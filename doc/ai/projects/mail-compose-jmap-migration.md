@@ -8,9 +8,9 @@ own send/draft-save side - blob re-upload, caching, and now a proper text/plain 
 ALL done + live-verified (2026-08-31, incl. against the IMAP-shim backend - see its own write-up
 below). **Step 2 (IMAP-shim EmailSubmission emulation) is now done + live-verified too
 (2026-08-31)** - see its own write-up and the "Step 2 live-testing fixes" section below for the 4
-real bugs found getting there. Step 4 is now functionally complete except reply-all/forward into an
-already-open compose popup (the `setCompose()` case, deliberately deferred - see its own write-up
-below).
+real bugs found getting there. Step 4 is now fully complete - forward-as-attachment into an
+already-open compose popup (the `setCompose()` case, deliberately deferred 2026-08-31) was picked
+back up and built + live-verified 2026-09-03, see its own write-up below.
 
 **Step 2 (IMAP-shim EmailSubmission emulation) built + live-verified 2026-08-31 - real SMTP
 send + real mailbox mutation, confirmed working (draft-save, actual send, Bcc handling, old-draft
@@ -699,19 +699,53 @@ round-trip needed. No attachment carry-forward for reply-all, matching classic (
 confirmed: `getComposeFrom()`'s `reply_attachments` case always calls `getReplyData('attachments',
 ...)`, never `'all'`).
 
-**Merge-into-already-open-popup, deliberately deferred (researched 2026-08-31, not built)**: a
-multi-message or forward-as-attachment action, when a compose popup is ALREADY open,
-`egw.openWithinWindow()` shows a picker and, if an existing popup is chosen, calls a LIVE JS method
-directly into that OTHER already-loaded window (`popups[i].app['mail']['setCompose'](...)`) instead
-of a URL/page load - server-side this decodes `appendix_data` (`mail_compose.inc.php:356-377`) into
-the SAME classic uid/folder-addressed `.eml`-attachment mechanism (`_get_uids_as_attachments()`,
-`addMessageAttachment(..., 'MESSAGE/RFC822', ...)`) my JMAP blobId-based forward-as-attachment
-already replaces for the fresh-popup case. No existing precedent for one window reaching DOWN into
-an already-open popup's JMAP state (only the reverse - a compose popup reaching UP to
-`window.opener.app.mail.jmap`) - `MailCompose.isJmapMode` is `private readonly`, would need new
-public cross-window state exposed. Ralf: defer rather than build now. The picker's own "New" option
-still correctly takes the JMAP-aware fresh-popup path (`openUp()`) - only "merge into an existing
-one" stays classic-only.
+**Merge-into-already-open-popup - BUILT + LIVE-VERIFIED (2026-09-03)**, picking the backlog item
+back up (originally researched 2026-08-31, deferred for lack of any way to reach DOWN into an
+already-open popup's JMAP state - only the reverse existed, a compose popup reaching UP to
+`window.opener.app.mail.jmap`).
+
+The classic path (still used unchanged whenever the target popup is classic-mode): a multi-message
+or forward-as-attachment action, when a compose popup is ALREADY open, `egw.openWithinWindow()`
+shows a picker and, if an existing popup is chosen, calls a live JS method directly into that OTHER
+already-loaded window (`popups[i].app['mail']['setCompose'](...)`) instead of a URL/page load -
+server-side this decodes `appendix_data` (`mail_compose.inc.php:356-377`) into the classic
+uid/folder-addressed `.eml`-attachment mechanism (`_get_uids_as_attachments()`,
+`addMessageAttachment(..., 'MESSAGE/RFC822', ...)`), via a full ETemplate postback
+(`compose_et2[0].submit()`) - fine for classic (server-rendered content survives a re-render by
+definition), but would have discarded a JMAP-mode popup's client-side-only state (typed body, staged
+attachments, chosen identity, the inserted-signature DOM marker) entirely, since none of that is
+known server-side mid-composition.
+
+**Fix**: two small additions gave `MailApp.setCompose()` (called with `this` already bound to the
+TARGET popup's own `MailApp` instance - `popups[i].app['mail'].setCompose`, so `this.compose` is
+already that SAME popup's own `MailCompose`, no cross-window property-poking needed) enough to
+decide per-target instead of always going classic:
+- `MailCompose.isJmapModeActive` - a public read-only getter mirroring the existing private
+  `isJmapMode`.
+- `MailCompose.mergeForwardAttachments(sourceIds)` - the reusable core of
+  `bootstrapForwardAsAttachment()` (a fresh popup's own forward-as-attachment bootstrap), extracted
+  so it can also be called POST-load: fetches each source message's blobId
+  (`MailJmap.fetchForForwardAsAttachment()`, this window's OWN jmap client/token cache - the target
+  popup's, not the opener's) and merges them into `carryForwardAttachments()`'s existing
+  array-manager-based UI sync, entirely client-side. Deliberately does NOT touch subject/
+  isReplyCompose/signature (unlike the fresh-popup bootstrap) - an already-open compose may already
+  have all three set by the user.
+
+`setCompose()`'s `'data'` field handling now checks `content.data.emails.ids` (the ONLY
+`content.data` shape forward-as-attachment ever sends - VFS-file-into-compose sends a different
+`{files:{...}}` shape, untouched, still classic-only) - if present AND `this.compose.
+isJmapModeActive`, calls `mergeForwardAttachments()` directly and returns, skipping the classic
+appendix_data+submit() path entirely for that case. A classic-mode target still falls through to the
+unchanged existing behaviour. The picker's own "New" option was already JMAP-aware (fresh-popup
+path) before this - only "merge into an existing one" was classic-only.
+
+**Live-verified**: opened a fresh JMAP-mode compose (confirmed `isJmapModeActive: true`,
+`mergeForwardAttachments` present on the live instance), then used "Weiterleiten als" → "Anhang" on
+two different messages from the main list, picking that SAME open popup each time via the picker
+dialog. Both merges completed with zero page reload (URL unchanged, no flash) and zero disruption to
+the popup's existing state - confirmed via `content.attachments`: after the first merge, exactly one
+`message/rfc822` JMAP-blobId attachment; after the second, exactly two (correctly appended, not
+replaced or duplicated).
 
 **Unrelated latent bug found, deliberately left as-is**: `egw.openWithinWindow()`'s own `openUp()`
 switches to a raw POST `<form>` submission when the built URL exceeds 2083 chars, bypassing

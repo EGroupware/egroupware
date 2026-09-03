@@ -42,6 +42,18 @@ export class MailCompose
 	private readonly isJmapMode : boolean = new URLSearchParams(window.location.search).get('jmap') === '1';
 
 	/**
+	 * Public read-only mirror of isJmapMode - lets MailApp.setCompose() (called on this SAME
+	 * window's own MailApp instance whenever another window merges something into an
+	 * already-open compose popup via egw.openWithinWindow(), see mergeForwardAttachments()'s own
+	 * docblock) decide whether this popup can accept a client-side-only merge instead of the
+	 * classic appendix_data+submit() postback.
+	 */
+	public get isJmapModeActive() : boolean
+	{
+		return this.isJmapMode;
+	}
+
+	/**
 	 * True for the duration of bootstrapCompose() (and everything it awaits) - guards
 	 * submitOnChange()'s 'mailaccount' branch against a real race found live 2026-09-01:
 	 * selectIdentityForRecipients() (called from bootstrapReply()/bootstrapComposeAsNew()) sets
@@ -1451,22 +1463,47 @@ export class MailCompose
 	 */
 	private async bootstrapForwardAsAttachment(sourceIds : string[]) : Promise<void>
 	{
+		const messages = await this.mergeForwardAttachments(sourceIds);
+		if (!messages) return;	// already reported to the user
+
+		this.isReplyCompose = true;
+		const subject = '[FWD] ' + messages[0].subject;
+		this.et2.getWidgetById('subject')?.set_value(subject);
+
+		// no quoted body - still apply the normal new-message signature (classic getForwardData()
+		// never suppresses it for this mode either, $suppressSigOnTop stays false)
+		await this.applySignatureForCurrentIdentity('', this.isReplyCompose);
+	}
+
+	/**
+	 * Fetch one or more messages' JMAP blobIds and merge them as message/rfc822 attachments into
+	 * THIS compose - the reusable core of bootstrapForwardAsAttachment() (a fresh popup), also
+	 * called directly by MailApp.setCompose() to merge a NEW forward-as-attachment action into an
+	 * ALREADY-OPEN JMAP-mode compose window (doc/ai/projects/mail-compose-jmap-migration.md,
+	 * "Merge into an already-open compose popup" - deliberately deferred 2026-08-31 for lack of
+	 * any public cross-window state on this class; isJmapModeActive + this method are that state).
+	 * Deliberately does NOT touch subject/isReplyCompose/signature - unlike a fresh popup, an
+	 * already-open one may already have all three set by the user; only bootstrapForwardAsAttachment()
+	 * (a genuinely blank new compose) does that, on top of this method.
+	 *
+	 * @return the fetched messages (subject/blobId/etc), or null if nothing could be fetched
+	 *  (already reported to the user via this.egw.message())
+	 */
+	public async mergeForwardAttachments(sourceIds : string[]) :
+		Promise<Awaited<ReturnType<MailJmap['fetchForForwardAsAttachment']>>[] | null>
+	{
 		if (!sourceIds.length)
 		{
 			this.egw.message(this.egw.lang('Failed to load original message(s)'), 'error');
-			return;
+			return null;
 		}
 		const results = await Promise.all(sourceIds.map((id) => this.app.jmap.fetchForForwardAsAttachment(id)));
 		const messages = results.filter((r) : r is NonNullable<typeof r> => r !== null);
 		if (!messages.length)
 		{
 			this.egw.message(this.egw.lang('Failed to load original message(s)'), 'error');
-			return;
+			return null;
 		}
-
-		this.isReplyCompose = true;
-		const subject = '[FWD] ' + messages[0].subject;
-		this.et2.getWidgetById('subject')?.set_value(subject);
 
 		const attachments = messages.map((m) => ({
 			blobId: m.blobId,
@@ -1476,10 +1513,7 @@ export class MailCompose
 			size: m.size,
 		}));
 		this.carryForwardAttachments(attachments, messages[0].profileID);
-
-		// no quoted body - still apply the normal new-message signature (classic getForwardData()
-		// never suppresses it for this mode either, $suppressSigOnTop stays false)
-		await this.applySignatureForCurrentIdentity('', this.isReplyCompose);
+		return messages;
 	}
 
 	/**

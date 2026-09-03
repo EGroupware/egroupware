@@ -1380,7 +1380,9 @@ export class MailApp extends EgwApp
 					// only reaches a real page load (where isJmapMode reads this back) when no
 					// compose popup is already open; if one IS open, it calls that OTHER window's
 					// own live setCompose() instead, whose isJmapMode was already fixed at ITS OWN
-					// original load time - this flag is simply never read in that case.
+					// original load time - this flag is simply never read in that case (setCompose()
+					// itself now branches on that OTHER window's own isJmapModeActive instead, see
+					// its own docblock - "Merge into an already-open compose popup").
 					if (this.jmapComposeEnabled)
 					{
 						(settings as typeof settings & {jmap? : string}).jmap = '1';
@@ -1476,6 +1478,21 @@ export class MailApp extends EgwApp
 			{
 				if (field == 'data')
 				{
+					// doc/ai/projects/mail-compose-jmap-migration.md, "Merge into an already-open
+					// compose popup" - deliberately deferred 2026-08-31 for lack of any way to
+					// reach INTO an already-loaded popup's JMAP state; MailCompose gained exactly
+					// that (isJmapModeActive + mergeForwardAttachments()) since. Only the
+					// forward-as-attachment content shape ({data:{emails:{ids,...}}}, the one
+					// action actually reachable while a popup is already open - see composeMessage()'s
+					// own 'forward'/'forwardasattach' branch) is handled client-side-only here; a
+					// classic-mode target (isJmapModeActive false) falls through to the unchanged
+					// appendix_data+submit() postback below, same as it always has.
+					const ids = content[field]?.['emails']?.['ids'];
+					if (ids && this.compose.isJmapModeActive)
+					{
+						this.compose.mergeForwardAttachments(String(ids).split(',').filter(Boolean));
+						return true;
+					}
 					const w = compose_et2[0].widgetContainer.getWidgetById('appendix_data');
 					w.set_value(JSON.stringify(content[field]));
 					const filemode = compose_et2[0].widgetContainer.getWidgetById('filemode');
