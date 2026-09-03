@@ -309,14 +309,14 @@ class QuoteTest extends TestCase
 
 	/**
 	 * query()'s error-classification distinguishes InvalidSql (for a MySQL error code in
-	 * [1064 syntax, 1062 duplicate-key, 1054 unknown-column]) from a generic Db\Exception for
-	 * everything else - that distinction lives in the `catch(\mysqli_sql_exception $e)` block,
-	 * which requires mysqli's modern exception-throwing mode. mysqli_report(MYSQLI_REPORT_ERROR |
-	 * MYSQLI_REPORT_STRICT) is now explicitly re-enabled in Db::_connect() (ADOdb's mysqli driver
-	 * constructor forces it back OFF otherwise, undoing PHP 8.1+'s own default - see the fix commit
-	 * for details), so this classification is genuinely live: a SQL-syntax error (code 1064, IN the
-	 * list) throws InvalidSql, with the SQL text recoverable via $e->details (set by the catch
-	 * block's re-throw).
+	 * [1064 syntax, 1062 duplicate-key, 1054 unknown-column, 1146 unknown-table]) from a generic
+	 * Db\Exception for everything else - that distinction lives in the
+	 * `catch(\mysqli_sql_exception $e)` block, which requires mysqli's modern exception-throwing
+	 * mode. mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT) is now explicitly re-enabled
+	 * in Db::_connect() (ADOdb's mysqli driver constructor forces it back OFF otherwise, undoing
+	 * PHP 8.1+'s own default - see the fix commit for details), so this classification is genuinely
+	 * live: a SQL-syntax error (code 1064, IN the list) throws InvalidSql, with the SQL text
+	 * recoverable via $e->details (set by the catch block's re-throw).
 	 */
 	public function testQuerySyntaxErrorThrowsInvalidSqlWithSqlInDetails()
 	{
@@ -335,12 +335,16 @@ class QuoteTest extends TestCase
 	}
 
 	/**
-	 * A non-existent-table error (code 1146) is NOT in the InvalidSql code list, so it must throw
-	 * the generic Api\Db\Exception, not the InvalidSql subclass - confirming the fine-grained
-	 * code-based classification is genuinely live now that mysqli throws (see the class doc-comment
-	 * on the previous test).
+	 * A non-existent-table error (code 1146) must throw InvalidSql, not just the generic
+	 * Api\Db\Exception: several places deliberately catch InvalidSql to keep working against a
+	 * table that does not exist (yet), most importantly during a fresh installation, where
+	 * Api\Link::delete_cache() and notifications_push::addGeneric() push to egw_notificationpopup
+	 * long before the notifications app is installed, and Api\Egw::__construct() probes egw_config
+	 * to decide whether to redirect to setup. It is also what every non-mysqli driver does: the
+	 * `if (!$rs)` branch further down query() raises InvalidSql for any SQL error, whatever its
+	 * code, so leaving 1146 out here would make mysqli the odd one out.
 	 */
-	public function testQueryUnknownTableThrowsGenericDbExceptionNotInvalidSql()
+	public function testQueryUnknownTableThrowsInvalidSql()
 	{
 		$table = 'egw_nonexistent_table_'.bin2hex(random_bytes(4));
 
@@ -351,12 +355,31 @@ class QuoteTest extends TestCase
 		}
 		catch (Api\Db\Exception\InvalidSql $e)
 		{
-			$this->fail('Error code 1146 (unknown table) is not in the InvalidSql code list - '.
-				'must be a generic Db\Exception, not InvalidSql: '.$e->getMessage());
+			$this->assertStringContainsString($table, $e->getMessage());
+		}
+	}
+
+	/**
+	 * A code that is NOT in the InvalidSql list - 1136 "Column count doesn't match value count" -
+	 * must throw the generic Api\Db\Exception, confirming the fine-grained code-based
+	 * classification is genuinely live now that mysqli throws (see the class doc-comment on
+	 * testQuerySyntaxErrorThrowsInvalidSqlWithSqlInDetails).
+	 */
+	public function testQueryUnclassifiedErrorThrowsGenericDbExceptionNotInvalidSql()
+	{
+		try
+		{
+			self::$db->query("INSERT INTO egw_test (t_uniq) VALUES ('a', 'b')", __LINE__, __FILE__);
+			$this->fail('Expected an exception for a mismatched column/value count');
+		}
+		catch (Api\Db\Exception\InvalidSql $e)
+		{
+			$this->fail('Error code 1136 (column count mismatch) is not in the InvalidSql code '.
+				'list - must be a generic Db\Exception, not InvalidSql: '.$e->getMessage());
 		}
 		catch (Api\Db\Exception $e)
 		{
-			$this->assertStringContainsString($table, $e->getMessage());
+			$this->assertSame(1136, $e->getCode());
 		}
 	}
 
