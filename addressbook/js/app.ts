@@ -1116,9 +1116,13 @@ class AddressbookApp extends EgwApp
 
 		for (const index in content)
 		{
-			if (content[index].file.length > 0)
+			// content used to be {vcard:{file:[],type:[]}} - since it became {data:{files:{...}}}
+			// (the shape app.mail.setCompose() wants), content[index].file was undefined and this
+			// threw right after the compose window had opened, so the message never showed.
+			// The label is no longer the key either ('data'), it is what we attach: a vCard.
+			if (content[index].files.file.length > 0)
 			{
-				egw.message(egw.lang('%1 contact(s) added as %2', content[index].file.length, egw.lang(index)));
+				egw.message(egw.lang('%1 contact(s) added as %2', content[index].files.file.length, egw.lang('vcard')));
 				return;
 			}
 		}

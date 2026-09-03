@@ -1,6 +1,7 @@
 %1 contact(s) %2	addressbook	de	%1 Kontakt(e) %2
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	de	%1 Kontakt(e) %2, %3 nicht da %4!
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	de	%1 Kontakt(e) %2, %3 nicht wegen fehlender Rechte!
+%1 contact(s) added as %2	addressbook	de	%1 Kontakt(e) als %2 hinzugefügt
 %1 contacts updated (%2 errors).	addressbook	de	%1 Kontakte aktualisiert (%2 Fehler).
 %1 fields in %2 other organisation member(s) changed	addressbook	de	%1 Felder in %2 Mitglied(ern) der Organisation geändert
 %1 key(s) added to public keyserver "%2".	addressbook	de	%1 Schlüssel wurden dem öffentlichen Schlüsselserver "%2" eingetragen.
