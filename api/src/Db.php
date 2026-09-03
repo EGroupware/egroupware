@@ -1946,8 +1946,14 @@ class Db
 				return $app_data = False;
 			}
 			include($tables_current);
-			$app_data =& $phpgw_baseline;
-			unset($phpgw_baseline);
+			// $app_data is already a reference alias to self::$all_app_data[$app] (established
+			// above) - a plain value-copy here writes through that alias into the shared static
+			// cache. Using "=&" instead (as this used to) REBINDS $app_data to $phpgw_baseline's own
+			// zval, severing the alias - self::$all_app_data[$app] stays null forever, silently
+			// disabling the cache (tables_current.inc.php gets re-include()'d and re-executed on
+			// every single call, for every app, in every request - invisible to a correctness-only
+			// test since $app_data itself still holds the right data for THIS call).
+			$app_data = $phpgw_baseline;
 		}
 		if ($table && (!$app_data || !isset($app_data[$table])))
 		{

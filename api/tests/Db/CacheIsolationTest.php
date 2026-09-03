@@ -192,68 +192,56 @@ class CacheIsolationTest extends TestCase
 	}
 
 	/**
-	 * REAL BUG found and locked down here, not fixed (out of scope for a test-only pass - this is
-	 * core Db.php behavior with a very wide blast radius, needs Ralf's judgement before touching):
-	 *
-	 * get_table_definitions()'s docblock claims "the already read table-definitions are shared
-	 * between all db-instances via a static var" (self::$all_app_data), but the caching is actually
-	 * COMPLETELY NON-FUNCTIONAL. The code does:
+	 * REAL BUG found and FIXED (commit adding the "$app_data = $phpgw_baseline;" plain-copy fix -
+	 * see api/src/Db.php): get_table_definitions()'s docblock claims "the already read
+	 * table-definitions are shared between all db-instances via a static var" (self::$all_app_data),
+	 * but the caching was actually COMPLETELY NON-FUNCTIONAL before the fix. The code did:
 	 *   $app_data =& self::$all_app_data[$app];      // $app_data now ALIASES the static array slot
 	 *   if (!isset($app_data)) {
 	 *       include($tables_current);                 // defines $phpgw_baseline
-	 *       $app_data =& $phpgw_baseline;              // REBINDS $app_data to a DIFFERENT zval!
+	 *       $app_data =& $phpgw_baseline;              // REBOUND $app_data to a DIFFERENT zval!
 	 *       ...
 	 *   }
-	 *   return $table ? $app_data[$table] : $app_data;
-	 * The 2nd "=&" does not copy $phpgw_baseline's VALUE into the zval that self::$all_app_data[$app]
-	 * points to - it rebinds the LOCAL variable $app_data to alias $phpgw_baseline instead, silently
-	 * breaking the alias to the static array. self::$all_app_data[$app] is left holding whatever it
-	 * had before (NULL, from the auto-vivification on the first "=&" line) - forever. Confirmed via
-	 * a minimal isolated PHP reproduction of this exact reference pattern (two zvals, `=&` twice) -
-	 * the static array entry stays NULL and each call gets a genuinely fresh, distinct array.
+	 * The 2nd "=&" did not copy $phpgw_baseline's VALUE into the zval that self::$all_app_data[$app]
+	 * points to - it rebound the LOCAL variable $app_data to alias $phpgw_baseline instead, silently
+	 * breaking the alias to the static array, leaving self::$all_app_data[$app] NULL forever. Fixed
+	 * by replacing that line with a plain value-copy (`$app_data = $phpgw_baseline;`), which writes
+	 * through the still-intact alias into the shared static-array slot.
 	 *
-	 * Practical impact: the intended "read once, share via static var" caching never happens for the
-	 * common ($app given explicitly, not true) path - tables_current.inc.php gets include()'d and
-	 * its top-level array-literal code re-executed on EVERY call to get_table_definitions($app), for
-	 * EVERY app, in EVERY request - not just once per process as the docblock promises. This is
-	 * called by every single Storage\Base/Api\Storage construction (see the "shared engine" note
-	 * throughout doc/ai/projects/storage-test-coverage.md) - a real, likely-widespread, previously
-	 * undiscovered performance issue (repeated array-literal construction instead of a true cache
-	 * hit), not merely a cosmetic one.
+	 * Practical impact of the bug (now resolved): the intended "read once, share via static var"
+	 * caching never happened for the common ($app given explicitly, not true) path -
+	 * tables_current.inc.php got include()'d and its top-level array-literal code re-executed on
+	 * EVERY call to get_table_definitions($app), for EVERY app, in EVERY request. This is called by
+	 * every single Storage\Base/Api\Storage construction (see the "shared engine" note throughout
+	 * doc/ai/projects/storage-test-coverage.md) - a real, likely-widespread performance issue that's
+	 * now fixed.
 	 */
-	public function testGetTableDefinitionsCacheIsNonFunctionalDespiteDocblockClaim()
+	public function testGetTableDefinitionsCacheIsPopulatedAfterFirstCall()
 	{
 		$first = self::$db->get_table_definitions('test', 'egw_test');
 		$second = self::$db->get_table_definitions('test', 'egw_test');
 
-		// the RETURNED VALUE is correct and value-equal both times (the bug is invisible to a
-		// correctness-only test - this is exactly why it went undiscovered)
-		$this->assertEquals($first, $second, 'Both calls must still return the correct, matching table definition');
+		$this->assertEquals($first, $second, 'Both calls must return the correct, matching table definition');
 
-		// ...but per the docblock, the static cache should now hold this data for app 'test'. It
-		// doesn't - self::$all_app_data['test'] stays NULL, proving no caching actually happened.
+		// the static cache should now hold this data for app 'test' after the first call
 		$prop = new ReflectionProperty(Api\Db::class, 'all_app_data');
 		$prop->setAccessible(true);
 		$cache = $prop->getValue();
 
-		$this->assertArrayHasKey('test', $cache, 'The array key gets auto-vivified by the "=&" reference access, even though the bug prevents it from ever being populated');
-		$this->assertNull($cache['test'],
-			'BUG: despite get_table_definitions(\'test\', ...) having been called twice and returning correct data both times, the static cache slot for app \'test\' is still NULL - the intended caching never actually happens (see method doc-comment for the exact reference-rebinding bug)');
+		$this->assertArrayHasKey('test', $cache);
+		$this->assertNotNull($cache['test'],
+			'The static cache slot for app \'test\' must be populated after the first call, not left NULL');
+		$this->assertArrayHasKey('egw_test', $cache['test'], 'Cached data must contain the egw_test table definition');
 	}
 
 	/**
 	 * $app===true triggers the "search all already-loaded apps, then scan EGW_INCLUDE_ROOT for
 	 * apps not yet loaded" fallback used when the caller doesn't know which app a table belongs to.
 	 *
-	 * Given the caching bug documented in testGetTableDefinitionsCacheIsNonFunctionalDespiteDocblockClaim(),
-	 * calling get_table_definitions('test', ...) first does NOT actually populate the cache the
-	 * "already loaded apps" search relies on (self::$all_app_data['test'] stays NULL) - so this
-	 * always falls through to the directory-scan branch in practice, regardless of what was
-	 * "loaded" beforehand. That branch's OWN cache-write (`self::$all_app_data[$dir] =& $phpgw_baseline`,
-	 * a direct reference on the real static-array slot, not through a rebound intermediate variable
-	 * like the buggy plain-$app path) is correct - so this call actually DOES cache 'test' properly
-	 * as a side effect, unlike a plain get_table_definitions('test', ...) call. Either way, the
-	 * CONTRACT (correct data returned) is what's asserted here.
+	 * Now that testGetTableDefinitionsCacheIsPopulatedAfterFirstCall()'s fix is in place, calling
+	 * get_table_definitions('test', ...) first DOES populate self::$all_app_data['test'], so this
+	 * should find it via the "already loaded apps" search rather than falling through to the
+	 * directory scan - either way, the CONTRACT (correct data returned) is what's asserted here.
 	 */
 	public function testGetTableDefinitionsAppTrueFindsTableAcrossLoadedApps()
 	{
