@@ -61,7 +61,7 @@ clearly-scoped change elsewhere (e.g. an import path).
 | smallpart | done | Most TS errors of any file in this project (4028 lines, 1 `var` - a comment only, 24 jQuery uses, 167 TS errors) - see below. `smallpart/` is also its own nested git repo - same note. |
 | calendar | done | Largest file in this project by line count, and by far the most `var`/jQuery usage of any file here (4525 lines, 253 `var`, ~90 jQuery uses, 97 TS errors, 14 `sendRequest()` sites) - see below. |
 | kanban | done | `kanban/js/app.ts`, 828 -> 833 lines. `kanban/` is its own nested git repo. 2 `var`, 4 jQuery hits, 22 TS errors, 0 `sendRequest()` (already on `egw.request()`), 6 `function(`/no `self`/`that` closures - see below. Also fixed a genuine `add_card_callback()` crash found post-completion (spans `js/app.ts` and `src/Ajax.php`). Committed (2 commits) and pushed to `origin/master`. |
-| home | done | `home/js/app.ts`, 538 -> 538 lines, main repo. 0 `var`, 2 jQuery hits, 11 TS errors, 2 `sendRequest()` sites, 2 live `function(` occurrences (plus a dead, fully commented-out gridster-era block that doesn't count) - see below. Found and fixed a genuine live `ReferenceError` crash in `set_default()`. |
+| home | done | `home/js/app.ts`, 538 -> 538 lines, main repo. 0 `var`, 2 jQuery hits, 11 TS errors, 2 `sendRequest()` sites, 2 live `function(` occurrences (plus a dead, fully commented-out gridster-era block that doesn't count) - see below. Found and fixed a genuine live `ReferenceError` crash in `set_default()`, plus a cross-file fix in the shared `et2_widget_dialog.ts` legacy-dialog attribute registry (systemic, affects every `et2_createWidget("dialog", ...)` caller in the repo). |
 
 **Nested git repos:** `tracker/`, `status/`, `smallpart/` and `kanban/` (and presumably other apps) are checked out as their own independent git repositories inside the main `egroupware` working tree - the root `.gitignore` explicitly excludes them (`/tracker/`, `status/`, `/smallpart/`, `/kanban/`) so the main repo never sees their contents. `git status`/`git diff` run from the repo root show nothing for files under these paths even when they're genuinely modified - `cd` into the app directory first (each has its own `.git/`) to see/commit/push those changes. Matches the existing `feedback_git_installs_independent_trees` memory ("don't composer-update root to pull an app-repo fix").
 
@@ -2806,24 +2806,33 @@ this file.
   silently, before this specific `ReferenceError` was even possible - `et2_portlet` being *unimported* is
   what turns a silent no-op into a hard crash, and TS's `TS2304` for that exact name is what surfaced it
   here).
-
-### Not touched (out of scope)
-
-- **`set_default()`'s dialog renders empty** - only discovered *because* the crash above is now fixed
-  (the dialog is created a few lines after the now-working `iterateOver` call, so it was previously
-  unreachable from the "select all" path - though it's reachable from the per-portlet "remove default"-less
-  branch too, and behaves the same there). Live-verified: `et2_createWidget("dialog", {template:
-  "home.set_default", buttons: Et2Dialog.BUTTONS_OK_CANCEL, ...})` does create a `<legacy-dialog>` element
-  (confirmed via `document.querySelector('legacy-dialog')`), but its content stays genuinely empty - no
-  title, no OK/Cancel buttons, no rendered `<et2-vbox>`/`<et2-description>`/`<et2-select-account>` from the
-  `home.set_default` sub-template that's defined right in `home/templates/default/index.xet` (confirmed the
-  template markup itself is fine and inline in the same file, not a separate lazy-fetched template - no
-  network request for it ever fires, consistent with that). This isn't a goal-1-through-6 issue (no TS
-  error, no jQuery, no `var`, nothing this pass's mechanical checks would catch) and digging into *why*
-  `et2_createWidget("dialog", {...})` fails to populate a templated legacy dialog is a much larger
-  investigation into `Et2Dialog`/legacy-dialog-factory internals, well beyond an app.ts-scoped pass -
-  flagged here as a real, currently-live bug for whoever picks up the dialog/legacy-widget-factory code
-  next, not fixed.
+- **`set_default()`'s dialog rendered completely empty** (no title, no OK/Cancel buttons, none of the
+  `home.set_default` sub-template's `<et2-vbox>`/`<et2-description>`/`<et2-select-account>` widgets) -
+  found only because fixing the crash above finally made this code path reachable. **Root-caused and
+  fixed, but the fix lives outside `home/js/app.ts` and outside this app's own repo** - a small,
+  clearly-scoped cross-file exception (per this doc's workflow note on when that's OK), called out
+  separately here rather than folded silently into the mechanical per-goal sections above:
+  `api/js/etemplate/et2_widget_dialog.ts`'s `et2_dialog` (the `<legacy-dialog>` shim every
+  `et2_createWidget("dialog", {...})` call resolves to) builds `et2_attribute_registry["et2_dialog"]` by
+  iterating `et2_dialog.properties` - Lit's *old-style* `static get properties()` getter. But
+  `Et2Dialog`'s `title`/`buttons`/`template`/`callback` (and others) are declared via `@property()`
+  **decorators**, which populate Lit's `elementProperties` map directly and never appear in `properties`
+  at all. So the registry was missing all four - and `et2_createWidget()`'s sanity check
+  (`ClassWithAttributes.generateAttributeSet()` in `et2_core_inheritance.ts`) `delete`s any attribute not
+  found in that registry *before the dialog widget is even constructed*. `title`/`buttons`/`template`/
+  `callback` were silently stripped from every legacy-factory dialog call in the whole repo, not just this
+  one - confirmed by grepping for the exact `et2_createWidget("dialog", {...})` pattern: it's also used in
+  `api/js/jsapi/app_base.js` (mailvelope backup dialog, share-link dialog) and `home/js/Et2PortletList.ts`
+  (its own add-to-list dialog). Fixed by building the registry from `et2_dialog.elementProperties` (Lit's
+  fully-resolved map, cast through `<any>` since this project's TS lib doesn't expose static
+  `elementProperties` through the `Et2Widget(SlDialog)` mixin chain - the same mixin-visibility gap
+  documented elsewhere in this project) instead of the stale `.properties` getter. Live-verified: rebuilt,
+  hard-reloaded, clicked "Set as default" again - the dialog now shows its title, the "Add as default for"
+  description, a working `et2-select-account` group dropdown (populated with real groups from the account
+  system), and OK/Cancel buttons. Cancelled out rather than submitting, to avoid actually changing a
+  shared group's default portlets on this dev instance. Not independently re-tested at the
+  `Et2PortletList`/`app_base.js` call sites (would need a differently-configured portlet/mailvelope setup
+  to reach), but the fix is at the single shared root cause they all go through, not a per-call-site patch.
 - **`_get_portlet_code()`** has zero callers anywhere in the repo (checked `home/js/`, `api/js/`,
   `calendar/js/`, and any `.php` references) - likely dead code, same shape as addressbook's
   `refreshCallback` finding. Left in place rather than deleted: it's not blocking any of the 6 goals (its
