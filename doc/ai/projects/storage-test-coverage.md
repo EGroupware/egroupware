@@ -191,14 +191,27 @@ Priority order:
    self-clean, but a test reading cached `get()` results across two account contexts without an
    intervening `update()`/`save()` should call `invalidate_cache($app)` explicitly.
 
-### Zero-usage classes - confirm scope before investing heavily
+### Usage corrections (this section's original "zero usage" claim was wrong for Json*)
 
-Grepped the whole repo (excluding `vendor/`): **`Db2DataIterator`, `RowsIterator`, `Json`,
-`JsonCF`, and `JsonTrait` have no call sites anywhere in this checkout.** Either EPL/Stylite-only
-(the usual blind spot - see the `[[epl_stylite_blind_spot]]` memory) or genuinely-unused
-infrastructure. Cheap to unit-test (no DB needed for most of it), so still worth doing, but lower
-priority than anything above, and not worth a live-DB round-trip test (would require adding a JSON
-column to the `test` fixture for zero real-world payoff).
+**CORRECTION**: the original grep behind this section only searched the tracked repo. `Json`/
+`JsonCF`/`JsonTrait` ARE genuinely used - by `invoices/` (present on disk, but `.gitignore`'d, line
+33: `/invoices/` - a real installed app invisible to a repo-wide grep, same blind-spot class as EPL
+apps but not actually EPL). `invoices/src/Bo.php` extends `Api\Storage\JsonCF` directly and also
+constructs a plain `Api\Storage\Json` instance for a `positions` sub-storage. **Treat `Json`/
+`JsonCF`/`JsonTrait` as real, in-use infrastructure, not low-priority speculative coverage** - a
+live-DB round-trip test against a real JSON column is worth doing after all, not just the pure-array
+trait tests. Lesson: when a class has "zero usage" in a repo-wide grep, check `.gitignore` for other
+installed-but-untracked app directories before concluding it's genuinely unused - don't assume EPL
+is the only blind spot.
+
+`Db2DataIterator` and `RowsIterator` remain unconfirmed as used anywhere - re-checked against every
+directory present on disk (tracked AND `.gitignore`'d apps alike), only the class definitions and
+`Base.php`'s own dead `search_return_iterator` path reference `Db2DataIterator`; nothing references
+`RowsIterator` at all. Note: `Api\Mail\Account`'s iterator-returning methods (`identities()`,
+per its own "most methods return iterators" docblock) use a DIFFERENT class,
+`Api\Db\CallbackIterator` (outside the `Storage\` namespace, not covered by this project's mapping
+at all) - worth a mention for whoever eventually maps `Api\Db\CallbackIterator`'s own coverage, but
+out of scope here.
 
 - **`Db2DataIterator`** - possible real bug found: `current()` calls
   `$this->storage->data2db($data)` (user->server direction) but the class name/docblock both say it
@@ -347,5 +360,7 @@ column to the `test` fixture for zero real-world payoff).
         losing anything (`8f4babf8dc`); the last one merged cleanly on top and verified via
         `git status`/`git log` before committing (`31b583c737`). No work was lost across either
         collision.
-- [ ] **Phase 5 - zero-usage classes**: `JsonTrait` pure-array tests, `Db2DataIterator` (incl. the
-      documented data2db/db2data question), `RowsIterator`.
+- [ ] **Phase 5**: `JsonTrait`/`Json`/`JsonCF` (real usage confirmed via `invoices/` - do the
+      pure-array trait tests AND a live-DB round-trip test, per the usage-correction note above),
+      `Db2DataIterator` (incl. the documented data2db/db2data question - still unconfirmed as used
+      anywhere, lower priority), `RowsIterator` (still unconfirmed as used anywhere, lower priority).
