@@ -525,14 +525,31 @@ export class MailCompose
 			this.lastMimeTypeConversion = {before: currentBody, after: newBody};
 		}
 		toWidget?.set_value(newBody);
+		this.syncMimeTypeContainers(toHtml);
+	}
 
-		// the "which body container is visible" swap is normally driven by the is_plain/is_html
-		// content flags, but those are one-shot expression bindings only re-evaluated on a fresh
-		// server render (same non-reactivity already seen elsewhere in this file) - toggle the
-		// containers directly instead. mail_htmltext sits inside an <et2-ai> wrapper (2 levels to
-		// the actual mailComposeHtmlContainer box), mail_plaintext doesn't (1 level) - walk up by
-		// class name instead of a hardcoded depth so this doesn't silently break if either
-		// wrapping ever changes.
+	/**
+	 * Toggle which body container (HTML editor vs. plain textarea) is actually VISIBLE - normally
+	 * driven by the is_plain/is_html content flags, but those are one-shot expression bindings
+	 * only re-evaluated on a fresh server render (same non-reactivity already seen elsewhere in
+	 * this file), so any programmatic `mimeType` widget change (a real user toggle via
+	 * switchMimeTypeClientSide() above, or a bootstrap* method's own `set_value()` - which does
+	 * NOT fire the onchange switchMimeTypeClientSide() is normally wired to) needs to call this
+	 * explicitly. Found live 2026-09-03 fixing "reply to a plain-text mail always opens as HTML,
+	 * ignoring the reply-format preference": bootstrapReply()/bootstrapComposeAsNew() already set
+	 * the mimeType WIDGET correctly, and the quoted body WAS correctly written into the right
+	 * (plain-text) body widget - just never actually shown, since nothing told the containers to
+	 * swap. Invisible until then because mimeType was ALWAYS wrongly 'html' before that fix
+	 * (MailJmap.fetchForReply()'s own bug, see its docblock), matching the default-visible
+	 * container - this desync could never actually manifest until a reply was capable of
+	 * genuinely resolving to plain text at all.
+	 *
+	 * mail_htmltext sits inside an `<et2-ai>` wrapper (2 levels to the actual
+	 * mailComposeHtmlContainer box), mail_plaintext doesn't (1 level) - walk up by class name
+	 * instead of a hardcoded depth so this doesn't silently break if either wrapping ever changes.
+	 */
+	private syncMimeTypeContainers(toHtml : boolean) : void
+	{
 		const findContainer = (widgetId : string, className : string) : any =>
 		{
 			let widget : any = this.et2.getWidgetById(widgetId);
@@ -1308,6 +1325,7 @@ export class MailCompose
 
 		const isHtml = context.mimeType === 'html';
 		this.et2.getWidgetById('mimeType')?.set_value(isHtml);
+		this.syncMimeTypeContainers(isHtml);
 		const quoted = this.app.jmap.quoteOriginalMessage(context);
 		await this.applySignatureForCurrentIdentity(quoted, this.isReplyCompose);
 
@@ -1359,6 +1377,7 @@ export class MailCompose
 
 		const isHtml = context.mimeType === 'html';
 		this.et2.getWidgetById('mimeType')?.set_value(isHtml);
+		this.syncMimeTypeContainers(isHtml);
 
 		// classic getComposeFrom()'s own "$suppressSigOnTop = true" for a non-empty body - the
 		// original content already carries whatever signature it originally had, so inserting a

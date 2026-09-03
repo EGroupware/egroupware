@@ -2643,8 +2643,17 @@ export class MailJmap
 
 			const htmlParts : any[] = email.htmlBody || [];
 			const textParts : any[] = email.textBody || [];
-			const useHtml = htmlParts.length > 0;
-			const part = useHtml ? htmlParts[0] : textParts[0];
+			// RFC 8621 §4.1.4: a message with NO real HTML part still gets a non-empty `htmlBody` -
+			// the server (confirmed live 2026-09-03 against Stalwart) echoes the plain-text part
+			// into it as a fallback "best attempt at an HTML rendition", so `htmlParts.length > 0`
+			// alone is true for almost every message, not just genuinely HTML ones - found live
+			// investigating "reply to a plain-text mail opens as HTML, ignoring the 'same format as
+			// original' preference" (ralf's own repro: a single-part text/plain message, `htmlBody`
+			// STILL came back non-empty, echoing that exact same part). Only a part whose own `type`
+			// is really `text/html` counts.
+			const htmlPart = htmlParts.find((p) => p.type === 'text/html');
+			const useHtml = !!htmlPart;
+			const part = useHtml ? htmlPart : textParts[0];
 			const raw = part ? (email.bodyValues?.[part.partId]?.value || '') : '';
 			const sanitized = useHtml ? DOMPurify.sanitize(raw, {
 				FORBID_TAGS: ['script', 'meta', 'base', 'object', 'embed', 'applet', 'iframe'],
@@ -2939,8 +2948,12 @@ export class MailJmap
 	{
 		const htmlParts : any[] = email.htmlBody || [];
 		const textParts : any[] = email.textBody || [];
-		const useHtml = htmlParts.length > 0 && htmlOptions !== 'only_if_no_text';
-		const part = useHtml ? htmlParts[0] : (textParts[0] || htmlParts[0]);
+		// same RFC 8621 §4.1.4 fallback-echo gotcha as fetchForReply() above - `htmlBody` is
+		// non-empty even for a plain-text-only message (Stalwart echoes the text/plain part into
+		// it), so only a part genuinely typed `text/html` counts as "this message has HTML".
+		const htmlPart = htmlParts.find((p) => p.type === 'text/html');
+		const useHtml = !!htmlPart && htmlOptions !== 'only_if_no_text';
+		const part = useHtml ? htmlPart : (textParts[0] || htmlPart);
 		const raw = part ? (email.bodyValues?.[part.partId]?.value || '') : '';
 		const isHtml = !!part && (useHtml || !textParts.length);
 

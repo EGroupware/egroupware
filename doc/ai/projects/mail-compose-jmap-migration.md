@@ -2119,3 +2119,57 @@ semantics, removes ~30 lines of duplication. Live-verified both paths on the sam
 `jmapDraftEmailId` correctly set to `"fkiaaabks"`) - both populate the attachment, no console errors.
 Committed + pushed to master, `597d61a341` (together with the bootstrapPromise/setBodyValue fixes
 above).
+
+## FIXED (2026-09-03): reply to a plain-text mail always opened as HTML, ignoring the "same format as original" preference; quoted body invisible once that got fixed
+
+Two-part report: (1) a 3rd-party report that replying to plain-text mail loses the quoted body, and
+(2) ralf's own repro - despite the `replyOptions` preference set to `'none'` ("use source as
+displayed, if applicable" - classic's own "same format as original" mode), replying to a genuinely
+plain-text message opened as HTML, WITH the correctly quoted body included.
+
+### Root cause #1: `MailJmap.fetchForReply()`/`assembleBodyHtml()` misread RFC 8621's `htmlBody` fallback echo
+
+Both methods determined html-vs-plain via `email.htmlBody.length > 0` - live-verified against the
+exact reported message (`mail::5::1::a::eoyaaabdx`, "Test Plaintext", a single-part `text/plain`
+message, no `subParts` at all): Stalwart's own `Email/get` response still returns a NON-EMPTY
+`htmlBody` array for it, containing the SAME `text/plain`-typed part echoed into both `textBody` AND
+`htmlBody` - RFC 8621 §4.1.4's own fallback behavior ("if there is no HTML part, return the plain
+text part instead") so `htmlBody` is never simply empty for a message with any body at all. Checking
+array length alone is therefore true for nearly every message, not just genuinely HTML ones -
+`fetchForReply()`'s own `context.mimeType` came back `'html'` for this literally single-part plain
+message, hence the reply UI opening in HTML mode regardless of the `replyOptions` preference
+(neither `bootstrapReply()` nor anything else in `compose.ts` even reads that preference - it just
+trusts `context.mimeType`, matching classic's own "'none' -> use the original's actual format"
+semantics, correctly, once given a correct `context.mimeType`).
+
+**Fix** (`mail/js/jmap.ts`): both `fetchForReply()` and `assembleBodyHtml()` (the message-VIEW body
+renderer - same exact flaw, found by grepping for the same `htmlBody.length` pattern) now require
+the picked `htmlBody` entry's own `type` to actually be `'text/html'` (`htmlParts.find(p => p.type
+=== 'text/html')`) rather than just checking the array is non-empty.
+
+### Root cause #2 (only became visible once #1 was fixed): body container visibility never synced to a bootstrap-set mimeType
+
+With `context.mimeType` now correctly `'plain'`, the reply DID get quoted into the correct
+(`mail_plaintext`) widget (confirmed directly: reading the widget's own `get_value()` returned the
+fully-quoted, correctly `>`-prefixed plain body) - but the compose window kept showing the HTML rich
+-text editor (with its own, empty `mail_htmltext` widget) instead, making the reply look completely
+blank. `switchMimeTypeClientSide()` (the function that actually toggles which of `mailComposeHtmlContainer`/
+`mailComposeTextContainer` is visible, via `set_disabled()` - `is_plain`/`is_html` are one-shot
+server-render expression bindings, never reactive) is ONLY ever called from `submitOnChange()`'s
+real user-driven `mimeType` onchange handler - `bootstrapReply()`/`bootstrapComposeAsNew()` (and
+`bootstrapDraft()`, which delegates to the latter) set the `mimeType` WIDGET's value directly via
+`set_value()`, which does not fire a synthetic change event, so the container swap never ran for
+those. This exact gap has presumably always existed, but was never observable before Root cause #1
+was fixed: `context.mimeType` was ALWAYS wrongly `'html'`, matching the server-rendered default
+(HTML) container that's already visible - the desync could only ever manifest once a reply was
+capable of genuinely resolving to plain text at all.
+
+**Fix**: extracted `switchMimeTypeClientSide()`'s own container-toggle logic into a new
+`syncMimeTypeContainers(toHtml)` helper, now also called right after both `bootstrapReply()`'s and
+`bootstrapComposeAsNew()`'s own `mimeType` `set_value()` calls (not just from the user-toggle path).
+
+**Live-verified 2026-09-03**, real end-to-end repro against the exact reported message (right-click
+"Test Plaintext" in Inbox -> Antworten): reply now opens correctly in plain-text mode (HTML toggle
+unchecked, plain toolbar) with the fully-quoted body visible (`>`-prefixed original + signature);
+manually toggling the HTML checkbox afterward still correctly converts and shows the content (no
+regression to the existing manual toggle path). No console errors either time.
