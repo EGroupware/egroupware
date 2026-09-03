@@ -2646,15 +2646,29 @@ ORDER BY cal_user_type, cal_usre_id
 	 * Recurring events that span the date will be ignored.  Non-recurring
 	 * events before the date will be deleted.
 	 *
+	 * Oldest events (lowest cal_id) are purged first, and the loop stops once
+	 * $time_limit is exceeded, so a single call never runs unbound (and does not
+	 * block the async service, or a request, for an unlimited time). The caller
+	 * has to keep calling this, as long as it returns true, to purge everything.
+	 *
 	 * @param DateTime $date
+	 * @param int $time_limit =300 maximum number of seconds this method is allowed to run
+	 * @return bool true if the time-limit was hit before everything before $date got purged, false if done
 	 * @throws Api\Db\Exception
 	 * @throws Api\Db\Exception\InvalidSql
 	 */
-	function purge(DateTime $date) : void
+	function purge(DateTime $date, int $time_limit=300) : bool
 	{
+		$start = microtime(true);
+
 		// with new range_end we simple delete all with range_end < $date (range_end NULL is never returned)
-		foreach($this->db->select($this->cal_table, 'cal_id', 'range_end < ' . (int)$date->format('server'), __LINE__, __FILE__, false, '', 'calendar') as $row)
+		// order by cal_id ASC, to purge the oldest events first
+		foreach($this->db->select($this->cal_table, 'cal_id', 'range_end < ' . (int)$date->format('server'), __LINE__, __FILE__, false, 'ORDER BY cal_id ASC', 'calendar') as $row)
 		{
+			if (microtime(true) - $start > $time_limit)
+			{
+				return true;	// time is up, though there might be more events left to purge
+			}
 			//echo __METHOD__." About to delete".$row['cal_id']."\r\n";
 			foreach($this->all_tables as $table)
 			{
@@ -2663,6 +2677,7 @@ ORDER BY cal_user_type, cal_usre_id
 			// handle links
 			Link::unlink('', 'calendar', $row['cal_id']);
 		}
+		return false;
 	}
 
 	/**
