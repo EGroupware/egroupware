@@ -38,19 +38,19 @@ tr.mail.label5 {
   --mail-left-border-color: #8000ff;
 }
 tr.mail.customFlag1 {
-  --flag-color: #ff0000;
+  --flag-color: var(--sl-color-red-600, #ff0000);
 }
 tr.mail.customFlag2 {
-  --flag-color: #ff8000;
+  --flag-color: var(--sl-color-orange-600, #ff8000);
 }
 tr.mail.customFlag3 {
-  --flag-color: #008000;
+  --flag-color: var(--sl-color-green-600, #008000);
 }
 tr.mail.customFlag4 {
-  --flag-color: #0000ff;
+  --flag-color: var(--sl-color-blue-600, #0000ff);
 }
 tr.mail.customFlag5 {
-  --flag-color: #8000ff;
+  --flag-color: var(--sl-color-violet-600, #8000ff);
 }
 tr.mail.deleted td:first-child {
   text-decoration: line-through;
