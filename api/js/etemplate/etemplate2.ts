@@ -143,7 +143,7 @@ import './et2_widget_vfs'; // Vfs must be first (before et2_widget_file) due to 
 import './legacy-shims/et2_widget_template';
 import './et2_widget_grid';
 import './et2_widget_box';
-import './et2_widget_hbox';
+import './legacy-shims/et2_widget_hbox';
 import './et2_widget_button';
 import './et2_widget_entry';
 import './et2_widget_textbox';

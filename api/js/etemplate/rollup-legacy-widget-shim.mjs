@@ -72,6 +72,9 @@ export const SHIM_MANIFEST = {
         {legacyName: 'et2_taglist_thumbnail', targetModule: './Et2Select/Select/Et2SelectThumbnail', targetExport: 'Et2SelectThumbnail'},
         {legacyName: 'et2_taglist_state', targetModule: './Et2Select/Select/Et2SelectState', targetExport: 'Et2SelectState'}
     ],
+    et2_widget_hbox: [
+        {legacyName: 'et2_hbox', targetModule: './Layout/Et2Box/Et2Box', targetExport: 'Et2HBox'}
+    ],
     et2_widget_date: [
         {legacyName: 'et2_date', targetModule: './Et2Date/Et2Date', targetExport: 'Et2Date'},
         {legacyName: 'et2_date_duration', targetModule: './Et2Date/Et2DateDuration', targetExport: 'Et2DateDuration'},

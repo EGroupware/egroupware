@@ -36,9 +36,9 @@ treated the same as a 1a case, **provided none of its aliases are an `old-*` cut
 — those are deliberately excluded from the rewrite (an explicit "give me the old behaviour" escape
 hatch) and some are genuinely still used (`old-box` in 6 templates, `old-int` in smallpart), which
 is why `box`/`number` stay real legacy files despite their base names being auto-rewritten
-everywhere else. `old-hbox`, unlike `old-box`/`old-int`, has zero usage anywhere and `et2_hbox` has
-no auto-repeat-style special case — with `legacy="true"` gone repo-wide, `hbox` may now be fully
-unreachable and a candidate for the same 1a-generated treatment; not yet re-verified/acted on.
+everywhere else. `old-hbox`, unlike `old-box`/`old-int`, had zero usage anywhere and `et2_hbox` had
+no auto-repeat-style special case — with `legacy="true"` gone repo-wide, `hbox` became fully
+unreachable and was moved to the 1a-generated treatment (2026-09-03, see table above).
 **Also note:** a plain `grep -r` in this checkout silently skips every
 `.gitignore`d app directory (`smallpart/`, `kanban/`, `tracker/`, `stylite/`, `rocketchat/`,
 `records/`, `projectmanager/`, and more) even though they're present on disk — any "0 usage"
@@ -57,7 +57,7 @@ files (created by this file's own `--in-place` CLI conversion mode, never live-s
 | `barcode` | `et2_widget_barcode.ts` | No | 2-not-migrated | Full legacy impl, no `et2-barcode` tag. |
 | `countdown` | `et2_widget_countdown.ts` | No | 2-not-migrated | Full legacy impl, no `et2-countdown` tag. |
 | `entry`, `contact-value`, `contact-account`, `contact-template`, `infolog-value`, `tracker-value`, `records-value` | `et2_widget_entry.ts` | No | 2-not-migrated | Full legacy impl; none of these types have webcomponent equivalents. |
-| `grid` | `et2_widget_grid.ts` | No | 2-not-migrated | Full legacy layout-grid impl (~1264 lines); `et2-datagrid` is unrelated (nextmatch row rendering, not the `<grid>` layout widget). Still imported by `et2_extension_nextmatch.ts` and `et2_widget_hbox.ts`. |
+| `grid` | `et2_widget_grid.ts` | No | 2-not-migrated | Full legacy layout-grid impl (~1264 lines); `et2-datagrid` is unrelated (nextmatch row rendering, not the `<grid>` layout widget). Still imported by `et2_extension_nextmatch.ts`. |
 | `historylog` | `et2_widget_historylog.ts` | No | 2-not-migrated | Real impl (744 lines), no `et2-historylog` tag. |
 | `hrule` | `et2_widget_hrule.ts` | No | 2-not-migrated | Small real impl, no `et2-hrule` tag. |
 | `html` | `et2_widget_html.ts` | No | 2-not-migrated | Real impl, no plain `et2-html` tag. |
@@ -78,7 +78,7 @@ files (created by this file's own `--in-place` CLI conversion mode, never live-s
 | `vfs-size` | `et2_widget_vfs.ts` | Yes (`et2-vfs-size`) | 1b-kept-dependency | `et2_vfsSize extends et2_description`, real impl. Imported by legacy `et2_widget_file.ts`. |
 | `vbox`, `box`, `old-box` | `et2_widget_box.ts` | Yes (`et2-box`, `et2-vbox`) | 1c-orphaned | `et2_box` real impl; `et2-box`/`et2-vbox` (`Layout/Et2Box/Et2Box.ts`) are independent - **but not a full replacement**, see "`old-box` auto-repeat" below. `box`/`vbox` are preprocessor-rewritten almost everywhere, but `old-box` (the explicit legacy escape hatch, never rewritten) is genuinely used in 6 live templates incl. `home/templates/default/index.xet` — file must stay. |
 | `details` | `et2_widget_box.ts` | Yes (`et2-details`) | 1c-orphaned | `et2_details extends et2_box`, real impl; `Layout/Et2Details/Et2Details.ts` is independent. Preprocessor-rewritten unconditionally (own dedicated regex) — moot anyway since the file stays for `old-box`. |
-| `hbox`, `old-hbox` | `et2_widget_hbox.ts` | Yes (`et2-hbox`) | 1c-orphaned | Real impl (`Layout/Et2Box/Et2Box.ts`'s `Et2HBox` is independent, including its align-cell behaviour - via CSS `:host([align])`/`::slotted([align])` selectors instead of JS-computed wrapper divs). `hbox` was previously blocked by `smallpart/templates/default/student.index.xet`'s `<overlay legacy="true">`, now gone (2026-09-03, see above) - **no other blocker exists**: `old-hbox` has zero usage anywhere, and unlike `old-box`, `et2_hbox` has no `getType()`-branching special case at all. Likely a genuine 1a-generated candidate now; not yet re-verified/acted on. |
+| `hbox`, `old-hbox` | `legacy-shims/et2_widget_hbox.d.ts` (generated) | Yes (`et2-hbox`) | 1a-generated | Was: real impl (`Layout/Et2Box/Et2Box.ts`'s `Et2HBox` is independent, including its align-cell behaviour - via CSS `:host([align])`/`::slotted([align])` selectors instead of JS-computed wrapper divs). `hbox` was previously blocked by `smallpart/templates/default/student.index.xet`'s `<overlay legacy="true">`; once that was gone (2026-09-03, see above) no other blocker remained: `old-hbox` had zero usage anywhere, and unlike `old-box`, `et2_hbox` has no `getType()`-branching special case at all. Deleted 2026-09-03; only real consumer (`smallpart/js/et2_widget_videooverlay.ts`) used it as a type annotation/cast only. |
 | `htmlarea_ro` | `et2_widget_html.ts` | Yes (`et2-htmlarea_ro`) | 1c-orphaned | `Et2HtmlAreaReadonly` is independent. No legacy importer of `et2_html` (for this type) besides the bulk bundle. Not in the preprocessor's rewrite list at all (only bare `htmlarea` is) — file stays regardless since `html`/`htmlarea` (other types in the same file) are still fully legacy. |
 | `iframe` | `legacy-shims/et2_widget_iframe.d.ts` (generated) | Yes (`et2-iframe`) | 1a-generated | Was: real impl (191 lines). **Fixed 2026-09-03**: was genuinely just forgotten - added to `ADD_ET2_PREFIX_LEGACY_REGEXP`, and `Et2Iframe/Et2Iframe` was missing from `etemplate2.ts`'s webcomponent bulk-import (so `customElements.define("et2-iframe", ...)` never ran). Giving it its first live traffic surfaced two real bugs, fixed along the way: `Et2Iframe.ts` called a non-existent `.attribute()` DOM method (should be `.setAttribute()`) and wrote to the deprecated `.options` getter instead of its own reactive properties, and a third one found live-testing admin (`Et2Iframe.__getIframeNode()` crashing when called before the component's first render, from `transformAttributes()` during initial widget-tree construction). `mail/js/app.ts`'s body-loading code (`loadMessageBody`/`preparePrint`/mailvelope integration, ~8 call sites) assumed `widget.getDOMNode()`/`document.querySelector()` reach a real `<iframe>` directly, which doesn't hold once the real iframe lives inside `Et2Iframe`'s shadow root - centralized into a `getBodyIframe()`/`realIframeNode()` helper. Live-verified against a real HTML newsletter body and admin. Deleted 2026-09-03 - no `old-iframe` escape hatch existed, and its only real consumers (`calendar/js/app.ts`, `smallpart/js/app.ts`) used `import type` only. |
 | `int`, `integer`, `float`, `old-int` | `et2_widget_number.ts` | Yes (`et2-number`) | 1c-orphaned | `et2_number extends et2_textbox`, real impl; `Et2Number` independent. `int`/`integer`/`float` are preprocessor-rewritten unconditionally, but `old-int` (the legacy escape hatch) is genuinely used by `smallpart/templates/default/student.index.xet` — file must stay. |
@@ -224,9 +224,9 @@ depend on them (i.e. everything marked 1b/1c/2 above) are gone:
 | State | Count (rows) |
 |---|---|
 | 1a — shim | 1 |
-| 1a — generated | 14 |
+| 1a — generated | 15 |
 | 1b — kept for a dependent | 6 |
-| 1c — orphaned legacy | 13 |
+| 1c — orphaned legacy | 12 |
 | 2 — not yet migrated | 34 |
 | n/a — infrastructure | 8 (one of which, `et2_extension_itempicker_actions.ts`, is outright dead code) |
 
@@ -275,6 +275,7 @@ importers (`etemplate2.ts` directly imports `Et2Toolbar`; `home/js/Et2Portlet*.t
 | `et2_widget_checkbox.ts` | `checkbox` | `Et2Checkbox` (`Et2Checkbox/Et2Checkbox.ts`) |
 | `et2_widget_date.ts` | `date`, `date_ro`, `date_duration`, `date_duration_ro`, `date_range` | `Et2Date/*` |
 | `et2_widget_diff.ts` | `diff` | `Et2Diff` (`Et2Diff/Et2Diff.ts`) |
+| `et2_widget_hbox.ts` | `hbox`, `old-hbox` | `Et2HBox` (`Layout/Et2Box/Et2Box.ts`) |
 | `et2_widget_htmlarea.ts` | (subclass only, no `et2_register_widget`) | `Et2HtmlArea` (`Et2HtmlArea/Et2HtmlArea.ts`) |
 | `et2_widget_iframe.ts` | `iframe` | `Et2Iframe` (`Et2Iframe/Et2Iframe.ts`) |
 | `et2_widget_image.ts` | (type re-exports only) | `Et2Image`, `Et2AppIcon`, `Et2Avatar`, `Et2LAvatar` |
