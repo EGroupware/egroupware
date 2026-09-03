@@ -9,7 +9,7 @@
  */
 
 
-import {css, html, LitElement} from "lit";
+import {css, html, LitElement, PropertyValues} from "lit";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 
 export class Et2Iframe extends Et2Widget(LitElement)
@@ -69,10 +69,34 @@ export class Et2Iframe extends Et2Widget(LitElement)
 		`;
 	}
 
+	/**
+	 * Push a changed src property into the real <iframe>
+	 *
+	 * src is a reactive property, so `src="@pdf_file"` in a template or a later
+	 * widget.src = url assignment (that is how a grid hands its content down, eg. the acdms
+	 * preview) only ever set the property. render() does not bind it to the inner <iframe>,
+	 * so the document never loaded unless set_src() was called explicitly.
+	 */
+	updated(changedProperties : PropertyValues)
+	{
+		super.updated(changedProperties);
+
+		if(changedProperties.has('src') && this.src && this.src.trim() != "" && this.src !== this.__appliedSrc)
+		{
+			this.__applySrc(this.src);
+		}
+	}
+
 	__getIframeNode() : HTMLIFrameElement
 	{
 		return this.shadowRoot?.querySelector('iframe') ?? null;
 	}
+
+	/**
+	 * The url last handed to the <iframe>, so updated() does not load again what set_src()
+	 * has just loaded
+	 */
+	private __appliedSrc : string = "";
 
 	/**
 	 * Run callback with the real <iframe> node, once it exists
@@ -111,30 +135,37 @@ export class Et2Iframe extends Et2Widget(LitElement)
 	{
 		if(_value.trim() != "")
 		{
-			this.__withIframeNode((node) =>
+			this.src = _value;
+			this.__applySrc(_value);
+		}
+	}
+
+	private __applySrc(_value : string)
+	{
+		this.__appliedSrc = _value;
+		this.__withIframeNode((node) =>
+		{
+			// a leftover srcdoc attribute overrides src and suppresses the load event
+			if(_value.trim() == 'about:blank')
 			{
-				// a leftover srcdoc attribute overrides src and suppresses the load event
-				if(_value.trim() == 'about:blank')
-				{
+				node.removeAttribute('srcdoc');
+				node.src = _value;
+			}
+			else
+			{
+				// Load the new page, but display a loader
+				let loader = document.createElement('div');
+				loader.className = 'et2_iframe loading';
+				node.before(loader);
+				window.setTimeout(function() {
 					node.removeAttribute('srcdoc');
 					node.src = _value;
-				}
-				else
-				{
-					// Load the new page, but display a loader
-					let loader = document.createElement('div');
-					loader.className = 'et2_iframe loading';
-					node.before(loader);
-					window.setTimeout(function() {
-						node.removeAttribute('srcdoc');
-						node.src = _value;
-						node.addEventListener('load',function() {
-							loader.remove();
-						});
-					},0);
-				}
-			});
-		}
+					node.addEventListener('load',function() {
+						loader.remove();
+					});
+				},0);
+			}
+		});
 	}
 
 	/**
