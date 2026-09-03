@@ -57,7 +57,6 @@ an error happend while trying to remove acl rights from the account %1!	mail	de	
 and %1 more	mail	de	und %1 weitere
 and the rule with priority %1, now got the priority %2	mail	de	Die Regel mit Priorität %1 hat jetzt die Priorität %2
 answered	mail	de	Beantwortet
-any flag	mail	de	Alle Markierungen
 any of	mail	de	mit einem
 any status	mail	de	Alle Status
 append	mail	de	hinzufügen
@@ -442,6 +441,7 @@ no access	mail	de	Kein Zugriff
 no action defined!	mail	de	Keine Aktion ausgewählt!
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	de	Keine Empfänger-Adresse (An/Kopie/Blindkopie) angegeben und kein Ordner zur Ablage der E-Mail spezifiziert.
 no adress, to send this mail to, supplied	mail	de	Keine Empfängeradresse angegeben!
+no filter	mail	de	Kein Filter
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	de	Es sind keine Zielordner oder andere Methoden (als InfoLog/Tracker ablegen) angegeben, um die Nachricht nach dem Senden zu speichern.
 no folders	mail	de	Keine Ordner
 no message body supplied	mail	de	Keinen Nachrichtentext-Teil gefunden

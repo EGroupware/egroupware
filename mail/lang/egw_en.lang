@@ -58,7 +58,6 @@ always show notifiction	mail	en	Always show notification
 an error happend while trying to remove acl rights from the account %1!	mail	en	An error happend while trying to remove ACL rights from the account %1!
 and the rule with priority %1, now got the priority %2	mail	en	And the rule with priority %1, now got the priority %2
 answered	mail	en	Answered
-any flag	mail	en	any flag
 any of	mail	en	any of
 any status	mail	en	any status
 append	mail	en	append
@@ -449,6 +448,7 @@ no access	mail	en	no access
 no action defined!	mail	en	No action defined!
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	en	No address TO/CC/BCC supplied, and no folder to save message to provided.
 no adress, to send this mail to, supplied	mail	en	no address was supplied to whom to send this email
+no filter	mail	en	No filter
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	en	No folder destination supplied, and no folder to save message or other measure to store the email (save to InfoLog/Tracker) provided, but required.
 no folders	mail	en	no folders
 no message body supplied	mail	en	No message body supplied

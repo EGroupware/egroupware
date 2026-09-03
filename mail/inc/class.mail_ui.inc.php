@@ -204,7 +204,7 @@ class mail_ui
 	private function flagFilterOptions(): array
 	{
 		$options = array(
-			array('value' => '', 'label' => 'any flag', 'icon' => 'flag'),
+			array('value' => '', 'label' => 'No filter', 'icon' => 'flag'),
 			array('value' => 'flagged', 'label' => 'flagged', 'icon' => 'unread_flagged_small'),
 		);
 		if ($this->supportsKeywords())

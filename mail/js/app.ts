@@ -2836,7 +2836,7 @@ export class MailApp extends EgwApp
 
 		const flagFilter = this.et2.getWidgetById('flagFilter');
 		if (!flagFilter) return;
-		// the option filtered for may not exist on the new server - fall back to "any flag",
+		// the option filtered for may not exist on the new server - fall back to "No filter",
 		// and let the list drop the now-stale filter with it
 		if (!_data.some(option => option.value == flagFilter.value))
 		{
