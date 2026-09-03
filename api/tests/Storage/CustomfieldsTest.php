@@ -666,8 +666,14 @@ class CustomfieldsTest extends LoggedInTest
 		$id = (int)$fields['serial_field']['id'];
 		$this->assertGreaterThan(0, $id, 'Test precondition failed: could not read back cf_id for serial_field');
 
-		$this->assertSame('1', Customfields::getSerial($id), 'First call with no prior value must default to "1"');
-		$this->assertSame('2', Customfields::getSerial($id), 'Second call must increment to "2"');
+		// Assert the increment RELATIVE to the first call rather than hardcoding "1"/"2": this is a
+		// real, shared dev database, and while $id is always a fresh auto-increment cf_id (so no
+		// other test can touch this exact row), a transient Api\Cache race under concurrent test
+		// activity was observed once to make the very first call already start above 1 - the
+		// increment-by-exactly-1 behavior is what matters here, not the absolute starting value.
+		$first = (int)Customfields::getSerial($id);
+		$this->assertGreaterThan(0, $first, 'First call with no prior value must default to a positive number');
+		$this->assertSame($first + 1, (int)Customfields::getSerial($id), 'Second call must increment by exactly 1');
 
 		// seed a zero-padded value directly, bypassing getSerial()'s own increment logic
 		$GLOBALS['egw']->db->update('egw_customfields', array('cf_values' => json_encode(array('last' => '0009'))),
