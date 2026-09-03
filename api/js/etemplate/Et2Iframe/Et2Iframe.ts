@@ -93,6 +93,19 @@ export class Et2Iframe extends Et2Widget(LitElement)
 	}
 
 	/**
+	 * The real <iframe> DOM node inside this widget's shadow root
+	 *
+	 * getDOMNode() (inherited from Et2Widget, unoverridden) returns the <et2-iframe> host
+	 * element itself - generic framework code relies on that for placement/visibility/sizing.
+	 * Consumers that need the actual iframe (its contentDocument/contentWindow, a 'load'
+	 * listener, ...) should use this instead of reaching for __getIframeNode() directly.
+	 */
+	get iframe() : HTMLIFrameElement
+	{
+		return this.__getIframeNode();
+	}
+
+	/**
 	 * The url last handed to the <iframe>, so updated() does not load again what set_src()
 	 * has just loaded
 	 */
