@@ -918,6 +918,18 @@ wraps the callback and invokes it via `_callback.call(this, ...)` with its own `
 outer method's `this` instead, a real behavior change. Added a comment explaining why, matching the
 project's established convention for documented exceptions.
 
+#### Unrelated pre-existing bug found via a user report, not caused by this pass
+
+Reported by Ralf: dragging files to a new folder in Filemanager threw `Uncaught TypeError:
+(egw.preference || []) is not iterable` in `drop()`. Git history shows the offending line
+(`[...(<string[]>egw.preference('drop_history', this.appname) || [])]`) hasn't been touched since a
+2021-era refactor - confirmed via a live console check that `egw.preference('drop_history',
+'filemanager')` can come back as a plain `{"0":...,"1":...}` object rather than a real array (depends
+on how the server last JSON-encoded that particular preference), which a spread can't iterate. Fixed
+with `Object.values(egw.preference(...) || [])` - same defensive pattern already used elsewhere in this
+project for preference/select-option values that may be an object or an array. Verified live against
+the real (non-array-shaped) preference data before and after the fix.
+
 ## calendar/js/app.ts (done)
 
 The largest file in this project by line count, and by far the most `var`/jQuery usage of any file here

@@ -1475,7 +1475,9 @@ export class filemanagerAPP extends EgwApp
 		}
 
 		// Remember the target for next time
-		let previous_dsts = [...(<string[]>egw.preference('drop_history', this.appname) || [])];
+		// egw.preference() can come back as a plain {"0":...,"1":...} object rather than a real
+		// array (depends on how the server last JSON-encoded it) - Object.values() handles both.
+		let previous_dsts : string[] = Object.values(egw.preference('drop_history', this.appname) || []);
 		previous_dsts.unshift(dst);
 		previous_dsts = Array.from(new Set(previous_dsts)).slice(0, 9);
 		egw.set_preference(this.appname, 'drop_history', previous_dsts);
