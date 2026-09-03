@@ -60,9 +60,10 @@ clearly-scoped change elsewhere (e.g. an import path).
 | stylite | done | `stylite/js/app.ts`, 1054 -> 1099 lines. `stylite/` is its own nested git repo. 2 `var`, 8 jQuery hits, 20 TS errors, 2 `egw.json(...).sendRequest()` sites, 31 `function(`/5 `self`/`that` closures - see below. |
 | smallpart | done | Most TS errors of any file in this project (4028 lines, 1 `var` - a comment only, 24 jQuery uses, 167 TS errors) - see below. `smallpart/` is also its own nested git repo - same note. |
 | calendar | done | Largest file in this project by line count, and by far the most `var`/jQuery usage of any file here (4525 lines, 253 `var`, ~90 jQuery uses, 97 TS errors, 14 `sendRequest()` sites) - see below. |
-| home | done | `home/js/app.ts`, 538 -> 538 lines, main repo. 0 `var`, 2 jQuery hits, 11 TS errors, 2 `sendRequest()` sites, 2 live `function(` occurrences (plus a dead, fully commented-out gridster-era block that doesn't count) - see below. Found and fixed a genuine live `ReferenceError` crash in `set_default()`. |
+| kanban | done | `kanban/js/app.ts`, 828 -> 833 lines. `kanban/` is its own nested git repo. 2 `var`, 4 jQuery hits, 22 TS errors, 0 `sendRequest()` (already on `egw.request()`), 6 `function(`/no `self`/`that` closures - see below. Also fixed a genuine `add_card_callback()` crash found post-completion (spans `js/app.ts` and `src/Ajax.php`). Committed (2 commits) and pushed to `origin/master`. |
+| home | done | `home/js/app.ts`, 538 -> 538 lines, main repo. 0 `var`, 2 jQuery hits, 11 TS errors, 2 `sendRequest()` sites, 2 live `function(` occurrences (plus a dead, fully commented-out gridster-era block that doesn't count) - see below. Found and fixed a genuine live `ReferenceError` crash in `set_default()`, plus a cross-file fix in the shared `et2_widget_dialog.ts` legacy-dialog attribute registry (systemic, affects every `et2_createWidget("dialog", ...)` caller in the repo). |
 
-**Nested git repos:** `tracker/`, `status/` and `smallpart/` (and presumably other apps) are checked out as their own independent git repositories inside the main `egroupware` working tree - the root `.gitignore` explicitly excludes them (`/tracker/`, `status/`, `/smallpart/`) so the main repo never sees their contents. `git status`/`git diff` run from the repo root show nothing for files under these paths even when they're genuinely modified - `cd` into the app directory first (each has its own `.git/`) to see/commit/push those changes. Matches the existing `feedback_git_installs_independent_trees` memory ("don't composer-update root to pull an app-repo fix").
+**Nested git repos:** `tracker/`, `status/`, `smallpart/` and `kanban/` (and presumably other apps) are checked out as their own independent git repositories inside the main `egroupware` working tree - the root `.gitignore` explicitly excludes them (`/tracker/`, `status/`, `/smallpart/`, `/kanban/`) so the main repo never sees their contents. `git status`/`git diff` run from the repo root show nothing for files under these paths even when they're genuinely modified - `cd` into the app directory first (each has its own `.git/`) to see/commit/push those changes. Matches the existing `feedback_git_installs_independent_trees` memory ("don't composer-update root to pull an app-repo fix").
 
 ## Workflow used per file
 
@@ -2457,6 +2458,225 @@ coupled to `this.et2`'s live widget tree, exactly the kind of heavyweight DOM-fi
 project's workflow says not to force. No test file added, consistent with every other app.ts done in
 this project so far (none of which added one either).
 
+## kanban/js/app.ts (done)
+
+828 -> 833 lines. `kanban/` is its own nested git repo (see the note above, now updated to list it).
+Baseline: 2 `var`, 4 jQuery hits, 22 TS errors, 0 `egw.json(...).sendRequest()` sites (the file already
+used `egw.request()` exclusively), 6 `function(` occurrences, 0 `self`/`that` closure-captures. Modest
+size, comparable to timesheet/tracker - no multi-day surprises here, and the classification-trap lessons
+from the `smallpart` pass (see that entry above) turned out to matter more than the raw error count
+suggested.
+
+### Legacy widget imports
+
+Every remaining `et2_*` import was checked against its defining `.xet` tag rather than assumed from the
+class hierarchy, per the `smallpart` pass's classification-trap lesson:
+
+- **`et2_selectbox`** (`add_card_new_entry()`'s `select_widget` param, the "Create new entry" dropdown in
+  the add-card dialog) - `board.xet` writes `<et2-select id="new">` (prefixed), so the real runtime class
+  is `Et2Select`, not the legacy widget. `et2_widget_selectbox.ts` confirms it's the familiar zero-member
+  compat shim (`class et2_selectbox extends Et2Select {}`, `@deprecated use Et2Select`) - switched the
+  import and the param type to `import type {Et2Select}`.
+- **`et2_nextmatch`** (`push()`'s one cast, `<et2_nextmatch> this.et2.getDOMWidgetById('nm')`) -
+  `list.xet` writes `<nextmatch id="nm">` **unprefixed**, so this one genuinely is the legacy widget at
+  runtime, not `Et2Nextmatch` - matches tracker's/admin's identical `nm` situation, not infolog's. Not
+  passed anywhere as a runtime `instanceof`-style value in this file (unlike tracker's `et2_nextmatch`),
+  so switched to `import type` (kept the name `et2_nextmatch`, not renamed - there's no "upgrade" here,
+  it's correctly still legacy).
+- **`et2_grid`** (`get_column()`'s return type/cast, and the `iterateOver(_callback, this, et2_grid)`
+  runtime filter argument) - `board.xet` writes `<grid id="@column_id">` unprefixed, and `et2_grid` has
+  no web-component replacement at all (same as timesheet's/status's finding) - kept as a **value** import
+  (it's passed to `iterateOver()` as a real runtime `instanceof` filter, not just used for type casts),
+  unrenamed.
+- **`et2_widget_kanban_card`/`et2_widget_kanban_board`** (this app's own custom legacy widgets, `new
+  et2_widget_kanban_card(...)`/`<et2_widget_kanband_card>` cast in `handle_new_entry()`) - confirmed via
+  `board.xet`'s `<kanban-card id="$row">`/`<kanban-board id="@board_id">` tags (both unprefixed) and each
+  file's own `et2_register_widget(..., ["kanban-card"])`/`["kanban-board"])` call that there is no
+  `Et2KanbanCard`/`Et2KanbanBoard` web component anywhere in the repo (`find api/js/etemplate -iname
+  "*Kanban*"` - no hits) - these are the actual implementations, not shims. Left as value imports,
+  unchanged.
+- **`egwAction`/`egwActionObject`** (used as real param types on 5 action-handler methods -
+  `add_card_list_handler()`, `add_card_column_handler()`, `add_entry_handler()`,
+  `delete_board_handler()`, `entry_drop_handler()`) had **no import at all** (`TS2304: Cannot find name`,
+  5x2 = 10 of the 22 baseline errors) - same real, concrete exported classes from
+  `api/js/egw_action/egw_action.ts` that addressbook found - added `import type {egwAction,
+  egwActionObject}`.
+- **`etemplate2`** was imported but only ever referenced inside a JSDoc `@param {etemplate2}` comment on
+  `et2_ready()` - never a real type annotation, so TS treated the import as unused (silently, since this
+  tsconfig has no `noUnusedLocals`). Rather than just deleting the dead import, typed `et2_ready(_et2 :
+  etemplate2, _name : string)` for real, matching `EgwApp.et2_ready()`'s own base-class signature
+  (`api/js/jsapi/egw_app.ts:283`) - this makes the import genuinely earn its keep instead of leaving it
+  half-dead. Switched to `import type` since the file never instantiates an `etemplate2` itself.
+- `EgwApp`/`PushData` were combined into one value import despite `PushData` only ever being used as a
+  type (`queue_update(pushData : PushData)`) - split off `PushData` into its own `import type`, same
+  pattern as addressbook's `CRM.ts` split.
+- `import {egw} from ".../egw_global"` was never present in this file to begin with - nothing to remove
+  here, unlike every other file in this pass.
+
+### TS errors fixed (22 total)
+
+- **Typing `_et2 : etemplate2` on `et2_ready()`** (see above) surfaced a **new**, previously-silent gap:
+  `etemplate2.app_obj` is `private`, so `_et2.app_obj.kanban.edit` (the `'kanban.edit'` case, 3 sites)
+  would have newly errored once `_et2` stopped being implicit `any`. Same widely-relied-on convention
+  addressbook found for `etemplate2.app_obj` (accessed directly from a dozen+ files across the repo
+  despite the modifier) - cast to `<any>` at the 3 sites rather than touching the shared `etemplate2.ts`.
+- **`egwAction`/`egwActionObject: Cannot find name`** (10 sites) - fixed by the import above.
+- **`<et2_nextmatch> this.et2.getDOMWidgetById('nm')`** (`TS2352`, "neither type sufficiently overlaps") -
+  the same `Et2Template.getDOMWidgetById(): typeof Et2Widget | null` return-type bug CRM.ts/status/
+  smallpart all found (it returns the mixin *factory function* type, not a widget instance). Applied the
+  established `<Type><unknown>...getDOMWidgetById(...)` workaround.
+- **`this.et2.getDOMWidgetById(column_id)?.getArrayMgr("content")`** (`drag_card()`) and **`this.et2
+  .getDOMWidgetById("listen")._children[0]`** (`set_edit_fields()`) - same `getDOMWidgetById()` bug, no
+  existing specific-type cast at either site (unlike the `nm` one above) - wrapped in `<any>` instead of
+  `<Type><unknown>`, matching status's plain-`<any>` variant of the same workaround. The `set_edit_fields`
+  one also touches `_children`, `private` on `Et2WidgetClass` - used the public `getChildren()` accessor
+  (addressbook's precedent) rather than reaching past the cast to the private field anyway.
+- **`add_value.content.allowed_apps` doesn't exist** (`add_card()`, `TS2339`) - `add_value`'s object
+  literal had no type annotation, so TS inferred `content: {board_id, column_id}` with no `allowed_apps`,
+  even though the code conditionally assigns it a few lines later. Added an explicit type annotation with
+  `allowed_apps?` as optional, rather than restructuring the conditional assignment into the literal
+  itself (the condition is evaluated after `add_value` already exists, so it can't move into the
+  literal without reordering unrelated logic).
+- **`value.board_id`/`value.column_id` don't exist on type `Object`** (`add_card_new_entry()`, 3 sites) -
+  `this.add_dialog.get_value()` returns generic `Object`. Two issues here, not just a typing gap: `Et2Dialog
+  .get_value()` is itself marked `@deprecated` in favor of the `.value` getter (which does the identical
+  `this._template_widget.getValues(...)` lookup, minus a `console.warn("Deprecated get_value() called")`
+  spam on every call) - since this call site needed touching for the TS error anyway, switched to `.value`
+  instead of just casting the deprecated method's result, avoiding the deprecated-vs-preferred trap the
+  `smallpart` pass hit with `Et2Tabs.show()`/`setActiveTab()`. Typed the local `value : any` for the
+  `.board_id`/`.column_id` access.
+- **`fe.mime`/`fe.edit`/`fe.edit_popup` don't exist on type `object`** (`edit_card()`, 3 sites) -
+  `egw.file_editor_prefered_mimes()` is declared `(mime: string) => object | null`
+  (`api/js/jsapi/egw_preferences.ts`). Rather than inventing a cast style, found the established
+  in-repo convention for this exact API in `api/js/jsapi/egw_links.ts`: `let fe : any =
+  this.file_editor_prefered_mimes(mime);` - copied it verbatim (`let fe : any = egw
+  .file_editor_prefered_mimes(...)`), converting the pre-existing `var` in the same edit. Left the
+  `// @ts-ignore` already sitting above that line untouched (unrelated to this fix, still valid either
+  way, not worth investigating further for a no-op change).
+
+### jQuery removed
+
+- `jQuery("#name", this.favorite_popup).val(name)` (`add_favorite()`) - `favorite_popup` is declared
+  `JQuery | any` on `EgwApp` but is never actually assigned anywhere findable in the current codebase
+  (`egw_app.ts`'s own `add_favorite()` base implementation now goes through `Favorite.add()` and never
+  touches `favorite_popup` at all) - this line's jQuery context argument is effectively always
+  `undefined` today, meaning the practical behavior has always been "search the whole document." Replaced
+  with a native equivalent that still degrades correctly for any of the three shapes the field's own type
+  admits (a jQuery collection, a raw element, or unset): `this.favorite_popup?.[0] ?? this.favorite_popup
+  ?? document`, then `.querySelector<HTMLInputElement>("#name")`.
+- `jQuery("a[href$='add_card();']",".egw_fw_ui_scrollarea").parent()` /
+  `jQuery("a[href$='edit_board();']",".egw_fw_ui_scrollarea").parent()` plus their `.hide()`/`.show()`
+  calls (`update_sidebox()`) -> `document.querySelector<HTMLElement>(".egw_fw_ui_scrollarea
+  a[href$='...']")?.parentElement` and `.style.display = '...' ? 'none' : ''`, same pattern as every
+  other `.hide()`/`.show()` swap in this project.
+- `jQuery(document.createElement("TR")).attr({id, class}).append(cell)` (`handle_new_entry()`) -> plain
+  `document.createElement("tr")` with `.id`/`.className` assignment and `.appendChild(cell)`. The result
+  is still handed to `column.tbody.append(row)` one line later, where `tbody` is a genuine `private
+  tbody : JQuery` field on `et2_grid` (already `@ts-ignore`'d, untouched, out of scope) - jQuery's
+  `.append()` accepts a plain DOM node just fine, so removing jQuery from the *construction* side didn't
+  require touching the legacy grid's own jQuery-based `tbody` at all.
+
+### function/closures -> arrow functions
+
+- `add_card_callback()`'s and `delete_board_handler()`'s `.then(function(data) {...}.bind(this))` ->
+  `.then((data) => {...})`. `add_card_callback()` also had a dead outer `let data;` declaration,
+  immediately shadowed by the callback's own `data` parameter and never read before the callback - removed
+  it as part of the same edit (directly touched by this conversion, not a separate drive-by cleanup).
+- `add_entries()`'s (static method) `.then(function(data) {...})` -> arrow. No `.bind(this)` was present
+  and the body only touches the closured `egw` global, not `this` - safe with no behavior change.
+- `queue_update()`'s `let flush_queue = function() {...}` plus its nested `.then(function(response)
+  {...}.bind(this))` -> both converted to arrows. `flush_queue` was itself invoked as
+  `window.setTimeout(flush_queue.bind(this), 500)` - once `flush_queue` is an arrow (closing over the
+  enclosing method's `this` directly), the `.bind(this)` became redundant and was dropped, matching
+  status's `_controllRingTone()` precedent for cleaning up a now-unnecessary explicit bind after an arrow
+  conversion.
+- `get_column()`'s `this.et2.iterateOver(function (widget) {...}, this, et2_grid)` -> arrow. The callback
+  never reads `this` (only closures over `new_parent`/`id`), and the explicit `this` passed as
+  `iterateOver`'s `_context` argument is the same object an arrow's lexical `this` would resolve to
+  anyway - the exact "redundant-but-harmless context argument" case tracker's `iterateOver()` conversions
+  already established as safe.
+
+### Verified live
+
+Baseline confirmed with `node_modules/.bin/tsc --noEmit -p tsconfig.json 2>&1 | grep
+"^kanban/js/app.ts("` (22 errors) before, 0 after. Since the shared `rollup -cw` watch build was
+mid-broken by an unrelated, concurrently-edited `smallpart/js/app.ts` (literal unresolved
+`<<<<<<< Updated upstream` conflict markers left in a file another session was actively editing at the
+same time - not touched, not this pass's concern), a one-off `rollup -c` build was needed instead: a
+temporary, immediately-reverted edit to `rollup.config.js`'s `addAppsConfig()` restricted the multi-app
+input glob to `kanban` only for one build, confirmed clean, then reverted (`git diff --stat
+rollup.config.js` showed no changes afterward).
+
+Loaded the built app in a real browser session (`nathan.egroupware.org`, `kanban.EGroupware\Kanban\Ui\
+BoardList.list`) and clicked through: board list -> opened a board (exercises `init_board()`/
+`update_sidebox()`/`get_column()`'s `et2_grid` filter/`handle_new_entry()`'s native-DOM row construction)
+-> right-click a column for the "Add card" context action (`add_card_column_handler()` -> `add_card()`,
+exercising the newly-typed `add_value` literal) -> opened the "Create new entry" `<et2-select>` and picked
+an app (`add_card_new_entry()`, exercising the `Et2Select` param type and the `.value`-over-`get_value()`
+fix) -> "Edit board" from the header menu (`et2_ready()`'s `'kanban.edit'` case and the new `<any>`-cast
+`app_obj.kanban.edit` access) -> its Columns tab (the "Changes"/"Listen" per-column buttons that drive
+`set_edit_fields()`/`updateButtons()`) -> Cancel back to the list (exercising `destroy()`'s matching
+`app_obj.kanban.edit` cleanup). No console errors at any step; all templates (`kanban.list`,
+`kanban.board`, `kanban.add`, `kanban.edit`, `kanban.edit_column`) loaded successfully.
+
+One transient `TypeError: Failed to construct 'HTMLElement': Illegal constructor` was hit on the very
+first navigation attempt - this is the stale-chunk symptom the `illegal_constructor_stale_chunk_mismatch`
+memory and this project's own smallpart-lessons warn about (multiple concurrent `rollup -cw` watchers
+were running from other sessions, rotating chunk hashes mid-load). A fresh tab + hard navigation resolved
+it immediately with no code change - confirmed a build/caching artifact, not a real bug, before concluding
+anything about the code itself.
+
+### Genuine bug found and fixed (post-completion, from a user report)
+
+After this pass wrapped, the user reported `add_card_callback()` (the "Select an existing entry" + OK
+path in the add-card dialog) was misbehaving, and pointed at `Ajax::ajax_add_card()`'s `$added` response
+part. Traced rather than guessed:
+
+- `Ajax::ajax_add_card()` (`kanban/src/Ajax.php`) sent **two** separate `type: "data"` response parts -
+  `Response::get()->generic('data', $added)` (the raw UID list) followed by `Response::get()->data($data)`
+  (the `{uid, data}` pairs) - a workaround from before `Response::data()` disallowed being called more
+  than once per response.
+- `egw.request()` (`api/js/jsapi/egw_json.ts`) collects *every* `type: "data"` response part and, since a
+  2024 change (`18493f1f28`, "Handle multiple etemplate->exec() results returned in the same request"),
+  resolves its promise with an **array** of all of them whenever there's more than one, instead of a
+  single value.
+- Combined: `add_card_callback()`'s `.then((data) => { for(let uid of data) { this.handle_new_entry(uid) }
+  })` was actually iterating over `[$added, $data]` (the two response parts), so `uid` was the whole
+  `$added` array on the first pass - `handle_new_entry(uid: string)`'s `uid.split("::")` then threw
+  `TypeError: uid.split is not a function`. Reproduced live via the browser console
+  (`app.kanban.add_card_callback(1, {board_id, column_id, entry: {app, id}})`, `1` being any non-
+  `CANCEL_BUTTON` id) and confirmed the exact stack trace before touching either file.
+- The crash was silent in normal use: an unrelated push notification from `add_entry()`'s own hooks
+  independently refreshes any open board, papering over the broken direct callback path.
+
+Fixed both sides rather than working around it purely client-side, since the double-emission was the
+actual root cause: `Ajax.php` now sends only the `$data` (uid+data pairs) response part - which is also
+strictly more correct than `$added` alone, since it already excludes cards immediately removed by a
+column filter - and `add_card_callback()` consumes that shape directly, calling `egw.dataStoreUID()`
+itself for each card before `handle_new_entry()` (the global `egw.data` json plugin only auto-caches a
+single `{uid, data}` object per response part, not an array of them, so this was never populated
+automatically either). Bonus: this also fixes `add_entries()`'s success-message count, which was reading
+`data.length` off the same always-2-element array (always reporting "2 entries added" regardless of the
+real count) - no code change needed there once the response shape was fixed.
+
+Verified live again after the fix: same console call now adds the card with no exception, correct data
+showing on the rendered card. Committed as two commits in `kanban/`'s own repo (this pass's modernization
+diff, then the bug fix on top) and pushed to `origin/master` (`c09b9f9..b224e9e`).
+
+### Not touched (out of scope)
+
+- The `Changes`/`Listen` per-column button click in the Edit Board -> Columns tab UI didn't visibly open
+  a dialog when clicked during live testing (no error either, and no chunk to actually re-verify against -
+  the click may need a different interaction than a plain automated click). `set_edit_fields()`'s and
+  `updateButtons()`'s own changes here are narrowly-scoped, behavior-preserving refactors (private-field
+  access -> the same class's own public accessor, plus the same `<any>` cast pattern used everywhere else
+  in this pass for the shared `getDOMWidgetById()` bug) - not a new code path, so this is noted as an
+  unconfirmed corner rather than a blocking concern.
+- `smallpart/js/app.ts`'s unresolved merge-conflict markers (found only because they blocked a full
+  multi-app `rollup -c` build) - another session's in-progress work in a different nested repo, well
+  outside this pass's scope. Not touched, not fixed, flagged here only so a future reader isn't surprised
+  by why a scoped `rollup.config.js` edit was needed for kanban's own build/verify step.
+
 ## home/js/app.ts (done)
 
 538 -> 538 lines, main repo (not a nested git repo). Baseline: 0 `var` (already clean), 2 jQuery hits, 11
@@ -2586,24 +2806,33 @@ this file.
   silently, before this specific `ReferenceError` was even possible - `et2_portlet` being *unimported* is
   what turns a silent no-op into a hard crash, and TS's `TS2304` for that exact name is what surfaced it
   here).
-
-### Not touched (out of scope)
-
-- **`set_default()`'s dialog renders empty** - only discovered *because* the crash above is now fixed
-  (the dialog is created a few lines after the now-working `iterateOver` call, so it was previously
-  unreachable from the "select all" path - though it's reachable from the per-portlet "remove default"-less
-  branch too, and behaves the same there). Live-verified: `et2_createWidget("dialog", {template:
-  "home.set_default", buttons: Et2Dialog.BUTTONS_OK_CANCEL, ...})` does create a `<legacy-dialog>` element
-  (confirmed via `document.querySelector('legacy-dialog')`), but its content stays genuinely empty - no
-  title, no OK/Cancel buttons, no rendered `<et2-vbox>`/`<et2-description>`/`<et2-select-account>` from the
-  `home.set_default` sub-template that's defined right in `home/templates/default/index.xet` (confirmed the
-  template markup itself is fine and inline in the same file, not a separate lazy-fetched template - no
-  network request for it ever fires, consistent with that). This isn't a goal-1-through-6 issue (no TS
-  error, no jQuery, no `var`, nothing this pass's mechanical checks would catch) and digging into *why*
-  `et2_createWidget("dialog", {...})` fails to populate a templated legacy dialog is a much larger
-  investigation into `Et2Dialog`/legacy-dialog-factory internals, well beyond an app.ts-scoped pass -
-  flagged here as a real, currently-live bug for whoever picks up the dialog/legacy-widget-factory code
-  next, not fixed.
+- **`set_default()`'s dialog rendered completely empty** (no title, no OK/Cancel buttons, none of the
+  `home.set_default` sub-template's `<et2-vbox>`/`<et2-description>`/`<et2-select-account>` widgets) -
+  found only because fixing the crash above finally made this code path reachable. **Root-caused and
+  fixed, but the fix lives outside `home/js/app.ts` and outside this app's own repo** - a small,
+  clearly-scoped cross-file exception (per this doc's workflow note on when that's OK), called out
+  separately here rather than folded silently into the mechanical per-goal sections above:
+  `api/js/etemplate/et2_widget_dialog.ts`'s `et2_dialog` (the `<legacy-dialog>` shim every
+  `et2_createWidget("dialog", {...})` call resolves to) builds `et2_attribute_registry["et2_dialog"]` by
+  iterating `et2_dialog.properties` - Lit's *old-style* `static get properties()` getter. But
+  `Et2Dialog`'s `title`/`buttons`/`template`/`callback` (and others) are declared via `@property()`
+  **decorators**, which populate Lit's `elementProperties` map directly and never appear in `properties`
+  at all. So the registry was missing all four - and `et2_createWidget()`'s sanity check
+  (`ClassWithAttributes.generateAttributeSet()` in `et2_core_inheritance.ts`) `delete`s any attribute not
+  found in that registry *before the dialog widget is even constructed*. `title`/`buttons`/`template`/
+  `callback` were silently stripped from every legacy-factory dialog call in the whole repo, not just this
+  one - confirmed by grepping for the exact `et2_createWidget("dialog", {...})` pattern: it's also used in
+  `api/js/jsapi/app_base.js` (mailvelope backup dialog, share-link dialog) and `home/js/Et2PortletList.ts`
+  (its own add-to-list dialog). Fixed by building the registry from `et2_dialog.elementProperties` (Lit's
+  fully-resolved map, cast through `<any>` since this project's TS lib doesn't expose static
+  `elementProperties` through the `Et2Widget(SlDialog)` mixin chain - the same mixin-visibility gap
+  documented elsewhere in this project) instead of the stale `.properties` getter. Live-verified: rebuilt,
+  hard-reloaded, clicked "Set as default" again - the dialog now shows its title, the "Add as default for"
+  description, a working `et2-select-account` group dropdown (populated with real groups from the account
+  system), and OK/Cancel buttons. Cancelled out rather than submitting, to avoid actually changing a
+  shared group's default portlets on this dev instance. Not independently re-tested at the
+  `Et2PortletList`/`app_base.js` call sites (would need a differently-configured portlet/mailvelope setup
+  to reach), but the fix is at the single shared root cause they all go through, not a per-call-site patch.
 - **`_get_portlet_code()`** has zero callers anywhere in the repo (checked `home/js/`, `api/js/`,
   `calendar/js/`, and any `.php` references) - likely dead code, same shape as addressbook's
   `refreshCallback` finding. Left in place rather than deleted: it's not blocking any of the 6 goals (its

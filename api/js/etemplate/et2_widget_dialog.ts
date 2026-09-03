@@ -148,12 +148,15 @@ export class et2_dialog extends Et2Dialog
 et2_register_widget(et2_dialog, ["dialog", "legacy_dialog"]);
 const type_map = {String: "string", Function: "js"};
 let attrs = {};
-for(const [key, value] of Object.entries(et2_dialog.properties))
+// Use elementProperties (Lit's fully-resolved property map), not the static properties
+// getter - Et2Dialog declares title/buttons/template/callback etc. via @property()
+// decorators, which never appear in properties, only in elementProperties.  Using
+// properties here silently dropped those attributes before the widget was even
+// constructed (ClassWithAttributes.generateAttributeSet() deletes anything not listed).
+(<any>et2_dialog).elementProperties.forEach((attr, key) =>
 {
-	let attr = et2_dialog.properties[key];
-
 	attrs[key] = {type: type_map[attr.type?.name || attr.name] || "any"};
-}
+});
 attrs["value"] = {type: "any"};
 et2_attribute_registry[et2_dialog.name] = attrs
 
