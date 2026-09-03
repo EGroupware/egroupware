@@ -2447,3 +2447,91 @@ identity → old signature (`digital ROCK`) fully gone, new identity's signature
 exactly one marker in the DOM. Typed a second time with real text above the signature, switched
 identity again: typed text preserved, signature swapped cleanly again, still exactly one marker, no
 duplication either time.
+
+## Step 8 (`Storage/Merge.php` mail-merge adoption): the backlog note was stale - `Mail\Jmap\Transport` (added 2026-09-01) already covers it; found + fixed two real bugs getting there (2026-09-03)
+
+Ralf: "Step 8, Storage/Merge.php adoption" - then, once shown the plan, pointed at `mail/src/
+ApiHandler.php`'s `sendViaJmap()` as prior art ("sounds exactly like what we already do for the REST
+API... maybe worse having a look there too").
+
+**The backlog note ("switch mail-merge send to the same EmailSubmission/blob primitive built in
+steps 0-3") predates `Api\Mail\Jmap\Transport`** (`8e11bfb4ef`, 2026-09-01) - a `Horde_Mail_Transport`
+plugin `Mail\Account::smtpTransport()` returns transparently for ANY account with `acc_smtp_ssl`
+configured for JMAP submission, built explicitly "to work for ANY `Api\Mailer` caller (notifications,
+mail-merge, cron jobs, ...), not just interactive compose" (its own docblock literally names
+mail-merge as an intended beneficiary). `Api\Mail::importMessageToMergeAndSend()` already builds a
+plain `Api\Mailer` and calls `$mailObject->send()` with no explicit transport - meaning it ALREADY
+transparently sends via real JMAP `EmailSubmission/set` for any JMAP-submission-configured account,
+with zero wiring needed. No new primitive to build - Step 8 is a stale entry, not a real backlog item
+anymore. (`ApiHandler::sendViaJmap()` itself was independently consolidated onto this exact same
+`Api\Mailer` + `Jmap\Transport` combination on 2026-09-02, per its own docblock - same conclusion,
+reached earlier, for the REST API's send path specifically.)
+
+**Bug 1 (real, live): duplicate Sent-folder copy for JMAP-transport accounts.**
+`importMessageToMergeAndSend()`'s send branch unconditionally follows `$mailObject->send()` with its
+own classic `$this->appendMessage($_folder, $mailObject->getRaw(), '')` - necessary for classic SMTP
+(which has no concept of a Sent folder at all), but `Jmap\Transport::send()` already creates the
+message in Drafts, submits it, and moves that SAME copy to Sent internally (RFC 8621 §7
+`onSuccessUpdateEmail`) as part of `send()` itself. Unmodified, every merge-sent email to a
+JMAP-submission account would land in Sent TWICE. **Fix**: skip the manual append when
+`Mail\Account::read($this->profileID)->smtpTransport() instanceof Mail\Jmap\Transport` (that account
+object/transport are both already cached from `send()`'s own internal resolution, so this second
+call is free - no new connection). Known gap left in a comment: `$importID` stays empty for a
+JMAP-transport send (no UID handed back), so a merge send's own `to_infolog`/`to_app` row-linking
+won't resolve a rowid in that case - not a regression (never worked/tested before `Jmap\Transport`
+existed either), just not yet wired up.
+
+**Bug 2 (real, pre-existing, unrelated to the JMAP work): the per-recipient `catch(Exception $e)`
+never actually caught a real send failure.** `api/src/Mail.php` has no `use Exception` import, so a
+bare `catch(Exception $e)` there resolves to `EGroupware\Api\Exception` (this namespace's own base
+class) - but `Api\Mailer::send()`'s own failures (both classic SMTP's `Horde_Mail_Exception` AND
+`Jmap\Transport`'s, same class, both global-namespace, extending `Horde_Exception` extends `\Exception`
+directly - a sibling branch, not a shared ancestor) are never instances of that. A single recipient's
+send failure propagated out of this ENTIRE per-recipient loop uncaught by its own inner catch -
+`mail_compose.inc.php`'s outer catch (that file has no namespace, so ITS bare `catch (Exception $e)`
+correctly resolves to global `\Exception` and does catch it) stopped it from being a raw fatal, but
+every REMAINING recipient in the same merge run was silently skipped, and `$results` itself never got
+assigned - losing this function's own per-recipient `$processStats` success/failure breakdown
+entirely for whatever had already been processed. Pre-existing bug (this namespace/exception mismatch
+predates any JMAP work), only newly likely to actually trigger now that a second transport
+(`Jmap\Transport`) can throw through the exact same spot. **Fix**: `catch(\Throwable $e)` instead -
+still catches everything the old code did (`EGroupware\Api\Exception` and its subclasses implement
+`\Throwable` too), now also catches the Horde-hierarchy exceptions it was missing.
+
+**Live-verified** (real Stalwart account, acc_id=1 - confirmed `smtpTransport()` does return
+`Jmap\Transport` for it via a direct check): a genuine merge-send attempt against this account threw
+partway through `Jmap\Transport::send()` (see "separate finding" below) - **and Bug 2's fix caught it
+correctly**, returning a clean, structured `$results['failed']` entry with the real underlying JMAP
+error message intact, instead of aborting/losing state. This is direct proof the exception-type fix
+works end-to-end, from an actual thrown `\Horde_Mail_Exception`, not just static reasoning. Could not
+complete a full successful send to verify Bug 1's fix by inspecting an actual non-duplicated Sent
+copy, blocked by that same separate issue.
+
+**Follow-up finding, ROOT-CAUSED + FIXED same session**: that merge-send attempt failed with
+`EmailSubmission/set failed: {"type":"invalidProperties","description":"Identity not found.",
+"properties":["identityId"]}` from Stalwart itself. Ralf's own diagnosis, straight from memory of the
+design decision: "we're not syncing identities to Stalwart, we return them only [via] the shim for
+our client-side to consume, can that be the reason?" - confirmed exactly right.
+`Api\Mail\Jmap\Identity` deliberately overrides `get()` for BOTH backends to always return our own
+locally-synthesized identities (its own docblock: "we don't sync any identity/signature data to
+Stalwart today") - their `id` is EGroupware's own `ident_id`, never a real backend identityId.
+`Jmap\Transport::sendJmap()`'s own comment already half-recognized this ("EGroupware's own ident_id
+is NOT a valid JMAP identityId... the From address is the only reliable link to the backend's real
+Identity") but the actual fix was incomplete: it searched that SAME synthesized list by From-address
+match, which correctly picks the right EMAIL but still hands `submit()` the synthesized (wrong) `id`
+- `EmailSubmission/set` genuinely reaches Stalwart (`EmailSubmission::set()` calls `$this->jmap->
+call(...)` directly, no override) and validates that id against ITS OWN real Identity registry,
+which naturally doesn't recognize EGroupware's internal ident_id.
+
+**Fix**: `resolveMailboxesAndIdentities()` now fetches the backend's REAL identities via
+`$jmap->call('Identity/get', ['accountId' => $jmap->accountId])` directly - the same raw, no-override
+mechanism `EmailSubmission::set()` itself already uses - instead of `$jmap->identity->get()` (which
+resolves to `Identity`'s local-synthesis override). The existing From-address-match-else-first-entry
+logic in `sendJmap()` is unchanged, just now operating on real data end to end.
+
+**Live-verified**: re-ran the exact same merge-send (acc_id=1, real Stalwart, contact's own address)
+- `EmailSubmission/set` now succeeds (`results.success` populated, no more "Identity not found").
+This also finally let Bug 1's fix (duplicate Sent-copy) be checked against a genuine successful send:
+the Sent folder showed exactly one copy of the test message (confirmed visually - it sorts to the
+very top by date, with no adjacent duplicate at the same timestamp), not two. Test message deleted
+afterward.

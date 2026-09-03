@@ -197,10 +197,11 @@ class Transport extends \Horde_Mail_Transport
 		}
 
 		[$drafts_id, $sent_id, $identities] = $this->resolveMailboxesAndIdentities($jmap);
-		// prefer the identity matching the From address, else fall back to the first one -
-		// EGroupware's own ident_id is NOT a valid JMAP identityId (Identity/get is always
-		// synthesized locally, never synced to the real backend, see Mail\Jmap\Identity's
-		// docblock) - the From address is the only reliable link to the backend's real Identity
+		// prefer the identity matching the From address, else fall back to the first one - both
+		// $identities entries and this comparison are against the backend's own REAL Identity/get
+		// (resolveMailboxesAndIdentities() fetches that directly, bypassing our own Identity type's
+		// local-synthesis override - see that method's own docblock for why using OUR synthesized
+		// id here would fail submit() below outright)
 		$identity = current(array_filter($identities, static fn($i) => strcasecmp($i['email'], $fromAddr) === 0)) ?: $identities[0];
 
 		$create = array_filter([
@@ -262,7 +263,7 @@ class Transport extends \Horde_Mail_Transport
 	/**
 	 * @param Http $jmap
 	 * @return array{0: string, 1: string, 2: array[]} Drafts mailbox id, Sent mailbox id, list of
-	 *  RFC 8621 §6.1 Identity objects (at least one)
+	 *  the BACKEND's OWN real RFC 8621 §6.1 Identity objects (at least one)
 	 * @throws \Horde_Mail_Exception no Drafts/Sent mailbox by role, or no Identity at all
 	 */
 	private function resolveMailboxesAndIdentities(Http $jmap) : array
@@ -277,7 +278,19 @@ class Transport extends \Horde_Mail_Transport
 		{
 			throw new \Horde_Mail_Exception('Could not find Drafts/Sent mailbox by role for account #'.$this->account->acc_id);
 		}
-		if (!($identities = $jmap->identity->get()['list'] ?? []))
+		// deliberately NOT $jmap->identity->get() - Mail\Jmap\Identity overrides that (for BOTH
+		// backends) to always return our own locally-synthesized identities/signatures for the
+		// compose UI, never a real passthrough (see that class's own docblock: "we don't sync any
+		// identity/signature data to Stalwart today") - their `id` is EGroupware's own `ident_id`,
+		// never a real backend identityId. submit() below DOES reach the real backend and validates
+		// identityId against ITS OWN real Identity registry - found live 2026-09-03 (ralf: "we're
+		// not syncing identities to Stalwart, we return them only [via our] shim for our client-side
+		// to consume, can that be the reason?" - investigating a merge-send failure): passing our
+		// synthesized id straight through fails outright with EmailSubmission/set's own
+		// "Identity not found" (RFC 8621 §7.5's ordinary invalidProperties, not a bug in the
+		// protocol handling - just the wrong id). `$jmap->call()` is the same raw, no-override
+		// mechanism EmailSubmission::set() itself already uses to genuinely reach the backend.
+		if (!($identities = $jmap->call('Identity/get', ['accountId' => $jmap->accountId])['list'] ?? []))
 		{
 			throw new \Horde_Mail_Exception('No JMAP identity found for account #'.$this->account->acc_id);
 		}

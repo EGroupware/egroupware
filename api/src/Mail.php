@@ -7906,13 +7906,39 @@ class Mail
 							try {
 								$mailObject->send();
 								$message_id = $mailObject->getHeader('Message-ID');
-								if($_folder)
+								// Mail\Jmap\Transport (RFC 8621 EmailSubmission, selected transparently by
+								// Mailer::send() -> Mail\Account::smtpTransport() whenever this account's
+								// acc_smtp_ssl is configured for JMAP submission - see that method's own
+								// docblock) already creates the message in Drafts, submits it, and moves
+								// that SAME copy to Sent as part of send() itself - appending another raw
+								// copy here would duplicate it. Classic SMTP has no such concept, so still
+								// needs this explicit append. Known gap: $importID stays empty for a
+								// JMAP-transport send (no UID to report back), so a merge send's own
+								// to_infolog/to_app row-linking (ajax_merge()'s caller) won't resolve a
+								// rowid in that case - not a regression (this combination was never
+								// exercised/working before Mail\Jmap\Transport existed either), just not
+								// yet wired up.
+								if ($_folder && !(Mail\Account::read($this->profileID)->smtpTransport() instanceof Mail\Jmap\Transport))
 								{
 									$id = $this->appendMessage($_folder, $mailObject->getRaw(), '');
 									$importID = $id->current();
 								}
 							}
-							catch(Exception $e) {
+							catch(\Throwable $e) {
+								// was catch(Exception $e) - EGroupware\Api\Exception in this namespace,
+								// which never actually caught a real send failure: Mailer::send()'s own
+								// internal errors (both classic Horde_Mail_Exception/SMTP and the newer
+								// Mail\Jmap\Transport's, both global-namespace \Horde_Mail_Exception) are
+								// NOT instances of THIS namespace's Exception class. Found investigating
+								// Step 8 (doc/ai/projects/mail-compose-jmap-migration.md) - pre-existing,
+								// not introduced by the JMAP work, just newly relevant now that a second
+								// transport can throw through here. The practical effect: any single
+								// recipient's send failure propagated all the way out of this whole
+								// per-recipient loop uncaught (well, caught by mail_compose.inc.php's own
+								// OUTER catch, since that file has no namespace - but only after aborting
+								// every REMAINING recipient in the same merge run, and losing this
+								// function's own $processStats success/failure breakdown for whichever
+								// recipients it had already handled).
 								$sendOK = false;
 								$errorInfo = $e->getMessage();
 								//error_log(__METHOD__.' ('.__LINE__.') '.array2string($errorInfo));
