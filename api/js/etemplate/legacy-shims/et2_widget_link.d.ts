@@ -1,10 +1,10 @@
-import {Et2LinkTo} from "./Et2Link/Et2LinkTo";
-import {Et2LinkAppSelect} from "./Et2Link/Et2LinkAppSelect";
-import {Et2LinkEntry, Et2LinkEntryReadonly} from "./Et2Link/Et2LinkEntry";
-import {Et2Link} from "./Et2Link/Et2Link";
-import {Et2LinkString} from "./Et2Link/Et2LinkString";
-import {Et2LinkList} from "./Et2Link/Et2LinkList";
-import {Et2LinkAdd} from "./Et2Link/Et2LinkAdd";
+import {Et2LinkTo} from "../Et2Link/Et2LinkTo";
+import {Et2LinkAppSelect} from "../Et2Link/Et2LinkAppSelect";
+import {Et2LinkEntry, Et2LinkEntryReadonly} from "../Et2Link/Et2LinkEntry";
+import {Et2Link} from "../Et2Link/Et2Link";
+import {Et2LinkString} from "../Et2Link/Et2LinkString";
+import {Et2LinkList} from "../Et2Link/Et2LinkList";
+import {Et2LinkAdd} from "../Et2Link/Et2LinkAdd";
 /** @deprecated use Et2LinkTo */
 export declare class et2_link_to extends Et2LinkTo {}
 /** @deprecated use Et2LinkAppSelect */

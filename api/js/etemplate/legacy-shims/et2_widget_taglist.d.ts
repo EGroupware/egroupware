@@ -1,9 +1,9 @@
-import {Et2Select} from "./Et2Select/Et2Select";
-import {Et2SelectAccount} from "./Et2Select/Select/Et2SelectAccount";
-import {Et2Email} from "./Et2Email/Et2Email";
-import {Et2SelectCategory} from "./Et2Select/Select/Et2SelectCategory";
-import {Et2SelectThumbnail} from "./Et2Select/Select/Et2SelectThumbnail";
-import {Et2SelectState} from "./Et2Select/Select/Et2SelectState";
+import {Et2Select} from "../Et2Select/Et2Select";
+import {Et2SelectAccount} from "../Et2Select/Select/Et2SelectAccount";
+import {Et2Email} from "../Et2Email/Et2Email";
+import {Et2SelectCategory} from "../Et2Select/Select/Et2SelectCategory";
+import {Et2SelectThumbnail} from "../Et2Select/Select/Et2SelectThumbnail";
+import {Et2SelectState} from "../Et2Select/Select/Et2SelectState";
 /** @deprecated use Et2Select */
 export declare class et2_taglist extends Et2Select {}
 /** @deprecated use Et2SelectAccount */

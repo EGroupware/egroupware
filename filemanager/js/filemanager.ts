@@ -18,11 +18,11 @@ import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 // et2_file is a real, distinct legacy widget implementation (not a shim), passed as a runtime
 // instanceof-filter value to iterateOver() below - see doc/ai/projects/app-ts-modernization.md.
 import {et2_file} from "../../api/js/etemplate/et2_widget_file";
-import type {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
+import type {et2_selectbox} from "../../api/js/etemplate/legacy-shims/et2_widget_selectbox";
 // et2_textbox/et2_checkbox are also passed as runtime instanceof-filter values to iterateOver()
 // below, alongside being used as cast types - so they stay value imports, like et2_file above.
 import {et2_textbox} from "../../api/js/etemplate/et2_widget_textbox";
-import {et2_checkbox} from "../../api/js/etemplate/et2_widget_checkbox";
+import {et2_checkbox} from "../../api/js/etemplate/legacy-shims/et2_widget_checkbox";
 import {MIME_REGEX} from "../../api/js/etemplate/Expose/ExposeMixin";
 // egwAction is used both as a type and as a runtime `instanceof` check below - value import needed.
 import {egwAction} from "../../api/js/egw_action/egw_action";

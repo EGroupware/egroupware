@@ -13,30 +13,31 @@ import {SHIM_MANIFEST} from './rollup-legacy-widget-shim.mjs';
 
 const VIRTUAL_ROOT = '/__legacy_widget_shim__/';
 
+// Manifest targetModule paths are relative to api/js/etemplate/ (where the real
+// et2_widget_*.ts files used to live) - a fixed, server-root-relative URL path, NOT
+// derived from the importer's URL. A consumer's specifier can route through any
+// directory (eg. legacy-shims/, for consumers updated to import the .d.ts there)
+// without affecting where the target webcomponent actually resolves.
+const ETEMPLATE_URL_DIR = '/api/js/etemplate';
+
 export function legacyWidgetShimDevServerPlugin()
 {
     return {
         name: 'legacy-widget-shim-dev-server',
-        resolveImport({source, context})
+        resolveImport({source})
         {
             const base = source.split('/').pop().replace(/\.tsx?$/, '');
             if(!SHIM_MANIFEST[base]) return;
 
-            const importerDir = path.posix.dirname(context.path);
-            const dir = source.startsWith('.')
-                ? path.posix.resolve(importerDir, path.posix.dirname(source))
-                : path.posix.dirname(source.startsWith('/') ? source : '/' + source);
-
-            return `${VIRTUAL_ROOT}${base}.js?dir=${encodeURIComponent(dir)}`;
+            return `${VIRTUAL_ROOT}${base}.js`;
         },
         serve(context)
         {
             if(!context.path.startsWith(VIRTUAL_ROOT)) return;
 
             const base = context.path.slice(VIRTUAL_ROOT.length).replace(/\.js$/, '');
-            const dir = context.query.dir;
             const manifest = SHIM_MANIFEST[base];
-            if(!manifest || !dir) return;
+            if(!manifest) return;
 
             const importsByModule = new Map();
             for(const entry of manifest)
@@ -49,7 +50,7 @@ export function legacyWidgetShimDevServerPlugin()
             for(const [mod, exportsSet] of importsByModule)
             {
                 // .ts extension so the esbuild dev-server plugin picks it up and compiles it
-                lines.push(`import {${[...exportsSet].join(', ')}} from ${JSON.stringify(path.posix.resolve(dir, mod) + '.ts')};`);
+                lines.push(`import {${[...exportsSet].join(', ')}} from ${JSON.stringify(path.posix.resolve(ETEMPLATE_URL_DIR, mod) + '.ts')};`);
             }
             for(const entry of manifest)
             {

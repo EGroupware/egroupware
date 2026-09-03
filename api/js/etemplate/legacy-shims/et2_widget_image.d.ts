@@ -1,7 +1,7 @@
-import {Et2Image} from "./Et2Image/Et2Image";
-import {Et2AppIcon} from "./Et2Image/Et2AppIcon";
-import {Et2Avatar} from "./Et2Avatar/Et2Avatar";
-import {Et2LAvatar} from "./Et2Avatar/Et2LAvatar";
+import {Et2Image} from "../Et2Image/Et2Image";
+import {Et2AppIcon} from "../Et2Image/Et2AppIcon";
+import {Et2Avatar} from "../Et2Avatar/Et2Avatar";
+import {Et2LAvatar} from "../Et2Avatar/Et2LAvatar";
 /** @deprecated use Et2Image */
 export declare class et2_image extends Et2Image {}
 /** @deprecated use Et2AppIcon */

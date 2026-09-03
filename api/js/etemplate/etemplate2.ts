@@ -140,7 +140,7 @@ import "./Et2Tree/Et2TreeDropdown";
 
 /* Include all widget classes here, we only care about them registering, not importing anything*/
 import './et2_widget_vfs'; // Vfs must be first (before et2_widget_file) due to import cycle
-import './et2_widget_template';
+import './legacy-shims/et2_widget_template';
 import './et2_widget_grid';
 import './et2_widget_box';
 import './et2_widget_hbox';
@@ -148,20 +148,19 @@ import './et2_widget_button';
 import './et2_widget_entry';
 import './et2_widget_textbox';
 import './et2_widget_number';
-import './et2_widget_selectbox';
+import './legacy-shims/et2_widget_selectbox';
 import './et2_widget_radiobox';
-import './et2_widget_date';
+import './legacy-shims/et2_widget_date';
 import './et2_widget_dialog';
-import './et2_widget_diff';
+import './legacy-shims/et2_widget_diff';
 import './et2_widget_html';
-import './et2_widget_taglist';
+import './legacy-shims/et2_widget_taglist';
 import './et2_widget_historylog';
 import './et2_widget_hrule';
-import './et2_widget_iframe';
 import './et2_widget_file';
 import './et2_widget_placeholder';
 import './et2_widget_progress';
-import './et2_widget_selectAccount';
+import './legacy-shims/et2_widget_selectAccount';
 import './et2_widget_ajaxSelect';
 import './et2_widget_video';
 import './et2_widget_audio';

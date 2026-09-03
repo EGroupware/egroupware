@@ -18,7 +18,7 @@ import {et2_dataview_column} from "./et2_dataview_model_columns";
 import {et2_dataview_controller} from "./et2_dataview_controller";
 import {et2_IDetachedDOM, et2_IResizeable} from "./et2_core_interfaces";
 import {et2_customfields_list} from "./et2_extension_customfields";
-import {et2_selectbox} from "./et2_widget_selectbox";
+import {et2_selectbox} from "./legacy-shims/et2_widget_selectbox";
 import {loadWebComponent} from "./Et2Widget/Et2Widget";
 import {cleanSelectOptions, SelectOption} from "./Et2Select/FindSelectOptions";
 import {Et2Diff} from "./Et2Diff/Et2Diff";

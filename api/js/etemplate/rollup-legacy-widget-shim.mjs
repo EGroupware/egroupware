@@ -14,6 +14,15 @@
  * what rollup bundles at runtime.
  */
 import path from 'path';
+import {fileURLToPath} from 'url';
+
+// Manifest targetModule paths are relative to this file's own directory
+// (api/js/etemplate/, where the real et2_widget_*.ts files used to live) -
+// NOT relative to whatever directory a consumer's import specifier happens to
+// route through (eg. legacy-shims/, for consumers updated to import the .d.ts
+// there). Anchoring here keeps resolution correct regardless of how deep or
+// via what path a consumer's specifier reaches this plugin.
+const ETEMPLATE_DIR = path.dirname(fileURLToPath(import.meta.url));
 
 export const SHIM_MANIFEST = {
     et2_widget_checkbox: [
@@ -85,23 +94,14 @@ export function legacyWidgetShimPlugin()
             const base = source.split('/').pop().replace(/\.tsx?$/, '');
             if(!SHIM_MANIFEST[base]) return null;
 
-            // Resolve the directory the real file would have lived in, so the
-            // manifest's relative targetModule paths still resolve from the same
-            // place - whether the consumer used a relative or absolute specifier.
-            const virtualDir = source.startsWith('.')
-                ? path.resolve(path.dirname(importer), path.dirname(source))
-                : path.dirname(source);
-
-            return VIRTUAL_PREFIX + base + '::' + virtualDir;
+            return VIRTUAL_PREFIX + base;
         },
         load(id)
         {
             if(!id.startsWith(VIRTUAL_PREFIX)) return null;
 
-            const rest = id.slice(VIRTUAL_PREFIX.length);
-            const sepIdx = rest.indexOf('::');
-            const base = rest.slice(0, sepIdx);
-            const dir = rest.slice(sepIdx + 2);
+            const base = id.slice(VIRTUAL_PREFIX.length);
+            const dir = ETEMPLATE_DIR;
             const manifest = SHIM_MANIFEST[base];
 
             const importsByModule = new Map();

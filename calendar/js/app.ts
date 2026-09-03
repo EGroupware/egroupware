@@ -13,7 +13,7 @@ import {EgwApp} from "../../api/js/jsapi/egw_app";
 import type {PushData} from "../../api/js/jsapi/egw_app";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
-import type {et2_date} from "../../api/js/etemplate/et2_widget_date";
+import type {et2_date} from "../../api/js/etemplate/legacy-shims/et2_widget_date";
 import {day, day4, listview, month, planner, week, weekN} from "./View";
 import {et2_calendar_view} from "./et2_widget_view";
 import {et2_calendar_timegrid} from "./et2_widget_timegrid";
@@ -24,17 +24,17 @@ import {et2_calendar_event} from "./et2_widget_event";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {et2_valueWidget} from "../../api/js/etemplate/et2_core_valueWidget";
 import type {et2_button} from "../../api/js/etemplate/et2_widget_button";
-import type {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
+import type {et2_selectbox} from "../../api/js/etemplate/legacy-shims/et2_widget_selectbox";
 import {et2_widget} from "../../api/js/etemplate/et2_core_widget";
 import type {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
-import type {et2_iframe} from "../../api/js/etemplate/et2_widget_iframe";
+import type {et2_iframe} from "../../api/js/etemplate/legacy-shims/et2_widget_iframe";
 // sprintf() is declared with an untyped 0-arg signature (uses `arguments` internally), so every
 // call with format args errors under TS - alias it locally with the real variadic signature rather
 // than touching the shared egw_action_common.ts.
 import {sprintf as _sprintf} from "../../api/js/egw_action/egw_action_common";
 import {egw_registerGlobalShortcut, egw_unregisterGlobalShortcut} from "../../api/js/egw_action/egw_keymanager";
 import type {et2_number} from "../../api/js/etemplate/et2_widget_number";
-import type {et2_template} from "../../api/js/etemplate/et2_widget_template";
+import type {et2_template} from "../../api/js/etemplate/legacy-shims/et2_widget_template";
 import type {Et2Textbox} from "../../api/js/etemplate/Et2Textbox/Et2Textbox";
 import "./SidemenuDate";
 import {formatDate, formatTime, parseDate} from "../../api/js/etemplate/Et2Date/Et2Date";

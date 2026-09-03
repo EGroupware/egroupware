@@ -22,7 +22,7 @@ import {et2_createWidget, et2_register_widget, et2_widget, WidgetConfig} from ".
 import {et2_DOMWidget} from "./et2_core_DOMWidget";
 import {et2_baseWidget} from "./et2_core_baseWidget";
 import {et2_inputWidget} from "./et2_core_inputWidget";
-import {et2_selectbox} from "./et2_widget_selectbox";
+import {et2_selectbox} from "./legacy-shims/et2_widget_selectbox";
 import {et2_nextmatch_rowProvider} from "./et2_extension_nextmatch_rowProvider";
 import {et2_nextmatch_controller} from "./et2_extension_nextmatch_controller";
 import {et2_dataview} from "./et2_dataview";
@@ -33,7 +33,7 @@ import {et2_dataview_grid} from "./et2_dataview_view_grid";
 import {et2_dynheight} from "./et2_widget_dynheight";
 import {et2_arrayMgr} from "./et2_core_arrayMgr";
 import {et2_button} from "./et2_widget_button";
-import {et2_template} from "./et2_widget_template";
+import {et2_template} from "./legacy-shims/et2_widget_template";
 import {egw} from "../jsapi/egw_global";
 import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
 import {egwIsMobile} from "../egw_action/egw_action_common";
