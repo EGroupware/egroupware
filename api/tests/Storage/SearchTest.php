@@ -61,21 +61,6 @@ class SearchTest extends TestCase
 		$GLOBALS['egw'] = new stdClass();
 		$GLOBALS['egw']->db = self::$db = new Api\Db($GLOBALS['egw_domain'][$domain]);
 		self::$db->connect();
-
-		// Api\Db::connect() only calls set_capabilities() (which fixes eg. the hardcoded, invalid
-		// default CAST_AS_VARCHAR capability "CAST(%s AS varchar)" - MySQL/MariaDB requires "AS
-		// char" - into the correct per-driver value) when it establishes a NEW physical
-		// connection. Api\Db pools the actual link in a process-wide static (self::$ADOdb); once
-		// ANY earlier Api\Db instance in this process has connected to the same host/db/user, a
-		// later `new Api\Db(...); ->connect()` with identical connection params just reuses that
-		// pooled link and skips set_capabilities() entirely, silently leaving THIS instance's
-		// $capabilities array at the generic (partly wrong) defaults. That makes search2criteria()'s
-		// CAST(...)/CONCAT() query below fail with a real MariaDB syntax error - but only when
-		// this test runs after another test file has already connected once in the same process
-		// (eg. the full api/tests/Storage/ suite), not when run standalone. Not an Api\Storage bug -
-		// pre-existing in Api\Db::connect(), flagged upstream in doc/ai/projects/storage-test-coverage.md,
-		// worked around here rather than "fixed" (Db.php connection pooling is out of this file's scope).
-		self::$db->set_capabilities(self::$db->Type, self::$db->ServerInfo['version'] ?? '10.0');
 	}
 
 	protected function setUp() : void

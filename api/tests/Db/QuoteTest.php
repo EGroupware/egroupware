@@ -308,22 +308,17 @@ class QuoteTest extends TestCase
 	// -------------------------------------------------------------------
 
 	/**
-	 * query()'s error-classification code READS as if it distinguishes InvalidSql (for a MySQL
-	 * error code in [1064 syntax, 1062 duplicate-key, 1054 unknown-column]) from a generic
-	 * Db\Exception for everything else - but that distinction lives in the
-	 * `catch(\mysqli_sql_exception $e)` block, which requires mysqli's modern exception-throwing
-	 * mode. Empirically verified (this session) that mysqli is NOT in that mode in this actual
-	 * runtime: Execute()/SelectLimit() return false silently instead, so EVERY query failure here -
-	 * including a non-existent-table error (code 1146, NOT in the InvalidSql code list) - falls
-	 * through the OTHER path (the unconditional `if (!$rs) throw new InvalidSql(...)` at the end of
-	 * query()) and comes back as InvalidSql regardless of the underlying error code. This test locks
-	 * down that ACTUAL behavior rather than the code-discrimination behavior the catch block's logic
-	 * would suggest - the fine-grained code-based classification is effectively dead code under this
-	 * environment's mysqli configuration. Also documents that $e->details (only set by the
-	 * catch-block's re-throw) is NEVER populated via this path - the SQL text instead appears
-	 * directly in $e->getMessage() (prefixed "Invalid SQL: ").
+	 * query()'s error-classification distinguishes InvalidSql (for a MySQL error code in
+	 * [1064 syntax, 1062 duplicate-key, 1054 unknown-column]) from a generic Db\Exception for
+	 * everything else - that distinction lives in the `catch(\mysqli_sql_exception $e)` block,
+	 * which requires mysqli's modern exception-throwing mode. mysqli_report(MYSQLI_REPORT_ERROR |
+	 * MYSQLI_REPORT_STRICT) is now explicitly re-enabled in Db::_connect() (ADOdb's mysqli driver
+	 * constructor forces it back OFF otherwise, undoing PHP 8.1+'s own default - see the fix commit
+	 * for details), so this classification is genuinely live: a SQL-syntax error (code 1064, IN the
+	 * list) throws InvalidSql, with the SQL text recoverable via $e->details (set by the catch
+	 * block's re-throw).
 	 */
-	public function testQuerySyntaxErrorThrowsInvalidSqlWithSqlInMessage()
+	public function testQuerySyntaxErrorThrowsInvalidSqlWithSqlInDetails()
 	{
 		$sql = 'SELECT FROM WHERE this is not valid sql';
 
@@ -334,12 +329,18 @@ class QuoteTest extends TestCase
 		}
 		catch (Api\Db\Exception\InvalidSql $e)
 		{
-			$this->assertStringContainsString($sql, $e->getMessage(),
-				'The original SQL must be recoverable from the exception for logging, here via getMessage() not ->details');
+			$this->assertSame($sql, $e->details,
+				'The original SQL must be recoverable via ->details for logging');
 		}
 	}
 
-	public function testQueryUnknownTableThrowsInvalidSqlDespiteErrorCode1146NotBeingInTheClassificationList()
+	/**
+	 * A non-existent-table error (code 1146) is NOT in the InvalidSql code list, so it must throw
+	 * the generic Api\Db\Exception, not the InvalidSql subclass - confirming the fine-grained
+	 * code-based classification is genuinely live now that mysqli throws (see the class doc-comment
+	 * on the previous test).
+	 */
+	public function testQueryUnknownTableThrowsGenericDbExceptionNotInvalidSql()
 	{
 		$table = 'egw_nonexistent_table_'.bin2hex(random_bytes(4));
 
@@ -350,8 +351,11 @@ class QuoteTest extends TestCase
 		}
 		catch (Api\Db\Exception\InvalidSql $e)
 		{
-			// documents actual behavior - see class doc-comment above for why this is InvalidSql
-			// and not the generic Db\Exception the catch-block's code-list would otherwise imply
+			$this->fail('Error code 1146 (unknown table) is not in the InvalidSql code list - '.
+				'must be a generic Db\Exception, not InvalidSql: '.$e->getMessage());
+		}
+		catch (Api\Db\Exception $e)
+		{
 			$this->assertStringContainsString($table, $e->getMessage());
 		}
 	}
