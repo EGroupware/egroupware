@@ -47,6 +47,7 @@ function createMailApp(toolbarActions : object)
 	const app = Object.create(MailApp.prototype) as MailApp;
 	const flagged : { flag : any, msg : string[] }[] = [];
 	const deleted : string[][] = [];
+	const seen : {references : any[], keyword : string, value : boolean}[] = [];
 
 	Object.assign(app, {
 		appname: 'mail',
@@ -67,30 +68,47 @@ function createMailApp(toolbarActions : object)
 		},
 		nm: {getSelection: () => ({ids: [], all: false})},
 		patchRow: () => {},
+		reduceCounterWithoutServerRoundtrip: () => {},
 		updateFilterData: () => {},
 		refreshFolderStatus: () => {},
 		getActiveFilters: () => false,
 		flagMessages: (flag, elems) => void flagged.push({flag, msg: elems?.msg}),
 		deleteMessages: (msg) => void deleted.push(msg?.msg),
 	});
+	Object.defineProperty(app, 'jmap', {value: {
+		messageReference: (id : string) => ({id}),
+		setSystemFlag: (references : any[], keyword : string, value : boolean) =>
+		{
+			seen.push({references, keyword, value});
+			return Promise.resolve();
+		}
+	}});
 
-	return {app, flagged, deleted};
+	return {app, flagged, deleted, seen};
 }
 
 describe("mobile message view", () =>
 {
 	let originalGetByApplication;
+	let originalJsonq;
+	let originalOpen;
 	let rows : { [uid : string] : any };
+	let queued : {menuaction : string, parameters : any[]}[];
 
 	beforeEach(() =>
 	{
 		// egw's row cache: the real 'data' module is only pulled in by egw.js's (here empty)
 		// dynamic include list, so it never registers on the global egw object under test
 		rows = {[ROW_ID]: {data: {subject: 'test signed', flags: {read: 'read'}, 'class': ''}}};
+		queued = [];
 		//@ts-ignore
 		egw.dataGetUIDdata = (uid : string) => rows[uid];
 		//@ts-ignore
 		egw.dataStoreUID = (uid : string, data : any) => void (rows[uid] = {data});
+		originalJsonq = egw.jsonq;
+		originalOpen = egw.open;
+		//@ts-ignore
+		egw.jsonq = (menuaction : string, parameters : any[]) => void queued.push({menuaction, parameters});
 
 		// callFlagMessages()'s 'read' branch resolves the current folder through the FIRST mail
 		// etemplate in the window, which in the mobile main window is mail.index
@@ -104,6 +122,43 @@ describe("mobile message view", () =>
 	afterEach(() =>
 	{
 		etemplate2.getByApplication = originalGetByApplication;
+		egw.jsonq = originalJsonq;
+		egw.open = originalOpen;
+	});
+
+	/** Opening an unread row updates the cache and persists the read flag through both existing paths. */
+	it("marks an unread message as read when it is opened", async() =>
+	{
+		rows[ROW_ID].data.flags = {};
+		rows[ROW_ID].data['class'] = 'unseen recent';
+		const {app, seen} = createMailApp({read: {caption: 'Read / Unread'}});
+
+		await app.mobileView({id: 'open', data: {}}, [{id: ROW_ID}]);
+
+		assert.equal(rows[ROW_ID].data.flags.read, 'read');
+		assert.equal(rows[ROW_ID].data['class'], '');
+		assert.deepEqual(seen, [{references: [{id: ROW_ID}], keyword: '$seen', value: true}]);
+		assert.deepInclude(queued, {
+			menuaction: 'mail.mail_ui.ajax_flagMessages',
+			parameters: ['read', {msg: [ROW_ID]}, false]
+		});
+	});
+
+	/** Desktop popup opening uses the same read-on-open operation as preview and mobile view. */
+	it("marks an unread message as read when it is opened in a popup", async() =>
+	{
+		rows[ROW_ID].data.flags = {};
+		rows[ROW_ID].data['class'] = 'unseen recent';
+		const {app, seen} = createMailApp({read: {caption: 'Read / Unread'}});
+		//@ts-ignore
+		egw.open = () => window;
+
+		app.openMessage({id: 'open'}, [{id: ROW_ID}], 'view');
+		await Promise.resolve();
+
+		assert.equal(rows[ROW_ID].data.flags.read, 'read');
+		assert.equal(rows[ROW_ID].data['class'], '');
+		assert.deepEqual(seen, [{references: [{id: ROW_ID}], keyword: '$seen', value: true}]);
 	});
 
 	it("marks the opened message read/unread", async() =>

@@ -1267,28 +1267,7 @@ export class MailApp extends EgwApp
 		{
 			setTitle(h);
 		}
-		// THE FOLLOWING IS PROBABLY NOT NEEDED, AS THE UNEVITABLE PREVIEW IS HANDLING THE COUNTER ISSUE
-		// When body is requested, mail is marked as read by the mail server. Update UI to match instantly.
-		if (typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data['class'] != 'undefined' && (dataElem.data['class'].indexOf('unseen') >= 0 || dataElem.data['class'].indexOf('recent') >= 0))
-		{
-			if (typeof dataElem.data.flags != 'undefined') dataElem.data.flags.read = 'read';
-			dataElem.data['class'] = dataElem.data['class'].split(' ')
-				.filter((className) => className != 'unseen' && className != 'recent').join(' ');
-			this.patchRow(_id);
-			// reduce counter without server roundtrip
-			this.reduceCounterWithoutServerRoundtrip();
-			// not needed, as an explizit read flags the message as seen anyhow
-			//egw.jsonq('mail.mail_ui.ajax_flagMessages',['read', messages, false]);
-			// Same JMAP-native-fast-path gap as preview()'s own identical block - see that one's
-			// comment for why this needs a real setSystemFlag() call now, not just a UI update
-			// (found live 2026-08-27, ralf).
-			try
-			{
-				this.jmap.setSystemFlag([this.jmap.messageReference(_id)], '$seen', true)
-					.catch((e) => console.error('openMessage(): failed to mark message as read', e));
-			}
-			catch (e) { /* non-JMAP row id - classic fallback already handled this server-side */ }
-		}
+		this.markOpenedMessageRead(_id, dataElem.data);
 	}
 
 	/**
@@ -1960,6 +1939,62 @@ export class MailApp extends EgwApp
 	}
 
 	/**
+	 * Mark an opened message as read, updating the row immediately and persisting the flag.
+	 *
+	 * @param rowId nextmatch row id
+	 * @param data cached row data
+	 */
+	private markOpenedMessageRead(rowId : string, data : any) : void
+	{
+		if (typeof data == 'undefined' || typeof data['class'] == 'undefined' ||
+			(data['class'].indexOf('unseen') < 0 && data['class'].indexOf('recent') < 0))
+		{
+			return;
+		}
+
+		const messages = {msg: [rowId]};
+		if (typeof data.flags != 'undefined') data.flags.read = 'read';
+		data['class'] = data['class'].split(' ')
+			.filter((className) => className != 'unseen' && className != 'recent').join(' ');
+		this.patchRow(rowId);
+		this.reduceCounterWithoutServerRoundtrip();
+
+		// A JMAP Email/get has no side effects, so persist $seen explicitly.  Non-JMAP rows
+		// fall back to the classic body request, which already marks the message read.
+		try
+		{
+			this.jmap.setSystemFlag([this.jmap.messageReference(rowId)], '$seen', true)
+				.catch((e) => console.error('markOpenedMessageRead(): failed to mark message as read', e));
+		}
+		catch (e) { /* non-JMAP row id - classic fallback already handled this server-side */ }
+
+		if (typeof data.dispositionnotificationto != 'undefined' && data.dispositionnotificationto &&
+			typeof data.flags.mdnsent == 'undefined' && typeof data.flags.mdnnotsent == 'undefined')
+		{
+			const buttons = [
+				{label: this.egw.lang("Yes"), id: "mdnsent", image: "check"},
+				{label: this.egw.lang("No"), id: "mdnnotsent", image: "cancelled"}
+			];
+			Et2Dialog.show_dialog((_button_id, _value) =>
+				{
+					switch (_button_id)
+					{
+						case "mdnsent":
+							egw.jsonq('mail.mail_ui.ajax_sendMDN', [messages]);
+							this.trySetMdnFlag(messages, true);
+							return;
+						case "mdnnotsent":
+							this.trySetMdnFlag(messages, false);
+					}
+				},
+			this.egw.lang("The message sender has requested a response to indicate that you have read this message. Would you like to send a receipt?"),
+			this.egw.lang("Confirm"),
+			messages, buttons);
+		}
+		egw.jsonq('mail.mail_ui.ajax_flagMessages', ['read', messages, false]);
+	}
+
+	/**
 	 * preview - implementation of the preview action
 	 *
 	 * @param nextmatch Et2Nextmatch The widget whose row was selected
@@ -2064,57 +2099,7 @@ export class MailApp extends EgwApp
 			));
 		}
 
-		const messages = {};
-		messages['msg'] = [rowId];
-
-		// When body is requested, mail is marked as read by the mail server. Update UI to match instantly.
-		if (typeof data != 'undefined' && typeof data != 'undefined' && typeof data['class']  != 'undefined' && (data['class'].indexOf('unseen') >= 0 || data['class'].indexOf('recent') >= 0))
-		{
-			if (typeof data.flags != 'undefined') data.flags.read = 'read';
-			data['class'] = data['class'].split(' ').filter((className) => className != 'unseen' && className != 'recent').join(' ');
-			this.patchRow(rowId);
-			// reduce counter without server roundtrip
-			this.reduceCounterWithoutServerRoundtrip();
-			// The comment above ("marked as read by the mail server") is only true for the classic
-			// fallback path (a raw, non-.PEEK IMAP FETCH BODY[] implicitly sets \Seen server-side) -
-			// loadMessageBody()'s JMAP-native fast path (MailJmap.fetchBody(), a pure Email/get with
-			// no side effects) never actually does, so this block used to only update the local UI
-			// to match a server-side change that, for a JMAP-native account, never happened - the
-			// message reverted to unseen on the next reload (found live 2026-08-27, ralf). Send the
-			// real JMAP patch here too - messageReference() throws for a non-JMAP row id (classic-
-			// only account), where the classic fallback already handled this server-side, so this
-			// is skipped rather than erroring.
-			try
-			{
-				this.jmap.setSystemFlag([this.jmap.messageReference(rowId)], '$seen', true)
-					.catch((e) => console.error('preview(): failed to mark message as read', e));
-			}
-			catch (e) { /* non-JMAP row id - classic fallback already handled this server-side */ }
-			if (typeof data.dispositionnotificationto != 'undefined' && data.dispositionnotificationto &&
-				typeof data.flags.mdnsent == 'undefined' && typeof data.flags.mdnnotsent == 'undefined')
-			{
-				const buttons = [
-					{label: this.egw.lang("Yes"), id: "mdnsent", image: "check"},
-					{label: this.egw.lang("No"), id: "mdnnotsent", image: "cancelled"}
-				];
-				Et2Dialog.show_dialog((_button_id, _value) =>
-					{
-						switch (_button_id)
-						{
-							case "mdnsent":
-								egw.jsonq('mail.mail_ui.ajax_sendMDN', [messages]);
-								this.trySetMdnFlag(messages, true);
-								return;
-							case "mdnnotsent":
-								this.trySetMdnFlag(messages, false);
-						}
-					},
-				this.egw.lang("The message sender has requested a response to indicate that you have read this message. Would you like to send a receipt?"),
-				this.egw.lang("Confirm"),
-				messages, buttons);
-			}
-			egw.jsonq('mail.mail_ui.ajax_flagMessages',['read', messages, false]);
-		}
+		this.markOpenedMessageRead(rowId, data);
 	}
 
 	protected setupViewAttachmentActions(data, sel_options)
@@ -7449,6 +7434,7 @@ export class MailApp extends EgwApp
 			}
 			// update local storage with added toolbar actions
 			egw.dataStoreUID(id,content.data);
+			this.markOpenedMessageRead(id, content.data);
 		}
 
 
