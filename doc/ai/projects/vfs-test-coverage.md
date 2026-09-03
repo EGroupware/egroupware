@@ -355,6 +355,26 @@ already set" guard skips trying to reach a real backend entirely.
   can meaningfully assert on. If those reports continue, the next debugging step is there, not in
   the filtering/targeting logic Phase 5 now covers.
 
+**Addendum to Phase 3** (2026-09-03, prompted by ralf asking specifically about it): partial
+writes/seek, the mechanism WebDAV range-requests (`Content-Range`) use to upload large files in
+chunks - a real gap this project had NOT covered. Added 4 tests to `SqlfsBackendTest.php`. Traced
+the real code path first: `api/src/WebDAV/Server/Filesystem.php::PUT()` opens with `fopen($fspath,
+"c")` instead of `"w"` specifically for a range request (`:557-558`, "c" creates but does NOT
+truncate, unlike "w"), then the caller seeks to the range's start offset before writing - both
+`Vfs\StreamWrapper::stream_seek()`/`stream_write()` (`StreamWrapper.php:286-341`) and
+`Sqlfs\StreamWrapper`'s underlying local-file open (`Sqlfs/StreamWrapper.php:315-320`, same `$mode`
+passed straight through to a real local `fopen()`) are thin pass-throughs with no bespoke chunking
+logic of their own - so this exercises PHP's native local-file seek/write semantics through the
+full Vfs stack, not a custom implementation. All 4 confirmed working correctly, no bugs found:
+seek+overwrite mid-file, mode `"c"` not truncating existing content (mirrors the WebDAV PUT path
+exactly), `stat()`'s size correctly derived from `Sqlfs\StreamWrapper::stream_close()`'s
+seek-to-end+`tell()` (`:366-367`) rather than naively trusting the last write's byte count, and a
+seek-past-EOF correctly zero-fills the gap (standard POSIX sparse-write semantics) rather than
+corrupting the file. Not chased further: the WebDAV-protocol-level `Content-Range` header parsing
+itself (which byte-range offset gets computed and handed to `fseek()`) - that's in the third-party
+`HTTP_WebDAV_Server` base class, outside this project's Vfs-layer scope, and worth a note if a
+real chunked-upload bug ever surfaces (the Vfs-layer mechanism itself is now confirmed sound).
+
 **Next**: Phase 6 (EPL/Stylite wrappers - `S3`, `S3direct`, `Merge`, `Versioning`, `Links`, `Vlinks`
 in `stylite/src/Vfs/`) and Phase 7 (`fsck` consistency-check mechanism, core + EPL hook consumers).
 Both confirmed priority, not deferred - see Status section above.

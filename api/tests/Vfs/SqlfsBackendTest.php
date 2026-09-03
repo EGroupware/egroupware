@@ -226,4 +226,95 @@ class SqlfsBackendTest extends LoggedInTest
 			Vfs::$is_root = false;
 		}
 	}
+
+	// ---------------------------------------------------------------
+	// partial writes / seek - the mechanism WebDAV range-requests (used by
+	// some clients to upload huge files in chunks) rely on. Both
+	// Vfs\StreamWrapper::stream_seek()/stream_write() (StreamWrapper.php:
+	// 286-341) and Vfs\Sqlfs\StreamWrapper's underlying local-file open
+	// (Sqlfs/StreamWrapper.php:315-320, `fopen($fs_path, $mode)` with the
+	// SAME mode WebDAV passes through) are thin pass-throughs to PHP's own
+	// fread/fwrite/fseek/ftell on a real local file - so this is really
+	// verifying that pass-through, and that Sqlfs\StreamWrapper::
+	// stream_close() computes the true final size via seek-to-end+tell()
+	// (`:366-367`) rather than naively trusting the last write's length.
+	// ---------------------------------------------------------------
+
+	public function testSeekAndOverwritePartialContent() : void
+	{
+		$file = $this->files[] = $this->getFilename();
+		file_put_contents(Vfs::PREFIX . $file, '0123456789');
+
+		$fp = fopen(Vfs::PREFIX . $file, 'r+');
+		$this->assertNotFalse($fp);
+		$this->assertTrue(fseek($fp, 5) === 0);
+		$this->assertEquals(5, fwrite($fp, 'XXXXX'));
+		fclose($fp);
+
+		$this->assertEquals('01234XXXXX', file_get_contents(Vfs::PREFIX . $file));
+	}
+
+	/**
+	 * Mirrors exactly what api/src/WebDAV/Server/Filesystem.php's PUT()
+	 * does for a range request: `fopen($fspath, "c")` - create if missing,
+	 * do NOT truncate if it already exists (unlike "w") - then the caller
+	 * seeks to the range's start offset before writing.
+	 */
+	public function testModeCDoesNotTruncateExistingContent() : void
+	{
+		$file = $this->files[] = $this->getFilename();
+		file_put_contents(Vfs::PREFIX . $file, '01234');	// "chunk 1" already uploaded
+
+		$fp = fopen(Vfs::PREFIX . $file, 'c');
+		$this->assertNotFalse($fp, 'mode "c" should open an existing file without truncating it');
+		$this->assertTrue(fseek($fp, 5) === 0);	// continue where chunk 1 left off
+		$this->assertEquals(5, fwrite($fp, '56789'));
+		fclose($fp);
+
+		$this->assertEquals('0123456789', file_get_contents(Vfs::PREFIX . $file));
+	}
+
+	/**
+	 * Sqlfs\StreamWrapper::stream_close() derives fs_size from
+	 * seek-to-end+tell() on the real underlying stream, NOT from summing
+	 * bytes written in this open/close cycle - so it must report the TRUE
+	 * final file size even when the writes were partial/out-of-order.
+	 */
+	public function testStatSizeReflectsTrueSizeAfterPartialWrite() : void
+	{
+		$file = $this->files[] = $this->getFilename();
+		file_put_contents(Vfs::PREFIX . $file, str_repeat('a', 20));
+
+		$fp = fopen(Vfs::PREFIX . $file, 'r+');
+		fseek($fp, 10);
+		fwrite($fp, 'XXXXX');	// only 5 bytes written, well before EOF
+		fclose($fp);
+
+		Vfs::clearstatcache();
+		$this->assertEquals(20, Vfs::stat($file)['size'],
+			'stat() size must reflect the true 20-byte file length, not the 5 bytes actually fwrite()n');
+	}
+
+	/**
+	 * A seek PAST the current end-of-file, then a write, must zero-fill the
+	 * gap (standard POSIX sparse-write semantics) - relevant since a
+	 * malformed/out-of-order Content-Range chunk could otherwise corrupt
+	 * the file silently instead of producing a well-defined result.
+	 */
+	public function testSeekPastEndOfFileZeroFillsGapOnWrite() : void
+	{
+		$file = $this->files[] = $this->getFilename();
+		file_put_contents(Vfs::PREFIX . $file, '01234');
+
+		$fp = fopen(Vfs::PREFIX . $file, 'r+');
+		fseek($fp, 10);	// 5 bytes past current EOF (positions 5-9 are a gap)
+		fwrite($fp, 'XXXXX');
+		fclose($fp);
+
+		$content = file_get_contents(Vfs::PREFIX . $file);
+		$this->assertEquals(15, strlen($content));
+		$this->assertEquals('01234', substr($content, 0, 5));
+		$this->assertEquals("\0\0\0\0\0", substr($content, 5, 5));
+		$this->assertEquals('XXXXX', substr($content, 10, 5));
+	}
 }
