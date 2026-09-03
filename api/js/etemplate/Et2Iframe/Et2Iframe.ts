@@ -69,9 +69,35 @@ export class Et2Iframe extends Et2Widget(LitElement)
 		`;
 	}
 
-	__getIframeNode()
+	__getIframeNode() : HTMLIFrameElement
 	{
-		return this.shadowRoot.querySelector('iframe');
+		return this.shadowRoot?.querySelector('iframe') ?? null;
+	}
+
+	/**
+	 * Run callback with the real <iframe> node, once it exists
+	 *
+	 * transformAttributes() (initial widget-tree construction from XML, eg. an initial
+	 * value="..." or a readonly/disabled default) can call set_src()/set_value() etc. before
+	 * this element is ever connected to the document - this.shadowRoot (and so the real
+	 * <iframe> inside it) doesn't exist yet at that point. Run immediately if it already does,
+	 * otherwise wait for the first render to commit.
+	 */
+	private __withIframeNode(callback : (node : HTMLIFrameElement) => void) : void
+	{
+		const node = this.__getIframeNode();
+		if(node)
+		{
+			callback(node);
+		}
+		else
+		{
+			this.updateComplete.then(() =>
+			{
+				const node = this.__getIframeNode();
+				if(node) callback(node);
+			});
+		}
 	}
 
 	/**
@@ -85,27 +111,29 @@ export class Et2Iframe extends Et2Widget(LitElement)
 	{
 		if(_value.trim() != "")
 		{
-			// a leftover srcdoc attribute overrides src and suppresses the load event
-			if(_value.trim() == 'about:blank')
+			this.__withIframeNode((node) =>
 			{
-				this.__getIframeNode().removeAttribute('srcdoc');
-				this.__getIframeNode().src = _value;
-			}
-			else
-			{
-				// Load the new page, but display a loader
-				let loader = document.createElement('div');
-				loader.className = 'et2_iframe loading';
-				this.__getIframeNode().before(loader);
-				window.setTimeout(function() {
-					this.__getIframeNode().removeAttribute('srcdoc');
-					this.__getIframeNode().src = _value;
-					this.__getIframeNode().addEventListener('load',function() {
-						loader.remove();
-					});
-				}.bind(this),0);
-
-			}
+				// a leftover srcdoc attribute overrides src and suppresses the load event
+				if(_value.trim() == 'about:blank')
+				{
+					node.removeAttribute('srcdoc');
+					node.src = _value;
+				}
+				else
+				{
+					// Load the new page, but display a loader
+					let loader = document.createElement('div');
+					loader.className = 'et2_iframe loading';
+					node.before(loader);
+					window.setTimeout(function() {
+						node.removeAttribute('srcdoc');
+						node.src = _value;
+						node.addEventListener('load',function() {
+							loader.remove();
+						});
+					},0);
+				}
+			});
 		}
 	}
 
@@ -117,13 +145,13 @@ export class Et2Iframe extends Et2Widget(LitElement)
 	set_name(_name)
 	{
 		this.name = _name;
-		this.__getIframeNode().setAttribute('name', _name);
+		this.__withIframeNode((node) => node.setAttribute('name', _name));
 	}
 
 	set_allow (_allow)
 	{
 		this.allow = _allow;
-		this.__getIframeNode().setAttribute('allow', _allow);
+		this.__withIframeNode((node) => node.setAttribute('allow', _allow));
 	}
 	/**
 	 * Make it look like part of the containing document
@@ -133,7 +161,7 @@ export class Et2Iframe extends Et2Widget(LitElement)
 	set_seamless(_seamless)
 	{
 		this.seamless = _seamless;
-		this.__getIframeNode().setAttribute("seamless", _seamless);
+		this.__withIframeNode((node) => node.setAttribute("seamless", _seamless));
 	}
 
 	set_value(_value)
@@ -161,7 +189,7 @@ export class Et2Iframe extends Et2Widget(LitElement)
 	 */
 	set_srcdoc(_value)
 	{
-		this.__getIframeNode().setAttribute("srcdoc", _value);
+		this.__withIframeNode((node) => node.setAttribute("srcdoc", _value));
 	}
 }
 
