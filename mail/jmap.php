@@ -170,4 +170,13 @@ catch (\Throwable $e)
 	http_response_code(500);
 	echo json_encode(['type' => 'serverFail', 'description' => $e->getMessage()], JSON_UNESCAPED_SLASHES);
 }
+// the client already has its full response at this point - anything JmapImap::dispatch() (eg.
+// EmailSubmission/set) queued via JmapImap::queueDeferredWork() (best-effort bookkeeping the user
+// doesn't need to wait for - see that method's own docblock) runs AFTER this, not before, so a slow
+// mail send doesn't keep the browser waiting on top of an already-successful send.
+if (function_exists('fastcgi_finish_request'))
+{
+	fastcgi_finish_request();
+}
+JmapImap::runDeferredWork();
 exit;

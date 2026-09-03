@@ -170,6 +170,69 @@ class Imap extends Jmap\Base
 	}
 
 	/**
+	 * Work queued to run AFTER the HTTP response has already been sent to the client (see
+	 * mail/jmap.php's own fastcgi_finish_request() call) - doc/ai/projects/
+	 * mail-compose-jmap-migration.md, 2026-09-03 ("sending via the shim takes an awful long time",
+	 * acc_id=42): instrumentation found the actual SMTP transmission is fast (~0.6s) - nearly 80%
+	 * of the ~6s total was TWO follow-up IMAP round trips AFTER the mail had already gone out
+	 * (appending the Sent-folder copy, deleting+expunging the old Draft), neither of which the user
+	 * needs to wait for. emailSubmissionSet() queues that work here instead of running it inline;
+	 * jmap.php runs it once the client already has its response. Matches this project's existing
+	 * tolerance for best-effort post-send bookkeeping elsewhere (eg. saveDraft()'s own old-draft
+	 * cleanup) - a failure here means a slightly-stale Sent folder or an orphaned draft, not a lost
+	 * email (the send already succeeded by the time anything is queued).
+	 *
+	 * emailSet()'s move/destroy handling (same day, ralf: "for deleting/move-to-trash we already
+	 * have a workaround on client-side... optimistically expecting it to work, and error and
+	 * revert, if not later") also queues its (confirmed even slower - up to 7.4s for a single
+	 * move, Dovecot's own server-side MOVE processing time, see that method's own docblock) IMAP
+	 * COPY+move/STORE+EXPUNGE calls here. Deliberately weaker than the send case: the IMAP
+	 * operation IS the entire requested action (nothing "already succeeded" before queuing), so a
+	 * failure during the deferred call itself (rare - invalid folder/message id etc. are still
+	 * validated synchronously before anything is queued) has no way back to the client that already
+	 * got its "OK" - accepted for now since mail/js/app.ts's callMove()/deleteMessages() already
+	 * optimistically remove the row before the server even replies and only reconcile
+	 * (nm.refresh()) on an explicit rejection, which a deferred failure can no longer produce;
+	 * follow-up idea (not built): push a revert notification over the existing WebSocket channel
+	 * (project_mail_jmap_push_notifications) for this rare case instead of leaving it to the next
+	 * incidental refresh.
+	 *
+	 * @var callable[]
+	 */
+	private static array $deferredWork = [];
+
+	/**
+	 * Queue work to run after the response has been sent - see $deferredWork's own docblock.
+	 */
+	public static function queueDeferredWork(callable $work) : void
+	{
+		self::$deferredWork[] = $work;
+	}
+
+	/**
+	 * Run (and clear) all queued deferred work - called by mail/jmap.php once the client already
+	 * has its response (fastcgi_finish_request()). A failure here can no longer be reported to the
+	 * client (that response is already gone) - logged instead, same as this codebase's other
+	 * best-effort cleanup paths.
+	 */
+	public static function runDeferredWork() : void
+	{
+		$work = self::$deferredWork;
+		self::$deferredWork = [];
+		foreach ($work as $fn)
+		{
+			try
+			{
+				$fn();
+			}
+			catch (\Throwable $e)
+			{
+				error_log(__METHOD__.'(): '.$e->getMessage());
+			}
+		}
+	}
+
+	/**
 	 * Run a batch of JMAP method calls, resolving RFC 8620 §3.7 result-references between them
 	 *
 	 * @param array $methodCalls [string $method, array $args, string $callId][]
@@ -1837,17 +1900,27 @@ class Imap extends Jmap\Base
 				}
 			}
 			// same primitive Mail::moveMessages()'s same-account branch uses (api/src/Mail.php),
-			// called directly - a server-internal IMAP COPY+move, no message bytes handled by us
-			foreach ($moves as $targetFolder => $ids)
+			// called directly - a server-internal IMAP COPY+move, no message bytes handled by us.
+			// Deferred (see $deferredWork's own docblock) - confirmed live 2026-09-03 that a single
+			// move's IMAP COPY+STORE+EXPUNGE can take several seconds, almost entirely Dovecot's
+			// own server-side processing time, not anything on our end.
+			if ($moves)
 			{
-				$targetMailbox = self::hordeMailbox($imap, $targetFolder);
-				$imap->copy($mailbox, $targetMailbox, [
-					'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $ids)),
-					'move' => true,
-				]);
+				self::queueDeferredWork(function() use ($imap, $mailbox, $moves)
+				{
+					foreach ($moves as $targetFolder => $ids)
+					{
+						$targetMailbox = self::hordeMailbox($imap, $targetFolder);
+						$imap->copy($mailbox, $targetMailbox, [
+							'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $ids)),
+							'move' => true,
+						]);
+					}
+				});
 			}
 			// same IMAP COPY primitive, without 'move' - the message stays in $mailbox too, see
-			// MailJmap.copyMessages()
+			// MailJmap.copyMessages(). Left synchronous - unlike move/destroy, nothing disappears
+			// from the current view for this to reconcile, and there's no evidence (yet) it's slow.
 			foreach ($copies as $targetFolder => $ids)
 			{
 				$targetMailbox = self::hordeMailbox($imap, $targetFolder);
@@ -1857,12 +1930,17 @@ class Imap extends Jmap\Base
 			}
 			if ($destroyed)
 			{
-				// same primitive Mail::deleteMessages()'s "remove_immediately" mode uses
-				$imap->store($mailbox, [
-					'add' => ['\\Deleted'],
-					'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $destroyed)),
-				]);
-				$imap->expunge($mailbox);
+				// same primitive Mail::deleteMessages()'s "remove_immediately" mode uses - deferred,
+				// same reasoning as the move branch above (same store()+expunge() primitive
+				// emailSubmissionSet()'s old-draft cleanup already defers)
+				self::queueDeferredWork(function() use ($imap, $mailbox, $destroyed)
+				{
+					$imap->store($mailbox, [
+						'add' => ['\\Deleted'],
+						'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $destroyed)),
+					]);
+					$imap->expunge($mailbox);
+				});
 			}
 		}
 
@@ -2620,20 +2698,27 @@ class Imap extends Jmap\Base
 				$mailer->forceBccHeader();
 				$raw = $mailer->getRaw(false);
 
-				if ($targetFolder !== null)
+				// the mail has ALREADY gone out at this point - appending the Sent-folder copy and
+				// deleting+expunging the old Draft are best-effort bookkeeping the user shouldn't
+				// have to wait for (see $deferredWork's own docblock) - queued to run once jmap.php
+				// has already sent the response to the client instead of inline here.
+				self::queueDeferredWork(function() use ($imap, $targetFolder, $sourceFolder, $raw, $sentFlags, $emailId)
 				{
-					$targetMailbox = self::hordeMailbox($imap, $targetFolder);
-					self::appendRawMessage($imap, $targetMailbox, $raw, $sentFlags);
-				}
-				// remove the old Draft outright (matches classic mail_compose::send()'s own
-				// deleteMessages(..., 'remove_immediately') cleanup after a successful
-				// send-from-draft)
-				$sourceMailbox = self::hordeMailbox($imap, $sourceFolder);
-				$imap->store($sourceMailbox, [
-					'add' => ['\\Deleted'],
-					'ids' => new \Horde_Imap_Client_Ids([(int)$emailId]),
-				]);
-				$imap->expunge($sourceMailbox);
+					if ($targetFolder !== null)
+					{
+						$targetMailbox = self::hordeMailbox($imap, $targetFolder);
+						self::appendRawMessage($imap, $targetMailbox, $raw, $sentFlags);
+					}
+					// remove the old Draft outright (matches classic mail_compose::send()'s own
+					// deleteMessages(..., 'remove_immediately') cleanup after a successful
+					// send-from-draft)
+					$sourceMailbox = self::hordeMailbox($imap, $sourceFolder);
+					$imap->store($sourceMailbox, [
+						'add' => ['\\Deleted'],
+						'ids' => new \Horde_Imap_Client_Ids([(int)$emailId]),
+					]);
+					$imap->expunge($sourceMailbox);
+				});
 
 				$created[$creationId] = ['id' => $creationId, 'sendAt' => gmdate('Y-m-d\TH:i:s\Z'), 'undoStatus' => 'final'];
 			}

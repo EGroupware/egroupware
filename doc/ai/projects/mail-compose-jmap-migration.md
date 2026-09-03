@@ -2292,3 +2292,116 @@ each showing internally-consistent output after the fix) - not added to the repo
 existing `Mailer`-focused test file to extend cleanly; the closest ones,
 `api/tests/Mail/SmimeMailerTest.php` and `.../Jmap/ImapBuildMailerTest.php`, both re-ran clean with
 this fix in place, 21+125 tests, no regressions).
+
+## FIXED (2026-09-03): shim send via `EmailSubmission/set` (acc_id=42) took ~5.8s - deferred the post-send IMAP bookkeeping past the HTTP response
+
+Ralf: "sending via the shim takes an aweful long time e.g. reproducable via acc_id=42 account, can
+you instrument that a bit so we get an idea where it's actually coming from". Added temporary
+per-step timing (to a scratch log file, removed again once done) around one real send:
+
+```
+acc=42:53 0_imapServerConnect=0.020s
+acc=42:53 outcome=success 1_refetchDraft=0.585s 2_buildMailer=0.063s 3_smimeRawFetch=0.000s
+  4_smtpSend=0.622s 5_getRaw=0.001s 6_appendToSent=3.414s 7_deleteOldDraft=1.146s TOTAL=5.831s
+```
+
+The actual SMTP send (`4_smtpSend`) is fast (~0.6s) - ~80% of the wall-clock time is TWO IMAP round
+trips that run AFTER the mail has already gone out: appending the Sent-folder copy (~3.4s - a full
+raw-bytes IMAP APPEND, not a cheap server-side copy) and deleting+expunging the now-obsolete Draft
+(~1.1s). Two ways to fix, ralf's own framing:
+
+- (a) use Dovecot's Submission service (JMAP-like: upload the blob once, then submission "send +
+  copy to Sent" server-side) - real fix, but only pays off where the IMAP server actually
+  advertises both blob-upload and Submission (ralf: EGroupware's own Dovecot-based Mail containers
+  already offer/use both but without blob upload yet, so would profit; the hosting environment
+  currently uses Postfix directly, planned to migrate to Stalwart/JMAP anyway, making this most
+  relevant for the container deployments specifically). Unclear yet whether Horde's
+  `Horde_Imap_Client` interface has any support for the blob/Submission side at all - not
+  investigated.
+- (b) `fastcgi_finish_request()`: answer the client as soon as the mail is actually sent, run the
+  Sent-copy-append + old-draft-cleanup afterward, in the same PHP-FPM worker process. Chosen as the
+  low-hanging fruit for now; (a) postponed.
+
+**Fix**: `Imap::$deferredWork` (a static array of closures) + `Imap::queueDeferredWork()`/
+`runDeferredWork()`. `emailSubmissionSet()` now queues the Sent-append + old-Draft delete/expunge
+closure instead of running it inline, and builds the success response immediately after queuing
+(the SMTP send itself, `$mailer->send()`, already ran synchronously before this point - by
+construction the mail has genuinely already gone out, so the client isn't told "sent" before it's
+true; only non-critical bookkeeping is deferred). `mail/jmap.php`'s POST dispatch branch calls
+`fastcgi_finish_request()` (guarded by `function_exists()`, since not every SAPI has it) right after
+`echo`ing the JSON response, then `Imap::runDeferredWork()`, then `exit` - the GET/cacheable branch
+(read-only `Email/get` preview/view fetches) is untouched, since `EmailSubmission/set` is a mutating
+call only ever reachable via POST. A deferred closure that throws is caught and `error_log()`'d
+(same "best-effort bookkeeping" tolerance the old-draft cleanup already had inline before this
+change) rather than surfaced anywhere - by the time it runs, the client already has its response and
+there's no channel left to report a failure back to it.
+
+**Live-verified** (same acc_id=42 account, a fresh compose + send via the browser): response TOTAL
+dropped from ~5.8s to ~1.07s (`0_imapServerConnect=0.019s`,
+`1_refetchDraft=0.488s 2_buildMailer=0.011s 3_smimeRawFetch=0.000s 4_smtpSend=0.562s 5_getRaw=0.003s
+TOTAL=1.065s`), with a separate `DEFERRED appendToSent=3.732s deleteOldDraft=1.353s TOTAL=5.085s`
+line confirming the background work still completed - the Sent folder got the message and the old
+Draft was gone, both checked directly in the UI afterward.
+
+**Not (yet) extended to plain `Email/set` move/destroy** (ralf raised this: "That deferring might
+also make sense for other JMAP shim operations like moving mail to other folder/trash"): the same
+`store()`+`expunge()` primitive `emailSet()`'s `destroy` branch uses is almost certainly paying a
+similar cost (the old-Draft cleanup above uses that exact primitive), so a plain delete-forever or
+move-to-Trash likely IS meaningfully slow too. But the risk shape is different from
+`EmailSubmission/set`: there, the SMTP send is the actual requested action and has already
+irreversibly happened by the time bookkeeping is deferred - a failure in the deferred part loses
+nothing the client cares about (mail's already sent). For `emailSet()`, the move/copy/destroy IMAP
+call IS the entire requested action - nothing has happened yet at response time if it's deferred.
+Doing the same thing there would mean answering "done" before the IMAP op has actually run, which
+would (1) reintroduce exactly the failure-mode `Mail optimistic delete no confirm` (fixed
+`b9bffc171d`) was fixed to prevent - the client's own row-removal already deliberately waits for a
+confirmed server response before updating the UI - and (2) have no channel left to surface a
+deferred failure (permission error, full mailbox, dropped connection) back to the client at all,
+unlike a thrown exception today which correctly leaves the row in place. Applying this pattern there
+needs an explicit decision to accept that weaker guarantee (fire-and-forget, server-log-only
+failures) for moves/deletes too - not just a mechanical copy of the `EmailSubmission/set` fix.
+
+**Root-cause investigation (2026-09-03, ralf: "investigate root cause first")**: confirmed a plain
+`Email/set` move-to-Trash on acc_id=42 is even slower than the send case - 7.4s wall-clock for a
+SINGLE message. Temporarily enabled `Horde_Imap_Client`'s own protocol debug log
+(`Mail\Imap::$default_params['debug']`, normally commented out) for one live move, then reverted -
+Dovecot's own tagged response settles it directly:
+
+```
+S: 5 OK [HIGHESTMODSEQ 57820] Move completed (7.370 + 0.000 + 7.369 secs).
+>> Command 5 took 7.4754 seconds.
+```
+
+Our own measured round-trip (7.4754s) matches Dovecot's self-reported server-side processing time
+(7.370s) almost exactly - essentially ALL of the cost is inside Dovecot itself executing the MOVE,
+not network latency, not our IMAP client code, not PHP overhead. This matches (and now has hard
+protocol-level evidence for) the earlier 2026-08-27 finding already documented in
+`Jmap\Imap::imapServer()`'s own docblock ("Dovecot's own MOVE response reported 'Move completed
+(24.933 ... secs)'"). Genuinely external, infrastructure-side slowness on that particular Dovecot
+backend (storage format/indexing/plugin overhead on MOVE/EXPUNGE) - nothing left to fix in this
+codebase itself; further root-causing needs Dovecot server-side access (doveadm/logs on that
+mailbox), which is outside this repo. Debug logging reverted, no code change from this
+investigation.
+
+**Extended the deferral to `Email/set` move/destroy too (2026-09-03, same day)**: ralf pointed out
+`mail/js/app.ts`'s `callMove()`/`deleteMessages()` already remove the row optimistically BEFORE the
+server replies and only reconcile (`nm.refresh()`) if the JMAP call rejects (`b9bffc171d`, same
+commit for both) - so the "client told 'done' before it's true" risk from the "not (yet) extended"
+analysis above already exists today, just surfaced via promise rejection rather than response
+timing. The one real gap: a failure DURING the deferred IMAP call itself (rare - invalid
+folder/message id etc. are still validated synchronously before anything is queued) has no channel
+back to the client, which already got its "OK" and won't call `nm.refresh()`. Decided (ralf: "Defer
+now, revert-signal later") to accept that narrower risk now, given how consistently slow this
+backend's MOVE/EXPUNGE is, and revisit pushing a revert notification over the existing WebSocket
+channel (`project_mail_jmap_push_notifications`) as a follow-up rather than building it upfront.
+
+**Fix**: `emailSet()`'s `$moves` and `$destroyed` handling (the IMAP COPY+move and STORE+EXPUNGE
+calls) now go through `queueDeferredWork()` too, same as `emailSubmissionSet()`'s. Flag add/remove
+(plain STORE, no expunge) and `$copies` (COPY without removing the source - nothing disappears from
+the current view to reconcile, no evidence it's slow) stay synchronous.
+
+**Live-verified** (acc_id=42, real browser actions, `window.fetch` wrapped to time the `jmap.php`
+POST): move-to-Trash dropped from 7.4s to 560ms, permanent delete (already-in-Trash, `destroy`
+branch) to 536ms - both confirmed via the UI itself, not just the fast response: the moved message
+showed up in Papierkorb afterward, and the permanently-deleted one was actually gone (not just
+missing from the row that already disappeared optimistically).
