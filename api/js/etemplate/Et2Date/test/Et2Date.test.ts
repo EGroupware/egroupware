@@ -126,6 +126,34 @@ describe("Date widget", () =>
 			assert.equal(input.value, "2026-11-05", "Stopped showing what the user typed");
 			assert.equal(element.get_value(), "2026-11-05T00:00:00Z");
 		});
+
+		// flatpickr parses every prefix of a date, so a half-typed date must not be committed:
+		// the "change" it fired re-queried a nextmatch filter after the first keystroke, and the
+		// re-render took the focus out of the field.
+		it("does not commit a date the user is still typing", async() =>
+		{
+			element.set_value("2026-11-05T00:00:00Z");
+			await element.init();
+			await elementUpdated(element);
+			const changeSpy = sinon.spy();
+			element.addEventListener("change", changeSpy);
+
+			const input = element.findInputField();
+			for(const typed of ["2", "202", "2027-0", "2027-01-"])
+			{
+				input.value = typed;
+				input.dispatchEvent(new Event("input", {bubbles: true}));
+				await elementUpdated(element);
+				assert.isFalse(changeSpy.called, `"${typed}" was committed`);
+				assert.equal(element.get_value(), "2026-11-05T00:00:00Z", `"${typed}" changed the value`);
+			}
+
+			input.value = "2027-01-15";
+			input.dispatchEvent(new Event("input", {bubbles: true}));
+			await elementUpdated(element);
+			assert.isTrue(changeSpy.called, "the complete date was not committed");
+			assert.equal(element.get_value(), "2027-01-15T00:00:00Z");
+		});
 	});
 
 	describe("Minimum and maximum date", () =>

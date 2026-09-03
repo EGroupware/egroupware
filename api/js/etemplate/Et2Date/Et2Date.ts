@@ -861,18 +861,26 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		{
 			// Invalid date string
 		}
-		// If they typed a valid date/time, try to update flatpickr
-		if(parsedDate)
+		// If they typed a complete date/time, try to update flatpickr.
+		// "Complete" means the text round-trips through the display format: flatpickr parses
+		// every prefix of a date ("0" gives 30/04/2025 with "d/m/Y H:i"), so committing
+		// whatever parses would overwrite the widget's value and fire "change" after every
+		// single keystroke.  In a filter that "change" re-queries the nextmatch, which
+		// re-renders and takes the focus out of the field - the user gets one character in
+		// and typing a date is impossible.  Anything shorter stays a plain "input"; flatpickr
+		// itself commits on blur and Enter, so a date typed in another form (eg. "1/9/2026")
+		// is still picked up when the field is left.
+		const formattedDate = parsedDate ? flatpickr.formatDate(parsedDate, this.getOptions().altFormat) : null;
+		if(formattedDate === value)
 		{
 			// What the user sees (their dateformat preference) vs. what we store and submit.
 			// The et2-textbox holds the stored form: its value is what our own value getter
 			// reads back, so writing the displayed form here would give a typed-in date a
 			// different value than the same day picked from the calendar.  What the user typed
 			// stays visible either way - that is flatpickr's separate altInput, not this.
-			const displayDate = flatpickr.formatDate(parsedDate, this.getOptions().altFormat);
+			// The displayed form is formattedDate above, which the condition has already compared.
 			const storedDate = flatpickr.formatDate(parsedDate, this.getOptions().dateFormat);
-			if(value === displayDate &&
-				// Avoid infinite loop of setting the same value back triggering another change
+			if(// Avoid infinite loop of setting the same value back triggering another change
 				this._instance.input.value !== storedDate)
 			{
 				try
