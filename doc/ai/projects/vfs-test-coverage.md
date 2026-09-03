@@ -324,6 +324,37 @@ since the shared `StreamWrapperBase` suite already covers basic CRUD/ACL for bot
   `testSymlinkFromFolder()` which each subclass overrides to pass a wrapper-scoped path instead) -
   not touched, out of scope for this phase.
 
-**Next**: Phase 5 (hooks - `vfs_added`/`modified`/`read`/`pre-write`/`mkdir` direct coverage, plus
-`filemanager_hooks::vfs_hooks()`/`push()`, the real client-notification pipeline - see the corrected
-finding above).
+**Phase 5 DONE** (2026-09-03): `api/tests/Vfs/HooksTest.php` - green (11 tests), own scratch mount
+like `FacadeTest`/`SqlfsBackendTest`. Two testing seams found to avoid needing a live push server or
+DB writes: `Api\Hooks::$locations` (protected static) spliced via reflection to add a spy hook
+alongside the real, already-registered ones for the test's duration; `Api\Json\Push::$backend`
+(protected static) pre-set via reflection to the test object itself (implements
+`Api\Json\PushBackend`) BEFORE any push happens, so `Push::checkSetBackend()`'s "only set if not
+already set" guard skips trying to reach a real backend entirely.
+- **Part A** (direct `vfs_*` hook firing, 6 tests): `vfs_mkdir`/`vfs_unlink`/`vfs_rename`/
+  `vfs_rmdir` fire with the expected `path`/`from`/`to`/`stat` data; a write correctly fires
+  `vfs_added` then `vfs_modified` then `vfs_read` in sequence. **Real finding**: `vfs_pre-write` is
+  the ONLY `vfs_*` hook whose `Api\Hooks::process()` call does NOT pass `no_permission_check=true`
+  (`StreamWrapper.php:288`, vs `:246,452,518,579,628` for all six others) - so unlike every other
+  vfs hook, it only fires for an app the current user actually has run-rights to. No consumer is
+  registered for it anywhere in the codebase today (confirmed by the original mapping), so this has
+  zero observable effect currently, but it's a real inconsistency documented and regression-tested
+  in case anyone ever wires a `vfs_pre-write` consumer up.
+- **Part B** (`filemanager_hooks::vfs_hooks()`/`push()`, 5 tests - the corrected "real
+  client-notification pipeline" finding from earlier in this doc): a zero-size file write triggers
+  no push; a non-empty write outside `/home/` broadcasts (`account_id === Push::ALL`); temp/lock-file
+  names (`~$...`, `.~lock....`, `....tmp`) are filtered entirely; a rename fires an extra `delete`
+  push for the old path before the `add` push for the new one; a write under `/home/` targets the
+  owner (not a broadcast) instead. All confirmed working as designed - no bugs found in this part,
+  the filtering/targeting logic does what its comments say.
+- **Deliberately not chased**: whether the `Push`->`swoolepush` link itself can silently drop
+  messages once past `filemanager_hooks::push()` - that's the actual remaining candidate for "not
+  always working" reports (`Api\Json\Push`'s real backend, `notifications_push`, wasn't touched by
+  this phase's spy), but it's an integration/ops question (is the push server reachable, is the
+  client's websocket connected, session drops...) rather than something a unit test in this suite
+  can meaningfully assert on. If those reports continue, the next debugging step is there, not in
+  the filtering/targeting logic Phase 5 now covers.
+
+**Next**: Phase 6 (EPL/Stylite wrappers - `S3`, `S3direct`, `Merge`, `Versioning`, `Links`, `Vlinks`
+in `stylite/src/Vfs/`) and Phase 7 (`fsck` consistency-check mechanism, core + EPL hook consumers).
+Both confirmed priority, not deferred - see Status section above.
