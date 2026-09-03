@@ -224,10 +224,28 @@ column to the `test` fixture for zero real-world payoff).
 
 - [x] **Phase 0 - Mapping** (this doc). Environment fixed: `BaseTest` domain resolution,
       `t_modified` clock-skew assertion.
-- [ ] **Phase 1 - `Base.php`/`Base2.php` core CRUD** (highest blast-radius): `parse_search()`,
-      `search()`'s `$filter` injection guard, `search2criteria()`, `save()` edge cases, `update()`,
-      `delete()`, `Base2`. Extend the `egw_test` fixture schema (uc column + bool column) as a
-      prerequisite sub-step.
+- [x] **Phase 1 - `Base.php`/`Base2.php` core CRUD** (highest blast-radius). `egw_test` fixture
+      extended (`t_uniq` uc column + `t_active` bool column, `test` app v17.1.001 -> 17.1.002,
+      commit `5e68a7176b`). Landed as three files, 41 new tests total, all green:
+      - `api/tests/Storage/SearchTest.php` (commit `e2cf834489`) - `parse_search()`, `search()`'s
+        `$filter` injection guard, `search2criteria()`, `get_default_search_columns()`,
+        `query_list()`'s stale-cache behavior.
+      - `api/tests/Storage/SaveDeleteTest.php` + `Base2Test.php` (commit `c744532261`) - `save()`'s
+        update-or-insert branch, `$extra_where` optimistic locking, the `USER_TIMEZONE_READ`
+        staleness-reload hack, `update()`, `delete()`, `not_unique()`, `Base2`.
+      - Deferred (documented, not done): the autoinc-less-table branch of `save()` (fixture only has
+        an autoinc table), `search2criteria()`'s full AND/OR/NOT/quoted-phrase matrix, `_get_columns()`
+        directly, UNION-query/`search_return_iterator` paths.
+      - **Found, not fixed (out of scope for a test-only pass)**: `Api\Db::connect()` only calls
+        `set_capabilities()` when opening a NEW physical connection - reusing the pooled static
+        `self::$ADOdb` link skips it, so a second `Api\Db` instance built later in the same process
+        can silently keep the wrong default capabilities (e.g. invalid `CAST(%s AS varchar)` instead
+        of `AS char` for MySQL/MariaDB). `SearchTest.php` works around it locally in
+        `setUpBeforeClass()`. Worth a real fix in `Db.php` at some point - ask Ralf before touching
+        shared `api/` behavior.
+      - Also documented (not fixed): `update()`'s docblock claims `merge=false` reduces
+        `$this->data` to just `$fields` - the actual code leaves `$this->data` untouched. Locked
+        down via test + comment, not "corrected" to match the docblock.
 - [ ] **Phase 2 - `History.php` + `Tracking.php`**: `changed_fields()`, notification dispatch via
       mock, `History::search()`/`add()`/`delete()`/`needs_diff()`, `track()` contract.
 - [ ] **Phase 3 - `Customfields.php` gaps**: `format()`, reordering logic, `save()` deletion
