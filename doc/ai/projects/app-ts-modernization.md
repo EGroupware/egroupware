@@ -930,6 +930,18 @@ with `Object.values(egw.preference(...) || [])` - same defensive pattern already
 project for preference/select-option values that may be an object or an array. Verified live against
 the real (non-array-shaped) preference data before and after the fix.
 
+A second, identical copy of the exact same line existed in `paste_enabled()` (used to build the
+"Einfügen" context-menu submenu's target-folder list) - reported separately by Ralf
+(`egw_action: enabled callback of action 'file_drop_symlink_paste' threw ... TypeError: (egw.preference
+|| []) is not iterable`) after the first fix was already live, since it's a distinct code path that
+happens to read the same preference the same unsafe way. Fixed identically. Prompted a repo-wide sweep
+(`grep -n "\[\.\.\."` across all app.ts/filemanager.ts files touched in this project) for the same
+raw-spread-over-a-possibly-object-shaped-value pattern - see `doc/ai/modernization.md`'s new standing
+rule for what the sweep found and fixed (`resources/js/app.ts`'s `app.calendar.state.owner` spread had
+the identical latent risk, fixed the same way) and confirmed safe (`filemanager.ts`'s
+`[...new Set(clipboard.type)]`, which round-trips through the client's own `sessionStorage`, never
+through a server JSON-encode step, so it can't hit this particular shape mismatch).
+
 ## calendar/js/app.ts (done)
 
 The largest file in this project by line count, and by far the most `var`/jQuery usage of any file here
@@ -1200,10 +1212,16 @@ Baseline: 0 `var`, 1 jQuery use, 4 TS errors, 0 `sendRequest()`, 1 `function(){}
   an existing precedent already in the codebase (`calendar/js/et2_widget_planner.ts:2004` does the exact
   same `<CalendarApp>app.calendar` cast), and is more precise than a blanket `<any>` since a real typed
   class already exists.
-- jQuery: `jQuery.extend([], app.calendar.state.owner) || []` (`sidebox_change()`) -> spread,
-  `[...((<CalendarApp>app.calendar).state.owner || [])]` - also drops the now-visibly-dead `|| []` after
-  the original `jQuery.extend()` call (that call always returns its own first-arg target, so the
-  fallback could never actually fire; the new spread's own `|| []` on the *input* replaces it correctly).
+- jQuery: `jQuery.extend([], app.calendar.state.owner) || []` (`sidebox_change()`) -> **originally**
+  converted to a spread, `[...((<CalendarApp>app.calendar).state.owner || [])]` - also dropped the
+  now-visibly-dead `|| []` after the original `jQuery.extend()` call (that call always returns its own
+  first-arg target, so the fallback could never actually fire; the new spread's own `|| []` on the
+  *input* replaces it correctly). **Corrected in a later pass**: a spread requires a real iterable, but
+  `jQuery.extend([], x)` tolerates `x` being a plain `{"0":...,"1":...}` object (copies key-by-key onto
+  the array target) - the same shape `app.calendar.state` can come back as after a server round-trip
+  (found via the `filemanager/js/filemanager.ts` `drop_history` regression - see that file's section and
+  `doc/ai/modernization.md` for the general rule). Changed to `Object.values((<CalendarApp>app.calendar)
+  .state.owner || [])`, which tolerates both shapes like the original jQuery call did.
 - `view_calendar()`'s `let show_calendar = function(res_ids) {...}.bind(this);` -> arrow function
   (`const show_calendar = (res_ids) => {...};`), dropping the now-redundant `.bind(this)` - the callback
   only ever reads `this.egw`/enclosing locals, never relies on being invoked as a method.

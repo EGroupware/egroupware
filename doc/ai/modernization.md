@@ -29,6 +29,24 @@ found them, and prefer the modern form for anything new.
   `document.getElementById()` lookup by that id. When in doubt, parse into a detached container first
   (`document.createElement('div')` + `.innerHTML = htmlString`, then move its children into the real
   target via `appendChild()` in a loop) to match jQuery's actual behavior.
+- **`jQuery.extend([], x)`/`jQuery.map(x, fn)` -> a native array spread (`[...x]`) or `Array.from(x)` is
+  only safe when `x` is guaranteed to already be a real array.** jQuery's array-ish helpers tolerate `x`
+  being a plain `{"0":...,"1":...}` object (copies/iterates by key, same as if it were an array) -
+  `[...x]`/`Array.from(x)` do not, and throw `TypeError: x is not iterable` the moment `x` isn't a real
+  iterable. This bites specifically for values that round-trip through `egw.preference()` (or any other
+  PHP `json_encode()` boundary): a PHP array can come back as a JSON *object* instead of a JSON *array*
+  depending on how the server happened to encode it that time (its keys' exact sequence/gaps, or even
+  which endpoint/batching path fetched it - the same preference value can come back shaped differently
+  depending on whether it was fetched individually or as part of a bulk `"*"` fetch), and JS's
+  `JSON.parse()` never promotes a `{...}` payload into a real `Array` no matter what its keys look like.
+  Caused two real, live-verified regressions in the same session (`filemanager/js/filemanager.ts`'s
+  `drop_history` preference breaking both drag-drop and the paste context-menu, `resources/js/app.ts`'s
+  `app.calendar.state.owner`) - see `doc/ai/projects/app-ts-modernization.md`'s filemanager section for
+  the full writeup. **Use `Object.values(x || [])` instead** wherever `x` isn't locally known to always
+  be a real array (a value that never leaves this session's own JS, e.g. something round-tripped only
+  through `sessionStorage` by this same client code, is fine as a plain spread) - `Object.values()`
+  handles both a real array and an object-with-numeric-keys correctly, matching what the original jQuery
+  call actually tolerated.
 - **No `var` keyword.** Don't use the old `var` keyword in new code. even if it is used in surrounding code.
   Use modern `const` or `let` keywords
 - **Prefer arrow functions over `function(...) {...}` expressions and `var self = this`/`var that =

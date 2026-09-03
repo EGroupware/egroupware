@@ -100,7 +100,10 @@ class resourcesApp extends EgwApp
 		if(ev[0] != 'r') {
 			widget.setSubChecked(ev,widget.getValue()[ev].value || false);
 		}
-		let owner = [...((<CalendarApp>app.calendar).state.owner || [])];
+		// app.calendar.state can come back from a server round-trip with .owner as a plain
+		// {"0":...,"1":...} object rather than a real array (depends on how the server last
+		// JSON-encoded it) - Object.values() handles both, a spread would throw on the object case.
+		let owner : string[] = Object.values((<CalendarApp>app.calendar).state.owner || []);
 		for(let i = owner.length-1; i >= 0; i--)
 		{
 			if(owner[i][0] == 'r')
