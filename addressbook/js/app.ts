@@ -1463,7 +1463,10 @@ class AddressbookApp extends EgwApp
 			Promise.all([groupedPromise, advancedSearchPromise]).then(() =>
 			{
 				framework.setWebsiteTitle('addressbook', '');
-				nm?.applyFilters({advanced_search: false});
+				// applyFilters() skips its reload when advanced_search doesn't actually
+				// change (the common case), so force it with a bare call below instead.
+				nm?.applyFilters({advanced_search: false}, {reload: false});
+				nm?.applyFilters();
 			});
 			return false;
 		}
