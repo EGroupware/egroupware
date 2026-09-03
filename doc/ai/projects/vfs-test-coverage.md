@@ -246,5 +246,24 @@ and NOT present in CI):
    mount-point back to the real test user after creating it, matching the existing
    `StreamWrapperBase::mountMerge()` convention.
 
-**Next**: Phase 2 (`Vfs\Base` mount table - `mount()`/`umount()` persistence, `resolve_url()`,
-`resolve_url_cache`/`symlink_cache`, `scheme2class()`/`load_wrapper()` edge cases).
+**Phase 2 DONE** (2026-09-03): `api/tests/Vfs/MountTableTest.php` - green (18 tests): `mount()`/
+`umount()` (root requirement, add/overwrite/no-op-if-identical, path-or-url unmount lookup),
+`resolve_url()` (longest-mount-point-wins, non-`vfs`-scheme passthrough, `$host` placeholder
+substitution, `resolve_url_cache` staleness until `clearstatcache()`), `mount_url()` (reverse
+lookup), `scheme2class()` (core/simple/dotted-app-scheme/unknown), `load_wrapper()`
+(known/unknown scheme). One naming gotcha found (not a bug): `scheme2class('vfs')` returns
+`Vfs\Base::class`, not `Vfs::class` - `__CLASS__` inside `Base::scheme2class()` is compile-time
+bound to `Base` (where it's written), not late-static-bound to whatever called it.
+
+Deliberately NOT exercised with a real write: `mount(..., $persistent_mount=true)`'s server-wide
+persistence branch (`Config::save_value('vfs_fstab', ...)`) - this dev environment's `vfs_fstab`
+server config is exactly the fragile shared state documented above (currently pointing `/` at
+`stylite.s3://`), and a test writing to it for real risks corrupting that shared config for every
+other session/tab using this environment. All `MountTableTest`/`FacadeTest` mounts use
+`$persistent_mount=false` (transient, in-memory only). The per-user persistent branch (positive int
+`$persistent_mount`, writing to `Api\Preferences` instead) would be safe to test in a follow-up,
+since it only touches the test's own account.
+
+**Next**: Phase 3 (core stream-wrapper deep coverage - `Vfs\StreamWrapper` router +
+`Vfs\Sqlfs\StreamWrapper` backend: symlink creation, extended-ACL storage, `propfind`/`proppatch`
+storage side, stat-cache behavior).
