@@ -298,6 +298,32 @@ reasonably covered (`StreamWrapperBase::testSymlinkFromFolder`/`testSymlinkSelfR
   relying on a subsequent `Vfs::stat()` read in the same request - `chmod()` doesn't need it, but
   don't rely on that being true for `chown()`/`chgrp()` too without checking.
 
-**Next**: Phase 4 (secondary Api/Vfs wrappers - `Links\StreamWrapper` ACL-by-linked-entry,
-`Filesystem\StreamWrapper` fixed user/group/mode enforcement, `Sqlfs\Utils` admin/maintenance;
-`Sharing\StreamWrapper` gap-fill only, already reasonably covered).
+**Phase 4 DONE** (2026-09-03): added to the existing per-wrapper test files rather than new ones,
+since the shared `StreamWrapperBase` suite already covers basic CRUD/ACL for both:
+- `api/tests/Vfs/Links/StreamWrapperTest.php` (+3 tests): `url_stat()`'s virtual entry-dir (a
+  `/apps/$app/$id` path that "exists" as a directory before any file is ever uploaded to it, as long
+  as the user has read access to the linked entry - `Links/StreamWrapper.php:159-208`), `eacl()`/
+  `get_eacl()` being pure no-ops (`:221-241` - access to a link entry is governed entirely by the
+  underlying app's own ACL, custom eACLs can't be layered on top the way they can for plain sqlfs
+  paths), and `rmdir()` on the entry-dir itself silently no-op'ing rather than actually removing it
+  (`:296-308`, "never delete entry-dir, as it makes attic inaccessible").
+- `api/tests/Vfs/Filesystem/StreamWrapperTest.php` (+2 tests): `chmod()` being entirely unsupported
+  (no such method on the class at all - the mount-configured fixed mode can't be changed per-file,
+  confirms/extends the existing `testWithAccess` skip's stated reason), and `deny_script()` blocking
+  a `.php`-named write when the mount has no `exec=1` query param (`Filesystem/StreamWrapper.php:
+  120,755-761`, checked from `stream_open()` for any non-read-only open).
+- `Sqlfs\Utils` (admin/maintenance) - `migrate_db2fs()` is a one-time legacy migration tool, out of
+  scope; `quotaRecalc()` (`Sqlfs/Utils.php:558-593`) operates over the ENTIRE sqlfs table
+  server-wide (not scoped to any test's own fixtures) and would be a real, broad side-effecting
+  write against this shared dev DB - deliberately not exercised with a real call, same reasoning as
+  Phase 2's skipped persistent-mount write. `fsck()` itself is Phase 7, not here.
+- Confirmed (not newly caused) while running the full suite: `Links/StreamWrapperTest.php` and
+  `Filesystem/StreamWrapperTest.php`'s inherited `testSymlinkSelfReferential` both still fail on the
+  same pre-existing `/home/demo` -> `stylite.s3://` environment issue (`StreamWrapperBase`'s default
+  `testSymlinkSelfReferential()` uses `Vfs::get_home_dir()` unconditionally, unlike
+  `testSymlinkFromFolder()` which each subclass overrides to pass a wrapper-scoped path instead) -
+  not touched, out of scope for this phase.
+
+**Next**: Phase 5 (hooks - `vfs_added`/`modified`/`read`/`pre-write`/`mkdir` direct coverage, plus
+`filemanager_hooks::vfs_hooks()`/`push()`, the real client-notification pipeline - see the corrected
+finding above).
