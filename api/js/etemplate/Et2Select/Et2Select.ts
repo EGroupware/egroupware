@@ -1157,7 +1157,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 		return html`
             <et2-image slot="prefix" part="icon" style="width: var(--icon-width)"
-                       src="${option.icon}"></et2-image>`
+                       src="${option.icon}" ?inline=${!!option.inlineIcon}></et2-image>`
 	}
 
 
