@@ -2943,7 +2943,14 @@ class Imap extends Jmap\Base
 
 		$part = $structure->getPart($partId);
 		$part->setContents($raw, ['encoding' => $encoding]);
-		$charset = $part->getContentTypeParameter('charset') ?: 'us-ascii';
+		// default to utf-8, not us-ascii which Horde chooses (same convention already established
+		// in Api\Mail's own Horde_Mime_Part::$defaultCharset override, api/src/Mail.php) - our own
+		// outgoing plain-text bodies are always utf-8, and a genuinely us-ascii message decodes
+		// identically either way (us-ascii is a strict subset of utf-8), so this can only help:
+		// found live 2026-09-03 (ralf: a shim-account plain-text reply with umlauts previewed as
+		// mojibake - Thunderbird displayed the very same message correctly, since it also assumes
+		// utf-8 rather than us-ascii for an undeclared charset)
+		$charset = $part->getContentTypeParameter('charset') ?: 'utf-8';
 
 		return [
 			'value' => Api\Translation::convert($part->getContents(), $charset, 'utf-8'),
@@ -3297,7 +3304,8 @@ class Imap extends Jmap\Base
 			return '';
 		}
 		$part = $structure->getPart($partId);
-		$charset = $part->getContentTypeParameter('charset') ?: 'us-ascii';
+		// default to utf-8, not us-ascii - see fetchBodyValue()'s identical fix/docblock above
+		$charset = $part->getContentTypeParameter('charset') ?: 'utf-8';
 		$raw = Api\Translation::convert($part->getContents(), $charset, 'utf-8');
 
 		if ($useHtml && $partId === $htmlId)

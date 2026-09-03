@@ -825,19 +825,26 @@ class Mailer extends Horde_Mime_Mail
      */
 	function getRaw($stream=true)
 	{
+		// code copied from Horde_Mime_Mail::getRaw(), as there is no way to inject charset in
+		// _headers->toString(), which is required to encode headers containing non-ascii chars correct
+		// Smime sign needs to be 7bit encoded to avoid any changes
+		$encode = $this->_base && $this->_base->getMetadata('X-EGroupware-Smime-signed')?
+				Horde_Mime_Part::ENCODE_7BIT :
+				(Horde_Mime_Part::ENCODE_7BIT | Horde_Mime_Part::ENCODE_8BIT | Horde_Mime_Part::ENCODE_BINARY);
 		if (!$this->_headersSynced)
 		{
 			self::checkSetRequiredHeaders($this->_headers);
-			parent::send(new Horde_Mail_Transport_Null(), true);	// true: keep Message-ID
+			// same $encode as below, NOT parent::send()'s own hardcoded ENCODE_7BIT-only default -
+			// found live 2026-09-03 (ralf: a shim-sent plain-text reply with umlauts arrived
+			// garbled): a message never explicitly send() before getRaw() (the saveAsDraft() case
+			// this override exists for) used to finalize its Content-Transfer-Encoding header here
+			// with a NARROWER mask than the body bytes below then got serialized with, picking a
+			// different, inconsistent encoding/escaping for the same content than what that
+			// already-written header declares.
+			$this->_send(new Horde_Mail_Transport_Null(), true, true, ['encode' => $encode]);	// true, true: keep Message-ID, use flowed format
 			$this->_headersSynced = true;
 		}
-		// code copied from Horde_Mime_Mail::getRaw(), as there is no way to inject charset in
-		// _headers->toString(), which is required to encode headers containing non-ascii chars correct
         if ($stream) {
-			// Smime sign needs to be 7bit encoded to avoid any changes
-			$encode = $this->_base && $this->_base->getMetadata('X-EGroupware-Smime-signed')?
-					Horde_Mime_Part::ENCODE_7BIT :
-					(Horde_Mime_Part::ENCODE_7BIT | Horde_Mime_Part::ENCODE_8BIT | Horde_Mime_Part::ENCODE_BINARY);
             $hdr = new Horde_Stream();
             $hdr->add($this->_headers->toString(array('charset' => 'utf-8', 'canonical' => true)), true);
             return Horde_Stream_Wrapper_Combine::getStream(
@@ -848,8 +855,17 @@ class Mailer extends Horde_Mime_Mail
             );
         }
 
+		// found live 2026-09-03 (ralf: a shim-sent plain-text reply with umlauts arrived garbled,
+		// missing its charset param entirely) - this branch used to call toString() WITHOUT the
+		// 'encode' option above, defaulting to ENCODE_7BIT alone. send() (called earlier, via a
+		// REAL SMTP transport that may have negotiated 8BITMIME) already finalized a
+		// Content-Transfer-Encoding header in $this->_headers based on the WIDER encode mask above;
+		// re-serializing the body here with a NARROWER one picks a different, inconsistent
+		// encoding/escaping for the actual bytes than what that already-written header declares -
+		// same 'encode' value as the stream branch, so both stay consistent with whatever send()
+		// (or getBasePart()'s own prior toString() calls) actually decided.
         return $this->_headers->toString(array('charset' => 'utf-8', 'canonical' => true)) .
-			$this->getBasePart()->toString(array('canonical' => true));
+			$this->getBasePart()->toString(array('canonical' => true, 'encode' => $encode));
     }
 
 	/**

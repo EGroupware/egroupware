@@ -2238,3 +2238,57 @@ capable of genuinely resolving to plain text at all.
 unchecked, plain toolbar) with the fully-quoted body visible (`>`-prefixed original + signature);
 manually toggling the HTML checkbox afterward still correctly converts and shows the content (no
 regression to the existing manual toggle path). No console errors either time.
+
+## FIXED (2026-09-03): shim plain-text reply with umlauts previewed as mojibake - two independent bugs, both real
+
+To test the fix above, ralf created a genuine plain-text reply (German umlauts/ß) via a shim
+(Dovecot/IMAP) account and noticed the received message previewed with garbled `ü`/`ß` -
+Thunderbird displayed the SAME raw message correctly, which turned out to be the key clue.
+
+### Bug 1 (send side): `Api\Mailer::getRaw(false)` could emit a body whose actual bytes didn't match its own `Content-Transfer-Encoding` header
+
+`getRaw($stream=true)`'s stream branch passes an explicit `'encode'` mask (7bit|8bit|binary, or
+7bit-only for a signed S/MIME part) to `getBasePart()->toString()`; the non-stream branch
+(`getRaw(false)` - what every JMAP-native send path actually calls) omitted it entirely, defaulting
+to `toString()`'s own `ENCODE_7BIT`-only default. `Horde_Mime_Part`'s own transfer-encoding decision
+is masked-dependent AND cached per-mask (`_temp['sendTransferEncoding'][$encode]`) - reserializing
+the body with a DIFFERENT mask than whatever `send()` (a real SMTP transport, possibly negotiating
+8BITMIME) or the earlier "never actually sent, just building a draft" auto-`send()` already decided
+picks a different, inconsistent actual encoding for the SAME bytes than the `Content-Transfer-
+Encoding` header (built from `$this->_headers`, NOT re-decided) still declares - e.g. a header
+saying `quoted-printable` while the body was actually re-serialized raw/`8bit`, or vice versa.
+Reproduced directly via PHPUnit (`Mailer::setBody()` + `getRaw(false)`, both with and without an
+explicit prior `send()`/forced `8BIT` encode) - confirmed live, BEFORE this fix, in both directions.
+
+**Fix**: compute `$encode` once, use it for the internal "never sent yet" auto-`send()` (now calling
+this class's own `_send()`, which accepts `$opts`, instead of `parent::send()`, which doesn't) AND
+for both `getRaw()` branches' body (re)serialization - the header and the body bytes it wraps are
+now always decided from the exact same mask, whichever code path produced them.
+
+### Bug 2 (read side, the actual mojibake): the shim's own body-decoders default an undeclared charset to `us-ascii`, not `utf-8`
+
+`Api\Mail\Jmap\Imap::fetchBodyValue()` (JMAP `Email/get`'s bodyValues, live message reading) and
+`structureToHtml()` (S/MIME/TNEF resolved-message rendering) both had `$charset =
+$part->getContentTypeParameter('charset') ?: 'us-ascii';` - RFC 2045's literal default, but NOT
+what any of this matters against in practice: this project's own outgoing plain-text is always
+utf-8 (bug 1 above just made that reliably DECLARED too), and Thunderbird - which displayed ralf's
+undeclared-charset test message correctly - already assumes utf-8 for undeclared charset rather
+than the RFC-literal default, matching most modern MUAs. `Api\Mail.php` (`api/src/Mail.php:8154-
+8155`) already carries this exact fix for the CLASSIC IMAP path (`Horde_Mime_Part::$defaultCharset
+= 'utf-8'; // Default charset to utf-8, not us-ascii which Horde chooses`) - the newer JMAP-shim
+implementation is a separate, parallel codepath that never inherited it.
+
+**Fix**: both call sites now default to `'utf-8'` instead of `'us-ascii'`. Zero downside for a
+genuinely us-ascii message (a strict subset of utf-8, decodes identically either way) - only
+improves handling of any message - not just ones affected by bug 1, any 3rd-party sender's mail
+too - that lacks a declared charset.
+
+**Test coverage**: `mail/tests/StructureToHtmlTest.php::testUndeclaredCharsetDefaultsToUtf8NotMojibake`
+(pure in-memory `Horde_Mime_Part`, no IMAP connection needed, matching this file's existing pattern)
+- verified it actually catches the regression by reverting the fix locally and confirming the exact
+mojibake pattern (`GrÃ¼Ãen` - UTF-8 bytes misread as Latin-1/us-ascii) reappears. `Api\Mailer::getRaw()`'s own fix was
+verified via a throwaway PHPUnit script (both "never sent" and "sent with forced 8BIT" scenarios,
+each showing internally-consistent output after the fix) - not added to the repo test suite (no
+existing `Mailer`-focused test file to extend cleanly; the closest ones,
+`api/tests/Mail/SmimeMailerTest.php` and `.../Jmap/ImapBuildMailerTest.php`, both re-ran clean with
+this fix in place, 21+125 tests, no regressions).

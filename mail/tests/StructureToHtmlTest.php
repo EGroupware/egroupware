@@ -72,4 +72,24 @@ class StructureToHtmlTest extends \PHPUnit\Framework\TestCase
 
 		$this->assertStringContainsString('cid:unknown@nowhere', $html);
 	}
+
+	/**
+	 * A plain-text part with NO charset parameter at all - found live 2026-09-03 (ralf: a
+	 * shim-account plain-text reply with German umlauts previewed as mojibake, while Thunderbird
+	 * displayed the identical raw message correctly, since it also assumes utf-8 rather than
+	 * us-ascii for an undeclared charset). Our own outgoing plain-text is always utf-8 (fixed the
+	 * same day to also always DECLARE it, Api\Mailer::getRaw()), but this covers any OTHER message
+	 * (a stale draft from before that fix, or from any 3rd-party sender) that still lacks one.
+	 */
+	public function testUndeclaredCharsetDefaultsToUtf8NotMojibake()
+	{
+		$part = new \Horde_Mime_Part();
+		$part->setType('text/plain');
+		// deliberately NOT calling setCharset() - the exact "no charset declared" shape reported
+		$part->setContents('Mit freundlichen Grüßen');
+
+		$html = JmapShim::structureToHtml($part);
+
+		$this->assertStringContainsString('Grüßen', $html);
+	}
 }
