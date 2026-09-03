@@ -379,9 +379,15 @@ export class MailApp extends EgwApp
 						}
 					});
 				}
-				if(!this.tree_wdg){
-					this.tree_wdg = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-				}
+				// Always refetch, never reuse a cached reference: a client-side reload of this
+				// same 'mail.index' template (e.g. mail app-header menu -> Categories -> "Back to
+				// list") builds a brand new tree widget/DOM node, and destroy() (the only place
+				// that resets tree_wdg to null) only runs when the whole mail app closes - so a
+				// stale guard here would silently keep wiring up the old, detached widget below
+				// (autoloading, openStatePreference, ...) while the new, visible tree stays at its
+				// unconfigured defaults (found live 2026-09-03: empty autoloading crashed the
+				// server with "Invalid $GLOBALS[egw_info][flags][currentapp]!" on expand).
+				this.tree_wdg = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 				if (this.tree_wdg) {
 					// show / open selected folder, if necessary autoload it
 					if (typeof this.tree_wdg.value === "string" && !this.tree_wdg.scrollToSelected())
@@ -2513,9 +2519,10 @@ export class MailApp extends EgwApp
 		}
 		try
 		{
-			if(!this.tree_wdg){
-				this.tree_wdg = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-			}
+			// Always refetch - see the matching comment in et2_ready()'s 'mail.index' case for why
+			// a cached tree_wdg can point at a stale, detached widget after a client-side template
+			// reload.
+			this.tree_wdg = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 
 			const activeFolders = this.tree_wdg.getTreeNodeOpenItems(nodeToRefresh,mode2use);
 			//alert(activeFolders.join('#,#'));
