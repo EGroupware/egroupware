@@ -218,6 +218,10 @@ For targeted frontend work:
 * Preserve existing test conventions.
 * Avoid broad rewrites of tests unless the component behaviour changed significantly.
 
+For writing/reviewing timing-sensitive tests around `Et2Datagrid`/`Et2Nextmatch`'s
+`requestAnimationFrame`/`setTimeout`-driven virtualizer, scroll, and debounce behavior, see
+`api/js/etemplate/Et2Datagrid/test/TestTimingNotes.md`.
+
 ## Browser / manual verification
 
 When a checklist or task calls for verifying UI behavior "at mobile viewport" or "on mobile":

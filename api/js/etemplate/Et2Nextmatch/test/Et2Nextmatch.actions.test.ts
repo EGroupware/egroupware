@@ -89,6 +89,14 @@ const waitForDatagridRows = async(datagrid : any, expectedCount : number) =>
 	}
 };
 
+// This helper will hang to the mocha timeout if ever run against a hidden/
+// backgrounded tab - a CDP-controlled tab can report document.hidden === true
+// while still accepting clicks, which pauses rAF entirely and can look exactly
+// like a real stuck-UI bug. Not a risk under CI as configured (Playwright runs
+// with concurrency: 1, genuinely foregrounded), but if this "hangs" locally,
+// check document.visibilityState/document.hidden on the tab before assuming a
+// product regression - this fooled a debugging session twice (see the
+// Et2Datagrid/Et2Nextmatch test-timing audit's methodology note).
 const waitForRenderedDatagridRow = async(datagrid : HTMLElement & { updateComplete? : Promise<unknown> }, rowId : string) : Promise<HTMLElement | null> =>
 {
 	for(let i = 0; i < 20; i++)
@@ -193,6 +201,25 @@ describe("Et2Nextmatch action setup", () =>
 {
 	before(() =>
 	{
+		// This stub does NOT fully disable virtualizer/layout behavior for every
+		// real Et2Nextmatch/Et2Datagrid mounted in this file (several `it`s below
+		// do `document.body.append(el)` and `await el.updateComplete`):
+		// @lit-labs/virtualizer captures `window.ResizeObserver` into a
+		// module-scoped variable when IT is first imported, which - like every
+		// import - happens once, before any test file's before() hook runs. So a
+		// virtualizer's own internal resize observers stay real here, same
+		// import-order situation as Et2Datagrid.test.ts's identical stub (see the
+		// comment at its install site). What this stub DOES reliably neuter is
+		// Et2Datagrid's own `_embeddedChildGridResizeObserver`
+		// (Et2Datagrid.ts, constructed fresh at runtime, reads
+		// `window.ResizeObserver` live) - the mechanism that auto-resyncs an
+		// embedded child grid's reserved height when it resizes. Et2Datagrid.test.ts's
+		// own embedded-height tests don't lean on that live callback either; they
+		// drive `_scheduleVirtualizerLayoutSync()`/`_syncEmbeddedVirtualizedHostHeight()`
+		// directly for the same reason. So: virtualizer range/layout regressions
+		// are not blocked here by design, but embedded child-height
+		// auto-resync-on-resize regressions are, and belong in
+		// Et2Datagrid.test.ts (driven manually, as it already does).
 		originalResizeObserver = window.ResizeObserver;
 		class ResizeObserverStub
 		{

@@ -151,11 +151,6 @@ similar scope.
   non-UI consumer map (CalDAV/REST, ActiveSync/z-push, cross-app callers), the all-day-across-
   timezones semantic gap that needs a product decision, and the phased plan (test harness first,
   then swap only what's behind `$this->so`, external contract unchanged until a later phase).
-- `doc/ai/projects/et2datagrid-test-timing-audit.md` - checklist of `Et2Datagrid`/`Et2Nextmatch`
-  test-suite findings from auditing for false reassurance around the `requestAnimationFrame`/
-  `setTimeout`-driven virtualizer/scroll/debounce code fixed in commit `303d783a0f`. Work through
-  items one at a time; convert to a documented limitation instead of skipping silently when a real
-  test isn't feasible for a given spot.
 - `doc/ai/projects/accounts-import-test-coverage.md` - test coverage for `Api\Accounts\Import`
   (LDAP/ADS/Univention account sync) across its 3 run modes and full config-option space, without a
   live LDAP/AD server. Covers the code map, config-option interaction matrix, why LDAP-protocol mocking

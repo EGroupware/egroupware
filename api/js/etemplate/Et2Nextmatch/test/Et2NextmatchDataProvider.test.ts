@@ -139,7 +139,12 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 	 *
 	 * Setup strategy:
 	 * - Stub `dataFetch()` with ordered UIDs.
-	 * - Stub `dataRegisterUID()` to resolve in intentionally shuffled timing.
+	 * - Stub `dataRegisterUID()` to defer each callback into a manually-released gate
+	 *   (see B8/C1 in the test-timing audit for why: real fixed-delay `setTimeout`s
+	 *   here would be genuinely interleaving, which is the point, but background-tab
+	 *   timer clamping and Chrome's intensive throttling shrink their safety margin
+	 *   against the mocha timeout unpredictably) - then release them in a
+	 *   deliberately different order than the server's declared `order`.
 	 *
 	 * Pass criteria:
 	 * - Returned row ids follow original server `order`.
@@ -147,6 +152,7 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 	 */
 	it("preserves server order even when UID registrations resolve out of order", async() =>
 	{
+		const pendingRegistrations = new Map<string, () => void>();
 		const host = createProviderHost({
 			id: "nm-order",
 			egw: () => ({
@@ -161,17 +167,19 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 			},
 			dataRegisterUID: (uid : string, callback : Function) =>
 			{
-				const delays : Record<string, number> = {"uid-1": 15, "uid-2": 1, "uid-3": 5};
-				window.setTimeout(() =>
-				{
-					callback({title: uid.toUpperCase()}, uid);
-				}, delays[uid] || 0);
+				pendingRegistrations.set(uid, () => callback({title: uid.toUpperCase()}, uid));
 			}
 			})
 		});
 
 		const provider = new Et2NextmatchDataProvider(host);
-		const page = await provider.fetchPage(0, 25);
+		const pendingPage = provider.fetchPage(0, 25);
+		// Release out of declared-order sequence: uid-2, then uid-3, then uid-1.
+		for(const uid of ["uid-2", "uid-3", "uid-1"])
+		{
+			pendingRegistrations.get(uid)!();
+		}
+		const page = await pendingPage;
 		assert.deepEqual(
 			page.rows.map((row) => row.id),
 			["addressbook::uid-1", "addressbook::uid-2", "addressbook::uid-3"],
@@ -512,12 +520,15 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 	/**
 	 * Contract under test:
 	 * - A row confirmed to exist by refresh() must get a keep-alive dataRegisterUID() listener,
-	 *   same as a row from a normal page fetch (storeRows()) - otherwise its central egw-cache
-	 *   entry has no registered listener and is evicted by that cache's 5-minute idle cleanup
-	 *   sweep. A row added via a push held back while the grid wasn't visible (Et2Datagrid's
-	 *   virtualizer renders nothing while hidden) can easily go unrendered that long, and would
-	 *   then render with no data at all (bare avatar, blank subject/date) once it finally is -
-	 *   this is the mechanism, not just a render-timing quirk.
+	 *   same as a row from a normal page fetch (storeRows()).
+	 *
+	 * Why this matters (not itself asserted here - that's egw's central UID cache and
+	 * Et2Datagrid's hidden-virtualizer behavior, outside this test's reach): without that
+	 * listener, the row's central egw-cache entry has no registered listener and is evicted by
+	 * that cache's 5-minute idle cleanup sweep. A row added via a push held back while the grid
+	 * wasn't visible (Et2Datagrid's virtualizer renders nothing while hidden) can easily go
+	 * unrendered that long, and would then render with no data at all (bare avatar, blank
+	 * subject/date) once it finally is.
 	 *
 	 * Setup strategy:
 	 * - Refresh a row that resolves successfully (cache has data, total confirms existence).

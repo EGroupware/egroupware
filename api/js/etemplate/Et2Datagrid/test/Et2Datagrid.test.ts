@@ -60,6 +60,15 @@ function createDatagrid() : Et2Datagrid
 	return el;
 }
 
+// This helper (and the other requestAnimationFrame-polling ones below, plus the
+// ~50 bare rAF awaits elsewhere in this file) will hang to the mocha timeout if
+// ever run against a hidden/backgrounded tab - a CDP-controlled tab can report
+// document.hidden === true while still accepting clicks, which pauses rAF
+// entirely and can look exactly like a real stuck-UI bug. Not a risk under CI as
+// configured (Playwright runs with concurrency: 1, genuinely foregrounded), but
+// if one of these "hangs" locally, check document.visibilityState/document.hidden
+// on the tab before assuming a product regression - this fooled a debugging
+// session twice (see the test-timing audit's methodology note).
 async function waitForDatagridRow(el : Et2Datagrid, rowId : string) : Promise<HTMLElement | null>
 {
 	for(let i = 0; i < 20; i++)
@@ -264,6 +273,17 @@ let originalResizeObserver : typeof window.ResizeObserver | undefined;
 let originalWindowOnError : OnErrorEventHandler | null = null;
 before(() =>
 {
+	// Load-order dependency, not just an implementation detail: this stub only
+	// suppresses noisy ResizeObserver-loop errors below (see the two handlers
+	// after it) because @lit-labs/virtualizer already captured the real
+	// window.ResizeObserver at its own module-import time, well before this
+	// before() hook runs - so virtualizer instances in this file are never
+	// actually measuring against ResizeObserverStub. If this install ever moves
+	// earlier (or virtualizer switches to lazy RO acquisition), every
+	// embedded-height test in this file would start measuring a virtualizer that
+	// can never observe a size change, and could still report green since
+	// waitForEmbeddedHostHeight()'s boolean return isn't asserted everywhere it's
+	// called.
 	originalResizeObserver = window.ResizeObserver;
 	originalWindowOnError = window.onerror;
 	class ResizeObserverStub
@@ -913,6 +933,72 @@ describe("Et2Datagrid row rendering", () =>
 	});
 
 	/**
+	 * Contract: normal row rendering must upgrade (hydrate) its own widgets through
+	 * the real chain - `MutationObserver` noticing the new row element,
+	 * `upgradeRenderedRows()` queueing it, `scheduleRowUpgradeQueue()` arming a real
+	 * `requestAnimationFrame`, and `processRowUpgradeQueue()` draining it - with no
+	 * test code calling `_upgradeRenderedRows()`/`_processRowUpgradeQueue()`
+	 * directly. Every other test exercising row upgrades drives at least one of
+	 * those methods by hand, so none of them would notice if
+	 * `scheduleRowUpgradeQueue()` were ever removed from the real code path (this
+	 * is the exact mechanism behind a prior session's false "stuck queue" lead).
+	 *
+	 * Setup: mount a real row template with a bindable widget and only ever poll
+	 * via `requestAnimationFrame`, the same way a real page would observe the row
+	 * becoming ready.
+	 *
+	 * Pass: the widget ends up hydrated with its row's data without any direct
+	 * drain call.
+	 */
+	it("upgrades the initial rendered row automatically, without the test driving the upgrade queue", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.cssText = "width:800px;height:240px";
+		document.body.appendChild(host);
+		const el = createDatagrid();
+		el.style.height = "100%";
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		const provider = new Et2RowProvider(el as any);
+		const rowTemplate = document.createElement("tr");
+		rowTemplate.innerHTML = `<td><et2-dg-test-transform class="row-label" data-value="$label"></et2-dg-test-transform></td>`;
+		const prepared = await (provider as any)._prepareRowTemplate(rowTemplate, el.columns as any);
+		el.templateData = {
+			columns: el.columns,
+			rowTemplate: prepared?.template ?? null,
+			rowTemplateXml: prepared?.xml ?? null,
+			rowTemplateAttrMap: prepared?.attrMap ?? {}
+		} as any;
+		el.setInitialRows([{id: "auto-upgrade-row-0", label: "Auto Upgrade Row"}]);
+		el.total = 1;
+		host.appendChild(el);
+
+		try
+		{
+			// Find the row once (it already retries internally), then poll only the
+			// widget's own hydration - re-running the full waitForDatagridRow() scan
+			// every frame here would let this loop's worst case run long enough to
+			// hit the mocha timeout before the assertion below ever gets to produce
+			// its own clear failure message (see C3 in the test-timing audit).
+			const row = await waitForDatagridRow(el, "auto-upgrade-row-0");
+			let widget : HTMLElement | null = row?.querySelector("et2-dg-test-transform.row-label") as HTMLElement | null;
+			for(let frame = 0; frame < 20 && widget?.textContent !== "Auto Upgrade Row"; frame++)
+			{
+				await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+				widget = row?.querySelector("et2-dg-test-transform.row-label") as HTMLElement | null;
+			}
+			assert.equal(
+				widget?.textContent,
+				"Auto Upgrade Row",
+				"the row's widget should be hydrated automatically via the real MutationObserver-triggered, rAF-scheduled upgrade drain"
+			);
+		}
+		finally
+		{
+			host.remove();
+		}
+	});
+
+	/**
 	 * Contract: a virtualizer range change must hydrate newly realized row widgets
 	 * even if MutationObserver delivery is missed.
 	 * Setup: render enough rows to scroll, then disconnect the observer before
@@ -950,16 +1036,22 @@ describe("Et2Datagrid row rendering", () =>
 			body.scrollTop = 1200;
 			body.dispatchEvent(new Event("scroll"));
 
+			// A single flat loop, not waitForDatagridRow() (itself a 20-frame retry)
+			// nested inside another 30-iteration retry - that nesting let this
+			// test's worst case run long enough to hit the mocha timeout before its
+			// own assertion below ever got a chance to fail with a clear message
+			// (see C3 in the test-timing audit).
 			let widget : HTMLElement | null = null;
-			for(let frame = 0; frame < 30; frame++)
+			for(let frame = 0; frame < 40; frame++)
 			{
-				const row = await waitForDatagridRow(el, "row-24");
+				const row = el.shadowRoot?.querySelector("[data-row-id='row-24']") as HTMLElement | null;
 				widget = row?.querySelector("et2-dg-test-transform.row-label") as HTMLElement | null;
 				if(widget?.textContent === "Row 24")
 				{
 					break;
 				}
 				await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+				await el.updateComplete;
 			}
 			assert.equal(widget?.textContent, "Row 24", "newly realized widget should be hydrated after range change");
 		}
@@ -982,6 +1074,97 @@ describe("Et2Datagrid row rendering", () =>
 
 		assert.equal((el as any)._virtualRowCount(), 4);
 		assert.deepEqual((el as any)._getVirtualItems((el as any)._virtualRowCount()), [0, 1, 2, 3]);
+	});
+
+	/**
+	 * Contract: after several rapid successive row-count shrinks (repeated
+	 * filter/date-range changes) while scrolled deep into the previous, much
+	 * larger result set, the virtualizer's realized range must not get left
+	 * stale past the real (now much smaller) row count - the top-level version
+	 * of commit 303d783a0f's stuck-placeholder-row bug. Only
+	 * `_hostElementSizeChanged()` (already called before that fix, for embedded
+	 * grids only) does not reliably re-clamp the range; the fix also forces a
+	 * full `_scheduleLayoutUpdate()` + `reflowIfNeeded()` and runs it
+	 * unconditionally, not just for embedded grids.
+	 *
+	 * Setup: a real, non-embedded, scrolled grid with 246 rows, scrolled to the
+	 * bottom (matching the bug report's own repro numbers), then two rapid
+	 * `reload()`s shrinking to 28 then 7 rows - each still real awaited fetches
+	 * (the bug is in virtualizer range re-measurement, not fetch race timing).
+	 *
+	 * Pass: the virtualizer's realized range ends within the real row count and
+	 * no loading-placeholder row is left in the DOM past it.
+	 */
+	it("re-clamps the virtualizer range after rapid row-count shrinks while scrolled", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.cssText = "width:800px;height:240px";
+		document.body.appendChild(host);
+
+		const columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		let currentRows = Array.from({length: 246}, (_v, index) => ({id: `shrink-${index}`, label: `Row ${index}`}));
+		let querySignature = "shrink-1";
+		const dataProvider = createDatagridDataProvider({
+			fetchPage: async(start : number, pageSize : number) => ({
+				rows: currentRows.slice(start, start + pageSize),
+				total: currentRows.length
+			}),
+			getQuerySignature: () => querySignature
+		});
+
+		const el = createDatagrid();
+		el.style.height = "100%";
+		el.columns = columns;
+		el.templateData = {columns} as any;
+		el.dataProvider = dataProvider as any;
+		host.appendChild(el);
+
+		async function reloadAndWait()
+		{
+			const loaded = new Promise<void>((resolve) =>
+			{
+				el.addEventListener("et2-loading-done", () => resolve(), {once: true});
+			});
+			await el.reload();
+			await loaded;
+		}
+
+		await reloadAndWait();
+		assert.isNotNull(await waitForDatagridRow(el, "shrink-0"), "initial large result set should render");
+
+		const body = el.shadowRoot!.querySelector(".dg-body") as HTMLElement;
+		body.scrollTop = body.scrollHeight;
+		body.dispatchEvent(new Event("scroll"));
+		for(let i = 0; i < 20 && !el.shadowRoot?.querySelector("[data-row-id='shrink-245']"); i++)
+		{
+			await new Promise<void>((resolve) => setTimeout(resolve, 0));
+			await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		}
+		assert.isNotNull(el.shadowRoot?.querySelector("[data-row-id='shrink-245']"), "test fixture should have scrolled deep into the large result set");
+
+		currentRows = Array.from({length: 28}, (_v, index) => ({id: `shrink-${index}`, label: `Row ${index}`}));
+		querySignature = "shrink-2";
+		await reloadAndWait();
+
+		currentRows = Array.from({length: 7}, (_v, index) => ({id: `shrink-${index}`, label: `Row ${index}`}));
+		querySignature = "shrink-3";
+		await reloadAndWait();
+
+		// The reflow the fix schedules runs on the next animation frame.
+		for(let i = 0; i < 10; i++)
+		{
+			await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+			await el.updateComplete;
+		}
+
+		const layout = (el as any)._virtualize?._layout;
+		assert.isBelow(layout._last, (el as any)._virtualRowCount(), "virtualizer's realized range should not extend past the real (shrunk) row count");
+		assert.isNull(
+			el.shadowRoot?.querySelector("[data-et2dg-placeholder]"),
+			"no unresolved loading-placeholder row should remain once the final total is known"
+		);
+
+		host.remove();
 	});
 
 	/**
@@ -4310,6 +4493,10 @@ describe("Et2Datagrid virtual height stability", () =>
 		el.total = 200;
 		(el as any)._reconcileRowRenderState();
 		await el.updateComplete;
+		// A queued fetch dispatches on a debounced macrotask, not the render microtask
+		// above - without this wait, this assertion would pass even if the initial
+		// render wrongly queued a fetch.
+		await new Promise((resolve) => window.setTimeout(resolve, 0));
 
 		assert.equal(calls.length, 0, "initial rendered chunk should not trigger fetch");
 
@@ -4521,6 +4708,10 @@ describe("Et2Datagrid data loading", () =>
 		await el.updateComplete;
 
 		assert.equal(fetchCalls, 0, "loadMore should not fetch when initial rows already cover current requested chunk");
+		// Timer-independent companion to the above: proves the chunk was never even
+		// queued, rather than queued-but-not-yet-dispatched by the time the timer fired.
+		const requestKey = (el as any)._requestQueue.requestKey(0, 20);
+		assert.isFalse((el as any)._requestQueue.isPendingOrQueued(requestKey), "loadMore should not have queued the already-covered chunk at all");
 		host.remove();
 	});
 
@@ -4572,6 +4763,10 @@ describe("Et2Datagrid data loading", () =>
 		await el.updateComplete;
 
 		assert.equal(fetchCalls, 0, "loadMore should not fetch when all rows are already provided");
+		// Timer-independent companion to the above: proves the chunk was never even
+		// queued, rather than queued-but-not-yet-dispatched by the time the timer fired.
+		const requestKey = (el as any)._requestQueue.requestKey(0, 5);
+		assert.isFalse((el as any)._requestQueue.isPendingOrQueued(requestKey), "loadMore should not have queued a chunk past the known total at all");
 		assert.equal(el.rows.length, 5, "preloaded rows should remain intact");
 		host.remove();
 	});

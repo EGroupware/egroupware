@@ -273,6 +273,97 @@ describe("Et2Nextmatch header event handling", () =>
 
 	/**
 	 * Contract under test:
+	 * - A filter change with reload allowed (the default - every test above this
+	 *   one passes `{reload: false}`) must actually drive the child datagrid
+	 *   through a real `reload()` and end up showing that reload's real
+	 *   rows/total, not just call `reload()` (already covered by the sinon-spy
+	 *   test above).
+	 *
+	 * Setup strategy:
+	 * - Patch only the child datagrid's `dataProvider.fetchPage()` (its other
+	 *   methods - `getQuerySignature()`, `getRowData()`, etc - stay real) so the
+	 *   real `reload()` -> `_fetchPage()` path resolves with known rows/total.
+	 *
+	 * Pass criteria:
+	 * - `applyFilters()` (no `reload: false`) reports the filter change applied.
+	 * - The child datagrid ends up with the new fetch's total and row count.
+	 */
+	it("reloads the child datagrid with real rows/total when applyFilters() is allowed to reload", async() =>
+	{
+		// Unlike Et2Datagrid.test.ts, this file does not stub ResizeObserver, so a
+		// real reload's real layout occasionally trips the harmless
+		// "ResizeObserver loop completed with undelivered notifications" warning,
+		// which the test runner otherwise treats as an uncaught error/test failure.
+		// Suppress only that message, only for this test, the same way (and for
+		// the same reason) Et2Datagrid.test.ts does for its whole file - an
+		// "error" listener alone was not enough to reliably catch this, since the
+		// runner's own `window.onerror` can see it independently.
+		const isResizeObserverLoopMessage = (text : string) => text.includes("ResizeObserver loop completed with undelivered notifications");
+		const resizeObserverErrorHandler = (event : ErrorEvent) =>
+		{
+			if(isResizeObserverLoopMessage(String(event?.message || "")))
+			{
+				event.preventDefault();
+				event.stopImmediatePropagation?.();
+			}
+		};
+		window.addEventListener("error", resizeObserverErrorHandler, true);
+		const originalWindowOnError = window.onerror;
+		window.onerror = (message, source, lineno, colno, error) =>
+		{
+			const text = String(message || error?.message || "");
+			if(isResizeObserverLoopMessage(text))
+			{
+				return true;
+			}
+			return typeof originalWindowOnError === "function"
+				   ? originalWindowOnError.call(window, message, source, lineno, colno, error)
+				   : false;
+		};
+
+		const el = new Et2Nextmatch();
+		try
+		{
+			document.body.append(el);
+			await el.updateComplete;
+			const datagrid = el.shadowRoot!.querySelector("et2-datagrid") as any;
+
+			datagrid.dataProvider.fetchPage = async() => ({
+				total: 2,
+				rows: [
+					{id: "addressbook::owner-42-a", title: "Owner 42 A"},
+					{id: "addressbook::owner-42-b", title: "Owner 42 B"}
+				]
+			});
+
+			const loaded = new Promise<void>((resolve) =>
+			{
+				datagrid.addEventListener("et2-loading-done", () => resolve(), {once: true});
+			});
+			const changed = el.applyFilters({col_filter: {owner: "42"}});
+			assert.isTrue(changed, "filter state should update");
+
+			await loaded;
+			await datagrid.updateComplete;
+
+			assert.equal(datagrid.total, 2, "child datagrid should show the reloaded query's real total");
+			assert.equal(datagrid.rows.length, 2, "child datagrid should show the reloaded query's real rows");
+			assert.deepEqual(
+				datagrid.rows.map((row : any) => row.id),
+				["addressbook::owner-42-a", "addressbook::owner-42-b"],
+				"child datagrid rows should come from the post-filter-change fetch"
+			);
+		}
+		finally
+		{
+			el.remove();
+			window.removeEventListener("error", resizeObserverErrorHandler, true);
+			window.onerror = originalWindowOnError;
+		}
+	});
+
+	/**
+	 * Contract under test:
 	 * - A changed root filter keeps root rows expanded, but no child-level data
 	 *   or expansion state survives into the new query.
 	 *
@@ -1349,6 +1440,16 @@ describe("Et2Nextmatch expandable child grid wiring", () =>
 
 		const childGrid = container.querySelector("et2-datagrid") as any;
 		assert.isNotNull(childGrid, "expanded content should render a child datagrid");
+		// This stub bypasses Et2Datagrid's real _fetchPage(), so it does not exercise
+		// the post-fetch _reconcileRowRenderState()/_scheduleVirtualizerLayoutSync()
+		// block on this specific (Et2Nextmatch-created) embeddedVirtualized child -
+		// this test's own contract is template/column/config inheritance, not that.
+		// The virtualizer-reflow fix itself is covered directly on embeddedVirtualized
+		// grids with a real fetchPage in Et2Datagrid.test.ts (e.g. "shrinks stale
+		// embedded spacer height after final total is known", "clears later
+		// placeholder extent after final embedded page resolves"); not duplicated
+		// here since it would need a much heavier fixture for no additional coverage
+		// of the fix itself, only of Et2Nextmatch's wiring to it.
 		const reload = sinon.stub(childGrid, "reload").callsFake(async() =>
 		{
 			await fetchPage(0, childGrid.pageSize);
