@@ -894,6 +894,12 @@ class Vfs extends Vfs\Base
 			{
 				$paths[] = $path = self::dirname($path);
 			}
+			// $eacls is false if the backend has no (persisted) eACL for $path at all;
+			// still need a real array to merge session-only eACLs into below.
+			if (!is_array($eacls))
+			{
+				$eacls = array();
+			}
 			foreach((array)$session_eacls as $eacl)
 			{
 				if (in_array($eacl['path'], $paths))
