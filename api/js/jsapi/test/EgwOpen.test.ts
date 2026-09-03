@@ -20,6 +20,12 @@ import {assert} from "@open-wc/testing";
 import * as sinon from "sinon";
 import {createEgwOpenEnv, EgwOpenEnv} from "./EgwOpenHarness";
 
+/** let a fire-and-forget async openComposePost() settle */
+function flushMicrotasks() : Promise<void>
+{
+	return new Promise(resolve => setTimeout(resolve, 0));
+}
+
 describe('egw_open.js (open)', () =>
 {
 	let env : EgwOpenEnv;
@@ -678,12 +684,12 @@ describe('egw_open.js (open)', () =>
 			assert.isTrue(instance.urlParamsTooLong({'preset[bcc]': new Array(fits + 1).fill(recipient)}));
 		});
 
-		it('posts a form into a new compose popup, targeting it, and removes the form again', () =>
+		it('posts a form into a new compose popup, targeting it, and removes the form again', async() =>
 		{
 			const instance = env.egw();
 			const openStub = stubComposePopup(instance);
 
-			instance.openComposePost({'preset[subject]': 'Team meeting', 'preset[body]': body(3000)});
+			await instance.openComposePost({'preset[subject]': 'Team meeting', 'preset[body]': body(3000)});
 
 			// the blank popup the form gets posted into
 			assert.isTrue(openStub.calledOnceWith('', 'mail', 'add', '', 'compose__', 'mail', undefined));
@@ -703,13 +709,13 @@ describe('egw_open.js (open)', () =>
 			assert.isNull(env.window.document.querySelector('form'));
 		});
 
-		it('sends each element of an array value as its own "name[]" input, so PHP receives an array', () =>
+		it('sends each element of an array value as its own "name[]" input, so PHP receives an array', async() =>
 		{
 			const instance = env.egw();
 			stubComposePopup(instance);
 			const bcc = ['A A <a@example.com>', 'B B <b@example.com>'];
 
-			instance.openComposePost({'preset[bcc]': bcc, 'preset[body]': body(3000)});
+			await instance.openComposePost({'preset[bcc]': bcc, 'preset[body]': body(3000)});
 
 			const params = env.formSubmits[0].params;
 			assert.deepEqual(params.filter(([name]) => name === 'preset[bcc][]'), [
@@ -718,12 +724,12 @@ describe('egw_open.js (open)', () =>
 			], 'one input per recipient - a single JSON-encoded input would arrive as one bogus address');
 		});
 
-		it('splits a query-string _extra into inputs', () =>
+		it('splits a query-string _extra into inputs', async() =>
 		{
 			const instance = env.egw();
 			stubComposePopup(instance);
 
-			instance.openComposePost('preset[subject]=Team+meeting&preset[bcc][]=a%40example.com');
+			await instance.openComposePost('preset[subject]=Team+meeting&preset[bcc][]=a%40example.com');
 
 			assert.deepEqual(env.formSubmits[0].params, [
 				['preset[subject]', 'Team meeting'],
@@ -731,29 +737,29 @@ describe('egw_open.js (open)', () =>
 			]);
 		});
 
-		it('does nothing but open the popup when the popup was blocked', () =>
+		it('does nothing but open the popup when the popup was blocked', async() =>
 		{
 			const instance = env.egw();
 			// what open() returns when the popup-blocker warning dialog is shown instead
 			const openStub = sinon.stub(instance, 'open').returns(undefined);
 
-			instance.openComposePost({'preset[body]': body(3000)}, true);
+			await instance.openComposePost({'preset[body]': body(3000)}, true);
 
 			assert.isTrue(openStub.calledOnce);
 			assert.equal(env.formSubmits.length, 0, 'no form to submit without a target popup');
 		});
 
-		it('passes _check_popup_blocker on to open()', () =>
+		it('passes _check_popup_blocker on to open()', async() =>
 		{
 			const instance = env.egw();
 			const openStub = stubComposePopup(instance);
 
-			instance.openComposePost({'preset[body]': body(3000)}, true);
+			await instance.openComposePost({'preset[body]': body(3000)}, true);
 
 			assert.isTrue(openStub.calledOnceWith('', 'mail', 'add', '', 'compose__', 'mail', true));
 		});
 
-		it('openWithinWindow() posts instead of opening a GET url when the parameters are too long', () =>
+		it('openWithinWindow() posts instead of opening a GET url when the parameters are too long', async() =>
 		{
 			const instance = env.egw();
 			const openStub = stubComposePopup(instance);
@@ -761,6 +767,7 @@ describe('egw_open.js (open)', () =>
 			const extra = {'preset[bcc]': ['a@example.com'], 'preset[body]': body(3000)};
 
 			instance.openWithinWindow('mail', 'setCompose', {}, extra, /mail.mail_compose.compose/);
+			await flushMicrotasks();
 
 			// NOT the GET path: open() must not be handed the parameters as url params
 			assert.isTrue(openStub.calledOnceWith('', 'mail', 'add', '', 'compose__', 'mail', undefined));
@@ -769,6 +776,34 @@ describe('egw_open.js (open)', () =>
 				['preset[bcc][]', 'a@example.com'],
 				['preset[body]', body(3000)]
 			]);
+		});
+
+		it('awaits a promise-returning open(), as a framework openPopup() gives back', async() =>
+		{
+			const instance = env.egw();
+			// kdots' EgwFramework.openPopup() is async (it awaits the open_popups_in preference),
+			// so egw.open() resolves to the window instead of returning it. Reading .name off the
+			// promise yielded the string "undefined" as form target, which posted the compose into
+			// a stray extra window while the intended popup showed an empty compose.
+			sinon.stub(instance, 'open').returns(Promise.resolve({name: 'compose__'}));
+
+			await instance.openComposePost({'preset[body]': body(3000)});
+
+			assert.equal(env.formSubmits.length, 1);
+			assert.equal(env.formSubmits[0].target, 'compose__');
+		});
+
+		it('posts into a new window when the "popup" is a dialog rather than a window', async() =>
+		{
+			const instance = env.egw();
+			// open_popups_in=same_window makes openPopup() answer with an Et2Dialog - nothing a
+			// form can target, so the parameters go to a new window instead of being dropped
+			sinon.stub(instance, 'open').returns(Promise.resolve({localName: 'et2-dialog'}));
+
+			await instance.openComposePost({'preset[body]': body(3000)});
+
+			assert.equal(env.formSubmits.length, 1);
+			assert.equal(env.formSubmits[0].target, '_blank');
 		});
 
 		it('openWithinWindow() keeps using the GET url for short parameters', () =>

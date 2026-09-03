@@ -54,6 +54,12 @@ function composeVars(body : string) : object
 }
 
 /** A mail body of the size that used to break: <pre>-wrapped description of a real mail */
+/** custom_mail() does not await egw.openComposePost(), so let its popup/form steps settle */
+function flushMicrotasks() : Promise<void>
+{
+	return new Promise(resolve => setTimeout(resolve, 0));
+}
+
 const MAIL_SIZED_BODY = '<pre>' + 'Sehr geehrte Damen und Herren, '.repeat(200) + '</pre>';
 const SHORT_BODY = '<pre>Kurze Beschreibung</pre>';
 
@@ -86,12 +92,13 @@ describe('CalendarApp.custom_mail()', () =>
 		env.destroy();
 	});
 
-	it('posts a mail-sized preset body instead of opening it as a GET url', () =>
+	it('posts a mail-sized preset body instead of opening it as a GET url', async() =>
 	{
 		const open_link = sinon.spy(egw, 'open_link');
 		const vars = composeVars(MAIL_SIZED_BODY);
 
 		app.custom_mail(vars);
+		await flushMicrotasks();
 
 		assert.isFalse(open_link.called, 'a GET url of this length is what the webserver answers with 414');
 		assert.equal(env.formSubmits.length, 1, 'compose parameters have to be posted instead');
@@ -107,9 +114,10 @@ describe('CalendarApp.custom_mail()', () =>
 		assert.equal(params.get('preset[type]'), 'text/calendar');
 	});
 
-	it('posts each participant as its own recipient input, so they do not arrive as one bogus address', () =>
+	it('posts each participant as its own recipient input, so they do not arrive as one bogus address', async() =>
 	{
 		app.custom_mail(composeVars(MAIL_SIZED_BODY));
+		await flushMicrotasks();
 
 		assert.deepEqual(env.formSubmits[0].params.filter(([name]) => name === 'preset[bcc][]'), [
 			['preset[bcc][]', 'A A <a@example.com>'],
@@ -117,12 +125,13 @@ describe('CalendarApp.custom_mail()', () =>
 		]);
 	});
 
-	it('keeps opening a short body as a popup url, unchanged', () =>
+	it('keeps opening a short body as a popup url, unchanged', async() =>
 	{
 		const open_link = sinon.stub(egw, 'open_link');
 		const vars = composeVars(SHORT_BODY);
 
 		app.custom_mail(vars);
+		await flushMicrotasks();
 
 		assert.equal(env.formSubmits.length, 0, 'nothing to post for a url of harmless length');
 		assert.isTrue(open_link.calledOnce);

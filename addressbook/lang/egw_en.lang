@@ -1,6 +1,7 @@
 %1 contact(s) %2	addressbook	en	%1 contact(s) %2
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	en	%1 contact(s) %2, %3 failed because of %4!
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	en	%1 contact(s) %2, %3 failed because of insufficient rights!
+%1 contact(s) added as %2	addressbook	en	%1 contact(s) added as %2
 %1 contacts updated (%2 errors).	addressbook	en	%1 contacts updated (%2 errors).
 %1 fields in %2 other organisation member(s) changed	addressbook	en	%1 fields in %2 other organization member(s) changed.
 %1 key(s) added to public keyserver "%2".	addressbook	en	%1 key(s) added to public keyserver "%2".
