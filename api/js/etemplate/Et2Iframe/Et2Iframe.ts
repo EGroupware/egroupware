@@ -116,14 +116,14 @@ export class Et2Iframe extends Et2Widget(LitElement)
 	 */
 	set_name(_name)
 	{
-		this.options.name = _name;
-		this.__getIframeNode().attribute('name', _name);
+		this.name = _name;
+		this.__getIframeNode().setAttribute('name', _name);
 	}
 
 	set_allow (_allow)
 	{
-		this.options.allow = _allow;
-		this.__getIframeNode().attribute('allow', _allow);
+		this.allow = _allow;
+		this.__getIframeNode().setAttribute('allow', _allow);
 	}
 	/**
 	 * Make it look like part of the containing document
@@ -132,8 +132,8 @@ export class Et2Iframe extends Et2Widget(LitElement)
 	 */
 	set_seamless(_seamless)
 	{
-		this.options.seamless = _seamless;
-		this.__getIframeNode().attribute("seamless", _seamless);
+		this.seamless = _seamless;
+		this.__getIframeNode().setAttribute("seamless", _seamless);
 	}
 
 	set_value(_value)
@@ -161,7 +161,7 @@ export class Et2Iframe extends Et2Widget(LitElement)
 	 */
 	set_srcdoc(_value)
 	{
-		this.__getIframeNode().attribute("srcdoc", _value);
+		this.__getIframeNode().setAttribute("srcdoc", _value);
 	}
 }
 

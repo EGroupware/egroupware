@@ -311,7 +311,7 @@ export class MailApp extends EgwApp
 				this.vacationFilterStatusChange();
 				break;
 			case 'mail.index':
-				document.querySelector('iframe#mail-index_messageIFRAME')?.addEventListener('load', () =>
+				this.getBodyIframe('messageIFRAME')?.addEventListener('load', () =>
 				{
 					// decrypt preview body if mailvelope is available
 					self.mailvelopeAvailable(self.mailvelopeDisplay);
@@ -421,7 +421,7 @@ export class MailApp extends EgwApp
 				// copies iframe content to a DIV, as iframe causes
 				// trouble for multipage printing
 
-				document.querySelector('iframe#mail-display_mailDisplayBodySrc')?.addEventListener('load', function(e)
+				this.getBodyIframe('mailDisplayBodySrc')?.addEventListener('load', function(e)
 				{
 					// encrypt body if mailvelope is available
 					self.mailvelopeAvailable(self.mailvelopeDisplay);
@@ -1852,8 +1852,7 @@ export class MailApp extends EgwApp
 					// body may have already finished loading (empty) before this resolved -
 					// retry the auto-index now that attachmentsBlock is known, but only into
 					// the iframe still actually showing this row (loadMessageBody() marks it)
-					const iframeDoc = (this.et2.getWidgetById('messageIFRAME')?.getDOMNode() as HTMLIFrameElement)
-						?.contentDocument;
+					const iframeDoc = this.getBodyIframe('messageIFRAME')?.contentDocument;
 					if (iframeDoc?.documentElement?.dataset.rowId === rowId)
 					{
 						renderAttachmentIndex(iframeDoc, data.attachmentsBlock, this.egw);
@@ -2232,6 +2231,27 @@ export class MailApp extends EgwApp
 	 *  - routes through MailJmap.fetchBodyFromMessagePart() instead of fetchBody(), since a
 	 *  sub-part has no real, independently-addressable row-id of its own to fetch normally.
 	 */
+	/**
+	 * Get the real <iframe> DOM node for a mail body iframe widget
+	 *
+	 * Et2Iframe (the webcomponent, used since 2026-09-03) keeps its actual <iframe> inside a
+	 * shadow root - widget.getDOMNode() (inherited, unoverridden) returns the <et2-iframe> host
+	 * element instead, and a plain document.querySelector() can't pierce the shadow boundary
+	 * either. __getIframeNode() is Et2Iframe's own accessor for the real node. Falls back to
+	 * getDOMNode() for the legacy et2_iframe widget, where that already *is* the real iframe.
+	 */
+	private static realIframeNode(widget: any): HTMLIFrameElement
+	{
+		if(!widget) return null;
+		return (typeof widget.__getIframeNode === 'function' ? widget.__getIframeNode() : widget.getDOMNode()) || null;
+	}
+
+	/** Same as realIframeNode(), looked up by widget id against this.et2. */
+	private getBodyIframe(widgetId: string): HTMLIFrameElement
+	{
+		return MailApp.realIframeNode(this.et2?.getWidgetById(widgetId));
+	}
+
 	/** Shared by loadMessageBody()'s {special:true} result and its own catch() fallback below. */
 	private loadClassicBody(iframeWidget: any, iframe: HTMLIFrameElement, rowId: string, onLoad: (doc: Document) => void,
 		partID?: string): void
@@ -2253,7 +2273,7 @@ export class MailApp extends EgwApp
 	{
 		//we now fire the request so increase inFlight request by one
 		this.inFlightRequests += 1;
-		const iframe = iframeWidget.getDOMNode() as HTMLIFrameElement;
+		const iframe = MailApp.realIframeNode(iframeWidget);
 		const fetchPromise = partID ?
 			this.jmap.fetchBodyFromMessagePart(rowId, partID) :
 			this.jmap.fetchBody(rowId, undefined, signal, passphrase, passExpMinutes);
@@ -6883,7 +6903,7 @@ export class MailApp extends EgwApp
 	 */
 	preparePrint(_iframe?: HTMLIFrameElement)
 	{
-		const mainIframe = _iframe || document.body.querySelector('#mail-display_mailDisplayBodySrc');
+		const mainIframe = _iframe || this.getBodyIframe('mailDisplayBodySrc');
 		let tmpPrintDiv = document.body.querySelector('#tempPrintDiv');
 		let notAttached = false;
 
@@ -6996,7 +7016,7 @@ export class MailApp extends EgwApp
 	prepareMailvelopePrint()
 	{
 		const tempPrint = document.querySelector('div#tempPrintDiv') as HTMLElement;
-		const originFrame = document.querySelector('#mail-display_mailDisplayBodySrc') as HTMLIFrameElement;
+		const originFrame = this.getBodyIframe('mailDisplayBodySrc');
 
 		if (tempPrint)
 		{
@@ -7034,7 +7054,7 @@ export class MailApp extends EgwApp
 	mailvelopeDisplay(_keyring)
 	{
 		const self = this;
-		const iframe = document.querySelector('iframe#mail-display_mailDisplayBodySrc,iframe#mail-index_messageIFRAME') as HTMLIFrameElement;
+		const iframe = this.getBodyIframe('mailDisplayBodySrc') || this.getBodyIframe('messageIFRAME');
 		const armored = iframe?.contentDocument?.querySelector('td.td_display > pre')?.textContent?.trim() || '';
 
 		if (armored == "" || armored.indexOf(this.begin_pgp_message) === -1) return;
