@@ -53,8 +53,15 @@ describe('AddressbookApp.adb_mail_vcard()', () =>
 	let composeCalls : any[];
 	let AddressbookApp : any;
 
-	before(async() =>
+	before(async function()
 	{
+		// unlike a static `import ... from "../app"` (evaluated as part of the module graph,
+		// before any mocha timer starts - see mail/js/test/MailMobileViewFlag.test.ts), this
+		// dynamic import happens inside the hook itself and so counts against mocha's default
+		// 3000ms hook timeout. Loading app.ts's whole transitive chain cold is comfortably
+		// under that on a dev machine, but not always on CI's slower/shared runners (observed
+		// CI-only timeout failures, 2026-09-03) - give it real headroom instead.
+		this.timeout(15000);
 		await import(APP_SOURCE);
 		AddressbookApp = (<any>window).app.classes.addressbook;
 	});
