@@ -191,3 +191,48 @@ cleanup candidates: the webcomponent is a complete, independent replacement, and
 the legacy tree depends on the old file any more, so removing type name from
 `et2_register_widget()` (and eventually the file) should be low-risk once templates using the bare
 type name are confirmed to render fine via the `et2-*` fallback in `et2_createWidget()`.
+
+---
+
+## Deleted `et2_widget_*.ts` files (search landed you here for a reason)
+
+If you searched for one of these filenames and found no file - it's not missing, it was
+deliberately deleted as part of the "1a — generated" cleanup (2026-09-03). It still "exists" at
+build/type-check/test time:
+
+- **`rollup.config.js`** synthesizes the trivial `class et2_X extends Et2Y {}` re-export on the fly
+  via [`rollup-legacy-widget-shim.mjs`](./rollup-legacy-widget-shim.mjs)'s `SHIM_MANIFEST`, for any
+  real code that still imports the old name (`api/js/etemplate/et2_extension_nextmatch.ts`,
+  `filemanager/js/filemanager.ts`, `calendar/js/app.ts`, etc.).
+- **`web-test-runner.config.mjs`** does the same for browser tests, via
+  [`webtest-legacy-widget-shim.mjs`](./webtest-legacy-widget-shim.mjs) (same manifest, different
+  plugin API - a dev-server `resolveImport`/`serve` hook instead of rollup's `resolveId`/`load`).
+- A same-named **`.d.ts` file** (a real file, still on disk) gives `tsc`/IDEs a real declaration to
+  resolve, so `import {et2_checkbox} from "./et2_widget_checkbox"` still type-checks.
+
+`et2_widget_toolbar.ts` and `et2_widget_portlet.ts` are the two exceptions: nothing ever imported
+those classes by name (only `etemplate2.ts`'s bulk `import './et2_widget_toolbar'` side-effect
+line, now deleted along with the file), so they needed no manifest entry, no shim, and no `.d.ts` -
+they're just gone, with `Et2Toolbar`/`Et2Portlet` staying registered via their own real, unrelated
+importers (`etemplate2.ts` directly imports `Et2Toolbar`; `home/js/Et2Portlet*.ts` import
+`Et2Portlet`).
+
+| Deleted file | Legacy type(s) it provided | Replaced by |
+|---|---|---|
+| `et2_widget_checkbox.ts` | `checkbox` | `Et2Checkbox` (`Et2Checkbox/Et2Checkbox.ts`) |
+| `et2_widget_date.ts` | `date`, `date_ro`, `date_duration`, `date_duration_ro`, `date_range` | `Et2Date/*` |
+| `et2_widget_diff.ts` | `diff` | `Et2Diff` (`Et2Diff/Et2Diff.ts`) |
+| `et2_widget_htmlarea.ts` | (subclass only, no `et2_register_widget`) | `Et2HtmlArea` (`Et2HtmlArea/Et2HtmlArea.ts`) |
+| `et2_widget_image.ts` | (type re-exports only) | `Et2Image`, `Et2AppIcon`, `Et2Avatar`, `Et2LAvatar` |
+| `et2_widget_link.ts` | (type re-exports + `et2_link_list` class) | `Et2Link/*` family |
+| `et2_widget_portlet.ts` | `portlet` | `Et2Portlet` (`Et2Portlet/Et2Portlet.ts`) |
+| `et2_widget_selectAccount.ts` | (type re-exports only) | `Et2SelectAccount`, `Et2SelectAccountReadonly` |
+| `et2_widget_selectbox.ts` | (subclass + type re-export) | `Et2Select`, `Et2SelectReadonly` |
+| `et2_widget_tabs.ts` | (type re-export only) | `Et2Tabs` (`Layout/Et2Tabs/Et2Tabs.ts`) |
+| `et2_widget_taglist.ts` | (type re-exports only) | `Et2Select`, `Et2SelectAccount`, `Et2Email`, `Et2SelectCategory`, `Et2SelectThumbnail`, `Et2SelectState` |
+| `et2_widget_template.ts` | (subclass only, no `et2_register_widget`) | `Et2Template` (`Et2Template/Et2Template.ts`) |
+| `et2_widget_toolbar.ts` | `toolbar` | `Et2Toolbar` (`Et2Toolbar/Et2Toolbar.ts`) |
+
+`et2_widget_dialog.ts` looks like it should be on this list too, but **isn't** - it stayed a real
+file (still 1a-shim, not 1a-generated) because it has actual behaviour beyond a bare re-export
+(custom constructor, attribute-registry generation, its own `customElements.define`).
