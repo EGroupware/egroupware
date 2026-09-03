@@ -117,9 +117,10 @@ class BaseTest extends TestCase
 		// set as ts, but read as is in DB
 		$data['t_end'] = Api\DateTime::to($data['t_end'], Api\DateTime::DATABASE);
 		// not set in testSaveInternalState()'s $data - insert() must apply the column defaults
-		// (t_uniq is nullable with no default => null, t_active defaults to true)
+		// (t_uniq/t_json are nullable with no default => null, t_active defaults to true)
 		$data['t_uniq'] = null;
 		$data['t_active'] = true;
+		$data['t_json'] = null;
 		$this->assertEquals($data, $read);
 	}
 

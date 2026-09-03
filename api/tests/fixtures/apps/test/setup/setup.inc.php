@@ -11,7 +11,7 @@
  */
 
 $setup_info['test']['name']      = 'test';
-$setup_info['test']['version']   = '17.1.002';
+$setup_info['test']['version']   = '17.1.003';
 $setup_info['test']['app_order'] = 5;
 $setup_info['test']['tables']    = array('egw_test');
 $setup_info['test']['enable']    = 1;

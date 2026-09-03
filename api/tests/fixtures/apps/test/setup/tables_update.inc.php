@@ -33,3 +33,18 @@ function test_upgrade17_1_001()
 
 	return $GLOBALS['setup_info']['test']['currentver'] = '17.1.002';
 }
+
+/**
+ * Add a JSON blob column, needed to test Storage\Json/JsonCF/JsonTrait against a real table -
+ * see doc/ai/projects/storage-test-coverage.md
+ */
+function test_upgrade17_1_002()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_test', 't_json', array(
+		'type' => 'text',
+		'nullable' => True,
+		'comment' => 'JSON blob column, for Storage\Json/JsonCF/JsonTrait tests',
+	));
+
+	return $GLOBALS['setup_info']['test']['currentver'] = '17.1.003';
+}

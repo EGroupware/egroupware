@@ -23,7 +23,9 @@ $phpgw_baseline = array(
 			't_uniq' => array('type' => 'varchar','precision' => '80','nullable' => True,
 				'comment' => 'nullable unique column, for Storage\Base::not_unique()/read() unique-key-fallback tests'),
 			't_active' => array('type' => 'bool','nullable' => True,'default' => '1',
-				'comment' => 'bool column, for Storage\Base::db2data() bool-conversion tests')
+				'comment' => 'bool column, for Storage\Base::db2data() bool-conversion tests'),
+			't_json' => array('type' => 'text','nullable' => True,
+				'comment' => 'JSON blob column, for Storage\Json/JsonCF/JsonTrait tests')
 		),
 		'pk' => array('t_id'),
 		'fk' => array(),
