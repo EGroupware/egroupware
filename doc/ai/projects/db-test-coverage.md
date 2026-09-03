@@ -253,9 +253,30 @@ exists.
 - [x] **Phase 0 - Mapping** (this doc). Two real bugs found (`_connect()`/`set_capabilities()` reuse
       gap; `Db\Schema::RefreshTable()`'s transaction leak, same class as the already-fixed
       `Customfields::getSerial()` bug) - flagged for a decision before Phase implementation proceeds.
-- [ ] **Phase 1 - `quote()`/`name_quote()` security matrix + `query()`'s `readonly` mode/error
-      discrimination**.
-- [ ] **Phase 2 - DB-portability functions** (no live connection needed - cheap, high value).
+- [x] **Phase 1 - `quote()`/`name_quote()` security matrix + `query()`'s `readonly` mode/error
+      discrimination**. `api/tests/Db/QuoteTest.php` (commit `6ac8e38023`, 28 tests) - injection
+      round-trip matrix (12 adversarial values), the null/`$not_null` footgun, `mb_substr()`
+      character-boundary truncation, astral-plane->U+FFFD replacement, array+glue implode, object
+      `__toString()` degradation, `name_quote()`'s space/`CASE`-prefix passthrough + reserved-word
+      quoting, `query()`'s readonly mode, error classification. **No bugs found** in `quote()`/
+      `name_quote()` - every adversarial value round-tripped byte-identical through a real query.
+      **Real finding, documented not fixed**: in this actual runtime mysqli is NOT in
+      exception-throwing mode, so `query()`'s code-based `InvalidSql`-vs-generic-`Db\Exception`
+      classification is effectively dead code here - every failure (including an unclassified error
+      code like 1146/unknown-table) falls through the unconditional `!$rs` fallback and comes back as
+      `InvalidSql` regardless. Also `$e->details` is never populated via this path - the SQL text
+      appears in `getMessage()` instead. Tests locked down to match actual behavior.
+- [x] **Phase 2 - DB-portability functions** (no live connection needed - cheap, high value).
+      `api/tests/Db/PortabilityTest.php` (commit `03244a91f9`, 42 tests) - `group_concat()`,
+      `regexp_replace()`, `strpos()` (mysql/pgsql/mssql only, `die()` path on unknown type
+      deliberately not exercised), `unix_timestamp()`/`from_unixtime()`, `date_format()` (incl. the
+      mssql `DATEPART`-splicing logic and empty-segment cleanup for adjacent placeholders),
+      `to_double()`/`to_int()`/`to_varchar()` across their engine branches. **Correction to the
+      original mapping**: `group_concat()`/`regexp_replace()` aren't fully connection-free after all
+      - both call `quote()` for a sub-value, which needs a live `Link_ID` for its string path -
+      worked around with one real connected `Db` instance whose `->Type`/`->ServerInfo` get
+      overridden per test case. **No bugs found** - one quirk documented (not a bug): `to_varchar()`
+      has no mysql-specific branch, unlike `to_double()`/`to_int()`.
 - [ ] **Phase 3 - `insert()`/`update()`/`delete()` edge cases + `column_data_implode()` +
       `expression()`**.
 - [ ] **Phase 4 - `union()`, transactions/locking, `set_app()`/`get_table_definitions()` cache
