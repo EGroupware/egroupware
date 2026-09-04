@@ -10,6 +10,7 @@
 
 
 import {css, html, LitElement, PropertyValues} from "lit";
+import {property} from "lit/decorators/property.js";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 
 export class Et2Iframe extends Et2Widget(LitElement)
@@ -32,19 +33,26 @@ export class Et2Iframe extends Et2Widget(LitElement)
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			label: {type: String},
-			seamless: {type: Boolean},
-			name: {type: String},
-			fullscreen: {type: Boolean},
-			needed: {type: Boolean},
-			src: {type:String},
-			allow: {type: String}
-		}
-	}
+	@property({type: String})
+	label : string;
+
+	@property({type: Boolean})
+	seamless : boolean;
+
+	@property({type: String})
+	name : string;
+
+	@property({type: Boolean})
+	fullscreen : boolean;
+
+	@property({type: Boolean})
+	needed : boolean;
+
+	@property({type: String})
+	src : string;
+
+	@property({type: String})
+	allow : string;
 
 	constructor(...args : any[])
 	{
