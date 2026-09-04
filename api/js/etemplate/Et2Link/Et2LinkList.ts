@@ -127,7 +127,7 @@ export class Et2LinkList extends Et2LinkString
 
 	// JS code which is executed when the links change
 	@property({type: Function})
-	onchange : Function;
+	onchange : any;
 
 	// Does NOT allow user to enter data, just displays existing data
 	// Disables delete, etc.
