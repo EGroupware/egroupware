@@ -420,18 +420,62 @@ session).
   Vlinks wrappers doesn't apply here - still worth re-checking once an actual Links/Vlinks test file
   exists and runs in the same process as the community Links tests.
 
-**Still to do for Phase 6**: `S3direct\StreamWrapper` (different implementation from `S3`,
-`implements StreamWrapperIfaceNoDir` directly rather than extending `Sqlfs\StreamWrapper` - own stat
-cache, per the original mapping - needs separate investigation, not assumed similar to `S3`);
-`Merge`/`Versioning` (both extend `S3\StreamWrapper` - likely share its "async upload, sync local
-CRUD" shape, worth confirming rather than assuming); EPL `Links\StreamWrapper` (1306 lines - a
-genuinely different, richer implementation than the community one, with its own alphabet/hash-based
-virtual directory caching system: `alphabet2cache`/`hashes2cache`/`entry2cache`/`app2cache`/
-`virtual_parent` - deserves its own dedicated mapping pass); `Vlinks\StreamWrapper` (thin subclass of
-the community `Links\StreamWrapper`, shares the `LinksParent` monkey-patch, no logic of its own
-beyond the scheme constant - lower priority once Links(EPL) itself is understood). The
-`AsyncAws\S3\S3Client` mock (described above) will be needed once any of these touch the
-re-download-from-S3 code path or actual upload verification.
+**`Versioning\StreamWrapper` DONE** (2026-09-04): `stylite/tests/Vfs/VersioningStreamWrapperTest.php`
+(6 tests, committed `6ab8913` in the `stylite/` repo) - confirmed the "async S3 upload, synchronous
+local CRUD" shape from `S3` carries over unchanged (not re-verified in depth). What's new/specific
+to versioning:
+- Writing to an existing NON-EMPTY file creates a SEPARATE new version row (`stream_open()`,
+  `Versioning/StreamWrapper.php:213-224`) rather than overwriting in place; `stream_close()`
+  (`:275-313`) then flips `fs_active` via a single `UPDATE ... CASE fs_id WHEN <new> THEN true ELSE
+  false END WHERE fs_dir=? AND fs_name=?`, making every other same-named row inactive rather than
+  deleting them - confirmed via direct row-count assertions, not just reading current content.
+- `$min_version` defaults to **330 seconds** (`StreamWrapper.php:132`) - two writes closer together
+  than that are silently coalesced into one version, not two. My first attempt at the
+  "writing creates a new version" test failed against this real throttle (wrote v1 and v2
+  milliseconds apart); fixed by mounting with `?min_version=0` for that test, and added a SEPARATE
+  test confirming the default throttle behavior itself on an un-overridden mount.
+- Opening for update without an actual `fwrite()` doesn't leave a spurious version behind
+  (`stream_close()`'s `write_called` check, `:279-284`) - verified with mode `'a'`, NOT `'r+'`,
+  because of the next finding.
+- **Real bug found, documented not fixed** (touches shared `Sqlfs\StreamWrapper` logic used by
+  every backend, not just Versioning - deserves careful review before changing):  opening an
+  existing, non-empty file on a versioned mount with mode `'r+'` always fails.
+  `Versioning\StreamWrapper::stream_open()` sets `$this->overwrite_new` (its "create a new version
+  row" signal) unconditionally for any non-read, non-skip-versioning open; `Vfs\Sqlfs\StreamWrapper::
+  stream_open()` (`Sqlfs/StreamWrapper.php:208-210`) treats a non-null `overwrite_new` as "this is
+  effectively a new file", entering its create-branch - which immediately rejects because
+  `$mode[0] == 'r'` ("does $mode require the file to exist (r,r+)", the code's own comment) matches
+  `'r+'` too. But `'r+'` is exactly the read+write mode Versioning's own code comment ("copy current
+  content into new version, if mode != w") implies should be supported for an in-place versioned
+  edit. Not hit by the actual WebDAV upload path (`api/src/WebDAV/Server/Filesystem.php::PUT()` uses
+  `"w"`/`"c"`, never `"r+"` - see the partial-write/seek addendum to Phase 3 above), so this doesn't
+  block normal uploads, but it's a real trap for any other code that opens a versioned vfs path with
+  the standard PHP `'r+'` mode. Regression-tested (`testReadWriteModeOnVersionedFileIsBroken`,
+  asserts the CURRENT broken `false` return, with a comment on what to flip once/if it's fixed).
+- Same soft-delete/orphan-row hazard as `S3` (`unlink()` and the version-swap both leave inactive
+  rows rather than deleting) - `tearDown()` uses the same hard-delete-via-`Api\Db` pattern; verified
+  zero orphans after a run.
 
-**Next**: continue Phase 6, then Phase 7 (`fsck` consistency-check mechanism, core + EPL hook
+**Still to do for Phase 6** (in priority order): EPL `Links\StreamWrapper` (1306 lines - genuinely
+richer than the community one, with its own alphabet/hash-based virtual directory caching system:
+`alphabet2cache`/`hashes2cache`/`entry2cache`/`app2cache`/`virtual_parent`, and its own
+`path2entry()`/`check_extended_acl()` ACL resolution using `Api\Link::vfs_path()` and an
+`APP_ID_PREG` pattern matching a `"Title (APP--ID)"` naming convention for alphabetically-cached
+entries - the headline feature this class adds over the community one. It DOES also support plain
+`/apps/$app/$id/...` paths via a fallback branch in `path2entry()`, so a shallow test mirroring
+Phase 4's community-Links test would pass, but would only exercise compatibility-fallback behavior,
+not the actual alphabet-cache navigation that's the point of this class - deliberately not written
+yet, to avoid a misleadingly-thin test standing in for real coverage. Needs its own dedicated
+mapping/test session.); `S3direct\StreamWrapper` (different implementation from `S3` -
+`implements StreamWrapperIfaceNoDir` directly rather than extending `Sqlfs\StreamWrapper`, own stat
+cache, per the original mapping - not yet investigated, don't assume it resembles `S3`); `Merge`
+(extends `S3\StreamWrapper`, but a narrower/more specialized feature - readonly-filesystem-plus-sqlfs
+overlay for print templates - already has SOME real coverage via the existing
+`SharingBackendTest.php`'s `mountMerge()` usage, lower priority than the other three); `Vlinks`
+(thin subclass of Links(EPL), shares its `LinksParent` monkey-patch, no logic of its own beyond the
+scheme constant - do last, once Links(EPL) itself is understood). The `AsyncAws\S3\S3Client` mock
+(described above under S3) will still be needed once any of these touch the re-download-from-S3
+code path or actual upload verification, none of which any Phase 6 test has needed so far.
+
+**Next**: continue Phase 6 (Links(EPL) first), then Phase 7 (`fsck` consistency-check mechanism, core + EPL hook
 consumers). Both confirmed priority, not deferred - see Status section above.
