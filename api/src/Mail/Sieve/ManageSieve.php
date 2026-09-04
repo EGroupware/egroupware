@@ -56,7 +56,12 @@ class ManageSieve extends Horde\ManageSieve implements Connection
 				'host'     => $params->acc_sieve_host ? $params->acc_sieve_host : $params->acc_imap_host,
 				'port'     => $params->acc_sieve_port,
 				'secure'   => Mail\Account::ssl2secure($params->acc_sieve_ssl),
-				'context'  => Mail\Account::sslContext($params->acc_sieve_ssl),
+				// (int) cast: sslContext()'s $ssl param is int-typed - acc_sieve_ssl can
+				// legitimately be the literal string 'no' (the "no encryption" sentinel), which
+				// throws a TypeError at this call boundary otherwise - same root cause as the
+				// acc_smtp_ssl equivalent found live 2026-09-03 in Mail\Account::smtpServer()/
+				// smtpTransport()
+				'context'  => Mail\Account::sslContext((int)$params->acc_sieve_ssl),
 				'user'     => $params->isAdminConnection ? $params->acc_imap_admin_username : $params->acc_imap_username,
 				'password' => $params->isAdminConnection ? $params->acc_imap_admin_password : $params->acc_imap_password,
 				'euser'    => $params->isAdminConnection ? $params->acc_imap_username : null,

@@ -73,4 +73,47 @@ class AccountSmtpTransportTest extends Api\LoggedInTest
 		$this->assertInstanceOf(Mail\Jmap\Transport::class,
 			$this->dummyAccount(Mail\Account::JMAP_HTTPS | Mail\Account::VERIFY_DISABLED)->smtpTransport());
 	}
+
+	/**
+	 * Regression guard: acc_smtp_ssl can legitimately be the literal string 'no' (the "no
+	 * encryption" sentinel, see admin_mail::sslTypes()/mergeVerifyCheckbox()) - PHP 8's bitwise &
+	 * throws "Unsupported operand types: string & int" for a non-numeric string operand instead
+	 * of pre-8's silent-0 coercion. Found live 2026-09-03: any account with acc_smtp_ssl='no'
+	 * crashed on EVERY save (Mail\Account::write() -> saveUserData() -> smtpServer()), not just
+	 * ones with S/MIME involved - dummyAccount()'s own int-typed $ssl param can't reproduce this
+	 * (a string argument would fail at ITS OWN call boundary), hence a raw array here instead.
+	 */
+	public function testSmtpServerToleratesNoEncryptionStringSentinel()
+	{
+		$account = new Mail\Account([
+			'acc_id' => 0,
+			'acc_smtp_type' => Mail\Smtp::class,
+			'acc_smtp_ssl' => 'no',
+			'acc_smtp_host' => 'smtp.example.org',
+			'acc_smtp_port' => 25,
+			'acc_imap_host' => 'imap.example.org',
+			'acc_imap_username' => 'phpunit-test-user',
+		]);
+
+		$smtpServer = $account->smtpServer();
+
+		$this->assertInstanceOf(Mail\Smtp::class, $smtpServer);
+		$this->assertSame('smtp.example.org', $smtpServer->host,
+			'no encryption scheme prefix (tlsv1://, tls://) must NOT be added to the host');
+	}
+
+	/** Same regression, for smtpTransport()'s classic (non-JMAP) branch. */
+	public function testSmtpTransportToleratesNoEncryptionStringSentinel()
+	{
+		$account = new Mail\Account([
+			'acc_id' => 0,
+			'acc_smtp_ssl' => 'no',
+			'acc_smtp_host' => 'smtp.example.org',
+			'acc_smtp_port' => 25,
+			'acc_imap_host' => 'imap.example.org',
+			'acc_imap_username' => 'phpunit-test-user',
+		]);
+
+		$this->assertInstanceOf(Horde_Mail_Transport_Smtphorde::class, $account->smtpTransport());
+	}
 }

@@ -196,7 +196,11 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 			'hostspec' => $this->params['acc_imap_host'],
 			'port' => $this->params['acc_imap_port'],
 			'secure' => Account::ssl2secure($this->params['acc_imap_ssl']),
-			'context' => Account::sslContext($this->params['acc_imap_ssl']),
+			// (int) cast: sslContext()'s $ssl param is int-typed - acc_imap_ssl can legitimately
+			// be the literal string 'no' (the "no encryption" sentinel), which throws a TypeError
+			// at this call boundary otherwise (found live 2026-09-03 for the acc_smtp_ssl
+			// equivalent in Mail\Account::smtpServer()/smtpTransport(), same root cause)
+			'context' => Account::sslContext((int)$this->params['acc_imap_ssl']),
 			'timeout' => $_timeout,
 		)+self::$default_params;
 

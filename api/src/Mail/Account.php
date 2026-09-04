@@ -832,7 +832,13 @@ class Account implements \ArrayAccess
 			$this->smtpServer->editForwardingAddress = false;
 			$this->smtpServer->host = $params['acc_smtp_host'];
 			$this->smtpServer->port = $params['acc_smtp_port'];
-			switch($params['acc_smtp_ssl'] & self::PROTOCOL_MASK)
+			// (int) cast: acc_smtp_ssl can legitimately be the literal string 'no' (the "no
+			// encryption" sentinel, see sslTypes()/mergeVerifyCheckbox()) - PHP 8's bitwise &
+			// throws "Unsupported operand types: string & int" for a non-numeric string operand
+			// instead of the pre-8 silent-0 coercion (found live 2026-09-03, any account with
+			// acc_smtp_ssl='no' crashed on every save). (int)'no' is 0 (SSL_NONE), which correctly
+			// falls through to $secure staying false below, unchanged from the intended behaviour.
+			switch((int)$params['acc_smtp_ssl'] & self::PROTOCOL_MASK)
 			{
 				case self::SSL_SSL:	// legacy alias, unified with SSL_TLS - see SSL_SSL's docblock
 				case self::SSL_TLS:
@@ -871,7 +877,9 @@ class Account implements \ArrayAccess
 			}
 
 			$secure = false;
-			switch($params['acc_smtp_ssl'] & self::PROTOCOL_MASK)
+			// (int) cast: see smtpServer()'s identical comment - acc_smtp_ssl can legitimately be
+			// the literal string 'no', which throws under PHP 8's bitwise & without this
+			switch((int)$params['acc_smtp_ssl'] & self::PROTOCOL_MASK)
 			{
 				case self::SSL_STARTTLS:
 					$secure = 'tls';	// Horde uses 'tls' for STARTTLS, not ssl connection with tls version >= 1 and no sslv2/3
@@ -900,7 +908,10 @@ class Account implements \ArrayAccess
 				'host' => $params['acc_smtp_host'],
 				'port' => $params['acc_smtp_port'],
 				'secure' => $secure,
-				'context' => self::sslContext($params['acc_smtp_ssl']),
+				// (int) cast: sslContext()'s own $ssl param is int-typed - 'no' (non-numeric
+				// string) throws a TypeError at this call boundary otherwise, same root cause as
+				// the switch() above
+				'context' => self::sslContext((int)$params['acc_smtp_ssl']),
 				'debug' => self::SMTP_DEBUG_LOG,
 				//'timeout' => self::TIMEOUT,
 			];
