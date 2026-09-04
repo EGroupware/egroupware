@@ -1,41 +1,34 @@
 import {Et2Select} from "../Et2Select";
 import {Et2StaticSelectMixin, StaticOptions} from "../StaticOptions";
 import {PropertyValues} from 'lit';
+import {property} from "lit/decorators/property.js";
 
 export class Et2SelectNumber extends Et2StaticSelectMixin(Et2Select)
 {
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/**
-			 * Step between numbers
-			 */
-			interval: {type: Number},
-			min: {type: Number},
-			max: {type: Number},
+	/**
+	 * Step between numbers
+	 */
+	@property({type: Number})
+	interval : number = 1;
 
-			/**
-			 * Add one or more leading zeros
-			 * Set to how many zeros you want (000)
-			 */
-			leading_zero: {type: String},
-			/**
-			 * Appended after every number
-			 */
-			suffix: {type: String}
-		}
-	}
+	@property({type: Number})
+	min : number = 1;
 
-	constructor()
-	{
-		super();
-		this.min = 1;
-		this.max = 10;
-		this.interval = 1;
-		this.leading_zero = "";
-		this.suffix = "";
-	}
+	@property({type: Number})
+	max : number = 10;
+
+	/**
+	 * Add one or more leading zeros
+	 * Set to how many zeros you want (000)
+	 */
+	@property({type: String})
+	leading_zero : string = "";
+
+	/**
+	 * Appended after every number
+	 */
+	@property({type: String})
+	suffix : string = "";
 
 	willUpdate(changedProperties : PropertyValues)
 	{
