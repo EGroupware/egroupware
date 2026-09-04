@@ -10,6 +10,7 @@
 
 
 import {css} from "lit";
+import {property} from "lit/decorators/property.js";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {SlTextarea} from "@shoelace-style/shoelace";
 import shoelace from "../Styles/shoelace";
@@ -18,6 +19,9 @@ import {Et2MarkdownEditMixin} from "../Markdown/Et2MarkdownEditMixin";
 
 export class Et2Textarea extends Et2MarkdownEditMixin(Et2InputWidget(SlTextarea))
 {
+	private __width : string;
+	private __height : string;
+
 	static get styles()
 	{
 		return [
@@ -52,23 +56,8 @@ export class Et2Textarea extends Et2MarkdownEditMixin(Et2InputWidget(SlTextarea)
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/**
-			 * Specify the width of the text area.
-			 * If not set, it will expand to fill the space available.
-			 */
-			width: {type: String},
-			/**
-			 * Specify the height of the text area.
-			 * If not set, it will expand to fill the space available.
-			 */
-			height: {type: String},
-			onkeypress: Function,
-		}
-	}
+	@property({type: Function})
+	onkeypress : any;
 
 	constructor()
 	{
@@ -111,6 +100,11 @@ export class Et2Textarea extends Et2MarkdownEditMixin(Et2InputWidget(SlTextarea)
 	 *
 	 * @param value
 	 */
+	/**
+	 * Specify the width of the text area.
+	 * If not set, it will expand to fill the space available.
+	 */
+	@property({type: String, noAccessor: true})
 	set width(value)
 	{
 
@@ -121,6 +115,16 @@ export class Et2Textarea extends Et2MarkdownEditMixin(Et2InputWidget(SlTextarea)
 		this.requestUpdate("width", oldValue);
 	}
 
+	get width()
+	{
+		return this.__width;
+	}
+
+	/**
+	 * Specify the height of the text area.
+	 * If not set, it will expand to fill the space available.
+	 */
+	@property({type: String, noAccessor: true})
 	set height(value)
 	{
 		let oldValue = this.__height;
@@ -128,6 +132,11 @@ export class Et2Textarea extends Et2MarkdownEditMixin(Et2InputWidget(SlTextarea)
 		this.__height = value;
 
 		this.requestUpdate("height", oldValue);
+	}
+
+	get height()
+	{
+		return this.__height;
 	}
 
 	/** Override some parent stuff to get sizing how we like it **/
