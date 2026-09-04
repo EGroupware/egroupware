@@ -2769,3 +2769,89 @@ renders "Ungültige E-Mail-Adresse" under a garbled single chip. Setting it to t
 quoted string (`"Mueller, Jens" <Jens.Mueller@elkamet.de>`, what `formatJmapAddress()` now
 produces) on a fresh page renders one clean "Mueller, Jens (elkamet.de)" chip with no error at all.
 `npx tsc --noEmit`/`npm run build` clean for all three touched files.
+
+## FIXED (2026-09-04): S/MIME signed message with real attachments showed no attachment icon in the list
+
+New regression report (ralf): "S/Mime signed message with 2 attachments does NOT show the
+attachments in the Sent Folder". Root-caused to `MailJmap.isSmimeWrapperOnly()`
+(`mail/js/jmap.ts`), added two days earlier (`db1eb1522f`, "no attachment icon...for purely S/MIME
+signed or encrypted messages") to fix the OPPOSITE problem: a plain signed message with no real
+attachment was showing a paperclip icon anyway, because both Stalwart's native `hasAttachment` and
+the shim's `structureHasAttachment()` count the detached PKCS7 signature part itself as "an
+attachment" (it carries `Content-Disposition: attachment`). That fix judged "is this just the
+wrapper" purely from the top-level `Content-Type` header - `multipart/signed` with a
+`pkcs7-signature` protocol - with no way to tell "just the wrapper" apart from "signed content
+that ALSO has 2 real attachments inside it": both produce the exact same top-level Content-Type,
+so the fix unconditionally hid the icon for every signed message, real attachments included. The
+message's own docblock already predicted and accepted this exact gap at the time ("a signed
+message whose signed payload is itself multipart/mixed with a genuine extra attachment would still
+lose the icon under this check") - this report is that gap actually being hit.
+
+**Why not just always fetch the real per-part list?** RFC 8621's `attachments` property (the
+accurate per-part metadata list) WOULD resolve this precisely, but `Imap.php`'s shim groups it
+with `bodyStructure`/`bodyValues` as needing "an extra per-message IMAP round trip" - fetching it
+for every row (all ~50 on a page) would reintroduce exactly the per-row IMAP/JMAP cost this
+project has consistently avoided elsewhere, for messages that are the overwhelming common case
+(not S/MIME signed at all).
+
+**Fix**: added `MailJmap.resolveSmimeSignedAttachments()`, called once per `getRows()` page AFTER
+the normal cheap fetch - it filters to just the rows already flagged `hasAttachment` AND
+`multipart/signed` (typically zero on an ordinary page, a handful at most even in a
+security-conscious mailbox), and only for THOSE issues a second, small `Email/get` for their real
+`attachments`. `isSmimeWrapperOnly()` now takes that per-message attachments array as a second
+parameter: `application/(x-)pkcs7-mime` (opaque signed/encrypted) stays a pure Content-Type check
+(its content is opaque pre-decryption, no way to see past the wrapper regardless), but
+`multipart/signed` now checks whether the resolved attachments contain anything besides the
+signature part itself - if yes, a real attachment exists and the icon shows; if the ONLY entry is
+the signature, it's wrapper-only and stays hidden, exactly like before. Falls back to the old,
+conservative "hide it" behaviour if `attachments` was never resolved (defensive, shouldn't happen).
+
+**Verified**: the three classification cases (wrapper-only, signed-with-real-attachments,
+non-signed) all resolve correctly via direct unit-style calls against the live page's own loaded
+`MailJmap` class. End-to-end sanity check against a real Sent folder (`getRows()` on a real
+account, no synthetic data) completed with no errors, rows rendered normally, and the two existing
+wrapper-only S/MIME test messages there still correctly show no icon (no regression to the
+original `db1eb1522f` fix). Sending a genuinely new signed+attached test message hit an unrelated
+account-configuration snag (no Sent folder configured / no working S/MIME cert for one identity,
+not something this fix touches) rather than a bug in this change, so live verification was done via
+the direct classification + real-`getRows()` checks above instead. `npx tsc --noEmit`/`npm run
+build` clean.
+
+## FIXED (2026-09-04): identity switch could delete the user's own just-typed text along with the old signature - a regression surfaced by the 2026-09-03 marker-removal fix
+
+New regression report (ralf): "(ik) signature is now correctly changed (prior one removed), but
+changing the identity also removes the text already written" - a direct follow-on to the 2026-09-03
+fix (`updateSignatureForIdentity()`'s HTML-mode removal switching from a fragile string match to a
+reliable `getElementById(SIGNATURE_MARKER_ID)` + `marker.remove()`). That fix made the removal
+reliable enough to actually run correctly every time - which is exactly what exposed this: the
+marker div it removes could, for `insertSignatureAtTopOfMessage` = 'top' placement, contain more
+than just the signature.
+
+**Root cause**: `MailJmap.composeBodyWithSignature()`'s 'top' branch built
+`` `<div id="${SIGNATURE_MARKER_ID}">${start}${before}${sigSource}${inbetween}</div>` `` - `start`
+being the blank leading `<p><br/></p>` line handed to an otherwise-empty compose (or a reply with
+no other content yet) so there's somewhere to click and type. For 'top' placement on a fresh
+compose, that blank paragraph is the ONLY visually-empty, obviously-clickable spot in the whole
+editor - a user typing their message there (entirely reasonably) had it silently nested INSIDE the
+signature's own marker div. `updateSignatureForIdentity()`'s `marker.remove()` deletes that whole
+subtree unconditionally on the next identity switch - taking the user's own typed text with it. The
+'below' branch never had this bug - its `start` was already a sibling before `body`, outside the
+div (`return start + body + block`); only 'top' nested it inside (`return block + body` with
+`start` baked into `block`'s own template literal).
+
+**Fix**: moved `start` outside the marker div for the 'top' case too, matching the pattern the
+'below' case already used correctly - `return start + block + body` with `block` now containing
+only `${before}${sigSource}${inbetween}` (the actual signature content). Visual layout is
+unchanged (the blank line still renders in the same position); structurally, it can no longer be
+deleted as a side effect of removing the signature.
+
+**Verified**: confirmed the bug directly first - `composeBodyWithSignature('', 'html', sig,
+{placement: 'top', ...})`'s result parsed via `DOMParser`, `getElementById('mail-compose-signature')
+.innerHTML` contained the `<p><br` empty-paragraph markup (pre-fix). Post-fix, the same call's
+marker no longer contains it. Full round-trip simulation of the actual bug - build initial 'top'
+body, simulate the user typing into the leading blank paragraph (exactly where they visually would
+click), run `updateSignatureForIdentity()`'s own marker-removal logic, re-apply
+`composeBodyWithSignature()` for a second identity - confirms the user's text now survives the
+switch (it did NOT before the fix, verified against the unfixed function beforehand) while the old
+signature is correctly gone and the new one present. A second run with 'below' placement (the
+already-working case) confirms no regression there. `npx tsc --noEmit`/`npm run build` clean.

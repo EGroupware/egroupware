@@ -578,11 +578,52 @@ export class MailJmap
 			this.mailboxRole(client, token.accountId, profileID, mailboxId),
 		]);
 		const showRecipient = MailJmap.RECIPIENT_SHOWN_ROLES.includes(role as string);
+		const emailList = emails.list || [];
+		await this.resolveSmimeSignedAttachments(client, token, mailboxId, emailList);
 
 		return {
-			rows: (emails.list || []).map((email : any) => this.email2row(email, profileID, mailboxId, showRecipient)),
-			total: ids.total ?? (emails.list || []).length,
+			rows: emailList.map((email : any) => this.email2row(email, profileID, mailboxId, showRecipient)),
+			total: ids.total ?? emailList.length,
 		};
+	}
+
+	/**
+	 * isSmimeWrapperOnly() needs each suspect email's real per-part `attachments` to tell "just the
+	 * S/MIME signature wrapper" apart from "signed content that ALSO has genuine attachments"
+	 * (found live 2026-09-04, ralf: "S/Mime signed message with 2 attachments does NOT show the
+	 * attachments in the Sent Folder" - db1eb1522f's own Content-Type-header-only check couldn't
+	 * tell the two apart, so it always hid the icon for any multipart/signed message).
+	 *
+	 * `attachments` costs an extra per-message IMAP round trip on the shim (Imap.php's emailGet()
+	 * groups it with the other bodyStructure-derived properties) - exactly the per-row cost this
+	 * project avoids elsewhere for the ORDINARY row list - so this is a SECOND, small Email/get
+	 * limited to the few ids that actually need it (hasAttachment AND multipart/signed - zero on an
+	 * ordinary page), never a blanket per-row fetch. Mutates the matching entries in `emails` in
+	 * place with their real `attachments` array.
+	 */
+	private async resolveSmimeSignedAttachments(client : JamClient, token : JmapToken, mailboxId : string,
+		emails : any[]) : Promise<void>
+	{
+		const suspects = emails.filter((email : any) =>
+			email.hasAttachment && MailJmap.isSignedContentType(email[MailJmap.CONTENT_TYPE_HEADER_PROPERTY]));
+		if (!suspects.length)
+		{
+			return;
+		}
+		const args : any = {
+			accountId: token.accountId,
+			ids: suspects.map((email : any) => email.id),
+			properties: ['attachments'],
+		};
+		if (token.isLocal)
+		{
+			args.mailboxId = mailboxId;
+		}
+		const result = token.isLocal ?
+			await this.emailGetViaCacheableGet(client, args) :
+			(await client.requestMany((t) => ({emails: t.Email.get(args) as any})))[0].emails;
+		const attachmentsById = new Map((result.list || []).map((email : any) => [email.id, email.attachments]));
+		suspects.forEach((email : any) => { email.attachments = attachmentsById.get(email.id); });
 	}
 
 	/**
@@ -4375,10 +4416,19 @@ export class MailJmap
 				: before + sigSource;
 			return start + body + block;
 		}
+		// `start` (the blank leading line given to an otherwise-empty compose) stays OUTSIDE the
+		// marker div here too, same as the 'below' case above - it used to be nested INSIDE it
+		// (`<div id=...>${start}${before}...`), so a user who typed into that very first, seemingly
+		// ordinary blank line (the only place to click in a fresh 'top'-placement compose) had their
+		// own text deleted right along with the old signature on the next identity switch, since
+		// updateSignatureForIdentity()'s HTML-mode removal deletes the whole marker div wholesale
+		// (found live 2026-09-04, ralf: signature swaps correctly now, but "changing the identity
+		// also removes the text already written" - a regression surfaced by that very fix, which
+		// made the marker-div removal reliable enough to finally run on every switch).
 		const block = mimeType === 'html'
-			? `<div id="${this.SIGNATURE_MARKER_ID}">${start}${before}${sigSource}${inbetween}</div>`
-			: start + before + sigSource + inbetween;
-		return block + body;
+			? `<div id="${this.SIGNATURE_MARKER_ID}">${before}${sigSource}${inbetween}</div>`
+			: before + sigSource + inbetween;
+		return start + block + body;
 	}
 
 	/** Also used by compose.ts's client-side mimeType (HTML/plain) toggle handler. */
@@ -5448,20 +5498,52 @@ export class MailJmap
 	 * attachment (it carries Content-Disposition: attachment/inline, same as a real one) - showing
 	 * a paperclip icon for a message with no actual user-facing attachment, which is confusing
 	 * (2026-09-02, ralf: "we should NOT show an attachment icon ... for s/mime signed or encrypted
-	 * messages, not having real attachments"). Deliberately message-list-only: a signed message
-	 * whose signed payload is itself multipart/mixed with a genuine extra attachment would still
-	 * lose the icon under this check - detecting that would need a full bodyStructure fetch at
-	 * list time, the exact per-row IMAP/JMAP cost this project has consistently avoided elsewhere.
+	 * messages, not having real attachments").
+	 *
+	 * application/(x-)pkcs7-mime (opaque signed/encrypted) stays a pure Content-Type check - its
+	 * content is opaque until decrypted, so there is no way to see past the wrapper at list time
+	 * regardless. multipart/signed is different: the signed content is NOT encrypted, so its real
+	 * attachments (if any) ARE visible without decryption - resolveSmimeSignedAttachments() fetches
+	 * them (only for the few rows that need it, see its own docblock) precisely so this can tell
+	 * "just the wrapper" apart from "signed content that also has real attachments" (found live
+	 * 2026-09-04, ralf: "S/Mime signed message with 2 attachments does NOT show the attachments in
+	 * the Sent Folder" - the original Content-Type-only version of this check couldn't tell the two
+	 * apart, so it always hid the icon for any multipart/signed message).
+	 *
+	 * @param attachments RFC 8621 EmailBodyPart metadata (resolveSmimeSignedAttachments()'s result)
+	 *  - undefined if never resolved (falls back to the old, conservative "hide it" behaviour)
 	 */
-	private static isSmimeWrapperOnly(contentTypeHeader : string) : boolean
+	private static isSmimeWrapperOnly(contentTypeHeader : string, attachments? : { type? : string }[]) : boolean
 	{
 		const type = (contentTypeHeader || '').split(';')[0].trim().toLowerCase();
 		if (type === 'application/pkcs7-mime' || type === 'application/x-pkcs7-mime')
 		{
 			return true;
 		}
+		if (!MailJmap.isSignedContentType(contentTypeHeader))
+		{
+			return false;
+		}
+		if (!attachments)
+		{
+			return true;
+		}
+		return !attachments.some((a) => !MailJmap.isSmimeSignaturePart(a?.type));
+	}
+
+	/** multipart/signed with an S/MIME (pkcs7-signature) protocol param - detached-signed */
+	private static isSignedContentType(contentTypeHeader : string) : boolean
+	{
+		const type = (contentTypeHeader || '').split(';')[0].trim().toLowerCase();
 		return type === 'multipart/signed' &&
 			/protocol\s*=\s*"?application\/(x-)?pkcs7-signature"?/i.test(contentTypeHeader || '');
+	}
+
+	/** the detached signature part itself, not a real user attachment */
+	private static isSmimeSignaturePart(type? : string) : boolean
+	{
+		const t = (type || '').toLowerCase();
+		return t === 'application/pkcs7-signature' || t === 'application/x-pkcs7-signature';
 	}
 
 	/**
@@ -5502,7 +5584,7 @@ export class MailJmap
 		const fromList = addressList(email.from);
 		const toList = addressList(email.to);
 		const hasAttachment = !!email.hasAttachment &&
-			!MailJmap.isSmimeWrapperOnly(email[MailJmap.CONTENT_TYPE_HEADER_PROPERTY]);
+			!MailJmap.isSmimeWrapperOnly(email[MailJmap.CONTENT_TYPE_HEADER_PROPERTY], email.attachments);
 
 		return {
 			row_id: this.app.egw.user('account_id') + '::' + profileID + '::' + mailboxId + '::' + email.id,
