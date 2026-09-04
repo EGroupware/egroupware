@@ -3245,13 +3245,7 @@ export class MailJmap
 			{
 				throw new JmapUserError(this.egw.lang('Unable to resolve the message blobId'));
 			}
-			const response = await this.clients[reference.profileID].downloadBlob({
-				accountId: token.accountId,
-				blobId,
-				mimeType: 'message/rfc822',
-				fileName: 'source',
-			});
-			return await response.text();
+			return await this.fetchRawSourceByBlobId(reference.profileID, blobId);
 		}
 		catch (e)
 		{
@@ -3259,6 +3253,28 @@ export class MailJmap
 			console.error('MailJmap.fetchRawSource(): failed', e);
 			throw new JmapUserError(describeJmapError(e) ?? this.egw.lang('Unable to connect to the mail server'));
 		}
+	}
+
+	/**
+	 * Download a whole-message blobId directly, skipping fetchRawSource()'s own Email/get-by-id
+	 * lookup entirely - the ONLY safe way to get "the raw source of the message I just sent" back
+	 * from the shim (MailJmap.sendNewEmail()'s own `rawBlobId`, see its docblock for why a
+	 * (mailboxId, emailId) re-fetch afterward is unsafe there specifically).
+	 */
+	async fetchRawSourceByBlobId(profileID : string, blobId : string) : Promise<string>
+	{
+		const token = await this.ensureToken(profileID);
+		if (!token)
+		{
+			throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
+		}
+		const response = await this.clients[profileID].downloadBlob({
+			accountId: token.accountId,
+			blobId,
+			mimeType: 'message/rfc822',
+			fileName: 'source',
+		});
+		return await response.text();
 	}
 
 	/**
@@ -4004,13 +4020,20 @@ export class MailJmap
 	 * @throws JmapUserError on any failure - see unreachableError()'s docblock
 	 * @throws JmapSmimePassphraseError smimeType needs signing and no passphrase (given or
 	 *  session-cached) was enough to unlock the sender's own private key
-	 * @return the just-sent message's own {emailId, mailboxId} (the Sent folder it landed in) -
-	 *  MailCompose's own cross-app-integration follow-up (to_infolog/to_tracker/to_calendar) needs
-	 *  both to fetch the message's raw source afterward (fetchRawSource(), keyed by a synthetic
-	 *  rowId built from exactly these two values)
+	 * @return the just-sent message's own {emailId, mailboxId} (the Sent folder it landed in), plus
+	 *  `rawBlobId` when the shim's own EmailSubmission/set response included one (see that class's
+	 *  own docblock note on this exact property - a shim-only extension, never present for a real
+	 *  Stalwart account). MailCompose's own cross-app-integration follow-up (to_infolog/to_tracker/
+	 *  to_calendar) needs the raw source of what was actually sent - `rawBlobId`, when present, is
+	 *  the ONLY safe way to get it back for the shim (found live 2026-09-04, ralf: "to_infolog
+	 *  attaches the wrong mail/eml" - re-fetching via {mailboxId, emailId} afterward, the
+	 *  Stalwart-safe fallback, can silently resolve to a DIFFERENT real message on the shim: its
+	 *  deferred Sent-copy is a fresh IMAP APPEND with its own brand-new per-mailbox UID, unrelated
+	 *  to `emailId`'s original Draft-folder UID number).
 	 */
 	async sendNewEmail(profileID : string, email : JmapNewEmail, smimeType? : string, passphrase? : string,
-		passExpMinutes? : number, existingDraftEmailId? : string) : Promise<{emailId : string, mailboxId : string}>
+		passExpMinutes? : number, existingDraftEmailId? : string) :
+		Promise<{emailId : string, mailboxId : string, rawBlobId? : string}>
 	{
 		try
 		{
@@ -4062,7 +4085,7 @@ export class MailJmap
 					console.error('MailJmap.sendNewEmail(): failed to clean up the previous draft copy', e);
 				}
 			}
-			return {emailId, mailboxId : sentId};
+			return {emailId, mailboxId : sentId, rawBlobId : (submission.created.sub1 as any).blobId};
 		}
 		catch (e)
 		{

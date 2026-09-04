@@ -2698,6 +2698,21 @@ class Imap extends Jmap\Base
 				$mailer->forceBccHeader();
 				$raw = $mailer->getRaw(false);
 
+				// Stash the exact bytes just sent as a blob NOW, synchronously (uploadBytes() is a
+				// local file write, not an IMAP round trip - negligible cost even though most sends
+				// never need it) - found live 2026-09-04 (ralf: "to_infolog attaches the wrong
+				// mail/eml"): MailCompose.integrateSentMessage() used to re-fetch "the just-sent
+				// message" afterward via (mailboxId=Sent, emailId=<this Draft's own UID>) - correct
+				// for real Stalwart (Email.id is stable across a mailboxIds move by spec) but WRONG
+				// for this shim, where the deferred Sent-copy below is a fresh IMAP APPEND that gets
+				// its own brand-new UID in Sent's own independent per-mailbox UID sequence, unrelated
+				// to the old Draft's UID number - that stale (folder, uid) pair could silently
+				// resolve to a completely different, unrelated real message that happens to already
+				// have that UID in Sent, with no error at all. `blobId` here sidesteps the whole
+				// problem: the client downloads these exact bytes directly, never needing to
+				// rediscover "where did the sent copy end up" by UID at all.
+				$rawBlobId = self::uploadBytes($raw, 'message/rfc822')['blobId'];
+
 				// the mail has ALREADY gone out at this point - appending the Sent-folder copy and
 				// deleting+expunging the old Draft are best-effort bookkeeping the user shouldn't
 				// have to wait for (see $deferredWork's own docblock) - queued to run once jmap.php
@@ -2720,7 +2735,14 @@ class Imap extends Jmap\Base
 					$imap->expunge($sourceMailbox);
 				});
 
-				$created[$creationId] = ['id' => $creationId, 'sendAt' => gmdate('Y-m-d\TH:i:s\Z'), 'undoStatus' => 'final'];
+				$created[$creationId] = ['id' => $creationId, 'sendAt' => gmdate('Y-m-d\TH:i:s\Z'),
+					'undoStatus' => 'final',
+					// not an RFC 8621 EmailSubmission property - a shim-only extension, see this
+					// block's own comment above. A real Stalwart account never reaches this class
+					// for its own EmailSubmission/set at all (real passthrough, see class docblock),
+					// so this key is simply absent from its response - MailJmap.sendNewEmail() falls
+					// back to the (safe-for-Stalwart) fetchRawSource(rowId) path when it's missing.
+					'blobId' => $rawBlobId];
 			}
 			catch (\Throwable $e)
 			{

@@ -752,7 +752,14 @@ switches to a raw POST `<form>` submission when the built URL exceeds 2083 chars
 `$_GET` entirely - `$jmapReplySkip` (reads `$_GET['jmap']`) would silently miss that case, falling
 back to the slower classic path (never breaks, just loses the speed-up) - could already affect the
 shipped multi-message forward-as-attachment given enough forwarded messages. Ralf: not worth fixing
-for this edge case.
+for this edge case - and (ralf, 2026-09-04) it's moot rather than deferred once Step 10 (eliminate
+the ETemplate postback cycle) lands: that phase's own design already drops passing reply/forward
+message-id lists via URL/POST params entirely (a static, content-free template shell opens every
+time; the client resolves what to load via its own JMAP fetch, referenced far more compactly than
+today - or via a direct cross-window call, the same pattern this session's "merge into an
+already-open popup" work just built) - `getComposeFrom()`/`$jmapReplySkip` and the URL-length
+concern that trips this bug disappear along with the whole code path they live in, not just get
+harder to hit. Nothing to fix here in the meantime; not worth a narrower interim patch either.
 
 **Forward-as-attachment built + live-verified 2026-08-31**: one or more messages, each
 attached whole as `message/rfc822` rather than quoted inline - matches classic
@@ -2569,3 +2576,48 @@ This also finally let Bug 1's fix (duplicate Sent-copy) be checked against a gen
 the Sent folder showed exactly one copy of the test message (confirmed visually - it sorts to the
 very top by date, with no adjacent duplicate at the same timestamp), not two. Test message deleted
 afterward.
+
+## FIXED (2026-09-04): to_infolog integration attached the WRONG .eml on the shim - root cause was `sendNewEmail()`'s returned `{emailId, mailboxId}` going stale for a fresh IMAP APPEND
+
+Ralf: "I have a regression, we need to look into, eml files attached to infologs opened by clicking
+on the [.eml] in infolog's list, have two problems: a) they display three mails side by side like
+three columns b) sometimes not the correct mail is shown" - then, once the investigation reached
+`integrateSentMessage()`: "the problem is worse, because the saved eml is already wrong, somehow
+the to-infolog integration saves the wrong mail/eml" - clarified as **two separate issues**: (a) a
+display-side "triple display" bug (still open, not investigated this round), (b) to_infolog
+attaching the wrong content at SAVE time (root-caused + fixed here). Confirmed by ralf: reproduces
+via the shim, not real Stalwart.
+
+**Root cause**: `MailCompose.integrateSentMessage()` (built 2026-09-02, "jmapEligible() blockers
+survey" section above) re-fetches "the just-sent message" via `MailJmap.fetchRawSource()`, keyed by
+a synthetic rowId built from `sendNewEmail()`'s returned `{emailId, mailboxId}` - `emailId` there is
+the original DRAFT's own id (from `createDraftEmail()`, captured BEFORE submission), `mailboxId` is
+the Sent folder's id. For real Stalwart this is safe (RFC 8621: `Email.id` is stable across a
+`mailboxIds` move - same message, same id, just relocated). For the shim, it's wrong: the deferred
+Sent-copy (`emailSubmissionSet()`'s own dedup fix, two days ago - see its section above) is a fresh
+IMAP `APPEND`, which gets its own brand-new UID in Sent's own INDEPENDENT per-mailbox UID sequence,
+completely unrelated to the old Draft-folder UID number `emailId` still holds. `fetchRawSource()`
+then asks the shim for "UID `<old-draft-uid>` in the Sent mailbox" - a (folder, uid) pair that was
+never real. IMAP UIDs being per-mailbox, if that UID number already happens to belong to a
+*different, real, unrelated* message already sitting in Sent (routine in an active mailbox), the
+fetch succeeds and silently returns THAT message's content instead - no error, no hint anything's
+wrong, exactly "the wrong mail/eml attached".
+
+**Fix**: the raw bytes are already sitting in `emailSubmissionSet()` as `$raw`, computed BEFORE any
+folder move happens - `Imap::uploadBytes($raw, 'message/rfc822')` (a local file write, not an IMAP
+round trip - negligible cost even though most sends never need it) stashes them synchronously, and
+`$created[$creationId]` now includes that `blobId` as a shim-only extension property (not RFC 8621 -
+a real Stalwart account never reaches this class for its own `EmailSubmission/set` at all, so the
+property is simply absent from its response). `MailJmap.sendNewEmail()` plumbs it through as
+`rawBlobId`; a new `MailJmap.fetchRawSourceByBlobId(profileID, blobId)` downloads it directly, no
+(mailboxId, emailId) lookup involved at all. `integrateSentMessage()` prefers `sent.rawBlobId` when
+present, falling back to the original `fetchRawSource(rowId)` path only when it's absent (i.e. real
+Stalwart, where that path was always safe).
+
+**Live-verified** (shim, acc_id=42, to_infolog only - to_tracker separately toggled on by an
+accidental stray click during testing, revealing an unrelated stuck "select existing ticket" dialog,
+not investigated, avoided by starting a clean compose): sent a marker-subject message, InfoLog popup
+opened correctly, saved, then verified server-side (direct SQL + VFS file read, bypassing the
+still-open display-side bug (a) entirely) that the attached `.eml`'s own `Subject:` header - read
+from the raw RFC822 bytes on disk, not the InfoLog's description text - matches the marker exactly.
+Test InfoLog entry and test email both deleted afterward.

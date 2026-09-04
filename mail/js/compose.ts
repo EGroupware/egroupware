@@ -1040,13 +1040,21 @@ export class MailCompose
 	 * classic Api\Mailer's own getRaw() output, which nothing here ever builds.
 	 *
 	 * A no-op if none of the three toggles are checked. Otherwise fetches the just-sent message's
-	 * raw source via MailJmap.fetchRawSource() (a synthetic rowId built from `sent`'s own
-	 * emailId/mailboxId - the exact same row-id shape every other mail row already uses) and hands
-	 * everything off to the new mail.mail_compose.ajax_integrateSent(), which does the actual
-	 * Link::set_data()/Framework::popup() work server-side - see its own docblock. That popup opens
-	 * itself via the framework's own JSON-response-apply mechanism (Framework::popup() calls
-	 * Json\Response::get()->apply('egw.open_link', ...) for a JSON request), so this method never
-	 * needs to open anything client-side itself.
+	 * raw source and hands everything off to the new mail.mail_compose.ajax_integrateSent(), which
+	 * does the actual Link::set_data()/Framework::popup() work server-side - see its own docblock.
+	 * That popup opens itself via the framework's own JSON-response-apply mechanism
+	 * (Framework::popup() calls Json\Response::get()->apply('egw.open_link', ...) for a JSON
+	 * request), so this method never needs to open anything client-side itself.
+	 *
+	 * Raw-source fetch: prefers `sent.rawBlobId` (MailJmap.sendNewEmail()'s own shim-only
+	 * extension, a direct blob download - see its docblock) when present, falling back to
+	 * MailJmap.fetchRawSource() (a synthetic rowId built from `sent`'s own emailId/mailboxId) only
+	 * when it's not - a real Stalwart account never returns `rawBlobId` at all (see
+	 * emailSubmissionSet()'s own comment on that property), but fetchRawSource() by rowId IS safe
+	 * there (Email.id is stable across a mailboxIds move by spec, unlike the shim's own fresh IMAP
+	 * APPEND for its deferred Sent-copy). Found live 2026-09-04 (ralf: "to_infolog attaches the
+	 * wrong mail/eml") that the rowId-based fetch alone could silently resolve to a DIFFERENT,
+	 * unrelated real message on the shim - see sendNewEmail()'s own docblock for the exact mechanism.
 	 *
 	 * `email.attachments` (currentEmailFields()'s own already-JMAP-resolved shape - {blobId,...} or
 	 * {vfsPath,...}, per uploadAttachmentsViaJmap()) is reused as-is: it's exactly what actually got
@@ -1054,7 +1062,7 @@ export class MailCompose
 	 * server-side resolver needs no separate per-row profileID at all - just the one `profileID`
 	 * the whole message was sent from.
 	 */
-	private async integrateSentMessage(sent : {emailId : string, mailboxId : string},
+	private async integrateSentMessage(sent : {emailId : string, mailboxId : string, rawBlobId? : string},
 		email : {to : any, cc : any, bcc : any, subject : string, body : string, isHtml : boolean, attachments? : any[]}) : Promise<void>
 	{
 		const toolbar : any = this.et2.getWidgetById('composeToolbar');
@@ -1066,8 +1074,10 @@ export class MailCompose
 		}
 
 		const profileID = String(this.currentProfileID());
-		const rowId = 'mail::' + this.egw.user('account_id') + '::' + profileID + '::' + sent.mailboxId + '::' + sent.emailId;
-		const eml = await this.app.jmap.fetchRawSource(rowId);
+		const eml = sent.rawBlobId ?
+			await this.app.jmap.fetchRawSourceByBlobId(profileID, sent.rawBlobId) :
+			await this.app.jmap.fetchRawSource(
+				'mail::' + this.egw.user('account_id') + '::' + profileID + '::' + sent.mailboxId + '::' + sent.emailId);
 		const entryId = (this.et2.getWidgetById('to_integrate_ids')?.get_value() || [])[0];
 
 		await this.egw.request('mail.mail_compose.ajax_integrateSent', [{
