@@ -513,16 +513,51 @@ Links tests still pass normally even with EPL's Links class loaded process-wide.
 re-checking if this combination's test order ever changes, given the monkey-patch is real and
 process-wide, just apparently harmless for what these specific tests happen to exercise.
 
-**Still to do for Phase 6**: `S3direct\StreamWrapper` (different implementation from `S3` -
-`implements StreamWrapperIfaceNoDir` directly rather than extending `Sqlfs\StreamWrapper`, own stat
-cache, per the original mapping - not yet investigated, don't assume it resembles `S3`); `Merge`
-(extends `S3\StreamWrapper`, but a narrower/more specialized feature - readonly-filesystem-plus-sqlfs
-overlay for print templates - already has SOME real coverage via the existing
-`SharingBackendTest.php`'s `mountMerge()` usage, lower priority); `Vlinks` (thin subclass of
-Links(EPL), shares its `LinksParent` monkey-patch, no logic of its own beyond the scheme constant -
-should be quick now that Links(EPL) itself is understood). The `AsyncAws\S3\S3Client` mock
-(described above under S3) will still be needed once any of these touch the re-download-from-S3
-code path or actual upload verification, none of which any Phase 6 test has needed so far.
+**`S3direct\StreamWrapper` DONE** (2026-09-04): `stylite/tests/Vfs/S3directStreamWrapperTest.php`
+(5 tests). Genuinely different from `S3`/`Versioning`/`Merge`: `implements
+Vfs\StreamWrapperIfaceNoDir` directly (NOT a `Sqlfs\StreamWrapper` subclass) - no local-storage
+pass-through at all, every read/write/list/delete goes synchronously through the real AsyncAws S3
+API against the actually-configured bucket. No mocking was needed after all - live connectivity was
+confirmed working directly (a raw `listObjectsV2` call succeeded against this environment's minio),
+so real reads/writes/deletes against a clearly-scoped, cleaned-up key prefix were used instead of
+building the AsyncAws mock the original plan anticipated.
 
-**Next**: continue Phase 6 (`S3direct` next), then Phase 7 (`fsck` consistency-check mechanism, core + EPL hook
+**Two safety/robustness measures added specifically for this wrapper, unlike anything else in
+Phase 6** (both prompted directly by ralf mid-session, not assumed):
+1. **CI safety**: `setUp()` does a real, cheap connectivity probe (a `listObjectsV2` call with a 5s
+   timeout) and calls `markTestSkipped()` if it throws, rather than only checking that
+   `self::$storages` config is non-empty - a non-empty config alone doesn't prove the endpoint is
+   actually reachable, and CI has no S3/minio available at all.
+2. **Bucket safety**: before writing anything, explicitly confirmed with ralf that this
+   environment's configured bucket (`"boulder"` on local minio - the name coincides with this
+   instance's own hosting domain, which read as a real-backups risk worth checking rather than
+   assuming) is disposable/test-only. Confirmed safe to write/delete real objects there.
+
+**Real bug found, documented not fixed** (two compounding, separate caching layers - each needs its
+own fix, not a blind patch here): after writing a NEW file, a later `Vfs::stat()`/`file_exists()`
+call incorrectly reports it as missing, for the rest of the PHP process's lifetime. Root cause 1:
+`StreamWrapper::_clearStatCache()` (`StreamWrapper.php:750`, `protected static`) is **defined but
+never called anywhere** in the class - `stream_open()`'s initial existence check
+(`:140`) negatively caches a new file's path, and nothing ever invalidates that stale entry after a
+successful write. Root cause 2 (compounds with the first, confirmed empirically - fixing only one
+layer still failed): the SAME core-router native-`stat()`-cache layer already found in Phase 3
+(`SqlfsBackendTest::testChownRequiresExplicitClearstatcacheUnlikeChmod`) - `Vfs::clearstatcache()`
+alone doesn't reach S3direct's own internal cache either, since the class has no public
+`clearstatcache()` method for `Vfs\Base::_call_on_backend()`'s dispatch to find. Real production
+impact: any single request that creates a file and then re-checks/re-reads it (very ordinary) would
+see it as missing. Every test needing to read back what it just wrote works around this via a
+reflection-based `_clearStatCache()` call plus `Vfs::clearstatcache()`; one dedicated test
+(`testStatCacheNeverInvalidatedAfterWrite`) deliberately skips the workaround to document the bug
+itself, with a note on what to flip once it's fixed.
+
+**Still to do for Phase 6**: `Merge` (extends `S3\StreamWrapper`, but a narrower/more specialized
+feature - readonly-filesystem-plus-sqlfs overlay for print templates - already has SOME real
+coverage via the existing `SharingBackendTest.php`'s `mountMerge()` usage, lower priority); `Vlinks`
+(thin subclass of Links(EPL), shares its `LinksParent` monkey-patch, no logic of its own beyond the
+scheme constant - should be quick now that Links(EPL) itself is understood). Confirmed across S3,
+Versioning, and now S3direct: no `AsyncAws\S3\S3Client` mock has been needed anywhere in Phase 6 so
+far - either local pass-through covers the common case, or (for S3direct) the live minio connection
+just worked. Only worth revisiting if `Merge`/`Vlinks` turn out to need it too.
+
+**Next**: continue Phase 6 (`Merge` and `Vlinks` next), then Phase 7 (`fsck` consistency-check mechanism, core + EPL hook
 consumers). Both confirmed priority, not deferred - see Status section above.
