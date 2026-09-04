@@ -456,26 +456,73 @@ to versioning:
   rows rather than deleting) - `tearDown()` uses the same hard-delete-via-`Api\Db` pattern; verified
   zero orphans after a run.
 
-**Still to do for Phase 6** (in priority order): EPL `Links\StreamWrapper` (1306 lines - genuinely
-richer than the community one, with its own alphabet/hash-based virtual directory caching system:
-`alphabet2cache`/`hashes2cache`/`entry2cache`/`app2cache`/`virtual_parent`, and its own
-`path2entry()`/`check_extended_acl()` ACL resolution using `Api\Link::vfs_path()` and an
-`APP_ID_PREG` pattern matching a `"Title (APP--ID)"` naming convention for alphabetically-cached
-entries - the headline feature this class adds over the community one. It DOES also support plain
-`/apps/$app/$id/...` paths via a fallback branch in `path2entry()`, so a shallow test mirroring
-Phase 4's community-Links test would pass, but would only exercise compatibility-fallback behavior,
-not the actual alphabet-cache navigation that's the point of this class - deliberately not written
-yet, to avoid a misleadingly-thin test standing in for real coverage. Needs its own dedicated
-mapping/test session.); `S3direct\StreamWrapper` (different implementation from `S3` -
+**EPL `Links\StreamWrapper` DONE** (2026-09-04): `stylite/tests/Vfs/LinksStreamWrapperTest.php`
+(9 tests, extends the shared `Vfs\StreamWrapperBase` like the community test does, mounting EPL's
+`stylite.links://` scheme at `/apps` instead). Ralf's own framing going in: virtual directories +
+symlinks exist so users can browse linked entries without knowing numeric ids; the directories act
+as adaptive filters (year vs. year-month, depending on volume) implemented via the stat-cache, with
+per-app plugins (`PluginIface`) defining the exact hashing criteria. Confirmed exactly this shape by
+reading `Infolog.php` (the concrete plugin for the app already used as this project's fixture app):
+root shows filter directories (eg. `"Own$"`, `"No filter$"`, one per `infolog_bo::$filters` entry,
+translated + title-cased by `lang()`), each filter dir shows either entries directly (≤
+`MAX_ENTRIES_NO_HASH=100`) or year-hash buckets that only refine to year-month once a single year
+exceeds `MAX_ENTRIES_ALL=200` (`Infolog.php:126-142`, `get_hashes()`).
+
+Confirmed the headline feature works end-to-end: `testEntryFindableViaVirtualFilterDirectory` finds
+a freshly-created infolog entry by browsing `/apps/infolog/Own$/All$/` (no id lookup), and the
+virtual name it finds resolves (via symlink, one level to the entry's directory, then to the actual
+file) to the exact same content as the real `/apps/infolog/$id/...` path.
+
+**Three real bugs found in the process, all documented not fixed** (this class's business logic,
+not the Vfs layer itself - each needs its own dedicated fix/review, not a blind patch here):
+
+1. **The "No filter" catch-all view is completely broken** - `Infolog::label2filter()`/`appdir()`
+   both use a bare `!$filter` truthiness check where `$filter` can legitimately be the empty string
+   (`infolog_bo::$filters['' => 'no Filter']`, the default "show everything" filter) - PHP's
+   `!''` is `true`, so a correct match gets treated as "not found", and `appdir()` returns `null`
+   immediately instead of listing anything. Confirmed via a live diagnostic (not by reading code
+   alone): the directory exists and opens fine, but is always empty regardless of how many entries
+   actually exist. Regression-tested (`testNoFilterCatchAllViewIsBrokenForEmptyStringFilterKey`,
+   asserts the current broken-empty state, with a note on what to flip once fixed).
+2. **A freshly-created entry with a real date isn't surfaced under its expected year-hash bucket at
+   all** - a live diagnostic showed `Infolog::get_hashes()` returning only `{"": <count>, "all":
+   <same count>}` for the "own" filter: every entry, including ones with genuine current-year
+   dates, landing in the "undated" bucket (`Infolog.php:281` relabels literal-1970 `DATE_FORMAT()`
+   results to the empty-string hash - consistent with `info_startdate=0` on old fixture entries, but
+   NOT consistent with entries that have a real date). An
+   `Api\Storage\Base::sanitizeOrderBy(...) REMOVED` log line fires on every run of the underlying
+   query; may or may not be the actual cause, not chased further. This undermines the entire
+   point of the adaptive hashing (avoiding huge unfiltered listings) - if grouping doesn't work,
+   everything piles into one bucket instead of splitting by date. Regression-tested
+   (`testFreshEntryNotSurfacedUnderExpectedYearHashBucket`). `testEntryFindableViaVirtualFilterDirectory`
+   works around this by using the flat `"All$"` listing instead, which does no date filtering at all.
+3. **Deleting a linked file fails with "permission denied"**, even though the same user just
+   successfully wrote it moments earlier via the identical ACL path - `Versioning\StreamWrapper::
+   unlink()` (reached via the `LinksParent` monkey-patch, see below) doesn't correctly consult
+   Links' extended-ACL-by-linked-entry override the way plain-sqlfs `unlink()` does for the
+   community wrapper. The inherited `StreamWrapperBase::testDelete()` is overridden to
+   `markTestSkipped()` with this explanation rather than fail uninformatively, pending its own
+   dedicated investigation (the mismatch is between two separate ACL-checking code paths, not a
+   guess-and-patch fix).
+
+**`LinksParent` monkey-patch cross-pollution risk - checked, NOT observed in this combination**:
+ran the full community+EPL Vfs suite together (150 tests, including both `Links/StreamWrapperTest`
+and this new `LinksStreamWrapperTest` in the same PHPUnit process) - no new failures beyond the
+same pre-existing ones already documented (`/home/demo` mount, admin-login errors). Community
+Links tests still pass normally even with EPL's Links class loaded process-wide. Still worth
+re-checking if this combination's test order ever changes, given the monkey-patch is real and
+process-wide, just apparently harmless for what these specific tests happen to exercise.
+
+**Still to do for Phase 6**: `S3direct\StreamWrapper` (different implementation from `S3` -
 `implements StreamWrapperIfaceNoDir` directly rather than extending `Sqlfs\StreamWrapper`, own stat
 cache, per the original mapping - not yet investigated, don't assume it resembles `S3`); `Merge`
 (extends `S3\StreamWrapper`, but a narrower/more specialized feature - readonly-filesystem-plus-sqlfs
 overlay for print templates - already has SOME real coverage via the existing
-`SharingBackendTest.php`'s `mountMerge()` usage, lower priority than the other three); `Vlinks`
-(thin subclass of Links(EPL), shares its `LinksParent` monkey-patch, no logic of its own beyond the
-scheme constant - do last, once Links(EPL) itself is understood). The `AsyncAws\S3\S3Client` mock
+`SharingBackendTest.php`'s `mountMerge()` usage, lower priority); `Vlinks` (thin subclass of
+Links(EPL), shares its `LinksParent` monkey-patch, no logic of its own beyond the scheme constant -
+should be quick now that Links(EPL) itself is understood). The `AsyncAws\S3\S3Client` mock
 (described above under S3) will still be needed once any of these touch the re-download-from-S3
 code path or actual upload verification, none of which any Phase 6 test has needed so far.
 
-**Next**: continue Phase 6 (Links(EPL) first), then Phase 7 (`fsck` consistency-check mechanism, core + EPL hook
+**Next**: continue Phase 6 (`S3direct` next), then Phase 7 (`fsck` consistency-check mechanism, core + EPL hook
 consumers). Both confirmed priority, not deferred - see Status section above.
