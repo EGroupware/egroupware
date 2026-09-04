@@ -1,6 +1,7 @@
 import {Et2Select} from "../Et2Select";
 import {Et2StaticSelectMixin, StaticOptions as so} from "../StaticOptions";
 import {cleanSelectOptions, SelectOption} from "../FindSelectOptions";
+import {property} from "lit/decorators/property.js";
 
 export class Et2SelectState extends Et2StaticSelectMixin(Et2Select)
 {
@@ -8,14 +9,6 @@ export class Et2SelectState extends Et2StaticSelectMixin(Et2Select)
 	 * Two-letter ISO country code
 	 */
 	protected __countryCode;
-
-	static get properties()
-	{
-		return {
-			...super.properties,
-			countryCode: String,
-		}
-	}
 
 	constructor()
 	{
@@ -29,6 +22,10 @@ export class Et2SelectState extends Et2StaticSelectMixin(Et2Select)
 		return this.__countryCode;
 	}
 
+	/**
+	 * Two-letter ISO country code
+	 */
+	@property({type: String, noAccessor: true})
 	set countryCode(code : string)
 	{
 		this.__countryCode = code;
