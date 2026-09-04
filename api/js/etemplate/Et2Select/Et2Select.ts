@@ -283,27 +283,12 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/**
-			 * Toggle between single and multiple selection
-			 */
-			multiple: {
-				type: Boolean,
-				reflect: true,
-			},
-
-			/**
-			 * Click handler for individual tags instead of the select as a whole.
-			 * Only used if multiple=true so we have tags
-			 */
-			onTagClick: {
-				type: Function,
-			}
-		}
-	}
+	/**
+	 * Click handler for individual tags instead of the select as a whole.
+	 * Only used if multiple=true so we have tags
+	 */
+	@property({type: Function})
+	onTagClick : any;
 
 
 	/** Placeholder text to show as a hint when the select is empty. */
