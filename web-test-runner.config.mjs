@@ -17,6 +17,7 @@
  */
 
 import fs from 'fs';
+import path from 'path';
 import {playwrightLauncher} from '@web/test-runner-playwright';
 import {esbuildPlugin} from '@web/dev-server-esbuild';
 import {legacyWidgetShimDevServerPlugin} from './api/js/etemplate/webtest-legacy-widget-shim.mjs';
@@ -42,8 +43,7 @@ function hasTestFile(dir)
 // Add any app with a *.test.ts file somewhere under js/
 const appJS = fs.readdirSync('.')
 	.filter(
-		dir => dir !== 'kdots' && // skip kdots for now
-			fs.existsSync(`${dir}/js`) &&
+		dir => fs.existsSync(`${dir}/js`) &&
 			fs.statSync(`${dir}/js`).isDirectory() &&
 			hasTestFile(`${dir}/js`),
 	)
@@ -69,16 +69,34 @@ export default {
 		<html lang="en-US">
 			<body>
 				<div id="egw_script_id" data-url="test.com"></div>
+				<!-- Classic script, so it runs before the deferred modules below - same order as a
+				     real page.  Legacy et2 code and bundled vendor libraries (eg. cropper, pulled
+				     in by Et2Avatar) still expect the jQuery global to already be there. -->
+				<script src="/vendor/bower-asset/jquery/dist/jquery.min.js"></script>
 				<script type="module">
 					// CI/test environments can expose POSIX locale tags that Intl rejects.
 					// Make sure the document has a lang for shoelace / library localization to find
 					document.documentElement.lang = 'en-US';
 					Object.defineProperty(window.navigator, 'language', {value: 'en-US', configurable: true});
 					Object.defineProperty(window.navigator, 'languages', {value: ['en-US'], configurable: true});
+					// egw.js redirects the page to ?cd=popup at module scope when it can't find a
+					// framework object, which under web-test-runner reloads the page mid-run and
+					// aborts the whole test file ("Tests were interrupted because the page was
+					// reloaded").  Nothing here needs a real framework, we only need the check to
+					// find *something*, so give it an inert stub.  Do NOT instead fake the
+					// data-include list egw.js also consults - it actually imports those files.
+					window.framework = window.framework || {};
 					if(!window.egw)
 					{
 						const egwFallback = function() { return window.egw || egwFallback; };
 						Object.assign(egwFallback, {
+							// egw_core.ts only builds the real egw object (the one with extend(),
+							// so every egw module can register itself) out of an existing
+							// window.egw marked prefsOnly - that is how Api\Framework::header()
+							// seeds it in a real page.  Without it, importing anything that pulls
+							// in an egw module dies on "egw.extend is not a function".
+							prefsOnly: true,
+							webserverUrl: "",
 							lang: label => label,
 							debug: () => {},
 							image: () => "",
@@ -138,6 +156,25 @@ export default {
 		// shims (eg. et2_widget_selectbox, pulled in by et2_extension_nextmatch.ts) that
 		// no longer exist on disk - see rollup-legacy-widget-shim.mjs for the rollup side
 		legacyWidgetShimDevServerPlugin(),
+		{
+			// A local `npm run build` leaves gitignored bundles next to their sources - eg.
+			// api/js/etemplate/etemplate2.js beside etemplate2.ts - and web-test-runner's
+			// node-resolve tries .js before .ts, so an extensionless import silently pulls in the
+			// last build instead of the source.  That is not just stale code: the bundle defines
+			// every widget's custom element itself, so the class under test loses the
+			// customElements.define() race and the test ends up exercising the build.  CI has no
+			// such files, so preferring the .ts sibling is also what makes local runs match CI.
+			name: "prefer-ts-source",
+			resolveImport({source, context})
+			{
+				if(!source.startsWith(".") || path.extname(source))
+				{
+					return;
+				}
+				const importer = path.join(process.cwd(), path.dirname(context.path));
+				return fs.existsSync(path.join(importer, `${source}.ts`)) ? `${source}.ts` : undefined;
+			}
+		},
 		{
 			name: "mock-modules",
 			resolveImport({source})
