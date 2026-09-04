@@ -58,32 +58,28 @@ class DeleteTest extends WebDAVTest
 	}
 
 	/**
-	 * Real, documented backend bug (not exercised as a "should recursively
-	 * delete" test): on this dev environment's Versioning-backed home
-	 * directories (default "/" mount is stylite.s3://, routing through
-	 * Versioning\StreamWrapper - see project_vfs_test_coverage.md), a
-	 * directory DELETE with children fails entirely, even though the child
-	 * WAS correctly removed first.
+	 * Recursive directory DELETE, whose outcome genuinely differs by backend:
 	 *
-	 * Traced (via a temporary debug instrumentation of Vfs\WebDAV::DELETE(),
-	 * removed again) to Vfs::remove()'s own return value: it correctly
-	 * soft-deletes the child ({".../child.txt": true}), but then the
-	 * directory's own rmdir() reports failure ({".../dir/": false}) - the
-	 * just-soft-deleted child row is still physically present
-	 * (fs_active=0), and Sqlfs\StreamWrapper::rmdir()'s "is this directory
-	 * empty" check does not exclude inactive rows, so it sees a "non-empty"
-	 * directory a moment after correctly emptying it. Vfs\WebDAV::DELETE()
-	 * (api/src/Vfs/WebDAV.php:81) then reports 403 Forbidden for the WHOLE
-	 * request, since its success check requires $deleted[$dir_path] itself
-	 * to be true, not just its children.
+	 * - Plain hard-delete backends (community `sqlfs://`, e.g. CI, which has
+	 *   no EPL/Stylite installed at all) correctly return 204, child gone.
+	 * - This dev environment's Versioning-backed home directories (default
+	 *   "/" mount is stylite.s3://, routing through Versioning\StreamWrapper -
+	 *   see project_vfs_test_coverage.md) hit a real, documented, NOT-YET-FIXED
+	 *   bug: `Vfs::remove()` correctly soft-deletes the child first
+	 *   ({".../child.txt": true}), but the just-soft-deleted (fs_active=0) row
+	 *   is still physically present, and Sqlfs\StreamWrapper::rmdir()'s
+	 *   "is this directory empty" check doesn't exclude inactive rows - so it
+	 *   sees a "non-empty" directory a moment after correctly emptying it, and
+	 *   Vfs\WebDAV::DELETE() (api/src/Vfs/WebDAV.php:81) reports 403 for the
+	 *   WHOLE request even though the child WAS actually removed. Traced via
+	 *   temporary debug instrumentation of DELETE() (added and reverted, not
+	 *   shipped).
 	 *
-	 * A plain (non-versioned, non-S3) sqlfs:// mount does hard deletes and
-	 * would not hit this - it's specific to soft-delete-capable backends.
-	 * Documented in doc/ai/projects/webdav-test-coverage.md; NOT fixed here
-	 * (matches this project's established EPL/backend-bug convention:
-	 * document, don't blind-patch).
+	 * Detects which situation applies via whether the EPL Versioning class is
+	 * loaded (same convention used throughout the Vfs project's EPL-conditional
+	 * tests), rather than assuming one universal outcome.
 	 */
-	public function testDeleteDirectoryWithChildrenFailsOnThisVersionedBackend() : void
+	public function testDeleteDirectoryWithChildren() : void
 	{
 		$dir = $this->homeFile(self::$user, 'to-delete-dir/');
 		$file = $this->homeFile(self::$user, 'to-delete-dir/child.txt');
@@ -91,9 +87,16 @@ class DeleteTest extends WebDAVTest
 		$this->assertHttpStatus([200, 201], $this->putFile($file, 'x', 'text/plain', self::$user));
 
 		$response = $this->getClient(self::$user)->delete($this->url($dir));
-		$this->assertHttpStatus(403, $response, 'BUG: should be 204, see docblock - the child WAS actually removed, see next assertion');
 
-		$this->assertHttpStatus(404, $this->getFileResponse($file, self::$user), 'the child WAS in fact removed, despite the 403');
+		if(class_exists('EGroupware\\Stylite\\Vfs\\Versioning\\StreamWrapper'))
+		{
+			$this->assertHttpStatus(403, $response, 'BUG on this Versioning-backed environment, see docblock - the child WAS actually removed, see next assertion');
+		}
+		else
+		{
+			$this->assertHttpStatus(204, $response, 'plain hard-delete backend: recursive DELETE must fully succeed');
+		}
+		$this->assertHttpStatus(404, $this->getFileResponse($file, self::$user), 'the child must be gone either way');
 	}
 
 	public function testDeleteNonExistentPathReturns404() : void

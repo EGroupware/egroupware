@@ -160,8 +160,19 @@ Of the 4 bugs found (below), ralf's decisions on each:
    `rmdir()` sees a "non-empty" directory and fails, and the WHOLE request
    reports 403, even though the child WAS actually removed. Traced via a
    temporary debug instrumentation of `DELETE()` (added and removed again, not
-   shipped). A plain hard-delete `sqlfs://` mount would not hit this.
-   `DeleteTest::testDeleteDirectoryWithChildrenFailsOnThisVersionedBackend()`.
+   shipped). A plain hard-delete `sqlfs://` mount (e.g. CI, no EPL/Stylite
+   installed) would not hit this and correctly returns 204 - discovered the
+   hard way when CI went red on this exact test after another session pushed
+   this project's first commit (before the environment-aware fix below):
+   `GetTest`'s pre-fix 416 bug ALSO independently broke CI in a second way
+   there - an out-of-bounds range with both start+end sent a `Content-Length`
+   for the requested range size (1001 bytes) but then wrote nothing, which
+   cURL treated as a hard connection error rather than a parseable response,
+   since CI's environment (unlike this dev one) doesn't have compression
+   masking the mismatch. Both are fixed now: the GET fix (above) avoids ever
+   reaching that broken write loop, and `DeleteTest::testDeleteDirectoryWithChildren()`
+   now branches its expectation on `class_exists('EGroupware\Stylite\Vfs\Versioning\StreamWrapper')`
+   instead of assuming one universal outcome.
 
 ### Other real findings (not bugs, still worth knowing)
 
