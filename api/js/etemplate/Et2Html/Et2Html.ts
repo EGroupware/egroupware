@@ -9,6 +9,7 @@
 
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {html, LitElement, nothing, PropertyValues} from "lit";
+import {property} from "lit/decorators/property.js";
 import {unsafeHTML} from "lit/directives/unsafe-html.js";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 
@@ -26,18 +27,11 @@ import {et2_IDetachedDOM} from "../et2_core_interfaces";
  */
 export class Et2Html extends Et2Widget(LitElement) implements et2_IDetachedDOM
 {
-	static get properties()
-	{
-		return {
-			...super.properties,
-			value: {type: String, noAccessor: true}
-		};
-	}
-
 	private _value : string = "";
 
 	get value() { return this._value; }
 
+	@property({type: String, noAccessor: true})
 	set value(_value : string)
 	{
 		const oldValue = this._value;
