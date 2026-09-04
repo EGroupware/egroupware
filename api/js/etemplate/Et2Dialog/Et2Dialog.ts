@@ -908,7 +908,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		{
 			let isDefault = hasDefault && button.default || !hasDefault && index == 0;
 			return html`
-                <et2-button ._parent=${this} id=${button.id} button_id=${button.button_id}
+                <et2-button ._parent=${this} id=${button.id} button_id=${ifDefined(button.button_id)}
                             label=${button.label}
                             slot="footer"
                             .image=${ifDefined(button.image)}

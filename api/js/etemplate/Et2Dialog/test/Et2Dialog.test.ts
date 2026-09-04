@@ -117,6 +117,39 @@ describe("Dialog widget basics", () =>
 
 		await dialog.hide();
 	});
+
+	it("falls back to the button's id when it has no button_id", async() =>
+	{
+		// A caller-defined button may omit button_id entirely and only carry an id (eg. the
+		// "delete" button of Et2Portlet's edit dialog, which its callback identifies by
+		// `button_id == "delete"`). _onClick() then has to fall back to the id attribute, so
+		// keep that fallback - and make sure the (unset) button_id attribute stays absent
+		// rather than being rendered as an empty or literal "undefined" string, either of
+		// which would shadow the id.
+		// @ts-ignore
+		const dialog = await fixture<Et2Dialog>(html`
+			<et2-dialog title="Custom buttons" .buttons=${[
+				{label: "Custom", id: "custom_action", image: "check"}
+			]}>
+			</et2-dialog>
+		`);
+		sinon.stub(dialog, "egw").returns(window.egw);
+		await elementUpdated(dialog);
+		await dialog.show();
+
+		const button = dialog.querySelector('et2-button[id="custom_action"]');
+		assert.isNotNull(button, "Button must be rendered");
+		assert.isFalse(button.hasAttribute("button_id"),
+			"An unset button_id must not be rendered as an attribute");
+
+		const completePromise = dialog.getComplete();
+		(<HTMLElement>button).click();
+		const [buttonId] = await completePromise;
+
+		assert.strictEqual(buttonId, "custom_action");
+
+		await dialog.hide();
+	});
 });
 describe("Properties", async() =>
 {
