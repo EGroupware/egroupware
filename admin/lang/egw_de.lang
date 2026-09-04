@@ -33,6 +33,7 @@
 2-factor-authentication for interactive login	admin	de	2-Faktor-Authentifizierung für interaktive Anmeldung
 3 month	admin	de	3 Monate
 6 month	admin	de	6 Monate
+a background color and a background image can not be used at the same time.	admin	de	Eine Hintergrundfarbe und ein Hintergrundbild können nicht gleichzeitig verwendet werden.
 access by	admin	de	Zugriff durch
 access control	admin	de	Zugriffsrechte
 access to %1 data by others	admin	de	Zugriffsrechte %1 durch andere

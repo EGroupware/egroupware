@@ -153,6 +153,16 @@ class admin_config
 			// support old validation hooks
 			$_POST = array('newsettings' => &$_content['newsettings']);
 
+			// login background color and image are mutually exclusive: the config dialog disables the image
+			// widget as soon as a color is set, and a disabled widget submits no value at all - so carry the
+			// stored images over, to have them back as soon as the color gets cleared again
+			if (!empty($_content['newsettings']['login_background_color']) &&
+				empty($_content['newsettings']['login_background_file']) &&
+				!empty($c->config_data['login_background_file']))
+			{
+				$_content['newsettings']['login_background_file'] = $c->config_data['login_background_file'];
+			}
+
 			// Remove actual files (cleanup) of deselected urls from login_background_file
 			if ($appname === 'phpgwapi' && !empty($c->config_data['login_background_file']))
 			{

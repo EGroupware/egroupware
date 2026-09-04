@@ -24,6 +24,9 @@ import type {LitElement} from "lit";
 import {loadWebComponent} from "../../api/js/etemplate/Et2Widget/Et2Widget";
 import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
 import type {EgwFrameworkApp} from "../../kdots/js/EgwFrameworkApp";
+import {Et2SelectThumbnail} from "../../api/js/etemplate/Et2Select/Select/Et2SelectThumbnail";
+import {Et2File} from "../../api/js/etemplate/Et2File/Et2File";
+import {Et2Colorpicker} from "../../api/js/etemplate/Et2Colorpicker/Et2Colorpicker";
 // egw/app are ambient globals (declare global {} in egw_global.d.ts, unconditionally included
 // via tsconfig's "**/*.d.ts") - no import needed or possible.
 
@@ -169,6 +172,11 @@ export class AdminApp extends EgwApp
 				// Load settings appropriate to currently set type
 				const widget = _et2.widgetContainer.getWidgetById('cf_type');
 				this.cf_type_change(null,widget);
+				break;
+
+			case 'admin.site-config':
+				this.loginBackgroundToggle();
+				this.enableAppToolbar(_et2, _name);
 				break;
 
 			case 'admin.cmds':
@@ -2064,9 +2072,39 @@ export class AdminApp extends EgwApp
 			if(_data && typeof _data.type == "undefined")
 			{
 				taglist.set_value(_data);
+				// set_value() does not fire a change event, so update the color/image exclusion ourselves
+				this.loginBackgroundToggle();
 			}
 		});
 		widget.value = {};
+	}
+
+	/**
+	 * Login background image and background color are mutually exclusive: disable the one the other rules out
+	 *
+	 * A set color wins over set images (same precedence as Api\Framework\Login uses server-side), so we never
+	 * disable both and leave the admin unable to change either.
+	 *
+	 * Called on change of either widget and once from et2_ready() - the widgets are therefore disabled from
+	 * javascript only, never via a template attribute, as the latter would stop them submitting their value
+	 * even after being re-enabled again.
+	 */
+	loginBackgroundToggle()
+	{
+		const image:Et2SelectThumbnail = <Et2SelectThumbnail>this.et2?.getWidgetById('newsettings[login_background_file]');
+		const upload:Et2File = <Et2File>(this.et2)?.getWidgetById('login_background_upload');
+		const color:Et2Colorpicker = <Et2Colorpicker>this.et2?.getWidgetById('newsettings[login_background_color]');
+		// site-config is used for every app, only the api one has these widgets
+		if(!image || !color || !upload) return;
+
+		const images = image.value;
+		// Et2Colorpicker does not redeclare Et2InputWidget's protected value as public, unlike the other two
+		const has_color = !!color.get_value();
+		const has_image = Array.isArray(images) ? images.length > 0 : !!images;
+
+		image.disabled = has_color;
+		upload.disabled = has_color;
+		color.disabled = !has_color && has_image;
 	}
 
 	/**

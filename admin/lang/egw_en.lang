@@ -33,6 +33,7 @@
 2-factor-authentication for interactive login	admin	en	2-Factor-Authentication for interactive login
 3 month	admin	en	3 month
 6 month	admin	en	6 month
+a background color and a background image can not be used at the same time.	admin	en	A background colour and a background image can not be used at the same time.
 access by	admin	en	Access by
 access control	admin	en	Access control
 access to %1 data by others	admin	en	Access to %1 data by others

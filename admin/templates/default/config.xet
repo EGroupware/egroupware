@@ -134,9 +134,16 @@
 						<et2-description  value="If you wish to have randomly selected images you may upload multiple images."></et2-description>
 					</et2-vbox>
 					<et2-vbox>
-						<et2-select-thumbnail  id="newsettings[login_background_file]" width="100%" allowFreeEntries="true" multiple="true" placeholder="Upload your background image or enter the URL"></et2-select-thumbnail>
-						<file accept="svg,png,jpeg,jpg" width="100%" label="upload" onchange="app.admin.login_background_update"/>
+						<et2-select-thumbnail  id="newsettings[login_background_file]" width="100%" allowFreeEntries="true" multiple="true" placeholder="Upload your background image or enter the URL" onchange="app.admin.loginBackgroundToggle"></et2-select-thumbnail>
+						<et2-file id="login_background_upload" accept="svg,png,jpeg,jpg" width="100%" label="upload" onchange="app.admin.login_background_update"/>
 					</et2-vbox>
+				</row>
+				<row>
+					<et2-vbox>
+						<et2-description  value="Enter the background color for the login page" label="%s:"></et2-description>
+						<et2-description  value="A background color and a background image can not be used at the same time."></et2-description>
+					</et2-vbox>
+					<et2-colorpicker  id="newsettings[login_background_color]" onchange="app.admin.loginBackgroundToggle"></et2-colorpicker>
 				</row>
 				<row>
 					<et2-description  value="Upload your favicon or enter the URL" label="%s:"></et2-description>

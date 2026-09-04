@@ -100,9 +100,22 @@ export class Et2Colorpicker extends Et2InputWidget(SlColorPicker)
 
 	_handleClickClear(e)
 	{
+		// our clear button is rendered into SlColorPicker's own trigger button (see firstUpdated),
+		// so the trigger's click handler sits on the very same element - stopPropagation() would
+		// not keep it from opening the dropdown, only stopImmediatePropagation() does
 		e.stopImmediatePropagation();
 		this.value = "";
 
+		// Shoelace emits sl-change only for its own user-interaction, never for a programmatic value
+		// change - so emit it ourselves, otherwise nothing observes the clear:
+		// onchange handlers and Et2InputWidget's sl-change -> change bridge both stay silent.
+		// Same pattern as Et2TreeDropdown.handleClearClick(), minus the sl-clear that SlColorPicker
+		// does not document as one of its events.
+		this.updateComplete.then(() =>
+		{
+			this.emit('sl-input');
+			this.emit('sl-change');
+		});
 	}
 }
 customElements.define('et2-colorpicker', Et2Colorpicker);
