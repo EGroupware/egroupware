@@ -12,6 +12,7 @@
 
 import {ExposeMixin, ExposeValue} from "../Expose/ExposeMixin";
 import {css, html, LitElement, TemplateResult} from "lit";
+import {property} from "lit/decorators/property.js";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 
@@ -77,64 +78,46 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 	}
 
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/**
-			 * Specify the application for the entry
-			 */
-			app: {
-				type: String,
-				reflect: true,
-			},
-			/**
-			 * Application entry ID
-			 */
-			entryId: {
-				type: String,
-				reflect: true
-			},
-			/**
-			 * Pass value as an object, will be parsed to set application & entryId
-			 */
-			value: {
-				type: Object,
-				reflect: false
-			},
-			/**
-			 * View link type
-			 * Used for displaying the linked entry
-			 * [view|edit|add]
-			 * default "view"
-			 */
-			linkHook: {
-				type: String
-			},
-			/**
-			 * Target application
-			 *
-			 * Passed to egw.open() to open entry in specified application
-			 */
-			targetApp: {
-				type: String
-			},
-			/**
-			 * Optional parameter to be passed to egw().open in order to open links in specified target eg. _blank
-			 */
-			extraLinkTarget: {
-				type: String
-			},
+	/**
+	 * Specify the application for the entry
+	 */
+	@property({type: String, reflect: true})
+	app : string;
 
-			/**
-			 * Breaks title into multiple lines based on this delimiter by replacing it with '\r\n'"
-			 */
-			breakTitle: {
-				type: String
-			}
+	/**
+	 * Application entry ID
+	 */
+	@property({type: String, reflect: true})
+	entryId : string;
 
-		}
-	}
+	/**
+	 * View link type
+	 * Used for displaying the linked entry
+	 * [view|edit|add]
+	 * default "view"
+	 */
+	@property({type: String})
+	linkHook : string;
+
+	/**
+	 * Target application
+	 *
+	 * Passed to egw.open() to open entry in specified application
+	 */
+	@property({type: String})
+	targetApp : string;
+
+	/**
+	 * Optional parameter to be passed to egw().open in order to open links in specified target eg. _blank
+	 */
+	@property({type: String})
+	extraLinkTarget : string;
+
+	/**
+	 * Breaks title into multiple lines based on this delimiter by replacing it with '\r\n'"
+	 */
+	@property({type: String})
+	breakTitle : string;
 
 	static MISSING_TITLE = "??";
 
@@ -242,6 +225,10 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 		return this.app && this.entryId ? this.app + ":" + this.entryId : "";
 	}
 
+	/**
+	 * Pass value as an object, will be parsed to set application & entryId
+	 */
+	@property({type: Object, reflect: false, noAccessor: true})
 	set value(_value : LinkInfo | string)
 	{
 		if(!_value)
