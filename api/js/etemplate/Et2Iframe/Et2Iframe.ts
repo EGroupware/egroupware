@@ -70,11 +70,11 @@ export class Et2Iframe extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * Push a changed src property into the real <iframe>
+	 * Push a changed src property into the real `<iframe>`
 	 *
 	 * src is a reactive property, so `src="@pdf_file"` in a template or a later
 	 * widget.src = url assignment (that is how a grid hands its content down, eg. the acdms
-	 * preview) only ever set the property. render() does not bind it to the inner <iframe>,
+	 * preview) only ever set the property. render() does not bind it to the inner `<iframe>`,
 	 * so the document never loaded unless set_src() was called explicitly.
 	 */
 	updated(changedProperties : PropertyValues)
@@ -93,9 +93,9 @@ export class Et2Iframe extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * The real <iframe> DOM node inside this widget's shadow root
+	 * The real `<iframe>` DOM node inside this widget's shadow root
 	 *
-	 * getDOMNode() (inherited from Et2Widget, unoverridden) returns the <et2-iframe> host
+	 * getDOMNode() (inherited from Et2Widget, unoverridden) returns the `<et2-iframe>` host
 	 * element itself - generic framework code relies on that for placement/visibility/sizing.
 	 * Consumers that need the actual iframe (its contentDocument/contentWindow, a 'load'
 	 * listener, ...) should use this instead of reaching for __getIframeNode() directly.
@@ -106,18 +106,18 @@ export class Et2Iframe extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * The url last handed to the <iframe>, so updated() does not load again what set_src()
+	 * The url last handed to the `<iframe>`, so updated() does not load again what set_src()
 	 * has just loaded
 	 */
 	private __appliedSrc : string = "";
 
 	/**
-	 * Run callback with the real <iframe> node, once it exists
+	 * Run callback with the real `<iframe>` node, once it exists
 	 *
 	 * transformAttributes() (initial widget-tree construction from XML, eg. an initial
 	 * value="..." or a readonly/disabled default) can call set_src()/set_value() etc. before
 	 * this element is ever connected to the document - this.shadowRoot (and so the real
-	 * <iframe> inside it) doesn't exist yet at that point. Run immediately if it already does,
+	 * `<iframe>` inside it) doesn't exist yet at that point. Run immediately if it already does,
 	 * otherwise wait for the first render to commit.
 	 */
 	private __withIframeNode(callback : (node : HTMLIFrameElement) => void) : void
