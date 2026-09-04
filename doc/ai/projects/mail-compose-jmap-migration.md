@@ -2677,3 +2677,47 @@ visibility toggle is straightforward, low-risk JS reasoned through by code readi
 lower-priority cosmetic issue that `@media print`'s OTHER styling rules (fonts, table borders) for
 `.tmpPrintDiv` also can't reach inside the shadow root was not addressed - print would still work
 correctly, just without that polish.
+
+## FIXED (2026-09-04): mobile single-message view's read/unread toggle silently reverted by a race with the auto-mark-read-on-open request
+
+New regression report (ralf, German): "Die Funktion gelesen/ungelesen markieren geht in der
+mobilen Ansicht nicht wenn man eine einzelne E-Mail geöffnet hat" - the read/unread toggle doesn't
+work in mobile view when viewing a single email.
+
+Two candidate root causes existed going in: (1) `mobileView()` not setting `currentlyFocussed`/
+`selectedMails`, already fixed the day before (27a5acbab3, 2026-09-03) - confirmed still present and
+correctly deployed on both this checkout's boulder.egroupware.org and the separately-deployed
+pole.egroupware.org (its own `app.min.js` already had `markOpenedMessageRead` and a fresh
+`Last-Modified` from earlier the same day); and (2) a genuinely new second bug, found by
+reproducing the exact user action programmatically via `app.mail.mobileView()` +
+`app.mail.callFlagMessages({id:'read'}, [], false)` against a live account on boulder.
+
+**Root cause**: `mobileView()` calls `markOpenedMessageRead()` on every open, which fires its own,
+independent `MailJmap.setSystemFlag([...], '$seen', true)` JMAP request to mark the message read -
+with no relationship at all to a manual read/unread toggle the user might perform moments later
+(`callFlagMessages()` → `flagMessages()` → its own separate `setSystemFlag()` call for the same
+row). The two requests race with no ordering guarantee: live-reproduced by opening a message (which
+correctly and immediately shows `flags.read` locally) then, in the same tick, toggling it back to
+unread (which also correctly flips the local state right away) - after a ~2s settle, the row
+silently reverted back to `read`, both in the local cache and in the real JMAP/Stalwart backend
+(confirmed via `egw.dataGetUIDdata()` polling, not just a UI glance). The slower-to-land auto-mark
+request simply overwrote the user's own, faster manual toggle after the fact - a classic lost-update
+race, introduced by the previous day's `ce4ce4fc61` ("mark opened messages as read in all views"),
+which had nothing to race against before that commit existed.
+
+**Fix**: added `MailApp.pendingReadMark : Map<string, Promise<void>>` (mail/js/app.ts), keyed by
+row id. `markOpenedMessageRead()` now stores its own `setSystemFlag()` promise there (cleared via
+`.finally()`), and `flagMessages()` - only for the `$seen` keyword, only for an explicit (non-"all")
+selection - awaits any pending entry for the affected row(s) before firing its own manual toggle
+request. This makes the two requests apply strictly in the order they were actually intended
+(auto-mark-on-open always lands first, since it's always fired first), rather than in whichever
+order the network happens to deliver them. Other flags (flagged, labels, custom flags) are
+untouched - no pending-map entry exists for them, so `waitForAutoMarkRead` resolves immediately.
+
+**Live-verified** against a real account on boulder.egroupware.org (JMAP-backed, acc_id=5, not the
+shim): reran the exact open-then-immediately-toggle-unread sequence that reproduced the bug before
+the fix - this time the row stayed `unseen`/`flags:{}` through a 3-second settle window (previously
+reverted to `read` within ~2s every time). A plain `flagged`/`unflagged` toggle (unaffected code
+path) was also re-tested immediately after, confirming no regression - it isn't gated by the new
+wait at all. `npx tsc --noEmit` clean for mail/js/app.ts, `npm run build` succeeded. Test message
+left in a clean, genuinely-read state afterward (it actually was opened during testing).

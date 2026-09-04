@@ -140,6 +140,21 @@ export class MailApp extends EgwApp
 	private _subscriptionChanges : Map<string, boolean> | null = null;
 
 	/**
+	 * rowId -> in-flight promise of markOpenedMessageRead()'s own auto-mark-as-read JMAP call.
+	 *
+	 * Found live 2026-09-04 (ralf: "gelesen/ungelesen markieren geht in der mobilen Ansicht nicht
+	 * wenn man eine einzelne E-Mail geöffnet hat"): opening a message always fires this call, and a
+	 * manual read/unread toggle done shortly afterward fires its OWN, completely independent
+	 * setSystemFlag() call for the same row - with no ordering between the two requests. Whichever
+	 * one's response the server processes last wins, so a user who opens a message and immediately
+	 * flips it back to unread would see their own toggle silently overwritten a moment later by the
+	 * slower auto-mark-read request landing after it. flagMessages() awaits this entry (if any)
+	 * before firing a manual $seen change for the same row, so the two always apply in the order
+	 * they were actually intended, regardless of which network round-trip happens to finish first.
+	 */
+	private pendingReadMark : Map<string, Promise<void>> = new Map();
+
+	/**
 	 * The subscribe popup's own profileID (mail_ui::subscription()'s $content['profileId']),
 	 * remembered alongside _subscriptionChanges since it's needed to apply them on Save.
 	 */
@@ -1986,8 +2001,15 @@ export class MailApp extends EgwApp
 		// fall back to the classic body request, which already marks the message read.
 		try
 		{
-			this.jmap.setSystemFlag([this.jmap.messageReference(rowId)], '$seen', true)
+			// Tracked in pendingReadMark (see its own docblock) so a manual toggle done shortly
+			// after opening waits for this request to actually land first, instead of racing it.
+			const promise = this.jmap.setSystemFlag([this.jmap.messageReference(rowId)], '$seen', true)
 				.catch((e) => console.error('markOpenedMessageRead(): failed to mark message as read', e));
+			this.pendingReadMark.set(rowId, promise);
+			promise.finally(() =>
+			{
+				if (this.pendingReadMark.get(rowId) === promise) this.pendingReadMark.delete(rowId);
+			});
 		}
 		catch (e) { /* non-JMAP row id - classic fallback already handled this server-side */ }
 
@@ -4362,10 +4384,18 @@ export class MailApp extends EgwApp
 			}
 			else
 			{
+				// pendingReadMark (see its own docblock): wait for markOpenedMessageRead()'s own
+				// auto-mark-as-read call for these same rows to actually land first, so a manual
+				// read/unread toggle right after opening a message can't be silently overwritten by
+				// that earlier-fired but slower request landing after this one.
+				const waitForAutoMarkRead = systemFlagKeyword === '$seen' ?
+					Promise.all((_elems.msg || []).map((id : string) => this.pendingReadMark.get(id) ?? Promise.resolve())) :
+					Promise.resolve();
+
 				// doc/ai/projects/mail-threaded-view.md, "Bulk actions on collapsed thread rows" -
 				// see tryJmapDelete()'s identical comment; a thrown messageReference() below still
 				// ends up a rejected `operation`, same as the try/catch this replaced.
-				operation = this.jmap.expandThreadRowIds(_elems.msg || []).then((expandedIds) =>
+				operation = waitForAutoMarkRead.then(() => this.jmap.expandThreadRowIds(_elems.msg || [])).then((expandedIds) =>
 				{
 					const references = expandedIds.map(id => this.jmap.messageReference(id));
 					if (actionId === 'unlabel')
