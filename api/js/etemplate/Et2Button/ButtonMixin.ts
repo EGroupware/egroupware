@@ -10,6 +10,7 @@
 
 
 import {css, LitElement, PropertyValues} from "lit";
+import {property} from "lit/decorators/property.js";
 import '../Et2Image/Et2Image';
 import shoelace from "../Styles/shoelace";
 import {egw_registerGlobalShortcut, egw_unregisterGlobalShortcut} from "../../egw_action/egw_keymanager";
@@ -160,32 +161,27 @@ so we force the button images to be square*/
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			image: {type: String, noAccessor: true},
+	/**
+	 * If button is set to readonly, do we want to hide it completely (old behaviour) or show it as disabled
+	 * (default)
+	 * Something's not quite right here, as the attribute shows up as "hideonreadonly" instead of "hide" but
+	 * it does not show up without the "attribute", and attribute:"hideonreadonly" does not show as an attribute
+	 */
+	@property({type: Boolean, reflect: true, attribute: "hide"})
+	hideOnReadonly : boolean = false;
 
-			/**
-			 * If button is set to readonly, do we want to hide it completely (old behaviour) or show it as disabled
-			 * (default)
-			 * Something's not quite right here, as the attribute shows up as "hideonreadonly" instead of "hide" but
-			 * it does not show up without the "attribute", and attribute:"hideonreadonly" does not show as an attribute
-			 */
-			hideOnReadonly: {type: Boolean, reflect: true, attribute: "hide"},
+	/**
+	 * Button should submit the etemplate
+	 * Return false from the click handler to cancel the submit, or set noSubmit to true to skip submitting.
+	 */
+	@property({type: Boolean, reflect: false})
+	noSubmit : boolean = false;
 
-			/**
-			 * Button should submit the etemplate
-			 * Return false from the click handler to cancel the submit, or set noSubmit to true to skip submitting.
-			 */
-			noSubmit: {type: Boolean, reflect: false},
-
-			/**
-			 * When submitting, skip the validation step.  Allows to submit etemplates directly to the server.
-			 */
-			noValidation: {type: Boolean}
-		}
-	}
+	/**
+	 * When submitting, skip the validation step.  Allows to submit etemplates directly to the server.
+	 */
+	@property({type: Boolean})
+	noValidation : boolean = false;
 
 	private _registeredKeycode : string;
 
@@ -195,9 +191,6 @@ so we force the button images to be square*/
 
 		// Property default values
 		this.__image = '';
-		this.noSubmit = false;
-		this.hideOnReadonly = false;
-		this.noValidation = false;
 
 		// Do not add icon here, no children can be added in constructor
 
@@ -229,6 +222,7 @@ so we force the button images to be square*/
 		while(this.lastChild) this.lastChild.remove();
 	}
 
+	@property({type: String, noAccessor: true})
 	set image(new_image : string)
 	{
 		let oldValue = this.__image;
