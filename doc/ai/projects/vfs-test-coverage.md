@@ -550,14 +550,39 @@ reflection-based `_clearStatCache()` call plus `Vfs::clearstatcache()`; one dedi
 (`testStatCacheNeverInvalidatedAfterWrite`) deliberately skips the workaround to document the bug
 itself, with a note on what to flip once it's fixed.
 
-**Still to do for Phase 6**: `Merge` (extends `S3\StreamWrapper`, but a narrower/more specialized
-feature - readonly-filesystem-plus-sqlfs overlay for print templates - already has SOME real
-coverage via the existing `SharingBackendTest.php`'s `mountMerge()` usage, lower priority); `Vlinks`
-(thin subclass of Links(EPL), shares its `LinksParent` monkey-patch, no logic of its own beyond the
-scheme constant - should be quick now that Links(EPL) itself is understood). Confirmed across S3,
-Versioning, and now S3direct: no `AsyncAws\S3\S3Client` mock has been needed anywhere in Phase 6 so
-far - either local pass-through covers the common case, or (for S3direct) the live minio connection
-just worked. Only worth revisiting if `Merge`/`Vlinks` turn out to need it too.
+**`Merge\StreamWrapper` DONE** (2026-09-04): `stylite/tests/Vfs/MergeStreamWrapperTest.php` (extends
+`Vfs\StreamWrapperBase` like the community wrapper tests do, 10 tests total incl. inherited ones).
+`SharingBackendTest::testMergeReadonly()`/`testMergeWritable()` already cover Merge as one of
+several backends exercised THROUGH sharing (create a share link, check readonly/writable access
+through it) - genuinely different from what this new file targets: the overlay mechanics
+themselves, none of which were covered anywhere before:
+- Reading a file that only exists in the readonly filesystem source reads straight through to it
+  (`Merge/StreamWrapper.php:452-455`).
+- Writing a brand-new file (no filesystem counterpart) creates a genuine new sqlfs entry.
+- **Deleting a file that only exists in the filesystem source does NOT touch the real file** - it
+  creates a 0-byte marker in sqlfs instead (`:152-174`, "to delete a file, create an empty
+  (size=0) file (in sqlfs)"), which `url_stat()` then treats as "doesn't exist" (`:422-426`).
+  Verified the real file on disk stays untouched, which is the entire point of the mechanism.
+- Deleting a file that HAS an sqlfs override removes just the override, restoring the underlying
+  filesystem source's content as visible again (`:158-161`) - NOT a real delete either.
+- The `testSymlinkFromFolder`/base-class tests requiring `mkdir()` are skipped: Merge's `mkdir()`
+  requires Admin-group membership (matches `SharingBackendTest`'s own comment about the same
+  requirement), not set up for the regular test account here.
 
-**Next**: continue Phase 6 (`Merge` and `Vlinks` next), then Phase 7 (`fsck` consistency-check mechanism, core + EPL hook
+**Confirmed, not caused, by running the full suite together (178 tests)**: `SharingBackendTest`
+alone (no new Phase 6 files loaded at all) already fails the exact same 9 ways in this
+environment - `testHomeReadonly`/`testHomeWritable`/`testSharingSymlink*`/`testShareFileInside*`
+all trace to the same pre-existing `/home/demo` mount issue documented since Phase 1, and
+`testMergeReadonly`/`testMergeWritable` fail on `Vfs::mkdir('/merged/sub_dir/')` for the exact same
+Admin-group requirement just found independently above. None of this is new or caused by any test
+in this project.
+
+**Still to do for Phase 6**: `Vlinks` (thin subclass of Links(EPL), shares its `LinksParent`
+monkey-patch, no logic of its own beyond the scheme constant - should be quick now that Links(EPL)
+itself is understood). Confirmed across S3, Versioning, S3direct, and Merge: no
+`AsyncAws\S3\S3Client` mock has been needed anywhere in Phase 6 so far - either local pass-through
+covers the common case, or (for S3direct) the live minio connection just worked. Only worth
+revisiting if `Vlinks` turns out to need it too.
+
+**Next**: continue Phase 6 (`Vlinks` next, likely the last piece), then Phase 7 (`fsck` consistency-check mechanism, core + EPL hook
 consumers). Both confirmed priority, not deferred - see Status section above.
