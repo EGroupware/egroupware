@@ -1,5 +1,6 @@
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {css, html, LitElement} from "lit";
+import {property} from "lit/decorators/property.js";
 import {repeat} from "lit/directives/repeat.js";
 import shoelace from "../Styles/shoelace";
 
@@ -44,24 +45,11 @@ export class Et2AvatarGroup extends Et2Widget(LitElement)
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/**
-			 * List of contact IDs
-			 */
-			value: {
-				type: Array
-			},
-		}
-	}
-
-	constructor()
-	{
-		super();
-		this.value = []
-	}
+	/**
+	 * List of contact IDs
+	 */
+	@property({type: Array})
+	value : any[] = [];
 
 	set_value(new_value)
 	{
