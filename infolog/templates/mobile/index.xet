@@ -24,7 +24,7 @@
 					</et2-vbox>
 					<et2-vbox  class="infolog_CompletedClmn" align="right">
 						<et2-date-time-today  id="${row}[info_startdate]" readonly="true"></et2-date-time-today>
-                        <et2-hbox align="center" class="infolog_CompletedClmn" onclick="egw.open($row_cont[info_id],'infolog');">
+                        <et2-hbox align="center" class="infolog_CompletedClmn" onclick="egw.open('$row_cont[info_id]','infolog');">
                             <et2-image label="$row_cont[info_type]" src="$row_cont[info_icon]" defaultSrc="infolog/navbar"></et2-image>
                             <progress label="$row_cont[info_percent]" value="$row_cont[info_percent]" max="100"/>
                         </et2-hbox>
