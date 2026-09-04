@@ -289,6 +289,37 @@ rename time per the caveat above).
   PR so `git blame` stays useful and CI catches any group's regressions in isolation before the
   next group starts.
 
+## FIXED (2026-09-04): the rename left two callers pointing at stale method names - spam actions and the whitelist/blacklist submenu were both silently dead
+
+New regression report (ralf): "no sub-actions for blacklist/whitelist" and "Marking as Spam also
+does NOT move the mail to Spam folder, and send it to SpamTitan".
+
+**Root cause**: `cf12cc7f6c` ("drop snake_case from remaining misc UI methods", part of this
+cleanup) updated `mail_ui.inc.php`'s own `onExecute` string for the spam/ham actions to
+`'javaScript:app.mail.spamActions'`, but never actually renamed the method itself - `app.ts` still
+defined it as `spam_actions`. Clicking "Report as Spam"/"Report as Ham" threw "not a function" and
+never reached `ajax_spamAction()` at all, so neither the folder-move nor the SpamTitan report ever
+happened. Separately, the SAME commit renamed `spamTitan_setActionTitle` → `spamTitanSetActionTitle`
+in `app.ts` but missed the one place that calls it: `stylite/inc/class.stylite_mail_spamtitan.inc.php`
+(a SEPARATE git repository - `EGroupwareGmbH/epl` - checked out alongside this one at `stylite/`,
+gitignored here and invisible to a same-repo grep/rename pass, see [[feedback_epl_stylite_blind_spot]]
+in memory). That file's own 8 action definitions (whitelist/blacklist email/domain add/remove)
+ALSO still referenced the old `app.mail.spam_actions` for their own `onExecute`, on top of the
+`enabled` callback naming mismatch - so every one of those actions was doubly broken: the `enabled`
+callback that computes each action's caption threw immediately when the menu tried to build itself,
+which killed the whole submenu, not just disabled one item.
+
+**Fix**: renamed `app.ts`'s `spam_actions` → `spamActions` (matching what `mail_ui.inc.php` already
+called it), and updated all 16 stale references (8× `onExecute`, 8× `enabled`) in the EPL
+`stylite_mail_spamtitan.inc.php` to the current method names.
+
+**Verified live** against a real message: called `app.mail.spamActions({id:'spam'}, [...])`
+directly - the request reached `ajax_spamAction` (200 OK), and the message was gone from INBOX and
+present in the Junk folder afterward (checked via a fresh `MailJmap.getRows()` call on both
+folders, not just the client-side row cache). `app.mail.spamTitanSetActionTitle()` also confirmed
+working - correctly set a caption like `Add "sender@example.com" into whitelisted emails` for a
+`whitelist_email_add` action. `npx tsc --noEmit`/`npm run build` clean; PHP syntax-checked.
+
 ## Related
 
 - [[mail-folder-tree-jmap]] — touched `mail/js/app.ts` during the folder-tree migration; new

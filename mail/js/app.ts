@@ -7363,10 +7363,17 @@ export class MailApp extends EgwApp
 	/**
 	 * Spam Actions handler
 	 *
+	 * Renamed from the old spam_actions (cf12cc7f6c, "drop snake_case from remaining misc UI
+	 * methods") - that commit updated mail_ui.inc.php's own onExecute string to
+	 * 'javaScript:app.mail.spamActions' but missed renaming the method itself, so "Report as
+	 * Spam"/"Report as Ham" threw "not a function" and never reached ajax_spamAction() at all -
+	 * no folder move, no SpamTitan report (found live 2026-09-04, ralf: "Marking as Spam also does
+	 * NOT move the mail to Spam folder, and send it to SpamTitan").
+	 *
 	 * @param {object} _action egw action
 	 * @param {object} _senders nm row
 	 */
-	spam_actions(_action, _senders)
+	spamActions(_action, _senders)
 	{
 		let id,fromaddress,domain, email = '';
 		let data : any = {};
