@@ -203,8 +203,6 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		$this->opened_mode = $mode = str_replace('b','',$mode);	// we are always binary, like every Linux system
 		$this->opened_stream = null;
 
-		parse_str(parse_url($url, PHP_URL_QUERY), $this->dir_url_params);
-
 		if (!is_null($this->overwrite_new) || !($stat = $this->url_stat($path,STREAM_URL_STAT_QUIET)) || $mode[0] == 'x')	// file not found or file should NOT exist
 		{
 			if (!$dir || $mode[0] == 'r' ||	// does $mode require the file to exist (r,r+)
