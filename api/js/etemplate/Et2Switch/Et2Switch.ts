@@ -131,7 +131,7 @@ export class Et2Switch extends Et2InputWidget(SlSwitch)
 	set value(new_value : string | boolean)
 	{
 		this.requestUpdate("checked");
-		if(this.toggleOn || this.toggleOf)
+		if(this.toggleOn || this.toggleOff)
 		{
 			if(new_value)
 			{
