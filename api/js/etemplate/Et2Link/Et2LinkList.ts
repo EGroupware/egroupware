@@ -11,6 +11,7 @@
 
 
 import {css, html, nothing, TemplateResult} from "lit";
+import {property} from "lit/decorators/property.js";
 import {repeat} from "lit/directives/repeat.js";
 import {LinkInfo} from "./Et2Link";
 import {egw} from "../../jsapi/egw_global";
@@ -124,18 +125,14 @@ export class Et2LinkList extends Et2LinkString
 	}
 
 
-	static get properties()
-	{
-		return {
-			...super.properties,
+	// JS code which is executed when the links change
+	@property({type: Function})
+	onchange : Function;
 
-			// JS code which is executed when the links change
-			onchange: {type: Function},
-			// Does NOT allow user to enter data, just displays existing data
-			// Disables delete, etc.
-			readonly: {type: Boolean}
-		}
-	}
+	// Does NOT allow user to enter data, just displays existing data
+	// Disables delete, etc.
+	@property({type: Boolean})
+	readonly : boolean;
 
 	private context : egwMenu;
 
