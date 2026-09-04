@@ -16,8 +16,10 @@ import shoelace from "../Styles/shoelace";
 import {egw_registerGlobalShortcut, egw_unregisterGlobalShortcut} from "../../egw_action/egw_keymanager";
 
 type Constructor<T = LitElement> = new (...args : any[]) => T;
-export const ButtonMixin = <T extends Constructor>(superclass : T) => class extends superclass
+export const ButtonMixin = <T extends Constructor>(superclass : T) =>
 {
+	class ButtonMixinClass extends superclass
+	{
 	protected clicked : boolean = false;
 
 	/**
@@ -476,4 +478,7 @@ so we force the button images to be square*/
 	{
 		return this.shadowRoot.querySelector('button');
 	}
+	}
+
+	return ButtonMixinClass as unknown as Constructor<ButtonMixinClass> & T;
 }
