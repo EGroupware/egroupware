@@ -855,6 +855,14 @@ export abstract class EgwApp
 			}, this, et2_nextmatch);
 		}
 
+		// Copy col_filter - it's still the same object as the nextmatch's live _filters.col_filter
+		// (shallow copy above), so a caller deleting a key from it (eg. filemanager.getState())
+		// would otherwise clear that filter from the widget too.
+		if(state.col_filter && typeof state.col_filter === "object")
+		{
+			state.col_filter = {...state.col_filter};
+		}
+
 		return state;
 	}
 
