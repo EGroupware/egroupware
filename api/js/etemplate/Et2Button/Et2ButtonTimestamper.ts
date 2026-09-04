@@ -11,6 +11,7 @@
 
 import {et2_IInput} from "../et2_core_interfaces";
 import {date} from "../lib/date.js";
+import {property} from "lit/decorators/property.js";
 import {Et2Button} from "./Et2Button";
 import {Et2Tabs} from "../Layout/Et2Tabs/Et2Tabs";
 import {SelectOption} from "../Et2Select/FindSelectOptions";
@@ -23,30 +24,23 @@ import {SelectOption} from "../Et2Select/FindSelectOptions";
  */
 export class Et2ButtonTimestamper extends Et2Button
 {
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/**
-			 * Which field to place the timestamp in
-			 */
-			target: {
-				type: String
-			},
-			/**
-			 * Format for the timestamp.  User is always after.
-			 */
-			format: {
-				type: String
-			},
-			/**
-			 * Timezone.  Default is user time.
-			 */
-			timezone: {
-				type: String
-			}
-		}
-	}
+	/**
+	 * Which field to place the timestamp in
+	 */
+	@property({type: String})
+	target : string;
+
+	/**
+	 * Format for the timestamp.  User is always after.
+	 */
+	@property({type: String})
+	format : string;
+
+	/**
+	 * Timezone.  Default is user time.
+	 */
+	@property({type: String})
+	timezone : string;
 
 	constructor(...args : any[])
 	{
