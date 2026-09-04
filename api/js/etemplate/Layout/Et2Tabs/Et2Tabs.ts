@@ -11,6 +11,7 @@ import {SlTab, SlTabGroup, SlTabPanel} from "@shoelace-style/shoelace";
 import {loadWebComponent} from "../../Et2Widget/Et2Widget";
 import {et2_directChildrenByTagName, et2_filteredNodeIterator, et2_readAttrWithDefault} from "../../et2_core_xml";
 import {css, PropertyValues} from "lit";
+import {property} from "lit/decorators/property.js";
 import shoelace from "../../Styles/shoelace";
 import {colorsDefStyles} from "../../Styles/colorsDefStyles";
 import {Et2InputWidget} from "../../Et2InputWidget/Et2InputWidget";
@@ -65,44 +66,36 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
+	/**
+	 * Array of [extra] tabs.
+	 * Each tab needs {label:..., template:...}.
+	 * Additional optional keys are prepend, hidden and id, for access into content array
+	 */
+	@property({type: Object})
+	extraTabs : any[] = [];
 
-			/**
-			 * Array of [extra] tabs.
-			 * Each tab needs {label:..., template:...}.
-			 * Additional optional keys are prepend, hidden and id, for access into content array
-			 */
-			extraTabs: {type: Object},
+	/**
+	 * Add tabs to template
+	 * Set to true if tabs specified in tabs property should be added to tabs read from template,
+	 * default false if not which replaces what's in template
+	 */
+	@property({type: Boolean})
+	addTabs : boolean = false;
 
-			/**
-			 * Add tabs to template
-			 * Set to true if tabs specified in tabs property should be added to tabs read from template,
-			 * default false if not which replaces what's in template
-			 */
-			addTabs: {type: Boolean},
+	/**
+	 * Set the height for tabs
+	 * Leave unset to size automatically from either parent height attribute, or height of first tabpanel
+	 * Set to 'auto' to allow tab height to flex to fill parent element
+	 */
+	@property({type: String, reflect: true})
+	tabHeight : string;
 
-			/**
-			 * Set the height for tabs
-			 * Leave unset to size automatically from either parent height attribute, or height of first tabpanel
-			 * Set to 'auto' to allow tab height to flex to fill parent element
-			 */
-			tabHeight: {type: String, reflect: true},
-
-			/**
-			 * @deprecated use "placement" instead
-			 * @see https://shoelace.style/components/tab-group
-			 */
-			alignTabs: {type: String},
-
-			/**
-			 * active tab is the value
-			 */
-			value: {type: String}
-		}
-	}
+	/**
+	 * @deprecated use "placement" instead
+	 * @see https://shoelace.style/components/tab-group
+	 */
+	@property({type: String})
+	alignTabs : string;
 
 	/**
 	 * Index of currently selected tab
@@ -117,8 +110,6 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 	{
 		super();
 
-		this.extraTabs = [];
-		this.addTabs = false;
 		if (egwIsMobile())
 		{
 			this.placement = 'end';
@@ -139,6 +130,10 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 		return this.getActiveTab()?.panel;
 	}
 
+	/**
+	 * active tab is the value
+	 */
+	@property({type: String, noAccessor: true})
 	set value(tab)
 	{
 		if (this.tabs && Array.isArray(this.tabs) && this.tabs.length)
