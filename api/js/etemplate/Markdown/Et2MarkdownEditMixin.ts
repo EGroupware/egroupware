@@ -20,6 +20,30 @@ import "@shoelace-style/shoelace/dist/components/popup/popup.js";
 type Constructor<T = {}> = new (...args : any[]) => T;
 
 /**
+ * The members Et2Widget / Et2InputWidget actually supply on every host this mixin is applied to,
+ * invisible to TypeScript here since the superclass is only typed as Constructor<LitElement>.
+ *
+ * A `declare egw`/`declare value` field pair used to stand in for this - the idiomatic tsc way to
+ * add ambient, no-runtime-emission members to a class - but this project's build does NOT run
+ * tsc's own emit: its Babel-based decorator transform does not recognize `declare` and compiled
+ * those into real `{kind: "field", value: void 0}` descriptors, each shadowing the real, inherited
+ * member with an own `undefined` instance property on every instance - breaking `this.egw()`
+ * app-wide for every Et2HtmlArea (found live 2026-09-04: a blank mail compose window hung forever,
+ * "TypeError: this.egw is not a function" in Et2HtmlArea's own _menubar getter). Cast `this` to
+ * this interface at each use site instead (`(this as unknown as HasEgwAndValue)`) - a cast has no
+ * runtime representation at all, in any transform, so it cannot repeat that failure mode. Widening
+ * the mixin's own generic constraint to `Constructor<LitElement & HasEgwAndValue>` would avoid the
+ * casts, but confuses TypeScript's inference of the OTHER, unrelated members Et2InputWidget mixes
+ * in below Et2HtmlArea's own call site - tried live, it turned narrow, correct member access here
+ * into a cascade of unrelated "does not exist on type Et2HtmlArea" errors there instead.
+ */
+interface HasEgwAndValue
+{
+	egw() : any;
+	value : string;
+}
+
+/**
  * Which pane(s) the markdown editor is showing.
  */
 export type MarkdownMode = "edit" | "split" | "preview";
@@ -186,14 +210,6 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
 		}
 
 		/**
-		 * Supplied by Et2Widget / Et2InputWidget on every host this mixin is applied to, but
-		 * invisible to TypeScript here, where the superclass is only a Constructor<LitElement>.
-		 * `declare` emits no code, so these cannot shadow the real members at runtime.
-		 */
-		declare egw : () => any;
-		declare value : string;
-
-		/**
 		 * Which pane(s) to show.  No effect unless `markdown` is enabled.
 		 *
 		 * Seeded from the user's last choice, unless the template says otherwise.
@@ -206,6 +222,12 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
 
 		/** did the template pin the mode, or may the preference decide? */
 		private _markdownModeFromTemplate = false;
+
+		/** see HasEgwAndValue's own docblock for why this cast exists instead of a declared field */
+		private get _host() : HasEgwAndValue
+		{
+			return this as unknown as HasEgwAndValue;
+		}
 
 		connectedCallback()
 		{
@@ -221,7 +243,7 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
 
 			if(this.markdown && !this._markdownModeFromTemplate)
 			{
-				const preference = this.egw()?.preference(VIEW_PREFERENCE, "common");
+				const preference = this._host.egw()?.preference(VIEW_PREFERENCE, "common");
 				if(VIEW_MODES.some(view => view.mode === preference))
 				{
 					this.markdownMode = <MarkdownMode>preference;
@@ -247,7 +269,7 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
 		{
 			this.markdownMode = mode;
 			this._markdownPopupOpen = false;
-			this.egw()?.set_preference("common", VIEW_PREFERENCE, mode);
+			this._host.egw()?.set_preference("common", VIEW_PREFERENCE, mode);
 		}
 
 		/**
@@ -287,7 +309,7 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
 			node.setSelectionRange(result.start, result.end);
 
 			// the web component's value has to follow the DOM node, or the edit is lost on submit
-			this.value = node.value;
+			this._host.value = node.value;
 			this.dispatchEvent(new Event("input", {bubbles: true, composed: true}));
 			this.dispatchEvent(new Event("change", {bubbles: true, composed: true}));
 
@@ -357,7 +379,7 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
                     <et2-button-icon
                             slot="trigger" noSubmit
                             image=${current.icon}
-                            statustext=${this.egw().lang("Markdown view: %1", this.egw().lang(current.label))}
+                            statustext=${this._host.egw().lang("Markdown view: %1", this._host.egw().lang(current.label))}
                     ></et2-button-icon>
                     <div class="markdown-view__panel">
 						${VIEW_MODES.map(view => html`
@@ -368,7 +390,7 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
                                         "active": this.markdownMode === view.mode
                                     })}
                                     image=${view.icon}
-                                    statustext=${this.egw().lang(view.label)}
+                                    statustext=${this._host.egw().lang(view.label)}
                                     @click=${() => this._setMarkdownMode(view.mode)}
                             ></et2-button-icon>`)}
                     </div>
@@ -390,7 +412,7 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
                 <et2-button-icon
                         noSubmit
                         image=${entry.icon}
-                        statustext=${this.egw().lang(entry.label)}
+                        statustext=${this._host.egw().lang(entry.label)}
                         @click=${() => this._applyMarkdownCommand(entry.command)}
                 ></et2-button-icon>`;
 
@@ -407,13 +429,13 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
                     >
                         <et2-dropdown placement="bottom-start" hoist>
                             <et2-button slot="trigger" noSubmit
-                            >${this.egw().lang("Normal")}
+                            >${this._host.egw().lang("Normal")}
                             </et2-button>
                             <sl-menu @sl-select=${(event : CustomEvent) =>
 									this._applyMarkdownCommand(event.detail.item.value)}>
 								${BLOCK_STYLES.map(style => html`
                                     <et2-menu-item value=${style.command}>
-										${this.egw().lang(style.label)}
+										${this._host.egw().lang(style.label)}
                                     </et2-menu-item>`)}
                             </sl-menu>
                         </et2-dropdown>
@@ -437,7 +459,7 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
 		{
 			const preview = html`
                 <div class="markdown-shell__preview" part="markdown-preview">
-					${this._markdownTemplate(this.value)}
+					${this._markdownTemplate(this._host.value)}
                 </div>`;
 
 			// The source pane stays in the DOM in every view, hidden rather than dropped.
