@@ -9,8 +9,8 @@ generated component docs for
 [`et2-datagrid`](https://etemplate.egroupware.org/components/et2-datagrid/) — this document does not
 repeat that reference material.
 
-Apps converted so far: Addressbook, Infolog, Filemanager, Mail, Timesheet. Apps still on the legacy
-widget: Calendar, Admin, Importexport, Aiassistant, Preferences, Home. Related in-flight/reference
+Apps converted so far: Addressbook, Infolog, Filemanager, Mail, Timesheet, Tracker. Apps still on the
+legacy widget: Calendar, Admin, Importexport, Aiassistant, Preferences, Home. Related in-flight/reference
 docs in the same directory as the widget source: `ColumnSelectionNotes.md`,
 `Et2DatagridDirectoryMigrationPlan.md`, `NestedExpansion.md`.
 
@@ -41,9 +41,56 @@ left on the legacy widget, same shared-framework-code reason as Addressbook's an
 views above — convert it together with a matching pass over other apps' favorite-portlet row
 templates, not as a one-off.
 
+Tracker's conversion covers the main index (desktop + mobile skin), the admin Escalations list
+(`escalations.xet`), and the comments/replies list embedded in the edit popup (`edit.xet`'s
+`tracker.edit.comments`/`tracker.edit.comment_row`, id `replies` — desktop only, the mobile edit
+template renders comments as a static loop with no nextmatch at all). `index.rows.xet` (the
+Home-favorite-portlet variant, rendered through `tracker_favorite_portlet.inc.php`, same `tracker.index.rows`
+template id as the real index but a separate file) is deliberately left on the legacy widget, same
+shared-framework-code reason as the other apps' portlet views above. The comments nextmatch also uses
+`lazy="true"` (see [Lazy loading a nextmatch that lives inside a tab](#lazy-loading-a-nextmatch-that-lives-inside-a-tab))
+so it doesn't fetch until the Comments tab is actually activated.
+
+Tracker had 4 `<et2-box class="action_popup prompt">` mass-action popups (`admin_popup`, `link_popup`,
+`assigned_popup`, `group_popup` in `templates/default/index.xet`). 3 of them (`admin_popup`,
+`assigned_popup`, `group_popup`) were converted to real `<et2-dialog>` elements per the action item
+below — all verified live against `nathan.egroupware.org`: `admin_popup`'s Update (real field change
+confirmed via `tr_modified`), `assigned_popup`'s Add/Delete (confirmed via `egw_tracker_assignee`
+rows), and all three dialogs' Cancel buttons (close without submitting, dialog stays reusable —
+`destroyOnClose="false"`). `group_popup`'s Ok button was also verified to submit the correct payload
+and take the correct code path, but its actual database write is blocked on this instance by a
+genuine, pre-existing, unrelated site configuration: `egw_config` has `tracker/field_acl` saved with
+`"tr_group":0`, i.e. this instance's admin has deliberately set the `tr_group` field ACL to "nobody
+may edit it" for the whole app, regardless of admin/technician status. `tracker_bo::readonlys_from_acl()`
+short-circuits on `!$rights` before ever calling `check_rights()`, so `is_admin()`/`is_technician()`
+being `true` is irrelevant once the field-level ACL itself is `0` — this is not a bug, just a config
+value that predates (or intentionally disables) mass group-reassignment. Not fixed, not in scope.
+
+The 4th, `link_popup` (a picker to link/unlink selected entries to one target entry via the generic
+Link registry), was **deleted outright** instead of converted — see
+[Before converting a `link_popup`-style action, check for the auto-added "Link" action](#before-converting-a-link_popup-style-action-check-for-the-auto-added-link-action)
+below. Removed: the `<et2-dialog>` (never built, since the plain-box version was deleted directly),
+the `'link'` entry in `tracker_ui`'s action-tree (under `change.children`), the `case 'link':` block in
+`tracker_ui::action()` (which called `Link::link()`/`Link::unlink()` directly, bypassing per-entry
+edit-rights checks that the generic action's `Widget\Link::ajax_link()` does perform via
+`checkLinkAccess()` — a small permissions gap fixed as a side effect of the removal, not the reason for
+it), and `'link'` from `index()`'s `in_array($multi_action, [...])` composite-action-string list. Live
+re-verified after removal: the generic "Link" context-menu item still appears and links/unlinks
+correctly (`egw_links` rows confirmed appearing/disappearing), `assigned_popup` Add/Delete still works
+(same shared composite-action-string code path), and no new console errors.
+
+Converting `assigned_popup` also surfaced a real sync bug between the filter drawer's `tr_tracker`
+control and the toolbar's `tr_assigned` picker (the picker needs to know which tracker queue is active
+to offer the right assignee list, but only the toolbar's own `tr_tracker` control used to update it —
+the drawer's copy, which shares the same widget id, didn't). Fixed by adding a `case 'tr_tracker':` arm
+to `app.ts`'s existing `checkNmFilterChanged()` — the generic handler that already fires for every
+`col_filter` key change regardless of which physical control (toolbar or drawer) changed it, since both
+write through the same shared id and the same `et2-filter` event. No new wiring was needed; the sync
+bug was really just a missing case in code that already ran on every relevant change.
+
 ## Status
 
-In progress. The checklist below is validated against four real conversions (see the reference
+In progress. The checklist below is validated against five real conversions (see the reference
 sections for the evidence each item is based on). Expect it to grow as more apps convert.
 
 ## Known gap: `ExposeMixin` doesn't recognize `Et2Nextmatch` at all
@@ -91,6 +138,118 @@ graph at all because of this one `instanceOf()` check. Once `ExposeMixin.ts` no 
 `Et2Link` and every other Expose consumer's dependency graph loses that edge entirely, not just the
 detection bug.
 
+## Known gap: `open_popup` actions whose popup markup isn't already an `<et2-dialog>`
+
+`Et2NextmatchActionController.openActionPopup()` (`Et2Nextmatch/Et2NextmatchActionController.ts`,
+~line 1468) — the modern replacement for the legacy `nm_action()`'s `case 'open_popup'` — finds the
+popup element (`[id*='<action.id>_popup']`) and calls `.show()`/sets `.open = true`/calls
+`.showModal()` on it, in that order, assuming the popup **is already an `<et2-dialog>`**. If none of
+those exist on the element (e.g. a plain `<et2-box id="foo_popup" class="action_popup prompt">`,
+shown/hidden purely via CSS - the pattern several apps use for their own custom multi-select popups,
+predating `Et2Dialog`), `openActionPopup()` returns `false` silently, and execution falls through to
+the `case "submit"` branch instead: it does a real, full form submit with whatever the popup's fields
+currently hold (their untouched defaults, since the popup was never actually shown for the user to
+fill in) - **not** an error, just a silent no-op-shaped submit for actions like Tracker's `admin`
+(only fires if `$content['admin_popup']` is a non-empty array, which never happens here) or `group`/
+`link` (both have `case` blocks in their apps' `::action()` keyed off a `_`-joined `$settings` suffix
+that a real dialog submission would have supplied).
+
+The **legacy** `nm_open_popup()` (`et2_extension_nextmatch_actions.js`, still used directly by apps
+that override `onExecute` for one specific popup action, e.g. Tracker's `assigned`/`change_assigned`
+and Infolog's `responsible`/`change_responsible`) does not have this limitation - on first use it
+upgrades the plain div in place: strips the `.prompt`/`.action_popup` hiding classes, moves its
+buttons into a real `Et2Dialog`'s footer slot, and calls `dialog.show()`. That upgrade path only runs
+for the one action an app explicitly wires to `nm_open_popup` via a custom `onExecute` - actions left
+on the framework's default execute (`Et2NextmatchActionController.initActions()`'s
+`setDefaultExecute`) go through `openActionPopup()` instead and hit the gap above.
+
+**Confirmed live** (2026-09-03, via `nm.executeAction('admin', {ids:['tracker::10'], all:false})`
+against Tracker's real index on `nathan.egroupware.org`): the `admin_popup` `<et2-box>` never opened
+(stayed `display:none`, never became an `<et2-dialog>`), and the followed-through submit was a
+genuine no-op only because `tracker_ui::action()`'s `admin` case requires `$action` to be an array -
+confirmed by `tr_modified` staying unchanged. Tracker's `group` and `link` actions are exposed to the
+exact same gap (both `nm_action: 'open_popup'` with no custom `onExecute`, both backed by a plain
+`<et2-box class="action_popup prompt">`) and were **not** further live-tested after this finding, to
+avoid another real submit against production data. Infolog already has the identical exposure today,
+independent of Tracker's conversion - `infolog/templates/default/index.xet` has `link_popup`,
+`startdate_popup`, and `enddate_popup` as the same `<et2-box class="action_popup prompt">` pattern
+with no custom `onExecute`, all wired through the same default-execute path.
+
+**Fixed 2026-09-03** (commit `81b4c2d55c`): `openActionPopup()` now delegates to `nm_open_popup()` for
+any popup that isn't already an `<et2-dialog>`, logging a one-time deprecation notice per popup id via
+`et2_warnOnce()`. Both paths now behave identically and no longer silently fall through to a bad
+submit - but note this is a **delegation, not a removal**: the framework's own default-execute path
+now depends on the legacy `et2_extension_nextmatch_actions.js` file too, on top of the apps that
+already called it directly from a custom `onExecute`. It does not reduce the codebase's dependency on
+that file; if anything it adds a caller. Deleting `et2_extension_nextmatch_actions.js` eventually is a
+real goal (confirmed directly by the project owner), but the intended path there is **not** a
+framework-level rewrite of `openActionPopup()` - it's every app, as it converts to `Et2Nextmatch`, also
+converting its own action-popup markup from the legacy `<et2-box class="action_popup prompt">` pattern
+to a real `<et2-dialog>`, the same way `tracker.edit.comment_edit`'s dialog already is. Once every app
+using `Et2NextmatchActionController` has real `<et2-dialog>` popups, the `openActionPopup()` delegation
+becomes dead code for the "converted app" case (though `nm_open_popup()` the function still needs to
+keep existing as long as any app remains on the *legacy* `et2_nextmatch` widget, since that widget's
+own `nm_action()` calls it directly through a completely separate code path that `Et2NextmatchActionController`
+never touches).
+
+**Action item for every app's conversion checklist**: grep the app's own templates for
+`class="action_popup prompt"` (or any other plain box/div toggled by CSS for a multi-select bulk-action
+popup) alongside its `<nextmatch>`/`<et2-nextmatch>` tag, and convert those to real `<et2-dialog>`
+elements as part of the SAME conversion commit — don't leave them as box popups the delegation above
+happens to keep working. Tracker had 4 of these (`admin_popup`, `link_popup`, `assigned_popup`,
+`group_popup` in `templates/default/index.xet`); 3 (`admin_popup`, `assigned_popup`, `group_popup`)
+have been converted and live-verified, `link_popup` was deleted instead (see the Tracker paragraph
+above and the subsection immediately below — **check for this case before converting any app's own
+`link_popup`-style popup**). The button-wiring is the hard part, not the markup: each
+box popup's buttons rely on `nm_open_popup()`'s runtime upgrade wrapping every `<et2-button>`'s onclick
+to set the legacy `window.nm_popup_action`/`window.nm_popup_ids` globals before calling the button's
+own handler (typically `onclick="nm_submit_popup(this)"`, which reads those same globals to build and
+send the submit). A real `<et2-dialog>` written directly in the template skips that upgrade path
+entirely (`openActionPopup()`'s already-a-dialog fast path only sets `.selectedIds` and calls
+`.show()` — no button wrapping at all), so each button's own onclick must be rewritten to not depend
+on those globals.
+
+### Before converting a `link_popup`-style action, check for the auto-added "Link" action
+
+EGroupware's action framework already auto-adds a generic "Link" context-menu action to **every** app
+whose entries are registered in the cross-app Link registry (i.e. the app's `setup.inc.php` has a
+`hooks['search_link']` entry) — see `EgwPopupActionImplementation._addLinkAction()`
+(`api/js/egw_action/EgwPopupActionImplementation.ts:968`), wired into every popup/context menu's
+`_buildMenu()` (`:636`) and gated only on `egw.link_get_registry(app, 'query'|'title')` returning
+something. It opens `LinkAction.open()` (`api/js/etemplate/Et2Link/LinkAction.ts`): a small dialog to
+pick one target entry via `<et2-link-entry>`, then Add (link) or Remove (unlink) every currently
+selected entry — including a proper "select all" (`nextmatch.fetchAllIds()`), per-entry success/failure
+reporting, and a real per-source edit-rights check (`Widget\Link::checkLinkAccess()`, called once per
+source entry inside `Widget\Link::ajax_link()`/`ajax_delete()`) — all via `jsonq()`, no page reload.
+
+If an app being converted has its own hand-rolled `link_popup`/`link_action`-style mass-action (a
+`<et2-link-entry>` plus Add/Delete buttons, backed by the app's own `case 'link':` in its `*_ui::action()`
+that calls `Link::link()`/`Link::unlink()` directly), **check whether it can just be deleted** instead of
+converted to a `<et2-dialog>`:
+
+- Confirm the app is actually in the Link registry (it almost certainly is, if it has its own link
+  action at all) — `grep -n "search_link" <app>/setup/setup.inc.php`, or check live via
+  `egw.link_get_registry('<app>', 'query')` in the browser console.
+- Confirm live that right-clicking a row already shows a top-level "Link" item (with the link icon) —
+  if the app's own action is nested under a submenu (Tracker's was under "Change"), the two coexist
+  without colliding, so this is safe to check on an unconverted app too, before doing anything else.
+- **Check for anything the app's own `case 'link':` does that the generic action does not**, before
+  deleting it — Tracker's had nothing extra (no ACL check at all, in fact — see above), but another
+  app's version might: an extra confirmation, a restriction to certain link types/apps, a side effect
+  (e.g. also notifying someone, or writing to the app's own audit/history log), or a different rights
+  model for who may link vs. unlink. Losing a silent app-specific restriction is easy to miss since
+  both the old and new action "work" from the end user's point of view — the only way to catch a
+  difference is reading the old handler's full body once before deleting it, not just diffing behavior
+  in a manual click-test.
+- If it does turn out to be pure app-specific reproduction of the generic behaviour, delete: the popup
+  markup, the action-tree entry, the `case 'link':` handler, and anywhere the app's own JS/PHP builds a
+  composite `<action>_<verb>_<value>` string specifically for `'link'` (Tracker had this in the
+  `in_array($multi_action, [...])` block in `tracker_ui::index()`, shared with `assigned`/`group` —
+  remove only the `'link'` member and its `is_array()` special-case, not the whole block).
+- Infolog's `index.xet` still has the identical `link_popup` pattern (`link_popup`/`link_action[add]`/
+  `link_action[delete]`, `infolog_ui.inc.php`'s `case 'link':`) and has not been checked against this
+  yet — worth doing whenever Infolog's own conversion is revisited, independent of anything here.
+
 ## Conversion checklist
 
 Do **not** split this across multiple commits by layer (template-only, then JS-only, etc.) — see
@@ -133,6 +292,11 @@ these in order, in one commit, then expect follow-up fixups.
    shared framework code — check with a reviewer first, per `AGENTS.md`) or read the value from
    content directly (`this.et2.getArrayMgr("content").getEntry("nm[<key>]")`).
 
+   This step is about settings the app's **JS** reads back — it is not a licence to delete every
+   `$content['nm']` key that isn't on the list. Several are consumed server-side and deliberately never
+   sent to the client, `no_filter`/`no_filter2`/`no_cat` being the ones most likely to get pruned by
+   mistake; see [the filterbox and `filter-template.php`](#reference-the-filterbox-and-filter-templatephp).
+
 4. **If the app needs a per-request-varying column-preference key** (e.g. different visible columns
    for two different views of the same row template), set `$content['nm']['columnselection_pref']` to
    that key server-side, same as before. `Et2Nextmatch`'s `settings` setter forwards this to
@@ -160,6 +324,11 @@ these in order, in one commit, then expect follow-up fixups.
    - any view switch the app has (row/tile/kanban/etc.) works and doesn't leave stale state
    - column visibility/order/width persists across a reload, including for every distinct
      column-preference key the app uses (see step 4)
+   - the filter drawer holds what it should: search, the Sorting select, the standard
+     `filter`/`filter2`/`cat_id` controls the app actually offers, and a Column Filters section matching
+     the row template's filtering headers. A filter that silently vanished usually means a `no_*` flag
+     or a header widget changed kind during the template conversion — see
+     [the filterbox and `filter-template.php`](#reference-the-filterbox-and-filter-templatephp)
    - push/refresh notifications update the list correctly — first check *which* push mechanism the
      app actually uses; not every app shares the generic `api.queue` long-poll (e.g. mail registers
      its own IMAP push via `ajax_enablePush`). Confirming the registration call succeeds is not the
@@ -216,7 +385,40 @@ Mechanical renames seen in every conversion:
 - `<html id="${row}[attachments]"/>` (a raw HTML-string cell) is not supported the same way. Replace
   with plain widgets (e.g. `<et2-image>`) bound to dedicated server-provided fields, rather than one
   HTML blob built server-side — this pushes icon-selection logic into row-data preparation instead of
-  the template (Mail: `attachment_icon`, `flagged_icon` fields added specifically for this).
+  the template (Mail: `attachment_icon`, `flagged_icon` fields added specifically for this). If the
+  field genuinely is rich-text/HTML content (not just an icon-selection hack) rather than a
+  server-computed blob to eliminate, see the `<html>`/`<htmlarea>` entry below instead — don't try to
+  decompose real HTML content into per-field widgets.
+- **Any bare `<html id="${row}[field]"/>` row-template widget silently renders nothing, with no
+  console warning at all** (Tracker: `tr_description`, `reply_message`) — `<html>` is a legacy
+  jQuery-only widget (`et2_widget_html.ts`, registered in `et2_registry`) that `Et2RowProvider`'s
+  clone step doesn't know about; it falls through to a bare `document.createElement("html")`, an
+  inert native element that never receives a value. This is a **different, silent failure mode**
+  from the documented `options="..."` case (`Et2RowProvider` logs `failed to transform row template
+  widget` for that one) — here there is nothing to see in the console, the cell is just empty.
+  Replace with `<et2-htmlarea readonly="true">` (the modern widget that actually renders `unsafeHTML`
+  and supports row hydration via `Et2InputWidget`'s `transformAttributes`) — not `<et2-description>`,
+  which escapes its value and has no raw-HTML mode at all. Immediately add `noAiTools="true"` too (see
+  the next bullet) or the fix appears to do nothing.
+- **Any `<et2-textarea>`/`<et2-htmlarea>`/`<htmlarea>` tag anywhere in a served `.xet` file — including
+  inside a nextmatch row template — gets blindly wrapped in `<et2-ai>` server-side** by a blanket regex
+  in `api/etemplate.php` (`# wrap et2-textarea and htmlarea in et2-ai ...`), unconditionally, unrelated
+  to nextmatch. `Et2RowProvider` can't hydrate a widget nested inside that extra wrapper level, so a
+  freshly-added row-template `<et2-htmlarea>` still renders empty even after fixing the `<html>` tag
+  itself, with no error either. Add `noAiTools="true"` to the widget to opt out — the same escape hatch
+  Tracker's own mobile `edit.xet` already uses for exactly this widget in exactly this row context.
+- **A row-template's header `<row>` must have `class="th"`, even for header widgets that aren't
+  sortheaders/filters** (Tracker's `tracker.edit.comment_row`, a comments/replies row template using
+  plain `<et2-nextmatch-header-account>`/`<et2-nextmatch-header>`, no sorting or filters wanted).
+  `Et2RowProvider._fromTemplateRoot()` looks for `.th` (or `thead`) specifically to find the header row;
+  without it, it falls back to `tplRoot.children[0]`/`[1]` by position, which is fragile and — for a
+  `<grid><columns>/<rows></grid>` structure — resolves to the wrong element entirely, throwing
+  `Cannot read properties of null (reading 'tagName')` inside `_headerColumnSourceNodes()` and leaving
+  the whole grid stuck on "No row template configured", not just that column. This can pass earlier,
+  narrower testing (e.g. a ticket that already has replies) and still be a real, general parse failure —
+  don't assume a `class="th"`-less header row is safe just because one row template already using it
+  loaded once; check every row template's header row explicitly, including ones for embedded/tab-panel
+  grids that don't need a "real" header UI.
 - Nested `<grid>`/`<columns>`/`<rows>` inside a `<nextmatch-header>` cell (multi-line sortable headers)
   does not carry over — replace with `<et2-vbox>`/`<et2-hbox>` wrapping
   `<et2-nextmatch-sortheader>` elements (Addressbook, Infolog).
@@ -227,6 +429,27 @@ Mechanical renames seen in every conversion:
   direct-binding form `$row_cont[fieldname]` does (Infolog) — if a bound value renders wrong or blank
   after confirming the field name is correct, try the direct-binding form before assuming the data
   itself is missing.
+- **A row-scoped `class=`/`disabled=` expression on a widget *nested inside* a row template must use
+  bare `$row_cont[fieldname]` (or `${row}[fieldname]`) — a legacy-looking `@@<nm-id>[$row][fieldname]`
+  form silently resolves to the wrong thing for every row, with no error.** (Tracker: a conditional
+  `disabled` pair meant to show one widget for real commenters and a fallback for system-generated
+  ones showed the fallback for *every* row instead, only for `disabled=`; a `class=` binding using the
+  same `@@`-form on a sibling widget failed the same way but silently — no visible symptom at all,
+  since a missing class is much easier to miss than "wrong branch always active".) Root cause:
+  `Et2RowProvider`'s prep-time rewrite (`_normalizeLegacyRowExpressionShorthand()`) only recognizes
+  `$row_cont[f]` / `${row}[f]` / `{$row}[f]` / `$row.f` shorthands; anything else - including a
+  `@@`-prefixed path someone hand-adapted from a *different*, working `disabled="!@@top_level_field"`
+  example elsewhere in the same template (where `top_level_field` is genuinely top-level ticket
+  content, not row-scoped) - passes through unrecognized. For a `disabled=` attribute specifically
+  (a Boolean-typed property) this then fails a second, narrower regex
+  (`Et2Datagrid._directBooleanRowValue()`, `^(!)?(?:\$\[path\]|\$field)$`) and falls through to a
+  looser fallback that does a raw `$row` → row-uid text substitution instead of indexing into that
+  row's own content - so the final `getEntry()` lookup always misses and always resolves the same way
+  for every row, not correctly per-row. Don't adapt a working `disabled="!@@field"` example to a new,
+  row-scoped field name without checking whether the original example's field was actually top-level
+  content or row content - the correct row-scoped form for either `class=` or `disabled=` is always
+  the same shorthand already used elsewhere for `id=`/`class=` in the same template
+  (`$row_cont[fieldname]`), never a hand-built `@@`-prefixed path.
 - Attributes that stop being used: `disable_selection_advance="true"` has no widget-level equivalent —
   implement the same "select the next/previous row after this one is removed" behavior in `app.ts` via
   the `et2-rows-deleted` event instead (see the replacement table below). `no_dynheight="true"` was
@@ -237,7 +460,8 @@ Mechanical renames seen in every conversion:
   `slot="main-header"` mechanism instead: keep the `header_right` template unchanged and add
   `<template template="that.template.id" slot="main-header"></template>` as a sibling of the
   `<et2-nextmatch>` tag (this is how Tracker and Filemanager's mobile skins place their own header
-  content, though those two hadn't converted the `<nextmatch>` tag itself when this was written). On a
+  content, though both had this pattern in place well before either app's own `<nextmatch>` tag was
+  converted). On a
   cramped mobile header a visible-label select can end up with too little vertical room for the label
   (a plain `<et2-select label="Type" ...>` needs more height than `main-header` has) — rather than
   fight for space, it's fine to just drop the filter from the header on mobile entirely, same as
@@ -393,6 +617,39 @@ after every (re)load:
     visibility, both unconditionally (whether they're actually used is `Et2Datagrid`'s call). Tests:
     `Et2Datagrid.test.ts`'s "admin save-as-default action" describe block.
 
+### Lazy loading a nextmatch that lives inside a tab
+
+Added for Tracker's `replies` comments nextmatch (`tracker/templates/default/edit.xet`'s Comments
+tab) - a nextmatch embedded in one panel of an `<et2-tabbox>` is otherwise loaded (server-side rows
+baked into the page payload, or a client fetch) unconditionally on page load, whether or not the
+user ever opens that tab. `Et2Tabs` renders every panel's full widget subtree eagerly at parse time
+(`createTabs()`/`createPanel()`), hiding inactive ones with CSS only (`display:none`) - there is no
+lazy-render support anywhere in the tab widget, and `Et2Nextmatch` itself has no panel-visibility
+awareness at all (`firstUpdated()` unconditionally calls `_datagrid?.reload()` once template/columns
+are parsed, regardless of the widget's own visibility).
+
+Fix: a new `lazy` boolean property on `Et2Nextmatch` (`Et2Nextmatch.ts`, alongside `lettersearch`).
+When set, `firstUpdated()` calls a new private `_whenLazyVisible()` before the client-fetch
+`_datagrid?.reload()` call (only that branch - template/column parsing and the server-preloaded-rows
+branch are untouched, so headers still render immediately even though row data is deferred).
+`_whenLazyVisible()` no-ops unless the nextmatch is inside an inactive `<et2-tab-panel>` (checked via
+`closest("et2-tab-panel")` + the panel's own reflected `active` attribute), in which case it returns a
+promise that resolves on the enclosing `<et2-tabbox>`'s `sl-tab-show` event once `event.detail.name`
+matches the panel's `name`. This mirrors an existing precedent in the codebase for the identical
+problem - `et2_widget_historylog.ts`'s `doLoadingFinished()` uses the same `sl-tab-show`/panel-name-match
+technique to lazily load a History tab's content, just against the legacy `get_tab_info()` API instead
+of a web-component ancestor.
+
+Usage: add `lazy="true"` to the `<et2-nextmatch>` tag. If the app also ships rows/`total` with the
+initial page load (skip this if it doesn't, e.g. via a settings key like Tracker's own
+`get_comment_rows`'s `num_rows`), set that to `0` (or otherwise suppress the server-side prefetch) too
+- `lazy` only gates the *client* fetch fallback; a server that ships `total` server-side still takes
+the immediate `storeRows()` branch in `firstUpdated()` and defeats the point. Don't set the
+server-side prefetch to 0 without also setting `lazy="true"` - some apps' legacy comments about
+"popup nextmatch needs num_rows set, client won't fetch" describe a real gap in the *old*
+`et2_extension_nextmatch` widget's popup handling, not `Et2Nextmatch`'s `reload()`, which fetches
+correctly in a popup as soon as `_whenLazyVisible()` resolves.
+
 ## Reference: settings allow-list
 
 `Et2Nextmatch.settings` only keeps an explicit allow-list of keys from `$content['nm']`
@@ -402,6 +659,58 @@ will get `undefined` after conversion even though the server sent it. In every c
 far, the **`$content['nm']` array shape built server-side did not need to change** — the conversion was
 template + app JS/TS only — but that's an observed outcome for four apps, not a guarantee; check
 `ALLOWED_SETTINGS` if the app relies on a setting that isn't in that list.
+
+**Do not read this backwards.** `ALLOWED_SETTINGS` governs what survives into the *client-side*
+`.settings` object, and says nothing at all about settings the server consumes and never sends. The
+clearest example is `no_filter`/`no_filter2`/`no_cat`, which are absent from the list *and* fully live —
+`Nextmatch.php` reads them server-side while building the filterbox, and dropping them because "they're
+not in `ALLOWED_SETTINGS` so they must be dead" silently changes which filters the app offers. See
+[the filterbox and `filter-template.php`](#reference-the-filterbox-and-filter-templatephp) below before
+deleting any `$content['nm']` key on allow-list grounds.
+
+## Reference: the filterbox and `filter-template.php`
+
+Where an app's filters actually come from under `Et2Nextmatch`, and the trap in the middle of it.
+
+- **The filterbox needs no app markup.** `Et2Nextmatch._ensureFilterbox()` creates its own
+  `<et2-filterbox slot="filter">` and appends it to the nearest ancestor exposing a `filter` slot —
+  in practice `<egw-app>`, whose `EgwFrameworkApp._filterTemplate()` renders the drawer (plus the
+  clear-filters and column-selection buttons) for any app whose page contains an `et2-nextmatch`.
+  `getNextmatch()` queries `et2-nextmatch` first, so this works for converted apps.
+- **Its contents are generated server-side, from the app's own row template.**
+  `Nextmatch.php::beforeSendToClient()` (~line 314) builds a `filter_template` URL pointing at
+  `api/filter-template.php/$app/templates/$template_set/$rows.xet?...`, unless the app set
+  `filterTemplate`/`filter_template` itself. `api/filter-template.php` then regex-reads that `.xet` and
+  emits a filter template containing: a searchbox (`et2-searchbox`, or the `rag.search` template where
+  the app supports RAG), a "Sorting" select built from every `et2-nextmatch-sortheader`, the standard
+  `cat_id`/`filter`/`filter2` controls (`et2-select-cat` for `cat_id` unless `cat_is_select` is passed),
+  an `<et2-details summary="Column Filters">` holding the filtering headers — with ids rewritten to
+  `col_filter[$id]`, because `et2-details` creates no namespace — and a favorites section if
+  `favorites` was passed.
+- **`no_filter`/`no_filter2`/`no_cat` are live server-side settings.** `Nextmatch.php` appends
+  `&filter=`/`&filter2=`/`&cat_id=` to that URL *only* when the corresponding disable flag is empty, so
+  each one suppresses its filter from the generated filterbox. Note the asymmetric name: `cat_id`'s flag
+  is `no_cat`, not `no_cat_id`. They are missing from `ALLOWED_SETTINGS` because they never travel to the
+  client at all — not because they stopped working. Conversely, **deleting `no_cat` is what makes a
+  category filter appear**; `admin/inc/class.admin_categories.inc.php:607` does exactly that on purpose,
+  with the reasoning in a comment on the line (`unset($content['nm']['no_filter']); // completely remove
+  no_filter, so it shows up in the filter-template`). Only drop one of these when the app genuinely has
+  something to offer in that slot — removing `no_filter` from an app with no `filter` options gives the
+  user an empty select.
+- **Only the `FilterMixin` headers feed Column Filters**: `et2-nextmatch-header-filter`,
+  `et2-nextmatch-header-account`, `et2-nextmatch-header-entry`, `et2-nextmatch-header-custom`. Plain
+  `et2-nextmatch-header` and `et2-nextmatch-sortheader` contribute a column label only — sortheaders
+  feed the Sorting select instead. So the choice of header widget in the row template is also the choice
+  of whether that column is filterable.
+- **A toolbar filter is a separate, additional control, not the filterbox entry.** Addressbook, InfoLog
+  and Timesheet each put an `et2-select-cat` in their `slot="main-header"` toolbar *and* get a category
+  filter in the drawer from the mechanism above; both exist at once. Don't infer from "there's one in the
+  toolbar" that the drawer has none — that misreading is what this section exists to prevent.
+- **To replace the generated filterbox entirely**, slot a template as `slot="filter"`. Calendar is the
+  only app currently doing this (`calendar/templates/default/filter.xet`). Filters can also be grouped
+  under headings via `data="groupName:..."` on a nextmatch header. `Et2Filterbox.readNextmatchFilters()`
+  — which collects the four filtering header tags client-side — is the other path, used when no
+  filter-template is in play.
 
 ## Reference: startup/lifecycle timing pitfalls
 
@@ -435,6 +744,22 @@ template + app JS/TS only — but that's an observed outcome for four apps, not 
   mobile-skin conversion needs `templates/mobile/app.css` to actually be the one that loads. Bare
   `<et2-styles src="...">` values inside a row template resolve the same way, relative to that
   template's own file.
+- **`app.css` selectors scoped to the index page's own container id (e.g. `#tracker-index
+  .some-row-class`) silently stop matching anything once that app converts**, with no warning
+  anywhere - the fallback above really does load that same file's rules into the datagrid's shadow
+  root, but a shadow root is its own separate node tree with no `#app-index` ancestor in it at all
+  (that id only exists in the light DOM), so an id-scoped selector can never match a row element
+  post-conversion. This is easy to miss because everything still *loads* without error; the only
+  symptom is that some row styling (read/unread bold, priority colors, italics, whatever the app used
+  the class for) just silently stops applying, and a plain page glance can miss it entirely if the
+  affected style is subtle (bold vs. not) rather than a layout break (Tracker: `tracker_unseen`/
+  `tracker_seen` bold state, several priority-color classes, `tracker_overdue`, `private`/`planned`
+  italics - all of `app.less`'s `#tracker-index { ... }`-wrapped block, one file, one rename away from
+  fixed). Before considering an app's row-CSS unaffected by conversion, grep its `app.less`/`app.css`
+  for a selector scoped to that page's own container id and check whether any of the classes it
+  targets are used inside the row template - if so, drop the id scope (the shadow root already
+  provides equivalent isolation, so nothing is lost by doing this) and recompile
+  (`lessc app.less app.css`, checking the diff is purely the scope removal before overwriting).
 - **Category-color row indicators have a built-in mechanism — don't hand-roll a dedicated column for
   it.** Give the `<row>` element's `class` binding the bare recognized placeholder for the category field
   (`$row_cont[info_cat]`, `$cat_id`, `$category`, or `$cat` — see `Et2RowProvider`'s

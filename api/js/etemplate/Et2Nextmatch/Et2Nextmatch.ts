@@ -289,6 +289,16 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	private _lettersearchVisible : boolean = true;
 
 	/**
+	 * Defer the initial row fetch until this nextmatch's tab panel (an ancestor
+	 * `<et2-tab-panel>`) is actually shown, instead of loading immediately on connect.
+	 * Only affects the client-side `reload()` fallback in firstUpdated() - template/column
+	 * parsing and any server-preloaded rows/total are unaffected, so headers still render.
+	 * Has no effect when there's no ancestor tab panel, or it's already the active one.
+	 */
+	@property({type: Boolean})
+	lazy : boolean = false;
+
+	/**
 	 * Field / column that holds Modified date for entries.
 	 * Used for smart refresh.
 	 *
@@ -1139,6 +1149,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		}
 		else
 		{
+			await this._whenLazyVisible();
 			await this._datagrid?.reload();
 		}
 		if(this._initialAdditionalData)
@@ -1150,6 +1161,45 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 			this._initialAdditionalData = null;
 		}
 		await this._updateRowStylesheets();
+	}
+
+	/**
+	 * Resolve immediately unless `lazy` is set and this nextmatch is sitting inside an
+	 * inactive `<et2-tab-panel>` - in that case, wait for the enclosing `<et2-tabbox>`'s
+	 * `sl-tab-show` for this panel before resolving. Mirrors the legacy pattern in
+	 * et2_widget_historylog.ts's doLoadingFinished(), adapted for a web component ancestor
+	 * instead of the legacy get_tab_info() API.
+	 */
+	private async _whenLazyVisible() : Promise<void>
+	{
+		if(!this.lazy)
+		{
+			return;
+		}
+		const panel = this.closest("et2-tab-panel");
+		const panelName = panel?.getAttribute("name");
+		if(!panel || !panelName || panel.hasAttribute("active"))
+		{
+			return;
+		}
+		const group = panel.closest("et2-tabbox");
+		if(!group)
+		{
+			return;
+		}
+		return new Promise<void>(resolve =>
+		{
+			const handler = (e : CustomEvent) =>
+			{
+				if(e.detail?.name !== panelName)
+				{
+					return;
+				}
+				group.removeEventListener("sl-tab-show", handler);
+				resolve();
+			};
+			group.addEventListener("sl-tab-show", handler);
+		});
 	}
 
 	/**
