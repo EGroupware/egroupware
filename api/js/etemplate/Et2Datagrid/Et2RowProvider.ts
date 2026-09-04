@@ -21,12 +21,36 @@ const DEFAULT_TILE_LAYOUT = {
 } as const;
 
 /**
+ * Mutable state threaded through one row-template preparation pass.
+ *
+ * Preparation walks the row template once and records everything per-row
+ * hydration will need, keyed by a generated `data-et2nm-id` so the recorded
+ * information survives the widget being namespaced and recycled later.
+ */
+interface Et2RowTemplatePrepareContext
+{
+	/** Row-scoped attribute expressions, by row-upgrade id. */
+	attrMap : Record<string, Record<string, string>>;
+	/** Row-template event handler sources, by row-upgrade id. */
+	handlerMap : Record<string, Record<string, string>>;
+	/** Dotted row-data path each widget binds its value to, by row-upgrade id. */
+	fieldMap : Record<string, string>;
+	/** Counter handing out the generated row-upgrade ids. */
+	idState : { next : number };
+	/** False when preparing a fragment that is not hydrated per row. */
+	recordAttributes : boolean;
+}
+
+/**
  * Resolves nextmatch row definitions from a template name or from slotted markup.
  * It returns normalized columns and a prepared row template for Et2Datagrid.
  */
 export class Et2RowProvider
 {
 	private static readonly CATEGORY_CLASS_PLACEHOLDER_FIELDS = ["cat", "cat_id", "category", "info_cat"] as const;
+
+	/** An id that names a row field or a row sub-object, rather than a row expression. */
+	private static readonly PLAIN_FIELD_ID = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
 
 	private host : Et2RowProviderHost;
 	private _templateLoadToken : number = 0;
@@ -54,6 +78,27 @@ export class Et2RowProvider
 		resolved = resolved.replace(/\$row_cont\[([^\]]+)\]/g, (_match, token) => String(getFieldValue(row, token) ?? ""));
 		resolved = resolved.replace(/\$([a-zA-Z_][a-zA-Z0-9_]*)\b/g, (_match, token) => String(getFieldValue(row, token) ?? ""));
 		return resolved;
+	}
+
+	/**
+	 * Look up a dotted row-field path, reporting whether the row actually has it.
+	 *
+	 * Direct id bindings may only supply a value for a field the row really carries,
+	 * so an absent field leaves the widget's own value alone.  A plain value lookup
+	 * cannot answer that, since a missing and an empty field both read as blank.
+	 */
+	static resolveRowField(rowData : any, path : string) : { found : boolean, value : any }
+	{
+		let current = rowData;
+		for(const part of path.split("."))
+		{
+			if(!current || typeof current !== "object" || !Object.prototype.hasOwnProperty.call(current, part))
+			{
+				return {found: false, value: undefined};
+			}
+			current = current[part];
+		}
+		return {found: true, value: current};
 	}
 
 	static customizeRowRootAttributes(rowRoot : HTMLElement, row : any, getFieldValue : (row : any, key : string) => any)
@@ -350,6 +395,7 @@ export class Et2RowProvider
 			rowTemplateXml: prepared?.xml ?? null,
 			rowTemplateAttrMap: prepared?.attrMap ?? {},
 			rowTemplateHandlerMap: prepared?.handlerMap ?? {},
+			rowTemplateFieldMap: prepared?.fieldMap ?? {},
 			rowStylesheets: [
 				...rowStylesheets,
 				...(prepared?.rowStylesheets ?? [])
@@ -408,6 +454,7 @@ export class Et2RowProvider
 			rowTemplateXml: prepared?.xml ?? null,
 			rowTemplateAttrMap: prepared?.attrMap ?? {},
 			rowTemplateHandlerMap: prepared?.handlerMap ?? {},
+			rowTemplateFieldMap: prepared?.fieldMap ?? {},
 			rowStylesheets: [
 				...rowStylesheets,
 				...(prepared?.rowStylesheets ?? [])
@@ -567,6 +614,7 @@ export class Et2RowProvider
 		xml : Element;
 		attrMap : Record<string, Record<string, string>>;
 		handlerMap : Record<string, Record<string, string>>;
+		fieldMap : Record<string, string>;
 		rowStylesheets : CSSStyleSheet[];
 	} | null>
 	{
@@ -579,10 +627,17 @@ export class Et2RowProvider
 		const rowStylesheets = await this._extractRowStylesheets(xml, templateUrl);
 		const attrMap : Record<string, Record<string, string>> = {};
 		const handlerMap : Record<string, Record<string, string>> = {};
+		const fieldMap : Record<string, string> = {};
 		const idState = {next: 1};
 
 		const template = document.createElement("template");
-		const fragment = this._createFragmentFromXml(xml, attrMap, handlerMap, idState, true);
+		const fragment = this._createFragmentFromXml(xml, {
+			attrMap,
+			handlerMap,
+			fieldMap,
+			idState,
+			recordAttributes: true
+		});
 		template.content.appendChild(fragment);
 
 		// Keep existing readonly behavior so row widgets render as display-only templates.
@@ -596,6 +651,7 @@ export class Et2RowProvider
 			xml,
 			attrMap,
 			handlerMap,
+			fieldMap,
 			rowStylesheets
 		};
 	}
@@ -692,21 +748,22 @@ export class Et2RowProvider
 
 	/**
 	 * Deep-clone XML into DOM while optionally recording dynamic attributes for later transformAttributes().
+	 *
+	 * @param namespace Row-data path the node sits under, built up from container ids.
 	 */
 	private _createFragmentFromXml(
 		node : Element,
-		attrMap : Record<string, Record<string, string>>,
-		handlerMap : Record<string, Record<string, string>>,
-		idState : { next : number },
-		recordAttributes : boolean = false
+		context : Et2RowTemplatePrepareContext,
+		namespace : string[] = []
 	) : DocumentFragment
 	{
 		const fragment = document.createDocumentFragment();
-		const root = this._cloneElement(node, attrMap, handlerMap, idState, recordAttributes);
+		const root = this._cloneElement(node, context, namespace);
 		fragment.appendChild(root);
 
-		const walk = (source : Element, destination : Element) =>
+		const walk = (source : Element, destination : Element, sourceNamespace : string[]) =>
 		{
+			const childNamespace = this._childNamespace(source, destination, sourceNamespace);
 			for(const child of Array.from(source.childNodes))
 			{
 				if(child.nodeType === Node.TEXT_NODE)
@@ -720,14 +777,70 @@ export class Et2RowProvider
 					continue;
 				}
 
-				const childElement = this._cloneElement(child as Element, attrMap, handlerMap, idState, recordAttributes);
+				const childElement = this._cloneElement(child as Element, context, childNamespace);
 				destination.appendChild(childElement);
-				walk(child as Element, childElement);
+				walk(child as Element, childElement, childNamespace);
 			}
 		};
 
-		walk(node, root);
+		walk(node, root, namespace);
 		return fragment;
+	}
+
+	/**
+	 * Row-data path that applies to the children of one row-template node.
+	 *
+	 * An id on a namespace-opening widget names a sub-object of the row, not a value
+	 * of its own: with row data `{sub: {name: "cheese"}}`, `<et2-vbox id="sub">`
+	 * scopes its descendants so an `<et2-description id="name">` inside it binds
+	 * `sub.name`.  Ids that are row expressions (`${row}[field]`, `$row_cont[...]`)
+	 * address the row directly and open no namespace.
+	 */
+	private _childNamespace(source : Element, element : Element, namespace : string[]) : string[]
+	{
+		const id = source.getAttribute?.("id");
+		if(!id || !Et2RowProvider.PLAIN_FIELD_ID.test(id) || !this._opensNamespace(element))
+		{
+			return namespace;
+		}
+		return [...namespace, id];
+	}
+
+	/**
+	 * Does this widget's id name a namespace for its children rather than a value?
+	 *
+	 * Deliberately the same question etemplate asks everywhere else, answered by the
+	 * widget class itself: boxes, grids, nextmatch and toolbar scope their children,
+	 * while the base widget does not, so a `<et2-select id="status">` carrying option
+	 * children still binds a value.  Anything we cannot ask - a plain element, or a
+	 * legacy tag with no custom-element registration - names a value.
+	 */
+	private _opensNamespace(element : Element) : boolean
+	{
+		const createNamespace = (element as any)?._createNamespace;
+		if(typeof createNamespace !== "function")
+		{
+			return false;
+		}
+		try
+		{
+			return createNamespace.call(element) === true;
+		}
+		catch(e)
+		{
+			return false;
+		}
+	}
+
+	/**
+	 * Row-data expression addressing one field, for use in template text.
+	 *
+	 * A field inside a namespace needs the nested `$[a.b]` form; a top-level one
+	 * keeps the plain `$field` shorthand.
+	 */
+	private static _rowFieldExpression(path : string[]) : string
+	{
+		return path.length > 1 ? "$[" + path.join(".") + "]" : "$" + path[0];
 	}
 
 	/**
@@ -735,15 +848,14 @@ export class Et2RowProvider
 	 */
 	private _cloneElement(
 		source : Element,
-		attrMap : Record<string, Record<string, string>>,
-		handlerMap : Record<string, Record<string, string>>,
-		idState : { next : number },
-		recordAttributes : boolean
+		context : Et2RowTemplatePrepareContext,
+		namespace : string[] = []
 	) : Element
 	{
+		const {attrMap, handlerMap, fieldMap, idState, recordAttributes} = context;
 		let tag = source.tagName.toLowerCase();
 		const lightweightDescription = tag === "et2-description"
-		                               ? this._lightweightDescriptionElement(source)
+		                               ? this._lightweightDescriptionElement(source, namespace)
 		                               : null;
 		if(lightweightDescription)
 		{
@@ -865,6 +977,25 @@ export class Et2RowProvider
 			}
 		}
 
+		// A plain identifier id is either a namespace or a direct row binding, never both.
+		// A namespace-opening widget (a box, a grid) has already had its id folded into
+		// `namespace` by _childNamespace(); everything else binds a value: id="host_name"
+		// means this row's host_name, and inside <et2-vbox id="sub"> it means the row's
+		// sub.host_name.  Record the path built from the template ids, because the live
+		// element gets namespaced by its container (eg. "nm_host_name") and would no
+		// longer match the row field it names.
+		if(recordAttributes && !this._opensNamespace(element))
+		{
+			const sourceId = source.getAttribute("id");
+			if(sourceId && Et2RowProvider.PLAIN_FIELD_ID.test(sourceId))
+			{
+				const fieldId = ensureRowUpgradeId();
+				if(fieldId)
+				{
+					fieldMap[fieldId] = [...namespace, sourceId].join(".");
+				}
+			}
+		}
 
 		return element;
 	}
@@ -948,8 +1079,10 @@ export class Et2RowProvider
 	 * Datagrid rows can contain many simple et2-description widgets. If the
 	 * description does not need link, tooltip, translation, or event behaviour,
 	 * native text avoids creating a Lit element and shadow root for every row.
+	 *
+	 * @param namespace Row-data path opened by the containers this description sits in.
 	 */
-	private _lightweightDescriptionElement(source : Element) : HTMLElement | null
+	private _lightweightDescriptionElement(source : Element, namespace : string[] = []) : HTMLElement | null
 	{
 		const allowedAttributes = new Set([
 			"id",
@@ -973,10 +1106,13 @@ export class Et2RowProvider
 		const id = source.getAttribute("id");
 		const value = source.getAttribute("value");
 		const idIsDynamic = !!id && (id.includes("$") || id.includes("{"));
-		const plainFieldId = !!id && /^[a-zA-Z_][a-zA-Z0-9_]*$/.test(id);
-		// A plain id in a row description is a row-value binding.  Preserve that
-		// contract when replacing the widget with native text.
-		const textExpression = idIsDynamic ? id : value ?? (plainFieldId ? "$" + id : id);
+		const plainFieldId = !!id && Et2RowProvider.PLAIN_FIELD_ID.test(id);
+		// A plain id in a row description is a row-value binding, scoped by whatever
+		// containers it sits in.  Preserve that contract when replacing the widget
+		// with native text.
+		const textExpression = idIsDynamic
+		                       ? id
+		                       : value ?? (plainFieldId ? Et2RowProvider._rowFieldExpression([...namespace, id!]) : id);
 		if(!textExpression)
 		{
 			return null;

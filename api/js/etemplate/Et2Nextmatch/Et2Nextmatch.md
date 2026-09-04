@@ -75,9 +75,15 @@ guard.
 
 ## Row value bindings
 
-Use direct row bindings in new or edited row templates. `$field` reads `field` from the current row;
-`$[parent.child]` reads a nested value. Direct bindings work in any row-template attribute; each widget then applies its
-normal interpretation of the resolved attribute value.
+Row templates bind in two ways, and the distinction is worth keeping straight:
+
+- **An `id` gets you a value.** `id="title"` is the widget's stable id *and* names the row field it shows, so the
+  datagrid supplies `rowData.title` as the widget value. This is the recommended form for row values.
+- **`$` and `@` expressions set attributes and properties.** They work in any row-template attribute, and each widget
+  then applies its normal interpretation of the resolved value.
+
+`$field` reads `field` from the current row and `$[parent.child]` reads a nested value. `@field` returns the content
+entry stored under that key, and `@@field` reads it from the root content instead of the current namespace.
 
 ```xml
 
@@ -89,10 +95,37 @@ normal interpretation of the resolved attribute value.
 </row>
 ```
 
-For ordinary display widgets, `id="title"` remains the stable widget id and, when the row has an own `title` field, the
-datagrid supplies `rowData.title` as the widget value. Use `value="$other_field"` when the value comes from a differently
-named or nested row field. Keep action and compound ids as ids, for example `id="delete[$id]"`; they are not row-value
-bindings.
+`value` is an ordinary property, so an expression can set it like any other. Reach for that only when the value comes
+from a differently named or nested row field - when the id already names the field, it is redundant:
+
+```xml
+
+<et2-description id="summary" value="$[details.short]" noLang="1"></et2-description>
+```
+
+Keep action and compound ids as ids, for example `id="delete[$id]"`; they are not row-value bindings.
+
+An id on a namespace-opening widget - a box, a grid, a nested nextmatch - scopes its children instead of naming a value
+of its own, so nested row data can be addressed by nesting the template. Given row data `{id: 1, sub: {name: "cheese"}}`:
+
+```xml
+
+<row>
+    <et2-description id="id"></et2-description>
+    <et2-vbox id="sub">
+        <et2-description id="name"></et2-description>
+    </et2-vbox>
+</row>
+```
+
+the inner description binds `sub.name`. Whether an id scopes or binds is the widget's own answer (`_createNamespace()`),
+the same question etemplate asks everywhere else - so an ordinary widget's id still names a value even when the template
+nests markup inside it, and an unnamed container is pure layout that never affects the path. Flat row data stays flat no
+matter how deeply it is wrapped: `{id: 1, name: "cheese"}` still binds through `<et2-vbox><et2-hbox><et2-description
+id="name"/></et2-hbox></et2-vbox>`.
+
+Attribute expressions are never namespaced: `$field` and `${row}[field]` always address the row itself, wherever they
+are written.
 
 Existing templates do not need a bulk rewrite. Legacy `${row}[title]`, `{$row}[title]`,
 `$row_cont[title]`, and `$row.title` continue to work in row templates. Use them only when documenting or maintaining

@@ -618,6 +618,11 @@ export class Et2DatagridRowRenderer
 					const id = element.getAttribute?.("data-et2nm-id");
 					const stored = id ? attrMap[id] : null;
 					const handlerSources = id ? this.host.templateData?.rowTemplateHandlerMap?.[id] : null;
+					// The row-data path from the row template, eg. "sub.name" for an
+					// <et2-description id="name"> inside <et2-vbox id="sub">.  element.id
+					// cannot be used: it has been namespaced by its container by now.
+					const rowField = id ? (this.host.templateData?.rowTemplateFieldMap?.[id] ?? null) : null;
+					const rowFieldValue = rowField ? Et2RowProvider.resolveRowField(rowData, rowField) : null;
 					if(handlerSources && Object.values(handlerSources).some((source) => source.includes("$") || source.includes("@")))
 					{
 						// Virtualized widgets are reused. These handlers are compiled with
@@ -729,11 +734,10 @@ export class Et2DatagridRowRenderer
 							element.id = `${rowId}[${idBinding.field}]`;
 						}
 					}
-					else if(!stored?.value && !stored?.id && typeof element.id === "string" && /^[a-zA-Z_][a-zA-Z0-9_]*$/.test(element.id) &&
-						Object.prototype.hasOwnProperty.call(rowData || {}, element.id) &&
+					else if(!stored?.value && !stored?.id && rowFieldValue?.found &&
 						(this.host._rowAttributePropertyType(element, "value") || typeof element.set_value === "function"))
 					{
-						attributes.value = rowData[element.id];
+						attributes.value = rowFieldValue.value;
 						hasDirectValue = true;
 						directValue = attributes.value;
 					}

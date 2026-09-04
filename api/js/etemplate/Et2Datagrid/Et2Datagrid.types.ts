@@ -36,6 +36,16 @@ export interface Et2DatagridTemplateData
 	rowTemplateAttrMap : Record<string, Record<string, string>>;
 	/** Row-template event handlers keyed by generated widget id. */
 	rowTemplateHandlerMap?: Record<string, Record<string, string>>;
+
+	/**
+	 * Dotted row-data path each prepared widget binds to, by its row-upgrade id.
+	 *
+	 * Built from the ids written in the row template - a container id opens a
+	 * namespace for its children, so `<et2-description id="name">` inside
+	 * `<et2-vbox id="sub">` records "sub.name".  The live element id cannot be
+	 * used: it gets namespaced by its container and no longer matches the row data.
+	 */
+	rowTemplateFieldMap?: Record<string, string>;
 	/** Styles extracted from <et2-styles> inside the row template. */
 	rowStylesheets? : CSSStyleSheet[];
 	/** Optional row-height hint supplied by template parsing. */
