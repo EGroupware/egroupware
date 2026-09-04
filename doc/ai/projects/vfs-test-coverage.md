@@ -375,9 +375,9 @@ itself (which byte-range offset gets computed and handed to `fseek()`) - that's 
 `HTTP_WebDAV_Server` base class, outside this project's Vfs-layer scope, and worth a note if a
 real chunked-upload bug ever surfaces (the Vfs-layer mechanism itself is now confirmed sound).
 
-**Phase 6 STARTED** (2026-09-03) - `S3\StreamWrapper` basic coverage done; `S3direct`, `Merge`,
-`Versioning`, EPL `Links`, `Vlinks` still to do (see below, this phase needs at least one more
-session).
+**Phase 6 COMPLETE** (2026-09-04) - all 6 EPL/Stylite wrappers covered (`S3`, `Versioning`, `Links`,
+`S3direct`, `Merge`, `Vlinks`), 6 real bugs found and documented. See the final tally near the end
+of this section for the summary; per-wrapper detail follows below in commit order.
 
 - **Corrected assumption - no AsyncAws mocking needed for basic CRUD**: the original Phase 6 plan
   above assumed S3 wrapper testing would need mocking AsyncAws's HTTP client. Reading
@@ -577,12 +577,26 @@ all trace to the same pre-existing `/home/demo` mount issue documented since Pha
 Admin-group requirement just found independently above. None of this is new or caused by any test
 in this project.
 
-**Still to do for Phase 6**: `Vlinks` (thin subclass of Links(EPL), shares its `LinksParent`
-monkey-patch, no logic of its own beyond the scheme constant - should be quick now that Links(EPL)
-itself is understood). Confirmed across S3, Versioning, S3direct, and Merge: no
-`AsyncAws\S3\S3Client` mock has been needed anywhere in Phase 6 so far - either local pass-through
-covers the common case, or (for S3direct) the live minio connection just worked. Only worth
-revisiting if `Vlinks` turns out to need it too.
+**`Vlinks\StreamWrapper` DONE, Phase 6 COMPLETE** (2026-09-04):
+`stylite/tests/Vfs/VlinksStreamWrapperTest.php` (8 tests). Confirmed the prediction from the
+mapping above: `Vlinks` is genuinely a thin subclass of the COMMUNITY `Links\StreamWrapper` (not
+EPL's own richer one) - no `url_stat()`/`check_extended_acl()`/`dir_opendir()` overrides of its
+own, so its virtual-entry-dir and `eacl()`/`get_eacl()`-no-op behavior mirror Phase 4's community
+coverage exactly, just reached via the `stylite.vlinks://` scheme. Hit the SAME real bug #3 already
+found and documented for EPL's own `Links\StreamWrapper`
+(`LinksStreamWrapperTest::testDelete()`) - `unlink()` fails with permission denied via the
+`LinksParent`-routed, S3-backed `Versioning\StreamWrapper` chain - confirming that bug is structural
+to the shared `LinksParent` monkey-patch mechanism itself, not specific to EPL's own Links
+implementation. Skipped `testDelete()` the same way, pointing at the other class's full explanation
+rather than duplicating it.
 
-**Next**: continue Phase 6 (`Vlinks` next, likely the last piece), then Phase 7 (`fsck` consistency-check mechanism, core + EPL hook
-consumers). Both confirmed priority, not deferred - see Status section above.
+**Phase 6 final tally**: 6 EPL/Stylite wrappers covered (`S3`, `Versioning`, `Links`, `S3direct`,
+`Merge`, `Vlinks`), **6 real bugs found** across them (Versioning's `r+`-mode bug; Links' 3 infolog
+bugs - broken "No filter" view, broken year-hash grouping, unlink permission-denied; S3direct's
+two-layer stat-cache bug; and the same unlink bug confirmed structural via Vlinks) - all documented,
+none silently fixed, each flagged as needing its own dedicated review. No `AsyncAws\S3\S3Client`
+mock was ever actually needed - either local pass-through covered the common case (`S3`,
+`Versioning`, `Merge`), or the live minio connection just worked (`S3direct`).
+
+**Next**: Phase 7 (`fsck` consistency-check mechanism, core + EPL hook
+consumers) - confirmed priority, not deferred - see Status section above.
