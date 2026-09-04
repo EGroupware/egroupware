@@ -1275,7 +1275,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                     label=${this.label || nothing}
                     placeholder=${placeholder}
                     aria-label=${this.ariaLabel || nothing}
-                    aria-description=${this.ariaDesciption || nothing}
+                    aria-description=${this.ariaDescription || nothing}
                     ?multiple=${this.multiple}
                     ?disabled=${this.disabled || this.readonly}
                     ?clearable=${this.clearable}
