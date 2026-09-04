@@ -2721,3 +2721,51 @@ reverted to `read` within ~2s every time). A plain `flagged`/`unflagged` toggle 
 path) was also re-tested immediately after, confirming no regression - it isn't gated by the new
 wait at all. `npx tsc --noEmit` clean for mail/js/app.ts, `npm run build` succeeded. Test message
 left in a clean, genuinely-read state afterward (it actually was opened during testing).
+
+## FIXED (2026-09-04): two independent bugs in one report - Exchange mail with undeclared charset showed Umlaute wrong, and a comma-containing display name broke reply's To-field validation
+
+New regression report (ralf): "mail from exchange server show Umlaute wrongly and reply gives
+validation error for the email contact (missing \")". Reproduced from a real ticket attachment (an
+Outlook/Exchange `.eml`, CodeTwo signature software in the delivery path) rather than a live
+mailbox message - both halves turned out to be genuine, unrelated bugs.
+
+### Bug (a): Umlaute - already fixed the day before, confirmed by direct simulation
+
+The `.eml`'s HTML body part has `Content-Type: text/html` with NO `charset` parameter at all -
+Outlook/Exchange relies purely on its own in-HTML `<meta charset=utf-8>` declaration. Decoding the
+actual raw bytes (extracted via `Horde_Mime_Part::parseMessage()`) as `us-ascii` (RFC 2045's literal
+default for an undeclared charset) reproduces the exact reported symptom byte-for-byte: "für die
+zusätzlichen" becomes "fr die zustzlichen", "Grüße" becomes "Gre", "Müller" becomes "Mller" - every
+non-ASCII byte silently dropped. Decoding the SAME bytes as `utf-8` (the message's real, actual
+encoding) renders every word correctly. This is exactly the mechanism `b3f49373c2` (2026-09-03,
+"fix a shim plain-text reply with umlauts previewing as mojibake") already fixed by changing
+`Api\Mail\Jmap\Imap`'s undeclared-charset default from `us-ascii` to `utf-8` in both
+`fetchBodyValue()` and `structureToHtml()`. No new code change needed for this half - confirmed via
+a throwaway script decoding the real ticket `.eml`'s bytes both ways, not just reasoning about it.
+
+### Bug (b): reply's To field - a comma in the sender's display name broke address round-tripping, found and fixed for real
+
+The original message's `From: "Mueller, Jens" <Jens.Mueller@elkamet.de>` - a properly RFC 5322
+quoted display name (Outlook always quotes a comma-containing name; the comma itself is entirely
+legal *inside* a quoted-string). Six call sites across `mail/js/{compose,app,jmap}.ts` - every place
+this project turns a JMAP `{name, email}` object back into a `"name <email>"` mailbox string for a
+reply/forward's To/Cc/Bcc, an ACL notification's `from`, and a grid row's address columns - all
+shared the same bug: `a.name ? \`${a.name} <${a.email}>\` : a.email`, unconditionally dropping any
+quoting. For `{name: "Mueller, Jens", email: "Jens.Mueller@elkamet.de"}` this produces the literal
+string `Mueller, Jens <Jens.Mueller@elkamet.de>` - the bare, unquoted comma then reads as an
+address-LIST separator to anything parsing it afterward (Et2Email's own address-list parser
+included), splitting one mailbox into two malformed fragments.
+
+**Fix**: added one shared `formatJmapAddress()` export in `mail/js/jmap.ts` that quotes the display
+name (and escapes any embedded `"`/`\`) whenever it contains an RFC 5322 "specials" character
+(`,()<>@:;[]"\`), and replaced all 6 call sites (`compose.ts`'s `bootstrapReply()` and
+`bootstrapComposeAsNew()`, `app.ts`'s address-repair handler, `jmap.ts`'s push-notification `from`
+and `email2row()`/`quoteOriginalMessage()`'s address-list formatting) with it, rather than fixing
+one call site and leaving the other five to fail the same way later.
+
+**Live-verified** on boulder: setting a compose window's To field to the OLD unquoted string
+(`Mueller, Jens <Jens.Mueller@elkamet.de>`) reproduces the reported failure exactly - Et2Email
+renders "Ungültige E-Mail-Adresse" under a garbled single chip. Setting it to the NEW, correctly
+quoted string (`"Mueller, Jens" <Jens.Mueller@elkamet.de>`, what `formatJmapAddress()` now
+produces) on a fresh page renders one clean "Mueller, Jens (elkamet.de)" chip with no error at all.
+`npx tsc --noEmit`/`npm run build` clean for all three touched files.

@@ -23,7 +23,7 @@ import type {Et2DatagridUpdateType} from "../../api/js/etemplate/Et2Datagrid/Et2
 import {Et2DatagridUpdateTypes} from "../../api/js/etemplate/Et2Datagrid/Et2Datagrid.types";
 import type {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatch";
 import {MailCompose} from "./compose";
-import {isPreferenceOn, JmapBodyResult, JmapMessageReference, JmapUserError, MailJmap} from "./jmap";
+import {formatJmapAddress, isPreferenceOn, JmapBodyResult, JmapMessageReference, JmapUserError, MailJmap} from "./jmap";
 import {renderAttachmentIndex} from "./attachmentIndex";
 import {attachmentSaveUrl, downloadAttachments} from "./attachmentDownload";
 import {buildErrorNode, buildFolderLevel, FolderTreeNode} from "./folderTree";
@@ -1888,7 +1888,7 @@ export class MailApp extends EgwApp
 					{
 						return;
 					}
-					const formatted = list.map(a => a.name ? `${a.name} <${a.email}>` : a.email);
+					const formatted = list.map(formatJmapAddress);
 					if (field === 'from' || field === 'to')
 					{
 						data[field + 'address'] = formatted[0] || '';

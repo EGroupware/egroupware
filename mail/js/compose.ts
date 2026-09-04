@@ -15,7 +15,7 @@ import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
 // needed or possible.
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {et2_widget} from "../../api/js/etemplate/et2_core_widget";
-import {MailJmap} from "./jmap";
+import {formatJmapAddress, MailJmap} from "./jmap";
 import type {JmapAttachment, JmapReplyContext} from "./jmap";
 
 export class MailCompose
@@ -1302,7 +1302,6 @@ export class MailCompose
 		}
 		else
 		{
-			const formatAddress = (a : {name? : string, email : string}) => a.name ? `${a.name} <${a.email}>` : a.email;
 			if (mode === 'reply_all')
 			{
 				// matches getReplyData()'s own 3-loop mode='all' logic exactly: the primary
@@ -1329,8 +1328,8 @@ export class MailCompose
 				addUnique(context.from, to);
 				addUnique(context.to, to);
 				addUnique(context.cc, cc);
-				this.et2.getWidgetById('to')?.set_value(to.map(formatAddress));
-				if (cc.length) this.et2.getWidgetById('cc')?.set_value(cc.map(formatAddress));
+				this.et2.getWidgetById('to')?.set_value(to.map(formatJmapAddress));
+				if (cc.length) this.et2.getWidgetById('cc')?.set_value(cc.map(formatJmapAddress));
 				// fieldExpanderInit() (app.ts's own post-load call) already ran BEFORE this bootstrap
 				// ever populated cc - it only shows a header row whose widget already has a value AT
 				// THAT TIME, so a client-only-populated cc stays hidden behind its "..." expander
@@ -1342,7 +1341,7 @@ export class MailCompose
 			}
 			else
 			{
-				const to = (context.replyTo?.length ? context.replyTo : context.from).map(formatAddress);
+				const to = (context.replyTo?.length ? context.replyTo : context.from).map(formatJmapAddress);
 				this.et2.getWidgetById('to')?.set_value(to);
 			}
 			// "Re: " is hardcoded, not translated, matching the classic getReplyData()'s own convention
@@ -1390,10 +1389,9 @@ export class MailCompose
 		this.isReplyCompose = false;
 		this.replyThreadingHeaders = null;
 
-		const formatAddress = (a : {name? : string, email : string}) => a.name ? `${a.name} <${a.email}>` : a.email;
-		this.et2.getWidgetById('to')?.set_value(context.to.map(formatAddress));
-		if (context.cc.length) this.et2.getWidgetById('cc')?.set_value(context.cc.map(formatAddress));
-		if (context.bcc.length) this.et2.getWidgetById('bcc')?.set_value(context.bcc.map(formatAddress));
+		this.et2.getWidgetById('to')?.set_value(context.to.map(formatJmapAddress));
+		if (context.cc.length) this.et2.getWidgetById('cc')?.set_value(context.cc.map(formatJmapAddress));
+		if (context.bcc.length) this.et2.getWidgetById('bcc')?.set_value(context.bcc.map(formatJmapAddress));
 		this.et2.getWidgetById('subject')?.set_value(context.subject);
 		// fieldExpanderInit() (app.ts's own post-load call) already ran BEFORE this bootstrap ever
 		// populated cc/bcc - it only shows a header row whose widget already has a value AT THAT

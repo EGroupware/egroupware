@@ -300,6 +300,29 @@ export function isPreferenceOn(value : any) : boolean
 }
 
 /**
+ * Format a JMAP {name, email} address as an RFC 5322 "display-name <addr-spec>" mailbox string,
+ * quoting the display name when it contains any character that would otherwise be misread once
+ * this string re-enters an address-list parser (an Et2Email widget's own value, a later reply's
+ * To field, ...).
+ *
+ * Found live 2026-09-04 (ralf: a reply's To field failed contact validation with a "missing
+ * closing quote" error) - an Exchange sender's real display name was `Mueller, Jens` (a comma is
+ * completely valid RFC 5322 content for a quoted-string, and Outlook always sends it that way,
+ * `"Mueller, Jens" <...>`), but every one of this file's several `a.name ? \`${a.name} <${a.email}>\`
+ * : a.email` call sites dropped that quoting on the way back out - the comma then read as an
+ * address-list SEPARATOR downstream, splitting one mailbox into two malformed fragments.
+ */
+export function formatJmapAddress(a : { name? : string, email : string }) : string
+{
+	if (!a.name) return a.email;
+	// RFC 5322 "specials" - any of these in an unquoted phrase would be misread as syntax
+	// (comma: address separator, <>: the addr-spec delimiters themselves, etc.)
+	const needsQuoting = /["\\,()<>@:;\[\]]/.test(a.name);
+	const name = needsQuoting ? `"${a.name.replace(/(["\\])/g, '\\$1')}"` : a.name;
+	return `${name} <${a.email}>`;
+}
+
+/**
  * Direct JMAP access, using Stalwart or the local plain-IMAP JMAP shim selected by the bootstrap.
  */
 export class MailJmap
@@ -1949,7 +1972,7 @@ export class MailJmap
 		{
 			case 'add':
 				acl.event = 'MessageNew';
-				acl.from = !email.from?.[0]?.name ? email.from?.[0]?.email : `${email.from[0].name} <${email.from[0].email}>`;
+				acl.from = email.from?.[0] ? formatJmapAddress(email.from[0]) : undefined;
 				acl.subject = email.subject;
 				acl.snippet = (email.preview || '').trim();
 				break;
@@ -4400,8 +4423,7 @@ export class MailJmap
 	 */
 	quoteOriginalMessage(context : JmapReplyContext) : string
 	{
-		const formatAddress = (a : JmapEmailAddress) => a.name ? `${a.name} <${a.email}>` : a.email;
-		const formatList = (addresses : JmapEmailAddress[]) => addresses.map(formatAddress).join(', ');
+		const formatList = (addresses : JmapEmailAddress[]) => addresses.map(formatJmapAddress).join(', ');
 		// context.date is jmapUtcToUserTz()'s intermediate shape (already timezone-shifted, but
 		// still a bare "Z"-suffixed ISO string, not human-readable) - formatDateTime() (Et2Date.ts)
 		// reads a Date's *UTC* getters to apply the user's actual dateformat/timeformat
@@ -5453,7 +5475,7 @@ export class MailJmap
 	private email2row(email : any, profileID : string, mailboxId : string, showRecipient : boolean = false) : any
 	{
 		const addressList = (list : { name? : string, email : string }[]) =>
-			(list || []).map(a => a.name ? `${a.name} <${a.email}>` : a.email);
+			(list || []).map(formatJmapAddress);
 		// a real JMAP server (eg. Stalwart) parses From/To/Cc/Bcc itself - if its own parser
 		// isn't RFC 2047-aware, a sending MUA's malformed encoded-word (a literal, unencoded
 		// comma inside a quoted display name - valid per RFC 2047, but breaks a naive
