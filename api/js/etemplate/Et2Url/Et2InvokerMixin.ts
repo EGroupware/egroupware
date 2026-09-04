@@ -9,6 +9,7 @@
 
 /* eslint-disable import/no-extraneous-dependencies */
 import {css, html, LitElement, render} from 'lit';
+import {state} from "lit/decorators/state.js";
 import {Et2InputWidget, Et2InputWidgetInterface} from "../Et2InputWidget/Et2InputWidget";
 import {colorsDefStyles} from "../Styles/colorsDefStyles";
 import {dedupeMixin} from "@open-wc/dedupe-mixin";
@@ -27,24 +28,17 @@ export const Et2InvokerMixin = dedupeMixin(<T extends Constructor<LitElement>>(s
 {
 	class Et2Invoker extends Et2InputWidget(superclass)
 	{
-		/** @type {any} */
-		static get properties()
-		{
-			return {
-				/**
-				 * Textual label or image specifier for egw.image()
-				 */
-				_invokerLabel: {
-					type: String,
-				},
-				_invokerTitle: {
-					type: String,
-				},
-				_invokerAction: {
-					type: Function,
-				}
-			};
-		}
+		/**
+		 * Textual label or image specifier for egw.image()
+		 */
+		@state()
+		_invokerLabel : string;
+
+		@state()
+		_invokerTitle : string;
+
+		@state()
+		_invokerAction : Function;
 
 		static get styles()
 		{
