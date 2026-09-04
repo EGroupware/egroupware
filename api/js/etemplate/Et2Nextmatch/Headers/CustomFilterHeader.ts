@@ -5,6 +5,7 @@ import {FilterMixin} from "./FilterMixin";
 import {html, LitElement} from "lit";
 import {cleanSelectOptions} from "../../Et2Select/FindSelectOptions";
 import {customElement} from "lit/decorators/custom-element.js";
+import {property} from "lit/decorators/property.js";
 
 /**
  * @summary Nextmatch custom filter header.
@@ -17,33 +18,19 @@ import {customElement} from "lit/decorators/custom-element.js";
 @customElement("et2-nextmatch-header-custom")
 export class Et2CustomFilterHeader extends FilterMixin(Et2InputWidget(LitElement))
 {
-	private widgetType : string;
-	private widgetOptions : {};
+	/**
+	 * tag of widget we want to use to filter
+	 */
+	@property({type: String})
+	private widgetType : string = "et2-description";
+
+	/**
+	 * Attributes / properties used for the filter widget
+	 */
+	@property({type: Object})
+	private widgetOptions : {} = {};
+
 	private filter_node : Et2InputWidgetInterface & LitElement;
-
-	static get properties()
-	{
-		return {
-			...super.properties,
-
-			/**
-			 * tag of widget we want to use to filter
-			 */
-			widgetType: {type: String},
-
-			/**
-			 * Attributes / properties used for the filter widget
-			 */
-			widgetOptions: {type: Object}
-		};
-	}
-
-	constructor(...args : any[])
-	{
-		super();
-		this.widgetType = "et2-description";
-		this.widgetOptions = {};
-	}
 
 	transformAttributes(attrs)
 	{
