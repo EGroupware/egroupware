@@ -17,6 +17,7 @@ import type {InteractEvent} from "@interactjs/core/InteractEvent";
 import {egw} from "../../jsapi/egw_global";
 import {deepExtend} from "../../jsapi/egw_utils";
 import {css, html, TemplateResult} from "lit";
+import {property} from "lit/decorators/property.js";
 import {classMap} from "lit/directives/class-map.js";
 import {HasSlotController} from "../Et2Widget/slot";
 import shoelace from "../Styles/shoelace";
@@ -32,34 +33,33 @@ import {SelectOption} from "../Et2Select/FindSelectOptions";
 
 export class Et2Portlet extends Et2Widget(SlCard)
 {
-	static get properties()
-	{
-		return {
-			...super.properties,
+	/**
+	 * Give a title
+	 * Goes in the header at the top with the icons
+	 */
+	@property({type: String})
+	title : string;
 
+	/**
+	 * Custom etemplate used to customize / set up the portlet
+	 */
+	@property({type: String})
+	editTemplate : string;
 
-			/**
-			 * Give a title
-			 * Goes in the header at the top with the icons
-			 */
-			title: {type: String},
+	/**
+	 * Set the portlet color
+	 */
+	@property({type: String})
+	color : string;
 
-			/**
-			 * Custom etemplate used to customize / set up the portlet
-			 */
-			editTemplate: {type: String},
-			/**
-			 * Set the portlet color
-			 */
-			color: {type: String},
+	/**
+	 * Array of customization settings, similar in structure to preference settings
+	 */
+	@property({type: Object})
+	settings : object;
 
-			/**
-			 * Array of customization settings, similar in structure to preference settings
-			 */
-			settings: {type: Object},
-			actions: {type: Object},
-		}
-	}
+	@property({type: Object})
+	actions : object;
 
 	static get styles()
 	{
