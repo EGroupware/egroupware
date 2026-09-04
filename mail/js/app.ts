@@ -6889,7 +6889,18 @@ export class MailApp extends EgwApp
 	preparePrint(_iframe?: HTMLIFrameElement)
 	{
 		const mainIframe = _iframe || this.et2?.getWidgetById('mailDisplayBodySrc')?.iframe;
-		let tmpPrintDiv = document.body.querySelector('#tempPrintDiv');
+		// was document.body.querySelector(...) - LIGHT-DOM-ONLY, blind to the shadow root the
+		// iframe (and thus its own sibling tmpPrintDiv, inserted a few lines below via
+		// mainIframe.parentNode.insertBefore()) actually lives in now that mailDisplayBodySrc is a
+		// real Et2Iframe custom element. Found live 2026-09-04 (ralf: "eml files attached to
+		// infologs... display three mails side by side like three columns"): this check ALWAYS
+		// failed to find the already-inserted copy, so EVERY preparePrint() call (the iframe's own
+		// 'load' event firing more than once is already a known, documented quirk - see this
+		// method's own callers) created yet ANOTHER duplicate #tempPrintDiv, all left visible side
+		// by side instead of the second call finding and reusing the first. Scoping the lookup to
+		// mainIframe's own parent (the correct shadow-DOM-local scope, same one insertBefore()
+		// already uses correctly) finds a previously-inserted copy regardless of where it lives.
+		let tmpPrintDiv = mainIframe?.parentNode?.querySelector('#tempPrintDiv');
 		let notAttached = false;
 
 		if (!tmpPrintDiv)
@@ -6897,6 +6908,14 @@ export class MailApp extends EgwApp
 			tmpPrintDiv = document.createElement('div');
 			tmpPrintDiv.id = 'tempPrintDiv';
 			tmpPrintDiv.classList.add('tmpPrintDiv');
+			// api/templates/default/print.css's own `@media screen { .tmpPrintDiv { display: none }
+			// }` is a light-DOM stylesheet - same shadow-DOM encapsulation issue as the querySelector
+			// fix above (found investigating the SAME "three columns" report): it never reaches this
+			// element once it lives inside the iframe's own shadow root, leaving it visible right
+			// next to the iframe's own real content instead of hidden. An inline style always
+			// applies regardless of shadow boundaries; displayPrint() clears it right before actually
+			// printing and restores it after.
+			tmpPrintDiv.style.display = 'none';
 			notAttached = true;
 		}
 
@@ -6932,6 +6951,25 @@ export class MailApp extends EgwApp
 
 		// Make sure the print happens after the content is loaded. Seems Firefox and IE can't handle timing for print command correctly
 		setTimeout(() =>{
+			// preparePrint()'s own inline `display: none` (see its own docblock - api/templates/
+			// default/print.css's `@media screen`/`@media print` rules for .tmpPrintDiv are both
+			// light-DOM stylesheets that can't reach inside the iframe's shadow root) needs an
+			// explicit inline override here too, or the print output would just be blank - restored
+			// afterward via onafterprint (Firefox/IE) or a short timeout (Chrome has no such event,
+			// same fallback printForCompose() already uses), so a cancelled print dialog doesn't
+			// leave the copy visible on screen.
+			const mainIframe = this.et2?.getWidgetById('mailDisplayBodySrc')?.iframe;
+			const tmpPrintDiv = mainIframe?.parentNode?.querySelector('#tempPrintDiv') as HTMLElement;
+			if (tmpPrintDiv) tmpPrintDiv.style.display = 'block';
+			const hideAgain = () => { if (tmpPrintDiv) tmpPrintDiv.style.display = 'none'; };
+			if ('onafterprint' in window)
+			{
+				window.addEventListener('afterprint', hideAgain, {once: true});
+			}
+			else
+			{
+				setTimeout(hideAgain, 2000);
+			}
 			egw(window).window.print();
 		},1000);
 	}

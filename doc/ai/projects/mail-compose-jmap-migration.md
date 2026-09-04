@@ -2621,3 +2621,59 @@ opened correctly, saved, then verified server-side (direct SQL + VFS file read, 
 still-open display-side bug (a) entirely) that the attached `.eml`'s own `Subject:` header - read
 from the raw RFC822 bytes on disk, not the InfoLog's description text - matches the marker exactly.
 Test InfoLog entry and test email both deleted afterward.
+
+## FIXED (2026-09-04): the "triple display" half of the same regression report - `preparePrint()`'s print-preview copy duplicating and staying visible, both caused by `mailDisplayBodySrc` becoming a real shadow-DOM `Et2Iframe`
+
+Same report as the to_infolog bug above, issue (a): "eml files attached to infologs opened by
+clicking on the [.eml] in infolog's list... display three mails side by side like three columns" -
+ralf's own follow-up clarified these are two separate issues; this is the display-side one (the
+to_infolog content-correctness bug is its own section above).
+
+Reproduced directly by clicking a real `.eml` link in InfoLog's own list view (the compact per-row
+attachment icons, `<et2-link-string id="${row}[filelinks]">` in `infolog/templates/default/
+index.xet`) - the SAME `mail.mail_ui.importMessageFromVFS2DraftAndDisplay` mime-handler
+(`mail_hooks.inc.php`'s `search_link()`) any app's `.eml` attachment already goes through.
+
+**Root cause, both halves of it traced to the SAME architectural change**: `MailApp.preparePrint()`
+(`mail/js/app.ts`) builds a print-friendly copy of the message body into a plain `<div
+id="tempPrintDiv">`, inserted as a DOM sibling of the `mailDisplayBodySrc` iframe - runs
+automatically on every message view (attached to that iframe's own `load` event, not just an
+explicit print action), and that `load` event is already documented in this exact code as firing
+more than once (a long-standing, previously-harmless quirk). Now that `mailDisplayBodySrc` is a real
+`Et2Iframe` custom element (shadow-DOM based, part of this project's ongoing widget modernization),
+two OLDER assumptions this method relied on both silently broke:
+1. Its own "does a copy already exist?" guard used `document.body.querySelector('#tempPrintDiv')` -
+   light-DOM-only, blind to the shadow root the div (and the iframe it's a sibling of) now actually
+   lives in. Every single `preparePrint()` call (so at least twice per view, given the documented
+   double-`load`-firing) found nothing, so EVERY call created yet another duplicate copy, all left
+   in the DOM side by side - the literal "three columns" (two accumulated duplicates plus the real
+   content).
+2. `api/templates/default/print.css`'s `@media screen { .tmpPrintDiv { display: none } }` - the rule
+   that's supposed to keep this print-only copy invisible during normal viewing - is a light-DOM
+   stylesheet too, so it never reached inside the shadow root either. Even after fixing (1), exactly
+   one (correctly de-duplicated, but still visible) extra copy remained next to the real content.
+
+**Fix**: `preparePrint()`'s existence check now queries `mainIframe.parentNode` instead of
+`document.body` - the same shadow-DOM-local scope `insertBefore()` a few lines down already used
+correctly - so a second call correctly finds and reuses the first call's div instead of creating
+another. The div also gets `style.display = 'none'` set directly in JS at creation time - an inline
+style always applies regardless of shadow-DOM CSS encapsulation, unlike the global stylesheet rule.
+`displayPrint()` (the one place that actually calls `window.print()`) now explicitly sets that same
+div's `display` back to `'block'` right before printing (otherwise the actual print output would
+just be blank - the `@media print` counterpart rule has the identical shadow-DOM-reach problem) and
+restores it to `'none'` afterward, via `afterprint` where supported or a short timeout otherwise
+(mirroring `printForCompose()`'s own existing cross-browser fallback for the same event).
+
+**Live-verified**: before the fix, clicking a real `.eml` attachment from InfoLog's list consistently
+showed 3 side-by-side copies of the message body (confirmed via DOM inspection - 2 duplicate
+`#tempPrintDiv` copies, both correctly living inside the iframe's shadow root, plus the real
+content). After the querySelector fix alone: stable at 2 (no longer growing across repeated opens,
+confirming the duplication itself was fixed - the remaining one being the "hidden" rule not
+reaching). After both fixes together: exactly one copy, full-width, matching normal display -
+confirmed via the same DOM inspection (`document.querySelectorAll`-through-shadow-roots walk):
+exactly one `#tempPrintDiv` in the whole page, with `style.display === 'none'`. Print output itself
+(`window.print()`) not separately exercised live (would trigger a real OS print dialog) - the
+visibility toggle is straightforward, low-risk JS reasoned through by code reading; the SEPARATE,
+lower-priority cosmetic issue that `@media print`'s OTHER styling rules (fonts, table borders) for
+`.tmpPrintDiv` also can't reach inside the shadow root was not addressed - print would still work
+correctly, just without that polish.
