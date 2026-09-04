@@ -153,7 +153,7 @@ import './et2_widget_radiobox';
 import './legacy-shims/et2_widget_date';
 import './et2_widget_dialog';
 import './legacy-shims/et2_widget_diff';
-import './et2_widget_html';
+import './legacy-shims/et2_widget_html';
 import './legacy-shims/et2_widget_taglist';
 import './et2_widget_historylog';
 import './et2_widget_hrule';

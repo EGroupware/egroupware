@@ -97,6 +97,9 @@ export const SHIM_MANIFEST = {
     ],
     et2_widget_file: [
         {legacyName: 'et2_file', targetModule: './Et2File/Et2File', targetExport: 'Et2File'}
+    ],
+    et2_widget_html: [
+        {legacyName: 'et2_html', targetModule: './Et2Html/Et2Html', targetExport: 'Et2Html'}
     ]
 };
 

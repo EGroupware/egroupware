@@ -3144,7 +3144,7 @@ export class MailApp extends EgwApp
 		const msg_wdg = this.et2.getWidgetById('msg');
 		if (msg_wdg)
 		{
-			return msg_wdg.valueOf().htmlNode[0].innerHTML;
+			return msg_wdg.value;
 		}
 		return "";
 	}
