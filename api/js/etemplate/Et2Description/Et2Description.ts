@@ -9,6 +9,7 @@
 
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {css, html, LitElement, render} from "lit";
+import {property} from "lit/decorators/property.js";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 import {activateLinks} from "../ActivateLinksDirective";
 import {et2_csvSplit} from "../et2_core_common";
@@ -54,60 +55,39 @@ export class Et2Description extends Et2MarkdownMixin(Et2Widget(LitElement)) impl
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/**
-			 * Scan the value, and if there are any links (URL, mailto:) then wrap them in a clickable
-			 * <a/> tag
-			 */
-			activateLinks: {
-				type: Boolean,
-				reflect: true
-			},
-			/**
-			 * Extra link target
-			 * Goes with href.  If provided, that's the target for opening the link.
-			 */
-			extraLinkTarget: {
-				type: String,
-				reflect: true
-			},
-			/**
-			 * widthxheight, if popup should be used, eg. 640x480
-			 */
-			extraLinkPopup: {
-				type: String,
-				reflect: true
-			},
-			/**
-			 * Link URL
-			 * If provided, will be clickable and open this URL
-			 */
-			href: {
-				type: String,
-				reflect: true
-			},
-			value: {
-				type: String,
-				noAccessor: true
-			},
-			for: { type: String}
-		}
-	}
+	/**
+	 * Scan the value, and if there are any links (URL, mailto:) then wrap them in a clickable
+	 * <a/> tag
+	 */
+	@property({type: Boolean, reflect: true})
+	activateLinks : boolean = false;
+
+	/**
+	 * Extra link target
+	 * Goes with href.  If provided, that's the target for opening the link.
+	 */
+	@property({type: String, reflect: true})
+	extraLinkTarget : string = "_browser";
+
+	/**
+	 * widthxheight, if popup should be used, eg. 640x480
+	 */
+	@property({type: String, reflect: true})
+	extraLinkPopup : string = "";
+
+	/**
+	 * Link URL
+	 * If provided, will be clickable and open this URL
+	 */
+	@property({type: String, reflect: true})
+	href : string;
+
+	@property({type: String})
+	for : string;
 
 	constructor()
 	{
 		super();
-
-		// Initialize properties
-		this.activateLinks = false;
-		this.extraLinkPopup = "";
-		this.extraLinkTarget = "_browser";
-		// Don't initialize this to avoid href(unknown) when rendered
-		//this.href = "";
-		this.value = "";
 
 		this._handleClick = this._handleClick.bind(this);
 	}
@@ -142,6 +122,7 @@ export class Et2Description extends Et2MarkdownMixin(Et2Widget(LitElement)) impl
 		return this._value;
 	}
 
+	@property({type: String, noAccessor: true})
 	set value(_value : string)
 	{
 		let oldValue = this.value;
