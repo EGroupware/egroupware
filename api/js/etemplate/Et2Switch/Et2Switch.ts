@@ -9,6 +9,7 @@
  */
 
 import {css, html, render} from "lit";
+import {property} from "lit/decorators/property.js";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import '../Et2Image/Et2Image';
 import {SlSwitch} from "@shoelace-style/shoelace";
@@ -92,23 +93,18 @@ export class Et2Switch extends Et2InputWidget(SlSwitch)
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/* label to show when the toggle switch is on */
-			toggleOn: {type: String},
-			/* label to show when the toggle switch is off */
-			toggleOff: {type: String}
-		}
-	}
+	/* label to show when the toggle switch is on */
+	@property({type: String})
+	toggleOn = '';
+
+	/* label to show when the toggle switch is off */
+	@property({type: String})
+	toggleOff = '';
 
 	constructor()
 	{
 		super();
 		this.isSlComponent = true;
-		this.toggleOn = '';
-		this.toggleOff = '';
 	}
 
 	updated(changedProperties)
