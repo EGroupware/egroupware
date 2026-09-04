@@ -312,6 +312,7 @@ class Nextmatch extends Etemplate\Widget
 			return;
 		}
 		// check if we have a filter-template or need to generate one
+		$rest = $tpl = null;
 		$rows_template = isset($value['template']) ? $value['template'] : ($this->attrs['template'] ?? $this->attrs['options'] ?? null);
 		$template_name = $value['filter_template'] ?? $this->attrs['filterTemplate'] ?? $this->attrs['filter_template'] ?? null;
 		if($template_name === null && !array_key_exists('filter_template', $this->attrs) && !array_key_exists('filterTemplate', $this->attrs))
@@ -335,7 +336,8 @@ class Nextmatch extends Etemplate\Widget
 			// Already set from a previous call, but somebody submitted
 			$url = $template_name;
 		}
-		else if($template_name && !($tpl = Template::instance($template_name)) && $rest)
+		// quiet: not having an own filter-template is the normal case here, not an error to log
+		else if($template_name && !($tpl = Template::instance($template_name, quiet: true)) && $rest)
 		{
 			if (($path=Template::relPath(str_replace('.filter', '', $template_name))))
 			{
@@ -377,8 +379,8 @@ class Nextmatch extends Etemplate\Widget
 		else
 		{
 			// only set url, if it is for $template_name direct, and $template_name is not inlined in index.xet
-			list($app, $rest) = explode('.', $template_name, 2);
-			if (strpos($tpl->rel_path, "/$app/templates/") !== false &&
+			list($app, $rest) = explode('.', (string)$template_name, 2) + [null, null];
+			if ($tpl && strpos($tpl->rel_path, "/$app/templates/") !== false &&
 				strpos($tpl->rel_path, "/$rest.xet") !== false)
 			{
 				$url = Template::rel2url($tpl->rel_path);

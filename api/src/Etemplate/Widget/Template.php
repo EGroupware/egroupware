@@ -55,9 +55,11 @@ class Template extends Etemplate\Widget
 	 * @param string $template_set =null default tries template-set from user and if not found "default"
 	 * @param string $version =''
 	 * @param string $load_via ='' use given template to load $name
+	 * @param bool $quiet =false true: do NOT log a not-found template, for callers deliberately probing
+	 *	if an optional template exists, where a missing one is a supported case and not an error
 	 * @return Template|boolean false if not found
 	 */
-	public static function instance($_name, $template_set=null, $version='', $load_via='')
+	public static function instance($_name, $template_set=null, $version='', $load_via='', $quiet=false)
 	{
 		if (Api\Header\UserAgent::mobile())
 		{
@@ -94,15 +96,17 @@ class Template extends Etemplate\Widget
 			{
 				$expand_name = self::expand_name($name, '','','','',self::$cont);
 				if ($expand_name && $expand_name != $name &&
-					($template = self::instance($expand_name, $template_set, $version, $load_via)))
+					($template = self::instance($expand_name, $template_set, $version, $load_via, $quiet)))
 				{
 					// Remember original, un-expanded name in case content changes while still cached
 					$template->original_name = $name;
 					return $template;
 				}
 			}
-			// do NOT log not found template because of missing $row_cont expansion on server-side
-			if (substr($name, 0, 10) !== '$row_cont[')
+			// do NOT log not found template for a deliberate probe, nor for a content-reference like
+			// "@type_template" or "$row_cont[...]" which could not be expanded server-side: these names
+			// never exist as a file and are (re-)resolved client-side, so they are not a missing template
+			if (!$quiet && substr($name, 0, 1) !== '@' && substr($name, 0, 10) !== '$row_cont[')
 			{
 				error_log(__METHOD__."('$name', '$template_set', '$version', '$load_via') template NOT found!");
 			}
@@ -129,8 +133,12 @@ class Template extends Etemplate\Widget
 			}
 		}
 
-		// template isn't found in file, should never happen
-		error_log(__METHOD__."('$name', '$template_set', '$version', '$load_via') template NOT found in file '$path'!");
+		// template isn't found in the file its name maps to: for a probe that just means the template does
+		// not exist (eg. "filemanager.filter" maps to filter.xet, which only defines "filemanager.index.filter")
+		if (!$quiet)
+		{
+			error_log(__METHOD__."('$name', '$template_set', '$version', '$load_via') template NOT found in file '$path'!");
+		}
 		return false;
 	}
 
