@@ -102,13 +102,6 @@ export class Et2DropdownButton extends Et2WidgetWithSelectMixin(LitElement)
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties
-		};
-	}
-
 	@property()
 	placement:string = "bottom-end";
 

@@ -22,13 +22,6 @@ export class Et2DateTimeOnly extends Et2DateTime
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties
-		}
-	}
-
 	constructor()
 	{
 		super();
