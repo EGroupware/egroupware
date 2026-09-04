@@ -1,5 +1,6 @@
 import {cleanSelectOptions, SelectOption} from "../Et2Select/FindSelectOptions";
 import {css, html, TemplateResult} from "lit";
+import {property} from "lit/decorators/property.js";
 import {Et2Select} from "../Et2Select/Et2Select";
 
 
@@ -29,25 +30,11 @@ export class Et2LinkAppSelect extends Et2Select
 		]
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-
-			/**
-			 * Limit to just this one application, and hide the selection
-			 */
-			onlyApp: {type: String},
-			/**
-			 * Limit to these applications (comma seperated).
-			 */
-			applicationList: {type: String},
-			/**
-			 * Show application icons instead of application names
-			 */
-			appIcons: {type: Boolean}
-		}
-	};
+	/**
+	 * Show application icons instead of application names
+	 */
+	@property({type: Boolean})
+	appIcons : boolean = true;
 
 	/*
 					icon.style.width = "var(--icon-width)";
@@ -66,7 +53,6 @@ export class Et2LinkAppSelect extends Et2Select
 	{
 		super();
 		this.onlyApp = "";
-		this.appIcons = true;
 		this.applicationList = [];
 		this.hoist = true;
 
@@ -74,6 +60,10 @@ export class Et2LinkAppSelect extends Et2Select
 		this._reset_select_options();
 	}
 
+	/**
+	 * Limit to just this one application, and hide the selection
+	 */
+	@property({type: String, noAccessor: true})
 	set onlyApp(app : string)
 	{
 		this.__onlyApp = app || "";
@@ -137,6 +127,10 @@ export class Et2LinkAppSelect extends Et2Select
 		}
 	}
 
+	/**
+	 * Limit to these applications (comma seperated).
+	 */
+	@property({type: String, noAccessor: true})
 	set applicationList(app_list : string[])
 	{
 		let oldValue = this.__applicationList;
