@@ -2,6 +2,7 @@
  * Column selector for nextmatch
  */
 import {css, html, LitElement, TemplateResult} from "lit";
+import {property} from "lit/decorators/property.js";
 import {classMap} from "lit/directives/class-map.js";
 import {repeat} from "lit/directives/repeat.js";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
@@ -65,20 +66,6 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 				}
 			`
 		]
-	}
-
-	static get properties()
-	{
-		return {
-			/**
-			 * List of currently selected columns
-			 */
-			value: {type: Object},
-
-			columns: {type: Object},
-
-			autoRefresh: {type: Number}
-		}
 	}
 
 	private __columns : any[] = [];
@@ -267,6 +254,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 		this.shadowRoot.querySelectorAll('sl-menu-item').forEach((item) => {item.checked = !checked});
 	}
 
+	@property({type: Object, noAccessor: true})
 	set columns(new_columns)
 	{
 		this.__columns = new_columns;
@@ -317,6 +305,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 	 * Ids are matched against `columns[].id` / `customFields[].id`, so they use
 	 * the same space-stripped encoding as those (Et2DatagridColumnState.encodeSelectionId()).
 	 */
+	@property({type: Object, noAccessor: true})
 	set value(new_value)
 	{
 		this.__pendingValueIds = new Set((Array.isArray(new_value) ? new_value : []).map((id) => String(id)));
@@ -362,6 +351,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 		return parseInt(this._autoRefreshNode?.value.toString()) || 0;
 	}
 
+	@property({type: Number, noAccessor: true})
 	set autoRefresh(new_value : number)
 	{
 		this.__autoRefresh = new_value;
