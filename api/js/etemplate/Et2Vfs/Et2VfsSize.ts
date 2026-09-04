@@ -12,6 +12,29 @@ import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {nothing} from "lit";
 
 /**
+ * Ported from legacy et2_vfsSize::human_size() - used where a plain string is needed
+ * (eg. a "file too large, maximum %1" warning message), not a rendered widget.
+ */
+export function humanFileSize(size : number) : string
+{
+	if(Number.isNaN(size)) return '';
+	let sign = '';
+	if(size < 0)
+	{
+		sign = '-';
+		size = -size;
+	}
+	const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+	let i = 0;
+	while(size >= 1024)
+	{
+		size /= 1024;
+		++i;
+	}
+	return sign + size.toFixed(i == 0 ? 0 : 1) + ' ' + units[i];
+}
+
+/**
  * @summary Human-readable file size.
  *
  * Extends Shoelace <code>&lt;sl-format-bytes&gt;</code> and unwraps the

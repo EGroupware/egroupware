@@ -1612,7 +1612,7 @@ export class filemanagerAPP extends EgwApp
 	 */
 	select_clicked(event, widget) : boolean
 	{
-		if (widget?.value?.is_dir)	// true for "httpd/unix-directory" and "egw/*"
+		if (widget?.fileInfo?.is_dir)	// true for "httpd/unix-directory" and "egw/*"
 		{
 			let path = null;
 			// Cannot do this, there are multiple widgets named path
@@ -1623,13 +1623,13 @@ export class filemanagerAPP extends EgwApp
 			// this is the old filemanager.select UI
 			if (!path && (path = widget.getRoot().getWidgetById("path")))
 			{
-				path.set_value(widget.value.path);
+				path.set_value(widget.fileInfo.path);
 				widget.getInstanceManager().submit();
 				return;
 			}
 			if(path)
 			{
-				path.set_value(widget.value.path);
+				path.set_value(widget.fileInfo.path);
 			}
 		}
 		else if (this.et2 && this.et2.getArrayMgr('content').getEntry('mode') != 'open-multiple')
@@ -1637,12 +1637,12 @@ export class filemanagerAPP extends EgwApp
 			let editfield = this.et2.getWidgetById('name');
 			if(editfield)
 			{
-				editfield.set_value(widget.value.name);
+				editfield.set_value(widget.fileInfo.name);
 			}
 		}
 		else
 		{
-			let file = widget.value.name;
+			let file = widget.fileInfo.name;
 			widget.getParent().iterateOver((widget) =>
 			{
 				if(widget.options.selected_value == file)

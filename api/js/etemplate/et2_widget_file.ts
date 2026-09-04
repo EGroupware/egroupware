@@ -15,7 +15,7 @@ import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_no_init} from "./et2_core_common";
 import {et2_DOMWidget} from "./et2_core_DOMWidget";
-import {et2_vfsSize} from "./et2_widget_vfs";
+import {humanFileSize} from "./Et2Vfs/Et2VfsSize";
 
 /**
  * Class which implements file upload
@@ -614,7 +614,7 @@ export class et2_file extends et2_inputWidget
 		var error = (typeof _event == "object" ? "" : _event);
 
 		if(this.options.max_file_size && file.size > this.options.max_file_size) {
-			error = this.egw().lang("File too large.  Maximum %1", et2_vfsSize.prototype.human_size(this.options.max_file_size));
+			error = this.egw().lang("File too large.  Maximum %1", humanFileSize(this.options.max_file_size));
 		}
 
 		if(this.options.progress)

@@ -19,6 +19,7 @@ import {FileInfo} from "./Et2VfsSelectDialog";
 import {SlBreadcrumbItem} from "@shoelace-style/shoelace";
 import {HasSlotController} from "../Et2Widget/slot";
 import {until} from "lit/directives/until.js";
+import {et2_IDetachedDOM} from "../et2_core_interfaces";
 
 /**
  * @summary Display an editable path from the VFS
@@ -39,8 +40,23 @@ import {until} from "lit/directives/until.js";
  * @csspart suffix - The container that wraps the suffix slot.
  *
  */
-export class Et2VfsPath extends Et2InputWidget(LitElement)
+export class Et2VfsPath extends Et2InputWidget(LitElement) implements et2_IDetachedDOM
 {
+	/** Mime type used by the VFS backend for directories */
+	static readonly DIR_MIME_TYPE : string = 'httpd/unix-directory';
+
+	/**
+	 * Full VFS stat-array for this widget, if value was ever set to one via
+	 * set_value()/setValue() - null if only ever given a plain path string.  Legacy
+	 * et2_vfs's `value` was always the full stat-array (server-side shape, eg.
+	 * `is_dir`/`mime`/`path`/`name` - not the same shape as this file's `FileInfo`
+	 * type, which is Et2VfsSelectDialog's newer AJAX-search result); this keeps it
+	 * available for row-context consumers (eg. an `onclick` handler checking
+	 * `widget.fileInfo.is_dir`) without changing what `value` itself means here
+	 * (a plain path string throughout this class's own rendering).
+	 */
+	public fileInfo : any = null;
+
 	static get styles()
 	{
 		return [
@@ -128,6 +144,7 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 
 	setValue(_value : string | FileInfo)
 	{
+		this.fileInfo = (_value && typeof _value === "object") ? _value : null;
 		if(typeof _value != "string" && _value.path)
 		{
 			_value = _value.path;
@@ -135,9 +152,39 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 		this.value = <string>_value;
 	}
 
+	/**
+	 * Legacy-style alias for setValue() - some code (eg. row-content-array binding via
+	 * Et2Widget.transformAttributes()) looks for set_value() specifically.
+	 */
+	set_value(_value : string | FileInfo)
+	{
+		this.setValue(_value);
+	}
+
 	getValue()
 	{
 		return (this.readonly || this.disabled) ? null : (this.egw().encodePath(this._value || ''));
+	}
+
+	/*
+	 * et2_IDetachedDOM - nextmatch/datagrid row virtualization support, matching legacy et2_vfs
+	 */
+	getDetachedAttributes(_attrs : string[])
+	{
+		_attrs.push("value");
+	}
+
+	getDetachedNodes() : HTMLElement[]
+	{
+		return [this];
+	}
+
+	setDetachedAttributes(_nodes : HTMLElement[], _values : object)
+	{
+		if(typeof _values["value"] !== "undefined")
+		{
+			this.set_value(<string | FileInfo>_values["value"]);
+		}
 	}
 
 	public focus()
@@ -282,6 +329,22 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 					cancelable: true,
 					detail: newPath.join("")
 				}));
+			}
+			// Read-only row display (eg. a nextmatch column) with no explicit onclick handler:
+			// default to opening the clicked path, same fallback as legacy et2_vfs.
+			if(this.readonly && !this.disabled && !this.onclick)
+			{
+				const isLastSegment = stopIndex === dirs.length;
+				let openPath = newPath.join("");
+				// No trailing slash on the file itself (only intermediate directories get one)
+				if(isLastSegment && openPath !== "/" && openPath.endsWith("/"))
+				{
+					openPath = openPath.replace(/\/*$/, '');
+				}
+				this.egw().open({
+					path: openPath,
+					type: isLastSegment ? (this.fileInfo?.mime ?? '') : Et2VfsPath.DIR_MIME_TYPE
+				}, "file");
 			}
 		}
 	}

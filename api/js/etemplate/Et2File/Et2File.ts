@@ -11,6 +11,7 @@ import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {Et2FileItem} from "./Et2FileItem";
 import Resumable from "../../Resumable/resumable";
 import {HasSlotController} from "../Et2Widget/slot";
+import {humanFileSize} from "../Et2Vfs/Et2VfsSize";
 
 // ResumableFile not defined in a way we can use it
 export interface FileInfo extends ResumableFile
@@ -571,8 +572,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 		else if(!hasValidFileSize(file, this.maxFileSize))
 		{
 			fileInfo.accepted = false;
-			// TODO: Stop using et2_vfsSize
-			//fileInfo.warning = this.egw().lang("File too large.  Maximum %1", et2_vfsSize.prototype.human_size(this.maxFileSize));
+			fileInfo.warning = this.egw().lang("File too large.  Maximum %1", humanFileSize(this.maxFileSize));
 		}
 
 		else

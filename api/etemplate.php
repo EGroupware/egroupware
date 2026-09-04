@@ -304,6 +304,16 @@ function send_template()
 		$str = preg_replace('#<description\s*/>#', '<et2-description></et2-description>', $str);
 		$str = preg_replace('#<description\s(.*?")\s*/>#s', '<et2-description $1></et2-description>', $str);
 
+		// fix <vfs ...(/|></vfs)> --> <et2-vfs-path readonly="true" ...></et2-vfs-path>
+		// (bare vfs is a read-only, clickable path breadcrumb bound to row data - same
+		// widget et2-vfs-path already implements for its editable use, just forced readonly)
+		$str = preg_replace_callback('#<vfs\s(.*?)(/|></vfs)>#s', static function (array $matches)
+		{
+			$attrs = parseAttrs($matches[1]);
+			$attrs['readonly'] = 'true';
+			return '<et2-vfs-path'.stringAttrs($attrs).'></et2-vfs-path>';
+		}, $str);
+
 		// modify <(vfs-mime|link-string|link-list) --> <et2-*
 		$str = preg_replace_callback(ADD_ET2_PREFIX_LEGACY_REGEXP, static function (array $matches) {
 			return '<' . $matches[2] . 'et2-' . $matches[3] .
