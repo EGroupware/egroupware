@@ -103,43 +103,20 @@ class GetTest extends WebDAVTest
 		$this->assertSame('MMMMMMMMMM', (string)$response->getBody());
 	}
 
-	/**
-	 * Real, documented server bug (not exercised as a "should be 206" test):
-	 * Server.php::http_GET()'s suffix-range branch (`else` at the bottom of
-	 * the single-range if/elseif/else, reached when $range has no 'start' key)
-	 * does fseek()+fpassthru() but - unlike BOTH other branches just above it -
-	 * never calls `$this->http_status("206 Partial content")`, so the response
-	 * keeps whatever status was set earlier ("200 OK") despite correctly
-	 * returning only the partial body. A client relying on the status code
-	 * to detect a partial response (rather than just trusting the body) would
-	 * be misled. Documented in doc/ai/projects/webdav-test-coverage.md.
-	 */
-	public function testSuffixByteRangeReturnsLastNBytesButWrongStatus() : void
+	public function testSuffixByteRangeReturnsLastNBytes() : void
 	{
 		$response = $this->getFileResponse($this->homeFile(self::$user, 'file.txt'), self::$user, [
 			'Range' => 'bytes=-10',
 		]);
-		$this->assertSame('MMMMMMMMMM', (string)$response->getBody(), 'body content is correct despite the status bug below');
-		$this->assertHttpStatus(200, $response, 'BUG: should be 206 Partial content, see docblock');
+		$this->assertHttpStatus(206, $response, 'suffix byte-range GET');
+		$this->assertSame('MMMMMMMMMM', (string)$response->getBody());
 	}
 
-	/**
-	 * Real, documented server bug: the range-start-past-EOF check
-	 * (`fseek($stream, $range['start'], SEEK_SET); if (feof($stream)) { 416 }`)
-	 * never actually triggers - PHP's feof() only becomes true after a FAILED
-	 * READ, not merely from seeking past the physical end of a (seekable)
-	 * stream, so this immediately-after-fseek() check is dead code. The
-	 * request instead falls through to a normal 206 response with an EMPTY
-	 * body (the read loop's `$size > 0` guard prevents reading anything, but
-	 * nothing catches the resulting empty/invalid range either). Documented
-	 * in doc/ai/projects/webdav-test-coverage.md.
-	 */
-	public function testRangeStartBeyondFileSizeDoesNotActuallyReturn416() : void
+	public function testRangeStartBeyondFileSizeReturns416() : void
 	{
 		$response = $this->getFileResponse($this->homeFile(self::$user, 'file.txt'), self::$user, [
 			'Range' => 'bytes=999-1999',
 		]);
-		$this->assertHttpStatus(206, $response, 'BUG: should be 416 Requested range not satisfiable, see docblock');
-		$this->assertSame('', (string)$response->getBody());
+		$this->assertHttpStatus(416, $response, 'range start past EOF');
 	}
 }

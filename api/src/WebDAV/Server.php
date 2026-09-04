@@ -1318,11 +1318,14 @@ class HTTP_WebDAV_Server
                             $range = $options['ranges'][0];
 
                             if (isset($range['start'])) {
-                                fseek($options['stream'], $range['start'], SEEK_SET);
-                                if (feof($options['stream'])) {
+                                if (isset($options['size']) && $range['start'] >= $options['size']) {
+                                    // feof() right after fseek() does NOT detect a seek past the
+                                    // end of a stream - it only becomes true after a subsequent
+                                    // failed read - so check against the known size instead.
                                     $this->http_status($status = "416 Requested range not satisfiable");
                                     return;
                                 }
+                                fseek($options['stream'], $range['start'], SEEK_SET);
 
                                 if (!empty($range['end'])) {
                                     $size = $range['end']-$range['start']+1;
@@ -1346,6 +1349,7 @@ class HTTP_WebDAV_Server
                                     fpassthru($options['stream']);
                                 }
                             } else {
+                                $this->http_status($status = "206 Partial content");
                                 if (!self::use_compression()) header("Content-length: ".$range['last']);
                                 fseek($options['stream'], -$range['last'], SEEK_END);
                                 fpassthru($options['stream']);

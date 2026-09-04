@@ -107,33 +107,49 @@ non-persistent scratch `Vfs::mount()`) is visible to that other process. So:
 
 ## Status
 
-**All 5 phases complete.** 25 tests across `api/tests/WebDAV/{PropfindTest,GetTest,PutTest,DeleteTest}.php`
-plus the shared `api/tests/WebDAVTest.php` base class, all green together. Nothing
-was fixed (no bug found here required a code change to ship this project - all
-findings below are documented, matching the [[project_vfs_test_coverage]]
-convention of documenting backend/environment bugs rather than blind-patching
-vendored/shared code).
+**All 5 phases complete**, plus a follow-up fix round (2026-09-04, same day).
+25 tests across `api/tests/WebDAV/{PropfindTest,GetTest,PutTest,DeleteTest}.php`
+plus the shared `api/tests/WebDAVTest.php` base class, all green together.
 
-### Real bugs found, documented (not fixed)
+Of the 4 bugs found (below), ralf's decisions on each:
+- **GET bugs #2 and #3: FIXED** in `api/src/WebDAV/Server.php` (shared with
+  CalDAV/CardDAV - re-ran `api/tests/CalDAV/` + `calendar/tests/CalDAV/`
+  after the fix, 84 tests still green, no regression). Tests updated to
+  assert the now-correct 206/416 behavior.
+- **PROPFIND `Depth: infinity` (#1): intentionally NOT going to be supported.**
+  Ralf: "something I don't want to support, it will blow up anyway on a real
+  installation" (unscoped whole-tree recursion over `egw_sqlfs` with no depth
+  limit). Test stays as documentation of the deliberate limitation, not a bug
+  to chase.
+- **Recursive DELETE on Versioning-backed mounts (#4): undecided**, left
+  as-is/documented for now.
 
-1. **PROPFIND `Depth: infinity` doesn't recurse.** `Server/Filesystem.php::PROPFIND()`
-   has a literal `// TODO recursion needed if "Depth: infinite"` - depth
-   `"infinity"` is treated identically to depth `1` (`!empty($options["depth"])`
-   is true for both), so nested collections are never descended into, contrary
-   to RFC 4918. `PropfindTest::testDepthInfinityDoesNotActuallyRecurse()`.
-2. **GET suffix byte-range (`Range: bytes=-N`) never returns 206.** In
+### Real bugs found
+
+1. **PROPFIND `Depth: infinity` doesn't recurse - by design, not going to be fixed.**
+   `Server/Filesystem.php::PROPFIND()` has a literal `// TODO recursion needed
+   if "Depth: infinite"` - depth `"infinity"` is treated identically to depth
+   `1` (`!empty($options["depth"])` is true for both), so nested collections
+   are never descended into, contrary to RFC 4918.
+   `PropfindTest::testDepthInfinityDoesNotActuallyRecurse()`.
+2. **FIXED - GET suffix byte-range (`Range: bytes=-N`) never returned 206.** In
    `Server.php::http_GET()`'s range handling, the suffix-range branch (reached
-   when a range has no `start` key) does `fseek()`+`fpassthru()` but - unlike
-   the two branches just above it - never calls `http_status("206 Partial
-   content")`, so the response body is correctly partial but the status stays
-   whatever was set earlier (200 OK). `GetTest::testSuffixByteRangeReturnsLastNBytesButWrongStatus()`.
-3. **GET range start past EOF never returns 416.** The out-of-bounds check
-   (`fseek($stream, $range['start']); if (feof($stream)) { 416 }`) is
+   when a range has no `start` key) did `fseek()`+`fpassthru()` but - unlike
+   the two branches just above it - never called `http_status("206 Partial
+   content")`, so the response body was correctly partial but the status
+   stayed whatever was set earlier (200 OK). Fixed by adding the missing
+   `$this->http_status($status = "206 Partial content");` call.
+   `GetTest::testSuffixByteRangeReturnsLastNBytes()`.
+3. **FIXED - GET range start past EOF never returned 416.** The out-of-bounds
+   check (`fseek($stream, $range['start']); if (feof($stream)) { 416 }`) was
    ineffective: PHP's `feof()` only becomes true after a *failed read*, not
    merely from seeking past a stream's physical end, so the check never
-   triggers. The request falls through to a 206 response with an empty body
-   instead of a 416. `GetTest::testRangeStartBeyondFileSizeDoesNotActuallyReturn416()`.
-4. **Recursive directory DELETE fails on Versioning/soft-delete-backed mounts.**
+   triggered - falling through to a 206 response with an empty body instead
+   of a 416. Fixed by checking `$range['start'] >= $options['size']` directly
+   (when the size is known) BEFORE the `fseek()`, instead of relying on
+   `feof()` after it. `GetTest::testRangeStartBeyondFileSizeReturns416()`.
+4. **Recursive directory DELETE fails on Versioning/soft-delete-backed mounts
+   - undecided, not fixed yet.**
    `Vfs\WebDAV::DELETE()` (api/src/Vfs/WebDAV.php:81) calls `Vfs::remove()` and
    requires the directory's OWN entry in the returned array to be `true` for a
    204 - but on this dev environment's default mount (`stylite.s3://` →
