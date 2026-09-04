@@ -140,7 +140,6 @@ import "./Et2Tree/Et2TreeDropdown";
 
 
 /* Include all widget classes here, we only care about them registering, not importing anything*/
-import './et2_widget_vfs'; // Vfs must be first (before et2_widget_file) due to import cycle
 import './legacy-shims/et2_widget_template';
 import './et2_widget_grid';
 import './et2_widget_box';
@@ -158,7 +157,7 @@ import './et2_widget_html';
 import './legacy-shims/et2_widget_taglist';
 import './et2_widget_historylog';
 import './et2_widget_hrule';
-import './et2_widget_file';
+import './legacy-shims/et2_widget_file';
 import './et2_widget_placeholder';
 import './et2_widget_progress';
 import './legacy-shims/et2_widget_selectAccount';

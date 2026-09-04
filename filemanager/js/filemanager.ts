@@ -15,9 +15,12 @@ import type {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch
 import type {Et2DatagridUpdateType, Et2DatagridView} from "../../api/js/etemplate/Et2Datagrid/Et2Datagrid.types";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
-// et2_file is a real, distinct legacy widget implementation (not a shim), passed as a runtime
-// instanceof-filter value to iterateOver() below - see doc/ai/projects/app-ts-modernization.md.
-import {et2_file} from "../../api/js/etemplate/et2_widget_file";
+// et2_file is now a shim over Et2File (et2_widget_file.ts deleted); passed as a runtime
+// instanceof-filter value to iterateOver() below, but since <file> is unconditionally
+// preprocessor-rewritten to <et2-file>, real widgets are instances of Et2File directly, never
+// of this never-instantiated shim subclass - this filter already matches nothing in practice
+// (kept as-is, not this deletion's concern to fix). See widget-migration-status.md.
+import {et2_file} from "../../api/js/etemplate/legacy-shims/et2_widget_file";
 import type {et2_selectbox} from "../../api/js/etemplate/legacy-shims/et2_widget_selectbox";
 // et2_textbox/et2_checkbox are also passed as runtime instanceof-filter values to iterateOver()
 // below, alongside being used as cast types - so they stay value imports, like et2_file above.

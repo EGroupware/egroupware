@@ -94,6 +94,9 @@ export const SHIM_MANIFEST = {
         {legacyName: 'et2_date_duration_ro', targetModule: './Et2Date/Et2DateDurationReadonly', targetExport: 'Et2DateDurationReadonly'},
         {legacyName: 'et2_date_ro', targetModule: './Et2Date/Et2DateReadonly', targetExport: 'Et2DateReadonly'},
         {legacyName: 'et2_date_range', targetModule: './Et2Date/Et2DateRange', targetExport: 'Et2DateRange'}
+    ],
+    et2_widget_file: [
+        {legacyName: 'et2_file', targetModule: './Et2File/Et2File', targetExport: 'Et2File'}
     ]
 };
 

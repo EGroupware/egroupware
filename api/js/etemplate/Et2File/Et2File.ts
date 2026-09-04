@@ -329,6 +329,13 @@ export class Et2File extends Et2InputWidget(LitElement)
 
 	protected async resumableFileAdded(file : FileInfo, event)
 	{
+		// Guards both the browse button (handleBrowseFileClick() already blocks that) and
+		// drag-and-drop onto dropTarget, which Resumable wires up unconditionally in
+		// createResumable() and has no readonly/disabled check of its own
+		if(this.disabled || this.readonly)
+		{
+			return;
+		}
 		this.set_validation_error(false);
 		file = {
 			accepted: true,
@@ -648,7 +655,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 
 	handleBrowseFileClick()
 	{
-		if(this.disabled)
+		if(this.disabled || this.readonly)
 		{
 			return;
 		}
