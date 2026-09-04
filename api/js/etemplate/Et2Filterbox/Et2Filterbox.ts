@@ -164,6 +164,18 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 		}
 	}
 
+	/**
+	 * We're not finished updating until any values we're pushing into our widgets have landed.
+	 * Those set_value() calls settle a microtask or more after they're made, so without this
+	 * anything that awaits updateComplete before reading our value still gets the old one.
+	 */
+	async getUpdateComplete() : Promise<boolean>
+	{
+		const result = await super.getUpdateComplete();
+		await this._pendingWidgetUpdates;
+		return result;
+	}
+
 	public applyFilters()
 	{
 		const value = this.value;

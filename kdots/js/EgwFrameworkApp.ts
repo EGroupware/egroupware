@@ -227,6 +227,7 @@ export class EgwFrameworkApp extends LitElement
 
 		this.handleSearchResults = this.handleSearchResults.bind(this);
 		this.handleShow = this.handleShow.bind(this);
+		this.handleFilterChange = this.handleFilterChange.bind(this);
 	}
 	connectedCallback()
 	{
@@ -243,6 +244,8 @@ export class EgwFrameworkApp extends LitElement
 		// Listen to nextmatches
 		this.addEventListener("et2-search-result", this.handleSearchResults);
 		this.addEventListener("et2-show", this.handleShow);
+		this.addEventListener("et2-filter", this.handleFilterChange);
+		this.addEventListener("change", this.handleFilterChange);
 
 		// Work around sl-split-panel resizing to 0 when app is hidden
 		this.framework.addEventListener("sl-tab-hide", this.handleTabHide);
@@ -256,6 +259,8 @@ export class EgwFrameworkApp extends LitElement
 		this.removeEventListener("clear", this.handleEtemplateClear);
 		this.removeEventListener("et2-search-result", this.handleSearchResults);
 		this.removeEventListener("et2-show", this.handleShow);
+		this.removeEventListener("et2-filter", this.handleFilterChange);
+		this.removeEventListener("change", this.handleFilterChange);
 		this.framework?.removeEventListener("sl-tab-hide", this.handleTabHide);
 		this.framework?.removeEventListener("sl-tab-show", this.handleTabShow);
 		(this.hasSlotController as any) = null;
@@ -841,14 +846,17 @@ export class EgwFrameworkApp extends LitElement
 				this.rowCount + " " + (this.egw.link_get_registry(this.name, "entries") || this.egw.lang("entries"))
 		};
 
+		// Work on a copy, callers pass us their filter values to be examined - not to be changed
+		const values = {...(filterValues ?? {})};
+
 		// Don't consider RAG Search type as a filter
-		delete filterValues.search_type;
+		delete values.search_type;
 		// Don't consider sort as a filter
-		delete filterValues.sort;
-		
+		delete values.sort;
+
 		// If there are no filters set, show filter-circle.  Show filter-circle-fill if there are filters set.
 		const emptyFilter = (v) => typeof v == "object" ? Object.values(v).filter(emptyFilter).length : v;
-		if(Object.values(filterValues).filter(emptyFilter).length !== 0)
+		if(Object.values(values).filter(emptyFilter).length !== 0)
 		{
 			info.icon = "filter-circle-fill";
 		}
@@ -965,6 +973,35 @@ export class EgwFrameworkApp extends LitElement
 	{
 		const filter = event.target.getRootNode().host.filtersDrawer;
 		filter.open = !filter.open;
+	}
+
+	/**
+	 * Filters were applied somewhere below us - by the filterbox, a favourite, a nextmatch header
+	 * widget - so the filter button icon and drawer label have to be re-evaluated.
+	 *
+	 * We render those from the filterbox's value, which is neither a reactive property nor
+	 * reachable by Lit through the filters getter, so nothing here re-renders on its own when a
+	 * filter is set or cleared.  Without this handler the header only happened to update when
+	 * rowCount changed too, leaving the "filters are set" icon showing after clearing a filter
+	 * that didn't change how many rows are displayed (and vice versa).
+	 *
+	 * @param event "et2-filter" from a nextmatch, or "change" from the filterbox
+	 * @protected
+	 */
+	protected handleFilterChange(event)
+	{
+		// "change" bubbles up from every input in the application; only the filterbox's own
+		// applyFilters() means the filters changed
+		if(event.type == "change" && event.target !== this.filters)
+		{
+			return;
+		}
+
+		this.requestUpdate();
+
+		// A change that did not come from the filterbox is pushed into its widgets asynchronously,
+		// so its value is still the old one right now - render again once it has caught up.
+		this.filters?.updateComplete.then(() => this.requestUpdate());
 	}
 
 	/**
