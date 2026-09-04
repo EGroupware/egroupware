@@ -35,8 +35,13 @@ describe("MailJmap.composeBodyWithSignature() - html mode", () =>
 	it("places the signature above the body when placement is 'top'", () =>
 	{
 		const result = MailJmap.composeBodyWithSignature("body", "html", SIG, {placement: "top", isReply: true});
+		// the leading blank line stays OUTSIDE the signature marker div - nesting it inside let a
+		// user's own typing (into that line, the only obviously-clickable spot in a fresh 'top'
+		// compose) get deleted along with the old signature on the next identity switch, since
+		// updateSignatureForIdentity()'s removal deletes the whole marker div (found live
+		// 2026-09-04, doc/ai/projects/mail-compose-jmap-migration.md's own entry for that date)
 		assert.equal(result,
-			'<div id="mail-compose-signature">' + '<p><br/></p>\n' +
+			'<p><br/></p>\n' + '<div id="mail-compose-signature">' +
 			'<hr class="ruler" style="border:1px dotted silver; width:100%;">' + HTML_SIG + '</div>' + 'body');
 	});
 
