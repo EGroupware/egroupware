@@ -4953,7 +4953,12 @@ export class MailApp extends EgwApp
 		// mail compose uses #mail-compose_subject input
 		const widget:Et2Textbox | Et2Description = document.querySelector('#mail-display_mail_displaysubject') ||
 			document.querySelector('#mail-compose_subject')
-		return widget.value
+		// neither exists for other mail.* templates (eg. the import-message popup) - called
+		// unconditionally from et2_ready() via _set_Window_title(), so throwing here aborted the
+		// REST of et2_ready() too (this.et2_obj never got assigned), breaking the unrelated-looking
+		// "upload does not submit" (found live 2026-09-04: this.et2_obj.submit() in uploadForImport()
+		// then failed with "Cannot read properties of undefined")
+		return widget?.value
 	}
 
 	/**
