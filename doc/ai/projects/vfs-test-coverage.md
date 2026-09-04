@@ -185,10 +185,12 @@ investigation).
 
 ## Status
 
-Phase 6 (EPL/Stylite wrappers) is confirmed **in scope for this pass, not deferred** - they underpin
-the commercial offering. Phases are listed in dependency order (facade/mount-table first since
-everything else builds on them) but Phase 6/7's EPL halves carry equal priority to their core
-counterparts, not "do this last if time allows".
+**ALL 7 PHASES COMPLETE** (2026-09-04). See the "Whole-project status" note at the end of the Phase
+7 section below for the final tally. Phase 6 (EPL/Stylite wrappers) was treated as **in scope for
+this pass, not deferred** throughout - they underpin the commercial offering - and got equal
+priority to core coverage rather than being left for "later if time allows". Phases below are listed
+in dependency order (facade/mount-table first since everything else builds on them) followed by
+per-phase detail in the order they were actually done.
 
 **Phase 1 DONE** (2026-09-03), committed `705510147c`:
 - `api/tests/Vfs/PathHelpersTest.php` - green (45 tests): `parse_url/concat/build_url/
@@ -598,5 +600,45 @@ none silently fixed, each flagged as needing its own dedicated review. No `Async
 mock was ever actually needed - either local pass-through covered the common case (`S3`,
 `Versioning`, `Merge`), or the live minio connection just worked (`S3direct`).
 
-**Next**: Phase 7 (`fsck` consistency-check mechanism, core + EPL hook
-consumers) - confirmed priority, not deferred - see Status section above.
+## Phase 7: fsck consistency-check mechanism
+
+**DONE, PROJECT COMPLETE** (2026-09-04).
+
+All 4 private `fsck_fix_*` checks on `Vfs\Sqlfs\Utils` scan the WHOLE `egw_sqlfs` table with no way
+to scope them to a subtree - unlike everything else in this project, they're not naturally
+test-isolatable. `$check_only=true` (the default) is read-only/safe against the shared dev DB, so
+it's used throughout; the REPAIR path (`$check_only=false`) is deliberately NOT exercised against
+live data, for the same reasoning as Phase 2's skipped persistent-mount write and Phase 4's skipped
+`quotaRecalc()` call - it would touch/modify whatever else happens to be inconsistent in this shared
+DB, not just rows a test created itself. DETECTION is still thoroughly testable and safe: each
+private method is invoked directly via reflection against a specific, isolated row the test seeds
+itself (never touching real/pre-existing data).
+
+- `api/tests/Vfs/FsckTest.php` (6 tests, own scratch mount like `FacadeTest`/`SqlfsBackendTest`):
+  `Utils::fsck(true)` runs without error (smoke test); the 3 required top-level nodes
+  (`/`, `/home`, `/apps`) are currently healthy (not simulated - deleting the real root node, even
+  temporarily, would be far too disruptive to this shared DB and any concurrent session using it);
+  `fsck_fix_no_content()` detects a file whose physical blob was deleted from `files/sqlfs`, and
+  separately an unexpected 0-byte file outside `/templates/`; `fsck_fix_unconnected()` detects a
+  node whose `fs_dir` points at a non-existent parent; `fsck_fix_multiple_active()` detects two
+  active rows sharing the same `fs_dir`+`fs_name`. Verified zero orphaned/corrupted rows remain
+  after a run.
+- `stylite/tests/Vfs/LinksStreamWrapperTest.php` (+1 test,
+  `testFsckDetectsInactiveEntryDir`): `Links\StreamWrapper::fsck()` (the first of the two registered
+  EPL `fsck` hook consumers, `stylite/setup/setup.inc.php:80`) detects an entry-dir left inactive
+  under `/apps/$app` - "undelete entry dirs, to make their attic accessible" per its own docblock.
+- `stylite/tests/Vfs/S3StreamWrapperTest.php` (+1 test,
+  `testS3checkRunsInCheckOnlyModeWithoutError`): `S3\StreamWrapper::s3check()` (the second EPL
+  `fsck` hook consumer) is only smoke-tested, not given a seeded-detection test like the others -
+  it does a live, whole-bucket `listObjectsV2` scan with no way to scope it to a test's own key
+  prefix, inherently slower/costlier than a single SQL query; the connectivity-check-and-skip
+  pattern already established for `S3direct` confirms the underlying S3 access itself works, and
+  `s3check()` is a straightforward consumer of that same access.
+
+**Whole-project status: all 7 phases complete.** Final tallies: **2 real bugs found and FIXED**
+(`Vfs::get_eacl()`'s `TypeError`; none in Phase 7) plus **6 real bugs found in EPL wrappers and
+documented, not fixed** (Phase 6's tally above), plus several real, non-obvious findings documented
+without being bugs (the `vfs_pre-write` permission-check inconsistency, the `chmod`/`chown` caching
+asymmetry, the two-node symlink cycle safety confirmation, the `LinksParent` monkey-patch
+architecture). All work is committed locally in both this repo and the separate `stylite/` (EPL)
+repo, per the shared-checkout convention of never auto-pushing.
