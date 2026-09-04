@@ -179,118 +179,59 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
             `];
 		}
 
-		static get properties()
-		{
-			return {
-				...super.properties,
+		/**
+		 * Defines whether this widget is visibly disabled.
+		 *
+		 * The widget is still visible, but clearly cannot be interacted with.  Widgets disabled in the template
+		 * will not return a value to the application code, even if re-enabled via javascript before submitting.
+		 * To allow a disabled widget to be re-enabled and return a value, disable via javascript in the app's
+		 * et2_ready() instead of an attribute in the template file.
+		 */
+		@property({type: Boolean, reflect: true})
+		disabled : boolean = false;
 
-				/**
-				 * Widget ID.  Optional, and not always the same as the DOM ID if the widget is inside something
-				 * else that also has an ID.
-				 * Putting this in the properties() list causes the parent portion of the DOM ID to be duplicated
-				 * due to how LitElement processes the change
-				 */
-				//id: {type: String, reflect: false},
+		/**
+		 * The widget is not visible.
+		 *
+		 * As far as the user is concerned, the widget does not exist.  Widgets hidden with an attribute in the
+		 * template may not be created in the DOM, and will not return a value.  Widgets can be hidden after creation,
+		 * and they may return a value if hidden this way.
+		 */
+		@property({type: Boolean, reflect: true})
+		hidden : boolean;
 
-				/**
-				 * CSS Class.  This class is applied to the _outside_, on the web component itself.
-				 * Due to how WebComponents work, this might not change anything inside the component.
-				 */
-				class: {type: String, reflect: true},
+		/**
+		 * Accesskey provides a hint for generating a keyboard shortcut for the current element.
+		 * The attribute value must consist of a single printable character.
+		 * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/accesskey
+		 */
+		@property({type: String, reflect: true})
+		accesskey : string;
 
-				/**
-				 * Defines whether this widget is visibly disabled.
-				 *
-				 * The widget is still visible, but clearly cannot be interacted with.  Widgets disabled in the template
-				 * will not return a value to the application code, even if re-enabled via javascript before submitting.
-				 * To allow a disabled widget to be re-enabled and return a value, disable via javascript in the app's
-				 * et2_ready() instead of an attribute in the template file.
-				 */
-				disabled: {
-					type: Boolean,
-					reflect: true
-				},
+		/**
+		 * The label of the widget
+		 * This is usually displayed in some way.  It's also important for accessability.
+		 * This is defined in the parent somewhere, and re-defining it causes labels to disappear
+		 */
+		@property({type: String})
+		label : string;
 
-				/**
-				 * The widget is not visible.
-				 *
-				 * As far as the user is concerned, the widget does not exist.  Widgets hidden with an attribute in the
-				 * template may not be created in the DOM, and will not return a value.  Widgets can be hidden after creation,
-				 * and they may return a value if hidden this way.
-				 */
-				hidden: {
-					type: Boolean,
-					reflect: true
-				},
+		@property({type: Function})
+		onclick : any;
 
-				/**
-				 * Accesskey provides a hint for generating a keyboard shortcut for the current element.
-				 * The attribute value must consist of a single printable character.
-				 * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/accesskey
-				 */
-				accesskey: {type: String, reflect: true},
+		/*** Style type attributes ***/
+		/**
+		 * Disable any translations for the widget
+		 */
+		@property({type: Boolean, reflect: false})
+		noLang : boolean;
 
-				/**
-				 * Widget ID of another node to insert this node into instead of the normal location
-				 * This isn't a normal property...
-				 */
-				parentId: {type: String, noAccessor: true},
-
-				/**
-				 * Tooltip which is shown for this element on hover
-				 */
-				statustext: {
-					type: String,
-					reflect: true,
-					noAccessor: true
-				},
-
-				/**
-				 * The label of the widget
-				 * This is usually displayed in some way.  It's also important for accessability.
-				 * This is defined in the parent somewhere, and re-defining it causes labels to disappear
-				 */
-				label: {
-					type: String
-				},
-
-				onclick: {
-					type: Function
-				},
-
-				/*** Style type attributes ***/
-				/**
-				 * Disable any translations for the widget
-				 */
-				noLang: {
-					type: Boolean,
-					reflect: false
-				},
-
-				/**
-				 * Used by Et2Box to determine alignment.
-				 * Allowed values are left, right
-				 */
-				align: {
-					type: String,
-					reflect: true
-				},
-
-				/**
-				 * comma-separated name:value pairs set as data attributes on DOM node
-				 * data="mime:${row}[mime]" would generate data-mime="..." in DOM, eg. to use it in CSS on a parent
-				 */
-				data: {
-					type: String,
-					reflect: false,
-					noAccessor: true
-				},
-
-				actions: {
-					type: Object
-				}
-			};
-		}
+		/**
+		 * Used by Et2Box to determine alignment.
+		 * Allowed values are left, right
+		 */
+		@property({type: String, reflect: true})
+		align : string;
 
 		/**
 		 * List of properties that get translated
@@ -326,7 +267,6 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				this._widget_id = this.getAttribute("id");
 			}
 
-			this.disabled = false;
 			this._handleClick = this._handleClick.bind(this);
 
 			// make all sizable widgets large by default on mobile template
@@ -430,6 +370,10 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			this.statustext = value;
 		}
 
+		/**
+		 * Tooltip which is shown for this element on hover
+		 */
+		@property({type: String, reflect: true, noAccessor: true})
 		set statustext(value : string)
 		{
 			let oldValue = this.__statustext;
@@ -516,6 +460,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		 * Set the dataset from a CSV
 		 * @param {string} value
 		 */
+		@property({type: String, reflect: false, noAccessor: true})
 		set data(value : string)
 		{
 			// Clear existing
@@ -572,7 +517,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		 * @param {object} actions {ID: {attributes..}+} map of egw action information
 		 * @see api/src/Etemplate/Widget/Nextmatch.php egw_actions() method
 		 */
-		@property({type: Object})
+		@property({type: Object, noAccessor: true})
 		set actions(actions : EgwAction[] | { [id : string] : object })
 		{
 			this._initActions(actions);
@@ -791,6 +736,11 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			}
 		}
 
+		/**
+		 * CSS Class.  This class is applied to the _outside_, on the web component itself.
+		 * Due to how WebComponents work, this might not change anything inside the component.
+		 */
+		@property({type: String, reflect: true, noAccessor: true})
 		set class(value : string)
 		{
 			let oldValue = this.classList.value;
@@ -1317,6 +1267,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		 *
 		 * @param {string} parent
 		 */
+		@property({type: String, noAccessor: true})
 		set parentId(parent : string | Element)
 		{
 			this.__parentId = parent;
