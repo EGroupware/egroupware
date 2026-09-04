@@ -10,6 +10,7 @@
 
 
 import {css, html, nothing, PropertyValueMap} from "lit";
+import {property} from "lit/decorators/property.js";
 import 'lit-flatpickr';
 import {dateStyles} from "./DateStyles";
 import type {Instance} from 'flatpickr/dist/types/instance';
@@ -365,37 +366,28 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/**
-			 * Display the calendar inline instead of revealed as needed
-			 */
-			inline: {type: Boolean},
-			/**
-			 * Placeholder text for input
-			 */
-			placeholder: {type: String},
+	/**
+	 * Display the calendar inline instead of revealed as needed
+	 */
+	@property({type: Boolean})
+	inline : boolean;
 
-			/**
-			 * Allow value that is not a multiple of minuteIncrement
-			 *
-			 * eg: 11:23 with default 5 minuteIncrement = 11:25
-			 * 16:47 with 30 minuteIncrement = 17:00
-			 * If false (default), it is impossible to have a time that is not a multiple of minuteIncrement.
-			 * Does not affect scroll, which always goes to nearest multiple.
-			 */
-			freeMinuteEntry: {type: Boolean},
+	/**
+	 * Placeholder text for input
+	 */
+	@property({type: String})
+	placeholder : string;
 
-			/**
-			 * The preferred placement of the calendar popup can be set with the placement attribute.  The default
-			 * is "auto".  Note that the actual position may vary to ensure the calendar remains in the viewport.
-			 * Valid placements are "top", "bottom" or "auto".
-			 */
-			placement: {type: String, noAccessor: true}
-		}
-	}
+	/**
+	 * Allow value that is not a multiple of minuteIncrement
+	 *
+	 * eg: 11:23 with default 5 minuteIncrement = 11:25
+	 * 16:47 with 30 minuteIncrement = 17:00
+	 * If false (default), it is impossible to have a time that is not a multiple of minuteIncrement.
+	 * Does not affect scroll, which always goes to nearest multiple.
+	 */
+	@property({type: Boolean})
+	freeMinuteEntry : boolean;
 
 	private _boundTooltipElements : HTMLElement[] = [];
 
@@ -1100,6 +1092,12 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		return this.__placement;
 	}
 
+	/**
+	 * The preferred placement of the calendar popup can be set with the placement attribute.  The default
+	 * is "auto".  Note that the actual position may vary to ensure the calendar remains in the viewport.
+	 * Valid placements are "top", "bottom" or "auto".
+	 */
+	@property({type: String, noAccessor: true})
 	set placement(new_placement : "top" | "bottom" | "auto")
 	{
 		if(this._instance)
