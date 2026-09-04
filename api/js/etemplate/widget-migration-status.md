@@ -235,7 +235,7 @@ depend on them (i.e. everything marked 1b/1c/2 above) are gone:
 | 1a — shim | 1 |
 | 1a — generated | 29 |
 | 1b — kept for a dependent | 1 |
-| 1c — orphaned legacy | 5 |
+| 1c — orphaned legacy | 6 |
 | 2 — not yet migrated | 32 |
 | n/a — infrastructure | 8 (one of which, `et2_extension_itempicker_actions.ts`, is outright dead code) |
 
