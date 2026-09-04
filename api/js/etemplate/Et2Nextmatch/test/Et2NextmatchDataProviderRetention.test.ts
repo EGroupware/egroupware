@@ -84,6 +84,7 @@ function createHost(egwApi : any) : any
 	host.getArrayMgr = () => ({data: {}, getEntry: (key : string) => key});
 	host.getParent = () => ({getArrayMgr: () => ({data: {}})});
 	host.getWidgetById = () => null;
+	host.refreshColumnVisibility = () => {};
 	host.closest = () => null;
 	host.egw = () => egwApi;
 	return host;

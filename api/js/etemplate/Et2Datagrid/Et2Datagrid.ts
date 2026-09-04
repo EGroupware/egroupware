@@ -4308,6 +4308,31 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
+	 * Re-evaluate column visibility after the content arrayMgr changed.
+	 *
+	 * A column's `disabled` may be an eTemplate expression (eg. `disabled="@no_customfields"`)
+	 * that is resolved against `getArrayMgr("content")` at render time.  That array manager is
+	 * plain data, not a reactive property, so writing a new value into it leaves the rendered
+	 * header and rows showing whatever the last render decided.  Whoever changes the content
+	 * has to say so by calling this.
+	 *
+	 * Does nothing unless some column actually has an expression to re-evaluate, so callers
+	 * can fire it on every content update without forcing a render on the common case.
+	 */
+	refreshColumnVisibility()
+	{
+		const hasExpression = (this.columns || []).some(
+			(column) => typeof column.disabled === "string" && column.disabled.trim() !== ""
+		);
+		if(!hasExpression)
+		{
+			return;
+		}
+		this.requestUpdate();
+		this.updateComplete.then(() => this._applyColumnVisibilityToRenderedRows());
+	}
+
+	/**
 	 * Toggle visibility for already-rendered cells without waiting for virtualizer to recycle rows.
 	 */
 	private _applyColumnVisibilityToRenderedRows()

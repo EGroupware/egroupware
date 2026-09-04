@@ -13,6 +13,7 @@ function createProviderHost(overrides : Record<string, any> = {}) : any
 	host.getArrayMgr = overrides.getArrayMgr ?? (() => ({data: {}, getEntry: (key : string) => key}));
 	host.getParent = overrides.getParent ?? (() => ({getArrayMgr: () => ({data: {}})}));
 	host.getWidgetById = overrides.getWidgetById ?? (() => null);
+	host.refreshColumnVisibility = overrides.refreshColumnVisibility ?? (() => {});
 	host.closest = overrides.closest ?? (() => null);
 	host.egw = overrides.egw ?? (() => ({
 		app_name: () => "addressbook",

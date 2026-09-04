@@ -565,6 +565,33 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	}
 
 	/**
+	 * Resolve a column's `disabled` expression against our content, eg. `@no_customfields`.
+	 *
+	 * Bound as a field so it can be handed to Et2DatagridColumnState as a plain callback.
+	 * Without it every expression counts as "not disabled" and conditional columns leak into
+	 * places that are supposed to skip them.
+	 */
+	private _parseColumnBooleanExpression = (expression : string) : boolean =>
+	{
+		const mgr = this.getArrayMgr("content");
+		return !!mgr?.parseBoolExpression(expression);
+	};
+
+	/**
+	 * Re-evaluate conditional column visibility against the current content.
+	 *
+	 * A row template can hide a column with an expression, eg. infolog's
+	 * `<column disabled="@no_customfields"/>`, and the server supplies the flag it reads
+	 * among the non-numeric keys of the rows response.  Those keys are written straight into
+	 * the content array manager, which is not reactive, so the datagrid has to be told that
+	 * the answer may have changed.
+	 */
+	public refreshColumnVisibility()
+	{
+		this._datagrid?.refreshColumnVisibility();
+	}
+
+	/**
 	 * Resolves once the template columns have been derived, so consumers (e.g.
 	 * filemanager tile view) can await visible columns without polling:
 	 *     await nm.whenColumnsReady(); // getValue().selectcols is now populated
@@ -1365,11 +1392,11 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 			return;
 		}
 
-		const columns = new Et2DatagridColumnState().toSelectionItems(this._currentColumns);
+		const columnState = new Et2DatagridColumnState();
+		const columns = columnState.toSelectionItems(this._currentColumns, this._parseColumnBooleanExpression);
 		const total = Math.max(0, grid.total ?? grid.rows.length);
 		const app = this._getAppName();
 		const printDefaults = this._resolvePrintPreferenceDefaults(app);
-		const columnState = new Et2DatagridColumnState();
 		const mappedDefaultIds = (printDefaults.columns || [])
 			.map((key) => columnState.encodeSelectionId(key))
 			.filter((id) => columns.some((column) => column.id === id));
@@ -1615,8 +1642,11 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		const value = {
 			...this._filters
 		};
-		const selectcols = this._currentColumns
-			.filter((column) => !column.hidden)
+		// A column the row template disabled for this content (eg. `disabled="@no_customfields"`)
+		// is not rendered, so reporting it as selected would save it into favourites and app
+		// state as a visible column.
+		const selectcols = new Et2DatagridColumnState()
+			.visibleColumns(this._currentColumns, this._parseColumnBooleanExpression)
 			.map((column) => String(column.key || ""))
 			.filter(Boolean);
 		if(this.lettersearch && this._lettersearchVisible)

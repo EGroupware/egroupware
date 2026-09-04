@@ -321,6 +321,11 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider, Reacti
 				}
 			}
 		}
+		// A column can be hidden by an expression reading one of the flags just written, eg.
+		// infolog's `<column disabled="@no_customfields"/>`.  Nothing about writing into the
+		// content array manager is reactive, so the grid keeps the columns it last rendered
+		// unless we ask it to look again.
+		this.host.refreshColumnVisibility();
 	}
 
 	/**
