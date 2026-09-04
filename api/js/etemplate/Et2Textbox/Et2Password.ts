@@ -12,6 +12,7 @@ import {Et2InvokerMixin} from "../Et2Url/Et2InvokerMixin";
 import {Et2Textbox} from "./Et2Textbox";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import {html} from "lit";
+import {property} from "lit/decorators/property.js";
 import {classMap} from "lit/directives/class-map.js";
 import {ifDefined} from "lit/directives/if-defined.js";
 import {egw} from "../../jsapi/egw_global";
@@ -29,28 +30,21 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
 	private encrypted = true;
 	private visible = false;
 
-	/** @type {any} */
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/**
-			 * Password is plaintext
-			 */
-			plaintext: Boolean,
-			/**
-			 * Suggest password length (0 for off)
-			 */
-			suggest: Number,
-		};
-	}
+	/**
+	 * Password is plaintext
+	 */
+	@property({type: Boolean})
+	plaintext = true;
+
+	/**
+	 * Suggest password length (0 for off)
+	 */
+	@property({type: Number})
+	suggest = 0;
 
 	constructor(...args : any[])
 	{
 		super(...args);
-
-		this.plaintext = true;
-		this.suggest = 0;
 
 		this._invokerLabel = '';
 		this._invokerTitle = this.egw().lang("Suggest password");
