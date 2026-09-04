@@ -1,5 +1,6 @@
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {css, html, LitElement, TemplateResult} from "lit";
+import {property} from "lit/decorators/property.js";
 import {classMap} from "lit/directives/class-map.js";
 import {ifDefined} from "lit/directives/if-defined.js";
 import shoelace from "../Styles/shoelace";
@@ -33,21 +34,11 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/**
-			 * Is the date range relative (this week) or absolute (2016-02-15 - 2016-02-21).  This will affect the value returned.
-			 */
-			relative: {type: Boolean},
-
-			/**
-			 * An object with keys 'from' and 'to' for absolute ranges, or a relative range string
-			 */
-			value: {type: Object}
-		}
-	}
+	/**
+	 * Is the date range relative (this week) or absolute (2016-02-15 - 2016-02-21).  This will affect the value returned.
+	 */
+	@property({type: Boolean})
+	relative : boolean;
 
 	/**
 	 * Value set while not connected, applied once the element connects.
@@ -208,6 +199,10 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 		return (val.from || val.to) ? val : null;
 	}
 
+	/**
+	 * An object with keys 'from' and 'to' for absolute ranges, or a relative range string
+	 */
+	@property({type: Object, noAccessor: true})
 	public set value(new_value : {to:string,from:string}|string)
 	{
 		if(!this.isConnected)
