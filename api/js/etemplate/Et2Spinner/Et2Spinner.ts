@@ -12,6 +12,7 @@ import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {SlSpinner} from "@shoelace-style/shoelace";
 import shoelace from "../Styles/shoelace";
 import {css} from "lit";
+import {property} from "lit/decorators/property.js";
 
 export class Et2Spinner extends Et2Widget(SlSpinner)
 {
@@ -25,26 +26,15 @@ export class Et2Spinner extends Et2Widget(SlSpinner)
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/**
-			 * font-size		size is based on font size
-			 * --track-width	The width of the track.
-			 * --track-color	The color of the track.
-			 * --indicator-color	The color of the indicator.
-			 * --speed	The time it takes for the spinner to complete one animation cycle.
-			 */
-			style: {type: String},
-		}
-	}
-
-	constructor()
-	{
-		super();
-		this.style = '';
-	}
+	/**
+	 * font-size		size is based on font size
+	 * --track-width	The width of the track.
+	 * --track-color	The color of the track.
+	 * --indicator-color	The color of the indicator.
+	 * --speed	The time it takes for the spinner to complete one animation cycle.
+	 */
+	@property({type: String})
+	style : string = '';
 
 	/**
 	 * Handle changes that have to happen based on changes to properties
