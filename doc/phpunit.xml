@@ -33,6 +33,7 @@
 	            <exclude>../api/tests/EtemplateTest.php</exclude>
 	            <exclude>../api/tests/AppTest.php</exclude>
 	            <exclude>../api/tests/CalDAVTest.php</exclude>
+	            <exclude>../api/tests/WebDAVTest.php</exclude>
 	            <exclude>../api/tests/LoggedInTest.php</exclude>
 	        </testsuite>
 	        <testsuite name="Etemplate">
