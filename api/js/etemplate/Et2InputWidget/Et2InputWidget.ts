@@ -225,50 +225,36 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			];
 		}
 
-		static get properties()
-		{
-			return {
-				...super.properties,
-				/**
-				 * The label of the widget
-				 * Overridden from parent to use our accessors
-				 */
-				label: {
-					type: String, noAccessor: true
-				},
+		// readonly is what is in the templates
+		// I put this in here so loadWebComponent finds it when it tries to set it from the template
+		@property({type: Boolean, reflect: true})
+		readonly : boolean = false;
 
-				// readonly is what is in the templates
-				// I put this in here so loadWebComponent finds it when it tries to set it from the template
-				readonly: {
-					type: Boolean,
-					reflect: true
-				},
+		@property({type: Boolean, reflect: true})
+		required : boolean = false;
 
-				required: {
-					type: Boolean,
-					reflect: true
-				},
-				onchange: {
-					type: Function
-				},
-				/**
-				 * Have browser focus this input on load.
-				 * Overrides etemplate2.focusOnFirstInput(), use only once per page
-				 * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attributes
-				 */
-				autofocus: {
-					type: Boolean,
-					reflect: true
-				},
+		@property({type: Function})
+		onchange : any;
 
-				autocomplete: {
-					type: String
-				},
-				ariaLabel : String,
-				ariaDescription : String,
-				helpText : String,
-			};
-		}
+		/**
+		 * Have browser focus this input on load.
+		 * Overrides etemplate2.focusOnFirstInput(), use only once per page
+		 * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attributes
+		 */
+		@property({type: Boolean, reflect: true})
+		autofocus : boolean;
+
+		@property({type: String})
+		autocomplete : string = 'on';
+
+		@property()
+		ariaLabel : string;
+
+		@property()
+		ariaDescription : string;
+
+		@property()
+		helpText : string;
 
 		/**
 		 * List of properties that get translated
@@ -315,14 +301,11 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			this.defaultValidators = [];
 			this._messagesHeldWhileFocused = [];
 
-			this.readonly = false;
-			this.required = false;
 			this._oldValue = this.getValue();
 
 			this.et2HandleFocus = this.et2HandleFocus.bind(this);
 			this.et2HandleBlur = this.et2HandleBlur.bind(this);
 			this.handleSlChange = this.handleSlChange.bind(this);
-			this.autocomplete = 'on';
 		}
 
 		connectedCallback()
