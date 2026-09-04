@@ -501,6 +501,7 @@ liechtenstein	common	ca	LIECHTENSTEIN
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	ca	Línia %1: '%2'\n<b>les dades csv no coincideixen amb el número de columnes de la taula %3 ==> ignorat</b>
 link	common	ca	Enlace
 linklist	common	ca	Lista de enlaces
+links	common	ca	Enllaços
 linkstring	common	ca	Cadena de enlaces
 linkto	common	ca	Enlace a
 list	common	ca	Llista

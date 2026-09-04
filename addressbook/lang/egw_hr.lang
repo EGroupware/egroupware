@@ -97,7 +97,6 @@ ldap context for contacts	admin	hr	LDAP kontekst za kontakte
 ldap host for contacts	admin	hr	LDAP poslužitelj za kontakte
 ldif	addressbook	hr	LDIF
 line 2	addressbook	hr	Linija 2
-links	addressbook	hr	Links
 list all categories	addressbook	hr	Prikaži sve kategorije
 location	addressbook	hr	Lokacija
 mark records as private	addressbook	hr	Označi podatak kao privatan

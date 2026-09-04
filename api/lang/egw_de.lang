@@ -822,6 +822,7 @@ linkapps	common	de	Verknüpfung Anwendungen
 linked	common	de	Verknüpft
 linkentry	common	de	Verknüpfung Eintrag
 linklist	common	de	Verknüpfung Liste
+links	common	de	Verknüpfungen
 links and attached files	preferences	de	Verknüpfungen zu anderen Datensätzen und angefügten Dateien
 links to specified application.  example: {{links/addressbook}}	common	de	Verknüpfungen zu der entsprechenden Anwendung. Beispiel der Verknüpfungen zum Adressbuch: {{links/addressbook}}
 linkstring	common	de	Verknüpfung Zeichenkette

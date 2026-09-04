@@ -54,7 +54,6 @@ leave it empty for a full week	timesheet	zh	留空表示整个星期
 leaves without saveing	timesheet	zh	不保存
 length<br>rows	timesheet	zh	字段长度<br>字段行数
 link title	timesheet	zh	链接标题
-links	timesheet	zh	链接
 make timesheets readable by infolog delegation	timesheet	zh	使工时表可被InfoLog代表读取
 max length of the input [, length of the inputfield (optional)]	timesheet	zh	输入的最大长度 [, 输入字段的长度 (可选)]
 mode	timesheet	zh	模式

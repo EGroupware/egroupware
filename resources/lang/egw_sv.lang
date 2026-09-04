@@ -64,7 +64,6 @@ is resource buyable?	resources	sv	Är resursen till salu
 is the ressource bookable?	resources	sv	Är resursen bokningsbar?
 is this resource bookable?	resources	sv	Är resursen bokningsbar
 is this resource buyable?	resources	sv	Är resursen till salu
-links	resources	sv	Länkar
 location	resources	sv	Placering
 location of resource	resources	sv	Resursens placering
 location:	resources	sv	Placering:

@@ -589,6 +589,7 @@ link target %1 not found!	common	lv	Saites mērķis %1 nav atrasts!
 link title of current record	common	lv	Pašreizējā ieraksta saites nosaukums
 link to each entry	common	lv	Saite uz katru ierakstu
 linklist	common	lv	Saistīt sarakstu
+links	common	lv	Saites
 links and attached files	preferences	lv	Saites un pievienotie faili
 links to specified application.  example: {{links/addressbook}}	common	lv	Saites uz norādīto lietojumprogrammu. Piemērs: {{links/addressbook}}
 linkstring	common	lv	Saistīt virkni

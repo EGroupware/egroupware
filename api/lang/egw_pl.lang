@@ -791,6 +791,7 @@ link to each entry	common	pl	Link do każdego wpisu
 linkapps	common	pl	LinkAplikacji
 linkentry	common	pl	LinkWpisu
 linklist	common	pl	LinkListy
+links	common	pl	Linki
 linkstring	common	pl	LinkCiąguZnaków
 linkto	common	pl	LinkDo
 list	common	pl	Lista

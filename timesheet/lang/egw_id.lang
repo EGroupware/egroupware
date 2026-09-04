@@ -64,7 +64,6 @@ leave it empty for a full week	timesheet	id	Biarkan kosong bila seminggu penuh
 leaves without saveing	timesheet	id	tinggalkan tanpa menyimpan
 length<br>rows	timesheet	id	Length<br>Rows
 link title	timesheet	id	Judul tautan
-links	timesheet	id	Tautan
 make timesheets readable by infolog delegation	timesheet	id	Jadikan lembar waktu dapat dibaca oleh delegasi InfoLog
 mode	timesheet	id	Mode
 modified	timesheet	id	Diubah

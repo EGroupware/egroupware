@@ -285,7 +285,6 @@ limit number of description lines (default 5, 0 for no limit)	infolog	ru	Кол�
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	ru	Ширина столбца описания. Работает только если количество строк установлено 0 = без ограничения.
 link	infolog	ru	Ссылка
 linked to %1	infolog	ru	Ссылка на %1
-links	infolog	ru	Ссылки
 links and attached files	infolog	ru	Ссылки и прикреплённые файлы
 links of this entry	infolog	ru	Ссылки этой записи
 links to specified application.  example: {{links/infolog}}	infolog	ru	Ссылки на указанное приложение. Пример: {{links/infolog}}

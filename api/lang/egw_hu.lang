@@ -538,6 +538,7 @@ light mode	common	hu	Világos mód
 line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	hu	A sor %1: '%2'\n<b>csv adat nem tartalmazza ##last-check-run## a tábla %3 ==> figyelmen kívül hagyva</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	hu	%1 sor: '%2'\n<b>a csv adatok nem egyeznek a(z) %3 táblázat oszlopszámaival ==> kihagyva</b>
 link	common	hu	Hivatkozás
+links	common	hu	Hivatkozások
 link target %1 not found!	common	hu	Link célpontja nem található (%1)!
 link to each entry	common	hu	Link az egyes bejegyzésekhez
 list	common	hu	Lista

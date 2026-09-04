@@ -78,7 +78,6 @@ is resource buyable?	resources	en	Is resource buyable
 is the ressource bookable?	resources	en	Is the ressource bookable?
 is this resource bookable?	resources	en	Is this resource bookable
 is this resource buyable?	resources	en	Is this resource buyable
-links	resources	en	Links
 location	resources	en	Location
 location of resource	resources	en	Location of resource
 location:	resources	en	Location:

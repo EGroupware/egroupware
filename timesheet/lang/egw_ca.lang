@@ -19,7 +19,6 @@ id	timesheet	ca	id
 last modified	timesheet	ca	Darrera modificació
 leaves without saveing	timesheet	ca	Sortir sense desar
 length<br>rows	timesheet	ca	Longitud<br>Files
-links	timesheet	ca	Enllaços
 max length of the input [, length of the inputfield (optional)]	timesheet	ca	longitud màxima de l'entrada [, longitud del camp de text (opcional)]
 modified	timesheet	ca	Modificat
 no details	timesheet	ca	sense detalls

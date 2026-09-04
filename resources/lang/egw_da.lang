@@ -36,7 +36,6 @@ implies read permission	resources	da	læserettigheder underforstået
 imports a list of resources from a csv file.	resources	da	Importerer en liste over ressourcer fra en CSV-fil.
 is resource bookable?	resources	da	Kan ressourcen bookes
 is the ressource bookable?	resources	da	Kan ressourcen bookes?
-links	resources	da	Links
 location	resources	da	Sted
 new accessory	resources	da	Nyt tilbehør
 new resource	resources	da	Ny ressource

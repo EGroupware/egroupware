@@ -273,7 +273,6 @@ limit number of description lines (default 5, 0 for no limit)	infolog	hu	A leír
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	hu	A leíró oszlop szélességének korlátozása. Csak akkor érvényes, ha a sorok korlátozása be van állítva. 0 = nincs korlátozás.
 link	infolog	hu	Hivatkozás
 linked to %1	infolog	hu	%1-hez kapcsolódik
-links	infolog	hu	Hivatkozások
 links and attached files	infolog	hu	Linkek és csatolt fájlok
 links of this entry	infolog	hu	Aktuális bejegyzés hivatkozásai
 links to specified application.  example: {{links/infolog}}	infolog	hu	A megadott alkalmazás linkjei. Példa: {{links/infolog}}

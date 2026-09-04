@@ -223,7 +223,6 @@ invite	common	id	Undang
 last	calendar	id	Akhir
 last changed	calendar	id	Pengubahan terakhir
 link to view the event	calendar	id	Tautan untuk melihat kegiatan
-links	calendar	id	Tautan
 links, attachments	calendar	id	Tautan, Lampiran
 listview	calendar	id	Tampilan Daftar
 location	calendar	id	Lokasi

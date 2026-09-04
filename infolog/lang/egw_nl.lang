@@ -274,7 +274,6 @@ limit number of description lines (default 5, 0 for no limit)	infolog	nl	Beperk 
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	nl	Beperk de breedte van de beschrijvingskolom. Alleen effectief als de limiet voor regels is ingesteld. 0 = geen limiet.
 link	infolog	nl	Link
 linked to %1	infolog	nl	Gelinkt aan %1
-links	infolog	nl	Links
 links and attached files	infolog	nl	Link naar bijgesloten bestand
 links of this entry	infolog	nl	Links van deze InfoLog
 links to specified application.  example: {{links/infolog}}	infolog	nl	Verwijst naar een specifieke applicatie. Voorbeeld: {{links/infolog}}

@@ -259,7 +259,6 @@ limit number of description lines (default 5, 0 for no limit)	infolog	zh	限制�
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	zh	限制说明栏的宽度。仅在设置了行数限制时有效。0 = 无限制。
 link	infolog	zh	关联
 linked to %1	infolog	zh	链接到 %1
-links	infolog	zh	关联
 links and attached files	infolog	zh	链接和附加文件
 links of this entry	infolog	zh	设定与事项相关的条目或文件
 links to specified application.  example: {{links/infolog}}	infolog	zh	指向指定应用程序的链接。示例： {{links/infolog}}

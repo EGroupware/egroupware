@@ -807,6 +807,7 @@ linkapps	common	it	Applicazioni Link
 linked	common	it	Collegato
 linkentry	common	it	Voce Link
 linklist	common	it	Elenco Link
+links	common	it	Collegamenti
 links and attached files	preferences	it	Collegamenti e file allegati
 links to specified application.  example: {{links/addressbook}}	common	it	Link verso specifica applicazione. P.es.: {{links/addressbook}}
 linkstring	common	it	Stringa Link

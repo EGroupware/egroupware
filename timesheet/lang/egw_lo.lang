@@ -15,7 +15,6 @@ history	timesheet	lo	ປະຫວັດສາດ
 id	timesheet	lo	ລະຫັດ
 leaves without saveing	timesheet	lo	ອອກໂດຍບໍ່ໄກ້ບັນທຶກ
 length<br>rows	timesheet	lo	ຄວາມຍາວ <br> ແຖວ
-links	timesheet	lo	ເຊື່ອມຕໍ່
 max length of the input [, length of the inputfield (optional)]	timesheet	lo	ຄວາມຍາວສູງສຸດຂອງການປ້ອນຂໍ້ຄວາມ[, ຄວາມຍາວຂອງພື້ນທີ່ຂໍ້ຄວາມ(ຖ້າມີ)]
 modified	timesheet	lo	ປັບປຸງ
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	lo	ຈໍານວນແຖວສໍາລັບຂອບເຂດຂອງການປ້ອນຂໍ້ມູນຫຼາຍໆແຖວ ຫຼື ຕົວເລືອກຫຼາຍໆຕົວ

@@ -285,7 +285,6 @@ limit number of description lines (default 5, 0 for no limit)	infolog	sl	Omejite
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	sl	Omejitev širine opisnega stolpca. Učinkovita le, če je nastavljena omejitev vrstic. 0 = brez omejitve.
 link	infolog	sl	Povezava
 linked to %1	infolog	sl	Povezano z %1
-links	infolog	sl	Povezave
 links and attached files	infolog	sl	Povezave in priložene datoteke
 links of this entry	infolog	sl	Povezave tega zapisa
 links to specified application.  example: {{links/infolog}}	infolog	sl	Povezave do določene aplikacije. Primer: {{links/infolog}}

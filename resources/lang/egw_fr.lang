@@ -78,7 +78,6 @@ is resource buyable?	resources	fr	Peut-on acheter les ressources ?
 is the ressource bookable?	resources	fr	La ressource peut-elle être réservée ?
 is this resource bookable?	resources	fr	Peut-on réserver cette ressource ?
 is this resource buyable?	resources	fr	Peut on acheter cette ressource ?
-links	resources	fr	Liens
 location	resources	fr	Emplacement
 location of resource	resources	fr	Emplacementde la ressource
 location:	resources	fr	Emplacement:

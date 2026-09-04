@@ -787,6 +787,7 @@ linkapps	common	km	ភ្ជាប់កម្មវិធី
 linked	common	km	ភ្ជាប់
 linkentry	common	km	តំណភ្ជាប់ចូល
 linklist	common	km	បញ្ជីតំណ
+links	common	km	តំណភ្ជាប់
 links and attached files	preferences	km	តំណភ្ជាប់និងឯកសារភ្ជាប់
 links to specified application.  example: {{links/addressbook}}	common	km	តំណភ្ជាប់ទៅកម្មវិធីដែលបានបញ្ជាក់។ ឧទាហរណ៍៖ {{links/addressbook}}
 linkstring	common	km	ខ្សែអក្សរភ្ជាប់

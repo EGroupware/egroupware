@@ -66,7 +66,6 @@ is resource buyable?	resources	hu	Az erőforrás megvásárolható?
 is the ressource bookable?	resources	hu	Foglalható-e az erőforrás?
 is this resource bookable?	resources	hu	Ez az erőforrás lefoglalható?
 is this resource buyable?	resources	hu	Megvásárolható ez az erőforrás?
-links	resources	hu	Hivatkozások
 location	resources	hu	Hely
 location of resource	resources	hu	Az erőforrás helye
 location:	resources	hu	Hely:

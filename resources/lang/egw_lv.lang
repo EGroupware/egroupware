@@ -56,7 +56,6 @@ is resource buyable?	resources	lv	Vai resurss ir nopērkams?
 is the ressource bookable?	resources	lv	Vai resurss ir rezervējams?
 is this resource bookable?	resources	lv	Vai šis resurss ir grāmatojams?
 is this resource buyable?	resources	lv	Vai šis resurss ir nopērkams?
-links	resources	lv	Saires
 location	resources	lv	Novietojums
 location of resource	resources	lv	Resursa novietojums
 manage mapping	resources	lv	Pārvaldīt kartēšanu

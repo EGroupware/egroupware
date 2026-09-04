@@ -64,7 +64,6 @@ is resource buyable?	resources	zh	是可购买资源吗？
 is the ressource bookable?	resources	zh	资源是否可预订？
 is this resource bookable?	resources	zh	该资源可预定吗？
 is this resource buyable?	resources	zh	该资源可购买吗？
-links	resources	zh	链接
 location	resources	zh	位置
 location of resource	resources	zh	资源的位置
 location:	resources	zh	位置：

@@ -86,7 +86,6 @@ leave it empty for a full week	timesheet	fr	Laisser vide pour une semaine pleine
 leaves without saveing	timesheet	fr	Quitter sans enregistrer
 length<br>rows	timesheet	fr	Longueur\nlignes
 link title	timesheet	fr	Lien vers le titre
-links	timesheet	fr	Liens
 links and attached files	timesheet	fr	Liens et fichiers attachés
 links to specified application.  example: {{links/infolog}}	timesheet	fr	Liens vers les applications spécifiés. Exemple :  {{links/infolog}}
 list of files linked to the current record	timesheet	fr	Listes des fichiers liés à l'enregistrement courant

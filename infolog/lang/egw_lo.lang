@@ -31,7 +31,6 @@ id	infolog	lo	ລະຫັດ
 leave without saveing the entry	infolog	lo	ອອກໂດຍບໍ່ໄກ້ບັນທຶກການເຂົ້າ
 leaves without saveing	infolog	lo	ອອກໂດຍບໍ່ໄກ້ບັນທຶກ
 link	infolog	lo	ເຊື່ອມຕໍ່ໄປທີ່ເຫດການ
-links	infolog	lo	ເຊື່ອມຕໍ່
 location	infolog	lo	ສະຖານທີ່
 max length of the input [, length of the inputfield (optional)]	infolog	lo	ຄວາມຍາວສູງສຸດຂອງການປ້ອນຂໍ້ຄວາມ[, ຄວາມຍາວຂອງພື້ນທີ່ຂໍ້ຄວາມ(ຖ້າມີ)]
 name must not be empty !!!	infolog	lo	ຫ້າມໃຫ້ຊື່ວ່າງ !!!

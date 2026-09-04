@@ -63,7 +63,6 @@ is resource buyable?	resources	no	Er det mulig å kjøpe ressursen ?
 is the ressource bookable?	resources	no	Er ressursen bokbar?
 is this resource bookable?	resources	no	Er det mulig å bestille denne ressursen ?
 is this resource buyable?	resources	no	Er det mulig å kjøpe denne ressursen ?
-links	resources	no	Lenker
 location	resources	no	Lokasjon
 location of resource	resources	no	Lokasjon av ressurser
 location:	resources	no	Lokasjon:

@@ -285,7 +285,6 @@ limit number of description lines (default 5, 0 for no limit)	infolog	sv	Begrän
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	sv	Begränsa bredden på beskrivningskolumnen. Gäller endast om gränsen för antal rader är satt. 0 = ingen begränsning.
 link	infolog	sv	Länk
 linked to %1	infolog	sv	Länkad till %1
-links	infolog	sv	Länkar
 links and attached files	infolog	sv	Länkar och bifogade filer
 links of this entry	infolog	sv	Postens länkar
 links to specified application.  example: {{links/infolog}}	infolog	sv	Länkar till angiven applikation. Exempel: {{links/infolog}}

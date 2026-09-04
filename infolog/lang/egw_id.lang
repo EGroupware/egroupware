@@ -262,7 +262,6 @@ limit number of description lines (default 5, 0 for no limit)	infolog	id	Batasi 
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	id	Batasi lebar kolom deskripsi. Hanya efektif jika batas baris ditetapkan. 0 = tidak ada batas.
 link	infolog	id	Tautan
 linked to %1	infolog	id	Ditautkan ke %1
-links	infolog	id	Tautan
 links and attached files	infolog	id	Tautan dan berkas terlampir
 links of this entry	infolog	id	Tautan dari entri ini
 links to specified application.  example: {{links/infolog}}	infolog	id	Tautan ke aplikasi tertentu. Contoh: {{links/infolog}}

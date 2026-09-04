@@ -39,7 +39,6 @@ is resource bookable?	resources	eu	Erretserbatu al litezke errekurtsoak?
 is resource buyable?	resources	eu	Eros al litezke errekurtsoak?
 is this resource bookable?	resources	eu	Erretserbatu al liteke errekurtso hau?
 is this resource buyable?	resources	eu	Eros al liteke errekurtso hau?
-links	resources	eu	Estekak
 location	resources	eu	Kokapena
 location of resource	resources	eu	Errekurtsoaren kokapena
 location:	resources	eu	Kokapena:

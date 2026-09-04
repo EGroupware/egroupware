@@ -186,7 +186,6 @@ ldap context for contacts	admin	da	LDAP context til kontakter
 ldap host for contacts	admin	da	LDAP vært for kontakter
 ldif	addressbook	da	LDIF
 line 2	addressbook	da	Linie 2
-links	addressbook	da	Links
 list all categories	addressbook	da	List alle kategorier
 list all customfields	addressbook	da	List alle tilpassede felter
 load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	da	Indlæs brugerdefinerede felter i indekset, selvom kolonnen med brugerdefinerede felter er slået fra (f.eks. for at vise dem i en specifik indekskolonne)

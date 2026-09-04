@@ -276,7 +276,6 @@ limit number of description lines (default 5, 0 for no limit)	infolog	km	កំ�
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	km	កំណត់ទទឹងនៃជួរឈរពិពណ៌នា។ មានប្រសិទ្ធភាពលុះត្រាតែការកំណត់បន្ទាត់ត្រូវបានកំណត់។ 0 = គ្មានដែនកំណត់។
 link	infolog	km	តំណភ្ជាប់
 linked to %1	infolog	km	បានភ្ជាប់ទៅ%1
-links	infolog	km	តំណភ្ជាប់
 links and attached files	infolog	km	តំណភ្ជាប់និងឯកសារភ្ជាប់
 links of this entry	infolog	km	តំណភ្ជាប់នៃធាតុនេះ។
 links to specified application.  example: {{links/infolog}}	infolog	km	តំណភ្ជាប់ទៅកម្មវិធីដែលបានបញ្ជាក់។ ឧទាហរណ៍៖ {{links/infolog}}

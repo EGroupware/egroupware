@@ -74,7 +74,6 @@ is resource buyable?	resources	sk	Dá sa zdroj kúpiť?
 is the ressource bookable?	resources	sk	Dá sa zdroj rezervovať?
 is this resource bookable?	resources	sk	Dá sa zdroj rezervovať?
 is this resource buyable?	resources	sk	Dá sa zdroj kúpiť?
-links	resources	sk	Odkazy
 location	resources	sk	Umiestnenie
 location of resource	resources	sk	Umiestnenie zdroja
 location:	resources	sk	Umiestnenie:

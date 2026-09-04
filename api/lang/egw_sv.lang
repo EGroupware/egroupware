@@ -697,6 +697,7 @@ link to each entry	common	sv	Länk till varje post
 linkapps	common	sv	LinkApps
 linkentry	common	sv	Länka inmatning
 linklist	common	sv	Länklista
+links	common	sv	Länkar
 linkstring	common	sv	LinkString
 linkto	common	sv	LinkTo
 list	common	sv	Lista

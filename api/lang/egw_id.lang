@@ -594,6 +594,7 @@ link to each entry	common	id	Tautan ke setiap entri
 linkapps	common	id	Tautkan aplikasi
 linkentry	common	id	Entri tautan
 linklist	common	id	Daftar tautan
+links	common	id	Tautan
 links and attached files	preferences	id	Tautan dan berkas yang dilampirkan
 linkstring	common	id	LinkString
 linkto	common	id	LinkTo

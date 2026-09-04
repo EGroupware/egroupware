@@ -331,7 +331,6 @@ ldap settings for contacts	admin	sk	Nastavenia LDAP pre kontakty
 ldif	addressbook	sk	LDIF
 line 2	addressbook	sk	Riadok 2
 link title for contacts show	addressbook	sk	Názov odkazu pre zobrazenie kontaktov
-links	addressbook	sk	Odkazy
 links and attached files	addressbook	sk	Odkazy a priložené súbory
 links to specified application.  example: {{links/infolog}}	addressbook	sk	Odkazy na vybranú aplikáciu. Príklad: {{links/infolog}}
 list all categories	addressbook	sk	Zoznam všetkých kategórií

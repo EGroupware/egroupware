@@ -285,7 +285,6 @@ limit number of description lines (default 5, 0 for no limit)	infolog	fi	Rajoita
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	fi	Rajoita kuvauskentän kokoa, jos rivirajoitus on myös asetettu. 0=ei rajoitusta.
 link	infolog	fi	Linkki
 linked to %1	infolog	fi	Linkki: %1
-links	infolog	fi	Linkit
 links and attached files	infolog	fi	Linkit ja liitetyt tiedostot
 links of this entry	infolog	fi	Tämän merkinnän linkit
 links to specified application.  example: {{links/infolog}}	infolog	fi	Linkki määriteltyyn sovellukseen. Esim. {{links/infolog}}

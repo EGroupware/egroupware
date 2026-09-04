@@ -285,7 +285,6 @@ limit number of description lines (default 5, 0 for no limit)	infolog	it	Limita 
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	it	Limita la larghezza della colonna di descrizione. Predefinito = 5, 0 = nessun limite.
 link	infolog	it	Link
 linked to %1	infolog	it	Collegato a %1
-links	infolog	it	Links
 links and attached files	infolog	it	Collegamenti e file allegati
 links of this entry	infolog	it	Links della voce
 links to specified application.  example: {{links/infolog}}	infolog	it	Collegamento (link) alla applicazione specifica. Esempio: {{links/infolog}}

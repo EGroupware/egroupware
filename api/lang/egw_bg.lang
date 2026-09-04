@@ -502,6 +502,7 @@ light mode	common	bg	Светъл режим
 line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	bg	Ред %1: '%2'\n<b>данните в csv съдържат ##last-check-run## на таблица %3 ==> игнориран</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	bg	Ред %1: '%2'\n<b>данните в csv не съвпадат с броя на колоните в таблицата %3 ==> игнориран</b>
 link	common	bg	Връзка
+links	common	bg	Връзки
 link to each entry	common	bg	Връзка към всеки запис
 list	common	bg	Списък
 list members	common	bg	Списък с членове

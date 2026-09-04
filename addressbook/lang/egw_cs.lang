@@ -332,7 +332,6 @@ ldap settings for contacts	admin	cs	Nastavení LDAP pro kontakty
 ldif	addressbook	cs	LDIF
 line 2	addressbook	cs	Řádek 2
 link title for contacts show	addressbook	cs	Odkazovat nadpis pro zobrazení kontaktů
-links	addressbook	cs	Odkazy
 links and attached files	addressbook	cs	Odkazy a připojené soubory
 links to specified application.  example: {{links/infolog}}	addressbook	cs	Odkazy na specifické aplikace. Příklad: {{links/infolog}}
 list all categories	addressbook	cs	Vypsat všechny kategorie

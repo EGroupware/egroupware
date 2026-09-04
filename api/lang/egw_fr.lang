@@ -818,6 +818,7 @@ linkapps	common	fr	LinkApps
 linked	common	fr	Ligé
 linkentry	common	fr	LinkEntry
 linklist	common	fr	Liste de liens
+links	common	fr	Liens
 links and attached files	preferences	fr	Liens et fichiers attachés
 links to specified application.  example: {{links/addressbook}}	common	fr	Liens vers une application spécifique. Exemple : {{links/addressbook}}
 linkstring	common	fr	ChaîneDeLien

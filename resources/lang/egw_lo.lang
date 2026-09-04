@@ -38,7 +38,6 @@ is resource bookable?	resources	lo	ສາມາດຈອງຊັບພະຍາ
 is resource buyable?	resources	lo	ສາມາດຊື້ຊັບພະຍາກອນໄດ້ບໍ ?
 is this resource bookable?	resources	lo	ຊັບພະຍາກອນນີ້ຈອງໄດ້ບໍ ?
 is this resource buyable?	resources	lo	ຊັບພະຍາກອນນີ້ຊື້ໄດ້ບໍ ?
-links	resources	lo	ເຊື່ອມຕໍ່
 location	resources	lo	ສະຖານທີ່
 location of resource	resources	lo	ສະຖານທີ່ຂອງຊັບພະຍາກອນ
 location:	resources	lo	ສະຖານທີ່:

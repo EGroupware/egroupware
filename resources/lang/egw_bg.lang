@@ -36,7 +36,6 @@ if you specify an export definition, it will be used when you export	resources	b
 imports a list of resources from a csv file.	resources	bg	Импортира списък с ресурси от CSV файл.
 is resource bookable?	resources	bg	Може ли ресурсът да бъде резервиран
 is the ressource bookable?	resources	bg	Може ли ресурсът да се резервира?
-links	resources	bg	Връзки
 location	resources	bg	Местоположение
 manage mapping	resources	bg	Управление на съответствията
 new accessory	resources	bg	Нов аксесоар

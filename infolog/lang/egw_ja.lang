@@ -285,7 +285,6 @@ limit number of description lines (default 5, 0 for no limit)	infolog	ja	説明�
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	ja	説明文の桁数制限。行数制限が指定されている場合のみ有効。0 = 無制限。
 link	infolog	ja	リンク
 linked to %1	infolog	ja	%1 にリンク済み
-links	infolog	ja	リンク
 links and attached files	infolog	ja	リンクと添付ファイル
 links of this entry	infolog	ja	この項目のリンク
 links to specified application.  example: {{links/infolog}}	infolog	ja	アプリケーションへのリンク  例: {{links/infolog}}

@@ -335,7 +335,6 @@ ldap settings for contacts	admin	en	LDAP settings for contacts
 ldif	addressbook	en	LDIF
 line 2	addressbook	en	Line 2
 link title for contacts show	addressbook	en	Link title for contacts
-links	addressbook	en	Links
 links and attached files	addressbook	en	Links and attached files
 links to specified application.  example: {{links/infolog}}	addressbook	en	Links to specified application. Example: {{links/infolog}}
 list all categories	addressbook	en	List all categories

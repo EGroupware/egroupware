@@ -364,7 +364,6 @@ limit search for conflicts in recurrences to given number of recurrences	calenda
 limit search for conflicts in recurrences to given time in seconds (default 3)	calendar	de	Begrenze Suche nach Terminkonflikten auf die angegebene Zeit in Sekunden (Vorgabe 3)
 link title for events to show	calendar	de	Erweiterung des Link-Titels für Kalender-Einträge
 link to view the event	calendar	de	Verweis (Weblink) um den Termin anzuzeigen
-links	calendar	de	Verknüpfungen
 links and attached files	calendar	de	Verknüpfungen zu anderen Datensätzen und angefügten Dateien
 links to specified application.  example: {{links/infolog}}	calendar	de	Verknüpfungen zu bestimmten Anwendungen. Beispiel: {{links/infolog}}
 links, attachments	calendar	de	Verknüpfungen, Datei-Anhänge

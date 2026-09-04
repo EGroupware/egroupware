@@ -270,7 +270,6 @@ limit number of description lines (default 5, 0 for no limit)	infolog	el	Περ�
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	el	Περιορισμός του πλάτους της στήλης περιγραφής. Ισχύει μόνο αν έχει οριστεί όριο γραμμών. 0 = κανένα όριο.
 link	infolog	el	Σύνδεσμος
 linked to %1	infolog	el	Συνδέεται με %1
-links	infolog	el	Σύνδεσμοι
 links and attached files	infolog	el	Σύνδεσμοι και συνημμένα αρχεία
 links of this entry	infolog	el	Σύνδεσμοι αυτής της καταχώρησης
 links to specified application.  example: {{links/infolog}}	infolog	el	Σύνδεσμοι προς την καθορισμένη εφαρμογή. Παράδειγμα: {{links/infolog}}

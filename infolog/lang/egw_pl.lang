@@ -278,7 +278,6 @@ limit number of description lines (default 5, 0 for no limit)	infolog	pl	Ogranic
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	pl	Ograniczenie szerokości kolumny opisu. Działa tylko wtedy, gdy ustawiony jest limit wierszy. 0 = brak limitu.
 link	infolog	pl	Podłącz
 linked to %1	infolog	pl	Link do %1
-links	infolog	pl	Linki
 links and attached files	infolog	pl	Linki i załączone pliki
 links of this entry	infolog	pl	Linki do tego wpisu
 links to specified application.  example: {{links/infolog}}	infolog	pl	Linki do określonej aplikacji. Przykład: {{links/infolog}}

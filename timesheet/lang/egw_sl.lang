@@ -82,7 +82,6 @@ leave it empty for a full week	timesheet	sl	Pustite prazen cel teden
 leaves without saveing	timesheet	sl	Zapre brez shranjevanja
 length<br>rows	timesheet	sl	Dolžina<br>Vrstic
 link title	timesheet	sl	Naslov povezave
-links	timesheet	sl	Povezave
 links and attached files	timesheet	sl	Povezave in priložene datoteke
 links to specified application.  example: {{links/infolog}}	timesheet	sl	Povezave do določene aplikacije. Primer: {{links / infolog}}
 list of files linked to the current record	timesheet	sl	Seznam datotek, povezanih s trenutnim zapisom

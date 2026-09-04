@@ -182,7 +182,6 @@ ldap context for contacts	admin	ko	LDAP 컨텍스트를 위한 인적관계
 ldap host for contacts	admin	ko	LDAP 호스트를 위한 인적관계
 ldif	addressbook	ko	LDIF
 line 2	addressbook	ko	2째 줄
-links	addressbook	ko	링크
 list all categories	addressbook	ko	모든 카테고리 목록
 load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	ko	사용자 지정 필드 열이 꺼져 있어도 인덱스에 사용자 지정 필드 로드(예: 특정 인덱스 열에 표시하기 위해)
 location	addressbook	ko	장소

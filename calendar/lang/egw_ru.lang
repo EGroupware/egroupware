@@ -360,7 +360,6 @@ limit search for conflicts in recurrences to given number of recurrences	calenda
 limit search for conflicts in recurrences to given time in seconds (default 3)	calendar	ru	Ограничить поиск конфликтов в повторах заданным временем в секундах (по умолчанию 3)
 link title for events to show	calendar	ru	Заголовок ссылки для отображаемых событий
 link to view the event	calendar	ru	Ссылка для просмотра события
-links	calendar	ru	Ссылки
 links and attached files	calendar	ru	Ссылки и прикреплённые файлы
 links to specified application.  example: {{links/infolog}}	calendar	ru	Ссылки на указанное приложение. Пример: {{links/infolog}}
 links, attachments	calendar	ru	Ссылки, Прикрепленные файлы

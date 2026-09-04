@@ -362,7 +362,6 @@ limit search for conflicts in recurrences to given number of recurrences	calenda
 limit search for conflicts in recurrences to given time in seconds (default 3)	calendar	cs	Omezení pro hledání konfliktů v pravidelných opakování v sekundách (přednastavená hodnota je 3)
 link title for events to show	calendar	cs	Odkaz na zobrazení událostí
 link to view the event	calendar	cs	Odkaz pro zobrazení události
-links	calendar	cs	Odkazy
 links and attached files	calendar	cs	Odkazy a připojené soubory
 links to specified application.  example: {{links/infolog}}	calendar	cs	Odkazy na specifické aplikace. Příklad: {{links/infolog}}
 links, attachments	calendar	cs	Odkazy, přílohy

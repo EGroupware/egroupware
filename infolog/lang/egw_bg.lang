@@ -278,7 +278,6 @@ limit number of description lines (default 5, 0 for no limit)	infolog	bg	Огр�
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	bg	Ограничаване на ширината на колоната с описание. Ефективно само ако е зададено ограничение на редовете. 0 = няма ограничение.
 link	infolog	bg	Връзка
 linked to %1	infolog	bg	Свързан с %1
-links	infolog	bg	Връзки
 links and attached files	infolog	bg	Връзки и прикачени файлове
 links of this entry	infolog	bg	Връзки на записа
 links to specified application.  example: {{links/infolog}}	infolog	bg	Връзки към определено приложение. Пример: {{връзки/инфолог}}

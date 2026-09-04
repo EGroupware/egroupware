@@ -89,7 +89,6 @@ leave it empty for a full week	timesheet	en	Leave it empty for a full week
 leaves without saveing	timesheet	en	Leaves without saving
 length<br>rows	timesheet	en	Length\nRows
 link title	timesheet	en	Link title
-links	timesheet	en	Links
 links and attached files	timesheet	en	Links and attached files
 links to specified application.  example: {{links/infolog}}	timesheet	en	Links to specified application. Example: {{links/infolog}}
 list of files linked to the current record	timesheet	en	List of files linked to the current record

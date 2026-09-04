@@ -331,7 +331,6 @@ ldap settings for contacts	admin	ja	コンタクト用 LDAP 設定
 ldif	addressbook	ja	LDIF
 line 2	addressbook	ja	町域（２行目）
 link title for contacts show	addressbook	ja	コンタクト用リンク・タイトル
-links	addressbook	ja	リンク
 links and attached files	addressbook	ja	リンクと添付ファイル
 links to specified application.  example: {{links/infolog}}	addressbook	ja	アプリケーションへのリンク。 例: {{links/infolog}}
 list all categories	addressbook	ja	全カテゴリをリスト表示

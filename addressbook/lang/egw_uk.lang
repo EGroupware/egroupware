@@ -170,7 +170,6 @@ label	addressbook	uk	Примітки
 last modified	addressbook	uk	Востаннє змінено
 ldif	addressbook	uk	LDIF
 line 2	addressbook	uk	Рядок 2
-links	addressbook	uk	Посилання
 load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	uk	Завантаження користувацьких полів в індекс, навіть якщо стовпець користувацьких полів вимкнено (наприклад, для відображення їх у певному стовпчику індексу)
 location	addressbook	uk	Місце
 mail vcard	addressbook	uk	Пошта vCard

@@ -59,7 +59,6 @@ is resource buyable?	resources	id	Apakah sumberdaya dapat dibeli?
 is the ressource bookable?	resources	id	Apakah sumber daya dapat dipesan?
 is this resource bookable?	resources	id	Apakah sumberdaya ini dapat dipesan?
 is this resource buyable?	resources	id	Apakah sumberdaya ini dapat dibeli?
-links	resources	id	Tautan
 location	resources	id	Lokasi
 location of resource	resources	id	Lokasi sumberdaya
 location:	resources	id	Lokasi:

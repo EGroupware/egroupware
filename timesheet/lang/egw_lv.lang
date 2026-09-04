@@ -37,7 +37,6 @@ last modified	timesheet	lv	Pēdējo reizi pārveidots
 leaves without saveing	timesheet	lv	aiziet bez saglabāšanas
 length<br>rows	timesheet	lv	Garums<br>Rindas
 link title	timesheet	lv	Saiknes nosaukums
-links	timesheet	lv	Saites
 make timesheets readable by infolog delegation	timesheet	lv	Padarīt laika uzskaites lapas lasāmas ar InfoLog deleģēšanu
 max length of the input [, length of the inputfield (optional)]	timesheet	lv	ievades datu maksimālais garums[, ievades lauka garums (pēc izvēles)]
 mode	timesheet	lv	Režīms

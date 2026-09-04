@@ -89,7 +89,6 @@ leave it empty for a full week	timesheet	de	Leer lassen für eine ganze Woche
 leaves without saveing	timesheet	de	Beenden ohne speichern
 length<br>rows	timesheet	de	Länge\nReihe
 link title	timesheet	de	Titel der Verknüpfung
-links	timesheet	de	Verknüpfungen
 links and attached files	timesheet	de	Verknüpfungen und angehangene Dateien
 links to specified application.  example: {{links/infolog}}	timesheet	de	Verknüpfung zu Anwendungen. Beispiel: {{links/infolog}}
 list of files linked to the current record	timesheet	de	Liste der zum aktuellen Eintrag verknüpften Dateien.

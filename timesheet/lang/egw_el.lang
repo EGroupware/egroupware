@@ -37,7 +37,6 @@ last modified	timesheet	el	Τελευταία τροποποίηση
 leaves without saveing	timesheet	el	αποχώρηση χωρίς αποθήκευση
 length<br>rows	timesheet	el	Μήκος<br>Γραμμές
 link title	timesheet	el	Τίτλος συνδέσμου
-links	timesheet	el	Σύνδεσμοι
 make timesheets readable by infolog delegation	timesheet	el	Κάντε τα φύλλα χρόνου αναγνώσιμα από την αντιπροσωπεία InfoLog
 max length of the input [, length of the inputfield (optional)]	timesheet	el	μέγιστο μήκος για την εισαγωγή, [μήκος του πεδίου εισαγωγής (κατ'επιλογήν)]
 mode	timesheet	el	Λειτουργία

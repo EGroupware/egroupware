@@ -207,7 +207,6 @@ ldap settings for contacts	admin	zh-tw	聯絡人的 LDAP 設定
 ldif	addressbook	zh-tw	LDIF
 line 2	addressbook	zh-tw	第2行
 link title for contacts show	addressbook	zh-tw	顯示聯絡人的連結標題
-links	addressbook	zh-tw	連結
 list all categories	addressbook	zh-tw	列出所有類別
 list all customfields	addressbook	zh-tw	列出所有自訂欄位
 list already exists!	addressbook	zh-tw	清單已經存在！

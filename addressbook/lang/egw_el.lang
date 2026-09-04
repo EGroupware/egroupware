@@ -331,7 +331,6 @@ ldap settings for contacts	admin	el	LDAP ρυθμίσεις για τις επα
 ldif	addressbook	el	LDIF
 line 2	addressbook	el	Γραμμή 2
 link title for contacts show	addressbook	el	Τίτλος συνδέσμου για παρουσίαση επαφών
-links	addressbook	el	Σύνδεσμοι
 links and attached files	addressbook	el	Σύνδεσμοι και συνημμένα αρχεία
 links to specified application.  example: {{links/infolog}}	addressbook	el	Σύνδεσμοι προς στην οριζόμενη εφαρμογή. Για παράδειγμα {{links/infolog}}
 list all categories	addressbook	el	Τοποθέτηση σε λίστα όλων των κατηγοριών

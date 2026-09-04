@@ -356,7 +356,6 @@ limit search for conflicts in recurrences to given number of recurrences	calenda
 limit search for conflicts in recurrences to given time in seconds (default 3)	calendar	ja	検索時、繰返し予定の衝突を指定秒内に制限する（既定値 3秒)
 link title for events to show	calendar	ja	リンク・タイトル
 link to view the event	calendar	ja	イベントを閲覧するためのリンク
-links	calendar	ja	リンク
 links and attached files	calendar	ja	リンクと添付ファイル
 links to specified application.  example: {{links/infolog}}	calendar	ja	指定されたアプリケーションへのリンク。  例: {{links/infolog}}
 links, attachments	calendar	ja	リンク, 添付

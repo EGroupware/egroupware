@@ -323,7 +323,6 @@ ldap settings for contacts	admin	km	ការកំណត់ LDAP សម្រ�
 ldif	addressbook	km	LDIF
 line 2	addressbook	km	ជួរទី 2
 link title for contacts show	addressbook	km	ចំណងជើងតំណសម្រាប់ទំនាក់ទំនង
-links	addressbook	km	តំណភ្ជាប់
 links and attached files	addressbook	km	តំណភ្ជាប់និងឯកសារភ្ជាប់
 links to specified application.  example: {{links/infolog}}	addressbook	km	តំណភ្ជាប់ទៅកម្មវិធីដែលបានបញ្ជាក់។ ឧទាហរណ៍៖ {{links/infolog}}
 list all categories	addressbook	km	រាយប្រភេទទាំងអស់។

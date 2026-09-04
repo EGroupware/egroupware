@@ -563,6 +563,7 @@ link	common	zh-tw	連結
 linkapps	common	zh-tw	連結模組
 linkentry	common	zh-tw	連結資料
 linklist	common	zh-tw	連結清單
+links	common	zh-tw	連結
 linkstring	common	zh-tw	連結文字
 linkto	common	zh-tw	連結網址
 list	common	zh-tw	列表

@@ -248,7 +248,6 @@ limit number of description lines (default 5, 0 for no limit)	infolog	lv	Ierobe�
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	lv	Ierobežot apraksta slejas platumu. Spēkā tikai tad, ja ir iestatīts rindu ierobežojums. 0 = nav ierobežojuma.
 link	infolog	lv	Saite
 linked to %1	infolog	lv	Saistīts ar %1
-links	infolog	lv	Saites
 links and attached files	infolog	lv	Saites un pievienotie faili
 links of this entry	infolog	lv	Lerakstu saites
 links to specified application.  example: {{links/infolog}}	infolog	lv	Saites uz norādīto lietojumprogrammu. Piemērs: {{links/infolog}}

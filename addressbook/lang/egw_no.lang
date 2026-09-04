@@ -186,7 +186,6 @@ ldap context for contacts	admin	no	LDAP område for kontakter
 ldap host for contacts	admin	no	LDAP tjener for kontakter
 ldif	addressbook	no	LDIF
 line 2	addressbook	no	Linje 2
-links	addressbook	no	Lenker
 list all categories	addressbook	no	Liste alle kategorier
 list all customfields	addressbook	no	Liste alle egendefinerte felt
 load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	no	Last inn egendefinerte felt i indeksen, selv om kolonnen for egendefinerte felt er av (f.eks. for å vise dem i en spesifikk indekskolonne)

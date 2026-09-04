@@ -39,7 +39,6 @@ is resource bookable?	resources	fa	آیا منبع قابل رزرو است؟
 is resource buyable?	resources	fa	آیا منبع قابل خرید است؟
 is this resource bookable?	resources	fa	آیا این منبع قابل رزرو است؟
 is this resource buyable?	resources	fa	آیا این منبع قابل خرید است؟
-links	resources	fa	پیوندها
 location	resources	fa	مکان
 location of resource	resources	fa	مکان منبع
 location:	resources	fa	مکان:

@@ -818,6 +818,7 @@ linkapps	common	es-es	Enlace a aplicaciones
 linked	common	es-es	Enlazado
 linkentry	common	es-es	Entrada de enlace
 linklist	common	es-es	Lista de enlaces
+links	common	es-es	Enlaces
 links and attached files	preferences	es-es	Enlaces y archivos adjuntos
 links to specified application.  example: {{links/addressbook}}	common	es-es	Enlaces a aplicación específica. Ejemplo: {{links/addressbook}}
 linkstring	common	es-es	Cadena de enlace

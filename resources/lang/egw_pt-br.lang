@@ -69,7 +69,6 @@ is resource buyable?	resources	pt-br	Recurso pode ser comprado?
 is the ressource bookable?	resources	pt-br	O recurso pode ser reservado?
 is this resource bookable?	resources	pt-br	Este recurso pode ser reservado?
 is this resource buyable?	resources	pt-br	Este recurso pode ser comprado?
-links	resources	pt-br	Links
 location	resources	pt-br	Local
 location of resource	resources	pt-br	Local do recurso
 location:	resources	pt-br	Local:

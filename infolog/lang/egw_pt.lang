@@ -280,7 +280,6 @@ limit number of description lines (default 5, 0 for no limit)	infolog	pt	Limite 
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	pt	Limitar a largura da coluna de descrição. Só é efetivo se o limite de linhas estiver definido. 0 = sem limite.
 link	infolog	pt	Ligação
 linked to %1	infolog	pt	Ligado a 1%
-links	infolog	pt	Ligações
 links and attached files	infolog	pt	Links e arquivos anexados
 links of this entry	infolog	pt	Ligações para este registo
 links to specified application.  example: {{links/infolog}}	infolog	pt	Ligações para a aplicação especificada. Exemplo: {{links/infolog}}

@@ -331,7 +331,6 @@ ldap settings for contacts	admin	nl	LDAP instellingen voor contacten
 ldif	addressbook	nl	LDIF
 line 2	addressbook	nl	Regel 2
 link title for contacts show	addressbook	nl	Linktitel voor contactenweergave
-links	addressbook	nl	Links
 links and attached files	addressbook	nl	Link naar bijgesloten bestand
 links to specified application.  example: {{links/infolog}}	addressbook	nl	Verwijst naar een specifieke applicatie. Voorbeeld: {{links/infolog}}
 list all categories	addressbook	nl	Toon alle categoriën

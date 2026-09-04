@@ -68,7 +68,6 @@ is resource buyable?	resources	sl	Se sredstvo lahko kupi?
 is the ressource bookable?	resources	sl	Ali je vir mogoče rezervirati?
 is this resource bookable?	resources	sl	Se to sredstvo lahko rezervira?
 is this resource buyable?	resources	sl	Se to sredstvo lahko kupi?
-links	resources	sl	Povezave
 location	resources	sl	Lokacija
 location of resource	resources	sl	Lokacija sredstva
 location:	resources	sl	Lokacija:

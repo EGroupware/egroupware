@@ -81,7 +81,6 @@ leave it empty for a full week	timesheet	es-es	Dejar en blanco durante una seman
 leaves without saveing	timesheet	es-es	sale sin guardar
 length<br>rows	timesheet	es-es	Longitud<br>Filas
 link title	timesheet	es-es	Título del enlace
-links	timesheet	es-es	Enlaces
 links and attached files	timesheet	es-es	Enlaces y ficheros adjuntos
 links to specified application.  example: {{links/infolog}}	timesheet	es-es	Enlaces a la aplicación especificada. Ejemplo: {{links/infolog}}
 list of files linked to the current record	timesheet	es-es	Lista de ficheros vinculados al registro actual

@@ -80,7 +80,6 @@ leave it empty for a full week	timesheet	fi	Jätä tyhjäksi, jos koko viikko
 leaves without saveing	timesheet	fi	Poistuu tallentamatta
 length<br>rows	timesheet	fi	Pituus Rivit
 link title	timesheet	fi	Linkin otsikko
-links	timesheet	fi	Linkit
 links and attached files	timesheet	fi	Linkit ja liitetyt tiedostot
 links to specified application.  example: {{links/infolog}}	timesheet	fi	Linkki määriteltyyn sovellukseen. Esim. {{links/infolog}}
 list of files linked to the current record	timesheet	fi	Lista liitetyistä tiedostoista

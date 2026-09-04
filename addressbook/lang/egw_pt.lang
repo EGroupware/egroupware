@@ -203,7 +203,6 @@ ldap context for contacts	admin	pt	Contexto LDAP para contactos
 ldap host for contacts	admin	pt	Servidor LDAP para contactos
 ldif	addressbook	pt	LDIF
 line 2	addressbook	pt	Linha 2
-links	addressbook	pt	Ligações
 links and attached files	addressbook	pt	Links e arquivos anexados
 list all categories	addressbook	pt	Listar todas as categorias
 list all customfields	addressbook	pt	Listar todos os campos personalizados

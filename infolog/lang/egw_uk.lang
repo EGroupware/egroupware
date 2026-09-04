@@ -230,7 +230,6 @@ limit number of description lines (default 5, 0 for no limit)	infolog	uk	Обм�
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	uk	Обмеження ширини стовпця опису. Впливає лише якщо встановлено обмеження на кількість рядків. 0 = без обмежень.
 link	infolog	uk	Посилання
 linked to %1	infolog	uk	Пов'язано з %1
-links	infolog	uk	Посилання
 links and attached files	infolog	uk	Посилання та прикріплені файли
 links of this entry	infolog	uk	Посилання цього запису
 links to specified application.  example: {{links/infolog}}	infolog	uk	Посилання на вказану програму. Приклад: {{links/infolog}}

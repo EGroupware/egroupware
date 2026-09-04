@@ -331,7 +331,6 @@ ldap settings for contacts	admin	fr	configuration LDAP pour les contacts
 ldif	addressbook	fr	LDIF
 line 2	addressbook	fr	Ligne 2
 link title for contacts show	addressbook	fr	Le titre du lien pour les contacts montre
-links	addressbook	fr	Liens
 links and attached files	addressbook	fr	Liens et fichiers attachés
 links to specified application.  example: {{links/infolog}}	addressbook	fr	Liens vers les applications spécifiés. Exemple : {{links/infolog}}
 list all categories	addressbook	fr	Lister toutes les catégories

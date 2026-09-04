@@ -792,6 +792,7 @@ linkapps	common	fi	Linkki sovellukseen
 linked	common	fi	Linkitetty
 linkentry	common	fi	Linkki tietueeseen
 linklist	common	fi	Linkkiluettelo
+links	common	fi	Linkit
 links and attached files	preferences	fi	Linkit ja liitetyt tiedostot
 links to specified application.  example: {{links/addressbook}}	common	fi	Määriteltyjen sovellusten linkit. Esim. {{links/addressbook}}
 linkstring	common	fi	Linkki merkkijonoon

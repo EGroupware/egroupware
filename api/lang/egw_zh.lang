@@ -681,6 +681,7 @@ link to each entry	common	zh	链接到每个条目
 linkapps	common	zh	链接应用程序
 linkentry	common	zh	链接条目
 linklist	common	zh	链接列表
+links	common	zh	链接
 linkstring	common	zh	链接字串
 linkto	common	zh	链接到
 list	common	zh	列表

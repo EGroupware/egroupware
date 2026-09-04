@@ -335,7 +335,6 @@ ldap settings for contacts	admin	de	LDAP Einstellungen für Kontakte
 ldif	addressbook	de	LDIF
 line 2	addressbook	de	Zeile 2
 link title for contacts show	addressbook	de	Titel der Verknüpfung für Kontakte zeigt
-links	addressbook	de	Verknüpfungen
 links and attached files	addressbook	de	Verknüpfungen zu anderen Datensätzen und angefügten Dateien
 links to specified application.  example: {{links/infolog}}	addressbook	de	Verknüpfungen zu bestimmten Anwendungen. Beispiel: {{links/infolog}}
 list all categories	addressbook	de	Liste alle Kategorien

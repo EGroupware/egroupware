@@ -817,6 +817,7 @@ linkapps	common	sk	Aplikácia odkazu
 linked	common	sk	Odkazuje
 linkentry	common	sk	Záznam o odkaze
 linklist	common	sk	Zoznam odkazov
+links	common	sk	Odkazy
 links and attached files	preferences	sk	Odkazy a priložené súbory
 links to specified application.  example: {{links/addressbook}}	common	sk	Odkazy k vybranej aplikácii. Príklad: {{links/addressbook}}
 linkstring	common	sk	Reťazec odkazu

@@ -74,7 +74,6 @@ is resource buyable?	resources	ja	購入可能？
 is the ressource bookable?	resources	ja	リソースは予約可能ですか？
 is this resource bookable?	resources	ja	このリソースは予約可能ですか？
 is this resource buyable?	resources	ja	このリソースは購入可能ですか？
-links	resources	ja	リンク
 location	resources	ja	保管場所
 location of resource	resources	ja	リソースの保管場所
 location:	resources	ja	保管場所:
