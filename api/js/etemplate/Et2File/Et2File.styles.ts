@@ -55,4 +55,14 @@ export default css`
 	.file--single et2-file-item[display="small"]::part(base) {
 		height: 100%;
 	}
+
+	/**
+	 * Single (non-popup) list sits inline in the button's own row, whose height
+	 * is often less than --sl-input-height-medium (eg. display="small").  The
+	 * popup-oriented max-height above then evaluates negative and clamps to 0,
+	 * hiding the file entirely, so don't constrain it here.
+	 */
+	.file--single .file__file-list {
+		max-height: none;
+	}
 `;
