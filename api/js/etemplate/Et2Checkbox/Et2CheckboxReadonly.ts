@@ -1,6 +1,8 @@
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {css, html, LitElement} from "lit";
+import {property} from "lit/decorators/property.js";
+import {state} from "lit/decorators/state.js";
 import {classMap} from "lit/directives/class-map.js"
 import shoelace from "../Styles/shoelace";
 
@@ -24,36 +26,37 @@ export class Et2CheckboxReadonly extends Et2InputWidget(LitElement) implements e
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
+	/**
+	 *  Checkbox is checked
+	 *
+	 * Internal only - not set via any .xet attribute or external JS; the
+	 * detached-rendering contract (getDetachedAttributes() below) deliberately
+	 * excludes it, deriving isChecked from value/selectedValue instead.
+	 */
+	@state()
+	checked : boolean;
 
-			/**
-			 *  Checkbox is checked
-			 */
-			checked: {type: Boolean},
+	/**
+	 * The checkbox's value attribute
+	 */
+	@property({type: String})
+	value : string;
 
-			/**
-			 * The checkbox's value attribute
-			 */
-			value: {type: String},
+	/* Value when checked */
+	@property({type: String})
+	selectedValue : string;
 
-			/* Value when checked */
-			selectedValue: {type: String},
+	/**
+	 * What should be displayed when readonly and selected
+	 */
+	@property({type: String})
+	roTrue : string;
 
-			/**
-			 * What should be displayed when readonly and selected
-			 */
-			roTrue: {type: String},
-			/**
-			 * What should be displayed when readonly and not selected
-			 */
-			roFalse: {type: String}
-		};
-	}
-
-	constructor() {super();}
+	/**
+	 * What should be displayed when readonly and not selected
+	 */
+	@property({type: String})
+	roFalse : string;
 
 	render()
 	{
