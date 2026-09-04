@@ -37,8 +37,14 @@ class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 			)))
 			->getMock();
 		$imap->method('getNameSpaceArray')->willReturn([
-			'personal' => [['delimiter' => $namespaces['personal'][0]['delimiter'] ?? '.']],
-			'others' => [['delimiter' => $namespaces['others'][0]['delimiter'] ?? '\\']],
+			'personal' => [[
+				'delimiter' => $namespaces['personal'][0]['delimiter'] ?? '.',
+				'name' => $namespaces['personal'][0]['name'] ?? '',
+			]],
+			'others' => [[
+				'delimiter' => $namespaces['others'][0]['delimiter'] ?? '\\',
+				'name' => $namespaces['others'][0]['name'] ?? '',
+			]],
 		]);
 		// mailboxNode()'s 'aclCapable' field calls this for the INBOX path - stub it so tests
 		// that never construct a real connection don't fall through to the real
@@ -70,6 +76,34 @@ class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 		$this->assertSame('INBOX/Project', JmapShim::canonicalPath($imap, 'INBOX.Project'));
 		$this->assertSame('INBOX', JmapShim::canonicalPath($imap, 'INBOX'));
 		$this->assertSame('INBOX.Project', JmapShim::hordeMailbox($imap, 'INBOX/Project'));
+	}
+
+	/**
+	 * The real regression: a server whose "others" (shared/other-users) namespace delimiter
+	 * differs from its "personal" one - a real, documented Cyrus/Dovecot configuration.
+	 * canonicalPath() (raw IMAP name -> canonical path, used to build every Mailbox/get node's
+	 * id/parentId) unconditionally used the 'personal' delimiter, so a raw name under the
+	 * "others" namespace (here "user.otheruser.Sub", others delimiter '.') never got its
+	 * delimiter replaced with '/' at all - it stayed completely unsplittable by splitPath() (no
+	 * '/' in it), so mailboxNode() gave it parentId=null: a shared subfolder showing up as a
+	 * top-level node at the account root instead of nested under "user/otheruser" (ralf's live
+	 * report: "Renaming mail subfolder under user doesn't work and the folder is no longer
+	 * displayed... visible at the mailaccount itself"). hordeMailbox() (the reverse direction)
+	 * already had this exact "others" branch (96d3d0e353) - this pins its missing mirror image.
+	 */
+	public function testCanonicalPathUsesOthersDelimiterForSharedNamespace()
+	{
+		$imap = $this->mockImap([
+			'personal' => [['delimiter' => '/']],
+			'others' => [['delimiter' => '.', 'name' => 'user.']],
+		]);
+
+		$this->assertSame('user/otheruser/Sub', JmapShim::canonicalPath($imap, 'user.otheruser.Sub'));
+		// a personal-namespace name (not under the "others" prefix) is untouched by the 'others'
+		// delimiter - still translated via 'personal' ('/', a no-op here)
+		$this->assertSame('INBOX/Project', JmapShim::canonicalPath($imap, 'INBOX/Project'));
+		// round-trips correctly back to the real IMAP name for a rename/move target too
+		$this->assertSame('user.otheruser.Sub', JmapShim::hordeMailbox($imap, 'user/otheruser/Sub'));
 	}
 
 	public function testListChildIdsTopLevel()

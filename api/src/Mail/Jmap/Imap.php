@@ -641,6 +641,17 @@ class Imap extends Jmap\Base
 	 * Translate a real IMAP mailbox name to the EGroupware-canonical "/"-joined folder path -
 	 * the reverse of hordeMailbox(), needed to build id/parentId for mailboxGet()'s results.
 	 *
+	 * A mailbox under the shared/other-users namespace can use a DIFFERENT delimiter than the
+	 * personal one (same reasoning as hordeMailbox()'s own isNamespaceRootPath() branch, fixed
+	 * there by 96d3d0e353 but missed here, its exact mirror image) - found live 2026-09-04 (ralf:
+	 * "Renaming mail subfolder under user doesn't work and the folder is no longer displayed...
+	 * visible at the mailaccount itself"). Unconditionally using the 'personal' delimiter left a
+	 * name like "user.otheruser.Sub" (others delimiter '.') completely unsplittable by
+	 * splitPath() (no '/' in it at all) once mailboxNode() called this - so it got parentId=null,
+	 * showing up as a top-level node instead of nested under "user/...", and renaming it later
+	 * re-derived the wrong (personal) delimiter too, via hordeMailbox() no longer recognizing the
+	 * mangled path as a namespace root.
+	 *
 	 * @param \Horde_Imap_Client_Socket $imap
 	 * @param string $mailboxName
 	 * @return string
@@ -651,7 +662,9 @@ class Imap extends Jmap\Base
 		{
 			return 'INBOX';
 		}
-		$delimiter = self::namespaceDelimiter($imap, 'personal');
+		$othersPrefix = self::namespacePrefix($imap, 'others');
+		$isNamespaceRoot = $othersPrefix !== '' && stripos($mailboxName, $othersPrefix) === 0;
+		$delimiter = self::namespaceDelimiter($imap, $isNamespaceRoot ? 'others' : 'personal');
 		return $delimiter === '/' ? $mailboxName : str_replace($delimiter, '/', $mailboxName);
 	}
 
@@ -1214,6 +1227,24 @@ class Imap extends Jmap\Base
 		static $delimiters = [];
 		$key = spl_object_id($imap).'|'.$namespace;
 		return $delimiters[$key] ??= $imap->getNameSpaceArray()[$namespace][0]['delimiter'] ?? '/';
+	}
+
+	/**
+	 * Get (and cache, per request/connection) one of $imap's namespace prefixes - the raw IMAP
+	 * mailbox-name prefix identifying that namespace (eg. "user" + delimiter) - canonicalPath()'s
+	 * own counterpart of namespaceDelimiter(), needed to recognize a shared/other-users mailbox
+	 * name BEFORE it is translated to a canonical path (isNamespaceRootPath() only works on the
+	 * canonical "/"-joined form, the very thing canonicalPath() is building).
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $namespace 'personal'|'others'|'shared' (Horde_Imap_Client_Socket::getNameSpaceArray()'s keys)
+	 * @return string
+	 */
+	private static function namespacePrefix(\Horde_Imap_Client_Socket $imap, string $namespace) : string
+	{
+		static $prefixes = [];
+		$key = spl_object_id($imap).'|'.$namespace;
+		return $prefixes[$key] ??= (string)($imap->getNameSpaceArray()[$namespace][0]['name'] ?? '');
 	}
 
 	/**

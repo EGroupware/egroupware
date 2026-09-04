@@ -380,6 +380,44 @@ fail for the exact same underlying reason). Fixed:
   caller-side redesign) and `resolveInlineImages()`/`downloadAttachment()`/`fetchRawHeader()`
   (already-established different shapes, not enumerated in this pass).
 
+## FIXED (2026-09-04): renaming a shared-namespace subfolder ("user/...") failed and the folder disappeared from the tree
+
+New regression report (ralf): "Renaming mail subfolder under user doesn't work and the folder is
+no longer displayed (it's visible at the mailaccount itself)".
+
+**Root cause**: `Jmap\Imap::hordeMailbox()` (canonical path -> real IMAP name) already branches on
+`isNamespaceRootPath()` to use the "others" namespace's own delimiter for a "user/..."/"shared/..."
+path, since a server's other-users/shared namespace delimiter can genuinely differ from its
+personal one (fixed `96d3d0e353`, "Fix namespace-root selection guard and shared-namespace
+delimiter"). `canonicalPath()` - the REVERSE direction (real IMAP name -> canonical path, used to
+build every `Mailbox/get` node's own `id`/`parentId`) - never got that same fix: it unconditionally
+used the 'personal' delimiter. On a server where the two differ, a raw shared-namespace mailbox
+name (eg. `user.otheruser.Sub`, others delimiter `.`) never had its delimiter replaced with `/` at
+all, leaving it completely unsplittable by `splitPath()` (no `/` to split on) - `mailboxNode()`
+then computed `parentId = null` for it, so the folder-tree showed it as a top-level node directly
+under the account root ("visible at the mailaccount itself") instead of nested under "user/...".
+Renaming it then failed too: the id the client resolved from that wrong tree position decodes back
+via the same broken flat path, and by the time `hordeMailbox()` tries to reconstruct the real IMAP
+name for the actual `RENAME` command, `isNamespaceRootPath()` no longer matches (the first
+"/"-segment is the whole dotted string, not literally "user") - picking the wrong ('personal')
+delimiter for the target name Horde is asked to rename to.
+
+**Fix**: added `canonicalPath()`'s missing mirror-image branch - a new `namespacePrefix()` helper
+(parallel to the existing `namespaceDelimiter()`) reads the "others" namespace's own raw prefix
+(eg. "user."), and `canonicalPath()` now checks the RAW mailbox name against that prefix (before
+any translation - `isNamespaceRootPath()` itself only works on an already-canonical path, the thing
+this function is building) to pick the matching delimiter, exactly mirroring `hordeMailbox()`'s own
+`isNamespaceRootPath()` branch.
+
+**Verified**: added `testCanonicalPathUsesOthersDelimiterForSharedNamespace` to
+`mail/tests/JmapShimMailboxGetTest.php` (extending `mockImap()` to support a namespace `'name'`
+prefix override) - confirmed it actually catches the regression by reverting just the `Imap.php`
+fix locally first (failed with `'user.otheruser.Sub'` where `'user/otheruser/Sub'` was expected,
+matching the exact reported symptom), then restored the fix and re-ran clean. Full existing suite
+(`JmapShimMailboxGetTest` 28 tests, `JmapShimMailboxSetTest` 17 tests) still green - no regression
+to the existing `hordeMailbox()`/`canonicalPath()` round-trip coverage or namespace-root visibility
+tests.
+
 ## Related
 
 - [[mail-jmap-modernization]] - the parent project; row-listing/body-rendering/bulk-actions already
