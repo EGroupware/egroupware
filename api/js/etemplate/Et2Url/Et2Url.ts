@@ -12,6 +12,7 @@ import {Et2InvokerMixin} from "./Et2InvokerMixin";
 import {Et2Textbox} from "../Et2Textbox/Et2Textbox";
 import {colorsDefStyles} from "../Styles/colorsDefStyles";
 import {css} from "lit";
+import {property} from "lit/decorators/property.js";
 import {egw} from "../../jsapi/egw_global";
 
 /**
@@ -21,25 +22,17 @@ import {egw} from "../../jsapi/egw_global";
  */
 export class Et2Url extends Et2InvokerMixin(Et2Textbox)
 {
-	/** @type {any} */
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/**
-			 * Allow a path instead of a URL, path must start with /, default false = not allowed
-			 */
-			allowPath: {
-				type: Boolean,
-			},
-			/**
-			 * Require (or forbid) that the path ends with a /, default not checked
-			 */
-			trailingSlash: {
-				type: Boolean,
-			},
-		};
-	}
+	/**
+	 * Allow a path instead of a URL, path must start with /, default false = not allowed
+	 */
+	@property({type: Boolean})
+	allowPath : boolean;
+
+	/**
+	 * Require (or forbid) that the path ends with a /, default not checked
+	 */
+	@property({type: Boolean})
+	trailingSlash : boolean;
 
 	static get styles()
 	{
