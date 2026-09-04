@@ -32,7 +32,7 @@ import {et2_grid} from "./et2_widget_grid";
 import {et2_dataview_grid} from "./et2_dataview_view_grid";
 import {et2_dynheight} from "./et2_widget_dynheight";
 import {et2_arrayMgr} from "./et2_core_arrayMgr";
-import {et2_button} from "./et2_widget_button";
+import type {et2_button} from "./legacy-shims/et2_widget_button";
 import {et2_template} from "./legacy-shims/et2_widget_template";
 import {egw} from "../jsapi/egw_global";
 import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
@@ -3871,11 +3871,11 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 			{
 				definition = egw.preference('nextmatch-export-definition', this.nextmatch.egw().app_name());
 			}
-			let button = <et2_button>et2_createWidget("buttononly", {
+			let button = <et2_button>et2_createWidget("button", {
 				id: "export",
 				"statustext": "Export",
 				image: "download",
-				"background_image": true
+				noSubmit: true
 			}, this);
 			jQuery(button.getDOMNode())
 				.click(this.nextmatch, function(event)

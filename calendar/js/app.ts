@@ -23,7 +23,7 @@ import {et2_calendar_planner_row} from "./et2_widget_planner_row";
 import {et2_calendar_event} from "./et2_widget_event";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {et2_valueWidget} from "../../api/js/etemplate/et2_core_valueWidget";
-import type {et2_button} from "../../api/js/etemplate/et2_widget_button";
+import type {et2_button} from "../../api/js/etemplate/legacy-shims/et2_widget_button";
 import type {et2_selectbox} from "../../api/js/etemplate/legacy-shims/et2_widget_selectbox";
 import {et2_widget} from "../../api/js/etemplate/et2_core_widget";
 import type {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";

@@ -145,7 +145,7 @@ import './legacy-shims/et2_widget_template';
 import './et2_widget_grid';
 import './et2_widget_box';
 import './legacy-shims/et2_widget_hbox';
-import './et2_widget_button';
+import './legacy-shims/et2_widget_button';
 import './et2_widget_entry';
 import './legacy-shims/et2_widget_textbox';
 import './legacy-shims/et2_widget_number';
