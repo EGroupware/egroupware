@@ -367,7 +367,10 @@ class filemanager_hooks
 			}
 			if($stat['gid'])
 			{
-				$account_id += $GLOBALS['egw']->accounts->members('-' . $stat['gid'], true);
+				// NOT "+=": that's array UNION, which silently drops whichever group member
+				// happens to land on an index already used above (eg. index 0, if $stat['uid']
+				// was just pushed there), since members() returns a plain 0-indexed array too.
+				$account_id = array_unique(array_merge($account_id, $GLOBALS['egw']->accounts->members('-' . $stat['gid'], true) ?: []));
 			}
 		}
 		else
