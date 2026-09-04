@@ -137,9 +137,9 @@ class TemplateTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 
 	/**
 	 * A name can resolve to a file that exists but does not define it, which is reported by a second,
-	 * separate error_log() - eg. the probe for "filemanager.filter" reads filter.xet, which only defines
-	 * "filemanager.index.filter". For a probe that is still just "no such template", so quiet has to
-	 * cover that message too.
+	 * separate error_log() - eg. an app ships <app>/templates/default/filter.xet for one nextmatch, and
+	 * another nextmatch's derived filter-template name maps to that same file without being defined in
+	 * it. For a probe that is still just "no such template", so quiet has to cover that message too.
 	 *
 	 * $load_via resolves the path from api.nested (api/templates/test/nested.xet) while we ask for a
 	 * name that file does not define, which is the cheapest way to reach that branch.

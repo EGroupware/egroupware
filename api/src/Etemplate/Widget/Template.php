@@ -133,8 +133,8 @@ class Template extends Etemplate\Widget
 			}
 		}
 
-		// template isn't found in the file its name maps to: for a probe that just means the template does
-		// not exist (eg. "filemanager.filter" maps to filter.xet, which only defines "filemanager.index.filter")
+		// template isn't found in the file its name maps to: for a probe that just means the template
+		// does not exist (eg. a name whose file happens to exist, but defines other templates only)
 		if (!$quiet)
 		{
 			error_log(__METHOD__."('$name', '$template_set', '$version', '$load_via') template NOT found in file '$path'!");

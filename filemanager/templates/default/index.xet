@@ -84,6 +84,10 @@
 	</et2-template>
 	<template id="filemanager.index" template="" lang="" group="0" version="1.9.003">
 		<et2-template template="filemanager.index.app-toolbar" slot="main-header"></et2-template>
-        <et2-nextmatch id="nm" template="filemanager.index.rows"/>
+        <!-- filter_template is set explicitly because it can not be derived: the rows-template
+             changes with the view (filemanager.index.rows vs. filemanager.tile), so Nextmatch
+             would derive a different filter-template name per view, while both views share
+             the same filters. -->
+        <et2-nextmatch id="nm" template="filemanager.index.rows" filter_template="filemanager.filter"/>
 	</template>
 </overlay>
