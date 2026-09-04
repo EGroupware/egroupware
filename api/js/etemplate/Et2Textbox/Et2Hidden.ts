@@ -36,6 +36,19 @@ export class Et2Hidden extends Et2InputWidget(LitElement)
 	@property()
 	value = "";
 
+	/**
+	 * A hidden input carries no user-editable state, so there is nothing for
+	 * `readonly` to protect: it only ever arrives here inherited from a template
+	 * whose readonlys use `__ALL__`. Et2InputWidget would then answer null, which
+	 * silently loses server-provided values (eg. the ajax url an app-box tab
+	 * loader reads from its "<tab>_iframe_load" widget), so hand out the value
+	 * regardless. `disabled` still hides it, as for any input.
+	 */
+	getValue(submit_value? : boolean)
+	{
+		return this.disabled ? null : this.value;
+	}
+
 	render()
 	{
 		return html`
