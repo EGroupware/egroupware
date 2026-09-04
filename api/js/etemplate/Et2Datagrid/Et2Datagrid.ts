@@ -4691,7 +4691,11 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			bubbles: true,
 			composed: true
 		}));
-		this.columns = this._columnState.applySelectionOrder(this.columns || [], applyDetail.selectedOrder);
+		this.columns = this._columnState.applySelectionOrder(
+			this.columns || [],
+			applyDetail.selectedOrder,
+			this._parseColumnBooleanExpression.bind(this)
+		);
 		this._rebuildCustomfieldColumnStateCache();
 		// Apply track sizes and current rendered-row cell visibility immediately.
 		this._ensureTableColSizes();

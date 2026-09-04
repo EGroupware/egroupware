@@ -192,8 +192,19 @@ export class Et2DatagridColumnState
 	 *
 	 * The chooser returns a subset order, but we need to preserve original entries,
 	 * hide unselected columns, and keep selected columns in chosen sequence.
+	 *
+	 * @param parseExpression Resolves a column's `disabled` expression.  Columns disabled by
+	 * their template (eg. `disabled="@no_customfields"`) are deliberately left out of the
+	 * chooser, so they arrive here looking unselected.  Without a way to tell them apart we
+	 * would overwrite the user's own show/hide choice with `hidden: true` and persist it,
+	 * turning a condition that is meant to override the preference while it holds into a
+	 * permanent change to it.
 	 */
-	applySelectionOrder(columns : Et2DatagridColumn[], selectedKeysInOrder : string[]) : Et2DatagridColumn[]
+	applySelectionOrder(
+		columns : Et2DatagridColumn[],
+		selectedKeysInOrder : string[],
+		parseExpression? : (expression : string) => boolean
+	) : Et2DatagridColumn[]
 	{
 		const byKey = new Map((columns || []).map((column) => [String(column.key), column]));
 		const customfieldColumnsByFieldName = new Map<string, Set<string>>();
@@ -274,7 +285,9 @@ export class Et2DatagridColumnState
 			}
 			return {
 				...column,
-				hidden: true
+				// Not offered in the chooser, so "unselected" says nothing about what the
+				// user wants - keep their stored choice for when the condition clears.
+				hidden: this.isColumnDisabled(column, parseExpression) ? !!column.hidden : true
 			};
 		});
 

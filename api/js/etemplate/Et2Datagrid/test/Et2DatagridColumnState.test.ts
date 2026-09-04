@@ -86,6 +86,43 @@ describe("Et2DatagridColumnState", () =>
 
 	/**
 	 * Contract under test:
+	 * - A column disabled by its template expression overrides the user's preference while the
+	 *   expression holds, but must not replace it: applying a chooser selection has to leave
+	 *   that column's stored `hidden` alone, because the chooser never offered it and so
+	 *   "unselected" carries no intent.
+	 *
+	 * Setup strategy:
+	 * - Three columns, the middle one disabled by expression, one of the others genuinely
+	 *   deselected.  The parser reports the expression as true, matching what the chooser saw
+	 *   when it filtered that column out.
+	 *
+	 * Pass criteria:
+	 * - The genuinely unselected column is hidden.
+	 * - The disabled column keeps the `hidden` it came in with, in both states.
+	 */
+	it("keeps the stored preference of an expression-disabled column when applying a selection", () =>
+	{
+		const state = new Et2DatagridColumnState();
+		const parseExpression = (expression : string) => expression === "@no_customfields";
+		const columns : Et2DatagridColumn[] = [
+			{key: "subject", title: "Subject"},
+			{key: "customfields", title: "Custom fields", disabled: "@no_customfields", hidden: false},
+			{key: "modified", title: "Modified"}
+		];
+
+		const next = state.applySelectionOrder(columns, ["subject"], parseExpression);
+
+		assert.equal(next[0].hidden, false, "selected column stays visible");
+		assert.equal(next[1].hidden, false, "user had the disabled column shown - that choice must survive");
+		assert.equal(next[2].hidden, true, "a column the user really did deselect is hidden");
+
+		const userHidThem = columns.map((column) => ({...column, hidden: true}));
+		const alsoNext = state.applySelectionOrder(userHidThem, ["subject"], parseExpression);
+		assert.equal(alsoNext[1].hidden, true, "a disabled column the user had hidden stays hidden");
+	});
+
+	/**
+	 * Contract under test:
 	 * - Customfield chooser ids are plain customfield names.
 	 *
 	 * Setup strategy:
