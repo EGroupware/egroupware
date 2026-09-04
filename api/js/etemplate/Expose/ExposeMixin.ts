@@ -12,6 +12,7 @@
 // Don't import this more than once
 import "../../../../node_modules/blueimp-gallery/js/blueimp-gallery.min";
 import {css, html, LitElement, render} from "lit";
+import {property} from "lit/decorators/property.js";
 import {et2_nextmatch} from "../et2_extension_nextmatch";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import {ET2_DATAVIEW_STEPSIZE} from "../et2_dataview_controller";
@@ -73,7 +74,7 @@ export interface MediaValue
 
 export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 {
-	return class extends superclass
+	class ExposeMixinClass extends superclass
 	{
 		static get styles()
 		{
@@ -84,20 +85,14 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 			];
 		}
 
-		static get properties()
-		{
-			return {
-				...super.properties,
-
-				/**
-				 * Function to extract an image list
-				 *
-				 * "Normally" we'll try to pull a list of images from the nextmatch or show just the current widget,
-				 * but if you know better you can provide a method to get the list.
-				 */
-				mediaContentFunction: {type: Function},
-			}
-		}
+		/**
+		 * Function to extract an image list
+		 *
+		 * "Normally" we'll try to pull a list of images from the nextmatch or show just the current widget,
+		 * but if you know better you can provide a method to get the list.
+		 */
+		@property({type: Function})
+		mediaContentFunction : any;
 
 		// @ts-ignore
 		private _gallery : blueimp.Gallery;
@@ -988,4 +983,6 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 			this.getInstanceManager().download(data.download_href ?? data.download_url ?? data.href);
 		}
 	}
+
+	return ExposeMixinClass as unknown as Constructor<ExposeMixinClass> & B;
 }
