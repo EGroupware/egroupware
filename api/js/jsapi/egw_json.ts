@@ -508,7 +508,17 @@ class JsonRequest
 							gen_time_div.append('<span class="asyncIncludeTime"></span>').find('.asyncIncludeTime');
 						gen_time_async.text(egw.lang('async includes took %1s', (end_time-start_time)/1000));
 					}*/
-				}));
+				}))
+				.catch((e) =>
+				{
+					// Detached from the caller's promise chain - without this, a failed js_files
+					// load is an unhandled rejection and the tab is left blank.
+					this.egw.debug('error', 'Loading a js file from an ajax response failed:', e);
+					this.egw.message.call(this.egw,
+						this.egw.lang('Please reload the EGroupware desktop (F5 / Cmd+r).'),
+						'error'
+					);
+				});
 				return;
 			}
 
@@ -572,6 +582,22 @@ class JsonRequest
 								{
 									// wrapped for the same reason as the js_files branch above
 									promise.then(this.#wrapCallback(() => this.handleResponse({response: apply_app})));
+								}
+								// An async plugin can reject well after this try/catch already returned,
+								// which would otherwise be an unhandled rejection - eg. etemplate2.handle_load()
+								// building the widget tree for a freshly opened app tab.
+								if (promise && typeof promise.catch === 'function')
+								{
+									promise.catch((e) =>
+									{
+										this.egw.debug('error', 'Exception "' + (e.message || e) + '" while handling JSON response from ' +
+											this.url + ' [' + JSON.stringify(this.parameters) + '] type "' + res.type +
+											'", plugin', plugin, 'response', res, e.stack);
+										this.egw.message.call(this.egw,
+											this.egw.lang('Please reload the EGroupware desktop (F5 / Cmd+r).'),
+											'error'
+										);
+									});
 								}
 							} catch(e) {
 								var msg = e.message ? e.message : e + '';
@@ -929,7 +955,15 @@ class Json implements JsonModule
 				{
 					return (<any>self.#wnd).egw_import(this.webserverUrl+'/'+parts[1]+'/js/app.min.js?'+((new Date).valueOf()/86400000|0).toString())
 						.then(() => this.applyFunc(_func, args, _context || self.#wnd),
-							(err) => {console.error("Failure loading /"+parts[1]+'/js/app.min.js' + " (" + err + ")\nAborting.")});
+							(err) =>
+							{
+								// console.error alone left whoever was waiting on this call silently stuck.
+								console.error("Failure loading /"+parts[1]+'/js/app.min.js' + " (" + err + ")\nAborting.");
+								egw(self.#wnd).message(
+									egw(self.#wnd).lang('Please reload the EGroupware desktop (F5 / Cmd+r).'),
+									'error'
+								);
+							});
 				}
 				// check if we need a not yet instantiated app.js object --> instantiate it now
 				else if (i == 1 && parts[0] == 'app' && typeof (_context || self.#wnd).app.classes[parts[1]] === 'function')
