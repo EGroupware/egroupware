@@ -1956,11 +1956,12 @@ class mail_ui
 		}
 		if (!$preventRedirect && $isDraftOrTemplate)
 		{
-			// jmap=1 (only when the user's own "jmapCompose" preference is on) so compose.ts's
-			// own bootstrapDraft() takes over client-side instead of the classic getDraftData()
-			// fetch - mail_compose.inc.php's own $jmapReplySkip already recognizes 'composefromdraft'
-			$jmap = !empty($GLOBALS['egw_info']['user']['preferences']['mail']['jmapCompose']) ? ['jmap' => '1'] : [];
-			Egw::redirect_link('/index.php', ['menuaction' => 'mail.mail_compose.compose', 'id' => $rowID, 'from' => 'composefromdraft'] + $jmap);
+			// jmap=1 so compose.ts's own bootstrapDraft() takes over client-side instead of the
+			// classic getDraftData() fetch - mail_compose.inc.php's own $jmapReplySkip already
+			// recognizes 'composefromdraft'. Used to be gated behind the "jmapCompose" preference
+			// (a temporary testing toggle, removed doc/ai/projects/mail-compose-jmap-migration.md
+			// Step 10) - always on now.
+			Egw::redirect_link('/index.php', ['menuaction' => 'mail.mail_compose.compose', 'id' => $rowID, 'from' => 'composefromdraft', 'jmap' => '1']);
 		}
 
 		$content = [

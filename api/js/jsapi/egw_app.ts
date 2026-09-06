@@ -993,6 +993,66 @@ export abstract class EgwApp
 	}
 
 	/**
+	 * Bootstrap a template entirely client-side - no server round-trip at all, for a popup opened
+	 * via egw.clientSidePopup() (api/js/jsapi/egw_open.ts), which has no server-rendered content
+	 * behind it to begin with (unlike viewEntry()'s et2-dialog above, which is still hosted inside
+	 * an already-loaded page).
+	 *
+	 * Replicates api/src/Etemplate.php's own exec()/api/templates/default/head.tpl popup-mode DOM
+	 * shape - `<div id="popupMainDiv" class="popupMainDiv">` wrapping a `<form class="et2_container">`
+	 * plus its matching hidden autocomplete-helper iframe - since CSS throughout (kdots/css/src/
+	 * popups.css, several apps' own app.css) targets that specific id/class/structure, both for
+	 * generic popup chrome (dialog header/footer spacing) and per-app layout (eg. mail's own
+	 * "#popupMainDiv { height: 100% }"), and browsers need a real enclosing `<form target="...">`
+	 * for autocomplete widgets to work at all (found live 2026-09-06 building mail's own
+	 * client-side compose popup this way, ralf: "it adds some styling currently missing").
+	 *
+	 * @param name template id, "$app.$template" form (eg. "mail.compose") - also used, with dots
+	 *  replaced by dashes, as the container's own DOM id and etemplate2's uniqueId. Passing the RAW
+	 *  dotted name as etemplate2's uniqueId instead breaks any widget whose id-derived DOM id gets
+	 *  used elsewhere as a dotted "global.path" - found live 2026-09-06: Et2HtmlArea's TinyMCE
+	 *  config/setup bridge (`window.egwEt2HtmlAreaConfigBridge['mail.compose_xxx']`) is resolved by
+	 *  the tinymce webcomponent naively splitting its "config"/"setup" attribute values on "." - a
+	 *  dotted id looked for a NESTED property instead of the one flat key that's actually there,
+	 *  resolved to undefined, and TinyMCE's own init callback into Et2HtmlArea silently never fired
+	 *  (`widget.tinymce`, and anything awaiting it, hung forever). A real server-rendered
+	 *  container's own id already gets this same dot->dash treatment (etemplate2's constructor
+	 *  itself does it for its container-id-derived fallback; api/js/etemplate/Et2Dialog/Et2Dialog.ts's
+	 *  `DOMContainer.setAttribute('id', templateID)` does it explicitly), so this only matters when
+	 *  passing an explicit uniqueId, which is exactly what a from-scratch popup has to do.
+	 * @param data {content, sel_options, readonlys, modifications, currentapp, ...} - same shape
+	 *  etemplate2.load()'s own _createArrayManagers() expects
+	 * @return the loaded etemplate2 instance - its own et2_ready() has already run by the time this
+	 *  resolves (the caller's app object must already exist on `window.app` by then if it needs to
+	 *  handle that callback, same as any classic postback)
+	 */
+	async bootstrapClientSideTemplate(name : string, data : any) : Promise<etemplate2>
+	{
+		const domId = name.replace(/\./g, '-');
+
+		const popupMainDiv = document.createElement('div');
+		popupMainDiv.id = 'popupMainDiv';
+		popupMainDiv.className = 'popupMainDiv';
+		document.body.appendChild(popupMainDiv);
+
+		const container = document.createElement('form');
+		container.target = 'egw_iframe_autocomplete_helper';
+		container.action = 'about:blank';
+		container.id = domId;
+		container.className = 'et2_container';
+		popupMainDiv.appendChild(container);
+
+		const autocompleteHelper = document.createElement('iframe');
+		autocompleteHelper.name = 'egw_iframe_autocomplete_helper';
+		autocompleteHelper.style.cssText = 'width:0;height:0;position:absolute;visibility:hidden;';
+		popupMainDiv.appendChild(autocompleteHelper);
+
+		const et2 = new etemplate2(container, '', domId);
+		await et2.load(name, '', data);
+		return et2;
+	}
+
+	/**
 	 * Opens _menuaction in an Et2Dialog
 	 *
 	 * Equivalent to egw.openDialog, though this one works in popups too.

@@ -32,14 +32,22 @@ export class MailCompose
 	private autosaveInterval : number;
 
 	/**
-	 * doc/ai/projects/mail-compose-jmap-migration.md - set from this popup's own "&jmap=1" URL
-	 * param, added by MailApp.composeMessage() for a genuinely new blank message (Step 1) or a
-	 * single reply (Step 4, first slice - never reply_all/forward yet) opened while the
-	 * "jmapCompose" toolbar toggle is on (see jmapComposeEnabled's docblock). Read once here
-	 * rather than in submitAction() so a mid-edit toggle change in the (separate) main window
-	 * can't retroactively change an already-open compose window's send behaviour.
+	 * Set for every popup MailApp.bootstrapComposePopup() creates (doc/ai/projects/
+	 * mail-compose-jmap-migration.md, Step 10) - a clientSidePopup() compose never has a classic
+	 * server-rendered content array behind it at all, so `from`/`sourceId` are passed in directly
+	 * (there's no real navigation URL to read them back from - the popup's own document was never
+	 * actually loaded from a URL, see egw_open.ts's clientSidePopup()).
+	 *
+	 * null for a popup MailApp.composeMessage() DIDN'T create this way - currently just
+	 * mail_ui::ajax_view()'s composefromdraft redirect (a real page load, batch/forwardasattach's
+	 * classic egw.openWithinWindow() path, and mailto:/vCard/filemanager entry points, all still
+	 * out of this pass's scope) - isJmapMode falls back to the classic "&jmap=1" URL param for
+	 * those (composefromdraft is the only one that still ever sets it, unconditionally since the
+	 * "jmapCompose" testing toggle was removed - ralf: "it was only a temporary means for testing").
 	 */
-	private readonly isJmapMode : boolean = new URLSearchParams(window.location.search).get('jmap') === '1';
+	private readonly explicitBootstrap : { from : string, sourceId : string, mode : string } | null;
+
+	private readonly isJmapMode : boolean;
 
 	/**
 	 * Public read-only mirror of isJmapMode - lets MailApp.setCompose() (called on this SAME
@@ -208,9 +216,11 @@ export class MailCompose
 		return this.app.egw;
 	}
 
-	constructor(mail : MailApp)
+	constructor(mail : MailApp, explicitBootstrap? : { from : string, sourceId : string, mode : string })
 	{
 		this.app = mail;
+		this.explicitBootstrap = explicitBootstrap || null;
+		this.isJmapMode = explicitBootstrap ? true : new URLSearchParams(window.location.search).get('jmap') === '1';
 
 		this.handleEtemplateClear = this.handleEtemplateClear.bind(this);
 	}
@@ -1164,9 +1174,9 @@ export class MailCompose
 	/**
 	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 4, first slice - dispatches to
 	 * bootstrapReply() for a JMAP-mode single reply/reply-with-attachments/inline-forward
-	 * (identified purely from this popup's own URL params, same technique isJmapMode already uses
-	 * - "&from=reply&id=<rowId>", added by MailApp.composeMessage() only when the "jmapCompose"
-	 * toggle is on), else the existing bootstrapSignature() for a genuinely new blank compose.
+	 * (identified from explicitBootstrap, or this popup's own "&from=reply&id=<rowId>" URL params
+	 * for the still-classic composefromdraft redirect - see explicitBootstrap's own docblock),
+	 * else the existing bootstrapSignature() for a genuinely new blank compose.
 	 * "reply_attachments" (added 2026-08-31, attachment carry-forward slice) is the same reply
 	 * plus carrying the original message's own attachments along - matching the classic code's own
 	 * `getForwardData()` + `getReplyData()` fallthrough composition of the same two features.
@@ -1183,10 +1193,8 @@ export class MailCompose
 	 * cc (same exclusions, plus anything already in `to`) into `cc`. "Merge this forward into an
 	 * already-open compose window" (egw.openWithinWindow()'s own multi-popup picker calling that
 	 * OTHER window's live setCompose(), not a URL load at all) is architecturally out of scope here
-	 * - composeMessage() still sets "&jmap=1" for that case (harmless: it only matters if
-	 * openWithinWindow() actually opens a fresh popup instead), but isJmapMode is fixed at that
-	 * OTHER window's own original load time and unrelated to this action, so it's a no-op there,
-	 * same as before this slice.
+	 * - isJmapMode is fixed at that OTHER window's own original load time and unrelated to this
+	 * action, so it's a no-op there, same as before this slice.
 	 */
 	private async bootstrapCompose() : Promise<void>
 	{
@@ -1194,23 +1202,29 @@ export class MailCompose
 		this.bootstrapping = true;
 		try
 		{
+			// explicitBootstrap (a clientSidePopup() compose) takes precedence over the classic
+			// "&jmap=1"-style URL params, which only ever apply to a real navigation (currently just
+			// mail_ui::ajax_view()'s composefromdraft redirect) - see explicitBootstrap's own docblock.
 			const params = new URLSearchParams(window.location.search);
-			const from = params.get('from') as 'reply' | 'reply_attachments' | 'reply_all' | 'forward' | 'composeasnew' | 'composefromdraft' | null;
-			if (from === 'forward' && params.get('mode') === 'forwardasattach')
+			const from = (this.explicitBootstrap ? this.explicitBootstrap.from : params.get('from')) as
+				'reply' | 'reply_attachments' | 'reply_all' | 'forward' | 'composeasnew' | 'composefromdraft' | null;
+			const id = this.explicitBootstrap ? this.explicitBootstrap.sourceId : params.get('id');
+			const mode = this.explicitBootstrap ? this.explicitBootstrap.mode : params.get('mode');
+			if (from === 'forward' && mode === 'forwardasattach')
 			{
-				await this.bootstrapForwardAsAttachment((params.get('id') || '').split(',').filter(Boolean));
+				await this.bootstrapForwardAsAttachment((id || '').split(',').filter(Boolean));
 			}
-			else if (from === 'composeasnew' && params.get('id'))
+			else if (from === 'composeasnew' && id)
 			{
-				await this.bootstrapComposeAsNew(params.get('id'));
+				await this.bootstrapComposeAsNew(id);
 			}
-			else if (from === 'composefromdraft' && params.get('id'))
+			else if (from === 'composefromdraft' && id)
 			{
-				await this.bootstrapDraft(params.get('id'));
+				await this.bootstrapDraft(id);
 			}
 			else if (from === 'reply' || from === 'reply_attachments' || from === 'reply_all' || from === 'forward')
 			{
-				const sourceId = params.get('id');
+				const sourceId = id;
 				if (sourceId)
 				{
 					await this.bootstrapReply(sourceId, from);

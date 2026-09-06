@@ -89,6 +89,35 @@ export interface OpenModule
 			  _returnID? : boolean, _status? : "yes"|"no", _skip_framework? : boolean) : Window|void;
 
 	/**
+	 * Open a (centered) popup window whose content is bootstrapped entirely client-side - no
+	 * server round-trip (no menuaction URL) at all for the popup's own opening.
+	 *
+	 * Opens 'about:blank', then clones this window's own `#egw_script_id` `<script>` tag (same
+	 * `data-include`/`data-app`/etc. - already correct for whatever app/page is opening the popup)
+	 * plus its stylesheet `<link>`s into the new window's `<head>`, and appends one more inline
+	 * module `<script>` that awaits that window's own `egw_ready` and then calls `_method` there
+	 * via the same `egw(window).json.applyFunc()` dotted-path resolution every `onExecute:
+	 * 'javaScript:app.x.y'` action string already uses elsewhere - including its existing
+	 * lazy-load-the-app-bundle-if-missing behaviour, so `_method`'s own app doesn't need to already
+	 * be loaded in the opener.
+	 *
+	 * The new window sets `window.opener` (a real `window.open()`, not an iframe), so egw.js's own
+	 * bootstrap (api/js/jsapi/egw.js) reuses `window.opener.top.egw`/`.framework` instead of
+	 * re-fetching config/user/lang - same mechanism a classic full-page popup already relies on,
+	 * just without that classic popup's own initial menuaction render.
+	 *
+	 * @param _method dotted `app.method` string, resolved the same way an action's own
+	 *  `onExecute: 'javaScript:...'` string is (api/js/jsapi/egw_json.ts's `applyFunc()`)
+	 * @param _args arguments passed to `_method`
+	 * @param _width
+	 * @param _height
+	 * @param _windowName or "_blank"
+	 * @return the new popup window, or undefined if the popup was blocked
+	 */
+	clientSidePopup(_method : string, _args : any[], _width : number, _height : number|"availHeight",
+					_windowName? : string) : Window|void;
+
+	/**
 	 * Get available height of screen
 	 */
 	availHeight() : number;
@@ -720,6 +749,152 @@ class Open implements OpenModule
 
 		// returning something, replaces whole window in FF, if used in link as "javascript:egw_openWindowCentered2()"
 		if (_returnID !== false) return windowID;
+	})(this);
+
+	/**
+	 * See OpenModule.clientSidePopup()'s own docblock.
+	 *
+	 * `window.open('about:blank', ...)` MUST run synchronously in this same tick, before anything
+	 * async - popup blockers only tolerate window.open() called directly inside a user-gesture
+	 * handler, so the window is opened blank first and filled in afterward, not the other way
+	 * round.
+	 */
+	clientSidePopup = ((self : Open) => function(this : any, _method : string, _args : any[], _width : any, _height : any,
+		_windowName? : string) : Window|void
+	{
+		egw.debug("navigation", "clientSidePopup(%s, %o, %s, %s)", _method, _args, _width, _height);
+
+		if (_height == 'availHeight') _height = this.availHeight();
+
+		const top_wnd : any = egw.top;
+		const positionLeft = (top_wnd.outerWidth/2)-(_width/2)+(<any>self.#wnd).screenX;
+		const positionTop  = (top_wnd.outerHeight/2)-(_height/2)+(<any>self.#wnd).screenY;
+
+		const popup = self.#wnd.open('about:blank', _windowName || '_blank', "width=" + _width + ",height=" + _height +
+			",screenX=" + positionLeft + ",left=" + positionLeft + ",screenY=" + positionTop + ",top=" + positionTop +
+			",location=no,menubar=no,directories=no,toolbar=no,scrollbars=yes,resizable=yes");
+		if (!popup)
+		{
+			// blocked - same silent-return convention openPopup() itself uses for a falsy windowID
+			return;
+		}
+
+		const openerDoc = self.#wnd.document;
+		const doc = popup.document;
+		doc.open();
+		doc.write('<!DOCTYPE html><html><head><meta charset="utf-8"></head><body></body></html>');
+		doc.close();
+
+		// stylesheet <link>s (theme/Shoelace CSS).
+		openerDoc.querySelectorAll('link[rel="stylesheet"]').forEach((link : HTMLLinkElement) =>
+		{
+			const clone = doc.createElement('link');
+			clone.rel = 'stylesheet';
+			clone.href = link.href;
+			doc.head.appendChild(clone);
+		});
+		// Inline <style> blocks too - api/templates/default/head.tpl's own un-attributed
+		// `<style>{app_css}</style>` (api/src/Framework.php's _get_css()/fonts()/app_colors()) is
+		// where the user's own "textsize" preference and font-family land, as a plain
+		// `:root, :host, body, input { font-size: ...px; font-family: ...; }` rule - a <link>-only
+		// copy left every widget rendering at the BROWSER's default font-size instead (found live
+		// 2026-09-06, ralf: "the font-size is still off" - client-side noticeably larger than a
+		// classic postback's own compose popup). Has no id/class of its own to target specifically,
+		// so every <style> in the opener's <head> is copied, matching how every stylesheet <link>
+		// already is.
+		openerDoc.querySelectorAll('head style').forEach((style : HTMLStyleElement) =>
+		{
+			const clone = doc.createElement('style');
+			clone.textContent = style.textContent;
+			doc.head.appendChild(clone);
+		});
+
+		// The opener's own #egw_script_id tag carries the CORE bootstrap essentials this popup
+		// needs (api/src/Framework.php's _get_js()) - data-include/data-app/data-epoch are already
+		// correct for whatever app/page is opening it - but ALSO several main-framework-window-only
+		// attributes (data-navbar-apps, data-websocket-*, data-app-header, data-grants, ...) that
+		// exist to bootstrap a full app window's own navbar/push-connection/ACL-grants state. A
+		// clientSidePopup() is never a main window, so only the attributes egw.js's own bootstrap
+		// actually needs to build `window.egw`/`egw_ready` are copied - an explicit allowlist,
+		// deliberately NOT "copy everything", to avoid this popup redundantly opening its own
+		// second websocket connection or re-rendering navbar state it will never show (ralf,
+		// 2026-09-06).
+		const egwScript = openerDoc.getElementById('egw_script_id');
+		if (!egwScript)
+		{
+			console.error('egw.clientSidePopup(): no #egw_script_id in the opener - cannot bootstrap');
+			popup.close();
+			return;
+		}
+		// Built fresh rather than egwScript.cloneNode(true) - a cloned script element that already
+		// carried a (root-relative) `src` misbehaves even after that `src` is immediately
+		// overwritten with an absolute URL: neither its load/error events nor any window-level
+		// error ever fire, the fetch just silently never happens (found live 2026-09-06). A script
+		// element built from scratch, given an absolute `src` from the start and never a
+		// root-relative one at any point, works correctly.
+		const egwScriptClone = doc.createElement('script') as HTMLScriptElement;
+		egwScriptClone.type = 'module';
+		egwScriptClone.id = 'egw_script_id';	// egw.js's own bootstrap finds itself by this id
+		['data-url', 'data-app', 'data-epoch', 'data-include'].forEach((name) =>
+		{
+			const value = egwScript.getAttribute(name);
+			if (value !== null) egwScriptClone.setAttribute(name, value);
+		});
+		// `data-include` reflects the OPENER's own page, not this popup - api/src/Framework.php's
+		// _get_js() tracks, per session, which JS a given app has "already sent" this browsing
+		// session and omits it from data-include on a later internal navigation within the SAME
+		// app/window (found live 2026-09-06: opening this from the mail LIST page - which had
+		// already received mail/js/app.min.js on an earlier navigation - produced a data-include
+		// with NO mail entry at all, while a real server-rendered mail_compose.compose() popup's
+		// own tag always has one, since ITS window/session-tracking context is fresh). A
+		// clientSidePopup() is always exactly that: a fresh context that has never received
+		// _method's own app bundle, so it's added explicitly here if the copied list doesn't
+		// already have it - reusing an existing app.min.js entry's own cache-bust query string
+		// (they're all written by the same build) rather than inventing one.
+		// data-app is likewise the OPENER's own app (or, for the top framework window, "eGroupWare"
+		// itself - the opener's #egw_script_id isn't necessarily the content window's own), not
+		// _method's app - set it explicitly rather than carrying the copied value forward. Every
+		// popup with an etemplate always loads etemplate's own separate tinymce chunk regardless of
+		// app (ralf, 2026-09-06) - only data-app and _method's own app bundle entry in data-include
+		// actually vary per app, so that's all that needs fixing up here.
+		const targetApp = _method.split('.')[0] === 'app' ? _method.split('.')[1] : null;
+		if (targetApp)
+		{
+			egwScriptClone.setAttribute('data-app', targetApp);
+
+			const include : string[] = JSON.parse(egwScriptClone.getAttribute('data-include') || '[]');
+			if (!include.some((entry) => entry.startsWith(targetApp + '/js/app.min.js')))
+			{
+				const sampleBundle = include.find((entry) => /\/js\/app\.min\.js\?/.test(entry));
+				const cacheBust = sampleBundle ? sampleBundle.split('?')[1] : '';
+				include.push(targetApp + '/js/app.min.js' + (cacheBust ? '?' + cacheBust : ''));
+				egwScriptClone.setAttribute('data-include', JSON.stringify(include));
+			}
+		}
+		// the original's `src` is root-relative ("/egroupware/api/js/jsapi/egw.min.js?...") -
+		// resolving that against a document.write()-derived about:blank popup's own base URL is
+		// exactly the failure described above, so this is always resolved to a fully absolute URL
+		// here, up front - the popup DOES correctly inherit the opener's ORIGIN (same-origin access,
+		// egw.js's own opener-detection works fine), it's specifically relative-URL RESOLUTION that
+		// isn't reliable in this context.
+		egwScriptClone.src = new URL(egwScript.getAttribute('src') || '', self.#wnd.location.href).href;
+		// egw.js's own bootstrap (api/js/jsapi/egw.js) reads this new attribute at the very end of
+		// its own ready-chain and calls applyFunc(method, args, window) there - the same dotted
+		// "app.method" resolution any 'javaScript:app.x.y' onExecute action string already uses
+		// (including its lazy-load-the-app-bundle-if-missing behaviour), just invoked once the
+		// framework is ready instead of from a click. Handling this INSIDE egw.js's own bootstrap
+		// chain (rather than a separately loaded/injected tail script) sidesteps two real problems
+		// found live 2026-09-06 testing a separate-file version of this: (1) a genuinely-blank
+		// popup's document inherits the OPENER's CSP as its "responsible document" (no real HTTP
+		// response of its own), and this server's script-src has no 'unsafe-inline'/nonce/hash, so
+		// an injected INLINE script was silently blocked; (2) even a same-origin EXTERNAL tail
+		// script (CSP-compliant) has no reliable execution-order guarantee relative to this one
+		// once both are dynamically inserted - it raced ahead and ran before `window.egw_ready` had
+		// even been assigned yet, not merely unresolved.
+		egwScriptClone.setAttribute('data-start', JSON.stringify({method: _method, args: _args || []}));
+		doc.head.appendChild(egwScriptClone);
+
+		return popup;
 	})(this);
 
 	/**

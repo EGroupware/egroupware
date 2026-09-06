@@ -155,6 +155,18 @@ export class MailApp extends EgwApp
 	private pendingReadMark : Map<string, Promise<void>> = new Map();
 
 	/**
+	 * accId -> in-flight/resolved promise of ajax_getComposeToolbarData()'s {actions, sel_options}
+	 *
+	 * Mostly static per account for a session, so cached here rather than re-fetched by every
+	 * compose popup - a clientSidePopup() compose gets a fresh MailApp instance of its own (each
+	 * window has its own JS realm, so a module-level/static cache wouldn't be shared), so it calls
+	 * this method on the OPENER's own app.mail instance via window.opener instead of its own,
+	 * making the server round-trip happen once per account for the life of the main window, not
+	 * once per popup open (doc/ai/projects/mail-compose-jmap-migration.md, Step 10, Phase B).
+	 */
+	private composeToolbarDataPromises : { [accId : string] : Promise<{ actions : object, sel_options : object, content : object }> } = {};
+
+	/**
 	 * The subscribe popup's own profileID (mail_ui::subscription()'s $content['profileId']),
 	 * remembered alongside _subscriptionChanges since it's needed to apply them on Save.
 	 */
@@ -208,17 +220,6 @@ export class MailApp extends EgwApp
 		}
 		return window.app._jmap;
 	}
-
-	/**
-	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 1 - "jmapCompose" toolbar toggle's
-	 * state (id="jmapCompose" in index.xet), persisted as an implicit "mail"/"jmapCompose"
-	 * preference (restored in et2_ready()'s 'mail.index' case, saved in toggleJmapCompose()) -
-	 * same mechanism as previewPane/allowExternalIMGs/etc, easy to forget re-enabling otherwise
-	 * (ralf, 2026-08-27). Read by composeMessage() to decide whether a plain new-message Compose
-	 * should send via JMAP (see MailJmap.sendNewEmail()) instead of the classic server-side path -
-	 * reply/forward/drafts stay classic regardless of this toggle.
-	 */
-	jmapComposeEnabled = false;
 
 	/**
 	 * Initialize javascript for this application
@@ -348,16 +349,6 @@ export class MailApp extends EgwApp
 				{
 					// @ts-ignore
 					aom.flags = egwSetBit(aom.flags, EGW_AO_FLAG_DEFAULT_FOCUS, false);
-				}
-
-				// doc/ai/projects/mail-compose-jmap-migration.md, Step 1 - restore the "jmapCompose"
-				// toggle's last state (implicit preference, same mechanism as previewPane etc. just
-				// below - easy to forget re-enabling after every reload otherwise, ralf 2026-08-27)
-				const jmapComposeToggle : any = this.et2.getWidgetById('jmapCompose');
-				if (jmapComposeToggle)
-				{
-					this.jmapComposeEnabled = !!egw.preference('jmapCompose', 'mail');
-					jmapComposeToggle.value = this.jmapComposeEnabled;
 				}
 
 				const splitter = this.et2.getWidgetById('mailSplitter');
@@ -1329,14 +1320,6 @@ export class MailApp extends EgwApp
 	 */
 	composeMessage(_action, _elems)
 	{
-		// doc/ai/projects/mail-compose-jmap-migration.md, Step 1 - captured BEFORE the backfill
-		// below (which fills _elems from the currently-selected/previewed message for unrelated
-		// reasons, even for a genuine "new blank message" trigger) - settings.id further down
-		// reflects that backfilled value, not the caller's original intent, so it's the wrong
-		// thing to gate the JMAP-mode flag on (found live 2026-08-27: a message merely being
-		// selected/previewed silently defeated the jmapCompose toggle with no visible symptom
-		// other than the classic send path's own unrelated errors).
-		const noSourceGiven = typeof _elems == 'undefined' || _elems.length == 0;
 		if (typeof _elems == 'undefined' || _elems.length==0)
 		{
 			if (this.et2 && this.et2.getArrayMgr("content").getEntry('mail_id'))
@@ -1389,19 +1372,11 @@ export class MailApp extends EgwApp
 						for(let j = 1; j < _elems.length; j++)
 						settings.id = settings.id + ',' + _elems[j].id;
 					}
-					// doc/ai/projects/mail-compose-jmap-migration.md, Step 4 (2026-08-31) - this
-					// branch returns before the shared jmap-gating block further down ever runs, so
-					// it has to set its own flag here. Harmless either way: egw.openWithinWindow()
-					// only reaches a real page load (where isJmapMode reads this back) when no
-					// compose popup is already open; if one IS open, it calls that OTHER window's
-					// own live setCompose() instead, whose isJmapMode was already fixed at ITS OWN
-					// original load time - this flag is simply never read in that case (setCompose()
-					// itself now branches on that OTHER window's own isJmapModeActive instead, see
-					// its own docblock - "Merge into an already-open compose popup").
-					if (this.jmapComposeEnabled)
-					{
-						(settings as typeof settings & {jmap? : string}).jmap = '1';
-					}
+					// Batch/forwardasattach stays on the classic postback path - doc/ai/projects/
+					// mail-compose-jmap-migration.md, Step 10's own scope note: this and the
+					// mailto:/vCard/filemanager entry points each build their long URL from a
+					// different, non-single-message source and need their own client-side rework
+					// before they can drop the server round-trip too.
 					return egw.openWithinWindow("mail", "setCompose", {
 						data:{
 							emails:{
@@ -1421,39 +1396,132 @@ export class MailApp extends EgwApp
 				// No further client side processing needed for these
 				settings.from = _action.id;
 		}
-		// doc/ai/projects/mail-compose-jmap-migration.md, Step 1 - a genuinely new message (the
-		// caller passed no source elems at all) may take the JMAP-mode flag; compose.ts reads it
-		// back from this popup's own URL to decide its Send behaviour. Gated on noSourceGiven
-		// (captured before the backfill above), NOT settings.id - that gets backfilled from the
-		// currently-selected/previewed message for unrelated reasons even on a genuine "new blank
-		// message" trigger, which would otherwise silently defeat this toggle whenever any message
-		// happened to be selected (found live 2026-08-27).
-		// Step 4, first slice (2026-08-27): a genuine single reply ("reply") is ALSO eligible -
-		// compose.ts's bootstrapReply() only OVERWRITES the classic server-rendered recipient/
-		// subject/body once its own JMAP fetch succeeds, so there's no "server skipped computing
-		// it" risk unlike the blank-new-compose case.
-		// 'reply_attachments' added 2026-08-31 (attachment carry-forward slice) - same reasoning,
-		// bootstrapReply() also carries the original message's own attachments client-side now.
-		// 'reply_all' added 2026-08-31 too, once bootstrapReply() gained the classic per-recipient
-		// own-address filtering logic it originally needed (getIdentities()'s email list across
-		// every identity, not just the one selected).
-		// Single-message INLINE forward added 2026-08-31 too - checked via settings.from/mode
-		// (already normalized by the switch above) rather than _action.id directly, since forward/
-		// forwardinline/forwardasattach all reach this point only for the single-message inline
-		// case (a batch forward or forwardasattach returns early via egw.openWithinWindow(), never
-		// reaching here at all - see the switch above).
-		const jmapEligibleForward = settings.from === 'forward' && settings.mode === 'forwardinline';
-		// 'composeasnew' added 2026-08-31 - MailCompose.bootstrapComposeAsNew() only OVERWRITES the
-		// classic server-rendered to/cc/bcc/subject/body once its own JMAP fetch succeeds, same
-		// "no risk of the server having skipped computing it" reasoning as reply/forward above.
-		if (this.jmapComposeEnabled && (noSourceGiven || _action.id === 'reply' || _action.id === 'reply_attachments' ||
-			_action.id === 'reply_all' || _action.id === 'composeasnew' || jmapEligibleForward))
-		{
-			(settings as typeof settings & {jmap? : string}).jmap = '1';
-		}
+		// doc/ai/projects/mail-compose-jmap-migration.md, Step 10 - every single-message compose
+		// (new/reply/reply_attachments/reply_all/composeasnew/inline forward) now opens via a
+		// client-side-only popup instead of a server round-trip to mail_compose::compose() at all -
+		// see MailApp.bootstrapComposePopup(), the method that popup runs. Used to be gated behind
+		// a "jmapCompose" testing toggle (removed - ralf: "it was only a temporary means for
+		// testing").
+		// A genuinely blank new message (settings.from still '') composes from the user's current
+		// ActiveProfileID, same as classic mail_compose's own constructor default - NOT from
+		// settings.id, which may be backfilled from the currently-selected/previewed message for
+		// unrelated reasons (see the backfill above) even when this action itself is 'compose'.
+		const accId = settings.from && settings.id ?
+			settings.id.split('::')[0] : (this.egw.preference('ActiveProfileID', 'mail') || '');
 		const compose_list = egw.getOpenWindows("mail", /^compose_/);
 		const window_name = 'compose_' + compose_list.length + '_'+ (settings.from || '') + '_' + settings.id;
-		return egw().open('','mail','add',settings,window_name,'mail');
+		return egw.clientSidePopup(
+			'app.mail.bootstrapComposePopup',
+			[settings.from || '', settings.id || '', accId, settings.mode || '', settings.smime_type || ''],
+			870, 'availHeight', window_name
+		);
+	}
+
+	/**
+	 * Toolbar-action-tree + sel_options needed to bootstrap a client-side compose popup, cached
+	 * per account for the life of the MAIN window - see composeToolbarDataPromises's own docblock.
+	 *
+	 * Same "defer to the opener's own instance instead of caching separately" pattern as the
+	 * `jmap` getter above - a clientSidePopup() compose popup gets its own freshly-instantiated
+	 * MailApp (no shared module-level state across windows), so this transparently redirects to
+	 * window.opener's instance rather than every popup building/caching its own copy. Re-checked
+	 * on every call (not cached once) so a popup that outlives its opener falls back to its own
+	 * instance/cache instead of reusing one tied to a now-gone window.
+	 *
+	 * @param accId account/profile id, "acc_id:ident_id" is fine too - the server only uses acc_id
+	 */
+	getComposeToolbarData(accId : string) : Promise<{ actions : object, sel_options : object, content : object }>
+	{
+		const openerMail : MailApp = window.opener && !window.opener.closed ? window.opener.app?.mail : undefined;
+		if (openerMail && openerMail !== this)
+		{
+			return openerMail.getComposeToolbarData(accId);
+		}
+		if (!this.composeToolbarDataPromises[accId])
+		{
+			this.composeToolbarDataPromises[accId] = this.egw.request(
+				'mail.mail_compose.ajax_getComposeToolbarData', [accId.split(':')[0]]
+			);
+		}
+		return this.composeToolbarDataPromises[accId];
+	}
+
+	/**
+	 * Bootstrap a compose popup entirely client-side - no server round-trip to
+	 * mail_compose::compose() at all for opening it (doc/ai/projects/mail-compose-jmap-migration.md,
+	 * Step 10). Run INSIDE the popup itself, via composeMessage()'s
+	 * `egw.clientSidePopup('app.mail.bootstrapComposePopup', [...])` call - not meant to be called
+	 * any other way.
+	 *
+	 * Mirrors what a real mail_compose::compose() postback + its own et2_ready 'mail.compose' case
+	 * normally do, but with getComposeToolbarData()'s (cached, opener-served) actions/sel_options/
+	 * content standing in for the server-rendered ones - EgwApp.bootstrapClientSideTemplate() does
+	 * the actual from-scratch DOM/etemplate2 construction (generic, not mail-specific). Its own
+	 * etemplate2.load() call fires et2_ready() normally, so the existing 'mail.compose' case in
+	 * this file's own et2_ready() runs exactly as it would for a classic postback - no need to
+	 * duplicate that wiring here.
+	 *
+	 * @param from '' | 'reply' | 'reply_attachments' | 'reply_all' | 'forward' | 'composeasnew' -
+	 *  same values MailCompose.bootstrapCompose() already dispatches on
+	 * @param sourceId source message row id, or null for a blank new compose
+	 * @param accId account/profile id to compose from
+	 * @param mode 'forwardinline' or null - only meaningful together with from='forward'
+	 * @param smimeType the source message's own Mail\Smime::TYPE_* (empty if none/not applicable) -
+	 *  pre-checks the composeToolbar's smime_sign/smime_encrypt actions to match, same as classic
+	 *  compose()'s own `$_content['composeToolbar']['smime_sign'/'smime_encrypt']` presets
+	 *  (class.mail_compose.inc.php:563-565)
+	 */
+	async bootstrapComposePopup(from : string, sourceId : string, accId : string, mode : string, smimeType : string) : Promise<void>
+	{
+		// getComposeToolbarData()'s result is a shared, cached object (one per account, reused by
+		// every compose popup for that account) - content gets handed to etemplate2.load(), which
+		// wraps it in an array manager that widgets then mutate in place via set_value(), so it MUST
+		// be cloned here first, or one popup's edits would corrupt every other (and future) popup's
+		// starting content for the same account. Same for actions - the smime_sign/smime_encrypt
+		// pre-check below mutates it too.
+		//
+		// ajax_getComposeSession() is the opposite: deliberately NOT cached/shared (unlike
+		// getComposeToolbarData(), a fresh Etemplate\Request session is needed per popup, not per
+		// account) - fetched in parallel since it's independent of the account-scoped data above.
+		const [{actions, sel_options, content}, {etemplate_exec_id}] = await Promise.all([
+			this.getComposeToolbarData(accId),
+			this.egw.request('mail.mail_compose.ajax_getComposeSession', [])
+		]);
+		const actionsCopy : any = {...actions};
+
+		// Mirror class.mail_compose.inc.php:553-565 - only pre-checks an action that actually
+		// EXISTS (getToolbarActions() only adds smime_sign/smime_encrypt at all when the account
+		// has S/MIME configured, Mail\Smime::get_acc_smime()) - matches the classic code's own
+		// implicit gate without needing to re-check account S/MIME config here too. Values mirror
+		// MailCompose's own SMIME_TYPE_SIGN/SMIME_TYPE_ENCRYPT/SMIME_TYPE_SIGN_ENCRYPT constants
+		// (mail/js/compose.ts), which themselves mirror Api\Mail\Smime::TYPE_*'s exact string values.
+		if (smimeType)
+		{
+			if (actionsCopy.smime_sign)
+			{
+				actionsCopy.smime_sign = {...actionsCopy.smime_sign,
+					checked: smimeType === 'smime_sign' || smimeType === 'smime_sign_encrypt'};
+			}
+			if (actionsCopy.smime_encrypt)
+			{
+				actionsCopy.smime_encrypt = {...actionsCopy.smime_encrypt, checked: smimeType === 'smime_encrypt'};
+			}
+		}
+
+		// Pre-construct MailCompose with the explicit bootstrap params BEFORE anything (in
+		// particular et2_ready()'s 'mail.compose' case below, triggered by etemplate2.load() itself)
+		// touches the `compose` getter - that getter lazily builds a plain, URL-parsing instance if
+		// none exists yet, which is the right thing for a classic postback but wrong here (this
+		// popup's own document was never loaded from a real URL at all).
+		(<any>window).app._compose = new MailCompose(this, {from, sourceId, mode});
+
+		await this.bootstrapClientSideTemplate('mail.compose', {
+			content: {...content},
+			sel_options,
+			modifications: {composeToolbar: {actions: actionsCopy}},
+			currentapp: 'mail',
+			etemplate_exec_id
+		});
 	}
 
 	/**
@@ -8069,16 +8137,6 @@ export class MailApp extends EgwApp
 	toggleThreaded(_ev, _widget)
 	{
 		this.nm && this.nm.applyFilters({threaded: _widget.value ? '1' : ''});
-	}
-
-	/**
-	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 1 UI toggle - see jmapComposeEnabled's
-	 * own docblock.
-	 */
-	toggleJmapCompose(_ev, _widget)
-	{
-		this.jmapComposeEnabled = !!_widget.value;
-		this.egw.set_preference('mail', 'jmapCompose', this.jmapComposeEnabled ? '1' : '');
 	}
 
 	/**

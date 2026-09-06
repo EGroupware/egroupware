@@ -276,6 +276,51 @@ window.app = {classes: {}};
 			egw.open_link.apply(egw, egw_popup);
 		}
 
+		// call an app method directly, if data-start specified - egw_open.ts's clientSidePopup()
+		// only, for a popup bootstrapped purely client-side (no server-rendered menuaction/content
+		// array at all): {method, args} the same dotted "app.method" string + argument list any
+		// 'javaScript:app.x.y' onExecute action string already resolves via applyFunc() (including
+		// its existing lazy-load-the-app-bundle-if-missing behaviour), just invoked here instead of
+		// from a click. Deliberately part of egw.js's own bootstrap chain rather than a separately
+		// loaded/injected script - a dynamically inserted <script> has no reliable execution-order
+		// guarantee relative to this one (found live 2026-09-06: an external tail script raced
+		// ahead and ran before egw_ready even existed as a property yet, not merely unresolved).
+		var egw_start = egw_script.getAttribute('data-start');
+		if (egw_start)
+		{
+			egw_start = JSON.parse(egw_start) || {};
+			// clientSidePopup() (egw_open.ts) already makes sure data-include lists _method's own
+			// app bundle explicitly - a normal page's data-include can omit it (api/src/Framework.php's
+			// _get_js() tracks, per session, which JS a given app has "already sent" and skips
+			// re-listing it on a later internal navigation within the SAME window/app), which a fresh
+			// popup never actually received, so egw_open.ts adds it back in rather than this file
+			// needing its own separate load step here.
+			//
+			// egw_ready resolving still doesn't strictly guarantee applyFunc() (a Json instance
+			// method merged directly onto the egw instance by egw_json.ts's `egw.extend('json', ...)`
+			// - NOT nested under `egw.json`, which is itself a different Json instance method, the
+			// JsonRequest factory used as `egw.json(menuaction).sendRequest(...)`) has finished its
+			// own registration - found live 2026-09-06, and the app bundle's own nested import chain
+			// (eg. mail's own etemplate2 dependency, which itself imports more chunks) can take a few
+			// seconds on a cold cache - so this polls briefly rather than assuming either is instant.
+			(function tryStart(attemptsLeft)
+			{
+				var e = egw(window);
+				if (e && typeof e.applyFunc === 'function')
+				{
+					e.applyFunc(egw_start.method, egw_start.args || [], window);
+				}
+				else if (attemptsLeft > 0)
+				{
+					window.setTimeout(function() { tryStart(attemptsLeft - 1); }, 50);
+				}
+				else
+				{
+					console.error('egw.js: data-start="'+JSON.stringify(egw_start)+'" given, but egw(window).applyFunc never became available');
+				}
+			})(200); // ~10s of retries
+		}
+
 		// set grants if given for push
 		var egw_grants = egw_script.getAttribute('data-grants');
 		if (egw_grants)

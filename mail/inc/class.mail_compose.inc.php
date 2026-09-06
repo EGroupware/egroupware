@@ -322,6 +322,153 @@ class mail_compose
 	}
 
 	/**
+	 * Toolbar-action-tree + sel_options needed to bootstrap a client-side compose popup
+	 *
+	 * getToolbarActions()'s own output (captions/icons/onExecute strings/shortcuts) plus the
+	 * mailaccount/mimeType/priority/filemode sel_options - everything compose()'s classic
+	 * postback normally computes server-side EXCEPT the mail_compose_prepare hook's own
+	 * content/readonlys (a separate endpoint, gated by Api\Hooks::count() - doc/ai/projects/
+	 * mail-compose-jmap-migration.md, Step 10, Phase B/2a).
+	 *
+	 * Mostly static per account for a session - mail/js/app.ts's MailApp.getComposeToolbarData()
+	 * caches this client-side keyed by account id, on the main window's own instance, so a
+	 * clientSidePopup() compose only calls this once per account for the life of that window,
+	 * not once per popup open.
+	 *
+	 * @param int|string|null $_acc_id account/profile id, defaults to the user's active account
+	 */
+	function ajax_getComposeToolbarData($_acc_id=null)
+	{
+		if ($_acc_id && $this->mail_bo->profileID != (int)$_acc_id)
+		{
+			$this->changeProfile((int)$_acc_id);
+		}
+
+		// same identities/sel_options computation as compose(), lines ~1381-1393 and 1484-1489
+		$sel_options = array('mailaccount' => array());
+		foreach (Mail\Account::search(true, false) as $acc_id => $account)
+		{
+			// do NOT add SMTP only accounts as identities
+			if (!$account->is_imap(false)) continue;
+
+			foreach ($account->identities($acc_id) as $ident_id => $identity)
+			{
+				$sel_options['mailaccount'][$acc_id.':'.$ident_id] = $identity;
+			}
+		}
+		$sel_options['mimeType'] = self::$mimeTypes;
+		$sel_options['priority'] = self::$priorities;
+		$sel_options['filemode'] = Vfs\Sharing::$modes;
+		if ($this->preventAttachFilemode)
+		{
+			unset($sel_options['filemode'][Vfs\Sharing::ATTACH]);
+		}
+
+		// baseline content for a BLANK new compose - setDefaults() picks the same
+		// identity/mimeType a classic blank compose() call would (LastSignatureIDUsed pref, or
+		// the first identity with a non-empty signature); everything else here mirrors compose()'s
+		// own static (not reply/attachment-dependent) content keys, lines ~1500-1533. A real
+		// reply/forward/composeasnew overwrites to/cc/subject/body/mailaccount/mimeType itself
+		// (MailCompose.bootstrapReply()/bootstrapComposeAsNew(), already JMAP-native) once the
+		// popup's own bootstrap fetches the source message - this is only ever the STARTING point.
+		$content = $this->setDefaults(array('mailaccount' => $this->mail_bo->profileID));
+		$content['mailaccount'] = $this->mail_bo->profileID.':'.$content['mailidentity'];
+		if (!in_array($content['mailaccount'], array_keys($sel_options['mailaccount'])))
+		{
+			foreach ($sel_options['mailaccount'] as $ident => $value)
+			{
+				$idnt_acc_parts = explode(':', $ident);
+				if ($content['mailidentity'] == $idnt_acc_parts[1])
+				{
+					$content['mailaccount'] = $ident;
+					break;
+				}
+			}
+		}
+		$content['is_html'] = ($content['mimeType'] == 'html' ? true : '');
+		$content['is_plain'] = ($content['mimeType'] == 'html' ? '' : true);
+		$content['priority'] = 3;
+		$content['filemode'] = $this->preventAttachFilemode ? Vfs\Sharing::READONLY : Vfs\Sharing::ATTACH;
+		$content['no_griddata'] = true;
+		$content['expiration_blur'] = $GLOBALS['egw_info']['user']['apps']['stylite'] ? lang('Select a date') : lang('EPL only');
+		if (empty($GLOBALS['egw_info']['user']['apps']['filemanager']))
+		{
+			$content['vfsNotAvailable'] = "mail_DisplayNone";
+		}
+		if (empty($GLOBALS['egw_info']['user']['apps']['infolog']))
+		{
+			$content['noInfologAvailable'] = "mail_DisplayNone";
+		}
+		if (empty($GLOBALS['egw_info']['user']['apps']['tracker']))
+		{
+			$content['noTrackerAvailable'] = "mail_DisplayNone";
+		}
+		if (empty($GLOBALS['egw_info']['user']['apps']['infolog']) && empty($GLOBALS['egw_info']['user']['apps']['tracker']))
+		{
+			$content['noSaveAsAvailable'] = "mail_DisplayNone";
+		}
+		$content['html_toolbar'] = empty(Mail::$mailConfig['html_toolbar']) ?
+			implode(',', Etemplate\Widget\HtmlArea::$toolbar_default_list) : implode(',', Mail::$mailConfig['html_toolbar']);
+		$content['attachmentLimitMb'] = Api\Config::read('mail')['attachment_limit_mb'] ?: self::$maxAttachmentSizeDefault;
+
+		// "predefined compose addresses" account preference (set via mail's account-settings UI,
+		// mail/js/app.ts:8035's own pref_id convention) - compose()'s own equivalent merge, lines
+		// ~1109-1119, runs unconditionally there (not just for a blank compose), so a classic reply
+		// gets these appended alongside its own to/cc too; here they only ever survive into a
+		// genuinely blank new compose - MailCompose.bootstrapReply()/bootstrapComposeAsNew()
+		// OVERWRITE (not append to) to/cc/bcc via set_value() once their own JMAP fetch resolves,
+		// same as any other baseline content key those methods touch (found live 2026-09-06,
+		// checking off doc/ai/projects/mail-compose-jmap-migration.md Step 10's own "predefined
+		// compose addresses" gap - ralf: appending onto an already-JMAP-fetched reply's own
+		// recipients is a separate, more invasive change than closing the common blank-compose case).
+		$preferencePreset = $GLOBALS['egw_info']['user']['preferences']['mail'][$this->mail_bo->profileID.'_predefined_compose_addresses'] ?? [];
+		foreach ($preferencePreset as $pref => $values)
+		{
+			if (!empty($values))
+			{
+				$content[$pref] = array_merge((array)($content[$pref] ?? []), (array)$values);
+			}
+		}
+
+		$actions = self::getToolbarActions($content);
+
+		Api\Json\Response::get()->data(array(
+			'actions' => $actions,
+			'sel_options' => $sel_options,
+			'content' => $content,
+		));
+	}
+
+	/**
+	 * A fresh Etemplate\Request session for a client-side compose popup - NEVER cached (unlike
+	 * ajax_getComposeToolbarData()), a new one is needed per popup open.
+	 *
+	 * A clientSidePopup() compose has no server-rendered Etemplate\Request behind it at all (no
+	 * mail_compose::compose()/Etemplate::exec() call ever ran), but Api\Etemplate\Widget\File's own
+	 * upload endpoints (ajax_upload()/ajax_test_chunk()) unconditionally look one up by
+	 * `etemplate_exec_id` (Api\Etemplate\Request::read($request_id)) to resolve the template/widget
+	 * that's uploading - with none to find, the "Upload files..."/VFS-attach toolbar buttons would
+	 * silently fail (found live 2026-09-06, checking off doc/ai/projects/mail-compose-jmap-
+	 * migration.md Step 10's own file-upload gap). Mirrors Etemplate::exec()'s own minimal
+	 * `self::$request->template = $this->as_array()` (api/src/Etemplate.php:169) - just enough for
+	 * Api\Etemplate\Widget\File::ajax_upload()'s own `Template::instance(...)` call to resolve the
+	 * same template, without this endpoint doing any of exec()'s actual (expensive) content/
+	 * sel_options rendering itself.
+	 *
+	 * @return void writes {etemplate_exec_id} via Api\Json\Response
+	 */
+	function ajax_getComposeSession()
+	{
+		$request = Etemplate\Request::read();
+		$request->output_mode = 2;	// popup
+		$request->template = (new Etemplate('mail.compose'))->as_array();
+
+		Api\Json\Response::get()->data(array(
+			'etemplate_exec_id' => $request->id(),
+		));
+	}
+
+	/**
 	 * Merge a typed preset body into the compose body, converting both to HTML when necessary
 	 *
 	 * @param array $content compose content with body and mimeType
