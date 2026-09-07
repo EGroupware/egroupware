@@ -182,7 +182,7 @@
     <element name="overlay">
       <ref name="attlist.overlay"/>
       <zeroOrMore>
-        <ref name="template"/>
+        <ref name="et2-template"/>
       </zeroOrMore>
     </element>
   </define>
@@ -1794,7 +1794,7 @@
       <ref name="attlist.tabpanels"/>
       <zeroOrMore>
         <choice>
-          <ref name="template"/>
+          <ref name="et2-template"/>
           <ref name="Widgets"/>
         </choice>
       </zeroOrMore>

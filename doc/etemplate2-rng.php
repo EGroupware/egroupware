@@ -383,6 +383,28 @@ $dom = new DOMDocument("1.0");
 $dom->preserveWhiteSpace = false;
 $dom->formatOutput = true;
 $dom->loadXML($grammar->asXML());
+
+// fix now-dangling <ref name="X"/> left pointing at a removed legacy widget that was replaced by
+// "et2-X" - definitions we don't otherwise regenerate (e.g. overlay's and tabpanels' own content
+// models, both still <ref name="template"/> from the legacy DTD) aren't touched by removeWidget()
+// above, which only removes the <define>/Widgets-choice entries themselves, not other references
+// to that name elsewhere in the grammar
+$xpath = new DOMXPath($dom);
+$xpath->registerNamespace('x', 'http://relaxng.org/ns/structure/1.0');
+$defined = [];
+foreach ($xpath->query('//x:define/@name') as $name)
+{
+	$defined[$name->value] = true;
+}
+foreach ($xpath->query('//x:ref') as $ref)
+{
+	$name = $ref->getAttribute('name');
+	if (!isset($defined[$name]) && isset($defined['et2-'.$name]))
+	{
+		$ref->setAttribute('name', 'et2-'.$name);
+	}
+}
+
 if (php_sapi_name() !== "cli")
 {
 	header('Content-Type: application/xml; charset=utf-8');
