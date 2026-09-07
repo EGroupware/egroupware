@@ -156,6 +156,11 @@ $overwrites = [
 	],
 	'et2-tab' => null,  // remove/skip, as we currently use legacy tabs and tabpanels
 	'et2-tab-panel' => null,
+	// skip: Et2Template's own TS-declared properties are near-empty - the real classic
+	// <template id="..." template="..." group="..." version="..." lang="..." .../> attributes
+	// and its Widgets* content model belong to the ORIGINAL legacy <template> definition, not to
+	// anything the CEM analyzer can see. Renamed from the original instead, see below.
+	'et2-template' => null,
 	'et2-details' => [
 		'.children' => 'Widgets',
 	],
@@ -257,6 +262,10 @@ foreach($missing_legacy_attributes as $attribute => $widgets)
             $element->addChild('empty');	// no children allowed
 	        $grammar->addChild('define')->addAttribute('name', 'attlist.'.$widget);
         }
+        // skip if already declared (e.g. "option" already has "value" in the legacy
+        // DTD-derived RNG) - a duplicate <attribute name="..."/> here would merge into
+        // an invalid duplicate ATTLIST entry once PHPStorm flattens this into a DTD
+        if (hasAttribute(getByName($grammar, 'attlist.'.$widget), $attribute)) continue;
         // add (optional) attribute
         if (!is_array($widgets) || (!isset($widgets['.optional']) || $widgets['.optional'] === true))
         {
@@ -365,6 +374,24 @@ $widgets_choice->addChild('ref')->addAttribute('name', 'old-box');
 ($element = $define->addChild('element'))->addAttribute('name', 'old-box');
 $element->addChild('ref')->addAttribute('name', 'attlist.et2-box');
 $element->addChild('oneOrMore')->addChild('ref')->addAttribute('name', 'Widgets');
+
+// et2-template: rename the classic legacy <template>/<attlist.template> definitions - they
+// already have the right Widgets* content model and full legacy attribute list (id/template/
+// group/version/lang/content/url/onload/disabled/.../readonly/attributes) - to survive as
+// et2-template, instead of being replaced by Et2Template's own near-empty auto-generated
+// definition (skipped above via 'et2-template' => null)
+if (($define = getByName($grammar, 'template')))
+{
+	$define['name'] = 'et2-template';
+	$define->element['name'] = 'et2-template';
+	$define->element->ref['name'] = 'attlist.et2-template';   // was <ref name="attlist.template"/>
+}
+if (($attrs = getByName($grammar, 'attlist.template')))
+{
+	$attrs['name'] = 'attlist.et2-template';
+}
+removeByName($widgets_choice, 'template');
+$widgets_choice->addChild('ref')->addAttribute('name', 'et2-template');
 
 $remove = [];
 foreach($widgets_choice->children() as $widget)
@@ -482,6 +509,24 @@ function getByName(SimpleXMLElement $parent, string $name) : ?SimpleXMLElement
 		}
 	}
 	return null;
+}
+
+/**
+ * Check whether an <attribute name="..."/> already exists anywhere under a given attlist
+ * (directly or wrapped in <optional>), regardless of RelaxNG nesting/namespace
+ *
+ * @param SimpleXMLElement|null $attlist
+ * @param string $name
+ * @return bool
+ */
+function hasAttribute(?SimpleXMLElement $attlist, string $name) : bool
+{
+	if (!isset($attlist)) return false;
+	foreach (dom_import_simplexml($attlist)->getElementsByTagName('attribute') as $attr)
+	{
+		if ($attr->getAttribute('name') === $name) return true;
+	}
+	return false;
 }
 
 /**
