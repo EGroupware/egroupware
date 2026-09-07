@@ -1500,8 +1500,29 @@ export class MailApp extends EgwApp
 		// be cloned here first, or one popup's edits would corrupt every other (and future) popup's
 		// starting content for the same account. Same for actions - the smime_sign/smime_encrypt
 		// pre-check below mutates it too.
-		const {actions, sel_options, content} = await this.getComposeToolbarData(accId);
+		//
+		// mail_compose_prepare hook (doc/ai/projects/mail-compose-jmap-migration.md, Step 10) -
+		// classic compose() runs this hook completely unconditionally (never gated on from/id), so
+		// mirror that here too rather than trying to guess "is this a plain new compose" - a
+		// 3rd-party registrant's own content merges in exactly like classic's own array_merge did,
+		// and (same as classic) a reply/forward's OWN to/cc/subject/body still lands afterward via
+		// bootstrapCompose()'s own set_value() calls once its JMAP fetch resolves, so a hook whose
+		// own $_GET params never coincide with from=reply/forward (eg. achelper's mode/template/
+		// info_id) is unaffected either way, exactly as before. Only ever costs a round trip when
+		// hasComposePrepareHook() says something is actually registered (cached per profileID
+		// alongside every other JMAP bootstrap fact - see MailJmap.ensureToken()).
+		const [{actions, sel_options, content}, prepared] = await Promise.all([
+			this.getComposeToolbarData(accId),
+			this.jmap.hasComposePrepareHook(accId).then(has => has ?
+				this.egw.request('mail.mail_compose.ajax_prepareCompose', []) : null)
+		]);
 		const actionsCopy : any = {...actions};
+		// content/sel_options are the SAME shared, cached objects getComposeToolbarData() reuses
+		// per account - merging the hook's own result into them directly (rather than into a copy)
+		// would be the exact "corrupt every other popup's starting content" bug the comment above
+		// warns about, just for the hook's data instead of a widget edit.
+		const contentCopy : any = prepared ? {...content, ...prepared.content} : content;
+		const selOptionsCopy : any = prepared ? {...sel_options, ...prepared.sel_options} : sel_options;
 
 		// Mirror class.mail_compose.inc.php:553-565 - only pre-checks an action that actually
 		// EXISTS (getToolbarActions() only adds smime_sign/smime_encrypt at all when the account
@@ -1530,8 +1551,9 @@ export class MailApp extends EgwApp
 		(<any>window).app._compose = new MailCompose(this, {from, sourceId, mode});
 
 		await this.bootstrapClientSideTemplate(name, {
-			content: {...content},
-			sel_options,
+			content: contentCopy,
+			sel_options: selOptionsCopy,
+			readonlys: prepared?.readonlys ?? {},
 			modifications: {composeToolbar: {actions: actionsCopy}},
 			currentapp: 'mail',
 			etemplate_exec_id

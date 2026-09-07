@@ -1718,32 +1718,77 @@ class mail_compose
 
 		//Allow other apps to hook into mail_compose
 		$readonlys = [];
-		$temp = Api\Hooks::process( array(
+		[$content, $readonlys, $sel_options, $preserv] = self::runComposePrepareHook($content, $readonlys, $sel_options, $preserv);
+
+		//error_log(__METHOD__.__LINE__.array2string($content));
+		$etpl->exec('mail.mail_compose.compose',$content,$sel_options,$readonlys,$preserv,2);
+	}
+
+	/**
+	 * Run the mail_compose_prepare hook, merging any registrant's returned content/readonlys/
+	 * preserv/sel_options on top of the given ones - extracted out of compose() so a fully
+	 * client-driven bootstrap (ajax_prepareCompose()) can run the exact same hook contract without
+	 * any of compose()'s own (expensive) content-preparation/Etemplate rendering. A registrant's
+	 * own implementation (eg. achelper's) is unaffected either way - it still receives and returns
+	 * the exact same {content, readonlys, sel_options} shape it always has.
+	 *
+	 * @param array $content
+	 * @param array $readonlys
+	 * @param array $sel_options
+	 * @param array $preserv
+	 * @return array [$content, $readonlys, $sel_options, $preserv] all merged
+	 */
+	private static function runComposePrepareHook(array $content, array $readonlys, array $sel_options, array $preserv) : array
+	{
+		$temp = Api\Hooks::process(array(
 			'location' => 'mail_compose_prepare',
 			'content' => $content,
 			'readonlys' => $readonlys,
-			'sel_options' => $sel_options
+			'sel_options' => $sel_options,
 		));
 
-		foreach ($temp as $hook){
-			if($hook){
+		foreach ($temp as $hook)
+		{
+			if ($hook)
+			{
 				// merge INTO the existing arrays: this used to merge $hook['preserv']/['sel_options']
 				// on top of $readonlys instead of $preserv/$sel_options themselves - a copy-paste bug
 				// that silently discarded everything compose() had already preserved (attachments,
 				// mode, mimeType, ...) and every sel_option the hook itself didn't echo back, for
 				// EVERY compose with any mail_compose_prepare hook registered - found via a 3rd-party
 				// (achelper) patch, 2026-09-03
-				$content =  array_merge($content,	$hook['content'] ?? []);
-				$readonlys = array_merge($readonlys,$hook['readonlys'] ?? []);
-				$preserv = array_merge($preserv,	$hook['preserv'] ?? []);
-				$sel_options = array_merge($sel_options,	$hook['sel_options'] ?? []);
+				$content = array_merge($content, $hook['content'] ?? []);
+				$readonlys = array_merge($readonlys, $hook['readonlys'] ?? []);
+				$preserv = array_merge($preserv, $hook['preserv'] ?? []);
+				$sel_options = array_merge($sel_options, $hook['sel_options'] ?? []);
 			}
-
 		}
-		unset($temp,$hook);
+		return [$content, $readonlys, $sel_options, $preserv];
+	}
 
-		//error_log(__METHOD__.__LINE__.array2string($content));
-		$etpl->exec('mail.mail_compose.compose',$content,$sel_options,$readonlys,$preserv,2);
+	/**
+	 * Standalone JSON endpoint for the mail_compose_prepare hook, for a fully client-driven compose
+	 * bootstrap (doc/ai/projects/mail-compose-jmap-migration.md, Step 10 - "mail_compose_prepare
+	 * hook survival" design sketch). A registrant is a normal Api\Hooks::process() handler reading
+	 * whatever $_GET/$_REQUEST params it defines itself (eg. achelper's own mode/template/info_id -
+	 * never from/id, so this never collides with MailApp.bootstrapComposePopup()'s own dispatch),
+	 * given the untouched (empty) $content/readonlys/sel_options a genuinely-new blank compose would
+	 * start from, returning modified copies via runComposePrepareHook() above - the exact same
+	 * contract compose() itself still uses, so an existing hook implementation needs zero code
+	 * changes.
+	 *
+	 * Only called from the client when JmapToken's own hasComposePrepareHook flag is true
+	 * (Api\Hooks::count('mail_compose_prepare') > 0, see ProfileHandler::jmapBootstrap()) - most
+	 * installs have nothing registered here at all, so this round trip is opt-in per install, not a
+	 * cost every compose pays for.
+	 *
+	 * @return void writes {content, readonlys, sel_options, preserv} via Api\Json\Response
+	 */
+	function ajax_prepareCompose()
+	{
+		[$content, $readonlys, $sel_options, $preserv] = self::runComposePrepareHook([], [], [], []);
+
+		Api\Json\Response::get()->data(compact('content', 'readonlys', 'sel_options', 'preserv'));
 	}
 
 	/**
