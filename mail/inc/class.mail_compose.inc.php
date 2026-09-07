@@ -440,35 +440,6 @@ class mail_compose
 	}
 
 	/**
-	 * A fresh Etemplate\Request session for a client-side compose popup - NEVER cached (unlike
-	 * ajax_getComposeToolbarData()), a new one is needed per popup open.
-	 *
-	 * A clientSidePopup() compose has no server-rendered Etemplate\Request behind it at all (no
-	 * mail_compose::compose()/Etemplate::exec() call ever ran), but Api\Etemplate\Widget\File's own
-	 * upload endpoints (ajax_upload()/ajax_test_chunk()) unconditionally look one up by
-	 * `etemplate_exec_id` (Api\Etemplate\Request::read($request_id)) to resolve the template/widget
-	 * that's uploading - with none to find, the "Upload files..."/VFS-attach toolbar buttons would
-	 * silently fail (found live 2026-09-06, checking off doc/ai/projects/mail-compose-jmap-
-	 * migration.md Step 10's own file-upload gap). Mirrors Etemplate::exec()'s own minimal
-	 * `self::$request->template = $this->as_array()` (api/src/Etemplate.php:169) - just enough for
-	 * Api\Etemplate\Widget\File::ajax_upload()'s own `Template::instance(...)` call to resolve the
-	 * same template, without this endpoint doing any of exec()'s actual (expensive) content/
-	 * sel_options rendering itself.
-	 *
-	 * @return void writes {etemplate_exec_id} via Api\Json\Response
-	 */
-	function ajax_getComposeSession()
-	{
-		$request = Etemplate\Request::read();
-		$request->output_mode = 2;	// popup
-		$request->template = (new Etemplate('mail.compose'))->as_array();
-
-		Api\Json\Response::get()->data(array(
-			'etemplate_exec_id' => $request->id(),
-		));
-	}
-
-	/**
 	 * Merge a typed preset body into the compose body, converting both to HTML when necessary
 	 *
 	 * @param array $content compose content with body and mimeType

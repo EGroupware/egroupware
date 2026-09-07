@@ -1397,11 +1397,20 @@ export class MailApp extends EgwApp
 				settings.from = _action.id;
 		}
 		// doc/ai/projects/mail-compose-jmap-migration.md, Step 10 - every single-message compose
-		// (new/reply/reply_attachments/reply_all/composeasnew/inline forward) now opens via a
-		// client-side-only popup instead of a server round-trip to mail_compose::compose() at all -
-		// see MailApp.bootstrapComposePopup(), the method that popup runs. Used to be gated behind
-		// a "jmapCompose" testing toggle (removed - ralf: "it was only a temporary means for
-		// testing").
+		// (new/reply/reply_attachments/reply_all/composeasnew/inline forward) now opens via
+		// mail/compose.php, a thin real page (no IMAP/session work of its own - see that file's
+		// own docblock) whose only job is to carry egw.js's bootstrap script tag plus a
+		// data-mail-start attribute calling MailApp.bootstrapComposePopup() once ready - not a
+		// server round-trip to mail_compose::compose() at all. Used to be an about:blank popup
+		// built via egw.clientSidePopup() (still used/kept as a generic primitive for other future
+		// callers), moved to this real-page approach instead (ralf, 2026-09-07): an about:blank
+		// document has no real top-level HTTP response of its own, so its security context stayed
+		// opaque even for same-origin script/fetch traffic, which Chrome flags as "third-party
+		// cookie" use - and a reload/F5 had nothing to re-run at all (just an empty about:blank
+		// page), where a real URL naturally re-triggers the same bootstrap (egw.js's own
+		// "opener-reuse" branch takes over if window.opener is still alive). Used to be gated
+		// behind a "jmapCompose" testing toggle (removed - ralf: "it was only a temporary means
+		// for testing").
 		// A genuinely blank new message (settings.from still '') composes from the user's current
 		// ActiveProfileID, same as classic mail_compose's own constructor default - NOT from
 		// settings.id, which may be backfilled from the currently-selected/previewed message for
@@ -1410,11 +1419,14 @@ export class MailApp extends EgwApp
 			settings.id.split('::')[0] : (this.egw.preference('ActiveProfileID', 'mail') || '');
 		const compose_list = egw.getOpenWindows("mail", /^compose_/);
 		const window_name = 'compose_' + compose_list.length + '_'+ (settings.from || '') + '_' + settings.id;
-		return egw.clientSidePopup(
-			'app.mail.bootstrapComposePopup',
-			[settings.from || '', settings.id || '', accId, settings.mode || '', settings.smime_type || ''],
-			870, 'availHeight', window_name
-		);
+		const url = this.egw.link('/mail/compose.php', {
+			from: settings.from || '',
+			id: settings.id || '',
+			acc_id: accId,
+			mode: settings.mode || '',
+			smime_type: settings.smime_type || '',
+		});
+		return egw.openPopup(url, 870, 'availHeight', window_name, 'mail');
 	}
 
 	/**
@@ -1470,23 +1482,25 @@ export class MailApp extends EgwApp
 	 *  pre-checks the composeToolbar's smime_sign/smime_encrypt actions to match, same as classic
 	 *  compose()'s own `$_content['composeToolbar']['smime_sign'/'smime_encrypt']` presets
 	 *  (class.mail_compose.inc.php:563-565)
+	 * @param bootstrap {name, url, etemplate_exec_id} - Api\Etemplate::clientSideBootstrap()'s own
+	 *  result, computed server-side by mail/compose.php itself (a cheap file-lookup + Api\Cache
+	 *  write, not a session write) and handed down via data-mail-start's own args - used to be a
+	 *  separate mail.mail_compose.ajax_getComposeSession() round-trip fetched here client-side, but
+	 *  that was only ever a workaround to get an exec_id before compose.php existed to compute one
+	 *  upfront (ralf, 2026-09-07: "that's the workaround we used ..., so there's no need for it now")
 	 */
-	async bootstrapComposePopup(from : string, sourceId : string, accId : string, mode : string, smimeType : string) : Promise<void>
+	async bootstrapComposePopup(from : string, sourceId : string, accId : string, mode : string, smimeType : string,
+		bootstrap : {name : string, url : string, etemplate_exec_id : string}) : Promise<void>
 	{
+		const {name, url, etemplate_exec_id} = bootstrap;
+
 		// getComposeToolbarData()'s result is a shared, cached object (one per account, reused by
 		// every compose popup for that account) - content gets handed to etemplate2.load(), which
 		// wraps it in an array manager that widgets then mutate in place via set_value(), so it MUST
 		// be cloned here first, or one popup's edits would corrupt every other (and future) popup's
 		// starting content for the same account. Same for actions - the smime_sign/smime_encrypt
 		// pre-check below mutates it too.
-		//
-		// ajax_getComposeSession() is the opposite: deliberately NOT cached/shared (unlike
-		// getComposeToolbarData(), a fresh Etemplate\Request session is needed per popup, not per
-		// account) - fetched in parallel since it's independent of the account-scoped data above.
-		const [{actions, sel_options, content}, {etemplate_exec_id}] = await Promise.all([
-			this.getComposeToolbarData(accId),
-			this.egw.request('mail.mail_compose.ajax_getComposeSession', [])
-		]);
+		const {actions, sel_options, content} = await this.getComposeToolbarData(accId);
 		const actionsCopy : any = {...actions};
 
 		// Mirror class.mail_compose.inc.php:553-565 - only pre-checks an action that actually
@@ -1515,13 +1529,13 @@ export class MailApp extends EgwApp
 		// popup's own document was never loaded from a real URL at all).
 		(<any>window).app._compose = new MailCompose(this, {from, sourceId, mode});
 
-		await this.bootstrapClientSideTemplate('mail.compose', {
+		await this.bootstrapClientSideTemplate(name, {
 			content: {...content},
 			sel_options,
 			modifications: {composeToolbar: {actions: actionsCopy}},
 			currentapp: 'mail',
 			etemplate_exec_id
-		});
+		}, url);
 	}
 
 	/**
@@ -7133,9 +7147,23 @@ export class MailApp extends EgwApp
 	{
 		//mail display uses #mail-display_mailDisplayDetails_subject text and
 		// mail compose uses #mail-compose_subject input
-		const widget:Et2Textbox | Et2Description = document.querySelector('#mail-display_mailDisplayDetails_subject') ||
-			document.querySelector('#mail-compose_subject')
-		return widget?.value
+		const composeWidget : Et2Textbox = document.querySelector('#mail-compose_subject');
+		if (composeWidget)
+		{
+			// A reply/forward's real subject isn't populated yet at the very first call (this
+			// runs synchronously from et2_ready(), before MailCompose.bootstrapReply()'s own async
+			// JMAP fetch resolves) - falls back to a generic title for that brief window, same as
+			// a genuinely blank new compose has for its entire lifetime unless the user types a
+			// subject. compose.xet's own subject onchange="app.mail.compose.subject2title" (fires
+			// for bootstrapReply()'s/bootstrapComposeAsNew()'s set_value() too, same as any other
+			// programmatic set_value()) overwrites this with the real subject once it's known -
+			// found live 2026-09-07 building the clientSidePopup compose bootstrap, ralf: "we
+			// always had a change handler on the subject, setting it as title and on load we
+			// showed the subject e.g. for a reply/forward, or just lang('Compose')".
+			return composeWidget.value || this.egw.lang('Compose');
+		}
+		const displayWidget : Et2Description = document.querySelector('#mail-display_mailDisplayDetails_subject');
+		return displayWidget?.value;
 	}
 
 	/**

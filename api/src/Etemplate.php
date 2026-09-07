@@ -79,6 +79,45 @@ class Etemplate extends Etemplate\Widget\Template
 	}
 
 	/**
+	 * Minimal client-side bootstrap info for a template: an Etemplate\Request exec_id plus the
+	 * real, cache-busted template url - without exec()'s own expensive self::instance() XML-parse
+	 * (that's only needed to fill sel_options/run beforeSendToClient for widgets that need it, and
+	 * to build the full postback machinery - irrelevant when the caller isn't submitting this
+	 * template back via the classic postback route at all, eg. a client-side-only compose popup).
+	 *
+	 * The returned url is rel2url()'s own /api/etemplate.php-routed url (same as exec()'s
+	 * $load_array['url'], api/src/Etemplate.php ~line 231) - NOT a direct path to the raw .xet -
+	 * so legacy .xet syntax still gets api/etemplate.php's usual on-the-fly conversion to modern
+	 * et2-* syntax, and the cache-buster is the real max(template mtime, etemplate.php mtime)
+	 * rel2url() computes, not a guess.
+	 *
+	 * self::$request->template is set to this template's (cheap) as_array(), same as exec() would
+	 * eventually store, so a later by-exec_id lookup (eg. Etemplate\Widget\File::ajax_upload()) can
+	 * still resolve the template without this method itself ever parsing it. output_mode is set to
+	 * 2 (popup, no navbar) - the only caller of a client-side-only bootstrap so far.
+	 *
+	 * @param string $name template name eg. "mail.compose"
+	 * @return array with keys "name", "url", "etemplate_exec_id"
+	 * @throws Exception\AssertionFailed if $name is not a valid/existing template
+	 */
+	public static function clientSideBootstrap(string $name) : array
+	{
+		$etpl = new self($name);
+		if (!$etpl->rel_path)
+		{
+			throw new Exception\AssertionFailed("No (valid) template '$name' found!");
+		}
+		self::$request->output_mode = 2;	// popup
+		self::$request->template = $etpl->as_array();
+
+		return array(
+			'name' => $etpl->name,
+			'url' => self::rel2url($etpl->rel_path),
+			'etemplate_exec_id' => self::$request->id(),
+		);
+	}
+
+	/**
 	 * Generates a Dialog from an eTemplate - abstract the UI-layer
 	 *
 	 * This is the only function an application should use, all other are INTERNAL and

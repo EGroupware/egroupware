@@ -1022,18 +1022,32 @@ export abstract class EgwApp
 	 *  passing an explicit uniqueId, which is exactly what a from-scratch popup has to do.
 	 * @param data {content, sel_options, readonlys, modifications, currentapp, ...} - same shape
 	 *  etemplate2.load()'s own _createArrayManagers() expects
+	 * @param url real, server-computed template url (Api\Etemplate::clientSideBootstrap()'s own
+	 *  "url", already /api/etemplate.php-routed and correctly cache-busted with the template's own
+	 *  mtime) - a real server-rendered page always has one of these (Etemplate::exec()'s own
+	 *  $load_array['url']); pass it through here too instead of leaving Et2Template.getUrl() to
+	 *  fall back to a once-a-day guess AND a direct, un-preprocessed .xet fetch (found live
+	 *  2026-09-07, ralf: "does compose.xet now have the correct cache-buster/timestamp?").
 	 * @return the loaded etemplate2 instance - its own et2_ready() has already run by the time this
 	 *  resolves (the caller's app object must already exist on `window.app` by then if it needs to
 	 *  handle that callback, same as any classic postback)
 	 */
-	async bootstrapClientSideTemplate(name : string, data : any) : Promise<etemplate2>
+	async bootstrapClientSideTemplate(name : string, data : any, url? : string) : Promise<etemplate2>
 	{
 		const domId = name.replace(/\./g, '-');
 
-		const popupMainDiv = document.createElement('div');
-		popupMainDiv.id = 'popupMainDiv';
-		popupMainDiv.className = 'popupMainDiv';
-		document.body.appendChild(popupMainDiv);
+		// A real server-rendered page (eg. mail/compose.php) may already have this - reused rather
+		// than duplicated (two elements sharing an id is invalid HTML, and getElementById() would
+		// only ever find the first one anyway) - only a from-scratch about:blank-derived popup
+		// (egw_open.ts's clientSidePopup()) needs one built here.
+		let popupMainDiv = document.getElementById('popupMainDiv');
+		if (!popupMainDiv)
+		{
+			popupMainDiv = document.createElement('div');
+			popupMainDiv.id = 'popupMainDiv';
+			popupMainDiv.className = 'popupMainDiv';
+			document.body.appendChild(popupMainDiv);
+		}
 
 		const container = document.createElement('form');
 		container.target = 'egw_iframe_autocomplete_helper';
@@ -1048,7 +1062,7 @@ export abstract class EgwApp
 		popupMainDiv.appendChild(autocompleteHelper);
 
 		const et2 = new etemplate2(container, '', domId);
-		await et2.load(name, '', data);
+		await et2.load(name, url || '', data);
 		return et2;
 	}
 
