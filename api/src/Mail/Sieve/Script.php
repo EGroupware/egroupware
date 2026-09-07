@@ -612,10 +612,14 @@ class Script
 					{
 						$vac_rule .= "\tredirect \"" . trim($addr) . "\";\n";
 					}
-					// if there is no other action e.g. fileinto before, we need to add an explicit keep, as the implicit on is canceled by the vaction redirect!
-					if ($connection->hasExtension('variables')) $vac_rule .= "\tif string :is \"\${action}\" \"inbox\" {\n";
-					$vac_rule .= "\t\tkeep;\n";
-					if ($connection->hasExtension('variables')) $vac_rule .= "\t}\n";
+					// only add a keep, if the user did not choose to NOT store the message in the INBOX (modus "notice")
+					if (!isset($vacation['modus']) || $vacation['modus'] !== 'notice')
+					{
+						// if there is no other action e.g. fileinto before, we need to add an explicit keep, as the implicit on is canceled by the vaction redirect!
+						if ($connection->hasExtension('variables')) $vac_rule .= "\tif string :is \"\${action}\" \"inbox\" {\n";
+						$vac_rule .= "\t\tkeep;\n";
+						if ($connection->hasExtension('variables')) $vac_rule .= "\t}\n";
+					}
 					$vac_rule .= "}\n";
 				}
 				if (!isset($vacation['modus']) || $vacation['modus'] !== 'store')
