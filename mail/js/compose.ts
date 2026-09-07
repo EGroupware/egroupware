@@ -1263,6 +1263,16 @@ export class MailCompose
 		// no comparable gap). One extra macrotask is enough for anything already queued to finish.
 		await new Promise((resolve) => setTimeout(resolve, 0));
 		this.et2.getInstanceManager().resetDirty();
+
+		// A reply/forward/composeasnew's real subject only lands via this bootstrap's own
+		// subject.set_value() call above - unlike Et2Select, Et2Textbox's set_value() does NOT
+		// fire a 'change' event, so compose.xet's own subject
+		// onchange="app.mail.compose.subject2title" wiring never runs for it (confirmed live
+		// 2026-09-07: title stayed stuck on the generic fallback MailApp.getWindowTitle() already
+		// set from et2_ready(), which necessarily ran before this bootstrap's own async JMAP fetch
+		// populated a real subject at all). Classic compose() never had this gap - the server
+		// already computed the real subject into initial content before et2_ready() ever ran.
+		this.app._set_Window_title();
 	}
 
 	/**
