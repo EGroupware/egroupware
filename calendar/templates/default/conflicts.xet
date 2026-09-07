@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="calendar.conflicts" template="" lang="" group="0" version="1.0.1.001">
+	<et2-template  id="calendar.conflicts" template="" lang="" group="0" version="1.0.1.001">
 		<et2-description  value="Scheduling conflict" class="calendar_size120b"></et2-description>
 		<et2-box  class="calendar_conflicts">
 			<grid>
@@ -43,5 +43,5 @@
 			<et2-button  id="button[reedit]" label="Re-Edit event" image="edit" statustext="Allows to edit the event again"></et2-button>
 			<et2-button  label="Freetime search" id="button[freetime]" image="search" statustext="Find free timeslots where the selected participants are available for the given timespan"></et2-button>
 		</et2-hbox>
-	</template>
+	</et2-template>
 </overlay>

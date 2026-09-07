@@ -12,11 +12,11 @@ Egroupware
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 
 <overlay>
-    <template id="calendar.planner">
+    <et2-template  id="calendar.planner">
 		<calendar-planner id="planner"
 			onchange="app.calendar.update_state(jQuery.extend(ev.data,{view:'planner'}));"
 			onevent_change="app.calendar.event_change"
 		>
 		</calendar-planner>
-	</template>
+	</et2-template>
 </overlay>

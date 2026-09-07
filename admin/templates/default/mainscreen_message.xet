@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-    <template id="admin.mainscreen_message.mainscreen" version="18.1">
-		<et2-vbox height="100%">
-			<et2-ai hidden="!$cont[html]">
-				<htmlarea id="html_mainscreen" height="500" width="100%" disabled="!$cont[html]"
-						  valid_children="+body[style]"/>
+    <et2-template  id="admin.mainscreen_message.mainscreen" version="18.1">
+		<et2-vbox  height="100%">
+			<et2-ai  hidden="!$cont[html]">
+				<et2-htmlarea  id="html_mainscreen" height="500" width="100%" disabled="!$cont[html]" validChildren="+body[style]"></et2-htmlarea>
 			</et2-ai>
-			<et2-ai hidden="$cont[html]" class="someClass">
-				<et2-textarea id="text_mainscreen" hidden="$cont[html]" rows="25" cols="70" height="500"></et2-textarea>
-			</et2-ai>
-		</et2-vbox>
-	</template>
-    <template id="admin.mainscreen_message.loginscreen" version="18.1">
-		<et2-vbox height="100%">
-			<et2-ai hidden="!$cont[html]">
-			    <htmlarea id="html_loginscreen" height="500" width="100%" disabled="!$cont[html]" valid_children="+body[style]"/>
-			</et2-ai>
-			<et2-ai hidden="$cont[html]">
-                <et2-textarea id="text_loginscreen" hidden="$cont[html]" rows="25" cols="70" height="500"></et2-textarea>
+			<et2-ai  hidden="$cont[html]" class="someClass">
+				<et2-textarea  id="text_mainscreen" hidden="$cont[html]" rows="25" cols="70" height="500"></et2-textarea>
 			</et2-ai>
 		</et2-vbox>
-	</template>
-	<template id="admin.mainscreen_message" template="" lang="" group="0" version="18.1">
+	</et2-template>
+    <et2-template  id="admin.mainscreen_message.loginscreen" version="18.1">
+		<et2-vbox  height="100%">
+			<et2-ai  hidden="!$cont[html]">
+			    <et2-htmlarea  id="html_loginscreen" height="500" width="100%" disabled="!$cont[html]" validChildren="+body[style]"></et2-htmlarea>
+			</et2-ai>
+			<et2-ai  hidden="$cont[html]">
+                <et2-textarea  id="text_loginscreen" hidden="$cont[html]" rows="25" cols="70" height="500"></et2-textarea>
+			</et2-ai>
+		</et2-vbox>
+	</et2-template>
+	<et2-template  id="admin.mainscreen_message" template="" lang="" group="0" version="18.1">
 		<grid width="100%" height="600">
 			<columns>
 				<column/>
@@ -41,8 +40,8 @@
 							<tab id="mainscreen" label="Home screen"/>
 						</tabs>
 						<tabpanels>
-							<template id="admin.mainscreen_message.loginscreen"/>
-							<template id="admin.mainscreen_message.mainscreen"/>
+							<et2-template  id="admin.mainscreen_message.loginscreen"></et2-template>
+							<et2-template  id="admin.mainscreen_message.mainscreen"></et2-template>
 						</tabpanels>
 					</et2-tabbox>
 				</row>
@@ -55,5 +54,5 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

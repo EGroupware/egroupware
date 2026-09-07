@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="mail.importMessage" template="" lang="" group="0" version="1.9.001">
+	<et2-template  id="mail.importMessage" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width="100"/>
@@ -13,13 +13,13 @@
 				</row>
 				<row>
 					<et2-description  value="Store to Folder"></et2-description>
-					<et2-select  id="FOLDER" allowFreeEntries="false" onclick="app.mail.addressClick" searchUrl="mail.mail_compose.ajax_searchFolder" searchOptions='{"noPrefixId": "true"}'></et2-select>
+					<et2-select  id="FOLDER" allowFreeEntries="false" onclick="app.mail.addressClick" searchUrl="mail.mail_compose.ajax_searchFolder" searchOptions="{&quot;noPrefixId&quot;: &quot;true&quot;}"></et2-select>
 				</row>
 				<row>
 					<et2-description  value="Choose file"></et2-description>
 					<et2-hbox>
-						<vfs-select id="vfsfile" button_caption = "" mode="open" mime="message/rfc822" onchange="app.mail.vfsUploadForImport"/>
-						<file statustext="Select file to import into Folder" onFinish="app.mail.uploadForImport" mime="/^message\//i" id="uploadForImport" drop_target ="mail-importMessage" class="mail_importMessageFile"/>
+						<et2-vfs-select  id="vfsfile" mode="open" mime="message/rfc822" onchange="app.mail.vfsUploadForImport"></et2-vfs-select>
+						<et2-file  statustext="Select file to import into Folder" onFinish="app.mail.uploadForImport" mime="/^message\//i" id="uploadForImport" class="mail_importMessageFile"></et2-file>
 					</et2-hbox>
 				</row>
 				<row class="dialogFooterToolbar">
@@ -27,5 +27,5 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

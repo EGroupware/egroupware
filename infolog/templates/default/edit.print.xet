@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="infolog.edit.print.project" template="" lang="" group="0" version="1.7.001">
+	<et2-template  id="infolog.edit.print.project" template="" lang="" group="0" version="1.7.001">
 		<grid width="100%" height="245">
 			<columns>
 				<column width="100"/>
@@ -36,8 +36,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="infolog.edit.print.links" template="" lang="" group="0" version="1.7.001">
+	</et2-template>
+	<et2-template  id="infolog.edit.print.links" template="" lang="" group="0" version="1.7.001">
 		<grid width="100%" height="245">
 			<columns>
 				<column width="95"/>
@@ -52,8 +52,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="infolog.edit.print.delegation" template="" lang="" group="0" version="1.7.001">
+	</et2-template>
+	<et2-template  id="infolog.edit.print.delegation" template="" lang="" group="0" version="1.7.001">
 		<grid width="100%" height="200" overflow="auto">
 			<columns>
 				<column width="100"/>
@@ -84,8 +84,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="infolog.edit.print" template="" lang="" group="0" version="1.7.001">
+	</et2-template>
+	<et2-template  id="infolog.edit.print" template="" lang="" group="0" version="1.7.001">
 		<grid width="100%">
 			<columns>
 				<column width="103"/>
@@ -95,7 +95,7 @@
 			</columns>
 			<rows>
 				<row disabled="!@msg">
-					<html span="all" class="message" align="center" id="msg" no_lang="1"/>
+					<et2-html  span="all" class="message" align="center" id="msg" noLang="1"></et2-html>
 					<et2-description></et2-description>
 					<et2-description></et2-description>
 					<et2-description></et2-description>
@@ -143,8 +143,7 @@
 				<row class="th" height="10">
 					<et2-description  span="all" value="Description"></et2-description>
 				</row>
-				<row>
-					<et2-textarea  id="info_des" statustext="enter a textual description of the log-entry" span="all" class="description" readonly="true" noLang="1"></et2-textarea>
+				<row><et2-ai  span="all"><et2-textarea  id="info_des" statustext="enter a textual description of the log-entry" class="description" readonly="true" noLang="1"></et2-textarea></et2-ai>
 				</row>
 				<row>
 					<et2-description></et2-description>
@@ -159,10 +158,10 @@
 					<customfields span="all" type_filter="@info_type"  readonly="true"/>
 				</row>
 				<row>
-					<template span="all" id="infolog.edit.print.project"/>
+					<et2-template  span="all" id="infolog.edit.print.project"></et2-template>
 				</row>
 				<row>
-					<template id="infolog.edit.print.links" span="all"/>
+					<et2-template  id="infolog.edit.print.links" span="all"></et2-template>
 				</row>
 				<row>
 					<et2-description></et2-description>
@@ -171,7 +170,7 @@
 					<et2-description></et2-description>
 				</row>
 				<row>
-					<template id="infolog.edit.print.delegation" span="all"/>
+					<et2-template  id="infolog.edit.print.delegation" span="all"></et2-template>
 				</row>
 				<row>
 					<et2-description></et2-description>
@@ -211,10 +210,10 @@
 				</row>
 			</rows>
 		</grid>
-		<styles>
+		<et2-styles>
 			.hideFrom input { display: none; }
 .link_select select { width: 250px; }
 .description textarea { width: 98%; }
-		</styles>
-	</template>
+		</et2-styles>
+	</et2-template>
 </overlay>

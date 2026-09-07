@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="importexport.definition_index.row" template="" lang="" group="0" version="1.9.002">
+	<et2-template  id="importexport.definition_index.row" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%">
 			<columns>
 				<column width="50px"/>
@@ -13,15 +13,14 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<et2-nextmatch-header-filter  id="type" class="lr_padding" emptyLabel="importexport"/>
+					<et2-nextmatch-header-filter  id="type" class="lr_padding" emptyLabel="importexport"></et2-nextmatch-header-filter>
 					<nextmatch-sortheader label="Name" id="name" class="lr_padding"/>
-					<et2-nextmatch-header-filter  id="application" class="lr_padding" emptyLabel="Application"/>
-					<et2-nextmatch-header-account  align="center" id="allowed_users" class="lr_padding" emptyLabel="Allowed users" accountType="groups"/>
-					<et2-nextmatch-header-account  id="owner" emptyLabel="Owner"/>
+					<et2-nextmatch-header-filter  id="application" class="lr_padding" emptyLabel="Application"></et2-nextmatch-header-filter>
+					<et2-nextmatch-header-account  align="center" id="allowed_users" class="lr_padding" emptyLabel="Allowed users" accountType="groups"></et2-nextmatch-header-account>
+					<et2-nextmatch-header-account  id="owner" emptyLabel="Owner"></et2-nextmatch-header-account>
 				</row>
 				<row class="row $row_cont[class]">
-                    <et2-image src="$row_cont[type]" onclick="app.importexport.open_definition"
-                               class="lr_padding button" noLang="1"></et2-image>
+                    <et2-image  src="$row_cont[type]" onclick="app.importexport.open_definition" class="lr_padding button" noLang="1"></et2-image>
                     <et2-description  id="${row}[name]" class="lr_padding" noLang="1"></et2-description>
                     <et2-description  id="${row}[application]" class="lr_padding"></et2-description>
                     <et2-select-account  id="${row}[allowed_users]" readonly="true" rows="5" class="lr_padding" multiple="1" placeholder="Private" noLang="1"></et2-select-account>
@@ -29,18 +28,18 @@
                 </row>
 			</rows>
 		</grid>
-		<styles>
+		<et2-styles>
 			.redItalic { color:red; font-style:italic;}			td.lr_padding { padding-left: 5px; padding-right: 5px; }
 
 .button {
   cursor: pointer;
 }
-		</styles>
-	</template>
-	<template id="importexport.definition_index.add" template="" lang="" group="0" version="1.9.002">
+		</et2-styles>
+	</et2-template>
+	<et2-template  id="importexport.definition_index.add" template="" lang="" group="0" version="1.9.002">
 		<et2-button  statustext="Add a new definition" label="Add" id="add" onclick="egw(window).open_link('importexport.importexport_definitions_ui.edit','_blank','500x500'); return false;" noSubmit="true"></et2-button>
-	</template>
-	<template id="importexport.definition_index" template="" lang="" group="0" version="1.9.002">
+	</et2-template>
+	<et2-template  id="importexport.definition_index" template="" lang="" group="0" version="1.9.002">
 		<nextmatch id="nm" template="importexport.definition_index.row" header_left="importexport.definition_index.add"/>
 		<et2-box  id="owner_popup" class="action_popup prompt">
 			<et2-description  value="Change owner" class="promptheader"></et2-description>
@@ -66,7 +65,7 @@
 				<et2-button  id="cancel_allowed" label="Cancel" onclick="nm_hide_popup(this,'allowed_popup');" image="cancel" noSubmit="true"></et2-button>
 			</et2-hbox>
 		</et2-box>
-		<styles>
+		<et2-styles>
 			td.lr_padding { padding-left: 5px; padding-right: 5px; }
 
 .button {
@@ -103,6 +102,6 @@
 .action_select {
 	width: 100%
 }
-		</styles>
-	</template>
+		</et2-styles>
+	</et2-template>
 </overlay>

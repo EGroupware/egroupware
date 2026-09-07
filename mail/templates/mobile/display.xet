@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="mail.display" template="" lang="" group="0" version="1.9.001">
+	<et2-template  id="mail.display" template="" lang="" group="0" version="1.9.001">
 		<et2-appicon  class="onlyPrint"></et2-appicon>
-		<html id="msg"/>
+		<et2-html  id="msg"></et2-html>
 		<et2-vbox  class="mailDisplay">
 			<et2-hbox  class="dialogHeadbar">
 				<et2-hbox>
-					<toolbar class="et2_head_toolbar" id="displayToolbar" width="100%" view_range="6" flat_list="true"/>
+					<et2-toolbar  class="et2_head_toolbar" id="displayToolbar" width="100%" viewRange="6" flatList="true"></et2-toolbar>
 					<et2-description></et2-description>
 				</et2-hbox>
 			</et2-hbox>
@@ -80,8 +80,8 @@
 
 		</et2-vbox>
 		<et2-vbox  class="mailDisplay">
-			<iframe frameborder="1" class="mail_displaybody" id="mailDisplayBodySrc" name="mailDisplayBodySrc" scrolling="auto" width="100%"/>
+			<et2-iframe  frameborder="1" class="mail_displaybody" id="mailDisplayBodySrc" name="mailDisplayBodySrc" scrolling="auto" width="100%"></et2-iframe>
 
 		</et2-vbox>
-	</template>
+	</et2-template>
 </overlay>

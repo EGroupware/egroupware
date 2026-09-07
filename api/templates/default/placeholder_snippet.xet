@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-    <template id="etemplate.placeholder_snippet" template="" lang="" group="0" version="21.1.001">
+    <et2-template  id="etemplate.placeholder_snippet" template="" lang="" group="0" version="21.1.001">
         <et2-vbox  id="outer_box">
             <et2-vbox  id="selects">
                 <et2-select  id="app"></et2-select>
@@ -13,7 +13,7 @@
                 <et2-description  id="preview_content"></et2-description>
             </et2-hbox>
         </et2-vbox>
-        <styles>
+        <et2-styles>
             #placeholder_snippet {
             min-width: 500px;
             min-height: 300px;
@@ -38,6 +38,6 @@
             border-radius: 0px;
             background-color: transparent;
             }
-        </styles>
-    </template>
+        </et2-styles>
+    </et2-template>
 </overlay>

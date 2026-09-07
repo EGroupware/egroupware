@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="admin.acl.add" template="" lang="" group="0" version="1.9.001">
+	<et2-template  id="admin.acl.add" template="" lang="" group="0" version="1.9.001">
 		<et2-button  statustext="Add" id="add" onclick="app.admin.acl({id:'add'},[{id:''}])" noSubmit="true"></et2-button>
-	</template>
-	<template id="admin.acl.rows" template="" lang="" group="0" version="1.9.001">
+	</et2-template>
+	<et2-template  id="admin.acl.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width="25"/>
@@ -26,14 +26,14 @@
 					<nextmatch-sortheader label="Application" id="acl_appname"/>
 					<nextmatch-sortheader label="Data from" id="acl_account"/>
 					<nextmatch-sortheader label="Access by" id="acl_location"/>
-					<nextmatch-header label="Read" id="read"/>
-					<nextmatch-header label="Add" id="add"/>
-					<nextmatch-header label="Edit" id="edit"/>
-					<nextmatch-header label="Delete" id="delete"/>
-					<nextmatch-header label="Private" id="private"/>
-					<nextmatch-header label="Custom 1" id="custom1"/>
-					<nextmatch-header label="Custom 2" id="custom2"/>
-					<nextmatch-header label="Custom 3" id="custom3"/>
+					<et2-nextmatch-header  label="Read" id="read"></et2-nextmatch-header>
+					<et2-nextmatch-header  label="Add" id="add"></et2-nextmatch-header>
+					<et2-nextmatch-header  label="Edit" id="edit"></et2-nextmatch-header>
+					<et2-nextmatch-header  label="Delete" id="delete"></et2-nextmatch-header>
+					<et2-nextmatch-header  label="Private" id="private"></et2-nextmatch-header>
+					<et2-nextmatch-header  label="Custom 1" id="custom1"></et2-nextmatch-header>
+					<et2-nextmatch-header  label="Custom 2" id="custom2"></et2-nextmatch-header>
+					<et2-nextmatch-header  label="Custom 3" id="custom3"></et2-nextmatch-header>
 				</row>
 				<row class="$row_cont[class]">
 					<et2-appicon  align="center" src="$row_cont[acl_appname]" class="admin_aclApp"></et2-appicon>
@@ -51,8 +51,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="admin.acl" template="" lang="" group="0" version="1.9.001">
+	</et2-template>
+	<et2-template  id="admin.acl" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width="100%"/>
@@ -68,5 +68,5 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

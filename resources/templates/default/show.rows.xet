@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="resources.show.rows" lang="" group="0" version="1.9.003">
+	<et2-template  id="resources.show.rows" lang="" group="0" version="1.9.003">
         <grid width="100%">
             <columns>
                 <column width="70"/>
@@ -31,7 +31,7 @@
 						<nextmatch-sortheader label="Location" id="location"/>
 						<et2-description  value="Storage information"></et2-description>
 					</et2-vbox>
-					<nextmatch-header label="Resource / Accessories"/>
+					<et2-nextmatch-header  label="Resource / Accessories"></et2-nextmatch-header>
 					<nextmatch-customfields id="customfields"/>
 				</row>
 				<row class="$row_cont[class]">
@@ -69,5 +69,5 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

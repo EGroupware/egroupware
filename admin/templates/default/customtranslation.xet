@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="admin.customtranslation" template="" lang="" group="0" version="1.9.001">
+	<et2-template  id="admin.customtranslation" template="" lang="" group="0" version="1.9.001">
 		<grid id="rows" width="100%">
 			<columns>
 				<column width="50%"/>
@@ -17,7 +17,7 @@
 				<row>
 					<et2-textbox  id="${row}[phrase]"></et2-textbox>
 					<et2-textbox  id="${row}[translation]"></et2-textbox>
-                    <et2-button align="center" label="Delete" id="delete[$row]" onclick="Et2Dialog.confirm(widget,'Delete','Delete')" image="delete"></et2-button>
+                    <et2-button  align="center" label="Delete" id="delete[$row]" onclick="Et2Dialog.confirm(widget,'Delete','Delete')" image="delete"></et2-button>
 				</row>
 			</rows>
 		</grid>
@@ -26,5 +26,5 @@
 			<et2-button  label="Apply" id="button[apply]"></et2-button>
 			<et2-button  label="Cancel" id="button[cancel]"></et2-button>
 		</et2-hbox>
-	</template>
+	</et2-template>
 </overlay>

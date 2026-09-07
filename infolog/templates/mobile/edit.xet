@@ -2,10 +2,9 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <!-- $Id: edit.xet 54611 2015-12-22 17:01:32Z nathangray $ -->
 <overlay>
-	<template id="infolog.edit.description" template="" lang="" group="0" version="1.6.001">
-        <et2-textarea id="info_des" width="99.7%" height="11lh" noLang="1" resizeRatio="0"></et2-textarea>
-	</template>
-	<template id="infolog.edit.links" template="" lang="" group="0" version="1.3.001">
+	<et2-template  id="infolog.edit.description" template="" lang="" group="0" version="1.6.001"><et2-ai><et2-textarea  id="info_des" width="99.7%" noLang="1" resizeRatio="0"></et2-textarea></et2-ai>
+	</et2-template>
+	<et2-template  id="infolog.edit.links" template="" lang="" group="0" version="1.3.001">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -22,8 +21,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="infolog.edit.project" template="" lang="" group="0" version="1.5.004">
+	</et2-template>
+	<et2-template  id="infolog.edit.project" template="" lang="" group="0" version="1.5.004">
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
@@ -55,8 +54,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="infolog.edit.details" template="" lang="" group="0" version="1.9.001">
+	</et2-template>
+	<et2-template  id="infolog.edit.details" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
@@ -97,8 +96,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="infolog.edit.ownership" template="" lang="" group="0" version="16.1.00">
+	</et2-template>
+	<et2-template  id="infolog.edit.ownership" template="" lang="" group="0" version="16.1.00">
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
@@ -128,14 +127,14 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-    <template id="infolog.edit" template="" lang="" group="0" version="1.9.101">
-        <et2-hbox disabled="@hidebuttons" slot="label">
-            <et2-button-icon statustext="Apply the changes" id="button[apply]" image="apply"></et2-button-icon>
-            <et2-button-icon statustext="delete this entry" id="button[delete]" onclick="return app.infolog.confirm_delete_edit($cont[info_id], $cont[info_anz_subs]);" image="delete" span="all"></et2-button-icon>
-            <et2-button-timestamp statustext="Insert timestamp into description field" id="timestamp" class="infologExtraButton infologTimestamp" image="pin-map" target="info_des"></et2-button-timestamp>
-            <et2-button-toggle ariaLabel="notifications" id="no_notifications" icon="bell-fill"/>
-            <et2-number id="info_number" readonly="true" class="entry_id" precision="0"></et2-number>
+	</et2-template>
+    <et2-template  id="infolog.edit" template="" lang="" group="0" version="1.9.101">
+        <et2-hbox  disabled="@hidebuttons" slot="label">
+            <et2-button-icon  statustext="Apply the changes" id="button[apply]" image="apply"></et2-button-icon>
+            <et2-button-icon  statustext="delete this entry" id="button[delete]" onclick="return app.infolog.confirm_delete_edit($cont[info_id], $cont[info_anz_subs]);" image="delete" span="all"></et2-button-icon>
+            <et2-button-timestamp  statustext="Insert timestamp into description field" id="timestamp" class="infologExtraButton infologTimestamp" image="pin-map" target="info_des"></et2-button-timestamp>
+            <et2-button-toggle  ariaLabel="notifications" id="no_notifications" icon="bell-fill"/>
+            <et2-number  id="info_number" readonly="true" class="entry_id" precision="0"></et2-number>
         </et2-hbox>
 		<grid border="1" width="100%">
 			<columns>
@@ -174,7 +173,7 @@
 					<et2-select-percent  span="4" statustext="Percent completed" id="info_percent" onchange="app.infolog.statusChanged"></et2-select-percent>
 				</row>
 				<row>
-                    <et2-tabbox id="tabs" span="all" cfTypeFilter="@info_type">
+                    <et2-tabbox  id="tabs" span="all" cfTypeFilter="@info_type">
                         <tabs>
                             <tab id="description" label="Description" statustext="longer textual description"/>
                             <tab id="details" label="Details" statustext="Location, priority , ..."/>
@@ -183,15 +182,15 @@
                             <tab id="ownership" label="Ownership"/>
                         </tabs>
                         <tabpanels>
-                            <template id="infolog.edit.description"/>
-                            <template id="infolog.edit.details"/>
-                            <template id="infolog.edit.links"/>
-                            <template id="infolog.edit.project"/>
-                            <template id="infolog.edit.ownership"/>
+                            <et2-template  id="infolog.edit.description"></et2-template>
+                            <et2-template  id="infolog.edit.details"></et2-template>
+                            <et2-template  id="infolog.edit.links"></et2-template>
+                            <et2-template  id="infolog.edit.project"></et2-template>
+                            <et2-template  id="infolog.edit.ownership"></et2-template>
                         </tabpanels>
                     </et2-tabbox>
                 </row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

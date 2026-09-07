@@ -2,7 +2,7 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <!-- $Id:$ -->
 <overlay>
-	<template id="infolog.home.link" template="" lang="" group="0" version="1.9.001">
+	<et2-template  id="infolog.home.link" template="" lang="" group="0" version="1.9.001">
 		<et2-hbox  class="infolog_CompletedClmn" height="45px">
 			<et2-image  label="$cont[info_status]" id="edit_status[$cont[info_id]]" href="javascript:egw.open($cont[info_id],'infolog');" src="image" defaultSrc="status"></et2-image>
 			<et2-vbox>
@@ -25,5 +25,5 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

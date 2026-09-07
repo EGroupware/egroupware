@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="importexport.wizard_basic_import_csv.fieldmapping" template="" lang="" group="0" version="1.9.001">
+	<et2-template  id="importexport.wizard_basic_import_csv.fieldmapping" template="" lang="" group="0" version="1.9.001">
 		<grid>
 			<columns>
 				<column/>
@@ -29,7 +29,7 @@
                             <row>
                                 <et2-description  value="$row_cont[index]" noLang="1"></et2-description>
                                 <et2-description  value="$row_cont[title]" noLang="1"></et2-description>
-                                <et2-select id="${row}[field]"></et2-select>
+                                <et2-select  id="${row}[field]"></et2-select>
                                 <et2-textbox  id="${row}[conversion]"></et2-textbox>
                             </row>
                         </rows>
@@ -37,10 +37,10 @@
 				</row>
 			</rows>
 		</grid>
-		<styles>
+		<et2-styles>
 			.et2_grid[id$='mapping'] td:first-child {
 display:none;
 }
-		</styles>
-	</template>
+		</et2-styles>
+	</et2-template>
 </overlay>

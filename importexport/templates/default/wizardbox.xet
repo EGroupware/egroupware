@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="importexport.wizardbox" template="" lang="" group="0" version="0.0.2">
+	<et2-template  id="importexport.wizardbox" template="" lang="" group="0" version="0.0.2">
         <grid width="100%" height="600">
             <columns>
                 <column width="100%"/>
@@ -12,7 +12,7 @@
                         <et2-vbox  width="100%">
                             <et2-description  id="text"></et2-description>
                             <et2-box  class="wizard_content">
-                                <template id="@wizard_content"/>
+                                <et2-template  id="@wizard_content"></et2-template>
                             </et2-box>
                         </et2-vbox>
                     </et2-hbox>
@@ -29,13 +29,13 @@
 				</row>
 			</rows>
 		</grid>
-		<styles>
+		<et2-styles>
             .wizard_content {
             height: 330px;
             width: 100%;
             max-height:330px;
             overflow:auto;
             }
-        </styles>
-	</template>
+        </et2-styles>
+	</et2-template>
 </overlay>

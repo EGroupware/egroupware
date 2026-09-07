@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="admin.index.rows" template="" lang="" group="0" version="1.9.001">
+	<et2-template  id="admin.index.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width="15%"/>
@@ -48,8 +48,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="admin.index.group" template="" lang="" group="0" version="1.9.001">
+	</et2-template>
+	<et2-template  id="admin.index.group" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width="30%"/>
@@ -65,8 +65,8 @@
 						<nextmatch-sortheader label="{Container} &amp; {Group name}" id="account_dn"/>
 					</et2-vbox>
 					<nextmatch-sortheader label="EMail" id="email"/>
-					<nextmatch-header label="Members" id="account_members"/>
-					<nextmatch-header label="Applications" id="apps"/>
+					<et2-nextmatch-header  label="Members" id="account_members"></et2-nextmatch-header>
+					<et2-nextmatch-header  label="Applications" id="apps"></et2-nextmatch-header>
 				</row>
 				<row class="$row_cont[status_class]">
 					<et2-vbox>
@@ -80,29 +80,28 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="admin.index.header" template="" lang="" group="0" version="1.9.001">
-		<et2-toolbar id="account-toolbar">
-			<et2-button-icon  statustext="Add" image="add" id="add" slot="prefix"
-				onclick="app.admin.account({id:'add'})" noSubmit="true"></et2-button-icon>
-			<template template="api.search-button" slot="prefix"></template>
-			<et2-select id="filter" ariaLabel="Group" onchange="app.admin.changeNmFilter"/>
-			<et2-select id="filter2" ariaLabel="Status" onchange="app.admin.changeNmFilter"/>
+	</et2-template>
+	<et2-template  id="admin.index.header" template="" lang="" group="0" version="1.9.001">
+		<et2-toolbar  id="account-toolbar">
+			<et2-button-icon  statustext="Add" image="add" id="add" slot="prefix" onclick="app.admin.account({id:'add'})" noSubmit="true"></et2-button-icon>
+			<et2-template  template="api.search-button" slot="prefix"></et2-template>
+			<et2-select  id="filter" ariaLabel="Group" onchange="app.admin.changeNmFilter"/>
+			<et2-select  id="filter2" ariaLabel="Status" onchange="app.admin.changeNmFilter"/>
 		</et2-toolbar>
-	</template>
-	<template id="admin.index.group.header" template="" lang="" group="0" version="1.9.001">
-		<et2-toolbar id="group-toolbar">
+	</et2-template>
+	<et2-template  id="admin.index.group.header" template="" lang="" group="0" version="1.9.001">
+		<et2-toolbar  id="group-toolbar">
 			<et2-button-icon  statustext="Add" image="add" id="add" onclick="app.admin.account({id:'add'})" noSubmit="true"></et2-button-icon>
-			<template template="api.search-button"></template>
+			<et2-template  template="api.search-button"></et2-template>
 		</et2-toolbar>
-	</template>
-	<template id="admin.index" template="" lang="" group="0" version="1.9.001">
-		<et2-template template="admin.index.header" slot="main-header"></et2-template>
-        <tree slot="left" autoloading="admin_ui::ajax_tree" id="tree" onclick="app.admin.run" parent_node="admin_tree_target" std_images="bullet"/>
+	</et2-template>
+	<et2-template  id="admin.index" template="" lang="" group="0" version="1.9.001">
+		<et2-template  template="admin.index.header" slot="main-header"></et2-template>
+        <et2-tree  slot="left" autoloading="admin_ui::ajax_tree" id="tree" onclick="app.admin.run" parentId="admin_tree_target" stdImages="bullet"></et2-tree>
 		<nextmatch id="nm" template="admin.index.rows"/>
-		<et2-template template="admin.index.group.header" slot="main-header" hidden="true"></et2-template>
+		<et2-template  template="admin.index.group.header" slot="main-header" hidden="true"></et2-template>
 		<nextmatch id="groups" template="admin.index.group" class="hide"/>
-		<iframe frameborder="1" height="100%" id="iframe" scrolling="auto" width="100%" disabled="true"/>
+		<et2-iframe  frameborder="1" height="100%" id="iframe" scrolling="auto" width="100%" disabled="true"></et2-iframe>
 		<et2-box  id="ajax_target" disabled="true"></et2-box>
-	</template>
+	</et2-template>
 </overlay>

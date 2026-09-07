@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="filemanager.admin" template="" lang="" group="0" version="1.7.001">
-		<groupbox disabled="!@percent_size">
-			<caption label="sqlFS Statistics"/>
+	<et2-template  id="filemanager.admin" template="" lang="" group="0" version="1.7.001">
+		<et2-groupbox  disabled="!@percent_size" summary="sqlFS Statistics">
 			<grid>
 				<columns>
 					<column/>
@@ -32,7 +31,7 @@
 					</row>
 				</rows>
 			</grid>
-		</groupbox>
+		</et2-groupbox>
 		<et2-description  value="Mountpoints" class="filemanager_header"></et2-description>
 		<grid id="mounts" class="egwGridView_grid">
 			<columns>
@@ -51,15 +50,14 @@
 				<row disabled="!@@is_root" part="footer" valign="bottom">
 					<et2-textbox  id="path"></et2-textbox>
 					<et2-vbox  width="100%">
-						<groupbox>
-							<caption label="Protocols"/>
+						<et2-groupbox  summary="Protocols">
 							<et2-vbox  class="filemanager_protocols">
 								<et2-description  value="WebDAVs: mount EGroupware or *Cloud shares"></et2-description>
 								<et2-description  value="SMB: mount Samba or Windows fileserver shares"></et2-description>
 								<et2-description  label="{Versioning}: {Versioning requires EGroupware EPL}" href="https://www.egroupware.org/EPL" extraLinkTarget="_blank"></et2-description>
 								<et2-description  value="Filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem" href="https://github.com/EGroupware/egroupware/blob/master/api/src/Vfs/Filesystem/StreamWrapper.php#L20" extraLinkTarget="_blank"></et2-description>
 							</et2-vbox>
-						</groupbox>
+						</et2-groupbox>
 						<et2-hbox  width="100%">
 							<et2-select  id="url[scheme]" statustext="Protocol to use" onchange="app.filemanager.changeMountScheme"></et2-select>
 							<et2-description  value="://"></et2-description>
@@ -88,7 +86,7 @@
 			<et2-hbox  disabled="!@versioning">
 				<et2-number  id="mtime" label="Delete all older versions and deleted files older then %s days" statustext="0 means all, -N newer then N days" precision="0"></et2-number>
 				<et2-textbox  label="under directory" id="versionedpath" statustext="/ = everywhere"></et2-textbox>
-                <et2-button id="delete-versions" label="Finally delete" onclick="Et2Dialog.confirm(widget,'Finally delete all older versions and deleted files under given directory.\n\nThis can NOT be undone!','Confirm final delete');" image="delete"></et2-button>
+                <et2-button  id="delete-versions" label="Finally delete" onclick="Et2Dialog.confirm(widget,'Finally delete all older versions and deleted files under given directory.\n\nThis can NOT be undone!','Confirm final delete');" image="delete"></et2-button>
 			</et2-hbox>
 			<grid>
 				<columns>
@@ -115,5 +113,5 @@
 			</grid>
 			<et2-button  id="logout" label="Logout" statustext="Log out as superuser"></et2-button>
 		</et2-vbox>
-	</template>
+	</et2-template>
 </overlay>

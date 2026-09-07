@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="filemanager.select" template="" lang="" group="0" version="1.9.002">
-		<html id="js"/>
+	<et2-template  id="filemanager.select" template="" lang="" group="0" version="1.9.002">
+		<et2-html  id="js"></et2-html>
 		<grid width="100%" resize_ratio="1">
 			<columns>
 				<column width="32"/>
@@ -30,10 +30,10 @@
 						<rows>
 							<row class="dialogHeader">
 								<et2-hbox>
-									<et2-button label="Up" id="button[up]" onclick="app.filemanager.change_dir('..');" image="goup"></et2-button>
-									<et2-button label="Home" statustext="Go to your home directory" id="button[home]" image="gohome"></et2-button>
-									<et2-vfs-path id="path" onchange="1"></et2-vfs-path>
-									<et2-button label="Create directory" id="button[createdir]" onclick="app.filemanager.createdir" image="button_createdir" class="createDir" roImage="createdir_disabled"></et2-button>
+									<et2-button  label="Up" id="button[up]" onclick="app.filemanager.change_dir('..');" image="goup"></et2-button>
+									<et2-button  label="Home" statustext="Go to your home directory" id="button[home]" image="gohome"></et2-button>
+									<et2-vfs-path  id="path" onchange="1"></et2-vfs-path>
+									<et2-button  label="Create directory" id="button[createdir]" onclick="app.filemanager.createdir" image="button_createdir" class="createDir" roImage="createdir_disabled"></et2-button>
 								</et2-hbox>
 							</row>
 							<row class="selectFiles file_dir_height" resize_ratio="1">
@@ -46,7 +46,7 @@
 									<rows>
 										<row class="row">
 											<et2-vfs-mime  align="center" id="$row" options="16" class="selectIcon"></et2-vfs-mime>
-											<vfs id="$row" onclick="app.filemanager.select_clicked"/>
+											<et2-vfs-path  id="$row" onclick="app.filemanager.select_clicked" readonly="true"></et2-vfs-path>
 											<et2-checkbox  align="right" id="selected[]" selectedValue="&quot;$row_cont[name]&quot;" ></et2-checkbox>
 										</row>
 									</rows>
@@ -59,9 +59,9 @@
 								<et2-select  class="selectMime" id="mime" onchange="1" emptyLabel="All files"></et2-select>
 							</row>
 							<row disabled="@no_upload">
-								<et2-groupbox summary="File upload">
+								<et2-groupbox  summary="File upload">
 									<et2-description  value="Choose a file for uploading"></et2-description>
-									<file id="file_upload"/>
+									<et2-file  id="file_upload"></et2-file>
 								</et2-groupbox>
 							</row>
 						</rows>
@@ -75,5 +75,5 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

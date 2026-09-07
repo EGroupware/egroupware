@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="admin.mailaccount.identity" template="" lang="" group="0" version="1.9.001">
+	<et2-template  id="admin.mailaccount.identity" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width="120"/>
@@ -35,13 +35,12 @@
 					<et2-description  for="ident_email" value="EMail address"></et2-description>
 					<et2-url-email  id="ident_email" options="80,128" width="96%"></et2-url-email>
 				</row>
-				<row>
-					<htmlarea expand_toolbar="false" height="125px" id="ident_signature" span="all" width="100%"/>
+				<row><et2-ai  span="all"><et2-htmlarea  id="ident_signature" width="100%" toolbarMode="wrap"></et2-htmlarea></et2-ai>
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="admin.mailaccount.imap" template="" lang="" group="0" version="1.9.001">
+	</et2-template>
+	<et2-template  id="admin.mailaccount.imap" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width="120"/>
@@ -85,8 +84,7 @@
 					</et2-hbox>
 				</row>
 				<row class="emailadmin_no_single">
-					<groupbox span="all" class="emailadmin_imap_admin">
-						<caption label="IMAP administration"/>
+					<et2-groupbox  span="all" class="emailadmin_imap_admin" summary="IMAP administration">
 						<grid>
 							<columns>
 								<column width="120"/>
@@ -103,12 +101,12 @@
 								</row>
 							</rows>
 						</grid>
-					</groupbox>
+					</et2-groupbox>
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="admin.mailaccount.folder" template="" lang="" group="0" version="1.9.001">
+	</et2-template>
+	<et2-template  id="admin.mailaccount.folder" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width="120"/>
@@ -145,8 +143,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="admin.mailaccount.sieve" template="" lang="" group="0" version="1.9.001">
+	</et2-template>
+	<et2-template  id="admin.mailaccount.sieve" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width="120"/>
@@ -175,8 +173,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="admin.mailaccount.smtp" template="" lang="" group="0" version="1.9.001">
+	</et2-template>
+	<et2-template  id="admin.mailaccount.smtp" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width="120"/>
@@ -217,8 +215,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="admin.mailaccount.aliases" template="" lang="" group="0" version="1.9.001">
+	</et2-template>
+	<et2-template  id="admin.mailaccount.aliases" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width="120"/>
@@ -244,7 +242,7 @@
 				<row disabled="@no_forward_available">
 					<et2-description></et2-description>
 					<et2-vbox>
-                        <et2-checkbox label="Forward only" id="deliveryMode" onchange="if (widget.getValue()) Et2Dialog.alert('Forward only disables IMAP mailbox / storing of mails and just forwards them to given address.','Forward only');" selectedValue="forwardOnly"></et2-checkbox>
+                        <et2-checkbox  label="Forward only" id="deliveryMode" onchange="if (widget.getValue()) Et2Dialog.alert('Forward only disables IMAP mailbox / storing of mails and just forwards them to given address.','Forward only');" selectedValue="forwardOnly"></et2-checkbox>
 						<et2-checkbox  label="Allow users to change forwards" id="acc_user_forward"></et2-checkbox>
 					</et2-vbox>
 				</row>
@@ -264,12 +262,12 @@
 					<et2-description></et2-description>
 				</row>
 				<row disabled="!@admin_actions">
-					<toolbar id="admin_actions" colspan="2" default_execute="app.admin.account_edit_action"/>
+					<et2-toolbar  id="admin_actions" colspan="2" defaultExecute="app.admin.account_edit_action"></et2-toolbar>
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="admin.mailaccount.encryption" template="" lang="" group="0" version="17.1">
+	</et2-template>
+	<et2-template  id="admin.mailaccount.encryption" template="" lang="" group="0" version="17.1">
 		<grid width="100%" resize_ratio="0">
 			<columns>
 				<column width="120"/>
@@ -280,78 +278,78 @@
 					<et2-description  value="SMIME"></et2-description>
 				</row>
 				<row valign="top">
-					<et2-description value="Certificate"></et2-description>
+					<et2-description  value="Certificate"></et2-description>
 					<et2-hbox>
-						<et2-button id="smimeGenerate" label="Create self-signed certificate" onclick="app.admin.smime_genCertificate" image="add" hideOnReadonly="true" noSubmit="true"></et2-button>
+						<et2-button  id="smimeGenerate" label="Create self-signed certificate" onclick="app.admin.smime_genCertificate" image="add" hideOnReadonly="true" noSubmit="true"></et2-button>
 						<et2-button  id="smime_export_p12" label="export certificate as p12" onclick="app.admin.smime_exportCert" image="export" noSubmit="true"></et2-button>
-						<et2-button id="smime_export_csr" label="Export CSR" onclick="app.admin.smime_exportCsr" image="export" noSubmit="true"></et2-button>
+						<et2-button  id="smime_export_csr" label="Export CSR" onclick="app.admin.smime_exportCsr" image="export" noSubmit="true"></et2-button>
 						<et2-button  id="smime_delete_p12" label="Delete certificate" onclick="Et2Dialog.confirm(widget,'Deleting removes your S/MIME private key entirely - you will no longer be able to read any previously received encrypted messages. If you are renewing your certificate, use Export CSR and Import certificate instead to keep your key.','Delete S/MIME certificate')" image="delete" noSubmit="true"></et2-button>
 					</et2-hbox>
 				</row>
 				<row valign="top">
-					<et2-description value="Passphrase"></et2-description>
-					<et2-password id="smime_passphrase" maxlength="128" autocomplete="off" placeholder="Only if the private key (new upload, or already stored) is passphrase-protected"></et2-password>
+					<et2-description  value="Passphrase"></et2-description>
+					<et2-password  id="smime_passphrase" maxlength="128" autocomplete="off" placeholder="Only if the private key (new upload, or already stored) is passphrase-protected"></et2-password>
 				</row>
 				<row valign="top">
 					<et2-description></et2-description>
-					<et2-checkbox id="smime_no_passphrase" label="Do NOT ask passphrase" onchange="app.admin.smime_noPassphraseChanged" statustext="Removes the passphrase from the private key (still protected by your login password) so signing, encrypting and decrypting never asks for it again"></et2-checkbox>
+					<et2-checkbox  id="smime_no_passphrase" label="Do NOT ask passphrase" onchange="app.admin.smime_noPassphraseChanged" statustext="Removes the passphrase from the private key (still protected by your login password) so signing, encrypting and decrypting never asks for it again"></et2-checkbox>
 				</row>
 				<row valign="top">
 					<et2-description  value="Upload your certificate .p12/.pfx file"></et2-description>
-					<file id="smimeKeyUpload" accept=".p12,.pfx"/>
+					<et2-file  id="smimeKeyUpload" accept=".p12,.pfx"></et2-file>
 				</row>
 				<row valign="top">
-					<et2-description value="Import CA-signed certificate for this key"></et2-description>
+					<et2-description  value="Import CA-signed certificate for this key"></et2-description>
 					<et2-hbox>
-						<file id="smimeCertUpload" accept=".pem,.crt,.cer,.p7b" onchange="app.admin.smime_certFileChanged"/>
-						<et2-button id="smime_import_cert" label="Import certificate" onclick="app.admin.change_account" image="upload" noSubmit="true"></et2-button>
+						<et2-file  id="smimeCertUpload" accept=".pem,.crt,.cer,.p7b" onchange="app.admin.smime_certFileChanged"></et2-file>
+						<et2-button  id="smime_import_cert" label="Import certificate" onclick="app.admin.change_account" image="upload" noSubmit="true"></et2-button>
 					</et2-hbox>
 				</row>
 				<row valign="top">
-					<et2-description value="Intermediate/CA certificate (optional)"></et2-description>
-					<file id="smimeIntermediateUpload" accept=".pem,.crt,.cer,.p7b"/>
+					<et2-description  value="Intermediate/CA certificate (optional)"></et2-description>
+					<et2-file  id="smimeIntermediateUpload" accept=".pem,.crt,.cer,.p7b"></et2-file>
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="admin.mailaccount.smimecertgen" template="" lang="" group="0" version="17.1">
+	</et2-template>
+	<et2-template  id="admin.mailaccount.smimecertgen" template="" lang="" group="0" version="17.1">
 		<grid width="100%">
 			<columns>
 				<column/>
 			</columns>
 			<rows>
 				<row>
-					<et2-groupbox summary="Certificate details">
+					<et2-groupbox  summary="Certificate details">
 						<et2-vbox>
-							<et2-textbox id="countryName" maxlength="2" label="Country" placeholder="DE" class="et2-label-fixed"></et2-textbox>
-							<et2-textbox id="stateOrProvinceName" label="State or province" class="et2-label-fixed"></et2-textbox>
-							<et2-textbox id="localityName" label="Locality" class="et2-label-fixed"></et2-textbox>
-							<et2-textbox id="organizationName" label="Organisation" class="et2-label-fixed"></et2-textbox>
-							<et2-textbox id="organizationalUnitName" label="Organizational unit" class="et2-label-fixed"></et2-textbox>
-							<et2-textbox id="commonName" label="Common name" class="et2-label-fixed"></et2-textbox>
-							<et2-textbox id="emailAddress" label="Email address" class="et2-label-fixed"></et2-textbox>
-							<et2-textbox id="validity" type="integer" label="Certificate validity in days" placeholder="3650" class="et2-label-fixed"></et2-textbox>
+							<et2-textbox  id="countryName" maxlength="2" label="Country" placeholder="DE" class="et2-label-fixed"></et2-textbox>
+							<et2-textbox  id="stateOrProvinceName" label="State or province" class="et2-label-fixed"></et2-textbox>
+							<et2-textbox  id="localityName" label="Locality" class="et2-label-fixed"></et2-textbox>
+							<et2-textbox  id="organizationName" label="Organisation" class="et2-label-fixed"></et2-textbox>
+							<et2-textbox  id="organizationalUnitName" label="Organizational unit" class="et2-label-fixed"></et2-textbox>
+							<et2-textbox  id="commonName" label="Common name" class="et2-label-fixed"></et2-textbox>
+							<et2-textbox  id="emailAddress" label="Email address" class="et2-label-fixed"></et2-textbox>
+							<et2-number  id="validity" label="Certificate validity in days" placeholder="3650" class="et2-label-fixed" precision="0"></et2-number>
 						</et2-vbox>
 					</et2-groupbox>
 				</row>
 				<row>
-					<et2-groupbox summary="passphrase">
-						<et2-description value="Enter a passphrase if you would like to protect your private key by password."></et2-description>
+					<et2-groupbox  summary="passphrase">
+						<et2-description  value="Enter a passphrase if you would like to protect your private key by password."></et2-description>
 						<et2-vbox>
-							<et2-password id="passphrase" label="Passphrase" class="et2-label-fixed"></et2-password>
-							<et2-password id="passphraseConf" label="Repeat passphrase" class="et2-label-fixed"></et2-password>
+							<et2-password  id="passphrase" label="Passphrase" class="et2-label-fixed"></et2-password>
+							<et2-password  id="passphraseConf" label="Repeat passphrase" class="et2-label-fixed"></et2-password>
 						</et2-vbox>
 					</et2-groupbox>
 				</row>
 			</rows>
 		</grid>
-		<styles>
+		<et2-styles>
 			.et2-label-fixed {
 			--label-width: 220px;
 			}
-		</styles>
-	</template>
-	<template id="admin.mailaccount" template="" lang="" group="0" version="1.9.001">
+		</et2-styles>
+	</et2-template>
+	<et2-template  id="admin.mailaccount" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width="120"/>
@@ -363,8 +361,8 @@
 						<et2-button-icon  id="button[save]"></et2-button-icon>
 						<et2-button-icon  id="button[apply]"></et2-button-icon>
 						<et2-button-icon  statustext="Use wizard to detect or verify configuration" id="button[wizard]" image="magicwand"></et2-button-icon>
-                        <et2-button-icon id="button[delete]" onclick="Et2Dialog.confirm(widget,'Delete this account','Delete')"></et2-button-icon>
-                        <et2-button-icon label="Delete identity" id="button[delete_identity]" onclick="Et2Dialog.confirm(widget,'Delete identity','Delete')" image="delete"></et2-button-icon>
+                        <et2-button-icon  id="button[delete]" onclick="Et2Dialog.confirm(widget,'Delete this account','Delete')"></et2-button-icon>
+                        <et2-button-icon  label="Delete identity" id="button[delete_identity]" onclick="Et2Dialog.confirm(widget,'Delete identity','Delete')" image="delete"></et2-button-icon>
 					</et2-hbox>
 				</row>
 				<row disabled="!@accounts" class="dialogHeader">
@@ -391,7 +389,7 @@
 					<et2-checkbox  label="account editable by user" id="acc_user_editable"></et2-checkbox>
 				</row>
 				<row>
-                    <et2-tabbox id="tabs" span="all">
+                    <et2-tabbox  id="tabs" span="all">
                         <tabs>
                             <tab id="admin.mailaccount.identity" label="Identity+Signature"
                                  statustext="Identity&amp;Signature"/>
@@ -404,17 +402,17 @@
                             <tab id="admin.mailaccount.encryption" label="Encryption" statustext="Encryption settings"/>
                         </tabs>
                         <tabpanels>
-                            <template id="admin.mailaccount.identity"/>
-                            <template id="admin.mailaccount.imap"/>
-                            <template id="admin.mailaccount.folder"/>
-                            <template id="admin.mailaccount.sieve"/>
-                            <template id="admin.mailaccount.smtp"/>
-                            <template id="admin.mailaccount.aliases"/>
-                            <template id="admin.mailaccount.encryption"/>
+                            <et2-template  id="admin.mailaccount.identity"></et2-template>
+                            <et2-template  id="admin.mailaccount.imap"></et2-template>
+                            <et2-template  id="admin.mailaccount.folder"></et2-template>
+                            <et2-template  id="admin.mailaccount.sieve"></et2-template>
+                            <et2-template  id="admin.mailaccount.smtp"></et2-template>
+                            <et2-template  id="admin.mailaccount.aliases"></et2-template>
+                            <et2-template  id="admin.mailaccount.encryption"></et2-template>
                         </tabpanels>
                     </et2-tabbox>
                 </row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

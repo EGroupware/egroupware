@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="addressbook.index.duplicate_rows" template="" lang="" group="0" version="16.001">
+	<et2-template  id="addressbook.index.duplicate_rows" template="" lang="" group="0" version="16.001">
 		<grid width="100%">
 			<columns>
 				<column width="75"/>
@@ -12,47 +12,47 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<et2-nextmatch-header label="Type" id="type"/>
-					<et2-nextmatch-header label="#" align="center" id="group_count"/>
+					<et2-nextmatch-header  label="Type" id="type"></et2-nextmatch-header>
+					<et2-nextmatch-header  label="#" align="center" id="group_count"></et2-nextmatch-header>
                     <et2-vbox>
-                        <et2-hbox disabled="!@order=n_fileas">
-                            <et2-nextmatch-sortheader label="own sorting" id="n_fileas" span="all"/>
+                        <et2-hbox  disabled="!@order=n_fileas">
+                            <et2-nextmatch-sortheader  label="own sorting" id="n_fileas" span="all"/>
                         </et2-hbox>
-                        <et2-hbox disabled="!@order=n_given">
-                            <et2-nextmatch-sortheader label="Firstname" id="n_given"/>
-                            <et2-nextmatch-sortheader label="Name" id="n_family"/>
+                        <et2-hbox  disabled="!@order=n_given">
+                            <et2-nextmatch-sortheader  label="Firstname" id="n_given"/>
+                            <et2-nextmatch-sortheader  label="Name" id="n_family"/>
                         </et2-hbox>
-                        <et2-hbox disabled="!@order=n_family">
-                            <et2-nextmatch-sortheader label="Name" id="n_family"/>
-                            <et2-nextmatch-sortheader label="Firstname" id="n_given"/>
+                        <et2-hbox  disabled="!@order=n_family">
+                            <et2-nextmatch-sortheader  label="Name" id="n_family"/>
+                            <et2-nextmatch-sortheader  label="Firstname" id="n_given"/>
                         </et2-hbox>
                         <et2-hbox>
-                            <et2-nextmatch-sortheader label="Organisation" id="org_name" span="all"/>
+                            <et2-nextmatch-sortheader  label="Organisation" id="org_name" span="all"/>
                         </et2-hbox>
-                        <et2-hbox disabled="!@order=/^(org_name|n_fileas|adr_one_postalcode|contact_modified|contact_created|#)/">
-                            <et2-nextmatch-sortheader label="Name" id="n_family"/>
-                            <et2-nextmatch-sortheader label="Firstname" id="n_given" class="leftPad5"/>
+                        <et2-hbox  disabled="!@order=/^(org_name|n_fileas|adr_one_postalcode|contact_modified|contact_created|#)/">
+                            <et2-nextmatch-sortheader  label="Name" id="n_family"/>
+                            <et2-nextmatch-sortheader  label="Firstname" id="n_given" class="leftPad5"/>
                         </et2-hbox>
-                        <et2-hbox disabled="@order=n_fileas">
-                            <et2-nextmatch-sortheader label="own sorting" id="n_fileas" span="all"/>
+                        <et2-hbox  disabled="@order=n_fileas">
+                            <et2-nextmatch-sortheader  label="own sorting" id="n_fileas" span="all"/>
                         </et2-hbox>
                     </et2-vbox>
-					<et2-nextmatch-header label="Business address" id="business"/>
+					<et2-nextmatch-header  label="Business address" id="business"></et2-nextmatch-header>
 					<!--
 					<et2-vbox>
-						<et2-nextmatch-header label="Business phone" id="tel_work"/>
-						<et2-nextmatch-header label="Mobile phone" id="tel_cell"/>
-						<et2-nextmatch-header label="Home phone" id="tel_home"/>
+						<et2-nextmatch-header  label="Business phone" id="tel_work"></et2-nextmatch-header>
+						<et2-nextmatch-header  label="Mobile phone" id="tel_cell"></et2-nextmatch-header>
+						<et2-nextmatch-header  label="Home phone" id="tel_home"></et2-nextmatch-header>
 						<et2-description  value="Fax"></et2-description>
 					</et2-vbox>
 					-->
 					<et2-vbox>
-						<et2-nextmatch-header label="Business email" id="email"/>
-						<et2-nextmatch-header label="Home email" id="email_home"/>
+						<et2-nextmatch-header  label="Business email" id="email"></et2-nextmatch-header>
+						<et2-nextmatch-header  label="Home email" id="email_home"></et2-nextmatch-header>
 					</et2-vbox>
 				</row>
 				<row class="$row_cont[cat_id] $row_cont[class]" valign="top">
-                    <et2-image label="$row_cont[type_label]" src="$row_cont[type]" align="center" noLang="1" defaultSrc="copy"></et2-image>
+                    <et2-image  label="$row_cont[type_label]" src="$row_cont[type]" align="center" noLang="1" defaultSrc="copy"></et2-image>
 					<et2-number  id="${row}[group_count]" readonly="true" align="center" precision="0"></et2-number>
 					<et2-vbox  id="${row}[id]">
 						<et2-description  id="${row}[line1]" noLang="1"></et2-description>
@@ -81,5 +81,5 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="mail.predefinedAddressesDialog" template="" lang="" group="0" version="17.1">
+	<et2-template  id="mail.predefinedAddressesDialog" template="" lang="" group="0" version="17.1">
 		<et2-hbox  class="et2_prompt">
 			<grid width="390">
 				<columns>
@@ -18,7 +18,7 @@
 					</row>
 					<row>
 						<et2-description  value="Folder"></et2-description>
-						<et2-select  id="folder" allowFreeEntries="false" multiple="true" searchUrl="mail.mail_compose.ajax_searchFolder" searchOptions='{"noPrefixId": "true"}'></et2-select>
+						<et2-select  id="folder" allowFreeEntries="false" multiple="true" searchUrl="mail.mail_compose.ajax_searchFolder" searchOptions="{&quot;noPrefixId&quot;: &quot;true&quot;}"></et2-select>
 					</row>
 					<row>
 						<et2-description  value="Cc"></et2-description>
@@ -31,5 +31,5 @@
 				</rows>
 			</grid>
 		</et2-hbox>
-	</template>
+	</et2-template>
 </overlay>

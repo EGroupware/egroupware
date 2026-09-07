@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="mail.display" template="" lang="" group="0" version="1.9.001">
-        <html id="msg"/>
+	<et2-template  id="mail.display" template="" lang="" group="0" version="1.9.001">
+        <et2-html  id="msg"></et2-html>
         <et2-vbox  class="mailDisplay">
-            <toolbar id="displayToolbar" width="100%" view_range="6" flat_list="true" list_header="short"
-                     class="noPrint"/>
+            <et2-toolbar  id="displayToolbar" width="100%" class="noPrint" viewRange="6" flatList="true" listHeader="short"></et2-toolbar>
             <!--
                 Wrapped in a <grid> (single row, like mail.index.preview's mailPreview grid in
                 mail/templates/default/index.xet) so MailApp.renderMessageInto() (mail/js/app.ts)
@@ -21,7 +20,7 @@
                 </columns>
                 <rows>
                     <row>
-                        <et2-vbox width="100%" class="previewWrapper">
+                        <et2-vbox  width="100%" class="previewWrapper">
                             <et2-hbox  class="mailPreviewHeaders">
                                 <et2-description  id="subject" readonly="true" hoverAction="app.mail.modifyMessageSubjectDialog" hoverActionTitle="Modify subject of this message"></et2-description>
                                 <et2-hbox  class="mailPreviewHeaders smimeIcons">
@@ -67,7 +66,7 @@
                             </et2-vbox>
                             <!-- noPrint: normal interactive display, avatar + toolbar dropdown actions per attachment -->
                             <et2-hbox  width="100%" class="mailPreviewHeaders noPrint">
-                                <et2-lavatar contactId="email:$cont[fromaddress]" lname="$cont[fromlavatar][lname]" fname="$cont[fromlavatar][fname]" shape="rounded" size="2.75em"></et2-lavatar>
+                                <et2-lavatar  contactId="email:$cont[fromaddress]" lname="$cont[fromlavatar][lname]" fname="$cont[fromlavatar][fname]" shape="rounded" size="2.75em"></et2-lavatar>
                                 <et2-vbox>
                                     <et2-vbox  class="addresses">
                                         <et2-hbox>
@@ -87,9 +86,9 @@
                                             <et2-description  value="Bcc" class="firstColumnTitle"></et2-description>
                                             <et2-email  id="bccaddress" readonly="true" rows="1" onTagClick="app.mail.onclickCompose"></et2-email>
                                         </et2-hbox>
-                                        <et2-hbox width="100%" disabled="!@attachmentsBlock">
-                                            <et2-description value="Attachments" class="firstColumnTitle"></et2-description>
-                                            <et2-details overlaySummaryOnOpen="true" toggleAlign="right" toggleOnHover="true" hoist="true" class="attachments">
+                                        <et2-hbox  width="100%" disabled="!@attachmentsBlock">
+                                            <et2-description  value="Attachments" class="firstColumnTitle"></et2-description>
+                                            <et2-details  overlaySummaryOnOpen="true" toggleAlign="right" toggleOnHover="true" hoist="true" class="attachments">
                                                 <et2-hbox  slot="summary">
                                                     <grid class="previewAttachmentArea egwGridView_grid">
                                                         <columns>
@@ -107,7 +106,7 @@
                                                                 <et2-description  id="attachmentsBlock[0][type]"></et2-description>
                                                                 <et2-description  id="attachmentsBlock[0][winmailFlag]"></et2-description>
                                                                 <et2-description-expose  class="et2_link useEllipsis" id="attachmentsBlock[0][filename]" mime="@attachmentsBlock[0][type]" href="@attachmentsBlock[0][mime_url]" noLang="1" mimeData="@attachmentsBlock[0][mime_data]"></et2-description-expose>
-                                                                <et2-description align="right" value="@attachmentsBlockTitle" class="et2_bold"></et2-description>
+                                                                <et2-description  align="right" value="@attachmentsBlockTitle" class="et2_bold"></et2-description>
                                                             </row>
                                                         </rows>
                                                     </grid>
@@ -131,7 +130,7 @@
                                                             <et2-description  id="${row}[winmailFlag]"></et2-description>
                                                             <et2-description-expose  class="et2_link useEllipsis" id="${row}[filename]" mime="$row_cont[type]" href="$row_cont[mime_url]" noLang="1" mimeData="$row_cont[mime_data]"></et2-description-expose>
                                                             <et2-description  align="right" id="${row}[size]"></et2-description>
-                                                            <et2-dropdown-button id="${row}[actions]" label="$row_cont[actionsDefaultLabel]" readonly="false" disabled="false" onchange="app.mail.attachmentsBlockActions" onclick="app.mail.attachmentsBlockActions"/>
+                                                            <et2-dropdown-button  id="${row}[actions]" label="$row_cont[actionsDefaultLabel]" readonly="false" disabled="false" onchange="app.mail.attachmentsBlockActions" onclick="app.mail.attachmentsBlockActions"/>
                                                         </row>
                                                     </rows>
                                                 </grid>
@@ -146,9 +145,9 @@
             </grid>
             <et2-box  class="mailDisplayContainer">
                 <et2-ai>
-				<iframe frameborder="1" class="mail_displaybody" id="mailDisplayBodySrc" name="mailDisplayBodySrc" scrolling="auto" width="100%"/>
+				<et2-iframe  frameborder="1" class="mail_displaybody" id="mailDisplayBodySrc" name="mailDisplayBodySrc" scrolling="auto" width="100%"></et2-iframe>
                 </et2-ai>
 			</et2-box>
         </et2-vbox>
-	</template>
+	</et2-template>
 </overlay>

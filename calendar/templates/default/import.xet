@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="calendar.import" template="" lang="" group="0" version="1.0.1.001">
+	<et2-template  id="calendar.import" template="" lang="" group="0" version="1.0.1.001">
 		<grid>
 			<columns>
 				<column/>
@@ -14,7 +14,7 @@
 				</row>
 				<row>
 					<et2-description  value="iCal file"></et2-description>
-					<file id="ical_file" needed="1"/>
+					<et2-file  id="ical_file" required="1"></et2-file>
 				</row>
 				<row>
 					<et2-description></et2-description>
@@ -25,5 +25,5 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

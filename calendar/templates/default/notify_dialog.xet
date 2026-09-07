@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="calendar.notify_dialog" template="" lang="" group="0" version="1.9.001">
+	<et2-template  id="calendar.notify_dialog" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width="88"/>
@@ -58,8 +58,8 @@
 			<et2-button  label="OK" id="button[save]" image="mail"></et2-button>
 			<et2-button  statustext="Close the window" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel"></et2-button>
 		</et2-hbox>
-		<styles>
+		<et2-styles>
 			.selectRole select { width: 100%; }
-		</styles>
-	</template>
+		</et2-styles>
+	</et2-template>
 </overlay>

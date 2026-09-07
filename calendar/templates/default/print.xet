@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="calendar.print.participants" template="" lang="" group="0" version="1.6.001">
+	<et2-template  id="calendar.print.participants" template="" lang="" group="0" version="1.6.001">
 		<grid width="100%" overflow="auto" id="participants">
 			<columns>
 				<column/>
@@ -33,8 +33,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="calendar.print.links" template="" lang="" group="0" version="1.6.001">
+	</et2-template>
+	<et2-template  id="calendar.print.links" template="" lang="" group="0" version="1.6.001">
 		<grid width="100%" height="200" overflow="auto">
 			<columns>
 				<column width="95"/>
@@ -49,8 +49,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="calendar.print" template="" lang="" group="0" version="1.6.001">
+	</et2-template>
+	<et2-template  id="calendar.print" template="" lang="" group="0" version="1.6.001">
 		<grid width="100%" height="200">
 			<columns>
 				<column width="95"/>
@@ -103,8 +103,7 @@
 					<et2-select-cat  id="category" readonly="true"></et2-select-cat>
 				</row>
 				<row valign="top">
-					<et2-description  value="Description"></et2-description>
-					<et2-textarea  id="description" readonly="true"></et2-textarea>
+					<et2-description  value="Description"></et2-description><et2-ai><et2-textarea  id="description" readonly="true"></et2-textarea></et2-ai>
 				</row>
 				<row class="th">
 					<et2-description  value="custom fields" span="all"></et2-description>
@@ -113,12 +112,12 @@
 					<customfields span="all" readonly="true"/>
 				</row>
 				<row>
-					<template id="calendar.print.participants" span="all"/>
+					<et2-template  id="calendar.print.participants" span="all"></et2-template>
 				</row>
 				<row>
-					<template span="all" id="calendar.print.links"/>
+					<et2-template  span="all" id="calendar.print.links"></et2-template>
 				</row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

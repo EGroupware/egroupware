@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="infolog.edit.description" template="" lang="" group="0" version="1.6.001">
-		<et2-textarea  id="info_des" noLang="1"></et2-textarea>
+	<et2-template  id="infolog.edit.description" template="" lang="" group="0" version="1.6.001"><et2-ai><et2-textarea  id="info_des" noLang="1"></et2-textarea></et2-ai>
 		<et2-checkbox  id="clean_history"></et2-checkbox>
-	</template>
-	<template id="infolog.edit.links" template="" lang="" group="0" version="1.3.001">
+	</et2-template>
+	<et2-template  id="infolog.edit.links" template="" lang="" group="0" version="1.3.001">
 		<grid width="100%" overflow="auto">
 			<columns>
 				<column width="99%"/>
@@ -23,8 +22,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="infolog.edit.project" template="" lang="" group="0" version="1.5.004">
+	</et2-template>
+	<et2-template  id="infolog.edit.project" template="" lang="" group="0" version="1.5.004">
 		<grid width="100%">
 			<columns>
                 <column width="120" class="infolog_normalWrap"/>
@@ -61,11 +60,11 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="infolog.edit.history" template="" lang="" group="0" version="1.3.002">
+	</et2-template>
+	<et2-template  id="infolog.edit.history" template="" lang="" group="0" version="1.3.002">
 		<historylog id="history" width="100%"/>
-	</template>
-	<template id="infolog.edit.details" template="" lang="" group="0" version="1.9.001">
+	</et2-template>
+	<et2-template  id="infolog.edit.details" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
             <columns>
                 <column width="370"/>
@@ -121,8 +120,8 @@
                 </row>
             </rows>
         </grid>
-	</template>
-	<template id="infolog.edit" template="" lang="" group="0" version="1.9.101">
+	</et2-template>
+	<et2-template  id="infolog.edit" template="" lang="" group="0" version="1.9.101">
 		<grid width="100%">
 			<columns>
 				<column width="100"/>
@@ -161,10 +160,8 @@
 					<et2-description  id="spacer" span="5"></et2-description>
 					<et2-hbox  class="tab_toolbar">
 
-                        <et2-button-timestamp  parentId="infolog-edit_tabs" slot="nav" statustext="Insert timestamp into description field"
-							id="timestamp" class="infologExtraButton infologTimestamp" target="info_des"></et2-button-timestamp>
-                        <et2-button-toggle parentId="infolog-edit_tabs" slot="nav" statustext="Encrypt description" id="encrypt"
-							class="infologExtraButton infologEncrypt" offIcon="lock" onIcon="unlock" onclick="app.infolog.toggleEncrypt"></et2-button-toggle>
+                        <et2-button-timestamp  parentId="infolog-edit_tabs" slot="nav" statustext="Insert timestamp into description field" id="timestamp" class="infologExtraButton infologTimestamp" target="info_des"></et2-button-timestamp>
+                        <et2-button-toggle  parentId="infolog-edit_tabs" slot="nav" statustext="Encrypt description" id="encrypt" class="infologExtraButton infologEncrypt" offIcon="lock" onIcon="unlock" onclick="app.infolog.toggleEncrypt"></et2-button-toggle>
                     </et2-hbox>
 				</row>
 				<row>
@@ -177,11 +174,11 @@
                             <tab id="history" label="History" statustext="Change history"/>
                         </tabs>
                         <tabpanels>
-                            <template id="infolog.edit.description"/>
-                            <template id="infolog.edit.details"/>
-                            <template id="infolog.edit.links"/>
-                            <template id="infolog.edit.project"/>
-                            <template id="infolog.edit.history"/>
+                            <et2-template  id="infolog.edit.description"></et2-template>
+                            <et2-template  id="infolog.edit.details"></et2-template>
+                            <et2-template  id="infolog.edit.links"></et2-template>
+                            <et2-template  id="infolog.edit.project"></et2-template>
+                            <et2-template  id="infolog.edit.history"></et2-template>
                         </tabpanels>
                     </et2-tabbox>
                 </row>
@@ -214,10 +211,10 @@
                         <et2-button  statustext="leave without saveing the entry" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel"></et2-button>
                         <et2-select  statustext="Execute a further action for this entry" id="action" onchange="app.infolog.edit_actions()" emptyLabel="Actions..."></et2-select>
                         <et2-checkbox  label="Do not notify" id="no_notifications" statustext="Do not notify of these changes"></et2-checkbox>
-                        <et2-button align="right" statustext="delete this entry" label="Delete" id="button[delete]" onclick="return app.infolog.confirm_delete_edit($cont[info_id], $cont[info_anz_subs]);" image="delete"></et2-button>
+                        <et2-button  align="right" statustext="delete this entry" label="Delete" id="button[delete]" onclick="return app.infolog.confirm_delete_edit($cont[info_id], $cont[info_anz_subs]);" image="delete"></et2-button>
                     </et2-hbox>
                 </row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

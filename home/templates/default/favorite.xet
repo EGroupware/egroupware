@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="home.favorite" template="" lang="" group="0" version="1.9.001">
+	<et2-template  id="home.favorite" template="" lang="" group="0" version="1.9.001">
 		<nextmatch id="nm" class="header_hidden" hide_header="true"/>
-	</template>
+	</et2-template>
 </overlay>

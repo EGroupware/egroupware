@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="admin.remotes.edit" template="" lang="" group="0" version="1.5.001">
+	<et2-template  id="admin.remotes.edit" template="" lang="" group="0" version="1.5.001">
 		<grid>
 			<columns>
 				<column/>
@@ -45,8 +45,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="admin.remotes.rows" template="" lang="" group="0" version="1.5.001">
+	</et2-template>
+	<et2-template  id="admin.remotes.rows" template="" lang="" group="0" version="1.5.001">
 		<grid>
 			<columns>
 				<column/>
@@ -66,26 +66,26 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="admin.remotes.header_left" template="" lang="" group="0" version="1.5.001">
+	</et2-template>
+	<et2-template  id="admin.remotes.header_left" template="" lang="" group="0" version="1.5.001">
 		<et2-button  id="add" label="Add" statustext="Add a new remote instance"></et2-button>
-	</template>
-	<template id="admin.remotes" template="" lang="" group="0" version="1.5.001">
+	</et2-template>
+	<et2-template  id="admin.remotes" template="" lang="" group="0" version="1.5.001">
 		<grid width="100%">
 			<columns>
 				<column/>
 			</columns>
 			<rows>
 				<row disabled="!@remote">
-					<template content="remote" span="all" class="border" id="admin.remotes.edit"/>
+					<et2-template  content="remote" span="all" class="border" id="admin.remotes.edit"></et2-template>
 				</row>
 				<row>
 					<nextmatch id="nm" options="admin.remotes.rows" header_left="admin.remotes.header_left"/>
 				</row>
 			</rows>
 		</grid>
-		<styles>
+		<et2-styles>
 			.border { border: black solid 2px; }
-		</styles>
-	</template>
+		</et2-styles>
+	</et2-template>
 </overlay>

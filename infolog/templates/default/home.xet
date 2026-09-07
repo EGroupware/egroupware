@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="infolog.home" template="" lang="" group="0" version="1.9.005">
+	<et2-template  id="infolog.home" template="" lang="" group="0" version="1.9.005">
 		<grid width="100%">
 			<columns>
 				<column width="120"/>
@@ -17,8 +17,8 @@
 			<rows>
 				<row class="th">
 					<et2-vbox>
-						<et2-nextmatch-header-filter  id="info_type" noLang="1" emptyLabel="Type"/>
-						<et2-nextmatch-header-filter  align="center" id="info_status" class="selectboxFullWidth" emptyLabel="Status"/>
+						<et2-nextmatch-header-filter  id="info_type" noLang="1" emptyLabel="Type"></et2-nextmatch-header-filter>
+						<et2-nextmatch-header-filter  align="center" id="info_status" class="selectboxFullWidth" emptyLabel="Status"></et2-nextmatch-header-filter>
 						<nextmatch-sortheader align="right" label="Completed" id="info_percent"/>
 					</et2-vbox>
 					<grid width="100%" spacing="0" padding="0">
@@ -42,7 +42,7 @@
 						</rows>
 					</grid>
 					<nextmatch-customfields id="customfields"/>
-					<nextmatch-header label="Category" id="cat_id"/>
+					<et2-nextmatch-header  label="Category" id="cat_id"></et2-nextmatch-header>
 					<et2-vbox>
 						<nextmatch-sortheader label="Startdate" id="info_startdate" sortmode="DESC"/>
 						<nextmatch-sortheader label="Enddate" id="info_enddate" sortmode="DESC"/>
@@ -58,8 +58,8 @@
 						<nextmatch-sortheader label="Re-planned" id="info_replanned_time" class="replanned"/>
 					</et2-vbox>
 					<et2-vbox>
-						<et2-nextmatch-header-account  statustext="Select to filter by owner" id="info_owner" class="infolog_user_filter" emptyLabel="Owner" accountType="both"/>
-						<et2-nextmatch-header-account  statustext="Select to filter by responsible" id="info_responsible" class="infolog_user_filter" emptyLabel="Responsible" accountType="both"/>
+						<et2-nextmatch-header-account  statustext="Select to filter by owner" id="info_owner" class="infolog_user_filter" emptyLabel="Owner" accountType="both"></et2-nextmatch-header-account>
+						<et2-nextmatch-header-account  statustext="Select to filter by responsible" id="info_responsible" class="infolog_user_filter" emptyLabel="Responsible" accountType="both"></et2-nextmatch-header-account>
 					</et2-vbox>
 					<nextmatch-sortheader label="last changed" id="info_datemodified" options="DESC"/>
 				</row>
@@ -123,5 +123,5 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

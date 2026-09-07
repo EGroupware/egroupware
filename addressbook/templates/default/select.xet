@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="addressbook.select.rows" template="" lang="" group="0" version="1.9.005">
+	<et2-template  id="addressbook.select.rows" template="" lang="" group="0" version="1.9.005">
 		<grid width="100%">
 			<columns>
 				<column width="40"/> <!-- type -->
@@ -13,36 +13,36 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<et2-nextmatch-header label="Type" id="type"/>
+					<et2-nextmatch-header  label="Type" id="type"></et2-nextmatch-header>
 					<et2-vbox>
-						<et2-hbox disabled="!@order=n_given">
-							<et2-nextmatch-sortheader label="Firstname" id="n_given"/>
-							<et2-nextmatch-sortheader label="Name" id="n_family"/>
+						<et2-hbox  disabled="!@order=n_given">
+							<et2-nextmatch-sortheader  label="Firstname" id="n_given"/>
+							<et2-nextmatch-sortheader  label="Name" id="n_family"/>
 						</et2-hbox>
-						<et2-hbox disabled="!@order=n_family">
-							<et2-nextmatch-sortheader label="Name" id="n_family"/>
-							<et2-nextmatch-sortheader label="Firstname" id="n_given"/>
+						<et2-hbox  disabled="!@order=n_family">
+							<et2-nextmatch-sortheader  label="Name" id="n_family"/>
+							<et2-nextmatch-sortheader  label="Firstname" id="n_given"/>
 						</et2-hbox>
 						<et2-hbox>
-							<et2-nextmatch-sortheader label="Organisation" id="org_name" span="all"/>
+							<et2-nextmatch-sortheader  label="Organisation" id="org_name" span="all"/>
 						</et2-hbox>
-						<et2-hbox disabled="!@order=/^(org_name|n_fileas|adr_one_postalcode|contact_modified|contact_created|#)/">
-							<et2-nextmatch-sortheader label="Name" id="n_family"/>
-							<et2-nextmatch-sortheader label="Firstname" id="n_given" class="leftPad5"/>
+						<et2-hbox  disabled="!@order=/^(org_name|n_fileas|adr_one_postalcode|contact_modified|contact_created|#)/">
+							<et2-nextmatch-sortheader  label="Name" id="n_family"/>
+							<et2-nextmatch-sortheader  label="Firstname" id="n_given" class="leftPad5"/>
 						</et2-hbox>
 					</et2-vbox>
-					<et2-nextmatch-header label="Photo" id="photo"/>
+					<et2-nextmatch-header  label="Photo" id="photo"></et2-nextmatch-header>
 					<et2-vbox>
-						<et2-nextmatch-header label="Business address" id="business"/>
-						<et2-nextmatch-header-custom  id="adr_one_countrycode" class="countrySelect" widgetType="select-country" emptyLabel="Country"/>
+						<et2-nextmatch-header  label="Business address" id="business"></et2-nextmatch-header>
+						<et2-nextmatch-header-custom  id="adr_one_countrycode" class="countrySelect" widgetType="" emptyLabel="Country"></et2-nextmatch-header-custom>
 					</et2-vbox>
 					<et2-vbox>
-						<et2-nextmatch-header label="Home address" id="home"/>
-						<et2-nextmatch-header-custom  id="adr_two_countrycode" class="countrySelect" widgetType="select-country" emptyLabel="Country"/>
+						<et2-nextmatch-header  label="Home address" id="home"></et2-nextmatch-header>
+						<et2-nextmatch-header-custom  id="adr_two_countrycode" class="countrySelect" widgetType="" emptyLabel="Country"></et2-nextmatch-header-custom>
 					</et2-vbox>
 					<et2-vbox>
-						<et2-nextmatch-header label="Business email" id="email"/>
-						<et2-nextmatch-header label="Home email" id="email_home"/>
+						<et2-nextmatch-header  label="Business email" id="email"></et2-nextmatch-header>
+						<et2-nextmatch-header  label="Home email" id="email_home"></et2-nextmatch-header>
 					</et2-vbox>
 				</row>
 				<row class="$row_cont[class] $row_cont[cat_id]" valign="top">
@@ -56,7 +56,7 @@
 					</et2-vbox>
 					<et2-lavatar  src="$row_cont[photo]" lname="$row_cont[n_family]" fname="$row_cont[n_given]"></et2-lavatar>
 					<et2-vbox>
-						<et2-hbox style="position: relative; left: -10px">
+						<et2-hbox  style="position: relative; left: -10px">
 							<et2-description  id="${row}[adr_one_postalcode]" noLang="1"></et2-description>
 							<et2-description  value=" " id="${row}[adr_one_locality]" class="leftPad5" noLang="1"></et2-description>
 							<et2-description  id="${row}[adr_one_region]" class="leftPad5" noLang="1"></et2-description>
@@ -65,7 +65,7 @@
 						<et2-select-country  id="${row}[adr_one_countrycode]" readonly="true"></et2-select-country>
 					</et2-vbox>
 					<et2-vbox>
-						<et2-hbox style="position: relative; left: -10px">
+						<et2-hbox  style="position: relative; left: -10px">
 							<et2-description  id="${row}[adr_two_postalcode]" noLang="1"></et2-description>
 							<et2-description  value=" " id="${row}[adr_two_locality]" class="leftPad5" noLang="1"></et2-description>
 							<et2-description  id="${row}[adr_two_region]" class="leftPad5" noLang="1"></et2-description>
@@ -75,35 +75,33 @@
 					</et2-vbox>
 
                     <et2-vbox>
-                        <et2-description id="${row}[email]" readonly="true" class="fixedHeight" emailDisplay="email"
-							onclick="app.addressbook.addEmailToCompose"></et2-description>
-                        <et2-description id="${row}[email_home]" readonly="true" class="fixedHeight" emailDisplay="email"
-							onclick="app.addressbook.addEmailToCompose"></et2-description>
+                        <et2-description  id="${row}[email]" readonly="true" class="fixedHeight" emailDisplay="email" onclick="app.addressbook.addEmailToCompose"></et2-description>
+                        <et2-description  id="${row}[email_home]" readonly="true" class="fixedHeight" emailDisplay="email" onclick="app.addressbook.addEmailToCompose"></et2-description>
                     </et2-vbox>
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="addressbook.select" template="" lang="" group="0" version="1.9.002">
-		<et2-nextmatch id="nm" template="addressbook.select.rows" span="all"/>
-		<et2-hbox class="footer">
-			<et2-select label="Add" id="what_to_use">
+	</et2-template>
+	<et2-template  id="addressbook.select" template="" lang="" group="0" version="1.9.002">
+		<et2-nextmatch  id="nm" template="addressbook.select.rows" span="all"/>
+		<et2-hbox  class="footer">
+			<et2-select  label="Add" id="what_to_use">
 				<option value="">Business or home email</option>
 				<option value="email">Business email</option>
 				<option value="email_home">Home email</option>
 				<option value="both">Business and home email</option>
 			</et2-select>
-			<et2-button label="To" id="add_to_to" onclick="app.addressbook.addEmailToCompose" image="forward-fill"></et2-button>
-			<et2-button label="Cc" id="add_to_cc" onclick="app.addressbook.addEmailToCompose" image="forward-fill"></et2-button>
-			<et2-button label="Bcc" id="add_to_bcc" onclick="app.addressbook.addEmailToCompose" image="forward-fill"></et2-button>
-			<et2-button label="Close" id="close" onclick="document.querySelector('et2-dialog').close(); return false;"></et2-button>
+			<et2-button  label="To" id="add_to_to" onclick="app.addressbook.addEmailToCompose" image="forward-fill"></et2-button>
+			<et2-button  label="Cc" id="add_to_cc" onclick="app.addressbook.addEmailToCompose" image="forward-fill"></et2-button>
+			<et2-button  label="Bcc" id="add_to_bcc" onclick="app.addressbook.addEmailToCompose" image="forward-fill"></et2-button>
+			<et2-button  label="Close" id="close" onclick="document.querySelector('et2-dialog').close(); return false;"></et2-button>
 		</et2-hbox>
-		<styles>
+		<et2-styles>
             #addressbook-select > et2-template::part(base) { display: flex; flex-direction: column;}
 			div.dialog_content img.dialog_icon[src=""] { display: none; }
 			et2-dialog#dialog-addressbook-select et2-button { max-width: 125px !important; }
 			et2-dialog#dialog-addressbook-select::part(panel) { width: 90vh; height: 70vh; position: absolute; bottom: 1vh; }
 			et2-hbox.footer { border-top: 2px solid #696969; padding-top: 10px; }
-		</styles>
-	</template>
+		</et2-styles>
+	</et2-template>
 </overlay>

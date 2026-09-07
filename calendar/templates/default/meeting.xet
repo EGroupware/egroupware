@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="calendar.meeting" template="" lang="" group="0" version="1.9.002">
+	<et2-template  id="calendar.meeting" template="" lang="" group="0" version="1.9.002">
 		<grid border="0" width="100%">
 			<columns>
 				<column/>
@@ -27,23 +27,22 @@
 				<row disabled="!@ics_method=request">
 					<et2-vbox>
 						<et2-description  value="This mail contains a meeting request" class="meetingRequestMessage"></et2-description>
-						<et2-textbox id="comment" placeholder="Comment" statustext="Add a comment to send to organizer with your response"></et2-textbox>
-						<et2-hbox class="buttonRow">
+						<et2-textbox  id="comment" placeholder="Comment" statustext="Add a comment to send to organizer with your response"></et2-textbox>
+						<et2-hbox  class="buttonRow">
 							<et2-button  label="Apply" id="button[apply]" hideOnReadonly="true"></et2-button>
 							<et2-button  label="Accept" id="button[accept]" image="calendar/accepted"></et2-button>
 							<et2-button  label="Tentative" id="button[tentativ]" image="calendar/tentative"></et2-button>
 							<et2-button  label="Reject" id="button[reject]" image="calendar/rejected"></et2-button>
-							<et2-button  statustext="Edit event in calendar" label="Edit" id="button[edit]" image="edit" hideOnReadonly="true"
-								onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;cal_id=$cont[id]'),'_blank','dependent=yes,width=750,height=410,scrollbars=yes,status=yes'); return false;" noSubmit="true"></et2-button>
+							<et2-button  statustext="Edit event in calendar" label="Edit" id="button[edit]" image="edit" hideOnReadonly="true" onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;cal_id=$cont[id]'),'_blank','dependent=yes,width=750,height=410,scrollbars=yes,status=yes'); return false;" noSubmit="true"></et2-button>
 						</et2-hbox>
 						<et2-description  id="meeting-request-status" class="meetingRequestError" span="all"></et2-description>
 					</et2-vbox>
 				</row>
 				<row disabled="!@ics_method=reply">
 					<et2-vbox>
-						<et2-description value="This mail contains a reply to a meeting request" class="meetingRequestMessage"></et2-description>
-						<et2-hbox class="buttonRow">
-							<et2-button label="Apply" id="button[apply]"></et2-button>
+						<et2-description  value="This mail contains a reply to a meeting request" class="meetingRequestMessage"></et2-description>
+						<et2-hbox  class="buttonRow">
+							<et2-button  label="Apply" id="button[apply]"></et2-button>
 						</et2-hbox>
 						<et2-description  id="meeting-request-status" class="meetingRequestError" span="all"></et2-description>
 					</et2-vbox>
@@ -51,11 +50,10 @@
 				<row disabled="!@ics_method=cancel">
 					<et2-vbox>
 						<et2-description  value="This mail cancels a meeting" class="meetingRequestMessage"></et2-description>
-						<et2-hbox class="buttonRow">
+						<et2-hbox  class="buttonRow">
 							<et2-button  label="Apply" statustext="Removes the event from my calendar" id="button[cancel]"></et2-button>
-                            <et2-button label="Delete" statustext="Delete this meeting for all participants" id="button[delete]" onclick="Et2Dialog.confirm(widget,'Delete this meeting for all participants','Delete')"></et2-button>
-							<et2-button  statustext="Edit event in calendar" label="Edit" id="button[edit]" image="edit"
-								onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;cal_id=$cont[id]'),'_blank','dependent=yes,width=750,height=410,scrollbars=yes,status=yes'); return false;"></et2-button>
+                            <et2-button  label="Delete" statustext="Delete this meeting for all participants" id="button[delete]" onclick="Et2Dialog.confirm(widget,'Delete this meeting for all participants','Delete')"></et2-button>
+							<et2-button  statustext="Edit event in calendar" label="Edit" id="button[edit]" image="edit" onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;cal_id=$cont[id]'),'_blank','dependent=yes,width=750,height=410,scrollbars=yes,status=yes'); return false;"></et2-button>
 						</et2-hbox>
 					</et2-vbox>
 				</row>
@@ -88,15 +86,15 @@
 				</row>
 				<row class="row">
 					<et2-description  value="Date"></et2-description>
-					<et2-hbox class="dates">
+					<et2-hbox  class="dates">
 						<et2-date-time  id="start" readonly="true" class="@changed[start]"></et2-date-time>
-						<et2-date-time id="old_start" readonly="true" class="meetingRequestChangedValue" disabled="!@old_start"></et2-date-time>
+						<et2-date-time  id="old_start" readonly="true" class="meetingRequestChangedValue" disabled="!@old_start"></et2-date-time>
 						<et2-date-time  label="-" id="end" readonly="true" class="@changed[end]"></et2-date-time>
 					</et2-hbox>
 				</row>
 				<row class="row" disabled="!@recurrence">
 					<et2-description></et2-description>
-					<et2-description class="meetingRequestError" value="This is a single recurrence of a recurring event."></et2-description>
+					<et2-description  class="meetingRequestError" value="This is a single recurrence of a recurring event."></et2-description>
 				</row>
 				<row class="row" valign="top" disabled="!@recure">
 					<et2-description  value="Recurrence"></et2-description>
@@ -111,7 +109,7 @@
 					<et2-description  id="description" noLang="true" activateLinks="true" class="@changed[description]"></et2-description>
 				</row>
 				<row class="row" valign="top">
-					<et2-description value="Participants"></et2-description>
+					<et2-description  value="Participants"></et2-description>
 					<grid id="participantChanges" class="meetingRequestParticipants $cont[changed][participants]">
 						<columns>
 							<column/>
@@ -119,21 +117,21 @@
 						<rows>
 							<row class="$row_cont[changed]">
 								<et2-hbox>
-									<et2-description id="${row}[label]"></et2-description>
-									<et2-description id="${row}[status]" label="(%s)"></et2-description>
-									<et2-description id="${row}[role]"></et2-description>
+									<et2-description  id="${row}[label]"></et2-description>
+									<et2-description  id="${row}[status]" label="(%s)"></et2-description>
+									<et2-description  id="${row}[role]"></et2-description>
 								</et2-hbox>
 							</row>
 						</rows>
 					</grid>
 				</row>
 				<row class="row" valign="top" disabled="!@comment">
-					<et2-description value="Comment"></et2-description>
-					<et2-description id="comment"></et2-description>
+					<et2-description  value="Comment"></et2-description>
+					<et2-description  id="comment"></et2-description>
 				</row>
 			</rows>
 		</grid>
-		<styles>
+		<et2-styles>
 			#popupMainDiv {
 				border: none;
 				margin: 0;
@@ -190,6 +188,6 @@
 				font-style: italic;
 				text-decoration: line-through;
 			}
-		</styles>
-	</template>
+		</et2-styles>
+	</et2-template>
 </overlay>

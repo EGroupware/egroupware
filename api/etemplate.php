@@ -92,7 +92,10 @@ function send_template()
 	}
 	// check for customized template in VFS
 	list(, $app, , $template, $name) = explode('/', $fspath);
-	$path = Api\Etemplate::rel2path(Api\Etemplate::relPath($app . '.' . basename($name, '.xet'), $template));
+	// CLI conversion targets the given physical file, NOT a live VFS-customized override of it
+	// (relPath() deliberately prefers a mounted /etemplates VFS customization for real serving)
+	$path = PHP_SAPI === 'cli' ? Api\Etemplate::rel2path($fspath) :
+		Api\Etemplate::rel2path(Api\Etemplate::relPath($app . '.' . basename($name, '.xet'), $template));
 	if(empty($path) || !file_exists($path) || !is_readable($path))
 	{
 		if (PHP_SAPI === 'cli')

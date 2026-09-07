@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="mail.subscribe" template="" lang="" group="0" version="1.9.001">
+	<et2-template  id="mail.subscribe" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width="20%"/>
@@ -24,10 +24,10 @@
 				</row>
 				<row>
 					<et2-box  scrolling="auto">
-						<et2-tree id="foldertree" multiple="true" onopenstart="app.mail.subscription_autoloadingStart" onopenend="app.mail.subscription_autoloadingEnd"/>
+						<et2-tree  id="foldertree" multiple="true" onopenstart="app.mail.subscription_autoloadingStart" onopenend="app.mail.subscription_autoloadingEnd"/>
 					</et2-box>
 				</row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

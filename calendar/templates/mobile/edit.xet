@@ -2,7 +2,7 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <!-- $Id: edit.xet 54465 2015-12-04 17:37:26Z nathangray $ -->
 <overlay>
-	<template id="calendar.edit.details" template="" lang="" group="0" version="1.9.001">
+	<et2-template  id="calendar.edit.details" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
@@ -43,18 +43,17 @@
 									<et2-checkbox  align="center" id="${row}[all]" label="all" readonly="true"></et2-checkbox>
 									<et2-select-account  id="${row}[owner]" readonly="true"></et2-select-account>
 								</et2-hbox>
-                                <et2-button-icon align="center" statustext="Delete this alarm" id="delete_alarm[$row_cont[id]]" onclick="Et2Dialog.confirm(widget,'Delete this alarm','Delete')" image="delete"></et2-button-icon>
+                                <et2-button-icon  align="center" statustext="Delete this alarm" id="delete_alarm[$row_cont[id]]" onclick="Et2Dialog.confirm(widget,'Delete this alarm','Delete')" image="delete"></et2-button-icon>
 							</row>
 						</rows>
 					</grid>
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="calendar.edit.description" template="" lang="" group="0" version="1.0.1.001">
-        <et2-textarea id="description" width="99.7%" height="10em" noLang="1" resizeRatio="0"></et2-textarea>
-	</template>
-	<template id="calendar.edit.participants" template="" lang="" group="0" version="1.9.001">
+	</et2-template>
+	<et2-template  id="calendar.edit.description" template="" lang="" group="0" version="1.0.1.001"><et2-ai><et2-textarea  id="description" width="99.7%" noLang="1" resizeRatio="0"></et2-textarea></et2-ai>
+	</et2-template>
+	<et2-template  id="calendar.edit.participants" template="" lang="" group="0" version="1.9.001">
 		<grid width="99%" id="participants">
 			<columns>
 				<column width = "120"/>
@@ -63,13 +62,13 @@
 			</columns>
 			<rows>
 				<row  disabled="@view">
-                    <et2-calendar-owner id="participant" allowFreeEntries="true" empty_label="Add new participants or resource"/>
+                    <et2-calendar-owner  id="participant" allowFreeEntries="true" emptyLabel="Add new participants or resource"/>
 				</row>
 				<row disabled="@no_add">
-                    <et2-hbox colspan="all">
-                        <et2-select class="selectRole" id="role"></et2-select>
-                        <et2-number aria-label="Quantity" placeholder="Quantity" class="quantity" id="quantity" min="1" width="4em" precision="0"></et2-number>
-                        <et2-button align="center" id="add" image="add" novalidate="1"></et2-button>
+                    <et2-hbox  colspan="all">
+                        <et2-select  class="selectRole" id="role"></et2-select>
+                        <et2-number  placeholder="Quantity" class="quantity" id="quantity" min="1" width="4em" precision="0" ariaLabel="Quantity"></et2-number>
+                        <et2-button  align="center" id="add" image="add" novalidate="1"></et2-button>
                     </et2-hbox>
 				</row>
 				<row class="th">
@@ -88,11 +87,11 @@
 				</row>
 			</rows>
 		</grid>
-		<styles>
+		<et2-styles>
 			.selectRole select { width: 100%; }
-		</styles>
-	</template>
-	<template id="calendar.edit.recurrence" template="" lang="" group="0" version="1.9.001">
+		</et2-styles>
+	</et2-template>
+	<et2-template  id="calendar.edit.recurrence" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
@@ -131,15 +130,15 @@
 						<rows>
 							<row>
 								<et2-date-time  id="$row" readonly="true"></et2-date-time>
-                                <et2-button statustext="Delete this exception" label="Delete" id="delete_exception[$row_cont]" onclick="Et2Dialog.confirm(widget,'Delete this exception','Delete')" image="delete"></et2-button>
+                                <et2-button  statustext="Delete this exception" label="Delete" id="delete_exception[$row_cont]" onclick="Et2Dialog.confirm(widget,'Delete this exception','Delete')" image="delete"></et2-button>
 							</row>
 						</rows>
 					</grid>
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="calendar.edit.links" template="" lang="" group="0" version="1.0.1.001">
+	</et2-template>
+	<et2-template  id="calendar.edit.links" template="" lang="" group="0" version="1.0.1.001">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -156,8 +155,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="calendar.edit.ownership" template="" lang="" group="0" version="1.0.1.001">
+	</et2-template>
+	<et2-template  id="calendar.edit.ownership" template="" lang="" group="0" version="1.0.1.001">
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
@@ -180,17 +179,15 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="calendar.edit" template="" lang="" group="0" version="1.9.001">
+	</et2-template>
+	<et2-template  id="calendar.edit" template="" lang="" group="0" version="1.9.001">
         <et2-hbox  span="all" width="100%" slot="label">
             <et2-button-icon  statustext="Apply the changes" id="button[apply]" image="apply"></et2-button-icon>
-            <et2-button-icon statustext="delete this entry" id="button[delete]" onclick="Et2Dialog.confirm(widget,'Delete this entry','Delete');" image="delete" span="all"></et2-button-icon>
-            <et2-button-icon  statustext="Find free timeslots where the selected participants are available for the given timespan"
-                              id="freetime" label="Freetime" onclick="app.calendar.freetime_search" image="clock-history" noSubmit="true"></et2-button-icon>
-            <et2-button-toggle ariaLabel="notifications" id="no_notifications" class="notification_check" onIcon="bell-fill" offIcon="bell-slash"/>
-            <et2-button-icon id="button[videoconference]" image="status/videoconference" noSubmit="true"
-                             onclick="app.calendar.joinVideoConference.call(window, '$cont[##videoconference]', this.getArrayMgr('content').data)"></et2-button-icon>
-            <et2-textbox type="hidden" id="delete_exceptions"></et2-textbox>
+            <et2-button-icon  statustext="delete this entry" id="button[delete]" onclick="Et2Dialog.confirm(widget,'Delete this entry','Delete');" image="delete" span="all"></et2-button-icon>
+            <et2-button-icon  statustext="Find free timeslots where the selected participants are available for the given timespan" id="freetime" label="Freetime" onclick="app.calendar.freetime_search" image="clock-history" noSubmit="true"></et2-button-icon>
+            <et2-button-toggle  ariaLabel="notifications" id="no_notifications" class="notification_check" onIcon="bell-fill" offIcon="bell-slash"/>
+            <et2-button-icon  id="button[videoconference]" image="status/videoconference" noSubmit="true" onclick="app.calendar.joinVideoConference.call(window, '$cont[##videoconference]', this.getArrayMgr('content').data)"></et2-button-icon>
+            <et2-hidden  id="delete_exceptions"></et2-hidden>
         </et2-hbox>
 		<grid border="1" width="100%">
 			<columns>
@@ -223,12 +220,11 @@
 				<row>
 					<et2-description  value="Options"></et2-description>
 					<et2-vbox>
-						<et2-checkbox statustext="Event will occupy the whole day" label="whole day" id="whole_day" onchange="app.calendar.set_alarmOptions_WD"></et2-checkbox>
-						<et2-checkbox statustext="A non blocking event will not conflict with other events" label="non blocking" id="non_blocking" selectedValue="1" unselectedValue="0" roTrue=" " ></et2-checkbox>
-						<et2-checkbox label="Private" id="public" selectedValue="0" unselectedValue="1" ></et2-checkbox>
-						<et2-checkbox label="Videoconference" id="videoconference" onchange="app.calendar.videoconferenceOnChange"></et2-checkbox>
-						<et2-checkbox label="Notify externals" id="participants[notify_externals]"
-							selectedValue="yes" unselectedValue="no" span="all" align="right"></et2-checkbox>
+						<et2-checkbox  statustext="Event will occupy the whole day" label="whole day" id="whole_day" onchange="app.calendar.set_alarmOptions_WD"></et2-checkbox>
+						<et2-checkbox  statustext="A non blocking event will not conflict with other events" label="non blocking" id="non_blocking" selectedValue="1" unselectedValue="0" roTrue=" " ></et2-checkbox>
+						<et2-checkbox  label="Private" id="public" selectedValue="0" unselectedValue="1" ></et2-checkbox>
+						<et2-checkbox  label="Videoconference" id="videoconference" onchange="app.calendar.videoconferenceOnChange"></et2-checkbox>
+						<et2-checkbox  label="Notify externals" id="participants[notify_externals]" selectedValue="yes" unselectedValue="no" span="all" align="right"></et2-checkbox>
 					</et2-vbox>
 				</row>
 				<row>
@@ -240,7 +236,7 @@
 					<et2-select-cat  id="category" multiple="true"></et2-select-cat>
 				</row>
 				<row>
-                    <et2-tabbox id="tabs" span="all">
+                    <et2-tabbox  id="tabs" span="all">
                         <tabs>
                             <tab id="description" label="Description" statustext="Full description"/>
                             <tab id="participants" label="Participants" statustext="Participants, Resources, ..."/>
@@ -250,16 +246,16 @@
                             <tab id="ownership" label="Ownership"/>
                         </tabs>
                         <tabpanels>
-                            <template id="calendar.edit.description"/>
-                            <template id="calendar.edit.participants"/>
-                            <template id="calendar.edit.details"/>
-                            <template id="calendar.edit.recurrence"/>
-                            <template id="calendar.edit.links"/>
-                            <template id="calendar.edit.ownership"/>
+                            <et2-template  id="calendar.edit.description"></et2-template>
+                            <et2-template  id="calendar.edit.participants"></et2-template>
+                            <et2-template  id="calendar.edit.details"></et2-template>
+                            <et2-template  id="calendar.edit.recurrence"></et2-template>
+                            <et2-template  id="calendar.edit.links"></et2-template>
+                            <et2-template  id="calendar.edit.ownership"></et2-template>
                         </tabpanels>
                     </et2-tabbox>
                 </row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

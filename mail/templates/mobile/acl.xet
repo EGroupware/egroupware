@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="mail.acl" template="" lang="" group="0" version="1.9.001">
+	<et2-template  id="mail.acl" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%" height="100%">
 			<columns>
 				<column/>
@@ -32,7 +32,7 @@
 									<et2-hbox>
 										<et2-select  id="${row}[acl]" label="Rights" onchange="app.mail.aclCommonRightsSelector"></et2-select>
 										<et2-checkbox  align="center" label="Recursively" id="${row}[acl_recursive]"></et2-checkbox>
-                                        <et2-button-icon align="right" statustext="Delete this ACL" id="delete[$row]" value="${row}" image="delete" onclick="app.mail.aclDeleteRow"></et2-button-icon>
+                                        <et2-button-icon  align="right" statustext="Delete this ACL" id="delete[$row]" value="${row}" image="delete" onclick="app.mail.aclDeleteRow"></et2-button-icon>
 									</et2-hbox>
 
 									<et2-hbox  class="aclDetails">
@@ -53,5 +53,5 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

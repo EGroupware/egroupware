@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="resources.sitemgr_book" template="" lang="" group="0" version="1.9.001">
+	<et2-template  id="resources.sitemgr_book" template="" lang="" group="0" version="1.9.001">
 		<et2-box  cols="1" rows="1">
 			<grid width="100%">
 				<columns>
@@ -10,11 +10,11 @@
 				</columns>
 				<rows>
 					<row>
-						<hidden id="res_id"/>
+						<et2-hidden  id="res_id"></et2-hidden>
 						<et2-description></et2-description>
 					</row>
 					<row disabled="!@msg">
-						<html id="msg" span="all" class="message"/>
+						<et2-html  id="msg" span="all" class="message"></et2-html>
 						<et2-description></et2-description>
 					</row>
 					<row>
@@ -26,7 +26,7 @@
 						<et2-description></et2-description>
 					</row>
 					<row disabled="!@long_description">
-						<html id="long_description" span="all" class="description"/>
+						<et2-html  id="long_description" span="all" class="description"></et2-html>
 						<et2-description></et2-description>
 					</row>
 					<row>
@@ -39,7 +39,7 @@
 						</et2-hbox>
 					</row>
 					<row disabled="!@contact_form">
-						<template id="@contact_form" span="all"/>
+						<et2-template  id="@contact_form" span="all"></et2-template>
 					</row>
 					<row disabled="!@show_contact">
 						<et2-description  value="Name"></et2-description>
@@ -61,17 +61,17 @@
 					</row>
 					<row>
 						<et2-box  id="planner_div" span="all">
-							<html id="planner" span="all"/>
+							<et2-html  id="planner" span="all"></et2-html>
 						</et2-box>
 					</row>
 				</rows>
 			</grid>
 		</et2-box>
-		<styles>
+		<et2-styles>
 			.resource_thumb img  {
 float:right;
 position:absolute;
 }
-		</styles>
-	</template>
+		</et2-styles>
+	</et2-template>
 </overlay>

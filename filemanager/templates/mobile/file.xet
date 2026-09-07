@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="filemanager.file.general" template="" lang="" group="0">
+	<et2-template  id="filemanager.file.general" template="" lang="" group="0">
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
@@ -10,7 +10,7 @@
 			<rows>
 				<row height="60">
 					<et2-image  align="center" src="icon" class="mimeHuge"></et2-image>
-					<vfs-name id="name" needed="1" class="fileName"/>
+					<et2-vfs-name  id="name" class="fileName" required="1"></et2-vfs-name>
 				</row>
 				<row>
 					<hrule span="all"/>
@@ -40,21 +40,19 @@
 					<et2-date-time  id="mtime" readonly="true"></et2-date-time>
 				</row>
 				<row>
-					<et2-description  for="comment" value="Comment"></et2-description>
-					<et2-textarea  id="comment" height="100"></et2-textarea>
+					<et2-description  for="comment" value="Comment"></et2-description><et2-ai><et2-textarea  id="comment"></et2-textarea></et2-ai>
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="filemanager.file.perms" template="" lang="" group="0">
+	</et2-template>
+	<et2-template  id="filemanager.file.perms" template="" lang="" group="0">
 		<grid width="100%" spacing="10">
 			<columns>
 				<column/>
 			</columns>
 			<rows>
 				<row>
-					<groupbox>
-						<caption label="Accessrights"/>
+					<et2-groupbox  summary="Accessrights">
 						<grid>
 							<columns>
 								<column width = "120"/>
@@ -83,11 +81,10 @@
 								</row>
 							</rows>
 						</grid>
-					</groupbox>
+					</et2-groupbox>
 				</row>
 				<row>
-					<groupbox>
-						<caption label="Owner"/>
+					<et2-groupbox  summary="Owner">
 						<grid>
 							<columns>
 								<column width = "120"/>
@@ -104,15 +101,15 @@
 								</row>
 							</rows>
 						</grid>
-					</groupbox>
+					</et2-groupbox>
 				</row>
 				<row disabled="!@is_dir">
 					<et2-checkbox  label="Modify all Subdirectories and their content" id="modify_subs"></et2-checkbox>
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="filemanager.file.eacl" template="" lang="" group="0" version="1.9.001">
+	</et2-template>
+	<et2-template  id="filemanager.file.eacl" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%" spacing="10">
 			<columns>
 				<column width="120"/>
@@ -121,8 +118,7 @@
 			</columns>
 			<rows>
 				<row valign="top" height="200">
-					<groupbox span="all">
-						<caption label="Extended access control list"/>
+					<et2-groupbox  span="all" summary="Extended access control list">
 						<grid width="100%" overflow="auto" id="eacl">
 							<columns>
 								<column width="60"/>
@@ -141,11 +137,11 @@
 									<et2-select-account  id="${row}[owner]" readonly="true"></et2-select-account>
 									<et2-select  id="${row}[rights]" readonly="true"></et2-select>
 									<et2-description  id="${row}[path]"></et2-description>
-                                    <et2-button label="Delete" id="delete[$row_cont[ino]-$row_cont[owner]]" onclick="Et2Dialog.confirm(widget,'Delete this extended ACL?','Delete')" image="delete"></et2-button>
+                                    <et2-button  label="Delete" id="delete[$row_cont[ino]-$row_cont[owner]]" onclick="Et2Dialog.confirm(widget,'Delete this extended ACL?','Delete')" image="delete"></et2-button>
 								</row>
 							</rows>
 						</grid>
-					</groupbox>
+					</et2-groupbox>
 				</row>
 				<row valign="bottom" disabled="!@is_owner">
 					<et2-select-account  class="eaclAccount" label="Owner" id="eacl_owner" emptyLabel="select one" accountType="both"></et2-select-account>
@@ -154,8 +150,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="filemanager.file.preview" template="" lang="" group="0" version="1.5.001">
+	</et2-template>
+	<et2-template  id="filemanager.file.preview" template="" lang="" group="0" version="1.5.001">
 		<grid width="100%" spacing="10" overflow="auto">
 			<columns>
 				<column/>
@@ -164,19 +160,18 @@
 				<row valign="top" disabled="!@mime=/^image/">
 					<et2-image  src="link" class="previewImage"></et2-image>
 				</row>
-				<row valign="top" height="280" disabled="!@text_content">
-					<et2-textarea  id="text_content" readonly="true" class="previewText"></et2-textarea>
+				<row valign="top" height="280" disabled="!@text_content"><et2-ai><et2-textarea  id="text_content" readonly="true" class="previewText"></et2-textarea></et2-ai>
 				</row>
 				<row disabled="@mime=/^(image|text)/">
 					<et2-description  value="No preview available"></et2-description>
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="filemanager.file.custom" template="" lang="" group="0" version="1.5.001">
+	</et2-template>
+	<et2-template  id="filemanager.file.custom" template="" lang="" group="0" version="1.5.001">
 		<customfields/>
-	</template>
-	<template id="filemanager.file" template="" lang="" group="0" version="1.9.001">
+	</et2-template>
+	<et2-template  id="filemanager.file" template="" lang="" group="0" version="1.9.001">
 		<grid border="1" width="100%">
 			<columns>
 				<column width = "120"/>
@@ -196,7 +191,7 @@
 					</et2-hbox>
 				</row>
 				<row class="dialogTabs">
-                    <et2-tabbox id="tabs" span="all">
+                    <et2-tabbox  id="tabs" span="all">
                         <tabs>
                             <tab id="filemanager.file.general" label="General"/>
                             <tab id="filemanager.file.perms" label="Permissions"/>
@@ -205,18 +200,18 @@
                             <tab id="filemanager.file.custom" label="Custom fields"/>
                         </tabs>
                         <tabpanels>
-                            <template id="filemanager.file.general"/>
-                            <template id="filemanager.file.perms"/>
-                            <template id="filemanager.file.eacl"/>
-                            <template id="filemanager.file.preview"/>
-                            <template id="filemanager.file.custom"/>
+                            <et2-template  id="filemanager.file.general"></et2-template>
+                            <et2-template  id="filemanager.file.perms"></et2-template>
+                            <et2-template  id="filemanager.file.eacl"></et2-template>
+                            <et2-template  id="filemanager.file.preview"></et2-template>
+                            <et2-template  id="filemanager.file.custom"></et2-template>
                         </tabpanels>
                     </et2-tabbox>
                 </row>
 			</rows>
 		</grid>
-		<styles>
+		<et2-styles>
 
-		</styles>
-	</template>
+		</et2-styles>
+	</et2-template>
 </overlay>

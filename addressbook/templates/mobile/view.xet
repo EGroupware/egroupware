@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="addressbook.view" template="" lang="" group="0" version="1.9.004" class="addressbook_view">
+	<et2-template  id="addressbook.view" template="" lang="" group="0" version="1.9.004" class="addressbook_view">
 		<grid class="addressbook_view" border="1" width="100%">
 			<columns>
 				<column width = "120"/>
@@ -13,7 +13,7 @@
 				<row>
 					<et2-box  align="center">
 						<et2-hbox  disabled="@hidebuttons">
-							<et2-avatar src="$cont[photo]" crop="false" shape="circle" size="4em"></et2-avatar>
+							<et2-avatar  src="$cont[photo]" crop="false" shape="circle" size="4em"></et2-avatar>
 						</et2-hbox>
 					</et2-box>
 				</row>
@@ -152,8 +152,7 @@
 					</et2-details>
 				</row>
 				<row>
-					<et2-description  value="Notes"></et2-description>
-					<et2-textarea  id="note" rows="10" height="200" resizeRatio="0"></et2-textarea>
+					<et2-description  value="Notes"></et2-description><et2-ai><et2-textarea  id="note" rows="10" resizeRatio="0"></et2-textarea></et2-ai>
 				</row>
 				<row>
 					<et2-description  value="Categories"></et2-description>
@@ -161,5 +160,5 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="admin.account.delete.delete" template="" lang="" group="0" version="18.1.001">
+	<et2-template  id="admin.account.delete.delete" template="" lang="" group="0" version="18.1.001">
 		<grid width="100%" height="100%">
 			<columns>
 				<column width="60%"/>
@@ -54,8 +54,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="admin.account.delete" template="" lang="" group="0" version="18.1.001">
+	</et2-template>
+	<et2-template  id="admin.account.delete" template="" lang="" group="0" version="18.1.001">
 	    <grid width="100%">
 	        <columns>
 	            <column width="100%"/>
@@ -70,7 +70,7 @@
                     		<tab id="main" label="Delete"/>
                     	</tabs>
                     	<tabpanels>
-                    		<template template="admin.account.delete.delete" width="100%"/>
+                    		<et2-template  template="admin.account.delete.delete" width="100%"></et2-template>
                     	</tabpanels>
                     </et2-tabbox>
 	            </row>
@@ -82,5 +82,5 @@
 	            </row>
 	        </rows>
 	    </grid>
-	</template>
+	</et2-template>
 </overlay>

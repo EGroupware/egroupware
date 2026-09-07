@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="mail.sieve.vacation" template="" lang="" group="0" version="1.9.002">
+	<et2-template  id="mail.sieve.vacation" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%" height="100%">
 			<columns>
 				<column/>
@@ -54,8 +54,7 @@
 				<row>
 					<et2-description  value="With message:"></et2-description>
 				</row>
-				<row>
-					<et2-textarea  id="text" width="99%" height="150px" class="et2_required" required="1" resizeRatio="0"></et2-textarea>
+				<row><et2-ai><et2-textarea  id="text" width="99%" class="et2_required" required="1" resizeRatio="0"></et2-textarea></et2-ai>
 				</row>
 				<row>
 					<et2-description  id="by_date_label" value="You can use $$start$$ for the above start date and $$end$$ for the end date."></et2-description>
@@ -69,5 +68,5 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

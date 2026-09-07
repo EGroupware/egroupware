@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="timesheet.index.dates" template="" lang="" group="0" version="1.2.001" >
-		<et2-date label="Start" id="startdate" class="et2-label-fixed" style="padding-bottom: .3rem"
-				  onchange="widget.getParent().getWidgetById('enddate').set_min(widget.getValue());return true;"></et2-date>
-		<et2-date label="End" id="enddate" class="et2-label-fixed"
-				  onchange="widget.getParent().getWidgetById('startdate').set_max(widget.getValue());return true;"></et2-date>
-	</template>
-	<template id="timesheet.index.rows" template="" lang="" group="0" version="1.9.001">
+	<et2-template  id="timesheet.index.dates" template="" lang="" group="0" version="1.2.001" >
+		<et2-date  label="Start" id="startdate" class="et2-label-fixed" style="padding-bottom: .3rem" onchange="widget.getParent().getWidgetById('enddate').set_min(widget.getValue());return true;"></et2-date>
+		<et2-date  label="End" id="enddate" class="et2-label-fixed" onchange="widget.getParent().getWidgetById('startdate').set_max(widget.getValue());return true;"></et2-date>
+	</et2-template>
+	<et2-template  id="timesheet.index.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width="10"/>
@@ -21,7 +19,7 @@
 				<row class="$class timesheetRow">
 					<et2-description  class="cat_$row_cont[cat_id] mobile_cat_col"></et2-description>
 					<et2-vbox>
-						<et2-customfields-list id="$row" class="customfields" app="timesheet" disabled="true"/>
+						<et2-customfields-list  id="$row" class="customfields" app="timesheet" disabled="true"/>
 						<et2-description  id="${row}[ts_title]" class="ts_title" noLang="1"></et2-description>
 						<et2-description  id="${row}[ts_description]" class="ts_description" noLang="1"></et2-description>
 						<et2-link  id="${row}[ts_link]" app="" noLang="1"></et2-link>
@@ -35,17 +33,17 @@
 							<et2-select-account  id="${row}[ts_owner]" readonly="true"></et2-select-account>
 						</et2-hbox>
 						<et2-hbox>
-							<et2-date-duration  id="${row}[ts_duration]"  selectUnit="true" readonly="true" ></et2-date-duration>
+							<et2-date-duration  id="${row}[ts_duration]" selectUnit="true" readonly="true" ></et2-date-duration>
 						</et2-hbox>
 					</et2-vbox>
 				</row>
 			</rows>
 		</grid>
-		<et2-styles src="rows.css"></et2-styles>
-	</template>
-	<template id="timesheet.index" template="" lang="" group="0" version="1.9.001">
+		<et2-styles  src="rows.css"></et2-styles>
+	</et2-template>
+	<et2-template  id="timesheet.index" template="" lang="" group="0" version="1.9.001">
 		<et2-description  id="plus_button_container"></et2-description>
-		<et2-nextmatch id="nm" template="timesheet.index.rows"></et2-nextmatch>
-		<et2-button  id="add" class="plus_button" onclick="egw.open('timesheet');" noSubmit="true"></et2-button>
-	</template>
+		<et2-nextmatch  id="nm" template="timesheet.index.rows"></et2-nextmatch>
+		<et2-button-icon  id="add" class="plus_button" onclick="egw.open('timesheet');" noSubmit="true" image="plus-lg"></et2-button-icon>
+	</et2-template>
 </overlay>

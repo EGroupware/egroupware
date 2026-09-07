@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="mail.sieve.vacation" template="" lang="" group="0" version="1.9.002">
+	<et2-template  id="mail.sieve.vacation" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%" height="100%">
 			<columns>
 				<column width="25%"/>
@@ -34,8 +34,8 @@
 					<et2-email  id="forwards" allowFreeEntries="true" width="100%" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email" placeholder="do not forward"></et2-email>
 				</row>
 				<row>
-					<et2-description value="Vacation notice"></et2-description>
-					<et2-select id="modus">
+					<et2-description  value="Vacation notice"></et2-description>
+					<et2-select  id="modus">
 						<option value="notice+store">Send vacation notice and store message in INBOX</option>
 						<option value="notice">Send only a vacation notice, do NOT store message in INBOX</option>
 						<option value="store">Only store message in INBOX, do NOT send vacation notice</option>
@@ -43,14 +43,13 @@
 				</row>
 				<row valign="top">
 					<et2-description  value="With message:"></et2-description>
-					<et2-vbox  span="all">
-						<et2-textarea  id="text" rows="10" class="et2_required" required="1"></et2-textarea>
+					<et2-vbox  span="all"><et2-ai><et2-textarea  id="text" rows="10" class="et2_required" required="1"></et2-textarea></et2-ai>
 						<et2-description  id="by_date_label" value="You can use $$start$$ for the above start date and $$end$$ for the end date."></et2-description>
 					</et2-vbox>
 				</row>
 				<row>
 					<et2-description  value="Resend after how many days?"></et2-description>
-					<et2-select id="days"></et2-select>
+					<et2-select  id="days"></et2-select>
 				</row>
 				<row>
 					<et2-description  value="Set it as default:" disabled="@is_not_admin_user"></et2-description>
@@ -67,5 +66,5 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="calendar.freetimesearch.rows" template="" lang="" group="0" version="1.0.1.001">
+	<et2-template  id="calendar.freetimesearch.rows" template="" lang="" group="0" version="1.0.1.001">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -24,8 +24,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="calendar.freetimesearch" template="" lang="" group="0" version="1.3.001">
+	</et2-template>
+	<et2-template  id="calendar.freetimesearch" template="" lang="" group="0" version="1.3.001">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -67,12 +67,12 @@
 					</et2-hbox>
 				</row>
 				<row>
-					<template content="freetime" span="all" id="calendar.freetimesearch.rows"/>
+					<et2-template  content="freetime" span="all" id="calendar.freetimesearch.rows"></et2-template>
 				</row>
 			</rows>
 		</grid>
-		<styles>
+		<et2-styles>
 			body { background-color: white; }
-		</styles>
-	</template>
+		</et2-styles>
+	</et2-template>
 </overlay>

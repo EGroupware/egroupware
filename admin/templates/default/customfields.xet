@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="admin.customfields.types" template="" lang="" group="0" version="1.2">
+	<et2-template  id="admin.customfields.types" template="" lang="" group="0" version="1.2">
 		<grid>
 			<columns>
 				<column/>
@@ -25,8 +25,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="admin.customfields.fields" template="" lang="" group="0" version="1.9.001">
+	</et2-template>
+	<et2-template  id="admin.customfields.fields" template="" lang="" group="0" version="1.9.001">
 		<grid>
 			<columns>
 				<column disabled="!@type2" width="50px"/>
@@ -44,20 +44,20 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<et2-nextmatch-header-filter emptyLabel="Type" id="cf_type2"/>
+					<et2-nextmatch-header-filter  emptyLabel="Type" id="cf_type2"></et2-nextmatch-header-filter>
 					<nextmatch-sortheader label="Name" id="cf_name"/>
 					<nextmatch-sortheader label="Label" id="cf_label"/>
-					<et2-nextmatch-header-filter emptyLabel="Type of field" id="cf_type"/>
-					<nextmatch-header label="Required" id="cf_needed"/>
-					<nextmatch-header label="Private" id="cf_private"/>
-					<nextmatch-header label="Readonly" id="cf_readonly"/>
-					<nextmatch-header label="Options" id="cf_values"/>
+					<et2-nextmatch-header-filter  emptyLabel="Type of field" id="cf_type"></et2-nextmatch-header-filter>
+					<et2-nextmatch-header  label="Required" id="cf_needed"></et2-nextmatch-header>
+					<et2-nextmatch-header  label="Private" id="cf_private"></et2-nextmatch-header>
+					<et2-nextmatch-header  label="Readonly" id="cf_readonly"></et2-nextmatch-header>
+					<et2-nextmatch-header  label="Options" id="cf_values"></et2-nextmatch-header>
 					<et2-vbox>
-						<nextmatch-header label="Length" id="cf_len"/>
-						<nextmatch-header label="Rows" id="cf_rows"/>
+						<et2-nextmatch-header  label="Length" id="cf_len"></et2-nextmatch-header>
+						<et2-nextmatch-header  label="Rows" id="cf_rows"></et2-nextmatch-header>
 					</et2-vbox>
 					<nextmatch-sortheader label="Order" id="cf_order"/>
-					<et2-nextmatch-header-filter emptyLabel="Tab" id="cf_tab"/>
+					<et2-nextmatch-header-filter  emptyLabel="Tab" id="cf_tab"></et2-nextmatch-header-filter>
 					<nextmatch-sortheader label="Last modified" id="cf_modified"/>
 				</row>
 				<row class="row" valign="top">
@@ -86,13 +86,13 @@
                 </row>
 			</rows>
 		</grid>
-	</template>
-	<template id="admin.customfields.header" template="" lang="" group="0" version="1.9.001">
+	</et2-template>
+	<et2-template  id="admin.customfields.header" template="" lang="" group="0" version="1.9.001">
 		<et2-button  label="Add" id="add" onclick="egw.open_link('admin.admin_customfields.edit&amp;appname='+widget.getArrayMgr('content').getRoot().getEntry('nm[appname]')+'&amp;use_private='+widget.getArrayMgr('content').getRoot().getEntry('use_private'),false,'600x600');" noSubmit="true"></et2-button>
-	</template>
-	<template id="admin.customfields" template="" lang="" group="0" version="1.9.001">
-		<et2-template template="admin.customfields.header" slot="main-header"></et2-template>
-		<template id="@type_template"/>
+	</et2-template>
+	<et2-template  id="admin.customfields" template="" lang="" group="0" version="1.9.001">
+		<et2-template  template="admin.customfields.header" slot="main-header"></et2-template>
+		<et2-template  id="@type_template"></et2-template>
 		<nextmatch id="nm" template="admin.customfields.fields"/>
-	</template>
+	</et2-template>
 </overlay>

@@ -10,7 +10,7 @@ Egroupware
 @version $Id$
 -->
 <overlay>
-	<template id="calendar.category_report" template="" lang="" group="0" version="16.2">
+	<et2-template  id="calendar.category_report" template="" lang="" group="0" version="16.2">
 		<et2-hbox  class="dialogHeader" height="28">
 			<et2-description  value="Category Report"></et2-description>
 		</et2-hbox>
@@ -67,5 +67,5 @@ Egroupware
 			</et2-hbox>
 			<et2-button  id="button[report]" label="Report" onclick="app.calendar.category_report_submit" image="template"></et2-button>
 		</et2-hbox>
-	</template>
+	</et2-template>
 </overlay>

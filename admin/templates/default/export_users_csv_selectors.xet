@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="admin.export_users_csv_selectors" template="" lang="" group="0" version="1.9.001">
+	<et2-template  id="admin.export_users_csv_selectors" template="" lang="" group="0" version="1.9.001">
 		<grid>
 			<columns>
 				<column/>
@@ -12,5 +12,5 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

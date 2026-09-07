@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="mail.modifyMessageSubjectDialog" template="" lang="" group="0" version="17.1">
+	<et2-template  id="mail.modifyMessageSubjectDialog" template="" lang="" group="0" version="17.1">
 		<et2-hbox  class="et2_prompt">
 			<grid width="100%">
 				<columns>
@@ -14,11 +14,10 @@
 						<et2-description  value="@value"></et2-description>
 					</row>
 					<row>
-						<et2-description  value="New subject"></et2-description>
-						<et2-textarea  id="value" width="400"></et2-textarea>
+						<et2-description  value="New subject"></et2-description><et2-ai><et2-textarea  id="value" width="400"></et2-textarea></et2-ai>
 					</row>
 				</rows>
 			</grid>
 		</et2-hbox>
-	</template>
+	</et2-template>
 </overlay>

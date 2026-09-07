@@ -12,7 +12,7 @@ Egroupware
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 
 <overlay>
-    <template id="calendar.view">
+    <et2-template  id="calendar.view">
 		<grid id="view" width="100%">
 			<columns>
 				<column/>
@@ -27,5 +27,5 @@ Egroupware
 				</row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

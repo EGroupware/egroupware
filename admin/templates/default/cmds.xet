@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="admin.cmds.rows" template="" lang="" group="0" version="1.5.001">
+	<et2-template  id="admin.cmds.rows" template="" lang="" group="0" version="1.5.001">
 		<grid width="100%">
 			<columns>
 				<column width="20%" minWidth="300"/> <!-- Title -->
@@ -19,23 +19,23 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<nextmatch-header label="Title" id="title"/>
-					<et2-nextmatch-header-custom  id="app" emptyLabel="All applications" widgetType="select-app"/>
-					<et2-nextmatch-header-account  id="account" emptyLabel="All accounts"/>
-					<et2-nextmatch-header-filter  id="type" emptyLabel="Type"/>
-					<et2-nextmatch-header-account  id="requested" emptyLabel="Requested"/>
-					<nextmatch-header label="Comment" id="comment"/>
+					<et2-nextmatch-header  label="Title" id="title"></et2-nextmatch-header>
+					<et2-nextmatch-header-custom  id="app" emptyLabel="All applications" widgetType=""></et2-nextmatch-header-custom>
+					<et2-nextmatch-header-account  id="account" emptyLabel="All accounts"></et2-nextmatch-header-account>
+					<et2-nextmatch-header-filter  id="type" emptyLabel="Type"></et2-nextmatch-header-filter>
+					<et2-nextmatch-header-account  id="requested" emptyLabel="Requested"></et2-nextmatch-header-account>
+					<et2-nextmatch-header  label="Comment" id="comment"></et2-nextmatch-header>
 					<nextmatch-sortheader label="Scheduled" id="cmd_scheduled"/>
-					<et2-nextmatch-header-filter  id="periodic" emptyLabel="Periodic"/>
-					<et2-nextmatch-header-filter  id="remote_id" emptyLabel="Remote"/>
+					<et2-nextmatch-header-filter  id="periodic" emptyLabel="Periodic"></et2-nextmatch-header-filter>
+					<et2-nextmatch-header-filter  id="remote_id" emptyLabel="Remote"></et2-nextmatch-header-filter>
 					<et2-vbox>
 						<nextmatch-sortheader label="Created" id="cmd_created"/>
-						<et2-nextmatch-header-account  id="creator" emptyLabel="Creator"/>
+						<et2-nextmatch-header-account  id="creator" emptyLabel="Creator"></et2-nextmatch-header-account>
 					</et2-vbox>
-					<et2-nextmatch-header-filter  id="status" emptyLabel="Status"/>
+					<et2-nextmatch-header-filter  id="status" emptyLabel="Status"></et2-nextmatch-header-filter>
 					<et2-vbox>
 						<nextmatch-sortheader label="Modified" id="cmd_modified"/>
-						<et2-nextmatch-header-account  id="modifier" emptyLabel="Modifier"/>
+						<et2-nextmatch-header-account  id="modifier" emptyLabel="Modifier"></et2-nextmatch-header-account>
 					</et2-vbox>
 				</row>
 				<row class="row $row_cont[class]">
@@ -64,20 +64,20 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="admin.cmds.splitter" template="" lang="" height="100%" group="0" version="19.01">
+	</et2-template>
+	<et2-template  id="admin.cmds.splitter" template="" lang="" height="100%" group="0" version="19.01">
 		<et2-split  orientation="h" height="100%" id="splitter" vertical="true" primary="start">
 			<nextmatch options="admin.cmds.rows" id="nm" onselect="app.admin.cmds_onselect"/>
-			<template id="admin.cmds.preview"/>
+			<et2-template  id="admin.cmds.preview"></et2-template>
 		</et2-split>
-	</template>
+	</et2-template>
 
-	<template id="admin.cmds" template="" lang="" height="100%" group="0" version="1.5.001">
-		<template id="admin.cmds.splitter" height="100%"/>
-	</template>
+	<et2-template  id="admin.cmds" template="" lang="" height="100%" group="0" version="1.5.001">
+		<et2-template  id="admin.cmds.splitter" height="100%"></et2-template>
+	</et2-template>
 
-	<template id="admin.cmds.preview" template="" lang="" group="0" version="1.5.001">
-		<iframe id="policy_preview" src=""/>
+	<et2-template  id="admin.cmds.preview" template="" lang="" group="0" version="1.5.001">
+		<et2-iframe  id="policy_preview" src=""></et2-iframe>
 		<grid id="cmds_preview">
 			<columns>
 				<column />
@@ -114,8 +114,8 @@
 				</row>
 			</rows>
 		</grid>
-		<styles>
+		<et2-styles>
 			#admin-cmds_cmds_preview .et2_hbox.row {padding: 5px 0 5px 3px;vertical-align: middle;}
-		</styles>
-	</template>
+		</et2-styles>
+	</et2-template>
 </overlay>

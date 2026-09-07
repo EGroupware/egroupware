@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="admin.config.general" template="" lang="" group="0" version="18.1">
+	<et2-template  id="admin.config.general" template="" lang="" group="0" version="18.1">
 		<grid width="100%" class="admin-config egwGridView_grid">
 			<columns>
 				<column width="70%"/>
@@ -37,7 +37,7 @@
 				</row>
 				<row>
 					<et2-description  value="Enter the VFS-Path where additional images, icons or logos can be placed (and found by EGroupwares applications). The path MUST start with /,and be readable by all users" label="%s:"></et2-description>
-					<et2-vfs-path id="newsettings[vfs_image_dir]"></et2-vfs-path>
+					<et2-vfs-path  id="newsettings[vfs_image_dir]"></et2-vfs-path>
 				</row>
 				<row>
 					<et2-description  value="Offer to installing EGroupware as mail-handler" label="%s:"></et2-description>
@@ -51,7 +51,7 @@
 				</row>
 				<row>
 					<et2-description  value="Retention period for history-log (in years)" label="%s:"></et2-description>
-					<et2-number id="newsettings[history_retention]" min="0" max="20" step="1" placeholder="unlimited"></et2-number>
+					<et2-number  id="newsettings[history_retention]" min="0" max="20" step="1" placeholder="unlimited"></et2-number>
 				</row>
 				<row>
 					<et2-description  value="Log user-agent and action of changes in history-log of entries" label="%s:"></et2-description>
@@ -74,9 +74,9 @@
 				<row>
 					<et2-description  value="Regular expression to find part to use as container" label="%s:"></et2-description>
 					<et2-hbox>
-						<et2-textbox id="newsettings[group_container_regexp]" placeholder="/,CN=([^,]+),/"></et2-textbox>
-						<et2-description value="-->" style="position: relative; top: .5em"></et2-description>
-						<et2-textbox id="newsettings[group_container_replace]" placeholder="$1" width="100px"></et2-textbox>
+						<et2-textbox  id="newsettings[group_container_regexp]" placeholder="/,CN=([^,]+),/"></et2-textbox>
+						<et2-description  value="-->" style="position: relative; top: .5em"></et2-description>
+						<et2-textbox  id="newsettings[group_container_replace]" placeholder="$1" width="100px"></et2-textbox>
 					</et2-hbox>
 				</row>
 
@@ -92,8 +92,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="admin.config.appearance" template="" lang="" group="0" version="18.1">
+	</et2-template>
+	<et2-template  id="admin.config.appearance" template="" lang="" group="0" version="18.1">
 		<grid width="100%" class="admin-config egwGridView_grid">
 			<columns>
 				<column width="50%"/>
@@ -108,16 +108,14 @@
 					<et2-description  value="Upload your logo or enter the URL" label="%s:"></et2-description>
 					<et2-vbox>
 						<et2-select-thumbnail  id="newsettings[login_logo_file]" width="100%" allowFreeEntries="true"></et2-select-thumbnail>
-						<file width="100%" label="upload" accept="svg,png,jpeg,jpg"
-							onchange="egw.json('admin.admin_config.ajax_upload_anon_images',[widget.get_value(), []], function(_data){widget._parent._children[0].set_value(_data)}).sendRequest()"/>
+						<et2-file  width="100%" label="upload" accept="svg,png,jpeg,jpg" onchange="egw.json('admin.admin_config.ajax_upload_anon_images',[widget.get_value(), []], function(_data){widget._parent._children[0].set_value(_data)}).sendRequest()"></et2-file>
 					</et2-vbox>
 				</row>
 				<row>
 					<et2-description  value="Upload your header logo or enter the URL (leave it empty if it is the same as login logo)" label="%s:"></et2-description>
 					<et2-vbox>
 						<et2-select-thumbnail  id="newsettings[login_logo_header]" width="100%" allowFreeEntries="true"></et2-select-thumbnail>
-						<file width="100%" label="upload" accept="svg,png,jpeg,jpg"
-							onchange="egw.json('admin.admin_config.ajax_upload_anon_images',[widget.get_value(), []], function(_data){widget._parent._children[0].set_value(_data)}).sendRequest()"/>
+						<et2-file  width="100%" label="upload" accept="svg,png,jpeg,jpg" onchange="egw.json('admin.admin_config.ajax_upload_anon_images',[widget.get_value(), []], function(_data){widget._parent._children[0].set_value(_data)}).sendRequest()"></et2-file>
 					</et2-vbox>
 				</row>
 				<row>
@@ -135,7 +133,7 @@
 					</et2-vbox>
 					<et2-vbox>
 						<et2-select-thumbnail  id="newsettings[login_background_file]" width="100%" allowFreeEntries="true" multiple="true" placeholder="Upload your background image or enter the URL" onchange="app.admin.loginBackgroundToggle"></et2-select-thumbnail>
-						<et2-file id="login_background_upload" accept="svg,png,jpeg,jpg" width="100%" label="upload" onchange="app.admin.login_background_update"/>
+						<et2-file  id="login_background_upload" accept="svg,png,jpeg,jpg" width="100%" label="upload" onchange="app.admin.login_background_update"/>
 					</et2-vbox>
 				</row>
 				<row>
@@ -149,8 +147,7 @@
 					<et2-description  value="Upload your favicon or enter the URL" label="%s:"></et2-description>
 					<et2-vbox>
 						<et2-select-thumbnail  id="newsettings[favicon_file]" multiple="true"></et2-select-thumbnail>
-						<file accept="svg,png,ico" width="100%" label="upload"
-							onchange="egw.json('admin.admin_config.ajax_upload_anon_images',[widget.get_value(), []], function(_data){widget._parent._children[0].set_value(_data)}).sendRequest()"/>
+						<et2-file  accept="svg,png,ico" width="100%" label="upload" onchange="egw.json('admin.admin_config.ajax_upload_anon_images',[widget.get_value(), []], function(_data){widget._parent._children[0].set_value(_data)}).sendRequest()"></et2-file>
 					</et2-vbox>
 				</row>
 				<row>
@@ -173,25 +170,23 @@
 					<et2-select-app  id="newsettings[fw_mobile_app_list]" multiple="true" other=",enabled:home;groupdav;sitemgr-link;sitemgr;developer_tools;etemplate;stylite;archive;importexport;activesync;notifications;esyncpro;preferences;registration" width="100%"></et2-select-app>
 				</row>
 				<row>
-					<et2-description value="Custom EGroupware web font as woff2 file" label="%s:"></et2-description>
+					<et2-description  value="Custom EGroupware web font as woff2 file" label="%s:"></et2-description>
 					<et2-vbox>
-						<et2-url id="newsettings[font_face_url]" allowPath="true"></et2-url>
-						<file width="100%" label="upload" accept="woff2"
-							  onchange="egw.json('admin.admin_config.ajax_upload_anon_images',[widget.get_value(), []], function(_data){widget._parent._children[0].set_value(_data)}).sendRequest()"/>
+						<et2-url  id="newsettings[font_face_url]" allowPath="true"></et2-url>
+						<et2-file  width="100%" label="upload" accept="woff2" onchange="egw.json('admin.admin_config.ajax_upload_anon_images',[widget.get_value(), []], function(_data){widget._parent._children[0].set_value(_data)}).sendRequest()"></et2-file>
 					</et2-vbox>
 				</row>
 				<row>
-					<et2-description value="Custom EGroupware Bold web font as woff2 file" label="%s:"></et2-description>
+					<et2-description  value="Custom EGroupware Bold web font as woff2 file" label="%s:"></et2-description>
 					<et2-vbox>
-						<et2-url id="newsettings[font_face_url2]" allowPath="true"></et2-url>
-						<file width="100%" label="upload" accept="woff2"
-							  onchange="egw.json('admin.admin_config.ajax_upload_anon_images',[widget.get_value(), []], function(_data){widget._parent._children[0].set_value(_data)}).sendRequest()"/>
+						<et2-url  id="newsettings[font_face_url2]" allowPath="true"></et2-url>
+						<et2-file  width="100%" label="upload" accept="woff2" onchange="egw.json('admin.admin_config.ajax_upload_anon_images',[widget.get_value(), []], function(_data){widget._parent._children[0].set_value(_data)}).sendRequest()"></et2-file>
 					</et2-vbox>
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="admin.config.security" template="" lang="" group="0" version="18.1">
+	</et2-template>
+	<et2-template  id="admin.config.security" template="" lang="" group="0" version="18.1">
 		<grid width="100%" class="admin-config egwGridView_grid">
 			<columns>
 				<column width="70%"/>
@@ -346,10 +341,10 @@
 				</row>
 				<row>
 					<et2-vbox>
-						<et2-description value="Logging in via SingleSignOn does not provide a password to pass it on to mail- or file-servers."></et2-description>
-						<et2-description value="Allow the user to store his password under 'Security &amp; Passwords' for SingleSignOn."></et2-description>
+						<et2-description  value="Logging in via SingleSignOn does not provide a password to pass it on to mail- or file-servers."></et2-description>
+						<et2-description  value="Allow the user to store his password under 'Security &amp; Passwords' for SingleSignOn."></et2-description>
 					</et2-vbox>
-					<et2-checkbox id="newsettings[store_password_for_sso]" label="Store password retrievable for SingleSignOn"></et2-checkbox>
+					<et2-checkbox  id="newsettings[store_password_for_sso]" label="Store password retrievable for SingleSignOn"></et2-checkbox>
 				</row>
 
 				<row>
@@ -421,19 +416,19 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="admin.config" template="" lang="" group="0" version="18.1">
-        <et2-tabbox id="tabs" tabHeight="auto">
+	</et2-template>
+	<et2-template  id="admin.config" template="" lang="" group="0" version="18.1">
+        <et2-tabbox  id="tabs" tabHeight="auto">
 			<tabs>
 				<tab id="general" label="General"/>
 				<tab id="appearance" label="Appearance"/>
 				<tab id="security" label="Security"/>
 			</tabs>
 			<tabpanels>
-				<template id="admin.config.general"/>
-				<template id="admin.config.appearance"/>
-				<template id="admin.config.security"/>
+				<et2-template  id="admin.config.general"></et2-template>
+				<et2-template  id="admin.config.appearance"></et2-template>
+				<et2-template  id="admin.config.security"></et2-template>
 			</tabpanels>
 		</et2-tabbox>
-	</template>
+	</et2-template>
 </overlay>
