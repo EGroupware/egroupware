@@ -308,11 +308,19 @@ class admin_config
 		else
 		{
 			// for security reasons we do not send all config to client-side, but only ones mentioned in templates
+			$file_content = file_get_contents($path);
 			$matches = null;
-			preg_match_all('/(id|content)="newsettings\[([^]]+)\]/', file_get_contents($path), $matches, PREG_PATTERN_ORDER);
+			preg_match_all('/(id|content)="newsettings\[([^]]+)\]/', $file_content, $matches, PREG_PATTERN_ORDER);
 			foreach($matches[2] as $name)
 			{
 				$content['newsettings'][$name] = isset($config[$name]) ? $config[$name] : '';
+			}
+			// allow the "config" hook to supply computed, read-only content eg. for an
+			// emptyLabel="@some_name" attribute, to show what a setting currently defaults to
+			preg_match_all('/emptyLabel="@([a-zA-Z0-9_]+)"/', $file_content, $matches, PREG_PATTERN_ORDER);
+			foreach($matches[1] as $name)
+			{
+				if (isset($config[$name])) $content[$name] = $config[$name];
 			}
 		}
 
