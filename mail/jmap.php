@@ -170,6 +170,43 @@ catch (\Throwable $e)
 	http_response_code(500);
 	echo json_encode(['type' => 'serverFail', 'description' => $e->getMessage()], JSON_UNESCAPED_SLASHES);
 }
+/**
+ * Catch an otherwise-invisible fatal (eg. "Maximum execution time exceeded") during
+ * JmapImap::runDeferredWork() - a real PHP fatal is NOT a catchable \Throwable (unlike a normal
+ * Exception/Error), so runDeferredWork()'s own try/catch around each queued closure never sees
+ * it at all; register_shutdown_function() + error_get_last() is the standard way to detect one
+ * regardless. Found live 2026-09-07: a "delete all matching" batch of 354 messages never
+ * completed and left zero trace anywhere (no exception in on-shutdown.log, no php-fpm pool log
+ * entry, no client-visible rejection) - traced to exactly this: max_execution_time=90s (doc/
+ * docker/fpm/Dockerfile) silently killing the deferred IMAP copy mid-flight. set_time_limit(0)
+ * below removes that specific limit (safe here - fastcgi_finish_request() already happened, no
+ * browser is waiting on this), but a production host can still enforce its own hard ceiling
+ * (ralf: "on the hosting farm we still have a hard 300s limit for requests") that set_time_limit()
+ * cannot override - this shutdown function is the backstop for that case (or any other fatal),
+ * not a fix for it; a batch that's slow enough to hit a hard external limit will still need
+ * chunking into multiple deferred passes, not attempted here.
+ */
+function mail_jmap_check_fatal_shutdown()
+{
+	$error = error_get_last();
+	if ($error && in_array($error['type'], [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE], true))
+	{
+		$message = 'Fatal error in deferred mail work: '.$error['message'].' ('.$error['file'].':'.$error['line'].')';
+		error_log($message);
+		try
+		{
+			(new \EGroupware\Api\Json\Push())->message(
+				lang('A mail operation failed in the background - please check the current view is up to date'),
+				'error'
+			);
+		}
+		catch (\Throwable $push_e)
+		{
+			error_log('mail_jmap_check_fatal_shutdown(): also failed to push: '.$push_e->getMessage());
+		}
+	}
+}
+
 // the client already has its full response at this point - anything JmapImap::dispatch() (eg.
 // EmailSubmission/set) queued via JmapImap::queueDeferredWork() (best-effort bookkeeping the user
 // doesn't need to wait for - see that method's own docblock) runs AFTER this, not before, so a slow
@@ -177,6 +214,20 @@ catch (\Throwable $e)
 if (function_exists('fastcgi_finish_request'))
 {
 	fastcgi_finish_request();
+	// same reasoning/fix as Egw::__destruct()'s own on-shutdown.log (api/src/Egw.php) - whatever
+	// error_log() was pointed at before (syslog, php-fpm's own log, ...) is no longer somewhere we
+	// can necessarily see once the fastcgi connection to the webserver is finished, so anything
+	// runDeferredWork() below logs (its own try/catch around each queued closure, see that
+	// method's docblock) needs an explicit, physical destination instead - found live 2026-09-07,
+	// ralf: "the log neither contains an exception nor something with runDeferredWork" after a
+	// deferred move silently failed.
+	ini_set('error_log', dirname($GLOBALS['egw_info']['server']['files_dir']).'/on-shutdown.log');
+	register_shutdown_function('mail_jmap_check_fatal_shutdown');
+	// deferred work (IMAP moves/destroys, possibly hundreds of messages in one Horde command) runs
+	// with no browser waiting on it any more - the classic max_execution_time is meant to bound a
+	// user-facing request, not this background tail, see mail_jmap_check_fatal_shutdown()'s own
+	// docblock for the still-real hosting-farm-level ceiling this can't remove.
+	set_time_limit(0);
 }
 JmapImap::runDeferredWork();
 exit;

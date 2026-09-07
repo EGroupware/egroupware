@@ -209,11 +209,43 @@ class Imap extends Jmap\Base
 		self::$deferredWork[] = $work;
 	}
 
+	/** One IMAP COPY/STORE command's worth of ids - see emailSet()'s own use of this. */
+	private const ID_CHUNK_SIZE = 50;
+
+	/**
+	 * Split a large id-set into chunks small enough for one IMAP command to reliably finish before
+	 * Dovecot's own connection/command timeout - found live 2026-09-07 that a single COPY command
+	 * carrying 354 ids ran long enough for Dovecot to just close the connection mid-command
+	 * (Horde_Imap_Client_Exception: "Mail server closed the connection unexpectedly"), while a 5-id
+	 * batch completed fine (just slower than a naive first check suggested - several seconds, not
+	 * instant). Also bounds how much work a single deferred closure loses if it's interrupted
+	 * partway (eg. a host-level hard request time limit some production hosts enforce regardless
+	 * of this script's own set_time_limit(0), see mail/jmap.php) - a chunk that already ran stays
+	 * done even if a later chunk fails.
+	 */
+	private static function chunkIds(array $ids) : array
+	{
+		return array_chunk($ids, self::ID_CHUNK_SIZE);
+	}
+
 	/**
 	 * Run (and clear) all queued deferred work - called by mail/jmap.php once the client already
 	 * has its response (fastcgi_finish_request()). A failure here can no longer be reported to the
 	 * client (that response is already gone) - logged instead, same as this codebase's other
-	 * best-effort cleanup paths.
+	 * best-effort cleanup paths. mail/jmap.php's own caller already redirects error_log() to a
+	 * physical on-shutdown.log file first (same reasoning as Egw::__destruct()'s identical fix) -
+	 * whatever error_log() was pointed at before is no longer somewhere reachable once the fastcgi
+	 * connection to the webserver is finished. Uses _egw_log_exception() (not a bare error_log()
+	 * one-liner) for the same file/line/trace/user/instance detail every other uncaught exception
+	 * in this codebase gets - found live 2026-09-07 that a bare message alone wasn't enough to even
+	 * confirm a deferred move (a large "delete all matching" batch) had failed at all, let alone why.
+	 *
+	 * Also pushes a user-facing error over the existing WebSocket channel (Api\Json\Push) - the
+	 * follow-up idea from this method's own earlier "no way back to the client" note above, now
+	 * built: even though the JMAP response with its (necessarily optimistic) "success" already
+	 * went out, the session itself is still around (this runs in the same PHP process, same
+	 * session, just after the HTTP response), so a push to "the current session" reaches the exact
+	 * browser tab that triggered it, same as any other live update.
 	 */
 	public static function runDeferredWork() : void
 	{
@@ -227,7 +259,18 @@ class Imap extends Jmap\Base
 			}
 			catch (\Throwable $e)
 			{
-				error_log(__METHOD__.'(): '.$e->getMessage());
+				_egw_log_exception($e);
+				try
+				{
+					(new Api\Json\Push())->message(
+						lang('A mail operation failed in the background').': '.$e->getMessage(),
+						'error'
+					);
+				}
+				catch (\Throwable $push_e)
+				{
+					_egw_log_exception($push_e);
+				}
 			}
 		}
 	}
@@ -1942,10 +1985,19 @@ class Imap extends Jmap\Base
 					foreach ($moves as $targetFolder => $ids)
 					{
 						$targetMailbox = self::hordeMailbox($imap, $targetFolder);
-						$imap->copy($mailbox, $targetMailbox, [
-							'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $ids)),
-							'move' => true,
-						]);
+						// chunked (see chunkIds()'s own docblock) - a single COPY carrying all of a
+						// large "delete/move all matching" batch (eg. 354 ids) was found live
+						// 2026-09-07 to run long enough for Dovecot to just close the connection
+						// mid-command (Horde_Imap_Client_Exception: "Mail server closed the
+						// connection unexpectedly") - a 5-id batch completed fine, just slower than
+						// expected.
+						foreach (self::chunkIds($ids) as $chunk)
+						{
+							$imap->copy($mailbox, $targetMailbox, [
+								'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $chunk)),
+								'move' => true,
+							]);
+						}
 					}
 				});
 			}
@@ -1963,13 +2015,18 @@ class Imap extends Jmap\Base
 			{
 				// same primitive Mail::deleteMessages()'s "remove_immediately" mode uses - deferred,
 				// same reasoning as the move branch above (same store()+expunge() primitive
-				// emailSubmissionSet()'s old-draft cleanup already defers)
+				// emailSubmissionSet()'s old-draft cleanup already defers). Chunked same as the move
+				// branch above - one expunge() at the end covers every chunk's \Deleted flags, no
+				// need to repeat it per chunk.
 				self::queueDeferredWork(function() use ($imap, $mailbox, $destroyed)
 				{
-					$imap->store($mailbox, [
-						'add' => ['\\Deleted'],
-						'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $destroyed)),
-					]);
+					foreach (self::chunkIds($destroyed) as $chunk)
+					{
+						$imap->store($mailbox, [
+							'add' => ['\\Deleted'],
+							'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $chunk)),
+						]);
+					}
 					$imap->expunge($mailbox);
 				});
 			}

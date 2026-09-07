@@ -3442,10 +3442,19 @@ export class MailApp extends EgwApp
 		const nm = _calledFromPopup ?
 			window?.egw?.window?.app?.mail?.et2?.getWidgetById(this.nm_index) :
 			this.et2.getWidgetById(this.nm_index);
-		if (!_msg["all"])
-		{
-			this.refresh(nm, _msg["msg"], Et2DatagridUpdateTypes.DELETE);
-		}
+		// Optimistic client-side removal, for "select all matching filter" too, not just an
+		// explicit selection - _msg["msg"] already holds every row id that was actually checked
+		// (getFormData(), same array either way; "select all" checks every currently-loaded row).
+		// A real server-side "delete all" (mode='trash') never happens synchronously - Imap::
+		// emailSet() queues the actual IMAP move via queueDeferredWork(), which only runs AFTER
+		// the JMAP response is already sent (mail/jmap.php's own fastcgi_finish_request() then
+		// JmapImap::runDeferredWork()) - so re-querying the folder right after a "success" response
+		// (the old this.egw.refresh() call below) is a race this side can never win: the deferred
+		// move hasn't necessarily run yet, and the re-query would show the same rows as still
+		// there (found live 2026-09-07, ralf: "deleting all drafts... seems to do nothing" - the
+		// delete itself deferred-ran fine moments later, this refresh's own re-query just fired too
+		// early and clobbered the optimistic removal with stale data).
+		this.refresh(nm, _msg["msg"], Et2DatagridUpdateTypes.DELETE);
 
 		// Tell server - fast client-side JMAP path for the common case (explicit selection, not
 		// "select all matching the current filter"), falling back to the classic ajax call
@@ -3456,13 +3465,12 @@ export class MailApp extends EgwApp
 			egw.json('mail.mail_ui.ajax_deleteMessages', [_msg, (typeof _action == 'undefined' ? 'no' : _action)]).sendRequest(true))
 			.then(() =>
 			{
-				if (_msg['all']) this.egw.refresh(this.egw.lang("deleted %1 messages in %2",(_msg['all']?egw.lang('all'):_msg['msg'].length),(displayname?displayname:egw.lang('current folder'))),'mail');//,ids,'delete');
 				this.egw.message(this.egw.lang("deleted %1 messages in %2", (_msg['all'] ? egw.lang('all') : _msg['msg'].length), (displayname ? displayname : egw.lang('current Folder'))), 'success');
 			})
 			.catch((e) =>
 			{
 				this.egw.message(e?.message || this.egw.lang('Failed to delete messages'), 'error');
-				if (!_msg['all']) nm.refresh();
+				nm.refresh();
 			});
 	}
 
