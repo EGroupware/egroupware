@@ -3012,3 +3012,14 @@ normal signature applied, no console errors; full `mail` jstest group green (189
 **Remaining Step 10 backlog, unchanged**: addressbook "email vCard" and filemanager "mail selected
 files"/"share link" - both still classic postback, each needing its own small client-side rework to
 resolve VFS paths/vCard data instead of a URL param.
+
+**Same popup-reuse regex bug found in 2 more places, fixed.** A systematic grep for the same
+classic-only pattern found `addressbook/js/app.ts`'s `adb_mail_vcard()` and
+`filemanager/js/filemanager.ts`'s `open_mail()`/`_mail_link_callback()` had it too - fixed the same
+way. These 3 entry points still open a brand NEW popup via the classic postback when nothing's open
+to reuse (vCard/VFS-attach's own content shape needs genuine JMAP-blob-upload support before that
+part can convert - same gap as the already-documented "Attach from VFS" one); only the reuse
+detection itself was broken and is now fixed everywhere. `filemanager`'s own "share link" content
+shape (plain `mail_htmltext`/`mail_plaintext` fields, not a VFS attachment) already works correctly
+against an already-open JMAP-mode popup via `setCompose()` today - only opening a brand new one for
+that action still goes through the classic url.
