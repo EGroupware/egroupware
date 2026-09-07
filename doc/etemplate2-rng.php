@@ -669,7 +669,10 @@ foreach ($xpath->query('//x:choice') as $choice)
 // sub-elements like row/tab (children of grid/tabs, never Widgets members themselves) need this
 // just as much.
 $globalAttrs = ['id', 'width', 'height', 'slot', 'style', 'span'];
-foreach ($xpath->query('//x:define[starts-with(@name, "attlist.") and not(starts-with(@name, "attlist.et2-"))]') as $attlistDefine)
+// et2-template is a special case: despite its et2- prefixed name, it's the renamed legacy
+// <template> definition (see above) and never goes through attributes()/overwriteAttributes()
+// either - explicitly included alongside the true legacy widgets
+foreach ($xpath->query('//x:define[(starts-with(@name, "attlist.") and not(starts-with(@name, "attlist.et2-"))) or @name="attlist.et2-template"]') as $attlistDefine)
 {
 	$existing = [];
 	foreach ($xpath->query('.//x:attribute/@name', $attlistDefine) as $a) { $existing[$a->value] = true; }
@@ -825,11 +828,24 @@ function overwriteAttributes(array& $element, ?string $name=null)
 	{
 		if (isset($type))
 		{
-            // only add it, if not already there
-            if (!array_filter($element['attributes']??[], static function($attribute) use ($attr)
+            // replace the type if the attribute already exists (eg. components.json's own
+            // inferred type is wrong or too narrow for real usage), otherwise add it -
+            // "foreach ($element['attributes'] ?? [] as &$x)" would NOT do this: the ?? produces
+            // a temporary value, so a by-reference foreach over it never writes back
+            $replaced = false;
+            if (isset($element['attributes']))
             {
-                return isset($attribute) && $attribute['name'] === $attr;
-            }))
+                foreach($element['attributes'] as &$attribute)
+                {
+                    if (isset($attribute) && $attribute['name'] === $attr)
+                    {
+                        $attribute['type'] = ['text' => $type];
+                        $replaced = true;
+                    }
+                }
+                unset($attribute);
+            }
+            if (!$replaced)
             {
                 $element['attributes'][] = ['name' => $attr, 'type' => ['text' => $type]];
             }

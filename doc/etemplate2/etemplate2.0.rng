@@ -339,6 +339,12 @@
     <optional>
       <attribute name="attributes"/>
     </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
   </define>
   <define name="grid">
     <element name="grid">
@@ -3751,14 +3757,7 @@
       <attribute name="accesskey"/>
     </optional>
     <optional>
-      <attribute name="accountType">
-        <choice>
-          <value>accounts</value>
-          <value>groups</value>
-          <value>both</value>
-          <value>owngroups</value>
-        </choice>
-      </attribute>
+      <attribute name="accountType"/>
     </optional>
     <optional>
       <attribute name="actions"/>
@@ -6490,16 +6489,7 @@
       </attribute>
     </optional>
     <optional>
-      <attribute name="selectedValue">
-        <choice>
-          <value>false</value>
-          <value>true</value>
-          <value>1</value>
-          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
-            <param name="pattern">!?[@$].*</param>
-          </data>
-        </choice>
-      </attribute>
+      <attribute name="selectedValue"/>
     </optional>
     <optional>
       <attribute name="size">
@@ -6538,16 +6528,7 @@
       <attribute name="title"/>
     </optional>
     <optional>
-      <attribute name="unselectedValue">
-        <choice>
-          <value>false</value>
-          <value>true</value>
-          <value>1</value>
-          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
-            <param name="pattern">!?[@$].*</param>
-          </data>
-        </choice>
-      </attribute>
+      <attribute name="unselectedValue"/>
     </optional>
     <optional>
       <attribute name="value"/>
@@ -17317,14 +17298,7 @@
       <attribute name="accesskey"/>
     </optional>
     <optional>
-      <attribute name="accountType">
-        <choice>
-          <value>accounts</value>
-          <value>groups</value>
-          <value>both</value>
-          <value>owngroups</value>
-        </choice>
-      </attribute>
+      <attribute name="accountType"/>
     </optional>
     <optional>
       <attribute name="actions"/>
@@ -17567,15 +17541,7 @@
       </attribute>
     </optional>
     <optional>
-      <attribute name="apps">
-        <choice>
-          <value>user</value>
-          <value>enabled</value>
-          <value>installed</value>
-          <value>all</value>
-          <value>all+setup</value>
-        </choice>
-      </attribute>
+      <attribute name="apps"/>
     </optional>
     <optional>
       <attribute name="ariaDescription"/>
@@ -22939,13 +22905,7 @@
       <attribute name="rows"/>
     </optional>
     <optional>
-      <attribute name="size">
-        <choice>
-          <value>small</value>
-          <value>medium</value>
-          <value>large</value>
-        </choice>
-      </attribute>
+      <attribute name="size"/>
     </optional>
     <optional>
       <attribute name="slot"/>
