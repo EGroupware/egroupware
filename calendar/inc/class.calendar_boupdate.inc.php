@@ -3532,7 +3532,7 @@ class calendar_boupdate extends calendar_bo
 	/**
 	 * Maximum time in seconds a single purge() run is allowed to take
 	 */
-	const PURGE_TIME_LIMIT = 300;	// 5 minutes
+	const PURGE_TIME_LIMIT = 270;	// 4.5 minutes, to stay well below async run frequency AND 300s request limit on the farm
 
 	/**
 	 * Delete events that are more than $age years old
