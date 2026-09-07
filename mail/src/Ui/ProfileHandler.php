@@ -74,6 +74,9 @@ class ProfileHandler
 				$bootstrap = self::localBootstrap('0');
 				$bootstrap['supportsThreading'] = false;	// fixture account is always local, see THREADING_ENABLED
 				$bootstrap['customLabels'] = CustomLabels::getCustomLabels();
+				// see the main branch's own comment below for why this rides along on the bootstrap
+				// already fetched once per account, instead of a dedicated per-compose-open call
+				$bootstrap['hasComposePrepareHook'] = Api\Hooks::count('mail_compose_prepare') > 0;
 				$response->data($bootstrap);
 				return;
 			}
@@ -109,6 +112,17 @@ class ProfileHandler
 				// to identify these two by name instead
 				$bootstrap['templatesFolder'] = $imapServer->acc_folder_template ?: 'Templates';
 				$bootstrap['outboxFolder'] = $imapServer->acc_folder_outbox ?: 'Outbox';
+				// doc/ai/projects/mail-compose-jmap-migration.md, Step 10 (Phase 2a) - whether any
+				// app registered for the mail_compose_prepare hook, so MailApp.bootstrapComposePopup()
+				// only pays for the extra endpoint call (Api\Hooks::process() itself, and the JMAP
+				// round-trip to fetch its result) when something's actually listening, same "don't
+				// pay for what nobody uses" principle as the classic $jmapReplySkip guard. Hook
+				// registration is a one-time, installation-wide fact (not per-account), and this
+				// bootstrap already runs once per account per window (MailJmap.ensureToken()) - ralf,
+				// 2026-09-07: "send that information to client-side once, e.g. with our ensure token
+				// request" - riding along here means zero extra round-trips for the common
+				// no-hook-registered case, rather than a dedicated per-compose-open check.
+				$bootstrap['hasComposePrepareHook'] = Api\Hooks::count('mail_compose_prepare') > 0;
 				// No working push-server for this instance (eg. shared hosting with none installed)?
 				// Tell the client to try JamWebSocketClient's client-side onPush() instead of the
 				// classic server-side JMAP push subscription (self::enablePush() below) - no

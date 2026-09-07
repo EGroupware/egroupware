@@ -54,6 +54,13 @@ interface JmapToken
 	// for a real JMAP server; see ProfileHandler::jmapBootstrap()'s docblock
 	templatesFolder? : string;
 	outboxFolder? : string;
+	// doc/ai/projects/mail-compose-jmap-migration.md, Step 10 (Phase 2a) - whether any app
+	// registered for the mail_compose_prepare hook (installation-wide, not per-account, but this
+	// bootstrap already runs once per account per window - ralf, 2026-09-07: "send that
+	// information to client-side once, e.g. with our ensure token request" - so
+	// MailApp.bootstrapComposePopup() only pays for the extra hook-invocation endpoint call when
+	// something's actually registered, same as ProfileHandler::jmapBootstrap()'s own docblock).
+	hasComposePrepareHook : boolean;
 }
 
 export interface JmapMessageReference
@@ -3356,6 +3363,21 @@ export class MailJmap
 	}
 
 	/**
+	 * Whether any app registered for the mail_compose_prepare hook - see JmapToken's own
+	 * hasComposePrepareHook docblock. Rides along on the same per-account bootstrap every other
+	 * JMAP operation already triggers (ensureToken()), so this is free (no extra round-trip) once
+	 * anything else has touched this account this session, and otherwise costs exactly the one
+	 * bootstrap call a compose popup needed anyway (getIdentities()/fetchForReply() etc.).
+	 *
+	 * @return false if the account isn't JMAP-eligible at all (same as ensureToken() returning null)
+	 */
+	async hasComposePrepareHook(profileID : string) : Promise<boolean>
+	{
+		const token = await this.ensureToken(profileID);
+		return token?.hasComposePrepareHook ?? false;
+	}
+
+	/**
 	 * Get a valid access-token for $profileID, requesting a fresh one from the server if needed
 	 *
 	 * The refresh-token never leaves the server: we just re-request this same bootstrap
@@ -3404,6 +3426,7 @@ export class MailJmap
 						templatesFolder: data.templatesFolder,
 						outboxFolder: data.outboxFolder,
 						enableWsPush: !!data.enableWsPush,
+						hasComposePrepareHook: !!data.hasComposePrepareHook,
 					};
 					if (Object.keys(token.customLabels).length)
 					{
