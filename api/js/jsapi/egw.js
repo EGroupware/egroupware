@@ -276,16 +276,22 @@ window.app = {classes: {}};
 			egw.open_link.apply(egw, egw_popup);
 		}
 
-		// call an app method directly, if data-start specified - egw_open.ts's clientSidePopup()
-		// only, for a popup bootstrapped purely client-side (no server-rendered menuaction/content
-		// array at all): {method, args} the same dotted "app.method" string + argument list any
-		// 'javaScript:app.x.y' onExecute action string already resolves via applyFunc() (including
-		// its existing lazy-load-the-app-bundle-if-missing behaviour), just invoked here instead of
-		// from a click. Deliberately part of egw.js's own bootstrap chain rather than a separately
-		// loaded/injected script - a dynamically inserted <script> has no reliable execution-order
-		// guarantee relative to this one (found live 2026-09-06: an external tail script raced
-		// ahead and ran before egw_ready even existed as a property yet, not merely unresolved).
-		var egw_start = egw_script.getAttribute('data-start');
+		// call an app method directly, if data-start (or data-$app-start) specified: {method, args}
+		// the same dotted "app.method" string + argument list any 'javaScript:app.x.y' onExecute
+		// action string already resolves via applyFunc() (including its existing
+		// lazy-load-the-app-bundle-if-missing behaviour), just invoked here instead of from a
+		// click. Two sources use this: egw_open.ts's clientSidePopup() (bare data-start, JS-set on
+		// a from-scratch about:blank popup with no server-rendered menuaction/content array at
+		// all), and a real page setting Api\Framework::set_extra($app, 'start', ...) server-side
+		// (data-$app-start - eg. mail/compose.php, doc/ai/projects/mail-compose-jmap-migration.md
+		// Step 10 "Option B", a real navigated page instead of about:blank specifically so reload
+		// works and Chrome doesn't flag it as third-party). Deliberately part of egw.js's own
+		// bootstrap chain rather than a separately loaded/injected script - a dynamically inserted
+		// <script> has no reliable execution-order guarantee relative to this one (found live
+		// 2026-09-06: an external tail script raced ahead and ran before egw_ready even existed as
+		// a property yet, not merely unresolved).
+		var egw_start = egw_script.getAttribute('data-start') ||
+			egw_script.getAttribute('data-' + egw_script.getAttribute('data-app') + '-start');
 		if (egw_start)
 		{
 			egw_start = JSON.parse(egw_start) || {};
