@@ -2995,3 +2995,20 @@ preference merge already uses), rather than replacing it. Live-verified: a fresh
 with a preset to/bcc shows both fields correctly populated alongside the normal signature/
 predefined-address content, no console errors; `npx tsc --noEmit`/`npm run build` clean, full
 `mail` jstest group green (189/189).
+
+**Batch forward-as-attachment converted off classic postback too.**
+`MailCompose.bootstrapForwardAsAttachment()` (mail/js/compose.ts) was already fully JMAP-native and
+already dispatched by `bootstrapCompose()` for `from='forward'`+`mode='forwardasattach'` (built back
+in Step 4) - only the "nothing to reuse" popup-open path itself still built a classic menuaction
+url. `composeMessage()`'s own compose.php-url-building tail was factored into
+`openComposePopupUrl()` so this branch could pass it as `openWithinWindow()`'s `_open_new` override
+too - but ONLY when the resulting url isn't too long for a GET request (`egw.urlParamsTooLong()`,
+the same 2083-char check `openWithinWindow()`'s own POST fallback already uses) - many forwarded
+messages still fall back to that already-safe classic path unchanged, since this new path has no
+POST fallback of its own. Live-verified: two real messages forwarded as attachment via a direct
+compose.php navigation produce both `.eml` attachments, first message's subject prefixed `[FWD]`,
+normal signature applied, no console errors; full `mail` jstest group green (189/189).
+
+**Remaining Step 10 backlog, unchanged**: addressbook "email vCard" and filemanager "mail selected
+files"/"share link" - both still classic postback, each needing its own small client-side rework to
+resolve VFS paths/vCard data instead of a URL param.
