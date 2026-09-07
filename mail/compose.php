@@ -68,6 +68,11 @@ Api\Framework::includeJS('/mail/js/app.min.js');
 
 $bootstrap = Api\Etemplate::clientSideBootstrap('mail.compose');
 
+// mailto:'s own preset to/cc/bcc (MailApp.composeMailto(), egw_open.ts's mailto() - already
+// entirely parsed client-side, so just decoded through here for bootstrapComposePopup() to merge
+// into its own content, same as from/id/acc_id/mode/smime_type below
+$preset = json_decode((string)($_GET['preset'] ?? ''), true) ?: [];
+
 Api\Framework::set_extra('mail', 'start', array(
 	'method' => 'app.mail.bootstrapComposePopup',
 	'args'   => array(
@@ -77,6 +82,7 @@ Api\Framework::set_extra('mail', 'start', array(
 		(string)($_GET['mode'] ?? ''),
 		(string)($_GET['smime_type'] ?? ''),
 		$bootstrap,
+		$preset,
 	),
 ));
 

@@ -44,6 +44,17 @@ interface CustomLabel
 }
 
 type CustomLabels = Record<string, CustomLabel>
+
+/**
+ * Matches an already-open compose popup's own url, classic (mail_compose.compose) OR
+ * client-side-only (mail/compose.php, doc/ai/projects/mail-compose-jmap-migration.md Step 10) -
+ * used by every "reuse an already-open compose window instead of opening a new one" call
+ * (egw.openWithinWindow()'s own popups_get() regex param). setCompose() itself works identically
+ * for either kind of popup (it only ever touches the loaded etemplate2/widgets, never the popup's
+ * own opening url), so only the DISCOVERY regex ever needed to change.
+ */
+const COMPOSE_POPUP_URL_PATTERN = /mail_compose\.compose|\/mail\/compose\.php/;
+
 /**
  * UI for mail
  *
@@ -1377,6 +1388,13 @@ export class MailApp extends EgwApp
 					// mailto:/vCard/filemanager entry points each build their long URL from a
 					// different, non-single-message source and need their own client-side rework
 					// before they can drop the server round-trip too.
+					//
+					// The reuse-detection regex itself DOES need to match compose.php too though -
+					// an already-open popup from any of the 5 entry points this project already
+					// converted has that url, not a mail_compose.compose one, and setCompose() below
+					// works identically either way (it only ever touches the loaded etemplate2/
+					// widgets, never the popup's own opening url) - found live 2026-09-07 checking
+					// off this exact gap.
 					return egw.openWithinWindow("mail", "setCompose", {
 						data:{
 							emails:{
@@ -1384,7 +1402,7 @@ export class MailApp extends EgwApp
 								processedmail_id: settings.id
 							}
 						}
-						}, settings, /mail.mail_compose.compose/);
+						}, settings, COMPOSE_POPUP_URL_PATTERN);
 				}
 				else
 				{
@@ -1427,6 +1445,34 @@ export class MailApp extends EgwApp
 			smime_type: settings.smime_type || '',
 		});
 		return egw.openPopup(url, 870, 'availHeight', window_name, 'mail');
+	}
+
+	/**
+	 * Open a fresh client-side compose popup preset with a mailto: link's own to/cc/bcc - the
+	 * "nothing to reuse" fallback egw_open.ts's own mailto() calls (via openWithinWindow()'s
+	 * `_open_new` override) instead of a classic menuaction url, closing off one of the "explicitly
+	 * deferred" entry points from doc/ai/projects/mail-compose-jmap-migration.md's own Step 10 scope
+	 * note. mailto() already parses the whole mailto: URI into this shape entirely client-side, so
+	 * there was nothing server-side left for this specific entry point to depend on - compose.php
+	 * just needs to carry it through to bootstrapComposePopup() below, same as from/id/acc_id/mode/
+	 * smime_type already do.
+	 *
+	 * @param content {to?, cc?, bcc?} - each an array of address strings (or a lone string/empty
+	 *  array - whatever mailto()'s own parsing produced)
+	 */
+	composeMailto(content : { to? : any, cc? : any, bcc? : any }) : void
+	{
+		const accId = this.egw.preference('ActiveProfileID', 'mail') || '';
+		const window_name = 'compose_mailto_' + Date.now();
+		const url = this.egw.link('/mail/compose.php', {
+			from: '',
+			id: '',
+			acc_id: accId,
+			mode: '',
+			smime_type: '',
+			preset: JSON.stringify(content),
+		});
+		egw.openPopup(url, 870, 'availHeight', window_name, 'mail');
 	}
 
 	/**
@@ -1488,9 +1534,13 @@ export class MailApp extends EgwApp
 	 *  separate mail.mail_compose.ajax_getComposeSession() round-trip fetched here client-side, but
 	 *  that was only ever a workaround to get an exec_id before compose.php existed to compute one
 	 *  upfront (ralf, 2026-09-07: "that's the workaround we used ..., so there's no need for it now")
+	 * @param preset {to?, cc?, bcc?} - a mailto: link's own preset recipients (MailApp.
+	 *  composeMailto(), compose.php's own $_GET['preset']), appended onto whatever getComposeToolbarData()'s
+	 *  content already has, or {} for every other caller
 	 */
 	async bootstrapComposePopup(from : string, sourceId : string, accId : string, mode : string, smimeType : string,
-		bootstrap : {name : string, url : string, etemplate_exec_id : string}) : Promise<void>
+		bootstrap : {name : string, url : string, etemplate_exec_id : string},
+		preset? : {to? : string[], cc? : string[], bcc? : string[]}) : Promise<void>
 	{
 		const {name, url, etemplate_exec_id} = bootstrap;
 
@@ -1523,6 +1573,22 @@ export class MailApp extends EgwApp
 		// warns about, just for the hook's data instead of a widget edit.
 		const contentCopy : any = prepared ? {...content, ...prepared.content} : content;
 		const selOptionsCopy : any = prepared ? {...sel_options, ...prepared.sel_options} : sel_options;
+
+		// preset (compose.php's own $_GET['preset'], MailApp.composeMailto()) - a mailto: link's
+		// own to/cc/bcc, appended onto whatever's already there (same "append, don't overwrite"
+		// convention the predefined-compose-addresses preference merge already uses server-side,
+		// class.mail_compose.inc.php's ajax_getComposeToolbarData()) rather than replacing it.
+		// Array.isArray() guard (not just truthy/length) - mailto()'s own content.to/cc/bcc is
+		// only ever a non-array when it's the empty-string default (falsy either way), but this
+		// stays correct even if that assumption ever changes: spreading a plain string via `...`
+		// would silently explode it into one array entry per CHARACTER instead of one address.
+		for (const field of ['to', 'cc', 'bcc'])
+		{
+			if (Array.isArray(preset?.[field]) && preset[field].length)
+			{
+				contentCopy[field] = [...(contentCopy[field] || []), ...preset[field]];
+			}
+		}
 
 		// Mirror class.mail_compose.inc.php:553-565 - only pre-checks an action that actually
 		// EXISTS (getToolbarActions() only adds smime_sign/smime_encrypt at all when the account
@@ -5006,7 +5072,7 @@ export class MailApp extends EgwApp
 						content.data.files["filemode"] = params['preset[filemode]'];
 						// always open compose in html mode, as attachment links look a lot nicer in html
 						params["mimeType"] = 'html';
-						egw.openWithinWindow("mail", "setCompose", content, params, /mail.mail_compose.compose/, true);
+						egw.openWithinWindow("mail", "setCompose", content, params, COMPOSE_POPUP_URL_PATTERN, true);
 					})
 					.finally(() => {
 						// No matter what, clear the waiting style

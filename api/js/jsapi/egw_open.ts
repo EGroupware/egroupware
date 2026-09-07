@@ -181,8 +181,13 @@ export interface OpenModule
 	 * @param _extra url or object of extra
 	 * @param _regexp regular expression to get specific popup with matched url
 	 * @param _check_popup_blocker TRUE check if browser pop-up blocker is on/off, FALSE no check
+	 * @param _open_new override for the "no existing popup to reuse" case - if given, called
+	 *  instead of the classic menuaction-url open (or urlParamsTooLong()'s own POST fallback).
+	 *  A caller whose target app can bootstrap itself client-side (doc/ai/projects/
+	 *  mail-compose-jmap-migration.md, Step 10) uses this to open THAT way instead, while the
+	 *  reuse-detection/multi-popup-picker logic here stays shared and unchanged.
 	 */
-	openWithinWindow(_app : string, _method : string, _content : object, _extra? : string|object, _regexp? : RegExp, _check_popup_blocker? : boolean) : void;
+	openWithinWindow(_app : string, _method : string, _content : object, _extra? : string|object, _regexp? : RegExp, _check_popup_blocker? : boolean, _open_new? : () => void) : void;
 }
 
 declare global
@@ -242,7 +247,21 @@ function mailto(uri : string) : void
 	// including "<" would get mistaken for <math> tag, and server will cut it off.
 	uri = uri.replace(/</g,'&lt;').replace(/>/g,'&gt;');
 
-	egw.openWithinWindow ("mail", "setCompose", content, {'preset[mailto]':uri}, /mail_compose.compose/);
+	// Matches an already-open compose popup's own url, classic (mail_compose.compose) OR
+	// client-side-only (mail/compose.php, doc/ai/projects/mail-compose-jmap-migration.md Step 10) -
+	// MailApp.setCompose() works identically for either kind of popup, it only ever touches the
+	// loaded etemplate2/widgets, never the popup's own opening url (found live 2026-09-07: a
+	// compose.php popup's own url never matched the old classic-only pattern, so a mailto: link
+	// always opened a redundant new popup instead of reusing one already open).
+	//
+	// The "nothing to reuse, open a new one" case now goes through MailApp.composeMailto() (a
+	// client-side-only bootstrap, no server round-trip) instead of openWithinWindow()'s own
+	// classic-menuaction fallback - mailto: itself already parses to/cc/bcc entirely client-side
+	// above, so there was never anything server-side left for THIS entry point to depend on
+	// (doc/ai/projects/mail-compose-jmap-migration.md, Step 10's own "explicitly deferred" list).
+	egw.openWithinWindow ("mail", "setCompose", content, {'preset[mailto]':uri},
+		/mail_compose\.compose|\/mail\/compose\.php/, undefined,
+		() => (<any>window).app.mail?.composeMailto(content));
 
 	for (var index in content)
 	{
@@ -1031,12 +1050,16 @@ class Open implements OpenModule
 	 * hence a plain `function` field. Doesn't touch this class's own state,
 	 * so no `self` capture is needed.
 	 */
-	openWithinWindow = function(this : any, _app : string, _method : string, _content : object, _extra? : any, _regexp? : RegExp, _check_popup_blocker? : boolean) : void
+	openWithinWindow = function(this : any, _app : string, _method : string, _content : object, _extra? : any, _regexp? : RegExp, _check_popup_blocker? : boolean, _open_new? : () => void) : void
 	{
 		var popups : any[] = (<any>window).framework.popups_get(_app, _regexp);
 
 		var openUp = (_app : string, _extra : any) => {
 
+			if (_open_new)
+			{
+				return _open_new();
+			}
 			// parameters too long for a GET url have to be posted into the compose window
 			if (egw.urlParamsTooLong(_extra))
 			{
