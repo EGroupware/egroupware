@@ -3084,10 +3084,64 @@ today's work:
   different local-file upload path (`uploadAttachmentsViaJmap()`'s OTHER branch, for a real
   locally-staged file - see its own `tmp_name`-keyed case). Also carries `preset[subject]`/
   `preset[body]`/`preset[mimeType]`/`preset[msg]` (an info message shown to the user) - `subject`
-  and `msg` aren't handled by the current `composeWithPreset()` shape at all yet either. Not started.
+  and `msg` aren't handled by the current `composeWithPreset()` shape at all yet either. **DONE
+  2026-09-07, see below.**
 - **Generic `preset[subject]`/`preset[replyto]`/`preset[priority]`** - simple content-key overrides
-  classic supports for ANY preset caller, not just the ones already converted. No current caller of
-  `composeWithPreset()` needs them, but a future one (eg. calendar's own conversion above) would -
-  `bootstrapComposePopup()`'s preset handling would need a small, generic extension for these
-  (same pattern as `body`, likely also a post-load widget set_value() rather than initial content,
-  given today's finding about `mail_htmltext` above - would need verifying per-widget, not assumed).
+  classic supports for ANY preset caller, not just the ones already converted. **`subject` DONE
+  2026-09-07** (turned out to be a plain initial-content overwrite, safe the same way to/cc/bcc
+  already are - the `subject` widget's own array-manager key matches its id directly, unlike
+  `mail_htmltext`'s indirection). `replyto`/`priority` still not needed by any current caller.
+
+## Step 10 follow-up (2026-09-07): calendar's meeting-invite mail converted
+
+`calendar_uiforms::ajax_custom_mail()` now returns `MailApp.composeWithPreset()`'s own preset shape
+directly (`subject`/`body`/`bodyMimeType`/`to`-or-`bcc`/`attachmentContents`/`msg`) instead of a
+classic menuaction-url `$vars` array - the real `tempnam()`'d `.ics` file (read server-side at
+postback-submission time) is gone; the `.ics` TEXT itself now travels in the response and gets
+uploaded as a real JMAP blob client-side. `CalendarApp.composeMeetingMail()` replaces the old
+`custom_mail(vars)` mechanism at both call sites (the event edit dialog's own "mail"/"sendrequest"
+actions, and the list's own `action_mail()`) - just calls the ajax endpoint and hands its result,
+unmodified, to `MailApp.composeWithPreset()`.
+
+**`composeWithPreset()` gained its own GET-vs-POST split** (`composeWithPresetPost()`, mirroring
+`egw.openComposePost()`'s existing technique: open a popup via `egw.open()` first, then POST a
+hidden form into it) for a preset too large for a GET url - the exact same "414 Request-URI Too
+Large" bug (help.egroupware.org/t/78981) the classic path already guarded against, since an event's
+description can be a whole mail and the preset now also carries the full `.ics` text.
+`mail/compose.php` reads `$_REQUEST['preset']` (not `$_GET`-only) to support this.
+
+**Two more real "never read for a blank compose" bugs found, same class as the vCard/filemanager
+one**: initial-content `attachments`/`body` were already known dead ends (see above), but calendar's
+own preset ALSO needed inline attachment content (not just a VFS path reference) and a plain-text
+body needing conversion - neither fit the existing `applyPresetFiles()`/`applyPresetBody()` shape
+as-is. New `MailCompose.applyPresetAttachmentContent()` uploads the given content as a real JMAP
+blob immediately via `MailJmap.uploadAttachment()` and merges it through `carryForwardAttachments()`
+(the jmapBlobId-tagged shape a reply's own carried-forward attachments already use - NOT
+`applyPresetFiles()`'s deferred jmapVfsPath marker, since there's nothing server-side left to
+reference for content generated fresh per compose). `applyPresetBody()` gained a `sourceMimeType`
+param - converts a plain preset body to html itself when the compose is actually in html mode
+(`egw.htmlspecialchars()` + newline-to-`<br>`), mirroring classic `mergePresetBody()`'s own
+`Mail\Html::convertTextToHtml(Api\Html::htmlspecialchars(...))` pair; the reverse (html source,
+plain-mode compose) isn't needed by any current caller and is left unconverted.
+
+**Live-verified end-to-end** against a real calendar event (id 14624): server-side directly
+(`ajax_custom_mail()` returns the correct subject/attachment type, and a real iCalendar re-generated
+from the DB by id) and the full client bootstrap via a synthetic but realistic preset through
+`compose.php` directly - subject, the actual `.ics` attachment (uploaded as a real blob), the plain
+-text body correctly converted to html and prepended above the signature, and the info-message
+toast all rendered correctly, no console errors. `composeMeetingMail()` itself also called live
+end-to-end (real event, real ajax round trip, real popup opened) with no errors.
+
+Two new tests replace the old, single `CustomMailLongBody.test.ts` - because the url-length concern
+that test covered moved from calendar's own code onto `composeWithPreset()`, coverage split the
+same way: `calendar/js/test/ComposeMeetingMail.test.ts` (the delegation contract - calls the ajax
+endpoint, hands the result on unmodified) and `mail/js/test/ComposeWithPresetLongBody.test.ts` (the
+actual GET-vs-POST split, where that logic now lives). `npx tsc --noEmit`/`npm run build` clean,
+full mail+calendar+addressbook+filemanager jstest groups green (198/198).
+
+**Step 10 is now functionally complete**: every entry point identified so far (new/reply/forward/
+composeasnew, batch forward-as-attachment, mailto:, vCard-attach, filemanager "mail selected
+files"/"share link", calendar's meeting-invite mail) opens without a server round-trip. Remaining
+backlog is narrow: `replyto`/`priority` generic preset fields (no current caller needs them); a
+tester-reported "right-click unread first row, delete fails on first try" bug - UNREPRODUCIBLE by
+ralf or here, tester was on an older already-pushed version, needs a tighter repro.
