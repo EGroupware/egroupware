@@ -890,8 +890,9 @@ class Db
 				$this->disconnect();
 				return $this->query($Query_String, $line, $file, $offset, $num_rows, $inputarr, $fetchmode, false);
 			}
-			$e = new Db\Exception\InvalidSql("Invalid SQL: ".(is_array($Query_String)?$Query_String[0]:$Query_String).
-				"\n$this->Error ($this->Errno)".
+			// DB error first, so it's still visible if something later truncates a very long message (eg. long SQL)
+			$e = new Db\Exception\InvalidSql("$this->Error ($this->Errno)".
+				"\nInvalid SQL: ".(is_array($Query_String)?$Query_String[0]:$Query_String).
 				($inputarr ? "\nParameters: '".implode("','",$inputarr)."'":''), $this->Errno);
 			// make SQL available in logging, same as the catch(\mysqli_sql_exception $e) block above
 			$e->details = $Query_String;
