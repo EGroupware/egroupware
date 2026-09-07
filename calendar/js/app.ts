@@ -1656,11 +1656,11 @@ export class CalendarApp extends EgwApp
 					this.egw.open_link('calendar.calendar_uiforms.edit&cal_id='+id+'&print=1','_blank','700x700');
 					break;
 				case 'mail':
-					this.egw.request('calendar.calendar_uiforms.ajax_custom_mail', [event, !event['id'], false]);
+					void this.composeMeetingMail(event, !event['id'], false);
 					this.et2.getInstanceManager().submit();
 					break;
 				case 'sendrequest':
-					this.egw.request('calendar.calendar_uiforms.ajax_custom_mail', [event, !event['id'], true]);
+					void this.composeMeetingMail(event, !event['id'], true);
 					this.et2.getInstanceManager().submit();
 					break;
 				case 'infolog':
@@ -1677,25 +1677,27 @@ export class CalendarApp extends EgwApp
 	}
 
 	/**
-	 * open mail compose popup window
+	 * Open a mail compose popup preset to mail an event's participants, or send it as a meeting
+	 * request - client-side-only (doc/ai/projects/mail-compose-jmap-migration.md, Step 10),
+	 * replacing the classic custom_mail(vars)/menuaction-url mechanism this used to be.
+	 * calendar_uiforms::ajax_custom_mail() computes the whole preset server-side (recipients,
+	 * subject, body, the event's own .ics text) - this just hands it to MailApp.composeWithPreset(),
+	 * which itself falls back to POSTing the preset when it's too long for a GET url (the body can
+	 * be a whole mail, for an event created from one - help.egroupware.org/t/78981's own "414
+	 * Request-URI Too Large", the same bug this method used to guard against directly).
 	 *
-	 * The preset body is the event description, which can be a whole mail
-	 * (event created from a mail) and thus too long for a GET url - the webserver
-	 * would answer with "414 Request-URI Too Large" - so it gets posted instead.
-	 *
-	 * @param {Array} vars
-	 * @todo need to provide right mail compose from server to custom_mail function
+	 * @param event the event's own client-side data - NOT re-read by id server-side, since this
+	 *  also has to work for a not-yet-saved new event's own "mail"/"sendrequest" action (no id yet
+	 *  at all)
+	 * @param added true if this is a newly-added event (changes the notification wording used only
+	 *  when the event has no description of its own)
+	 * @param asrequest true to send as a meeting REQUEST (recipients in "to", not "bcc") rather
+	 *  than a plain notice
 	 */
-	custom_mail (vars)
+	async composeMeetingMail(event : object, added : boolean, asrequest = false) : Promise<void>
 	{
-		if (this.egw.urlParamsTooLong(vars))
-		{
-			this.egw.openComposePost(vars);
-		}
-		else
-		{
-			this.egw.open_link(this.egw.link("/index.php",vars),'_blank','700x700');
-		}
+		const preset = await this.egw.request('calendar.calendar_uiforms.ajax_custom_mail', [event, added, asrequest]);
+		(<any>window).app.mail?.composeWithPreset(preset);
 	}
 
 	/**
@@ -2442,9 +2444,7 @@ export class CalendarApp extends EgwApp
 	{
 		const data = egw.dataGetUIDdata(_selected[0].id) || {data:{}};
 		const event = data.data;
-		this.egw.request('calendar.calendar_uiforms.ajax_custom_mail',
-			[event, false, _action.id==='sendrequest']
-		);
+		void this.composeMeetingMail(event, false, _action.id==='sendrequest');
 	}
 
 	/**

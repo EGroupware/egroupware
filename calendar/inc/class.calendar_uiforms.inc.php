@@ -1464,11 +1464,24 @@ class calendar_uiforms extends calendar_ui
 	}
 
 	/**
-	 * return javascript to open mail compose window with preset content to mail all participants
+	 * Compute a client-side-only compose preset (doc/ai/projects/mail-compose-jmap-migration.md,
+	 * Step 10) to mail an event's participants, or send it as a meeting request - CalendarApp's own
+	 * composeMeetingMail() opens mail/compose.php with the returned {to|bcc, subject, body,
+	 * mimeType, attachmentContents, msg} (MailApp.composeWithPreset()'s own shape). $event is the
+	 * client's own in-memory event data, not re-read by id here - deliberately, since this is also
+	 * called for a not-yet-saved new event (no id yet at all) from the edit dialog's own "mail"/
+	 * "sendrequest" toolbar actions.
+	 *
+	 * Used to return a classic menuaction-url-shaped {vars} for app.calendar.custom_mail() to open
+	 * (or - once too long for a GET url - POST) via the classic mail_compose::compose() postback;
+	 * a real filesystem tempnam()'d .ics file only that classic path ever needed (referenced
+	 * by path, read directly server-side at postback-submission time) is gone now - the .ics TEXT
+	 * itself travels in the response instead, uploaded as a real JMAP blob client-side
+	 * (MailCompose.applyPresetAttachmentContent()).
 	 *
 	 * @param array $event
 	 * @param boolean $added
-	 * @return string javascript window.open command
+	 * @return void writes the preset via Api\Json\Response
 	 */
 	function ajax_custom_mail($event,$added,$asrequest=false)
 	{
@@ -1541,28 +1554,19 @@ class calendar_uiforms extends calendar_ui
 		// as event is in user TZ, but iCal class expects server TZ!
 		$ics = $boical->exportVCal(array($event['id']),'2.0','REQUEST',false);
 
-		$ics_file = tempnam($GLOBALS['egw_info']['server']['temp_dir'],'ics');
-		if(($f = fopen($ics_file,'w')))
-		{
-			fwrite($f,$ics);
-			fclose($f);
-		}
-		//error_log(__METHOD__.__LINE__.array2string($to));
-		$vars = array(
-			'menuaction'      => 'mail.mail_compose.compose',
-			'mimeType'		  => $GLOBALS['egw_info']['user']['preferences']['mail']['composeOptions'] != 'text' ? 'html' : 'plain',
-			'preset[subject]' => $event['title'],
-			'preset[body]'    => $body,
-			'preset[mimeType]' => 'plain',
-			'preset[name]'    => 'event.ics',
-			'preset[file]'    => $ics_file,
-			'preset[type]'    => 'text/calendar'.($asrequest?'; method=REQUEST':''),
-			'preset[size]'    => filesize($ics_file),
+		$preset = array(
+			'subject' => $event['title'],
+			'body'    => $body,
+			'bodyMimeType' => 'plain',
+			'attachmentContents' => array(array(
+				'name'    => 'event.ics',
+				'type'    => 'text/calendar'.($asrequest?'; method=REQUEST':''),
+				'content' => $ics,
+			)),
 		);
-		$vars[$asrequest?'preset[to]': 'preset[bcc]'] = $to;
-		if ($asrequest) $vars['preset[msg]'] = lang('You attempt to mail a meetingrequest to the recipients above. Depending on the client this mail is opened with, the recipient may or may not see the mailbody below, but only see the meeting request attached.');
-		$response = Api\Json\Response::get();
-		$response->call('app.calendar.custom_mail', $vars);
+		$preset[$asrequest?'to': 'bcc'] = $to;
+		if ($asrequest) $preset['msg'] = lang('You attempt to mail a meetingrequest to the recipients above. Depending on the client this mail is opened with, the recipient may or may not see the mailbody below, but only see the meeting request attached.');
+		Api\Json\Response::get()->data($preset);
 	}
 
 	/**

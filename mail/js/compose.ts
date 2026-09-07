@@ -441,23 +441,57 @@ export class MailCompose
 	}
 
 	/**
-	 * Apply a client-side-only compose bootstrap's own preset body snippet (filemanager "share
-	 * link" - doc/ai/projects/mail-compose-jmap-migration.md, Step 10) - PREPENDED to the current
-	 * body widget's value, mirroring classic mergePresetBody()'s own `$preset['body'].$content['body']`
-	 * ordering (preset content above, signature below - class.mail_compose.inc.php's own docblock:
-	 * "if we preset the body, we always want the signature below"). Must run AFTER
-	 * bootstrapSignature() has already inserted the signature (initial content's own `body`/
-	 * `mail_htmltext` key is never read for a blank compose bootstrapped this way at all - only
-	 * bootstrapSignature()'s own direct widget set_value() populates it - found live 2026-09-07
-	 * trying the (silently no-op) initial-content route first, same class of bug applyPresetFiles()
-	 * hit for attachments).
+	 * Apply a client-side-only compose bootstrap's own preset attachment CONTENT (calendar's own
+	 * meeting-invite .ics - doc/ai/projects/mail-compose-jmap-migration.md, Step 10) - unlike
+	 * applyPresetFiles()'s bare VFS-path reference, there is nothing server-side left to reference
+	 * here (the .ics is generated fresh per compose, never staged anywhere), so this uploads it as
+	 * a real JMAP blob immediately and merges it via carryForwardAttachments() - the same
+	 * jmapBlobId-tagged shape a reply's own carried-forward attachments already use, not
+	 * applyPresetFiles()'s deferred jmapVfsPath marker.
 	 *
-	 * @param html html snippet to prepend
+	 * @param files {name, type, content}[] - content is the raw attachment text (ICS is always
+	 *  7-bit-safe-or-UTF-8 text per RFC 5545, never binary, so no base64 round trip needed)
 	 */
-	public applyPresetBody(html : string) : void
+	public async applyPresetAttachmentContent(files : { name : string, type : string, content : string }[]) : Promise<void>
+	{
+		if (!files.length) return;
+		const profileID = this.currentProfileID();
+		const uploaded = await Promise.all(files.map((f) =>
+		{
+			const blob = new Blob([f.content], {type: f.type});
+			return this.app.jmap.uploadAttachment(profileID, blob, f.name, f.type);
+		}));
+		this.carryForwardAttachments(uploaded, profileID);
+	}
+
+	/**
+	 * Apply a client-side-only compose bootstrap's own preset body snippet (filemanager "share
+	 * link", calendar's own meeting-invite description - doc/ai/projects/mail-compose-jmap-
+	 * migration.md, Step 10) - PREPENDED to the current body widget's value, mirroring classic
+	 * mergePresetBody()'s own `$preset['body'].$content['body']` ordering (preset content above,
+	 * signature below - class.mail_compose.inc.php's own docblock: "if we preset the body, we
+	 * always want the signature below"). Must run AFTER bootstrapSignature() has already inserted
+	 * the signature (initial content's own `body`/`mail_htmltext` key is never read for a blank
+	 * compose bootstrapped this way at all - only bootstrapSignature()'s own direct widget
+	 * set_value() populates it - found live 2026-09-07 trying the (silently no-op) initial-content
+	 * route first, same class of bug applyPresetFiles() hit for attachments).
+	 *
+	 * @param body the preset body - html if `sourceMimeType` is 'html' (filemanager's own share-link
+	 *  snippet already is, and also forces the whole compose into html mode via preset.mimeType, so
+	 *  this is always the matching case for that caller), otherwise plain text
+	 * @param sourceMimeType 'plain' | 'html', default 'html' (matches every caller before
+	 *  calendar's own plain-text event description) - converted to html (mirroring classic
+	 *  mergePresetBody()'s own Mail\Html::convertTextToHtml(Api\Html::htmlspecialchars(...)) pair)
+	 *  only when the compose is ACTUALLY in html mode and the source isn't already; the reverse
+	 *  (html source, plain-mode compose) isn't needed by any current caller and is left unconverted
+	 */
+	public applyPresetBody(body : string, sourceMimeType : 'plain' | 'html' = 'html') : void
 	{
 		const widget = this.currentBodyWidget();
 		if (!widget) return;
+		const isHtmlMode = this.et2.getWidgetById('mimeType')?.get_value() !== false;
+		const html = (isHtmlMode && sourceMimeType === 'plain') ?
+			this.egw.htmlspecialchars(body).replace(/\r\n|\r|\n/g, '<br>\n') : body;
 		widget.set_value(html + (widget.get_value() || ''));
 	}
 

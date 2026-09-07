@@ -68,10 +68,14 @@ Api\Framework::includeJS('/mail/js/app.min.js');
 
 $bootstrap = Api\Etemplate::clientSideBootstrap('mail.compose');
 
-// mailto:'s own preset to/cc/bcc (MailApp.composeMailto(), egw_open.ts's mailto() - already
-// entirely parsed client-side, so just decoded through here for bootstrapComposePopup() to merge
-// into its own content, same as from/id/acc_id/mode/smime_type below
-$preset = json_decode((string)($_GET['preset'] ?? ''), true) ?: [];
+// MailApp.composeWithPreset()'s own preset (to/cc/bcc, VFS-referenced or inline-content
+// attachments, a body snippet, ...) - already resolved entirely client-side by whichever caller
+// built it, so just decoded through here for bootstrapComposePopup() to merge into its own
+// content, same as from/id/acc_id/mode/smime_type below. $_REQUEST (not $_GET-only) - a preset too
+// large for a GET url (eg. calendar's own meeting-invite description/ics) arrives via
+// composeWithPresetPost()'s own POST instead (same "GET when short, POST when not" split
+// egw.openComposePost() already uses for the classic path).
+$preset = json_decode((string)($_REQUEST['preset'] ?? ''), true) ?: [];
 
 Api\Framework::set_extra('mail', 'start', array(
 	'method' => 'app.mail.bootstrapComposePopup',

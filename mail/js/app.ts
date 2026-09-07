@@ -1476,26 +1476,74 @@ export class MailApp extends EgwApp
 	 * carries the preset through to bootstrapComposePopup() (see its own @param preset docblock),
 	 * same as from/id/acc_id/mode/smime_type already do.
 	 *
-	 * @param preset {to?, cc?, bcc?, files?, filemode?, body?, mimeType?} - see
-	 *  bootstrapComposePopup()'s own preset docblock for the full shape/semantics of each field
+	 * A preset carrying real content (calendar's own meeting-invite conversion: an event
+	 * description that can be a whole mail, plus the full .ics text) can be too long for a GET url
+	 * (help.egroupware.org/t/78981's own "414 Request-URI Too Large", the same bug
+	 * CustomMailLongBody.test.ts already guards against for the classic path) - falls back to
+	 * composeWithPresetPost() in that case, same "GET when short, POST when not" split
+	 * egw.openWithinWindow()'s own urlParamsTooLong() check already uses for the classic path.
+	 *
+	 * @param preset {to?, cc?, bcc?, subject?, files?, filemode?, body?, bodyMimeType?, mimeType?,
+	 *  attachmentContents?, msg?} - see bootstrapComposePopup()'s own preset docblock for the full
+	 *  shape/semantics of each field
 	 */
 	composeWithPreset(preset : {
-		to? : any, cc? : any, bcc? : any,
+		to? : any, cc? : any, bcc? : any, subject? : string,
 		files? : { path : string, name : string, type : string }[],
-		filemode? : string, body? : string, mimeType? : string,
+		filemode? : string, body? : string, bodyMimeType? : 'plain' | 'html', mimeType? : string,
+		attachmentContents? : { name : string, type : string, content : string }[],
+		msg? : string,
 	}) : void
 	{
 		const accId = this.egw.preference('ActiveProfileID', 'mail') || '';
 		const window_name = 'compose_preset_' + Date.now();
+		const presetJson = JSON.stringify(preset);
+		if (egw.urlParamsTooLong({preset: presetJson}))
+		{
+			void this.composeWithPresetPost(preset, accId);
+			return;
+		}
 		const url = this.egw.link('/mail/compose.php', {
 			from: '',
 			id: '',
 			acc_id: accId,
 			mode: '',
 			smime_type: '',
-			preset: JSON.stringify(preset),
+			preset: presetJson,
 		});
 		egw.openPopup(url, 870, 'availHeight', window_name, 'mail');
+	}
+
+	/**
+	 * composeWithPreset()'s own POST fallback for a too-long preset - same technique
+	 * egw.openComposePost() already uses for the classic menuaction path (egw_open.ts): open a
+	 * popup via egw.open() first (sized/named the same way, briefly showing a blank classic
+	 * compose page - cosmetic only, this is the rare long-content case), then POST the preset into
+	 * that SAME window, replacing it with this popup's own client-side bootstrap. compose.php reads
+	 * $_REQUEST['preset'] (not $_GET-only) specifically so this works.
+	 */
+	private async composeWithPresetPost(preset : object, accId : string) : Promise<void>
+	{
+		const window_name = 'compose_preset_' + Date.now();
+		const popup : any = await egw.open('', 'mail', 'add', '', window_name, 'mail');
+		if (!popup) return;	// popup blocked, or blocker-warning dialog already shown
+		const target = typeof popup.name === 'string' && popup.name ? popup.name : '_blank';
+		const url = this.egw.link('/mail/compose.php', {
+			from: '', id: '', acc_id: accId, mode: '', smime_type: '',
+		});
+		const doc = document;
+		const form = doc.createElement('form');
+		form.target = target;
+		form.action = url;
+		form.method = 'post';
+		const input = doc.createElement('input');
+		input.type = 'hidden';
+		input.name = 'preset';
+		input.value = JSON.stringify(preset);
+		form.appendChild(input);
+		doc.body.appendChild(form);
+		form.submit();
+		form.remove();
 	}
 
 	/**
@@ -1567,21 +1615,40 @@ export class MailApp extends EgwApp
 	 *  separate mail.mail_compose.ajax_getComposeSession() round-trip fetched here client-side, but
 	 *  that was only ever a workaround to get an exec_id before compose.php existed to compute one
 	 *  upfront (ralf, 2026-09-07: "that's the workaround we used ..., so there's no need for it now")
-	 * @param preset {to?, cc?, bcc?, files?, filemode?, body?, mimeType?} - MailApp.
-	 *  composeWithPreset()'s own param, round-tripped through compose.php's own $_GET['preset'],
-	 *  appended onto whatever getComposeToolbarData()'s content already has, or {} for every other
-	 *  caller. `files` are VFS paths (addressbook vCard-attach, filemanager "mail selected files") -
-	 *  {path, name, type} each, turned into a bare `jmapVfsPath` marker attachment entry (same shape
-	 *  MailCompose.vfsUpload() itself builds for an already-open popup's own VFS-attach picker,
-	 *  minus any actual upload - MailJmap.uploadVfsAttachment()/the shim's own zero-byte-moved
-	 *  reference resolve it at send time, see uploadAttachmentsViaJmap()'s own docblock).
+	 * @param preset {to?, cc?, bcc?, subject?, files?, filemode?, body?, bodyMimeType?, mimeType?,
+	 *  attachmentContents?, msg?} - MailApp.composeWithPreset()'s own param, round-tripped through
+	 *  compose.php's own $_REQUEST['preset'], appended onto whatever getComposeToolbarData()'s
+	 *  content already has, or {} for every other caller.
+	 *  - `subject` overwrites (a blank compose never has one already, unlike to/cc/bcc's append).
+	 *  - `files` are VFS paths (addressbook vCard-attach, filemanager "mail selected files") -
+	 *    {path, name, type} each, turned into a bare `jmapVfsPath` marker attachment entry (same
+	 *    shape MailCompose.vfsUpload() itself builds for an already-open popup's own VFS-attach
+	 *    picker, minus any actual upload - MailJmap.uploadVfsAttachment()/the shim's own
+	 *    zero-byte-moved reference resolve it at send time, see uploadAttachmentsViaJmap()'s own
+	 *    docblock).
+	 *  - `attachmentContents` are already-known bytes with nothing server-side left to reference
+	 *    (calendar's own meeting-invite .ics, generated fresh per compose, never staged anywhere) -
+	 *    {name, type, content} each, uploaded as a real JMAP blob immediately (MailCompose.
+	 *    applyPresetAttachmentContent()), same jmapBlobId-tagged shape carryForwardAttachments()
+	 *    already uses for a reply's own carried-forward attachments.
+	 *  - `body`/`bodyMimeType` - preset body text/its own type ('plain'|'html', default 'html') -
+	 *    MailCompose.applyPresetBody() converts plain to html itself if the compose is actually in
+	 *    html mode, mirroring classic mergePresetBody(). `mimeType` (no `body` prefix) is a
+	 *    DIFFERENT thing - forces the compose's own OVERALL mode (filemanager's own VFS-attach/
+	 *    share-link callers force 'html' regardless of the user's own composeOptions preference);
+	 *    calendar's own preset leaves this unset, so the user's normal default mode applies, same
+	 *    as classic custom_mail()'s own (non-forcing) `mimeType` derivation.
+	 *  - `msg` - an info message to show once the popup has loaded (calendar's own meeting-request
+	 *    disclaimer, classic compose()'s own Framework::message($msg) equivalent for this path).
 	 */
 	async bootstrapComposePopup(from : string, sourceId : string, accId : string, mode : string, smimeType : string,
 		bootstrap : {name : string, url : string, etemplate_exec_id : string},
 		preset? : {
-			to? : string[], cc? : string[], bcc? : string[],
+			to? : string[], cc? : string[], bcc? : string[], subject? : string,
 			files? : { path : string, name : string, type : string }[],
-			filemode? : string, body? : string, mimeType? : string,
+			filemode? : string, body? : string, bodyMimeType? : 'plain' | 'html', mimeType? : string,
+			attachmentContents? : { name : string, type : string, content : string }[],
+			msg? : string,
 		}) : Promise<void>
 	{
 		const {name, url, etemplate_exec_id} = bootstrap;
@@ -1630,6 +1697,15 @@ export class MailApp extends EgwApp
 			{
 				contentCopy[field] = [...(contentCopy[field] || []), ...preset[field]];
 			}
+		}
+		// preset.subject (calendar's own meeting-invite title) - a blank compose never has one
+		// already, so a plain overwrite (not append) is correct here, unlike to/cc/bcc above; the
+		// `subject` widget's own array-manager key matches its id directly (unlike mail_htmltext/
+		// mail_plaintext's body indirection), so this - like to/cc/bcc - is safe as part of the
+		// INITIAL content etemplate2.load() itself processes.
+		if (preset?.subject)
+		{
+			contentCopy.subject = preset.subject;
 		}
 
 		// preset.files (addressbook vCard-attach, filemanager "mail selected files") is applied
@@ -1691,22 +1767,33 @@ export class MailApp extends EgwApp
 			etemplate_exec_id
 		}, url);
 
-		// preset.files/body - see the comments where each is read above for why these have to run
-		// AFTER the template has loaded (MailCompose.applyPresetFiles()/applyPresetBody()'s own
-		// docblocks) rather than as part of the content bootstrapClientSideTemplate() was just
-		// given. Awaiting bootstrapPromise first so this runs after bootstrapSignature() has
-		// already inserted the signature, not racing with it.
-		if (preset?.files?.length || preset?.body)
+		// preset.files/attachmentContents/body - see the comments where each is read above for why
+		// these have to run AFTER the template has loaded (MailCompose.applyPresetFiles()/
+		// applyPresetAttachmentContent()/applyPresetBody()'s own docblocks) rather than as part of
+		// the content bootstrapClientSideTemplate() was just given. Awaiting bootstrapPromise first
+		// so this runs after bootstrapSignature() has already inserted the signature, not racing
+		// with it. attachmentContents (a real upload) before body, so a share-link-style body
+		// insertion (none of today's callers combine the two, but nothing stops a future one)
+		// wouldn't ever reference an attachment that hasn't finished uploading yet.
+		if (preset?.files?.length || preset?.attachmentContents?.length || preset?.body)
 		{
 			await (<any>window).app._compose.bootstrapPromise;
 			if (preset.files?.length)
 			{
 				(<any>window).app._compose.applyPresetFiles(preset.files);
 			}
+			if (preset.attachmentContents?.length)
+			{
+				await (<any>window).app._compose.applyPresetAttachmentContent(preset.attachmentContents);
+			}
 			if (preset.body)
 			{
-				(<any>window).app._compose.applyPresetBody(preset.body);
+				(<any>window).app._compose.applyPresetBody(preset.body, preset.bodyMimeType);
 			}
+		}
+		if (preset?.msg)
+		{
+			this.egw.message(preset.msg, 'info');
 		}
 	}
 
