@@ -45,7 +45,14 @@ $overwrites = [
 	// customfields/customfields-list still have a real, actively used legacy implementation
 	// (api/etemplate.php's preprocessor deliberately does not rewrite these tags, unlike almost
 	// everything else - see widget-migration-status.md, "1b - kept for a dependent")
-	'.keep' => ['customfields', 'customfields-list'],
+	// same issue as customfields/customfields-list above: created by missing_legacy_attributes
+	// below (real attrs added there), then immediately deleted again by the main per-component
+	// loop since each has a same-stripped-name et2- replacement - api/etemplate.php's own
+	// preprocessor deliberately never rewrites these when run non-interactively (see its
+	// "$replace_filters = PHP_SAPI !== 'cli' && ..." - "as we currently don't want to remove
+	// them permanently!"), so they're still real, live tag names in every converted template
+	'.keep' => ['customfields', 'customfields-list', 'nextmatch', 'nextmatch-header',
+		'nextmatch-sortheader', 'nextmatch-customfields'],
 	'*' => [    // all widgets, DOM attributes are NOT reported
 		'.attrs' => [
 			'id' => 'string',   // commented out with some reasoning in Et2Widget
@@ -199,6 +206,12 @@ $overwrites = [
 	'et2-select' => [
 		'.children' => ['.quantity' => 'zeroOrMore', 'option'],
 	],
+	'et2-select-app' => [
+		'.children' => ['.quantity' => 'zeroOrMore', 'option'],
+	],
+	'et2-select-number' => [
+		'.children' => ['.quantity' => 'zeroOrMore', 'option'],
+	],
 	'et2-email' => [
 		'.attrs' => [
 			'onTagClick' => 'function',
@@ -224,6 +237,31 @@ $overwrites = [
 		'.attrs' => [
 			'mime' => 'string',
 		],
+		'.children' => 'Widgets',   // real usage: et2-button-icon (upload trigger override)
+	],
+	// generic container widgets real templates nest arbitrary content into - same treatment as
+	// the et2-(v|h)box/et2-details/et2-groupbox/et2-split/et2-ai family above
+	'et2-toolbar' => [
+		'.children' => 'Widgets',
+	],
+	'et2-dropdown' => [
+		'.children' => 'Widgets',
+	],
+	'et2-dropdown-button' => [
+		'.children' => 'Widgets',
+	],
+	'et2-searchbox' => [
+		'.children' => 'Widgets',
+	],
+	'et2-filterbox' => [
+		'.children' => 'Widgets',
+	],
+	'et2-dialog' => [
+		'.children' => 'Widgets',
+	],
+	// input-widget prefix/suffix slot content, eg. <et2-number><et2-label slot="suffix"/></et2-number>
+	'et2-number' => [
+		'.children' => 'Widgets',
 	],
 ];
 
@@ -413,6 +451,82 @@ if (($attrs = getByName($grammar, 'attlist.template')))
 }
 removeByName($widgets_choice, 'template');
 $widgets_choice->addChild('ref')->addAttribute('name', 'et2-template');
+
+// app-specific widgets with no generic webcomponent (calendar/kanban/projectmanager/smallpart -
+// see widget-migration-status.md's "App-specific widgets" section, all "2-not-migrated"), plus a
+// few other real legacy leaf tags that never got a components.json entry at all. None of these
+// have their own children (real usage is always a leaf tag), so unlike missing_legacy_attributes
+// this is keyed by widget name -> its full real attribute list, all generic optional strings -
+// exact types don't matter much for widgets this narrowly-used and unlikely to gain a real
+// webcomponent soon.
+$app_specific_widgets = [
+	'calendar-date' => ['id', 'aria-labelledby'],
+	'calendar-planner' => ['id', 'onchange', 'onevent_change'],
+	'calendar-timegrid' => ['id', 'onchange', 'onevent_change'],
+	'calendar-daycol' => ['id'],
+	'calendar-planner_row' => ['id'],
+	'et2-calendar-owner' => ['id', 'class', 'span', 'label', 'placeholder', 'emptyLabel', 'helpText',
+		'multiple', 'allowFreeEntries', 'autocompleteUrl', 'onchange', 'tabindex'],
+	'contact-fields' => ['id'],
+	'infolog-fields' => ['id', 'label', 'span', 'statustext'],
+	'kanban-board' => ['id', 'name', 'color', 'columns', 'column_actions', 'swimlanes'],
+	'kanban-card' => ['id', 'class', 'actions', 'template'],
+	'projectmanager-gantt' => ['id', 'class', 'span', 'autoload', 'ajax_update'],
+	'projectmanager-pricelist' => ['id', 'class', 'span', 'statustext', 'onchange', 'options',
+		'readonly', 'value', 'width', 'e'],
+	'projectmanager-select' => ['id', 'no_lang', 'onchange', 'options', 'checked'],
+	'projectmanager-select-erole' => ['id', 'label', 'span', 'no_lang', 'options', 'readonly'],
+	'smallpart-cats-select' => ['id', 'action', 'categoryType', 'comment_cat', 'disabled',
+		'emptyLabel', 'filled', 'hidden', 'multiple', 'noSubs', 'onchange', 'onlySubs',
+		'placeholder', 'readonly'],
+	'smallpart-cl-measurement-L' => ['id', 'activation_period', 'disabled', 'running_interval',
+		'running_interval_range', 'steps_className'],
+	'smallpart-comment-timespan' => ['id', 'action', 'disabled', 'readonly', 'starttime',
+		'stoptime', 'videobar'],
+	'smallpart-comment' => ['id', 'style'],
+	'smallpart-flag-time' => ['id', 'label', 'noSubmit', 'onclick'],
+	'smallpart-lf-button' => ['id', 'class', 'color', 'label', 'onclick'],
+	'smallpart-livefeedback-report' => ['id', 'onclick_callback', 'seekable', 'videobar', 'width'],
+	'smallpart-media-recorder' => ['id', 'autoUpload', 'disabled', 'hidden', 'hideMediaSelectors',
+		'videoName', 'width'],
+	'smallpart-videobar' => ['id', 'class', 'disabled', 'multi_src', 'slider_callback',
+		'slider_tags', 'src_type', 'starttime', 'video_src', 'width'],
+	'smallpart-videooverlay' => ['id', 'course_id', 'editable', 'get_elements_callback',
+		'test_display', 'toolbar_add', 'toolbar_add_question', 'toolbar_cancel', 'toolbar_delete',
+		'toolbar_duration', 'toolbar_edit', 'toolbar_offset', 'toolbar_play', 'toolbar_save',
+		'toolbar_starttime', 'video_id', 'videobar'],
+	// generic dynamic-type placeholder widget (id/type/select_options resolved server-side)
+	'widget' => ['id', 'class', 'type', 'size', 'no_lang', 'onchange', 'select_options', 'attributes'],
+	// bare vfs-* leaf tags the preprocessor doesn't (yet) rewrite - see et2-vfs-{path,size} for
+	// their et2- prefixed, webcomponent-backed equivalents
+	'vfs-path' => ['id', 'class', 'align', 'size', 'width', 'onchange'],
+	'vfs-size' => ['id', 'class', 'align', 'options', 'value'],
+	'vfs-name_ro' => ['id'],
+	'et2-select-account_ro' => ['id'],
+	'et2-tracker-assigned' => ['id', 'class', 'multiple', 'noLang', 'placeholder', 'tracker'],
+	// real, live legacy tags never referenced by missing_legacy_attributes at all (unlike their
+	// nextmatch-* siblings above, so never even created in the first place, let alone removed)
+	'nextmatch-customfilter' => ['id', 'class', 'options'],
+	'filter' => ['id', 'relative_dates'],
+];
+foreach ($app_specific_widgets as $widget => $attrs)
+{
+	if (!getByName($grammar, $widget))
+	{
+		$widgets_choice->addChild('ref')->addAttribute('name', $widget);
+		($define = $grammar->addChild('define'))->addAttribute('name', $widget);
+		($element = $define->addChild('element'))->addAttribute('name', $widget);
+		$element->addChild('ref')->addAttribute('name', 'attlist.'.$widget);
+		$element->addChild('empty');
+		$attlist = $grammar->addChild('define');
+		$attlist->addAttribute('name', 'attlist.'.$widget);
+		$attlist->addAttribute('combine', 'interleave');
+		foreach ($attrs as $attr)
+		{
+			$attlist->addChild('optional')->addChild('attribute')->addAttribute('name', $attr);
+		}
+	}
+}
 
 $remove = [];
 foreach($widgets_choice->children() as $widget)

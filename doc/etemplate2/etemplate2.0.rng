@@ -45,7 +45,10 @@
       <ref name="script"/>
       <ref name="countdown"/>
       <ref name="customfields-types"/>
+      <ref name="nextmatch"/>
+      <ref name="nextmatch-header"/>
       <ref name="nextmatch-customfields"/>
+      <ref name="nextmatch-sortheader"/>
       <ref name="et2-nextmatch-header-account"/>
       <ref name="et2-ai"/>
       <ref name="et2-app-box"/>
@@ -176,6 +179,37 @@
       <ref name="et2-visually-hidden"/>
       <ref name="old-box"/>
       <ref name="et2-template"/>
+      <ref name="calendar-date"/>
+      <ref name="calendar-planner"/>
+      <ref name="calendar-timegrid"/>
+      <ref name="calendar-daycol"/>
+      <ref name="calendar-planner_row"/>
+      <ref name="et2-calendar-owner"/>
+      <ref name="contact-fields"/>
+      <ref name="infolog-fields"/>
+      <ref name="kanban-board"/>
+      <ref name="kanban-card"/>
+      <ref name="projectmanager-gantt"/>
+      <ref name="projectmanager-pricelist"/>
+      <ref name="projectmanager-select"/>
+      <ref name="projectmanager-select-erole"/>
+      <ref name="smallpart-cats-select"/>
+      <ref name="smallpart-cl-measurement-L"/>
+      <ref name="smallpart-comment-timespan"/>
+      <ref name="smallpart-comment"/>
+      <ref name="smallpart-flag-time"/>
+      <ref name="smallpart-lf-button"/>
+      <ref name="smallpart-livefeedback-report"/>
+      <ref name="smallpart-media-recorder"/>
+      <ref name="smallpart-videobar"/>
+      <ref name="smallpart-videooverlay"/>
+      <ref name="widget"/>
+      <ref name="vfs-size"/>
+      <ref name="vfs-name_ro"/>
+      <ref name="et2-select-account_ro"/>
+      <ref name="et2-tracker-assigned"/>
+      <ref name="nextmatch-customfilter"/>
+      <ref name="filter"/>
     </choice>
   </define>
   <define name="overlay">
@@ -3249,6 +3283,53 @@
       <attribute name="statustext"/>
     </optional>
   </define>
+  <define name="nextmatch">
+    <element name="nextmatch">
+      <ref name="attlist.nextmatch"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.nextmatch">
+    <optional>
+      <attribute name="class"/>
+    </optional>
+    <optional>
+      <attribute name="disabled"/>
+    </optional>
+    <attribute name="id"/>
+    <optional>
+      <attribute name="header_left"/>
+    </optional>
+    <optional>
+      <attribute name="header_right"/>
+    </optional>
+    <optional>
+      <attribute name="header_row"/>
+    </optional>
+    <optional>
+      <attribute name="onselect"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
+    </optional>
+    <attribute name="template"/>
+  </define>
+  <define name="nextmatch-header">
+    <element name="nextmatch-header">
+      <ref name="attlist.nextmatch-header"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.nextmatch-header">
+    <optional>
+      <attribute name="class"/>
+    </optional>
+    <attribute name="id"/>
+    <attribute name="label"/>
+    <optional>
+      <attribute name="span"/>
+    </optional>
+  </define>
   <define name="nextmatch-customfields">
     <element name="nextmatch-customfields">
       <ref name="attlist.nextmatch-customfields"/>
@@ -3260,6 +3341,30 @@
       <attribute name="class"/>
     </optional>
     <attribute name="id"/>
+    <optional>
+      <attribute name="span"/>
+    </optional>
+  </define>
+  <define name="nextmatch-sortheader">
+    <element name="nextmatch-sortheader">
+      <ref name="attlist.nextmatch-sortheader"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.nextmatch-sortheader">
+    <optional>
+      <attribute name="class"/>
+    </optional>
+    <attribute name="id"/>
+    <attribute name="label"/>
+    <optional>
+      <attribute name="sortmode" a:defaultValue="ASC">
+        <choice>
+          <value>ASC</value>
+          <value>DESC</value>
+        </choice>
+      </attribute>
+    </optional>
     <optional>
       <attribute name="span"/>
     </optional>
@@ -8933,7 +9038,9 @@
   <define name="et2-dialog">
     <element name="et2-dialog">
       <ref name="attlist.et2-dialog"/>
-      <empty/>
+      <oneOrMore>
+        <ref name="Widgets"/>
+      </oneOrMore>
     </element>
   </define>
   <define name="attlist.et2-dialog" combine="interleave">
@@ -9303,7 +9410,9 @@
   <define name="et2-dropdown">
     <element name="et2-dropdown">
       <ref name="attlist.et2-dropdown"/>
-      <empty/>
+      <oneOrMore>
+        <ref name="Widgets"/>
+      </oneOrMore>
     </element>
   </define>
   <define name="attlist.et2-dropdown" combine="interleave">
@@ -9437,18 +9546,6 @@
       </attribute>
     </optional>
     <optional>
-      <attribute name="stayOpenOnSelect">
-        <choice>
-          <value>false</value>
-          <value>true</value>
-          <value>1</value>
-          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
-            <param name="pattern">!?[@$].*</param>
-          </data>
-        </choice>
-      </attribute>
-    </optional>
-    <optional>
       <attribute name="style"/>
     </optional>
     <optional>
@@ -9473,7 +9570,9 @@
   <define name="et2-dropdown-button">
     <element name="et2-dropdown-button">
       <ref name="attlist.et2-dropdown-button"/>
-      <empty/>
+      <oneOrMore>
+        <ref name="Widgets"/>
+      </oneOrMore>
     </element>
   </define>
   <define name="attlist.et2-dropdown-button" combine="interleave">
@@ -11134,7 +11233,9 @@
   <define name="et2-filterbox">
     <element name="et2-filterbox">
       <ref name="attlist.et2-filterbox"/>
-      <empty/>
+      <oneOrMore>
+        <ref name="Widgets"/>
+      </oneOrMore>
     </element>
   </define>
   <define name="attlist.et2-filterbox" combine="interleave">
@@ -15162,7 +15263,9 @@
   <define name="et2-number">
     <element name="et2-number">
       <ref name="attlist.et2-number"/>
-      <empty/>
+      <oneOrMore>
+        <ref name="Widgets"/>
+      </oneOrMore>
     </element>
   </define>
   <define name="attlist.et2-number" combine="interleave">
@@ -15982,7 +16085,9 @@
   <define name="et2-searchbox">
     <element name="et2-searchbox">
       <ref name="attlist.et2-searchbox"/>
-      <empty/>
+      <oneOrMore>
+        <ref name="Widgets"/>
+      </oneOrMore>
     </element>
   </define>
   <define name="attlist.et2-searchbox" combine="interleave">
@@ -17012,7 +17117,9 @@
   <define name="et2-select-app">
     <element name="et2-select-app">
       <ref name="attlist.et2-select-app"/>
-      <empty/>
+      <zeroOrMore>
+        <ref name="option"/>
+      </zeroOrMore>
     </element>
   </define>
   <define name="attlist.et2-select-app" combine="interleave">
@@ -19242,7 +19349,9 @@
   <define name="et2-select-number">
     <element name="et2-select-number">
       <ref name="attlist.et2-select-number"/>
-      <empty/>
+      <zeroOrMore>
+        <ref name="option"/>
+      </zeroOrMore>
     </element>
   </define>
   <define name="attlist.et2-select-number" combine="interleave">
@@ -22914,7 +23023,9 @@
   <define name="et2-toolbar">
     <element name="et2-toolbar">
       <ref name="attlist.et2-toolbar"/>
-      <empty/>
+      <oneOrMore>
+        <ref name="Widgets"/>
+      </oneOrMore>
     </element>
   </define>
   <define name="attlist.et2-toolbar" combine="interleave">
@@ -26517,7 +26628,9 @@
   <define name="et2-vfs-upload">
     <element name="et2-vfs-upload">
       <ref name="attlist.et2-vfs-upload"/>
-      <empty/>
+      <oneOrMore>
+        <ref name="Widgets"/>
+      </oneOrMore>
     </element>
   </define>
   <define name="attlist.et2-vfs-upload" combine="interleave">
@@ -26873,5 +26986,751 @@
         <ref name="Widgets"/>
       </oneOrMore>
     </element>
+  </define>
+  <define name="calendar-date">
+    <element name="calendar-date">
+      <ref name="attlist.calendar-date"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.calendar-date" combine="interleave">
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="aria-labelledby"/>
+    </optional>
+  </define>
+  <define name="calendar-planner">
+    <element name="calendar-planner">
+      <ref name="attlist.calendar-planner"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.calendar-planner" combine="interleave">
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="onchange"/>
+    </optional>
+    <optional>
+      <attribute name="onevent_change"/>
+    </optional>
+  </define>
+  <define name="calendar-timegrid">
+    <element name="calendar-timegrid">
+      <ref name="attlist.calendar-timegrid"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.calendar-timegrid" combine="interleave">
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="onchange"/>
+    </optional>
+    <optional>
+      <attribute name="onevent_change"/>
+    </optional>
+  </define>
+  <define name="calendar-daycol">
+    <element name="calendar-daycol">
+      <ref name="attlist.calendar-daycol"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.calendar-daycol" combine="interleave">
+    <optional>
+      <attribute name="id"/>
+    </optional>
+  </define>
+  <define name="calendar-planner_row">
+    <element name="calendar-planner_row">
+      <ref name="attlist.calendar-planner_row"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.calendar-planner_row" combine="interleave">
+    <optional>
+      <attribute name="id"/>
+    </optional>
+  </define>
+  <define name="et2-calendar-owner">
+    <element name="et2-calendar-owner">
+      <ref name="attlist.et2-calendar-owner"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.et2-calendar-owner" combine="interleave">
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="class"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="label"/>
+    </optional>
+    <optional>
+      <attribute name="placeholder"/>
+    </optional>
+    <optional>
+      <attribute name="emptyLabel"/>
+    </optional>
+    <optional>
+      <attribute name="helpText"/>
+    </optional>
+    <optional>
+      <attribute name="multiple"/>
+    </optional>
+    <optional>
+      <attribute name="allowFreeEntries"/>
+    </optional>
+    <optional>
+      <attribute name="autocompleteUrl"/>
+    </optional>
+    <optional>
+      <attribute name="onchange"/>
+    </optional>
+    <optional>
+      <attribute name="tabindex"/>
+    </optional>
+  </define>
+  <define name="contact-fields">
+    <element name="contact-fields">
+      <ref name="attlist.contact-fields"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.contact-fields" combine="interleave">
+    <optional>
+      <attribute name="id"/>
+    </optional>
+  </define>
+  <define name="infolog-fields">
+    <element name="infolog-fields">
+      <ref name="attlist.infolog-fields"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.infolog-fields" combine="interleave">
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="label"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="statustext"/>
+    </optional>
+  </define>
+  <define name="kanban-board">
+    <element name="kanban-board">
+      <ref name="attlist.kanban-board"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.kanban-board" combine="interleave">
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="name"/>
+    </optional>
+    <optional>
+      <attribute name="color"/>
+    </optional>
+    <optional>
+      <attribute name="columns"/>
+    </optional>
+    <optional>
+      <attribute name="column_actions"/>
+    </optional>
+    <optional>
+      <attribute name="swimlanes"/>
+    </optional>
+  </define>
+  <define name="kanban-card">
+    <element name="kanban-card">
+      <ref name="attlist.kanban-card"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.kanban-card" combine="interleave">
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="class"/>
+    </optional>
+    <optional>
+      <attribute name="actions"/>
+    </optional>
+    <optional>
+      <attribute name="template"/>
+    </optional>
+  </define>
+  <define name="projectmanager-gantt">
+    <element name="projectmanager-gantt">
+      <ref name="attlist.projectmanager-gantt"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.projectmanager-gantt" combine="interleave">
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="class"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="autoload"/>
+    </optional>
+    <optional>
+      <attribute name="ajax_update"/>
+    </optional>
+  </define>
+  <define name="projectmanager-pricelist">
+    <element name="projectmanager-pricelist">
+      <ref name="attlist.projectmanager-pricelist"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.projectmanager-pricelist" combine="interleave">
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="class"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="onchange"/>
+    </optional>
+    <optional>
+      <attribute name="options"/>
+    </optional>
+    <optional>
+      <attribute name="readonly"/>
+    </optional>
+    <optional>
+      <attribute name="value"/>
+    </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="e"/>
+    </optional>
+  </define>
+  <define name="projectmanager-select">
+    <element name="projectmanager-select">
+      <ref name="attlist.projectmanager-select"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.projectmanager-select" combine="interleave">
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="no_lang"/>
+    </optional>
+    <optional>
+      <attribute name="onchange"/>
+    </optional>
+    <optional>
+      <attribute name="options"/>
+    </optional>
+    <optional>
+      <attribute name="checked"/>
+    </optional>
+  </define>
+  <define name="projectmanager-select-erole">
+    <element name="projectmanager-select-erole">
+      <ref name="attlist.projectmanager-select-erole"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.projectmanager-select-erole" combine="interleave">
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="label"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="no_lang"/>
+    </optional>
+    <optional>
+      <attribute name="options"/>
+    </optional>
+    <optional>
+      <attribute name="readonly"/>
+    </optional>
+  </define>
+  <define name="smallpart-cats-select">
+    <element name="smallpart-cats-select">
+      <ref name="attlist.smallpart-cats-select"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.smallpart-cats-select" combine="interleave">
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="action"/>
+    </optional>
+    <optional>
+      <attribute name="categoryType"/>
+    </optional>
+    <optional>
+      <attribute name="comment_cat"/>
+    </optional>
+    <optional>
+      <attribute name="disabled"/>
+    </optional>
+    <optional>
+      <attribute name="emptyLabel"/>
+    </optional>
+    <optional>
+      <attribute name="filled"/>
+    </optional>
+    <optional>
+      <attribute name="hidden"/>
+    </optional>
+    <optional>
+      <attribute name="multiple"/>
+    </optional>
+    <optional>
+      <attribute name="noSubs"/>
+    </optional>
+    <optional>
+      <attribute name="onchange"/>
+    </optional>
+    <optional>
+      <attribute name="onlySubs"/>
+    </optional>
+    <optional>
+      <attribute name="placeholder"/>
+    </optional>
+    <optional>
+      <attribute name="readonly"/>
+    </optional>
+  </define>
+  <define name="smallpart-cl-measurement-L">
+    <element name="smallpart-cl-measurement-L">
+      <ref name="attlist.smallpart-cl-measurement-L"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.smallpart-cl-measurement-L" combine="interleave">
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="activation_period"/>
+    </optional>
+    <optional>
+      <attribute name="disabled"/>
+    </optional>
+    <optional>
+      <attribute name="running_interval"/>
+    </optional>
+    <optional>
+      <attribute name="running_interval_range"/>
+    </optional>
+    <optional>
+      <attribute name="steps_className"/>
+    </optional>
+  </define>
+  <define name="smallpart-comment-timespan">
+    <element name="smallpart-comment-timespan">
+      <ref name="attlist.smallpart-comment-timespan"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.smallpart-comment-timespan" combine="interleave">
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="action"/>
+    </optional>
+    <optional>
+      <attribute name="disabled"/>
+    </optional>
+    <optional>
+      <attribute name="readonly"/>
+    </optional>
+    <optional>
+      <attribute name="starttime"/>
+    </optional>
+    <optional>
+      <attribute name="stoptime"/>
+    </optional>
+    <optional>
+      <attribute name="videobar"/>
+    </optional>
+  </define>
+  <define name="smallpart-comment">
+    <element name="smallpart-comment">
+      <ref name="attlist.smallpart-comment"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.smallpart-comment" combine="interleave">
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+  </define>
+  <define name="smallpart-flag-time">
+    <element name="smallpart-flag-time">
+      <ref name="attlist.smallpart-flag-time"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.smallpart-flag-time" combine="interleave">
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="label"/>
+    </optional>
+    <optional>
+      <attribute name="noSubmit"/>
+    </optional>
+    <optional>
+      <attribute name="onclick"/>
+    </optional>
+  </define>
+  <define name="smallpart-lf-button">
+    <element name="smallpart-lf-button">
+      <ref name="attlist.smallpart-lf-button"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.smallpart-lf-button" combine="interleave">
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="class"/>
+    </optional>
+    <optional>
+      <attribute name="color"/>
+    </optional>
+    <optional>
+      <attribute name="label"/>
+    </optional>
+    <optional>
+      <attribute name="onclick"/>
+    </optional>
+  </define>
+  <define name="smallpart-livefeedback-report">
+    <element name="smallpart-livefeedback-report">
+      <ref name="attlist.smallpart-livefeedback-report"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.smallpart-livefeedback-report" combine="interleave">
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="onclick_callback"/>
+    </optional>
+    <optional>
+      <attribute name="seekable"/>
+    </optional>
+    <optional>
+      <attribute name="videobar"/>
+    </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+  </define>
+  <define name="smallpart-media-recorder">
+    <element name="smallpart-media-recorder">
+      <ref name="attlist.smallpart-media-recorder"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.smallpart-media-recorder" combine="interleave">
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="autoUpload"/>
+    </optional>
+    <optional>
+      <attribute name="disabled"/>
+    </optional>
+    <optional>
+      <attribute name="hidden"/>
+    </optional>
+    <optional>
+      <attribute name="hideMediaSelectors"/>
+    </optional>
+    <optional>
+      <attribute name="videoName"/>
+    </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+  </define>
+  <define name="smallpart-videobar">
+    <element name="smallpart-videobar">
+      <ref name="attlist.smallpart-videobar"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.smallpart-videobar" combine="interleave">
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="class"/>
+    </optional>
+    <optional>
+      <attribute name="disabled"/>
+    </optional>
+    <optional>
+      <attribute name="multi_src"/>
+    </optional>
+    <optional>
+      <attribute name="slider_callback"/>
+    </optional>
+    <optional>
+      <attribute name="slider_tags"/>
+    </optional>
+    <optional>
+      <attribute name="src_type"/>
+    </optional>
+    <optional>
+      <attribute name="starttime"/>
+    </optional>
+    <optional>
+      <attribute name="video_src"/>
+    </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+  </define>
+  <define name="smallpart-videooverlay">
+    <element name="smallpart-videooverlay">
+      <ref name="attlist.smallpart-videooverlay"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.smallpart-videooverlay" combine="interleave">
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="course_id"/>
+    </optional>
+    <optional>
+      <attribute name="editable"/>
+    </optional>
+    <optional>
+      <attribute name="get_elements_callback"/>
+    </optional>
+    <optional>
+      <attribute name="test_display"/>
+    </optional>
+    <optional>
+      <attribute name="toolbar_add"/>
+    </optional>
+    <optional>
+      <attribute name="toolbar_add_question"/>
+    </optional>
+    <optional>
+      <attribute name="toolbar_cancel"/>
+    </optional>
+    <optional>
+      <attribute name="toolbar_delete"/>
+    </optional>
+    <optional>
+      <attribute name="toolbar_duration"/>
+    </optional>
+    <optional>
+      <attribute name="toolbar_edit"/>
+    </optional>
+    <optional>
+      <attribute name="toolbar_offset"/>
+    </optional>
+    <optional>
+      <attribute name="toolbar_play"/>
+    </optional>
+    <optional>
+      <attribute name="toolbar_save"/>
+    </optional>
+    <optional>
+      <attribute name="toolbar_starttime"/>
+    </optional>
+    <optional>
+      <attribute name="video_id"/>
+    </optional>
+    <optional>
+      <attribute name="videobar"/>
+    </optional>
+  </define>
+  <define name="widget">
+    <element name="widget">
+      <ref name="attlist.widget"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.widget" combine="interleave">
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="class"/>
+    </optional>
+    <optional>
+      <attribute name="type"/>
+    </optional>
+    <optional>
+      <attribute name="size"/>
+    </optional>
+    <optional>
+      <attribute name="no_lang"/>
+    </optional>
+    <optional>
+      <attribute name="onchange"/>
+    </optional>
+    <optional>
+      <attribute name="select_options"/>
+    </optional>
+    <optional>
+      <attribute name="attributes"/>
+    </optional>
+  </define>
+  <define name="vfs-size">
+    <element name="vfs-size">
+      <ref name="attlist.vfs-size"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.vfs-size" combine="interleave">
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="class"/>
+    </optional>
+    <optional>
+      <attribute name="align"/>
+    </optional>
+    <optional>
+      <attribute name="options"/>
+    </optional>
+    <optional>
+      <attribute name="value"/>
+    </optional>
+  </define>
+  <define name="vfs-name_ro">
+    <element name="vfs-name_ro">
+      <ref name="attlist.vfs-name_ro"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.vfs-name_ro" combine="interleave">
+    <optional>
+      <attribute name="id"/>
+    </optional>
+  </define>
+  <define name="et2-select-account_ro">
+    <element name="et2-select-account_ro">
+      <ref name="attlist.et2-select-account_ro"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.et2-select-account_ro" combine="interleave">
+    <optional>
+      <attribute name="id"/>
+    </optional>
+  </define>
+  <define name="et2-tracker-assigned">
+    <element name="et2-tracker-assigned">
+      <ref name="attlist.et2-tracker-assigned"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.et2-tracker-assigned" combine="interleave">
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="class"/>
+    </optional>
+    <optional>
+      <attribute name="multiple"/>
+    </optional>
+    <optional>
+      <attribute name="noLang"/>
+    </optional>
+    <optional>
+      <attribute name="placeholder"/>
+    </optional>
+    <optional>
+      <attribute name="tracker"/>
+    </optional>
+  </define>
+  <define name="nextmatch-customfilter">
+    <element name="nextmatch-customfilter">
+      <ref name="attlist.nextmatch-customfilter"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.nextmatch-customfilter" combine="interleave">
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="class"/>
+    </optional>
+    <optional>
+      <attribute name="options"/>
+    </optional>
+  </define>
+  <define name="filter">
+    <element name="filter">
+      <ref name="attlist.filter"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.filter" combine="interleave">
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="relative_dates"/>
+    </optional>
   </define>
 </grammar>
