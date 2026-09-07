@@ -1383,18 +1383,26 @@ export class MailApp extends EgwApp
 						for(let j = 1; j < _elems.length; j++)
 						settings.id = settings.id + ',' + _elems[j].id;
 					}
-					// Batch/forwardasattach stays on the classic postback path - doc/ai/projects/
-					// mail-compose-jmap-migration.md, Step 10's own scope note: this and the
-					// mailto:/vCard/filemanager entry points each build their long URL from a
-					// different, non-single-message source and need their own client-side rework
-					// before they can drop the server round-trip too.
+					// The reuse-detection regex needs to match compose.php too - an already-open
+					// popup from any of the 5 entry points this project already converted has that
+					// url, not a mail_compose.compose one, and setCompose() below works identically
+					// either way (it only ever touches the loaded etemplate2/widgets, never the
+					// popup's own opening url) - found live 2026-09-07 checking off this exact gap.
 					//
-					// The reuse-detection regex itself DOES need to match compose.php too though -
-					// an already-open popup from any of the 5 entry points this project already
-					// converted has that url, not a mail_compose.compose one, and setCompose() below
-					// works identically either way (it only ever touches the loaded etemplate2/
-					// widgets, never the popup's own opening url) - found live 2026-09-07 checking
-					// off this exact gap.
+					// MailCompose.bootstrapForwardAsAttachment() (mail/js/compose.ts) is already
+					// fully JMAP-native and already dispatched by bootstrapCompose() for
+					// from='forward'+mode='forwardasattach' - so the "nothing to reuse" case now
+					// opens via mail/compose.php too, same as every other action, UNLESS the
+					// resulting url would be too long for a GET request (many forwarded messages) -
+					// openComposePopupUrl() below never had a POST fallback of its own (a currently-
+					// unguarded gap this project has otherwise avoided everywhere else), so this
+					// falls back to openWithinWindow()'s OWN, already-safe default (its
+					// urlParamsTooLong()-gated POST) for that case instead of reproducing one.
+					const accId = settings.id.split('::')[0];
+					const tooLong = egw.urlParamsTooLong({
+						from: settings.from, id: settings.id, acc_id: accId,
+						mode: settings.mode, smime_type: '',
+					});
 					return egw.openWithinWindow("mail", "setCompose", {
 						data:{
 							emails:{
@@ -1402,7 +1410,8 @@ export class MailApp extends EgwApp
 								processedmail_id: settings.id
 							}
 						}
-						}, settings, COMPOSE_POPUP_URL_PATTERN);
+						}, settings, COMPOSE_POPUP_URL_PATTERN, undefined,
+						tooLong ? undefined : () => this.openComposePopupUrl(settings, accId));
 				}
 				else
 				{
@@ -1435,6 +1444,16 @@ export class MailApp extends EgwApp
 		// unrelated reasons (see the backfill above) even when this action itself is 'compose'.
 		const accId = settings.from && settings.id ?
 			settings.id.split('::')[0] : (this.egw.preference('ActiveProfileID', 'mail') || '');
+		return this.openComposePopupUrl(settings, accId);
+	}
+
+	/**
+	 * Build and open a mail/compose.php popup url from composeMessage()'s own `settings` shape -
+	 * factored out so the batch-forwardasattach branch above can call it too, as an `_open_new`
+	 * override for openWithinWindow()'s "nothing to reuse" case (see its own comment).
+	 */
+	private openComposePopupUrl(settings : { id : string, from : string, smime_type? : string, mode? : string }, accId : string)
+	{
 		const compose_list = egw.getOpenWindows("mail", /^compose_/);
 		const window_name = 'compose_' + compose_list.length + '_'+ (settings.from || '') + '_' + settings.id;
 		const url = this.egw.link('/mail/compose.php', {
