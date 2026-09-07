@@ -3016,10 +3016,78 @@ resolve VFS paths/vCard data instead of a URL param.
 **Same popup-reuse regex bug found in 2 more places, fixed.** A systematic grep for the same
 classic-only pattern found `addressbook/js/app.ts`'s `adb_mail_vcard()` and
 `filemanager/js/filemanager.ts`'s `open_mail()`/`_mail_link_callback()` had it too - fixed the same
-way. These 3 entry points still open a brand NEW popup via the classic postback when nothing's open
-to reuse (vCard/VFS-attach's own content shape needs genuine JMAP-blob-upload support before that
-part can convert - same gap as the already-documented "Attach from VFS" one); only the reuse
-detection itself was broken and is now fixed everywhere. `filemanager`'s own "share link" content
-shape (plain `mail_htmltext`/`mail_plaintext` fields, not a VFS attachment) already works correctly
-against an already-open JMAP-mode popup via `setCompose()` today - only opening a brand new one for
-that action still goes through the classic url.
+way. These 3 entry points still opened a brand NEW popup via the classic postback when nothing's
+open to reuse - only the reuse detection itself was broken and is now fixed everywhere.
+
+## Step 10 follow-up (2026-09-07): vCard-attach and filemanager "mail files"/"share link" converted
+
+The "genuine JMAP-blob-upload support" the previous entry called a blocker turned out to already
+exist: `MailCompose.vfsUpload()` (built earlier for an already-open popup's own VFS-attach picker
+widget) already merges a bare `jmapVfsPath` marker attachment entry - no bytes moved client-side at
+all, resolved only at send time (`uploadAttachmentsViaJmap()`: a real upload for a real-JMAP
+target, or a zero-byte-moved reference the shim reads directly server-side). This is exactly the
+mechanism addressbook's vCard-attach and filemanager's "mail selected files" both need too - they
+just needed a way to reach it from a FRESH popup, not only an already-open one.
+
+**Built**: new `MailApp.composeWithPreset({to?, cc?, bcc?, files?, filemode?, body?, mimeType?})`
+generalizes `composeMailto()` (now a thin wrapper) - `files` are `{path, name, type}` VFS
+references, `body` an HTML snippet (filemanager's "share link"). `adb_mail_vcard()`/`open_mail()`/
+`_mail_link_callback()` now pass this as `openWithinWindow()`'s own `_open_new` override, same
+mechanism `mailto()` already uses.
+
+**Real bug found getting there**: a first attempt folded `files`/`body` into the popup's own
+INITIAL content (same as `to`/`cc`/`bcc` already do) - live-tested, and the attachment/body simply
+never appeared. Root cause: a genuinely blank compose's initial `content.attachments`/`content.body`/
+`content.mail_htmltext` are never read by anything at all in this client-side-only bootstrap - only
+`bootstrapSignature()`'s and `vfsUpload()`'s own direct widget/array-manager calls populate them,
+timed to run AFTER the template has loaded. Baking a preset into the initial content is exactly the
+same class of bug `mergeAttachmentEntries()`'s own UI-visibility fix already exists for (an
+attachments block whose disabled/collapsed widget state was evaluated once, before the row existed,
+never re-evaluated). Fixed with two new post-load `MailCompose` methods instead:
+`applyPresetFiles()` (reuses `mergeAttachmentEntries()`'s proven fix as-is) and `applyPresetBody()`
+(prepends, matching classic `mergePresetBody()`'s own "preset content above, signature below"
+ordering - `mail_compose.inc.php`'s own docblock: "if we preset the body, we always want the
+signature below"). Both run after `MailCompose.bootstrapPromise` resolves, so they land after
+`bootstrapSignature()` has already inserted the signature, not racing with it.
+
+**Live-verified** all three shapes via direct `compose.php` navigation: a vCard attachment shows
+with the correct filename, a share-link body prepends correctly above the signature, and a VFS
+file with an explicit `filemode` shows "Send files as: Download link" - no console errors in any
+case. `npx tsc --noEmit`/`npm run build` clean, full mail+addressbook+filemanager jstest groups
+green (194/194).
+
+## Remaining `$preset` gaps beyond Step 10's own scope (surveyed 2026-09-07, not started)
+
+Classic `mail_compose::compose()`'s full `$_REQUEST['preset']` handling (lines ~1127-1338) supports
+several things this project's new `preset` mechanism does not cover yet, none of them touched by
+today's work:
+
+- **`preset[mailtocontactbyid]`** - comma-separated addressbook contact ids, resolved server-side
+  into `to` addresses via a live `Api\Contacts::search()`. No live caller found for it in this
+  codebase (grepped for `mailtocontactbyid`) - looks orphaned, not worth converting unless a real
+  caller turns up.
+- **`send_to`** (base64-encoded alternate to/cc/bcc/subject/body encoding) - its only remaining
+  caller, `addressbook_ui::email2link()`, has no callers of its own anywhere in the codebase either
+  (grepped for `email2link` - zero hits outside its own definition). Dead code, not a real gap.
+- **`app`/`method`/`id`** (generic "any app can email one of its own registered entries" -
+  `Link::get_registry($app, $method)` + `ExecMethod()`) - no live caller found building this exact
+  3-param shape either. Possibly legacy/superseded by each app building its own preset directly
+  (calendar does, see below) - not confirmed dead, just unconfirmed live, needs a real caller found
+  before converting.
+- **Calendar's "email this event" / "send meeting request"** (`calendar_uiforms::ajax_custom_mail()`
+  -> `calendar/js/app.ts`'s `custom_mail()`) - a genuinely live, real feature, confirmed reachable
+  from the event edit dialog's own "mail"/"sendrequest" actions. Still 100% classic postback
+  (`egw.open_link()`/`egw.openComposePost()` for the URL-too-long case). **Not the same shape as
+  vCard/filemanager**: its attachment is a real `tempnam()`'d filesystem `.ics` file, not a VFS
+  path - `MailCompose.applyPresetFiles()`'s `jmapVfsPath` marker doesn't apply as-is; this would
+  need either VFS-staging the .ics first (matching vCard/filemanager's shape) or a genuinely
+  different local-file upload path (`uploadAttachmentsViaJmap()`'s OTHER branch, for a real
+  locally-staged file - see its own `tmp_name`-keyed case). Also carries `preset[subject]`/
+  `preset[body]`/`preset[mimeType]`/`preset[msg]` (an info message shown to the user) - `subject`
+  and `msg` aren't handled by the current `composeWithPreset()` shape at all yet either. Not started.
+- **Generic `preset[subject]`/`preset[replyto]`/`preset[priority]`** - simple content-key overrides
+  classic supports for ANY preset caller, not just the ones already converted. No current caller of
+  `composeWithPreset()` needs them, but a future one (eg. calendar's own conversion above) would -
+  `bootstrapComposePopup()`'s preset handling would need a small, generic extension for these
+  (same pattern as `body`, likely also a post-load widget set_value() rather than initial content,
+  given today's finding about `mail_htmltext` above - would need verifying per-widget, not assumed).
