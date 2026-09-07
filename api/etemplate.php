@@ -421,9 +421,6 @@ function send_template()
 		// use et2-email instead of et2-select-email
 		$str = preg_replace('#<et2-select-email\s(.*?")\s*/?>(</et2-select-email>)?#s', '<et2-email $1></et2-email>', $str);
 
-		// use et2-select-cat instead of et2-tree-cat
-		$str = preg_replace('#<et2-tree-cat\s(.*?")\s*/?>(</et2-tree-cat>)?#s', '<et2-select-cat $1></et2-select-cat>', $str);
-
 		// nextmatch headers
 		// replace all filters with NM headers, if not running via cli (as we currently don't want to remove them permanently!)
 		$replace_filters = PHP_SAPI !== 'cli' && !preg_match('/<nextmatch [^>]*replaceFilters="false"/', $str);
@@ -520,6 +517,12 @@ function send_template()
 
 		// replace no longer used <et2-tree-multiple.../> with <et2-tree multiple="true".../>
 		$str = preg_replace('#<et2-tree-multiple ([^>]+)(/>|</et2-tree-multiple>)#', '<et2-tree multiple="true" $1></et2-tree>', $str);
+
+		// use et2-select-cat instead of et2-tree-cat - must run after the bare tree(-cat)
+		// rewrite above, since that's what actually produces et2-tree-cat in the first place;
+		// this used to run before it, so a bare <tree-cat> only reached et2-tree-cat, not
+		// et2-select-cat, in a single pass (needed a second conversion pass to fully resolve)
+		$str = preg_replace('#<et2-tree-cat\s(.*?")\s*/?>(</et2-tree-cat>)?#s', '<et2-select-cat $1></et2-select-cat>', $str);
 
 		if ($template === 'mobile')
 		{
