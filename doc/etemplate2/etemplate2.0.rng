@@ -4187,6 +4187,9 @@
       <attribute name="copy-label"/>
     </optional>
     <optional>
+      <attribute name="copyLabel"/>
+    </optional>
+    <optional>
       <attribute name="data"/>
     </optional>
     <optional>
@@ -7414,10 +7417,25 @@
   </define>
   <define name="attlist.et2-date-time-today" combine="interleave">
     <optional>
+      <attribute name="align"/>
+    </optional>
+    <optional>
+      <attribute name="class"/>
+    </optional>
+    <optional>
       <attribute name="height"/>
     </optional>
     <optional>
       <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="noLang">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="slot"/>
@@ -8246,6 +8264,15 @@
     </optional>
     <optional>
       <attribute name="stay-open-on-select">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="stayOpenOnSelect">
         <choice>
           <value>false</value>
           <value>true</value>
@@ -10356,6 +10383,15 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="applyDefaultFont">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="ariaDescription"/>
     </optional>
     <optional>
@@ -10410,6 +10446,9 @@
       <attribute name="image-upload"/>
     </optional>
     <optional>
+      <attribute name="imageUpload"/>
+    </optional>
+    <optional>
       <attribute name="label"/>
     </optional>
     <optional>
@@ -10462,6 +10501,33 @@
     </optional>
     <optional>
       <attribute name="noLang">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="noMenubar">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="noStatusbar">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="noToolbar">
         <choice>
           <value>false</value>
           <value>true</value>
@@ -10525,7 +10591,20 @@
       <attribute name="toolbar-mode"/>
     </optional>
     <optional>
+      <attribute name="toolbarMode">
+        <choice>
+          <value>floating</value>
+          <value>sliding</value>
+          <value>scrolling</value>
+          <value>wrap</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="valid-children"/>
+    </optional>
+    <optional>
+      <attribute name="validChildren"/>
     </optional>
     <optional>
       <attribute name="value"/>
@@ -21902,6 +21981,15 @@
       <attribute name="id"/>
     </optional>
     <optional>
+      <attribute name="noLang">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -22693,6 +22781,9 @@
       <attribute name="method-id"/>
     </optional>
     <optional>
+      <attribute name="methodId"/>
+    </optional>
+    <optional>
       <attribute name="mime"/>
     </optional>
     <optional>
@@ -23159,6 +23250,15 @@
     </optional>
     <optional>
       <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="noLang">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="slot"/>

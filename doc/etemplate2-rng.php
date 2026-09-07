@@ -84,6 +84,41 @@ $overwrites = [
 		'.attrs' => [
 			'markdown' => 'boolean',
 			'markdownMode' => "'edit' | 'split' | 'preview'",
+			// same "not resolved via mixin" gap as markdown/markdownMode above
+			'applyDefaultFont' => 'boolean',
+			'imageUpload' => 'string',
+			'noMenubar' => 'boolean',
+			'noStatusbar' => 'boolean',
+			'noToolbar' => 'boolean',
+			'toolbarMode' => "'floating' | 'sliding' | 'scrolling' | 'wrap'",
+			'validChildren' => 'string',
+		],
+	],
+	'Et2VfsUid' => [   // inherited by et2-vfs-gid too (Et2VfsGid extends Et2VfsUid)
+		'.attrs' => [
+			'noLang' => 'boolean',
+		],
+	],
+	'et2-dropdown' => [
+		'.attrs' => [
+			'stayOpenOnSelect' => 'boolean',
+		],
+	],
+	'et2-date-time-today' => [
+		'.attrs' => [
+			'align' => 'string',
+			'class' => 'string',
+			'noLang' => 'boolean',
+		],
+	],
+	'et2-button-copy' => [
+		'.attrs' => [
+			'copyLabel' => 'string',
+		],
+	],
+	'et2-vfs-select' => [
+		'.attrs' => [
+			'methodId' => 'string',
 		],
 	],
 	'et2-textbox' => [
