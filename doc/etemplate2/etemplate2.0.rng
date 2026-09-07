@@ -221,7 +221,6 @@
     </element>
   </define>
   <define name="attlist.overlay" combine="interleave">
-    <empty/>
     <optional>
       <attribute name="id"/>
     </optional>
@@ -357,7 +356,6 @@
     </element>
   </define>
   <define name="attlist.columns" combine="interleave">
-    <empty/>
     <optional>
       <attribute name="id"/>
     </optional>
@@ -424,7 +422,6 @@
     </element>
   </define>
   <define name="attlist.rows" combine="interleave">
-    <empty/>
     <optional>
       <attribute name="id"/>
     </optional>
@@ -2216,7 +2213,6 @@
     </element>
   </define>
   <define name="attlist.tabs" combine="interleave">
-    <empty/>
     <optional>
       <attribute name="id"/>
     </optional>
@@ -2280,7 +2276,6 @@
     </element>
   </define>
   <define name="attlist.tabpanels" combine="interleave">
-    <empty/>
     <optional>
       <attribute name="id"/>
     </optional>
@@ -3937,6 +3932,9 @@
     </optional>
     <optional>
       <attribute name="rows"/>
+    </optional>
+    <optional>
+      <attribute name="searchUrl"/>
     </optional>
     <optional>
       <attribute name="select_options"/>
@@ -9432,9 +9430,9 @@
   <define name="et2-dialog">
     <element name="et2-dialog">
       <ref name="attlist.et2-dialog"/>
-      <oneOrMore>
+      <zeroOrMore>
         <ref name="Widgets"/>
-      </oneOrMore>
+      </zeroOrMore>
     </element>
   </define>
   <define name="attlist.et2-dialog" combine="interleave">
@@ -9804,9 +9802,9 @@
   <define name="et2-dropdown">
     <element name="et2-dropdown">
       <ref name="attlist.et2-dropdown"/>
-      <oneOrMore>
+      <zeroOrMore>
         <ref name="Widgets"/>
-      </oneOrMore>
+      </zeroOrMore>
     </element>
   </define>
   <define name="attlist.et2-dropdown" combine="interleave">
@@ -9964,9 +9962,9 @@
   <define name="et2-dropdown-button">
     <element name="et2-dropdown-button">
       <ref name="attlist.et2-dropdown-button"/>
-      <oneOrMore>
+      <zeroOrMore>
         <ref name="Widgets"/>
-      </oneOrMore>
+      </zeroOrMore>
     </element>
   </define>
   <define name="attlist.et2-dropdown-button" combine="interleave">
@@ -11594,6 +11592,9 @@
       <attribute name="search"/>
     </optional>
     <optional>
+      <attribute name="searchUrl"/>
+    </optional>
+    <optional>
       <attribute name="select_options"/>
     </optional>
     <optional>
@@ -11630,9 +11631,9 @@
   <define name="et2-filterbox">
     <element name="et2-filterbox">
       <ref name="attlist.et2-filterbox"/>
-      <oneOrMore>
+      <zeroOrMore>
         <ref name="Widgets"/>
-      </oneOrMore>
+      </zeroOrMore>
     </element>
   </define>
   <define name="attlist.et2-filterbox" combine="interleave">
@@ -13814,6 +13815,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchUrl"/>
+    </optional>
+    <optional>
       <attribute name="select_options"/>
     </optional>
     <optional>
@@ -14575,6 +14579,9 @@
     </optional>
     <optional>
       <attribute name="rows"/>
+    </optional>
+    <optional>
+      <attribute name="searchUrl"/>
     </optional>
     <optional>
       <attribute name="select_options"/>
@@ -15669,9 +15676,9 @@
   <define name="et2-number">
     <element name="et2-number">
       <ref name="attlist.et2-number"/>
-      <oneOrMore>
+      <zeroOrMore>
         <ref name="Widgets"/>
-      </oneOrMore>
+      </zeroOrMore>
     </element>
   </define>
   <define name="attlist.et2-number" combine="interleave">
@@ -16491,9 +16498,9 @@
   <define name="et2-searchbox">
     <element name="et2-searchbox">
       <ref name="attlist.et2-searchbox"/>
-      <oneOrMore>
+      <zeroOrMore>
         <ref name="Widgets"/>
-      </oneOrMore>
+      </zeroOrMore>
     </element>
   </define>
   <define name="attlist.et2-searchbox" combine="interleave">
@@ -17043,6 +17050,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchUrl"/>
+    </optional>
+    <optional>
       <attribute name="select_options"/>
     </optional>
     <optional>
@@ -17258,6 +17268,9 @@
     </optional>
     <optional>
       <attribute name="rows"/>
+    </optional>
+    <optional>
+      <attribute name="searchUrl"/>
     </optional>
     <optional>
       <attribute name="select_options"/>
@@ -17485,6 +17498,9 @@
     </optional>
     <optional>
       <attribute name="rows"/>
+    </optional>
+    <optional>
+      <attribute name="searchUrl"/>
     </optional>
     <optional>
       <attribute name="select_options"/>
@@ -17717,6 +17733,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchUrl"/>
+    </optional>
+    <optional>
       <attribute name="select_options"/>
     </optional>
     <optional>
@@ -17934,6 +17953,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchUrl"/>
+    </optional>
+    <optional>
       <attribute name="select_options"/>
     </optional>
     <optional>
@@ -18149,6 +18171,9 @@
     </optional>
     <optional>
       <attribute name="rows"/>
+    </optional>
+    <optional>
+      <attribute name="searchUrl"/>
     </optional>
     <optional>
       <attribute name="select_options"/>
@@ -18634,6 +18659,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchUrl"/>
+    </optional>
+    <optional>
       <attribute name="select_options"/>
     </optional>
     <optional>
@@ -18849,6 +18877,9 @@
     </optional>
     <optional>
       <attribute name="rows"/>
+    </optional>
+    <optional>
+      <attribute name="searchUrl"/>
     </optional>
     <optional>
       <attribute name="select_options"/>
@@ -19068,6 +19099,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchUrl"/>
+    </optional>
+    <optional>
       <attribute name="select_options"/>
     </optional>
     <optional>
@@ -19283,6 +19317,9 @@
     </optional>
     <optional>
       <attribute name="rows"/>
+    </optional>
+    <optional>
+      <attribute name="searchUrl"/>
     </optional>
     <optional>
       <attribute name="select_options"/>
@@ -19502,6 +19539,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchUrl"/>
+    </optional>
+    <optional>
       <attribute name="select_options"/>
     </optional>
     <optional>
@@ -19717,6 +19757,9 @@
     </optional>
     <optional>
       <attribute name="rows"/>
+    </optional>
+    <optional>
+      <attribute name="searchUrl"/>
     </optional>
     <optional>
       <attribute name="select_options"/>
@@ -19948,6 +19991,9 @@
     </optional>
     <optional>
       <attribute name="rows"/>
+    </optional>
+    <optional>
+      <attribute name="searchUrl"/>
     </optional>
     <optional>
       <attribute name="select_options"/>
@@ -20182,6 +20228,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchUrl"/>
+    </optional>
+    <optional>
       <attribute name="select_options"/>
     </optional>
     <optional>
@@ -20402,6 +20451,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchUrl"/>
+    </optional>
+    <optional>
       <attribute name="select_options"/>
     </optional>
     <optional>
@@ -20620,6 +20672,9 @@
     </optional>
     <optional>
       <attribute name="rows"/>
+    </optional>
+    <optional>
+      <attribute name="searchUrl"/>
     </optional>
     <optional>
       <attribute name="select_options"/>
@@ -20850,6 +20905,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchUrl"/>
+    </optional>
+    <optional>
       <attribute name="select_options"/>
     </optional>
     <optional>
@@ -21067,6 +21125,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchUrl"/>
+    </optional>
+    <optional>
       <attribute name="select_options"/>
     </optional>
     <optional>
@@ -21282,6 +21343,9 @@
     </optional>
     <optional>
       <attribute name="rows"/>
+    </optional>
+    <optional>
+      <attribute name="searchUrl"/>
     </optional>
     <optional>
       <attribute name="select_options"/>
@@ -21511,6 +21575,9 @@
     </optional>
     <optional>
       <attribute name="rows"/>
+    </optional>
+    <optional>
+      <attribute name="searchUrl"/>
     </optional>
     <optional>
       <attribute name="select_options"/>
@@ -23429,9 +23496,9 @@
   <define name="et2-toolbar">
     <element name="et2-toolbar">
       <ref name="attlist.et2-toolbar"/>
-      <oneOrMore>
+      <zeroOrMore>
         <ref name="Widgets"/>
-      </oneOrMore>
+      </zeroOrMore>
     </element>
   </define>
   <define name="attlist.et2-toolbar" combine="interleave">
@@ -27034,9 +27101,9 @@
   <define name="et2-vfs-upload">
     <element name="et2-vfs-upload">
       <ref name="attlist.et2-vfs-upload"/>
-      <oneOrMore>
+      <zeroOrMore>
         <ref name="Widgets"/>
-      </oneOrMore>
+      </zeroOrMore>
     </element>
   </define>
   <define name="attlist.et2-vfs-upload" combine="interleave">

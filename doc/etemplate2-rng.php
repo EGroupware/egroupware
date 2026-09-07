@@ -222,6 +222,8 @@ $overwrites = [
 			'rows' => 'int',
 			'tabindex' => 'int',
 			'allowFreeEntries' => 'boolean',
+			// server-side only: Select.php/Taglist.php both read $this->attrs['searchUrl']
+			'searchUrl' => 'string',
 		],
 	],
 	'et2-select' => [
@@ -234,8 +236,11 @@ $overwrites = [
 	],
 	'et2-checkbox' => [
 		'.attrs' => [
-			'selectedValue' => 'boolean',
-			'unselectedValue' => 'boolean',
+			// components.json infers 'boolean' (default: true/false), but real usage stores an
+			// arbitrary string as the "checked"/"unchecked" value (eg. selectedValue="active") -
+			// a checkbox representing a non-boolean value pair, not just an on/off toggle
+			'selectedValue' => 'string',
+			'unselectedValue' => 'string',
 		],
 	],
 	'et2-textarea' => [
@@ -277,31 +282,33 @@ $overwrites = [
 		'.attrs' => [
 			'mime' => 'string',
 		],
-		'.children' => 'Widgets',   // real usage: et2-button-icon (upload trigger override)
+		// real usage: et2-button-icon (upload trigger override), often self-closed with none
+		'.children' => ['.quantity' => 'zeroOrMore', 'Widgets'],
 	],
-	// generic container widgets real templates nest arbitrary content into - same treatment as
-	// the et2-(v|h)box/et2-details/et2-groupbox/et2-split/et2-ai family above
+	// generic container widgets real templates nest arbitrary content into (or self-close with
+	// none) - same treatment as the et2-(v|h)box/et2-details/et2-groupbox/et2-split/et2-ai
+	// family above, but zeroOrMore since these are commonly self-closed too
 	'et2-toolbar' => [
-		'.children' => 'Widgets',
+		'.children' => ['.quantity' => 'zeroOrMore', 'Widgets'],
 	],
 	'et2-dropdown' => [
-		'.children' => 'Widgets',
+		'.children' => ['.quantity' => 'zeroOrMore', 'Widgets'],
 	],
 	'et2-dropdown-button' => [
-		'.children' => 'Widgets',
+		'.children' => ['.quantity' => 'zeroOrMore', 'Widgets'],
 	],
 	'et2-searchbox' => [
-		'.children' => 'Widgets',
+		'.children' => ['.quantity' => 'zeroOrMore', 'Widgets'],
 	],
 	'et2-filterbox' => [
-		'.children' => 'Widgets',
+		'.children' => ['.quantity' => 'zeroOrMore', 'Widgets'],
 	],
 	'et2-dialog' => [
-		'.children' => 'Widgets',
+		'.children' => ['.quantity' => 'zeroOrMore', 'Widgets'],
 	],
 	// input-widget prefix/suffix slot content, eg. <et2-number><et2-label slot="suffix"/></et2-number>
 	'et2-number' => [
-		'.children' => 'Widgets',
+		'.children' => ['.quantity' => 'zeroOrMore', 'Widgets'],
 	],
 ];
 
@@ -666,6 +673,11 @@ foreach ($xpath->query('//x:define[starts-with(@name, "attlist.") and not(starts
 {
 	$existing = [];
 	foreach ($xpath->query('.//x:attribute/@name', $attlistDefine) as $a) { $existing[$a->value] = true; }
+	// a bare <empty/> ("no attributes") sibling alongside real <optional> attribute patterns
+	// under the same combine="interleave" define breaks libxml's RelaxNG compilation in a way
+	// that cascades into unrelated-looking content-model errors elsewhere in the schema - remove
+	// it, since it becomes redundant the moment this attlist gains a real attribute anyway
+	foreach ($xpath->query('./x:empty', $attlistDefine) as $empty) { $attlistDefine->removeChild($empty); }
 	foreach ($globalAttrs as $attr)
 	{
 		if (isset($existing[$attr])) continue;
