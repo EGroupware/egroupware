@@ -235,7 +235,7 @@ removeNode($grammar->start->choice);
 $grammar->start->addChild('ref')->addAttribute('name', 'overlay');
 // fix legacy widgets: attribute-name => (array of) widgets
 $missing_legacy_attributes = [
-	'app' => 'customfields-types',
+	'app' => ['customfields-types', 'customfields', 'customfields-list'],
     'callback' => 'vfs-upload',
 	'class' => ['nextmatch','nextmatch-header', 'nextmatch-customfields', 'nextmatch-sortheader', 'customfields-types'],
 	'disabled' => 'nextmatch',
@@ -266,6 +266,7 @@ $missing_legacy_attributes = [
 	'statustext' => ['tab', 'customfields-types', 'option'],
 	'template' => ['.optional' => false, 'nextmatch'],
 	'tab'     => 'customfields',
+	'title' => 'option',  // real: Select.php reads $val['title'] as a tooltip alongside/instead of label
 ];
 foreach($missing_legacy_attributes as $attribute => $widgets)
 {
@@ -452,15 +453,68 @@ foreach ($xpath->query('//x:ref') as $ref)
 	}
 }
 
+// enrich every boolean-like <choice> uniformly, regardless of whether it came from attributes()'s
+// case 'boolean' above (already false/true/1) or is a legacy widget's hand-authored true/false
+// choice carried over unchanged from the original DTD-derived etemplate2.rng (grid/et2-template/
+// historylog/tab/... never go through attributes() at all): make sure "1" is present, and add a
+// dynamic-expression pattern branch (disabled="!@showsearchbuttons", private="$cont[no_private_cfs]")
+// - correct for anything that validates against the .rng directly, but does NOT survive conversion
+// to DTD: DTD attribute types are either a fixed keyword or a literal enumeration, never both, so
+// PHPStorm's RNG->DTD step has no way to carry this branch through (confirmed - a plain <text/>
+// here hit the same wall, see git blame). By team decision (2026-09-07) the DTD keeps the strict
+// enum and tolerates these being flagged there.
+foreach ($xpath->query('//x:choice') as $choice)
+{
+	$values = [];
+	$isBoolean = true;
+	foreach ($choice->childNodes as $child)
+	{
+		if ($child->nodeType !== XML_ELEMENT_NODE) continue;
+		if ($child->localName !== 'value') { $isBoolean = false; break; }
+		$values[$child->textContent] = true;
+	}
+	if (!$isBoolean || !array_intersect_key($values, ['true' => 1, 'false' => 1])) continue;
+	foreach (['false', 'true', '1'] as $value)
+	{
+		if (!isset($values[$value]))
+		{
+			$choice->appendChild($dom->createElementNS('http://relaxng.org/ns/structure/1.0', 'value', $value));
+		}
+	}
+	$data = $choice->appendChild($dom->createElementNS('http://relaxng.org/ns/structure/1.0', 'data'));
+	// the "pattern" facet param needs the XSD datatype library - RelaxNG's own built-in library
+	// (used when datatypeLibrary is omitted) doesn't support any <param>s at all
+	$data->setAttribute('datatypeLibrary', 'http://www.w3.org/2001/XMLSchema-datatypes');
+	$data->setAttribute('type', 'token');
+	$param = $data->appendChild($dom->createElementNS('http://relaxng.org/ns/structure/1.0', 'param', '!?[@$].*'));
+	$param->setAttribute('name', 'pattern');
+}
+
+// widen span's enum to the values real templates actually use (grid-span, not just 'all')
+foreach ($xpath->query('//x:attribute[@name="span"]/x:choice/x:value[text()="4"]') as $value)
+{
+	foreach (['1', '5'] as $extra)
+	{
+		$value->parentNode->insertBefore($dom->createElementNS('http://relaxng.org/ns/structure/1.0', 'value', $extra), $value);
+	}
+}
+
+// <option>text</option> and <et2-styles>css</et2-styles> hold real text content (the option's
+// visible label, resp. inline CSS rules) - both declared <empty/> since neither's "children" is
+// a Widgets ref this script otherwise knows how to add
+foreach (['option', 'et2-styles'] as $name)
+{
+	foreach ($xpath->query('//x:define[@name="'.$name.'"]/x:element/x:empty') as $empty)
+	{
+		$empty->parentNode->replaceChild($dom->createElementNS('http://relaxng.org/ns/structure/1.0', 'text'), $empty);
+	}
+}
+
 if (php_sapi_name() !== "cli")
 {
 	header('Content-Type: application/xml; charset=utf-8');
 }
-// add <value>1</value> to legacy widget boolean attributes
-echo preg_replace('#<choice>
-(\s+)<value>true</value>
-(\s+)<value>false</value>
-(\s+)</choice>#', "<choice>\n\$1<value>false</value>\n\$1<value>true</value>\n\$1<value>1</value>\n\$3</choice>",
+echo
 	// update the header
 	preg_replace('#<!--.*-->#s', '<!--
     ==========================================================
@@ -481,7 +535,7 @@ echo preg_replace('#<choice>
         ...
         </overlay>
     ==========================================================
--->', $dom->saveXML()));
+-->', $dom->saveXML());
 
 /**
  * Remove (legacy-)widget with given name from schema
@@ -655,22 +709,12 @@ function attributes(array $component, ?SimpleXMLElement $attrs=null)
 				$choice->addChild('value', 'false');
 				$choice->addChild('value', 'true');
 				$choice->addChild('value', '1');    // often used in our templates
-				// dynamic expression forms used throughout real templates, e.g.
-				// disabled="!@showsearchbuttons" or private="$cont[no_private_cfs]" - RelaxNG can
-				// express "one of these literals, OR a string matching this pattern", correct here
-				// for anything that validates against the .rng directly. Does NOT survive
-				// conversion to DTD though: DTD attribute types are either a fixed keyword or a
-				// literal enumeration, never both, so PHPStorm's RNG->DTD step has no way to carry
-				// this branch through (confirmed - a plain <text/> here hit the same wall, see
-				// git blame). By team decision (2026-09-07) the DTD keeps the strict enum and
-				// tolerates these being flagged there.
-				$pattern = $choice->addChild('data');
-				// the "pattern" facet param needs the XSD datatype library - RelaxNG's own
-				// built-in library (used when datatypeLibrary is omitted) doesn't support any
-				// <param>s at all
-				$pattern->addAttribute('datatypeLibrary', 'http://www.w3.org/2001/XMLSchema-datatypes');
-				$pattern->addAttribute('type', 'token');
-				$pattern->addChild('param', '!?[@$].*')->addAttribute('name', 'pattern');
+				// dynamic-expression pattern branch (disabled="!@showsearchbuttons", private=
+				// "$cont[no_private_cfs]") is added uniformly to every boolean-like <choice> in a
+				// single DOM pass below - including legacy widgets' hand-authored true/false
+				// choices carried over unchanged from the original DTD-derived etemplate2.rng
+				// (grid/et2-template/historylog/tab/... - these never go through this function at
+				// all), which would otherwise be missed if handled only here
 				break;
             case 'any':
                 break;

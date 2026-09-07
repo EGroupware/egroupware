@@ -222,9 +222,12 @@
     <optional>
       <attribute name="disabled" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -264,9 +267,12 @@
     <optional>
       <attribute name="no_lang" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -400,9 +406,12 @@
     <optional>
       <attribute name="disabled" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -442,9 +451,12 @@
     <optional>
       <attribute name="no_lang" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -477,9 +489,12 @@
     <optional>
       <attribute name="statustext_html" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -492,9 +507,12 @@
     <optional>
       <attribute name="disabled" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -534,9 +552,12 @@
     <optional>
       <attribute name="no_lang" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -593,9 +614,12 @@
     <optional>
       <attribute name="statustext_html" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -608,9 +632,12 @@
     <optional>
       <attribute name="disabled" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -650,9 +677,12 @@
     <optional>
       <attribute name="no_lang" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -706,9 +736,12 @@
     <optional>
       <attribute name="statustext_html" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -721,9 +754,12 @@
     <optional>
       <attribute name="disabled" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -763,9 +799,12 @@
     <optional>
       <attribute name="no_lang" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -819,9 +858,12 @@
     <optional>
       <attribute name="statustext_html" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -834,9 +876,12 @@
     <optional>
       <attribute name="disabled" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -876,9 +921,12 @@
     <optional>
       <attribute name="no_lang" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -932,9 +980,12 @@
     <optional>
       <attribute name="statustext_html" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -947,9 +998,12 @@
     <optional>
       <attribute name="disabled" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -989,9 +1043,12 @@
     <optional>
       <attribute name="no_lang" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -1045,9 +1102,12 @@
     <optional>
       <attribute name="statustext_html" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -1060,9 +1120,12 @@
     <optional>
       <attribute name="disabled" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -1102,9 +1165,12 @@
     <optional>
       <attribute name="no_lang" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -1158,9 +1224,12 @@
     <optional>
       <attribute name="statustext_html" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -1173,9 +1242,12 @@
     <optional>
       <attribute name="disabled" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -1215,9 +1287,12 @@
     <optional>
       <attribute name="no_lang" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -1271,9 +1346,12 @@
     <optional>
       <attribute name="statustext_html" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -1286,9 +1364,12 @@
     <optional>
       <attribute name="disabled" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -1328,9 +1409,12 @@
     <optional>
       <attribute name="no_lang" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -1347,7 +1431,7 @@
   <define name="option">
     <element name="option">
       <ref name="attlist.option"/>
-      <empty/>
+      <text/>
     </element>
   </define>
   <define name="attlist.option" combine="interleave">
@@ -1356,6 +1440,9 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="title"/>
     </optional>
   </define>
   <define name="radio">
@@ -1377,9 +1464,12 @@
     <optional>
       <attribute name="needed" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -1398,9 +1488,12 @@
     <optional>
       <attribute name="readonly" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -1416,9 +1509,12 @@
     <optional>
       <attribute name="statustext_html" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -1431,9 +1527,12 @@
     <optional>
       <attribute name="disabled" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -1473,9 +1572,12 @@
     <optional>
       <attribute name="no_lang" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -1514,9 +1616,12 @@
     <optional>
       <attribute name="needed" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -1526,9 +1631,12 @@
     <optional>
       <attribute name="statustext_html" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -1541,9 +1649,12 @@
     <optional>
       <attribute name="disabled" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -1583,9 +1694,12 @@
     <optional>
       <attribute name="no_lang" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -1624,9 +1738,12 @@
     <optional>
       <attribute name="private">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -1648,9 +1765,12 @@
     <optional>
       <attribute name="statustext_html" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -1663,9 +1783,12 @@
     <optional>
       <attribute name="disabled" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -1705,9 +1828,12 @@
     <optional>
       <attribute name="no_lang" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -1722,6 +1848,9 @@
     </optional>
     <optional>
       <attribute name="attributes"/>
+    </optional>
+    <optional>
+      <attribute name="app"/>
     </optional>
     <optional>
       <attribute name="exclude"/>
@@ -1752,9 +1881,12 @@
     <optional>
       <attribute name="private">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -1776,9 +1908,12 @@
     <optional>
       <attribute name="statustext_html" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -1791,9 +1926,12 @@
     <optional>
       <attribute name="disabled" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -1833,9 +1971,12 @@
     <optional>
       <attribute name="no_lang" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -1850,6 +1991,9 @@
     </optional>
     <optional>
       <attribute name="attributes"/>
+    </optional>
+    <optional>
+      <attribute name="app"/>
     </optional>
   </define>
   <define name="tabs">
@@ -1910,9 +2054,12 @@
     <optional>
       <attribute name="statustext_html" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -1925,9 +2072,12 @@
     <optional>
       <attribute name="disabled" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -1967,9 +2117,12 @@
     <optional>
       <attribute name="no_lang" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -2014,9 +2167,12 @@
     <optional>
       <attribute name="statustext_html" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -2029,9 +2185,12 @@
     <optional>
       <attribute name="disabled" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -2071,9 +2230,12 @@
     <optional>
       <attribute name="no_lang" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -2103,9 +2265,12 @@
     <optional>
       <attribute name="statustext_html" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -2118,9 +2283,12 @@
     <optional>
       <attribute name="disabled" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -2160,9 +2328,12 @@
     <optional>
       <attribute name="no_lang" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -2207,9 +2378,12 @@
     <optional>
       <attribute name="statustext_html" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -2222,9 +2396,12 @@
     <optional>
       <attribute name="disabled" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -2264,9 +2441,12 @@
     <optional>
       <attribute name="no_lang" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -2299,18 +2479,24 @@
     <optional>
       <attribute name="muted" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
     <optional>
       <attribute name="autoplay" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -2320,9 +2506,12 @@
     <optional>
       <attribute name="controls" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -2332,9 +2521,12 @@
     <optional>
       <attribute name="loop" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -2344,9 +2536,12 @@
     <optional>
       <attribute name="statustext_html" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -2359,9 +2554,12 @@
     <optional>
       <attribute name="disabled" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -2401,9 +2599,12 @@
     <optional>
       <attribute name="no_lang" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -2436,45 +2637,60 @@
     <optional>
       <attribute name="muted" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
     <optional>
       <attribute name="autoplay" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
     <optional>
       <attribute name="controls" a:defaultValue="true">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
     <optional>
       <attribute name="loop" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
     <optional>
       <attribute name="autohide" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -2487,9 +2703,12 @@
     <optional>
       <attribute name="statustext_html" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -2502,9 +2721,12 @@
     <optional>
       <attribute name="disabled" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -2544,9 +2766,12 @@
     <optional>
       <attribute name="no_lang" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -2600,9 +2825,12 @@
     <optional>
       <attribute name="statustext_html" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -2615,9 +2843,12 @@
     <optional>
       <attribute name="disabled" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -2657,9 +2888,12 @@
     <optional>
       <attribute name="no_lang" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -2704,9 +2938,12 @@
     <optional>
       <attribute name="needed" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -2725,9 +2962,12 @@
     <optional>
       <attribute name="readonly" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -2740,9 +2980,12 @@
     <optional>
       <attribute name="statustext_html" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -2755,9 +2998,12 @@
     <optional>
       <attribute name="disabled" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -2797,9 +3043,12 @@
     <optional>
       <attribute name="no_lang" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -2826,9 +3075,12 @@
     <optional>
       <attribute name="no_lang" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -2882,9 +3134,12 @@
     <optional>
       <attribute name="statustext_html" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -2897,9 +3152,12 @@
     <optional>
       <attribute name="disabled" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -2939,9 +3197,12 @@
     <optional>
       <attribute name="no_lang" a:defaultValue="false">
         <choice>
-          <value>false</value>
           <value>true</value>
+          <value>false</value>
           <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -3208,6 +3469,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -3318,6 +3581,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -3453,6 +3718,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -3588,6 +3855,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -3734,6 +4003,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -3830,6 +4101,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -3953,6 +4226,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -4065,6 +4340,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -4358,6 +4635,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -4522,6 +4801,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -4724,6 +5005,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -4796,6 +5079,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -5089,6 +5374,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -5285,6 +5572,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -5387,6 +5676,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -5531,6 +5822,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -5747,6 +6040,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -5988,6 +6283,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -6162,6 +6459,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -6318,6 +6617,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -6426,6 +6727,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -6531,6 +6834,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -6636,6 +6941,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -6750,6 +7057,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -6996,6 +7305,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -7179,6 +7490,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -7389,6 +7702,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -7554,6 +7869,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -7737,6 +8054,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -7917,6 +8236,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -8097,6 +8418,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -8154,6 +8477,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -8283,6 +8608,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -8427,6 +8754,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -8567,6 +8896,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -8768,6 +9099,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -8948,6 +9281,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -9080,6 +9415,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -9290,6 +9627,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -9509,6 +9848,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -9671,6 +10012,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -9857,6 +10200,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -10043,6 +10388,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -10166,6 +10513,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -10397,6 +10746,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -10541,6 +10892,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -10756,6 +11109,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -10942,6 +11297,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -11082,6 +11439,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -11213,6 +11572,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -11360,6 +11721,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -11462,6 +11825,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -11741,6 +12106,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -11904,6 +12271,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -12027,6 +12396,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -12153,6 +12524,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -12305,6 +12678,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -12437,6 +12812,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -12554,6 +12931,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -12713,6 +13092,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -12946,6 +13327,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -13123,6 +13506,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -13267,6 +13652,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -13480,6 +13867,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -13701,6 +14090,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -13830,6 +14221,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -13998,6 +14391,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -14169,6 +14564,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -14292,6 +14689,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -14405,6 +14804,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -14537,6 +14938,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -14639,6 +15042,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -14738,6 +15143,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -15055,6 +15462,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -15411,6 +15820,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -15549,6 +15960,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -15887,6 +16300,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -16128,6 +16543,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -16343,6 +16760,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -16568,6 +16987,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -16794,6 +17215,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -17009,6 +17432,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -17224,6 +17649,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -17491,6 +17918,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -17703,6 +18132,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -17918,6 +18349,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -18133,6 +18566,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -18348,6 +18783,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -18563,6 +19000,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -18778,6 +19217,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -19005,6 +19446,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -19235,6 +19678,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -19453,6 +19898,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -19671,6 +20118,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -19897,6 +20346,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -20112,6 +20563,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -20327,6 +20780,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -20554,6 +21009,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -20659,6 +21116,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -20775,6 +21234,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -20804,7 +21265,7 @@
   <define name="et2-styles">
     <element name="et2-styles">
       <ref name="attlist.et2-styles"/>
-      <empty/>
+      <text/>
     </element>
   </define>
   <define name="attlist.et2-styles" combine="interleave">
@@ -20883,6 +21344,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -21066,6 +21529,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -21237,6 +21702,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -21474,6 +21941,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -21624,6 +22093,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -21903,6 +22374,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -22234,6 +22707,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -22405,6 +22880,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -22588,6 +23065,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -22786,6 +23265,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -23032,6 +23513,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -23355,6 +23838,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -23708,6 +24193,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -24046,6 +24533,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -24384,6 +24873,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -24515,6 +25006,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -24563,6 +25056,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -24686,6 +25181,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -24836,6 +25333,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -25147,6 +25646,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -25327,6 +25828,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -25519,6 +26022,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -25738,6 +26243,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -25843,6 +26350,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -25942,6 +26451,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -25990,6 +26501,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -26227,6 +26740,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
@@ -26335,6 +26850,8 @@
           <value>all</value>
           <value>2</value>
           <value>3</value>
+          <value>1</value>
+          <value>5</value>
           <value>4</value>
         </choice>
       </attribute>
