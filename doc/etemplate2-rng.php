@@ -87,6 +87,9 @@ $overwrites = [
 	'et2-link-entry' => [
 		'.attrs' => [
 			'onlyApp' => 'string',
+			// real per components.json (Et2LinkEntry.placeholder), just missing the "attribute:"
+			// reflection metadata the analyzer usually reports
+			'placeholder' => 'string',
 		],
 	],
 	'Et2InputWidget' => [
@@ -150,20 +153,25 @@ $overwrites = [
 	'et2-textbox' => [
 			'.children' => ['.quantity' => 'optional', 'et2-image'],
 	],
-	'et2-date' => [
+	// class name, not tag name: Et2DateTime extends Et2Date and Et2DateTimeOnly extends
+	// Et2DateTime, so this also covers et2-date-time/et2-date-timeonly's own dataFormat
+	// (Date.php: $this->attrs['dataFormat'] ?? $this->attrs['data_format'], real server-side)
+	'Et2Date' => [
 		'.attrs' => [
 			'yearRange' => 'string',
 			'dataFormat' => 'string',
 		],
 	],
+	// zeroOrMore, not the default oneOrMore: real templates use genuinely empty box/hbox/vbox
+	// too (eg. <et2-box id="ajax_target" disabled="true"></et2-box> - a pure JS-populated target)
 	'et2-hbox' => [
-		'.children' => 'Widgets',
+		'.children' => ['.quantity' => 'zeroOrMore', 'Widgets'],
 	],
 	'et2-vbox' => [
-		'.children' => 'Widgets',
+		'.children' => ['.quantity' => 'zeroOrMore', 'Widgets'],
 	],
 	'et2-box' => [
-		'.children' => 'Widgets',
+		'.children' => ['.quantity' => 'zeroOrMore', 'Widgets'],
 	],
 	'Et2Box' => [   // inherited by et2-(v|h)box too
 		'.attrs' => [
@@ -235,6 +243,9 @@ $overwrites = [
 			'image' => 'string',
 			'noSubmit' => 'boolean',
 			'hideOnReadonly' => 'boolean',
+			// ButtonMixin.ts: noValidation:boolean=false, used to skip client-side validation on
+			// submit - a real mixin member the analyzer doesn't resolve, same as noSubmit above
+			'noValidation' => 'boolean',
 		],
 	],
 	'Et2ButtonIcon' => 'Et2Button',     // no inheritance from Et2Button, but Et2ButtonMixin, which is not recognised
@@ -285,6 +296,8 @@ $overwrites = [
 		'.attrs' => [
 			'onTagClick' => 'function',
 			'multiple' => 'boolean',
+			// Taglist.php: 'allowFreeEntries' => true (real, server-side default)
+			'allowFreeEntries' => 'boolean',
 		],
 	],
 	// slot doc: "the target widget (e.g. et2-textarea, et2-vbox, iframe) is placed" - real usage
@@ -379,7 +392,11 @@ $missing_legacy_attributes = [
     ],
 	'span' => ['nextmatch', 'nextmatch-header', 'nextmatch-customfields', 'nextmatch-sortheader', 'customfields-types'],
 	'statustext' => ['tab', 'customfields-types', 'option', 'nextmatch-sortheader'],
-	'template' => ['.optional' => false, 'nextmatch'],
+	// NOT required despite looking that way: Nextmatch.php falls back to $this->attrs['options']
+	// for the same purpose (row template name) when 'template' isn't given - real usage like
+	// <nextmatch id="nm" options="app.prompts.rows"/> has only 'options', never 'template'
+	'template' => ['nextmatch'],
+	'options' => ['nextmatch', 'nextmatch-sortheader'],
 	'tab'     => 'customfields',
 	// app-specific column-header customization for the tracker app
 	'tracker' => 'nextmatch-header-custom',

@@ -3625,6 +3625,9 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="options"/>
+    </optional>
+    <optional>
       <attribute name="width"/>
     </optional>
     <optional>
@@ -3678,7 +3681,12 @@
     <optional>
       <attribute name="span"/>
     </optional>
-    <attribute name="template"/>
+    <optional>
+      <attribute name="template"/>
+    </optional>
+    <optional>
+      <attribute name="options"/>
+    </optional>
     <optional>
       <attribute name="width"/>
     </optional>
@@ -4824,9 +4832,9 @@
   <define name="et2-box">
     <element name="et2-box">
       <ref name="attlist.et2-box"/>
-      <oneOrMore>
+      <zeroOrMore>
         <ref name="Widgets"/>
-      </oneOrMore>
+      </zeroOrMore>
     </element>
   </define>
   <define name="attlist.et2-box" combine="interleave">
@@ -5133,6 +5141,18 @@
     </optional>
     <optional>
       <attribute name="noSubmit">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="noValidation">
         <choice>
           <value>false</value>
           <value>true</value>
@@ -5562,6 +5582,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="noValidation">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="onchange"/>
     </optional>
     <optional>
@@ -5658,6 +5690,18 @@
     </optional>
     <optional>
       <attribute name="noSubmit">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="noValidation">
         <choice>
           <value>false</value>
           <value>true</value>
@@ -5896,6 +5940,18 @@
     </optional>
     <optional>
       <attribute name="noSubmit">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="noValidation">
         <choice>
           <value>false</value>
           <value>true</value>
@@ -8799,6 +8855,9 @@
       <attribute name="data"/>
     </optional>
     <optional>
+      <attribute name="dataFormat"/>
+    </optional>
+    <optional>
       <attribute name="disabled">
         <choice>
           <value>false</value>
@@ -8935,6 +8994,9 @@
     </optional>
     <optional>
       <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="yearRange"/>
     </optional>
   </define>
   <define name="et2-date-timeonly">
@@ -8981,6 +9043,9 @@
       <attribute name="data"/>
     </optional>
     <optional>
+      <attribute name="dataFormat"/>
+    </optional>
+    <optional>
       <attribute name="disabled">
         <choice>
           <value>false</value>
@@ -9117,6 +9182,9 @@
     </optional>
     <optional>
       <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="yearRange"/>
     </optional>
   </define>
   <define name="et2-date-time-today">
@@ -10475,6 +10543,18 @@
     </optional>
     <optional>
       <attribute name="allowDragAndDrop"/>
+    </optional>
+    <optional>
+      <attribute name="allowFreeEntries">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="allowPlaceholder">
@@ -12370,9 +12450,9 @@
   <define name="et2-hbox">
     <element name="et2-hbox">
       <ref name="attlist.et2-hbox"/>
-      <oneOrMore>
+      <zeroOrMore>
         <ref name="Widgets"/>
-      </oneOrMore>
+      </zeroOrMore>
     </element>
   </define>
   <define name="attlist.et2-hbox" combine="interleave">
@@ -14492,6 +14572,9 @@
     </optional>
     <optional>
       <attribute name="parentId"/>
+    </optional>
+    <optional>
+      <attribute name="placeholder"/>
     </optional>
     <optional>
       <attribute name="query"/>
@@ -26414,9 +26497,9 @@
   <define name="et2-vbox">
     <element name="et2-vbox">
       <ref name="attlist.et2-vbox"/>
-      <oneOrMore>
+      <zeroOrMore>
         <ref name="Widgets"/>
-      </oneOrMore>
+      </zeroOrMore>
     </element>
   </define>
   <define name="attlist.et2-vbox" combine="interleave">
