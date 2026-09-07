@@ -3173,3 +3173,114 @@ confirm all three actually fail without it (`acc_id` resolves to the literal str
 confirmed they pass with it restored. Live-verified against a real message
 (`mail::5::42::SU5CT1g=::184754`) - `composeMessage()` now correctly resolves `acc_id=42`. `npx tsc
 --noEmit`/`npm run build` clean, full `mail` jstest group green (194/194).
+
+## Server-side cleanup audit (2026-09-07): can `mail_compose::compose()` be deleted?
+
+Requested by ralf ahead of actually deleting `mail_compose::compose()` (the classic full-page
+postback Step 10 has been steadily replacing): three-part research pass over what's still
+live/needed.
+
+- **`mail_ui`** (86 methods): overwhelmingly still live and needed, essentially orthogonal to the
+  compose migration. Only lead for future cleanup is `folderManagement()`/`mail_tree` - already a
+  known, separate open TODO from the folder-tree migration project ([[project_mail_folder_tree_jmap]]),
+  not new.
+- **`Api\Mail`/`mail_bo`** (13 public methods after a prior decomposition project): still fully
+  needed - dual-purpose as (a) a static utility library the JMAP-native shim itself depends on
+  (`Api\Mail\Jmap\Imap` reuses `parseAddressList()`, `attachmentName()`, `tnef_decoder()`, etc.
+  without ever calling `Mail::getInstance()`), and (b) the stateful IMAP business object for
+  zpush/ActiveSync (JMAP declined there), mail-merge sending, cross-app "email as attachment"
+  integrations, the REST API (`mail/src/ApiHandler.php`), and the classic-postback remnants (this
+  section). `mail/compose.php` and `mail/src/Ui/ProfileHandler.php` confirmed **zero** real calls
+  into `Api\Mail`/`Mail::getInstance()` - the "no IMAP/JMAP server-side" design boundary for the
+  new client-side compose bootstrap holds.
+- **`mail_compose::compose()`'s own remaining callers**: exactly 3, all classic-postback
+  (`egw.open()`/`egw.openWithinWindow()` to `menuaction=mail.mail_compose.compose`):
+  1. `mail_ui::ajax_view()`'s `composefromdraft` redirect (opening a saved draft/template).
+  2. One VFS-attachment-forward action in `mail/js/app.ts` (forwarding a message's own attachment
+     straight from its context menu), missing the `_open_new`/`COMPOSE_POPUP_URL_PATTERN`
+     conversion the other VFS-path callers (filemanager, addressbook vCard) already got.
+  3. The generic `Link::get_registry('mail', 'edit')` fallback, traced to
+     `EgwApp._mergeEmail()`'s single-recipient branch (`api/js/jsapi/egw_app.ts`) - a shared,
+     app-agnostic mail-merge action multiple apps use (addressbook's own single-contact "insert
+     into email document" merge is the concrete example tested below).
+  All confirmed `mail_compose` methods used independently of `compose()` itself (`ajax_getComposeToolbarData`,
+  `ajax_prepareCompose`, `ajax_getAttachmentLinksBody`, `ajax_integrateSent`, `ajax_saveAsDraft`,
+  `ajax_searchFolder`, `ajax_searchAddress`, `ajax_merge`, `getToolbarActions`, `setDefaults`,
+  `runComposePrepareHook`, `mergePresetBody`, `addPresetFiles`, `createMessage`, `send`,
+  `saveAsDraft`, `getAttachment`) stay untouched.
+
+## Step 10 follow-up (2026-09-07): the last 3 classic-postback callers of compose() converted
+
+Converts all 3 callers found by the audit above, clearing the way to actually delete
+`mail_compose::compose()` in a follow-up pass.
+
+**1. `mail_ui::ajax_view()`'s `composefromdraft` redirect** - now
+`Egw::redirect_link('/mail/compose.php', ['from' => 'composefromdraft', 'id' => $rowID, 'acc_id' =>
+$icServerID, 'mode' => '', 'smime_type' => ''])` instead of the classic menuaction. `compose.ts`'s
+own `bootstrapDraft()` (already built, JMAP-native) takes over entirely client-side -
+`mail_compose.inc.php`'s own `$jmapReplySkip` already recognized `'composefromdraft'`, so there was
+nothing left for a classic full-page render to contribute here. `$icServerID` is the row id's own
+profileID (`Api\Mail::splitRowID()`), the same value `MailApp.composeMessage()`'s own client-side
+accId computation derives from the same row id.
+
+**2. VFS-attachment-forward** (`mail/js/app.ts`, an attachment context-menu action) - now resolves
+the VFS path via the existing `ajax_vfsOpen` call (unchanged) and calls
+`egw.openWithinWindow("mail", "setCompose", ..., COMPOSE_POPUP_URL_PATTERN, true, () =>
+this.composeWithPreset({files, mimeType: 'html'}))` - the same `jmapVfsPath`-marker mechanism
+filemanager's `open_mail()`/addressbook's vCard-attach already use, closing off the last
+still-classic `egw.openWithinWindow("mail", ...)` call site.
+
+**3. `EgwApp._mergeEmail()`'s single-recipient branch** (`api/js/jsapi/egw_app.ts`) - was
+`egw.open(id, 'mail', 'edit', {from:'merge', document, merge}, target)`, a classic postback via
+mail's own Link registry (`edit => {menuaction: mail.mail_compose.compose}`). Now calls a new
+`mail.mail_compose.ajax_mergeSingle` endpoint (merges into a **draft**, does not send - the
+multi-recipient/`select_all` branch above is unchanged, still always-send via the existing
+`ajax_merge()`), then reopens the resulting draft the same client-side-only way
+`MailApp.composeMessage()` reopens any other draft: `composeMessage({id: 'composefromdraft'}, [{id:
+result.id}])`. `mail_compose::ajax_mergeSingle($id, $document, $mergeClass='')` is the new
+single-recipient counterpart to the existing `ajax_merge()`, sharing the exact same
+`Api\Mail::importMessageToMergeAndSend()` mechanism, just without `ajax_merge()`'s own "extra
+non-numeric id" force-send trick.
+
+**Two more JMAP-fallthrough bugs found live-verifying #3** (same bug class as
+[[project_jmap_imap_fallthrough_cleanup]] - falling through to `Horde_Imap_Client_Socket` raw-IMAP
+methods that are unguarded for a JMAP/Stalwart account, which has no raw IMAP connection to fall
+back to):
+- `Api\Mail::importMessageToMergeAndSend()`'s save-as-draft branch (`$openAsDraft`, previously only
+  ever reachable via `ajax_merge()`'s always-send path, so never actually exercised until
+  `ajax_mergeSingle()` became its first real caller) called `folderExists()`/`isSentFolder()`/
+  `isDraftFolder()` on the already-JMAP-resolved draft folder name, always reporting "does not
+  exist" for a JMAP account (`_getSpecialUseFolder()` already has its own guard against exactly
+  this, further up the same file - this specific branch didn't). Fixed by trusting the folder for
+  a JMAP `icServer` instead of re-probing it, and passing `checkexistance=false` into
+  `isSentFolder()`/`isDraftFolder()` (their own internal `folderExists()` call has the same issue).
+- `Api\Mail::appendMessage()` itself - the actual raw IMAP `APPEND` has no JMAP equivalent at all,
+  so every caller (7 across `mail_compose.inc.php`, `mail_zpush.inc.php`, `ApiHandler.php`,
+  `ImportHandler.php`, `AttachmentHandler.php`, plus this one) failed identically for a JMAP
+  account before this fix. `ImportHandler::importMessageToFolder()` had already independently
+  patched around this exact problem at its own call site (`Email/import`, RFC 8621 §4.8, via
+  `jmapClient()->emailImport()`) before this method-level fix existed - this fix moves the same
+  approach into `appendMessage()` itself, so every caller benefits, not just future ones written
+  with this specific gotcha in mind. IMAP-style `\Flag` names in `$_flags` (eg. `\Draft`, `\Seen`)
+  are mapped to their JMAP keyword equivalent (`$draft`, `$seen`); `\Recent` (server-managed, no
+  JMAP keyword) is silently dropped, same as it's never a real settable flag on the classic path
+  either.
+
+**Verified**: `ajax_mergeSingle()` live-tested end-to-end against the real Stalwart/JMAP test
+account (profileID 1) via a hand-uploaded `.eml` merge template (webdav PUT) and a real addressbook
+contact - confirmed the created draft's row id resolves correctly, its subject/body placeholders
+(`{{n_fn}}` etc.) are correctly substituted, and `composeMessage({id:'composefromdraft'}, ...)`
+opens it client-side with zero classic-postback network traffic (only
+`ajax_getComposeToolbarData` + the cache-busted `compose.xet` fetch, same pattern as every other
+Step 10 entry point). Callers #1 and #2 live-verified the same way (network requests confirmed no
+`menuaction=mail.mail_compose.compose` navigation for either). New regression test
+`mail/js/test/MergeEmailSingleRecipient.test.ts` covers `_mergeEmail()`'s single-recipient branch
+directly (success, server-side merge failure, and request-rejection paths). `php -l` clean on all
+touched PHP files, `npx tsc --noEmit`/`npm run build` clean (pre-existing, unrelated baseline
+errors only), full `mail` jstest group green (197/197, 194 previous + 3 new).
+
+**Next step**: with all 3 classic-postback callers of `compose()` converted, `mail_compose::compose()`
+itself (and its exclusively-owned helpers `getComposeFrom()`/`getDraftData()`/`getForwardData()`/
+`getReplyData()`, plus the `jmap=1` URL-param fallback in `compose.ts`'s own `bootstrapCompose()`
+and `MailApp.compose`'s lazy URL-parsing getter) can actually be deleted - not yet done, pending
+ralf's go-ahead.

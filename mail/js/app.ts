@@ -5258,12 +5258,24 @@ export class MailApp extends EgwApp
 						// File is in VFS, put it in a compose window
 						const params = {};
 						const content = {data:{files:{file:[]}}};
-						params['preset[file][]'] = 'vfs://default'+vfs_path;
-						content.data.files.file.push('vfs://default'+vfs_path);
+						const vfsPath = 'vfs://default'+vfs_path;
+						params['preset[file][]'] = vfsPath;
+						content.data.files.file.push(vfsPath);
 						content.data.files["filemode"] = params['preset[filemode]'];
 						// always open compose in html mode, as attachment links look a lot nicer in html
 						params["mimeType"] = 'html';
-						egw.openWithinWindow("mail", "setCompose", content, params, COMPOSE_POPUP_URL_PATTERN, true);
+						// preset.files (doc/ai/projects/mail-compose-jmap-migration.md, Step 10) -
+						// same jmapVfsPath-marker mechanism filemanager's own open_mail()/addressbook's
+						// vCard-attach already use, closing off the last still-classic
+						// egw.openWithinWindow("mail",...) call site (found auditing compose()'s own
+						// remaining callers, 2026-09-07).
+						const files = [{
+							path: vfsPath,
+							name: attachments[row_id].filename,
+							type: attachments[row_id].type || 'application/octet-stream',
+						}];
+						egw.openWithinWindow("mail", "setCompose", content, params, COMPOSE_POPUP_URL_PATTERN, true,
+							() => this.composeWithPreset({files, mimeType: 'html'}));
 					})
 					.finally(() => {
 						// No matter what, clear the waiting style

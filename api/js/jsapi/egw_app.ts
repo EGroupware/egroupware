@@ -1345,11 +1345,26 @@ export abstract class EgwApp
 		}
 		else
 		{
-			this.egw.open(ids.pop(), 'mail', 'edit', {
-				from: 'merge',
-				document: data.document,
-				merge: data.merge
-			}, data['target']);
+			// mail/compose.php (doc/ai/projects/mail-compose-jmap-migration.md, Step 10) instead of
+			// the classic mail_compose::compose() postback (egw.open(id, 'mail', 'edit', ...), which
+			// resolved to that same menuaction via mail's own Link registry) - the merge itself
+			// still has to happen server-side (ajax_mergeSingle(), the exact same merge-into-drafts
+			// mechanism the multi-recipient long-task branch above already uses), but opening the
+			// resulting draft afterward is the same client-side-only "reopen a draft" MailApp.
+			// composeMessage() already does for every other draft - no reason to render a classic
+			// postback around it just for this one caller. Found auditing compose()'s own remaining
+			// callers, 2026-09-07 - this one wasn't previously identified.
+			this.egw.request('mail.mail_compose.ajax_mergeSingle', [ids.pop(), data.document, data.merge])
+				.then((result : any) =>
+				{
+					if (result?.msg)
+					{
+						this.egw.message(result.msg, 'error');
+						return;
+					}
+					(<any>window).app.mail?.composeMessage({id: 'composefromdraft'}, [{id: result.id}]);
+				})
+				.catch((e : any) => this.egw.message(e?.message || e, 'error'));
 		}
 	}
 
