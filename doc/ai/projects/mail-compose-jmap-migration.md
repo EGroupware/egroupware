@@ -3056,41 +3056,33 @@ file with an explicit `filemode` shows "Send files as: Download link" - no conso
 case. `npx tsc --noEmit`/`npm run build` clean, full mail+addressbook+filemanager jstest groups
 green (194/194).
 
-## Remaining `$preset` gaps beyond Step 10's own scope (surveyed 2026-09-07, not started)
+## `$preset` attributes NOT implemented (final status, 2026-09-07)
 
 Classic `mail_compose::compose()`'s full `$_REQUEST['preset']` handling (lines ~1127-1338) supports
-several things this project's new `preset` mechanism does not cover yet, none of them touched by
-today's work:
+a few things this project's new `composeWithPreset()` mechanism still does not cover. Everything
+else surveyed here (`mailtocontactbyid`, `subject`, calendar's own meeting-invite shape) either
+turned out orphaned or got built - see the "calendar's meeting-invite mail converted" entry below
+for that half. What's left, deliberately not built:
 
 - **`preset[mailtocontactbyid]`** - comma-separated addressbook contact ids, resolved server-side
-  into `to` addresses via a live `Api\Contacts::search()`. No live caller found for it in this
-  codebase (grepped for `mailtocontactbyid`) - looks orphaned, not worth converting unless a real
-  caller turns up.
+  into `to` addresses via a live `Api\Contacts::search()`. No live caller found for it anywhere in
+  the codebase (grepped for `mailtocontactbyid`) - looks orphaned. Not worth converting unless a
+  real caller turns up.
 - **`send_to`** (base64-encoded alternate to/cc/bcc/subject/body encoding) - its only remaining
   caller, `addressbook_ui::email2link()`, has no callers of its own anywhere in the codebase either
   (grepped for `email2link` - zero hits outside its own definition). Dead code, not a real gap.
 - **`app`/`method`/`id`** (generic "any app can email one of its own registered entries" -
   `Link::get_registry($app, $method)` + `ExecMethod()`) - no live caller found building this exact
   3-param shape either. Possibly legacy/superseded by each app building its own preset directly
-  (calendar does, see below) - not confirmed dead, just unconfirmed live, needs a real caller found
-  before converting.
-- **Calendar's "email this event" / "send meeting request"** (`calendar_uiforms::ajax_custom_mail()`
-  -> `calendar/js/app.ts`'s `custom_mail()`) - a genuinely live, real feature, confirmed reachable
-  from the event edit dialog's own "mail"/"sendrequest" actions. Still 100% classic postback
-  (`egw.open_link()`/`egw.openComposePost()` for the URL-too-long case). **Not the same shape as
-  vCard/filemanager**: its attachment is a real `tempnam()`'d filesystem `.ics` file, not a VFS
-  path - `MailCompose.applyPresetFiles()`'s `jmapVfsPath` marker doesn't apply as-is; this would
-  need either VFS-staging the .ics first (matching vCard/filemanager's shape) or a genuinely
-  different local-file upload path (`uploadAttachmentsViaJmap()`'s OTHER branch, for a real
-  locally-staged file - see its own `tmp_name`-keyed case). Also carries `preset[subject]`/
-  `preset[body]`/`preset[mimeType]`/`preset[msg]` (an info message shown to the user) - `subject`
-  and `msg` aren't handled by the current `composeWithPreset()` shape at all yet either. **DONE
-  2026-09-07, see below.**
-- **Generic `preset[subject]`/`preset[replyto]`/`preset[priority]`** - simple content-key overrides
-  classic supports for ANY preset caller, not just the ones already converted. **`subject` DONE
-  2026-09-07** (turned out to be a plain initial-content overwrite, safe the same way to/cc/bcc
-  already are - the `subject` widget's own array-manager key matches its id directly, unlike
-  `mail_htmltext`'s indirection). `replyto`/`priority` still not needed by any current caller.
+  (calendar does, see below) - not confirmed dead, just unconfirmed live. Needs a real caller found
+  before converting; not pursued further without one.
+- **Generic `preset[replyto]`/`preset[priority]`** - simple content-key overrides classic supports
+  for ANY preset caller, not just the ones already converted (`subject` is the one of this group
+  that DID turn out needed, by calendar - built 2026-09-07, see below). No current
+  `composeWithPreset()` caller needs `replyto`/`priority` yet. Would likely be as simple as
+  `subject` was (both `replyto` and `priority` widgets bind directly to their own array-manager key,
+  same as `subject` - no `mail_htmltext`-style indirection to trip over) if a caller ever needs
+  them, but not built speculatively.
 
 ## Step 10 follow-up (2026-09-07): calendar's meeting-invite mail converted
 
