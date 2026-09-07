@@ -3284,3 +3284,79 @@ itself (and its exclusively-owned helpers `getComposeFrom()`/`getDraftData()`/`g
 `getReplyData()`, plus the `jmap=1` URL-param fallback in `compose.ts`'s own `bootstrapCompose()`
 and `MailApp.compose`'s lazy URL-parsing getter) can actually be deleted - not yet done, pending
 ralf's go-ahead.
+
+## Step 10 follow-up (2026-09-07): mail_compose::compose() deleted (ralf: "delete compose and
+everything exclusivly used by it")
+
+**Deleted from `mail_compose.inc.php`** (13 methods, 2220 lines): `compose()` itself, and every
+private helper whose ONLY real caller was `compose()` or another deleted helper (verified via a
+full call-graph audit, not just a first-pass grep - the first pass missed several transitively-
+exclusive helpers, eg. `addAttachment()`/`addMessageAttachment()` were only called from the
+already-being-deleted `addPresetFiles()`/`getDraftData()`/`getForwardData()`/
+`_get_uids_as_attachments()`): `mergePresetBody()`, `addPresetFiles()`, `getComposeFrom()`,
+`generateComposeID()`, `getDraftData()`, `getForwardData()`, `addAttachment()`,
+`addMessageAttachment()`, `testIfOneKeyInArrayDoesExistInString()`, `getReplyData()`,
+`_get_uids_as_attachments()`, `get_preferred_identity()`. Removed `'compose' => True` from
+`$public_functions` (menuaction no longer resolvable). Deleted `mail/tests/ComposePresetBodyTest.php`
+(tested `mergePresetBody()` via reflection, now dead). `replaceEmailAdresses()`/
+`generateRFC822Address()`/`getErrorInfo()` were found to ALREADY have zero real callers (dead
+before this pass, not exclusive to `compose()`) - left alone, out of this pass's scope.
+
+**Two real dependencies had to be fixed first, not just deleted along with compose()** - both
+found by tracing every remaining live reference to the classic `mail.mail_compose.compose`
+menuaction, not just deleting and seeing what broke:
+
+1. **`api/js/jsapi/egw_config.ts`'s `install_mailto_handler()`** - registers EGroupware as the
+   OS/browser's own `mailto:` protocol handler (`navigator.registerProtocolHandler`), hardcoded to
+   `index.php?menuaction=mail.mail_compose.compose&preset[mailto]=%s`. A real, live, opt-in
+   feature (NOT the same as `egw_open.ts`'s own in-page `mailto()` link parser, which never
+   reached this file at all) - activating it is always a fresh top-level navigation with no
+   already-running JS to hand a parsed URI to, so classic `compose()`'s own server-side RFC 6068
+   parsing (`$_REQUEST['preset']['mailto']`) had no client-side equivalent to fall back to.
+   Repointed at `/mail/compose.php?mailto=%s`, with the RFC 6068 parsing ported into `compose.php`
+   itself (`parse_str()` on the query component - simpler and more correct than the classic
+   regex/`__AMPERSAND__`-workaround approach, since a single already-encoded `mailto` GET value
+   doesn't have that classic scheme's own delimiter-collision problem).
+2. **`openComposePopupUrl()`'s own missing POST fallback** (`mail/js/app.ts`, batch
+   forward-as-attachment) - many comma-joined message ids can make the GET url too long; this was
+   already a documented gap silently patched over by falling through to
+   `egw.openWithinWindow()`'s own classic `urlParamsTooLong()`/`openComposePost()` path (which
+   posted into `mail_compose::compose()`). Built the real fix instead of losing it: new
+   `openComposePopupUrlPost()` (mirrors `composeWithPresetPost()`'s technique - open a blank popup,
+   POST `id` into it as a form field, `from`/`acc_id`/`mode`/`smime_type` stay in the url's query
+   string since they're always short) - `compose.php` now reads all 5 of those via `$_REQUEST`
+   (not `$_GET`-only) so the POST path works. With this closing the gap for real,
+   `egw_open.ts`'s `openComposePost()` (hardcoded to the classic menuaction) and its only helper
+   `urlParamsPairs()` were deleted outright - nothing calls them any more (confirmed: every real
+   `openWithinWindow("mail", ...)` caller across the whole codebase already supplies its own
+   `_open_new` override, so `openWithinWindow()`'s own classic-fallback branch, which called
+   `openComposePost()`, was simplified to just the plain GET-url open, never truly generic despite
+   accepting an `_app` parameter). `EgwOpen.test.ts`'s dedicated `openComposePost()` test suite
+   removed/replaced with tests confirming `openWithinWindow()` has no built-in POST fallback of its
+   own any more - each caller's responsibility now.
+
+**Two pre-existing, unrelated bugs found while tracing every reference, deliberately NOT fixed
+(out of this pass's scope - neither is "used by compose()", they're dead/broken independent of
+compose() existing)**:
+- `mail/src/Ui/ImportHandler.php`'s `importMessageFromVFS2DraftAndDisplay()` builds a redirect to
+  `mail.mail_compose.composeFromDraft` for its `$mode != 'display'` branch - that method never
+  existed on `mail_compose` (only `compose()` did, with `from=composefromdraft` as a parameter,
+  not a separate method name). Its only real caller (`mail_hooks.inc.php`'s `.eml`-file mime
+  handler) always uses the default `$mode='display'`, so this branch appears to be unreachable in
+  practice - not verified further.
+- `addressbook/inc/class.addressbook_ui.inc.php`'s `email2link()` builds a link to
+  `mail.mail_compose.compose` (now deleted) - confirmed zero real callers anywhere in the
+  codebase, already fully dead before this pass.
+
+**Verified**: `php -l` clean on all touched PHP files. `npx tsc --noEmit` clean except pre-existing
+baseline errors (confirmed via `git stash` comparison - the 2 `egw_open.ts` errors that looked new
+turned out to be the same pre-existing errors at shifted line numbers after the deletions). Full
+jstest: `mail` (197/197), `api/js/jsapi/test/*` (478/478, includes the rewritten `EgwOpen.test.ts`),
+`calendar`+`addressbook`+`filemanager` (7/7) - all green.
+
+**Still NOT deleted, deliberately left for a later pass** (dead-but-inert, not a correctness risk,
+lower priority than the above): `compose.ts`'s own `bootstrapCompose()` "classic `&jmap=1` URL
+params" fallback branch (unreachable now - nothing constructs a `MailCompose` without going
+through `bootstrapComposePopup()`'s own `explicitBootstrap` any more) and `MailApp.compose`'s lazy
+getter's `if(!window.app._compose) { new MailCompose(this) }` branch (same reasoning - always
+pre-constructed with `explicitBootstrap` before anything reads the getter now).
