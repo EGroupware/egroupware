@@ -3137,3 +3137,39 @@ files"/"share link", calendar's meeting-invite mail) opens without a server roun
 backlog is narrow: `replyto`/`priority` generic preset fields (no current caller needs them); a
 tester-reported "right-click unread first row, delete fails on first try" bug - UNREPRODUCIBLE by
 ralf or here, tester was on an older already-pushed version, needs a tighter repro.
+
+## FIXED (2026-09-07): reply/forward opened compose.php with `acc_id=mail`
+
+Real tester report (pole.egroupware.org): replying to/forwarding a message opened
+`mail/compose.php?...&acc_id=mail&...` - obviously wrong, and sometimes surfaced downstream as
+`mail_wizard`'s own "add account" dialog opening empty.
+
+**Root cause**: `MailApp.composeMessage()`'s own accId computation read
+`settings.id.split('::')[0]` - but a mail row id is
+`mail::<accountID>::<profileID>::<folderID>::<emailID>` (`Api\Mail::splitRowID()`'s own canonical
+5-part shape), so index 0 is always the literal string `"mail"` (the app-name segment), never an
+account id - index 2 is the real profileID. Introduced in the very first Step 10 commit
+(`7ec1eefa56`) and copied into the later batch-forwardasattach branch (`43c0f9384f`) - neither ever
+got exercised with a REAL reply/forward row id while testing (only synthetic URLs where acc_id was
+already known and passed in directly).
+
+**The "mail_wizard opens empty" half is not a separate bug**: `admin_mail::edit()`'s own
+`(int)$_GET['acc_id'] > 0` guard already handles a garbage acc_id safely (falls through to its
+"no account configured, add new" flow) - it just looks like "the wizard is broken" rather than
+"a wrong acc_id was passed to it". No server-side change needed there once the root cause is fixed.
+
+**Fix**: extracted a shared `rowIdProfileID(id)` helper (`mail/js/app.ts`) -
+`id.split(',')[0].split('::')[2]` (the `split(',')` handles the batch-forward case, where `id` can
+be several comma-joined row ids; only the first one's profileID is ever needed, since a batch is
+always composed from a single account) - used at both call sites. Other `.split('::')[0]` uses
+elsewhere in `mail/js/app.ts` (`spamfolderEnabled()`, `sieveEnabled()`, `setPredefinedAddresses()`,
+`refreshQuotaDisplay()`) were checked and are NOT the same bug - they operate on folder-tree node
+ids (a different, genuinely 2-part `profileID::folderName` shape, no `mail::` app-name prefix),
+where index 0 really is the profileID.
+
+**Verified**: new regression test (`mail/js/test/ComposeMessageAccId.test.ts`) covers single
+reply, single forward, and batch forward-as-attachment - deliberately reverted the fix first to
+confirm all three actually fail without it (`acc_id` resolves to the literal string `"mail"`), then
+confirmed they pass with it restored. Live-verified against a real message
+(`mail::5::42::SU5CT1g=::184754`) - `composeMessage()` now correctly resolves `acc_id=42`. `npx tsc
+--noEmit`/`npm run build` clean, full `mail` jstest group green (194/194).
