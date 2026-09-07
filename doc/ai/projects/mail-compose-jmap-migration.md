@@ -2855,3 +2855,104 @@ click), run `updateSignatureForIdentity()`'s own marker-removal logic, re-apply
 switch (it did NOT before the fix, verified against the unfixed function beforehand) while the old
 signature is correctly gone and the new one present. A second run with 'below' placement (the
 already-working case) confirms no regression there. `npx tsc --noEmit`/`npm run build` clean.
+
+## Step 10 (eliminate the server round-trip for opening the compose popup) - IN PROGRESS (2026-09-06/07)
+
+New message, reply, reply_all, forward, forward_attachments, and composeasnew now all open their
+popup without a `menuaction=mail.mail_compose.compose&...` render: `MailApp.composeMessage()`
+navigates straight to a static-shaped popup, whose own bootstrap calls the already-JMAP-native
+`bootstrapReply()`/`bootstrapComposeAsNew()`/`applySignatureForCurrentIdentity()` (all built in
+earlier steps) instead of a classic postback. `EgwApp.bootstrapClientSideTemplate()`
+(`api/js/jsapi/egw_app.ts`, deliberately generic/non-mail) does the actual DOM/etemplate2
+construction any such caller needs - reused as-is by this popup's own bootstrap.
+
+**Superseded design, mid-flight (2026-09-07)**: the mechanism originally built (2026-09-06,
+`1e38fc4f68`) opened the popup via a new `egw.clientSidePopup(method, width, height)` primitive
+(`api/js/jsapi/egw_open.ts`) - `window.open('about:blank', ...)` synchronously in the click handler
+(to survive popup blockers), then copying the opener's own `<script>`/`<link>` tags into it so
+nothing re-fetches, then invoking `method` once those finish loading. Two real problems surfaced
+live: Chrome permanently flags the popup with its third-party-cookie warning (an about:blank
+document has no real top-level HTTP response of its own, so its security context stays opaque even
+though every script it runs is same-origin), and reloading (F5) the popup shows a blank page (there
+is nothing at `about:blank` for the browser to re-fetch). Ralf, given a pro/con comparison focused
+specifically on round-trip counts, chose "Option B: a tiny server-side PHP endpoint... incl.
+immediately closing the session, and no IMAP/JMAP opening server-side" over a static
+`compose.html` + GET-params alternative.
+
+**Built**: `mail/compose.php` - a thin, mail-agnostic popup shell reached via a REAL navigation
+(fixes both bugs above). Sets `noheader=>true` explicitly (found live: `Egw::load_optional_classes()`
+otherwise auto-echoes `header()` itself before control returns here, silently no-op'ing this file's
+own later `header()` call and the `Api\Framework::set_extra()` data it was supposed to carry - the
+same reason classic `mail_compose::compose()`, reached via `index.php`, already gets `noheader`
+for free). Explicitly `Api\Framework::includeJS('/mail/js/app.min.js')` before `header()` (found
+live: `Framework::_get_js()`'s per-session "already sent this app's own bundle" tracking otherwise
+omits it here, exactly the same class of bug `clientSidePopup()` itself hit earlier). Commits
+(closes) the session immediately, same pattern as `json.php`/`mail/jmap.php`, since nothing here
+writes to it. `egw.js`'s own `data-start` bootstrap handling (previously only for a JS-injected,
+`clientSidePopup()`-only bare `data-start`) now also checks `data-$app-start`
+(`Api\Framework::set_extra($app, 'start', ...)`'s own attribute name), so a real server-rendered
+page can use the identical "call one app method once the framework's ready" mechanism.
+`egw.clientSidePopup()` itself is left untouched, still available as a general framework primitive
+for other future callers - only mail compose moved off it.
+
+**`Api\Etemplate::clientSideBootstrap($name)` added** (`api/src/Etemplate.php`) - a small,
+non-mail-specific helper giving a client-side-only bootstrap exactly the two things it needs from
+a template, without `exec()`'s own expensive `self::instance()` XML-parse (only needed to fill
+`sel_options`/run `beforeSendToClient()`/build the full postback machinery - irrelevant when the
+client was never going to submit this template back via a classic postback at all): a fresh
+`Etemplate\Request` `etemplate_exec_id`, and the SAME `/api/etemplate.php`-routed, real-mtime-
+cache-busted url `exec()`'s own `$load_array['url']` already uses (`rel2url()`). This replaced two
+separate bugs found chasing "does compose.xet have the correct cache-buster/timestamp?": (a) the
+from-scratch bootstrap's `etemplate2.load()` call was passing an empty url, so `Et2Template.
+getUrl()` fell back to a once-a-day guessed cache-buster (real staleness risk after a same-day
+deploy) - `bootstrapClientSideTemplate()` now takes an explicit `url` param and passes it straight
+through; (b) that same empty-url fallback fetches the raw `.xet` directly, entirely bypassing
+`/api/etemplate.php`'s legacy-to-modern-web-component XML conversion + disk caching that every
+classic page's template implicitly relies on - `clientSideBootstrap()`'s url goes through it
+correctly instead. Live-verified: `<et2-template>`'s own `.url` resolves to
+`/api/etemplate.php/mail/templates/default/compose.xet?<real file mtime>`, not the old
+`?download=<day-number>` pattern.
+
+`ajax_getComposeSession()` (`mail_compose.inc.php`) - a workaround added earlier the same day purely
+to get an `etemplate_exec_id` for the file-upload widget (`Api\Etemplate\Widget\File::ajax_upload()`
+looks one up unconditionally) - is gone again: `compose.php` now calls `clientSideBootstrap()`
+itself (a cheap `Api\Cache` write, not a session write - `Etemplate\Request\Cache`, not
+`Request\Session` - so it's unaffected by committing the session early) and hands
+`{name, url, etemplate_exec_id}` down through the same `data-mail-start` args, eliminating what
+would otherwise have been a whole extra client round-trip on every compose open.
+
+**Also fixed along the way**: predefined-compose-addresses preference now applied for a genuinely
+new (blank) compose bootstrapped this way (reply/forward deliberately NOT extended - a separate,
+more invasive change); S/MIME sign/encrypt toolbar pre-check for a bootstrapped reply/forward now
+matches classic `compose()`'s own `$_content['composeToolbar']['smime_sign'/'smime_encrypt']`
+presets; file-upload support (the `ajax_getComposeSession()`/`clientSideBootstrap()` work above);
+`Api\Hooks::count()` crashed with a `TypeError` for any hook location no app has ever registered
+(`count(null)` under PHP 8) - found blocking a file-upload test, fixed generically
+(`api/src/Hooks.php`); a CSS gap between the attachment/filemode row and TinyMCE once a file is
+attached; the popup's window title not updating for a bootstrapped reply/forward (`Et2Textbox.
+set_value()`, unlike `Et2Select`, doesn't fire a `change` event, so `compose.xet`'s subject
+onchange wiring never ran - `bootstrapCompose()` now explicitly refreshes the title itself once it
+has set the real subject).
+
+**`mail_compose_prepare` hook survival** (see the design sketch above, 2026-09-03) - only the
+"skip the round trip entirely when nothing implements the hook" optimization is built so far:
+`ProfileHandler::jmapBootstrap()` now sends a `hasComposePrepareHook` flag to the client once,
+riding along on the per-account bootstrap every JMAP operation already triggers
+(`MailJmap.ensureToken()`), and `MailJmap.hasComposePrepareHook(profileID)` reads it back. Ralf,
+mid-testing: "finish with the prepare hook, I'm just testing uploads" - the actual
+`ajax_prepareCompose()` endpoint (the "Proposed design" section above) and its client-side call are
+**deliberately not built yet**, paused on explicit instruction, not forgotten.
+
+**Explicitly out of scope for this pass** (still classic postback, unchanged): `mailto:` links,
+addressbook "email vCard", filemanager "mail selected files"/"share link", and batch
+forward-as-attachment - each builds its long URL from a different source (a raw `mailto:` URI, VFS
+paths, a list of message ids) and needs its own small client-side rework to resolve that source via
+JMAP/VFS instead of a URL param, deferred to a follow-up.
+
+**Remaining backlog for this step**: the `ajax_prepareCompose()` hook-invocation endpoint above; the
+explicitly-deferred entry points above; live-testing draft-close-without-sending behaviour was
+checked as a side question (confirmed unchanged/pre-existing - closing a compose popup without
+sending still leaves the draft in the Drafts folder, "a safety net" per ralf, not a regression); a
+tester-reported "right-click an unread first row, delete doesn't work on the first try" bug could
+not be reproduced by ralf or via several attempts here - the tester was on an older, already-pushed
+version, not this work in progress; needs a tighter repro before further investigation.
