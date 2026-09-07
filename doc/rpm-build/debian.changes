@@ -1,3 +1,14 @@
+egroupware-docker (26.9.20260907) hardy; urgency=low
+
+  * Addressbook: fix international address style
+  * Addressbook: state/territory selection for Australian addresses
+  * Api: fix history now showing anything
+  * Calendar: fix 6 month event purge was not taking 6 months
+  * Mail: fix import-message upload not submitting
+  * Mail: fix uncaught exception crashing send/save-as-draft when a server-side referenced attachment's source message is gone
+
+ -- Ralf Becker <rb@egroupware.org>  Mon, 07 Sep 2026 11:20:39 +0200
+
 egroupware-docker (26.8.20260825) hardy; urgency=low
 
   * SECURITY: this release fixes one critical and multiple high level security vulnerabilities, everyone is strongly adviced to update to it!
