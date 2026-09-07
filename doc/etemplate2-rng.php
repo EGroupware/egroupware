@@ -655,8 +655,22 @@ function attributes(array $component, ?SimpleXMLElement $attrs=null)
 				$choice->addChild('value', 'false');
 				$choice->addChild('value', 'true');
 				$choice->addChild('value', '1');    // often used in our templates
-				// not understood by DTD :(
-				//$choice->addChild('text');  // as we allow "@<attr>" or "$cont[name]"
+				// dynamic expression forms used throughout real templates, e.g.
+				// disabled="!@showsearchbuttons" or private="$cont[no_private_cfs]" - RelaxNG can
+				// express "one of these literals, OR a string matching this pattern", correct here
+				// for anything that validates against the .rng directly. Does NOT survive
+				// conversion to DTD though: DTD attribute types are either a fixed keyword or a
+				// literal enumeration, never both, so PHPStorm's RNG->DTD step has no way to carry
+				// this branch through (confirmed - a plain <text/> here hit the same wall, see
+				// git blame). By team decision (2026-09-07) the DTD keeps the strict enum and
+				// tolerates these being flagged there.
+				$pattern = $choice->addChild('data');
+				// the "pattern" facet param needs the XSD datatype library - RelaxNG's own
+				// built-in library (used when datatypeLibrary is omitted) doesn't support any
+				// <param>s at all
+				$pattern->addAttribute('datatypeLibrary', 'http://www.w3.org/2001/XMLSchema-datatypes');
+				$pattern->addAttribute('type', 'token');
+				$pattern->addChild('param', '!?[@$].*')->addAttribute('name', 'pattern');
 				break;
             case 'any':
                 break;
