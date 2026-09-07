@@ -450,9 +450,9 @@
   <define name="row">
     <element name="row">
       <ref name="attlist.row"/>
-      <oneOrMore>
+      <zeroOrMore>
         <ref name="Widgets"/>
-      </oneOrMore>
+      </zeroOrMore>
     </element>
   </define>
   <define name="attlist.row" combine="interleave">
@@ -3604,7 +3604,9 @@
       <attribute name="class"/>
     </optional>
     <attribute name="id"/>
-    <attribute name="label"/>
+    <optional>
+      <attribute name="label"/>
+    </optional>
     <optional>
       <attribute name="readonly"/>
     </optional>
@@ -3698,7 +3700,9 @@
       <attribute name="class"/>
     </optional>
     <attribute name="id"/>
-    <attribute name="label"/>
+    <optional>
+      <attribute name="label"/>
+    </optional>
     <optional>
       <attribute name="span"/>
     </optional>
@@ -3726,7 +3730,9 @@
       <attribute name="class"/>
     </optional>
     <attribute name="id"/>
-    <attribute name="label"/>
+    <optional>
+      <attribute name="label"/>
+    </optional>
     <optional>
       <attribute name="readonly"/>
     </optional>
@@ -3818,6 +3824,18 @@
     </optional>
     <optional>
       <attribute name="disabled">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="editModeEnabled">
         <choice>
           <value>false</value>
           <value>true</value>
@@ -4048,6 +4066,18 @@
       <attribute name="parentId"/>
     </optional>
     <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="resolveTarget"/>
     </optional>
     <optional>
@@ -4183,6 +4213,18 @@
     </optional>
     <optional>
       <attribute name="parentId"/>
+    </optional>
+    <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="rowCount"/>
@@ -4323,6 +4365,18 @@
     </optional>
     <optional>
       <attribute name="parentId"/>
+    </optional>
+    <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="slot"/>
@@ -4467,6 +4521,18 @@
       <attribute name="parentId"/>
     </optional>
     <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="shape"/>
     </optional>
     <optional>
@@ -4569,6 +4635,18 @@
     </optional>
     <optional>
       <attribute name="parentId"/>
+    </optional>
+    <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="slot"/>
@@ -4696,6 +4774,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -4748,6 +4838,12 @@
     </optional>
     <optional>
       <attribute name="align"/>
+    </optional>
+    <optional>
+      <attribute name="cellpadding"/>
+    </optional>
+    <optional>
+      <attribute name="cellspacing"/>
     </optional>
     <optional>
       <attribute name="class"/>
@@ -4808,6 +4904,18 @@
     </optional>
     <optional>
       <attribute name="parentId"/>
+    </optional>
+    <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="slot"/>
@@ -5271,6 +5379,18 @@
       <attribute name="parentId"/>
     </optional>
     <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -5538,6 +5658,18 @@
     </optional>
     <optional>
       <attribute name="noSubmit">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="readonly">
         <choice>
           <value>false</value>
           <value>true</value>
@@ -6146,6 +6278,18 @@
       <attribute name="parentId"/>
     </optional>
     <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -6260,6 +6404,18 @@
     </optional>
     <optional>
       <attribute name="pill">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="readonly">
         <choice>
           <value>false</value>
           <value>true</value>
@@ -7182,6 +7338,18 @@
       <attribute name="parentId"/>
     </optional>
     <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -7287,6 +7455,18 @@
     </optional>
     <optional>
       <attribute name="parentId"/>
+    </optional>
+    <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="slot"/>
@@ -7525,6 +7705,18 @@
     </optional>
     <optional>
       <attribute name="parentId"/>
+    </optional>
+    <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="slot"/>
@@ -7770,6 +7962,18 @@
     </optional>
     <optional>
       <attribute name="parentId"/>
+    </optional>
+    <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="selection-mode"/>
@@ -8947,6 +9151,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -8995,6 +9211,18 @@
     </optional>
     <optional>
       <attribute name="align"/>
+    </optional>
+    <optional>
+      <attribute name="boldItalic">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="class"/>
@@ -9048,6 +9276,21 @@
       <attribute name="label"/>
     </optional>
     <optional>
+      <attribute name="labelFor"/>
+    </optional>
+    <optional>
+      <attribute name="link"/>
+    </optional>
+    <optional>
+      <attribute name="linkPopupSize"/>
+    </optional>
+    <optional>
+      <attribute name="linkTarget"/>
+    </optional>
+    <optional>
+      <attribute name="linkTitle"/>
+    </optional>
+    <optional>
       <attribute name="markdown">
         <choice>
           <value>false</value>
@@ -9076,6 +9319,18 @@
     </optional>
     <optional>
       <attribute name="parentId"/>
+    </optional>
+    <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="slot"/>
@@ -9134,6 +9389,18 @@
       <attribute name="align"/>
     </optional>
     <optional>
+      <attribute name="boldItalic">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="class"/>
     </optional>
     <optional>
@@ -9185,6 +9452,21 @@
       <attribute name="label"/>
     </optional>
     <optional>
+      <attribute name="labelFor"/>
+    </optional>
+    <optional>
+      <attribute name="link"/>
+    </optional>
+    <optional>
+      <attribute name="linkPopupSize"/>
+    </optional>
+    <optional>
+      <attribute name="linkTarget"/>
+    </optional>
+    <optional>
+      <attribute name="linkTitle"/>
+    </optional>
+    <optional>
       <attribute name="markdown">
         <choice>
           <value>false</value>
@@ -9222,6 +9504,18 @@
     </optional>
     <optional>
       <attribute name="parentId"/>
+    </optional>
+    <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="slot"/>
@@ -9364,6 +9658,18 @@
     </optional>
     <optional>
       <attribute name="parentId"/>
+    </optional>
+    <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="slot"/>
@@ -9569,6 +9875,18 @@
     </optional>
     <optional>
       <attribute name="parentId"/>
+    </optional>
+    <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="slot"/>
@@ -9886,6 +10204,18 @@
       <attribute name="placement"/>
     </optional>
     <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="skidding"/>
     </optional>
     <optional>
@@ -9908,6 +10238,18 @@
     </optional>
     <optional>
       <attribute name="stay-open-on-select">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="stayOpenOnSelect">
         <choice>
           <value>false</value>
           <value>true</value>
@@ -10455,6 +10797,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="removable">
         <choice>
           <value>false</value>
@@ -10965,6 +11319,18 @@
       <attribute name="parentId"/>
     </optional>
     <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -11353,6 +11719,18 @@
       <attribute name="progress"/>
     </optional>
     <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="size"/>
     </optional>
     <optional>
@@ -11455,6 +11833,18 @@
     </optional>
     <optional>
       <attribute name="disabled">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="editModeEnabled">
         <choice>
           <value>false</value>
           <value>true</value>
@@ -11911,6 +12301,18 @@
       <attribute name="parentId"/>
     </optional>
     <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -11984,6 +12386,12 @@
       <attribute name="align"/>
     </optional>
     <optional>
+      <attribute name="cellpadding"/>
+    </optional>
+    <optional>
+      <attribute name="cellspacing"/>
+    </optional>
+    <optional>
       <attribute name="class"/>
     </optional>
     <optional>
@@ -12042,6 +12450,18 @@
     </optional>
     <optional>
       <attribute name="parentId"/>
+    </optional>
+    <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="slot"/>
@@ -12295,6 +12715,18 @@
     </optional>
     <optional>
       <attribute name="parentId"/>
+    </optional>
+    <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="slot"/>
@@ -12731,6 +13163,18 @@
       <attribute name="parentId"/>
     </optional>
     <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="seamless">
         <choice>
           <value>false</value>
@@ -12868,6 +13312,18 @@
       <attribute name="parentId"/>
     </optional>
     <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -12994,6 +13450,18 @@
     </optional>
     <optional>
       <attribute name="parentId"/>
+    </optional>
+    <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="slot"/>
@@ -13144,6 +13612,18 @@
       <attribute name="parentId"/>
     </optional>
     <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="shape"/>
     </optional>
     <optional>
@@ -13203,6 +13683,18 @@
       <attribute name="align"/>
     </optional>
     <optional>
+      <attribute name="boldItalic">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="class"/>
     </optional>
     <optional>
@@ -13254,6 +13746,21 @@
       <attribute name="label"/>
     </optional>
     <optional>
+      <attribute name="labelFor"/>
+    </optional>
+    <optional>
+      <attribute name="link"/>
+    </optional>
+    <optional>
+      <attribute name="linkPopupSize"/>
+    </optional>
+    <optional>
+      <attribute name="linkTarget"/>
+    </optional>
+    <optional>
+      <attribute name="linkTitle"/>
+    </optional>
+    <optional>
       <attribute name="markdown">
         <choice>
           <value>false</value>
@@ -13282,6 +13789,18 @@
     </optional>
     <optional>
       <attribute name="parentId"/>
+    </optional>
+    <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="slot"/>
@@ -13401,6 +13920,18 @@
     </optional>
     <optional>
       <attribute name="parentId"/>
+    </optional>
+    <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="slot"/>
@@ -13689,6 +14220,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="editModeEnabled">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="emptyLabel"/>
     </optional>
     <optional>
@@ -13943,6 +14486,9 @@
     </optional>
     <optional>
       <attribute name="onclick"/>
+    </optional>
+    <optional>
+      <attribute name="onlyApp"/>
     </optional>
     <optional>
       <attribute name="parentId"/>
@@ -14458,6 +15004,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="editModeEnabled">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="emptyLabel"/>
     </optional>
     <optional>
@@ -14685,6 +15243,18 @@
     </optional>
     <optional>
       <attribute name="parentId"/>
+    </optional>
+    <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="showDeleted">
@@ -15167,6 +15737,18 @@
       <attribute name="parentId"/>
     </optional>
     <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -15280,6 +15862,18 @@
     </optional>
     <optional>
       <attribute name="path"/>
+    </optional>
+    <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="slot"/>
@@ -15422,6 +16016,18 @@
       <attribute name="placeholder"/>
     </optional>
     <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="rows"/>
     </optional>
     <optional>
@@ -15529,6 +16135,18 @@
       <attribute name="parentId"/>
     </optional>
     <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -15625,6 +16243,18 @@
     </optional>
     <optional>
       <attribute name="parentId"/>
+    </optional>
+    <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="slot"/>
@@ -16446,6 +17076,18 @@
       <attribute name="parentId"/>
     </optional>
     <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="settings"/>
     </optional>
     <optional>
@@ -16927,6 +17569,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="editModeEnabled">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="emptyLabel"/>
     </optional>
     <optional>
@@ -17136,6 +17790,18 @@
     </optional>
     <optional>
       <attribute name="disabled">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="editModeEnabled">
         <choice>
           <value>false</value>
           <value>true</value>
@@ -17359,6 +18025,18 @@
     </optional>
     <optional>
       <attribute name="disabled">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="editModeEnabled">
         <choice>
           <value>false</value>
           <value>true</value>
@@ -17595,6 +18273,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="editModeEnabled">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="emptyLabel"/>
     </optional>
     <optional>
@@ -17815,6 +18505,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="editModeEnabled">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="emptyLabel"/>
     </optional>
     <optional>
@@ -18024,6 +18726,18 @@
     </optional>
     <optional>
       <attribute name="disabled">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="editModeEnabled">
         <choice>
           <value>false</value>
           <value>true</value>
@@ -18521,6 +19235,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="editModeEnabled">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="emptyLabel"/>
     </optional>
     <optional>
@@ -18730,6 +19456,18 @@
     </optional>
     <optional>
       <attribute name="disabled">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="editModeEnabled">
         <choice>
           <value>false</value>
           <value>true</value>
@@ -18961,6 +19699,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="editModeEnabled">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="emptyLabel"/>
     </optional>
     <optional>
@@ -19170,6 +19920,18 @@
     </optional>
     <optional>
       <attribute name="disabled">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="editModeEnabled">
         <choice>
           <value>false</value>
           <value>true</value>
@@ -19401,6 +20163,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="editModeEnabled">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="emptyLabel"/>
     </optional>
     <optional>
@@ -19610,6 +20384,18 @@
     </optional>
     <optional>
       <attribute name="disabled">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="editModeEnabled">
         <choice>
           <value>false</value>
           <value>true</value>
@@ -19832,6 +20618,18 @@
     </optional>
     <optional>
       <attribute name="disabled">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="editModeEnabled">
         <choice>
           <value>false</value>
           <value>true</value>
@@ -20078,6 +20876,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="editModeEnabled">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="emptyLabel"/>
     </optional>
     <optional>
@@ -20313,6 +21123,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="editModeEnabled">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="emptyLabel"/>
     </optional>
     <optional>
@@ -20525,6 +21347,18 @@
     </optional>
     <optional>
       <attribute name="disabled">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="editModeEnabled">
         <choice>
           <value>false</value>
           <value>true</value>
@@ -20767,6 +21601,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="editModeEnabled">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="emptyLabel"/>
     </optional>
     <optional>
@@ -20976,6 +21822,18 @@
     </optional>
     <optional>
       <attribute name="disabled">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="editModeEnabled">
         <choice>
           <value>false</value>
           <value>true</value>
@@ -21207,6 +22065,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="editModeEnabled">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="emptyLabel"/>
     </optional>
     <optional>
@@ -21416,6 +22286,18 @@
     </optional>
     <optional>
       <attribute name="disabled">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="editModeEnabled">
         <choice>
           <value>false</value>
           <value>true</value>
@@ -21656,6 +22538,18 @@
       <attribute name="parentId"/>
     </optional>
     <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -21766,6 +22660,18 @@
     </optional>
     <optional>
       <attribute name="primary"/>
+    </optional>
+    <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="slot"/>
@@ -21882,6 +22788,18 @@
     </optional>
     <optional>
       <attribute name="parentId"/>
+    </optional>
+    <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="slot"/>
@@ -22601,6 +23519,18 @@
     </optional>
     <optional>
       <attribute name="pill">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="readonly">
         <choice>
           <value>false</value>
           <value>true</value>
@@ -23393,6 +24323,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="removable">
         <choice>
           <value>false</value>
@@ -23491,6 +24433,12 @@
           </data>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="cellpadding"/>
+    </optional>
+    <optional>
+      <attribute name="cellspacing"/>
     </optional>
     <optional>
       <attribute name="class"/>
@@ -25482,6 +26430,12 @@
       <attribute name="align"/>
     </optional>
     <optional>
+      <attribute name="cellpadding"/>
+    </optional>
+    <optional>
+      <attribute name="cellspacing"/>
+    </optional>
+    <optional>
       <attribute name="class"/>
     </optional>
     <optional>
@@ -25542,6 +26496,18 @@
       <attribute name="parentId"/>
     </optional>
     <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -25581,6 +26547,18 @@
     </optional>
     <optional>
       <attribute name="noLang">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="readonly">
         <choice>
           <value>false</value>
           <value>true</value>
@@ -25717,6 +26695,18 @@
       <attribute name="parentId"/>
     </optional>
     <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -25788,6 +26778,18 @@
       <attribute name="align"/>
     </optional>
     <optional>
+      <attribute name="boldItalic">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="class"/>
     </optional>
     <optional>
@@ -25839,6 +26841,21 @@
       <attribute name="label"/>
     </optional>
     <optional>
+      <attribute name="labelFor"/>
+    </optional>
+    <optional>
+      <attribute name="link"/>
+    </optional>
+    <optional>
+      <attribute name="linkPopupSize"/>
+    </optional>
+    <optional>
+      <attribute name="linkTarget"/>
+    </optional>
+    <optional>
+      <attribute name="linkTitle"/>
+    </optional>
+    <optional>
       <attribute name="markdown">
         <choice>
           <value>false</value>
@@ -25867,6 +26884,18 @@
     </optional>
     <optional>
       <attribute name="parentId"/>
+    </optional>
+    <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="slot"/>
@@ -26886,6 +27915,18 @@
       <attribute name="parentId"/>
     </optional>
     <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -26987,6 +28028,18 @@
       <attribute name="parentId"/>
     </optional>
     <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -27026,6 +28079,18 @@
     </optional>
     <optional>
       <attribute name="noLang">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="readonly">
         <choice>
           <value>false</value>
           <value>true</value>
@@ -27386,6 +28451,18 @@
     </optional>
     <optional>
       <attribute name="parentId"/>
+    </optional>
+    <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="slot"/>

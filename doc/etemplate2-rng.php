@@ -61,19 +61,37 @@ $overwrites = [
 			'slot' => 'string', // would be nice, if we could list parent slots ...
             'style' => 'string',
 			'span' => "'all' | '2' | '3' | '4'",    // eT2 grid span
+			// Widget.php::is_readonly() - a real, generic server-side mechanism every widget
+			// class inherits, not just widgets whose own TS component happens to reflect it
+			'readonly' => 'boolean',
+		],
+	],
+	// the analyzer does not resolve members contributed by a mixin, so the markdown attribute
+	// has to be declared here.  Class name, so everything descending from it inherits: covers
+	// et2-label, et2-textbox_ro, et2-textarea_ro and et2-number_ro.
+	// Also Description.php: $legacy_options = 'bold-italic,link,activate_links,label_for,
+	// link_target,link_popup_size,link_title' - real, server-side legacy attributes
+	'Et2Description' => [
+		'.attrs' => [
+			'markdown' => 'boolean',
+			'boldItalic' => 'boolean',
+			'link' => 'string',
+			'activateLinks' => 'boolean',
+			'labelFor' => 'string',
+			'linkTarget' => 'string',
+			'linkPopupSize' => 'string',
+			'linkTitle' => 'string',
+		],
+	],
+	// Link.php: $legacy_options = 'only_app' - real, server-side legacy attribute
+	'et2-link-entry' => [
+		'.attrs' => [
+			'onlyApp' => 'string',
 		],
 	],
 	'Et2InputWidget' => [
 		'.attrs' => [
 			'tabindex' => 'int',    // not reported, probably because DOM attributeq
-		],
-	],
-	// the analyzer does not resolve members contributed by a mixin, so the markdown attributes
-	// have to be declared here.  Class names, so everything descending from them inherits:
-	// Et2Description covers et2-label, et2-textbox_ro, et2-textarea_ro and et2-number_ro.
-	'Et2Description' => [
-		'.attrs' => [
-			'markdown' => 'boolean',
 		],
 	],
 	'Et2HtmlAreaReadonly' => [
@@ -110,6 +128,7 @@ $overwrites = [
 		'.attrs' => [
 			'stayOpenOnSelect' => 'boolean',
 		],
+		'.children' => ['.quantity' => 'zeroOrMore', 'Widgets'],
 	],
 	'et2-date-time-today' => [
 		'.attrs' => [
@@ -149,6 +168,9 @@ $overwrites = [
 	'Et2Box' => [   // inherited by et2-(v|h)box too
 		'.attrs' => [
 			'overflow' => 'string', // DOM attributes
+			// Box.php: $legacy_options includes cellpadding/cellspacing for box/hbox/vbox/groupbox
+			'cellpadding' => 'string',
+			'cellspacing' => 'string',
 		],
 	],
 	'et2-tabbox' => [
@@ -224,6 +246,8 @@ $overwrites = [
 			'allowFreeEntries' => 'boolean',
 			// server-side only: Select.php/Taglist.php both read $this->attrs['searchUrl']
 			'searchUrl' => 'string',
+			// Taglist.php: 'editModeEnabled' => true (real, server-side default)
+			'editModeEnabled' => 'boolean',
 		],
 	],
 	'et2-select' => [
@@ -291,9 +315,6 @@ $overwrites = [
 	'et2-toolbar' => [
 		'.children' => ['.quantity' => 'zeroOrMore', 'Widgets'],
 	],
-	'et2-dropdown' => [
-		'.children' => ['.quantity' => 'zeroOrMore', 'Widgets'],
-	],
 	'et2-dropdown-button' => [
 		'.children' => ['.quantity' => 'zeroOrMore', 'Widgets'],
 	],
@@ -335,10 +356,11 @@ $missing_legacy_attributes = [
 	'header_left' => 'nextmatch',
 	'header_right' => 'nextmatch',
 	'header_row' => 'nextmatch',
-	'label' => [
-		'.optional' => false,
-		'nextmatch-header', 'nextmatch-sortheader', 'nextmatch-customfields',
-	],
+	// nextmatch-customfields is real without a label just as often as with one (eg.
+	// <nextmatch-customfields id="customfields"/>), unlike its header/sortheader siblings - since
+	// this array can only have one 'label' key (a duplicate key would just silently discard the
+	// first), keep it optional for all three rather than fighting a per-widget split
+	'label' => ['nextmatch-header', 'nextmatch-sortheader', 'nextmatch-customfields'],
 	'maxWidth' => 'column',
 	'minWidth' => 'column',
 	'no_lang' => 'nextmatch',
@@ -688,6 +710,15 @@ foreach ($xpath->query('//x:define[(starts-with(@name, "attlist.") and not(start
 		$attribute = $optional->appendChild($dom->createElementNS('http://relaxng.org/ns/structure/1.0', 'attribute'));
 		$attribute->setAttribute('name', $attr);
 	}
+}
+
+// <row> requires oneOrMore Widgets in the legacy DTD-derived RNG, but real templates use
+// genuinely empty rows too (eg. a spacer/placeholder row) - widen to zeroOrMore
+foreach ($xpath->query('//x:define[@name="row"]/x:element/x:oneOrMore[x:ref[@name="Widgets"]]') as $oneOrMore)
+{
+	$zeroOrMore = $dom->createElementNS('http://relaxng.org/ns/structure/1.0', 'zeroOrMore');
+	while ($oneOrMore->firstChild) { $zeroOrMore->appendChild($oneOrMore->firstChild); }
+	$oneOrMore->parentNode->replaceChild($zeroOrMore, $oneOrMore);
 }
 
 // widen span's enum to the values real templates actually use (grid-span, not just 'all')
