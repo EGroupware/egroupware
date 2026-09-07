@@ -293,7 +293,9 @@ class admin_config
 		$content = array(
 			'tabs' => $_content['tabs'] ?: $_GET['tab'] ?? '',
 			'tabs2' => $_content['tabs2'] ?: $_GET['tab'] ?? '',
-			'template' => $appname.'.config',
+			// append a real cache-buster (like Etemplate::rel2url() does), so the client-side
+			// et2-template does NOT fall back to its own day-granularity "reload daily" cache-buster
+			'template' => $appname.'.config?'.max(filemtime($path), filemtime(EGW_SERVER_ROOT.'/api/etemplate.php')),
 			'newsettings' => array(),
 			'need_tab' => strpos(file_get_contents(EGW_SERVER_ROOT.'/'.$appname.'/templates/default/config.xet'), '<tabpanels>') === false,
 		);
