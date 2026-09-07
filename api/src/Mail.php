@@ -7082,6 +7082,51 @@ class Mail
 			$_header = ltrim(str_replace("\n","\r\n",$_header));
 			$_header .= str_replace("\n","\r\n",$_body);
 		}
+		// JMAP-FALLTHROUGH-GUARD (see [[project_jmap_imap_fallthrough_cleanup]]): the classic
+		// icServer->append() below falls through to Horde_Imap_Client_Socket, unguarded for a
+		// JMAP account (same bug class already fixed once at ImportHandler::importMessageToFolder()'s
+		// own JMAP-FALLTHROUGH-GUARD - a JMAP account has no raw IMAP connection to append to in
+		// the first place). Materialize via genuine Email/import (RFC 8621 §4.8) instead, uniformly
+		// available for both Stalwart and the local shim via jmapClient() (found again live
+		// 2026-09-07, this time via ajax_mergeSingle()'s save-as-draft branch - a different caller
+		// of this same method; ImportHandler couldn't just call this method since it needed its own
+		// copy of this fix before this one existed).
+		if ($this->icServer instanceof Mail\Imap\Jmap)
+		{
+			$raw = is_resource($_header) ? stream_get_contents($_header) : $_header;
+			try
+			{
+				$jmap = $this->icServer->jmapClient();
+				$mailboxId = $jmap->mailbox->getMailboxId($_folderName);
+				if (!$mailboxId)
+				{
+					throw new Exception\WrongUserinput(lang("Destination Folder %1 does not exist.", $_folderName));
+				}
+				// map IMAP-style '\Flag' names (eg. '\Draft', '\Seen') to their JMAP keyword
+				// equivalent ('$draft', '$seen') - '\Recent' is server-managed, has no JMAP
+				// keyword, and is silently dropped, same as it's never a real settable flag on
+				// the classic path either
+				$keywords = [];
+				foreach (is_array($_flags) ? $_flags : explode(',', (string)$_flags) as $flag)
+				{
+					if (($flag = trim($flag, " \t\\")) === '' || strcasecmp($flag, 'Recent') === 0)
+					{
+						continue;
+					}
+					$keywords['$'.strtolower($flag)] = true;
+				}
+				$blobId = $jmap->uploadBlob($raw, 'message/rfc822');
+				return $jmap->emailImport($blobId, $_folderName, $keywords);
+			}
+			catch (Exception\WrongUserinput $e)
+			{
+				throw $e;
+			}
+			catch (\Throwable $e)
+			{
+				throw new Exception\WrongUserinput(lang("Could not append Message:").' '.$e->getMessage());
+			}
+		}
 		// the recent flag is the default enforced here ; as we assume the _flags is always set,
 		// we default it to hordes default (Recent) (, other wise we should not pass the parameter
 		// for flags at all)
@@ -8012,12 +8057,26 @@ class Mail
 					{
 						if ($openAsDraft)
 						{
-							if($this->folderExists($_folder,true))
+							// JMAP-FALLTHROUGH-GUARD (see [[project_jmap_imap_fallthrough_cleanup]]):
+							// folderExists() falls through to Horde_Imap_Client_Socket for a JMAP
+							// icServer, opening a real raw IMAP connection to what is (for a JMAP/
+							// Stalwart account) a JMAP(S)-only endpoint - always fails, so $_folder
+							// (already resolved JMAP-natively via getDraftFolder()/getSentFolder(),
+							// see _getSpecialUseFolder()'s own guard above) would always be treated
+							// as "does not exist" here, silently dropping the merge (found live
+							// 2026-09-07 testing ajax_mergeSingle(), mail-compose-jmap-migration.md
+							// Step 10's 3rd caller - the first real caller of this branch; ajax_merge()'s
+							// multi-recipient path always forces the send branch above instead).
+							// isSentFolder()/isDraftFolder() below have the same fallthrough in their
+							// own internal folderExists() call, so also skip their existence check
+							// (checkexistance=false) - the folder is already known to exist by then.
+							$folderKnownToExist = $this->icServer instanceof Mail\Imap\Jmap || $this->folderExists($_folder,true);
+							if($folderKnownToExist)
 							{
-								if($this->isSentFolder($_folder))
+								if($this->isSentFolder($_folder, false))
 								{
 									$flags = '\\Seen';
-								} elseif($this->isDraftFolder($_folder)) {
+								} elseif($this->isDraftFolder($_folder, false)) {
 									$flags = '\\Draft';
 								} else {
 									$flags = '';
