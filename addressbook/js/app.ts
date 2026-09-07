@@ -1112,7 +1112,16 @@ class AddressbookApp extends EgwApp
 			content.data.files.file.push("vfs://default/apps/addressbook/"+idToUse+"/.entry");
 			content.data.files.type.push("text/vcard; charset="+(egw.preference('vcard_charset', 'addressbook') || 'utf-8'));
 		}
-		egw.openWithinWindow("mail", "setCompose", content, link, /mail.mail_compose.compose/);
+		// Matches an already-open compose popup's own url, classic (mail_compose.compose) OR
+		// client-side-only (mail/compose.php, doc/ai/projects/mail-compose-jmap-migration.md Step
+		// 10) - MailApp.setCompose() works identically for either kind of popup, it only ever
+		// touches the loaded etemplate2/widgets, never the popup's own opening url (found live
+		// 2026-09-07 fixing the same gap in mail/js/app.ts and egw_open.ts's own mailto() - this
+		// call never got the fix along with those). This entry point itself still opens a NEW
+		// popup via the classic postback when nothing's open to reuse - vCard's own VFS-attach
+		// content shape needs genuine JMAP-blob-upload support before that part can convert too
+		// (same gap as filemanager's "mail selected files"/"share link" and "Attach from VFS").
+		egw.openWithinWindow("mail", "setCompose", content, link, /mail_compose\.compose|\/mail\/compose\.php/);
 
 		for (const index in content)
 		{

@@ -530,7 +530,16 @@ export class filemanagerAPP extends EgwApp
 		content.data.files["filemode"] = params['preset[filemode]'];
 		// always open compose in html mode, as attachment links look a lot nicer in html
 		params["mimeType"] = 'html';
-		return egw.openWithinWindow("mail", "setCompose", content, params, /mail.mail_compose.compose/, true);
+		// Matches an already-open compose popup's own url, classic (mail_compose.compose) OR
+		// client-side-only (mail/compose.php, doc/ai/projects/mail-compose-jmap-migration.md Step
+		// 10) - MailApp.setCompose() works identically for either kind of popup, it only ever
+		// touches the loaded etemplate2/widgets, never the popup's own opening url (found live
+		// 2026-09-07 fixing the same gap in mail/js/app.ts and egw_open.ts's own mailto() - this
+		// call never got the fix along with those). This entry point itself still opens a NEW
+		// popup via the classic postback when nothing's open to reuse - VFS-attach content needs
+		// genuine JMAP-blob-upload support before that part can convert too (same gap as
+		// addressbook's vCard-attach and "Attach from VFS").
+		return egw.openWithinWindow("mail", "setCompose", content, params, /mail_compose\.compose|\/mail\/compose\.php/, true);
 	}
 
 	/**
@@ -603,7 +612,11 @@ export class filemanagerAPP extends EgwApp
 			mail_htmltext: ['<br /><a href="'+_data.share_link + '">'+_data.title+'</a>'],
 			mail_plaintext: ["\n"+_data.share_link]
 		};
-		return egw.openWithinWindow("mail", "setCompose", content, params, /mail.mail_compose.compose/);
+		// see open_mail()'s own comment above - same regex fix, same "still classic postback for a
+		// genuinely new popup" scope (this content shape is plain text fields though, not a VFS
+		// attachment, so reusing an ALREADY-open JMAP-mode popup via setCompose() already works
+		// today; only opening a brand NEW one still goes through the classic menuaction url).
+		return egw.openWithinWindow("mail", "setCompose", content, params, /mail_compose\.compose|\/mail\/compose\.php/);
 	}
 
 	/**
