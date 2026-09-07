@@ -173,6 +173,14 @@
             #mail-compose .attachments {
             margin-bottom: 0.5em;
             }
+            /* filemodeRow itself has no bottom margin of its own - only ever noticeable once an
+               attachment makes the row actually visible (it's otherwise collapsed/empty-looking
+               either way) - found live 2026-09-07 testing file uploads against the clientSidePopup
+               compose bootstrap, ralf: "no gap between the after upload displayed attachment mode
+               row and Tiny" */
+            #mail-compose .filemodeRow {
+            margin-bottom: 0.5em;
+            }
         </styles>
     </template>
 </overlay>
