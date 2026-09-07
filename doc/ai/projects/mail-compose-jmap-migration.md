@@ -2943,16 +2943,55 @@ mid-testing: "finish with the prepare hook, I'm just testing uploads" - the actu
 `ajax_prepareCompose()` endpoint (the "Proposed design" section above) and its client-side call are
 **deliberately not built yet**, paused on explicit instruction, not forgotten.
 
-**Explicitly out of scope for this pass** (still classic postback, unchanged): `mailto:` links,
-addressbook "email vCard", filemanager "mail selected files"/"share link", and batch
-forward-as-attachment - each builds its long URL from a different source (a raw `mailto:` URI, VFS
-paths, a list of message ids) and needs its own small client-side rework to resolve that source via
-JMAP/VFS instead of a URL param, deferred to a follow-up.
+**Explicitly out of scope for this pass** (still classic postback, unchanged): addressbook "email
+vCard", filemanager "mail selected files"/"share link", and batch forward-as-attachment - each
+builds its long URL from a different source (VFS paths, a list of message ids) and needs its own
+small client-side rework to resolve that source via JMAP/VFS instead of a URL param, deferred to a
+follow-up. `mailto:` links themselves are now converted too (2026-09-07, see below) - the first of
+this list to move.
 
-**Remaining backlog for this step**: the `ajax_prepareCompose()` hook-invocation endpoint above; the
-explicitly-deferred entry points above; live-testing draft-close-without-sending behaviour was
-checked as a side question (confirmed unchanged/pre-existing - closing a compose popup without
-sending still leaves the draft in the Drafts folder, "a safety net" per ralf, not a regression); a
-tester-reported "right-click an unread first row, delete doesn't work on the first try" bug could
-not be reproduced by ralf or via several attempts here - the tester was on an older, already-pushed
-version, not this work in progress; needs a tighter repro before further investigation.
+## Step 10 follow-up (2026-09-07): mail_compose_prepare hook endpoint built, mailto: converted
+
+**`ajax_prepareCompose()` built** - the design sketch above's own "Proposed design" endpoint. A new
+`mail_compose::runComposePrepareHook()` (extracted from `compose()`'s own inline hook-merge block,
+byte-for-byte the same logic, used by both) runs `Api\Hooks::process('mail_compose_prepare', ...)`
+and merges any registrant's `content`/`readonlys`/`sel_options`/`preserv` - `ajax_prepareCompose()`
+just calls it with empty starting arrays and returns the result via `Api\Json\Response`.
+`MailApp.bootstrapComposePopup()` only calls it when `MailJmap.hasComposePrepareHook()` (the flag
+built earlier) is true, merging the result into its own content/sel_options the same way classic
+`compose()` always has - a hook whose own `$_GET` params never coincide with `from=reply/forward`
+(eg. achelper's `mode`/`template`/`info_id`) is unaffected either way, exactly as before. Verified
+directly: a synthetic hook registrant injected via `ReflectionProperty` into `Api\Hooks::$locations`
+(never touching the real instance-wide hook cache) confirms the merge produces the exact expected
+`content`/`readonlys`/`sel_options`, and the zero-registrant case still returns a clean empty shape;
+live, the no-hook-registered path costs zero extra round trips (flag correctly false).
+
+**Real regression found + fixed**: `egw.openWithinWindow()`'s "reuse an already-open popup instead
+of opening a new one" mechanism (used by `mailto:` links, the VFS-attachment "forward" action, and
+batch forward-as-attachment) discovers candidate popups via `framework.popups_get(_app, _regexp)`,
+matching each popup's own `location.href` against a regex - every one of these callers used a
+classic-only pattern (`mail_compose.compose`/`mail.mail_compose.compose`), which a `compose.php`
+popup's url never matches. Since this project already converted 5 entry points to `compose.php`,
+every one of THESE 3 still-classic callers silently stopped finding them, always opening a
+redundant new popup instead of reusing one already open - unnoticed until now since none of this
+step's own testing exercised the "another entry point re-opens an existing popup" path. Fixed by
+matching either url shape in all 3 places (`api/js/jsapi/egw_open.ts`'s `mailto()`,
+`MailApp.composeMessage()`'s batch-forward branch, and its own VFS-attachment-forward branch) -
+`MailApp.setCompose()` itself already works identically for either kind of popup, it only ever
+touches the loaded etemplate2/widgets, never the popup's own opening url.
+
+**`mailto:` links converted off classic postback.** `mailto()` (`egw_open.ts`) already parses the
+whole `mailto:` URI into `{to, cc, bcc}` entirely client-side - there was nothing server-side left
+for this entry point to depend on. `openWithinWindow()` gained an optional `_open_new` override
+parameter: when given, it's called instead of the classic menuaction-url open for the "nothing to
+reuse" case, while the reuse-detection/multi-popup-picker dialog logic stays shared and unchanged
+for the two still-classic callers (VFS-attachment-forward, batch-forward) that don't pass one.
+`mailto()` passes `() => window.app.mail?.composeMailto(content)`; new `MailApp.composeMailto()`
+opens `mail/compose.php` with the preset to/cc/bcc JSON-encoded into a `$_GET['preset']` param,
+which `compose.php` decodes and hands to `bootstrapComposePopup()` alongside its other args -
+`bootstrapComposePopup()` appends preset to/cc/bcc onto whatever `getComposeToolbarData()`'s
+content already has (same "append, don't overwrite" convention the predefined-compose-addresses
+preference merge already uses), rather than replacing it. Live-verified: a fresh compose.php popup
+with a preset to/bcc shows both fields correctly populated alongside the normal signature/
+predefined-address content, no console errors; `npx tsc --noEmit`/`npm run build` clean, full
+`mail` jstest group green (189/189).
