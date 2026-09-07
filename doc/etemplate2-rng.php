@@ -61,9 +61,14 @@ $overwrites = [
 			'slot' => 'string', // would be nice, if we could list parent slots ...
             'style' => 'string',
 			'span' => "'all' | '2' | '3' | '4'",    // eT2 grid span
-			// Widget.php::is_readonly() - a real, generic server-side mechanism every widget
-			// class inherits, not just widgets whose own TS component happens to reflect it
+			// Widget.php::$bool_attr_default - real, generic server-side attributes every
+			// widget class inherits, not just widgets whose own TS component happens to reflect
+			// them (readonly via is_readonly(), the rest via set_attrs()'s XML-bool casting)
 			'readonly' => 'boolean',
+			'disabled' => 'boolean',
+			'statustextHtml' => 'boolean',
+			'noLang' => 'boolean',
+			'required' => 'boolean',
 		],
 	],
 	// the analyzer does not resolve members contributed by a mixin, so the markdown attribute
@@ -74,7 +79,8 @@ $overwrites = [
 	'Et2Description' => [
 		'.attrs' => [
 			'markdown' => 'boolean',
-			'boldItalic' => 'boolean',
+			// not a boolean despite the name - real usage passes a mode string (eg. "b")
+			'boldItalic' => 'string',
 			'link' => 'string',
 			'activateLinks' => 'boolean',
 			'labelFor' => 'string',
@@ -259,6 +265,9 @@ $overwrites = [
 			'searchUrl' => 'string',
 			// Taglist.php: 'editModeEnabled' => true (real, server-side default)
 			'editModeEnabled' => 'boolean',
+			// api/etemplate.php's own preprocessor deliberately generates this (from legacy
+			// autocomplete_params) when converting taglist -> et2-select
+			'searchOptions' => 'string',
 		],
 	],
 	'et2-select' => [
@@ -313,12 +322,11 @@ $overwrites = [
 	'Et2File' => [   // covers et2-file and et2-vfs-upload (Et2VfsUpload extends Et2File)
 		'.attrs' => [
 			'callback' => 'string',
+			// real on both, not just vfs-upload - confirmed via mail/invoices real usage
+			'mime' => 'string',
 		],
 	],
 	'et2-vfs-upload' => [
-		'.attrs' => [
-			'mime' => 'string',
-		],
 		// real usage: et2-button-icon (upload trigger override), often self-closed with none
 		'.children' => ['.quantity' => 'zeroOrMore', 'Widgets'],
 	],

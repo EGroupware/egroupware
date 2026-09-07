@@ -3959,6 +3959,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchOptions"/>
+    </optional>
+    <optional>
       <attribute name="searchUrl"/>
     </optional>
     <optional>
@@ -3981,6 +3984,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -4086,6 +4101,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="resolveTarget"/>
     </optional>
     <optional>
@@ -4105,6 +4132,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -4235,6 +4274,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="rowCount"/>
     </optional>
     <optional>
@@ -4254,6 +4305,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -4387,6 +4450,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -4406,6 +4481,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -4541,6 +4628,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="shape"/>
     </optional>
     <optional>
@@ -4563,6 +4662,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -4657,6 +4768,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -4673,6 +4796,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -4794,6 +4929,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -4810,6 +4957,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -4926,6 +5085,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -4942,6 +5113,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -5251,6 +5434,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="style"/>
     </optional>
     <optional>
@@ -5411,6 +5606,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -5427,6 +5634,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -5648,6 +5867,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="style"/>
     </optional>
     <optional>
@@ -5668,6 +5899,18 @@
   </define>
   <define name="attlist.et2-button-scroll" combine="interleave">
     <optional>
+      <attribute name="disabled">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="height"/>
     </optional>
     <optional>
@@ -5687,6 +5930,18 @@
     </optional>
     <optional>
       <attribute name="image"/>
+    </optional>
+    <optional>
+      <attribute name="noLang">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="noSubmit">
@@ -5725,6 +5980,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -5736,6 +6003,18 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -6050,6 +6329,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="style"/>
     </optional>
     <optional>
@@ -6248,6 +6539,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="style"/>
     </optional>
     <optional>
@@ -6346,6 +6649,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -6362,6 +6677,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -6495,6 +6822,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="size">
         <choice>
           <value>small</value>
@@ -6520,6 +6859,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -6729,6 +7080,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -6965,6 +7328,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="style"/>
     </optional>
     <optional>
@@ -7141,6 +7516,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="style"/>
     </optional>
     <optional>
@@ -7299,6 +7686,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="style"/>
     </optional>
     <optional>
@@ -7406,6 +7805,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -7422,6 +7833,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -7525,6 +7948,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -7541,6 +7976,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -7647,6 +8094,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -7663,6 +8122,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -7775,6 +8246,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -7791,6 +8274,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -8032,6 +8527,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="selection-mode"/>
     </optional>
     <optional>
@@ -8051,6 +8558,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -8236,6 +8755,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -8450,6 +8981,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="step"/>
     </optional>
     <optional>
@@ -8615,6 +9158,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -8802,6 +9357,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="style"/>
     </optional>
     <optional>
@@ -8985,6 +9552,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -9175,6 +9754,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="style"/>
     </optional>
     <optional>
@@ -9199,6 +9790,18 @@
     </optional>
     <optional>
       <attribute name="class"/>
+    </optional>
+    <optional>
+      <attribute name="disabled">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="height"/>
@@ -9231,6 +9834,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -9242,6 +9857,18 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -9281,16 +9908,7 @@
       <attribute name="align"/>
     </optional>
     <optional>
-      <attribute name="boldItalic">
-        <choice>
-          <value>false</value>
-          <value>true</value>
-          <value>1</value>
-          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
-            <param name="pattern">!?[@$].*</param>
-          </data>
-        </choice>
-      </attribute>
+      <attribute name="boldItalic"/>
     </optional>
     <optional>
       <attribute name="class"/>
@@ -9401,6 +10019,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -9417,6 +10047,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -9457,16 +10099,7 @@
       <attribute name="align"/>
     </optional>
     <optional>
-      <attribute name="boldItalic">
-        <choice>
-          <value>false</value>
-          <value>true</value>
-          <value>1</value>
-          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
-            <param name="pattern">!?[@$].*</param>
-          </data>
-        </choice>
-      </attribute>
+      <attribute name="boldItalic"/>
     </optional>
     <optional>
       <attribute name="class"/>
@@ -9586,6 +10219,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -9602,6 +10247,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -9740,6 +10397,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -9756,6 +10425,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -9957,6 +10638,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -9973,6 +10666,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -10157,6 +10862,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="style"/>
     </optional>
     <optional>
@@ -10284,6 +11001,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="skidding"/>
     </optional>
     <optional>
@@ -10303,6 +11032,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="stay-open-on-select">
@@ -10517,6 +11258,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -10752,6 +11505,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="style"/>
     </optional>
     <optional>
@@ -10901,6 +11666,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="size">
         <choice>
           <value>small</value>
@@ -10926,6 +11703,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -11116,6 +11905,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="style"/>
     </optional>
     <optional>
@@ -11304,6 +12105,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="style"/>
     </optional>
     <optional>
@@ -11411,6 +12224,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -11439,6 +12264,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -11578,6 +12415,9 @@
       <attribute name="max-files"/>
     </optional>
     <optional>
+      <attribute name="mime"/>
+    </optional>
+    <optional>
       <attribute name="multiple">
         <choice>
           <value>false</value>
@@ -11672,6 +12512,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -11811,6 +12663,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="size"/>
     </optional>
     <optional>
@@ -11830,6 +12694,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -12043,6 +12919,9 @@
       <attribute name="search"/>
     </optional>
     <optional>
+      <attribute name="searchOptions"/>
+    </optional>
+    <optional>
       <attribute name="searchUrl"/>
     </optional>
     <optional>
@@ -12065,6 +12944,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -12257,6 +13148,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="style"/>
     </optional>
     <optional>
@@ -12393,6 +13296,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -12409,6 +13324,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -12544,6 +13471,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -12560,6 +13499,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -12711,6 +13662,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="style"/>
     </optional>
     <optional>
@@ -12809,6 +13772,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -12825,6 +13800,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -13108,6 +14095,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="style"/>
     </optional>
     <optional>
@@ -13255,6 +14254,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="seamless">
         <choice>
           <value>false</value>
@@ -13286,6 +14297,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -13404,6 +14427,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -13423,6 +14458,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -13544,6 +14591,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -13563,6 +14622,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -13704,6 +14775,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="shape"/>
     </optional>
     <optional>
@@ -13726,6 +14809,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -13763,16 +14858,7 @@
       <attribute name="align"/>
     </optional>
     <optional>
-      <attribute name="boldItalic">
-        <choice>
-          <value>false</value>
-          <value>true</value>
-          <value>1</value>
-          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
-            <param name="pattern">!?[@$].*</param>
-          </data>
-        </choice>
-      </attribute>
+      <attribute name="boldItalic"/>
     </optional>
     <optional>
       <attribute name="class"/>
@@ -13883,6 +14969,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -13899,6 +14997,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -14014,6 +15124,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -14030,6 +15152,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -14191,6 +15325,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -14419,6 +15565,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchOptions"/>
+    </optional>
+    <optional>
       <attribute name="searchUrl"/>
     </optional>
     <optional>
@@ -14441,6 +15590,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -14628,6 +15789,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="style"/>
     </optional>
     <optional>
@@ -14744,6 +15917,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="showDeleted">
         <choice>
           <value>false</value>
@@ -14772,6 +15957,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -14989,6 +16186,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="style"/>
     </optional>
     <optional>
@@ -15203,6 +16412,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchOptions"/>
+    </optional>
+    <optional>
       <attribute name="searchUrl"/>
     </optional>
     <optional>
@@ -15225,6 +16437,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -15340,6 +16564,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="showDeleted">
         <choice>
           <value>false</value>
@@ -15368,6 +16604,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -15538,6 +16786,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -15713,6 +16973,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="style"/>
     </optional>
     <optional>
@@ -15832,6 +17104,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -15848,6 +17132,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -15959,6 +17255,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -15975,6 +17283,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -16111,6 +17431,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="rows"/>
     </optional>
     <optional>
@@ -16130,6 +17462,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -16230,6 +17574,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -16246,6 +17602,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -16340,6 +17708,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -16359,6 +17739,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -16692,6 +18084,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="step"/>
@@ -17052,6 +18456,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="step"/>
     </optional>
     <optional>
@@ -17171,6 +18587,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="settings"/>
     </optional>
     <optional>
@@ -17190,6 +18618,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -17546,6 +18986,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="step"/>
     </optional>
     <optional>
@@ -17768,6 +19220,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchOptions"/>
+    </optional>
+    <optional>
       <attribute name="searchUrl"/>
     </optional>
     <optional>
@@ -17790,6 +19245,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -18000,6 +19467,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchOptions"/>
+    </optional>
+    <optional>
       <attribute name="searchUrl"/>
     </optional>
     <optional>
@@ -18022,6 +19492,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -18235,6 +19717,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchOptions"/>
+    </optional>
+    <optional>
       <attribute name="searchUrl"/>
     </optional>
     <optional>
@@ -18257,6 +19742,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -18472,6 +19969,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchOptions"/>
+    </optional>
+    <optional>
       <attribute name="searchUrl"/>
     </optional>
     <optional>
@@ -18494,6 +19994,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -18704,6 +20216,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchOptions"/>
+    </optional>
+    <optional>
       <attribute name="searchUrl"/>
     </optional>
     <optional>
@@ -18726,6 +20241,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -18936,6 +20463,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchOptions"/>
+    </optional>
+    <optional>
       <attribute name="searchUrl"/>
     </optional>
     <optional>
@@ -18958,6 +20488,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -19229,6 +20771,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="style"/>
     </optional>
     <optional>
@@ -19434,6 +20988,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchOptions"/>
+    </optional>
+    <optional>
       <attribute name="searchUrl"/>
     </optional>
     <optional>
@@ -19456,6 +21013,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -19666,6 +21235,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchOptions"/>
+    </optional>
+    <optional>
       <attribute name="searchUrl"/>
     </optional>
     <optional>
@@ -19688,6 +21260,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -19898,6 +21482,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchOptions"/>
+    </optional>
+    <optional>
       <attribute name="searchUrl"/>
     </optional>
     <optional>
@@ -19920,6 +21507,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -20130,6 +21729,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchOptions"/>
+    </optional>
+    <optional>
       <attribute name="searchUrl"/>
     </optional>
     <optional>
@@ -20152,6 +21754,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -20362,6 +21976,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchOptions"/>
+    </optional>
+    <optional>
       <attribute name="searchUrl"/>
     </optional>
     <optional>
@@ -20384,6 +22001,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -20594,6 +22223,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchOptions"/>
+    </optional>
+    <optional>
       <attribute name="searchUrl"/>
     </optional>
     <optional>
@@ -20616,6 +22248,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -20840,6 +22484,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchOptions"/>
+    </optional>
+    <optional>
       <attribute name="searchUrl"/>
     </optional>
     <optional>
@@ -20862,6 +22509,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -21087,6 +22746,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchOptions"/>
+    </optional>
+    <optional>
       <attribute name="searchUrl"/>
     </optional>
     <optional>
@@ -21109,6 +22771,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -21322,6 +22996,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchOptions"/>
+    </optional>
+    <optional>
       <attribute name="searchUrl"/>
     </optional>
     <optional>
@@ -21344,6 +23021,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -21557,6 +23246,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchOptions"/>
+    </optional>
+    <optional>
       <attribute name="searchUrl"/>
     </optional>
     <optional>
@@ -21579,6 +23271,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -21800,6 +23504,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchOptions"/>
+    </optional>
+    <optional>
       <attribute name="searchUrl"/>
     </optional>
     <optional>
@@ -21822,6 +23529,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -22032,6 +23751,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchOptions"/>
+    </optional>
+    <optional>
       <attribute name="searchUrl"/>
     </optional>
     <optional>
@@ -22054,6 +23776,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -22264,6 +23998,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchOptions"/>
+    </optional>
+    <optional>
       <attribute name="searchUrl"/>
     </optional>
     <optional>
@@ -22286,6 +24023,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -22508,6 +24257,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="searchOptions"/>
+    </optional>
+    <optional>
       <attribute name="searchUrl"/>
     </optional>
     <optional>
@@ -22530,6 +24282,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -22633,6 +24397,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -22649,6 +24425,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -22757,6 +24545,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -22779,6 +24579,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -22885,6 +24697,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -22904,6 +24728,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -23088,6 +24924,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="style"/>
     </optional>
     <optional>
@@ -23259,6 +25107,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -23500,6 +25360,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="style"/>
     </optional>
     <optional>
@@ -23637,6 +25509,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="size">
         <choice>
           <value>small</value>
@@ -23662,6 +25546,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -23949,6 +25845,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -24284,6 +26192,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="step"/>
     </optional>
     <optional>
@@ -24430,6 +26350,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="size">
         <choice>
           <value>small</value>
@@ -24455,6 +26387,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -24648,6 +26592,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -24848,6 +26804,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -25096,6 +27064,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -25433,6 +27413,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="step"/>
@@ -25790,6 +27782,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="step"/>
     </optional>
     <optional>
@@ -26128,6 +28132,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="step"/>
@@ -26470,6 +28486,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="step"/>
     </optional>
     <optional>
@@ -26591,6 +28619,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -26609,6 +28649,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="style"/>
     </optional>
     <optional>
@@ -26622,6 +28674,18 @@
     </element>
   </define>
   <define name="attlist.et2-vfs-gid" combine="interleave">
+    <optional>
+      <attribute name="disabled">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
     <optional>
       <attribute name="height"/>
     </optional>
@@ -26653,6 +28717,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -26664,6 +28740,18 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -26790,6 +28878,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -26809,6 +28909,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -26861,16 +28973,7 @@
       <attribute name="align"/>
     </optional>
     <optional>
-      <attribute name="boldItalic">
-        <choice>
-          <value>false</value>
-          <value>true</value>
-          <value>1</value>
-          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
-            <param name="pattern">!?[@$].*</param>
-          </data>
-        </choice>
-      </attribute>
+      <attribute name="boldItalic"/>
     </optional>
     <optional>
       <attribute name="class"/>
@@ -26981,6 +29084,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -26997,6 +29112,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -27324,6 +29451,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="step"/>
     </optional>
     <optional>
@@ -27492,6 +29631,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -27686,6 +29837,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -27909,6 +30072,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="style"/>
     </optional>
     <optional>
@@ -28010,6 +30185,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -28026,6 +30213,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
@@ -28123,6 +30322,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -28141,6 +30352,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="style"/>
     </optional>
     <optional>
@@ -28154,6 +30377,18 @@
     </element>
   </define>
   <define name="attlist.et2-vfs-uid" combine="interleave">
+    <optional>
+      <attribute name="disabled">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
     <optional>
       <attribute name="height"/>
     </optional>
@@ -28185,6 +30420,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -28196,6 +30443,18 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
         </choice>
       </attribute>
     </optional>
@@ -28444,6 +30703,18 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="style"/>
     </optional>
     <optional>
@@ -28548,6 +30819,18 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="slot"/>
     </optional>
     <optional>
@@ -28564,6 +30847,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="statustextHtml">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="style"/>
