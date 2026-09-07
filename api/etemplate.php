@@ -243,7 +243,10 @@ function send_template()
 		$str = preg_replace('#<textbox(.*?\srows="\d+".*?)/>#', '<et2-textarea$1></et2-textarea>', $str);
 
 		// fix <(textbox|int(eger)?|float|passwd) precision="int(eger)?|float|passwd" .../> --> <et2-number precision=.../>, <et2-password .../> or <et2-textbox .../>
-		$str = preg_replace_callback('#<(textbox|int(eger)?|float|number|passwd).*?\s(type="(int(eger)?|float|passwd)")?.*?(/|></textbox)>#',
+		// the "(?:\s(type=...))?" wrapping - rather than a bare mandatory \s before an optional
+		// group - matters: a completely bare, attribute-less <int/>/<integer/>/<float/> has no
+		// whitespace at all to match, so a mandatory \s there made the whole pattern never match
+		$str = preg_replace_callback('#<(textbox|int(eger)?|float|number|passwd).*?(?:\s(type="(int(eger)?|float|passwd)"))?.*?(/|></textbox)>#',
 			static function ($matches)
 			{
 				if ($matches[1] === 'passwd' || $matches['4'] === 'passwd')
@@ -258,7 +261,8 @@ function send_template()
 				$type = $matches[1] === 'float' || $matches[4] === 'float' ? 'float' : 'int';
 				$tag = str_replace('<' . $matches[1], '<et2-number', substr($matches[0], 0, -2));
 				if (!empty($matches[3])) $tag = str_replace($matches[3], '', $tag);
-				if ($type !== 'float') $tag .= ' precision="0"';
+				// don't clobber an explicitly-given precision with the int/integer default
+				if ($type !== 'float' && !preg_match('/\sprecision="/', $tag)) $tag .= ' precision="0"';
 				return $tag . '></et2-number>';
 			}, $str);
 
