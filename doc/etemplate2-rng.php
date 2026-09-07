@@ -205,6 +205,26 @@ $overwrites = [
 			'multiple' => 'boolean',
 		],
 	],
+	// slot doc: "the target widget (e.g. et2-textarea, et2-vbox, iframe) is placed" - real usage
+	// also confirms et2-htmlarea (admin.mailaccount.identity's signature field); not restricted
+	// further than that, same as the et2-(v|h)box/et2-details/et2-groupbox/et2-split family below
+	'et2-ai' => [
+		'.children' => 'Widgets',
+	],
+	// server-side-only attributes (Api\Etemplate\Widget\File/Vfs, never reach the client as a
+	// reflected TS property, so components.json can't see them - real and documented though:
+	// File.php's docblock: "attribute 'callback' for a server-side callback ... for file or
+	// vfs-upload widgets"; Vfs.php: "// Legacy option for vfs-upload" -> $legacy_options = "mime"
+	'Et2File' => [   // covers et2-file and et2-vfs-upload (Et2VfsUpload extends Et2File)
+		'.attrs' => [
+			'callback' => 'string',
+		],
+	],
+	'et2-vfs-upload' => [
+		'.attrs' => [
+			'mime' => 'string',
+		],
+	],
 ];
 
 /**

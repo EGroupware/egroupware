@@ -3204,7 +3204,9 @@
   <define name="et2-ai">
     <element name="et2-ai">
       <ref name="attlist.et2-ai"/>
-      <empty/>
+      <oneOrMore>
+        <ref name="Widgets"/>
+      </oneOrMore>
     </element>
   </define>
   <define name="attlist.et2-ai" combine="interleave">
@@ -9344,6 +9346,9 @@
           <value>1</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="callback"/>
     </optional>
     <optional>
       <attribute name="chunkSize"/>
@@ -23310,6 +23315,9 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="callback"/>
+    </optional>
+    <optional>
       <attribute name="chunkSize"/>
     </optional>
     <optional>
@@ -23386,6 +23394,9 @@
     </optional>
     <optional>
       <attribute name="max-files"/>
+    </optional>
+    <optional>
+      <attribute name="mime"/>
     </optional>
     <optional>
       <attribute name="multiple">
