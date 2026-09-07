@@ -185,6 +185,27 @@ $overwrites = [
 	'et2-nextmatch-header-custom' => [
 		'.attrs' => [
 			'emptyLabel' => 'string',
+			'tracker' => 'string',   // app-specific column-header customization for the tracker app
+		],
+	],
+	// server-side-only, same class of gap as customfields/vfs-upload above - real per
+	// Nextmatch.php's docblock/code, never reach the client as reflected TS properties
+	'et2-nextmatch' => [
+		'.attrs' => [
+			'filterTemplate' => 'string',
+			'headerRight' => 'string',
+			'onselect' => 'string',
+		],
+	],
+	'et2-nextmatch-header-filter' => [
+		'.attrs' => [
+			'search' => 'string',
+		],
+	],
+	'et2-nextmatch-header-customfields' => [
+		'.attrs' => [
+			'app' => 'string',
+			'readonly' => 'boolean',
 		],
 	],
 	'Et2Button' => [
@@ -206,8 +227,27 @@ $overwrites = [
 	'et2-select' => [
 		'.children' => ['.quantity' => 'zeroOrMore', 'option'],
 	],
+	'Et2SelectAccount' => [   // real, Lit-reflected, missed by the analyzer like the others above
+		'.attrs' => [
+			'accountType' => 'string',
+		],
+	],
+	'et2-checkbox' => [
+		'.attrs' => [
+			'selectedValue' => 'boolean',
+			'unselectedValue' => 'boolean',
+		],
+	],
+	'et2-textarea' => [
+		'.attrs' => [
+			'size' => 'string',
+		],
+	],
 	'et2-select-app' => [
 		'.children' => ['.quantity' => 'zeroOrMore', 'option'],
+		'.attrs' => [
+			'apps' => 'string',
+		],
 	],
 	'et2-select-number' => [
 		'.children' => ['.quantity' => 'zeroOrMore', 'option'],
@@ -275,9 +315,12 @@ $grammar->start->addChild('ref')->addAttribute('name', 'overlay');
 $missing_legacy_attributes = [
 	'app' => ['customfields-types', 'customfields', 'customfields-list'],
     'callback' => 'vfs-upload',
+	'align' => 'nextmatch-sortheader',
 	'class' => ['nextmatch','nextmatch-header', 'nextmatch-customfields', 'nextmatch-sortheader', 'customfields-types'],
 	'disabled' => 'nextmatch',
 	'exclude' => 'customfields',
+	'filter_template' => 'nextmatch',   // Nextmatch.php: $this->attrs['filterTemplate'] ?? $this->attrs['filter_template']
+	'height' => 'nextmatch',
 	'id' => [
 		'.optional' => false,
 		'nextmatch-header', 'nextmatch-sortheader', 'nextmatch-customfields', 'nextmatch', 'customfields-types',
@@ -287,23 +330,31 @@ $missing_legacy_attributes = [
 	'header_row' => 'nextmatch',
 	'label' => [
 		'.optional' => false,
-		'nextmatch-header', 'nextmatch-sortheader',
+		'nextmatch-header', 'nextmatch-sortheader', 'nextmatch-customfields',
 	],
 	'maxWidth' => 'column',
 	'minWidth' => 'column',
+	'no_lang' => 'nextmatch',
 	'onchange'  => 'customfields-types',
 	'onselect' => 'nextmatch',
     'value' => 'option',
-	'readonly' => 'customfields-types',
+	'readonly' => ['customfields-types', 'nextmatch-customfields', 'nextmatch-sortheader'],
+	// Nextmatch.php: "$replace_filters = ... !preg_match('/<nextmatch [^>]*replaceFilters=\"false\"/', ...)"
+	'replaceFilters' => 'nextmatch',
+	// Nextmatch.php docblock: "'search' => // IO search pattern"
+	'search' => 'nextmatch-header-filter',
     'sortmode' => [
         '.values' => ['ASC', 'DESC'],
         '.default' => 'ASC',
 	    'nextmatch-sortheader',
     ],
 	'span' => ['nextmatch', 'nextmatch-header', 'nextmatch-customfields', 'nextmatch-sortheader', 'customfields-types'],
-	'statustext' => ['tab', 'customfields-types', 'option'],
+	'statustext' => ['tab', 'customfields-types', 'option', 'nextmatch-sortheader'],
 	'template' => ['.optional' => false, 'nextmatch'],
 	'tab'     => 'customfields',
+	// app-specific column-header customization for the tracker app
+	'tracker' => 'nextmatch-header-custom',
+	'width' => 'nextmatch-header',
 	'title' => 'option',  // real: Select.php reads $val['title'] as a tooltip alongside/instead of label
 ];
 foreach($missing_legacy_attributes as $attribute => $widgets)
@@ -602,6 +653,26 @@ foreach ($xpath->query('//x:choice') as $choice)
 	$data->setAttribute('type', 'token');
 	$param = $data->appendChild($dom->createElementNS('http://relaxng.org/ns/structure/1.0', 'param', '!?[@$].*'));
 	$param->setAttribute('name', 'pattern');
+}
+
+// legacy (non et2-*) widgets never go through attributes()/overwriteAttributes(), so they never
+// get the '*' global attrs (id/width/height/slot/style/span) every et2-* component automatically
+// receives - add whichever of those a legacy widget's attlist doesn't already declare. Covers
+// every legacy attlist.*, not just top-level Widgets choice members, since structural
+// sub-elements like row/tab (children of grid/tabs, never Widgets members themselves) need this
+// just as much.
+$globalAttrs = ['id', 'width', 'height', 'slot', 'style', 'span'];
+foreach ($xpath->query('//x:define[starts-with(@name, "attlist.") and not(starts-with(@name, "attlist.et2-"))]') as $attlistDefine)
+{
+	$existing = [];
+	foreach ($xpath->query('.//x:attribute/@name', $attlistDefine) as $a) { $existing[$a->value] = true; }
+	foreach ($globalAttrs as $attr)
+	{
+		if (isset($existing[$attr])) continue;
+		$optional = $attlistDefine->appendChild($dom->createElementNS('http://relaxng.org/ns/structure/1.0', 'optional'));
+		$attribute = $optional->appendChild($dom->createElementNS('http://relaxng.org/ns/structure/1.0', 'attribute'));
+		$attribute->setAttribute('name', $attr);
+	}
 }
 
 // widen span's enum to the values real templates actually use (grid-span, not just 'all')

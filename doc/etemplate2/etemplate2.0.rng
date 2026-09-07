@@ -45,10 +45,10 @@
       <ref name="script"/>
       <ref name="countdown"/>
       <ref name="customfields-types"/>
+      <ref name="nextmatch-sortheader"/>
       <ref name="nextmatch"/>
       <ref name="nextmatch-header"/>
       <ref name="nextmatch-customfields"/>
-      <ref name="nextmatch-sortheader"/>
       <ref name="et2-nextmatch-header-account"/>
       <ref name="et2-ai"/>
       <ref name="et2-app-box"/>
@@ -222,6 +222,24 @@
   </define>
   <define name="attlist.overlay" combine="interleave">
     <empty/>
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
+    </optional>
   </define>
   <define name="et2-template">
     <element name="et2-template">
@@ -340,6 +358,24 @@
   </define>
   <define name="attlist.columns" combine="interleave">
     <empty/>
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
+    </optional>
   </define>
   <define name="column">
     <element name="column">
@@ -363,6 +399,21 @@
     <optional>
       <attribute name="minWidth"/>
     </optional>
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
+    </optional>
   </define>
   <define name="rows">
     <element name="rows">
@@ -374,6 +425,24 @@
   </define>
   <define name="attlist.rows" combine="interleave">
     <empty/>
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
+    </optional>
   </define>
   <define name="row">
     <element name="row">
@@ -401,6 +470,18 @@
     </optional>
     <optional>
       <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
     </optional>
   </define>
   <define name="attlist.grid" combine="interleave">
@@ -506,6 +587,12 @@
     <optional>
       <attribute name="attributes"/>
     </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
   </define>
   <define name="caption">
     <element name="caption">
@@ -606,6 +693,12 @@
     </optional>
     <optional>
       <attribute name="attributes"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
     </optional>
   </define>
   <define name="entry">
@@ -729,6 +822,12 @@
     <optional>
       <attribute name="attributes"/>
     </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
   </define>
   <define name="contact-value">
     <element name="contact-value">
@@ -850,6 +949,12 @@
     </optional>
     <optional>
       <attribute name="attributes"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
     </optional>
   </define>
   <define name="contact-account">
@@ -973,6 +1078,12 @@
     <optional>
       <attribute name="attributes"/>
     </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
   </define>
   <define name="contact-template">
     <element name="contact-template">
@@ -1094,6 +1205,12 @@
     </optional>
     <optional>
       <attribute name="attributes"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
     </optional>
   </define>
   <define name="infolog-value">
@@ -1217,6 +1334,12 @@
     <optional>
       <attribute name="attributes"/>
     </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
   </define>
   <define name="tracker-value">
     <element name="tracker-value">
@@ -1338,6 +1461,12 @@
     </optional>
     <optional>
       <attribute name="attributes"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
     </optional>
   </define>
   <define name="records-value">
@@ -1461,6 +1590,12 @@
     <optional>
       <attribute name="attributes"/>
     </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
   </define>
   <define name="option">
     <element name="option">
@@ -1477,6 +1612,24 @@
     </optional>
     <optional>
       <attribute name="title"/>
+    </optional>
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
     </optional>
   </define>
   <define name="radio">
@@ -1624,6 +1777,12 @@
     <optional>
       <attribute name="attributes"/>
     </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
   </define>
   <define name="radiogroup">
     <element name="radiogroup">
@@ -1748,6 +1907,12 @@
     </optional>
     <optional>
       <attribute name="attributes"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
     </optional>
   </define>
   <define name="customfields">
@@ -1892,6 +2057,12 @@
     <optional>
       <attribute name="tab"/>
     </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
   </define>
   <define name="customfields-list">
     <element name="customfields-list">
@@ -2029,6 +2200,12 @@
     <optional>
       <attribute name="app"/>
     </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
   </define>
   <define name="tabs">
     <element name="tabs">
@@ -2040,6 +2217,24 @@
   </define>
   <define name="attlist.tabs" combine="interleave">
     <empty/>
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
+    </optional>
   </define>
   <define name="tab">
     <element name="tab">
@@ -2057,6 +2252,21 @@
     <optional>
       <attribute name="statustext"/>
     </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
+    </optional>
   </define>
   <define name="tabpanels">
     <element name="tabpanels">
@@ -2071,6 +2281,24 @@
   </define>
   <define name="attlist.tabpanels" combine="interleave">
     <empty/>
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
+    </optional>
   </define>
   <define name="attlist.tabbox" combine="interleave">
     <optional>
@@ -2171,6 +2399,12 @@
     </optional>
     <optional>
       <attribute name="attributes"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
     </optional>
   </define>
   <define name="historylog">
@@ -2285,6 +2519,12 @@
     <optional>
       <attribute name="attributes"/>
     </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
   </define>
   <define name="hrule">
     <element name="hrule">
@@ -2382,6 +2622,12 @@
     </optional>
     <optional>
       <attribute name="attributes"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
     </optional>
   </define>
   <define name="progress">
@@ -2495,6 +2741,12 @@
     </optional>
     <optional>
       <attribute name="attributes"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
     </optional>
   </define>
   <define name="video">
@@ -2653,6 +2905,12 @@
     </optional>
     <optional>
       <attribute name="attributes"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
     </optional>
   </define>
   <define name="audio">
@@ -2821,6 +3079,12 @@
     <optional>
       <attribute name="attributes"/>
     </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
   </define>
   <define name="barcode">
     <element name="barcode">
@@ -2942,6 +3206,12 @@
     </optional>
     <optional>
       <attribute name="attributes"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
     </optional>
   </define>
   <define name="itempicker">
@@ -3095,6 +3365,12 @@
     <optional>
       <attribute name="attributes"/>
     </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
   </define>
   <define name="script">
     <element name="script">
@@ -3129,6 +3405,18 @@
     </optional>
     <optional>
       <attribute name="attributes"/>
+    </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
     </optional>
   </define>
   <define name="countdown">
@@ -3252,6 +3540,12 @@
     <optional>
       <attribute name="attributes"/>
     </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
   </define>
   <start>
     <ref name="overlay"/>
@@ -3282,6 +3576,63 @@
     <optional>
       <attribute name="statustext"/>
     </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+  </define>
+  <define name="nextmatch-sortheader">
+    <element name="nextmatch-sortheader">
+      <ref name="attlist.nextmatch-sortheader"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.nextmatch-sortheader">
+    <optional>
+      <attribute name="align"/>
+    </optional>
+    <optional>
+      <attribute name="class"/>
+    </optional>
+    <attribute name="id"/>
+    <attribute name="label"/>
+    <optional>
+      <attribute name="readonly"/>
+    </optional>
+    <optional>
+      <attribute name="sortmode" a:defaultValue="ASC">
+        <choice>
+          <value>ASC</value>
+          <value>DESC</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
   </define>
   <define name="nextmatch">
     <element name="nextmatch">
@@ -3296,6 +3647,12 @@
     <optional>
       <attribute name="disabled"/>
     </optional>
+    <optional>
+      <attribute name="filter_template"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
     <attribute name="id"/>
     <optional>
       <attribute name="header_left"/>
@@ -3307,12 +3664,27 @@
       <attribute name="header_row"/>
     </optional>
     <optional>
+      <attribute name="no_lang"/>
+    </optional>
+    <optional>
       <attribute name="onselect"/>
+    </optional>
+    <optional>
+      <attribute name="replaceFilters"/>
     </optional>
     <optional>
       <attribute name="span"/>
     </optional>
     <attribute name="template"/>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
   </define>
   <define name="nextmatch-header">
     <element name="nextmatch-header">
@@ -3329,6 +3701,18 @@
     <optional>
       <attribute name="span"/>
     </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
   </define>
   <define name="nextmatch-customfields">
     <element name="nextmatch-customfields">
@@ -3341,32 +3725,24 @@
       <attribute name="class"/>
     </optional>
     <attribute name="id"/>
-    <optional>
-      <attribute name="span"/>
-    </optional>
-  </define>
-  <define name="nextmatch-sortheader">
-    <element name="nextmatch-sortheader">
-      <ref name="attlist.nextmatch-sortheader"/>
-      <empty/>
-    </element>
-  </define>
-  <define name="attlist.nextmatch-sortheader">
-    <optional>
-      <attribute name="class"/>
-    </optional>
-    <attribute name="id"/>
     <attribute name="label"/>
     <optional>
-      <attribute name="sortmode" a:defaultValue="ASC">
-        <choice>
-          <value>ASC</value>
-          <value>DESC</value>
-        </choice>
-      </attribute>
+      <attribute name="readonly"/>
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
     </optional>
   </define>
   <define name="et2-nextmatch-header-account">
@@ -6738,6 +7114,9 @@
       <attribute name="tabindex"/>
     </optional>
     <optional>
+      <attribute name="tracker"/>
+    </optional>
+    <optional>
       <attribute name="widgetOptions"/>
     </optional>
     <optional>
@@ -6978,6 +7357,9 @@
       <attribute name="align"/>
     </optional>
     <optional>
+      <attribute name="app"/>
+    </optional>
+    <optional>
       <attribute name="class"/>
     </optional>
     <optional>
@@ -7036,6 +7418,18 @@
     </optional>
     <optional>
       <attribute name="parentId"/>
+    </optional>
+    <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="slot"/>
@@ -11197,6 +11591,9 @@
       <attribute name="rows"/>
     </optional>
     <optional>
+      <attribute name="search"/>
+    </optional>
+    <optional>
       <attribute name="select_options"/>
     </optional>
     <optional>
@@ -14962,6 +15359,12 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="filterTemplate"/>
+    </optional>
+    <optional>
+      <attribute name="headerRight"/>
+    </optional>
+    <optional>
       <attribute name="height"/>
     </optional>
     <optional>
@@ -15020,6 +15423,9 @@
     </optional>
     <optional>
       <attribute name="onclick"/>
+    </optional>
+    <optional>
+      <attribute name="onselect"/>
     </optional>
     <optional>
       <attribute name="parentId"/>
@@ -27000,6 +27406,21 @@
     <optional>
       <attribute name="aria-labelledby"/>
     </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
+    </optional>
   </define>
   <define name="calendar-planner">
     <element name="calendar-planner">
@@ -27016,6 +27437,21 @@
     </optional>
     <optional>
       <attribute name="onevent_change"/>
+    </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
     </optional>
   </define>
   <define name="calendar-timegrid">
@@ -27034,6 +27470,21 @@
     <optional>
       <attribute name="onevent_change"/>
     </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
+    </optional>
   </define>
   <define name="calendar-daycol">
     <element name="calendar-daycol">
@@ -27045,6 +27496,21 @@
     <optional>
       <attribute name="id"/>
     </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
+    </optional>
   </define>
   <define name="calendar-planner_row">
     <element name="calendar-planner_row">
@@ -27055,6 +27521,21 @@
   <define name="attlist.calendar-planner_row" combine="interleave">
     <optional>
       <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
     </optional>
   </define>
   <define name="et2-calendar-owner">
@@ -27111,6 +27592,21 @@
     <optional>
       <attribute name="id"/>
     </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
+    </optional>
   </define>
   <define name="infolog-fields">
     <element name="infolog-fields">
@@ -27130,6 +27626,18 @@
     </optional>
     <optional>
       <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
     </optional>
   </define>
   <define name="kanban-board">
@@ -27157,6 +27665,21 @@
     <optional>
       <attribute name="swimlanes"/>
     </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
+    </optional>
   </define>
   <define name="kanban-card">
     <element name="kanban-card">
@@ -27176,6 +27699,21 @@
     </optional>
     <optional>
       <attribute name="template"/>
+    </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
     </optional>
   </define>
   <define name="projectmanager-gantt">
@@ -27199,6 +27737,18 @@
     </optional>
     <optional>
       <attribute name="ajax_update"/>
+    </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
     </optional>
   </define>
   <define name="projectmanager-pricelist">
@@ -27238,6 +27788,15 @@
     <optional>
       <attribute name="e"/>
     </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
   </define>
   <define name="projectmanager-select">
     <element name="projectmanager-select">
@@ -27260,6 +27819,21 @@
     </optional>
     <optional>
       <attribute name="checked"/>
+    </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
     </optional>
   </define>
   <define name="projectmanager-select-erole">
@@ -27286,6 +27860,18 @@
     </optional>
     <optional>
       <attribute name="readonly"/>
+    </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
     </optional>
   </define>
   <define name="smallpart-cats-select">
@@ -27337,6 +27923,21 @@
     <optional>
       <attribute name="readonly"/>
     </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
+    </optional>
   </define>
   <define name="smallpart-cl-measurement-L">
     <element name="smallpart-cl-measurement-L">
@@ -27362,6 +27963,21 @@
     </optional>
     <optional>
       <attribute name="steps_className"/>
+    </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
     </optional>
   </define>
   <define name="smallpart-comment-timespan">
@@ -27392,6 +28008,21 @@
     <optional>
       <attribute name="videobar"/>
     </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
+    </optional>
   </define>
   <define name="smallpart-comment">
     <element name="smallpart-comment">
@@ -27405,6 +28036,18 @@
     </optional>
     <optional>
       <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
     </optional>
   </define>
   <define name="smallpart-flag-time">
@@ -27425,6 +28068,21 @@
     </optional>
     <optional>
       <attribute name="onclick"/>
+    </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
     </optional>
   </define>
   <define name="smallpart-lf-button">
@@ -27449,6 +28107,21 @@
     <optional>
       <attribute name="onclick"/>
     </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
+    </optional>
   </define>
   <define name="smallpart-livefeedback-report">
     <element name="smallpart-livefeedback-report">
@@ -27471,6 +28144,18 @@
     </optional>
     <optional>
       <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
     </optional>
   </define>
   <define name="smallpart-media-recorder">
@@ -27500,6 +28185,18 @@
     </optional>
     <optional>
       <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
     </optional>
   </define>
   <define name="smallpart-videobar">
@@ -27538,6 +28235,18 @@
     </optional>
     <optional>
       <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
     </optional>
   </define>
   <define name="smallpart-videooverlay">
@@ -27598,6 +28307,21 @@
     <optional>
       <attribute name="videobar"/>
     </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
+    </optional>
   </define>
   <define name="widget">
     <element name="widget">
@@ -27630,6 +28354,21 @@
     <optional>
       <attribute name="attributes"/>
     </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
+    </optional>
   </define>
   <define name="vfs-size">
     <element name="vfs-size">
@@ -27653,6 +28392,21 @@
     <optional>
       <attribute name="value"/>
     </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
+    </optional>
   </define>
   <define name="vfs-name_ro">
     <element name="vfs-name_ro">
@@ -27663,6 +28417,21 @@
   <define name="attlist.vfs-name_ro" combine="interleave">
     <optional>
       <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
     </optional>
   </define>
   <define name="et2-select-account_ro">
@@ -27718,6 +28487,21 @@
     <optional>
       <attribute name="options"/>
     </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
+    </optional>
   </define>
   <define name="filter">
     <element name="filter">
@@ -27731,6 +28515,21 @@
     </optional>
     <optional>
       <attribute name="relative_dates"/>
+    </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="span"/>
     </optional>
   </define>
 </grammar>
