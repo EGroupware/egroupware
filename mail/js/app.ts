@@ -56,6 +56,26 @@ type CustomLabels = Record<string, CustomLabel>
 const COMPOSE_POPUP_URL_PATTERN = /mail_compose\.compose|\/mail\/compose\.php/;
 
 /**
+ * Extract the profileID (the account to compose FROM) out of a mail row id - `mail::<accountID>::
+ * <profileID>::<folderID>::<emailID>` (Api\Mail::splitRowID()'s own canonical 5-part shape, see
+ * its own docblock; the app-name prefix is always the literal string "mail", never the profile).
+ * `id` may be a single row id, or several comma-joined ones (composeMessage()'s own batch-forward
+ * case) - only the FIRST one's profileID is ever needed (an "email selected messages" batch is
+ * always composed from a single account).
+ *
+ * Found live 2026-09-07 (real tester report, pole.egroupware.org): reply/forward's own accId
+ * computation used `.split('::')[0]` instead of `[2]` - always resolving to the literal string
+ * "mail" (the app-name segment, not an account id at all), so compose.php's own url carried
+ * `acc_id=mail`. bootstrapComposePopup() then couldn't resolve any real account from that,
+ * sometimes surfacing as mail_wizard's own "add account" dialog opening instead, empty - not a
+ * separate bug, the same wrong acc_id read as "no valid account configured".
+ */
+function rowIdProfileID(id : string) : string
+{
+	return id.split(',')[0].split('::')[2] || '';
+}
+
+/**
  * UI for mail
  *
  * @augments EgwApp
@@ -1398,7 +1418,7 @@ export class MailApp extends EgwApp
 					// unguarded gap this project has otherwise avoided everywhere else), so this
 					// falls back to openWithinWindow()'s OWN, already-safe default (its
 					// urlParamsTooLong()-gated POST) for that case instead of reproducing one.
-					const accId = settings.id.split('::')[0];
+					const accId = rowIdProfileID(settings.id);
 					const tooLong = egw.urlParamsTooLong({
 						from: settings.from, id: settings.id, acc_id: accId,
 						mode: settings.mode, smime_type: '',
@@ -1443,7 +1463,7 @@ export class MailApp extends EgwApp
 		// settings.id, which may be backfilled from the currently-selected/previewed message for
 		// unrelated reasons (see the backfill above) even when this action itself is 'compose'.
 		const accId = settings.from && settings.id ?
-			settings.id.split('::')[0] : (this.egw.preference('ActiveProfileID', 'mail') || '');
+			rowIdProfileID(settings.id) : (this.egw.preference('ActiveProfileID', 'mail') || '');
 		return this.openComposePopupUrl(settings, accId);
 	}
 
