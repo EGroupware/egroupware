@@ -77,14 +77,43 @@ $bootstrap = Api\Etemplate::clientSideBootstrap('mail.compose');
 // egw.openComposePost() already uses for the classic path).
 $preset = json_decode((string)($_REQUEST['preset'] ?? ''), true) ?: [];
 
+// mailto: link, activated via the OS/browser's own registered protocol handler
+// (api/js/jsapi/egw_config.ts's install_mailto_handler()) - NOT the same as clicking a mailto:
+// link already inside a loaded EGroupware page (egw_open.ts's own mailto() parses+dispatches
+// that entirely client-side, never reaching this file at all). A protocol-handler activation is
+// always a fresh top-level navigation with no already-running JS to hand a parsed URI to, so RFC
+// 6068 parsing has to happen here instead - mail_compose::compose()'s own equivalent classic-path
+// parsing (removed together with compose() itself) did the same thing server-side.
+if (($mailto = (string)($_GET['mailto'] ?? '')) !== '')
+{
+	$uri = stripos($mailto, 'mailto:') === 0 ? substr($mailto, 7) : $mailto;
+	[$to, $query] = array_pad(explode('?', $uri, 2), 2, '');
+	parse_str($query, $mailtoParams);
+	$split = static function($value)
+	{
+		return $value !== null && $value !== '' ? preg_split('/\s*,\s*/', trim($value)) : null;
+	};
+	$preset += array_filter([
+		'to' => $split(rawurldecode($to)),
+		'cc' => $split($mailtoParams['cc'] ?? null),
+		'bcc' => $split($mailtoParams['bcc'] ?? null),
+		'subject' => $mailtoParams['subject'] ?? null,
+		'body' => $mailtoParams['body'] ?? null,
+		'bodyMimeType' => isset($mailtoParams['body']) ? 'plain' : null,
+	], static fn($value) => $value !== null);
+}
+
 Api\Framework::set_extra('mail', 'start', array(
 	'method' => 'app.mail.bootstrapComposePopup',
 	'args'   => array(
-		(string)($_GET['from'] ?? ''),
-		(string)($_GET['id'] ?? ''),
-		(string)($_GET['acc_id'] ?? ''),
-		(string)($_GET['mode'] ?? ''),
-		(string)($_GET['smime_type'] ?? ''),
+		// $_REQUEST not $_GET-only: MailApp.openComposePopupUrlPost()'s own POST fallback (many
+		// comma-joined message ids, batch forward-as-attachment, can make `id` too long for a GET
+		// url) posts `id` as a form field instead - same reasoning $preset above already has.
+		(string)($_REQUEST['from'] ?? ''),
+		(string)($_REQUEST['id'] ?? ''),
+		(string)($_REQUEST['acc_id'] ?? ''),
+		(string)($_REQUEST['mode'] ?? ''),
+		(string)($_REQUEST['smime_type'] ?? ''),
 		$bootstrap,
 		$preset,
 	),

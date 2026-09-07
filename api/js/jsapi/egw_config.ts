@@ -68,7 +68,14 @@ class Config implements ConfigModule
 					// 3rd "title" arg is from an older spec version - current TS DOM
 					// lib types only declare 2, but browsers still accept (and some
 					// older ones still use) a 3rd; keep it, matching the original.
-					(<any>navigator.registerProtocolHandler)('mailto', url+'/index.php?menuaction=mail.mail_compose.compose&preset[mailto]=%s', 'Mail');
+					// mail/compose.php (doc/ai/projects/mail-compose-jmap-migration.md, Step 10)
+					// instead of the classic mail_compose::compose() postback (deleted together
+					// with its own server-side mailto: parsing) - compose.php's own $_GET['mailto']
+					// handling parses the RFC 6068 URI %s substitutes to here, since a protocol-
+					// handler activation is always a fresh top-level navigation with no
+					// already-running JS to hand a parsed URI to (unlike egw_open.ts's own
+					// in-page mailto() parser).
+					(<any>navigator.registerProtocolHandler)('mailto', url+'/mail/compose.php?mailto=%s', 'Mail');
 				}
 				catch (e)
 				{

@@ -9,9 +9,9 @@
  * the chooser's callback directly invocable, as if a button had been
  * clicked). See EgwOpenHarness for what else is stubbed and why.
  *
- * Also covers urlParamsTooLong()/openComposePost() and openWithinWindow()
- * routing long parameters through them - the form submission itself is
- * captured by the harness (env.formSubmits) instead of navigating.
+ * Also covers urlParamsTooLong() and openWithinWindow()'s own GET-url path
+ * (no built-in POST fallback of its own - see the urlParamsTooLong() describe
+ * block below).
  *
  * NOT covered (documented residual risk, see EgwOpenHarness docblock):
  * link_handler()'s no-framework fallback (real navigation).
@@ -19,12 +19,6 @@
 import {assert} from "@open-wc/testing";
 import * as sinon from "sinon";
 import {createEgwOpenEnv, EgwOpenEnv} from "./EgwOpenHarness";
-
-/** let a fire-and-forget async openComposePost() settle */
-function flushMicrotasks() : Promise<void>
-{
-	return new Promise(resolve => setTimeout(resolve, 0));
-}
 
 describe('egw_open.js (open)', () =>
 {
@@ -54,7 +48,6 @@ describe('egw_open.js (open)', () =>
 		assert.isFunction(instance._check_popupBlocker);
 		assert.isFunction(instance.openWithinWindow);
 		assert.isFunction(instance.urlParamsTooLong);
-		assert.isFunction(instance.openComposePost);
 	});
 
 	describe('open_link()', () =>
@@ -630,26 +623,15 @@ describe('egw_open.js (open)', () =>
 	});
 
 	/**
-	 * Regression coverage for "calender: long description -> 414
-	 * Request-URI Too Large": an event created from a mail carries the whole mail as its
-	 * description, which calendar presets as the compose body. Sent as a GET url that
-	 * exceeds the webserver's request-line limit (nginx/Apache: 4k), so anything above
-	 * MAX_URL_PARAMS_LENGTH (2083) has to be POSTed into the compose window instead.
-	 *
-	 * Setup: `open` is stubbed to return a named fake popup (the harness' window.open
-	 * stub returns undefined, and openComposePost needs the popup's name as form target),
-	 * and the harness stubs HTMLFormElement.prototype.submit, recording every submit in
-	 * env.formSubmits. So each test asserts on WHICH path was taken (open() called with
-	 * url params vs. a recorded form submit) and what the form carried.
+	 * urlParamsTooLong() itself stays a generic utility (composeMessage()/composeWithPreset()'s
+	 * own POST-fallback decisions in mail/js/app.ts still call it) - the POST-fallback mechanism
+	 * that used to live here (openComposePost(), hardcoded to the classic mail_compose::compose()
+	 * postback) was removed together with compose() itself; each mail-specific caller now builds
+	 * its own POST fallback targeting mail/compose.php instead (MailApp.composeWithPresetPost()/
+	 * openComposePopupUrlPost(), covered by mail's own jstest group, not here).
 	 */
-	describe('urlParamsTooLong() / openComposePost()', () =>
+	describe('urlParamsTooLong()', () =>
 	{
-		/** What egw.open('','mail','add',...) hands back: the (blank) compose popup */
-		function stubComposePopup(instance : any) : sinon.SinonStub
-		{
-			return sinon.stub(instance, 'open').returns({name: 'compose__'});
-		}
-
 		/** n characters of body, ie. what a mail-turned-event-description looks like */
 		function body(n : number) : string
 		{
@@ -684,137 +666,29 @@ describe('egw_open.js (open)', () =>
 			assert.isTrue(instance.urlParamsTooLong({'preset[bcc]': new Array(fits + 1).fill(recipient)}));
 		});
 
-		it('posts a form into a new compose popup, targeting it, and removes the form again', async() =>
-		{
-			const instance = env.egw();
-			const openStub = stubComposePopup(instance);
-
-			await instance.openComposePost({'preset[subject]': 'Team meeting', 'preset[body]': body(3000)});
-
-			// the blank popup the form gets posted into
-			assert.isTrue(openStub.calledOnceWith('', 'mail', 'add', '', 'compose__', 'mail', undefined));
-
-			assert.equal(env.formSubmits.length, 1, 'exactly one form submitted');
-			const submit = env.formSubmits[0];
-			assert.equal(submit.method, 'post');
-			assert.equal(submit.action, 'index.php?menuaction=mail.mail_compose.compose');
-			assert.equal(submit.target, 'compose__', 'form has to target the popup that was just opened');
-			assert.isTrue(submit.connected, 'form must be in the document to be submittable');
-			assert.deepEqual(submit.params, [
-				['preset[subject]', 'Team meeting'],
-				['preset[body]', body(3000)]
-			]);
-			// no leftover form in the document
-			assert.isFalse(submit.form.isConnected);
-			assert.isNull(env.window.document.querySelector('form'));
-		});
-
-		it('sends each element of an array value as its own "name[]" input, so PHP receives an array', async() =>
-		{
-			const instance = env.egw();
-			stubComposePopup(instance);
-			const bcc = ['A A <a@example.com>', 'B B <b@example.com>'];
-
-			await instance.openComposePost({'preset[bcc]': bcc, 'preset[body]': body(3000)});
-
-			const params = env.formSubmits[0].params;
-			assert.deepEqual(params.filter(([name]) => name === 'preset[bcc][]'), [
-				['preset[bcc][]', bcc[0]],
-				['preset[bcc][]', bcc[1]]
-			], 'one input per recipient - a single JSON-encoded input would arrive as one bogus address');
-		});
-
-		it('splits a query-string _extra into inputs', async() =>
-		{
-			const instance = env.egw();
-			stubComposePopup(instance);
-
-			await instance.openComposePost('preset[subject]=Team+meeting&preset[bcc][]=a%40example.com');
-
-			assert.deepEqual(env.formSubmits[0].params, [
-				['preset[subject]', 'Team meeting'],
-				['preset[bcc][]', 'a@example.com']
-			]);
-		});
-
-		it('does nothing but open the popup when the popup was blocked', async() =>
-		{
-			const instance = env.egw();
-			// what open() returns when the popup-blocker warning dialog is shown instead
-			const openStub = sinon.stub(instance, 'open').returns(undefined);
-
-			await instance.openComposePost({'preset[body]': body(3000)}, true);
-
-			assert.isTrue(openStub.calledOnce);
-			assert.equal(env.formSubmits.length, 0, 'no form to submit without a target popup');
-		});
-
-		it('passes _check_popup_blocker on to open()', async() =>
-		{
-			const instance = env.egw();
-			const openStub = stubComposePopup(instance);
-
-			await instance.openComposePost({'preset[body]': body(3000)}, true);
-
-			assert.isTrue(openStub.calledOnceWith('', 'mail', 'add', '', 'compose__', 'mail', true));
-		});
-
-		it('openWithinWindow() posts instead of opening a GET url when the parameters are too long', async() =>
-		{
-			const instance = env.egw();
-			const openStub = stubComposePopup(instance);
-			(env.window as any).framework = {popups_get: sinon.stub().returns([])};
-			const extra = {'preset[bcc]': ['a@example.com'], 'preset[body]': body(3000)};
-
-			instance.openWithinWindow('mail', 'setCompose', {}, extra, /mail.mail_compose.compose/);
-			await flushMicrotasks();
-
-			// NOT the GET path: open() must not be handed the parameters as url params
-			assert.isTrue(openStub.calledOnceWith('', 'mail', 'add', '', 'compose__', 'mail', undefined));
-			assert.equal(env.formSubmits.length, 1);
-			assert.deepEqual(env.formSubmits[0].params, [
-				['preset[bcc][]', 'a@example.com'],
-				['preset[body]', body(3000)]
-			]);
-		});
-
-		it('awaits a promise-returning open(), as a framework openPopup() gives back', async() =>
-		{
-			const instance = env.egw();
-			// kdots' EgwFramework.openPopup() is async (it awaits the open_popups_in preference),
-			// so egw.open() resolves to the window instead of returning it. Reading .name off the
-			// promise yielded the string "undefined" as form target, which posted the compose into
-			// a stray extra window while the intended popup showed an empty compose.
-			sinon.stub(instance, 'open').returns(Promise.resolve({name: 'compose__'}));
-
-			await instance.openComposePost({'preset[body]': body(3000)});
-
-			assert.equal(env.formSubmits.length, 1);
-			assert.equal(env.formSubmits[0].target, 'compose__');
-		});
-
-		it('posts into a new window when the "popup" is a dialog rather than a window', async() =>
-		{
-			const instance = env.egw();
-			// open_popups_in=same_window makes openPopup() answer with an Et2Dialog - nothing a
-			// form can target, so the parameters go to a new window instead of being dropped
-			sinon.stub(instance, 'open').returns(Promise.resolve({localName: 'et2-dialog'}));
-
-			await instance.openComposePost({'preset[body]': body(3000)});
-
-			assert.equal(env.formSubmits.length, 1);
-			assert.equal(env.formSubmits[0].target, '_blank');
-		});
-
 		it('openWithinWindow() keeps using the GET url for short parameters', () =>
 		{
 			const instance = env.egw();
 			const openStub = sinon.stub(instance, 'open');
 			(env.window as any).framework = {popups_get: sinon.stub().returns([])};
 
-			instance.openWithinWindow('mail', 'setCompose', {}, {'preset[body]': body(100)}, /mail.mail_compose.compose/);
+			instance.openWithinWindow('mail', 'setCompose', {}, {'preset[body]': body(100)}, /\/mail\/compose\.php/);
 
 			assert.isTrue(openStub.calledOnceWith('', 'mail', 'add', {'preset[body]': body(100)}, 'mail', 'mail', undefined));
+			assert.equal(env.formSubmits.length, 0);
+		});
+
+		it("openWithinWindow() has no built-in POST fallback for long parameters without an _open_new override - that's each caller's own responsibility now", () =>
+		{
+			const instance = env.egw();
+			const openStub = sinon.stub(instance, 'open');
+			(env.window as any).framework = {popups_get: sinon.stub().returns([])};
+			const extra = {'preset[body]': body(3000)};
+
+			instance.openWithinWindow('mail', 'setCompose', {}, extra, /\/mail\/compose\.php/);
+
+			// still the plain GET-url path - no special-casing, no form posted
+			assert.isTrue(openStub.calledOnceWith('', 'mail', 'add', extra, 'mail', 'mail', undefined));
 			assert.equal(env.formSubmits.length, 0);
 		});
 	});

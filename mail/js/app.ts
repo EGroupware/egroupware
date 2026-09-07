@@ -1412,12 +1412,11 @@ export class MailApp extends EgwApp
 					// MailCompose.bootstrapForwardAsAttachment() (mail/js/compose.ts) is already
 					// fully JMAP-native and already dispatched by bootstrapCompose() for
 					// from='forward'+mode='forwardasattach' - so the "nothing to reuse" case now
-					// opens via mail/compose.php too, same as every other action, UNLESS the
-					// resulting url would be too long for a GET request (many forwarded messages) -
-					// openComposePopupUrl() below never had a POST fallback of its own (a currently-
-					// unguarded gap this project has otherwise avoided everywhere else), so this
-					// falls back to openWithinWindow()'s OWN, already-safe default (its
-					// urlParamsTooLong()-gated POST) for that case instead of reproducing one.
+					// opens via mail/compose.php too, same as every other action - falling back to
+					// openComposePopupUrlPost() (a real POST fallback, closing the gap this comment
+					// used to document) when the resulting url would be too long for a GET request
+					// (many forwarded messages), same "GET when short, POST when not" split
+					// composeWithPreset() already uses.
 					const accId = rowIdProfileID(settings.id);
 					const tooLong = egw.urlParamsTooLong({
 						from: settings.from, id: settings.id, acc_id: accId,
@@ -1431,7 +1430,7 @@ export class MailApp extends EgwApp
 							}
 						}
 						}, settings, COMPOSE_POPUP_URL_PATTERN, undefined,
-						tooLong ? undefined : () => this.openComposePopupUrl(settings, accId));
+						tooLong ? () => this.openComposePopupUrlPost(settings, accId) : () => this.openComposePopupUrl(settings, accId));
 				}
 				else
 				{
@@ -1487,6 +1486,43 @@ export class MailApp extends EgwApp
 	}
 
 	/**
+	 * openComposePopupUrl()'s own POST fallback, for when `settings.id` (many comma-joined message
+	 * ids, batch forward-as-attachment) makes the GET url too long - closes the gap its own
+	 * docblock used to document (falling back to egw.openWithinWindow()'s classic
+	 * urlParamsTooLong()/openComposePost() path, which posted into the classic mail_compose::
+	 * compose() postback; both removed together with compose() itself). Same technique
+	 * composeWithPresetPost() already uses: open a blank popup via egw.open() first, then POST the
+	 * (potentially long) `id` into that same window as compose.php's own bootstrap target - `from`/
+	 * `acc_id`/`mode`/`smime_type` stay in the url's query string (always short), only `id` needs to
+	 * be a form field. compose.php reads `id` via `$_REQUEST` (not `$_GET`-only) specifically so
+	 * this works.
+	 */
+	private async openComposePopupUrlPost(settings : { id : string, from : string, smime_type? : string, mode? : string }, accId : string) : Promise<void>
+	{
+		const compose_list = egw.getOpenWindows("mail", /^compose_/);
+		const window_name = 'compose_' + compose_list.length + '_' + (settings.from || '') + '_post';
+		const popup : any = await egw.open('', 'mail', 'add', '', window_name, 'mail');
+		if (!popup) return;	// popup blocked, or blocker-warning dialog already shown
+		const target = typeof popup.name === 'string' && popup.name ? popup.name : '_blank';
+		const url = this.egw.link('/mail/compose.php', {
+			from: settings.from || '', acc_id: accId, mode: settings.mode || '', smime_type: settings.smime_type || '',
+		});
+		const doc = document;
+		const form = doc.createElement('form');
+		form.target = target;
+		form.action = url;
+		form.method = 'post';
+		const input = doc.createElement('input');
+		input.type = 'hidden';
+		input.name = 'id';
+		input.value = settings.id || '';
+		form.appendChild(input);
+		doc.body.appendChild(form);
+		form.submit();
+		form.remove();
+	}
+
+	/**
 	 * Open a fresh client-side compose popup with a preset - the "nothing to reuse" fallback
 	 * several other apps' own "email this"/"attach this" actions call (via openWithinWindow()'s
 	 * `_open_new` override) instead of a classic menuaction url, closing off entry points from
@@ -1536,11 +1572,10 @@ export class MailApp extends EgwApp
 
 	/**
 	 * composeWithPreset()'s own POST fallback for a too-long preset - same technique
-	 * egw.openComposePost() already uses for the classic menuaction path (egw_open.ts): open a
-	 * popup via egw.open() first (sized/named the same way, briefly showing a blank classic
-	 * compose page - cosmetic only, this is the rare long-content case), then POST the preset into
-	 * that SAME window, replacing it with this popup's own client-side bootstrap. compose.php reads
-	 * $_REQUEST['preset'] (not $_GET-only) specifically so this works.
+	 * openComposePopupUrlPost() above uses: open a popup via egw.open() first (sized/named the
+	 * same way, briefly blank - cosmetic only, this is the rare long-content case), then POST the
+	 * preset into that SAME window, replacing it with this popup's own client-side bootstrap.
+	 * compose.php reads $_REQUEST['preset'] (not $_GET-only) specifically so this works.
 	 */
 	private async composeWithPresetPost(preset : object, accId : string) : Promise<void>
 	{

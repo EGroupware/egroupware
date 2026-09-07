@@ -33,9 +33,8 @@
  * EgwJson.test.ts.
  *
  * `HTMLFormElement.prototype.submit` is stubbed in the iframe's realm
- * (`env.formSubmits`), so the long-parameters form-POST path
- * (openComposePost(), also used by openWithinWindow()) can be asserted on
- * without the browser actually navigating anything.
+ * (`env.formSubmits`), so a form-POST fallback can be asserted on (or
+ * confirmed absent) without the browser actually navigating anything.
  *
  * Deliberately NOT exercised anywhere in the test suite built on this
  * harness: assigning to a real window's `location.href` (link_handler's
