@@ -77,7 +77,12 @@ describe('AddressbookApp.adb_mail_vcard()', () =>
 				args.reduce((s : string, arg, i) => s.replace('%' + (i + 1), arg), msg)),
 			preference: () => 'utf-8',
 			message: (msg : string) => messages.push(msg),
-			openWithinWindow: (...args : any[]) => composeCalls.push(args)
+			openWithinWindow: (...args : any[]) => composeCalls.push(args),
+			// dataGetUIDdata() - adb_mail_vcard()'s own preset.files (2026-09-07, Step 10) reads a
+			// contact's display name off the nextmatch row cache for the vCard's own filename; no
+			// row data in this test, so the code falls back to a generic name - not what's under
+			// test here (the 'files' shape assertions below don't check names).
+			dataGetUIDdata: () => undefined,
 		};
 		// app.ts calls the bare global `egw`, not this.egw, inside adb_mail_vcard()
 		(<any>window).egw = egw;
@@ -107,6 +112,26 @@ describe('AddressbookApp.adb_mail_vcard()', () =>
 		assert.equal(link['preset[type]'].length, CONTACT_IDS.length);
 		// the message is read off content, so its shape is part of the contract that broke
 		assert.deepEqual(content.data.files.file, link['preset[file]']);
+	});
+
+	it('opens a fresh compose with a jmapVfsPath preset per contact when nothing is open to reuse', () =>
+	{
+		const elems = [{id: 'addressbook::' + CONTACT_IDS[0]}];
+		const composeWithPresetCalls : any[] = [];
+		(<any>window).app = {mail: {composeWithPreset: (preset : any) => composeWithPresetCalls.push(preset)}};
+
+		app.adb_mail_vcard({id: 'mail'}, elems);
+
+		const openNew = composeCalls[0][6];
+		assert.equal(typeof openNew, 'function', 'openWithinWindow() got an _open_new override');
+		openNew();
+
+		assert.equal(composeWithPresetCalls.length, 1);
+		assert.deepEqual(composeWithPresetCalls[0].files, [{
+			path: 'vfs://default/apps/addressbook/' + CONTACT_IDS[0] + '/.entry',
+			name: 'vcard.vcf',
+			type: 'text/vcard; charset=utf-8',
+		}]);
 	});
 
 	it('says nothing when there is nothing to attach', () =>

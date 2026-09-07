@@ -1094,6 +1094,7 @@ class AddressbookApp extends EgwApp
 	{
 		const link = {'preset[type]':[], 'preset[file]':[]};
 		const content = {data:{files:{file:[], type:[]}}};
+		const vcardType = "text/vcard; charset="+(egw.preference('vcard_charset', 'addressbook') || 'utf-8');
 		const nm = this.et2.getWidgetById('nm');
 		if(this._fetchAllSelected(nm, (ids) =>
 		{
@@ -1103,25 +1104,37 @@ class AddressbookApp extends EgwApp
 			return;
 		}
 
+		// preset.files (doc/ai/projects/mail-compose-jmap-migration.md, Step 10) - built alongside
+		// link/content above (the classic shapes, still needed for the "reuse an already-open
+		// popup" case below) so a "nothing to reuse" open can go through MailApp.composeWithPreset()
+		// instead. Filename mirrors classic addPresetFiles()'s own special-cased naming for a
+		// vfs://.../.entry path (Link::title($app,$id).'.'.mime2ext($type)) - cheaper here since the
+		// contact's own display name is already sitting in the nextmatch row cache, no Link::title()
+		// round trip needed.
+		const files : { path : string, name : string, type : string }[] = [];
 		for (let i = 0; i < _elems.length; i++)
 		{
 			const idToUseArray = _elems[i].id.split('::');
 			const idToUse = idToUseArray[1];
-			link['preset[type]'].push("text/vcard; charset="+(egw.preference('vcard_charset', 'addressbook') || 'utf-8'));
-			link['preset[file]'].push("vfs://default/apps/addressbook/"+idToUse+"/.entry");
-			content.data.files.file.push("vfs://default/apps/addressbook/"+idToUse+"/.entry");
-			content.data.files.type.push("text/vcard; charset="+(egw.preference('vcard_charset', 'addressbook') || 'utf-8'));
+			const path = "vfs://default/apps/addressbook/"+idToUse+"/.entry";
+			link['preset[type]'].push(vcardType);
+			link['preset[file]'].push(path);
+			content.data.files.file.push(path);
+			content.data.files.type.push(vcardType);
+			const contactName = egw.dataGetUIDdata(_elems[i].id)?.data?.n_fn;
+			files.push({path, name: (contactName || 'vcard') + '.vcf', type: vcardType});
 		}
 		// Matches an already-open compose popup's own url, classic (mail_compose.compose) OR
 		// client-side-only (mail/compose.php, doc/ai/projects/mail-compose-jmap-migration.md Step
 		// 10) - MailApp.setCompose() works identically for either kind of popup, it only ever
 		// touches the loaded etemplate2/widgets, never the popup's own opening url (found live
 		// 2026-09-07 fixing the same gap in mail/js/app.ts and egw_open.ts's own mailto() - this
-		// call never got the fix along with those). This entry point itself still opens a NEW
-		// popup via the classic postback when nothing's open to reuse - vCard's own VFS-attach
-		// content shape needs genuine JMAP-blob-upload support before that part can convert too
-		// (same gap as filemanager's "mail selected files"/"share link" and "Attach from VFS").
-		egw.openWithinWindow("mail", "setCompose", content, link, /mail_compose\.compose|\/mail\/compose\.php/);
+		// call never got the fix along with those). The "nothing to reuse" case now opens via
+		// MailApp.composeWithPreset({files}) instead of the classic menuaction url - a jmapVfsPath
+		// marker attachment, resolved (real upload, or a zero-byte-moved reference for the shim) at
+		// send time, same mechanism MailCompose.vfsUpload() already uses for an already-open popup.
+		egw.openWithinWindow("mail", "setCompose", content, link, /mail_compose\.compose|\/mail\/compose\.php/,
+			undefined, () => (<any>window).app.mail?.composeWithPreset({files}));
 
 		for (const index in content)
 		{

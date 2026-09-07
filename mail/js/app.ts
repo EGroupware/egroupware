@@ -1467,31 +1467,45 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * Open a fresh client-side compose popup preset with a mailto: link's own to/cc/bcc - the
-	 * "nothing to reuse" fallback egw_open.ts's own mailto() calls (via openWithinWindow()'s
-	 * `_open_new` override) instead of a classic menuaction url, closing off one of the "explicitly
-	 * deferred" entry points from doc/ai/projects/mail-compose-jmap-migration.md's own Step 10 scope
-	 * note. mailto() already parses the whole mailto: URI into this shape entirely client-side, so
-	 * there was nothing server-side left for this specific entry point to depend on - compose.php
-	 * just needs to carry it through to bootstrapComposePopup() below, same as from/id/acc_id/mode/
-	 * smime_type already do.
+	 * Open a fresh client-side compose popup with a preset - the "nothing to reuse" fallback
+	 * several other apps' own "email this"/"attach this" actions call (via openWithinWindow()'s
+	 * `_open_new` override) instead of a classic menuaction url, closing off entry points from
+	 * doc/ai/projects/mail-compose-jmap-migration.md's own Step 10 "explicitly deferred" list one
+	 * at a time - each caller already has (or can cheaply derive) its own preset entirely
+	 * client-side, so there was nothing server-side left for these to depend on; compose.php just
+	 * carries the preset through to bootstrapComposePopup() (see its own @param preset docblock),
+	 * same as from/id/acc_id/mode/smime_type already do.
 	 *
-	 * @param content {to?, cc?, bcc?} - each an array of address strings (or a lone string/empty
-	 *  array - whatever mailto()'s own parsing produced)
+	 * @param preset {to?, cc?, bcc?, files?, filemode?, body?, mimeType?} - see
+	 *  bootstrapComposePopup()'s own preset docblock for the full shape/semantics of each field
 	 */
-	composeMailto(content : { to? : any, cc? : any, bcc? : any }) : void
+	composeWithPreset(preset : {
+		to? : any, cc? : any, bcc? : any,
+		files? : { path : string, name : string, type : string }[],
+		filemode? : string, body? : string, mimeType? : string,
+	}) : void
 	{
 		const accId = this.egw.preference('ActiveProfileID', 'mail') || '';
-		const window_name = 'compose_mailto_' + Date.now();
+		const window_name = 'compose_preset_' + Date.now();
 		const url = this.egw.link('/mail/compose.php', {
 			from: '',
 			id: '',
 			acc_id: accId,
 			mode: '',
 			smime_type: '',
-			preset: JSON.stringify(content),
+			preset: JSON.stringify(preset),
 		});
 		egw.openPopup(url, 870, 'availHeight', window_name, 'mail');
+	}
+
+	/**
+	 * @deprecated use composeWithPreset({to, cc, bcc}) directly - kept as a thin wrapper only
+	 * because egw_open.ts's own mailto() already references this name by its own literal string
+	 * (`window.app.mail?.composeMailto`), not worth touching for a pure rename.
+	 */
+	composeMailto(content : { to? : any, cc? : any, bcc? : any }) : void
+	{
+		this.composeWithPreset(content);
 	}
 
 	/**
@@ -1553,13 +1567,22 @@ export class MailApp extends EgwApp
 	 *  separate mail.mail_compose.ajax_getComposeSession() round-trip fetched here client-side, but
 	 *  that was only ever a workaround to get an exec_id before compose.php existed to compute one
 	 *  upfront (ralf, 2026-09-07: "that's the workaround we used ..., so there's no need for it now")
-	 * @param preset {to?, cc?, bcc?} - a mailto: link's own preset recipients (MailApp.
-	 *  composeMailto(), compose.php's own $_GET['preset']), appended onto whatever getComposeToolbarData()'s
-	 *  content already has, or {} for every other caller
+	 * @param preset {to?, cc?, bcc?, files?, filemode?, body?, mimeType?} - MailApp.
+	 *  composeWithPreset()'s own param, round-tripped through compose.php's own $_GET['preset'],
+	 *  appended onto whatever getComposeToolbarData()'s content already has, or {} for every other
+	 *  caller. `files` are VFS paths (addressbook vCard-attach, filemanager "mail selected files") -
+	 *  {path, name, type} each, turned into a bare `jmapVfsPath` marker attachment entry (same shape
+	 *  MailCompose.vfsUpload() itself builds for an already-open popup's own VFS-attach picker,
+	 *  minus any actual upload - MailJmap.uploadVfsAttachment()/the shim's own zero-byte-moved
+	 *  reference resolve it at send time, see uploadAttachmentsViaJmap()'s own docblock).
 	 */
 	async bootstrapComposePopup(from : string, sourceId : string, accId : string, mode : string, smimeType : string,
 		bootstrap : {name : string, url : string, etemplate_exec_id : string},
-		preset? : {to? : string[], cc? : string[], bcc? : string[]}) : Promise<void>
+		preset? : {
+			to? : string[], cc? : string[], bcc? : string[],
+			files? : { path : string, name : string, type : string }[],
+			filemode? : string, body? : string, mimeType? : string,
+		}) : Promise<void>
 	{
 		const {name, url, etemplate_exec_id} = bootstrap;
 
@@ -1609,6 +1632,30 @@ export class MailApp extends EgwApp
 			}
 		}
 
+		// preset.files (addressbook vCard-attach, filemanager "mail selected files") is applied
+		// AFTER the template loads, via MailCompose.applyPresetFiles() below - NOT folded into this
+		// initial content: found live 2026-09-07 that doing it here leaves the attachments block's
+		// own disabled/collapsed widget state stuck (exactly the bug mergeAttachmentEntries()'s own
+		// UI-visibility fix exists for on the "reuse an existing popup" path - applyPresetFiles()
+		// reuses that same fix instead of reproducing it).
+		if (preset?.filemode)
+		{
+			contentCopy.filemode = preset.filemode;
+		}
+		// preset.body (filemanager "share link") is applied AFTER the template loads too, via
+		// MailCompose.applyPresetBody() below - same reason as preset.files above: a blank
+		// compose's initial content.body/mail_htmltext is never read at all, only
+		// bootstrapSignature()'s own direct widget set_value() populates it.
+		// classic mail_compose.inc.php's own "always open compose in html mode, as attachment
+		// links look a lot nicer in html" (filemanager's own VFS-attach/share-link callers force
+		// this regardless of the user's own composeOptions preference)
+		if (preset?.mimeType)
+		{
+			contentCopy.mimeType = preset.mimeType;
+			contentCopy.is_html = preset.mimeType === 'html' ? true : '';
+			contentCopy.is_plain = preset.mimeType === 'html' ? '' : true;
+		}
+
 		// Mirror class.mail_compose.inc.php:553-565 - only pre-checks an action that actually
 		// EXISTS (getToolbarActions() only adds smime_sign/smime_encrypt at all when the account
 		// has S/MIME configured, Mail\Smime::get_acc_smime()) - matches the classic code's own
@@ -1643,6 +1690,24 @@ export class MailApp extends EgwApp
 			currentapp: 'mail',
 			etemplate_exec_id
 		}, url);
+
+		// preset.files/body - see the comments where each is read above for why these have to run
+		// AFTER the template has loaded (MailCompose.applyPresetFiles()/applyPresetBody()'s own
+		// docblocks) rather than as part of the content bootstrapClientSideTemplate() was just
+		// given. Awaiting bootstrapPromise first so this runs after bootstrapSignature() has
+		// already inserted the signature, not racing with it.
+		if (preset?.files?.length || preset?.body)
+		{
+			await (<any>window).app._compose.bootstrapPromise;
+			if (preset.files?.length)
+			{
+				(<any>window).app._compose.applyPresetFiles(preset.files);
+			}
+			if (preset.body)
+			{
+				(<any>window).app._compose.applyPresetBody(preset.body);
+			}
+		}
 	}
 
 	/**

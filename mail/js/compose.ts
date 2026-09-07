@@ -415,6 +415,53 @@ export class MailCompose
 	}
 
 	/**
+	 * Apply a client-side-only compose bootstrap's own preset VFS-attachment files (addressbook
+	 * vCard-attach, filemanager "mail selected files" - doc/ai/projects/mail-compose-jmap-
+	 * migration.md, Step 10) - same bare `jmapVfsPath` marker shape vfsUpload() itself builds for
+	 * an already-open popup's own picker widget. Deliberately reuses mergeAttachmentEntries()
+	 * rather than folding these into the popup's own INITIAL content: found live 2026-09-07 that a
+	 * bare initial-content merge leaves the attachments block's own disabled/collapsed widget state
+	 * stuck (exactly the bug mergeAttachmentEntries()'s own UI-visibility fix exists for on the
+	 * "reuse an existing popup" path) - only calling it, post-load, actually shows the row.
+	 *
+	 * @param files {path, name, type}[]
+	 */
+	public applyPresetFiles(files : { path : string, name : string, type : string }[]) : void
+	{
+		if (!files.length) return;
+		this.mergeAttachmentEntries(files.map((f) => ({
+			tmp_name: 'vfs:' + f.path,
+			jmapVfsPath: f.path,
+			name: f.name || f.path.split('/').pop() || f.path,
+			type: f.type || 'application/octet-stream',
+			size: 0,
+			filemode_icon: 'attach',
+			filemode_title: '',
+		})));
+	}
+
+	/**
+	 * Apply a client-side-only compose bootstrap's own preset body snippet (filemanager "share
+	 * link" - doc/ai/projects/mail-compose-jmap-migration.md, Step 10) - PREPENDED to the current
+	 * body widget's value, mirroring classic mergePresetBody()'s own `$preset['body'].$content['body']`
+	 * ordering (preset content above, signature below - class.mail_compose.inc.php's own docblock:
+	 * "if we preset the body, we always want the signature below"). Must run AFTER
+	 * bootstrapSignature() has already inserted the signature (initial content's own `body`/
+	 * `mail_htmltext` key is never read for a blank compose bootstrapped this way at all - only
+	 * bootstrapSignature()'s own direct widget set_value() populates it - found live 2026-09-07
+	 * trying the (silently no-op) initial-content route first, same class of bug applyPresetFiles()
+	 * hit for attachments).
+	 *
+	 * @param html html snippet to prepend
+	 */
+	public applyPresetBody(html : string) : void
+	{
+		const widget = this.currentBodyWidget();
+		if (!widget) return;
+		widget.set_value(html + (widget.get_value() || ''));
+	}
+
+	/**
 	 * Check sharing mode and disable not available options
 	 *
 	 * @param {Node} _node

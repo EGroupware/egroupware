@@ -522,10 +522,22 @@ export class filemanagerAPP extends EgwApp
 		if (!params || typeof params != 'object') params = {};
 		if (!(attachments instanceof Array)) attachments = [ attachments ];
 		let content = {data:{files:{file:[]}}};
+		// preset.files (doc/ai/projects/mail-compose-jmap-migration.md, Step 10) - built alongside
+		// content above (the classic shape, still needed for the "reuse an already-open popup"
+		// case below) so a "nothing to reuse" open can go through MailApp.composeWithPreset()
+		// instead. mime type comes from the same nextmatch row cache open_mail()'s own callers
+		// (mail()/mail_share_link()) already selected these files from.
+		const files : { path : string, name : string, type : string }[] = [];
 		for(let i=0; i < attachments.length; i++)
 		{
-			params['preset[file]['+i+']'] = 'vfs://default'+attachments[i];
-			content.data.files.file.push('vfs://default'+attachments[i]);
+			const vfsPath = 'vfs://default'+attachments[i];
+			params['preset[file]['+i+']'] = vfsPath;
+			content.data.files.file.push(vfsPath);
+			files.push({
+				path: vfsPath,
+				name: this.basename(<string>attachments[i]),
+				type: egw.dataGetUIDdata('filemanager::'+attachments[i])?.data?.mime || 'application/octet-stream',
+			});
 		}
 		content.data.files["filemode"] = params['preset[filemode]'];
 		// always open compose in html mode, as attachment links look a lot nicer in html
@@ -535,11 +547,15 @@ export class filemanagerAPP extends EgwApp
 		// 10) - MailApp.setCompose() works identically for either kind of popup, it only ever
 		// touches the loaded etemplate2/widgets, never the popup's own opening url (found live
 		// 2026-09-07 fixing the same gap in mail/js/app.ts and egw_open.ts's own mailto() - this
-		// call never got the fix along with those). This entry point itself still opens a NEW
-		// popup via the classic postback when nothing's open to reuse - VFS-attach content needs
-		// genuine JMAP-blob-upload support before that part can convert too (same gap as
-		// addressbook's vCard-attach and "Attach from VFS").
-		return egw.openWithinWindow("mail", "setCompose", content, params, /mail_compose\.compose|\/mail\/compose\.php/, true);
+		// call never got the fix along with those). The "nothing to reuse" case now opens via
+		// MailApp.composeWithPreset({files, filemode, mimeType}) instead of the classic menuaction
+		// url - a jmapVfsPath marker attachment, resolved (real upload, or a zero-byte-moved
+		// reference for the shim) at send time, same mechanism MailCompose.vfsUpload() already uses
+		// for an already-open popup.
+		return egw.openWithinWindow("mail", "setCompose", content, params, /mail_compose\.compose|\/mail\/compose\.php/, true,
+			() => (<any>window).app.mail?.composeWithPreset({
+				files, filemode: params['preset[filemode]'], mimeType: 'html',
+			}));
 	}
 
 	/**
@@ -604,19 +620,22 @@ export class filemanagerAPP extends EgwApp
 	{
 		if (_data.msg || !_data.share_link) window.egw_refresh(_data.msg, this.appname);
 
+		const linkHtml = '<a href="'+_data.share_link + '">'+_data.title+'</a>';
 		let params = {
-			'preset[body]': '<a href="'+_data.share_link + '">'+_data.title+'</a>',
+			'preset[body]': linkHtml,
 			'mimeType': 'html'// always open compose in html mode, as attachment links look a lot nicer in html
 		};
 		let content = {
-			mail_htmltext: ['<br /><a href="'+_data.share_link + '">'+_data.title+'</a>'],
+			mail_htmltext: ['<br />'+linkHtml],
 			mail_plaintext: ["\n"+_data.share_link]
 		};
-		// see open_mail()'s own comment above - same regex fix, same "still classic postback for a
-		// genuinely new popup" scope (this content shape is plain text fields though, not a VFS
-		// attachment, so reusing an ALREADY-open JMAP-mode popup via setCompose() already works
-		// today; only opening a brand NEW one still goes through the classic menuaction url).
-		return egw.openWithinWindow("mail", "setCompose", content, params, /mail_compose\.compose|\/mail\/compose\.php/);
+		// see open_mail()'s own comment above - same regex fix; this content shape is plain text
+		// fields though, not a VFS attachment, so reusing an ALREADY-open JMAP-mode popup via
+		// setCompose() already works today unchanged. The "nothing to reuse" case now opens via
+		// MailApp.composeWithPreset({body, mimeType}) instead of the classic menuaction url - a
+		// plain content.body append, no attachment/JMAP-blob complexity at all for this one.
+		return egw.openWithinWindow("mail", "setCompose", content, params, /mail_compose\.compose|\/mail\/compose\.php/,
+			undefined, () => (<any>window).app.mail?.composeWithPreset({body: '<br />'+linkHtml, mimeType: 'html'}));
 	}
 
 	/**
