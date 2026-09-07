@@ -298,6 +298,19 @@ $overwrites = [
 			'apps' => 'string',
 		],
 	],
+	// real usage nests a filter <option> (eg. id="0" "All users") the same way et2-select does
+	'et2-nextmatch-header-account' => [
+		'.children' => ['.quantity' => 'zeroOrMore', 'option'],
+	],
+	// real usage nests an icon, eg. <et2-image slot="prefix"> for the path's leading icon
+	'et2-vfs-path' => [
+		'.children' => ['.quantity' => 'zeroOrMore', 'Widgets'],
+	],
+	'Et2DateTimeToday' => [
+		'.attrs' => [
+			'onclick' => 'function',
+		],
+	],
 	'et2-select-number' => [
 		'.children' => ['.quantity' => 'zeroOrMore', 'option'],
 	],

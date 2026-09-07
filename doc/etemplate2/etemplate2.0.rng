@@ -3763,7 +3763,9 @@
   <define name="et2-nextmatch-header-account">
     <element name="et2-nextmatch-header-account">
       <ref name="attlist.et2-nextmatch-header-account"/>
-      <empty/>
+      <zeroOrMore>
+        <ref name="option"/>
+      </zeroOrMore>
     </element>
   </define>
   <define name="attlist.et2-nextmatch-header-account" combine="interleave">
@@ -9820,6 +9822,9 @@
           </data>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="onclick"/>
     </optional>
     <optional>
       <attribute name="readonly">
@@ -29490,7 +29495,9 @@
   <define name="et2-vfs-path">
     <element name="et2-vfs-path">
       <ref name="attlist.et2-vfs-path"/>
-      <empty/>
+      <zeroOrMore>
+        <ref name="Widgets"/>
+      </zeroOrMore>
     </element>
   </define>
   <define name="attlist.et2-vfs-path" combine="interleave">
