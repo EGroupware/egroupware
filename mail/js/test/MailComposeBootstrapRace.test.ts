@@ -31,7 +31,11 @@ const egw : any = {
 
 function createFakeApp() : MailApp
 {
-	return {egw} as unknown as MailApp;
+	// _set_Window_title() - bootstrapCompose()'s own end-of-bootstrap title refresh (2026-09-07,
+	// fixing the title not updating for a client-side reply/forward bootstrap since Et2Textbox's
+	// set_value() doesn't fire a 'change' event) - a no-op stub is enough, this test only cares
+	// about the bootstrapping-flag race, not window title behaviour.
+	return {egw, _set_Window_title: () => {}} as unknown as MailApp;
 }
 
 /** Mirrors Et2Select/Et2Checkbox: set_value() updates the value AND (if wired) fires onchange synchronously, same as a real dispatchEvent("change") - the exact mechanism the race depends on. */
