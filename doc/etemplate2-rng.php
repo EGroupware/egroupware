@@ -40,7 +40,12 @@ $widgets_choice = getByName($grammar, 'Widgets')->choice;
  */
 $overwrites = [
 	// RE to remove no longer used legacy widgets not matching "et2-<legacy-name>"
-	'.remove' => '/^(button|dropdown_button|int|float|menu|select|taglist|tree|passwd|date|time|ajax_select|vfs-(select|path))/',
+	'.remove' => '/^(button|dropdown_button|int|float|menu|select|taglist|tree|passwd|date|time|ajax_select|vfs-(select|path)|vfs$)/',
+	// legacy widgets to NOT auto-remove below despite having a same-named et2-<name> webcomponent:
+	// customfields/customfields-list still have a real, actively used legacy implementation
+	// (api/etemplate.php's preprocessor deliberately does not rewrite these tags, unlike almost
+	// everything else - see widget-migration-status.md, "1b - kept for a dependent")
+	'.keep' => ['customfields', 'customfields-list'],
 	'*' => [    // all widgets, DOM attributes are NOT reported
 		'.attrs' => [
 			'id' => 'string',   // commented out with some reasoning in Et2Widget
@@ -307,9 +312,24 @@ foreach($components as $component)
         }
     }
 
-    // remove corresponding legacy widget
-    removeWidget(str_replace('et2-', '', $component['tagName']));
+    // remove corresponding legacy widget, unless explicitly kept (still has a real legacy impl)
+    $legacyName = str_replace('et2-', '', $component['tagName']);
+    if (!in_array($legacyName, $overwrites['.keep'] ?? [], true))
+    {
+        removeWidget($legacyName);
+    }
 }
+
+// old-box: et2_box's still-live "old-box" auto-repeat escape hatch (see widget-migration-status.md,
+// "old-box auto-repeat" section) - same widget class/attributes/children as et2-box, but was never
+// part of the legacy etemplate2.dtd's Widgets choice and is deliberately never preprocessor-rewritten
+// (unlike plain box/vbox/hbox), so it needs adding here rather than relying on the components.json-
+// driven loop above
+$widgets_choice->addChild('ref')->addAttribute('name', 'old-box');
+($define = $grammar->addChild('define'))->addAttribute('name', 'old-box');
+($element = $define->addChild('element'))->addAttribute('name', 'old-box');
+$element->addChild('ref')->addAttribute('name', 'attlist.et2-box');
+$element->addChild('oneOrMore')->addChild('ref')->addAttribute('name', 'Widgets');
 
 $remove = [];
 foreach($widgets_choice->children() as $widget)
