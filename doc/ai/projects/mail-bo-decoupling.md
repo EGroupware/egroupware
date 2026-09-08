@@ -1,6 +1,6 @@
 # Mail: `Api\Mail`/`mail_ui` decomposition for testability
 
-## Status: Phase 1 complete, Phase 2 complete except Api\Mail's "Folder management" group (started 2026-08-14)
+## Status: Phase 1 complete, Phase 2 complete except Api\Mail's "Folder management" group (started 2026-08-14); Api\Mail orphaned-method audit+cleanup done (2026-09-09)
 
 This doc captures an analysis of `api/src/Mail.php` (`Api\Mail`, the `mail_bo` business-object class)
 and `mail/inc/class.mail_ui.inc.php` (`mail_ui`, the Etemplate app class), aimed at breaking both apart
@@ -314,6 +314,65 @@ Per [[mail-folder-tree-jmap]], the "Folder ajax handlers"/"Row-id helpers" `mail
     `MessageDisplayHandler`) for a purely organizational move that adds no testability (both are
     already `static`/pure and trivially testable in place). Left on `mail_ui` exactly as-is.
 
+## `Api\Mail` orphaned-method audit and cleanup (2026-09-09)
+
+Full usage audit of every one of `Api\Mail`'s 138 methods (ralf: "let's check again Api/Mail /
+mail_bo for orphaned / not used methods") - a straight dead-code sweep, not an extraction pass, so
+tracked here separately from the Phase 1/2 groups above rather than as a new phase. Done via 3
+parallel research passes (46 methods each) covering every call site in the repo, grouped by caller
+file/condition, with the same case-insensitive/string-callable/gitignored-`tracker/` discipline as
+Phase 1's own incident (see above) - each candidate was independently re-verified with a fresh
+case-insensitive grep before deleting anything, not just taken on the first pass's word.
+
+**16 methods removed, zero external callers found for any of them (repo-wide, case-insensitive,
+including a direct check against the gitignored `tracker/` checkout on disk):**
+
+- `forceEAProfileLoad`, `saveSessionData` - dead session/profile helpers (not the unrelated
+  same-named methods on `mail_sieve`/`Ldap` - those stayed, they're a different class each).
+- `hasCapability` - a thin `$this->icServer->hasCapability()` wrapper; every real caller already
+  calls `icServer->hasCapability()` directly, bypassing it entirely.
+- `getUserEMailAddresses`, `getAllIdentities` - dead identity-lookup helpers.
+- `getDefaultIdentity` + `getIdentitiesWithAccounts` - a dead pair: the only caller of
+  `getIdentitiesWithAccounts()` was `getDefaultIdentity()` itself, which had no callers of its own.
+- `getTimeOut` - dead (distinct from the actively-used `Mail\Imap::getTimeOut()` on a different
+  class - don't conflate the two when reading old comments referencing "getTimeOut()").
+- `fetchUnSubscribedFolders`, `getFolderArrays` - dead folder-listing methods; `getFolderArrays()`'s
+  only reference was a self-recursive call from within its own body, no real external/sibling
+  caller anywhere (likely superseded by `getFolderObjects()`).
+- `getFlags` + `getNotifyFlags` - another dead pair: `getNotifyFlags()`'s only downstream call was
+  to `getFlags()`, itself otherwise uncalled.
+- `detect_qp` - dead, zero references anywhere including comments.
+- `addAccount`, `deleteAccount`, `updateAccount` - literal `error_log(...'NOT DONE YET!')` stubs,
+  never implemented. Easily confused with the *actually-live* hook dispatch of the same three names
+  in `Api\Mail\Hooks::run_plugin_hooks()` (registered via `api/setup/setup.inc.php`'s
+  `addaccount`/`deleteaccount` hooks) - traced that dispatch precisely and confirmed it calls the
+  method on the account's `Mail\Imap`/`Mail\Smtp` *subclass* instance (`Imap\Dovecot`,
+  `Smtp\Stalwart`, etc.), never on `Api\Mail` (this bo class) - these three stubs were simply never
+  reachable from anywhere, a leftover from before that hook dispatch existed on the subclass side.
+
+**Explicitly NOT removed despite thin/single-purpose usage** (real, just narrow):
+`getQuotaRoot` (flagged "unsure" - no confirmed direct call site found, but not confidently zero
+either; left alone pending a closer look rather than guessed at), `getFolderByType`/`getTemplateFolder`/
+`_getSortString`/`parseSearchTokens`/`buildTokenizedSearch`/`_getSpecialUseFolder`/
+`check_create_autofolders`/`getMailBoxCounters` (internal-only helpers, genuinely exercised via
+their public siblings, just never called from outside the class - not orphaned, by design),
+`jmapAwareSortedList`/`compressFolder` (zero *in-repo* callers but real callers confirmed in
+`tracker/`'s gitignored `tracker_mailhandler` - would have been false-positive removals),
+`getAttachmentAccount` (only reachable via a string-callable array passed to `Link::set_data()` in
+`AttachmentJmap.php` - a plain grep for `->`/`::` calls finds nothing, a reminder of the same
+case-insensitive/string-callable trap Phase 1's own incident (above) already warned about).
+
+**Verified**: `php -l` clean, method count 138→122, full `mail`+`api/tests/Mail` PHPUnit suite
+(281 tests) - only the pre-existing baseline failures (REST-connection `cURL error 7` in
+`MailAccountPatchTest`, one unrelated VFS-fixture-permission failure in `ImapBuildMailerTest`),
+identical to this project's already-documented baseline. No code changes beyond the 16 deletions -
+every remaining method already had a confirmed real caller.
+
+The "proposed component groups" table below is updated to drop the now-deleted method names from
+its "representative methods" examples (`getFolderArrays` from Folder management,
+`saveSessionData`/`getAllIdentities`/`getDefaultIdentity` from Identity/account/session lifecycle) -
+the groups themselves are otherwise unaffected, this was pure subtraction, not regrouping.
+
 ## Next up
 
 `mail_ui`'s ajax-handler regrouping (Phase 2) is now **fully complete**: S/MIME, Import, Message
@@ -324,8 +383,9 @@ deliberately left untouched). Remaining: the higher-risk `Api\Mail` groups -
 - **Header/search, body/attachment IMAP fetch** - need the `$icServer` coupling question answered
   first, see "Recommended approach" above.
 - **`Api\Mail`'s "Folder management" group** (`createFolder`/`renameFolder`/`deleteFolder`/
-  `getFolderObjects`/`getFolderArrays`/`getFolderStatus`/`getMailBoxCounters`/`_getNameSpaces`/
-  `getSpecialUseFolders`/`getQuotaRoot`) - no longer blocked ([[mail-folder-tree-jmap]] fully
+  `getFolderObjects`/`getFolderStatus`/`getMailBoxCounters`/`_getNameSpaces`/
+  `getSpecialUseFolders`/`getQuotaRoot` - `getFolderArrays()` was in this group too but turned out
+  to be dead code, removed 2026-09-09, see the audit section above) - no longer blocked ([[mail-folder-tree-jmap]] fully
   landed 2026-08-17), but a harder follow-up than the `mail_ui` group above: it would be the first
   time this project's constructor-injection pattern applies to `Api\Mail` itself rather than
   `mail_ui`, and two of its static properties (`self::$specialUseFolders`, `self::$profileDefunct`)
@@ -339,7 +399,7 @@ deliberately left untouched). Remaining: the higher-risk `Api\Mail` groups -
 
 | File | Lines | Methods |
 |---|---|---|
-| `api/src/Mail.php` | 8337 | ~142 |
+| `api/src/Mail.php` | 7873 | 122 (16 dead ones removed 2026-09-09, see audit section above) |
 | `mail/inc/class.mail_ui.inc.php` | 3370 | ~74 |
 | `mail/js/app.ts` (`MailApp`, client-side, same problem, not analyzed in depth here) | 6620 | - |
 
@@ -380,11 +440,11 @@ column is the rough blocker to extracting it as a standalone, `Api\Mail`-indepen
 | **Folder-type/naming helpers** | `isDraftFolder`, `isTrashFolder`, `isSentFolder`, `isOutbox`, `isTemplateFolder`, `getFolderByType`, `pathToFolderData`, `sortByMailbox`/`sortByDisplayName`/etc., `encodeFolderName`/`decodeEntityFolderName` | Low-medium - mostly string logic against folder names/preferences, a few call `folderExists()` which needs `$icServer` | **Low-medium.** Splitting the pure-string subset first, leaving the existence-checking variants as thin wrappers that delegate, is a safe first cut. |
 | **Custom labels/keywords** | `getCustomLabels`, `categoriesToCustomLabels`, `validateKeyword`, `customLabelId`, `isLabelKeyword`, `labelSearchCriterion`, `labelSearchFromStatus` | Low - already mostly `static`, touches `Categories` (a different app's API), not `$icServer` | **Low.** Already has `api/tests/Mail/CustomLabelsTest.php`; formalizing the class boundary is mostly organizational. |
 | **JMAP-dispatch helpers** | all `jmap<MethodName>()` privates (`jmapGetMessageHeader`, `jmapGetMessageBody`, `jmapFlagMessages`, `jmapMoveMessages`, ...) | Medium - depend on `$icServer instanceof Mail\Imap\Jmap`, but not on the wider IMAP connection state the classic half needs | **Medium, but arguably shouldn't move.** These already form their own conceptual unit (documented dispatch pattern); extracting them fully would mean re-plumbing every classic-method call site's `if (($r = $this->jmap...()) !== null) return $r;` header. Lower-value than the pure-utility groups above for the test-coverage goal, since they're already reasonably testable in place given a fake `Mail\Imap\Jmap`. |
-| **Folder management (existence/CRUD/listing)** | `createFolder`, `renameFolder`, `deleteFolder`, `getFolderObjects`, `getFolderArrays`, `getFolderStatus`, `getMailBoxCounters`, `_getNameSpaces`, `getSpecialUseFolders`, `getQuotaRoot` | High - real IMAP calls via `$icServer`, heavy internal caching keyed by `ImapServerId` | **No longer blocked** ([[mail-folder-tree-jmap]] fully landed 2026-08-17) but still High/not started - none of these 10 have external callers outside `mail/` (no tracker dependency), but 2 static properties (`self::$specialUseFolders`, `self::$profileDefunct`) are also touched by `_getSpecialUseFolder()`/`folderExists()`, which stay on `Api\Mail` - see "Next up". |
+| **Folder management (existence/CRUD/listing)** | `createFolder`, `renameFolder`, `deleteFolder`, `getFolderObjects`, `getFolderStatus`, `getMailBoxCounters`, `_getNameSpaces`, `getSpecialUseFolders`, `getQuotaRoot` | High - real IMAP calls via `$icServer`, heavy internal caching keyed by `ImapServerId` | **No longer blocked** ([[mail-folder-tree-jmap]] fully landed 2026-08-17) but still High/not started - none of these 10 have external callers outside `mail/` (no tracker dependency), but 2 static properties (`self::$specialUseFolders`, `self::$profileDefunct`) are also touched by `_getSpecialUseFolder()`/`folderExists()`, which stay on `Api\Mail` - see "Next up". |
 | **Header/list/search** | `getHeaders`, `getSortedList`, `createIMAPFilter`, `_getSortString`, `buildTokenizedSearch`, `parseSearchTokens` | High - `$icServer` IMAP search/fetch calls, feeds `getSortedList()`'s numeric-UID contract other callers assume (see [[mail-jmap-modernization]] on why `getSortedList()` couldn't just be swapped for JMAP everywhere) | **High.** Same caution as folder management, compounded by the numeric-UID assumption already documented as a constraint. |
 | **Body/attachment fetch (classic IMAP halves)** | `getMessageBody`, `getMessageAttachments`, `getAttachment`, `getAttachmentByCID`, `getMultipartAlternative/Mixed/Related`, `getBodyPart`, `getTextPart`, `getStructure` | High - real IMAP fetches plus TNEF/S-MIME special-casing already threaded through `jmapResolveUid()`'s bail-to-classic trap (see [[mail-jmap-modernization]]) | **High.** The MIME-parsing sub-logic (walking a `Horde_Mime_Part` tree once already fetched) is more separable than the IMAP-fetch shell around it - a `Mail\BodyRenderer` that takes a `Horde_Mime_Part` and returns rendered HTML/text, independent of how that part was fetched, is plausible and would let the JMAP path (which already gets pre-parsed structure per RFC 8621, no `Horde_Mime_Part` walk needed) and the classic path share test coverage of the transform logic even though they can't share the fetch. |
 | **Compose/send helpers** | `get_mailcontent`, `appendMessage`, `importMessageToMergeAndSend`, `parseFileIntoMailObject`, `parseRawMessageIntoMailObject`, `processURL2InlineImages`, `checkFileBasics` | High - `Mailer`, VFS, merge-print integration, several other apps' hooks | **High, lower priority** - explicitly out of scope for the current JMAP project too (`mail_compose.inc.php` audited and left classic, see [[mail-jmap-modernization]]); no reason to prioritize decoupling code that isn't being actively modified. |
-| **Identity/account/session lifecycle** | `getInstance`, `__construct`, `restoreSessionData`, `saveSessionData`, `getAllIdentities`, `getAccountIdentities`, `getDefaultIdentity` | N/A - this *is* the state-management core everything else depends on | **Don't extract.** This is the thing other components would take as a constructor dependency, not a component itself. |
+| **Identity/account/session lifecycle** | `getInstance`, `__construct`, `restoreSessionData`, `getAccountIdentities` | N/A - this *is* the state-management core everything else depends on | **Don't extract.** This is the thing other components would take as a constructor dependency, not a component itself. |
 | **S/MIME** | `resolveSmimeMessage`, `_decryptSmimeBody` | Medium - `Horde_Crypt_Smime`, passphrase handling | Already fairly self-contained; lower priority since S/MIME is intentionally still classic-only per [[mail-jmap-modernization]]. |
 
 ## `mail_ui` - proposed component groups
