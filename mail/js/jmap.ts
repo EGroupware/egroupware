@@ -204,6 +204,22 @@ export type JmapBodyResult =
 		smime? : any;
 	};
 
+/**
+ * Result of MailJmap.verifyPgpSignature() - `verified`/`keySource` together give the same
+ * three-state model setSmimeFlags() already established for S/MIME: `verified` true is the
+ * fully-trusted case; `verified` false with `keySource` 'none' means signed but no key was found
+ * to check it against at all; `verified` false with a real `keySource` means a key WAS found but
+ * the signature didn't validate against it.
+ */
+export interface PgpSignatureResult
+{
+	signed : true;
+	verified : boolean;
+	keySource : 'addressbook' | 'inline' | 'none';
+	/** the message's own From address, lowercased - null if genuinely absent */
+	email : string | null;
+}
+
 export interface JmapGetRowsQuery
 {
 	selectedFolder : string;	// "profileID::folder/path"
@@ -3064,6 +3080,269 @@ export class MailJmap
 			fileName: part.name || 'part',
 		});
 		return response.text();
+	}
+
+	/**
+	 * Depth-first search for a PGP/MIME (RFC 3156) detached-signature multipart/signed wrapper -
+	 * `subParts[1].type === 'application/pgp-signature'` is the unambiguous, RFC-mandated marker
+	 * distinguishing it from an S/MIME-signed multipart/signed (already handled server-side via
+	 * isSpecialCase(), never reaches here - see that method's own docblock). Mirrors
+	 * findPgpPart()'s identical shape/reasoning for the encrypted case.
+	 */
+	private findPgpSignaturePart(part : any) : {signedPart : any, sigPart : any} | null
+	{
+		if (!part)
+		{
+			return null;
+		}
+		if ((part.type || '').toLowerCase() === 'multipart/signed' && part.subParts?.length >= 2 &&
+			(part.subParts[1].type || '').toLowerCase() === 'application/pgp-signature')
+		{
+			return {signedPart: part.subParts[0], sigPart: part.subParts[1]};
+		}
+		for (const sub of part.subParts || [])
+		{
+			const found = this.findPgpSignaturePart(sub);
+			if (found)
+			{
+				return found;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * RFC 1847 §2.1 canonical extraction of a multipart/signed part's two children - the EXACT
+	 * wire bytes (including the signed sub-part's OWN Content-Type/MIME headers - part of what the
+	 * signature actually covers) a signature was computed over and verified against, sliced
+	 * directly from the message's raw bytes rather than reconstructed from any parsed
+	 * representation. This is the ONLY safe way to get this - confirmed live (2026-09-08 spike,
+	 * doc/ai/projects/mail-pgp-signature-verification.md has the full method/findings) against
+	 * both real Stalwart and the local shim: Stalwart gives NO blobId at all for a non-leaf
+	 * subParts[0] (the common case - a real MUA's signed body is usually itself a multipart, one
+	 * level deeper than the bare "text/plain" the RFC's own examples show), and the shim'S own
+	 * per-part blobId for a multipart container returns only that part's body, silently missing
+	 * its own Content-Type header - subtly wrong for verification despite looking superficially
+	 * plausible (right ballpark size, valid MIME content).
+	 *
+	 * Uses ISO-8859-1 (not UTF-8) to go from bytes to a searchable string and back - a byte-for-
+	 * byte-reversible mapping for every possible byte value (unlike UTF-8, which would corrupt
+	 * arbitrary binary content), safe here since the boundary markers being searched for are
+	 * always plain ASCII regardless of what the surrounding parts actually contain.
+	 *
+	 * @param raw the WHOLE message's raw bytes (Email/get's own top-level blobId, downloaded
+	 *  verbatim via downloadBlob() - never the shim's own per-part blobId scheme)
+	 * @param boundary the enclosing multipart/signed part's own boundary string (no leading "--")
+	 * @returns null if the boundary can't be located at least 3 times (opening delimiter, the one
+	 *  separating the two children, and the closing "--boundary--") - an unexpected/malformed
+	 *  structure the caller reports as "unable to verify" rather than guessing
+	 */
+	private static sliceMultipartSigned(raw : Uint8Array, boundary : string) : {signedBytes : Uint8Array, sigPartBytes : Uint8Array} | null
+	{
+		const text = new TextDecoder('iso-8859-1').decode(raw);
+		const delim = '--' + boundary;
+		const idx : number[] = [];
+		let pos = 0;
+		while (idx.length < 3)
+		{
+			const found = text.indexOf(delim, pos);
+			if (found === -1) break;
+			idx.push(found);
+			pos = found + delim.length;
+		}
+		if (idx.length < 3)
+		{
+			return null;
+		}
+		const [d0, d1, d2] = idx;
+		const afterLine = (offset : number) : number =>
+		{
+			const nl = text.indexOf('\r\n', offset);
+			return nl === -1 ? offset : nl + 2;
+		};
+		const trimTrailingCrlf = (end : number) : number =>
+			(text[end - 2] === '\r' && text[end - 1] === '\n') ? end - 2 : end;
+
+		return {
+			signedBytes: raw.slice(afterLine(d0), trimTrailingCrlf(d1)),
+			sigPartBytes: raw.slice(afterLine(d1), trimTrailingCrlf(d2)),
+		};
+	}
+
+	/**
+	 * The multipart/signed wrapper's own Content-Type boundary parameter, located directly in the
+	 * raw message text (same reasoning as sliceMultipartSigned()'s own docblock - no MIME-
+	 * reconstructing parser). Takes the FIRST "Content-Type: multipart/signed" occurrence in the
+	 * message - correct for the overwhelming common case (the signed wrapper as the message's own
+	 * top-level structure, both live-tested fixtures included), but would pick the wrong one for a
+	 * signed message forwarded/nested inside ANOTHER signed message - accepted as a known
+	 * limitation rather than something to over-engineer for a first pass.
+	 */
+	private static extractMultipartSignedBoundary(raw : Uint8Array) : string | null
+	{
+		const text = new TextDecoder('iso-8859-1').decode(raw);
+		const headerMatch = /Content-Type:\s*multipart\/signed;[^\r\n]*(?:\r\n[ \t][^\r\n]*)*/i.exec(text);
+		if (!headerMatch)
+		{
+			return null;
+		}
+		const boundaryMatch = /boundary\s*=\s*"?([^";\r\n]+)"?/i.exec(headerMatch[0]);
+		return boundaryMatch ? boundaryMatch[1] : null;
+	}
+
+	/** The signature part's own armored body, stripped of its Content-Type/Content-Description/... headers */
+	private static extractSignatureArmor(sigPartBytes : Uint8Array) : string
+	{
+		const text = new TextDecoder('iso-8859-1').decode(sigPartBytes);
+		const idx = text.indexOf('\r\n\r\n');
+		return idx === -1 ? text : text.slice(idx + 4);
+	}
+
+	/**
+	 * openpgp.js's lightweight build (verify-only feature set - no key generation/encryption code,
+	 * both never needed here), lazy-loaded as its own code-split chunk via a static dynamic
+	 * import() - Rollup resolves/bundles this exactly like any other node_modules import, just
+	 * deferred until actually called, so the overwhelming majority of messages (never PGP-signed)
+	 * never pay for it at all. Cached: every subsequent call after the first reuses the same
+	 * already-resolved module instead of re-importing.
+	 */
+	private static openpgpPromise : Promise<any> | null = null;
+
+	private static loadOpenpgp() : Promise<any>
+	{
+		if (!MailJmap.openpgpPromise)
+		{
+			MailJmap.openpgpPromise = import('openpgp/lightweight');
+		}
+		return MailJmap.openpgpPromise;
+	}
+
+	/**
+	 * Verify a PGP/MIME (RFC 3156) detached signature entirely client-side via openpgp.js - no
+	 * server involvement at all, matching this app's established "client-side JMAP-native"
+	 * direction (see doc/ai/projects/mail-pgp-signature-verification.md for the full design). A
+	 * lighter-weight, self-contained sibling to fetchBody() - takes only a rowId (does its own
+	 * Email/get for whatever it needs: bodyStructure to detect/locate the signature, blobId for
+	 * the raw bytes, from/attachments to resolve a verification key), so callers (MailApp's own
+	 * per-load trigger, mirroring mailvelopeAvailable(mailvelopeDisplay)) don't need to thread
+	 * fetchBody()'s own result through - this can run independently, in parallel, without slowing
+	 * fetchBody()'s own already-fast body render.
+	 *
+	 * Key resolution order mirrors the send-side encrypt-recipient lookup (mailvelopeGetCheckRecipients(),
+	 * api/js/jsapi/egw_app.ts) for the same reasoning - addressbook first (a key explicitly stored/
+	 * trusted by this user), falling back to a key the message carries inline as its own attachment
+	 * (a common PGP/MIME MUA convention for a first-time recipient - RFC 8621 already surfaces it as
+	 * a normal `application/pgp-keys` attachment, no special JMAP support needed) - with the obvious
+	 * trust caveat an inline key carries: it only proves the message was signed by whichever key it
+	 * claims, not that the key genuinely belongs to the named sender. `keySource` in the result
+	 * lets the UI distinguish the two, matching the three-state model (verified / signed-with-
+	 * unknown-key / signature-invalid) setSmimeFlags() already established.
+	 *
+	 * @returns null if this message isn't PGP-signed at all (the common case - cheap: only the
+	 *  lightweight bodyStructure fetch runs before this check, the expensive whole-message download
+	 *  and openpgp.js load only happen once a PGP signature is actually confirmed present)
+	 */
+	async verifyPgpSignature(rowId : string) : Promise<PgpSignatureResult | null>
+	{
+		try
+		{
+			const ref = this.messageReference(rowId);
+			const token = await this.ensureToken(ref.profileID);
+			if (!token)
+			{
+				return null;
+			}
+			const args : any = {
+				accountId: token.accountId,
+				ids: [ref.emailId],
+				properties: ['bodyStructure', 'blobId', 'from', 'attachments'],
+			};
+			if (token.isLocal)
+			{
+				args.mailboxId = ref.mailboxId;
+			}
+			const [{got}] = await this.clients[ref.profileID].requestMany((t) => ({got: t.Email.get(args) as any}));
+			const email = got.list?.[0];
+			const found = email && this.findPgpSignaturePart(email.bodyStructure);
+			if (!found || !email.blobId)
+			{
+				return null;
+			}
+			const senderEmail = (email.from?.[0]?.email || '').toLowerCase() || null;
+
+			const rawResponse = await this.clients[ref.profileID].downloadBlob({
+				accountId: token.accountId, blobId: email.blobId, mimeType: 'message/rfc822', fileName: 'raw.eml',
+			});
+			const raw = new Uint8Array(await rawResponse.arrayBuffer());
+			const boundary = MailJmap.extractMultipartSignedBoundary(raw);
+			const sliced = boundary ? MailJmap.sliceMultipartSigned(raw, boundary) : null;
+			if (!sliced)
+			{
+				return {signed: true, verified: false, keySource: 'none', email: senderEmail};
+			}
+			const armoredSig = MailJmap.extractSignatureArmor(sliced.sigPartBytes);
+
+			// addressbook first, then a same-message inline `application/pgp-keys` attachment
+			let armoredKey : string | null = null;
+			let keySource : 'addressbook' | 'inline' | 'none' = 'none';
+			if (senderEmail)
+			{
+				try
+				{
+					const abResult : any = await this.egw.request('addressbook.addressbook_bo.ajax_get_pgp_keys', [[senderEmail]]);
+					if (abResult?.[senderEmail])
+					{
+						armoredKey = abResult[senderEmail];
+						keySource = 'addressbook';
+					}
+				}
+				catch (e)
+				{
+					console.error('MailJmap.verifyPgpSignature(): addressbook key lookup failed', e);
+				}
+			}
+			if (!armoredKey)
+			{
+				const inlineKeyPart = (email.attachments || []).find((a : any) => (a.type || '').toLowerCase() === 'application/pgp-keys');
+				if (inlineKeyPart?.blobId)
+				{
+					const keyResponse = await this.clients[ref.profileID].downloadBlob({
+						accountId: token.accountId, blobId: inlineKeyPart.blobId,
+						mimeType: 'application/pgp-keys', fileName: inlineKeyPart.name || 'key.asc',
+					});
+					armoredKey = await keyResponse.text();
+					keySource = 'inline';
+				}
+			}
+			if (!armoredKey)
+			{
+				return {signed: true, verified: false, keySource: 'none', email: senderEmail};
+			}
+
+			const openpgp = await MailJmap.loadOpenpgp();
+			const [key, signature, message] = await Promise.all([
+				openpgp.readKey({armoredKey}),
+				openpgp.readSignature({armoredSignature: armoredSig}),
+				openpgp.createMessage({binary: sliced.signedBytes}),
+			]);
+			const result = await openpgp.verify({message, signature, verificationKeys: [key]});
+			let verified = false;
+			try
+			{
+				await result.signatures[0].verified;
+				verified = true;
+			}
+			catch (e)
+			{
+				verified = false;
+			}
+			return {signed: true, verified, keySource, email: senderEmail};
+		}
+		catch (e)
+		{
+			console.error('MailJmap.verifyPgpSignature(): failed', e);
+			return null;
+		}
 	}
 
 	/**

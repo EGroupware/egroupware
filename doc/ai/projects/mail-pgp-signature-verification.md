@@ -1,6 +1,36 @@
 # Mail: verify PGP/MIME signatures natively (no Mailvelope dependency)
 
-## Status: scoping only (2026-09-08) - nothing implemented yet
+## Status: Phase 2 core engine done + live-verified (2026-09-08) - UI wiring not started
+
+`MailJmap.verifyPgpSignature(rowId)` (`mail/js/jmap.ts`) implements the full chain: detects a
+PGP-signed `multipart/signed` (`findPgpSignaturePart()`), downloads the whole raw message (the
+spike's own confirmed-safe path), slices out the exact signed bytes + detached signature
+(`sliceMultipartSigned()`/`extractMultipartSignedBoundary()`/`extractSignatureArmor()`), resolves a
+verification key (addressbook first via the existing `ajax_get_pgp_keys`, then a same-message inline
+`application/pgp-keys` attachment), and calls `openpgp.js` (lazy-loaded lightweight build,
+`loadOpenpgp()`) to verify. **Live-verified end-to-end** against the real Stalwart fixture from the
+spike: uploaded/imported the same message, stored ralf's own real public key via
+`ajax_set_pgp_keys`, called `verifyPgpSignature()` - result `{signed:true, verified:true,
+keySource:'addressbook', email:'rb@egroupware.org'}`, matching the spike's own independent `gpg
+--verify` "Korrekte Signatur" ground truth exactly.
+
+`openpgp` added as an npm dependency (lightweight build, `openpgp/lightweight` export) -
+lazy-loaded via a plain dynamic `import()`, which Rollup automatically code-splits into its own
+~232K chunk (confirmed: `chunks/openpgp.min-*.js`), never touching the main bundle for the
+overwhelming majority of messages that are never PGP-signed. `mail/js/openpgp.d.ts` is a small
+ambient module declaration working around tsconfig.json's classic "node" `moduleResolution` not
+understanding package.json `"exports"` subpath maps (Rollup's own resolver handles it fine
+regardless - this is purely a TypeScript type-checking gap). `web-test-runner.config.mjs` needed
+the same "resolve this bare specifier to a concrete file" mock-modules entry `dompurify`/`tinymce`
+already use, for the same underlying reason under its own (different) esbuild-based resolver.
+
+**Not yet done**: no UI wiring at all yet (no trigger call from `MailApp.loadMessageBody()`, no
+`setPgpSignatureFlags()`, no icon assets, no `display.xet` changes) - this doc's own original
+"Suggested phasing" Step 3. `verifyPgpSignature()` itself is fully callable and correct today, just
+not yet connected to anything a user would see.
+
+Precursor: [[mail-pgp-mailvelope-fixes]] - Mailvelope-based encrypt/decrypt was fixed and live-verified
+first, as ralf's own baseline to test signature verification against.
 
 Follow-up to fixing the "PGP signed messages are displayed red as unverified" regression
 (`MailJmap.isSpecialCase()`/`SPECIAL_CASE_TYPES`, `mail/js/jmap.ts` - a PGP/MIME `multipart/signed`
@@ -60,23 +90,56 @@ Mailvelope at all, or even require the extension to be installed.
   bytes, not the assembled/sanitized display HTML" need (used today for the PGP/MIME *encrypted*
   ciphertext part). The same primitive fetches both sub-parts a signature check needs.
 
-## The one real open question: byte-exact canonicalization
+## The one real open question: byte-exact canonicalization - RESOLVED (2026-09-08 spike)
 
 RFC 3156 §5 verifies a PGP/MIME signature against the **canonical MIME representation** of the
 first sub-part - its raw, still-transfer-encoded bytes, with CRLF line endings, exactly as they
 were on the wire. This is the single most common source of real-world "valid signature reported as
-invalid" bugs in PGP/MIME implementations generally (a relay normalizing line endings, a decoder
-handing back LF instead of CRLF, trailing-whitespace differences, etc.) - **not something to assume
-away**. Concretely still needs answering before implementation: does `downloadPartText()`/JMAP's
-Blob download for `part.subParts[0]`'s `blobId` give back that exact original wire representation,
-or an already-decoded/newline-normalized version? This needs a live check against both real
-Stalwart and the local IMAP shim (`JmapShim.php`) - they may not even agree with each other - using
-a real signed message (ralf's example `.eml`, saved as a fixture) and a known-good independent
-verification (e.g. `gpg --verify` on the raw file) as the ground truth to compare against. If the
-byte-exact bytes aren't recoverable via the normal Blob-download path, the fallback is fetching the
-**entire raw message** (`Email/get`'s `blobId` on the message itself, or an `EMAILID` raw-fetch) and
-slicing out the first MIME part by hand from that - more work, but guaranteed byte-correct since
-nothing has been through any JMAP-level re-encoding at all.
+invalid" bugs in PGP/MIME implementations generally - not something to assume away, and it turned
+out to matter in exactly the way expected.
+
+**Method**: two real, independently-obtained fixture `.eml` files (ralf's own Thunderbird self-sent
+message, `multipart/signed → [multipart/mixed, application/pgp-signature]`; and an older message
+from an external sender with an inline-attached public key, `multipart/signed → [multipart/mixed,
+application/pgp-signature]` plus the mixed part itself carrying `[multipart/alternative,
+application/pgp-keys]`). Ground truth for each: extracted the exact wire-byte range of `subParts[0]`
+(including ITS OWN Content-Type header - RFC 1847's canonical form requires that) by locating the
+outer boundary markers directly in the raw bytes (no MIME-reconstructing parser, to avoid the exact
+risk being tested), then independently confirmed each with `gpg --verify` against the extracted
+signature part (importing the sender's own inline-attached key for the external-sender fixture,
+matching the "message carries its own signer's key" case this doc already flagged as worth
+supporting) - both fixtures verified as genuinely, correctly signed before touching JMAP at all.
+
+**Findings** (uploaded each fixture as a blob, `Email/import`ed it into both a real Stalwart account
+and the local shim, fetched it back via JMAP, compared SHA-256 hashes against the local ground
+truth - full detail in [[mail-pgp-mailvelope-fixes]], which this same session's Mailvelope work had
+already built and verified the blob-upload/import primitives for):
+
+1. **Whole-message download IS byte-exact on both backends** - `Email/get`'s own `blobId` on the
+   message itself, downloaded via the normal Blob-download path, hashed identically to the original
+   local file on Stalwart AND the shim (`2feb6f95176cf21...`, matching exactly). This is the one
+   fully-safe, backend-uniform primitive.
+2. **A sub-part's own `blobId` (RFC 8621's per-part download) is NOT safe to rely on for this**, for
+   a different reason on each backend:
+   - **Stalwart**: only assigns a `blobId` to actual leaf content parts. `subParts[0]` in both test
+     fixtures is itself a `multipart/mixed` container (not a leaf) - its `blobId` came back `null`.
+     No per-part download exists to even attempt for this (very common, not edge-case) shape.
+   - **The shim**: DOES assign a `blobId` to every part, container or not (its own self-describing
+     `mailbox:uid:partId` scheme) - but downloading a *container* part's blobId returns only that
+     part's own multipart BODY, missing its own Content-Type header line (confirmed: the returned
+     bytes started at the inner boundary marker, not at `Content-Type: multipart/mixed...`). Per
+     RFC 1847 §2.1 the canonical form needs that header included - this data is subtly wrong for
+     signature verification even though a naive length/existence check wouldn't catch it.
+
+**Conclusion**: skip the per-part blobId path for this feature entirely, on both backends - always
+use the "fetch the whole raw message via its own top-level `blobId`, then slice out `subParts[0]`'s
+exact byte range by hand" approach this doc's own fallback plan already anticipated. Locating that
+byte range needs the SAME boundary-marker approach the spike's own ground-truth extraction used
+(don't reconstruct via a MIME parser - slice the confirmed-byte-exact raw bytes directly using the
+already-known boundary string from `bodyStructure`/the Content-Type header), trimming the CRLF
+immediately before the boundary delimiter per RFC 2046. `findPgpPart()`'s existing bodyStructure walk
+(`mail/js/jmap.ts`) already locates which node is `subParts[0]` and would need to also record the
+multipart/signed parent's own boundary string for this slicing.
 
 ## Library choice
 

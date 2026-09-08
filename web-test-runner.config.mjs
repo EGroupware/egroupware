@@ -228,6 +228,14 @@ export default {
 				{
 					return '/node_modules/dompurify/dist/purify.es.mjs';
 				}
+				// openpgp's own types/exports map ("./lightweight") isn't resolved by this
+				// dev-server's resolver either (same class of gap as dompurify above, and as
+				// tsconfig.json's own classic "node" moduleResolution - see mail/js/openpgp.d.ts) -
+				// point straight at the resolved file, matching Rollup's own production resolution
+				if (source === 'openpgp/lightweight')
+				{
+					return '/node_modules/openpgp/dist/lightweight/openpgp.min.mjs';
+				}
 				if (source === 'tinymce')
 				{
 					return '/api/js/etemplate/Et2HtmlArea/test/TinyMceStub.ts';
