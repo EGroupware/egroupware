@@ -9,6 +9,7 @@
  */
 
 import {EgwApp} from '../../api/js/jsapi/egw_app';
+import type {PushData} from '../../api/js/jsapi/egw_app';
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {CRMView} from "../../addressbook/js/CRM";
 import {nm_open_popup} from "../../api/js/etemplate/et2_extension_nextmatch_actions.js";
@@ -51,6 +52,39 @@ class InfologApp extends EgwApp
 	{
 		// call parent
 		super.destroy(_app);
+	}
+
+	/**
+	 * Check grants to see if we can quickly tell this entry is not for us
+	 *
+	 * Being responsible for an entry gives implicit access to it, and an entry can be made the
+	 * responsibility of a group as well as of a single user - a group we are a member of counts
+	 * (infolog_bo::is_responsible_user() matches responsible against the user *and* his
+	 * memberships).  Neither our own memberships nor our own account are necessarily among the
+	 * grants we have clientside, as they are not grants, so responsible has to be checked
+	 * against them before falling back to the grants the base class knows about.
+	 *
+	 * @param pushData
+	 * @param grant_fields List of fields in pushData.acl with account IDs that might grant access
+	 * @param appname Optional, to check against the grants for a different application.  Defaults to this.appname.
+	 *
+	 * @return boolean Entry has ACL access
+	 */
+	_push_grant_check(pushData : PushData, grant_fields : string[], appname? : string) : boolean
+	{
+		const responsible = pushData.acl ? pushData.acl.info_responsible : undefined;
+		if(typeof responsible !== "undefined" && responsible !== null)
+		{
+			// account IDs come as numbers or strings, so compare loosely
+			const mine = [this.egw.user("account_id"), ...(this.egw.user("memberships") || [])];
+			const listed = Array.isArray(responsible) ? responsible : [responsible];
+			if(listed.some(account => mine.some(m => m == account)))
+			{
+				return true;
+			}
+		}
+
+		return super._push_grant_check(pushData, grant_fields, appname);
 	}
 
 	/**
