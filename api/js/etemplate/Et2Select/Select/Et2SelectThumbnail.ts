@@ -68,16 +68,18 @@ export class Et2SelectThumbnail extends Et2Select
 		}
 		this.requestUpdate();
 
-		// Make sure not to double-add
-		if(this.multiple && this.value.indexOf(text) == -1)
+		// Make sure not to double-add.
+		// Assign the array back rather than pushing into it - a push does not go through the value
+		// setter, so the thumbnail would be added to the options but never to the value.
+		if(this.multiple && this.getValueAsArray().indexOf(text) == -1)
 		{
-			this.value.push(text);
+			this.value = [...this.getValueAsArray(), text];
 		}
-		else if(!this.multiple)
+		else if(!this.multiple && this.value !== text)
 		{
 			this.value = text;
-			return;
 		}
+		this.dispatchEvent(new Event("change", {bubbles: true}));
 
 		return true;
 	}

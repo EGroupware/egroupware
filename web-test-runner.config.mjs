@@ -7,11 +7,14 @@
  *
  * Test groups are discovered from each app with any *.test.ts file somewhere under js/
  * (not necessarily directly in js/test/ - eg. api's tests live in per-widget
- * js/etemplate/&lt;widget&gt;/test/ subdirectories) and are named after that app.  Use
- * `npm run jstest` to run every group, or select an app with `npm run jstest -- <app>`
- * (for example, `npm run jstest -- api`). Pass a test file or glob instead to run it
- * directly, for example:
- * `npm run jstest -- api/js/etemplate/MyWidget/test/MyWidget.test.ts`.
+ * js/etemplate/&lt;widget&gt;/test/ subdirectories) and are named after that app.
+ *
+ * - every group:   `npm run jstest`
+ * - one app:       `npm run jstest -- --group api`
+ * - one file/glob: `npm run jstest -- api/js/etemplate/MyWidget/test/MyWidget.test.ts`
+ *
+ * Note the `--group`: a bare app name (`npm run jstest -- api`) is NOT a group selector, it is a
+ * path, and the runner would glob the whole api/ directory.  See the comment on cliFiles below.
  *
  * Trouble getting tests to run?  Try manually compiling TypeScript (source & tests), that seems to help.
  */
@@ -55,12 +58,49 @@ const testGroups = appJS.map(app => ({
 const groupFiles = Object.fromEntries(testGroups.map(({name, files}) => [name, files]));
 groupFiles.default = groupFiles.api;
 
-// A positional group name expands to its test glob; other positional arguments
-// remain file paths or globs for targeted test runs.
-const cliFiles = process.argv
-	.slice(2)
-	.filter(arg => arg && !arg.startsWith('-'))
-	.map(arg => groupFiles[arg] ?? arg);
+// Flags that consume the following argument as their value, so we do not mistake that value
+// for a file to test.  Taken from @web/test-runner's own option list (dist/config/readCliArgs.js).
+const VALUE_FLAGS = new Set([
+	'--files', '--root-dir', '--concurrent-browsers', '--concurrency', '--config', '--port',
+	'--groups', '--group', '--browsers', '--esbuild-target'
+]);
+
+// Positional arguments only - file paths or globs for a targeted run.
+//
+// Group names deliberately do NOT belong here: @web/test-runner declares its own `files` option
+// as the CLI's defaultOption, and parseConfig() merges cliArgs *after* this config, so a bare
+// positional always overwrites whatever `files` we set.  Passing a group name that way used to
+// expand to the group's glob here and then get clobbered back to the bare name, which the runner
+// globbed as a *directory* - pulling in every .php/.svg/.xet/.map under it as a "test file".
+// Group selection therefore goes through the runner's own --group flag; its value must not be
+// collected here, or we would fall into the `files` branch below and export no groups at all.
+// (Broke in @web/test-runner 1.0, see bde6bcf403.)
+const cliFiles = [];
+for(let i = 2; i < process.argv.length; i++)
+{
+	const arg = process.argv[i];
+	if(!arg)
+	{
+		continue;
+	}
+	if(arg.startsWith('-'))
+	{
+		// "--group api" consumes the next argument; "--group=api" does not
+		if(!arg.includes('=') && VALUE_FLAGS.has(arg))
+		{
+			i++;
+		}
+		continue;
+	}
+	if(groupFiles[arg])
+	{
+		throw new Error(
+			`"${arg}" is a test group, not a file. Use: npm run jstest -- --group ${arg}\n` +
+			`Available groups: ${Object.keys(groupFiles).join(', ')}`
+		);
+	}
+	cliFiles.push(arg);
+}
 
 export default {
 	nodeResolve: true,
@@ -149,6 +189,10 @@ export default {
 		// Dependant on specific versions of shared libraries (libicuuc.so.66, latest is .67)
 		//playwrightLauncher({ product: 'webkit' }),
 	],
+	// Either an explicit set of files, or the groups - never both: parseConfig() hands a top-level
+	// `files` to any group that lacks one and then drops it, so exporting `groups` alongside an
+	// explicit glob silently runs every group instead of the glob.  --group works because its
+	// value is not collected as a positional above, leaving cliFiles empty.
 	...(cliFiles.length ? {files: cliFiles} : {groups: testGroups}),
 
 	plugins: [

@@ -4,6 +4,7 @@ import * as sinon from 'sinon';
 import {inputBasicTests} from "../../Et2InputWidget/test/InputBasicTests";
 import {Et2Select} from "../Et2Select";
 import {waitForEvent} from "../../Et2Widget/event";
+import {tagNodes, tagsReady, tagValues, visibleOptionValues} from "./helpers";
 
 /**
  * Test file for Etemplate webComponent Select
@@ -121,19 +122,15 @@ describe("Multiple", () =>
 
 	it("Can remove tags", async() =>
 	{
-		assert.equal(element.select.querySelectorAll("sl-option").length, 2, "Did not find options");
+		assert.lengthOf(visibleOptionValues(element), 2, "Did not find options");
 
 		assert.sameMembers(element.value, ["one", "two"]);
-		let tags = element.select.combobox.querySelectorAll('.select__tags et2-tag');
 
 		// Await tags to render
-		let tag_updates = []
-		element.select.combobox.querySelectorAll("et2-tag").forEach((t : Et2Tag) => tag_updates.push(t.updateComplete));
-		await Promise.all(tag_updates);
+		await tagsReady(element);
 
-		assert.equal(tags.length, 2);
-		assert.equal(tags[0].value, "one");
-		assert.equal(tags[1].value, "two");
+		assert.deepEqual(tagValues(element), ["one", "two"]);
+		let tags = tagNodes(element);
 
 		// Set up listener
 		const listener = oneEvent(element, "change");
@@ -147,14 +144,11 @@ describe("Multiple", () =>
 
 		// Wait for widget to update
 		await element.updateComplete;
-		tag_updates = []
-		element.select.combobox.querySelectorAll('et2-tag').forEach((t : Et2Tag) => tag_updates.push(t.updateComplete));
-		await Promise.all(tag_updates);
+		await tagsReady(element);
 
 		// Check
 		assert.sameMembers(element.value, ["two"], "Removing tag did not remove value");
-		tags = element.select.combobox.querySelectorAll('.select__tags et2-tag');
-		assert.equal(tags.length, 1, "Removed tag is still there");
+		assert.deepEqual(tagValues(element), ["two"], "Removed tag is still there");
 	});
 
 });

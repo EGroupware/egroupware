@@ -2,6 +2,7 @@ import {assert, fixture, html, oneEvent} from '@open-wc/testing';
 import {Et2Select} from "../Et2Select";
 import {Et2Tag} from "../Tag/Et2Tag";
 import {Et2Textbox} from "../../Et2Textbox/Et2Textbox";
+import {ensureSearchInputHasSelect, tagNodes} from "./helpers";
 
 // Stub global egw for cssImage & widget.egw() to find
 // @ts-ignore
@@ -29,10 +30,7 @@ async function before(editable = true)
 	// Need to call loadFromXML() explicitly to read the options
 	element.loadFromXML(element);
 	element.value = "one";
-	if((element as any)._searchInputNode && typeof (element as any)._searchInputNode.select !== "function")
-	{
-		(element as any)._searchInputNode.select = () => {};
-	}
+	ensureSearchInputHasSelect(element);
 
 	return element;
 }
@@ -51,7 +49,7 @@ describe("Editable tag", () =>
 
 	it("Tag editable matches editModeEnabled", async() =>
 	{
-		let tag = element.select.combobox.querySelectorAll(tag_name);
+		let tag = tagNodes(element);
 		assert.isAbove(tag.length, 0, "No tags found");
 		assert.isTrue(tag[0].editable, "Select is editable but tag is not");
 
@@ -60,7 +58,7 @@ describe("Editable tag", () =>
 		element.requestUpdate("editModeEnabled", true);
 		await element.updateComplete;
 
-		tag = element.select.combobox.querySelectorAll(tag_name);
+		tag = tagNodes(element);
 		tag.forEach(async t => await t.updateComplete);
 		assert.isAbove(tag.length, 0, "No tags found");
 		assert.isFalse(tag[0].editable, "Tag was editable but should not be");
@@ -68,14 +66,14 @@ describe("Editable tag", () =>
 
 	it("Has edit button when editable ", async() =>
 	{
-		let tag = element.select.combobox.querySelectorAll(tag_name);
+		let tag = tagNodes(element);
 		await tag.updateComplete;
 		assert.isAbove(tag.length, 0, "No tags found");
 		assert.exists(tag[0].shadowRoot.querySelector("et2-button-icon[label='edit*']"), "No edit button");
 	});
 	it("Shows input when edit button is clicked", async() =>
 	{
-		let tag = element.select.combobox.querySelectorAll(tag_name)[0];
+		let tag = tagNodes(element)[0];
 		await tag.updateComplete;
 
 		let edit_button = tag.shadowRoot.querySelector("et2-button-icon");
@@ -86,7 +84,7 @@ describe("Editable tag", () =>
 	});
 	it("Changes value when edited", async() =>
 	{
-		let tag = <Et2Tag>element.select.combobox.querySelectorAll(tag_name)[0];
+		let tag = <Et2Tag>tagNodes(element)[0];
 		tag.isEditing = true;
 		tag.requestUpdate();
 		await tag.updateComplete;
@@ -129,12 +127,59 @@ describe("Editable tag", () =>
 
 	});
 
+	/**
+	 * The select's own startEdit()/stopEdit(), as opposed to the tag's.  Nothing exercised this
+	 * path, so when tag editing moved from SelectSearchMixin into Et2Select a missing
+	 * waitForEvent import went unnoticed by the whole suite and only showed up in a browser.
+	 */
+	it("startEdit() opens the edit input with the current value", async() =>
+	{
+		element.allowFreeEntries = true;
+		await element.updateComplete;
+
+		element.startEdit();
+		await element.updateComplete;
+
+		assert.exists(element._editInputNode, "No edit input");
+		assert.equal(element._editInputNode.value, "one", "Edit input did not get the current value");
+		assert.equal(element._editInputNode.dataset.initial, "one", "Original value was not remembered");
+	});
+
+	it("stopEdit() puts the edited text in the value", async() =>
+	{
+		element.allowFreeEntries = true;
+		await element.updateComplete;
+
+		element.startEdit();
+		await element.updateComplete;
+		element._editInputNode.value = "renamed";
+		element.stopEdit(false);
+		await element.updateComplete;
+
+		assert.include(element.value, "renamed", "Edited text did not reach the value");
+		assert.notInclude(element.value, "one", "Original value was left behind");
+	});
+
+	it("stopEdit(true) abandons the edit", async() =>
+	{
+		element.allowFreeEntries = true;
+		await element.updateComplete;
+
+		element.startEdit();
+		await element.updateComplete;
+		element._editInputNode.value = "discarded";
+		element.stopEdit(true);
+		await element.updateComplete;
+
+		assert.notInclude(element.value, "discarded", "Aborted edit still changed the value");
+	});
+
 	it("Does not have edit button when readonly", async() =>
 	{
 		element.readonly = true;
 		await element.updateComplete;
 
-		let tag = element.select.combobox.querySelectorAll(tag_name);
+		let tag = tagNodes(element);
 		assert.isAbove(tag.length, 0, "No tags found");
 
 		let wait = [];
@@ -151,7 +196,7 @@ describe("Select is not editable", () =>
 
 	it("Does not have edit button when not editable", async() =>
 	{
-		let tag = element.select.combobox.querySelectorAll(tag_name);
+		let tag = tagNodes(element);
 		assert.isAbove(tag.length, 0, "No tags found");
 
 		assert.isNull(tag[0].shadowRoot.querySelector("et2-button-icon[label='edit*']"), "Unexpected edit button");

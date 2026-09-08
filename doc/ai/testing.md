@@ -206,11 +206,37 @@ Web component tests use `web-test-runner`.
 
 Run the relevant web component tests with the project’s npm script when available:
 
-`npm test`
+* every group: `npm run jstest`
+* one app: `npm run jstest -- --group api`
+* one file or glob: `npm run jstest -- api/js/etemplate/MyWidget/test/MyWidget.test.ts`
 
-Or, when using the direct runner:
+Note the `--group`. A **bare app name is not a group selector** - `@web/test-runner` declares its own
+`files` option as the CLI's default (positional) option and merges CLI args over the config file, so
+a bare `api` is taken as a *path* and the whole `api/` directory gets globbed: every `.php`, `.svg`,
+`.xet` and `.map` under it is imported as a "test file", producing ~1100 `Could not import your test
+module` errors. Those are tallied separately from the tests, so the pass/fail counts stay correct,
+but a real failure is easy to lose in the noise. `web-test-runner.config.mjs` now throws a pointing
+error rather than letting that happen.
 
-`npx web-test-runner`
+### Running the JS tests from a git worktree
+
+A worktree only gets tracked files, so three things have to be provided before the tests can run.
+Symlink rather than copy - the two directories are ~1GB together:
+
+```
+ln -sfn /path/to/main/node_modules node_modules   # running the build & test runner
+ln -sfn /path/to/main/vendor       vendor         # served at /vendor/... by the test harness
+cp -p   /path/to/main/header.inc.php .            # gitignored, so no worktree ever has one
+```
+
+Without `vendor` the failure is loud but misleading: ~336 tests fail with
+`Failed to load /vendor/bower-asset/jquery/dist/jquery.min.js`, which looks like a code regression
+rather than a missing directory.
+
+Both symlinks then show up as untracked, because `.gitignore` lists them with a trailing slash
+(`/node_modules/`) which matches a directory but not a symlink. Add them to `info/exclude` - note
+that git reads this from the **common** git dir, not the per-worktree one, so it goes in
+`<main>/.git/info/exclude`, not `<main>/.git/worktrees/<name>/info/exclude`.
 
 For targeted frontend work:
 

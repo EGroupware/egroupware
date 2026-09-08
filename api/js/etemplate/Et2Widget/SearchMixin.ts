@@ -6,6 +6,13 @@ import {until} from "lit/directives/until.js";
 import type {IegwAppLocal} from "../../jsapi/egw_global";
 import {Et2InputWidgetInterface} from "../Et2InputWidget/Et2InputWidget";
 import {classMap} from "lit/directives/class-map.js";
+import {et2_warnOnce} from "./Et2Widget";
+// resultTemplate() renders <sl-option>, so register it here rather than relying on the host to
+// have imported shoelace.  A host that has not gets un-upgraded HTMLElements in the result list,
+// and setCurrentResult()'s requestUpdate() on them throws.
+// Side-effect import - a type-only reference would be elided by the bundler.
+import "@shoelace-style/shoelace/dist/components/option/option.js";
+import "@shoelace-style/shoelace/dist/components/spinner/spinner.js";
 
 
 /**
@@ -66,9 +73,9 @@ export declare class SearchMixinInterface<DataType extends SearchResult, Results
 	search : boolean;
 
 	/**
-	 * Get [additional] options from the server when you search, instead of just searching existing options
+	 * Where search results come from - see the property below for the accepted forms
 	 */
-	searchUrl : string;
+	searchUrl : string | ((search : string, options : object) => Promise<any[]>);
 
 	/**
 	 * Additional search options passed to the search functions
@@ -144,6 +151,7 @@ export interface SearchResultElement
 type Constructor<T = {}> = new (...args : any[]) => T;
 
 
+
 /**
  * @summary Strongly typed mixin for asking the server for values that match a string the user types in and displaying those
  * matches for the user to choose from.
@@ -156,7 +164,9 @@ type Constructor<T = {}> = new (...args : any[]) => T;
  * @event et2-select - Emitted when the selection changes
  */
 export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
-	{ egw() : IegwAppLocal, noLang : boolean } & LitElement>,
+	// getValueAsArray is optional: a host that has its own (eg. Et2WidgetWithSelectMixin) wins,
+	// see getValueAsArray() below
+	{ egw() : IegwAppLocal, noLang : boolean, getValueAsArray?() : any[] } & LitElement>,
 	DataType extends SearchResult, Results extends SearchResultsInterface<DataType>>(superClass : T) =>
 {
 	class SearchMixinClass extends superClass
@@ -166,9 +176,19 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 		 */
 		@property({type: Boolean}) search : boolean = true;
 		/**
-		 * Get [additional] options from the server when you search, instead of just searching in the browser
+		 * Where search results come from, instead of just searching in the browser.  Either:
+		 * - a menuaction string, requested from the server
+		 * - an "app.appname.method" string, resolved via egw().applyFunc() - the same convention
+		 *   onExecute="javaScript:app.X.Y" uses, minus the prefix.  applyFunc() lazy-loads the app's
+		 *   JS object, so this can be wired straight into a template with no extra app code.
+		 * - a JS callback returning a Promise of results, for per-instance sourcing without a
+		 *   subclass (overriding remoteSearch() would need one, or patching the instance)
+		 *
+		 * {attribute: false} because a function cannot come from an HTML attribute.  Template
+		 * attributes still work: etemplate assigns them as properties (Et2Widget.transformAttributes).
 		 */
-		@property() searchUrl : string = "";
+		@property({attribute: false})
+		searchUrl : string | ((search : string, options : object) => Promise<any[]>) = "";
 		/**
 		 * Additional search parameters that are passed to the server
 		 * when we query searchUrl
@@ -188,6 +208,12 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 		@state() currentResult : LitElement & SearchResultElement = null;
 		// Search result nodes marked as "selected"
 		@state() selectedResults : (HTMLElement & SearchResultElement)[] = [];
+
+		/**
+		 * How long to wait after the user stops typing before searching, in ms.
+		 * Override in a subclass to change the debounce.
+		 */
+		public static SEARCH_TIMEOUT : number = 500;
 
 		// You can set specific class options here.  They will be overridden by searchOptions.
 		protected _classSearchOptions = {};
@@ -253,8 +279,19 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 			});
 		}
 
+		/**
+		 * The value as an array, whatever shape it is stored in.
+		 *
+		 * A host that has its own idea of this wins: Et2WidgetWithSelectMixin's version keeps an
+		 * empty string when there is an emptyLabel, and silently shadowing it drops the empty
+		 * option from the rendered list.  Only fall back to our own when the host has none.
+		 */
 		public getValueAsArray()
 		{
+			if(typeof super.getValueAsArray == "function")
+			{
+				return super.getValueAsArray();
+			}
 			if(Array.isArray(this.value))
 			{
 				return this.value;
@@ -343,6 +380,24 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 				return Promise.resolve(<DataType[]><unknown>[]);
 			}
 
+			// Caller supplies the results itself - no round-trip
+			if(typeof this.searchUrl === "function")
+			{
+				return Promise.resolve(this.searchUrl(search, options)).then((results) =>
+				{
+					return <any>this.processRemoteResults(results);
+				});
+			}
+
+			// An app's own method, resolved (and lazy-loaded) through egw()
+			if(this.searchUrl.startsWith("app."))
+			{
+				return Promise.resolve(this.egw().applyFunc(this.searchUrl, [search, options])).then((results) =>
+				{
+					return <any>this.processRemoteResults(results);
+				});
+			}
+
 			// Include a limit by default to avoid massive lists breaking the UI
 			// This can be overridden by setting a different limit in this.searchOptions
 			let sendOptions = {
@@ -365,6 +420,12 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 		 */
 		protected processResults(results : Results)
 		{
+			results = this._checkResultShape(results);
+			if(!results)
+			{
+				return;
+			}
+
 			// Look through results, we may reject some
 			for(let i = results.results.length - 1; i >= 0; i--)
 			{
@@ -390,6 +451,52 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 			}
 
 			this.requestUpdate();
+		}
+
+		/**
+		 * Check a response is the {results: [...], total: n} we asked for, and complain once per
+		 * source if it is not.
+		 *
+		 * The usual miss is a bare array: several older EGroupware endpoints send one, and it is
+		 * the obvious thing to return from an app method or a callback.  That is still usable, so
+		 * take it rather than throwing the user's results away - we just cannot know a real total,
+		 * so "n more..." will say there are none.  Anything else we cannot interpret at all.
+		 *
+		 * Et2Select and Et2Email convert legacy shapes before we see them
+		 * (Et2Select/legacySearchResults.ts), so they never come through here.
+		 *
+		 * @deprecated the bare-array tolerance only.  It is here so a wrong shape degrades to a
+		 *	warning instead of a broken widget, not as a second supported contract - the warning
+		 *	names the source so it can be fixed.  Once nothing warns, drop the coercion and let
+		 *	this return null for anything that is not {results, total}.
+		 * @todo remove the Array.isArray() branch once no source warns
+		 *
+		 * @returns the response to use, or null if there was nothing usable in it
+		 */
+		private _checkResultShape(results) : Results | null
+		{
+			if(results && Array.isArray((<Results>results).results))
+			{
+				return <Results>results;
+			}
+
+			const source = typeof this.searchUrl === "function" ?
+						   (this.searchUrl.name || "(callback)") :
+						   String(this.searchUrl || "(no searchUrl)");
+			const usable = Array.isArray(results);
+
+			et2_warnOnce(this, "search-result-shape:" + source,
+				`Search source "${source}" answered with ${usable ? "a bare array" : typeof results}, ` +
+				`not {results: [...], total: n}. ` +
+				(usable ?
+				 `Using it as the results, but there is no total, so "n more..." cannot be shown. ` :
+				 `Nothing usable in it, ignoring. `) +
+				`Either return that shape, or convert it by overriding processRemoteResults().`,
+				results
+			);
+
+			// @todo remove with the tolerance above
+			return usable ? <Results>{results: results, total: results.length} : null;
 		}
 
 		/**
@@ -605,7 +712,10 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 			// Start the search automatically if they have enough letters
 			if(this._searchNode.value.length > 0)
 			{
-				this._searchTimeout = window.setTimeout(() => {this.startSearch()}, 500);
+				// via this.constructor, so a subclass can override SEARCH_TIMEOUT without having to
+				// re-implement this whole handler
+				const delay = (<typeof SearchMixinClass>this.constructor).SEARCH_TIMEOUT;
+				this._searchTimeout = window.setTimeout(() => {this.startSearch()}, delay);
 			}
 		}
 
@@ -763,5 +873,11 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 		}
 
 	};
-	return SearchMixinClass as unknown as Constructor<SearchMixinInterface<DataType, Results>> & LitElement & T;
+	// LitElement goes *inside* Constructor<>: it describes the instance, not the constructor.
+	// `& LitElement` on the outside said the constructor function was itself a LitElement, which is
+	// meaningless.  Note this alone does not make call sites cast-free - consumers pass
+	// `Constructor<any> & typeof LitElement` as T to get past the constraint above, and that `any`
+	// is what actually erases the element type at the call site.  Fixing that means tightening the
+	// constraint, which is a bigger change than this one.
+	return SearchMixinClass as unknown as Constructor<SearchMixinInterface<DataType, Results> & LitElement> & T;
 }

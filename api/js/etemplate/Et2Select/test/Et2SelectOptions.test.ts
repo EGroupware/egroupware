@@ -6,6 +6,7 @@ import {et2_arrayMgr} from "../../et2_core_arrayMgr";
 import {SelectOption} from "../FindSelectOptions";
 import '../Select/Et2SelectNumber';
 import {Et2SelectNumber} from "../Select/Et2SelectNumber";
+import {activateOptions, optionNodes, visibleOptionLabels, visibleOptionValues} from "./helpers";
 
 let parser = new window.DOMParser();
 
@@ -30,17 +31,6 @@ let options = [
 	<SelectOption>{value: "2", label: "Option 2"}
 ];
 
-async function activateOptions(select : Et2Select)
-{
-	// Et2Select defers rendering the full <sl-option> list until user interaction
-	// (_optionsActivated=true) to keep initial render cheap. These tests assert the complete
-	// option set in the DOM, so we force that state and wait for both Lit update cycles.
-	// TODO: Tests could be rewritten to work around / with the non-rendered options
-	(select as any)._optionsActivated = true;
-	select.requestUpdate("_optionsActivated");
-	await elementUpdated(select);
-	await select.updateComplete;
-}
 describe("Select widget", () =>
 {
 	beforeEach(async() =>
@@ -80,7 +70,7 @@ describe("Select widget", () =>
 			await activateOptions(element);
 
 			/** TESTING **/
-			assert.isNotNull(element.select.querySelector("[value='option']"), "Missing template option");
+			assert.include(visibleOptionValues(element), "option", "Missing template option");
 		});
 
 		it("directly in sel_options", async() =>
@@ -100,7 +90,7 @@ describe("Select widget", () =>
 			await activateOptions(element);
 
 			/** TESTING **/
-			assert.equal(element.select.querySelectorAll("sl-option").length, 2);
+			assert.lengthOf(visibleOptionValues(element), 2);
 		});
 
 		it("merges template options with sel_options", async() =>
@@ -121,7 +111,7 @@ describe("Select widget", () =>
 			await activateOptions(element);
 
 			/** TESTING **/
-			let option_keys = Object.values(element.select.querySelectorAll("sl-option")).map(o => o.value);
+			let option_keys = visibleOptionValues(element);
 			assert.include(option_keys, "option", "Template option missing");
 			assert.includeMembers(option_keys, ["1", "2", "option"], "Option mis-match");
 			assert.equal(option_keys.length, 3);
@@ -142,7 +132,7 @@ describe("Select widget", () =>
 			await activateOptions(element);
 
 			/** TESTING **/
-			assert.equal(element.select.querySelectorAll("sl-option").length, 10);
+			assert.lengthOf(visibleOptionValues(element), 10);
 		});
 
 		it("updates static number options when range properties change", async() =>
@@ -158,10 +148,9 @@ describe("Select widget", () =>
 			element.suffix = " units";
 			await element.updateComplete;
 
-			const options = Array.from(element.select.querySelectorAll("sl-option"));
-			assert.deepEqual(options.map(option => option.value), ["2", "4", "6"],
+			assert.deepEqual(visibleOptionValues(element), ["2", "4", "6"],
 				"Range changes should regenerate option values");
-			assert.deepEqual(options.map(option => option.textContent.trim()), ["2 units**", "4 units**", "6 units**"],
+			assert.deepEqual(visibleOptionLabels(element), ["2 units**", "4 units**", "6 units**"],
 				"Suffix changes should regenerate option labels");
 		});
 
@@ -186,7 +175,7 @@ describe("Select widget", () =>
 			await activateOptions(element);
 
 			/** TESTING **/
-			let option_keys = Object.values(element.select.querySelectorAll("sl-option")).map(o => o.value);
+			let option_keys = visibleOptionValues(element);
 			assert.includeMembers(option_keys, ["1", "2", "one", "two"], "Option mis-match");
 			assert.equal(option_keys.length, 4);
 		});
@@ -210,7 +199,7 @@ describe("Select widget", () =>
 			await activateOptions(element);
 
 			/** TESTING **/
-			let option_keys = Object.values(element.select.querySelectorAll("sl-option")).map(o => o.value);
+			let option_keys = visibleOptionValues(element);
 			assert.include(option_keys, "option", "Template option missing");
 			assert.includeMembers(option_keys, ["1", "2", "option"], "Option mis-match");
 			assert.equal(option_keys.length, 11);
@@ -239,11 +228,10 @@ describe("Select widget", () =>
 			await element.show();
 
 			// Not actually testing if the browser renders, just if they show where expected
-			const options = element.select.querySelectorAll("sl-option");
-			assert.equal(options.length, 5, "Wrong number of options");
+			assert.lengthOf(visibleOptionValues(element), 5, "Wrong number of options");
 
 			// Still not checking if they're _really_ visible, just that they have the correct display
-			options.forEach(o =>
+			optionNodes(element).forEach(o =>
 			{
 				assert.equal(getComputedStyle(o).display, "block", "Wrong style.display");
 			})

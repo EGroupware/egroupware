@@ -14,7 +14,11 @@ import {Et2WidgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
 import {SelectOption} from "./FindSelectOptions";
 import shoelace from "../Styles/shoelace";
 import {RowLimitedMixin} from "../Layout/RowLimitedMixin";
-import {Et2WithSearchMixin} from "./SearchMixin";
+import {SelectSearchMixin} from "./SelectSearchMixin";
+import {FreeEntryMixin} from "./FreeEntryMixin";
+import {Et2Tag} from "./Tag/Et2Tag";
+import {FreeEntryMixinInterface} from "./FreeEntryMixin";
+import {waitForEvent} from "../Et2Widget/event";
 import {property} from "lit/decorators/property.js";
 import {SlChangeEvent, SlOption, SlSelect} from "@shoelace-style/shoelace";
 import {repeat} from "lit/directives/repeat.js";
@@ -48,7 +52,7 @@ export class Et2WidgetWithSelect extends RowLimitedMixin(Et2WidgetWithSelectMixi
  * as value instead of just a string.
  *
  * SearchMixin adds additional abilities to ALL select boxes
- * @see Et2WithSearchMixin
+ * @see SelectSearchMixin
  *
  * Override for extending widgets:
  * # Custom display of selected value
@@ -97,7 +101,7 @@ export class Et2WidgetWithSelect extends RowLimitedMixin(Et2WidgetWithSelectMixi
 
 @customElement('et2-select')
 // @ts-ignore SlSelect styles is a single CSSResult, not an array, so TS complains
-export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
+export class Et2Select extends SelectSearchMixin(FreeEntryMixin(Et2WidgetWithSelect))
 {
 	// Solves some issues with focus
 	static shadowRootOptions = {...LitElement.shadowRootOptions, delegatesFocus: true};
@@ -108,6 +112,129 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			// Parent (SlSelect) returns a single cssResult, not an array
 			shoelace,
 			super.styles,
+			css`
+				/* Search & free-entry UI.  Moved here from SearchMixin, which had no business
+				   shipping sl-select part overrides - the mixin is being retired and this styles
+				   Et2Select's own DOM.  Behaviour unchanged, selectors are verbatim. */
+
+				/* Full width search textbox covers loading spinner, lift it up */
+				::slotted(sl-spinner) {
+					z-index: 2;
+				}
+
+				/* Show edit textbox only when editing */
+				.search_input #edit {
+					display: none;
+				}
+				.search_input.editing #search {
+					display: none;
+				}
+				.search_input.editing #edit {
+					display: initial;
+				}
+
+
+				  :host([search]) sl-select[open]::part(prefix), :host([allowfreeentries]) sl-select[open]::part(prefix) {
+					flex: 2 1 auto;
+					flex-wrap: wrap;
+					width: 100%;
+				}
+
+					:host([search]), :host([allowfreeentries]) {
+						sl-select[open]::part(display-input) {
+							display: none;
+						}
+					}
+
+					:host([search][multiple]), :host([allowfreeentries]) {
+						sl-select[open]::part(clear-button) {
+							display: none;
+						}
+					
+						sl-select[open]::part(expand-icon) {
+							display: none;
+						}
+					}
+
+				  sl-select[open][multiple]::part(tags) {
+					flex-basis: 100%;
+				  }
+
+				  sl-select[open][multiple]::part(combobox) {
+					flex-flow: wrap;
+				  }
+
+
+				  /* Search textbox general styling, starts hidden */
+
+				  .search_input {
+					display: none;
+					/* See also etemplate2.css, searchbox border turned off in there */
+					border: none;
+					flex: 1 1 auto;
+					order: 2;
+					margin-left: 0px;
+					height: var(--sl-input-height-medium);
+					width: 100%;
+					  background-color: var(--input-background-color);
+					z-index: var(--sl-z-index-dropdown);
+
+					  #search::part(input) {
+						  padding: 0 calc(var(--sl-input-spacing-small) - var(--sl-input-border-width) * 4);
+					  }
+				  }
+
+					:host([search]) et2-textbox::part(base), #edit, #edit:focus-visible {
+					border: none;
+					box-shadow: none;
+						outline: none;
+				  }
+
+				  /* Search UI active - show textbox & stuff */
+
+				  .search_input.active,
+				  .search_input.editing {
+					display: flex;
+				  }
+
+				  /* If multiple and no value, overlap search onto widget instead of below */
+
+				  :host([multiple]) .search_input.active.novalue {
+					top: 0px;
+				  }
+				
+				/* Hide options that do not match current search text */
+
+				  :host([search]) sl-option.no-match {
+					display: none;
+				}
+
+				/* Nothing to show yet (no local options, nothing searched) - don't render an empty dropdown panel */
+
+				  :host([dropdown-empty]) ::part(listbox) {
+					border: none;
+					box-shadow: none;
+					padding: 0;
+				}
+				/* Different cursor for editable tags */
+				:host([allowfreeentries]):not([readonly]) .search_tag::part(base)  {
+					cursor: text;
+				}
+				
+				/** Readonly **/
+				/* No border */
+				:host([readonly]) .form-control-input {
+					border: none;
+				}
+				/* disable focus border */
+				:host([readonly]) .form-control-input:focus-within {
+					box-shadow: none;
+				}
+				/* normal cursor */
+				:host([readonly]) .select__control {
+					cursor: initial;
+				}
+`,
 			css`
 				:host {
 					display: block;
@@ -342,6 +469,10 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		this._handleMouseLeave = this._handleMouseLeave.bind(this);
 		this._handleTagOverflow = this._handleTagOverflow.bind(this);
 		this.handleTagClick = this.handleTagClick.bind(this);
+		// used as an event handler in _tagTemplate(), so it needs its `this`
+		this.handleTagEdit = this.handleTagEdit.bind(this);
+		this._handleDoubleClick = this._handleDoubleClick.bind(this);
+		this._handleEditKeyDown = this._handleEditKeyDown.bind(this);
 	}
 	/**
 	 * List of properties that get translated
@@ -1021,6 +1152,249 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			.filter(o => this.emptyLabel ? o.value !== '' : o), (o : SelectOption) => o.value, this._groupTemplate.bind(this))
 		}`;
 	}
+
+
+	/**
+	 * Allow editing tags by clicking on them.  allowFreeEntries must be true.
+	 *
+	 * Tag editing lives here rather than in SelectSearchMixin: it reuses the search container but
+	 * is not search, and it needs Et2Tag, which only Et2Select has.
+	 */
+	@property({type: Boolean})
+	editModeEnabled = false;
+
+	/** The search container is also wanted when tags are editable, not only for searching */
+	protected get _needsSearchControls() : boolean
+	{
+		return super._needsSearchControls || (!this.readonly && this.editModeEnabled);
+	}
+
+	/** Our contribution to the search container */
+	protected _editControlTemplate() : TemplateResult | typeof nothing
+	{
+		if(!this.editModeEnabled)
+		{
+			return nothing;
+		}
+		return html`<input id="edit" type="text" part="input"
+                           autocomplete="off"
+                           style="width:100%"
+                           aria-label="${this.egw().lang('Edit tag')}"
+                           @keydown=${this._handleEditKeyDown}
+                           @click=${(e) => e.stopPropagation()}
+                           @blur=${this.stopEdit.bind(this)}
+        />`;
+	}
+
+	protected _onMenuShowExtras()
+	{
+		// Hide edit explicitly since it's so hard via CSS
+		if(this._needsSearchControls && this._editInputNode)
+		{
+			this._editInputNode.style.display = "none";
+		}
+
+		if(this.editModeEnabled && this.allowFreeEntries && !this.multiple && this.value)
+		{
+			this.startEdit();
+			this._editInputNode.select();
+			// Hide search explicitly since it's so hard via CSS
+			this._searchInputNode.style.display = "none";
+		}
+	}
+
+	protected _onMenuHideExtras()
+	{
+		if(this._editInputNode)
+		{
+			this._editInputNode.style.display = "";
+		}
+	}
+
+	/** A tag break in the search box ends any edit in progress */
+	protected _resetExtraControls()
+	{
+		this.stopEdit(false);
+	}
+
+	update(changedProperties)
+	{
+		super.update(changedProperties);
+
+		// Required because we explicitly create tags instead of doing it in render()
+		if(changedProperties.has("editModeEnabled") || changedProperties.has("readonly"))
+		{
+			this.select?.shadowRoot?.querySelectorAll(".select__tags > div > *").forEach((tag : Et2Tag) =>
+			{
+				tag.editable = this.editModeEnabled && !this.readonly;
+			});
+		}
+	}
+
+protected get _editInputNode() : HTMLInputElement
+	{
+		return this._activeControls?.querySelector("input#edit");
+	}
+
+_handleDoubleClick(event : MouseEvent)
+	{
+		// No edit (shouldn't happen...)
+		if(!this.editModeEnabled)
+		{
+			return;
+		}
+
+		// Find the tag
+		const path = event.composedPath();
+		const tag = <Et2Tag>path.find((el) => el instanceof Et2Tag);
+		this.hide();
+		this.updateComplete.then(() =>
+		{
+			tag.startEdit(event);
+		});
+	}
+
+protected _handleEditKeyDown(event : KeyboardEvent)
+	{
+		// Stop propagation, or parent key handler will add again
+		event.stopImmediatePropagation();
+
+		if((<typeof FreeEntryMixinInterface><unknown>this.constructor).TAG_BREAK.indexOf(event.key) !== -1 && this.allowFreeEntries)
+		{
+			this.stopEdit();
+
+			// Mess with tabindexes to allow focus to easily go to next control
+			const input = this.select.shadowRoot.querySelector('[tabindex="0"]');
+			input.setAttribute("tabindex", "-1");
+			this.updateComplete.then(() =>
+			{
+				// Set it back so we can get focus again later
+				input.setAttribute("tabindex", "0");
+			})
+			return;
+		}
+		// Abort edit, put original value back
+		else if(event.key == "Escape")
+		{
+			this.stopEdit(true);
+			// Prevent default, since that would try to close popup
+			event.preventDefault();
+		}
+	}
+
+public handleTagEdit(event)
+	{
+		let value = event.target.value;
+		let original = event.target.dataset.original_value;
+
+		if(!value || !this.allowFreeEntries || !this.validateFreeEntry(value))
+		{
+			// Not a good value, reset it.
+			event.target.variant = "danger"
+			return false;
+		}
+
+		event.target.variant = "success";
+
+		// Add to internal list
+		this.createFreeEntry(value);
+
+		// Remove original from value & DOM
+		if(value != original)
+		{
+			if(this.multiple)
+			{
+				this.value = this.value.filter(v => v !== original);
+			}
+			else
+			{
+				this.value = value;
+			}
+			this.__select_options = this.__select_options.filter(v => v.value !== original);
+		}
+	}
+
+	/**
+	 * Start editing the current value if multiple=false
+	 *
+	 * @param {Et2Tag} tag
+	 */
+	public startEdit(tag? : Et2Tag)
+	{
+		const tag_value = tag ? tag.value : this.value.toString();
+
+			// Turn on edit UI
+			this._activeControls.classList.add("editing", "active");
+
+			// Pre-set value to tag value
+			this._editInputNode.style.display = "";
+			this._editInputNode.value = tag_value
+
+			// If they abort the edit, they'll want the original back.
+			this._editInputNode.dataset.initial = tag_value;
+
+		waitForEvent(this.dropdown, "sl-after-show").then(() =>
+		{
+			this._editInputNode.focus();
+		})
+	}
+
+protected stopEdit(abort = false)
+	{
+		// type to select will focus matching entries, but we don't want to stop the edit yet
+		if(typeof abort == "object" && abort.type == "blur")
+		{
+			if(abort.relatedTarget?.localName == this.optionTag)
+			{
+				return;
+			}
+			// Edit lost focus, accept changes
+			abort = false;
+		}
+
+		const original = this._editInputNode?.dataset.initial;
+		delete this._editInputNode?.dataset.initial;
+
+		let value = abort ? original : this._editInputNode?.value;
+		if(this._editInputNode)
+		{
+			this._editInputNode.value = "";
+		}
+
+		// Remove original from value & DOM
+		if(value != original && original)
+		{
+			if(this.multiple)
+			{
+				this.value = this.value.filter(v => v !== original);
+			}
+			else
+			{
+				this.value = value;
+			}
+			this.select_options = this.select_options.filter(v => v.value !== original);
+			this.dropdown.querySelector(".freeEntry[value='" + original.replace(/'/g, "\\\'") + "']")?.remove();
+		}
+
+		if(value && value != original)
+		{
+			this.createFreeEntry(value);
+		}
+
+		this.requestUpdate("select_options");
+
+		this._activeControls.classList.remove("editing", "active");
+		if(!this.multiple)
+		{
+			this.updateComplete.then(async() =>
+			{
+				// Don't know why, but this doesn't always work leaving the value hidden by prefix
+				await this.dropdown.hide();
+				this.dropdown.classList.remove("select--open");
+			});
+		}
+	}
+
 
 	/**
 	 * Get the options we're going to render, depending on if we have them all or not

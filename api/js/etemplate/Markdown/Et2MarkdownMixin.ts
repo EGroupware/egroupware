@@ -36,7 +36,7 @@ export const Et2MarkdownMixin = dedupeMixin(<T extends Constructor<LitElement>>(
 	{
 		static get styles() : CSSResultGroup
 		{
-			// super.styles may be absent or a single CSSResult - same guard Et2WithSearchMixin uses
+			// super.styles may be absent or a single CSSResult - same guard SelectSearchMixin uses
 			return [
 				// @ts-ignore superclass is only typed as Constructor<LitElement>, which has no styles
 				...(super.styles ? (Symbol.iterator in Object(super.styles) ? super.styles : [super.styles]) : []),
