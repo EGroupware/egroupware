@@ -353,6 +353,53 @@ class Widget
 	static protected $registry_not_cached = false;
 
 	/**
+	 * Widget files/classes that threw (typically "Class ... not found", a \Error not caught by
+	 * the loop's own try/catch) while this scan ran nested inside another widget file's own
+	 * include - see scanForWidgets()'s "mid_include" handling. A same-directory-level sibling
+	 * class needed by one of these (eg. Widget/Select.php, needed by Widget/Nextmatch/*.php or an
+	 * app's own *_etemplate_widget) may simply not exist YET at this point, since
+	 * RecursiveDirectoryIterator's traversal order isn't guaranteed parent-before-child, and -
+	 * regardless of order - the file that triggered this whole scan is itself still mid-include,
+	 * so nothing later in the SAME call can complete it either. Retried once we're confident
+	 * we're no longer nested, see retryDeferredWidgetFiles().
+	 *
+	 * @var array[] each either ['path' => string] for the directory scan or ['class' => string]
+	 *      for the etemplate2_register_widgets hook loop
+	 */
+	static protected $deferred_widget_files = [];
+
+	/**
+	 * Retry any widget files/classes deferred by a previous, nested scanForWidgets() call
+	 *
+	 * Safe to call here: we only ever reach this from a scanForWidgets() call that found
+	 * self::$registry_not_cached already true, meaning the ORIGINAL scan (and whatever widget
+	 * file triggered it) has definitely finished including by now - a fresh, non-nested call.
+	 */
+	protected static function retryDeferredWidgetFiles()
+	{
+		$deferred = self::$deferred_widget_files;
+		self::$deferred_widget_files = [];
+		foreach($deferred as $entry)
+		{
+			try
+			{
+				if (isset($entry['path']))
+				{
+					include_once($entry['path']);
+				}
+				else
+				{
+					class_exists($entry['class']);	// trigger autoloader
+				}
+			}
+			catch(\Throwable $e)
+			{
+				error_log($e->getMessage());
+			}
+		}
+	}
+
+	/**
 	 * Store the registry in the instance cache, if scanForWidgets() had to postpone that
 	 *
 	 * Must only be called once all widget-class files finished including, as PHP runs their
@@ -385,6 +432,7 @@ class Widget
 		// already scanned, only the caching was postponed --> nothing to rescan
 		if (self::$registry_not_cached)
 		{
+			self::retryDeferredWidgetFiles();
 			self::cacheWidgetRegistry();
 			return self::$widget_registry;
 		}
@@ -407,6 +455,16 @@ class Widget
 					break;
 				}
 			}
+			// RecursiveDirectoryIterator's traversal order is filesystem-dependent, NOT guaranteed
+			// parent-directory-before-subdirectory - a subclass file (eg. Widget/Nextmatch/*.php,
+			// or an app's own *_etemplate_widget) can get included before a same-directory-level
+			// parent class it extends (eg. Widget/Select.php), throwing \Error ("Class ... not
+			// found") during inheritance resolution. Worse, if THIS scan itself is running nested
+			// inside that parent class' own include (see the mid_include comment above), the
+			// parent genuinely can't become available until we return all the way out of this
+			// call - retrying within the same call wouldn't help. Defer failures to
+			// self::$deferred_widget_files and retry them from a later, non-nested
+			// scanForWidgets() call instead, see retryDeferredWidgetFiles().
 			foreach(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(__DIR__.'/Widget')) as $path)
 			{
 				if(strpos($path, 'tests/') !== FALSE)
@@ -419,9 +477,9 @@ class Widget
 					{
 						include_once($path);
 					}
-					catch(\Exception $e)
+					catch(\Throwable $e)
 					{
-						error_log($e->getMessage());
+						self::$deferred_widget_files[] = ['path' => $path];
 					}
 				}
 			}
@@ -438,16 +496,21 @@ class Widget
 						{
 							class_exists($class);	// trigger autoloader
 						}
-						catch(\Exception $e)
+						catch(\Throwable $e)
 						{
-							error_log($e->getMessage());
+							self::$deferred_widget_files[] = ['class' => $class];
 						}
 					}
 				}
 			}
 			// postpone caching until the file(s) we were called from finished including and registered
 			self::$registry_not_cached = true;
-			if (!$mid_include) self::cacheWidgetRegistry();
+			if (!$mid_include)
+			{
+				// not nested, so anything deferred above is safe to retry right now too
+				self::retryDeferredWidgetFiles();
+				self::cacheWidgetRegistry();
+			}
 		}
 		else
 		{
