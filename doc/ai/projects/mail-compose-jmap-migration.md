@@ -3449,3 +3449,52 @@ construction/execution isn't testable in this environment's own PHPUnit-CLI cont
 pre-existing IMAP-connection limitation as the `send()` split, see
 [[feedback_docker_container_test_db_differs]]). Full jstest: the merge test itself (3/3) and the
 full `api/jsapi` group (478/478) green; `mail_compose::ajax_merge()`/`ajax_mergeSingle()` gone.
+
+## Step 10 follow-up (2026-09-08): mail_compose moved to mail/src/Compose.php
+
+Final step of this session's `mail_compose` cleanup: moved the remaining class itself out of the
+old `mail/inc/class.mail_compose.inc.php` location into `mail/src/Compose.php`, converted to the
+`EGroupware\Mail` namespace (`class mail_compose` -> `class Compose`), matching `Send`/`Merge`/
+`ComposeMessageBuilder` (all already there) and the established `mail/src/Ui/*Handler` convention.
+
+**Done in 2 commits, `git mv` first**: a pure-rename commit (`git mv ... mail/src/Compose.php`,
+zero content changes) so git's rename detection keeps blame/history intact, THEN a second commit
+with the namespace/class-name conversion and every bare global-namespace reference the move now
+needs a leading backslash for (`\mail_ui`, `\mail_tree`, `\calendar_ical`, `\addressbook_vcal`,
+`\Exception` - found via a systematic `grep` sweep of every `new X(`/`X::` in the file, not just
+the parts touched by yesterday's `send()`/`merge()` extractions).
+
+**No delegating stub** (ralf, same call as yesterday's `Merge` extraction) - every real caller
+updated directly: `new mail_compose()` -> `new Compose()` (`mail_ui.inc.php`/`mail_sieve.inc.php`,
+each gaining a `use EGroupware\Mail\Compose;` import), `mail_compose::getToolbarActions()`
+(`mail_hooks.inc.php`) / `::ajax_searchAddress()` (`api/src/Etemplate/Widget/Select.php`, whose
+`use mail_compose;` "explicitly import old not yet ported classes" import became
+`use EGroupware\Mail\Compose;`), and every `'mail.mail_compose.*'` menuaction string ->
+`'mail.EGroupware\Mail\Compose.*'` - `mail/js/compose.ts` (6 strings: `getAttachment` x2,
+`ajax_integrateSent`, `ajax_getAttachmentLinksBody`, `ajax_saveAsDraft` x2), `mail/js/app.ts` (2:
+`ajax_getComposeToolbarData`, `ajax_prepareCompose`), and 5 `.xet` templates' own `searchUrl`
+attribute (`ajax_searchFolder`, the widget-level autocomplete search callback - confirmed
+`Et2Select`'s `searchUrl` is just handed straight through to `egw().request()`, same dispatch path
+as the JS calls, no special parsing of its own).
+
+**Left alone, pre-existing/out of scope** (same as yesterday's finds, unaffected by the rename
+either way): `ImportHandler.php`'s already-broken `mail.mail_compose.composeFromDraft` reference
+(method never existed under either name) and addressbook's dead `email2link()` (zero callers,
+targets the already-deleted `compose()`). Left the large volume of historical prose comments
+elsewhere (`api/src/Mail/Jmap/Imap.php`, `mail/js/compose.ts`/`jmap.ts` docblocks, etc.) saying
+"classic mail_compose::X()" or citing the old `class.mail_compose.inc.php` file path - describe
+past behavior for context, not live dependencies, matching the "not updated site-by-site" call from
+the `compose()` deletion and `send()`/`merge()` extractions.
+
+**Verified**: `php -l` clean on all touched files. `ReflectionClass`-based checks inside the app
+container: `EGroupware\Mail\Compose` autoloads with every expected method (`saveAsDraft`,
+`createMessage`, all the `ajax_*` methods, `getAttachment` - and correctly NOT `send`/`ajax_merge`/
+`ajax_mergeSingle`/`compose`, already moved/deleted); the old `mail_compose` class no longer exists
+at all (`class_exists()` false with or without autoload); `public_functions` default still
+`['getAttachment' => true]`; a direct simulation of `index.php`'s/`json.php`'s own
+`explode('.', $menuaction)` dispatch parsing against all 7 real new-menuaction strings resolves
+correctly (`class_exists()` + `method_exists()` both true for each); `mail_ui`/`mail_sieve`/
+`Select` (the 3 files with real code call-sites) all still autoload cleanly. `npx tsc --noEmit`
+clean (no new errors in `compose.ts`/`app.ts`). Full `mail` jstest group green (197/197), full
+`mail/tests/` PHPUnit suite unchanged from baseline (157 tests, 6 pre-existing unrelated REST
+-connection errors, same as before this rename).
