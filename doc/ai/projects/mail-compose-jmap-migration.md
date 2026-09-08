@@ -3360,3 +3360,57 @@ params" fallback branch (unreachable now - nothing constructs a `MailCompose` wi
 through `bootstrapComposePopup()`'s own `explicitBootstrap` any more) and `MailApp.compose`'s lazy
 getter's `if(!window.app._compose) { new MailCompose(this) }` branch (same reasoning - always
 pre-constructed with `explicitBootstrap` before anything reads the getter now).
+
+## Step 10 follow-up (2026-09-08): dead code removed + mail_compose::send() split into its own class
+
+**Dead code removed** from `mail_compose.inc.php` (a full call-graph audit for ralf, listing every
+remaining method + where it's actually called from - most `ajax_*` methods ARE called from the
+client-side compose bootstrap as expected, but `ajax_mergeSingle`/`ajax_merge`/`ajax_searchFolder`/
+`ajax_searchAddress` are called from elsewhere - addressbook's generic merge action, widget
+searchUrl/Taglist resolution, mail_sieve/mail_ui directly - not mail's own compose at all):
+`replaceEmailAdresses()`, `generateRFC822Address()`, `getErrorInfo()`, `_getHostName()`,
+`stripSlashes()` - confirmed zero callers anywhere before deleting.
+
+**`send()` extracted into `EGroupware\Mail\Send`** (`mail/src/Send.php`) - its only real caller was
+already `ApiHandler::send()` (the REST API's non-interactive send-mail endpoint, used only when the
+account isn't JMAP-native - a Stalwart account goes through `ApiHandler::sendViaJmap()` instead,
+never touching this class). Not a copy-paste: `send()` shares its actual MIME-building
+(`createMessage()`, ~290 lines) with `mail_compose::saveAsDraft()` (still live - `ajax_saveAsDraft()`
+is the client-side compose's own autosave/save-as-draft path), so that whole cluster -
+`createMessage()`, `_getAttachmentLinks()`, `wrapBlockWithPreferredFont()` (only ever called from
+`_getAttachmentLinks()`), `resolveEmailAddressList()`, `convertHTMLToText()`, `_encrypt()`,
+`changeProfile()`, plus a new `initMailAccount()` (mail_compose's own constructor body, unchanged,
+just extracted so both classes share the exact same account-connect logic) - moved into a new
+`EGroupware\Mail\ComposeMessageBuilder` trait both classes `use`. `_getCleanHTML()` moved directly
+into `Send` instead (send()'s only real caller, not shared with saveAsDraft()).
+
+Verified the extraction is byte-identical (not just "looks right"): diffed every moved method's
+brace-matched body between the original file and the new trait/class programmatically - the only
+differences anywhere were the 6 bare global-namespace references (`\mail_tree`, `\stylite_sharing`,
+`\addressbook_bo`, 3x `\Exception`) that need an explicit leading backslash once the code lives in a
+namespaced file (the original had none - `mail_compose.inc.php` has never declared a namespace at
+all). Caught one real transcription typo this way before it shipped: a copy-pasted `isDraftFolder()`
+branch that said `'\Seen'` instead of `'\Draft'`.
+
+**Verified**: `php -l` clean on all 4 touched/created PHP files. Runtime-verified via
+`ReflectionClass` inside the actual app container (`php -l` can't catch namespace/autoload
+mistakes) - both classes autoload, compose the trait correctly, have exactly the methods expected
+(`mail_compose` no longer has `send()` at all). New `mail/tests/SendRefactorTest.php` (PHPUnit,
+`Api\LoggedInTest`) covers the split's shape - trait properties are independent per instance (not
+accidentally shared), both classes expose the same trait methods, `resolveEmailAddressList()`/
+`convertHTMLToText()` behave identically through either class. Doesn't call `send()`/`saveAsDraft()`/
+even the shared `initMailAccount()` themselves - a live IMAP/JMAP connection isn't available in this
+environment's own PHPUnit CLI context at all (confirmed by reproducing the identical
+"Account not found (acc_id=0)" failure against the pre-existing, *unmodified* `mail_compose`
+constructor too, in the exact same test run - not something this refactor introduced, and this
+container's own test DB only has accounts 1/62 anyway, not the 85/42/64 documented in
+[[project_mail_test_accounts]] for the interactive dev instance - a different database entirely
+despite sharing this code checkout). Full `mail/tests/` PHPUnit suite: 157 tests, 541 assertions,
+0 new failures (6 pre-existing `MailAccountPatchTest` errors, unrelated - `cURL: Failed to connect
+to localhost port 80`, no web server bound for those REST tests in this exec context).
+
+**Not fixed, pre-existing and out of scope**: `ApiHandler.php`'s `prepareAttachments()`'s own
+docblock still says "for mail_compose::compose" (renamed to a generic "for compose/send" in
+passing); a handful of explanatory comments elsewhere (`api/src/Mail/Jmap/Imap.php`, this doc's own
+earlier sections) still say "classic mail_compose::send()" - accurate as history, not updated
+site-by-site since they describe past behavior for context, not a live dependency.
