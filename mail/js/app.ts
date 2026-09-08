@@ -3628,9 +3628,9 @@ export class MailApp extends EgwApp
 			if (newcounter === 0)
 			{
 				newcounter = null;
-				ftree.setClass(_foldernode.id, 'unread','-');
+				ftree.setClass(_foldernode.value, 'unread','-');
 			}
-			ftree.set_badge(_foldernode.id, newcounter?.toString());
+			ftree.set_badge(_foldernode.value, newcounter?.toString());
 		}
 	}
 
@@ -3759,7 +3759,7 @@ export class MailApp extends EgwApp
 		{
                 _foldernode = ftree.getSelectedItem();
 
-                displayname = _foldernode.text.replace(this._unseen_regexp, '');
+                displayname = _foldernode.label.replace(this._unseen_regexp, '');
             } else {
 			message = this.splitRowId(_msg['msg'][0]);
 			if (message[3]) _foldernode = displayname = atob(message[3]);
@@ -6638,7 +6638,7 @@ export class MailApp extends EgwApp
 	{
 		const node = _widget.getNode(_id);
 		// do we need to autoload the subitems first
-		if (node.child && !node.item.length)
+		if (node.hasChildren && !node.children.length)
 		{
 			return _widget.refreshItem(_id).then(() => _widget.setSubChecked(_id, "toggle"));
 		}
@@ -6698,7 +6698,7 @@ export class MailApp extends EgwApp
 		ftree.addEventListener('et2-selection-change', () => this.recordSubscriptionChange(ftree));
 		ftree.autoloading = (item : any) => this.folderTreeAutoload(item, false).then((result) =>
 		{
-			this.seedSubscriptionValue(ftree, result?.item ?? []);
+			this.seedSubscriptionValue(ftree, result?.children ?? []);
 			return result;
 		});
 
@@ -6713,8 +6713,8 @@ export class MailApp extends EgwApp
 			this.seedSubscriptionValue(ftree, data);
 			// buildRootFolderData() already eagerly embeds INBOX's own children (it's always
 			// auto-opened) - seed those too, since they never go through the autoloading wrapper
-			const inbox = data.find((node) => node.id === profileID + '::INBOX');
-			if (inbox) this.seedSubscriptionValue(ftree, inbox.item);
+			const inbox = data.find((node) => node.value === profileID + '::INBOX');
+			if (inbox) this.seedSubscriptionValue(ftree, inbox.children);
 		}).catch((e) =>
 		{
 			this._subscriptionChanges = null;
@@ -6740,7 +6740,7 @@ export class MailApp extends EgwApp
 		const value = new Set<string>(ftree.value || []);
 		nodes.forEach((node) =>
 		{
-			if (node.checked) value.add(node.id);
+			if (node.checked) value.add(node.value);
 		});
 		ftree.value = [...value];
 		this._subscriptionKnownValue = value;
@@ -7131,7 +7131,7 @@ export class MailApp extends EgwApp
 	 * folder loading, one level per expand, instead of the classic ajax_foldertree menuaction
 	 * (see doc/ai/projects/mail-folder-tree-jmap.md).
 	 *
-	 * item.id is either a bare profileID (an account root node, seeded server-side - expanding
+	 * item.value is either a bare profileID (an account root node, seeded server-side - expanding
 	 * it means "list its top-level folders", parentId null) or "profileID::canonical/path" (a
 	 * folder node built by this same callback on an earlier level - item.jmapId is then the raw
 	 * JMAP Mailbox id to pass as parentId, not derived from the path: a real JMAP/Stalwart
@@ -7159,14 +7159,16 @@ export class MailApp extends EgwApp
 	 *  matching classic mail_tree.inc.php's own folderManagement()/ajax_folderMgmtTree_autoloading()
 	 *  calls (hardcoded $_subscribedOnly=false) - that dialog manages folders, including
 	 *  unsubscribed ones, so every level of its tree must always show everything.
-	 * @return {item: FolderTreeNode[]} - Et2Tree's expected handleLazyLoading() result shape
+	 * @return {children: FolderTreeNode[]} - Et2Tree's expected handleLazyLoading() result shape
+	 *  (Object.assign()'d straight onto the node being expanded, so the key must match
+	 *  FolderTreeNode's own `children` field, not just be "whatever Et2Tree accepts")
 	 */
-	folderTreeAutoload(item : any, subscribedOnly? : boolean) : Promise<{ item : FolderTreeNode[] } | any>
+	folderTreeAutoload(item : any, subscribedOnly? : boolean) : Promise<{ children : FolderTreeNode[] } | any>
 	{
-		const hasParent = typeof item.id === "string" && item.id.indexOf('::') !== -1;
-		const [profileID, parentPath] : [string, string] = hasParent ? item.id.split('::', 2) : [item.id, ''];
+		const hasParent = typeof item.value === "string" && item.value.indexOf('::') !== -1;
+		const [profileID, parentPath] : [string, string] = hasParent ? item.value.split('::', 2) : [item.value, ''];
 		const parentId : string | null = hasParent ? item.jmapId : null;
-		const errorLeaf = () => ({item: [buildErrorNode(profileID, parentPath,
+		const errorLeaf = () => ({children: [buildErrorNode(profileID, parentPath,
 			this.egw.lang('Connection could not be established, use the wizard to check why!'), egw)]});
 
 		if (hasParent && !parentId)
@@ -7179,12 +7181,12 @@ export class MailApp extends EgwApp
 			: this.buildRootFolderData(profileID, subscribedOnly);
 
 		return fetchLevel.then((data) =>
-			data === null ? errorLeaf() : {item: data}
+			data === null ? errorLeaf() : {children: data}
 		).catch((e) =>
 		{
 			if (e?.constructor?.name === 'JmapUserError')
 			{
-				return {item: [buildErrorNode(profileID, parentPath, e.message, egw)]};
+				return {children: [buildErrorNode(profileID, parentPath, e.message, egw)]};
 			}
 			throw e;
 		});
@@ -7211,11 +7213,11 @@ export class MailApp extends EgwApp
 			const top = buildFolderLevel(result.top, profileID, '', {subscribedOnly, isTopLevel: true}, egw);
 			if (result.inboxChildren !== null)
 			{
-				const inboxNode = top.find((node) => node.id === profileID + '::INBOX');
+				const inboxNode = top.find((node) => node.value === profileID + '::INBOX');
 				if (inboxNode)
 				{
-					inboxNode.item = buildFolderLevel(result.inboxChildren, profileID, 'INBOX', {subscribedOnly, isTopLevel: true}, egw);
-					inboxNode.child = inboxNode.item.length > 0;
+					inboxNode.children = buildFolderLevel(result.inboxChildren, profileID, 'INBOX', {subscribedOnly, isTopLevel: true}, egw);
+					inboxNode.hasChildren = inboxNode.children.length > 0;
 				}
 			}
 			return top;
@@ -7270,7 +7272,7 @@ export class MailApp extends EgwApp
 			{
 				if (data === null) return false;
 				const parentTreeId = parentPath !== '' ? profileID + '::' + parentPath : profileID;
-				return ftree.refreshItem(parentTreeId, {item: data}).then(() => true);
+				return ftree.refreshItem(parentTreeId, {children: data}).then(() => true);
 			})
 			.catch((e) =>
 			{

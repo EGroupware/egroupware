@@ -39,13 +39,13 @@ function build(mailboxes : JmapMailboxNode[], options : { subscribedOnly? : bool
 
 describe("buildFolderLevel()", () =>
 {
-	it("maps a plain mailbox to mail's Et2Tree field names (text/tooltip/item)", () =>
+	it("maps a plain mailbox to the base Etemplate Tree field names (label/title/children)", () =>
 	{
 		const [node] = build([mailbox({name: "Inbox"})]);
 
-		assert.equal(node.text, "Inbox");
-		assert.equal(node.tooltip, "", "no role - tooltip would equal the label, so it's omitted");
-		assert.deepEqual(node.item, []);
+		assert.equal(node.label, "Inbox");
+		assert.equal(node.title, "", "no role - tooltip would equal the label, so it's omitted");
+		assert.deepEqual(node.children, []);
 	});
 
 	it("sets checked from isSubscribed", () =>
@@ -65,7 +65,7 @@ describe("buildFolderLevel()", () =>
 		], {subscribedOnly: true});
 
 		assert.equal(nodes.length, 1);
-		assert.equal(nodes[0].text, "a");
+		assert.equal(nodes[0].label, "a");
 	});
 
 	it("keeps unsubscribed mailboxes when subscribedOnly is not set", () =>
@@ -94,7 +94,7 @@ describe("buildFolderLevel()", () =>
 			mailbox({name: "Sent", role: "sent", isSubscribed: false}),
 		], {subscribedOnly: true});
 
-		assert.deepEqual(nodes.map((n) => n.text), ["translated(INBOX)", "user"]);
+		assert.deepEqual(nodes.map((n) => n.label), ["translated(INBOX)", "user"]);
 	});
 
 	/**
@@ -109,25 +109,25 @@ describe("buildFolderLevel()", () =>
 			mailbox({name: "user", isSubscribed: false, hasChildren: false}),
 		], {subscribedOnly: true});
 
-		assert.deepEqual(nodes.map((n) => n.text), ["translated(INBOX)"]);
+		assert.deepEqual(nodes.map((n) => n.label), ["translated(INBOX)"]);
 	});
 
-	it("marks child=true when hasChildren is true", () =>
+	it("marks hasChildren=true when the mailbox's own hasChildren is true", () =>
 	{
 		const [node] = build([mailbox({hasChildren: true})]);
-		assert.isTrue(node.child);
+		assert.isTrue(node.hasChildren);
 	});
 
-	it("marks child=true when hasChildren is unknown (real JMAP has no such hint)", () =>
+	it("marks hasChildren=true when the mailbox's own hasChildren is unknown (real JMAP has no such hint)", () =>
 	{
 		const [node] = build([mailbox({hasChildren: undefined})]);
-		assert.isTrue(node.child, "a guaranteed-leaf folder just briefly shows an expand affordance that Et2Tree's own lazy-load self-corrects on first (empty) expand");
+		assert.isTrue(node.hasChildren, "a guaranteed-leaf folder just briefly shows an expand affordance that Et2Tree's own lazy-load self-corrects on first (empty) expand");
 	});
 
-	it("marks child=false only when hasChildren is explicitly false", () =>
+	it("marks hasChildren=false only when the mailbox's own hasChildren is explicitly false", () =>
 	{
 		const [node] = build([mailbox({hasChildren: false})]);
-		assert.isFalse(node.child);
+		assert.isFalse(node.hasChildren);
 	});
 
 	it("sets a badge from unreadEmails, and omits it when zero", () =>
@@ -158,7 +158,7 @@ describe("buildFolderLevel()", () =>
 		const [noChildren] = build([mailbox({role: "inbox", hasChildren: false})]);
 
 		assert.isTrue(withChildren.open);
-		assert.isTrue(unknownChildren.open, "hasChildren unknown (real JMAP) still assumes expandable, same as `child`");
+		assert.isTrue(unknownChildren.open, "hasChildren unknown (real JMAP) still assumes expandable, same as `hasChildren`");
 		assert.isUndefined(noChildren.open);
 	});
 
@@ -248,9 +248,9 @@ describe("buildFolderLevel()", () =>
 		const [trash] = build([mailbox({role: "trash", name: "Papierkorb"})]);
 		const [templates] = build([mailbox({role: "templates", name: "Vorlagen"})]);
 
-		assert.equal(inbox.text, "translated(INBOX)");
-		assert.equal(trash.text, "translated(Trash)");
-		assert.equal(templates.text, "translated(Templates)");
+		assert.equal(inbox.label, "translated(INBOX)");
+		assert.equal(trash.label, "translated(Trash)");
+		assert.equal(templates.label, "translated(Templates)");
 	});
 
 	/**
@@ -263,29 +263,29 @@ describe("buildFolderLevel()", () =>
 	{
 		const [trash] = build([mailbox({role: "trash", name: "Papierkorb"})]);
 
-		assert.equal(trash.tooltip, "Trash", "must be the raw canonical key, not translated(Trash)");
+		assert.equal(trash.title, "Trash", "must be the raw canonical key, not translated(Trash)");
 	});
 
 	it("omits the tooltip (empty string) whenever it would be identical to the label", () =>
 	{
 		const [plain] = build([mailbox({role: null, name: "Projects"})]);
 
-		assert.equal(plain.text, "Projects");
-		assert.equal(plain.tooltip, "", "raw name already equals the label - no point duplicating it");
+		assert.equal(plain.label, "Projects");
+		assert.equal(plain.title, "", "raw name already equals the label - no point duplicating it");
 	});
 
 	it("keeps the raw name for a folder with no role at all", () =>
 	{
 		const [plain] = build([mailbox({role: null, name: "Projects"})]);
 
-		assert.equal(plain.text, "Projects");
+		assert.equal(plain.label, "Projects");
 	});
 
 	it("translates the label for an archive-role folder too, discarding the raw name", () =>
 	{
 		const [archive] = build([mailbox({role: "archive", name: "Archives"})]);
 
-		assert.equal(archive.text, "translated(Archive)");
+		assert.equal(archive.label, "translated(Archive)");
 	});
 
 	it("falls back to the generic folder icon for a plain (non-special) folder", () =>
@@ -318,7 +318,7 @@ describe("buildFolderLevel()", () =>
 			const [trash] = buildFolderLevel([mailbox({role: "trash", name: "Trash"})], "42", "Archives/2020", {isTopLevel: false}, egw);
 			const [inbox] = buildFolderLevel([mailbox({role: "inbox", name: "INBOX"})], "42", "Archives/2020", {isTopLevel: false}, egw);
 
-			assert.equal(trash.text, "translated(Trash)");
+			assert.equal(trash.label, "translated(Trash)");
 			assert.include(trash.im0, "trash");
 			assert.include(inbox.im0, "download", "still uses the inbox/home icon");
 			assert.isUndefined(inbox.open, "must not auto-open - that's still isTopLevel-gated");
@@ -332,7 +332,7 @@ describe("buildFolderLevel() id construction", () =>
 	{
 		const [node] = buildFolderLevel([mailbox({id: "opaque-1", name: "Sent"})], "42", "", {}, egw);
 
-		assert.equal(node.id, "42::Sent");
+		assert.equal(node.value, "42::Sent");
 		assert.equal(node.jmapId, "opaque-1");
 	});
 
@@ -340,7 +340,7 @@ describe("buildFolderLevel() id construction", () =>
 	{
 		const [node] = buildFolderLevel([mailbox({id: "opaque-2", name: "2026"})], "42", "INBOX/Project", {}, egw);
 
-		assert.equal(node.id, "42::INBOX/Project/2026");
+		assert.equal(node.value, "42::INBOX/Project/2026");
 	});
 
 	it("never derives id from the (possibly opaque, real-JMAP) jmapId - only from profileID+parentPath+name", () =>
@@ -349,19 +349,19 @@ describe("buildFolderLevel() id construction", () =>
 		// reconstructable into a path at all - the tree-facing id must never depend on it
 		const [node] = buildFolderLevel([mailbox({id: "aBcD123", name: "Projects"})], "7", "INBOX", {}, egw);
 
-		assert.equal(node.id, "7::INBOX/Projects");
+		assert.equal(node.value, "7::INBOX/Projects");
 		assert.equal(node.jmapId, "aBcD123");
 	});
 });
 
 describe("buildErrorNode()", () =>
 {
-	it("puts the error message into both text and tooltip", () =>
+	it("puts the error message into both label and title", () =>
 	{
 		const node = buildErrorNode("42", "INBOX/Project", "Server unreachable", egw);
 
-		assert.equal(node.text, "Server unreachable");
-		assert.equal(node.tooltip, "Server unreachable");
+		assert.equal(node.label, "Server unreachable");
+		assert.equal(node.title, "Server unreachable");
 	});
 
 	it("builds its id from profileID + parentPath, falling back to INBOX at the top level", () =>
@@ -369,8 +369,8 @@ describe("buildErrorNode()", () =>
 		const nested = buildErrorNode("42", "INBOX/Project", "boom", egw);
 		const topLevel = buildErrorNode("42", "", "boom", egw);
 
-		assert.equal(nested.id, "42::INBOX/Project");
-		assert.equal(topLevel.id, "42::INBOX");
+		assert.equal(nested.value, "42::INBOX/Project");
+		assert.equal(topLevel.value, "42::INBOX");
 	});
 
 	it("is never checked, never expandable, and has no children", () =>
@@ -378,8 +378,8 @@ describe("buildErrorNode()", () =>
 		const node = buildErrorNode("42", "", "boom", egw);
 
 		assert.isFalse(node.checked);
-		assert.isFalse(node.child);
-		assert.deepEqual(node.item, []);
+		assert.isFalse(node.hasChildren);
+		assert.deepEqual(node.children, []);
 	});
 
 	it("uses the no-select icon variant, same as classic's treeLeafNoConnectionArray()", () =>

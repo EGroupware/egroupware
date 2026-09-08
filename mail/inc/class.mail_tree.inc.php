@@ -11,9 +11,9 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Etemplate\Widget\Tree;
 use EGroupware\Api\Mail;
 use EGroupware\Api\Mail\FolderHelpers;
-use EGroupware\Mail\Tree;
 
 /**
  * Mail tree worker class
@@ -104,11 +104,11 @@ class mail_tree
 	 */
 	static function treeLeafNoConnectionArray($_profileID, $_err, $_path, $_parent)
 	{
-		$baseNode = array('id' => $_profileID);
+		$baseNode = array(Tree::ID => $_profileID);
 		$leaf =  array(
-			'id' => $_profileID.self::DELIMITER.'INBOX',
-			'text' => $_err,
-			'tooltip' => $_err,
+			Tree::ID => $_profileID.self::DELIMITER.'INBOX',
+			Tree::LABEL => $_err,
+			Tree::TOOLTIP => $_err,
 			'im0' => self::$leafImages["folderNoSelectClosed"],
 			'im1' => self::$leafImages["folderNoSelectOpen"],
 			'im2' => self::$leafImages["folderNoSelectClosed"],
@@ -351,7 +351,7 @@ class mail_tree
 				if ($parent) $parent .= self::DELIMITER;
 			}
 
-			if (!is_array($insert) || !isset($insert['item']))
+			if (!is_array($insert) || !isset($insert[Tree::CHILDREN]))
 			{
 				// throwing an exeption here seems to be unrecoverable,
 				// even if the cause is a something that can be handeled by the mailserver

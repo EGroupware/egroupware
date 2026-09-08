@@ -6,10 +6,14 @@
  * A standalone module (not a MailApp method) so it stays trivially unit-testable - same
  * reasoning as attachmentIndex.ts.
  *
- * Field names deliberately match mail's own Tree.php override (mail/src/Tree.php), not the base
- * Etemplate Tree widget's: `id` (not `value`), `text` (not `label`), `tooltip`, `item` (not
- * `children`), `child` (not `hasChildren`) - mail_tree.inc.php already emits this shape, and
- * Et2Tree.ts's _optionTemplate() supports both naming schemes via fallbacks.
+ * Field names match the base Etemplate Tree widget's own constants (Api\Etemplate\Widget\Tree::
+ * VALUE/LABEL/TITLE/CHILDREN/AUTOLOAD_CHILDREN - `value`/`label`/`title`/`children`/`hasChildren`),
+ * not a mail-specific convention - mail/src/Tree.php (which used to redefine these as `id`/`text`/
+ * `tooltip`/`item`/`child`) was removed 2026-09-08 so mail_tree.inc.php and this file both use the
+ * same constants every other app's tree-building code already does. Et2Tree.ts's
+ * _optionTemplate()/getLabel()/hasChildren()/etc. all still support the old mail-specific naming
+ * too (several callers elsewhere still use it), so this is purely a naming alignment, not a
+ * behavior change.
  *
  * @link https://www.egroupware.org
  * @author EGroupware GmbH [info@egroupware.org]
@@ -62,23 +66,24 @@ export interface BuildFolderLevelOptions
 }
 
 /**
- * mail's tree-node id ("profileID::canonical/path") is a different scheme from the raw JMAP
- * Mailbox id (base64(path) for the local shim, an opaque server-assigned string for real JMAP/
- * Stalwart) - it's what the rest of the app (changeFolder(), NextMatch's selectedFolder
- * filter, MailJmap.getRows()'s own folder-path parsing) already expects. Every node keeps its
- * raw JMAP id too (under `jmapId`), purely so a *later* expand of that same node can pass it
- * straight back as getMailboxChildren()'s parentId without having to re-derive it - Stalwart's
- * opaque ids in particular can't be reconstructed from a path at all.
+ * mail's tree-node id ("profileID::canonical/path", stored under `value` - Api\Etemplate\Widget\
+ * Tree::ID) is a different scheme from the raw JMAP Mailbox id (base64(path) for the local shim,
+ * an opaque server-assigned string for real JMAP/Stalwart) - it's what the rest of the app
+ * (changeFolder(), NextMatch's selectedFolder filter, MailJmap.getRows()'s own folder-path
+ * parsing) already expects. Every node keeps its raw JMAP id too (under `jmapId`), purely so a
+ * *later* expand of that same node can pass it straight back as getMailboxChildren()'s parentId
+ * without having to re-derive it - Stalwart's opaque ids in particular can't be reconstructed from
+ * a path at all.
  */
 export interface FolderTreeNode
 {
-	id : string;
+	value : string;
 	jmapId : string;
-	text : string;
-	tooltip : string;
+	label : string;
+	title : string;
 	checked : boolean;
-	child : boolean;
-	item : any[];
+	hasChildren : boolean;
+	children : any[];
 	badge? : number;
 	im0 : string;
 	im1 : string;
@@ -211,9 +216,9 @@ export function sortTopLevel(list : JmapMailboxNode[]) : void
 }
 
 /**
- * Build one FolderTreeNode, used by buildFolderLevel() for one level at a time. `item`/`child`
- * are left at their lazy-loading defaults (empty/"assume expandable", see buildFolderLevel()'s
- * docblock).
+ * Build one FolderTreeNode, used by buildFolderLevel() for one level at a time. `children`/
+ * `hasChildren` are left at their lazy-loading defaults (empty/"assume expandable", see
+ * buildFolderLevel()'s docblock).
  *
  * @param mailbox
  * @param profileID owning mail account's profile id
@@ -252,13 +257,13 @@ function buildNode(mailbox : JmapMailboxNode, profileID : string, path : string,
 	const tooltip = tooltipCandidate !== label ? tooltipCandidate : '';
 	const isNamespaceRoot = isNamespaceRootName(mailbox.name);
 	return {
-		id: profileID + '::' + path,
+		value: profileID + '::' + path,
 		jmapId: mailbox.id,
-		text: label,
-		tooltip,
+		label,
+		title: tooltip,
 		checked: !!mailbox.isSubscribed,
-		child: mailbox.hasChildren !== false,
-		item: [],
+		hasChildren: mailbox.hasChildren !== false,
+		children: [],
 		// unread count, same information mail_tree.inc.php's classic setOutStructure()
 		// showed via a "(n)" label suffix + bold style - a badge is Et2Tree's more modern
 		// equivalent (_optionTemplate() already renders selectOption.badge as an sl-badge)
@@ -294,10 +299,11 @@ function buildNode(mailbox : JmapMailboxNode, profileID : string, path : string,
  * way to know in advance whether a deeply-nested descendant several levels down is subscribed
  * without eagerly fetching the whole subtree first - exactly what this feature exists to avoid.
  *
- * `child` (Et2Tree's lazy/expandable flag) is set whenever `hasChildren` is true *or unknown*
- * (undefined) - real JMAP (Stalwart) has no "has children" hint at all, so every non-leaf-role
- * mailbox must default to "assume expandable"; Et2Tree's own handleItemLazyLoad() already
- * self-corrects (clears the flag) if a first expand comes back with zero children.
+ * `hasChildren` (Et2Tree's lazy/expandable flag) is set whenever the JMAP mailbox's own
+ * `hasChildren` is true *or unknown* (undefined) - real JMAP (Stalwart) has no "has children" hint
+ * at all, so every non-leaf-role mailbox must default to "assume expandable"; Et2Tree's own
+ * handleItemLazyLoad() already self-corrects (clears the flag) if a first expand comes back with
+ * zero children.
  *
  * @param mailboxes one level's worth of sibling Mailbox nodes
  * @param profileID owning mail account's profile id
@@ -305,7 +311,7 @@ function buildNode(mailbox : JmapMailboxNode, profileID : string, path : string,
  *  used to build each child's tree-facing id (see FolderTreeNode's docblock)
  * @param options
  * @param egw only .image(name, app) is used
- * @return Et2Tree node data (mail's field names - see FolderTreeNode)
+ * @return Et2Tree node data (base Api\Etemplate\Widget\Tree field names - see FolderTreeNode)
  */
 export function buildFolderLevel(mailboxes : JmapMailboxNode[], profileID : string, parentPath : string,
 	options : BuildFolderLevelOptions = {}, egw : Egw) : FolderTreeNode[]
@@ -361,13 +367,13 @@ export function buildFolderLevel(mailboxes : JmapMailboxNode[], profileID : stri
 export function buildErrorNode(profileID : string, parentPath : string, message : string, egw : Egw) : FolderTreeNode
 {
 	return {
-		id: profileID + '::' + (parentPath || 'INBOX'),
+		value: profileID + '::' + (parentPath || 'INBOX'),
 		jmapId: '',
-		text: message,
-		tooltip: message,
+		label: message,
+		title: message,
 		checked: false,
-		child: false,
-		item: [],
+		hasChildren: false,
+		children: [],
 		im0: egw.image('folderNoSelectClosed', 'mail'),
 		im1: egw.image('folderNoSelectOpen', 'mail'),
 		im2: egw.image('folderNoSelectClosed', 'mail'),
