@@ -3414,3 +3414,38 @@ docblock still says "for mail_compose::compose" (renamed to a generic "for compo
 passing); a handful of explanatory comments elsewhere (`api/src/Mail/Jmap/Imap.php`, this doc's own
 earlier sections) still say "classic mail_compose::send()" - accurate as history, not updated
 site-by-site since they describe past behavior for context, not a live dependency.
+
+## Step 10 follow-up (2026-09-08): ajax_merge()/ajax_mergeSingle() split into EGroupware\Mail\Merge
+
+Following the same method-inventory audit as the `send()` split above: `ajax_merge()`/
+`ajax_mergeSingle()` (addressbook's own multi/single-recipient "insert into email document" merge
+action, `EgwApp._mergeEmail()`) turned out to be the *least* coupled methods in `mail_compose` -
+neither touches `$this->mailPreferences`/`$this->displayCharset`/`$this->sessionData`, nor any
+`ComposeMessageBuilder` trait method (`createMessage()` etc.) - only `$this->mail_bo` (a connected
+`Api\Mail` instance). Extracted into a new `mail/src/Merge.php` (`EGroupware\Mail\Merge`) with a
+minimal standalone constructor (just `Mail::getInstance()`, none of `initMailAccount()`'s
+`mailPreferences`/`Mail::$mailConfig` setup this class never needed).
+
+**No delegating stub left on `mail_compose`** (ralf: "I dont think we need a stub, as the callers
+are all in our api or repo, which we can fix up directly") - unlike the `mail_ui` -> `Ui\*Handler`
+extractions ([[mail-bo-decoupling]]), which keep one because EGroupware's menuaction dispatch
+resolves by literal class-name string and some of THEIR callers are outside this repo's direct
+control. Here both real callers (`api/js/jsapi/egw_app.ts`'s `_mergeEmail()`, one `nm_action`
+menuaction string and one `egw.request()` call) are this repo's own code, updated directly to
+`mail.EGroupware\Mail\Merge.ajax_merge`/`ajax_mergeSingle` - confirmed this dot-separated
+`app.Fully\Qualified\ClassName.method` menuaction form already works today via `json.php`'s own
+dispatch parsing (`explode('.', $menuaction)`, no restriction to global-namespace classes) -
+`collabora.EGroupware\collabora\Ui.editor`/`guacamole.EGroupware\Guacamole\Ui.index` are existing,
+live precedents for the exact same pattern elsewhere in this codebase.
+
+**Verified**: same rigor as the `send()` split - programmatic brace-matched diff of both moved
+method bodies against the original (only the expected `\mail_ui`/`\mail_integration`/`\infolog_bo`/
+`\Exception` backslash additions, no transcription errors), `php -l` clean, `ReflectionClass` checks
+inside the container confirming the class autoloads with both methods and `mail_compose` no longer
+has either, and a direct simulation of `json.php`'s own dispatch parsing against the literal new
+menuaction string (`explode('.', ...)` correctly yields `appName=mail`,
+`className=EGroupware\Mail\Merge`, `functionName=ajax_mergeSingle`, `class_exists()` true) - actual
+construction/execution isn't testable in this environment's own PHPUnit-CLI context (same
+pre-existing IMAP-connection limitation as the `send()` split, see
+[[feedback_docker_container_test_db_differs]]). Full jstest: the merge test itself (3/3) and the
+full `api/jsapi` group (478/478) green; `mail_compose::ajax_merge()`/`ajax_mergeSingle()` gone.
