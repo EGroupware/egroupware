@@ -895,6 +895,27 @@ et2-image.smime_cert_unknownemail svg {
   display: flex;
   justify-content: end;
 }
+et2-box.pgp_sig_verified {
+  border-top: 4px solid #1ab82c !important;
+}
+et2-image.pgp_sig_verified,
+et2-image.pgp_sig_verified svg {
+  color: #1ab82c !important;
+}
+et2-box.pgp_sig_invalid {
+  border-top: 4px solid #e90052 !important;
+}
+et2-image.pgp_sig_invalid,
+et2-image.pgp_sig_invalid svg {
+  color: #e90052 !important;
+}
+et2-box.pgp_sig_unknownkey {
+  border-top: 4px solid #a28cff !important;
+}
+et2-image.pgp_sig_unknownkey,
+et2-image.pgp_sig_unknownkey svg {
+  color: #a28cff !important;
+}
 #mail-compose #mail-compose_composeToolbar et2-button-toggle::part(control) {
   font-size: 20px;
 }

@@ -499,6 +499,9 @@ password protect	mail	en	password protect
 perform expunge and expunge as a part of close	mail	en	Perform EXPUNGE and expunge as a part of CLOSE
 permission denied	mail	en	Permission denied
 personal signature	mail	en	Personal signature
+pgp/mime signed message, no public key found to verify the signature	mail	en	PGP/MIME signed message, no public key found to verify the signature
+pgp/mime signed message, signature verification failed for %1	mail	en	PGP/MIME signed message, signature verification FAILED for %1
+pgp/mime signed message, signature verified for %1	mail	en	PGP/MIME signed message, signature verified for %1
 please configure access to an existing individual imap account.	mail	en	Please configure access to an existing individual IMAP account.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	en	Please configure your S/MIME certificate in Encryption tab located at Edit Account dialog.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	en	Please contact your Administrator to validate if your server supports serverside filterrules, and how to enable them in EGroupware for your active account (%1) with ID: %2.

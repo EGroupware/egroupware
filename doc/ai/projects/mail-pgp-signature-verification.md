@@ -1,6 +1,6 @@
 # Mail: verify PGP/MIME signatures natively (no Mailvelope dependency)
 
-## Status: Phase 2 core engine done + live-verified (2026-09-08) - UI wiring not started
+## Status: Phase 3 UI wiring done + live-verified (2026-09-08) - Phase 4 tests not started
 
 `MailJmap.verifyPgpSignature(rowId)` (`mail/js/jmap.ts`) implements the full chain: detects a
 PGP-signed `multipart/signed` (`findPgpSignaturePart()`), downloads the whole raw message (the
@@ -24,10 +24,48 @@ regardless - this is purely a TypeScript type-checking gap). `web-test-runner.co
 the same "resolve this bare specifier to a concrete file" mock-modules entry `dompurify`/`tinymce`
 already use, for the same underlying reason under its own (different) esbuild-based resolver.
 
-**Not yet done**: no UI wiring at all yet (no trigger call from `MailApp.loadMessageBody()`, no
-`setPgpSignatureFlags()`, no icon assets, no `display.xet` changes) - this doc's own original
-"Suggested phasing" Step 3. `verifyPgpSignature()` itself is fully callable and correct today, just
-not yet connected to anything a user would see.
+**Phase 3 UI wiring done and live-verified (2026-09-08)**, deviating slightly from the original
+"Suggested phasing" Step 3/1 plan: rather than folding PGP into `fetchBody()`'s own `JmapBodyResult`
+(the `smime`-field approach), `verifyPgpSignature(rowId)` is called directly and independently from
+`MailApp.loadMessageBody()`'s fast-path `iframe` load listener and `loadClassicBody()`'s own load
+listener (`mail/js/app.ts`, same two spots `mailvelopeAvailable(mailvelopeDisplay)` already hooks
+into) - simpler than threading a new field through the body-fetch pipeline, and correctly async
+(doesn't block the body from rendering while the signature check runs). A `rowId ===
+this.currentlyFocussed` staleness guard on the resolved promise avoids a slow verify from a
+previously-selected message clobbering a later selection's icon.
+
+`MailApp.setPgpSignatureFlags(result)`/`pgpClearFlags(nodes)` (`mail/js/app.ts`) mirror
+`setSmimeFlags()`/`smimeClearFlags()`'s shape exactly, but with PGP's own 3-state vocabulary instead
+of force-fitting S/MIME's verify/cert/unknownemail one: `pgp_sig_verified` (green,
+`result.verified===true`), `pgp_sig_invalid` (red, a key was found - addressbook or inline - but
+cryptographic verification failed) and `pgp_sig_unknownkey` (purple, `keySource==='none'`, no key
+available to even attempt verification). Own icon (`pgp_signature`, generic `lock` image, NOT
+reusing the `smime_sign`/`smime_encrypt` custom SVGs - different trust mechanism, deliberately
+visually distinct only by border/icon color today) added to both `index.xet` (preview pane) and
+`display.xet` (popup/full view) right next to the existing `smime_signature`/`smime_encryption`
+icons in the `smimeIcons` hbox; CSS in `app.less` (and hand-mirrored into the compiled `app.css`,
+since this checkout has no local LESS compiler) reuses S/MIME's exact green/red/purple palette for
+visual consistency. Reset wiring mirrors S/MIME's too: `preview()`'s pre-load reset now clears PGP
+flags alongside S/MIME's, and `setPgpSignatureFlags()` itself clears-then-reapplies on every call so
+re-selecting an already-open message doesn't need special-casing.
+
+**Live-verified in the browser** against a real signed-by-self message in ralf's own inbox
+("Testmail PGP singed", sent from/to `rb@egroupware.org`): preview pane showed the green
+`pgp_sig_verified` border + green lock icon immediately on selection, with statustext "PGP/MIME
+signed message, signature verified for rb@egroupware.org"; selecting a different (PGP-encrypted,
+not signed) message correctly cleared both the border class and disabled the icon; re-selecting the
+signed message re-applied the verified state correctly (round-trip). Lang phrases added to
+`mail/lang/egw_en.lang`/`egw_de.lang` for the three statustext variants. `npx tsc --noEmit`,
+`npm run build`, and `npx web-test-runner "mail/js/**/*.test.ts"` (197/197 passing) all clean - no
+new errors introduced by this phase.
+
+Popup/`mail.display` path not independently browser-verified this session (Claude's own browser
+automation has trouble tracking popup windows it didn't open itself into its tab group - see
+[[mail-pgp-mailvelope-fixes]]'s aside on this) but is code-symmetric with the already-proven S/MIME
+popup handling (`egw(window).is_popup()` branch in `setSmimeFlags()`/now `setPgpSignatureFlags()`
+picks `.mailDisplayContainer` instead of `mailPreviewContainer`) and uses the exact same
+`pgp_signature` widget id/JS methods `display.xet` shares with `index.xet` - low risk, but worth a
+quick manual popup check.
 
 Precursor: [[mail-pgp-mailvelope-fixes]] - Mailvelope-based encrypt/decrypt was fixed and live-verified
 first, as ralf's own baseline to test signature verification against.

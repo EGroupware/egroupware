@@ -2568,6 +2568,7 @@ export class MailApp extends EgwApp
 			IframeHandle.set_src('about:blank');
 
 			this.smimeClearFlags([this.et2.getWidgetById('mailPreviewContainer').getDOMNode()]);
+			this.pgpClearFlags([this.et2.getWidgetById('mailPreviewContainer').getDOMNode()]);
 
 			// show iframe, in case we hide it from mailvelopes one and remove that
 			const iframeNode = IframeHandle.getDOMNode();
@@ -2728,6 +2729,10 @@ export class MailApp extends EgwApp
 			// ONLY place left that calls this for the classic-navigation case, now that et2_ready()'s
 			// own template-lifetime listeners no longer do (see their own comments)
 			this.mailvelopeAvailable(this.mailvelopeDisplay);
+			this.jmap.verifyPgpSignature(rowId).then((result) =>
+			{
+				if (result && rowId === this.currentlyFocussed) this.setPgpSignatureFlags(result);
+			}).catch((e) => console.error('MailApp.loadClassicBody(): verifyPgpSignature failed', e));
 			onLoad(doc);
 		}, {once: true});
 		iframeWidget.set_src(egw.link('/index.php', {
@@ -2785,6 +2790,10 @@ export class MailApp extends EgwApp
 				// trigger Mailvelope"). mailvelopeDisplay() itself already no-ops immediately for any
 				// non-PGP body (checks for the armored header before doing anything).
 				this.mailvelopeAvailable(this.mailvelopeDisplay);
+				this.jmap.verifyPgpSignature(rowId).then((result) =>
+				{
+					if (result && rowId === this.currentlyFocussed) this.setPgpSignatureFlags(result);
+				}).catch((e) => console.error('MailApp.loadMessageBody(): verifyPgpSignature failed', e));
 				onLoad(doc);
 			}, {once: true});
 			iframe.srcdoc = fast.html;
@@ -8609,6 +8618,64 @@ export class MailApp extends EgwApp
 			_nodes[i].classList.remove(...['smime_cert_verified',
 				'smime_cert_notverified',
 				'smime_cert_notvalid', 'smime_cert_unknownemail']);
+		}
+	}
+
+	/**
+	 * Show/hide the PGP/MIME signature status icon and border, mirroring setSmimeFlags() -
+	 * a separate, deliberately non-shared trust mechanism (client-side openpgp.js verification,
+	 * MailJmap.verifyPgpSignature(), jmap.ts) so it gets its own icon and CSS classes rather than
+	 * reusing S/MIME's.
+	 *
+	 * @param {PgpSignatureResult} _data
+	 */
+	setPgpSignatureFlags(_data)
+	{
+		if (!_data) return;
+		const et2_object = egwIsMobile() ? this.et2_view.widgetContainer : this.et2;
+		const pgp_signature = et2_object.getWidgetById('pgp_signature');
+		if (!pgp_signature) return;
+		const mail_container = egwIsMobile() ? document.getElementsByClassName('mailContent')[0] :
+				egw(window).is_popup() ? document.getElementsByClassName('mailDisplayContainer')[0] :
+				et2_object.getWidgetById('mailPreviewContainer').getDOMNode();
+		pgp_signature.set_disabled(!_data.signed);
+		if (!_data.signed || !mail_container)
+		{
+			if (mail_container) this.pgpClearFlags([mail_container]);
+			return;
+		}
+		this.pgpClearFlags([mail_container]);
+		let pgpClass, statustext;
+		if (_data.verified)
+		{
+			pgpClass = 'pgp_sig_verified';
+			statustext = this.egw.lang('PGP/MIME signed message, signature verified for %1', _data.email || '');
+		}
+		else if (_data.keySource !== 'none')
+		{
+			pgpClass = 'pgp_sig_invalid';
+			statustext = this.egw.lang('PGP/MIME signed message, signature verification FAILED for %1', _data.email || '');
+		}
+		else
+		{
+			pgpClass = 'pgp_sig_unknownkey';
+			statustext = this.egw.lang('PGP/MIME signed message, no public key found to verify the signature');
+		}
+		mail_container.classList.add(pgpClass);
+		pgp_signature.set_class(pgpClass);
+		pgp_signature.set_statustext(statustext);
+	}
+
+	/**
+	 * Reset PGP/MIME signature flag classes, mirroring smimeClearFlags()
+	 *
+	 * @param {HTMLElement[]} _nodes
+	 */
+	pgpClearFlags(_nodes)
+	{
+		for (let i = 0; i < _nodes.length; i++)
+		{
+			_nodes[i].classList.remove(...['pgp_sig_verified', 'pgp_sig_invalid', 'pgp_sig_unknownkey']);
 		}
 	}
 

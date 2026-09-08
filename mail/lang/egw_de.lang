@@ -489,6 +489,9 @@ passphrase, if private key is protected	mail	de	Passphrase, falls der private Sc
 password protect	mail	de	Passwort geschützt
 permission denied	mail	de	Zugriff verweigert
 personal signature	mail	de	Persönliche Signatur
+pgp/mime signed message, no public key found to verify the signature	mail	de	PGP/MIME-signierte Nachricht, kein öffentlicher Schlüssel zur Prüfung der Signatur gefunden
+pgp/mime signed message, signature verification failed for %1	mail	de	PGP/MIME-signierte Nachricht, Signaturprüfung für %1 FEHLGESCHLAGEN
+pgp/mime signed message, signature verified for %1	mail	de	PGP/MIME-signierte Nachricht, Signatur für %1 verifiziert
 please configure access to an existing individual imap account.	mail	de	Konfigurieren Sie hier den Zugang zu einem existierenden IMAP-Postfach.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	de	Bitte konfigurieren Sie Ihr S/MIME-Zertifikat auf der Registerkarte "Verschlüsselung" im Dialogfeld "Konto bearbeiten".
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	de	Bitte kontaktieren Sie Ihren Administrator um sicherzustellen dass ihr Server serverseitige Filterregeln unterstützt und wie diese in EGroupware für Ihr aktives Konto (%1) mit der ID %2 erlaubt werden.

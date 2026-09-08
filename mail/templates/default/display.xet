@@ -27,6 +27,12 @@
                                 <et2-hbox  class="mailPreviewHeaders smimeIcons">
                                     <et2-image  id="smime_signature" src="smime_sign" inline="true" statustext="Smime signed message" hidden="!@smime=smime_sign" align="right" width="24"></et2-image>
                                     <et2-image  id="smime_encryption" src="smime_encrypt" inline="true" statustext="Smime encrypted message" hidden="!@smime=smime_encrypt" align="right" width="24"></et2-image>
+                                    <!-- PGP/MIME signature status (MailApp.setPgpSignatureFlags(), mail/js/app.ts) - a
+                                         different trust mechanism than S/MIME, deliberately not sharing its icon; hidden
+                                         by default (set_disabled()/set_class()/set_statustext() driven entirely
+                                         client-side by MailJmap.verifyPgpSignature(), same as smime_signature's own
+                                         JS-only wiring) -->
+                                    <et2-image  id="pgp_signature" src="lock" inline="true" disabled="true" align="right" width="24"></et2-image>
                                 </et2-hbox>
                             </et2-hbox>
                             <!-- onlyPrint: simpler, non-interactive layout (no avatar/toolbar/dropdown actions), shown only for print media via CSS -->

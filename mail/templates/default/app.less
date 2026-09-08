@@ -1044,6 +1044,29 @@ et2-image.smime_cert_unknownemail, et2-image.smime_cert_unknownemail svg {
 	justify-content: end;
 }
 
+/* PGP/MIME signature status (MailApp.setPgpSignatureFlags(), mail/js/app.ts) - a separate
+   trust mechanism from S/MIME, deliberately given its own classes/colors rather than reusing
+   the smime_cert_* ones above, even though the 3-state shape (verified/invalid/unknown-key)
+   and border/icon-color pattern is the same. */
+et2-box.pgp_sig_verified {
+	border-top: 4px solid #1ab82c !important;
+}
+et2-image.pgp_sig_verified, et2-image.pgp_sig_verified svg {
+	color: #1ab82c !important;
+}
+et2-box.pgp_sig_invalid {
+	border-top: 4px solid #e90052 !important;
+}
+et2-image.pgp_sig_invalid, et2-image.pgp_sig_invalid svg {
+	color: #e90052 !important;
+}
+et2-box.pgp_sig_unknownkey {
+	border-top: 4px solid #a28cff !important;
+}
+et2-image.pgp_sig_unknownkey, et2-image.pgp_sig_unknownkey svg {
+	color: #a28cff !important;
+}
+
 #mail-compose #mail-compose_composeToolbar et2-button-toggle::part(control){
     font-size: 20px;
 }
