@@ -24,6 +24,7 @@ use EGroupware\Api\Mail\CustomLabels;
 use EGroupware\Api\Mail\FolderHelpers;
 use EGroupware\Api\Mail\Imap\Jmap as ImapJmap;
 use EGroupware\Api\Mail\Jmap\Imap as JmapImap;
+use EGroupware\Mail\Compose;
 use EGroupware\Mail\Tree;
 use EGroupware\Mail\Ui\AttachmentHandler;
 use EGroupware\Mail\Ui\AttachmentJmap;
@@ -1958,7 +1959,7 @@ class mail_ui
 		{
 			// mail/compose.php (doc/ai/projects/mail-compose-jmap-migration.md, Step 10) instead of
 			// the classic mail_compose::compose() postback - compose.ts's own bootstrapDraft()
-			// takes over entirely client-side (mail_compose.inc.php's own $jmapReplySkip already
+			// takes over entirely client-side (Compose.php's own $jmapReplySkip already
 			// recognizes 'composefromdraft'), so there was nothing left for a classic full-page
 			// render to contribute here; $icServerID is already the row id's own profileID
 			// (Mail::splitRowID() above), same value MailApp.composeMessage()'s own client-side
@@ -2294,7 +2295,7 @@ class mail_ui
 		}
 		if (!empty($content['FOLDER']))
 		{
-			$compose = new mail_compose();
+			$compose = new Compose();
 			$sel_options['FOLDER'] = $compose->ajax_searchFolder(0,true);
 		}
 

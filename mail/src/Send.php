@@ -19,12 +19,12 @@ use EGroupware\Api\Mail\BodyDecoding;
 
 /**
  * Send a mail directly, no interactive compose UI involved - extracted 2026-09-08 from
- * mail_compose::send(), whose only real caller was already ApiHandler::send() (the REST API's
+ * Compose::send(), whose only real caller was already ApiHandler::send() (the REST API's
  * own send-mail endpoint, used only for accounts that aren't JMAP-native - a JMAP/Stalwart account
  * goes through ApiHandler::sendViaJmap() instead, never touching this class at all). Shares its
  * actual MIME-building (createMessage()/_getAttachmentLinks()/_encrypt()/etc.) with
- * mail_compose::saveAsDraft() via the ComposeMessageBuilder trait, rather than duplicating it or
- * depending on a full mail_compose instance.
+ * Compose::saveAsDraft() via the ComposeMessageBuilder trait, rather than duplicating it or
+ * depending on a full Compose instance.
  */
 class Send
 {

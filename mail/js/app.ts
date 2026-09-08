@@ -1634,7 +1634,7 @@ export class MailApp extends EgwApp
 		if (!this.composeToolbarDataPromises[accId])
 		{
 			this.composeToolbarDataPromises[accId] = this.egw.request(
-				'mail.mail_compose.ajax_getComposeToolbarData', [accId.split(':')[0]]
+				'mail.EGroupware\\Mail\\Compose.ajax_getComposeToolbarData', [accId.split(':')[0]]
 			);
 		}
 		return this.composeToolbarDataPromises[accId];
@@ -1728,7 +1728,7 @@ export class MailApp extends EgwApp
 		const [{actions, sel_options, content}, prepared] = await Promise.all([
 			this.getComposeToolbarData(accId),
 			this.jmap.hasComposePrepareHook(accId).then(has => has ?
-				this.egw.request('mail.mail_compose.ajax_prepareCompose', []) : null)
+				this.egw.request('mail.EGroupware\\Mail\\Compose.ajax_prepareCompose', []) : null)
 		]);
 		const actionsCopy : any = {...actions};
 		// content/sel_options are the SAME shared, cached objects getComposeToolbarData() reuses

@@ -878,7 +878,7 @@ export class MailCompose
 			return;
 		}
 		const get_param: {menuaction : string, tmpname : any, etemplate_exec_id : any, mode? : string} = {
-			menuaction: 'mail.mail_compose.getAttachment',	// todo compose for Draft folder
+			menuaction: 'mail.EGroupware\\Mail\\Compose.getAttachment',	// todo compose for Draft folder
 			tmpname: attgrid.tmp_name,
 			etemplate_exec_id: this.et2.getInstanceManager().etemplate_exec_id
 		};
@@ -1131,7 +1131,7 @@ export class MailCompose
 	 * classic Api\Mailer's own getRaw() output, which nothing here ever builds.
 	 *
 	 * A no-op if none of the three toggles are checked. Otherwise fetches the just-sent message's
-	 * raw source and hands everything off to the new mail.mail_compose.ajax_integrateSent(), which
+	 * raw source and hands everything off to the new mail.EGroupware\Mail\Compose.ajax_integrateSent(), which
 	 * does the actual Link::set_data()/Framework::popup() work server-side - see its own docblock.
 	 * That popup opens itself via the framework's own JSON-response-apply mechanism
 	 * (Framework::popup() calls Json\Response::get()->apply('egw.open_link', ...) for a JSON
@@ -1171,7 +1171,7 @@ export class MailCompose
 				'mail::' + this.egw.user('account_id') + '::' + profileID + '::' + sent.mailboxId + '::' + sent.emailId);
 		const entryId = (this.et2.getWidgetById('to_integrate_ids')?.get_value() || [])[0];
 
-		await this.egw.request('mail.mail_compose.ajax_integrateSent', [{
+		await this.egw.request('mail.EGroupware\\Mail\\Compose.ajax_integrateSent', [{
 			appKeys,
 			entryId,
 			mailaddresses: {to: email.to, cc: email.cc, bcc: email.bcc},
@@ -2089,7 +2089,7 @@ export class MailCompose
 				return cached;
 			}
 			const url = this.egw.link('/index.php', {
-				menuaction: 'mail.mail_compose.getAttachment',
+				menuaction: 'mail.EGroupware\\Mail\\Compose.getAttachment',
 				tmpname: attachment.tmp_name,
 				etemplate_exec_id: etemplateExecId,
 			});
@@ -2141,7 +2141,7 @@ export class MailCompose
 		const filemode = this.et2.getWidgetById('filemode')?.get_value();
 		if (forSend && attachments?.length && filemode && filemode !== 'attach' && this.explicitShareModeChosen)
 		{
-			body = await this.egw.request('mail.mail_compose.ajax_getAttachmentLinksBody', [{
+			body = await this.egw.request('mail.EGroupware\\Mail\\Compose.ajax_getAttachmentLinksBody', [{
 				profileID: this.currentProfileID(),
 				body,
 				isHtml,
@@ -2410,7 +2410,7 @@ export class MailCompose
 			self.app.mailvelope_editor.encrypt([]).then((_armored) =>
 			{
 				content['mail_plaintext'] = _armored;
-				void self.egw.json('mail.mail_compose.ajax_saveAsDraft',[content, action],(_data) =>{
+				void self.egw.json('mail.EGroupware\\Mail\\Compose.ajax_saveAsDraft',[content, action],(_data) =>{
 					const res = self.savingDraft_response(_data,action);
 					if (res)
 					{
@@ -2429,7 +2429,7 @@ export class MailCompose
 			return;
 		}
 		// Send request through framework main window, so it works even if the main window is reloaded
-		egw_getFramework().egw_appWindow().egw.json('mail.mail_compose.ajax_saveAsDraft', [content, action], (_data) =>
+		egw_getFramework().egw_appWindow().egw.json('mail.EGroupware\\Mail\\Compose.ajax_saveAsDraft', [content, action], (_data) =>
 		{
 			const res = self.savingDraft_response(_data, action);
 			if (res)

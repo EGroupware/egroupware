@@ -1,6 +1,6 @@
 <?php
 /**
- * EGroupware Mail: shared message-building logic for mail_compose and Send
+ * EGroupware Mail: shared message-building logic for Compose and Send
  *
  * @link https://www.egroupware.org
  * @package mail
@@ -15,10 +15,10 @@ use EGroupware\Api\Vfs;
 use EGroupware\Mail\Ui\AttachmentJmap;
 
 /**
- * Shared between mail_compose (classic compose UI - saveAsDraft()/ajax_saveAsDraft()) and Send
+ * Shared between Compose (classic compose UI - saveAsDraft()/ajax_saveAsDraft()) and Send
  * (REST API - send()): both build an Api\Mailer from posted form-data + identity the same way.
- * Extracted 2026-09-08 when Send was split out of mail_compose, to avoid either duplicating this
- * ~350-line MIME-building logic or making Send depend on a full mail_compose instance.
+ * Extracted 2026-09-08 when Send was split out of Compose, to avoid either duplicating this
+ * ~350-line MIME-building logic or making Send depend on a full Compose instance.
  *
  * A using class needs its own $mail_bo/$mailPreferences/$displayCharset properties (declared
  * here) and must call initMailAccount() from its own constructor.
@@ -43,8 +43,8 @@ trait ComposeMessageBuilder
 
 	/**
 	 * Connect to the given (or user's currently active) mail account and make sure mail config is
-	 * loaded - identical setup mail_compose's own constructor already did, extracted so Send's
-	 * constructor can share it without depending on a mail_compose instance.
+	 * loaded - identical setup Compose's own constructor already did, extracted so Send's
+	 * constructor can share it without depending on a Compose instance.
 	 *
 	 * @param ?int $_acc_id
 	 */

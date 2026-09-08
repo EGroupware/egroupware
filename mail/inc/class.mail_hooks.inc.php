@@ -13,6 +13,7 @@
 use EGroupware\Api;
 use EGroupware\Api\Egw;
 use EGroupware\Api\Mail;
+use EGroupware\Mail\Compose;
 
 /**
  * Class containing admin, preferences and sidebox-menus and other hooks
@@ -204,7 +205,7 @@ class mail_hooks
 		$folderList['none'] = lang('no folders');
 
 		// Build toggled on actions sel options
-		$allActions = mail_compose::getToolbarActions(array(
+		$allActions = Compose::getToolbarActions(array(
 			'priority' => true,
 			'mailaccount' => (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']
 		));

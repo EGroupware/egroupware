@@ -10,6 +10,8 @@
  * @version $Id$
  */
 
+namespace EGroupware\Mail;
+
 use EGroupware\Api;
 use EGroupware\Api\Acl;
 use EGroupware\Api\Egw;
@@ -20,14 +22,13 @@ use EGroupware\Api\Mail;
 use EGroupware\Api\Mail\AddressList;
 use EGroupware\Api\Mail\BodyDecoding;
 use EGroupware\Api\Vfs;
-use EGroupware\Mail\ComposeMessageBuilder;
 use EGroupware\Mail\Ui\AttachmentJmap;
 use EGroupware\Mail\Ui\BodyHandler;
 
 /**
  * Mail interface class for compose mails in popup
  */
-class mail_compose
+class Compose
 {
 	use ComposeMessageBuilder;
 
@@ -512,7 +513,7 @@ class mail_compose
 			if (strtoupper($attachment['type']) == 'TEXT/CALENDAR' || strtoupper($attachment['type']) == 'TEXT/X-VCALENDAR')
 			{
 				//error_log(__METHOD__."about to call calendar_ical");
-				$calendar_ical = new calendar_ical();
+				$calendar_ical = new \calendar_ical();
 				$eventid = $calendar_ical->iCalSearch($attachment['attachment'],-1);
 				//error_log(__METHOD__.array2string($eventid));
 				if (!$eventid) $eventid = -1;
@@ -530,7 +531,7 @@ class mail_compose
 			}
 			if (strtoupper($attachment['type']) == 'TEXT/X-VCARD' || strtoupper($attachment['type']) == 'TEXT/VCARD')
 			{
-				$addressbook_vcal = new addressbook_vcal();
+				$addressbook_vcal = new \addressbook_vcal();
 				// double \r\r\n seems to end a vcard prematurely, so we set them to \r\n
 				//error_log(__METHOD__.__LINE__.$attachment['attachment']);
 				$attachment['attachment'] = str_replace("\r\r\n", "\r\n", $attachment['attachment']);
@@ -811,7 +812,7 @@ class mail_compose
 				$messageUid = ($messageUid===true ? $status['uidnext'] : $messageUid);
 				if (is_array($this->mail_bo->getMessageHeader($messageUid, '',false, false, $folder)))
 				{
-					$draft_id = mail_ui::generateRowID($this->mail_bo->profileID, $folder, $messageUid);
+					$draft_id = \mail_ui::generateRowID($this->mail_bo->profileID, $folder, $messageUid);
 					if ($content['lastDrafted'] != $draft_id && isset($content['lastDrafted']))
 					{
 						$dhA = Mail::splitRowID($content['lastDrafted']);
@@ -867,7 +868,7 @@ class mail_compose
 			'draftedId' => $draft_id,
 			'message' => $msg,
 			'success' => $success,
-			'draftfolder' => $this->mail_bo->profileID.mail_ui::$delimiter.$this->mail_bo->getDraftFolder()
+			'draftfolder' => $this->mail_bo->profileID.\mail_ui::$delimiter.$this->mail_bo->getDraftFolder()
 		));
 	}
 
@@ -898,7 +899,7 @@ class mail_compose
 			//error_log(__METHOD__.__LINE__.array2string($acc));
 			$identity = Mail\Account::read_identity($acc['ident_id'],true);
 		}
-		catch (Exception $e)
+		catch (\Exception $e)
 		{
 			$identity=array();
 		}

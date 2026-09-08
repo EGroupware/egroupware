@@ -15,10 +15,10 @@ namespace EGroupware\Api\Etemplate\Widget;
 use EGroupware\Api\Acl;
 use EGroupware\Api\Etemplate;
 use EGroupware\Api;
+use EGroupware\Mail\Compose;
 
 // explicitly import old not yet ported classes
 use calendar_timezones;
-use mail_compose;
 
 /**
  * eTemplate select widget
@@ -1303,7 +1303,7 @@ class Select extends Etemplate\Widget
 
 		// TODO: this should go to a BO, not a UI object
 		$_REQUEST['include_lists'] = $options['includeLists'] ?? false;
-		return mail_compose::ajax_searchAddress();
+		return Compose::ajax_searchAddress();
 	}
 
 	/**

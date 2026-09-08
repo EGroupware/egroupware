@@ -15,6 +15,7 @@ use EGroupware\Api\Framework;
 use EGroupware\Api\Etemplate;
 use EGroupware\Api\Mail;
 use EGroupware\Api\Mail\Sieve\Script;
+use EGroupware\Mail\Compose;
 
 class mail_sieve
 {
@@ -1362,7 +1363,7 @@ class mail_sieve
 	 */
 	function ajax_getFolders ($_searchStringLength=2, $_returnList=false, $_mailaccountToSearch=null, $_noPrefixId=false)
 	{
-		$mailCompose = new mail_compose();
+		$mailCompose = new Compose();
 		if ($_REQUEST['noPrefixId']) $_noPrefixId = $_REQUEST['noPrefixId'];
 		$mailCompose->ajax_searchFolder($_searchStringLength, $_returnList, $_mailaccountToSearch, $_noPrefixId);
 	}

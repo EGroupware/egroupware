@@ -15,14 +15,14 @@ use EGroupware\Api\Mail;
 use EGroupware\Api\Vfs;
 
 /**
- * Mail-merge ajax handlers, extracted from mail_compose 2026-09-08 - EgwApp::_mergeEmail()
+ * Mail-merge ajax handlers, extracted from Compose 2026-09-08 - EgwApp::_mergeEmail()
  * (api/js/jsapi/egw_app.ts), a generic action multiple apps use (addressbook's own single/multi
  * -contact "insert into email document" merge is the concrete example), is the only real caller of
- * either method, and neither ever needed anything from mail_compose beyond a connected mail_bo -
+ * either method, and neither ever needed anything from Compose beyond a connected mail_bo -
  * no createMessage()/_getAttachmentLinks()/etc. from the ComposeMessageBuilder trait. Dispatched
  * directly via menuaction (mail.EGroupware\Mail\Merge.ajax_merge/ajax_mergeSingle) - both callers
  * are this repo's own JS, updated alongside this move, so no delegating stub was left on
- * mail_compose.
+ * Compose.
  */
 class Merge
 {
