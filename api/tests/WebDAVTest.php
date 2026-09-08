@@ -211,6 +211,32 @@ abstract class WebDAVTest extends CalDAVTest
 	}
 
 	/**
+	 * POST one or more files as multipart/form-data, like a plain HTML upload form would.
+	 *
+	 * @param string $path eg. from homeFile()/homeCollection()
+	 * @param array $files list of ['field'=>input-name (e.g. "file" or "files[]"), 'filename'=>,
+	 *  'contents'=>raw bytes] entries - repeat the same "files[]" field for a multi-file upload
+	 * @param ?string $user account_lid to authenticate as, default organizer/EGW_USER
+	 * @return ResponseInterface
+	 */
+	protected function postMultipart(string $path, array $files, ?string $user=null) : ResponseInterface
+	{
+		$user = $user ?: $this->organizerLid();
+		$multipart = [];
+		foreach ($files as $file)
+		{
+			$multipart[] = [
+				'name'     => $file['field'],
+				'filename' => $file['filename'],
+				'contents' => $file['contents'],
+			];
+		}
+		return $this->getClient($user)->post($this->url($path), [
+			RequestOptions::MULTIPART => $multipart,
+		]);
+	}
+
+	/**
 	 * PUT a single Content-Range chunk of a (possibly multi-request) chunked upload.
 	 *
 	 * @param string $path eg. from homeFile()

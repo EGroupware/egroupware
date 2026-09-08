@@ -1552,11 +1552,15 @@ class HTTP_WebDAV_Server
 		}
 
         // get the Content-type
+        // multipart/form-data (regular HTML file-upload forms) is supported, PHP/the SAPI already
+        // parses it into $_FILES; any other multipart/* request is still not supported
+        $is_multipart_formdata = isset($this->_SERVER['CONTENT_TYPE']) &&
+	        !strncasecmp($this->_SERVER['CONTENT_TYPE'], 'multipart/form-data', 19);
+
         if (isset($this->_SERVER["CONTENT_TYPE"])) {
-	        // for now we do not support any sort of multipart requests
-	        if (!strncmp($this->_SERVER["CONTENT_TYPE"], 'multipart/', 10)) {
+	        if (!strncmp($this->_SERVER["CONTENT_TYPE"], 'multipart/', 10) && !$is_multipart_formdata) {
 		        $this->http_status('501 not implemented');
-		        echo 'The service does not support mulipart POST requests';
+		        echo 'The service does not support this multipart POST request';
 		        return;
 	        }
 	        $options['content_type'] = $this->_SERVER['CONTENT_TYPE'];
@@ -1565,27 +1569,35 @@ class HTTP_WebDAV_Server
 	        $options['content_type'] = 'application/octet-stream';
         }
 
-        $options['stream'] = $this->_body ?? fopen('php://input', 'r');
-    	switch($this->_SERVER['HTTP_CONTENT_ENCODING'])
-    	{
-    		case 'gzip':
-    		case 'deflate':	//zlib
-    			if (extension_loaded('zlib'))
-     			{
-      				stream_filter_append($options['stream'], 'zlib.inflate', STREAM_FILTER_READ);
-       			}
-    	}
-		// store request in $this->request, if requested via $this->store_request
-		if ($this->store_request)
-		{
-			$options['content'] = '';
-			while(!feof($options['stream']))
+        if ($is_multipart_formdata)
+        {
+	        // php://input is NOT available for multipart/form-data, use what PHP already parsed
+	        $options['files'] = $_FILES;
+        }
+        else
+        {
+	        $options['stream'] = $this->_body ?? fopen('php://input', 'r');
+	    	switch($this->_SERVER['HTTP_CONTENT_ENCODING'])
+	    	{
+	    		case 'gzip':
+	    		case 'deflate':	//zlib
+	    			if (extension_loaded('zlib'))
+	     			{
+	      				stream_filter_append($options['stream'], 'zlib.inflate', STREAM_FILTER_READ);
+	       			}
+	    	}
+			// store request in $this->request, if requested via $this->store_request
+			if ($this->store_request)
 			{
-				$options['content'] .= fread($options['stream'],8192);
+				$options['content'] = '';
+				while(!feof($options['stream']))
+				{
+					$options['content'] .= fread($options['stream'],8192);
+				}
+				$this->request =& $options['content'];
+				unset($options['stream']);
 			}
-			$this->request =& $options['content'];
-			unset($options['stream']);
-		}
+        }
 
         /* RFC 2616 2.6 says: "The recipient of the entity MUST NOT
          ignore any Content-* (e.g. Content-Range) headers that it

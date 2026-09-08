@@ -110,6 +110,241 @@ class WebDAV extends HTTP_WebDAV_Server_Filesystem
 		return '204 No Content';
 	}
 
+	/**
+	 * POST method handler for multipart/form-data (regular HTML file-upload forms) requests
+	 *
+	 * Two modes, using the very same permission and quota checks PUT() uses:
+	 * - request path is an existing directory: upload one or more files into it, each stored
+	 *   under its (sanitized) client-supplied filename
+	 * - request path is not an existing directory (a file, existing or not): exactly one
+	 *   uploaded file is required, its content replaces (or creates) that exact path, like PUT
+	 *
+	 * On success we always return "204 No Content" plus a Location header pointing to the
+	 * uploaded file (resp. the first one, for a multi-file directory upload - there's no
+	 * standard way to report multiple locations).
+	 *
+	 * @param array &$options
+	 * @return string HTTP status
+	 */
+	function POST(&$options)
+	{
+		$files = array_values(array_filter(self::_flatten_files($options['files'] ?? []), static function($file)
+		{
+			// ignore left-empty file-inputs, they carry no file at all
+			return $file['error'] !== UPLOAD_ERR_NO_FILE;
+		}));
+
+		if (!$files)
+		{
+			return '400 Bad Request';
+		}
+
+		$fspath = $this->base.$options['path'];
+
+		if (is_dir($fspath))
+		{
+			return $this->_post_to_directory($options['path'], $fspath, $files);
+		}
+
+		if (count($files) !== 1)
+		{
+			return '400 Bad Request';	// replacing/creating a single file requires exactly one upload
+		}
+		return $this->_post_replace_file($options['path'], $fspath, $files[0]);
+	}
+
+	/**
+	 * Upload one or more files into an existing directory
+	 *
+	 * @param string $dir_path Vfs path of the target directory
+	 * @param string $dir_fspath vfs:// stream url of $dir_path
+	 * @param array $files flattened, non-empty $_FILES entries
+	 * @return string HTTP status
+	 */
+	private function _post_to_directory($dir_path, $dir_fspath, array $files)
+	{
+		if (!$this->_is_writable($dir_fspath))
+		{
+			return '403 Forbidden';
+		}
+
+		// validate & resolve all files first, so we never write only part of the request
+		$targets = array();
+		foreach ($files as $file)
+		{
+			if ($file['error'] !== UPLOAD_ERR_OK)
+			{
+				return '400 Bad Request';
+			}
+			if (!($name = self::_safe_upload_filename($file['name'])))
+			{
+				return '400 Bad Request';
+			}
+			$target_path   = Vfs::concat($dir_path, $name);
+			$target_fspath = $this->base.$target_path;
+
+			if (is_dir($target_fspath))
+			{
+				return '403 Forbidden';	// can not overwrite a directory with a file
+			}
+			if (file_exists($target_fspath) && !$this->_is_writable($target_fspath))
+			{
+				return '403 Forbidden';
+			}
+			$targets[] = array('path' => $target_path, 'fspath' => $target_fspath, 'file' => $file);
+		}
+
+		foreach ($targets as $target)
+		{
+			if (($status = $this->_write_uploaded_file($target['path'], $target['fspath'], $target['file'])) !== true)
+			{
+				return $status;
+			}
+		}
+
+		header('Location: '.$this->_urlencode($this->_mergePaths($this->base_uri, $targets[0]['path'])));
+
+		return '204 No Content';
+	}
+
+	/**
+	 * Replace (or create) a single file with exactly one uploaded file, exactly like PUT
+	 *
+	 * @param string $path Vfs path of the target file
+	 * @param string $fspath vfs:// stream url of $path
+	 * @param array $file single flattened $_FILES entry
+	 * @return string HTTP status
+	 */
+	private function _post_replace_file($path, $fspath, array $file)
+	{
+		if ($file['error'] !== UPLOAD_ERR_OK)
+		{
+			return '400 Bad Request';
+		}
+
+		$dir = Vfs::dirname($fspath);
+		if (!file_exists($dir) || !is_dir($dir))
+		{
+			return '409 Conflict';
+		}
+
+		$new = !file_exists($fspath);
+		if (($new && !$this->_is_writable($dir)) || (!$new && !$this->_is_writable($fspath)))
+		{
+			return '403 Forbidden';
+		}
+		if (!$new && is_dir($fspath))
+		{
+			return '403 Forbidden';
+		}
+
+		if (($status = $this->_write_uploaded_file($path, $fspath, $file)) !== true)
+		{
+			return $status;
+		}
+
+		header('Location: '.$this->_urlencode($this->_mergePaths($this->base_uri, $path)));
+
+		return '204 No Content';
+	}
+
+	/**
+	 * Write a single uploaded file into the Vfs, triggering the same quota hook PUT() does
+	 *
+	 * @param string $path Vfs path (used for the quota hook)
+	 * @param string $fspath vfs:// stream url to write to
+	 * @param array $file flattened $_FILES entry (name, tmp_name, size, error)
+	 * @return true|string true on success, or an HTTP status string on failure
+	 */
+	private function _write_uploaded_file($path, $fspath, array $file)
+	{
+		try
+		{
+			Api\Hooks::process(array(
+				'location' => 'vfs_pre-write',
+				'path'     => $path,
+				'length'   => $file['size'],
+			));
+		}
+		catch (\Exception $e)
+		{
+			return '413 Payload Too Large';
+		}
+
+		if (!($src = fopen($file['tmp_name'], 'r')))
+		{
+			return '403 Forbidden';
+		}
+		if (!($dst = fopen($fspath, 'w')))
+		{
+			fclose($src);
+			return '403 Forbidden';
+		}
+		$ok = stream_copy_to_stream($src, $dst) !== false;
+		fclose($src);
+		fclose($dst);
+
+		return $ok ?: '403 Forbidden';
+	}
+
+	/**
+	 * Flatten $_FILES into a plain list of ['name'=>, 'tmp_name'=>, 'size'=>, 'error'=>] entries
+	 *
+	 * Handles both a single <input type="file" name="x"> and an array one, eg.
+	 * <input type="file" name="files[]" multiple>.
+	 *
+	 * @param array $files $_FILES (or equivalent)
+	 * @return array
+	 */
+	private static function _flatten_files(array $files)
+	{
+		$flat = array();
+		foreach ($files as $file)
+		{
+			if (!isset($file['name'])) continue;
+
+			if (is_array($file['name']))
+			{
+				foreach (array_keys($file['name']) as $idx)
+				{
+					$flat[] = array(
+						'name'     => $file['name'][$idx],
+						'tmp_name' => $file['tmp_name'][$idx],
+						'size'     => $file['size'][$idx],
+						'error'    => $file['error'][$idx],
+					);
+				}
+			}
+			else
+			{
+				$flat[] = array(
+					'name'     => $file['name'],
+					'tmp_name' => $file['tmp_name'],
+					'size'     => $file['size'],
+					'error'    => $file['error'],
+				);
+			}
+		}
+		return $flat;
+	}
+
+	/**
+	 * Sanitize a client-supplied upload filename
+	 *
+	 * Strips any directory components (path-traversal protection, eg. "../../etc/passwd" or
+	 * "a/b.txt" become "passwd" resp. "b.txt") and control characters.
+	 *
+	 * @param string $name
+	 * @return string|null null if nothing safe/usable is left
+	 */
+	private static function _safe_upload_filename($name)
+	{
+		$name = Vfs::basename(str_replace('\\', '/', (string)$name));
+		$name = preg_replace('/[\x00-\x1F\x7F]/', '', trim($name));
+
+		return ($name === '' || $name === '.' || $name === '..') ? null : $name;
+	}
+
     /**
      * MKCOL method handler
      *
