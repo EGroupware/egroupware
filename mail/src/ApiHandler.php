@@ -156,7 +156,7 @@ class ApiHandler extends Api\CalDAV\Handler
 				// JMAP-native send path (real-JMAP/Stalwart accounts only) - see doc/ai/projects/
 				// mail-compose-jmap-migration.md. Attachments ARE supported (sendViaJmap()
 				// consolidated onto Api\Mailer + Api\Mail\Jmap\Transport 2026-09-02); a reply
-				// still falls through to the classic mail_compose path below (importing the
+				// still falls through to the classic Send path below (importing the
 				// replied-to .eml into Drafts first isn't wired into this path yet) -
 				// $preset['file'] is realistically never set here anyway (prepareAttachments()
 				// only populates it in $do_compose mode, already returned above), kept as a
@@ -175,13 +175,13 @@ class ApiHandler extends Api\CalDAV\Handler
 				if (empty($mail_account->acc_imap_password) || $mail_account->acc_smtp_auth_session && empty($mail_account->acc_smtp_password))
 				{
 					$acc_id = Api\Mail\Account::get_default(true, true, true, false);
-					$compose = new \mail_compose($acc_id);
-					$compose->mailPreferences['sendOptions'] = 'send_only';
+					$send = new Send($acc_id);
+					$send->mailPreferences['sendOptions'] = 'send_only';
 					$warning = 'Mail NOT saved to Sent folder, as no user password';
 				}
 				else
 				{
-					$compose = new \mail_compose($acc_id);
+					$send = new Send($acc_id);
 				}
 				$preset = array_filter([
 					'mailaccount' => $acc_id,
@@ -189,7 +189,7 @@ class ApiHandler extends Api\CalDAV\Handler
 					'identity' => null,
 					'add_signature' => true,    // add signature in send, independent what preference says
 				]+$preset);
-				if ($compose->send($preset, $acc_id))
+				if ($send->send($preset, $acc_id))
 				{
 					echo json_encode(array_filter([
 						'status' => 200,
@@ -199,7 +199,7 @@ class ApiHandler extends Api\CalDAV\Handler
 					]), self::JSON_RESPONSE_OPTIONS);
 					return true;
 				}
-				throw new \Exception($compose->error_info);
+				throw new \Exception($send->errorInfo);
 			}
 
 			throw new \Exception('Not Found', 404);
@@ -422,7 +422,7 @@ class ApiHandler extends Api\CalDAV\Handler
 	/**
 	 * Send a mail via Api\Mailer, for the lean/direct REST-API send path (see this method's only
 	 * call site - a reply, which needs an existing-.eml-into-Drafts import first, still falls
-	 * through to the full mail_compose path instead)
+	 * through to the full Send path instead)
 	 *
 	 * Consolidated 2026-09-02 onto plain Api\Mailer, letting Mail\Account::smtpTransport() pick
 	 * the right transport itself (Api\Mail\Jmap\Transport, RFC 8621 §7 EmailSubmission, whenever
@@ -516,7 +516,7 @@ class ApiHandler extends Api\CalDAV\Handler
 	}
 
 	/**
-	 * Convert an attachment name into an upload array for mail_compose::compose
+	 * Convert an attachment name into an upload array for compose/send
 	 *
 	 * @param string[] $attachments either "/mail/attachments/<token>" / file in temp_dir or VFS path
 	 * @param ?string $attachmentType "attach" (default), "link", "share_ro", "share_rw"
