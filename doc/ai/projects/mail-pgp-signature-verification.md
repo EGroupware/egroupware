@@ -1,6 +1,8 @@
 # Mail: verify PGP/MIME signatures natively (no Mailvelope dependency)
 
-## Status: Phase 3 UI wiring done + live-verified (2026-09-08) - Phase 4 tests not started
+## Status: Phase 3 UI wiring done + live-verified (2026-09-08), ralf testing 2026-09-09 - Phase 4
+tests not started; 3 follow-up items queued 2026-09-09 (Autocrypt key-import dialog, sending an
+Autocrypt header, Mailvelope sign-on-send) - see "Planned follow-up" below, none started
 
 `MailJmap.verifyPgpSignature(rowId)` (`mail/js/jmap.ts`) implements the full chain: detects a
 PGP-signed `multipart/signed` (`findPgpSignaturePart()`), downloads the whole raw message (the
@@ -237,11 +239,72 @@ private-key/passphrase step at all:
    no live server needed) for the verify logic itself, plus a live-Stalwart/live-shim check using
    ralf's real example message for the canonicalization question and an end-to-end sanity check.
 
+## Planned follow-up (added 2026-09-09, not started)
+
+Three extensions ralf asked for on top of the done verify-only Phase 1-3 work above, testing of
+which he'll do "tomorrow" (i.e. after this note was written):
+
+1. **Autocrypt-driven key import from the unknown-key icon.** Today `pgp_sig_unknownkey`
+   (this project) and `smime_cert_unknownemail` (existing S/MIME code, `setSmimeFlags()`) just
+   render a purple/neutral icon with no click action - `setPgpSignatureFlags()`/`setSmimeFlags()`
+   already wire an `onclick` for their *other* states (`smimeCertAddToContact()` for S/MIME's
+   verified/notverified/notvalid cases - see `smime_signature`/`smime_encryption` `onclick` in
+   `setSmimeFlags()`, `mail/js/app.ts`). When the message carries an `Autocrypt:` header (the
+   [Autocrypt](https://autocrypt.org/level1.html) standard: `Autocrypt: addr=<email>;
+   keydata=<base64 key, no ASCII armor>`, optionally with a `prefer-encrypt` attribute) and no
+   matching key was found in the addressbook, clicking the icon should offer a dialog ("this
+   message includes a public key for %1, save it to the addressbook?") rather than the icon
+   staying inert. Needs: (a) surfacing the raw `Autocrypt` header value up to the client - check
+   whether JMAP `Email/get`'s `header:Autocrypt:asText` (RFC 8621 §4.1.3 convenience property) is
+   already exposed anywhere in `MailJmap`, or needs adding to the `properties` list fetched in
+   `verifyPgpSignature()`/the S/MIME equivalent; (b) decoding the `keydata=` value (base64 -> raw
+   OpenPGP key bytes -> needs re-wrapping in ASCII armor, since `ajax_set_pgp_keys` and the
+   addressbook's stored-key format expect armored text, and `openpgp.js`'s own
+   `key.armor()`/`readKey({binaryKey})` can do that conversion); (c) an S/MIME equivalent needs its
+   own key-source, since Autocrypt itself is OpenPGP-only by spec - worth clarifying with ralf
+   whether "Autocrypt header" for the S/MIME case actually means a *different*, S/MIME-specific
+   convention (e.g. the sender's cert as a `smime.p7s`/`application/pkcs7-mime` attachment, which
+   S/MIME signed messages already carry) rather than a literal `Autocrypt:` header, since no such
+   header exists for S/MIME in any standard.
+2. **Sending an Autocrypt header on outgoing mail.** If the sending account has its own public key
+   stored in the addressbook (`Api\Contacts::FILES_PGP_PUBKEY` - the same store
+   `ajax_get_pgp_keys()`/`ajax_set_pgp_keys()` already read/write), add an `Autocrypt:` header to
+   outgoing mail carrying it (PGP case: literal Autocrypt spec, base64 raw key + `addr=`). Needs
+   the same "S/MIME equivalent" clarification as above - S/MIME doesn't have an Autocrypt-shaped
+   header/spec, so this may end up being "attach/reference the sender's cert" rather than a literal
+   header, unless ralf wants a custom (non-standard) analogous header. Likely lands in
+   `mail/js/compose.ts`'s `trySendViaJmap()`/`trySaveDraftViaJmap()` (where the PGP-encrypt-via-
+   Mailvelope call already happens) or server-side in `Api\Mail\Jmap\Imap::buildMailerFromEmailProperties()`
+   depending on whether it needs to run whether or not Mailvelope is even involved (an unsigned,
+   unencrypted plain outgoing mail should presumably still get the header if the account has a
+   published key - this is opportunistic key distribution, independent of whether *this particular
+   message* is signed/encrypted).
+3. **Mailvelope: also PGP-sign outgoing mail, not just encrypt.** Today's Mailvelope integration
+   (`mail/js/app.ts`'s `mailvelope_editor`, `mail/js/compose.ts`'s `trySendViaJmap()`/
+   `trySaveDraftViaJmap()` - see [[mail-pgp-mailvelope-fixes]]) only ever calls
+   `mailvelope_editor.encrypt(recipients)`, producing `multipart/encrypted`. Mailvelope's own
+   editor API additionally supports **sign-only** (`multipart/signed`, no encryption - the exact
+   shape `verifyPgpSignature()` above already knows how to check) and *signed-then-encrypted*
+   combined output; need to check the installed Mailvelope version's exact editor API for
+   requesting a signature (likely an editor-creation option like `armorHeaders`/a `sign: true`
+   equivalent, or a separate `editor.sign()` call before/instead of `encrypt()` - needs checking
+   against Mailvelope's actual client-API docs, not assumed). This directly supersedes this doc's
+   own earlier "Explicitly out of scope" line about not changing how EGroupware *sends*
+   signed/encrypted PGP mail (see below) - that exclusion was written when this project was
+   verify-only; sending-side signing is now explicitly wanted, just via Mailvelope rather than
+   `openpgp.js` (Mailvelope holds the private signing key, `openpgp.js` here never does - same
+   division of responsibility as encrypt/decrypt already has).
+
+None of these three has been designed in detail yet (no data-flow spike, no UI mock, no code) -
+this section is a plan-level placeholder capturing the ask, not an implementation.
+
 ## Explicitly out of scope for this project
 
 - PGP **encryption/decryption** - stays exactly as-is via Mailvelope; this project is
-  signature-verification-only.
+  signature-verification-only. (Superseded for the *signing* half by planned-follow-up item 3
+  above - encryption itself is still out of scope, unchanged.)
 - Verifying `multipart/encrypted` PGP/MIME's own inner signature (if the encrypted payload itself
   contains a signed-then-encrypted structure) - Mailvelope already decrypts that client-side and
   reports its own signature status; not this project's concern.
-- Any change to how EGroupware *sends* signed/encrypted PGP mail.
+- Any change to how EGroupware *sends* signed/encrypted PGP mail. (Superseded by planned-follow-up
+  items 2 and 3 above.)
