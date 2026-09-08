@@ -8,7 +8,7 @@ import {attachmentSaveUrl, downloadAttachments} from "../attachmentDownload";
  * Behaviour under test:
  * 1. Per attachment, the same two paths a single "Download" uses: JMAP blob download when the
  *    row has a blobId and its mail_id parses, else a fetch of the classic
- *    mail.mail_ui.getAttachment URL saved from the resulting blob.
+ *    mail.EGroupware\\Mail\\Ui.getAttachment URL saved from the resulting blob.
  * 2. Downloads run strictly sequentially - never overlapping - with a gap between them.
  * 3. One failing attachment does not abort the rest; its filename comes back in `failed`.
  * 4. Rows without a filename (the null holes an attachmentsBlock can contain) are skipped.
@@ -156,7 +156,11 @@ describe("downloadAttachments()", () =>
 
 		assert.deepEqual(result, {downloaded: 1, failed: []});
 		assert.equal(rec.fetched.length, 1);
-		assert.include(rec.fetched[0], "menuaction=mail.mail_ui.getAttachment");
+		// the raw fetched URL string carries the backslash percent-encoded (%5C, from the actual
+		// fetch()/URL machinery) - PHP's own $_GET parsing decodes it back to a literal backslash
+		// server-side either way, see attachmentSaveUrl()'s own test below (which checks the
+		// decoded, not raw, form via URLSearchParams)
+		assert.include(rec.fetched[0], "menuaction=mail.EGroupware%5CMail%5CUi.getAttachment");
 		assert.include(rec.fetched[0], "mode=save");
 		assert.deepEqual(rec.saved, [{filename: "plain.txt", size: 1}]);
 		assert.deepEqual(rec.jmapCalls, []);
@@ -228,7 +232,7 @@ describe("attachmentSaveUrl()", () =>
 
 		assert.isTrue(url.startsWith("/egroupware/index.php?"), "must be webserverUrl-based: " + url);
 		const params = new URL(url, "http://localhost").searchParams;
-		assert.equal(params.get("menuaction"), "mail.mail_ui.getAttachment");
+		assert.equal(params.get("menuaction"), "mail.EGroupware\\Mail\\Ui.getAttachment");
 		assert.equal(params.get("mode"), "save");
 		assert.equal(params.get("id"), "1::INBOX::12");
 		assert.equal(params.get("part"), "2");

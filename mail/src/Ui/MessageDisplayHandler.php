@@ -1,6 +1,6 @@
 <?php
 /**
- * EGroupware Mail: message-display ajax/menuaction handlers for mail_ui
+ * EGroupware Mail: message-display ajax/menuaction handlers for Ui
  *
  * @link https://www.egroupware.org
  * @package mail
@@ -19,41 +19,41 @@ use EGroupware\Api\Mail\Jmap\Imap as JmapImap;
 use InvalidArgumentException;
 use addressbook_vcal;
 use calendar_ical;
-use mail_ui;
+use EGroupware\Mail\Ui;
 
 /**
  * Last (and largest) batch of the classic-fallback half of "Attachment/body-fetch ajax handlers"
  * (see doc/ai/projects/mail-bo-decoupling.md) - image/attachment/zip download plus the message-body
  * render pipeline, including the JMAP-native S/MIME/TNEF fast path and its classic IMAP fallback.
- * Constructor-injected with the owning `mail_ui`, same shape as ImportHandler/MessageActionHandler/
+ * Constructor-injected with the owning `Ui`, same shape as ImportHandler/MessageActionHandler/
  * AttachmentHandler.
  *
- * `mail_ui` keeps thin wrappers for `displayImage()`, `getAttachment()`, `download_zip()` and
+ * `Ui` keeps thin wrappers for `displayImage()`, `getAttachment()`, `download_zip()` and
  * `loadEmailBody()` - all four are menuaction-dispatched by that exact name (`$public_functions`).
  * `get_load_email_data()` and `tryJmapNativeSpecialCase()` have no such requirement (no menuaction
  * entry, not in `$public_functions`) but `get_load_email_data()` does have one real in-repo caller
- * outside `mail_ui` itself - `mail/profile.php` (a standalone profiling script) calls it directly on
- * a `mail_ui` instance - so that call site was repointed to construct this class directly rather
+ * outside `Ui` itself - `mail/profile.php` (a standalone profiling script) calls it directly on
+ * a `Ui` instance - so that call site was repointed to construct this class directly rather
  * than keeping a wrapper "just in case" (per this doc's extraction discipline: in-repo call sites
- * get updated, not wrapped). The other internal `mail_ui` call site (inside what's now
+ * get updated, not wrapped). The other internal `Ui` call site (inside what's now
  * `ajax_spamAction()`'s per-item loop) was repointed to `$this->messageDisplayHandler()->
  * get_load_email_data(...)`.
  *
  * `get_email_header()`/`showBody()` moved here too - grepping the whole repo found no callers left
- * outside this group once it's extracted, so keeping them on `mail_ui` would just be dead weight.
+ * outside this group once it's extracted, so keeping them on `Ui` would just be dead weight.
  *
  * `getdisplayableBody()`'s `$this->mailbox`/`$this->uid`/`$this->partID` reads (now
  * `AttachmentHandler`, called here as `$this->ui->attachmentHandler()->getdisplayableBody(...)`)
  * are populated right here in `get_load_email_data()` before that call - `attachmentHandler()` was
- * widened from `private` to package-default on `mail_ui` for this cross-class call, same reasoning
+ * widened from `private` to package-default on `Ui` for this cross-class call, same reasoning
  * as `get_actions()` earlier. See `AttachmentHandler`'s docblock for the correction to an earlier,
  * incorrect "these are always null" claim made before this method had been read.
  */
 class MessageDisplayHandler
 {
-	private mail_ui $ui;
+	private Ui $ui;
 
-	public function __construct(mail_ui $ui)
+	public function __construct(Ui $ui)
 	{
 		$this->ui = $ui;
 	}
@@ -232,8 +232,8 @@ class MessageDisplayHandler
 		// (Mail::splitRowID() can't tell it apart from a real classic row) - reconstruct the
 		// original opaque-emailID shape instead when we have one, so the JMAP-native listing
 		// (and thus the per-file blobId fetch further down) actually gets used for Stalwart rows
-		$rowID = $emailID ? mail_ui::generateJmapRowID($icServerID, $folderID, $emailID) :
-			mail_ui::generateRowID($icServerID, $mailbox, $message_id);
+		$rowID = $emailID ? Ui::generateJmapRowID($icServerID, $folderID, $emailID) :
+			Ui::generateRowID($icServerID, $mailbox, $message_id);
 		// always fetch all, even inline (images)
 		$fetchEmbeddedImages = true;
 		$jmapAttachments = AttachmentJmap::resolveAttachmentsJmap($rowID, null, $fetchEmbeddedImages);
@@ -360,7 +360,7 @@ class MessageDisplayHandler
 		$acc_smime = Mail\Smime::get_acc_smime($this->ui->mail_bo->profileID);
 		if (empty($acc_smime))
 		{
-			mail_ui::callWizard($e->getMessage().' '.lang('Please configure your S/MIME certificate in Encryption tab located at Edit Account dialog.'), true, 'error');
+			Ui::callWizard($e->getMessage().' '.lang('Please configure your S/MIME certificate in Encryption tab located at Edit Account dialog.'), true, 'error');
 		}
 		Framework::message($e->getMessage());
 		return $this->get_email_header();
@@ -499,7 +499,7 @@ class MessageDisplayHandler
 
 	/**
 	 * Lean JSON-shaped counterpart to tryJmapNativeSpecialCase() above, for MailJmap.fetchBody()'s
-	 * client-first fast path (mail_ui::ajax_resolveSpecialCaseBody()) - doc/ai/projects/
+	 * client-first fast path (Ui::ajax_resolveSpecialCaseBody()) - doc/ai/projects/
 	 * mail-compose-jmap-migration.md's "read-side extraction" follow-up (2026-08-31). Same
 	 * underlying resolveSmime()/resolveTnef() primitives as tryJmapNativeSpecialCase(), just
 	 * self-contained (rowId in, JSON-shaped result out - no reliance on $this->ui->mail_bo already
@@ -514,7 +514,7 @@ class MessageDisplayHandler
 	 * resolveSmime()/resolveSmimeJmap()'s own default - only meaningful for 'smime' (TNEF has no
 	 * passphrase concept). A still-needed passphrase now propagates as a genuine
 	 * Mail\Smime\PassphraseMissing throw instead of collapsing to null, so the caller
-	 * (mail_ui::ajax_resolveSpecialCaseBody()) can shape a distinct {needsPassphrase, message}
+	 * (Ui::ajax_resolveSpecialCaseBody()) can shape a distinct {needsPassphrase, message}
 	 * response - MailJmap.fetchBody()'s own client-side retry loop, mirroring the send-side
 	 * JmapSmimePassphraseError flow.
 	 *
@@ -614,7 +614,7 @@ class MessageDisplayHandler
 			// of its TTL - same self-heal as tryJmapNativeSpecialCase()'s identical catch above
 			// and the send-side smimeEncryptEmailProperties() (found live 2026-09-02)
 			Api\Cache::unsetSession('mail', 'smime_passphrase');
-			// propagate distinctly - mail_ui::ajax_resolveSpecialCaseBody() shapes this into a
+			// propagate distinctly - Ui::ajax_resolveSpecialCaseBody() shapes this into a
 			// {needsPassphrase, message} response for MailJmap.fetchBody()'s own retry loop
 			throw $e;
 		}
@@ -631,7 +631,7 @@ class MessageDisplayHandler
 	 *  for a Stalwart-opaque-id row, so this never pays RowIdParts' own "real IMAP EMAILID search"
 	 *  cost (the exact "20s timeout" this whole JMAP-native S/MIME/TNEF path exists to avoid)
 	 *  unless tryJmapNativeSpecialCase() below actually falls through to the classic path, which
-	 *  genuinely needs a real UID. mail/profile.php and mail_ui.inc.php's own direct callers always
+	 *  genuinely needs a real UID. mail/profile.php and Ui.inc.php's own direct callers always
 	 *  pass a plain string, unaffected.
 	 * @param string|\Closure $mailbox same deferred-resolution treatment as $uid
 	 */

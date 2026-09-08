@@ -1,6 +1,6 @@
 <?php
 /**
- * EGroupware Mail: JMAP-native attachment listing/fetch helpers for mail_ui
+ * EGroupware Mail: JMAP-native attachment listing/fetch helpers for Ui
  *
  * @link https://www.egroupware.org
  * @package mail
@@ -12,18 +12,19 @@ namespace EGroupware\Mail\Ui;
 use EGroupware\Api;
 use EGroupware\Api\Mail;
 use EGroupware\Api\Mail\Jmap\Imap as JmapImap;
+use EGroupware\Mail\Ui;
 
 /**
- * The "JMAP fast path" slice of mail_ui's "Attachment/body-fetch ajax handlers" group - unlike the
- * classic-fallback methods that stayed in mail_ui (resolveAttachmentsBlock(), getAttachment(),
+ * The "JMAP fast path" slice of Ui's "Attachment/body-fetch ajax handlers" group - unlike the
+ * classic-fallback methods that stayed in Ui (resolveAttachmentsBlock(), getAttachment(),
  * download_zip(), ...), every method here was already written to take an explicit account id and
  * talk directly to Mail\Account::read()->imapServer()/JmapShim, deliberately bypassing
- * mail_ui's connected mail_bo entirely (same "backend-agnostic, no $icServer coupling" shape as
+ * Ui's connected mail_bo entirely (same "backend-agnostic, no $icServer coupling" shape as
  * Api\Mail's own jmap<MethodName>() dispatch helpers - see doc/ai/projects/mail-jmap-modernization.md).
- * That's what makes this a genuinely zero-mail_ui-instance-dependency extraction, unlike
+ * That's what makes this a genuinely zero-Ui-instance-dependency extraction, unlike
  * ImportHandler/MessageActionHandler - see doc/ai/projects/mail-bo-decoupling.md.
  *
- * The classic methods that stay in mail_ui call into these as their JMAP-native fast path, falling
+ * The classic methods that stay in Ui call into these as their JMAP-native fast path, falling
  * back to their own classic IMAP fetch when a method here returns null (not applicable, or the
  * account isn't JMAP-native) - the same `$jmapResult ?? $classicResult` pattern used throughout.
  */
@@ -76,7 +77,7 @@ class AttachmentJmap
 				}
 				$attachmentHTML[$key]['type'] = $value['mimeType'];
 				$attachmentHTML[$key]['mimetype'] = Api\MimeMagic::mime2label($value['mimeType']);
-				$onlyOwnHandlers = preg_match(\mail_ui::$mimeTypesHandledOnlyByMail, $value['mimeType']) ? 'mail' : null;
+				$onlyOwnHandlers = preg_match(Ui::$mimeTypesHandledOnlyByMail, $value['mimeType']) ? 'mail' : null;
 				// JMAP-native attachment content fetch (blobId set by jmapAttachmentsToLegacy()/
 				// resolveWinmailJmap() for a JMAP-listed row - Stalwart real JMAP *or* the local
 				// shim for a plain-IMAP account, see fetchBlobBytes()'s own docblock for the two
@@ -130,7 +131,7 @@ class AttachmentJmap
 				{
 					case 'MESSAGE/RFC822':
 						$linkData = [
-							'menuaction' => 'mail.mail_ui.displayMessage',
+							'menuaction' => 'mail.EGroupware\\Mail\\Ui.displayMessage',
 							'mode' => 'display', //message/rfc822 attachments should be opened in display mode
 							'id' => $rowID,
 							'part' => $value['partID'],
@@ -173,7 +174,7 @@ class AttachmentJmap
 					case 'TEXT/CALENDAR':
 					case 'TEXT/X-VCALENDAR':
 						$linkData = array_merge([
-							'menuaction' => 'mail.mail_ui.getAttachment',
+							'menuaction' => 'mail.EGroupware\\Mail\\Ui.getAttachment',
 							'id' => $rowID,
 							'part' => $value['partID'],
 							'is_winmail' => $value['is_winmail'],
@@ -205,7 +206,7 @@ class AttachmentJmap
 						break;
 					default:
 						$linkData = [
-							'menuaction' => 'mail.mail_ui.getAttachment',
+							'menuaction' => 'mail.EGroupware\\Mail\\Ui.getAttachment',
 							'id' => $rowID,
 							'part' => $value['partID'],
 							'is_winmail' => $value['is_winmail'],
@@ -219,7 +220,7 @@ class AttachmentJmap
 				}
 				// we either use mime_data for server-side supported mime-types or mime_url for client-side or download
 				// message/rfc822 (and vcard/calendar) always get their OWN dedicated popup URL via
-				// $linkData/$linkView above (mail_ui.displayMessage, or an app's own view_popup) -
+				// $linkData/$linkView above (Ui.displayMessage, or an app's own view_popup) -
 				// same "special, not a generic blob view" types mail/js/app.ts's own
 				// resolveAttachmentViewUrls() excludes from its client-side mime_url resolution.
 				// Never route these through mime_data (Api\Link::set_data()) - found live
@@ -252,7 +253,7 @@ class AttachmentJmap
 					'</b></a>';
 
 				$linkData = [
-					'menuaction' => 'mail.mail_ui.getAttachment',
+					'menuaction' => 'mail.EGroupware\\Mail\\Ui.getAttachment',
 					'mode' => 'save',
 					'id' => $rowID,
 					'part' => $value['partID'],
@@ -768,7 +769,7 @@ class AttachmentJmap
 	/**
 	 * Re-parse a raw From/To/Cc/Bcc header via Api\Mail::parseAddressList(), for a real JMAP
 	 * server's (eg. Stalwart's) own address-list parsing to fall back to, on-demand, when its
-	 * result looks broken - see mail_ui::ajax_parseAddressList()'s docblock for the full story.
+	 * result looks broken - see Ui::ajax_parseAddressList()'s docblock for the full story.
 	 *
 	 * @param string $header raw (still RFC 2047-encoded, un-decoded) header value
 	 * @return array

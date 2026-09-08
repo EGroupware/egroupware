@@ -107,7 +107,7 @@ class ApiHandler extends Api\CalDAV\Handler
 						$mail->openConnection();
 						$uid = $mail->appendMessage($folder, $mailer->getRaw(), null, '\\Seen');
 						// and generate row-id from it to pass as reply_id to compose
-						$params['reply_id'] = \mail_ui::generateRowID($acc_id, $folder, $uid, true);
+						$params['reply_id'] = Ui::generateRowID($acc_id, $folder, $uid, true);
 						$params['from'] = 'reply';
 					}
 					else
@@ -407,7 +407,7 @@ class ApiHandler extends Api\CalDAV\Handler
 
 		// tell browser to view eml from drafts folder
 		$push = new Api\Json\Push($user);
-		$push->call('egw.open', \mail_ui::generateRowID($acc_id, $folder, $message_uid, true),
+		$push->call('egw.open', Ui::generateRowID($acc_id, $folder, $message_uid, true),
 			'mail', 'view', ['mode' => 'display'], '_blank', 'mail');
 
 		// respond with success message

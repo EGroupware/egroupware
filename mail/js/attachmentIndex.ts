@@ -32,7 +32,7 @@ export function renderAttachmentIndex(doc : Document, attachmentsBlock : any[], 
 	{
 		const downloadAll = doc.createElement('a');
 		downloadAll.href = egw.link('/index.php', {
-			menuaction: 'mail.mail_ui.download_zip',
+			menuaction: 'mail.EGroupware\\Mail\\Ui.download_zip',
 			id: attachmentsBlock[0].mail_id
 		});
 		downloadAll.className = 'mail_attachmentIndexDownloadAll';

@@ -2118,7 +2118,7 @@ export class MailApp extends EgwApp
 			// persist in the session - api.queue's handler closes/commits the session up front
 			// (to avoid blocking other concurrent queued requests), silently discarding that
 			// write. egw.request() sends a normal, immediate, non-queued request instead.
-			this.egw.request('mail.mail_ui.ajax_fetchMessageDetails', [rowId]).then((_data) =>
+			this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_fetchMessageDetails', [rowId]).then((_data) =>
 			{
 				if (_data)
 				{
@@ -2170,27 +2170,27 @@ export class MailApp extends EgwApp
 		const metadata = await this.jmap.fetchAttachmentsMetadata(rowId);
 		if (metadata === null)
 		{
-			return this.egw.request('mail.mail_ui.ajax_fetchAttachments', [rowId]);
+			return this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_fetchAttachments', [rowId]);
 		}
 		const isTnef = (a : any) => (a.type || '').toLowerCase() === 'application/ms-tnef' ||
 			(a.name || '').toLowerCase() === 'winmail.dat';
 		const tnefIndex = metadata.findIndex(isTnef);
 		if (tnefIndex === -1)
 		{
-			return this.egw.request('mail.mail_ui.ajax_fetchAttachments', [rowId, metadata]);
+			return this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_fetchAttachments', [rowId, metadata]);
 		}
 		const tnefEntry = metadata[tnefIndex];
 		const siblings = metadata.filter((_, i) => i !== tnefIndex);
 		const [siblingsResult, tnefResult] = await Promise.all([
-			siblings.length ? this.egw.request('mail.mail_ui.ajax_fetchAttachments', [rowId, siblings])
+			siblings.length ? this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_fetchAttachments', [rowId, siblings])
 				: Promise.resolve({attachmentsBlock: []}),
-			this.egw.request('mail.mail_ui.ajax_resolveWinmail', [rowId, tnefEntry.partId, tnefEntry.blobId]),
+			this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_resolveWinmail', [rowId, tnefEntry.partId, tnefEntry.blobId]),
 		]);
 		if (!Array.isArray(tnefResult) || !tnefResult.length)
 		{
 			// decoding failed (or it turned out not to be real TNEF after all) - fall back to the
 			// classic full-list resolution rather than silently dropping the winmail.dat entry
-			return this.egw.request('mail.mail_ui.ajax_fetchAttachments', [rowId]);
+			return this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_fetchAttachments', [rowId]);
 		}
 		// siblings omits the TNEF entry, so splitting its (equally TNEF-less) result array at the
 		// TNEF entry's own original position gives exactly the "everything before"/"everything
@@ -2232,7 +2232,7 @@ export class MailApp extends EgwApp
 			if (attachmentsBlock) attachmentsBlock.getDOMNode().classList.add('loading');
 			// Not this.egw.jsonq() - see the ajax_fetchMessageDetails call above for why: this
 			// also generates a Link::set_data() token that needs to survive in the session.
-			this.egw.request('mail.mail_ui.ajax_resolveWinmail',[rowId]).then((_data) =>
+			this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_resolveWinmail',[rowId]).then((_data) =>
 			{
 				if (attachmentsBlock) attachmentsBlock.getDOMNode().classList.remove('loading');
 				if (typeof _data == 'object')
@@ -2435,7 +2435,7 @@ export class MailApp extends EgwApp
 					switch (_button_id)
 					{
 						case "mdnsent":
-							egw.jsonq('mail.mail_ui.ajax_sendMDN', [messages]);
+							egw.jsonq('mail.EGroupware\\Mail\\Ui.ajax_sendMDN', [messages]);
 							this.trySetMdnFlag(messages, true);
 							return;
 						case "mdnnotsent":
@@ -2446,7 +2446,7 @@ export class MailApp extends EgwApp
 			this.egw.lang("Confirm"),
 			messages, buttons);
 		}
-		egw.jsonq('mail.mail_ui.ajax_flagMessages', ['read', messages, false]);
+		egw.jsonq('mail.EGroupware\\Mail\\Ui.ajax_flagMessages', ['read', messages, false]);
 	}
 
 	/**
@@ -2694,7 +2694,7 @@ export class MailApp extends EgwApp
 			onLoad(doc);
 		}, {once: true});
 		iframeWidget.set_src(egw.link('/index.php', {
-			menuaction: 'mail.mail_ui.loadEmailBody', _messageID: rowId,
+			menuaction: 'mail.EGroupware\\Mail\\Ui.loadEmailBody', _messageID: rowId,
 			...(partID ? {_partID: partID} : {}),
 		}));
 	}
@@ -3009,7 +3009,7 @@ export class MailApp extends EgwApp
 			this.et2?.getWidgetById(this.nm_index + '[foldertree]')?.getValue() ||
 			this.egw.preference('ActiveProfileID', 'mail') || '').split('::')[0];
 
-		const classicFallback = () => egw.json('mail.mail_ui.ajax_refreshQuotaDisplay', [_server]).sendRequest(true);
+		const classicFallback = () => egw.json('mail.EGroupware\\Mail\\Ui.ajax_refreshQuotaDisplay', [_server]).sendRequest(true);
 
 		if (!profileID)
 		{
@@ -3078,7 +3078,7 @@ export class MailApp extends EgwApp
 	 */
 	callRefreshVacationNotice(_server?)
 	{
-		egw.jsonq('mail_ui::ajax_refreshVacationNotice',[_server]);
+		egw.jsonq('EGroupware\\Mail\\Ui::ajax_refreshVacationNotice',[_server]);
 	}
 	/**
 	 * Make sure attachments have all needed data, so they can be found for
@@ -3100,7 +3100,7 @@ export class MailApp extends EgwApp
 			// Add required info
 			data.mime = data.type;
 			data.download_url = egw.link('/index.php', {
-				menuaction: 'mail.mail_ui.getAttachment',
+				menuaction: 'mail.EGroupware\\Mail\\Ui.getAttachment',
 				id: mail_id,
 				part: data.partID,
 				is_winmail: data.winmailFlag
@@ -3314,7 +3314,7 @@ export class MailApp extends EgwApp
 		// as jsonq is too fast wrap it to be delayed a bit, to ensure the folder actions
 		// are executed last of the queue
 		window.setTimeout(() => {
-			egw.jsonq('mail.mail_ui.ajax_setFolderStatus',[_folders], () =>{self.unlockTree();});
+			egw.jsonq('mail.EGroupware\\Mail\\Ui.ajax_setFolderStatus',[_folders], () =>{self.unlockTree();});
 		}, 500);
 	}
 
@@ -3766,7 +3766,7 @@ export class MailApp extends EgwApp
 		const mode : 'trash' | 'destroy' = _action === 'remove_immediately' ? 'destroy' :
 			_action === 'move_to_trash' ? 'trash' :
 			(this.egw.preference('deleteOptions', 'mail') === 'remove_immediately' ? 'destroy' : 'trash');
-		const fallback = () => egw.json('mail.mail_ui.ajax_deleteMessages',
+		const fallback = () => egw.json('mail.EGroupware\\Mail\\Ui.ajax_deleteMessages',
 			[_msg, (typeof _action == 'undefined' ? 'no' : _action)]).sendRequest(true);
 
 		if (_msg['all'])
@@ -3837,7 +3837,7 @@ export class MailApp extends EgwApp
 		// way (below) - a message that was never actually deleted server-side must come back,
 		// not silently vanish until the next reload reveals it.
 		Promise.resolve(this.tryJmapDelete(_msg, _action) ??
-			egw.json('mail.mail_ui.ajax_deleteMessages', [_msg, (typeof _action == 'undefined' ? 'no' : _action)]).sendRequest(true))
+			egw.json('mail.EGroupware\\Mail\\Ui.ajax_deleteMessages', [_msg, (typeof _action == 'undefined' ? 'no' : _action)]).sendRequest(true))
 			.then(() =>
 			{
 				this.egw.message(this.egw.lang("deleted %1 messages in %2", (_msg['all'] ? egw.lang('all') : _msg['msg'].length), (displayname ? displayname : egw.lang('current Folder'))), 'success');
@@ -3944,7 +3944,7 @@ export class MailApp extends EgwApp
 
 		this.jmap.invalidateQuota(server[0]);
 		this.egw.message(this.egw.lang('empty junk'), 'success');
-		const classicEmptySpam = () => egw.json('mail.mail_ui.ajax_emptySpam',
+		const classicEmptySpam = () => egw.json('mail.EGroupware\\Mail\\Ui.ajax_emptySpam',
 			[server[0], activeFilters['selectedFolder']? activeFilters['selectedFolder']:null],
 			() =>{self.unlockTree();}).sendRequest(true);
 		this.tryJmapPurgeFolder(server[0], 'junk', activeFilters['selectedFolder'], () => self.unlockTree(), classicEmptySpam)
@@ -3980,7 +3980,7 @@ export class MailApp extends EgwApp
 
 		this.jmap.invalidateQuota(server[0]);
 		this.egw.message(this.egw.lang('empty trash'), 'success');
-		const classicEmptyTrash = () => egw.json('mail.mail_ui.ajax_emptyTrash',
+		const classicEmptyTrash = () => egw.json('mail.EGroupware\\Mail\\Ui.ajax_emptyTrash',
 			[server[0], activeFilters['selectedFolder']? activeFilters['selectedFolder']:null],
 			() =>{self.unlockTree();}).sendRequest(true);
 		this.tryJmapPurgeFolder(server[0], 'trash', activeFilters['selectedFolder'], () => self.unlockTree(), classicEmptyTrash)
@@ -4039,7 +4039,7 @@ export class MailApp extends EgwApp
             _widget.getSelectedNode().expanded = true;
 
 		this.lockTree();
-		egw.json('mail_ui::ajax_changeProfile',[folder, getFolders, this.et2.getInstanceManager().etemplate_exec_id], () => {
+		egw.json('EGroupware\\Mail\\Ui::ajax_changeProfile',[folder, getFolders, this.et2.getInstanceManager().etemplate_exec_id], () => {
 			this.unlockTree();
 		})
 			.sendRequest(true);
@@ -4886,7 +4886,7 @@ export class MailApp extends EgwApp
 		//false means do not send back a request response
 		//if we selected only some mails the handling is done clientside already
 		const needsResponse = _elems.all || this.egw.is_popup();
-		egw.jsonq('mail.mail_ui.ajax_flagMessages', [_flag, _elems, needsResponse]);
+		egw.jsonq('mail.EGroupware\\Mail\\Ui.ajax_flagMessages', [_flag, _elems, needsResponse]);
 		//	.sendRequest(true);
 	}
 
@@ -4929,7 +4929,7 @@ export class MailApp extends EgwApp
 		const classicHeaderPopup = () =>
 		{
 			let url = this.egw.webserverUrl+'/index.php?';
-			url += 'menuaction=mail.mail_ui.displayHeader';	// todo compose for Draft folder
+			url += 'menuaction=mail.EGroupware\\Mail\\Ui.displayHeader';	// todo compose for Draft folder
 			url += '&id='+rowId;
 			this.displayHeaderLines(url);
 		};
@@ -4979,7 +4979,7 @@ export class MailApp extends EgwApp
 		const classicSourcePopup = () =>
 		{
 			let url = this.egw.webserverUrl+'/index.php?';
-			url += 'menuaction=mail.mail_ui.saveMessage';	// todo compose for Draft folder
+			url += 'menuaction=mail.EGroupware\\Mail\\Ui.saveMessage';	// todo compose for Draft folder
 			url += '&id='+rowId;
 			url += '&location=display';
 			this.displayHeaderLines(url);
@@ -5030,7 +5030,7 @@ export class MailApp extends EgwApp
 		{
 			//alert('save('+_elems[0].id+')');
 			let url = this.egw.webserverUrl+'/index.php?';
-			url += 'menuaction=mail.mail_ui.saveMessage';	// todo compose for Draft folder
+			url += 'menuaction=mail.EGroupware\\Mail\\Ui.saveMessage';	// todo compose for Draft folder
 			url += '&id='+_elems[i].id;
 			const a = document.createElement('a');
 			a.href = url;
@@ -5106,7 +5106,7 @@ export class MailApp extends EgwApp
 		switch(attgrid.type.toUpperCase())
 		{
 			case 'MESSAGE/RFC822':
-				url += 'menuaction=mail.mail_ui.displayMessage';	// todo compose for Draft folder
+				url += 'menuaction=mail.EGroupware\\Mail\\Ui.displayMessage';	// todo compose for Draft folder
 				url += '&mode=display';//message/rfc822 attachments should be opened in display mode
 				url += '&id='+mailid;
 				url += '&part=' + (attgrid.partID ?? "");
@@ -5139,7 +5139,7 @@ export class MailApp extends EgwApp
 			case 'TEXT/VCARD':
 			case 'TEXT/CALENDAR':
 			case 'TEXT/X-VCALENDAR':
-				url += 'menuaction=mail.mail_ui.getAttachment';	// todo compose for Draft folder
+				url += 'menuaction=mail.EGroupware\\Mail\\Ui.getAttachment';	// todo compose for Draft folder
 				url += '&id='+mailid;
 				url += '&part='+attgrid.partID;
 				url += '&is_winmail='+attgrid.winmailFlag;
@@ -5170,7 +5170,7 @@ export class MailApp extends EgwApp
 				height = w_h[1];
 				break;
 			default:
-				url += 'menuaction=mail.mail_ui.getAttachment';	// todo compose for Draft folder
+				url += 'menuaction=mail.EGroupware\\Mail\\Ui.getAttachment';	// todo compose for Draft folder
 				url += '&id='+mailid;
 				url += '&part='+attgrid.partID;
 				url += '&is_winmail='+attgrid.winmailFlag;
@@ -5238,7 +5238,7 @@ export class MailApp extends EgwApp
 				}
 				const vfs_select = loadWebComponent('et2-vfs-select', {
 					mode: action === 'saveOneToVfs' ? 'saveas' : 'select-dir',
-					method: 'mail.mail_ui.ajax_vfsSave',
+					method: 'mail.EGroupware\\Mail\\Ui.ajax_vfsSave',
 					buttonLabel: this.egw.lang(action === 'saveOneToVfs' ? 'Save' : 'Save all'),
 					title: this.egw.lang(action === 'saveOneToVfs' ? 'Save attachment' : 'Save attachments'),
 					filename: action === 'saveOneToVfs' ? attachments[0]['filename'] : null
@@ -5258,7 +5258,7 @@ export class MailApp extends EgwApp
 				this.egw.loading_prompt('mail_open_file', true, attachment.filename);
 
 				// Temp save to VFS
-				this.egw.request('mail.mail_ui.ajax_vfsOpen', [id, attachment.filename]).then((temp_path) =>
+				this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_vfsOpen', [id, attachment.filename]).then((temp_path) =>
 				{
 					if (temp_path)
 					{
@@ -5289,7 +5289,7 @@ export class MailApp extends EgwApp
 					// classic path, see downloadAllAttachments() below
 					const url = action === 'downloadOneAsFile' ? attachmentSaveUrl(this.egw, attachment) :
 						this.egw.webserverUrl + '/index.php?' + new URLSearchParams({
-							menuaction: 'mail.mail_ui.download_zip',
+							menuaction: 'mail.EGroupware\\Mail\\Ui.download_zip',
 							mode: 'save',
 							id: attachment.mail_id,
 							part: attachment.partID,
@@ -5329,7 +5329,7 @@ export class MailApp extends EgwApp
 
 				// Move the attachment to VFS
 				const file_id = mail_id+'::'+attachments[row_id].partID+'::'+attachments[row_id].winmailFlag+'::'+attachments[row_id].filename;
-				this.egw.request("mail.mail_ui.ajax_vfsOpen", [file_id,attachments[row_id].filename])
+				this.egw.request("mail.EGroupware\\Mail\\Ui.ajax_vfsOpen", [file_id,attachments[row_id].filename])
 					.then((vfs_path) => {
 						if(!vfs_path)
 						{
@@ -5442,7 +5442,7 @@ export class MailApp extends EgwApp
 		const vfs_select = loadWebComponent('et2-vfs-select', {
 			mode: _elems.length > 1 ? 'select-dir' : 'saveas',
 			mime: 'message/rfc822',
-			method: 'mail.mail_ui.ajax_vfsSave',
+			method: 'mail.EGroupware\\Mail\\Ui.ajax_vfsSave',
 			buttonLabel: _elems.length > 1 ? egw.lang('Save all') : egw.lang('save'),
 			title: this.egw.lang("Save email"),
 			filename: _elems.length > 1 ? names : names[0],
@@ -5665,7 +5665,7 @@ export class MailApp extends EgwApp
 	private trySetMdnFlag(messages : any, sent : boolean) : void
 	{
 		const classicFallback = () =>
-			egw.jsonq('mail.mail_ui.ajax_flagMessages', [sent ? 'mdnsent' : 'mdnnotsent', messages, true]);
+			egw.jsonq('mail.EGroupware\\Mail\\Ui.ajax_flagMessages', [sent ? 'mdnsent' : 'mdnnotsent', messages, true]);
 		// doc/ai/projects/mail-threaded-view.md, "Bulk actions on collapsed thread rows" - a
 		// same-tick no-op in practice here (this is always a single previewed message, which can't
 		// be a thread-parent row - opening one expands it instead of previewing a body), kept for
@@ -5730,7 +5730,7 @@ export class MailApp extends EgwApp
 
 		// thev 4th param indicates if it is a normal move messages action. if not the action is a move2.... (archiveFolder) action
 		const isArchiveShortcut = _action.id.substr(0,4)=='move'&&_action.id.substr(4,1)=='2';
-		const classicMove = () => egw.json('mail.mail_ui.ajax_copyMessages',[target, messages, 'move', (isArchiveShortcut?'2':'_') ], () =>{
+		const classicMove = () => egw.json('mail.EGroupware\\Mail\\Ui.ajax_copyMessages',[target, messages, 'move', (isArchiveShortcut?'2':'_') ], () =>{
 			self.unlockTree();
 
 			// Server response may contain refresh, but it's always delete
@@ -5834,7 +5834,7 @@ export class MailApp extends EgwApp
 		if (messages['all']=='cancel') return false;
 		if (messages['all']) messages['activeFilters'] = this.getActiveFilters(_action);
 		const self = this;
-		const classicCopy = () => egw.json('mail.mail_ui.ajax_copyMessages',[target, messages],() =>{self.unlockTree();})
+		const classicCopy = () => egw.json('mail.EGroupware\\Mail\\Ui.ajax_copyMessages',[target, messages],() =>{self.unlockTree();})
 			.sendRequest();
 		// Server response contains refresh
 
@@ -6254,7 +6254,7 @@ export class MailApp extends EgwApp
 		if (_file_count && Object.keys(_event.data.getValue() || {}).length > 0)
 		{
 			const widget = _event.data;
-//			var request = new egw_json_request('mail_ui::ajax_importMessage', ['upload', widget.getValue(), _path], this);
+//			var request = new egw_json_request('EGroupware\\Mail\\Ui::ajax_importMessage', ['upload', widget.getValue(), _path], this);
 //			widget.set_value('');
 //			request.sendRequest();//false, this._upload_callback, this);
 			this.et2_obj.submit();
@@ -6636,7 +6636,7 @@ export class MailApp extends EgwApp
 	editSubscribe(_action,_senders)
 	{
 		const acc_id = parseInt(_senders[0].id);
-		this.egw.open_link('mail.mail_ui.subscription&acc_id='+acc_id, '_blank', '720x580');
+		this.egw.open_link('mail.EGroupware\\Mail\\Ui.subscription&acc_id='+acc_id, '_blank', '720x580');
 	}
 
 	/**
@@ -6652,7 +6652,7 @@ export class MailApp extends EgwApp
 		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		this.egw.message(this.egw.lang('Subscribe to Folder %1',ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'')), 'success');
 		(this.tryJmapSetSubscribed(_senders[0].id, true) ??
-			egw.json('mail.mail_ui.ajax_foldersubscription',[acc_id,folder,true]).sendRequest());
+			egw.json('mail.EGroupware\\Mail\\Ui.ajax_foldersubscription',[acc_id,folder,true]).sendRequest());
 	}
 
 	/**
@@ -6692,7 +6692,7 @@ export class MailApp extends EgwApp
 		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		this.egw.message(this.egw.lang('Unsubscribe from Folder %1',ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'')), 'success');
 		(this.tryJmapSetSubscribed(_senders[0].id, false) ??
-			egw.json('mail.mail_ui.ajax_foldersubscription',[acc_id,folder,false]).sendRequest());
+			egw.json('mail.EGroupware\\Mail\\Ui.ajax_foldersubscription',[acc_id,folder,false]).sendRequest());
 	}
 
 	/**
@@ -6757,7 +6757,7 @@ export class MailApp extends EgwApp
 		// submit round-trip), not into $content directly - that never actually surfaces via
 		// getArrayMgr('content') on the initial load, so read the same acc_id the PHP side
 		// itself resolved from, straight off this popup's own URL (editSubscribe() always
-		// opens it as .../mail.mail_ui.subscription&acc_id=X)
+		// opens it as .../mail.EGroupware\\Mail\\Ui.subscription&acc_id=X)
 		const profileID = new URLSearchParams(window.location.search).get('acc_id') ??
 			String(this.et2.getArrayMgr('content').getEntry('profileId') ?? '');
 		if (!ftree || !profileID) return;
@@ -7795,7 +7795,7 @@ export class MailApp extends EgwApp
 	folderManagement(_action,_senders)
 	{
 		const acc_id = parseInt(_senders[0].id);
-		this.egw.open_link('mail.mail_ui.folderManagement&acc_id='+acc_id, '_blank', '720x580');
+		this.egw.open_link('mail.EGroupware\\Mail\\Ui.folderManagement&acc_id='+acc_id, '_blank', '720x580');
 	}
 
 	/**
@@ -7913,7 +7913,7 @@ export class MailApp extends EgwApp
 			};
 		}
 
-		this.egw.json('mail.mail_ui.ajax_spamAction', [
+		this.egw.json('mail.EGroupware\\Mail\\Ui.ajax_spamAction', [
 			_action.id,items
 		], (_data) =>{
 			if (_data[1] && _data[1].length > 0)
@@ -8267,7 +8267,7 @@ export class MailApp extends EgwApp
 		const attachmentArea = this.et2.getWidgetById('previewAttachmentArea');
 		if (attachmentArea) attachmentArea.getDOMNode().classList.add('loading');
 		const interval = window.setInterval(() =>{
-			self.egw.json('mail.mail_ui.ajax_smimeAttachmentsChecker',null,(_stop) =>{
+			self.egw.json('mail.EGroupware\\Mail\\Ui.ajax_smimeAttachmentsChecker',null,(_stop) =>{
 				if (_stop)
 				{
 					window.clearInterval(interval);
@@ -8396,7 +8396,7 @@ export class MailApp extends EgwApp
 			{
 				if (_button_id == 'contact' && _value)
 				{
-					self.egw.json('mail.mail_ui.ajax_smimeAddCertToContact',
+					self.egw.json('mail.EGroupware\\Mail\\Ui.ajax_smimeAddCertToContact',
 					_metadata,(_result) =>{
 						if (!_result)
 						{
@@ -8469,7 +8469,7 @@ export class MailApp extends EgwApp
 					{
 						case Et2Dialog.OK_BUTTON:
 							egw.loading_prompt('modifyMessageSubjectDialog', true);
-							egw.json('mail.mail_ui.ajax_saveModifiedMessageSubject', [id, newSubject], (_data) =>
+							egw.json('mail.EGroupware\\Mail\\Ui.ajax_saveModifiedMessageSubject', [id, newSubject], (_data) =>
 							{
 								egw.loading_prompt('modifyMessageSubjectDialog', false);
 								if (_data && !_data.success)

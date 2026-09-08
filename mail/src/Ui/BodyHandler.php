@@ -12,17 +12,18 @@ namespace EGroupware\Mail\Ui;
 use EGroupware\Api;
 use EGroupware\Api\Mail;
 use Horde_Mime_Part;
-use mail_ui;
+use EGroupware\Mail\Ui;
 
 /**
- * Extracted from mail_ui - the only coupling to mail_ui itself is a single read of the public
- * static `mail_ui::$icServerID` (the same light-touch pattern ProfileHandler uses), so this class
- * needs no `mail_ui` instance.
+ * Extracted from Ui - the only coupling to Ui itself is a single read of the public
+ * static `Ui::$icServerID` (the same light-touch pattern ProfileHandler uses), so this class
+ * needs no `Ui` instance.
  *
- * `mail_ui::resolve_inline_image_byType()` is called from tracker's `tracker_bo` (a separate repo)
- * by that exact name, so `mail_ui` keeps a thin wrapper for it - see
+ * `Ui::resolve_inline_image_byType()` is called from tracker's `tracker_bo` (a separate repo,
+ * gitignored here - `/tracker/` in .gitignore - present on disk in this deployment but not part of
+ * this git repo) by that exact name, so `Ui` keeps a thin wrapper for it - see
  * doc/ai/projects/mail-bo-decoupling.md's extraction discipline. `resolve_inline_images()` has no
- * external callers and was removed from `mail_ui` outright.
+ * external callers and was removed from `Ui` outright.
  */
 class BodyHandler
 {
@@ -67,7 +68,7 @@ class BodyHandler
 			$_link_callback = function ($_cid) use ($_mailbox, $_uid, $_partID)
 			{
 				$linkData = [
-					'menuaction' => 'mail.mail_ui.displayImage',
+					'menuaction' => 'mail.Ui.displayImage',
 					'uid' => base64_encode($_uid),
 					'mailbox' => base64_encode($_mailbox),
 					'cid' => base64_encode($_cid),
@@ -114,7 +115,7 @@ class BodyHandler
 					{
 						if ($_type != "background" && !$imageURL)
 						{
-							$bo = Mail::getInstance(false, mail_ui::$icServerID);
+							$bo = Mail::getInstance(false, Ui::$icServerID);
 							$attachment = $bo->getAttachmentByCID($_uid, $CID, $_partID);
 
 							// only use data uri for "smaller" images, as otherwise the first display of the mail takes to long

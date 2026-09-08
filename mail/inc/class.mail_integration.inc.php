@@ -13,14 +13,15 @@
 use EGroupware\Api;
 use EGroupware\Api\Link;
 use EGroupware\Api\Mail;
+use EGroupware\Mail\Ui;
 
 /**
  * Class cotains methods and functions
  * to be used to integrate mail's message into other applications
  *
  */
-class mail_integration {
-
+class mail_integration
+{
 	/**
 	 * Public functions
 	 * @var type
@@ -410,7 +411,7 @@ class mail_integration {
 					};
 					foreach(array('src','url','background') as $type)
 					{
-						$mailcontent['html_message'] = mail_ui::resolve_inline_image_byType(
+						$mailcontent['html_message'] = Ui::resolve_inline_image_byType(
 								$mailcontent['html_message'],
 								$mailbox,
 								$attachment['uid'],

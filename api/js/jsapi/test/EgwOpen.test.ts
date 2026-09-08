@@ -172,17 +172,17 @@ describe('egw_open.js (open)', () =>
 			const instance = env.egw();
 			sinon.stub(instance, 'link_handler');
 			env.stubs.get_mime_info.returns({
-				menuaction: 'mail.mail_ui.importMessageFromVFS2DraftAndDisplay',
+				menuaction: 'mail.EGroupware\\Mail\\Ui.importMessageFromVFS2DraftAndDisplay',
 				mime_id: 'formData[file]', mime_data: 'formData[data]',
 			});
 
 			instance.open_link(
-				'https://example.test/index.php?menuaction=mail.mail_ui.displayMessage&mode=display&id=mail%3A%3A1%3A%3AINBOX%3A%3A42',
+				'https://example.test/index.php?menuaction=mail.EGroupware\\Mail\\Ui.displayMessage&mode=display&id=mail%3A%3A1%3A%3AINBOX%3A%3A42',
 				undefined, undefined, undefined, false, 'message/rfc822');
 
 			assert.isFalse(env.stubs.link.called, 'egw.link() must not be called - nothing to rebuild');
 			const url = (<sinon.SinonStub>instance.link_handler).firstCall.args[0];
-			assert.equal(url, 'https://example.test/index.php?menuaction=mail.mail_ui.displayMessage&mode=display&id=mail%3A%3A1%3A%3AINBOX%3A%3A42');
+			assert.equal(url, 'https://example.test/index.php?menuaction=mail.EGroupware\\Mail\\Ui.displayMessage&mode=display&id=mail%3A%3A1%3A%3AINBOX%3A%3A42');
 		});
 	});
 

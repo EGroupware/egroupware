@@ -17,6 +17,7 @@ use DOMDocument;
 use EGroupware\Api;
 use EGroupware\Api\Mail;
 use EGroupware\Api\Vfs;
+use EGroupware\Mail\Ui;
 use EGroupware\Collabora\Conversion;
 use EGroupware\Stylite;
 use tidy;
@@ -2988,9 +2989,9 @@ abstract class Merge
 			return $merged;
 		}
 		// Open email in compose?
-		if($email && count($id_group) == 1 && $mail_id && class_exists("mail_ui"))
+		if($email && count($id_group) == 1 && $mail_id && class_exists(Ui::class))
 		{
-			$mail_uid = \mail_ui::generateRowID($mail_bo->profileID, $mail_folder, $mail_id);
+			$mail_uid = Ui::generateRowID($mail_bo->profileID, $mail_folder, $mail_id);
 			$mail_popup = '';
 			$mail_info = Api\Link::edit('mail', $mail_uid, $mail_popup);
 			$mail_info['from'] = 'composefromdraft';

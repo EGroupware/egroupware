@@ -127,8 +127,8 @@ class CreateAttachmentBlockTest extends \EGroupware\Api\AppTest
 
 		$this->assertArrayNotHasKey('mime_data', $result[0],
 			'message/rfc822 must never carry a mime_data token, even with a real blobId present');
-		$this->assertStringContainsString('mail_ui.displayMessage', $result[0]['mime_url'] ?? '',
-			'message/rfc822 must have a real mime_url pointing at mail_ui.displayMessage');
+		$this->assertStringContainsString('Ui.displayMessage', $result[0]['mime_url'] ?? '',
+			'message/rfc822 must have a real mime_url pointing at Ui.displayMessage');
 	}
 
 	/**

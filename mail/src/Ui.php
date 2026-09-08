@@ -4,11 +4,10 @@
  *
  * @link http://www.egroupware.org
  * @package mail
- * @author EGroupware GmbH [info@egroupware.org]
- * @copyright (c) 2013-2016 by EGroupware GmbH <info-AT-egroupware.org>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
+
+namespace EGroupware\Mail;
 
 use EGroupware\Api;
 use EGroupware\Api\Link;
@@ -25,7 +24,6 @@ use EGroupware\Api\Mail\CustomLabels;
 use EGroupware\Api\Mail\FolderHelpers;
 use EGroupware\Api\Mail\Imap\Jmap as ImapJmap;
 use EGroupware\Api\Mail\Jmap\Imap as JmapImap;
-use EGroupware\Mail\Compose;
 use EGroupware\Mail\Ui\AttachmentHandler;
 use EGroupware\Mail\Ui\AttachmentJmap;
 use EGroupware\Mail\Ui\BodyHandler;
@@ -42,16 +40,16 @@ use EGroupware\Mail\Ui\Tree as MailTree;
  *
  * As we do NOT want to connect to previous imap server, when a profile change is triggered
  * by user ajax_changeProfile is not a static method and instanciates its own
- * mail_ui object.
+ * Ui object.
  *
  * If they detect a profile change is to be triggered they call:
- *		$mail_ui = new mail_ui(false);	// not call constructor / connect to imap server
+ *		$mail_ui = new Ui(false);	// not call constructor / connect to imap server
  *		$mail_ui->changeProfile($_profileID);
  * If no profile change is needed they just call:
- *		$mail_ui = new mail_ui();
+ *		$mail_ui = new Ui();
  * Afterwards they use $mail_ui instead of $this.
  */
-class mail_ui
+class Ui
 {
 	/**
 	 * Methods callable via menuaction
@@ -269,16 +267,16 @@ class mail_ui
 				$this->mail_bo->openConnection(self::$icServerID);
 			}
 		}
-		catch (Exception $e)
+		catch (\Exception $e)
 		{
 			// we need this to handle failed JSONRequests
-			if (Api\Json\Request::isJSONRequest() && $_GET['menuaction'] != 'mail.mail_ui.index')
+			if (Api\Json\Request::isJSONRequest() && $_GET['menuaction'] != 'mail.EGroupware\\Mail\\Ui.index')
 			{
 				$response = Api\Json\Response::get();
 				$response->call('egw.message',$e->getMessage(),'error');
 			}
 			// redirect to mail wizard to handle it (redirect works for ajax too), unless index is called. we want the sidebox
-			if ($_GET['menuaction'] != 'mail.mail_ui.index') self::callWizard($e->getMessage(),true,'error',false);
+			if ($_GET['menuaction'] != 'mail.EGroupware\\Mail\\Ui.index') self::callWizard($e->getMessage(),true,'error',false);
 		}
 		if (Mail::$debugTimes) Mail::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
 	}
@@ -392,7 +390,7 @@ class mail_ui
 			$windowName = "editMailAccount".self::$icServerID;
 			$response->call("egw.open_link", Egw::link('/index.php', $linkData), $windowName, "600x480",null,true);
 			Framework::message($message, 'error');
-			if ($_GET['menuaction'] == 'mail.mail_ui.index' && $reset_sidebox_on_index)
+			if ($_GET['menuaction'] == 'mail.EGroupware\\Mail\\Ui.index' && $reset_sidebox_on_index)
 			{
 				$response->call('framework.setSidebox','mail',array(),'md5');
 			}
@@ -486,7 +484,7 @@ class mail_ui
 		// got subscribed or unsubscribed by the user
 		try {
 			$subscribed = array_keys($this->mail_bo->icServer->listSubscribedMailboxes('',0,true) ?: []);
-		} catch (Exception $ex) {
+		} catch (\Exception $ex) {
 			Framework::message($ex->getMessage());
 		}
 
@@ -530,7 +528,7 @@ class mail_ui
 						try {
 							$this->mail_bo->icServer->subscribeMailbox($mailbox, $subscribe);
 						}
-						catch (Exception $ex)
+						catch (\Exception $ex)
 						{
 							$msg_type = 'error';
 							if ($subscribe)
@@ -578,7 +576,7 @@ class mail_ui
 
 		$readonlys = array();
 
-		$stmpl->exec('mail.mail_ui.subscription', $content,$sel_options,$readonlys,$preserv,2);
+		$stmpl->exec('mail.EGroupware\\Mail\\Ui.subscription', $content,$sel_options,$readonlys,$preserv,2);
 	}
 
 	const DEFAULT_IMAGE_PROXY = 'https://';
@@ -793,7 +791,7 @@ class mail_ui
 				$readonlys = $preserv = array();
 				if (Mail::$debugTimes) Mail::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
 		}
-		catch (Exception $e)
+		catch (\Exception $e)
 		{
 			// do not exit here. mail-tree should be build. if we exit here, we never get there.
 			_egw_log_exception($e);
@@ -870,7 +868,7 @@ class mail_ui
 		// send configured image proxy to client-side
 		$content['image_proxy'] = self::image_proxy();
 		$content['no_vfs'] = !$GLOBALS['egw_info']['user']['apps']['filemanager'];
-		return $etpl->exec('mail.mail_ui.index',$content,$sel_options,$readonlys,$preserv);
+		return $etpl->exec('mail.EGroupware\\Mail\\Ui.index',$content,$sel_options,$readonlys,$preserv);
 	}
 
 	/**
@@ -1057,19 +1055,19 @@ class mail_ui
 
 
 		// enforce global (group-specific) ACL
-		if (!mail_hooks::access('aclmanagement'))
+		if (!\mail_hooks::access('aclmanagement'))
 		{
 			unset($tree_actions['editAcl']);
 		}
-		if (!mail_hooks::access('editfilterrules'))
+		if (!\mail_hooks::access('editfilterrules'))
 		{
 			unset($tree_actions['sieve']);
 		}
-		if (!mail_hooks::access('absentnotice'))
+		if (!\mail_hooks::access('absentnotice'))
 		{
 			unset($tree_actions['vacation']);
 		}
-		if (!mail_hooks::access('managefolders'))
+		if (!\mail_hooks::access('managefolders'))
 		{
 			unset($tree_actions['add']);
 			unset($tree_actions['move']);
@@ -1079,7 +1077,7 @@ class mail_ui
 			// to existing folders, it should only affect add/rename/move/delete
 		}
 		// Turn off drag folder on mobile, it can conflict with context menu on Android
-		if(EGroupware\Api\Header\UserAgent::mobile())
+		if(Api\Header\UserAgent::mobile())
 		{
 			unset($tree_actions['move']);
 		}
@@ -1181,7 +1179,7 @@ class mail_ui
 					$user = $this->mail_bo->icServer->ident_email;
 				}
 			}
-			stylite_mail_spamtitan::setActionItems($_action, $_items, $auth=[
+			\stylite_mail_spamtitan::setActionItems($_action, $_items, $auth=[
 				'user'		=> $user,
 				'userpwd'	=> $this->mail_bo->icServer->acc_imap_password,
 				'api_url'	=> $this->mail_bo->icServer->acc_spam_api,
@@ -1193,7 +1191,7 @@ class mail_ui
 				!Api\Cache::getSession('SpamTitian', 'AliasesSynced-'.$this->mail_bo->icServer->acc_id.'-'.$this->mail_bo->icServer->acc_imap_username))
 			{
 				$data = Api\Mail\Account::read($this->mail_bo->profileID)->smtpServer()->getUserData($GLOBALS['egw_info']['user']['account_id']);
-				if (($m = stylite_mail_spamtitan::setActionItems('sync_aliases',
+				if (($m = \stylite_mail_spamtitan::setActionItems('sync_aliases',
 					array(array_merge((array)$data['mailLocalAddress'], (array)$data['mailAlternateAddress'])), $auth)))
 				{
 					$msg[] = $m;
@@ -1246,7 +1244,7 @@ class mail_ui
 		// spamTitan actions
 		if (($account->acc_spam_api || !empty($account->getParamOverwrites()['acc_spam_api'])) && class_exists('stylite_mail_spamtitan'))
 		{
-			$actions['spamfilter']['children'] = array_merge($actions['spamfilter']['children'], $spam_actions=stylite_mail_spamtitan::getActions());
+			$actions['spamfilter']['children'] = array_merge($actions['spamfilter']['children'], $spam_actions=\stylite_mail_spamtitan::getActions());
 
 			// allow EGroupware admins to white- or blacklist for everyone/whole domain
 			if (!empty($GLOBALS['egw_info']['apps']['admin']))
@@ -1986,7 +1984,7 @@ class mail_ui
 			$content['msg'] = lang("ERROR: Message could not be displayed.").' '.
 				lang("In Mailbox: %1, with ID: %2, and PartID: %3",$mailbox,$uid,$partID);
 		}
-		$linkData = array('menuaction'=>"mail.mail_ui.loadEmailBody","_messageID"=>$rowID);
+		$linkData = array('menuaction'=>"mail.EGroupware\\Mail\\Ui.loadEmailBody","_messageID"=>$rowID);
 		if (!empty($partID)) $linkData['_partID']=$partID;
 		if ($htmlOptions != $this->mail_bo->htmlOptions) $linkData['_htmloptions']=$htmlOptions;
 		$content['mailDisplayBodySrc'] = Egw::link('/index.php',$linkData);
@@ -2006,7 +2004,7 @@ class mail_ui
 				'onExecute' => 'javaScript:app.mail.dragAttachment'
 			)
 		));
-		$etpl->exec('mail.mail_ui.displayMessage', $content, array(), array(), $content, 2);
+		$etpl->exec('mail.EGroupware\\Mail\\Ui.displayMessage', $content, array(), array(), $content, 2);
 	}
 
 	/**
@@ -2082,7 +2080,7 @@ class mail_ui
 				// Set vacation to the instance cache for particular account with expiration of one day
 				Api\Cache::setCache(Api\Cache::INSTANCE, 'email', 'vacationNotice'.$GLOBALS['egw_info']['user']['account_lid'], $cachedVacations, 60*60*24);
 			}
-			catch (PEAR_Exception $ex)
+			catch (\PEAR_Exception $ex)
 			{
 				$this->callWizard($ex->getMessage(), true, 'error');
 			}
@@ -2274,15 +2272,18 @@ class mail_ui
 			$draft = $this->mail_bo->getDraftFolder();
 			$content['FOLDER']=(array)(preg_match($draft, "/::/") ? $draft : $this->mail_bo->profileID.'::'.$draft);
 		}
-		if (!empty($content['FOLDER']))
-		{
-			$compose = new Compose();
-			$sel_options['FOLDER'] = $compose->ajax_searchFolder(0,true);
-		}
+		// FOLDER's own et2-select already lazy-loads its options client-side via its searchUrl
+		// attribute (importMessage.xet: searchUrl="mail.EGroupware\Mail\Compose.ajax_searchFolder")
+		// - eagerly pre-populating sel_options['FOLDER'] here was redundant and forced a live IMAP
+		// connect on every render of this form, even before the user has selected a file to import
+		// (found live 2026-09-08: a transient IMAP hiccup broke the whole form for exactly that
+		// reason). compose.xet's own folder select uses the identical searchUrl-only pattern with
+		// no eager sel_options in Compose.php at all, already proven live in production.
+		$sel_options = array();
 
 		$etpl = new Etemplate('mail.importMessage');
 		$etpl->setElementAttribute('uploadForImport','onFinish','app.mail.uploadForImport');
-		$etpl->exec('mail.mail_ui.importMessage',$content,$sel_options,array(),array(),2);
+		$etpl->exec('mail.EGroupware\\Mail\\Ui.importMessage',$content,$sel_options,array(),array(),2);
 	}
 
 	/**
@@ -2537,7 +2538,7 @@ class mail_ui
 
 		if ($icServerID && $icServerID != $previous_id)
 		{
-			$mail_ui = new mail_ui(false);	// do NOT run constructor, as we call changeProfile anyway
+			$mail_ui = new self(false);	// do NOT run constructor, as we call changeProfile anyway
 			try
 			{
 				$mail_ui->changeProfile($icServerID);
@@ -2552,13 +2553,13 @@ class mail_ui
 					));
 				}
 			}
-			catch (Exception $e) {
+			catch (\Exception $e) {
 				self::callWizard($e->getMessage(),true, 'error');
 			}
 		}
 		else
 		{
-			$mail_ui = new mail_ui(true);	// run constructor
+			$mail_ui = new self(true);	// run constructor
 		}
 	}
 
@@ -2580,13 +2581,13 @@ class mail_ui
 			try
 			{
 				// Create mail app object
-				$mail = new mail_ui();
+				$mail = new self();
 
 				if (empty($icServerID)) $icServerID = $mail->Mail->profileID;
 				if ($icServerID != $mail->Mail->profileID) return;
 
 				$vacation = $mail->gatherVacation($cachedVacations);
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				$vacation=false;
 				error_log(__METHOD__.__LINE__." ".$e->getMessage());
 				unset($e);
@@ -2689,7 +2690,7 @@ class mail_ui
 				}
 				$quota = $this->mail_bo->getQuotaRoot();
 			}
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$quota['limit'] = 'NOT SET';
 			error_log(__METHOD__.__LINE__." ".$e->getMessage());
 			unset($e);
@@ -2722,7 +2723,7 @@ class mail_ui
 			try
 			{
 				$this->changeProfile($rememberServerID);
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				unset($e);
 			}
 		}
@@ -2878,6 +2879,6 @@ class mail_ui
 		$preserv = array(
 			'acc_id' => $content['acc_id'] // preserve acc id to be used in client-side
 		);
-		$dtmpl->exec('mail.mail_ui.folderManagement', $content,$sel_options,$readonlys,$preserv,2);
+		$dtmpl->exec('mail.EGroupware\\Mail\\Ui.folderManagement', $content,$sel_options,$readonlys,$preserv,2);
 	}
 }

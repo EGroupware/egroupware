@@ -2495,7 +2495,7 @@ export class MailJmap
 			if (this.isSpecialCase(email.bodyStructure))
 			{
 				// S/MIME/TNEF: decrypt/decode is 100% server-side either way (private key material,
-				// binary-format decoding) - mail.mail_ui.ajax_resolveSpecialCaseBody() is the lean
+				// binary-format decoding) - mail.EGroupware\\Mail\\Ui.ajax_resolveSpecialCaseBody() is the lean
 				// JSON counterpart of the classic full-page iframe fallback (MessageDisplayHandler::
 				// tryJmapNativeSpecialCase()), reusing the exact same resolveSmime()/resolveTnef()
 				// primitives. Returns null for anything it can't handle (meeting invites/text-calendar
@@ -2506,7 +2506,7 @@ export class MailJmap
 				// raw-IMAP-EMAILID-search cost this whole path exists to avoid for a Stalwart row, so
 				// it's not actually usable as a passphrase-prompt fallback) - caller shows its own
 				// dialog and retries with the passphrase, same as the send-side flow.
-				const resolved = await this.egw.request('mail.mail_ui.ajax_resolveSpecialCaseBody',
+				const resolved = await this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_resolveSpecialCaseBody',
 					[rowId, htmlOptions || '', passphrase || '', passExpMinutes ?? null]);
 				if (resolved?.needsPassphrase)
 				{
@@ -3415,7 +3415,7 @@ export class MailJmap
 		}
 		if (!this.tokenPromises[profileID])
 		{
-			this.tokenPromises[profileID] = this.egw.request('mail.mail_ui.ajax_jmapBootstrap', [profileID])
+			this.tokenPromises[profileID] = this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_jmapBootstrap', [profileID])
 				.then((data : any) : JmapToken | null =>
 				{
 					window.clearTimeout(this.refreshTimers[profileID]);
@@ -4205,7 +4205,7 @@ export class MailJmap
 	 * the SAME Email properties createDraftEmail() would otherwise send straight to Email/set
 	 * (resolveOutgoingInlineImages() + draftEmailProperties(), so an HTML body's inline images are
 	 * already real cid:-referenced blob attachments, not dangling client-only blob: URLs, by the
-	 * time the server signs/encrypts it), hands them to mail.mail_ui.
+	 * time the server signs/encrypts it), hands them to mail.EGroupware\\Mail\\Ui.
 	 * ajax_smimeEncryptEmailProperties() (JmapImap::smimeEncryptEmailProperties()'s own docblock has
 	 * the full design), and returns the blobId+type createDraftEmail() swaps into bodyStructure in
 	 * place of the multipart structure it would otherwise build.
@@ -4231,7 +4231,7 @@ export class MailJmap
 	{
 		const {body, inlineImages} = await this.resolveOutgoingInlineImages(token, client, email.body ?? '');
 		const emailProperties = this.draftEmailProperties(identity, {...email, body}, inlineImages);
-		const result : any = await this.egw.request('mail.mail_ui.ajax_smimeEncryptEmailProperties',
+		const result : any = await this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_smimeEncryptEmailProperties',
 			[profileID, emailProperties, smimeType, passphrase || '', passExpMinutes ?? null]);
 		if (result?.needsPassphrase)
 		{
@@ -5717,7 +5717,7 @@ export class MailJmap
 			{
 				return null;
 			}
-			return await this.egw.request('mail.mail_ui.ajax_parseAddressList', [raw]);
+			return await this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_parseAddressList', [raw]);
 		}
 		catch (e)
 		{

@@ -13,31 +13,31 @@ use EGroupware\Api;
 use EGroupware\Api\Egw;
 use EGroupware\Api\Framework;
 use EGroupware\Api\Mail;
-use mail_ui;
+use EGroupware\Mail\Ui;
 
 /**
- * Import-a-message-into-a-folder ajax handlers, extracted from mail_ui.
+ * Import-a-message-into-a-folder ajax handlers, extracted from Ui.
  *
- * Unlike Mail\Ui\SmimeHandler, this group is NOT independent of mail_ui/Api\Mail instance state
+ * Unlike Mail\Ui\SmimeHandler, this group is NOT independent of Ui/Api\Mail instance state
  * (folder existence checks, profile/hierarchy-delimiter lookups, appendMessage() all need the
- * owning mail_ui's already-connected mail_bo) - it takes the owning `mail_ui` as a constructor
+ * owning Ui's already-connected mail_bo) - it takes the owning `Ui` as a constructor
  * dependency instead, the same pattern `mail_tree` already uses. This is still a real
- * organizational win (mail_ui.inc.php gets smaller, the import domain lives in one file) even
+ * organizational win (Ui.inc.php gets smaller, the import domain lives in one file) even
  * though it isn't a testability win the way the pure Phase 1 classes were - see
  * doc/ai/projects/mail-bo-decoupling.md.
  *
- * `mail_ui::importMessageFromVFS2DraftAndDisplay()` stays in place as a one-line delegation here -
- * required because it's in `mail_ui::$public_functions` (menuaction-dispatched, and registered as
- * the .eml mime-handler in mail_hooks.inc.php). `mail_ui::importMessage()` was NOT moved - it's a
+ * `Ui::importMessageFromVFS2DraftAndDisplay()` stays in place as a one-line delegation here -
+ * required because it's in `Ui::$public_functions` (menuaction-dispatched, and registered as
+ * the .eml mime-handler in mail_hooks.inc.php). `Ui::importMessage()` was NOT moved - it's a
  * dual-purpose entry point (renders the upload form Etemplate OR processes a submitted upload) and
- * the form-rendering half is genuinely `mail_ui`'s job; only its internal call to
+ * the form-rendering half is genuinely `Ui`'s job; only its internal call to
  * importMessageToFolder() was repointed here.
  */
 class ImportHandler
 {
-	private mail_ui $ui;
+	private Ui $ui;
 
-	public function __construct(mail_ui $ui)
+	public function __construct(Ui $ui)
 	{
 		$this->ui = $ui;
 	}
@@ -211,7 +211,7 @@ class ImportHandler
 			if ($mode == 'display')
 			{
 				Egw::redirect_link('/index.php', [
-					'menuaction' => 'mail.mail_ui.displayMessage',
+					'menuaction' => 'mail.Ui.displayMessage',
 					'id' => $rowId,
 					'deleteDraftOnClose' => 1,
 					'mode' => $mode,
@@ -226,7 +226,7 @@ class ImportHandler
 				// from mail_compose itself back in 2013 (composeFromDraft() deleted, never
 				// replaced), so this branch has been dead/unreachable ever since, regardless of the
 				// 2026-09-08 Compose rename. Repointed at the same client-side compose-from-draft
-				// redirect mail_ui::ajax_view() already uses for an existing draft/template row
+				// redirect Ui::ajax_view() already uses for an existing draft/template row
 				// (doc/ai/projects/mail-compose-jmap-migration.md Step 10), so a future caller
 				// passing a non-'display' $mode gets a working edit flow instead of a dead menuaction.
 				Egw::redirect_link('/mail/compose.php', [

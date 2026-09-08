@@ -12,24 +12,24 @@ namespace EGroupware\Mail\Ui;
 use EGroupware\Api;
 use EGroupware\Api\Mail;
 use EGroupware\Api\Mail\CustomLabels;
-use mail_ui;
+use EGroupware\Mail\Ui;
 
 /**
  * A lighter-coupled slice of the "Account/session/profile ajax handlers" group from
  * doc/ai/projects/mail-bo-decoupling.md - unlike ImportHandler/MessageActionHandler, these methods
- * were already written to take an explicit profile/server id rather than relying on `mail_ui`'s
+ * were already written to take an explicit profile/server id rather than relying on `Ui`'s
  * connected mail_bo (see jmapBootstrap()/enablePush()'s own docblocks: this is deliberate, so they
- * have no side effect on the session's "active profile" state), so this class needs no `mail_ui`
- * instance at all - only two read-only references to `mail_ui`'s own static properties
+ * have no side effect on the session's "active profile" state), so this class needs no `Ui`
+ * instance at all - only two read-only references to `Ui`'s own static properties
  * ($icServerID as jmapBootstrap()'s "no explicit id given" fallback, $delimiter for folder-id
  * parsing), not a constructor dependency.
  *
  * `changeProfile()`/`ajax_changeProfile()`/`gatherVacation()`/`ajax_refreshVacationNotice()`/
- * `ajax_refreshFilters()`/`ajax_refreshQuotaDisplay()` stayed on `mail_ui` - each either mutates
- * `mail_ui`'s own instance state directly (`$this->searchTypes`, `$this->statusTypes`,
- * `self::$icServerID` itself) or explicitly constructs/depends on a full `mail_ui` instance
- * (`ajax_changeProfile()` does `new mail_ui(false)`, `ajax_refreshVacationNotice()` does
- * `new mail_ui()`), so there was no clean way to pull them out without just relocating the same
+ * `ajax_refreshFilters()`/`ajax_refreshQuotaDisplay()` stayed on `Ui` - each either mutates
+ * `Ui`'s own instance state directly (`$this->searchTypes`, `$this->statusTypes`,
+ * `self::$icServerID` itself) or explicitly constructs/depends on a full `Ui` instance
+ * (`ajax_changeProfile()` does `new Ui(false)`, `ajax_refreshVacationNotice()` does
+ * `new Ui()`), so there was no clean way to pull them out without just relocating the same
  * full coupling.
  */
 class ProfileHandler
@@ -67,7 +67,7 @@ class ProfileHandler
 			// accountId "0" is never a real account - it's served by mail/jmap.php from an
 			// in-file fixture, purely so the client-side JMAP code can be tested/exercised
 			// without a real mailbox.
-			// Checked BEFORE the "?: mail_ui::$icServerID" fallback below: '0' is falsy in PHP,
+			// Checked BEFORE the "?: Ui::$icServerID" fallback below: '0' is falsy in PHP,
 			// so applying that fallback first would silently replace it with the active profile.
 			if ((string)$icServerID === '0')
 			{
@@ -80,7 +80,7 @@ class ProfileHandler
 				$response->data($bootstrap);
 				return;
 			}
-			$resolvedID = $icServerID ?: mail_ui::$icServerID;
+			$resolvedID = $icServerID ?: Ui::$icServerID;
 			$imapServer = Mail\Account::read($resolvedID)->imapServer();
 			$local = !($imapServer instanceof Mail\Imap\Stalwart);
 			$bootstrap = $local
@@ -174,7 +174,7 @@ class ProfileHandler
 	 * Called directly from jmapBootstrap() - i.e. at most once per profile per JMAP-token
 	 * lifetime, same as jmapBootstrap() itself, rather than on every row fetch like the old
 	 * server-side get_rows() did. Originally triggered by a separate fire-and-forget client
-	 * call (mail_ui::ajax_enablePush()); folded in here since get_rows() removal left that as
+	 * call (Ui::ajax_enablePush()); folded in here since get_rows() removal left that as
 	 * the only caller and a redundant round-trip for something jmapBootstrap() already knows
 	 * how to do with the $imapServer object it already has in hand.
 	 *
@@ -198,7 +198,7 @@ class ProfileHandler
 		{
 			if ($imapServer instanceof Api\Mail\Imap\PushIface && $imapServer->pushAvailable())
 			{
-				$imapServer->enablePush(null, $icServerID.mail_ui::$delimiter.'INBOX');
+				$imapServer->enablePush(null, $icServerID.Ui::$delimiter.'INBOX');
 			}
 		}
 		catch (\Exception $e)

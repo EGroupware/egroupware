@@ -956,14 +956,14 @@ export class MailCompose
 		// thing and we fixed it to work client-side") needs a real row-id, not a bare blobId (ralf:
 		// "I believe it does not understand the blobIds given") - matches app.displayAttachment()'s
 		// own MESSAGE/RFC822 case exactly. Found live 2026-08-31: without this, the click
-		// unexpectedly ended up at mail.mail_ui.importMessageFromVFS2DraftAndDisplay (a classic
+		// unexpectedly ended up at mail.EGroupware\\Mail\\Ui.importMessageFromVFS2DraftAndDisplay (a classic
 		// VFS-import menuaction) instead - the actual triggering mechanism was never pinned down,
 		// but this bypasses it entirely by never reaching a generic blob-download/click-dispatch
 		// path for this case at all.
 		if (attgrid.jmapSourceRowId)
 		{
 			const url = egw.link('/index.php', {
-				menuaction: 'mail.mail_ui.displayMessage',
+				menuaction: 'mail.EGroupware\\Mail\\Ui.displayMessage',
 				mode: 'display',
 				id: attgrid.jmapSourceRowId,
 			});

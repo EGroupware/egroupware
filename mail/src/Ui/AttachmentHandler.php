@@ -1,6 +1,6 @@
 <?php
 /**
- * EGroupware Mail: classic (mail_bo-coupled) attachment/body-fetch handlers for mail_ui
+ * EGroupware Mail: classic (mail_bo-coupled) attachment/body-fetch handlers for Ui
  *
  * @link https://www.egroupware.org
  * @package mail
@@ -13,20 +13,20 @@ use EGroupware\Api;
 use EGroupware\Api\Mail;
 use EGroupware\Api\Mail\BodyDecoding;
 use EGroupware\Api\Vfs;
-use mail_ui;
+use EGroupware\Mail\Ui;
 use tidy;
 
 /**
  * First batch of the classic-fallback half of "Attachment/body-fetch ajax handlers" (see
- * doc/ai/projects/mail-bo-decoupling.md) - the methods that genuinely need `mail_ui`'s connected
+ * doc/ai/projects/mail-bo-decoupling.md) - the methods that genuinely need `Ui`'s connected
  * mail_bo, unlike the zero-dependency JMAP-native cluster already in Mail\Ui\AttachmentJmap.
- * Constructor-injected with the owning `mail_ui`, same shape as ImportHandler/MessageActionHandler.
+ * Constructor-injected with the owning `Ui`, same shape as ImportHandler/MessageActionHandler.
  *
- * `mail_ui` keeps thin wrappers for `vfsSaveMessages()` (menuaction-dispatched directly, and also
+ * `Ui` keeps thin wrappers for `vfsSaveMessages()` (menuaction-dispatched directly, and also
  * called via `ExecMethod2()` from filemanager_ui.inc.php) and the `ajax_*`-prefixed methods
  * (`ajax_vfsOpen`, `ajax_vfsSave`, `ajax_saveModifiedMessageSubject`, `ajax_fetchMessageDetails`).
  * `resolveAttachmentsBlock()`/`vfsSaveAttachments()`/`getdisplayableBody()` had no external callers
- * and were removed from `mail_ui` outright.
+ * and were removed from `Ui` outright.
  *
  * `getdisplayableBody()`'s inline-image resolution reads `$this->mailbox`/`$this->uid`/
  * `$this->partID` (now `$this->ui->mailbox`/etc.) - **correction**: an earlier version of this
@@ -38,9 +38,9 @@ use tidy;
  */
 class AttachmentHandler
 {
-	private mail_ui $ui;
+	private Ui $ui;
 
-	public function __construct(mail_ui $ui)
+	public function __construct(Ui $ui)
 	{
 		$this->ui = $ui;
 	}
@@ -468,7 +468,7 @@ class AttachmentHandler
 	 * preview() / MailApp.renderMessageInto() (mail/js/app.ts) expect - the same fields
 	 * email2row() (mail/js/jmap.ts) produces for list rows.
 	 *
-	 * Fallback for the "view" popup (mail_ui::displayMessage()) when window.opener's row cache
+	 * Fallback for the "view" popup (Ui::displayMessage()) when window.opener's row cache
 	 * isn't available - a bookmarked/direct link, or the opener window was closed. The normal,
 	 * zero-extra-round-trip case reuses the opener's already-fetched row instead of calling this.
 	 *

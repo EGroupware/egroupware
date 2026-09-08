@@ -34,6 +34,7 @@ $headertime = microtime(true);
 
 use EGroupware\Api\Mail\Account as emailadmin_account;
 use EGroupware\Api\Mail\Imap as emailadmin_imap;
+use EGroupware\Mail\Ui;
 use EGroupware\Mail\Ui\MessageDisplayHandler;
 
 // on which mail account do we work, if not specified use default one (connects to imap server!)
@@ -143,7 +144,7 @@ function mail_times($acc_id, array &$times, $prefix='mail_')
 	// instanciate mail for given acc_id - have to set it as preference ;-)
 	$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $acc_id;
 	// instanciation should call openConnection
-	$mail_ui = new mail_ui();
+	$mail_ui = new Ui();
 	$mail_ui->mail_bo->openConnection($acc_id);
 	$logintime = microtime(true);
 

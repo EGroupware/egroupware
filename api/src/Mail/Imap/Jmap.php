@@ -1250,4 +1250,32 @@ class Jmap extends Mail\Imap
 		}
 		return false;
 	}
+
+	/**
+	 * JMAP-FALLTHROUGH-GUARD (see [[project_jmap_imap_fallthrough_cleanup]]):
+	 * without this override, getNameSpaceArray() falls through to Horde_Imap_Client_Socket's raw
+	 * NAMESPACE command (getNamespaces()/_getNamespaces()), which tries real IMAP protocol against
+	 * what's actually the JMAP(S) endpoint for a JMAP account - found live 2026-09-08 via
+	 * mail_ui::importMessage()'s folder-picker (Compose::ajax_searchFolder() -> Api\Mail::
+	 * getFolderObjects() -> _getNameSpaces()), "Mail server closed the connection unexpectedly."
+	 * RFC 8621 has no IMAP-NAMESPACE-equivalent concept at all - every JMAP account only ever has
+	 * a flat, unprefixed personal hierarchy from this call's perspective (shared/other-user
+	 * mailboxes are just regular Mailbox objects with role=null, not a distinct namespace - see
+	 * folderTree.ts's own isNamespaceRootName() for how the client already treats that
+	 * client-side), so 'others'/'shared' are always empty here.
+	 *
+	 * @return array
+	 */
+	function getNameSpaceArray()
+	{
+		return [
+			'personal' => [[
+				'type' => 'personal',
+				'name' => '',
+				'prefix' => '',
+				'prefix_present' => false,
+				'delimiter' => '/',
+			]],
+		];
+	}
 }

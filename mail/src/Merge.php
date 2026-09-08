@@ -110,7 +110,7 @@ class Merge
 		$folder = $this->mail_bo->getDraftFolder();
 		$this->mail_bo->importMessageToMergeAndSend($document_merge, Vfs::PREFIX.$document, [$id], $folder, $merged_mail_id);
 
-		return \mail_ui::generateRowID($this->mail_bo->profileID, $folder, $merged_mail_id, true);
+		return Ui::generateRowID($this->mail_bo->profileID, $folder, $merged_mail_id, true);
 	}
 
 	/**
@@ -153,7 +153,7 @@ class Merge
 			// Also save as infolog
 			if($merged_mail_id && $_REQUEST['to_app'] && isset($GLOBALS['egw_info']['user']['apps'][$_REQUEST['to_app']]))
 			{
-				$rowid = \mail_ui::generateRowID($this->mail_bo->profileID, $folder, $merged_mail_id, true);
+				$rowid = Ui::generateRowID($this->mail_bo->profileID, $folder, $merged_mail_id, true);
 				$data = \mail_integration::get_integrate_data($rowid);
 				if($data && $_REQUEST['to_app'] == 'infolog')
 				{

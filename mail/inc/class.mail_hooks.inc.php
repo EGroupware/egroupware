@@ -14,6 +14,7 @@ use EGroupware\Api;
 use EGroupware\Api\Egw;
 use EGroupware\Api\Mail;
 use EGroupware\Mail\Compose;
+use EGroupware\Mail\Ui;
 
 /**
  * Class containing admin, preferences and sidebox-menus and other hooks
@@ -83,11 +84,11 @@ class mail_hooks
 
         return array(
 			'view'  => array(
-				'menuaction' => 'mail.mail_ui.displayMessage',
+				'menuaction' => 'mail.EGroupware\\Mail\\Ui.displayMessage',
 			),
 			'view_id'    => 'id',
 			'view_popup' => '870xavailHeight',
-			'view_list'	=>	'mail.mail_ui.index',
+			'view_list'	=>	'mail.EGroupware\\Mail\\Ui.index',
 			// no 'add'/'edit' menuaction any more - mail_compose::compose() (the classic
 			// full-page postback they used to point at) is gone, and nothing resolves them
 			// generically (EgwApp._mergeEmail(), the last real reader, now calls
@@ -99,7 +100,7 @@ class mail_hooks
 			// register mail as handler for .eml files
 			'mime' => array(
 				'message/rfc822' => array(
-					'menuaction' => 'mail.mail_ui.importMessageFromVFS2DraftAndDisplay',
+					'menuaction' => 'mail.EGroupware\\Mail\\Ui.importMessageFromVFS2DraftAndDisplay',
 					'mime_url'   => 'formData[file]',
 					'mime_data'  => 'formData[data]',
 					'formData[type]' => 'message/rfc822',
@@ -588,7 +589,7 @@ class mail_hooks
 		$appname = 'mail';
 
 		$linkData = array(
-			'menuaction' => 'mail.mail_ui.importMessage',
+			'menuaction' => 'mail.EGroupware\\Mail\\Ui.importMessage',
 		);
 
 		$GLOBALS['egw']->framework->sidebox($appname, lang('import message'), [
@@ -699,7 +700,7 @@ class mail_hooks
 					if(is_array($headers['header']) && count($headers['header']) > 0) {
 						foreach($headers['header'] as $header) {
 							// check if unseen mail has already been notified
-							$headerrowid = mail_ui::generateRowID($activeProfile, $notify_folder, $header['uid'], $_prependApp=false);
+							$headerrowid = Ui::generateRowID($activeProfile, $notify_folder, $header['uid'], $_prependApp=false);
 						 	if(!in_array($headerrowid, $notified_mail_uidsCache[$activeProfile][$notify_folder])) {
 						 		// got a REAL recent message
 						 		$header['folder'] = $notify_folder;
@@ -726,7 +727,7 @@ class mail_hooks
 							'mail_to'			=> $recent_message['to_address'],
 						);
 						// save notification status
-						$notified_mail_uidsCache[$activeProfile][$recent_message['folder']][] = mail_ui::generateRowID($activeProfile, $recent_message['folder'], $recent_message['uid'], $_prependApp=false);
+						$notified_mail_uidsCache[$activeProfile][$recent_message['folder']][] = Ui::generateRowID($activeProfile, $recent_message['folder'], $recent_message['uid'], $_prependApp=false);
 					}
 					foreach ($values as &$mail)
 					{

@@ -812,7 +812,7 @@ class Compose
 				$messageUid = ($messageUid===true ? $status['uidnext'] : $messageUid);
 				if (is_array($this->mail_bo->getMessageHeader($messageUid, '',false, false, $folder)))
 				{
-					$draft_id = \mail_ui::generateRowID($this->mail_bo->profileID, $folder, $messageUid);
+					$draft_id = Ui::generateRowID($this->mail_bo->profileID, $folder, $messageUid);
 					if ($content['lastDrafted'] != $draft_id && isset($content['lastDrafted']))
 					{
 						$dhA = Mail::splitRowID($content['lastDrafted']);
@@ -868,7 +868,7 @@ class Compose
 			'draftedId' => $draft_id,
 			'message' => $msg,
 			'success' => $success,
-			'draftfolder' => $this->mail_bo->profileID.\mail_ui::$delimiter.$this->mail_bo->getDraftFolder()
+			'draftfolder' => $this->mail_bo->profileID.Ui::$delimiter.$this->mail_bo->getDraftFolder()
 		));
 	}
 

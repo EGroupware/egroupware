@@ -15,23 +15,23 @@ use EGroupware\Api\Mail\AddressList;
 use EGroupware\Api\Mail\CustomLabels;
 use EGroupware\Api\Mail\FolderHelpers;
 use Horde_Mime_Headers;
-use mail_ui;
+use EGroupware\Mail\Ui;
 
 /**
- * Message-action ajax handlers, extracted from mail_ui - the full "Message action ajax handlers"
+ * Message-action ajax handlers, extracted from Ui - the full "Message action ajax handlers"
  * group from doc/ai/projects/mail-bo-decoupling.md except ajax_saveModifiedMessageSubject(), which
  * actually belongs with "Attachment/body-fetch ajax handlers" (it shares that group's
  * fetchMessageBytesJmap()/replaceMessageJmap(), see Mail\Ui\AttachmentJmap).
  *
- * Like ImportHandler, this takes the owning mail_ui as a constructor dependency rather than being
+ * Like ImportHandler, this takes the owning Ui as a constructor dependency rather than being
  * a zero-dependency class - see the "session dependency shape" note in mail-bo-decoupling.md.
  * flagMessages()/deleteMessages() call back into `Mail\Ui\FolderHandler::setFolderStatus()` (via
  * `$this->ui->folderHandler()`, package-default for the same reason as above), and the still-
- * `mail_ui`-static `generateRowID()`/`$delimiter` (the "Row-id helpers" group, deliberately left in
+ * `Ui`-static `generateRowID()`/`$delimiter` (the "Row-id helpers" group, deliberately left in
  * place - see mail-bo-decoupling.md). copyMessages() no longer tracks used folders server-side (the
  * JMAP fast path never reaches this code) - see mail/js/app.ts's rememberUsedFolder().
  *
- * emptySpam()/emptyTrash() (from mail_ui's `ajax_emptySpam`/`ajax_emptyTrash`) joined this group
+ * emptySpam()/emptyTrash() (from Ui's `ajax_emptySpam`/`ajax_emptyTrash`) joined this group
  * later - see doc/ai/projects/mail-folder-tree-jmap.md's "Resolved" note: `app.ts`'s
  * `emptySpam()`/`emptyTrash()` already try a JMAP fast path (`MailJmap.purgeFolder()`)
  * first, so these are permanent classic-fallbacks, not folder-tree-migration-blocked code. They're
@@ -40,9 +40,9 @@ use mail_ui;
  */
 class MessageActionHandler
 {
-	private mail_ui $ui;
+	private Ui $ui;
 
-	public function __construct(mail_ui $ui)
+	public function __construct(Ui $ui)
 	{
 		$this->ui = $ui;
 	}
@@ -128,7 +128,7 @@ class MessageActionHandler
 	 * Status criteria of a "select all matching filter" request, for Mail::createIMAPFilter()
 	 *
 	 * Two independent criteria the list ANDs together: the status filter, plus the app-header
-	 * flag filter (nextmatch's col_filter[flagFilter], see mail_ui::flagFilterOptions()) - which
+	 * flag filter (nextmatch's col_filter[flagFilter], see Ui::flagFilterOptions()) - which
 	 * is where the 'flagged' status option moved to, so it has to reach the IMAP query from here.
 	 *
 	 * @param array $query activeFilters as sent by the client
@@ -508,7 +508,7 @@ class MessageActionHandler
 		{
 			$_copyOrMove = 'copy';
 		}
-		[$targetProfileID, $targetFolder] = explode(mail_ui::$delimiter, $folderName, 2);
+		[$targetProfileID, $targetFolder] = explode(Ui::$delimiter, $folderName, 2);
 		// check if move2archive was called with the correct archiveFolder
 		$archiveFolder = $this->ui->mail_bo->getArchiveFolder();
 		if ($_move2ArchiveMarker == '2' && $targetFolder != $archiveFolder)
@@ -588,7 +588,7 @@ class MessageActionHandler
 					{
 						if ($_copyOrMove == 'move')
 						{
-							$messageListForRefresh[] = mail_ui::generateRowID($sourceProfileID, $folderName, $uID, $_prependApp = false);
+							$messageListForRefresh[] = Ui::generateRowID($sourceProfileID, $folderName, $uID, $_prependApp = false);
 						}
 					}
 				}
@@ -629,9 +629,9 @@ class MessageActionHandler
 						$moveList[] = $hA['msgUID'];
 						if ($_copyOrMove == 'move')
 						{
-							$helpvar = explode(mail_ui::$delimiter, $rowID);
+							$helpvar = explode(Ui::$delimiter, $rowID);
 							array_shift($helpvar);
-							$messageListForRefresh[] = implode(mail_ui::$delimiter, $helpvar);
+							$messageListForRefresh[] = implode(Ui::$delimiter, $helpvar);
 						}
 					}
 					try
@@ -700,14 +700,14 @@ class MessageActionHandler
 		}
 		$junkFolder = $this->ui->mail_bo->getJunkFolder();
 		if(!empty($junkFolder)) {
-			if ($selectedFolder == $icServerID.mail_ui::$delimiter.$junkFolder)
+			if ($selectedFolder == $icServerID.Ui::$delimiter.$junkFolder)
 			{
 				// Lock the tree if the active folder is junk folder
 				$response->call('app.mail.lockTree');
 			}
 			$this->ui->mail_bo->deleteMessages('all',$junkFolder,'remove_immediately');
 			$fStatus = array(
-				$icServerID.mail_ui::$delimiter.$junkFolder => 0
+				$icServerID.Ui::$delimiter.$junkFolder => 0
 			);
 			//Call to reset folder status counter, after junkFolder triggered not from Junk folder
 			//-as we don't have junk folder specific information available on client-side we need to deal with it on server
@@ -717,10 +717,10 @@ class MessageActionHandler
 		{
 			$oldFolderInfo = $this->ui->mail_bo->getFolderStatus($junkFolder,false,false,false);
 			$response->call('egw.message',lang('empty junk'));
-			$response->call('app.mail.reloadNode',array($icServerID.mail_ui::$delimiter.$junkFolder=>$oldFolderInfo['shortDisplayName']));
+			$response->call('app.mail.reloadNode',array($icServerID.Ui::$delimiter.$junkFolder=>$oldFolderInfo['shortDisplayName']));
 			$this->ui->changeProfile($rememberServerID);
 		}
-		else if ($selectedFolder == $icServerID.mail_ui::$delimiter.$junkFolder)
+		else if ($selectedFolder == $icServerID.Ui::$delimiter.$junkFolder)
 		{
 			$response->call('egw.refresh',lang('empty junk'),'mail');
 		}
@@ -744,14 +744,14 @@ class MessageActionHandler
 		}
 		$trashFolder = $this->ui->mail_bo->getTrashFolder();
 		if(!empty($trashFolder)) {
-			if ($selectedFolder == $icServerID.mail_ui::$delimiter.$trashFolder)
+			if ($selectedFolder == $icServerID.Ui::$delimiter.$trashFolder)
 			{
 				// Lock the tree if the active folder is Trash folder
 				$response->call('app.mail.lockTree');
 			}
 			$this->ui->mail_bo->compressFolder($trashFolder);
 			$fStatus = array(
-				$icServerID.mail_ui::$delimiter.$trashFolder => 0
+				$icServerID.Ui::$delimiter.$trashFolder => 0
 			);
 			//Call to reset folder status counter, after emptyTrash triggered not from Trash folder
 			//-as we don't have trash folder specific information available on client-side we need to deal with it on server
@@ -761,10 +761,10 @@ class MessageActionHandler
 		{
 			$oldFolderInfo = $this->ui->mail_bo->getFolderStatus($trashFolder,false,false,false);
 			$response->call('egw.message',lang('empty trash'));
-			$response->call('app.mail.reloadNode',array($icServerID.mail_ui::$delimiter.$trashFolder=>$oldFolderInfo['shortDisplayName']));
+			$response->call('app.mail.reloadNode',array($icServerID.Ui::$delimiter.$trashFolder=>$oldFolderInfo['shortDisplayName']));
 			$this->ui->changeProfile($rememberServerID);
 		}
-		else if ($selectedFolder == $icServerID.mail_ui::$delimiter.$trashFolder)
+		else if ($selectedFolder == $icServerID.Ui::$delimiter.$trashFolder)
 		{
 			$response->call('egw.refresh',lang('empty trash'),'mail');
 		}

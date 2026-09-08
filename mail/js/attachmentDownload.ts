@@ -11,7 +11,7 @@
  *
  * Each attachment takes the same two paths the single-attachment "Download" action uses: the
  * fast client-side JMAP blob download when the row has a blobId and its mail_id parses, else
- * the classic mail.mail_ui.getAttachment URL. The classic one is fetched into a blob and saved
+ * the classic mail.EGroupware\\Mail\\Ui.getAttachment URL. The classic one is fetched into a blob and saved
  * from a `blob:` URL rather than by pointing a synthetic <a download> at the server URL - see
  * AGENTS.md's "File downloads" section for why that is unreliable (silently sends no request at
  * all from inside a popup window), which a multi-file loop would only make worse.
@@ -78,7 +78,7 @@ export const DOWNLOAD_GAP_MS = 200;
 export function attachmentSaveUrl(egw: any, attachment: AttachmentRow): string
 {
 	return egw.webserverUrl + '/index.php?' + new URLSearchParams({
-		menuaction: 'mail.mail_ui.getAttachment',
+		menuaction: 'mail.EGroupware\\Mail\\Ui.getAttachment',
 		mode: 'save',
 		id: attachment.mail_id,
 		part: attachment.partID,

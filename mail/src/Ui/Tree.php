@@ -13,7 +13,7 @@ use EGroupware\Api;
 use EGroupware\Api\Etemplate\Widget\Tree as TreeWidget;
 use EGroupware\Api\Mail;
 use EGroupware\Mail\Compose;
-use mail_ui;
+use EGroupware\Mail\Ui;
 
 /**
  * Builds the per-account root nodes shown in the mail folder tree - the only part of the classic
@@ -23,7 +23,7 @@ use mail_ui;
  * Was `mail_tree` (mail/inc/class.mail_tree.inc.php) until 2026-09-08, when everything else in
  * that class was found to be dead: `getTree()`/`setOutStructure()`/`nodeHasChildren()`/
  * `isAccountNode()`/`getNodeLevel()`/`treeLeafNoConnectionArray()` only ever existed to build the
- * deep, eager, full-account folder tree `mail_ui::subscription()`/`folderManagement()` used as a
+ * deep, eager, full-account folder tree `Ui::subscription()`/`folderManagement()` used as a
  * "classic fallback for a non-JMAP-reachable account" - but every *other* JMAP surface in this
  * codebase had already dropped that same kind of fallback (folder-tree browsing, folder CRUD,
  * message actions - see mail-folder-tree-jmap.md's dead-code-sweep commits) on the reasoning that
@@ -52,27 +52,27 @@ class Tree
 	 * @var array
 	 */
 	static $leafImages = array(
-		// used by mail_ui::index()'s own catch block to mark the active account as a
+		// used by Ui::index()'s own catch block to mark the active account as a
 		// connection-error leaf when it fails entirely - the only other real caller of this class
 		'folderNoSelectClosed' => "folderNoSelectClosed",
 		'folderAccount' => "thunderbird",
 	);
 
 	/**
-	 * Instance of mail_ui class
+	 * Instance of Ui class
 	 *
-	 * @var mail_ui
+	 * @var Ui
 	 */
 	var $ui;
 
 	/**
 	 * Mail tree constructor
 	 *
-	 * @param mail_ui $mail_ui
+	 * @param Ui $Ui
 	 */
-	function __construct(mail_ui $mail_ui)
+	function __construct(Ui $Ui)
 	{
-		$this->ui = $mail_ui;
+		$this->ui = $Ui;
 
 		// check images available in png or svg
 		foreach(self::$leafImages as &$image)
@@ -98,7 +98,7 @@ class Tree
 	 *  client-side, the moment that account's node is actually opened (mail/js/app.ts's
 	 *  folderTreeAutoload()/buildRootFolderData() -> MailJmap.getRootFolders(), which already
 	 *  renders a "Connection could not be established" error leaf on failure) - so no user-visible
-	 *  check is lost, only deferred to when it's actually needed. `mail_ui::index()`'s own catch
+	 *  check is lost, only deferred to when it's actually needed. `Ui::index()`'s own catch
 	 *  block (the only external caller) keeps the live check, since by then something has already
 	 *  gone wrong and it's specifically trying to find out what.
 	 *

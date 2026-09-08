@@ -13,13 +13,13 @@ use EGroupware\Api;
 use EGroupware\Api\Framework;
 use EGroupware\Api\Mail;
 use Horde_Imap_Client_Exception;
-use mail_ui;
+use EGroupware\Mail\Ui;
 
 /**
- * Folder ajax handlers, extracted from mail_ui.
+ * Folder ajax handlers, extracted from Ui.
  *
- * Not independent of mail_ui/Api\Mail instance state (folder existence/status checks, hierarchy-
- * delimiter lookups, the connected mail_bo) - takes the owning `mail_ui` as a constructor
+ * Not independent of Ui/Api\Mail instance state (folder existence/status checks, hierarchy-
+ * delimiter lookups, the connected mail_bo) - takes the owning `Ui` as a constructor
  * dependency, the same pattern ImportHandler/MessageActionHandler/AttachmentHandler/
  * MessageDisplayHandler already use. See doc/ai/projects/mail-bo-decoupling.md.
  *
@@ -28,10 +28,10 @@ use mail_ui;
  * subscribe popup's `MailApp.subscriptionLoad()`. `setFolderStatus()` is a no-op for JMAP accounts
  * (their unread/folder state is already fully client-side) and classic-only for plain IMAP.
  *
- * `addFolder()`/`renameFolder()`/`moveFolder()`/`deleteFolder()` (+ mail_ui's own
+ * `addFolder()`/`renameFolder()`/`moveFolder()`/`deleteFolder()` (+ Ui's own
  * `ajax_addFolder()`/`ajax_renameFolder()`/`ajax_MoveFolder()`/`ajax_deleteFolder()` delegations)
  * removed 2026-09-08 - the folder-tree JMAP migration (doc/ai/projects/mail-folder-tree-jmap.md)
- * already made all 4 of these client-side-only, and a full-mail_ui audit found their classic
+ * already made all 4 of these client-side-only, and a full-Ui audit found their classic
  * fallback call sites had all become unreachable in practice: `addFolder()`'s JMAP-side wrapper
  * never actually returned the "fall back to classic" signal at all, and the other 3 could only be
  * reached by right-clicking Rename/Move/Delete on a bare *account* node - not a real folder - which
@@ -40,9 +40,9 @@ use mail_ui;
  */
 class FolderHandler
 {
-	private mail_ui $ui;
+	private Ui $ui;
 
-	public function __construct(mail_ui $ui)
+	public function __construct(Ui $ui)
 	{
 		$this->ui = $ui;
 	}
@@ -102,7 +102,7 @@ class FolderHandler
 			$oA = array();
 			foreach ($_folder as $_folderName)
 			{
-				list($profileID,$folderName) = explode(mail_ui::$delimiter,$_folderName,2);
+				list($profileID,$folderName) = explode(Ui::$delimiter,$_folderName,2);
 				if (is_numeric($profileID)) //things like mail::xxx will be ignored
 				{
 					if ($profileID != $this->ui->mail_bo->profileID) continue; // only current connection

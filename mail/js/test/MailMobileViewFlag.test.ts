@@ -139,7 +139,7 @@ describe("mobile message view", () =>
 		assert.equal(rows[ROW_ID].data['class'], '');
 		assert.deepEqual(seen, [{references: [{id: ROW_ID}], keyword: '$seen', value: true}]);
 		assert.deepInclude(queued, {
-			menuaction: 'mail.mail_ui.ajax_flagMessages',
+			menuaction: 'mail.EGroupware\\Mail\\Ui.ajax_flagMessages',
 			parameters: ['read', {msg: [ROW_ID]}, false]
 		});
 	});
