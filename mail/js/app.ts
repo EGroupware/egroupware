@@ -5008,8 +5008,33 @@ export class MailApp extends EgwApp
 
 		if (armored == "" || armored.indexOf(this.begin_pgp_message) === -1) return;
 
-		let container = iframe.parent()[0];
-		let container_selector = this.et2._inst.name == 'mail.display'  ? '.mailDisplayContainer' : `#${container.dom_id}`;
+		// Mailvelope's own createDisplayContainer() resolves `container_selector` via ITS content
+		// script's plain document.querySelector() from the TOP-level document - no shadow-piercing
+		// capability at all. iframe.parent()[0].dom_id is undefined now (Et2Iframe is a shadow-DOM
+		// custom element - its light-DOM ancestors never carry that legacy property), so
+		// container_selector silently became "#undefined", document.querySelector() returned null,
+		// and Mailvelope's own code threw trying to appendChild into that null result. Sidesteps
+		// the whole reachability question (master fix: doc/ai/projects/mail-pgp-mailvelope-fixes.md,
+		// 2026-09-08): append a fresh, guaranteed-reachable plain <div> straight onto document.body,
+		// positioned over the iframe's current on-screen rect, instead of trying to find/walk to an
+		// existing reachable ancestor.
+		let container_selector;
+		if (this.et2._inst.name == 'mail.display')
+		{
+			container_selector = '.mailDisplayContainer';
+		}
+		else
+		{
+			if (!iframe.length) return;
+			let rect = iframe[0].getBoundingClientRect();
+			jQuery('div[id^="mailvelope-display-"]').remove();
+			let anchor = document.createElement('div');
+			anchor.id = 'mailvelope-display-' + Math.random().toString(36).slice(2);
+			anchor.style.cssText = `position: absolute; left: ${rect.left + window.scrollX}px; top: ${rect.top + window.scrollY}px; ` +
+				`width: ${rect.width}px; height: ${rect.height}px; z-index: 1;`;
+			document.body.appendChild(anchor);
+			container_selector = `#${anchor.id}`;
+		}
 		let options = {
 			showExternalContent: this.egw.preference('allowExternalIMGs') == 1	// "1", or "0", undefined --> true or false
 		};
