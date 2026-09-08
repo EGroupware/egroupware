@@ -426,3 +426,48 @@ tests.
   group in `mail_ui` should not be decoupled/extracted until this migration lands; everything else
   in that plan (S/MIME, Import, address-list/body-decoding/custom-labels/folder-string-helpers
   already done) is unaffected and can proceed independently.
+
+## `mail/src/Tree.php` removed, switched to `Api\Etemplate\Widget\Tree`'s own constants (2026-09-08)
+
+ralf: "We should be able to remove mail/src/Tree by using the current Api/Etemplate/Widget/Tree
+constants in mail's code too, not redefining them." `mail/src/Tree.php` was a 14-line subclass
+redefining the base widget's `ID`/`LABEL`/`TOOLTIP`/`CHILDREN`/`AUTOLOAD_CHILDREN` constants as
+`id`/`text`/`tooltip`/`item`/`child` instead of `value`/`label`/`title`/`children`/`hasChildren` -
+not just redundant duplication as it first looked: `Et2Tree.ts` genuinely supports BOTH naming
+conventions with per-field fallbacks, and mail had deliberately used the `id`/`item`/`child` side
+consistently across both the classic PHP tree builder (`mail_tree.inc.php`) and the JMAP-native
+client-side tree code (`folderTree.ts`'s `buildNode()`/`buildErrorNode()`, several direct-field
+accesses in `app.ts`) so PHP-provided root nodes and JS-built child nodes could splice into the
+same tree structure without special-casing.
+
+**Widget-level prerequisite first** (`871c5c319a`): several `Et2Tree.ts` methods only ever checked
+ONE of the two conventions - `setLabel()`/`getLabel()`/`getSelectedLabel()`/`hasChildren()`, the
+private `_search()`/`_deleteItem()` recursion (used by `getNode()`/`deleteItem()`), and
+`handleItemLazyLoad()`'s reset-on-empty-result logic - all fixed to fall back to the other
+convention, matching the pattern `_optionTemplate()`/`applyOpenState()` already used. Purely
+additive (ralf: "We should NOT remove the fallback names in the widget, just mail app should use
+the new ones!" - ie. the widget keeps supporting both indefinitely; only mail's own files switch).
+
+**The actual switch** (`e212190835`): `mail_tree.inc.php`/`mail_ui.inc.php` now `use
+EGroupware\Api\Etemplate\Widget\Tree;` instead of the mail-specific one; `folderTree.ts`'s
+`FolderTreeNode` interface/`buildNode()`/`buildErrorNode()` and every matching field access in
+`app.ts` (`.text`→`.label`, `.tooltip`→`.title`, `.item`→`.children`, `.child`→`.hasChildren`,
+`.id`→`.value` on tree nodes specifically, NOT on unrelated JMAP `Mailbox.id` or DOM-id params)
+switched to match. `folderTreeAutoload()`'s own return-wrapper key also changed from `{item:
+data}` to `{children: data}` - not just cosmetic, since `Et2Tree.handleLazyLoading()` does
+`Object.assign(node, result)`, so the wrapper key IS the literal field written onto the node.
+
+**2 real latent bugs surfaced and fixed along the way** in `mail_tree.inc.php`: `treeLeafNoConnectionArray()`
+built its error-leaf array with literal `'id'`/`'text'`/`'tooltip'` keys instead of the `Tree::`
+constants (silently relied on the old constant values matching); `setOutStructure()`'s missing-parent
+check used a literal `isset($insert['item'])` instead of `Tree::CHILDREN` - both would have produced
+a broken/inconsistent node once the constant's value changed out from under them.
+
+**Verified**: full `mail` jstest group (197/197), `addressbook` (5/5 - exercises `Tree::groups()`'s
+base-convention usage, confirming the widget-level fix didn't disturb it), `Et2Tree.test.ts` (3/3),
+`mail` PHPUnit suite (157 tests, same 6 pre-existing unrelated REST-connection errors as the known
+baseline), `tsc --noEmit` clean (diffed line-for-line against pre-change output - zero new errors
+anywhere touched), and a real PHPUnit-harness check (`Api\LoggedInTest`-based, not a bare CLI
+script - see [[feedback_accounts_singleton_broken_in_phpunit_cli]]) confirming
+`mail_tree::getAccountsRootNode()` now actually returns `value`/`label`/`children` keys, not
+`id`/`text`/`item`. Both commits local only, not yet pushed.
