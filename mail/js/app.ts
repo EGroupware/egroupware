@@ -2482,6 +2482,21 @@ export class MailApp extends EgwApp
 		// don't go further if the preview is supposed to be disabled and we're not in mobile view
 		if (previewPane == 'hide' && !egwIsMobile()) return;
 
+		// Re-selecting the exact same, already-rendered message is a genuine no-op click (most
+		// mail clients treat it as free) - skip the whole reload rather than re-running it.
+		// Not just an optimization: re-running the full load+render cycle for a PGP message
+		// confused Mailvelope's own state and dropped its decrypted view entirely (found live
+		// 2026-09-08, ralf: "clicked on the same, PGP encrypted message" - a second
+		// createDisplayContainer() call for identical content, or a race with the reset-cleanup
+		// mailvelopeDisplay() does on every call, is the likely underlying cause, but skipping the
+		// redundant reload here sidesteps needing to root-cause that at all).
+		if (selected?.length === 1 && selected[0] && selected[0] === this.currentlyFocussed)
+		{
+			const loadedRowId = (this.et2.getWidgetById('messageIFRAME') as any)
+				?.iframe?.contentDocument?.documentElement?.dataset?.rowId;
+			if (loadedRowId === selected[0]) return;
+		}
+
 		// A newer selection supersedes any body-fetch still in flight for the previous one
 		if (this.previewFetchAbort)
 		{

@@ -157,14 +157,19 @@ leaves a genuinely separate real attachment outside the `multipart/encrypted` wr
 the fake attachment gone, the earlier overlay concern (Mailvelope covering a would-be attachments
 row) resolved as a side effect too - no attachments row, nothing to cover.
 
-### Known remaining rough edge (not resolved this session, low priority)
+## Bug 5: re-selecting the same already-decrypted message dropped Mailvelope's display
 
-- **Re-selecting the SAME already-decrypted PGP message a second time removed Mailvelope's display**
-  (confirmed by ralf: same message, second click, not a different one). Not root-caused - candidates:
-  Mailvelope's own dedup/caching behavior on a second `createDisplayContainer()` call for identical
-  content, or a race between the reset-cleanup (fix 4) and the first call's still-settling async
-  state. Uncommon interaction (most users won't re-click an already-open message); not chased
-  further this session.
+Clicking an already-open PGP message a second time (same rowId, not a different one) removed
+Mailvelope's decrypted view - confirmed by ralf. Never root-caused (candidates: Mailvelope's own
+dedup/caching behavior on a second `createDisplayContainer()` call for identical content, or a race
+with `mailvelopeDisplay()`'s own reset-cleanup) - didn't need to be: ralf's own observation ("shouldn't
+this cache, so it didn't reload?") pointed at the right fix instead. `preview()` (`mail/js/app.ts`)
+unconditionally re-ran the whole load+render cycle on every row click, even a re-click of the row
+already shown - most mail clients treat that as a free no-op. Added a guard right at the top: if the
+newly selected row is the same as `this.currentlyFocussed` AND the message iframe's own
+`dataset.rowId` (set by `loadMessageBody()`'s load listener) already matches it, skip the reload
+entirely. Sidesteps needing to root-cause Mailvelope's own reaction to a second call - there just
+never IS a second call now. Confirmed by ralf: no more flicker, Mailvelope survives a re-click.
 
 ### Aside: testing this through Claude's own browser automation was unreliable
 
@@ -177,6 +182,29 @@ automation, as an anti-exfiltration measure), not an EGroupware bug. Every fix p
 sizing especially) had to be verified in ralf's own regular, non-automated browser session instead -
 worth remembering for any FUTURE Mailvelope-display work in this app: don't trust Claude's own tab
 for it, ask the user to check.
+
+## 26-branch backport (`/Users/ralf/epl-26-checkout`, pushed)
+
+26 predates the JMAP-native compose/display migration entirely (classic-only rendering), so most of
+this doc's fixes (1, 2, most of 3's fix chain, 4, 5) don't apply there - they're all specific to the
+modern per-message-selection JMAP fast path 26 doesn't have. Two things DID carry over, since 26's
+`mailvelopeDisplay()` uses the identical `Et2Iframe` shadow-DOM widget and the identical
+`.mailDisplayContainer` CSS:
+
+- **CSP was tried, then reverted** - ralf confirmed live that 26's classic-only flow doesn't hit the
+  `frame-src 'none'` block master's JMAP-fast-path did; committed then `git revert`ed once disproven
+  (kept as a revert commit rather than a history rewrite, since the CSP commit itself had already
+  been pushed... well, only locally at that point, but revert was still the safer/available choice -
+  `git reset --hard` is blocked by this environment's own safety classifier).
+- **Container resolution** (this doc's Bug 3, fix 3) - identical root cause
+  (`iframe.parent()[0].dom_id` silently `undefined` now, `container_selector` becoming `"#undefined"`,
+  Mailvelope's own code throwing `Cannot read properties of null (reading 'appendChild')` trying to
+  use it) - ported the same "append a fresh anchor div to document.body" fix, adapted to 26's
+  jQuery-based code.
+- **CSS sizing** (this doc's fix 5) - identical gap (only a `@media print`-scoped rule existed) -
+  ported verbatim.
+
+Both ported fixes live-verified by ralf on a farm test-tree before push.
 
 ## Explicitly out of scope / untouched
 
