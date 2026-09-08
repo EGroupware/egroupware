@@ -598,9 +598,33 @@ et2-details.details {width: 100%}
 
 .mailDisplayContainer {
 	height: 100%;
+	// containing block for Mailvelope's own iframe below, in case it (or a wrapper it creates
+	// around it) uses absolute positioning - without this, "100%"/an absolute offset resolves
+	// against a FARTHER positioned ancestor instead, landing in some unrelated quadrant of the
+	// page rather than filling this container.
+	position: relative;
 	padding-top: 1em;
 	border-top: 1px solid silver;
 	margin-top: 1em;
+}
+// Mailvelope's own createDisplayContainer() (mailvelopeDisplay(), mail/js/app.ts) injects its
+// chrome-extension:// iframe into .mailDisplayContainer (possibly wrapped in its own extra
+// element(s) - descendant selector, not a direct-child one, to not depend on knowing that exact
+// shape) with no sizing of its own - only ever got explicit width/height via the OTHER, @media
+// print-only ".mailvelopeTopContainer > iframe" rule further down, so on a normal screen it
+// rendered at Mailvelope's own intrinsic default size/position instead of filling the container.
+// !important on height: Mailvelope's own script sets an inline `style="height: <n>px"` on this
+// same iframe once the passphrase is entered and it resizes to the decrypted content (an inline
+// style always wins over an external stylesheet rule otherwise, regardless of selector
+// specificity) - mirrors master's own fix, see doc/ai/projects/mail-pgp-mailvelope-fixes.md there.
+.mailDisplayContainer iframe[src^="chrome-extension"],
+.mailDisplayContainer iframe[src^="about:blank?mvelo"] {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100% !important;
+	border: none;
 }
 .mailDisplayBody {
 	height:100%;
