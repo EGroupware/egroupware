@@ -527,3 +527,45 @@ rename commit, `5926fbce29`), then the content/dead-code-removal commit (`159c7e
 errors), a real PHPUnit-harness check confirming the old `mail_tree` class no longer exists and
 `Tree::getAccountsRootNode()`/`getInitialIndexTree()` still work correctly, full `mail` jstest group
 (197/197), `tsc --noEmit` clean, `php -l` clean on every touched file.
+
+## Full `mail_ui` audit (2026-09-08): 2 more confirmed-dead spots + a real UI-bug fix
+
+ralf asked for the same kind of full method/caller/JMAP-vs-IMAP audit done above for `mail_tree`,
+now for `mail_ui.inc.php` itself (~60 methods: 15 in `$public_functions`, ~29 `ajax_*`, ~16
+internal-only). Most of it is genuinely still needed and backend-agnostic - `mail_bo`/`Api\Mail`
+already abstracts JMAP vs IMAP, nothing in `mail_ui` branches on it directly. Confirmed
+`ajax_flagMessages`/`ajax_deleteMessages`/`ajax_copyMessages` are NOT dead classic fallbacks: they
+still carry a real, JMAP-unreplicated feature - "select all matching the current filter" bulk
+operations (`MessageActionHandler::flagMessages()`'s `$_messageList === 'all'` branch builds a real
+IMAP/JMAP-shim search query) - confirmed via `MailApp.handleJmapError()`'s own docblock, which
+explicitly keeps a real classic fallback for a genuine JMAP failure on these, unlike the folder-CRUD
+methods below (whose own docblocks say "there's no classic fallback").
+
+**Found dead**: `mail_ui::smimeExportCert()`/`smimeExportCsr()` (+ `SmimeHandler::exportCert()`/
+`exportCsr()`/`accountId()`) - zero real callers anywhere; the admin S/MIME cert UI
+(`admin/templates/*/mailaccount.xet`'s export buttons) goes through `admin_mail::smimeExportFile()`
+directly now. `ajax_addFolder()`'s call site was structurally unreachable - its `tryJmapAddFolder()`
+JS wrapper has no code path that ever returns the "fall back to classic" `null` signal.
+
+**Found reachable only via a real (minor) UI bug**: `ajax_renameFolder()`/`ajax_MoveFolder()`/
+`ajax_deleteFolder()`'s wrappers (`tryJmapRenameFolder`/`tryJmapMoveFolder`/`tryJmapDeleteFolder`)
+each return `null` specifically for a bare account-root id ("an account root can't be
+renamed/moved/deleted") - but `MailApp.checkFolderNoSelect()` (the shared enabled-check for every
+tree context-menu action) only excluded "NoSelect"-flagged nodes, not a healthy account root. So
+right-clicking Rename/Move/Delete on an *account* (not a folder) could still reach these classic
+methods - not a deliberate fallback, a UI gap. Fixed `checkFolderNoSelect()` to also disable those 3
+specifically for an account-root node (`action.id` check) - `Add`/`Subscribe`/`Unsubscribe`/
+`Folder Management` stay enabled there, each a real, supported account-root operation.
+
+**Cleanup**: renamed the survivors from `tryJmapAddFolder`/etc to `jmapAddFolder`/etc ("try" no
+longer applies once there's nothing to fall back to); removed `mail_ui`'s 4 `ajax_*` delegations and
+`FolderHandler`'s corresponding method bodies (490 lines - its only caller); removed
+`SmimeAccountIdTest.php` (only tested the now-dead `accountId()` guard). `FolderHandler` keeps
+`folderSubscription()`/`setFolderStatus()` - genuinely still classic-only (the mobile subscribe
+template has no JMAP tree at all; `setFolderStatus()` already no-ops for JMAP accounts).
+
+**Verified**: full `mail` PHPUnit suite (175 tests after the 3 removed `SmimeAccountIdTest` cases,
+same 6 pre-existing baseline errors), a live PHPUnit-harness check confirming every removed method
+is gone and the survivors are intact, full `mail` jstest group (197/197), `tsc`/`php -l` clean.
+Commit `3bd41dff13`, local only, not yet pushed (same for the `mail_tree` rename commits above -
+`5926fbce29`/`159c7e3bde`/`5344f7610a`).
