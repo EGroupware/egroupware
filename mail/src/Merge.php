@@ -64,6 +64,39 @@ class Merge
 	public function ajax_mergeSingle($id, string $document, string $mergeClass = '')
 	{
 		$response = Api\Json\Response::get();
+		try
+		{
+			// acc_id deliberately not returned - MailApp.composeMessage() already derives it from
+			// the row id itself (Api\Mail::splitRowID()'s own profileID segment), same as reopening
+			// any other draft.
+			$response->data(['id' => $this->mergeSingle($id, $document, $mergeClass)]);
+		}
+		catch (\Exception $e)
+		{
+			$response->data(['msg' => $e->getMessage()]);
+		}
+	}
+
+	/**
+	 * Merge a single document into a new draft - the actual work behind ajax_mergeSingle(),
+	 * extracted 2026-09-08 so a plain (non-ajax) PHP caller can reuse it directly: invoices'
+	 * own "mail this invoice" postback (invoices/src/Ui.php) used to redirect to the classic,
+	 * now-deleted `mail.mail_compose.compose` menuaction (`from=merge`) - the modern equivalent is
+	 * this method plus building a `/mail/compose.php?from=composefromdraft&id=...` redirect the
+	 * same way mail_ui::ajax_view()'s own composefromdraft redirect already does, since the merge
+	 * itself always lands in the drafts folder first regardless of caller.
+	 *
+	 * @param string|int $id merge target id (eg. a contact/invoice id)
+	 * @param string $document vfs path of the document to merge
+	 * @param string $mergeClass Api\Storage\Merge subclass to use, defaults to Api\Contacts\Merge
+	 *  (anything not matching this method's own validation regex silently falls back to that default)
+	 * @return string the resulting draft's own mail row id (Api\Mail::splitRowID()'s own profileID
+	 *  segment identifies the account/acc_id to open it with)
+	 * @throws Api\Exception\WrongUserinput if $document isn't a valid, mergeable template
+	 * @throws \Exception if the merge/send itself fails
+	 */
+	public function mergeSingle($id, string $document, string $mergeClass = '') : string
+	{
 		$merge_class = preg_match('/^(EGroupware\\\\.+\\\\Merge|[a-z_-]+_merge)$/', $mergeClass) ?
 			$mergeClass : 'EGroupware\\Api\\Contacts\\Merge';
 		$document_merge = new $merge_class();
@@ -71,26 +104,13 @@ class Merge
 
 		if (($error = $document_merge->check_document($document, '')))
 		{
-			$response->data(['msg' => $error]);
-			return;
+			throw new Api\Exception\WrongUserinput($error);
 		}
-		try
-		{
-			$merged_mail_id = '';
-			$folder = $this->mail_bo->getDraftFolder();
-			$this->mail_bo->importMessageToMergeAndSend($document_merge, Vfs::PREFIX.$document, [$id], $folder, $merged_mail_id);
+		$merged_mail_id = '';
+		$folder = $this->mail_bo->getDraftFolder();
+		$this->mail_bo->importMessageToMergeAndSend($document_merge, Vfs::PREFIX.$document, [$id], $folder, $merged_mail_id);
 
-			// acc_id deliberately not returned - MailApp.composeMessage() already derives it from
-			// the row id itself (Api\Mail::splitRowID()'s own profileID segment), same as reopening
-			// any other draft.
-			$response->data([
-				'id' => \mail_ui::generateRowID($this->mail_bo->profileID, $folder, $merged_mail_id, true),
-			]);
-		}
-		catch (\Exception $e)
-		{
-			$response->data(['msg' => $e->getMessage()]);
-		}
+		return \mail_ui::generateRowID($this->mail_bo->profileID, $folder, $merged_mail_id, true);
 	}
 
 	/**

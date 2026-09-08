@@ -3471,8 +3471,13 @@ class addressbook_ui extends addressbook_bo
 	/**
 	 * convert email-address in compose link
 	 *
+	 * Used to dispatch to whichever mail-ish app was installed, each via its own classic
+	 * menuaction - the felamimail and "email" apps are long gone (removed here 2026-09-08, ralf:
+	 * "remove the felamimail case, that app is long dead and gone" / "also the 'email' case, also
+	 * dead"), leaving only the current mail app's own branch below.
+	 *
 	 * @param string $email email-addresse
-	 * @return array/string array with get-params or mailto:$email, or '' or no mail addresse
+	 * @return string mailto:$email, or '' for no mail address or no mail app installed
 	 */
 	function email2link($email)
 	{
@@ -3480,26 +3485,17 @@ class addressbook_ui extends addressbook_bo
 
 		if($GLOBALS['egw_info']['user']['apps']['mail'])
 		{
-			return array(
-				'menuaction' => 'mail.mail_compose.compose',
-				'send_to'    => base64_encode($email)
-			);
+			// mail's own compose popup moved from the classic mail_compose::compose() postback
+			// (mail.mail_compose.compose menuaction, dropped together with that class) to
+			// mail/compose.php's own client-side-only bootstrap (doc/ai/projects/
+			// mail-compose-jmap-migration.md, Step 10) - that menuaction/send_to param no longer
+			// exist at all (found live 2026-09-08, ralf: "addressbook_ui and collabora app have the
+			// same issue" as invoices' own dropped-menuaction bug). egw_open.ts's own open_link()
+			// already special-cases a plain "mailto:" href, routing it through mailto()'s
+			// client-side parsing into a real compose.php popup - no menuaction left to point at.
+			return 'mailto:' . $email;
 		}
-		if($GLOBALS['egw_info']['user']['apps']['felamimail'])
-		{
-			return array(
-				'menuaction' => 'felamimail.uicompose.compose',
-				'send_to'    => base64_encode($email)
-			);
-		}
-		if($GLOBALS['egw_info']['user']['apps']['email'])
-		{
-			return array(
-				'menuaction' => 'email.uicompose.compose',
-				'to' => $email,
-			);
-		}
-		return 'mailto:' . $email;
+		return '';
 	}
 
 	/**

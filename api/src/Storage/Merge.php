@@ -3733,7 +3733,8 @@ abstract class Merge
 	/**
 	 * Allow to attach files to merged mails
 	 *
-	 * Called from mail.mail_compose.compose
+	 * Called from Api\Mail::importMessageToMergeAndSend() (mail.mail_compose.compose, the classic
+	 * caller this docblock used to name, was dropped together with mail_compose::compose() itself)
 	 *
 	 * @param int|string $id
 	 * @return array[] array of array with values for keys
