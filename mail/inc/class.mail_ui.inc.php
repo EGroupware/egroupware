@@ -35,6 +35,7 @@ use EGroupware\Mail\Ui\MessageActionHandler;
 use EGroupware\Mail\Ui\MessageDisplayHandler;
 use EGroupware\Mail\Ui\ProfileHandler;
 use EGroupware\Mail\Ui\SmimeHandler;
+use EGroupware\Mail\Ui\Tree as MailTree;
 
 /**
  * Mail User Interface
@@ -238,7 +239,7 @@ class mail_ui
 	 */
 	function __construct($run_constructor=true)
 	{
-		$this->mail_tree = new mail_tree($this);
+		$this->mail_tree = new MailTree($this);
 		if (!$run_constructor) return;
 
 		if (Mail::$debugTimes) $starttime = microtime (true);
@@ -474,10 +475,12 @@ class mail_ui
 		{
 			Framework::window_close('Missing acc_id!');
 		}
-		// Tree population is handled client-side via JMAP (MailApp.subscriptionLoad(),
-		// mail/js/app.ts) - the server-rendered tree below is only the classic fallback for a
-		// non-JMAP-reachable account, same as mail_ui::folderManagement()'s own seed.
-		$sel_options['foldertree'] =  $this->mail_tree->getTree(null,$profileId,1,true,false,false);
+		// Tree population is handled entirely client-side via JMAP (MailApp.subscriptionLoad(),
+		// mail/js/app.ts) - no server-rendered seed needed, and no classic fallback either (dropped
+		// 2026-09-08, matching every other JMAP surface in this app): "JMAP unreachable" means the
+		// account's mail-server connection itself is down, which a classic IMAP attempt on the same
+		// connection can never succeed at either - see EGroupware\Mail\Ui\Tree's own docblock.
+		// subscriptionLoad() shows an error leaf in the (empty) tree on failure instead.
 
 		//Get all subscribed folders
 		// as getting all subscribed folders is very fast operation
@@ -809,12 +812,12 @@ class mail_ui
 			{
 				// the active profile's own connection failed entirely (eg. the mail server is
 				// down) - still render every configured account's root node
-				// (mail_tree::getAccountsRootNode() only reads account config, no live connection
+				// (MailTree::getAccountsRootNode() only reads account config, no live connection
 				// needed) with the broken/active account shown as a connection-error leaf, instead
 				// of leaving the client with no content at all: callWizard() below only opens its
 				// popup via response.call(), not a user gesture, so it can be silently blocked -
 				// the mail app itself (tree + empty row list) must render regardless.
-				$tree = mail_tree::getAccountsRootNode();
+				$tree = MailTree::getAccountsRootNode();
 				foreach ($tree[Tree::CHILDREN] as &$accountNode)
 				{
 					if ((string)$accountNode[Tree::ID] !== (string)self::$icServerID)
@@ -826,7 +829,7 @@ class mail_ui
 					$accountNode[Tree::AUTOLOAD_CHILDREN] = false;
 					$accountNode[Tree::OPEN] = 0;
 					$accountNode[Tree::IMAGE_LEAF] = $accountNode[Tree::IMAGE_FOLDER_OPEN] =
-						$accountNode[Tree::IMAGE_FOLDER_CLOSED] = mail_tree::$leafImages['folderNoSelectClosed'];
+						$accountNode[Tree::IMAGE_FOLDER_CLOSED] = MailTree::$leafImages['folderNoSelectClosed'];
 				}
 				unset($accountNode);
 				$sel_options[self::$nm_index]['foldertree'] = $tree;
@@ -2920,9 +2923,12 @@ class mail_ui
 	/**
 	 * Main function to handle folder management dialog
 	 *
-	 * Tree population and folder deletion are handled client-side via JMAP
-	 * (MailApp.folderManagementLoad()/folderManagementDeleteOne(), mail/js/app.ts) - the
-	 * server-rendered tree below is only the classic fallback for a non-JMAP-reachable account.
+	 * Tree population and folder deletion are handled entirely client-side via JMAP
+	 * (MailApp.folderManagementLoad()/folderManagementDeleteOne(), mail/js/app.ts) - no
+	 * server-rendered seed needed, and no classic fallback either (dropped 2026-09-08, matching
+	 * every other JMAP surface in this app) - see subscription()'s own comment / EGroupware\Mail\
+	 * Ui\Tree's docblock for why. folderManagementLoad() shows an error leaf in the (empty) tree
+	 * on failure instead.
 	 *
 	 * @param array $content content of dialog
 	 */
@@ -2930,7 +2936,6 @@ class mail_ui
 	{
 		$dtmpl = new Etemplate('mail.folder_management');
 		$profileID = $_GET['acc_id']? $_GET['acc_id']: $content['acc_id'];
-		$sel_options['tree'] = $this->mail_tree->getTree(null,$profileID, 1, true, false, false);
 
 		if (!is_array($content))
 		{

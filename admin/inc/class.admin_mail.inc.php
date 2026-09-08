@@ -1475,8 +1475,8 @@ class admin_mail
 						// the account can't connect right now (eg. mail server down) - the wizard's
 						// whole purpose is letting the user fix that, so it must not abort/close
 						// itself over this the way the outer catch below does for a real failure.
-						// Deliberately NOT fixed inside getUserData() itself: mail_tree's account
-						// enumeration (mail_tree::getAccountsRootNode()) relies on this same kind
+						// Deliberately NOT fixed inside getUserData() itself: EGroupware\Mail\Ui\Tree's
+						// account enumeration (Tree::getAccountsRootNode()) relies on this same kind
 						// of failure propagating out of it to render a broken-account error leaf -
 						// this needs to stay scoped to just this wizard call site.
 						if (self::$debug) _egw_log_exception($ex);

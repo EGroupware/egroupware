@@ -145,7 +145,7 @@ trait ComposeMessageBuilder
 		$email_From =  $_identity['ident_email'] ? $_identity['ident_email'] : $activeMailProfile['ident_email'];
 		// Try to fix identity email with no domain part set
 		$_mailObject->setFrom(Mail::fixInvalidAliasAddress(Api\Accounts::id2name($_identity['account_id'], 'account_email'), $email_From),
-			\mail_tree::getIdentityName($_identity, false));
+			self::getIdentityName($_identity, false));
 
 		$_mailObject->addHeader('X-Priority', $_formData['priority']);
 		$_mailObject->addHeader('X-Mailer', 'EGroupware-Mail');
@@ -406,6 +406,80 @@ trait ComposeMessageBuilder
 			if ($connection_opened) $mail_bo->closeConnection();
 		}
 		return $inline_images ?? [];
+	}
+
+	/**
+	 * bit flag: ident_realname
+	 */
+	const IDENT_NAME = 1;
+	/**
+	 * bit flag: ident_email
+	 */
+	const IDENT_EMAIL = 2;
+	/**
+	 * bit flag: ident_org
+	 */
+	const IDENT_ORG = 4;
+	/**
+	 * bit flag: ident_name
+	 */
+	const IDENT_NAME_IDENTITY= 8;
+
+	/**
+	 * bit flag: org | name email
+	 */
+	const ORG_NAME_EMAIL = 16;
+
+	/**
+	 * Build folder tree parent identity label
+	 *
+	 * Moved here from the classic mail_tree (now EGroupware\Mail\Ui\Tree) 2026-09-08 - it's an
+	 * identity-display-name formatter, not tree-structure logic, and was already used from here
+	 * (createMessage()'s own From: header, above) as much as from there (Ui\Tree::
+	 * getAccountsRootNode()'s account-node label/tooltip, which now calls Compose::getIdentityName()
+	 * since Ui\Tree doesn't use this trait).
+	 *
+	 * @param array $_account
+	 * @param bool $_fullString = true full or false=NamePart only is returned
+	 * @return string
+	 */
+	static function getIdentityName ($_account, bool $_fullString=true)
+	{
+		$identLabel = $GLOBALS['egw_info']['user']['preferences']['mail']['identLabel'];
+		$name = array();
+
+		if ($identLabel & self::IDENT_NAME_IDENTITY)
+		{
+			$name[] = $_account['ident_name'];
+		}
+
+		if ($identLabel & self::IDENT_NAME)
+		{
+			$name[] = $_account['ident_realname']. ' ';
+		}
+
+		if ($identLabel & self::IDENT_ORG)
+		{
+			$name[] = $_account['ident_org'];
+		}
+
+		if ($identLabel & self::ORG_NAME_EMAIL)
+		{
+			$name[] = $_account['ident_org']." | ".$_account['ident_realname'].($_fullString ? ' '.' <'.$_account['ident_email'].'>' : '');
+		}
+
+		if ($identLabel & self::IDENT_EMAIL || empty($name))
+		{
+			if ($_fullString && trim($_account['ident_email']))
+			{
+				$name[] = ' <'.$_account['ident_email'].'>';
+			}
+			elseif (!empty($_account['acc_imap_username']) && trim($_account['acc_imap_username']))
+			{
+				$name[] = ' <'.$_account['acc_imap_username'].'>';
+			}
+		}
+		return implode(' ', $name);
 	}
 
 	/**

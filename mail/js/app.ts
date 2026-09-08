@@ -6706,7 +6706,12 @@ export class MailApp extends EgwApp
 		{
 			if (data === null)
 			{
+				// no classic server-rendered tree to fall back to any more (dropped 2026-09-08,
+				// mail_ui::subscription() no longer seeds one) - show an error leaf instead, same
+				// as folderTreeAutoload()'s own errorLeaf() for a single-node expand failure
 				this._subscriptionChanges = null;
+				ftree.select_options = [buildErrorNode(profileID, '',
+					this.egw.lang('Connection could not be established, use the wizard to check why!'), egw)];
 				return;
 			}
 			ftree.select_options = data;
@@ -6718,11 +6723,11 @@ export class MailApp extends EgwApp
 		}).catch((e) =>
 		{
 			this._subscriptionChanges = null;
-			if (e?.constructor?.name === 'JmapUserError')
-			{
-				this.egw.message(e.message, 'error');
-			}
-			console.error('MailApp.subscriptionLoad(): JMAP tree load failed, keeping the classic server-rendered tree', e);
+			const message = e?.constructor?.name === 'JmapUserError' ? e.message :
+				this.egw.lang('Connection could not be established, use the wizard to check why!');
+			this.egw.message(message, 'error');
+			ftree.select_options = [buildErrorNode(profileID, '', message, egw)];
+			console.error('MailApp.subscriptionLoad(): JMAP tree load failed', e);
 		});
 	}
 
@@ -6841,8 +6846,10 @@ export class MailApp extends EgwApp
 	 * mail_tree.inc.php's own folderManagement()/ajax_folderMgmtTree_autoloading() calls, which
 	 * hardcoded $_subscribedOnly=false the same way).
 	 *
-	 * On any failure (network, non-JMAP-capable account), this is a no-op: the tree keeps whatever
-	 * the server already rendered (mail_ui::folderManagement()'s own mail_tree->getTree() call).
+	 * On any failure (network, non-JMAP-capable account), no classic server-rendered tree exists
+	 * to fall back to any more (dropped 2026-09-08, mail_ui::folderManagement() no longer seeds
+	 * one) - shows an error leaf instead, same as folderTreeAutoload()'s own errorLeaf() for a
+	 * single-node expand failure.
 	 */
 	private folderManagementLoad() : void
 	{
@@ -6855,17 +6862,18 @@ export class MailApp extends EgwApp
 		{
 			if (data === null)
 			{
-				console.error('MailApp.folderManagementLoad(): account not JMAP-reachable, keeping the classic server-rendered tree');
+				tree.select_options = [buildErrorNode(profileID, '',
+					this.egw.lang('Connection could not be established, use the wizard to check why!'), egw)];
 				return;
 			}
 			tree.select_options = data;
 		}).catch((e) =>
 		{
-			if (e?.constructor?.name === 'JmapUserError')
-			{
-				this.egw.message(e.message, 'error');
-			}
-			console.error('MailApp.folderManagementLoad(): JMAP tree load failed, keeping the classic server-rendered tree', e);
+			const message = e?.constructor?.name === 'JmapUserError' ? e.message :
+				this.egw.lang('Connection could not be established, use the wizard to check why!');
+			this.egw.message(message, 'error');
+			tree.select_options = [buildErrorNode(profileID, '', message, egw)];
+			console.error('MailApp.folderManagementLoad(): JMAP tree load failed', e);
 		});
 	}
 
