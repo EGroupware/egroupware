@@ -39,6 +39,15 @@ window.app = {classes: {}};
 			if (window.customElements.get(name))
 			{
 				console.debug('egw: keeping already-registered', name, '(an older build already defined it earlier this session; skipping the just-fetched redefinition)');
+				// Reaching here means two builds' copies of the same class are live in this
+				// document: egw_import() de-dupes entry files by url, but a chunk arrives as a
+				// static import of one and is named by its content hash, so a rebuild between
+				// opening app A and app B gives B a chunk that redefines A's tags. Constructing
+				// one of the just-skipped classes then throws "Illegal constructor" - caught in
+				// egw_json.ts, but the user's first sign of it would otherwise be that error.
+				// Notify here instead, so "reload when convenient" has already been offered.
+				// Idempotent and main-window-only - notifyUpdateAvailable() handles both.
+				window.egw_import?.notifyUpdateAvailable?.();
 				return;
 			}
 			return _define(name, ctor, options);
