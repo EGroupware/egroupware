@@ -537,30 +537,27 @@ export abstract class EgwApp
 	 */
 	_push_grant_check(pushData : PushData, grant_fields : string[], appname? : string) : boolean
 	{
-		let grants = egw.grants(appname || this.appname);
+		const grants = egw.grants(appname || this.appname);
 
-		// No grants known
-		if(!grants)
+		// No grants known, or nothing to check them against: we can not tell, so assume access
+		if(!grants || !pushData.acl)
 		{
 			return true;
 		}
 
 		// check user has a grant from owner or something
-		for(let i = 0; i < grant_fields.length; i++)
+		for(const field of grant_fields)
 		{
-			let grant_field = pushData.acl[grant_fields[i]];
-			if(["number", "string"].indexOf(typeof grant_field) >= 0 && grants[grant_field] !== 'undefined')
+			const value = pushData.acl[field];
+			// A field can name a single account (eg. info_owner) or several (eg. info_responsible)
+			for(const account of Array.isArray(value) ? value : [value])
 			{
-				// ACL access
-				return true;
-			}
-			else if(!Object.keys(grants).filter(function(grant_account)
-			{
-				return grant_field.indexOf(grant_account) >= 0 ||
-					grant_field.indexOf(parseInt(grant_account)).length
-			}))
-			{
-				return false;
+				// grants is indexed by the account IDs we got a grant from, so a missing entry means no access
+				if(["number", "string"].indexOf(typeof account) >= 0 && typeof grants[account] !== "undefined")
+				{
+					// ACL access
+					return true;
+				}
 			}
 		}
 		return false;
