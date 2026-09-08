@@ -2246,6 +2246,27 @@ class Imap extends Jmap\Base
 			}
 		}
 
+		// PGP encrypt body swap (createDraftEmail()'s bodyOverride, MailJmap.pgpEncryptBody()) - a
+		// {type: "multipart/encrypted...", subParts: [{application/pgp-encrypted}, {application/
+		// octet-stream}]} bodyStructure with no bodyValues at all is Mailvelope's already-encrypted
+		// armored ciphertext (the octet-stream subPart's blobId), needing the exact same RFC 3156 §4
+		// two-part wrapping Api\Mailer::setOpenPgpBody() already builds for the classic postback path
+		// (mail/src/ComposeMessageBuilder.php's own 'openpgp' case) - reuse it directly rather than
+		// re-implementing the same structure by hand. Same live-verified-against-Stalwart shape as
+		// the client's own pgpEncryptBody() (2026-09-08) - a real Stalwart/JMAP account never reaches
+		// this at all (Email/set create is handled natively there).
+		if (!empty($email['bodyStructure']['subParts']) && count($email['bodyStructure']['subParts']) === 2 &&
+			str_starts_with((string)($email['bodyStructure']['type'] ?? ''), 'multipart/encrypted') &&
+			($email['bodyStructure']['subParts'][1]['type'] ?? '') === 'application/octet-stream')
+		{
+			$raw = self::readUploadedBlob($accountId, (string)$email['bodyStructure']['subParts'][1]['blobId']);
+			if ($raw !== null)
+			{
+				$mailer->setOpenPgpBody($raw);
+				return $mailer;
+			}
+		}
+
 		$bodyValues = (array)($email['bodyValues'] ?? []);
 		$textBody = null;
 		$htmlBody = null;

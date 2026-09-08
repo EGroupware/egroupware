@@ -2600,7 +2600,7 @@ export class MailJmap
 			// (mail/js/app.ts) finds it in the `td.td_display > pre` it already scans for.
 			const pgpPart = this.findPgpPart(email.bodyStructure);
 			const html = pgpPart ?
-				this.wrapDocument(MailJmap.textToHtml(await this.downloadPartText(ref.profileID, token, pgpPart))) :
+				this.wrapDocument(MailJmap.textToHtml(await this.downloadPartText(ref.profileID, token, pgpPart)), true) :
 				this.assembleBodyHtml(email, htmlOptions);
 			return {
 				special: false,
@@ -3143,14 +3143,28 @@ export class MailJmap
 	 *
 	 * cid: image references are left as-is here - resolved asynchronously after render by
 	 * resolveInlineImages(), same as external images already are (resolveExternalImages()).
+	 *
+	 * @param body
+	 * @param forMailvelope true only for fetchBody()'s own PGP branch - leaves frame-src at its
+	 *  page-default 'self' instead of forcing 'none', matching every OTHER context Mailvelope
+	 *  already runs in unmodified (stylite/js/app.ts's InfoLog description editor/tooltip - plain
+	 *  pages, no frame-src override at all - MessageDisplayHandler.php's own identical 'none'
+	 *  hardening is 2020's "stricter CSP policy for mail body", predating Mailvelope integration
+	 *  entirely and never meant to interact with it). connect-src/manifest-src stay 'none' either
+	 *  way - unrelated to what actually blocked Mailvelope here (found live 2026-09-08: a
+	 *  `frame-src 'none'`-forbidden `chrome-extension://` iframe, not any connect-src/XHR need).
 	 */
-	private wrapDocument(body : string) : string
+	private wrapDocument(body : string, forMailvelope : boolean = false) : string
 	{
 		// same directive set the current server-rendered response sets via HTTP header
 		// (mail_ui::get_load_email_data(), class.mail_ui.inc.php:2993-3000: script-src 'self' to
 		// load preview.js below, img-src additionally allows blob: for Stalwart inline-image
 		// downloads, see resolveInlineImages(), alongside the data: URIs cid images already used)
-		const csp = "frame-src 'none'; connect-src 'none'; manifest-src 'none'; script-src 'self'; " +
+		// explicit 'self' (not just omitting frame-src) - an absent frame-src with no default-src
+		// fallback in this standalone <meta> tag would mean UNRESTRICTED, not merely "back to the
+		// page default"
+		const csp = "frame-src " + (forMailvelope ? "'self'" : "'none'") + "; " +
+			"connect-src 'none'; manifest-src 'none'; script-src 'self'; " +
 			"img-src http: blob: data:; media-src https: http: data:";
 
 		return `<!DOCTYPE html><html><head><meta charset="utf-8">` +
@@ -4174,6 +4188,10 @@ export class MailJmap
 	 *  old draft and sending it would leave the ORIGINAL draft orphaned in the Drafts folder - only
 	 *  the freshly-created one (this call's own emailId, moved Drafts->Sent above) ever gets
 	 *  cleaned up automatically.
+	 * @param pgpArmored Mailvelope's own already-encrypted armored output (compose.ts's
+	 *  MailApp.mailvelope_editor.encrypt()) - mutually exclusive with smimeType, wrapped into a
+	 *  proper bodyStructure via pgpEncryptBody() instead, entirely client-side (no server round-trip,
+	 *  unlike S/MIME - see that method's own docblock for why)
 	 * @throws JmapUserError on any failure - see unreachableError()'s docblock
 	 * @throws JmapSmimePassphraseError smimeType needs signing and no passphrase (given or
 	 *  session-cached) was enough to unlock the sender's own private key
@@ -4189,7 +4207,7 @@ export class MailJmap
 	 *  to `emailId`'s original Draft-folder UID number).
 	 */
 	async sendNewEmail(profileID : string, email : JmapNewEmail, smimeType? : string, passphrase? : string,
-		passExpMinutes? : number, existingDraftEmailId? : string) :
+		passExpMinutes? : number, existingDraftEmailId? : string, pgpArmored? : string) :
 		Promise<{emailId : string, mailboxId : string, rawBlobId? : string}>
 	{
 		try
@@ -4197,13 +4215,14 @@ export class MailJmap
 			const {token, client, identity, submissionIdentityId, draftsId, sentId} = await this.resolveComposeContext(profileID, true);
 
 			const bodyOverride = smimeType ?
-				await this.smimeEncryptBody(profileID, token, client, identity, email, smimeType, passphrase, passExpMinutes) : undefined;
+				await this.smimeEncryptBody(profileID, token, client, identity, email, smimeType, passphrase, passExpMinutes) :
+				pgpArmored ? await this.pgpEncryptBody(profileID, pgpArmored) : undefined;
 			// TYPE_SIGN's "whole" shape needs Email/import, not Email/set create - see
 			// importWholeMessageDraft()'s own docblock
 			const emailId = bodyOverride && 'whole' in bodyOverride ?
 				await this.importWholeMessageDraft(token, client, draftsId, bodyOverride.blobId) :
 				await this.createDraftEmail(token, client, identity, draftsId, email,
-					bodyOverride as {type : string, blobId : string} | undefined);
+					bodyOverride as {type : string, blobId : string} | {type : string, subParts : {type : string, blobId : string}[]} | undefined);
 
 			const [{submission}] = await client.requestMany((t) => ({
 				submission: t.EmailSubmission.set({
@@ -4302,6 +4321,47 @@ export class MailJmap
 	}
 
 	/**
+	 * Wrap an already-PGP-encrypted armored message (Mailvelope's own `editor.encrypt()` output)
+	 * into an RFC 3156 multipart/encrypted bodyStructure - createDraftEmail()'s bodyOverride swap,
+	 * same mechanism smimeEncryptBody() uses, but with NO server round-trip at all: unlike S/MIME
+	 * (whose signing/encryption happens server-side against a stored cert, private key material
+	 * never leaving the server), Mailvelope's embedded OpenPGP engine already produced the
+	 * ciphertext client-side, in the browser - there's nothing left for the server to do. Two tiny
+	 * blobs, uploaded via the same uploadAttachment() primitive real attachments use: RFC 3156 §4's
+	 * fixed "Version: 1" identifier part, and the armored ciphertext itself.
+	 *
+	 * @param profileID
+	 * @param armored Mailvelope's `-----BEGIN PGP MESSAGE-----...` armored output
+	 */
+	private async pgpEncryptBody(profileID : string, armored : string) :
+		Promise<{type : string, subParts : {type : string, blobId : string}[]}>
+	{
+		const [version, cipher] = await Promise.all([
+			this.uploadAttachment(profileID, new Blob(['Version: 1\n'], {type: 'application/pgp-encrypted'}),
+				'version', 'application/pgp-encrypted'),
+			this.uploadAttachment(profileID, new Blob([armored], {type: 'application/octet-stream'}),
+				'encrypted.asc', 'application/octet-stream'),
+		]);
+		return {
+			// RFC 3156 §4 requires a `protocol` Content-Type parameter naming the OpenPGP
+			// identifier part's own media type - JMAP's structured EmailBodyPart properties have no
+			// dedicated field for extra Content-Type parameters (only `type`, the bare media type),
+			// but live-verified against real Stalwart (2026-09-08) that it takes the WHOLE
+			// `type; params` string verbatim into the actual Content-Type header rather than
+			// rejecting/stripping it - simplest way to get a spec-correct header out of this
+			// property set. Without this, Stalwart still built a working multipart/encrypted
+			// structure (both subParts render correctly), just missing this one parameter - so a
+			// server that instead did reject or strip it would only cost strict RFC-compliance, not
+			// a broken message.
+			type: 'multipart/encrypted; protocol="application/pgp-encrypted"',
+			subParts: [
+				{type: version.type, blobId: version.blobId},
+				{type: cipher.type, blobId: cipher.blobId},
+			],
+		};
+	}
+
+	/**
 	 * Create (or reimport-and-replace) a Drafts-mailbox Email via JMAP Email/set - the autosave/
 	 * "save as draft" counterpart to sendNewEmail(), same scope limits (real-JMAP accounts only,
 	 * no attachments/S-MIME yet - see doc/ai/projects/mail-compose-jmap-migration.md's Step 1).
@@ -4323,19 +4383,23 @@ export class MailJmap
 	 * @param existingEmailId already-drafted Email id from a PREVIOUS call in this same compose
 	 *  session, destroyed once its replacement is created - undefined for the first save of a
 	 *  brand new message
+	 * @param pgpArmored Mailvelope's own already-encrypted armored output - see sendNewEmail()'s
+	 *  own param docblock; same pgpEncryptBody() bodyStructure swap, no server round-trip
 	 * @returns the drafted Email's id and its Drafts mailboxId - pass emailId back in as
 	 *  existingEmailId on the next call
 	 * @throws JmapUserError on any failure - see unreachableError()'s docblock. IMAP-shim accounts
 	 *  gained Email/create support in Step 2 (Api\Mail\Jmap\Imap::emailSet()), so this no longer
 	 *  throws JmapUnsupportedBackendError for token.isLocal the way it used to.
 	 */
-	async saveDraft(profileID : string, email : JmapNewEmail, existingEmailId? : string) : Promise<{emailId : string, mailboxId : string}>
+	async saveDraft(profileID : string, email : JmapNewEmail, existingEmailId? : string, pgpArmored? : string) :
+		Promise<{emailId : string, mailboxId : string}>
 	{
 		try
 		{
 			const {token, client, identity, draftsId} = await this.resolveComposeContext(profileID, false);
 
-			const emailId = await this.createDraftEmail(token, client, identity, draftsId, email);
+			const bodyOverride = pgpArmored ? await this.pgpEncryptBody(profileID, pgpArmored) : undefined;
+			const emailId = await this.createDraftEmail(token, client, identity, draftsId, email, bodyOverride);
 			if (existingEmailId)
 			{
 				try
@@ -5017,7 +5081,8 @@ export class MailJmap
 	 *  would otherwise build them, only the body's own MIME shape changes.
 	 */
 	private async createDraftEmail(token : JmapToken, client : JamClient, identity : any, draftsId : string, email : JmapNewEmail,
-		bodyOverride? : {type : string, blobId : string}) : Promise<string>
+		bodyOverride? : {type : string, blobId : string} | {type : string, subParts : {type : string, blobId : string}[]}) :
+		Promise<string>
 	{
 		const {body, inlineImages} = bodyOverride ?
 			{body: email.body ?? '', inlineImages: [] as JmapInlineImage[]} :
@@ -5028,7 +5093,10 @@ export class MailJmap
 			delete properties.bodyValues;
 			delete properties.textBody;
 			delete properties.htmlBody;
-			properties.bodyStructure = {type: bodyOverride.type, blobId: bodyOverride.blobId};
+			// bodyOverride is already the exact bodyStructure shape - a flat {type,blobId} single
+			// opaque part for S/MIME, or a {type,subParts} multipart/encrypted tree for PGP
+			// (pgpEncryptBody()) - no reconstruction needed
+			properties.bodyStructure = bodyOverride;
 		}
 		const [{emailSet}] = await client.requestMany((t) => ({
 			emailSet: t.Email.set({

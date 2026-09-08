@@ -612,8 +612,14 @@ export class MailCompose
 	 * losing content, not a polished HTML authoring experience (nobody switches TO plain text
 	 * and then back expecting rich formatting to reappear either way, outside the "undo" case
 	 * lastMimeTypeConversion already covers).
+	 *
+	 * Public (not just submitOnChange()'s own caller): MailApp.togglePgpEncrypt() (app.ts) also
+	 * calls this directly via the `compose` getter to force plain-text before a PGP encrypt -
+	 * that code used to fall back to a full `getInstanceManager().submit()` reload, which hung
+	 * forever showing the loading spinner once compose stopped registering a postback menuaction
+	 * (mail_compose::compose() removed, doc/ai/projects/mail-compose-jmap-migration.md Step 10).
 	 */
-	private switchMimeTypeClientSide(toHtml : boolean) : void
+	switchMimeTypeClientSide(toHtml : boolean) : void
 	{
 		const fromWidget = this.et2.getWidgetById(toHtml ? 'mail_plaintext' : 'mail_htmltext');
 		const toWidget = this.et2.getWidgetById(toHtml ? 'mail_htmltext' : 'mail_plaintext');
@@ -999,26 +1005,12 @@ export class MailCompose
 		// still-uploading classic (non-JMAP) attachment's own postback merge to the punch.
 		wait = wait.then(() => this.waitForPendingUploads());
 
-		if (this.app.mailvelope_editor)
-		{
-			const self = this;
-			wait.then(() =>
-			{
-				this.app.mailvelopeGetCheckRecipients().then((_recipients) =>
-				{
-					return self.app.mailvelope_editor.encrypt(_recipients);
-				}).then((_armored) =>
-				{
-					self.et2.getWidgetById('mimeType').set_value(false);
-					self.et2.getWidgetById('mail_plaintext').set_disabled(false);
-					self.et2.getWidgetById('mail_plaintext').set_value(_armored);
-				}).catch((_err) =>
-				{
-					self.egw.message(_err.message, 'error');
-				});
-			});
-			return false;
-		}
+		// mailvelope (PGP) used to have its own branch here that just encrypted the body into the
+		// mail_plaintext widget and stopped (`return false`) - clicking Send visibly did nothing
+		// (found live 2026-09-08). trySendViaJmap() now handles mailvelope directly (encrypts via
+		// Mailvelope, passes the armored result through as MailJmap.sendNewEmail()'s pgpArmored -
+		// see jmapEligible()'s own docblock), so it just falls through to the same isJmapMode path
+		// every other send takes.
 		// doc/ai/projects/mail-compose-jmap-migration.md, Step 1 - try the JMAP-native send path
 		// for a plain new message opened via the "jmapCompose" toggle. trySendViaJmap() itself
 		// decides eligibility (no attachments carried forward from another message, no
@@ -1086,8 +1078,16 @@ export class MailCompose
 				signed ? MailCompose.SMIME_TYPE_SIGN : encrypted ? MailCompose.SMIME_TYPE_ENCRYPT : undefined;
 			const passphrase = this.et2.getWidgetById('smime_passphrase')?.get_value();
 			email = await this.currentEmailFields(true);
+			// Mailvelope already produced the ciphertext client-side (its own iframe editor, not
+			// the mail_htmltext/mail_plaintext widgets email.body came from above) - pgpArmored
+			// takes the SAME bodyOverride swap smimeType does in sendNewEmail(), just with no
+			// server round-trip (see pgpEncryptBody()'s own docblock for why PGP differs from
+			// S/MIME here). Real recipients (not saveAsDraft's own `[]`), matching this being an
+			// actual send.
+			const pgpArmored = this.app.mailvelope_editor ?
+				await this.app.mailvelope_editor.encrypt(await this.app.mailvelopeGetCheckRecipients()) : undefined;
 			sent = await this.app.jmap.sendNewEmail(String(this.currentProfileID()), email,
-				smimeType, passphrase, this.smimePassExpMinutes, this.jmapDraftEmailId);
+				smimeType, passphrase, this.smimePassExpMinutes, this.jmapDraftEmailId, pgpArmored);
 		}
 		catch (e)
 		{
@@ -1202,10 +1202,17 @@ export class MailCompose
 	 * The `forSend` param this method used to take is gone (2026-09-02) - it only ever gated the
 	 * now-removed cross-app-integration block, and every other check here applies identically to a
 	 * send or a draft save.
+	 *
+	 * mailvelope is no longer a blocker either (2026-09-08 follow-up): trySendViaJmap()/
+	 * trySaveDraftViaJmap() both encrypt via Mailvelope client-side first, then pass the armored
+	 * result through as pgpArmored - see MailJmap.pgpEncryptBody()'s own docblock for why PGP
+	 * (unlike S/MIME) never needed a server round-trip to begin with. This closes the gap that made
+	 * PGP-encrypted Send silently do nothing and PGP autosave hit the classic postback's
+	 * raw-IMAP-fallthrough Drafts-folder error (found live 2026-09-08).
 	 */
 	private jmapEligible() : boolean
 	{
-		if (!this.isJmapMode || this.app.mailvelope_editor)
+		if (!this.isJmapMode)
 		{
 			return false;
 		}
@@ -2219,7 +2226,12 @@ export class MailCompose
 		let result : {emailId : string, mailboxId : string};
 		try
 		{
-			result = await this.app.jmap.saveDraft(this.currentProfileID(), await this.currentEmailFields(), this.jmapDraftEmailId);
+			// `[]` (no recipients) matches the classic saveAsDraftClassic() mailvelope branch's own
+			// convention - a draft only ever needs to be re-openable by the SENDER later, never a
+			// recipient who hasn't received it yet
+			const pgpArmored = this.app.mailvelope_editor ? await this.app.mailvelope_editor.encrypt([]) : undefined;
+			result = await this.app.jmap.saveDraft(this.currentProfileID(), await this.currentEmailFields(),
+				this.jmapDraftEmailId, pgpArmored);
 		}
 		catch (e)
 		{
@@ -2400,10 +2412,13 @@ export class MailCompose
 					// doc/ai/projects/mail-compose-jmap-migration.md, Step 1 - try the JMAP-native
 					// draft-save path first (autosave and plain "Save as Draft"). Only ever engages
 					// when the jmapCompose toggle is on AND this compose is otherwise eligible (no
-					// attachments/integration/S-MIME/mailvelope) - "Not sure we want to follow that
-					// up now" (ralf) on the classic autosave's own raw-IMAP-fallthrough error was the
-					// reason to build this, so classic autosave/save must keep working unchanged
-					// whenever the toggle is off or this compose isn't (yet) eligible.
+					// classically-carried-forward attachments) - "Not sure we want to follow that up
+					// now" (ralf) on the classic autosave's own raw-IMAP-fallthrough error was the
+					// original reason to build this; mailvelope now goes through here too
+					// (jmapEligible()'s own docblock, 2026-09-08) specifically BECAUSE that same
+					// classic-postback error turned out to still hit PGP autosave otherwise. Classic
+					// autosave/save keeps working unchanged whenever the toggle is off or this compose
+					// isn't (yet) eligible for some other reason.
 					self.trySaveDraftViaJmap(action).then((handled) =>
 					{
 						if (handled)

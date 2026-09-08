@@ -362,8 +362,13 @@ export class MailApp extends EgwApp
 			case 'mail.index':
 				this.et2?.getWidgetById('messageIFRAME')?.iframe?.addEventListener('load', () =>
 				{
-					// decrypt preview body if mailvelope is available
-					self.mailvelopeAvailable(self.mailvelopeDisplay);
+					// mailvelopeAvailable(mailvelopeDisplay) moved to loadMessageBody()'s own fast
+					// path AND loadClassicBody() (2026-09-08) - this same 'load' listener stays
+					// attached for the whole life of the template and fired alongside those on every
+					// message selection, decrypting the SAME message twice into two separate
+					// Mailvelope display containers side by side (found live testing the
+					// mail.display case's identical duplicate pattern - see that listener's own
+					// comment below)
 					self.preparePrint();
 				});
 				const nm = this.et2.getWidgetById(this.nm_index);
@@ -468,8 +473,13 @@ export class MailApp extends EgwApp
 
 				this.et2?.getWidgetById('mailDisplayBodySrc')?.iframe?.addEventListener('load', function(e)
 				{
-					// encrypt body if mailvelope is available
-					self.mailvelopeAvailable(self.mailvelopeDisplay);
+					// mailvelopeAvailable(mailvelopeDisplay) moved to loadMessageBody()'s own fast
+					// path AND loadClassicBody() (2026-09-08) - this listener stays attached for the
+					// template's whole lifetime and re-fires on every navigation of THIS iframe,
+					// alongside loadMessageBody()'s own once-per-load listener on the same element -
+					// calling it from both created two separate Mailvelope display containers side
+					// by side for the same message (found live 2026-09-08, ralf: "It showed 3
+					// versions of the message side by side... twice the message with mailvelope").
 					self.preparePrint();
 					self.resolveExternalImages((this as HTMLIFrameElement).contentWindow.document, window.location.search.endsWith('&mode=print_images'));
 					// Trigger print command if the mail oppend for printing porpuse
@@ -2699,6 +2709,10 @@ export class MailApp extends EgwApp
 		{
 			const doc = iframe.contentWindow.document;
 			doc.documentElement.dataset.rowId = rowId;
+			// classic-fallback counterpart of loadMessageBody()'s own fast-path trigger below - the
+			// ONLY place left that calls this for the classic-navigation case, now that et2_ready()'s
+			// own template-lifetime listeners no longer do (see their own comments)
+			this.mailvelopeAvailable(this.mailvelopeDisplay);
 			onLoad(doc);
 		}, {once: true});
 		iframeWidget.set_src(egw.link('/index.php', {
@@ -2745,6 +2759,17 @@ export class MailApp extends EgwApp
 				doc.documentElement.dataset.rowId = rowId;
 				this.jmap.resolveInlineImages(doc, rowId, fast).catch((e) =>
 					console.error('MailApp.loadMessageBody(): resolveInlineImages failed', e));
+				// PGP/MIME (MailJmap.fetchBody()'s own PGP branch, jmap.ts) renders the raw armored
+				// text into this SAME `td.td_display > pre` shape specifically so mailvelopeDisplay()
+				// can find and decrypt it - et2_ready()'s own `iframe.addEventListener('load', ...)`
+				// call to this (mail.index/mail.display cases) only ever fires for the CLASSIC
+				// full-page iframe load, once, at template-ready time; this JMAP-native fast path
+				// re-sets `.srcdoc` on every message selection without ever re-triggering that
+				// original listener, so a PGP-encrypted preview silently never called Mailvelope at
+				// all (found live 2026-09-08, ralf: "preview shows the raw PGP message, but does NOT
+				// trigger Mailvelope"). mailvelopeDisplay() itself already no-ops immediately for any
+				// non-PGP body (checks for the armored header before doing anything).
+				this.mailvelopeAvailable(this.mailvelopeDisplay);
 				onLoad(doc);
 			}, {once: true});
 			iframe.srcdoc = fast.html;
@@ -7786,13 +7811,57 @@ export class MailApp extends EgwApp
 	mailvelopeDisplay(_keyring)
 	{
 		const self = this;
-		const iframe = this.et2?.getWidgetById('mailDisplayBodySrc')?.iframe || this.et2?.getWidgetById('messageIFRAME')?.iframe;
+		const iframeWidget : any = this.et2?.getWidgetById('mailDisplayBodySrc') || this.et2?.getWidgetById('messageIFRAME');
+		const iframe = iframeWidget?.iframe;
 		const armored = iframe?.contentDocument?.querySelector('td.td_display > pre')?.textContent?.trim() || '';
+
+		// Undo a PREVIOUS message's own mailvelopeDisplay() unconditionally, before checking
+		// whether THIS message even is PGP - found live 2026-09-08 (ralf: "clicked an other time
+		// and the message is gone, looks like the iframe is not back but Mailvelope is gone"):
+		// selecting message A (PGP) sets iframe.style.display='none' once Mailvelope takes over;
+		// selecting message B (not PGP) right after loads B's real content into that SAME iframe
+		// element (loadMessageBody() reuses it, only .srcdoc changes) but never reversed A's own
+		// inline style, and this method used to `return` immediately for a non-PGP body, before
+		// ever reaching the code that would have cleared it - B's content loaded correctly, just
+		// stayed invisible. Also clears any leftover preview-pane anchor <div> (see the `else`
+		// branch below) and any Mailvelope iframe still sitting in .mailDisplayContainer from a
+		// previous message in the SAME popup - stale regardless of what THIS message turns out to
+		// be.
+		if (iframe) iframe.style.display = '';
+		document.querySelectorAll('div[id^="mailvelope-display-"]').forEach(el => el.remove());
+		document.querySelectorAll('.mailDisplayContainer ' + this.mailvelope_iframe_selector).forEach(el => el.remove());
 
 		if (armored == "" || armored.indexOf(this.begin_pgp_message) === -1) return;
 
-		const container = iframe.parentElement;
-		const container_selector = this.et2.getInstanceManager().name == 'mail.display'  ? '.mailDisplayContainer' : `#${(container as any).dom_id}`;
+		// Mailvelope's own createDisplayContainer() resolves `container_selector` via ITS content
+		// script's plain document.querySelector() from the TOP-level document - no shadow-piercing
+		// capability at all. `.iframe` (Et2Iframe.ts's own accessor) lives inside that widget's own
+		// shadow root, and (found live 2026-09-08, preview-pane case only) so does the whole chain
+		// of ancestors up through <et2-ai> - iframeWidget.parentElement resolves to a real Element,
+		// but neither IT nor any further .parentElement walk ever reaches something
+		// document.querySelector() can actually find (confirmed live: giving that element a fresh
+		// id and querying '#'+id from the top document still returns null) - unlike the
+		// 'mail.display' branch below, where `.mailDisplayContainer` (display.xet's own <et2-box>)
+		// sits genuinely in light DOM, untouched by this. Sidesteps the whole shadow-nesting
+		// question: append a fresh, guaranteed-reachable plain <div> straight onto document.body,
+		// positioned over the iframe's current on-screen rect, instead of trying to find or walk up
+		// to an existing reachable ancestor.
+		let container_selector : string;
+		if (this.et2.getInstanceManager().name == 'mail.display')
+		{
+			container_selector = '.mailDisplayContainer';
+		}
+		else
+		{
+			if (!iframe) return;
+			const rect = iframe.getBoundingClientRect();
+			const anchor = document.createElement('div');
+			anchor.id = 'mailvelope-display-' + Math.random().toString(36).slice(2);
+			anchor.style.cssText = `position: absolute; left: ${rect.left + window.scrollX}px; top: ${rect.top + window.scrollY}px; ` +
+				`width: ${rect.width}px; height: ${rect.height}px; z-index: 1;`;
+			document.body.appendChild(anchor);
+			container_selector = `#${anchor.id}`;
+		}
 		const options : {showExternalContent : boolean, senderAddress? : string} = {
 			showExternalContent: this.egw.preference('allowExternalIMGs') == 1	// "1", or "0", undefined --> true or false
 		};
@@ -7852,11 +7921,12 @@ export class MailApp extends EgwApp
 					predefinedText: options.predefinedText.slice(end_pgp+this.end_pgp_message.length+1).replace(/^> \s*/m,''),
 					signMsg: true	// for now (no UI) always sign, when we encrypt
 				};
-				// set encrypted checkbox, if not already set
-				const composeToolbar = this.et2.getWidgetById('composeToolbar');
-				if (!composeToolbar.checkbox('pgp'))
+				// set encrypted checkbox, if not already set - .checkbox('pgp') no longer exists on
+				// this widget, same stale API as togglePgpEncrypt()'s own set_checked() call sites
+				const pgpAction = this.et2.getWidgetById('composeToolbar')._actionManager.getActionById('pgp');
+				if (!pgpAction.checked)
 				{
-					composeToolbar.checkbox('pgp',true);
+					pgpAction.set_checked(true);
 				}
 			}
 		}
@@ -7900,8 +7970,11 @@ export class MailApp extends EgwApp
 				if (mimeType.get_value())
 				{
 					mimeType.set_value(false);
-					self.et2.getInstanceManager().submit();
-					return;	// ToDo: do that without reload
+					// entirely client-side (compose.ts's switchMimeTypeClientSide()), matching what
+					// the compose HTML/plain toggle itself does now - a full submit()/reload used to
+					// run here, but compose no longer registers a postback menuaction to submit to,
+					// so it just hung forever on the loading spinner (found live 2026-09-08)
+					self.compose.switchMimeTypeClientSide(false);
 				}
 				self.mailvelopeOpenKeyring().then((_keyring) =>
 				{
@@ -7929,7 +8002,11 @@ export class MailApp extends EgwApp
 					}
 					else
 					{
-						self.et2.getWidgetById('composeToolbar').checkbox('pgp', true);
+						// same re-check pattern as the other set_checked() call sites in this method -
+						// .checkbox('pgp', true) no longer exists on this widget (found live 2026-09-08,
+						// clicking "No" here to keep encryption on threw "checkbox is not a function")
+						self.et2.getWidgetById('composeToolbar')._actionManager.getActionById('pgp').set_checked(true);
+						document.querySelector('button#composeToolbar-pgp')?.classList.toggle('toolbar_toggled');
 					}
 				},
 				this.egw.lang('You will loose current message body, unless you save it to your clipboard!'),

@@ -725,8 +725,24 @@ class MessageDisplayHandler
 		{
 			Api\Session::cache_control(true);
 
-			// more strict CSP for displaying mail
-			foreach(['frame-src', 'connect-src', 'manifest-src'] as $src)
+			// more strict CSP for displaying mail - EXCEPT frame-src for a PGP/MIME message
+			// (multipart/encrypted, api/src/Mail.php:5915's own identical contentTypeMap() check):
+			// its ciphertext sub-part is rendered as-is specifically so Mailvelope can find and
+			// decrypt it client-side (mailvelopeDisplay(), mail/js/app.ts), which needs to inject a
+			// chrome-extension:// iframe - 'none' unconditionally blocks that (found live
+			// 2026-09-08, ralf: "preview shows the raw PGP message, but does NOT trigger
+			// Mailvelope" + a null-appendChild error). Leaving frame-src at the page's own default
+			// ('self', ContentSecurityPolicy::send()) instead of overriding it is enough - the
+			// EXACT same default already works for Mailvelope everywhere else it's used
+			// (stylite/js/app.ts's InfoLog description editor/tooltip, no frame-src override at
+			// all) - nothing here needs an explicit chrome-extension: allowance. This 'none'
+			// hardening is 2020's "stricter CSP policy for mail body", years before Mailvelope
+			// integration existed - never meant to conflict with it, just never revisited since.
+			// connect-src/manifest-src stay 'none' regardless - unrelated to what actually blocked
+			// Mailvelope here.
+			$srcs = in_array('multipart/encrypted', $structure->contentTypeMap(), true) ?
+				['connect-src', 'manifest-src'] : ['frame-src', 'connect-src', 'manifest-src'];
+			foreach($srcs as $src)
 			{
 				Api\Header\ContentSecurityPolicy::add($src, 'none');
 			}
