@@ -1350,7 +1350,14 @@ export class MailApp extends EgwApp
 	 */
 	composeMessage(_action, _elems)
 	{
-		if (typeof _elems == 'undefined' || _elems.length==0)
+		// The "New message" toolbar button (index.xet's button[mailcreate]/mobile's composeMail)
+		// calls this as composeMessage(false) - a genuinely blank compose, never contextual to
+		// whatever message happens to be currently open/focused. The backfill below (meant for
+		// reply/reply_all/forward/composeasnew invoked without an explicit row selection, eg. a
+		// keyboard shortcut while previewing a message) must NOT run for that case - found live
+		// 2026-09-08 (ralf): it was leaking the currently-focused message's own id (and, via
+		// settings.smime_type below, its S/MIME status) into an otherwise-blank compose.php url.
+		if ((typeof _elems == 'undefined' || _elems.length==0) && _action && _action.id)
 		{
 			if (this.et2 && this.et2.getArrayMgr("content").getEntry('mail_id'))
 			{
@@ -1730,11 +1737,20 @@ export class MailApp extends EgwApp
 		]);
 		const actionsCopy : any = {...actions};
 		// content/sel_options are the SAME shared, cached objects getComposeToolbarData() reuses
-		// per account - merging the hook's own result into them directly (rather than into a copy)
-		// would be the exact "corrupt every other popup's starting content" bug the comment above
-		// warns about, just for the hook's data instead of a widget edit.
-		const contentCopy : any = prepared ? {...content, ...prepared.content} : content;
-		const selOptionsCopy : any = prepared ? {...sel_options, ...prepared.sel_options} : sel_options;
+		// per account - this copy MUST happen unconditionally (found live 2026-09-08, ralf: replying
+		// to one message showed a PREVIOUS message's own Cc, and even a brand-new blank "Compose"
+		// opened with leftover recipients/attachments): the `prepared ? ... : content` form below
+		// used to skip cloning entirely whenever no mail_compose_prepare hook is registered - the
+		// common case - leaving `contentCopy === content`, the exact same object getComposeToolbarData()
+		// caches and reuses for every future popup of this account. MailCompose's own
+		// mergeAttachmentEntries()/deleteAttachment()/checkSharingFilemode() (mail/js/compose.ts) all
+		// reassign top-level keys straight onto `this.et2.getArrayMgr('content').data` - which
+		// et2_arrayMgr holds by reference, not by copy - so any one popup's edits permanently
+		// corrupted the shared per-account baseline every later popup (including an unrelated blank
+		// compose) starts from. A shallow copy is enough since every existing mutation site reassigns
+		// a top-level key rather than pushing into a shared nested array/object in place.
+		const contentCopy : any = {...content, ...(prepared?.content || {})};
+		const selOptionsCopy : any = {...sel_options, ...(prepared?.sel_options || {})};
 
 		// preset (compose.php's own $_GET['preset'], MailApp.composeMailto()) - a mailto: link's
 		// own to/cc/bcc, appended onto whatever's already there (same "append, don't overwrite"

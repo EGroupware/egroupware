@@ -1434,7 +1434,17 @@ export class MailCompose
 				addUnique(context.to, to);
 				addUnique(context.cc, cc);
 				this.et2.getWidgetById('to')?.set_value(to.map(formatJmapAddress));
-				if (cc.length) this.et2.getWidgetById('cc')?.set_value(cc.map(formatJmapAddress));
+				// unconditional, even when cc is empty - Compose.php's own ajax_getComposeToolbarData()
+				// (mail/src/Compose.php) may have pre-seeded this widget from the account's
+				// "predefined compose addresses" preference (a genuinely blank compose's own baseline,
+				// per that method's own docblock: "these only ever survive into a genuinely blank new
+				// compose" - a reply is supposed to OVERWRITE them). Found live 2026-09-08 (ralf: Cc
+				// addresses from a previous reply kept showing up on a LATER, unrelated reply): the
+				// old `if (cc.length)` guard here left that predefined baseline (or, on the reply-all
+				// path itself, whatever was already sitting in the widget) untouched whenever the
+				// CURRENT original message happened to have no Cc of its own.
+				this.et2.getWidgetById('cc')?.set_value(cc.map(formatJmapAddress));
+				this.et2.getWidgetById('bcc')?.set_value([]);
 				// fieldExpanderInit() (app.ts's own post-load call) already ran BEFORE this bootstrap
 				// ever populated cc - it only shows a header row whose widget already has a value AT
 				// THAT TIME, so a client-only-populated cc stays hidden behind its "..." expander
@@ -1448,6 +1458,13 @@ export class MailCompose
 			{
 				const to = (context.replyTo?.length ? context.replyTo : context.from).map(formatJmapAddress);
 				this.et2.getWidgetById('to')?.set_value(to);
+				// a plain (non-reply-all) reply never carries the original's own Cc/Bcc forward, but
+				// the widgets still need to be explicitly cleared - see the reply-all branch's own
+				// docblock above for why leaving them untouched leaks a predefined-address baseline
+				// (or, for 'reply_attachments'/successive replies, ANY prior value) into a reply that
+				// should start with none.
+				this.et2.getWidgetById('cc')?.set_value([]);
+				this.et2.getWidgetById('bcc')?.set_value([]);
 			}
 			// "Re: " is hardcoded, not translated, matching the classic getReplyData()'s own convention
 			subject = /^re:/i.test(context.subject.trim()) ? context.subject : 'Re: ' + context.subject;
@@ -1494,9 +1511,13 @@ export class MailCompose
 		this.isReplyCompose = false;
 		this.replyThreadingHeaders = null;
 
+		// cc/bcc unconditional (even when empty) for the same reason bootstrapReply() now is -
+		// see its own docblock: a `if (context.cc.length)` guard here left an account's
+		// "predefined compose addresses" baseline (Compose.php's own ajax_getComposeToolbarData())
+		// sitting in the widget whenever the reopened draft itself had no Cc/Bcc of its own.
 		this.et2.getWidgetById('to')?.set_value(context.to.map(formatJmapAddress));
-		if (context.cc.length) this.et2.getWidgetById('cc')?.set_value(context.cc.map(formatJmapAddress));
-		if (context.bcc.length) this.et2.getWidgetById('bcc')?.set_value(context.bcc.map(formatJmapAddress));
+		this.et2.getWidgetById('cc')?.set_value(context.cc.map(formatJmapAddress));
+		this.et2.getWidgetById('bcc')?.set_value(context.bcc.map(formatJmapAddress));
 		this.et2.getWidgetById('subject')?.set_value(context.subject);
 		// fieldExpanderInit() (app.ts's own post-load call) already ran BEFORE this bootstrap ever
 		// populated cc/bcc - it only shows a header row whose widget already has a value AT THAT
