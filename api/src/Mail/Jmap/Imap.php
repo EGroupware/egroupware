@@ -3385,9 +3385,12 @@ class Imap extends Jmap\Base
 	}
 
 	// top-level content-types that need the JMAP-native S/MIME resolver (resolveSmime()/
-	// resolveSmimeJmap()) - same list mail/js/jmap.ts's MailJmap.SPECIAL_CASE_TYPES uses for S/MIME
+	// resolveSmimeJmap()) - same list mail/js/jmap.ts's MailJmap.SPECIAL_CASE_TYPES uses for S/MIME.
+	// 'multipart/signed' deliberately NOT included here (see specialCaseType()'s own dedicated
+	// check below) - matches mail/js/jmap.ts's own SPECIAL_CASE_TYPES docblock: RFC 1847's wrapper
+	// is shared by RFC 3156 PGP/MIME's detached signature too, not S/MIME-exclusive.
 	private const SMIME_TYPES = [
-		'multipart/signed', 'application/pkcs7-mime', 'application/x-pkcs7-mime',
+		'application/pkcs7-mime', 'application/x-pkcs7-mime',
 		'application/pkcs7-signature', 'application/x-pkcs7-signature',
 	];
 
@@ -3406,6 +3409,27 @@ class Imap extends Jmap\Base
 	public static function specialCaseType(array $bodyStructure) : ?string
 	{
 		$type = strtolower($bodyStructure['type'] ?? '');
+		if ($type === 'multipart/signed')
+		{
+			// RFC 1847's multipart/signed wrapper is shared by RFC 3156 PGP/MIME's own detached
+			// signature (application/pgp-signature) - only actually needs the S/MIME resolver
+			// when its own detached-signature sub-part is really S/MIME (pkcs7). This is the
+			// server-side twin of mail/js/jmap.ts's own isSpecialCase() fix (2026-09-08, commit
+			// a27d40f064) - missed at the time, so a PGP-signed message kept showing red/
+			// unverified in the popup/display view specifically (found live 2026-09-09, ralf):
+			// loadEmailBody()'s classic iframe src, the popup's own initial body source, always
+			// goes through this method via tryJmapNativeSpecialCase(), bypassing the client-side-
+			// only fix entirely - the preview pane (pure client-side JMAP path) was already correct.
+			foreach (($bodyStructure['subParts'] ?? []) as $subPart)
+			{
+				$subType = strtolower($subPart['type'] ?? '');
+				if ($subType === 'application/pkcs7-signature' || $subType === 'application/x-pkcs7-signature')
+				{
+					return 'smime';
+				}
+			}
+			return null;
+		}
 		if (in_array($type, self::SMIME_TYPES, true))
 		{
 			return 'smime';
