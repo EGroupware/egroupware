@@ -90,6 +90,25 @@ export function et2_createWidget(_name: string, _attrs: object, _parent?: any): 
 	// check and return web-components in case widget is no longer available as legacy widget
 	if(typeof et2_registry[_name] === "undefined")
 	{
+		// A handful of deleted legacy widget types have no like-named et2-* successor at all -
+		// "et2-" + name (tried below) only ever works when the modern element happens to be named
+		// exactly that (select -> et2-select, checkbox -> et2-checkbox, ...). "int"/"float" are the
+		// known exception (both replaced by et2-number, not et2-int/et2-float - found live
+		// 2026-09-08, ralf: an "int"/"float" customfield rendered as a literal "int"/"float"
+		// placeholder box - et2_placeholder below, its own getType() text - instead of a real
+		// input). Checked here, client-side, as the true last-resort central spot: PHP callers
+		// (Etemplate\Widget\Transformer::mapLegacyType(), Customfields::_widget()) already remap
+		// this server-side and never send "int"/"float" as a type at all, but this catches any
+		// other caller (a hand-authored legacy XML tag, or an app this codebase can't see) too.
+		const LEGACY_TYPE_MAP: Record<string, string> = {int: 'et2-number', float: 'et2-number'};
+		if(LEGACY_TYPE_MAP[_name] && window.customElements.get(LEGACY_TYPE_MAP[_name]))
+		{
+			if(_name === 'int' && typeof (_attrs as any)['precision'] === 'undefined')
+			{
+				_attrs = {...(_attrs as any), precision: 0};
+			}
+			return loadWebComponent(LEGACY_TYPE_MAP[_name], _attrs, _parent);
+		}
 		if(window.customElements.get('et2-' + _name))
 		{
 			return loadWebComponent('et2-' + _name, _attrs, _parent);

@@ -320,6 +320,7 @@ class Customfields extends Transformer
 			$link_types = Api\Link::app_list();
 		}
 
+		$extraAttrs = [];
 		if (($type = $field['type']) === 'filemanager')
 		{
 			$type = 'vfs-upload';
@@ -329,11 +330,24 @@ class Customfields extends Transformer
 		{
 			$type = 'link-to';
 		}
+		else
+		{
+			// "int"/"float" customfields used to have their own matching widget class, long since
+			// deleted with no successor ever registered under those names - a customfield of either
+			// type used to render as a literal "int"/"float" placeholder box instead of a real input
+			// (found live 2026-09-08, ralf, via the SEPARATE-but-identical bug in records_widget's
+			// own customfield rendering - see Transformer::action()/mapLegacyType()'s own docblock).
+			// Shared with Transformer::action() rather than duplicated here, per ralf: "it would be
+			// good if the fix sits in a central location or is a static method the other class can
+			// call too".
+			[$type, $extraAttrs] = self::mapLegacyType($type);
+		}
 		$xml = '<' . $type . ' type="' . $type . '" id="' . self::$prefix . $fname . '" required="' . $field['needed'] . '"/>';
 		$widget = self::factory($type, $xml, self::$prefix . $fname);
 		$widget->id = self::$prefix.$fname;
 		$widget->attrs['type'] = $type;
 		$widget->set_attrs($xml);
+		$widget->attrs += $extraAttrs;	// eg. "int"'s own precision=0 (only fills in keys not already set)
 
 		// some type-specific (default) attributes
 		switch($type)
