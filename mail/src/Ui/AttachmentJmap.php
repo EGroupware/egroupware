@@ -512,6 +512,34 @@ class AttachmentJmap
 	 */
 	private static function jmapAttachmentsToLegacy(array $jmapAttachments, bool $fetchEmbeddedImages) : array
 	{
+		// RFC 3156 §4's PGP/MIME "Version: 1" control part is a structural marker of the message's
+		// own multipart/encrypted wrapper, never a real user attachment - Mailvelope decrypts the
+		// ciphertext (its own very next sibling; RFC 3156 mandates that exact 2-part order, nothing
+		// else in between) entirely client-side (mailvelopeDisplay(), mail/js/app.ts), so both are
+		// noise here. Matches the classic Api\Mail::getMessageAttachments()'s own identical skip
+		// (api/src/Mail.php:5915) - found live 2026-09-08 showing as a stray "Unbekannt_Part1..."
+		// row (partially covered by Mailvelope's own overlay) for a real-JMAP (Stalwart) account
+		// specifically; this shared method covers the shim too, so both backends now agree. A real
+		// OTHER attachment alongside an encrypted message (outside the multipart/encrypted wrapper
+		// entirely - e.g. `multipart/mixed[multipart/encrypted[...], real_attachment]`) is left
+		// untouched - only the pgp-encrypted marker part and its immediate next sibling are skipped,
+		// wherever in the list they happen to fall.
+		$skip = 0;
+		$jmapAttachments = array_values(array_filter($jmapAttachments, function(array $attachment) use (&$skip)
+		{
+			if ($skip)
+			{
+				$skip--;
+				return false;
+			}
+			if (($attachment['type'] ?? '') === 'application/pgp-encrypted')
+			{
+				$skip = 1;
+				return false;
+			}
+			return true;
+		}));
+
 		$legacy = [];
 		foreach ($jmapAttachments as $attachment)
 		{

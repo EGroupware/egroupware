@@ -135,6 +135,28 @@ ever called Mailvelope to actually decrypt/replace it.
 - Popup: confirmed working end-to-end by ralf after fix 5's `!important` - full width AND full
   height now survive past the passphrase-entry resize, original iframe cleanly hidden.
 
+## Bug 4: PGP's own structural parts shown as a fake attachment (Stalwart only)
+
+Viewing a real PGP-encrypted message on a real-JMAP (Stalwart) account showed a stray
+"Unbekannt_Part1..." row in the attachments block - RFC 3156 §4's `application/pgp-encrypted`
+"Version: 1" control part and its ciphertext sibling, both structural parts of the message's own
+`multipart/encrypted` body, not real user attachments. Confirmed by ralf as backend-specific and
+independent of how the message was sent (even an externally-SMTP-delivered message to Stalwart
+showed it) - the IMAP shim already got this right, Stalwart didn't. Partially covered by
+Mailvelope's own overlay, compounding the confusion.
+
+Classic mail already handles this correctly (`Api\Mail::getMessageAttachments()`,
+`api/src/Mail.php:5915`, skips both parts of a `multipart/encrypted` structure) - the newer
+JMAP-native attachment listing (`AttachmentJmap::jmapAttachmentsToLegacy()`, shared by both
+backends) never gained the equivalent skip. Fixed by filtering on the `application/pgp-encrypted`
+marker type (RFC 3156-reserved, never legitimately used by a real attachment) plus its immediate
+next sibling in the flattened attachments list - conservative, backend-uniform (fixes Stalwart,
+harmless no-op for the shim which apparently never surfaced the pair there to begin with), and
+leaves a genuinely separate real attachment outside the `multipart/encrypted` wrapper (e.g.
+`multipart/mixed[multipart/encrypted[...], real_attachment.pdf]`) untouched. Confirmed by ralf: with
+the fake attachment gone, the earlier overlay concern (Mailvelope covering a would-be attachments
+row) resolved as a side effect too - no attachments row, nothing to cover.
+
 ### Known remaining rough edge (not resolved this session, low priority)
 
 - **Re-selecting the SAME already-decrypted PGP message a second time removed Mailvelope's display**
