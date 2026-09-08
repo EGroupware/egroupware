@@ -26,7 +26,7 @@ import {MailCompose} from "./compose";
 import {formatJmapAddress, isPreferenceOn, JmapBodyResult, JmapMessageReference, JmapUserError, MailJmap} from "./jmap";
 import {renderAttachmentIndex} from "./attachmentIndex";
 import {attachmentSaveUrl, downloadAttachments} from "./attachmentDownload";
-import {buildErrorNode, buildFolderLevel, FolderTreeNode} from "./folderTree";
+import {buildErrorNode, buildFolderLevel, buildMailboxPaths, FolderTreeNode, isNamespaceRootName} from "./folderTree";
 // egw/egw_getFramework are ambient globals (declare global {} in egw_global.d.ts,
 // unconditionally included via tsconfig's "**/*.d.ts") - no import needed or possible.
 
@@ -355,6 +355,9 @@ export class MailApp extends EgwApp
 		{
 			case 'mail.sieve.vacation':
 				this.vacationFilterStatusChange();
+				break;
+			case 'mail.importMessage':
+				this.importMessageInit();
 				break;
 			case 'mail.index':
 				this.et2?.getWidgetById('messageIFRAME')?.iframe?.addEventListener('load', () =>
@@ -5054,6 +5057,150 @@ export class MailApp extends EgwApp
 	addressClick(tag_info, widget)
 	{
 
+	}
+
+	/**
+	 * Client-side JMAP folder search for the FOLDER/folder et2-select fields (compose.xet,
+	 * predefinedAddressesDialog.xet, importMessage.xet) - replaces the classic
+	 * mail.EGroupware\Mail\Compose.ajax_searchFolder server round-trip, which is IMAP-only and
+	 * unreachable for a JMAP/Stalwart account (found live 2026-09-08 via importMessage(), see
+	 * doc/ai/projects/mail-folder-tree-jmap.md). Wired via searchUrl="app.mail.searchFolder"
+	 * (SearchMixin.ts's new "app." string convention).
+	 *
+	 * @param search substring to match, case-insensitively, against each folder's canonical path
+	 *  or translated display label - same two-way match classic ajax_searchFolder() did (folder
+	 *  key vs. displayName)
+	 * @param options static searchOptions from the widget's own attribute - every current
+	 *  template passes {noPrefixId: "true"}, honoured for symmetry with the classic version. An
+	 *  explicit options.profileID overrides the account guess below - not used by any current
+	 *  template (searchOptions is a static XML attribute, can't carry a value that changes per
+	 *  dialog open), but predefinedAddressesDialog.xet's own opener (see the ~line 8579
+	 *  loadWebComponent("et2-dialog", ...) call) already knows the target profileID and could set
+	 *  the rendered widget's searchOptions after load to fix that dialog's own "always searches
+	 *  ActiveProfileID, not the account the tree action was invoked on" gap - not done here, out
+	 *  of scope for this pass.
+	 * @return {value, label} pairs - value is "profileID::path" unless noPrefixId is set (then
+	 *  just "path", matching classic's own $_noPrefixId branch)
+	 */
+	async searchFolder(search : string, options : any) : Promise<{ value : string, label : string }[]>
+	{
+		if(!search || search.length < 2) return [];
+
+		const mailaccountValue = String(this.et2?.getWidgetById?.('mailaccount')?.get_value?.() ?? '');
+		const profileID = String(options?.profileID ?? '') || mailaccountValue.split(':', 2)[0] ||
+			this.egw.preference('ActiveProfileID', 'mail') || '';
+		if(!profileID) return [];
+
+		const mailboxes = await this.jmap.getAllMailboxes(profileID);
+		if(!mailboxes) return [];
+
+		const paths = buildMailboxPaths(mailboxes, this.egw);
+		const noPrefixId = options?.noPrefixId === true || options?.noPrefixId === 'true';
+		const lowerSearch = search.toLowerCase();
+		return mailboxes
+			.filter((mailbox) => !isNamespaceRootName(mailbox.name))
+			.map((mailbox) => ({mailbox, ...paths.get(mailbox.id)}))
+			.filter(({path, label}) => path.toLowerCase().includes(lowerSearch) || label.toLowerCase().includes(lowerSearch))
+			.map(({path, label}) => ({
+				value: noPrefixId ? path : profileID + '::' + path,
+				label,
+			}));
+	}
+
+	/**
+	 * importMessage.xet's own 'mailaccount' onchange - resets FOLDER to the newly-selected
+	 * account's own Drafts folder (falling back to INBOX, which always exists, if that account
+	 * has none or a JMAP lookup fails) so the two fields never disagree (FOLDER's previous value
+	 * belonged to the OLD account, and noPrefixId is off for this template - see Ui::
+	 * importMessage()'s own docblock - so a stale value would silently file the import into the
+	 * wrong account, not just the wrong folder). Added 2026-09-08 (ralf's report): with more than
+	 * one account configured, there was previously no way to choose which account to import into
+	 * at all.
+	 *
+	 * @param _egw
+	 * @param _widget the 'mailaccount' et2-select itself
+	 */
+	async importMessageAccountChanged(_egw, _widget)
+	{
+		if(!_widget || Object.keys(_widget).length === 0) return;
+		const profileID = String(_widget.getValue() ?? '');
+		const folderWidget = _widget.getRoot()?.getWidgetById?.('FOLDER');
+		if(!profileID || !folderWidget) return;
+
+		let path = 'INBOX';
+		try
+		{
+			const mailboxes = await this.jmap.getAllMailboxes(profileID);
+			const drafts = mailboxes?.find((mailbox) => mailbox.role === 'drafts');
+			if(drafts)
+			{
+				path = buildMailboxPaths(mailboxes, this.egw).get(drafts.id)?.path ?? path;
+			}
+		}
+		catch(e)
+		{
+			// a JMAP hiccup resolving the Drafts folder shouldn't block picking an account at all -
+			// INBOX (set above) always exists
+		}
+		folderWidget.set_value(profileID + '::' + path);
+	}
+
+	/**
+	 * importMessage.xet's own et2_ready() init (ralf's ask 2026-09-08):
+	 * - preselects the account+folder from whatever the opener's own mail list currently has
+	 *   open, instead of always defaulting to the user's default account's Drafts folder (Ui::
+	 *   importMessage()'s own server-side default, still used as the fallback below) - same
+	 *   established window.opener.app.mail.* reuse pattern already used elsewhere in this file
+	 *   (customLabels above, MailApp's own jmap getter, ...).
+	 * - hides the account selector entirely when only one account is configured - with a single
+	 *   account there's nothing to choose, so showing it would just be a confusing, always-
+	 *   disabled-feeling extra field.
+	 * - resolves and seeds a real label for whichever folder ends up selected (the opener's, or
+	 *   the server's own default) - FOLDER has no eagerly-fetched sel_options at all (see Ui::
+	 *   importMessage()'s own docblock, avoiding a live IMAP round trip on every render), so
+	 *   without this the widget shows nothing selected even though its value IS set correctly
+	 *   (found live 2026-09-08 - ralf's report).
+	 */
+	private async importMessageInit() : Promise<void>
+	{
+		const mailaccountWidget : any = this.et2.getWidgetById('mailaccount');
+		if(mailaccountWidget && (mailaccountWidget.select_options || []).length <= 1)
+		{
+			const row = mailaccountWidget.getDOMNode()?.closest('tr');
+			if(row) row.hidden = true;
+		}
+
+		const folderWidget : any = this.et2.getWidgetById('FOLDER');
+		if(!folderWidget) return;
+
+		// no opener (eg. opened directly, or the opener window was closed), or the opener's own
+		// mail list has nothing selected yet - fall back to the server's own default, which is
+		// already this widget's current value
+		const openerSelectedFolder = (window.opener as any)?.app?.mail?.getActiveFilters?.()?.selectedFolder;
+		const targetValue = String(openerSelectedFolder || folderWidget.getValue() || '');
+		const [profileID, path] = targetValue.split('::', 2);
+		if(!profileID || !path) return;
+
+		if(mailaccountWidget && openerSelectedFolder) mailaccountWidget.set_value(profileID);
+
+		let label = path;
+		try
+		{
+			const mailboxes = await this.jmap.getAllMailboxes(profileID);
+			if(mailboxes)
+			{
+				const paths = buildMailboxPaths(mailboxes, this.egw);
+				const match = mailboxes.find((mailbox) => paths.get(mailbox.id)?.path === path);
+				if(match) label = paths.get(match.id).label;
+			}
+		}
+		catch(e)
+		{
+			// a JMAP hiccup resolving the label shouldn't block preselecting a folder at all -
+			// the raw path (set above) is still shown, not nothing
+		}
+		folderWidget.select_options = [{value: targetValue, label}];
+		folderWidget.set_value(targetValue);
 	}
 
 	/**

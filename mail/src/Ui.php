@@ -2270,16 +2270,55 @@ class Ui
 		if (empty($content['FOLDER']))
 		{
 			$draft = $this->mail_bo->getDraftFolder();
-			$content['FOLDER']=(array)(preg_match($draft, "/::/") ? $draft : $this->mail_bo->profileID.'::'.$draft);
+			// was preg_match($draft, "/::/") (pattern/subject swapped - $draft is virtually never
+			// a valid regex pattern) wrapped in an (array) cast, both pre-existing since this was
+			// still class.mail_ui.inc.php - the swapped call is always false (or a raw PHP warning
+			// for a $draft containing regex-special characters), so this always took the "add our
+			// own profileID::" branch regardless of whether $draft already had one; harmless by
+			// accident, since that's the correct branch for the common "no prefix yet" case
+			// anyway. The (array) cast was not harmless though: FOLDER is a single (non-multiple)
+			// et2-select, so wrapping its string value in a one-element array (found live
+			// 2026-09-08: the widget rendered with nothing selected at all, worse once FOLDER
+			// stopped having any eagerly-fetched sel_options to coincidentally paper over it -
+			// see this method's own docblock below) broke the value outright rather than just
+			// mis-picking a branch that usually didn't matter.
+			$content['FOLDER'] = preg_match("/::/", $draft) ? $draft : $this->mail_bo->profileID.'::'.$draft;
+		}
+		if (empty($content['mailaccount']))
+		{
+			$content['mailaccount'] = $this->mail_bo->profileID;
 		}
 		// FOLDER's own et2-select already lazy-loads its options client-side via its searchUrl
-		// attribute (importMessage.xet: searchUrl="mail.EGroupware\Mail\Compose.ajax_searchFolder")
-		// - eagerly pre-populating sel_options['FOLDER'] here was redundant and forced a live IMAP
-		// connect on every render of this form, even before the user has selected a file to import
-		// (found live 2026-09-08: a transient IMAP hiccup broke the whole form for exactly that
-		// reason). compose.xet's own folder select uses the identical searchUrl-only pattern with
-		// no eager sel_options in Compose.php at all, already proven live in production.
-		$sel_options = array();
+		// attribute (importMessage.xet: searchUrl="app.mail.searchFolder", a client-side JMAP
+		// search - MailApp.searchFolder()/folderTree.ts's buildMailboxPaths(), see
+		// doc/ai/projects/mail-folder-tree-jmap.md) - eagerly pre-populating sel_options['FOLDER']
+		// here was redundant and forced a live IMAP connect on every render of this form, even
+		// before the user has selected a file to import. Originally misdiagnosed as "a transient
+		// IMAP hiccup" (2026-09-08); actually a reproducible failure for any JMAP/Stalwart
+		// account, since Compose::ajax_searchFolder() (the old searchUrl target) has no JMAP data
+		// source at all - fixed by moving the search itself client-side instead of just removing
+		// this eager call. compose.xet's own folder select uses the same searchUrl-only pattern
+		// with no eager sel_options in Compose.php at all.
+		//
+		// mailaccount's own sel_options ARE built eagerly here though (unlike FOLDER) - it's a
+		// short, purely config-derived list (Mail\Account::search(true, false), no live IMAP
+		// connect - same "is_imap(false)" call Compose::ajax_getComposeToolbarData() already uses
+		// for its own mailaccount list), not per-request IMAP data. Added 2026-09-08 (ralf's
+		// report): with more than one account configured, importMessage.xet's FOLDER search had
+		// no way to tell the user which account a given result belonged to, or let them pick a
+		// different one - searchFolder() (mail/js/app.ts) already prefers a sibling 'mailaccount'
+		// widget's value over the ActiveProfileID preference fallback once one exists. One row
+		// per ACCOUNT (not per identity, unlike compose.xet's own mailaccount select) - which
+		// identity sends isn't meaningful for "which account to file this message into". Same
+		// label format as the folder tree's own account root nodes (EGroupware\Mail\Ui\Tree::
+		// getAccountsRootNode()) so an account reads the same way here as it already does there.
+		$sel_options = array('mailaccount' => array());
+		foreach (Mail\Account::search(true, false) as $acc_id => $account)
+		{
+			if (!$account->is_imap(false)) continue;
+			$sel_options['mailaccount'][$acc_id] = Compose::getIdentityName(
+				Mail\Account::identity_name($account, true, $GLOBALS['egw_info']['user']['account_id'], true));
+		}
 
 		$etpl = new Etemplate('mail.importMessage');
 		$etpl->setElementAttribute('uploadForImport','onFinish','app.mail.uploadForImport');

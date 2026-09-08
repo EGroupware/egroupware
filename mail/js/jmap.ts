@@ -1145,6 +1145,61 @@ export class MailJmap
 	}
 
 	/**
+	 * Fetch every mailbox belonging to this account in one flat pass (no parentId scoping) -
+	 * unlike getMailboxChildren()'s own lazy per-level loading (built for the tree, where only
+	 * one level is ever needed at a time), the FOLDER/folder et2-select fields' client-side
+	 * search (mail/js/folderTree.ts's buildMailboxPaths(), wired via
+	 * searchUrl="app.mail.searchFolder" - see doc/ai/projects/mail-folder-tree-jmap.md) needs the
+	 * whole account's hierarchy up front to search across every folder, not just one expanded
+	 * level.
+	 *
+	 * @return null if this account has no usable JMAP access-token (same contract as
+	 *  getMailboxChildren())
+	 */
+	async getAllMailboxes(profileID : string, subscribedOnly? : boolean) : Promise<any[] | null>
+	{
+		try
+		{
+			const token = await this.ensureToken(profileID);
+			if (!token) return null;
+			const client = this.clients[profileID];
+			const filter : Record<string, any> = {};
+			const effectiveSubscribedOnly = subscribedOnly ?? !isPreferenceOn(this.egw.preference('showAllFoldersInFolderPane', 'mail'));
+			if (effectiveSubscribedOnly)
+			{
+				filter.isSubscribed = true;
+			}
+
+			const [{mailboxes}] = await client.requestMany((t) =>
+			{
+				const ids = t.Mailbox.query({
+					accountId: token.accountId,
+					filter,
+				});
+				const mailboxes = t.Mailbox.get({
+					accountId: token.accountId,
+					ids: ids.$ref('/ids'),
+				});
+				return {ids, mailboxes};
+			});
+			return mailboxes.list || [];
+		}
+		catch (e)
+		{
+			if (e instanceof JmapUserError) throw e;
+			const message = describeJmapError(e);
+			if (message)
+			{
+				console.error('MailJmap.getAllMailboxes(): JMAP error', e);
+				throw new JmapUserError(message);
+			}
+			console.error('MailJmap.getAllMailboxes(): failed, caller shows an empty result', e);
+			this.popupCheckCert(profileID);
+			return null;
+		}
+	}
+
+	/**
 	 * Templates/Outbox have no IMAP SPECIAL-USE attribute or JMAP role at all - JmapShim already
 	 * resolves them server-side via acc_folder_template/acc_folder_outbox for the local shim, but
 	 * a real JMAP server (Stalwart) has no equivalent mechanism, so match by the account's own

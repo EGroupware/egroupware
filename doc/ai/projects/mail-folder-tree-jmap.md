@@ -567,5 +567,161 @@ template has no JMAP tree at all; `setFolderStatus()` already no-ops for JMAP ac
 **Verified**: full `mail` PHPUnit suite (175 tests after the 3 removed `SmimeAccountIdTest` cases,
 same 6 pre-existing baseline errors), a live PHPUnit-harness check confirming every removed method
 is gone and the survivors are intact, full `mail` jstest group (197/197), `tsc`/`php -l` clean.
-Commit `3bd41dff13`, local only, not yet pushed (same for the `mail_tree` rename commits above -
-`5926fbce29`/`159c7e3bde`/`5344f7610a`).
+Pushed together with the `mail_tree` rename commits above.
+
+## `mail_ui` renamed to `EGroupware\Mail\Ui` (2026-09-08), same day
+
+ralf: "please move/rename the mail_ui class to mail/src/Ui.php including all references to it" -
+the same rename Compose/Merge/Tree already went through, now for the main UI class itself. Much
+bigger blast radius than any previous rename: ~30 files across mail, api, filemanager, and (outside
+this repo entirely - see below) tracker.
+
+**Unlike Compose/Merge/Tree, this one keeps a compat stub** at the old
+`mail/inc/class.mail_ui.inc.php` path (`class mail_ui extends EGroupware\Mail\Ui {}`) - ralf's
+explicit call: "we need to change the index url in mail/setup/setup.inc.php and have a stub
+mail_ui to not fail hard, if the user has not updated." `mail_ui` has a much larger external
+surface (menuaction dispatch from any not-yet-rebuilt cached JS bundle, third-party/EPL app code,
+saved bookmarks/links) than the previous renames - static properties/methods are inherited by the
+stub, not duplicated, so eg. `mail_ui::$icServerID` stays in sync with the real class automatically.
+
+**A genuinely broken intermediate state hit CI** between the pure-rename commit (`f118b34314`,
+file moved but class still literally named `mail_ui`) and the follow-up content-conversion commit:
+the classic autoloader could no longer find `mail_ui` at its expected old path once the file
+moved, breaking `AttachmentJmap.php`'s `\mail_ui::$mimeTypesHandledOnlyByMail` reference - "Class
+mail_ui not found" in CI, on a commit a concurrent session in this shared checkout happened to
+push in between. Fixed by getting the full rename (incl. the stub) committed and pushed promptly
+(`e3bb8fe399`).
+
+**2 real bugs found via live testing while doing this**:
+1. `Ui.php`'s `get_tree_actions()` had `EGroupware\Api\Header\UserAgent::mobile()` written without
+   a leading backslash (every other reference in the file correctly used the short `Api\Header\
+   UserAgent` form via the existing `use EGroupware\Api;` import) - under the new `namespace
+   EGroupware\Mail;` that resolved relative to the current namespace instead of the global root
+   ("Class EGroupware\Mail\EGroupware\Api\Header\UserAgent not found").
+2. A 13th [[project_jmap_imap_fallthrough_cleanup]] site: `Api\Mail\Imap\Jmap` never overrode
+   `getNameSpaceArray()`, so any caller (`Compose::ajax_searchFolder()`, used by
+   `Ui::importMessage()`'s folder-picker dropdown) fell through to `Horde_Imap_Client_Socket`'s raw
+   NAMESPACE command - real IMAP protocol against what's actually the JMAP(S) endpoint for a
+   Stalwart account ("Mail server closed the connection unexpectedly"). Initially misdiagnosed as
+   transient (matching an earlier, unrelated transient blip seen the same session) - ralf caught
+   the actual pattern: consistently fails for the JMAP account (acc_id=1), consistently works for
+   the classic Dovecot one (acc_id=42). Fixed with the same override pattern `hasCapability()`
+   already uses in the same class - RFC 8621 has no IMAP-NAMESPACE concept, so a JMAP account
+   always just gets a flat, personal-only result. Also removed `importMessage()`'s own redundant
+   eager `sel_options['FOLDER'] = $compose->ajax_searchFolder(0,true)` call once ralf asked "I dont
+   understand why it even tries to connect, before I uploaded the message" - the `FOLDER` field's
+   `et2-select` already lazy-loads its options client-side via its own `searchUrl` attribute,
+   identical to `compose.xet`'s folder select (which has never had an eager `sel_options` in
+   `Compose.php` at all) - the eager call forced a live IMAP connect on every render of the form,
+   even before a file was selected, and was what surfaced the fallthrough bug above in the first
+   place.
+
+**One file outside this repo's git tracking**: `tracker/inc/class.tracker_bo.inc.php` calls
+`mail_ui::resolve_inline_image_byType()` by that exact name - `tracker/` is entirely gitignored
+(`.gitignore:57`), a separate EPL repo present on disk in this deployment but not part of this git
+repo at all (an earlier research pass in this same session had wrongly concluded it was "this same
+repo, a different app" - corrected back). Updated the file on disk (`use EGroupware\Mail\Ui;` +
+`Ui::resolve_inline_image_byType()`) since it's a real, needed fix for this deployment, but it
+cannot be committed via this repo - whoever maintains the separate tracker/EPL repo needs to apply
+the same change there directly.
+
+**Verified**: full `mail` PHPUnit suite + `api/tests/Mail/` (only the known pre-existing REST-
+connection errors + one pre-existing, unrelated VFS-fixture-permission failure - confirmed via
+stale Aug-24 file permissions on the test fixture directory, not caused by this), a live
+PHPUnit-harness check of the stub/static-property-inheritance/both menuaction dispatch forms
+(`app.ClassName.method` and the `ClassName::method` direct-static form used by
+`ajax_refreshVacationNotice`/`ajax_changeProfile`)/the new `getNameSpaceArray()` override, full
+`mail` jstest (197/197 - one test assertion fixed along the way: the backslash in a menuaction URL
+gets percent-encoded by the browser's own fetch/URL machinery, harmless since PHP decodes it back
+server-side, but the test was checking the raw un-decoded string), `tsc` clean (diffed against
+baseline, zero new errors anywhere), `php -l` clean on every touched file. Commit `e3bb8fe399`,
+pushed.
+
+## Client-side JMAP folder search (2026-09-08), same day
+
+Continuation of the `getNameSpaceArray()` fix above: fixing the crash wasn't enough, since
+`Compose::ajax_searchFolder()` (the classic folder-search endpoint every `FOLDER`/`folder`
+et2-select field's `searchUrl` pointed at) has no JMAP data source at all - `Api\Mail::
+getFolderObjects()` is IMAP-only. ralf: "The most easy approach would be to also do that
+client-side directly against the JMAP server or the shim", refined by "I believe we did something
+similar for the folder-tree, by allowing a function instead of an url" (confirming the
+`Et2Tree.autoloading`-style `string | function` pattern) and "it would be nice if that also
+detects a string starting with app. so it can be directly wired into the template" (the existing
+`onExecute="javaScript:app.X.Y"` action-string convention, minus the prefix).
+
+**A second wrong-exception-type bug**, found investigating a "still failing on the JMAP account"
+report: `Api\Mail::getFolderObjects()`'s `listSubscribedMailboxes()` call was wrapped in
+`catch(Exception $e)` - inside `api/src/Mail.php`'s own `namespace EGroupware\Api;`, `Exception`
+resolves to *this namespace's own* `Api\Exception` class, not the global `\Exception` -  so it
+never actually caught `listSubscribedMailboxes()`'s real failure mode, the global-namespace
+`Horde_Imap_Client_Exception` thrown by the (then still-unguarded) IMAP fallthrough. Same root
+cause already documented+fixed once in this file (`importMessageToMergeAndSend()`'s own
+`catch(\Throwable $e)`) - fixed the same way at this second site. Only the one call site actually
+hit was fixed; a grep found 5 more occurrences of the identical broken pattern elsewhere in the
+file, left alone (out of scope for this pass).
+
+**`SearchMixin.ts`'s `searchUrl`** (`api/js/etemplate/Et2Select/SearchMixin.ts`) widened to
+`string | ((search, options) => Promise<SelectOption[]>)`, plus a `"app.appname.method"` string
+convention resolved via `egw().applyFunc()` (which also lazy-loads/instantiates that app's own JS
+object if needed) - both checked in `remoteSearch()` before the existing URL/JSON-file branches.
+Verified via a before/after `tsc --noEmit` diff (one new, already-pervasive `Property 'egw' does
+not exist on Et2WidgetWithSearch` error, not a new class of error) and the full `api`+`mail` jstest
+groups (1332 + 197 passed).
+
+**`MailApp.searchFolder()`** (`mail/js/app.ts`) + two new building blocks: `MailJmap.
+getAllMailboxes()` (`mail/js/jmap.ts` - one flat `Mailbox/query`+`Mailbox/get` pass, no `parentId`
+scoping, unlike the tree's own lazy per-level `getMailboxChildren()`) and `buildMailboxPaths()`
+(`mail/js/folderTree.ts` - resolves every mailbox's own canonical `/`-joined path + translated
+label from that flat list via an id->mailbox map, matching `buildFolderLevel()`/`buildNode()`'s
+own path-segment/role-label conventions so a search result's value lines up with the tree's own
+node ids). Wired into `compose.xet` (both `default` and `mobile`), `predefinedAddressesDialog.xet`,
+and `importMessage.xet` via `searchUrl="app.mail.searchFolder"` - `moveFolder.xet`'s identical old
+`searchUrl` was left alone, since that whole template turned out to be dead (no server-side
+reference to its `mail.moveFolder` template id anywhere, superseded by
+[[project_mail_copy_folder_usage]]'s client-side quick-submenus).
+
+**Account selection for `importMessage.xet`** (ralf: "with multiple accounts at least it's hard to
+understand/select a specific mail-account you want to import to"): added a `mailaccount`
+et2-select (one row per *account*, not per identity like `compose.xet`'s own - which identity
+sends is meaningless for "which account to file this message into"), sel_options built the same
+`Mail\Account::search(true, false)` + `is_imap(false)` (no live connect) way `Compose::
+ajax_getComposeToolbarData()` already builds its own account list, labelled the same way the
+folder tree's own account root nodes are (`EGroupware\Mail\Ui\Tree::getAccountsRootNode()`'s
+`Compose::getIdentityName(Mail\Account::identity_name(...))` chain). `MailApp.
+importMessageAccountChanged()` resets `FOLDER` to the new account's own Drafts folder (falling
+back to INBOX) on change, since `FOLDER`'s value now needs to carry an account prefix again
+(`noPrefixId` dropped for this one template - every other `searchUrl="app.mail.searchFolder"`
+caller keeps it, since none of them have their own account picker). Hides the whole selector row
+when only one account is configured (ralf's ask) - nothing to choose, so showing it would just be
+a confusing, always-disabled-feeling extra field.
+
+Then ralf: "it would be nice if that also detects... the current active account and folder" -
+`MailApp.importMessageInit()` (new `et2_ready()` `'mail.importMessage'` case) preselects both from
+`window.opener.app.mail.getActiveFilters().selectedFolder` (same established `window.opener.
+app.mail.*` reuse pattern already used elsewhere in this file), falling back to the server's own
+default (current account's Drafts folder) when there's no opener or nothing selected there yet.
+
+**Two more real bugs found live testing this** (ralf: "the folder is still empty"):
+1. `Ui::importMessage()`'s own `FOLDER` default line had a stray `(array)` cast -
+   `$content['FOLDER'] = (array)(...)` - wrapping a plain string value in a one-element array,
+   silently breaking the (non-`multiple`) `FOLDER` widget's value outright. Pre-existing since the
+   original classic `class.mail_ui.inc.php` (confirmed via `git log`, long before this session's
+   rename) - previously harmless-by-accident, since the widget always had a full eagerly-fetched
+   option list to (apparently) paper over it; broke visibly only once that eager fetch was removed
+   (see the `getNameSpaceArray()` section above) and there were no options left to hide it. Fixed
+   by dropping the cast - while there, also fixed the adjacent `preg_match($draft, "/::/")` (args
+   swapped - `$draft` used as the pattern, `"/::/"` as the subject; always false/warns for a
+   typical folder name, which happened to always route to the correct branch anyway, so this was
+   harmless, just fixed in passing since it's the same statement).
+2. Even with a correct scalar value, `FOLDER` still showed nothing: it has no eagerly-fetched
+   `sel_options` at all (by design, to avoid a live IMAP round trip on every render - see the
+   `getNameSpaceArray()` section above), so there was no label to show for whatever value it had,
+   preselected or the server's own default alike. Fixed in `importMessageInit()`: resolve the
+   selected folder's own label via the same `getAllMailboxes()`/`buildMailboxPaths()` pair
+   `searchFolder()` uses, and seed it as the widget's one initial `select_options` entry.
+
+**Verified**: `tsc --noEmit` diffed against baseline (zero new errors), full `mail` jstest group
+(197/197) re-run after each incremental change, `php -l` clean. Not yet live-verified in a real
+browser against boulder.egroupware.org - ralf reported the empty-folder-display bug from live
+testing there, which is the only live-testing feedback so far; the underlying cause (the
+`(array)` cast + missing label) is fixed but not yet re-confirmed live.

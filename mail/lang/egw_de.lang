@@ -12,6 +12,7 @@
 %1 is not writable by you!	mail	de	%1 ist nicht beschreibbar für Sie!
 %1 mails selected	mail	de	%1 E-Mail(s) ausgewählt
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	de	%1 benötigt die Sieve Erweiterung %2, versuchen Sie statt dessen %3 oder eine höhere Anzahl von Tagen.
+account	mail	de	Konto
 account editable by user	mail	de	Benutzer kann dieses Konto bearbeiten
 account not reachable	mail	de	Konto nicht erreichbar
 acl rights retrieve failed, seems there are no rights set!	mail	de	Die Zugriffsrechte konnten nicht gelesen werden!

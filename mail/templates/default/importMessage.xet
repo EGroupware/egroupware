@@ -13,8 +13,12 @@
 					<et2-description  value="Import message" align="center" span="all"></et2-description>
 				</row>
 				<row>
+					<et2-description  value="Account"></et2-description>
+					<et2-select  id="mailaccount" onchange="app.mail.importMessageAccountChanged"></et2-select>
+				</row>
+				<row>
 					<et2-description  value="Store to Folder"></et2-description>
-					<et2-select  id="FOLDER" allowFreeEntries="false" onclick="app.mail.addressClick" searchUrl="mail.EGroupware\Mail\Compose.ajax_searchFolder" searchOptions="{&quot;noPrefixId&quot;: &quot;true&quot;}"></et2-select>
+					<et2-select  id="FOLDER" allowFreeEntries="false" onclick="app.mail.addressClick" searchUrl="app.mail.searchFolder"></et2-select>
 				</row>
 				<row>
 					<et2-description  value="Choose file"></et2-description>

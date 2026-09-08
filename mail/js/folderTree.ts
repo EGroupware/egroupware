@@ -364,6 +364,56 @@ export function buildFolderLevel(mailboxes : JmapMailboxNode[], profileID : stri
  * @param message human-readable error text (MailJmap's JmapUserError#message)
  * @param egw only .image(name, app) is used
  */
+/**
+ * Build every mailbox's own canonical "/"-joined path and search/display label from a FLAT list
+ * of ALL of an account's mailboxes (see MailJmap.getAllMailboxes()) - the one-shot, whole-account
+ * counterpart of buildFolderLevel()'s per-level pathSegment()/label logic, used by the FOLDER/
+ * folder et2-select fields' client-side search (MailApp.searchFolder(), wired via
+ * searchUrl="app.mail.searchFolder") since a folder-name search needs the whole hierarchy up
+ * front, unlike the tree's own lazy per-level loading.
+ *
+ * Path segments and role-label translation exactly match buildFolderLevel()/buildNode() (INBOX's
+ * canonical uppercase name, ROLE_LABEL_KEYS translation for a role-identifiable folder), so a
+ * search result's value lines up with the same tree node id buildFolderLevel() would have
+ * produced for the same mailbox.
+ *
+ * @param mailboxes every mailbox belonging to one account, in any order (a parent may appear
+ *  after its own children in the list - resolved via an id->mailbox map, not list order)
+ * @param egw only .lang() is used
+ * @return Map from mailbox id to its {path, label} - path is the full "/"-joined canonical path
+ *  (eg. "INBOX/Projects/2026"), label is the same shape but with each role-identifiable segment
+ *  translated (matching classic getFolderObjects()'s own displayName). A namespace root (see
+ *  isNamespaceRootName()) gets an entry like any other mailbox - excluding it, if desired, is
+ *  left to the caller, same as buildFolderLevel()'s own namespace-root visibility check being a
+ *  separate concern from path-building.
+ */
+export function buildMailboxPaths(mailboxes : JmapMailboxNode[], egw : { lang(key : string) : string }) : Map<string, { path : string, label : string }>
+{
+	const byId = new Map(mailboxes.map((m) => [m.id, m]));
+	const pathSegment = (mailbox : JmapMailboxNode) => mailbox.role === 'inbox' ? 'INBOX' : mailbox.name;
+	const labelSegment = (mailbox : JmapMailboxNode) =>
+	{
+		const roleLabelKey = mailbox.role ? ROLE_LABEL_KEYS[mailbox.role] : undefined;
+		return roleLabelKey ? egw.lang(roleLabelKey) : mailbox.name;
+	};
+	const resolved = new Map<string, { path : string, label : string }>();
+	const resolve = (mailbox : JmapMailboxNode) : { path : string, label : string } =>
+	{
+		const cached = resolved.get(mailbox.id);
+		if (cached) return cached;
+		const parent = mailbox.parentId ? byId.get(mailbox.parentId) : undefined;
+		const parentResolved = parent ? resolve(parent) : null;
+		const result = {
+			path: parentResolved ? parentResolved.path + '/' + pathSegment(mailbox) : pathSegment(mailbox),
+			label: parentResolved ? parentResolved.label + '/' + labelSegment(mailbox) : labelSegment(mailbox),
+		};
+		resolved.set(mailbox.id, result);
+		return result;
+	};
+	mailboxes.forEach(resolve);
+	return resolved;
+}
+
 export function buildErrorNode(profileID : string, parentPath : string, message : string, egw : Egw) : FolderTreeNode
 {
 	return {

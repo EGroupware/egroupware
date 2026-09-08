@@ -43,7 +43,7 @@
 					</row>
 					<row class="mailComposeHeaders mailComposeFolder">
 						<et2-description  value="Folder"></et2-description>
-						<et2-select  id="folder" allowFreeEntries="false" onclick="app.mail.addressClick" multiple="true" searchUrl="mail.EGroupware\Mail\Compose.ajax_searchFolder" searchOptions="{&quot;noPrefixId&quot;: &quot;true&quot;}"></et2-select>
+						<et2-select  id="folder" allowFreeEntries="false" onclick="app.mail.addressClick" multiple="true" searchUrl="app.mail.searchFolder" searchOptions="{&quot;noPrefixId&quot;: &quot;true&quot;}"></et2-select>
 					</row>
 					<row class="mailComposeHeaders" >
 						<et2-dropdown>

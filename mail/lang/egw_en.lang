@@ -13,6 +13,7 @@
 %1 is not writable by you!	mail	en	%1 is NOT writable by you!
 %1 mails selected	mail	en	%1 emails selected
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	en	%1 requires Sieve extension %2, maybe try %1 or higher number of days.
+account	mail	en	Account
 account editable by user	mail	en	Account editable by user
 account not reachable	mail	en	Account not reachable
 acl rights retrieve failed, seems there are no rights set!	mail	en	ACL rights retrieve failed, seems there are no rights set!
