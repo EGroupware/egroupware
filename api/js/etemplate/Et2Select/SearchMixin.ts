@@ -34,9 +34,12 @@ export declare class SearchMixinInterface
 	search : boolean;
 
 	/**
-	 * Get [additional] options from the server when you search, instead of just searching existing options
+	 * Get [additional] options from the server when you search, instead of just searching existing
+	 * options - a menuaction/JSON-file URL string, or a JS callback (same "supply results yourself
+	 * instead of an ajax round-trip" pattern Et2Tree.autoloading already uses) returning a Promise
+	 * of SelectOption[]
 	 */
-	searchUrl : string;
+	searchUrl : string | ((search : string, options : object) => Promise<SelectOption[]>);
 
 	/**
 	 * Allow adding new options that are not in the search results
@@ -91,8 +94,14 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 		@property({type: Boolean, reflect: true})
 		search = false;
 
-		@property({type: String})
-		searchUrl = '';
+		/**
+		 * A menuaction/JSON-file URL string, or a JS callback (same "supply results yourself
+		 * instead of an ajax round-trip" pattern Et2Tree.autoloading already uses) returning a
+		 * Promise of SelectOption[] - {attribute: false} since a function can't come from an HTML
+		 * attribute anyway, only ever set as a real JS property.
+		 */
+		@property({attribute: false})
+		searchUrl : string | ((search : string, options : object) => Promise<SelectOption[]>) = '';
 
 		/**
 		 * Allow custom entries that are not in the options
@@ -381,7 +390,12 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			{
 				this.search = true;
 				// Decode URL, possibly again.  If set in template, it can wind up double-encoded.
-				this.searchUrl = this.egw().decodePath(this.searchUrl);
+				// Not applicable to a JS callback - only ever set as a real property, never from a
+				// (possibly encoded) template attribute string.
+				if(typeof this.searchUrl === "string")
+				{
+					this.searchUrl = this.egw().decodePath(this.searchUrl);
+				}
 			}
 			if(changedProperties.has("searchOptions") && this.searchOptions){
 				try {
@@ -577,7 +591,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 		 */
 		public get searchEnabled() : boolean
 		{
-			return !this.readonly && (this.search || this.searchUrl.length > 0);
+			return !this.readonly && (this.search || !!this.searchUrl);
 		}
 
 		protected get _searchInputNode() : Et2Textbox
@@ -1334,6 +1348,30 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			if(!this.searchUrl)
 			{
 				return Promise.resolve([]);
+			}
+
+			// A JS callback (same pattern Et2Tree.autoloading already uses) - caller supplies
+			// results itself instead of an ajax round-trip
+			if(typeof this.searchUrl === "function")
+			{
+				return Promise.resolve(this.searchUrl(search, options)).then((results) =>
+				{
+					return this._processResultCount(results);
+				});
+			}
+
+			// A "app.appname.method" string (same convention onExecute="javaScript:app.X.Y" action
+			// strings already use, minus the "javaScript:" prefix - unambiguous here since a real
+			// server menuaction never starts with the literal app name "app") - resolved via
+			// egw().applyFunc(), which also lazy-loads/instantiates that app's own JS object if it
+			// isn't already, so this can be wired directly into a template with no extra JS needed
+			// in the using app's own et2_ready().
+			if(this.searchUrl.startsWith("app."))
+			{
+				return Promise.resolve(this.egw().applyFunc(this.searchUrl, [search, options])).then((results) =>
+				{
+					return this._processResultCount(results);
+				});
 			}
 
 			// Check our URL: JSON file or URL?
