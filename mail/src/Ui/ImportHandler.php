@@ -208,21 +208,35 @@ class ImportHandler
 		try
 		{
 			$rowId = $this->importMessageToFolder($formData, $draftFolder, $importID);
-			$linkData = [
-				'menuaction' => $mode == 'display' ? 'mail.mail_ui.displayMessage' : 'mail.mail_compose.composeFromDraft',
-				'id' => $rowId,
-				'deleteDraftOnClose' => 1,
-			];
-			if ($mode != 'display')
+			if ($mode == 'display')
 			{
-				unset($linkData['deleteDraftOnClose']);
-				$linkData['method'] = 'importMessageToMergeAndSend';
+				Egw::redirect_link('/index.php', [
+					'menuaction' => 'mail.mail_ui.displayMessage',
+					'id' => $rowId,
+					'deleteDraftOnClose' => 1,
+					'mode' => $mode,
+				]);
 			}
 			else
 			{
-				$linkData['mode'] = $mode;
+				// $mode != 'display' (ie. edit the imported draft) has had no live caller in over a
+				// decade - the mail_hooks.inc.php message/rfc822 mime-handler, the only registered
+				// caller, never passes $mode and always used the 'display' branch above; the
+				// 'mail.mail_compose.composeFromDraft' menuaction this used to point at was removed
+				// from mail_compose itself back in 2013 (composeFromDraft() deleted, never
+				// replaced), so this branch has been dead/unreachable ever since, regardless of the
+				// 2026-09-08 Compose rename. Repointed at the same client-side compose-from-draft
+				// redirect mail_ui::ajax_view() already uses for an existing draft/template row
+				// (doc/ai/projects/mail-compose-jmap-migration.md Step 10), so a future caller
+				// passing a non-'display' $mode gets a working edit flow instead of a dead menuaction.
+				Egw::redirect_link('/mail/compose.php', [
+					'from' => 'composefromdraft',
+					'id' => $rowId,
+					'acc_id' => $this->ui->mail_bo->profileID,
+					'mode' => '',
+					'smime_type' => '',
+				]);
 			}
-			Egw::redirect_link('/index.php', $linkData);
 		}
 		catch (Api\Exception\WrongUserinput $e)
 		{
