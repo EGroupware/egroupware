@@ -701,10 +701,14 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	 */
 	setLabel(_id, _label, _tooltip?)
 	{
-		let tooltip = _tooltip || (this.getNode(_id) && this.getNode(_id).tooltip ? this.getNode(_id).tooltip : "");
 		let i = this.getNode(_id)
+		let tooltip = _tooltip || (i?.tooltip ?? i?.title) || "";
+		// writes both naming conventions (see TreeItemData's own docblock) - the node may use
+		// either, and writing only its own would need checking which first for no real benefit
 		i.tooltip = tooltip
+		i.title = tooltip
 		i.text = _label
+		i.label = _label
 	}
 
 	/**
@@ -714,7 +718,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	 */
 	getLabel(_id)
 	{
-		return this.getNode(_id)?.text;
+		const node = this.getNode(_id);
+		return node?.label ?? node?.text;
 	}
 
 	/**
@@ -723,7 +728,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	 */
 	getSelectedLabel()
 	{
-		return this.getSelectedItem()?.text
+		const node = this.getSelectedItem();
+		return node?.label ?? node?.text;
 	}
 
 	/**
@@ -996,7 +1002,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	 */
 	hasChildren(_id)
 	{
-		return this.getNode(_id).child;
+		const node = this.getNode(_id);
+		return node?.hasChildren ?? node?.child;
 	}
 
 	/**
@@ -1181,9 +1188,10 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		{
 			// TODO: We already have the right option in context.  Look into this.getNode(), find out why it's there.  It doesn't do a deep search.
 			const parentNode = selectOption ?? this.getNode(selectOption.id) ?? this.optionSearch(selectOption.value, this._selectOptions, 'value', 'children');
-			if(!parentNode || !parentNode.item || parentNode.item.length == 0)
+			const children = parentNode?.children ?? parentNode?.item;
+			if(!parentNode || !children || children.length == 0)
 			{
-				parentNode.child = false;
+				if(typeof parentNode.children !== "undefined") parentNode.hasChildren = false; else parentNode.child = false;
 				parentNode.open = false;
 				this.requestUpdate("lazy", "true");
 			}
@@ -1564,9 +1572,9 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 				res = value
 				return res
 			}
-			else if(_id?.startsWith(value.id) && typeof value.item !== "undefined")
+			else if(_id?.startsWith(value.id ?? value.value) && typeof (value.item ?? value.children) !== "undefined")
 			{
-				res = this._search(_id, value.item)
+				res = this._search(_id, value.item ?? value.children)
 			}
 		}
 		return res
@@ -1595,9 +1603,9 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 			if(value.value === _id || value.id === _id)
 			{
 				list.splice(i, 1)
-			} else if (_id.startsWith(value.id))
+			} else if (_id.startsWith(value.id ?? value.value))
 			{
-				this._deleteItem(_id, value.item)
+				this._deleteItem(_id, value.item ?? value.children)
 			}
 		}
 	}
