@@ -236,20 +236,17 @@ function mailto(uri : string) : void
 	// including "<" would get mistaken for <math> tag, and server will cut it off.
 	uri = uri.replace(/</g,'&lt;').replace(/>/g,'&gt;');
 
-	// Matches an already-open compose popup's own url, classic (mail_compose.compose) OR
-	// client-side-only (mail/compose.php, doc/ai/projects/mail-compose-jmap-migration.md Step 10) -
-	// MailApp.setCompose() works identically for either kind of popup, it only ever touches the
-	// loaded etemplate2/widgets, never the popup's own opening url (found live 2026-09-07: a
-	// compose.php popup's own url never matched the old classic-only pattern, so a mailto: link
-	// always opened a redundant new popup instead of reusing one already open).
+	// Matches an already-open compose popup's own url (mail/compose.php,
+	// doc/ai/projects/mail-compose-jmap-migration.md Step 10) - MailApp.setCompose() only ever
+	// touches the loaded etemplate2/widgets, never the popup's own opening url.
 	//
-	// The "nothing to reuse, open a new one" case now goes through MailApp.composeMailto() (a
+	// The "nothing to reuse, open a new one" case goes through MailApp.composeMailto() (a
 	// client-side-only bootstrap, no server round-trip) instead of openWithinWindow()'s own
 	// classic-menuaction fallback - mailto: itself already parses to/cc/bcc entirely client-side
 	// above, so there was never anything server-side left for THIS entry point to depend on
 	// (doc/ai/projects/mail-compose-jmap-migration.md, Step 10's own "explicitly deferred" list).
 	egw.openWithinWindow ("mail", "setCompose", content, {'preset[mailto]':uri},
-		/mail_compose\.compose|\/mail\/compose\.php/, undefined,
+		/\/mail\/compose\.php/, undefined,
 		() => (<any>window).app.mail?.composeMailto(content));
 
 	for (var index in content)

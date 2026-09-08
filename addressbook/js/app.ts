@@ -1124,16 +1124,14 @@ class AddressbookApp extends EgwApp
 			const contactName = egw.dataGetUIDdata(_elems[i].id)?.data?.n_fn;
 			files.push({path, name: (contactName || 'vcard') + '.vcf', type: vcardType});
 		}
-		// Matches an already-open compose popup's own url, classic (mail_compose.compose) OR
-		// client-side-only (mail/compose.php, doc/ai/projects/mail-compose-jmap-migration.md Step
-		// 10) - MailApp.setCompose() works identically for either kind of popup, it only ever
-		// touches the loaded etemplate2/widgets, never the popup's own opening url (found live
-		// 2026-09-07 fixing the same gap in mail/js/app.ts and egw_open.ts's own mailto() - this
-		// call never got the fix along with those). The "nothing to reuse" case now opens via
-		// MailApp.composeWithPreset({files}) instead of the classic menuaction url - a jmapVfsPath
-		// marker attachment, resolved (real upload, or a zero-byte-moved reference for the shim) at
-		// send time, same mechanism MailCompose.vfsUpload() already uses for an already-open popup.
-		egw.openWithinWindow("mail", "setCompose", content, link, /mail_compose\.compose|\/mail\/compose\.php/,
+		// Matches an already-open compose popup's own url (mail/compose.php,
+		// doc/ai/projects/mail-compose-jmap-migration.md Step 10) - MailApp.setCompose() only ever
+		// touches the loaded etemplate2/widgets, never the popup's own opening url. The "nothing to
+		// reuse" case opens via MailApp.composeWithPreset({files}) instead of a classic menuaction
+		// url - a jmapVfsPath marker attachment, resolved (real upload, or a zero-byte-moved
+		// reference for the shim) at send time, same mechanism MailCompose.vfsUpload() already uses
+		// for an already-open popup.
+		egw.openWithinWindow("mail", "setCompose", content, link, /\/mail\/compose\.php/,
 			undefined, () => (<any>window).app.mail?.composeWithPreset({files}));
 
 		for (const index in content)

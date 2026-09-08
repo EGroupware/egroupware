@@ -46,14 +46,13 @@ interface CustomLabel
 type CustomLabels = Record<string, CustomLabel>
 
 /**
- * Matches an already-open compose popup's own url, classic (mail_compose.compose) OR
- * client-side-only (mail/compose.php, doc/ai/projects/mail-compose-jmap-migration.md Step 10) -
- * used by every "reuse an already-open compose window instead of opening a new one" call
- * (egw.openWithinWindow()'s own popups_get() regex param). setCompose() itself works identically
- * for either kind of popup (it only ever touches the loaded etemplate2/widgets, never the popup's
- * own opening url), so only the DISCOVERY regex ever needed to change.
+ * Matches an already-open compose popup's own url (mail/compose.php,
+ * doc/ai/projects/mail-compose-jmap-migration.md Step 10) - used by every "reuse an already-open
+ * compose window instead of opening a new one" call (egw.openWithinWindow()'s own popups_get()
+ * regex param). No longer needs to also match the classic mail_compose::compose() postback url -
+ * that class was deleted/moved entirely 2026-09-07/08, so no popup can carry that url any more.
  */
-const COMPOSE_POPUP_URL_PATTERN = /mail_compose\.compose|\/mail\/compose\.php/;
+const COMPOSE_POPUP_URL_PATTERN = /\/mail\/compose\.php/;
 
 /**
  * Extract the profileID (the account to compose FROM) out of a mail row id - `mail::<accountID>::
@@ -1403,11 +1402,10 @@ export class MailApp extends EgwApp
 						for(let j = 1; j < _elems.length; j++)
 						settings.id = settings.id + ',' + _elems[j].id;
 					}
-					// The reuse-detection regex needs to match compose.php too - an already-open
-					// popup from any of the 5 entry points this project already converted has that
-					// url, not a mail_compose.compose one, and setCompose() below works identically
-					// either way (it only ever touches the loaded etemplate2/widgets, never the
-					// popup's own opening url) - found live 2026-09-07 checking off this exact gap.
+					// The reuse-detection regex matches compose.php - an already-open popup from any
+					// of the entry points this project already converted has that url, and
+					// setCompose() below works the same way regardless (it only ever touches the
+					// loaded etemplate2/widgets, never the popup's own opening url).
 					//
 					// MailCompose.bootstrapForwardAsAttachment() (mail/js/compose.ts) is already
 					// fully JMAP-native and already dispatched by bootstrapCompose() for
