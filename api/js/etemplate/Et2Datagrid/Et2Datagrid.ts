@@ -594,6 +594,17 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 
 	/** Set of row ids already added, used to avoid duplicate render on incremental fetches. */
 	private displayedRowIds : Set<string> = new Set();
+	/**
+	 * Row ids explicitly deleted client-side. An `add`/`update` refresh whose request
+	 * started before a delete (eg. a push notification's own row fetch, slow over a
+	 * bad connection) can still resolve *after* that delete has already removed the
+	 * row - _removeRowsById() clears the id from displayedRowIds, so without this set
+	 * the late response looks exactly like a legitimately new row and gets re-inserted
+	 * (see _applyRefreshedRows()'s ADD/UPDATE branches). Bounded by
+	 * MAX_DELETED_ROW_IDS and cleared entirely on the next full reload (_clearRows()).
+	 */
+	private _deletedRowIds : Set<string> = new Set();
+	private static readonly MAX_DELETED_ROW_IDS = 200;
 	private _initialExportParts : string[] = [];
 	private _scrollListener : (() => void) | null = null;
 	private _scrollListenerBody : HTMLElement | null = null;
@@ -3131,6 +3142,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this._rowsByIndex = [];
 		this._rowRenderVersionById.clear();
 		this.displayedRowIds.clear();
+		this._deletedRowIds.clear();
 		this._completedRequestKeys.clear();
 		this._expandedRowHeightByParentRowId.clear();
 		this._expandedVirtualItemHeights.clear();
@@ -5141,7 +5153,11 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			{
 				const movedRowIds = new Set(rowsById.keys());
 				this._rowsByIndex = this._rowsByIndex.filter((row) => !row || !movedRowIds.has(row.id));
-				const topRows = (result.rows || []).map((row) => this.dataProvider?.getRowData ? {id: row.id} : row);
+				// Drop any row already deleted client-side - this response's request may have
+				// started before that delete and only resolved after it (see _deletedRowIds).
+				const topRows = (result.rows || [])
+					.filter((row) => !this._deletedRowIds.has(row.id))
+					.map((row) => this.dataProvider?.getRowData ? {id: row.id} : row);
 				this._rowsByIndex.unshift(...topRows);
 				topRows.forEach((row) =>
 				{
@@ -5188,7 +5204,11 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			{
 				for(const row of result.rows || [])
 				{
-					if(this.displayedRowIds.has(row.id))
+					// The second check catches a response whose request started before a
+					// delete of this same row and only resolved after it - without it, the
+					// row would look exactly like a legitimately new one and get resurrected
+					// (see _deletedRowIds).
+					if(this.displayedRowIds.has(row.id) || this._deletedRowIds.has(row.id))
 					{
 						continue;
 					}
@@ -5250,6 +5270,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			this.displayedRowIds.delete(row.id);
 			this._rowRenderVersionById.delete(row.id);
 			this.selectedRowIds.delete(row.id);
+			this._markRowIdDeleted(row.id);
 			removedCount++;
 		}
 		if(removedCount > 0 && this.total !== null)
@@ -5257,6 +5278,26 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			this.total = Math.max(0, this.total - removedCount);
 		}
 		return removedCount;
+	}
+
+	/**
+	 * Remember a row id was explicitly deleted, evicting the oldest entry first if
+	 * MAX_DELETED_ROW_IDS is exceeded - a late refresh response arriving further behind
+	 * a delete than that (in number of other deletes since, not just elapsed time) isn't
+	 * realistic to guard against, and the whole set is cleared on the next full reload
+	 * anyway (_clearRows()), so nothing is lost long-term by evicting the oldest here.
+	 */
+	private _markRowIdDeleted(rowId : string) : void
+	{
+		this._deletedRowIds.add(rowId);
+		if(this._deletedRowIds.size > Et2Datagrid.MAX_DELETED_ROW_IDS)
+		{
+			const oldest = this._deletedRowIds.values().next().value;
+			if(oldest !== undefined)
+			{
+				this._deletedRowIds.delete(oldest);
+			}
+		}
 	}
 
 	/**

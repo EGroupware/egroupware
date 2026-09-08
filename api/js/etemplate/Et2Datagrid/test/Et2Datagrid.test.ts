@@ -2357,6 +2357,125 @@ describe("Et2Datagrid row rendering", () =>
 	});
 
 	/**
+	 * Contract: an "add" refresh must not resurrect a row that was already deleted
+	 * client-side. A mail push notification's own row fetch can be delayed (eg. a slow
+	 * connection) long enough that its "add" response only resolves after the user has
+	 * already deleted that same just-arrived row - _removeRowsById() clears the id from
+	 * displayedRowIds, so without a separate deleted-id guard the late response looks
+	 * exactly like a legitimately new row and gets re-inserted.
+	 * Setup: add row-2, delete it, then apply a second "add" refresh for the same id -
+	 * standing in for the original add's own request resolving late.
+	 * Pass: row-2 is not re-inserted; only the originally-seeded row remains.
+	 */
+	it("does not resurrect a row deleted before its 'add' refresh resolves", async() =>
+	{
+		const el = createDatagrid();
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		el.templateData = {columns: el.columns} as any;
+		el.dataProvider = createDatagridDataProvider({
+			fetchPage: async() => ({rows: [], total: 1}),
+			refresh: async() => ({
+				rows: [{id: "addressbook::row-2", data: {uid: "addressbook::row-2", label: "Pushed row"}}],
+				removedRowIds: []
+			})
+		}) as any;
+		el.setInitialRows([{uid: "addressbook::row-1", label: "Row 1"}]);
+		el.total = 1;
+
+		// A push notification adds row-2 ...
+		await el.refresh(["row-2"], "add" as any);
+		await new Promise((resolve) => window.setTimeout(resolve, 0));
+		assert.deepEqual(
+			el.rows.map((row) => row.id),
+			["addressbook::row-2", "addressbook::row-1"],
+			"row-2 should be present after the add refresh, before the race is simulated"
+		);
+
+		// ... the user deletes it right away ...
+		await el.refresh(["row-2"], "delete" as any);
+		assert.deepEqual(el.rows.map((row) => row.id), ["addressbook::row-1"], "row-2 should be removed by the delete");
+
+		// ... but the original add's own request only resolves now, after the delete has
+		// already applied - simulated here by a second "add" refresh for the same id.
+		await el.refresh(["row-2"], "add" as any);
+		await new Promise((resolve) => window.setTimeout(resolve, 0));
+
+		assert.deepEqual(
+			el.rows.map((row) => row.id),
+			["addressbook::row-1"],
+			"a late add response for an already-deleted row must not resurrect it"
+		);
+		assert.equal(el.total, 1, "total should not grow from a resurrected row");
+	});
+
+	/**
+	 * Contract: a literal "update" refresh (the type that moves a row to the top) must not
+	 * resurrect a row that was already deleted client-side, for the same reason as "add"
+	 * above.
+	 * Setup: seed two rows, delete the second, then apply an "update" refresh whose response
+	 * targets that same deleted row id - standing in for a stale/delayed response.
+	 * Pass: the deleted row is not reinserted at the top.
+	 */
+	it("does not resurrect a row deleted before its literal 'update' refresh resolves", async() =>
+	{
+		const el = createDatagrid();
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		el.templateData = {columns: el.columns} as any;
+		el.dataProvider = createDatagridDataProvider({
+			fetchPage: async() => ({rows: [], total: 2}),
+			refresh: async() => ({
+				rows: [{id: "addressbook::row-2", data: {uid: "addressbook::row-2", label: "Late update response"}}],
+				removedRowIds: []
+			})
+		}) as any;
+		el.setInitialRows([
+			{uid: "addressbook::row-1", label: "Row 1"},
+			{uid: "addressbook::row-2", label: "Row 2"}
+		]);
+		el.total = 2;
+
+		await el.refresh(["row-2"], "delete" as any);
+		assert.deepEqual(el.rows.map((row) => row.id), ["addressbook::row-1"], "row-2 should be removed by the delete");
+
+		await el.refresh(["row-2"], "update" as any);
+		await new Promise((resolve) => window.setTimeout(resolve, 0));
+
+		assert.deepEqual(
+			el.rows.map((row) => row.id),
+			["addressbook::row-1"],
+			"a late update response for an already-deleted row must not resurrect it"
+		);
+	});
+
+	/**
+	 * Contract: the deleted-row-id tracking used by the two tests above must not grow
+	 * without bound over a long-lived session where many rows get deleted but the grid is
+	 * never fully reloaded (which would otherwise clear it) - the oldest entries are evicted
+	 * once MAX_DELETED_ROW_IDS is exceeded.
+	 * Setup: seed and delete more rows in one batch than the cap allows.
+	 * Pass: the tracked set size never exceeds the cap.
+	 */
+	it("caps deleted-row-id tracking so a long session of deletes can't grow it unbounded", async() =>
+	{
+		const el = createDatagrid();
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		el.templateData = {columns: el.columns} as any;
+		const cap = (Et2Datagrid as any).MAX_DELETED_ROW_IDS;
+		const rowCount = cap + 5;
+		const rows = Array.from({length: rowCount}, (_v, index) => ({uid: `addressbook::row-${index}`, label: `Row ${index}`}));
+		el.setInitialRows(rows);
+		el.total = rowCount;
+
+		await el.refresh(rows.map((_row, index) => `row-${index}`), "delete" as any);
+
+		assert.isAtMost(
+			(el as any)._deletedRowIds.size,
+			cap,
+			"deleted-row-id tracking should be capped, not grow with every delete in a long session"
+		);
+	});
+
+	/**
 	 * Contract: an "edit" refresh always does a full reload, unconditionally - never a targeted
 	 * single-row provider refresh. An edit can change the fields a filter checks (eg. a status
 	 * change matching the active status filter) and can move the row to a new sorted position,
