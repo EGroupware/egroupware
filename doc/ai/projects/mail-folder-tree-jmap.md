@@ -470,4 +470,60 @@ baseline), `tsc --noEmit` clean (diffed line-for-line against pre-change output 
 anywhere touched), and a real PHPUnit-harness check (`Api\LoggedInTest`-based, not a bare CLI
 script - see [[feedback_accounts_singleton_broken_in_phpunit_cli]]) confirming
 `mail_tree::getAccountsRootNode()` now actually returns `value`/`label`/`children` keys, not
-`id`/`text`/`item`. Both commits local only, not yet pushed.
+`id`/`text`/`item`. Both commits pushed to master.
+
+## `mail_tree` fully audited, dead code removed, renamed to `EGroupware\Mail\Ui\Tree` (2026-09-08)
+
+ralf asked for a full method-by-method usage audit before moving/renaming the class further -
+every method, every real caller, and under what conditions (JMAP/IMAP) each is reachable. Findings:
+`mail_tree` has no `ajax_*` methods and no `$public_functions` - it's a pure internal PHP helper,
+only ever reachable from `mail_ui.inc.php`'s own PHP (plus `getIdentityName()`, called externally
+from `ComposeMessageBuilder`). Nothing inside it branches on JMAP vs IMAP - `getAccountsRootNode()`
+lists every configured account regardless of backend.
+
+**`getTree()`'s `$_parent` handling was provably dead**: its only 2 real callers
+(`mail_ui::subscription()`/`folderManagement()`) always passed `$_parent = null`, and
+`isAccountNode(null)` always evaluates false - so the "single node loader" branch, the "account
+called for open" sub-branch, and the final "structs children of account root node" reshaping
+block were all unreachable regardless of any future caller. `isAccountNode()` itself then had zero
+remaining callers.
+
+**Follow-up question from ralf that changed the scope**: "what is the fallback condition [for
+`getTree()`]? If it's only about the JMAP shim not working properly, it makes no sense to keep."
+Traced precisely: the fallback fires only when `MailJmap.getRootFolders()`/`getMailboxChildren()`
+return `null`, whose own docblocks say this means "no usable JMAP access-token (server unreachable,
+MFA, ...)" - and `ProfileHandler::jmapBootstrap()`'s own docblock states plainly "every account is
+JMAP-eligible... returning null here means the account/server is genuinely unreachable right now".
+For plain-IMAP/shim accounts, `localBootstrap()` does no connectivity check at all - the actual
+failure surfaces later, inside `getMailboxChildren()`'s own JmapShim dispatch, which is a thin
+wrapper directly over the same `Api\Mail`/IMAP connection classic code uses; any error carrying
+real JMAP semantics is thrown as `JmapUserError` and shown directly, never routed into this
+fallback - only a bare connection-level failure returns `null`. So the fallback could never
+actually succeed where JMAP genuinely failed, exactly the same reasoning that already justified
+dropping the classic fallback from every *other* JMAP surface (folder-tree browsing, folder CRUD,
+message actions - see the dead-code-sweep commits above). Decided: drop it here too.
+
+**Scope after that decision**: `getTree()`/`setOutStructure()`/`nodeHasChildren()`/
+`isAccountNode()`/`getNodeLevel()`/`treeLeafNoConnectionArray()` all lost their last real caller and
+were removed entirely (`getAccountsRootNode()`'s own call to `setOutStructure()` turned out to be a
+no-op for its actual input - a single-segment `path` pops to an empty `$components` in
+`array_pop()`, so the whole parent-walking loop never executed for this caller - inlined to the 2
+lines it actually did: `unset($baseNode['path']); $roots[TreeWidget::CHILDREN][] = $baseNode;`).
+`mail_ui::subscription()`/`folderManagement()` no longer seed a server-side tree at all;
+`subscriptionLoad()`/`folderManagementLoad()` (`mail/js/app.ts`) now show a real error leaf
+(`buildErrorNode()`) on failure instead of relying on a classic tree that no longer exists.
+
+`getIdentityName()` (+ its `IDENT_*`/`ORG_NAME_EMAIL` constants) moved into `ComposeMessageBuilder`
+per ralf's explicit call - it's an identity-display-name formatter, not tree-structure logic, and
+was already used from there (`createMessage()`'s own `From:` header) as much as from `mail_tree`.
+
+The 3 survivors (constructor, `getAccountsRootNode()`, `getInitialIndexTree()`) were renamed from
+`mail_tree` to `EGroupware\Mail\Ui\Tree`, matching the `mail/src/Ui/*Handler` convention (ralf:
+"as it's purely internally use place it in / rename it to Mail/Ui/Tree") - `git mv` first (pure
+rename commit, `5926fbce29`), then the content/dead-code-removal commit (`159c7e3bde`).
+`$leafImages` pruned to the 2 entries still actually read.
+
+**Verified**: full `mail` PHPUnit suite (157 tests, same 6 pre-existing baseline REST-connection
+errors), a real PHPUnit-harness check confirming the old `mail_tree` class no longer exists and
+`Tree::getAccountsRootNode()`/`getInitialIndexTree()` still work correctly, full `mail` jstest group
+(197/197), `tsc --noEmit` clean, `php -l` clean on every touched file.
