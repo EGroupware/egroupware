@@ -180,6 +180,16 @@ similar scope.
   `self::` calls ARE forwarding for late static binding (unlike a literal `ClassName::` call) -
   only method *resolution* differs between `self::` (always the literal defining class's own
   declaration) and `static::` (the possibly-overridden, late-static-bound one).
+- `doc/ai/projects/hashed-entries-build-pinning.md` - giving rollup's entry files (`app.min.js`,
+  `egw.min.js`, `etemplate2.js`) content hashes and pinning a document to one build's file graph, so
+  opening a not-yet-opened app after a rebuild stops forcing the user into a reload the build-epoch
+  design deliberately set out to spare them. Covers why the already-caught "Illegal constructor"
+  crash is not the motivation, why hashing without pinning fixes nothing, the confirmed-dead
+  `getImportMap()` trio and why an import map is probably unnecessary, the way hashing would silently
+  disable the existing `egw_import` dedup defence, the app-disclosure problem a verbatim manifest
+  would create, and why the pin must NOT live in the session (it would survive a reload and make the
+  "reload at your convenience" prompt a lie). All design decisions settled; scoped but not started -
+  no code yet.
 - `doc/ai/projects/app-ts-modernization.md` - per-app modernization pass over each app's
   `$app/js/app.ts`: legacy `et2_*` widget imports -> web-component imports (`import type` when the
   widget is only ever used as a TS type), `var` -> `const`/`let`, fixing the file's own TS errors, and
