@@ -2129,6 +2129,11 @@ export class MailApp extends EgwApp
 					const data = this.renderMessageInto(template, rowId, _data);
 					this.registerForDrag(rowId, data.attachmentsBlock);
 				}
+			}).catch((e) =>
+			{
+				// Previously unhandled - a rejection here (eg. a session/network hiccup) left
+				// the popup's headers silently blank with no error shown at all.
+				console.error('renderPopupMessage(): ajax_fetchMessageDetails failed', e);
 			});
 		}
 	}
