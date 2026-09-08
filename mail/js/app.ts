@@ -2476,9 +2476,28 @@ export class MailApp extends EgwApp
 			rowId = this.fetchCurrentlyFocussed(selected);
 			data = this.renderMessageInto(mailPreview, rowId);
 		}
-		else if (!egwIsMobile() && mailPreview)
+		else
 		{
-			mailPreview.set_value({content:data, sel_options:{}});
+			if (!egwIsMobile() && mailPreview)
+			{
+				mailPreview.set_value({content:data, sel_options:{}});
+			}
+			// Genuinely nothing selected (undefined - eg. after switching folder, this.preview()'s
+			// own no-arg callers - or an explicitly empty array, eg. after a move/delete) - clear the
+			// stale currentlyFocussed/selectedMails too, not just the visible preview pane, so a
+			// later reply/reply-all/forward invoked with no explicit row selection (composeMessage()'s
+			// own "nothing selected, fall back to whatever is currently focused/previewed" backfill)
+			// can't silently target the PREVIOUS message instead of correctly having nothing to act
+			// on (found live 2026-09-08, ralf: "wenn man im Preview auf 'antworten/allen Antworten'
+			// klickt und aber noch keine neue Mail ausgewählt ist, triggert das ein Antworten auf die
+			// vorher ausgewählte Mail"). Deliberately NOT done for a genuine multi-selection
+			// (selected.length > 1) - composeMessage()'s own action dispatch already passes that
+			// selection through explicitly, so there's no stale-fallback risk to guard against there.
+			if (typeof selected == 'undefined' || selected.length === 0)
+			{
+				this.currentlyFocussed = '';
+				this.selectedMails = [];
+			}
 		}
 		// We cannot do any sensible thing if there is no rowId (or data) to act on after the mailPreview is cleared
 		if(!rowId && Object.keys(data).length === 0) return
