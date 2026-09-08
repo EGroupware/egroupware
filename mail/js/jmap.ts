@@ -2343,8 +2343,17 @@ export class MailJmap
 	// library job, meeting invites render via calendar.calendar_uiforms::meeting()).
 	// multipart/encrypted (PGP/MIME) is NOT in this set - Mailvelope decrypts entirely client-side
 	// already and needs no server involvement at all, see findPgpPart()/fetchBody() below.
+	// Bare "multipart/signed" is deliberately NOT in this flat set either (found live 2026-09-08,
+	// ralf: "PGP signed messages are displayed red as unverified ... mistaken for a s/mime signed
+	// message that does not verify") - RFC 1847 uses that exact same wrapper for RFC 3156's
+	// PGP/MIME detached signature too (an application/pgp-signature 2nd sub-part instead of
+	// S/MIME's application/(x-)pkcs7-signature), and this whole special-case path always routes
+	// into ajax_resolveSpecialCaseBody() -> Api\Mail\Smime::resolveMessage() - which naturally
+	// "fails to verify" ANY signature that isn't actually S/MIME. isSpecialCase() below only
+	// special-cases a multipart/signed part whose OWN detached-signature sub-part is really S/MIME;
+	// a PGP/MIME-signed message needs no special handling at all - it's plain, readable MIME
+	// already, same as any other message (no verification UI exists for it client-side either way).
 	private static readonly SPECIAL_CASE_TYPES = new Set([
-		'multipart/signed',
 		'application/pkcs7-mime', 'application/x-pkcs7-mime',
 		'application/pkcs7-signature', 'application/x-pkcs7-signature',
 		'text/calendar', 'application/ms-tnef',
@@ -2941,7 +2950,11 @@ export class MailJmap
 		}
 	}
 
-	/** Depth-first walk of bodyStructure/subParts for any SPECIAL_CASE_TYPES / winmail.dat match */
+	/**
+	 * Depth-first walk of bodyStructure/subParts for any SPECIAL_CASE_TYPES / winmail.dat match, or
+	 * an S/MIME (not PGP/MIME) multipart/signed wrapper - see SPECIAL_CASE_TYPES' own docblock for
+	 * why that one needs a dedicated check instead of just being a flat member of that set.
+	 */
 	private isSpecialCase(part : any) : boolean
 	{
 		if (!part)
@@ -2949,7 +2962,9 @@ export class MailJmap
 			return false;
 		}
 		if (MailJmap.SPECIAL_CASE_TYPES.has((part.type || '').toLowerCase()) ||
-			(part.name || '').toLowerCase() === 'winmail.dat')
+			(part.name || '').toLowerCase() === 'winmail.dat' ||
+			((part.type || '').toLowerCase() === 'multipart/signed' &&
+				(part.subParts || []).some((sub : any) => MailJmap.isSmimeSignaturePart(sub?.type))))
 		{
 			return true;
 		}
