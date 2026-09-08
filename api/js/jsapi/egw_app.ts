@@ -1322,7 +1322,7 @@ export abstract class EgwApp
 		data['popup'] = this.egw.link_get_registry('mail', 'edit_popup');
 		data['message'] = this.egw.lang('insert in %1', data.document);
 
-		data['menuaction'] = 'mail.mail_compose.ajax_merge';
+		data['menuaction'] = 'mail.EGroupware\\Mail\\Merge.ajax_merge';
 		action.data = data;
 
 		if(data['select_all'] || ids.length > 1)
@@ -1353,8 +1353,11 @@ export abstract class EgwApp
 			// resulting draft afterward is the same client-side-only "reopen a draft" MailApp.
 			// composeMessage() already does for every other draft - no reason to render a classic
 			// postback around it just for this one caller. Found auditing compose()'s own remaining
-			// callers, 2026-09-07 - this one wasn't previously identified.
-			this.egw.request('mail.mail_compose.ajax_mergeSingle', [ids.pop(), data.document, data.merge])
+			// callers, 2026-09-07 - this one wasn't previously identified. ajax_merge()/
+			// ajax_mergeSingle() moved into their own EGroupware\Mail\Merge class 2026-09-08 (this
+			// was already their only real caller, and neither needed anything from mail_compose
+			// beyond a connected mail_bo) - dispatched directly, no delegating stub needed.
+			this.egw.request('mail.EGroupware\\Mail\\Merge.ajax_mergeSingle', [ids.pop(), data.document, data.merge])
 				.then((result : any) =>
 				{
 					if (result?.msg)

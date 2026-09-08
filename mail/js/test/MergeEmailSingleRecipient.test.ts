@@ -26,9 +26,11 @@ const APP_SOURCE = '/mail/js/app.ts';
  * Before: a single recipient went through `egw.open(id, 'mail', 'edit', {from:'merge', ...})`,
  * a classic full-page postback resolving through mail's own Link registry to
  * mail_compose::compose(). Now: the merge itself still happens server-side
- * (mail.mail_compose.ajax_mergeSingle - merges into a NEW draft, does not send), but opening the
- * result is the same client-side-only "reopen a draft" MailApp.composeMessage() already does for
- * any other draft - no classic postback render at all.
+ * (EGroupware\Mail\Merge::ajax_mergeSingle - merges into a NEW draft, does not send; moved out of
+ * mail_compose into its own class 2026-09-08, dispatched directly - it never needed anything from
+ * mail_compose besides a connected mail_bo), but opening the result is the same client-side-only
+ * "reopen a draft" MailApp.composeMessage() already does for any other draft - no classic postback
+ * render at all.
  *
  * Setup: _mergeEmail() only ever touches `this.egw` and the global `window.app.mail`, so the app
  * object is a bare Object.create(MailApp.prototype) - no EgwApp constructor, which would want a
@@ -77,7 +79,7 @@ describe('EgwApp._mergeEmail() single recipient', () =>
 
 		await mergeSingle(46, '/home/ralf/Serienbrief.eml', 'EGroupware\\Api\\Contacts\\Merge');
 
-		assert.isTrue(egw.request.calledOnceWith('mail.mail_compose.ajax_mergeSingle',
+		assert.isTrue(egw.request.calledOnceWith('mail.EGroupware\\Mail\\Merge.ajax_mergeSingle',
 			[46, '/home/ralf/Serienbrief.eml', 'EGroupware\\Api\\Contacts\\Merge']));
 		assert.isTrue(composeMessage.calledOnceWith(
 			{id: 'composefromdraft'}, [{id: 'mail::5::1::RHJhZnRz::abc123'}]));

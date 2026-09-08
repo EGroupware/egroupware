@@ -90,7 +90,7 @@ class mail_hooks
 			// no 'add'/'edit' menuaction any more - mail_compose::compose() (the classic
 			// full-page postback they used to point at) is gone, and nothing resolves them
 			// generically (EgwApp._mergeEmail(), the last real reader, now calls
-			// mail.mail_compose.ajax_mergeSingle() directly instead). *_popup sizes stay -
+			// mail.EGroupware\Mail\Merge.ajax_mergeSingle() directly instead). *_popup sizes stay -
 			// _mergeEmail() still reads 'edit_popup' for its own popup dimensions.
 			'add_popup'  => '900xavailHeight',
 			'edit_id'    => 'id',
