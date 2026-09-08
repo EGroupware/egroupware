@@ -7562,19 +7562,35 @@ export class MailApp extends EgwApp
 	 */
 	preparePrint(_iframe?: HTMLIFrameElement)
 	{
-		const mainIframe = _iframe || this.et2?.getWidgetById('mailDisplayBodySrc')?.iframe;
+		const iframeWidget : any = this.et2?.getWidgetById('mailDisplayBodySrc');
+		const mainIframe = _iframe || iframeWidget?.iframe;
+		// hostNode is where tmpPrintDiv actually gets anchored as a SIBLING - the light-DOM
+		// <et2-iframe> element itself when resolved via the widget (iframeWidget IS that host
+		// element - Lit components extend HTMLElement), deliberately NOT mainIframe (the real
+		// <iframe>, which lives inside iframeWidget's own shadow root - Et2Iframe.__getIframeNode()
+		// does `this.shadowRoot.querySelector('iframe')`). Anchoring on mainIframe would put
+		// tmpPrintDiv INSIDE that same shadow root as a descendant of the host, where it silently
+		// inherits the host's own print-time `display:none` (print.css's own
+		// `#mail-display_mailDisplayBodySrc { display: none }` rule, set on the <et2-iframe>
+		// element by id) right along with the real iframe it's supposed to replace - `display:none`
+		// on an ancestor always wins over any descendant's own inline style override, shadow
+		// boundary or not (found live 2026-09-09 - ralf: "printing of mails is not working, headers
+		// are visible but not the body"; the headers print fine since they're plain light-DOM
+		// content elsewhere in the template, untouched by this). When _iframe is passed explicitly
+		// it's assumed to already be a plain light-DOM iframe (no current caller does this), so
+		// it's already the correct anchor itself.
+		const hostNode : HTMLElement = _iframe || iframeWidget;
 		// was document.body.querySelector(...) - LIGHT-DOM-ONLY, blind to the shadow root the
-		// iframe (and thus its own sibling tmpPrintDiv, inserted a few lines below via
-		// mainIframe.parentNode.insertBefore()) actually lives in now that mailDisplayBodySrc is a
-		// real Et2Iframe custom element. Found live 2026-09-04 (ralf: "eml files attached to
-		// infologs... display three mails side by side like three columns"): this check ALWAYS
-		// failed to find the already-inserted copy, so EVERY preparePrint() call (the iframe's own
-		// 'load' event firing more than once is already a known, documented quirk - see this
-		// method's own callers) created yet ANOTHER duplicate #tempPrintDiv, all left visible side
-		// by side instead of the second call finding and reusing the first. Scoping the lookup to
-		// mainIframe's own parent (the correct shadow-DOM-local scope, same one insertBefore()
-		// already uses correctly) finds a previously-inserted copy regardless of where it lives.
-		let tmpPrintDiv = mainIframe?.parentNode?.querySelector('#tempPrintDiv');
+		// iframe actually lives in now that mailDisplayBodySrc is a real Et2Iframe custom element.
+		// Found live 2026-09-04 (ralf: "eml files attached to infologs... display three mails side
+		// by side like three columns"): this check ALWAYS failed to find the already-inserted copy,
+		// so EVERY preparePrint() call (the iframe's own 'load' event firing more than once is
+		// already a known, documented quirk - see this method's own callers) created yet ANOTHER
+		// duplicate #tempPrintDiv, all left visible side by side instead of the second call finding
+		// and reusing the first. Scoping the lookup to hostNode's own parent (light-DOM, not the
+		// shadow root - see hostNode's own docblock above) finds a previously-inserted copy
+		// regardless of where it lives.
+		let tmpPrintDiv = hostNode?.parentNode?.querySelector<HTMLElement>('#tempPrintDiv');
 		let notAttached = false;
 
 		if (!tmpPrintDiv)
@@ -7583,12 +7599,10 @@ export class MailApp extends EgwApp
 			tmpPrintDiv.id = 'tempPrintDiv';
 			tmpPrintDiv.classList.add('tmpPrintDiv');
 			// api/templates/default/print.css's own `@media screen { .tmpPrintDiv { display: none }
-			// }` is a light-DOM stylesheet - same shadow-DOM encapsulation issue as the querySelector
-			// fix above (found investigating the SAME "three columns" report): it never reaches this
-			// element once it lives inside the iframe's own shadow root, leaving it visible right
-			// next to the iframe's own real content instead of hidden. An inline style always
-			// applies regardless of shadow boundaries; displayPrint() clears it right before actually
-			// printing and restores it after.
+			// }` is a light-DOM stylesheet - now correctly reaches this element (a light-DOM
+			// sibling of hostNode, see hostNode's own docblock above), but kept as an inline style
+			// too (belt-and-suspenders, cheap): displayPrint() clears it right before actually
+			// printing and restores it after via the same inline property.
 			tmpPrintDiv.style.display = 'none';
 			notAttached = true;
 		}
@@ -7609,9 +7623,9 @@ export class MailApp extends EgwApp
 		}
 
 		// Attach the element to the DOM after maniupulation
-		if (notAttached && mainIframe)
+		if (notAttached && hostNode)
 		{
-			mainIframe.parentNode.insertBefore(tmpPrintDiv, mainIframe.nextElementSibling);
+			hostNode.parentNode.insertBefore(tmpPrintDiv, hostNode.nextElementSibling);
 		}
 		tmpPrintDiv.querySelector('#divAppboxHeader')?.remove();
 	}
@@ -7625,15 +7639,17 @@ export class MailApp extends EgwApp
 
 		// Make sure the print happens after the content is loaded. Seems Firefox and IE can't handle timing for print command correctly
 		setTimeout(() =>{
-			// preparePrint()'s own inline `display: none` (see its own docblock - api/templates/
-			// default/print.css's `@media screen`/`@media print` rules for .tmpPrintDiv are both
-			// light-DOM stylesheets that can't reach inside the iframe's shadow root) needs an
-			// explicit inline override here too, or the print output would just be blank - restored
-			// afterward via onafterprint (Firefox/IE) or a short timeout (Chrome has no such event,
-			// same fallback printForCompose() already uses), so a cancelled print dialog doesn't
-			// leave the copy visible on screen.
-			const mainIframe = this.et2?.getWidgetById('mailDisplayBodySrc')?.iframe;
-			const tmpPrintDiv = mainIframe?.parentNode?.querySelector('#tempPrintDiv') as HTMLElement;
+			// preparePrint()'s own inline `display: none` needs an explicit inline override here
+			// too (belt-and-suspenders alongside print.css's own `@media print` rule - see
+			// preparePrint()'s docblock for why tmpPrintDiv must be anchored on the widget itself,
+			// not the real iframe inside its shadow root), restored afterward via onafterprint
+			// (Firefox/IE) or a short timeout (Chrome has no such event, same fallback
+			// printForCompose() already uses), so a cancelled print dialog doesn't leave the copy
+			// visible on screen. Looked up via the SAME hostNode-based anchor preparePrint() itself
+			// uses (the <et2-iframe> widget, not its own .iframe accessor) - querying via mainIframe.
+			// parentNode here would look inside the shadow root, where tmpPrintDiv no longer lives.
+			const iframeWidget : any = this.et2?.getWidgetById('mailDisplayBodySrc');
+			const tmpPrintDiv = iframeWidget?.parentNode?.querySelector('#tempPrintDiv') as HTMLElement;
 			if (tmpPrintDiv) tmpPrintDiv.style.display = 'block';
 			const hideAgain = () => { if (tmpPrintDiv) tmpPrintDiv.style.display = 'none'; };
 			if ('onafterprint' in window)
