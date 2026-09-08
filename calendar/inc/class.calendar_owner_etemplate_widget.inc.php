@@ -21,7 +21,7 @@ use EGroupware\Api\Etemplate;
  *
  * The naming convention is <appname>_<subtype>_etemplate_widget
  */
-class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
+class calendar_owner_etemplate_widget extends Etemplate\Widget\Select
 {
 
 	/**

@@ -29,7 +29,7 @@ export class Et2SelectAccount extends SelectAccountMixin(Et2StaticSelectMixin(Et
 		// not be complete
 		if(this.egw().preference('account_selection', 'common') !== 'none')
 		{
-			this.searchUrl = "EGroupware\\Api\\Etemplate\\Widget\\Taglist::ajax_search";
+			this.searchUrl = "EGroupware\\Api\\Etemplate\\Widget\\Select::ajax_search";
 		}
 
 		this.searchOptions = {type: 'account', account_type: 'accounts'};

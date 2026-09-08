@@ -142,7 +142,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 	 * Set to "" to cancel searching.
 	 * @type {string}
 	 */
-	@property({type: String}) searchUrl = "EGroupware\\Api\\Etemplate\\Widget\\Taglist::ajax_email";
+	@property({type: String}) searchUrl = "EGroupware\\Api\\Etemplate\\Widget\\Select::ajax_email";
 
 	/**
 	 * Limit the maximum height of the widget, for when you have a lot of addresses.

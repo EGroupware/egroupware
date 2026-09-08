@@ -13,7 +13,7 @@
 				<et2-checkbox  statustext="check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)" id="disposition" selectedValue="on" unselectedValue="off" ></et2-checkbox>
 				<et2-textbox  id="appendix_data" autocomplete="off"></et2-textbox>
 				<et2-password  id="smime_passphrase"></et2-password>
-				<et2-select  id="to_integrate_ids" multiple="true" allowFreeEntries="true" editModeEnabled="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_search"></et2-select>
+				<et2-select  id="to_integrate_ids" multiple="true" allowFreeEntries="true" editModeEnabled="true" searchUrl="EGroupware\Api\Etemplate\Widget\Select::ajax_search"></et2-select>
 				<et2-select  id="priority"></et2-select>
 				<et2-vbox  class="expanderFirstRow">
 					<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="composeID"></et2-textbox>
@@ -45,7 +45,7 @@
 					</row>
 					<row class="mailComposeHeaders mailComposeReplyto">
 						<et2-description  value="Reply to"></et2-description>
-						<et2-email  id="replyto" width="100%" onclick="app.mail.addressClick" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email" allowPlaceholder="true"></et2-email>
+						<et2-email  id="replyto" width="100%" onclick="app.mail.addressClick" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Select::ajax_email" allowPlaceholder="true"></et2-email>
 					</row>
 					<row class="mailComposeHeaders mailComposeFolder">
 						<et2-description  value="Folder"></et2-description>
@@ -66,11 +66,11 @@
 					</row>
 					<row class="mailComposeHeaders mailComposeCc">
 						<et2-description  value="Cc"></et2-description>
-                        <et2-email  id="cc" width="100%" onclick="app.mail.addressClick" onchange="app.mail.compose.recipientsOnChange" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email" placeholder="select or insert email address" includeLists="true" allowPlaceholder="true"></et2-email>
+                        <et2-email  id="cc" width="100%" onclick="app.mail.addressClick" onchange="app.mail.compose.recipientsOnChange" searchUrl="EGroupware\Api\Etemplate\Widget\Select::ajax_email" placeholder="select or insert email address" includeLists="true" allowPlaceholder="true"></et2-email>
                     </row>
                     <row class="mailComposeHeaders mailComposeBcc">
                         <et2-description  value="Bcc"></et2-description>
-                        <et2-email  id="bcc" width="100%" onclick="app.mail.addressClick" onchange="app.mail.compose.recipientsOnChange" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email" placeholder="select or insert email address" includeLists="true" allowPlaceholder="true"></et2-email>
+                        <et2-email  id="bcc" width="100%" onclick="app.mail.addressClick" onchange="app.mail.compose.recipientsOnChange" searchUrl="EGroupware\Api\Etemplate\Widget\Select::ajax_email" placeholder="select or insert email address" includeLists="true" allowPlaceholder="true"></et2-email>
                     </row>
                     <row class="mailComposeHeaders">
                         <et2-description  value="Subject"></et2-description>

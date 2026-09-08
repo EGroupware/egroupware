@@ -377,7 +377,7 @@ function send_template()
 				// only set (default) searchUrl for regular taglist or taglist-email, or if a non-empty autocomplete_url was given
 				if (empty($matches['2']) || $matches[2] === '-email' || !empty($attrs['autocomplete_url']))
 				{
-					$attrs['searchUrl'] = $attrs['autocomplete_url'] ?? 'EGroupware\\Api\\Etemplate\\Widget\\Taglist::'.
+					$attrs['searchUrl'] = $attrs['autocomplete_url'] ?? 'EGroupware\\Api\\Etemplate\\Widget\\Select::'.
 						($matches[2] === '-email' ? 'ajax_email' : 'ajax_search');
 
 					if (isset($attrs['autocomplete_params']))
