@@ -3747,7 +3747,17 @@ class Mail
 								$subscribedMailboxes = $this->icServer->listSubscribedMailboxes($singleNameSpace['prefix'],0,true);
 							}
 						}
-						catch(Exception $e)
+						// was catch(Exception $e) - EGroupware\Api\Exception in this namespace, which
+						// never actually caught a real IMAP failure: listSubscribedMailboxes() falls
+						// through to Horde_Imap_Client_Socket's raw LIST/LSUB command (unguarded on
+						// Imap\Jmap/Stalwart - see project_jmap_imap_fallthrough_cleanup), throwing the
+						// global-namespace Horde_Imap_Client_Exception, not an instance of THIS
+						// namespace's Exception class - so the intended "skip this namespace" fail-soft
+						// never actually fired for a JMAP account (found live 2026-09-08 via
+						// Compose::ajax_searchFolder() on a Stalwart account). Same root cause already
+						// documented+fixed once in this file (see importMessageToMergeAndSend()'s own
+						// catch(\Throwable $e) comment).
+						catch(\Throwable $e)
 						{
 							continue;
 						}
