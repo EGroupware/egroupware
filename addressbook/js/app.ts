@@ -255,6 +255,31 @@ class AddressbookApp extends EgwApp
 	}
 
 	/**
+	 * Check grants to see if we can quickly tell this contact is not for us
+	 *
+	 * Contacts of accounts have owner 0, and access to them does not come from a grant by
+	 * account 0: it comes from the account_selection preference and admin rights, neither of
+	 * which is part of the grants we have clientside.  We can not tell for those contacts,
+	 * so we let them through and leave the decision to the server.
+	 *
+	 * @param pushData
+	 * @param grant_fields List of fields in pushData.acl with account IDs that might grant access
+	 * @param appname Optional, to check against the grants for a different application.  Defaults to this.appname.
+	 *
+	 * @return boolean Entry has ACL access
+	 */
+	_push_grant_check(pushData : PushData, grant_fields : string[], appname? : string) : boolean
+	{
+		// 0 is the accounts addressbook, see above.  Owner arrives as number or string.
+		if(pushData.acl && parseInt(pushData.acl.owner) === 0)
+		{
+			return true;
+		}
+
+		return super._push_grant_check(pushData, grant_fields, appname);
+	}
+
+	/**
 	 * Change handler for contact / org selectbox
 	 *
 	 * @param {Event} _ev
