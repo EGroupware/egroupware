@@ -73,8 +73,6 @@ class mail_ui
 		'importMessageFromVFS2DraftAndDisplay'=>True,
 		'subscription'	=> True,
 		'folderManagement' => true,
-		'smimeExportCert' => true,
-		'smimeExportCsr' => true,
 	);
 
 	/**
@@ -2032,26 +2030,6 @@ class mail_ui
 	}
 
 	/**
-	 * Export stored smime certificate in database
-	 * @return boolean return false if not successful
-	 */
-	function smimeExportCert()
-	{
-		return $this->smimeHandler()->exportCert();
-	}
-
-	/**
-	 * Export a CSR (certificate signing request) generated from the stored
-	 * smime private key, so a CA can (re-)issue a certificate for it
-	 *
-	 * @return boolean return false if not successful
-	 */
-	function smimeExportCsr()
-	{
-		return $this->smimeHandler()->exportCsr();
-	}
-
-	/**
 	 * Build actions for display toolbar
 	 */
 	function getDisplayToolbarActions ()
@@ -2346,29 +2324,6 @@ class mail_ui
 	}
 
 	/**
-	 * This function creates folder/subfolder based on its selected parent
-	 *
-	 * @param string $_parent folder name or profile+folder name to add a folder to
-	 * @param string $_new new folder name to be created
-	 *
-	 */
-	function ajax_addFolder($_parent, $_new)
-	{
-		$this->folderHandler()->addFolder($_parent, $_new);
-	}
-
-	/**
-	 * ajax_renameFolder - its called via json, so the function must start with ajax (or the class-name must contain ajax)
-	 * @param string $_folderName folder to rename and refresh
-	 * @param string $_newName new foldername
-	 * @return nothing
-	 */
-	function ajax_renameFolder($_folderName, $_newName)
-	{
-		$this->folderHandler()->renameFolder($_folderName, $_newName);
-	}
-
-	/**
 	 * ResolveWinmail fetches the encoded attachments
 	 * from winmail.dat and will response expected structure back
 	 * to client in order to display them.
@@ -2552,30 +2507,6 @@ class mail_ui
 			_egw_log_exception($e);
 			$response->data(['error' => $e->getMessage()]);
 		}
-	}
-
-	/**
-	 * move folder
-	 *
-	 * @param string _folderName  folder to vove
-	 * @param string _target target folder
-	 *
-	 * @return void
-	 */
-	function ajax_MoveFolder($_folderName, $_target)
-	{
-		$this->folderHandler()->moveFolder($_folderName, $_target);
-	}
-
-	/**
-	 * ajax_deleteFolder - its called via json, so the function must start with ajax (or the class-name must contain ajax)
-	 * @param string $_folderName folder to delete
-	 * @param boolean $_return = false wheter return the success value (true) or send response to client (false)
-	 * @return nothing
-	 */
-	function ajax_deleteFolder($_folderName, $_return = false)
-	{
-		return $this->folderHandler()->deleteFolder($_folderName, $_return);
 	}
 
 	/**

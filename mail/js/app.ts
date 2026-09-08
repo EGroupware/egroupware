@@ -3323,6 +3323,20 @@ export class MailApp extends EgwApp
 			return false;
 		}
 
+		// Rename/Move/Delete only make sense on a real folder, never a bare account-root node
+		// (jmapRenameFolder()/jmapMoveFolder()/jmapDeleteFolder() all reject one too, "an account
+		// itself cannot be renamed/moved/deleted here") - without this, those 3 actions stayed
+		// enabled for an account root and fell through to their now-removed classic
+		// ajax_renameFolder/ajax_MoveFolder/ajax_deleteFolder counterparts (mail_ui no longer has
+		// them, see doc/ai/projects/mail-folder-tree-jmap.md). 'add'/'subscribe'/'unsubscribe'/
+		// 'foldermanagement' are deliberately excluded - each is a real, supported operation on an
+		// account root (adding its first top-level folder, managing the whole account's
+		// subscriptions).
+		if (['edit', 'move', 'delete'].includes(action.id) && _senders[0].id.indexOf('::') === -1)
+		{
+			return false;
+		}
+
 		return true;
 	}
 
@@ -5970,8 +5984,7 @@ export class MailApp extends EgwApp
 					switch (_button_id)
 					{
 						case "add":
-							(this.tryJmapAddFolder(_senders[0].id, NewFolderName) ??
-								egw.json('mail.mail_ui.ajax_addFolder', [_senders[0].id, NewFolderName]).sendRequest(true));
+							this.jmapAddFolder(_senders[0].id, NewFolderName);
 							return;
 					case "cancel":
 				}
@@ -5983,11 +5996,12 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * Try the fast client-side JMAP create-folder path - MailJmap.createMailbox(). Refreshes the
-	 * parent's tree level on success; on failure shows the error directly, there's no classic
-	 * fallback (see folderTreeAutoload()'s docblock for why).
+	 * Client-side JMAP create-folder path - MailJmap.createMailbox(). Refreshes the parent's tree
+	 * level on success; on failure shows the error directly - no classic fallback any more
+	 * (mail_ui::ajax_addFolder()/FolderHandler::addFolder() removed 2026-09-08, see
+	 * doc/ai/projects/mail-folder-tree-jmap.md).
 	 */
-	private tryJmapAddFolder(parentTreeId : string, name : string) : Promise<any> | null
+	private jmapAddFolder(parentTreeId : string, name : string) : Promise<any>
 	{
 		const [profileID, parentPath] : [string, string] = parentTreeId.indexOf('::') !== -1 ?
 			parentTreeId.split('::', 2) as [string, string] : [parentTreeId, ''];
@@ -6026,8 +6040,7 @@ export class MailApp extends EgwApp
 					switch (_button_id)
 					{
 						case "rename":
-							(this.tryJmapRenameFolder(_senders[0].id, NewFolderName) ??
-								egw.json('mail.mail_ui.ajax_renameFolder', [_senders[0].id, NewFolderName]).sendRequest(true));
+							this.jmapRenameFolder(_senders[0].id, NewFolderName);
 							return;
 					case "cancel":
 				}
@@ -6039,14 +6052,23 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * Try the fast client-side JMAP rename path - MailJmap.renameMailbox() (same parent, new leaf
-	 * name only - matches classic ajax_renameFolder()'s own "rename in place" semantics, no move).
-	 * Refreshes the parent's tree level on success; on failure shows the error directly, there's no
-	 * classic fallback (see folderTreeAutoload()'s docblock for why).
+	 * Client-side JMAP rename path - MailJmap.renameMailbox() (same parent, new leaf name only -
+	 * matches the removed classic ajax_renameFolder()'s own "rename in place" semantics, no move).
+	 * Refreshes the parent's tree level on success; on failure shows the error directly - no
+	 * classic fallback any more (mail_ui::ajax_renameFolder()/FolderHandler::renameFolder()
+	 * removed 2026-09-08, see doc/ai/projects/mail-folder-tree-jmap.md).
+	 *
+	 * treeId is never a bare account-root id in practice - checkFolderNoSelect() disables the
+	 * Rename action entirely for one - but this stays defensive (a plain error instead of a crash
+	 * a few lines down) in case some other caller ever passes one anyway.
 	 */
-	private tryJmapRenameFolder(treeId : string, newName : string) : Promise<any> | null
+	private jmapRenameFolder(treeId : string, newName : string) : Promise<any>
 	{
-		if (treeId.indexOf('::') === -1) return null;	// an account root can't be renamed
+		if (treeId.indexOf('::') === -1)
+		{
+			this.egw.message(this.egw.lang('An account itself cannot be renamed here.'), 'error');
+			return Promise.resolve();
+		}
 		const [profileID, path] : [string, string] = treeId.split('::', 2) as [string, string];
 		const parentPath = path.includes('/') ? path.substring(0, path.lastIndexOf('/')) : '';
 
@@ -6089,8 +6111,7 @@ export class MailApp extends EgwApp
 				egw.loading_prompt('mail_moveFolder', true, '', '#egw_fw_basecontainer');
 				for (let i = 0; i < _senders.length; i++)
 				{
-					(this.tryJmapMoveFolder(_senders[i].id, destination.id) ??
-						egw.request('mail.mail_ui.ajax_MoveFolder', [_senders[i].id, destination.id]))
+					this.jmapMoveFolder(_senders[i].id, destination.id)
 						.finally(() =>
 							{
 								// Move is done (successfully or not), remove loading
@@ -6108,15 +6129,24 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * Try the fast client-side JMAP move path - MailJmap.moveMailbox(). Same-account only
-	 * (moveFolder() already rejected a cross-account move before ever reaching this).
-	 * Refreshes *both* the source's old parent level and the destination level on success (the
-	 * moved node disappears from one, appears in the other); on failure shows the error directly,
-	 * there's no classic fallback (see folderTreeAutoload()'s docblock for why).
+	 * Client-side JMAP move path - MailJmap.moveMailbox(). Same-account only (moveFolder() already
+	 * rejected a cross-account move before ever reaching this). Refreshes *both* the source's old
+	 * parent level and the destination level on success (the moved node disappears from one,
+	 * appears in the other); on failure shows the error directly - no classic fallback any more
+	 * (mail_ui::ajax_MoveFolder()/FolderHandler::moveFolder() removed 2026-09-08, see
+	 * doc/ai/projects/mail-folder-tree-jmap.md).
+	 *
+	 * sourceTreeId is never a bare account-root id in practice - checkFolderNoSelect() disables
+	 * dragging one as a move source entirely - but this stays defensive (a plain error instead of
+	 * a crash a few lines down) in case some other caller ever passes one anyway.
 	 */
-	private tryJmapMoveFolder(sourceTreeId : string, destTreeId : string) : Promise<any> | null
+	private jmapMoveFolder(sourceTreeId : string, destTreeId : string) : Promise<any>
 	{
-		if (sourceTreeId.indexOf('::') === -1) return null;	// an account root can't be moved
+		if (sourceTreeId.indexOf('::') === -1)
+		{
+			this.egw.message(this.egw.lang('An account itself cannot be moved here.'), 'error');
+			return Promise.resolve();
+		}
 		const [profileID, sourcePath] : [string, string] = sourceTreeId.split('::', 2) as [string, string];
 		const sourceParentPath = sourcePath.includes('/') ? sourcePath.substring(0, sourcePath.lastIndexOf('/')) : '';
 		const destPath = destTreeId.indexOf('::') !== -1 ? destTreeId.split('::', 2)[1] : '';
@@ -6152,8 +6182,7 @@ export class MailApp extends EgwApp
 				{
 					case "delete":
 						this.jmap.invalidateQuota(_senders[0].id.split('::', 1)[0]);
-						(this.tryJmapDeleteFolder(_senders[0].id) ??
-							egw.json('mail.mail_ui.ajax_deleteFolder', [_senders[0].id]).sendRequest(true));
+						this.jmapDeleteFolder(_senders[0].id);
 						return;
 					case "cancel":
 				}
@@ -6164,13 +6193,22 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * Try the fast client-side JMAP delete path - MailJmap.deleteMailbox(). Refreshes the parent's
-	 * tree level on success; on failure shows the error directly, there's no classic fallback (see
-	 * folderTreeAutoload()'s docblock for why).
+	 * Client-side JMAP delete path - MailJmap.deleteMailbox(). Refreshes the parent's tree level
+	 * on success; on failure shows the error directly - no classic fallback any more
+	 * (mail_ui::ajax_deleteFolder()/FolderHandler::deleteFolder() removed 2026-09-08, see
+	 * doc/ai/projects/mail-folder-tree-jmap.md).
+	 *
+	 * treeId is never a bare account-root id in practice - checkFolderNoSelect() disables the
+	 * Delete action entirely for one - but this stays defensive (a plain error instead of a crash
+	 * a few lines down) in case some other caller ever passes one anyway.
 	 */
-	private tryJmapDeleteFolder(treeId : string) : Promise<any> | null
+	private jmapDeleteFolder(treeId : string) : Promise<any>
 	{
-		if (treeId.indexOf('::') === -1) return null;	// an account root can't be deleted
+		if (treeId.indexOf('::') === -1)
+		{
+			this.egw.message(this.egw.lang('An account itself cannot be deleted here.'), 'error');
+			return Promise.resolve();
+		}
 		const [profileID, path] : [string, string] = treeId.split('::', 2) as [string, string];
 		const parentPath = path.includes('/') ? path.substring(0, path.lastIndexOf('/')) : '';
 

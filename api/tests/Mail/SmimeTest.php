@@ -90,9 +90,8 @@ class SmimeTest extends TestCase
 
 	/**
 	 * generate_csr() must build a CSR carrying the given DN for an already
-	 * existing (passphrase protected) private key - this is what
-	 * mail_ui::smimeExportCsr() and admin_mail's "Export CSR"/"Create CSR for
-	 * new private key" buttons rely on.
+	 * existing (passphrase protected) private key - this is what admin_mail's
+	 * "Export CSR"/"Create CSR for new private key" buttons rely on.
 	 */
 	public function testGenerateCsrForExistingKey()
 	{
