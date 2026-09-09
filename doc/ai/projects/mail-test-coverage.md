@@ -1,6 +1,6 @@
 # Mail: test-coverage audit and gap-closing plan
 
-## Status: audit complete (2026-09-09); priority 1 done; priority 2 (JMAP/shim path) done except for items blocked on a live/mocked IMAP+SMTP connection, PGP/S-MIME adjacency, or DB-backed CLI flakiness (see Progress log for the full list); a SECOND live-reported Reply-To regression found+fixed along the way (the shim's send-time re-fetch never read replyTo/Priority/read-receipt/thread-headers back from the stored draft); priority 3 (send/SMTP side) - `Smtp.php::mailbox_address()`, `Transport.php::sendJmap()` (with a real bug found+fixed there - a real-JMAP-transport send always produced a message with NO body/attachments at all), and `ApiHandler.php`'s `returnVacation()`/`parseAddressList()` done; remaining priority-3 items all need real IMAP/SMTP/Sieve connections; priority 4 (`app.ts`/`Ui\*Handler.php`) - `MailApp.markOpenedMessageRead()`/`resolveExternalImages()`/`resolveAttachmentViewUrls()` `Ui\BodyHandler`'s inline-image resolution, and `Ui\FolderHandler::setFolderStatus()`'s guard clauses done (with a real bug found+fixed in `resolveExternalImages()` - unguarded `toolbar.getActionById()` null-dereference on the "Show" button); also fixed 2 more live-reported Sieve vacation/notification bugs along the way, verified via a new `sieve-test`-based testing technique (see Progress log)
+## Status: audit complete (2026-09-09); priority 1 done; priority 2 (JMAP/shim path) done except for items blocked on a live/mocked IMAP+SMTP connection, PGP/S-MIME adjacency, or DB-backed CLI flakiness (see Progress log for the full list); a SECOND live-reported Reply-To regression found+fixed along the way (the shim's send-time re-fetch never read replyTo/Priority/read-receipt/thread-headers back from the stored draft); priority 3 (send/SMTP side) - `Smtp.php::mailbox_address()`, `Transport.php::sendJmap()` (with a real bug found+fixed there - a real-JMAP-transport send always produced a message with NO body/attachments at all), and `ApiHandler.php`'s `returnVacation()`/`parseAddressList()` done; remaining priority-3 items all need real IMAP/SMTP/Sieve connections; priority 4 (`app.ts`/`Ui\*Handler.php`) - `MailApp.markOpenedMessageRead()`/`resolveExternalImages()`/`resolveAttachmentViewUrls()` `Ui\BodyHandler`'s inline-image resolution, `Ui\FolderHandler::setFolderStatus()`'s guard clauses, and `Ui\ImportHandler::importMessageToFolder()`'s JMAP-native import path done (with a real bug found+fixed in `resolveExternalImages()` - unguarded `toolbar.getActionById()` null-dereference on the "Show" button); also fixed 2 more live-reported Sieve vacation/notification bugs along the way, verified via a new `sieve-test`-based testing technique (see Progress log)
 
 Full-codebase scan of `mail/js/*.ts`, `mail/src/*.php`, `mail/inc/*.php`, `api/src/Mail.php` and
 `api/src/Mail/*.php` (including the `Jmap/` shim + real-JMAP layer), cross-referenced against every
@@ -418,12 +418,27 @@ Delegate classes (`mail/src/Ui/*Handler.php`):
   broken guard (temporarily disabled it, watched the test fail with the expected "must not be
   called" exception, restored it). Also covers the empty/null `$_folder` no-op. `new Ui(false)`
   skips the real IMAP/DB bootstrap entirely, `mail_bo` set directly to a throwing stub.
+- **Done (2026-09-09)**: `Ui\ImportHandler::importMessageToFolder()`'s JMAP-native import path -
+  6 tests, `mail/tests/ImportHandlerImportMessageToFolderTest.php`. Same
+  "JMAP-FALLTHROUGH-GUARD" pattern as `FolderHandler::setFolderStatus()` but more substantial - a
+  real live bug found 2026-09-03 (clicking an InfoLog-attached `.eml` on a Stalwart account failed
+  with "Zielordner Drafts existiert nicht"): `folderExists()`/`appendMessage()` fall through to
+  raw-socket methods, unguarded for a JMAP account, so this materializes the import via genuine
+  `Email/import` (RFC 8621 §4.8) instead. Confirmed the tests catch a regression: temporarily
+  disabled the guard, watched 5 of 6 tests fail with the expected "must not be called" exception
+  from the stub (falling through to the classic path exactly like the real bug), restored it.
+  `$_formData['file']` uses the `egw-data://` scheme throughout, so `Mail::checkFileBasics()`
+  returns immediately with no real temp-file dependency. Covers: the JMAP-shaped rowId
+  construction, the raw message bytes actually uploaded as the blob, `INBOX`+delimiter
+  normalization before folder resolution, the "target folder doesn't exist" failure (never
+  uploads a blob), any other JMAP failure wrapped into `Api\Exception\WrongUserinput` with the
+  original message, and the empty-`$_folder` guard never touching JMAP at all.
 - Otherwise still untested beyond `ProfileHandler::quotaDisplay()` and `AttachmentJmap`'s
   address/attachment-block helpers (already well covered): `MessageActionHandler.php` (real
   mailbox-mutating logic, 220+-line methods - overlaps priority 1), `MessageDisplayHandler.php`
   (S/MIME-passphrase handling, JMAP-vs-classic dispatch - deliberately deferred, PGP/S-MIME
-  adjacent), `ImportHandler.php`, `SmimeHandler.php` (PGP/S-MIME, deliberately deferred),
-  `Tree.php`, `AttachmentHandler.php`.
+  adjacent), `SmimeHandler.php` (PGP/S-MIME, deliberately deferred), `Tree.php`,
+  `AttachmentHandler.php`.
 
 ## Lower priority (classic `Api\Mail`-side, per priority order above)
 
@@ -601,8 +616,11 @@ Kept for completeness, but explicitly deprioritized until the above is in better
 - 2026-09-09: `Ui\FolderHandler::setFolderStatus()`'s guard clauses (3 tests,
   `FolderHandlerSetFolderStatusTest.php`) done - see the delegate-classes entry above for what's
   covered, including confirming this test actually catches a broken JMAP-fallthrough guard.
-  Remaining priority-4 work: `preview()`, `renderMessageInto()`, compose popup wiring
-  (PGP-adjacent, deliberately deferred), folder-tree UI (~20 methods), search/filter UI,
-  attachments UI, drag-and-drop, and the rest of `mail/src/Ui/*Handler.php`
-  (`MessageActionHandler.php`, `MessageDisplayHandler.php` - PGP/S-MIME-adjacent,
-  `ImportHandler.php`, `Tree.php`, `AttachmentHandler.php`).
+- 2026-09-09: `Ui\ImportHandler::importMessageToFolder()`'s JMAP-native import path (6 tests,
+  `ImportHandlerImportMessageToFolderTest.php`) done - see the delegate-classes entry above for
+  what's covered, including confirming these tests actually catch a broken JMAP-fallthrough guard
+  (5 of 6 fail when disabled). Remaining priority-4 work: `preview()`, `renderMessageInto()`,
+  compose popup wiring (PGP-adjacent, deliberately deferred), folder-tree UI (~20 methods),
+  search/filter UI, attachments UI, drag-and-drop, and the rest of `mail/src/Ui/*Handler.php`
+  (`MessageActionHandler.php`, `MessageDisplayHandler.php` - PGP/S-MIME-adjacent, `Tree.php`,
+  `AttachmentHandler.php`).
