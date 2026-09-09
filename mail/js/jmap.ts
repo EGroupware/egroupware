@@ -377,6 +377,21 @@ export class MailJmap
 	// the baseline enableWsPush()'s onPush() callback diffs each new StateChange against, see
 	// processWsPushStates()
 	private wsPushStates : Record<string, Record<string, Record<string, string>>> = {};
+	// rowId -> verifyPgpSignature() result, or null if not PGP-signed at all; a key simply being
+	// absent means "never checked yet" (see peekPgpSignature()). Avoids re-doing the whole-message
+	// download + openpgp verify every time the same message is viewed again, and lets
+	// MailApp.composeMessage() synchronously ask "was the message I'm replying to signed?" for the
+	// reply/forward auto-match feature (doc/ai/projects/mail-pgp-signature-verification.md's
+	// "Planned follow-up" #4) without paying for another async round trip on top of the one the
+	// preview pane's own trigger call already made moments earlier.
+	private pgpSignatureCache : Record<string, PgpSignatureResult | null> = {};
+	// rowId -> was this message's bodyStructure multipart/encrypted (PGP)? Populated by fetchBody()
+	// for every message it loads (findPgpPart() is a cheap, pure structural walk of the
+	// already-fetched bodyStructure, no extra network cost) - same "peek what was already found"
+	// reasoning as pgpSignatureCache above, for MailApp.composeMessage()'s reply/forward
+	// auto-match. PGP encryption has no separate "verify" step the way signing does, so this is
+	// just a plain boolean, not a richer result type.
+	private pgpEncryptedCache : Record<string, boolean> = {};
 	private static readonly CUSTOM_FLAGS = ['customFlag1', 'customFlag2', 'customFlag3', 'customFlag4', 'customFlag5'];
 	// standard (non-label, non-custom-flag) system flags the UI can bulk-toggle for an explicit
 	// selection - keyed by the base ("un"-stripped) action id used throughout mail/js/app.ts
@@ -2563,6 +2578,7 @@ export class MailJmap
 			{
 				return {special: true};
 			}
+			this.pgpEncryptedCache[rowId] = !!this.findPgpPart(email.bodyStructure);
 			if (this.isSpecialCase(email.bodyStructure))
 			{
 				// S/MIME/TNEF: decrypt/decode is 100% server-side either way (private key material,
@@ -3258,6 +3274,43 @@ export class MailJmap
 	 *  and openpgp.js load only happen once a PGP signature is actually confirmed present)
 	 */
 	async verifyPgpSignature(rowId : string) : Promise<PgpSignatureResult | null>
+	{
+		if (rowId in this.pgpSignatureCache)
+		{
+			return this.pgpSignatureCache[rowId];
+		}
+		const result = await this.verifyPgpSignatureUncached(rowId);
+		this.pgpSignatureCache[rowId] = result;
+		return result;
+	}
+
+	/**
+	 * Synchronous cache peek, currently informational only - no compose-side "sign with PGP"
+	 * mechanism exists yet to auto-check against (Mailvelope's own integration is encrypt-only
+	 * today, see doc/ai/projects/mail-pgp-signature-verification.md's "Planned follow-up" #3,
+	 * "Mailvelope sign-on-send") - unlike peekPgpEncrypted() below, MailApp.composeMessage() does
+	 * NOT currently call this. Returns `undefined` when the message has never been through
+	 * verifyPgpSignature() at all, `null` when it was checked and found not PGP-signed, or the
+	 * real result otherwise.
+	 */
+	peekPgpSignature(rowId : string) : PgpSignatureResult | null | undefined
+	{
+		return this.pgpSignatureCache[rowId];
+	}
+
+	/**
+	 * Synchronous cache peek for MailApp.composeMessage()'s reply/forward auto-match - the `pgp`
+	 * compose-toolbar action is PGP *encryption* (Mailvelope), not signing (see peekPgpSignature()'s
+	 * own docblock for why that one has no such consumer yet). Returns `undefined` when the message
+	 * has never gone through fetchBody() at all (nothing to go on, so the toggle is left at its
+	 * normal default), `true`/`false` otherwise.
+	 */
+	peekPgpEncrypted(rowId : string) : boolean | undefined
+	{
+		return this.pgpEncryptedCache[rowId];
+	}
+
+	private async verifyPgpSignatureUncached(rowId : string) : Promise<PgpSignatureResult | null>
 	{
 		try
 		{

@@ -114,6 +114,7 @@ Api\Framework::set_extra('mail', 'start', array(
 		(string)($_REQUEST['acc_id'] ?? ''),
 		(string)($_REQUEST['mode'] ?? ''),
 		(string)($_REQUEST['smime_type'] ?? ''),
+		(string)($_REQUEST['pgp_encrypted'] ?? ''),
 		$bootstrap,
 		$preset,
 	),

@@ -1387,7 +1387,7 @@ export class MailApp extends EgwApp
 			}
 		}
 		// Extra info passed to egw.open()
-		const settings: { id: string; from: string; smime_type?: string; mode?: string } = {
+		const settings: { id: string; from: string; smime_type?: string; mode?: string; pgp_encrypted?: string } = {
 			// 'Source' Mail UID
 			id: '',
 			// How to pull data from the Mail IDs for the compose
@@ -1398,6 +1398,16 @@ export class MailApp extends EgwApp
 		settings.id = ((typeof _elems == 'undefined'|| _elems.length == 0)?'':_elems[0].id);
 		const content = egw.dataGetUIDdata(settings.id);
 		if (content) settings.smime_type = content.data['smime'];
+		// PGP has no server-known row field to mirror smime_type above with (100% client-side
+		// detection, unlike S/MIME's own `smime` row field) - reuses whatever fetchBody() already
+		// found for this exact message the last time it was displayed (MailJmap.peekPgpEncrypted(),
+		// a synchronous cache read - see its own docblock). Never triggers a fresh check here:
+		// composeMessage() needs to stay fast, and a message that was never actually opened/viewed
+		// simply doesn't get the reply/forward auto-match, same as forwarding a batch of still-
+		// loading messages. The `pgp` compose action is encryption only (Mailvelope) - there's no
+		// equivalent for "was this PGP-signed" yet, since PGP has no sign-on-send mechanism at all
+		// (doc/ai/projects/mail-pgp-signature-verification.md's "Planned follow-up" #3).
+		if (this.jmap.peekPgpEncrypted(settings.id)) settings.pgp_encrypted = '1';
 		switch(_action.id)
 		{
 			case 'compose':
@@ -1489,7 +1499,7 @@ export class MailApp extends EgwApp
 	 * factored out so the batch-forwardasattach branch above can call it too, as an `_open_new`
 	 * override for openWithinWindow()'s "nothing to reuse" case (see its own comment).
 	 */
-	private openComposePopupUrl(settings : { id : string, from : string, smime_type? : string, mode? : string }, accId : string)
+	private openComposePopupUrl(settings : { id : string, from : string, smime_type? : string, mode? : string, pgp_encrypted? : string }, accId : string)
 	{
 		const compose_list = egw.getOpenWindows("mail", /^compose_/);
 		const window_name = 'compose_' + compose_list.length + '_'+ (settings.from || '') + '_' + settings.id;
@@ -1499,6 +1509,7 @@ export class MailApp extends EgwApp
 			acc_id: accId,
 			mode: settings.mode || '',
 			smime_type: settings.smime_type || '',
+			pgp_encrypted: settings.pgp_encrypted || '',
 		});
 		return egw.openPopup(url, 870, 'availHeight', window_name, 'mail');
 	}
@@ -1515,7 +1526,7 @@ export class MailApp extends EgwApp
 	 * be a form field. compose.php reads `id` via `$_REQUEST` (not `$_GET`-only) specifically so
 	 * this works.
 	 */
-	private async openComposePopupUrlPost(settings : { id : string, from : string, smime_type? : string, mode? : string }, accId : string) : Promise<void>
+	private async openComposePopupUrlPost(settings : { id : string, from : string, smime_type? : string, mode? : string, pgp_encrypted? : string }, accId : string) : Promise<void>
 	{
 		const compose_list = egw.getOpenWindows("mail", /^compose_/);
 		const window_name = 'compose_' + compose_list.length + '_' + (settings.from || '') + '_post';
@@ -1524,6 +1535,7 @@ export class MailApp extends EgwApp
 		const target = typeof popup.name === 'string' && popup.name ? popup.name : '_blank';
 		const url = this.egw.link('/mail/compose.php', {
 			from: settings.from || '', acc_id: accId, mode: settings.mode || '', smime_type: settings.smime_type || '',
+			pgp_encrypted: settings.pgp_encrypted || '',
 		});
 		const doc = document;
 		const form = doc.createElement('form');
@@ -1682,6 +1694,16 @@ export class MailApp extends EgwApp
 	 *  pre-checks the composeToolbar's smime_sign/smime_encrypt actions to match, same as classic
 	 *  compose()'s own `$_content['composeToolbar']['smime_sign'/'smime_encrypt']` presets
 	 *  (class.mail_compose.inc.php:563-565)
+	 * @param pgpEncrypted '1' when the source message was PGP-encrypted (composeMessage()'s own
+	 *  MailJmap.peekPgpEncrypted() cache read - see its own docblock for why this can't be a fresh
+	 *  check here), '' otherwise - pre-checks the composeToolbar's `pgp` action (PGP encryption via
+	 *  Mailvelope) to match, same idea as smimeType above but PGP has no server-known row field to
+	 *  read it from directly. Reply/forward auto-matching the source message's encrypted state
+	 *  (doc/ai/projects/mail-pgp-signature-verification.md's "Planned follow-up" #4) - default only,
+	 *  never enforced: the user can still switch it back off for this one reply/forward. The
+	 *  "signed" half of that follow-up isn't wired here: `pgp` is PGP *encryption* only, and there's
+	 *  no PGP *sign*-on-send mechanism yet to pre-check against (Mailvelope's own integration is
+	 *  encrypt-only today - see "Planned follow-up" #3, "Mailvelope sign-on-send").
 	 * @param bootstrap {name, url, etemplate_exec_id} - Api\Etemplate::clientSideBootstrap()'s own
 	 *  result, computed server-side by mail/compose.php itself (a cheap file-lookup + Api\Cache
 	 *  write, not a session write) and handed down via data-mail-start's own args - used to be a
@@ -1715,6 +1737,7 @@ export class MailApp extends EgwApp
 	 *    disclaimer, classic compose()'s own Framework::message($msg) equivalent for this path).
 	 */
 	async bootstrapComposePopup(from : string, sourceId : string, accId : string, mode : string, smimeType : string,
+		pgpEncrypted : string,
 		bootstrap : {name : string, url : string, etemplate_exec_id : string},
 		preset? : {
 			to? : string[], cc? : string[], bcc? : string[], subject? : string,
@@ -1832,6 +1855,24 @@ export class MailApp extends EgwApp
 				actionsCopy.smime_encrypt = {...actionsCopy.smime_encrypt, checked: smimeType === 'smime_encrypt'};
 			}
 		}
+		// Pre-checking `pgp` here alone (same shape as smime_sign/smime_encrypt above) only gets the
+		// button LOOKING toggled on - unlike S/MIME, which reads its state straight off the widget
+		// at send time (MailCompose.trySendViaJmap()), PGP/Mailvelope needs a real, initialized
+		// `this.mailvelope_editor` to exist, or trySendViaJmap() silently sends unencrypted despite
+		// the button showing checked. et2_ready()'s own 'mail.compose' case does call
+		// this.mailvelopeAvailable(this.mailvelopeCompose) when the `pgp` widget is already checked
+		// at load time, BUT that path skips mailvelopeGetCheckRecipients() - the step that actually
+		// imports the recipient's public key into Mailvelope's OWN keyring (fetching it from the
+		// addressbook server-side first if needed) - unlike a real click (togglePgpEncrypt()) always
+		// does. Confirmed live (2026-09-09, ralf: "just setting the toggle seems not to trigger
+		// Mailvelope"): relying on that shortcut alone was not enough. So this pre-checks the button
+		// (so it LOOKS right immediately) but triggers the real activation explicitly below, via the
+		// exact same code path a real click uses (including its own recipient-key/no-mailvelope
+		// error handling) rather than the simpler shortcut.
+		if (pgpEncrypted === '1' && actionsCopy.pgp)
+		{
+			actionsCopy.pgp = {...actionsCopy.pgp, checked: true};
+		}
 
 		// Pre-construct MailCompose with the explicit bootstrap params BEFORE anything (in
 		// particular et2_ready()'s 'mail.compose' case below, triggered by etemplate2.load() itself)
@@ -1857,21 +1898,34 @@ export class MailApp extends EgwApp
 		// with it. attachmentContents (a real upload) before body, so a share-link-style body
 		// insertion (none of today's callers combine the two, but nothing stops a future one)
 		// wouldn't ever reference an attachment that hasn't finished uploading yet.
-		if (preset?.files?.length || preset?.attachmentContents?.length || preset?.body)
+		//
+		// Also where the pgp reply/forward auto-match above actually gets armed (see the
+		// `actionsCopy.pgp` pre-check's own comment for why the pre-check alone isn't enough): a
+		// reply/forward's own recipient (unlike a mailto:/preset one, already in `contentCopy`
+		// above) is filled in ASYNCHRONOUSLY by MailCompose.bootstrapReply() - the SAME
+		// `bootstrapPromise` this block already awaits for its own, unrelated reason - so
+		// mailvelopeGetCheckRecipients() (called via togglePgpEncrypt() below) sees the real "To"
+		// address, not an empty field. Confirmed live (2026-09-09, ralf: "just setting the toggle
+		// seems not to trigger Mailvelope") that triggering this too early, right after the initial
+		// template bootstrap rather than after this await, silently checked/imported keys for
+		// nobody. `bootstrapPromise` must therefore be awaited HERE UNCONDITIONALLY now, not only
+		// when a preset needs it.
+		await (<any>window).app._compose.bootstrapPromise;
+		if (preset?.files?.length)
 		{
-			await (<any>window).app._compose.bootstrapPromise;
-			if (preset.files?.length)
-			{
-				(<any>window).app._compose.applyPresetFiles(preset.files);
-			}
-			if (preset.attachmentContents?.length)
-			{
-				await (<any>window).app._compose.applyPresetAttachmentContent(preset.attachmentContents);
-			}
-			if (preset.body)
-			{
-				(<any>window).app._compose.applyPresetBody(preset.body, preset.bodyMimeType);
-			}
+			(<any>window).app._compose.applyPresetFiles(preset.files);
+		}
+		if (preset?.attachmentContents?.length)
+		{
+			await (<any>window).app._compose.applyPresetAttachmentContent(preset.attachmentContents);
+		}
+		if (preset?.body)
+		{
+			(<any>window).app._compose.applyPresetBody(preset.body, preset.bodyMimeType);
+		}
+		if (pgpEncrypted === '1' && actionsCopy.pgp)
+		{
+			this.togglePgpEncrypt({checked: true});
 		}
 		if (preset?.msg)
 		{
