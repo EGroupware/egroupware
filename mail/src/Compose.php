@@ -726,7 +726,12 @@ class Compose
 		$attachments = $this->resolveJmapAttachmentsToFiles((array)($params['attachments'] ?? []), $profileID);
 
 		$eml = tempnam($GLOBALS['egw_info']['server']['temp_dir'], 'mail_integrate_');
-		file_put_contents($eml, (string)($params['eml'] ?? ''));
+		// base64, not a raw string param: JSON/UTF-8 transport of an arbitrary byte string is
+		// inherently lossy for anything that isn't already valid UTF-8 (a genuinely 8-bit signed
+		// S/MIME/PGP body is under no obligation to be) - see MailJmap.fetchRawSourceBytesBase64()'s
+		// own docblock (mail/js/jmap.ts) for the full story; this is the ONLY consumer of that
+		// value, so decoding it back here is safe/unambiguous.
+		file_put_contents($eml, base64_decode((string)($params['emlBase64'] ?? '')));
 
 		$mailaddresses = (array)($params['mailaddresses'] ?? []);
 		if (!empty($activeMailProfile['ident_email']))

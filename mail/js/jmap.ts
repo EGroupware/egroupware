@@ -3199,8 +3199,7 @@ export class MailJmap
 		const body = idx === -1 ? text : text.slice(idx + 4);
 		// most PGP/MIME senders (Thunderbird/Enigmail) leave the signature part as plain 7bit
 		// ASCII armor, so `body` is already the right thing to hand to openpgp.readSignature() -
-		// but at least one real sender (found live 2026-09-09, ralf: a message from jens.riedel@
-		// baw.de, "Rückfragen zu den Installationsdateien...") base64-encodes it instead (a
+		// but at least one real sender base64-encodes it instead (found live 2026-09-09, a
 		// `Content-Transfer-Encoding: base64` header on the pgp-signature part itself), and
 		// openpgp.readSignature() then threw "Misformed armored text" on the still-encoded bytes.
 		const cte = /^Content-Transfer-Encoding:\s*([^\r\n]+)/im.exec(headers)?.[1]?.trim().toLowerCase();
@@ -3674,28 +3673,8 @@ export class MailJmap
 	{
 		try
 		{
-			const reference = this.messageReference(rowId);
-			const token = await this.ensureToken(reference.profileID);
-			if (!token)
-			{
-				throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
-			}
-			const args : any = {accountId: token.accountId, ids: [reference.emailId], properties: ['blobId']};
-			if (token.isLocal)
-			{
-				// standalone Email/get (no preceding Email/query in this request) needs our shim's
-				// local-only mailboxId extension - see JmapShim::emailGet(), same as refreshRows()
-				args.mailboxId = reference.mailboxId;
-			}
-			const [{emails}] = await this.clients[reference.profileID].requestMany((t) => ({
-				emails: t.Email.get(args) as any,
-			}));
-			const blobId = (emails.list || [])[0]?.blobId;
-			if (!blobId)
-			{
-				throw new JmapUserError(this.egw.lang('Unable to resolve the message blobId'));
-			}
-			return await this.fetchRawSourceByBlobId(reference.profileID, blobId);
+			const {profileID, blobId} = await this.resolveMessageBlobId(rowId);
+			return await this.fetchRawSourceByBlobId(profileID, blobId);
 		}
 		catch (e)
 		{
@@ -3706,25 +3685,125 @@ export class MailJmap
 	}
 
 	/**
-	 * Download a whole-message blobId directly, skipping fetchRawSource()'s own Email/get-by-id
-	 * lookup entirely - the ONLY safe way to get "the raw source of the message I just sent" back
-	 * from the shim (MailJmap.sendNewEmail()'s own `rawBlobId`, see its docblock for why a
-	 * (mailboxId, emailId) re-fetch afterward is unsafe there specifically).
+	 * Shared rowId -> blobId resolution for fetchRawSource() and fetchRawSourceBytesBase64() -
+	 * extracted (2026-09-09) so both share the exact same Email/get-by-id lookup rather than
+	 * duplicating it.
 	 */
-	async fetchRawSourceByBlobId(profileID : string, blobId : string) : Promise<string>
+	private async resolveMessageBlobId(rowId : string) : Promise<{profileID : string, blobId : string}>
+	{
+		const reference = this.messageReference(rowId);
+		const token = await this.ensureToken(reference.profileID);
+		if (!token)
+		{
+			throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
+		}
+		const args : any = {accountId: token.accountId, ids: [reference.emailId], properties: ['blobId']};
+		if (token.isLocal)
+		{
+			// standalone Email/get (no preceding Email/query in this request) needs our shim's
+			// local-only mailboxId extension - see JmapShim::emailGet(), same as refreshRows()
+			args.mailboxId = reference.mailboxId;
+		}
+		const [{emails}] = await this.clients[reference.profileID].requestMany((t) => ({
+			emails: t.Email.get(args) as any,
+		}));
+		const blobId = (emails.list || [])[0]?.blobId;
+		if (!blobId)
+		{
+			throw new JmapUserError(this.egw.lang('Unable to resolve the message blobId'));
+		}
+		return {profileID: reference.profileID, blobId};
+	}
+
+	/**
+	 * Shared token+downloadBlob() core for fetchRawSourceByBlobId() and
+	 * fetchRawSourceBytesBase64ByBlobId() - both need the exact same download, only differing in
+	 * how the Response body gets consumed afterward (text() vs arrayBuffer() - see the latter's
+	 * own docblock for why that distinction is not cosmetic).
+	 */
+	private async downloadRawSourceResponse(profileID : string, blobId : string) : Promise<Response>
 	{
 		const token = await this.ensureToken(profileID);
 		if (!token)
 		{
 			throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
 		}
-		const response = await this.clients[profileID].downloadBlob({
+		return await this.clients[profileID].downloadBlob({
 			accountId: token.accountId,
 			blobId,
 			mimeType: 'message/rfc822',
 			fileName: 'source',
 		});
+	}
+
+	/**
+	 * Download a whole-message blobId directly, skipping fetchRawSource()'s own Email/get-by-id
+	 * lookup entirely - the ONLY safe way to get "the raw source of the message I just sent" back
+	 * from the shim (MailJmap.sendNewEmail()'s own `rawBlobId`, see its docblock for why a
+	 * (mailboxId, emailId) re-fetch afterward is unsafe there specifically).
+	 *
+	 * Best-effort READABLE text only - response.text() always UTF-8-decodes per the WHATWG Fetch
+	 * spec (regardless of the message's own declared charset), replacing any byte that isn't
+	 * valid UTF-8 with U+FFFD. Fine for this method's own callers (view-source/view-header
+	 * display, where a rare mojibake character is a cosmetic issue at worst) but NOT
+	 * byte-reversible - anything that needs to re-persist the exact original bytes afterward (a
+	 * real .eml file a user may later re-open expecting its S/MIME/PGP signature to still verify)
+	 * MUST use fetchRawSourceBytesBase64ByBlobId() instead (found live 2026-09-09, reproduced in
+	 * mail/js/test/MailRawSourceByteFidelity.test.ts - MailCompose.integrateSentMessage() used to
+	 * go through this method and silently corrupt a genuinely 8-bit signed body this way).
+	 */
+	async fetchRawSourceByBlobId(profileID : string, blobId : string) : Promise<string>
+	{
+		const response = await this.downloadRawSourceResponse(profileID, blobId);
 		return await response.text();
+	}
+
+	/**
+	 * Byte-exact, reversible counterpart of fetchRawSourceByBlobId() - base64-encodes the RAW
+	 * bytes instead of decoding them as text, so it survives round-tripping through anything
+	 * text-only (this method's own JSON-over-HTTP callers included) regardless of what charset/
+	 * encoding the original message's bytes actually use. Base64 is inherently 7-bit/ASCII-safe,
+	 * so no further encoding step anywhere downstream can silently corrupt it the way
+	 * fetchRawSourceByBlobId()'s response.text() does - see that method's own docblock for the
+	 * bug this exists to avoid.
+	 *
+	 * Use this for anything that re-persists the message afterward (currently: MailCompose.
+	 * integrateSentMessage()'s .eml attachment) - NOT for view-source/view-header display, which
+	 * wants readable text, not base64.
+	 */
+	async fetchRawSourceBytesBase64ByBlobId(profileID : string, blobId : string) : Promise<string>
+	{
+		const response = await this.downloadRawSourceResponse(profileID, blobId);
+		const bytes = new Uint8Array(await response.arrayBuffer());
+		// btoa() needs a "binary string" (one JS UTF-16 code unit per byte, 0-255) - built in
+		// chunks to avoid blowing the call stack via String.fromCharCode(...bytes) on a large
+		// message (a spread of a huge typed array as individual arguments)
+		let binary = '';
+		const chunkSize = 0x8000;
+		for (let i = 0; i < bytes.length; i += chunkSize)
+		{
+			binary += String.fromCharCode(...bytes.subarray(i, i + chunkSize));
+		}
+		return btoa(binary);
+	}
+
+	/**
+	 * rowId-based counterpart of fetchRawSourceBytesBase64ByBlobId() - same Email/get-by-id
+	 * blobId resolution fetchRawSource() itself uses (resolveMessageBlobId()).
+	 */
+	async fetchRawSourceBytesBase64(rowId : string) : Promise<string>
+	{
+		try
+		{
+			const {profileID, blobId} = await this.resolveMessageBlobId(rowId);
+			return await this.fetchRawSourceBytesBase64ByBlobId(profileID, blobId);
+		}
+		catch (e)
+		{
+			if (e instanceof JmapUserError) throw e;
+			console.error('MailJmap.fetchRawSourceBytesBase64(): failed', e);
+			throw new JmapUserError(describeJmapError(e) ?? this.egw.lang('Unable to connect to the mail server'));
+		}
 	}
 
 	/**

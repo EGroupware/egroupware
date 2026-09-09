@@ -1226,13 +1226,19 @@ export class MailCompose
 	 *
 	 * Raw-source fetch: prefers `sent.rawBlobId` (MailJmap.sendNewEmail()'s own shim-only
 	 * extension, a direct blob download - see its docblock) when present, falling back to
-	 * MailJmap.fetchRawSource() (a synthetic rowId built from `sent`'s own emailId/mailboxId) only
-	 * when it's not - a real Stalwart account never returns `rawBlobId` at all (see
-	 * emailSubmissionSet()'s own comment on that property), but fetchRawSource() by rowId IS safe
+	 * MailJmap.fetchRawSourceBytesBase64() (a synthetic rowId built from `sent`'s own emailId/
+	 * mailboxId) only when it's not - a real Stalwart account never returns `rawBlobId` at all
+	 * (see emailSubmissionSet()'s own comment on that property), but a rowId-based fetch IS safe
 	 * there (Email.id is stable across a mailboxIds move by spec, unlike the shim's own fresh IMAP
 	 * APPEND for its deferred Sent-copy). Found live 2026-09-04 (ralf: "to_infolog attaches the
 	 * wrong mail/eml") that the rowId-based fetch alone could silently resolve to a DIFFERENT,
 	 * unrelated real message on the shim - see sendNewEmail()'s own docblock for the exact mechanism.
+	 *
+	 * base64, not fetchRawSource()'s plain text: this .eml becomes a REAL file (ajax_integrateSent()
+	 * writes it verbatim to VFS) a user may later re-open expecting its S/MIME/PGP signature to
+	 * still verify - fetchRawSource()'s response.text() silently corrupts a genuinely 8-bit signed
+	 * body via its own UTF-8 decode (found live 2026-09-09, see MailJmap.fetchRawSourceByBlobId()'s
+	 * own docblock and mail/js/test/MailRawSourceByteFidelity.test.ts).
 	 *
 	 * `email.attachments` (currentEmailFields()'s own already-JMAP-resolved shape - {blobId,...} or
 	 * {vfsPath,...}, per uploadAttachmentsViaJmap()) is reused as-is: it's exactly what actually got
@@ -1252,9 +1258,9 @@ export class MailCompose
 		}
 
 		const profileID = String(this.currentProfileID());
-		const eml = sent.rawBlobId ?
-			await this.app.jmap.fetchRawSourceByBlobId(profileID, sent.rawBlobId) :
-			await this.app.jmap.fetchRawSource(
+		const emlBase64 = sent.rawBlobId ?
+			await this.app.jmap.fetchRawSourceBytesBase64ByBlobId(profileID, sent.rawBlobId) :
+			await this.app.jmap.fetchRawSourceBytesBase64(
 				'mail::' + this.egw.user('account_id') + '::' + profileID + '::' + sent.mailboxId + '::' + sent.emailId);
 		const entryId = (this.et2.getWidgetById('to_integrate_ids')?.get_value() || [])[0];
 
@@ -1266,7 +1272,7 @@ export class MailCompose
 			body: email.body,
 			isHtml: email.isHtml,
 			attachments: email.attachments || [],
-			eml,
+			emlBase64,
 			profileID,
 		}]);
 	}
