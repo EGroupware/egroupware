@@ -32,6 +32,7 @@ import {Et2DatagridColumnResizeController} from "./Et2DatagridColumnResizeContro
 import {Et2DatagridPrintController} from "./Et2DatagridPrintController";
 import {Et2DatagridRequestQueue} from "./Et2DatagridRequestQueue";
 import {Et2DatagridSelectionController} from "./Et2DatagridSelectionController";
+import {Et2DatagridSwipeController} from "./Et2DatagridSwipeController";
 import {Et2DatagridRowRenderer} from "./Et2DatagridRowRenderer";
 import {styleMap} from "lit/directives/style-map.js";
 import {et2_compileLegacyJS} from "../et2_core_legacyJSFunctions";
@@ -618,12 +619,15 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _sourceColumnKeys : string[] = [];
 	_restoreFocusAfterRender : boolean = false;
 	private _lastPointerToggleSelect : boolean = false;
+	/** Row a swipe just toggled - the trailing click for the same gesture must not also replace the selection. */
+	private _suppressNextClickRowId : string | null = null;
 	_columnManager : Et2DatagridColumnManager = new Et2DatagridColumnManager();
 	private _columnState : Et2DatagridColumnState = new Et2DatagridColumnState();
 	private _columnResize : Et2DatagridColumnResizeController = new Et2DatagridColumnResizeController(this);
 	private readonly _printController : Et2DatagridPrintController = new Et2DatagridPrintController(this);
 	private readonly _requestQueue : Et2DatagridRequestQueue = new Et2DatagridRequestQueue(this);
 	private readonly _selection : Et2DatagridSelectionController = new Et2DatagridSelectionController(this);
+	private readonly _swipe : Et2DatagridSwipeController = new Et2DatagridSwipeController(this);
 	private readonly _rowRenderer : Et2DatagridRowRenderer = new Et2DatagridRowRenderer(this);
 
 	/** Live reference to the pending-upgrade queue; see Et2DatagridRowRenderer. */
@@ -821,6 +825,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this._scrollbarSpacePx = this._browserScrollbarSpace();
 		this._handleTableClick = this._handleTableClick.bind(this);
 		this._handleTablePointerDown = this._handleTablePointerDown.bind(this);
+		this._handleTablePointerUp = this._handleTablePointerUp.bind(this);
+		this._handleTablePointerCancel = this._handleTablePointerCancel.bind(this);
 		this._handleTableKeydown = this._handleTableKeydown.bind(this);
 		this._scrollListener = () =>
 		{
@@ -4483,6 +4489,11 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			return;
 		}
 		const rowId = rowData.id;
+		if(this._suppressNextClickRowId === rowId)
+		{
+			this._suppressNextClickRowId = null;
+			return;
+		}
 		this._moveActiveRow(rowIndex, true);
 		const toggleFromPointer = this._lastPointerToggleSelect;
 		this._lastPointerToggleSelect = false;
@@ -4494,6 +4505,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _handleTablePointerDown(event : PointerEvent)
 	{
+		this._suppressNextClickRowId = null;
+		this._swipe.handlePointerDown(event);
 		if(this._isRowExpanderEventTarget(event))
 		{
 			this._lastPointerToggleSelect = false;
@@ -4508,9 +4521,25 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
+	 * Mobile swipe-to-mark/unmark gesture end - see Et2DatagridSwipeController.
+	 */
+	private _handleTablePointerUp(event : PointerEvent)
+	{
+		this._suppressNextClickRowId = this._swipe.handlePointerUp(event);
+	}
+
+	/**
+	 * Mobile swipe-to-mark/unmark gesture abort - see Et2DatagridSwipeController.
+	 */
+	private _handleTablePointerCancel(event : PointerEvent)
+	{
+		this._swipe.handlePointerCancel(event);
+	}
+
+	/**
 	 * Detect row clicks that should be left to links or legacy clickable widgets.
 	 */
-	private _isInteractiveRowEventTarget(event : Event) : boolean
+	_isInteractiveRowEventTarget(event : Event) : boolean
 	{
 		const path = event.composedPath?.() || [];
 		let rowElement : HTMLElement | null = null;
@@ -4549,7 +4578,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	/**
 	 * Detect whether an event originated from a row expander control.
 	 */
-	private _isRowExpanderEventTarget(event : Event) : boolean
+	_isRowExpanderEventTarget(event : Event) : boolean
 	{
 		const target = event.target as HTMLElement | null;
 		return !!target?.closest?.(".dg-row-expander");
@@ -4798,12 +4827,12 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this._selection.toggleSelectionOnActiveRow();
 	}
 
-	private _updateSelectionFromPointer(rowId : string, rowIndex : number, event : MouseEvent, toggleFromPointer : boolean = false)
+	_updateSelectionFromPointer(rowId : string, rowIndex : number, event : MouseEvent, toggleFromPointer : boolean = false)
 	{
 		this._selection.updateSelectionFromPointer(rowId, rowIndex, event, toggleFromPointer);
 	}
 
-	private _moveActiveRow(index : number, focus : boolean)
+	_moveActiveRow(index : number, focus : boolean)
 	{
 		this._selection.moveActiveRow(index, focus);
 	}
@@ -5838,6 +5867,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	                            ?hidden=${!!stateTemplate}
 	                            @keydown=${this._handleTableKeydown}
 	                            @pointerdown=${this._handleTablePointerDown}
+	                            @pointerup=${this._handleTablePointerUp}
+	                            @pointercancel=${this._handleTablePointerCancel}
 	                            @click=${this._handleTableClick}
 	                    >
 	                        ${this._printRows
@@ -5888,6 +5919,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 						?hidden=${!!stateTemplate}
 						@keydown=${this._handleTableKeydown}
 						@pointerdown=${this._handleTablePointerDown}
+						@pointerup=${this._handleTablePointerUp}
+						@pointercancel=${this._handleTablePointerCancel}
 						@click=${this._handleTableClick}
 					>
 						<!-- Accessible / sizing header -->

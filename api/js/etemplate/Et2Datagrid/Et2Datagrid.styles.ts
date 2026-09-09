@@ -201,6 +201,10 @@ export default css`
 		min-height: 0;
 		position: relative;
 		scrollbar-gutter: stable;
+		/* Opt the row area out of the browser's own horizontal-swipe gestures (edge
+		 * swipe-to-go-back on mobile Chrome/Safari) so a mobile mark/unmark swipe
+		 * isn't hijacked into a page navigation - vertical panning stays native. */
+		touch-action: pan-y;
 
 		table {
 			width: 100%;

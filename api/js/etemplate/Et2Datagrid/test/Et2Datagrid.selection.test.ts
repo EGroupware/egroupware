@@ -357,4 +357,56 @@ describe("Et2Datagrid row selection", () =>
 
 		assert.isFalse(fired, "deleting an unrelated row should not emit a selection-changed event");
 	});
+
+	/**
+	 * Contract: on mobile, a touch swipe on a row toggles its selection (see
+	 * Et2DatagridSwipeController), but the browser still fires its own
+	 * trailing `click` for that same gesture afterward - that click must not
+	 * replace the selection the swipe just produced. Found live via real
+	 * mobile touch emulation: right after a swipe marked a row, the very
+	 * next click silently un-marked/replaced it.
+	 *
+	 * Setup: select row-0 with a plain click (multiple mode), then swipe
+	 * row-1 (touch pointerdown/pointerup past the swipe threshold), then
+	 * fire the trailing click a real touchscreen still sends on the same row.
+	 *
+	 * Pass: both row-0 and row-1 remain selected after the trailing click -
+	 * it must be suppressed rather than replace the selection with just row-1.
+	 */
+	it("keeps a swipe's selection when the browser fires a trailing click for the same gesture", () =>
+	{
+		const rows = Array.from({length: 3}, (_value, index) => ({id: `row-${index}`, label: `Row ${index}`}));
+		const grid = createDatagrid(rows);
+		grid.selectionMode = "multiple";
+		grid.setInitialRows(rows);
+		grid.total = rows.length;
+
+		const table = document.createElement("table");
+		const body = document.createElement("tbody");
+		table.append(body);
+		document.body.append(table);
+		renderVirtualRow(grid, 0, body);
+		const row1 = renderVirtualRow(grid, 1, body);
+
+		(grid as any)._updateSelectionFromPointer("row-0", 0, new MouseEvent("click"));
+
+		const withTarget = (event : Event, target : EventTarget) : Event =>
+		{
+			Object.defineProperty(event, "target", {value: target, configurable: true});
+			return event;
+		};
+
+		(grid as any)._handleTablePointerDown(withTarget(
+			new PointerEvent("pointerdown", {pointerId: 1, pointerType: "touch", clientX: 100, clientY: 20}), row1));
+		(grid as any)._handleTablePointerUp(withTarget(
+			new PointerEvent("pointerup", {pointerId: 1, pointerType: "touch", clientX: 10, clientY: 20}), row1));
+		assert.sameMembers(Array.from((grid as any).selectedRowIds), ["row-0", "row-1"],
+			"swipe should add row-1 to the existing selection");
+
+		(grid as any)._handleTableClick(withTarget(new MouseEvent("click", {clientX: 10, clientY: 20}), row1));
+		assert.sameMembers(Array.from((grid as any).selectedRowIds), ["row-0", "row-1"],
+			"the browser's trailing click for the same gesture must not replace the selection");
+
+		table.remove();
+	});
 });
