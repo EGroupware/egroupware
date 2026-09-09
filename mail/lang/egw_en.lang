@@ -30,6 +30,7 @@ add files as %1	mail	en	Add files as %1
 add folder	mail	en	Add folder
 add raw message, ignore mail attachments	mail	en	Convert email to item, add raw message text (ignore email attachments)
 add this certificate into contact	mail	en	Add this certificate into contact
+add this key into contact	mail	en	Add this key into contact
 add to addressbook	mail	en	Add to addressbook
 adding %1 to blacklisted email addresses failed because of %2	mail	en	Adding %1 to blacklisted email addresses failed because of %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	en	Adding %1 to whiltelisted email addresses failed because of %2
@@ -71,6 +72,7 @@ archive folder	mail	en	Archive Folder
 are you sure you want to delete all selected folders?	mail	en	Are you sure you want to delete all selected folders?
 are you sure you want to move folder %1 to folder %2?	mail	en	Are you sure you want to move folder %1 to folder %2?
 arrival	mail	en	Received
+ask	mail	en	ask
 ask for permission	mail	en	Ask for permission
 attach files	mail	en	Attach files
 attach users vcard at compose to every new mail	mail	en	Attach users vCard at compose to every new email.
@@ -381,6 +383,7 @@ junk	mail	en	Junk
 junk folder	mail	en	Junk folder
 keep a copy	mail	en	Keep a copy
 keep a copy of the message in your inbox	mail	en	Keep a copy of the message in your inbox
+key fingerprint	mail	en	Key fingerprint
 kilobytes	mail	en	kilobytes
 last used signature	mail	en	Last used signature
 later	mail	en	Later
@@ -438,6 +441,8 @@ name and email	mail	en	Name and email
 name of account	mail	en	Name of account
 name of header, only letters, numbers and dash (-) allowed	mail	en	Name of header, only letters, numbers and dash (-) allowed
 name of imap servers (space separated host or host:port)	mail	en	Name of IMAP servers (space separated host or host:port)
+never ask	mail	en	never ask
+never ask again	mail	en	Never ask again
 never display html emails	mail	en	Never display HTML emails
 never show	mail	en	Never show
 never show notification	mail	en	Never show notification
@@ -473,6 +478,7 @@ notify about new mail in this folders	mail	en	Notify about new email in these fo
 notify when new mails arrive in these folders	mail	en	notify when new emails arrive in these folders
 obsolet create right, combination rights of k and x	mail	en	Obsolet create right, combination rights of K and X
 obsolete delete right, combination rights of e, t and x	mail	en	Obsolete delete right, combination rights of E, T and X
+offer to add sender's s/mime certificate or pgp key to contact	mail	en	Offer to add sender's S/MIME certificate or PGP key to contact
 on	mail	en	on
 on behalf of	mail	en	On behalf of
 on vacation	mail	en	On vacation
@@ -500,6 +506,7 @@ password protect	mail	en	password protect
 perform expunge and expunge as a part of close	mail	en	Perform EXPUNGE and expunge as a part of CLOSE
 permission denied	mail	en	Permission denied
 personal signature	mail	en	Personal signature
+pgp key info for email %1	mail	en	PGP key info for email %1
 pgp/mime signed message, no public key found to verify the signature	mail	en	PGP/MIME signed message, no public key found to verify the signature
 pgp/mime signed message, signature does not belong to sender %1	mail	en	PGP/MIME signed message, signature does NOT belong to sender %1
 pgp/mime signed message, signature verification failed for %1	mail	en	PGP/MIME signed message, signature verification FAILED for %1
@@ -527,6 +534,7 @@ printview	mail	en	Printview
 private key created, downloading csr...	mail	en	Private key created, downloading CSR...
 processing of file %1 failed. failed to meet basic restrictions.	mail	en	Processing of file %1 failed. Failed to meet basic restrictions.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	en	Provide a default vacation text, (used on new vacation messages when there was no message set up previously)
+public key	mail	en	Public key
 purple	mail	en	Purple
 push notifications	mail	en	Push notifications
 quicksearch	mail	en	Quicksearch
@@ -772,6 +780,7 @@ what do do with html email	mail	en	What to do with HTML email.
 what order the list columns are in	mail	en	What order the list columns are in
 what to do when you delete a message	mail	en	What to do when you delete a message.
 what to do when you send a message	mail	en	What to do when you send a message.
+when a signed message reveals a certificate/key not yet stored for that sender, ask whether to add it - a verified signature from an already-known contact is always added automatically without asking	mail	en	When a signed message reveals a certificate/key not yet stored for that sender, ask whether to add it - a verified signature from an already-known contact is always added automatically without asking
 when deleting messages	mail	en	When deleting messages
 when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	en	When displaying messages in a popup, re-use the same popup for all or open a new popup for each message
 when saving messages as item of a different app	mail	en	When saving messages as item of a different EGroupware app.
@@ -793,6 +802,7 @@ yes, offer copy option	mail	en	Yes, offer copy option
 you can select what info to be displayed on email tag	mail	en	You can select what info to be displayed on email tag.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	en	You can use $$start$$ for the above start date and $$end$$ for the end date.
 you may add this certificate into your contact, if you trust this signature.	mail	en	You may add this certificate into your contact, if you trust this signature.
+you may add this key into your contact, if you trust this signature.	mail	en	You may add this key into your contact, if you trust this signature.
 you need to enter your s/mime passphrase to send this message.	mail	en	You need to enter your S/MIME passphrase to send this message.
 you need to enter your s/mime passphrase to view this message.	mail	en	You need to enter your S/MIME passphrase to view this message.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	en	You need to install Mailvelope plugin available for Chrome and Firefox from %1.

@@ -29,6 +29,7 @@ add files as %1	mail	de	Dateien hinzufügen als %1
 add folder	mail	de	Ordner hinzufügen
 add raw message, ignore mail attachments	mail	de	Konvertiere E-Mail zum Eintrag und füge die original E-Mail an (aber keine Anhänge)
 add this certificate into contact	mail	de	Dieses Zertifikat dem Kontakt hinzufügen
+add this key into contact	mail	de	Diesen Schlüssel dem Kontakt hinzufügen
 add to addressbook	mail	de	Zum Adressbuch hinzufügen
 adding %1 to blacklisted email addresses failed because of %2	mail	de	Hinzufügen von %1 als E-Mail-Adresse zur Blacklist ist fehlgeschlagen, da %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	de	Hinzufügen von %1 als E-Mail-Adresse zur Whitelist ist fehlgeschlagen, da %2
@@ -69,6 +70,7 @@ archive folder	mail	de	Archivordner
 are you sure you want to delete all selected folders?	mail	de	Sollen alle selektierten Ordner gelöcht werden?
 are you sure you want to move folder %1 to folder %2?	mail	de	Soll der Ordner %1 in den Ordner %2 verschoben werden?
 arrival	mail	de	Empfangsdatum
+ask	mail	de	fragen
 ask for permission	mail	de	Immer nachfragen
 attach files	mail	de	Dateien anhängen
 attach users vcard at compose to every new mail	mail	de	Füge die vCard des Benutzers an jede neue E-Mail an.
@@ -374,6 +376,7 @@ junk	mail	de	Spam
 junk folder	mail	de	Ordner für Spam-Nachrichten
 keep a copy	mail	de	Eine Kopie behalten
 keep a copy of the message in your inbox	mail	de	Eine Kopie der Nachricht im Posteingang behalten
+key fingerprint	mail	de	Schlüssel-Fingerabdruck
 kilobytes	mail	de	Kilobyte
 last used signature	mail	de	Zuletzt verwendete Signatur
 later	mail	de	Später
@@ -430,6 +433,8 @@ name and email	mail	de	Name und E-Mail
 name of account	mail	de	Konten-Bezeichnung
 name of header, only letters, numbers and dash (-) allowed	mail	de	Name des Headers, nur Buchstaben, Zahlen und Bindestrich (-) erlaubt
 name of imap servers (space separated host or host:port)	mail	de	Name der IMAP Server (Leerzeichen getrennt Host oder Host:Port)
+never ask	mail	de	nie fragen
+never ask again	mail	de	Nicht mehr fragen
 never display html emails	mail	de	Niemals anzeigen
 never show	mail	de	Nie anzeigen
 never show notification	mail	de	Benachrichtigungen nie anzeigen
@@ -463,6 +468,7 @@ none, create all	mail	de	keine, erstellt alle
 nothing to change.	mail	de	Nichts zu Ändern.
 notify about new mail in this folders	mail	de	Über neue E-Mails in diesem Ordner benachrichtigen
 notify when new mails arrive in these folders	mail	de	Benachrichtigung, sobald neue E-Mails in den folgenden Ordnern ankommen
+offer to add sender's s/mime certificate or pgp key to contact	mail	de	Anbieten, S/MIME-Zertifikat oder PGP-Schlüssel des Absenders zum Kontakt hinzuzufügen
 on	mail	de	am
 on behalf of	mail	de	Im Namen von
 on vacation	mail	de	Abwesenheit
@@ -489,6 +495,7 @@ passphrase, if private key is protected	mail	de	Passphrase, falls der private Sc
 password protect	mail	de	Passwort geschützt
 permission denied	mail	de	Zugriff verweigert
 personal signature	mail	de	Persönliche Signatur
+pgp key info for email %1	mail	de	PGP-Schlüsselinfo für E-Mail %1
 pgp/mime signed message, no public key found to verify the signature	mail	de	PGP/MIME-signierte Nachricht, kein öffentlicher Schlüssel zur Prüfung der Signatur gefunden
 pgp/mime signed message, signature does not belong to sender %1	mail	de	PGP/MIME-signierte Nachricht, Signatur gehört NICHT zum Absender %1
 pgp/mime signed message, signature verification failed for %1	mail	de	PGP/MIME-signierte Nachricht, Signaturprüfung für %1 FEHLGESCHLAGEN
@@ -515,6 +522,7 @@ printview	mail	de	Druckansicht
 private key created, downloading csr...	mail	de	Privater Schlüssel erstellt, CSR wird heruntergeladen...
 processing of file %1 failed. failed to meet basic restrictions.	mail	de	Das Verarbeiten der Datei %1 ist fehlgeschlagen. Grundlegende Voraussetzungen wurden nicht erfüllt.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	de	Vorschlagstext für eine Abwesenheitsnotiz (wenn noch kein eigener Benachrichtigungstext vorhanden ist)
+public key	mail	de	Öffentlicher Schlüssel
 purple	mail	de	Violett
 push notifications	mail	de	Push Benachrichtigungen
 quicksearch	mail	de	Schnellsuche
@@ -759,6 +767,7 @@ what do do with html email	mail	de	Wie sollen E-Mails im HTML-Format angezeigt w
 what order the list columns are in	mail	de	Wählen Sie die Spaltenanordnung in der E-Mail Liste aus
 what to do when you delete a message	mail	de	Wählen Sie die Methode aus, wenn Sie eine Nachricht löschen. Diese kann entweder direkt gelöscht werden, oder in den Papierkorb verschoben werden.
 what to do when you send a message	mail	de	Wählen Sie die Aktion aus, wenn eine Nachricht versendet wird. EGroupware kann z. B. die Nachricht in den Gesendet-Ordner kopieren.
+when a signed message reveals a certificate/key not yet stored for that sender, ask whether to add it - a verified signature from an already-known contact is always added automatically without asking	mail	de	Wenn eine signierte Nachricht ein für den Absender noch nicht gespeichertes Zertifikat/Schlüssel zeigt, nachfragen, ob dieses hinzugefügt werden soll - bei einer geprüften Signatur eines bereits bekannten Kontakts erfolgt das Hinzufügen immer automatisch ohne Nachfrage
 when deleting messages	mail	de	Wenn Nachrichten gelöscht werden
 when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	de	Dürfen E-Mail in dem gleichen Fenster angezeigt werden, oder wünschen Sie nur jede E-Mail ein neues Fenster
 when saving messages as item of a different app	mail	de	Wählen Sie das Format zur Konvertierung von E-Mails in andere Anwendungen aus. Beispielsweise das Speichern von E-Mails als InfoLog. Wir empfehlen .eml, um die original E-Mail zu erhalten und darauf zu antworten.
@@ -779,6 +788,7 @@ yes, offer copy option	mail	de	Ja, mit Kopier-Option
 you can select what info to be displayed on email tag	mail	de	Sie können auswählen, welche Informationen auf dem E-Mail-Tag angezeigt werden sollen. Die zusätzliche Anzeige der E-Mail-Adresse ermöglicht die Absenderadresse zu überprüfen.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	de	Sie können $$start$$ für das obige Start- und $$end$$ für das End-Datum verwenden.
 you may add this certificate into your contact, if you trust this signature.	mail	de	Sie können dieses Zertifikat in Ihren Kontakt speichern, wenn Sie dieser Signatur trauen.
+you may add this key into your contact, if you trust this signature.	mail	de	Sie können diesen Schlüssel in Ihren Kontakt speichern, wenn Sie dieser Signatur trauen.
 you need to enter your s/mime passphrase to send this message.	mail	de	Sie müssen Ihr S/MIME-Passwort eingeben um diese Nachricht zu senden.
 you need to enter your s/mime passphrase to view this message.	mail	de	Sie müssen Ihr S/MIME-Passwort eingeben um diese Nachricht anzuzeigen.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	de	Sie müssen das Mailvelope-Plugin für Chrome oder Firefox von %1 installieren.

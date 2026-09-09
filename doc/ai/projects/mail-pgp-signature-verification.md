@@ -19,13 +19,15 @@ preference, `Autocrypt`/`Autocrypt-Gossip` send+receive, `prefer-encrypt` storag
 multi-key-per-address storage fix, mutual-auto-encrypt preference, S/MIME auto-add-when-verified,
 and an explicit Level 1 spec gap/deviation audit. Phase 5 steps 1 (keydata minimize/re-armor), 2
 (multi-key-per-address addressbook storage, **now including its `prefer-encrypt`-attribute storage
-half too**), **3's `Autocrypt:`-sending half, and 4's pure header-parsing logic** are DONE
-(2026-09-09, see their own phasing entries) - `Autocrypt-Gossip:` sending, actually WIRING the new
-header parser to a real incoming message, the consent dialog, mutual auto-encrypt, and S/MIME
-auto-add are still plan only; the new `prefer-encrypt` storage API from item 2 has no caller yet
-(item 6, mutual auto-encrypt, is what would set it). **Phase 5 step 2's alias-pointer storage
-rework (Phase G) is now also DONE (2026-09-09)** - see its own entry under
-item 1 below.
+half too**), **3's `Autocrypt:`-sending half, 4's pure header-parsing logic, 5 (consent dialog +
+preference, triggered by the already-working inline-key case rather than Autocrypt headers - see
+its own entry for why), and 7 (auto-add for an already-known contact, extended from S/MIME-only to
+BOTH S/MIME and PGP)** are DONE (2026-09-09, see their own phasing entries) - `Autocrypt-Gossip:`
+sending, actually wiring item 4's header parser to a real incoming message's Autocrypt HEADER
+specifically (item 5's dialog itself already ships, just not fed by that source yet), and item 6's
+mutual auto-encrypt preference are still plan only; the new `prefer-encrypt` storage API from item 2
+still has no caller (item 6 is what would set it). **Phase 5 step 2's alias-pointer storage rework
+(Phase G) is now also DONE (2026-09-09)** - see its own entry under item 1 below.
 **Security fix (Phase H, DONE 2026-09-09)**: a signature/cert that cryptographically verifies but
 doesn't itself claim the message's From address is now shown as invalid, not verified, for both PGP
 and S/MIME - see its own section below, right before "Why this is even possible without Mailvelope".
@@ -700,18 +702,104 @@ payload, not as a bare outer header - needs the decrypted-body access pattern, n
 feeding a successful parse's `keydata` through `autocryptKeydataToArmoredKey()` (item 1, already
 built) into the actual consent-dialog-gated storage call.
 
-### 5. Consent dialog + new preference
+### 5. Consent dialog + new preference - DONE (2026-09-09), triggered by the INLINE-key case, not Autocrypt headers yet
 
-Reuses `smimeCertAddToContact()`'s existing dialog shape (`mail/js/app.ts` - a "Close" / "Add this
-certificate into contact" `et2-dialog`, currently S/MIME-only, opened on click) as the template for
-a new PGP-key-consent dialog, but triggered differently: not on click, but automatically whenever a
-key was newly learned (via item 3's `Autocrypt:` header on an incoming message, or item 4's gossip
-parsing) for an address the addressbook has **no** stored key for yet - buttons **Yes / No / Never
-ask again**, matching ralf's own wording exactly (a 3rd button beyond the existing 2, or a
-dialog-level checkbox - needs a real UI decision when this gets built, not decided here). "Never ask
-again" persists into a new preference, mirroring the `previewPane` shape in `mail_hooks::settings()`
-(`mail/inc/class.mail_hooks.inc.php`): a `select` with `''` (default, ask every time) / `'never'`
-(never ask) - name TBD at implementation time (e.g. `autocrypt_ask_import`).
+Ralf: *"for item 5 let's check the s/mime dialog for that and maybe while on it also add 'Never
+ask', a preference and the automatic adding for senders already in AB (item 7). In general we want
+the s/mime pgp to look similar, so users dont have to learn two different things."* Implemented
+both items 5 and 7 together, for BOTH PGP and S/MIME, sharing one dialog shape and one preference -
+see item 7's own entry just below for the shared design write-up (the two items turned out to be
+one and the same mechanism, applied symmetrically to both signature types, so there's no point
+describing them twice).
+
+**Scope note**: item 5 was originally written assuming the trigger would be a newly-learned
+`Autocrypt:`-header key (items 3/4) - those aren't wired to any live message-reading caller yet
+(item 4's parsing logic is DONE, but not yet called against a real message's headers, see that
+item's own entry). What ships now instead uses the OTHER, already-fully-working "found a key not in
+the addressbook" signal: `PgpSignatureResult.keySource === 'inline'` (a message's own
+`application/pgp-keys` attachment, Phase 4's existing infrastructure) - the direct PGP analogue of
+S/MIME's own `addtocontact` (a cert embedded in the signed message itself, not from the
+addressbook), and the correct symmetric trigger ralf's own "look similar" framing calls for. Once
+Autocrypt-header learning is wired up later, it can feed the SAME dialog/preference/auto-add
+mechanism (`pgpAutoOfferAddToContact()`) - this was designed generically for exactly that, not
+`keySource:'inline'`-specific.
+
+### 6. New preference: "mutual" auto-encrypt
+
+A second new preference (checkbox or 3-way select, TBD): when on, and the current compose's
+recipient(s) all have a stored `prefer_encrypt=mutual` (item 2's storage) **and** our own account's
+own `Autocrypt:` header also carries `prefer-encrypt=mutual` (item 3), auto-enable the `pgp` toggle
+for a **new** compose (not just reply-to-encrypted, which is already built - see item 4 in the
+"Reply/forward auto-matches" entry above). Reuses the exact same `togglePgpEncrypt({checked: true})`
++ post-`bootstrapPromise` timing this session's reply/forward auto-encrypt work already established
+(`bootstrapComposePopup()`, `mail/js/app.ts`) - the recipient-population-must-finish-first and
+recipient-key-check-must-actually-run lessons from that work apply identically here, just with a
+different *reason* to decide `pgpEncrypted='1'` (stored `prefer_encrypt` match instead of "was the
+source message encrypted").
+
+### 7. Auto-add a verified sender's cert/key to an already-known contact, no dialog - DONE (2026-09-09), both S/MIME and PGP
+
+Originally scoped S/MIME-only ("auto-add to an ALREADY-known contact, no dialog... unlike an
+unknown/unverified one, which keeps today's click-to-add dialog unchanged") - shipped alongside
+item 5 above as one shared, symmetric mechanism for BOTH S/MIME and PGP instead, per ralf's own
+"look similar" framing, and now the unknown-contact case ALSO auto-prompts (via item 5's consent
+dialog) rather than staying click-only, since "Never ask" only makes sense as an opt-out for
+something that pops up unprompted.
+
+**Real gap found while wiring this**: `data.addtocontact` (`Api\Mail\Smime::resolveMessage()`) was
+ALREADY being computed server-side this whole time, but NOTHING client-side ever read it for the
+JMAP-native flow - the only code that ever called the actionable (`_display` falsy) variant of
+`smimeCertAddToContact()` was the OLD classic-mail push path
+(`Ui\MessageDisplayHandler.php`'s `$push->call('app.mail.smimeCertAddToContact', $smime)`, dead for
+a JMAP-driven display). So this "verified but not-yet-in-addressbook cert" case had silently never
+prompted at all for any JMAP-native message, S/MIME's own click-triggered info dialog
+(`_display=true`, both existing `smime_signature`/`smime_encryption` icon onclick handlers) being
+the only reachable path. Fixed as part of this work, not a pre-existing regression from earlier
+this session's JMAP migration - `addtocontact` was simply never wired up to begin with.
+
+**Shared shape** (`mail/js/app.ts`):
+- `setSmimeFlags()`/`setPgpSignatureFlags()` now call `smimeAutoOfferAddToContact(data)`/
+  `pgpAutoOfferAddToContact(data)` whenever there's something to offer - S/MIME: `data.verify &&
+  data.addtocontact`; PGP: `_data.verified && _data.armoredKey` (see `PgpSignatureResult.
+  armoredKey`'s own docblock, `mail/js/jmap.ts` - populated ONLY for `keySource==='inline'` AND a
+  genuinely verified, address-matching signature, alongside new display-only `keyFingerprint`/
+  `keyUid` fields sourced from the SAME `openpgp.readKey()` call `verifyPgpSignatureUncached()`
+  already makes, no second parse needed).
+- Both `*AutoOfferAddToContact()` methods FIRST attempt a silent update against a matching existing
+  contact (`ajax_smimeAddCertToContact` / new `ajax_pgpAddKeyToContact`, `mail/src/Ui.php` - the
+  latter a thin wrapper around a new plain `addressbook_bo::set_pgp_keys()`, deliberately NOT the
+  existing `ajax_set_pgp_keys()` used elsewhere, which also uploads to a public keyserver and has a
+  different return shape, side effects only appropriate for that method's own "user pastes their
+  own key" flow). A truthy result means an existing contact was updated - item 7's own "no dialog"
+  case, done, just a quiet `egw.message()` toast (matching the existing manual "Add this
+  certificate" button's own feedback). A falsy result (no matching contact at all) falls through to
+  the (now auto-triggered) consent dialog from item 5, UNLESS the shared `smime_pgp_add_contact`
+  preference (`mail_hooks::settings()`, `mail/inc/class.mail_hooks.inc.php` - `select`, `''`
+  default/"ask" vs `'never'`, live-verified rendering correctly with both options in the real
+  Preferences UI, help text and label included) is set to `'never'`.
+- `smimeCertAddToContact()`/new sibling `pgpKeyAddToContact()` (mirrored shape/naming) gained a
+  3rd `_autoTriggered` param that adds a **"Never ask again"** button (persists the preference via
+  `egw.set_preference()`) - only for the auto-triggered path, never the user-initiated
+  click-on-the-icon path (both icons already had, or now also have for PGP, an `onclick` opening
+  the SAME dialog `_display=true`, info-only - nothing to "opt out of" when the user asked to see
+  it themselves).
+- New `mail/templates/default/pgpKeyAddToContact.xet`, deliberately mirroring
+  `smimeCertAddToContact.xet`'s exact grid/row shape (message/message2 header, "Signed by"/"Email
+  address" rows in the same order) - differs only where PGP genuinely has no X.509 equivalent (a
+  fingerprint row instead of issuer/country, since a PGP key isn't CA-issued).
+- Both flows write into the SAME shared addressbook `pubkey` field/preset
+  (`addressbook_bo::save()`'s own single-field dispatch-by-regex, not a separate PGP-specific
+  field) when falling back to "create a new contact" - `egw.open('','addressbook','add',extra)`
+  pre-filled with email/name/key exactly as S/MIME's existing fallback already does.
+
+Live-verified (2026-09-09): the new `smime_pgp_add_contact` preference renders correctly in the
+real Mail Preferences UI ("Einstellungen der Konfiguration" tab, right after "Fensterlayout") with
+both `ask`/`never ask` options and its help text tooltip - confirms the `mail_hooks::settings()`
+wiring end-to-end. **Not yet live-clicked-through**: the actual auto-popup dialog on a real signed
+message (needs a live signed message from a not-yet-known sender to trigger against; all the
+underlying logic is unit-tested and the full mail JS suite (466/466) + build stay clean, but the
+dialog-opening methods themselves are, like `setSmimeFlags()`/`setPgpSignatureFlags()` before them,
+DOM/widget-heavy and not unit-tested - see Phase H's own precedent for that decision).
 
 ### 6. New preference: "mutual" auto-encrypt
 
@@ -799,14 +887,18 @@ keeps today's click-to-add dialog unchanged). Also needs the same multi-key-per-
 3. Sending `Autocrypt:` (own key) - DONE (2026-09-09, see its own entry) - was indeed the simplest,
    most self-contained piece, no consent-dialog UI needed (never touches another contact's stored
    data). `Autocrypt-Gossip:` (the other half of item 3) is still not started.
-4. Item 4's pure `Autocrypt:`-header-parsing logic is DONE (2026-09-09, see its own entry) -
-   consent dialog + preference (item 5), then wiring that parser to a real message + gossip-parsing
-   (item 3's gossip half, item 4's remaining wiring) - the two together are what actually needs the
-   dialog, still not started.
+4. Item 4's pure `Autocrypt:`-header-parsing logic, item 5's consent dialog + preference, and item
+   7's auto-add-for-known-contacts are ALL DONE (2026-09-09, see their own entries) - items 5/7
+   shipped together as one shared, symmetric S/MIME+PGP mechanism, triggered by the already-working
+   inline-key case rather than Autocrypt headers (item 4's parser has no live caller yet). Still not
+   started: `Autocrypt-Gossip:` sending (item 3's other half), and actually wiring item 4's header
+   parser to a real message's `Autocrypt:` header as an ADDITIONAL trigger source for item 5's now-
+   already-shipped dialog.
 5. `prefer-encrypt` **storage** (item 2) is DONE (2026-09-09, see its own entry) - what's left is
    mutual auto-encrypt preference (item 6) and actually wiring items 3/4's sending/receiving code
    to call `set_autocrypt_attributes()`/`get_autocrypt_attributes()`.
-6. S/MIME auto-add-when-verified (item 7) - small, independent, can land any time after item 1.
+6. Item 6 (mutual auto-encrypt preference) - the only piece of the original items 5/6/7 grouping
+   not yet done.
 
 ## Explicitly out of scope for this project
 

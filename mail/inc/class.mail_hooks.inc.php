@@ -476,6 +476,17 @@ class mail_hooks
 				'default' => 'vertical',
 				'reload' => true
 			),
+			'smime_pgp_add_contact' => array(
+				'type' => 'select',
+				'label' => 'Offer to add sender\'s S/MIME certificate or PGP key to contact',
+				'help' => 'When a signed message reveals a certificate/key not yet stored for that sender, ask whether to add it - a verified signature from an already-known contact is always added automatically without asking',
+				'name' => 'smime_pgp_add_contact',
+				'values' => array(
+					'' => lang('ask'),
+					'never' => lang('never ask'),
+				),
+				'default' => '',
+			),
 			'toggledOnActions' => array(
 				'type' => 'taglist',
 				'label' => 'Toggled on actions',

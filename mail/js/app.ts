@@ -8687,6 +8687,53 @@ export class MailApp extends EgwApp
 			self.smimeCertAddToContact(data, true);
 		};
 		smimeEncryptionNode.classList.add('et2_clickable');
+
+		// item 7 (auto-add for an already-known contact, no dialog) + item 5's own dialog now
+		// actually reachable from the JMAP-native flow (found live 2026-09-09 while wiring the PGP
+		// side alongside this: `data.addtocontact` was ALREADY computed server-side by
+		// Smime::resolveMessage() this whole time, but nothing client-side ever read it except the
+		// old classic-mail push path (MessageDisplayHandler.php's `$push->call('app.mail.
+		// smimeCertAddToContact', ...)`, unreachable for a JMAP-driven display) - so this "verified
+		// but not-yet-in-addressbook cert" case silently never prompted at all for JMAP mail).
+		if (data.verify && data.addtocontact)
+		{
+			this.smimeAutoOfferAddToContact(data);
+		}
+	}
+
+	/**
+	 * "Verified signature, but this cert isn't (yet, or no longer matching) what's stored for this
+	 * address" (`data.addtocontact`, Api\Mail\Smime::resolveMessage()) - offer to add it, mirroring
+	 * pgpAutoOfferAddToContact()'s own identical shape (ralf, 2026-09-09: "we want the s/mime pgp
+	 * to look similar, so users dont have to learn two different things").
+	 *
+	 * Item 7: if the sender's address already matches an EXISTING contact, `ajax_smimeAddCertToContact`
+	 * (the SAME endpoint the dialog's own "Add this certificate" button already uses) silently
+	 * updates it directly - a *verified* signature from an *already-known* contact needs no extra
+	 * confirmation. Only when nothing matched (no contact at all for this address) does this fall
+	 * back to the (now auto-triggered, not just click-triggered) consent dialog - unless the user
+	 * has opted out entirely via the `smime_pgp_add_contact` preference's "never ask" value.
+	 *
+	 * @param {object} _metadata smime resolved certificate data (same shape setSmimeFlags() itself
+	 *  received, and smimeCertAddToContact() already expects)
+	 */
+	smimeAutoOfferAddToContact(_metadata)
+	{
+		if (egwIsMobile()) return;
+		const self = this;
+		this.egw.json('mail.EGroupware\\Mail\\Ui.ajax_smimeAddCertToContact', _metadata, (_result) =>
+		{
+			if (_result)
+			{
+				// item 7: an existing contact was found and silently updated - just a quiet,
+				// non-blocking confirmation, no dialog (matches the manual "Add this certificate"
+				// button's own existing egw.message(_result) feedback)
+				this.egw.message(_result);
+				return;
+			}
+			if (this.egw.preference('smime_pgp_add_contact', 'mail') === 'never') return;
+			self.smimeCertAddToContact(_metadata, false, true);
+		}).sendRequest(true);
 	}
 
 	/**
@@ -8765,6 +8812,131 @@ export class MailApp extends EgwApp
 		mail_container.classList.add(pgpClass);
 		pgp_signature.set_class(pgpClass);
 		pgp_signature.set_statustext(statustext);
+
+		const self = this;
+		const pgpSignatureNode = pgp_signature.getDOMNode();
+		pgpSignatureNode.onclick = () =>
+		{
+			self.pgpKeyAddToContact(_data, true);
+		};
+		pgpSignatureNode.classList.add('et2_clickable');
+
+		// item 5/7 (ralf, 2026-09-09: "we want the s/mime pgp to look similar, so users dont have
+		// to learn two different things") - see smimeAutoOfferAddToContact()'s own docblock for the
+		// full shape this mirrors; PgpSignatureResult.armoredKey is ONLY populated when
+		// keySource==='inline' AND the key actually verified (see its own docblock), which is
+		// exactly "found a usable key on this message that isn't in the addressbook yet".
+		if (_data.verified && _data.armoredKey)
+		{
+			this.pgpAutoOfferAddToContact(_data);
+		}
+	}
+
+	/**
+	 * PGP analogue of smimeAutoOfferAddToContact() - see its own docblock for the full shape
+	 * (item 7's "already-known contact, no dialog" auto-add + item 5's now-auto-triggered consent
+	 * dialog, sharing the SAME `smime_pgp_add_contact` "never ask" preference).
+	 *
+	 * @param {PgpSignatureResult} _data verifyPgpSignature()'s own result - armoredKey/keyFingerprint/
+	 *  keyUid are guaranteed present (setPgpSignatureFlags() only calls this when they are)
+	 */
+	pgpAutoOfferAddToContact(_data)
+	{
+		if (egwIsMobile()) return;
+		const self = this;
+		this.egw.json('mail.EGroupware\\Mail\\Ui.ajax_pgpAddKeyToContact',
+			{email: _data.email, armoredKey: _data.armoredKey}, (_result) =>
+		{
+			if (_result)
+			{
+				// item 7: an existing contact was found and silently updated
+				this.egw.message(_result);
+				return;
+			}
+			if (this.egw.preference('smime_pgp_add_contact', 'mail') === 'never') return;
+			self.pgpKeyAddToContact(_data, false, true);
+		}).sendRequest(true);
+	}
+
+	/**
+	 * Inform user about a message-supplied PGP key and offer to add it into the relevant contact
+	 * in the addressbook - PGP analogue of smimeCertAddToContact(), same dialog shape/behaviour
+	 * (same template layout, same button set, same "Never ask again" mechanism) so S/MIME and PGP
+	 * don't ask the user to learn two different flows.
+	 *
+	 * @param {PgpSignatureResult} _data
+	 * @param {boolean} _display if set to true will only show close button (user-initiated click
+	 *  on the pgp_signature icon - informational only, nothing to opt out of)
+	 * @param {boolean} _autoTriggered true when opened automatically by pgpAutoOfferAddToContact()
+	 */
+	pgpKeyAddToContact(_data, _display, _autoTriggered? : boolean)
+	{
+		if (egwIsMobile()) return;
+		if (!_data || !_data.armoredKey) return;
+		const self = this;
+		// same shape as smimeCertAddToContact()'s own content.message (always set, regardless of
+		// _display) - "you may add this key" (message2) is the only part conditional on _display
+		const content : any = {
+			message: this.egw.lang('PGP/MIME signed message, signature verified for %1', _data.email || ''),
+			email: _data.email, keyUid: _data.keyUid, keyFingerprint: _data.keyFingerprint,
+			armoredKey: _data.armoredKey, class: '',
+		};
+		const buttons : {label : any, id : string, image : string, class? : string, default? : boolean}[] = [
+			{label: this.egw.lang("Close"), id: "close", image: 'cancelDialog'},
+		];
+		if (!_display)
+		{
+			buttons[1] = {
+				label: this.egw.lang("Add this key into contact"),
+				id: "contact",
+				image: "add",
+				"class": "ui-priority-primary",
+				"default": true,
+			};
+			content.message2 = egw.lang('You may add this key into your contact, if you trust this signature.');
+		}
+		if (_autoTriggered)
+		{
+			buttons.push({label: this.egw.lang("Never ask again"), id: "never", image: "delete"});
+		}
+		const extra = {
+			'presets[email]': _data.email,
+			// keyUid is the FULL User ID string ("Name <email>") - strip the bracketed address for
+			// just the display name, matching what n_given (given/display name) actually expects
+			'presets[n_given]': (_data.keyUid || '').replace(/\s*<[^>]*>\s*$/, ''),
+			// SAME shared 'pubkey' field S/MIME's own extra.presets uses above - addressbook_bo::
+			// save() tells PGP and S/MIME content apart by which regex matches, not a separate field
+			'presets[pubkey]': _data.armoredKey,
+		};
+		const dialog = et2_createWidget('et2-dialog', {
+			callback(_button_id, _value)
+			{
+				if (_button_id == 'contact' && _value)
+				{
+					self.egw.json('mail.EGroupware\\Mail\\Ui.ajax_pgpAddKeyToContact',
+						{email: _data.email, armoredKey: _data.armoredKey}, (_result) =>
+					{
+						if (!_result)
+						{
+							egw.open('', 'addressbook', 'add', extra);
+						}
+						egw.message(_result);
+					}).sendRequest(true);
+				}
+				else if (_button_id == 'never')
+				{
+					self.egw.set_preference('mail', 'smime_pgp_add_contact', 'never');
+				}
+			},
+			title: egw.lang('PGP key info for email %1', _data.email),
+			buttons: buttons,
+			minWidth: 500,
+			minHeight: 500,
+			value: {content: content},
+			template: egw.webserverUrl + '/mail/templates/default/pgpKeyAddToContact.xet?1',
+			resizable: false,
+		});
+		document.body.append(dialog as any);
 	}
 
 	/**
@@ -8786,8 +8958,13 @@ export class MailApp extends EgwApp
 	 *
 	 * @param {type} _metadata
 	 * @param {boolean} _display if set to true will only show close button
+	 * @param {boolean} _autoTriggered true when opened automatically by smimeAutoOfferAddToContact()
+	 *  rather than by the user clicking the signature/encryption icon - adds a "Never ask again"
+	 *  button (mirroring pgpKeyAddToContact()'s identical shape) that persists the
+	 *  `smime_pgp_add_contact` preference; not offered on a user-initiated click, since there's
+	 *  nothing to opt out of when the user asked to see this themselves
 	 */
-	smimeCertAddToContact(_metadata, _display)
+	smimeCertAddToContact(_metadata, _display, _autoTriggered? : boolean)
 	{
 		//do not show the dialog on mobile
 		if(egwIsMobile()){
@@ -8811,6 +8988,10 @@ export class MailApp extends EgwApp
 			};
 			content.message2 = egw.lang('You may add this certificate into your contact, if you trust this signature.');
 		}
+		if (_autoTriggered)
+		{
+			buttons.push({label: this.egw.lang("Never ask again"), id: "never", image: "delete"});
+		}
 		const extra = {
 			'presets[email]': _metadata.email,
 			'presets[n_given]': _metadata.certDetails.subject.commonName,
@@ -8832,6 +9013,10 @@ export class MailApp extends EgwApp
 						}
 						egw.message(_result);
 					}).sendRequest(true);
+				}
+				else if (_button_id == 'never')
+				{
+					self.egw.set_preference('mail', 'smime_pgp_add_contact', 'never');
 				}
 			},
 			title: egw.lang('Certificate info for email %1', _metadata.email),

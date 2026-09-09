@@ -2065,6 +2065,23 @@ class Ui
 	}
 
 	/**
+	 * Adds a message-supplied PGP key to the relevant contact - PGP analogue of
+	 * ajax_smimeAddCertToContact() above (2026-09-09, Autocrypt Phase 5 items 5/7, doc/ai/projects/
+	 * mail-pgp-signature-verification.md), same "silently updates an existing contact, does
+	 * nothing for a contact that doesn't exist yet" semantics as addressbook_bo::set_pgp_keys()
+	 * itself already has via set_keys()'s own search - the caller (MailApp.pgpAutoOfferAddToContact()/
+	 * pgpKeyAddToContact(), mail/js/app.ts) decides what to do with a falsy result (offer to
+	 * create a new contact).
+	 *
+	 * @param array $_metadata ['email' => sender address, 'armoredKey' => armored PGP public key text]
+	 */
+	function ajax_pgpAddKeyToContact ($_metadata)
+	{
+		$ab = new \addressbook_bo();
+		Api\Json\Response::get()->data($ab->set_pgp_keys([$_metadata['email'] => $_metadata['armoredKey']]));
+	}
+
+	/**
 	 * Build actions for display toolbar
 	 */
 	function getDisplayToolbarActions ()

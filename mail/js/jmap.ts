@@ -276,6 +276,20 @@ export interface PgpSignatureResult
 	 * `pgp_sig_invalid` state.
 	 */
 	addressMismatch? : boolean;
+	/**
+	 * Populated ONLY when keySource==='inline' (a same-message-supplied key, not from the
+	 * addressbook - the PGP analogue of S/MIME's `unknownemail`/`addtocontact` "this cert isn't in
+	 * the addressbook yet" case) - the exact armored key text used to verify, plus display-only
+	 * metadata, for MailApp.pgpAutoOfferAddToContact()'s (`mail/js/app.ts`) "offer to add this key
+	 * to the sender's contact" flow (Autocrypt Phase 5 items 5/7, doc/ai/projects/
+	 * mail-pgp-signature-verification.md - ralf, 2026-09-09: "we want the s/mime pgp to look
+	 * similar, so users dont have to learn two different things").
+	 */
+	armoredKey? : string;
+	/** hex, no separators (key.getFingerprint()'s own format) - display only */
+	keyFingerprint? : string;
+	/** the key's primary User ID string (eg. "Name <email>") - display only */
+	keyUid? : string;
 }
 
 /** A single successfully-parsed `Autocrypt:` header - see MailJmap.parseAutocryptHeader()'s own docblock. */
@@ -3683,7 +3697,17 @@ export class MailJmap
 				addressMismatch = true;
 				verified = false;
 			}
-			return {signed: true, verified, keySource, email: senderEmail, ...(addressMismatch ? {addressMismatch} : {})};
+			// display/offer-to-add fields - ONLY for a key that actually verified this message AND
+			// wasn't already in the addressbook (see PgpSignatureResult.armoredKey's own docblock);
+			// deliberately excludes the addressMismatch case above (verified is already forced false
+			// there) - never offer to add a key as "the sender's key" when it doesn't even claim to
+			// be theirs.
+			const keyDisplay = verified && keySource === 'inline' ?
+				{armoredKey, keyFingerprint: key.getFingerprint(), keyUid: key.getUserIDs()[0] || ''} : null;
+			return {
+				signed: true, verified, keySource, email: senderEmail,
+				...(addressMismatch ? {addressMismatch} : {}), ...(keyDisplay ? keyDisplay : {}),
+			};
 		}
 		catch (e)
 		{

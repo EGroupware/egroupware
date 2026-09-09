@@ -158,7 +158,9 @@ describe("MailJmap.verifyPgpSignature() - end-to-end with a real openpgp.js fixt
 	});
 
 	it("falls back to the message's own inline application/pgp-keys attachment when the "
-		+ "addressbook has no key for the sender", async() =>
+		+ "addressbook has no key for the sender - and, being verified from a NOT-yet-addressbook "
+		+ "key, also returns the armoredKey/keyFingerprint/keyUid display fields "
+		+ "MailApp.pgpAutoOfferAddToContact() needs to offer adding it", async() =>
 	{
 		const jmap = new MailJmap(createFakeApp(async(_method, _params) => ({})));
 		primeFixture(jmap, {
@@ -167,11 +169,30 @@ describe("MailJmap.verifyPgpSignature() - end-to-end with a real openpgp.js fixt
 			downloadKeyBytes: new TextEncoder().encode(PUBLIC_KEY),
 		});
 
-		const result = await jmap.verifyPgpSignature("mail::0::1::mbx1::email1");
+		const result : any = await jmap.verifyPgpSignature("mail::0::1::mbx1::email1");
 
-		assert.deepEqual(result, {
-			signed: true, verified: true, keySource: "inline", email: "sender@example.invalid",
-		});
+		assert.equal(result.signed, true);
+		assert.equal(result.verified, true);
+		assert.equal(result.keySource, "inline");
+		assert.equal(result.email, "sender@example.invalid");
+		assert.equal(result.armoredKey, PUBLIC_KEY);
+		assert.equal(result.keyUid, "PHPUnit Fixture <sender@example.invalid>");
+		assert.match(result.keyFingerprint, /^[0-9a-f]{16,64}$/);
+	});
+
+	it("does NOT return armoredKey/keyFingerprint/keyUid when the key came from the "
+		+ "addressbook (already known, nothing to offer adding)", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp(
+			async(_method, _params) => ({"sender@example.invalid": PUBLIC_KEY})));
+		primeFixture(jmap, {rawBytes: buildRawEml(WIRE_SUBPART)});
+
+		const result : any = await jmap.verifyPgpSignature("mail::0::1::mbx1::email1");
+
+		assert.equal(result.keySource, "addressbook");
+		assert.isUndefined(result.armoredKey);
+		assert.isUndefined(result.keyFingerprint);
+		assert.isUndefined(result.keyUid);
 	});
 
 	it("reports verified:false (not hidden, not thrown) when the signed content doesn't match "

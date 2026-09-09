@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
+<overlay>
+	<!-- PGP analogue of smimeCertAddToContact.xet - deliberately mirrored layout (2026-09-09,
+	     ralf: "we want the s/mime pgp to look similar, so users dont have to learn two different
+	     things") - same grid/columns, same header row shape, "Signed by"/"Email address" rows in
+	     the same order, a details/text tabbox in the same spot. Differs only where PGP genuinely
+	     has no X.509 equivalent (no issuer/country - a PGP key isn't CA-issued; a fingerprint row
+	     instead, PGP's own closest analogue of a cert's identifying detail). -->
+	<et2-template  id="mail.pgpKeyAddToContact" template="" lang="" group="0" version="17.1">
+		<grid width="100%">
+			<columns>
+				<column width="120"/>
+				<column width="300"/>
+				<column width="20"/>
+			</columns>
+			<rows>
+				<row class="dialogHeader">
+					<et2-description  span="2" id="message"></et2-description>
+					<et2-image  src="envelope-at-fill" class="@class"></et2-image>
+				</row>
+				<row>
+					<et2-description  id="message2"></et2-description>
+				</row>
+				<row>
+					<et2-description  value="Signed by" label="%s:"></et2-description>
+					<et2-description  id="keyUid"></et2-description>
+				</row>
+				<row>
+					<et2-description  value="Email address" label="%s:"></et2-description>
+					<et2-description  id="email"></et2-description>
+				</row>
+				<row>
+					<et2-description  value="Key fingerprint" label="%s:"></et2-description>
+					<et2-description  id="keyFingerprint"></et2-description>
+				</row>
+				<row>
+					<et2-description  value="Public key" label="%s:"></et2-description>
+				</row>
+				<row>
+					<et2-textarea  id="armoredKey" readonly="true" rows="8" span="2"></et2-textarea>
+				</row>
+			</rows>
+		</grid>
+	</et2-template>
+</overlay>

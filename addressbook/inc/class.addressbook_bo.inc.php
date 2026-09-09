@@ -819,6 +819,25 @@ class addressbook_bo extends Api\Contacts
 	}
 
 	/**
+	 * Set PGP keys for given email or account_id, if user has necessary rights - plain set_keys()
+	 * wrapper, same shape as set_smime_keys() above. Deliberately NOT the same as ajax_set_pgp_keys()
+	 * above, which additionally uploads to a public keyserver and appends that to its return message -
+	 * side effects only appropriate for that method's own "user explicitly pastes/manages their own
+	 * key" UI flow, not for MailApp.pgpAutoOfferAddToContact()'s (mail/js/app.ts) "silently store a
+	 * message-supplied key for an already-known contact" use (2026-09-09, Autocrypt Phase 5 items 5/7 -
+	 * see doc/ai/projects/mail-pgp-signature-verification.md).
+	 *
+	 * @param array $keys email|account_id => public key pairs to store
+	 * @param boolean $allow_user_updates =null for admins, set config to allow regular users to store their pgp key
+	 *
+	 * @return string message of the update operation result
+	 */
+	public function set_pgp_keys($keys, $allow_user_updates=null)
+	{
+		return $this->set_keys($keys, true, $allow_user_updates);
+	}
+
+	/**
 	 * Saves contact
 	 *
 	 * Reimplemented to strip pubkeys pasted into pubkey field or imported and store them as files in Vfs.
