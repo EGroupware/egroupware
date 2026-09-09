@@ -4832,11 +4832,14 @@ export class MailJmap
 				await this.smimeEncryptBody(profileID, token, client, identity, email, smimeType, passphrase, passExpMinutes) :
 				pgpArmored ? await this.pgpEncryptBody(profileID, pgpArmored) : undefined;
 			// TYPE_SIGN's "whole" shape needs Email/import, not Email/set create - see
-			// importWholeMessageDraft()'s own docblock
+			// importWholeMessageDraft()'s own docblock; a pre-built whole message has no hook for us
+			// to add an extra header, so no Autocrypt header on that path (S/MIME-signed messages
+			// don't need one anyway - Autocrypt is a PGP-only concept)
 			const emailId = bodyOverride && 'whole' in bodyOverride ?
 				await this.importWholeMessageDraft(token, client, draftsId, bodyOverride.blobId) :
 				await this.createDraftEmail(token, client, identity, draftsId, email,
-					bodyOverride as {type : string, blobId : string} | {type : string, subParts : {type : string, blobId : string}[]} | undefined);
+					bodyOverride as {type : string, blobId : string} | {type : string, subParts : {type : string, blobId : string}[]} | undefined,
+					await this.buildAutocryptHeader(identity));
 
 			const [{submission}] = await client.requestMany((t) => ({
 				submission: t.EmailSubmission.set({
@@ -5367,7 +5370,8 @@ export class MailJmap
 	}
 
 	/** Shared Email property-set builder for a create (sendNewEmail()/saveDraft()) or update (saveDraft()) - everything except mailboxIds/keywords, which differ between the two. */
-	private draftEmailProperties(identity : any, email : JmapNewEmail, inlineImages : JmapInlineImage[] = []) : Record<string, any>
+	private draftEmailProperties(identity : any, email : JmapNewEmail, inlineImages : JmapInlineImage[] = [],
+		autocryptHeader? : string | null) : Record<string, any>
 	{
 		const isHtml = !!email.isHtml;
 		const attachments = email.attachments ?? [];
@@ -5444,6 +5448,10 @@ export class MailJmap
 			...(email.threadTopic ? {'header:Thread-Topic': email.threadTopic} : {}),
 			...(email.threadIndex ? {'header:Thread-Index': email.threadIndex} : {}),
 			...(email.listId ? {'header:List-Id': email.listId} : {}),
+			// Autocrypt (https://docs.autocrypt.org/level1.html) - see buildAutocryptHeader()'s own
+			// docblock for how this value is built; omitted entirely (not just empty) when there's
+			// no key to advertise, matching every other conditional header above.
+			...(autocryptHeader ? {'header:Autocrypt': autocryptHeader} : {}),
 			bodyValues,
 			// attachments/htmlBody/textBody are RFC 8621 §4.1.4 convenience VIEWS the server
 			// derives from bodyStructure on read - not independently settable on create, so the
@@ -5698,6 +5706,56 @@ export class MailJmap
 	}
 
 	/**
+	 * Build this account's own outgoing `Autocrypt:` header value - Autocrypt Level 1 (https://
+	 * docs.autocrypt.org/level1.html) Phase 5 item 3, doc/ai/projects/
+	 * mail-pgp-signature-verification.md - `addr=<email>; keydata=<base64>` (`keydata=` MUST be the
+	 * LAST parameter per spec, hence the fixed order here). Sent unconditionally on every real send
+	 * (sendNewEmail() only, NOT saveDraft()'s autosave-only path - a still-unsent draft never
+	 * reaches SMTP, so there's nothing "outgoing" about it yet, and re-doing an addressbook lookup +
+	 * openpgp.js key-minimization on every autosave tick would be wasted work) whenever the sending
+	 * identity has a PGP key stored under its own address - reuses the exact same addressbook
+	 * lookup (`ajax_get_pgp_keys`) and minimization (armoredKeyToAutocryptKeydata()) already built
+	 * for reading Autocrypt-shaped keydata.
+	 *
+	 * `prefer-encrypt=mutual` is deliberately NOT added yet - gated on the "mutual" auto-encrypt
+	 * preference (Phase 5 item 6), which doesn't exist yet; not an oversight, see the project doc's
+	 * own phasing.
+	 *
+	 * @return null (header omitted entirely, not sent empty) when this identity has no PGP key
+	 *  stored in the addressbook yet, or that key has no Autocrypt-compatible encryption subkey
+	 *  (armoredKeyToAutocryptKeydata()'s own null case)
+	 */
+	private async buildAutocryptHeader(identity : any) : Promise<string | null>
+	{
+		const email = (identity?.email || '').toLowerCase();
+		if (!email) return null;
+
+		let armoredKey : string | undefined;
+		try
+		{
+			const result : any = await this.egw.request('addressbook.addressbook_bo.ajax_get_pgp_keys', [[email]]);
+			armoredKey = result?.[email];
+		}
+		catch (e)
+		{
+			console.error('MailJmap.buildAutocryptHeader(): addressbook PGP key lookup failed', e);
+			return null;
+		}
+		if (!armoredKey) return null;
+
+		try
+		{
+			const keydata = await MailJmap.armoredKeyToAutocryptKeydata(armoredKey);
+			return keydata ? `addr=${email}; keydata=${keydata}` : null;
+		}
+		catch (e)
+		{
+			console.error('MailJmap.buildAutocryptHeader(): key minimization failed', e);
+			return null;
+		}
+	}
+
+	/**
 	 * Create a new $draft-keyword Email in the Drafts mailbox - shared by sendNewEmail() and
 	 * saveDraft()'s first-save case.
 	 *
@@ -5706,15 +5764,18 @@ export class MailJmap
 	 *  entirely with a SINGLE opaque blobId-referenced part (the already-signed/encrypted body
 	 *  entity) - from/to/cc/bcc/subject/inReplyTo/references stay exactly as draftEmailProperties()
 	 *  would otherwise build them, only the body's own MIME shape changes.
+	 * @param autocryptHeader buildAutocryptHeader()'s own result - sendNewEmail() only, see that
+	 *  method's own docblock for why saveDraft()'s autosave path never passes one
 	 */
 	private async createDraftEmail(token : JmapToken, client : JamClient, identity : any, draftsId : string, email : JmapNewEmail,
-		bodyOverride? : {type : string, blobId : string} | {type : string, subParts : {type : string, blobId : string}[]}) :
+		bodyOverride? : {type : string, blobId : string} | {type : string, subParts : {type : string, blobId : string}[]},
+		autocryptHeader? : string | null) :
 		Promise<string>
 	{
 		const {body, inlineImages} = bodyOverride ?
 			{body: email.body ?? '', inlineImages: [] as JmapInlineImage[]} :
 			await this.resolveOutgoingInlineImages(token, client, email.body ?? '');
-		const properties : any = this.draftEmailProperties(identity, {...email, body}, inlineImages);
+		const properties : any = this.draftEmailProperties(identity, {...email, body}, inlineImages, autocryptHeader);
 		if (bodyOverride)
 		{
 			delete properties.bodyValues;

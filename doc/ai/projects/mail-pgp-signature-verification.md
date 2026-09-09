@@ -17,12 +17,14 @@ see its own entry), the other three (and item 4's PGP-signed half) still not sta
 integration (Phase 5) planned in full 2026-09-09** (own section further down) - consent dialog +
 preference, `Autocrypt`/`Autocrypt-Gossip` send+receive, `prefer-encrypt` storage, the
 multi-key-per-address storage fix, mutual-auto-encrypt preference, S/MIME auto-add-when-verified,
-and an explicit Level 1 spec gap/deviation audit. Phase 5 steps 1 (keydata minimize/re-armor) and 2
+and an explicit Level 1 spec gap/deviation audit. Phase 5 steps 1 (keydata minimize/re-armor), 2
 (multi-key-per-address addressbook storage, **now including its `prefer-encrypt`-attribute storage
-half too**) are DONE (2026-09-09, see their own phasing entries) - steps 3-6 (actually
-sending/receiving `Autocrypt:` headers, the consent dialog, mutual auto-encrypt, S/MIME auto-add)
-are still plan only; nothing calls the new storage API yet. **Phase 5 step 2's alias-pointer storage
-rework (Phase G) is now also DONE (2026-09-09)** - see its own entry under item 1 below.
+half too**) and **3's `Autocrypt:`-sending half** are DONE (2026-09-09, see their own phasing
+entries) - `Autocrypt-Gossip:` sending, receiving/parsing either header, the consent dialog, mutual
+auto-encrypt, and S/MIME auto-add are still plan only; the new `prefer-encrypt` storage API from
+item 2 has no caller yet (item 6, mutual auto-encrypt, is what would set it). **Phase 5 step 2's
+alias-pointer storage rework (Phase G) is now also DONE (2026-09-09)** - see its own entry under
+item 1 below.
 **Security fix (Phase H, DONE 2026-09-09)**: a signature/cert that cryptographically verifies but
 doesn't itself claim the message's From address is now shown as invalid, not verified, for both PGP
 and S/MIME - see its own section below, right before "Why this is even possible without Mailvelope".
@@ -625,14 +627,27 @@ address entry).
 
 ### 3. Sending: `Autocrypt:` (own key) and `Autocrypt-Gossip:` (recipients' keys)
 
-- **`Autocrypt:`** - if the sending identity's own account has a stored PGP public key (`ajax_get_pgp_keys()`
-  against the account's own email, or account keys may need their own lookup path - check), convert
-  it from our armored storage to Autocrypt's binary-minimized form (openpgp.js can read the armored
-  key and re-export/minimize it - needs confirming its API actually supports stripping down to the
-  mandated 5-packet shape, see the "real gaps" list below) and add the header. Include
-  `prefer-encrypt=mutual` only if the NEW "mutual" preference (item 8 below) is on for this account.
-  Unconditional per the spec (every outgoing message, not just to known Autocrypt peers) - matches
-  "opportunistic."
+- **`Autocrypt:` - DONE (2026-09-09)**: new `MailJmap.buildAutocryptHeader(identity)` (`mail/js/
+  jmap.ts`) looks up the sending identity's own address via the existing `ajax_get_pgp_keys()`
+  addressbook endpoint (confirmed: no separate "account keys" lookup path needed, the same
+  address-keyed endpoint used everywhere else works fine for the sending identity's own email too),
+  converts the armored result via `armoredKeyToAutocryptKeydata()` (Phase 5 item 1, already built +
+  tested), and assembles `addr=<email>; keydata=<base64>` (`keydata=` last, per spec). Wired into
+  `sendNewEmail()` only (an actual submit), NOT `saveDraft()`'s autosave-only path - a still-unsent
+  draft never reaches SMTP, so nothing is "outgoing" yet, and re-running an addressbook lookup +
+  openpgp.js minimization on every autosave tick would be wasted work; `createDraftEmail()`/
+  `draftEmailProperties()` both gained an optional `autocryptHeader` param threaded through for
+  this, defaulting to omitted (no header) when not passed. Also applies to Mailvelope-encrypted
+  sends (`pgpArmored` given) - correctly so, a PGP-encrypted message's own sender should still
+  advertise their key for the recipient to reply-encrypt back; does NOT apply to S/MIME `TYPE_SIGN`'s
+  "whole" pre-built-message path (Autocrypt is PGP-only, irrelevant there anyway). `prefer-encrypt=
+  mutual` deliberately NOT added yet - correctly still gated on the "mutual" preference (item 6
+  below), which doesn't exist yet; returns `null` (header omitted, not sent empty) whenever there's
+  no key to advertise or the stored key has no Autocrypt-compatible encryption subkey, and swallows
+  (logs, doesn't throw) any addressbook-lookup failure - a send must never fail just because this
+  informational header couldn't be built. New tests: `MailJmapBuildAutocryptHeader.test.ts` (the
+  lookup/assembly logic, addressbook mocked) and a new describe block in `MailJmapDraftEmailProperties
+  Headers.test.ts` (the pure passthrough into the final Email/set properties).
 - **`Autocrypt-Gossip:`** - one per `To`/`Cc` recipient whose key is in the addressbook, **only when
   the message is actually being encrypted** (Mailvelope on) - per the spec, gossip headers belong
   inside the plaintext MIME payload that then gets encrypted, never as a bare outer RFC 5322 header.
@@ -764,8 +779,9 @@ keeps today's click-to-add dialog unchanged). Also needs the same multi-key-per-
    per-address distinction at all - it degrades gracefully (the uploaded content becomes the `"*"`
    fallback, same as a legacy file), but doesn't yet let a user pick "this key is for my home
    address" through that specific UI path.
-3. Sending `Autocrypt:` (own key) - the simplest, most self-contained piece, no consent-dialog UI
-   needed (never touches another contact's stored data).
+3. Sending `Autocrypt:` (own key) - DONE (2026-09-09, see its own entry) - was indeed the simplest,
+   most self-contained piece, no consent-dialog UI needed (never touches another contact's stored
+   data). `Autocrypt-Gossip:` (the other half of item 3) is still not started.
 4. Consent dialog + preference (item 5), then receiving/gossip-parsing (items 3's gossip half, 4) -
    the two together are what actually needs the dialog.
 5. `prefer-encrypt` **storage** (item 2) is DONE (2026-09-09, see its own entry) - what's left is

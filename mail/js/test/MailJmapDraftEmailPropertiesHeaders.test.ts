@@ -86,6 +86,40 @@ describe("MailJmap.draftEmailProperties() - replyTo/priority/disposition headers
 });
 
 /**
+ * Autocrypt (Phase 5 item 3, 2026-09-09): draftEmailProperties() itself just passes through
+ * whatever buildAutocryptHeader() already computed - see MailJmapBuildAutocryptHeader.test.ts for
+ * that method's own addressbook-lookup/minimization logic, kept separate since it's async and
+ * network-mocked while draftEmailProperties() itself stays a pure synchronous function.
+ */
+describe("MailJmap.draftEmailProperties() - header:Autocrypt passthrough", () =>
+{
+	it("sets header:Autocrypt to the given value when provided", () =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const properties = (jmap as any).draftEmailProperties(IDENTITY, baseEmail(), [],
+			"addr=sender@example.org; keydata=BASE64DATA");
+
+		assert.equal(properties["header:Autocrypt"], "addr=sender@example.org; keydata=BASE64DATA");
+	});
+
+	it("omits header:Autocrypt when null (no key to advertise, or an autosave-only call)", () =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const properties = (jmap as any).draftEmailProperties(IDENTITY, baseEmail(), [], null);
+
+		assert.notProperty(properties, "header:Autocrypt");
+	});
+
+	it("omits header:Autocrypt when not given at all (saveDraft()'s own call shape)", () =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const properties = (jmap as any).draftEmailProperties(IDENTITY, baseEmail());
+
+		assert.notProperty(properties, "header:Autocrypt");
+	});
+});
+
+/**
  * Follow-up regression coverage (2026-09-09, ralf, after the fixes above: "Does that mean they
  * [Thread-Topic/Thread-Index/List-Id] are lost when replying to a mail? ... it would be a real
  * regression we need to fix"): classic getReplyData()'s own propagation of these three headers
