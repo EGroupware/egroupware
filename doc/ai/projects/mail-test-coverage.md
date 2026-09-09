@@ -1,6 +1,6 @@
 # Mail: test-coverage audit and gap-closing plan
 
-## Status: audit complete (2026-09-09); priority 1 (bulk move/copy/delete) client-side + deferred-work queue done; priority 2 (JMAP/shim path) started with jmap.ts's mailbox CRUD (see Progress log)
+## Status: audit complete (2026-09-09); priority 1 (bulk move/copy/delete) client-side + deferred-work queue done; priority 2 (JMAP/shim path) - jmap.ts's mailbox CRUD + label/flag setters done (see Progress log)
 
 Full-codebase scan of `mail/js/*.ts`, `mail/src/*.php`, `mail/inc/*.php`, `api/src/Mail.php` and
 `api/src/Mail/*.php` (including the `Jmap/` shim + real-JMAP layer), cross-referenced against every
@@ -113,19 +113,30 @@ optimistic-clear, no hard guard yet).
   everything else swallowed to `null` for classic-fallback callers) - the get/query chained-via-
   `$ref()` result-reference call shape needed its own dedicated fake (see that test file's own
   comment) since a plain single-call fake silently passes with the real chaining broken.
-- `mail/js/jmap.ts` (rest of the ~half still untested): thread-keyword aggregation
-  (`aggregateThreadKeywords`, and notably
-  `keywordsToRowFlags()` itself - the exact logic central to the answered/forwarded fix, still with
-  no direct unit test), search/filter-to-JMAP translation (`buildFilter`, `buildTokenizedFilter`,
-  `flaggedFilter`, `buildSort`), most push/WebSocket payload-building (`buildWsPushPayload`,
-  `buildEmailPush`/`buildMailboxPush`/`buildEmailDeletePush`), S/MIME encrypt
-  (`smimeEncryptBody`, `resolveSmimeSignedAttachments`), PGP dispatch/cache methods (`findPgpPart`,
-  `peekPgpSignature`, `peekPgpEncrypted`, `pgpEncryptBody` - as opposed to the already-tested
-  lower-level byte helpers), `saveDraft()` (only `sendNewEmail()` is exercised), most label/flag
-  setters (`setLabel`, `setMdnFlag`, `clearLabels`, `setCustomFlag`, `clearLabelsForAll`,
-  `toggleForAll`), most attachment upload/resolve methods (`uploadAttachment`,
-  `uploadVfsAttachment`, `downloadBlobUrl`, `reuploadAttachmentForAccount`,
-  `resolveOutgoingInlineImages`, `fetchAttachmentsMetadata`, `getAttachmentViewUrl`).
+- **Done (2026-09-09)**: `mail/js/jmap.ts`'s label/custom-flag surface - `setLabel`, `setMdnFlag`,
+  `clearLabels`, `setCustomFlag`, `clearLabelsForAll`, `toggleForAll` - 14 tests,
+  `mail/js/test/MailJmapLabelsAndFlags.test.ts`. Covers: built-in vs. case-insensitive custom-label
+  keyword resolution, custom-flag mutual exclusivity (setting one clears every other + `$flagged`;
+  unsetting only clears itself + `$flagged`, doesn't touch siblings), `clearLabels`'s full
+  built-in+custom keyword set, and `toggleForAll`'s per-message toggle semantics (concurrently
+  queries both "has it"/"doesn't have it", adds to the latter, removes from the former - not a bulk
+  "set for everyone"). Found (during writing, not a bug - just a test-authoring trap worth noting
+  for next time) that `keywordPatch()`'s "unset" value is the JMAP PatchObject sentinel `null`, not
+  `false` - several first-draft assertions had to be corrected. Also confirmed `ensureToken()`'s own
+  unreachable-account path can fall through to `popupCheckCert()`, which needs `egw.link()`/
+  `egw.open_link()` stubbed even in an otherwise-minimal fake `egw` - same requirement
+  `MailJmapMailboxCrud.test.ts`'s `getAllMailboxes()` tests already found.
+- `mail/js/jmap.ts` (rest still untested): thread-keyword aggregation (`aggregateThreadKeywords`,
+  and notably `keywordsToRowFlags()` itself - the exact logic central to the answered/forwarded
+  fix, still with no direct unit test), search/filter-to-JMAP translation (`buildFilter`,
+  `buildTokenizedFilter`, `flaggedFilter`, `buildSort`), most push/WebSocket payload-building
+  (`buildWsPushPayload`, `buildEmailPush`/`buildMailboxPush`/`buildEmailDeletePush`), S/MIME
+  encrypt (`smimeEncryptBody`, `resolveSmimeSignedAttachments`), PGP dispatch/cache methods
+  (`findPgpPart`, `peekPgpSignature`, `peekPgpEncrypted`, `pgpEncryptBody` - as opposed to the
+  already-tested lower-level byte helpers), `saveDraft()` (only `sendNewEmail()` is exercised),
+  most attachment upload/resolve methods (`uploadAttachment`, `uploadVfsAttachment`,
+  `downloadBlobUrl`, `reuploadAttachmentForAccount`, `resolveOutgoingInlineImages`,
+  `fetchAttachmentsMetadata`, `getAttachmentViewUrl`).
 - `api/src/Mail/Jmap/Imap.php`: `emailQuery()`/`emailGet()`'s real-account (non-"0") IMAP
   search/fetch translation (every existing test uses the demo fixture or a mocked adapter that
   bypasses real search/fetch construction), `resolveSmime()`/`resolveTnef()`'s IMAP-fetch half,
@@ -222,8 +233,9 @@ Kept for completeness, but explicitly deprioritized until the above is in better
   `JmapShimDeferredWorkTest.php`) done. `emailSet()`'s own IMAP-execution branches still open (see
   priority-1 entry above for why - needs a live/mocked IMAP connection, not attempted yet).
 - 2026-09-09: started priority 2 (JMAP/shim path) - `mail/js/jmap.ts`'s mailbox CRUD (22 tests,
-  `MailJmapMailboxCrud.test.ts`) done. Rest of priority 2 (thread-keyword aggregation, search/
+  `MailJmapMailboxCrud.test.ts`) and label/flag setters (14 tests,
+  `MailJmapLabelsAndFlags.test.ts`) done. Rest of priority 2 (thread-keyword aggregation, search/
   filter translation, push/WebSocket payload-building, S/MIME encrypt, PGP dispatch/cache,
-  `saveDraft()`, label/flag setters, attachment upload/resolve, the shim's real-account
+  `saveDraft()`, attachment upload/resolve, the shim's real-account
   `emailQuery`/`emailGet`/`resolveSmime`/`resolveTnef`/`emailSubmissionSet`, and the entire
   real-JMAP-facing layer) still open.
