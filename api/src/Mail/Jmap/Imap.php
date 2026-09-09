@@ -1638,6 +1638,17 @@ class Imap extends Jmap\Base
 		// after the CREATE-time fix)
 		$wantSendHeaders = !$properties || array_intersect(
 			[self::PRIORITY_HEADER_PROPERTY, self::DISPOSITION_REQUEST_HEADER_PROPERTY], $properties);
+		// Autocrypt (https://docs.autocrypt.org/level1.html) - Phase 5 item 4's own read side
+		// (MailJmap.fetchForReply()) AND emailSubmissionSet()'s re-fetch-then-resend flow both read
+		// this back - found live 2026-09-09 (ralf: "It sends now, but no Autocrypt header", isolated
+		// to isLocal/shim accounts specifically): unlike Stalwart's own native JMAP-over-HTTP, which
+		// genuinely supports ANY "header:X:form" property per RFC 8621 §4.1.3 with no server-side
+		// code needed here at all (confirmed live against a real Stalwart account BEFORE this fix -
+		// this shim's own emailGet() has NO generic header mechanism whatsoever, only this explicit
+		// per-header allowlist, same as every other $wantXxx flag above), this account type needs
+		// its own dedicated IMAP header fetch + mapping, exactly like every other header property
+		// here already has.
+		$wantAutocrypt = !$properties || in_array(self::AUTOCRYPT_HEADER_PROPERTY, $properties, true);
 		// whole-message blobId (RFC 8621 top-level Email.blobId) - MailJmap.fetchRawHeader()'s
 		// "view header" fast path, no extra IMAP work needed (same self-describing scheme
 		// bodyPartToJmap() uses per-part, just with an empty partId - see download())
@@ -1712,6 +1723,10 @@ class Imap extends Jmap\Base
 			$query->headers('sendheaders', ['X-Priority', 'Disposition-Notification-To'],
 				['cache' => true, 'peek' => true]);
 		}
+		if ($wantAutocrypt)
+		{
+			$query->headers('autocrypt', ['Autocrypt'], ['cache' => true, 'peek' => true]);
+		}
 
 		$results = $imap->fetch($mailbox, $query, [
 			'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $ids)),
@@ -1732,7 +1747,7 @@ class Imap extends Jmap\Base
 			if (($data = $results[(int)$id] ?? null))
 			{
 				/** @var \Horde_Imap_Client_Data_Fetch $data */
-				$email = self::emailFromFetch($imap, $mailbox, $id, $data, $wantPreview, (bool)$wantBody, $wantMdn, $wantBlobId, $wantContentType, (bool)$wantThreadHeaders, (bool)$wantSendHeaders);
+				$email = self::emailFromFetch($imap, $mailbox, $id, $data, $wantPreview, (bool)$wantBody, $wantMdn, $wantBlobId, $wantContentType, (bool)$wantThreadHeaders, (bool)$wantSendHeaders, $wantAutocrypt);
 				if ($wantThreadId)
 				{
 					$email['threadId'] = $threadMap[$id] ?? $id;
@@ -2290,6 +2305,28 @@ class Imap extends Jmap\Base
 				$mailer->addHeader($header, (string)$value);
 			}
 		}
+		// Autocrypt (https://docs.autocrypt.org/level1.html), Phase 5 item 3's sending half - same
+		// two-key-form duality as Thread-Topic/-Index/List-Id above (bare `header:Autocrypt` from a
+		// direct client CREATE submission, MailJmap.draftEmailProperties(); AUTOCRYPT_HEADER_
+		// PROPERTY's `:all` array form from emailSubmissionSet()'s own re-fetch-then-resend flow) -
+		// found missing here entirely 2026-09-09 (ralf, live-testing the just-added send-side
+		// Autocrypt header: "It sends now, but no Autocrypt header"). Live-debugged down to TWO
+		// gaps, both now fixed: this bare-form read here (the CREATE-time half - confirmed correct
+		// via a real send, "Autocrypt:" present in the built raw MIME bytes) was only half the
+		// story - the re-fetch's OWN `emailGet()`/emailFromFetch() had no Autocrypt handling AT ALL
+		// (unlike Stalwart's native JMAP-over-HTTP, this shim's emailGet() has no generic
+		// "header:X:form" mechanism, only this explicit per-header allowlist - see emailGet()'s own
+		// $wantAutocrypt comment), so the SECOND buildMailerFromEmailProperties() call (the one
+		// whose output is what's actually transmitted) never received the value at all even once
+		// this bare-form read worked. Only ever a single value (never multiple Autocrypt headers on
+		// send), so the `:all` array form's first element is all that's needed here, not the
+		// general "possibly many" case parseAutocryptHeaders() (client-side, reading an INCOMING
+		// message) has to handle.
+		$autocrypt = $email['header:Autocrypt'] ?? (($email[self::AUTOCRYPT_HEADER_PROPERTY] ?? [])[0] ?? null);
+		if (!empty($autocrypt))
+		{
+			$mailer->addHeader('Autocrypt', (string)$autocrypt);
+		}
 
 		// S/MIME encrypt-only/sign+encrypt body swap (createDraftEmail()'s bodyOverride, see
 		// smimeEncryptEmailProperties()'s own docblock) - a bare {type, blobId} bodyStructure with
@@ -2834,13 +2871,16 @@ class Imap extends Jmap\Base
 				// Thread-Topic/Thread-Index/List-Id) were all absent from this list, so all five
 				// were silently dropped at actual send time - each was only ever populated from a
 				// direct client CREATE submission, never read back from the already-stored draft
-				// this re-fetches.
+				// this re-fetches. Autocrypt (same day, same bug class - found live once item 3's
+				// send-side header existed to actually test) joined this list too, via its own
+				// AUTOCRYPT_HEADER_PROPERTY `:all` read-form.
 				$fetched = self::emailGet($accountId, [
 					'ids' => [$emailId],
 					'mailboxId' => base64_encode($sourceFolder),
 					'properties' => ['from', 'to', 'cc', 'bcc', 'replyTo', 'subject', 'inReplyTo', 'references',
 						self::PRIORITY_HEADER_PROPERTY, self::DISPOSITION_REQUEST_HEADER_PROPERTY,
 						self::THREAD_TOPIC_HEADER_PROPERTY, self::THREAD_INDEX_HEADER_PROPERTY, self::LIST_ID_HEADER_PROPERTY,
+						self::AUTOCRYPT_HEADER_PROPERTY,
 						'bodyStructure', 'textBody', 'htmlBody', 'bodyValues'],
 				], $emailContext);
 				$email = ($fetched['list'] ?? [])[0] ?? null;
@@ -3054,9 +3094,13 @@ class Imap extends Jmap\Base
 	 *  DISPOSITION_REQUEST_HEADER_PROPERTY fields (needs a preceding
 	 *  $query->headers('sendheaders', ...) call, see emailGet()) - emailSubmissionSet()'s own
 	 *  re-fetch-then-resend flow, reading a saved draft's own Priority/read-receipt-request back
+	 * @param bool $wantAutocrypt true adds the AUTOCRYPT_HEADER_PROPERTY field, ALL raw instances
+	 *  as an array per RFC 8621 §4.1.3's ":all" suffix (needs a preceding $query->headers(
+	 *  'autocrypt', ...) call, see emailGet()) - MailJmap.fetchForReply()'s own read (Phase 5 item
+	 *  4) and emailSubmissionSet()'s re-fetch-then-resend flow (item 3's sending half)
 	 * @return array
 	 */
-	public static function emailFromFetch(\Horde_Imap_Client_Socket $imap, string $mailbox, string $uid, \Horde_Imap_Client_Data_Fetch $data, bool $wantPreview = true, bool $wantBody = false, bool $wantMdn = false, bool $wantBlobId = false, bool $wantContentType = false, bool $wantThreadHeaders = false, bool $wantSendHeaders = false) : array
+	public static function emailFromFetch(\Horde_Imap_Client_Socket $imap, string $mailbox, string $uid, \Horde_Imap_Client_Data_Fetch $data, bool $wantPreview = true, bool $wantBody = false, bool $wantMdn = false, bool $wantBlobId = false, bool $wantContentType = false, bool $wantThreadHeaders = false, bool $wantSendHeaders = false, bool $wantAutocrypt = false) : array
 	{
 		$envelope = $data->getEnvelope();
 		$structure = $data->getStructure();
@@ -3125,6 +3169,12 @@ class Imap extends Jmap\Base
 			$email[self::DISPOSITION_REQUEST_HEADER_PROPERTY] = $sendHeaders ?
 				self::firstHeaderValue($sendHeaders, ['Disposition-Notification-To']) : null;
 		}
+		if ($wantAutocrypt)
+		{
+			$autocryptHeaders = $data->getHeaders('autocrypt', \Horde_Imap_Client_Data_Fetch::HEADER_PARSE);
+			$email[self::AUTOCRYPT_HEADER_PROPERTY] = $autocryptHeaders ?
+				self::allHeaderValues($autocryptHeaders, 'Autocrypt') : [];
+		}
 		if ($wantBody && $structure)
 		{
 			$email += self::emailBodyFields($imap, $mailbox, $uid, $structure);
@@ -3156,6 +3206,22 @@ class Imap extends Jmap\Base
 	const THREAD_TOPIC_HEADER_PROPERTY = 'header:thread-topic:asText';
 	const THREAD_INDEX_HEADER_PROPERTY = 'header:thread-index:asText';
 	const LIST_ID_HEADER_PROPERTY = 'header:list-id:asText';
+
+	/**
+	 * RFC 8621 §4.1.3 ":all" suffix (array of every instance) - matches MailJmap's own read-side
+	 * key exactly (mail/js/jmap.ts). Real Stalwart JMAP-over-HTTP supports this generically for any
+	 * `header:X:form` property with no server-side code needed; THIS shim does not (isLocal:true -
+	 * emailGet() below has no generic header mechanism, only an explicit per-header allowlist), so
+	 * this constant's emailGet()/emailFromFetch() wiring (the $wantAutocrypt block below) had to be
+	 * added by hand - missing at first (live-found 2026-09-09, ralf: "It sends now, but no Autocrypt
+	 * header"), now fixed and live-verified against this shim. Used ONLY for the
+	 * emailSubmissionSet() re-fetch below (its own docblock note on PRIORITY_HEADER_PROPERTY
+	 * explains why a re-fetch form is needed at all) - the bare `header:Autocrypt` form (single
+	 * string, no `:all`) is what a direct client CREATE submission sends (MailJmap.
+	 * draftEmailProperties()), read directly in buildMailerFromEmailProperties() below without
+	 * needing its own named constant.
+	 */
+	const AUTOCRYPT_HEADER_PROPERTY = 'header:Autocrypt:all';
 
 	/**
 	 * RFC 8621 §4.1.3 header-property mechanism, bare form (not ":asText" - matches
@@ -3196,6 +3262,35 @@ class Imap extends Jmap\Base
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * ALL instances of one header, as an array (RFC 8621 §4.1.3 ":all" suffix), instead of
+	 * firstHeaderValue()'s single "first non-empty of a priority list" result. No explicit RFC 2047
+	 * decoding call here (unlike firstHeaderValue()'s `iconv_mime_decode()`) - but the value has
+	 * already been decoded by this point regardless, since `Horde_Mime_Headers::parseHeaders()`
+	 * (invoked internally by the `HEADER_PARSE` fetch mode both this and firstHeaderValue() rely on)
+	 * does its own RFC 2047 decoding while parsing, before either method ever sees the value; an
+	 * extra `iconv_mime_decode()` call here would be redundant at best (a harmless no-op on
+	 * already-decoded text) and can fail outright on already-decoded non-ASCII bytes (verified: it
+	 * returns `false` when re-run on text containing a decoded "©"), so don't add one. Harmless for
+	 * Autocrypt specifically (its only realistic user, currently) - `keydata=`'s own value is pure
+	 * base64, whose alphabet (A-Za-z0-9+/=) can never contain the "?" an RFC 2047 encoded word
+	 * requires, so real Autocrypt header values are never actually altered by this decoding.
+	 *
+	 * @param \Horde_Mime_Headers $headers
+	 * @param string $name
+	 * @return string[] empty array if the header is absent
+	 */
+	private static function allHeaderValues(\Horde_Mime_Headers $headers, string $name) : array
+	{
+		$arr = array_change_key_case($headers->toArray(), CASE_UPPER);
+		$value = $arr[strtoupper($name)] ?? null;
+		if ($value === null)
+		{
+			return [];
+		}
+		return array_map(static fn($v) => trim((string)$v), (array)$value);
 	}
 
 	/**
