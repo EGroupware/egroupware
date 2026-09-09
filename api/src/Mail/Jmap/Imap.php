@@ -2325,7 +2325,20 @@ class Imap extends Jmap\Base
 		$autocrypt = $email['header:Autocrypt'] ?? (($email[self::AUTOCRYPT_HEADER_PROPERTY] ?? [])[0] ?? null);
 		if (!empty($autocrypt))
 		{
-			$mailer->addHeader('Autocrypt', (string)$autocrypt);
+			// A real keydata= value is several KB of unbroken base64 (no whitespace at all), and
+			// Horde_Mime_Headers::toArray()'s own line-folding is just wordwrap($val, 76, $eol.' ')
+			// with NO $cut=true - wordwrap() only ever breaks AT existing whitespace, so a "word"
+			// (here, the entire header value) longer than the wrap width is left as one single,
+			// unbroken line. Horde_Smtp_Filter_Body then classifies any line >998 octets with no
+			// CR/LF as "binary" data (RFC 2045 §2.8), and if the SMTP server doesn't advertise
+			// BINARYMIME (RFC 3030) - true here - sending then fails outright with "Server does not
+			// support binary message data." (live-found 2026-09-09, ralf, acc_id=42/shim, a real key
+			// long enough to trigger it). Fix: insert a plain space every 76 chars ourselves first,
+			// giving wordwrap() break points to fold on - safe because keydata is base64 (whitespace
+			// carries no meaning) and both the incoming-header parser (parseAutocryptHeader()) and
+			// the armored-key roundtrip (MailJmap.autocryptKeydataToArmoredKey()) already strip all
+			// whitespace before base64-decoding.
+			$mailer->addHeader('Autocrypt', trim(chunk_split((string)$autocrypt, 76, ' ')));
 		}
 
 		// S/MIME encrypt-only/sign+encrypt body swap (createDraftEmail()'s bodyOverride, see

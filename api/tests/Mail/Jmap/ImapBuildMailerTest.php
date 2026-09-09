@@ -504,6 +504,90 @@ class ImapBuildMailerTest extends Api\LoggedInTest
 	}
 
 	/**
+	 * Phase 5 item 3's Autocrypt sending half (doc/ai/projects/mail-pgp-signature-verification.md) -
+	 * same bare/`:all`-form duality as Thread-Topic/-Index/List-Id above.
+	 */
+	public function testAutocryptHeaderIsSetFromRawHeaderProperty()
+	{
+		$email = [
+			'from' => [['email' => 'sender@example.org']],
+			'to' => [['email' => 'recipient@example.org']],
+			'subject' => 'Autocrypt test',
+			'header:Autocrypt' => 'addr=sender@example.org; keydata=AAAABASE64KEYDATA',
+			'bodyValues' => ['body' => ['value' => 'x']],
+		];
+		$raw = $this->invokeBuildMailer($email)->getRaw(false);
+
+		$this->assertMatchesRegularExpression(
+			'/^Autocrypt: addr=sender@example\.org; keydata=AAAABASE64KEYDATA/mi', $raw);
+	}
+
+	public function testAutocryptHeaderIsAlsoSetFromTheAllReadShapeForm()
+	{
+		$email = [
+			'from' => [['email' => 'sender@example.org']],
+			'to' => [['email' => 'recipient@example.org']],
+			'subject' => 'Autocrypt re-fetch test',
+			Imap::AUTOCRYPT_HEADER_PROPERTY => ['addr=sender@example.org; keydata=AAAABASE64KEYDATA'],
+			'bodyValues' => ['body' => ['value' => 'x']],
+		];
+		$raw = $this->invokeBuildMailer($email)->getRaw(false);
+
+		$this->assertMatchesRegularExpression(
+			'/^Autocrypt: addr=sender@example\.org; keydata=AAAABASE64KEYDATA/mi', $raw);
+	}
+
+	public function testAutocryptHeaderIsOmittedWhenNotProvided()
+	{
+		$email = [
+			'from' => [['email' => 'sender@example.org']],
+			'to' => [['email' => 'recipient@example.org']],
+			'subject' => 'No Autocrypt',
+			'bodyValues' => ['body' => ['value' => 'x']],
+		];
+		$raw = $this->invokeBuildMailer($email)->getRaw(false);
+
+		$this->assertDoesNotMatchRegularExpression('/^Autocrypt:/mi', $raw);
+	}
+
+	/**
+	 * Regression test for a real live bug (found 2026-09-09, ralf, acc_id=42/shim: red toast
+	 * "Server does not support binary message data.") - a real `keydata=` value is several KB of
+	 * unbroken base64 (no whitespace anywhere), and Horde_Mime_Headers::toArray()'s own line
+	 * folding is just `wordwrap($val, 76, $eol.' ')` with no `$cut=true`, so wordwrap() cannot
+	 * break a single "word" longer than the wrap width - the entire header ends up as one huge
+	 * unbroken line. Horde_Smtp_Filter_Body then classifies any line over 998 octets with no CR/LF
+	 * as "binary" data (RFC 2045 §2.8), and the SMTP server here doesn't advertise BINARYMIME (RFC
+	 * 3030), so sending failed outright. Fixed by pre-folding the value with a space every 76 chars
+	 * before handing it to addHeader() - this asserts no line of the raw, wrapped output exceeds
+	 * that 998-octet threshold even for a multi-KB keydata value.
+	 */
+	public function testLongAutocryptHeaderIsFoldedSoNoLineExceedsTheSmtpBinaryDataThreshold()
+	{
+		$longKeydata = 'addr=sender@example.org; keydata='.str_repeat('A', 3000);
+		$email = [
+			'from' => [['email' => 'sender@example.org']],
+			'to' => [['email' => 'recipient@example.org']],
+			'subject' => 'Long Autocrypt key',
+			'header:Autocrypt' => $longKeydata,
+			'bodyValues' => ['body' => ['value' => 'x']],
+		];
+		$raw = $this->invokeBuildMailer($email)->getRaw(false);
+
+		foreach (preg_split('/\r\n/', $raw) as $line)
+		{
+			$this->assertLessThanOrEqual(998, strlen($line),
+				'a header (or body) line over 998 octets with no CR/LF triggers binary-data '.
+				'detection in Horde_Smtp_Filter_Body, which the SMTP server here rejects');
+		}
+		// folding must be whitespace-only (base64 is whitespace-insensitive on decode) - unfold via
+		// Horde_Mime_Headers itself (the same mechanism the receiving/re-fetch side uses) and check
+		// all 3000 original characters are still there once that whitespace is stripped back out
+		$unfolded = \Horde_Mime_Headers::parseHeaders($raw)->getValue('Autocrypt');
+		$this->assertSame(preg_replace('/\s+/', '', $longKeydata), preg_replace('/\s+/', '', $unfolded));
+	}
+
+	/**
 	 * doc/ai/projects/mail-compose-jmap-migration.md's S/MIME encrypt-only/sign+encrypt design
 	 * (2026-08-27): createDraftEmail()'s bodyOverride swaps a `{type: 'application/pkcs7-mime',
 	 * blobId}` single opaque leaf in for bodyValues/textBody/htmlBody entirely - meant to BE the
