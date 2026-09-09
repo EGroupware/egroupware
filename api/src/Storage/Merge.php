@@ -3143,6 +3143,14 @@ abstract class Merge
 			$response->error($message . $e->getMessage());
 		}
 
+		// When an email is part of the merge, $merge_result also contains a success/failed/
+		// no_email report (Mail::importMessageToMergeAndSend()). The plain VFS-path entries in
+		// that case are just the merged document and the archived .eml being linked to the
+		// entry - internal "stylite.links://..." details the user can't make sense of - so drop
+		// them and report only the send status. Without an email, those paths are the only
+		// feedback we have, so keep showing them.
+		$has_email_result = count(array_filter($merge_result, fn($result) => !is_string($result))) > 0;
+
 		foreach($merge_result as $result)
 		{
 			if(is_string($result))
@@ -3151,7 +3159,10 @@ abstract class Merge
 				{
 					$response->apply('egw.open_link', [Vfs::download_url($result, true), '_browser']);
 				}
-				$message .= $result . "\n";
+				if(!$has_email_result)
+				{
+					$message .= $result . "\n";
+				}
 			}
 			else
 			{
@@ -3168,7 +3179,7 @@ abstract class Merge
 				}
 				elseif($result['success'])
 				{
-					$message .= implode(", ", $result['success']);
+					$message .= implode(", ", $result['success']) . "\n";
 				}
 			}
 		}
