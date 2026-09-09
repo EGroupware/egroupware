@@ -440,6 +440,51 @@ class ImapBuildMailerTest extends Api\LoggedInTest
 		$this->assertDoesNotMatchRegularExpression('/^List-Id:/mi', $raw);
 	}
 
+	/**
+	 * Regression test for the second half of a live-reported bug (found 2026-09-09, ralf again:
+	 * "I set a ReplyTo in the UI, but neither the mail in Sent folder nor the received mail
+	 * contains the Reply-To header" - AFTER the first Reply-To fix above already landed): the
+	 * shim's actual send path, emailSubmissionSet(), never reuses the client's original create-time
+	 * properties - it re-fetches the already-stored Draft via emailGet() and rebuilds a fresh
+	 * Mailer from THAT read-shape instead (see emailSubmissionSet()'s own docblock). Email/get's
+	 * read-shape uses the ":asText" property form (THREAD_TOPIC_HEADER_PROPERTY etc., already used
+	 * by fetchForReply() for a different purpose) rather than the bare form a direct client CREATE
+	 * submission uses - this method must accept EITHER form for the same header.
+	 */
+	public function testThreadTopicIndexAndListIdHeadersAreAlsoSetFromTheAsTextReadShapeForm()
+	{
+		$email = [
+			'from' => [['email' => 'sender@example.org']],
+			'to' => [['email' => 'recipient@example.org']],
+			'subject' => 'Re: thread propagation via re-fetch',
+			Imap::THREAD_TOPIC_HEADER_PROPERTY => 'Original subject',
+			Imap::THREAD_INDEX_HEADER_PROPERTY => 'AQHTest1234567890abcdefg==',
+			Imap::LIST_ID_HEADER_PROPERTY => 'My List <mylist.example.org>',
+			'bodyValues' => ['body' => ['value' => 'x']],
+		];
+		$raw = $this->invokeBuildMailer($email)->getRaw(false);
+
+		$this->assertMatchesRegularExpression('/^Thread-Topic: Original subject/mi', $raw);
+		$this->assertMatchesRegularExpression('/^Thread-Index: AQHTest1234567890abcdefg==/mi', $raw);
+		$this->assertMatchesRegularExpression('/^List-Id: My List <mylist\.example\.org>/mi', $raw);
+	}
+
+	/** When both forms are somehow present, the bare (direct client submission) form wins. */
+	public function testThreadTopicPrefersTheBareFormOverTheAsTextFormWhenBothArePresent()
+	{
+		$email = [
+			'from' => [['email' => 'sender@example.org']],
+			'to' => [['email' => 'recipient@example.org']],
+			'subject' => 'Re: precedence',
+			'header:Thread-Topic' => 'Bare form wins',
+			Imap::THREAD_TOPIC_HEADER_PROPERTY => 'asText form loses',
+			'bodyValues' => ['body' => ['value' => 'x']],
+		];
+		$raw = $this->invokeBuildMailer($email)->getRaw(false);
+
+		$this->assertMatchesRegularExpression('/^Thread-Topic: Bare form wins/mi', $raw);
+	}
+
 	/** inReplyTo/references must be wrapped in angle brackets, matching RFC 5322. */
 	public function testThreadingHeadersAreAngleBracketWrapped()
 	{

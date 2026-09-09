@@ -1629,6 +1629,15 @@ class Imap extends Jmap\Base
 		$wantThreadHeaders = !$properties || array_intersect(
 			[self::THREAD_TOPIC_HEADER_PROPERTY, self::THREAD_INDEX_HEADER_PROPERTY, self::LIST_ID_HEADER_PROPERTY],
 			$properties);
+		// header:X-Priority/header:Disposition-Notification-To propagation for
+		// emailSubmissionSet()'s own re-fetch-then-resend flow (found missing 2026-09-09 alongside
+		// replyTo above - ralf, relaying a tester report: "the selected ReplyTo is NOT send with
+		// the mail" - buildMailerFromEmailProperties() already reads these two exact bare-form
+		// property names when building the Mailer, but nothing ever populated them back from an
+		// already-stored message, so both were silently dropped again at actual send time even
+		// after the CREATE-time fix)
+		$wantSendHeaders = !$properties || array_intersect(
+			[self::PRIORITY_HEADER_PROPERTY, self::DISPOSITION_REQUEST_HEADER_PROPERTY], $properties);
 		// whole-message blobId (RFC 8621 top-level Email.blobId) - MailJmap.fetchRawHeader()'s
 		// "view header" fast path, no extra IMAP work needed (same self-describing scheme
 		// bodyPartToJmap() uses per-part, just with an empty partId - see download())
@@ -1669,7 +1678,9 @@ class Imap extends Jmap\Base
 		// bogus extra addresses. Api\Mail::parseAddressList() already has the repair logic for
 		// exactly this (see its "no mailbox or host part" handling) that the classic pre-JMAP code
 		// path has long relied on - this restores that same robustness for the JMAP-native path.
-		$query->headers('addresses', ['From', 'To', 'Cc', 'Bcc'], ['cache' => true, 'peek' => true]);
+		// Reply-To added 2026-09-09 alongside 'replyTo' below (see emailFromFetch()) - same
+		// regression as header:X-Priority/header:Disposition-Notification-To further down.
+		$query->headers('addresses', ['From', 'To', 'Cc', 'Bcc', 'Reply-To'], ['cache' => true, 'peek' => true]);
 		$query->flags();
 		$query->size();
 		$query->structure();
@@ -1696,6 +1707,11 @@ class Imap extends Jmap\Base
 			$query->headers('threadheaders', ['Thread-Topic', 'Thread-Index', 'List-Id'],
 				['cache' => true, 'peek' => true]);
 		}
+		if ($wantSendHeaders)
+		{
+			$query->headers('sendheaders', ['X-Priority', 'Disposition-Notification-To'],
+				['cache' => true, 'peek' => true]);
+		}
 
 		$results = $imap->fetch($mailbox, $query, [
 			'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $ids)),
@@ -1716,7 +1732,7 @@ class Imap extends Jmap\Base
 			if (($data = $results[(int)$id] ?? null))
 			{
 				/** @var \Horde_Imap_Client_Data_Fetch $data */
-				$email = self::emailFromFetch($imap, $mailbox, $id, $data, $wantPreview, (bool)$wantBody, $wantMdn, $wantBlobId, $wantContentType, (bool)$wantThreadHeaders);
+				$email = self::emailFromFetch($imap, $mailbox, $id, $data, $wantPreview, (bool)$wantBody, $wantMdn, $wantBlobId, $wantContentType, (bool)$wantThreadHeaders, (bool)$wantSendHeaders);
 				if ($wantThreadId)
 				{
 					$email['threadId'] = $threadMap[$id] ?? $id;
@@ -2242,27 +2258,36 @@ class Imap extends Jmap\Base
 		// equivalent of classic ComposeMessageBuilder::createMessage()'s unconditional
 		// addHeader('X-Priority', ...) and checkbox-gated addHeader('Disposition-Notification-To',
 		// $_identity['ident_email']) - found missing here alongside replyTo above.
-		if (isset($email['header:X-Priority']) && $email['header:X-Priority'] !== '')
+		if (isset($email[self::PRIORITY_HEADER_PROPERTY]) && $email[self::PRIORITY_HEADER_PROPERTY] !== '')
 		{
-			$mailer->addHeader('X-Priority', (string)$email['header:X-Priority']);
+			$mailer->addHeader('X-Priority', (string)$email[self::PRIORITY_HEADER_PROPERTY]);
 		}
-		if (!empty($email['header:Disposition-Notification-To']))
+		if (!empty($email[self::DISPOSITION_REQUEST_HEADER_PROPERTY]))
 		{
-			$mailer->addHeader('Disposition-Notification-To', (string)$email['header:Disposition-Notification-To']);
+			$mailer->addHeader('Disposition-Notification-To', (string)$email[self::DISPOSITION_REQUEST_HEADER_PROPERTY]);
 		}
 		// Thread-Topic/Thread-Index/List-Id propagation on reply (classic getReplyData()'s
 		// equivalent, removed 2014 commit 2172fc769d, found missing here entirely 2026-09-09 - see
 		// emailGet()'s own docblock note) - MailJmap.draftEmailProperties() sets these from
 		// whatever the original message being replied to had, once fetchForReply() found them.
+		//
+		// Two possible key forms for the SAME property, checked in order: the bare form is what a
+		// direct client CREATE submission uses (matches draftEmailProperties() exactly); the
+		// ":asText" form (THREAD_*_HEADER_PROPERTY) is emailGet()'s own read-shape, used when
+		// emailSubmissionSet()'s re-fetch-then-resend flow re-reads an already-stored draft
+		// instead (found missing 2026-09-09 - same re-fetch gap as header:X-Priority/
+		// header:Disposition-Notification-To/replyTo above, just for a property that already had
+		// READ support for a different consumer, fetchForReply(), under a different key form).
 		foreach ([
-			'header:Thread-Topic' => 'Thread-Topic',
-			'header:Thread-Index' => 'Thread-Index',
-			'header:List-Id' => 'List-Id',
-		] as $prop => $header)
+			'header:Thread-Topic' => ['Thread-Topic', self::THREAD_TOPIC_HEADER_PROPERTY],
+			'header:Thread-Index' => ['Thread-Index', self::THREAD_INDEX_HEADER_PROPERTY],
+			'header:List-Id' => ['List-Id', self::LIST_ID_HEADER_PROPERTY],
+		] as $prop => [$header, $readFormProp])
 		{
-			if (!empty($email[$prop]))
+			$value = $email[$prop] ?? $email[$readFormProp] ?? null;
+			if (!empty($value))
 			{
-				$mailer->addHeader($header, (string)$email[$prop]);
+				$mailer->addHeader($header, (string)$value);
 			}
 		}
 
@@ -2803,10 +2828,19 @@ class Imap extends Jmap\Base
 				}
 
 				$emailContext = [];
+				// found missing 2026-09-09 (ralf, relaying a tester report: "the selected ReplyTo
+				// is NOT send with the mail"): 'replyTo' plus every header:X property
+				// buildMailerFromEmailProperties() reads (X-Priority/Disposition-Notification-To/
+				// Thread-Topic/Thread-Index/List-Id) were all absent from this list, so all five
+				// were silently dropped at actual send time - each was only ever populated from a
+				// direct client CREATE submission, never read back from the already-stored draft
+				// this re-fetches.
 				$fetched = self::emailGet($accountId, [
 					'ids' => [$emailId],
 					'mailboxId' => base64_encode($sourceFolder),
-					'properties' => ['from', 'to', 'cc', 'bcc', 'subject', 'inReplyTo', 'references',
+					'properties' => ['from', 'to', 'cc', 'bcc', 'replyTo', 'subject', 'inReplyTo', 'references',
+						self::PRIORITY_HEADER_PROPERTY, self::DISPOSITION_REQUEST_HEADER_PROPERTY,
+						self::THREAD_TOPIC_HEADER_PROPERTY, self::THREAD_INDEX_HEADER_PROPERTY, self::LIST_ID_HEADER_PROPERTY,
 						'bodyStructure', 'textBody', 'htmlBody', 'bodyValues'],
 				], $emailContext);
 				$email = ($fetched['list'] ?? [])[0] ?? null;
@@ -3016,9 +3050,13 @@ class Imap extends Jmap\Base
 	 *  THREAD_INDEX_HEADER_PROPERTY/LIST_ID_HEADER_PROPERTY fields (needs a preceding
 	 *  $query->headers('threadheaders', ...) call, see emailGet()) - MailJmap.fetchForReply()'s
 	 *  own reply-propagation fetch (classic getReplyData()'s equivalent)
+	 * @param bool $wantSendHeaders true adds the PRIORITY_HEADER_PROPERTY/
+	 *  DISPOSITION_REQUEST_HEADER_PROPERTY fields (needs a preceding
+	 *  $query->headers('sendheaders', ...) call, see emailGet()) - emailSubmissionSet()'s own
+	 *  re-fetch-then-resend flow, reading a saved draft's own Priority/read-receipt-request back
 	 * @return array
 	 */
-	public static function emailFromFetch(\Horde_Imap_Client_Socket $imap, string $mailbox, string $uid, \Horde_Imap_Client_Data_Fetch $data, bool $wantPreview = true, bool $wantBody = false, bool $wantMdn = false, bool $wantBlobId = false, bool $wantContentType = false, bool $wantThreadHeaders = false) : array
+	public static function emailFromFetch(\Horde_Imap_Client_Socket $imap, string $mailbox, string $uid, \Horde_Imap_Client_Data_Fetch $data, bool $wantPreview = true, bool $wantBody = false, bool $wantMdn = false, bool $wantBlobId = false, bool $wantContentType = false, bool $wantThreadHeaders = false, bool $wantSendHeaders = false) : array
 	{
 		$envelope = $data->getEnvelope();
 		$structure = $data->getStructure();
@@ -3038,6 +3076,12 @@ class Imap extends Jmap\Base
 			'to' => self::addressListFromHeader($addressHeaders, 'To') ?? self::addressList($envelope->to),
 			'cc' => self::addressListFromHeader($addressHeaders, 'Cc') ?? self::addressList($envelope->cc),
 			'bcc' => self::addressListFromHeader($addressHeaders, 'Bcc') ?? self::addressList($envelope->bcc),
+			// RFC 8621 §4.1.1 - found missing here entirely 2026-09-09 (ralf, relaying a tester
+			// report: "the selected ReplyTo is NOT send with the mail") - same
+			// addressListFromHeader()-with-envelope-fallback pattern as to/cc/bcc above, unconditional
+			// (not gated) since it costs nothing extra: 'Reply-To' was added to the SAME 'addresses'
+			// header fetch those already use.
+			'replyTo' => self::addressListFromHeader($addressHeaders, 'Reply-To') ?? self::addressList($envelope->reply_to),
 			'hasAttachment' => $hasAttachment,
 		];
 		if ($wantBlobId)
@@ -3065,6 +3109,14 @@ class Imap extends Jmap\Base
 				self::firstHeaderValue($threadHeaders, ['Thread-Index']) : null;
 			$email[self::LIST_ID_HEADER_PROPERTY] = $threadHeaders ?
 				self::firstHeaderValue($threadHeaders, ['List-Id']) : null;
+		}
+		if ($wantSendHeaders)
+		{
+			$sendHeaders = $data->getHeaders('sendheaders', \Horde_Imap_Client_Data_Fetch::HEADER_PARSE);
+			$email[self::PRIORITY_HEADER_PROPERTY] = $sendHeaders ?
+				self::firstHeaderValue($sendHeaders, ['X-Priority']) : null;
+			$email[self::DISPOSITION_REQUEST_HEADER_PROPERTY] = $sendHeaders ?
+				self::firstHeaderValue($sendHeaders, ['Disposition-Notification-To']) : null;
 		}
 		if ($wantBody && $structure)
 		{
@@ -3097,6 +3149,23 @@ class Imap extends Jmap\Base
 	const THREAD_TOPIC_HEADER_PROPERTY = 'header:thread-topic:asText';
 	const THREAD_INDEX_HEADER_PROPERTY = 'header:thread-index:asText';
 	const LIST_ID_HEADER_PROPERTY = 'header:list-id:asText';
+
+	/**
+	 * RFC 8621 §4.1.3 header-property mechanism, bare form (not ":asText" - matches
+	 * MailJmap.draftEmailProperties()'s own write-side key exactly, see
+	 * buildMailerFromEmailProperties()) - found missing 2026-09-09 alongside 'replyTo': these were
+	 * only ever populated from a direct client CREATE submission, never read back from an
+	 * already-stored message, so emailSubmissionSet()'s re-fetch-then-resend flow silently dropped
+	 * both again even after that fix.
+	 */
+	const PRIORITY_HEADER_PROPERTY = 'header:X-Priority';
+
+	/**
+	 * Same, for the read-receipt-REQUEST header a compose sets when the user checks "request a
+	 * read receipt" - NOT MDN_HEADER_PROPERTY above, which detects the OPPOSITE direction (an
+	 * INCOMING message asking US for a receipt).
+	 */
+	const DISPOSITION_REQUEST_HEADER_PROPERTY = 'header:Disposition-Notification-To';
 
 	/**
 	 * First non-empty value among a priority list of header names, decoded (RFC 2047) and trimmed -

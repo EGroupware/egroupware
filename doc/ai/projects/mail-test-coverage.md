@@ -1,6 +1,6 @@
 # Mail: test-coverage audit and gap-closing plan
 
-## Status: audit complete (2026-09-09); priority 1 (bulk move/copy/delete) client-side + deferred-work queue done; priority 2 (JMAP/shim path) - jmap.ts's mailbox CRUD, label/flag setters, thread-keyword aggregation, filter/sort, saveDraft, WS push-payload, and attachment upload/resolve done, plus the shim's filterToQuery()/buildSort() IMAP-search translation and the real-JMAP-facing Mailbox.php/Email.php layer (with a real bug found+fixed in Mailbox.php, see Progress log)
+## Status: audit complete (2026-09-09); priority 1 (bulk move/copy/delete) client-side + deferred-work queue done; priority 2 (JMAP/shim path) - jmap.ts's mailbox CRUD, label/flag setters, thread-keyword aggregation, filter/sort, saveDraft, WS push-payload, and attachment upload/resolve done, plus the shim's filterToQuery()/buildSort() IMAP-search translation and the real-JMAP-facing Mailbox.php/Email.php layer (with a real bug found+fixed in Mailbox.php, see Progress log); paused again 2026-09-09 for a SECOND live-reported Reply-To regression (the shim's send-time re-fetch never read replyTo/Priority/read-receipt/thread-headers back from the stored draft) - fixed, see Progress log
 
 Full-codebase scan of `mail/js/*.ts`, `mail/src/*.php`, `mail/inc/*.php`, `api/src/Mail.php` and
 `api/src/Mail/*.php` (including the `Jmap/` shim + real-JMAP layer), cross-referenced against every
@@ -395,3 +395,37 @@ Kept for completeness, but explicitly deprioritized until the above is in better
   priority-2 work: `emailQuery()`/`emailGet()`'s own real-account IMAP search/fetch EXECUTION,
   `resolveSmime()`/`resolveTnef()`'s IMAP-fetch half, `emailSubmissionSet()`, and
   `EmailSubmission.php`/`Identity.php` in the real-JMAP-facing layer.
+- 2026-09-09: paused AGAIN for a second live-reported Reply-To regression, reported after the
+  first fix (de4945125a) had already landed: "I set a ReplyTo in the UI, but neither the mail in
+  Sent folder nor the received mail contains the Reply-To header." Root cause: the first fix only
+  covered the CREATE-time write path (client `draftEmailProperties()` → shim
+  `buildMailerFromEmailProperties()`, writing a correct Reply-To into the stored Draft message).
+  The shim's actual SEND path, `emailSubmissionSet()`, never reuses those original create-time
+  properties - it re-fetches the already-stored Draft via `emailGet()`/`emailFromFetch()` and
+  rebuilds a FRESH `Api\Mailer` from that re-fetched read-shape instead (see its own docblock).
+  `emailFromFetch()` never had any code to read `replyTo` back from a stored message at all, and a
+  code audit alongside the live-reported bug found the SAME gap for `header:X-Priority`
+  (Priority) and `header:Disposition-Notification-To` (read-receipt request) - both would have
+  silently dropped identically, just not yet reported. The already-fixed Thread-Topic/Thread-Index/
+  List-Id propagation had a related but distinct gap: `emailFromFetch()` DOES know how to read
+  them back (added for `fetchForReply()`'s own, different purpose), but under the `:asText`
+  read-shape property form (`THREAD_TOPIC_HEADER_PROPERTY` etc.), not the bare form a direct
+  client CREATE submission uses - and `emailSubmissionSet()`'s re-fetch properties list requested
+  neither form at all.
+  Fixed: (1) `emailFromFetch()` now populates `replyTo` unconditionally (same
+  `addressListFromHeader()`-with-envelope-fallback pattern as to/cc/bcc, 'Reply-To' added to the
+  same always-fetched 'addresses' header group - free, no extra IMAP round trip); (2) a new
+  `$wantSendHeaders` flag/`sendheaders` header fetch populates two new bare-form constants,
+  `PRIORITY_HEADER_PROPERTY`/`DISPOSITION_REQUEST_HEADER_PROPERTY`, mirroring the existing
+  MDN/content-type/thread-header opt-in pattern; (3) `buildMailerFromEmailProperties()`'s
+  thread-header loop now checks BOTH the bare form and the `:asText` read-form (bare wins when
+  both present); (4) `emailSubmissionSet()`'s re-fetch `properties` list now explicitly requests
+  `replyTo` + all five header properties. 6 new tests in
+  `mail/tests/JmapShimSendTimeHeadersRegressionTest.php` (replyTo/Priority/read-receipt read-back)
+  plus 2 new tests in `ImapBuildMailerTest.php` (the `:asText`-form fallback and its precedence
+  over the bare form) - full round-trip through `emailSubmissionSet()` itself still needs a live/
+  mocked IMAP+SMTP connection, out of scope per this doc's own established priority-1/2 decision,
+  so verified via these two narrower layers (the re-fetch's read side, and the Mailer-build's
+  consume side) instead. Full PHP suite for the touched files green (only the pre-existing,
+  unrelated VFS/S3 `testVfsPathAttachmentIsReadDirectlyFromVfs` failure remains). Back to priority
+  2 next.
