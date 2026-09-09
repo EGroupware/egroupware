@@ -137,8 +137,18 @@ optimistic-clear, no hard guard yet).
   an empty-members edge case), and one end-to-end case feeding the aggregate straight into
   `keywordsToRowFlags()` (a thread where only one of several members was forwarded still shows
   the forward icon on the collapsed row).
-- `mail/js/jmap.ts` (rest still untested): search/filter-to-JMAP translation (`buildFilter`,
-  `buildTokenizedFilter`, `flaggedFilter`, `buildSort`), most push/WebSocket payload-building
+- **Done (2026-09-09)**: `mail/js/jmap.ts`'s search/filter/sort-to-JMAP translation -
+  `buildFilter`, `buildTokenizedFilter`, `flaggedFilter`, `buildSort` - 30 tests,
+  `mail/js/test/MailJmapFilterAndSort.test.ts`. Covers: every sort-column mapping + ASC/DESC
+  default, the flagged-filter OR-of-6-keywords shape, every status-filter keyword mapping
+  (unseen/answered/seen/label1-5/custom-label case-insensitive resolution), date-range's +1-day
+  "before is exclusive, our enddate is inclusive" adjustment, the app-header flagFilter being
+  ANDed as an independent condition from the status filter (both can be active simultaneously),
+  larger/smaller size parsing, per-cat_id text-search field dispatch (quick/quickwithcc/single-
+  field/body/text), and the tokenizer's quoted-phrase/AND/OR/+/- syntax. The single-vs-AND-wrapped
+  result-collapsing contract (exactly 1 condition returned bare, 2+ wrapped) is exercised
+  throughout rather than as its own separate test.
+- `mail/js/jmap.ts` (rest still untested): most push/WebSocket payload-building
   (`buildWsPushPayload`, `buildEmailPush`/`buildMailboxPush`/`buildEmailDeletePush`), S/MIME
   encrypt (`smimeEncryptBody`, `resolveSmimeSignedAttachments`), PGP dispatch/cache methods
   (`findPgpPart`, `peekPgpSignature`, `peekPgpEncrypted`, `pgpEncryptBody` - as opposed to the
@@ -252,8 +262,9 @@ Kept for completeness, but explicitly deprioritized until the above is in better
   priority-2 line item above since it was bug-driven, not audit-driven, but the coverage is real
   and future audits of this doc should account for it.
 - 2026-09-09: back to priority 2 - `mail/js/jmap.ts`'s `keywordsToRowFlags()`/
-  `aggregateThreadKeywords()` (19 tests, `MailJmapThreadKeywordAggregation.test.ts`) done. Rest of
-  priority 2 (search/filter translation, push/WebSocket payload-building, S/MIME encrypt, PGP
-  dispatch/cache, `saveDraft()`, attachment upload/resolve, the shim's real-account
-  `emailQuery`/`emailGet`/`resolveSmime`/`resolveTnef`/`emailSubmissionSet`, and the entire
-  real-JMAP-facing layer) still open.
+  `aggregateThreadKeywords()` (19 tests, `MailJmapThreadKeywordAggregation.test.ts`) and
+  search/filter/sort translation (`buildFilter`/`buildTokenizedFilter`/`flaggedFilter`/`buildSort`,
+  30 tests, `MailJmapFilterAndSort.test.ts`) done. Rest of priority 2 (push/WebSocket
+  payload-building, S/MIME encrypt, PGP dispatch/cache, `saveDraft()`, attachment upload/resolve,
+  the shim's real-account `emailQuery`/`emailGet`/`resolveSmime`/`resolveTnef`/
+  `emailSubmissionSet`, and the entire real-JMAP-facing layer) still open.
