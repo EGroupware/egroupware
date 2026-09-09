@@ -116,6 +116,8 @@ use EGroupware\Api\Json\Push;
  *    Attached files are stored under $vfs_basedir='/infolog' in the vfs!
  * 3) It manages the link-registry, in which apps can register themselfs by implementing some hooks
  * 4) It notifies apps, who registered for that service, about changes in the links their entries
+ * 5) Linking to an arbitrary (external) URL: pass self::URL_APPNAME as $app2/$id2=$url to Link::link().
+ *    There's no app registered for it, no query()/notify() support - title() just returns the URL itself.
  *
  * Modification times in links (and deleted timestamp) are always in server-time!
  * (We dont convert them here, as most apps ignore them anyway)
@@ -136,6 +138,14 @@ class Link extends Link\Storage
 	 * appname used for linking existing files to VFS
 	 */
 	const VFS_LINK = 'link';
+
+	/**
+	 * pseudo-appname to link an arbitrary (external) URL to an entry, id is the URL itself
+	 *
+	 * Link::link($app, $id, self::URL_APPNAME, $url, $remark) - no app is registered for it,
+	 * so query()/notify() are no-ops and title() just returns the URL itself.
+	 */
+	const URL_APPNAME = 'url';
 
 	/**
 	 * Baseurl for the attachments in the vfs
@@ -903,6 +913,12 @@ class Link extends Link\Storage
 			}*/
 			if (self::DEBUG) echo '<p>'.__METHOD__."('$app','$id')='$title' (file)</p>\n";
 			return $title;
+		}
+		if ($app == self::URL_APPNAME)
+		{
+			// no app registered for it, and no separate "title" of a plain URL: it's its own title
+			if (self::DEBUG) echo '<p>'.__METHOD__."('$app','$id')='$id' (url)</p>\n";
+			return $id;
 		}
 		if ($app == '' || !is_array($reg = self::$app_register[$app]) || !isset($reg['title']))
 		{

@@ -2,6 +2,7 @@ import {cleanSelectOptions, SelectOption} from "../Et2Select/FindSelectOptions";
 import {css, html, TemplateResult} from "lit";
 import {property} from "lit/decorators/property.js";
 import {Et2Select} from "../Et2Select/Et2Select";
+import {LINK_URL_APPNAME, LINK_URL_ICON} from "./Et2Link";
 
 
 export class Et2LinkAppSelect extends Et2Select
@@ -210,6 +211,13 @@ export class Et2LinkAppSelect extends Et2Select
 			select_options.map((option) =>
 			{
 				option.icon = this.egw().link_get_registry(option.value, 'icon') ?? option.value + "/navbar"
+			});
+			// no real app is registered for linking an arbitrary URL, so it's not in
+			// link_app_list() - add it as its own option, with its own icon
+			select_options.push({
+				value: LINK_URL_APPNAME,
+				label: this.egw().lang('URL'),
+				icon: LINK_URL_ICON
 			});
 		}
 		if (!this.value)

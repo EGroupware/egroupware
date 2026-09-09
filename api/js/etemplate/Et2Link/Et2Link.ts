@@ -17,6 +17,23 @@ import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 
 /**
+ * Pseudo-appname matching PHP's Api\Link::URL_APPNAME - a link to an arbitrary external
+ * URL, id is the URL itself. There's no real app registered for it (nothing to look up via
+ * egw().open()), so it needs its own icon and its own "open" behaviour throughout this file.
+ */
+export const LINK_URL_APPNAME = "url";
+
+/**
+ * Icon for a LINK_URL_APPNAME link: no real app icon exists for it, so this is a small
+ * inline SVG (just the text "http", stretched to fill the icon box via textLength) rather
+ * than a file under an app's templates/default/images/.
+ */
+const URL_ICON_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">' +
+	'<text x="1" y="18" font-family="monospace" font-weight="bold" font-size="16" ' +
+	'textLength="23" lengthAdjust="spacingAndGlyphs" fill="#000">http</text></svg>';
+export const LINK_URL_ICON = "data:image/svg+xml," + encodeURIComponent(URL_ICON_SVG);
+
+/**
  * Display a specific, single entry from an application
  *
  * The entry is specified with the application name, and the app's ID for that entry.
@@ -160,6 +177,12 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 	 */
 	protected _thumbnailTemplate(link : LinkInfo) : TemplateResult
 	{
+		// No real app is registered for a url link, so there's no app icon to look up either
+		if(link.app === LINK_URL_APPNAME)
+		{
+			return html`
+                <et2-image part="icon" class="link__icon" src=${LINK_URL_ICON}></et2-image>`;
+		}
 		// If we have a mimetype, use a Et2VfsMime
 		// Files have path set in 'icon' property, and mime in 'type'
 		if(link.type && link.icon)
@@ -432,6 +455,14 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 		// If we don't have app & entryId, nothing we can do
 		if(!this.app || !this.entryId || typeof this.entryId !== "string")
 		{
+			return false;
+		}
+		// No real app is registered for a url link, so egw().open() has nothing to look up -
+		// the "entry" is just the URL itself, open it directly
+		if(this.app === LINK_URL_APPNAME)
+		{
+			window.open(this.entryId, "_blank", "noopener");
+			_ev.stopImmediatePropagation();
 			return false;
 		}
 		// If super didn't handle it (returns false), just use egw.open()

@@ -1170,3 +1170,25 @@ function api_upgrade26_1()
 
 	return $GLOBALS['setup_info']['api']['currentver'] = '26.1.001';
 }
+
+/**
+ * Increase link_id2 to varchar(1024) to allow storing URLs
+ *
+ * @return string
+ */
+function api_upgrade26_1_001()
+{
+	$GLOBALS['egw_setup']->oProc->DropIndex('egw_links', ['link_app2', 'link_id2', 'link_lastmod']);
+	$GLOBALS['egw_setup']->oProc->DropIndex('egw_links', ['link_app1', 'link_app2', 'link_id1', 'link_id2']);
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_links', 'link_lastmod');
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_links','link_id2',array(
+		'type' => 'ascii',
+		'precision' => '1024',
+		'nullable' => False,
+		'comment' => "URL if link_app2='url'"
+	));
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_links', ['link_app2', 'link_id2(64)']);
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_links', ['link_app1', 'link_app2', 'link_id1', 'link_id2(64)']);
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '26.1.002';
+}

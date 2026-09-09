@@ -198,6 +198,17 @@ similar scope.
   (the `Et2WidgetClass#_inst` private-field break with its `getInstanceManager()` replacement, the
   `EgwApp.nm : Et2Nextmatch | et2_nextmatch` union needing a per-method cast, and the `app.stylite`-is-
   untyped-EPL problem). infolog done; other apps not started.
+- `doc/ai/projects/link-url-support.md` - `Api\Link`/`egw_links` enhancement letting any app's
+  entry hold arbitrary external URLs, via a new `Link::URL_APPNAME = 'url'` pseudo-app (mirrors
+  the existing `VFS_APPNAME` special case) rather than a per-app URL table. Covers the schema
+  change (`link_id2` widened to `varchar(1024)`, prefix-indexed to 64 chars via the schema DSL's
+  `'colname(64)'` length-suffix syntax, `link_lastmod` split out into its own standalone index),
+  the `Link::title()`/`Link\Storage::_add2links()` fixes a pseudo-app needs (both silently drop
+  such links otherwise - the ACL/access-checking code's assumption that every "other side" of a
+  link is a real installed app), the `et2-link*` widget UI (an "URL" option in the existing link-
+  app picker swaps the search combo for a plain URL input, then the existing (Link) button/ajax
+  path - already fully generic - just works, no new widgets or endpoints needed), and a small
+  inline-SVG icon (no new asset file). Done and tested.
 
 ## Security and data handling
 
