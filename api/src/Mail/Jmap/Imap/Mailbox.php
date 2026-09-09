@@ -21,10 +21,12 @@ use EGroupware\Api\Mail\Jmap\Imap;
 class Mailbox extends Base
 {
 	/**
-	 * $properties/$fetchAllBodyValues are unused - mailboxGet() has no properties-filter or
-	 * body-value concept (Mailbox has no body).
+	 * $properties/$fetchAllBodyValues/$mailboxId are unused - mailboxGet() has no
+	 * properties-filter or body-value concept (Mailbox has no body), and a Mailbox is
+	 * addressed by its own id, so it never needs one to be told which mailbox it is in.
+	 * $mailboxId is only in the signature to stay LSP-compatible with Api\Jmap\Type::get().
 	 */
-	public function get(?array $ids=null, ?array $properties=null, bool $fetchAllBodyValues=false) : array
+	public function get(?array $ids=null, ?array $properties=null, bool $fetchAllBodyValues=false, ?string $mailboxId=null) : array
 	{
 		/** @var Imap $jmap */
 		$jmap = $this->jmap;

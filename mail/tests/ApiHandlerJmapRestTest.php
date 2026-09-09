@@ -319,7 +319,7 @@ class FakeJmapMailboxForFolderWalk extends JmapType
 		return ['ids' => $ids];
 	}
 
-	public function get(?array $ids=null, ?array $properties=null, bool $fetchAllBodyValues=false) : array
+	public function get(?array $ids=null, ?array $properties=null, bool $fetchAllBodyValues=false, ?string $mailboxId=null) : array
 	{
 		return ['list' => array_values(array_intersect_key(self::TREE, array_flip((array)$ids)))];
 	}

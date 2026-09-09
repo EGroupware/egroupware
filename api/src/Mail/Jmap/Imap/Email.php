@@ -27,14 +27,19 @@ class Email extends Base
 	 * $fetchAllBodyValues is unused - Imap::emailGet() already always populates bodyValues in
 	 * full whenever any body property is requested (no partial-fetch mode to opt into, unlike a
 	 * real JMAP server).
+	 *
+	 * $mailboxId is forwarded: emailGet() takes it as the alternative to the mailbox context a
+	 * preceding emailQuery() would have left in $jmap->context, which is what makes a standalone
+	 * Email/get (no listing first) possible at all - without either, it throws.
 	 */
-	public function get(?array $ids=null, ?array $properties=null, bool $fetchAllBodyValues=false) : array
+	public function get(?array $ids=null, ?array $properties=null, bool $fetchAllBodyValues=false, ?string $mailboxId=null) : array
 	{
 		/** @var Imap $jmap */
 		$jmap = $this->jmap;
 		return Imap::emailGet($jmap->accountId, array_filter([
 			'ids' => $ids,
 			'properties' => $properties,
+			'mailboxId' => $mailboxId,
 		], static fn($v) => $v !== null), $jmap->context);
 	}
 
