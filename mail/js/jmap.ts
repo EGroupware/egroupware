@@ -3195,7 +3195,23 @@ export class MailJmap
 	{
 		const text = new TextDecoder('iso-8859-1').decode(sigPartBytes);
 		const idx = text.indexOf('\r\n\r\n');
-		return idx === -1 ? text : text.slice(idx + 4);
+		const headers = idx === -1 ? '' : text.slice(0, idx);
+		const body = idx === -1 ? text : text.slice(idx + 4);
+		// most PGP/MIME senders (Thunderbird/Enigmail) leave the signature part as plain 7bit
+		// ASCII armor, so `body` is already the right thing to hand to openpgp.readSignature() -
+		// but at least one real sender (found live 2026-09-09, ralf: a message from jens.riedel@
+		// baw.de, "Rückfragen zu den Installationsdateien...") base64-encodes it instead (a
+		// `Content-Transfer-Encoding: base64` header on the pgp-signature part itself), and
+		// openpgp.readSignature() then threw "Misformed armored text" on the still-encoded bytes.
+		const cte = /^Content-Transfer-Encoding:\s*([^\r\n]+)/im.exec(headers)?.[1]?.trim().toLowerCase();
+		if (cte === 'base64')
+		{
+			// atob() decodes to a binary string (one char per byte) - the same byte-per-char
+			// convention already used throughout this file (TextDecoder('iso-8859-1')), and
+			// exactly what openpgp.readSignature() expects for its ASCII-armored text argument.
+			return atob(body.replace(/\s+/g, ''));
+		}
+		return body;
 	}
 
 	/**
