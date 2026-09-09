@@ -2,11 +2,17 @@
 
 ## Status: Phase 3 UI wiring done + live-verified (2026-09-08); ralf's own live testing 2026-09-09
 surfaced 5 real bugs (4 UI-wiring, 1 in the core verify engine itself), all fixed + live-verified
-same day (see below) - Phase 4 tests not started (beyond the one regression test added for the
-core-engine bug); Phase 4 broader unit-test coverage (PGP + S/MIME attachment-hiding) now underway;
-4 follow-up items queued 2026-09-09 (Autocrypt key-import dialog, sending an Autocrypt header,
-Mailvelope sign-on-send, reply/forward auto-matching signed/encrypted state) - see "Planned
-follow-up" below, none started
+same day (see below). **Phase 4 (unit tests) done for the verify engine + attachment-hiding**
+(2026-09-09): `PgpSignatureVerification.test.ts` (end-to-end `verifyPgpSignature()` against a real
+openpgp.js fixture - verified/tampered/inline-key/no-key/not-signed), `PgpSignatureArmorExtraction.
+test.ts` (the base64-CTE regression), and S/MIME's own attachment-hiding coverage in
+`CreateAttachmentBlockTest.php` (every `Mail\Smime::$SMIME_TYPES` control part, which also found +
+fixed a real array-reindexing bug in `createAttachmentBlock()`). Not yet covered: `findPgpSignaturePart()`/
+`sliceMultipartSigned()`/`extractMultipartSignedBoundary()` don't have their own isolated unit
+tests (only exercised indirectly via the end-to-end test above) - worth adding if either one grows
+another edge case. 4 follow-up items queued 2026-09-09 (Autocrypt key-import dialog, sending an
+Autocrypt header, Mailvelope sign-on-send, reply/forward auto-matching signed/encrypted state) -
+see "Planned follow-up" below, none started
 
 ### 2026-09-09 core-engine bugfix: base64-encoded signature parts
 
