@@ -20,7 +20,11 @@ multi-key-per-address storage fix, mutual-auto-encrypt preference, S/MIME auto-a
 and an explicit Level 1 spec gap/deviation audit. Phase 5 steps 1 (keydata minimize/re-armor) and 2
 (multi-key-per-address addressbook storage) are now DONE (2026-09-09, see their own phasing
 entries) - steps 3-6 (sending/receiving Autocrypt headers, the consent dialog, prefer-encrypt
-storage, mutual auto-encrypt, S/MIME auto-add) are still plan only.
+storage, mutual auto-encrypt, S/MIME auto-add) are still plan only. **Phase 5 step 2's alias-pointer
+storage rework (Phase G) is now also DONE (2026-09-09)** - see its own entry under item 1 below.
+**Security fix (Phase H, DONE 2026-09-09)**: a signature/cert that cryptographically verifies but
+doesn't itself claim the message's From address is now shown as invalid, not verified, for both PGP
+and S/MIME - see its own section below, right before "Why this is even possible without Mailvelope".
 
 ### 2026-09-09 core-engine bugfix: base64-encoded signature parts
 
@@ -171,6 +175,63 @@ JS OpenPGP implementation. Recommendation: **client-side, via `openpgp.js`**, re
 addressbook's already-existing PGP key infrastructure - no server-side crypto dependency needed at
 all, which also fits this app's established "client-side JMAP-native" direction better than adding
 a new PHP extension would.
+
+### 2026-09-09 Security fix (Phase H): signature must not verify unless the key/cert itself claims the sender's address
+
+Ralf's own security-flagged request: *"Can you check that we only show a signature (s/mime or pgp)
+as validated, IF it's key matches the From header, otherwise it should be shown as invalid. I
+believe that's also in the Autocrypt standard and I also want a test for that, as it's security
+relevant, if there's none yet (both s/mime and pgp)."* Correct instinct - Autocrypt Level 1 itself
+requires exactly this alignment (`addr=` in the `Autocrypt:` header must match the message's own
+`From`, or the whole header is discarded as invalid) - and the reasoning generalizes beyond
+Autocrypt specifically: a cryptographically valid signature proves nothing about the claimed sender
+if the signing key/cert doesn't itself claim that address, the same reason DKIM/DMARC alignment
+checks exist. Before this fix, a key/cert could verify successfully while belonging to a completely
+different identity than the message's `From:` and still render as "verified" - eg. an attacker's
+own genuinely-issued key/cert, attached inline or filed under the wrong addressbook contact,
+signing a message that merely *claims* to be from someone else.
+
+**PGP** (`mail/js/jmap.ts`): `MailJmap.verifyPgpSignature()`'s result gained an `addressMismatch?:
+boolean` field; a new `keyClaimsAddress(key, email)` checks the key's own `getUserIDs()` for a
+bracketed `<email>` (or bare-email) match, case-insensitively, against ANY of the key's UIDs (a key
+legitimately carrying multiple UIDs - eg. work + personal - only needs to claim the address
+somewhere). Checked regardless of `keySource` - an inline (message-supplied, attacker-controlled on
+a malicious message) key is the obvious risk, but an addressbook-stored key could equally be filed
+under the wrong contact by mistake; this is a correctness check on the KEY, not a trust judgement
+about where it came from. On a mismatch, `verified` is forced `false` and `addressMismatch: true` is
+set, so `MailApp.setPgpSignatureFlags()` (`mail/js/app.ts`) can show a more specific statustext
+("PGP/MIME signed message, signature does NOT belong to sender %1") while still rendering the same
+`pgp_sig_invalid` (red) state as any other verification failure.
+
+**S/MIME** (`api/src/Mail/Smime.php`): the `unknownemail` check already existed in
+`resolveMessage()` (cert email / `subjectAltName` vs. `$fromAddress`, feeding
+`X-EGroupware-Smime`'s metadata) - the gap was purely on the UI side: `MailApp.setSmimeFlags()`
+(`mail/js/app.ts`) rendered `data.unknownemail` as a separate, softer `smime_cert_unknownemail`
+(purple) state, visually distinct from - and less alarming than - an outright broken signature. Now
+removes the `smime_cert_verified`/`smime_cert_notverified` classes and renders the SAME
+`smime_cert_notvalid` (red) severity `setSmimeFlags()`'s own verify/cert branches already use for a
+broken signature, with its own new statustext ("S/MIME signed message, signature does NOT belong to
+sender %1").
+
+**Tests** (none existed for this before, on either side, confirmed via grep across
+`SmimeMailerTest.php`/`SmimeResolveMessageTest.php`/`StructureToHtmlTest.php`/`mail/js/test/`):
+- PGP: a new case in `PgpSignatureVerification.test.ts` reuses the file's real openpgp.js fixture
+  (same key/signature/message bytes as the existing verified-path test) but looks the key up under
+  a *different* address than the fixture's own UID - simulating a misfiled addressbook entry -
+  asserting `verified:false, addressMismatch:true`.
+- S/MIME: two new tests in `SmimeResolveMessageTest.php` build a genuinely signed (`TYPE_SIGN`,
+  `multipart/signed`, no stored account credential needed - `resolveMessage()`'s signature-only path
+  never calls `get_acc_smime()`) message against a real self-signed cert, then call
+  `resolveMessage()` with a mismatched vs. matching `$fromAddress` and assert `unknownemail` is/isn't
+  set. (Note: a self-signed test cert never chain-verifies against a trusted CA in this environment
+  regardless of address matching - `$metadata['verify']` stays `false` for an unrelated,
+  pre-existing reason - so these tests assert on `signed`/`email`/`unknownemail` instead of `verify`.)
+- No JS-side rendering tests were added for `setSmimeFlags()`/`setPgpSignatureFlags()` themselves
+  (confirmed via grep: none exist for either method today) - out of scope for this fix, which is
+  scoped to the underlying verify-result correctness; those methods are widget/DOM-heavy and would
+  need their own dedicated test harness if ever covered.
+
+Committed together (production code + both sides' tests) in a single commit, not yet pushed.
 
 ## Why this is even possible without Mailvelope
 
@@ -465,16 +526,58 @@ gap ralf flagged ("we already support 2 email addresses (business and home)") - 
 just theoretical, and it blocks both Autocrypt (business/home genuinely often use different keys)
 and the existing S/MIME manual-add flow equally.
 
-**Fix shape (needs a real spike before locking in, but the direction is clear)**: replace the bare
-single-key VFS file with a small structured store keyed by address - simplest option is a JSON file
-at the same VFS path (`{"business@x.com": {key: "-----BEGIN...", prefer_encrypt: "mutual"},
-"home@x.com": {...}}`), keeping `set_keys()`/`get_keys()`'s existing per-contact-id file location
-and ACL/backend dispatch (`pubkey_use_file()`) unchanged - only the *content* of that one file
-changes shape, and old single-armored-key files need a one-time read-side fallback (a file that
-doesn't parse as JSON is treated as "one key, address unknown" for backward compatibility with
-every contact that already has a key stored today). `ajax_get_pgp_keys()`/`ajax_set_pgp_keys()`'s
-own email|account_id -> key **map** shape already matches this per-address model on the wire; the
-contact-record storage layer underneath is the only thing that needs to change.
+**DONE (2026-09-09), in two passes - Phase G being the second, final rework:**
+
+*Pass 1*: replaced the bare single-key VFS file with a JSON object keyed by lowercased address,
+each value originally `{"key": "-----BEGIN..."}`, keeping `set_keys()`/`get_keys()`'s existing
+per-contact-id file location and ACL/backend dispatch (`pubkey_use_file()`) unchanged - only the
+*content* of that one file changes shape. Found + fixed two real, independent bugs while building
+this: `set_keys()`'s own search `$criteria` only ever included `contact_email`, never
+`contact_email_home`, so a key stored for a contact's home-only address silently matched nothing;
+and a brand-new contact with no `.files/` VFS directory yet (no photo/key/anything ever attached)
+failed its very first key write outright (`file_put_contents()` can't create a missing parent
+directory through the VFS stream wrapper) - fixed with an explicit `Api\Vfs::is_dir()`/`mkdir()`
+guard. Initial tests in `addressbook/tests/AddressbookBoMultiKeyStorageTest.php` (reflection against
+the two pure-function private statics, `\PHPUnit\Framework\TestCase`, no DB/session - the shared
+docker environment's own account search hangs even for the *original* unmodified `set_keys()`,
+confirmed via a git-stash comparison, a pre-existing environment limitation unrelated to this fix).
+
+*Pass 2 (Phase G, ralf's own design refinement)*: ralf's own question - *"so currently we only have
+the base64 encoded / armored key in the file, in future you propose to use a json object and index
+the keys by their address, and probably aliases for further addresses... so if we do NOT find a
+JSON object, we can only try to extract the address from the cert or assume it's one of the given
+email of the contact... Probably verifying it when there's only a single cert/key makes a lot of
+sense"* - then *"hmm, cant we detect the address from the public key, as least for s/mime it should
+be easy via openssl as it's the CN... not sure about PGP"* - led to reworking the format one more
+time before it shipped further: **the per-address value is now EITHER the armored key/cert text
+directly, OR a plain address string naming another entry in the SAME object to use instead** (an
+alias) - `{"business@x.com": "-----BEGIN...", "home@x.com": "business@x.com"}` - dropping the
+`{"key": ...}` wrapper. `merge_keys_json()` creates these aliases automatically: storing the exact
+same armored text under a second address makes the second entry a plain alias to the first instead
+of duplicating the (often multi-KB) text again; `extract_key_for_address()` follows an alias chain
+(cycle-guarded via a `$seen` map) to whatever it ultimately resolves to.
+
+A new `detect_smime_address()` (`openssl_x509_parse()`, `subjectAltName`'s `email:` value first,
+falling back to the subject DN's `emailAddress` attribute - confirmed both fields' exact shape via a
+real generated test cert) gives S/MIME two things PGP structurally can't have (no `gnupg` extension
+or PHP OpenPGP library anywhere in this stack, and armored PGP text is base64-encoded binary - a
+key's own User ID isn't readable server-side at all, only client-side via `openpgp.js`, see
+`MailJmap.keyClaimsAddress()` in the Phase H security fix above): (1) migrating a legacy (pre-format,
+bare-armored-text) stored cert now keys it by the address `detect_smime_address()` reads out of it,
+instead of always falling back to the address-unknown `"*"` entry; (2) when a contact's ONLY stored
+S/MIME entry is that `"*"` fallback (nothing else on file - the check is skipped once more than one
+entry exists, that's the normal multi-address case), the cert's own detected address is cross-checked
+against whatever address is actually being asked for before handing it back at all - refusing to
+offer a leftover/mismatched single key just because it's the only thing on file. Explicitly does
+**not** clean up/remove a stale key when a contact's email changes outright (ralf's own deferred
+scope decision - a separate, later concern) - it only stops that one leftover key from being
+silently offered for an address it doesn't belong to.
+
+`AddressbookBoMultiKeyStorageTest.php` rewritten for the new flat/alias format and `bool $pgp`
+parameter (18 tests: same-content dedup -> alias, alias-chain following, cyclic-alias guard, legacy
+S/MIME migration address detection vs. PGP's unconditional `"*"` fallback, the single-`"*"`-entry
+S/MIME cross-check match/mismatch/skip-when-multiple-entries cases, and PGP's own entry never being
+cross-checked at all).
 
 ### 2. Store `prefer-encrypt` as a comment, not a new column
 

@@ -174,10 +174,17 @@ class addressbook_bo extends Api\Contacts
 	 * confirmed live 2026-09-09 this was NOT the case before (a single VFS file per contact,
 	 * regardless of how many of its addresses get_keys() already searched). The one VFS file
 	 * (Api\Contacts::FILES_PGP_PUBKEY/FILES_SMIME_PUBKEY, unchanged path/ACL/backend-dispatch via
-	 * pubkey_use_file()) now holds a JSON object `{"<lowercased address>": {"key": "<armored
-	 * text>"}}` instead of a single bare armored key/cert - see merge_keys_json()/
-	 * extract_key_for_address() for the format and the legacy-file (pre-fix, bare armored text,
-	 * still read by get_key() below) backward-compatibility fallback.
+	 * pubkey_use_file()) now holds a JSON object keyed by lowercased address, eg.:
+	 *   {"rb@egroupware.org": "-----BEGIN PGP PUBLIC KEY BLOCK-----...",
+	 *    "ralfbecker@outdoor-training.de": "rb@egroupware.org"}
+	 * - a value is EITHER the armored key/cert text itself, OR (ralf's own proposed shape,
+	 * 2026-09-09) a plain address string naming another entry in the SAME object to use instead -
+	 * an alias, for when the identical key/cert legitimately covers more than one of a contact's
+	 * addresses, without duplicating the (often multi-KB) key text once per address. See
+	 * merge_keys_json() (which also creates these aliases automatically - see its own docblock)/
+	 * extract_key_for_address() for the exact format and the legacy-file (pre-fix, bare armored
+	 * text with no address distinction at all, still read by get_key() below) backward-
+	 * compatibility fallback.
 	 *
 	 * @param array $keys email|account_id => public key pairs to store
 	 * @param boolean $pgp true: PGP, false: S/Mime
@@ -202,7 +209,7 @@ class addressbook_bo extends Api\Contacts
 			}
 			if ($update)
 			{
-				Config::save_value('own_account_acl', $this->own_account_acl, 'phpgwapi');
+				Api\Config::save_value('own_account_acl', $this->own_account_acl, 'phpgwapi');
 			}
 		}
 
@@ -274,13 +281,13 @@ class addressbook_bo extends Api\Contacts
 					{
 						$contact['pubkey'] = preg_replace($key_regexp, '', $contact['pubkey']);
 					}
-					$newContent = self::merge_keys_json($existing, $forThisContact);
+					$newContent = self::merge_keys_json($existing, $forThisContact, $pgp);
 					$updated++;
 				}
 				else
 				{
 					$existing = $contact['pubkey'] ?? '';
-					$newContent = self::merge_keys_json($existing, $forThisContact);
+					$newContent = self::merge_keys_json($existing, $forThisContact, $pgp);
 					$contact['pubkey'] = $newContent;
 				}
 				$contact['photo_unchanged'] = true;	// otherwise photo will be lost, because $contact['jpegphoto'] is not set
@@ -324,28 +331,86 @@ class addressbook_bo extends Api\Contacts
 	 * Merge new (address => armored key) pairs into a contact's existing stored key content.
 	 *
 	 * $existing may be: empty (nothing stored yet), the new per-address JSON object this method
-	 * itself produces, or a legacy pre-fix bare armored key/cert - upgraded here into the new
-	 * shape's `"*"` (address-unknown) fallback entry, so an address NOT explicitly being updated
-	 * by this call keeps resolving to it exactly like before this fix (get_key()'s own one key
-	 * applied to whichever address was asked about). Addresses ARE being updated this call always
-	 * overwrite whatever was there for that specific address (new key replaces old, no history).
+	 * itself produces (a value is EITHER the armored key/cert text itself, OR a plain address
+	 * string naming another entry in the SAME object to use instead - an alias, see set_keys()'s
+	 * own docblock for the full format), or a legacy pre-fix bare armored key/cert - upgraded here
+	 * into the new shape, keyed by whichever address detect_smime_address() can determine it
+	 * actually belongs to (S/MIME only - PGP has no server-side way to read a key's own User IDs,
+	 * see this class' docblock), falling back to `"*"` (address-unknown) when that's not possible.
+	 * An address NOT explicitly being updated by this call keeps resolving to that entry exactly
+	 * like before this fix (get_key()'s own one key applied to whichever address was asked about).
+	 * Addresses that ARE being updated this call always overwrite whatever was there for that
+	 * specific address (new key replaces old, no history).
+	 *
+	 * Same-content dedup: when the exact armored text being stored for $address is ALREADY present
+	 * under a different address, the new entry becomes an alias to that address instead of
+	 * duplicating the (often multi-KB) key/cert text again - the common case of one real-world key
+	 * legitimately covering more than one of a contact's addresses.
 	 *
 	 * @param string $existing current file/pubkey-field content, '' if nothing stored yet
 	 * @param array $newKeysByAddress lowercased-address (or '*') => armored key/cert pairs to add/overwrite
+	 * @param bool $pgp true: PGP (no legacy-address-detection possible), false: S/MIME
 	 * @return string new JSON content to store
 	 */
-	private static function merge_keys_json(string $existing, array $newKeysByAddress) : string
+	private static function merge_keys_json(string $existing, array $newKeysByAddress, bool $pgp) : string
 	{
 		$decoded = $existing !== '' ? json_decode($existing, true) : null;
 		if (!is_array($decoded) || json_last_error() !== JSON_ERROR_NONE)
 		{
-			$decoded = $existing !== '' ? ['*' => ['key' => $existing]] : [];
+			if ($existing === '')
+			{
+				$decoded = [];
+			}
+			else
+			{
+				$detectedAddress = !$pgp ? self::detect_smime_address($existing) : null;
+				$decoded = [($detectedAddress ?? '*') => $existing];
+			}
 		}
 		foreach ($newKeysByAddress as $address => $key)
 		{
-			$decoded[$address] = ['key' => $key];
+			$existingAddress = array_search($key, $decoded, true);
+			$decoded[$address] = $existingAddress !== false && $existingAddress !== $address ?
+				$existingAddress : $key;
 		}
 		return json_encode($decoded);
+	}
+
+	/**
+	 * Try to determine which email address an S/MIME certificate itself claims to belong to -
+	 * checked via openssl_x509_parse(), subjectAltName (RFC 5280's preferred, multi-value location
+	 * for an email SAN - "email:foo@example.org", possibly comma-separated with other SAN types)
+	 * first, falling back to the legacy subject DN emailAddress attribute. Used both to upgrade a
+	 * legacy (pre-fix, address-unaware) stored cert into the new per-address JSON shape without
+	 * losing which address it actually belongs to (merge_keys_json()) and to cross-check a
+	 * caller-supplied address against a contact's single stored key (extract_key_for_address()).
+	 *
+	 * PGP has NO equivalent here - there's no gnupg extension or PHP OpenPGP library anywhere in
+	 * this stack, and armored PGP text is base64-encoded binary, so a key's own User ID isn't
+	 * readable server-side at all (client-side JS/openpgp.js can do this, see MailJmap.
+	 * keyClaimsAddress() in mail/js/jmap.ts, but that's a different, browser-only context).
+	 *
+	 * @param string $cert PEM-encoded certificate text
+	 * @return ?string lowercased email address, or null if none could be determined
+	 */
+	private static function detect_smime_address(string $cert) : ?string
+	{
+		if (!($parsed = @openssl_x509_parse($cert)))
+		{
+			return null;
+		}
+		$matches = null;
+		if (!empty($parsed['extensions']['subjectAltName']) &&
+			preg_match('/email:([^,\s]+)/i', $parsed['extensions']['subjectAltName'], $matches))
+		{
+			return strtolower($matches[1]);
+		}
+		if (!empty($parsed['subject']['emailAddress']))
+		{
+			return strtolower(is_array($parsed['subject']['emailAddress']) ?
+				reset($parsed['subject']['emailAddress']) : $parsed['subject']['emailAddress']);
+		}
+		return null;
 	}
 
 	/**
@@ -449,32 +514,62 @@ class addressbook_bo extends Api\Contacts
 		}
 		if (!$content) return null;
 
-		return self::extract_key_for_address($content, $address, $key_regexp);
+		return self::extract_key_for_address($content, $address, $key_regexp, $pgp);
 	}
 
 	/**
 	 * Pick the right key out of a contact's stored key content for a given address.
 	 *
+	 * Follows alias entries (a value that's itself a plain address string, not armored key/cert
+	 * text - see set_keys()'s own docblock for the format) to whatever address they ultimately
+	 * point at, bounded by $seen against a malformed/cyclic chain.
+	 *
+	 * Single-key cross-check: when the ONLY thing resolving for this contact is the `"*"`
+	 * (address-unknown) fallback entry - eg. a legacy pre-fix contact never migrated to a specific
+	 * address, or one whose stored address just doesn't match what's being asked - detect_smime_
+	 * address() is used (S/MIME only, see its own docblock for why PGP can't do this) to verify the
+	 * key actually claims the requested address before returning it, rather than handing back
+	 * possibly-stale-or-wrong-contact key content just because it's the only one on file. This does
+	 * NOT clean up/remove a stale key when a contact's email changes (deferred, a separate concern)
+	 * - it only stops a single leftover/mismatched key from being silently offered for an address it
+	 * doesn't belong to.
+	 *
 	 * @param string $content raw file/pubkey-field content - either the new per-address JSON
 	 *  shape (merge_keys_json()'s own output) or a legacy pre-fix bare armored key/cert
 	 * @param ?string $address lowercased address to look up, or null
 	 * @param string $key_regexp only used for the legacy (non-JSON) fallback extraction
+	 * @param bool $pgp true: PGP (no single-key address cross-check possible), false: S/MIME
 	 * @return string|null
 	 */
-	private static function extract_key_for_address(string $content, ?string $address, string $key_regexp) : ?string
+	private static function extract_key_for_address(string $content, ?string $address, string $key_regexp, bool $pgp) : ?string
 	{
 		$decoded = json_decode($content, true);
-		if (is_array($decoded) && json_last_error() === JSON_ERROR_NONE)
+		if (!is_array($decoded) || json_last_error() !== JSON_ERROR_NONE)
 		{
-			if ($address !== null && isset($decoded[$address]['key']))
-			{
-				return $decoded[$address]['key'];
-			}
-			return $decoded['*']['key'] ?? null;
+			// legacy bare-armored-text format - applies to any address, same as before this fix
+			$matches = null;
+			return preg_match($key_regexp, $content, $matches) ? $matches[0] : null;
 		}
-		// legacy bare-armored-text format - applies to any address, same as before this fix
-		$matches = null;
-		return preg_match($key_regexp, $content, $matches) ? $matches[0] : null;
+		$usedFallback = !($address !== null && array_key_exists($address, $decoded));
+		$lookup = !$usedFallback ? $address : (array_key_exists('*', $decoded) ? '*' : null);
+		$seen = [];
+		while ($lookup !== null && !isset($seen[$lookup]) && array_key_exists($lookup, $decoded))
+		{
+			$seen[$lookup] = true;
+			$value = $decoded[$lookup];
+			if (is_string($value) && preg_match($key_regexp, $value))
+			{
+				if ($usedFallback && $address !== null && !$pgp && count($decoded) === 1 &&
+					($detected = self::detect_smime_address($value)) !== null && $detected !== $address)
+				{
+					return null;
+				}
+				return $value;
+			}
+			// not itself an armored key/cert - treat as an alias pointing to another address entry
+			$lookup = is_string($value) ? strtolower($value) : null;
+		}
+		return null;
 	}
 
 	/**
