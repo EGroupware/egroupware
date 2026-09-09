@@ -13,7 +13,9 @@ too (`PgpSignatureStructureHelpers.test.ts`, 2026-09-09), closing the one gap th
 note called out. 4 follow-up items queued 2026-09-09 (Autocrypt key-import dialog, sending an
 Autocrypt header, Mailvelope sign-on-send, reply/forward auto-matching signed/encrypted state) -
 see "Planned follow-up" below; item 4's PGP-encrypted half is now DONE + live-verified (2026-09-09,
-see its own entry), the other three (and item 4's PGP-signed half) still not started. **Autocrypt
+see its own entry); items 1-2 were superseded and shipped via the Phase 5 plan below; item 3
+(Mailvelope sign-on-send) is researched and DROPPED (see its own entry - not achievable via
+Mailvelope's API), which also kills item 4's PGP-signed half (it was blocked on item 3). **Autocrypt
 integration (Phase 5) planned in full 2026-09-09** (own section further down) - consent dialog +
 preference, `Autocrypt`/`Autocrypt-Gossip` send+receive, `prefer-encrypt` storage, the
 multi-key-per-address storage fix, mutual-auto-encrypt preference, S/MIME auto-add-when-verified,
@@ -23,8 +25,10 @@ half too**), **3's `Autocrypt:`-sending half, 4 (both the header-parsing logic A
 real reply/forward source message - only `Autocrypt-Gossip:` itself remains), 5 (consent dialog +
 preference, fed by both the inline-key case AND, now, real Autocrypt headers), and 7 (auto-add for
 an already-known contact, extended from S/MIME-only to BOTH S/MIME and PGP)** are DONE (2026-09-09,
-see their own phasing entries) - `Autocrypt-Gossip:` sending/receiving and item 6's mutual
-auto-encrypt preference are still plan only; item 2's `prefer-encrypt` storage now HAS a real
+see their own phasing entries) - `Autocrypt-Gossip:` sending/receiving is now **DROPPED**
+(researched 2026-09-09 against Mailvelope's actual API source - not achievable, see its own entries
+under items 3/4) and item 6's mutual auto-encrypt preference is still plan only; item 2's
+`prefer-encrypt` storage now HAS a real
 caller (item 4's wiring, when a header carries `prefer-encrypt=mutual`) but nothing reads it back
 yet (item 6 is what would). **Item 4's real-message wiring is now live-verified too** (2026-09-09,
 same day, against a real Autocrypt-header-bearing message ralf found in acc_id=1's own Inbox - see
@@ -35,6 +39,17 @@ read-only check). **Phase 5 step 2's alias-pointer storage rework (Phase G) is n
 **Security fix (Phase H, DONE 2026-09-09)**: a signature/cert that cryptographically verifies but
 doesn't itself claim the message's From address is now shown as invalid, not verified, for both PGP
 and S/MIME - see its own section below, right before "Why this is even possible without Mailvelope".
+**Autocrypt-sending-for-the-shim-backend bugfix round (2026-09-09)**: two real bugs found via ralf's
+own live send testing (a shim-only `emailGet()`/re-fetch gap dropping the header again at actual
+send time, then an SMTP binary-data rejection from an unfolded multi-KB header value) - both fixed
++ tested + pushed, see "3b" below. **Planned-follow-up item 3 (Mailvelope sign-on-send) and
+Autocrypt-Gossip (Phase 5 item 3's other half) are now both researched and DROPPED (2026-09-09)** -
+neither is achievable through Mailvelope's public client-API, confirmed by reading its actual
+current source, not assumed - see their own entries for the full findings. A related, unplanned
+discovery from that same research: Mailvelope has its own native Autocrypt support
+(`Keyring.additionalHeadersForOutgoingEmail()`/`processAutocryptHeader()`), entirely separate from
+and unsynchronized with the addressbook-based mechanism this project built - flagged as an open
+architectural question under item 3, not yet decided.
 
 ### 2026-09-09 core-engine bugfix: base64-encoded signature parts
 
@@ -407,21 +422,43 @@ which he'll do "tomorrow" (i.e. after this note was written):
    receiving, `prefer-encrypt` storage, the multi-key-per-address storage fix both PGP and S/MIME
    need, and an explicit Level-1-spec gap audit) - see that section for the real plan, this entry
    stays only as a pointer so old links/history still resolve.
-3. **Mailvelope: also PGP-sign outgoing mail, not just encrypt.** Today's Mailvelope integration
+3. **Mailvelope: also PGP-sign outgoing mail, not just encrypt - BLOCKED (researched 2026-09-09),
+   sign-only is not exposed by Mailvelope's API at all.** Today's Mailvelope integration
    (`mail/js/app.ts`'s `mailvelope_editor`, `mail/js/compose.ts`'s `trySendViaJmap()`/
    `trySaveDraftViaJmap()` - see [[mail-pgp-mailvelope-fixes]]) only ever calls
-   `mailvelope_editor.encrypt(recipients)`, producing `multipart/encrypted`. Mailvelope's own
-   editor API additionally supports **sign-only** (`multipart/signed`, no encryption - the exact
-   shape `verifyPgpSignature()` above already knows how to check) and *signed-then-encrypted*
-   combined output; need to check the installed Mailvelope version's exact editor API for
-   requesting a signature (likely an editor-creation option like `armorHeaders`/a `sign: true`
-   equivalent, or a separate `editor.sign()` call before/instead of `encrypt()` - needs checking
-   against Mailvelope's actual client-API docs, not assumed). This directly supersedes this doc's
-   own earlier "Explicitly out of scope" line about not changing how EGroupware *sends*
-   signed/encrypted PGP mail (see below) - that exclusion was written when this project was
-   verify-only; sending-side signing is now explicitly wanted, just via Mailvelope rather than
-   `openpgp.js` (Mailvelope holds the private signing key, `openpgp.js` here never does - same
-   division of responsibility as encrypt/decrypt already has).
+   `mailvelope_editor.encrypt(recipients)`, producing `multipart/encrypted`. This entry originally
+   assumed Mailvelope's editor API "additionally supports sign-only... need to check the installed
+   Mailvelope version's exact editor API for requesting a signature" - that assumption was wrong.
+   Read the actual current source (`mailvelope/mailvelope@master`, `src/client-API/client-api.js` +
+   `src/controller/editor.controller.js`), not just its docs:
+   - `Editor` (what `createEditorContainer()` resolves to) exposes exactly two methods,
+     `encrypt(recipients)` and `createDraft()` - both **always** encrypt; `signMsg: true` (an
+     `EditorContainerOptions` field) only adds a signature on top of encryption, there is no
+     signed-but-not-encrypted output achievable through either.
+   - `editor.controller.js` registers `this.on('sign-only', this.onSignOnly)` under an explicit
+     `// standalone editor only` comment block, entirely separate from the `// API only` handler
+     group (`editor-container-encrypt`, `editor-container-create-draft`) - the "Sign only" toolbar
+     button a user sees in Mailvelope's own standalone compose popup is simply never wired up when
+     the editor is embedded via `createEditorContainer()` at all.
+   - A Mailvelope maintainer confirmed the same thing explicitly on
+     [issue #472](https://github.com/mailvelope/mailvelope/issues/472) (2017, still true against
+     today's source): *"sign-only PGP/MIME is currently not supported in the API. Neither sending
+     nor verifying such messages."*
+   - Grepped the whole Mailvelope repo for a lower-level primitive that would let us hand it
+     arbitrary plaintext/a key list and get back a signature without the visible editor UI (which
+     would let us build our own `multipart/signed` structure around it) - none exists; every
+     content-producing entry point goes through the editor iframe's own UI and always encrypts.
+   - The only way to actually get sign-only outgoing PGP would be to do the signing ourselves,
+     client-side, without Mailvelope - which needs the user's PGP *private* key, and Mailvelope
+     deliberately never exposes that to the embedding page (by design, same reason
+     `createDisplayContainer()` only ever hands back a rendered iframe, never decrypted plaintext).
+     Not pursuing this - it would mean maintaining a second, parallel private-key-handling path
+     that duplicates exactly what Mailvelope exists to keep out of our hands.
+   - **Conclusion: dropped.** PGP-signed (unencrypted) outgoing mail is not achievable through
+     Mailvelope's public API, full stop - not a version/config gap, a hard architectural one. This
+     also settles this doc's own earlier "Explicitly out of scope" line about not changing how
+     EGroupware *sends* signed/encrypted PGP mail (see below): it stays out of scope, just now for a
+     confirmed reason rather than an assumed one.
 
 4. **Reply/forward auto-matches the original message's signed/encrypted state - PGP-encrypted half
    DONE (2026-09-09), PGP-signed half still blocked on item #3 above.** ralf: "we should automatic
@@ -450,16 +487,17 @@ which he'll do "tomorrow" (i.e. after this note was written):
      Live-verified: recipient correctly populated, `mailvelope_editor` created, action's `checked`
      state still `true` (not reverted to `false`, which `togglePgpEncrypt()`'s own error path does
      on a real failure).
-   - **PGP signed -> "answer signed with signed"**: still not possible. The `pgp` compose action is
-     encryption only (Mailvelope) - there is no PGP *sign*-on-send mechanism at all yet (item #3
-     above). `MailJmap.pgpSignatureCache`/`peekPgpSignature()` already exist (mirroring
-     `pgpEncryptedCache`/`peekPgpEncrypted()`) ready for when item #3 adds a real sign toggle to
-     pre-check against, but `composeMessage()` doesn't call `peekPgpSignature()` yet - deliberately
-     not force-fitting a guessed-at future action id/param shape before item #3's own design (which
-     needs to check Mailvelope's actual editor API first) is worked out.
+   - **PGP signed -> "answer signed with signed"**: **dead, not just unbuilt** - item #3's research
+     (2026-09-09) confirmed sign-only PGP has no path through Mailvelope's API at all, so there is no
+     future sign toggle for this to pre-check against. `MailJmap.pgpSignatureCache`/
+     `peekPgpSignature()` (built mirroring `pgpEncryptedCache`/`peekPgpEncrypted()` in anticipation)
+     are now dead code kept only in case item #3 gets revisited with a non-Mailvelope signing
+     approach - `composeMessage()` was deliberately never wired to call `peekPgpSignature()`, which
+     turned out to be the right call.
 
-None of items 1-3 has been designed in detail yet (no data-flow spike, no UI mock, no code) - that
+None of items 1-2 has been designed in detail yet (no data-flow spike, no UI mock, no code) - that
 part of this section is still a plan-level placeholder capturing the ask, not an implementation.
+Item 3 is researched and closed (see its own entry - not proceeding).
 
 ## Autocrypt integration (Phase 5) - plan only, 2026-09-09, nothing implemented yet
 
@@ -655,24 +693,44 @@ address entry).
   informational header couldn't be built. New tests: `MailJmapBuildAutocryptHeader.test.ts` (the
   lookup/assembly logic, addressbook mocked) and a new describe block in `MailJmapDraftEmailProperties
   Headers.test.ts` (the pure passthrough into the final Email/set properties).
-- **`Autocrypt-Gossip:`** - one per `To`/`Cc` recipient whose key is in the addressbook, **only when
-  the message is actually being encrypted** (Mailvelope on) - per the spec, gossip headers belong
-  inside the plaintext MIME payload that then gets encrypted, never as a bare outer RFC 5322 header.
-  Concretely: build the `Autocrypt-Gossip:` header lines and prepend them to the plaintext body
-  `mail_plaintext`/`mail_htmltext` content **before** calling `mailvelope_editor.encrypt()`, so they
-  end up inside the ciphertext exactly as the spec requires - NOT alongside the outer `Autocrypt:`
-  header, which stays outside as normal. Needs checking exactly how Mailvelope's own editor
-  API/output represents the payload's own header block (does `encrypt()` let us inject arbitrary
-  header lines into the to-be-encrypted MIME part, or do we need to hand-assemble that part
-  ourselves before handing it to Mailvelope?) - a real unknown to resolve during implementation, not
-  assumed here.
-- Where in the send path: `MailJmap.createDraftEmail()`/`draftEmailProperties()` (`mail/js/jmap.ts`)
-  build the outgoing `Email/set` properties today: RFC 8621 §4.1.3's `header:<Name>:asRaw` property
-  shape is already used read-side in this file (`MDN_HEADER_PROPERTY`, `CONTENT_TYPE_HEADER_PROPERTY`)
-  - the write-side equivalent should work the same way for a single `Autocrypt:` header; **multiple**
-  same-named `Autocrypt-Gossip:` headers (one per recipient) may need an array-valued header
-  property or a different JMAP mechanism entirely - needs verifying against both Stalwart's real
-  JMAP and the local shim's own header-writing support before assuming either works.
+- **`Autocrypt-Gossip:` - DROPPED (researched 2026-09-09), not achievable through Mailvelope's
+  public API.** Per spec, gossip headers must be *protected headers* - part of the inner MIME
+  structure's own header block, semantically separate from the visible body, so a receiving
+  Autocrypt implementation's header parser can find them as real header fields (not as message
+  text). Read Mailvelope's actual source (`client-API/client-api.js`, `client-API/
+  web-components.js`) to answer this entry's own open question: `createEditorContainer()`'s only
+  content-injection option is `predefinedText` (`EditorContainerOptions`), which becomes the
+  **visible, user-editable plaintext body** - there is no option, and no lower-level primitive
+  anywhere in the API, for supplying a separate header block that ends up inside the ciphertext
+  alongside (but distinct from) the body. `encrypt(recipients)` takes no plaintext argument at all -
+  it encrypts whatever's currently in the editor's own text area and returns one opaque
+  `AsciiArmored` blob; the caller never gets to shape the inner MIME structure. Also grepped the
+  entire Mailvelope repository for "gossip" and "protected header" - zero matches anywhere, so
+  there's no native support to lean on either (see the "Mailvelope has its own native Autocrypt
+  support" note in item 3 below - even that generates only the plain `Autocrypt:` header, "so far
+  this is only the `autocrypt` header" per its own docstring). The only way to produce a genuinely
+  spec-compliant gossip header would be to hand-build the entire signed/encrypted MIME structure
+  ourselves and bypass Mailvelope's editor completely for any gossip-bearing send - a full
+  reimplementation of what Mailvelope exists to do for us, not a small addition. **Not pursuing
+  this.**
+- Where the single `Autocrypt:` header actually goes in the send path: `MailJmap.createDraftEmail()`/
+  `draftEmailProperties()` (`mail/js/jmap.ts`) build the outgoing `Email/set` properties, using the
+  same bare `header:<Name>` write-side shape the read-side `MDN_HEADER_PROPERTY`/
+  `CONTENT_TYPE_HEADER_PROPERTY` properties already use - confirmed working for both Stalwart and
+  the shim (see "3b" below). The "multiple same-named headers" question this bullet used to raise
+  (a hypothetical array-valued header property, one per `Autocrypt-Gossip:` recipient) is moot now
+  that gossip itself is dropped (see above) - never needed.
+- **Mailvelope has its own, entirely separate native Autocrypt support** (found while researching
+  the gossip question, 2026-09-09) - unrelated to anything built for this project, and not wired
+  into any of it: `Keyring.additionalHeadersForOutgoingEmail({from})` resolves to
+  `{autocrypt: "addr=...; prefer-encrypt=mutual; keydata=..."}`, generated from **Mailvelope's own
+  keyring**, and `Keyring.processAutocryptHeader({autocrypt, from, date})` feeds an incoming header
+  straight into Mailvelope's own trust store - a second, independent Autocrypt implementation
+  running in parallel to the addressbook-based one this project built (items 1/2/4/5/7 above), with
+  no synchronization between the two key stores for the same contacts. Flagging this as an open
+  architectural question, not resolving it here: worth a deliberate decision (keep both stores
+  separate, or have EGroupware defer to Mailvelope's own mechanism when Mailvelope is the active PGP
+  backend) rather than continuing to build the addressbook-based side in ignorance of it.
 
 ### 3b. Live-testing bugfix round (2026-09-09, ralf's own live send testing) - both now fixed
 
@@ -721,7 +779,7 @@ address entry).
   coverage tests for `buildMailerFromEmailProperties()` itself - previously untested for this
   header, unlike replyTo/X-Priority/thread headers already covered there). Committed `a577d73954`.
 
-### 4. Receiving: use a replied/forwarded message's own `Autocrypt`/`Autocrypt-Gossip` headers as a key source - DONE (2026-09-09) except `Autocrypt-Gossip:` itself
+### 4. Receiving: use a replied/forwarded message's own `Autocrypt`/`Autocrypt-Gossip` headers as a key source - DONE (2026-09-09); `Autocrypt-Gossip:` itself DROPPED (see below)
 
 New `MailJmap.parseAutocryptHeader(headerValue, fromAddress)`/`parseAutocryptHeaders(headerValues,
 fromAddress)` (`mail/js/jmap.ts`) implement Level 1's own validation rules exactly, confirmed
@@ -763,9 +821,12 @@ EXISTING contact in the same request (a brand-new, not-yet-created contact has n
 the attribute to yet either). **First real caller of item 2's `prefer-encrypt` storage** - item 6
 (mutual auto-encrypt) is what will eventually read it back out.
 
-**Still not built**: `Autocrypt-Gossip:` itself (same header shape, `parseAutocryptHeader()` should
-work for it directly, but it lives INSIDE the decrypted MIME payload, not as a bare outer header -
-needs the decrypted-body access pattern, a genuinely separate piece of work from everything above).
+**`Autocrypt-Gossip:` - dropped (researched 2026-09-09), see item 3's own entry above.** The
+receiving half has the same blocker as sending: it lives inside the decrypted MIME payload as a
+protected header, and Mailvelope's `createDisplayContainer()` only ever hands back a rendered
+iframe, never the decrypted plaintext/headers to the embedding page's own JS - so
+`parseAutocryptHeader()` (which would otherwise work for it directly, same header shape) has
+nothing to actually parse it from even if sending were solved. Not pursuing.
 
 **Live-verified (2026-09-09)**, closing the gap above the same day it was written: ralf found a
 real Autocrypt-header-bearing message already sitting in acc_id=1's own Inbox (a 2009-vintage
@@ -973,15 +1034,15 @@ keeps today's click-to-add dialog unchanged). Also needs the same multi-key-per-
    address" through that specific UI path.
 3. Sending `Autocrypt:` (own key) - DONE (2026-09-09, see its own entry) - was indeed the simplest,
    most self-contained piece, no consent-dialog UI needed (never touches another contact's stored
-   data). `Autocrypt-Gossip:` (the other half of item 3) is still not started.
+   data). `Autocrypt-Gossip:` (the other half of item 3) is **DROPPED** (researched 2026-09-09 - not
+   achievable through Mailvelope's public API, see its own entry).
 4. Item 4 (BOTH the `Autocrypt:`-header-parsing logic AND wiring it to a real reply/forward source
    message), item 5's consent dialog + preference, and item 7's auto-add-for-known-contacts are ALL
    DONE (2026-09-09, see their own entries) - items 5/7 shipped as one shared, symmetric S/MIME+PGP
    mechanism, fed by both the inline-key case AND real Autocrypt headers. **Live-verified same day**
    against a real message + real Stalwart server (item 4's own entry has the full confirmation) -
-   only the UI dialog/silent-add trigger itself wasn't clicked through live. Still not started:
-   `Autocrypt-Gossip:` sending AND receiving (item 3's other half, and the receiving side needs the
-   decrypted-body access pattern item 4's own entry describes).
+   only the UI dialog/silent-add trigger itself wasn't clicked through live. `Autocrypt-Gossip:`
+   receiving (item 3's other half) is **DROPPED** for the same reason as sending - see its own entry.
 5. `prefer-encrypt` **storage** (item 2) is DONE (2026-09-09, see its own entry), and as of item 4's
    wiring above now has its first real WRITER too (`ajax_pgpAddKeyToContact` calls
    `set_autocrypt_attributes()` when a header carries `prefer-encrypt=mutual`) - what's left is
