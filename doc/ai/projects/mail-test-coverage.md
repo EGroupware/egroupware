@@ -1,6 +1,6 @@
 # Mail: test-coverage audit and gap-closing plan
 
-## Status: audit complete (2026-09-09); bulk move/copy/delete - client-side + deferred-work queue done, shim's actual IMAP move/copy/destroy execution still needs a live/mocked IMAP connection (see Progress log)
+## Status: audit complete (2026-09-09); priority 1 (bulk move/copy/delete) client-side + deferred-work queue done; priority 2 (JMAP/shim path) started with jmap.ts's mailbox CRUD (see Progress log)
 
 Full-codebase scan of `mail/js/*.ts`, `mail/src/*.php`, `mail/inc/*.php`, `api/src/Mail.php` and
 `api/src/Mail/*.php` (including the `Jmap/` shim + real-JMAP layer), cross-referenced against every
@@ -103,9 +103,18 @@ optimistic-clear, no hard guard yet).
 
 ### 2. JMAP (and shim) path
 
-- `mail/js/jmap.ts` (~half the API untested): all folder/mailbox CRUD (`createMailbox`,
+- **Done (2026-09-09)**: `mail/js/jmap.ts`'s folder/mailbox CRUD - `createMailbox`,
   `renameMailbox`, `moveMailbox`, `deleteMailbox`, `setMailboxSubscribed`, `getAllMailboxes`,
-  `resolveMailboxId`), thread-keyword aggregation (`aggregateThreadKeywords`, and notably
+  `resolveMailboxId` - 22 tests, `mail/js/test/MailJmapMailboxCrud.test.ts`. Covers: create's
+  top-level-vs-nested parentId resolution, rename/move/delete's success-vs-failure cache
+  invalidation (a failed op must NOT invalidate the mailboxId cache), move's own top-level
+  destination case, subscribe/unsubscribe, `resolveMailboxId`'s "empty path never queries JMAP at
+  all" contract, and `getAllMailboxes`'s three-way error contract (JmapUserError rethrown,
+  everything else swallowed to `null` for classic-fallback callers) - the get/query chained-via-
+  `$ref()` result-reference call shape needed its own dedicated fake (see that test file's own
+  comment) since a plain single-call fake silently passes with the real chaining broken.
+- `mail/js/jmap.ts` (rest of the ~half still untested): thread-keyword aggregation
+  (`aggregateThreadKeywords`, and notably
   `keywordsToRowFlags()` itself - the exact logic central to the answered/forwarded fix, still with
   no direct unit test), search/filter-to-JMAP translation (`buildFilter`, `buildTokenizedFilter`,
   `flaggedFilter`, `buildSort`), most push/WebSocket payload-building (`buildWsPushPayload`,
@@ -212,3 +221,9 @@ Kept for completeness, but explicitly deprioritized until the above is in better
   `MailJmapBulkMoveCopyDelete.test.ts`) and the shim's deferred-work queue/`chunkIds()` (7 tests,
   `JmapShimDeferredWorkTest.php`) done. `emailSet()`'s own IMAP-execution branches still open (see
   priority-1 entry above for why - needs a live/mocked IMAP connection, not attempted yet).
+- 2026-09-09: started priority 2 (JMAP/shim path) - `mail/js/jmap.ts`'s mailbox CRUD (22 tests,
+  `MailJmapMailboxCrud.test.ts`) done. Rest of priority 2 (thread-keyword aggregation, search/
+  filter translation, push/WebSocket payload-building, S/MIME encrypt, PGP dispatch/cache,
+  `saveDraft()`, label/flag setters, attachment upload/resolve, the shim's real-account
+  `emailQuery`/`emailGet`/`resolveSmime`/`resolveTnef`/`emailSubmissionSet`, and the entire
+  real-JMAP-facing layer) still open.
