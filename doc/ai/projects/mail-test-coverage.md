@@ -126,9 +126,18 @@ optimistic-clear, no hard guard yet).
   unreachable-account path can fall through to `popupCheckCert()`, which needs `egw.link()`/
   `egw.open_link()` stubbed even in an otherwise-minimal fake `egw` - same requirement
   `MailJmapMailboxCrud.test.ts`'s `getAllMailboxes()` tests already found.
-- `mail/js/jmap.ts` (rest still untested): thread-keyword aggregation (`aggregateThreadKeywords`,
-  and notably `keywordsToRowFlags()` itself - the exact logic central to the answered/forwarded
-  fix, still with no direct unit test), search/filter-to-JMAP translation (`buildFilter`,
+- **Done (2026-09-09)**: `mail/js/jmap.ts`'s status-icon/label computation and thread-keyword
+  folding - `keywordsToRowFlags()` (the exact logic central to the answered/forwarded fix,
+  previously with no direct unit test at all) and `aggregateThreadKeywords()` - 19 tests,
+  `mail/js/test/MailJmapThreadKeywordAggregation.test.ts`. Covers: status-icon priority
+  (forwarded > answered > unseen > none), `$seen` clearing the unseen class/icon, custom-flag/
+  built-in-label/custom-label keyword resolution (including case-insensitive custom-label
+  matching), the labelTags "2 or more" display threshold, `$seen`'s AND-fold vs. every other
+  keyword's OR-fold across thread members (including a member with no `keywords` map at all, and
+  an empty-members edge case), and one end-to-end case feeding the aggregate straight into
+  `keywordsToRowFlags()` (a thread where only one of several members was forwarded still shows
+  the forward icon on the collapsed row).
+- `mail/js/jmap.ts` (rest still untested): search/filter-to-JMAP translation (`buildFilter`,
   `buildTokenizedFilter`, `flaggedFilter`, `buildSort`), most push/WebSocket payload-building
   (`buildWsPushPayload`, `buildEmailPush`/`buildMailboxPush`/`buildEmailDeletePush`), S/MIME
   encrypt (`smimeEncryptBody`, `resolveSmimeSignedAttachments`), PGP dispatch/cache methods
@@ -234,8 +243,17 @@ Kept for completeness, but explicitly deprioritized until the above is in better
   priority-1 entry above for why - needs a live/mocked IMAP connection, not attempted yet).
 - 2026-09-09: started priority 2 (JMAP/shim path) - `mail/js/jmap.ts`'s mailbox CRUD (22 tests,
   `MailJmapMailboxCrud.test.ts`) and label/flag setters (14 tests,
-  `MailJmapLabelsAndFlags.test.ts`) done. Rest of priority 2 (thread-keyword aggregation, search/
-  filter translation, push/WebSocket payload-building, S/MIME encrypt, PGP dispatch/cache,
-  `saveDraft()`, attachment upload/resolve, the shim's real-account
+  `MailJmapLabelsAndFlags.test.ts`) done.
+- 2026-09-09: paused for a live-reported regression (Reply-To silently dropped on send) - full
+  header audit + fix (Reply-To/Priority/read-receipt, then a follow-up Thread-Topic/Thread-Index/
+  List-Id reply-propagation regression found while investigating) added real test coverage for
+  `draftEmailProperties()`, `fetchForReply()`, `bootstrapReply()`, and the shim's
+  `buildMailerFromEmailProperties()`/`emailFromFetch()` along the way - not tracked as its own
+  priority-2 line item above since it was bug-driven, not audit-driven, but the coverage is real
+  and future audits of this doc should account for it.
+- 2026-09-09: back to priority 2 - `mail/js/jmap.ts`'s `keywordsToRowFlags()`/
+  `aggregateThreadKeywords()` (19 tests, `MailJmapThreadKeywordAggregation.test.ts`) done. Rest of
+  priority 2 (search/filter translation, push/WebSocket payload-building, S/MIME encrypt, PGP
+  dispatch/cache, `saveDraft()`, attachment upload/resolve, the shim's real-account
   `emailQuery`/`emailGet`/`resolveSmime`/`resolveTnef`/`emailSubmissionSet`, and the entire
   real-JMAP-facing layer) still open.
