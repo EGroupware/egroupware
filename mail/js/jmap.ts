@@ -3230,12 +3230,15 @@ export class MailJmap
 	}
 
 	/**
-	 * openpgp.js's lightweight build (verify-only feature set - no key generation/encryption code,
-	 * both never needed here), lazy-loaded as its own code-split chunk via a static dynamic
+	 * openpgp.js's lightweight build, lazy-loaded as its own code-split chunk via a static dynamic
 	 * import() - Rollup resolves/bundles this exactly like any other node_modules import, just
 	 * deferred until actually called, so the overwhelming majority of messages (never PGP-signed)
 	 * never pay for it at all. Cached: every subsequent call after the first reuses the same
-	 * already-resolved module instead of re-importing.
+	 * already-resolved module instead of re-importing. Originally added verify-only (signature
+	 * checking never needs key generation/encryption), but confirmed live (2026-09-09 spike) that
+	 * the lightweight build's packet-level API (`PacketList`, `readKey({binaryKey})`, `.armor()`)
+	 * is also enough for armoredKeyToAutocryptKeydata()/autocryptKeydataToArmoredKey() below - no
+	 * need for a second, separate full-build load just for Autocrypt key (de)minimization.
 	 */
 	private static openpgpPromise : Promise<any> | null = null;
 
@@ -3246,6 +3249,78 @@ export class MailJmap
 			MailJmap.openpgpPromise = import('openpgp/lightweight');
 		}
 		return MailJmap.openpgpPromise;
+	}
+
+	/**
+	 * Autocrypt (https://docs.autocrypt.org/level1.html) `keydata=` is NOT our armored storage
+	 * format - it's base64 of a MINIMIZED binary export: "MUST consist of exactly five packets:
+	 * signing-capable primary key, user ID, self-signature, encryption-capable subkey, binding
+	 * signature" - stripping every other user ID, subkey, third-party certification, and
+	 * revocation signature a real-world key may carry. Confirmed live (2026-09-09 spike, full
+	 * openpgp npm package used to generate a multi-UID/multi-subkey test fixture, then this exact
+	 * logic run against it with the lightweight build) that the primary user's own existing
+	 * self-signature and the chosen subkey's own existing binding signature both remain valid once
+	 * re-assembled into a fresh, smaller packet list - no re-signing needed (which would require
+	 * the private key anyway, unusable for a contact's key we only ever have the public half of).
+	 *
+	 * @returns null if the key has no valid encryption-capable subkey at all (getEncryptionKey()
+	 *  throws for a signing-only key) - not usable for Autocrypt either way, per the spec's own
+	 *  mandated 5-packet shape assuming a modern primary-signs/subkey-encrypts layout
+	 */
+	static async armoredKeyToAutocryptKeydata(armoredKey : string) : Promise<string | null>
+	{
+		const openpgp = await MailJmap.loadOpenpgp();
+		const key = await openpgp.readKey({armoredKey});
+		let encryptionKey : any;
+		try
+		{
+			encryptionKey = await key.getEncryptionKey();
+		}
+		catch (e)
+		{
+			return null;
+		}
+		const subkey = key.subkeys.find((sk : any) => sk.getKeyID().equals(encryptionKey.getKeyID()));
+		if (!subkey)
+		{
+			// the primary key packet itself is the "encryption key" (a legacy layout with no
+			// separate subkey at all) - doesn't fit Autocrypt's own mandated shape, same
+			// "not usable" outcome as no encryption capability at all
+			return null;
+		}
+		const primaryUser = await key.getPrimaryUser();
+		const user = key.users[primaryUser.index];
+		const selfCertification = user.selfCertifications[user.selfCertifications.length - 1];
+		const bindingSignature = subkey.bindingSignatures[subkey.bindingSignatures.length - 1];
+
+		const minimal = new openpgp.PacketList();
+		minimal.push(key.keyPacket, user.userID, selfCertification, subkey.keyPacket, bindingSignature);
+		const binary : Uint8Array = minimal.write();
+		let binaryStr = '';
+		for (let i = 0; i < binary.length; i++)
+		{
+			binaryStr += String.fromCharCode(binary[i]);
+		}
+		return btoa(binaryStr);
+	}
+
+	/**
+	 * Reverse of armoredKeyToAutocryptKeydata() above - an incoming Autocrypt/Autocrypt-Gossip
+	 * header's `keydata=` (base64 of a minimized binary key) converted back to the ASCII-armored
+	 * text our own addressbook storage (ajax_get_pgp_keys()/ajax_set_pgp_keys()) already expects,
+	 * so a key learned this way can go through the exact same storage path as any other.
+	 */
+	static async autocryptKeydataToArmoredKey(keydataBase64 : string) : Promise<string>
+	{
+		const openpgp = await MailJmap.loadOpenpgp();
+		const binaryStr = atob(keydataBase64.replace(/\s+/g, ''));
+		const binary = new Uint8Array(binaryStr.length);
+		for (let i = 0; i < binaryStr.length; i++)
+		{
+			binary[i] = binaryStr.charCodeAt(i);
+		}
+		const key = await openpgp.readKey({binaryKey: binary});
+		return key.armor();
 	}
 
 	/**

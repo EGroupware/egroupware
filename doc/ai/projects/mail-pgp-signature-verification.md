@@ -17,7 +17,8 @@ see its own entry), the other three (and item 4's PGP-signed half) still not sta
 integration (Phase 5) planned in full 2026-09-09** (own section further down) - consent dialog +
 preference, `Autocrypt`/`Autocrypt-Gossip` send+receive, `prefer-encrypt` storage, the
 multi-key-per-address storage fix, mutual-auto-encrypt preference, S/MIME auto-add-when-verified,
-and an explicit Level 1 spec gap/deviation audit - **plan only, no code written yet**.
+and an explicit Level 1 spec gap/deviation audit. Phase 5 step 1 (keydata minimize/re-armor) is now
+DONE (2026-09-09, see its own phasing entry) - the rest of Phase 5 is still plan only.
 
 ### 2026-09-09 core-engine bugfix: base64-encoded signature parts
 
@@ -590,9 +591,20 @@ keeps today's click-to-add dialog unchanged). Also needs the same multi-key-per-
 
 ### Suggested phasing (draft, not committed to)
 
-1. Spike the keydata minimize/binary-export + re-armor round trip in openpgp.js in isolation
-   (mirrors this project's own original Phase 1 spike approach) - the biggest unknown, should happen
-   before any UI work, same reasoning as the original signature-verification spike.
+1. **DONE (2026-09-09).** Spike + implement the keydata minimize/binary-export + re-armor round
+   trip: `MailJmap.armoredKeyToAutocryptKeydata()`/`autocryptKeydataToArmoredKey()` (`mail/js/jmap.ts`),
+   with real openpgp.js-generated multi-UID/multi-subkey fixture coverage
+   (`mail/js/test/PgpAutocryptKeydata.test.ts`). Confirmed live in the spike (full `openpgp` npm
+   package used only to *generate* the test fixture, since key generation needs it - the lightweight
+   build alone was used for the actual minimize/export/re-read/armor logic under test): the
+   lightweight build's packet-level API (`PacketList`, `readKey({binaryKey})`, `.armor()`) is
+   sufficient - **no second, separate full-build load is needed** for Autocrypt key handling, closing
+   what would otherwise have been an open bundle-size question. Minimization takes the PRIMARY user's
+   own existing self-signature and the encryption-capable subkey's own existing binding signature
+   as-is (no re-signing, which would need the private key - unusable for a contact's key we only
+   ever have the public half of) and reassembles just those 5 packets; returns `null` for a
+   signing-only key (no valid `getEncryptionKey()`), which the spec's own 5-packet shape doesn't fit
+   anyway.
 2. Multi-key-per-address storage fix (item 1) - unblocks everything else, including the existing
    S/MIME single-cert limitation, independently useful even without any Autocrypt work landing yet.
 3. Sending `Autocrypt:` (own key) - the simplest, most self-contained piece, no consent-dialog UI
