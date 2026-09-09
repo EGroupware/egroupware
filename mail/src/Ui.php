@@ -17,6 +17,7 @@ use EGroupware\Api\Vfs;
 use EGroupware\Api\Etemplate;
 use EGroupware\Api\Etemplate\KeyManager;
 use EGroupware\Api\Etemplate\Widget\Tree;
+use EGroupware\Api\Etemplate\Widget\Nextmatch;
 use EGroupware\Api\Mail;
 use EGroupware\Api\Mail\AddressList;
 use EGroupware\Api\Mail\BodyDecoding;
@@ -668,7 +669,7 @@ class Ui
 
 				// These must always be set, even if $content is an array
 				$content[self::$nm_index]['cat_is_select'] = true;    // Category select is just a normal selectbox
-				$content[self::$nm_index]['cat_id_aria_label'] = lang('Search');
+				$content[self::$nm_index]['cat_id_aria_label'] = lang('Type of search');
 				$content[self::$nm_index]['filter_aria_label'] = lang('Status');
 				$content[self::$nm_index]['filter2_aria_label'] = lang('Details');
 				$content[self::$nm_index]['no_filter2'] = false;       // Disable second filter
@@ -860,11 +861,47 @@ class Ui
 			case "expand":
 			case "fixed":
 				$etpl->setElementAttribute('mailSplitter', 'orientation', 'h');
-				if (!Api\Header\UserAgent::mobile()) $etpl->setElementAttribute('nm', 'template', 'mail.index.rows.horizontal');
+				if (!Api\Header\UserAgent::mobile())
+				{
+					$etpl->setElementAttribute('nm', 'template', 'mail.index.rows.horizontal');
+				}
 				break;
 			default:
 				$etpl->setElementAttribute('mailSplitter', 'orientation', 'v');
 		}
+		// 'nm' lives inside the separately, lazily client-side-loaded "mail.index.splitter"
+		// et2-template inclusion (see mail.index's own "splitter" widget) - that means its
+		// beforeSendToClient() never runs as part of ANY server-side render pass, so the
+		// Nextmatch widget's own filterTemplate auto-detection (which is what gives every other
+		// app's nextmatch its toolbar filter-icon) never fires for mail at all. Compute+set it
+		// explicitly instead (found live 2026-09-09, ralf: mail's own filter-icon missing
+		// entirely - see Nextmatch::computeFilterTemplate()'s own docblock for the full story).
+		// filter/cat_id config (labels/aria-labels/no_filter2/cat_is_select) reused as-is from
+		// whatever the classic inline 'filter'/'cat_id' et2-selects already have set on
+		// $content[self::$nm_index] above (eg. the 'quick'/'search' preview-mode branch) - stays
+		// in sync automatically instead of duplicating those strings/flags here. 'template' is
+		// deliberately forced to "mail.index.rows" (bare, no ".vertical"/".horizontal" suffix, not
+		// itself a real template id) regardless of whatever's in content - only used to derive the
+		// source file (mail/templates/default/index.xet, stripping ".rows" onward same as any
+		// real variant name would), while NOT matching either real
+		// "mail.index.rows.(vertical|horizontal)" <et2-template> id when echoed back as api/
+		// filter-template.php's own "template" GET param. That param, when it DOES match, narrows
+		// the sortheader/search extraction to just that one block - fine for infolog (exactly one
+		// rows template), but mail.index.rows.vertical's own block only defines 2 of mail's 7
+		// sortheaders (the rest live in the separate .horizontal block, only used in some
+		// preview-pane layouts) - narrowing to whichever variant happens to be active left the
+		// drawer showing only 2 sort options (found live 2026-09-09, ralf: "nearly empty, only
+		// showing the searchbox"). Not matching anything falls through to filter-template.php's
+		// own default (scan the whole file), picking up both variants' sortheaders - the same full
+		// set ralf's own manual/unnarrowed request against this URL already confirmed.
+		$etpl->setElementAttribute('nm', 'filterTemplate', Nextmatch::computeFilterTemplate(
+			['template' => 'mail.index.rows'] + array_intersect_key($content[self::$nm_index] ?? [], array_flip([
+				'no_filter', 'no_filter2', 'no_cat', 'cat_is_select',
+				'filter_label', 'filter2_label', 'cat_id_label',
+				'filter_aria_label', 'filter2_aria_label', 'cat_id_aria_label',
+				'filter_statustext', 'filter2_statustext', 'cat_id_statustext',
+			]))
+		));
 		// send configured image proxy to client-side
 		$content['image_proxy'] = self::image_proxy();
 		$content['no_vfs'] = !$GLOBALS['egw_info']['user']['apps']['filemanager'];

@@ -726,6 +726,7 @@ trust servers seen / unseen info	mail	de	Abruf des ungelesen/gelesen Status des 
 trust the server when retrieving the folder status. if you select no, we will search for the unseen messages and count them ourselves	mail	de	EGroupware verwendet die Statusinformationen Ihres E-Mail Servers. Wählen Sie hier nur "Nein", wenn die Anzahl der ungelesenen E-Mails nicht stimmt. Die Eigenermittlung der Anzahl der ungelesenen E-Mails wirkt sich negativ auf die Performance des E-Mail-Moduls aus.
 trying to recover from session data	mail	de	Versuch der Wiederherstellung aus den gespeicherten Session-Daten
 turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	de	Deaktivieren Sie die horizontale Trennlinie zwischen dem Text Ihrer E-Mail und der Signatur.
+type of search	mail	de	Art der Suche
 unable to fetch vacation!	mail	de	Abwesenheitsnotiz konnte nicht gelesen werden!
 unconditional	mail	de	immer
 undelete	mail	de	Als gelöscht markiert entfernen

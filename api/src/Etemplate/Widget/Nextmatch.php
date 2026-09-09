@@ -312,10 +312,50 @@ class Nextmatch extends Etemplate\Widget
 			return;
 		}
 		// check if we have a filter-template or need to generate one
+		if (($filterTemplate = self::computeFilterTemplate($this->attrs, $value)))
+		{
+			self::setElementAttribute($this->id, "filter_template", $filterTemplate);
+			self::setElementAttribute($this->id, "filterTemplate", $filterTemplate);
+		}
+		// stop NM itself from generating search, filter(2) and cat_id widgets
+		foreach(['search', 'filter', 'filter2', 'cat_id'] as $key)
+		{
+			Etemplate::setElementAttribute($this->id ?? 'nm', 'no_'.$key, true);
+		}
+	}
+
+	/**
+	 * Compute the filterTemplate attribute value for a nextmatch widget: either its own
+	 * explicitly configured filter-template, or an auto-generated one (a real "$app.$rest.filter"
+	 * template if it exists, else a dynamically-built /api/filter-template.php URL extracting
+	 * search/sort/filter widgets straight out of the rows template).
+	 *
+	 * Normally called by beforeSendToClient() above, for a nextmatch that's part of a normal
+	 * server-side render pass. Also directly callable for a nextmatch nested inside a separately,
+	 * lazily client-side-loaded <et2-template template="..."> inclusion widget (eg. mail's own
+	 * "mail.index.splitter") - that inclusion pattern means the nested nextmatch's own
+	 * beforeSendToClient() never runs as part of ANY server-side pass at all (Widget\Template::
+	 * beforeSendToClient() only hands the client a lazy-load URL for the whole included template,
+	 * it never server-side-processes what's inside it), so the owning app has to call this
+	 * directly and set the result itself via Etemplate::setElementAttribute($widgetId,
+	 * 'filterTemplate', $url) - see EGroupware\Mail\Ui::index() for the first real caller (found
+	 * live 2026-09-09, ralf: mail's own filter-icon missing entirely, confirmed via a missing
+	 * filter-template.php request in the network tab - infolog/addressbook/timesheet don't nest
+	 * their own nextmatch this way, so they never hit this gap).
+	 *
+	 * @param array $attrs widget attrs (id, template, filter_label, no_filter, etc.) - same keys
+	 *  beforeSendToClient() reads off $this->attrs
+	 * @param array $value content values for this widget - same keys beforeSendToClient() reads
+	 *  off its own $value
+	 * @return string|null the filterTemplate attribute value (a real template name, or a
+	 *  filter-template.php URL), or null if this nextmatch has no filter-template at all
+	 */
+	public static function computeFilterTemplate(array $attrs, array $value=[]) : ?string
+	{
 		$rest = $tpl = null;
-		$rows_template = isset($value['template']) ? $value['template'] : ($this->attrs['template'] ?? $this->attrs['options'] ?? null);
-		$template_name = $value['filter_template'] ?? $this->attrs['filterTemplate'] ?? $this->attrs['filter_template'] ?? null;
-		if($template_name === null && !array_key_exists('filter_template', $this->attrs) && !array_key_exists('filterTemplate', $this->attrs))
+		$rows_template = $value['template'] ?? $attrs['template'] ?? $attrs['options'] ?? null;
+		$template_name = $value['filter_template'] ?? $attrs['filterTemplate'] ?? $attrs['filter_template'] ?? null;
+		if($template_name === null && !array_key_exists('filter_template', $attrs) && !array_key_exists('filterTemplate', $attrs))
 		{
 			$parts = explode('.', $rows_template);
 			// remove rows
@@ -359,19 +399,19 @@ class Nextmatch extends Etemplate\Widget
 		        'cat_id'  => 'Category'] as $key => $label)
 			{
 				$disable_attr = $key === 'cat_id' ? 'no_cat' : 'no_'.$key;
-				if (empty($value[$disable_attr] ?? $this->attrs[$disable_attr] ?? null))
+				if (empty($value[$disable_attr] ?? $attrs[$disable_attr] ?? null))
 				{
-					$url .= '&'.$key.'='.urlencode($value[$key.'_label'] ?? $this->attrs[$key.'_label'] ??
-							$value[$key.'_aria_label'] ?? $this->attrs[$key.'_aria_label'] ??
-							$value[$key.'_statustext'] ?? $this->attrs[$key.'_statustext'] ?? $label);
+					$url .= '&'.$key.'='.urlencode($value[$key.'_label'] ?? $attrs[$key.'_label'] ??
+							$value[$key.'_aria_label'] ?? $attrs[$key.'_aria_label'] ??
+							$value[$key.'_statustext'] ?? $attrs[$key.'_statustext'] ?? $label);
 				}
 			}
-			foreach(array_keys($this->attrs+$value) as $key)
+			foreach(array_keys($attrs+$value) as $key)
 			{
 				if (!str_ends_with($key, '_label') && !in_array($key, ['filter', 'filter2', 'cat_id']) &&
 					preg_match('/^(filter|cat_|no_search|favorites|template)/', $key))
 				{
-					$val = $value[$key] ?? $this->attrs[$key] ?? '';
+					$val = $value[$key] ?? $attrs[$key] ?? '';
 					$url .= '&' . $key . '=' . urlencode((string)$val);
 				}
 			}
@@ -386,16 +426,7 @@ class Nextmatch extends Etemplate\Widget
 				$url = Template::rel2url($tpl->rel_path);
 			}
 		}
-		if($template_name)
-		{
-			self::setElementAttribute($this->id, "filter_template", $url ?? $template_name);
-			self::setElementAttribute($this->id, "filterTemplate", $url ?? $template_name);
-		}
-		// stop NM itself from generating search, filter(2) and cat_id widgets
-		foreach(['search', 'filter', 'filter2', 'cat_id'] as $key)
-		{
-			Etemplate::setElementAttribute($this->id ?? 'nm', 'no_'.$key, true);
-		}
+		return $template_name ? ($url ?? $template_name) : null;
 	}
 
 	/**

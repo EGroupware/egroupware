@@ -738,6 +738,7 @@ trust servers seen / unseen info	mail	en	Trust servers SEEN / UNSEEN info
 trust the server when retrieving the folder status. if you select no, we will search for the unseen messages and count them ourselves	mail	en	Trust the server when retrieving the folder status. if you select no, we will search for the UNSEEN messages and count them ourselves.
 trying to recover from session data	mail	en	Trying to recover from session data
 turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	en	Turn off horizontal line between signature and composed message.\nIf you use templates, this option is only applied to the text part of the message.
+type of search	mail	en	Type of search
 unable to fetch vacation!	mail	en	Unable to fetch vacation!
 unconditional	mail	en	Unconditional
 undelete	mail	en	Undelete
