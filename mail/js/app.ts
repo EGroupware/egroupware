@@ -3030,7 +3030,12 @@ export class MailApp extends EgwApp
 				{
 					_node.querySelector("body").dispatchEvent(new Event('load'));
 				}
-				const print = toolbar.getActionById('print');
+				// found live 2026-09-09 while adding test coverage: no guard here for the
+				// (real, unremarkable) case where no toolbar/displayToolbar action manager
+				// exists yet - eg. a popup/mobile view without one, or just timing - crashing
+				// with an uncaught TypeError right after the images were already shown, same
+				// null-check this method's own OTHER toolbar access already has above.
+				const print = toolbar?.getActionById('print');
 				if (print)
 				{
 					if (!print.data)

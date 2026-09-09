@@ -1,6 +1,6 @@
 # Mail: test-coverage audit and gap-closing plan
 
-## Status: audit complete (2026-09-09); priority 1 done; priority 2 (JMAP/shim path) done except for items blocked on a live/mocked IMAP+SMTP connection, PGP/S-MIME adjacency, or DB-backed CLI flakiness (see Progress log for the full list); a SECOND live-reported Reply-To regression found+fixed along the way (the shim's send-time re-fetch never read replyTo/Priority/read-receipt/thread-headers back from the stored draft); priority 3 (send/SMTP side) - `Smtp.php::mailbox_address()`, `Transport.php::sendJmap()` (with a real bug found+fixed there - a real-JMAP-transport send always produced a message with NO body/attachments at all), and `ApiHandler.php`'s `returnVacation()`/`parseAddressList()` done; remaining priority-3 items all need real IMAP/SMTP/Sieve connections; now on priority 4 (`app.ts`/`Ui\*Handler.php`) - `MailApp.markOpenedMessageRead()` done (see Progress log)
+## Status: audit complete (2026-09-09); priority 1 done; priority 2 (JMAP/shim path) done except for items blocked on a live/mocked IMAP+SMTP connection, PGP/S-MIME adjacency, or DB-backed CLI flakiness (see Progress log for the full list); a SECOND live-reported Reply-To regression found+fixed along the way (the shim's send-time re-fetch never read replyTo/Priority/read-receipt/thread-headers back from the stored draft); priority 3 (send/SMTP side) - `Smtp.php::mailbox_address()`, `Transport.php::sendJmap()` (with a real bug found+fixed there - a real-JMAP-transport send always produced a message with NO body/attachments at all), and `ApiHandler.php`'s `returnVacation()`/`parseAddressList()` done; remaining priority-3 items all need real IMAP/SMTP/Sieve connections; priority 4 (`app.ts`/`Ui\*Handler.php`) - `MailApp.markOpenedMessageRead()`/`resolveExternalImages()` done (with a real bug found+fixed in the latter - unguarded `toolbar.getActionById()` null-dereference on the "Show" button); also fixed 2 more live-reported Sieve vacation/notification bugs along the way, verified via a new `sieve-test`-based testing technique (see Progress log)
 
 Full-codebase scan of `mail/js/*.ts`, `mail/src/*.php`, `mail/inc/*.php`, `api/src/Mail.php` and
 `api/src/Mail/*.php` (including the `Jmap/` shim + real-JMAP layer), cross-referenced against every
@@ -351,9 +351,25 @@ method-by-method list isn't practical:
   `mdnsent`/`mdnnotsent`). `Et2Dialog.show_dialog` and `egw.jsonq` are monkey-patched for the
   duration of each test (restored in `afterEach`), same established pattern as
   `MailMobileViewFlag.test.ts`'s own `etemplate2.getByApplication` stub.
+- **Done (2026-09-09)**: `MailApp.resolveExternalImages()` - 13 tests,
+  `mail/js/test/MailAppResolveExternalImages.test.ts`. Genuinely untested until now, with real
+  privacy/security risk (the client-side half of the "blocked external image" feature - a broken
+  guard could bypass an admin-forced "Never allow" preference, or mis-show the HTTP-vs-HTTPS
+  security warning). **Found and fixed a real bug** while writing this: the "Show" button's click
+  handler unconditionally called `toolbar.getActionById('print')` with no null-guard - `toolbar`
+  is `null` whenever no toolbar/displayToolbar action manager exists yet (a popup/mobile view
+  without one, or just timing), throwing an uncaught `TypeError` right after the images were
+  already shown and the banner removed; the method's own OTHER toolbar access a few lines above
+  already had this exact guard. Fixed with `toolbar?.getActionById('print')`, matching that
+  existing precedent. Covers: the no-blocked-images no-op, the default "ask for permission"
+  banner, never double-showing the banner, the forced "Never" preference correctly suppressing
+  the banner entirely, the `show=true` override bypassing "Never" (the print-with-images URL
+  mode), the already-allow-listed-domain auto-resolve path, HTTP-vs-HTTPS image-proxy routing,
+  the HTTP security-warning (red banner) gating, and all three banner buttons (Show/Allow/Close)
+  including Allow's domain-persistence vs Show's one-time-only behaviour.
 - Message display orchestration (rest untested): `preview()`, `renderMessageInto()` (only the
   small `retryAttachmentIndexForRow()` slice extracted from it is covered),
-  `resolveAttachmentViewUrls()`, `resolveExternalImages()`.
+  `resolveAttachmentViewUrls()`.
 - Bulk flag/delete: see priority 1 above.
 - Compose popup wiring: `openComposePopupUrl()`, `openComposePopupUrlPost()`,
   `bootstrapComposePopup()` (recently modified by a concurrent session for PGP support - untested
@@ -524,3 +540,22 @@ Kept for completeness, but explicitly deprioritized until the above is in better
   deliberately deferred), folder-tree UI (~20 methods), search/filter UI, attachments UI,
   drag-and-drop, and the entire `mail/src/Ui/*Handler.php` delegate-class set (all untested beyond
   `ProfileHandler::quotaDisplay()`/`AttachmentJmap`).
+- 2026-09-09: interrupted by a live-reported Sieve regression (a follow-up on
+  `api/src/Mail/Sieve/Script.php`'s vacation-modus "notice" fix, `c7db44df`) - found+fixed two more
+  bugs in the same generation logic, both only triggered when email notification is also enabled
+  alongside vacation (an unconditional trailing `keep;` undoing the fix, and a `require [...]`
+  syntax corruption that failed the whole script to compile). Verified with a NEW testing
+  technique for this codebase: generate the actual script via `Script`, run it through a real
+  Sieve interpreter (Dovecot Pigeonhole's `sieve-test`), assert on its reported compile
+  result/actions - 7 tests, `api/tests/Mail/Sieve/ScriptVacationNotificationTest.php`, confirmed
+  to fail against the pre-fix code. Not tracked as its own priority-N line item (bug-driven, not
+  audit-driven, and outside `doc/ai/projects/mail-test-coverage.md`'s own JMAP/mail-JS/mail-PHP
+  scope), but the coverage and the `sieve-test` technique are real and reusable for any future
+  Sieve work.
+- 2026-09-09: back to priority 4 - `MailApp.resolveExternalImages()` (13 tests,
+  `MailAppResolveExternalImages.test.ts`) done - see priority-4 entry above for what's covered,
+  including a real bug found+fixed (an unguarded `toolbar.getActionById()` null-dereference on the
+  "Show" button). Full JS suite: 152 files, 2043 tests, all passing. Remaining priority-4 work:
+  `preview()`, `renderMessageInto()`, `resolveAttachmentViewUrls()`, compose popup wiring
+  (PGP-adjacent, deliberately deferred), folder-tree UI (~20 methods), search/filter UI,
+  attachments UI, drag-and-drop, and the entire `mail/src/Ui/*Handler.php` delegate-class set.
