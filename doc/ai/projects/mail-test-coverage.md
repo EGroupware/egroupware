@@ -1,6 +1,6 @@
 # Mail: test-coverage audit and gap-closing plan
 
-## Status: audit complete (2026-09-09); priority 1 done; priority 2 (JMAP/shim path) done except for items blocked on a live/mocked IMAP+SMTP connection, PGP/S-MIME adjacency, or DB-backed CLI flakiness (see Progress log for the full list); a SECOND live-reported Reply-To regression found+fixed along the way (the shim's send-time re-fetch never read replyTo/Priority/read-receipt/thread-headers back from the stored draft); priority 3 (send/SMTP side) - `Smtp.php::mailbox_address()`, `Transport.php::sendJmap()` (with a real bug found+fixed there - a real-JMAP-transport send always produced a message with NO body/attachments at all), and `ApiHandler.php`'s `returnVacation()`/`parseAddressList()` done; remaining priority-3 items all need real IMAP/SMTP/Sieve connections (see Progress log)
+## Status: audit complete (2026-09-09); priority 1 done; priority 2 (JMAP/shim path) done except for items blocked on a live/mocked IMAP+SMTP connection, PGP/S-MIME adjacency, or DB-backed CLI flakiness (see Progress log for the full list); a SECOND live-reported Reply-To regression found+fixed along the way (the shim's send-time re-fetch never read replyTo/Priority/read-receipt/thread-headers back from the stored draft); priority 3 (send/SMTP side) - `Smtp.php::mailbox_address()`, `Transport.php::sendJmap()` (with a real bug found+fixed there - a real-JMAP-transport send always produced a message with NO body/attachments at all), and `ApiHandler.php`'s `returnVacation()`/`parseAddressList()` done; remaining priority-3 items all need real IMAP/SMTP/Sieve connections; now on priority 4 (`app.ts`/`Ui\*Handler.php`) - `MailApp.markOpenedMessageRead()` done (see Progress log)
 
 Full-codebase scan of `mail/js/*.ts`, `mail/src/*.php`, `mail/inc/*.php`, `api/src/Mail.php` and
 `api/src/Mail/*.php` (including the `Jmap/` shim + real-JMAP layer), cross-referenced against every
@@ -337,8 +337,22 @@ optimistic-clear, no hard guard yet).
 test files for the template to reuse). Standout untested areas, given the file's size a full
 method-by-method list isn't practical:
 
-- Message display orchestration: `preview()`, `renderMessageInto()` (only the small
-  `retryAttachmentIndexForRow()` slice extracted from it is covered), `markOpenedMessageRead()`,
+- **Done (2026-09-09)**: `MailApp.markOpenedMessageRead()` - 12 tests,
+  `mail/js/test/MailAppMarkOpenedMessageRead.test.ts`. `MailMobileViewFlag.test.ts` already
+  exercised its normal JMAP-flagging path indirectly (through `mobileView()`/`openMessage()`), but
+  not its own guard conditions or the MDN (read-receipt) prompt branch - both genuinely untested,
+  both with real "silently wrong" risk (a broken guard could re-flag an already-read message on
+  every open; a broken MDN gate could never prompt for a receipt request, or re-prompt one already
+  answered). Covers: the three early-return guards (no data/no `class`/neither unseen-nor-recent),
+  stripping only `unseen`/`recent` from `class` (keeping other class names), the classic
+  `ajax_flagMessages` jsonq fallback firing even for a non-JMAP row (whose `messageReference()`
+  throws) while the JMAP `setSystemFlag()` call is correctly skipped, the `pendingReadMark`
+  tracking lifecycle, and all four MDN-prompt gating combinations (`dispositionnotificationto` x
+  `mdnsent`/`mdnnotsent`). `Et2Dialog.show_dialog` and `egw.jsonq` are monkey-patched for the
+  duration of each test (restored in `afterEach`), same established pattern as
+  `MailMobileViewFlag.test.ts`'s own `etemplate2.getByApplication` stub.
+- Message display orchestration (rest untested): `preview()`, `renderMessageInto()` (only the
+  small `retryAttachmentIndexForRow()` slice extracted from it is covered),
   `resolveAttachmentViewUrls()`, `resolveExternalImages()`.
 - Bulk flag/delete: see priority 1 above.
 - Compose popup wiring: `openComposePopupUrl()`, `openComposePopupUrlPost()`,
@@ -502,3 +516,11 @@ Kept for completeness, but explicitly deprioritized until the above is in better
   pipeline via the shared `ComposeMessageBuilder` trait) - not attempted either. Remaining
   reasonably-testable priority-3 work is now thin; consider priority 4 (`app.ts`/`Ui\*Handler.php`)
   next, or revisit priority-2's DB-flakiness-blocked `Identity.php::synthesize()`.
+- 2026-09-09: started priority 4 - `MailApp.markOpenedMessageRead()` (12 tests,
+  `MailAppMarkOpenedMessageRead.test.ts`) done - see priority-4 entry above for what's covered.
+  Full JS suite: 151 files, 2031 tests, all passing. Remaining priority-4 work: the rest of
+  message-display orchestration (`preview()`, `renderMessageInto()`, `resolveAttachmentViewUrls()`,
+  `resolveExternalImages()`), compose popup wiring (`bootstrapComposePopup()` - PGP-adjacent,
+  deliberately deferred), folder-tree UI (~20 methods), search/filter UI, attachments UI,
+  drag-and-drop, and the entire `mail/src/Ui/*Handler.php` delegate-class set (all untested beyond
+  `ProfileHandler::quotaDisplay()`/`AttachmentJmap`).
