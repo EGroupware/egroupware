@@ -148,14 +148,26 @@ optimistic-clear, no hard guard yet).
   field/body/text), and the tokenizer's quoted-phrase/AND/OR/+/- syntax. The single-vs-AND-wrapped
   result-collapsing contract (exactly 1 condition returned bare, 2+ wrapped) is exercised
   throughout rather than as its own separate test.
-- `mail/js/jmap.ts` (rest still untested): most push/WebSocket payload-building
-  (`buildWsPushPayload`, `buildEmailPush`/`buildMailboxPush`/`buildEmailDeletePush`), S/MIME
-  encrypt (`smimeEncryptBody`, `resolveSmimeSignedAttachments`), PGP dispatch/cache methods
-  (`findPgpPart`, `peekPgpSignature`, `peekPgpEncrypted`, `pgpEncryptBody` - as opposed to the
-  already-tested lower-level byte helpers), `saveDraft()` (only `sendNewEmail()` is exercised),
-  most attachment upload/resolve methods (`uploadAttachment`, `uploadVfsAttachment`,
-  `downloadBlobUrl`, `reuploadAttachmentForAccount`, `resolveOutgoingInlineImages`,
-  `fetchAttachmentsMetadata`, `getAttachmentViewUrl`).
+- **Done (2026-09-09)**: `mail/js/jmap.ts`'s `saveDraft()` (and, along the way, the
+  `resolveComposeContext()` private helper it shares with `sendNewEmail()`) - 9 tests,
+  `mail/js/test/MailJmapSaveDraft.test.ts`. Covers: the reimport-and-replace semantics (create the
+  new draft first, only then best-effort-destroy the previous copy - a cleanup failure, thrown or
+  merely a non-throwing `notDestroyed` response, must never fail the save itself, which already
+  succeeded), identity resolution by the profileID's own `ident_id` suffix (not just "the first
+  identity"), the shim-only destroy `mailboxId` extension, and `resolveComposeContext()`'s own
+  "no matching identity"/"no Drafts folder" failure branches. Found (characterization, not fixed):
+  unlike `destroyIds()`'s bulk-delete counterpart, the old-draft cleanup call never actually
+  inspects the response for `notDestroyed` - only a thrown/rejected request is caught, so a
+  server-reported (non-throwing) failure to destroy is silently treated as success.
+- `mail/js/jmap.ts` (rest still untested - S/MIME/PGP methods deliberately skipped, a concurrent
+  session is actively working in that area, see priority-3's own note): most push/WebSocket
+  payload-building (`buildWsPushPayload`, `buildEmailPush`/`buildMailboxPush`/
+  `buildEmailDeletePush`), S/MIME encrypt (`smimeEncryptBody`, `resolveSmimeSignedAttachments`),
+  PGP dispatch/cache methods (`findPgpPart`, `peekPgpSignature`, `peekPgpEncrypted`,
+  `pgpEncryptBody` - as opposed to the already-tested lower-level byte helpers), most attachment
+  upload/resolve methods (`uploadAttachment`, `uploadVfsAttachment`, `downloadBlobUrl`,
+  `reuploadAttachmentForAccount`, `resolveOutgoingInlineImages`, `fetchAttachmentsMetadata`,
+  `getAttachmentViewUrl`).
 - `api/src/Mail/Jmap/Imap.php`: `emailQuery()`/`emailGet()`'s real-account (non-"0") IMAP
   search/fetch translation (every existing test uses the demo fixture or a mocked adapter that
   bypasses real search/fetch construction), `resolveSmime()`/`resolveTnef()`'s IMAP-fetch half,
@@ -262,9 +274,13 @@ Kept for completeness, but explicitly deprioritized until the above is in better
   priority-2 line item above since it was bug-driven, not audit-driven, but the coverage is real
   and future audits of this doc should account for it.
 - 2026-09-09: back to priority 2 - `mail/js/jmap.ts`'s `keywordsToRowFlags()`/
-  `aggregateThreadKeywords()` (19 tests, `MailJmapThreadKeywordAggregation.test.ts`) and
+  `aggregateThreadKeywords()` (19 tests, `MailJmapThreadKeywordAggregation.test.ts`),
   search/filter/sort translation (`buildFilter`/`buildTokenizedFilter`/`flaggedFilter`/`buildSort`,
-  30 tests, `MailJmapFilterAndSort.test.ts`) done. Rest of priority 2 (push/WebSocket
-  payload-building, S/MIME encrypt, PGP dispatch/cache, `saveDraft()`, attachment upload/resolve,
-  the shim's real-account `emailQuery`/`emailGet`/`resolveSmime`/`resolveTnef`/
-  `emailSubmissionSet`, and the entire real-JMAP-facing layer) still open.
+  30 tests, `MailJmapFilterAndSort.test.ts`), and `saveDraft()` (9 tests,
+  `MailJmapSaveDraft.test.ts`) done. Deliberately skipping the S/MIME encrypt and PGP dispatch/
+  cache methods for now - a concurrent session is actively working in that exact area (confirmed
+  by a live "PGP/S-MIME signatures must not verify unless the key/cert claims the sender's
+  address" fix landing mid-session). Rest of priority 2 (push/WebSocket payload-building,
+  attachment upload/resolve, the shim's real-account
+  `emailQuery`/`emailGet`/`resolveSmime`/`resolveTnef`/`emailSubmissionSet`, and the entire
+  real-JMAP-facing layer) still open.
