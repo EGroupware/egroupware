@@ -33,7 +33,22 @@ readdirSync('./chunks').forEach(name => {
 
 // Timestamp identifying this build, written to build-epoch.json below so a running session
 // can cheaply poll for "is a newer build available" without re-fetching any JS bundle.
-const buildEpoch = Date.now();
+//
+// Reassigned in buildStart below (not just set once here) because rollup's watch mode keeps
+// this same config module instance alive across every incremental rebuild - a plain top-level
+// const would freeze both this and entryManifest's filename to whatever they were when the
+// watcher started, so a later rebuild would silently overwrite that same
+// chunks/build-manifest-<epoch>.json with fresh hashes instead of writing a new one. That would
+// rot the pin for any document already open: it always asks for its own epoch's manifest, but
+// the file behind that epoch would have quietly become a different build.
+let buildEpoch = Date.now();
+
+// Populated in generateBundle below: logical entry path relative to EGW_SERVER_ROOT (eg.
+// "/infolog/js/app.min.js") -> this build's hashed physical path (eg.
+// "/chunks/infolog-js-app.min-<hash>.js"). Written to chunks/build-manifest-<epoch>.json so the
+// server can resolve an entry against the exact build a document was pinned to, even after a
+// later build moves that entry to a new hash. Reset in buildStart below, same reason as buildEpoch.
+let entryManifest = {};
 
 // Turn on minification
 const do_minify = false;
@@ -79,9 +94,11 @@ const config = {
         }
     },
     output: {
-        // TODO: Hashed entries, when server supports
-        //entryFileNames: '[name]-[hash].js',
-        entryFileNames: '[name].js',
+        // Hashed entries, addressable like chunks already are - entries land in chunks/ too, so
+        // an old build stays servable as long as its files aren't swept by the atime GC above.
+        // Flattens the input key's slashes into a collision-free name across all apps, eg.
+        // "infolog/js/app.min" -> "chunks/infolog-js-app.min-<hash>.js"
+        entryFileNames: (chunkInfo) => 'chunks/' + chunkInfo.name.replace(/\//g, '-') + '-[hash].js',
         chunkFileNames: 'chunks/[name]-[hash].js',
         // Best practice: use this:
         //dir: './dist',
@@ -221,10 +238,34 @@ const config = {
         }
     },
     {
+        // Fresh identity for this build, before anything else in the pipeline runs - see the
+        // comments on buildEpoch/entryManifest above for why this can't just be top-level state.
+        buildStart () {
+            buildEpoch = Date.now();
+            entryManifest = {};
+        }
+    },
+    {
+        // Record this build's logical-entry -> hashed-physical-path mapping (see entryManifest
+        // above). generateBundle sees final hashed fileNames, before they're written to disk.
+        generateBundle (options, bundle) {
+            for (const file of Object.values(bundle)) {
+                if (file.type === 'chunk' && file.isEntry) {
+                    entryManifest['/' + file.name + '.js'] = '/' + file.fileName;
+                }
+            }
+        }
+    },
+    {
         // Write out this build's epoch, so a running session can cheaply poll for
         // "is a newer build available" (see api/js/jsapi/egw.js) without touching any JS bundle.
+        // The manifest is unversioned, same as this - the server only ever resolves an entry
+        // against the current build (a fresh page render) or not at all (ajax_exec, where the
+        // client resolves against its own already-resident copy instead), so there is nothing to
+        // keep a history of and nothing for the chunks/ GC to sweep here.
         writeBundle () {
             writeFileSync('./api/js/build-epoch.json', JSON.stringify({epoch: buildEpoch}));
+            writeFileSync('./api/js/build-manifest.json', JSON.stringify(entryManifest));
         }
     }],
 

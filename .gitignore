@@ -87,3 +87,4 @@ resources/js/app.js
 timesheet/js/app.js
 /doc/.phpunit.result.cache
 /api/js/build-epoch.json
+/api/js/build-manifest.json

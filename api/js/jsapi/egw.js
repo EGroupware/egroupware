@@ -52,6 +52,8 @@ window.app = {classes: {}};
 	window.egw_webserverUrl = egw_script.getAttribute('data-url');
 	window.egw_appName = egw_script.getAttribute('data-app');
 	window.egw_buildEpoch = parseInt(egw_script.getAttribute('data-epoch')) || null;
+	// logical entry path -> hashed physical path, filtered server-side to this user's apps
+	window.egw_manifest = JSON.parse(egw_script.getAttribute('data-manifest')) || {};
 
 	// split includes in legacy js and modules
 	const legacy_js_regexp = /\/dhtmlx|jquery-ui|^etemplate\/|^phpbrain\/|^phpgwapi\//;
@@ -196,10 +198,16 @@ window.app = {classes: {}};
 	}
 
 	// make our promise global, as legacy code calls egw_LAB.wait which we assign to egw_ready.then
+	//
+	// Routed through window.egw_import() (egw_files.ts) rather than a bare import() - the
+	// `egw(window).message` access above already instantiated every window-local module
+	// (including Files, which sets this up) before this code ever runs. An entry (app.min.js,
+	// etemplate2.js) here is hashed at build time, so this resolves it against this document's
+	// own window.egw_manifest instead of assuming rel_src is already a fetchable path.
 	window.egw_LAB = window.egw_ready =
 		legacy_js_import(include.filter((src) => src.match(legacy_js_regexp) !== null), window.egw_webserverUrl)
 			.then(() => Promise.all(include.filter((src) => src.match(legacy_js_regexp) === null)	//.reverse()
-				.map(rel_src => import(window.egw_webserverUrl+'/'+rel_src)
+				.map(rel_src => window.egw_import('/'+rel_src)
 					.catch((err) => {window.setTimeout(() => {throw err;},0)})
 	))).then(() =>
 	{

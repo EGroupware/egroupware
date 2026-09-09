@@ -813,7 +813,7 @@ class Open implements OpenModule
 		const egwScriptClone = doc.createElement('script') as HTMLScriptElement;
 		egwScriptClone.type = 'module';
 		egwScriptClone.id = 'egw_script_id';	// egw.js's own bootstrap finds itself by this id
-		['data-url', 'data-app', 'data-epoch', 'data-include'].forEach((name) =>
+		['data-url', 'data-app', 'data-epoch', 'data-include', 'data-manifest'].forEach((name) =>
 		{
 			const value = egwScript.getAttribute(name);
 			if (value !== null) egwScriptClone.setAttribute(name, value);
@@ -827,8 +827,10 @@ class Open implements OpenModule
 		// own tag always has one, since ITS window/session-tracking context is fresh). A
 		// clientSidePopup() is always exactly that: a fresh context that has never received
 		// _method's own app bundle, so it's added explicitly here if the copied list doesn't
-		// already have it - reusing an existing app.min.js entry's own cache-bust query string
-		// (they're all written by the same build) rather than inventing one.
+		// already have it. Entries in data-include are always the bare logical path (app.min.js
+		// is hashed at build time, but that's resolved client-side by whatever loads
+		// data-include - egw_import(), same as here - not baked into the string itself), so this
+		// is a plain string match/push, no manifest lookup needed.
 		// data-app is likewise the OPENER's own app (or, for the top framework window, "eGroupWare"
 		// itself - the opener's #egw_script_id isn't necessarily the content window's own), not
 		// _method's app - set it explicitly rather than carrying the copied value forward. Every
@@ -841,11 +843,10 @@ class Open implements OpenModule
 			egwScriptClone.setAttribute('data-app', targetApp);
 
 			const include : string[] = JSON.parse(egwScriptClone.getAttribute('data-include') || '[]');
-			if (!include.some((entry) => entry.startsWith(targetApp + '/js/app.min.js')))
+			const entry = targetApp + '/js/app.min.js';
+			if (!include.includes(entry))
 			{
-				const sampleBundle = include.find((entry) => /\/js\/app\.min\.js\?/.test(entry));
-				const cacheBust = sampleBundle ? sampleBundle.split('?')[1] : '';
-				include.push(targetApp + '/js/app.min.js' + (cacheBust ? '?' + cacheBust : ''));
+				include.push(entry);
 				egwScriptClone.setAttribute('data-include', JSON.stringify(include));
 			}
 		}

@@ -280,8 +280,12 @@ class Etemplate extends Etemplate\Widget\Template
 		else	// first call
 		{
 			// check if application of template has a app.js file --> load it, preferring local min file if there
+			// app.min.js is hashed at build time and no longer exists under its literal name, so
+			// check the manifest first; a miss falls back to the literal file_exists() checks,
+			// exactly as before hashing existed
 			list($app) = explode('.',$this->name);
-			if (file_exists(EGW_SERVER_ROOT.($path = '/'.$app.'/js/app.min.js')) ||
+			$path = '/'.$app.'/js/app.min.js';
+			if (Framework\Bundle::resolveEntry($path) || file_exists(EGW_SERVER_ROOT.$path) ||
 				file_exists(EGW_SERVER_ROOT.($path = '/'.$app.'/js/app.js')))
 			{
 				Framework::includeJS($path);

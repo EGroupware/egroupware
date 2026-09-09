@@ -1153,15 +1153,29 @@ abstract class Framework extends Framework\Extra
 		}, self::get_script_links(true, false, $map));
 		$extra['app'] = $GLOBALS['egw_info']['flags']['currentapp'];
 		$extra['epoch'] = self::currentBuildEpoch();
+		// filtered logical->hashed manifest, so the two client-side concat sites (a lazy
+		// app.<name> load, and a clientSidePopup()'s own data-include patch) can resolve a
+		// hashed entry instead of guessing its cache-buster
+		$extra['manifest'] = Framework\Bundle::clientManifest();
 
 		// Static things we want to make sure are loaded first
 //$java_script .='<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.44/dist/themes/base.css">
 //<script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.44/dist/shoelace.js"></script>';
 
-		// load our clientside entrypoint egw.min.js with a cache-buster
-		$java_script .= '<script type="module" src="'.$GLOBALS['egw_info']['server']['webserver_url'].
-			'/api/js/jsapi/egw.min.js?'.filemtime(EGW_SERVER_ROOT.'/api/js/jsapi/egw.min.js').
-			'" id="egw_script_id"';
+		// load our clientside entrypoint egw.min.js - hashed at build time, so a resolved path
+		// needs no separate cache-buster; falls back to a filemtime-busted literal path for a
+		// pre-hashing install (no manifest written yet)
+		if (($egw_min_path = Framework\Bundle::resolveEntry('/api/js/jsapi/egw.min.js')))
+		{
+			$java_script .= '<script type="module" src="'.$GLOBALS['egw_info']['server']['webserver_url'].
+				$egw_min_path.'" id="egw_script_id"';
+		}
+		else
+		{
+			$java_script .= '<script type="module" src="'.$GLOBALS['egw_info']['server']['webserver_url'].
+				'/api/js/jsapi/egw.min.js?'.filemtime(EGW_SERVER_ROOT.'/api/js/jsapi/egw.min.js').
+				'" id="egw_script_id"';
+		}
 
 		// add values of extra parameter and class var as data attributes to script tag of egw.js
 		foreach($extra+self::$extra as $name => $value)
@@ -1722,14 +1736,19 @@ abstract class Framework extends Framework\Extra
 			$response->includeCSS($GLOBALS['egw_info']['server']['webserver_url'].$path);
 		}
 
-		// try to add app specific js file
-		if (file_exists(EGW_SERVER_ROOT.($path = '/'.$app.'/js/app.min.js')) ||
+		// try to add app specific js file - app.min.js is hashed at build time and no longer
+		// exists under its literal name, so check the manifest first; a miss falls back to the
+		// literal file_exists() checks, exactly as before hashing existed
+		$path = '/'.$app.'/js/app.min.js';
+		if (Framework\Bundle::resolveEntry($path) || file_exists(EGW_SERVER_ROOT.$path) ||
 			file_exists(EGW_SERVER_ROOT.($path = '/'.$app.'/js/app.js')))
 		{
 			self::includeJS($path);
 		}
 
-		// add all js files from Framework::includeJS()
+		// add all js files from Framework::includeJS() - js_includes() leaves an entry as its
+		// bare logical path; egw_import() (egw_files.ts) resolves it client-side against the
+		// manifest this document's own page render already stamped into it
 		$files = Framework\Bundle::js_includes(self::$js_include_mgr->get_included_files());
 		foreach($files as $path)
 		{

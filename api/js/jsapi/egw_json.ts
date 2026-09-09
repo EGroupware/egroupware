@@ -953,7 +953,11 @@ class Json implements JsonModule
 				// check if we need a not yet included app.js object --> include it now and return a Promise
 				else if (i == 1 && parts[0] == 'app' && typeof (_context || self.#wnd).app.classes[parts[1]] === 'undefined')
 				{
-					return (<any>self.#wnd).egw_import(this.webserverUrl+'/'+parts[1]+'/js/app.min.js?'+((new Date).valueOf()/86400000|0).toString())
+					// app.min.js is hashed at build time - hand egw_import() the bare logical
+					// path and let it resolve against window.egw_manifest itself (egw_files.ts),
+					// same as every other entry load; a miss there falls back to importing this
+					// literal path (today's Fallback, unchanged)
+					return (<any>self.#wnd).egw_import('/'+parts[1]+'/js/app.min.js')
 						.then(() => this.applyFunc(_func, args, _context || self.#wnd),
 							(err) =>
 							{
