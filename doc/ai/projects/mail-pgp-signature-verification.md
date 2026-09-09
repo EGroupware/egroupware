@@ -27,7 +27,8 @@ preference, fed by both the inline-key case AND, now, real Autocrypt headers), a
 an already-known contact, extended from S/MIME-only to BOTH S/MIME and PGP)** are DONE (2026-09-09,
 see their own phasing entries) - `Autocrypt-Gossip:` sending/receiving is now **DROPPED**
 (researched 2026-09-09 against Mailvelope's actual API source - not achievable, see its own entries
-under items 3/4) and item 6's mutual auto-encrypt preference is still plan only; item 2's
+under items 3/4) and item 6's mutual auto-encrypt preference is **NEXT UP** (marked 2026-09-09,
+still unbuilt); item 2's
 `prefer-encrypt` storage now HAS a real
 caller (item 4's wiring, when a header carries `prefer-encrypt=mutual`) but nothing reads it back
 yet (item 6 is what would). **Item 4's real-message wiring is now live-verified too** (2026-09-09,
@@ -872,7 +873,11 @@ enough (a plain `{email, armoredKey, keyFingerprint, keyUid, preferEncrypt?}` sh
 this reason - and later the SAME day, item 4's Autocrypt-header wiring landed and now feeds it too
 (see item 4's own entry for that half's details, including its own unverified-live caveat).
 
-### 6. New preference: "mutual" auto-encrypt
+### 6. New preference: "mutual" auto-encrypt - NEXT UP (2026-09-09)
+
+The only piece of the original items 5/6/7 grouping not yet done (item 5/7 shipped together, see
+their own entries above) - now that items 1-5/7 are done and both Mailvelope items (sign-on-send,
+Autocrypt-Gossip) are researched and dropped, this is the next thing to actually build.
 
 A second new preference (checkbox or 3-way select, TBD): when on, and the current compose's
 recipient(s) all have a stored `prefer_encrypt=mutual` (item 2's storage) **and** our own account's
@@ -883,7 +888,9 @@ for a **new** compose (not just reply-to-encrypted, which is already built - see
 (`bootstrapComposePopup()`, `mail/js/app.ts`) - the recipient-population-must-finish-first and
 recipient-key-check-must-actually-run lessons from that work apply identically here, just with a
 different *reason* to decide `pgpEncrypted='1'` (stored `prefer_encrypt` match instead of "was the
-source message encrypted").
+source message encrypted"). Reader side: `addressbook_bo::get_autocrypt_attributes()` (item 2's own
+storage API) already exists to read `prefer_encrypt` back per-address - this item is its first real
+caller.
 
 ### 7. Auto-add a verified sender's cert/key to an already-known contact, no dialog - DONE (2026-09-09), both S/MIME and PGP
 
@@ -949,29 +956,11 @@ underlying logic is unit-tested and the full mail JS suite (466/466) + build sta
 dialog-opening methods themselves are, like `setSmimeFlags()`/`setPgpSignatureFlags()` before them,
 DOM/widget-heavy and not unit-tested - see Phase H's own precedent for that decision).
 
-### 6. New preference: "mutual" auto-encrypt
-
-A second new preference (checkbox or 3-way select, TBD): when on, and the current compose's
-recipient(s) all have a stored `prefer_encrypt=mutual` (item 2's storage) **and** our own account's
-own `Autocrypt:` header also carries `prefer-encrypt=mutual` (item 3), auto-enable the `pgp` toggle
-for a **new** compose (not just reply-to-encrypted, which is already built - see item 4 in the
-"Reply/forward auto-matches" entry above). Reuses the exact same `togglePgpEncrypt({checked: true})`
-+ post-`bootstrapPromise` timing this session's reply/forward auto-encrypt work already established
-(`bootstrapComposePopup()`, `mail/js/app.ts`) - the recipient-population-must-finish-first and
-recipient-key-check-must-actually-run lessons from that work apply identically here, just with a
-different *reason* to decide `pgpEncrypted='1'` (stored `prefer_encrypt` match instead of "was the
-source message encrypted").
-
-### 7. S/MIME: auto-add a verified sender's cert to an already-known contact, no dialog
-
-Small addition to the existing S/MIME verify flow (`setSmimeFlags()`, `mail/js/app.ts`): when a
-message's S/MIME signature verifies (`data.verify` true) **and** the sender's email already matches
-an existing addressbook contact, call the same `ajax_smimeAddCertToContact` the dialog's "Add this
-certificate" button already uses, directly - skip the dialog entirely, since a *verified* signature
-from an *already-known* contact needs no extra confirmation (unlike an unknown/unverified one, which
-keeps today's click-to-add dialog unchanged). Also needs the same multi-key-per-address storage fix
-(item 1) - a contact with two addresses, each with their own real S/MIME cert, has exactly the same
-"second cert clobbers the first" problem PGP has today.
+*(Items 6 and 7 were originally drafted here too, duplicating the updated item 6/7 entries above
+almost word-for-word - leftover from this section's own original "plan only, nothing implemented
+yet" pass before items 1-5/7 were updated in place. Removed 2026-09-09 as stale/redundant now that
+item 6 has a single, current entry above marked NEXT UP and item 7 shipped (see its own DONE entry
+above) - keeping two copies of the same not-yet-current text was confusing, not informative.)*
 
 ### Other spec gaps/contradictions worth flagging now (not necessarily fixing in v1)
 
@@ -1048,8 +1037,11 @@ keeps today's click-to-add dialog unchanged). Also needs the same multi-key-per-
    `set_autocrypt_attributes()` when a header carries `prefer-encrypt=mutual`) - what's left is
    mutual auto-encrypt preference (item 6), which is what would actually READ it back via
    `get_autocrypt_attributes()`.
-6. Item 6 (mutual auto-encrypt preference) - the only piece of the original items 5/6/7 grouping
-   not yet done.
+6. **Item 6 (mutual auto-encrypt preference) - NEXT UP (2026-09-09).** The only piece of the
+   original items 5/6/7 grouping not yet done, and with items 1-5/7 done and both Mailvelope items
+   (planned-follow-up item 3, Autocrypt-Gossip) researched and dropped, the only remaining work in
+   this whole Autocrypt integration besides the known `pubkey_uploaded()` UI gap (item 1's own
+   entry).
 
 ## Explicitly out of scope for this project
 
