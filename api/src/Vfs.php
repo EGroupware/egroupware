@@ -493,8 +493,8 @@ class Vfs extends Vfs\Base
 						{
 							 $cmp *= -1;
 						}
-						// always use name as second sort criteria
-						if (!$cmp) $cmp = strcasecmp($a['name'], $b['name']);
+						// always use name as second sort criteria, natural order eg. "file2" before "file10"
+						if (!$cmp) $cmp = strnatcasecmp($a['name'], $b['name']);
 						return $cmp;
 					});
 					break;
@@ -507,7 +507,8 @@ class Vfs extends Vfs\Base
 				case 'mime':
 					$ok = uasort($result, function($a, $b) use ($dirsontop, $order, $sort_desc)
 					{
-						$cmp = strcasecmp($a[$order], $b[$order]);
+						// natural order eg. "file2" before "file10"
+						$cmp = strnatcasecmp($a[$order], $b[$order]);
 						// sort code, to place directories before files, if $dirsontop enabled
 						if ($dirsontop && ($a['mime'] == self::DIR_MIME_TYPE) !== ($b['mime'] == self::DIR_MIME_TYPE))
 						{
@@ -519,7 +520,7 @@ class Vfs extends Vfs\Base
 							$cmp *= -1;
 						}
 						// always use name as second sort criteria
-						if (!$cmp && $order != 'name') $cmp = strcasecmp($a['name'], $b['name']);
+						if (!$cmp && $order != 'name') $cmp = strnatcasecmp($a['name'], $b['name']);
 						return $cmp;
 					});
 					break;

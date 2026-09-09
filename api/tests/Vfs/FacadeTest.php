@@ -492,6 +492,55 @@ class FacadeTest extends LoggedInTest
 		$this->assertNotContains($log, $found);
 	}
 
+	public function testFindOrderNameIsNatural() : void
+	{
+		$dir = $this->getFilename('_natural');
+		Vfs::mkdir($dir);
+		// deliberately created out of both ASCII and natural order
+		$names = ['file2.txt', 'file10.txt', 'file1.txt', 'file11.txt', 'file20.txt'];
+		foreach($names as $name)
+		{
+			file_put_contents(Vfs::PREFIX . $dir . '/' . $name, 'x');
+		}
+
+		// mindepth=1 excludes $dir itself, matching how filemanager lists a
+		// directory's contents (filemanager_ui::get_vfs_options())
+		$found = Vfs::find($dir, ['mindepth' => 1, 'order' => 'name', 'sort' => 'ASC']);
+		$this->assertSame(
+			['file1.txt', 'file2.txt', 'file10.txt', 'file11.txt', 'file20.txt'],
+			array_map([Vfs::class, 'basename'], $found),
+			'Vfs::find() must sort names naturally (file2 before file10), not byte-wise ASCII'
+		);
+
+		// descending is just the reverse, still natural (not ASCII) order
+		$found_desc = Vfs::find($dir, ['mindepth' => 1, 'order' => 'name', 'sort' => 'DESC']);
+		$this->assertSame(
+			['file20.txt', 'file11.txt', 'file10.txt', 'file2.txt', 'file1.txt'],
+			array_map([Vfs::class, 'basename'], $found_desc)
+		);
+	}
+
+	public function testFindOrderMtimeTieBreaksNaturalByName() : void
+	{
+		$dir = $this->getFilename('_natural_mtime');
+		Vfs::mkdir($dir);
+		// same content -> same size, and created back-to-back so mtime very
+		// likely ties too, either way the name tie-break must be natural order
+		$names = ['img2.png', 'img10.png', 'img1.png'];
+		foreach($names as $name)
+		{
+			file_put_contents(Vfs::PREFIX . $dir . '/' . $name, 'x');
+			Vfs::touch($dir . '/' . $name, 1000000000);
+		}
+
+		$found = Vfs::find($dir, ['mindepth' => 1, 'order' => 'mtime', 'sort' => 'ASC']);
+		$this->assertSame(
+			['img1.png', 'img2.png', 'img10.png'],
+			array_map([Vfs::class, 'basename'], $found),
+			'name tie-break for numeric sort orders (mtime, size, ...) must be natural, not byte-wise ASCII'
+		);
+	}
+
 	// ---------------------------------------------------------------
 	// lock / unlock / checkLock
 	// ---------------------------------------------------------------
