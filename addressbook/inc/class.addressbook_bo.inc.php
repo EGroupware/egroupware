@@ -176,7 +176,8 @@ class addressbook_bo extends Api\Contacts
 	 * (Api\Contacts::FILES_PGP_PUBKEY/FILES_SMIME_PUBKEY, unchanged path/ACL/backend-dispatch via
 	 * pubkey_use_file()) now holds a JSON object keyed by lowercased address, eg.:
 	 *   {"rb@egroupware.org": "-----BEGIN PGP PUBLIC KEY BLOCK-----...",
-	 *    "ralfbecker@outdoor-training.de": "rb@egroupware.org"}
+	 *    "ralfbecker@outdoor-training.de": "rb@egroupware.org",
+	 *    "autocrypt": {"rb@egroupware.org": {"prefer-encrypt": "mutual"}}}
 	 * - a value is EITHER the armored key/cert text itself, OR (ralf's own proposed shape,
 	 * 2026-09-09) a plain address string naming another entry in the SAME object to use instead -
 	 * an alias, for when the identical key/cert legitimately covers more than one of a contact's
@@ -185,6 +186,14 @@ class addressbook_bo extends Api\Contacts
 	 * extract_key_for_address() for the exact format and the legacy-file (pre-fix, bare armored
 	 * text with no address distinction at all, still read by get_key() below) backward-
 	 * compatibility fallback.
+	 *
+	 * `"autocrypt"` (PGP only - ralf's own addition, 2026-09-09, "sorry I forgot about the
+	 * Autocrypt attributes") is a RESERVED top-level key, never a real address (a real address
+	 * always contains "@", or is the literal "*" fallback) - it holds Autocrypt
+	 * (https://docs.autocrypt.org/level1.html) per-address attributes like `prefer-encrypt`, keyed
+	 * ONLY by a "main"/root address that directly holds armored key text, never by an address
+	 * that's merely an ALIAS to another address' key - see get_autocrypt_attributes()/
+	 * set_autocrypt_attributes()/resolve_root_address() for how these are read/written/resolved.
 	 *
 	 * @param array $keys email|account_id => public key pairs to store
 	 * @param boolean $pgp true: PGP, false: S/Mime
@@ -269,10 +278,9 @@ class addressbook_bo extends Api\Contacts
 				if (!$forThisContact) continue;
 
 				// key is stored in file for sql backend or allways for pgp key
-				$path = null;
-				if ($contact['id'] && $this->pubkey_use_file($pgp, $contact))
+				$path = $this->key_storage_path($contact, $pgp);
+				if ($path)
 				{
-					$path =  Api\Link::vfs_path('addressbook', $contact['id'], $file);
 					$contact['files'] |= $pgp ? self::FILES_BIT_PGP_PUBKEY : self::FILES_BIT_SMIME_PUBKEY;
 					$existing = file_exists($path) ? file_get_contents($path) : '';
 					// remove evtl. existing legacy (non-JSON) pubkey from the CONTACT field too -
@@ -295,18 +303,7 @@ class addressbook_bo extends Api\Contacts
 				{
 					if ($path)
 					{
-						// check_perms && save check ACL, in case of access only via own-account we have to use root to allow the update
-						$backup = Api\Vfs::$is_root; Api\Vfs::$is_root = true;
-						// a contact that never had ANY file (photo/key/...) attached before has no
-						// .files/ directory yet - file_put_contents() can't create it implicitly
-						// (found live 2026-09-09 writing a test for this fix: the very first key
-						// ever stored for a brand-new contact silently failed to write)
-						if (!Api\Vfs::is_dir($dir = dirname($path)))
-						{
-							Api\Vfs::mkdir($dir, 0700, true);
-						}
-						if (file_put_contents($path, $newContent)) ++$updated;
-						Api\Vfs::$is_root = $backup;
+						if ($this->write_key_file($path, $newContent)) ++$updated;
 					}
 					else
 					{
@@ -328,50 +325,128 @@ class addressbook_bo extends Api\Contacts
 	}
 
 	/**
-	 * Merge new (address => armored key) pairs into a contact's existing stored key content.
+	 * VFS path a contact's key/cert content is stored under, or null if this contact/backend
+	 * stores it in the `pubkey` DB/LDAP/AD field instead (see pubkey_use_file()) - factored out of
+	 * set_keys() so set_autocrypt_attributes() can locate/update the SAME storage without
+	 * duplicating the file-vs-field decision.
 	 *
-	 * $existing may be: empty (nothing stored yet), the new per-address JSON object this method
-	 * itself produces (a value is EITHER the armored key/cert text itself, OR a plain address
-	 * string naming another entry in the SAME object to use instead - an alias, see set_keys()'s
-	 * own docblock for the full format), or a legacy pre-fix bare armored key/cert - upgraded here
-	 * into the new shape, keyed by whichever address detect_smime_address() can determine it
-	 * actually belongs to (S/MIME only - PGP has no server-side way to read a key's own User IDs,
-	 * see this class' docblock), falling back to `"*"` (address-unknown) when that's not possible.
-	 * An address NOT explicitly being updated by this call keeps resolving to that entry exactly
-	 * like before this fix (get_key()'s own one key applied to whichever address was asked about).
-	 * Addresses that ARE being updated this call always overwrite whatever was there for that
-	 * specific address (new key replaces old, no history).
+	 * @param array $contact
+	 * @param bool $pgp true: PGP, false: S/MIME
+	 * @return ?string
+	 */
+	private function key_storage_path(array $contact, bool $pgp) : ?string
+	{
+		if (!$contact['id'] || !$this->pubkey_use_file($pgp, $contact))
+		{
+			return null;
+		}
+		return Api\Link::vfs_path('addressbook', $contact['id'],
+			$pgp ? Api\Contacts::FILES_PGP_PUBKEY : Api\Contacts::FILES_SMIME_PUBKEY);
+	}
+
+	/**
+	 * Write new key/cert JSON content to the given VFS path, run as root like set_keys() itself
+	 * does (check_perms()/save() already checked ACL before this is called; access via own-account
+	 * ACL alone otherwise can't write the VFS file) - see set_keys()'s own comment for why the
+	 * `.files/` directory guard is needed (a contact that never had ANY file attached before has no
+	 * such directory yet, and file_put_contents() can't create it implicitly).
+	 *
+	 * @param string $path
+	 * @param string $content
+	 * @return bool
+	 */
+	private function write_key_file(string $path, string $content) : bool
+	{
+		$backup = Api\Vfs::$is_root; Api\Vfs::$is_root = true;
+		if (!Api\Vfs::is_dir($dir = dirname($path)))
+		{
+			Api\Vfs::mkdir($dir, 0700, true);
+		}
+		$ok = (bool)file_put_contents($path, $content);
+		Api\Vfs::$is_root = $backup;
+		return $ok;
+	}
+
+	/**
+	 * Decode a contact's stored key content into the per-address array shape, migrating legacy
+	 * (pre-fix, bare-armored-text) content into it first if it isn't already JSON - see
+	 * merge_keys_json()'s own docblock for the exact migration rule (S/MIME: keyed by whatever
+	 * detect_smime_address() reads out of it, falling back to `"*"`; PGP: always `"*"`, no
+	 * server-side address detection possible). Shared by merge_keys_json() (write side) and
+	 * get_autocrypt_attributes()/set_autocrypt_attributes() (read side), so both agree on exactly
+	 * where an existing key/cert ends up.
+	 *
+	 * @param string $existing current file/pubkey-field content, '' if nothing stored yet
+	 * @param bool $pgp true: PGP (no legacy-address-detection possible), false: S/MIME
+	 * @return array
+	 */
+	private static function decode_key_content(string $existing, bool $pgp) : array
+	{
+		$decoded = $existing !== '' ? json_decode($existing, true) : null;
+		if (is_array($decoded) && json_last_error() === JSON_ERROR_NONE)
+		{
+			return $decoded;
+		}
+		if ($existing === '')
+		{
+			return [];
+		}
+		$detectedAddress = !$pgp ? self::detect_smime_address($existing) : null;
+		return [($detectedAddress ?? '*') => $existing];
+	}
+
+	/**
+	 * Merge new (address => armored key) pairs, and/or (PGP only) new Autocrypt attributes, into a
+	 * contact's existing stored key content.
+	 *
+	 * $existing is decoded (and legacy content migrated) via decode_key_content() - see its own
+	 * docblock. A value is EITHER the armored key/cert text itself, OR a plain address string
+	 * naming another entry in the SAME object to use instead - an alias, see set_keys()'s own
+	 * docblock for the full format. An address NOT explicitly being updated by this call keeps
+	 * resolving to whatever entry it already had (get_key()'s own one key applied to whichever
+	 * address was asked about). Addresses that ARE being updated this call always overwrite
+	 * whatever was there for that specific address (new key replaces old, no history).
 	 *
 	 * Same-content dedup: when the exact armored text being stored for $address is ALREADY present
 	 * under a different address, the new entry becomes an alias to that address instead of
 	 * duplicating the (often multi-KB) key/cert text again - the common case of one real-world key
 	 * legitimately covering more than one of a contact's addresses.
 	 *
+	 * Autocrypt attributes (`$autocryptByAddress`, PGP only - silently ignored for S/MIME, which
+	 * has no equivalent concept) attach to whichever address ALREADY holds the real key content for
+	 * $address after the address-key merge above (resolve_root_address()) - never created
+	 * standalone without a key: an address with no resolvable key gets no `"autocrypt"` entry at
+	 * all, since these attributes describe a property of an EXISTING key/identity, not a reason on
+	 * their own to invent one. Merged (not replaced) into whatever attributes that address already
+	 * had, so eg. setting `prefer-encrypt` doesn't wipe out an unrelated attribute set earlier.
+	 *
 	 * @param string $existing current file/pubkey-field content, '' if nothing stored yet
 	 * @param array $newKeysByAddress lowercased-address (or '*') => armored key/cert pairs to add/overwrite
-	 * @param bool $pgp true: PGP (no legacy-address-detection possible), false: S/MIME
+	 * @param bool $pgp true: PGP, false: S/MIME
+	 * @param array $autocryptByAddress lowercased-address => [attribute => value, ...] pairs to
+	 *  merge, eg. ['rb@x.com' => ['prefer-encrypt' => 'mutual']] - PGP only
 	 * @return string new JSON content to store
 	 */
-	private static function merge_keys_json(string $existing, array $newKeysByAddress, bool $pgp) : string
+	private static function merge_keys_json(string $existing, array $newKeysByAddress, bool $pgp,
+		array $autocryptByAddress=[]) : string
 	{
-		$decoded = $existing !== '' ? json_decode($existing, true) : null;
-		if (!is_array($decoded) || json_last_error() !== JSON_ERROR_NONE)
-		{
-			if ($existing === '')
-			{
-				$decoded = [];
-			}
-			else
-			{
-				$detectedAddress = !$pgp ? self::detect_smime_address($existing) : null;
-				$decoded = [($detectedAddress ?? '*') => $existing];
-			}
-		}
+		$decoded = self::decode_key_content($existing, $pgp);
 		foreach ($newKeysByAddress as $address => $key)
 		{
 			$existingAddress = array_search($key, $decoded, true);
 			$decoded[$address] = $existingAddress !== false && $existingAddress !== $address ?
 				$existingAddress : $key;
+		}
+		if ($pgp)
+		{
+			foreach ($autocryptByAddress as $address => $attributes)
+			{
+				$root = self::resolve_root_address($decoded, strtolower($address), self::$pgp_key_regexp);
+				if ($root !== null)
+				{
+					$decoded['autocrypt'][$root] = array_merge($decoded['autocrypt'][$root] ?? [], $attributes);
+				}
+			}
 		}
 		return json_encode($decoded);
 	}
@@ -409,6 +484,42 @@ class addressbook_bo extends Api\Contacts
 		{
 			return strtolower(is_array($parsed['subject']['emailAddress']) ?
 				reset($parsed['subject']['emailAddress']) : $parsed['subject']['emailAddress']);
+		}
+		return null;
+	}
+
+	/**
+	 * Resolve which address, within an already-decoded per-address key/cert JSON object, actually
+	 * holds the real armored key/cert text for a given requested address - following any alias
+	 * chain (a value that's itself a plain address string, not armored key/cert text - see
+	 * set_keys()'s own docblock for the format) to whatever address it ultimately points at,
+	 * bounded by $seen against a malformed/cyclic chain. Falls back to the `"*"` (address-unknown)
+	 * entry when the requested address has no entry of its own. Never resolves through the
+	 * reserved `"autocrypt"` attributes object (a real address always contains "@", or is the
+	 * literal "*").
+	 *
+	 * @param array $decoded
+	 * @param ?string $address lowercased address to look up, or null
+	 * @param string $key_regexp what an entry's value must match to count as real key/cert text,
+	 *  rather than an alias pointing elsewhere
+	 * @return ?string the resolved address (a real key of $decoded whose value is $key_regexp-
+	 *  matching key/cert text), or null if nothing resolves
+	 */
+	private static function resolve_root_address(array $decoded, ?string $address, string $key_regexp) : ?string
+	{
+		$lookup = $address !== null && array_key_exists($address, $decoded) ?
+			$address : (array_key_exists('*', $decoded) ? '*' : null);
+		$seen = [];
+		while ($lookup !== null && $lookup !== 'autocrypt' && !isset($seen[$lookup]) && array_key_exists($lookup, $decoded))
+		{
+			$seen[$lookup] = true;
+			$value = $decoded[$lookup];
+			if (is_string($value) && preg_match($key_regexp, $value))
+			{
+				return $lookup;
+			}
+			// not itself an armored key/cert - treat as an alias pointing to another address entry
+			$lookup = is_string($value) ? strtolower($value) : null;
 		}
 		return null;
 	}
@@ -518,6 +629,117 @@ class addressbook_bo extends Api\Contacts
 	}
 
 	/**
+	 * Get stored Autocrypt attributes (eg. `prefer-encrypt`) for a contact's PGP key at a given
+	 * address.
+	 *
+	 * Autocrypt (https://docs.autocrypt.org/level1.html) attributes are stored under a reserved
+	 * top-level `"autocrypt"` object in the same per-address JSON this class already uses for keys
+	 * (see set_keys()'s own docblock for the full format), keyed ONLY by the "main"/root address
+	 * that directly holds the armored key text - an address that's merely an ALIAS to another
+	 * address' key resolves to THAT address' attributes, not a separate copy, since `prefer-encrypt`
+	 * etc. describe the key/identity, not the alias pointer.
+	 *
+	 * PGP only - Autocrypt is an OpenPGP/MIME-specific mechanism, S/MIME has no equivalent concept.
+	 *
+	 * @param array $contact
+	 * @param ?string $address lowercased address to look up, or null
+	 * @return array attribute-name => value pairs, eg. ['prefer-encrypt' => 'mutual'] - empty if none stored
+	 */
+	public function get_autocrypt_attributes(array $contact, ?string $address) : array
+	{
+		$content = null;
+		if (file_exists($path = Api\Link::vfs_path('addressbook', $contact['id'], Api\Contacts::FILES_PGP_PUBKEY)))
+		{
+			$content = file_get_contents($path) ?: null;
+		}
+		if (!$content && !empty($contact['pubkey']))
+		{
+			$content = $contact['pubkey'];
+		}
+		if (!$content) return [];
+
+		$decoded = self::decode_key_content($content, true);
+		if (empty($decoded['autocrypt']))
+		{
+			return [];
+		}
+		$root = self::resolve_root_address($decoded, $address, self::$pgp_key_regexp);
+		return $root !== null ? ($decoded['autocrypt'][$root] ?? []) : [];
+	}
+
+	/**
+	 * Set/merge Autocrypt attributes (eg. `prefer-encrypt`) for a contact's PGP key at a given
+	 * address, if user has necessary rights (same ACL/save() path as set_keys()).
+	 *
+	 * PGP only (see get_autocrypt_attributes()'s own docblock) - attributes attach to whichever
+	 * address ALREADY holds the real key content for $recipient (resolve_root_address(), following
+	 * an alias chain the same way get_key() does), never created standalone without a key on file:
+	 * this describes a property of an EXISTING key/identity, not a reason on its own to create or
+	 * touch a contact entry. Silently does nothing (returns false) for a contact with no PGP key
+	 * stored at all yet for $recipient.
+	 *
+	 * @param string|int $recipient email address or account_id
+	 * @param array $attributes attribute-name => value pairs to merge, eg. ['prefer-encrypt' => 'mutual']
+	 * @return bool true if the attributes were merged into at least one contact's stored key
+	 */
+	public function set_autocrypt_attributes($recipient, array $attributes) : bool
+	{
+		if (!$attributes) return false;
+
+		if (is_numeric($recipient))
+		{
+			$criteria = ['egw_addressbook.account_id' => [(int)$recipient]];
+			$address = null;
+		}
+		else
+		{
+			$address = strtolower($recipient);
+			$criteria = ['contact_email_home' => [$address], 'contact_email' => [$address]];
+		}
+
+		$updated = false;
+		$filters = array(null);
+		// if accounts-backend is NOT SQL, we need to search the accounts separate
+		if ($this->so_accounts)
+		{
+			$filters[] = array('owner' => '0');
+		}
+		foreach ($filters as $filter)
+		{
+			foreach ((array)$this->search($criteria, false, '', '', '', false, 'OR', false, $filter) as $contact)
+			{
+				$path = $this->key_storage_path($contact, true);
+				$existing = $path ? (file_exists($path) ? file_get_contents($path) : '') : ($contact['pubkey'] ?? '');
+
+				$decoded = self::decode_key_content($existing, true);
+				if (self::resolve_root_address($decoded, $address, self::$pgp_key_regexp) === null)
+				{
+					continue;	// no PGP key stored for this contact/address yet - nothing to attach attributes to
+				}
+
+				$newContent = self::merge_keys_json($existing, [], true, [($address ?? '*') => $attributes]);
+				if ($path)
+				{
+					$contact['files'] |= self::FILES_BIT_PGP_PUBKEY;
+				}
+				else
+				{
+					$contact['pubkey'] = $newContent;
+				}
+				$contact['photo_unchanged'] = true;	// otherwise photo will be lost, because $contact['jpegphoto'] is not set
+				if ($this->check_perms(Acl::EDIT, $contact) && $this->save($contact))
+				{
+					if (!$path || $this->write_key_file($path, $newContent))
+					{
+						$updated = true;
+					}
+				}
+			}
+		}
+		return $updated;
+	}
+
+	/**
 	 * Pick the right key out of a contact's stored key content for a given address.
 	 *
 	 * Follows alias entries (a value that's itself a plain address string, not armored key/cert
@@ -533,6 +755,10 @@ class addressbook_bo extends Api\Contacts
 	 * NOT clean up/remove a stale key when a contact's email changes (deferred, a separate concern)
 	 * - it only stops a single leftover/mismatched key from being silently offered for an address it
 	 * doesn't belong to.
+	 *
+	 * Root-address resolution itself (following an alias chain to whatever address actually holds
+	 * the key/cert text) is delegated to resolve_root_address() - shared with merge_keys_json()'s
+	 * own Autocrypt-attribute merging and get_autocrypt_attributes()/set_autocrypt_attributes().
 	 *
 	 * @param string $content raw file/pubkey-field content - either the new per-address JSON
 	 *  shape (merge_keys_json()'s own output) or a legacy pre-fix bare armored key/cert
@@ -550,26 +776,20 @@ class addressbook_bo extends Api\Contacts
 			$matches = null;
 			return preg_match($key_regexp, $content, $matches) ? $matches[0] : null;
 		}
+		$root = self::resolve_root_address($decoded, $address, $key_regexp);
+		if ($root === null) return null;
+		$value = $decoded[$root];
+
 		$usedFallback = !($address !== null && array_key_exists($address, $decoded));
-		$lookup = !$usedFallback ? $address : (array_key_exists('*', $decoded) ? '*' : null);
-		$seen = [];
-		while ($lookup !== null && !isset($seen[$lookup]) && array_key_exists($lookup, $decoded))
+		// "autocrypt" is reserved metadata (see set_keys()'s own docblock), not a key entry -
+		// excluded from the "is this the contact's ONLY stored key" count below
+		$addressEntryCount = count($decoded) - (isset($decoded['autocrypt']) ? 1 : 0);
+		if ($usedFallback && $address !== null && !$pgp && $addressEntryCount === 1 &&
+			($detected = self::detect_smime_address($value)) !== null && $detected !== $address)
 		{
-			$seen[$lookup] = true;
-			$value = $decoded[$lookup];
-			if (is_string($value) && preg_match($key_regexp, $value))
-			{
-				if ($usedFallback && $address !== null && !$pgp && count($decoded) === 1 &&
-					($detected = self::detect_smime_address($value)) !== null && $detected !== $address)
-				{
-					return null;
-				}
-				return $value;
-			}
-			// not itself an armored key/cert - treat as an alias pointing to another address entry
-			$lookup = is_string($value) ? strtolower($value) : null;
+			return null;
 		}
-		return null;
+		return $value;
 	}
 
 	/**

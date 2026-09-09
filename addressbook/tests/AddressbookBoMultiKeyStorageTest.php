@@ -76,11 +76,20 @@ u3Mo9yka+ar9NDRkU1RX6PJCylSi75TM3TGcmDeM6sxgp1OI4w+NAWHPMZCLNDcg
 
 CERT;
 
-	private function merge(string $existing, array $newKeysByAddress, bool $pgp=true) : string
+	private function merge(string $existing, array $newKeysByAddress, bool $pgp=true, array $autocryptByAddress=[]) : string
 	{
 		$ref = new ReflectionMethod(addressbook_bo::class, 'merge_keys_json');
 		$ref->setAccessible(true);
-		return $ref->invoke(null, $existing, $newKeysByAddress, $pgp);
+		return $ref->invoke(null, $existing, $newKeysByAddress, $pgp, $autocryptByAddress);
+	}
+
+	private function autocryptAttributes(string $content, ?string $address) : array
+	{
+		$decoded = json_decode($content, true);
+		$rootRef = new ReflectionMethod(addressbook_bo::class, 'resolve_root_address');
+		$rootRef->setAccessible(true);
+		$root = $rootRef->invoke(null, $decoded, $address, addressbook_bo::$pgp_key_regexp);
+		return $root !== null ? ($decoded['autocrypt'][$root] ?? []) : [];
 	}
 
 	private function extract(string $content, ?string $address, bool $pgp=true) : ?string
@@ -355,5 +364,108 @@ CERT;
 
 		$this->assertSame($this->pgpKey('only-key'),
 			$this->extract($content, 'whoever@example.invalid', true));
+	}
+
+	/**
+	 * 2026-09-09, ralf's own follow-up ("sorry I forgot about the Autocrypt attributes"):
+	 * merge_keys_json()'s 4th ($autocryptByAddress) param attaches Autocrypt attributes (eg.
+	 * `prefer-encrypt`) under the reserved `"autocrypt"` top-level key, keyed by the address that
+	 * actually holds the key - the literal case: a key already stored for an address, then
+	 * attributes learned for that SAME address in a later call.
+	 */
+	public function testMergeAddsAutocryptAttributesForAddressWithExistingKey()
+	{
+		$key = $this->pgpKey('key');
+		$merged = $this->merge('', ['a@example.invalid' => $key]);
+		$merged = $this->merge($merged, [], true, ['a@example.invalid' => ['prefer-encrypt' => 'mutual']]);
+
+		$this->assertSame(['prefer-encrypt' => 'mutual'], $this->autocryptAttributes($merged, 'a@example.invalid'));
+		// the key itself must be completely unaffected
+		$this->assertSame($key, $this->extract($merged, 'a@example.invalid'));
+	}
+
+	/**
+	 * Attributes can also be merged in the SAME call that stores the key itself (the more common
+	 * real-world case: a message arrives with both an `Autocrypt:` header's key AND its
+	 * `prefer-encrypt` parameter at once).
+	 */
+	public function testMergeAddsKeyAndAutocryptAttributesInOneCall()
+	{
+		$key = $this->pgpKey('key');
+		$merged = $this->merge('', ['a@example.invalid' => $key], true,
+			['a@example.invalid' => ['prefer-encrypt' => 'mutual']]);
+
+		$this->assertSame($key, $this->extract($merged, 'a@example.invalid'));
+		$this->assertSame(['prefer-encrypt' => 'mutual'], $this->autocryptAttributes($merged, 'a@example.invalid'));
+	}
+
+	/**
+	 * No key on file for that address at all (not even a "*" fallback) - attributes describe a
+	 * property of an EXISTING key, so nothing is created/stored, matching set_autocrypt_attributes()'
+	 * own "nothing to attach to" behaviour.
+	 */
+	public function testMergeIgnoresAutocryptAttributesWithNoMatchingKey()
+	{
+		$merged = $this->merge('', [], true, ['nobody@example.invalid' => ['prefer-encrypt' => 'mutual']]);
+
+		$this->assertSame([], $this->autocryptAttributes($merged, 'nobody@example.invalid'));
+		$this->assertArrayNotHasKey('autocrypt', json_decode($merged, true));
+	}
+
+	/**
+	 * Attributes requested for an ALIAS address attach to the address that actually holds the key
+	 * (the alias' target), never to the alias address itself - "only main address, not aliases"
+	 * per ralf's own wording.
+	 */
+	public function testMergeAutocryptAttributesUnderAliasAttachToRootAddress()
+	{
+		$key = $this->pgpKey('shared-key');
+		$merged = $this->merge('', ['business@example.invalid' => $key]);
+		$merged = $this->merge($merged, ['home@example.invalid' => $key]);	// becomes an alias
+		$merged = $this->merge($merged, [], true, ['home@example.invalid' => ['prefer-encrypt' => 'mutual']]);
+
+		$decoded = json_decode($merged, true);
+		$this->assertSame('business@example.invalid', $decoded['home@example.invalid'],
+			'home must still be a plain alias, not itself carrying attributes');
+		$this->assertSame(['prefer-encrypt' => 'mutual'], $decoded['autocrypt']['business@example.invalid'] ?? null,
+			'attributes must be recorded under the ROOT address the alias points at');
+		$this->assertSame(['prefer-encrypt' => 'mutual'], $this->autocryptAttributes($merged, 'home@example.invalid'),
+			'reading via the alias address must still resolve to the root address\' attributes');
+	}
+
+	/** Merging new attributes MERGES into, rather than replaces, whatever was already stored. */
+	public function testMergeAutocryptAttributesMergeNotReplaceExisting()
+	{
+		$merged = $this->merge('', ['a@example.invalid' => $this->pgpKey('key')]);
+		$merged = $this->merge($merged, [], true, ['a@example.invalid' => ['prefer-encrypt' => 'mutual']]);
+		$merged = $this->merge($merged, [], true, ['a@example.invalid' => ['other-attribute' => 'x']]);
+
+		$this->assertSame(['prefer-encrypt' => 'mutual', 'other-attribute' => 'x'],
+			$this->autocryptAttributes($merged, 'a@example.invalid'));
+	}
+
+	/** Autocrypt is a PGP-only concept - $autocryptByAddress is silently ignored for S/MIME. */
+	public function testMergeIgnoresAutocryptAttributesForSmime()
+	{
+		$merged = $this->merge(self::SMIME_CERT, [], false, [self::SMIME_CERT_ADDRESS => ['prefer-encrypt' => 'mutual']]);
+
+		$this->assertArrayNotHasKey('autocrypt', json_decode($merged, true));
+	}
+
+	/**
+	 * The reserved "autocrypt" top-level key must never be mistaken for a real address entry by
+	 * extract_key_for_address()'s single-key S/MIME cross-check (which only applies when a contact
+	 * has EXACTLY one address entry on file) - a PGP contact with one key AND autocrypt attributes
+	 * has 2 top-level JSON keys, but still only ONE actual address entry.
+	 */
+	public function testAutocryptObjectDoesNotInflateSingleKeyCount()
+	{
+		$merged = $this->merge('', ['*' => $this->pgpKey('only-key')], true,
+			['*' => ['prefer-encrypt' => 'mutual']]);
+
+		// PGP is never cross-checked anyway, but confirm the shape: 2 top-level keys ("*" + "autocrypt")
+		$decoded = json_decode($merged, true);
+		$this->assertCount(2, $decoded);
+		$this->assertSame($this->pgpKey('only-key'), $this->extract($merged, 'whoever@example.invalid', true));
 	}
 }

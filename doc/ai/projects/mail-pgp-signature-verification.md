@@ -18,10 +18,11 @@ integration (Phase 5) planned in full 2026-09-09** (own section further down) - 
 preference, `Autocrypt`/`Autocrypt-Gossip` send+receive, `prefer-encrypt` storage, the
 multi-key-per-address storage fix, mutual-auto-encrypt preference, S/MIME auto-add-when-verified,
 and an explicit Level 1 spec gap/deviation audit. Phase 5 steps 1 (keydata minimize/re-armor) and 2
-(multi-key-per-address addressbook storage) are now DONE (2026-09-09, see their own phasing
-entries) - steps 3-6 (sending/receiving Autocrypt headers, the consent dialog, prefer-encrypt
-storage, mutual auto-encrypt, S/MIME auto-add) are still plan only. **Phase 5 step 2's alias-pointer
-storage rework (Phase G) is now also DONE (2026-09-09)** - see its own entry under item 1 below.
+(multi-key-per-address addressbook storage, **now including its `prefer-encrypt`-attribute storage
+half too**) are DONE (2026-09-09, see their own phasing entries) - steps 3-6 (actually
+sending/receiving `Autocrypt:` headers, the consent dialog, mutual auto-encrypt, S/MIME auto-add)
+are still plan only; nothing calls the new storage API yet. **Phase 5 step 2's alias-pointer storage
+rework (Phase G) is now also DONE (2026-09-09)** - see its own entry under item 1 below.
 **Security fix (Phase H, DONE 2026-09-09)**: a signature/cert that cryptographically verifies but
 doesn't itself claim the message's From address is now shown as invalid, not verified, for both PGP
 and S/MIME - see its own section below, right before "Why this is even possible without Mailvelope".
@@ -579,16 +580,48 @@ S/MIME migration address detection vs. PGP's unconditional `"*"` fallback, the s
 S/MIME cross-check match/mismatch/skip-when-multiple-entries cases, and PGP's own entry never being
 cross-checked at all).
 
-### 2. Store `prefer-encrypt` as a comment, not a new column
+**Follow-up, same day**: ralf caught a gap right after the above shipped - *"sorry I forgot about
+the Autocrypt attributes ... for pgp we should also allow the set and get the extra attribute(s)
+from Autocrypt like 'prefer':'encrypt' in the JSON, enhancing the JSON for PGP with an (optional)
+'autocrypt' attribute, containing an object with again address-attribute(s) and the autocrypt
+attributes of that address (only main address, not aliases)"* - this is now item 2's actual DONE
+implementation, see below (superseding its own original "comment prefix" idea).
 
-Ralf's own proposed shape - prepend a comment line to the stored key text rather than a new DB/VFS
-field: `# prefer-encrypt=mutual\n-----BEGIN PGP PUBLIC KEY BLOCK-----...`. Combined with the
-per-address JSON restructuring above, this naturally becomes a `prefer_encrypt` property alongside
-each address's `key` entry instead of a literal comment line - functionally the same "carry it with
-the key, no new schema" idea, just placed in the new structure rather than as literal prepended
-text. (If the multi-key fix above turns out to need more design time than the comment-prefix idea,
-the comment-prefix approach also works standalone against *today's* single-key-per-contact storage
-as a smaller first step - worth keeping in mind as a fallback ordering.)
+### 2. Autocrypt attributes (`prefer-encrypt` etc.) - DONE (2026-09-09), as a reserved JSON key, not a comment prefix
+
+Superseded the originally-proposed "prepend a comment line to the key text" shape (`#
+prefer-encrypt=mutual\n-----BEGIN...`) with ralf's own refined design once item 1's alias-pointer
+format actually existed to hang it off of: a reserved top-level `"autocrypt"` key in the SAME
+per-address JSON object item 1 already uses (`set_keys()`'s own docblock has the full up-to-date
+format) - `{"business@x.com": "-----BEGIN...", "home@x.com": "business@x.com", "autocrypt":
+{"business@x.com": {"prefer-encrypt": "mutual"}}}`. PGP only - Autocrypt is an OpenPGP/MIME-
+specific mechanism, S/MIME has no equivalent concept (silently ignored if ever passed for S/MIME).
+
+Attributes are keyed ONLY by the "main"/root address that directly holds the armored key text -
+**never by an address that's merely an alias to another's key** (ralf's own explicit constraint,
+"only main address, not aliases") - since `prefer-encrypt` etc. describe the key/identity itself,
+not the alias pointer; asking for an alias address's attributes transparently resolves to its root
+address' attributes instead (same alias-chain-following `resolve_root_address()` item 1's
+`extract_key_for_address()` already uses, refactored out as a shared helper). Attributes attach
+only to an address that ALREADY has a resolvable key - never created standalone (an orphan
+`"autocrypt"` entry with no matching key would be meaningless), and merge (not replace) into
+whatever attributes that address already had, so eg. learning `prefer-encrypt` later doesn't wipe
+out some other attribute learned earlier.
+
+New API on `addressbook_bo`: `get_autocrypt_attributes(array $contact, ?string $address) : array`
+(read) and `set_autocrypt_attributes($recipient, array $attributes) : bool` (write - same
+contact-search/ACL/`save()` path as `set_keys()`, factored into shared `key_storage_path()`/
+`write_key_file()` private helpers both now use). Neither is wired into any caller yet - this is
+storage-layer plumbing ahead of Autocrypt steps 3/4 below (sending/receiving the actual
+`Autocrypt:` header's `prefer-encrypt=` parameter), which are what will actually call these.
+
+7 new tests in `AddressbookBoMultiKeyStorageTest.php` (25 total): attributes attach when a key
+already exists / merge in the same call as the key itself / are silently dropped when no key
+exists for that address at all / resolve through an alias to the root address (not stored under
+the alias) / merge rather than replace across repeated calls / are ignored entirely for S/MIME /
+and don't inflate `extract_key_for_address()`'s "is this the contact's ONLY key" count used by
+item 1's S/MIME single-key cross-check (the reserved `"autocrypt"` key is metadata, not a second
+address entry).
 
 ### 3. Sending: `Autocrypt:` (own key) and `Autocrypt-Gossip:` (recipients' keys)
 
@@ -735,7 +768,9 @@ keeps today's click-to-add dialog unchanged). Also needs the same multi-key-per-
    needed (never touches another contact's stored data).
 4. Consent dialog + preference (item 5), then receiving/gossip-parsing (items 3's gossip half, 4) -
    the two together are what actually needs the dialog.
-5. `prefer-encrypt` storage (item 2) + mutual auto-encrypt preference (item 6).
+5. `prefer-encrypt` **storage** (item 2) is DONE (2026-09-09, see its own entry) - what's left is
+   mutual auto-encrypt preference (item 6) and actually wiring items 3/4's sending/receiving code
+   to call `set_autocrypt_attributes()`/`get_autocrypt_attributes()`.
 6. S/MIME auto-add-when-verified (item 7) - small, independent, can land any time after item 1.
 
 ## Explicitly out of scope for this project
