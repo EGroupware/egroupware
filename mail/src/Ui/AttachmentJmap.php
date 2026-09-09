@@ -285,6 +285,15 @@ class AttachmentJmap
 				unset($attachmentHTML[$ikey]['link_view']);
 				unset($attachmentHTML[$ikey]['link_save']);
 			}
+			// the foreach above keeps $attachments' own keys, which have a gap wherever the
+			// S/MIME `continue` (skipping a control part like application/pkcs7-signature) fired -
+			// found via a new PHPUnit test (2026-09-09): a real attachment immediately after a
+			// skipped S/MIME part came back at index 1, not 0, so $result[0] was simply missing
+			// rather than being that attachment. array_values() re-numbers 0..n-1, matching
+			// jmapAttachmentsToLegacy()'s own array_values(array_filter(...)) one layer up (which
+			// has the identical concern for its pgp-encrypted/pgp-signature skips, already handled
+			// there the same way).
+			$attachmentHTML = array_values($attachmentHTML);
 		}
 		return ($_returnFullHTML ? $attachmentHTMLBlock : $attachmentHTML);
 	}

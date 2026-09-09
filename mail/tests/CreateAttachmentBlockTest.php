@@ -227,6 +227,62 @@ class CreateAttachmentBlockTest extends \EGroupware\Api\AppTest
 	}
 
 	/**
+	 * Every S/MIME control-part mime type (Mail\Smime::$SMIME_TYPES - the pkcs7/pkcs8/pkcs10
+	 * family) must be dropped from the attachment list entirely, never shown as a downloadable
+	 * "attachment" - createAttachmentBlock()'s own `continue` on Mail\Smime::isSmime() (line 68).
+	 * Iterates the real $SMIME_TYPES list rather than a hardcoded copy, so a future addition to
+	 * that list is automatically covered here too.
+	 */
+	public function testEverySmimeControlPartTypeIsHiddenFromAttachmentList()
+	{
+		foreach (Api\Mail\Smime::$SMIME_TYPES as $smimeType)
+		{
+			$result = $this->block(array($this->attachment($smimeType, 'smime.p7s')));
+
+			$this->assertSame([], $result,
+				"S/MIME control part '$smimeType' must never be shown as an attachment");
+		}
+	}
+
+	/**
+	 * An S/MIME control part alongside a genuine attachment: only the real attachment survives,
+	 * at its own index - proves the S/MIME skip doesn't leave a gap/null entry behind for a
+	 * following real attachment to inherit (same class of bug as the known stale-windowName one
+	 * above, but for array indexing rather than $windowName).
+	 */
+	public function testSmimePartHiddenButFollowingRealAttachmentKept()
+	{
+		$result = $this->block(array(
+			$this->attachment('application/pkcs7-signature', 'smime.p7s'),
+			$this->attachment('application/pdf', 'report.pdf'),
+		));
+
+		$this->assertCount(1, $result, 'only the real PDF attachment must remain');
+		$this->assertSame('report.pdf', $result[0]['filename']);
+	}
+
+	/**
+	 * Division-of-responsibility check: createAttachmentBlock()'s S/MIME skip must NOT also catch
+	 * the PGP/MIME control-part types (application/pgp-encrypted, application/pgp-signature) -
+	 * those are a different trust mechanism, already filtered one layer earlier by
+	 * AttachmentJmap::jmapAttachmentsToLegacy() (see JmapAttachmentsToLegacyTest), before the
+	 * caller ever reaches createAttachmentBlock(). If this function started also matching them,
+	 * jmapAttachmentsToLegacy()'s own filtering would become untestable dead code from the real
+	 * call path's perspective (the fixtures below call createAttachmentBlock() directly, bypassing
+	 * that earlier layer, precisely so this stays visible either way).
+	 */
+	public function testPgpControlPartTypesAreNotFilteredHere()
+	{
+		$result = $this->block(array(
+			$this->attachment('application/pgp-encrypted', 'version.txt'),
+			$this->attachment('application/pgp-signature', 'signature.asc'),
+		));
+
+		$this->assertCount(2, $result,
+			'PGP control parts are not this function\'s job to filter - jmapAttachmentsToLegacy() already did, one layer up');
+	}
+
+	/**
 	 * Pass criteria: when the filemanager app is not enabled for the current user, every
 	 * attachment is flagged no_vfs so the client hides "save to filemanager" - mirrors
 	 * FilemanagerMimeTypeTest::testGetEditorLinkFalsyWithoutCollaboraApp's approach of directly
