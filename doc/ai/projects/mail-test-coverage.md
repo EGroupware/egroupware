@@ -1,6 +1,6 @@
 # Mail: test-coverage audit and gap-closing plan
 
-## Status: audit complete (2026-09-09); priority 1 (bulk move/copy/delete) client-side + deferred-work queue done; priority 2 (JMAP/shim path) - jmap.ts's mailbox CRUD, label/flag setters, thread-keyword aggregation, filter/sort, saveDraft, WS push-payload, and attachment upload/resolve done, plus the shim's filterToQuery()/buildSort() IMAP-search translation and the real-JMAP-facing Mailbox.php/Email.php/EmailSubmission.php layer (with a real bug found+fixed in Mailbox.php, see Progress log); paused again 2026-09-09 for a SECOND live-reported Reply-To regression (the shim's send-time re-fetch never read replyTo/Priority/read-receipt/thread-headers back from the stored draft) - fixed, see Progress log
+## Status: audit complete (2026-09-09); priority 1 done; priority 2 (JMAP/shim path) done except for items blocked on a live/mocked IMAP+SMTP connection, PGP/S-MIME adjacency, or DB-backed CLI flakiness (see Progress log for the full list); a SECOND live-reported Reply-To regression found+fixed along the way (the shim's send-time re-fetch never read replyTo/Priority/read-receipt/thread-headers back from the stored draft); now on priority 3 (send/SMTP side) - `Smtp.php::mailbox_address()` done
 
 Full-codebase scan of `mail/js/*.ts`, `mail/src/*.php`, `mail/inc/*.php`, `api/src/Mail.php` and
 `api/src/Mail/*.php` (including the `Jmap/` shim + real-JMAP layer), cross-referenced against every
@@ -283,8 +283,14 @@ optimistic-clear, no hard guard yet).
 - `mail/js/compose.ts`'s send-side S/MIME/PGP wiring: `trySendViaJmap()`'s smimeType derivation
   from the toolbar widgets, and the Mailvelope/PGP `pgpArmored` passthrough - untested. A wrong-mode
   bug here would silently send mail unsigned/unencrypted.
-- `Api\Mail\Smtp.php::mailbox_address()` (5-way switch on `mail_login_type`) - untested, small and
-  deterministic, cheap win whenever picked up.
+- **Done (2026-09-09)**: `Api\Mail\Smtp.php::mailbox_address()`/`mailbox_addr()` - 10 tests,
+  `api/tests/Mail/SmtpMailboxAddressTest.php`. Covers all 5 `mail_login_type` branches
+  (email/standard/uidNumber/domain-username/vmailmgr) plus the unrecognised-type fallback and the
+  two "no domain given" null-return cases, using the array-`$account` shape - per the method's own
+  docblock, an array `$account` deliberately bypasses `$GLOBALS['egw']->accounts->id2name()`
+  entirely, so this needed no Accounts-singleton workaround at all. `mailbox_addr()`'s own
+  instance-property (`$defaultDomain`/`$loginType`) fallback and its parameter-override precedence
+  also covered.
 - Classic `Api\Mail::appendMessage()` (message-import/append, the pre-JMAP counterpart of the now
   byte-fidelity-tested shim `appendRawMessage()`) - untested, lower priority per the priority order.
 
@@ -438,7 +444,15 @@ Kept for completeness, but explicitly deprioritized until the above is in better
   unrelated VFS/S3 `testVfsPathAttachmentIsReadDirectlyFromVfs` failure remains). Back to priority
   2 next.
 - 2026-09-09: `EmailSubmission.php`'s `set()`/`submit()` (9 tests, `EmailSubmissionTest.php`)
-  done - same fake-session approach as `EmailTest.php`. Remaining priority-2 work: `emailQuery()`/
-  `emailGet()`'s own real-account IMAP search/fetch EXECUTION, `resolveSmime()`/`resolveTnef()`'s
-  IMAP-fetch half, `emailSubmissionSet()` (needs a live/mocked IMAP+SMTP connection), and
-  `Identity.php`'s `synthesize()` in the real-JMAP-facing layer.
+  done - same fake-session approach as `EmailTest.php`. Remaining priority-2 work is now entirely
+  blocked on either a live/mocked IMAP+SMTP connection (`emailQuery()`/`emailGet()`'s real-account
+  EXECUTION, `resolveTnef()`, `emailSubmissionSet()`), PGP/S-MIME adjacency to avoid while a
+  concurrent session is active there (`resolveSmime()`), or DB-backed `Accounts::id2name()`
+  CLI-flakiness (`Identity.php`'s `synthesize()`) - moving on to priority 3 (send/SMTP side).
+- 2026-09-09: started priority 3 (send/SMTP side) - `Api\Mail\Smtp.php::mailbox_address()`/
+  `mailbox_addr()` (10 tests, `SmtpMailboxAddressTest.php`) done, the doc's own flagged "cheap
+  win." Rest of priority 3 still open: `Api\Mail\Jmap\Transport.php::sendJmap()`'s full pipeline
+  (highest standalone priority here) + `resolveMailboxesAndIdentities()`, `mail/src/Send.php`'s
+  actual `send()` flow, `mail/src/ApiHandler.php`'s `post()`/`viewEml()`/vacation methods,
+  `compose.ts`'s send-side S/MIME/PGP wiring (deliberately deferred - concurrent session), classic
+  `Api\Mail::appendMessage()`.
