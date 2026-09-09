@@ -94,6 +94,9 @@ function fakeContext(overrides : Partial<JmapReplyContext> = {}) : JmapReplyCont
 		inReplyTo: ['msg1@example.com'],
 		references: ['msg1@example.com'],
 		attachments: [],
+		threadTopic: null,
+		threadIndex: null,
+		listId: null,
 		...overrides,
 	};
 }

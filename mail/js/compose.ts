@@ -160,8 +160,18 @@ export class MailCompose
 	 * Reply-To/References) for a reply, set once by bootstrapReply() from MailJmap.fetchForReply()'s
 	 * result and included in every currentEmailFields() call thereafter (send AND every
 	 * save/autosave) - null for a plain new-message compose.
+	 *
+	 * threadTopic/threadIndex/listId (2026-09-09) - classic getReplyData()'s own Thread-Topic/
+	 * Thread-Index/List-Id propagation (removed 2014 commit 2172fc769d), found missing here
+	 * entirely: the JMAP-native reply path never requested/read them from the original message at
+	 * all (ralf: "Does that mean they are lost when replying to a mail? ... it would be a real
+	 * regression"). Reply-only, same as inReplyTo/references above - a forward starts a new thread
+	 * from the recipient's perspective, matching why those two are already null for isForward.
 	 */
-	private replyThreadingHeaders : {inReplyTo : string[] | null, references : string[] | null} | null = null;
+	private replyThreadingHeaders : {
+		inReplyTo : string[] | null, references : string[] | null,
+		threadTopic : string | null, threadIndex : string | null, listId : string | null,
+	} | null = null;
 
 	/**
 	 * Original message(s) to mark $answered/$forwarded once this compose successfully sends -
@@ -1494,7 +1504,10 @@ export class MailCompose
 		// forward too, not just a true reply - it really means "quote-style compose", governing
 		// signature placement (applySignatureForCurrentIdentity() below), not literally "is a reply".
 		this.isReplyCompose = true;
-		this.replyThreadingHeaders = isForward ? null : {inReplyTo: context.inReplyTo, references: context.references};
+		this.replyThreadingHeaders = isForward ? null : {
+			inReplyTo: context.inReplyTo, references: context.references,
+			threadTopic: context.threadTopic, threadIndex: context.threadIndex, listId: context.listId,
+		};
 		this.sourceMessagesToFlag = {rowIds: [sourceId], forwarded: isForward};
 
 		const identities = await this.selectIdentityForRecipients(context);
@@ -2306,6 +2319,11 @@ export class MailCompose
 			// found missing alongside replyTo above (2026-09-09) - see JmapNewEmail's own docblock
 			priority: this.et2.getWidgetById('priority')?.get_value(),
 			requestReadReceipt: this.et2.getWidgetById('disposition')?.get_value() === 'on',
+			// classic getReplyData()'s Thread-Topic/Thread-Index/List-Id propagation, found missing
+			// here entirely alongside the above (2026-09-09) - see replyThreadingHeaders' own docblock
+			threadTopic: this.replyThreadingHeaders?.threadTopic ?? undefined,
+			threadIndex: this.replyThreadingHeaders?.threadIndex ?? undefined,
+			listId: this.replyThreadingHeaders?.listId ?? undefined,
 		};
 	}
 

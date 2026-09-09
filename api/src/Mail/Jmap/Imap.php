@@ -1618,6 +1618,17 @@ class Imap extends Jmap\Base
 		// message-list attachment-icon S/MIME-wrapper detection - MailJmap.email2row() reads this
 		// same property name back verbatim, see its isSmimeWrapperOnly()
 		$wantContentType = !$properties || in_array(self::CONTENT_TYPE_HEADER_PROPERTY, $properties, true);
+		// Thread-Topic/Thread-Index/List-Id propagation on reply (classic mail_compose's own
+		// getReplyData(), removed 2014 commit 2172fc769d "support the propagation of Thread-Topic,
+		// Thread-Index and List-Id on reply too" - found missing here entirely 2026-09-09, ralf:
+		// "Does that mean they are lost when replying to a mail? ... it would be a real
+		// regression" - confirmed: MailJmap.fetchForReply() never requested/read them at all, so
+		// the JMAP-native reply path silently dropped this propagation outright) -
+		// MailJmap.fetchForReply() (mail/js/jmap.ts) reads these same 3 property names back
+		// verbatim, one combined flag since they're always fetched together for that one purpose.
+		$wantThreadHeaders = !$properties || array_intersect(
+			[self::THREAD_TOPIC_HEADER_PROPERTY, self::THREAD_INDEX_HEADER_PROPERTY, self::LIST_ID_HEADER_PROPERTY],
+			$properties);
 		// whole-message blobId (RFC 8621 top-level Email.blobId) - MailJmap.fetchRawHeader()'s
 		// "view header" fast path, no extra IMAP work needed (same self-describing scheme
 		// bodyPartToJmap() uses per-part, just with an empty partId - see download())
@@ -1680,6 +1691,11 @@ class Imap extends Jmap\Base
 		{
 			$query->headers('contenttype', ['Content-Type'], ['cache' => true, 'peek' => true]);
 		}
+		if ($wantThreadHeaders)
+		{
+			$query->headers('threadheaders', ['Thread-Topic', 'Thread-Index', 'List-Id'],
+				['cache' => true, 'peek' => true]);
+		}
 
 		$results = $imap->fetch($mailbox, $query, [
 			'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $ids)),
@@ -1700,7 +1716,7 @@ class Imap extends Jmap\Base
 			if (($data = $results[(int)$id] ?? null))
 			{
 				/** @var \Horde_Imap_Client_Data_Fetch $data */
-				$email = self::emailFromFetch($imap, $mailbox, $id, $data, $wantPreview, (bool)$wantBody, $wantMdn, $wantBlobId, $wantContentType);
+				$email = self::emailFromFetch($imap, $mailbox, $id, $data, $wantPreview, (bool)$wantBody, $wantMdn, $wantBlobId, $wantContentType, (bool)$wantThreadHeaders);
 				if ($wantThreadId)
 				{
 					$email['threadId'] = $threadMap[$id] ?? $id;
@@ -2233,6 +2249,21 @@ class Imap extends Jmap\Base
 		if (!empty($email['header:Disposition-Notification-To']))
 		{
 			$mailer->addHeader('Disposition-Notification-To', (string)$email['header:Disposition-Notification-To']);
+		}
+		// Thread-Topic/Thread-Index/List-Id propagation on reply (classic getReplyData()'s
+		// equivalent, removed 2014 commit 2172fc769d, found missing here entirely 2026-09-09 - see
+		// emailGet()'s own docblock note) - MailJmap.draftEmailProperties() sets these from
+		// whatever the original message being replied to had, once fetchForReply() found them.
+		foreach ([
+			'header:Thread-Topic' => 'Thread-Topic',
+			'header:Thread-Index' => 'Thread-Index',
+			'header:List-Id' => 'List-Id',
+		] as $prop => $header)
+		{
+			if (!empty($email[$prop]))
+			{
+				$mailer->addHeader($header, (string)$email[$prop]);
+			}
 		}
 
 		// S/MIME encrypt-only/sign+encrypt body swap (createDraftEmail()'s bodyOverride, see
@@ -2981,9 +3012,13 @@ class Imap extends Jmap\Base
 	 *  Email.blobId) - no extra IMAP work, same self-describing scheme bodyPartToJmap() uses
 	 * @param bool $wantContentType true adds the CONTENT_TYPE_HEADER_PROPERTY field (needs a
 	 *  preceding $query->headers('contenttype', ...) call, see emailGet())
+	 * @param bool $wantThreadHeaders true adds the THREAD_TOPIC_HEADER_PROPERTY/
+	 *  THREAD_INDEX_HEADER_PROPERTY/LIST_ID_HEADER_PROPERTY fields (needs a preceding
+	 *  $query->headers('threadheaders', ...) call, see emailGet()) - MailJmap.fetchForReply()'s
+	 *  own reply-propagation fetch (classic getReplyData()'s equivalent)
 	 * @return array
 	 */
-	public static function emailFromFetch(\Horde_Imap_Client_Socket $imap, string $mailbox, string $uid, \Horde_Imap_Client_Data_Fetch $data, bool $wantPreview = true, bool $wantBody = false, bool $wantMdn = false, bool $wantBlobId = false, bool $wantContentType = false) : array
+	public static function emailFromFetch(\Horde_Imap_Client_Socket $imap, string $mailbox, string $uid, \Horde_Imap_Client_Data_Fetch $data, bool $wantPreview = true, bool $wantBody = false, bool $wantMdn = false, bool $wantBlobId = false, bool $wantContentType = false, bool $wantThreadHeaders = false) : array
 	{
 		$envelope = $data->getEnvelope();
 		$structure = $data->getStructure();
@@ -3021,6 +3056,16 @@ class Imap extends Jmap\Base
 			$email[self::CONTENT_TYPE_HEADER_PROPERTY] = $contentTypeHeaders ?
 				self::firstHeaderValue($contentTypeHeaders, ['Content-Type']) : null;
 		}
+		if ($wantThreadHeaders)
+		{
+			$threadHeaders = $data->getHeaders('threadheaders', \Horde_Imap_Client_Data_Fetch::HEADER_PARSE);
+			$email[self::THREAD_TOPIC_HEADER_PROPERTY] = $threadHeaders ?
+				self::firstHeaderValue($threadHeaders, ['Thread-Topic']) : null;
+			$email[self::THREAD_INDEX_HEADER_PROPERTY] = $threadHeaders ?
+				self::firstHeaderValue($threadHeaders, ['Thread-Index']) : null;
+			$email[self::LIST_ID_HEADER_PROPERTY] = $threadHeaders ?
+				self::firstHeaderValue($threadHeaders, ['List-Id']) : null;
+		}
 		if ($wantBody && $structure)
 		{
 			$email += self::emailBodyFields($imap, $mailbox, $uid, $structure);
@@ -3042,6 +3087,16 @@ class Imap extends Jmap\Base
 	 * ":asText"/":asRaw" suffix) - see mail/js/jmap.ts's own copy of this constant for why.
 	 */
 	const CONTENT_TYPE_HEADER_PROPERTY = 'header:content-type';
+
+	/**
+	 * Same RFC 8621 §4.1.3 header-property mechanism, for reply propagation (classic
+	 * getReplyData()'s equivalent, see emailGet()'s own docblock note on why this was added
+	 * 2026-09-09) - MailJmap.fetchForReply() (mail/js/jmap.ts) reads these exact keys back
+	 * verbatim.
+	 */
+	const THREAD_TOPIC_HEADER_PROPERTY = 'header:thread-topic:asText';
+	const THREAD_INDEX_HEADER_PROPERTY = 'header:thread-index:asText';
+	const LIST_ID_HEADER_PROPERTY = 'header:list-id:asText';
 
 	/**
 	 * First non-empty value among a priority list of header names, decoded (RFC 2047) and trimmed -

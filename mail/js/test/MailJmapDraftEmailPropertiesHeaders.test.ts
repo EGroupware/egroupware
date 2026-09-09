@@ -84,3 +84,48 @@ describe("MailJmap.draftEmailProperties() - replyTo/priority/disposition headers
 		assert.notProperty(properties, "header:Disposition-Notification-To");
 	});
 });
+
+/**
+ * Follow-up regression coverage (2026-09-09, ralf, after the fixes above: "Does that mean they
+ * [Thread-Topic/Thread-Index/List-Id] are lost when replying to a mail? ... it would be a real
+ * regression we need to fix"): classic getReplyData()'s own propagation of these three headers
+ * from the original message onto a reply (2014 commit 2172fc769d) had no JMAP-native equivalent -
+ * MailCompose.bootstrapReply() now sets them from MailJmap.fetchForReply()'s result (see
+ * JmapReplyContext's own docblock), and draftEmailProperties() carries them through here.
+ */
+describe("MailJmap.draftEmailProperties() - Thread-Topic/Thread-Index/List-Id reply propagation", () =>
+{
+	it("sets all three raw header properties when propagated from a reply", () =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const properties = (jmap as any).draftEmailProperties(IDENTITY, baseEmail({
+			threadTopic : "Original subject",
+			threadIndex : "AQHTest1234567890abcdefg==",
+			listId : "My List <mylist.example.org>",
+		}));
+
+		assert.equal(properties["header:Thread-Topic"], "Original subject");
+		assert.equal(properties["header:Thread-Index"], "AQHTest1234567890abcdefg==");
+		assert.equal(properties["header:List-Id"], "My List <mylist.example.org>");
+	});
+
+	it("omits all three when the original message had none (a plain new message, or a forward)", () =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const properties = (jmap as any).draftEmailProperties(IDENTITY, baseEmail());
+
+		assert.notProperty(properties, "header:Thread-Topic");
+		assert.notProperty(properties, "header:Thread-Index");
+		assert.notProperty(properties, "header:List-Id");
+	});
+
+	it("resolves each of the three independently - only threadTopic given, the other two stay omitted", () =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const properties = (jmap as any).draftEmailProperties(IDENTITY, baseEmail({threadTopic : "Only this one"}));
+
+		assert.equal(properties["header:Thread-Topic"], "Only this one");
+		assert.notProperty(properties, "header:Thread-Index");
+		assert.notProperty(properties, "header:List-Id");
+	});
+});

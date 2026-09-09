@@ -237,6 +237,7 @@ describe("MailCompose bootstrap populates sourceMessagesToFlag", () =>
 			mimeType : 'plain', body : 'the original body', profileID : '1',
 			inReplyTo : ['msg1@example.com'], references : ['msg1@example.com'],
 			attachments : [],
+			threadTopic : null, threadIndex : null, listId : null,
 			...overrides,
 		};
 	}
@@ -349,6 +350,53 @@ describe("MailCompose bootstrap populates sourceMessagesToFlag", () =>
 			await compose.mergeForwardAttachments([SOURCE_ROW_ID]);
 
 			assert.deepEqual((compose as any).sourceMessagesToFlag, {rowIds : [SOURCE_ROW_ID], forwarded : true});
+		});
+	});
+
+	/**
+	 * Regression coverage (2026-09-09, ralf: "Does that mean they [Thread-Topic/Thread-Index/
+	 * List-Id] are lost when replying to a mail? ... it would be a real regression we need to
+	 * fix") - classic getReplyData()'s propagation of these three headers from the original
+	 * message onto a reply (2014 commit 2172fc769d) had no JMAP-native equivalent at all;
+	 * bootstrapReply() now captures them into replyThreadingHeaders alongside inReplyTo/
+	 * references, reply-only (null for a forward), same convention as those two.
+	 */
+	describe("bootstrapReply() populates replyThreadingHeaders' threadTopic/threadIndex/listId", () =>
+	{
+		it("a plain reply captures all three from the original message", async() =>
+		{
+			const compose = createComposeForReply(fakeContext({
+				threadTopic : "Original subject", threadIndex : "AQHTest==", listId : "mylist.example.org",
+			}), [fakeIdentity()]);
+
+			await (compose as any).bootstrapReply(SOURCE_ROW_ID, 'reply');
+
+			assert.deepEqual((compose as any).replyThreadingHeaders, {
+				inReplyTo : ['msg1@example.com'], references : ['msg1@example.com'],
+				threadTopic : "Original subject", threadIndex : "AQHTest==", listId : "mylist.example.org",
+			});
+		});
+
+		it("stays null (the whole replyThreadingHeaders object) for an inline forward - a forward starts a new thread", async() =>
+		{
+			const compose = createComposeForReply(fakeContext({
+				threadTopic : "Original subject", threadIndex : "AQHTest==", listId : "mylist.example.org",
+			}), [fakeIdentity()]);
+
+			await (compose as any).bootstrapReply(SOURCE_ROW_ID, 'forward');
+
+			assert.isNull((compose as any).replyThreadingHeaders);
+		});
+
+		it("stays null per-field when the original message had none of these headers", async() =>
+		{
+			const compose = createComposeForReply(fakeContext(), [fakeIdentity()]);
+
+			await (compose as any).bootstrapReply(SOURCE_ROW_ID, 'reply');
+
+			assert.isNull((compose as any).replyThreadingHeaders.threadTopic);
+			assert.isNull((compose as any).replyThreadingHeaders.threadIndex);
+			assert.isNull((compose as any).replyThreadingHeaders.listId);
 		});
 	});
 });

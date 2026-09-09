@@ -399,6 +399,47 @@ class ImapBuildMailerTest extends Api\LoggedInTest
 		$this->assertDoesNotMatchRegularExpression('/^Disposition-Notification-To:/mi', $raw);
 	}
 
+	/**
+	 * Regression test for the follow-up bug found live 2026-09-09 (ralf, after the Reply-To fix
+	 * above: "Does that mean they [Thread-Topic/Thread-Index/List-Id] are lost when replying to a
+	 * mail? ... it would be a real regression we need to fix") - classic getReplyData()'s own
+	 * propagation of these three headers from the original message onto a reply (2014 commit
+	 * 2172fc769d) had no JMAP-native equivalent at all. MailJmap.draftEmailProperties() sends them
+	 * as raw header:HeaderName properties once fetchForReply() has found them on the original.
+	 */
+	public function testThreadTopicIndexAndListIdHeadersAreSetWhenPropagatedFromAReply()
+	{
+		$email = [
+			'from' => [['email' => 'sender@example.org']],
+			'to' => [['email' => 'recipient@example.org']],
+			'subject' => 'Re: thread propagation',
+			'header:Thread-Topic' => 'Original subject',
+			'header:Thread-Index' => 'AQHTest1234567890abcdefg==',
+			'header:List-Id' => 'My List <mylist.example.org>',
+			'bodyValues' => ['body' => ['value' => 'x']],
+		];
+		$raw = $this->invokeBuildMailer($email)->getRaw(false);
+
+		$this->assertMatchesRegularExpression('/^Thread-Topic: Original subject/mi', $raw);
+		$this->assertMatchesRegularExpression('/^Thread-Index: AQHTest1234567890abcdefg==/mi', $raw);
+		$this->assertMatchesRegularExpression('/^List-Id: My List <mylist\.example\.org>/mi', $raw);
+	}
+
+	public function testThreadTopicIndexAndListIdHeadersAreOmittedWhenNotPropagated()
+	{
+		$email = [
+			'from' => [['email' => 'sender@example.org']],
+			'to' => [['email' => 'recipient@example.org']],
+			'subject' => 'A plain new message, not a reply',
+			'bodyValues' => ['body' => ['value' => 'x']],
+		];
+		$raw = $this->invokeBuildMailer($email)->getRaw(false);
+
+		$this->assertDoesNotMatchRegularExpression('/^Thread-Topic:/mi', $raw);
+		$this->assertDoesNotMatchRegularExpression('/^Thread-Index:/mi', $raw);
+		$this->assertDoesNotMatchRegularExpression('/^List-Id:/mi', $raw);
+	}
+
 	/** inReplyTo/references must be wrapped in angle brackets, matching RFC 5322. */
 	public function testThreadingHeadersAreAngleBracketWrapped()
 	{

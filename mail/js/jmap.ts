@@ -116,6 +116,19 @@ export interface JmapNewEmail
 	 * priority above (2026-09-09).
 	 */
 	requestReadReceipt? : boolean;
+	/**
+	 * Thread-Topic/Thread-Index/List-Id propagation on reply - classic getReplyData()'s own
+	 * equivalent (removed 2014 commit 2172fc769d "support the propagation of Thread-Topic,
+	 * Thread-Index and List-Id on reply too"), found missing here entirely 2026-09-09 (ralf: "Does
+	 * that mean they are lost when replying to a mail? ... it would be a real regression") -
+	 * MailCompose.bootstrapReply() sets all three from whatever MailJmap.fetchForReply() found on
+	 * the original message (see JmapReplyContext's own docblock); undefined for a plain
+	 * new-message compose or a forward (a forward starts a new thread, same as inReplyTo/
+	 * references above).
+	 */
+	threadTopic? : string;
+	threadIndex? : string;
+	listId? : string;
 }
 
 /**
@@ -209,6 +222,17 @@ export interface JmapReplyContext
 	 * ignores this list entirely, matching the classic code's own behaviour.
 	 */
 	attachments : JmapAttachment[];
+	/**
+	 * Thread-Topic/Thread-Index/List-Id propagation on reply - classic getReplyData()'s own
+	 * equivalent (removed 2014 commit 2172fc769d "support the propagation of Thread-Topic,
+	 * Thread-Index and List-Id on reply too"), found missing here entirely 2026-09-09 (ralf: "Does
+	 * that mean they are lost when replying to a mail? ... it would be a real regression") - the
+	 * JMAP-native reply path never requested/read these at all. null when the original message
+	 * simply had no such header, same as `replyTo` above.
+	 */
+	threadTopic : string | null;
+	threadIndex : string | null;
+	listId : string | null;
 }
 
 /** Result of MailJmap.fetchBody() - see that method's docblock */
@@ -436,6 +460,17 @@ export class MailJmap
 	// bare form's raw, undecoded value is all isSmimeWrapperOnly() needs anyway (plain ASCII
 	// type/param text, never RFC 2047-encoded).
 	private static readonly CONTENT_TYPE_HEADER_PROPERTY = 'header:content-type';
+	// Thread-Topic/Thread-Index/List-Id reply propagation (classic getReplyData()'s equivalent,
+	// removed 2014 commit 2172fc769d, found missing here entirely 2026-09-09 - see
+	// fetchForReply()'s own use of these). Matches Api\Mail\Jmap\Imap::THREAD_TOPIC_HEADER_PROPERTY
+	// et al (api/src/Mail/Jmap/Imap.php) for the local shim; a real JMAP server (Stalwart) should
+	// answer these natively per RFC 8621 §4.1.3 - NOT yet live-verified there (all 3 are
+	// unstructured free-text-shaped headers, so "asText" is expected to behave unlike
+	// CONTENT_TYPE_HEADER_PROPERTY's own structured-header caveat above, but confirm live before
+	// relying on it further).
+	private static readonly THREAD_TOPIC_HEADER_PROPERTY = 'header:thread-topic:asText';
+	private static readonly THREAD_INDEX_HEADER_PROPERTY = 'header:thread-index:asText';
+	private static readonly LIST_ID_HEADER_PROPERTY = 'header:list-id:asText';
 	// JMAP Quota extension (RFC 9425) - matches Mail\Jmap::JMAP_QUOTA (api/src/Mail/Jmap.php)
 	private static readonly JMAP_QUOTA = 'urn:ietf:params:jmap:quota';
 	// Per-profile cache of getQuota()'s formatted result - refreshQuotaDisplay() (app.ts)
@@ -2812,7 +2847,8 @@ export class MailJmap
 				ids: [ref.emailId],
 				properties: ['from', 'to', 'cc', 'bcc', 'replyTo', 'subject', 'sentAt', 'receivedAt',
 					'messageId', 'references', 'bodyStructure', 'textBody', 'htmlBody', 'bodyValues',
-					'attachments'],
+					'attachments', MailJmap.THREAD_TOPIC_HEADER_PROPERTY, MailJmap.THREAD_INDEX_HEADER_PROPERTY,
+					MailJmap.LIST_ID_HEADER_PROPERTY],
 				fetchAllBodyValues: true,
 			};
 			if (token.isLocal)
@@ -2884,6 +2920,9 @@ export class MailJmap
 				inReplyTo,
 				references,
 				attachments,
+				threadTopic: email[MailJmap.THREAD_TOPIC_HEADER_PROPERTY] || null,
+				threadIndex: email[MailJmap.THREAD_INDEX_HEADER_PROPERTY] || null,
+				listId: email[MailJmap.LIST_ID_HEADER_PROPERTY] || null,
 			};
 		}
 		catch (e)
@@ -5354,6 +5393,11 @@ export class MailJmap
 			// found missing here alongside replyTo above, see JmapNewEmail's own docblock.
 			...(email.priority ? {'header:X-Priority': String(email.priority)} : {}),
 			...(email.requestReadReceipt ? {'header:Disposition-Notification-To': identity.email} : {}),
+			// classic getReplyData()'s Thread-Topic/Thread-Index/List-Id propagation, found missing
+			// here alongside the above (2026-09-09) - see JmapNewEmail's own docblock.
+			...(email.threadTopic ? {'header:Thread-Topic': email.threadTopic} : {}),
+			...(email.threadIndex ? {'header:Thread-Index': email.threadIndex} : {}),
+			...(email.listId ? {'header:List-Id': email.listId} : {}),
 			bodyValues,
 			// attachments/htmlBody/textBody are RFC 8621 §4.1.4 convenience VIEWS the server
 			// derives from bodyStructure on read - not independently settable on create, so the
