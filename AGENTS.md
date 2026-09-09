@@ -198,6 +198,17 @@ similar scope.
   (the `Et2WidgetClass#_inst` private-field break with its `getInstanceManager()` replacement, the
   `EgwApp.nm : Et2Nextmatch | et2_nextmatch` union needing a per-method cast, and the `app.stylite`-is-
   untyped-EPL problem). infolog done; other apps not started.
+- `doc/ai/projects/knowledgebase-app.md` - design of a brand-new `knowledgebase` app to supersede
+  the deprecated `phpbrain` (Knowledge Base) and `wiki` apps, built on `Api\Storage`/
+  `Api\Storage\Tracking`/`Api\Categories`/`Api\Acl` rather than either legacy app's bespoke
+  persistence/ACL/history. Covers the 3-pane (category tree / nextmatch list / document view)
+  UI, the new document/comment/rating/related-document schema, the 3-tier document>category>owner
+  `Api\Acl` model (designed specifically so both legacy apps' data can be imported), dual
+  Markdown/HTML content support reusing the existing `Et2MarkdownEditMixin`/`Et2HtmlArea` widgets
+  (no new editor needed), history via the shared `egw_history_log`/`<historylog>` widget instead
+  of wiki's full-copy-per-revision storage, and migration mappings from both legacy apps. Design
+  phase, no code written yet - deferred for later phases: multi-category-per-document, public/
+  anonymous access, and phpbrain's FAQ-style question-intake pipeline.
 - `doc/ai/projects/link-url-support.md` - `Api\Link`/`egw_links` enhancement letting any app's
   entry hold arbitrary external URLs, via a new `Link::URL_APPNAME = 'url'` pseudo-app (mirrors
   the existing `VFS_APPNAME` special case) rather than a per-app URL table. Covers the schema
@@ -209,6 +220,19 @@ similar scope.
   app picker swaps the search combo for a plain URL input, then the existing (Link) button/ajax
   path - already fully generic - just works, no new widgets or endpoints needed), and a small
   inline-SVG icon (no new asset file). Done and tested.
+- `doc/ai/projects/calendar-rrule-standards-gap.md` - maps how far `calendar_rrule` (the whole
+  recurrence engine, shared by the UI, DB storage, iCal import/export, and the JSCalendar REST read
+  path) falls short of RFC 5545 - single-implicit-BYDAY/BYMONTHDAY only, no BYMONTH/BYYEARDAY/
+  BYWEEKNO/BYSETPOS/BYHOUR-MINUTE-SECOND, COUNT irreversibly collapsed to UNTIL, RRULE+RDATE
+  mutually exclusive, WKST read from the viewing user's live preference instead of stored per
+  event - ahead of two future features (a real stored RRULE + library-based interpretation, and
+  REST support for creating/updating recurring events). Covers the full gap table plus several
+  concrete bugs found while building the harness (a crash importing RRULE+RDATE together with
+  UNTIL, order-dependent semantic loss for RRULE+RDATE without UNTIL, a `monthly_byday_num`
+  int/float docblock mismatch, YEARLY leap-day drift, JSCalendar's `byDay` not being a JSON array
+  as RFC 8984 requires). Mapping + test harness (`calendar/tests/RruleTest.php`,
+  `IcalRruleRoundtripTest.php`, `JsCalendarRecurrenceTest.php`) done; schema redesign and REST
+  write support are future phases, not started.
 
 ## Security and data handling
 
