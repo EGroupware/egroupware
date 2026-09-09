@@ -11,7 +11,7 @@ Authentication is via Basic Auth with username and a password, or a token valid 
 > * viewing EML files 
 > * setting the vacation notice
 > * creating or editing mail accounts and identities
-> * **planned, not yet implemented**: read-only listing of folders and emails, see
+> * read-only listing of folders and emails (JMAP-lite, not full JMAP), see
 >   [Folders and Emails (JMAP-lite)](#folders-and-emails-jmap-lite) below
 
 > **Mail accounts in EGroupware can be for a single or multiple accounts or groups or even for everyone.**
@@ -345,9 +345,10 @@ x-webdav-status: 204 No Content
 
 ## Folders and Emails (JMAP-lite)
 
-> **Status: planned, not yet implemented.** This section documents the intended API, designed before
-> implementation (see `doc/ai/projects/mail-rest-jmap-lite.md` for the full plan, architecture, and
-> backend-parity notes).
+> **Status: implemented (2026-09-09).** `GET /mail/folders` and `GET /mail/folders/<folderId>/emails`
+> are live-verified against a running instance; the single-folder/single-email/attachment-download
+> endpoints are implemented but not yet live-verified. See `doc/ai/projects/mail-rest-jmap-lite.md`
+> for the full plan, architecture, and backend-parity notes.
 
 These endpoints let a client read a mail account's folders and the emails inside them, using JMAP's own
 `Mailbox`/`Email` data model (RFC 8620/8621) - but this is **not** a full JMAP implementation. There is
@@ -492,7 +493,8 @@ Content-Type: application/json
 
 Query parameters:
 - `properties`: comma-separated list of `Email` properties - default adds `bodyStructure`, `textBody`,
-  `htmlBody`, `attachments`, `bodyValues` (with `fetchAllBodyValues`) to the list-view default above
+  `htmlBody`, `attachments`, `bodyValues`, `blobId` (with `fetchAllBodyValues`) to the list-view
+  default above
 
 ```
 curl -i https://example.org/egroupware/groupdav.php/mail/folders/<folderId>/emails/<emailId> --user <user> -H 'Accept: application/json'
@@ -513,6 +515,7 @@ Content-Type: application/json
   "cc": [],
   "bcc": [],
   "hasAttachment": true,
+  "blobId": "<messageBlobId>",
   "bodyStructure": {"partId": "1", "type": "multipart/mixed", "subParts": ["..."]},
   "textBody": [{"partId": "2", "type": "text/plain"}],
   "htmlBody": [{"partId": "3", "type": "text/html"}],
@@ -523,10 +526,11 @@ Content-Type: application/json
 }
 ```
 > This is genuine JMAP body shape (`bodyStructure`/`bodyValues` keyed by `partId`), not a flattened
-> plain-string simplification - proxied as-is from the account's JMAP session.
+> plain-string simplification - proxied as-is from the account's JMAP session. The top-level `blobId`
+> (RFC 8621 §4.1.1) is the whole raw message - see below for how to download it as `.eml`.
 </details>
 
-#### **GET** `/mail[/<id>]/folders/<folderId>/emails/<emailId>/attachments/<blobId>` download attachment content
+#### **GET** `/mail[/<id>]/folders/<folderId>/emails/<emailId>/attachments/<blobId>` download attachment content, or the raw `.eml` message
 
 <details>
   <summary>Example: Downloading an attachment found in an email's `attachments[]` list</summary>
@@ -543,4 +547,22 @@ Content-Disposition: attachment; filename="contract.pdf"
 > An inline image referenced via `cid:` in `htmlBody` is resolved the same way a real JMAP client would:
 > match the `cid` against an entry in `attachments[]`, then download it here by its `blobId`. This API
 > does not rewrite `cid:` references itself.
+</details>
+
+<details>
+  <summary>Example: Downloading the raw <code>.eml</code> message (its own top-level <code>blobId</code>, not one from <code>attachments[]</code>)</summary>
+
+There is no separate "download raw message" endpoint - an email's own top-level `blobId` (RFC 8621
+§4.1.1, request it via `?properties=...,blobId` on the single-email `GET` above) is just another blob,
+downloaded through this exact same endpoint. Recognized specially for proper headers.
+
+```
+curl -i https://example.org/egroupware/groupdav.php/mail/folders/<folderId>/emails/<emailId>/attachments/<messageBlobId> --user <user>
+
+HTTP/1.1 200 Ok
+Content-Type: message/rfc822
+Content-Disposition: attachment; filename="Re: Contract Installation.eml"
+
+<raw RFC 5322 message>
+```
 </details>

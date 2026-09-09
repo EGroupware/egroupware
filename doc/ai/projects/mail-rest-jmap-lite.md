@@ -261,10 +261,21 @@ mirroring how `Addressbook.md`'s own sync listing adds `more-results`/`sync-toke
 list/get, **and** attachment download (moved up from the first draft's Phase 2, per ralf: needed so a
 client can resolve inline images itself, the genuine-JMAP way).
 
-**Phase 2 (deferred)**:
-- `GET .../emails/<emailId>/raw` - raw `message/rfc822` download (symmetrical to the existing `POST
-  /mail[/<id>]/view` upload; no download today).
-- Search across all folders (`Email/query` without an implicit `inMailbox`).
+**Phase 2, `GET .../emails/<emailId>/raw` - done for free (2026-09-09)**: no separate endpoint needed
+after all. `Email.blobId` (RFC 8621 §4.1.1, the whole raw RFC 5322 message) is just another blobId -
+the existing `.../attachments/<blobId>` endpoint already downloads it correctly on both backends (the
+shim's own blobId scheme already represents "whole message" as an empty-partId blobId,
+`base64(mailbox):uid:`, per `Api\Mail\Jmap\Imap.php:3153`; `AttachmentJmap::fetchBlobBytes()` already
+branches on that). Closed two small gaps to make it actually usable: added `blobId` to
+`DEFAULT_EMAIL_BODY_PROPERTIES` (wasn't returned by default from `GET .../emails/<emailId>`), and
+`getAttachment()` now recognizes a request for the email's own top-level `blobId` specifically and
+sets `Content-Type: message/rfc822` + a `<subject>.eml` filename, instead of the generic attachment
+fallback. No new route, no new PHP method.
+
+**Phase 2 (still deferred)**:
+- Search across all folders (`Email/query` without an implicit `inMailbox`) - scoped and shipped for
+  the mail UI instead, see [[mail-cross-folder-search]]; REST exposure for this endpoint specifically
+  not started.
 - `Mailbox.myRights` for shim-backed accounts, if/when useful - would need real work in `Imap.php`
   (computing rights from IMAP `MYRIGHTS`), not just exposing an existing field.
 

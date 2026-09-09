@@ -770,9 +770,13 @@ class ApiHandler extends Api\CalDAV\Handler
 
 	/**
 	 * Added to DEFAULT_EMAIL_LIST_PROPERTIES for the single-email endpoint's default - genuine JMAP
-	 * body shape (bodyStructure/bodyValues by partId), not a flattened simplification.
+	 * body shape (bodyStructure/bodyValues by partId), not a flattened simplification. `blobId` is
+	 * the top-level RFC 8621 §4.1.1 property (the whole raw RFC 5322 message, NOT one of
+	 * attachments[]'s own blobIds) - doubles as this API's raw .eml download, since it's just
+	 * another blobId for the existing attachment-download endpoint (see getAttachment()'s own
+	 * doc/ai/projects/mail-rest-jmap-lite.md note) - no separate "download raw" endpoint needed.
 	 */
-	const DEFAULT_EMAIL_BODY_PROPERTIES = ['bodyStructure', 'textBody', 'htmlBody', 'attachments', 'bodyValues'];
+	const DEFAULT_EMAIL_BODY_PROPERTIES = ['bodyStructure', 'textBody', 'htmlBody', 'attachments', 'bodyValues', 'blobId'];
 
 	/**
 	 * Make an opaque JMAP-ish id safe to use as a URL path segment.
@@ -1100,9 +1104,11 @@ class ApiHandler extends Api\CalDAV\Handler
 	 * $folderIdUrlSafe is unused - AttachmentJmap::fetchBlobBytes() only needs the account and the
 	 * (already self-describing/opaque, already url-safe) blobId itself; it's in the URL purely
 	 * for discoverability/consistency with how the client found the blobId (in an email's own
-	 * attachments[] list). $emailId IS used, but only to look up that same attachment's real
-	 * name/type for the Content-Disposition/Content-Type headers - a proper download filename,
-	 * not fetching the actual bytes a second, different way.
+	 * attachments[] list, or the email's own top-level `blobId` for a raw .eml download - see
+	 * DEFAULT_EMAIL_BODY_PROPERTIES's own note; no separate "download raw" endpoint exists or is
+	 * needed, this same endpoint already covers it). $emailId IS used, but only to look up that
+	 * same blob's real name/type for the Content-Disposition/Content-Type headers - a proper
+	 * download filename, not fetching the actual bytes a second, different way.
 	 *
 	 * @param int $user
 	 * @param int|null $ident_id
@@ -1123,8 +1129,15 @@ class ApiHandler extends Api\CalDAV\Handler
 		$name = $blobId;
 		$type = '';
 		try {
-			$email = $account->jmapSession()->email->get([$emailId], ['attachments'])['list'][0] ?? null;
-			foreach ((array)($email['attachments'] ?? []) as $attachment)
+			$email = $account->jmapSession()->email->get([$emailId], ['attachments', 'blobId', 'subject'])['list'][0] ?? null;
+			if (($email['blobId'] ?? null) === $blobId)
+			{
+				// the email's own top-level blobId (RFC 8621 §4.1.1) - the whole raw message, not
+				// one of attachments[]'s own parts
+				$name = ($email['subject'] ?? 'message').'.eml';
+				$type = 'message/rfc822';
+			}
+			else foreach ((array)($email['attachments'] ?? []) as $attachment)
 			{
 				if (($attachment['blobId'] ?? null) === $blobId)
 				{
