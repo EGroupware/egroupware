@@ -19,11 +19,12 @@ preference, `Autocrypt`/`Autocrypt-Gossip` send+receive, `prefer-encrypt` storag
 multi-key-per-address storage fix, mutual-auto-encrypt preference, S/MIME auto-add-when-verified,
 and an explicit Level 1 spec gap/deviation audit. Phase 5 steps 1 (keydata minimize/re-armor), 2
 (multi-key-per-address addressbook storage, **now including its `prefer-encrypt`-attribute storage
-half too**) and **3's `Autocrypt:`-sending half** are DONE (2026-09-09, see their own phasing
-entries) - `Autocrypt-Gossip:` sending, receiving/parsing either header, the consent dialog, mutual
-auto-encrypt, and S/MIME auto-add are still plan only; the new `prefer-encrypt` storage API from
-item 2 has no caller yet (item 6, mutual auto-encrypt, is what would set it). **Phase 5 step 2's
-alias-pointer storage rework (Phase G) is now also DONE (2026-09-09)** - see its own entry under
+half too**), **3's `Autocrypt:`-sending half, and 4's pure header-parsing logic** are DONE
+(2026-09-09, see their own phasing entries) - `Autocrypt-Gossip:` sending, actually WIRING the new
+header parser to a real incoming message, the consent dialog, mutual auto-encrypt, and S/MIME
+auto-add are still plan only; the new `prefer-encrypt` storage API from item 2 has no caller yet
+(item 6, mutual auto-encrypt, is what would set it). **Phase 5 step 2's alias-pointer storage
+rework (Phase G) is now also DONE (2026-09-09)** - see its own entry under
 item 1 below.
 **Security fix (Phase H, DONE 2026-09-09)**: a signature/cert that cryptographically verifies but
 doesn't itself claim the message's From address is now shown as invalid, not verified, for both PGP
@@ -669,19 +670,35 @@ address entry).
 
 ### 4. Receiving: use a replied/forwarded message's own `Autocrypt`/`Autocrypt-Gossip` headers as a key source
 
-When Mailvelope-composing a reply/forward (`mailvelopeCompose()`, `mail/js/app.ts` - already reads
-the quoted PGP-armored body out of the source message for the "reply to encrypted message" case),
-also parse that source message's own raw headers for `Autocrypt:` (the original sender's key -
-useful if the addressbook doesn't have it yet) and `Autocrypt-Gossip:` (other recipients' keys, if
-this was a group message) and feed anything found through the same consent-dialog path as item 5
-below, rather than silently trusting it. Per the spec's own robustness notes: **discard entirely**
-if more than one `Autocrypt:` header is present on the message (a spec-defined error condition, not
-just "take the first one"), and skip peer-state-relevant processing entirely for
-`multipart/report` messages (MDNs) and messages with more than one `From` address - both apply
-equally to us even without building the full peer-state machine, since they're about not trusting
-malformed/adversarial input, not about the state machine itself. Needs the reverse of item 3's
-binary-minimize conversion: base64-decode the header's `keydata`, then re-armor it (`key.armor()`)
-to match our own storage convention.
+**Parsing half - DONE (2026-09-09)**, wiring half still pending. New `MailJmap.
+parseAutocryptHeader(headerValue, fromAddress)`/`parseAutocryptHeaders(headerValues, fromAddress)`
+(`mail/js/jmap.ts`) implement Level 1's own validation rules exactly, confirmed against the spec
+text itself (fetched live while writing this, not from memory): `addr`/`keydata` both required;
+**"If this address [`addr`] differs from the one in the `From` header, the entire `Autocrypt`
+header MUST be treated as invalid"**; attribute names starting with `_` are non-critical and
+silently ignored if unrecognized, but any OTHER unrecognized attribute name invalidates the whole
+header (**"MUST treat the entire `Autocrypt` header as invalid if it encounters a 'critical'
+attribute that it doesn't support"**); `prefer-encrypt` is `'mutual'` only for an explicit
+`prefer-encrypt=mutual`, else `'nopreference'` (**"any other value (or ... does not see the
+attribute at all)"**); the spec's own 10 KiB cap is enforced defensively on read too (a malicious/
+corrupted header could exceed what a spec-compliant sender ever would); and
+`parseAutocryptHeaders()` applies the exact multiple-header rule (**"If there is more than one
+valid header, this SHOULD be treated as an error, and all `Autocrypt` headers discarded as
+invalid"**) across a message's full set of raw `Autocrypt:` header values. 19 tests in
+`PgpAutocryptHeaderParsing.test.ts`, each quoting the spec line it verifies.
+
+**Deliberately NOT yet built** (needs the not-yet-built consent dialog from item 5 first - the two
+are meant to land together per this doc's own phasing, so half-wiring this now would mean silently
+auto-trusting a header with no user awareness at all): actually calling this parser against a real
+incoming/replied-to message's raw headers (`mailvelopeCompose()`, `mail/js/app.ts`, already reads
+the quoted PGP-armored body out of the source message for the "reply to encrypted message" case -
+the natural place to also read its `Autocrypt:`/`Autocrypt-Gossip:` headers), the
+`multipart/report`/multiple-`From` skip-entirely guard (needs real message metadata this pure
+parser deliberately doesn't take), `Autocrypt-Gossip:` parsing specifically (same header shape and
+`parseAutocryptHeader()` should work for it directly, but it lives INSIDE the decrypted MIME
+payload, not as a bare outer header - needs the decrypted-body access pattern, not built), and
+feeding a successful parse's `keydata` through `autocryptKeydataToArmoredKey()` (item 1, already
+built) into the actual consent-dialog-gated storage call.
 
 ### 5. Consent dialog + new preference
 
@@ -782,8 +799,10 @@ keeps today's click-to-add dialog unchanged). Also needs the same multi-key-per-
 3. Sending `Autocrypt:` (own key) - DONE (2026-09-09, see its own entry) - was indeed the simplest,
    most self-contained piece, no consent-dialog UI needed (never touches another contact's stored
    data). `Autocrypt-Gossip:` (the other half of item 3) is still not started.
-4. Consent dialog + preference (item 5), then receiving/gossip-parsing (items 3's gossip half, 4) -
-   the two together are what actually needs the dialog.
+4. Item 4's pure `Autocrypt:`-header-parsing logic is DONE (2026-09-09, see its own entry) -
+   consent dialog + preference (item 5), then wiring that parser to a real message + gossip-parsing
+   (item 3's gossip half, item 4's remaining wiring) - the two together are what actually needs the
+   dialog, still not started.
 5. `prefer-encrypt` **storage** (item 2) is DONE (2026-09-09, see its own entry) - what's left is
    mutual auto-encrypt preference (item 6) and actually wiring items 3/4's sending/receiving code
    to call `set_autocrypt_attributes()`/`get_autocrypt_attributes()`.

@@ -278,6 +278,17 @@ export interface PgpSignatureResult
 	addressMismatch? : boolean;
 }
 
+/** A single successfully-parsed `Autocrypt:` header - see MailJmap.parseAutocryptHeader()'s own docblock. */
+export interface AutocryptHeaderResult
+{
+	/** lowercased - always equal to the message's own From address (parseAutocryptHeader() rejects otherwise) */
+	addr : string;
+	/** base64 minimized-binary-key text, exactly as it appeared in the header - NOT yet re-armored */
+	keydata : string;
+	/** 'mutual' only if the header explicitly said so - any other/missing value means 'nopreference', per spec */
+	preferEncrypt : 'mutual' | 'nopreference';
+}
+
 export interface JmapGetRowsQuery
 {
 	selectedFolder : string;	// "profileID::folder/path"
@@ -3415,6 +3426,92 @@ export class MailJmap
 		}
 		const key = await openpgp.readKey({binaryKey: binary});
 		return key.armor();
+	}
+
+	/**
+	 * Parse ONE `Autocrypt:` header's raw value per Autocrypt Level 1's own validation rules
+	 * (https://docs.autocrypt.org/level1.html, confirmed via the spec text itself, 2026-09-09) -
+	 * Phase 5 item 4's receiving half (doc/ai/projects/mail-pgp-signature-verification.md), pure
+	 * parsing logic only, NOT yet wired into any actual "read an incoming message" caller (that
+	 * needs the not-yet-built consent dialog + preference from item 5 first - the two are
+	 * deliberately being built together per the project doc's own phasing).
+	 *
+	 * Rules applied, quoting the spec: `addr` and `keydata` are both required; **"If this address
+	 * [`addr`] differs from the one in the `From` header, the entire `Autocrypt` header MUST be
+	 * treated as invalid"** (hence `fromAddress` is a required param here, not optional); attribute
+	 * names starting with `_` are non-critical and silently ignored if unrecognized, but **"[the
+	 * MUA] MUST treat the entire `Autocrypt` header as invalid if it encounters a 'critical'
+	 * attribute that it doesn't support"** (any non-`_`-prefixed name other than `addr`/`keydata`/
+	 * `prefer-encrypt`); `prefer-encrypt` is only ever `'mutual'` for an explicit `prefer-encrypt=
+	 * mutual` - **"any other value (or ... does not see the attribute at all)"** means
+	 * `'nopreference'`; and the spec's own 10 KiB sender-side cap is enforced defensively here too
+	 * (a malicious/corrupted header could exceed it even though a spec-compliant sender never
+	 * would).
+	 *
+	 * Multiple-header handling (**"If there is more than one valid header, this SHOULD be treated
+	 * as an error, and all `Autocrypt` headers discarded as invalid"**) and the skip-entirely cases
+	 * (`multipart/report`, multiple `From` addresses) are the CALLER's responsibility -
+	 * parseAutocryptHeaders() below handles the multiple-header rule for a single message's full
+	 * set of raw header values; the content-type/multi-From checks depend on data this pure
+	 * per-header parser deliberately doesn't take.
+	 *
+	 * @param headerValue raw, already-unfolded header value (everything after `Autocrypt:`)
+	 * @param fromAddress the message's own From address (lowercased or not, compared case-insensitively)
+	 * @return null if the header is malformed/invalid by any of the above rules
+	 */
+	static parseAutocryptHeader(headerValue : string, fromAddress : string) : AutocryptHeaderResult | null
+	{
+		if (!headerValue || headerValue.length > 10 * 1024) return null;
+
+		const attrs : Record<string, string> = {};
+		for (const part of headerValue.split(';'))
+		{
+			const trimmed = part.trim();
+			if (!trimmed) continue;
+			const eq = trimmed.indexOf('=');
+			// a malformed attribute (no "=", or a repeated attribute name) can't be told apart from
+			// a critical one we don't understand - safest is to reject the whole header, not guess
+			if (eq < 0) return null;
+			const key = trimmed.substring(0, eq).trim().toLowerCase();
+			if (key in attrs) return null;
+			attrs[key] = trimmed.substring(eq + 1).trim();
+		}
+
+		if (!attrs['addr'] || !attrs['keydata']) return null;
+		const addr = attrs['addr'].toLowerCase();
+		if (addr !== (fromAddress || '').toLowerCase()) return null;
+
+		for (const key of Object.keys(attrs))
+		{
+			if (key.startsWith('_')) continue;
+			if (key !== 'addr' && key !== 'keydata' && key !== 'prefer-encrypt') return null;
+		}
+
+		return {
+			addr, keydata: attrs['keydata'],
+			preferEncrypt: attrs['prefer-encrypt'] === 'mutual' ? 'mutual' : 'nopreference',
+		};
+	}
+
+	/**
+	 * Parse a message's FULL set of `Autocrypt:` header values (a message may carry more than one -
+	 * spec-invalid on its own, see below) and apply the spec's own multiple-header rule: **"If there
+	 * is more than one valid header, this SHOULD be treated as an error, and all `Autocrypt` headers
+	 * discarded as invalid"** - so this returns the single result ONLY when exactly one of the given
+	 * header values parsed successfully, null otherwise (zero valid, or more than one valid).
+	 *
+	 * @param headerValues raw values of every `Autocrypt:` header line found on the message (JMAP's
+	 *  `header:Autocrypt:asRaw` on a real multi-valued header comes back as an array - see RFC 8621
+	 *  §4.1.3; the read-side integration this feeds isn't built yet, see parseAutocryptHeader()'s
+	 *  own docblock)
+	 * @param fromAddress the message's own From address
+	 */
+	static parseAutocryptHeaders(headerValues : string[], fromAddress : string) : AutocryptHeaderResult | null
+	{
+		const valid = headerValues
+			.map((v) => MailJmap.parseAutocryptHeader(v, fromAddress))
+			.filter((r) : r is AutocryptHeaderResult => r !== null);
+		return valid.length === 1 ? valid[0] : null;
 	}
 
 	/**
