@@ -7,14 +7,14 @@ import {MailJmap} from "../jmap";
  * bytes of a PGP/MIME `application/pgp-signature` sub-part (headers + blank line + body) and
  * returns the ASCII-armored signature text ready for openpgp.readSignature().
  *
- * Regression coverage for a real bug (found live 2026-09-09, ralf: a message from
- * jens.riedel@baw.de, "Rückfragen zu den Installationsdateien...", structurally identical to the
- * Phase 1 spike's "older.eml" fixture): most senders (Thunderbird/Enigmail) leave this part as
- * plain 7bit ASCII armor, but this one had `Content-Transfer-Encoding: base64` on the signature
- * part itself - the naive "everything after the blank line is the armor" original implementation
- * handed openpgp.readSignature() still-base64-encoded bytes, which threw "Misformed armored text"
- * - silently caught by verifyPgpSignature()'s top-level try/catch, so the message showed no PGP
- * icon at all instead of a "verification failed"/"unknown key" one.
+ * Regression coverage for a real bug (found live 2026-09-09, on a real third-party sender's
+ * message - structurally identical to the Phase 1 spike's "older.eml" fixture): most senders
+ * (Thunderbird/Enigmail) leave this part as plain 7bit ASCII armor, but this one had
+ * `Content-Transfer-Encoding: base64` on the signature part itself - the naive "everything after
+ * the blank line is the armor" original implementation handed openpgp.readSignature()
+ * still-base64-encoded bytes, which threw "Misformed armored text" - silently caught by
+ * verifyPgpSignature()'s top-level try/catch, so the message showed no PGP icon at all instead of
+ * a "verification failed"/"unknown key" one.
  */
 function extract(headers : string, body : string) : string
 {

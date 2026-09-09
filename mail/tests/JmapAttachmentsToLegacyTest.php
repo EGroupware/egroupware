@@ -161,13 +161,13 @@ class JmapAttachmentsToLegacyTest extends \PHPUnit\Framework\TestCase
 	public function testPgpSignatureHiddenButInlineKeyKeptWhenBothPresent()
 	{
 		$legacy = $this->call([
-			['partId' => '3', 'blobId' => 'blob3', 'size' => 3000, 'name' => 'OpenPGP_0x74910C57F72ABA4B.asc',
+			['partId' => '3', 'blobId' => 'blob3', 'size' => 3000, 'name' => 'OpenPGP_0xDEADBEEF12345678.asc',
 				'type' => 'application/pgp-keys', 'cid' => null, 'disposition' => 'attachment'],
 			['partId' => '4', 'blobId' => 'blob4', 'size' => 833, 'name' => 'OpenPGP_signature.asc',
 				'type' => 'application/pgp-signature', 'cid' => null, 'disposition' => 'attachment'],
 		], false);
 
 		$this->assertCount(1, $legacy);
-		$this->assertSame('OpenPGP_0x74910C57F72ABA4B.asc', $legacy[0]['name']);
+		$this->assertSame('OpenPGP_0xDEADBEEF12345678.asc', $legacy[0]['name']);
 	}
 }

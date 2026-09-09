@@ -18,29 +18,30 @@ see "Planned follow-up" below, none started
 
 `MailJmap.extractSignatureArmor()` (`mail/js/jmap.ts`) assumed everything after a
 `application/pgp-signature` part's own header block *is* the ASCII-armored signature text - true
-for Thunderbird/Enigmail (leaves it plain 7bit), but a real message from `jens.riedel@baw.de`
-("Rückfragen zu den Installationsdateien von Collabora Office Desktop" - structurally the Phase 1
+for Thunderbird/Enigmail (leaves it plain 7bit), but a real message from a third-party sender
+(name/subject withheld here - no consent to publish those details; structurally the Phase 1
 spike's "older.eml" fixture) has `Content-Transfer-Encoding: base64` on that part specifically.
 `openpgp.readSignature()` then threw "Misformed armored text" on the still-base64-encoded bytes,
 silently caught by `verifyPgpSignature()`'s top-level `try/catch` - the message showed **no PGP
-icon at all** (found live 2026-09-09, ralf: "testing with the 'Rückfragen zu den Install...', which
-is PGP signed but with a different structure then the TB signature, is not shown as signed"), not
-even the "unknown key"/"invalid" states the doc's own 3-state model has for exactly this kind of
-case. Fixed by checking that header and `atob()`-decoding first when it says `base64`. New unit
-test coverage in `mail/js/test/PgpSignatureArmorExtraction.test.ts` (the extraction function is
-pure/static, no JMAP mocking needed).
+icon at all** (found live 2026-09-09, ralf: testing that message showed it "is not shown as
+signed" despite being PGP signed with a structure differing from the Thunderbird-signed case),
+not even the "unknown key"/"invalid" states the doc's own 3-state model has for exactly this kind
+of case. Fixed by checking that header and `atob()`-decoding first when it says `base64`. New
+unit test coverage in `mail/js/test/PgpSignatureArmorExtraction.test.ts` (the extraction function
+is pure/static, no JMAP mocking needed).
 
-**Important caveat found while live-verifying this fix**: the live test mailbox's 11 copies of this
-message all still show `verified:false` (`pgp_sig_invalid`, correctly *shown* now, just not
+**Important caveat found while live-verifying this fix**: the live test mailbox's several copies of
+this message all still show `verified:false` (`pgp_sig_invalid`, correctly *shown* now, just not
 *verified*) - independently confirmed this is **not** a remaining code bug: downloaded the original
 `.eml` from ralf's own Downloads folder, ran the exact same extraction algorithm against it by hand
 (Python port, `/tmp` scratch script), and `gpg --verify` against that byte-exact original returned
 "Korrekte Signatur" successfully using the sender's own inline `application/pgp-keys` key - proving
 the extraction/verification logic itself is correct for this structural shape. The live mailbox's
 stored copies have a *different* SHA-256 than that original file, meaning whatever import/resend
-process put 11 copies into this test account altered the bytes somewhere - fatal for a byte-exact
-MIME signature, but a pre-existing test-data fidelity issue outside this project's scope, not
-something to "fix" in `verifyPgpSignature()` itself.
+process put those copies into this test account altered the bytes somewhere - fatal for a
+byte-exact MIME signature, but a pre-existing test-data fidelity issue outside this project's
+scope, not something to "fix" in `verifyPgpSignature()` itself. Ralf is investigating that
+byte-fidelity gap separately (2026-09-09: "our eml export is not byte exact").
 
 ### 2026-09-09 UI-wiring bugfix round (live-tested by ralf)
 
