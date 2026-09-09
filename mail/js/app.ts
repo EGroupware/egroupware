@@ -2288,13 +2288,8 @@ export class MailApp extends EgwApp
 					egw.dataStoreUID(data.uid, data);
 					if (!egwIsMobile() && template) template.set_value({content:data, sel_options:sel_options});
 					// body may have already finished loading (empty) before this resolved -
-					// retry the auto-index now that attachmentsBlock is known, but only into
-					// the iframe still actually showing this row (loadMessageBody() marks it)
-					const iframeDoc = this.et2?.getWidgetById('messageIFRAME')?.iframe?.contentDocument;
-					if (iframeDoc?.documentElement?.dataset.rowId === rowId)
-					{
-						renderAttachmentIndex(iframeDoc, data.attachmentsBlock, this.egw);
-					}
+					// retry the auto-index now that attachmentsBlock is known
+					this.retryAttachmentIndexForRow(rowId, data.attachmentsBlock);
 				}
 			});
 		}
@@ -2360,6 +2355,29 @@ export class MailApp extends EgwApp
 		if (!egwIsMobile() && template) template.set_value({content:data, sel_options:sel_options});
 
 		return data;
+	}
+
+	/**
+	 * Retry the auto-index (renderAttachmentIndex(), mail/js/attachmentIndex.ts) once an
+	 * on-demand attachmentsBlock fetch resolves - renderMessageInto()'s own on-demand JMAP
+	 * attachmentsBlock resolution (resolveJmapAttachmentsBlock()) is async, so the message body
+	 * may have already finished loading (and found itself empty, before any attachments were
+	 * known) by the time this lands. Only renders into the iframe still actually showing THIS
+	 * row - loadMessageBody() marks the iframe's own dataset.rowId, so a user who has since
+	 * selected a DIFFERENT row while this fetch was in flight never gets a stale row's
+	 * attachments rendered into the CURRENT iframe.
+	 *
+	 * Extracted into its own method (2026-09-09) purely for unit testability -
+	 * renderMessageInto() itself has too many unrelated preconditions (winmail.dat resolution,
+	 * attachmentsBlock widget, template.set_value()) to drive in a focused test.
+	 */
+	private retryAttachmentIndexForRow(rowId : string, attachmentsBlock : any[]) : void
+	{
+		const iframeDoc = this.et2?.getWidgetById('messageIFRAME')?.iframe?.contentDocument;
+		if (iframeDoc?.documentElement?.dataset.rowId === rowId)
+		{
+			renderAttachmentIndex(iframeDoc, attachmentsBlock, this.egw);
+		}
 	}
 
 	/**
