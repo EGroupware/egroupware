@@ -977,6 +977,23 @@ class filemanager_ui
 	}
 
 	/**
+	 * Convert a vfs mtime/ctime, which is a real Unix timestamp (unlike most other EGroupware
+	 * timestamps, which use server-time wallclock digits misencoded as a Unix timestamp), into
+	 * the timestamp Api\DateTime expects, in the user's timezone
+	 *
+	 * @param int $vfs_time real Unix timestamp, eg. from Vfs stat() / url_stat()
+	 * @return int|null
+	 */
+	protected static function vfs_time2user($vfs_time)
+	{
+		if (empty($vfs_time)) return $vfs_time;
+
+		$time = new Api\DateTime('@'.$vfs_time);
+		$time->setUser();
+		return $time->format('ts');
+	}
+
+	/**
 	 * Callback to fetch the rows for the nextmatch widget
 	 *
 	 * @param array $query
@@ -1127,7 +1144,7 @@ class filemanager_ui
 
 			foreach(['mtime', 'ctime'] as $date_field)
 			{
-				$row[$date_field] = Api\DateTime::server2user($row[$date_field]);
+				$row[$date_field] = self::vfs_time2user($row[$date_field]);
 			}
 			// do NOT send URL to client-side, it can contain passwords
 			unset($row['url']);
@@ -1579,12 +1596,10 @@ class filemanager_ui
 			['value' => '0', 'label' => lang("root")]
 		);
 
-		// Times are in server time, convert to user timezone
+		// vfs mtime/ctime are real Unix timestamps, convert to the timestamp format Api\DateTime expects
 		foreach(['mtime', 'ctime'] as $date_field)
 		{
-			$time = new Api\DateTime($content[$date_field], Api\DateTime::$server_timezone);
-			$time->setUser();
-			$content[$date_field] = $time->format('ts');
+			$content[$date_field] = self::vfs_time2user($content[$date_field]);
 		}
 
 		// mergeapp

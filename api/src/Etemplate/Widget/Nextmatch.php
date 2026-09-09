@@ -851,13 +851,13 @@ class Nextmatch extends Etemplate\Widget
 				$row_template = Template::instance($widget->attrs['template']);
 			}
 
-			// Try to find just the repeating part
-			$repeating_row = null;
-			// First child should be a grid, we want last row
-			foreach($row_template->children[0]->children[1]->children as $child)
-			{
-				if($child->type == 'row') $repeating_row = $child;
-			}
+			// Try to find just the repeating part, ie. the last 'row' widget in the template.
+			// A row is usually nested in a grid (<grid><rows><row>), but that's not required
+			// (e.g. a preceding et2-styles sibling, or a row template with no grid at all), so
+			// search the whole subtree instead of assuming a fixed nesting/position - except
+			// inside an already-found row, which can contain its own unrelated nested grid
+			// (eg. resources' accessories sub-list), not another candidate for the repeating row.
+			$repeating_row = self::findLastRow($row_template);
 		}
 		// otherwise, we might get stopped by max_excutiontime
 		if ($total > 200) @set_time_limit(0);
@@ -914,6 +914,35 @@ class Nextmatch extends Etemplate\Widget
 
 		//error_log($value['get_rows'].'() returning '.array2string($total).', method = '.array2string($method).', value = '.array2string($value));
 		return $total;
+	}
+
+	/**
+	 * Find the last 'row' widget in a row template, ie. the repeating row (as opposed to eg.
+	 * a preceding header 'row')
+	 *
+	 * A row is usually nested in a grid (<grid><rows><row>), but that's not required, so this
+	 * searches the whole subtree instead of assuming a fixed nesting/position - except inside
+	 * an already-found row, which can contain its own unrelated nested grid (eg. a sub-list
+	 * of accessories), not another candidate for the repeating row we're looking for.
+	 *
+	 * @param Etemplate\Widget $widget
+	 * @return Etemplate\Widget|null
+	 */
+	private static function findLastRow(Etemplate\Widget $widget)
+	{
+		$last = null;
+		foreach($widget->children as $child)
+		{
+			if ($child->type == 'row')
+			{
+				$last = $child;
+			}
+			elseif (($found = self::findLastRow($child)))
+			{
+				$last = $found;
+			}
+		}
+		return $last;
 	}
 
 	/**
