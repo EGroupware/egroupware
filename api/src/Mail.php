@@ -404,7 +404,17 @@ class Mail
 		{
 			$oldProfileID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
 		}
-		if ($_testConnection)
+		// JMAP-FALLTHROUGH-GUARD (see [[project_jmap_imap_fallthrough_cleanup]]): getCurrentMailbox()
+		// -> mailboxExist() -> openMailbox() all fall through to Horde_Imap_Client_Socket methods
+		// neither Imap\Jmap nor Imap\Stalwart override - for a JMAP account this is a REAL raw IMAP
+		// socket attempt against acc_imap_host:acc_imap_port, which for Stalwart is a JMAP(S)
+		// endpoint, not an IMAP server, hanging until a read/timeout error (found live 2026-09-09,
+		// ralf: mail_ui::changeProfile() took ~20s switching TO a Stalwart account - same underlying
+		// bug as openConnection()'s own guard just above, but this method has no such guard at all).
+		// A successful JMAP access-token grant (Imap\Stalwart::login(), already run earlier in this
+		// same request via Account::is_imap()) already proves connectivity - nothing meaningful for
+		// a JMAP account to test here.
+		if ($_testConnection && !($_icServerObject instanceof Mail\Imap\Jmap))
 		{
 			try
 			{
@@ -850,12 +860,6 @@ class Mail
 		// for a JMAP account to gain from opening a classic IMAP connection at all.
 		if ($this->icServer instanceof Mail\Imap\Jmap)
 		{
-			// TEMPORARY diagnostic, 2026-08-24 - confirm this guard is what was actually firing
-			// for the stalwart.egroupware.org hang, and capture the real caller - to be removed
-			// once confirmed
-			file_put_contents('/var/lib/egroupware/mailwizard-debug.log',
-				date('Y-m-d H:i:s')." openConnection() short-circuited for JMAP icServer (acc_id={$this->icServer->acc_id})\n".
-				(new \Exception())->getTraceAsString()."\n\n", FILE_APPEND);
 			return;
 		}
 		if (self::$debugTimes) $starttime = microtime (true);

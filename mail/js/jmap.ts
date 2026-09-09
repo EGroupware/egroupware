@@ -696,6 +696,19 @@ export class MailJmap
 		// (filter2 / mail.ShowDetails preference) is on
 		const fetchPreview = !!query.filter2;
 
+		// "All folders" search (doc/ai/projects/mail-cross-folder-search.md) - real-JMAP
+		// (Stalwart) only; Ui::$searchTypes only ever offers this cat_id value for such an
+		// account, but double-checked here too (defense in depth - eg. a stale cached dropdown
+		// after switching to a different, non-Stalwart account without a full page reload).
+		// Never issues a query at all without a real search string - ralf: "if no search-pattern
+		// is given, [do]n't try[] to query all mails" - an empty account-wide filter would mean
+		// "every message in the account" (RFC 8620 empty-filter semantics), never what's wanted.
+		const searchAllFolders = (query.cat_id || '').toLowerCase() === 'all';
+		if (searchAllFolders && (token.isLocal || !(query.search || '').trim()))
+		{
+			return {rows: [], total: 0};
+		}
+
 		// doc/ai/projects/mail-threaded-view.md, Phase 1 - only reachable once
 		// ProfileHandler::THREADING_ENABLED is flipped true (nothing sets query.threaded yet, and
 		// token.supportsThreading is false for every account until then either way), so this is
@@ -725,6 +738,12 @@ export class MailJmap
 				{
 					properties.push('preview');
 				}
+				if (searchAllFolders)
+				{
+					// each row needs its OWN mailbox, not the (irrelevant here) selected-tree-
+					// folder mailboxId - see the row-building block below
+					properties.push('mailboxIds');
+				}
 				const emails = t.Email.get({
 					accountId: token.accountId,
 					ids: ids.$ref('/ids'),
@@ -732,14 +751,43 @@ export class MailJmap
 				});
 				return {ids, emails};
 			}),
-			this.mailboxRole(client, token.accountId, profileID, mailboxId),
+			// a single mailboxRole() lookup makes no sense across multiple real mailboxes -
+			// resolved per-row instead, below, once the actual result set is known
+			searchAllFolders ? Promise.resolve(null) : this.mailboxRole(client, token.accountId, profileID, mailboxId),
 		]);
-		const showRecipient = MailJmap.RECIPIENT_SHOWN_ROLES.includes(role as string);
 		const emailList = emails.list || [];
 		await this.resolveSmimeSignedAttachments(client, token, mailboxId, emailList);
 
+		let rows : any[];
+		if (searchAllFolders)
+		{
+			// resolve role+display name once per DISTINCT mailbox actually present in this page
+			// of results (typically a handful), not once per email - mailboxRoleAndName() is
+			// itself cached, so a folder repeated across pages/searches costs nothing further
+			const distinctMailboxIds : string[] = [...new Set<string>(emailList
+				.map((email : any) => Object.keys(email.mailboxIds || {})[0])
+				.filter((id : string | undefined) : id is string => !!id))];
+			const infoByMailboxId : Record<string, {role : string | null, name : string}> = {};
+			await Promise.all(distinctMailboxIds.map(async (mid : string) =>
+			{
+				infoByMailboxId[mid] = await this.mailboxRoleAndName(client, token.accountId, profileID, mid);
+			}));
+			rows = emailList.map((email : any) =>
+			{
+				const rowMailboxId = Object.keys(email.mailboxIds || {})[0] || mailboxId;
+				const info = infoByMailboxId[rowMailboxId];
+				const showRecipientRow = MailJmap.RECIPIENT_SHOWN_ROLES.includes(info?.role as string);
+				return this.email2row(email, profileID, rowMailboxId, showRecipientRow, info?.name);
+			});
+		}
+		else
+		{
+			const showRecipient = MailJmap.RECIPIENT_SHOWN_ROLES.includes(role as string);
+			rows = emailList.map((email : any) => this.email2row(email, profileID, mailboxId, showRecipient));
+		}
+
 		return {
-			rows: emailList.map((email : any) => this.email2row(email, profileID, mailboxId, showRecipient)),
+			rows,
 			total: ids.total ?? emailList.length,
 		};
 	}
@@ -4414,8 +4462,13 @@ export class MailJmap
 	 */
 	private buildFilter(query : JmapGetRowsQuery, mailboxId : string) : EmailFilter
 	{
-		const conditions : EmailFilter[] = [{inMailbox: mailboxId}];
 		const catId = (query.cat_id || '').toLowerCase();
+		// 'all' ("all folders") deliberately omits inMailbox - a real-JMAP-only (Stalwart),
+		// whole-account search (doc/ai/projects/mail-cross-folder-search.md); Ui::$searchTypes
+		// only ever offers this option for a real-JMAP account, and getRows() never issues this
+		// query at all without a non-empty search string, so there's no "browse-all-folders"
+		// mode to guard against here - only ever reached with searchStr non-empty.
+		const conditions : EmailFilter[] = catId === 'all' ? [] : [{inMailbox: mailboxId}];
 		const searchStr = query.search || '';
 
 		if (searchStr)
@@ -4429,6 +4482,9 @@ export class MailJmap
 				case 'bydate':
 					textFilter = this.buildTokenizedFilter(searchStr,
 						catId === 'quickwithcc' ? ['subject', 'from', 'to', 'cc'] : ['subject', 'from', 'to']);
+					break;
+				case 'all':
+					textFilter = this.buildTokenizedFilter(searchStr, ['subject', 'from', 'to']);
 					break;
 				case 'subject':
 				case 'from':
@@ -6521,6 +6577,37 @@ export class MailJmap
 		return this.mailboxRoleCache[cacheKey];
 	}
 
+	// keyed by "profileID::mailboxId", same lifetime/invalidation reasoning as mailboxRoleCache -
+	// a mailbox's name can actually change (rename), but only via an action this same client
+	// session initiates, and a stale label on an "all folders" search result row is low-stakes
+	// cosmetic drift, not worth adding cache invalidation for
+	private mailboxRoleAndNameCache : Record<string, {role : string | null, name : string}> = {};
+
+	/**
+	 * Resolve a mailbox's JMAP role AND display name together, cached - the "all folders" search
+	 * result path's own per-row equivalent of mailboxRole() above (which only every needs role,
+	 * for the single mailbox the whole query is already scoped to). Kept as a separate method/
+	 * cache rather than widening mailboxRole() itself, since that one's two existing call sites
+	 * only ever need role and have no use for a folder display name.
+	 *
+	 * @see doc/ai/projects/mail-cross-folder-search.md
+	 */
+	private async mailboxRoleAndName(client : JamClient, accountId : string, profileID : string, mailboxId : string) : Promise<{role : string | null, name : string}>
+	{
+		const cacheKey = profileID + '::' + mailboxId;
+		if (!(cacheKey in this.mailboxRoleAndNameCache))
+		{
+			const [{mailbox}] = await client.requestMany((t) => ({
+				mailbox: t.Mailbox.get({accountId, ids: [mailboxId], properties: ['role', 'name']}),
+			}));
+			this.mailboxRoleAndNameCache[cacheKey] = {
+				role: mailbox.list?.[0]?.role ?? null,
+				name: mailbox.list?.[0]?.name ?? '',
+			};
+		}
+		return this.mailboxRoleAndNameCache[cacheKey];
+	}
+
 	/** See email2row()'s own `showRecipient` param docblock. */
 	private static readonly RECIPIENT_SHOWN_ROLES = ['sent', 'drafts', 'templates'];
 
@@ -6590,8 +6677,13 @@ export class MailJmap
 	 *  grid's single "From" column) shows the recipient instead, since you already know you're the
 	 *  sender in those mailboxes. Only `address` swaps - `fromaddress`/`toaddress` themselves stay
 	 *  correct either way, same as the classic code only ever touched `data['address']`.
+	 * @param folderLabel only for "all folders" search results (doc/ai/projects/
+	 *  mail-cross-folder-search.md) - a message's own folder display name (eg. "Inbox"), prefixed
+	 *  onto the single `address` column ("Inbox: Jane Doe <...>") so the user can tell where a
+	 *  cross-folder result actually lives without a dedicated folder column/row. `fromaddress`/
+	 *  `toaddress` etc. stay unprefixed - only the one unified display column changes.
 	 */
-	private email2row(email : any, profileID : string, mailboxId : string, showRecipient : boolean = false) : any
+	private email2row(email : any, profileID : string, mailboxId : string, showRecipient : boolean = false, folderLabel? : string) : any
 	{
 		const addressList = (list : { name? : string, email : string }[]) =>
 			(list || []).map(formatJmapAddress);
@@ -6633,7 +6725,7 @@ export class MailJmap
 			additionaltoaddress: toList.slice(1),
 			ccaddress: addressList(email.cc),
 			bccaddress: addressList(email.bcc),
-			address: (showRecipient ? toList[0] : fromList[0]) || '',
+			address: (folderLabel ? folderLabel + ': ' : '') + ((showRecipient ? toList[0] : fromList[0]) || ''),
 			date: this.jmapUtcToUserTz(email.sentAt || email.receivedAt),
 			modified: this.jmapUtcToUserTz(email.receivedAt),
 			size: email.size,

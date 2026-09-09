@@ -1,7 +1,11 @@
 # Mail: JMAP-lite REST endpoints for folders + emails
 
-## Status: Phase 1 implemented (2026-09-09) - all 5 endpoints wired up, unit-tested; live REST
-verification against a running instance still pending (see "Testing" below)
+## Status: Phase 1 implemented + partially live-verified (2026-09-09); Phase 2 started
+
+**Live-verified (ralf, 2026-09-09)**: `GET /mail/folders` and `GET /mail/folders/<folderId>/emails`
+both confirmed returning correct data against a real running instance. `GET .../folders/<folderId>`,
+`GET .../emails/<emailId>` and the attachment-download endpoint are NOT yet live-verified - still
+resting on unit tests only.
 
 ralf wants to extend the existing simple mail REST API
 ([`doc/REST-CalDAV-CardDAV/Mail.md`](../../REST-CalDAV-CardDAV/Mail.md),
@@ -321,4 +325,5 @@ batching, `/changes`, push.
 
 [[mail-jmap-modernization]], [[mail-bo-decoupling]], [[mail-folder-tree-jmap]], [[mail-threaded-view]],
 the JMAP-native mail ACL work (planned in memory `project_mail_jmap_acl_plan`, not yet its own
-doc/ai/projects file), [[mail-test-coverage]]
+doc/ai/projects file), [[mail-test-coverage]], [[mail-cross-folder-search]] (Phase 2's "search across
+all folders" item, scoped for the UI first, REST exposure deferred as a second step)

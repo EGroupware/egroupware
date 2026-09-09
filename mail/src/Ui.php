@@ -120,6 +120,10 @@ class Ui
 		'larger'		=> 'greater than',	// lang('greater than')
 		'smaller'		=> 'less than',	// lang('less than')
 		'bydate' 	=> 'Selected date range (with quicksearch)',// lang('Selected date range (with quicksearch)')
+		// only offered when supportsAllFoldersSearch() is true - real JMAP (Stalwart) accounts
+		// only, see that method's own docblock and doc/ai/projects/mail-cross-folder-search.md;
+		// removed from $this->searchTypes before it reaches the client otherwise
+		'all'		=> 'all folders',	// lang('all folders')
 	);
 
 	/**
@@ -188,6 +192,28 @@ class Ui
 	{
 		return $this->mail_bo->icServer instanceof ImapJmap ||
 			$this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS');
+	}
+
+	/**
+	 * Can the active account search across every folder at once (the "all folders" search-type)?
+	 *
+	 * Real JMAP (Stalwart) only - live-verified 2026-09-09 (ralf, via the browser console against
+	 * acc_id=1/accountId "b"): a plain `Email/query` with NO `inMailbox` condition genuinely
+	 * searches every mailbox server-side, fast, no client-side per-folder looping needed. The local
+	 * plain-IMAP JmapShim has no equivalent - IMAP's own SEARCH command is single-mailbox only, and
+	 * the one extension that could change that (RFC 7377 MULTISEARCH) is neither advertised by the
+	 * Dovecot test account checked live nor actually implemented in this codebase's vendored Horde
+	 * IMAP client library (its own doc lists it aspirationally, copied from upstream, never wired
+	 * up) - so this deliberately does NOT attempt a "loop over every folder" fallback for a
+	 * shim-backed account, matching ralf's own call: "if not supported by the mail-server, we
+	 * should not offer it, the performance is most likely horrible". See
+	 * doc/ai/projects/mail-cross-folder-search.md.
+	 *
+	 * @return bool
+	 */
+	private function supportsAllFoldersSearch(): bool
+	{
+		return $this->mail_bo->icServer instanceof ImapJmap;
 	}
 
 	/**
@@ -750,6 +776,10 @@ class Ui
 				{
 					unset($this->searchTypes['']);
 					unset($this->searchTypes['quickwithcc']);
+				}
+				if (!$this->supportsAllFoldersSearch())
+				{
+					unset($this->searchTypes['all']);
 				}
 				$sel_options['cat_id'] = $this->searchTypes;
 				//error_log(__METHOD__.__LINE__.array2string($sel_options['cat_id']));
@@ -2656,6 +2686,19 @@ class Ui
 						'value' => $actions,
 					));
 				}
+				// re-send the search-type options for the NEWLY active account (found live
+				// 2026-09-09, ralf: switching from a Stalwart to a Dovecot/shim account left the
+				// "All folders" search-type still selected/offered - this was the only account-
+				// switch entrypoint (ajax_refreshFilters() is a *different*, not-called-here
+				// method), so supportsAllFoldersSearch()'s own gating never actually ran on a
+				// profile switch. app.mail.refreshCatIdOptions() already resets the dropdown to
+				// quicksearch by itself whenever the current selection isn't in the new list, so
+				// this alone is enough - no new client-side logic needed.
+				if (!$mail_ui->supportsAllFoldersSearch())
+				{
+					unset($mail_ui->searchTypes['all']);
+				}
+				$response->call('app.mail.refreshCatIdOptions', $mail_ui->searchTypes);
 			}
 			catch (\Exception $e) {
 				self::callWizard($e->getMessage(),true, 'error');
@@ -2737,6 +2780,10 @@ class Ui
 		{
 			unset($this->searchTypes['']);
 			unset($this->searchTypes['quickwithcc']);
+		}
+		if (!$this->supportsAllFoldersSearch())
+		{
+			unset($this->searchTypes['all']);
 		}
 		if ($this->supportsKeywords())
 		{
