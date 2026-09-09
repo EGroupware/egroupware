@@ -232,4 +232,39 @@ class ImportexportDefinitionsBoTest extends \EGroupware\Api\AppTest
 		// Already deleted - clear so tearDown doesn't try again.
 		$this->definition_id = null;
 	}
+
+	/**
+	 * importexport_definition::delete() and ::move() call $this->get_owner(), but no
+	 * such method exists (only the private get_allowed_users()/get_options()/get_filter()
+	 * backing __get() do) - owner must be read via the magic __get() (`$this->owner`)
+	 * instead, like every other attribute. Regression test for that fatal error, calling
+	 * importexport_definition::delete() directly rather than through
+	 * importexport_definitions_bo::delete(), which bypasses it entirely via raw so_sql.
+	 */
+	public function testDefinitionDelete()
+	{
+		$account_id = $GLOBALS['egw_info']['user']['account_id'];
+		$name = $this->uniqueName();
+		$data = array(
+			'name' => $name,
+			'application' => 'infolog',
+			'plugin' => 'infolog_export_csv',
+			'type' => 'export',
+			'plugin_options' => array('fieldsep' => ',', 'charset' => 'utf-8'),
+			'filter' => array(),
+			'owner' => $account_id,
+			'allowed_users' => array($account_id),
+		);
+
+		$this->definition_id = $this->saveAndFindId($data);
+
+		$definition = new importexport_definition($this->definition_id);
+		$definition->delete();
+
+		$still_there = new importexport_definitions_bo(array('name' => $name), true);
+		$this->assertEmpty($still_there->get_definitions(), 'deleted definition must no longer be findable by name');
+
+		// Already deleted - clear so tearDown doesn't try again.
+		$this->definition_id = null;
+	}
 }

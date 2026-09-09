@@ -38,7 +38,7 @@ class importexport_export_ui {
 	public function __construct() {
 		Framework::includeJS('.','export_dialog','importexport');
 		Framework::includeJS('.','importexport','importexport');
-		$this->user = $GLOBALS['egw_info']['user']['user_id'];
+		$this->user = $GLOBALS['egw_info']['user']['account_id'];
 		$this->export_plugins = importexport_helper_functions::get_plugins('all','export');
 
 	}
