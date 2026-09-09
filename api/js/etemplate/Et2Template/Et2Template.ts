@@ -608,7 +608,9 @@ export class Et2Template extends Et2Widget(LitElement)
 
 	protected getUrl()
 	{
-		if(this.url)
+		// "null" (string) can arrive here if a pushed server attribute override of null got
+		// stringified before being applied - treat it as "no url set", not a valid url
+		if(this.url && this.url !== "null")
 		{
 			return this.url;
 		}

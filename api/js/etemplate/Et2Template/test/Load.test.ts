@@ -214,6 +214,21 @@ describe("Loading", () =>
 		// Should be empty
 		assert.isEmpty(element.querySelectorAll("*"));
 	});
+	it("ignores a poisoned url of literal string 'null'", async() =>
+	{
+		// Simulate a server-pushed "url" attribute override of null (eg. for a bare
+		// <et2-template id="..."> reference tag whose sub-template was never resolved
+		// server-side) getting stringified to the literal string "null" on the way in
+		element.id = "app.something";
+		// @ts-ignore url is a real property, but poisoned with the string "null"
+		element.url = "null";
+
+		// @ts-ignore getUrl() is protected
+		const url = element.getUrl();
+
+		assert.notEqual(url, "null", "Literal string 'null' was treated as a valid url");
+	});
+
 	it("shows a message when it can't find the template", async() =>
 	{
 		const clock = sinon.useFakeTimers();

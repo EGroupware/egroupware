@@ -286,7 +286,13 @@ class Template extends Etemplate\Widget
 		//error_log(__METHOD__."('$cname') this->id=$this->id, this->type=$this->type, this->attrs=".array2string($this->attrs));
 		$form_name = self::form_name($cname, $this->id, $expand);
 
-		self::setElementAttribute($form_name, 'url', self::rel2url($this->rel_path));
+		// only send an url override if we actually have one: a bare reference tag (eg. a lazy-loaded
+		// tab-panel) never gets rel_path populated, and sending an explicit null here overrides the
+		// client-side getUrl() fallback that would otherwise correctly resolve the url from the id
+		if (($url = self::rel2url($this->rel_path)))
+		{
+			self::setElementAttribute($form_name, 'url', $url);
+		}
 	}
 }
 

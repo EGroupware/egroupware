@@ -1897,7 +1897,9 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 				}
 			// fall through to look in content
 			default:
-				attrValue = mgr ? mgr.expandName("" + attrValue) : attrValue;
+				// Do not stringify a real null into the string "null" - that would make it a
+				// truthy value where the widget's own default/fallback logic expects falsy
+				attrValue = (mgr && attrValue !== null) ? mgr.expandName("" + attrValue) : attrValue;
 				if(attrValue && typeof attrValue == "string" && widget_class.translate[attribute])
 				{
 					// allow attribute to contain multiple translated sub-strings eg: {Firstname}.{Lastname}
