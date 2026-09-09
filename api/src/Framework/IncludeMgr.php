@@ -429,20 +429,6 @@ class IncludeMgr
 	}
 
 	/**
-	 * Get importMap for browser
-	 */
-	public function getImportMap()
-	{
-		$files = $this->get_included_files();
-		$imports = array_combine(array_map(static function($url)
-		{
-			return parse_url($url, PHP_URL_PATH);
-		}, $files), $files);
-
-		return ['imports' => $imports];
-	}
-
-	/**
 	 * Constructor
 	 *
 	 * @param array $files =null optional files to include as for include_files method

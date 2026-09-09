@@ -1247,42 +1247,6 @@ abstract class Framework extends Framework\Extra
 	}
 
 	/**
-	 * Files imported via script tag in egw.js, because they are no modules
-	 */
-	const legacy_js_imports = '#/dhtmlx|jquery|magicsuggest|resumable#';
-
-	/**
-	 * Add EGroupware URL prefix eg. '/egroupware' to files AND bundles
-	 *
-	 * @return array
-	 */
-	public static function getImportMap()
-	{
-		$imports = Bundle::getImportMap();
-
-		// adding some extra mappings
-		if (($prefix = parse_url($GLOBALS['egw_info']['server']['webserver_url'], PHP_URL_PATH)) === '/') $prefix = '';
-
-		// fix egw_global(.d.ts) import
-		$imports[$prefix.'/api/js/jsapi/egw_global'] = $prefix.'/api/js/jsapi/egw_global.js?'.
-			filemtime(EGW_SERVER_ROOT.'/api/js/jsapi/egw_global.js');
-
-		// @todo: add all node_modules as bare imports
-
-		// map all legacy-js to something "not hurting"
-		$imports = array_map(static function($url) use ($prefix)
-		{
-			return !preg_match(self::legacy_js_imports, $url) ? $url :
-				$prefix.'/api/js/jquery/jquery.noconflict.js';
-		}, $imports);
-
-		ContentSecurityPolicy::add("script-src","https://cdn.skypack.dev");
-		ContentSecurityPolicy::add("script-src","https://cdn.jsdelivr.net");
-		ContentSecurityPolicy::add("style-src","https://cdn.jsdelivr.net");
-		return ['imports' => $imports];
-	}
-
-	/**
 	 * List available themes
 	 *
 	 * Themes are css file in the template directory

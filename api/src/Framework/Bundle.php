@@ -154,17 +154,4 @@ class Bundle
 		}
 		return array_values(array_unique($to_include));
 	}
-
-	/**
-	 * Generate importmap for whole instance
-	 *
-	 * JS bundling/minifying was dropped when we moved to rollup (see class doc-comment); there is
-	 * currently nothing to add here. Framework::getImportMap() adds its own extra mappings on top.
-	 *
-	 * @return array
-	 */
-	public static function getImportMap()
-	{
-		return [];
-	}
 }
