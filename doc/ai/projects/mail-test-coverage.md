@@ -1,6 +1,6 @@
 # Mail: test-coverage audit and gap-closing plan
 
-## Status: audit complete (2026-09-09); priority 1 done; priority 2 (JMAP/shim path) done except for items blocked on a live/mocked IMAP+SMTP connection, PGP/S-MIME adjacency, or DB-backed CLI flakiness (see Progress log for the full list); a SECOND live-reported Reply-To regression found+fixed along the way (the shim's send-time re-fetch never read replyTo/Priority/read-receipt/thread-headers back from the stored draft); now on priority 3 (send/SMTP side) - `Smtp.php::mailbox_address()` done, plus a real bug found+fixed in `Transport.php::sendJmap()` (a real-JMAP-transport send always produced a message with NO body/attachments at all - see Progress log)
+## Status: audit complete (2026-09-09); priority 1 done; priority 2 (JMAP/shim path) done except for items blocked on a live/mocked IMAP+SMTP connection, PGP/S-MIME adjacency, or DB-backed CLI flakiness (see Progress log for the full list); a SECOND live-reported Reply-To regression found+fixed along the way (the shim's send-time re-fetch never read replyTo/Priority/read-receipt/thread-headers back from the stored draft); priority 3 (send/SMTP side) - `Smtp.php::mailbox_address()`, `Transport.php::sendJmap()` (with a real bug found+fixed there - a real-JMAP-transport send always produced a message with NO body/attachments at all), and `ApiHandler.php`'s `returnVacation()`/`parseAddressList()` done; remaining priority-3 items all need real IMAP/SMTP/Sieve connections (see Progress log)
 
 Full-codebase scan of `mail/js/*.ts`, `mail/src/*.php`, `mail/inc/*.php`, `api/src/Mail.php` and
 `api/src/Mail/*.php` (including the `Jmap/` shim + real-JMAP layer), cross-referenced against every
@@ -302,10 +302,18 @@ optimistic-clear, no hard guard yet).
 - `mail/src/Send.php`: only trait-composition shape and two pure helpers
   (`resolveEmailAddressList()`, `convertHtmlToText()`) are tested (`SendRefactorTest.php`) - the
   actual `send()` MIME-building/mailbox-routing flow is untested.
-- `mail/src/ApiHandler.php`: only the identity-PATCH REST endpoint is tested
-  (`REST/MailAccountPatchTest.php`). `post()` (REST send, routes to `sendViaJmap()` or classic
-  `Send`), `viewEml()` (raw-.eml REST endpoint - same byte-fidelity risk class as the bug just
-  fixed elsewhere), `getVacation()`/`updateVacation()`, `check_access()` untested.
+- **Done (2026-09-09)**: `mail/src/ApiHandler.php`'s `returnVacation()`/`parseAddressList()` - 9
+  tests, `mail/tests/ApiHandlerVacationTest.php`. Both pure helpers (no IMAP/DB dependency) shared
+  by `getVacation()`/`updateVacation()`, which themselves need a real IMAP/Sieve connection
+  (`Account::imapServer()`) and stay untested. Covers `returnVacation()`'s sieve-timestamp ->
+  Y-m-d mapping, comma-string -> array forwards split, and int-cast days - plus documents (doesn't
+  fix) that its bare `array_filter()` drops every falsy value, so an explicit "0 days" is
+  indistinguishable from "not set" in the REST response. `parseAddressList()`'s valid/empty/
+  invalid-address (with the attribute name and raw input in the exception message) cases covered.
+- `mail/src/ApiHandler.php` (rest still untested, all need real IMAP/Sieve/session state):
+  `getVacation()`/`updateVacation()` themselves, `post()` (REST send, routes to `sendViaJmap()` or
+  classic `Send`), `viewEml()` (raw-.eml REST endpoint - same byte-fidelity risk class as the bug
+  fixed earlier this session), `check_access()`.
 - `mail/js/compose.ts`'s send-side S/MIME/PGP wiring: `trySendViaJmap()`'s smimeType derivation
   from the toolbar widgets, and the Mailvelope/PGP `pgpArmored` passthrough - untested. A wrong-mode
   bug here would silently send mail unsigned/unencrypted.
@@ -485,5 +493,12 @@ Kept for completeness, but explicitly deprioritized until the above is in better
   a separate, already-tested path) silently produced a message with no body and no attachments at
   all - see priority-3 entry above for the full explanation. Rest of priority 3 still open:
   `mail/src/Send.php`'s actual `send()` flow, `mail/src/ApiHandler.php`'s `post()`/`viewEml()`/
-  vacation methods, `compose.ts`'s send-side S/MIME/PGP wiring (deliberately deferred - concurrent
-  session), classic `Api\Mail::appendMessage()`.
+  `getVacation()`/`updateVacation()`/`check_access()`, `compose.ts`'s send-side S/MIME/PGP wiring
+  (deliberately deferred - concurrent session), classic `Api\Mail::appendMessage()`.
+- 2026-09-09: `ApiHandler.php`'s `returnVacation()`/`parseAddressList()` pure helpers (9 tests,
+  `ApiHandlerVacationTest.php`) done. `getVacation()`/`updateVacation()`/`post()`/`viewEml()`/
+  `check_access()` all need real IMAP/Sieve/session state, not attempted. `Send.php`'s actual
+  `send()` flow is similarly heavy (a full `Api\Mail`/`Api\Mailer`/SMTP-or-IMAP-connection
+  pipeline via the shared `ComposeMessageBuilder` trait) - not attempted either. Remaining
+  reasonably-testable priority-3 work is now thin; consider priority 4 (`app.ts`/`Ui\*Handler.php`)
+  next, or revisit priority-2's DB-flakiness-blocked `Identity.php::synthesize()`.
