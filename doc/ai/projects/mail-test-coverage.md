@@ -1,6 +1,6 @@
 # Mail: test-coverage audit and gap-closing plan
 
-## Status: audit complete (2026-09-09); priority 1 (bulk move/copy/delete) client-side + deferred-work queue done; priority 2 (JMAP/shim path) - jmap.ts's mailbox CRUD + label/flag setters done (see Progress log)
+## Status: audit complete (2026-09-09); priority 1 (bulk move/copy/delete) client-side + deferred-work queue done; priority 2 (JMAP/shim path) - jmap.ts's mailbox CRUD, label/flag setters, thread-keyword aggregation, filter/sort, saveDraft, WS push-payload, and attachment upload/resolve done (see Progress log)
 
 Full-codebase scan of `mail/js/*.ts`, `mail/src/*.php`, `mail/inc/*.php`, `api/src/Mail.php` and
 `api/src/Mail/*.php` (including the `Jmap/` shim + real-JMAP layer), cross-referenced against every
@@ -170,14 +170,32 @@ optimistic-clear, no hard guard yet).
   called out in the method's own docblock as something a naive edit could silently break.
   `folderId2path()` itself (a separate chained-`$ref()` lookup) was stubbed directly rather than
   faked at the requestMany() level, keeping these tests focused on the envelope-building logic.
+- **Done (2026-09-09)**: `mail/js/jmap.ts`'s attachment upload/resolve methods -
+  `uploadAttachment`, `downloadBlobUrl`, `reuploadAttachmentForAccount`, `isLocalAccount`,
+  `uploadVfsAttachment`, `fetchAttachmentsMetadata`, `getAttachmentViewUrl`/
+  `revokeAttachmentViewUrls`, `resolveOutgoingInlineImages` - 26 tests,
+  `mail/js/test/MailJmapAttachmentUploadResolve.test.ts`. Covers: `uploadAttachment()`'s
+  content-type re-slicing (only when the blob's own type doesn't already match) and its
+  `JmapUserError`-wrapping of a raw upload failure; `downloadBlobUrl()`/`getAttachmentViewUrl()`'s
+  `withKnownType()` enforcement of the requested mime type onto the created object URL (the
+  "image/svg+xml" -> "image/svg xml" query-string decode bug this exists to work around);
+  `reuploadAttachmentForAccount()`'s download-from-source/upload-to-target flow returning the
+  TARGET account's new blobId, not the source one; `isLocalAccount()`'s token passthrough
+  including the no-token case; `getAttachmentViewUrl()`'s per-rowId object-URL tracking and
+  `revokeAttachmentViewUrls()`'s cleanup; and `resolveOutgoingInlineImages()`'s no-blob-urls
+  fast path, cached-upload reuse (never re-uploads the same blob: URL twice, including within one
+  call), a missing Blob being left untouched rather than dropped, and one image's upload failure
+  not blocking or losing any other image in the same body. `fetchAttachmentsMetadata()`'s
+  server-side JMAP-fallback branch (real, non-shim accounts) and `uploadVfsAttachment()`'s
+  WebDAV fetch-failure path are covered via the shared `requestMany()`/`fetch()` fakes; the shim's
+  own `emailGet()`-based `attachments` fetch path (`token.isLocal`) is not separately re-tested
+  here since it already goes through the same `emailGetViaCacheableGet()` machinery covered
+  elsewhere.
 - `mail/js/jmap.ts` (rest still untested - S/MIME/PGP methods deliberately skipped, a concurrent
   session is actively working in that area, see priority-3's own note): S/MIME encrypt
   (`smimeEncryptBody`, `resolveSmimeSignedAttachments`), PGP dispatch/cache methods
   (`findPgpPart`, `peekPgpSignature`, `peekPgpEncrypted`, `pgpEncryptBody` - as opposed to the
-  already-tested lower-level byte helpers), most attachment upload/resolve methods
-  (`uploadAttachment`, `uploadVfsAttachment`, `downloadBlobUrl`,
-  `reuploadAttachmentForAccount`, `resolveOutgoingInlineImages`, `fetchAttachmentsMetadata`,
-  `getAttachmentViewUrl`).
+  already-tested lower-level byte helpers).
 - `api/src/Mail/Jmap/Imap.php`: `emailQuery()`/`emailGet()`'s real-account (non-"0") IMAP
   search/fetch translation (every existing test uses the demo fixture or a mocked adapter that
   bypasses real search/fetch construction), `resolveSmime()`/`resolveTnef()`'s IMAP-fetch half,
@@ -292,6 +310,15 @@ Kept for completeness, but explicitly deprioritized until the above is in better
   `MailJmapWsPushPayload.test.ts`) done. Deliberately skipping the S/MIME encrypt and PGP
   dispatch/cache methods for now - a concurrent session is actively working in that exact area
   (confirmed by a live "PGP/S-MIME signatures must not verify unless the key/cert claims the
-  sender's address" fix landing mid-session). Rest of priority 2 (attachment upload/resolve, the
-  shim's real-account `emailQuery`/`emailGet`/`resolveSmime`/`resolveTnef`/`emailSubmissionSet`,
-  and the entire real-JMAP-facing layer) still open.
+  sender's address" fix landing mid-session). Rest of priority 2 (the shim's real-account
+  `emailQuery`/`emailGet`/`resolveSmime`/`resolveTnef`/`emailSubmissionSet`, and the entire
+  real-JMAP-facing layer) still open.
+- 2026-09-09: `mail/js/jmap.ts`'s attachment upload/resolve methods (26 tests,
+  `MailJmapAttachmentUploadResolve.test.ts`) done - `uploadAttachment`/`downloadBlobUrl`/
+  `reuploadAttachmentForAccount`/`isLocalAccount`/`uploadVfsAttachment`/
+  `fetchAttachmentsMetadata`/`getAttachmentViewUrl`/`revokeAttachmentViewUrls`/
+  `resolveOutgoingInlineImages`. Full JS suite: 146 files, 1982 tests, all passing (up from
+  145/1956). Remaining priority-2 work: the shim's real-account `emailQuery`/`emailGet` IMAP
+  translation, `resolveSmime()`/`resolveTnef()`'s IMAP-fetch half, `emailSubmissionSet()`, and
+  the entire real-JMAP-facing layer (`Api\Mail\Jmap\Email.php`, `EmailSubmission.php`,
+  `Identity.php`, `Mailbox.php`).
