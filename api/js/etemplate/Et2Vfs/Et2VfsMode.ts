@@ -20,6 +20,12 @@ import {customElement} from "lit/decorators/custom-element.js";
 @customElement('et2-vfs-mode')
 export class Et2VfsMode extends Et2Description
 {
+	constructor()
+	{
+		super();
+		this.noLang = true;	// value is a numeric fs_mode, never a translatable phrase
+	}
+
 	/** File-type masks matching the S_IFMT bits. */
 	static readonly types : Record<string, number> = {
 		'l': 0xA000, // link
