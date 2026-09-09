@@ -192,6 +192,46 @@ class JmapTest extends \PHPUnit\Framework\TestCase
 	}
 
 	/**
+	 * $answered/$forwarded (added 2026-09-09, mail/js/compose.ts's own post-send source-message
+	 * marking - MailCompose's JMAP-native send never runs classic Api\Mail::flagMessages(
+	 * "answered"/"forwarded", ...) at all, see mail/src/Send.php) must map to the real IMAP
+	 * flags classic Api\Mail::flagMessages() itself already writes ($Forwarded has no leading
+	 * backslash - it's a non-standard but widely-used IMAP keyword, not a system flag).
+	 */
+	public function testWritableKeywordMappingTranslatesAnsweredAndForwardedSystemKeywords()
+	{
+		$keywords = JmapShim::writableKeywords();
+
+		$this->assertSame('\\Answered', $keywords['$answered']);
+		$this->assertSame('$Forwarded', $keywords['$forwarded']);
+	}
+
+	/**
+	 * MailCompose.flagSourceMessagesAfterSend() (mail/js/compose.ts) marks a reply's/forward's
+	 * source message via MailJmap.setSystemFlag() - Email/set must actually accept those
+	 * keywords through the local shim now, not just for a real JMAP server.
+	 */
+	public function testEmailSetAcceptsAnsweredAndForwardedKeywordPatches()
+	{
+		$responses = JmapShim::dispatch([
+			['Email/set', [
+				'accountId' => '0',
+				'mailboxId' => base64_encode('INBOX'),
+				'update' => [
+					'1' => [
+						'keywords/$answered' => true,
+						'keywords/$forwarded' => true,
+					],
+				],
+			], 's0'],
+		]);
+
+		$this->assertSame('Email/set', $responses[0][0]);
+		$this->assertArrayHasKey('1', (array)$responses[0][1]['updated']);
+		$this->assertSame([], (array)$responses[0][1]['notUpdated']);
+	}
+
+	/**
 	 * The local shim must not be an arbitrary IMAP-keyword write endpoint.  An unknown
 	 * keyword is rejected per id and no update is reported.
 	 */

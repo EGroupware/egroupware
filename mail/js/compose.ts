@@ -1137,51 +1137,7 @@ export class MailCompose
 			console.error('MailCompose.integrateSentMessage(): failed', e);
 			this.egw.message(e?.message || this.egw.lang('Failed to create linked entry'), 'error');
 		}
-		if (this.sourceMessagesToFlag)
-		{
-			try
-			{
-				const references = this.sourceMessagesToFlag.rowIds.map((id) => this.app.jmap.messageReference(id));
-				await this.app.jmap.setSystemFlag(references, '$answered', true);
-				if (this.sourceMessagesToFlag.forwarded)
-				{
-					await this.app.jmap.setSystemFlag(references, '$forwarded', true);
-				}
-				// Instantly reflect the new icon on the opener's already-rendered row, same
-				// "optimistic patch, no round-trip needed" mechanism MailApp.callFlagMessages()
-				// already uses for read/flagged toggles (see MailApp.patchRow()'s own docblock) -
-				// egw's data cache is shared with the opener even from this popup. Without this,
-				// the row only picks up $answered/$forwarded from a later JMAP push notification
-				// (never for an account with no push support at all) or a manual list refresh -
-				// found live 2026-09-09, ralf: "replied icon is shown now, though without push
-				// only after a refresh - we could set it from client-side after a successful send,
-				// before closing the window, that way it's set even if the server does not
-				// support push". This window closes right after (see window.close() below), so
-				// there is no later opportunity to do this from here.
-				for (const rowId of this.sourceMessagesToFlag.rowIds)
-				{
-					const dataElem = this.egw.dataGetUIDdata(rowId);
-					if (!dataElem) continue;
-					dataElem.data.flags ||= {};
-					dataElem.data.flags.replied = 'replied';
-					const classes = (dataElem.data['class'] || '').split(' ').filter(Boolean);
-					if (!classes.includes('replied')) classes.push('replied');
-					if (this.sourceMessagesToFlag.forwarded)
-					{
-						dataElem.data.flags.forwarded = 'forwarded';
-						if (!classes.includes('forwarded')) classes.push('forwarded');
-					}
-					dataElem.data['class'] = classes.join(' ');
-					this.app.patchRow(rowId);
-				}
-			}
-			catch (e)
-			{
-				// best-effort, same as integrateSentMessage() above - never blocks/reports a
-				// send failure over this, the message already went out successfully
-				console.error('MailCompose: failed to flag original message(s) as answered/forwarded', e);
-			}
-		}
+		await this.flagSourceMessagesAfterSend();
 		// the form still carries its unsent-draft content as far as ETemplate's own dirty-tracking
 		// is concerned - it never went through ETemplate's own submit(), so closing now would
 		// otherwise trip the "unsaved changes" beforeunload prompt despite the message having
@@ -1189,6 +1145,69 @@ export class MailCompose
 		this.et2.getInstanceManager().skip_close_prompt();
 		window.close();
 		return true;
+	}
+
+	/**
+	 * Best-effort follow-up to a successful trySendViaJmap() send: mark sourceMessagesToFlag's
+	 * message(s) $answered (and $forwarded, for an actual forward) - see that field's own
+	 * docblock for why this is needed at all (classic Send::send()'s equivalent server-side
+	 * behaviour never runs for a JMAP-native send). Extracted into its own method purely for unit
+	 * testability - trySendViaJmap() itself has too many unrelated preconditions (S/MIME toolbar
+	 * widgets, mailvelope, currentEmailFields()) to drive in a focused test.
+	 *
+	 * Never throws - a failure here (including MailJmap.setSystemFlag() itself rejecting) is
+	 * logged and swallowed, exactly like integrateSentMessage()'s own handling right above this
+	 * call in trySendViaJmap(): the message already went out successfully, nothing here should
+	 * ever be reported as a send failure.
+	 */
+	private async flagSourceMessagesAfterSend() : Promise<void>
+	{
+		if (!this.sourceMessagesToFlag)
+		{
+			return;
+		}
+		try
+		{
+			const references = this.sourceMessagesToFlag.rowIds.map((id) => this.app.jmap.messageReference(id));
+			await this.app.jmap.setSystemFlag(references, '$answered', true);
+			if (this.sourceMessagesToFlag.forwarded)
+			{
+				await this.app.jmap.setSystemFlag(references, '$forwarded', true);
+			}
+			// Instantly reflect the new icon on the opener's already-rendered row, same
+			// "optimistic patch, no round-trip needed" mechanism MailApp.callFlagMessages()
+			// already uses for read/flagged toggles (see MailApp.patchRow()'s own docblock) -
+			// egw's data cache is shared with the opener even from this popup. Without this,
+			// the row only picks up $answered/$forwarded from a later JMAP push notification
+			// (never for an account with no push support at all) or a manual list refresh -
+			// found live 2026-09-09, ralf: "replied icon is shown now, though without push
+			// only after a refresh - we could set it from client-side after a successful send,
+			// before closing the window, that way it's set even if the server does not
+			// support push". This window closes right after trySendViaJmap()'s own call site
+			// returns, so there is no later opportunity to do this from here.
+			for (const rowId of this.sourceMessagesToFlag.rowIds)
+			{
+				const dataElem = this.egw.dataGetUIDdata(rowId);
+				if (!dataElem) continue;
+				dataElem.data.flags ||= {};
+				dataElem.data.flags.replied = 'replied';
+				const classes = (dataElem.data['class'] || '').split(' ').filter(Boolean);
+				if (!classes.includes('replied')) classes.push('replied');
+				if (this.sourceMessagesToFlag.forwarded)
+				{
+					dataElem.data.flags.forwarded = 'forwarded';
+					if (!classes.includes('forwarded')) classes.push('forwarded');
+				}
+				dataElem.data['class'] = classes.join(' ');
+				this.app.patchRow(rowId);
+			}
+		}
+		catch (e)
+		{
+			// best-effort, same as integrateSentMessage() above - never blocks/reports a
+			// send failure over this, the message already went out successfully
+			console.error('MailCompose: failed to flag original message(s) as answered/forwarded', e);
+		}
 	}
 
 	/**
