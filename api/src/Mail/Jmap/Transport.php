@@ -159,6 +159,19 @@ class Transport extends \Horde_Mail_Transport
 		// parseMessage() needs the Content-Type/boundary headers alongside it to correctly
 		// interpret a multipart structure, so recombine before parsing, same as
 		// Horde_Mail_Transport_Smtphorde::send() recombines them for the wire
+		//
+		// Horde_Mime_Part::send()'s own toString(['stream' => true]) call leaves the stream's
+		// pointer at its END (it was just WRITTEN there, not read) - found live 2026-09-09 while
+		// adding test coverage: without rewind() first, stream_get_contents() here returns an
+		// EMPTY string for the (normal) case where $body arrives pre-positioned like that, so
+		// every real JMAP-transport send would silently create a message with no body and no
+		// attachments at all. Horde's own Horde_Mail_Transport_Mock::send() (the reference
+		// implementation for exactly this "is_resource($body)" case) already does this same
+		// rewind() first, for the same reason.
+		if (is_resource($body))
+		{
+			rewind($body);
+		}
 		$rawBody = is_resource($body) ? stream_get_contents($body) : (string)$body;
 		$mime = \Horde_Mime_Part::parseMessage($textHeaders."\r\n\r\n".$rawBody);
 

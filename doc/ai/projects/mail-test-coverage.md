@@ -1,6 +1,6 @@
 # Mail: test-coverage audit and gap-closing plan
 
-## Status: audit complete (2026-09-09); priority 1 done; priority 2 (JMAP/shim path) done except for items blocked on a live/mocked IMAP+SMTP connection, PGP/S-MIME adjacency, or DB-backed CLI flakiness (see Progress log for the full list); a SECOND live-reported Reply-To regression found+fixed along the way (the shim's send-time re-fetch never read replyTo/Priority/read-receipt/thread-headers back from the stored draft); now on priority 3 (send/SMTP side) - `Smtp.php::mailbox_address()` done
+## Status: audit complete (2026-09-09); priority 1 done; priority 2 (JMAP/shim path) done except for items blocked on a live/mocked IMAP+SMTP connection, PGP/S-MIME adjacency, or DB-backed CLI flakiness (see Progress log for the full list); a SECOND live-reported Reply-To regression found+fixed along the way (the shim's send-time re-fetch never read replyTo/Priority/read-receipt/thread-headers back from the stored draft); now on priority 3 (send/SMTP side) - `Smtp.php::mailbox_address()` done, plus a real bug found+fixed in `Transport.php::sendJmap()` (a real-JMAP-transport send always produced a message with NO body/attachments at all - see Progress log)
 
 Full-codebase scan of `mail/js/*.ts`, `mail/src/*.php`, `mail/inc/*.php`, `api/src/Mail.php` and
 `api/src/Mail/*.php` (including the `Jmap/` shim + real-JMAP layer), cross-referenced against every
@@ -267,12 +267,38 @@ optimistic-clear, no hard guard yet).
 
 ### 3. Send/SMTP side
 
-- **`Api\Mail\Jmap\Transport.php`** - highest standalone priority here: only an `assertInstanceOf`
-  smoke test exists (`AccountSmtpTransportTest.php`). `sendJmap()`'s full pipeline (MIME re-parsing,
-  To/Cc/Bcc-vs-recipients reconciliation including the Bcc-inference-by-diff branch, attachment
-  blob upload) and `resolveMailboxesAndIdentities()` (Drafts/Sent-by-role lookup) are untested -
-  the latter has its own comment documenting a real prior bug ("Identity not found", found live
-  2026-09-03).
+- **Done (2026-09-09)**: `Api\Mail\Jmap\Transport.php`'s `sendJmap()`/`resolveMailboxesAndIdentities()`/
+  `send()` - 17 tests, `api/tests/Mail/Jmap/TransportSendTest.php`. `jmapClient()` itself (opens a
+  real HTTP/IMAP connection) is bypassed via Reflection, injecting a fake `Http` subclass directly
+  into the protected `$jmap` property (had to actually extend `Http`, not just fake a generic
+  session, since that property is typed to the concrete class) - its `$types` map still points at
+  the REAL `Mailbox`/`Email`/`EmailSubmission` Type classes, so this also exercises that
+  already-tested translation layer for real, only faking the single `call()`/`uploadBlob()` entry
+  points. Real `Horde_Mime_Mail`/`Horde_Mime_Part` objects build the `$recipients`/`$headers`/
+  `$body` triple exactly the way `Api\Mailer` really does, rather than hand-crafting raw MIME text
+  - this also naturally exercises the Bcc-inference-by-diff branch (Horde never puts Bcc in the
+  transmitted headers, only in `$recipients`). Covers: To/Cc extraction and Bcc via both the
+  explicit-header and inferred-by-diff paths, attachment blob upload, identity resolution
+  (From-address match, case-insensitive, with first-identity fallback), the Drafts→Sent
+  `onSuccessUpdateEmail` patch, `Email/set`/`EmailSubmission/set` failure handling, and
+  `resolveMailboxesAndIdentities()`'s Drafts/Sent-by-role lookup (including its real Identity/get`
+  raw-call bypass of `Identity`'s own local-synthesis override - the prior "Identity not found" bug's
+  own fix, found live 2026-09-03) and its two failure branches.
+  **Found and fixed a second real bug** while writing this: `sendJmap()` never `rewind()`s a
+  stream `$body` before `stream_get_contents()`-ing it. `Horde_Mime_Part::send()`'s own
+  `toString(['stream' => true])` call - the actual mechanism that builds `$body` for every real
+  send - leaves the stream's pointer at its END (it was just WRITTEN there, not read), so without
+  a rewind, `sendJmap()` silently parsed an EMPTY body and found ZERO attachments for every real
+  JMAP-transport send (confirmed by testing against a real `Horde_Mime_Mail`+`Horde_Mime_Part`
+  pipeline, which reproduced this immediately) - this would affect ANY account actually configured
+  with JMAP-over-HTTP as its SMTP submission mechanism (`acc_smtp_ssl`'s JMAP_HTTP/JMAP_HTTPS
+  bits), used for notifications/mail-merge/cron sends, not just interactive compose (which has its
+  own separate, already-tested/-fixed JMAP send path via the IMAP shim - unaffected). Confirmed the
+  correct fix (`rewind($body)` before reading) against Horde's own established convention:
+  `Horde_Mail_Transport_Mock::send()` (Horde's own reference/test transport) already does exactly
+  this for the identical reason. Fixed + a dedicated regression test
+  (`testSendJmapRewindsAStreamBodyThatArrivesAlreadyAtEndOfFile`) building a real stream and
+  deliberately leaving it at EOF before calling `sendJmap()`, matching the real-world case exactly.
 - `mail/src/Send.php`: only trait-composition shape and two pure helpers
   (`resolveEmailAddressList()`, `convertHtmlToText()`) are tested (`SendRefactorTest.php`) - the
   actual `send()` MIME-building/mailbox-routing flow is untested.
@@ -451,8 +477,13 @@ Kept for completeness, but explicitly deprioritized until the above is in better
   CLI-flakiness (`Identity.php`'s `synthesize()`) - moving on to priority 3 (send/SMTP side).
 - 2026-09-09: started priority 3 (send/SMTP side) - `Api\Mail\Smtp.php::mailbox_address()`/
   `mailbox_addr()` (10 tests, `SmtpMailboxAddressTest.php`) done, the doc's own flagged "cheap
-  win." Rest of priority 3 still open: `Api\Mail\Jmap\Transport.php::sendJmap()`'s full pipeline
-  (highest standalone priority here) + `resolveMailboxesAndIdentities()`, `mail/src/Send.php`'s
-  actual `send()` flow, `mail/src/ApiHandler.php`'s `post()`/`viewEml()`/vacation methods,
-  `compose.ts`'s send-side S/MIME/PGP wiring (deliberately deferred - concurrent session), classic
-  `Api\Mail::appendMessage()`.
+  win."
+- 2026-09-09: `Api\Mail\Jmap\Transport.php`'s `sendJmap()`/`resolveMailboxesAndIdentities()`/
+  `send()` (17 tests, `TransportSendTest.php`) done - the highest standalone priority-3 item.
+  **Found+fixed a real bug**: `sendJmap()` never rewound a stream `$body` before reading it, so
+  every real JMAP-transport send (notifications/mail-merge/cron, NOT interactive compose - that's
+  a separate, already-tested path) silently produced a message with no body and no attachments at
+  all - see priority-3 entry above for the full explanation. Rest of priority 3 still open:
+  `mail/src/Send.php`'s actual `send()` flow, `mail/src/ApiHandler.php`'s `post()`/`viewEml()`/
+  vacation methods, `compose.ts`'s send-side S/MIME/PGP wiring (deliberately deferred - concurrent
+  session), classic `Api\Mail::appendMessage()`.
