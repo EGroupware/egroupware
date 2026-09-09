@@ -1,6 +1,6 @@
 # Mail: test-coverage audit and gap-closing plan
 
-## Status: audit complete (2026-09-09); priority 1 done; priority 2 (JMAP/shim path) done except for items blocked on a live/mocked IMAP+SMTP connection, PGP/S-MIME adjacency, or DB-backed CLI flakiness (see Progress log for the full list); a SECOND live-reported Reply-To regression found+fixed along the way (the shim's send-time re-fetch never read replyTo/Priority/read-receipt/thread-headers back from the stored draft); priority 3 (send/SMTP side) - `Smtp.php::mailbox_address()`, `Transport.php::sendJmap()` (with a real bug found+fixed there - a real-JMAP-transport send always produced a message with NO body/attachments at all), and `ApiHandler.php`'s `returnVacation()`/`parseAddressList()` done; remaining priority-3 items all need real IMAP/SMTP/Sieve connections; priority 4 (`app.ts`/`Ui\*Handler.php`) - `MailApp.markOpenedMessageRead()`/`resolveExternalImages()`/`resolveAttachmentViewUrls()` done (with a real bug found+fixed in `resolveExternalImages()` - unguarded `toolbar.getActionById()` null-dereference on the "Show" button); also fixed 2 more live-reported Sieve vacation/notification bugs along the way, verified via a new `sieve-test`-based testing technique (see Progress log)
+## Status: audit complete (2026-09-09); priority 1 done; priority 2 (JMAP/shim path) done except for items blocked on a live/mocked IMAP+SMTP connection, PGP/S-MIME adjacency, or DB-backed CLI flakiness (see Progress log for the full list); a SECOND live-reported Reply-To regression found+fixed along the way (the shim's send-time re-fetch never read replyTo/Priority/read-receipt/thread-headers back from the stored draft); priority 3 (send/SMTP side) - `Smtp.php::mailbox_address()`, `Transport.php::sendJmap()` (with a real bug found+fixed there - a real-JMAP-transport send always produced a message with NO body/attachments at all), and `ApiHandler.php`'s `returnVacation()`/`parseAddressList()` done; remaining priority-3 items all need real IMAP/SMTP/Sieve connections; priority 4 (`app.ts`/`Ui\*Handler.php`) - `MailApp.markOpenedMessageRead()`/`resolveExternalImages()`/`resolveAttachmentViewUrls()` and `Ui\BodyHandler`'s inline-image resolution done (with a real bug found+fixed in `resolveExternalImages()` - unguarded `toolbar.getActionById()` null-dereference on the "Show" button); also fixed 2 more live-reported Sieve vacation/notification bugs along the way, verified via a new `sieve-test`-based testing technique (see Progress log)
 
 Full-codebase scan of `mail/js/*.ts`, `mail/src/*.php`, `mail/inc/*.php`, `api/src/Mail.php` and
 `api/src/Mail/*.php` (including the `Jmap/` shim + real-JMAP layer), cross-referenced against every
@@ -394,11 +394,27 @@ method-by-method list isn't practical:
 - Attachments UI: `attachmentsBlockActions()`, `setupViewAttachmentActions()`.
 - Drag-and-drop: `registerForDrag()`, `dragAttachment()`.
 
-Delegate classes (`mail/src/Ui/*Handler.php`), all untested beyond `ProfileHandler::quotaDisplay()`
-and `AttachmentJmap`'s address/attachment-block helpers (already well covered):
-`MessageActionHandler.php` (real mailbox-mutating logic, 220+-line methods - overlaps priority 1),
-`MessageDisplayHandler.php` (S/MIME-passphrase handling, JMAP-vs-classic dispatch), `BodyHandler.php`,
-`FolderHandler.php`, `ImportHandler.php`, `SmimeHandler.php`, `Tree.php`, `AttachmentHandler.php`.
+Delegate classes (`mail/src/Ui/*Handler.php`):
+
+- **Done (2026-09-09)**: `BodyHandler.php`'s inline (`cid:`) image resolution - 10 tests,
+  `mail/tests/BodyHandlerResolveInlineImagesTest.php`. Real risk here: a broken regex for any of
+  the 4 inline-image forms (`plain`/`src`/`url`/`background`) would leave real HTML emails showing
+  broken-image icons instead of their actual inline content. `resolveInlineImageByType()` accepts
+  an explicit `$_link_callback`, sidestepping its own default callback's DB/IMAP dependency
+  entirely (only reached when the callback returns an empty URL - a data-uri fallback, not
+  exercised here) - most tests use that. Covers all 4 forms, that only `src` URL-decodes the
+  matched CID before calling back, multiple occurrences each resolving with their own CID, a body
+  with no matching reference passing through unchanged, and `resolveInlineImages()`'s own
+  `plain`-vs-`html` dispatch (only the plain form for `plain`, all three of src/url/background for
+  `html`) - the latter two tests use the REAL default callback (`Api\Egw::link()`), needing
+  `Api\LoggedInTest`'s bootstrap; the whole class extends it for consistency (mixing `LoggedInTest`
+  with a bare `TestCase` in one phpunit invocation is a known process-shared-static-state hazard).
+- Otherwise still untested beyond `ProfileHandler::quotaDisplay()` and `AttachmentJmap`'s
+  address/attachment-block helpers (already well covered): `MessageActionHandler.php` (real
+  mailbox-mutating logic, 220+-line methods - overlaps priority 1), `MessageDisplayHandler.php`
+  (S/MIME-passphrase handling, JMAP-vs-classic dispatch - deliberately deferred, PGP/S-MIME
+  adjacent), `FolderHandler.php`, `ImportHandler.php`, `SmimeHandler.php` (PGP/S-MIME, deliberately
+  deferred), `Tree.php`, `AttachmentHandler.php`.
 
 ## Lower priority (classic `Api\Mail`-side, per priority order above)
 
@@ -569,7 +585,11 @@ Kept for completeness, but explicitly deprioritized until the above is in better
   "Show" button). Full JS suite: 152 files, 2043 tests, all passing.
 - 2026-09-09: `MailApp.resolveAttachmentViewUrls()` (8 tests,
   `MailAppResolveAttachmentViewUrls.test.ts`) done - see priority-4 entry above for what's
-  covered. Full JS suite: 153 files, 2051 tests, all passing. Remaining priority-4 work:
-  `preview()`, `renderMessageInto()`, compose popup wiring (PGP-adjacent, deliberately deferred),
-  folder-tree UI (~20 methods), search/filter UI, attachments UI, drag-and-drop, and the entire
-  `mail/src/Ui/*Handler.php` delegate-class set.
+  covered. Full JS suite: 153 files, 2051 tests, all passing.
+- 2026-09-09: `Ui\BodyHandler`'s inline (`cid:`) image resolution (10 tests,
+  `BodyHandlerResolveInlineImagesTest.php`) done - see the delegate-classes entry above for what's
+  covered. Remaining priority-4 work: `preview()`, `renderMessageInto()`, compose popup wiring
+  (PGP-adjacent, deliberately deferred), folder-tree UI (~20 methods), search/filter UI,
+  attachments UI, drag-and-drop, and the rest of `mail/src/Ui/*Handler.php`
+  (`MessageActionHandler.php`, `MessageDisplayHandler.php` - PGP/S-MIME-adjacent,
+  `FolderHandler.php`, `ImportHandler.php`, `Tree.php`, `AttachmentHandler.php`).
