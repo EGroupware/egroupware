@@ -12,7 +12,8 @@ fixed a real array-reindexing bug in `createAttachmentBlock()`). Not yet covered
 tests (only exercised indirectly via the end-to-end test above) - worth adding if either one grows
 another edge case. 4 follow-up items queued 2026-09-09 (Autocrypt key-import dialog, sending an
 Autocrypt header, Mailvelope sign-on-send, reply/forward auto-matching signed/encrypted state) -
-see "Planned follow-up" below, none started
+see "Planned follow-up" below; item 4's PGP-encrypted half is now DONE + live-verified (2026-09-09,
+see its own entry), the other three (and item 4's PGP-signed half) still not started
 
 ### 2026-09-09 core-engine bugfix: base64-encoded signature parts
 
@@ -373,26 +374,43 @@ which he'll do "tomorrow" (i.e. after this note was written):
    `openpgp.js` (Mailvelope holds the private signing key, `openpgp.js` here never does - same
    division of responsibility as encrypt/decrypt already has).
 
-4. **Reply/forward auto-matches the original message's signed/encrypted state.** Added 2026-09-09.
-   Replying to or forwarding a PGP-signed message should default the compose toolbar's PGP toggle
-   to on (same message for a PGP-encrypted original, and the analogous S/MIME sign/encrypt toggles
-   for an S/MIME original) - ralf: "we should automatic enable the toggles to the same state, so by
-   default we answer signed messages with signed messages (there's currently a gap with PGP), and
-   encrypted messages with encrypted messages." **Default only, never enforced** - the user must
-   still be able to switch a toggle back off for that one reply/forward if they want to. Needs: (a)
-   confirming what S/MIME's own current reply/forward behavior actually is before assuming it's the
-   model to copy (ralf's phrasing suggests S/MIME may already default this way and PGP is the one
-   with the gap, but that should be verified against the actual `Compose.php`/`compose.ts` reply/
-   forward init path, not assumed); (b) the PGP toggle's own initial `checked` state needs to be
-   driven by the source message's own PGP status (reusing `verifyPgpSignature()`'s `signed` flag
-   for "was this signed" - encrypted detection is a separate, already-existing check per
-   `mailvelopeDisplay()`'s own multipart/encrypted detection) at compose-open time, in
-   `Compose.php`'s reply/forward content-building (`getToolbarActions()`'s `pgp`/`smime_sign`/
-   `smime_encrypt` entries already support a `checkbox`+implicit default state - needs the initial
-   value threaded through from the source message).
+4. **Reply/forward auto-matches the original message's signed/encrypted state - PGP-encrypted half
+   DONE (2026-09-09), PGP-signed half still blocked on item #3 above.** ralf: "we should automatic
+   enable the toggles to the same state, so by default we answer signed messages with signed
+   messages (there's currently a gap with PGP), and encrypted messages with encrypted messages."
+   **Default only, never enforced** - the user can still switch a toggle back off for that one
+   reply/forward.
+   - **S/MIME**: turned out to already work, unrelated to today's work - `composeMessage()`
+     (`mail/js/app.ts`) has long set `settings.smime_type = content.data['smime']` (the row's own
+     server-known field) unconditionally, threaded through `compose.php`/`bootstrapComposePopup()`
+     to pre-check `smime_sign`/`smime_encrypt` - confirming ralf's own suspicion that S/MIME was
+     the one NOT missing this.
+   - **PGP encrypted -> pre-check `pgp`**: newly built. `MailJmap.peekPgpEncrypted()` (a synchronous
+     cache of `fetchBody()`'s own structural PGP-encrypted detection, populated whenever a message
+     is actually viewed - PGP has no server-known row field like `smime` to read synchronously) ->
+     `composeMessage()` -> `pgp_encrypted=1` through `compose.php` -> `bootstrapComposePopup()`.
+     Pre-checking the button alone was NOT enough, unlike S/MIME (which just reads the widget's
+     value at send time) - PGP additionally needs a real, initialized `mailvelope_editor`, which
+     needs `mailvelopeGetCheckRecipients()` to actually run (imports the recipient's key into
+     Mailvelope's own keyring, fetching it from the addressbook server-side first if needed).
+     `bootstrapComposePopup()` now explicitly calls `togglePgpEncrypt({checked: true})` - the exact
+     same code path a real click uses - but only AFTER `MailCompose.bootstrapReply()` (via its own
+     `bootstrapPromise`) has populated the reply's real recipient; triggering it right after the
+     initial template bootstrap left the "To" field still empty, so the key-check ran for nobody.
+     Both gaps found live (ralf: "just setting the toggle seems not to trigger Mailvelope").
+     Live-verified: recipient correctly populated, `mailvelope_editor` created, action's `checked`
+     state still `true` (not reverted to `false`, which `togglePgpEncrypt()`'s own error path does
+     on a real failure).
+   - **PGP signed -> "answer signed with signed"**: still not possible. The `pgp` compose action is
+     encryption only (Mailvelope) - there is no PGP *sign*-on-send mechanism at all yet (item #3
+     above). `MailJmap.pgpSignatureCache`/`peekPgpSignature()` already exist (mirroring
+     `pgpEncryptedCache`/`peekPgpEncrypted()`) ready for when item #3 adds a real sign toggle to
+     pre-check against, but `composeMessage()` doesn't call `peekPgpSignature()` yet - deliberately
+     not force-fitting a guessed-at future action id/param shape before item #3's own design (which
+     needs to check Mailvelope's actual editor API first) is worked out.
 
-None of these four has been designed in detail yet (no data-flow spike, no UI mock, no code) - this
-section is a plan-level placeholder capturing the ask, not an implementation.
+None of items 1-3 has been designed in detail yet (no data-flow spike, no UI mock, no code) - that
+part of this section is still a plan-level placeholder capturing the ask, not an implementation.
 
 ## Explicitly out of scope for this project
 
