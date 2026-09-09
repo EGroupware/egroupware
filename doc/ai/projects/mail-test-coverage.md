@@ -1,6 +1,6 @@
 # Mail: test-coverage audit and gap-closing plan
 
-## Status: audit complete (2026-09-09); priority 1 (bulk move/copy/delete) client-side + deferred-work queue done; priority 2 (JMAP/shim path) - jmap.ts's mailbox CRUD, label/flag setters, thread-keyword aggregation, filter/sort, saveDraft, WS push-payload, and attachment upload/resolve done (see Progress log)
+## Status: audit complete (2026-09-09); priority 1 (bulk move/copy/delete) client-side + deferred-work queue done; priority 2 (JMAP/shim path) - jmap.ts's mailbox CRUD, label/flag setters, thread-keyword aggregation, filter/sort, saveDraft, WS push-payload, and attachment upload/resolve done, plus the shim's own filterToQuery()/buildSort() IMAP-search translation (see Progress log)
 
 Full-codebase scan of `mail/js/*.ts`, `mail/src/*.php`, `mail/inc/*.php`, `api/src/Mail.php` and
 `api/src/Mail/*.php` (including the `Jmap/` shim + real-JMAP layer), cross-referenced against every
@@ -196,10 +196,26 @@ optimistic-clear, no hard guard yet).
   (`smimeEncryptBody`, `resolveSmimeSignedAttachments`), PGP dispatch/cache methods
   (`findPgpPart`, `peekPgpSignature`, `peekPgpEncrypted`, `pgpEncryptBody` - as opposed to the
   already-tested lower-level byte helpers).
-- `api/src/Mail/Jmap/Imap.php`: `emailQuery()`/`emailGet()`'s real-account (non-"0") IMAP
-  search/fetch translation (every existing test uses the demo fixture or a mocked adapter that
-  bypasses real search/fetch construction), `resolveSmime()`/`resolveTnef()`'s IMAP-fetch half,
-  `emailSubmissionSet()` (the shim's own send path - no test at all).
+- **Done (2026-09-09)**: `api/src/Mail/Jmap/Imap.php`'s Email/query filter/sort translation -
+  `findInMailbox`/`filterToQuery`/`applyCondition`/`buildSort`/`keywordToFlag` - 28 tests,
+  `api/tests/Mail/Jmap/ImapFilterQueryTest.php`. These are pure static functions with no IMAP/DB
+  dependency (only `emailQuery()` itself, which calls `imapServer()->search()`, needs a live
+  connection - not attempted), so tested directly, asserting on
+  `Horde_Imap_Client_Search_Query`'s own `(string)` IMAP search command rendering: every leaf
+  condition (subject/from/to/cc/body/text/minSize/maxSize/after/before/hasKeyword/notKeyword),
+  `inMailbox` being excluded from the search criteria itself (resolved separately via
+  `findInMailbox()`), AND/OR combination, NOT of a single leaf, and NOT of an AND compound
+  distributing via De Morgan's laws into an OR of negated leaves (Horde has no query-level
+  negation). `buildSort()`'s ascending/descending/unrecognised-property/no-criteria branches, and
+  `keywordToFlag()`'s standard-keyword-vs-passthrough mapping, also covered.
+- `api/src/Mail/Jmap/Imap.php`: `emailQuery()`/`emailGet()`'s own real-account (non-"0") IMAP
+  search/fetch EXECUTION (as opposed to the query-translation logic above, now covered) - still
+  needs a live or properly mocked `Horde_Imap_Client_Socket` connection, not attempted.
+  `resolveSmime()`/`resolveTnef()`'s IMAP-fetch half, `emailSubmissionSet()` (the shim's own send
+  path - sends via SMTP and appends/deletes real IMAP messages, same "needs a live/mocked IMAP
+  connection" blocker as `emailSet()`'s own IMAP-execution branches in priority 1; also has a
+  multipart/signed body-preservation branch that's PGP/S-MIME-adjacent, left alone while a
+  concurrent session is active there).
 - The real-JMAP/Stalwart-facing layer has essentially **zero** tests: `Api\Mail\Jmap\Email.php`
   (`getChanges()` push/sync change-tracking is genuinely complex and unverified),
   `EmailSubmission.php` (`set()`'s RFC 8621 §7.4 `onSuccessUpdateEmail`/`onSuccessDestroyEmail`
@@ -322,3 +338,14 @@ Kept for completeness, but explicitly deprioritized until the above is in better
   translation, `resolveSmime()`/`resolveTnef()`'s IMAP-fetch half, `emailSubmissionSet()`, and
   the entire real-JMAP-facing layer (`Api\Mail\Jmap\Email.php`, `EmailSubmission.php`,
   `Identity.php`, `Mailbox.php`).
+- 2026-09-09: the shim's Email/query filter/sort translation (`findInMailbox`/`filterToQuery`/
+  `applyCondition`/`buildSort`/`keywordToFlag`, 28 tests, `ImapFilterQueryTest.php`) done - pure
+  functions, no live IMAP connection needed. Confirmed `ImapBuildMailerTest.php`'s pre-existing
+  `testVfsPathAttachmentIsReadDirectlyFromVfs` S3/VFS-stream-wrapper failure reproduces identically
+  standalone, unrelated to this addition. Deliberately not touching `emailSubmissionSet()` (has a
+  PGP/S-MIME-adjacent multipart/signed branch, and needs a live SMTP/IMAP connection anyway - a
+  concurrent session is still active on PGP/Autocrypt work, 2 more commits landed this session).
+  Remaining priority-2 work: `emailQuery()`/`emailGet()`'s own real-account IMAP search/fetch
+  EXECUTION, `resolveSmime()`/`resolveTnef()`'s IMAP-fetch half, `emailSubmissionSet()`, and the
+  entire real-JMAP-facing layer (`Api\Mail\Jmap\Email.php`, `EmailSubmission.php`, `Identity.php`,
+  `Mailbox.php`).
