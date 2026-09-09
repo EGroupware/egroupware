@@ -1,8 +1,48 @@
 # Mail: verify PGP/MIME signatures natively (no Mailvelope dependency)
 
-## Status: Phase 3 UI wiring done + live-verified (2026-09-08), ralf testing 2026-09-09 - Phase 4
+## Status: Phase 3 UI wiring done + live-verified (2026-09-08); ralf's own live testing 2026-09-09
+surfaced 4 real bugs in that UI wiring, all fixed + live-verified same day (see below) - Phase 4
 tests not started; 3 follow-up items queued 2026-09-09 (Autocrypt key-import dialog, sending an
 Autocrypt header, Mailvelope sign-on-send) - see "Planned follow-up" below, none started
+
+### 2026-09-09 UI-wiring bugfix round (live-tested by ralf)
+
+- **Icon swap**: compose toolbar's PGP encrypt toggle now uses bootstrap `file-lock2` (was the
+  generic `lock` also used for other unrelated things); the `pgp_signature` status icon now uses
+  `envelope-at-fill` (ralf's own choice, was also `lock` before - indistinguishable from the
+  compose toggle and S/MIME had no equivalent overlap).
+- **Both PGP and S/MIME icons showing on a plain S/MIME-only message** - `setPgpSignatureFlags()`
+  was calling `pgp_signature.set_disabled(!data.signed)` to hide the icon for a non-PGP message,
+  copying `setSmimeFlags()`'s own pattern - but `disabled` never hides an Et2Widget, only makes it
+  look non-interactive (per `Et2Widget.ts`'s own docblock); S/MIME's icons only ever "worked" via
+  their `hidden="!@smime=..."` one-shot server-render binding (a real content field, since S/MIME
+  status IS known server-side), which PGP has no equivalent of (100% client-side/async detection).
+  Fixed by using `.hidden` instead, with both `index.xet`/`display.xet` now defaulting
+  `hidden="true"` so nothing flashes visible before the async verify resolves.
+- **PGP icon visibly smaller/differently-weighted than S/MIME's** despite identical `width="24"` -
+  S/MIME's icons are inlined custom SVGs that scale to fill their box; a bootstrap-icons class like
+  `bi-envelope-at-fill` renders via a `::before` webfont glyph sized by `font-size` (not
+  width/height) - it was rendering at the page's ambient 14px. Fixed with a scoped CSS rule
+  (`.mailPreviewHeaders.smimeIcons et2-image[class*="bi-"] { font-size: 24px; }`) in `app.less`
+  (+ hand-mirrored `app.css`).
+- **Duplicate tooltip** (a plain native OS one stacked on the framework's own nicer-styled one) -
+  turned out to be a pre-existing, framework-wide `Et2Image.ts` bug, not scoped to this feature:
+  `render()` copied `statustext` into the native `title` attribute, duplicating
+  `Et2Widget.ts`'s own `updated()`-driven `egw().tooltipBind()` binding that already exists for
+  *every* widget's `statustext` (including images) - any et2-image with a statustext showed two
+  tooltips. Fixed in `Et2Image.ts` (title now only comes from `label`, never `statustext`) and
+  committed separately from the mail-specific changes since it's a shared-widget fix, not mail-only.
+- **PGP signature "attachment" not hidden from the attachment list** - the RFC 1847 detached
+  signature part of a `multipart/signed` message showed up as a normal-looking attachment (an
+  `OpenPGP_signature.asc` file), same underlying issue as the earlier `multipart/encrypted` control
+  part fix. Fixed in `AttachmentJmap::jmapAttachmentsToLegacy()` by filtering
+  `application/pgp-signature` outright - simpler than the encrypted case's "marker + next sibling"
+  skip, since JMAP's own flattened `attachments` list always surfaces the signature as one
+  self-contained entry regardless of how deeply the signed content itself is nested. Verified
+  against both real fixture shapes from the Phase 1 spike (a plain Thunderbird self-signed message,
+  and one that also carries the sender's own `application/pgp-keys` inline - only the signature is
+  hidden, the inline key stays visible/downloadable, needed for the still-unbuilt Autocrypt
+  follow-up above). New PHPUnit coverage in `mail/tests/JmapAttachmentsToLegacyTest.php`.
 
 `MailJmap.verifyPgpSignature(rowId)` (`mail/js/jmap.ts`) implements the full chain: detects a
 PGP-signed `multipart/signed` (`findPgpSignaturePart()`), downloads the whole raw message (the
