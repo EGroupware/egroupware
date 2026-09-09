@@ -169,6 +169,16 @@ class addressbook_bo extends Api\Contacts
 	/**
 	 * Set keys for given email or account_id and key type based on regexp (SMIME or PGP), if user has necessary rights
 	 *
+	 * Storage is per-address, not per-contact-record: a contact with a business AND a home email,
+	 * each using their own real-world key, can now store both without one clobbering the other -
+	 * confirmed live 2026-09-09 this was NOT the case before (a single VFS file per contact,
+	 * regardless of how many of its addresses get_keys() already searched). The one VFS file
+	 * (Api\Contacts::FILES_PGP_PUBKEY/FILES_SMIME_PUBKEY, unchanged path/ACL/backend-dispatch via
+	 * pubkey_use_file()) now holds a JSON object `{"<lowercased address>": {"key": "<armored
+	 * text>"}}` instead of a single bare armored key/cert - see merge_keys_json()/
+	 * extract_key_for_address() for the format and the legacy-file (pre-fix, bare armored text,
+	 * still read by get_key() below) backward-compatibility fallback.
+	 *
 	 * @param array $keys email|account_id => public key pairs to store
 	 * @param boolean $pgp true: PGP, false: S/Mime
 	 * @param boolean $allow_user_updates = null for admins, set config to allow regular users to store their key
@@ -213,7 +223,9 @@ class addressbook_bo extends Api\Contacts
 			}
 			else
 			{
-				$criteria['contact_email'][] = $recipient;
+				// search BOTH addresses - previously only contact_email (primary), silently never
+				// finding a contact whose matching address was ONLY their email_home
+				$criteria['contact_email_home'][] = $criteria['contact_email'][] = strtolower($recipient);
 			}
 		}
 		if (!$criteria) return 0;
@@ -229,14 +241,25 @@ class addressbook_bo extends Api\Contacts
 		{
 			foreach((array)$this->search($criteria, false, '', '', '', false, 'OR', false, $filter) as $contact)
 			{
+				// every (address => key) pair from $keys that actually applies to THIS contact -
+				// a single set_keys() call can carry keys for BOTH of a contact's addresses at
+				// once, each stored under its own address instead of one clobbering the other
+				$forThisContact = [];
 				if ($contact['account_id'] && isset($keys[$contact['account_id']]))
 				{
-					$key = $keys[$contact['account_id']];
+					// no specific address known for an account-id-keyed entry - store as the
+					// address-unknown fallback, same meaning as an upgraded legacy file
+					$forThisContact['*'] = $keys[$contact['account_id']];
 				}
-				elseif (isset($keys[$contact['email']]))
+				foreach (['email', 'email_home'] as $field)
 				{
-					$key = $keys[$contact['email']];
+					$address = strtolower($contact[$field] ?? '');
+					if ($address !== '' && isset($keys[$address]))
+					{
+						$forThisContact[$address] = $keys[$address];
+					}
 				}
+				if (!$forThisContact) continue;
 
 				// key is stored in file for sql backend or allways for pgp key
 				$path = null;
@@ -244,20 +267,21 @@ class addressbook_bo extends Api\Contacts
 				{
 					$path =  Api\Link::vfs_path('addressbook', $contact['id'], $file);
 					$contact['files'] |= $pgp ? self::FILES_BIT_PGP_PUBKEY : self::FILES_BIT_SMIME_PUBKEY;
-					// remove evtl. existing old pubkey
+					$existing = file_exists($path) ? file_get_contents($path) : '';
+					// remove evtl. existing legacy (non-JSON) pubkey from the CONTACT field too -
+					// file storage and the pubkey field are never both populated for the same key
 					if (preg_match($key_regexp, $contact['pubkey']))
 					{
 						$contact['pubkey'] = preg_replace($key_regexp, '', $contact['pubkey']);
 					}
+					$newContent = self::merge_keys_json($existing, $forThisContact);
 					$updated++;
-				}
-				elseif (empty($contact['pubkey']) || !preg_match($key_regexp, $contact['pubkey']))
-				{
-					$contact['pubkey'] .= $key;
 				}
 				else
 				{
-					$contact['pubkey'] = preg_replace($key_regexp, $key, $contact['pubkey']);
+					$existing = $contact['pubkey'] ?? '';
+					$newContent = self::merge_keys_json($existing, $forThisContact);
+					$contact['pubkey'] = $newContent;
 				}
 				$contact['photo_unchanged'] = true;	// otherwise photo will be lost, because $contact['jpegphoto'] is not set
 				if ($this->check_perms(Acl::EDIT, $contact) && $this->save($contact))
@@ -266,7 +290,15 @@ class addressbook_bo extends Api\Contacts
 					{
 						// check_perms && save check ACL, in case of access only via own-account we have to use root to allow the update
 						$backup = Api\Vfs::$is_root; Api\Vfs::$is_root = true;
-						if (file_put_contents($path, $key)) ++$updated;
+						// a contact that never had ANY file (photo/key/...) attached before has no
+						// .files/ directory yet - file_put_contents() can't create it implicitly
+						// (found live 2026-09-09 writing a test for this fix: the very first key
+						// ever stored for a brand-new contact silently failed to write)
+						if (!Api\Vfs::is_dir($dir = dirname($path)))
+						{
+							Api\Vfs::mkdir($dir, 0700, true);
+						}
+						if (file_put_contents($path, $newContent)) ++$updated;
 						Api\Vfs::$is_root = $backup;
 					}
 					else
@@ -286,6 +318,34 @@ class addressbook_bo extends Api\Contacts
 			$message = !$updated ? false: lang('%1 public keys added.', $updated);
 		}
 		return $message;
+	}
+
+	/**
+	 * Merge new (address => armored key) pairs into a contact's existing stored key content.
+	 *
+	 * $existing may be: empty (nothing stored yet), the new per-address JSON object this method
+	 * itself produces, or a legacy pre-fix bare armored key/cert - upgraded here into the new
+	 * shape's `"*"` (address-unknown) fallback entry, so an address NOT explicitly being updated
+	 * by this call keeps resolving to it exactly like before this fix (get_key()'s own one key
+	 * applied to whichever address was asked about). Addresses ARE being updated this call always
+	 * overwrite whatever was there for that specific address (new key replaces old, no history).
+	 *
+	 * @param string $existing current file/pubkey-field content, '' if nothing stored yet
+	 * @param array $newKeysByAddress lowercased-address (or '*') => armored key/cert pairs to add/overwrite
+	 * @return string new JSON content to store
+	 */
+	private static function merge_keys_json(string $existing, array $newKeysByAddress) : string
+	{
+		$decoded = $existing !== '' ? json_decode($existing, true) : null;
+		if (!is_array($decoded) || json_last_error() !== JSON_ERROR_NONE)
+		{
+			$decoded = $existing !== '' ? ['*' => ['key' => $existing]] : [];
+		}
+		foreach ($newKeysByAddress as $address => $key)
+		{
+			$decoded[$address] = ['key' => $key];
+		}
+		return json_encode($decoded);
 	}
 
 	/**
@@ -326,25 +386,28 @@ class addressbook_bo extends Api\Contacts
 			foreach((array)$this->search($criteria, array('account_id', 'contact_email', 'contact_email_home', 'contact_pubkey', 'contact_id'),
 				'', '', '', false, 'OR', false, $filter) as $contact)
 			{
-				// first check for file and second for pubkey field (LDAP, AD or old SQL)
-				if (($content = $this->get_key($contact, $pgp)))
+				$email = strtolower($contact['email'] ?? '');
+				$emailHome = strtolower($contact['email_home'] ?? '');
+
+				if (empty($criteria['account_id']) || in_array($email, $recipients) || in_array($emailHome, $recipients))
 				{
-					$contact['email'] = strtolower($contact['email']);
-					if (empty($criteria['account_id']) || in_array($contact['email'], $recipients))
+					// return EACH of this contact's addresses that was actually asked about, with
+					// its OWN key - a contact with both a business and home address asked about
+					// together, each having a different stored key, must return both correctly
+					// (a single "one key per contact" result, like before this fix, would have
+					// silently dropped one of them)
+					foreach ([$email, $emailHome] as $address)
 					{
-						if (in_array($contact['email_home'], $recipients))
+						if ($address !== '' && in_array($address, $recipients) && !isset($result[$address]) &&
+							($content = $this->get_key($contact, $pgp, $address)))
 						{
-							$result[$contact['email_home']] = $content;
-						}
-						else
-						{
-							$result[$contact['email']] = $content;
+							$result[$address] = $content;
 						}
 					}
-					else
-					{
-						$result[$contact['account_id']] = $content;
-					}
+				}
+				elseif (($content = $this->get_key($contact, $pgp, $email)))
+				{
+					$result[$contact['account_id']] = $content;
 				}
 			}
 		}
@@ -352,13 +415,17 @@ class addressbook_bo extends Api\Contacts
 	}
 
 	/**
-	 * Extract PGP or S/Mime pubkey from contact array
+	 * Extract PGP or S/Mime pubkey from contact array, for a specific address
 	 *
 	 * @param array $contact
 	 * @param boolean $pgp
+	 * @param ?string $address lowercased address the key is wanted for - a contact's per-address
+	 *  stored key wins if present, falling back to the "*" (address-unknown/legacy) entry if not;
+	 *  null behaves like the "*"-only lookup (used for the account-id-keyed case, where there's no
+	 *  single specific address to prefer)
 	 * @return string pubkey or NULL
 	 */
-	function get_key(array $contact, $pgp)
+	function get_key(array $contact, $pgp, ?string $address=null)
 	{
 		if ($pgp)
 		{
@@ -370,15 +437,44 @@ class addressbook_bo extends Api\Contacts
 			$key_regexp = Api\Mail\Smime::$certificate_regexp;
 			$file = Api\Contacts::FILES_SMIME_PUBKEY;
 		}
-		$matches = null;
-		if (file_exists($path = Api\Link::vfs_path('addressbook', $contact['id'], $file)) &&
-			($content = file_get_contents($path)) &&
-			preg_match($key_regexp, $content, $matches) ||
-			preg_match($key_regexp, $contact['pubkey'], $matches))
+		// first check for file and second for pubkey field (LDAP, AD or old SQL)
+		$content = null;
+		if (file_exists($path = Api\Link::vfs_path('addressbook', $contact['id'], $file)))
 		{
-			return $matches[0];
+			$content = file_get_contents($path) ?: null;
 		}
-		return null;
+		if (!$content && !empty($contact['pubkey']))
+		{
+			$content = $contact['pubkey'];
+		}
+		if (!$content) return null;
+
+		return self::extract_key_for_address($content, $address, $key_regexp);
+	}
+
+	/**
+	 * Pick the right key out of a contact's stored key content for a given address.
+	 *
+	 * @param string $content raw file/pubkey-field content - either the new per-address JSON
+	 *  shape (merge_keys_json()'s own output) or a legacy pre-fix bare armored key/cert
+	 * @param ?string $address lowercased address to look up, or null
+	 * @param string $key_regexp only used for the legacy (non-JSON) fallback extraction
+	 * @return string|null
+	 */
+	private static function extract_key_for_address(string $content, ?string $address, string $key_regexp) : ?string
+	{
+		$decoded = json_decode($content, true);
+		if (is_array($decoded) && json_last_error() === JSON_ERROR_NONE)
+		{
+			if ($address !== null && isset($decoded[$address]['key']))
+			{
+				return $decoded[$address]['key'];
+			}
+			return $decoded['*']['key'] ?? null;
+		}
+		// legacy bare-armored-text format - applies to any address, same as before this fix
+		$matches = null;
+		return preg_match($key_regexp, $content, $matches) ? $matches[0] : null;
 	}
 
 	/**

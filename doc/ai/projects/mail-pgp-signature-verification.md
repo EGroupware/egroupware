@@ -17,8 +17,10 @@ see its own entry), the other three (and item 4's PGP-signed half) still not sta
 integration (Phase 5) planned in full 2026-09-09** (own section further down) - consent dialog +
 preference, `Autocrypt`/`Autocrypt-Gossip` send+receive, `prefer-encrypt` storage, the
 multi-key-per-address storage fix, mutual-auto-encrypt preference, S/MIME auto-add-when-verified,
-and an explicit Level 1 spec gap/deviation audit. Phase 5 step 1 (keydata minimize/re-armor) is now
-DONE (2026-09-09, see its own phasing entry) - the rest of Phase 5 is still plan only.
+and an explicit Level 1 spec gap/deviation audit. Phase 5 steps 1 (keydata minimize/re-armor) and 2
+(multi-key-per-address addressbook storage) are now DONE (2026-09-09, see their own phasing
+entries) - steps 3-6 (sending/receiving Autocrypt headers, the consent dialog, prefer-encrypt
+storage, mutual auto-encrypt, S/MIME auto-add) are still plan only.
 
 ### 2026-09-09 core-engine bugfix: base64-encoded signature parts
 
@@ -605,8 +607,27 @@ keeps today's click-to-add dialog unchanged). Also needs the same multi-key-per-
    ever have the public half of) and reassembles just those 5 packets; returns `null` for a
    signing-only key (no valid `getEncryptionKey()`), which the spec's own 5-packet shape doesn't fit
    anyway.
-2. Multi-key-per-address storage fix (item 1) - unblocks everything else, including the existing
-   S/MIME single-cert limitation, independently useful even without any Autocrypt work landing yet.
+2. **DONE (2026-09-09).** Multi-key-per-address storage fix (item 1) - `addressbook_bo::set_keys()`/
+   `get_keys()`/`get_key()` (`addressbook/inc/class.addressbook_bo.inc.php`, shared by PGP and
+   S/MIME via the `$pgp` flag) now store a JSON object keyed by lowercased address instead of one
+   bare key per contact record, via two new pure-function helpers (`merge_keys_json()`,
+   `extract_key_for_address()`) - a `"*"` entry is the legacy-file/account-id-lookup fallback, so
+   nothing already stored breaks and an address never explicitly re-stored keeps resolving to it.
+   Also fixed two smaller bugs found while building this: `set_keys()`'s own search/key-selection
+   never checked `contact_email_home` at all (a key explicitly stored for someone's home-only
+   address silently found no contact to attach it to), and a brand-new contact with no `.files/`
+   VFS directory yet couldn't have its very first key written at all (`file_put_contents()` can't
+   create the missing parent directory itself). Unit-tested via reflection on the two pure
+   functions (`addressbook/tests/AddressbookBoMultiKeyStorageTest.php`, 8 tests) rather than a full
+   integration test through `search()`/`save()`/ACL/VFS - found live while building this that the
+   shared docker PHPUnit environment's own account search hangs indefinitely even for the
+   ORIGINAL, unmodified `set_keys()` (confirmed by testing the pre-fix code directly) - a
+   pre-existing environment limitation, not something this fix caused or needs to chase down.
+   **Known follow-up, not fixed here**: the addressbook contact-edit UI's own PGP/S-MIME
+   `vfs-upload` widget (`addressbook_ui::pubkey_uploaded()`) still uploads a single file with no
+   per-address distinction at all - it degrades gracefully (the uploaded content becomes the `"*"`
+   fallback, same as a legacy file), but doesn't yet let a user pick "this key is for my home
+   address" through that specific UI path.
 3. Sending `Autocrypt:` (own key) - the simplest, most self-contained piece, no consent-dialog UI
    needed (never touches another contact's stored data).
 4. Consent dialog + preference (item 5), then receiving/gossip-parsing (items 3's gossip half, 4) -
