@@ -2291,6 +2291,10 @@ export class MailCompose
 			to: this.et2.getWidgetById('to')?.get_value(),
 			cc: this.et2.getWidgetById('cc')?.get_value(),
 			bcc: this.et2.getWidgetById('bcc')?.get_value(),
+			// found live 2026-09-09 (ralf, relaying a tester report: "the selected ReplyTo is NOT
+			// send with the mail") missing entirely - see JmapNewEmail.replyTo's own docblock
+			// (mail/js/jmap.ts) for why/how this silently regressed.
+			replyTo: this.et2.getWidgetById('replyto')?.get_value(),
 			subject: this.et2.getWidgetById('subject')?.get_value(),
 			body,
 			isHtml,
@@ -2299,6 +2303,9 @@ export class MailCompose
 			// undefined for a plain new-message compose
 			inReplyTo: this.replyThreadingHeaders?.inReplyTo ?? undefined,
 			references: this.replyThreadingHeaders?.references ?? undefined,
+			// found missing alongside replyTo above (2026-09-09) - see JmapNewEmail's own docblock
+			priority: this.et2.getWidgetById('priority')?.get_value(),
+			requestReadReceipt: this.et2.getWidgetById('disposition')?.get_value() === 'on',
 		};
 	}
 

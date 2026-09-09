@@ -301,6 +301,104 @@ class ImapBuildMailerTest extends Api\LoggedInTest
 		$this->assertDoesNotMatchRegularExpression('/^Bcc:/mi', $raw);
 	}
 
+	/**
+	 * Regression test for the bug found live 2026-09-09 (ralf, relaying a tester report: "the
+	 * selected ReplyTo is NOT send with the mail") - buildMailerFromEmailProperties() never read
+	 * a 'replyTo' property at all, so every JMAP-native send silently dropped a user-selected
+	 * Reply-To on the shim (MailJmap.draftEmailProperties() itself had the exact same gap,
+	 * fixed alongside this - see JmapNewEmail.replyTo's own docblock, mail/js/jmap.ts).
+	 */
+	public function testReplyToAddressIsAddedToTheMailer()
+	{
+		$email = [
+			'from' => [['email' => 'sender@example.org']],
+			'to' => [['email' => 'recipient@example.org']],
+			'replyTo' => [['email' => 'reply-here@example.org', 'name' => 'Reply Here']],
+			'subject' => 'Reply-To test',
+			'bodyValues' => ['body' => ['value' => 'x']],
+		];
+		$raw = $this->invokeBuildMailer($email)->getRaw(false);
+
+		$this->assertMatchesRegularExpression('/^Reply-To:.*reply-here@example\.org/mi', $raw);
+	}
+
+	public function testReplyToHeaderIsOmittedWhenNotProvided()
+	{
+		$email = [
+			'from' => [['email' => 'sender@example.org']],
+			'to' => [['email' => 'recipient@example.org']],
+			'subject' => 'No reply-to',
+			'bodyValues' => ['body' => ['value' => 'x']],
+		];
+		$raw = $this->invokeBuildMailer($email)->getRaw(false);
+
+		$this->assertDoesNotMatchRegularExpression('/^Reply-To:/mi', $raw);
+	}
+
+	/**
+	 * MailCompose's 'priority' toolbar widget (X-Priority) - found missing here alongside
+	 * replyTo above (2026-09-09), via RFC 8621 §4.1.3's header:HeaderName (raw form) property.
+	 */
+	public function testXPriorityHeaderIsSetFromRawHeaderProperty()
+	{
+		$email = [
+			'from' => [['email' => 'sender@example.org']],
+			'to' => [['email' => 'recipient@example.org']],
+			'subject' => 'Priority test',
+			'header:X-Priority' => '1',
+			'bodyValues' => ['body' => ['value' => 'x']],
+		];
+		$raw = $this->invokeBuildMailer($email)->getRaw(false);
+
+		$this->assertMatchesRegularExpression('/^X-Priority: 1/mi', $raw);
+	}
+
+	public function testXPriorityHeaderIsOmittedWhenNotProvided()
+	{
+		$email = [
+			'from' => [['email' => 'sender@example.org']],
+			'to' => [['email' => 'recipient@example.org']],
+			'subject' => 'No priority',
+			'bodyValues' => ['body' => ['value' => 'x']],
+		];
+		$raw = $this->invokeBuildMailer($email)->getRaw(false);
+
+		$this->assertDoesNotMatchRegularExpression('/^X-Priority:/mi', $raw);
+	}
+
+	/**
+	 * MailCompose's 'disposition' toolbar checkbox ("request a read receipt") - classic
+	 * createMessage() sets this to the SENDING identity's own address, never a separate widget
+	 * value; the JMAP-native client passes that already-resolved address through as the raw
+	 * header:Disposition-Notification-To property value.
+	 */
+	public function testDispositionNotificationToHeaderIsSetWhenRequested()
+	{
+		$email = [
+			'from' => [['email' => 'sender@example.org']],
+			'to' => [['email' => 'recipient@example.org']],
+			'subject' => 'Read receipt requested',
+			'header:Disposition-Notification-To' => 'sender@example.org',
+			'bodyValues' => ['body' => ['value' => 'x']],
+		];
+		$raw = $this->invokeBuildMailer($email)->getRaw(false);
+
+		$this->assertMatchesRegularExpression('/^Disposition-Notification-To: sender@example\.org/mi', $raw);
+	}
+
+	public function testDispositionNotificationToHeaderIsOmittedWhenNotRequested()
+	{
+		$email = [
+			'from' => [['email' => 'sender@example.org']],
+			'to' => [['email' => 'recipient@example.org']],
+			'subject' => 'No read receipt',
+			'bodyValues' => ['body' => ['value' => 'x']],
+		];
+		$raw = $this->invokeBuildMailer($email)->getRaw(false);
+
+		$this->assertDoesNotMatchRegularExpression('/^Disposition-Notification-To:/mi', $raw);
+	}
+
 	/** inReplyTo/references must be wrapped in angle brackets, matching RFC 5322. */
 	public function testThreadingHeadersAreAngleBracketWrapped()
 	{

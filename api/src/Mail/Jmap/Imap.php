@@ -2159,9 +2159,10 @@ class Imap extends Jmap\Base
 	}
 
 	/**
-	 * Build an Api\Mailer instance from RFC 8621 Email properties (to/cc/bcc/subject/inReplyTo/
-	 * references/bodyValues + either the htmlBody/textBody convenience shortcut or a full
-	 * bodyStructure) - doc/ai/projects/mail-compose-jmap-migration.md's Step 2, the shim's own
+	 * Build an Api\Mailer instance from RFC 8621 Email properties (to/cc/bcc/replyTo/subject/
+	 * inReplyTo/references/header:X-Priority/header:Disposition-Notification-To/bodyValues +
+	 * either the htmlBody/textBody convenience shortcut or a full bodyStructure) -
+	 * doc/ai/projects/mail-compose-jmap-migration.md's Step 2, the shim's own
 	 * equivalent of classic mail_compose::createMessage(). Used by both emailSet()'s new 'create'
 	 * handling (building a Draft/Email to store) and emailSubmissionSet() (re-fetching an existing
 	 * Draft's own properties via emailGet() and resending them). Doesn't call send()/getRaw()
@@ -2196,9 +2197,14 @@ class Imap extends Jmap\Base
 			$mailer->setFrom($email['from'][0]['email'], $email['from'][0]['name'] ?? $email['from'][0]['email']);
 		}
 
-		foreach (['to', 'cc', 'bcc'] as $type)
+		// 'replyTo' (2026-09-09: found missing here entirely, alongside header:X-Priority/
+		// header:Disposition-Notification-To below - ralf, relaying a tester report: "the
+		// selected ReplyTo is NOT send with the mail") - same addAddress(..., 'replyto') call as
+		// to/cc/bcc, just keyed by the RFC 8621 property's own camelCase name rather than a
+		// lowercase Mailer type string.
+		foreach (['to' => 'to', 'cc' => 'cc', 'bcc' => 'bcc', 'replyTo' => 'replyto'] as $prop => $type)
 		{
-			foreach ((array)($email[$type] ?? []) as $address)
+			foreach ((array)($email[$prop] ?? []) as $address)
 			{
 				if (!empty($address['email']))
 				{
@@ -2215,6 +2221,18 @@ class Imap extends Jmap\Base
 				$mailer->addHeader($header, implode(' ', array_map(
 					fn($id) => '<'.trim((string)$id, '<>').'>', (array)$email[$prop])));
 			}
+		}
+		// RFC 8621 §4.1.3 header:HeaderName (raw form) - MailJmap.draftEmailProperties()'s own
+		// equivalent of classic ComposeMessageBuilder::createMessage()'s unconditional
+		// addHeader('X-Priority', ...) and checkbox-gated addHeader('Disposition-Notification-To',
+		// $_identity['ident_email']) - found missing here alongside replyTo above.
+		if (isset($email['header:X-Priority']) && $email['header:X-Priority'] !== '')
+		{
+			$mailer->addHeader('X-Priority', (string)$email['header:X-Priority']);
+		}
+		if (!empty($email['header:Disposition-Notification-To']))
+		{
+			$mailer->addHeader('Disposition-Notification-To', (string)$email['header:Disposition-Notification-To']);
 		}
 
 		// S/MIME encrypt-only/sign+encrypt body swap (createDraftEmail()'s bodyOverride, see

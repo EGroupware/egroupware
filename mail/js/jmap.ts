@@ -80,6 +80,15 @@ export interface JmapNewEmail
 	to? : string | string[];	// comma-separated string, or an array of addresses (eg. Et2Email's .value)
 	cc? : string | string[];
 	bcc? : string | string[];
+	/**
+	 * MailCompose's own 'replyto' toolbar widget (mail/templates/default/compose.xet) - found live
+	 * 2026-09-09 (ralf, relaying a tester report: "the selected ReplyTo is NOT send with the
+	 * mail") missing here entirely: classic ComposeMessageBuilder::createMessage() always read
+	 * $_formData['replyto'] into the outgoing Mailer (same addAddress(..., 'replyto') call as to/
+	 * cc/bcc), but nothing in the JMAP-native send path ever carried it at all - every JMAP-native
+	 * send silently dropped a user-selected Reply-To, on both backends.
+	 */
+	replyTo? : string | string[];
 	subject? : string;
 	body? : string;
 	isHtml? : boolean;
@@ -94,6 +103,19 @@ export interface JmapNewEmail
 	 */
 	inReplyTo? : string[];
 	references? : string[];
+	/**
+	 * MailCompose's own 'priority' toolbar widget - X-Priority header value ("1"/"3"/"5" = high/
+	 * normal/low, mail/src/Compose.php's own $priorities map). Found missing here alongside
+	 * replyTo above (2026-09-09) - classic createMessage() always sent this unconditionally.
+	 */
+	priority? : string;
+	/**
+	 * MailCompose's own 'disposition' toolbar checkbox ("request a read receipt") - classic
+	 * createMessage() sets Disposition-Notification-To to the SENDING identity's own address
+	 * (never a separate widget value) only when checked. Found missing here alongside replyTo/
+	 * priority above (2026-09-09).
+	 */
+	requestReadReceipt? : boolean;
 }
 
 /**
@@ -5267,6 +5289,7 @@ export class MailJmap
 		const to = this.addressesToJmap(email.to);
 		const cc = this.addressesToJmap(email.cc);
 		const bcc = this.addressesToJmap(email.bcc);
+		const replyTo = this.addressesToJmap(email.replyTo);
 
 		const bodyValues : Record<string, {value : string, charset : string}> = {
 			body: {value: email.body ?? '', charset: 'utf-8'},
@@ -5321,9 +5344,16 @@ export class MailJmap
 			// (found live 2026-08-31, once sending moved client-side).
 			...(cc?.length ? {cc} : {}),
 			...(bcc?.length ? {bcc} : {}),
+			...(replyTo?.length ? {replyTo} : {}),
 			subject: email.subject ?? '',
 			...(email.inReplyTo?.length ? {inReplyTo: email.inReplyTo} : {}),
 			...(email.references?.length ? {references: email.references} : {}),
+			// RFC 8621 §4.1.3 header:HeaderName (raw form) - classic createMessage()'s own
+			// unconditional addHeader('X-Priority', ...) and conditional (checkbox-gated)
+			// addHeader('Disposition-Notification-To', $_identity['ident_email']) equivalents -
+			// found missing here alongside replyTo above, see JmapNewEmail's own docblock.
+			...(email.priority ? {'header:X-Priority': String(email.priority)} : {}),
+			...(email.requestReadReceipt ? {'header:Disposition-Notification-To': identity.email} : {}),
 			bodyValues,
 			// attachments/htmlBody/textBody are RFC 8621 §4.1.4 convenience VIEWS the server
 			// derives from bodyStructure on read - not independently settable on create, so the
