@@ -27,34 +27,6 @@ window.app = {classes: {}};
 {
 	"use strict";
 
-	// Guard against a fatal crash when a mid-session rebuild loads a new-hash chunk that
-	// re-registers an already-defined custom element: the browser has no "redefine" API for
-	// an existing tag name anyway, so without this guard the second define() throws a fatal,
-	// uncatchable-at-module-scope DOMException instead of silently keeping the first version.
-	if (!window.customElements.__egwGuarded)
-	{
-		const _define = window.customElements.define.bind(window.customElements);
-		window.customElements.define = function(name, ctor, options)
-		{
-			if (window.customElements.get(name))
-			{
-				console.debug('egw: keeping already-registered', name, '(an older build already defined it earlier this session; skipping the just-fetched redefinition)');
-				// Reaching here means two builds' copies of the same class are live in this
-				// document: egw_import() de-dupes entry files by url, but a chunk arrives as a
-				// static import of one and is named by its content hash, so a rebuild between
-				// opening app A and app B gives B a chunk that redefines A's tags. Constructing
-				// one of the just-skipped classes then throws "Illegal constructor" - caught in
-				// egw_json.ts, but the user's first sign of it would otherwise be that error.
-				// Notify here instead, so "reload when convenient" has already been offered.
-				// Idempotent and main-window-only - notifyUpdateAvailable() handles both.
-				window.egw_import?.notifyUpdateAvailable?.();
-				return;
-			}
-			return _define(name, ctor, options);
-		};
-		window.customElements.__egwGuarded = true;
-	}
-
 	var debug = false;
 	var egw_script = document.getElementById('egw_script_id');
 	var start_time = (new Date).getTime();
