@@ -202,6 +202,19 @@ similar scope.
 ## Security and data handling
 
 - Do not commit secrets, tokens, credentials, private keys, or production data.
+- Do not put a real person's personal data - email addresses, names, message subjects/content, IP
+  addresses, or similar - into test fixtures, code comments, commit messages, or docs, even when
+  describing a real bug found against a real message/account (own accounts under your control, e.g.
+  ralf@/rb@egroupware.org, are fine to reference). There is no consent to publish a third party's
+  data this way, and unlike a private bug tracker this repo's history is public. If a real example
+  is genuinely useful for understanding the bug, replace it with an anonymized/synthetic
+  equivalent that demonstrates the same shape (a fake name/address like `sender@example.invalid`, a
+  generated key/message fixture, a made-up subject line) - describe the fact pattern ("a sender
+  using Content-Transfer-Encoding: base64 on the signature part"), not the identity behind it. This
+  applies retroactively too: if you notice already-committed text like this (yours or someone
+  else's), redact it in a new commit rather than leaving it - and flag to the user immediately if
+  it turns out to already be pushed to a public remote, since a new commit alone doesn't remove it
+  from history.
 - Do not weaken authentication, authorization, validation, escaping, or CSRF protections.
 - Treat user input as unsafe.
 - Preserve existing permission checks.
