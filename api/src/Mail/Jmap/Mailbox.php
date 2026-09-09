@@ -44,7 +44,12 @@ class Mailbox extends Type
 				$query['#parentId'] = [
 					'name' => 'Mailbox/query',
 					'path' => '/ids',
-					'resultOf' => (string)$key,
+					// the PRECEDING segment's own call id (RFC 8620 §3.7: resultOf must reference
+					// an earlier method call) - not $key itself, which is this segment's own
+					// about-to-be-assigned id (found 2026-09-09 while adding test coverage: every
+					// multi-segment lookup was self-referencing, never actually resolving via a
+					// real JMAP server)
+					'resultOf' => (string)($key - 1),
 				];
 			}
 			$methodCalls[] = ['Mailbox/query', $query, (string)$key++];

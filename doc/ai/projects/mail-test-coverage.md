@@ -1,6 +1,6 @@
 # Mail: test-coverage audit and gap-closing plan
 
-## Status: audit complete (2026-09-09); priority 1 (bulk move/copy/delete) client-side + deferred-work queue done; priority 2 (JMAP/shim path) - jmap.ts's mailbox CRUD, label/flag setters, thread-keyword aggregation, filter/sort, saveDraft, WS push-payload, and attachment upload/resolve done, plus the shim's own filterToQuery()/buildSort() IMAP-search translation (see Progress log)
+## Status: audit complete (2026-09-09); priority 1 (bulk move/copy/delete) client-side + deferred-work queue done; priority 2 (JMAP/shim path) - jmap.ts's mailbox CRUD, label/flag setters, thread-keyword aggregation, filter/sort, saveDraft, WS push-payload, and attachment upload/resolve done, plus the shim's own filterToQuery()/buildSort() IMAP-search translation and the real-JMAP-facing Mailbox.php folder resolution (with a real bug found+fixed there, see Progress log)
 
 Full-codebase scan of `mail/js/*.ts`, `mail/src/*.php`, `mail/inc/*.php`, `api/src/Mail.php` and
 `api/src/Mail/*.php` (including the `Jmap/` shim + real-JMAP layer), cross-referenced against every
@@ -216,12 +216,31 @@ optimistic-clear, no hard guard yet).
   connection" blocker as `emailSet()`'s own IMAP-execution branches in priority 1; also has a
   multipart/signed body-preservation branch that's PGP/S-MIME-adjacent, left alone while a
   concurrent session is active there).
-- The real-JMAP/Stalwart-facing layer has essentially **zero** tests: `Api\Mail\Jmap\Email.php`
-  (`getChanges()` push/sync change-tracking is genuinely complex and unverified),
-  `EmailSubmission.php` (`set()`'s RFC 8621 §7.4 `onSuccessUpdateEmail`/`onSuccessDestroyEmail`
-  handling), `Identity.php` (`synthesize()`'s signature-merge/HTML-to-text fallback logic),
-  `Mailbox.php` (`getMailboxId()`'s chained per-segment query construction,
-  `folderId2path()`'s cached 4-level lookup loop).
+- **Done (2026-09-09)**: `Api\Mail\Jmap\Mailbox.php`'s folder-path <-> Mailbox-id resolution -
+  `getMailboxId()`/`folderId2path()` - 10 tests, `api/tests/Mail/Jmap/MailboxFolderResolutionTest.php`.
+  Both only ever call `$this->jmap->jmapCall()`, so a minimal fake session (a `Base` anonymous
+  subclass implementing `jmapCall()`) was enough to test the request-shape/response-parsing logic
+  without a real HTTP/IMAP connection. **Found and fixed a real bug** while writing this:
+  `getMailboxId()`'s per-segment `#parentId` back-reference was `resultOf => (string)$key` - the
+  CURRENT segment's own about-to-be-assigned call id, not the PRECEDING segment's id - a
+  self-reference RFC 8620 §3.7 forbids (`resultOf` must name an *earlier* method call). This meant
+  any multi-segment folder path lookup against a real JMAP server (Stalwart, acc_id=1) would never
+  actually resolve its `#parentId` reference correctly - affecting `Email.php`'s create/move/import
+  paths, `Mail.php`'s send path, and `ImportHandler.php`, all of which call `getMailboxId()` for
+  real-JMAP accounts. Fixed to `resultOf => (string)($key - 1)`; a 3-segment regression test (not
+  just 2) added specifically because a naive "always reference call 0" fix would also have passed
+  a 2-segment-only test. Also documents (not fixed, pre-existing and cosmetic) that
+  `folderId2path()`'s "normalize to uppercase INBOX" rule only fires for the first name appended
+  overall (the leaf being queried), not for an INBOX ancestor reached while walking up a deeper
+  path - and that its function-static per-folderId cache is shared process-wide, across every
+  `Mailbox` instance, not per-instance.
+- The real-JMAP/Stalwart-facing layer otherwise still has **essentially zero** tests:
+  `Api\Mail\Jmap\Email.php` (`getChanges()` push/sync change-tracking is genuinely complex and
+  unverified), `EmailSubmission.php` (`set()`'s RFC 8621 §7.4 `onSuccessUpdateEmail`/
+  `onSuccessDestroyEmail` handling), `Identity.php` (`synthesize()`'s signature-merge/HTML-to-text
+  fallback logic - needs `Mail\Account::identities()`/`Accounts::id2name()`, both DB-backed, and
+  the latter is unreliable in PHPUnit CLI per this doc's own project memory, so lower priority
+  until that's worked around).
 
 ### 3. Send/SMTP side
 
@@ -349,3 +368,9 @@ Kept for completeness, but explicitly deprioritized until the above is in better
   EXECUTION, `resolveSmime()`/`resolveTnef()`'s IMAP-fetch half, `emailSubmissionSet()`, and the
   entire real-JMAP-facing layer (`Api\Mail\Jmap\Email.php`, `EmailSubmission.php`, `Identity.php`,
   `Mailbox.php`).
+- 2026-09-09: `Mailbox.php`'s `getMailboxId()`/`folderId2path()` (10 tests,
+  `MailboxFolderResolutionTest.php`) done. Found+fixed a real bug in the process:
+  `getMailboxId()`'s chained `#parentId` back-reference self-referenced its own call id instead of
+  the preceding segment's, breaking real-JMAP (Stalwart) nested-folder lookups - see the
+  priority-2 entry above for the full explanation. Remaining real-JMAP-facing layer work:
+  `Email.php`, `EmailSubmission.php`, `Identity.php`'s `synthesize()`.
