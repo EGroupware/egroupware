@@ -225,8 +225,15 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 			// Hide if no valid image
 			return html``;
 		}
-		// set title on et2-image for both bootstrap-image via css-class and embedded img tag
-		this.title = this.statustext || this.label || "";
+		// set title on et2-image for both bootstrap-image via css-class and embedded img tag -
+		// but NOT from statustext: Et2Widget's own updated() already binds statustext to the
+		// framework's own (nicer-styled) hover tooltip (egw().tooltipBind(), egw_tooltip.ts) for
+		// every widget including this one, so duplicating it into the native title attribute just
+		// stacked a second, plain OS tooltip on top of it (found live 2026-09-09, ralf: "the s/mime
+		// [icon] has a tooltip and a title attribute, which is wired, we should only show the
+		// (nicer styled) tooltip"). label has no such binding, so it keeps using title as its only
+		// tooltip mechanism.
+		this.title = this.statustext ? "" : (this.label || "");
 
 		const bootstrap = url.match(/\/node_modules\/bootstrap-icons\/icons\/([^.]+)\.svg/);
 		if (bootstrap)
