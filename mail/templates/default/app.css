@@ -891,6 +891,9 @@ et2-image.smime_cert_unknownemail svg {
 .mailPreviewHeaders.smimeIcons et2-image {
   width: 24px;
 }
+.mailPreviewHeaders.smimeIcons et2-image[class*="bi-"] {
+  font-size: 24px;
+}
 .mailPreviewHeaders.smimeIcons {
   display: flex;
   justify-content: end;

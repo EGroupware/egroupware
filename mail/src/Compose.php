@@ -181,7 +181,7 @@ class Compose
 			),
 			'pgp' => array(
 				'caption' => 'Encrypt',
-				'icon' => 'lock',
+				'icon' => 'file-lock2',
 				'group' => ++$group,
 				'onExecute' => 'javaScript:app.mail.togglePgpEncrypt',
 				'hint' => 'Send message PGP encrypted: requires keys from all recipients!',

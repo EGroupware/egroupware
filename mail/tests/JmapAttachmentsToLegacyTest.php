@@ -115,4 +115,59 @@ class JmapAttachmentsToLegacyTest extends \PHPUnit\Framework\TestCase
 		$this->assertCount(1, $legacy);
 		$this->assertSame('invoice.pdf', $legacy[0]['name']);
 	}
+
+	/**
+	 * PGP/MIME multipart/encrypted's RFC 3156 §4 control part ("Version: 1") plus its very next
+	 * sibling (the ciphertext) are both a structural marker, never a real user attachment -
+	 * Mailvelope decrypts the ciphertext client-side (see mailvelopeDisplay(), mail/js/app.ts).
+	 */
+	public function testPgpEncryptedControlPartAndCiphertextAreHidden()
+	{
+		$legacy = $this->call([
+			['partId' => '1', 'blobId' => 'blob1', 'size' => 10, 'name' => null,
+				'type' => 'application/pgp-encrypted', 'cid' => null, 'disposition' => null],
+			['partId' => '2', 'blobId' => 'blob2', 'size' => 999, 'name' => 'encrypted.asc',
+				'type' => 'application/octet-stream', 'cid' => null, 'disposition' => 'attachment'],
+		], false);
+
+		$this->assertSame([], $legacy);
+	}
+
+	/**
+	 * PGP/MIME multipart/signed's RFC 1847 detached signature is never a real user attachment
+	 * either (MailJmap.verifyPgpSignature(), mail/js/jmap.ts, already verifies it client-side) -
+	 * a plain Thunderbird self-signed message's shape
+	 * (`multipart/signed[multipart/mixed[text/plain], pgp-signature]`): the flat "attachments"
+	 * list has just the one entry, the signature, which must be filtered out entirely.
+	 */
+	public function testPgpSignaturePartIsHidden()
+	{
+		$legacy = $this->call([
+			['partId' => '2', 'blobId' => 'blob2', 'size' => 833, 'name' => 'OpenPGP_signature.asc',
+				'type' => 'application/pgp-signature', 'cid' => null, 'disposition' => 'attachment'],
+		], false);
+
+		$this->assertSame([], $legacy);
+	}
+
+	/**
+	 * Second real fixture shape (2026-09-09, signed-by-someone-else message that also carries the
+	 * sender's own public key inline):
+	 * `multipart/signed[multipart/mixed[...[pgp-keys]], pgp-signature]` - the flat "attachments"
+	 * list has both the inline key and the trailing signature, in that order. Only the signature
+	 * is hidden; the inline `application/pgp-keys` part is kept as a normal attachment (a later
+	 * feature will let it be imported into the addressbook, which needs it still reachable).
+	 */
+	public function testPgpSignatureHiddenButInlineKeyKeptWhenBothPresent()
+	{
+		$legacy = $this->call([
+			['partId' => '3', 'blobId' => 'blob3', 'size' => 3000, 'name' => 'OpenPGP_0x74910C57F72ABA4B.asc',
+				'type' => 'application/pgp-keys', 'cid' => null, 'disposition' => 'attachment'],
+			['partId' => '4', 'blobId' => 'blob4', 'size' => 833, 'name' => 'OpenPGP_signature.asc',
+				'type' => 'application/pgp-signature', 'cid' => null, 'disposition' => 'attachment'],
+		], false);
+
+		$this->assertCount(1, $legacy);
+		$this->assertSame('OpenPGP_0x74910C57F72ABA4B.asc', $legacy[0]['name']);
+	}
 }

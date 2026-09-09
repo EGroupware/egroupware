@@ -537,6 +537,27 @@ class AttachmentJmap
 				$skip = 1;
 				return false;
 			}
+			// RFC 1847 detached signature of a PGP/MIME `multipart/signed` message (MailJmap.
+			// verifyPgpSignature(), mail/js/jmap.ts, already verifies this client-side) - never a
+			// real user attachment, just noise here, same reasoning as pgp-encrypted's control
+			// part above. Unlike that one, this is always a single, self-contained flat-list entry
+			// (RFC 8621's own `attachments` convenience property already flattens the tree), not a
+			// marker+next-sibling pair, and shows up the same way regardless of how deeply the
+			// *signed content itself* is nested - confirmed against two real, differently-shaped
+			// fixtures (2026-09-09): a plain Thunderbird self-signed mail
+			// (`multipart/signed[multipart/mixed[text/plain], pgp-signature]` - one attachments
+			// entry, the signature) and a signed-by-someone-else mail that also carries the
+			// sender's own public key inline
+			// (`multipart/signed[multipart/mixed[multipart/mixed[multipart/alternative[...],
+			// pgp-keys]], pgp-signature]` - two attachments entries, pgp-keys then pgp-signature).
+			// Only the signature itself is filtered here; the inline `application/pgp-keys` part is
+			// left as a normal attachment (see doc/ai/projects/mail-pgp-signature-verification.md's
+			// "Planned follow-up" - a later feature will let it be imported into the addressbook,
+			// which needs it still reachable, not hidden).
+			if (($attachment['type'] ?? '') === 'application/pgp-signature')
+			{
+				return false;
+			}
 			return true;
 		}));
 

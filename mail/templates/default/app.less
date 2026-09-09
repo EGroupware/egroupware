@@ -1039,6 +1039,16 @@ et2-image.smime_cert_unknownemail, et2-image.smime_cert_unknownemail svg {
 .mailPreviewHeaders.smimeIcons et2-image {
 	width: 24px;
 }
+// smime_signature/smime_encryption are inlined SVGs (Et2Image scales them to fill the element's
+// own width/height); pgp_signature is a bootstrap-icons webfont glyph instead (Et2Image's
+// "resolves to /node_modules/bootstrap-icons/..." branch adds a bi-<name> class and renders no
+// content of its own - the icon comes entirely from that class's ::before, sized by font-size,
+// NOT by width/height) - without this it rendered at the page's ambient 14px instead of matching
+// the other icons' 24px box, looking visibly smaller/differently-weighted (found live 2026-09-09,
+// ralf: "see the different size of s/mime and PGP icons, they should have the same size").
+.mailPreviewHeaders.smimeIcons et2-image[class*="bi-"] {
+	font-size: 24px;
+}
 .mailPreviewHeaders.smimeIcons {
 	display: flex;
 	justify-content: end;

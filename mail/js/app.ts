@@ -8638,7 +8638,17 @@ export class MailApp extends EgwApp
 		const mail_container = egwIsMobile() ? document.getElementsByClassName('mailContent')[0] :
 				egw(window).is_popup() ? document.getElementsByClassName('mailDisplayContainer')[0] :
 				et2_object.getWidgetById('mailPreviewContainer').getDOMNode();
-		pgp_signature.set_disabled(!_data.signed);
+		// et2-image has no "hide until proven signed" server-side binding to fall back on (unlike
+		// smime_signature/smime_encryption's own `hidden="!@smime=..."` in the .xet, evaluated
+		// against content that's always known server-side) - PGP detection is 100% client-side and
+		// async, so this element is `hidden="true"` in both index.xet/display.xet by default and
+		// ONLY this call ever un-hides it. `disabled` is deliberately NOT used for that: per
+		// Et2Widget's own docblock, disabled means "still visible, greyed out, non-interactive" -
+		// it does not hide anything, so an earlier version of this code (using set_disabled() the
+		// same way setSmimeFlags() does) left the icon visibly showing on every message, including
+		// genuinely S/MIME-only ones (found live 2026-09-09, ralf: "an s/mime signed message shows
+		// now both icons, which is wrong!").
+		pgp_signature.hidden = !_data.signed;
 		if (!_data.signed || !mail_container)
 		{
 			if (mail_container) this.pgpClearFlags([mail_container]);
