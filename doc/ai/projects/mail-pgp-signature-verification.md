@@ -674,6 +674,38 @@ address entry).
   property or a different JMAP mechanism entirely - needs verifying against both Stalwart's real
   JMAP and the local shim's own header-writing support before assuming either works.
 
+### 3b. Live-testing bugfix round (2026-09-09, ralf's own live send testing) - both now fixed
+
+- **Unrelated blocker first**: sending via the shim (`acc_id=42`, SMTP) initially failed outright
+  with a red "Unable to connect to mail server" toast, traced to a PHP fatal at class-load time -
+  `Api\Mail\Jmap\Identity::get()`/`Api\Mail\Jmap\Quota::get()`'s signatures had gone incompatible
+  with the widened `Api\Jmap\Type::get()` parent signature from an unrelated concurrent commit
+  (`6fd81c8879`, "mail: implement JMAP-lite REST endpoints for folders/emails (Phase 1)"). Since
+  `Api\Mail\Jmap\Identity` is used unconditionally for identity resolution on both backends, this
+  broke sending (and anything else touching identities) everywhere, not just the shim. Fixed by
+  adding the matching `bool $fetchAllBodyValues=false` parameter to both overrides; not otherwise
+  related to Autocrypt or this project. Committed separately (`d59822cd91`), pushed.
+- **The real Autocrypt bug**: item 3's "Autocrypt: - DONE" entry above was only fully verified
+  against a real Stalwart account (`isLocal:false`) at the time it was written - Stalwart's own
+  native JMAP-over-HTTP genuinely supports any `header:X:form` property generically (RFC 8621
+  §4.1.3), no server-side code needed, so the CREATE-time write path alone was sufficient there.
+  The **shim** (`Api\Mail\Jmap\Imap`, `isLocal:true`, e.g. `acc_id=42`) has no such generic
+  mechanism - `emailGet()` only ever returns a hardcoded per-header allowlist, one `$want...` flag
+  + explicit IMAP `$query->headers(...)` fetch + `emailFromFetch()` mapping per property (already
+  true for `replyTo`/`X-Priority`/`Disposition-Notification-To`/thread headers before this). Worse,
+  `emailSubmissionSet()`'s actual send path doesn't reuse the client's original CREATE properties
+  as-is: it stores a Draft, then **re-fetches that Draft via `emailGet()`** and rebuilds a fresh
+  `Api\Mailer` from the re-fetched result for the real SMTP transmission - so even though the
+  initial draft's raw MIME correctly contained `Autocrypt:` (confirmed live), the re-fetch dropped
+  it silently, since `emailGet()` had no Autocrypt handling at all. Fixed by adding the same
+  `$wantAutocrypt`/`AUTOCRYPT_HEADER_PROPERTY`/`emailFromFetch()` wiring already used for the
+  other send-time headers (`api/src/Mail/Jmap/Imap.php`); live-verified end-to-end via a real
+  UI-click-triggered send (debug-log trace showed the CREATE step producing `hasAutocrypt=YES` and
+  the RESEND step's re-fetch then also carrying `header:Autocrypt:all` through, matching). New
+  regression test: `mail/tests/JmapShimAutocryptHeaderTest.php`, mirroring
+  `JmapShimSendTimeHeadersRegressionTest.php`'s existing pattern for this exact bug class. Committed
+  `f059a17f35`.
+
 ### 4. Receiving: use a replied/forwarded message's own `Autocrypt`/`Autocrypt-Gossip` headers as a key source - DONE (2026-09-09) except `Autocrypt-Gossip:` itself
 
 New `MailJmap.parseAutocryptHeader(headerValue, fromAddress)`/`parseAutocryptHeaders(headerValues,
