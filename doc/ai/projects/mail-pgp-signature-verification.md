@@ -705,6 +705,21 @@ address entry).
   regression test: `mail/tests/JmapShimAutocryptHeaderTest.php`, mirroring
   `JmapShimSendTimeHeadersRegressionTest.php`'s existing pattern for this exact bug class. Committed
   `f059a17f35`.
+- **Third bug, found immediately after the above two were fixed and re-tested live**: sending with
+  a real key now got a red toast, "Server does not support binary message data." A real `keydata=`
+  is several KB of unbroken base64 (no whitespace at all) - `Horde_Mime_Headers::toArray()`'s own
+  line-folding is plain `wordwrap($val, 76, $eol.' ')` with no `$cut=true`, so it can't break a
+  "word" longer than the wrap width; the entire header ended up as one massive unbroken line, which
+  `Horde_Smtp_Filter_Body` then classifies as **binary** data (RFC 2045 §2.8: any line over 998
+  octets with no CR/LF) - and this SMTP server doesn't advertise BINARYMIME (RFC 3030), so sending
+  failed outright. Fixed by pre-folding the value ourselves (a plain space inserted every 76 chars)
+  before calling `addHeader()`, giving `wordwrap()` break points to fold on - safe, since keydata is
+  base64 (whitespace-insensitive) and every reader (`MailJmap.autocryptKeydataToArmoredKey()`
+  client-side, `parseAutocryptHeader()`) already strips whitespace before decoding regardless. New
+  regression test: `testLongAutocryptHeaderIsFoldedSoNoLineExceedsTheSmtpBinaryDataThreshold`
+  (`api/tests/Mail/Jmap/ImapBuildMailerTest.php`, which also gained 3 more general Autocrypt
+  coverage tests for `buildMailerFromEmailProperties()` itself - previously untested for this
+  header, unlike replyTo/X-Priority/thread headers already covered there). Committed `a577d73954`.
 
 ### 4. Receiving: use a replied/forwarded message's own `Autocrypt`/`Autocrypt-Gossip` headers as a key source - DONE (2026-09-09) except `Autocrypt-Gossip:` itself
 
