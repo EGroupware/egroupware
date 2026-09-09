@@ -1,6 +1,6 @@
 # Mail: test-coverage audit and gap-closing plan
 
-## Status: audit complete (2026-09-09); priority 1 (bulk move/copy/delete) client-side + deferred-work queue done; priority 2 (JMAP/shim path) - jmap.ts's mailbox CRUD, label/flag setters, thread-keyword aggregation, filter/sort, saveDraft, WS push-payload, and attachment upload/resolve done, plus the shim's filterToQuery()/buildSort() IMAP-search translation and the real-JMAP-facing Mailbox.php/Email.php layer (with a real bug found+fixed in Mailbox.php, see Progress log); paused again 2026-09-09 for a SECOND live-reported Reply-To regression (the shim's send-time re-fetch never read replyTo/Priority/read-receipt/thread-headers back from the stored draft) - fixed, see Progress log
+## Status: audit complete (2026-09-09); priority 1 (bulk move/copy/delete) client-side + deferred-work queue done; priority 2 (JMAP/shim path) - jmap.ts's mailbox CRUD, label/flag setters, thread-keyword aggregation, filter/sort, saveDraft, WS push-payload, and attachment upload/resolve done, plus the shim's filterToQuery()/buildSort() IMAP-search translation and the real-JMAP-facing Mailbox.php/Email.php/EmailSubmission.php layer (with a real bug found+fixed in Mailbox.php, see Progress log); paused again 2026-09-09 for a SECOND live-reported Reply-To regression (the shim's send-time re-fetch never read replyTo/Priority/read-receipt/thread-headers back from the stored draft) - fixed, see Progress log
 
 Full-codebase scan of `mail/js/*.ts`, `mail/src/*.php`, `mail/inc/*.php`, `api/src/Mail.php` and
 `api/src/Mail/*.php` (including the `Jmap/` shim + real-JMAP layer), cross-referenced against every
@@ -251,9 +251,17 @@ optimistic-clear, no hard guard yet).
   anywhere else in the method (the change-tracking queries are always global, never
   folder-scoped) - harmless in practice since every real caller only ever passes the default
   `"INBOX"`, but a wasted round-trip if that ever changed.
+- **Done (2026-09-09)**: `Api\Mail\Jmap\EmailSubmission.php`'s `set()`/`submit()` - 9 tests,
+  `api/tests/Mail/Jmap/EmailSubmissionTest.php`. Same fake-session approach as `EmailTest.php`.
+  Covers: `set()`'s RFC 8621 §7.4 `onSuccessUpdateEmail`/`onSuccessDestroyEmail` as top-level
+  request args (not per-object create properties), and empty create/update/destroy + null
+  onSuccess* all filtered out consistently with `Type::set()`'s own convention; `submit()`'s
+  minimal create shape (no `envelope` key at all when none given), the envelope when given, the
+  sent-email patch wrapped under its own `#s1` creation-id back-reference (mutually exclusive with
+  destroying it, per the method's own docblock - not enforced in code, a caller contract), and the
+  created-object-vs-`notCreated`-fallback return shape (including the "neither present" edge case).
 - The real-JMAP/Stalwart-facing layer otherwise still has **essentially zero** tests:
-  `EmailSubmission.php` (`set()`'s RFC 8621 §7.4 `onSuccessUpdateEmail`/`onSuccessDestroyEmail`
-  handling), `Identity.php` (`synthesize()`'s signature-merge/HTML-to-text fallback logic - needs
+  `Identity.php` (`synthesize()`'s signature-merge/HTML-to-text fallback logic - needs
   `Mail\Account::identities()`/`Accounts::id2name()`, both DB-backed, and the latter is unreliable
   in PHPUnit CLI per this doc's own project memory, so lower priority until that's worked around).
 
@@ -429,3 +437,8 @@ Kept for completeness, but explicitly deprioritized until the above is in better
   consume side) instead. Full PHP suite for the touched files green (only the pre-existing,
   unrelated VFS/S3 `testVfsPathAttachmentIsReadDirectlyFromVfs` failure remains). Back to priority
   2 next.
+- 2026-09-09: `EmailSubmission.php`'s `set()`/`submit()` (9 tests, `EmailSubmissionTest.php`)
+  done - same fake-session approach as `EmailTest.php`. Remaining priority-2 work: `emailQuery()`/
+  `emailGet()`'s own real-account IMAP search/fetch EXECUTION, `resolveSmime()`/`resolveTnef()`'s
+  IMAP-fetch half, `emailSubmissionSet()` (needs a live/mocked IMAP+SMTP connection), and
+  `Identity.php`'s `synthesize()` in the real-JMAP-facing layer.
