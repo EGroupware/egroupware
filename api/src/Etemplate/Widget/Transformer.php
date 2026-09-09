@@ -257,7 +257,7 @@ abstract class Transformer extends Etemplate\Widget
 		// the switch-case branch above reuses $attr as its own foreach loop variable.
 		if ($acted_on === 'type' && isset($attrs['type']))
 		{
-			[$attrs['type'], $extra] = self::mapLegacyType($attrs['type']);
+			[$attrs['type'], $extra] = self::mapLegacyType($attrs['type'], $attrs);
 			$attrs += $extra;	// only fills in keys not already explicitly set
 		}
 	}
@@ -266,19 +266,28 @@ abstract class Transformer extends Etemplate\Widget
 	 * Map a legacy widget type name whose widget class no longer exists to its modern et2
 	 * web-component equivalent - shared by every caller that resolves some OTHER value (a
 	 * customfield's own configured type, website's own widget 'type' attribute, ...) into an
-	 * eTemplate widget type name, so the mapping only has to live in one place. Currently just
+	 * eTemplate widget type name, so the mapping only has to live in one place. Currently
 	 * "int"/"float" (found live 2026-09-08, ralf: both records_widget's own custom-field rendering,
 	 * action() above, AND Customfields::_widget() - the universal, every-app custom-fields feature -
 	 * independently hit the exact same "int"/"float" widget classes were deleted, no successor ever
 	 * registered" gap; ralf: "it would be good if the fix sits in a central location or is a static
-	 * method the other class can call too").
+	 * method the other class can call too") and "textbox" (found live 2026-09-09, ralf: a records
+	 * "Contract" type's own multi-line "Vertragsänderungen"/"Zahlungsmodalität" textboxes lost their
+	 * line breaks and couldn't have new ones added - "textbox" only got the generic 'et2-' prefix
+	 * applied instead of switching to 'et2-textarea', unlike every OTHER textbox->et2 path
+	 * (Customfields::_widget()'s own 'text' case, api/etemplate.php's static-.xet regex preprocessor,
+	 * both client-side customfield widget mappers), which all already apply a "rows>0 -> textarea"
+	 * switch; et2-textbox is a real, registered custom element unlike et2-int/-float, so this variant
+	 * renders a valid-looking but wrong single-line widget instead of an obviously broken one).
 	 *
 	 * @param string $type
+	 * @param array $attrs attrs the caller has resolved so far, eg. 'rows' - only read here, never
+	 *  written to directly (the caller merges in the extra attrs this method returns instead)
 	 * @return array{0: string, 1: array} [possibly-remapped type, extra attrs the caller should
 	 *  merge in (only for keys it hasn't already set itself) - eg. "int"'s own precision=0, so a
 	 *  whole-number customfield doesn't silently accept decimals]
 	 */
-	public static function mapLegacyType(string $type) : array
+	public static function mapLegacyType(string $type, array $attrs=[]) : array
 	{
 		switch ($type)
 		{
@@ -286,6 +295,12 @@ abstract class Transformer extends Etemplate\Widget
 				return ['et2-number', ['precision' => 0]];
 			case 'float':
 				return ['et2-number', []];
+			case 'textbox':
+				if (!empty($attrs['rows']))
+				{
+					return ['et2-textarea', []];
+				}
+				break;
 		}
 		return [$type, []];
 	}

@@ -100,7 +100,16 @@ export function et2_createWidget(_name: string, _attrs: object, _parent?: any): 
 		// (Etemplate\Widget\Transformer::mapLegacyType(), Customfields::_widget()) already remap
 		// this server-side and never send "int"/"float" as a type at all, but this catches any
 		// other caller (a hand-authored legacy XML tag, or an app this codebase can't see) too.
+		// "textbox" is a related but quieter case (found live 2026-09-09, ralf: a records "Contract"
+		// type's multi-line textboxes lost their line breaks and couldn't have new ones added) -
+		// unlike et2-int/et2-float, et2-textbox IS a real registered element, so the generic
+		// "et2-" + name fallback below "succeeds" with the wrong (always single-line) widget instead
+		// of visibly failing; only rows>0 legacy textboxes need redirecting to et2-textarea.
 		const LEGACY_TYPE_MAP: Record<string, string> = {int: 'et2-number', float: 'et2-number'};
+		if(_name === 'textbox' && (_attrs as any)['rows'] && window.customElements.get('et2-textarea'))
+		{
+			return loadWebComponent('et2-textarea', _attrs, _parent);
+		}
 		if(LEGACY_TYPE_MAP[_name] && window.customElements.get(LEGACY_TYPE_MAP[_name]))
 		{
 			if(_name === 'int' && typeof (_attrs as any)['precision'] === 'undefined')
