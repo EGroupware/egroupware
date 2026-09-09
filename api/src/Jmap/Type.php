@@ -34,9 +34,13 @@ abstract class Type
 	/**
 	 * @param string[]|null $ids null = all
 	 * @param string[]|null $properties null = server default (usually all)
+	 * @param bool $fetchAllBodyValues RFC 8621 §4.3 Email/get-only extra argument - populate
+	 *  every text/html body part's value in the response's bodyValues, not just ones explicitly
+	 *  referenced. Meaningless for any other type - never pass true except for Email, since a
+	 *  real JMAP server may reject an argument its method doesn't define.
 	 * @return array{list: array[], notFound?: string[]}
 	 */
-	public function get(?array $ids=null, ?array $properties=null) : array
+	public function get(?array $ids=null, ?array $properties=null, bool $fetchAllBodyValues=false) : array
 	{
 		return $this->jmap->call(static::TYPE_NAME.'/get', array_filter([
 			// RFC 8620 §5.1: every standard method call requires accountId - both concrete
@@ -44,20 +48,27 @@ abstract class Type
 			'accountId' => $this->jmap->accountId,
 			'ids' => $ids,
 			'properties' => $properties,
+			'fetchAllBodyValues' => $fetchAllBodyValues ?: null,
 		], static fn($v) => $v !== null));
 	}
 
 	/**
 	 * @param array $filter FilterCondition or FilterOperator object
 	 * @param array $sort Comparator objects
-	 * @return array{ids: string[], ...}
+	 * @param int|null $position RFC 8620 §5.5 - zero-based index of the first id to return
+	 * @param int|null $limit RFC 8620 §5.5 - max number of ids to return
+	 * @param bool $calculateTotal RFC 8620 §5.5 - include the query's total match count in the response
+	 * @return array{ids: string[], total?: int, ...}
 	 */
-	public function query(array $filter=[], array $sort=[]) : array
+	public function query(array $filter=[], array $sort=[], ?int $position=null, ?int $limit=null, bool $calculateTotal=false) : array
 	{
 		return $this->jmap->call(static::TYPE_NAME.'/query', array_filter([
 			'accountId' => $this->jmap->accountId,
 			'filter' => $filter ?: null,
 			'sort' => $sort ?: null,
+			'position' => $position,
+			'limit' => $limit,
+			'calculateTotal' => $calculateTotal ?: null,
 		], static fn($v) => $v !== null));
 	}
 

@@ -15,6 +15,9 @@
 namespace EGroupware\Api\Mail;
 
 use EGroupware\Api;
+use EGroupware\Api\Jmap\Base as JmapSessionBase;
+use EGroupware\Api\Mail\Imap\Jmap as ImapJmap;
+use EGroupware\Api\Mail\Jmap\Imap as JmapShim;
 
 use Horde_Imap_Client_Exception;
 use Horde_Mail_Transport_Smtphorde;
@@ -772,6 +775,29 @@ class Account implements \ArrayAccess
 			}
 		}
 		return $this->imapServer;
+	}
+
+	/**
+	 * Get this account's JMAP session - real JMAP-over-HTTP (Http) for a Stalwart-classed
+	 * account, or the local plain-IMAP JMAP-shaped emulation (JmapShim) for every other account
+	 * (Dovecot, Cyrus, even OAuth-authenticated external accounts) - both share the same
+	 * `Api\Jmap\Base` per-type get()/query()/set() contract (`$session->mailbox`/`$session->email`),
+	 * so callers don't need their own instanceof check.
+	 *
+	 * Single reusable factory for the `instanceof Imap\Jmap` branch ~32 existing call sites across
+	 * mail/src and api/src/Mail.php already duplicate inline - new code should call this instead
+	 * of adding a 33rd (see doc/ai/projects/mail-rest-jmap-lite.md).
+	 *
+	 * @return JmapSessionBase
+	 */
+	public function jmapSession() : JmapSessionBase
+	{
+		$icServer = $this->imapServer();
+		if ($icServer instanceof ImapJmap)
+		{
+			return $icServer->jmapClient();
+		}
+		return new JmapShim((string)$this->acc_id);
 	}
 
 	/**

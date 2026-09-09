@@ -1,6 +1,7 @@
 # Mail: JMAP-lite REST endpoints for folders + emails
 
-## Status: Planning (2026-09-09), nothing implemented yet
+## Status: Phase 1 implemented (2026-09-09) - all 5 endpoints wired up, unit-tested; live REST
+verification against a running instance still pending (see "Testing" below)
 
 ralf wants to extend the existing simple mail REST API
 ([`doc/REST-CalDAV-CardDAV/Mail.md`](../../REST-CalDAV-CardDAV/Mail.md),
@@ -150,6 +151,23 @@ JMAP contract itself, and the REST layer never needs to touch `Ui.php` at all.
 As before: **treat every `id`/`parentId`/`mailboxIds` key/`blobId` as fully opaque.** Never construct,
 parse, or reuse one outside a request to this same account through this same API.
 
+**One real wrinkle found during implementation**: the shim's `Mailbox.id`/`parentId` are plain
+`base64_encode()` (`Mailbox::getMailboxId()`/`mailboxNode()`, `Api\Mail\Jmap\Imap.php`) - not
+URL-path-segment-safe, since that alphabet includes `+`/`/`/`=`. `ApiHandler::urlSafeId()` re-keys
+these (and `Email.mailboxIds`' keys) through a url-safe alphabet substitution before they ever reach a
+JSON response, so what a client sees as `id` is always exactly what it can put back in a URL. The
+**reverse** direction (`fromUrlSafeId()`, decoding a folder id back out of an incoming URL) is
+deliberately **not** applied unconditionally: a genuine real-JMAP id (Stalwart) is allowed by RFC 8620
+§1.2 to contain literal `-`/`_` as ordinary characters, and blindly reversing those back to `+`/`/`
+would corrupt such an id even though the *encode* direction never touched it in the first place
+(`urlSafeId()` is a true no-op for any id containing no `+`/`/`, which every real JMAP id satisfies by
+construction - but that no-op-ness doesn't invert safely, since the output is indistinguishable from
+an id that legitimately contains `-`/`_`). Fixed by gating the decode step on
+`ApiHandler::isRealJmapSession($session)`: only ever decode when the session is the local
+`JmapShim` (`Api\Mail\Jmap\Imap`), pass a real-JMAP (`Http`) folder id straight through unchanged in
+both directions. `getFolder()`/`listEmails()` are the two call sites; `Email.id`/`blobId` never needed
+this at all (a plain IMAP UID or an already-self-describing-url-safe `blobId` either way).
+
 ## `properties` and filter/sort: pass through, don't allow-list
 
 Matching "no extra processing": a `properties` query parameter (comma-separated) is forwarded verbatim
@@ -249,24 +267,55 @@ client can resolve inline images itself, the genuine-JMAP way).
 **Explicitly not planned**: `Email/set`, `Mailbox/set`, JMAP session/capabilities resource, method
 batching, `/changes`, push.
 
-## Implementation plan (files to touch, for the follow-up implementation task)
+## Implementation (2026-09-09) - what actually landed
 
-- `api/src/Mail/Account.php` - add `jmapSession(): Api\Jmap\Base` factory (encapsulates the `Http` vs.
-  `Imap` choice in one place for this project to call; existing 32 inline `instanceof` sites untouched).
-- `api/src/Mail/Jmap/Imap.php` - fix the `mailboxIds` gap in `emailFromFetch()`/`emailGet()` (see
-  "Backend parity").
-- `mail/src/ApiHandler.php` - new regex routes + handler methods (`listFolders()`, `getFolder()`,
-  `listEmails()`, `getEmail()`, `getAttachment()`) following the existing dispatch pattern in `get()`;
-  parses `properties`/`filter[...]`/`sort`/`position`/`limit` query params into the session `get()`/
-  `query()` call shapes, and wraps results in this API's `{"responses": {...}}` envelope. No object
-  reshaping beyond that envelope.
-- `doc/REST-CalDAV-CardDAV/Mail.md` / `doc/openapi/mail.json` - already updated in this planning pass to
-  match the design above (see git history of those two files alongside this doc).
-- Tests: extend `mail/tests/REST/` with a read-only test class exercising all five endpoints against
-  **both** a JMAP-native account (acc_id=1, Stalwart) and a shimmed account (acc_id=85 or 42, Dovecot) -
-  per [[mail-test-coverage]]'s own priority note ("JMAP/shim over classic `Api\Mail`"), and specifically
-  assert the documented backend-parity gaps (`myRights`/`totalThreads`/`unreadThreads` absent on shim,
-  `mailboxIds` now present on both after the fix above) rather than assuming silent parity.
+- `api/src/Jmap/Type.php` - widened the generic `get()`/`query()` contract to also carry
+  `fetchAllBodyValues` (get) and `position`/`limit`/`calculateTotal` (query) - RFC 8620 §5.5/§4.3
+  arguments the original two-argument signatures had no room for. Zero production callers existed yet
+  (confirmed via grep), so this was a safe widen, not a breaking change. `Http`'s `Mailbox`/`Email`
+  classes need no further change (no override, they already used the generic default). The shim's
+  `Imap\Mailbox`/`Imap\Email` overrides got their signatures widened to match (LSP compatibility) -
+  `Imap\Mailbox::query()` ignores the new params (folder listing has no paging concept yet, see
+  "Backend parity"); `Imap\Email::query()` forwards `position`/`limit` into `Imap::emailQuery()`'s
+  `$args` (which already supported them internally, just unreachable through the `Type` contract before
+  this); `Imap\Email::get()`'s `$fetchAllBodyValues` stays unused - the shim already always computes
+  full body values whenever any body property is requested, no partial-fetch mode to opt into.
+- `api/src/Mail/Jmap/Imap.php` - fixed the `mailboxIds` gap in `emailFromFetch()` (unconditional, cheap
+  - `$imap`/`$mailbox` were already in scope, no extra IMAP round trip; uses the exact same
+  `base64(canonicalPath())` id scheme as `Mailbox::getMailboxId()`, so it always matches a real
+  `Mailbox.id` from the same session).
+- `api/src/Mail/Account.php` - added `jmapSession(): Api\Jmap\Base` factory (the `Http` vs. `Imap`
+  choice in one place for this project to call; the existing ~32 inline `instanceof` sites elsewhere in
+  the codebase are untouched, out of scope).
+- `mail/src/ApiHandler.php` - the 5 route handlers (`listFolders()`, `getFolder()`, `listEmails()`,
+  `getEmail()`, `getAttachment()`), following the existing regex-dispatch pattern in `get()`; the
+  `properties`/`filter[...]`/`sort`/`position`/`limit` query-param parsing helpers; `urlSafeId()`/
+  `fromUrlSafeId()`/`isRealJmapSession()` (see the "IDs" section's wrinkle above); `jsonMailbox()`/
+  `jsonEmail()` (id re-keying only, no other reshaping); `listAllFolders()` (the recursive per-level
+  tree flatten). Error responses use plain `\Exception($msg, $httpCode)` (404/400), matching this
+  file's own existing convention for REST-facing errors - **not** `Api\Exception\NotFound`/
+  `WrongParameter` (those default to non-HTTP internal codes, e.g. `NotFound`'s default is `2`; this
+  file's own `put()` already works around that by hardcoding `'404 Not Found'` rather than trusting
+  `handleException()`'s generic code passthrough for that class).
+- `doc/REST-CalDAV-CardDAV/Mail.md` / `doc/openapi/mail.json` - updated to match (see git history).
+- `mail/tests/ApiHandlerJmapRestTest.php` - new unit tests (no live IMAP/JMAP/DB needed) for every pure-
+  logic piece above: the id-transform asymmetry (including a test that documents/pins the exact
+  wrinkle described above), `queryEmailFilter()`/`queryEmailSort()` parsing, `jsonMailbox()`/
+  `jsonEmail()` re-keying, `listAllFolders()`'s recursive walk (against a small fake `Api\Jmap\Base`/
+  `Type` double), `Type::query()`/`get()`'s widened argument-building (against a fake `Base` capturing
+  `call()` args), and the `mailboxIds` fix in `emailFromFetch()` (against a mocked non-`INBOX` mailbox,
+  same `mockImap()`-style pattern `JmapShimMailboxGetTest.php` already uses).
+
+**Not done yet / explicitly deferred**:
+- Live REST-level verification against a running instance (the style `mail/tests/REST/
+  MailAccountPatchTest.php` already uses for the *existing* mail REST endpoints, real HTTP round-trip
+  via `RestBase`/Guzzle) - needs a live dev/docker instance with acc_id=1 (Stalwart) and acc_id=85/42
+  (Dovecot/shim) per [[mail-test-coverage]]'s own account notes; not run in this session.
+  Specifically worth checking live: the `Mailbox/query filter:{parentId:null}` top-level semantics
+  against real Stalwart (spec reading says it should match top-level mailboxes, per this doc's own
+  earlier caveat) and the `hasAttachment` filter's documented no-op on the shim.
+- Phase 2 items (raw `.eml` download, cross-folder search, shim `myRights`) - unchanged from the
+  original plan, still deferred.
 
 ## Related
 

@@ -20,7 +20,11 @@ use EGroupware\Api\Mail\Jmap\Imap;
  */
 class Mailbox extends Base
 {
-	public function get(?array $ids=null, ?array $properties=null) : array
+	/**
+	 * $properties/$fetchAllBodyValues are unused - mailboxGet() has no properties-filter or
+	 * body-value concept (Mailbox has no body).
+	 */
+	public function get(?array $ids=null, ?array $properties=null, bool $fetchAllBodyValues=false) : array
 	{
 		/** @var Imap $jmap */
 		$jmap = $this->jmap;
@@ -29,7 +33,12 @@ class Mailbox extends Base
 		], static fn($v) => $v !== null), $jmap->calledFor);
 	}
 
-	public function query(array $filter=[], array $sort=[]) : array
+	/**
+	 * $sort/$position/$limit/$calculateTotal are unused - mailboxQuery() only ever supports its
+	 * two existing modes (single lookup-by-name, or "list direct children of parentId") - see the
+	 * lazy per-level tree-loading design in doc/ai/projects/mail-folder-tree-jmap.md.
+	 */
+	public function query(array $filter=[], array $sort=[], ?int $position=null, ?int $limit=null, bool $calculateTotal=false) : array
 	{
 		/** @var Imap $jmap */
 		$jmap = $this->jmap;

@@ -688,6 +688,24 @@ class ApiHandler extends Api\CalDAV\Handler
 					Api\Header\Content::type($matches[2], '', filesize($tmp));
 					readfile($tmp);
 					exit;
+
+				// JMAP-lite (RFC 8620/8621-shaped, NOT full JMAP) read-only folders/emails - see
+				// doc/ai/projects/mail-rest-jmap-lite.md. All 5 proxy the account's real JMAP
+				// session (Account::jmapSession()) rather than reshaping a hand-picked subset.
+				case preg_match('#^/mail(/(\d+))?/folders$#', $path, $matches) === 1:
+					return self::listFolders($user, isset($matches[2]) ? (int)$matches[2] : null);
+
+				case preg_match('#^/mail(/(\d+))?/folders/([^/]+)$#', $path, $matches) === 1:
+					return self::getFolder($user, isset($matches[2]) ? (int)$matches[2] : null, $matches[3]);
+
+				case preg_match('#^/mail(/(\d+))?/folders/([^/]+)/emails$#', $path, $matches) === 1:
+					return self::listEmails($user, isset($matches[2]) ? (int)$matches[2] : null, $matches[3]);
+
+				case preg_match('#^/mail(/(\d+))?/folders/([^/]+)/emails/([^/]+)$#', $path, $matches) === 1:
+					return self::getEmail($user, isset($matches[2]) ? (int)$matches[2] : null, $matches[3], $matches[4]);
+
+				case preg_match('#^/mail(/(\d+))?/folders/([^/]+)/emails/([^/]+)/attachments/([^/]+)$#', $path, $matches) === 1:
+					return self::getAttachment($user, isset($matches[2]) ? (int)$matches[2] : null, $matches[3], $matches[4], $matches[5]);
 			}
 		}
 		catch (\Throwable $e) {
@@ -729,6 +747,399 @@ class ApiHandler extends Api\CalDAV\Handler
 		return Api\Mail\Account::read($identity['acc_id'],
 			!empty($GLOBALS['egw_info']['user']['apps']['admin']) && $user != $GLOBALS['egw_info']['user']['account_id'] ? $user : null,
 			$replace_placeholders);
+	}
+
+	// --- JMAP-lite (RFC 8620/8621-shaped, NOT full JMAP) read-only folders/emails ----------------
+	//
+	// See doc/ai/projects/mail-rest-jmap-lite.md for the full design. Design mandate: proxy the
+	// account's real JMAP session (Account::jmapSession() - real JMAP-over-HTTP for Stalwart, or
+	// the local plain-IMAP JmapShim otherwise) rather than reshape a hand-picked field subset -
+	// a `properties` query param is forwarded verbatim to Mailbox/get or Email/get, exactly like
+	// real JMAP's own `properties` argument, so this file never needs its own fixed allow-list.
+	// The two small transforms below (urlSafeId()/jsonMailbox()/jsonEmail()) are pure REST/HTTP
+	// transport plumbing (URL-path-segment safety, response-envelope wrapping) - never a change to
+	// the underlying object's fields/semantics.
+
+	/**
+	 * Default Email/get properties for the emails-list endpoint, when the client doesn't ask for
+	 * specific ones via ?properties= - a reasonable list-view default, not a restriction (a client
+	 * can always ask for more, or fewer, via ?properties=).
+	 */
+	const DEFAULT_EMAIL_LIST_PROPERTIES = ['id', 'mailboxIds', 'keywords', 'size', 'receivedAt',
+		'sentAt', 'subject', 'from', 'to', 'cc', 'bcc', 'hasAttachment', 'preview'];
+
+	/**
+	 * Added to DEFAULT_EMAIL_LIST_PROPERTIES for the single-email endpoint's default - genuine JMAP
+	 * body shape (bodyStructure/bodyValues by partId), not a flattened simplification.
+	 */
+	const DEFAULT_EMAIL_BODY_PROPERTIES = ['bodyStructure', 'textBody', 'htmlBody', 'attachments', 'bodyValues'];
+
+	/**
+	 * Make an opaque JMAP-ish id safe to use as a URL path segment.
+	 *
+	 * A no-op for an id that already only uses the url-safe base64 alphabet or plain digits (a
+	 * real JMAP id - RFC 8620 §1.2 requires the url-safe alphabet - or an IMAP UID), since neither
+	 * ever contains a literal '+' or '/' to begin with - only the local JmapShim's own Mailbox
+	 * id/parentId (plain base64 of a folder path, predating that RFC check, see Api\Mail\Jmap\
+	 * Imap::mailboxNode()) actually needs the substitution. Safe to call UNCONDITIONALLY on
+	 * anything this API emits, regardless of backend - see fromUrlSafeId()'s docblock for why the
+	 * reverse direction is NOT equally safe to call unconditionally.
+	 *
+	 * Deliberately NOT fixed at the shim's own source (Mailbox::getMailboxId()/mailboxNode()) -
+	 * that id scheme is shared with mail_ui's own row-id encoding across the whole mail app;
+	 * changing it there would be a much larger, unrelated refactor. This is purely this REST
+	 * API's own transport boundary.
+	 *
+	 * @param string $id
+	 * @return string
+	 */
+	protected static function urlSafeId(string $id) : string
+	{
+		return rtrim(strtr($id, '+/', '-_'), '=');
+	}
+
+	/**
+	 * Reverse of urlSafeId() - NOT safe to call unconditionally, unlike urlSafeId() itself.
+	 *
+	 * A real JMAP id (RFC 8620 §1.2) is legitimately allowed to contain '-'/'_' as ordinary
+	 * characters (they're part of the url-safe alphabet) - urlSafeId() never touches such an id
+	 * (nothing to substitute, no '+'/'/' present), so blindly reversing '-'/'_' back to '+'/'/'
+	 * here would CORRUPT a real id that happens to contain either character, even though it was
+	 * never actually transformed. Only the local JmapShim's own plain-base64 ids are safe to
+	 * decode this way (base64_encode()'s alphabet never produces '-'/'_' on its own, so any '-'/
+	 * '_' found in one of ITS ids is unambiguously something urlSafeId() introduced by
+	 * substituting a '+'/'/').
+	 *
+	 * Callers MUST only invoke this for a session that is NOT real-JMAP-over-HTTP (i.e. only for
+	 * a JmapShim-backed account) - see this method's call sites in getFolder()/listEmails() for
+	 * the guard. Real-JMAP folder ids are passed straight through unchanged instead.
+	 *
+	 * @param string $id
+	 * @return string
+	 */
+	protected static function fromUrlSafeId(string $id) : string
+	{
+		return strtr($id, '-_', '+/');
+	}
+
+	/**
+	 * Is $session real JMAP-over-HTTP (Stalwart), as opposed to the local plain-IMAP JmapShim?
+	 * Only concrete Api\Jmap\Base subclass Account::jmapSession() ever returns - see
+	 * fromUrlSafeId()'s docblock for why this distinction matters for folder-id decoding.
+	 *
+	 * @param Api\Jmap\Base $session
+	 * @return bool
+	 */
+	protected static function isRealJmapSession(Api\Jmap\Base $session) : bool
+	{
+		return $session instanceof Api\Mail\Jmap\Http;
+	}
+
+	/**
+	 * ?properties=a,b,c query param, forwarded verbatim to Mailbox/get or Email/get - null (not an
+	 * empty array) when absent, so the session's own "null = server default" behaviour applies.
+	 *
+	 * @return string[]|null
+	 */
+	protected static function queryProperties() : ?array
+	{
+		return isset($_GET['properties']) && $_GET['properties'] !== '' ?
+			array_map('trim', explode(',', $_GET['properties'])) : null;
+	}
+
+	/**
+	 * ?sort=<property>[ asc|desc] query param -> a JMAP Comparator array, default "receivedAt desc"
+	 *
+	 * @return array
+	 */
+	protected static function queryEmailSort() : array
+	{
+		[$property, $order] = array_pad(preg_split('/\s+/', trim((string)($_GET['sort'] ?? 'receivedAt desc'))), 2, 'desc');
+		return [['property' => $property, 'isAscending' => strtolower($order) !== 'desc']];
+	}
+
+	/**
+	 * ?filter[before]=...&filter[hasAttachment]=... query params -> JMAP Email FilterCondition
+	 * leaf conditions, using exactly RFC 8621 §4.4.1's own property names (not this file's own
+	 * naming) - passed straight through, no reinterpretation. Note: the local JmapShim's own
+	 * filterToQuery()/applyCondition() (Api\Mail\Jmap\Imap.php) doesn't implement "hasAttachment"
+	 * at all yet (silently ignored, not an error) - a known, documented backend-parity gap (see
+	 * doc/ai/projects/mail-rest-jmap-lite.md), not something to special-case or reject here.
+	 *
+	 * @return array<string,mixed>
+	 * @throws \Exception (400) on an unsupported filter attribute
+	 */
+	protected static function queryEmailFilter() : array
+	{
+		static $allowed = ['before', 'after', 'hasAttachment', 'text', 'hasKeyword', 'notKeyword'];
+		$filter = [];
+		foreach ((array)($_GET['filter'] ?? []) as $key => $value)
+		{
+			if (!in_array($key, $allowed, true))
+			{
+				throw new \Exception("Invalid filter attribute '$key', must be one of: '".implode("', '", $allowed)."'", 400);
+			}
+			$filter[$key] = $key === 'hasAttachment' ? filter_var($value, FILTER_VALIDATE_BOOLEAN) : $value;
+		}
+		return $filter;
+	}
+
+	/**
+	 * Re-key a Mailbox object's id-shaped fields through urlSafeId() - the only transform applied,
+	 * every other field is proxied exactly as the session returned it.
+	 *
+	 * @param array $mailbox
+	 * @return array
+	 */
+	protected static function jsonMailbox(array $mailbox) : array
+	{
+		if (isset($mailbox['id'])) $mailbox['id'] = self::urlSafeId($mailbox['id']);
+		if (isset($mailbox['parentId'])) $mailbox['parentId'] = self::urlSafeId($mailbox['parentId']);
+		return $mailbox;
+	}
+
+	/**
+	 * Re-key an Email object's id-shaped fields (mailboxIds keys) through urlSafeId() - same as
+	 * jsonMailbox(), the only transform applied.
+	 *
+	 * @param array $email
+	 * @return array
+	 */
+	protected static function jsonEmail(array $email) : array
+	{
+		if (isset($email['mailboxIds']) && is_array($email['mailboxIds']))
+		{
+			$email['mailboxIds'] = array_combine(
+				array_map([self::class, 'urlSafeId'], array_keys($email['mailboxIds'])),
+				array_values($email['mailboxIds']));
+		}
+		return $email;
+	}
+
+	/**
+	 * Recursively walk the account's folder tree (Mailbox/query filtered by parentId, one level at
+	 * a time - both backends' Mailbox/query only support exactly this shape, see
+	 * doc/ai/projects/mail-rest-jmap-lite.md's "Backend parity" section) into one flat list - a
+	 * REST client asking for "the folders" naturally wants all of them, unlike the interactive
+	 * tree UI's own lazy per-level loading (a performance optimization this simpler REST consumer
+	 * doesn't need).
+	 *
+	 * filter:{parentId: null} (top level) vs filter:{parentId: <id>} (children of <id>) always
+	 * uses an explicit key, even at the top (never omitted) - an OMITTED parentId means something
+	 * different per backend: real JMAP then applies no parentId constraint at all (=> every
+	 * mailbox, defeating "list only this level"), while the shim's own mailboxQuery() specifically
+	 * treats an absent/empty parentId as "top level only". Explicitly passing null keeps both
+	 * backends aligned on "top level", matching RFC 8621's own null-parentId-means-top-level
+	 * Mailbox semantics - needs a live check against real Stalwart (not just spec reading) before
+	 * this is considered fully verified there, same as other JMAP-native features in this codebase.
+	 *
+	 * isSubscribed is only ever added to the filter (as literal `true`) when actually wanted -
+	 * never sent as `false`: for real JMAP that's an equality filter ("only UNSUBSCRIBED"), the
+	 * opposite of "no subscription constraint at all" a false $subscribedOnly here means.
+	 *
+	 * @param Api\Jmap\Base $session
+	 * @param bool $subscribedOnly
+	 * @param string[]|null $properties forwarded to Mailbox/get
+	 * @return array[] flat list of Mailbox objects (still with the session's own raw ids - not
+	 *  yet run through jsonMailbox())
+	 */
+	protected static function listAllFolders(Api\Jmap\Base $session, bool $subscribedOnly, ?array $properties) : array
+	{
+		$folders = [];
+		$walk = function(?string $parentId) use (&$walk, &$folders, $session, $subscribedOnly, $properties)
+		{
+			$filter = ['parentId' => $parentId];
+			if ($subscribedOnly)
+			{
+				$filter['isSubscribed'] = true;
+			}
+			$ids = $session->mailbox->query($filter)['ids'] ?? [];
+			if (!$ids)
+			{
+				return;
+			}
+			foreach ($session->mailbox->get($ids, $properties)['list'] ?? [] as $mailbox)
+			{
+				$folders[] = $mailbox;
+				$walk($mailbox['id']);
+			}
+		};
+		$walk(null);
+		return $folders;
+	}
+
+	/**
+	 * GET /mail[/<id>]/folders
+	 *
+	 * @param int $user
+	 * @param int|null $ident_id
+	 * @return true
+	 */
+	protected static function listFolders(int $user, ?int $ident_id) : bool
+	{
+		$account = self::getMailAccount($user, $ident_id);
+		$session = $account->jmapSession();
+		$subscribedOnly = !isset($_GET['subscribedOnly']) || filter_var($_GET['subscribedOnly'], FILTER_VALIDATE_BOOLEAN);
+
+		$prefix = '/mail'.($ident_id ? '/'.$ident_id : '').'/folders/';
+		$responses = [];
+		foreach (self::listAllFolders($session, $subscribedOnly, self::queryProperties()) as $mailbox)
+		{
+			$mailbox = self::jsonMailbox($mailbox);
+			$responses[$prefix.$mailbox['id']] = $mailbox;
+		}
+		echo json_encode(['responses' => $responses], self::JSON_RESPONSE_OPTIONS);
+		return true;
+	}
+
+	/**
+	 * GET /mail[/<id>]/folders/<folderId>
+	 *
+	 * @param int $user
+	 * @param int|null $ident_id
+	 * @param string $folderIdUrlSafe
+	 * @return true
+	 * @throws \Exception (404) if not found
+	 */
+	protected static function getFolder(int $user, ?int $ident_id, string $folderIdUrlSafe) : bool
+	{
+		$account = self::getMailAccount($user, $ident_id);
+		$session = $account->jmapSession();
+		// only the local JmapShim's own ids need decoding back - see fromUrlSafeId()'s docblock
+		$folderId = self::isRealJmapSession($session) ? $folderIdUrlSafe : self::fromUrlSafeId($folderIdUrlSafe);
+
+		$list = $session->mailbox->get([$folderId], self::queryProperties())['list'] ?? [];
+		if (!$list)
+		{
+			throw new \Exception("Folder '$folderIdUrlSafe' not found", 404);
+		}
+		echo json_encode(self::jsonMailbox($list[0]), self::JSON_RESPONSE_OPTIONS);
+		return true;
+	}
+
+	/**
+	 * GET /mail[/<id>]/folders/<folderId>/emails
+	 *
+	 * @param int $user
+	 * @param int|null $ident_id
+	 * @param string $folderIdUrlSafe
+	 * @return true
+	 */
+	protected static function listEmails(int $user, ?int $ident_id, string $folderIdUrlSafe) : bool
+	{
+		$account = self::getMailAccount($user, $ident_id);
+		$session = $account->jmapSession();
+		// only the local JmapShim's own ids need decoding back - see fromUrlSafeId()'s docblock
+		$folderId = self::isRealJmapSession($session) ? $folderIdUrlSafe : self::fromUrlSafeId($folderIdUrlSafe);
+
+		$filter = ['inMailbox' => $folderId]+self::queryEmailFilter();
+		$position = max(0, (int)($_GET['position'] ?? 0));
+		$limit = min(200, max(1, (int)($_GET['limit'] ?? 50)));
+
+		$query = $session->email->query($filter, self::queryEmailSort(), $position, $limit, true);
+		$ids = $query['ids'] ?? [];
+
+		$byId = [];
+		if ($ids)
+		{
+			foreach ($session->email->get($ids, self::queryProperties() ?? self::DEFAULT_EMAIL_LIST_PROPERTIES)['list'] ?? [] as $email)
+			{
+				$byId[$email['id']] = $email;
+			}
+		}
+		// rebuild in Email/query's own order - Email/get responses are not guaranteed to preserve
+		// the requested ids' order (see Api\Mail\Jmap\Imap::emailGet()'s own docblock on why it
+		// has to do the same reordering internally for the shim's IMAP FETCH responses)
+		$prefix = '/mail'.($ident_id ? '/'.$ident_id : '').'/folders/'.$folderIdUrlSafe.'/emails/';
+		$responses = [];
+		foreach ($ids as $id)
+		{
+			if (isset($byId[$id]))
+			{
+				$responses[$prefix.$id] = self::jsonEmail($byId[$id]);
+			}
+		}
+		echo json_encode([
+			'responses' => $responses,
+			'position' => $query['position'] ?? $position,
+			'total' => $query['total'] ?? count($ids),
+		], self::JSON_RESPONSE_OPTIONS);
+		return true;
+	}
+
+	/**
+	 * GET /mail[/<id>]/folders/<folderId>/emails/<emailId>
+	 *
+	 * @param int $user
+	 * @param int|null $ident_id
+	 * @param string $folderIdUrlSafe unused beyond routing/discoverability - Email/get only needs
+	 *  the emailId (see doc/ai/projects/mail-rest-jmap-lite.md's attachment-endpoint note, same
+	 *  reasoning)
+	 * @param string $emailId
+	 * @return true
+	 * @throws \Exception (404) if not found
+	 */
+	protected static function getEmail(int $user, ?int $ident_id, string $folderIdUrlSafe, string $emailId) : bool
+	{
+		$account = self::getMailAccount($user, $ident_id);
+		$session = $account->jmapSession();
+
+		$properties = self::queryProperties() ?? array_merge(self::DEFAULT_EMAIL_LIST_PROPERTIES, self::DEFAULT_EMAIL_BODY_PROPERTIES);
+		$list = $session->email->get([$emailId], $properties, true)['list'] ?? [];
+		if (!$list)
+		{
+			throw new \Exception("Email '$emailId' not found", 404);
+		}
+		echo json_encode(self::jsonEmail($list[0]), self::JSON_RESPONSE_OPTIONS);
+		return true;
+	}
+
+	/**
+	 * GET /mail[/<id>]/folders/<folderId>/emails/<emailId>/attachments/<blobId>
+	 *
+	 * $folderIdUrlSafe is unused - AttachmentJmap::fetchBlobBytes() only needs the account and the
+	 * (already self-describing/opaque, already url-safe) blobId itself; it's in the URL purely
+	 * for discoverability/consistency with how the client found the blobId (in an email's own
+	 * attachments[] list). $emailId IS used, but only to look up that same attachment's real
+	 * name/type for the Content-Disposition/Content-Type headers - a proper download filename,
+	 * not fetching the actual bytes a second, different way.
+	 *
+	 * @param int $user
+	 * @param int|null $ident_id
+	 * @param string $folderIdUrlSafe
+	 * @param string $emailId
+	 * @param string $blobId
+	 * @return true
+	 * @throws \Exception (404) if not found
+	 */
+	protected static function getAttachment(int $user, ?int $ident_id, string $folderIdUrlSafe, string $emailId, string $blobId) : bool
+	{
+		$account = self::getMailAccount($user, $ident_id);
+		$bytes = Ui\AttachmentJmap::fetchBlobBytes((string)$account->acc_id, $blobId);
+		if ($bytes === null)
+		{
+			throw new \Exception("Attachment '$blobId' not found", 404);
+		}
+		$name = $blobId;
+		$type = '';
+		try {
+			$email = $account->jmapSession()->email->get([$emailId], ['attachments'])['list'][0] ?? null;
+			foreach ((array)($email['attachments'] ?? []) as $attachment)
+			{
+				if (($attachment['blobId'] ?? null) === $blobId)
+				{
+					$name = $attachment['name'] ?? $name;
+					$type = $attachment['type'] ?? '';
+					break;
+				}
+			}
+		}
+		catch (\Throwable $e) {
+			unset($e);	// fall back to the generic name/type below rather than failing the download
+		}
+		Api\Header\Content::type($name, $type, strlen($bytes));
+		echo $bytes;
+		return true;
 	}
 
 	const PASSWORD_DUMMY = '********';

@@ -23,7 +23,12 @@ use EGroupware\Api\Mail\Jmap\Imap;
  */
 class Email extends Base
 {
-	public function get(?array $ids=null, ?array $properties=null) : array
+	/**
+	 * $fetchAllBodyValues is unused - Imap::emailGet() already always populates bodyValues in
+	 * full whenever any body property is requested (no partial-fetch mode to opt into, unlike a
+	 * real JMAP server).
+	 */
+	public function get(?array $ids=null, ?array $properties=null, bool $fetchAllBodyValues=false) : array
 	{
 		/** @var Imap $jmap */
 		$jmap = $this->jmap;
@@ -33,13 +38,20 @@ class Email extends Base
 		], static fn($v) => $v !== null), $jmap->context);
 	}
 
-	public function query(array $filter=[], array $sort=[]) : array
+	/**
+	 * $calculateTotal is ignored - Imap::emailQuery() always computes and returns 'total'
+	 * (an IMAP SEARCH already has to walk the full match set to sort it, so there's no
+	 * "skip computing total" fast path to opt into the way a real JMAP server has).
+	 */
+	public function query(array $filter=[], array $sort=[], ?int $position=null, ?int $limit=null, bool $calculateTotal=false) : array
 	{
 		/** @var Imap $jmap */
 		$jmap = $this->jmap;
 		return Imap::emailQuery($jmap->accountId, array_filter([
 			'filter' => $filter ?: null,
 			'sort' => $sort ?: null,
+			'position' => $position,
+			'limit' => $limit,
 		], static fn($v) => $v !== null), $jmap->context);
 	}
 

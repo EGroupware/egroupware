@@ -3066,6 +3066,13 @@ class Imap extends Jmap\Base
 
 		$email = [
 			'id' => $uid,
+			// RFC 8621 §4.1.1 - real JMAP always includes this; found missing here entirely
+			// 2026-09-09 while planning doc/ai/projects/mail-rest-jmap-lite.md (the shim tracked
+			// "current mailbox" only out-of-band via $context, never as an Email property). Cheap
+			// to add - $imap/$mailbox are already in scope, no extra IMAP round trip - and uses the
+			// exact same id scheme as Mailbox::getMailboxId() (base64 of the canonical path), so a
+			// mailboxIds key here always matches a real Mailbox.id from the same session.
+			'mailboxIds' => [base64_encode(self::canonicalPath($imap, $mailbox)) => true],
 			'keywords' => self::flagsToKeywords($data->getFlags()),
 			'size' => $data->getSize(),
 			'receivedAt' => self::imapDate($data->getImapDate()),
