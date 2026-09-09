@@ -668,6 +668,64 @@ class addressbook_bo extends Api\Contacts
 	}
 
 	/**
+	 * Search addressbook for the `prefer-encrypt` Autocrypt attribute of given recipients' own
+	 * stored PGP keys - Phase 5 item 6's recipient-side check for the "mutual" auto-encrypt
+	 * preference (doc/ai/projects/mail-pgp-signature-verification.md): does a compose recipient's
+	 * OWN key already carry `prefer-encrypt=mutual` (learned from a previous Autocrypt header, or
+	 * set explicitly)?
+	 *
+	 * Same contact/address search shape as get_keys() (business `email` vs home `email_home`, an
+	 * account owning BOTH addresses only counted once each) - mapped through
+	 * get_autocrypt_attributes() per found contact instead of get_key(). PGP only, Autocrypt
+	 * attributes are a PGP-only concept (S/MIME has no equivalent).
+	 *
+	 * @param string|array $recipients email addresses
+	 * @return array address => 'mutual' pairs - an address is present ONLY when its stored value is
+	 *  exactly 'mutual' (never 'nopreference' or any other value, and never absent-but-present)
+	 */
+	public function get_autocrypt_prefer_encrypt($recipients) : array
+	{
+		if (!$recipients) return [];
+		if (!is_array($recipients)) $recipients = [$recipients];
+		$recipients = array_map('strtolower', $recipients);
+
+		$criteria = ['contact_email_home' => $recipients, 'contact_email' => $recipients];
+		$result = [];
+		$filters = [null];
+		// if accounts-backend is NOT SQL, we need to search the accounts separate
+		if ($this->so_accounts)
+		{
+			$filters[] = ['owner' => '0'];
+		}
+		foreach ($filters as $filter)
+		{
+			foreach ((array)$this->search($criteria, ['account_id', 'contact_email', 'contact_email_home', 'contact_pubkey', 'contact_id'],
+				'', '', '', false, 'OR', false, $filter) as $contact)
+			{
+				foreach ([strtolower($contact['email'] ?? ''), strtolower($contact['email_home'] ?? '')] as $address)
+				{
+					if ($address !== '' && in_array($address, $recipients, true) && !isset($result[$address]) &&
+						($this->get_autocrypt_attributes($contact, $address)['prefer-encrypt'] ?? null) === 'mutual')
+					{
+						$result[$address] = 'mutual';
+					}
+				}
+			}
+		}
+		return $result;
+	}
+
+	/**
+	 * Ajax wrapper for get_autocrypt_prefer_encrypt() - see its own docblock.
+	 *
+	 * @param string|array $recipients email addresses
+	 */
+	public function ajax_get_autocrypt_prefer_encrypt($recipients)
+	{
+		Api\Json\Response::get()->data($this->get_autocrypt_prefer_encrypt($recipients));
+	}
+
+	/**
 	 * Set/merge Autocrypt attributes (eg. `prefer-encrypt`) for a contact's PGP key at a given
 	 * address, if user has necessary rights (same ACL/save() path as set_keys()).
 	 *

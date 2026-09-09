@@ -487,6 +487,17 @@ class mail_hooks
 				),
 				'default' => '',
 			),
+			'pgp_autocrypt_mutual' => array(
+				'type' => 'select',
+				'label' => 'Automatically enable PGP encryption when both sides prefer it (Autocrypt "mutual" mode)',
+				'help' => 'When on: our own outgoing Autocrypt header advertises prefer-encrypt=mutual, and a new (not reply/forward) mail to recipient(s) who ALL advertised the same via their own Autocrypt header gets PGP encryption switched on automatically - you can still switch it back off for that one mail',
+				'name' => 'pgp_autocrypt_mutual',
+				'values' => array(
+					'' => lang('no'),
+					'1' => lang('yes'),
+				),
+				'default' => '',
+			),
 			'toggledOnActions' => array(
 				'type' => 'taglist',
 				'label' => 'Toggled on actions',

@@ -851,6 +851,7 @@ export class MailCompose
 	 * OnChange callback for recipients:
 	 * - make them draggable
 	 * - check if we have keys for recipients, if we compose an encrypted mail
+	 * - Phase 5 item 6's "mutual" auto-encrypt: if not already encrypted, maybe turn it on now
 	 **/
 	recipientsOnChange()
 	{
@@ -861,6 +862,13 @@ export class MailCompose
 			{
 				this.egw.message(_err.message, 'error');
 			});
+		}
+		else
+		{
+			// no error surfaced to the user here - a "no" answer (missing key, preference off, ...)
+			// is the normal, silent case, not a failure; checkMutualAutoEncrypt() itself already
+			// fails closed (never throws) for every real error condition
+			void this.app.checkMutualAutoEncrypt();
 		}
 	}
 

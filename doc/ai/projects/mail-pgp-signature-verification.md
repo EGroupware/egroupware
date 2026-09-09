@@ -27,11 +27,12 @@ preference, fed by both the inline-key case AND, now, real Autocrypt headers), a
 an already-known contact, extended from S/MIME-only to BOTH S/MIME and PGP)** are DONE (2026-09-09,
 see their own phasing entries) - `Autocrypt-Gossip:` sending/receiving is now **DROPPED**
 (researched 2026-09-09 against Mailvelope's actual API source - not achievable, see its own entries
-under items 3/4) and item 6's mutual auto-encrypt preference is **NEXT UP** (marked 2026-09-09,
-still unbuilt); item 2's
-`prefer-encrypt` storage now HAS a real
-caller (item 4's wiring, when a header carries `prefer-encrypt=mutual`) but nothing reads it back
-yet (item 6 is what would). **Item 4's real-message wiring is now live-verified too** (2026-09-09,
+under items 3/4) and item 6's mutual auto-encrypt preference is now **DONE** too (2026-09-09, see
+its own entry - built end-to-end, unit-tested, not yet live-clicked-through). With that, **all of
+Phase 5 is now either DONE or explicitly DROPPED** - nothing left unbuilt in this whole section
+except the known `pubkey_uploaded()` UI gap (item 1's own entry). item 2's `prefer-encrypt` storage
+now HAS a real caller (item 4's wiring, when a header carries `prefer-encrypt=mutual`) AND a real
+reader (item 6). **Item 4's real-message wiring is now live-verified too** (2026-09-09,
 same day, against a real Autocrypt-header-bearing message ralf found in acc_id=1's own Inbox - see
 its own entry for the full console-verified confirmation) - only the UI dialog/silent-add trigger
 itself wasn't exercised live (deliberately, to avoid writing to ralf's real addressbook from a
@@ -873,24 +874,67 @@ enough (a plain `{email, armoredKey, keyFingerprint, keyUid, preferEncrypt?}` sh
 this reason - and later the SAME day, item 4's Autocrypt-header wiring landed and now feeds it too
 (see item 4's own entry for that half's details, including its own unverified-live caveat).
 
-### 6. New preference: "mutual" auto-encrypt - NEXT UP (2026-09-09)
+### 6. New preference: "mutual" auto-encrypt - DONE (2026-09-09), not yet live-clicked-through
 
 The only piece of the original items 5/6/7 grouping not yet done (item 5/7 shipped together, see
 their own entries above) - now that items 1-5/7 are done and both Mailvelope items (sign-on-send,
-Autocrypt-Gossip) are researched and dropped, this is the next thing to actually build.
+Autocrypt-Gossip) are researched and dropped, this was the next thing to actually build.
 
-A second new preference (checkbox or 3-way select, TBD): when on, and the current compose's
-recipient(s) all have a stored `prefer_encrypt=mutual` (item 2's storage) **and** our own account's
-own `Autocrypt:` header also carries `prefer-encrypt=mutual` (item 3), auto-enable the `pgp` toggle
-for a **new** compose (not just reply-to-encrypted, which is already built - see item 4 in the
-"Reply/forward auto-matches" entry above). Reuses the exact same `togglePgpEncrypt({checked: true})`
-+ post-`bootstrapPromise` timing this session's reply/forward auto-encrypt work already established
-(`bootstrapComposePopup()`, `mail/js/app.ts`) - the recipient-population-must-finish-first and
-recipient-key-check-must-actually-run lessons from that work apply identically here, just with a
-different *reason* to decide `pgpEncrypted='1'` (stored `prefer_encrypt` match instead of "was the
-source message encrypted"). Reader side: `addressbook_bo::get_autocrypt_attributes()` (item 2's own
-storage API) already exists to read `prefer_encrypt` back per-address - this item is its first real
-caller.
+Went with a plain checkbox-style preference (chose over the doc's earlier "checkbox or 3-way
+select, TBD" - a 3rd state doesn't map to anything meaningful for Autocrypt's own binary
+mutual/absent concept), `pgp_autocrypt_mutual` (`mail/inc/class.mail_hooks.inc.php`, `select` type
+with `''`/`'1'` values rather than a real `checkbox` widget - matches `smime_pgp_add_contact`'s own
+existing pattern in this same settings array exactly, both read back the same way via
+`isPreferenceOn()`).
+
+**Own-side (sending)**: `MailJmap.buildAutocryptHeader()` (`mail/js/jmap.ts`) now inserts
+`prefer-encrypt=mutual` right after `addr=` (spec only requires `keydata=` be LAST) whenever the
+preference is on AND this identity actually has a usable key to advertise it with - turning the
+preference on with no key yet must never advertise `prefer-encrypt` for a key that doesn't exist.
+Tested: `MailJmapBuildAutocryptHeader.test.ts`'s new "prefer-encrypt=mutual (Phase 5 item 6)"
+describe block (3 cases: added when on, omitted when off/default, never added without a key).
+
+**Recipient-side (reading)**: new `addressbook_bo::get_autocrypt_prefer_encrypt($recipients)`/
+`ajax_get_autocrypt_prefer_encrypt()` (`addressbook/inc/class.addressbook_bo.inc.php`) - same
+contact/address search shape as `get_pgp_keys()`/`get_keys()` (business `email` vs home
+`email_home`), mapped through `get_autocrypt_attributes()` (item 2's own storage API, its first
+real caller) per found contact instead of `get_key()`; returns `address => 'mutual'` only when the
+stored value is exactly `'mutual'`. New `MailJmap.allRecipientsPreferMutualEncryption(addresses)`
+calls it and requires EVERY address to match (empty list or any lookup failure = false, fail
+closed - never auto-enable encryption we're not sure about). Tested:
+`MailJmapAllRecipientsPreferMutualEncryption.test.ts` (6 cases: all-match, one-missing, empty list,
+lowercase/dedup, lookup failure, exact-string match against `'nopreference'`); PHP side via new
+`AddressbookBoAutocryptAttributesTest.php` (6 cases covering `get_autocrypt_attributes()` itself,
+previously untested at all despite existing since item 2 - direct-address match, no attributes
+stored, no key stored, alias-address resolution, cross-address isolation, plus the
+`get_autocrypt_prefer_encrypt()` per-contact filter shape via a hand-built contact list, its
+`$this->search()` call itself untestable for the same pre-existing environment-hang reason
+`AddressbookBoMultiKeyStorageTest.php`'s own docblock documents for `get_keys()`/`set_keys()`).
+Found live writing this: `get_autocrypt_attributes()` unconditionally calls `Api\Link::vfs_path()`/
+`file_exists()` on a `vfs://` stream-wrapped path, which needs a real framework bootstrap even
+though no such file exists for a synthetic contact id - a bare `TestCase` throws "Call to a member
+function get_user_applications() on null" from inside `Api\Vfs\Links\StreamWrapper`; fixed by
+basing the new test on `Api\LoggedInTest` (same acc_id=1-for-bootstrap-only pattern
+`ImapBuildMailerTest.php`/`SmimeMailerTest.php` already use).
+
+**Compose-time auto-enable**: new `MailApp.checkMutualAutoEncrypt()` (`mail/js/app.ts`), called from
+`MailCompose.recipientsOnChange()` (`mail/js/compose.ts`) whenever PGP isn't already on - collects
+to/cc/bcc (same set `mailvelopeGetCheckRecipients()` checks, same rfc822-to-plain-email extraction
+`egw_app.ts`'s own version does), resolves the currently-selected identity's email via
+`MailJmap.getIdentities()` + the `mailaccount` widget's `accId:identId` value, and only if BOTH
+`allRecipientsPreferMutualEncryption()` is true AND that identity has a real PGP key on file
+(`ajax_get_pgp_keys`) calls `togglePgpEncrypt({checked: true})` - the exact same activation path
+item 4's reply/forward pre-check already uses. **"Default only, never enforced" guard**: new
+`pgpMutualAutoDecided` field, set unconditionally at the very top of `togglePgpEncrypt()` itself (a
+real click as much as any programmatic call, including item 4's own pre-check) - once ANYTHING has
+decided this compose's pgp state, `checkMutualAutoEncrypt()` never runs again for the rest of that
+popup's lifetime, so it can never fight a user who already turned pgp on or off themselves, and a
+reply/forward that already pre-decided its own state (item 4) is correctly left alone too. Not
+unit-tested (DOM/widget-heavy, calls the real toolbar action + multiple widgets - same category of
+method as `setSmimeFlags()`/`setPgpSignatureFlags()`/the dialog-opening methods before it, see Phase
+H's own precedent for that decision) - **not yet live-clicked-through** either (needs two real
+addressbook contacts with `prefer-encrypt=mutual` already learned, one for each side of a real
+compose, to exercise end-to-end).
 
 ### 7. Auto-add a verified sender's cert/key to an already-known contact, no dialog - DONE (2026-09-09), both S/MIME and PGP
 
@@ -959,8 +1003,9 @@ DOM/widget-heavy and not unit-tested - see Phase H's own precedent for that deci
 *(Items 6 and 7 were originally drafted here too, duplicating the updated item 6/7 entries above
 almost word-for-word - leftover from this section's own original "plan only, nothing implemented
 yet" pass before items 1-5/7 were updated in place. Removed 2026-09-09 as stale/redundant now that
-item 6 has a single, current entry above marked NEXT UP and item 7 shipped (see its own DONE entry
-above) - keeping two copies of the same not-yet-current text was confusing, not informative.)*
+item 6 has a single, current entry above (marked NEXT UP at the time, now DONE - see its own entry)
+and item 7 shipped (see its own DONE entry above) - keeping two copies of the same not-yet-current
+text was confusing, not informative.)*
 
 ### Other spec gaps/contradictions worth flagging now (not necessarily fixing in v1)
 
@@ -1032,16 +1077,14 @@ above) - keeping two copies of the same not-yet-current text was confusing, not 
    against a real message + real Stalwart server (item 4's own entry has the full confirmation) -
    only the UI dialog/silent-add trigger itself wasn't clicked through live. `Autocrypt-Gossip:`
    receiving (item 3's other half) is **DROPPED** for the same reason as sending - see its own entry.
-5. `prefer-encrypt` **storage** (item 2) is DONE (2026-09-09, see its own entry), and as of item 4's
-   wiring above now has its first real WRITER too (`ajax_pgpAddKeyToContact` calls
-   `set_autocrypt_attributes()` when a header carries `prefer-encrypt=mutual`) - what's left is
-   mutual auto-encrypt preference (item 6), which is what would actually READ it back via
-   `get_autocrypt_attributes()`.
-6. **Item 6 (mutual auto-encrypt preference) - NEXT UP (2026-09-09).** The only piece of the
-   original items 5/6/7 grouping not yet done, and with items 1-5/7 done and both Mailvelope items
-   (planned-follow-up item 3, Autocrypt-Gossip) researched and dropped, the only remaining work in
-   this whole Autocrypt integration besides the known `pubkey_uploaded()` UI gap (item 1's own
-   entry).
+5. `prefer-encrypt` **storage** (item 2) is DONE (2026-09-09, see its own entry) and now has both a
+   real WRITER (`ajax_pgpAddKeyToContact` calls `set_autocrypt_attributes()` when a header carries
+   `prefer-encrypt=mutual`) and a real READER (item 6's `get_autocrypt_prefer_encrypt()`).
+6. **Item 6 (mutual auto-encrypt preference) - DONE (2026-09-09), see its own entry.** With this,
+   every item in this whole Autocrypt integration is now either DONE or explicitly DROPPED, except
+   the known `pubkey_uploaded()` UI gap (item 1's own entry) - and item 6 itself still needs a real
+   live click-through (two real contacts with `prefer-encrypt=mutual` already learned) before
+   calling it fully verified.
 
 ## Explicitly out of scope for this project
 

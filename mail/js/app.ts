@@ -7992,6 +7992,17 @@ export class MailApp extends EgwApp
 	mailvelope_editor : any = undefined;
 
 	/**
+	 * Phase 5 item 6's "default only, never enforced" guard (doc/ai/projects/
+	 * mail-pgp-signature-verification.md) - true once EITHER a real user click on the `pgp` toolbar
+	 * action OR checkMutualAutoEncrypt()'s own auto-enable has happened for THIS compose popup, so
+	 * later recipient changes never re-trigger (or re-override) a decision already made. Set
+	 * unconditionally at the top of togglePgpEncrypt() itself (every call, real click or
+	 * programmatic - including item 4's own reply/forward pre-check in bootstrapComposePopup()), so
+	 * a reply/forward that already pre-decided its own pgp state is correctly left alone too.
+	 */
+	pgpMutualAutoDecided : boolean = false;
+
+	/**
 	 * Called on compose, if mailvelope is available
 	 *
 	 * @param {Keyring} _keyring Mailvelope keyring to use
@@ -8052,6 +8063,8 @@ export class MailApp extends EgwApp
 	 */
 	togglePgpEncrypt(_action)
 	{
+		// Phase 5 item 6 - see pgpMutualAutoDecided's own docblock for why this is unconditional
+		this.pgpMutualAutoDecided = true;
 		const self = this;
 		if (_action.checked)
 		{
@@ -8129,6 +8142,65 @@ export class MailApp extends EgwApp
 		recipients = recipients.concat(this.et2.getWidgetById('bcc').get_value());
 
 		return super.mailvelopeGetCheckRecipients(recipients);
+	}
+
+	/**
+	 * Phase 5 item 6, doc/ai/projects/mail-pgp-signature-verification.md - the "mutual" auto-encrypt
+	 * preference's compose-time half: for a NEW compose (no source message to read a pre-existing
+	 * state from, unlike item 4's reply/forward pre-check in bootstrapComposePopup()), auto-enable
+	 * PGP once ALL current recipients have their OWN Autocrypt `prefer-encrypt=mutual` stored AND
+	 * our own sending identity would ALSO advertise it (a real PGP key on file for that identity,
+	 * the same pre-condition MailJmap.buildAutocryptHeader() itself checks before adding the
+	 * attribute at actual send time) - true "both sides prefer mutual" semantics, not just one.
+	 *
+	 * Called from MailCompose.recipientsOnChange() - fires again on every recipient change, but
+	 * `pgpMutualAutoDecided` (see its own docblock) makes this a one-shot decision per compose popup,
+	 * same "default only, never enforced" contract item 4's own reply/forward pre-check already
+	 * established: once decided (by a real click OR by this method), never re-evaluated or
+	 * overridden again for the rest of this compose window's lifetime.
+	 */
+	async checkMutualAutoEncrypt() : Promise<void>
+	{
+		if (this.pgpMutualAutoDecided || this.mailvelope_editor) return;
+		if (!isPreferenceOn(this.egw.preference('pgp_autocrypt_mutual', 'mail'))) return;
+
+		// same rfc822-to-plain-email extraction egw_app.ts's own mailvelopeGetCheckRecipients() does -
+		// the addressbook lookup below needs bare addresses, not "Name <email>" display strings
+		const rfc822Preg = /<([^'" <>]+)>$/;
+		const toPlainEmail = (recipient : string) =>
+		{
+			const matches = recipient.match(rfc822Preg);
+			return (matches ? matches[1] : recipient).toLowerCase();
+		};
+		let recipients : string[] = this.et2.getWidgetById('to')?.get_value() || [];
+		recipients = recipients.concat(this.et2.getWidgetById('cc')?.get_value() || []);
+		recipients = recipients.concat(this.et2.getWidgetById('bcc')?.get_value() || []);
+		recipients = recipients.map(toPlainEmail);
+		if (!recipients.length) return;
+
+		const mailaccountValue = String(this.et2?.getWidgetById?.('mailaccount')?.get_value?.() ?? '');
+		const [accId, identId] = mailaccountValue.split(':', 2);
+		if (!accId) return;
+
+		let ownEmail : string | undefined;
+		try
+		{
+			const identities = await this.jmap.getIdentities(accId);
+			ownEmail = identities.find((i : any) => i.id === identId)?.email?.toLowerCase();
+		}
+		catch (e)
+		{
+			return;	// no identity resolved - fail closed, same as allRecipientsPreferMutualEncryption()
+		}
+		if (!ownEmail) return;
+
+		const [recipientsMutual, ownKeys] : [boolean, Record<string, string>] = await Promise.all([
+			this.jmap.allRecipientsPreferMutualEncryption(recipients),
+			this.egw.request('addressbook.addressbook_bo.ajax_get_pgp_keys', [[ownEmail]]).catch(() => ({})),
+		]);
+		if (!recipientsMutual || !ownKeys?.[ownEmail] || this.pgpMutualAutoDecided) return;
+
+		this.togglePgpEncrypt({checked: true});
 	}
 
 	/**

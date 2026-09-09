@@ -5961,9 +5961,11 @@ export class MailJmap
 	 * lookup (`ajax_get_pgp_keys`) and minimization (armoredKeyToAutocryptKeydata()) already built
 	 * for reading Autocrypt-shaped keydata.
 	 *
-	 * `prefer-encrypt=mutual` is deliberately NOT added yet - gated on the "mutual" auto-encrypt
-	 * preference (Phase 5 item 6), which doesn't exist yet; not an oversight, see the project doc's
-	 * own phasing.
+	 * `prefer-encrypt=mutual` (Phase 5 item 6, "mutual" auto-encrypt preference) is included, right
+	 * after `addr=` and before `keydata=` (spec only requires `keydata=` be LAST, order of any other
+	 * attributes is otherwise free), whenever the `pgp_autocrypt_mutual` mail preference is on AND
+	 * this identity actually has a usable key to advertise it with - turning the preference on with
+	 * no key stored yet must not advertise a `prefer-encrypt` for a key that doesn't exist.
 	 *
 	 * @return null (header omitted entirely, not sent empty) when this identity has no PGP key
 	 *  stored in the addressbook yet, or that key has no Autocrypt-compatible encryption subkey
@@ -5990,12 +5992,52 @@ export class MailJmap
 		try
 		{
 			const keydata = await MailJmap.armoredKeyToAutocryptKeydata(armoredKey);
-			return keydata ? `addr=${email}; keydata=${keydata}` : null;
+			if (!keydata) return null;
+			const preferEncrypt = isPreferenceOn(this.egw.preference('pgp_autocrypt_mutual', 'mail')) ?
+				'prefer-encrypt=mutual; ' : '';
+			return `addr=${email}; ${preferEncrypt}keydata=${keydata}`;
 		}
 		catch (e)
 		{
 			console.error('MailJmap.buildAutocryptHeader(): key minimization failed', e);
 			return null;
+		}
+	}
+
+	/**
+	 * Phase 5 item 6's recipient-side half of the "mutual" auto-encrypt preference - true only when
+	 * EVERY given address has `prefer-encrypt=mutual` stored (via a PREVIOUSLY learned Autocrypt
+	 * header or an explicit key upload, addressbook_bo::set_autocrypt_attributes()), never when the
+	 * list is empty (a brand-new compose with no recipients yet has nothing to auto-decide from).
+	 * Address-keyed like `ajax_get_pgp_keys()` and every other addressbook lookup in this file -
+	 * lowercased, deduplicated before the request so a repeated address doesn't cost twice.
+	 *
+	 * Only checks the RECIPIENTS' side - buildAutocryptHeader() above (our own account's side,
+	 * called separately at actual send time) is what decides whether OUR OWN outgoing header would
+	 * also carry `prefer-encrypt=mutual`; a caller wanting the full "both sides prefer mutual"
+	 * picture (Phase 5 item 6's own compose-time auto-enable decision) checks the
+	 * `pgp_autocrypt_mutual` preference itself (the same one buildAutocryptHeader() reads) alongside
+	 * this method's result, rather than this method re-deriving it a second time.
+	 *
+	 * @param addresses email addresses to check
+	 * @return false if `addresses` is empty, on any lookup failure (fail closed - never auto-enable
+	 *  encryption we're not sure about), or if even one address lacks the attribute
+	 */
+	async allRecipientsPreferMutualEncryption(addresses : string[]) : Promise<boolean>
+	{
+		const unique = [...new Set(addresses.map(a => a.toLowerCase()).filter(a => a))];
+		if (!unique.length) return false;
+
+		try
+		{
+			const result : Record<string, string> = await this.egw.request(
+				'addressbook.addressbook_bo.ajax_get_autocrypt_prefer_encrypt', [unique]);
+			return unique.every(address => result?.[address] === 'mutual');
+		}
+		catch (e)
+		{
+			console.error('MailJmap.allRecipientsPreferMutualEncryption(): addressbook lookup failed', e);
+			return false;
 		}
 	}
 

@@ -54,9 +54,10 @@ naltmbOcjckv0wtAnAGFh5MEBRUKCA4MBBYAAgECGQECmwMCHgEWIQTFBW09
 
 const IDENTITY = {id: "1", email: "fixture@example.invalid", name: "Sender"};
 
-function createFakeApp(egwRequest : (method : string, params : any[]) => Promise<any>) : MailApp
+function createFakeApp(egwRequest : (method : string, params : any[]) => Promise<any>,
+	preference : (name : string, app : string) => any = () => undefined) : MailApp
 {
-	return {egw: {request: egwRequest}} as unknown as MailApp;
+	return {egw: {request: egwRequest, preference}} as unknown as MailApp;
 }
 
 describe("MailJmap.buildAutocryptHeader()", () =>
@@ -117,5 +118,44 @@ describe("MailJmap.buildAutocryptHeader()", () =>
 
 		assert.isNull(await (jmap as any).buildAutocryptHeader({id: "1", email: "", name: "No Email"}));
 		assert.isFalse(called);
+	});
+
+	/** Phase 5 item 6 - the "mutual" auto-encrypt preference's own-side half. */
+	describe("prefer-encrypt=mutual (Phase 5 item 6)", () =>
+	{
+		it("adds prefer-encrypt=mutual, right after addr= and before keydata=, when the preference is on", async() =>
+		{
+			const jmap = new MailJmap(createFakeApp(
+				async() => ({"fixture@example.invalid": MULTI_UID_KEY_ARMOR}),
+				(name, app) => (name === 'pgp_autocrypt_mutual' && app === 'mail') ? '1' : undefined));
+
+			const header = await (jmap as any).buildAutocryptHeader(IDENTITY);
+
+			const expectedKeydata = await MailJmap.armoredKeyToAutocryptKeydata(MULTI_UID_KEY_ARMOR);
+			assert.equal(header,
+				`addr=fixture@example.invalid; prefer-encrypt=mutual; keydata=${expectedKeydata}`);
+			// keydata= must still be the LAST parameter per the Autocrypt spec, mutual or not
+			assert.isTrue(header!.endsWith(`keydata=${expectedKeydata}`));
+		});
+
+		it("omits prefer-encrypt=mutual when the preference is off (the default)", async() =>
+		{
+			const jmap = new MailJmap(createFakeApp(
+				async() => ({"fixture@example.invalid": MULTI_UID_KEY_ARMOR}),
+				() => ''));
+
+			const header = await (jmap as any).buildAutocryptHeader(IDENTITY);
+
+			assert.notInclude(header, 'prefer-encrypt');
+		});
+
+		it("never advertises prefer-encrypt=mutual for an identity with no key, even with the preference on", async() =>
+		{
+			const jmap = new MailJmap(createFakeApp(
+				async() => ({}),
+				() => '1'));
+
+			assert.isNull(await (jmap as any).buildAutocryptHeader(IDENTITY));
+		});
 	});
 });
