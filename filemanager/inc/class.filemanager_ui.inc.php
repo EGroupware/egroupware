@@ -979,10 +979,10 @@ class filemanager_ui
 	/**
 	 * Convert a vfs mtime/ctime, which is a real Unix timestamp (unlike most other EGroupware
 	 * timestamps, which use server-time wallclock digits misencoded as a Unix timestamp), into
-	 * the timestamp Api\DateTime expects, in the user's timezone
+	 * an Api\DateTime object in the user's timezone
 	 *
 	 * @param int $vfs_time real Unix timestamp, eg. from Vfs stat() / url_stat()
-	 * @return int|null
+	 * @return Api\DateTime|int|null
 	 */
 	protected static function vfs_time2user($vfs_time)
 	{
@@ -990,7 +990,7 @@ class filemanager_ui
 
 		$time = new Api\DateTime('@'.$vfs_time);
 		$time->setUser();
-		return $time->format('ts');
+		return $time;
 	}
 
 	/**
