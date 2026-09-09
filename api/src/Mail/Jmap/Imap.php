@@ -2871,8 +2871,8 @@ class Imap extends Jmap\Base
 	/**
 	 * Standard IMAP flags an imported message's "keywords" may set - broader than
 	 * writableKeywords() (which only covers what the UI may *mutate* on an existing message via
-	 * Email/set - labels/customflags/$flagged, deliberately excluding \Seen/\Draft/\Answered).
-	 * Unrecognised keywords are silently ignored rather than failing the whole import.
+	 * Email/set - labels/customflags/$flagged/$seen/$answered/$forwarded, deliberately excluding
+	 * \Draft). Unrecognised keywords are silently ignored rather than failing the whole import.
 	 *
 	 * @param string $keyword lowercased JMAP keyword, e.g. "$seen"
 	 * @return ?string IMAP flag, or null if not a recognised standard keyword
@@ -2899,8 +2899,13 @@ class Imap extends Jmap\Base
 		// 'MDNSent'/'MDNnotSent' (no '$' prefix) is the real IMAP keyword classic
 		// Api\Mail::flagMessages() already writes - matched here so a message flagged through
 		// either code path is recognized identically by the other. $seen is here for
-		// MailJmap.setSystemFlag()'s explicit-selection bulk read/unread action.
-		$keywords = ['$flagged' => '\\Flagged', '$seen' => '\\Seen', '$mdnsent' => 'MDNSent', '$mdnnotsent' => 'MDNnotSent'];
+		// MailJmap.setSystemFlag()'s explicit-selection bulk read/unread action. $answered/
+		// $forwarded (2026-09-09) are for that same method's OTHER caller, MailCompose's
+		// post-send source-message marking (mail/js/compose.ts) - the JMAP-native send path's
+		// equivalent of classic Api\Mail::flagMessages("answered"/"forwarded", ...)
+		// (mail/src/Send.php), which never runs for it at all.
+		$keywords = ['$flagged' => '\\Flagged', '$seen' => '\\Seen', '$answered' => '\\Answered',
+			'$forwarded' => '$Forwarded', '$mdnsent' => 'MDNSent', '$mdnnotsent' => 'MDNnotSent'];
 		foreach (['label1', 'label2', 'label3', 'label4', 'label5',
 			'customflag1', 'customflag2', 'customflag3', 'customflag4', 'customflag5'] as $keyword)
 		{

@@ -4315,6 +4315,11 @@ export class MailJmap
 	 * (Stalwart) accepts any keyword already. Scoped to explicit selections only - "select all
 	 * matching filter" for these two keeps its classic, filter-aware toggle semantics (e.g.
 	 * "mark all as read" while viewing the Unseen filter), not replicated here.
+	 *
+	 * Also the mechanism MailCompose uses (mail/js/compose.ts, 2026-09-09) to mark an original
+	 * message $answered/$forwarded right after a successful reply/forward send - classic
+	 * Api\Mail::flagMessages("answered"/"forwarded", ...) equivalent, needed those two keywords
+	 * added to JmapShim::writableKeywords() as well.
 	 */
 	async setSystemFlag(references : JmapMessageReference[], keyword : string, set : boolean) : Promise<void>
 	{

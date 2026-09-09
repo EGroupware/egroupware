@@ -164,6 +164,29 @@ export class MailCompose
 	private replyThreadingHeaders : {inReplyTo : string[] | null, references : string[] | null} | null = null;
 
 	/**
+	 * Original message(s) to mark $answered/$forwarded once this compose successfully sends -
+	 * this JMAP-native send path's own equivalent of classic mail_compose's server-side
+	 * Send::send() unconditionally flagging the source message via Api\Mail::flagMessages()
+	 * (mail/src/Send.php ~line 510-549). sendNewEmail() only ever creates+submits the NEW
+	 * message - it never touches the message being replied to/forwarded at all, so that classic
+	 * behaviour silently stopped happening once compose's send path went client-side-JMAP (found
+	 * live 2026-09-09, ralf, relaying a tester report: "the icon showing an email was
+	 * replied-to/forwarded is no longer shown ... in old mails it's still shown, only for newly
+	 * answered ones" - old messages were flagged by the still-then-current classic path, new ones
+	 * never are).
+	 *
+	 * Set once by bootstrapReply() (single reply/reply_all/reply_attachments/inline-forward) or
+	 * accumulated by mergeForwardAttachments() (forwardasattach can be called more than once into
+	 * an already-open compose popup, see that method's own docblock - hence the union, not a
+	 * plain overwrite, and the Set-based de-dup). rowId strings, exactly what
+	 * MailJmap.messageReference() parses - `forwarded` is true only for an actual forward
+	 * (matches classic Send::send()'s own "forward implies answered too" behaviour: its
+	 * flagMessages("forwarded", ...) call falls through to also set \Answered, on top of the
+	 * unconditional flagMessages("answered", ...) call it already makes first).
+	 */
+	private sourceMessagesToFlag : {rowIds : string[], forwarded : boolean} | null = null;
+
+	/**
 	 * Cache of already-uploaded locally-staged attachments (uploadAttachmentsViaJmap()). Two
 	 * distinct key shapes share this one map:
 	 * - a classically-staged (VFS-attach) file's own tmp_name - a stable id for one staged file
@@ -1114,6 +1137,51 @@ export class MailCompose
 			console.error('MailCompose.integrateSentMessage(): failed', e);
 			this.egw.message(e?.message || this.egw.lang('Failed to create linked entry'), 'error');
 		}
+		if (this.sourceMessagesToFlag)
+		{
+			try
+			{
+				const references = this.sourceMessagesToFlag.rowIds.map((id) => this.app.jmap.messageReference(id));
+				await this.app.jmap.setSystemFlag(references, '$answered', true);
+				if (this.sourceMessagesToFlag.forwarded)
+				{
+					await this.app.jmap.setSystemFlag(references, '$forwarded', true);
+				}
+				// Instantly reflect the new icon on the opener's already-rendered row, same
+				// "optimistic patch, no round-trip needed" mechanism MailApp.callFlagMessages()
+				// already uses for read/flagged toggles (see MailApp.patchRow()'s own docblock) -
+				// egw's data cache is shared with the opener even from this popup. Without this,
+				// the row only picks up $answered/$forwarded from a later JMAP push notification
+				// (never for an account with no push support at all) or a manual list refresh -
+				// found live 2026-09-09, ralf: "replied icon is shown now, though without push
+				// only after a refresh - we could set it from client-side after a successful send,
+				// before closing the window, that way it's set even if the server does not
+				// support push". This window closes right after (see window.close() below), so
+				// there is no later opportunity to do this from here.
+				for (const rowId of this.sourceMessagesToFlag.rowIds)
+				{
+					const dataElem = this.egw.dataGetUIDdata(rowId);
+					if (!dataElem) continue;
+					dataElem.data.flags ||= {};
+					dataElem.data.flags.replied = 'replied';
+					const classes = (dataElem.data['class'] || '').split(' ').filter(Boolean);
+					if (!classes.includes('replied')) classes.push('replied');
+					if (this.sourceMessagesToFlag.forwarded)
+					{
+						dataElem.data.flags.forwarded = 'forwarded';
+						if (!classes.includes('forwarded')) classes.push('forwarded');
+					}
+					dataElem.data['class'] = classes.join(' ');
+					this.app.patchRow(rowId);
+				}
+			}
+			catch (e)
+			{
+				// best-effort, same as integrateSentMessage() above - never blocks/reports a
+				// send failure over this, the message already went out successfully
+				console.error('MailCompose: failed to flag original message(s) as answered/forwarded', e);
+			}
+		}
 		// the form still carries its unsent-draft content as far as ETemplate's own dirty-tracking
 		// is concerned - it never went through ETemplate's own submit(), so closing now would
 		// otherwise trip the "unsaved changes" beforeunload prompt despite the message having
@@ -1402,6 +1470,7 @@ export class MailCompose
 		// signature placement (applySignatureForCurrentIdentity() below), not literally "is a reply".
 		this.isReplyCompose = true;
 		this.replyThreadingHeaders = isForward ? null : {inReplyTo: context.inReplyTo, references: context.references};
+		this.sourceMessagesToFlag = {rowIds: [sourceId], forwarded: isForward};
 
 		const identities = await this.selectIdentityForRecipients(context);
 
@@ -1645,6 +1714,14 @@ export class MailCompose
 			this.egw.message(this.egw.lang('Failed to load original message(s)'), 'error');
 			return null;
 		}
+
+		// union, not overwrite - this same method can run again into an already-open compose
+		// (see this method's own docblock), each time contributing more forwarded-as-attachment
+		// sources that still need flagging once the compose actually sends.
+		this.sourceMessagesToFlag = {
+			rowIds: [...new Set([...(this.sourceMessagesToFlag?.rowIds ?? []), ...messages.map((m) => m.sourceRowId)])],
+			forwarded: true,
+		};
 
 		const attachments = messages.map((m) => ({
 			blobId: m.blobId,
