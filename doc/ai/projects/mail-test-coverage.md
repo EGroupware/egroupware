@@ -159,13 +159,23 @@ optimistic-clear, no hard guard yet).
   unlike `destroyIds()`'s bulk-delete counterpart, the old-draft cleanup call never actually
   inspects the response for `notDestroyed` - only a thrown/rejected request is caught, so a
   server-reported (non-throwing) failure to destroy is silently treated as success.
+- **Done (2026-09-09)**: `mail/js/jmap.ts`'s WebSocket push-payload building -
+  `buildWsPushPayload`/`buildEmailPush`/`buildMailboxPush`/`buildEmailDeletePush` - 14 tests,
+  `mail/js/test/MailJmapWsPushPayload.test.ts`. Covers: add/update envelope shapes for both
+  emails and mailboxes, the destroyed-email wildcard-folder delete envelope, the
+  destroyed-mailbox "only if its path was already cached" gate, a resolved-to-null folder (a
+  destroyed-mailbox race) being filtered out of the final payload rather than producing a broken
+  entry, Mailbox/changes never being called when only Email changed (and vice versa), and the
+  "must use EGroupware's own account_id, never the JMAP accountId param" id-shape distinction
+  called out in the method's own docblock as something a naive edit could silently break.
+  `folderId2path()` itself (a separate chained-`$ref()` lookup) was stubbed directly rather than
+  faked at the requestMany() level, keeping these tests focused on the envelope-building logic.
 - `mail/js/jmap.ts` (rest still untested - S/MIME/PGP methods deliberately skipped, a concurrent
-  session is actively working in that area, see priority-3's own note): most push/WebSocket
-  payload-building (`buildWsPushPayload`, `buildEmailPush`/`buildMailboxPush`/
-  `buildEmailDeletePush`), S/MIME encrypt (`smimeEncryptBody`, `resolveSmimeSignedAttachments`),
-  PGP dispatch/cache methods (`findPgpPart`, `peekPgpSignature`, `peekPgpEncrypted`,
-  `pgpEncryptBody` - as opposed to the already-tested lower-level byte helpers), most attachment
-  upload/resolve methods (`uploadAttachment`, `uploadVfsAttachment`, `downloadBlobUrl`,
+  session is actively working in that area, see priority-3's own note): S/MIME encrypt
+  (`smimeEncryptBody`, `resolveSmimeSignedAttachments`), PGP dispatch/cache methods
+  (`findPgpPart`, `peekPgpSignature`, `peekPgpEncrypted`, `pgpEncryptBody` - as opposed to the
+  already-tested lower-level byte helpers), most attachment upload/resolve methods
+  (`uploadAttachment`, `uploadVfsAttachment`, `downloadBlobUrl`,
   `reuploadAttachmentForAccount`, `resolveOutgoingInlineImages`, `fetchAttachmentsMetadata`,
   `getAttachmentViewUrl`).
 - `api/src/Mail/Jmap/Imap.php`: `emailQuery()`/`emailGet()`'s real-account (non-"0") IMAP
@@ -277,10 +287,11 @@ Kept for completeness, but explicitly deprioritized until the above is in better
   `aggregateThreadKeywords()` (19 tests, `MailJmapThreadKeywordAggregation.test.ts`),
   search/filter/sort translation (`buildFilter`/`buildTokenizedFilter`/`flaggedFilter`/`buildSort`,
   30 tests, `MailJmapFilterAndSort.test.ts`), and `saveDraft()` (9 tests,
-  `MailJmapSaveDraft.test.ts`) done. Deliberately skipping the S/MIME encrypt and PGP dispatch/
-  cache methods for now - a concurrent session is actively working in that exact area (confirmed
-  by a live "PGP/S-MIME signatures must not verify unless the key/cert claims the sender's
-  address" fix landing mid-session). Rest of priority 2 (push/WebSocket payload-building,
-  attachment upload/resolve, the shim's real-account
-  `emailQuery`/`emailGet`/`resolveSmime`/`resolveTnef`/`emailSubmissionSet`, and the entire
-  real-JMAP-facing layer) still open.
+  `MailJmapSaveDraft.test.ts`) and WebSocket push-payload building (`buildWsPushPayload`/
+  `buildEmailPush`/`buildMailboxPush`/`buildEmailDeletePush`, 14 tests,
+  `MailJmapWsPushPayload.test.ts`) done. Deliberately skipping the S/MIME encrypt and PGP
+  dispatch/cache methods for now - a concurrent session is actively working in that exact area
+  (confirmed by a live "PGP/S-MIME signatures must not verify unless the key/cert claims the
+  sender's address" fix landing mid-session). Rest of priority 2 (attachment upload/resolve, the
+  shim's real-account `emailQuery`/`emailGet`/`resolveSmime`/`resolveTnef`/`emailSubmissionSet`,
+  and the entire real-JMAP-facing layer) still open.
