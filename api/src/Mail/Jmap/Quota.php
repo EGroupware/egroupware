@@ -27,15 +27,19 @@ class Quota extends Type
 	/**
 	 * @param string[]|null $ids null = all
 	 * @param string[]|null $properties
+	 * @param bool $fetchAllBodyValues ignored - Quota has no body values, kept only for
+	 *  signature-compatibility with Type::get() (found live 2026-09-09: a PHP fatal
+	 *  "Declaration must be compatible" broke this class' autoload entirely once Type::get()
+	 *  gained this param, unrelated to this class' own logic)
 	 * @return array{list: array[], notFound: string[]} empty of both if the server does NOT
 	 *  advertise the quota capability
 	 */
-	public function get(?array $ids=null, ?array $properties=null) : array
+	public function get(?array $ids=null, ?array $properties=null, bool $fetchAllBodyValues=false) : array
 	{
 		if (!in_array(Http::JMAP_QUOTA, $this->jmap->capabilities ?? []))
 		{
 			return ['list' => [], 'notFound' => []];
 		}
-		return parent::get($ids, $properties);
+		return parent::get($ids, $properties, $fetchAllBodyValues);
 	}
 }

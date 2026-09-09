@@ -44,8 +44,12 @@ class Identity extends Type
 	 * @param string[]|null $ids null = all
 	 * @param string[]|null $properties ignored - always returns every property, same as every
 	 *  other type here when the caller doesn't ask for a narrower set
+	 * @param bool $fetchAllBodyValues ignored - Identity has no body values, kept only for
+	 *  signature-compatibility with Type::get() (found live 2026-09-09: a PHP fatal
+	 *  "Declaration must be compatible" broke this class' autoload entirely - and with it every
+	 *  JMAP call needing an Identity, including sending - once Type::get() gained this param)
 	 */
-	public function get(?array $ids=null, ?array $properties=null) : array
+	public function get(?array $ids=null, ?array $properties=null, bool $fetchAllBodyValues=false) : array
 	{
 		return self::synthesize($this->jmap->acc_id ?? (int)$this->jmap->accountId, $ids);
 	}
