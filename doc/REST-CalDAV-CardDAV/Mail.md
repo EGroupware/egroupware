@@ -11,6 +11,8 @@ Authentication is via Basic Auth with username and a password, or a token valid 
 > * viewing EML files 
 > * setting the vacation notice
 > * creating or editing mail accounts and identities
+> * **planned, not yet implemented**: read-only listing of folders and emails, see
+>   [Folders and Emails (JMAP-lite)](#folders-and-emails-jmap-lite) below
 
 > **Mail accounts in EGroupware can be for a single or multiple accounts or groups or even for everyone.**
 > A mail account can have multiple identities or signatures. If a mail account is for more than one 
@@ -338,4 +340,207 @@ HTTP/2 204
 x-dav-powered-by: EGroupware 26.1 CalDAV/CardDAV/GroupDAV server
 x-webdav-status: 204 No Content
 ```
+</details>
+
+
+## Folders and Emails (JMAP-lite)
+
+> **Status: planned, not yet implemented.** This section documents the intended API, designed before
+> implementation (see `doc/ai/projects/mail-rest-jmap-lite.md` for the full plan, architecture, and
+> backend-parity notes).
+
+These endpoints let a client read a mail account's folders and the emails inside them, using JMAP's own
+`Mailbox`/`Email` data model (RFC 8620/8621) - but this is **not** a full JMAP implementation. There is
+no `/jmap` session/capabilities resource, no method batching, no `state`/`changes`, no push, and no
+write methods (`Email/set`, `Mailbox/set`, ...). Just a handful of plain `GET` endpoints.
+
+**These endpoints proxy the account's real JMAP session, they don't reshape it.** Every mail account
+already has a uniform JMAP session internally - genuine JMAP-over-HTTP for Stalwart-backed accounts, or
+a local server-side JMAP-shaped emulation ("JmapShim") for every plain-IMAP account (Dovecot, Cyrus,
+even OAuth-authenticated external accounts). This API calls that session's `Mailbox/Email` `get`/`query`
+directly and returns what it returns - a `properties` query parameter is forwarded verbatim to the
+underlying JMAP call, exactly like real JMAP's own `properties` argument, rather than this API
+maintaining its own fixed field allow-list. Consequences worth knowing:
+- **`id` values are genuinely the session's own ids** - real opaque JMAP ids for a Stalwart-backed
+  account, or the shim's own stable `base64(folder path)` (folders) / IMAP `UID` (emails) ids for a
+  plain-IMAP account. Either way: **treat every `id`/`parentId`/`mailboxIds` key/`blobId` as fully
+  opaque** - never construct, parse, or reuse one outside a request to this same account through this
+  same API.
+- **The two backends are not always field-identical**, because this API doesn't force them to be:
+  - A Stalwart-backed `Mailbox` includes `myRights`, `totalThreads`, `unreadThreads`. A plain-IMAP
+    (shim-backed) `Mailbox` currently does **not** include those three, but does include two
+    shim-only extras with no JMAP counterpart: `hasChildren`, `aclCapable`.
+  - `Email.threadId` is available on **both** backends when explicitly requested via `properties`
+    (not included by default).
+  - A single email's `bodyStructure`/`textBody`/`htmlBody`/`bodyValues` (genuine JMAP body shape, not a
+    flattened simplification) are fully supported on both backends already.
+
+#### **GET** `/mail[/<id>]/folders` list folders (mailboxes)
+
+<details>
+  <summary>Example: Listing folders for the default identity</summary>
+
+Query parameters (all optional):
+- `properties`: comma-separated list of `Mailbox` properties to return (forwarded to the underlying
+  `Mailbox/get` call) - default is all standard properties for that backend (see backend-parity notes
+  above)
+- `subscribedOnly`: `true` (default) or `false` - only list subscribed folders, or all folders
+
+```
+curl -i https://example.org/egroupware/groupdav.php/mail/folders --user <user> -H 'Accept: application/json'
+
+HTTP/1.1 200 Ok
+Content-Type: application/json
+
+{
+  "responses": {
+    "/mail/folders/<folderId>": {
+      "id": "<folderId>",
+      "name": "INBOX",
+      "parentId": null,
+      "role": "inbox",
+      "totalEmails": 42,
+      "unreadEmails": 3,
+      "isSubscribed": true
+    },
+    "/mail/folders/<folderId2>": {
+      "id": "<folderId2>",
+      "name": "Sent",
+      "parentId": null,
+      "role": "sent",
+      "totalEmails": 137,
+      "unreadEmails": 0,
+      "isSubscribed": true
+    }
+  }
+}
+```
+</details>
+
+#### **GET** `/mail[/<id>]/folders/<folderId>` get a single folder
+
+<details>
+  <summary>Example: Querying a single folder by its id</summary>
+
+```
+curl -i https://example.org/egroupware/groupdav.php/mail/folders/<folderId> --user <user> -H 'Accept: application/json'
+
+HTTP/1.1 200 Ok
+Content-Type: application/json
+
+{
+  "id": "<folderId>",
+  "name": "INBOX",
+  "parentId": null,
+  "role": "inbox",
+  "totalEmails": 42,
+  "unreadEmails": 3,
+  "isSubscribed": true
+}
+```
+</details>
+
+#### **GET** `/mail[/<id>]/folders/<folderId>/emails` list emails in a folder
+
+<details>
+  <summary>Example: Listing the newest emails in a folder</summary>
+
+Query parameters (all optional):
+- `properties`: comma-separated list of `Email` properties to return (forwarded to `Email/get`) -
+  default `id,mailboxIds,keywords,size,receivedAt,sentAt,subject,from,to,cc,bcc,hasAttachment,preview`
+- `position`: integer, default `0` - offset for paging
+- `limit`: integer, default `50`, max `200` - max emails to return
+- `sort`: e.g. `receivedAt desc` (default) or `receivedAt asc`
+- `filter[before]` / `filter[after]`: ISO 8601 date-time - received-date range
+- `filter[hasAttachment]`: `true`/`false`
+- `filter[text]`: string - basic subject/from/body search
+- `filter[keyword]` / `filter[notKeyword]`: e.g. `$seen`, `$flagged` - flag filter
+
+```
+curl -i https://example.org/egroupware/groupdav.php/mail/folders/<folderId>/emails?limit=2 --user <user> -H 'Accept: application/json'
+
+HTTP/1.1 200 Ok
+Content-Type: application/json
+
+{
+  "responses": {
+    "/mail/folders/<folderId>/emails/<emailId>": {
+      "id": "<emailId>",
+      "mailboxIds": {"<folderId>": true},
+      "keywords": {"$seen": true},
+      "size": 4821,
+      "receivedAt": "2026-09-09T08:12:00Z",
+      "sentAt": "2026-09-09T08:11:52Z",
+      "subject": "Re: Contract Installation",
+      "from": [{"name": "Jane Doe", "email": "jane@example.org"}],
+      "to": [{"name": "Ralf Becker", "email": "ralf@example.org"}],
+      "cc": [],
+      "bcc": [],
+      "hasAttachment": false
+    }
+  },
+  "position": 0,
+  "total": 42
+}
+```
+</details>
+
+#### **GET** `/mail[/<id>]/folders/<folderId>/emails/<emailId>` get a single email
+
+<details>
+  <summary>Example: Retrieving a single email with its body</summary>
+
+Query parameters:
+- `properties`: comma-separated list of `Email` properties - default adds `bodyStructure`, `textBody`,
+  `htmlBody`, `attachments`, `bodyValues` (with `fetchAllBodyValues`) to the list-view default above
+
+```
+curl -i https://example.org/egroupware/groupdav.php/mail/folders/<folderId>/emails/<emailId> --user <user> -H 'Accept: application/json'
+
+HTTP/1.1 200 Ok
+Content-Type: application/json
+
+{
+  "id": "<emailId>",
+  "mailboxIds": {"<folderId>": true},
+  "keywords": {"$seen": true},
+  "size": 4821,
+  "receivedAt": "2026-09-09T08:12:00Z",
+  "sentAt": "2026-09-09T08:11:52Z",
+  "subject": "Re: Contract Installation",
+  "from": [{"name": "Jane Doe", "email": "jane@example.org"}],
+  "to": [{"name": "Ralf Becker", "email": "ralf@example.org"}],
+  "cc": [],
+  "bcc": [],
+  "hasAttachment": true,
+  "bodyStructure": {"partId": "1", "type": "multipart/mixed", "subParts": ["..."]},
+  "textBody": [{"partId": "2", "type": "text/plain"}],
+  "htmlBody": [{"partId": "3", "type": "text/html"}],
+  "bodyValues": {"2": {"value": "Hi Ralf,\n\n...", "isTruncated": false}, "3": {"value": "<p>Hi Ralf,</p>...", "isTruncated": false}},
+  "attachments": [
+    {"partId": "4", "blobId": "<blobId>", "name": "contract.pdf", "type": "application/pdf", "size": 102400, "cid": null}
+  ]
+}
+```
+> This is genuine JMAP body shape (`bodyStructure`/`bodyValues` keyed by `partId`), not a flattened
+> plain-string simplification - proxied as-is from the account's JMAP session.
+</details>
+
+#### **GET** `/mail[/<id>]/folders/<folderId>/emails/<emailId>/attachments/<blobId>` download attachment content
+
+<details>
+  <summary>Example: Downloading an attachment found in an email's `attachments[]` list</summary>
+
+```
+curl -i https://example.org/egroupware/groupdav.php/mail/folders/<folderId>/emails/<emailId>/attachments/<blobId> --user <user>
+
+HTTP/1.1 200 Ok
+Content-Type: application/pdf
+Content-Disposition: attachment; filename="contract.pdf"
+
+<binary content>
+```
+> An inline image referenced via `cid:` in `htmlBody` is resolved the same way a real JMAP client would:
+> match the `cid` against an entry in `attachments[]`, then download it here by its `blobId`. This API
+> does not rewrite `cid:` references itself.
 </details>

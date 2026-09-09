@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "EGroupware Mail REST API",
-    "description": "REST API for the EGroupware Mail application. Supports sending mail, launching compose windows, viewing EML files, uploading attachments, and managing vacation notices.",
+    "description": "REST API for the EGroupware Mail application. Supports sending mail, launching compose windows, viewing EML files, uploading attachments, and managing vacation notices. Also documents (tag 'Mail Folders/Emails (JMAP-lite, planned)') a planned, not-yet-implemented set of read-only endpoints to list folders and emails using field names modeled on JMAP's Mailbox/Email objects - not a full JMAP implementation, see doc/ai/projects/mail-rest-jmap-lite.md.",
     "version": "1.0.0",
     "contact": {
       "name": "EGroupware",
@@ -713,6 +713,307 @@
           }
         }
       }
+    },
+    "/mail/folders": {
+      "get": {
+        "tags": ["Mail Folders/Emails (JMAP-lite, planned)"],
+        "operationId": "listMailFolders",
+        "summary": "List folders (mailboxes) for the default identity",
+        "description": "PLANNED, NOT YET IMPLEMENTED. Proxies the account's real JMAP session (Http for Stalwart, or the local JmapShim for plain-IMAP accounts) - not a hand-picked field subset. See doc/ai/projects/mail-rest-jmap-lite.md.",
+        "parameters": [
+          { "$ref": "#/components/parameters/properties" },
+          { "$ref": "#/components/parameters/subscribedOnly" },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string", "enum": ["application/json"] }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of folders",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/MailboxListResponse" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
+    },
+    "/mail/{id}/folders": {
+      "get": {
+        "tags": ["Mail Folders/Emails (JMAP-lite, planned)"],
+        "operationId": "listMailFoldersFor",
+        "summary": "List folders (mailboxes) for a specific identity",
+        "description": "PLANNED, NOT YET IMPLEMENTED. Same as GET /mail/folders, for the specified mail identity. See doc/ai/projects/mail-rest-jmap-lite.md.",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" },
+          { "$ref": "#/components/parameters/properties" },
+          { "$ref": "#/components/parameters/subscribedOnly" },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string", "enum": ["application/json"] }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of folders",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/MailboxListResponse" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
+    },
+    "/mail/folders/{folderId}": {
+      "get": {
+        "tags": ["Mail Folders/Emails (JMAP-lite, planned)"],
+        "operationId": "getMailFolder",
+        "summary": "Get a single folder",
+        "description": "PLANNED, NOT YET IMPLEMENTED. Returns one Mailbox object by id, for the default identity, proxied from the account's JMAP session. See doc/ai/projects/mail-rest-jmap-lite.md.",
+        "parameters": [
+          { "$ref": "#/components/parameters/folderId" },
+          { "$ref": "#/components/parameters/properties" },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string", "enum": ["application/json"] }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Folder details",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Mailbox" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/mail/{id}/folders/{folderId}": {
+      "get": {
+        "tags": ["Mail Folders/Emails (JMAP-lite, planned)"],
+        "operationId": "getMailFolderFor",
+        "summary": "Get a single folder for a specific identity",
+        "description": "PLANNED, NOT YET IMPLEMENTED. Same as GET /mail/folders/{folderId}, for the specified mail identity. See doc/ai/projects/mail-rest-jmap-lite.md.",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" },
+          { "$ref": "#/components/parameters/folderId" },
+          { "$ref": "#/components/parameters/properties" },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string", "enum": ["application/json"] }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Folder details",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Mailbox" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/mail/folders/{folderId}/emails": {
+      "get": {
+        "tags": ["Mail Folders/Emails (JMAP-lite, planned)"],
+        "operationId": "listMailFolderEmails",
+        "summary": "List emails in a folder",
+        "description": "PLANNED, NOT YET IMPLEMENTED. Proxies the account's real JMAP session's Email/query + Email/get - not a hand-picked field subset. See doc/ai/projects/mail-rest-jmap-lite.md.",
+        "parameters": [
+          { "$ref": "#/components/parameters/folderId" },
+          { "$ref": "#/components/parameters/properties" },
+          { "$ref": "#/components/parameters/position" },
+          { "$ref": "#/components/parameters/limit" },
+          { "$ref": "#/components/parameters/sort" },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string", "enum": ["application/json"] }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of emails",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/EmailListResponse" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/mail/{id}/folders/{folderId}/emails": {
+      "get": {
+        "tags": ["Mail Folders/Emails (JMAP-lite, planned)"],
+        "operationId": "listMailFolderEmailsFor",
+        "summary": "List emails in a folder for a specific identity",
+        "description": "PLANNED, NOT YET IMPLEMENTED. Same as GET /mail/folders/{folderId}/emails, for the specified mail identity. See doc/ai/projects/mail-rest-jmap-lite.md.",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" },
+          { "$ref": "#/components/parameters/folderId" },
+          { "$ref": "#/components/parameters/properties" },
+          { "$ref": "#/components/parameters/position" },
+          { "$ref": "#/components/parameters/limit" },
+          { "$ref": "#/components/parameters/sort" },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string", "enum": ["application/json"] }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of emails",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/EmailListResponse" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/mail/folders/{folderId}/emails/{emailId}": {
+      "get": {
+        "tags": ["Mail Folders/Emails (JMAP-lite, planned)"],
+        "operationId": "getMailEmail",
+        "summary": "Get a single email",
+        "description": "PLANNED, NOT YET IMPLEMENTED. Returns one Email object, proxied from the account's JMAP session - genuine JMAP body shape (bodyStructure/bodyValues by partId) when body properties are requested, not a flattened simplification. See doc/ai/projects/mail-rest-jmap-lite.md.",
+        "parameters": [
+          { "$ref": "#/components/parameters/folderId" },
+          { "$ref": "#/components/parameters/emailId" },
+          { "$ref": "#/components/parameters/properties" },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string", "enum": ["application/json"] }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Email details",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Email" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/mail/{id}/folders/{folderId}/emails/{emailId}": {
+      "get": {
+        "tags": ["Mail Folders/Emails (JMAP-lite, planned)"],
+        "operationId": "getMailEmailFor",
+        "summary": "Get a single email for a specific identity",
+        "description": "PLANNED, NOT YET IMPLEMENTED. Same as GET /mail/folders/{folderId}/emails/{emailId}, for the specified mail identity. See doc/ai/projects/mail-rest-jmap-lite.md.",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" },
+          { "$ref": "#/components/parameters/folderId" },
+          { "$ref": "#/components/parameters/emailId" },
+          { "$ref": "#/components/parameters/properties" },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string", "enum": ["application/json"] }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Email details",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Email" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/mail/folders/{folderId}/emails/{emailId}/attachments/{blobId}": {
+      "get": {
+        "tags": ["Mail Folders/Emails (JMAP-lite, planned)"],
+        "operationId": "getMailAttachment",
+        "summary": "Download attachment content",
+        "description": "PLANNED, NOT YET IMPLEMENTED. Downloads raw attachment bytes by blobId (found in an email's attachments[] list), via a backend-uniform blob fetch (AttachmentJmap::fetchBlobBytes()). folderId/emailId are for discoverability/consistency only - the fetch itself only needs the account and blobId. See doc/ai/projects/mail-rest-jmap-lite.md.",
+        "parameters": [
+          { "$ref": "#/components/parameters/folderId" },
+          { "$ref": "#/components/parameters/emailId" },
+          { "$ref": "#/components/parameters/blobId" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Attachment content",
+            "content": {
+              "*/*": {
+                "schema": { "type": "string", "format": "binary" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/mail/{id}/folders/{folderId}/emails/{emailId}/attachments/{blobId}": {
+      "get": {
+        "tags": ["Mail Folders/Emails (JMAP-lite, planned)"],
+        "operationId": "getMailAttachmentFor",
+        "summary": "Download attachment content for a specific identity",
+        "description": "PLANNED, NOT YET IMPLEMENTED. Same as GET /mail/folders/{folderId}/emails/{emailId}/attachments/{blobId}, for the specified mail identity. See doc/ai/projects/mail-rest-jmap-lite.md.",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" },
+          { "$ref": "#/components/parameters/folderId" },
+          { "$ref": "#/components/parameters/emailId" },
+          { "$ref": "#/components/parameters/blobId" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Attachment content",
+            "content": {
+              "*/*": {
+                "schema": { "type": "string", "format": "binary" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
     }
   },
   "components": {
@@ -732,6 +1033,62 @@
           "type": "integer"
         },
         "description": "Mail identity ID"
+      },
+      "folderId": {
+        "name": "folderId",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "string" },
+        "description": "Opaque folder id, as returned by GET /mail/folders. Never construct or parse this value - always echo one previously returned by this API."
+      },
+      "emailId": {
+        "name": "emailId",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "string" },
+        "description": "Opaque email id, as returned by GET /mail/folders/{folderId}/emails. Never construct or parse this value - always echo one previously returned by this API."
+      },
+      "blobId": {
+        "name": "blobId",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "string" },
+        "description": "Opaque attachment blob id, as found in an Email object's attachments[].blobId. Never construct or parse this value - always echo one previously returned by this API."
+      },
+      "properties": {
+        "name": "properties",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "string" },
+        "description": "Comma-separated list of JMAP properties to return, forwarded verbatim to the underlying Mailbox/get or Email/get call (this API does not maintain its own fixed field subset). Omit for a backend-dependent default set of standard properties."
+      },
+      "subscribedOnly": {
+        "name": "subscribedOnly",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "boolean", "default": true },
+        "description": "Only list subscribed folders (default true), or all folders"
+      },
+      "position": {
+        "name": "position",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "integer", "default": 0, "minimum": 0 },
+        "description": "Offset for paging (JMAP Email/query naming)"
+      },
+      "limit": {
+        "name": "limit",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "integer", "default": 50, "maximum": 200, "minimum": 1 },
+        "description": "Max emails to return"
+      },
+      "sort": {
+        "name": "sort",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "string", "default": "receivedAt desc" },
+        "description": "Sort order, e.g. 'receivedAt desc' (default) or 'receivedAt asc'"
       }
     },
     "schemas": {
@@ -1015,6 +1372,116 @@
             "description": "Error message"
           }
         }
+      },
+      "Mailbox": {
+        "type": "object",
+        "description": "PLANNED, NOT YET IMPLEMENTED. Proxied from the account's real JMAP session (Http for Stalwart, JmapShim for plain IMAP) - not a hand-picked field subset; additional properties beyond the ones listed here may be present or absent depending on backend and the `properties` query parameter. id/parentId are the session's own ids (real JMAP ids for Stalwart, base64(folder path) for the shim) - always treat as opaque. myRights/totalThreads/unreadThreads are only present for a Stalwart-backed (real JMAP) account; hasChildren/aclCapable are shim-only extras with no RFC 8621 counterpart.",
+        "properties": {
+          "id": { "type": "string", "description": "Opaque folder id" },
+          "name": { "type": "string", "description": "Display name of just this folder (not the full path)" },
+          "parentId": { "type": ["string", "null"], "description": "Id of the parent folder, or null for a top-level folder" },
+          "role": {
+            "type": ["string", "null"],
+            "description": "Best-effort role, derived from the account's configured special folders"
+          },
+          "totalEmails": { "type": "integer" },
+          "unreadEmails": { "type": "integer" },
+          "totalThreads": { "type": "integer", "description": "Stalwart/real-JMAP accounts only" },
+          "unreadThreads": { "type": "integer", "description": "Stalwart/real-JMAP accounts only" },
+          "myRights": { "type": "object", "description": "Stalwart/real-JMAP accounts only" },
+          "isSubscribed": { "type": "boolean" }
+        },
+        "additionalProperties": true
+      },
+      "MailboxListResponse": {
+        "type": "object",
+        "description": "PLANNED, NOT YET IMPLEMENTED.",
+        "properties": {
+          "responses": {
+            "type": "object",
+            "additionalProperties": { "$ref": "#/components/schemas/Mailbox" },
+            "description": "Map of resource path (e.g. '/mail/folders/<folderId>') to Mailbox object"
+          }
+        }
+      },
+      "EmailAddress": {
+        "type": "object",
+        "description": "JMAP EmailAddress object (RFC 8621 §4.1.2.3)",
+        "properties": {
+          "name": { "type": ["string", "null"] },
+          "email": { "type": "string" }
+        }
+      },
+      "EmailListItem": {
+        "type": "object",
+        "description": "PLANNED, NOT YET IMPLEMENTED. Proxied from the account's real JMAP session's Email/get - default list-view properties shown here, but the full set returned is controlled by the `properties` query parameter, same as real JMAP. id is the session's own id (real JMAP id for Stalwart, IMAP UID for the shim) - always treat as opaque.",
+        "properties": {
+          "id": { "type": "string", "description": "Opaque email id" },
+          "mailboxIds": {
+            "type": "object",
+            "additionalProperties": { "type": "boolean" },
+            "description": "Map of folder id -> true. Usually a single entry; may have more than one for a backend where a message can live in multiple mailboxes."
+          },
+          "keywords": {
+            "type": "object",
+            "additionalProperties": { "type": "boolean" },
+            "description": "JMAP keyword map, e.g. {\"$seen\": true, \"$flagged\": true}, translated from IMAP flags"
+          },
+          "size": { "type": "integer", "description": "Size in bytes" },
+          "receivedAt": { "type": "string", "format": "date-time" },
+          "sentAt": { "type": ["string", "null"], "format": "date-time" },
+          "subject": { "type": "string" },
+          "from": { "type": "array", "items": { "$ref": "#/components/schemas/EmailAddress" } },
+          "to": { "type": "array", "items": { "$ref": "#/components/schemas/EmailAddress" } },
+          "cc": { "type": "array", "items": { "$ref": "#/components/schemas/EmailAddress" } },
+          "bcc": { "type": "array", "items": { "$ref": "#/components/schemas/EmailAddress" } },
+          "replyTo": { "type": "array", "items": { "$ref": "#/components/schemas/EmailAddress" } },
+          "hasAttachment": { "type": "boolean" },
+          "preview": { "type": "string", "description": "Short plain-text snippet - only present when requested via the properties query parameter" },
+          "threadId": { "type": "string", "description": "Only present when requested via the properties query parameter - supported on both backends" }
+        },
+        "additionalProperties": true
+      },
+      "EmailListResponse": {
+        "type": "object",
+        "description": "PLANNED, NOT YET IMPLEMENTED.",
+        "properties": {
+          "responses": {
+            "type": "object",
+            "additionalProperties": { "$ref": "#/components/schemas/EmailListItem" },
+            "description": "Map of resource path (e.g. '/mail/folders/<folderId>/emails/<emailId>') to Email list-view object"
+          },
+          "position": { "type": "integer", "description": "Offset of the first returned email" },
+          "total": { "type": "integer", "description": "Total number of emails matching the query, ignoring position/limit" }
+        }
+      },
+      "EmailAttachment": {
+        "type": "object",
+        "description": "PLANNED, NOT YET IMPLEMENTED. Attachment metadata; the blobId downloads the actual content via GET .../emails/{emailId}/attachments/{blobId}.",
+        "properties": {
+          "partId": { "type": "string" },
+          "blobId": { "type": "string", "description": "Opaque blob id - pass to the attachment-download endpoint" },
+          "name": { "type": "string" },
+          "type": { "type": "string", "description": "MIME type" },
+          "size": { "type": "integer" },
+          "cid": { "type": ["string", "null"], "description": "Content-ID, for inline-referenced attachments (e.g. images referenced from htmlBody via cid:)" }
+        }
+      },
+      "Email": {
+        "description": "PLANNED, NOT YET IMPLEMENTED. Full single-resource Email object: EmailListItem fields plus genuine JMAP body fields (proxied as-is, not flattened) when requested via properties.",
+        "allOf": [
+          { "$ref": "#/components/schemas/EmailListItem" },
+          {
+            "type": "object",
+            "properties": {
+              "bodyStructure": { "type": "object", "description": "JMAP EmailBodyPart tree (RFC 8621 §4.1.4) - only present when requested via properties" },
+              "textBody": { "type": "array", "items": { "type": "object" }, "description": "JMAP EmailBodyPart references into bodyValues - only present when requested via properties" },
+              "htmlBody": { "type": "array", "items": { "type": "object" }, "description": "JMAP EmailBodyPart references into bodyValues - only present when requested via properties; inline cid: references are left unrewritten" },
+              "bodyValues": { "type": "object", "additionalProperties": { "type": "object" }, "description": "Map of partId -> {value, isTruncated, isEncodingProblem} (RFC 8621 §4.1.4) - only present when requested via properties" },
+              "attachments": { "type": "array", "items": { "$ref": "#/components/schemas/EmailAttachment" }, "description": "Only present when requested via properties" }
+            }
+          }
+        ]
       }
     },
     "responses": {
