@@ -7,10 +7,10 @@ same day (see below). **Phase 4 (unit tests) done for the verify engine + attach
 openpgp.js fixture - verified/tampered/inline-key/no-key/not-signed), `PgpSignatureArmorExtraction.
 test.ts` (the base64-CTE regression), and S/MIME's own attachment-hiding coverage in
 `CreateAttachmentBlockTest.php` (every `Mail\Smime::$SMIME_TYPES` control part, which also found +
-fixed a real array-reindexing bug in `createAttachmentBlock()`). Not yet covered: `findPgpSignaturePart()`/
-`sliceMultipartSigned()`/`extractMultipartSignedBoundary()` don't have their own isolated unit
-tests (only exercised indirectly via the end-to-end test above) - worth adding if either one grows
-another edge case. 4 follow-up items queued 2026-09-09 (Autocrypt key-import dialog, sending an
+fixed a real array-reindexing bug in `createAttachmentBlock()`); `findPgpSignaturePart()`/
+`sliceMultipartSigned()`/`extractMultipartSignedBoundary()` now have their own isolated unit tests
+too (`PgpSignatureStructureHelpers.test.ts`, 2026-09-09), closing the one gap the previous status
+note called out. 4 follow-up items queued 2026-09-09 (Autocrypt key-import dialog, sending an
 Autocrypt header, Mailvelope sign-on-send, reply/forward auto-matching signed/encrypted state) -
 see "Planned follow-up" below; item 4's PGP-encrypted half is now DONE + live-verified (2026-09-09,
 see its own entry), the other three (and item 4's PGP-signed half) still not started
