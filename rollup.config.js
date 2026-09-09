@@ -11,7 +11,7 @@
 
 import path from 'path';
 import babel from '@babel/core';
-import { readFileSync, readdirSync, statSync, unlinkSync, writeFileSync  } from "fs";
+import { readFileSync, readdirSync, statSync, unlinkSync, writeFileSync, renameSync  } from "fs";
 //import rimraf from 'rimraf';
 // Default import: terser 4.x ships a minified CJS bundle with no exports map, so Node
 // cannot detect its named exports and "import { minify }" fails to load this config.
@@ -263,9 +263,30 @@ const config = {
         // against the current build (a fresh page render) or not at all (ajax_exec, where the
         // client resolves against its own already-resident copy instead), so there is nothing to
         // keep a history of and nothing for the chunks/ GC to sweep here.
+        //
+        // Guards against a stale rebuild overwriting a fresher one (eg. two concurrent
+        // "rollup -cw" processes on the same tree): skip the write (both files, together)
+        // if this build's epoch is older than what's already on disk, and write each file
+        // via a same-directory temp file + rename so a concurrent reader never sees a
+        // half-written one.
         writeBundle () {
-            writeFileSync('./api/js/build-epoch.json', JSON.stringify({epoch: buildEpoch}));
-            writeFileSync('./api/js/build-manifest.json', JSON.stringify(entryManifest));
+            const epochPath = './api/js/build-epoch.json';
+            let existingEpoch = 0;
+            try {
+                existingEpoch = JSON.parse(readFileSync(epochPath, 'utf-8')).epoch || 0;
+            }
+            catch (e) {}
+            if (buildEpoch < existingEpoch)
+            {
+                return;
+            }
+            const atomicWrite = (path, content) => {
+                const tmpPath = path + '.' + process.pid + '.tmp';
+                writeFileSync(tmpPath, content);
+                renameSync(tmpPath, path);
+            };
+            atomicWrite(epochPath, JSON.stringify({epoch: buildEpoch}));
+            atomicWrite('./api/js/build-manifest.json', JSON.stringify(entryManifest));
         }
     }],
 
