@@ -13,7 +13,11 @@ too (`PgpSignatureStructureHelpers.test.ts`, 2026-09-09), closing the one gap th
 note called out. 4 follow-up items queued 2026-09-09 (Autocrypt key-import dialog, sending an
 Autocrypt header, Mailvelope sign-on-send, reply/forward auto-matching signed/encrypted state) -
 see "Planned follow-up" below; item 4's PGP-encrypted half is now DONE + live-verified (2026-09-09,
-see its own entry), the other three (and item 4's PGP-signed half) still not started
+see its own entry), the other three (and item 4's PGP-signed half) still not started. **Autocrypt
+integration (Phase 5) planned in full 2026-09-09** (own section further down) - consent dialog +
+preference, `Autocrypt`/`Autocrypt-Gossip` send+receive, `prefer-encrypt` storage, the
+multi-key-per-address storage fix, mutual-auto-encrypt preference, S/MIME auto-add-when-verified,
+and an explicit Level 1 spec gap/deviation audit - **plan only, no code written yet**.
 
 ### 2026-09-09 core-engine bugfix: base64-encoded signature parts
 
@@ -323,41 +327,12 @@ private-key/passphrase step at all:
 Three extensions ralf asked for on top of the done verify-only Phase 1-3 work above, testing of
 which he'll do "tomorrow" (i.e. after this note was written):
 
-1. **Autocrypt-driven key import from the unknown-key icon.** Today `pgp_sig_unknownkey`
-   (this project) and `smime_cert_unknownemail` (existing S/MIME code, `setSmimeFlags()`) just
-   render a purple/neutral icon with no click action - `setPgpSignatureFlags()`/`setSmimeFlags()`
-   already wire an `onclick` for their *other* states (`smimeCertAddToContact()` for S/MIME's
-   verified/notverified/notvalid cases - see `smime_signature`/`smime_encryption` `onclick` in
-   `setSmimeFlags()`, `mail/js/app.ts`). When the message carries an `Autocrypt:` header (the
-   [Autocrypt](https://autocrypt.org/level1.html) standard: `Autocrypt: addr=<email>;
-   keydata=<base64 key, no ASCII armor>`, optionally with a `prefer-encrypt` attribute) and no
-   matching key was found in the addressbook, clicking the icon should offer a dialog ("this
-   message includes a public key for %1, save it to the addressbook?") rather than the icon
-   staying inert. Needs: (a) surfacing the raw `Autocrypt` header value up to the client - check
-   whether JMAP `Email/get`'s `header:Autocrypt:asText` (RFC 8621 §4.1.3 convenience property) is
-   already exposed anywhere in `MailJmap`, or needs adding to the `properties` list fetched in
-   `verifyPgpSignature()`/the S/MIME equivalent; (b) decoding the `keydata=` value (base64 -> raw
-   OpenPGP key bytes -> needs re-wrapping in ASCII armor, since `ajax_set_pgp_keys` and the
-   addressbook's stored-key format expect armored text, and `openpgp.js`'s own
-   `key.armor()`/`readKey({binaryKey})` can do that conversion); (c) an S/MIME equivalent needs its
-   own key-source, since Autocrypt itself is OpenPGP-only by spec - worth clarifying with ralf
-   whether "Autocrypt header" for the S/MIME case actually means a *different*, S/MIME-specific
-   convention (e.g. the sender's cert as a `smime.p7s`/`application/pkcs7-mime` attachment, which
-   S/MIME signed messages already carry) rather than a literal `Autocrypt:` header, since no such
-   header exists for S/MIME in any standard.
-2. **Sending an Autocrypt header on outgoing mail.** If the sending account has its own public key
-   stored in the addressbook (`Api\Contacts::FILES_PGP_PUBKEY` - the same store
-   `ajax_get_pgp_keys()`/`ajax_set_pgp_keys()` already read/write), add an `Autocrypt:` header to
-   outgoing mail carrying it (PGP case: literal Autocrypt spec, base64 raw key + `addr=`). Needs
-   the same "S/MIME equivalent" clarification as above - S/MIME doesn't have an Autocrypt-shaped
-   header/spec, so this may end up being "attach/reference the sender's cert" rather than a literal
-   header, unless ralf wants a custom (non-standard) analogous header. Likely lands in
-   `mail/js/compose.ts`'s `trySendViaJmap()`/`trySaveDraftViaJmap()` (where the PGP-encrypt-via-
-   Mailvelope call already happens) or server-side in `Api\Mail\Jmap\Imap::buildMailerFromEmailProperties()`
-   depending on whether it needs to run whether or not Mailvelope is even involved (an unsigned,
-   unencrypted plain outgoing mail should presumably still get the header if the account has a
-   published key - this is opportunistic key distribution, independent of whether *this particular
-   message* is signed/encrypted).
+1. **Autocrypt-driven key import from the unknown-key icon** and **sending an Autocrypt header on
+   outgoing mail** - both **superseded 2026-09-09** by the much more detailed "Autocrypt integration
+   (Phase 5)" plan further down this doc (consent dialog + preference, `Autocrypt-Gossip:` sending/
+   receiving, `prefer-encrypt` storage, the multi-key-per-address storage fix both PGP and S/MIME
+   need, and an explicit Level-1-spec gap audit) - see that section for the real plan, this entry
+   stays only as a pointer so old links/history still resolve.
 3. **Mailvelope: also PGP-sign outgoing mail, not just encrypt.** Today's Mailvelope integration
    (`mail/js/app.ts`'s `mailvelope_editor`, `mail/js/compose.ts`'s `trySendViaJmap()`/
    `trySaveDraftViaJmap()` - see [[mail-pgp-mailvelope-fixes]]) only ever calls
@@ -411,6 +386,221 @@ which he'll do "tomorrow" (i.e. after this note was written):
 
 None of items 1-3 has been designed in detail yet (no data-flow spike, no UI mock, no code) - that
 part of this section is still a plan-level placeholder capturing the ask, not an implementation.
+
+## Autocrypt integration (Phase 5) - plan only, 2026-09-09, nothing implemented yet
+
+Ralf's ask, verbatim (2026-09-09): attach an `Autocrypt:` header for our own key + `Autocrypt-Gossip:`
+headers for recipients' known keys on send; consume a replied/forwarded message's own
+`Autocrypt-Gossip:` headers as a key source for Mailvelope; ask-and-remember consent before storing
+a key learned this way; fix multi-key-per-contact storage for PGP *and* S/MIME; store `prefer-encrypt`
+alongside a stored key; audit against the [Autocrypt Level 1 spec](https://docs.autocrypt.org/level1.html)
+for gaps/contradictions; add a "mutual" auto-encrypt preference; auto-add a verified S/MIME sender's
+cert to an already-known contact without asking.
+
+### What Autocrypt actually is (spec summary, Level 1)
+
+Two headers, both `addr=...; [prefer-encrypt=mutual;] keydata=<base64>` shaped:
+
+- **`Autocrypt:`** - one per outgoing message, `addr` MUST equal the `From` address, `keydata` is
+  the *sender's own* public key. Sent unconditionally (not just to known peers) - this is what makes
+  it "opportunistic": every recipient of any mail from us learns our key, without ever asking them
+  first.
+- **`Autocrypt-Gossip:`** - one **per recipient** (`To`/`Cc`/`Reply-To`), each carrying *that
+  recipient's* key as this message's sender already knows it. **MUST be inside the encrypted MIME
+  payload, never in the plaintext outer headers** ("SHOULD NOT be added outside encrypted MIME part
+  to avoid leaking third-party metadata") - this is how a group conversation bootstraps everyone's
+  keys to everyone else without a directory lookup: if A encrypts to B and C, gossiping both of
+  their keys, B and C now each know the other's key too, enabling an encrypted reply-all.
+
+`prefer-encrypt=mutual` is a mutual opt-in signal: "if you (the peer) also prefer-encrypt=mutual,
+default new messages between us to encrypted." Absence means `nopreference` - never send any other
+value. The spec's own recommendation algorithm only turns encryption on by default when **both**
+sides have said `mutual` (or the message is itself a reply to something that was encrypted - already
+built, see item 4 above).
+
+Keydata is **not** the armored text we store today: "MUST consist of exactly five packets:
+signing-capable primary key, user ID, self-signature, encryption-capable subkey, binding signature.
+Content MUST be binary format (not ASCII-armored), then base64-encoded." A minimized, single-UID,
+single-subkey export - not whatever a real-world key (multiple UIDs, multiple subkeys, third-party
+signatures, revocations) actually contains.
+
+### Where our design deliberately diverges from Level 1 (and why)
+
+Level 1's own model is a **private, per-account, disposable cache** (`peers[addr]`) that updates
+itself silently on every incoming message, no user prompt ever, specifically to stay frictionless.
+Our addressbook is the opposite: a **shared, authoritative, multi-user contact store** - silently
+overwriting a shared contact's stored key from a header nobody reviewed is a materially bigger deal
+than Level 1's own throwaway cache. Ralf's ask/no-ask consent dialog + preference is a deliberate,
+correct adaptation for that context, not a spec gap to "fix" - documenting this explicitly so a
+later reviewer doesn't try to make this match the spec's own no-prompt design.
+
+Two consequences of that divergence, worth being explicit about:
+- We are **not** building the full `peers[addr]` state machine (`last_seen`/`autocrypt_timestamp`/
+  `gossip_timestamp`, "youngest header always wins" auto-overwrite, the 35-day staleness-discourage
+  rule). What we *are* building - explicit consent before ever touching the addressbook, backed by
+  the existing key-storage functions - covers the actually-wanted behavior (learn keys
+  opportunistically, but a human reviews what gets kept) without needing that machinery.
+- The spec's per-peer model has **exactly one key slot per address**, full stop ("Each peer indexed
+  by canonicalized email address has single `public_key` and single `gossip_key` ... No support for
+  multiple keys per peer in Level 1"). That's *consistent* with fixing our own per-CONTACT-RECORD
+  storage to be per-ADDRESS instead (see below) - a contact with a business and a home address is,
+  in Autocrypt's own terms, two separate peers, each with its own one key slot. It does **not**
+  justify multiple keys for the *same* address; "youngest wins" is the spec's answer to that, which
+  our own "ask before overwriting" consent step effectively replaces with a human decision instead.
+
+### 1. Fix: PGP/S-MIME key storage is per-contact-record, not per-address
+
+Confirmed in `addressbook_bo::set_keys()`/`get_keys()` (`addressbook/inc/class.addressbook_bo.inc.php`,
+shared by both `$pgp=true` and `$pgp=false`/S-MIME): a key is stored as a single VFS file
+(`Api\Link::vfs_path('addressbook', $contact['id'], $file)`, `$file` = `Api\Contacts::FILES_PGP_PUBKEY`
+or `FILES_SMIME_PUBKEY`) keyed purely by **contact id** - one file per contact, full stop. `get_keys()`
+already searches both `contact_email` *and* `contact_email_home` and can return the same stored
+content under either address, but there is only ever one thing stored: if a contact has a business
+and a home address using two *different* real-world keys, storing a key learned for one silently
+clobbers whatever was stored for the other the moment `set_keys()` runs again. This is the literal
+gap ralf flagged ("we already support 2 email addresses (business and home)") - confirmed real, not
+just theoretical, and it blocks both Autocrypt (business/home genuinely often use different keys)
+and the existing S/MIME manual-add flow equally.
+
+**Fix shape (needs a real spike before locking in, but the direction is clear)**: replace the bare
+single-key VFS file with a small structured store keyed by address - simplest option is a JSON file
+at the same VFS path (`{"business@x.com": {key: "-----BEGIN...", prefer_encrypt: "mutual"},
+"home@x.com": {...}}`), keeping `set_keys()`/`get_keys()`'s existing per-contact-id file location
+and ACL/backend dispatch (`pubkey_use_file()`) unchanged - only the *content* of that one file
+changes shape, and old single-armored-key files need a one-time read-side fallback (a file that
+doesn't parse as JSON is treated as "one key, address unknown" for backward compatibility with
+every contact that already has a key stored today). `ajax_get_pgp_keys()`/`ajax_set_pgp_keys()`'s
+own email|account_id -> key **map** shape already matches this per-address model on the wire; the
+contact-record storage layer underneath is the only thing that needs to change.
+
+### 2. Store `prefer-encrypt` as a comment, not a new column
+
+Ralf's own proposed shape - prepend a comment line to the stored key text rather than a new DB/VFS
+field: `# prefer-encrypt=mutual\n-----BEGIN PGP PUBLIC KEY BLOCK-----...`. Combined with the
+per-address JSON restructuring above, this naturally becomes a `prefer_encrypt` property alongside
+each address's `key` entry instead of a literal comment line - functionally the same "carry it with
+the key, no new schema" idea, just placed in the new structure rather than as literal prepended
+text. (If the multi-key fix above turns out to need more design time than the comment-prefix idea,
+the comment-prefix approach also works standalone against *today's* single-key-per-contact storage
+as a smaller first step - worth keeping in mind as a fallback ordering.)
+
+### 3. Sending: `Autocrypt:` (own key) and `Autocrypt-Gossip:` (recipients' keys)
+
+- **`Autocrypt:`** - if the sending identity's own account has a stored PGP public key (`ajax_get_pgp_keys()`
+  against the account's own email, or account keys may need their own lookup path - check), convert
+  it from our armored storage to Autocrypt's binary-minimized form (openpgp.js can read the armored
+  key and re-export/minimize it - needs confirming its API actually supports stripping down to the
+  mandated 5-packet shape, see the "real gaps" list below) and add the header. Include
+  `prefer-encrypt=mutual` only if the NEW "mutual" preference (item 8 below) is on for this account.
+  Unconditional per the spec (every outgoing message, not just to known Autocrypt peers) - matches
+  "opportunistic."
+- **`Autocrypt-Gossip:`** - one per `To`/`Cc` recipient whose key is in the addressbook, **only when
+  the message is actually being encrypted** (Mailvelope on) - per the spec, gossip headers belong
+  inside the plaintext MIME payload that then gets encrypted, never as a bare outer RFC 5322 header.
+  Concretely: build the `Autocrypt-Gossip:` header lines and prepend them to the plaintext body
+  `mail_plaintext`/`mail_htmltext` content **before** calling `mailvelope_editor.encrypt()`, so they
+  end up inside the ciphertext exactly as the spec requires - NOT alongside the outer `Autocrypt:`
+  header, which stays outside as normal. Needs checking exactly how Mailvelope's own editor
+  API/output represents the payload's own header block (does `encrypt()` let us inject arbitrary
+  header lines into the to-be-encrypted MIME part, or do we need to hand-assemble that part
+  ourselves before handing it to Mailvelope?) - a real unknown to resolve during implementation, not
+  assumed here.
+- Where in the send path: `MailJmap.createDraftEmail()`/`draftEmailProperties()` (`mail/js/jmap.ts`)
+  build the outgoing `Email/set` properties today: RFC 8621 §4.1.3's `header:<Name>:asRaw` property
+  shape is already used read-side in this file (`MDN_HEADER_PROPERTY`, `CONTENT_TYPE_HEADER_PROPERTY`)
+  - the write-side equivalent should work the same way for a single `Autocrypt:` header; **multiple**
+  same-named `Autocrypt-Gossip:` headers (one per recipient) may need an array-valued header
+  property or a different JMAP mechanism entirely - needs verifying against both Stalwart's real
+  JMAP and the local shim's own header-writing support before assuming either works.
+
+### 4. Receiving: use a replied/forwarded message's own `Autocrypt`/`Autocrypt-Gossip` headers as a key source
+
+When Mailvelope-composing a reply/forward (`mailvelopeCompose()`, `mail/js/app.ts` - already reads
+the quoted PGP-armored body out of the source message for the "reply to encrypted message" case),
+also parse that source message's own raw headers for `Autocrypt:` (the original sender's key -
+useful if the addressbook doesn't have it yet) and `Autocrypt-Gossip:` (other recipients' keys, if
+this was a group message) and feed anything found through the same consent-dialog path as item 5
+below, rather than silently trusting it. Per the spec's own robustness notes: **discard entirely**
+if more than one `Autocrypt:` header is present on the message (a spec-defined error condition, not
+just "take the first one"), and skip peer-state-relevant processing entirely for
+`multipart/report` messages (MDNs) and messages with more than one `From` address - both apply
+equally to us even without building the full peer-state machine, since they're about not trusting
+malformed/adversarial input, not about the state machine itself. Needs the reverse of item 3's
+binary-minimize conversion: base64-decode the header's `keydata`, then re-armor it (`key.armor()`)
+to match our own storage convention.
+
+### 5. Consent dialog + new preference
+
+Reuses `smimeCertAddToContact()`'s existing dialog shape (`mail/js/app.ts` - a "Close" / "Add this
+certificate into contact" `et2-dialog`, currently S/MIME-only, opened on click) as the template for
+a new PGP-key-consent dialog, but triggered differently: not on click, but automatically whenever a
+key was newly learned (via item 3's `Autocrypt:` header on an incoming message, or item 4's gossip
+parsing) for an address the addressbook has **no** stored key for yet - buttons **Yes / No / Never
+ask again**, matching ralf's own wording exactly (a 3rd button beyond the existing 2, or a
+dialog-level checkbox - needs a real UI decision when this gets built, not decided here). "Never ask
+again" persists into a new preference, mirroring the `previewPane` shape in `mail_hooks::settings()`
+(`mail/inc/class.mail_hooks.inc.php`): a `select` with `''` (default, ask every time) / `'never'`
+(never ask) - name TBD at implementation time (e.g. `autocrypt_ask_import`).
+
+### 6. New preference: "mutual" auto-encrypt
+
+A second new preference (checkbox or 3-way select, TBD): when on, and the current compose's
+recipient(s) all have a stored `prefer_encrypt=mutual` (item 2's storage) **and** our own account's
+own `Autocrypt:` header also carries `prefer-encrypt=mutual` (item 3), auto-enable the `pgp` toggle
+for a **new** compose (not just reply-to-encrypted, which is already built - see item 4 in the
+"Reply/forward auto-matches" entry above). Reuses the exact same `togglePgpEncrypt({checked: true})`
++ post-`bootstrapPromise` timing this session's reply/forward auto-encrypt work already established
+(`bootstrapComposePopup()`, `mail/js/app.ts`) - the recipient-population-must-finish-first and
+recipient-key-check-must-actually-run lessons from that work apply identically here, just with a
+different *reason* to decide `pgpEncrypted='1'` (stored `prefer_encrypt` match instead of "was the
+source message encrypted").
+
+### 7. S/MIME: auto-add a verified sender's cert to an already-known contact, no dialog
+
+Small addition to the existing S/MIME verify flow (`setSmimeFlags()`, `mail/js/app.ts`): when a
+message's S/MIME signature verifies (`data.verify` true) **and** the sender's email already matches
+an existing addressbook contact, call the same `ajax_smimeAddCertToContact` the dialog's "Add this
+certificate" button already uses, directly - skip the dialog entirely, since a *verified* signature
+from an *already-known* contact needs no extra confirmation (unlike an unknown/unverified one, which
+keeps today's click-to-add dialog unchanged). Also needs the same multi-key-per-address storage fix
+(item 1) - a contact with two addresses, each with their own real S/MIME cert, has exactly the same
+"second cert clobbers the first" problem PGP has today.
+
+### Other spec gaps/contradictions worth flagging now (not necessarily fixing in v1)
+
+- **Keydata must be minimized + binary, not our stored armored text.** The single biggest technical
+  gap: `Autocrypt:`/`Autocrypt-Gossip:` headers are NOT "base64 of whatever armored key we have" -
+  they're base64 of a specific, minimal 5-packet binary export. Needs real openpgp.js engineering
+  (read the stored key, produce a minimized single-UID/single-subkey binary export) before any
+  header can be legally emitted - this is not a formatting detail, a full multi-UID/multi-subkey key
+  sent as `keydata` violates the spec outright and other implementations may reject it.
+- **10 KiB header size cap** ("MUAs MUST NOT send headers exceeding 10 KiB including prefix and
+  folding whitespace") - should be a hard check before emitting any Autocrypt/Gossip header, skip
+  (don't truncate) and log if a key is too large after minimization.
+- **Address canonicalization** (lowercase local part, IDNA/punycode domain) needed when matching an
+  incoming header's `addr=` against addressbook email fields - `get_keys()` already lowercases for
+  its own search, worth confirming that's sufficient or needs extending for IDNA domains.
+- **Multiple accounts/aliases** - "Each account/alias MUST have distinct `accounts[from-addr]`
+  entry" - relevant since EGroupware mail accounts already support multiple identities; the "own
+  key for the Autocrypt header" lookup (item 3) must be keyed by the *actual From address being
+  sent from*, not a single fixed "the user's key," if a user has more than one configured identity.
+- **Not building**: the 35-day `autocrypt_timestamp`-vs-`last_seen` staleness/discourage heuristic,
+  Setup Message / Setup Code (transferring one's own key+secret between devices via a passphrase-
+  protected message) - both explicitly deferred, no ask for either today.
+
+### Suggested phasing (draft, not committed to)
+
+1. Spike the keydata minimize/binary-export + re-armor round trip in openpgp.js in isolation
+   (mirrors this project's own original Phase 1 spike approach) - the biggest unknown, should happen
+   before any UI work, same reasoning as the original signature-verification spike.
+2. Multi-key-per-address storage fix (item 1) - unblocks everything else, including the existing
+   S/MIME single-cert limitation, independently useful even without any Autocrypt work landing yet.
+3. Sending `Autocrypt:` (own key) - the simplest, most self-contained piece, no consent-dialog UI
+   needed (never touches another contact's stored data).
+4. Consent dialog + preference (item 5), then receiving/gossip-parsing (items 3's gossip half, 4) -
+   the two together are what actually needs the dialog.
+5. `prefer-encrypt` storage (item 2) + mutual auto-encrypt preference (item 6).
+6. S/MIME auto-add-when-verified (item 7) - small, independent, can land any time after item 1.
 
 ## Explicitly out of scope for this project
 
