@@ -1505,10 +1505,10 @@ export class MailCompose
 		// already uses (MailApp.pgpAutoOfferAddToContact(), mail/js/app.ts). Deliberately NOT
 		// awaited - this is a side offer, not something that should slow down or risk breaking the
 		// actual reply/forward bootstrap below if key parsing/dialog code throws; `.catch()` instead
-		// of letting a rejection go unhandled. NOT yet live-verified against a real Autocrypt-
-		// header-bearing message (none available 2026-09-09) - see AUTOCRYPT_HEADER_PROPERTY's own
-		// docblock (mail/js/jmap.ts) for the specific unconfirmed detail (Stalwart's exact
-		// echo-back key for this property).
+		// of letting a rejection go unhandled. The fetchForReply()/parseAutocryptHeader()/
+		// autocryptResultToPgpOffer() pipeline feeding this is live-verified against a real message +
+		// real Stalwart (see AUTOCRYPT_HEADER_PROPERTY's own docblock, mail/js/jmap.ts) - only this
+		// exact call site (the dialog/silent-add actually firing) wasn't itself clicked through live.
 		if (context.autocrypt)
 		{
 			MailJmap.autocryptResultToPgpOffer(context.autocrypt).then((offer) =>

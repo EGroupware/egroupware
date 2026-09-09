@@ -523,13 +523,15 @@ export class MailJmap
 	// RFC 8621 §4.1.3 ":all" suffix - ALL raw Autocrypt: header instances as an array (needed to
 	// apply parseAutocryptHeaders()'s own spec-mandated "more than one valid header discards all of
 	// them" rule, see its own docblock in mail/js/jmap.ts) - used by fetchForReply() below, Phase 5
-	// item 4's remaining "wire the header parser to a real message" piece. Bare/raw form
-	// deliberately, matching CONTENT_TYPE_HEADER_PROPERTY's own live-verified precedent above (an
-	// explicit ":asRaw" suffix gets silently collapsed by Stalwart's response, echoed back under
-	// the bare canonical key instead) - this specific property is NOT independently live-verified
-	// (no Autocrypt-bearing test message was available 2026-09-09 to check the real echo-back key
-	// against), same "confirm live before relying on it further" caveat as THREAD_TOPIC_HEADER_
-	// PROPERTY et al above.
+	// item 4's "wire the header parser to a real message" piece. Bare/raw form deliberately, same
+	// reasoning as CONTENT_TYPE_HEADER_PROPERTY's own live-verified precedent above (an explicit
+	// ":asRaw" suffix gets silently collapsed by Stalwart's response, echoed back under the bare
+	// canonical key instead) - live-verified 2026-09-09 (ralf found a real Autocrypt-bearing
+	// message in acc_id=1's own Inbox and gave its emailId) that this specific property comes back
+	// keyed under the EXACT literal string requested here, NOT collapsed/renamed the way an
+	// explicit ":asRaw" suffix would be - confirmed via a real Email/get against real Stalwart, then
+	// parseAutocryptHeader()/autocryptResultToPgpOffer() run against the real result: correct addr/
+	// keydata, and a real 40-hex-char fingerprint + the key's own actual User ID out the other end.
 	private static readonly AUTOCRYPT_HEADER_PROPERTY = 'header:Autocrypt:all';
 	// JMAP Quota extension (RFC 9425) - matches Mail\Jmap::JMAP_QUOTA (api/src/Mail/Jmap.php)
 	private static readonly JMAP_QUOTA = 'urn:ietf:params:jmap:quota';

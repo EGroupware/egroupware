@@ -26,10 +26,12 @@ an already-known contact, extended from S/MIME-only to BOTH S/MIME and PGP)** ar
 see their own phasing entries) - `Autocrypt-Gossip:` sending/receiving and item 6's mutual
 auto-encrypt preference are still plan only; item 2's `prefer-encrypt` storage now HAS a real
 caller (item 4's wiring, when a header carries `prefer-encrypt=mutual`) but nothing reads it back
-yet (item 6 is what would). **item 4's real-message wiring is NOT live-verified** (no
-Autocrypt-header-bearing test message was available 2026-09-09) - see its own entry for the
-specific unconfirmed detail. **Phase 5 step 2's alias-pointer storage rework (Phase G) is now also
-DONE (2026-09-09)** - see its own entry under item 1 below.
+yet (item 6 is what would). **Item 4's real-message wiring is now live-verified too** (2026-09-09,
+same day, against a real Autocrypt-header-bearing message ralf found in acc_id=1's own Inbox - see
+its own entry for the full console-verified confirmation) - only the UI dialog/silent-add trigger
+itself wasn't exercised live (deliberately, to avoid writing to ralf's real addressbook from a
+read-only check). **Phase 5 step 2's alias-pointer storage rework (Phase G) is now also DONE
+(2026-09-09)** - see its own entry under item 1 below.
 **Security fix (Phase H, DONE 2026-09-09)**: a signature/cert that cryptographically verifies but
 doesn't itself claim the message's From address is now shown as invalid, not verified, for both PGP
 and S/MIME - see its own section below, right before "Why this is even possible without Mailvelope".
@@ -718,18 +720,28 @@ the attribute to yet either). **First real caller of item 2's `prefer-encrypt` s
 work for it directly, but it lives INSIDE the decrypted MIME payload, not as a bare outer header -
 needs the decrypted-body access pattern, a genuinely separate piece of work from everything above).
 
-**Explicitly NOT live-verified (2026-09-09) - no Autocrypt-header-bearing test message was
-available** (ralf: *"unfortunately I have none, let's continue and I test later"*, re: item 5's own
-dialog, same constraint applies here): the exact JMAP echo-back key for `header:Autocrypt:all` is
-UNCONFIRMED against a real server - `CONTENT_TYPE_HEADER_PROPERTY`'s own docblock (`mail/js/
-jmap.ts`) documents a real, live-verified precedent of Stalwart silently collapsing an explicit
-`:asRaw` suffix and echoing a property back under a DIFFERENT (bare/canonical) key than requested;
-`AUTOCRYPT_HEADER_PROPERTY` was deliberately written in the bare/raw form to match that precedent,
-but has NOT itself been checked against a real response the way that property was. All of the pure
-logic (parsing, the skip-entirely guards, the keydata->armored-key->display-info conversion) IS
-unit-tested (`MailJmapFetchForReplyAutocrypt.test.ts`, `MailJmapAutocryptResultToPgpOffer.test.ts`)
-against MOCKED JMAP responses, which by construction can't catch a wrong property-name assumption -
-this needs a real live check before being trusted end-to-end.
+**Live-verified (2026-09-09)**, closing the gap above the same day it was written: ralf found a
+real Autocrypt-header-bearing message already sitting in acc_id=1's own Inbox (a 2009-vintage
+self-test, `Autocrypt: addr=rb@egroupware.org; keydata=...`, no `prefer-encrypt`) and gave its JMAP
+`emailId`. Checked directly via the browser console against the real, live Stalwart server (`Email/
+get` with the exact `AUTOCRYPT_HEADER_PROPERTY` string, then `MailJmap.parseAutocryptHeader()`/
+`autocryptResultToPgpOffer()` run against the real result, right in the page - not a mocked
+response): the response comes back keyed under the EXACT literal string requested,
+`"header:Autocrypt:all"` - **unlike** `CONTENT_TYPE_HEADER_PROPERTY`'s own documented gotcha (an
+explicit `:asRaw` suffix silently collapsed onto a different/bare key), this property is NOT
+collapsed/renamed by Stalwart, confirming `AUTOCRYPT_HEADER_PROPERTY`'s bare/raw-form choice was
+unnecessary caution that happened to also be correct. The array-of-one raw header string parsed
+correctly (`addr: "rb@egroupware.org"`, `preferEncrypt: "nopreference"`, matching the header's own
+content exactly), and converted correctly all the way through to a real, valid PGP key: a 40-hex-
+char fingerprint, `keyUid: "Ralf Becker <rb@egroupware.org>"` (the key's own REAL User ID, not a
+guess), and a properly-formed `-----BEGIN PGP PUBLIC KEY BLOCK-----` armored export. Every piece of
+item 4's wiring - the property request, the parser, and the keydata-to-armored-key-to-display-info
+conversion - is now confirmed correct against a real message and a real server, not just mocked
+unit tests. **Not itself tested**: actually clicking "reply" in the UI and observing
+`bootstrapReply()` → `pgpAutoOfferAddToContact()`'s own dialog/silent-add behavior fire for real -
+deliberately not triggered from this read-only console check, since `rb@egroupware.org` is ralf's
+own account address and letting the auto-add path run for real would write to his live addressbook
+without him driving it himself.
 
 ### 5. Consent dialog + new preference - DONE (2026-09-09), now fed by BOTH the inline-key case AND (same day, see item 4) Autocrypt headers
 
@@ -918,10 +930,11 @@ keeps today's click-to-add dialog unchanged). Also needs the same multi-key-per-
 4. Item 4 (BOTH the `Autocrypt:`-header-parsing logic AND wiring it to a real reply/forward source
    message), item 5's consent dialog + preference, and item 7's auto-add-for-known-contacts are ALL
    DONE (2026-09-09, see their own entries) - items 5/7 shipped as one shared, symmetric S/MIME+PGP
-   mechanism, fed by both the inline-key case AND real Autocrypt headers. **Not live-verified** - no
-   test message was available (see item 4's own entry for the specific unconfirmed JMAP property
-   detail). Still not started: `Autocrypt-Gossip:` sending AND receiving (item 3's other half, and
-   the receiving side needs the decrypted-body access pattern item 4's own entry describes).
+   mechanism, fed by both the inline-key case AND real Autocrypt headers. **Live-verified same day**
+   against a real message + real Stalwart server (item 4's own entry has the full confirmation) -
+   only the UI dialog/silent-add trigger itself wasn't clicked through live. Still not started:
+   `Autocrypt-Gossip:` sending AND receiving (item 3's other half, and the receiving side needs the
+   decrypted-body access pattern item 4's own entry describes).
 5. `prefer-encrypt` **storage** (item 2) is DONE (2026-09-09, see its own entry), and as of item 4's
    wiring above now has its first real WRITER too (`ajax_pgpAddKeyToContact` calls
    `set_autocrypt_attributes()` when a header carries `prefer-encrypt=mutual`) - what's left is
