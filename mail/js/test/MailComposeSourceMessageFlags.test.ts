@@ -237,7 +237,7 @@ describe("MailCompose bootstrap populates sourceMessagesToFlag", () =>
 			mimeType : 'plain', body : 'the original body', profileID : '1',
 			inReplyTo : ['msg1@example.com'], references : ['msg1@example.com'],
 			attachments : [],
-			threadTopic : null, threadIndex : null, listId : null,
+			threadTopic : null, threadIndex : null, listId : null, autocrypt : null,
 			...overrides,
 		};
 	}

@@ -1499,6 +1499,23 @@ export class MailCompose
 			this.egw.message(this.egw.lang('Failed to load original message(s)'), 'error');
 			return;
 		}
+		// Autocrypt Phase 5 item 4's remaining wiring (2026-09-09, doc/ai/projects/
+		// mail-pgp-signature-verification.md) - a valid `Autocrypt:` header on the message being
+		// replied/forwarded to feeds the SAME consent-dialog/auto-add mechanism the inline-key case
+		// already uses (MailApp.pgpAutoOfferAddToContact(), mail/js/app.ts). Deliberately NOT
+		// awaited - this is a side offer, not something that should slow down or risk breaking the
+		// actual reply/forward bootstrap below if key parsing/dialog code throws; `.catch()` instead
+		// of letting a rejection go unhandled. NOT yet live-verified against a real Autocrypt-
+		// header-bearing message (none available 2026-09-09) - see AUTOCRYPT_HEADER_PROPERTY's own
+		// docblock (mail/js/jmap.ts) for the specific unconfirmed detail (Stalwart's exact
+		// echo-back key for this property).
+		if (context.autocrypt)
+		{
+			MailJmap.autocryptResultToPgpOffer(context.autocrypt).then((offer) =>
+			{
+				if (offer) this.app.pgpAutoOfferAddToContact({...offer, preferEncrypt: context.autocrypt.preferEncrypt});
+			}).catch((e) => console.error('MailCompose.bootstrapReply(): Autocrypt key offer failed', e));
+		}
 		const isForward = mode === 'forward';
 		// classic mail_compose.inc.php's own $isReply flag (getComposeFrom()) is set for an inline
 		// forward too, not just a true reply - it really means "quote-style compose", governing

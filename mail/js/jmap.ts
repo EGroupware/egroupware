@@ -233,6 +233,18 @@ export interface JmapReplyContext
 	threadTopic : string | null;
 	threadIndex : string | null;
 	listId : string | null;
+	/**
+	 * A successfully-parsed `Autocrypt:` header from the ORIGINAL (source) message being
+	 * replied/forwarded - Autocrypt Phase 5 item 4's remaining wiring (doc/ai/projects/
+	 * mail-pgp-signature-verification.md), consumed by MailCompose.bootstrapReply() (`mail/js/
+	 * compose.ts`) to feed the SAME consent-dialog/auto-add mechanism (`pgpAutoOfferAddToContact()`,
+	 * `mail/js/app.ts`) item 5/7's inline-key case already uses - see
+	 * MailJmap.autocryptResultToPgpOffer() for the conversion. null when there's no valid header,
+	 * MORE than one valid header (parseAutocryptHeaders()'s own spec-mandated "discard all" rule),
+	 * or the message has anything other than exactly one `From` address (Level 1's own "skip
+	 * peer-state-relevant processing" rule for a malformed/adversarial multi-From message).
+	 */
+	autocrypt : AutocryptHeaderResult | null;
 }
 
 /** Result of MailJmap.fetchBody() - see that method's docblock */
@@ -508,6 +520,17 @@ export class MailJmap
 	private static readonly THREAD_TOPIC_HEADER_PROPERTY = 'header:thread-topic:asText';
 	private static readonly THREAD_INDEX_HEADER_PROPERTY = 'header:thread-index:asText';
 	private static readonly LIST_ID_HEADER_PROPERTY = 'header:list-id:asText';
+	// RFC 8621 §4.1.3 ":all" suffix - ALL raw Autocrypt: header instances as an array (needed to
+	// apply parseAutocryptHeaders()'s own spec-mandated "more than one valid header discards all of
+	// them" rule, see its own docblock in mail/js/jmap.ts) - used by fetchForReply() below, Phase 5
+	// item 4's remaining "wire the header parser to a real message" piece. Bare/raw form
+	// deliberately, matching CONTENT_TYPE_HEADER_PROPERTY's own live-verified precedent above (an
+	// explicit ":asRaw" suffix gets silently collapsed by Stalwart's response, echoed back under
+	// the bare canonical key instead) - this specific property is NOT independently live-verified
+	// (no Autocrypt-bearing test message was available 2026-09-09 to check the real echo-back key
+	// against), same "confirm live before relying on it further" caveat as THREAD_TOPIC_HEADER_
+	// PROPERTY et al above.
+	private static readonly AUTOCRYPT_HEADER_PROPERTY = 'header:Autocrypt:all';
 	// JMAP Quota extension (RFC 9425) - matches Mail\Jmap::JMAP_QUOTA (api/src/Mail/Jmap.php)
 	private static readonly JMAP_QUOTA = 'urn:ietf:params:jmap:quota';
 	// Per-profile cache of getQuota()'s formatted result - refreshQuotaDisplay() (app.ts)
@@ -2885,7 +2908,8 @@ export class MailJmap
 				properties: ['from', 'to', 'cc', 'bcc', 'replyTo', 'subject', 'sentAt', 'receivedAt',
 					'messageId', 'references', 'bodyStructure', 'textBody', 'htmlBody', 'bodyValues',
 					'attachments', MailJmap.THREAD_TOPIC_HEADER_PROPERTY, MailJmap.THREAD_INDEX_HEADER_PROPERTY,
-					MailJmap.LIST_ID_HEADER_PROPERTY],
+					MailJmap.LIST_ID_HEADER_PROPERTY, MailJmap.AUTOCRYPT_HEADER_PROPERTY,
+					MailJmap.CONTENT_TYPE_HEADER_PROPERTY],
 				fetchAllBodyValues: true,
 			};
 			if (token.isLocal)
@@ -2943,6 +2967,18 @@ export class MailJmap
 				.filter((a : any) => !(a.cid && /^image\//i.test(a.type || '')) || a.disposition === 'attachment')
 				.map((a : any) => ({blobId: a.blobId, name: a.name || '', type: a.type || 'application/octet-stream', size: a.size || 0}));
 
+			// Autocrypt Level 1's own "skip peer-state-relevant processing entirely" rule for
+			// content this pure header-level parser can't itself judge as trustworthy: a
+			// multipart/report (auto-generated, eg. an MDN) message, or one claiming more than one
+			// From address (both are about not trusting malformed/adversarial input, unrelated to
+			// whether the header itself parses cleanly) - see parseAutocryptHeaders()'s own docblock
+			// for the multiple-HEADER rule this is layered on top of.
+			const contentType = String(email[MailJmap.CONTENT_TYPE_HEADER_PROPERTY] || '').toLowerCase();
+			const fromAddresses : string[] = (email.from || []).map((a : any) => a.email);
+			const autocryptHeaders : string[] = email[MailJmap.AUTOCRYPT_HEADER_PROPERTY] || [];
+			const autocrypt = !contentType.startsWith('multipart/report') && fromAddresses.length === 1 && autocryptHeaders.length ?
+				MailJmap.parseAutocryptHeaders(autocryptHeaders, fromAddresses[0]) : null;
+
 			return {
 				from: email.from || [],
 				to: email.to || [],
@@ -2960,6 +2996,7 @@ export class MailJmap
 				threadTopic: email[MailJmap.THREAD_TOPIC_HEADER_PROPERTY] || null,
 				threadIndex: email[MailJmap.THREAD_INDEX_HEADER_PROPERTY] || null,
 				listId: email[MailJmap.LIST_ID_HEADER_PROPERTY] || null,
+				autocrypt,
 			};
 		}
 		catch (e)
@@ -3440,6 +3477,34 @@ export class MailJmap
 		}
 		const key = await openpgp.readKey({binaryKey: binary});
 		return key.armor();
+	}
+
+	/**
+	 * Convert a successfully-parsed `Autocrypt:` header (parseAutocryptHeader()'s own result) into
+	 * the `{email, armoredKey, keyFingerprint, keyUid}` shape MailApp.pgpAutoOfferAddToContact()/
+	 * pgpKeyAddToContact() (`mail/js/app.ts`) already expect - the SAME shape `verifyPgpSignature()`
+	 * populates for its own `keySource==='inline'` case, so both key-discovery sources (a message's
+	 * own inline attachment, or its `Autocrypt:` header) feed the identical consent-dialog/auto-add
+	 * mechanism without that code needing to know which one it came from.
+	 *
+	 * @return null if the re-armored key can't be parsed back (shouldn't happen for a
+	 *  spec-compliant `keydata=`, but never trust externally-supplied bytes without checking)
+	 */
+	static async autocryptResultToPgpOffer(result : AutocryptHeaderResult) :
+		Promise<{email : string, armoredKey : string, keyFingerprint : string, keyUid : string} | null>
+	{
+		try
+		{
+			const armoredKey = await MailJmap.autocryptKeydataToArmoredKey(result.keydata);
+			const openpgp = await MailJmap.loadOpenpgp();
+			const key = await openpgp.readKey({armoredKey});
+			return {armoredKey, email: result.addr, keyFingerprint: key.getFingerprint(), keyUid: key.getUserIDs()[0] || ''};
+		}
+		catch (e)
+		{
+			console.error('MailJmap.autocryptResultToPgpOffer(): failed to parse keydata', e);
+			return null;
+		}
 	}
 
 	/**

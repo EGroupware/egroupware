@@ -97,6 +97,7 @@ function fakeContext(overrides : Partial<JmapReplyContext> = {}) : JmapReplyCont
 		threadTopic: null,
 		threadIndex: null,
 		listId: null,
+		autocrypt: null,
 		...overrides,
 	};
 }

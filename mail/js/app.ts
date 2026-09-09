@@ -8837,15 +8837,23 @@ export class MailApp extends EgwApp
 	 * (item 7's "already-known contact, no dialog" auto-add + item 5's now-auto-triggered consent
 	 * dialog, sharing the SAME `smime_pgp_add_contact` "never ask" preference).
 	 *
-	 * @param {PgpSignatureResult} _data verifyPgpSignature()'s own result - armoredKey/keyFingerprint/
-	 *  keyUid are guaranteed present (setPgpSignatureFlags() only calls this when they are)
+	 * Two callers feed this the same `{email, armoredKey, keyFingerprint, keyUid}` shape from two
+	 * different key-discovery sources: setPgpSignatureFlags() (a verified message's own inline
+	 * `application/pgp-keys` attachment - `PgpSignatureResult`, no `preferEncrypt` concept at all)
+	 * and MailCompose.bootstrapReply() (`mail/js/compose.ts` - an incoming `Autocrypt:` header,
+	 * MailJmap.autocryptResultToPgpOffer() plus its own `preferEncrypt`, item 4's remaining wiring,
+	 * 2026-09-09 - NOT yet live-verified against a real Autocrypt-header-bearing message).
+	 *
+	 * @param {object} _data {email, armoredKey, keyFingerprint, keyUid, preferEncrypt?} - preferEncrypt
+	 *  is optional/only ever `'mutual'` (item 6's own storage, `ajax_pgpAddKeyToContact`) - absent
+	 *  for the inline-key case, which has no such concept
 	 */
 	pgpAutoOfferAddToContact(_data)
 	{
 		if (egwIsMobile()) return;
 		const self = this;
 		this.egw.json('mail.EGroupware\\Mail\\Ui.ajax_pgpAddKeyToContact',
-			{email: _data.email, armoredKey: _data.armoredKey}, (_result) =>
+			{email: _data.email, armoredKey: _data.armoredKey, preferEncrypt: _data.preferEncrypt}, (_result) =>
 		{
 			if (_result)
 			{
@@ -8914,7 +8922,7 @@ export class MailApp extends EgwApp
 				if (_button_id == 'contact' && _value)
 				{
 					self.egw.json('mail.EGroupware\\Mail\\Ui.ajax_pgpAddKeyToContact',
-						{email: _data.email, armoredKey: _data.armoredKey}, (_result) =>
+						{email: _data.email, armoredKey: _data.armoredKey, preferEncrypt: _data.preferEncrypt}, (_result) =>
 					{
 						if (!_result)
 						{

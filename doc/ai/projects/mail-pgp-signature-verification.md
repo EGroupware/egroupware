@@ -19,15 +19,17 @@ preference, `Autocrypt`/`Autocrypt-Gossip` send+receive, `prefer-encrypt` storag
 multi-key-per-address storage fix, mutual-auto-encrypt preference, S/MIME auto-add-when-verified,
 and an explicit Level 1 spec gap/deviation audit. Phase 5 steps 1 (keydata minimize/re-armor), 2
 (multi-key-per-address addressbook storage, **now including its `prefer-encrypt`-attribute storage
-half too**), **3's `Autocrypt:`-sending half, 4's pure header-parsing logic, 5 (consent dialog +
-preference, triggered by the already-working inline-key case rather than Autocrypt headers - see
-its own entry for why), and 7 (auto-add for an already-known contact, extended from S/MIME-only to
-BOTH S/MIME and PGP)** are DONE (2026-09-09, see their own phasing entries) - `Autocrypt-Gossip:`
-sending, actually wiring item 4's header parser to a real incoming message's Autocrypt HEADER
-specifically (item 5's dialog itself already ships, just not fed by that source yet), and item 6's
-mutual auto-encrypt preference are still plan only; the new `prefer-encrypt` storage API from item 2
-still has no caller (item 6 is what would set it). **Phase 5 step 2's alias-pointer storage rework
-(Phase G) is now also DONE (2026-09-09)** - see its own entry under item 1 below.
+half too**), **3's `Autocrypt:`-sending half, 4 (both the header-parsing logic AND wiring it to a
+real reply/forward source message - only `Autocrypt-Gossip:` itself remains), 5 (consent dialog +
+preference, fed by both the inline-key case AND, now, real Autocrypt headers), and 7 (auto-add for
+an already-known contact, extended from S/MIME-only to BOTH S/MIME and PGP)** are DONE (2026-09-09,
+see their own phasing entries) - `Autocrypt-Gossip:` sending/receiving and item 6's mutual
+auto-encrypt preference are still plan only; item 2's `prefer-encrypt` storage now HAS a real
+caller (item 4's wiring, when a header carries `prefer-encrypt=mutual`) but nothing reads it back
+yet (item 6 is what would). **item 4's real-message wiring is NOT live-verified** (no
+Autocrypt-header-bearing test message was available 2026-09-09) - see its own entry for the
+specific unconfirmed detail. **Phase 5 step 2's alias-pointer storage rework (Phase G) is now also
+DONE (2026-09-09)** - see its own entry under item 1 below.
 **Security fix (Phase H, DONE 2026-09-09)**: a signature/cert that cryptographically verifies but
 doesn't itself claim the message's From address is now shown as invalid, not verified, for both PGP
 and S/MIME - see its own section below, right before "Why this is even possible without Mailvelope".
@@ -670,39 +672,66 @@ address entry).
   property or a different JMAP mechanism entirely - needs verifying against both Stalwart's real
   JMAP and the local shim's own header-writing support before assuming either works.
 
-### 4. Receiving: use a replied/forwarded message's own `Autocrypt`/`Autocrypt-Gossip` headers as a key source
+### 4. Receiving: use a replied/forwarded message's own `Autocrypt`/`Autocrypt-Gossip` headers as a key source - DONE (2026-09-09) except `Autocrypt-Gossip:` itself
 
-**Parsing half - DONE (2026-09-09)**, wiring half still pending. New `MailJmap.
-parseAutocryptHeader(headerValue, fromAddress)`/`parseAutocryptHeaders(headerValues, fromAddress)`
-(`mail/js/jmap.ts`) implement Level 1's own validation rules exactly, confirmed against the spec
-text itself (fetched live while writing this, not from memory): `addr`/`keydata` both required;
-**"If this address [`addr`] differs from the one in the `From` header, the entire `Autocrypt`
-header MUST be treated as invalid"**; attribute names starting with `_` are non-critical and
-silently ignored if unrecognized, but any OTHER unrecognized attribute name invalidates the whole
-header (**"MUST treat the entire `Autocrypt` header as invalid if it encounters a 'critical'
-attribute that it doesn't support"**); `prefer-encrypt` is `'mutual'` only for an explicit
-`prefer-encrypt=mutual`, else `'nopreference'` (**"any other value (or ... does not see the
-attribute at all)"**); the spec's own 10 KiB cap is enforced defensively on read too (a malicious/
-corrupted header could exceed what a spec-compliant sender ever would); and
+New `MailJmap.parseAutocryptHeader(headerValue, fromAddress)`/`parseAutocryptHeaders(headerValues,
+fromAddress)` (`mail/js/jmap.ts`) implement Level 1's own validation rules exactly, confirmed
+against the spec text itself (fetched live while writing this, not from memory): `addr`/`keydata`
+both required; **"If this address [`addr`] differs from the one in the `From` header, the entire
+`Autocrypt` header MUST be treated as invalid"**; attribute names starting with `_` are
+non-critical and silently ignored if unrecognized, but any OTHER unrecognized attribute name
+invalidates the whole header (**"MUST treat the entire `Autocrypt` header as invalid if it
+encounters a 'critical' attribute that it doesn't support"**); `prefer-encrypt` is `'mutual'` only
+for an explicit `prefer-encrypt=mutual`, else `'nopreference'` (**"any other value (or ... does not
+see the attribute at all)"**); the spec's own 10 KiB cap is enforced defensively on read too (a
+malicious/corrupted header could exceed what a spec-compliant sender ever would); and
 `parseAutocryptHeaders()` applies the exact multiple-header rule (**"If there is more than one
 valid header, this SHOULD be treated as an error, and all `Autocrypt` headers discarded as
 invalid"**) across a message's full set of raw `Autocrypt:` header values. 19 tests in
 `PgpAutocryptHeaderParsing.test.ts`, each quoting the spec line it verifies.
 
-**Deliberately NOT yet built** (needs the not-yet-built consent dialog from item 5 first - the two
-are meant to land together per this doc's own phasing, so half-wiring this now would mean silently
-auto-trusting a header with no user awareness at all): actually calling this parser against a real
-incoming/replied-to message's raw headers (`mailvelopeCompose()`, `mail/js/app.ts`, already reads
-the quoted PGP-armored body out of the source message for the "reply to encrypted message" case -
-the natural place to also read its `Autocrypt:`/`Autocrypt-Gossip:` headers), the
-`multipart/report`/multiple-`From` skip-entirely guard (needs real message metadata this pure
-parser deliberately doesn't take), `Autocrypt-Gossip:` parsing specifically (same header shape and
-`parseAutocryptHeader()` should work for it directly, but it lives INSIDE the decrypted MIME
-payload, not as a bare outer header - needs the decrypted-body access pattern, not built), and
-feeding a successful parse's `keydata` through `autocryptKeydataToArmoredKey()` (item 1, already
-built) into the actual consent-dialog-gated storage call.
+**Wiring (2026-09-09, same day as item 5/7 above, since the two were built together per the doc's
+own original phasing note)**: `MailJmap.fetchForReply()` now also requests `header:Autocrypt:all`
+(RFC 8621 §4.1.3's `:all` suffix - an array of every `Autocrypt:` instance on the message, needed
+for `parseAutocryptHeaders()`'s own multi-header rule) and `CONTENT_TYPE_HEADER_PROPERTY` (already
+existed, reused), applies the `multipart/report`/multiple-`From` skip-entirely guard (**"skip
+peer-state-relevant processing entirely"**) on top of the parser's own result, and exposes it as a
+new `JmapReplyContext.autocrypt` field. `MailCompose.bootstrapReply()` (`mail/js/compose.ts`) feeds
+a non-null result through the new `MailJmap.autocryptResultToPgpOffer()` (re-arms the `keydata` via
+`autocryptKeydataToArmoredKey()`, item 1, then parses the result once more for display metadata -
+fingerprint/UID) into `MailApp.pgpAutoOfferAddToContact()` (item 5's own mechanism, `mail/js/
+app.ts`) - the EXACT SAME consent-dialog/auto-add flow the inline-key case already uses, since
+`pgpAutoOfferAddToContact()` was deliberately designed generically enough (a plain `{email,
+armoredKey, keyFingerprint, keyUid}` shape) to accept either key-discovery source without caring
+which one it came from. Fire-and-forget (not awaited) from `bootstrapReply()` - a side offer that
+must never slow down or risk breaking the actual reply/forward bootstrap it's attached to.
 
-### 5. Consent dialog + new preference - DONE (2026-09-09), triggered by the INLINE-key case, not Autocrypt headers yet
+`prefer-encrypt=mutual` (when present) is threaded all the way through too: `pgpAutoOfferAddToContact()`
+now accepts an optional `preferEncrypt` field, and the underlying `ajax_pgpAddKeyToContact`
+(`mail/src/Ui.php`) calls the still-otherwise-uncalled `addressbook_bo::set_autocrypt_attributes()`
+(item 2's own storage API) with it - but ONLY once the key itself actually resolved against an
+EXISTING contact in the same request (a brand-new, not-yet-created contact has nothing to attach
+the attribute to yet either). **First real caller of item 2's `prefer-encrypt` storage** - item 6
+(mutual auto-encrypt) is what will eventually read it back out.
+
+**Still not built**: `Autocrypt-Gossip:` itself (same header shape, `parseAutocryptHeader()` should
+work for it directly, but it lives INSIDE the decrypted MIME payload, not as a bare outer header -
+needs the decrypted-body access pattern, a genuinely separate piece of work from everything above).
+
+**Explicitly NOT live-verified (2026-09-09) - no Autocrypt-header-bearing test message was
+available** (ralf: *"unfortunately I have none, let's continue and I test later"*, re: item 5's own
+dialog, same constraint applies here): the exact JMAP echo-back key for `header:Autocrypt:all` is
+UNCONFIRMED against a real server - `CONTENT_TYPE_HEADER_PROPERTY`'s own docblock (`mail/js/
+jmap.ts`) documents a real, live-verified precedent of Stalwart silently collapsing an explicit
+`:asRaw` suffix and echoing a property back under a DIFFERENT (bare/canonical) key than requested;
+`AUTOCRYPT_HEADER_PROPERTY` was deliberately written in the bare/raw form to match that precedent,
+but has NOT itself been checked against a real response the way that property was. All of the pure
+logic (parsing, the skip-entirely guards, the keydata->armored-key->display-info conversion) IS
+unit-tested (`MailJmapFetchForReplyAutocrypt.test.ts`, `MailJmapAutocryptResultToPgpOffer.test.ts`)
+against MOCKED JMAP responses, which by construction can't catch a wrong property-name assumption -
+this needs a real live check before being trusted end-to-end.
+
+### 5. Consent dialog + new preference - DONE (2026-09-09), now fed by BOTH the inline-key case AND (same day, see item 4) Autocrypt headers
 
 Ralf: *"for item 5 let's check the s/mime dialog for that and maybe while on it also add 'Never
 ask', a preference and the automatic adding for senders already in AB (item 7). In general we want
@@ -712,17 +741,16 @@ see item 7's own entry just below for the shared design write-up (the two items 
 one and the same mechanism, applied symmetrically to both signature types, so there's no point
 describing them twice).
 
-**Scope note**: item 5 was originally written assuming the trigger would be a newly-learned
-`Autocrypt:`-header key (items 3/4) - those aren't wired to any live message-reading caller yet
-(item 4's parsing logic is DONE, but not yet called against a real message's headers, see that
-item's own entry). What ships now instead uses the OTHER, already-fully-working "found a key not in
-the addressbook" signal: `PgpSignatureResult.keySource === 'inline'` (a message's own
-`application/pgp-keys` attachment, Phase 4's existing infrastructure) - the direct PGP analogue of
-S/MIME's own `addtocontact` (a cert embedded in the signed message itself, not from the
-addressbook), and the correct symmetric trigger ralf's own "look similar" framing calls for. Once
-Autocrypt-header learning is wired up later, it can feed the SAME dialog/preference/auto-add
-mechanism (`pgpAutoOfferAddToContact()`) - this was designed generically for exactly that, not
-`keySource:'inline'`-specific.
+**Scope note (now resolved)**: item 5 was originally written assuming the trigger would be a
+newly-learned `Autocrypt:`-header key (items 3/4) - at the time those weren't wired to any live
+message-reading caller yet, so what shipped FIRST instead used the OTHER, already-fully-working
+"found a key not in the addressbook" signal: `PgpSignatureResult.keySource === 'inline'` (a
+message's own `application/pgp-keys` attachment, Phase 4's existing infrastructure) - the direct
+PGP analogue of S/MIME's own `addtocontact`, and the correct symmetric trigger ralf's own "look
+similar" framing calls for. `pgpAutoOfferAddToContact()` was deliberately designed generically
+enough (a plain `{email, armoredKey, keyFingerprint, keyUid, preferEncrypt?}` shape) for exactly
+this reason - and later the SAME day, item 4's Autocrypt-header wiring landed and now feeds it too
+(see item 4's own entry for that half's details, including its own unverified-live caveat).
 
 ### 6. New preference: "mutual" auto-encrypt
 
@@ -887,16 +915,18 @@ keeps today's click-to-add dialog unchanged). Also needs the same multi-key-per-
 3. Sending `Autocrypt:` (own key) - DONE (2026-09-09, see its own entry) - was indeed the simplest,
    most self-contained piece, no consent-dialog UI needed (never touches another contact's stored
    data). `Autocrypt-Gossip:` (the other half of item 3) is still not started.
-4. Item 4's pure `Autocrypt:`-header-parsing logic, item 5's consent dialog + preference, and item
-   7's auto-add-for-known-contacts are ALL DONE (2026-09-09, see their own entries) - items 5/7
-   shipped together as one shared, symmetric S/MIME+PGP mechanism, triggered by the already-working
-   inline-key case rather than Autocrypt headers (item 4's parser has no live caller yet). Still not
-   started: `Autocrypt-Gossip:` sending (item 3's other half), and actually wiring item 4's header
-   parser to a real message's `Autocrypt:` header as an ADDITIONAL trigger source for item 5's now-
-   already-shipped dialog.
-5. `prefer-encrypt` **storage** (item 2) is DONE (2026-09-09, see its own entry) - what's left is
-   mutual auto-encrypt preference (item 6) and actually wiring items 3/4's sending/receiving code
-   to call `set_autocrypt_attributes()`/`get_autocrypt_attributes()`.
+4. Item 4 (BOTH the `Autocrypt:`-header-parsing logic AND wiring it to a real reply/forward source
+   message), item 5's consent dialog + preference, and item 7's auto-add-for-known-contacts are ALL
+   DONE (2026-09-09, see their own entries) - items 5/7 shipped as one shared, symmetric S/MIME+PGP
+   mechanism, fed by both the inline-key case AND real Autocrypt headers. **Not live-verified** - no
+   test message was available (see item 4's own entry for the specific unconfirmed JMAP property
+   detail). Still not started: `Autocrypt-Gossip:` sending AND receiving (item 3's other half, and
+   the receiving side needs the decrypted-body access pattern item 4's own entry describes).
+5. `prefer-encrypt` **storage** (item 2) is DONE (2026-09-09, see its own entry), and as of item 4's
+   wiring above now has its first real WRITER too (`ajax_pgpAddKeyToContact` calls
+   `set_autocrypt_attributes()` when a header carries `prefer-encrypt=mutual`) - what's left is
+   mutual auto-encrypt preference (item 6), which is what would actually READ it back via
+   `get_autocrypt_attributes()`.
 6. Item 6 (mutual auto-encrypt preference) - the only piece of the original items 5/6/7 grouping
    not yet done.
 

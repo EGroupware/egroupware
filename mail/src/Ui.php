@@ -2073,12 +2073,23 @@ class Ui
 	 * pgpKeyAddToContact(), mail/js/app.ts) decides what to do with a falsy result (offer to
 	 * create a new contact).
 	 *
-	 * @param array $_metadata ['email' => sender address, 'armoredKey' => armored PGP public key text]
+	 * @param array $_metadata ['email' => sender address, 'armoredKey' => armored PGP public key text,
+	 *  'preferEncrypt' => optional, only 'mutual' has any effect - stores the Autocrypt Phase 5
+	 *  item 2 `prefer-encrypt` attribute (addressbook_bo::set_autocrypt_attributes()) alongside the
+	 *  key, but ONLY once the key itself actually resolved to an existing contact above (a
+	 *  brand-new, not-yet-created contact has nothing to attach the attribute to yet either) -
+	 *  first real caller of that storage API, item 6's own still-unbuilt mutual-auto-encrypt
+	 *  preference is what will eventually read it back]
 	 */
 	function ajax_pgpAddKeyToContact ($_metadata)
 	{
 		$ab = new \addressbook_bo();
-		Api\Json\Response::get()->data($ab->set_pgp_keys([$_metadata['email'] => $_metadata['armoredKey']]));
+		$result = $ab->set_pgp_keys([$_metadata['email'] => $_metadata['armoredKey']]);
+		if ($result && ($_metadata['preferEncrypt'] ?? null) === 'mutual')
+		{
+			$ab->set_autocrypt_attributes($_metadata['email'], ['prefer-encrypt' => 'mutual']);
+		}
+		Api\Json\Response::get()->data($result);
 	}
 
 	/**
