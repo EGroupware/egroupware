@@ -293,11 +293,11 @@ flagged %1 messages as %2 in %3	mail	en	Flagged %1 message(s) as "%2" in %3.
 flagged %1 messages as flagged in %2	mail	en	Flagged %1 message(s) as flagged in %2.
 flagged %1 messages as unflagged in %2	mail	en	Flagged %1 message(s) as unflagged in %2.
 folder	mail	en	Folder
+folder '%1' not found	mail	en	Folder '%1' not found
 folder %1 %2 failed because of %3!	mail	en	Folder %1 %2 failed because of %3!
 folder %1 %2 failed!	mail	en	Folder %1 %2 failed!
 folder %1 has been created successfully, although the subscription failed because of %2	mail	en	Folder %1 has been created successfully, although the subscription failed because of %2
 folder %1 is moving to folder %2	mail	en	Folder %1 is moving to folder %2
-folder '%1' not found	mail	en	Folder '%1' not found
 folder management	mail	en	Folder Management
 folder management ...	mail	en	Folder Management ...
 folder settings	mail	en	Folder settings
@@ -375,6 +375,7 @@ inline	mail	en	Forward
 insert	mail	en	Insert
 insert (perform append, copy into mailbox)	mail	en	Insert (perform APPEND, COPY into mailbox)
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	en	insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)
+internal error building the s/mime message.	mail	en	Internal error building the S/MIME message.
 job	mail	en	Job
 junk	mail	en	Junk
 junk folder	mail	en	Junk folder
@@ -500,6 +501,7 @@ perform expunge and expunge as a part of close	mail	en	Perform EXPUNGE and expun
 permission denied	mail	en	Permission denied
 personal signature	mail	en	Personal signature
 pgp/mime signed message, no public key found to verify the signature	mail	en	PGP/MIME signed message, no public key found to verify the signature
+pgp/mime signed message, signature does not belong to sender %1	mail	en	PGP/MIME signed message, signature does NOT belong to sender %1
 pgp/mime signed message, signature verification failed for %1	mail	en	PGP/MIME signed message, signature verification FAILED for %1
 pgp/mime signed message, signature verified for %1	mail	en	PGP/MIME signed message, signature verified for %1
 please configure access to an existing individual imap account.	mail	en	Please configure access to an existing individual IMAP account.
@@ -588,12 +590,10 @@ rights	mail	en	Rights
 rule priority position	mail	en	Rule priority position
 rule with priority	mail	en	rule with priority
 rules	mail	en	Rules
-s/mime encryption failed because no certificate has been found for sender address: %1	mail	en	S/MIME Encryption failed because no certificate has been found for sender address: %1
 s/mime encryption failed	mail	en	S/MIME encryption failed
 s/mime encryption failed because no certificate has been found for following addresses: %1	mail	en	S/MIME Encryption failed because no certificate has been found for following addresses: %1
-internal error building the s/mime message.	mail	en	Internal error building the S/MIME message.
-the s/mime certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.	mail	en	The S/MIME certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.
-the s/mime certificate stored in the address book for %1 is not valid - check for duplicate/broken address book entries for this address.	mail	en	The S/MIME certificate stored in the address book for %1 is not valid - check for duplicate/broken address book entries for this address.
+s/mime encryption failed because no certificate has been found for sender address: %1	mail	en	S/MIME Encryption failed because no certificate has been found for sender address: %1
+s/mime signed message, signature does not belong to sender %1	mail	en	S/MIME signed message, signature does NOT belong to sender %1
 save all	mail	en	Save all
 save all attachments to filemanager	mail	en	Save all to File Manager
 save as calendar	mail	en	Save as Calendar
@@ -721,6 +721,8 @@ the imap server need to meet certain requirements and be configured for it:	mail
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	en	The message sender has requested a response to indicate that you have read this message. Would you like to send a receipt?
 the mimeparser can not parse this message.	mail	en	The MIME parser can not parse this message.
 the rule with priority %1 successfully saved!	mail	en	The rule with priority %1 successfully saved!
+the s/mime certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.	mail	en	The S/MIME certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.
+the s/mime certificate stored in the address book for %1 is not valid - check for duplicate/broken address book entries for this address.	mail	en	The S/MIME certificate stored in the address book for %1 is not valid - check for duplicate/broken address book entries for this address.
 the total size of the attachments exceeds the limit of %1 mb	mail	en	The total size of the attachments exceeds the limit of %1 MB
 the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	en	The total size of the attachments exceeds the limit of %1 MB. Switched to download link
 then	mail	en	THEN

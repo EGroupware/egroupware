@@ -264,6 +264,18 @@ export interface PgpSignatureResult
 	keySource : 'addressbook' | 'inline' | 'none';
 	/** the message's own From address, lowercased - null if genuinely absent */
 	email : string | null;
+	/**
+	 * true when the signature cryptographically verified, but the KEY ITSELF does not claim the
+	 * message's own From address in any of its User IDs - `verified` is forced false in this case
+	 * too (found live 2026-09-09, ralf, security concern: "check that we only show a signature ...
+	 * as validated, IF it's key matches the From header, otherwise it should be shown as
+	 * invalid" - a valid signature from a key that doesn't even claim to belong to the sender
+	 * proves nothing about the claimed sender at all, same reasoning DKIM/DMARC alignment checks
+	 * exist for). Distinguished from a plain crypto failure only so the UI can show a more
+	 * specific message (setPgpSignatureFlags(), mail/js/app.ts) - both render as the same
+	 * `pgp_sig_invalid` state.
+	 */
+	addressMismatch? : boolean;
 }
 
 export interface JmapGetRowsQuery
@@ -3313,6 +3325,27 @@ export class MailJmap
 	}
 
 	/**
+	 * Does any of this key's own User IDs claim the given (already-lowercased) email address?
+	 * Checked case-insensitively against the bracketed `<email>` form every real-world UID uses
+	 * ("Name <email@example.com>") - falls back to treating the whole UID string as the address
+	 * for the rare bare-email-only UID with no display name and no brackets. A key legitimately
+	 * carries multiple UIDs (eg. a work and a personal address on the same key), so ANY match is
+	 * enough - this only needs to establish "this key at least claims to be usable for that
+	 * address", not which UID is the primary one (unlike armoredKeyToAutocryptKeydata()'s own
+	 * primary-user-only minimization below, which is a different, unrelated question).
+	 */
+	private static keyClaimsAddress(key : any, email : string) : boolean
+	{
+		const uids : string[] = key.getUserIDs?.() || [];
+		return uids.some((uid) =>
+		{
+			const match = /<([^>]+)>\s*$/.exec(uid);
+			const uidEmail = match ? match[1] : uid;
+			return uidEmail.toLowerCase() === email;
+		});
+	}
+
+	/**
 	 * Autocrypt (https://docs.autocrypt.org/level1.html) `keydata=` is NOT our armored storage
 	 * format - it's base64 of a MINIMIZED binary export: "MUST consist of exactly five packets:
 	 * signing-capable primary key, user ID, self-signature, encryption-capable subkey, binding
@@ -3540,7 +3573,20 @@ export class MailJmap
 			{
 				verified = false;
 			}
-			return {signed: true, verified, keySource, email: senderEmail};
+			// a cryptographically valid signature from a key that doesn't even CLAIM the sender's
+			// address proves nothing about the claimed sender - see PgpSignatureResult.
+			// addressMismatch's own docblock. Checked regardless of keySource: an inline
+			// (message-supplied, so attacker-controlled on a malicious message) key is the
+			// obvious risk, but an addressbook-stored key could equally have been filed under the
+			// wrong contact/address by mistake - this is a correctness check on the KEY, not a
+			// trust judgement about where it came from.
+			let addressMismatch = false;
+			if (verified && senderEmail && !MailJmap.keyClaimsAddress(key, senderEmail))
+			{
+				addressMismatch = true;
+				verified = false;
+			}
+			return {signed: true, verified, keySource, email: senderEmail, ...(addressMismatch ? {addressMismatch} : {})};
 		}
 		catch (e)
 		{

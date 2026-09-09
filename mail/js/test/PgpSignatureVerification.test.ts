@@ -95,6 +95,7 @@ function primeFixture(jmap : MailJmap, options : {
 	rawBytes : Uint8Array,
 	attachments? : any[],
 	downloadKeyBytes? : Uint8Array,
+	fromEmail? : string,
 }) : void
 {
 	(jmap as any).tokens["1"] = {
@@ -107,7 +108,7 @@ function primeFixture(jmap : MailJmap, options : {
 				list: [{
 					bodyStructure: BODY_STRUCTURE,
 					blobId: "blob-raw-message",
-					from: [{email: "sender@example.invalid"}],
+					from: [{email: options.fromEmail || "sender@example.invalid"}],
 					attachments: options.attachments || [],
 				}],
 			},
@@ -197,6 +198,28 @@ describe("MailJmap.verifyPgpSignature() - end-to-end with a real openpgp.js fixt
 
 		assert.deepEqual(result, {
 			signed: true, verified: false, keySource: "none", email: "sender@example.invalid",
+		});
+	});
+
+	it("reports verified:false and addressMismatch:true when the key cryptographically verifies "
+		+ "but none of its own User IDs claim the message's From address - eg. a key misfiled "
+		+ "under the wrong addressbook contact, or an inline key attached to spoof a different "
+		+ "sender - security-relevant: an attacker who controls their own valid key/signature "
+		+ "must never have it rendered as verified just by using someone else's From address",
+	async() =>
+	{
+		// PUBLIC_KEY's own UID is "PHPUnit Fixture <sender@example.invalid>" - looked up here
+		// under a DIFFERENT address than the message's From, simulating a misfiled addressbook
+		// entry (the signature itself is genuinely valid for this exact message/key pair).
+		const jmap = new MailJmap(createFakeApp(
+			async(_method, _params) => ({"attacker@example.invalid": PUBLIC_KEY})));
+		primeFixture(jmap, {rawBytes: buildRawEml(WIRE_SUBPART), fromEmail: "attacker@example.invalid"});
+
+		const result = await jmap.verifyPgpSignature("mail::0::1::mbx1::email1");
+
+		assert.deepEqual(result, {
+			signed: true, verified: false, keySource: "addressbook", email: "attacker@example.invalid",
+			addressMismatch: true,
 		});
 	});
 

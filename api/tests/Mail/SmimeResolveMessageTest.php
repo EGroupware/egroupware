@@ -80,6 +80,30 @@ class SmimeResolveMessageTest extends Api\LoggedInTest
 	}
 
 	/**
+	 * Builds+returns the raw bytes of a SIGN-only (TYPE_SIGN, multipart/signed - not encrypted, no
+	 * stored account credential needed at all) message, plus the cert/privkey pair used to sign it
+	 * - for the addressMismatch/'unknownemail' cross-check below, which only needs a genuinely
+	 * valid signature paired with a cert whose OWN claimed email differs from the caller-supplied
+	 * $fromAddress (see resolveMessage()'s own strcasecmp($fromAddress, $cert_email) check).
+	 *
+	 * @return array{raw: string, cert: string}
+	 */
+	private function buildSignedMessage(array $dn, string $passphrase) : array
+	{
+		$generated = (new Smime())->generate_certificate($dn, null, $passphrase, 30);
+		$mailer = new Api\Mailer(self::ACC_ID);
+		$mailer->addAddress('recipient@example.org', 'Recipient');
+		$mailer->addHeader('Subject', 'PHPUnit resolveMessage signed test');
+		$mailer->setBody("signed payload\n");
+		$this->assertTrue($mailer->smimeEncrypt(Smime::TYPE_SIGN, [
+			'senderPubKey' => $generated['cert'],
+			'senderPrivKey' => $generated['privkey'],
+			'passphrase' => $passphrase,
+		]));
+		return ['raw' => $mailer->getRaw(false), 'cert' => $generated['cert']];
+	}
+
+	/**
 	 * No passphrase given, none session-cached - get_acc_smime() can't unlock the stored private
 	 * key at all, so resolveMessage() must throw PassphraseMissing rather than a generic error or
 	 * silently returning unusable content.
@@ -139,6 +163,48 @@ class SmimeResolveMessageTest extends Api\LoggedInTest
 		$structure = Smime::resolveMessage(self::ACC_ID, $raw, 'application/pkcs7-mime', '');
 
 		$this->assertStringContainsString('secret payload', $structure->getContents());
+	}
+
+	/**
+	 * Security-relevant (DKIM/DMARC-alignment-style check): a genuinely, cryptographically signed
+	 * message (same cert/key pair signs and verifies its own message here - a self-signed test
+	 * cert never chain-verifies against a trusted CA in this environment regardless, so 'verify'
+	 * itself stays false the same way it would for any self-signed cert; that's a separate,
+	 * pre-existing concern unrelated to this check) must still be flagged 'unknownemail' (rendered
+	 * as invalid, not verified, by the UI - see mail/js/app.ts's setSmimeFlags()) when the signing
+	 * certificate's own claimed email (subject emailAddress / subjectAltName) does NOT match the
+	 * message's actual From address - eg. a signer presenting a cert for a DIFFERENT address than
+	 * the one the message claims to be from.
+	 */
+	public function testResolveMessageFlagsUnknownEmailWhenFromAddressDoesNotMatchSignerCert()
+	{
+		['raw' => $raw] = $this->buildSignedMessage(self::DN, self::PASSPHRASE);
+
+		$structure = Smime::resolveMessage(self::ACC_ID, $raw, 'multipart/signed', '',
+			'someone-else@example.invalid');
+
+		$metadata = $structure->getMetadata('X-EGroupware-Smime');
+		$this->assertTrue($metadata['signed'] ?? false, 'a valid signature must still have been found/parsed');
+		$this->assertSame(strtolower(self::DN['emailAddress']), $metadata['email'] ?? null);
+		$this->assertTrue($metadata['unknownemail'] ?? false,
+			'signer cert email differs from From address - must be flagged unknownemail');
+	}
+
+	/**
+	 * Positive-path counterpart: a From address matching the signer cert's own email must NOT be
+	 * flagged 'unknownemail' - confirms the check above fails for the right reason (a genuine
+	 * mismatch) and not because resolveMessage() always flags it.
+	 */
+	public function testResolveMessageDoesNotFlagUnknownEmailWhenFromAddressMatchesSignerCert()
+	{
+		['raw' => $raw] = $this->buildSignedMessage(self::DN, self::PASSPHRASE);
+
+		$structure = Smime::resolveMessage(self::ACC_ID, $raw, 'multipart/signed', '',
+			self::DN['emailAddress']);
+
+		$metadata = $structure->getMetadata('X-EGroupware-Smime');
+		$this->assertTrue($metadata['signed'] ?? false);
+		$this->assertArrayNotHasKey('unknownemail', $metadata);
 	}
 
 	/**

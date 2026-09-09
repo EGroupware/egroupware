@@ -55,7 +55,6 @@ always respond / auto-responder	mail	de	Immer antworten / Auto-Responder
 always show html emails	mail	de	HTML-E-Mails immer anzeigen
 always show notifiction	mail	de	Benachrichtigungen immer anzeigen
 an error happend while trying to remove acl rights from the account %1!	mail	de	Ein Fehler trat auf beim Versuch die Zugriffsrechte vom Konto %1 zu entfernen!
-and %1 more	mail	de	und %1 weitere
 and the rule with priority %1, now got the priority %2	mail	de	Die Regel mit Priorität %1 hat jetzt die Priorität %2
 answered	mail	de	Beantwortet
 any of	mail	de	mit einem
@@ -288,11 +287,11 @@ flagged %1 messages as %2 in %3	mail	de	%1 Nachricht(en) wurden als "%2" in %3 m
 flagged %1 messages as flagged in %2	mail	de	%1 Nachricht(en) markiert in %2
 flagged %1 messages as unflagged in %2	mail	de	Bei %1 Nachricht(en) wurde die Markierung in %2 entfernt
 folder	mail	de	Ordner
+folder '%1' not found	mail	de	Ordner '%1' nicht gefunden
 folder %1 %2 failed because of %3!	mail	de	Ordner %1 %2 fehlgeschlagen, da %3!
 folder %1 %2 failed!	mail	de	Ordner %1 %2 fehlgeschlagen!
 folder %1 has been created successfully, although the subscription failed because of %2	mail	de	Ordner %1 wurde erfolgreich angelegt, obwohl das Abonnieren fehlgeschlagen ist, weil: %2
 folder %1 is moving to folder %2	mail	de	Ordner %1 wird in den Ordner %2 verschoben
-folder '%1' not found	mail	de	Ordner '%1' nicht gefunden
 folder management	mail	de	Ordner-Verwaltung
 folder management ...	mail	de	Ordner-Verwaltung ...
 folder settings	mail	de	Ordner-Einstellungen
@@ -369,6 +368,7 @@ initialization of mail failed. please use the wizard to cope with the problem.	m
 inline	mail	de	Weiterleiten
 insert	mail	de	Einfügen
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	de	Einfügen der Signatur am Anfang einer neuen E-Mail (auch Antworten/Weiterleiten).\nDie Signatur ist dann Teil der E-Mail und kann möglicherweise nicht über die Funktionalität >Signatur ändern/auswählen< verändert werden
+internal error building the s/mime message.	mail	de	Interner Fehler beim Erstellen der S/MIME-Nachricht.
 job	mail	de	Dienstlich
 junk	mail	de	Spam
 junk folder	mail	de	Ordner für Spam-Nachrichten
@@ -490,6 +490,7 @@ password protect	mail	de	Passwort geschützt
 permission denied	mail	de	Zugriff verweigert
 personal signature	mail	de	Persönliche Signatur
 pgp/mime signed message, no public key found to verify the signature	mail	de	PGP/MIME-signierte Nachricht, kein öffentlicher Schlüssel zur Prüfung der Signatur gefunden
+pgp/mime signed message, signature does not belong to sender %1	mail	de	PGP/MIME-signierte Nachricht, Signatur gehört NICHT zum Absender %1
 pgp/mime signed message, signature verification failed for %1	mail	de	PGP/MIME-signierte Nachricht, Signaturprüfung für %1 FEHLGESCHLAGEN
 pgp/mime signed message, signature verified for %1	mail	de	PGP/MIME-signierte Nachricht, Signatur für %1 verifiziert
 please configure access to an existing individual imap account.	mail	de	Konfigurieren Sie hier den Zugang zu einem existierenden IMAP-Postfach.
@@ -576,12 +577,10 @@ rights	mail	de	Zugriffsrechte
 rule priority position	mail	de	Priorität/Reihenfolge
 rule with priority	mail	de	Regel mit Priorität
 rules	mail	de	Regeln
-s/mime encryption failed because no certificate has been found for sender address: %1	mail	de	Die S/MIME-Verschlüsselung ist fehlgeschlagen, weil kein Zertifikat für die Absenderadresse gefunden wurde: %1
 s/mime encryption failed	mail	de	Die S/MIME-Verschlüsselung ist fehlgeschlagen
 s/mime encryption failed because no certificate has been found for following addresses: %1	mail	de	Die S/MIME-Verschlüsselung ist fehlgeschlagen, weil kein Zertifikat für folgende Adressen gefunden wurde: %1
-internal error building the s/mime message.	mail	de	Interner Fehler beim Erstellen der S/MIME-Nachricht.
-the s/mime certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.	mail	de	Das im Adressbuch für %1 gespeicherte S/MIME-Zertifikat stimmt nicht mit dem Zertifikat Ihres Kontos überein - bitte auf doppelte Adressbucheinträge für diese Adresse prüfen.
-the s/mime certificate stored in the address book for %1 is not valid - check for duplicate/broken address book entries for this address.	mail	de	Das im Adressbuch für %1 gespeicherte S/MIME-Zertifikat ist ungültig - bitte auf doppelte oder fehlerhafte Adressbucheinträge für diese Adresse prüfen.
+s/mime encryption failed because no certificate has been found for sender address: %1	mail	de	Die S/MIME-Verschlüsselung ist fehlgeschlagen, weil kein Zertifikat für die Absenderadresse gefunden wurde: %1
+s/mime signed message, signature does not belong to sender %1	mail	de	S/MIME-signierte Nachricht, Signatur gehört NICHT zum Absender %1
 save all	mail	de	Alle speichern
 save all attachments to filemanager	mail	de	Alle Anhänge im Dateimanager speichern
 save as calendar	mail	de	Als Termin speichern
@@ -709,6 +708,8 @@ the imap server need to meet certain requirements and be configured for it:	mail
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	de	Der Absender hat eine Empfangsbestätigung angefordert, um sicher zu stellen, dass Sie diese E-Mail gelesen haben. Möchten Sie eine Empfangsbestätigung senden?
 the mimeparser can not parse this message.	mail	de	Der MIME-Parser versteht diese Nachricht nicht.
 the rule with priority %1 successfully saved!	mail	de	Die Regel mit Priorität %1 wurde erfolgreich gespeichert!
+the s/mime certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.	mail	de	Das im Adressbuch für %1 gespeicherte S/MIME-Zertifikat stimmt nicht mit dem Zertifikat Ihres Kontos überein - bitte auf doppelte Adressbucheinträge für diese Adresse prüfen.
+the s/mime certificate stored in the address book for %1 is not valid - check for duplicate/broken address book entries for this address.	mail	de	Das im Adressbuch für %1 gespeicherte S/MIME-Zertifikat ist ungültig - bitte auf doppelte oder fehlerhafte Adressbucheinträge für diese Adresse prüfen.
 the total size of the attachments exceeds the limit of %1 mb	mail	de	Die Größe der Anhänge überschreitet %1 MB
 the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	de	Die Größe der Anhänge überschreitet %1 MB. Es wurde auf "Link zum Herunterladen" umgestellt.
 then	mail	de	dann

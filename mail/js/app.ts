@@ -8662,8 +8662,19 @@ export class MailApp extends EgwApp
 		}
 		if (data.unknownemail)
 		{
-			mail_container.classList.add((data.class='smime_cert_unknownemail'));
+			// a cryptographically valid signature from a certificate that doesn't even claim the
+			// sender's own address proves nothing about the claimed sender - same reasoning
+			// DKIM/DMARC alignment checks exist for (found live 2026-09-09, ralf, security
+			// concern: "we only show a signature ... as validated, IF it's key matches the From
+			// header, otherwise it should be shown as invalid"). Used to render as its own,
+			// softer 'smime_cert_unknownemail' (purple) state - overridden here to the SAME
+			// 'smime_cert_notvalid' (red) severity setSmimeFlags()'s own verify/cert branches
+			// above already use for an outright broken signature, not a separate/lesser one.
+			mail_container.classList.remove('smime_cert_verified', 'smime_cert_notverified');
+			mail_container.classList.add((data.class='smime_cert_notvalid'));
 			smime_signature.set_class(data.class);
+			smime_signature.set_statustext(this.egw.lang(
+				'S/MIME signed message, signature does NOT belong to sender %1', data.email || ''));
 		}
 		data.class = data.class ? data.class : "";
 		const smimeSignatureNode = smime_signature.getDOMNode();
@@ -8736,7 +8747,15 @@ export class MailApp extends EgwApp
 		else if (_data.keySource !== 'none')
 		{
 			pgpClass = 'pgp_sig_invalid';
-			statustext = this.egw.lang('PGP/MIME signed message, signature verification FAILED for %1', _data.email || '');
+			// addressMismatch: the signature itself checked out cryptographically, but the
+			// signing key doesn't claim the sender's address at all - MailJmap.
+			// verifyPgpSignature() already forces verified=false for this (see
+			// PgpSignatureResult.addressMismatch's own docblock, jmap.ts) - a more specific
+			// message than the generic "verification FAILED" helps explain why a signature that
+			// otherwise "worked" still isn't shown as trusted.
+			statustext = _data.addressMismatch ?
+				this.egw.lang('PGP/MIME signed message, signature does NOT belong to sender %1', _data.email || '') :
+				this.egw.lang('PGP/MIME signed message, signature verification FAILED for %1', _data.email || '');
 		}
 		else
 		{
