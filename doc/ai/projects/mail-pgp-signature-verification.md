@@ -3,8 +3,10 @@
 ## Status: Phase 3 UI wiring done + live-verified (2026-09-08); ralf's own live testing 2026-09-09
 surfaced 5 real bugs (4 UI-wiring, 1 in the core verify engine itself), all fixed + live-verified
 same day (see below) - Phase 4 tests not started (beyond the one regression test added for the
-core-engine bug); 3 follow-up items queued 2026-09-09 (Autocrypt key-import dialog, sending an
-Autocrypt header, Mailvelope sign-on-send) - see "Planned follow-up" below, none started
+core-engine bug); Phase 4 broader unit-test coverage (PGP + S/MIME attachment-hiding) now underway;
+4 follow-up items queued 2026-09-09 (Autocrypt key-import dialog, sending an Autocrypt header,
+Mailvelope sign-on-send, reply/forward auto-matching signed/encrypted state) - see "Planned
+follow-up" below, none started
 
 ### 2026-09-09 core-engine bugfix: base64-encoded signature parts
 
@@ -364,8 +366,26 @@ which he'll do "tomorrow" (i.e. after this note was written):
    `openpgp.js` (Mailvelope holds the private signing key, `openpgp.js` here never does - same
    division of responsibility as encrypt/decrypt already has).
 
-None of these three has been designed in detail yet (no data-flow spike, no UI mock, no code) -
-this section is a plan-level placeholder capturing the ask, not an implementation.
+4. **Reply/forward auto-matches the original message's signed/encrypted state.** Added 2026-09-09.
+   Replying to or forwarding a PGP-signed message should default the compose toolbar's PGP toggle
+   to on (same message for a PGP-encrypted original, and the analogous S/MIME sign/encrypt toggles
+   for an S/MIME original) - ralf: "we should automatic enable the toggles to the same state, so by
+   default we answer signed messages with signed messages (there's currently a gap with PGP), and
+   encrypted messages with encrypted messages." **Default only, never enforced** - the user must
+   still be able to switch a toggle back off for that one reply/forward if they want to. Needs: (a)
+   confirming what S/MIME's own current reply/forward behavior actually is before assuming it's the
+   model to copy (ralf's phrasing suggests S/MIME may already default this way and PGP is the one
+   with the gap, but that should be verified against the actual `Compose.php`/`compose.ts` reply/
+   forward init path, not assumed); (b) the PGP toggle's own initial `checked` state needs to be
+   driven by the source message's own PGP status (reusing `verifyPgpSignature()`'s `signed` flag
+   for "was this signed" - encrypted detection is a separate, already-existing check per
+   `mailvelopeDisplay()`'s own multipart/encrypted detection) at compose-open time, in
+   `Compose.php`'s reply/forward content-building (`getToolbarActions()`'s `pgp`/`smime_sign`/
+   `smime_encrypt` entries already support a `checkbox`+implicit default state - needs the initial
+   value threaded through from the source message).
+
+None of these four has been designed in detail yet (no data-flow spike, no UI mock, no code) - this
+section is a plan-level placeholder capturing the ask, not an implementation.
 
 ## Explicitly out of scope for this project
 
