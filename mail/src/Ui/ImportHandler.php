@@ -211,7 +211,7 @@ class ImportHandler
 			if ($mode == 'display')
 			{
 				Egw::redirect_link('/index.php', [
-					'menuaction' => 'mail.Ui.displayMessage',
+					'menuaction' => 'mail.EGroupware\\Mail\\Ui.displayMessage',
 					'id' => $rowId,
 					'deleteDraftOnClose' => 1,
 					'mode' => $mode,

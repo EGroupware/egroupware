@@ -656,3 +656,19 @@ Kept for completeness, but explicitly deprioritized until the above is in better
   rest of `mail/src/Ui/*Handler.php` (real mailbox-mutating logic, PGP/S-MIME-adjacent, or needs a
   real IMAP/VFS round trip). Worth reassessing priorities with ralf before continuing further into
   priority 4.
+- 2026-09-10: paused for a live-reported regression (ralf, screenshot: clicking an attached
+  `.eml`'s inline image / an imported-from-VFS `.eml` failed with "CreateObject(Ui) file
+  .../class.Ui.inc.php not found!"). Root cause: two menuaction strings were left as the bare,
+  un-namespaced `mail.Ui.X` instead of the fully-namespaced `mail.EGroupware\Mail\Ui.X` every
+  other menuaction for this class already uses - the dispatcher tried to load the long-retired
+  classic `mail/inc/class.Ui.inc.php`. Confirmed via a repo-wide grep that these were the only two
+  occurrences: `BodyHandler.php`'s default inline-image link callback (`displayImage`) and
+  `ImportHandler::importMessageFromVFS2DraftAndDisplay()`'s "view the imported draft" redirect
+  (`displayMessage`). Both fixed. Tightened `BodyHandlerResolveInlineImagesTest.php`'s two
+  default-callback tests to assert on the exact, correctly-namespaced menuaction string instead of
+  just "displayImage" appearing somewhere - the old, looser assertion passed even with the bug
+  present; confirmed the tightened version fails against the pre-fix code, then restored.
+  `importMessageFromVFS2DraftAndDisplay()`'s own fix has no automated regression test -
+  `Egw::redirect_link()` unconditionally calls `exit`, making the method unsafe to invoke directly
+  in a PHPUnit process - verified instead via the same repo-wide grep confirming the fix is
+  unique/isolated and via manual reasoning about the URL-building code path.

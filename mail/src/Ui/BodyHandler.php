@@ -68,7 +68,7 @@ class BodyHandler
 			$_link_callback = function ($_cid) use ($_mailbox, $_uid, $_partID)
 			{
 				$linkData = [
-					'menuaction' => 'mail.Ui.displayImage',
+					'menuaction' => 'mail.EGroupware\\Mail\\Ui.displayImage',
 					'uid' => base64_encode($_uid),
 					'mailbox' => base64_encode($_mailbox),
 					'cid' => base64_encode($_cid),

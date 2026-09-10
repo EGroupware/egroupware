@@ -95,12 +95,22 @@ class BodyHandlerResolveInlineImagesTest extends Api\LoggedInTest
 
 	// --- resolveInlineImages() dispatch (real default callback, needs Api\Egw::link()) ---
 
+	/**
+	 * Regression test for a real bug found live 2026-09-10 (ralf: a screenshot showing "CreateObject(Ui)
+	 * file .../class.Ui.inc.php not found!" after clicking an attached .eml's inline image): the
+	 * default link callback's menuaction was the bare, un-namespaced 'mail.Ui.displayImage' instead
+	 * of the fully-namespaced 'mail.EGroupware\Mail\Ui.displayImage' every other menuaction in this
+	 * codebase uses for this class - the dispatcher then tried (and failed) to load the classic
+	 * mail/inc/class.Ui.inc.php, which was retired long ago. Asserting on the exact menuaction
+	 * string (not just "displayImage" appearing somewhere) is what actually catches this - the
+	 * previous, looser assertion here passed even with the bug present.
+	 */
 	public function testResolveInlineImagesPlainMessageTypeOnlyAppliesThePlainForm()
 	{
 		$result = BodyHandler::resolveInlineImages('[cid:image1]', 'INBOX', '42', '1', 'plain');
 
 		$this->assertStringStartsWith('<img src="', $result);
-		$this->assertStringContainsString('displayImage', $result);
+		$this->assertStringContainsString('menuaction=mail.EGroupware%5CMail%5CUi.displayImage', $result);
 	}
 
 	public function testResolveInlineImagesHtmlMessageTypeAppliesSrcUrlAndBackgroundForms()
@@ -112,6 +122,7 @@ class BodyHandlerResolveInlineImagesTest extends Api\LoggedInTest
 		$this->assertStringNotContainsString('cid:one', $result);
 		$this->assertStringNotContainsString('cid:two', $result);
 		$this->assertStringNotContainsString('cid:three', $result);
-		$this->assertSame(3, substr_count($result, 'displayImage'), "all three inline forms must have been resolved");
+		$this->assertSame(3, substr_count($result, 'menuaction=mail.EGroupware%5CMail%5CUi.displayImage'),
+			"all three inline forms must have been resolved, each via the correctly-namespaced menuaction");
 	}
 }
