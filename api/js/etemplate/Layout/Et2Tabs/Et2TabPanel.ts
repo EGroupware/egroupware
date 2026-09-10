@@ -1,9 +1,9 @@
 import {Et2Widget} from "../../Et2Widget/Et2Widget";
 import {SlTabPanel} from "@shoelace-style/shoelace";
 import shoelace from "../../Styles/shoelace";
-import {css} from "lit";
 import {property} from "lit/decorators/property.js";
 
+import styles from "./Et2TabPanel.styles";
 export class Et2TabPanel extends Et2Widget(SlTabPanel)
 {
 	static get styles()
@@ -12,24 +12,7 @@ export class Et2TabPanel extends Et2Widget(SlTabPanel)
 			// @ts-ignore
 			...super.styles,
 			...shoelace,
-			css`
-			:host {
-			
-				height: 100%;
-				/*
-				width: 100%;
-				
-				min-height: fit-content;
-				min-width: fit-content;
-				*/
-			}
-			.tab-panel {
-				height: 100%;
-			}
-			::slotted(*) {
-				height: 100%;
-			}
-			`
+			styles
 		];
 	}
 

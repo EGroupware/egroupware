@@ -9,7 +9,7 @@
  */
 
 
-import {css, html, nothing, PropertyValueMap} from "lit";
+import {html, nothing, PropertyValueMap} from "lit";
 import {property} from "lit/decorators/property.js";
 import 'lit-flatpickr';
 import {dateStyles} from "./DateStyles";
@@ -24,6 +24,7 @@ import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import shoelace from "../Styles/shoelace";
 import {classMap} from "lit/directives/class-map.js";
 
+import styles from "./Et2Date.styles";
 // list of existing localizations from node_modules/flatpicker/dist/l10n directory:
 const l10n = [
 	'ar', 'at', 'az', 'be', 'bg', 'bn', 'bs', 'cat', 'cs', 'cy', 'da', 'de', 'eo', 'es', 'et', 'fa', 'fi', 'fo',
@@ -326,43 +327,7 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 			...(super.styles ? (Array.isArray(super.styles) ? super.styles : [super.styles]) : []),
 			shoelace,
 			dateStyles,
-			css`
-			  :host {
-				width: auto;
-			  }
-
-				/* Scroll buttons */
-				.form-control-input {
-					position: relative;
-					display: flex;
-
-					et2-textbox {
-						flex: 1 1 auto;
-						min-width: 14ex;
-					}
-				}
-
-				.form-control-input:hover .et2-date-time__scrollbuttons {
-				display: flex;
-			  }
-
-			  .et2-date-time__scrollbuttons {
-				display: none;
-				flex-direction: column;
-				width: calc(var(--sl-input-height-medium) / 2);
-				position: absolute;
-				right: 0px;
-				  margin-inline-end: 0px;
-			  }
-
-			  .et2-date-time__scrollbuttons > * {
-				font-size: var(--sl-font-size-2x-small);
-				height: calc(var(--sl-input-height-medium) / 2);
-			  }
-			.et2-date-time__scrollbuttons > *::part(base) {
-				padding: 3px;
-			}
-            `,
+			styles,
 		];
 	}
 

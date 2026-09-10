@@ -8,7 +8,7 @@
  */
 
 import {Et2Widget} from "../Et2Widget/Et2Widget";
-import {css, html, LitElement, render} from "lit";
+import {html, LitElement, render} from "lit";
 import {property} from "lit/decorators/property.js";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 import {activateLinks} from "../ActivateLinksDirective";
@@ -16,6 +16,7 @@ import {et2_csvSplit} from "../et2_core_common";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {Et2MarkdownMixin} from "../Markdown/Et2MarkdownMixin";
 
+import styles from "./Et2Description.styles";
 export class Et2Description extends Et2MarkdownMixin(Et2Widget(LitElement)) implements et2_IDetachedDOM
 {
 
@@ -27,31 +28,7 @@ export class Et2Description extends Et2MarkdownMixin(Et2Widget(LitElement)) impl
 	{
 		return [
 			...super.styles,
-			css`
-			* {
-				white-space: pre-wrap;
-			}
-			:host {
-				display:flex;
-				flex-direction: row;
-				justify-content: flex-start;
-				align-items: center;
-				flex: 0 1 auto !important;
-			}
-
-				label {
-					padding-inline-end: 1ex;
-				}
-
-				.split-label label {
-					display: contents;
-				}
-			::slotted(a) {
-				cursor: pointer;
-				color: var(--sl-color-primary-700);
-				text-decoration: none;
-			  	display: inherit;
-			}`
+			styles
 		];
 	}
 

@@ -6,7 +6,7 @@
  * @link https://www.egroupware.org
  * @author Nathan Gray
  */
-import {css, html, LitElement, nothing} from "lit";
+import {html, LitElement, nothing} from "lit";
 import {property} from "lit/decorators/property.js";
 import {classMap} from "lit/directives/class-map.js";
 import {Et2LinkAppSelect} from "./Et2LinkAppSelect";
@@ -16,6 +16,7 @@ import {Et2Link, LINK_URL_APPNAME, LinkInfo} from "./Et2Link";
 import {Et2Url} from "../Et2Url/Et2Url";
 import {HasSlotController} from "../Et2Widget/slot";
 
+import styles from "./Et2LinkEntry.styles";
 /**
  * @summary Find and select a single entry using the link system.
  *
@@ -37,36 +38,7 @@ export class Et2LinkEntry extends Et2InputWidget(LitElement)
 	{
 		return [
 			...(Array.isArray(super.styles) ? super.styles : [super.styles]),
-			css`
-				:host {
-					display: block;
-				}
-
-				:host(.hideApp) ::slotted([slot="app"]) {
-					display: none;
-				}
-
-				[hidden] {
-					display: none;
-				}
-
-				.form-control-input {
-					display: flex;
-					gap: 0.5rem;
-				}
-
-				et2-link-apps {
-					flex: 1 1 auto;
-					&::part(icon){
-						margin-inline-end: 0;
-					}
-				}
-
-				et2-url, et2-link-search {
-					flex: 1 1 auto;
-				}
-
-			`
+			styles
 		];
 	}
 

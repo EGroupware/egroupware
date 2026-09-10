@@ -1,7 +1,7 @@
 /**
  * Column selector for nextmatch
  */
-import {css, html, LitElement, TemplateResult} from "lit";
+import {html, LitElement, TemplateResult} from "lit";
 import {property} from "lit/decorators/property.js";
 import {classMap} from "lit/directives/class-map.js";
 import {repeat} from "lit/directives/repeat.js";
@@ -14,6 +14,7 @@ import Sortable from "sortablejs/modular/sortable.complete.esm";
 import {SlMenuItem} from "@shoelace-style/shoelace";
 import {Et2Select} from "../Et2Select/Et2Select";
 
+import styles from "./ColumnSelection.styles";
 export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 {
 	static get styles()
@@ -21,50 +22,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 		return [
 			super.styles,
 			shoelace,
-			css`
-				:host {
-					max-height: inherit;
-					min-width: 35em;
-					display: flex;
-					flex-direction: column;
-					flex: 1 1 auto;
-					--icon-width: 20px;
-				}
-
-				sl-menu {
-					flex: 1 10 auto;
-					overflow-y: auto;
-					max-height: 50em;
-				}
-
-				/* Drag handle on columns (not individual custom fields or search letter) */
-
-				sl-menu > .select_row::part(base) {
-					padding-left: var(--sl-spacing-x-large);
-				}
-
-				.select_row::part(prefix) {
-					display: none;
-				}
-
-				sl-menu > .column::part(prefix) {
-					display: initial;
-					position: absolute;
-					left: 0px;
-					font-size: var(--sl-font-size-large);
-					cursor: grab;
-				}
-
-				sl-menu-item::part(label), sl-menu-item::part(submenu-icon) {
-					cursor: initial;
-				}
-
-				/* Change vertical alignment of CF checkbox line to up with title, not middle */
-
-				.custom_fields::part(base) {
-					align-items: baseline;
-				}
-			`
+			styles
 		]
 	}
 

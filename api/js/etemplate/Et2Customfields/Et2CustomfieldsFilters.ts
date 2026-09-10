@@ -1,6 +1,6 @@
 import {Et2CustomfieldsBase} from "./Et2CustomfieldsBase";
 import {customElement} from "lit/decorators/custom-element.js";
-import {css, html} from "lit";
+import {html} from "lit";
 import {html as staticHtml, unsafeStatic} from "lit/static-html.js";
 import {repeat} from "lit/directives/repeat.js";
 import {ref} from "lit/directives/ref.js";
@@ -12,6 +12,7 @@ import {
 import type {Et2CustomfieldWidgetMapping} from "./Et2CustomfieldWidgetMapper";
 import "../Et2Link/Et2LinkEntry";
 
+import styles from "./Et2CustomfieldsFilters.styles";
 /**
  * @summary Renders customfield filter selectboxes.
  *
@@ -28,25 +29,7 @@ export class Et2CustomfieldsFilters extends Et2CustomfieldsBase
 	{
 		return [
 			...super.styles,
-			css`
-				:host {
-					display: block;
-				}
-
-				.customfields-filters {
-					display: flex;
-					flex-direction: column;
-					gap: var(--sl-spacing-2x-small, 0.25rem);
-				}
-
-				.customfields-filters__field {
-					min-width: 0;
-				}
-
-				.customfields-filters__field > * {
-					min-width: 0;
-				}
-			`
+			styles
 		];
 	}
 

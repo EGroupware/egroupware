@@ -11,11 +11,12 @@
 
 
 import {ExposeMixin, ExposeValue} from "../Expose/ExposeMixin";
-import {css, html, LitElement, TemplateResult} from "lit";
+import {html, LitElement, TemplateResult} from "lit";
 import {property} from "lit/decorators/property.js";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 
+import styles from "./Et2Link.styles";
 /**
  * Pseudo-appname matching PHP's Api\Link::URL_APPNAME - a link to an arbitrary external
  * URL, id is the URL itself. There's no real app registered for it (nothing to look up via
@@ -50,47 +51,7 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 	{
 		return [
 			...super.styles,
-			css`
-			  :host {
-				display: block;
-				cursor: pointer;
-			  }
-
-			  .link {
-				display: flex;
-				gap: 0.5rem;
-			  }
-
-			  .link__title {
-				flex: 2 1 50%;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                max-width: max-content;
-                width: 0;
-			  }
-
-			  .link__remark {
-				flex: 1 1 50%;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                max-width: max-content;
-                width: 0;
-			  }
-
-			  :host:hover {
-				text-decoration: underline
-			  }
-
-			  /** Style based on parent **/
-
-			  :host(et2-link-string) div {
-				display: inline;
-			  }
-
-			  :host-context(et2-link-list):hover {
-				text-decoration: none;
-			  }
-			`
+			styles
 		];
 	}
 

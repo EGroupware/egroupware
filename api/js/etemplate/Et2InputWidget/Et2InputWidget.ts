@@ -1,4 +1,4 @@
-import {css, html, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
+import {html, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
 import {et2_IInput, et2_IInputNode, et2_ISubmitListener} from "../et2_core_interfaces";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {HasSlotController} from "../Et2Widget/slot";
@@ -13,6 +13,7 @@ import {Et2TabPanel} from "../Layout/Et2Tabs/Et2TabPanel";
 import type {Et2Tabs} from "../Layout/Et2Tabs/Et2Tabs";
 
 
+import styles from "./Et2InputWidget.styles";
 /**
  * This mixin will allow any LitElement to become an Et2InputWidget
  *
@@ -198,30 +199,7 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		{
 			return [
 				...super.styles,
-				css`
-				  /* Allow actually disabled inputs */
-
-				  :host([disabled]) {
-					display: initial;
-				  }
-
-				  /* Needed so required can show through */
-
-				  ::slotted(input), input {
-					background-color: transparent;
-				  }
-
-				  /* Used to allow auto-sizing on slotted inputs */
-
-				  .input-group__container > .input-group__input ::slotted(.form-control) {
-					width: 100%;
-				  }
-
-				  .form-control__help-text {
-					position: relative;
-					  width: 100%;
-				  }
-				`
+				styles
 			];
 		}
 

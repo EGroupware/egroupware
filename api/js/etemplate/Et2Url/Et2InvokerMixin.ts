@@ -14,6 +14,7 @@ import {Et2InputWidget, Et2InputWidgetInterface} from "../Et2InputWidget/Et2Inpu
 import {colorsDefStyles} from "../Styles/colorsDefStyles";
 import {dedupeMixin} from "@open-wc/dedupe-mixin";
 
+import styles from "./Et2InvokerMixin.styles";
 /**
  * Invoker mixing adds an invoker button to a widget to trigger some action, e.g.:
  * - searchbox to delete input
@@ -45,31 +46,7 @@ export const Et2InvokerMixin = dedupeMixin(<T extends Constructor<LitElement>>(s
 			return [
 				...super.styles,
 				colorsDefStyles,
-				css`
-				::slotted(input), input, ::slotted(select) {
-					background-color: transparent;
-					border: none !important;
-				}
-				.input-group {
-					border: 1px solid var(--input-border-color);
-				}
-				.input-group__suffix{
-					text-align: center;
-				}
-				.input-group__container {
-					align-items: center
-				}
-				::slotted([slot="suffix"]) {
-					border: none !important;
-					background-color: transparent !important;
-					width: 2rem;
-					margin-inline-end: var(--sl-input-spacing-medium);
-				}
-				::slotted(:disabled) {cursor: default !important;}
-				:host(:hover) ::slotted([slot="suffix"]) {
-					cursor: pointer;
-				}
-			`,
+				styles,
 			];
 		}
 

@@ -21,6 +21,7 @@ import type {Et2Button} from "../Et2Button/Et2Button";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {CachedQueueMixin} from "../Et2Widget/CachedQueueMixin";
 
+import styles from "./Et2Avatar.styles";
 /**
  * Avatars are used to represent a person or profile.
  *
@@ -46,37 +47,7 @@ export class Et2Avatar extends CachedQueueMixin(Et2Widget(SlAvatar)) implements 
 			shoelace,
 			cropperStyles,
 			//set absolute position on edit icons so it does not interfere with flex positioning of initials
-			css`
-                [part='edit'] {
-                    visibility: hidden;
-                    border-radius: 50%;
-                    margin: -4px;
-                    z-index: 1;
-                    color: var(--sl-color-neutral-950)
-                }
-
-                div[part='initials'] {
-                    & ~ .edit {
-                        position: absolute;
-                        right: 2rem;
-                    }
-
-                    & ~ .delete {
-                        position: absolute;
-                        left: 2rem;
-                    }
-                }
-
-                :host(:hover)::part(edit) {
-                    visibility: visible;
-                }
-
-                /* if we fall back to an sl-icon give it a visible color*/
-
-                sl-icon {
-                    color: var(--sl-color-neutral-950)
-                }
-			`
+			styles
 		];
 	}
 

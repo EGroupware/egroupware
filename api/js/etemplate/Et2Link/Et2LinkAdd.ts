@@ -1,5 +1,5 @@
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
-import {css, html, LitElement, nothing} from "lit";
+import {html, LitElement, nothing} from "lit";
 import {Et2LinkAppSelect} from "./Et2LinkAppSelect";
 import {LinkInfo} from "./Et2Link";
 import {Et2Button} from "../Et2Button/Et2Button";
@@ -7,6 +7,7 @@ import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
 import {classMap} from "lit/directives/class-map.js";
 
+import styles from "./Et2LinkAdd.styles";
 /**
  * Find and select a single entry using the link system.
  *
@@ -19,28 +20,7 @@ export class Et2LinkAdd extends Et2InputWidget(LitElement)
 	{
 		return [
 			...super.styles,
-			css`
-				.form-control {
-					display: flex;
-					align-items: center;
-					flex-wrap: wrap;
-				}
-
-				.form-control-input {
-					display: flex;
-					flex: 1 1 auto;
-					position: relative;
-					max-width: 100%;
-                    border: solid var(--sl-input-border-width) var(--sl-input-border-color);
-                    border-radius: var(--sl-input-border-radius-medium);
-                    &:hover{
-                        border-color: var(--sl-input-border-color-hover);
-                    }
-				}
-				et2-link-apps::part(combobox){
-					border:none;
-				}
-			`
+			styles
 		];
 	}
 

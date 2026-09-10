@@ -1,4 +1,4 @@
-import {css, html, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
+import {html, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
 import {customElement} from "lit/decorators/custom-element.js";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {Favorite} from "./Favorite";
@@ -11,6 +11,7 @@ import {SlMenu} from "@shoelace-style/shoelace";
 import {state} from "lit/decorators/state.js";
 import {app} from "../../jsapi/egw_global";
 
+import styles from "./Et2FavoritesMenu.styles";
 /**
  * @summary A menu listing a user's favorites.  Populated from the user's preferences.
  *
@@ -28,36 +29,7 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
 	{
 		return [
 			super.styles,
-			css`
-				:host {
-					min-width: 15em;
-				}
-
-				et2-image[src="trash"] {
-					display: none;
-				}
-				[part="menu"]{
-					padding: 0;
-				}
-
-				sl-menu-item:hover et2-image[src="trash"] {
-					display: initial;
-				}
-
-				sl-menu-item[active] {
-					background-color: var(--highlight-background-color);
-				}
-				sl-menu-item::part(submenu-icon), sl-menu-item::part(checked-icon){
-					width: 0;
-				}
-                sl-menu-item::part(base){
-	                padding-block: 0;
-                }
-				
-				[slot="prefix"]:not([name="plus"]){
-					color: var(--sl-color-neutral-500);
-				}
-			`
+			styles
 		]
 	};
 

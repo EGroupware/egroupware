@@ -1,33 +1,18 @@
 import {cleanSelectOptions, SelectOption} from "../Et2Select/FindSelectOptions";
-import {css, html, TemplateResult} from "lit";
+import {html, TemplateResult} from "lit";
 import {property} from "lit/decorators/property.js";
 import {Et2Select} from "../Et2Select/Et2Select";
 import {LINK_URL_APPNAME, LINK_URL_ICON} from "./Et2Link";
 
 
+import styles from "./Et2LinkAppSelect.styles";
 export class Et2LinkAppSelect extends Et2Select
 {
 	static get styles()
 	{
 		return [
 			...super.styles,
-			css`
-			:host {
-				--icon-width: 20px;
-				display: inline-block;
-				min-width: 64px;
-			}
-			:host(.app-icons) {
-				max-width: 75px;
-			}
-			.select__menu {
-				overflow-x: hidden;
-			}
-			::part(control) {
-				border: none;
-				box-shadow: initial;
-			}
-			`
+			styles
 		]
 	}
 

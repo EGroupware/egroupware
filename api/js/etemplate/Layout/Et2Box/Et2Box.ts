@@ -14,6 +14,7 @@ import {classMap} from "lit/directives/class-map.js";
 import {Et2Widget} from "../../Et2Widget/Et2Widget";
 import {et2_IDetachedDOM} from "../../et2_core_interfaces";
 
+import styles, {vbox} from "./Et2Box.styles";
 /**
  * @summary A basic wrapper to group other widgets
  *
@@ -25,49 +26,7 @@ export class Et2Box extends Et2Widget(LitElement) implements et2_IDetachedDOM
 	{
 		return [
 			...super.styles,
-			css`
-            :host {
-				display: block;
-            }
-            :host > div {
-            	display: flex;
-            	flex-wrap: nowrap;
-            	justify-content: flex-start;
-            	align-items: stretch;
-            	height: 100%;
-			}
-			:host([align="right"]) > div {
-				justify-content: flex-end;
-			}
-			:host([align="left"]) > div {
-				justify-content: flex-start;
-			}
-			:host([align="center"]) > div {
-				justify-content: center;
-			}
-			/* CSS for child elements */
-            ::slotted(*) {
-            	flex: 1 1 auto;
-            }
-            ::slotted(img),::slotted(et2-image) {
-            	/* Stop images from growing.  In general we want them to stay */
-            	flex-grow: 0;
-            }
-            ::slotted([align="left"]) {
-            	margin-right: auto;
-            	order: -1;
-            }
-            ::slotted([align="right"]) {
-            	margin-left: auto;
-            	order: 1;
-				text-align: initial;
-            }
-            
-            /* work around for chromium print bug, see render() */
-            :host > .no-print-gap {
-            	gap: 0px;
-            }
-            `,
+			styles,
 		];
 	}
 
@@ -164,23 +123,7 @@ export class Et2VBox extends Et2Box
 	{
 		return [
 			...super.styles,
-			css`
-			  :host > div {
-				flex-direction: column;
-			  }
-
-			  :host([align="center"]) > div {
-				align-items: center;
-			  }
-
-			  /* CSS for child elements */
-
-			  ::slotted(*) {
-				/* Stop children from growing vertically.  In general we want them to stay their "normal" height */
-				flex-grow: 0;
-			  }
-
-			`
+			vbox
 		];
 	}
 }

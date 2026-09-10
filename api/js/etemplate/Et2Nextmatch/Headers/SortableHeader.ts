@@ -1,10 +1,11 @@
-import {css, html} from "lit";
+import {html} from "lit";
 import {property} from "lit/decorators/property.js";
 import {et2_INextmatchSortable} from "../../et2_extension_nextmatch";
 import {Et2NextmatchHeader} from "./Header";
 import {customElement} from "lit/decorators/custom-element.js";
 import {ET2_NEXTMATCH_SORT_EVENT, Et2NextmatchSortEventDetail} from "./events";
 
+import styles from "./SortableHeader.styles";
 type SortMode = "none" | "asc" | "desc";
 
 /**
@@ -27,31 +28,7 @@ export class Et2NextmatchSortableHeader extends Et2NextmatchHeader implements et
 	{
 		return [
 			...super.styles,
-			css`
-				:host {
-					width: fit-content;
-					cursor: pointer;
-					display: inline-flex;
-					white-space: nowrap;
-				}
-
-				.nextmatch_sortheader {
-					padding-right: var(--sl-spacing-small);
-					overflow: hidden;
-					text-overflow: ellipsis;
-					flex: 1 1 auto;
-				}
-
-				.nextmatch_sortheader:hover {
-					text-decoration: underline;
-				}
-
-				.nextmatch_sortheader--marker {
-					width: 1em;
-					text-decoration: none;
-					background-repeat: no-repeat;
-				}
-			`
+			styles
 		];
 	}
 

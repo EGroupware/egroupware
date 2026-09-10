@@ -11,7 +11,7 @@
 
 
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
-import {css, html, LitElement, nothing} from "lit";
+import {html, LitElement, nothing} from "lit";
 import {Et2Button} from "../Et2Button/Et2Button";
 import {Et2LinkEntry} from "./Et2LinkEntry";
 import {egw} from "../../jsapi/egw_global";
@@ -28,6 +28,7 @@ import {property} from "lit/decorators/property.js";
 import {customElement} from "lit/decorators/custom-element.js";
 import {state} from "lit/decorators/state.js";
 
+import styles from "./Et2LinkTo.styles";
 /**
  * Choose an existing entry, VFS file or local file, and link it to the current entry.
  *
@@ -60,29 +61,7 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 	{
 		return [
 			...super.styles,
-			css`
-				[hidden] {
-					display: none;
-				}
-
-				et2-link-entry {
-					flex: 1 1 auto;
-				}
-
-				.input-group__container {
-					flex: 1 1 auto;
-				}
-
-				.form-control-input {
-					display: flex;
-					width: 100%;
-					gap: 0.5rem;
-				}
-
-				::slotted(.et2_file) {
-					width: 30px;
-				}
-			`
+			styles
 		];
 	}
 

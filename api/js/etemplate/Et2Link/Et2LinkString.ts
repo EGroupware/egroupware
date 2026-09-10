@@ -10,7 +10,7 @@
  */
 
 
-import {css, html, LitElement, nothing, PropertyValues, render, TemplateResult} from "lit";
+import {html, LitElement, nothing, PropertyValues, render, TemplateResult} from "lit";
 import {until} from "lit/directives/until.js";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {LinkInfo} from "./Et2Link";
@@ -20,6 +20,7 @@ import {customElement} from "lit/decorators/custom-element.js";
 import {repeat} from "lit/directives/repeat.js";
 import {Et2LazyLoadController} from "../Et2Widget/Et2LazyLoadController";
 
+import styles from "./Et2LinkString.styles";
 /**
  * Display a list of entries in a comma separated list
  *
@@ -37,36 +38,7 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 	{
 		return [
 			...super.styles,
-			css`
-				:host {
-					list-style-type: none;
-					display: inline;
-					padding: 0px;
-				}
-
-				et2-link, et2-link::part(base), et2-description {
-					display: inline;
-				}
-
-				et2-link::part(icon), et2-link::part(remark) {
-					display: none;
-				}
-
-				et2-link:hover {
-					text-decoration: underline;
-				}
-
-
-				/* CSS for child elements */
-
-				et2-link::part(title):after {
-					content: ", "
-				}
-
-				et2-link:last-child::part(title):after {
-					content: initial;
-				}
-			`
+			styles
 		];
 	}
 

@@ -1,6 +1,6 @@
 import {CUSTOMFIELD_PREFIX, Et2CustomfieldsBase} from "./Et2CustomfieldsBase";
 import {customElement} from "lit/decorators/custom-element.js";
-import {css, html} from "lit";
+import {html} from "lit";
 import {html as staticHtml, unsafeStatic} from "lit/static-html.js";
 import {repeat} from "lit/directives/repeat.js";
 import {ref} from "lit/directives/ref.js";
@@ -8,6 +8,7 @@ import type {Et2CustomfieldWidgetMapping} from "./Et2CustomfieldWidgetMapper";
 import {applyCustomfieldWidgetMapping, mapCustomfieldToWidget} from "./Et2CustomfieldWidgetMapper";
 import "../Et2Link/Et2LinkEntry";
 
+import styles from "./Et2Customfields.styles";
 /**
  * @summary Renders editable customfield widgets.
  *
@@ -24,30 +25,7 @@ export class Et2Customfields extends Et2CustomfieldsBase
 	{
 		return [
 			...super.styles,
-			css`
-				:host {
-					display: block;
-				}
-
-				.customfields {
-					display: grid;
-					grid-template-columns: max-content minmax(0, 1fr);
-					gap: var(--sl-spacing-2x-small, 0.25rem) var(--sl-spacing-small, 0.75rem);
-					align-items: start;
-				}
-
-				.customfields__label {
-					padding-top: var(--sl-spacing-2x-small, 0.25rem);
-				}
-
-				.customfields__field {
-					min-width: 0;
-				}
-
-				.customfields__field > * {
-					min-width: 0;
-				}
-			`
+			styles
 		];
 	}
 

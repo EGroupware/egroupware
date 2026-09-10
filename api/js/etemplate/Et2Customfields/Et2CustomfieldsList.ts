@@ -1,7 +1,7 @@
 import {CUSTOMFIELD_PREFIX, Et2CustomfieldsBase} from "./Et2CustomfieldsBase";
 import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
-import {css, html} from "lit";
+import {html} from "lit";
 import {html as staticHtml, unsafeStatic} from "lit/static-html.js";
 import {repeat} from "lit/directives/repeat.js";
 import {ref} from "lit/directives/ref.js";
@@ -10,6 +10,7 @@ import "../Et2Link/Et2Link";
 import "../Et2Select/SelectTypes";
 import {applyCustomfieldWidgetMapping, mapCustomfieldToWidget} from "./Et2CustomfieldWidgetMapper";
 
+import styles from "./Et2CustomfieldsList.styles";
 /**
  * @summary Renders read-only customfield widgets.
  *
@@ -31,46 +32,7 @@ export class Et2CustomfieldsList extends Et2CustomfieldsBase
 	{
 		return [
 			...super.styles,
-			css`
-				:host {
-					display: block;
-				}
-
-				.customfields-list {
-					display: flex;
-					flex-direction: column;
-					gap: var(--sl-spacing-2x-small, 0.25rem);
-				}
-
-				.customfields-list__field {
-					display: flex;
-					align-items: center;
-					min-width: 0;
-				}
-
-				.customfields-list__field[hidden] {
-					display: none;
-				}
-
-				.customfields-list__field > * {
-					min-width: 0;
-				}
-
-				:host([no-label]) .customfields-list__field {
-					align-items: stretch;
-					width: 100%;
-				}
-
-				:host([no-label]) .customfields-list__field > * {
-					flex: 1 1 auto;
-					width: 100%;
-					max-width: 100%;
-				}
-
-				:host([no-label]) et2-link::part(remark) {
-					display: none;
-				}
-			`
+			styles
 		];
 	}
 

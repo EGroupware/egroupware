@@ -9,7 +9,6 @@
  */
 
 
-import {css} from "lit";
 import {property} from "lit/decorators/property.js";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {SlTextarea} from "@shoelace-style/shoelace";
@@ -17,6 +16,7 @@ import shoelace from "../Styles/shoelace";
 import {Et2MarkdownEditMixin} from "../Markdown/Et2MarkdownEditMixin";
 
 
+import styles from "./Et2Textarea.styles";
 export class Et2Textarea extends Et2MarkdownEditMixin(Et2InputWidget(SlTextarea))
 {
 	private __width : string;
@@ -27,32 +27,7 @@ export class Et2Textarea extends Et2MarkdownEditMixin(Et2InputWidget(SlTextarea)
 		return [
 			...shoelace,
 			...super.styles,
-			css`
-				:host {
-					display: flex;
-					flex-direction: column;
-					width: 100%;
-					height: 100%;
-				}
-
-				.textarea--resize-vertical {
-					height: 100%;
-				}
-
-				:host::part(form-control) {
-					height: 100%;
-					align-items: stretch !important;
-				}
-
-				:host::part(form-control-input), :host::part(textarea) {
-					height: 100%;
-				}
-
-				.form-control-input .textarea--standard.textarea--focused:not(.textarea--disabled){
-					width: calc(100% - (2 * var(--sl-focus-ring-width)));
-					margin-left: var(--sl-focus-ring-width);
-				}
-			`,
+			styles,
 		];
 	}
 

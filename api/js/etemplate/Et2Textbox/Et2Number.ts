@@ -9,11 +9,12 @@
  */
 
 import {Et2Textbox} from "./Et2Textbox";
-import {css, html, nothing, PropertyValues, render} from "lit";
+import {html, nothing, PropertyValues, render} from "lit";
 import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
 
 
+import styles from "./Et2Number.styles";
 /**
  * @summary Enter a numeric value.  Number formatting comes from preferences by default
  * @since 23.1
@@ -40,36 +41,7 @@ export class Et2Number extends Et2Textbox
 	{
 		return [
 			...(super.styles ? (Array.isArray(super.styles) ? super.styles : [super.styles]) : []),
-			css`
-			  /* Scroll buttons */
-
-				:host(:hover) .input--medium .input__suffix ::slotted(et2-button-scroll) {
-					visibility: visible;
-				}
-
-				.input--medium .input__suffix ::slotted(et2-button-scroll) {
-					visibility: hidden;
-					padding: 0px;
-					margin: 0px;
-					margin-left: var(--sl-spacing-small);
-					margin-inline-end: var(--sl-spacing-x-small);
-				}
-
-				:host([step]) .input--medium .input__control {
-					padding-left: 0px;
-					flex-shrink: 0;
-				}
-
-				.form-control-input {
-					min-width: var(--width, 4em);
-					max-width: var(--width, 7em);
-				}
-
-				.input__control {
-					text-align: right;
-				}
-
-			`,
+			styles,
 		];
 	}
 

@@ -9,13 +9,13 @@
  */
 
 
-import {css} from "lit";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import '../Et2Image/Et2Image';
 import {SlCheckbox} from "@shoelace-style/shoelace";
 import shoelace from "../Styles/shoelace";
 import {property} from "lit/decorators/property.js";
 
+import styles from "./Et2Checkbox.styles";
 export class Et2Checkbox extends Et2InputWidget(SlCheckbox)
 {
 	/**
@@ -28,35 +28,7 @@ export class Et2Checkbox extends Et2InputWidget(SlCheckbox)
 		return [
 			...shoelace,
 			...super.styles,
-			css`
-			  :host {
-				/* Make it line up with the middle of surroundings */
-				margin: auto 0px;
-				vertical-align: baseline;
-			  }
-
-			  :host([disabled]) {
-				display: initial;
-			  }
-
-			  /* Fix positioning */
-
-			  .checkbox {
-				position: relative;
-			  }
-
-			  /* Extend hover highlight to label */
-
-			  .checkbox:not(.checkbox--disabled):hover {
-				color: var(--sl-input-border-color-hover);
-			  }
-
-			  /* Use normal color even when required */
-
-			  :host([required]) .checkbox__control {
-				color: var(--input-text-color);
-			  }
-			`,
+			styles,
 		];
 	}
 
