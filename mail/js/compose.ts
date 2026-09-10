@@ -448,6 +448,42 @@ export class MailCompose
 	}
 
 	/**
+	 * Apply a caller-chosen "send files as" mode (filemanager's Download link / Readonly share /
+	 * Writable share actions, via composeWithPreset({filemode}) for a fresh popup or
+	 * MailApp.setCompose()'s own confirmed yes/no question for an already-open one) the way a real
+	 * user pick through the widget counts: currentEmailFields() only ever converts attachments
+	 * into share links when `explicitShareModeChosen` is set (see its docblock), and a
+	 * programmatic set_value() does NOT set it - checkSharingFilemode()'s genuine-onchange branch
+	 * never sees a node for it (found live 2026-09-10: widget said "link", the send would still
+	 * have attached the files). The user picked the mode in the other app and, for an open popup,
+	 * confirmed it - that is the explicit choice. Also runs checkSharingFilemode()'s load-time
+	 * variant so the expiration/password fields follow the mode, without its extra alert.
+	 *
+	 * @param filemode 'attach' | 'link' | 'share_ro' | 'share_rw'
+	 */
+	public applyPresetFilemode(filemode : string) : void
+	{
+		const widget = this.et2?.getWidgetById('filemode');
+		if (!filemode || !widget) return;
+		if (widget.get_value() !== filemode)
+		{
+			widget.set_value(filemode);
+		}
+		this.checkSharingFilemode(undefined, widget);
+		// checkSharingFilemode() may have downgraded share_rw without EPL - read back the value
+		this.explicitShareModeChosen = widget.get_value() !== 'attach';
+	}
+
+	/**
+	 * Strip the "vfs://default" url prefix a preset file path may carry, leaving the bare absolute
+	 * VFS path the jmapVfsPath marker rows (and everything consuming them) work with.
+	 */
+	public static vfsPathFromPreset(path : string) : string
+	{
+		return String(path || '').replace(/^vfs:\/\/default(?=\/)/, '');
+	}
+
+	/**
 	 * Apply a client-side-only compose bootstrap's own preset VFS-attachment files (addressbook
 	 * vCard-attach, filemanager "mail selected files" - doc/ai/projects/mail-compose-jmap-
 	 * migration.md, Step 10) - same bare `jmapVfsPath` marker shape vfsUpload() itself builds for
@@ -464,7 +500,13 @@ export class MailCompose
 		if (!files.length) return;
 		this.mergeAttachmentEntries(files.map((f) => ({
 			tmp_name: 'vfs:' + f.path,
-			jmapVfsPath: f.path,
+			// a bare absolute VFS path ("/home/asig/x.pdf"), never the "vfs://default/..." url the
+			// classic preset[file] params carry (filemanager, addressbook, mail re-attach and 3rd-party
+			// callers all build that one): every consumer of the marker prepends the prefix itself
+			// (Compose::resolveJmapAttachmentsToFiles() Vfs::PREFIX, displayUploadedFile()'s and
+			// uploadVfsAttachment()'s webdav.php url) - the url form died at send time with
+			// "Filename 'vfs://default/...' is not an absolute path!" (found live 2026-09-10)
+			jmapVfsPath: MailCompose.vfsPathFromPreset(f.path),
 			name: f.name || f.path.split('/').pop() || f.path,
 			type: f.type || 'application/octet-stream',
 			size: 0,

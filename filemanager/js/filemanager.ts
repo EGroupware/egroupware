@@ -540,6 +540,11 @@ export class filemanagerAPP extends EgwApp
 			});
 		}
 		content.data.files["filemode"] = params['preset[filemode]'];
+		// the same name/type for the "reuse an already-open popup" case: MailApp.setCompose()
+		// resolves that client-side too (vfsFilesFromComposeContent()), and the type is what the
+		// JMAP upload declares at send time
+		content.data.files["name"] = files.map(f => f.name);
+		content.data.files["type"] = files.map(f => f.type);
 		// always open compose in html mode, as attachment links look a lot nicer in html
 		params["mimeType"] = 'html';
 		// Matches an already-open compose popup's own url (mail/compose.php,

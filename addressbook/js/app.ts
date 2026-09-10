@@ -1118,7 +1118,7 @@ class AddressbookApp extends EgwApp
 	adb_mail_vcard(_action, _elems)
 	{
 		const link = {'preset[type]':[], 'preset[file]':[]};
-		const content = {data:{files:{file:[], type:[]}}};
+		const content = {data:{files:{file:[], type:[], name:[]}}};
 		const vcardType = "text/vcard; charset="+(egw.preference('vcard_charset', 'addressbook') || 'utf-8');
 		const nm = this.et2.getWidgetById('nm');
 		if(this._fetchAllSelected(nm, (ids) =>
@@ -1148,6 +1148,10 @@ class AddressbookApp extends EgwApp
 			content.data.files.type.push(vcardType);
 			const contactName = egw.dataGetUIDdata(_elems[i].id)?.data?.n_fn;
 			files.push({path, name: (contactName || 'vcard') + '.vcf', type: vcardType});
+			// same name for the "reuse an already-open popup" case, which MailApp.setCompose()
+			// resolves client-side too (vfsFilesFromComposeContent()) - a bare ".entry" basename
+			// is no attachment name
+			content.data.files.name.push(files[files.length - 1].name);
 		}
 		// Matches an already-open compose popup's own url (mail/compose.php,
 		// doc/ai/projects/mail-compose-jmap-migration.md Step 10) - MailApp.setCompose() only ever
