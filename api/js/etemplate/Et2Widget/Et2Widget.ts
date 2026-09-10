@@ -121,6 +121,11 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 						display: none;
 					}
 
+					/* Without this, an inherited :host{display:...} (eg. from Shoelace) silently outranks the browser's own [hidden] rule - see Et2MenuItem.ts for the same fix. */
+					:host([hidden]) {
+						display: none;
+					}
+
 					:host(.et2_clickable) {
 						cursor: pointer;
 					}

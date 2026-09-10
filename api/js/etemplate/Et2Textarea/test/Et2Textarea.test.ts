@@ -16,6 +16,7 @@
 import {assert, elementUpdated, fixture, html} from "@open-wc/testing";
 import type {Et2Textarea} from "../Et2Textarea";
 import "../Et2Textarea";
+import {inputBasicTests} from "../../Et2InputWidget/test/InputBasicTests";
 
 let written: { app: string, name: string, value: any }[] = [];
 let preferences: Record<string, any> = {};
@@ -362,3 +363,5 @@ describe("et2-textarea markdown click-to-edit", () =>
 		assert.isFalse(!!el.shadowRoot.querySelector("[data-source-line]"), "none in edit view");
 	});
 });
+
+inputBasicTests(async() => await fixture<Et2Textarea>(html`<et2-textarea></et2-textarea>`), "I'm a good test value", "textarea");

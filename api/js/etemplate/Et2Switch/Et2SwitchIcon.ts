@@ -119,6 +119,12 @@ export class Et2SwitchIcon extends Et2InputWidget(LitElement)
 	@property({reflect: true}) variant = "neutral";
 	@property({reflect: true}) size;
 
+	// Backs value - the render()'s .checked=${live(this.checked)} binding re-asserts this on
+	// every render, so set value() must go through this property, not this.switch.checked
+	// directly, or the next unrelated re-render (eg. from a hidden/disabled change) silently
+	// wipes the value back out.
+	@property({type: Boolean}) checked = false;
+
 	protected get switch() : SlSwitch { return <SlSwitch>this.shadowRoot?.querySelector("sl-switch")};
 
 	private get input() { return this.switch.shadowRoot.querySelector("input");}
@@ -136,19 +142,16 @@ export class Et2SwitchIcon extends Et2InputWidget(LitElement)
 		{
 			new_value = et2_evalBool(new_value);
 		}
+		this.checked = !!new_value;
 		if(this.switch)
 		{
-			this.switch.checked = !!new_value;
-		}
-		else
-		{
-			this.updateComplete.then(() => this.value = new_value);
+			this.switch.checked = this.checked;
 		}
 	}
 
 	get value()
 	{
-		return this.switch?.checked;
+		return this.checked;
 	}
 
 	/** Overridden from parent because something in there clears / resets the check value */

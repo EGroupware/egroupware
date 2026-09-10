@@ -1,5 +1,6 @@
 import {assert} from "@open-wc/testing";
 import {Et2Filterbox} from "../Et2Filterbox";
+import {widgetSlotTests} from "../../Et2Widget/test/WidgetSlotTests";
 
 /**
  * Contract under test:
@@ -156,3 +157,19 @@ describe("Et2Filterbox sort sync", () =>
 		element.remove();
 	});
 });
+
+// value is only meaningful once a real filter template (with a live et2 instance manager) is
+// attached - the fake-template setup used above doesn't give it one - so the full
+// inputBasicTests() value/required contract doesn't apply here. Its label/help-text/prefix/suffix
+// slots (the exact 4 names in its own hasSlotController) still follow the normal part= convention
+// and are worth checking on their own.
+// skipLabelFixed: Et2Filterbox.styles.ts sets its own --label-width (min(20rem, 30%), 100% on
+// narrow screens) for its drawer layout, overriding .et2-label-fixed's generic 8em default - the
+// CSS hook itself still works, this widget just legitimately customizes the variable it reads.
+widgetSlotTests(async() =>
+{
+	const element = new Et2Filterbox();
+	document.body.append(element);
+	await element.updateComplete;
+	return element;
+}, ["label", "help-text", "prefix", "suffix"], {skipLabelFixed: true});

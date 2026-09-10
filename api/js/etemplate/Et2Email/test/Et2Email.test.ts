@@ -274,9 +274,13 @@ describe("Tags", () =>
 	});
 });
 
+// Et2Email is a tag-based, always-multi-value widget - get_value() is an array even with a
+// single address, never a plain string (previously masked by inputBasicTests' old loose
+// assert.equal(), where [ 'fake@example.com' ] == 'fake@example.com' is true via JS's array-to-
+// string coercion - deepEqual is stricter and correctly needs the real shape spelled out here).
 inputBasicTests(async() =>
 {
 	const element = await before();
 	element.noLang = true;
 	return element
-}, "fake@example.com", "input");
+}, "fake@example.com", "input", {expectedValue: ["fake@example.com"], emptyValue: []});

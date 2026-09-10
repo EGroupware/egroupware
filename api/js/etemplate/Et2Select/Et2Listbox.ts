@@ -130,13 +130,17 @@ export class Et2Listbox extends RowLimitedMixin(Et2WidgetWithSelectMixin(LitElem
 
 	set value(new_value : String[] | String)
 	{
-		const oldValue = this.value;
 		if(typeof new_value == "string")
 		{
 			new_value = [new_value]
 		}
 		this.__value = <String[]>new_value;
-		this.requestUpdate("value", oldValue);
+		// Not requestUpdate("value", oldValue): once hasUpdated, the getter derives its result
+		// from the rendered <sl-menu-item>s' checked state, which hasn't re-rendered yet at this
+		// point - so this.value (used for oldValue) still reads the pre-update result, equal to
+		// itself, and Lit's hasChanged() sees "no change" and skips the render that would
+		// actually update the checked items. An unconditional requestUpdate() always schedules it.
+		this.requestUpdate();
 	}
 
 	_optionTemplate(option : SelectOption) : TemplateResult

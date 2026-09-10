@@ -218,6 +218,21 @@ module` errors. Those are tallied separately from the tests, so the pass/fail co
 but a real failure is easy to lose in the noise. `web-test-runner.config.mjs` now throws a pointing
 error rather than letting that happen.
 
+### Every input widget's test file should call `inputBasicTests()`
+
+Any widget built on the `Et2InputWidget` mixin (has a real, user-settable value) should call
+`inputBasicTests()` from `api/js/etemplate/Et2InputWidget/test/InputBasicTests.ts` in its test
+file - it's the shared contract covering readonly/disabled/hidden, round-trip values, required,
+and the label/help-text/prefix/suffix `part=` convention (including `.et2-label-fixed`). A widget
+with no real value but still worth checking for label handling (eg. a display-only widget) can
+call `widgetSlotTests()` from `api/js/etemplate/Et2Widget/test/WidgetSlotTests.ts` directly instead.
+See the docblocks in both files for the full contract and the options available (`expectedValue`,
+`emptyValue`, `checkEmptyDisplay`, `skip`) for widgets whose value/rendering doesn't fit the
+default assumptions - every `skip` needs a one-line comment at the call site explaining why.
+`doc/ai/projects/input-widget-test-coverage.md` tracks the rollout and documents the gotchas found
+along the way (nested custom elements that need an explicit registration import, Shoelace's
+`assignedNodes()`/`{flatten: true}` behavior, etc.).
+
 ### Running the JS tests from a git worktree
 
 A worktree only gets tracked files, so three things have to be provided before the tests can run.

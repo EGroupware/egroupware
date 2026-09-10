@@ -4,6 +4,7 @@
 import {assert, fixture, html} from '@open-wc/testing';
 import {Et2Number} from "../Et2Number";
 import * as sinon from "sinon";
+import {inputBasicTests} from "../../Et2InputWidget/test/InputBasicTests";
 
 window.egw = {
 	lang: i => i + "*",
@@ -166,5 +167,4 @@ describe("'.' as thousands separator", () =>
 		});
 	});
 });
-//
-// inputBasicTests(before, "I'm a good test value", "input");
+inputBasicTests(before, "42", "input");

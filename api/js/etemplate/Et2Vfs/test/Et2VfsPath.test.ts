@@ -2,6 +2,7 @@ import {assert, elementUpdated, expect, fixture, html, oneEvent} from '@open-wc/
 import * as sinon from 'sinon';
 import {Et2VfsPath} from "../Et2VfsPath";
 import {sendKeys} from "@web/test-runner-commands";
+import {inputBasicTests} from "../../Et2InputWidget/test/InputBasicTests";
 
 /**
  * Test file for Etemplate webComponent VfsPath
@@ -205,13 +206,19 @@ describe("Read-only display of a value that is not a path", () =>
 		assert.exists(element.shadowRoot.querySelector("sl-breadcrumb"));
 	});
 });
-/*
-These no longer pass (In/Out value tests > no value gives empty string)
-inputBasicTests(async() =>
-{
-	const element = await before();
-	element.noLang = true;
-	return element
-}, "/home/test", "sl-breadcrumb");
-
- */
+// render() has 3 different branches depending on state (plain text when readonly and not a path,
+// an <input> while actively editing, a breadcrumb otherwise) - there's no single selector that
+// shows "the value" across all of them, which is why the old call here (checking a fixed
+// "sl-breadcrumb" selector unconditionally) never passed. A freshly-created, non-editing widget
+// renders the breadcrumb branch: an empty value still produces one root breadcrumb item (from
+// "".split('/')) with its "/" separator but no actual path segment text - not a bug, that's the
+// clickable root affordance, so the check strips separators/whitespace rather than requiring
+// completely empty content.
+inputBasicTests(before, "/home/test/directory", "input", {
+	checkEmptyDisplay: (element : Et2VfsPath) =>
+		assert.equal(
+			element.shadowRoot.querySelector(".vfs-path__breadcrumb")?.textContent.replace(/[/\s]/g, ""),
+			"",
+			"Displaying a path segment when there is no value"
+		)
+});

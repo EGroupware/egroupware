@@ -1,6 +1,15 @@
 import {css} from 'lit';
 
 export default css`
+	/* Without this, an empty label/help-text still shows - Styles/shoelace.ts brings the label back when has-label, help-text needs its own pair (like Et2HtmlArea's). */
+	.form-control__label, .form-control__help-text {
+		display: none;
+	}
+
+	.form-control--has-help-text .form-control__help-text {
+		display: block;
+	}
+
 	:host([open]) {
 		/* Keep the active email field above adjacent editor chrome such as TinyMCE toolbars. */
 		position: relative;

@@ -297,6 +297,11 @@ export class Et2Number extends Et2Textbox
 	 */
 	getValue() : any
 	{
+		// A readonly/disabled widget must not return a value (Et2InputWidget's base contract).
+		if(this.readonly || this.disabled)
+		{
+			return null;
+		}
 		if(this.value == "" || typeof this.value == "undefined")
 		{
 			return "";

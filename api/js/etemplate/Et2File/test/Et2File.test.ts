@@ -4,6 +4,7 @@ import {html} from "lit";
 import * as sinon from "sinon";
 import {Et2File} from "../Et2File";
 import {Et2FileItem} from "../Et2FileItem";
+import {widgetSlotTests} from "../../Et2Widget/test/WidgetSlotTests";
 
 
 window.egw = {
@@ -264,3 +265,8 @@ describe('Et2File Component', async() =>
 		assert.equal(badFile.warning, 'Permission denied', "failed file should carry a warning");
 	});
 });
+
+// value is a {tempFileName: FileInfo} map built by real upload interactions (Resumable), not a
+// plain settable value - the full inputBasicTests() round-trip/required contract doesn't fit.
+// label/help-text still follow the normal part= convention and are worth checking on their own.
+widgetSlotTests(async() => await fixture<Et2File>(html`<et2-file></et2-file>`), ["label", "help-text"]);
