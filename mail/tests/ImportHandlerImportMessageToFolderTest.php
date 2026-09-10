@@ -201,7 +201,12 @@ class ImportHandlerImportMessageToFolderTest extends Api\LoggedInTest
 		}
 		catch (Api\Exception\WrongUserinput $e)
 		{
-			$this->assertStringContainsString('Destination Folder not set', $e->getMessage());
+			// case-insensitive: mail/lang/egw_en.lang translates the raw "Destination Folder not
+			// set." source literal to "Destination folder not set." (lowercase 'f') - found via a
+			// real CI failure 2026-09-10, where the full language file is loaded; a local dev
+			// container with an incomplete/stale translation cache can silently fall back to the
+			// raw literal's own capitalization instead, masking the mismatch
+			$this->assertStringContainsStringIgnoringCase('destination folder not set', $e->getMessage());
 		}
 		$this->assertEmpty($jmap->uploadedBlobs);
 	}
