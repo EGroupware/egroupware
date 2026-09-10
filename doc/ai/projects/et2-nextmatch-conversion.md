@@ -400,6 +400,20 @@ Mechanical renames seen in every conversion:
   and supports row hydration via `Et2InputWidget`'s `transformAttributes`) — not `<et2-description>`,
   which escapes its value and has no raw-HTML mode at all. Immediately add `noAiTools="true"` too (see
   the next bullet) or the fix appears to do nothing.
+- **`<progress id="${row}[field]"/>` renders as a *native* `<progress>` stuck in its indeterminate
+  animation** (Tracker: `tr_completion`) — same root cause as the `<html>` bullet above (`et2_progress`
+  is a legacy widget, so `Et2RowProvider`'s clone step falls through to `document.createElement`), but
+  this one is worse than an empty cell: `progress` *is* a real HTML element, so every row shows a
+  plausible-looking animated bar and nothing hints that no value ever arrived. There is no
+  `et2-progress` web component, and none is needed - bind the native element's own attributes instead:
+  `<progress title="$row_cont[field]%" value="$row_cont[field]" max="100"/>`. `label=` does NOT work
+  here (it is what InfoLog's converted `index.xet` originally carried over): it is inert on a native
+  `<progress>`, which then has no accessible name and no hover text at all, where the legacy widget
+  used to put its label in the element's `title`. Drop the `id="${row}[field]"` binding too: a plain
+  element has no `value` property options and no `set_value()`, so row hydration never reaches the
+  value branch and instead `setAttribute()`s the *resolved* id, leaving `id="70"` on the element.
+  Finally add `width: 100%` CSS - a native `<progress>` defaults to ~140px, which overflows a narrow
+  list column and gets clipped, so an un-styled 70% bar looks full.
 - **Any `<et2-textarea>`/`<et2-htmlarea>`/`<htmlarea>` tag anywhere in a served `.xet` file — including
   inside a nextmatch row template — gets blindly wrapped in `<et2-ai>` server-side** by a blanket regex
   in `api/etemplate.php` (`# wrap et2-textarea and htmlarea in et2-ai ...`), unconditionally, unrelated
