@@ -172,14 +172,73 @@ class NextmatchTest extends Etemplate\WidgetBaseTest
 	}
 
 	/**
+	 * A nextmatch living inside a bare <et2-template> reference tag (as any lazy-loaded
+	 * tab-panel does, eg. tracker's "Comments" tab) must resolve just as well as one in the
+	 * template itself: such a reference is NOT expanded while the referencing template gets
+	 * parsed, so searching only its (non-existing) children rejected the form_name outright
+	 * ("Unknown nextmatch/historylog widget 'replies'!" -> 400 on opening the tab).
+	 *
+	 * Setup: the test template references api.nextmatch_test.sub_template (which holds the
+	 * "sub_nm" nextmatch) as a bare tag, and is rendered with a server-side get_rows for it.
+	 * Pass criteria: no InvalidArgumentException, the server-side get_rows ran (total=1) and
+	 * the get_rows the client sent along was ignored.
+	 */
+	public function testAjaxGetRowsResolvesNextmatchInReferencedTemplate()
+	{
+		$exec_id = $this->templateRequest(array('sub_nm' => array(
+			'get_rows' => __CLASS__.'::mock_get_rows',
+			'num_rows' => 0,	// lazy: no rows shipped with the page itself
+		)));
+		self::$mock_get_rows_params = null;
+		self::$client_get_rows_called = false;
+
+		Nextmatch::ajax_get_rows($exec_id, array('start' => 0, 'num_rows' => 10), array(
+			'get_rows' => __CLASS__.'::client_get_rows',
+		), 'sub_nm');
+
+		$data = $this->responseData();
+		$this->assertSame(1, $data['total'] ?? null,
+			'nextmatch inside a bare <et2-template> reference did not resolve to its server-side get_rows');
+		$this->assertFalse(self::$client_get_rows_called,
+			'client-supplied get_rows callback must never be called');
+	}
+
+	/**
 	 * Render the test template to create the server-side request cache used by
-	 * ajax_get_rows().  Returning an exec id proves the history widget resolved.
+	 * ajax_get_rows() (see templateRequest()).  Returning an exec id proves the
+	 * history widget resolved.
 	 *
 	 * Also asserts that HistoryLog::beforeSendToClient() has already seeded the
 	 * trusted 'get_rows' into the request content at render time - this is what
 	 * lets Nextmatch::ajax_get_rows() stay completely generic about historylog,
 	 * so a regression here should fail at this layer, not just show up as a
 	 * wrong 'total' from ajax_get_rows().
+	 *
+	 * @param string $expected_get_rows the get_rows callback beforeSendToClient()
+	 *	should have stored server-side for $form_name
+	 */
+	private function historyRequest($form_name, $record_id, $expected_get_rows)
+	{
+		$exec_id = $this->templateRequest(array(
+			$form_name => array(
+				'id' => $record_id,
+				'app' => 'api',
+				'status-widgets' => array(),
+			),
+		));
+
+		// $handle_not_found=false: never let a "not found" fall through to
+		// Etemplate\Request::read()'s web-request-only redirect/exit() fallback
+		$stored = Etemplate\Request::read($exec_id, false);
+		$this->assertSame($expected_get_rows, $stored->content[$form_name]['get_rows'] ?? null,
+			'HistoryLog::beforeSendToClient() did not seed the trusted get_rows into request content');
+
+		return $exec_id;
+	}
+
+	/**
+	 * Render the test template with the given content to create the server-side
+	 * request cache used by ajax_get_rows(), and return its exec id.
 	 *
 	 * The request created here is stored server-side via a real PHP session
 	 * (WidgetBaseTest sets Request::$request_class to Request\Session). An
@@ -188,30 +247,24 @@ class NextmatchTest extends Etemplate\WidgetBaseTest
 	 * harmless for a real one-request-per-process web call, but fatal here:
 	 * every test in this file shares one long-running PHP process, so a closed
 	 * session is never implicitly reopened between tests. Reopen it explicitly
-	 * before relying on it. Without this, Etemplate\Request::read() below would
-	 * find nothing (Cache::setSession() silently no-ops on a closed session
-	 * instead of writing $_SESSION), hit its own "session expired" fallback,
-	 * and - since that fallback assumes a real web request - call exit(),
-	 * killing the whole PHPUnit process instead of just failing this test.
+	 * before relying on it. Without this, a later Etemplate\Request::read()
+	 * would find nothing (Cache::setSession() silently no-ops on a closed
+	 * session instead of writing $_SESSION), hit its own "session expired"
+	 * fallback, and - since that fallback assumes a real web request - call
+	 * exit(), killing the whole PHPUnit process instead of just failing a test.
 	 *
-	 * @param string $expected_get_rows the get_rows callback beforeSendToClient()
-	 *	should have stored server-side for $form_name
+	 * @param array $content
+	 * @return string etemplate_exec_id
 	 */
-	private function historyRequest($form_name, $record_id, $expected_get_rows)
+	private function templateRequest(array $content)
 	{
 		if (session_status() !== PHP_SESSION_ACTIVE) session_start();
 
 		Etemplate::reset_request();
 		$etemplate = new Etemplate();
 		$this->assertTrue($etemplate->read(self::TEST_TEMPLATE, 'test'),
-			'could not load nextmatch history test template');
-		$result = $this->mockedExec($etemplate, array(
-			$form_name => array(
-				'id' => $record_id,
-				'app' => 'api',
-				'status-widgets' => array(),
-			),
-		));
+			'could not load nextmatch test template');
+		$result = $this->mockedExec($etemplate, $content);
 
 		$exec_id = null;
 		foreach ($result as $command)
@@ -222,13 +275,7 @@ class NextmatchTest extends Etemplate\WidgetBaseTest
 				break;
 			}
 		}
-		$this->assertNotEmpty($exec_id, 'history test template did not create an exec id');
-
-		// $handle_not_found=false: never let a "not found" fall through to
-		// Etemplate\Request::read()'s web-request-only redirect/exit() fallback
-		$stored = Etemplate\Request::read($exec_id, false);
-		$this->assertSame($expected_get_rows, $stored->content[$form_name]['get_rows'] ?? null,
-			'HistoryLog::beforeSendToClient() did not seed the trusted get_rows into request content');
+		$this->assertNotEmpty($exec_id, 'nextmatch test template did not create an exec id');
 
 		$this->ajax_response->initResponseArray();
 		return $exec_id;

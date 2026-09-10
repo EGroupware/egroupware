@@ -276,6 +276,37 @@ class Template extends Etemplate\Widget
 	}
 
 	/**
+	 * Iterate over children to find the one with the given id and optional type
+	 *
+	 * Reimplemented because a bare reference tag (eg. <et2-template id="app.tpl.sub"/> for a
+	 * lazy-loaded tab-panel) is NOT expanded while the template referencing it gets parsed,
+	 * so it has no children of its own to search - resolve the referenced template here,
+	 * same as run() does for the same reason.
+	 *
+	 * @param string $id
+	 * @param string $type =null
+	 * @return Etemplate\Widget|NULL
+	 */
+	public function getElementById($id, $type=null)
+	{
+		if (($element = parent::getElementById($id, $type)))
+		{
+			return $element;
+		}
+		// only a reference tag has no children of its own, a real template always has some
+		if (empty($this->children) && ($name = $this->id ?: ($this->attrs['template'] ?? null)) &&
+			// $quiet=true: a not (yet) resolvable reference is a supported case here, not an error
+			($template = self::instance(self::expand_name($name, '', '', '', '', self::$request->content ?? []) ?: $name,
+				null, '', '', true)) &&
+			// $template !== $this: our own definition, so there is nothing more to search
+			$template !== $this && !empty($template->children))
+		{
+			return $template->getElementById($id, $type);
+		}
+		return null;
+	}
+
+	/**
 	 * Fill type options in self::$request->sel_options to be used on the client
 	 *
 	 * @param string $cname
