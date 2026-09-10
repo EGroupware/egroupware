@@ -788,6 +788,10 @@ body egw-app,
 .popupMainDiv .dialogFooterToolbar td:last-child {
   padding-right: var(--sl-spacing-x-small);
 }
+body > .popupMainDiv {
+  max-height: 100dvh;
+  overflow: auto;
+}
 /*** End popup styling ***/
 /*** WIDGETS ***/
 /* This should mostly go away with webcomponents */

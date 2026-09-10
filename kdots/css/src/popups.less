@@ -37,4 +37,28 @@
   }
 }
 
+// framework.less locks html/body to 100vh with overflow:clip, so the app frame never
+// scrolls as a whole.  Popup windows load the same CSS but have no scrolling pane of
+// their own: they rely on api/js/jsapi/egw.js' resize_popup() growing the window to fit
+// their content.  When it can't - browser or desktop zoom, a small screen, or a browser
+// that clamps resizeTo() - the excess is clipped away, and since clip (unlike hidden) is
+// not a scroll container, the dialog footer buttons become completely unreachable.
+// Give the popup its own scroll container instead.
+//
+// Direct child of body only: api/js/jsapi/app_base.js reuses the .popupMainDiv class for
+// the mobile view container, which already sits inside a scrolling #popupMainDiv.
+// 100dvh rather than a vh percentage: body has no margin and .popupMainDiv's padding is
+// horizontal-only, so this is exactly the viewport - no space wasted, no scrollbar until
+// one is actually needed - and dvh also copes with a mobile browser's collapsing URL bar.
+//
+// This does not affect auto-sizing: resize_popup(), etemplate2.resize(), et2_dynheight
+// and Et2Tabs._sizeTabs() all measure .et2_container (or their own children), never
+// #popupMainDiv, and a block child of an overflow:auto parent keeps its full content
+// height rather than being squeezed (verified live 2026-09-10 with the cap forced small
+// enough to actually clamp).
+body > .popupMainDiv {
+  max-height: 100dvh;
+  overflow: auto;
+}
+
 /*** End popup styling ***/
