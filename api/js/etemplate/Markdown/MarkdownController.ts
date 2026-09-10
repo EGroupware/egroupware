@@ -47,17 +47,21 @@ export class MarkdownController implements ReactiveController
 	 * Exposed for hosts that need the string rather than a template.
 	 *
 	 * @param value markdown source
+	 * @param sourceMap tag each block with the source line it came from
 	 */
-	toHtml(value : string) : string
+	toHtml(value : string, sourceMap = false) : string
 	{
 		if(!this.host.markdown || !value)
 		{
 			return null;
 		}
-		if(value !== this._cachedSource)
+		// the cache key has to include sourceMap, or an editor preview and a nextmatch cell
+		// rendering the same text would hand each other the wrong markup
+		const key = (sourceMap ? "1\0" : "0\0") + value;
+		if(key !== this._cachedSource)
 		{
-			this._cachedSource = value;
-			this._cachedHtml = markdownToHtml(value);
+			this._cachedSource = key;
+			this._cachedHtml = markdownToHtml(value, {sourceMap: sourceMap});
 		}
 		return this._cachedHtml;
 	}
@@ -66,14 +70,15 @@ export class MarkdownController implements ReactiveController
 	 * Render `value` as markdown when the host has it enabled, plain text otherwise.
 	 *
 	 * @param value markdown source
+	 * @param sourceMap tag each block with the source line it came from
 	 */
-	render(value : string)
+	render(value : string, sourceMap = false)
 	{
 		if(!value)
 		{
 			return nothing;
 		}
-		const rendered = this.toHtml(value);
+		const rendered = this.toHtml(value, sourceMap);
 		if(rendered === null)
 		{
 			return html`${value}`;

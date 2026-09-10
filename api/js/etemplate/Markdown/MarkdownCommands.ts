@@ -262,3 +262,67 @@ export function minimalEdit(oldValue: string, newValue: string): { from: number,
 		text: newValue.slice(prefix, newValue.length - suffix)
 	};
 }
+
+/**
+ * Character offset of the start of `line` (0-based) in `value`.
+ */
+export function offsetOfLine(value: string, line: number): number
+{
+	value = value ?? "";
+	let offset = 0;
+	for(let i = 0; i < Math.max(0, line); i++)
+	{
+		const next = value.indexOf("\n", offset);
+		if(next === -1)
+		{
+			return value.length;
+		}
+		offset = next + 1;
+	}
+	return Math.min(offset, value.length);
+}
+
+/**
+ * Map an offset in a block's *rendered* text back to an offset in the markdown source.
+ *
+ * Needed because a source line is far too coarse to click on: with breaks:true a whole run of
+ * plain-text lines renders as ONE paragraph full of <br>, so every click in it maps to the same
+ * line and the caret never moves off the start.
+ *
+ * The two strings are almost the same - rendered text is the source minus its markers - so a
+ * parallel walk aligns them: matching characters advance both cursors, and a character that only
+ * exists in the source (a "*", a "#", a "> ") advances the source alone.
+ *
+ * @param source markdown source
+ * @param blockStart offset in `source` where the clicked block begins
+ * @param rendered the block's rendered text
+ * @param renderedOffset offset within `rendered` that was clicked
+ */
+export function sourceOffsetForRendered(source: string, blockStart: number, rendered: string,
+										renderedOffset: number): number
+{
+	source = source ?? "";
+	rendered = rendered ?? "";
+
+	let i = Math.max(0, Math.min(blockStart, source.length));
+	let r = 0;
+	const target = Math.max(0, Math.min(renderedOffset, rendered.length));
+
+	while(i < source.length)
+	{
+		const matches = r < rendered.length && source[i] === rendered[r];
+
+		// stop once we are sitting ON the target character rather than on a marker in front
+		// of it - otherwise clicking the "H" of "# Heading" would land the caret on the "#"
+		if(r === target && (matches || r >= rendered.length))
+		{
+			break;
+		}
+		if(matches)
+		{
+			r++;
+		}
+		i++;
+	}
+	return i;
+}

@@ -111,13 +111,13 @@ $overwrites = [
 	'Et2Textarea' => [
 		'.attrs' => [
 			'markdown' => 'boolean',
-			'markdownMode' => "'edit' | 'split' | 'preview'",
+			'markdownMode' => "'edit' | 'split' | 'view'",
 		],
 	],
 	'Et2HtmlArea' => [
 		'.attrs' => [
 			'markdown' => 'boolean',
-			'markdownMode' => "'edit' | 'split' | 'preview'",
+			'markdownMode' => "'edit' | 'split' | 'view'",
 			// same "not resolved via mixin" gap as markdown/markdownMode above
 			'applyDefaultFont' => 'boolean',
 			'imageUpload' => 'string',

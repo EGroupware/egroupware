@@ -526,12 +526,12 @@ class preferences_hooks
 				'values' => array(
 					'edit'    => lang('Editor only'),
 					'split'   => lang('Editor and preview'),
-					'preview' => lang('Preview only'),
+					'view'    => lang('Preview only'),
 				),
 				'help'   => 'Which view markdown-enabled text fields open in. Switching the view in a field updates this.',
 				'xmlrpc' => True,
 				'admin'  => False,
-				'default' => 'edit',
+				'default' => 'view',
 			)
 		);
 		// disable thumbnails, if no size configured by admin

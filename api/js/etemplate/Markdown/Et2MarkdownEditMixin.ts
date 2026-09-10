@@ -6,13 +6,20 @@
  * @link https://www.egroupware.org
  */
 
-import {css, html, LitElement, nothing, type CSSResultGroup} from "lit";
+import {html, LitElement, nothing, type CSSResultGroup} from "lit";
 import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
 import {classMap} from "lit/directives/class-map.js";
 import {dedupeMixin} from "@open-wc/dedupe-mixin";
 import {Et2MarkdownMixin} from "./Et2MarkdownMixin";
-import {applyCommand, minimalEdit, type MarkdownCommand} from "./MarkdownCommands";
+import editStyles from "./Et2MarkdownEditMixin.styles";
+import {
+	applyCommand,
+	minimalEdit,
+	offsetOfLine,
+	sourceOffsetForRendered,
+	type MarkdownCommand
+} from "./MarkdownCommands";
 import {selectionVirtualElement, textareaSelectionRect} from "./textareaSelectionRect";
 // self-registering, so the popup works no matter which widget pulled the mixin in first
 import "@shoelace-style/shoelace/dist/components/popup/popup.js";
@@ -46,7 +53,7 @@ interface HasEgwAndValue
 /**
  * Which pane(s) the markdown editor is showing.
  */
-export type MarkdownMode = "edit" | "split" | "preview";
+export type MarkdownMode = "edit" | "split" | "view";
 
 /**
  * Remembers the last view the user chose, across fields and sessions.
@@ -56,7 +63,7 @@ const VIEW_PREFERENCE = "markdown_view";
 const VIEW_MODES : { mode : MarkdownMode, icon : string, label : string }[] = [
 	{mode: "edit", icon: "pencil", label: "Edit"},
 	{mode: "split", icon: "layout-split", label: "Split view"},
-	{mode: "preview", icon: "eye", label: "Preview"}
+	{mode: "view", icon: "eye", label: "Preview"}
 ];
 
 /**
@@ -121,107 +128,36 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
 			return [
 				// @ts-ignore superclass is only typed as Constructor<LitElement>, which has no styles
 				...(super.styles ? (Symbol.iterator in Object(super.styles) ? super.styles : [super.styles]) : []),
-				css`
-					.markdown-shell {
-						position: relative;
-						display: flex;
-						flex-direction: column;
-						height: 100%;
-						min-height: 0;
-					}
-
-					.markdown-shell__panes {
-						flex: 1 1 auto;
-						min-height: 0;
-						display: flex;
-					}
-
-					.markdown-shell__panes > * {
-						flex: 1 1 auto;
-						min-width: 0;
-					}
-
-					.markdown-shell__source {
-						display: flex;
-						min-width: 0;
-						min-height: 0;
-					}
-
-					.markdown-shell__source > * {
-						flex: 1 1 auto;
-						min-width: 0;
-					}
-
-					/* beats the flex display above, so ?hidden really hides */
-					.markdown-shell [hidden] {
-						display: none !important;
-					}
-
-					/* the preview scrolls on its own, so a long document cannot stretch the field */
-					.markdown-shell__preview {
-						overflow: auto;
-						padding: var(--sl-spacing-x-small);
-						background-color: var(--sl-color-neutral-0);
-						border: solid var(--sl-input-border-width) var(--sl-input-border-color);
-						border-radius: var(--sl-input-border-radius-medium);
-					}
-
-					/* the view switcher sits over the top-left corner of the editor, mirroring
-					   the AI button in the top-right */
-					.markdown-view {
-						position: absolute;
-						top: var(--sl-spacing-3x-small);
-						left: var(--sl-spacing-3x-small);
-						z-index: 1;
-					}
-
-					.markdown-view::part(panel) {
-						padding: var(--sl-spacing-3x-small);
-					}
-
-					.markdown-view__panel {
-						display: flex;
-						gap: var(--sl-spacing-3x-small);
-					}
-
-					.markdown-view__option.active::part(base) {
-						background-color: var(--sl-color-neutral-200);
-						border-radius: var(--sl-border-radius-small);
-					}
-
-					.markdown-popup__bar {
-						display: flex;
-						align-items: center;
-						gap: var(--sl-spacing-3x-small);
-						padding: var(--sl-spacing-3x-small);
-						background-color: var(--sl-panel-background-color);
-						border: solid var(--sl-panel-border-width) var(--sl-panel-border-color);
-						border-radius: var(--sl-border-radius-medium);
-						box-shadow: var(--sl-shadow-large);
-					}
-
-					.markdown-popup__separator {
-						width: var(--sl-panel-border-width);
-						align-self: stretch;
-						background-color: var(--sl-panel-border-color);
-					}
-				`
+				editStyles
 			];
 		}
 
 		/**
 		 * Which pane(s) to show.  No effect unless `markdown` is enabled.
 		 *
-		 * Seeded from the user's last choice, unless the template says otherwise.
+		 * Seeded from the user's last choice, unless the template says otherwise.  Defaults to
+		 * "view": a field opens showing the formatted text, and clicking it puts the caret where
+		 * you clicked, so reading costs nothing and editing costs one click.
 		 */
 		@property({type: String, reflect: true, attribute: "markdown-mode"})
-		markdownMode : MarkdownMode = "edit";
+		markdownMode : MarkdownMode = "view";
 
 		/** is the on-selection format popup showing? */
 		@state() protected _markdownPopupOpen = false;
 
 		/** did the template pin the mode, or may the preference decide? */
 		private _markdownModeFromTemplate = false;
+
+		/**
+		 * The popup's anchor, kept stable per textarea.
+		 *
+		 * sl-popup re-runs its positioning whenever `anchor` changes identity.  Building a fresh
+		 * virtual element inside render() therefore hands it a "new" anchor on every update and
+		 * it never settles, so the object is made once per source node and reused.  The rect
+		 * itself is still read live, so it stays accurate while typing and scrolling.
+		 */
+		private _markdownAnchorFor : HTMLTextAreaElement = null;
+		private _markdownAnchor : { getBoundingClientRect : () => DOMRect } = null;
 
 		/** see HasEgwAndValue's own docblock for why this cast exists instead of a declared field */
 		private get _host() : HasEgwAndValue
@@ -260,6 +196,24 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
 		protected get _markdownSourceNode() : HTMLTextAreaElement
 		{
 			return this.shadowRoot?.querySelector("textarea");
+		}
+
+		/**
+		 * A stable virtual element over the current selection, for sl-popup's `anchor`.
+		 */
+		protected get _markdownSelectionAnchor()
+		{
+			const node = this._markdownSourceNode;
+			if(!node)
+			{
+				return null;
+			}
+			if(node !== this._markdownAnchorFor)
+			{
+				this._markdownAnchorFor = node;
+				this._markdownAnchor = selectionVirtualElement(node);
+			}
+			return this._markdownAnchor;
 		}
 
 		/**
@@ -322,7 +276,7 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
 		protected _markdownUpdatePopup()
 		{
 			const node = this._markdownSourceNode;
-			this._markdownPopupOpen = this.markdownMode !== "preview"
+			this._markdownPopupOpen = this.markdownMode !== "view"
 				&& !!node && !!textareaSelectionRect(node);
 		}
 
@@ -350,6 +304,83 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
 			event.stopPropagation();
 			this._applyMarkdownCommand(command);
 		};
+
+		/**
+		 * Clicking the preview puts the caret back into the source where it was clicked.
+		 *
+		 * In preview it switches to edit first; in split the editor is already visible, so it only
+		 * moves the caret.  That switch deliberately does NOT write the view preference - the user
+		 * asked to edit this one field, not to change what every field opens as.
+		 */
+		protected _handleMarkdownPreviewClick = (event : MouseEvent) =>
+		{
+			const target = <HTMLElement>event.composedPath()[0];
+			// a link in the preview is still a link
+			if(!target?.closest || target.closest("a"))
+			{
+				return;
+			}
+
+			const block = target.closest("[data-source-line]");
+			const line = parseInt(block?.getAttribute("data-source-line") ?? "", 10);
+			if(isNaN(line))
+			{
+				return;
+			}
+
+			const value = this._host.value ?? "";
+			const offset = this._markdownCaretOffset(event, <HTMLElement>block, line, value);
+
+			if(this.markdownMode === "view")
+			{
+				this.markdownMode = "edit";
+			}
+
+			// the source is only focusable once the mode change has rendered
+			this.updateComplete.then(() =>
+			{
+				const node = this._markdownSourceNode;
+				if(node)
+				{
+					node.focus();
+					node.setSelectionRange(offset, offset);
+				}
+			});
+		};
+
+		/**
+		 * Where in the source the click landed.
+		 * The exact character comes from caretPositionFromPoint
+		 * Browsers too old for the shadowRoots argument simply get the start of the block.
+		 */
+		protected _markdownCaretOffset(event : MouseEvent, block : HTMLElement, line : number,
+									   value : string) : number
+		{
+			const blockStart = offsetOfLine(value, line);
+
+			const caret = (<any>document).caretPositionFromPoint?.(event.clientX, event.clientY,
+				{shadowRoots: [this.shadowRoot]});
+			const node = caret?.offsetNode;
+			if(!node || !block.contains(node))
+			{
+				return blockStart;
+			}
+
+			// offset of the clicked text node within the block's own rendered text
+			const walker = document.createTreeWalker(block, NodeFilter.SHOW_TEXT);
+			let rendered = 0;
+			let text : Node;
+			while((text = walker.nextNode()))
+			{
+				if(text === node)
+				{
+					return sourceOffsetForRendered(value, blockStart, block.textContent ?? "",
+						rendered + caret.offset);
+				}
+				rendered += text.textContent.length;
+			}
+			return blockStart;
+		}
 
 		/**
 		 * Hide the popup when focus leaves the widget entirely.
@@ -421,7 +452,7 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
                         class="markdown-popup" part="markdown-popup"
                         placement="top" strategy="fixed" flip shift distance="6"
                         ?active=${this._markdownPopupOpen}
-                        .anchor=${selectionVirtualElement(node)}
+                        .anchor=${this._markdownSelectionAnchor}
                 >
                     <div
                             class="markdown-popup__bar"
@@ -458,14 +489,17 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
 		protected _markdownShellTemplate(source)
 		{
 			const preview = html`
-                <div class="markdown-shell__preview" part="markdown-preview">
-					${this._markdownTemplate(this._host.value)}
+                <div
+                        class="markdown-shell__preview" part="markdown-preview"
+                        @click=${this._handleMarkdownPreviewClick}
+                >
+					${this._markdownController.render(this._host.value, true)}
                 </div>`;
 
 			// The source pane stays in the DOM in every view, hidden rather than dropped.
 			// Shoelace's textarea reaches for this.input in updated() and in validation, so a
 			// preview that removed it would throw on the next update.
-			const hideSource = this.markdownMode === "preview";
+			const hideSource = this.markdownMode === "view";
 
 			const panes = this.markdownMode === "split"
 				? html`

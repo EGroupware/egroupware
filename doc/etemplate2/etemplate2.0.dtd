@@ -2893,7 +2893,7 @@
     imageUpload CDATA #IMPLIED
     label CDATA #IMPLIED
     markdown CDATA #IMPLIED
-    markdownMode (edit|split|preview) #IMPLIED
+    markdownMode (edit|split|view) #IMPLIED
     mode CDATA #IMPLIED
     no-menubar CDATA #IMPLIED
     no-statusbar CDATA #IMPLIED
@@ -5087,7 +5087,7 @@
     inputmode (none|text|decimal|numeric|tel|search|email|url) #IMPLIED
     label CDATA #IMPLIED
     markdown CDATA #IMPLIED
-    markdownMode (edit|split|preview) #IMPLIED
+    markdownMode (edit|split|view) #IMPLIED
     maxlength CDATA #IMPLIED
     minlength CDATA #IMPLIED
     name CDATA #IMPLIED

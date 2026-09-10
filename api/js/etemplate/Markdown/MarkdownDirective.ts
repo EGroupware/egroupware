@@ -76,23 +76,57 @@ function getParser() : MarkdownIt
 			}
 			return defaultLinkOpen(tokens, idx, options, env, self);
 		};
+
+		// Record which source line each block came from, so the preview can be clicked to put
+		// the caret back in the right place.  Off unless env.sourceMap asks for it
+		parser.core.ruler.push("et2_source_line", state =>
+		{
+			if(!state.env?.sourceMap)
+			{
+				return;
+			}
+			for(const token of state.tokens)
+			{
+				// nesting 1 is an opening tag, 0 a self-contained block such as a fence or hr
+				if(token.map && token.nesting >= 0)
+				{
+					token.attrSet("data-source-line", String(token.map[0]));
+				}
+			}
+		});
 	}
 	return parser;
 }
 
 /**
+ * Options for markdownToHtml().
+ */
+export interface MarkdownRenderOptions
+{
+	/**
+	 * Add data-source-line to every block, mapping it back to its line in the source.
+	 * Only the editor needs this; the display path leaves it off.
+	 */
+	sourceMap?: boolean;
+}
+
+/**
  * Parse markdown and sanitize the result.  Safe to hand to unsafeHTML().
  *
+ * data-source-line survives DOMPurify on its own: ALLOW_DATA_ATTR defaults to true, so data-*
+ * is permitted alongside the explicit ALLOWED_ATTR list, and event handlers are still stripped.
+ *
  * @param value markdown source
+ * @param options see MarkdownRenderOptions
  * @returns sanitized HTML, or "" for an empty value
  */
-export function markdownToHtml(value : string) : string
+export function markdownToHtml(value : string, options : MarkdownRenderOptions = {}) : string
 {
 	if(!value)
 	{
 		return "";
 	}
-	return DOMPurify.sanitize(getParser().render(value), {
+	return DOMPurify.sanitize(getParser().render(value, {sourceMap: options.sourceMap === true}), {
 		ALLOWED_TAGS: SUPPORTED_TAGS,
 		ALLOWED_ATTR: ALLOWED_ATTR,
 		ADD_ATTR: ["target", "rel"],

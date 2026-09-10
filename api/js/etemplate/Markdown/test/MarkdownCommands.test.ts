@@ -14,7 +14,7 @@
  * environment problem - nothing external is involved.
  */
 import {assert} from '@open-wc/testing';
-import {applyCommand, minimalEdit} from "../MarkdownCommands";
+import {applyCommand, minimalEdit, offsetOfLine, sourceOffsetForRendered} from "../MarkdownCommands";
 
 /**
  * Run a command over the selection marked by | ... | in `marked`, and return the result.
@@ -193,5 +193,66 @@ describe("minimalEdit()", () =>
 			const edit = minimalEdit(from, to);
 			assert.equal(from.slice(0, edit.from) + edit.text + from.slice(edit.to), to);
 		});
+	});
+});
+
+describe("offsetOfLine()", () =>
+{
+	const SRC = "# Heading\n\na **bold** word\n\n- item";
+
+	it("finds the start of each line", () =>
+	{
+		assert.equal(offsetOfLine(SRC, 0), 0);
+		assert.equal(offsetOfLine(SRC, 2), SRC.indexOf("a **bold**"));
+		assert.equal(offsetOfLine(SRC, 4), SRC.indexOf("- item"));
+	});
+
+	it("clamps past the end and before the start", () =>
+	{
+		assert.equal(offsetOfLine(SRC, 99), SRC.length);
+		assert.equal(offsetOfLine(SRC, -1), 0);
+		assert.equal(offsetOfLine("", 3), 0);
+	});
+});
+
+describe("sourceOffsetForRendered()", () =>
+{
+	it("maps straight through for plain text", () =>
+	{
+		const src = "hello world";
+		assert.equal(sourceOffsetForRendered(src, 0, "hello world", 6), 6);
+	});
+
+	it("skips markers that never reached the rendered text", () =>
+	{
+		//  source: "a **bold** word"   rendered: "a bold word"
+		const src = "a **bold** word";
+		// clicking just before "word" in the rendered text (offset 7)
+		assert.equal(sourceOffsetForRendered(src, 0, "a bold word", 7), src.indexOf("word"));
+		// clicking at the start of "bold"
+		assert.equal(sourceOffsetForRendered(src, 0, "a bold word", 2), src.indexOf("bold"));
+	});
+
+	it("skips a heading marker", () =>
+	{
+		const src = "# Heading";
+		assert.equal(sourceOffsetForRendered(src, 0, "Heading", 0), src.indexOf("Heading"));
+	});
+
+	it("handles the breaks:true case - one block spanning many source lines", () =>
+	{
+		// this is the case that made every click land on offset 0
+		const src = "line one\nline two\nline three";
+		const rendered = "line one\nline two\nline three";
+		assert.equal(sourceOffsetForRendered(src, 0, rendered, 9), 9, "start of line two");
+		assert.equal(sourceOffsetForRendered(src, 0, rendered, 23), 23, "into line three");
+	});
+
+	it("clamps instead of running away", () =>
+	{
+		assert.equal(sourceOffsetForRendered("abc", 0, "abc", 99), 3);
+		assert.equal(sourceOffsetForRendered("abc", 0, "abc", -5), 0);
+		assert.equal(sourceOffsetForRendered("", 0, "", 3), 0);
+		assert.equal(sourceOffsetForRendered("abc", 99, "abc", 1), 3);
 	});
 });
