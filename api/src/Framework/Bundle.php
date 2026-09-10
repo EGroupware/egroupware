@@ -128,7 +128,23 @@ class Bundle
 			{
 				list($path, $query) = explode('?', $file, 2)+[null,null];
 
-				if (preg_match('#/js/(app(\.min)?|etemplate/etemplate2)\.js$#', $file))
+				$is_entry = preg_match('#/js/(app(\.min)?|etemplate/etemplate2)\.js$#', $file);
+
+				// A legacy, pre-rollup <app>/js/app.js can still be sitting on disk - they are
+				// gitignored, so they survive every deploy - while the manifest only ever keys the
+				// app.min.js rollup actually builds. Handing that non-min path to the client
+				// unresolved makes it load the stale artifact, whose own baked-in chunk/vendor
+				// imports are long gone (404s). Upgrade it to its .min sibling, which is what the
+				// .min-companion swap below has always silently done for such a file.
+				if ($is_entry && str_ends_with($path, '/app.js') &&
+					self::resolveEntry($min_entry = substr($path, 0, -3).'.min.js'))
+				{
+					$path = $min_entry;
+				}
+				// Only emit a bare logical path the client can actually resolve against its own
+				// manifest; without a hit, fall through to the pre-hashing handling below
+				// (min-companion swap plus cache-buster) rather than emitting an unresolvable one.
+				if ($is_entry && self::resolveEntry($path))
 				{
 					$to_include[$file] = $path;
 					continue;

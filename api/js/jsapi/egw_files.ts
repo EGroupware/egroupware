@@ -50,14 +50,15 @@ export interface FilesModule
 	/**
 	 * Show the "new updates available" notice once (main window only, not popups)
 	 *
-	 * Called immediately when window.egw_import() (see the Files constructor) has to skip a
-	 * rebuilt file to avoid loading a 2nd, ABI-incompatible module copy, or later by the
-	 * periodic build-epoch poll in egw.js.
+	 * Shown when window.egw_import() has to skip a rebuilt file to avoid loading a 2nd,
+	 * ABI-incompatible module copy, or when the periodic build-epoch poll finds a newer build.
+	 * Both the notice-once state and the trigger live on window.egw_import() (egw.js), which
+	 * this only forwards to - read window.egw_import.updateAvailableNotified for the flag
+	 * itself, which deliberately is NOT mirrored here: egw's module merge assigns values rather
+	 * than accessors (mergeObjects() in egw_core.ts), so a getter cannot survive it live and
+	 * would hand every egw(wnd) consumer a snapshot frozen at merge time.
 	 */
 	notifyUpdateAvailable() : void;
-
-	/** Whether notifyUpdateAvailable() has already shown its notice in this window */
-	readonly updateAvailableNotified : boolean;
 }
 
 declare global
@@ -160,12 +161,6 @@ class Files implements FilesModule
 
 	#wnd : Window;
 
-	// urls already handed to window.egw_import() below, keyed with their cache-busting
-	// timestamp stripped, so a mid-session rebuild can't load a 2nd, ABI-incompatible copy
-	// of an already-resident module into this window
-	#imported : {[key : string] : string} = {};
-	#updateAvailableNotified = false;
-
 	constructor(_wnd : Window)
 	{
 		this.#wnd = _wnd;
@@ -184,79 +179,16 @@ class Files implements FilesModule
 		this.#files = strip_egw_url(this.#files);
 		// resolve bundles and replace .min.js with .js
 		this.#files = files_from_bundles(this.#files);
-
-		// logical entry path -> hashed physical path, fixed since THIS document's own page
-		// render and never refreshed before a reload (see egw.js) - which is exactly what makes
-		// resolving through it "pinned": the same logical name always resolves to the same
-		// answer for this document's whole life, even after a rebuild changes what's current.
-		const manifest : {[key : string] : string} = (<any>_wnd).egw_manifest || {};
-
-		// Allow egw.json to load JS into popups, in THIS window's own realm - a dynamic
-		// import() must run in the importing window's realm, which is why this is assigned
-		// directly on `_wnd` here (at Files construction, which happens for every window/popup
-		// egw.js's bootstrap runs in) rather than left for a caller to reach via egw(wnd).files.
-		//
-		// `url` may be a bare logical entry path (egw.js's own data-include bootstrap loader, or
-		// the lazy app.<name> loader in egw_json.ts) or a full absolute URL (an ajax_exec
-		// response's js_files always sends one, same as for any other included file) -
-		// egw-relativize it the same way #files above does, so both shapes end up keyed the same
-		// way the manifest itself is: a single leading slash, relative to EGW_SERVER_ROOT.
-		// Resolved against the manifest above, falling back to that same normalized logical path
-		// on a miss (not a manifest-known entry - eg. a non-entry script - or a pre-hashing
-		// install with no manifest at all) - either way, re-prefixed with webserverUrl to become
-		// a fetchable url, exactly reconstructing the original url in the miss case.
-		//
-		// De-dupes by that same logical name (cache-busting timestamp stripped for the miss
-		// case): once a name's been imported here, asking for it again resolves to the
-		// already-imported url instead of fetching+evaluating a 2nd copy. Without this, the 2nd
-		// copy's classes would lose the browser's custom-element registry race for tags the 1st
-		// copy already defined, crashing with "Failed to construct 'HTMLElement': Illegal
-		// constructor" the moment a Lit-based widget (Et2Widget et al) is built from it. When we
-		// do skip a stale-version reload this way, let the user know a page reload would pick up
-		// the new one.
-		const egw_import = (url : string) : Promise<any> =>
-		{
-			let logical = strip_egw_url([removeTS(url)])[0];
-			if (logical.charAt(0) !== '/') logical = '/' + logical;
-			const key = logical;
-			// manifest values are EGW_SERVER_ROOT-relative (eg. "/chunks/foo-<hash>.js"), same as
-			// the logical keys themselves - both need webserverUrl prepended to become a
-			// fetchable url, same as every other resolved-path consumer in this codebase already
-			// does
-			const resolved = egw.webserverUrl + (manifest[logical] || logical);
-			if (typeof this.#imported[key] === 'undefined')
-			{
-				this.#imported[key] = resolved;
-			}
-			else if (this.#imported[key] !== resolved)
-			{
-				// someone rebuilt while this window was open - keep the already-loaded
-				// version running, but let the user know a reload would pick up the new one
-				this.notifyUpdateAvailable();
-			}
-			return import(this.#imported[key]);
-		};
-		// also reachable straight off window.egw_import (not just egw(wnd).files): a bare
-		// egw(window) call - as used by egw.js's periodic build-epoch poll - doesn't reliably
-		// have every MODULE_WND_LOCAL module merged in yet (a pre-existing quirk, independent
-		// of this change - eg. the "tooltip" module has the same gap)
-		(<any>egw_import).notifyUpdateAvailable = () => this.notifyUpdateAvailable();
-		Object.defineProperty(egw_import, 'updateAvailableNotified', {get: () => this.#updateAvailableNotified});
-		(<any>_wnd).egw_import = egw_import;
 	}
 
+	// window.egw_import() (egw.js) owns the notice-once state, alongside the de-dupe that
+	// triggers it. This stays here purely so egw(wnd) consumers keep reaching it, and goes
+	// through _wnd's own egw.js - the one holding that state - rather than this bundle's copy
+	// of anything. An instance property, not a prototype method, so egw's for-in module merge
+	// actually picks it up.
 	notifyUpdateAvailable = () : void =>
 	{
-		if (!this.#updateAvailableNotified && this.#wnd.opener == null)
-		{
-			this.#updateAvailableNotified = true;
-			egw(this.#wnd).message(egw.lang('New updates available. Reload when convenient to get the latest updates.'), 'info');
-		}
-	}
-
-	get updateAvailableNotified() : boolean
-	{
-		return this.#updateAvailableNotified;
+		(<any>this.#wnd).egw_import?.notifyUpdateAvailable();
 	}
 
 	/**

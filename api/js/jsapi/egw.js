@@ -23,6 +23,123 @@
  */
 window.app = {classes: {}};
 
+/**
+ * Import a module in THIS document's realm, resolved against THIS document's build
+ *
+ * Lives here, rather than in one of the egw modules, for two reasons that both come down to
+ * this file being loaded once per document while the modules are a shared bundle:
+ *
+ * - A module is only ever evaluated into the realm of the code that imported it, and a bundled
+ *   module's functions belong to whichever realm loaded that bundle, not to whatever window
+ *   object you call them on. A popup adopts its opener's egw object (see the bootstrap below),
+ *   so the egw module code a popup runs is the OPENER's copy - an import() written there loads
+ *   into the opener and leaves the popup without the class it just asked for.
+ * - A module only reaches a window once egw's window-local module merge has run for it, which
+ *   is not guaranteed: egw_modules.js deliberately evaluates this file BEFORE egw_core, so the
+ *   `egw(window)` access in the bootstrap below still sees the prefsOnly stub and merges
+ *   nothing. Anything the bootstrap's own include loader needs therefore cannot live in a
+ *   module, or a document nobody else calls egw(window) for comes up with no JS at all.
+ *
+ * De-dupes by logical name: once a name has been imported here, asking again resolves to the
+ * already-imported url instead of fetching and evaluating a 2nd copy. Without that, the 2nd
+ * copy's classes lose the custom-element registry race for tags the 1st copy already defined,
+ * crashing with "Failed to construct 'HTMLElement': Illegal constructor" as soon as a Lit-based
+ * widget is built from it. When a rebuilt file is skipped that way the user is told a reload
+ * would pick it up, once per document and never in a popup (whose opener shows it instead).
+ *
+ * @param {string} _url logical entry path ("/mail/js/app.min.js"), or a full absolute url as an
+ *  ajax response's js_files sends - both get egw-relativised to a single leading slash, the way
+ *  the manifest itself is keyed, then resolved through this document's window.egw_manifest.
+ *  A miss (a non-entry script, or a pre-hashing install with no manifest) falls back to that
+ *  same path, reconstructing the url it came in as.
+ * @returns {Promise<*>} the imported module, evaluated in this document's realm
+ */
+window.egw_import = (function()
+{
+	// logical name -> url actually imported for it in this document
+	const imported = {};
+	let notified = false;
+
+	/**
+	 * Remove a cache-busting timestamp query parameter, eg. /path/name.js?12345678[&other=val]
+	 *
+	 * @param {string} _src
+	 * @returns {string}
+	 */
+	function removeTS(_src)
+	{
+		return _src.replace(/[?&][0-9]+&?/, '?').replace(/\?$/, '');
+	}
+
+	/**
+	 * Make an url relative to EGW_SERVER_ROOT, discarding protocol and host if present
+	 *
+	 * @param {string} _url
+	 * @returns {string}
+	 */
+	function stripEgwUrl(_url)
+	{
+		let egw_url = window.egw_webserverUrl || '';
+		if (!egw_url.endsWith('/')) egw_url += '/';
+		// egw_url may be just a path while _url is a full url incl. protocol - prefix our own
+		// protocol and host to split on, as splitting by just the path would fail
+		const need_full_url = egw_url.startsWith('/') && _url.startsWith('http') ?
+			window.location.protocol+'//'+window.location.host : '';
+		const parts = _url.split(need_full_url+egw_url);
+		if (parts.length > 1)
+		{
+			parts.shift();	// discard protocol and host
+			return parts.join(need_full_url+egw_url);
+		}
+		return _url;
+	}
+
+	function egw_import(_url)
+	{
+		const manifest = window.egw_manifest || {};
+		let logical = stripEgwUrl(removeTS(_url));
+		if (!logical.startsWith('/')) logical = '/'+logical;
+		// a legacy, pre-rollup <app>/js/app.js may still be on the server - they are gitignored,
+		// so they survive deploys - while the manifest only keys the app.min.js rollup builds.
+		// Importing that path literally loads the stale artifact, whose own baked-in chunk and
+		// vendor imports are long gone - prefer its .min sibling when the manifest knows it.
+		if (logical.endsWith('/js/app.js') && manifest[logical.slice(0, -3)+'.min.js'])
+		{
+			logical = logical.slice(0, -3)+'.min.js';
+		}
+		// manifest keys and values are both EGW_SERVER_ROOT-relative, so either way this needs
+		// webserverUrl prepended to become fetchable
+		const resolved = (window.egw_webserverUrl || '') + (manifest[logical] || logical);
+		if (typeof imported[logical] === 'undefined')
+		{
+			imported[logical] = resolved;
+		}
+		else if (imported[logical] !== resolved)
+		{
+			// someone rebuilt while this document was open - keep the already-loaded version
+			// running, but let the user know a reload would pick up the new one
+			egw_import.notifyUpdateAvailable();
+		}
+		return import(imported[logical]);
+	}
+
+	/**
+	 * Show the "new updates available" notice once, main window only
+	 *
+	 * Also called by the periodic build-epoch poll further down this file.
+	 */
+	egw_import.notifyUpdateAvailable = function()
+	{
+		if (notified || window.opener != null) return;
+
+		notified = true;
+		egw(window).message(egw.lang('New updates available. Reload when convenient to get the latest updates.'), 'info');
+	};
+	Object.defineProperty(egw_import, 'updateAvailableNotified', {get: () => notified});
+
+	return egw_import;
+})();
+
 (function()
 {
 	"use strict";
@@ -199,11 +316,9 @@ window.app = {classes: {}};
 
 	// make our promise global, as legacy code calls egw_LAB.wait which we assign to egw_ready.then
 	//
-	// Routed through window.egw_import() (egw_files.ts) rather than a bare import() - the
-	// `egw(window).message` access above already instantiated every window-local module
-	// (including Files, which sets this up) before this code ever runs. An entry (app.min.js,
-	// etemplate2.js) here is hashed at build time, so this resolves it against this document's
-	// own window.egw_manifest instead of assuming rel_src is already a fetchable path.
+	// An entry (app.min.js, etemplate2.js) here is hashed at build time, so window.egw_import()
+	// above resolves it against this document's own manifest rather than assuming rel_src is
+	// already a fetchable path.
 	window.egw_LAB = window.egw_ready =
 		legacy_js_import(include.filter((src) => src.match(legacy_js_regexp) !== null), window.egw_webserverUrl)
 			.then(() => Promise.all(include.filter((src) => src.match(legacy_js_regexp) === null)	//.reverse()
