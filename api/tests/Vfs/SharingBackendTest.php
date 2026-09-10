@@ -276,6 +276,76 @@ class SharingBackendTest extends SharingBase
 		$this->assertEquals($file, $created_share['share_path']);
 	}
 
+	/**
+	 * Test sharing a symlink with a *relative* target, eg. an invoice import storing the
+	 * file as ".invoice.pdf" and putting a translated "Rechnung.pdf" symlink next to it.
+	 * Vfs::readlink() hands back the raw ".invoice.pdf", which Vfs::stat() rejects as
+	 * not absolute unless it is resolved against the link's own directory first.
+	 */
+	public function testSharingRelativeSymlinkSharesTargetFile()
+	{
+		$target = Vfs::get_home_dir();
+
+		$this->files = $this->addFiles($target);
+
+		$this->files[] = $symlink = $target.'/relative_symlink.txt';
+		$file = $target.'/test_file.txt';
+		if(Vfs::is_link($symlink)) Vfs::unlink($symlink);
+		$this->assertTrue(
+			Vfs::symlink('test_file.txt', $symlink),
+			"Unable to create symlink $symlink => test_file.txt"
+		);
+
+		$this->shares[] = $created_share = Sharing::create('', $symlink, Sharing::READONLY, '', '');
+
+		$this->assertEquals($file, $created_share['share_path']);
+	}
+
+	/**
+	 * Same as above, but with a relative target pointing into a sub-directory
+	 */
+	public function testSharingRelativeSymlinkIntoSubdirectory()
+	{
+		$target = Vfs::get_home_dir();
+
+		$this->files = $this->addFiles($target);
+
+		$this->files[] = $symlink = $target.'/relative_subdir_symlink.txt';
+		$file = $target.'/sub_dir/subdir_test_file.txt';
+		if(Vfs::is_link($symlink)) Vfs::unlink($symlink);
+		$this->assertTrue(
+			Vfs::symlink('sub_dir/subdir_test_file.txt', $symlink),
+			"Unable to create symlink $symlink => sub_dir/subdir_test_file.txt"
+		);
+
+		$this->shares[] = $created_share = Sharing::create('', $symlink, Sharing::READONLY, '', '');
+
+		$this->assertEquals($file, $created_share['share_path']);
+	}
+
+	/**
+	 * Test sharing a file reached through a directory symlink with a relative target
+	 */
+	public function testShareFileInsideRelativeSymlinkDirectory()
+	{
+		$target = Vfs::get_home_dir();
+
+		$this->files = $this->addFiles($target);
+		$target_file = $target.'/sub_dir/'.'subdir_test_file.txt';
+
+		$this->files[] = $symlink = $target.'/relative_symlinked_dir/';
+		$file = $symlink.'subdir_test_file.txt';
+		if(Vfs::is_link($symlink)) Vfs::unlink($symlink);
+		$this->assertTrue(
+			Vfs::symlink('sub_dir/', $symlink),
+			"Unable to create symlink $symlink => sub_dir/"
+		);
+
+		$this->shares[] = $created_share = Sharing::create('', $file, Sharing::READONLY, '', '');
+
+		$this->assertEquals(Vfs::PREFIX . $target_file, $created_share['share_path']);
+	}
+
 	public function testShareFileInsideSymlinkDirectory()
 	{
 		$target = Vfs::get_home_dir();
