@@ -36,6 +36,16 @@ export interface EgwCoreEnv
 	 */
 	createWindow() : Window;
 
+	/**
+	 * Load a different document into one of the createWindow() windows, keeping the same
+	 * Window object - what a popup reload or an iframe navigation does in real usage.
+	 *
+	 * @param _win a window previously returned by createWindow()
+	 * @param _path same-origin path, resolved against this page's origin (the windows live in
+	 *  an about:blank document, which has no base url of its own to resolve a bare path against)
+	 */
+	navigateWindow(_win : Window, _path : string) : Promise<void>;
+
 	/** Remove the iframe(s) and let the browser tear down their realms */
 	destroy() : void;
 }
@@ -80,6 +90,15 @@ export async function createEgwCoreEnv(prefs : object = {}, src : string = 'abou
 			win.document.body.appendChild(child);
 			childWindows.push(child);
 			return child.contentWindow as Window;
+		},
+		navigateWindow(_win : Window, _path : string) : Promise<void>
+		{
+			const child = childWindows.find(iframe => iframe.contentWindow === _win);
+			if (!child) return Promise.reject(new Error('navigateWindow(): not a createWindow() window'));
+
+			const loaded = new Promise<void>(resolve => child.addEventListener('load', () => resolve(), {once: true}));
+			child.src = window.location.origin + _path;
+			return loaded;
 		},
 		destroy()
 		{

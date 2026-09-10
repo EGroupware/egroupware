@@ -49,6 +49,16 @@
 		app : Map<string, Map<string, object>>;
 		wnd : Map<Window, Map<string, object>>;
 		glo : Map<string, object>;
+		/**
+		 * The document each wnd slot above was built for
+		 *
+		 * A window's identity outlives its documents - reloading a popup or navigating an iframe
+		 * hands back the very same Window object - so `wnd` alone cannot tell "already built for
+		 * this page" from "built for the page this window used to show". Recording the document
+		 * lets dropStaleWindow() below spot the second case, which is otherwise indistinguishable
+		 * and silently permanent: see its own docblock for what that costs.
+		 */
+		wndDocument : Map<Window, Document>;
 	}
 
 	// Some local functions for cloning and merging javascript objects
@@ -142,6 +152,17 @@
 		// If none was found, create the slot
 		mods = new Map<string, object>();
 		_moduleInstances.wnd.set(_window, mods);
+		// remember which document these are for, so a later navigation of this same window is
+		// recognised as needing its own set (see dropStaleWindow())
+		try
+		{
+			if (_window.document) _moduleInstances.wndDocument.set(_window, _window.document);
+		}
+		catch (e)
+		{
+			// ignore SecurityError accessing a cross-origin window's document - without a
+			// recorded document such a window simply keeps today's reuse-forever behaviour
+		}
 
 		// Add an eventlistener for the "onunload" event -- if "onunload" gets
 		// called, we have to delete the module slot created above
@@ -239,6 +260,54 @@
 	}
 
 	/**
+	 * Discard everything cached for a window that has since loaded a different document
+	 *
+	 * Window-local modules are built once per window and then reused, which is only correct
+	 * while that window still shows the document they were built for. A reload or navigation
+	 * replaces the document but keeps the Window, so without this the reused modules stay bound
+	 * to a page that no longer exists: whatever they captured at construction (an already-loaded
+	 * script/css list, a tooltip container, a set of decorated nodes) describes the old document,
+	 * and - worse - none of the per-document setup they do in their constructors runs for the new
+	 * one, including the "beforeunload" cleanup registered by getWndModules() below. That last
+	 * omission is what made the staleness permanent rather than one-off: with no listener left to
+	 * clear the slot, every further navigation of the window reused it again.
+	 *
+	 * Called for every egw(..., _window) lookup, before any cached instance can be returned - a
+	 * document's own bootstrap does exactly such a lookup (see api/js/jsapi/egw.js), so this runs
+	 * before anything else in the new page gets a chance to reach a stale module.
+	 *
+	 * Windows we have no recorded document for (created before this bookkeeping, or cross-origin
+	 * so we may not look) are left alone, as are ones already showing the document we recorded.
+	 *
+	 * @param _instances refers to all api instances.
+	 * @param _moduleInstances is the object which contains the application and window specific
+	 * 	module instances.
+	 * @param _window is the window to check.
+	 */
+	function dropStaleWindow(_instances : InstancesMap, _moduleInstances : ModuleInstancesState, _window : Window) : void
+	{
+		var known = _moduleInstances.wndDocument.get(_window);
+		if (!known) return;
+
+		var current : Document | null;
+		try
+		{
+			current = _window.document;
+		}
+		catch (e)
+		{
+			return;	// cross-origin now - nothing we can safely decide
+		}
+		// a closed window has no document to compare against - leave it to the periodic cleanup
+		if (!current || current === known) return;
+
+		cleanupEgwInstances(_instances, _moduleInstances, function(_w)
+		{
+			return _w.window === _window;
+		});
+	}
+
+	/**
 	 * Returns a egw instance for the given application and the given window. If
 	 * the instance does not exist now, the instance will be created.
 	 *
@@ -259,6 +328,10 @@
 
 		// Let "_window" be exactly null, if it evaluates to false
 		_window = _window ? _window : null;
+
+		// anything cached for this window belongs to whatever document it showed at the time -
+		// drop it all if that is no longer the document it is showing now
+		if (_window) dropStaleWindow(_instances, _moduleInstances, _window);
 
 		var byWindow = _instances.get(hash);
 		if (!byWindow)
@@ -288,7 +361,11 @@
 			{
 				if (_cond(entry))
 				{
-					entry.instance && entry.instance.unregisterAllPlugins();
+					// optional call: an instance created before the 'json' module registered
+					// (or in a harness that never loads it) has no unregisterAllPlugins, and a
+					// throw here would abandon the rest of the cleanup half-done - which now
+					// matters on the egw() path too, not just at unload (see dropStaleWindow())
+					entry.instance?.unregisterAllPlugins?.();
 					byWindow.delete(win);
 				}
 			}
@@ -307,6 +384,7 @@
 			if (_cond({window: wndWindow}))
 			{
 				_moduleInstances.wnd.delete(wndWindow);
+				_moduleInstances.wndDocument.delete(wndWindow);
 			}
 		}
 	}
@@ -400,7 +478,8 @@
 		var moduleInstances : ModuleInstancesState = {
 			'app': new Map<string, Map<string, object>>(),
 			'wnd': new Map<Window, Map<string, object>>(),
-			'glo': new Map<string, object>()
+			'glo': new Map<string, object>(),
+			'wndDocument': new Map<Window, Document>()
 		};
 
 		/**
@@ -750,8 +829,13 @@
 		// Merge the preferences into the egw object.
 		mergeObjects(egw, prefs);
 
-		// Create the entry for the root window in the module instances
+		// Create the entry for the root window in the module instances - deliberately empty, as
+		// every MODULE_WND_LOCAL module is registered after this bootstrap and so arrives via
+		// extend()'s mergeWndLocalModule() rather than getWndModules(). Record the document
+		// alongside it, the one place that creates a wnd slot without going through
+		// getWndModules(), so "every slot knows its document" holds for all of them.
 		moduleInstances.wnd.set(window, new Map<string, object>());
+		moduleInstances.wndDocument.set(window, window.document);
 
 		// Create the entry for the global window in the instances and register
 		// the global instance there

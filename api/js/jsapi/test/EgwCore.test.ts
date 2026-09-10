@@ -418,4 +418,102 @@ describe('egw_core.js composition engine', () =>
 			assert.isTrue(unregisterAllPlugins.calledOnce, 'only the closed window\'s instance is cleaned up');
 		});
 	});
+
+	describe('a window that loads a different document', () =>
+	{
+		// A Window outlives its documents: reloading a popup or navigating an iframe hands back
+		// the very same Window object, which is what egw keys its window-local modules by. Those
+		// modules are built for a document though - they read its scripts/stylesheets, add
+		// listeners and nodes to it - so reusing the previous page's set silently binds the new
+		// page to a dead one, and skips the per-document setup their constructors do, including
+		// the beforeunload cleanup getWndModules() itself registers. Missing that last one is
+		// what makes the reuse permanent instead of one-off: with no listener left to clear the
+		// slot, every further navigation of the window reuses it again.
+		//
+		// The window's own navigation does fire beforeunload and does clear the slot - what
+		// defeats it is the outgoing page reaching for egw once more on its way out, which real
+		// pages do while tearing their widgets down (Et2Widget's disconnectedCallback calls
+		// egw()). That re-creates the slot against the document already on its way out, after the
+		// cleanup has run, which is what the `pagehide` listener below stands in for.
+
+		/** Count only the builds for _win, not extend()'s own build for the root window */
+		function buildsFor(_documents : Document[], _win : Window) : Document[]
+		{
+			return _documents.filter(doc => doc !== env.window.document);
+		}
+
+		it('rebuilds its window-local modules instead of reusing the previous document\'s', async() =>
+		{
+			const documents : Document[] = [];
+			env.egw.extend('doc-bound', env.egw.MODULE_WND_LOCAL, (_app, _wnd) =>
+			{
+				documents.push(_wnd.document);
+				return {builtFor: _wnd.document};
+			});
+
+			const win = env.createWindow();
+			const before = env.egw(win);
+			assert.lengthOf(buildsFor(documents, win), 1, 'opening the window builds the module once');
+
+			win.addEventListener('pagehide', () => env.egw(win), {once: true});
+			await env.navigateWindow(win, '/api/js/jsapi/test/blank.html');
+
+			const after = env.egw(win);
+			assert.strictEqual(after.builtFor, win.document, 'built for the document now shown');
+			assert.notStrictEqual(after.builtFor, before.builtFor, 'not the one built for the old document');
+		});
+
+		it('runs the previous document\'s instances through the normal cleanup on the way out', async() =>
+		{
+			const unregisterAllPlugins = sinon.stub();
+			env.egw.extend('json-ish', env.egw.MODULE_WND_LOCAL, () => ({unregisterAllPlugins}));
+
+			const win = env.createWindow();
+			env.egw('someapp', win);
+
+			win.addEventListener('pagehide', () => env.egw('someapp', win), {once: true});
+			await env.navigateWindow(win, '/api/js/jsapi/test/blank.html');
+			const torn_down_on_unload = unregisterAllPlugins.callCount;
+
+			env.egw('someapp', win);
+
+			assert.isAbove(unregisterAllPlugins.callCount, torn_down_on_unload,
+				'the instance left over from the old document is torn down, not just dropped');
+		});
+
+		it('keeps reusing modules while the document has not changed', () =>
+		{
+			const documents : Document[] = [];
+			env.egw.extend('counted', env.egw.MODULE_WND_LOCAL, (_app, _wnd) =>
+			{
+				documents.push(_wnd.document);
+				return {};
+			});
+
+			const win = env.createWindow();
+			env.egw(win);
+			env.egw('someapp', win);
+			env.egw(win);
+
+			assert.lengthOf(buildsFor(documents, win), 1,
+				'no repeated rebuilds for a window sitting on one document');
+		});
+
+		it('leaves the root window\'s slot alone, which the bootstrap seeds empty on purpose', () =>
+		{
+			// The bootstrap pre-creates the root window's (empty) module slot, so every
+			// MODULE_WND_LOCAL module reaches it through extend()'s merge rather than through
+			// getWndModules(). Mistaking that slot for a leftover would build all of them a
+			// second time and hand egw(window) a different set than egw itself carries.
+			const factory = sinon.stub().returns({fromFactory: true});
+			env.egw.extend('root-counted', env.egw.MODULE_WND_LOCAL, factory);
+
+			assert.isTrue(factory.calledOnce, 'extend() merged it into the root window');
+			assert.isTrue(env.egw.fromFactory, 'and onto the egw object itself');
+
+			env.egw(env.window);
+
+			assert.isTrue(factory.calledOnce, 'egw(window) must not rebuild it');
+		});
+	});
 });
