@@ -427,6 +427,18 @@ export class Et2DatagridRowRenderer
 			}
 			processed++;
 		}
+		if(processed > 0)
+		{
+			// Start watching these rows for genuine resize as soon as they exist, rather
+			// than waiting for scheduleRowsUpgradedSettle()'s own frame-pair convergence
+			// check to reach them - that check can race a caller that moves the virtualizer's
+			// visible range (eg. an embedded grid's ancestor scrolling it far past these rows)
+			// before its sample runs, permanently committing a null "nothing measurable"
+			// sample and leaving _rowHeightStableSinceReload with only the slow fallback to
+			// rely on. Observing here is safe even before layout has actually settled: a row
+			// still growing just keeps resetting _markRowHeightUnstable()'s debounce.
+			this.host._observeRowHeightStability();
+		}
 		this.compactRowUpgradeQueue();
 		if(this.pendingRowUpgradeCount)
 		{
@@ -518,6 +530,15 @@ export class Et2DatagridRowRenderer
 	private finishRowsUpgradedSettle()
 	{
 		this.host._updateMeasuredAverageRowHeight();
+		// The settle loop's own 2-consecutive-frame-pair convergence check can
+		// still commit on a row that looks stable for those two samples but
+		// isn't actually done growing (eg. a further reflow after widget
+		// attachment, font metrics resolving late) - live-observed on
+		// timesheet. A ResizeObserver on the currently-measured rows catches
+		// that: unlike a fixed frame count, it's driven by the browser's own
+		// change detection, so it only ever fires again if the row genuinely
+		// resizes - see _observeRowHeightStability().
+		this.host._observeRowHeightStability();
 		this._rowWidgetsUpgradeSettling = false;
 		this.host.dispatchEvent(new CustomEvent("et2-row-widgets-upgraded", {
 			bubbles: true,

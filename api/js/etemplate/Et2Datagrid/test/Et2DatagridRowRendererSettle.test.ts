@@ -51,6 +51,7 @@ function createStubHost(samples : number[])
 	};
 	host._scheduleEmbeddedVirtualizedHeightSync = () => {};
 	host._scheduleRowsMinHeightSync = () => {};
+	host._observeRowHeightStability = () => {};
 	return host;
 }
 

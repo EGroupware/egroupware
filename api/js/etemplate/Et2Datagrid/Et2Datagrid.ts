@@ -302,6 +302,33 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	// defer requesting rows beyond the first page until the pre-measurement height
 	// guess (_rowHeightPx's "default" 44px) has had a chance to be corrected.
 	private _hasMeasuredRowHeightSinceReload : boolean = false;
+	/**
+	 * Watches the currently-measured rows for a real, browser-detected size
+	 * change after the settle loop has already committed a height - see
+	 * _observeRowHeightStability().
+	 */
+	private _rowHeightResizeObserver : ResizeObserver | null = null;
+	/**
+	 * True only after a real quiet period (no ResizeObserver-detected resize
+	 * for ROW_HEIGHT_STABLE_DEBOUNCE_MS) since the last one - a stricter,
+	 * debounced companion to _hasMeasuredRowHeightSinceReload's one-shot
+	 * "measured at least once" signal. See _markRowHeightUnstable().
+	 */
+	private _rowHeightStableSinceReload : boolean = false;
+	private _rowHeightStableTimer : number | null = null;
+	/** Debounce window for _rowHeightStableSinceReload - see _markRowHeightUnstable(). */
+	private static readonly ROW_HEIGHT_STABLE_DEBOUNCE_MS = 150;
+	/**
+	 * Last-resort bound on _rowHeightStableSinceReload, for the genuine
+	 * "this grid will never drive a real measurement" case (hidden grid,
+	 * zero matching rows, ...) - see _clearRows()'s fallback timer. A real
+	 * settle+debounce cycle normally resolves in well under a second (a few
+	 * settle passes at most, each ~2 rAFs, plus one debounce window), so
+	 * this is generous on purpose: it must not be anywhere near fast enough
+	 * to race the real confirmation, only to backstop cases that never
+	 * produce one at all.
+	 */
+	private static readonly ROW_HEIGHT_STABLE_FALLBACK_MS = 2000;
 	/** Incremented on every _clearRows() - guards that flag's bounded fallback timer below. */
 	private _rowsClearEpoch : number = 0;
 	_sparseVirtualizerLayoutActive : boolean = false;
@@ -922,6 +949,13 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this._embeddedVirtualizedHeightSyncPassesRemaining = 0;
 		this._embeddedChildGridResizeObserver?.disconnect();
 		this._embeddedChildGridResizeObserver = null;
+		this._rowHeightResizeObserver?.disconnect();
+		this._rowHeightResizeObserver = null;
+		if(this._rowHeightStableTimer !== null)
+		{
+			window.clearTimeout(this._rowHeightStableTimer);
+			this._rowHeightStableTimer = null;
+		}
 		if(this._embeddedChildGridObserverSyncFrame !== null)
 		{
 			cancelAnimationFrame(this._embeddedChildGridObserverSyncFrame);
@@ -1278,6 +1312,14 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			this._scheduleEmbeddedChildGridObserverSync();
 		}
 		this._upgradeRenderedRows();
+		// Re-target the current rows on every render, not only right after a row-upgrade
+		// batch or a settle: rows can be swapped for freshly stamped DOM nodes (the
+		// outerHTML round-trip that keeps hydrated widgets across re-renders replaces the
+		// element identity), which would otherwise leave a ResizeObserver watching nodes
+		// that already left the document and can never resize again. _observeRowHeightStability()
+		// is cheap to call redundantly: it no-ops once row height is locked/fixed, and
+		// leaves an existing observation alone when there is nothing new to measure yet.
+		this._observeRowHeightStability();
 		if(this._restoreFocusAfterRender && this.activeRowIndex >= 0)
 		{
 			this._focusRowByIndex(this.activeRowIndex, 10);
@@ -2578,6 +2620,103 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
+	 * Re-verify row height with the browser's own change detection instead of
+	 * a fixed frame count, after the settle loop
+	 * (Et2DatagridRowRenderer.scheduleRowsUpgradedSettle()) has already
+	 * committed one - that loop's 2-consecutive-frame-pair convergence check
+	 * can commit on a row that reads stable for those two samples but hasn't
+	 * actually finished growing (eg. a further reflow after widget
+	 * attachment, font metrics resolving late) - live-observed on timesheet:
+	 * `_hasMeasuredRowHeightSinceReload` true, `_rowHeightPx` stuck at the
+	 * 44px default, true value 33px reached only after settle had already
+	 * concluded.
+	 *
+	 * Watching for a *later* resize alone isn't enough to fix
+	 * `_requestChunkForRowIndex()`'s deferral guard, though: that guard's
+	 * existing one-shot `_hasMeasuredRowHeightSinceReload` flag flips true as
+	 * soon as the (possibly still-wrong) settle commits, synchronously in
+	 * the same render pass - well before any ResizeObserver callback could
+	 * possibly fire (those are always deferred past the current
+	 * layout/paint). So a wrong decision can already be made and dispatched
+	 * before this observer ever gets a chance to correct the stored value.
+	 * `_markRowHeightUnstable()` provides the actual fix that guard needs: a
+	 * separate, debounced `_rowHeightStableSinceReload` flag that only
+	 * becomes true after a real quiet *period* (no resize for
+	 * ROW_HEIGHT_STABLE_DEBOUNCE_MS) rather than a single matching sample -
+	 * genuine quiescence, not a coincidence of timing.
+	 *
+	 * Re-observes the current row set every time a settle completes, since
+	 * the previously-observed rows may have been replaced (new page,
+	 * different rows recycled into the same DOM nodes).
+	 */
+	_observeRowHeightStability() : void
+	{
+		if(this._rowHeightLocked || this._usesFixedVirtualizerRowHeight())
+		{
+			this._rowHeightResizeObserver?.disconnect();
+			if(this._rowHeightStableTimer !== null)
+			{
+				window.clearTimeout(this._rowHeightStableTimer);
+				this._rowHeightStableTimer = null;
+			}
+			return;
+		}
+		const measurable = this._measurableRenderedRows();
+		if(measurable.length === 0)
+		{
+			// Nothing measurable right now - eg. the virtualizer's visible range has
+			// moved past the rows a caller upgraded moments ago, before this could be
+			// called for them (upgradeRenderedRows() -> processRowUpgradeQueue() calls
+			// this as soon as a batch finishes, but the settle loop also calls it once
+			// convergence completes, which can run after that range has moved on).
+			// Leave whatever is currently observed alone rather than tearing it down for
+			// nothing: a real, already-armed observation is strictly more useful than an
+			// empty one, and the next genuinely measurable batch will re-arm this anyway.
+			return;
+		}
+		if(!this._rowHeightResizeObserver)
+		{
+			this._rowHeightResizeObserver = new ResizeObserver(() => this._markRowHeightUnstable());
+		}
+		else
+		{
+			this._rowHeightResizeObserver.disconnect();
+		}
+		for(const row of measurable)
+		{
+			this._rowHeightResizeObserver.observe(row);
+		}
+		// observe() itself delivers one initial callback per newly-observed
+		// element (per the ResizeObserver spec), so the debounce below always
+		// (re)starts from here too - nothing extra to kick off manually.
+	}
+
+	/**
+	 * Mark row height as not-yet-confirmed-stable and (re)start a short
+	 * debounce: only once this fires *without* another resize in the
+	 * meantime does `_rowHeightStableSinceReload` flip true and
+	 * `_requestChunkForRowIndex()`'s deferral lift. A one-shot "has it been
+	 * measured at least once" flag isn't enough here - see
+	 * `_observeRowHeightStability()`'s docblock - genuine quiescence needs a
+	 * quiet *period*, not a single sample.
+	 */
+	private _markRowHeightUnstable() : void
+	{
+		this._rowHeightStableSinceReload = false;
+		if(this._rowHeightStableTimer !== null)
+		{
+			window.clearTimeout(this._rowHeightStableTimer);
+		}
+		this._rowHeightStableTimer = window.setTimeout(() =>
+		{
+			this._rowHeightStableTimer = null;
+			this._rowHeightStableSinceReload = true;
+			this._updateMeasuredAverageRowHeight();
+			this.requestUpdate();
+		}, Et2Datagrid.ROW_HEIGHT_STABLE_DEBOUNCE_MS);
+	}
+
+	/**
 	 * Update sampled row-height average from the currently realized, upgraded
 	 * data rows. Samples are retained by row id so scrolling through mixed-height
 	 * rows converges instead of replacing the estimate with only the current
@@ -2601,6 +2740,32 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		const average = this._sampleRenderedRowHeightAverage();
 		if(average === null)
 		{
+			// Nothing is currently rendered/measurable. That is only safe to treat as
+			// vacuously stable when real row data already exists for this query but simply
+			// isn't in the measurable range right now - eg. an embedded grid's ancestor
+			// scrolled it past the only rows that were ever upgraded, before either this
+			// settled or a resize could be observed (see _observeRowHeightStability()).
+			// There is no risk of committing on a row that is still growing when there is
+			// no row at all to measure.
+			//
+			// It is NOT safe when this.rows is still empty: right after reload() calls
+			// _clearRows(), a settle scheduled *before* that clear (its own 2-rAF chain
+			// already in flight when the reload happened) can finish here with nothing to
+			// sample simply because the fetch for the new query hasn't landed yet - not
+			// because nothing will ever be measurable. Rushing _rowHeightStableSinceReload
+			// true in that case defeats the deferral guard for real content that is
+			// already on its way, live-observed to let a stale, too-large pre-fetch guess
+			// through and re-trigger the exact spurious second-page request this
+			// mechanism exists to prevent.
+			if(this.rows.length > 0)
+			{
+				this._rowHeightStableSinceReload = true;
+				if(this._rowHeightStableTimer !== null)
+				{
+					window.clearTimeout(this._rowHeightStableTimer);
+					this._rowHeightStableTimer = null;
+				}
+			}
 			return null;
 		}
 		// First real measurement for this query - see _requestChunkForRowIndex(), which
@@ -2671,7 +2836,23 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return this._renderedDataRowElements(rowsBody);
 		}
-		return Array.from(rowsBody?.querySelectorAll(":scope > tr[data-row-id]:not([data-et2dg-placeholder]):not(.dg-row-placeholder)") || []) as HTMLElement[];
+		const candidates = Array.from(rowsBody?.querySelectorAll(":scope > tr[data-row-id]:not([data-et2dg-placeholder]):not(.dg-row-placeholder)") || []) as HTMLElement[];
+		// A realized row (has a real data-row-id, isn't a placeholder) can still
+		// be waiting in the row-upgrade queue - its cells may not hold their real
+		// widget content yet, only whatever the row starts out as before
+		// processRowUpgradeQueue() reaches it. Sampling that row's height reads
+		// pre-hydration content, not the row's true rendered height - live
+		// observed to converge the settle loop (two-consecutive-samples-agree)
+		// on a value that later turns out wrong once the row actually upgrades,
+		// permanently marking row-height "measured" for the reload/query the
+		// wrong value came from (see _updateMeasuredAverageRowHeight()). Only
+		// count a row once its own data-et2dg-upgraded-for attribute confirms
+		// processRowUpgradeQueue() has actually run for it.
+		return candidates.filter((row) =>
+		{
+			const rowId = row.getAttribute("data-row-id") || "";
+			return !!rowId && row.getAttribute("data-et2dg-upgraded-for") === this._rowUpgradeSignature(rowId);
+		});
 	}
 
 	/**
@@ -3159,6 +3340,13 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this._rowHeightSettled = false;
 		this._embeddedRowHeightSettled = false;
 		this._hasMeasuredRowHeightSinceReload = false;
+		this._rowHeightStableSinceReload = false;
+		this._rowHeightResizeObserver?.disconnect();
+		if(this._rowHeightStableTimer !== null)
+		{
+			window.clearTimeout(this._rowHeightStableTimer);
+			this._rowHeightStableTimer = null;
+		}
 		this._sparseVirtualizerLayoutActive = false;
 		if(this._deferredEmbeddedRemeasureTimer !== null)
 		{
@@ -3177,6 +3365,15 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		// first), fall back to treating the guess as good enough. Guarded by the
 		// epoch so a fallback armed for an earlier reload can't fire after a newer
 		// one has already cleared rows again.
+		//
+		// Deliberately does NOT also force _rowHeightStableSinceReload true here:
+		// that flag has its own, longer fallback below
+		// (ROW_HEIGHT_STABLE_FALLBACK_MS) rather than sharing this one. A normal
+		// grid's settle process runs on this exact same ~2-rAF timescale, so
+		// tying the stricter flag to this fast a fallback made it a coin flip
+		// which one won - live-observed to let this fallback fire first and
+		// permanently skip the real, debounced confirmation _rowHeightStableSinceReload
+		// exists to provide, defeating its whole purpose.
 		const epoch = ++this._rowsClearEpoch;
 		requestAnimationFrame(() => requestAnimationFrame(() =>
 		{
@@ -3186,6 +3383,19 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				this.requestUpdate();
 			}
 		}));
+		// _rowHeightStableSinceReload's own, much longer fallback: only for the
+		// genuine "this grid will never drive a real measurement" case (same
+		// examples as above) - a real settle+debounce cycle normally resolves
+		// in well under a second, so this is a last resort, not a race
+		// participant.
+		window.setTimeout(() =>
+		{
+			if(epoch === this._rowsClearEpoch && !this._rowHeightStableSinceReload)
+			{
+				this._rowHeightStableSinceReload = true;
+				this.requestUpdate();
+			}
+		}, Et2Datagrid.ROW_HEIGHT_STABLE_FALLBACK_MS);
 	}
 
 	/**
@@ -3830,7 +4040,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			return;
 		}
 		const chunkStart = Math.floor(rowIndex / this.pageSize) * this.pageSize;
-		if(chunkStart > 0 && !this._hasMeasuredRowHeightSinceReload && !this._usesFixedVirtualizerRowHeight())
+		if(chunkStart > 0 && this._bodyScrollVersion === 0 && !this._rowHeightStableSinceReload && !this._usesFixedVirtualizerRowHeight())
 		{
 			// The virtualizer's range before any real row has been measured is based on
 			// _rowHeightPx's pre-measurement guess, which can overstate how many rows
@@ -3838,14 +4048,18 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			// pass can ask for a second page here purely because the guess was smaller
 			// than the row content actually turns out to be, when the real (larger)
 			// measured height would have made the first page alone sufficient. Defer
-			// anything past the first page until _updateMeasuredAverageRowHeight() has
-			// measured at least one real row - it forces a re-render afterward (whether
-			// or not the estimate actually changed), which re-evaluates this same row
-			// and requests it for real if still needed once the guess is corrected.
+			// anything past the first page until row height has held steady for a real
+			// quiet period (_rowHeightStableSinceReload - stricter than merely "measured
+			// once", see _markRowHeightUnstable()/_observeRowHeightStability()) - that
+			// debounce forces a re-render once it elapses, which re-evaluates this same
+			// row and requests it for real if still needed once the guess is corrected.
 			// Skip the wait entirely when the row height is already authoritative
 			// (locked, or an embedded grid whose pitch already settled) - there is no
 			// guess to correct, so deferring here would just block a legitimate request
 			// forever whenever this grid never itself calls _updateMeasuredAverageRowHeight().
+			// Also skip it once the user has genuinely scrolled (_bodyScrollVersion > 0):
+			// that's a real request for a real row the user is asking to see, not the
+			// virtualizer's own initial-load over-guess, so it must not wait on settling.
 			return;
 		}
 		if(!this._hasMissingRowsInChunk(chunkStart))
@@ -5577,6 +5791,59 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		return this.view === "tile";
 	}
 
+	/**
+	 * @lit-labs/virtualizer's FlowLayout defaults to a fixed 1000px prefetch
+	 * overhang on top of the visible viewport when deciding how many
+	 * row-indices to materialize. For small, uniform rows that alone can push
+	 * past a page's worth of rows with no row-height estimate ever being
+	 * wrong - eg. a 780px viewport with 33px rows needs (780+1000)/33 ≈ 54
+	 * rows, exceeding a 50-row initial page - forcing an avoidable second
+	 * fetch immediately on load.
+	 *
+	 * Only applied before the user has actually scrolled this grid
+	 * (`_bodyScrollVersion === 0`, incremented solely by the real "scroll"
+	 * listener) - a flat reduction here regressed a real scroll/hydration
+	 * test (Et2Datagrid.test.ts "hydrates newly realized rows..."), which
+	 * scrolls a considerable distance in one jump and depends on the
+	 * library's original large overhang to bring the destination row into
+	 * range in a single step. That's a materially different situation from
+	 * the initial-load-with-no-interaction-yet case this exists to fix, so
+	 * the reduction only applies pre-scroll; once real scrolling starts,
+	 * this reverts to the library's own default so prefetch-ahead behavior
+	 * stays exactly as tested.
+	 *
+	 * Budgeted at half a page's worth of rows (viewport + overhang), rather
+	 * than shaving just one or two rows off a full page as earlier attempts
+	 * here did. Those narrower margins were live-observed to still land on
+	 * chunk `pageSize` (eg. row 50 of a 50-row page) even once
+	 * `rowHeightEstimatePx` had genuinely settled to the correct value: the
+	 * virtualizer's own internal average row size and viewport dimension
+	 * (FlowLayout's `_metricsCache`/`_viewDim1`) are measured from actual
+	 * rendered geometry and can differ from `rowHeightEstimatePx` and
+	 * `this._body.clientHeight` by enough (a couple of percent each) to
+	 * close a one-or-two-row gap - there is no exact row count that is
+	 * guaranteed safe against that drift, only a comfortably wide one. Half a
+	 * page still gives meaningful prefetch-ahead buffer while leaving enough
+	 * slack that this measurement drift cannot push the real range into the
+	 * next chunk. Requires `rowHeightEstimatePx` to actually be correct -
+	 * see _measurableRenderedRows()'s upgraded-row filter for a bug that let
+	 * it stay stuck at the pre-measurement default even after being marked
+	 * "measured".
+	 */
+	private _tableOverhangPx() : number
+	{
+		if(this._bodyScrollVersion > 0)
+		{
+			return 1000;
+		}
+		const viewportPx = this._body?.clientHeight || 0;
+		if(!(viewportPx > 0))
+		{
+			return 1000;
+		}
+		return Math.max(0, Math.floor(this.pageSize / 2) * this.rowHeightEstimatePx - viewportPx);
+	}
+
 	private _tileLayoutConfig()
 	{
 		const layout = this.templateData?.tileLayout || {};
@@ -5893,6 +6160,17 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		if(tableLayout)
 		{
 			tableVirtualizerConfig.layout = tableLayout;
+		}
+		else if(!this.embeddedVirtualized)
+		{
+			// Top-level grids only - embedded child grids have their own,
+			// separately-timing-sensitive settle/reservation dance (see
+			// _isEmbeddedInitialLoading()/_virtualRowCount()) that a changed
+			// overhang here was observed to disturb, even though this config
+			// object has no direct relationship to that logic. No `type` here
+			// uses the library's own default FlowLayout, just with a smaller
+			// overhang than its 1000px default - see _tableOverhangPx().
+			tableVirtualizerConfig.layout = {_overhang: this._tableOverhangPx()};
 		}
 		return html`
             <div class="dg-root" part="base" style=${styleMap(styles)}>
