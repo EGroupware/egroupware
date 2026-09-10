@@ -1649,7 +1649,15 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		$stat = $vfs->url_stat($path, 0);
 		if ($stat['readlink'])
 		{
-			$stat = $vfs->url_stat($stat['readlink'], 0);
+			// a relative symlink (eg. "Rechnung.pdf" -> ".invoice.pdf") stores just the raw
+			// target, which is relative to the directory the link sits in - resolve it against
+			// that directory, as url_stat() below needs an absolute path
+			$target = $stat['readlink'];
+			if ($target[0] !== '/')
+			{
+				$target = Vfs::concat(Vfs::dirname(Vfs::parse_url($path, PHP_URL_PATH)), $target);
+			}
+			$stat = $vfs->url_stat($target, 0);
 		}
 		$fs_id = $stat['ino'];
 

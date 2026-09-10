@@ -151,6 +151,34 @@ class SqlfsBackendTest extends LoggedInTest
 	 * by Vfs\StreamWrapper::MAX_SYMLINK_DEPTH=10
 	 * (StreamWrapper.php:54,905-940's check_symlink_components() hop counter).
 	 */
+	/**
+	 * Vfs::get_minimum_file_id() (used by Collabora's Wopi::get_file_id() to keep one
+	 * file ID across versions) follows a symlink by feeding stat's 'readlink' straight
+	 * back into url_stat(). For a relative symlink that raw target is relative to the
+	 * link's own directory, so it has to be resolved against it first - otherwise the
+	 * lookup builds a malformed query instead of returning the target's fs_id.
+	 */
+	public function testGetMinimumFileIdFollowsRelativeSymlink() : void
+	{
+		$real = $this->files[] = $this->getFilename('_minid_real.txt');
+		file_put_contents(Vfs::PREFIX . $real, 'min file id content');
+
+		$expected = Vfs::get_minimum_file_id($real);
+		$this->assertNotNull($expected, "No fs_id for plain file '$real'");
+
+		$absolute = $this->files[] = $this->getFilename('_minid_absolute');
+		$this->assertTrue(Vfs::symlink($real, $absolute));
+		$this->assertEquals($expected, Vfs::get_minimum_file_id($absolute),
+			'Absolute symlink should resolve to the target\'s fs_id');
+
+		$relative = $this->files[] = $this->getFilename('_minid_relative');
+		$this->assertTrue(Vfs::symlink(Vfs::basename($real), $relative));
+		$this->assertEquals(Vfs::basename($real), Vfs::readlink($relative),
+			'Test setup: link should store the bare relative target');
+		$this->assertEquals($expected, Vfs::get_minimum_file_id($relative),
+			'Relative symlink should resolve to the target\'s fs_id');
+	}
+
 	public function testSymlinkTwoNodeCycleDoesNotHangAndFailsToResolve() : void
 	{
 		$a = $this->files[] = $this->getFilename('_cycle_a');
