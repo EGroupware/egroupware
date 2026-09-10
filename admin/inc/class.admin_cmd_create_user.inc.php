@@ -61,6 +61,12 @@ class admin_cmd_create_user extends admin_cmd_edit_user
 	 * (eg. self-registration) should ever land a new account in an admin group,
 	 * whatever the caller's $set['account_groups'] ends up containing.
 	 *
+	 * Deliberately does NOT use Acl::check()/get_rights(): those return an unconditional
+	 * "allowed" for an account/group with NO acl rows at all, whenever the server's
+	 * acl_default setting is not 'deny' - exactly the case for a plain, never-configured
+	 * self-registration group, which would then be misread as carrying admin rights. Reads
+	 * the raw repository instead and only reacts to an EXPLICIT admin/run grant row.
+	 *
 	 * @throws Api\Exception\NoPermission\Admin if a target group has admin rights
 	 */
 	public function skipAdminCheck()
@@ -68,7 +74,15 @@ class admin_cmd_create_user extends admin_cmd_edit_user
 		foreach ((array)($this->set['account_groups'] ?? []) as $gid)
 		{
 			admin_cmd::_instanciate_acl($gid);
-			if (admin_cmd::$acl->check('run', 1, 'admin'))
+			$rights = 0;
+			foreach (admin_cmd::$acl->read() as $row)
+			{
+				if ($row['appname'] === 'admin' && in_array($row['location'], array('run', 'everywhere')))
+				{
+					$rights |= $row['rights'];
+				}
+			}
+			if ($rights & 1)
 			{
 				throw new Api\Exception\NoPermission\Admin();
 			}
