@@ -1915,6 +1915,13 @@ export class MailApp extends EgwApp
 		{
 			(<any>window).app._compose.applyPresetFiles(preset.files);
 		}
+		// contentCopy.filemode above only preselects the widget - a "send as link/share" the user
+		// picked in filemanager has to count as their explicit choice too, or the send would
+		// silently attach the files anyway (MailCompose.applyPresetFilemode()'s own docblock)
+		if (preset?.filemode)
+		{
+			(<any>window).app._compose.applyPresetFilemode(preset.filemode);
+		}
 		if (preset?.attachmentContents?.length)
 		{
 			await (<any>window).app._compose.applyPresetAttachmentContent(preset.attachmentContents);
@@ -1931,6 +1938,24 @@ export class MailApp extends EgwApp
 		{
 			this.egw.message(preset.msg, 'info');
 		}
+	}
+
+	/**
+	 * The {path, name, type}[] MailCompose.applyPresetFiles() wants, from setCompose()'s classic
+	 * `content.data.files` shape: parallel arrays `file` (vfs://default/... paths, required) and
+	 * optional `name`/`type` (same index). A missing name falls back to the path's basename, a
+	 * missing type to application/octet-stream - the type is what the JMAP upload at send time
+	 * declares, so callers that know the real mime (filemanager's row cache, a mail attachment's
+	 * own part) pass it along.
+	 */
+	vfsFilesFromComposeContent(files : any) : { path : string, name : string, type : string }[]
+	{
+		const paths : string[] = Array.isArray(files?.file) ? files.file : [];
+		return paths.filter(Boolean).map((path, i) => ({
+			path,
+			name: files.name?.[i] || path.split('/').pop() || path,
+			type: files.type?.[i] || 'application/octet-stream',
+		}));
 	}
 
 	/**
@@ -1985,9 +2010,43 @@ export class MailApp extends EgwApp
 						this.compose.mergeForwardAttachments(String(ids).split(',').filter(Boolean));
 						return true;
 					}
+					// VFS files (filemanager "attach to mail", addressbook vCard-attach, a mail
+					// attachment re-attached via ajax_vfsOpen): the other content shape reachable
+					// while a popup is already open. Found live 2026-09-10: it fell through to the
+					// classic appendix_data+submit() postback below, which the client-side compose
+					// (mail/compose.php) has nothing to answer - the popup sat on its "please wait"
+					// prompt for ever, no request even left. Same bare jmapVfsPath marker rows the
+					// "nothing to reuse" path builds via composeWithPreset({files}), through the same
+					// MailCompose.applyPresetFiles().
+					const vfsFiles = this.vfsFilesFromComposeContent(content[field]?.['files']);
+					const filemode = compose_et2[0].widgetContainer.getWidgetById('filemode');
+					if (vfsFiles.length && this.compose.isJmapModeActive)
+					{
+						const wanted = content[field]['files']['filemode'];
+						if (wanted && filemode && filemode.get_value() != wanted)
+						{
+							const filemode_label = (filemode.select_options || []).filter(_item => _item.value == wanted)[0]?.['label'] || wanted;
+							Et2Dialog.show_dialog((_button) =>
+								{
+									if (_button == Et2Dialog.YES_BUTTON)
+									{
+										// the confirmed answer IS the explicit share-mode choice the send path
+										// requires - a bare filemode.set_value() would not count
+										this.compose.applyPresetFilemode(wanted);
+										this.compose.applyPresetFiles(vfsFiles);
+									}
+								},
+								this.egw.lang(
+									'Be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. Would you like to proceed?',
+									filemode_label, filemode_label),
+								this.egw.lang('Add files as %1', filemode_label), {}, Et2Dialog.BUTTONS_YES_NO, Et2Dialog.WARNING_MESSAGE);
+							return true;
+						}
+						this.compose.applyPresetFiles(vfsFiles);
+						return true;
+					}
 					const w = compose_et2[0].widgetContainer.getWidgetById('appendix_data');
 					w.set_value(JSON.stringify(content[field]));
-					const filemode = compose_et2[0].widgetContainer.getWidgetById('filemode');
 					if (content[field]['files'] && content[field]['files']['filemode']
 							&& filemode && filemode.get_value() != content[field]['files']['filemode'])
 					{
@@ -5634,6 +5693,10 @@ export class MailApp extends EgwApp
 							name: attachments[row_id].filename,
 							type: attachments[row_id].type || 'application/octet-stream',
 						}];
+						// the same name/type for the "reuse an already-open popup" case, which
+						// setCompose() resolves client-side too (vfsFilesFromComposeContent())
+						content.data.files["name"] = files.map(f => f.name);
+						content.data.files["type"] = files.map(f => f.type);
 						egw.openWithinWindow("mail", "setCompose", content, params, COMPOSE_POPUP_URL_PATTERN, true,
 							() => this.composeWithPreset({files, mimeType: 'html'}));
 					})
