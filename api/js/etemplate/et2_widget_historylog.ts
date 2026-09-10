@@ -307,7 +307,9 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 				value: '~file~',
 				label: this.egw().lang('File')
 			});
-			this.options.value['status-widgets']['~file~'] = 'vfs';
+			// et2-vfs-path (readonly) replaces the deleted legacy "vfs", and takes either a
+			// plain path or a full stat-array.  The dead name rendered a "vfs" placeholder box.
+			this.options.value['status-widgets']['~file~'] = 'et2-vfs-path';
 		}
 
 		// Add in handling for user-agent & action

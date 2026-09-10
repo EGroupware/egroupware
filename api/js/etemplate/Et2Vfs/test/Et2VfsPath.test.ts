@@ -16,6 +16,8 @@ window.egw = {
 	jsonq: () => Promise.resolve({}),
 	lang: i => i + "*",
 	link: i => i,
+	// An /apps/<app>/<id>/... path resolves the entry's title for its breadcrumb segment
+	link_title: (_app, _id) => "Entry #" + _id,
 	preference: i => "",
 	tooltipUnbind: () => {},
 	webserverUrl: "",
@@ -138,6 +140,70 @@ describe("User interactions", () =>
 		// No change event
 		sinon.assert.notCalled(handler);
 	})
+});
+
+describe("Read-only display of a value that is not a path", () =>
+{
+	// Setup run before each test
+	beforeEach(async() =>
+	{
+		await before();
+		element.readonly = true;
+		await elementUpdated(element);
+	});
+
+	it("renders a path as a clickable breadcrumb", async() =>
+	{
+		element.set_value("/apps/infolog/1/attachment.pdf");
+		await elementUpdated(element);
+
+		assert.exists(element.shadowRoot.querySelector("sl-breadcrumb"), "No breadcrumb for a path");
+		assert.notExists(element.shadowRoot.querySelector(".vfs-path__plain"), "Path rendered as plain text");
+	});
+
+	it("renders a bare name as plain text, with no icon", async() =>
+	{
+		// eg. the historylog's "File" column for a removed attachment - only the basename is left
+		element.set_value("attachment.pdf");
+		await elementUpdated(element);
+
+		const plain = element.shadowRoot.querySelector(".vfs-path__plain");
+		assert.exists(plain, "Bare name not rendered as plain text");
+		assert.equal(plain.textContent.trim(), "attachment.pdf");
+		assert.notExists(element.shadowRoot.querySelector("sl-breadcrumb"), "Bare name rendered as a breadcrumb");
+		assert.notExists(element.shadowRoot.querySelector("et2-image"), "Bare name got a filemanager icon");
+	});
+
+	it("renders nothing for an empty value", async() =>
+	{
+		element.set_value("");
+		await elementUpdated(element);
+
+		assert.equal(element.shadowRoot.querySelector(".vfs-path__plain").textContent.trim(), "");
+		assert.notExists(element.shadowRoot.querySelector("sl-breadcrumb"), "Empty value rendered as a breadcrumb");
+		assert.notExists(element.shadowRoot.querySelector("et2-image"), "Empty value got a filemanager icon");
+	});
+
+	it("survives a null value", async() =>
+	{
+		// Nothing stops a row-bound value from arriving as null
+		element.set_value(null);
+		await elementUpdated(element);
+
+		assert.equal(element.value, "");
+		assert.isNull(element.fileInfo);
+	});
+
+	it("keeps the full stat-array from an object value in fileInfo", async() =>
+	{
+		// What the historylog's filemanager-derived rows send
+		element.set_value({path: "/apps/infolog/1/attachment.pdf", name: "attachment.pdf", mime: "application/pdf"});
+		await elementUpdated(element);
+
+		assert.equal(element.value, "/apps/infolog/1/attachment.pdf");
+		assert.equal(element.fileInfo.mime, "application/pdf");
+		assert.exists(element.shadowRoot.querySelector("sl-breadcrumb"));
+	});
 });
 /*
 These no longer pass (In/Out value tests > no value gives empty string)

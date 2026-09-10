@@ -73,6 +73,28 @@ class TemplateTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 	}
 
 	/**
+	 * An <et2-template> reference is not inlined by Widget::factory(), so it has no children and
+	 * getElementById() has to resolve it lazily to see the widgets inside.  Asserts the reference
+	 * really is still childless, so this keeps covering the lazy path if that ever changes.
+	 */
+	public function testEt2TemplateReferenceIsSearched()
+	{
+		$template = Template::instance('api.nested', 'test');
+		$this->assertInstanceOf(Template::class, $template);
+
+		$reference = $template->getElementById('api.nested.et2_sub_template');
+		$this->assertInstanceOf(Template::class, $reference);
+		$this->assertEmpty($reference->children,
+			'reference tag got inlined, this test no longer covers the lazy resolution');
+
+		$this->assertInstanceOf('EGroupware\Api\Etemplate\Widget',
+			$template->getElementById('et2_sub_child'),
+			'widget inside an <et2-template> reference was not found');
+		$this->assertNull($template->getElementById('et2_sub_child', 'no-such-type'),
+			'type filter must still apply through a resolved reference');
+	}
+
+	/**
 	 * Run $callback with error_log() redirected to a temporary file and return what was written.
 	 *
 	 * @param callable $callback

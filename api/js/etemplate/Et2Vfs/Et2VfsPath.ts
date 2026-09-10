@@ -145,11 +145,11 @@ export class Et2VfsPath extends Et2InputWidget(LitElement) implements et2_IDetac
 	setValue(_value : string | FileInfo)
 	{
 		this.fileInfo = (_value && typeof _value === "object") ? _value : null;
-		if(typeof _value != "string" && _value.path)
+		if(typeof _value != "string" && _value?.path)
 		{
 			_value = _value.path;
 		}
-		this.value = <string>_value;
+		this.value = <string>(_value ?? "");
 	}
 
 	/**
@@ -415,7 +415,11 @@ export class Et2VfsPath extends Et2InputWidget(LitElement) implements et2_IDetac
 		const isEditable = !(this.disabled || this.readonly);
 		const editing = this.editing && isEditable;
 
-		let icon = this._getIcon(pathParts);
+		// A breadcrumb of a non-path gets a bogus filemanager icon and a click opening nothing,
+		// so render an empty value as nothing and a bare name (eg. a removed file) as text.
+		const plainText = !isEditable && !this.value.startsWith("/");
+
+		let icon = plainText ? "" : this._getIcon(pathParts);
 
 		return html`
             <div
@@ -459,7 +463,8 @@ export class Et2VfsPath extends Et2InputWidget(LitElement) implements et2_IDetac
                                        }}
                             ></et2-image>` : nothing}
                     </slot>
-                    ${editing ? html`
+                    ${plainText ? html`
+                        <span class="vfs-path__plain">${this.value}</span>` : editing ? html`
                         <input
                                 class="vfs-path__value-input"
                                 type="text"

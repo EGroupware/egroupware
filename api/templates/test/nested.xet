@@ -5,8 +5,14 @@
 	<template id="api.nested.sub_template" template="" lang="" group="0" version="16.1">
 		<widget id="sub_child"/>
 	</template>
+	<!-- referenced from api.nested with an <et2-template> tag, which - unlike the legacy <template>
+	     tag - Widget::factory() does NOT inline, so that reference has no children server-side -->
+	<et2-template id="api.nested.et2_sub_template" template="" lang="" group="0" version="16.1">
+		<widget id="et2_sub_child"/>
+	</et2-template>
 	<template id="api.nested" template="" lang="" group="0" version="16.1">
 		<widget id="only_child"/>
 		<template id="api.nested.sub_template"/>
+		<et2-template id="api.nested.et2_sub_template"/>
 	</template>
 </overlay>

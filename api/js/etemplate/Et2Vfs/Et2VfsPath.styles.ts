@@ -162,6 +162,18 @@ export default css`
 		cursor: initial;
 	}
 
+	/* Read-only non-path value: text instead of a breadcrumb, styled like the breadcrumb label */
+	.vfs-path__plain {
+		flex: 1 1 auto;
+		min-width: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		color: var(--input-text-color);
+		font-size: var(--sl-font-size-medium);
+		font-weight: var(--sl-font-weight-bold);
+	}
+
 	.vfs-path__disabled sl-breadcrumb-item::part(label) {
 		color: var(--sl-input-color-disabled);
 	}
