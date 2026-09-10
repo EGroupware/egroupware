@@ -646,11 +646,15 @@ export class AdminApp extends EgwApp
 		this.nm.set_disabled(true);
 		this.groups.set_disabled(false);
 		this.showAppToolbar('admin.index.group.header')
-		// et2_extension_nextmatch.ts listens via jQuery(...).on('show.et2_nextmatch', ...), which
-		// internally just addEventListener()s the base type 'show' (the ".et2_nextmatch" part is a
-		// jQuery-only namespace used for filtering jQuery's own trigger()/off(), not part of the
-		// native event type) - dispatching a plain native 'show' event still reaches that handler.
-		this.et2.parentNode.dispatchEvent(new Event('show'));
+		// Tell the now-visible nextmatch to fetch its rows: it is rendered with num_rows=0 and
+		// only loads data once it is told it became visible.  Its listeners sit on the app node
+		// (etemplate2's DOMContainer.parentNode), one level above this.et2.parentNode (which is
+		// the DOMContainer itself), so the event has to bubble to reach them - the jQuery
+		// .trigger() this replaced simulated bubbling, a plain native Event does not.
+		// The ".et2_nextmatch" suffix those listeners use is a jQuery-only namespace for
+		// filtering its own trigger()/off(), not part of the native event type, so a native
+		// 'show' event does reach them.
+		this.et2.parentNode.dispatchEvent(new Event('show', {bubbles: true}));
 	}
 
 	/**
