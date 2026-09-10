@@ -119,6 +119,47 @@ class CreateUserCommandTest extends CommandBase {
 	}
 
 	/**
+	 * A plain group with NO acl rows at all (the normal state of a real self-registration
+	 * group, and of any freshly created group) must NOT be mistaken for an admin group.
+	 *
+	 * Regression guard: Acl::check()/get_rights() return an unconditional "allowed" for an
+	 * account/group with zero acl rows whenever server config acl_default != 'deny' - which is
+	 * the default on a fresh install (unlike this dev instance, which is why this only failed
+	 * in CI). skipAdminCheck() must not be fooled by that into refusing a harmless group.
+	 */
+	public function testSkipAdminCheckAllowsPlainUnconfiguredGroup()
+	{
+		$this->asAdmin(function()
+		{
+			$group_cmd = new admin_cmd_edit_group(false, array(
+				'account_lid' => 'create_user_cmd_test_plain_group',
+				'account_members' => array($GLOBALS['egw_info']['user']['account_id']),
+			));
+			$group_cmd->run();
+			$this->group_id = $group_cmd->account;
+		});
+		$this->assertNotEmpty($this->group_id, 'Did not create test group');
+
+		// force the fail-open Acl::get_rights() fallback path, whatever this instance's
+		// real acl_default config is, so the test actually exercises the CI failure mode
+		$orig_acl_default = $GLOBALS['egw_info']['server']['acl_default'] ?? null;
+		$GLOBALS['egw_info']['server']['acl_default'] = 'allow';
+		try
+		{
+			$account = $this->account;
+			$account['account_groups'] = array($this->group_id);
+
+			// must not throw
+			(new admin_cmd_create_user($account))->skipAdminCheck();
+			$this->assertTrue(true);
+		}
+		finally
+		{
+			$GLOBALS['egw_info']['server']['acl_default'] = $orig_acl_default;
+		}
+	}
+
+	/**
 	 * exec() must refuse to touch an existing account, even if something sets ->account after
 	 * construction - keeps a waived admin-check strictly scoped to creating NEW accounts.
 	 */
