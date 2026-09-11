@@ -172,6 +172,10 @@ table.infolog_fullWidth {
 .infologExtraButton ~ .infologExtraButton {
   margin: 0;
 }
+/* Default off-state filter crushes the lock glyph to near-invisible; keep it legible */
+.infologEncrypt {
+  --image-filter-off: opacity(.6);
+}
 div#infolog-edit_infolog-edit-description {
   height: 100%;
 }

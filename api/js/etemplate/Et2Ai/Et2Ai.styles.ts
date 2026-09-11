@@ -33,8 +33,8 @@ export default css`
 	.et2-ai-dropdown {
 		visibility: hidden;
 		position: absolute;
-		top: 0px;
-		right: 0px;
+		top: var(--sl-spacing-2x-small);
+		right: var(--sl-spacing-2x-small);
 
 		et2-button-icon {
 			font-size: calc(var(--sl-font-size-large) * 1.5);
