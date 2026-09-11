@@ -539,7 +539,11 @@ class JsonRequest
 			for (var i = 0; i < data.response.length; i++)
 			{
 				// Get the response object
-				var res = data.response[i];
+				// const, not var: captured by the async promise.catch() below, which fires
+				// after this loop has moved on to later response items - var's function-scope
+				// binding would report whichever item was processed last, not the one that
+				// actually failed (eg. logging type "css" for an "et2_load" rejection).
+				const res = data.response[i];
 				if(typeof res.type == 'string' && res.type != 'data') only_data = false;
 
 				// Check whether a plugin for the given type exists
@@ -552,9 +556,14 @@ class JsonRequest
 						const handlerCount = handler_level[res.type].length;
 						for (let j = handlerCount - 1; j >= 0; j--)
 						{
+							// let, not var: a fresh binding per iteration (like res above),
+							// captured correctly by the async promise.catch() below - but
+							// declared outside the try so the synchronous catch(e) can still
+							// log it too.
+							let plugin;
 							try {
 								// Get a reference to the plugin
-								var plugin = handler_level[res.type][j];
+								plugin = handler_level[res.type][j];
 								/* disabled for now
 								if (res.type === 'et2_load')
 								{
@@ -613,7 +622,8 @@ class JsonRequest
 			// Call request callback, if provided
 			if(typeof this.callback === 'function' && !only_data)
 			{
-				this.callback.call(this.context,res);
+				// last dispatched response entry - res itself is scoped to the loop above now
+				this.callback.call(this.context, data.response[data.response.length - 1]);
 			}
 		}
 	}
