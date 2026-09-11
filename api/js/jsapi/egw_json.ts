@@ -986,7 +986,15 @@ class Json implements JsonModule
 					// actually knows about this app's entry.
 					if (typeof (<any>self.#wnd).egw_manifest?.['/'+parts[1]+'/js/app.min.js'] === 'undefined')
 					{
+						// Return (not fall through to the "not a function" throw at the bottom of
+						// this method) - most likely a load-order race against that app's own
+						// <script> include (eg. notificationajaxpopup.js), not an error worth an
+						// "Exception ... while handling JSON response" log entry every time it
+						// happens. Silently dropping this particular call is the accepted, quieter
+						// floor for now; a real fix (retry once the app object shows up, instead of
+						// giving up) is a separate, follow-up problem.
 						egw(self.#wnd).debug("log", "app."+parts[1]+" has no rollup entry, not attempting to load it");
+						return;
 					}
 					else
 					{
