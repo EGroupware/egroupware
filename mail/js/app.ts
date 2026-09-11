@@ -444,9 +444,27 @@ export class MailApp extends EgwApp
 								{
 									do_open(folder + '/' + path_parts.shift());
 								}
+								else
+								{
+									// Reached the actual target (eg. Inbox itself, not just its
+									// account) - openItem() only expands it, it does not select
+									// it, so without this it stays open but not highlighted/active.
+									this.tree_wdg.reSelectItem(folder);
+								}
 							});
 						}
-						path_parts && do_open(parts[0]+'::'+path_parts.shift());
+						// Open the bare account-root node first. For a tree with nothing loaded
+						// yet (eg. a first-time user: no saved mail.ExpandedFolders, and
+						// ActiveProfileID not yet persisted so the server doesn't render any
+						// account "open" either), the target account's own top-level folders
+						// aren't in _selectOptions yet - openItem() on "<profileID>::INBOX"
+						// directly is then a silent no-op (getNode() finds nothing to open),
+						// so nothing ever ends up open or selected. Opening the bare account id
+						// first triggers its lazy-load; only then does the existing per-segment
+						// chain below have anything to find. Harmless/idempotent when the
+						// account is already open (the common, existing-user case).
+						path_parts && this.tree_wdg.openItem(parts[0])
+							.then(() => do_open(parts[0]+'::'+path_parts.shift()));
 					}
 					//TODO check if there are changes necessary
 					this.tree_wdg.set_onopenstart(this.openStartTree.bind(this));
