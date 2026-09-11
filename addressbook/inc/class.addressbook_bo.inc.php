@@ -896,6 +896,126 @@ class addressbook_bo extends Api\Contacts
 	}
 
 	/**
+	 * Ajax handler for the PGP/S-MIME "upload key" UI in the contact-edit form
+	 * (addressbook/js/app.ts's pubkeyUploadStart()) - merges the uploaded key into whatever's
+	 * already stored for this contact's OTHER addresses, instead of clobbering the whole file the
+	 * way Et2VfsUpload's own default raw-to-VFS write used to (found live 2026-09-09/2026-09-11,
+	 * the "Known follow-up" this doc/ai/projects/mail-pgp-signature-verification.md's Phase 5 item 1
+	 * entry flagged: by the time the vfs-upload widget's own `callback` attribute fires
+	 * (addressbook_ui::pubkey_uploaded()), the raw bytes are already permanently written to the
+	 * SAME VFS path the old multi-address JSON lived at - nothing left to merge into by then).
+	 * pubkeyUploadStart() cancels that default upload entirely (the exact `ev.preventDefault()`
+	 * pattern MailCompose.uploadStart() already established for local-attachment uploads,
+	 * `mail/js/compose.ts`) and posts here instead.
+	 *
+	 * Address determination happens BEFORE this call for PGP, HERE for S/MIME: PGP has no
+	 * server-side way to read a key's own User IDs at all (see decode_key_content()'s own
+	 * docblock) - the client already did that via openpgp.js, matched against the addresses THIS
+	 * contact's own open edit form shows, and sends whatever matched (possibly none).
+	 * detect_smime_address() (X.509 parsing, native to PHP), by contrast, needs no client help -
+	 * always called here regardless of whatever $addresses the client sent for that case (S/MIME
+	 * client-side sends none at all).
+	 *
+	 * A matched address goes through set_pgp_keys()/set_smime_keys() (item 1/2's own
+	 * already-tested merge machinery, address-search based - same as
+	 * ajax_pgpAddKeyToContact()/ajax_set_pgp_keys() already use, no contact id needed there at
+	 * all). An UNMATCHED key (no PGP UID matched anything the form showed, or
+	 * detect_smime_address() found nothing) falls back to the `'*'` "no specific address known"
+	 * slot instead - the same meaning as today's legacy/pre-this-feature storage.
+	 * set_keys()'s own address-driven search can never reach that case (searching for the literal
+	 * string "*" as an email address matches no real contact), so it's handled directly against
+	 * $contactId via merge_key_for_contact_id() below instead.
+	 *
+	 * @param int $contactId
+	 * @param bool $pgp true: PGP, false: S/MIME
+	 * @param string $armored the uploaded key/cert's raw text content
+	 * @param string[] $addresses PGP only - lowercased candidate address(es) the client's own
+	 *  openpgp.js parse matched against this contact's known addresses; always empty for S/MIME
+	 *  (detect_smime_address() below is authoritative for that case)
+	 */
+	public function ajax_pubkey_upload($contactId, $pgp, string $armored, array $addresses=[])
+	{
+		$response = Api\Json\Response::get();
+		$pgp = (bool)$pgp;
+		$key_regexp = $pgp ? self::$pgp_key_regexp : Api\Mail\Smime::$certificate_regexp;
+		if (!preg_match($key_regexp, $armored))
+		{
+			$response->data(['message' => lang('File is not a %1 public key!', $pgp ? lang('PGP') : lang('S/MIME'))]);
+			return;
+		}
+		if (!$pgp)
+		{
+			$addresses = array_filter([self::detect_smime_address($armored)]);
+		}
+		if ($addresses)
+		{
+			$keys = array_fill_keys(array_map('strtolower', $addresses), $armored);
+			$message = $pgp ? $this->set_pgp_keys($keys) : $this->set_smime_keys($keys);
+		}
+		else
+		{
+			$message = $this->merge_key_for_contact_id((int)$contactId, $pgp, $armored);
+		}
+		$response->data(['message' => $message]);
+	}
+
+	/**
+	 * Merge an uploaded key/cert into the `'*'` (no specific address known) slot of a SPECIFIC,
+	 * already-identified contact - the one case set_keys()'s own address-driven search can never
+	 * reach (see ajax_pubkey_upload()'s own docblock). Shares set_keys()'s own per-contact write
+	 * logic (key_storage_path()/write_key_file()/merge_keys_json(), all already covered by
+	 * AddressbookBoMultiKeyStorageTest.php) rather than duplicating it, just addressed by contact
+	 * id instead of discovered via search.
+	 *
+	 * @param int $contactId
+	 * @param bool $pgp true: PGP, false: S/MIME
+	 * @param string $armored
+	 * @return string message of the update operation result
+	 */
+	private function merge_key_for_contact_id(int $contactId, bool $pgp, string $armored) : string
+	{
+		if (!($contact = $this->read($contactId)))
+		{
+			return lang('Contact not found');
+		}
+		if (!$this->check_perms(Acl::EDIT, $contact))
+		{
+			return lang('Permission denied');
+		}
+		$key_regexp = $pgp ? self::$pgp_key_regexp : Api\Mail\Smime::$certificate_regexp;
+		$path = $this->key_storage_path($contact, $pgp);
+		if ($path)
+		{
+			$contact['files'] |= $pgp ? self::FILES_BIT_PGP_PUBKEY : self::FILES_BIT_SMIME_PUBKEY;
+			$existing = file_exists($path) ? file_get_contents($path) : '';
+			// remove evtl. existing legacy (non-JSON) pubkey from the CONTACT field too - file
+			// storage and the pubkey field are never both populated for the same key (mirrors
+			// set_keys()'s own equivalent step)
+			if (preg_match($key_regexp, $contact['pubkey'] ?? ''))
+			{
+				$contact['pubkey'] = preg_replace($key_regexp, '', $contact['pubkey']);
+			}
+			$newContent = self::merge_keys_json($existing, ['*' => $armored], $pgp);
+		}
+		else
+		{
+			$existing = $contact['pubkey'] ?? '';
+			$newContent = self::merge_keys_json($existing, ['*' => $armored], $pgp);
+			$contact['pubkey'] = $newContent;
+		}
+		$contact['photo_unchanged'] = true;	// otherwise photo will be lost, see set_keys()'s own comment
+		if (!$this->save($contact))
+		{
+			return lang('Error saving contact');
+		}
+		if ($path && !$this->write_key_file($path, $newContent))
+		{
+			return lang('Error writing key file');
+		}
+		return lang('Key stored.');
+	}
+
+	/**
 	 * Saves contact
 	 *
 	 * Reimplemented to strip pubkeys pasted into pubkey field or imported and store them as files in Vfs.

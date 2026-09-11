@@ -1888,6 +1888,110 @@ class AddressbookApp extends EgwApp
 			});
 		}
 	}
+
+	/**
+	 * Cache of openpgp.js's lightweight build - lazy-loaded via a static dynamic import(), same
+	 * pattern MailJmap.loadOpenpgp() (mail/js/jmap.ts) already established for the identical need
+	 * there. Duplicated here rather than shared across app bundles - this codebase's established
+	 * per-app self-contained convention (every mail/js/test/*.test.ts file's own docblock notes
+	 * the same choice for small, single-purpose helpers).
+	 */
+	private static openpgpPromise : Promise<any> | null = null;
+
+	private static loadOpenpgp() : Promise<any>
+	{
+		if (!AddressbookApp.openpgpPromise)
+		{
+			AddressbookApp.openpgpPromise = import('openpgp/lightweight');
+		}
+		return AddressbookApp.openpgpPromise;
+	}
+
+	/**
+	 * Every email address a PGP key's own User IDs claim, lowercased - same UID-parsing regex
+	 * MailJmap.keyClaimsAddress() (mail/js/jmap.ts) already established for the identical
+	 * question on the mail side (does this key claim ONE given address?), just returning the full
+	 * claimed set here instead: pubkeyUploadStart() below needs to check against MULTIPLE of a
+	 * contact's own addresses (business + home) at once, not just one.
+	 */
+	private static keyUserIdAddresses(key : any) : string[]
+	{
+		const uids : string[] = key.getUserIDs?.() || [];
+		return uids.map((uid : string) =>
+		{
+			const match = /<([^>]+)>\s*$/.exec(uid);
+			return (match ? match[1] : uid).toLowerCase();
+		}).filter((email : string) => email.includes('@'));
+	}
+
+	/**
+	 * onStart handler for the PGP/S-MIME "upload key" et2-vfs-upload widgets in the contact-edit
+	 * form (addressbook/templates/default/edit.xet) - cancels Et2File's own default raw-to-VFS
+	 * upload entirely (the exact `ev.preventDefault()` pattern MailCompose.uploadStart() already
+	 * established, mail/js/compose.ts, for the identical "take over from the widget's own default
+	 * upload" need) and replaces it with a merge-aware flow via the new
+	 * addressbook_bo::ajax_pubkey_upload().
+	 *
+	 * Why this exists at all (doc/ai/projects/mail-pgp-signature-verification.md, Phase 5 item 1's
+	 * own "Known follow-up" note): Et2File's default upload writes the raw bytes straight to the
+	 * VFS path BEFORE the widget's own `callback` attribute (addressbook_ui::pubkey_uploaded())
+	 * ever runs - by the time that callback fires, whatever multi-address JSON was already stored
+	 * there for this contact's OTHER addresses is already gone, overwritten. This handler avoids
+	 * that entirely by never letting the default upload happen in the first place.
+	 *
+	 * PGP address detection happens HERE, client-side, via openpgp.js - matched against the
+	 * addresses THIS contact's own open edit form currently shows (`email`/`email_home` widgets).
+	 * PHP has no server-side way to read a PGP key's own User IDs at all (see
+	 * addressbook_bo::decode_key_content()'s own docblock). S/MIME needs no such step - the server
+	 * already has detect_smime_address() (native X.509 parsing via openssl), so the raw cert text
+	 * is sent as-is and the server decides.
+	 */
+	async pubkeyUploadStart(event : CustomEvent) : Promise<void>
+	{
+		event.preventDefault();
+
+		const widget : any = event.target;
+		const [, contactId, path] = String(widget?.id ?? '').split(':');
+		const pgp = path === '.files/pgp-pubkey.asc';
+		const file : File = (event.detail as any)?.file;
+		if (!contactId || !file) return;
+
+		let armored : string;
+		try
+		{
+			armored = await file.text();
+		}
+		catch (e)
+		{
+			this.egw.message(this.egw.lang('Could not read file'), 'error');
+			return;
+		}
+
+		let addresses : string[] = [];
+		if (pgp)
+		{
+			try
+			{
+				const openpgp = await AddressbookApp.loadOpenpgp();
+				const key = await openpgp.readKey({armoredKey: armored});
+				const claimed = AddressbookApp.keyUserIdAddresses(key);
+				const content : any = this.et2.getArrayMgr('content').data;
+				const known = [content?.email, content?.email_home]
+					.map((a : string) => (a || '').toLowerCase())
+					.filter((a : string) => a);
+				addresses = claimed.filter((a : string) => known.includes(a));
+			}
+			catch (e)
+			{
+				this.egw.message(this.egw.lang('Not a valid PGP public key'), 'error');
+				return;
+			}
+		}
+
+		this.egw.request('addressbook.addressbook_bo.ajax_pubkey_upload', [contactId, pgp, armored, addresses])
+			.then((result : any) => this.egw.message(result?.message || '', 'success'))
+			.catch((err : any) => this.egw.message(err?.message || this.egw.lang('Upload failed'), 'error'));
+	}
 }
 
 app.classes.addressbook = AddressbookApp;

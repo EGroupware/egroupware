@@ -147,11 +147,11 @@
                             </row>
                             <row valign="top" class="smime_section_border">
                                 <et2-description  value="SMIME key"></et2-description>
-                                <et2-vfs-upload  id="addressbook:$cont[id]:.files/smime-pubkey.crt" accept=".crt,.pem,.cer,application/x-x509-ca-cert,application/x-x509-user-cert" mime="/application\/(x-x509-(ca|user)|pkix)-cert/" callback="addressbook.addressbook_ui.pubkey_uploaded"></et2-vfs-upload>
+                                <et2-vfs-upload  id="addressbook:$cont[id]:.files/smime-pubkey.crt" accept=".crt,.pem,.cer,application/x-x509-ca-cert,application/x-x509-user-cert" mime="/application\/(x-x509-(ca|user)|pkix)-cert/" onStart="app.addressbook.pubkeyUploadStart"></et2-vfs-upload>
                             </row>
                             <row valign="top">
                                 <et2-description  value="PGP key"></et2-description>
-                                <et2-vfs-upload  id="addressbook:$cont[id]:.files/pgp-pubkey.asc" accept=".asc,application/pgp-keys" mime="/(application\/pgp-keys|text\/plain)/" callback="addressbook.addressbook_ui.pubkey_uploaded"></et2-vfs-upload>
+                                <et2-vfs-upload  id="addressbook:$cont[id]:.files/pgp-pubkey.asc" accept=".asc,application/pgp-keys" mime="/(application\/pgp-keys|text\/plain)/" onStart="app.addressbook.pubkeyUploadStart"></et2-vfs-upload>
                             </row>
                             <row valign="top">
                                 <et2-description  for="pubkey" value="Public key"></et2-description><et2-ai><et2-textarea  id="pubkey" rows="4" resizeRatio="0"></et2-textarea></et2-ai>

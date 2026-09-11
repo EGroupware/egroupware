@@ -28,9 +28,10 @@ an already-known contact, extended from S/MIME-only to BOTH S/MIME and PGP)** ar
 see their own phasing entries) - `Autocrypt-Gossip:` sending/receiving is now **DROPPED**
 (researched 2026-09-09 against Mailvelope's actual API source - not achievable, see its own entries
 under items 3/4) and item 6's mutual auto-encrypt preference is now **DONE** too (2026-09-09, see
-its own entry - built end-to-end, unit-tested, not yet live-clicked-through). With that, **all of
-Phase 5 is now either DONE or explicitly DROPPED** - nothing left unbuilt in this whole section
-except the known `pubkey_uploaded()` UI gap (item 1's own entry). item 2's `prefer-encrypt` storage
+its own entry - built end-to-end, unit-tested, not yet live-clicked-through). The
+`pubkey_uploaded()` UI gap (item 1's own entry) is now **DONE** too (2026-09-11, see its own
+entry). With that, **every single item in this whole Phase 5 section is now DONE or explicitly
+DROPPED** - nothing left unbuilt. item 2's `prefer-encrypt` storage
 now HAS a real caller (item 4's wiring, when a header carries `prefer-encrypt=mutual`) AND a real
 reader (item 6). **Item 4's real-message wiring is now live-verified too** (2026-09-09,
 same day, against a real Autocrypt-header-bearing message ralf found in acc_id=1's own Inbox - see
@@ -1061,11 +1062,47 @@ text was confusing, not informative.)*
    shared docker PHPUnit environment's own account search hangs indefinitely even for the
    ORIGINAL, unmodified `set_keys()` (confirmed by testing the pre-fix code directly) - a
    pre-existing environment limitation, not something this fix caused or needs to chase down.
-   **Known follow-up, not fixed here**: the addressbook contact-edit UI's own PGP/S-MIME
-   `vfs-upload` widget (`addressbook_ui::pubkey_uploaded()`) still uploads a single file with no
-   per-address distinction at all - it degrades gracefully (the uploaded content becomes the `"*"`
-   fallback, same as a legacy file), but doesn't yet let a user pick "this key is for my home
-   address" through that specific UI path.
+   **Follow-up DONE (2026-09-11)**: the addressbook contact-edit UI's own PGP/S-MIME `vfs-upload`
+   widget used to always clobber whatever multi-address JSON was already stored, with no
+   per-address distinction at all - `Et2File`'s own default upload writes the raw bytes straight
+   to the VFS path BEFORE `addressbook_ui::pubkey_uploaded()` (its `callback` attribute) ever
+   runs, so by the time that callback fired there was nothing left to merge into. Fixed not by
+   building new merge logic (`set_pgp_keys()`/`set_smime_keys()`/`merge_keys_json()` above already
+   do exactly that, address-keyed) but by routing the upload through them instead of around them:
+   - **Client** (`addressbook/js/app.ts`'s new `pubkeyUploadStart()`, wired via
+     `onStart="app.addressbook.pubkeyUploadStart"` on both `et2-vfs-upload` elements,
+     `addressbook/templates/default/edit.xet`) - cancels `Et2File`'s default upload entirely
+     (`event.preventDefault()`, the exact pattern `MailCompose.uploadStart()` already established
+     for the identical "take over from the widget's own default upload" need, `mail/js/
+     compose.ts`). For PGP: reads the file via `File.text()`, parses it with openpgp.js
+     (`readKey()`/`getUserIDs()`, new `keyUserIdAddresses()` - same UID-parsing regex
+     `MailJmap.keyClaimsAddress()` already established, duplicated per-bundle rather than shared
+     across apps), and matches the claimed address(es) against THIS contact's own currently-shown
+     `email`/`email_home` form fields - PHP has no server-side way to read a PGP key's own User
+     IDs at all (`decode_key_content()`'s own docblock). For S/MIME: no client parsing at all,
+     sent as-is - `detect_smime_address()` already exists server-side (native X.509 via
+     `openssl`).
+   - **Server**: new `addressbook_bo::ajax_pubkey_upload($contactId, $pgp, $armored, $addresses)`.
+     A matched address goes straight through `set_pgp_keys()`/`set_smime_keys()` (no new code -
+     same address-search-based merge `ajax_pgpAddKeyToContact()`/`ajax_set_pgp_keys()` already
+     use). An unmatched key (no PGP UID matched anything the form showed, or
+     `detect_smime_address()` found nothing) falls back to the `'*'` slot via new
+     `merge_key_for_contact_id()` - `set_keys()`'s own address-driven search can never reach `'*'`
+     (searching for the literal string `"*"` as an email address matches no real contact), so
+     that one case is handled directly against `$contactId` instead, reusing `set_keys()`'s own
+     per-contact write primitives (`key_storage_path()`/`write_key_file()`/`merge_keys_json()`)
+     rather than duplicating them.
+   - **Tested**: client-side address-matching logic
+     (`addressbook/js/test/AddressbookPubkeyUploadMerge.test.ts`, 4 cases, real openpgp.js-parsed
+     multi-UID fixture) and the server's early input-validation guard
+     (`addressbook/tests/AddressbookBoPubkeyUploadTest.php`, 3 cases, via `Api\Json\Response::
+     returnResult()` - both reads AND resets the singleton's state, no reflection needed between
+     tests). **Not tested**: the actual merge path once a contact is found
+     (`merge_key_for_contact_id()`/`set_pgp_keys()`/`set_smime_keys()`) - same pre-existing
+     `$this->search()`-hang environment limitation `AddressbookBoMultiKeyStorageTest.php`'s own
+     docblock already documents for `set_keys()` itself, not something this fix caused. **Not yet
+     live-clicked-through** either - needs a real contact with two addresses, each getting its own
+     uploaded key, verified to land in separate JSON slots without clobbering.
 3. Sending `Autocrypt:` (own key) - DONE (2026-09-09, see its own entry) - was indeed the simplest,
    most self-contained piece, no consent-dialog UI needed (never touches another contact's stored
    data). `Autocrypt-Gossip:` (the other half of item 3) is **DROPPED** (researched 2026-09-09 - not
@@ -1080,11 +1117,13 @@ text was confusing, not informative.)*
 5. `prefer-encrypt` **storage** (item 2) is DONE (2026-09-09, see its own entry) and now has both a
    real WRITER (`ajax_pgpAddKeyToContact` calls `set_autocrypt_attributes()` when a header carries
    `prefer-encrypt=mutual`) and a real READER (item 6's `get_autocrypt_prefer_encrypt()`).
-6. **Item 6 (mutual auto-encrypt preference) - DONE (2026-09-09), see its own entry.** With this,
-   every item in this whole Autocrypt integration is now either DONE or explicitly DROPPED, except
-   the known `pubkey_uploaded()` UI gap (item 1's own entry) - and item 6 itself still needs a real
-   live click-through (two real contacts with `prefer-encrypt=mutual` already learned) before
-   calling it fully verified.
+6. **Item 6 (mutual auto-encrypt preference) - DONE (2026-09-09), see its own entry.**
+7. **The `pubkey_uploaded()` UI gap (item 1's own entry) - DONE (2026-09-11).** With this, every
+   item in this whole Autocrypt integration is now either DONE or explicitly DROPPED - nothing
+   left unbuilt. Both this and item 6 still need a real live click-through before calling them
+   fully verified: item 6 needs two real contacts with `prefer-encrypt=mutual` already learned;
+   this one needs a contact with two addresses, each getting its own uploaded key, confirmed to
+   land in separate JSON slots without clobbering.
 
 ## Explicitly out of scope for this project
 
