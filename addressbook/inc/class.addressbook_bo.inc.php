@@ -289,7 +289,7 @@ class addressbook_bo extends Api\Contacts
 					{
 						$contact['pubkey'] = preg_replace($key_regexp, '', $contact['pubkey']);
 					}
-					$newContent = self::merge_keys_json($existing, $forThisContact, $pgp);
+					$newContent = self::append_primary_key_pem(self::merge_keys_json($existing, $forThisContact, $pgp), $pgp);
 					$updated++;
 				}
 				else
@@ -368,6 +368,43 @@ class addressbook_bo extends Api\Contacts
 	}
 
 	/**
+	 * Strip a trailing real PEM/armored key block from stored key content, leaving just the JSON
+	 * metadata prefix in front of it - see append_primary_key_pem()'s own docblock for why that
+	 * block is there (2026-09-11: a downloaded `.files/pgp-pubkey.asc`/`smime-pubkey.crt` used to
+	 * contain nothing but JSON despite its own file extension, confusing anyone who opened it
+	 * expecting a real key - ralf, live-testing the multi-key upload fix).
+	 *
+	 * Splits on the FIRST real (0x0A) newline character, NOT a BEGIN/END marker search - a
+	 * deliberate correction of this method's own first version, which searched for a BEGIN/END
+	 * match and stripped everything before it: since every stored key/cert IS ITSELF armored/PEM
+	 * text held as a JSON string value, valid JSON routinely contains that exact substring INSIDE
+	 * its own (properly escaped) content too - matching on it would have corrupted the very
+	 * common case of decoding a contact with a real key already stored, treating part of the
+	 * actual JSON payload as if it were the appended block. json_encode()'s own default output
+	 * (used by every writer here, none use JSON_PRETTY_PRINT) is GUARANTEED to contain zero real
+	 * newline characters - the JSON spec requires a literal newline inside a string value to be
+	 * escaped as the two characters `\`+`n`, never emitted raw - so the first real newline in the
+	 * whole file, if any, can only be the one append_primary_key_pem() itself inserts between the
+	 * JSON and its own trailing block.
+	 *
+	 * Does NOT need to special-case a legacy (pre-fix) bare-armored file with no JSON prefix at
+	 * all: json_decode()-ing this method's result against JUST the truncated first line of raw
+	 * armored text (which itself always starts "-----BEGIN ...-----\n", ie. splits right after
+	 * its own opening marker) predictably fails, and both callers already fall back to their own
+	 * `$existing`/`$content` parameter (the FULL, untouched original) for that legacy case, not
+	 * this method's own return value.
+	 *
+	 * @param string $content
+	 * @return string $content with any trailing real key block (and the newline before it)
+	 *  removed, or $content unchanged if it contains no real newline at all
+	 */
+	private static function strip_trailing_key_pem(string $content) : string
+	{
+		$nl = strpos($content, "\n");
+		return $nl === false ? $content : substr($content, 0, $nl);
+	}
+
+	/**
 	 * Decode a contact's stored key content into the per-address array shape, migrating legacy
 	 * (pre-fix, bare-armored-text) content into it first if it isn't already JSON - see
 	 * merge_keys_json()'s own docblock for the exact migration rule (S/MIME: keyed by whatever
@@ -382,7 +419,8 @@ class addressbook_bo extends Api\Contacts
 	 */
 	private static function decode_key_content(string $existing, bool $pgp) : array
 	{
-		$decoded = $existing !== '' ? json_decode($existing, true) : null;
+		$json = self::strip_trailing_key_pem($existing);
+		$decoded = $json !== '' ? json_decode($json, true) : null;
 		if (is_array($decoded) && json_last_error() === JSON_ERROR_NONE)
 		{
 			return $decoded;
@@ -449,6 +487,63 @@ class addressbook_bo extends Api\Contacts
 			}
 		}
 		return json_encode($decoded);
+	}
+
+	/**
+	 * Append the "primary" key/cert's own real, valid PEM/armored block after the JSON metadata
+	 * merge_keys_json() produces, before writing it to the `.files/pgp-pubkey.asc`/
+	 * `smime-pubkey.crt` VFS file - so a file with THAT extension actually contains a real,
+	 * importable key again (2026-09-11: ralf downloaded his own contact's file expecting one and
+	 * found nothing but JSON instead - confusing, even though functionally the JSON alone was
+	 * already everything EGroupware itself needed). strip_trailing_key_pem() is this method's own
+	 * exact inverse - reading code strips this block straight back off before decoding the JSON,
+	 * so the block is purely an add-on for external tools/humans, never itself a second source of
+	 * truth.
+	 *
+	 * Today's format is a flat per-address map with no inherent "primary" concept - a contact can
+	 * legitimately hold two genuinely DIFFERENT keys, one per address. Tiebreak, simplest first:
+	 * the `"*"` (no-specific-address) entry if present, else whichever real (non-alias,
+	 * non-`"autocrypt"`) entry comes first in the map. For the overwhelmingly common case (one
+	 * real key, possibly aliased across several addresses) there is only ever one real entry to
+	 * find regardless of order, so this only actually matters for the rare multi-key case.
+	 *
+	 * @param string $json merge_keys_json()'s own return value
+	 * @param bool $pgp true: PGP, false: S/MIME
+	 * @return string $json with the primary key's own real PEM block appended, or $json unchanged
+	 *  if nothing in it resolves to real key/cert text at all (eg. only Autocrypt attributes with
+	 *  no key, which set_autocrypt_attributes() itself never allows, but defensive regardless)
+	 */
+	private static function append_primary_key_pem(string $json, bool $pgp) : string
+	{
+		$decoded = json_decode($json, true);
+		if (!is_array($decoded))
+		{
+			return $json;
+		}
+		$key_regexp = $pgp ? self::$pgp_key_regexp : Api\Mail\Smime::$certificate_regexp;
+		$candidates = isset($decoded['*']) ? ['*'] : [];
+		foreach (array_keys($decoded) as $address)
+		{
+			if ($address !== '*' && $address !== 'autocrypt')
+			{
+				$candidates[] = $address;
+			}
+		}
+		foreach ($candidates as $address)
+		{
+			$value = $decoded[$address];
+			// follow (at most) one alias hop - an alias always points straight at a real entry,
+			// never chains further (merge_keys_json()'s own invariant)
+			if (is_string($value) && !preg_match($key_regexp, $value) && isset($decoded[$value]))
+			{
+				$value = $decoded[$value];
+			}
+			if (is_string($value) && preg_match($key_regexp, $value, $m))
+			{
+				return rtrim($json)."\n".trim($m[0])."\n";
+			}
+		}
+		return $json;
 	}
 
 	/**
@@ -787,7 +882,7 @@ class addressbook_bo extends Api\Contacts
 				$contact['photo_unchanged'] = true;	// otherwise photo will be lost, because $contact['jpegphoto'] is not set
 				if ($this->check_perms(Acl::EDIT, $contact) && $this->save($contact))
 				{
-					if (!$path || $this->write_key_file($path, $newContent))
+					if (!$path || $this->write_key_file($path, self::append_primary_key_pem($newContent, true)))
 					{
 						$updated = true;
 					}
@@ -827,7 +922,10 @@ class addressbook_bo extends Api\Contacts
 	 */
 	private static function extract_key_for_address(string $content, ?string $address, string $key_regexp, bool $pgp) : ?string
 	{
-		$decoded = json_decode($content, true);
+		// strip_trailing_key_pem() - see append_primary_key_pem()'s own docblock: $content may
+		// carry a real PEM/armored block AFTER the actual JSON, purely for external tools/humans
+		// who open the file directly - decoding it straight would fail on that trailing text
+		$decoded = json_decode(self::strip_trailing_key_pem($content), true);
 		if (!is_array($decoded) || json_last_error() !== JSON_ERROR_NONE)
 		{
 			// legacy bare-armored-text format - applies to any address, same as before this fix
@@ -1006,7 +1104,7 @@ class addressbook_bo extends Api\Contacts
 		if ($path)
 		{
 			$existing = file_exists($path) ? file_get_contents($path) : '';
-			$newContent = self::merge_keys_json($existing, $keys, $pgp);
+			$newContent = self::append_primary_key_pem(self::merge_keys_json($existing, $keys, $pgp), $pgp);
 			if (!$this->write_key_file($path, $newContent))
 			{
 				return ['message' => lang('Error writing key file')];

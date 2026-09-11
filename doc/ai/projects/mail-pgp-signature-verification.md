@@ -1109,6 +1109,35 @@ text was confusing, not informative.)*
      etag): S/MIME on a non-SQL backend, stored directly in the `pubkey` DB/LDAP/AD field with no
      separate VFS file to write independently - a pre-existing tradeoff for that one backend
      combination, not something this fix claims to solve.
+   - **File format (2026-09-11)**: a `.files/pgp-pubkey.asc`/`smime-pubkey.crt` file used to
+     contain nothing but the per-address JSON, despite its own extension - confusing when
+     downloaded directly (ralf: "I wonder if we should change the name of the file... Obviously we
+     need to check then both files"). Considered a separate `.json` file (rejected - every
+     existing file on disk already holds bare JSON under the OLD `.asc`/`.crt` name, so it would
+     need permanent dual-path checking or a migration pass across `key_storage_path()`/`get_key()`/
+     `set_keys()`/the widget's own template id - real surface area for a cosmetic problem).
+     Instead: new `append_primary_key_pem()` appends the "primary" key/cert's own real PEM/armored
+     block after the JSON before writing (`'*'` entry preferred if present, else the first real,
+     non-alias address entry - the only two cases that can ever actually differ, since a contact
+     with just one real key, aliased across several addresses, has only one candidate regardless
+     of order) - so the file becomes something `gpg --import`/any real tool can actually use again,
+     while EGroupware's own JSON prefix still carries the full per-address structure. New
+     `strip_trailing_key_pem()` is the exact read-side inverse, used by both
+     `decode_key_content()` and `extract_key_for_address()` (the two independent readers - each
+     used to `json_decode()` the raw content directly). **Its own first version was wrong, caught
+     before commit**: it searched for a BEGIN/END marker match and stripped everything before it -
+     but a stored key IS ITSELF armored text held as a JSON string value, so ordinary valid JSON
+     (a contact that already has a real key on file, the overwhelmingly common case) routinely
+     contains that exact substring too, and that approach corrupted it. Fixed version splits on
+     the first REAL newline character instead - `json_encode()`'s own output (every writer here
+     uses it, none use `JSON_PRETTY_PRINT`) is guaranteed to contain zero real newlines, since the
+     JSON spec requires one inside a string value to be escaped as `\n`, never emitted raw; the
+     first real newline in a file, if any, can therefore only be the one `append_primary_key_pem()`
+     itself inserts. Existing on-disk files (pure JSON, no trailing block, exactly the pre-fix
+     shape) keep working unchanged on read - no migration needed, they just don't get the nicer
+     shape until next written. Tested: 7 new cases in `AddressbookBoMultiKeyStorageTest.php`,
+     including the exact regression the broken first version would have failed (round-tripping a
+     JSON blob that already contains a real key's BEGIN/END markers inside its own string value).
    - **Tested**: client-side address-matching logic
      (`addressbook/js/test/AddressbookPubkeyUploadMerge.test.ts`, 4 cases, real openpgp.js-parsed
      multi-UID fixture) and the server's early input-validation guard

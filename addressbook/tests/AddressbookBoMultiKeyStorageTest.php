@@ -468,4 +468,121 @@ CERT;
 		$this->assertCount(2, $decoded);
 		$this->assertSame($this->pgpKey('only-key'), $this->extract($merged, 'whoever@example.invalid', true));
 	}
+
+	private function stripTrailingPem(string $content) : string
+	{
+		$ref = new ReflectionMethod(addressbook_bo::class, 'strip_trailing_key_pem');
+		$ref->setAccessible(true);
+		return $ref->invoke(null, $content);
+	}
+
+	private function appendPrimaryPem(string $json, bool $pgp = true) : string
+	{
+		$ref = new ReflectionMethod(addressbook_bo::class, 'append_primary_key_pem');
+		$ref->setAccessible(true);
+		return $ref->invoke(null, $json, $pgp);
+	}
+
+	/**
+	 * append_primary_key_pem()/strip_trailing_key_pem() (2026-09-11) - a `.files/pgp-pubkey.asc`/
+	 * `smime-pubkey.crt` file used to hold nothing but the per-address JSON, despite its own file
+	 * extension promising a real key (ralf, live-testing the multi-key upload fix: downloaded his
+	 * own contact's file expecting one, found only JSON). append_primary_key_pem() appends the
+	 * "primary" key's own real PEM block after the JSON before writing; strip_trailing_key_pem()
+	 * is its exact inverse on the read side.
+	 *
+	 * This is the regression test for strip_trailing_key_pem()'s own FIRST, broken version (never
+	 * shipped, caught before commit): it searched for a BEGIN/END marker match and stripped
+	 * everything before it - but every stored key IS ITSELF armored text held as a JSON string
+	 * value, so plain valid JSON routinely contains that exact substring already, and that
+	 * approach corrupted the JSON of exactly the common "a key is already stored" case. The fixed
+	 * version splits on the first REAL newline character instead (json_encode()'s own output is
+	 * guaranteed to have none - a raw newline inside a JSON string value must be escaped as `\n`
+	 * per the JSON spec) - this fixture is deliberately built to fail loudly under the broken
+	 * approach and pass under the fixed one.
+	 */
+	public function testStripTrailingPemRoundTripsWithoutCorruptingJsonThatAlreadyContainsAKey()
+	{
+		$key = $this->pgpKey('already-stored-key');
+		$merged = $this->merge('', ['a@example.invalid' => $key]);	// pure JSON, no trailing block
+
+		$withBlock = $this->appendPrimaryPem($merged);
+		$stripped = $this->stripTrailingPem($withBlock);
+
+		$this->assertSame($merged, $stripped,
+			'stripping the appended block must recover EXACTLY the original JSON, unchanged');
+		$this->assertSame($key, json_decode($stripped, true)['a@example.invalid'],
+			'the JSON itself must decode correctly, keydata intact');
+	}
+
+	/** No real newline anywhere at all (the common case, plain json_encode() output) - unchanged. */
+	public function testStripTrailingPemLeavesPlainJsonUnchanged()
+	{
+		$merged = $this->merge('', ['a@example.invalid' => $this->pgpKey('a-key')]);
+
+		$this->assertSame($merged, $this->stripTrailingPem($merged));
+	}
+
+	/** append_primary_key_pem() picks the `'*'` entry over any specific address, when present. */
+	public function testAppendPrimaryPemPrefersTheWildcardEntry()
+	{
+		$merged = $this->merge('', [
+			'*' => $this->pgpKey('wildcard-key'),
+			'a@example.invalid' => $this->pgpKey('specific-key'),
+		]);
+
+		$withBlock = $this->appendPrimaryPem($merged);
+
+		$this->assertStringEndsWith($this->pgpKey('wildcard-key'), $withBlock);
+	}
+
+	/** No `'*'` entry - falls back to the first real (non-alias) address entry in the map. */
+	public function testAppendPrimaryPemFallsBackToFirstRealAddressEntry()
+	{
+		$merged = $this->merge('', ['a@example.invalid' => $this->pgpKey('a-key')]);
+
+		$withBlock = $this->appendPrimaryPem($merged);
+
+		$this->assertStringEndsWith($this->pgpKey('a-key'), $withBlock);
+	}
+
+	/** An alias entry (a plain address string, not armored text) is followed to its real key. */
+	public function testAppendPrimaryPemFollowsAnAliasToItsRealKey()
+	{
+		$key = $this->pgpKey('shared-key');
+		$merged = $this->merge('', [
+			'a@example.invalid' => $key,
+			'b@example.invalid' => $key,	// merge_keys_json() turns this into an alias to 'a@...'
+		]);
+		$this->assertSame('a@example.invalid', json_decode($merged, true)['b@example.invalid'],
+			'sanity check: b really did become an alias, not a duplicate copy');
+
+		$withBlock = $this->appendPrimaryPem($merged);
+
+		$this->assertStringEndsWith($key, $withBlock);
+	}
+
+	/** Nothing resolves to real key/cert text at all (autocrypt attributes only) - unchanged. */
+	public function testAppendPrimaryPemLeavesContentUnchangedWhenNothingResolves()
+	{
+		$json = json_encode(['autocrypt' => ['a@example.invalid' => ['prefer-encrypt' => 'mutual']]]);
+
+		$this->assertSame($json, $this->appendPrimaryPem($json));
+	}
+
+	/** Full round trip: merge -> append -> write-shape -> strip -> extract, same as production use. */
+	public function testAppendThenStripRoundTripsThroughExtractKeyForAddress()
+	{
+		$businessKey = $this->pgpKey('business-key');
+		$homeKey = $this->pgpKey('home-key');
+		$merged = $this->merge('', [
+			'business@example.invalid' => $businessKey,
+			'home@example.invalid' => $homeKey,
+		]);
+
+		$fileContent = $this->appendPrimaryPem($merged);
+
+		$this->assertSame($businessKey, $this->extract($fileContent, 'business@example.invalid'));
+		$this->assertSame($homeKey, $this->extract($fileContent, 'home@example.invalid'));
+	}
 }
