@@ -474,10 +474,15 @@ class JsonRequest
 			// flowing, so piggybacking here needs no extra request and has no URL to cache.
 			// Same 12h drift threshold as egw.js's periodic poll, which stays as a fallback
 			// for a tab that never makes another ajax call.
-			const buildEpoch = (<any>this.egw.window).egw_buildEpoch;
+			// this.egw.window can be null (eg. a popup whose window closed before its response
+			// arrived, live-found via mail's Avatar::ajax_image_check crashing with "Cannot read
+			// properties of null (reading 'egw_buildEpoch')") - fall back to the global window,
+			// matching the req.egw ? req.egw.window : window pattern used elsewhere in this file.
+			const epochWindow = <any>(this.egw.window || window);
+			const buildEpoch = epochWindow.egw_buildEpoch;
 			if (data.epoch && buildEpoch && data.epoch - buildEpoch > 12 * 3600000)
 			{
-				(<any>this.egw.window).egw_import?.notifyUpdateAvailable();
+				epochWindow.egw_import?.notifyUpdateAvailable();
 			}
 			/* disabled for now
 			if (egw.preference('show_generation_time', 'common', false) == "1")
@@ -869,8 +874,11 @@ class Json implements JsonModule
 				// this is what was actually still loading a stale etemplate2 chunk on pole, not
 				// any cache or deploy race). egw_import() falls back to the literal path itself
 				// on a manifest miss, so this is a strict superset - no behavior change for a
-				// genuinely non-entry script.
-				return Promise.all((<any>res.data).map((src) => (<any>req.egw.window).egw_import(src)))
+				// genuinely non-entry script. req.egw.window can be null (eg. a popup whose
+				// window closed before its response arrived) - fall back to the global window,
+				// matching the same req.egw ? req.egw.window : window pattern used just above
+				// for the 'script' plugin.
+				return Promise.all((<any>res.data).map((src) => (<any>(req.egw.window || window)).egw_import(src)))
 					.then(() => req.onLoadFinish.call(req.sender));
 			}
 			throw 'Invalid parameters';
