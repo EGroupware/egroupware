@@ -707,7 +707,11 @@ export class EgwFramework extends LitElement
 		// @ts-ignore egw.preference() returns a Promise if you pass true for callback
 		const pref = await egw.preference("open_popups_in", "common", true);
 		let windowID = null;
-		if(pref == "same_window" || window.matchMedia('(max-width: 800px)').matches)
+		// A dialog can only hold an eTemplate, which openDialog() loads from a menuaction. A url
+		// without one - a webdav file view, a share link, an external url - needs a real window,
+		// narrow viewport or not: the split below would otherwise pass the whole url through as the
+		// "menuaction" and request nonsense.
+		if((pref == "same_window" || window.matchMedia('(max-width: 800px)').matches) && _url.includes("menuaction="))
 		{
 			// openDialog doesn't take a full URL, just the menuaction part
 			const dialogURL = _url.split("menuaction=").pop();

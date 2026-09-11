@@ -211,4 +211,49 @@ describe('EgwFramework', () =>
 			'home.kdots_framework.test.template'
 		);
 	});
+
+	describe('openPopup() in same-window mode', () =>
+	{
+		// The "open popups in the same window" preference and a narrow (mobile) viewport share one
+		// branch, and the preference is the half a test can set.
+		beforeEach(() =>
+		{
+			egwStub.preference.resolves("same_window");
+			egwStub.openPopup.resetHistory();
+			egwStub.openDialog.resetHistory();
+			// openPopup() writes .framework onto whatever window it got back
+			egwStub.openPopup.returns({});
+		});
+
+		it('opens a url without a menuaction in a real window', async() =>
+		{
+			// openDialog() used to get the whole url as its "menuaction", and the file never opened
+			await element.openPopup('/webdav.php/home/someone/report.html', 800, 1024, '_blank',
+				undefined, true, undefined, window);
+
+			assert.isTrue(egwStub.openDialog.notCalled, 'openDialog() was handed a non-menuaction url');
+			assert.isTrue(egwStub.openPopup.calledOnce);
+			assert.equal(egwStub.openPopup.firstCall.args[0], '/webdav.php/home/someone/report.html');
+		});
+
+		it('opens a menuaction url as a dialog', async() =>
+		{
+			// An app has to be active: openPopup() puts the dialog inside it
+			element.applicationList = [{
+				name: 'test-app', internalName: 'test', url: 'https://test.app', title: 'Test App',
+				icon: '', status: '1', openOnce: '', features: {}
+			}];
+			element.loadApp('test-app', true);
+			const dialog = <any>document.createElement('div');
+			dialog.updateComplete = Promise.resolve();
+			egwStub.openDialog.resolves(dialog);
+
+			await element.openPopup('/index.php?menuaction=app.handler.method', 800, 1024, '_blank',
+				undefined, true, undefined, window);
+
+			assert.isTrue(egwStub.openPopup.notCalled, 'a menuaction url should not need a window');
+			assert.isTrue(egwStub.openDialog.calledOnceWith('app.handler.method'));
+			assert.isTrue(dialog.classList.contains('egw-popup'));
+		});
+	});
 });
