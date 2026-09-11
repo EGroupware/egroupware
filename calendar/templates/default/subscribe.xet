@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="calendar.subscribe" template="" lang="" group="0" version="19.1">
+	<et2-template  id="calendar.subscribe" template="" lang="" group="0" version="19.1">
 		<grid width="720">
 			<columns>
 				<column width="120"/>
@@ -9,51 +10,49 @@
 			</columns>
 			<rows>
 				<row>
-					<et2-description for="name" value="Subscriptions"></et2-description>
-					<et2-select id="cat_id" emptyLabel="Create a new subscription"
-						onchange="widget.getInstanceManager().submit(null,false,true); return false;"></et2-select>
+					<et2-description  for="name" value="Subscriptions"></et2-description>
+					<et2-select  id="cat_id" emptyLabel="Create a new subscription" onchange="widget.getInstanceManager().submit(null,false,true); return false;"></et2-select>
 				</row>
 				<row>
-					<et2-description for="name" value="Name"></et2-description>
-					<et2-textbox id="name" tabindex="1" maxlength="255" required="true"></et2-textbox>
+					<et2-description  for="name" value="Name"></et2-description>
+					<et2-textbox  id="name" tabindex="1" maxlength="255" required="true"></et2-textbox>
 				</row>
 				<row>
-					<et2-description for="url" value="URL"></et2-description>
-					<et2-url id="url" required="true"></et2-url>
+					<et2-description  for="url" value="URL"></et2-description>
+					<et2-url  id="url" required="true"></et2-url>
 				</row>
 				<row>
-					<et2-description for="user" value="Username"></et2-description>
+					<et2-description  for="user" value="Username"></et2-description>
 					<et2-hbox>
-						<et2-textbox id="user"></et2-textbox>
-						<et2-password label="Password" id="password" autocomplete="new-password"></et2-password>
+						<et2-textbox  id="user"></et2-textbox>
+						<et2-password  label="Password" id="password" autocomplete="new-password"></et2-password>
 					</et2-hbox>
 				</row>
 				<row disabled="!@show_calendar_selection">
-					<et2-description for="calendar" value="Calendar"></et2-description>
-					<et2-select id="calendar" emptyLabel="Select one..." required="true"></et2-select>
+					<et2-description  for="calendar" value="Calendar"></et2-description>
+					<et2-select  id="calendar" emptyLabel="Select one..." required="true"></et2-select>
 				</row>
 				<row>
-					<et2-description value="Additional participants"></et2-description>
-					<et2-calendar-owner id="participants" multiple="true"></et2-calendar-owner>
+					<et2-description  value="Additional participants"></et2-description>
+					<et2-calendar-owner  id="participants" multiple="true"></et2-calendar-owner>
 				</row>
 				<row>
-					<et2-description value="Modify events"></et2-description>
+					<et2-description  value="Modify events"></et2-description>
                     <et2-hbox>
-						<et2-checkbox id="set_private" label="private" statustext="Does NOT show event to other users, unless they have a private grant"></et2-checkbox>
-						<et2-select id="blocking" label="Blocking" emptyLabel="From file" statustext="A non blocking event will not conflict with other events"></et2-select>
+						<et2-checkbox  id="set_private" label="private" statustext="Does NOT show event to other users, unless they have a private grant"></et2-checkbox>
+						<et2-select  id="blocking" label="Blocking" emptyLabel="From file" statustext="A non blocking event will not conflict with other events"></et2-select>
 					</et2-hbox>
 				</row>
 				<row>
 					<et2-description  value="Color" for="color"></et2-description>
 					<et2-hbox>
 						<et2-colorpicker  id="color"></et2-colorpicker>
-						<et2-select label="Icon" id="icon" emptyLabel="None" search="true"
-							searchUrl="preferences.preferences_categories_ui.ajax_search"></et2-select>
+						<et2-select  label="Icon" id="icon" emptyLabel="None" search="true" searchUrl="preferences.preferences_categories_ui.ajax_search"></et2-select>
 					</et2-hbox>
 				</row>
 				<row>
-					<et2-description value="Automatic update"></et2-description>
-					<et2-select id="sync_frequence">
+					<et2-description  value="Automatic update"></et2-description>
+					<et2-select  id="sync_frequence">
 						<option value="">Never</option>
 						<option value="1440">daily</option>
 						<option value="480">8 {hours}</option>
@@ -66,16 +65,15 @@
 					</et2-select>
 				</row>
 				<row>
-					<et2-hbox span="all" width="100%">
-						<et2-button accesskey="s" label="Save" id="button[save]" hideOnReadonly="true"></et2-button>
-						<et2-button label="Apply" id="button[apply]" hideOnReadonly="true"></et2-button>
-						<et2-button label="Cancel" id="button[cancel]" onclick="window.close(); return false;" hideOnReadonly="true"></et2-button>
-						<et2-button align="right" label="Sync now" id="button[sync]" image="arrow-repeat"></et2-button>
-						<et2-button align="right" label="Delete" id="button[delete]"
-							onclick="Et2Dialog.confirm(widget,'Do you want to delete this subscription incl. the synced events?','Delete')"></et2-button>
+					<et2-hbox  span="all" width="100%">
+						<et2-button  accesskey="s" label="Save" id="button[save]" hideOnReadonly="true"></et2-button>
+						<et2-button  label="Apply" id="button[apply]" hideOnReadonly="true"></et2-button>
+						<et2-button  label="Cancel" id="button[cancel]" onclick="window.close(); return false;" hideOnReadonly="true"></et2-button>
+						<et2-button  align="right" label="Sync now" id="button[sync]" image="arrow-repeat"></et2-button>
+						<et2-button  align="right" label="Delete" id="button[delete]" onclick="Et2Dialog.confirm(widget,'Do you want to delete this subscription incl. the synced events?','Delete')"></et2-button>
 					</et2-hbox>
 				</row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

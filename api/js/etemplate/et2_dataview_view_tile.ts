@@ -10,11 +10,6 @@
  * @version $Id: et2_dataview_view_container_1.js 46338 2014-03-20 09:40:37Z ralfbecker $
  */
 
-/*egw:uses
-	/vendor/bower-asset/jquery/dist/jquery.js;
-	et2_dataview_interfaces;
-*/
-
 import {et2_dataview_row} from "./et2_dataview_view_row";
 
 /**

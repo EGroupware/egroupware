@@ -31,7 +31,6 @@ imports entries into the timesheet from a csv file.	timesheet	ko	Mengimpor entri
 last modified	timesheet	ko	마지막 수정
 leaves without saveing	timesheet	ko	저장없이 나가기
 link title	timesheet	ko	연동 제목
-links	timesheet	ko	링크
 make timesheets readable by infolog delegation	timesheet	ko	InfoLog 위임으로 근태 기록표 가독성 확보
 mode	timesheet	ko	모드
 modified	timesheet	ko	변경됨

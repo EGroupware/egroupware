@@ -9,12 +9,6 @@
  * @copyright EGroupware GmbH 2011-2021
  */
 
-/*egw:uses
-	/vendor/bower-asset/jquery/dist/jquery.js;
-	et2_core_DOMWidget;
-	et2_core_xml;
-*/
-
 import {et2_no_init} from "./et2_core_common";
 import {et2_IAligned, et2_IDetachedDOM, et2_IResizeable} from "./et2_core_interfaces";
 import {et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
@@ -24,7 +18,7 @@ import {egw_getAppObjectManager, egwActionObject} from '../egw_action/egw_action
 import {et2_directChildrenByTagName, et2_filteredNodeIterator, et2_readAttrWithDefault} from "./et2_core_xml";
 import {egw} from "../jsapi/egw_global";
 import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
-
+import {et2_warnOnce} from "./Et2Widget/Et2Widget";
 
 /**
  * Class which implements the "grid" XET-Tag
@@ -444,8 +438,8 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 			{
 				if(y >= h)
 				{
-					this.egw().debug("warn", "Skipped grid cell in column, '" +
-						nodeName + "'");
+					et2_warnOnce(this, "legacy-grid:skipped-column:" + nodeName,
+						"Skipped grid cell in column, '" + nodeName + "'");
 					return;
 				}
 
@@ -516,8 +510,8 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 					{
 						// Only notify it skipping other than description,
 						// description used to pad
-						this.egw().debug("warn", "Skipped grid cell in row, '" +
-							nodeName + "'");
+						et2_warnOnce(this, "legacy-grid:skipped-row:" + nodeName,
+							"Skipped grid cell in row, '" + nodeName + "'");
 					}
 					return;
 				}
@@ -1126,7 +1120,10 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 		for(; i < this.rowData.length; i++)
 		{
 			if(this.rowData[i].part != 'body') continue;
-			const content = this.getArrayMgr('content').getEntry(i);
+			// getEntry() short-circuits and returns the whole content array when passed
+			// the number 0 (its explodeKey() falsy-check treats numeric 0 as "no key"),
+			// so row index 0 must be passed as a string to be looked up correctly.
+			const content = this.getArrayMgr('content').getEntry(String(i));
 			if(content)
 			{
 				// Add a new action object to the object manager

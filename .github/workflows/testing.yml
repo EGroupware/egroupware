@@ -6,6 +6,53 @@ on:
     branches:
       - master
   workflow_dispatch:
+  # Lets a private repo (eg. one in the EGroupwareGmbH org) run this exact same suite with its
+  # own apps checked out alongside the public ones, instead of maintaining a second copy of it.
+  # Private sources must never be checked out by this repo's own triggers, so they arrive purely
+  # through the "extra-apps" input - see the "Checkout additional apps" step below.
+  workflow_call:
+    inputs:
+      egw-repo:
+        description: 'EGroupware repository to test. Required for cross-repo callers.'
+        type: string
+        default: ''
+      egw-ref:
+        description: 'Branch/tag/sha of egw-repo to test. Required for cross-repo callers.'
+        type: string
+        default: ''
+      extra-apps:
+        description: >-
+          JSON array of additional app repositories to check out into the tree, eg.
+          [{"repo":"EGroupwareGmbH/epl","dir":"stylite","ref":"master"}].
+          "dir" defaults to the repository name, "ref" defaults to master.
+          Their tests are picked up automatically: doc/phpunit.xml collects ../*/tests/ and
+          web-test-runner.config.mjs builds a group per app from <app>/js/**/*.test.ts.
+        type: string
+        default: ''
+      extra-apps-owner:
+        description: >-
+          Organisation owning the extra-apps repositories, eg. EGroupwareGmbH. Required when
+          authenticating via a GitHub App: this workflow file lives in another org, so without
+          it the App installation would be looked up against the wrong owner.
+        type: string
+        default: ''
+    secrets:
+      # Two ways to authenticate against the extra-apps repositories - supply either.
+      # A GitHub App is preferred: it mints a token scoped to just the repos it is installed on,
+      # valid one hour, tied to the org rather than to a person's account. Its token is revoked
+      # in the minting action's post step, so it can only be created inside the job that uses it
+      # - which is why the minting happens here rather than in the calling workflow.
+      extra-apps-app-id:
+        description: 'GitHub App ID, used together with extra-apps-private-key.'
+        required: false
+      extra-apps-private-key:
+        description: 'PEM private key of the GitHub App named by extra-apps-app-id.'
+        required: false
+      extra-apps-token:
+        description: >-
+          Fallback for installations without a GitHub App: a token with read access to every
+          repository listed in extra-apps. Ignored when extra-apps-app-id is set.
+        required: false
 
 jobs:
   phpunit:
@@ -21,12 +68,60 @@ jobs:
       EGW_CONFIG_PASSWD: ""
       SYSOP_USER: ""
       SYSOP_PASS: ""
+      EGW_EXTRA_APP_DIRS: ""
+      # The secrets context is not available in a step's "if:", so route it through job env.
+      EXTRA_APPS_APP_ID: ${{ secrets.extra-apps-app-id }}
 
     steps:
       - uses: actions/checkout@v4
         with:
+          # Under workflow_call the github context describes the *calling* repository, so a
+          # cross-repo caller has to name what to test; direct triggers fall back to themselves.
+          repository: ${{ inputs.egw-repo || github.repository }}
+          ref: ${{ inputs.egw-ref || github.ref }}
           submodules: true
           path: sources
+
+      - name: Mint installation token for additional apps
+        id: extra-apps-app-token
+        if: inputs.extra-apps != '' && env.EXTRA_APPS_APP_ID != ''
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.extra-apps-app-id }}
+          private-key: ${{ secrets.extra-apps-private-key }}
+          # No "repositories": grants the token every repo the App is installed on for this owner.
+          owner: ${{ inputs.extra-apps-owner }}
+
+      - name: Checkout additional apps
+        if: inputs.extra-apps != ''
+        env:
+          EXTRA_APPS: ${{ inputs.extra-apps }}
+          GH_TOKEN: ${{ steps.extra-apps-app-token.outputs.token || secrets.extra-apps-token }}
+        run: |
+          set -euo pipefail
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::error::extra-apps was given, but no credentials: set either the" \
+                 "extra-apps-app-id/extra-apps-private-key pair (plus extra-apps-owner)" \
+                 "or the extra-apps-token secret"
+            exit 1
+          fi
+          DIRS=""
+          while read -r app; do
+            repo="$(jq -r '.repo' <<<"$app")"
+            dir="$(jq -r '.dir // (.repo | split("/") | last)' <<<"$app")"
+            ref="$(jq -r '.ref // "master"' <<<"$app")"
+            echo "::group::$repo@$ref -> $dir"
+            git clone --depth 1 --branch "$ref" \
+              "https://x-access-token:${GH_TOKEN}@github.com/${repo}.git" \
+              "$GITHUB_WORKSPACE/sources/$dir"
+            # Drop the clone's .git: it keeps the token out of a stored remote url, and stops
+            # "install-cli.php --git-apps pull" below from trying to update these apps.
+            rm -rf "$GITHUB_WORKSPACE/sources/$dir/.git"
+            echo "::endgroup::"
+            DIRS="$DIRS $dir"
+          done < <(jq -c '.[]' <<<"$EXTRA_APPS")
+          echo "EGW_EXTRA_APP_DIRS=${DIRS# }" >> "$GITHUB_ENV"
+
       - name: Cache Composer downloads
         uses: actions/cache@v4
         with:
@@ -47,6 +142,25 @@ jobs:
             composer install --no-interaction --ignore-platform-reqs
           php "${GITHUB_WORKSPACE}/sources/install-cli.php" --git-apps pull
 
+      - name: Install PHP dependencies of additional apps
+        if: env.EGW_EXTRA_APP_DIRS != ''
+        shell: bash
+        run: |
+          set -euo pipefail
+          COMPOSER_CACHE_DIR="${HOME}/.composer/cache"
+          # Apps cloned from git are not composer packages, so their requirements are absent from
+          # the root composer.lock - they carry their own vendor/ dir, same as a manual install.
+          for dir in $EGW_EXTRA_APP_DIRS; do
+            [ -f "$GITHUB_WORKSPACE/sources/$dir/composer.json" ] || continue
+            echo "::group::composer install in $dir"
+            docker run --rm --user "$(id -u):$(id -g)" \
+              -v "${COMPOSER_CACHE_DIR}":/tmp/composer-cache \
+              -v "${GITHUB_WORKSPACE}/sources/$dir":/app -w /app \
+              -e COMPOSER_CACHE_DIR=/tmp/composer-cache \
+              composer install --no-interaction --ignore-platform-reqs
+            echo "::endgroup::"
+          done
+
       - name: Prepare compose project layout
         run: |
           set -euo pipefail
@@ -61,21 +175,6 @@ jobs:
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
           $COMPOSE up -d --force-recreate db egroupware nginx
 
-      - name: Install PHP extensions
-        run: |
-          set -euo pipefail
-          COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
-            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
-            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
-          $COMPOSE exec -T egroupware sh -lc '
-            set -e
-            php_version="$(php -r "echo PHP_MAJOR_VERSION . \".\" . PHP_MINOR_VERSION;")"
-            apt-get update
-            if ! apt-get install -y "php${php_version}-tidy"; then
-              apt-get install -y php-tidy
-            fi
-            php -m | grep -i tidy
-          '
       - name: Wait for install
         run: |
           set -euo pipefail
@@ -104,7 +203,8 @@ jobs:
           done
 
           echo "Waiting for EGroupware installation log message..."
-          until $COMPOSE logs egroupware | grep -q "$SUCCESS_MSG"; do
+          INSTALL_LOG="$(mktemp)"
+          until $COMPOSE logs egroupware > "$INSTALL_LOG" && grep -q "$SUCCESS_MSG" "$INSTALL_LOG"; do
             if [ "$ELAPSED" -ge "$MAX_WAIT" ]; then
               echo "::error::Timed out waiting for EGroupware installation"
               echo "==== egroupware logs ===="
@@ -128,37 +228,37 @@ jobs:
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
 
+          INSTALL_LOG="$(mktemp)"
+          $COMPOSE logs egroupware > "$INSTALL_LOG"
+
           # Get sysop admin user from install log
           SYSOP_USER="sysop"
           SYSOP_PASS="$(
-            $COMPOSE logs egroupware |
-              awk '
-                /EGroupware username: sysop/ {found=1; next}
-                found && /password:/ {
-                  sub(/^[^:]*:[[:space:]]*/, "", $0)
-                  print
-                  exit
-                }
-              '
+            awk '
+              /EGroupware username: sysop/ {found=1; next}
+              found && /password:/ {
+                sub(/^[^:]*:[[:space:]]*/, "", $0)
+                print
+                exit
+              }
+            ' "$INSTALL_LOG"
           )"
 
           # Get setup user/password from install log.
           CONFIG_USER="$(
-            $COMPOSE logs egroupware |
-              awk '
-                /Setup username:/ {sub(/.*Setup username:[[:space:]]*/, "", $0); print; exit}
-              '
+            awk '
+              /Setup username:/ {sub(/.*Setup username:[[:space:]]*/, "", $0); print; exit}
+            ' "$INSTALL_LOG"
           )"
           CONFIG_PASS="$(
-            $COMPOSE logs egroupware |
-              awk '
-                /Setup username:/ {found=1; next}
-                found && /password:/ {
-                  sub(/^[^:]*:[[:space:]]*/, "", $0)
-                  print
-                  exit
-                }
-              '
+            awk '
+              /Setup username:/ {found=1; next}
+              found && /password:/ {
+                sub(/^[^:]*:[[:space:]]*/, "", $0)
+                print
+                exit
+              }
+            ' "$INSTALL_LOG"
           )"
           for v in SYSOP_USER SYSOP_PASS CONFIG_USER CONFIG_PASS; do
             if [ -z "${!v}" ]; then
@@ -230,7 +330,6 @@ jobs:
           EGW_TEST_PASS="$(
             sed -n 's/.*<var name="EGW_PASSWORD" value="\([^"]*\)".*/\1/p' "$GITHUB_WORKSPACE/sources/doc/phpunit.xml"
           )"
-
           for v in SYSOP_USER SYSOP_PASS EGW_TEST_USER EGW_TEST_PASS; do
             if [ -z "${!v}" ]; then
               echo "::error::Missing $v"
@@ -246,6 +345,12 @@ jobs:
             --edit-user "$SYSOP_USER,$SYSOP_PASS,$EGW_TEST_USER,Test,User,$EGW_TEST_PASS,$EGW_TEST_USER@example.invalid"
           $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php admin/admin-cli.php \
             --allow-app "$SYSOP_USER,$SYSOP_PASS,$EGW_TEST_USER,projectmanager"
+
+          # No separate admin test account needed: "sysop" (SYSOP_USER/SYSOP_PASS, extracted
+          # above from the install log) already has real admin rights from setup and is used
+          # directly as EGW_ADMIN_USER/EGW_ADMIN_PASSWORD in the "Run PHPUnit" step below.
+          # A dedicated "demoadmin"-style account previously used here collided with "demo" in
+          # several apps' generous name-matching lookups (see doc/phpunit.xml).
 
           # Ensure share links resolve locally in CI
           $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php setup/setup-cli.php \
@@ -269,28 +374,65 @@ jobs:
             echo "Listening ports:"
             ss -lntp || netstat -lntp || true
           '
-      - name: Install fixture test app
+      - name: Install/update all apps
         run: |
           set -euo pipefail
           COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
-          # Ensure fixture test app is linked and installed before tests
-          $COMPOSE exec -T \
-            -e EGW_CONFIG_USER="$EGW_CONFIG_USER" \
-            -e EGW_CONFIG_PASSWD="$EGW_CONFIG_PASSWD" \
-            -w "$EGW_SRC_DIR" egroupware sh -lc '
-            if [ -d api/tests/fixtures/apps/test ]; then
-              ln -sfn api/tests/fixtures/apps/test test
-              set +e
-              php setup/setup-cli.php --update default,$EGW_CONFIG_USER,$EGW_CONFIG_PASSWD,no,test
-              rc=$?
-              set -e
-              echo "setup-cli exit code: $rc"
-            fi
+
+          # header.inc.php is generated against the image's own baked-in /usr/share/egroupware
+          # install, while everything from here on serves the checked-out tree from $EGW_SRC_DIR.
+          # Without patching EGW_SERVER_ROOT first, setup-cli.php scans the stale baked-in app
+          # list, never sees the checkout's apps as new, and silently reports "No update
+          # necessary". (Idempotent - "Run PHPUnit" below repeats it.)
+          $COMPOSE exec -T egroupware \
+            sed -i "s#/usr/share/egroupware#$EGW_SRC_DIR#g" /var/lib/egroupware/header.inc.php
+
+          # The fixture app used by api/tests lives outside the app dirs - link it into place so
+          # the loop below finds it like any other app.
+          $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware sh -lc '
+            if [ -d api/tests/fixtures/apps/test ]; then ln -sfn api/tests/fixtures/apps/test test; fi
           '
-          if ! $COMPOSE exec -T db mariadb -u root -p"$EGW_DB_ROOT_PW" -D "egroupware" -e "SHOW TABLES LIKE 'egw_test%';" | grep -q "egw_test"; then
-            echo "egw_test table not found after test app install, some tests will be skipped"
+
+          # Install/update every app present in the checkout instead of naming them here: the CI
+          # image's baked-in install lags the branch (it predates eg. webauthn, whose schema was
+          # therefore never created), and apps supplied via the "extra-apps" input are not in it
+          # at all. One app failing to install must not abort the rest of the matrix, so each
+          # exit code is only logged; the app list queried afterwards is what actually gates.
+          APPS="$(
+            $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware sh -lc '
+              for d in */setup/setup.inc.php; do [ -e "$d" ] && echo "${d%%/*}"; done
+            ' | tr -d "\r"
+          )"
+          for app in $APPS; do
+            echo "::group::setup-cli --update $app"
+            set +e
+            $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware \
+              php setup/setup-cli.php --update \
+                default,"$EGW_CONFIG_USER","$EGW_CONFIG_PASSWD",no,"$app"
+            echo "setup-cli exit code for $app: $?"
+            set -e
+            echo "::endgroup::"
+          done
+
+          INSTALLED="$(
+            $COMPOSE exec -T db mariadb -N -B -u root -p"$EGW_DB_ROOT_PW" -D "egroupware" \
+              -e "SELECT app_name FROM egw_applications;" | tr -d "\r"
+          )"
+          echo "Installed apps: $(echo $INSTALLED | tr '\n' ' ')"
+
+          # webauthn plus anything the caller asked for must be there, or the suite would silently
+          # skip/fail on a missing schema rather than report it here.
+          for app in webauthn ${EGW_EXTRA_APP_DIRS:-}; do
+            if ! grep -qx "$app" <<<"$INSTALLED"; then
+              echo "::error::app '$app' missing from egw_applications after install"
+              exit 1
+            fi
+          done
+          # The fixture app is only a warning: a checkout without api/tests/fixtures has none.
+          if ! grep -qx "test" <<<"$INSTALLED"; then
+            echo "::warning::fixture app 'test' not installed, some tests will be skipped"
           fi
 
       - name: Install webauthn app
@@ -354,6 +496,16 @@ jobs:
             fi
           done
 
+          # header.inc.php is generated against the image's own baked-in /usr/share/egroupware
+          # install (rsynced from the image at container start), but the "Run PHPUnit" step below
+          # serves the actual checked-out branch from $EGW_SRC_DIR instead - patch the mismatched
+          # EGW_SERVER_ROOT so the app-specific autoloader (api/src/autoload.php, which resolves
+          # classes via EGW_INCLUDE_ROOT rather than composer's own correctly-resolved base dir)
+          # looks in the right place. Done inside the container (not via the host bind-mount path)
+          # since the file is owned by the container's own user, not the Actions runner.
+          $COMPOSE exec -T egroupware \
+            sed -i "s#/usr/share/egroupware#$EGW_SRC_DIR#g" /var/lib/egroupware/header.inc.php
+
           # Run tests with local HTTP endpoint inside egroupware container
           $COMPOSE exec -T \
             -e HTTP_HOST=127.0.0.1:8081 \
@@ -361,10 +513,11 @@ jobs:
             -e EGW_URL=http://127.0.0.1:8081 \
             -e EGW_CONFIG_USER="$EGW_CONFIG_USER" \
             -e EGW_CONFIG_PASSWD="$EGW_CONFIG_PASSWD" \
+            -e EGW_ADMIN_PASSWORD="$SYSOP_PASS" \
             -w "$EGW_SRC_DIR" egroupware \
             bash -lc '
               set -euo pipefail
-              php -S 127.0.0.1:8081 -t "$PWD" > /tmp/egw-phpunit-http.log 2>&1 &
+              php -S 127.0.0.1:8081 -t "$PWD" "$PWD/.github/ci-router.php" > /tmp/egw-phpunit-http.log 2>&1 &
               server_pid=$!
               trap "kill $server_pid 2>/dev/null || true" EXIT
 
@@ -372,7 +525,13 @@ jobs:
                 php -r '\''$fp=@fsockopen("127.0.0.1",8081,$errno,$errstr,0.2); if($fp){fclose($fp); exit(0);} exit(1);'\'' && break
                 sleep 1
               done
+              set +e
               php vendor/bin/phpunit --configuration doc/phpunit.xml
+              rc=$?
+              set -e
+              echo "=== php built-in server log (last 300 lines) ==="
+              tail -n 300 /tmp/egw-phpunit-http.log || true
+              exit $rc
             '
       - name: Tear down
         if: always()
@@ -395,6 +554,9 @@ jobs:
       EGW_CONFIG_PASSWD: ""
       SYSOP_USER: ""
       SYSOP_PASS: ""
+      EGW_EXTRA_APP_DIRS: ""
+      # The secrets context is not available in a step's "if:", so route it through job env.
+      EXTRA_APPS_APP_ID: ${{ secrets.extra-apps-app-id }}
     defaults:
       run:
         shell: bash
@@ -402,8 +564,52 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          # Under workflow_call the github context describes the *calling* repository, so a
+          # cross-repo caller has to name what to test; direct triggers fall back to themselves.
+          repository: ${{ inputs.egw-repo || github.repository }}
+          ref: ${{ inputs.egw-ref || github.ref }}
           submodules: true
           path: sources
+
+      - name: Mint installation token for additional apps
+        id: extra-apps-app-token
+        if: inputs.extra-apps != '' && env.EXTRA_APPS_APP_ID != ''
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.extra-apps-app-id }}
+          private-key: ${{ secrets.extra-apps-private-key }}
+          # No "repositories": grants the token every repo the App is installed on for this owner.
+          owner: ${{ inputs.extra-apps-owner }}
+
+      - name: Checkout additional apps
+        if: inputs.extra-apps != ''
+        env:
+          EXTRA_APPS: ${{ inputs.extra-apps }}
+          GH_TOKEN: ${{ steps.extra-apps-app-token.outputs.token || secrets.extra-apps-token }}
+        run: |
+          set -euo pipefail
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::error::extra-apps was given, but no credentials: set either the" \
+                 "extra-apps-app-id/extra-apps-private-key pair (plus extra-apps-owner)" \
+                 "or the extra-apps-token secret"
+            exit 1
+          fi
+          DIRS=""
+          while read -r app; do
+            repo="$(jq -r '.repo' <<<"$app")"
+            dir="$(jq -r '.dir // (.repo | split("/") | last)' <<<"$app")"
+            ref="$(jq -r '.ref // "master"' <<<"$app")"
+            echo "::group::$repo@$ref -> $dir"
+            git clone --depth 1 --branch "$ref" \
+              "https://x-access-token:${GH_TOKEN}@github.com/${repo}.git" \
+              "$GITHUB_WORKSPACE/sources/$dir"
+            # Drop the clone's .git: it keeps the token out of a stored remote url, and stops
+            # "install-cli.php --git-apps pull" below from trying to update these apps.
+            rm -rf "$GITHUB_WORKSPACE/sources/$dir/.git"
+            echo "::endgroup::"
+            DIRS="$DIRS $dir"
+          done < <(jq -c '.[]' <<<"$EXTRA_APPS")
+          echo "EGW_EXTRA_APP_DIRS=${DIRS# }" >> "$GITHUB_ENV"
 
       - name: Cache Composer downloads
         uses: actions/cache@v4

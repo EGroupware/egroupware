@@ -1552,12 +1552,13 @@ class calendar_so
 		else
 		{
 			// special handling for egw_cal, as old databases have a different column order!!!
-			$cols =& Api\Cache::getSession(__CLASS__,$table);
+			$cols = Api\Cache::getSession(__CLASS__,$table);
 
 			if (is_null($cols))
 			{
 				$meta = $GLOBALS['egw']->db->metadata($table,true);
 				$cols = array_keys($meta['meta']);
+				Api\Cache::setSession(__CLASS__, $table, $cols);
 			}
 		}
 		return $cols;

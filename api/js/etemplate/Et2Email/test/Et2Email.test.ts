@@ -4,6 +4,8 @@ import {inputBasicTests} from "../../Et2InputWidget/test/InputBasicTests";
 import {Et2Email} from "../Et2Email";
 import {Et2EmailTag} from "../../Et2Select/Tag/Et2EmailTag";
 import {waitForEvent} from "../../Et2Widget/event";
+// Et2Tag's editor is an et2-textbox; without this it never upgrades and has no value
+import "../../Et2Textbox/Et2Textbox";
 
 /**
  * Test file for Etemplate webComponent Select
@@ -225,11 +227,60 @@ describe("Tags", () =>
 		assert.sameMembers(element.value, ["two@example.com"], "Removing tag did not remove value");
 		assert.equal(element._tags.length, 1, "Removed tag is still there");
 	});
+
+	it("Can edit a tag", async() =>
+	{
+		const tag = element._tags[0];
+		assert.isTrue(tag.editable, "Tag was not editable");
+
+		tag.startEdit();
+		await tag.updateComplete;
+		// startEdit() finishes wiring the editor asynchronously
+		await tag._editNode?.updateComplete;
+
+		const input = tag._editNode;
+		assert.exists(input, "Editing did not open an input");
+		assert.equal(input.value, "one@example.com", "Editor did not start from the tag's value");
+
+		input.value = "edited@example.com";
+		input.dispatchEvent(new Event("blur", {bubbles: true}));
+
+		await element.updateComplete;
+		await Promise.all(element._tags.map((t : Et2EmailTag) => t.updateComplete));
+
+		assert.include(element.value, "edited@example.com", "Edited address did not reach the value");
+		assert.notInclude(element.value, "one@example.com", "Original address was left behind");
+	});
+
+	/**
+	 * Typing an address checks validateAddress(); editing an existing tag used not to, so
+	 * "not-an-email" was refused when typed and accepted when edited in.
+	 */
+	it("Rejects an edit that is not an address", async() =>
+	{
+		const tag = element._tags[0];
+		tag.startEdit();
+		await tag.updateComplete;
+		await tag._editNode?.updateComplete;
+
+		const input = tag._editNode;
+		input.value = "not-an-email";
+		input.dispatchEvent(new Event("blur", {bubbles: true}));
+
+		await element.updateComplete;
+
+		assert.notInclude(element.value, "not-an-email", "Invalid address was accepted");
+		assert.include(element.value, "one@example.com", "Original address was not put back");
+	});
 });
 
+// Et2Email is a tag-based, always-multi-value widget - get_value() is an array even with a
+// single address, never a plain string (previously masked by inputBasicTests' old loose
+// assert.equal(), where [ 'fake@example.com' ] == 'fake@example.com' is true via JS's array-to-
+// string coercion - deepEqual is stricter and correctly needs the real shape spelled out here).
 inputBasicTests(async() =>
 {
 	const element = await before();
 	element.noLang = true;
 	return element
-}, "fake@example.com", "input");
+}, "fake@example.com", "input", {expectedValue: ["fake@example.com"], emptyValue: []});

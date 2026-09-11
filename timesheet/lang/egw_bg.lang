@@ -55,7 +55,6 @@ leave it empty for a full week	timesheet	bg	Непопълнено - цяла с
 leaves without saveing	timesheet	bg	изход без запис
 length<br>rows	timesheet	bg	Дължина<br>Редове
 link title	timesheet	bg	Заглавие на връзката
-links	timesheet	bg	Връзки
 make timesheets readable by infolog delegation	timesheet	bg	Направете таблиците за отчитане на работното време четими чрез делегиране на InfoLog
 max length of the input [, length of the inputfield (optional)]	timesheet	bg	макс. дължина на входа[, дължнина на вх.поле (опция)]
 mode	timesheet	bg	Режим

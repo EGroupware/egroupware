@@ -360,7 +360,6 @@ limit search for conflicts in recurrences to given number of recurrences	calenda
 limit search for conflicts in recurrences to given time in seconds (default 3)	calendar	sk	Obmedziť vyhľadávanie konfliktov v opakovaniach na daný čas v sekundách (predvolené: 3)
 link title for events to show	calendar	sk	Titulok odkazu pre zobrazenie k udalosti
 link to view the event	calendar	sk	Odkaz na zobrazenie udalosti
-links	calendar	sk	Odkazy
 links and attached files	calendar	sk	Odkazy a priložené súbory
 links to specified application.  example: {{links/infolog}}	calendar	sk	Odkazy na vybranú aplikáciu. Príklad: {{links/infolog}}
 links, attachments	calendar	sk	Odkazy, prílohy

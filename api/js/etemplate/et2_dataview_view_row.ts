@@ -9,12 +9,6 @@
  * @copyright EGroupware GmbH 2011-2021
  */
 
-/*egw:uses
-	egw_action.egw_action;
-
-	et2_dataview_view_container;
-*/
-
 import {et2_dataview_IViewRange} from "./et2_dataview_interfaces";
 import {et2_dataview_container} from "./et2_dataview_view_container";
 
@@ -149,9 +143,7 @@ export class et2_dataview_row extends et2_dataview_container implements et2_data
 		return res;
 	}
 
-
 	/** -- PRIVATE FUNCTIONS -- **/
-
 
 	_handleExpansionButtonClick( _callback, _context)
 	{
@@ -182,9 +174,7 @@ export class et2_dataview_row extends et2_dataview_container implements et2_data
 		this.invalidate();
 	}
 
-
 	/** -- Implementation of et2_dataview_IViewRange -- **/
-
 
 	setViewRange( _range)
 	{

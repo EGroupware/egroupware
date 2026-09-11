@@ -1,4 +1,4 @@
-## Automatic testing
+## Automatic component testing
 
 Automatic tests go in the `test/` subfolder of your component's directory. They will be found and run by
 “web-test-runner”.
@@ -7,50 +7,75 @@ Tests are written using
 * Mocha (https://mochajs.org/) & Chai Assertion Library (https://www.chaijs.com/api/assert/)
 * Playwright (https://playwright.dev/docs/intro) runs the tests in actual browsers.
 
-Here's a simple example:
+Here is a basic test for a generic input widget:
 
 ```ts
 /**
- * Test file for Etemplate webComponent Textbox
+ * Tests for MyWidget.
  */
-import {assert, fixture, html} from '@open-wc/testing';
-import {Et2Textbox} from "../Et2Textbox";
+import {assert, elementUpdated, fixture, html} from "@open-wc/testing";
+import * as sinon from "sinon";
+import {MyWidget} from "../MyWidget";
 import {inputBasicTests} from "../../Et2InputWidget/test/InputBasicTests";
 
-// Reference to component under test
-let element : Et2Textbox;
+let element : MyWidget;
 
-async function before()
+async function createElement()
 {
-	// Create an element to test with, and wait until it's ready
-	element = await fixture<Et2Textbox>(html`
-        <et2-textbox></et2-textbox>
+	element = await fixture<MyWidget>(html`
+		<et2-my-widget></et2-my-widget>
 	`);
+
+	// Replace EGroupware services used by the widget with the smallest useful stub.
+	sinon.stub(element, "egw").returns({
+		lang: value => value,
+		tooltipUnbind: () => {}
+	});
+	await elementUpdated(element);
+
 	return element;
 }
 
-describe("Textbox widget", () =>
+describe("MyWidget", () =>
 {
-	// Setup run before each test
-	beforeEach(before);
+	beforeEach(createElement);
 
 	it('is defined', () =>
 	{
-		assert.instanceOf(element, Et2Textbox);
+		assert.instanceOf(element, MyWidget);
 	});
 
-	it('has a label', () =>
+	it("updates its value", async() =>
 	{
-		element.set_label("Yay label");
-		assert.isEmpty(element.shadowRoot.querySelectorAll('.et2_label'));
-	})
+		element.value = "Updated";
+		await element.updateComplete;
+
+		assert.equal(element.value, "Updated");
+	});
 });
 
-// Run some common, basic tests for inputs (readonly, value, etc.)
-inputBasicTests(before, "I'm a good test value", "input");
+// Reuse the common input contract tests when MyWidget extends Et2InputWidget.
+inputBasicTests(createElement, "Test value", "input");
 ```
 
-This verifies that the component can be loaded and created.  `inputBasicTests()` checks readonly and in/out values.
+This verifies that the component can be created and reacts to a property update. Stub `element.egw()` with only the
+services the component uses. This keeps the test independent of a running EGroupware installation. Use
+`element.updateComplete` or `elementUpdated(element)` before asserting changes that require a render.
+
+`inputBasicTests()` checks common input behaviour, including readonly handling and values in and out. It is only
+appropriate for components based on `Et2InputWidget`.
+
+Run one test file from the repository root:
+
+```sh
+npm run jstest -- api/js/etemplate/MyWidget/test/MyWidget.test.ts
+```
+
+Run the complete frontend test suite with:
+
+```sh
+npm run jstest
+```
 
 ### What to test
 
@@ -66,4 +91,7 @@ the values going in. How to do this, and what to do with bad values, depends on 
 
 ### Test tips
 
-* Always use `this.egw()`. It can be easily stubbed for your test. Global `egw` cannot.
+* Component code should use `this.egw()`. Tests can stub it on the component; the global `egw` cannot be isolated as
+  easily.
+* Keep the stub small. Add only the EGroupware methods needed by the behaviour under test.
+* Await `updateComplete` before checking rendered output after changing a reactive property.

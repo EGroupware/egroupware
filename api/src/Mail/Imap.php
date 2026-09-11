@@ -196,6 +196,11 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 			'hostspec' => $this->params['acc_imap_host'],
 			'port' => $this->params['acc_imap_port'],
 			'secure' => Account::ssl2secure($this->params['acc_imap_ssl']),
+			// (int) cast: sslContext()'s $ssl param is int-typed - acc_imap_ssl can legitimately
+			// be the literal string 'no' (the "no encryption" sentinel), which throws a TypeError
+			// at this call boundary otherwise (found live 2026-09-03 for the acc_smtp_ssl
+			// equivalent in Mail\Account::smtpServer()/smtpTransport(), same root cause)
+			'context' => Account::sslContext((int)$this->params['acc_imap_ssl']),
 			'timeout' => $_timeout,
 		)+self::$default_params;
 
@@ -312,6 +317,19 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	public function login()
 	{
 		parent::login();
+
+		// one-time silent certificate-verification upgrade for an account still in
+		// VERIFY_UNDECIDED state (see Account::resolveVerification()'s docblock) - a cheap
+		// no-op once decided, so this runs on every real login without extra cost afterward.
+		// is_numeric() guard: synthetic non-DB accounts (eg. tracker_mailhandler's
+		// 'tracker_'.$queue pseudo acc_id) have nothing to persist against, so skip them.
+		if ($this->acc_id && is_numeric($this->acc_id) &&
+			(((int)$this->acc_imap_ssl & Account::VERIFY_MASK) === Account::VERIFY_UNDECIDED))
+		{
+			$this->params['acc_imap_ssl'] = Account::resolveVerification((int)$this->acc_id, 'acc_imap_ssl',
+				(int)$this->acc_imap_ssl, $this->acc_imap_host, (int)$this->acc_imap_port,
+				Account::ssl2secure($this->acc_imap_ssl), "a1 STARTTLS\r\n");
+		}
 
 		foreach($this->run_on_login as $key => $data)
 		{
@@ -913,6 +931,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 				{
 					self::$supports_keywords[$this->ImapServerId] = stripos(implode('', $status['flags']), '$label') !== false ||
 						in_array('\\*', $status['permflags']);	// arbitrary keyswords also allow keywords
+					self::persist_supports_keywords();
 				}
 				return $_status;
 			}
@@ -964,6 +983,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 				{
 					error_log(__METHOD__.__LINE__.' (examineServer for detection) '.$capability.'->'.array2string(self::$supports_keywords).' failed '.function_backtrace());
 					self::$supports_keywords[$this->ImapServerId]=false;
+					self::persist_supports_keywords();
 				}
 			}
 			//error_log(__METHOD__.__LINE__.' '.$capability.'->'.array2string(self::$supports_keywords).' '.function_backtrace());
@@ -1495,7 +1515,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	 */
 	public static function init_static()
 	{
-		self::$supports_keywords =& Api\Cache::getSession (__CLASS__, 'supports_keywords');
+		self::$supports_keywords = Api\Cache::getSession (__CLASS__, 'supports_keywords');
 
 		// hosts from header.inc.php
 		self::$hosts_with_push = $GLOBALS['egw_info']['server']['imap_hosts_with_push'] ?? [];
@@ -1505,6 +1525,14 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 		{
 			self::$hosts_with_push[] = $host;
 		}
+	}
+
+	/**
+	 * Persist self::$supports_keywords (mutated in-place, no longer a live session reference) back to the session
+	 */
+	private static function persist_supports_keywords()
+	{
+		Api\Cache::setSession(__CLASS__, 'supports_keywords', self::$supports_keywords);
 	}
 
 	/**
@@ -1595,6 +1623,29 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	{
 		return self::$hosts_with_push && (in_array($this->acc_imap_host, self::$hosts_with_push) ||
 			in_array($this->acc_imap_host.':'.$this->acc_imap_port, self::$hosts_with_push));
+	}
+
+	/**
+	 * Resolve the folder+uid tail of a row-id (see Api\Mail::splitRowID(), the caller) into
+	 * a real folder name and message UID.
+	 *
+	 * Base implementation for plain IMAP: rows are already classic-shaped (base64-encoded
+	 * folder, numeric IMAP UID) - this is also exactly what rows sourced from mail/jmap.php's
+	 * local JMAP shim (for plain IMAP accounts) look like, so no further translation is needed.
+	 * Imap\Jmap overrides this for Stalwart's own opaque JMAP ids.
+	 *
+	 * @param string $folder base64-encoded folder name, or '' if not present in the row-id
+	 * @param string $uid message UID, or '' if not present in the row-id
+	 * @return RowIdParts with values for keys "folder", "msgUID", "folderID", "emailID", "is_jmap" -
+	 *  already cheap here (no IMAP call), but kept as the same lazy-capable type Imap\Jmap::
+	 *  splitRowID() returns so Api\Mail::splitRowID() can treat both uniformly
+	 */
+	public function splitRowID(string $folder, string $uid) : RowIdParts
+	{
+		return new RowIdParts(['folderID' => null, 'emailID' => null, 'is_jmap' => false], fn() => [
+			'folder' => $folder !== '' ? base64_decode($folder) : null,
+			'msgUID' => $uid !== '' ? $uid : null,
+		]);
 	}
 }
 Imap::init_static();

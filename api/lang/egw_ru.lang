@@ -770,6 +770,7 @@ link to each entry	common	ru	Ссылка на каждую запись
 linkapps	common	ru	СсылкаНаПриложение
 linkentry	common	ru	СсылкаНаЗапись
 linklist	common	ru	СсылкаНаСписок
+links	common	ru	Ссылки
 links and attached files	preferences	ru	Ссылки и прикреплённые файлы
 links to specified application.  example: {{links/addressbook}}	common	ru	Ссылается на указанное приложение. Пример: {{links/addressbook}}
 linkstring	common	ru	СсылкаНаСтроку

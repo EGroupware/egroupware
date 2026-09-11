@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="admin.group.edit.members" template="" lang="" group="0" version="1.9.001">
+	<et2-template  id="admin.group.edit.members" template="" lang="" group="0" version="1.9.001">
 		<et2-select-account  id="account_members" multiple="true" accountType="accounts" required="true" rows="5"></et2-select-account>
-	</template>
-	<template id="admin.group.edit.apps" template="" lang="" group="0" version="1.9.001">
+	</et2-template>
+	<et2-template  id="admin.group.edit.apps" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%" id="apps" overflow="auto" height="250" resize_ratio="1">
 			<columns>
 				<column width="44px"/>
@@ -19,8 +20,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="admin.group.edit" template="" lang="" group="0" version="1.9.001">
+	</et2-template>
+	<et2-template  id="admin.group.edit" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width="100px"/>
@@ -47,8 +48,8 @@
 					</et2-hbox>
                 </row>
 				<row>
-					<et2-description value="Container" for="account_dn"></et2-description>
-					<et2-textbox id="account_dn" maxlength="255" disabled="@disable_dn" statustext="Can be used to show groups by container, if enabled"></et2-textbox>
+					<et2-description  value="Container" for="account_dn"></et2-description>
+					<et2-textbox  id="account_dn" maxlength="255" disabled="@disable_dn" statustext="Can be used to show groups by container, if enabled"></et2-textbox>
 				</row>
             </rows>
 		</grid>
@@ -58,8 +59,8 @@
 				<tab id="apps" label="Applications" statustext="Applications this group can use"/>
 			</tabs>
 			<tabpanels>
-				<template id="admin.group.edit.members"/>
-				<template id="admin.group.edit.apps"/>
+				<et2-template  id="admin.group.edit.members"></et2-template>
+				<et2-template  id="admin.group.edit.apps"></et2-template>
 			</tabpanels>
 		</et2-tabbox>
 		<et2-hbox  class="dialogFooterToolbar">
@@ -68,5 +69,5 @@
 			<et2-button  label="Cancel" id="button[cancel]" onclick="window.close();"></et2-button>
 			<et2-button  align="right" label="Delete" id="button[delete]" onclick="app.admin.deleteGroup"></et2-button>
 		</et2-hbox>
-	</template>
+	</et2-template>
 </overlay>

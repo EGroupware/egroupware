@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="home.note" template="" lang="" group="0" version="1.9.001">
-        <et2-vbox>
-            <htmlarea id="note"/>
-            <et2-hbox id="button" class="dialogFooterToolbar">
-                <et2-button statustext="Saves this entry" label="Save" id="save" image="save"></et2-button>
-                <et2-button statustext="Apply the changes" label="Apply" id="apply" image="apply"></et2-button>
-                <et2-button statustext="leave without saveing the entry" label="Cancel" id="cancel"
-                            onclick="window.close();" image="cancel"></et2-button>
+	<et2-template  id="home.note" template="" lang="" group="0" version="1.9.001">
+        <et2-vbox><et2-ai><et2-htmlarea  id="note"></et2-htmlarea></et2-ai>
+            <et2-hbox  id="button" class="dialogFooterToolbar">
+                <et2-button  statustext="Saves this entry" label="Save" id="save" image="save"></et2-button>
+                <et2-button  statustext="Apply the changes" label="Apply" id="apply" image="apply"></et2-button>
+                <et2-button  statustext="leave without saveing the entry" label="Cancel" id="cancel" onclick="window.close();" image="cancel"></et2-button>
             </et2-hbox>
         </et2-vbox>
-        <styles>
+        <et2-styles>
             #home-note et2-vbox {
             height: 100%;
             }
@@ -26,6 +25,6 @@
             .home_note_portlet .et2_container div.dialogFooterToolbar {
             display:none;
             }
-        </styles>
-    </template>
+        </et2-styles>
+    </et2-template>
 </overlay>

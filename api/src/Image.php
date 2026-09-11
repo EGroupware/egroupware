@@ -206,6 +206,7 @@ class Image
 		'reload'	=> 'arrow-clockwise',
 		'revert'    => 'recycle',
 		'save'      => 'api/bi-save',   // composition of floppy=apply and x-square=cancel
+		'save_all'	=> 'download',
 		'save_new'  => 'api/bi-save-new',
 		'save_zip'	=> 'file-zip',
 		//'search'	=> 'search',

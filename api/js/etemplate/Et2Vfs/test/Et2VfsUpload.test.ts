@@ -253,4 +253,71 @@ describe('Et2VfsUpload existing file checks', async() =>
 		assert(Object.keys(element._uploadPending).length == 1, 'User should be asked about overwriting');
 		assert(addSpy.notCalled, 'File upload should not proceed');
 	})
+
+	/**
+	 * Drop feedback for the framework default (non-filemanager apps).
+	 *
+	 * Behaviour under test:
+	 *   When a file is dropped onto a nextmatch row, Et2Nextmatch._defaultFileDrop
+	 *   appends the Et2VfsUpload widget to the nextmatch and lets it upload into
+	 *   the row's VFS link directory.  Feedback is reported through the standard
+	 *   message bar (egw().message), typed to upload status (success / warning /
+	 *   error) — there is intentionally NO bespoke overlay.  This case verifies
+	 *   the widget-level contract the framework depends on: the widget is a
+	 *   reachable, visible child (not display:none / redirected list) and the
+	 *   dropped file registers and starts uploading.
+	 *
+	 * Setup strategy:
+	 *   - Append the widget to a container (mirrors _defaultFileDrop appending it
+	 *     to the nextmatch host).
+	 *   - Use a mock egw (window.egw + sinon stubs) so no server session is
+	 *     needed; `request` resolves `{errs:0, exists:false}` so the upload
+	 *     proceeds instead of prompting to overwrite.
+	 *   - Drive a drop with a synthetic File via addFile() (same entry point the
+	 *     framework uses).
+	 *
+	 * Pass criteria:
+	 *   - The widget is a child of the container and is not display:none.
+	 *   - The dropped file is registered (files/value non-empty) and an upload
+	 *     is initiated (_uploadPending non-empty), so the framework will have
+	 *     status to surface in the message bar.
+	 *
+	 * Environment constraints:
+	 *   - Purely client-side; no backend reachable (login to a live instance is
+	 *     unavailable, so this asserts the UI/registration path only, not an
+	 *     actual multipart upload to the server).
+	 *   - The message-bar routing itself lives in Et2Nextmatch._defaultFileDrop
+	 *     and is not exercised here; this case covers the widget contract it
+	 *     relies on.
+	 *   - Relies on Et2VfsUpload upgrading (assert.instanceOf "make sure it
+	 *     works"); fails fast if the custom element is not registered.
+	 */
+	it('is a visible, upload-able widget when used for row drop feedback', async() =>
+	{
+		const container = document.createElement("div");
+		document.body.appendChild(container);
+
+		const link = await fixture<Et2VfsUpload>(html`
+            <et2-vfs-upload path="/apps/infolog/123/" multiple></et2-vfs-upload>`);
+		// Make sure it works (forces the custom element to upgrade)
+		assert.instanceOf(link, Et2VfsUpload);
+		container.appendChild(link);
+
+		const mockEgw = {...window.egw, lang: sinon.stub().returnsArg(0), request: sinon.stub().resolves({errs: 0, exists: false}), message: sinon.stub()};
+		link.egw = () => mockEgw;
+
+		const fileInfo = <File>{name: 'test.txt', type: 'text/plain', size: 5};
+		link.addFile(fileInfo);
+		await link.updateComplete;
+
+		// Widget must be a reachable, visible child (no display:none / overlay).
+		assert.equal(link.parentElement, container, "upload widget should be a child of the nextmatch/container");
+		assert.notEqual(getComputedStyle(link).display, "none", "upload widget must not be hidden");
+		// Dropped file registers and an upload is initiated -> framework has
+		// status to report via egw().message().
+		assert.isAbove(link.files.length + Object.keys(link.value).length, 0, "dropped file should be registered");
+		assert.isAbove(Object.keys(link._uploadPending).length, 0, "upload should be initiated for the dropped file");
+
+		container.remove();
+	})
 });

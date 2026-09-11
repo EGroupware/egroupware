@@ -10,7 +10,8 @@
  */
 
 import {Et2DropdownButton} from "../Et2DropdownButton/Et2DropdownButton";
-import {css, html, PropertyValues, TemplateResult} from "lit";
+import {html, PropertyValues, TemplateResult} from "lit";
+import {property} from "lit/decorators/property.js";
 import {SelectOption} from "../Et2Select/FindSelectOptions";
 import {et2_INextmatchHeader, et2_nextmatch} from "../et2_extension_nextmatch";
 import {Et2Image} from "../Et2Image/Et2Image";
@@ -18,6 +19,7 @@ import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import {SlMenuItem} from "@shoelace-style/shoelace";
 import {Favorite} from "./Favorite";
 
+import styles from "./Et2Favorites.styles";
 /**
  * Favorites widget, designed for use in the nextmatch header
  *
@@ -51,48 +53,21 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 	{
 		return [
 			...super.styles,
-			css`
-			  :host {
-				  min-width: 8ex;
-			  }
-
-			  et2-image {
-				  display: block;
-				  position: relative;
-				top: -2px;
-			  }
-
-			  et2-image[src="trash"] {
-				display: none;
-			  }
-
-			  sl-menu {
-				min-width: 15em;
-			  }
-
-				sl-menu-item:hover et2-image[src="trash"] {
-				display: initial;
-			  }
-
-				sl-menu-item:last-child::part(base) {
-				background-image: none;
-			  }
-			`,
+			styles,
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			// Where we keep the "default" preference
-			defaultPref: {type: String},
-			// Application to show favorites for
-			app: {type: String},
-			// Extra filters to include in the saved favorite
-			filters: {type: Object}
-		};
-	}
+	// Where we keep the "default" preference
+	@property({type: String})
+	defaultPref : string;
+
+	// Application to show favorites for
+	@property({type: String})
+	app : string;
+
+	// Extra filters to include in the saved favorite
+	@property({type: Object})
+	filters : object;
 
 	// Favorites are prefixed in preferences
 	public static readonly PREFIX = "favorite_";

@@ -607,6 +607,7 @@ light mode	common	no	Lys modus
 link	common	no	Lenke
 link to each entry	common	no	Lenke til hver oppføring
 linklist	common	no	Lenkeliste
+links	common	no	Lenker
 linkstring	common	no	Lenkestreng
 linkto	common	no	Lenk til
 list	common	no	Liste

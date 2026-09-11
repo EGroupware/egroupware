@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="admin.acl.delete.main" template="" lang="" group="0" version="1.9.001">
+	<et2-template  id="admin.acl.delete.main" template="" lang="" group="0" version="1.9.001">
 		<et2-description  value="Delete this access control"></et2-description>
-	</template>
-	<template id="admin.acl.delete" template="" lang="" group="0" version="1.9.001">
+	</et2-template>
+	<et2-template  id="admin.acl.delete" template="" lang="" group="0" version="1.9.001">
 		<et2-tabbox  id="tabs" class="et2_nowrap" span="all" width="100%" tabHeight="250px">
 			<tabs>
 				<tab id="main" label="Delete" statustext="Delete"/>
 			</tabs>
 			<tabpanels>
-				<template id="admin.acl.delete.main"/>
+				<et2-template  id="admin.acl.delete.main"></et2-template>
 			</tabpanels>
 		</et2-tabbox>
-	</template>
+	</et2-template>
 </overlay>

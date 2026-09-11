@@ -278,7 +278,6 @@ if no acl records for user or any group the user is a member of	admin	lv	Ja nav 
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	lv	Vai vēlies pārvaldīt mājasdirektoriju un pieteikšanāsformas atribūtus, ja lieto LDAP
 imap admin password	admin	lv	IMAP administratora parole
 imap admin user	admin	lv	IMAP administrators
-imap server	admin	lv	IMAP serveris
 imap server hostname or ip address	admin	lv	IMAP servera hosta vārds vai IP adrese
 imap server logintyp	admin	lv	IMAP servera autorizācijas veids
 imap server port	admin	lv	IMAP servera ports

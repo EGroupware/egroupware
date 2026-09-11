@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="calendar.config" template="" lang="" group="0" version="16.1">
+	<et2-template  id="calendar.config" template="" lang="" group="0" version="16.1">
 		<grid width="100%" class="admin-config egwGridView_grid">
 			<columns>
 				<column width="50%"/>
@@ -49,13 +50,13 @@
 					</et2-select>
 				</row>
 				<row>
-					<et2-description value="Allow party crashers with email that match the following regular expression" label="%s:"></et2-description>
-					<et2-textbox id="newsettings[caldav_party_crasher_regexp]" placeholder="/^(someone@else.com|.*@(example.org|other.net))$/i"></et2-textbox>
+					<et2-description  value="Allow party crashers with email that match the following regular expression" label="%s:"></et2-description>
+					<et2-textbox  id="newsettings[caldav_party_crasher_regexp]" placeholder="/^(someone@else.com|.*@(example.org|other.net))$/i"></et2-textbox>
 				</row>
 				<row>
-					<et2-vbox span="all">
-						<et2-description value="A party crasher in someone who is NOT invited to the meeting but somehow got the invitation."/>
-						<et2-description value="By default (nothing is set here) EGroupware allows only the organizer/owner to add them."/>
+					<et2-vbox  span="all">
+						<et2-description  value="A party crasher in someone who is NOT invited to the meeting but somehow got the invitation."/>
+						<et2-description  value="By default (nothing is set here) EGroupware allows only the organizer/owner to add them."/>
 					</et2-vbox>
 				</row>
 				<row>
@@ -140,5 +141,5 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

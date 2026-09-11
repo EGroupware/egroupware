@@ -352,7 +352,11 @@ class Db
 		// on connection failure re-try with an other host
 		// remembering in session which host we used last time
 		$use_host_from_session = true;
-		while(($host = $this->get_host(!$use_host_from_session)))
+		// bound retries locally, independent of get_host()'s session-persisted counter: that counter silently fails to persist when there's no active PHP session
+		// (eg. setup-cli.php creating the DB before any session can exist), which without this cap turns the loop below into an infinite reconnect-and-fail spin
+		$max_tries = count(explode(';', $this->Host[0] == '@' ? getenv(substr($this->Host, 1)) : $this->Host)) + 2;
+		$tries = 0;
+		while ($tries++ < $max_tries && ($host = $this->get_host(!$use_host_from_session)))
 		{
 			try {
 				//error_log(__METHOD__."() this->Host(s)=$this->Host, n=$n --> host=$host");
@@ -421,7 +425,7 @@ class Db
 	{
 		$hosts = explode(';', $this->Host[0] == '@' ? getenv(substr($this->Host, 1)) : $this->Host);
 		$num_hosts = count($hosts);
-		$n =& Cache::getSession(__CLASS__, $this->Host);
+		$n = Cache::getSession(__CLASS__, $this->Host);
 		if (!isset($n)) $n = 0;
 
 		if ($next && ++$n >= $num_hosts+2)
@@ -433,6 +437,7 @@ class Db
 		{
 			$ret = $hosts[$n % $num_hosts];
 		}
+		Cache::setSession(__CLASS__, $this->Host, $n);
 		//error_log(__METHOD__."(next=".array2string($next).") n=$n returning ".array2string($ret));
 		return $ret;
 	}
@@ -536,6 +541,15 @@ class Db
 				{
 					// set a connection timeout of 1 second, to allow quicker failover to other db-nodes (default is 20s)
 					$this->Link_ID->setConnectionParameter(MYSQLI_OPT_CONNECT_TIMEOUT, 1);
+					// ADOdb's mysqli driver constructor (just run by ADONewConnection() above) forces
+					// mysqli_report(MYSQLI_REPORT_OFF), undoing PHP 8.1+'s own exception-throwing
+					// default - re-enable it so query()'s catch(\mysqli_sql_exception $e) block (and
+					// its richer error-code-based InvalidSql classification) actually fires, instead
+					// of every failure silently falling through to the generic "!$rs" fallback below.
+					// mysqli_report() is process-wide, not per-connection, and this only re-runs when
+					// a genuinely NEW ADOdb connection object is constructed (see the enclosing if),
+					// so it stays in effect for the pooled self::$ADOdb connection too.
+					mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 				}
 				$connect = $GLOBALS['egw_info']['server']['db_persistent'] &&
 					// do NOT attempt persistent connection, if it is switched off in php.ini (it will only cause a warning)
@@ -589,6 +603,14 @@ class Db
 			else
 			{
 				$this->Link_ID = self::$ADOdb;
+				// reusing the pooled connection skips the "new connection" branch above entirely -
+				// that's the ONLY place that otherwise calls set_capabilities()/populates
+				// $this->ServerInfo, so without this, $this->capabilities silently stays at the
+				// class-default array (eg. the MySQL-wrong CAPABILITY_CAST_AS_VARCHAR =>
+				// 'CAST(%s AS varchar)' instead of the MySQL-corrected 'AS char' set_capabilities()
+				// would apply) for every Db instance built after the first one in a process.
+				$this->ServerInfo = $this->Link_ID->ServerInfo();
+				$this->set_capabilities($Type, $this->ServerInfo['version']);
 			}
 		}
 		if (!$this->Link_ID->isConnected() && !$this->Link_ID->Connect())
@@ -832,6 +854,7 @@ class Db
 					1064,   // You have an error in your SQL syntax
 					1062,   // Duplicate entry
 					1054,   // Unknown column 'X' in ...
+					1146,   // Table 'X' doesn't exist
 				]))
 				{
 					$e = new Db\Exception\InvalidSql($e->getMessage(), $e->getCode(), $e);
@@ -867,9 +890,13 @@ class Db
 				$this->disconnect();
 				return $this->query($Query_String, $line, $file, $offset, $num_rows, $inputarr, $fetchmode, false);
 			}
-			throw new Db\Exception\InvalidSql("Invalid SQL: ".(is_array($Query_String)?$Query_String[0]:$Query_String).
-				"\n$this->Error ($this->Errno)".
+			// DB error first, so it's still visible if something later truncates a very long message (eg. long SQL)
+			$e = new Db\Exception\InvalidSql("$this->Error ($this->Errno)".
+				"\nInvalid SQL: ".(is_array($Query_String)?$Query_String[0]:$Query_String).
 				($inputarr ? "\nParameters: '".implode("','",$inputarr)."'":''), $this->Errno);
+			// make SQL available in logging, same as the catch(\mysqli_sql_exception $e) block above
+			$e->details = $Query_String;
+			throw $e;
 		}
 		elseif(empty($rs->sql))
 		{
@@ -1719,13 +1746,10 @@ class Db
 
 				$col = $key;
 				// fix "table.column" expressions, to not trigger exception, if column alone would work
-				if (!is_int($key) && is_array($column_definitions) && !isset($column_definitions[$key]))
+				if (!is_int($key) && is_array($column_definitions) && !isset($column_definitions[$key]) &&
+					(!preg_match('/^([a-z0-9_]+)\.([a-z0-9_]+)$/i',$key,$matches) || !isset($column_definitions[$matches[2]])))
 				{
-					if (strpos($key, '.') !== false) list(, $col) = explode('.', $key);
-					if (!isset($column_definitions[$col]))
-					{
-						throw new Db\Exception\InvalidSql("db::column_data_implode('$glue',".print_r($array,True).",'$use_key',".print_r($only,True).",<pre>".print_r($column_definitions,True)."</pre><b>nothing known about column '$key'!</b>");
-					}
+					throw new Db\Exception\InvalidSql("db::column_data_implode('$glue',".print_r($array,True).",'$use_key',".print_r($only,True).",<pre>".print_r($column_definitions,True)."</pre><b>nothing known about column '$key'!</b>");
 				}
 				$column_type = is_array($column_definitions) ? ($column_definitions[$col]['type'] ?? false) : False;
 				$not_null = is_array($column_definitions) && isset($column_definitions[$col]['nullable']) ? !$column_definitions[$col]['nullable'] : false;
@@ -1924,8 +1948,14 @@ class Db
 				return $app_data = False;
 			}
 			include($tables_current);
-			$app_data =& $phpgw_baseline;
-			unset($phpgw_baseline);
+			// $app_data is already a reference alias to self::$all_app_data[$app] (established
+			// above) - a plain value-copy here writes through that alias into the shared static
+			// cache. Using "=&" instead (as this used to) REBINDS $app_data to $phpgw_baseline's own
+			// zval, severing the alias - self::$all_app_data[$app] stays null forever, silently
+			// disabling the cache (tables_current.inc.php gets re-include()'d and re-executed on
+			// every single call, for every app, in every request - invisible to a correctness-only
+			// test since $app_data itself still holds the right data for THIS call).
+			$app_data = $phpgw_baseline;
 		}
 		if ($table && (!$app_data || !isset($app_data[$table])))
 		{

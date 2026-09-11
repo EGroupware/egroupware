@@ -210,7 +210,6 @@ if no acl records for user or any group the user is a member of	admin	iw	אם א
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	iw	?האם ברצונך לנהל תכונות שלמחיצת הבית ושל של הכניסה LDAP-אם משתמשים ב
 imap admin password	admin	iw	IMAP סיסמת ניהול
 imap admin user	admin	iw	IMAP שם מנהל
-imap server	admin	iw	שרת IMAP
 imap server hostname or ip address	admin	iw	שלו IP- או כתובת הIMAP שם שרת
 imap server logintyp	admin	iw	IMAP סוג כניסה לשרת
 imap server port	admin	iw	IMAP פורט שרת

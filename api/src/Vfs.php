@@ -493,8 +493,8 @@ class Vfs extends Vfs\Base
 						{
 							 $cmp *= -1;
 						}
-						// always use name as second sort criteria
-						if (!$cmp) $cmp = strcasecmp($a['name'], $b['name']);
+						// always use name as second sort criteria, natural order eg. "file2" before "file10"
+						if (!$cmp) $cmp = strnatcasecmp($a['name'], $b['name']);
 						return $cmp;
 					});
 					break;
@@ -507,7 +507,8 @@ class Vfs extends Vfs\Base
 				case 'mime':
 					$ok = uasort($result, function($a, $b) use ($dirsontop, $order, $sort_desc)
 					{
-						$cmp = strcasecmp($a[$order], $b[$order]);
+						// natural order eg. "file2" before "file10"
+						$cmp = strnatcasecmp($a[$order], $b[$order]);
 						// sort code, to place directories before files, if $dirsontop enabled
 						if ($dirsontop && ($a['mime'] == self::DIR_MIME_TYPE) !== ($b['mime'] == self::DIR_MIME_TYPE))
 						{
@@ -519,7 +520,7 @@ class Vfs extends Vfs\Base
 							$cmp *= -1;
 						}
 						// always use name as second sort criteria
-						if (!$cmp && $order != 'name') $cmp = strcasecmp($a['name'], $b['name']);
+						if (!$cmp && $order != 'name') $cmp = strnatcasecmp($a['name'], $b['name']);
 						return $cmp;
 					});
 					break;
@@ -861,12 +862,13 @@ class Vfs extends Vfs\Base
 	{
 		if ($session_only)
 		{
-			$session_eacls =& Cache::getSession(__CLASS__, self::SESSION_EACL);
+			$session_eacls = Cache::getSession(__CLASS__, self::SESSION_EACL);
 			$session_eacls[] = array(
 				'path'   => $url[0] == '/' ? $url : self::parse_url($url, PHP_URL_PATH),
 				'owner'  => $owner ? $owner : self::$user,
 				'rights' => $rights,
 			);
+			Cache::setSession(__CLASS__, self::SESSION_EACL, $session_eacls);
 			return true;
 		}
 		return self::_call_on_backend('eacl',array($url,$rights,$owner));
@@ -884,7 +886,7 @@ class Vfs extends Vfs\Base
 	{
 		$eacls = self::_call_on_backend('get_eacl',array($path),true);	// true = fail silent (no PHP Warning)
 
-		$session_eacls =& Cache::getSession(__CLASS__, self::SESSION_EACL);
+		$session_eacls = Cache::getSession(__CLASS__, self::SESSION_EACL);
 		if ($session_eacls)
 		{
 			// eacl is recursive, therefore we have to match all parent-dirs too
@@ -892,6 +894,12 @@ class Vfs extends Vfs\Base
 			while ($path && $path != '/')
 			{
 				$paths[] = $path = self::dirname($path);
+			}
+			// $eacls is false if the backend has no (persisted) eACL for $path at all;
+			// still need a real array to merge session-only eACLs into below.
+			if (!is_array($eacls))
+			{
+				$eacls = array();
 			}
 			foreach((array)$session_eacls as $eacl)
 			{
@@ -2271,6 +2279,19 @@ class Vfs extends Vfs\Base
 	 */
 	static function symlink($target,$link)
 	{
+		// reject links that would create a symlink-resolution cycle: either path nested inside the other's tree
+		$link_path = rtrim(self::parse_url($link, PHP_URL_PATH) ?: $link, '/');
+		$abs_target = $target !== '' && $target[0] === '/' ? $target : self::concat(self::dirname($link), $target);
+		$target_path = rtrim(self::parse_url($abs_target, PHP_URL_PATH) ?: $abs_target, '/');
+
+		if ($link_path === $target_path ||
+			str_starts_with($link_path.'/', $target_path.'/') ||
+			str_starts_with($target_path.'/', $link_path.'/'))
+		{
+			if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$target','$link') refusing to create cyclic/self-referential symlink!");
+			return false;
+		}
+
 		if (($ret = self::_call_on_backend('symlink', [$target, $link],false,1, true)))	// 1=path is in $link!
 		{
 			Vfs\StreamWrapper::symlinkCache_remove($link);

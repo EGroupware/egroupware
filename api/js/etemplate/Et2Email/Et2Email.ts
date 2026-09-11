@@ -25,7 +25,8 @@ import styles from "./Et2Email.styles";
 import {SelectOption} from "../Et2Select/FindSelectOptions";
 import {IsEmail} from "../Validators/IsEmail";
 import Sortable from "sortablejs/modular/sortable.complete.esm.js";
-import {SearchMixinInterface} from "../Et2Widget/SearchMixin";
+import {SearchMixin, SearchResultsInterface} from "../Et2Widget/SearchMixin";
+import {normalizeLegacySearchResults} from "../Et2Select/legacySearchResults";
 
 /**
  * @summary Enter email addresses, offering suggestions from contacts
@@ -64,7 +65,10 @@ import {SearchMixinInterface} from "../Et2Widget/SearchMixin";
  *
  * @cssproperty [--height=5] - The maximum height of the widget, to limit size when you have a lot of addresses.  Set by rows property, when set.
  */
-export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinInterface
+type Constructor<T = LitElement> = new (...args : any[]) => T;
+
+export class Et2Email
+	extends SearchMixin<Constructor<any> & typeof LitElement, SelectOption, SearchResultsInterface<SelectOption>>(Et2InputWidget(LitElement))
 {
 	// Solves some issues with focus
 	static shadowRootOptions = {...LitElement.shadowRootOptions, delegatesFocus: true};
@@ -142,7 +146,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 	 * Set to "" to cancel searching.
 	 * @type {string}
 	 */
-	@property({type: String}) searchUrl = "EGroupware\\Api\\Etemplate\\Widget\\Taglist::ajax_email";
+	@property({type: String}) searchUrl = "EGroupware\\Api\\Etemplate\\Widget\\Select::ajax_email";
 
 	/**
 	 * Limit the maximum height of the widget, for when you have a lot of addresses.
@@ -151,10 +155,8 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 	 */
 	@property({type: Number, reflect: true}) rows;
 
-	@state() searching = false;
-	@state() hasFocus = false;
-	@state() currentOption : SlOption;
-	@state() currentTag : Et2EmailTag;
+	protected currentOption : SlOption;
+	protected currentTag : Et2EmailTag;
 
 	/** If the select is limited to 1 row, we show the number of tags not visible */
 	@state() _tagsHidden = 0;
@@ -171,12 +173,73 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 	get _suggestions() : SlOption[] { return Array.from(this.shadowRoot.querySelectorAll("sl-option"));}
 
 	/**
-	 * When user is typing, we wait this long for them to be finished before we start the search
-	 * @type {number}
-	 * @protected
-	 * @internal
+	 * A suggestion list is not a result list - keep it short.
+	 *
+	 * Deliberately not the maxmatchs preference, which sizes list views: ten is what this widget
+	 * asked for before it moved onto the mixin, and a dropdown of a hundred addresses helps nobody.
+	 * searchOptions still overrides it.
 	 */
-	public static SEARCH_TIMEOUT : number = 500;
+	protected _classSearchOptions = {num_rows: 10};
+
+	/**
+	 * Show the suggestions once the search lands.
+	 *
+	 * The mixin tracks its own resultsOpen, but our suggestions live in an sl-popup driven by
+	 * `open`, so opening it is ours to do.
+	 */
+	public async startSearch()
+	{
+		await super.startSearch();
+		await this._searchPromise;
+
+		if(!this.open && this.hasFocus)
+		{
+			this.show();
+		}
+	}
+
+	/**
+	 * Select::ajax_email answers with a bare array rather than {results, total}, so normalise
+	 * before the mixin sees it - and get the once-per-endpoint warning while that endpoint lives.
+	 *
+	 * Also make the first suggestion current, so Tab/Enter can take it without arrowing down.
+	 */
+	protected processRemoteResults<DataType extends SelectOption>(results) : DataType[]
+	{
+		const processed = super.processRemoteResults(<any>normalizeLegacySearchResults(results, this.searchUrl));
+
+		this.updateComplete.then(() =>
+		{
+			this.setCurrentOption(this._suggestions[0]);
+		});
+
+		return processed;
+	}
+
+	/**
+	 * There are no local options to search - every suggestion comes from the server.
+	 */
+	protected localSearch<DataType extends SelectOption>(search : string, searchOptions : object, localOptions : DataType[] = []) : Promise<DataType[]>
+	{
+		return Promise.resolve([]);
+	}
+
+	/**
+	 * Suggestions are rendered as our own sl-option list inside the popup, so the mixin must not
+	 * render a second one.
+	 */
+	protected searchResultsTemplate()
+	{
+		return nothing;
+	}
+
+	/**
+	 * Our input is part of the combobox, not something the mixin should render.
+	 */
+	protected searchInputTemplate()
+	{
+		return nothing;
+	}
 
 	/**
 	 * Typing these characters will end the email address and start a new one
@@ -193,9 +256,6 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 	 */
 	protected _close_on_select = true;
 
-	protected _searchTimeout : number;
-	protected _searchPromise : Promise<SelectOption[]> = Promise.resolve([]);
-	protected _selectOptions : SelectOption[] = [];
 
 	// Overflow Observer for +# display
 	protected tagOverflowObserver : IntersectionObserver = null;
@@ -270,6 +330,10 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 			this.defaultValidators = (<Array<Validator>>this.defaultValidators).filter(v => !(v instanceof IsEmail));
 			this.defaultValidators.push(new IsEmail(this.allowPlaceholder));
 		}
+		if(changedProperties.has("allowDragAndDrop"))
+		{
+			this.classList.toggle("et2-sortable-email", this.allowDragAndDrop);
+		}
 	}
 
 	update(changedProperties : PropertyValues)
@@ -339,10 +403,8 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 
 		if(!this.allowDragAndDrop)
 		{
-			this.classList.remove("et2-sortable-email");
 			return;
 		}
-		this.classList.add("et2-sortable-email");
 		let pull : boolean | string = !this.disabled && !this.readonly;
 		if(this.readonly && !this.disabled)
 		{
@@ -528,92 +590,8 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 	}
 
 
-	/**
-	 * Start searching for contacts matching what has been typed
-	 */
-	public async startSearch()
-	{
-		// Stop timeout timer
-		clearTimeout(this._searchTimeout);
 
-		// Clear current option, it's probably going to go away
-		this.setCurrentOption(null);
 
-		// If no searchUrl, no search
-		if(!this.searchUrl)
-		{
-			return;
-		}
-
-		this.searching = true;
-		this.requestUpdate("searching");
-
-		// Start the searches
-		this._searchPromise = this.remoteSearch(this._search.value, this.searchOptions);
-		return this._searchPromise.then(async() =>
-		{
-			this.searching = false;
-			this.requestUpdate("searching", true);
-			if(!this.open && this.hasFocus)
-			{
-				this.show();
-			}
-
-			await this.updateComplete;
-		});
-	}
-
-	/**
-	 * Actually query the server.
-	 *
-	 * This can be overridden to change request parameters or eg. send them as POST parameters.
-	 *
-	 * Default implementation here sends search string and options:
-	 * - as two parameters to the AJAX function
-	 * - and (additional) as GET parameters plus search string as "query"
-	 *
-	 *
-	 * @param {string} search
-	 * @param {object} options
-	 * @returns Promise<SelectOption[]>
-	 * @protected
-	 * @internal
-	 */
-	protected remoteSearch(search : string, options : object) : Promise<SelectOption[]>
-	{
-		// Include a limit, even if options don't, to avoid massive lists breaking the UI
-		let sendOptions = {
-			num_rows: 10,
-			...options
-		}
-		return this.egw().request(this.egw().link(this.egw().ajaxUrl(this.egw().decodePath(this.searchUrl)),
-			{query: search, ...sendOptions}), [search, sendOptions]).then((results) =>
-		{
-			return this.processRemoteResults(results);
-		});
-	}
-
-	/**
-	 * Add in remote results
-	 *
-	 * Any results that already exist will be removed to avoid duplicates
-	 *
-	 * @param results
-	 * @protected
-	 * @internal
-	 */
-	protected processRemoteResults(entries)
-	{
-		this._selectOptions = entries;
-		this.updateComplete.then(() =>
-		{
-			this.currentOption = this._suggestions[0];
-		});
-
-		this.requestUpdate();
-
-		return entries;
-	}
 
 	/**
 	 * The end of a sort, either internal or between widgets that deal with email
@@ -920,7 +898,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		}
 		else if(event.key == "Escape")
 		{
-			this._selectOptions = [];
+			this._searchResults = [];
 			this.hide();
 			return;
 		}
@@ -929,7 +907,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		// -1 because we're in keyDown handler, and value is from _before_ this key was pressed
 		if(this._search.value.length - 1 > 0)
 		{
-			this._searchTimeout = window.setTimeout(() => {this.startSearch()}, Et2Email.SEARCH_TIMEOUT);
+			this._searchTimeout = window.setTimeout(() => {this.startSearch()}, (<typeof Et2Email>this.constructor).SEARCH_TIMEOUT);
 		}
 	}
 
@@ -1131,6 +1109,15 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		// Need to update our value, or it will just redo the tag with the old value
 		if(event.originalValue && this.value.includes(event.originalValue))
 		{
+			// An edited address has to pass the same check as a typed one, or the widget would
+			// accept by editing what it refuses by typing.  Put the tag back if it does not.
+			if(!this.validateAddress(event.target.value))
+			{
+				event.target.value = event.originalValue;
+				event.target.requestUpdate?.("value");
+				return;
+			}
+
 			let index = this.value.indexOf(event.originalValue);
 			this.value[index] = event.target.value;
 			this.requestUpdate();
@@ -1247,7 +1234,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 
 	suggestionsTemplate()
 	{
-		return html`${repeat(this._selectOptions, (o : SelectOption) => o.value, this.optionTemplate.bind(this))}`;
+		return html`${repeat(this._searchResults, (o : SelectOption) => o.value, this.optionTemplate.bind(this))}`;
 	}
 
 
@@ -1379,7 +1366,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
                                 @keydown=${this.handleSuggestionsKeyDown}
                                 @mouseup=${this.handleSuggestionsMouseUp}
                         >
-                            ${(this._selectOptions && this._selectOptions.length) ? this.suggestionsTemplate() : this.egw().lang("no matches found")}
+                            ${(this._searchResults && this._searchResults.length) ? this.suggestionsTemplate() : this.egw().lang("no matches found")}
                         </div>
                     </sl-popup>
                 </div>

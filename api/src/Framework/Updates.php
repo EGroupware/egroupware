@@ -101,16 +101,15 @@ class Updates
 				{
 					return null;
 				}
-				return Html::a_href(Html::image('api', 'security-update', lang('EGroupware security update %1 needs to be installed!', $versions['security'])),
-					'http://www.egroupware.org/changelog', null, ' target="_blank"');
+				return self::notification_icon('security-update',
+					lang('EGroupware security update %1 needs to be installed!', $versions['security']));
 			}
 			if ($GLOBALS['egw_info']['user']['apps']['admin'] && version_compare($api, $versions['current'], '<'))
 			{
 				$msg = substr($versions['current'], 0, strlen($api_major)) == $api_major ?
 					lang('EGroupware maintenance update %1 available', $versions['current']) :
 					lang('New EGroupware release %1 available', $versions['current']);
-				return Html::a_href(Html::image('api', 'update', $msg),
-					'http://www.egroupware.org/changelog', null, ' target="_blank"');
+				return self::notification_icon('update', $msg);
 			}
 		}
 		elseif ($GLOBALS['egw_info']['user']['apps']['admin'])
@@ -121,10 +120,25 @@ class Updates
 				$error .= "\n".lang('%1 setting "%2" = %3 disallows access via http!',
 					'php.ini', 'allow_url_fopen', array2string(ini_get('allow_url_fopen')));
 			}
-			return Html::a_href(Html::image('api', 'update', $error),
-				'http://www.egroupware.org/changelog', null, ' target="_blank" data-api-version="'.$api.'"');
+			return self::notification_icon('update', $error, $api);
 		}
 		return null;
+	}
+
+	/**
+	 * Render the update notification
+	 *
+	 * @param string $image logical image name
+	 * @param string $title tooltip and accessible label
+	 * @param string|null $api current API version, set when the automatic check failed
+	 * @return string
+	 */
+	protected static function notification_icon($image, $title, $api=null)
+	{
+		$title = Html::htmlspecialchars($title);
+		return '<et2-button-icon id="topmenu_info_update" class="topmenu_info_item '.$image.'" image="'.$image.'"'.
+			' label="'.$title.'" title="'.$title.'" href="http://www.egroupware.org/changelog" target="_blank" nosubmit'.
+			($api ? ' data-api-version="'.Html::htmlspecialchars($api).'"' : '').'></et2-button-icon>';
 	}
 
 	/**

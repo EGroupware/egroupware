@@ -58,7 +58,6 @@ leave it empty for a full week	timesheet	hu	Teljes héthez hagyja üresen
 leaves without saveing	timesheet	hu	kilépés mentés nélkül
 length<br>rows	timesheet	hu	Sorok<br>Hossza
 link title	timesheet	hu	Link címe
-links	timesheet	hu	Hivatkozások
 make timesheets readable by infolog delegation	timesheet	hu	A munkaidő-nyilvántartások olvashatóvá tétele az InfoLog delegáció által
 max length of the input [, length of the inputfield (optional)]	timesheet	hu	a beviteli mező maximális hossza (opcionális)
 mode	timesheet	hu	Режим

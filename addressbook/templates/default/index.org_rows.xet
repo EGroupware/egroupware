@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="addressbook.index.org_rows" template="" lang="" group="0" version="1.9.001">
+	<et2-template  id="addressbook.index.org_rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width="75"/>
@@ -14,28 +15,28 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<nextmatch-header label="Type" id="type" options="1"/>
-					<nextmatch-header label="#" align="center" id="number" options="Number"/>
-					<nextmatch-sortheader id="org_name" label="Organisation"/>
-					<nextmatch-header label="Department" id="org_unit"/>
-					<nextmatch-header label="Business address" id="business"/>
+                    <et2-nextmatch-header  label="Type" id="type"></et2-nextmatch-header>
+                    <et2-nextmatch-header  label="#" align="center" id="number"></et2-nextmatch-header>
+                    <et2-nextmatch-sortheader  id="org_name" label="Organisation"/>
+					<et2-nextmatch-header  label="Department" id="org_unit"></et2-nextmatch-header>
+					<et2-nextmatch-header  label="Business address" id="business"></et2-nextmatch-header>
 					<et2-vbox>
-						<nextmatch-header label="Business phone" id="tel_work"/>
-						<nextmatch-header label="Mobile phone" id="tel_cell"/>
-						<nextmatch-header label="Home phone" id="tel_home"/>
+						<et2-nextmatch-header  label="Business phone" id="tel_work"></et2-nextmatch-header>
+						<et2-nextmatch-header  label="Mobile phone" id="tel_cell"></et2-nextmatch-header>
+						<et2-nextmatch-header  label="Home phone" id="tel_home"></et2-nextmatch-header>
 						<et2-description  value="Fax"></et2-description>
 					</et2-vbox>
 					<et2-vbox>
-						<nextmatch-header label="Url" id="url"/>
-						<nextmatch-header label="Business email" id="email"/>
-						<nextmatch-header label="Home email" id="email_home"/>
+						<et2-nextmatch-header  label="Url" id="url"></et2-nextmatch-header>
+						<et2-nextmatch-header  label="Business email" id="email"></et2-nextmatch-header>
+						<et2-nextmatch-header  label="Home email" id="email_home"></et2-nextmatch-header>
 					</et2-vbox>
 				</row>
 				<row class="$row_cont[cat_id] $row_cont[class]" valign="top">
-                    <et2-image label="$row_cont[type_label]" src="$row_cont[type]" align="center" noLang="1" defaultSrc="home"></et2-image>
+                    <et2-image  label="$row_cont[type_label]" src="$row_cont[type]" align="center" noLang="1" defaultSrc="home"></et2-image>
 					<et2-number  id="${row}[org_count]" readonly="true" align="center" precision="0"></et2-number>
 					<et2-vbox>
-                        <et2-description id="${row}[line1]" noLang="1"></et2-description>
+                        <et2-description  id="${row}[line1]" noLang="1"></et2-description>
 						<et2-description  id="${row}[line2]" noLang="1"></et2-description>
 					</et2-vbox>
 					<et2-description  id="${row}[org_unit]" noLang="1"></et2-description>
@@ -65,5 +66,5 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

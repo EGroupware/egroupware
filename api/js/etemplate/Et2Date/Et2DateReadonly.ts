@@ -9,6 +9,7 @@
 
 
 import {html, LitElement} from "lit";
+import {property} from "lit/decorators/property.js";
 import {formatDate, parseDate} from "./Et2Date";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
@@ -30,13 +31,8 @@ export class Et2DateReadonly extends Et2Widget(LitElement) implements et2_IDetac
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			value: String,
-		}
-	}
+	@property({type: String})
+	value : string;
 
 	constructor()
 	{

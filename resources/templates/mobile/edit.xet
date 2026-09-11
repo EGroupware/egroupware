@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="resources.edit_tabs.general" template="" lang="" group="0" version="">
+	<et2-template  id="resources.edit_tabs.general" template="" lang="" group="0" version="">
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
@@ -61,15 +62,14 @@
 					</grid>
 				</row>
 				<row>
-					<file id="own_file" class="resources_pictureFile" onchange="app.resources.select_picture_src"/>
+					<et2-file  id="own_file" class="resources_pictureFile" onchange="app.resources.select_picture_src"></et2-file>
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="resources.edit_tabs.page" template="" lang="" group="0" version="">
-		<htmlarea statustext="Web-Site for this resource" id="long_description" height="200" toolbar="true" imageUpload="link_to"/>
-	</template>
-	<template id="resources.edit_tabs.links" template="" lang="" group="0" version="">
+	</et2-template>
+	<et2-template  id="resources.edit_tabs.page" template="" lang="" group="0" version=""><et2-ai><et2-htmlarea  statustext="Web-Site for this resource" id="long_description" imageUpload="link_to" noToolbar="false"></et2-htmlarea></et2-ai>
+	</et2-template>
+	<et2-template  id="resources.edit_tabs.links" template="" lang="" group="0" version="">
 		<grid width="100%" height="245"  overflow="auto">
 			<columns>
 				<column width="100"/>
@@ -87,8 +87,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="resources.edit_tabs.ownership" template="" lang="" group="0" version="">
+	</et2-template>
+	<et2-template  id="resources.edit_tabs.ownership" template="" lang="" group="0" version="">
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
@@ -110,8 +110,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="resources.edit" template="" lang="" group="0" version="1.9.002">
+	</et2-template>
+	<et2-template  id="resources.edit" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
@@ -121,7 +121,7 @@
 				<row  class="dialogHeadbar" >
 					<et2-hbox>
 						<et2-button-icon  id="button[apply]" image="apply"></et2-button-icon>
-                        <et2-button-icon id="button[delete]" onclick="Et2Dialog.confirm(widget,'Do you really want to delete this resource?','Delete')" image="delete"></et2-button-icon>
+                        <et2-button-icon  id="button[delete]" onclick="Et2Dialog.confirm(widget,'Do you really want to delete this resource?','Delete')" image="delete"></et2-button-icon>
 						<et2-number  id="res_id" readonly="true" class="entry_id" precision="0"></et2-number>
 					</et2-hbox>
 				</row>
@@ -155,7 +155,7 @@
 					<et2-checkbox  statustext="Is resource bookable?" id="bookable" span="3"></et2-checkbox>
 				</row>
 				<row>
-                    <et2-tabbox id="tabs" span="all" cfTypeFilter="@cat_id">
+                    <et2-tabbox  id="tabs" span="all" cfTypeFilter="@cat_id">
                         <tabs>
                             <tab id="page" label="Description"
                                  statustext="Informations about the location of resource"/>
@@ -164,10 +164,10 @@
                             <tab id="ownership" label="Ownership"/>
                         </tabs>
                         <tabpanels>
-                            <template id="resources.edit_tabs.page"/>
-                            <template id="resources.edit_tabs.general"/>
-                            <template id="resources.edit_tabs.links"/>
-                            <template id="resources.edit_tabs.ownership"/>
+                            <et2-template  id="resources.edit_tabs.page"></et2-template>
+                            <et2-template  id="resources.edit_tabs.general"></et2-template>
+                            <et2-template  id="resources.edit_tabs.links"></et2-template>
+                            <et2-template  id="resources.edit_tabs.ownership"></et2-template>
                         </tabpanels>
                     </et2-tabbox>
                 </row>
@@ -175,5 +175,5 @@
 
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

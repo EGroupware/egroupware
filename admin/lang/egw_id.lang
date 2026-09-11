@@ -259,7 +259,6 @@ if different from email address	admin	id	Tidak ada batasan
 if disabled existing tokens immediatly stop working.	admin	id	Jika menonaktifkan token yang ada, token yang ada akan segera berhenti bekerja.
 imap admin password	admin	id	Password admin IMAP
 imap admin user	admin	id	Admin IMAP
-imap server	admin	id	IMAP Server
 importance	admin	id	Importance
 in mbyte	admin	id	dalam MByte
 inactive	admin	id	Tidak aktif

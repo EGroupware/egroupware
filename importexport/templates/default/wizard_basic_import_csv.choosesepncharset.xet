@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="importexport.wizard_basic_import_csv.choosesepncharset" template="" lang="" group="0" version="1.9.001">
+	<et2-template  id="importexport.wizard_basic_import_csv.choosesepncharset" template="" lang="" group="0" version="1.9.001">
 		<grid>
 			<columns>
 				<column/>
@@ -33,8 +34,8 @@
 				</row>
 			</rows>
 		</grid>
-		<styles>
+		<et2-styles>
 			.width180 select { width:150px;}
-		</styles>
-	</template>
+		</et2-styles>
+	</et2-template>
 </overlay>

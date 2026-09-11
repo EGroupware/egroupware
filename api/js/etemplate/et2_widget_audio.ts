@@ -9,12 +9,6 @@
  * @copyright EGroupware GmbH
  */
 
-/*egw:uses
-	/vendor/bower-asset/jquery/dist/jquery.js;
-	et2_core_interfaces;
-	et2_core_baseWidget;
-*/
-
 import { et2_baseWidget } from './et2_core_baseWidget'
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {WidgetConfig, et2_register_widget} from "./et2_core_widget";

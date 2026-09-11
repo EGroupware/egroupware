@@ -52,15 +52,15 @@ customize this with the icon slot.
 
 ```html:preview
 <et2-avatar label="Avatar with an image icon">
-  <et2-image slot="icon" name="image"></et2-image>
+  <et2-image slot="icon" src="image"></et2-image>
 </et2-avatar>
 
 <et2-avatar label="Avatar with an archive icon">
-  <et2-image slot="icon" name="archive"></et2-image>
+  <et2-image slot="icon" src="archive"></et2-image>
 </et2-avatar>
 
 <et2-avatar label="Avatar with a briefcase icon">
-  <et2-image slot="icon" name="briefcase"></et2-image>
+  <et2-image slot="icon" src="briefcase"></et2-image>
 </et2-avatar>
 ```
 

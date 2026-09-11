@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="resources.view.page" template="" lang="" group="0" version="">
+	<et2-template  id="resources.view.page" template="" lang="" group="0" version="">
 		<et2-textbox  statustext="Short description of resource" id="short_description" maxlength="100"></et2-textbox>
-	</template>
-	<template id="resources.view.custom" template="" lang="" group="0" version="">
+	</et2-template>
+	<et2-template  id="resources.view.custom" template="" lang="" group="0" version="">
 		<grid width="100%" height="245" class="row_on" spacing="0" padding="0" overflow="auto">
 			<columns>
 				<column/>
@@ -18,8 +19,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="resources.view.ownership" template="" lang="" group="0" version="">
+	</et2-template>
+	<et2-template  id="resources.view.ownership" template="" lang="" group="0" version="">
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
@@ -41,8 +42,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="resources.view" template="" lang="" group="0" version="1.9.002">
+	</et2-template>
+	<et2-template  id="resources.view" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
@@ -82,7 +83,7 @@
 					<et2-checkbox  statustext="Is resource bookable?" id="bookable" span="3"></et2-checkbox>
 				</row>
 				<row>
-                    <et2-tabbox id="tabs" span="all">
+                    <et2-tabbox  id="tabs" span="all">
                         <tabs>
                             <tab id="page" label="Description"
                                  statustext="Informations about the location of resource"/>
@@ -90,13 +91,13 @@
                             <tab id="ownership" label="Ownership"/>
                         </tabs>
                         <tabpanels>
-                            <template id="resources.view.page"/>
-                            <template id="resources.view.custom"/>
-                            <template id="resources.view.ownership"/>
+                            <et2-template  id="resources.view.page"></et2-template>
+                            <et2-template  id="resources.view.custom"></et2-template>
+                            <et2-template  id="resources.view.ownership"></et2-template>
                         </tabpanels>
                     </et2-tabbox>
                 </row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

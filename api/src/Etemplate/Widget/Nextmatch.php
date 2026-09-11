@@ -43,6 +43,11 @@ use EGroupware\Api;
  * 	'cat_id'         =>		// IO category, if not 'no_cat' => True
  * 	'search'         =>		// IO search pattern
  * 	'order'          =>		// IO name of the column to sort after (optional for the sortheaders)
+ * 							// can also be given as a widget attribute directly in the template, eg.
+ * 							// <nextmatch order="tr_modified" sort="DESC"/>, used as the initial default
+ * 							// sort only if the app didn't already set one; if neither is given, falls
+ * 							// back to the 'row_modified' field (sorted newest first) when set. See the
+ * 							// matching doc-only 'order'/'sort' fields on Et2Nextmatch.ts.
  * 	'sort'           =>		// IO direction of the sort: 'ASC' or 'DESC'
  * 	'col_filter'     =>		// IO array of column-name value pairs (optional for the filterheaders)
  * 							// grid requires implementation of folowing filters in get_rows, even if not used as regular filters!
@@ -122,7 +127,7 @@ class Nextmatch extends Etemplate\Widget
 		$form_name = self::form_name($cname, $this->id, $expand);
 		$value = self::get_array(self::$request->content, $form_name, true);
 
-		list($app) = explode('.', $value['get_rows']);
+		list($app) = explode('.', $value['get_rows'] ?? '');
 		if(empty($GLOBALS['egw_info']['apps'][$app]))
 		{
 			list($app) = explode('.', $this->attrs['template']);
@@ -142,6 +147,23 @@ class Nextmatch extends Etemplate\Widget
 										'"/>'
 				);
 				$cfs->beforeSendToClient($cname, $expand);
+			}
+		}
+		// declarative fallback default, given directly on the widget in the template
+		// (eg. <nextmatch order="tr_modified" sort="DESC"/>) - lowest precedence: only
+		// used when neither the app's PHP code nor a stored preference already picked one
+		if (empty($value['order']))
+		{
+			if (!empty($this->attrs['order']))
+			{
+				$value['order'] = $this->attrs['order'];
+				$value['sort'] = $this->attrs['sort'] ?? 'ASC';
+			}
+			// otherwise fall back to sorting by the row's own modification field, newest first
+			elseif (!empty($value['row_modified']))
+			{
+				$value['order'] = $value['row_modified'];
+				$value['sort'] = 'DESC';
 			}
 		}
 		// Check for sort preference.  We only apply this on first load, so it can be changed
@@ -290,9 +312,50 @@ class Nextmatch extends Etemplate\Widget
 			return;
 		}
 		// check if we have a filter-template or need to generate one
-		$rows_template = isset($value['template']) ? $value['template'] : ($this->attrs['template'] ?? $this->attrs['options'] ?? null);
-		$template_name = $value['filter_template'] ?? $this->attrs['filterTemplate'] ?? $this->attrs['filter_template'] ?? null;
-		if($template_name === null && !array_key_exists('filter_template', $this->attrs) && !array_key_exists('filterTemplate', $this->attrs))
+		if (($filterTemplate = self::computeFilterTemplate($this->attrs, $value)))
+		{
+			self::setElementAttribute($this->id, "filter_template", $filterTemplate);
+			self::setElementAttribute($this->id, "filterTemplate", $filterTemplate);
+		}
+		// stop NM itself from generating search, filter(2) and cat_id widgets
+		foreach(['search', 'filter', 'filter2', 'cat_id'] as $key)
+		{
+			Etemplate::setElementAttribute($this->id ?? 'nm', 'no_'.$key, true);
+		}
+	}
+
+	/**
+	 * Compute the filterTemplate attribute value for a nextmatch widget: either its own
+	 * explicitly configured filter-template, or an auto-generated one (a real "$app.$rest.filter"
+	 * template if it exists, else a dynamically-built /api/filter-template.php URL extracting
+	 * search/sort/filter widgets straight out of the rows template).
+	 *
+	 * Normally called by beforeSendToClient() above, for a nextmatch that's part of a normal
+	 * server-side render pass. Also directly callable for a nextmatch nested inside a separately,
+	 * lazily client-side-loaded <et2-template template="..."> inclusion widget (eg. mail's own
+	 * "mail.index.splitter") - that inclusion pattern means the nested nextmatch's own
+	 * beforeSendToClient() never runs as part of ANY server-side pass at all (Widget\Template::
+	 * beforeSendToClient() only hands the client a lazy-load URL for the whole included template,
+	 * it never server-side-processes what's inside it), so the owning app has to call this
+	 * directly and set the result itself via Etemplate::setElementAttribute($widgetId,
+	 * 'filterTemplate', $url) - see EGroupware\Mail\Ui::index() for the first real caller (found
+	 * live 2026-09-09, ralf: mail's own filter-icon missing entirely, confirmed via a missing
+	 * filter-template.php request in the network tab - infolog/addressbook/timesheet don't nest
+	 * their own nextmatch this way, so they never hit this gap).
+	 *
+	 * @param array $attrs widget attrs (id, template, filter_label, no_filter, etc.) - same keys
+	 *  beforeSendToClient() reads off $this->attrs
+	 * @param array $value content values for this widget - same keys beforeSendToClient() reads
+	 *  off its own $value
+	 * @return string|null the filterTemplate attribute value (a real template name, or a
+	 *  filter-template.php URL), or null if this nextmatch has no filter-template at all
+	 */
+	public static function computeFilterTemplate(array $attrs, array $value=[]) : ?string
+	{
+		$rest = $tpl = null;
+		$rows_template = $value['template'] ?? $attrs['template'] ?? $attrs['options'] ?? null;
+		$template_name = $value['filter_template'] ?? $attrs['filterTemplate'] ?? $attrs['filter_template'] ?? null;
+		if($template_name === null && !array_key_exists('filter_template', $attrs) && !array_key_exists('filterTemplate', $attrs))
 		{
 			$parts = explode('.', $rows_template);
 			// remove rows
@@ -313,7 +376,8 @@ class Nextmatch extends Etemplate\Widget
 			// Already set from a previous call, but somebody submitted
 			$url = $template_name;
 		}
-		else if($template_name && !($tpl = Template::instance($template_name)) && $rest)
+		// quiet: not having an own filter-template is the normal case here, not an error to log
+		else if($template_name && !($tpl = Template::instance($template_name, quiet: true)) && $rest)
 		{
 			if (($path=Template::relPath(str_replace('.filter', '', $template_name))))
 			{
@@ -335,19 +399,19 @@ class Nextmatch extends Etemplate\Widget
 		        'cat_id'  => 'Category'] as $key => $label)
 			{
 				$disable_attr = $key === 'cat_id' ? 'no_cat' : 'no_'.$key;
-				if (empty($value[$disable_attr] ?? $this->attrs[$disable_attr] ?? null))
+				if (empty($value[$disable_attr] ?? $attrs[$disable_attr] ?? null))
 				{
-					$url .= '&'.$key.'='.urlencode($value[$key.'_label'] ?? $this->attrs[$key.'_label'] ??
-							$value[$key.'_aria_label'] ?? $this->attrs[$key.'_aria_label'] ??
-							$value[$key.'_statustext'] ?? $this->attrs[$key.'_statustext'] ?? $label);
+					$url .= '&'.$key.'='.urlencode($value[$key.'_label'] ?? $attrs[$key.'_label'] ??
+							$value[$key.'_aria_label'] ?? $attrs[$key.'_aria_label'] ??
+							$value[$key.'_statustext'] ?? $attrs[$key.'_statustext'] ?? $label);
 				}
 			}
-			foreach(array_keys($this->attrs+$value) as $key)
+			foreach(array_keys($attrs+$value) as $key)
 			{
 				if (!str_ends_with($key, '_label') && !in_array($key, ['filter', 'filter2', 'cat_id']) &&
 					preg_match('/^(filter|cat_|no_search|favorites|template)/', $key))
 				{
-					$val = $value[$key] ?? $this->attrs[$key] ?? '';
+					$val = $value[$key] ?? $attrs[$key] ?? '';
 					$url .= '&' . $key . '=' . urlencode((string)$val);
 				}
 			}
@@ -355,23 +419,14 @@ class Nextmatch extends Etemplate\Widget
 		else
 		{
 			// only set url, if it is for $template_name direct, and $template_name is not inlined in index.xet
-			list($app, $rest) = explode('.', $template_name, 2);
-			if (strpos($tpl->rel_path, "/$app/templates/") !== false &&
+			list($app, $rest) = explode('.', (string)$template_name, 2) + [null, null];
+			if ($tpl && strpos($tpl->rel_path, "/$app/templates/") !== false &&
 				strpos($tpl->rel_path, "/$rest.xet") !== false)
 			{
 				$url = Template::rel2url($tpl->rel_path);
 			}
 		}
-		if($template_name)
-		{
-			self::setElementAttribute($this->id, "filter_template", $url ?? $template_name);
-			self::setElementAttribute($this->id, "filterTemplate", $url ?? $template_name);
-		}
-		// stop NM itself from generating search, filter(2) and cat_id widgets
-		foreach(['search', 'filter', 'filter2', 'cat_id'] as $key)
-		{
-			Etemplate::setElementAttribute($this->id ?? 'nm', 'no_'.$key, true);
-		}
+		return $template_name ? ($url ?? $template_name) : null;
 	}
 
 	/**
@@ -428,7 +483,7 @@ class Nextmatch extends Etemplate\Widget
 			$filters['col_filter'] = array_filter($filters['col_filter'], fn($key) => !is_int($key), ARRAY_FILTER_USE_KEY);
 		}
 		// remove non-string search patterns not used in UI
-		if (empty($filters['search']) || !is_string($filters['search']))
+		if (!is_string($filters['search']))
 		{
 			unset($filters['search']);
 		}
@@ -440,7 +495,8 @@ class Nextmatch extends Etemplate\Widget
 		if (($template = Template::instance(self::$request->template['name'], self::$request->template['template_set'],
 			self::$request->template['version'], self::$request->template['load_via'])))
 		{
-			$template = $template->getElementById($form_name, strpos($form_name, 'history') === 0 ? 'historylog' : 'nextmatch');
+			$template = $template->getElementById($form_name, strpos($form_name, 'history') === 0 ? 'historylog' : 'et2-nextmatch') ??
+				$template->getElementById($form_name, strpos($form_name, 'history') === 0 ? 'historylog' : 'nextmatch');
 		}
 		else
 		{
@@ -795,13 +851,13 @@ class Nextmatch extends Etemplate\Widget
 				$row_template = Template::instance($widget->attrs['template']);
 			}
 
-			// Try to find just the repeating part
-			$repeating_row = null;
-			// First child should be a grid, we want last row
-			foreach($row_template->children[0]->children[1]->children as $child)
-			{
-				if($child->type == 'row') $repeating_row = $child;
-			}
+			// Try to find just the repeating part, ie. the last 'row' widget in the template.
+			// A row is usually nested in a grid (<grid><rows><row>), but that's not required
+			// (e.g. a preceding et2-styles sibling, or a row template with no grid at all), so
+			// search the whole subtree instead of assuming a fixed nesting/position - except
+			// inside an already-found row, which can contain its own unrelated nested grid
+			// (eg. resources' accessories sub-list), not another candidate for the repeating row.
+			$repeating_row = self::findLastRow($row_template);
 		}
 		// otherwise, we might get stopped by max_excutiontime
 		if ($total > 200) @set_time_limit(0);
@@ -858,6 +914,35 @@ class Nextmatch extends Etemplate\Widget
 
 		//error_log($value['get_rows'].'() returning '.array2string($total).', method = '.array2string($method).', value = '.array2string($value));
 		return $total;
+	}
+
+	/**
+	 * Find the last 'row' widget in a row template, ie. the repeating row (as opposed to eg.
+	 * a preceding header 'row')
+	 *
+	 * A row is usually nested in a grid (<grid><rows><row>), but that's not required, so this
+	 * searches the whole subtree instead of assuming a fixed nesting/position - except inside
+	 * an already-found row, which can contain its own unrelated nested grid (eg. a sub-list
+	 * of accessories), not another candidate for the repeating row we're looking for.
+	 *
+	 * @param Etemplate\Widget $widget
+	 * @return Etemplate\Widget|null
+	 */
+	private static function findLastRow(Etemplate\Widget $widget)
+	{
+		$last = null;
+		foreach($widget->children as $child)
+		{
+			if ($child->type == 'row')
+			{
+				$last = $child;
+			}
+			elseif (($found = self::findLastRow($child)))
+			{
+				$last = $found;
+			}
+		}
+		return $last;
 	}
 
 	/**
@@ -1019,6 +1104,7 @@ class Nextmatch extends Etemplate\Widget
 	 * - boolean 'postSubmit' eg. downloads need a submit via POST request not our regular Ajax submit, only works with nm_action=submit!
 	 * - string 'hint' tooltip on menu item
 	 * - string 'color' color of the caption e.g. "red" or "#ff0000"
+	 * * - string 'iconColor' color of the prefix icon if supported e.g. "red" or "#ff0000"
 	 *
 	 * @param ?array $actions id indexed array of actions / array with valus for keys: 'iconUrl', 'caption', 'onExecute', ...
 	 * @param string $template_name ='' name of the template, used as default for app name of images
@@ -1409,6 +1495,85 @@ class Nextmatch extends Etemplate\Widget
 				if (!isset($validated[$form_name])) $validated[$form_name] = [];
 				$validate =& self::get_array($validated[$form_name], $attr, true);
 				$validate = $val;
+			}
+		}
+	}
+
+	/**
+	 * Save one or more preferences as the default, forced, or reset (deleted) value for
+	 * every user of the nextmatch's app - the admin-only "save as default/force/reset"
+	 * action from the column-selection dialog's `default_preference` select.
+	 *
+	 * Reachable only via ajax: the modern `Et2Datagrid`-based column-selection dialog no
+	 * longer does a real form submit, so it never reaches self::validate() - that method
+	 * still has an equivalent block, kept for whatever legacy path might still submit a
+	 * real form, but it's unreachable from the current dialog and, since 2022's rewrite to
+	 * a static `.xet` template, reads field names (`nm_col_preference`/`nm_autorefresh`)
+	 * that no longer match what the client actually submits (`default_preference`/`autoRefresh`)
+	 * - do not use it as a reference for what the client currently sends.
+	 *
+	 * $prefs is built entirely client-side (see `Et2Datagrid._maybeSaveColumnSelectionAsAdminDefault()`),
+	 * because the preference key/format each setting is read back under is owned by whichever
+	 * widget reads it - eg. columns use `Et2Datagrid`'s own generated key in its own JSON shape,
+	 * NOT the plain comma-separated column-name string under the legacy 'nextmatch-<pref>' key
+	 * that self::validate()'s block writes and which is no longer read by anything.
+	 *
+	 * $app is deliberately NOT a parameter - it's resolved from the real widget the exec_id's
+	 * request resolves to, not trusted from the client, so an admin session can't be tricked
+	 * into forcing preferences for an app it never actually had this dialog open for.
+	 *
+	 * @param string $exec_id identifies the calling eTemplate request
+	 * @param string $form_name full id of the nextmatch widget within that request
+	 * @param array $prefs preference-name => value pairs to save
+	 * @param string $action 'default'|'reset'|'force'
+	 */
+	public static function ajax_set_admin_default($exec_id, $form_name, array $prefs, $action)
+	{
+		if (empty($GLOBALS['egw_info']['user']['apps']['admin']) || empty($prefs) ||
+			!($request = Etemplate\Request::read($exec_id, false)))
+		{
+			return;
+		}
+		$template = Template::instance($request->template['name'], $request->template['template_set'],
+			$request->template['version'], $request->template['load_via']);
+		$widget = $template ? ($template->getElementById($form_name, 'et2-nextmatch') ??
+			$template->getElementById($form_name, 'nextmatch')) : null;
+		if (!$widget || empty($widget->attrs['template']))
+		{
+			return;
+		}
+		list($app) = explode('.', $widget->attrs['template']);
+		if (!$app)
+		{
+			return;
+		}
+
+		$pref_level = $action === 'force' ? 'forced' : 'default';
+
+		// Clear any forced value first, or an existing forced pref would still win over the new default
+		if ($pref_level !== 'forced')
+		{
+			foreach ($prefs as $name => $value)
+			{
+				$GLOBALS['egw']->preferences->delete($app, $name, 'forced');
+			}
+			$GLOBALS['egw']->preferences->save_repository(true, 'forced');
+		}
+
+		$GLOBALS['egw']->preferences->read_repository(true);
+		foreach ($prefs as $name => $value)
+		{
+			$GLOBALS['egw']->preferences->add($app, $name, $value, $pref_level);
+		}
+		$GLOBALS['egw']->preferences->save_repository(true, $pref_level);
+		$GLOBALS['egw']->preferences->read(true);
+
+		if ($action === 'reset')
+		{
+			// Clear the current user's own override too, so they immediately see the new default
+			foreach ($prefs as $name => $value)
+			{
+				$GLOBALS['egw']->preferences->delete_preference($app, $name);
 			}
 		}
 	}

@@ -1910,16 +1910,16 @@
         },
         {
             "name": "egroupware/imap-client",
-            "version": "2.31.2",
+            "version": "2.31.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/Imap_Client.git",
-                "reference": "08fe784122c7a6afdaa11e57ad227ff010cb9efa"
+                "reference": "d4f28ef507cd93655b595ddffddbfbcdee8f659f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/Imap_Client/zipball/08fe784122c7a6afdaa11e57ad227ff010cb9efa",
-                "reference": "08fe784122c7a6afdaa11e57ad227ff010cb9efa",
+                "url": "https://api.github.com/repos/EGroupware/Imap_Client/zipball/d4f28ef507cd93655b595ddffddbfbcdee8f659f",
+                "reference": "d4f28ef507cd93655b595ddffddbfbcdee8f659f",
                 "shasum": ""
             },
             "require": {
@@ -1974,7 +1974,7 @@
             "description": "IMAP client library",
             "homepage": "https://www.horde.org/libraries/Horde_Imap_Client",
             "support": {
-                "source": "https://github.com/EGroupware/Imap_Client/tree/2.31.2"
+                "source": "https://github.com/EGroupware/Imap_Client/tree/2.31.3"
             },
             "time": "2019-09-29T00:00:00+00:00"
         },
@@ -2348,12 +2348,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/openid.git",
-                "reference": "d1083054b1728185adb2b5acf52826df3026a35b"
+                "reference": "2a8a1ffff4a38e2e9dc4893fc8cea065852d45ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/openid/zipball/d1083054b1728185adb2b5acf52826df3026a35b",
-                "reference": "d1083054b1728185adb2b5acf52826df3026a35b",
+                "url": "https://api.github.com/repos/EGroupware/openid/zipball/2a8a1ffff4a38e2e9dc4893fc8cea065852d45ff",
+                "reference": "2a8a1ffff4a38e2e9dc4893fc8cea065852d45ff",
                 "shasum": ""
             },
             "require": {
@@ -2389,7 +2389,7 @@
             "support": {
                 "source": "https://github.com/EGroupware/openid/tree/master"
             },
-            "time": "2026-07-26T12:12:23+00:00"
+            "time": "2026-07-26T14:02:49+00:00"
         },
         {
             "name": "egroupware/projectmanager",
@@ -2397,12 +2397,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/projectmanager.git",
-                "reference": "dc53573f314e56bb6acb967b6b7a370544f00236"
+                "reference": "8d44d2270880f492af2d54c197baddd3b5cce24d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/dc53573f314e56bb6acb967b6b7a370544f00236",
-                "reference": "dc53573f314e56bb6acb967b6b7a370544f00236",
+                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/8d44d2270880f492af2d54c197baddd3b5cce24d",
+                "reference": "8d44d2270880f492af2d54c197baddd3b5cce24d",
                 "shasum": ""
             },
             "require": {
@@ -2772,12 +2772,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/status.git",
-                "reference": "709fae3e405f378883f36c1e89c9a8016db817a0"
+                "reference": "148aa4c03e8b6d45371d96290c3f0d227ae123e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/status/zipball/709fae3e405f378883f36c1e89c9a8016db817a0",
-                "reference": "709fae3e405f378883f36c1e89c9a8016db817a0",
+                "url": "https://api.github.com/repos/EGroupware/status/zipball/148aa4c03e8b6d45371d96290c3f0d227ae123e2",
+                "reference": "148aa4c03e8b6d45371d96290c3f0d227ae123e2",
                 "shasum": ""
             },
             "require": {
@@ -2808,7 +2808,7 @@
             "support": {
                 "source": "https://github.com/EGroupware/status/tree/master"
             },
-            "time": "2026-07-26T12:14:27+00:00"
+            "time": "2026-07-26T12:51:54+00:00"
         },
         {
             "name": "egroupware/stream-filter",
@@ -4412,7 +4412,7 @@
             ],
             "authors": [
                 {
-                    "name": "Lu\u00eds Cobucci",
+                    "name": "Luís Cobucci",
                     "email": "lcobucci@gmail.com"
                 }
             ],
@@ -4480,7 +4480,7 @@
             ],
             "authors": [
                 {
-                    "name": "Lu\u00eds Cobucci",
+                    "name": "Luís Cobucci",
                     "email": "lcobucci@gmail.com",
                     "role": "Developer"
                 }
@@ -6137,16 +6137,16 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "3.0.52",
+            "version": "3.0.55",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "2adaefc83df2ec548558307690f376dd7d4f4fce"
+                "reference": "db9744e6d47e742b1f974e965ad49bdd041105af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/2adaefc83df2ec548558307690f376dd7d4f4fce",
-                "reference": "2adaefc83df2ec548558307690f376dd7d4f4fce",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/db9744e6d47e742b1f974e965ad49bdd041105af",
+                "reference": "db9744e6d47e742b1f974e965ad49bdd041105af",
                 "shasum": ""
             },
             "require": {
@@ -6227,7 +6227,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpseclib/phpseclib/issues",
-                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.52"
+                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.55"
             },
             "funding": [
                 {
@@ -6243,7 +6243,54 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-04-27T07:02:15+00:00"
+            "time": "2026-06-14T23:24:10+00:00"
+        },
+        {
+            "name": "phpstan/phpdoc-parser",
+            "version": "2.3.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpdoc-parser.git",
+                "reference": "fb19eedd2bb67ff8cf7a5502ad329e701d6398a3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/fb19eedd2bb67ff8cf7a5502ad329e701d6398a3",
+                "reference": "fb19eedd2bb67ff8cf7a5502ad329e701d6398a3",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "doctrine/annotations": "^2.0",
+                "nikic/php-parser": "^5.3.0",
+                "php-parallel-lint/php-parallel-lint": "^1.2",
+                "phpstan/extension-installer": "^1.0",
+                "phpstan/phpstan": "^2.0",
+                "phpstan/phpstan-phpunit": "^2.0",
+                "phpstan/phpstan-strict-rules": "^2.0",
+                "phpunit/phpunit": "^9.6",
+                "symfony/process": "^5.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PHPStan\\PhpDocParser\\": [
+                        "src/"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHPDoc parser with support for nullable, intersection and generic types",
+            "support": {
+                "issues": "https://github.com/phpstan/phpdoc-parser/issues",
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/2.3.3"
+            },
+            "time": "2026-07-08T07:01:06+00:00"
         },
         {
             "name": "phpstan/phpdoc-parser",

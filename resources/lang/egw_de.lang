@@ -77,7 +77,6 @@ is resource buyable?	resources	de	Ist diese Ressource käuflich?
 is the ressource bookable?	resources	de	Ist die Ressource buchbar?
 is this resource bookable?	resources	de	Ist diese Ressource buchbar?
 is this resource buyable?	resources	de	Ist diese Ressource käuflich?
-links	resources	de	Verknüpfungen
 location	resources	de	Lagerort
 location of resource	resources	de	Lagerort der Ressource
 location:	resources	de	Lagerort:

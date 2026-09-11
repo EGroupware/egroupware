@@ -326,7 +326,10 @@ export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 					{
 						return this.egw().lang(p1);
 					}),
-					title: et2_readAttrWithDefault(options[i], "title", "")
+					title: et2_readAttrWithDefault(options[i], "title", ""),
+					// marks the fallback option for widgets like Et2DropdownButton's defaultPreference,
+					// used when no (or no matching) preference value is stored yet
+					default: et2_readAttrWithDefault(options[i], "default", "") === "true"
 				});
 			}
 			this._xmlOptions = new_options;

@@ -1,7 +1,8 @@
 /**
  * Column selector for nextmatch
  */
-import {css, html, LitElement, TemplateResult} from "lit";
+import {html, LitElement, TemplateResult} from "lit";
+import {property} from "lit/decorators/property.js";
 import {classMap} from "lit/directives/class-map.js";
 import {repeat} from "lit/directives/repeat.js";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
@@ -13,6 +14,7 @@ import Sortable from "sortablejs/modular/sortable.complete.esm";
 import {SlMenuItem} from "@shoelace-style/shoelace";
 import {Et2Select} from "../Et2Select/Et2Select";
 
+import styles from "./ColumnSelection.styles";
 export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 {
 	static get styles()
@@ -20,74 +22,18 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 		return [
 			super.styles,
 			shoelace,
-			css`
-				:host {
-					max-height: inherit;
-					min-width: 35em;
-					display: flex;
-					flex-direction: column;
-					flex: 1 1 auto;
-					--icon-width: 20px;
-				}
-
-				sl-menu {
-					flex: 1 10 auto;
-					overflow-y: auto;
-					max-height: 50em;
-				}
-
-				/* Drag handle on columns (not individual custom fields or search letter) */
-
-				sl-menu > .select_row::part(base) {
-					padding-left: var(--sl-spacing-x-large);
-				}
-
-				.select_row::part(prefix) {
-					display: none;
-				}
-
-				sl-menu > .column::part(prefix) {
-					display: initial;
-					position: absolute;
-					left: 0px;
-					font-size: var(--sl-font-size-large);
-					cursor: grab;
-				}
-
-				sl-menu-item::part(label), sl-menu-item::part(submenu-icon) {
-					cursor: initial;
-				}
-
-				/* Change vertical alignment of CF checkbox line to up with title, not middle */
-
-				.custom_fields::part(base) {
-					align-items: baseline;
-				}
-			`
+			styles
 		]
 	}
 
-	static get properties()
-	{
-		return {
-			/**
-			 * List of currently selected columns
-			 */
-			value: {type: Object},
-
-			columns: {type: Object},
-
-			autoRefresh: {type: Number}
-		}
-	}
-
-	private __columns = [];
+	private __columns : any[] = [];
 	private __autoRefresh : number | false = false;
+	private __pendingValueIds : Set<string> | null = null;
 	private sort : Sortable;
 
 	constructor(...args : any[])
 	{
-		super(...args);
+		super();
 
 		this.handleSelectAll = this.handleSelectAll.bind(this);
 	}
@@ -97,7 +43,17 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 		super.connectedCallback();
 		this.updateComplete.then(() =>
 		{
-			this.sort = Sortable.create(this.shadowRoot.querySelector('sl-menu'), {
+			if(!this.isConnected)
+			{
+				return;
+			}
+			const menu = this.shadowRoot.querySelector('sl-menu');
+			if(!menu)
+			{
+				return;
+			}
+			this.sort?.destroy();
+			this.sort = Sortable.create(menu, {
 				ghostClass: 'ui-fav-sortable-placeholder',
 				draggable: 'sl-menu-item.column',
 				dataIdAttr: 'value',
@@ -105,6 +61,13 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 				delay: 25
 			});
 		});
+	}
+
+	disconnectedCallback()
+	{
+		super.disconnectedCallback();
+		this.sort?.destroy();
+		this.sort = undefined;
 	}
 
 	protected render() : TemplateResult
@@ -129,7 +92,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 		const apps = this.egw().user('apps');
 
 		return html`
-            ${this.__autoRefresh !== "false" ? autoRefresh : ''}
+            ${this.__autoRefresh !== false ? autoRefresh : ''}
             ${!apps['admin'] ? '' : html`
                 <et2-select id="default_preference" emptylabel="${this.egw().lang("Preference")}">
                 </et2-select>`
@@ -146,7 +109,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 	 */
 	protected rowTemplate(column) : TemplateResult
 	{
-		const isCustom = column.widget?.instanceOf?.(et2_nextmatch_customfields) || false;
+		const isCustom = this._isCustomfieldsColumn(column);
 		const alwaysOn = [et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS, et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT].indexOf(column.visibility) !== -1;
 
 		// Don't show disabled columns
@@ -157,7 +120,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 		return html`
             <sl-menu-item
                     exportparts="label,prefix"
-                    value="${column.id.replaceAll(" ", "___")}"
+                    value="${String(column.id).split(" ").join("___")}"
                     type="checkbox"
                     ?checked=${alwaysOn || column.visibility == et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE}
                     ?disabled=${alwaysOn}
@@ -169,9 +132,42 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
                     })}">
                 <sl-icon slot="prefix" name="grip-vertical"></sl-icon>
                 ${column.caption}
-                <!-- Custom fields get listed separately -->
-                ${isCustom ? this.customFieldsTemplate(column) : ''}
-            </sl-menu-item>`;
+            </sl-menu-item>
+            <!-- Custom fields get listed separately -->
+            ${isCustom ? this.customFieldsTemplate(column) : ''}`;
+	}
+
+	private _isCustomfieldsColumn(column) : boolean
+	{
+		return column.isCustomfields === true ||
+			(column.customFields || []).length > 0 ||
+			column.widget?.instanceOf?.(et2_nextmatch_customfields) ||
+			false;
+	}
+
+	private _customfieldItems(column) : Array<{ id : string; caption : string; visibility : boolean | number }>
+	{
+		if(Array.isArray(column.customFields) && column.customFields.length)
+		{
+			return column.customFields.map((field) => ({
+				id: field.id,
+				caption: field.caption,
+				visibility: field.visibility
+			}));
+		}
+		let widget = column.widget as et2_nextmatch_customfields & {
+			customfields : Record<string, { name : string; label : string }>;
+			fields : Record<string, boolean>;
+		};
+		if(jQuery.isEmptyObject(widget?.customfields || {}))
+		{
+			return [];
+		}
+		return Object.values(widget.customfields).map((field) => ({
+			id: et2_customfields_list.PREFIX + field.name,
+			caption: field.label,
+			visibility: widget.fields?.[field.name] ? et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE : false
+		}));
 	}
 
 	/**
@@ -185,22 +181,27 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 	protected customFieldsTemplate(column) : TemplateResult
 	{
 		// Custom fields get listed separately
-		let widget = column.widget;
-		if(jQuery.isEmptyObject((<et2_nextmatch_customfields><unknown>widget).customfields))
+		const customFields = this._customfieldItems(column);
+		if(customFields.length == 0)
 		{
 			// No customfields defined, don't show column
 			return html``;
 		}
 		return html`
             <sl-divider></sl-divider>
-            ${repeat(Object.values(widget.customfields), (field) => field.name, (field) =>
+            ${repeat(customFields, (field) => field.id, (field) =>
             {
-                return this.rowTemplate({
-                    id: et2_customfields_list.PREFIX + field.name,
-                    caption: field.label,
-                    visibility: (widget.fields[field.name] ? et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE : false)
-
-                });
+                return html`
+                    <sl-menu-item
+                            exportparts="label,prefix"
+                            value="${String(field.id).split(" ").join("___")}"
+                            data-parent-column="${String(column.id).split(" ").join("___")}"
+                            type="checkbox"
+                            ?checked=${field.visibility == et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE}
+                            title="${field.caption}"
+                            class="select_row">
+                        ${field.caption}
+                    </sl-menu-item>`;
             })}
             <sl-divider></sl-divider>`;
 	}
@@ -211,12 +212,15 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 		this.shadowRoot.querySelectorAll('sl-menu-item').forEach((item) => {item.checked = !checked});
 	}
 
+	@property({type: Object, noAccessor: true})
 	set columns(new_columns)
 	{
 		this.__columns = new_columns;
+		this._applyPendingValue();
 		this.requestUpdate();
 	}
 
+	// @ts-expect-error Legacy input widget defines value as a property; this dialog proxy computes it from menu state.
 	get value()
 	{
 		let value = [];
@@ -231,18 +235,18 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 				{
 					value.push(val);
 				}
-				if(column.widget?.customfields)
+				if(this._isCustomfieldsColumn(column))
 				{
-					menuItem.querySelectorAll("[value][checked]").forEach((cf : SlMenuItem) =>
+					this.shadowRoot.querySelectorAll(`[data-parent-column='${val}'][value][checked]`).forEach((cf : SlMenuItem) =>
 					{
-						value.push(cf.value.replaceAll("___", " "));
+						value.push(cf.value.split("___").join(" "));
 					})
 				}
 			}
 		});
 
 		// Add in letters
-		this.shadowRoot?.querySelectorAll("[part='columns'] > :not(.column)").forEach((i : SlMenuItem) =>
+		this.shadowRoot?.querySelectorAll("[part='columns'] > :not(.column):not([data-parent-column])").forEach((i : SlMenuItem) =>
 		{
 			if(i.checked)
 			{
@@ -252,9 +256,42 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 		return value;
 	}
 
+	/**
+	 * Pre-check the given column (and customfield) ids, e.g. to restore a
+	 * previously saved selection (see Et2Nextmatch.beforePrint()).
+	 *
+	 * Ids are matched against `columns[].id` / `customFields[].id`, so they use
+	 * the same space-stripped encoding as those (Et2DatagridColumnState.encodeSelectionId()).
+	 */
+	@property({type: Object, noAccessor: true})
 	set value(new_value)
 	{
-		// TODO?  Only here to avoid error right now
+		this.__pendingValueIds = new Set((Array.isArray(new_value) ? new_value : []).map((id) => String(id)));
+		this._applyPendingValue();
+		this.requestUpdate();
+	}
+
+	/**
+	 * Apply __pendingValueIds (if any) as the checked state of __columns.
+	 *
+	 * Deferred out of the value/columns setters because either can run first
+	 * when the dialog template is bound, and both need the other's data.
+	 */
+	private _applyPendingValue()
+	{
+		if(!this.__pendingValueIds || !this.__columns?.length)
+		{
+			return;
+		}
+		const ids = this.__pendingValueIds;
+		this.__columns = this.__columns.map((column) => ({
+			...column,
+			visibility: ids.has(String(column.id)),
+			customFields: (column.customFields || []).map((field) => ({
+				...field,
+				visibility: ids.has(String(field.id))
+			}))
+		}));
 	}
 
 	private get _autoRefreshNode() : Et2Select
@@ -272,6 +309,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 		return parseInt(this._autoRefreshNode?.value.toString()) || 0;
 	}
 
+	@property({type: Number, noAccessor: true})
 	set autoRefresh(new_value : number)
 	{
 		this.__autoRefresh = new_value;

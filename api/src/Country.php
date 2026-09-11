@@ -653,14 +653,14 @@ class Country
 	 * @var array
 	 */
 	protected static $au_states_array = array(
+		'ACT' => 'Australian Capital Territory',
 		'NSW' => 'New South Wales',
-		'VIC' => 'Victoria',
+		'NT'  => 'Northern Territory',
 		'QLD' => 'Queensland',
-		'WA'  => 'Western Australia',
 		'SA'  => 'South Australia',
 		'TAS' => 'Tasmania',
-		'ACT' => 'Australian Capital Territory',
-		'NT'  => 'Northern Territory'
+		'VIC' => 'Victoria',
+		'WA'  => 'Western Australia'
 	);
 
 	/**

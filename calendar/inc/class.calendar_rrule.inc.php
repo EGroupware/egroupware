@@ -292,7 +292,7 @@ class calendar_rrule implements Iterator
 			}
 			else
 			{
-				$this->monthly_byday_num = 1 + floor(($this->time->format('d')-1) / 7);
+				$this->monthly_byday_num = (int)(1 + floor(($this->time->format('d')-1) / 7));
 			}
 		}
 		elseif($type == self::MONTHLY_MDAY)
@@ -557,7 +557,7 @@ class calendar_rrule implements Iterator
 		{
 			return clone $this->time;
 		}
-		if (isset($this->current)) $backup = $this->current;
+		$backup = isset($this->current) ? $this->current : null;
 		$this->rewind();
 
 		while(--$count > 0)

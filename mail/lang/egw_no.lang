@@ -1,9 +1,9 @@
+(no subject)	mail	no	(uten emne)
 %1 attachments	mail	no	%1 vedlegg
 %1 for all users	mail	no	%1 for alle brukere
 %1 is not writable by you!	mail	no	%1 kan IKKE skrives av deg!
 %1 mails selected	mail	no	%1 e-poster valgt
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	no	%1 krever Sieve-utvidelsen %2, prøv kanskje %1 eller et høyere antall dager.
-(no subject)	mail	no	(uten emne)
 acl rights retrieve failed, seems there are no rights set!	mail	no	Henting av ACL-rettigheter mislyktes, ser ut til at det ikke er angitt noen rettigheter!
 activating by date requires a start- and end-date!	mail	no	Aktivering etter dato krever en start- OG sluttdato!
 add as new	mail	no	Legg til som ny
@@ -15,7 +15,6 @@ adding %1 to whiltelisted email addresses failed because of %2	mail	no	Legge til
 all my email addresses	mail	no	alle mine e-postadresser
 all of	mail	no	alle av
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	no	Alle undermapper slettes også, og alle meldinger i alle berørte mapper vil gå tapt
-allow users to create further identities	mail	no	Tillat brukere å opprette flere identiteter
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	no	Tillater en bruker å lese, skrive og opprette mapper og e-poster, legge til meldinger i dem, legge til meldinger i dem og slette meldinger
 always respond / auto-responder	mail	no	Alltid svare / autosvar
 always show html emails	mail	no	Vis alltid HTML meldinger
@@ -44,7 +43,6 @@ check to save as infolog on send	mail	no	Kryss av for å opprette som InfoLog et
 check to save as tracker entry on send	mail	no	Kryss av for å opprette som sak etter sending
 checking admin credentials failed	mail	no	Kontroll av administratorlegitimasjon mislyktes
 compose	mail	no	Ny melding
-compress folder	mail	no	Komprimer mappe
 contact label	mail	no	Kontaktetikett
 contains	mail	no	inneholder
 continue	mail	no	Fortsett
@@ -53,8 +51,6 @@ convert mail to item, attach its attachments and add raw message (message/rfc822
 convert only mail to item (ignore possible attachments)	mail	no	Konverter kun e-post til sak (ignorer eventuelle vedlegg)
 copied %1 message(s) from %2 to %3	mail	no	Kopierte %1 melding(er) fra %2 til %3.
 copy to	mail	no	Kopier til
-default identity for compose	mail	no	Standardidentitet for ny e-post
-default signature	mail	no	Standard signatur
 default sorting order	mail	no	Standard sortering
 defines what to show as identity label on mail folder header	common	no	Definerer hva som skal vises som identitetsmerke på e-postmappens overskrift. Merkene refererer til feltene i e-postkontoen.
 delete folder	mail	no	Slett Mappe
@@ -72,13 +68,8 @@ do you want to prevent the editing/setup of notification by mail to other emaila
 does not contain	mail	no	inneholder ikke
 does not match	mail	no	stemmer ikke
 does not match regexp	mail	no	stemmer ikke med regexp
-don't use draft folder	mail	no	Ikke bruk utkast-mappen
 don't use sent	mail	no	Ikke bruk Sendt
 don't use trash	mail	no	Ikke bruk Søppelkurv
-draft	mail	no	Utkast
-draft folder	mail	no	Utkast-mappe
-drafts	mail	no	Utkast
-drafts folder	mail	no	Utkast-mappe
 edit account	mail	no	Rediger konto
 edit vacation settings	mail	no	Redigere ferieinnstillinger
 email address	mail	no	E-postadresse
@@ -90,7 +81,6 @@ empty trash	mail	no	Tøm søppelkurv
 enable	mail	no	Aktivere
 enabled	mail	no	Aktivert
 encrypt your message with smime certificate	mail	no	Krypter meldingen din med S/MIME-sertifikat
-error: could not save message as draft	mail	no	Feil: Kunne ikke lagre meldingen som utkast
 event details follow	mail	no	Hendelsesdetaljer følger
 every %1. day	mail	no	Hver %1. dag
 everyone	mail	no	Alle
@@ -126,15 +116,12 @@ header	mail	no	Overskrift
 header lines	mail	no	Hodelinjer
 hide from	mail	no	Skjul Fra
 high priority	mail	no	Høy prioritet
-how should the available information on identities be displayed	admin	no	Hvordan skal den tilgjengelige informasjonen om identiteter vises
 html	mail	no	HTML
 html mode	mail	no	HTML-modus
 ident name	mail	no	Identnavn
 ident name email	mail	no	Identnavn [E-post]
 ident name organization email	mail	no	Identnavn Organisasjon [E-post]
-identity	mail	no	Identitet
 identity label	mail	no	Identitetsetikett
-identity+signature	mail	no	Identitet+Signatur
 if	mail	no	Dersom
 if different from email address	mail	no	Hvis forskjellig fra e-postadressen
 if mail header	mail	no	dersom meldingshodet
@@ -159,7 +146,6 @@ junk folder	mail	no	søppelpost mappe
 keep a copy	mail	no	Behold en kopi
 keep a copy of the message in your inbox	mail	no	behold en kopi av meldingen i din innboks
 kilobytes	mail	no	kilobytes
-last used signature	mail	no	Sist brukte signatur
 later	mail	no	Senere
 learning as ham (not spam) failed because of %1	mail	no	Læring som skinke (ikke spam) mislyktes på grunn av %1
 learning as spam failed because of %1	mail	no	Læring som spam mislyktes på grunn av %1
@@ -175,7 +161,6 @@ mark as deleted	mail	no	Merk som slettet
 matches	mail	no	treff
 matches regexp	mail	no	treffer regexp
 message learned as spam and moved to spam folder	mail	no	Melding oppdaget som søppelpost og flyttet til søppelpostmappen
-move selected mails to archive	mail	no	Flytt valgte e-poster til arkiv
 move selected to	mail	no	Flytt valgt til
 move to	mail	no	Flytt til
 move to archive	mail	no	Flytt til arkivmappe
@@ -209,7 +194,6 @@ organization | real name email	mail	no	Organisasjon | Ekte navn [E-post]
 original message	mail	no	Opprinnelig melding
 outbox	mail	no	Utboks
 permission denied	mail	no	Ingen tilgang
-personal signature	mail	no	Personlig signatur
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	no	Konfigurer S/MIME-sertifikatet i kategorien Kryptering i dialogboksen Rediger konto.
 please select a address	mail	no	Vennligst velg en adresse
 please select the number of days to wait between responses	mail	no	Vennligst velg antall dager for vent melding tilbakemeldinger
@@ -247,8 +231,6 @@ required pear class mail/mimedecode.php not found.	mail	no	Påkrevd PEAR-klasse 
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	no	Påkrevd å deaktivere hvis du bruker Dovecot med private seen-flagg på delt mappe eller brukermappe!
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	no	S/MIME-kryptering mislyktes fordi det ikke ble funnet noe sertifikat for avsenderadressen: %1
 save all	mail	no	Lagre alle
-save as draft	mail	no	Lagre som utkast
-save as draft and print	mail	no	Lagre som utkast og skriv ut
 save as infolog on send	mail	no	Kryss av for knappen for å opprette som InfoLog etter sending
 save as tracker on send	mail	no	Kryss av for at meldingen skal opprettes som ticket etter sending
 save the drafted message as eml file into vfs	mail	no	Lagre den utarbeidede meldingen som eml-fil i Filbehandling
@@ -261,7 +243,6 @@ select all	mail	no	Velg alle
 select an existing entry in order to append mail content to it	mail	no	Velg en eksisterende oppføring for å legge til e-postinnhold i den.
 select mail addresses from addressbook	mail	no	Velg e-postadresse(r) fra adresseboken
 select or insert email address	mail	no	Velg eller sett inn e-postadresse
-selected	mail	no	valgt.
 selected date range (with quicksearch)	mail	no	Valgt datointervall (med hurtigsøk)
 send message and move to send folder (if configured)	mail	no	Send melding og flytt til sendemappe (hvis konfigurert)
 send message pgp encrypted: requires keys from all recipients!	mail	no	Send meldingen PGP-kryptert: krever nøkler fra alle mottakere!
@@ -306,11 +287,9 @@ unflagged	mail	no	Avflagget
 unread	mail	no	Ulest
 vacation notice	mail	no	Ferie melding
 validate addresses on submit:	mail	no	Valider adresser ved sending:
-validate selected addresses on submit:	mail	no	Bekreft valgte adresser ved sending:
 view header lines	mail	no	Vis overskriftslinjer
 what to do when you delete a message	mail	no	Hva du skal gjøre når du sletter en melding.
 when deleting messages	mail	no	Når du sletter meldinger
-which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	no	Hvilken e-postidentitet (signatur) ønsker du å starte med?\nFor «Personlig signatur» bruker vi alltid den første personlige signaturen.
 write	mail	no	Lagre
 write & delete	mail	no	skriv og slett
 wrote	mail	no	skrev

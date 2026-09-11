@@ -203,8 +203,6 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		$this->opened_mode = $mode = str_replace('b','',$mode);	// we are always binary, like every Linux system
 		$this->opened_stream = null;
 
-		parse_str(parse_url($url, PHP_URL_QUERY), $this->dir_url_params);
-
 		if (!is_null($this->overwrite_new) || !($stat = $this->url_stat($path,STREAM_URL_STAT_QUIET)) || $mode[0] == 'x')	// file not found or file should NOT exist
 		{
 			if (!$dir || $mode[0] == 'r' ||	// does $mode require the file to exist (r,r+)
@@ -1651,7 +1649,15 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		$stat = $vfs->url_stat($path, 0);
 		if ($stat['readlink'])
 		{
-			$stat = $vfs->url_stat($stat['readlink'], 0);
+			// a relative symlink (eg. "Rechnung.pdf" -> ".invoice.pdf") stores just the raw
+			// target, which is relative to the directory the link sits in - resolve it against
+			// that directory, as url_stat() below needs an absolute path
+			$target = $stat['readlink'];
+			if ($target[0] !== '/')
+			{
+				$target = Vfs::concat(Vfs::dirname(Vfs::parse_url($path, PHP_URL_PATH)), $target);
+			}
+			$stat = $vfs->url_stat($target, 0);
 		}
 		$fs_id = $stat['ino'];
 

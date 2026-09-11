@@ -8,11 +8,6 @@
  * @author Hadi Nategh
  */
 
-/*egw:uses
-	/vendor/bower-asset/jquery/dist/jquery.js;
-	et2_core_baseWidget;
-*/
-
 import {et2_no_init} from "./et2_core_common";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
@@ -118,6 +113,16 @@ export class et2_countdown extends et2_valueWidget {
 				if (typeof self.onFinish == "function") self.onFinish();
 			}
 		}, 1000);
+	}
+
+	destroy()
+	{
+		if(this.timer)
+		{
+			clearInterval(this.timer);
+			this.timer = null;
+		}
+		super.destroy();
 	}
 
 	private _updateTimer()

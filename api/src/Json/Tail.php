@@ -65,7 +65,7 @@ class Tail
 	 */
 	public function __construct(?string $filename=null)
 	{
-		$this->filenames =& Api\Cache::getSession('phpgwapi', __CLASS__);
+		$this->filenames = Api\Cache::getSession('phpgwapi', __CLASS__);
 
 		if ($filename)
 		{
@@ -80,6 +80,7 @@ class Tail
 			if (!$this->filenames || !in_array($filename,$this->filenames))
 			{
 				$this->filenames[] = $filename;
+				Api\Cache::setSession('phpgwapi', __CLASS__, $this->filenames);
 			}
 		}
 	}

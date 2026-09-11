@@ -110,6 +110,13 @@ export class tapAndSwipe {
 	 */
 	public element : HTMLElement  = null;
 
+	// bind() returns a new function reference each call - destroy() needs these exact
+	// references (not the unbound methods) to actually remove what the constructor added.
+	private _boundTouchStart : (event : TouchEvent) => void;
+	private _boundTouchEnd : (event : any) => void;
+	private _boundTouchMove : (event : any) => void;
+	private _boundTouchCancel : (event : any) => void;
+
 	/**
 	 * Constructor
 	 * @param _element
@@ -123,10 +130,14 @@ export class tapAndSwipe {
 		if (!element || !(typeof element != 'string' && element instanceof EventTarget)) return;
 
 		this.element = (element instanceof EventTarget) ? element : document.querySelector(element);
-		this.element.addEventListener('touchstart', this._onTouchStart.bind(this), false);
-		this.element.addEventListener('touchend', this._ontouchEnd.bind(this), false);
-		this.element.addEventListener('touchmove', this._onTouchMove.bind(this), false);
-		this.element.addEventListener('touchcancel', this._onTouchCancel.bind(this), false);
+		this._boundTouchStart = this._onTouchStart.bind(this);
+		this._boundTouchEnd = this._ontouchEnd.bind(this);
+		this._boundTouchMove = this._onTouchMove.bind(this);
+		this._boundTouchCancel = this._onTouchCancel.bind(this);
+		this.element.addEventListener('touchstart', this._boundTouchStart, false);
+		this.element.addEventListener('touchend', this._boundTouchEnd, false);
+		this.element.addEventListener('touchmove', this._boundTouchMove, false);
+		this.element.addEventListener('touchcancel', this._boundTouchCancel, false);
 	}
 
 	_onScrolled(event)
@@ -294,8 +305,9 @@ export class tapAndSwipe {
 	 */
 	public destroy()
 	{
-		this.element.removeEventListener('touchstart', this._onTouchStart);
-		this.element.removeEventListener('touchend', this._ontouchEnd);
-		this.element.removeEventListener('touchcancel', this._onTouchCancel);
+		this.element.removeEventListener('touchstart', this._boundTouchStart);
+		this.element.removeEventListener('touchend', this._boundTouchEnd);
+		this.element.removeEventListener('touchmove', this._boundTouchMove);
+		this.element.removeEventListener('touchcancel', this._boundTouchCancel);
 	}
 }

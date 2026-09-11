@@ -30,6 +30,13 @@ if (($egw_url = getenv('EGW_URL') ?: ($_ENV['EGW_URL'] ?? null) ?: ($GLOBALS['EG
 	$path = parse_url($egw_url, PHP_URL_PATH);
 	$GLOBALS['egw_info']['server']['webserver_url'] = $path ?: $egw_url;
 }
+// EGW_ADMIN_PASSWORD (for the "sysop" account, see doc/phpunit.xml) is generated fresh per
+// install and supplied via environment, not committed - normalize into $GLOBALS so test code
+// can keep reading $GLOBALS['EGW_ADMIN_PASSWORD'] like the other phpunit.xml <var> entries.
+if (($egw_admin_password = getenv('EGW_ADMIN_PASSWORD') ?: ($_ENV['EGW_ADMIN_PASSWORD'] ?? null)))
+{
+	$GLOBALS['EGW_ADMIN_PASSWORD'] = $egw_admin_password;
+}
 // Optional CI-only switch to disable custom push backends (eg. swoolepush)
 // during PHPUnit runs to avoid network retries/backoff impacting runtime.
 if ((string)getenv('EGW_DISABLE_PUSH_BACKENDS') === '1')

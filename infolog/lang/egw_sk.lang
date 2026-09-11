@@ -285,7 +285,6 @@ limit number of description lines (default 5, 0 for no limit)	infolog	sk	Obmedzi
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	sk	Obmedziť šírku stĺpca popisu. Uplatní sa len ak je nastavené obmedzenie riadkov. 0 = bez obmedzenia.
 link	infolog	sk	Odkaz
 linked to %1	infolog	sk	Pripojené na %1
-links	infolog	sk	Odkazy
 links and attached files	infolog	sk	Odkazy a priložené súbory
 links of this entry	infolog	sk	Odkazy pre tento záznam
 links to specified application.  example: {{links/infolog}}	infolog	sk	Odkazy na vybranú aplikáciu. Príklad: {{links/infolog}}

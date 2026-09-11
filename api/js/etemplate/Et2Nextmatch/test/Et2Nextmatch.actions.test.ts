@@ -2,6 +2,8 @@ import {assert} from "@open-wc/testing";
 import {Et2Nextmatch} from "../Et2Nextmatch";
 import {Et2NextmatchActionController, resolveActionApiGetters} from "../Et2NextmatchActionController";
 import {EgwPopupActionImplementation} from "../../../egw_action/EgwPopupActionImplementation";
+import {egw_getActionManager, egw_getObjectManager} from "../../../egw_action/egw_action";
+import {Et2Dialog} from "../../Et2Dialog/Et2Dialog";
 import * as sinon from "sinon";
 
 const egwStub = {
@@ -9,14 +11,20 @@ const egwStub = {
 	image: () => "",
 	tooltipBind: () => {},
 	tooltipUnbind: () => {},
-	preference: () => null,
+	preference: (_key? : string) => null,
 	set_preference: () => {},
 	app_name: () => "addressbook",
+	link: (url : string) => url,
 	uid: () => "nm-test-id",
 	debug: () => {}
 };
 window.egw = function() { return egwStub; } as any;
 Object.assign(window.egw, egwStub);
+
+let resizeObserverErrorHandler : ((event : ErrorEvent) => void) | null = null;
+let resizeObserverRejectionHandler : ((event : PromiseRejectionEvent) => void) | null = null;
+let originalResizeObserver : typeof window.ResizeObserver | undefined;
+let originalWindowOnError : OnErrorEventHandler | null = null;
 
 type FakeAction = {
 	id : string;
@@ -69,8 +77,213 @@ const makeFakeObjectManager = (factory? : (rowId : string, aoi : any) => any) =>
 	unregisterActions: () => {}
 });
 
+const waitForDatagridRows = async(datagrid : any, expectedCount : number) =>
+{
+	for(let i = 0; i < 20; i++)
+	{
+		if((datagrid?.rows?.length || 0) >= expectedCount)
+		{
+			return;
+		}
+		await Promise.resolve();
+		await datagrid?.updateComplete;
+	}
+};
+
+// This helper will hang to the mocha timeout if ever run against a hidden/
+// backgrounded tab - a CDP-controlled tab can report document.hidden === true
+// while still accepting clicks, which pauses rAF entirely and can look exactly
+// like a real stuck-UI bug. Not a risk under CI as configured (Playwright runs
+// with concurrency: 1, genuinely foregrounded), but if this "hangs" locally,
+// check document.visibilityState/document.hidden on the tab before assuming a
+// product regression - this fooled a debugging session twice (see the
+// Et2Datagrid/Et2Nextmatch test-timing audit's methodology note).
+const waitForRenderedDatagridRow = async(datagrid : HTMLElement & { updateComplete? : Promise<unknown> }, rowId : string) : Promise<HTMLElement | null> =>
+{
+	for(let i = 0; i < 20; i++)
+	{
+		const row = datagrid?.shadowRoot?.querySelector(`[data-row-id='${rowId}']`) as HTMLElement | null;
+		if(row)
+		{
+			return row;
+		}
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		await datagrid?.updateComplete;
+	}
+	return null;
+};
+
+const getRenderableRootRows = async(
+	el : Et2Nextmatch,
+	rows : Array<Record<string, any>> = [{id: "addressbook::root", title: "Root"}]
+) : Promise<HTMLElement> =>
+{
+	const rootGrid = el.shadowRoot!.querySelector("et2-datagrid") as any;
+	rootGrid.configurationLoading = false;
+	if(!rootGrid.columns?.length)
+	{
+		rootGrid.columns = [{key: "title", title: "Title"}];
+	}
+	if((rootGrid.rows?.length || 0) === 0)
+	{
+		rootGrid.setInitialRows(rows);
+	}
+	await rootGrid.updateComplete;
+	return rootGrid.shadowRoot!.getElementById("rows") as HTMLElement;
+};
+
+const appendSyntheticDatagridRow = (datagrid : HTMLElement, rowId : string) : HTMLElement =>
+{
+	const shadowRoot = datagrid.shadowRoot ?? (datagrid as any).createRenderRoot();
+	let rowsBody = shadowRoot.getElementById("rows") as HTMLElement | null;
+	if(!rowsBody)
+	{
+		rowsBody = document.createElement("tbody");
+		rowsBody.id = "rows";
+		shadowRoot.append(rowsBody);
+	}
+	const row = document.createElement("tr");
+	row.setAttribute("data-row-id", rowId);
+	rowsBody.append(row);
+	return row;
+};
+
+const makeSyntheticChildGrid = async(
+	rootRows : HTMLElement,
+	rowId : string,
+	parentRowId : string = "parent",
+	selectionMode : "single" | "multiple" = "multiple"
+) =>
+{
+	await customElements.whenDefined("et2-datagrid");
+	const childGrid = document.createElement("et2-datagrid") as any;
+	childGrid.parentRowId = parentRowId;
+	childGrid.selectionMode = selectionMode;
+	childGrid.autoActivateFirstRow = false;
+	(rootRows.getRootNode() as ShadowRoot).append(childGrid);
+	await Promise.resolve();
+	const row = appendSyntheticDatagridRow(childGrid, rowId);
+	return {childGrid, row};
+};
+
+const syntheticRowsBody = (grid : HTMLElement) : HTMLElement =>
+	grid.shadowRoot!.getElementById("rows") as HTMLElement;
+
+const selectSyntheticGridRow = (
+	el : Et2Nextmatch,
+	rootGrid : any,
+	grid : any,
+	rowId : string,
+	replaceSelection : boolean = false
+) =>
+{
+	grid.selectedRowIds = new Set([rowId]);
+	(el as any)._handleSelectionChanged({
+		detail: {
+			selectedRowIds: [rowId],
+			activeRowId: rowId,
+			allSelected: false,
+			replaceSelection
+		},
+		composedPath: () => grid === rootGrid ? [rootGrid] : [grid, rootGrid]
+	});
+};
+
+const activateSyntheticGridRow = (el : Et2Nextmatch, rootGrid : any, grid : any, rowId : string) =>
+{
+	grid.activeRowId = rowId;
+	(el as any)._handleActiveRowChanged({
+		detail: {activeRowId: rowId},
+		composedPath: () => grid === rootGrid ? [rootGrid] : [grid, rootGrid]
+	});
+};
+
 describe("Et2Nextmatch action setup", () =>
 {
+	before(() =>
+	{
+		// This stub does NOT fully disable virtualizer/layout behavior for every
+		// real Et2Nextmatch/Et2Datagrid mounted in this file (several `it`s below
+		// do `document.body.append(el)` and `await el.updateComplete`):
+		// @lit-labs/virtualizer captures `window.ResizeObserver` into a
+		// module-scoped variable when IT is first imported, which - like every
+		// import - happens once, before any test file's before() hook runs. So a
+		// virtualizer's own internal resize observers stay real here, same
+		// import-order situation as Et2Datagrid.test.ts's identical stub (see the
+		// comment at its install site). What this stub DOES reliably neuter is
+		// Et2Datagrid's own `_embeddedChildGridResizeObserver`
+		// (Et2Datagrid.ts, constructed fresh at runtime, reads
+		// `window.ResizeObserver` live) - the mechanism that auto-resyncs an
+		// embedded child grid's reserved height when it resizes. Et2Datagrid.test.ts's
+		// own embedded-height tests don't lean on that live callback either; they
+		// drive `_scheduleVirtualizerLayoutSync()`/`_syncEmbeddedVirtualizedHostHeight()`
+		// directly for the same reason. So: virtualizer range/layout regressions
+		// are not blocked here by design, but embedded child-height
+		// auto-resync-on-resize regressions are, and belong in
+		// Et2Datagrid.test.ts (driven manually, as it already does).
+		originalResizeObserver = window.ResizeObserver;
+		class ResizeObserverStub
+		{
+			observe() {}
+			unobserve() {}
+			disconnect() {}
+		}
+		window.ResizeObserver = ResizeObserverStub as any;
+		originalWindowOnError = window.onerror;
+
+		resizeObserverErrorHandler = (event : ErrorEvent) =>
+		{
+			const message = String(event?.message || "");
+			if(message.includes("ResizeObserver loop completed with undelivered notifications"))
+			{
+				event.preventDefault();
+				event.stopImmediatePropagation?.();
+			}
+		};
+		window.addEventListener("error", resizeObserverErrorHandler, true);
+		window.onerror = (message, source, lineno, colno, error) =>
+		{
+			const text = String(message || error?.message || "");
+			if(text.includes("ResizeObserver loop completed with undelivered notifications"))
+			{
+				return true;
+			}
+			if(typeof originalWindowOnError === "function")
+			{
+				return originalWindowOnError.call(window, message, source, lineno, colno, error);
+			}
+			return false;
+		};
+		resizeObserverRejectionHandler = (event : PromiseRejectionEvent) =>
+		{
+			const message = String((event?.reason && (event.reason.message || event.reason)) || "");
+			if(message.includes("ResizeObserver loop completed with undelivered notifications"))
+			{
+				event.preventDefault();
+			}
+		};
+		window.addEventListener("unhandledrejection", resizeObserverRejectionHandler, true);
+	});
+
+	after(() =>
+	{
+		if(resizeObserverErrorHandler)
+		{
+			window.removeEventListener("error", resizeObserverErrorHandler, true);
+			resizeObserverErrorHandler = null;
+		}
+		if(resizeObserverRejectionHandler)
+		{
+			window.removeEventListener("unhandledrejection", resizeObserverRejectionHandler, true);
+			resizeObserverRejectionHandler = null;
+		}
+		if(originalResizeObserver)
+		{
+			window.ResizeObserver = originalResizeObserver;
+		}
+		window.onerror = originalWindowOnError;
+	});
+
 	/**
 	 * Contract under test:
 	 * - Nextmatch action definitions are retained and linked to a row only when actions are triggered.
@@ -133,6 +346,156 @@ describe("Et2Nextmatch action setup", () =>
 
 	/**
 	 * Contract under test:
+	 * - Recycled datagrid rows do not leave action objects holding detached DOM nodes.
+	 *
+	 * Setup strategy:
+	 * - Create a row action object through the normal popup-target path.
+	 * - Detach that row and customize a later rendered row.
+	 *
+	 * Pass criteria:
+	 * - The detached row action object is removed during row customization.
+	 */
+	it("prunes detached row action objects while customizing rendered rows", () =>
+	{
+		const removeDetached = sinon.spy();
+		const controller : any = new Et2NextmatchActionController({
+			id: "nm_actions_cleanup",
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "addressbook"})
+		} as any);
+		controller.actionManager = {
+			children: [],
+			data: {},
+			getActionById: () => null,
+			addAction: () => controller.actionManager,
+			updateActions: () => {},
+			setDefaultExecute: () => {}
+		};
+		controller.objectManager = makeFakeObjectManager((rowId) => makeFakeRowObject({
+			id: rowId,
+			remove: removeDetached
+		}));
+
+		const row = document.createElement("div");
+		row.setAttribute("data-row-id", "row::detached");
+		document.body.append(row);
+		controller.findEventRow = () => ({rowId: "row::detached", rowElement: row});
+		controller.triggerPopupForRow(new MouseEvent("contextmenu", {bubbles: true, composed: true, cancelable: true}));
+		row.remove();
+
+		const nextRow = document.createElement("div");
+		nextRow.setAttribute("data-row-id", "row::next");
+		document.body.append(nextRow);
+		try
+		{
+			controller.customizeRowElement(nextRow);
+			assert.isTrue(removeDetached.calledOnce, "detached row action object should be removed");
+			assert.isFalse(controller.rowActionObjects.has("row::detached"), "detached action object should leave the map");
+		}
+		finally
+		{
+			nextRow.remove();
+		}
+	});
+
+	/**
+	 * Contract under test:
+	 * - A shortcut declared by a nextmatch action is executed before datagrid key handling.
+	 *
+	 * Setup strategy:
+	 * - Provide a Delete action and an action-object manager spy to the controller.
+	 *
+	 * Pass criteria:
+	 * - Delete is forwarded with its matching shortcut data; an unmatched Ctrl+A is ignored.
+	 */
+	it("forwards matching action shortcuts to the action object manager", () =>
+	{
+		const controller : any = new Et2NextmatchActionController({} as any);
+		const execute = sinon.stub().callsFake((context) => context.keyEvent.keyCode === 46);
+		controller.actionManager = {
+			children: [{
+				id: "delete",
+				shortcut: {keyCode: 46, shift: false, ctrl: false, alt: false}
+			}]
+		};
+		controller.objectManager = {executeActionImplementation: execute};
+
+		const deleteEvent = new KeyboardEvent("keydown", {key: "Delete"});
+		Object.defineProperty(deleteEvent, "keyCode", {value: 46});
+		assert.isTrue(controller.handleShortcut(deleteEvent), "Delete shortcut should be handled");
+		assert.isTrue(execute.calledOnce, "matching shortcut should execute through the action manager");
+		assert.deepInclude(execute.firstCall.args[0].keyEvent, {keyCode: 46, ctrl: false}, "shortcut data should preserve key and modifiers");
+		const selectAllEvent = new KeyboardEvent("keydown", {key: "a", ctrlKey: true});
+		Object.defineProperty(selectAllEvent, "keyCode", {value: 65});
+		assert.isFalse(controller.handleShortcut(selectAllEvent), "unmatched shortcut should remain available to other handlers");
+	});
+
+	/**
+	 * Contract under test:
+	 * - A shortcut runs against "the selected rows", but arrow-key navigation only
+	 *   moves the active row without changing selection.  Mirroring legacy
+	 *   EgwActionObject.forceSelection(), the active row must be folded into the
+	 *   selection before the shortcut executes whenever it isn't already part of it -
+	 *   otherwise a shortcut like Delete would silently act on a stale, previously
+	 *   clicked/selected row instead of the row currently shown as active.
+	 *
+	 * Setup strategy:
+	 * - Provide a Delete action and a host stub exposing getActiveRowId()/selectSingleRow().
+	 * - Exercise three selection states: active row not selected, active row already
+	 *   part of an explicit multi-selection, and "all rows" selected.
+	 *
+	 * Pass criteria:
+	 * - selectSingleRow() is called only in the first case; the other two leave the
+	 *   existing selection untouched.
+	 */
+	it("folds the active row into selection before running a shortcut, unless it already qualifies", () =>
+	{
+		const controller : any = new Et2NextmatchActionController({} as any);
+		controller.actionManager = {
+			children: [{
+				id: "delete",
+				shortcut: {keyCode: 46, shift: false, ctrl: false, alt: false}
+			}]
+		};
+		controller.objectManager = {executeActionImplementation: sinon.stub().returns(true)};
+
+		const deleteEvent = () =>
+		{
+			const event = new KeyboardEvent("keydown", {key: "Delete"});
+			Object.defineProperty(event, "keyCode", {value: 46});
+			return event;
+		};
+
+		// Active row (row-2) was reached by arrow keys, not clicked/selected - a
+		// previously clicked row-0 is still the only thing in `selectedRowIds`.
+		controller.host = {getActiveRowId: () => "row-2", selectSingleRow: sinon.stub()};
+		controller.selectedRowIds = ["row-0"];
+		controller.allSelected = false;
+		controller.handleShortcut(deleteEvent());
+		assert.isTrue(controller.host.selectSingleRow.calledOnceWith("row-2"),
+			"active row not in the selection should be folded in before executing");
+
+		// Active row is already part of an explicit multi-selection (e.g. built via
+		// ctrl-click or the Space-bar toggle) - must survive untouched.
+		controller.host = {getActiveRowId: () => "row-2", selectSingleRow: sinon.stub()};
+		controller.selectedRowIds = ["row-0", "row-2"];
+		controller.allSelected = false;
+		controller.handleShortcut(deleteEvent());
+		assert.isFalse(controller.host.selectSingleRow.called,
+			"active row already selected should not collapse an existing multi-selection");
+
+		// "Select all" doesn't enumerate every id in selectedRowIds - must not be
+		// mistaken for "active row is unselected".
+		controller.host = {getActiveRowId: () => "row-2", selectSingleRow: sinon.stub()};
+		controller.selectedRowIds = [];
+		controller.allSelected = true;
+		controller.handleShortcut(deleteEvent());
+		assert.isFalse(controller.host.selectSingleRow.called,
+			"select-all should not be collapsed just because the active row isn't literally listed");
+	});
+
+	/**
+	 * Contract under test:
 	 * - Selecting a popup action executes the configured handler with the selected row object.
 	 *
 	 * Setup strategy:
@@ -170,7 +533,18 @@ describe("Et2Nextmatch action setup", () =>
 		controller.actionManager = fakeActionManager;
 		controller.objectManager = makeFakeObjectManager((rowId) =>
 		{
-			const rowObject = makeFakeRowObject({id: rowId, links: [] as string[]});
+			const rowObject = makeFakeRowObject({
+				id: rowId,
+				links: [] as string[],
+				parent: {
+					updateSelectedChildren: (child : any, selected : boolean) =>
+					{
+						if(selected) selectedRows.add(child);
+						else selectedRows.delete(child);
+					},
+					updateFocusedChild: () => {}
+				}
+			});
 			rowObject.updateActionLinks = function(links : string[])
 			{
 				this.links = links;
@@ -203,6 +577,839 @@ describe("Et2Nextmatch action setup", () =>
 		controller.triggerPopupForRow(new MouseEvent("contextmenu", {bubbles: true, composed: true, cancelable: true}));
 
 		assert.deepEqual(executedRowIds, ["row::7"], "popup handler should receive selected sender row");
+	});
+
+	/**
+	 * Contract under test:
+	 * - Opening a context menu on one of several Nextmatch-selected rows must
+	 *   synchronize those row objects before popup execution.
+	 *
+	 * Setup strategy:
+	 * - Keep two row ids in the Nextmatch selection model while only the context
+	 *   row remains rendered.
+	 * - Open a popup on one of the rendered rows.
+	 *
+	 * Pass criteria:
+	 * - Popup execution receives both selected row objects, not only the context
+	 *   row that caused lazy action-object creation.
+	 */
+	it("passes all selected rows to popup actions opened from a selected row", () =>
+	{
+		const executedRowIds : string[] = [];
+		const rowObjects = new Map<string, any>();
+		const rows = document.createElement("tbody");
+		for(const rowId of ["addressbook::1"])
+		{
+			const row = document.createElement("tr");
+			row.setAttribute("data-row-id", rowId);
+			rows.append(row);
+		}
+		const fakeActionManager = {
+			children: [] as FakeAction[],
+			data: {},
+			getActionById: () => null,
+			addAction: () => fakeActionManager,
+			updateActions: (actions : Record<string, any>) =>
+			{
+				fakeActionManager.children = Object.entries(actions).map(([id, action]) => ({
+					id,
+					type: action.type || "popup",
+					data: action.data || {},
+					execute: (senders, target) => action.onExecute?.(action, senders, target)
+				}));
+			},
+			setDefaultExecute: () => {}
+		};
+		const controller : any = new Et2NextmatchActionController({
+			id: "nm_popup_multi_selection",
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "addressbook"})
+		} as any);
+		controller.actionManager = fakeActionManager;
+		controller.getRowsBodies = () => [rows];
+		controller.objectManager = makeFakeObjectManager((rowId) =>
+		{
+			const rowObject = makeFakeRowObject({id: rowId, links: [] as string[]});
+			rowObject.forceSelection = () => rowObject._actionSelected = true;
+			rowObject.updateActionLinks = function(links : string[]) { this.links = links; };
+			rowObject.executeActionImplementation = function()
+			{
+				const action = fakeActionManager.children.find((candidate) => candidate.id === this.links[0]);
+				const selected = Array.from(rowObjects.values()).filter((candidate) => candidate._actionSelected);
+				action?.execute(selected, this);
+				return !!action;
+			};
+			rowObjects.set(rowId, rowObject);
+			return rowObject;
+		});
+		controller.initActions({
+			archive: {
+				type: "popup",
+				onExecute: (_action, senders) => executedRowIds.push(...senders.map((sender) => sender.id))
+			}
+		});
+		controller.selectedRowIds = ["addressbook::1", "addressbook::2"];
+		const contextRow = rows.querySelector("[data-row-id='addressbook::1']") as HTMLElement;
+		controller.findEventRow = () => ({rowId: "addressbook::1", rowElement: contextRow});
+
+		controller.triggerPopupForRow(new MouseEvent("contextmenu", {bubbles: true, composed: true, cancelable: true}));
+
+		assert.equal(rowObjects.size, 2, "selection synchronization should materialize the rendered and virtualized selected rows");
+		assert.sameMembers(executedRowIds, ["addressbook::1", "addressbook::2"], "popup action should receive every selected row");
+	});
+
+	/**
+	 * Contract under test:
+	 * - The Nextmatch action bridge forwards every selected row object supplied
+	 *   by the action framework to the configured action execution path.
+	 *
+	 * Setup strategy:
+	 * - Register a default action executor through the controller's normal
+	 *   action-manager initialization.
+	 * - Invoke it with two selected source row objects and one target row.
+	 *
+	 * Pass criteria:
+	 * - The bridge receives the complete ordered sender list and the target
+	 *   unchanged; action-framework selection/visibility logic is not tested.
+	 */
+	it("forwards every selected row to the action execution bridge", () =>
+	{
+		let defaultExecute : Function | null = null;
+		const controller : any = new Et2NextmatchActionController({
+			id: "nm_action_multi_sender",
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "addressbook"})
+		} as any);
+		controller.actionManager = {
+			data: {},
+			getActionById: () => null,
+			addAction: () => controller.actionManager,
+			updateActions: () => {},
+			setDefaultExecute: (handler : Function) => defaultExecute = handler
+		};
+		const executeNextmatchAction = sinon.stub(controller, "executeNextmatchAction");
+		controller.initActions({archive: {data: {nm_action: "submit"}}});
+
+		const sources = [makeFakeRowObject({id: "addressbook::1"}), makeFakeRowObject({id: "addressbook::2"})];
+		const target = makeFakeRowObject({id: "addressbook::target"});
+		defaultExecute!({id: "archive", data: {nm_action: "submit"}}, sources, target);
+
+		assert.strictEqual(executeNextmatchAction.firstCall.args[1], sources, "all selected source rows should be forwarded together");
+		assert.strictEqual(executeNextmatchAction.firstCall.args[2], target, "action target should be forwarded unchanged");
+	});
+
+	/**
+	 * Contract under test:
+	 * - A select-all selection reaches the Nextmatch submit bridge as the legacy
+	 *   `select_all` flag rather than an incomplete list of rendered ids.
+	 *
+	 * Setup strategy:
+	 * - Execute a submit action with an empty id list and `all: true`.
+	 *
+	 * Pass criteria:
+	 * - The submitted Nextmatch value marks `select_all` true.
+	 */
+	it("submits select-all actions as a complete result-set selection", () =>
+	{
+		const el = new Et2Nextmatch();
+		const submit = sinon.spy();
+		el.setInstanceManager({submit, DOMContainer: document.body, app: "addressbook"} as any);
+		const action : any = {id: "archive", data: {nm_action: "submit"}};
+		const controller : any = (el as any)._actionController;
+		controller.actionManager = {
+			getActionById: (id : string) => id === "archive" ? action : null,
+			getActionsByAttr: () => []
+		};
+
+		el.executeAction("archive", {ids: [], all: true});
+
+		assert.isTrue(submit.calledOnce, "select-all action should submit through the instance manager");
+		assert.isTrue(el.value.select_all, "submit payload should represent all matching rows");
+		assert.deepEqual(el.value.selected, [], "select-all should not be reduced to rendered row ids");
+	});
+
+	/**
+	 * Contract under test:
+	 * - The action-system select-all entry delegates selection to Nextmatch rather
+	 *   than selecting only currently materialized action objects.
+	 *
+	 * Setup strategy:
+	 * - Provide a minimal select-all action and capture its registered callback.
+	 *
+	 * Pass criteria:
+	 * - Running the callback calls the host's public select-all bridge once.
+	 */
+	it("routes the select-all action through Nextmatch", () =>
+	{
+		let selectAllHandler : Function | null = null;
+		const host : any = {
+			id: "nm_select_all_action",
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "addressbook"}),
+			selectAllRows: sinon.spy()
+		};
+		const selectAllAction = {set_onExecute: (handler : Function) => selectAllHandler = handler};
+		const controller : any = new Et2NextmatchActionController(host);
+		controller.actionManager = {
+			data: {},
+			getActionById: (id : string) => id === "select_all" ? selectAllAction : null,
+			addAction: () => controller.actionManager,
+			updateActions: () => {},
+			setDefaultExecute: () => {}
+		};
+
+		controller.initActions({});
+		selectAllHandler!();
+
+		assert.isTrue(host.selectAllRows.calledOnce, "select-all action should delegate to the Nextmatch selection bridge");
+	});
+
+	/**
+	 * Contract under test:
+	 * - Nextmatch action managers are scoped by eTemplate instance before widget id.
+	 *
+	 * Setup strategy:
+	 * - Initialize two controllers with the same app and Nextmatch id but different instance ids.
+	 * - Do not pre-create the instance action managers.
+	 *
+	 * Pass criteria:
+	 * - Each controller creates a separate instance action manager, then a separate Nextmatch action manager under it.
+	 */
+	it("creates an eTemplate instance action manager before resolving duplicate nextmatch ids", () =>
+	{
+		const appName = `addressbook_nextmatch_scope_${Date.now()}`;
+		const nextmatchId = "nm";
+		const appActionManager = egw_getActionManager(appName, true, 1);
+		const makeHost = (instanceId : string) => ({
+			id: nextmatchId,
+			egw: () => ({
+				...egwStub,
+				app_name: () => appName
+			}),
+			getInstanceManager: () => ({
+				app: appName,
+				uniqueId: instanceId
+			})
+		});
+		const firstController : any = new Et2NextmatchActionController(makeHost("template_one") as any);
+		const secondController : any = new Et2NextmatchActionController(makeHost("template_two") as any);
+
+		firstController.ensureActionManagers();
+		secondController.ensureActionManagers();
+
+		const instanceOne = appActionManager.getActionById("template_one", 1);
+		const instanceTwo = appActionManager.getActionById("template_two", 1);
+
+		assert.notStrictEqual(firstController.actionManager, secondController.actionManager, "duplicate Nextmatch ids should not share one action manager");
+		assert.isOk(instanceOne, "first eTemplate instance action manager should be created");
+		assert.isOk(instanceTwo, "second eTemplate instance action manager should be created");
+		assert.strictEqual(firstController.actionManager, instanceOne.getActionById(nextmatchId, 1), "first Nextmatch manager should be under the first instance");
+		assert.strictEqual(secondController.actionManager, instanceTwo.getActionById(nextmatchId, 1), "second Nextmatch manager should be under the second instance");
+	});
+
+	it("removes a stale widget action object before creating delegated row object manager", () =>
+	{
+		const appName = `addressbook_nextmatch_object_${Date.now()}`;
+		const nextmatchId = "nm_stale_object";
+		const appObjectManager = egw_getObjectManager(appName, true, 1);
+		const staleObject = appObjectManager.addObject(nextmatchId);
+		const unregisterActions = sinon.spy(staleObject, "unregisterActions");
+		const controller : any = new Et2NextmatchActionController({
+			id: nextmatchId,
+			egw: () => ({
+				...egwStub,
+				app_name: () => appName
+			}),
+			getInstanceManager: () => ({
+				app: appName,
+				uniqueId: `template_${Date.now()}`
+			})
+		} as any);
+
+		controller.ensureActionManagers();
+
+		const matchingObjects = appObjectManager.children.filter((child : any) => child.id === nextmatchId);
+		assert.isTrue(unregisterActions.calledOnce, "stale host-bound object should unregister its action listeners");
+		assert.lengthOf(matchingObjects, 1, "only the delegated object manager should remain for the Nextmatch id");
+		assert.strictEqual(matchingObjects[0], controller.objectManager, "remaining object should be the controller's delegated object manager");
+	});
+
+	/**
+	 * Contract under test:
+	 * - Et2NextmatchActionController only materializes EgwActionObject "children" for rows that
+	 *   are currently selected (lazy/virtualized selection), so children.length always equals
+	 *   selectedChildren.length whenever any selection exists. The inherited
+	 *   EgwActionObject.getAllSelected() compares exactly those two counts, so without a fix it
+	 *   would wrongly report "all selected" the moment any subset of rows is selected - most
+	 *   easily triggered right after a fresh load/reload when a shift-click selects a few of many
+	 *   rows. Mail's delete handler trusts this flag to decide between per-message delete and a
+	 *   destructive whole-folder delete, so a false positive here is safety-critical.
+	 *
+	 * Setup strategy:
+	 * - Build a real objectManager via ensureActionManagers(), then reproduce the exact trap
+	 *   condition by materializing 3 selected child action objects (children.length ===
+	 *   selectedChildren.length === 3) while the controller's authoritative allSelected flag is
+	 *   false, mirroring a 3-row shift-click out of a much larger folder.
+	 *
+	 * Pass criteria:
+	 * - objectManager.getAllSelected() must follow controller.allSelected (false here), not the
+	 *   trivially-equal children/selectedChildren counts.
+	 */
+	it("does not report all-selected from partial selection materialized after reload", () =>
+	{
+		const appName = `mail_nextmatch_allselected_${Date.now()}`;
+		const controller : any = new Et2NextmatchActionController({
+			id: "nm",
+			egw: () => ({
+				...egwStub,
+				app_name: () => appName
+			}),
+			getInstanceManager: () => ({
+				app: appName,
+				uniqueId: `template_${Date.now()}`
+			})
+		} as any);
+
+		controller.ensureActionManagers();
+		controller.allSelected = false;
+
+		for(const rowId of ["row1", "row2", "row3"])
+		{
+			const rowObject = controller.objectManager.addObject(rowId);
+			rowObject.setSelected(true);
+		}
+
+		assert.strictEqual(controller.objectManager.children.length, 3, "sanity: only the selected rows were materialized as children");
+		assert.strictEqual(controller.objectManager.selectedChildren.length, 3, "sanity: children/selectedChildren counts are trivially equal");
+		assert.isFalse(controller.objectManager.getAllSelected(), "partial selection must not be reported as all-selected merely because every materialized child is selected");
+
+		controller.allSelected = true;
+		assert.isTrue(controller.objectManager.getAllSelected(), "a real select-all must still be reported once the controller's authoritative flag is set");
+	});
+
+	/**
+	 * Contract under test:
+	 * - Et2Nextmatch action registration attaches the owning nextmatch pointer
+	 *   on every action, including nested child actions.
+	 *
+	 * Setup strategy:
+	 * - Use a fake action manager that builds a parent action with one child.
+	 * - Initialize actions through the controller.
+	 *
+	 * Pass criteria:
+	 * - Parent and child action data both contain the owning nextmatch instance.
+	 */
+	it("annotates registered actions and children with the owning nextmatch", () =>
+	{
+		const host = {
+			id: "nm_annotate",
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "addressbook"})
+		} as any;
+		const fakeActionManager = {
+			children: [] as any[],
+			data: {},
+			getActionById: () => null,
+			updateActions: () =>
+			{
+				fakeActionManager.children = [{
+					id: "parent",
+					data: {},
+					children: {
+						child: {
+							id: "child",
+							data: {}
+						}
+					}
+				}];
+			},
+			setDefaultExecute: () => {}
+		};
+		const controller : any = new Et2NextmatchActionController(host);
+		controller.actionManager = fakeActionManager;
+		controller.objectManager = makeFakeObjectManager();
+
+		controller.initActions({parent: {caption: "Parent"}});
+
+		assert.strictEqual(fakeActionManager.children[0].data.nextmatch, host, "parent action should reference nextmatch");
+		assert.strictEqual(fakeActionManager.children[0].children.child.data.nextmatch, host, "child action should reference nextmatch");
+	});
+
+	/**
+	 * Contract under test:
+	 * - Controller submit actions provide selected ids, select_all, checkboxes,
+	 *   active filters and the configured action variable from Et2Nextmatch.settings.
+	 *
+	 * Setup strategy:
+	 * - Execute the controller submit path against a real Et2Nextmatch.
+	 * - Stub the instance manager submit path.
+	 *
+	 * Pass criteria:
+	 * - Submit is called once.
+	 * - The generated nextmatch value includes the controller submit payload.
+	 */
+	it("supports submit actions through Et2Nextmatch settings action_var", () =>
+	{
+		const el = new Et2Nextmatch();
+		el.id = "nm";
+		const submit = sinon.spy();
+		const postSubmit = sinon.spy();
+		el.settings = {action_var: "nm_action_id"};
+		el.setInstanceManager({
+			submit,
+			postSubmit,
+			DOMContainer: document.body,
+			app: "addressbook",
+			uniqueId: "nm_submit_uid"
+		} as any);
+		el.applyFilters({filter: "open"}, {reload: false});
+		const controller : any = (el as any)._actionController;
+		controller.actionManager = {
+			getActionsByAttr: () => []
+		};
+
+		const action : any = {
+			id: "archive",
+			caption: "Archive",
+			data: {
+				nm_action: "submit",
+				extra_payload: "kept"
+			}
+		};
+
+		controller.executeNextmatchAction(action, [], null, {ids: ["addressbook::7"], all: false});
+		const value = el.value;
+
+		assert.isTrue(submit.calledOnce, "submit action should use the instance manager submit path");
+		assert.isFalse(postSubmit.called, "regular submit should not use postSubmit");
+		assert.deepEqual(value.selected, ["7"], "selected ids should be converted back to provider ids");
+		assert.equal(value.select_all, false, "select_all flag should be included");
+		assert.equal(value.filter, "open", "active filters should be included");
+		assert.equal(value.extra_payload, "kept", "action data should be included");
+		assert.equal(value.nm_action_id, "archive", "configured action_var should receive the action id");
+		assert.notProperty(value, "nextmatch", "nextmatch object should not be submitted");
+	});
+
+	it("does not overwrite structured datagrid column preferences with legacy migration data", () =>
+	{
+		const originalPreference = egwStub.preference;
+		const originalSetPreference = egwStub.set_preference;
+		const setPreference = sinon.spy();
+		egwStub.preference = (key : string) => key === "nextmatch-addressbook.index.rows-prefs"
+			? [{key: "name", width: "220px", hidden: false}]
+			: null;
+		egwStub.set_preference = setPreference;
+
+		try
+		{
+			const el : any = new Et2Nextmatch();
+			el._seedDatagridColumnPreferencesFromLegacy(
+				"addressbook.index.rows",
+				"addressbook",
+				[{key: "name", title: "Name", width: "120px"}]
+			);
+
+			assert.isFalse(setPreference.called, "existing structured datagrid preference should take precedence");
+		}
+		finally
+		{
+			egwStub.preference = originalPreference;
+			egwStub.set_preference = originalSetPreference;
+		}
+	});
+
+	/**
+	 * Contract under test:
+	 * - Child rows rendered inside expanded child datagrids are equivalent to top-level rows for action materialization.
+	 *
+	 * Setup strategy:
+	 * - Render a real Et2Nextmatch and append a child datagrid inside the root datagrid shadow rows.
+	 * - Select a child row id through the action controller selection bridge.
+	 *
+	 * Pass criteria:
+	 * - The action object manager receives an object for the child row id.
+	 * - The action object interface points at the child datagrid row element.
+	 */
+	it("materializes selected child datagrid rows as action objects", async() =>
+	{
+		const el = new Et2Nextmatch();
+		document.body.append(el);
+		await el.updateComplete;
+
+		const rootRows = await getRenderableRootRows(el);
+		const {childGrid, row: childRow} = await makeSyntheticChildGrid(rootRows, "addressbook::child-1");
+
+		const materialized : any[] = [];
+		const controller = (el as any)._actionController as Et2NextmatchActionController;
+		(controller as any).actionManager = {children: []};
+		(controller as any).objectManager = makeFakeObjectManager((rowId, aoi) =>
+		{
+			const rowObject = makeFakeRowObject({id: rowId, iface: aoi});
+			materialized.push({rowId, rowObject});
+			return rowObject;
+		});
+		(controller as any).getRowsBodies = () => [syntheticRowsBody(childGrid)];
+
+		controller.handleSelectionChanged({
+			selectedRowIds: ["addressbook::child-1"],
+			activeRowId: "addressbook::child-1",
+			allSelected: false
+		});
+
+		assert.deepEqual(materialized.map((entry) => entry.rowId), ["addressbook::child-1"]);
+		assert.strictEqual(
+			materialized[0].rowObject.iface.getDOMNode(),
+			childRow,
+			"child row action object should bind to the child datagrid row element"
+		);
+
+		el.remove();
+	});
+
+	/**
+	 * Contract under test:
+	 * - Context/action target lookup finds rows inside expanded child datagrids.
+	 *
+	 * Setup strategy:
+	 * - Render a real Et2Nextmatch and append a child datagrid inside the root
+	 *   datagrid rows area.
+	 * - Dispatch a composed context event from the rendered child row.
+	 *
+	 * Pass criteria:
+	 * - The action target is the child row element.
+	 * - The materialized action object id is the child row id.
+	 */
+	it("resolves child datagrid rows as action targets", async() =>
+	{
+		const el = new Et2Nextmatch();
+		document.body.append(el);
+		await el.updateComplete;
+
+		const rootRows = await getRenderableRootRows(el);
+		const {childGrid, row: childRow} = await makeSyntheticChildGrid(rootRows, "addressbook::child-context");
+
+		const materialized : any[] = [];
+		const controller = (el as any)._actionController as Et2NextmatchActionController;
+		(controller as any).actionManager = {children: []};
+		(controller as any).objectManager = makeFakeObjectManager((rowId, aoi) =>
+		{
+			const rowObject = makeFakeRowObject({id: rowId, iface: aoi});
+			materialized.push({rowId, rowObject});
+			return rowObject;
+		});
+		(controller as any).getRowsBodies = () => [syntheticRowsBody(childGrid)];
+
+		const event = new MouseEvent("contextmenu", {bubbles: true, cancelable: true, composed: true});
+		Object.defineProperty(event, "composedPath", {
+			value: () => [childRow],
+			configurable: true
+		});
+		const target = controller.findActionTarget(event);
+
+		assert.strictEqual(target.target, childRow, "action target should be the child row element");
+		assert.equal(target.action?.id, "addressbook::child-context", "action object should use the child row id");
+		assert.deepEqual(materialized.map((entry) => entry.rowId), ["addressbook::child-context"]);
+
+		el.remove();
+	});
+
+	/**
+	 * Contract under test:
+	 * - Multi-select state is aggregated across multiple child grids instead of
+	 *   being replaced by the most recently changed child grid.
+	 *
+	 * Setup strategy:
+	 * - Render a Nextmatch with two child datagrids inside the root grid.
+	 * - Select one row in each child grid through their public selection API.
+	 *
+	 * Pass criteria:
+	 * - Et2Nextmatch.getSelection() returns both selected child row ids.
+	 */
+	it("aggregates selected rows from multiple child datagrids", async() =>
+	{
+		const el = new Et2Nextmatch();
+		document.body.append(el);
+		await el.updateComplete;
+
+		const rootRows = await getRenderableRootRows(el);
+		const makeChildGrid = async(rowId : string, parentRowId : string) =>
+		{
+			const {childGrid} = await makeSyntheticChildGrid(rootRows, rowId, parentRowId);
+			return childGrid;
+		};
+
+		const firstChild = await makeChildGrid("addressbook::child-a", "parent-a");
+		const secondChild = await makeChildGrid("addressbook::child-b", "parent-b");
+
+		const rootGrid = el.shadowRoot!.querySelector("et2-datagrid") as any;
+		selectSyntheticGridRow(el, rootGrid, firstChild, "addressbook::child-a");
+		selectSyntheticGridRow(el, rootGrid, secondChild, "addressbook::child-b");
+
+		assert.sameMembers(
+			el.getSelection().ids,
+			["addressbook::child-a", "addressbook::child-b"],
+			"selection should include rows selected in both child grids"
+		);
+
+		el.remove();
+	});
+
+	it("clears parent and sibling selections when a single-select child grid selects a row", async() =>
+	{
+		const el = new Et2Nextmatch();
+		document.body.append(el);
+		await el.updateComplete;
+
+		const rootGrid = el.shadowRoot!.querySelector("et2-datagrid") as any;
+		const rootRows = await getRenderableRootRows(el, [{id: "addressbook::parent", title: "Parent"}]);
+		const makeChildGrid = async(rowId : string, parentRowId : string, selectionMode : "single" | "multiple" = "multiple") =>
+		{
+			const {childGrid} = await makeSyntheticChildGrid(rootRows, rowId, parentRowId, selectionMode);
+			return childGrid;
+		};
+
+		const firstChild = await makeChildGrid("addressbook::child-a", "parent-a");
+		const secondChild = await makeChildGrid("addressbook::child-b", "parent-b", "single");
+		(el as any)._childGrids = () => [firstChild, secondChild];
+		selectSyntheticGridRow(el, rootGrid, rootGrid, "addressbook::parent");
+		selectSyntheticGridRow(el, rootGrid, firstChild, "addressbook::child-a");
+		selectSyntheticGridRow(el, rootGrid, secondChild, "addressbook::child-b");
+
+		assert.deepEqual(el.getSelection().ids, ["addressbook::child-b"], "single-select child should be the only selected grid");
+		assert.deepEqual(Array.from((rootGrid as any).selectedRowIds), [], "parent grid selection should be cleared");
+		assert.deepEqual(Array.from((firstChild as any).selectedRowIds), [], "sibling child selection should be cleared");
+
+		el.remove();
+	});
+
+	it("clears parent and child selections on plain pointer replacement", async() =>
+	{
+		const el = new Et2Nextmatch();
+		document.body.append(el);
+		await el.updateComplete;
+
+		const rootGrid = el.shadowRoot!.querySelector("et2-datagrid") as any;
+		const rootRows = await getRenderableRootRows(el, [{id: "addressbook::parent", title: "Parent"}]);
+		const {childGrid} = await makeSyntheticChildGrid(rootRows, "addressbook::child", "parent");
+		(el as any)._childGrids = () => [childGrid];
+
+		selectSyntheticGridRow(el, rootGrid, rootGrid, "addressbook::parent");
+		selectSyntheticGridRow(el, rootGrid, childGrid, "addressbook::child");
+		assert.sameMembers(
+			el.getSelection().ids,
+			["addressbook::parent", "addressbook::child"],
+			"programmatic selection can still aggregate across grids"
+		);
+
+		selectSyntheticGridRow(el, rootGrid, rootGrid, "addressbook::parent", true);
+		assert.deepEqual(el.getSelection().ids, ["addressbook::parent"], "plain parent click should clear child selection");
+		assert.deepEqual(Array.from((childGrid as any).selectedRowIds), [], "child grid DOM selection should be cleared");
+
+		selectSyntheticGridRow(el, rootGrid, childGrid, "addressbook::child");
+		assert.sameMembers(
+			el.getSelection().ids,
+			["addressbook::parent", "addressbook::child"],
+			"setup should restore both selections before testing child click"
+		);
+
+		selectSyntheticGridRow(el, rootGrid, childGrid, "addressbook::child", true);
+		assert.deepEqual(el.getSelection().ids, ["addressbook::child"], "plain child click should clear parent selection");
+		assert.deepEqual(Array.from((rootGrid as any).selectedRowIds), [], "parent grid DOM selection should be cleared");
+
+		el.remove();
+	});
+
+	it("submits selected rows aggregated from multiple child datagrids", async() =>
+	{
+		const el = new Et2Nextmatch();
+		el.id = "nm";
+		const submit = sinon.spy();
+		el.setInstanceManager({
+			submit,
+			DOMContainer: document.body,
+			app: "addressbook",
+			uniqueId: "nm_child_selection_submit_uid"
+		} as any);
+		document.body.append(el);
+		await el.updateComplete;
+
+		const action : any = {
+			id: "view_org",
+			data: {}
+		};
+		const controller : any = (el as any)._actionController;
+		controller.actionManager = {
+			getActionById: (id) => id === "view_org" ? action : null,
+			getActionsByAttr: () => []
+		};
+		const rootGrid = el.shadowRoot!.querySelector("et2-datagrid") as any;
+		const rootRows = await getRenderableRootRows(el);
+		const makeChildGrid = async(rowId : string, parentRowId : string) =>
+		{
+			const {childGrid} = await makeSyntheticChildGrid(rootRows, rowId, parentRowId);
+			return childGrid;
+		};
+
+		const firstChild = await makeChildGrid("addressbook::child-a", "parent-a");
+		const secondChild = await makeChildGrid("addressbook::child-b", "parent-b");
+		selectSyntheticGridRow(el, rootGrid, firstChild, "addressbook::child-a");
+		selectSyntheticGridRow(el, rootGrid, secondChild, "addressbook::child-b");
+		el.executeAction("view_org", undefined, {nmAction: "submit"});
+
+		assert.isTrue(submit.calledOnce, "submit action should submit the instance manager");
+		assert.sameMembers(el.value.selected, ["child-a", "child-b"], "submit payload should include selected rows from both child grids");
+
+		el.remove();
+	});
+
+	it("keeps only one active row across parent and child datagrids", async() =>
+	{
+		const el = new Et2Nextmatch();
+		document.body.append(el);
+		await el.updateComplete;
+
+		const rootGrid = el.shadowRoot!.querySelector("et2-datagrid") as any;
+		const rootRows = await getRenderableRootRows(el, [{id: "addressbook::parent", title: "Parent"}]);
+		const makeChildGrid = async(rowId : string, parentRowId : string) =>
+		{
+			const {childGrid} = await makeSyntheticChildGrid(rootRows, rowId, parentRowId);
+			return childGrid;
+		};
+
+		const firstChild = await makeChildGrid("addressbook::child-a", "parent-a");
+		const secondChild = await makeChildGrid("addressbook::child-b", "parent-b");
+		(el as any)._childGrids = () => [firstChild, secondChild];
+		activateSyntheticGridRow(el, rootGrid, rootGrid, "addressbook::parent");
+		activateSyntheticGridRow(el, rootGrid, firstChild, "addressbook::child-a");
+		activateSyntheticGridRow(el, rootGrid, secondChild, "addressbook::child-b");
+
+		assert.isNull((rootGrid as any).activeRowId, "parent active row should be cleared when child grid becomes active");
+		assert.isNull((firstChild as any).activeRowId, "sibling child active row should be cleared");
+		assert.equal((secondChild as any).activeRowId, "addressbook::child-b", "latest active child grid should keep active row");
+
+		el.remove();
+	});
+
+	it("can execute a plain action through the controller submit path", () =>
+	{
+		const el = new Et2Nextmatch();
+		el.id = "nm";
+		const submit = sinon.spy();
+		el.setInstanceManager({
+			submit,
+			DOMContainer: document.body,
+			app: "addressbook",
+			uniqueId: "nm_view_org_uid"
+		} as any);
+		const action : any = {
+			id: "view_org",
+			data: {}
+		};
+		const controller : any = (el as any)._actionController;
+		controller.actionManager = {
+			getActionById: (id) => id === "view_org" ? action : null,
+			getActionsByAttr: () => []
+		};
+
+		const handled = el.executeAction("view_org", {ids: ["org_name:Example"], all: false}, {nmAction: "submit"});
+		const value = el.value;
+
+		assert.isTrue(handled, "existing action should be handled");
+		assert.isTrue(submit.calledOnce, "forced submit action should submit the instance manager");
+		assert.deepEqual(value.selected, ["org_name:Example"], "selected ids should be submitted");
+		assert.equal(value.action, "view_org", "default action_var should receive the action id");
+		assert.notProperty(action.data, "nm_action", "temporary nm_action should not remain on action data");
+	});
+
+	it("executes actions against the current selection when selection is omitted", () =>
+	{
+		const el = new Et2Nextmatch();
+		el.id = "nm";
+		const submit = sinon.spy();
+		el.setInstanceManager({
+			submit,
+			DOMContainer: document.body,
+			app: "addressbook",
+			uniqueId: "nm_current_selection_uid"
+		} as any);
+		const action : any = {
+			id: "view_org",
+			data: {}
+		};
+		const controller : any = (el as any)._actionController;
+		controller.actionManager = {
+			getActionById: (id) => id === "view_org" ? action : null,
+			getActionsByAttr: () => []
+		};
+		sinon.stub(el, "getSelection").returns({ids: ["addressbook::99"], all: false});
+
+		el.executeAction("view_org", undefined, {nmAction: "submit"});
+
+		assert.deepEqual(el.value.selected, ["99"], "omitted selection should use the nextmatch current selection");
+	});
+
+	/**
+	 * Contract under test:
+	 * - Several apps (eg. tracker, infolog) still declare an "open_popup" action's popup as a
+	 *   plain, CSS-toggled element (`<et2-box id="foo_popup" class="action_popup prompt">`) left
+	 *   over from the legacy `<nextmatch>` widget, instead of a real `<et2-dialog>`.
+	 * - openActionPopup() must upgrade that element into a real dialog and open it - like
+	 *   nm_open_popup() already does for the few actions whose onExecute calls it directly -
+	 *   instead of failing to find a dialog API on it and silently falling through to a real
+	 *   form submit.
+	 *
+	 * Setup strategy:
+	 * - Build a minimal non-dialog popup element (plain box, ".promptheader" title, one
+	 *   "et2-button" child) named "<action id>_popup", matching the affected templates.
+	 * - Execute the action as "open_popup".
+	 *
+	 * Pass criteria:
+	 * - The instance manager's submit() is never called.
+	 * - The popup element is upgraded in place into an Et2Dialog and shown.
+	 */
+	it("upgrades a legacy non-dialog action popup instead of falling through to submit", () =>
+	{
+		const el = new Et2Nextmatch();
+		el.id = "nm";
+		const submit = sinon.spy();
+		el.setInstanceManager({
+			submit,
+			DOMContainer: document.body,
+			app: "tracker",
+			uniqueId: "nm_legacy_popup_uid"
+		} as any);
+
+		const popup = document.createElement("div");
+		popup.id = "admin_popup";
+		popup.className = "action_popup prompt";
+		const header = document.createElement("div");
+		header.className = "promptheader";
+		popup.append(header);
+		popup.append(document.createElement("et2-button"));
+		document.body.append(popup);
+
+		const action : any = {id: "admin", data: {}};
+		const controller : any = (el as any)._actionController;
+		controller.actionManager = {
+			getActionById: (id) => id === "admin" ? action : null,
+			getActionsByAttr: () => []
+		};
+
+		try
+		{
+			const handled = el.executeAction("admin", {ids: ["tracker::10"], all: false}, {nmAction: "open_popup"});
+
+			assert.isTrue(handled, "open_popup action should report itself as handled");
+			assert.isFalse(submit.called, "a legacy non-dialog popup must not fall through to a real submit");
+
+			const upgraded = document.body.querySelector("#admin_popup");
+			assert.instanceOf(upgraded, Et2Dialog, "plain popup element should be upgraded into a real dialog");
+			assert.isTrue((upgraded as any).open, "upgraded dialog should be shown");
+		}
+		finally
+		{
+			document.body.querySelector("#admin_popup")?.remove();
+		}
 	});
 
 	/**
@@ -273,6 +1480,195 @@ describe("Et2Nextmatch action setup", () =>
 
 	/**
 	 * Contract under test:
+	 * - Right-clicking a visible row after the addressbook named row template
+	 *   has loaded and the grid has been scrolled must not surface the datagrid
+	 *   missing-template warning.
+	 *
+	 * Setup strategy:
+	 * - Configure the same named template used by addressbook `index.xet`.
+	 * - Resolve template data and preload enough rows for a visible grid.
+	 * - Dispatch scroll and then a composed contextmenu event from a rendered row.
+	 *
+	 * Pass criteria:
+	 * - Rows are rendered before the contextmenu event.
+	 * - Row context-menu handling is invoked.
+	 * - `Et2Datagrid: No row template configured` is not logged.
+	 */
+	it("does not warn about missing row template when right-clicking a visible row after scroll", async() =>
+	{
+		const el = new Et2Nextmatch();
+		el.setAttribute("template", "addressbook.index.rows");
+		el.rows = [{
+			id: "addressbook::1",
+			data: {name: "Contact 1"}
+		}];
+		const rowTemplate = document.createElement("template");
+		rowTemplate.innerHTML = `
+			<tr>
+				<td data-col-key="name"><span data-name="name"></span></td>
+			</tr>
+		`;
+		const fromTemplate = sinon.stub((el as any)._rowProvider, "fromTemplate").resolves({
+			rowTemplateId: "addressbook.index.rows",
+			rowTemplate,
+			rowTemplateXml: null,
+			rowTemplateAttrMap: {},
+			loaderTemplate: null,
+			columns: [{key: "name", title: "Name"}]
+		});
+		let debug : sinon.SinonSpy | null = null;
+		let triggerPopupForRow : sinon.SinonStub | null = null;
+		try
+		{
+			debug = sinon.spy(egwStub, "debug");
+			document.body.append(el);
+			await el.updateComplete;
+			await el.updateComplete;
+
+			const datagrid = el.shadowRoot?.querySelector("et2-datagrid") as HTMLElement & { updateComplete? : Promise<unknown> };
+			await datagrid?.updateComplete;
+			await waitForDatagridRows(datagrid, 1);
+			assert.isTrue(!!(datagrid as any)?.templateData?.rowTemplate, "row template should be loaded before right-click");
+			assert.equal((datagrid as any)?.rows?.length, 1, "datagrid should have row data before right-click");
+
+			const body = datagrid?.shadowRoot?.querySelector(".dg-body") as HTMLElement | null;
+			body!.scrollTop = 120;
+			body!.dispatchEvent(new Event("scroll", {bubbles: true, composed: true}));
+
+			const row = await waitForRenderedDatagridRow(datagrid, "addressbook::1");
+			assert.isNotNull(row, "a row should be visible before right-click");
+
+			triggerPopupForRow = sinon.stub((el as any)._actionController, "triggerPopupForRow").returns(true);
+			const event = new MouseEvent("contextmenu", {bubbles: true, cancelable: true, composed: true});
+			row!.dispatchEvent(event);
+
+			assert.isTrue(triggerPopupForRow.calledOnce, "right-click should use row popup handling");
+			assert.isTrue(event.defaultPrevented, "row context menu should be intercepted");
+			assert.isFalse(debug!.getCalls().some((call) =>
+					(call.args as any[])[0] === "warn" && (call.args as any[])[1] === "Et2Datagrid: No row template configured"),
+				"missing-template warning should not be logged after rows are visible");
+		}
+		finally
+		{
+			triggerPopupForRow?.restore();
+			debug?.restore();
+			fromTemplate.restore();
+			el.remove();
+		}
+	});
+
+	/**
+	 * Contract under test:
+	 * - Right-clicking a row while the addressbook named row template is still
+	 *   loading must not surface the datagrid missing-template warning.
+	 *
+	 * Setup strategy:
+	 * - Configure the same named template used by addressbook `index.xet`.
+	 * - Keep row-template resolution pending during first render.
+	 * - Dispatch a composed contextmenu event from a datagrid row.
+	 *
+	 * Pass criteria:
+	 * - Row context-menu handling is invoked.
+	 * - `Et2Datagrid: No row template configured` is not logged before template
+	 *   resolution completes.
+	 */
+	it("does not warn about missing row template when right-clicking a row during initial template load", async() =>
+	{
+		const el = new Et2Nextmatch();
+		el.setAttribute("template", "addressbook.index.rows");
+		let resolveTemplate : (value : any) => void = () => {};
+		const templatePromise = new Promise((resolve) =>
+		{
+			resolveTemplate = resolve;
+		});
+		const fromTemplate = sinon.stub((el as any)._rowProvider, "fromTemplate").returns(templatePromise);
+		let debug : sinon.SinonSpy | null = null;
+		let triggerPopupForRow : sinon.SinonStub | null = null;
+		try
+		{
+			debug = sinon.spy(egwStub, "debug");
+			document.body.append(el);
+			await el.updateComplete;
+
+			const datagrid = el.shadowRoot?.querySelector("et2-datagrid") as HTMLElement & { updateComplete? : Promise<unknown> };
+			await datagrid?.updateComplete;
+
+			const row = document.createElement("tr");
+			row.setAttribute("data-row-id", "addressbook::1");
+			datagrid?.shadowRoot?.append(row);
+			triggerPopupForRow = sinon.stub((el as any)._actionController, "triggerPopupForRow").returns(true);
+			const event = new MouseEvent("contextmenu", {bubbles: true, cancelable: true, composed: true});
+			row.dispatchEvent(event);
+
+			assert.isTrue(triggerPopupForRow.calledOnce, "right-click should use row popup handling");
+			assert.isTrue(event.defaultPrevented, "row context menu should be intercepted");
+			assert.isFalse(debug!.getCalls().some((call) =>
+					(call.args as any[])[0] === "warn" && (call.args as any[])[1] === "Et2Datagrid: No row template configured"),
+				"missing-template warning should not be logged while row template is loading");
+		}
+		finally
+		{
+			resolveTemplate(null);
+			await Promise.resolve();
+			triggerPopupForRow?.restore();
+			debug?.restore();
+			fromTemplate.restore();
+			el.remove();
+		}
+	});
+
+	/**
+	 * Contract under test:
+	 * - Right-clicking the last visible row after scrolling must not throw when
+	 *   the datagrid's virtualized row index cache contains unloaded gaps.
+	 *
+	 * Setup strategy:
+	 * - Render a Nextmatch with a child datagrid.
+	 * - Emulate sparse datagrid row state with only the last row loaded.
+	 * - Dispatch contextmenu from that last row.
+	 *
+	 * Pass criteria:
+	 * - Contextmenu handling does not throw while selecting the action row.
+	 * - The last row is selected through the datagrid.
+	 */
+	it("selects sparse last row without throwing when right-clicked", async() =>
+	{
+		const el = new Et2Nextmatch();
+		document.body.append(el);
+		await el.updateComplete;
+
+		const datagrid = el.shadowRoot?.querySelector("et2-datagrid") as any;
+		datagrid.rows = [{id: "addressbook::last", data: {label: "Last row"}}];
+		datagrid._rowsByIndex = [
+			undefined,
+			undefined,
+			{id: "addressbook::last", data: {label: "Last row"}}
+		];
+		const row = document.createElement("tr");
+		row.setAttribute("data-row-id", "addressbook::last");
+		datagrid.shadowRoot?.append(row);
+		const controller : any = (el as any)._actionController;
+		const fakeRowObject = {
+			forceSelection: sinon.spy(),
+			setSelected: sinon.spy(),
+			setFocused: sinon.spy(),
+			executeActionImplementation: sinon.stub().returns(true)
+		};
+		const ensureRowActionObject = sinon.stub(controller, "ensureRowActionObject").returns(fakeRowObject);
+
+		const event = new MouseEvent("contextmenu", {bubbles: true, cancelable: true, composed: true});
+		assert.doesNotThrow(() => row.dispatchEvent(event),
+			"right-click on sparse last row should not throw while selecting it");
+		assert.deepEqual(Array.from(datagrid.selectedRowIds), ["addressbook::last"], "last row should be selected");
+		assert.equal(datagrid.activeRowIndex, 2, "selection should use sparse row index");
+		assert.isTrue(fakeRowObject.forceSelection.calledOnce, "action row should still be force-selected");
+
+		ensureRowActionObject.restore();
+		el.remove();
+	});
+
+	/**
+	 * Contract under test:
 	 * - Row popup flow does not re-select rows that are already selected.
 	 *
 	 * Setup strategy:
@@ -293,6 +1689,8 @@ describe("Et2Nextmatch action setup", () =>
 		row.setAttribute("data-row-id", "row::same");
 		const fakeRowObject = {
 			forceSelection: sinon.spy(),
+			setSelected: sinon.spy(),
+			setFocused: sinon.spy(),
 			executeActionImplementation: sinon.stub().returns(true)
 		};
 
@@ -357,6 +1755,317 @@ describe("Et2Nextmatch action setup", () =>
 
 	/**
 	 * Contract under test:
+	 * - Mobile default-click-to-open must not accumulate duplicate listeners on
+	 *   the shared rows container as new virtualized rows are materialized.
+	 *
+	 * Background:
+	 * - Nextmatch rows are virtualized: ensureRowActionObject() creates a
+	 *   brand-new action-object interface (AOI) for every distinct row the
+	 *   first time it's selected/clicked. Each row's EgwActionObject points
+	 *   findActionTargetHandler at the shared objectManager, whose own AOI
+	 *   (dragDropAOI) already registers directly on the shared rows container
+	 *   (see syncDragDropRegistration()). EgwPopupActionImplementation.
+	 *   registerAction() now refuses to bind anything for a delegate whose own
+	 *   DOM node differs from that parent node - matching how
+	 *   egwDragActionImplementation/EgwDropActionImplementation already behave -
+	 *   so no row ever adds its own copy of the listener. Before that fix, the
+	 *   "already delegated" check was tracked per-row-AOI rather than per-
+	 *   parent-node, so every newly materialized row believed it was first and
+	 *   permanently added another 'click' listener (mobile binds via
+	 *   addEventListener, not desktop's idempotent property assignment),
+	 *   opening one dialog per distinct row ever materialized in the session.
+	 *
+	 * Setup strategy:
+	 * - Build a real controller against a real rows container and register a
+	 *   real popup action, so the real egw_action registration path runs.
+	 * - Force window.egwIsMobile() to report true, matching the reported
+	 *   platform.
+	 * - Materialize several distinct rows the same way selection/keyboard
+	 *   navigation/taps do, via the controller's own row-materialization entry
+	 *   point.
+	 *
+	 * Pass criteria:
+	 * - No additional 'click' listener is added to the shared rows container
+	 *   beyond the one binding the container already owns.
+	 */
+	it("does not accumulate duplicate default-click listeners on the shared rows container as rows are materialized (mobile)", () =>
+	{
+		const originalIsMobile = window.egwIsMobile;
+		(window as any).egwIsMobile = () => true;
+
+		const rows = document.createElement("tbody");
+		rows.id = "rows";
+		document.body.append(rows);
+
+		const controller : any = new Et2NextmatchActionController({
+			id: `nm_mobile_click_dedup_${Date.now()}`,
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "addressbook"})
+		} as any);
+		controller.getRowsBody = () => rows;
+
+		try
+		{
+			controller.initActions({
+				open: {type: "popup", caption: "Open"}
+			});
+
+			const addEventListenerSpy = sinon.spy(rows, "addEventListener");
+
+			for(const rowId of ["row::a", "row::b", "row::c"])
+			{
+				const rowElement = document.createElement("tr");
+				rowElement.setAttribute("data-row-id", rowId);
+				rows.append(rowElement);
+				controller.ensureRowActionObject(rowId, rowElement);
+			}
+
+			const newClickBindings = addEventListenerSpy.getCalls().filter((call : any) => call.args[0] === "click");
+			assert.lengthOf(newClickBindings, 0, "materializing new virtualized rows must not add duplicate default-click listeners on the shared rows container");
+
+			addEventListenerSpy.restore();
+		}
+		finally
+		{
+			(window as any).egwIsMobile = originalIsMobile;
+			rows.remove();
+		}
+	});
+
+	/**
+	 * Contract under test:
+	 * - EgwPopupActionImplementation.registerAction() must never bind a listener
+	 *   for a delegate whose own DOM node differs from its parent's node,
+	 *   matching egwDragActionImplementation/EgwDropActionImplementation's
+	 *   existing `node !== parentNode -> return false` guard.
+	 *
+	 * Background:
+	 * - This is the framework-level fix underlying the Nextmatch regression
+	 *   test above: a widget with many distinct children (e.g. Nextmatch's
+	 *   virtualized rows) delegates action-target resolution to a shared
+	 *   parent via findActionTargetHandler. The parent registers its own real
+	 *   listener directly; children must never add their own copy, regardless
+	 *   of how many distinct child AOIs ever call registerAction.
+	 *
+	 * Setup strategy:
+	 * - A parent node with its own AOI/context (node === parentNode) and three
+	 *   distinct child AOIs/contexts that each delegate to that same parent.
+	 *
+	 * Pass criteria:
+	 * - Only the parent's own registerAction() call binds a real listener;
+	 *   every child call returns false and adds nothing to the DOM.
+	 */
+	it("never binds a listener for a delegate whose node differs from its parent's node", () =>
+	{
+		const popup : any = new EgwPopupActionImplementation();
+		const parentNode = document.createElement("div");
+		document.body.append(parentNode);
+		(parentNode as any).findActionTarget = () => ({target: null, action: null});
+
+		// The parent's AOI needs getWidget() (read by registerAction() to resolve parentNode
+		// via _context.findActionTargetHandler.iface.getWidget()) in addition to getDOMNode()
+		// (read for its own direct registration) - matching Et2NextmatchDragDropAOI/
+		// EgwDragDropShoelaceTree, which implement both against the same underlying node.
+		const parentAoi : any = {getDOMNode: () => parentNode, getWidget: () => parentNode};
+		const parentContext : any = {iface: parentAoi, manager: {getActionsByAttr: () => []}};
+		const addEventListenerSpy = sinon.spy(parentNode, "addEventListener");
+
+		try
+		{
+			// Parent registers itself directly (no findActionTargetHandler of its own) -
+			// mirrors Et2NextmatchActionController's objectManager / Et2Tree's widget_object.
+			const parentRegistered = popup.registerAction(parentAoi, sinon.spy(), parentContext);
+			assert.isTrue(parentRegistered, "the parent's own direct registration should succeed");
+
+			for(const id of ["child::a", "child::b", "child::c"])
+			{
+				const childNode = document.createElement("div");
+				const childAoi : any = {getDOMNode: () => childNode};
+				const childContext : any = {
+					iface: childAoi,
+					manager: {getActionsByAttr: () => []},
+					// Points at the parent's own EgwActionObject-like context (which has .iface),
+					// not directly at its AOI - matching how Et2NextmatchActionController sets
+					// rowObject.findActionTargetHandler = this.objectManager (not = dragDropAOI).
+					findActionTargetHandler: parentContext
+				};
+				const childRegistered = popup.registerAction(childAoi, sinon.spy(), childContext);
+				assert.isFalse(childRegistered, `delegate ${id} must not bind its own listener onto the shared parent`);
+			}
+
+			const clickBindings = addEventListenerSpy.getCalls().filter((call : any) => call.args[0] === "click" || call.args[0] === "contextmenu");
+			assert.lengthOf(clickBindings, 1, "only the parent's own registration should ever bind a real listener on the shared node");
+		}
+		finally
+		{
+			addEventListenerSpy.restore();
+			parentNode.remove();
+		}
+	});
+
+	/**
+	 * Contract under test:
+	 * - registerAction() -> unregisterAction() -> registerAction() on the same
+	 *   node/AOI must leave exactly one live default-click binding, not two.
+	 *
+	 * Background:
+	 * - registerAction() used to bookkeep a bogus {type:'contextmenu',
+	 *   listener:_callback} entry that never matched the real 'click'/
+	 *   'ondblclick' binding _registerDefault() actually created, so
+	 *   unregisterAction() could never remove it. Any widget that re-registers
+	 *   on the same node/AOI (Et2NextmatchActionController.
+	 *   syncDragDropRegistration(), called on every render; Et2Tree's
+	 *   _link_actions(); calendar's et2_widget_timegrid on window resize; any
+	 *   Et2Widget re-running set_actions()) would accumulate one more listener
+	 *   per re-registration on mobile, firing the default action once per
+	 *   accumulated listener.
+	 *
+	 * Pass criteria:
+	 * - After register -> unregister -> register, exactly one real 'click'
+	 *   entry is tracked, and a single dispatched click fires the callback
+	 *   exactly once.
+	 */
+	it("leaves exactly one live default-click binding after register/unregister/register (mobile)", () =>
+	{
+		const originalIsMobile = window.egwIsMobile;
+		(window as any).egwIsMobile = () => true;
+
+		const popup : any = new EgwPopupActionImplementation();
+		const node = document.createElement("div");
+		document.body.append(node);
+
+		const aoi : any = {getDOMNode: () => node};
+		const context : any = {iface: aoi, manager: {getActionsByAttr: () => []}};
+		const callback = sinon.spy();
+
+		try
+		{
+			popup.registerAction(aoi, callback, context);
+			popup.unregisterAction(aoi);
+			popup.registerAction(aoi, callback, context);
+
+			const clickEntries = aoi.handlers["popup"].filter((h : any) => h.type === "click");
+			assert.lengthOf(clickEntries, 1, "exactly one real click binding should be tracked after re-registration");
+
+			node.dispatchEvent(new MouseEvent("click", {bubbles: true, cancelable: true}));
+
+			assert.equal(callback.callCount, 1, "default action should fire exactly once per click, not once per stale accumulated listener");
+		}
+		finally
+		{
+			(window as any).egwIsMobile = originalIsMobile;
+			node.remove();
+		}
+	});
+
+	/**
+	 * Contract under test:
+	 * - unregisterAction() must clear a desktop default-dblclick binding by
+	 *   nulling the `ondblclick` property, since removeEventListener() cannot
+	 *   undo a plain property assignment.
+	 *
+	 * Pass criteria:
+	 * - After register, node.ondblclick is a function; after unregister, it's
+	 *   null; after re-registering, invoking it fires the callback exactly once.
+	 */
+	it("clears the ondblclick property binding on unregister (desktop)", () =>
+	{
+		const popup : any = new EgwPopupActionImplementation();
+		const node = document.createElement("div");
+		document.body.append(node);
+
+		const aoi : any = {getDOMNode: () => node};
+		const context : any = {iface: aoi, manager: {getActionsByAttr: () => []}};
+		const callback = sinon.spy();
+
+		try
+		{
+			popup.registerAction(aoi, callback, context);
+			assert.isFunction(node.ondblclick, "default double-click handler should be bound");
+
+			popup.unregisterAction(aoi);
+			assert.isNull(node.ondblclick, "unregisterAction should null out the ondblclick property binding");
+
+			popup.registerAction(aoi, callback, context);
+			(node.ondblclick as Function)(new MouseEvent("dblclick", {bubbles: true, cancelable: true}));
+			assert.equal(callback.callCount, 1, "default action should fire exactly once after re-registration");
+		}
+		finally
+		{
+			node.remove();
+		}
+	});
+
+	/**
+	 * Contract under test:
+	 * - unregisterAction() must dispose the tapAndSwipe instance _registerContext()
+	 *   creates for long-press/tap-and-hold context menu support, not just remove
+	 *   the synthetic 'tapandhold' event listener.
+	 *
+	 * Background:
+	 * - _handleTapHold() creates a `new tapAndSwipe(_node, {...})` on every
+	 *   registration. tapAndSwipe's constructor binds its own internal
+	 *   touchstart/touchend/touchmove/touchcancel listeners directly on the node
+	 *   to detect the gesture. Without disposing the instance on unregister,
+	 *   every re-registration cycle (e.g. Et2NextmatchActionController.
+	 *   syncDragDropRegistration(), called on every render) would leak another
+	 *   full instance's worth of touch listeners - each one independently
+	 *   detecting the same real gesture and firing its own stale callback,
+	 *   the same class of bug as the default-click handler, just for long-press.
+	 *
+	 * Setup strategy:
+	 * - Track net add/remove counts per touch event type across several
+	 *   register/unregister cycles on the same node/AOI.
+	 *
+	 * Pass criteria:
+	 * - touchstart/touchend/touchmove/touchcancel all net to zero after each
+	 *   full register+unregister cycle - nothing is left bound.
+	 */
+	it("disposes the tapAndSwipe instance on unregister instead of leaking its touch listeners", () =>
+	{
+		const popup : any = new EgwPopupActionImplementation();
+		const node = document.createElement("div");
+		document.body.append(node);
+
+		const aoi : any = {getDOMNode: () => node};
+		const context : any = {iface: aoi, manager: {getActionsByAttr: () => []}};
+		const callback = sinon.spy();
+
+		const net : Record<string, number> = {};
+		const addOrig = node.addEventListener.bind(node);
+		const removeOrig = node.removeEventListener.bind(node);
+		node.addEventListener = ((type : string, listener : any, opts? : any) =>
+		{
+			net[type] = (net[type] || 0) + 1;
+			return addOrig(type, listener, opts);
+		}) as any;
+		node.removeEventListener = ((type : string, listener : any, opts? : any) =>
+		{
+			net[type] = (net[type] || 0) - 1;
+			return removeOrig(type, listener, opts);
+		}) as any;
+
+		try
+		{
+			for(let i = 0; i < 4; i++)
+			{
+				popup.registerAction(aoi, callback, context);
+				popup.unregisterAction(aoi);
+			}
+
+			for(const type of ["touchstart", "touchend", "touchmove", "touchcancel"])
+			{
+				assert.equal(net[type], 0, `${type} listeners must not accumulate across repeated register/unregister cycles`);
+			}
+		}
+		finally
+		{
+			node.remove();
+		}
+	});
+
+	/**
+	 * Contract under test:
 	 * - Long-press on touch/pen triggers context popup after delay.
 	 *
 	 * Setup strategy:
@@ -381,7 +2090,7 @@ describe("Et2Nextmatch action setup", () =>
 		try
 		{
 			controller.handlePointerDown(event);
-			await clock.tickAsync(560);
+			clock.tick(560);
 			assert.isTrue(triggerPopupForRow.calledOnce, "long-press should trigger popup action");
 		}
 		finally
@@ -439,6 +2148,62 @@ describe("Et2Nextmatch action setup", () =>
 
 	/**
 	 * Contract under test:
+	 * - Delegated row popup actions execute on the row object.
+	 * - Popup context still exposes the clicked widget as the clipboard/text target.
+	 *
+	 * Setup strategy:
+	 * - Create a row with a child custom element representing a rendered widget.
+	 * - Dispatch the contextmenu from the widget while stubbing row/action lookup.
+	 *
+	 * Pass criteria:
+	 * - The popup context target is the widget.
+	 * - Context text comes from the widget, not the whole row.
+	 */
+	it("uses the clicked widget as row popup context target", async() =>
+	{
+		const el = new Et2Nextmatch();
+		document.body.append(el);
+		await el.updateComplete;
+		const controller : any = (el as any)._actionController;
+		const row = document.createElement("tr");
+		row.setAttribute("data-row-id", "row::clipboard");
+		const otherCell = document.createElement("td");
+		otherCell.textContent = "Other row text";
+		const cell = document.createElement("td");
+		const widget = document.createElement("et2-label");
+		widget.textContent = "Specific widget text";
+		cell.append(widget);
+		row.append(otherCell, cell);
+		document.body.append(row);
+		const fakeRowObject = {
+			forceSelection: sinon.spy(),
+			executeActionImplementation: sinon.stub().returns(true)
+		};
+
+		sinon.stub(controller, "findEventRow").returns({rowId: "row::clipboard", rowElement: row});
+		sinon.stub(controller, "ensureRowActionObject").returns(fakeRowObject);
+
+		widget.addEventListener("contextmenu", (event) => controller.triggerPopupForRow(event), {once: true});
+		widget.dispatchEvent(new MouseEvent("contextmenu", {
+			bubbles: true,
+			composed: true,
+			cancelable: true,
+			clientX: 12,
+			clientY: 34
+		}));
+
+		const context = fakeRowObject.executeActionImplementation.firstCall.args[0];
+		assert.strictEqual(context.target, widget, "popup context should target the clicked widget");
+		assert.equal(context.innerText, "Specific widget text", "popup context text should come from the clicked widget");
+
+		(controller.findEventRow as sinon.SinonStub).restore();
+		(controller.ensureRowActionObject as sinon.SinonStub).restore();
+		row.remove();
+		el.remove();
+	});
+
+	/**
+	 * Contract under test:
 	 * - Moving pointer beyond movement threshold cancels pending long-press popup.
 	 *
 	 * Setup strategy:
@@ -468,7 +2233,7 @@ describe("Et2Nextmatch action setup", () =>
 				clientX: 25,
 				clientY: 10
 			}));
-			await clock.tickAsync(560);
+			clock.tick(560);
 			assert.isFalse(triggerPopupForRow.called, "popup should not open after movement cancels long-press");
 		}
 		finally
@@ -604,6 +2369,86 @@ describe("Et2Nextmatch action setup", () =>
 		el.remove();
 	});
 
+	/**
+	 * Contract under test:
+	 * - Placeholder actions can target child menu entries such as InfoLog's
+	 *   top-level `add` action containing a `new` child.
+	 *
+	 * Setup strategy:
+	 * - Configure a minimal action tree with `add -> new` and unrelated `open`.
+	 * - Resolve placeholder links for `new`, then build the placeholder context
+	 *   link map.
+	 *
+	 * Pass criteria:
+	 * - `new` resolves as an available placeholder action.
+	 * - The top-level `add` branch is visible/enabled so the context menu can
+	 *   reach `new`.
+	 * - Unrelated actions stay hidden/disabled.
+	 */
+	it("allows placeholder actions configured as child menu ids", () =>
+	{
+		const controller : any = new Et2NextmatchActionController({
+			id: "nm_placeholder_child_action",
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "infolog"})
+		} as any);
+		const add : any = {id: "add", type: "popup", children: []};
+		const newAction : any = {id: "new", type: "popup", parent: add, children: []};
+		add.children = [newAction];
+		const open : any = {id: "open", type: "popup", children: []};
+		const actions = {add, new: newAction, open};
+		controller.getActionLinks = () => ["open", "add"];
+		controller.actionManager = {
+			children: [open, add],
+			getActionById: (id : string) => actions[id]
+		};
+		controller.setPlaceholderActions(["new"]);
+
+		const resolved = controller._resolvePlaceholderActionLinks(["new"]);
+		const contextLinks = controller._getPlaceholderContextLinks(resolved);
+
+		assert.deepEqual(resolved, ["new"], "child placeholder action id should resolve from the action tree");
+		assert.isTrue(controller.hasPlaceholderActions(), "child placeholder action should count as an available placeholder action");
+		assert.deepEqual(contextLinks, [
+			{actionId: "open", enabled: false, visible: false},
+			{actionId: "add", enabled: true, visible: true}
+		], "placeholder context should expose the parent branch for the allowed child action only");
+	});
+
+	/**
+	 * Contract under test:
+	 * - Placeholder actions are not rendered as inline no-results buttons.
+	 *
+	 * Setup strategy:
+	 * - Configure placeholder actions.
+	 * - Stub inline action resolution so the test fails if render tries to use
+	 *   the old inline-button path.
+	 *
+	 * Pass criteria:
+	 * - Nextmatch does not ask for inline placeholder actions during render.
+	 * - No default content is slotted into datagrid's `noResults` slot.
+	 */
+	it("does not render placeholder actions as inline no-results buttons", async() =>
+	{
+		const el = new Et2Nextmatch();
+		el.id = "nm_no_inline_placeholder_actions";
+		el.placeholderActions = ["add", "import_csv"];
+		document.body.append(el);
+		await el.updateComplete;
+		const controller : any = (el as any)._actionController;
+		const getInlinePlaceholderActions = sinon.stub(controller, "getInlinePlaceholderActions").throws(new Error("inline placeholder actions should not be resolved"));
+
+		el.requestUpdate();
+		await el.updateComplete;
+
+		const datagrid = el.shadowRoot!.querySelector("et2-datagrid") as HTMLElement | null;
+		assert.isFalse(getInlinePlaceholderActions.called, "render should not resolve placeholder actions for inline buttons");
+		assert.isNull(datagrid?.querySelector("[slot='noResults']"), "Nextmatch should leave default no-results rendering to Datagrid");
+
+		getInlinePlaceholderActions.restore();
+		el.remove();
+	});
+
 	it("binds delegated drag target resolution on the datagrid rows container", () =>
 	{
 		const host = document.createElement("div");
@@ -725,6 +2570,70 @@ describe("Et2Nextmatch action setup", () =>
 		assert.isFalse(row.draggable, "prepared row should be cleared after pointer cleanup");
 	});
 
+	/**
+	 * A filemanager tile's et2-vfs-mime thumbnail is a native-draggable image.
+	 * Simulate pointerdown on that image and resolve its containing tile row.
+	 * Pass when the image's browser file drag is disabled while the row is armed
+	 * for the normal Nextmatch drag action.
+	 */
+	it("uses the row drag for an et2-vfs-mime thumbnail", () =>
+	{
+		const row = document.createElement("div");
+		row.setAttribute("data-row-id", "filemanager::/home/test.png");
+		const mime = document.createElement("et2-vfs-mime");
+		const thumbnail = document.createElement("img");
+		mime.append(thumbnail);
+		row.append(mime);
+		const controller : any = new Et2NextmatchActionController({
+			id: "nm_prepare_thumbnail_drag",
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "filemanager"})
+		} as any);
+		controller.actionManager = {children: [{id: "egw_link_drag", type: "drag"}]};
+		controller.findEventRow = () => ({rowId: "filemanager::/home/test.png", rowElement: row});
+
+		controller.prepareDragRow({
+			button: 0,
+			ctrlKey: false,
+			metaKey: false,
+			shiftKey: false,
+			altKey: false,
+			target: thumbnail,
+			composedPath: () => [thumbnail, mime, row]
+		} as PointerEvent);
+
+		assert.isFalse(thumbnail.draggable, "thumbnail should not start a browser-native image/file drag");
+		assert.isTrue(row.draggable, "tile row should remain the Nextmatch drag source");
+		controller.clearPreparedDragRow();
+	});
+
+	/**
+	 * Filemanager's desktop drag-out builds its DownloadURL from the selected
+	 * action object's row data.  Materialize a virtualized row through the
+	 * controller and pass when its file metadata is exposed on that object.
+	 */
+	it("keeps file metadata on row action objects for desktop drag-out", () =>
+	{
+		const row = document.createElement("div");
+		const fileData = {
+			name: "test.png",
+			mime: "image/png",
+			download_url: "/webdav.php/home/test.png?download"
+		};
+		const controller : any = new Et2NextmatchActionController({
+			id: "nm_drag_out_data",
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "filemanager"}),
+			_dataProvider: {getRowData: () => fileData}
+		} as any);
+		controller.actionManager = {children: []};
+		controller.objectManager = makeFakeObjectManager();
+
+		const rowObject = controller.ensureRowActionObject("filemanager::/home/test.png", row);
+
+		assert.strictEqual(rowObject.data, fileData, "row action object should expose the data required for DownloadURL");
+	});
+
 	it("does not arm a nextmatch row as draggable without a drag action", () =>
 	{
 		const row = document.createElement("tr");
@@ -788,6 +2697,180 @@ describe("Et2Nextmatch action setup", () =>
 		assert.isTrue(objectManager.updateActionLinks.calledOnce, "rows container should still be synchronized with the action system");
 		assert.deepEqual(objectManager.updateActionLinks.firstCall.args[0], [], "no drop links should be registered when no drop action exists");
 		assert.isFalse(addAction.called, "controller should not synthesize drop actions when drop support is unavailable");
+	});
+
+	it("registers link drop support using app name when data store prefix is unset", () =>
+	{
+		const actions : Record<string, any> = {};
+		const children : any[] = [];
+		const actionManager = {
+			children,
+			getActionById: (id : string) => actions[id] || null,
+			addAction: (type : string, id : string, caption : string, icon : string, onExecute : Function, allowOnMultiple : boolean) =>
+			{
+				const action : any = {
+					id,
+					type,
+					caption,
+					icon,
+					onExecute,
+					allowOnMultiple,
+					acceptedTypes: type === "drop" ? ["default"] : undefined,
+					set_group(group : string)
+					{
+						this.group = group;
+					},
+					set_dragType(dragType : string)
+					{
+						this.dragType = dragType;
+					}
+				};
+				actions[id] = action;
+				children.push(action);
+				return action;
+			}
+		};
+		const controller : any = new Et2NextmatchActionController({
+			id: "nm_link_drop_app_fallback",
+			egw: () => ({
+				...egwStub,
+				appName: "addressbook",
+				link_get_registry: (app : string, type : string) => app === "addressbook" && type === "query" ? {} : null,
+				user: (key : string) => key === "apps" ? {addressbook: {}, infolog: {}} : null
+			}),
+			getInstanceManager: () => ({app: "addressbook"})
+		} as any);
+		controller.actionManager = actionManager;
+
+		controller.initLinkDragDropActions();
+
+		assert.exists(actions.egw_link_drop, "link drop action should be registered when the app supports link queries");
+		assert.include(actions.egw_link_drop.acceptedTypes, "link");
+		assert.notInclude(actions.egw_link_drop.acceptedTypes, "file", "link drop should not accept filemanager/file drop types");
+		assert.strictEqual(actions.egw_link_drag.dragType, "link", "row drag action should advertise link drags");
+	});
+
+	it("unregisters drop handlers before rebinding the delegated rows AOI", () =>
+	{
+		const oldRows = document.createElement("tbody");
+		const newRows = document.createElement("tbody");
+		const events : Array<{event : string, node : HTMLElement | null}> = [];
+		const controller : any = new Et2NextmatchActionController({
+			id: "nm_drop_rebind",
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "addressbook"})
+		} as any);
+		controller.ensureActionManagers = () => {};
+		controller.initLinkDragDropActions = () => {};
+		controller.getRowsBody = () => newRows;
+		controller.getActionLinks = () => [];
+		controller.dragDropAOI = {
+			node: oldRows,
+			bindNode(node : HTMLElement | null)
+			{
+				events.push({event: "bind", node});
+				this.node = node;
+			}
+		};
+		controller.objectManager = {
+			unregisterActions: () => events.push({event: "unregister", node: controller.dragDropAOI.node}),
+			setAOI: () => {},
+			updateActionLinks: () => {}
+		};
+
+		controller.syncDragDropRegistration();
+
+		assert.deepEqual(events, [
+			{event: "unregister", node: oldRows},
+			{event: "bind", node: newRows}
+		], "old row listeners must be unregistered before the AOI points at the new rows body");
+	});
+
+	it("does not link drag or drop actions to placeholder host context", () =>
+	{
+		const controller : any = new Et2NextmatchActionController({
+			id: "nm_placeholder_context_links",
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "addressbook"})
+		} as any);
+		const actions = {
+			open: {id: "open", type: "popup"},
+			egw_link_drop: {id: "egw_link_drop", type: "drop"},
+			egw_link_drag: {id: "egw_link_drag", type: "drag"}
+		};
+		controller.getActionLinks = () => Object.keys(actions);
+		controller.actionManager = {
+			getActionById: (id : string) => actions[id]
+		};
+
+		assert.deepEqual(
+			controller._getPlaceholderContextLinks(["open"]).map((link) => link.actionId),
+			["open"],
+			"placeholder host context should only link popup actions"
+		);
+	});
+
+	/**
+	 * Contract under test:
+	 * - The Nextmatch link-drop adapter consumes every selected drag source and
+	 *   the distinct target row supplied by the action framework.
+	 *
+	 * Setup strategy:
+	 * - Register the controller's link-drop action with a minimal action manager.
+	 * - Invoke its callback with two source rows and one target row.
+	 *
+	 * Pass criteria:
+	 * - The link request targets the dropped-on row and contains both sources.
+	 */
+	it("passes all drag sources and the target row to the link-drop adapter", () =>
+	{
+		const sentRequests : any[] = [];
+		const sendRequest = sinon.spy();
+		const registeredActions = new Map<string, any>();
+		const host : any = {
+			id: "nm_link_drop",
+			egw: () => ({
+				...egwStub,
+				link_get_registry: (_app : string, capability : string) => capability === "query",
+				json: (...args : any[]) =>
+				{
+					sentRequests.push(args);
+					return {sendRequest};
+				}
+			}),
+			_dataProvider: {getDataStorePrefix: () => "addressbook"},
+			refresh: () => {},
+			// ajax_link() is passed the exec_id so the server can check the request against
+			// the currently edited entry, see 27d552b103
+			getInstanceManager: () => ({etemplate_exec_id: "test-exec-id"})
+		};
+		const controller : any = new Et2NextmatchActionController(host);
+		controller.actionManager = {
+			getActionById: (id : string) => registeredActions.get(id),
+			addAction: (type : string, id : string, _caption : string, _icon : string, onExecute : Function) =>
+			{
+				const action = {type, id, onExecute, acceptedTypes: []};
+				registeredActions.set(id, action);
+				return action;
+			}
+		};
+
+		controller.initLinkDragDropActions();
+		registeredActions.get("egw_link_drop").onExecute(
+			{},
+			[{id: "addressbook::source-1"}, {id: "calendar::source-2"}],
+			{id: "addressbook::target"}
+		);
+
+		assert.isTrue(sendRequest.calledOnce, "drop adapter should send one link request");
+		assert.deepEqual(
+			sentRequests[0][1],
+			["addressbook", "target", [
+				{app: "addressbook", id: "source-1"},
+				{app: "calendar", id: "source-2"}
+			], "test-exec-id"],
+			"drop adapter should preserve both selected sources and the target row"
+		);
 	});
 
 	it("materializes visible selected rows into action objects for multi-row drag helpers", () =>

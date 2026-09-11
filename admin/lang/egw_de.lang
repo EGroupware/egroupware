@@ -2,6 +2,9 @@
 (de)activate mail accounts	admin	de	E-Mail-Konten (de)aktivieren
 (no subject)	admin	de	(Kein Betreff)
 %1 %2 rights for %3 on %4 to %5	admin	de	%1 %2 Rechte für %3 auf %4 bis %5
+%1 (no encryption)	admin	de	%1 (unverschlüsselt)
+%1 (starttls)	admin	de	%1 (StartTLS)
+%1 (tls/ssl)	admin	de	%1 (TLS/SSL)
 %1 access to other data	admin	de	Zugriffsrechte %1 auf Daten anderer
 %1 accounts being activated	admin	de	%1 Konten werden aktiviert
 %1 acl entries deleted.	admin	de	%1 ACL Einträge gelöscht.
@@ -30,6 +33,7 @@
 2-factor-authentication for interactive login	admin	de	2-Faktor-Authentifizierung für interaktive Anmeldung
 3 month	admin	de	3 Monate
 6 month	admin	de	6 Monate
+a background color and a background image can not be used at the same time.	admin	de	Eine Hintergrundfarbe und ein Hintergrundbild können nicht gleichzeitig verwendet werden.
 access by	admin	de	Zugriff durch
 access control	admin	de	Zugriffsrechte
 access to %1 data by others	admin	de	Zugriffsrechte %1 durch andere
@@ -116,6 +120,7 @@ allow users to create identities for aliases	admin	de	Anwender dürfen Identitä
 allowed for get requests, default in modern browsers, if attribute is not set	admin	de	erlaubt für GET Requests, Vorgabe in modernen Browsern, wenn das Attribute nicht gesetzt ist
 allowed just as second factor	admin	de	Ausschließlich als zweiter Faktor
 alternate email address	admin	de	Zusätzliche E-Mail-Adressen
+an unrecognized host	common	de	einen unbekannten Host
 and logged in	admin	de	und eingeloggt
 anonymous user	admin	de	Anonymer Benutzer
 anonymous user (not shown in list sessions)	admin	de	Anonymer Benutzer (wird bei 'Sitzungen anzeigen' nicht angezeigt).
@@ -187,6 +192,8 @@ category list	admin	de	Kategorieliste
 category saved.	admin	de	Kategorie gespeichert.
 certificate	admin	de	Zertifikat
 certificate details	admin	de	Details des Zertifikat
+certificate error	common	de	Zertifikatsfehler
+certificate passphrase removed.	admin	de	Passphrase des Zertifikats entfernt.
 certificate validity in days	admin	de	Gültigkeit des Zertifikats in Tagen
 change access	admin	de	Zugriffsrechte ändern
 change account_id	admin	de	Änderung der Konto-ID
@@ -217,11 +224,13 @@ comma-separated ip addresses white-listed from above blocking (:optional number 
 command scheduled to run at %1	admin	de	Ausführung des Befehls eingeplant am/um %1
 command was run %1 on %2	admin	de	Kommando wurde um %1 auf %2 ausgeführt
 commercial: all sorts of companies	admin	de	Kommerziell: alle Arten von Firmen
+common name	admin	de	Allgemeiner Name
 config password or md5 hash from the header.inc.php	admin	de	Konfigurationspasswort oder MD5 Hash von der header.inc.php Datei
 configuration	admin	de	Konfiguration
 configuration saved.	admin	de	Die Konfiguration wurde erfolgreich gespeichert.
 connection dropped by imap server.	admin	de	Verbindung von IMAP-Server beendet.
 connection is not secure! everyone can read eg. your credentials.	admin	de	Die Verbindung ist NICHT sicher! Jeder kann z. B. Ihr Passwort lesen.
+connection refused or timed out	common	de	Verbindung abgelehnt oder Zeitüberschreitung
 container	admin	de	Container
 continue	admin	de	Weiter
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	de	Cookie-Domain. (Vorgabe 'leer' bedeutet den kompletten Domainnamen, für SiteMgr erlaubt z.B. ".domain.com" das gleiche Cookie für egw.domain.com und www.domain.com zu verwenden).
@@ -229,8 +238,11 @@ cookie path (allows multiple egw sessions with different directories, has proble
 copy of	admin	de	Kopie von
 could not append message:	admin	de	Diese E-Mail lässt sich nicht anzeigen:
 could not complete request. reason given: %s	admin	de	Konnte Anfrage nicht beenden. Grund: %s
+could not connect to "%1:%2": %3	common	de	Konnte keine Verbindung zu "%1:%2" herstellen: %3
+could not establish a tls connection to "%1:%2" - wrong port or protocol?	common	de	Konnte keine TLS-Verbindung zu "%1:%2" herstellen - falscher Port oder falsches Protokoll?
 could not extract private key from given p12 file. either the p12 file is broken or password is wrong!	admin	de	Konnte den privaten Schlüssel nicht aus der angegeben p12-Datei extrahieren. Entweder ist die p12-Datei kaputt oder das Passwort ist falsch!
 could not open secure connection to the imap server. %s : %s.	admin	de	Konnte keine sichere Verbindung zum IMAP Server aufbauen. %s: %s.
+could not rebuild the certificate without a passphrase!	admin	de	Zertifikat konnte nicht ohne Passphrase neu erstellt werden!
 could not remote execute the command	admin	de	Kann den Befehl nicht remote ausführen.
 country	admin	de	Land
 country selection	admin	de	Länderauswahl
@@ -327,15 +339,18 @@ direct login without password or second factor	admin	de	Direkter Login ohne Pass
 disable	admin	de	Abschalten
 disable "auto completion" of the login form	admin	de	Automatisches Vervollständigen der Logindaten abschalten
 disable all	admin	de	Alle Video-Anleitungen deaktivieren
+disable certificate validation	admin	de	Zertifikatsprüfung deaktivieren
 disable minifying of javascript and css files	admin	de	Komprimierung von JavaScript- und CSS-Dateien deaktivieren
 disable pgp encryption (mailvelope)	admin	de	PGP-Verschlüsselung deaktivieren (Mailvelope)
 disabled	admin	de	Deaktiviert
 disabled (not recomended)	admin	de	Abgeschaltet (nicht empfohlen)
 disabled, do not show on login page	admin	de	Deaktiviert, wird auf der Anmelde-Seite nicht angezeigt
+disabling certificate validation makes this connection vulnerable to a man-in-the-middle attack - only do this if you understand and accept that risk.	admin	de	Die Zertifikatsprüfung zu deaktivieren macht diese Verbindung anfällig für einen Man-in-the-Middle-Angriff - tun Sie dies nur, wenn Sie dieses Risiko verstehen und akzeptieren.
 display	admin	de	Anzeigen
 displayed length of input field (set rows=1 to limit length)	admin	de	Angezeigte Länge des Eingabefelds (setze Zeilen=1, um die Eingabe zu beschränken)
 displaying html messages is disabled	admin	de	Anzeigen von HTML-Nachrichten ist deaktiviert
 displaying plain messages is disabled	admin	de	Anzeigen von Text-Nachrichten ist deaktiviert
+do not ask passphrase	admin	de	Nicht nach Passphrase fragen
 do not delete the category and return back to the list	admin	de	Kategorie NICHT löschen und zurück zur Liste gehen
 do not generate email addresses	admin	de	Keine E-Mail-Adressen erzeugen
 do not offer introduction video	admin	de	Einführungsvideo nicht anbieten
@@ -516,7 +531,6 @@ if you specify port 5190 as sieve server port, you enforce ssl for sieve (server
 if you wish to have randomly selected images you may upload multiple images.	admin	de	Wenn Sie zufällig ausgewählte Bilder haben möchten, können Sie mehrere Bilder hochladen.
 imap admin password	admin	de	IMAP Administrator Passwort
 imap admin user	admin	de	IMAP Administrator Benutzer
-imap server	admin	de	IMAP-Server
 imap server closed the connection.	admin	de	IMAP-Server hat die Verbindung beendet.
 imap server closed the connection. server responded: %s	admin	de	IMAP-Server hat die Verbindung beendet. Server Antwort: %s
 imap server hostname or ip address	admin	de	IMAP-Server Hostname oder IP-Adresse
@@ -547,6 +561,8 @@ invalid type "%1"!	admin	de	Ungültiger Typ "%1"!
 invalid value "%1" use yes or no!	admin	de	Ungültiger Wert "%1". Verwenden Sie Ja oder Nein!
 invalid value "%1", use only:	admin	de	Ungültiger Wert "%1". Verwenden Sie nur:
 ip	admin	de	IP
+jmap (http, no encryption)	admin	de	JMAP (http, unverschlüsselt)
+jmap (https)	admin	de	JMAP (https)
 jobs	admin	de	Jobs
 kill	admin	de	Beenden
 kill session	admin	de	Sitzung beenden
@@ -595,6 +611,7 @@ list current sessions	admin	de	Aktive Sitzungen anzeigen
 list of current users	admin	de	Liste der gegenwärtigen Benutzer
 log user-agent and action of changes in history-log of entries	admin	de	Protokolliere Browser-Typ und -Aktion von Änderungen in der Historie der Einträge
 logged out	admin	de	Abgemeldet
+locality	admin	de	Ort
 login history	admin	de	Login-Kontrolle
 login id	admin	de	Benutzername
 login message	admin	de	Meldung der Anmelde-Seite
@@ -642,6 +659,7 @@ no alternate email address	admin	de	Keine zusätzlichen E-Mail-Adressen
 no default account found!	admin	de	Kein Standard Mail-Konto gefunden!
 no encryption	admin	de	Keine Verschlüsselung
 no forwarding email address	admin	de	Keine Weiterleitungsadresse definiert
+no host/port configured.	common	de	Kein Host/Port konfiguriert.
 no jobs in the database !!!	admin	de	Keine Jobs in der Datenbank!
 no limit	admin	de	Kein Limit
 no matches found	admin	de	Keine Übereinstimmungen gefunden
@@ -679,6 +697,7 @@ openapi configuration	admin	de	OpenAPI Konfiguration
 operating system	admin	de	Betriebssystem
 order	admin	de	Reihenfolge
 organisation	admin	de	Organisation
+organizational unit	admin	de	Abteilung
 other security configuration	admin	de	Andere sicherheitsrelevante Konfigurationen
 outbound	admin	de	Ausgehend
 own categories	admin	de	Eigene Kategorien
@@ -732,6 +751,9 @@ profile access rights	admin	de	Profilzugriffsrechte
 profile is active	admin	de	Profil ist aktiv
 profile list	admin	de	Profilliste
 profile name	admin	de	Profilname
+protocol (encryption)	admin	de	Protokoll (Verschlüsselung)
+push server is not working	admin	de	Push-Server funktioniert NICHT
+push server is working	admin	de	Push-Server funktioniert
 qmaildotmode	admin	de	qmaildotmode
 quota settings	admin	de	Quota-Einstellungen
 quota size in mbyte	admin	de	Quota-Größe in MByte
@@ -746,8 +768,10 @@ remote administration instances	admin	de	Remote Administration
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	de	Die Remote Administration muss von der Remote-Instanz (unter Admin -> Konfiguration der Anwendung) freigegeben werden!
 remote instance saved	admin	de	Remote Instanz gespeichert.
 remove	admin	de	Entfernen
+removes the passphrase from the private key (still protected by your login password) so signing, encrypting and decrypting never asks for it again	admin	de	Entfernt die Passphrase vom privaten Schlüssel (weiterhin durch Ihr Anmeldepasswort geschützt), sodass beim Signieren, Ver- und Entschlüsseln nie mehr danach gefragt wird
 removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	de	Sind Sie sicher? Den Zugriff für Gruppen zu nehmen kann zu Problemen mit den Daten dieser Kategorie führen. Benutzer dieser Gruppen haben möglicherweise keinen Zugriff mehr:
 renaming user 'anonymous' will break file sharing and collabora online office!	admin	de	Das Umbenennen des Benutzers 'anonymous' verhindert die Dateifreigabe und Collabora Online Office!
+repeat passphrase	admin	de	Passphrase wiederholen
 requested	admin	de	Angefordert
 required pear class mail/mimedecode.php not found.	admin	de	Die benötigte PEAR-Klasse Mail/mimeDecode.php wurde nicht gefunden.
 required to embed egroupware via iframe eg. for lti	admin	de	Notwendig um EGroupware per iFrame einzubetten z.B. für LTI
@@ -777,7 +801,6 @@ search categories	admin	de	Kategorien durchsuchen
 search groups	admin	de	Gruppen durchsuchen
 search peer servers	admin	de	Serververbund durchsuchen
 secret deleted, two factor authentication disabled.	admin	de	Geheimnis gelöscht, 2-Faktor-Authentifizierung deaktiviert.
-secure connection	admin	de	Sichere Verbindung
 security	admin	de	Sicherheit
 select accounts for which the custom field should be readonly	admin	de	Benutzer auswählen, für die dieses benutzerdefinierte Feld schreibgeschützt sein soll
 select accounts for which the custom field should be visible	admin	de	Benutzer auswählen, für die dieses benutzerdefinierte Feld sichtbar sein soll
@@ -798,6 +821,7 @@ select which location this app should appear on the navbar, lowest (left) to hig
 selectbox	admin	de	Auswahlfeld
 send using this email-address	admin	de	Zum Versenden wird diese E-Mail-Adresse benutzt
 serial number	admin	de	Fortlaufende Nummer
+server	admin	de	Server
 server %1 has been updated	admin	de	Server %1 wurde aktualisiert.
 server list	admin	de	Server-Liste
 server password	admin	de	Server-Passwort
@@ -841,7 +865,6 @@ sorry, the above users are still a member of the group %1	admin	de	Diese Benutze
 sorry, the follow users are still a member of the group %1	admin	de	Die folgenden Benutzer sind noch Mitglied der Gruppe %1.
 sort the entries	admin	de	Einträge sortieren
 source account #%1 does not exist!	admin	de	Quellaccount #%1 besteht nicht!
-ssl	admin	de	Verschlüsselt (SSL)
 standard	admin	de	Vorgabe
 standard identity	admin	de	Standard Identität
 standard imap server	admin	de	Standard IMAP-Server
@@ -849,6 +872,7 @@ standard smtp-server	admin	de	Standard SMTP-Server
 start	admin	de	Start
 start testjob!	admin	de	Test-Job starten!
 starts with	admin	de	Startet mit
+state or province	admin	de	Bundesland/Provinz
 strictly required, user can not login without	admin	de	Unbedingt benötigt, Benutzer können sich ohne nicht mehr anmelden
 submit changes	admin	de	Änderungen speichern
 submit displayed information?	admin	de	Angezeigte Informationen übertragen
@@ -872,6 +896,7 @@ the install id of an instance can be found under admin > site configuration	admi
 the login and password can not be the same	admin	de	Benutzername und Passwort dürfen nicht identisch sein.
 the loginid can not be more then 8 characters	admin	de	Der Benutzername darf nicht länger als 8 Zeichen sein.
 the mimeparser can not parse this message.	admin	de	Der MIME-Parser versteht diese Nachricht nicht.
+the server "%1" answered, but presented a certificate issued for "%2" - not for "%1". this usually means a wrong hostname/dns entry, or a load-balancer routing to the wrong backend - not just an outdated certificate. disabling certificate validation lets you connect anyway, but makes the connection vulnerable to a man-in-the-middle attack - only do that if you understand and accept that risk.	common	de	Der Server "%1" hat geantwortet, aber ein Zertifikat für "%2" präsentiert - NICHT für "%1". Das deutet meist auf einen falschen Hostnamen/DNS-Eintrag hin, oder einen Load-Balancer, der zum falschen Server weiterleitet - nicht nur auf ein abgelaufenes Zertifikat. Die Zertifikatsprüfung zu deaktivieren erlaubt trotzdem eine Verbindung, macht diese aber anfällig für einen Man-in-the-Middle-Angriff - tun Sie das nur, wenn Sie dieses Risiko verstehen und akzeptieren.
 the testjob sends you a mail everytime it is called.	admin	de	Der Test-Job sendet Ihnen jedes mal eine E-Mail wenn er aufgerufen wird.
 the text displayed to the user	admin	de	Für den Benutzer angezeigter Text
 the two passwords are not the same	admin	de	Die beiden Passwörter stimmen nicht überein
@@ -1019,3 +1044,5 @@ intermediate/ca certificate (optional)	admin	de	Zwischenzertifikat/CA-Zertifikat
 this s/mime private key is passphrase-protected. please enter the passphrase above and try again.	admin	de	Dieser private S/MIME-Schlüssel ist durch eine Passphrase geschützt. Bitte geben Sie die Passphrase oben ein und versuchen Sie es erneut.
 the passphrase entered was not correct, please try again.	admin	de	Die eingegebene Passphrase war nicht korrekt, bitte versuchen Sie es erneut.
 required to export or import a certificate for this key	admin	de	Erforderlich, um ein Zertifikat für diesen Schlüssel zu exportieren oder zu importieren
+deleting removes your s/mime private key entirely - you will no longer be able to read any previously received encrypted messages. if you are renewing your certificate, use export csr and import certificate instead to keep your key.	admin	de	Löschen entfernt Ihren privaten S/MIME-Schlüssel vollständig - Sie können dann bereits empfangene verschlüsselte Nachrichten nicht mehr lesen. Wenn Sie Ihr Zertifikat erneuern möchten, nutzen Sie stattdessen CSR exportieren und Zertifikat importieren, um Ihren Schlüssel zu behalten.
+delete s/mime certificate	admin	de	S/MIME-Zertifikat löschen

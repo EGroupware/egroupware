@@ -182,7 +182,6 @@ ldap context for contacts	admin	lv	LDAP konteksts kontaktiem
 ldap host for contacts	admin	lv	LDAP hosts kontaktiem
 ldif	addressbook	lv	LDIF
 line 2	addressbook	lv	2. rindiņa
-links	addressbook	lv	Saites
 list all categories	addressbook	lv	Kategoriju saraksts
 load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	lv	Ielādēt pielāgotos laukus indeksā, pat ja pielāgotā lauka sleja ir izslēgta (piemēram, lai tos parādītu konkrētā indeksa slejā).
 load vcard	addressbook	lv	Ielādēt vCard

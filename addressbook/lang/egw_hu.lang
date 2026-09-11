@@ -272,7 +272,6 @@ ldap settings for contacts	admin	hu	Kapcsolatok LDAP beállításai
 ldif	addressbook	hu	LDIF
 line 2	addressbook	hu	Line 2
 link title for contacts show	addressbook	hu	Hivatkozás címe a Kapcsolatok megjelenítéséhez
-links	addressbook	hu	Hivatkozások
 list all categories	addressbook	hu	Összes kategória listázása
 list all customfields	addressbook	hu	Összes egyedi mező listázása
 list already exists!	addressbook	hu	A lista már létezik!

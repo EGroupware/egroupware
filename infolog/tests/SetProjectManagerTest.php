@@ -33,6 +33,65 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 	// Project used to test
 	protected $pm_id = null;
 
+	/**
+	 * Force-purge a stray projectmanager project by id, bypassing ACL, IF it's still there
+	 * after a normal projectmanager_bo delete attempt.
+	 *
+	 * projectmanager_bo::delete() calls projectmanager_bo::read() first, which enforces an ACL
+	 * check against the CURRENT session user. Observed (but not yet root-caused) in the full
+	 * PHPUnit suite: that check can return false for a project this same test just created a
+	 * moment earlier, apparently after enough other tests have run before it in the same
+	 * process. When that happens, delete() silently no-ops (returns 0, no exception) and the
+	 * row survives, later colliding with the next test's fixture INSERT under the same
+	 * pm_number. This is test-fixture cleanup, where "get rid of it no matter what" is the
+	 * correct semantics - projectmanager_so's delete() is a plain, ACL-free row delete, used
+	 * here ONLY as a last-resort safety net *after* the normal, cascade-aware bo-level delete
+	 * has already had its chance to clean up members/elements/links properly.
+	 *
+	 * @param int|string|null $pm_id
+	 */
+	protected function forcePurgeProjectIfStillThere($pm_id)
+	{
+		if (!$pm_id)
+		{
+			return;
+		}
+		$so = new \projectmanager_so();
+		if ($so->read($pm_id))
+		{
+			$so->delete($pm_id);
+		}
+	}
+
+	/**
+	 * Make sure no stray projectmanager project with the given pm_number is left over from an
+	 * earlier, interrupted test run, before a fresh fixture gets created under the same number.
+	 *
+	 * Looks the project up via projectmanager_so, NOT projectmanager_bo: a stray row can be
+	 * ACL-invisible to the ACL-gated bo::read() used for the lookup in the original version of
+	 * this pre-cleanup, for the same not-yet-root-caused reason documented on
+	 * forcePurgeProjectIfStillThere() - which would otherwise skip cleanup entirely rather than
+	 * just no-op the delete. If found, attempts the normal cascade-aware bo-level delete first
+	 * (proper member/element/link cleanup when the ACL check happens to succeed), then falls
+	 * back to a forced purge if the row is still there afterwards.
+	 *
+	 * @param \projectmanager_bo $bo used for the normal (cascade-aware) delete attempt;
+	 *   its history property is forced to '' so a single delete() call always purges rather
+	 *   than soft-deleting
+	 * @param string $pm_number
+	 */
+	protected function purgeStaleProjectFixture(\projectmanager_bo $bo, $pm_number)
+	{
+		$so = new \projectmanager_so();
+		$project = $so->read(array('pm_number' => $pm_number));
+		if (!$project || !$project['pm_id'])
+		{
+			return;
+		}
+		$bo->history = '';
+		$bo->delete($project['pm_id'], true);
+		$this->forcePurgeProjectIfStillThere($project['pm_id']);
+	}
 
 	protected function setUp() : void
 	{
@@ -44,19 +103,17 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 		$this->pm_bo = new \projectmanager_bo();
 
 		$this->mockTracking($this->bo, 'infolog_tracking');
+		// Unlike $this->bo, this wasn't mocked before - projectmanager_bo::save() lazily
+		// creates a real projectmanager_tracking and calls its (real, unmocked) track(), which
+		// can fail under heavy load and make save() return a truthy error string instead of 0,
+		// failing makeProject()'s assertFalse() check. DeleteTest.php/TemplateTest.php already
+		// mock this for their own projectmanager_bo - do the same here.
+		$this->mockTracking($this->pm_bo, 'projectmanager_tracking');
 
 		// Make sure projects are not there first
-		$pm_numbers = array(
-			'TEST',
-			'SUB-TEST'
-		);
-		foreach($pm_numbers as $number)
+		foreach(array('TEST', 'SUB-TEST') as $number)
 		{
-			$project = $this->pm_bo->read(Array('pm_number' => $number));
-			if($project && $project['pm_id'])
-			{
-				$this->pm_bo->delete($project);
-			}
+			$this->purgeStaleProjectFixture($this->pm_bo, $number);
 		}
 
 
@@ -65,19 +122,40 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 
 	protected function tearDown() : void
 	{
-		// Remove infolog under test
-		if($this->info_id)
+		// Nested try/finally: if deleting the infolog entry throws, the project must still
+		// get a cleanup attempt, and the bo's must still get unset either way - otherwise a
+		// stuck 'TEST'-numbered project or global bo silently breaks unrelated tests running
+		// later in the same PHPUnit process.
+		try
 		{
-			$this->bo->delete($this->info_id, False, False, True);
-			// One more time for history
-			$this->bo->delete($this->info_id, False, False, True);
+			// Remove infolog under test
+			if($this->info_id)
+			{
+				$this->bo->delete($this->info_id, False, False, True);
+				// One more time for history
+				$this->bo->delete($this->info_id, False, False, True);
+			}
 		}
+		finally
+		{
+			try
+			{
+				// Remove the test project
+				$this->deleteProject();
+			}
+			finally
+			{
+				$this->bo = null;
+				$this->pm_bo = null;
 
-		// Remove the test project
-		$this->deleteProject();
-
-		$this->bo = null;
-		$this->pm_bo = null;
+				// testSetProjectViaURL() sets these to simulate a URL-based call. $_REQUEST is a
+				// process-wide superglobal that PHPUnit does not reset between tests, so leaving
+				// them set leaks into infolog_ui::edit() calls made by later tests in the same
+				// process (eg. ContactTest), silently overwriting their info_contact/pm_id via
+				// the 'projectmanager' case in edit()'s action switch.
+				unset($_REQUEST['action'], $_REQUEST['action_id']);
+			}
+		}
 	}
 
 	/**
@@ -449,21 +527,29 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 		$first_pm_id = $this->pm_id;
 		$this->pm_bo->data = array();
 		$this->makeProject('2');
-		$info['old_pm_id'] = $first_pm_id;
-		$info['pm_id'] = $this->pm_id;
-		$this->bo->write($info);
 
-		// Check infolog has pm_id properly set
-		$this->assertEquals($this->pm_id, $info['pm_id']);
+		// Everything from here on uses the just-created 2nd project ($this->pm_id). Wrapped in
+		// try/finally starting right here (not just around the later re-check block) so that if
+		// ANY assertion/call below throws, the finally still deletes project #2 and restores
+		// $this->pm_id to $first_pm_id - otherwise the outer tearDown() (which only ever cleans up
+		// the CURRENT $this->pm_id) would delete project #2 but leave the original "TEST" project
+		// (only reachable via the now-lost local $first_pm_id) leaked in the DB.
+		try
+		{
+			$info['old_pm_id'] = $first_pm_id;
+			$info['pm_id'] = $this->pm_id;
+			$this->bo->write($info);
 
-		// Force links to run notification now so we get valid testing - it
-		// usually waits until Egw::on_shutdown();
-		Api\Link::run_notifies();
+			// Check infolog has pm_id properly set
+			$this->assertEquals($this->pm_id, $info['pm_id']);
 
-		// Now load it again
-		$info = $this->bo->read($this->info_id);
+			// Force links to run notification now so we get valid testing - it
+			// usually waits until Egw::on_shutdown();
+			Api\Link::run_notifies();
 
-		try {
+			// Now load it again
+			$info = $this->bo->read($this->info_id);
+
 			// Check infolog has pm_id properly set
 			$this->assertEquals($this->pm_id, $info['pm_id'], 'Project did not change');
 
@@ -728,12 +814,11 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 
 		$this->assertFalse((boolean)$result, 'Error making test project');
 		$this->assertArrayHasKey('pm_id', $this->pm_bo->data, 'Could not make test project');
-		$this->assertThat($this->pm_bo->data['pm_id'],
-			$this->logicalAnd(
-				$this->isType('integer'),
-				$this->greaterThan(0)
-			)
-		);
+		// Accept int or numeric string: Storage\Base::read() never casts DB columns (they come
+		// back as strings from mysqli), and any intervening read of this project - eg. via
+		// notification processing - re-hydrates pm_id as a string. Only the numeric value matters.
+		$this->assertTrue(is_numeric($this->pm_bo->data['pm_id']) && $this->pm_bo->data['pm_id'] > 0,
+			'pm_id is not a positive number: '.var_export($this->pm_bo->data['pm_id'], true));
 		$this->pm_id = $this->pm_bo->data['pm_id'];
 	}
 
@@ -766,11 +851,18 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 
 		// Force to ignore setting
 		$this->pm_bo->history = '';
-		$this->pm_bo->delete($this->pm_id, true);
+		try
+		{
+			$this->pm_bo->delete($this->pm_id, true);
+		}
+		finally
+		{
+			// Force links to run notification now, or elements might stay
+			// usually waits until Egw::on_shutdown();
+			Api\Link::run_notifies();
 
-		// Force links to run notification now, or elements might stay
-		// usually waits until Egw::on_shutdown();
-		Api\Link::run_notifies();
+			$this->forcePurgeProjectIfStillThere($this->pm_id);
+		}
 	}
 
 }

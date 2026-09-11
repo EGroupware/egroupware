@@ -361,7 +361,7 @@
     "/tracker/{id}/replies/": {
       "get": {
         "tags": ["Tracker Replies"],
-        "operationId": "listReplies",
+        "operationId": "listTicketReplies",
         "summary": "List all replies for a ticket",
         "description": "Returns all visible replies for the specified tracker ticket as an object keyed by reply ID.",
         "parameters": [
@@ -391,7 +391,7 @@
       },
       "post": {
         "tags": ["Tracker Replies"],
-        "operationId": "createReply",
+        "operationId": "createTicketReply",
         "summary": "Create a reply on a ticket",
         "description": "Adds a new reply/comment to the specified tracker ticket.",
         "parameters": [
@@ -439,7 +439,7 @@
     "/tracker/{id}/replies/{reply_id}": {
       "get": {
         "tags": ["Tracker Replies"],
-        "operationId": "getReply",
+        "operationId": "getTicketReply",
         "summary": "Get a single reply",
         "description": "Retrieves a single reply/comment by ticket ID and reply ID.",
         "parameters": [
@@ -470,7 +470,7 @@
       },
       "put": {
         "tags": ["Tracker Replies"],
-        "operationId": "replaceReply",
+        "operationId": "replaceTicketReply",
         "summary": "Replace a reply",
         "description": "Fully replaces a reply. 'message' is required.",
         "parameters": [
@@ -500,7 +500,7 @@
       },
       "patch": {
         "tags": ["Tracker Replies"],
-        "operationId": "updateReply",
+        "operationId": "updateTicketReply",
         "summary": "Partially update a reply",
         "description": "Updates only the supplied reply fields.",
         "parameters": [
@@ -530,7 +530,7 @@
       },
       "delete": {
         "tags": ["Tracker Replies"],
-        "operationId": "deleteReply",
+        "operationId": "deleteTicketReply",
         "summary": "Delete a reply",
         "description": "Deletes a reply/comment from the specified tracker ticket.",
         "parameters": [

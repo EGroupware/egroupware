@@ -9,12 +9,6 @@
  * @copyright EGroupware GmbH 2011-2021
  */
 
-/*egw:uses
-	egw_action.egw_action_common;
-	egw_action.egw_action;
-	/vendor/bower-asset/jquery-touchswipe/jquery.touchSwipe.js;
-*/
-
 import {egwActionObjectInterface} from "../egw_action/egw_action";
 import {
 	EGW_AO_SHIFT_STATE_MULTI,

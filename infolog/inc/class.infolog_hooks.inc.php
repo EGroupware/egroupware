@@ -223,6 +223,7 @@ class infolog_hooks
 			'links'  => lang('only the links'),
 			'attach' => lang('only the attachments'),
 			'none'   => lang('no links or attachments'),
+			'details' => lang('only for details'),
 		);
 		$show_details = array(
 			0 => lang('No'),

@@ -8,11 +8,6 @@
  * @package egw_action
  */
 
-/*egw:uses
-	vendor.bower-asset.jquery.dist.jquery;
-	egw_action;
-*/
-
 import {egw_getAppObjectManager, egw_globalObjectManager} from "./egw_action";
 import {
 	EGW_AO_EXEC_SELECTED,
@@ -191,7 +186,6 @@ window.addEventListener("contextmenu", function(event)
 	}
 	return true;
 });
-
 
 /**
  * Creates a unique key for the given shortcut

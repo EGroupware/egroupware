@@ -331,7 +331,6 @@ ldap settings for contacts	admin	sl	Nastavitve LDAP za stike
 ldif	addressbook	sl	LDIF
 line 2	addressbook	sl	Vrstica 2
 link title for contacts show	addressbook	sl	Prikaži naslov stika kot povezavo
-links	addressbook	sl	Povezave
 links and attached files	addressbook	sl	Povezave in priložene datoteke
 links to specified application.  example: {{links/infolog}}	addressbook	sl	Povezave do določene aplikacije. Primer: {{links / infolog}}
 list all categories	addressbook	sl	Izpis vseh kategorij

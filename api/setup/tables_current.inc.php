@@ -184,9 +184,9 @@ $phpgw_baseline = array(
 		'fd' => array(
 			'link_id' => array('type' => 'auto','nullable' => False),
 			'link_app1' => array('type' => 'ascii','precision' => '16','nullable' => False),
-			'link_id1' => array('type' => 'ascii','meta' => array("link_app1='api-accounts'" => 'account'),'precision' => '64','nullable' => False),
+			'link_id1' => array('type' => 'ascii','precision' => '64','nullable' => False),
 			'link_app2' => array('type' => 'ascii','precision' => '16','nullable' => False),
-			'link_id2' => array('type' => 'ascii','meta' => array("link_app2='api-accounts'" => 'account'),'precision' => '64','nullable' => False),
+			'link_id2' => array('type' => 'ascii','precision' => '1024','nullable' => False,'comment' => "URL if link_app2='url'"),
 			'link_remark' => array('type' => 'varchar','precision' => '100'),
 			'link_lastmod' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False),
 			'link_owner' => array('type' => 'int','meta' => 'account','precision' => '4','nullable' => False),
@@ -194,7 +194,7 @@ $phpgw_baseline = array(
 		),
 		'pk' => array('link_id'),
 		'fk' => array(),
-		'ix' => array('deleted',array('link_app1','link_id1','link_lastmod'),array('link_app2','link_id2','link_lastmod'),array('link_app1','link_app2','link_id1','link_id2')),
+		'ix' => array('deleted','link_lastmod',array('link_app1','link_id1'),array('link_app2','link_id2(64)'),array('link_app1','link_app2','link_id1','link_id2(64)')),
 		'uc' => array()
 	),
 	'egw_addressbook' => array(
@@ -475,7 +475,7 @@ $phpgw_baseline = array(
 			'cred_type' => array('type' => 'int','precision' => '2','nullable' => False,'comment' => '&1=imap, &2=smtp, &4=admin'),
 			'account_id' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False,'comment' => 'account_id or 0=all'),
 			'cred_username' => array('type' => 'varchar','precision' => '80','nullable' => False,'comment' => 'username'),
-			'cred_password' => array('type' => 'varchar','precision' => '16384','comment' => 'password encrypted'),
+			'cred_password' => array('type' => 'blob','comment' => 'password encrypted'),
 			'cred_pw_enc' => array('type' => 'int','precision' => '1','default' => '0','comment' => '0=not, 1=user pw, 2=system')
 		),
 		'pk' => array('cred_id'),

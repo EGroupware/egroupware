@@ -389,7 +389,6 @@ if using ldap, do you want to manage homedirectory and loginshell attributes?	ad
 if using ssl or tls, you must have the php openssl extension loaded.	admin	fi	Jos SSL tai TLS on käytössä, PHP openssl lisäosa pitää olla ladattuna.
 imap admin password	admin	fi	IMAP admin salasana
 imap admin user	admin	fi	IMAP admin käyttäjätunnus
-imap server	admin	fi	IMAP -palvelin
 imap server closed the connection.	admin	fi	IMAP palvelin katkaisi yhteyden.
 imap server closed the connection. server responded: %s	admin	fi	IMAP palvelin katkaisi yhteyden. %s
 imap server hostname or ip address	admin	fi	IMAP -palvelimen nimi tai IP-osoite

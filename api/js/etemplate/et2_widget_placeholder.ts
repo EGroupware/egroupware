@@ -9,12 +9,6 @@
  * @copyright Nathan Gray 2021
  */
 
-/*egw:uses
-	et2_core_inputWidget;
-	et2_core_valueWidget;
-	et2_widget_description;
-*/
-
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_inputWidget} from "./et2_core_inputWidget";
@@ -23,7 +17,6 @@ import {Et2LinkEntry} from "./Et2Link/Et2LinkEntry";
 import {Et2Select} from "./Et2Select/Et2Select";
 import {Et2Description} from "./Et2Description/Et2Description";
 import {Et2Button} from "./Et2Button/Et2Button";
-
 
 /**
  * Display a dialog to choose a placeholder
@@ -420,7 +413,6 @@ export class et2_placeholder_snippet_select extends et2_placeholder_select
 	protected LIST_URL = 'EGroupware\\Api\\Etemplate\\Widget\\Placeholder::ajax_get_placeholders';
 	protected TEMPLATE = '/api/templates/default/placeholder_snippet.xet?1';
 
-
 	/**
 	 * Constructor
 	 *
@@ -447,7 +439,6 @@ export class et2_placeholder_snippet_select extends et2_placeholder_select
 		let placeholder_list = <Et2Select><unknown>this.dialog.eTemplate.widgetContainer.getDOMWidgetById("placeholder_list");
 		let preview = <Et2Description><unknown>this.dialog.eTemplate.widgetContainer.getDOMWidgetById("preview_content");
 		let entry = <Et2LinkEntry><unknown>this.dialog.eTemplate.widgetContainer.getDOMWidgetById("entry");
-
 
 		placeholder_list.set_select_options(this._get_placeholders("addressbook", "addresses"));
 

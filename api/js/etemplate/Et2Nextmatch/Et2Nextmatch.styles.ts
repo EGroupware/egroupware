@@ -23,6 +23,28 @@ export default css`
 		border-left-color: var(--category-color, transparent);
 	}
 
+	:host(.print) {
+		height: auto;
+	}
+
+	:host(.print) [part="header"],
+	:host(.print) .nextmatch_lettersearch,
+	:host(.print) [part="footer"] {
+		display: none;
+	}
+
+	:host(.print) et2-datagrid {
+		height: auto;
+	}
+
+	.nextmatch-subgrid {
+		height: auto;
+	}
+
+	.nextmatch-subgrid::part(state) {
+		padding: var(--sl-spacing-x-small);
+	}
+
 	.nextmatch_lettersearch {
 		display: flex;
 		flex-wrap: nowrap;
@@ -44,14 +66,4 @@ export default css`
 		border-color: var(--sl-color-primary-500);
 	}
 
-	.nextmatch_placeholder_actions {
-		margin-top: var(--sl-spacing-small);
-		display: flex;
-		flex-wrap: wrap;
-		gap: var(--sl-spacing-2x-small);
-	}
-
-	.nextmatch_placeholder_action {
-		color: var(--sl-color-primary-700);
-	}
 `;

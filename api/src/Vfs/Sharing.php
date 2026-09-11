@@ -224,7 +224,7 @@ class Sharing extends \EGroupware\Api\Sharing
 	 */
 	protected static function session_mount($target, $mount)
 	{
-		$session_fstab =& Api\Cache::getSession('api', 'fstab');
+		$session_fstab = Api\Cache::getSession('api', 'fstab');
 		if(!$session_fstab)
 		{
 			$session_fstab = array();
@@ -233,6 +233,7 @@ class Sharing extends \EGroupware\Api\Sharing
 			'mount' => $mount,
 			'class' => get_called_class()
 		);
+		Api\Cache::setSession('api', 'fstab', $session_fstab);
 	}
 
 	protected static function after_login($share)
@@ -343,7 +344,7 @@ class Sharing extends \EGroupware\Api\Sharing
 	{
 		if (!isset(self::$db)) self::$db = $GLOBALS['egw']->db;
 
-		$path2tmp =& Api\Cache::getSession(__CLASS__, 'path2tmp');
+		$path2tmp = Api\Cache::getSession(__CLASS__, 'path2tmp');
 		$path = static::validate_path($path, $mode);
 
 		if (empty($name)) $name = $path;
@@ -385,12 +386,36 @@ class Sharing extends \EGroupware\Api\Sharing
 				}
 				// store temp. path in session, to be able to add more recipients
 				$path2tmp[$path] = $tmp_file;
+				Api\Cache::setSession(__CLASS__, 'path2tmp', $path2tmp);
 
 				$vfs_path = $tmp_file;
 			}
 
 			return parent::create($action_id, $vfs_path, $mode, $name, $recipients, $extra);
 		}
+	}
+
+	/**
+	 * Make a symlink target absolute, so it can be passed on to Vfs::stat() & co
+	 *
+	 * Vfs::readlink() hands back the link's raw content, which for a relative symlink is
+	 * relative to the directory the link sits in - eg. an invoice import storing the file as
+	 * ".invoice.pdf" and adding a translated "Rechnung.pdf" symlink next to it pointing at
+	 * ".invoice.pdf". Vfs::stat() rejects anything that is not absolute, so resolve a relative
+	 * target against the link's own directory here. Absolute targets are returned unchanged,
+	 * as the caller relies on them keeping their exact shape (vfs URL or plain path).
+	 *
+	 * @param string $link path or vfs URL of the symlink itself
+	 * @param string $target content of the symlink, absolute or relative
+	 * @return string absolute path (or vfs URL) of the target
+	 */
+	protected static function absolute_link_target($link, $target)
+	{
+		if ($target !== '' && $target[0] !== '/' && parse_url($target, PHP_URL_SCHEME) !== 'vfs')
+		{
+			$target = Vfs::concat(Vfs::dirname(Vfs::parse_url($link, PHP_URL_PATH)), $target);
+		}
+		return $target;
 	}
 
 	/**
@@ -429,13 +454,14 @@ class Sharing extends \EGroupware\Api\Sharing
 			// We don't allow sharing paths that contain links, resolve to target instead
 			if(($target = Vfs::readlink($path)))
 			{
-				$path = $target;
+				$path = static::absolute_link_target($path, $target);
 			}
 			$check = $path;
 			do
 			{
 				if(($delinked = Vfs::readlink($check)))
 				{
+					$delinked = static::absolute_link_target($check, $delinked);
 					if($delinked[strlen($delinked)-1] == '/') $check .='/';
 					$path = str_replace($check, $delinked, $path);
 					if(parse_url($path, PHP_URL_SCHEME) !== 'vfs')

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="admin.index.rows" template="" lang="" group="0" version="1.9.001">
+	<et2-template  id="admin.index.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width="90%"/>
@@ -34,8 +35,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="admin.index.group" template="" lang="" group="0" version="1.9.001">
+	</et2-template>
+	<et2-template  id="admin.index.group" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width="90%"/>
@@ -60,14 +61,14 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="admin.index" template="" lang="" group="0" version="1.9.001">
-        <tree autoloading="admin_ui::ajax_tree" id="tree" onclick="app.admin.run" parent_node="admin_tree_target" std_images="bullet" slot="left"/>
+	</et2-template>
+	<et2-template  id="admin.index" template="" lang="" group="0" version="1.9.001">
+        <et2-tree  autoloading="admin_ui::ajax_tree" id="tree" onclick="app.admin.run" slot="left" parentId="admin_tree_target" stdImages="bullet"></et2-tree>
 		<et2-description  id="plus_button_container"></et2-description>
-		<et2-button  class="plus_button" id="add" onclick="app.admin.account({id:&quot;add&quot;})" noSubmit="true"></et2-button>
+		<et2-button-icon  class="plus_button" id="add" onclick="app.admin.account({id:&quot;add&quot;})" noSubmit="true" image="plus-lg"></et2-button-icon>
 		<nextmatch id="nm" template="admin.index.rows"/>
 		<nextmatch id="groups" template="admin.index.group"/>
-		<iframe frameborder="1" height="100%" id="iframe" scrolling="auto" width="100%" disabled="true"/>
+		<et2-iframe  frameborder="1" height="100%" id="iframe" scrolling="auto" width="100%" disabled="true"></et2-iframe>
 		<et2-box  id="ajax_target" height="99%" disabled="true"></et2-box>
-	</template>
+	</et2-template>
 </overlay>

@@ -338,7 +338,6 @@ limit search for conflicts in recurrences to given number of recurrences	calenda
 limit search for conflicts in recurrences to given time in seconds (default 3)	calendar	km	កំណត់ការស្វែងរកការប៉ះទង្គិចនៅក្នុងការកើតឡើងម្តងទៀតទៅនឹងពេលវេលាដែលបានផ្តល់ឱ្យជាវិនាទី (លំនាំដើម 3)
 link title for events to show	calendar	km	តំណចំណងជើងសម្រាប់ព្រឹត្តិការណ៍ដែលត្រូវបង្ហាញ
 link to view the event	calendar	km	តំណភ្ជាប់ដើម្បីមើលព្រឹត្តិការណ៍
-links	calendar	km	តំណភ្ជាប់
 links and attached files	calendar	km	តំណភ្ជាប់និងឯកសារភ្ជាប់
 links to specified application.  example: {{links/infolog}}	calendar	km	តំណភ្ជាប់ទៅកម្មវិធីដែលបានបញ្ជាក់។ ឧទាហរណ៍៖ {{links/infolog}}
 links, attachments	calendar	km	តំណភ្ជាប់, ឯកសារភ្ជាប់

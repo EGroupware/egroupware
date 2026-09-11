@@ -127,6 +127,7 @@ export class Et2AppBox extends Et2Widget(LitElement)
 		this.handleEtemplateClear = this.handleEtemplateClear.bind(this);
 		this.handleSearchResults = this.handleSearchResults.bind(this);
 		this.handleShow = this.handleShow.bind(this);
+		this.handleFilterChange = this.handleFilterChange.bind(this);
 	}
 
 	connectedCallback()
@@ -136,6 +137,8 @@ export class Et2AppBox extends Et2Widget(LitElement)
 		this.addEventListener("clear", this.handleEtemplateClear);
 		this.addEventListener("et2-search-result", this.handleSearchResults);
 		this.addEventListener("et2-show", this.handleShow);
+		this.addEventListener("et2-filter", this.handleFilterChange);
+		this.addEventListener("change", this.handleFilterChange);
 	}
 
 	disconnectedCallback()
@@ -145,6 +148,8 @@ export class Et2AppBox extends Et2Widget(LitElement)
 		this.removeEventListener("clear", this.handleEtemplateClear);
 		this.removeEventListener("et2-search-result", this.handleSearchResults);
 		this.removeEventListener("et2-show", this.handleShow);
+		this.removeEventListener("et2-filter", this.handleFilterChange);
+		this.removeEventListener("change", this.handleFilterChange);
 	}
 
 	firstUpdated()
@@ -193,11 +198,14 @@ export class Et2AppBox extends Et2Widget(LitElement)
 			tooltip: this.egw().lang("Filters") + ": " + (this.rowCount || "0")
 		};
 
+		// Work on a copy, callers pass us their filter values to be examined - not to be changed
+		const values = {...(filterValues ?? {})};
+
 		// Don't consider sort as a filter.
-		delete filterValues.sort;
+		delete values.sort;
 
 		const emptyFilter = (v : any) => typeof v == "object" ? Object.values(v).filter(emptyFilter).length : v;
-		if(Object.values(filterValues).filter(emptyFilter).length !== 0)
+		if(Object.values(values).filter(emptyFilter).length !== 0)
 		{
 			info.icon = "filter-circle-fill";
 		}
@@ -372,6 +380,35 @@ export class Et2AppBox extends Et2Widget(LitElement)
 		{
 			this.rowCount = event.detail?.total ?? "";
 		}
+	}
+
+	/**
+	 * Filters were applied somewhere below us - by the filterbox, a favourite, a nextmatch header
+	 * widget - so the filter button icon and drawer label have to be re-evaluated.
+	 *
+	 * We render those from the filterbox's value, which is neither a reactive property nor
+	 * reachable by Lit through the filters getter, so nothing here re-renders on its own when a
+	 * filter is set or cleared.  Without this handler the header only happened to update when
+	 * rowCount changed too, leaving the "filters are set" icon showing after clearing a filter
+	 * that didn't change how many rows are displayed (and vice versa).
+	 *
+	 * @param event "et2-filter" from a nextmatch, or "change" from the filterbox
+	 * @protected
+	 */
+	protected handleFilterChange(event)
+	{
+		// "change" bubbles up from every input in the application; only the filterbox's own
+		// applyFilters() means the filters changed
+		if(event.type == "change" && event.target !== this.filters)
+		{
+			return;
+		}
+
+		this.requestUpdate();
+
+		// A change that did not come from the filterbox is pushed into its widgets asynchronously,
+		// so its value is still the old one right now - render again once it has caught up.
+		this.filters?.updateComplete.then(() => this.requestUpdate());
 	}
 
 	protected _loadingTemplate()

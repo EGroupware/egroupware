@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="admin.categories.index.rows" template="" lang="" group="0" version="1.9.002">
+	<et2-template  id="admin.categories.index.rows" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%">
 			<columns>
 				<column width="10"/>
@@ -15,7 +16,7 @@
 					<et2-description  class="cat_$row_cont[cat_id] mobile_cat_col"></et2-description>
 					<et2-vbox>
 						<et2-hbox  cellpadding="0" cellspacing="0" >
-							<html id="${row}[level_spacer]"/>
+							<et2-html  id="${row}[level_spacer]"></et2-html>
 							<et2-description  id="${row}[name]" class="$row_cont[class]"></et2-description>
 
 						</et2-hbox>
@@ -41,11 +42,11 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="admin.categories.index.add" template="" lang="" group="0" version="1.9.001">
+	</et2-template>
+	<et2-template  id="admin.categories.index.add" template="" lang="" group="0" version="1.9.001">
 		<et2-button  lable="Add" id="add" onclick="window.open('$cont[add_link]','_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;" noSubmit="true"></et2-button>
-	</template>
-	<template id="admin.categories.index" template="" lang="" group="0" version="1.9.001">
+	</et2-template>
+	<et2-template  id="admin.categories.index" template="" lang="" group="0" version="1.9.001">
 		<nextmatch id="nm" options="admin.categories.index.rows" span="all" header_left="admin.categories.index.add"/>
 		<et2-box  class="action_popup prompt" id="owner_popup">
 			<et2-vbox>
@@ -60,7 +61,7 @@
 				</et2-hbox>
 			</et2-vbox>
 		</et2-box>
-		<styles>
+		<et2-styles>
 			.level0 { font-weight: bold; }
 
 .action_popup {
@@ -90,6 +91,6 @@
 .action_select {
 	width: 100%
 }
-		</styles>
-	</template>
+		</et2-styles>
+	</et2-template>
 </overlay>

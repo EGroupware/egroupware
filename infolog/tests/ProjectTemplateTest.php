@@ -46,12 +46,11 @@ class ProjectTemplateTest extends \EGroupware\Projectmanager\TemplateTest
 
 		$this->assertFalse((boolean)$result, 'Error making test project');
 		$this->assertArrayHasKey('pm_id', $this->bo->data, 'Could not make test project');
-		$this->assertThat($this->bo->data['pm_id'],
-			$this->logicalAnd(
-				$this->isType('integer'),
-				$this->greaterThan(0)
-			)
-		);
+		// Accept int or numeric string: Storage\Base::read() never casts DB columns (they come
+		// back as strings from mysqli), and any intervening read of this project - eg. via
+		// notification processing - re-hydrates pm_id as a string. Only the numeric value matters.
+		$this->assertTrue(is_numeric($this->bo->data['pm_id']) && $this->bo->data['pm_id'] > 0,
+			'pm_id is not a positive number: '.var_export($this->bo->data['pm_id'], true));
 		$this->pm_id = $this->bo->data['pm_id'];
 
 		// Add some elements

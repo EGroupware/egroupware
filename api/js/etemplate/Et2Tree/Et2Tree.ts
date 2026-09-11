@@ -115,6 +115,19 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	private lazyLoading: Promise<void>;
 
 	/**
+	 * Node ids (value ?? id) with a handleItemLazyLoad() fetch currently in flight.
+	 *
+	 * A node stays "lazy" (see _optionTemplate()) until its own fetch resolves and updates its
+	 * item/child state - but every OTHER node's fetch completing also triggers a tree-wide
+	 * requestUpdate("_selectOptions"), which re-renders every item and, via _optionTemplate()'s
+	 * own autoload self-trigger, re-dispatches "sl-lazy-load" for this node again even though it's
+	 * already loading. Without this guard, N concurrently-loading nodes (eg. many
+	 * persisted-open folders self-triggering at once) produce a multiplying storm of redundant,
+	 * duplicate fetches for the same nodes as their siblings resolve one by one.
+	 */
+	private _lazyLoadPending = new Set<string>();
+
+	/**
 	 * get the first selected node using attributes on the shadow root elements
 	 */
 	private get selected(){
@@ -145,17 +158,19 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 
 	@property({type: Boolean})
 	highlighting: Boolean = false   // description: "Add highlighting class on hovered over item, highlighting is disabled by default"
-	@property({type: String})
-	autoloading: string = ""  //description: "JSON URL or menuaction to be called for nodes marked with child=1, but not having children, getSelectedNode() contains node-id"
+	@property()
+	autoloading: string | ((item : TreeItemData) => Promise<any>) = ""  //description: "JSON URL or menuaction to be called for nodes marked with child=1, but not having children, getSelectedNode() contains node-id - or a Javascript callback function(item) returning a Promise of the same {item: [...]} / {children: [...]} shape, for a caller that wants to supply children itself instead of an ajax round-trip"
 	@property({type: Function})
 	onopenstart //description: "Javascript function executed when user opens a node: function(_id, _widget, _hasChildren) returning true to allow opening!"
 	@property({type: Function})
 	onopenend   //description: "Javascript function executed when opening a node is finished: function(_id, _widget, _hasChildren)"
 	@property({type: String})
+	openStatePreference: string = ""  //description: "'app.prefName' - if set, the tree automatically restores which nodes were expanded from this preference on load, and (debounced) saves the current expand-state back to it on every node open/close"
+	@property({type: String})
 	imagePath : string = egw?.webserverUrl + "/api/templates/default/images/dhtmlxtree/" //TODO we will need a different path here! maybe just rename the path?
 	//     description: "Directory for tree structure images, set on server-side to 'dhtmlx' subdir of templates image-directory"
 	@property()
-	value = []
+	value:any[]|string = []
 
 	protected autoloading_url: any;
 	// private selectOptions: TreeItemData[] = [];
@@ -173,6 +188,10 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 
 	private _actionManager: EgwAction;
 	widget_object: EgwActionObject;
+	// openStatePreference bookkeeping - see applyOpenState()/saveOpenState()
+	private _openIds : Set<string>;
+	private _hasSavedOpenState : boolean = false;
+	private _openStateSaveTimer : number;
 	/***
 	 * If you alter the pictures used as expand/collapse icons
 	 * you need to increase this number to cache bust Browser-caching
@@ -233,7 +252,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	}
 	firstUpdated()
 	{
-		if (this.autoloading)
+		if (this.autoloading && typeof this.autoloading === "string")
 		{
 			// @ts-ignore from static get properties
 			let url = this.autoloading;
@@ -243,6 +262,11 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 				url = '/json.php?menuaction=' + url;
 			}
 			this.autoloading = url;
+		}
+
+		if (this.openStatePreference)
+		{
+			this.applyOpenState();
 		}
 
 		// Check if top level should be autoloaded
@@ -272,9 +296,173 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		}
 	}
 
+	/**
+	 * Split "app.prefName" (openStatePreference) into its [app, name] parts.
+	 *
+	 * App names never contain a dot, so splitting on the first one is unambiguous.
+	 */
+	private openStatePreferenceParts() : [string, string] | null
+	{
+		const dot = this.openStatePreference.indexOf('.');
+		if (dot < 1 || dot === this.openStatePreference.length - 1)
+		{
+			return null;
+		}
+		return [this.openStatePreference.substring(0, dot), this.openStatePreference.substring(dot + 1)];
+	}
+
+	/**
+	 * Lazily parse and cache openStatePreference's persisted expanded-node-ids, once per widget
+	 * instance - reused by every applyOpenState() call (initial render, and again after every
+	 * lazy-load merge, see handleItemLazyLoad()). Also records (_hasSavedOpenState) whether a
+	 * preference value was ever actually saved at all, as opposed to merely being unset - an
+	 * explicitly-saved empty list is still the non-empty raw string "[]", distinct from a raw
+	 * value of "" /undefined/null for "never saved anything yet". applyOpenState() needs this
+	 * distinction: see its own docblock for why.
+	 */
+	private loadOpenIds() : Set<string>
+	{
+		if (this._openIds) return this._openIds;
+		const parts = this.openStatePreferenceParts();
+		let ids : string[] = [];
+		if (parts)
+		{
+			const raw = egw().preference(parts[1], parts[0]);
+			this._hasSavedOpenState = !!raw;
+			try
+			{
+				ids = JSON.parse(raw || "[]") || [];
+			}
+			catch (e)
+			{
+				ids = [];
+			}
+		}
+		return this._openIds = new Set(ids);
+	}
+
+	/**
+	 * Apply openStatePreference's persisted expanded-node-ids to whatever's currently in
+	 * _selectOptions. Restoring a *deep* expand path (e.g. "INBOX > Project > 2026") needs more
+	 * than a single pass at first render: with lazy per-level loading, "Project"/"2026" don't
+	 * exist client-side at all until "INBOX" has actually been expanded once and its children
+	 * have arrived - so this must be re-run every time a lazy-load merge brings new nodes into
+	 * _selectOptions (see handleItemLazyLoad()), not just once in firstUpdated(). Each pass only
+	 * ever marks nodes already present; _optionTemplate()'s own expandState-driven eager
+	 * lazy-load dispatch (see its docblock) is what actually drives the next level's fetch once
+	 * a matching node gets marked open here, continuing the cascade level by level as each
+	 * fetch resolves.
+	 *
+	 * The top level (_selectOptions itself) is authoritative both ways - closed AND open - but
+	 * only once a preference value has actually ever been saved (_hasSavedOpenState, see
+	 * loadOpenIds()). A caller's own initial data can carry its own "open by default" flag (eg.
+	 * mail's active-account row, or its sole account if there's only one) that would otherwise
+	 * never get overridden by an explicit user close: closing a top-level item removes it from
+	 * the persisted set, but with only an additive apply, the caller's own default `open` would
+	 * just reassert itself again on the next page load, making it impossible to ever permanently
+	 * close that item. That authoritative reset must NOT kick in before anything's ever been
+	 * saved though - a brand-new user (nothing saved yet) should still see the caller's own
+	 * sensible defaults (eg. their one and only account starting open), not everything
+	 * force-closed just because the preference happens to not exist yet. Deeper levels stay
+	 * additive-only regardless (never reset to closed) - they have no such caller-supplied
+	 * default to override, and a fresh fetch may have deliberately set its own `open` (eg. mail's
+	 * INBOX-always-open-if-it-has-children behaviour, folderTree.ts's buildNode()) that must not
+	 * be clobbered.
+	 *
+	 * At least one top-level item always ends up open (falls back to the first one if the
+	 * authoritative pass above would otherwise leave zero) - a saved state can end up with none
+	 * open (eg. one saved before handleItemCollapse()'s own "can't close the last one" guard
+	 * existed), and a completely-collapsed top level would leave the user looking at an empty
+	 * tree with nothing to click.
+	 */
+	private applyOpenState() : void
+	{
+		if (!this.openStatePreferenceParts()) return;
+		const ids = this.loadOpenIds();
+		const authoritative = this._hasSavedOpenState;
+
+		const applyRecursive = (options : TreeItemData[], isTopLevel : boolean) =>
+		{
+			(options ?? []).forEach((option : any) =>
+			{
+				if (ids.has(option.id ?? option.value))
+				{
+					option.open = 1;
+				}
+				else if (isTopLevel && authoritative)
+				{
+					option.open = 0;
+				}
+				applyRecursive(option.item ?? option.children, false);
+			});
+		};
+		applyRecursive(this._selectOptions, true);
+		if (authoritative && this._selectOptions?.length && !this._selectOptions.some((o : any) => o.open))
+		{
+			(this._selectOptions[0] as any).open = 1;
+		}
+		this.requestUpdate("_selectOptions");
+	}
+
+	/**
+	 * Collect every currently-open node's id (recursively) and (debounced) write it back to
+	 * openStatePreference - called from handleItemExpand()/handleItemCollapse().
+	 */
+	private saveOpenState() : void
+	{
+		const parts = this.openStatePreferenceParts();
+		if (!parts) return;
+		const [app, name] = parts;
+
+		const ids : string[] = [];
+		const collect = (options : TreeItemData[]) =>
+		{
+			(options ?? []).forEach((option : any) =>
+			{
+				if (option.open)
+				{
+					ids.push(option.id ?? option.value);
+				}
+				collect(option.item ?? option.children);
+			});
+		};
+		collect(this._selectOptions);
+
+		window.clearTimeout(this._openStateSaveTimer);
+		this._openStateSaveTimer = window.setTimeout(() =>
+		{
+			egw().set_preference(app, name, JSON.stringify(ids));
+		}, 300);
+	}
+
+
 	protected updated(_changedProperties: PropertyValues)
 	{
-		super.updated(_changedProperties);
+		// Et2WidgetWithSelectMixin's own updated() re-derives select_options from sel_options
+		// (via find_select_options(), a generic "find this widget's flat option list" utility)
+		// whenever "id" changed and select_options itself didn't change in the SAME batch - eg.
+		// exactly what happens here, since this widget's id is typically set well before its
+		// data is. find_select_options() does its own independent widget.getArrayMgr("sel_options")
+		// lookup (ignoring the _xmlOptions this mixin method passes it, which stays empty for a
+		// tree - see loadFromXML()'s own override), re-fetching the SAME root wrapper object
+		// ({id, item}) this class's own select_options override already unwrapped correctly, and
+		// mangles it the exact same way cleanSelectOptions() does (iterating the wrapper's own
+		// keys as option entries) - then assigns the mangled result right back through
+		// select_options, silently clobbering the correct tree data. "id" is hidden from the
+		// super call to suppress this - Et2Tree fully owns its own data (select_options,
+		// loadFromXML(), the lazy autoloading pipeline) and has no other use for the mixin's
+		// id-driven re-derivation.
+		const withoutId = new Map(_changedProperties);
+		withoutId.delete("id");
+		super.updated(withoutId as PropertyValues);
+
+		// openStatePreference is often assigned imperatively (eg. mail's app.ts, right after
+		// getWidgetById()) - possibly after firstUpdated() already ran and found it empty, so
+		// also (re-)apply here whenever it actually changes, not just once on first render
+		if (_changedProperties.has("openStatePreference") && this.openStatePreference)
+		{
+			this.applyOpenState();
+		}
 	}
 
 	//Sl-Trees handle their own onClick events
@@ -513,10 +701,14 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	 */
 	setLabel(_id, _label, _tooltip?)
 	{
-		let tooltip = _tooltip || (this.getNode(_id) && this.getNode(_id).tooltip ? this.getNode(_id).tooltip : "");
 		let i = this.getNode(_id)
+		let tooltip = _tooltip || (i?.tooltip ?? i?.title) || "";
+		// writes both naming conventions (see TreeItemData's own docblock) - the node may use
+		// either, and writing only its own would need checking which first for no real benefit
 		i.tooltip = tooltip
+		i.title = tooltip
 		i.text = _label
+		i.label = _label
 	}
 
 	/**
@@ -526,7 +718,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	 */
 	getLabel(_id)
 	{
-		return this.getNode(_id)?.text;
+		const node = this.getNode(_id);
+		return node?.label ?? node?.text;
 	}
 
 	/**
@@ -535,7 +728,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	 */
 	getSelectedLabel()
 	{
-		return this.getSelectedItem()?.text
+		const node = this.getSelectedItem();
+		return node?.label ?? node?.text;
 	}
 
 	/**
@@ -571,25 +765,22 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	 */
 	refreshItem(_id, data)
 	{
-		/* TODO currently always ask the sever
-		if (typeof data != "undefined" && data != null)
+		let item = this.getNode(_id);
+		// if the item does not exist in the tree yet no need to refresh
+		if(item == null)
 		{
-
-			//data seems never to be used
-			this.refreshItem(_id, null)
-		} else*/
-		{
-			let item = this.getNode(_id);
-			// if the item does not exist in the tree yet no need to refresh
-			if(item == null)
-			{
-				return Promise.resolve();
-			}
-			return this.handleLazyLoading(item).then((result) => {
-				Object.assign(item, result);
-				this.requestUpdate("_selectOptions")
-			})
+			return Promise.resolve();
 		}
+		if (typeof data !== "undefined" && data !== null)
+		{
+			Object.assign(item, data);
+			this.requestUpdate("_selectOptions");
+			return Promise.resolve();
+		}
+		return this.handleLazyLoading(item).then((result) => {
+			Object.assign(item, result);
+			this.requestUpdate("_selectOptions")
+		})
 	}
 
 	/**
@@ -811,7 +1002,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	 */
 	hasChildren(_id)
 	{
-		return this.getNode(_id).child;
+		const node = this.getNode(_id);
+		return node?.hasChildren ?? node?.child;
 	}
 
 	/**
@@ -941,9 +1133,25 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 			this.optionSearch(event.target.value ?? event.target.id, this._selectOptions, 'id', 'item');
 		if(selectOption)
 		{
-			selectOption.open = 0;
+			// never let the last remaining open top-level item collapse (only matters once
+			// openStatePreference is in use, eg. mail's account list - a single account, or the
+			// last one still open among several, must always stay open so the user never ends up
+			// looking at a completely empty tree with nothing left to click). Not clearing .open
+			// here still forces a re-render below, which reasserts ?expanded=true on the DOM node
+			// and snaps it straight back open, undoing Shoelace's own already-applied collapse.
+			const isLastOpenTopLevel = this.openStatePreferenceParts() &&
+				this._selectOptions.includes(selectOption as any) &&
+				!this._selectOptions.some((o : any) => o !== selectOption && o.open);
+			if (!isLastOpenTopLevel)
+			{
+				selectOption.open = 0;
+			}
 
 			this.requestUpdate("_selectOptions")
+		}
+		if (this.openStatePreference)
+		{
+			this.saveOpenState();
 		}
 	}
 
@@ -955,6 +1163,10 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		{
 			selectOption.open = 1;
 		}
+		if (this.openStatePreference)
+		{
+			this.saveOpenState();
+		}
 	}
 
 	protected handleItemLazyLoad(event)
@@ -964,19 +1176,42 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		const selectOption = this.optionSearch(event.target.value ?? event.target.id, this._selectOptions, 'value', 'children') ??
 			this.optionSearch(event.target.value ?? event.target.id, this._selectOptions, 'id', 'item');
 
+		const key = selectOption?.value ?? selectOption?.id ?? (event.target.value ?? event.target.id);
+		if(this._lazyLoadPending.has(key))
+		{
+			// a fetch for this exact node is already in flight - see _lazyLoadPending's docblock
+			return;
+		}
+		this._lazyLoadPending.add(key);
+
 		this.lazyLoading = this.handleLazyLoading(selectOption).then((result) =>
 		{
 			// TODO: We already have the right option in context.  Look into this.getNode(), find out why it's there.  It doesn't do a deep search.
 			const parentNode = selectOption ?? this.getNode(selectOption.id) ?? this.optionSearch(selectOption.value, this._selectOptions, 'value', 'children');
-			if(!parentNode || !parentNode.item || parentNode.item.length == 0)
+			const children = parentNode?.children ?? parentNode?.item;
+			if(!parentNode || !children || children.length == 0)
 			{
-				parentNode.child = false;
+				if(typeof parentNode.children !== "undefined") parentNode.hasChildren = false; else parentNode.child = false;
 				parentNode.open = false;
 				this.requestUpdate("lazy", "true");
 			}
-			this.getDomNode(parentNode.value ?? parentNode.id).loading = false
+			// the DOM node may not exist right now (e.g. an ancestor's own re-render is still
+			// pending while this and another lazy-load resolve close together) - nothing to reset
+			// in that case, and crashing here would also skip the openState cascade/requestUpdate below
+			const domNode = this.getDomNode(parentNode.value ?? parentNode.id);
+			if(domNode)
+			{
+				domNode.loading = false;
+			}
+			if (this.openStatePreference)
+			{
+				// cascade the restore: newly-arrived children may themselves be in the
+				// persisted expanded-ids set, continuing a deep expand path level by level
+				// as each fetch resolves (see applyOpenState()'s docblock)
+				this.applyOpenState();
+			}
 			this.requestUpdate("_selectOptions")
-		});
+		}).finally(() => this._lazyLoadPending.delete(key));
 	}
 
 	/**
@@ -1063,7 +1298,11 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		})
 	}
 
-	protected async finishedLazyLoading()
+	/**
+	 * Resolves once the initial autoloading fetch (if any) has populated _selectOptions.
+	 * Public so callers like Et2TreeDropdown can wait for data before eg. scrolling to a selection.
+	 */
+	public async finishedLazyLoading()
 	{
 		await this.lazyLoading;
 		return this.lazyLoading
@@ -1123,13 +1362,18 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		const selected = typeof this.value == "string" && this.value == value || Array.isArray(this.value) && this.value.includes(value);
 		const draggable = this.widget_object?.actionLinks?.filter(al => al.actionObj?.type == "drag").length > 0
 
+		// title uses ?? below, not || : an explicit "" must render as title="" to block the
+		// browser's native title-attribute inheritance from a DOM ancestor (a child node with no
+		// tooltip of its own would otherwise silently show its parent's - eg. mail's INBOX node,
+		// whose own children live inside its DOM subtree). Only the genuinely-unset case
+		// (undefined/null) should fall through to .title/nothing.
 		return html`
             <sl-tree-item
                     part="item"
                     exportparts="checkbox, label, item:item-item"
                     id=${value}
                     value="${value}"
-                    title=${selectOption.tooltip ||selectOption.title || nothing}
+                    title=${selectOption.tooltip ?? selectOption.title ?? nothing}
                     class=${selectOption.class || nothing}
                     ?selected=${selected && !selectOption.unselectable}
                     ?unselectable=${selectOption.unselectable}
@@ -1205,13 +1449,20 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 
 	handleLazyLoading(_item: TreeItemData)
 	{
-		let requestLink = egw().link(egw().ajaxUrl(egw().decodePath(this.autoloading)),
-			{
-				id: _item.value ?? _item.id
-			})
+		let result: Promise<TreeItemData>;
+		if (typeof this.autoloading === "function")
+		{
+			result = Promise.resolve(this.autoloading(_item));
+		}
+		else
+		{
+			let requestLink = egw().link(egw().ajaxUrl(egw().decodePath(this.autoloading)),
+				{
+					id: _item.value ?? _item.id
+				})
 
-		let result: Promise<TreeItemData> = egw().request(requestLink, [])
-
+			result = egw().request(requestLink, [])
+		}
 
 		return result
 			.then((results) => {
@@ -1321,9 +1572,9 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 				res = value
 				return res
 			}
-			else if(_id?.startsWith(value.id) && typeof value.item !== "undefined")
+			else if(_id?.startsWith(value.id ?? value.value) && typeof (value.item ?? value.children) !== "undefined")
 			{
-				res = this._search(_id, value.item)
+				res = this._search(_id, value.item ?? value.children)
 			}
 		}
 		return res
@@ -1352,9 +1603,9 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 			if(value.value === _id || value.id === _id)
 			{
 				list.splice(i, 1)
-			} else if (_id.startsWith(value.id))
+			} else if (_id.startsWith(value.id ?? value.value))
 			{
-				this._deleteItem(_id, value.item)
+				this._deleteItem(_id, value.item ?? value.children)
 			}
 		}
 	}
@@ -1407,5 +1658,47 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		return {target: target, action: action};
 	}
 }
+
+/**
+ * Override Et2WidgetWithSelectMixin's own select_options getter/setter entirely, redirecting
+ * straight to this class's own _selectOptions (what _optionTemplate()/getNode()/etc. actually
+ * render/search) instead of the mixin's __select_options/cleanSelectOptions() pipeline.
+ *
+ * That pipeline is built for flat SelectOption {value, label} lists, not this widget's
+ * hierarchical {id, item} node shape - fed a tree's root wrapper object directly,
+ * cleanSelectOptions() iterates its OWN keys as if they were option entries ("id"/"item"),
+ * turning eg. classic mail_tree.inc.php's `{id: 0, item: [...]}` seed into a single bogus
+ * `{value: "id", label: "0"}` option (exactly the "shows a lone 0 instead of the tree" bug) plus
+ * a second, blank one. Since nothing in this class ever reads the mixin's own __select_options
+ * either, bypassing it entirely for both directions is the correct fix, not papering over
+ * cleanSelectOptions()'s output after the fact.
+ *
+ * Accepts either a plain array of top-level nodes (eg. mail's app.ts, building its own JMAP tree
+ * data) or a root *wrapper* object - {id, item} or {id, children} - the shape a server-rendered
+ * tree (classic mail_tree.inc.php et al) actually emits, same unwrapping firstUpdated()'s own
+ * lazy-load merge already does for its fetched results.
+ *
+ * Done as a plain Object.defineProperty() on the prototype, deliberately NOT a class-body
+ * get/set pair with a @property() decorator: this project's actual production build (rollup.config.js,
+ * @babel/core with the legacy decorators transform) silently dropped an accessor pair declared
+ * that way from the compiled output entirely - both with and without the decorator - even though
+ * it compiled and worked correctly under the plain TS/esbuild path this repo's own *tests* run
+ * under. That toolchain divergence is exactly how this shipped broken once already (the "why
+ * doesn't ralf see the fix" incident) despite every test passing. A plain prototype assignment
+ * after the class body has no class-transform/decorator machinery to get lost in.
+ */
+Object.defineProperty(Et2Tree.prototype, "select_options", {
+	configurable: true,
+	enumerable: true,
+	get() : TreeItemData[]
+	{
+		return (this as any)._selectOptions;
+	},
+	set(new_options : TreeItemData[] | {item? : TreeItemData[], children? : TreeItemData[]})
+	{
+		(this as any)._selectOptions = (new_options as any)?.item ?? (new_options as any)?.children ??
+			(Array.isArray(new_options) ? new_options : []);
+	},
+});
 
 customElements.define("et2-tree", Et2Tree);

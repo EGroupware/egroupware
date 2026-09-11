@@ -12,14 +12,16 @@
  * grunt-contrib-cssmin vendor outdated, vulnerable glob/minimatch/js-yaml versions
  * with no upstream fix - see GHSA-mh99-v99m-4gvg and related advisories).
  *
- * This file is kept for two reasons:
- * - build-css.mjs (run via "npm run css") reads the cssmin config below through a
- *   minimal grunt.initConfig() shim, so the file lists stay a single source of truth
- * - Api\Framework\Bundle::getImportMap() (api/src/Framework/Bundle.php) parses this
- *   file's grunt.initConfig({...}) call directly by regex for (unrelated, legacy)
- *   JS bundle info
+ * This file is kept because build-css.mjs (run via "npm run css") reads the cssmin
+ * config below through a minimal grunt.initConfig() shim, so the file lists stay a
+ * single source of truth.
  *
- * Please use only double quotes, as we parse this file as json to update it!
+ * Api\Framework\Bundle::getImportMap() (api/src/Framework/Bundle.php) used to parse
+ * this file's grunt.initConfig({...}) call by regex for legacy JS bundle info, but
+ * that was JS bundling/minifying leftover from before rollup and has been removed -
+ * Bundle.php no longer reads this file at all.
+ *
+ * Please use only double quotes, as build-css.mjs parses this file as json.
  *
  * @param {object} grunt
  */

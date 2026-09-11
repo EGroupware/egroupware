@@ -346,6 +346,75 @@ class Widget
 	}
 
 	/**
+	 * Registry is complete, but could not be cached by scanForWidgets() yet, see there
+	 *
+	 * @var boolean
+	 */
+	static protected $registry_not_cached = false;
+
+	/**
+	 * Widget files/classes that threw (typically "Class ... not found", a \Error not caught by
+	 * the loop's own try/catch) while this scan ran nested inside another widget file's own
+	 * include - see scanForWidgets()'s "mid_include" handling. A same-directory-level sibling
+	 * class needed by one of these (eg. Widget/Select.php, needed by Widget/Nextmatch/*.php or an
+	 * app's own *_etemplate_widget) may simply not exist YET at this point, since
+	 * RecursiveDirectoryIterator's traversal order isn't guaranteed parent-before-child, and -
+	 * regardless of order - the file that triggered this whole scan is itself still mid-include,
+	 * so nothing later in the SAME call can complete it either. Retried once we're confident
+	 * we're no longer nested, see retryDeferredWidgetFiles().
+	 *
+	 * @var array[] each either ['path' => string] for the directory scan or ['class' => string]
+	 *      for the etemplate2_register_widgets hook loop
+	 */
+	static protected $deferred_widget_files = [];
+
+	/**
+	 * Retry any widget files/classes deferred by a previous, nested scanForWidgets() call
+	 *
+	 * Safe to call here: we only ever reach this from a scanForWidgets() call that found
+	 * self::$registry_not_cached already true, meaning the ORIGINAL scan (and whatever widget
+	 * file triggered it) has definitely finished including by now - a fresh, non-nested call.
+	 */
+	protected static function retryDeferredWidgetFiles()
+	{
+		$deferred = self::$deferred_widget_files;
+		self::$deferred_widget_files = [];
+		foreach($deferred as $entry)
+		{
+			try
+			{
+				if (isset($entry['path']))
+				{
+					include_once($entry['path']);
+				}
+				else
+				{
+					class_exists($entry['class']);	// trigger autoloader
+				}
+			}
+			catch(\Throwable $e)
+			{
+				error_log($e->getMessage());
+			}
+		}
+	}
+
+	/**
+	 * Store the registry in the instance cache, if scanForWidgets() had to postpone that
+	 *
+	 * Must only be called once all widget-class files finished including, as PHP runs their
+	 * registerWidget() calls at the very end of the file.
+	 */
+	protected static function cacheWidgetRegistry()
+	{
+		if (self::$registry_not_cached)
+		{
+			self::$registry_not_cached = false;
+			Api\Cache::setInstance('etemplate', 'widget_registry', self::$widget_registry, 3600);
+		}
+	}
+
+	/**
 	 * Try to discover all widgets, as names don't always match tags (eg:
 	 * listbox is in menupopup)
 	 *
@@ -355,14 +424,47 @@ class Widget
 	 *
 	 * The list is cached for an hour, to avoid rescanning the filesystem but
 	 * also to make sure the list is always available, even when calling static
-	 * functions of widgets.
+	 * functions of widgets. Caching can be postponed until the registry is known to be
+	 * complete, see the comment about widget files still being included below.
 	 */
 	public static function scanForWidgets()
 	{
+		// already scanned, only the caching was postponed --> nothing to rescan
+		if (self::$registry_not_cached)
+		{
+			self::retryDeferredWidgetFiles();
+			self::cacheWidgetRegistry();
+			return self::$widget_registry;
+		}
 		$widget_registry = Api\Cache::getInstance('etemplate', 'widget_registry');
 
 		if (!$widget_registry)	// not in instance cache --> rescan from filesystem
 		{
+			// If the first etemplate class autoloaded by a request is a Widget subclass, PHP loads
+			// this file - and runs the scan below - while that subclass file is still being included.
+			// include_once() is a no-op for a file which is already being included, so the file's
+			// registerWidget() call at its very end only runs after we returned, which would leave us
+			// caching an incomplete registry (eg. without 'template' for the usual Api\Etemplate entry).
+			$mid_include = false;
+			$widget_dir = __DIR__.DIRECTORY_SEPARATOR.'Widget'.DIRECTORY_SEPARATOR;
+			foreach(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS) as $frame)
+			{
+				if (isset($frame['file']) && strpos($frame['file'], $widget_dir) === 0)
+				{
+					$mid_include = true;
+					break;
+				}
+			}
+			// RecursiveDirectoryIterator's traversal order is filesystem-dependent, NOT guaranteed
+			// parent-directory-before-subdirectory - a subclass file (eg. Widget/Nextmatch/*.php,
+			// or an app's own *_etemplate_widget) can get included before a same-directory-level
+			// parent class it extends (eg. Widget/Select.php), throwing \Error ("Class ... not
+			// found") during inheritance resolution. Worse, if THIS scan itself is running nested
+			// inside that parent class' own include (see the mid_include comment above), the
+			// parent genuinely can't become available until we return all the way out of this
+			// call - retrying within the same call wouldn't help. Defer failures to
+			// self::$deferred_widget_files and retry them from a later, non-nested
+			// scanForWidgets() call instead, see retryDeferredWidgetFiles().
 			foreach(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(__DIR__.'/Widget')) as $path)
 			{
 				if(strpos($path, 'tests/') !== FALSE)
@@ -375,9 +477,9 @@ class Widget
 					{
 						include_once($path);
 					}
-					catch(\Exception $e)
+					catch(\Throwable $e)
 					{
-						error_log($e->getMessage());
+						self::$deferred_widget_files[] = ['path' => $path];
 					}
 				}
 			}
@@ -394,16 +496,21 @@ class Widget
 						{
 							class_exists($class);	// trigger autoloader
 						}
-						catch(\Exception $e)
+						catch(\Throwable $e)
 						{
-							error_log($e->getMessage());
+							self::$deferred_widget_files[] = ['class' => $class];
 						}
 					}
 				}
 			}
-			if (self::$widget_registry['htmlarea'] === Api\Etemplate\Widget\HtmlArea::class)
-			Api\Cache::setInstance('etemplate', 'widget_registry', self::$widget_registry, 3600);
-			else error_log(__METHOD__."() wrong class for Htmlarea: ".function_backtrace ());
+			// postpone caching until the file(s) we were called from finished including and registered
+			self::$registry_not_cached = true;
+			if (!$mid_include)
+			{
+				// not nested, so anything deferred above is safe to retry right now too
+				self::retryDeferredWidgetFiles();
+				self::cacheWidgetRegistry();
+			}
 		}
 		else
 		{
@@ -421,6 +528,10 @@ class Widget
 	 */
 	public static function factory($type, $xml, $id=null)
 	{
+		// all includes finished by now, so cache the registry, if scanForWidgets() had to postpone it
+		// (before we add resolved classes below, which must not be cached, as they depend on the request)
+		if (self::$registry_not_cached) self::cacheWidgetRegistry();
+
 		$class_name =& self::$widget_registry[$type];
 
 		if (!isset($class_name))
@@ -702,36 +813,52 @@ class Widget
 	 */
 	protected static function expand_name($name,$c,$row,$c_=0,$row_=0,$cont=array())
 	{
-		$is_index_in_content = !empty($name) && $name[0] == '@';
-		if (($pos_var=strpos($name,'$')) !== false)
+		// fast path: nothing to expand, by far the most common case
+		if (empty($name) || ($name[0] !== '@' && strpos($name, '$') === false))
 		{
-			if (!$cont)
-			{
-				$cont = array();
-			}
-			if (!is_numeric($c)) $c = self::chrs2num($c);
-			$col = self::num2chrs($c-1);	// $c-1 to get: 0:'@', 1:'A', ...
-			if (is_numeric($c_)) $col_ = self::num2chrs($c_-1);
-			$row_cont = $cont[$row] ?? null;
-			$col_row_cont = $cont[$col.$row] ?? null;
+			return $name;
+		}
+		$is_index_in_content = $name[0] == '@';
 
-			$er = error_reporting(0);
-			try {
-				eval('$name = "' . strtr($name, [
-					'\\' => '\\\\',       // escape backslashes, to gard against \" to be escaped as \\" and therefore not at all
-					'"' => '\\"',         // escape used double quotes
-					'`' => '',            // disarm/remove backtick operator allowed in strings
-					'${row}' => $row,     // this is the only necessary usage of ${...}, we replace it directly with $row
-					'{$row}' => $row,     // deprecated use '${row}'
-					'{' => '', '}' => '', // disarm ${...} usable to run PHP e.g. "${phpinfo()}" or "${system('id')}"
-				]) . '";');
+		if (strpos($name, '$') !== false)
+		{
+			// ${row} / deprecated {$row}: literal substitution of $row's value, not a variable reference
+			if (strpos($name, '{') !== false)
+			{
+				$name = strtr($name, ['${row}' => $row, '{$row}' => $row]);
 			}
-			catch(\Throwable $e) {
-				error_log(__METHOD__."() eval('\$name = \"".strtr($name, ['\\' => '\\\\', '"' => '\\"', '`' => '', '${row}' => $row, '{' => '', '}' => '']) . "\";)");
-				_egw_log_exception($e);
+			if (strpos($name, '$') !== false)
+			{
+				if (!$cont) $cont = array();
+				if (!is_numeric($c)) $c = self::chrs2num($c);
+				$col = self::num2chrs($c-1);	// $c-1 to get: 0:'@', 1:'A', ...
+				$col_ = is_numeric($c_) ? self::num2chrs($c_-1) : null;
+				$row_cont = $cont[$row] ?? null;
+				$col_row_cont = $cont[$col.$row] ?? null;
+				$vars = array(
+					'c' => $c, 'row' => $row, 'c_' => $c_, 'row_' => $row_,
+					'cont' => $cont, 'col' => $col, 'col_' => $col_,
+					'row_cont' => $row_cont, 'col_row_cont' => $col_row_cont,
+				);
+				// resolve $var and $var[key] (key may be a bareword or another $var), same
+				// single-level lookup PHP's own double-quote string interpolation gives us -
+				// anything else (${expr}, object/array chaining, ...) is simply left untouched,
+				// never executed
+				$name = preg_replace_callback('/\$(\w+)(?:\[(\$?\w+)\])?/', static function($matches) use ($vars)
+				{
+					$value = $vars[$matches[1]] ?? '';
+					if (isset($matches[2]) && $matches[2] !== '' && is_array($value))
+					{
+						$idx = $matches[2];
+						if ($idx[0] === '$')
+						{
+							$idx = $vars[substr($idx, 1)] ?? '';
+						}
+						$value = $value[$idx] ?? '';
+					}
+					return is_array($value) ? 'Array' : (string)$value;
+				}, $name);
 			}
-			error_reporting($er);
-			unset($col_, $row_, $row_cont, $col_row_cont);	// quieten IDE warning about used vars, they might be used in above eval!
 		}
 		if ($is_index_in_content)
 		{

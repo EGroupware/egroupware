@@ -250,7 +250,6 @@ ldap settings for contacts	admin	sv	LDAP inställningar för kontakter
 ldif	addressbook	sv	LDIF
 line 2	addressbook	sv	Rad 2
 link title for contacts show	addressbook	sv	Länktitel för kontakter
-links	addressbook	sv	Länkar
 links and attached files	addressbook	sv	Länkar och bifogade filer
 list all categories	addressbook	sv	Visa alla kategorier
 list all customfields	addressbook	sv	Visa alla anpassade fält

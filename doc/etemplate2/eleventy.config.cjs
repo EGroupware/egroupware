@@ -1,10 +1,11 @@
 /* eslint-disable no-invalid-this */
 const fs = require('fs');
 const path = require('path');
+const {execSync} = require('child_process');
 const lunr = require('lunr');
 const {capitalCase} = require('change-case');
-const {JSDOM} = require('jsdom');
-const {customElementsManifest, getAllComponents, getShoelaceVersion} = require('./_utilities/cem.cjs');
+const {customElementsManifest, getAllComponents, getAllMixins, getShoelaceVersion} = require('./_utilities/cem.cjs');
+const {buildTaxonomy, FEATURE_AREAS} = require('./_utilities/widget-taxonomy.cjs');
 const egwFlavoredMarkdown = require('./_utilities/markdown.cjs');
 const activeLinks = require('./_utilities/active-links.cjs');
 const anchorHeadings = require('./_utilities/anchor-headings.cjs');
@@ -21,7 +22,48 @@ const replacer = require('./_utilities/replacer.cjs');
 const assetsDir = 'assets';
 const cdndir = 'cdn';
 const npmdir = 'dist';
-const allComponents = getAllComponents();
+
+// Every documented mixin/controller lists which widgets consume it (reverse of "this component's
+// mixins", already on each component) so a reader landing on Et2InputWidget's page can jump to
+// every input widget, and vice versa - see doc/ai/projects/etemplate-docs-sidebar-grouping.md.
+function attachConsumedBy(components, mixins)
+{
+	mixins.forEach(mixin =>
+	{
+		mixin.consumedBy = components
+			.filter(c => (c.mixins || []).some(m => m.name === mixin.name))
+			.map(c => ({name: c.name, tagName: c.tagName}));
+	});
+}
+
+// Walks the computed taxonomy and copies belongsTo/related back onto the matching component
+// object (by name), so component.njk can render a "Related" section at the end of the page
+// without needing to know anything about the taxonomy tree shape itself - just its own data.
+function attachTaxonomyMetadata(components, taxonomy)
+{
+	const byName = new Map(components.map(c => [c.name, c]));
+	function visit(node)
+	{
+		const component = byName.get(node.name);
+		if (component)
+		{
+			component.belongsTo = node.belongsTo;
+			component.related = node.related;
+		}
+		(node.associated || []).forEach(visit);
+	}
+	taxonomy.categories.forEach(cat => cat.entries.forEach(entry =>
+	{
+		visit(entry.base);
+		entry.variations.forEach(visit);
+	}));
+}
+
+let allComponents = getAllComponents();
+let allMixins = getAllMixins();
+attachConsumedBy(allComponents, allMixins);
+let widgetTaxonomy = buildTaxonomy(allComponents, allMixins);
+attachTaxonomyMetadata(allComponents, widgetTaxonomy);
 let hasBuiltSearchIndex = false;
 
 // Write component data to file, 11ty will pick it up and create pages - the name & location are important
@@ -30,12 +72,18 @@ if (!fs.existsSync("_data"))
 	fs.mkdirSync("_data");
 }
 fs.writeFileSync("_data/components.json", JSON.stringify(allComponents));
+fs.writeFileSync("_data/mixins.json", JSON.stringify(allMixins));
+fs.writeFileSync("_data/widgetTaxonomy.json", JSON.stringify(widgetTaxonomy));
 
 // Put it here too, since addPassthroughCopy() ignores it
 fs.copyFileSync("../dist/custom-elements.json", "assets/custom-elements.json");
 
-module.exports = function (eleventyConfig)
+module.exports = async function (eleventyConfig)
 {
+	// package.json overrides jsdom's html-encoding-sniffer dependency to avoid html-encoding-sniffer@6 requiring
+	// ESM-only @exodus/bytes from CommonJS under Node 24.
+	const {JSDOM} = await import('jsdom');
+
 	//
 	// Global data
 	//
@@ -48,6 +96,8 @@ module.exports = function (eleventyConfig)
 		image: 'images/logo.svg',
 		version: customElementsManifest.package.version,
 		components: allComponents,
+		mixins: allMixins,
+		widgetTaxonomy: widgetTaxonomy,
 		shoelaceVersion: getShoelaceVersion(),
 		cdndir,
 		npmdir
@@ -76,7 +126,47 @@ module.exports = function (eleventyConfig)
 	// Etemplate2
 	eleventyConfig.addPassthroughCopy({"../../chunks": "assets/scripts/chunks"});
 	eleventyConfig.addPassthroughCopy({"../../api/js/etemplate/etemplate2.js": "assets/scripts/sub/dir/etemplate/etemplate2.js"});
+	// egw.min.js is the real bootstrap that normally runs *before* etemplate2.js on every
+	// EGroupware page (see Api\Framework::header()) - it seeds window.egw_webserverUrl from the
+	// egw_script_id tag's data-url attribute and pulls in the egw_debug/egw_links/egw_images/...
+	// modules that etemplate2.js's own bundle doesn't include. Without it, egw().webserverUrl
+	// stays null and egw().debug()/link_app_list()/getSessionItem() etc. don't exist - see
+	// default.njk's egw_script_id script tag.
+	eleventyConfig.addPassthroughCopy({"../../api/js/jsapi/egw.min.js": "assets/scripts/sub/dir/jsapi/egw.min.js"});
+	eleventyConfig.addPassthroughCopy({"../../api/js/jsapi/egw.min.js.map": "assets/scripts/sub/dir/jsapi/egw.min.js.map"});
+	// kdots/js/app.min.js's own top-level logic no-ops here (no <egw-framework> element exists),
+	// but importing it registers <egw-message> (kdots/js/EgwFrameworkMessage.ts, via a
+	// @customElement decorator side effect) as a real custom element. Without it,
+	// egw().message()'s no-framework fallback does `document.createElement("egw-message")` and
+	// gets a plain, undefined HTMLElement - `.updateComplete` is undefined on it, and awaiting
+	// that throws synchronously. That's fatal when it happens inside a widget's own constructor
+	// (eg. Et2Email calling egw().preference() for an app whose prefs need a - failing, no PHP
+	// backend here - ajax fetch): the constructor throws before Lit ever attaches a shadow root,
+	// so the widget silently never renders at all. Destination path is 2 levels deep to match
+	// this file's own relative `../../chunks/...` import.
+	eleventyConfig.addPassthroughCopy({"../../kdots/js/app.min.js": "assets/scripts/sub/kdots/app.min.js"});
+	eleventyConfig.addPassthroughCopy({"../../kdots/js/app.min.js.map": "assets/scripts/sub/kdots/app.min.js.map"});
+	// Static skin/content CSS for the HtmlArea (TinyMCE) widget - resolved at runtime as
+	// `${egw().webserverUrl}/api/js/etemplate/Et2HtmlArea/skins/ui/...` (Et2HtmlArea.ts). The
+	// dynamic tinymce.php stylesheet and the image-upload ajax endpoint need a real PHP backend
+	// and stay unavailable in the docs site; this only covers what's a static file.
+	eleventyConfig.addPassthroughCopy({"../../api/js/etemplate/Et2HtmlArea/skins/ui": "assets/api/js/etemplate/Et2HtmlArea/skins/ui"});
+	// api/tinymce.php normally generates the editor's content-area CSS from the user's font
+	// preference (see Api\Etemplate\Widget\HtmlArea::contentCss()) - there's no PHP backend here
+	// to run it, so serve TinyMCE's own stock default content CSS at that URL instead (query
+	// string is ignored by the static file server). Static, but far better than a 404 that
+	// aborts TinyMCE's own init - see Et2HtmlArea.ts's contentCss()/skinUrl().
+	eleventyConfig.addPassthroughCopy({"../../node_modules/tinymce/skins/content/default/content.css": "assets/api/tinymce.php"});
+	// Et2HtmlArea.ts computes TinyMCE's base_url as `${webserverUrl}/node_modules/tinymce` - it
+	// lazy-fetches plugin i18n files (eg. the "help" plugin's keynav locale) from under there at
+	// runtime, and a 404 on one of those aborts the rest of TinyMCE's own init silently (no
+	// toolbar/editor renders at all). Mirror the whole package so any such fetch resolves.
+	eleventyConfig.addPassthroughCopy({"../../node_modules/tinymce": "assets/node_modules/tinymce"});
 	eleventyConfig.addPassthroughCopy({"../../node_modules/bootstrap-icons/font/bootstrap-icons.min.css": "assets/styles/bootstrap-icons.min.css"});
+	// The CSS above references fonts/bootstrap-icons.woff(2) by relative path - without also
+	// copying the font files themselves, the glyphs never render (confirmed: sidebar category
+	// icons showed as broken/tofu characters until this was added).
+	eleventyConfig.addPassthroughCopy({"../../node_modules/bootstrap-icons/font/fonts": "assets/styles/fonts"});
 	eleventyConfig.addPassthroughCopy({"../../api/js/etemplate/*/doc/*": "assets/components/"});
 	eleventyConfig.addPassthroughCopy({"../../node_modules/diff2html/bundles/css/diff2html.min.css": "assets/styles/diff2html.min.css"});
 
@@ -123,6 +213,42 @@ module.exports = function (eleventyConfig)
 		}
 		return component;
 	});
+
+	// Resolves an "inheritedFrom" ancestor to a documented page, for linking from the collapsed
+	// "Inherited ..." sections back to whatever actually documents the member in full. Checks (in
+	// order): a real Shoelace ancestor (links out to shoelace.style, since we don't document
+	// Shoelace's own API) - an exact widget-name match - then a mixin match, retrying with a
+	// "+ Mixin" suffix since a TS mixin factory's produced class name (what inheritedFrom.name
+	// reports, e.g. "Et2WidgetWithSelect") doesn't always match the mixin's own declared name
+	// (e.g. "Et2WidgetWithSelectMixin"). Returns null (render as plain text) if nothing matches.
+	// `module` is the ancestor's inheritedFrom.module, used only to detect the Shoelace case.
+	eleventyConfig.addNunjucksGlobal('findAncestorDoc', (name, module) =>
+	{
+		if (module === '@shoelace-style/shoelace')
+		{
+			// e.g. "SlButton" -> "button", "SlFormatBytes" -> "format-bytes" - matches Shoelace's
+			// own component page URLs (the tag name minus its "sl-" prefix).
+			const slug = name.replace(/^Sl/, '').replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+			return {type: 'shoelace', name, url: `https://shoelace.style/components/${slug}`};
+		}
+		const widget = allComponents.find(c => c.name === name);
+		if (widget)
+		{
+			return {type: 'component', tagName: widget.tagName, name: widget.name};
+		}
+		const mixin = allMixins.find(m => m.name === name || m.name === name + 'Mixin');
+		if (mixin)
+		{
+			return {type: 'mixin', name: mixin.name};
+		}
+		return null;
+	});
+
+	// True when a "Belongs to" value is one of the 4 recognized feature-area subsystems (as
+	// opposed to rule 4's actual-inheritance-parent case, e.g. "Et2Select") - lets component.njk
+	// link to that subsystem's Reference overview page instead of falling through to
+	// findAncestorDoc (which wouldn't find a real component/mixin for a subsystem label anyway).
+	eleventyConfig.addNunjucksGlobal('isFeatureArea', value => Object.values(FEATURE_AREAS).includes(value));
 
 	//
 	// Custom markdown syntaxes
@@ -270,6 +396,51 @@ module.exports = function (eleventyConfig)
 	eleventyConfig.on('eleventy.after', () =>
 	{
 		console.log('[eleventy.after]');
+	});
+
+	//
+	// Keep component docs fresh under --watch.
+	//
+	// Component markdown (api/js/etemplate/**/*.md) and the generated API tables
+	// (custom-elements.json from cem analyze) are NOT in 11ty's input/_data graph,
+	// so the watcher never sees them and the top-level getAllComponents() run above
+	// only happens once at config load. Watch the source tree and, before every
+	// rebuild, regenerate the manifest from TypeScript and re-read component content
+	// into _data/components.json so the page actually reflects the edit.
+	//
+	// cem analyze only needs to run when a .ts file changed — editing a component's
+	// .md doc is just a content change that getAllComponents() re-reads cheaply without
+	// re-analyzing TypeScript. We also write the manifest to doc/dist only (the single
+	// source cem.cjs consumes); the previous second run into _data was never read.
+	//
+	eleventyConfig.addWatchTarget("../../api/js/etemplate/**/*.{ts,md}");
+
+	eleventyConfig.on('eleventy.beforeWatch', (queue) =>
+	{
+		// Only re-run the (expensive) cem analyzer when a TypeScript source file changed.
+		const tsChanged = (queue || []).some(file => file.endsWith('.ts'));
+		if (tsChanged)
+		{
+			// metadata.mjs resolves its own paths; run from the repo root so cem analyze finds package.json.
+			const repoRoot = path.resolve(__dirname, '../..');
+			const metadataScript = path.resolve(repoRoot, 'doc/scripts/metadata.mjs');
+			execSync(`node "${metadataScript}" --outdir "${path.resolve(__dirname, '../dist')}"`, {cwd: repoRoot, stdio: 'inherit'});
+		}
+
+		// Re-read component markdown + manifest into components.json for the page render.
+		// Cheap, and also runs when only a .md doc changed so its content is refreshed.
+		allComponents = getAllComponents();
+		allMixins = getAllMixins();
+		attachConsumedBy(allComponents, allMixins);
+		widgetTaxonomy = buildTaxonomy(allComponents, allMixins);
+		attachTaxonomyMetadata(allComponents, widgetTaxonomy);
+		if (!fs.existsSync("_data"))
+		{
+			fs.mkdirSync("_data");
+		}
+		fs.writeFileSync("_data/components.json", JSON.stringify(allComponents));
+		fs.writeFileSync("_data/mixins.json", JSON.stringify(allMixins));
+		fs.writeFileSync("_data/widgetTaxonomy.json", JSON.stringify(widgetTaxonomy));
 	});
 
 	//

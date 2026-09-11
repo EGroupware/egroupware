@@ -75,6 +75,29 @@ describe("Date widget", () =>
 		assert.equal(element.get_value(), '');
 	});
 
+	/**
+	 * Regression test: flatpickr's own clear() defaults triggerChangeEvent to true, unlike
+	 * setDate() (used for a real value) which this same setter calls with no triggerChange arg
+	 * (defaults false). Programmatically resetting value to empty must not fire "change" -
+	 * a real caller (Et2Filterbox re-applying a nextmatch's saved filter state) listens for
+	 * "change" and calls back into Et2Nextmatch.applyFilters(), which can re-set this same
+	 * widget's value to empty again - an infinite loop reproduced live against a real mailbox
+	 * whose date filter legitimately resolves to empty.
+	 */
+	it("setting value to empty does not re-fire a change event", async() =>
+	{
+		element.set_value("2008-09-22T00:00:00.000Z");
+		await elementUpdated(element);
+
+		const changeSpy = sinon.spy();
+		element.addEventListener("change", changeSpy);
+
+		element.set_value("");
+		await elementUpdated(element);
+
+		assert.isFalse(changeSpy.called);
+	});
+
 	const tz_list = [
 		{name: "America/Edmonton", offset: -600},
 		{name: "UTC", offset: 0},

@@ -15,6 +15,7 @@ use EGroupware\Api\Framework;
 use EGroupware\Api\Etemplate;
 use EGroupware\Api\Mail;
 use EGroupware\Api\Mail\Sieve\Script;
+use EGroupware\Mail\Compose;
 
 class mail_sieve
 {
@@ -734,7 +735,7 @@ class mail_sieve
 								}
 								// refresh vacationNotice on index
 								$response = Api\Json\Response::get();
-								$response->call('app.mail.mail_callRefreshVacationNotice',$icServer->ImapServerId);
+								$response->call('app.mail.callRefreshVacationNotice',$icServer->ImapServerId);
 								Framework::refresh_opener($msg, 'mail');
 								if ($button === 'apply' || $icServer->error !=="")
 								{
@@ -987,7 +988,7 @@ class mail_sieve
 
 		//Calling to referesh after move action
 		$response = Api\Json\Response::get();
-		$response->call('app.mail.sieve_refresh');
+		$response->call('app.mail.sieveRefresh');
 	}
 
 	/**
@@ -1041,7 +1042,7 @@ class mail_sieve
 		}
 		$this->saveSessionData();
 
-		$response->call('app.mail.sieve_refresh');
+		$response->call('app.mail.sieveRefresh');
 	}
 
 	/**
@@ -1362,7 +1363,7 @@ class mail_sieve
 	 */
 	function ajax_getFolders ($_searchStringLength=2, $_returnList=false, $_mailaccountToSearch=null, $_noPrefixId=false)
 	{
-		$mailCompose = new mail_compose();
+		$mailCompose = new Compose();
 		if ($_REQUEST['noPrefixId']) $_noPrefixId = $_REQUEST['noPrefixId'];
 		$mailCompose->ajax_searchFolder($_searchStringLength, $_returnList, $_mailaccountToSearch, $_noPrefixId);
 	}

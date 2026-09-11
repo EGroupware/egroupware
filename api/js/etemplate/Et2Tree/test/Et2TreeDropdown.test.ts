@@ -2,6 +2,7 @@ import {Et2TreeDropdown} from "../Et2TreeDropdown";
 import {assert, fixture} from "@open-wc/testing";
 import {html} from "lit";
 import {Et2Tree} from "../Et2Tree";
+import {inputBasicTests} from "../../Et2InputWidget/test/InputBasicTests";
 
 window.egw = {
 	ajaxUrl: (url) => url,
@@ -11,15 +12,18 @@ window.egw = {
 	tooltipUnbind: () => {},
 	webserverUrl: ""
 };
+let element : Et2TreeDropdown;
+
+async function before()
+{
+	element = await fixture<Et2TreeDropdown>(html`
+        <et2-tree-dropdown></et2-tree-dropdown>`);
+	return element;
+}
+
 describe("Et2TreeDropdown", () =>
 {
-	let element : Et2TreeDropdown;
-
-	beforeEach(async() =>
-	{
-		element = await fixture<Et2TreeDropdown>(html`
-            <et2-tree-dropdown></et2-tree-dropdown>`);
-	});
+	beforeEach(before);
 
 	// Make sure it works
 	it("is defined", async() =>
@@ -91,3 +95,5 @@ describe("Et2TreeDropdown", () =>
 		assert(!element.hasAttribute("open"), "Dropdown should close when clicking outside");
 	});
 });
+
+inputBasicTests(before, "leaf-1", "input");

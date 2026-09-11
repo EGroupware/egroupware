@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="resources.acl.rows">
+	<et2-template  id="resources.acl.rows">
 		<grid width="100%">
 			<columns>
 				<column width="20%"/>
@@ -16,25 +17,25 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<nextmatch-header label="Category" id="id"/>
-					<nextmatch-header label="Icon" id="icon"/>
-					<nextmatch-header statustext="Category admin" id="admin" label="Category admin"/>
-					<nextmatch-header statustext="Category admin" id="owner" label="Category owner"/>
-					<nextmatch-header id="location" label="Locations / rooms"/>
-					<nextmatch-header label="Read permissions" id="read"/>
+					<et2-nextmatch-header  label="Category" id="id"></et2-nextmatch-header>
+					<et2-nextmatch-header  label="Icon" id="icon"></et2-nextmatch-header>
+					<et2-nextmatch-header  statustext="Category admin" id="admin" label="Category admin"></et2-nextmatch-header>
+					<et2-nextmatch-header  statustext="Category admin" id="owner" label="Category owner"></et2-nextmatch-header>
+					<et2-nextmatch-header  id="location" label="Locations / rooms"></et2-nextmatch-header>
+					<et2-nextmatch-header  label="Read permissions" id="read"></et2-nextmatch-header>
 					<et2-vbox>
-						<nextmatch-header label="Write permissions" id="write" />
+						<et2-nextmatch-header  label="Write permissions" id="write"></et2-nextmatch-header>
 						<et2-description  label="implies read permission"></et2-description>
 					</et2-vbox>
-					<nextmatch-header label="Read Calendar permissions" id="calread"/>
+					<et2-nextmatch-header  label="Read Calendar permissions" id="calread"></et2-nextmatch-header>
 					<et2-vbox>
-						<nextmatch-header label="Direct booking permissions" id="calwrite"/>
+						<et2-nextmatch-header  label="Direct booking permissions" id="calwrite"></et2-nextmatch-header>
 						<et2-description  label="implies booking permission"></et2-description>
 					</et2-vbox>
 				</row>
 				<row class="$row_cont[id] $row_cont[class]">
 					<et2-hbox>
-						<html id="${row}[level_spacer]"/>
+						<et2-html  id="${row}[level_spacer]"></et2-html>
 						<et2-description  id="${row}[name]" class="$row_cont[class]"></et2-description>
 					</et2-hbox>
 					<et2-image  align="center" src="${row}[icon_url]"></et2-image>
@@ -48,8 +49,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="resources.acl" template="" lang="" group="0" version="">
+	</et2-template>
+	<et2-template  id="resources.acl" template="" lang="" group="0" version="">
 		<nextmatch id="nm" template="resources.acl.rows" />		
-	</template>
+	</et2-template>
 </overlay>

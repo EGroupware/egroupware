@@ -14,6 +14,11 @@ export class EgwPopups
 
 	public add(windowID : Window | Et2Dialog)
 	{
+		// Ignore windows / dialogs we are already tracking
+		if(windowID instanceof Et2Dialog ? this._popups.indexOf(windowID) !== -1 : this.findIndex(<Window>windowID) !== -1)
+		{
+			return;
+		}
 		this._popups.push(windowID);
 		if(!this._popupsGCInterval)
 		{
@@ -84,7 +89,11 @@ export class EgwPopups
 	{
 		if(_wnd instanceof Et2Dialog)
 		{
-			this._popups.splice(this._popups.indexOf(_wnd), 1);
+			const index = this._popups.indexOf(_wnd);
+			if(index !== -1)
+			{
+				this._popups.splice(index, 1);
+			}
 			_wnd.modal?.deactivate();
 			return (<Et2Dialog>_wnd).hide();
 		}

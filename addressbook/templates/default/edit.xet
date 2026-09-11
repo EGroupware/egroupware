@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="addressbook.editname" template="" lang="" group="0" version="1.9.001">
+	<et2-template  id="addressbook.editname" template="" lang="" group="0" version="1.9.001">
 		<grid class="editname">
 			<columns>
 				<column width="85"/>
@@ -34,8 +35,8 @@
                 </row>
             </rows>
         </grid>
-    </template>
-    <template id="addressbook.edit.general" template="" lang="" group="0" version="1.9.003">
+    </et2-template>
+    <et2-template  id="addressbook.edit.general" template="" lang="" group="0" version="1.9.003">
         <grid width="94%">
             <columns>
                 <column width="92"/>
@@ -111,14 +112,12 @@
                         <et2-description  for="shared" value="Shared with"></et2-description>
                         <et2-checkbox  id="shared_writable" label="writable" statustext="Create new shares writable"></et2-checkbox>
                     </et2-vbox>
-                    <et2-select-account id="shared_values" multiple="true" span="all"
-                                        onchange="app.addressbook.shared_changed"
-                                        accountType="both"></et2-select-account>
+                    <et2-select-account  id="shared_values" multiple="true" span="all" onchange="app.addressbook.shared_changed" accountType="both"></et2-select-account>
                 </row>
             </rows>
 		</grid>
-	</template>
-	<template id="addressbook.edit.details" template="" lang="" group="0" version="1.9.002">
+	</et2-template>
+	<et2-template  id="addressbook.edit.details" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%" overflow="auto">
 			<columns>
 				<column width="312"/>
@@ -127,7 +126,7 @@
 			</columns>
 			<rows>
 				<row valign="top">
-					<et2-select-cat id="cat_id" multiple="true" placeholder="Category"></et2-select-cat>
+					<et2-select-cat  id="cat_id" multiple="true" placeholder="Category"></et2-select-cat>
 					<et2-description></et2-description>
 					<grid width="100%">
 						<columns>
@@ -136,8 +135,7 @@
 						</columns>
 						<rows>
 							<row valign="top">
-								<et2-description  value="Notes"></et2-description>
-                                <et2-textarea  id="note" rows="10" height="100"></et2-textarea>
+								<et2-description  value="Notes"></et2-description><et2-ai><et2-textarea  id="note" rows="10"></et2-textarea></et2-ai>
 							</row>
 							<row disabled="@hidebuttons">
 								<et2-description  value="Last date"></et2-description>
@@ -149,29 +147,22 @@
                             </row>
                             <row valign="top" class="smime_section_border">
                                 <et2-description  value="SMIME key"></et2-description>
-                                <vfs-upload id="addressbook:$cont[id]:.files/smime-pubkey.crt"
-                                            accept=".crt,.pem,.cer,application/x-x509-ca-cert,application/x-x509-user-cert"
-                                            mime="/application\/(x-x509-(ca|user)|pkix)-cert/"
-                                            callback="addressbook.addressbook_ui.pubkey_uploaded"/>
+                                <et2-vfs-upload  id="addressbook:$cont[id]:.files/smime-pubkey.crt" accept=".crt,.pem,.cer,application/x-x509-ca-cert,application/x-x509-user-cert" mime="/application\/(x-x509-(ca|user)|pkix)-cert/" onStart="app.addressbook.pubkeyUploadStart"></et2-vfs-upload>
                             </row>
                             <row valign="top">
                                 <et2-description  value="PGP key"></et2-description>
-                                <vfs-upload id="addressbook:$cont[id]:.files/pgp-pubkey.asc"
-                                            accept=".asc,application/pgp-keys"
-                                            mime="/(application\/pgp-keys|text\/plain)/"
-                                            callback="addressbook.addressbook_ui.pubkey_uploaded"/>
+                                <et2-vfs-upload  id="addressbook:$cont[id]:.files/pgp-pubkey.asc" accept=".asc,application/pgp-keys" mime="/(application\/pgp-keys|text\/plain)/" onStart="app.addressbook.pubkeyUploadStart"></et2-vfs-upload>
                             </row>
                             <row valign="top">
-                                <et2-description  for="pubkey" value="Public key"></et2-description>
-                                <et2-textarea  id="pubkey" rows="4" resizeRatio="0"></et2-textarea>
+                                <et2-description  for="pubkey" value="Public key"></et2-description><et2-ai><et2-textarea  id="pubkey" rows="4" resizeRatio="0"></et2-textarea></et2-ai>
                             </row>
                         </rows>
                     </grid>
                 </row>
             </rows>
         </grid>
-    </template>
-    <template id="addressbook.edit.home" template="" lang="" group="0" version="1.9.001">
+    </et2-template>
+    <et2-template  id="addressbook.edit.home" template="" lang="" group="0" version="1.9.001">
         <grid width="100%">
             <columns>
                 <column width="92"/>
@@ -248,8 +239,8 @@
                 </row>
             </rows>
 		</grid>
-	</template>
-	<template id="addressbook.edit.links" template="" lang="" group="0" version="1.9.001">
+	</et2-template>
+	<et2-template  id="addressbook.edit.links" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%" overflow="auto">
 			<columns>
 				<column/>
@@ -266,27 +257,27 @@
 				</row>
 			</rows>
         </grid>
-    </template>
-    <template id="addressbook.edit.distribution_list" template="" lang="" group="0" version="1.9.001">
+    </et2-template>
+    <et2-template  id="addressbook.edit.distribution_list" template="" lang="" group="0" version="1.9.001">
         <et2-box  width="100%" overflow="auto">
             <et2-description  id="distrib_lists" span="all"></et2-description>
         </et2-box>
-    </template>
-    <template id="addressbook.edit.custom" template="" lang="" group="0" version="1.9.001">
+    </et2-template>
+    <et2-template  id="addressbook.edit.custom" template="" lang="" group="0" version="1.9.001">
         <et2-box  width="100%" overflow="auto">
             <customfields private="$cont[no_private_cfs]"  type_filter="$cont[tid]"/>
         </et2-box>
-    </template>
-    <template id="addressbook.edit.custom_private" template="" lang="" group="0" version="1.9.001">
+    </et2-template>
+    <et2-template  id="addressbook.edit.custom_private" template="" lang="" group="0" version="1.9.001">
         <et2-box  width="100%" overflow="auto">
             <customfields id="private_cfs" private="1"  type_filter="$cont[tid]"/>
         </et2-box>
-    </template>
-    <template id="addressbook.edit.history" template="" lang="" group="0" version="1.9.001">
+    </et2-template>
+    <et2-template  id="addressbook.edit.history" template="" lang="" group="0" version="1.9.001">
         <historylog id="history" width="100%"/>
-    </template>
-    <template id="addressbook.edit" template="" lang="" group="0" version="1.9.004" class="addressbook_edit">
-        <template id="addressbook.editname"/>
+    </et2-template>
+    <et2-template  id="addressbook.edit" template="" lang="" group="0" version="1.9.004" class="addressbook_edit">
+        <et2-template  id="addressbook.editname"></et2-template>
         <grid class="addressbook_edit" border="1" width="100%">
             <columns>
                 <column width="100"/>
@@ -300,7 +291,7 @@
                 <row class="dialogHeader">
                     <et2-box  align="center">
                         <et2-hbox  disabled="@hidebuttons">
-                            <et2-lavatar id="jpegphoto" image="$cont[photo]" contactId="$cont[id]" crop="false" editable="true"></et2-lavatar>
+                            <et2-lavatar  id="jpegphoto" image="$cont[photo]" contactId="$cont[id]" crop="false" editable="true"></et2-lavatar>
                         </et2-hbox>
                     </et2-box>
                     <et2-textbox  id="n_fn" tabindex="-1" class="cursorHand" placeholder="Name"></et2-textbox>
@@ -346,12 +337,12 @@
                             <tab id="history" label="History"/>
                         </tabs>
                         <tabpanels>
-                            <template id="addressbook.edit.general"/>
-                            <template id="addressbook.edit.home"/>
-                            <template id="addressbook.edit.details"/>
-                            <template id="addressbook.edit.links"/>
-                            <template id="addressbook.edit.distribution_list"/>
-                            <template id="addressbook.edit.history"/>
+                            <et2-template  id="addressbook.edit.general"></et2-template>
+                            <et2-template  id="addressbook.edit.home"></et2-template>
+                            <et2-template  id="addressbook.edit.details"></et2-template>
+                            <et2-template  id="addressbook.edit.links"></et2-template>
+                            <et2-template  id="addressbook.edit.distribution_list"></et2-template>
+                            <et2-template  id="addressbook.edit.history"></et2-template>
                         </tabpanels>
                     </et2-tabbox>
                 </row>
@@ -383,7 +374,7 @@
 						<et2-button  label="Apply" id="button[apply]" class="button_apply" image="apply"></et2-button>
 						<et2-button  label="Cancel" id="button[cancel]" class="button_cancel" onclick="if($cont[view] || false) return true; window.close(); return false;" image="cancel"></et2-button>
 						<et2-checkbox  statustext="Apply changes to all members, whose fields have the same previous content" label="change all organisation members" id="change_org" span="all" disabled="@hide_change_org"></et2-checkbox>
-                        <et2-button align="right" label="Delete" id="button[delete]" class="button_delete" onclick="Et2Dialog.confirm(widget,'Do you really want to delete this contact?','Delete')" image="delete"></et2-button>
+                        <et2-button  align="right" label="Delete" id="button[delete]" class="button_delete" onclick="Et2Dialog.confirm(widget,'Do you really want to delete this contact?','Delete')" image="delete"></et2-button>
 					</et2-hbox>
 
 				</row>
@@ -401,5 +392,5 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

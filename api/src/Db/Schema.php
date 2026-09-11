@@ -787,7 +787,15 @@ class Schema
 
 		if (!$Ok)
 		{
+			// transaction_abort() (ADOdb FailTrans()) only flags the transaction to fail - it does
+			// NOT itself commit/rollback, that only happens in transaction_commit() (ADOdb
+			// CompleteTrans()). Without this call the transaction_begin() above stays open
+			// indefinitely on $this->m_odb, holding its locks for the rest of the process - see
+			// api/src/Storage/Customfields.php's getSerial() for the same bug, already fixed, and
+			// setup/admin_account.php for the correct transaction_abort()-then-transaction_commit()
+			// idiom used elsewhere.
 			$this->m_odb->transaction_abort();
+			$this->m_odb->transaction_commit();
 			return False;
 		}
 		// do we need to update the new sequences value ?

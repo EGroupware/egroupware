@@ -246,7 +246,6 @@ limit number of description lines (default 5, 0 for no limit)	infolog	et	Piirake
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	et	Kirjeldussamba laiuse piiramine. Toimib ainult siis, kui on seatud ridade piirang. 0 = piirang puudub.
 link	infolog	et	Link
 linked to %1	infolog	et	Lingitud %1-ga
-links	infolog	et	Lingid
 links and attached files	infolog	et	Lingid ja lisatud failid
 links of this entry	infolog	et	Selle kirje lingid
 links to specified application.  example: {{links/infolog}}	infolog	et	Lingid määratud rakendusele. Näide: {{links/infolog}}

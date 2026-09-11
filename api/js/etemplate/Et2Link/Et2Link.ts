@@ -11,9 +11,28 @@
 
 
 import {ExposeMixin, ExposeValue} from "../Expose/ExposeMixin";
-import {css, html, LitElement, TemplateResult} from "lit";
+import {html, LitElement, TemplateResult} from "lit";
+import {property} from "lit/decorators/property.js";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
+
+import styles from "./Et2Link.styles";
+/**
+ * Pseudo-appname matching PHP's Api\Link::URL_APPNAME - a link to an arbitrary external
+ * URL, id is the URL itself. There's no real app registered for it (nothing to look up via
+ * egw().open()), so it needs its own icon and its own "open" behaviour throughout this file.
+ */
+export const LINK_URL_APPNAME = "url";
+
+/**
+ * Icon for a LINK_URL_APPNAME link: no real app icon exists for it, so this is a small
+ * inline SVG (just the text "http", stretched to fill the icon box via textLength) rather
+ * than a file under an app's templates/default/images/.
+ */
+const URL_ICON_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">' +
+	'<text x="1" y="18" font-family="monospace" font-weight="bold" font-size="16" ' +
+	'textLength="23" lengthAdjust="spacingAndGlyphs" fill="#000">http</text></svg>';
+export const LINK_URL_ICON = "data:image/svg+xml," + encodeURIComponent(URL_ICON_SVG);
 
 /**
  * Display a specific, single entry from an application
@@ -32,109 +51,51 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 	{
 		return [
 			...super.styles,
-			css`
-			  :host {
-				display: block;
-				cursor: pointer;
-			  }
-
-			  .link {
-				display: flex;
-				gap: 0.5rem;
-			  }
-
-			  .link__title {
-				flex: 2 1 50%;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                max-width: max-content;
-                width: 0;
-			  }
-
-			  .link__remark {
-				flex: 1 1 50%;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                max-width: max-content;
-                width: 0;
-			  }
-
-			  :host:hover {
-				text-decoration: underline
-			  }
-
-			  /** Style based on parent **/
-
-			  :host(et2-link-string) div {
-				display: inline;
-			  }
-
-			  :host-context(et2-link-list):hover {
-				text-decoration: none;
-			  }
-			`
+			styles
 		];
 	}
 
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/**
-			 * Specify the application for the entry
-			 */
-			app: {
-				type: String,
-				reflect: true,
-			},
-			/**
-			 * Application entry ID
-			 */
-			entryId: {
-				type: String,
-				reflect: true
-			},
-			/**
-			 * Pass value as an object, will be parsed to set application & entryId
-			 */
-			value: {
-				type: Object,
-				reflect: false
-			},
-			/**
-			 * View link type
-			 * Used for displaying the linked entry
-			 * [view|edit|add]
-			 * default "view"
-			 */
-			linkHook: {
-				type: String
-			},
-			/**
-			 * Target application
-			 *
-			 * Passed to egw.open() to open entry in specified application
-			 */
-			targetApp: {
-				type: String
-			},
-			/**
-			 * Optional parameter to be passed to egw().open in order to open links in specified target eg. _blank
-			 */
-			extraLinkTarget: {
-				type: String
-			},
+	/**
+	 * Specify the application for the entry
+	 */
+	@property({type: String, reflect: true})
+	app : string;
 
-			/**
-			 * Breaks title into multiple lines based on this delimiter by replacing it with '\r\n'"
-			 */
-			breakTitle: {
-				type: String
-			}
+	/**
+	 * Application entry ID
+	 */
+	@property({type: String, reflect: true})
+	entryId : string;
 
-		}
-	}
+	/**
+	 * View link type
+	 * Used for displaying the linked entry
+	 * [view|edit|add]
+	 * default "view"
+	 */
+	@property({type: String})
+	linkHook : string;
+
+	/**
+	 * Target application
+	 *
+	 * Passed to egw.open() to open entry in specified application
+	 */
+	@property({type: String})
+	targetApp : string;
+
+	/**
+	 * Optional parameter to be passed to egw().open in order to open links in specified target eg. _blank
+	 */
+	@property({type: String})
+	extraLinkTarget : string;
+
+	/**
+	 * Breaks title into multiple lines based on this delimiter by replacing it with '\r\n'"
+	 */
+	@property({type: String})
+	breakTitle : string;
 
 	static MISSING_TITLE = "??";
 
@@ -143,12 +104,13 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 
 	// Title is read-only inside
 	private _title : string;
-	private _titlePromise : Promise<string>;
+	private _titlePromise : Promise<string> | null;
 
 	constructor()
 	{
 		super();
 		this._title = Et2Link.MISSING_TITLE;
+		this._titlePromise = null;
 		this.__linkHook = "view";
 	}
 
@@ -176,6 +138,12 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 	 */
 	protected _thumbnailTemplate(link : LinkInfo) : TemplateResult
 	{
+		// No real app is registered for a url link, so there's no app icon to look up either
+		if(link.app === LINK_URL_APPNAME)
+		{
+			return html`
+                <et2-image part="icon" class="link__icon" src=${LINK_URL_ICON}></et2-image>`;
+		}
 		// If we have a mimetype, use a Et2VfsMime
 		// Files have path set in 'icon' property, and mime in 'type'
 		if(link.type && link.icon)
@@ -241,12 +209,19 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 		return this.app && this.entryId ? this.app + ":" + this.entryId : "";
 	}
 
+	/**
+	 * Pass value as an object, will be parsed to set application & entryId
+	 */
+	@property({type: Object, reflect: false, noAccessor: true})
 	set value(_value : LinkInfo | string)
 	{
 		if(!_value)
 		{
+			this.app = this.getAttribute("app") ?? "";
 			this.entryId = "";
 			this.title = "";
+			this._titlePromise = null;
+			this.requestUpdate("value");
 			return;
 		}
 		if(typeof _value != 'object' && _value)
@@ -274,7 +249,7 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 			this.app = _value.app;
 			this.entryId = _value.id;
 
-			if(_value.title)
+			if(typeof _value.title !== "undefined")
 			{
 				this._title = _value.title;
 			}
@@ -303,6 +278,16 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 	set_value(_value : LinkInfo | string)
 	{
 		this.value = _value;
+	}
+
+	transformAttributes(attrs)
+	{
+		super.transformAttributes(attrs);
+
+		if(this.id && this.getArrayMgr("content")?.getEntry(this.id, false, true) === null)
+		{
+			this.value = "";
+		}
 	}
 
 	get exposeValue() : ExposeValue
@@ -346,19 +331,36 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 		super.requestUpdate();
 		if(changedProperties.has("app") || changedProperties.has("entryId"))
 		{
-			if(this.app && this.entryId && !this._title)
+			if(!this.app || !this.entryId)
 			{
-				this._title = Et2Link.MISSING_TITLE;
+				// Incomplete - not enough information to look anything up, so there's no value to show
+				this._title = "";
+				this._titlePromise = null;
 			}
-			if(this.app && this.entryId && this._title == Et2Link.MISSING_TITLE)
+			else
 			{
-				// Title will be fetched from server and then set
-				this._titlePromise = this.egw()?.link_title(this.app, this.entryId, true).then(title =>
+				if(!this._title)
 				{
-					this._title = title;
-					// It's probably already been rendered
-					this.requestUpdate();
-				});
+					this._title = Et2Link.MISSING_TITLE;
+				}
+				if(this._title == Et2Link.MISSING_TITLE)
+				{
+					// Title will be fetched from server and then set
+					const app = this.app;
+					const entryId = this.entryId;
+					const titlePromise = this.egw()?.link_title(app, entryId, true).then(title =>
+					{
+						if(this.app !== app || this.entryId !== entryId || this._titlePromise !== titlePromise)
+						{
+							return;
+						}
+						this._title = title || "";
+						this._titlePromise = null;
+						// It's probably already been rendered
+						this.requestUpdate();
+					});
+					this._titlePromise = titlePromise ?? null;
+				}
 			}
 		}
 	}
@@ -414,6 +416,14 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 		// If we don't have app & entryId, nothing we can do
 		if(!this.app || !this.entryId || typeof this.entryId !== "string")
 		{
+			return false;
+		}
+		// No real app is registered for a url link, so egw().open() has nothing to look up -
+		// the "entry" is just the URL itself, open it directly
+		if(this.app === LINK_URL_APPNAME)
+		{
+			window.open(this.entryId, "_blank", "noopener");
+			_ev.stopImmediatePropagation();
 			return false;
 		}
 		// If super didn't handle it (returns false), just use egw.open()

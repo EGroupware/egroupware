@@ -331,7 +331,6 @@ ldap settings for contacts	admin	bg	LDAP настройки за контакт�
 ldif	addressbook	bg	LDIF
 line 2	addressbook	bg	Ред 2
 link title for contacts show	addressbook	bg	Основна връзка за контакт
-links	addressbook	bg	Връзки
 links and attached files	addressbook	bg	Връзки и прикачени файлове
 links to specified application.  example: {{links/infolog}}	addressbook	bg	Връзки към конкретно приложение. Например: {{links/infolog}}
 list all categories	addressbook	bg	Показване на всички категории

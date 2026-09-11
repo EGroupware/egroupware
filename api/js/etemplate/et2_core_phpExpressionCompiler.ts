@@ -9,10 +9,6 @@
  * @copyright EGroupware GmbH 2011-2021
  */
 
-/*egw:uses
-	et2_core_common;
-*/
-
 import {egw} from "../jsapi/egw_global";
 
 /**

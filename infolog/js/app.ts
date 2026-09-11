@@ -8,26 +8,24 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
-/*egw:uses
-	/api/js/jsapi/egw_app.js
- */
-
 import {EgwApp} from '../../api/js/jsapi/egw_app';
+import type {PushData} from '../../api/js/jsapi/egw_app';
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
-import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import {CRMView} from "../../addressbook/js/CRM";
-import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
 import {nm_open_popup} from "../../api/js/etemplate/et2_extension_nextmatch_actions.js";
-import {egw} from "../../api/js/jsapi/egw_global";
-import {et2_date} from "../../api/js/etemplate/et2_widget_date";
 import {EgwFrameworkApp} from "../../kdots/js/EgwFrameworkApp";
 import type {Et2ButtonToggle} from "../../api/js/etemplate/Et2Button/Et2ButtonToggle";
-import {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
+import type {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
+import type {Et2Date} from "../../api/js/etemplate/Et2Date/Et2Date";
+import type {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatch";
+import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
+// egw/app are ambient globals (declare global {} in egw_global.d.ts, unconditionally included
+// via tsconfig's "**/*.d.ts") - no import needed or possible.
 
 /**
  * UI for Infolog
  *
- * @augments AppJS
+ * @augments EgwApp
  */
 class InfologApp extends EgwApp
 {
@@ -57,6 +55,39 @@ class InfologApp extends EgwApp
 	}
 
 	/**
+	 * Check grants to see if we can quickly tell this entry is not for us
+	 *
+	 * Being responsible for an entry gives implicit access to it, and an entry can be made the
+	 * responsibility of a group as well as of a single user - a group we are a member of counts
+	 * (infolog_bo::is_responsible_user() matches responsible against the user *and* his
+	 * memberships).  Neither our own memberships nor our own account are necessarily among the
+	 * grants we have clientside, as they are not grants, so responsible has to be checked
+	 * against them before falling back to the grants the base class knows about.
+	 *
+	 * @param pushData
+	 * @param grant_fields List of fields in pushData.acl with account IDs that might grant access
+	 * @param appname Optional, to check against the grants for a different application.  Defaults to this.appname.
+	 *
+	 * @return boolean Entry has ACL access
+	 */
+	_push_grant_check(pushData : PushData, grant_fields : string[], appname? : string) : boolean
+	{
+		const responsible = pushData.acl ? pushData.acl.info_responsible : undefined;
+		if(typeof responsible !== "undefined" && responsible !== null)
+		{
+			// account IDs come as numbers or strings, so compare loosely
+			const mine = [this.egw.user("account_id"), ...(this.egw.user("memberships") || [])];
+			const listed = Array.isArray(responsible) ? responsible : [responsible];
+			if(listed.some(account => mine.some(m => m == account)))
+			{
+				return true;
+			}
+		}
+
+		return super._push_grant_check(pushData, grant_fields, appname);
+	}
+
+	/**
 	 * This function is called when the etemplate2 object is loaded
 	 * and ready.  If you must store a reference to the et2 object,
 	 * make sure to clean it up in destroy().
@@ -80,20 +111,22 @@ class InfologApp extends EgwApp
 			case 'infolog.index':
 				this.filter_change();
 				// Show / hide descriptions according to details filter
-				var nm = <et2_nextmatch>this.et2.getWidgetById('nm');
-				var filter2 = <et2_selectbox> nm.getWidgetById('filter2');
-				this.show_details(filter2.value == 'all', nm.getDOMNode(nm));
-				// Remove the rule added by show_details() if the template is removed
-				jQuery(_et2.DOMContainer).on('clear', jQuery.proxy(function() {egw.css(this);}, '#' + nm.getDOMNode(nm).id + ' .et2_box.infoDes'));
+				const nm = <Et2Nextmatch>this.et2.getWidgetById('nm');
+				//"all" indicates display description; "null" or "" means do not
+				const filter2:boolean = (nm.activeFilters.filter2 ?? '') == "all";
+				this.show_details(filter2, nm);
+				//sync toolbar toggle button with current filter2 state
+				const detailsToggle= this.et2?.getWidgetById('details');
+				if(detailsToggle) detailsToggle.value= filter2;
 
 				// Enable decrypt on hover
 				if (this.egw.user('apps').stylite) {
-					this.mailvelopeAvailable(function () {
+					this.mailvelopeAvailable(() => {
 						egw.applyFunc('app.stylite.decrypt_hover', [nm]);
 					});
 				}
 				// blur count, if limit modified optimization used
-				if (nm.getController()?.getTotalCount() === 9999)
+				if(nm?.totalCount === 9999)
 				{
 					this.blurCount(true);
 				}
@@ -117,11 +150,11 @@ class InfologApp extends EgwApp
 						this.toggleEncrypt();
 
 						// Decrypt history on hover
-						var history = this.et2.getWidgetById('history');
+						const history = this.et2.getWidgetById('history');
 						this.egw.applyFunc('app.stylite.decrypt_hover', [history, 'et2-description']);
 					});
 					// This disables the diff in history
-					var history = this.et2.getArrayMgr('content').getEntry('history');
+					const history = this.et2.getArrayMgr('content').getEntry('history');
 					history['status-widgets'].De = 'description';
 				}
 				break;
@@ -156,7 +189,7 @@ class InfologApp extends EgwApp
 				switch (_app)
 				{
 					case 'timesheet':
-						var nm = this.et2 ? this.et2.getWidgetById('nm') : null;
+						const nm = this.et2 ? this.et2.getWidgetById('nm') : null;
 						if (nm) nm.applyFilters();
 						break;
 				}
@@ -165,7 +198,7 @@ class InfologApp extends EgwApp
 		// Refresh handler for Addressbook CRM view
 		if(_app == 'infolog' && this.et2?.getInstanceManager() && this.et2.getInstanceManager().app == 'addressbook' && this.et2.getInstanceManager().name == 'infolog.index')
 		{
-			this.et2._inst.refresh(_msg, _app, _id, _type);
+			this.et2.getInstanceManager().refresh(_msg, _app, _id, _type);
 		}
 	}
 
@@ -186,8 +219,8 @@ class InfologApp extends EgwApp
 		let nm : any = {};
 
 		// Get index etemplate
-		var et2 = etemplate2.getById('infolog-index');
-		if(et2)
+		const et2 = etemplate2.getById('infolog-index');
+		if(et2 && et2.widgetContainer?.getWidgetById("nm") !=null)
 		{
 			state = et2.widgetContainer.getWidgetById("nm").getValue();
 			let content = et2.widgetContainer.getArrayMgr('content');
@@ -214,9 +247,9 @@ class InfologApp extends EgwApp
 	{
 		// as we have to set state.state.action, we have to set all other
 		// for "No filter" favorite to work as expected
-		var to_set = {col_filter: null, filter: '', filter2: '', cat_id: '', search: '', action: null};
+		const to_set = {col_filter: null, filter: '', filter2: '', cat_id: '', search: '', action: null};
 		if (typeof state.state == 'undefined') state.state = {};
-		for(var name in to_set)
+		for(const name in to_set)
 		{
 			if (typeof state.state[name] == 'undefined') state.state[name] = to_set[name];
 		}
@@ -232,23 +265,25 @@ class InfologApp extends EgwApp
 	 * @param ev
 	 * @param filter
 	 */
-	filter_change(ev : Event, filter : Et2Select)
+	filter_change(ev? : Event, filter? : Et2Select)
 	{
 		if (!this.et2) return;	// ignore calls before et2_ready
 		const dates = this.et2.getWidgetById('infolog.index.dates');
 		if(this.nm && filter && dates)
 		{
+			const nm = <Et2Nextmatch>this.nm;
 			switch(filter.value)
 			{
 				case 'bydate':
 				case 'duedate':
 					dates.set_disabled(false);
-					const filterDrawer = filter.closest('egw-app').filtersDrawer;
-					if (filterDrawer && !filterDrawer.open)
+
+					// Focusing an empty date field can make it silently pick today and fire its own
+					// change, overwriting dates a favorite just applied - only focus if nm really has none.
+					if (!nm.activeFilters.col_filter?.startdate)
 					{
-						filterDrawer.open = true;
+						nm.updateComplete.then(() => dates.getWidgetById('col_filter[startdate]')?.focus());
 					}
-					window.setTimeout(() => dates.getWidgetById('col_filter[startdate]')?.focus());
 					break;
 				default:
 					dates.set_disabled(true);
@@ -268,53 +303,18 @@ class InfologApp extends EgwApp
 	{
 		if (this.nm && filter2)
 		{
-			// Show / hide descriptions
-			this.show_details(filter2.value === 'all', this.nm.getDOMNode(this.nm));
-		}
+			const nm = <Et2Nextmatch>this.nm;
 
-		// Only change columns for a real user event, to avoid interfering with
-		// favorites
-		if (this.nm && filter2 && !this.nm.update_in_progress)
-		{
-			// Update page - set update_in_progress to true to avoid triggering
-			// the change handler and looping if the user has a custom field
-			// column change
-			let in_progress = this.nm.update_in_progress;
-			this.nm.update_in_progress = true;
+			// Show / hide descriptions
+			this.show_details(filter2.value === 'all', nm);
 
 			// Store selection as implicit preference
-			egw.set_preference('infolog', this.nm.options.settings.columnselection_pref.replace('-details', '') + '-details-pref', filter2.value);
+			egw.set_preference('infolog', nm.columnPreferenceName.replace('-details', '') + '-details-pref', filter2.value);
 
-			// Change preference location - widget is nextmatch
-			this.nm.options.settings.columnselection_pref = this.nm.options.settings.columnselection_pref.replace('-details', '') + (filter2.value == 'all' ? '-details' : '');
-
-			// Load new preferences
-			var colData = this.nm.columns.slice();
-			for(var i = 0; i < this.nm.columns.length; i++) colData[i].visible=false;
-
-			if(egw.preference(this.nm.options.settings.columnselection_pref,'infolog'))
-			{
-				this.nm.set_columns((<String>egw.preference(this.nm.options.settings.columnselection_pref,'infolog')).split(','));
-			}
-			this.nm._applyUserPreferences(this.nm.columns, colData);
-
-			// Now apply them to columns
-			for(var i = 0; i < colData.length; i++)
-			{
-				this.nm.dataview.getColumnMgr().columns[i].set_width(colData[i].width);
-				this.nm.dataview.getColumnMgr().columns[i].set_visibility(colData[i].visible);
-			}
-			this.nm.dataview.getColumnMgr().updated();
-
-			// Set the actual filter value here
-			this.nm.activeFilters.filter2 = filter2.value;
-			this.nm.dataview.updateColumns();
-			this.nm.update_in_progress = in_progress;
+			// Change preference location - Et2Datagrid loads & applies the new
+			// preferences reactively when columnPreferenceName changes
+			nm.columnPreferenceName = nm.columnPreferenceName.replace('-details', '') + (filter2.value == 'all' ? '-details' : '');
 		}
-
-		// Already handled everything here and the column change probably triggered a reload
-		// Return false to skip nm doing the filter value change
-		return false;
 	}
 
 	/**
@@ -331,15 +331,14 @@ class InfologApp extends EgwApp
 	}
 
 	/**
-	 * Show or hide details by changing the CSS class
+	 * Show or hide details in nextmatch rows.
 	 *
 	 * @param {boolean} show
-	 * @param {DOMNode} dom_node
+	 * @param nextmatch nextmatch widget
 	 */
-	show_details(show, dom_node)
+	show_details(show, nextmatch : any)
 	{
-		// Show / hide descriptions
-        egw.css((dom_node && dom_node.id ? "#"+dom_node.id+' ' : '') + (egwIsMobile()? ".infoDescRow" : ".infoDes"),"display:" + (show ? "block;" : "none;"));
+		nextmatch?.style?.setProperty("--infolog-info-details-display", show ? "block" : "none");
 	}
 
 	/**
@@ -352,7 +351,7 @@ class InfologApp extends EgwApp
 	confirm_delete(_action, _senders)
 	{
 		let children = false;
-		let child_button = document.body.querySelector('#delete_sub') || document.body.querySelector('[id*="delete_sub"]');
+		const child_button = document.body.querySelector<HTMLButtonElement>('#delete_sub') || document.body.querySelector<HTMLButtonElement>('[id*="delete_sub"]');
 		this._action_all = _action.parent.data.nextmatch?.getSelection().all;
 		this._action_ids = [];
 		if(child_button)
@@ -372,6 +371,44 @@ class InfologApp extends EgwApp
 		nm_open_popup(_action, _senders);
 	}
 
+	/**
+	 * Confirm & delete a single entry from the edit popup's own Delete button.
+	 *
+	 * Uses the same plain "Delete selected entries?" confirmation and the same
+	 * infolog.infolog_ui.ajax_action server action as the list's row-level Delete
+	 * action (confirm_delete()), instead of rendering a separate server-side
+	 * confirmation template - there's no nextmatch/selection here to drive
+	 * confirm_delete()/nm_open_popup() directly.
+	 *
+	 * @param info_id
+	 * @param has_subs whether this entry has sub-entries, enabling "delete including sub-entries"
+	 */
+	confirm_delete_edit(info_id, has_subs)
+	{
+		const egw = this.egw;
+		const DELETE = 1, DELETE_SUB = 2, CANCEL = 0;
+		const buttons = [
+			{button_id: DELETE, id: "delete", label: egw.lang("Yes - Delete"), image: "check"},
+			{
+				button_id: DELETE_SUB, id: "delete_sub", label: egw.lang("Yes - Delete including sub-entries"),
+				image: "check", disabled: !has_subs
+			},
+			{button_id: CANCEL, id: "cancel", label: egw.lang("No - Cancel"), image: "cancelled", default: true}
+		];
+		Et2Dialog.show_dialog((button_id) =>
+		{
+			if(button_id !== DELETE && button_id !== DELETE_SUB)
+			{
+				return;
+			}
+			egw.json("infolog.infolog_ui.ajax_action", [button_id === DELETE_SUB ? "delete_sub" : "delete", [info_id], false])
+				.sendRequest(false);	// false = synchronious request, so the delete completes before we close
+			window.close();
+		}, egw.lang("Delete selected entries?"), egw.lang("Delete"), undefined, buttons,
+			Et2Dialog.QUESTION_MESSAGE, undefined, egw);
+		return false;
+	}
+
 	private _action_ids = [];
 	private _action_all = false;
 
@@ -382,7 +419,7 @@ class InfologApp extends EgwApp
 	 */
 	actionCallback(_action)
 	{
-		egw.json("infolog.infolog_ui.ajax_action", [_action, this._action_ids, this._action_all]).sendRequest(true);
+		egw.request("infolog.infolog_ui.ajax_action", [_action, this._action_ids, this._action_all]);
 	}
 
 	/**
@@ -393,17 +430,18 @@ class InfologApp extends EgwApp
 	 */
 	add_email_from_ab(ab_id,info_cc)
 	{
-		var ab = <HTMLSelectElement>document.getElementById(ab_id);
+		const ab = <HTMLSelectElement>document.getElementById(ab_id);
 
 		if (!ab || !ab.value)
 		{
-			jQuery("tr.hiddenRow").css("display", "table-row");
+			document.querySelectorAll<HTMLElement>("tr.hiddenRow").forEach(row => row.style.display = "table-row");
 		}
 		else
 		{
-			var cc = <HTMLInputElement>document.getElementById(info_cc);
+			const cc = <HTMLInputElement>document.getElementById(info_cc);
 
-			for(var i=0; i < ab.options.length && ab.options[i].value != ab.value; ++i) ;
+			let i : number;
+			for(i=0; i < ab.options.length && ab.options[i].value != ab.value; ++i) ;
 
 			if (i < ab.options.length)
 			{
@@ -411,7 +449,7 @@ class InfologApp extends EgwApp
 				ab.value = '';
 				// @ts-ignore
 				ab.onchange();
-				jQuery("tr.hiddenRow").css("display", "none");
+				document.querySelectorAll<HTMLElement>("tr.hiddenRow").forEach(row => row.style.display = "none");
 			}
 		}
 		return false;
@@ -428,9 +466,9 @@ class InfologApp extends EgwApp
 		// Make sure this doesn't get executed while template is loading
 		if (!this.et2?.getInstanceManager()) return;
 
-		const status = <et2_selectbox>this.et2.getWidgetById('info_status');
-		const percent = <et2_selectbox>this.et2.getWidgetById('info_percent');
-		const datecompleted = <et2_date>this.et2.getWidgetById('info_datecompleted');
+		const status = <Et2Select>this.et2.getWidgetById('info_status');
+		const percent = <Et2Select>this.et2.getWidgetById('info_percent');
+		const datecompleted = <Et2Date>this.et2.getWidgetById('info_datecompleted');
 		const old_status = status.get_value();
 		const old_percent = parseInt(percent.get_value());
 		let completed : boolean;
@@ -498,11 +536,12 @@ class InfologApp extends EgwApp
 	 */
 	edit_actions()
 	{
-		var widget = this.et2.getWidgetById('action');
-		var template = this.et2._inst;
+		const widget = this.et2.getWidgetById('action');
+		const template = this.et2.getInstanceManager();
+		let id;
 		if (template)
 		{
-			var id = template.widgetContainer.getArrayMgr('content').data['info_id'];
+			id = template.widgetContainer.getArrayMgr('content').data['info_id'];
 		}
 		if (widget)
 		{
@@ -516,7 +555,7 @@ class InfologApp extends EgwApp
 					egw.open(id,'infolog','edit',{print:1});
 					break;
 				case 'ical':
-					template.postSubmit();
+					template.postSubmit(widget);
 					break;
 				default:
 					template.submit();
@@ -532,7 +571,7 @@ class InfologApp extends EgwApp
 	 */
 	infolog_menu_print(_action, _selected)
 	{
-		var id = _selected[0].id.replace(/^infolog::/g,'');
+		const id = _selected[0].id.replace(/^infolog::/g,'');
 		egw.open(id,'infolog','edit',{print:1});
 	}
 
@@ -541,21 +580,22 @@ class InfologApp extends EgwApp
 	 */
 	infolog_print_preview_onload()
 	{
-		var that = this;
-		jQuery('#infolog-edit-print').bind('load',function(){
-			var isLoadingCompleted = true;
-			jQuery('#infolog-edit-print').bind("DOMSubtreeModified",function(event){
-					isLoadingCompleted = false;
-					jQuery('#infolog-edit-print').unbind("DOMSubtreeModified");
-			});
-			setTimeout(function() {
+		const node = document.getElementById('infolog-edit-print');
+		node?.addEventListener('load', () => {
+			let isLoadingCompleted = true;
+			const onSubtreeModified = () => {
+				isLoadingCompleted = false;
+				node.removeEventListener("DOMSubtreeModified", onSubtreeModified);
+			};
+			node.addEventListener("DOMSubtreeModified", onSubtreeModified);
+			setTimeout(() => {
 				isLoadingCompleted = false;
 			}, 1000);
-			var interval = setInterval(function(){
+			const interval = setInterval(() => {
 				if (!isLoadingCompleted)
 				{
 					clearInterval(interval);
-					that.infolog_print_preview();
+					this.infolog_print_preview();
 				}
 			}, 100);
 		});
@@ -589,7 +629,7 @@ class InfologApp extends EgwApp
 	 */
 	add_action_handler(action, selected)
 	{
-		var nm = action.getManager().data.nextmatch || false;
+		const nm = action.getManager().data.nextmatch || false;
 		if(nm)
 		{
 			this.add_with_extras(nm,action.id,
@@ -614,16 +654,16 @@ class InfologApp extends EgwApp
 		// We use widget.getRoot() instead of this.et2 for the case when the
 		// addressbook tab is viewing a contact + infolog list, there's 2 infolog
 		// etemplates
-		var nm = widget.getRoot().getWidgetById('nm');
-		var nm_value = nm.getValue() || {};
+		const nm = widget.getRoot().getWidgetById('nm');
+		const nm_value = nm.getValue() || {};
 
 		// It's important that all these keys are here, they override the link
 		// registry.
-		var action_id = nm_value.action_id ? nm_value.action_id : (_action_id != '0' ? _action_id : "") || "";
+		let action_id = nm_value.action_id ? nm_value.action_id : (_action_id != '0' ? _action_id : "") || "";
 		if(typeof action_id == "object" && typeof action_id.length == "undefined")
 		{
 			// Need a real array here
-			action_id = jQuery.map(action_id,function(val) {return val;});
+			action_id = Object.values(action_id);
 		}
 
 		// No action?  Try the linked filter, in case it's set
@@ -636,7 +676,7 @@ class InfologApp extends EgwApp
 				action_id = action_id || split[1] || '';
 			}
 		}
-		var extras = {
+		const extras = {
 			type: _type || nm_value.col_filter.info_type || "task",
 			cat_id: nm_value.cat_id || "",
 			action: nm_value.action || _action || nm.settings.action || "",
@@ -663,7 +703,7 @@ class InfologApp extends EgwApp
 	 */
 	view_parent(_action, _selected)
 	{
-		var data = egw.dataGetUIDdata(_selected[0].id);
+		const data = egw.dataGetUIDdata(_selected[0].id);
 		if (data && data.data && data.data.info_id_parent)
 		{
 			egw.link_handler(egw.link('/index.php', {
@@ -709,18 +749,17 @@ class InfologApp extends EgwApp
 	 */
 	timesheet_list(_action, _selected)
 	{
-		var extras = {
+		const extras = {
 			link_app: 'infolog',
-			link_id: false
+			link_id: <string|boolean>false
 		};
-		for(var i = 0; i < _selected.length; i++)
+		for(let i = 0; i < _selected.length; i++)
 		{
 			// Remove UID prefix for just contact_id
-			var ids = _selected[i].id.split('::');
+			const ids = _selected[i].id.split('::');
 			ids.shift();
-			ids = ids.join('::');
 
-			extras.link_id = ids;
+			extras.link_id = ids.join('::');
 			break;
 		}
 
@@ -735,7 +774,7 @@ class InfologApp extends EgwApp
 	 */
 	has_parent(_action, _selected)
 	{
-		var data = egw.dataGetUIDdata(_selected[0].id);
+		const data = egw.dataGetUIDdata(_selected[0].id);
 
 		return data && data.data && data.data.info_id_parent > 0;
 	}
@@ -750,17 +789,17 @@ class InfologApp extends EgwApp
 	 */
 	submit_if_not_empty(_node, _widget)
 	{
-		if (_widget.get_value()) this.et2._inst.submit();
+		if (_widget.get_value()) this.et2.getInstanceManager().submit();
 	}
 
 	/**
 	 * Toggle encryption
 	 *
-	 * @param {jQuery.Event} _event
+	 * @param {Event} _event
 	 * @param {et2_button} _widget
 	 * @param {DOMNode} _node
 	 */
-	toggleEncrypt(_event, _widget, _node)
+	toggleEncrypt(_event?, _widget?, _node?)
 	{
 		// otherwise we get called twice
 		_event && _event.preventDefault();
@@ -781,18 +820,18 @@ class InfologApp extends EgwApp
 		this.egw.applyFunc('app.stylite.toggleEncrypt', [_event, _widget, _node]);
 	}
 
-
 	/**
 	 * OnChange callback for responsible
 	 *
-	 * @param {jQuery.Event} _event
+	 * @param {Event} _event
 	 * @param {et2_widget} _widget
 	 */
 	onchangeResponsible(_event, _widget)
 	{
-		if (app.stylite && app.stylite.onchangeResponsible)
+		const stylite = <any>app.stylite;
+		if (stylite && stylite.onchangeResponsible)
 		{
-			app.stylite.onchangeResponsible.call(app.stylite, _event, _widget);
+			stylite.onchangeResponsible.call(stylite, _event, _widget);
 		}
 	}
 
@@ -806,8 +845,8 @@ class InfologApp extends EgwApp
 	 */
 	change_responsible(_action, _selected)
 	{
-		var et2 = _selected[0].manager.data.nextmatch.getInstanceManager();
-		var responsible = et2.widgetContainer.getWidgetById('responsible');
+		const et2 = _selected[0].manager.data.nextmatch.getInstanceManager();
+		const responsible = et2.widgetContainer.getWidgetById('responsible');
 		if(responsible)
 		{
 			responsible.set_value([]);
@@ -820,7 +859,7 @@ class InfologApp extends EgwApp
 
 		if(_selected.length === 1)
 		{
-			var data = egw.dataGetUIDdata(_selected[0].id);
+			const data = egw.dataGetUIDdata(_selected[0].id);
 
 			if(responsible && data && data.data)
 			{
@@ -842,20 +881,19 @@ class InfologApp extends EgwApp
 	printEncrypt(_keyring)
 	{
 		//this.mailvelopeAvailable(this.toggleEncrypt);
-		var info_desc = this.et2.getWidgetById('info_des');
+		const info_desc = this.et2.getWidgetById('info_des');
 
-		var self = this;
-		mailvelope.createDisplayContainer('#infolog-edit-print_info_des', info_desc.value, _keyring).then(function(_container)
+		mailvelope.createDisplayContainer('#infolog-edit-print_info_des', info_desc.value, _keyring).then((_container) =>
 		{
-			var $info_des_dom = jQuery(self.et2.getWidgetById('info_des').getDOMNode());
-//			$info_des_dom.children('iframe').height($info_des_dom.height());
-			$info_des_dom.children('span').hide();
+			const info_des_dom : HTMLElement = this.et2.getWidgetById('info_des').getDOMNode();
+//			(info_des_dom.querySelector(':scope > iframe') as HTMLElement).style.height = info_des_dom.offsetHeight + 'px';
+			info_des_dom.querySelectorAll<HTMLElement>(':scope > span').forEach(span => span.style.display = 'none');
 			//Trigger print action
-			self.infolog_print_preview();
+			this.infolog_print_preview();
 		},
-		function(_err)
+		(_err) =>
 		{
-			self.egw.message(_err, 'error');
+			this.egw.message(_err, 'error');
 		});
 	}
 
@@ -874,6 +912,7 @@ class InfologApp extends EgwApp
 	 */
 	toggleDetails(_ev : Event, _widget : Et2ButtonToggle)
 	{
+		this.show_details(_widget.value, this.et2.getWidgetById("nm"));
 		this.nm && this.nm.applyFilters({filter2: _widget.value ? 'all' : ''});
 	}
 

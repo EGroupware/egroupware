@@ -9,14 +9,18 @@
  */
 
 
-import {css, LitElement, PropertyValues} from "lit";
+import {LitElement, PropertyValues} from "lit";
+import {property} from "lit/decorators/property.js";
 import '../Et2Image/Et2Image';
 import shoelace from "../Styles/shoelace";
 import {egw_registerGlobalShortcut, egw_unregisterGlobalShortcut} from "../../egw_action/egw_keymanager";
 
+import styles from "./ButtonMixin.styles";
 type Constructor<T = LitElement> = new (...args : any[]) => T;
-export const ButtonMixin = <T extends Constructor>(superclass : T) => class extends superclass
+export const ButtonMixin = <T extends Constructor>(superclass : T) =>
 {
+	class ButtonMixinClass extends superclass
+	{
 	protected clicked : boolean = false;
 
 	/**
@@ -62,130 +66,31 @@ export const ButtonMixin = <T extends Constructor>(superclass : T) => class exte
 		return [
 			...shoelace,
 			...(super.styles || []),
-			css`
-            :host {
-                padding: 0;
-                /* These should probably come from somewhere else */
-               	max-width: 125px;
-               	min-width: fit-content;
-               	display: block;
-            }
-            /* Override general disabled=hide from Et2Widget */
-            :host([disabled]) {
-            	display: block;
-            }
-            :host([hideonreadonly][disabled]) {
-            	display:none !important;
-            }
-
-			/* Leave label there for accessibility, but position it so it can't be seen */
-			:host(.imageOnly) .button__label {
-				position: absolute;
-				left: -999px
-			}
-            
-            /* Set size for icon */
-            ::slotted(img.imageOnly) {
-    			padding-right: 0px !important;
-    			width: 16px !important;
-			}
-            ::slotted(et2-image) {
-            	height: 20px;
-                max-width: 20px;
-                display: flex;
-				font-size: 20px !important;
-				padding-left: var(--et2-button-image-padding-left);
-/*fix for firefox esr: this version does not set a width on the image to fill available space
-so we force the button images to be square*/
-				width: 20px;
-            }
-            ::slotted([slot="icon"][src='']) {
-				display: none;
-			}
-			.imageOnly {
-				width:18px;
-				height: 18px;
-			}
-			/* Make hover border match other widgets (select) */
-			.button--standard.button--default:hover:not(.button--disabled) {
-				background-color: var(--sl-color-gray-200);
-				border-color: var(--sl-input-border-color-hover);
-				color: var(--sl-input-color-hover);
-			}
-			.button {
-				justify-content: left;
-			}
-			.button--has-label.button--medium .button__label {
-				padding: 0 var(--sl-spacing-medium);
-			}
-			.button__label {
-				text-overflow: ellipsis;
-    			overflow-x: hidden;
-			}
-			.button__prefix {
-				padding-left: 1px;
-			}
-			
-			/* Only image, no label */
-			.button--has-prefix:not(.button--has-label) {
-				justify-content: center;
-				width: var(--sl-input-height-medium);
-				padding-inline-start: 0;			
-			}
-
-				.button--has-prefix:not(.button--has-label) {
-					::slotted(et2-image), .button__label {
-						padding-left: 0;
-					}
-			}
-			
-			/* Override primary styling - we use variant=primary on first dialog button */
-			.button--standard.button--primary {
-				background-color: var(--sl-color-gray-100);
-				border-color: var(--sl-color-gray-400);
-				color: var(--sl-input-color-hover);
-			}
-			.button--standard.button--primary:hover:not(.button--disabled),
-			.button--standard.button--primary.button--checked:not(.button--disabled) {
-				background-color: var(--sl-color-gray-200);
-				border-color: var(--sl-color-gray-600);
-				color: initial;
-			}
-			.button--standard.button--primary:active:not(.button--disabled) {
-				border-color: var(--sl-color-gray-700);
-				background-color: var(--sl-color-gray-300);
-				color: initial;
-			}
-            `,
+			styles,
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			image: {type: String, noAccessor: true},
+	/**
+	 * If button is set to readonly, do we want to hide it completely (old behaviour) or show it as disabled
+	 * (default)
+	 * Something's not quite right here, as the attribute shows up as "hideonreadonly" instead of "hide" but
+	 * it does not show up without the "attribute", and attribute:"hideonreadonly" does not show as an attribute
+	 */
+	@property({type: Boolean, reflect: true, attribute: "hide"})
+	hideOnReadonly : boolean = false;
 
-			/**
-			 * If button is set to readonly, do we want to hide it completely (old behaviour) or show it as disabled
-			 * (default)
-			 * Something's not quite right here, as the attribute shows up as "hideonreadonly" instead of "hide" but
-			 * it does not show up without the "attribute", and attribute:"hideonreadonly" does not show as an attribute
-			 */
-			hideOnReadonly: {type: Boolean, reflect: true, attribute: "hide"},
+	/**
+	 * Button should submit the etemplate
+	 * Return false from the click handler to cancel the submit, or set noSubmit to true to skip submitting.
+	 */
+	@property({type: Boolean, reflect: false})
+	noSubmit : boolean = false;
 
-			/**
-			 * Button should submit the etemplate
-			 * Return false from the click handler to cancel the submit, or set noSubmit to true to skip submitting.
-			 */
-			noSubmit: {type: Boolean, reflect: false},
-
-			/**
-			 * When submitting, skip the validation step.  Allows to submit etemplates directly to the server.
-			 */
-			noValidation: {type: Boolean}
-		}
-	}
+	/**
+	 * When submitting, skip the validation step.  Allows to submit etemplates directly to the server.
+	 */
+	@property({type: Boolean})
+	noValidation : boolean = false;
 
 	private _registeredKeycode : string;
 
@@ -195,9 +100,6 @@ so we force the button images to be square*/
 
 		// Property default values
 		this.__image = '';
-		this.noSubmit = false;
-		this.hideOnReadonly = false;
-		this.noValidation = false;
 
 		// Do not add icon here, no children can be added in constructor
 
@@ -229,6 +131,7 @@ so we force the button images to be square*/
 		while(this.lastChild) this.lastChild.remove();
 	}
 
+	@property({type: String, noAccessor: true})
 	set image(new_image : string)
 	{
 		let oldValue = this.__image;
@@ -239,6 +142,14 @@ so we force the button images to be square*/
 		else
 		{
 			this.__image = this.egw().image(new_image);
+			// Fall back to treating a bare name as a Bootstrap Icons name directly - same
+			// reasoning as Et2Image.parse_href(): many of our own icon names ARE Bootstrap
+			// icon names, and this keeps the button's icon visible when egw().image()'s
+			// name->file map isn't available (eg. nothing ever called egw.set_images()).
+			if(!this.__image && new_image && new_image.indexOf('/') === -1)
+			{
+				this.__image = '/node_modules/bootstrap-icons/icons/' + new_image + '.svg';
+			}
 		}
 		this.requestUpdate("image", oldValue);
 	}
@@ -474,4 +385,7 @@ so we force the button images to be square*/
 	{
 		return this.shadowRoot.querySelector('button');
 	}
+	}
+
+	return ButtonMixinClass as unknown as Constructor<ButtonMixinClass> & T;
 }

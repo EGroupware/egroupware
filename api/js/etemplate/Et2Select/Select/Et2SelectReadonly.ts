@@ -60,15 +60,11 @@ li {
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			value: String,
-			select_options: {type: Array},
-			searchUrl: String // Used for options from file
-		}
-	}
+	/**
+	 * Used for options from file
+	 */
+	@property({type: String})
+	searchUrl : string;
 
 	private __select_options : SelectOption[];
 	private __value : string[];
@@ -167,6 +163,7 @@ li {
 		return (Array.isArray(this.value) ? this.value : [this.value]);
 	}
 
+	@property({type: String, noAccessor: true})
 	set value(new_value : string | string[])
 	{
 		// Split anything that is still a CSV
@@ -196,6 +193,7 @@ li {
 	 *
 	 * @param {SelectOption[]} new_options
 	 */
+	@property({type: Array, noAccessor: true})
 	set select_options(new_options : SelectOption[] | { [key : string] : string })
 	{
 		if(!Array.isArray(new_options))

@@ -34,7 +34,7 @@ class Avatar
 		{
 			return $lavatar = null;
 		}
-		$email = strtolower(current(Api\Mail::stripRFC822Addresses([$address])));
+		$email = strtolower(current(AddressList::stripRFC822Addresses([$address])));
 
 		// we cache on instance level, but also add current user to the key, as not all users might see the same contacts
 		$cached = Api\Cache::getInstance(__CLASS__, $GLOBALS['egw_info']['user']['account_id'].'-'.$email,

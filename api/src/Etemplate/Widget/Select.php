@@ -15,12 +15,17 @@ namespace EGroupware\Api\Etemplate\Widget;
 use EGroupware\Api\Acl;
 use EGroupware\Api\Etemplate;
 use EGroupware\Api;
+use EGroupware\Mail\Compose;
 
 // explicitly import old not yet ported classes
 use calendar_timezones;
 
 /**
  * eTemplate select widget
+ *
+ * Also handles et2-email/et2-select-thumbnail (and the legacy taglist/et2-select-email tags),
+ * absorbed from the former Widget\Taglist (there's no more client-side Taglist widget, just
+ * Et2Email/Et2Select* components) - see Widget\Taglist's own docblock.
  *
  * @todo unavailable cats (eg. private cats of an other user) need to be preserved!
  * @todo fully implement attr[multiple] === "dynamic" to render widget with a button to switch to multiple
@@ -32,6 +37,13 @@ class Select extends Etemplate\Widget
 	 * If the selectbox has this many rows, give it a search box automatically
 	 */
 	const SEARCH_ROW_LIMIT = PHP_INT_MAX; // Automatic disabled, only explicit
+
+	/**
+	 * Regexp for validating email alias considering domain part be optional
+	 * this should be used regarding the domainOptional attribute defined in
+	 * taglist-email.
+	 */
+	const EMAIL_PREG_NO_DOMAIN = "/^(([^,<][^,<]+|\042[^\042]+\042|\'[^\']+\'|)\s?<)?[^\x01-\x20()\xe2\x80\x8b<>@,;:\042\[\]]+(?<![.\s])(@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,})?>?$/iu";
 
 	/**
 	 * These types are either set or cached on the client side, so we don't send
@@ -108,6 +120,19 @@ class Select extends Etemplate\Widget
 	 */
 	public function set_attrs($xml, $cloned=true)
 	{
+		// former Widget\Taglist's own extra defaults - scoped to just the tag names it used to
+		// own (not applied to every Select widget, eg. allowFreeEntries=>true would silently
+		// disable "not in allowed list" validation for every plain dropdown otherwise)
+		if (in_array($this->type, ['et2-email', 'et2-select-email', 'et2-select-thumbnail', 'taglist'], true))
+		{
+			$this->bool_attr_default += array(
+				'allowFreeEntries' => true,
+				'useCommaKey'      => true,
+				'editModeEnabled'  => true,
+				'multiple'         => true,
+			);
+		}
+
 		parent::set_attrs($xml, $cloned);
 
 		if (!isset($this->attrs['multiple']) || $this->attrs['multiple'] !== 'dynamic')
@@ -259,6 +284,27 @@ class Select extends Etemplate\Widget
 							self::set_validation_error($form_name, lang("'%1' is NOT a valid app-name ('%2')!", $val, implode("', '",$allowed)),'');
 							$value = '';
 							break 2;
+						}
+						break;
+
+					// former Widget\Taglist's own validation - it's a free-text multi-entry list
+					// (not validated against $allowed), so on a bad entry drop just that one entry
+					// rather than clearing the whole value like the other cases above
+					case 'email':
+						if(($this->attrs['includeLists'] ?? $this->attrs['include_lists']) && is_numeric($val))
+						{
+							$lists = $GLOBALS['egw']->contacts->get_lists(Api\Acl::READ);
+							if(!array_key_exists($val, $lists))
+							{
+								self::set_validation_error($form_name, lang("'%1' is NOT allowed ('%2')!", $val, implode("','", array_keys($lists))), '');
+							}
+						}
+						elseif($val !== '' && !preg_match(Url::EMAIL_PREG, $val) &&
+							!($this->attrs['domainOptional'] && preg_match(self::EMAIL_PREG_NO_DOMAIN, $val)) &&
+							// Allow merge placeholders.  Might be a better way to do this though.
+							!preg_match('/{{.+}}|\$\$.+\$\$/', $val))
+						{
+							self::set_validation_error($form_name, lang("'%1' has an invalid format", $val), '');
 						}
 						break;
 
@@ -1186,6 +1232,81 @@ class Select extends Etemplate\Widget
 	}
 
 	/**
+	 * The default search goes to the link system
+	 *
+	 * Find entries that match query parameter (from link system) and format them
+	 * as the widget expects, a list of {id: ..., label: ...} objects
+	 *
+	 * Moved here from the former Widget\Taglist, see its own docblock.
+	 */
+	public static function ajax_search($search_text=null, array $search_options = [])
+	{
+		$app = $_REQUEST['app'];
+		$type = $_REQUEST['type'];
+		$query = $search_text ?? $_REQUEST['query'];
+		$options = $search_options;
+		$results = [];
+		if (empty($query))
+		{
+			// do NOT search without a query
+		}
+		elseif($type === "account")
+		{
+			$options['account_type'] = $_REQUEST['account_type'];
+			$options['tag_list'] = true;
+			$results = Api\Accounts::link_query($query, $options);
+		}
+		else
+		{
+			foreach(Api\Link::query($app, $query, $options) as $id => $name)
+			{
+				$results[] = ['value' => $id, 'label' => $name];
+			}
+		}
+		usort($results, static function ($a, $b) use ($query)
+		{
+			similar_text($query, $a["label"], $percent_a);
+			similar_text($query, $b["label"], $percent_b);
+			return $percent_a === $percent_b ? 0 : ($percent_a > $percent_b ? -1 : 1);
+		});
+
+		// If we have a total, include it too so client knows if results were limited
+		if(array_key_exists('total', $options))
+		{
+			$results['total'] = intval($options['total']);
+		}
+
+		// switch regular JSON response handling off
+		Api\Json\Request::isJSONRequest(false);
+
+		header('Content-Type: application/json; charset=utf-8');
+		echo json_encode($results);
+		exit;
+	}
+
+	/**
+	 * Search for emails
+	 *
+	 * Uses the mail application if available, or addressbook
+	 *
+	 * Moved here from the former Widget\Taglist, see its own docblock.
+	 */
+	public static function ajax_email($search=null, ?array $options=null)
+	{
+		$_REQUEST['query'] = $_REQUEST['query'] ?: $search;
+		// If no mail app access, use link system -> addressbook
+		if(empty($GLOBALS['egw_info']['apps']['mail']))
+		{
+			$_REQUEST['app'] = 'addressbook-email';
+			return self::ajax_search();
+		}
+
+		// TODO: this should go to a BO, not a UI object
+		$_REQUEST['include_lists'] = $options['includeLists'] ?? false;
+		return Compose::ajax_searchAddress();
+	}
+
+	/**
 	 * Get groups including container, if enabled
 	 *
 	 * Internally using Tree::groups() to not implement container logic again.
@@ -1225,4 +1346,6 @@ class Select extends Etemplate\Widget
 }
 
 Etemplate\Widget::registerWidget(__NAMESPACE__ . '\\Select', array('et2-select', 'selectbox', 'listbox', 'select',
-																   'menupopup'));
+																   'menupopup',
+																   // former Widget\Taglist's own registrations, see its docblock
+																   'taglist', 'et2-select-email', 'et2-select-thumbnail', 'et2-email'));

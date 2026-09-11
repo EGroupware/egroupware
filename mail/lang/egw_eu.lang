@@ -5,7 +5,6 @@ always show html emails	mail	eu	Betik erakutsi HTML  formatuan emailak
 any of	mail	eu	batekin
 attachments	mail	eu	Atxikiak
 compose	mail	eu	Idatzi
-compress folder	mail	eu	Karpeta konprimatu
 condition	mail	eu	baldintza
 contains	mail	eu	dauka
 copy to	mail	eu	Kopiatu Hona

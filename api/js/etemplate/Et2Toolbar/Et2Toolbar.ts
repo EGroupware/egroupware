@@ -287,6 +287,10 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 	{
 		if(Array.isArray(action.children) && action.children.length > 0)
 		{
+			// Per-action override of the toolbar-wide default - lets one action with children
+			// (eg. mail's 'setLabel'/'flag') become a dropdown even in a toolbar that otherwise
+			// flattens every other such action (groupChildren=false, the desktop default).
+			const groupChildren = this.groupChildren || action.groupChildren;
 			let children = {};
 			let add_children = (root, children) =>
 			{
@@ -302,13 +306,30 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 					{
 						info['icon'] = root.children[id].iconUrl;
 					}
+					if(root.children[id].color)
+					{
+						info['color'] = root.children[id].color;
+					}
+					if(root.children[id].iconColor)
+					{
+						info['iconColor'] = root.children[id].iconColor;
+					}
+					if(root.children[id].toolbarDefault)
+					{
+						info['default'] = true;
+					}
+					if(root.children[id].checkbox)
+					{
+						info['checkbox'] = root.children[id].checkbox;
+						info['checked'] = root.children[id].checked;
+					}
 					if(root.children[id].children)
 					{
 						add_children(root.children[id], info);
 					}
 					children[id] = info;
 
-					if(!this.groupChildren)
+					if(!groupChildren)
 					{
 						childaction = root.children[id];
 						if(typeof this._preference[childaction['id']] === 'undefined')
@@ -326,7 +347,7 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 				}
 			};
 			add_children(action, children);
-			if(!this.groupChildren && children)
+			if(!groupChildren && children)
 			{
 				return;
 			}
@@ -344,22 +365,12 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 						dropdown.closest("et2-toolbar").handleAction(ev, action);
 					}
 				}.bind(action),
-				image: action.iconUrl || ''
+				image: action.iconUrl || '',
+				defaultPreference: action.defaultPreference || '',
+				iconOnly: !!action.iconOnly
 			}, this);
 
 			dropdown.select_options = Object.values(children);
-
-			//Set default selected action
-			if(typeof action.children != 'undefined')
-			{
-				for(let child in action.children)
-				{
-					if(action.children[child].default)
-					{
-						dropdown.label = action.children[child].caption;
-					}
-				}
-			}
 
 			dropdown.onclick = function(selected, dropdown)
 			{
@@ -744,7 +755,14 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 	{
 		if(action.checkbox)
 		{
-			action.set_checked(this.getWidgetById(action.id).value);
+			// A checkbox action can also just be a checkbox-rendered dropdown menu item
+			// (eg. mail's label/flag toolbar dropdowns) with no corresponding real toolbar widget -
+			// only sync from one if it actually exists.
+			const widget = this.getWidgetById(action.id);
+			if(widget)
+			{
+				action.set_checked(widget.value);
+			}
 		}
 		this.value = {action: action.id};
 		if(!action.data)

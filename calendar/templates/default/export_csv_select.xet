@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="calendar.export_csv_select" template="" lang="" group="0" version="1.9.003">
+	<et2-template  id="calendar.export_csv_select" template="" lang="" group="0" version="1.9.003">
 		<grid>
 			<columns>
 				<column width="150"/>
@@ -37,7 +38,7 @@
 								<et2-date  statustext="Enddate of the export" id="end"></et2-date>
 							</row>
 							<row>
-                                <et2-calendar-owner id="owner" empty_label="Owner" span="2" class="shorter" allowFreeEntries="false" autocomplete_url="calendar.calendar_owner_etemplate_widget.ajax_owner"/>
+                                <et2-calendar-owner  id="owner" span="2" class="shorter" allowFreeEntries="false" emptyLabel="Owner" autocompleteUrl="calendar.calendar_owner_etemplate_widget.ajax_owner"/>
 							</row>
 						</rows>
 					</grid>
@@ -48,10 +49,10 @@
 				</row>
 			</rows>
 		</grid>
-		<styles>
+		<et2-styles>
 			.shorter select {
   width: 170px;
 }
-		</styles>
-	</template>
+		</et2-styles>
+	</et2-template>
 </overlay>

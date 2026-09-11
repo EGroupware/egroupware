@@ -1,16 +1,25 @@
-import {css, html} from "lit";
+import {html} from "lit";
 import {property} from "lit/decorators/property.js";
 import {et2_INextmatchSortable} from "../../et2_extension_nextmatch";
 import {Et2NextmatchHeader} from "./Header";
-import {customElement} from "lit/decorators.js";
+import {customElement} from "lit/decorators/custom-element.js";
 import {ET2_NEXTMATCH_SORT_EVENT, Et2NextmatchSortEventDetail} from "./events";
 
+import styles from "./SortableHeader.styles";
 type SortMode = "none" | "asc" | "desc";
 
 /**
- * Sortable nextmatch header.
+ * @summary Sortable nextmatch header.
  *
  * This is the webComponent counterpart of legacy `et2_nextmatch_sortheader`.
+ * It emits `et2-nextmatch-sort` on user click and falls back to legacy direct
+ * sorting when no modern listener handles the event.
+ *
+ * @event {CustomEvent<Et2NextmatchSortEventDetail>} et2-nextmatch-sort - Emitted when the user activates the header.
+ *
+ * @csspart base - Sortable header label element.
+ * @csspart label - Sortable header label text.
+ * @csspart sort-indicator - Visual sort direction marker.
  */
 @customElement("et2-nextmatch-sortheader")
 export class Et2NextmatchSortableHeader extends Et2NextmatchHeader implements et2_INextmatchSortable
@@ -19,36 +28,13 @@ export class Et2NextmatchSortableHeader extends Et2NextmatchHeader implements et
 	{
 		return [
 			...super.styles,
-			css`
-				:host {
-					width: 100%;
-					cursor: pointer;
-					display: inline-block;
-					white-space: nowrap;
-				}
-
-				.nextmatch_sortheader {
-					padding-right: var(--sl-spacing-large, 20px);
-					overflow: hidden;
-					text-overflow: ellipsis;
-				}
-
-				.nextmatch_sortheader:hover {
-					text-decoration: underline;
-				}
-
-				.nextmatch_sortheader--marker {
-					text-decoration: none;
-					margin-left: var(--sl-spacing-small);
-					background-repeat: no-repeat;
-				}
-			`
+			styles
 		];
 	}
 
 	/**
 	 * Default sort direction used on first click.
-	 * Matches legacy behavior: anything other than DESC defaults to ASC.
+	 * Anything other than DESC defaults to ASC.
 	 */
 	@property({type: String})
 	sortmode : string = "";
@@ -57,33 +43,6 @@ export class Et2NextmatchSortableHeader extends Et2NextmatchHeader implements et
 	 * Current visual/apply sort mode.
 	 */
 	private _currentSortmode : SortMode = "none";
-
-	/**
-	 * Bind click handling once.
-	 */
-	constructor(...args : any[])
-	{
-		super(...args);
-		this._handleClick = this._handleClick.bind(this);
-	}
-
-	/**
-	 * Attach click listener for triggering nextmatch sorting.
-	 */
-	connectedCallback()
-	{
-		super.connectedCallback();
-		this.addEventListener("click", this._handleClick);
-	}
-
-	/**
-	 * Remove click listener on detach.
-	 */
-	disconnectedCallback()
-	{
-		super.disconnectedCallback();
-		this.removeEventListener("click", this._handleClick);
-	}
 
 	/**
 	 * Legacy compatibility wrapper.
@@ -110,29 +69,44 @@ export class Et2NextmatchSortableHeader extends Et2NextmatchHeader implements et
 
 	private _sortId() : string
 	{
-		return String(this.getAttribute("id") || "");
+		return this.id || this.getAttribute("id") || "";
+	}
+
+	private _nextSortmode() : SortMode
+	{
+		const defaultAsc = String(this.sortmode || "").toUpperCase() !== "DESC";
+		switch(this._currentSortmode)
+		{
+			case "none":
+				return defaultAsc ? "asc" : "desc";
+			case "asc":
+				return defaultAsc ? "desc" : "none";
+			case "desc":
+				return defaultAsc ? "none" : "asc";
+		}
 	}
 
 	/**
 	 * Trigger sort on click and persist sort preference like legacy header does.
 	 */
-	private _handleClick(event : MouseEvent)
+	_handleClick(event : MouseEvent) : boolean
 	{
-		if(this.disabled)
+		if((this as any).disabled)
 		{
 			return false;
 		}
 		event.preventDefault();
 
-		const defaultAsc = String(this.sortmode || "").toUpperCase() !== "DESC";
 		const sortId = this._sortId();
+		const nextSortmode = this._nextSortmode();
 		const sortEvent = new CustomEvent<Et2NextmatchSortEventDetail>(ET2_NEXTMATCH_SORT_EVENT, {
 			bubbles: true,
 			composed: true,
 			cancelable: true,
 			detail: {
 				id: sortId,
-				asc: this._currentSortmode === "none" ? defaultAsc : undefined
+				asc: nextSortmode === "none" ? undefined : nextSortmode === "asc",
+				clear: nextSortmode === "none"
 			}
 		});
 		this.dispatchEvent(sortEvent);
@@ -148,11 +122,18 @@ export class Et2NextmatchSortableHeader extends Et2NextmatchHeader implements et
 			{
 				return;
 			}
-			this.nextmatch.sortBy(sortId, sortEvent.detail.asc, sortEvent.detail.update);
+			if(sortEvent.detail.clear && typeof this.nextmatch.resetSort === "function")
+			{
+				this.nextmatch.resetSort();
+			}
+			else
+			{
+				this.nextmatch.sortBy(sortId, sortEvent.detail.asc, sortEvent.detail.update);
+			}
 			try
 			{
-				this.egw().set_preference(
-					this.nextmatch._get_appname(),
+					this.egw().set_preference(
+					(this.nextmatch as any)._get_appname(),
 					this.nextmatch.options.template + "_sort",
 					this.nextmatch.activeFilters["sort"]
 				);
@@ -181,10 +162,11 @@ export class Et2NextmatchSortableHeader extends Et2NextmatchHeader implements et
 		}
 
 		return html`
-            <span class="nextmatch_sortheader ${this._currentSortmode} ${this.label ? "" : "et2_label_empty"}">
+            <span class="nextmatch_sortheader ${this._currentSortmode} ${this.label ? "" : "et2_label_empty"}"
+                  part="base label">
 				${this.label || ""}
 			</span>
-            <span class="nextmatch_sortheader--marker ${indicator}"></span>
+            <span class="nextmatch_sortheader--marker ${indicator}" part="sort-indicator"></span>
 		`;
 	}
 }

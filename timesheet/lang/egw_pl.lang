@@ -63,7 +63,6 @@ leave it empty for a full week	timesheet	pl	Pozostaw pusty na cały tydzień
 leaves without saveing	timesheet	pl	Pozostaw bez zmian
 length<br>rows	timesheet	pl	Długość<br>linie
 link title	timesheet	pl	Tytuł linku
-links	timesheet	pl	Odsyłacze
 make timesheets readable by infolog delegation	timesheet	pl	Udostępnij arkusze czasu pracy delegatom InfoLog
 max length of the input [, length of the inputfield (optional)]	timesheet	pl	maksymalna długość danych [,długość pola (opcjonalnie)]
 mode	timesheet	pl	Tryb

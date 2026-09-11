@@ -76,7 +76,6 @@ is resource buyable?	resources	es-es	¿Se puede realizar una compra del recurso?
 is the ressource bookable?	resources	es-es	¿Se puede reservar el recurso?
 is this resource bookable?	resources	es-es	¿Se puede realizar una reserva sobre este recurso?
 is this resource buyable?	resources	es-es	¿Se puede realizar una compra de este recurso?
-links	resources	es-es	Enlaces
 location	resources	es-es	Ubicación
 location of resource	resources	es-es	Ubicación del recurso
 location:	resources	es-es	Ubicación:

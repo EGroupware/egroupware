@@ -66,7 +66,6 @@ leave it empty for a full week	timesheet	cs	Ponechte prázdné pro celý týden
 leaves without saveing	timesheet	cs	ukoční bez uložení
 length<br>rows	timesheet	cs	Délka<br>Řádky
 link title	timesheet	cs	Název odkazu
-links	timesheet	cs	Odkazy
 make timesheets readable by infolog delegation	timesheet	cs	Zpřístupněte časové rozvrhy delegátům InfoLog
 max length of the input [, length of the inputfield (optional)]	timesheet	cs	Maximální délka vstupu [, délka vstupního pole (volitelná)]
 mode	timesheet	cs	Režim

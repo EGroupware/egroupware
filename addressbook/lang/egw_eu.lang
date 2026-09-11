@@ -150,7 +150,6 @@ ldap context for contacts	admin	eu	LDAP kontextua kontaktuentzat
 ldap host for contacts	admin	eu	LDAP zerbitzaria kontaktuentzat
 ldif	addressbook	eu	LDIF
 line 2	addressbook	eu	2. Errenkada
-links	addressbook	eu	Loturak
 list all categories	addressbook	eu	Kategoria guztien zerrenda
 list all customfields	addressbook	eu	Eremu pertsonalizatu guztien zerrenda
 load vcard	addressbook	eu	VCard-a kargatu

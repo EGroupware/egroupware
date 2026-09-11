@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <!-- $Id: list.xet 54765 2016-01-19 00:48:21Z nathangray $ -->
 <overlay>
-	<template id="calendar.list.add" template="" lang="" group="0" version="16.1.001">
-		<et2-button  id="add" class="plus_button" onclick="egw.open('calendar');" parentId="calendar-list_plus_button_container"></et2-button>
-	</template>
-	<template id="calendar.list.dates" template="" lang="" group="0" version="1.3.001">
+	<et2-template  id="calendar.list.add" template="" lang="" group="0" version="16.1.001">
+		<et2-button-icon  id="add" class="plus_button" onclick="egw.open('calendar');" parentId="calendar-list_plus_button_container" image="plus-lg"></et2-button-icon>
+	</et2-template>
+	<et2-template  id="calendar.list.dates" template="" lang="" group="0" version="1.3.001">
 		<et2-hbox>
 			<et2-description  value="Start"></et2-description>
 			<et2-date  id="startdate" onchange="app.calendar.update_state({date: widget.getValue()}); return false;"></et2-date>
 			<et2-description  value="End"></et2-description>
 			<et2-date  id="enddate" onchange="app.calendar.update_state({end_date: widget.getValue()}); return false;"></et2-date>
 		</et2-hbox>
-	</template>
-	<template id="calendar.list.rows" template="" lang="" group="0" version="1.9.004">
+	</et2-template>
+	<et2-template  id="calendar.list.rows" template="" lang="" group="0" version="1.9.004">
 		<grid width="100%" >
 			<columns>
 				<column width="10"/>
@@ -40,8 +41,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="calendar.list" template="" lang="" group="0" version="1.9.003">
+	</et2-template>
+	<et2-template  id="calendar.list" template="" lang="" group="0" version="1.9.003">
         <nextmatch id="nm" template="calendar.list.rows" header_right="calendar.list.add" header_left="calendar.list.dates" filter_template=""/>
 		<grid width="100%" border="0" spacing="0" padding="0">
 			<columns>
@@ -50,7 +51,7 @@
 			</columns>
 			<rows>
 				<row disabled="!@css">
-					<html id="css" span="all"/>
+					<et2-html  id="css" span="all"></et2-html>
 				</row>
 				<row>
 					<et2-description  align="center" id="msg" span="all" class="message" noLang="1"></et2-description>
@@ -87,7 +88,7 @@
 				</row>
 			</rows>
 		</grid>
-		<styles>
+		<et2-styles>
 			.noWrap { white-space: nowrap; }
 
 .image16 img {
@@ -99,6 +100,6 @@
 }
 
 
-		</styles>
-	</template>
+		</et2-styles>
+	</et2-template>
 </overlay>

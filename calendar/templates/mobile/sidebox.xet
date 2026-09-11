@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!-- Same as kdots/sidebox.xet -->
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-    <template id="calendar.sidebox" slot="left-top">
+    <et2-template  id="calendar.sidebox" slot="left-top">
         <calendar-date id="date" aria-labelledby="overviewHeader"></calendar-date><!-- flatpickr mini calendar view at the top -->
-        <et2-calendar-owner id="owner"
-                            onchange="app.calendar.update_state({owner: widget.getValue()}); return false;"
-                            multiple="true" allowFreeEntries="false" tabindex="0"></et2-calendar-owner>
-    </template>
+        <et2-calendar-owner  id="owner" onchange="app.calendar.update_state({owner: widget.getValue()}); return false;" multiple="true" allowFreeEntries="false" tabindex="0"></et2-calendar-owner>
+    </et2-template>
 </overlay>

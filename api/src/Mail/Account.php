@@ -15,6 +15,9 @@
 namespace EGroupware\Api\Mail;
 
 use EGroupware\Api;
+use EGroupware\Api\Jmap\Base as JmapSessionBase;
+use EGroupware\Api\Mail\Imap\Jmap as ImapJmap;
+use EGroupware\Api\Mail\Jmap\Imap as JmapShim;
 
 use Horde_Imap_Client_Exception;
 use Horde_Mail_Transport_Smtphorde;
@@ -144,6 +147,10 @@ class Account implements \ArrayAccess
 	const SSL_STARTTLS = 1;
 	/**
 	 * SSL (inferior to TLS!)
+	 *
+	 * Deprecated legacy alias for SSL_TLS - nothing below TLS 1.2 is meaningful or even
+	 * supported by PHP anymore, so this distinction is obsolete. Always treated identically to
+	 * SSL_TLS on read; new writes normalize to SSL_TLS, this value is never written again.
 	 */
 	const SSL_SSL = 3;
 	/**
@@ -151,9 +158,44 @@ class Account implements \ArrayAccess
 	 */
 	const SSL_TLS = 2;
 	/**
-	 * if set, verify certifcate (currently not implemented in Horde_Imap_Client!)
+	 * JMAP over plain http (no encryption)
+	 */
+	const JMAP_HTTP = 4;
+	/**
+	 * JMAP over https
+	 */
+	const JMAP_HTTPS = 6;
+	/**
+	 * Mask for the protocol/encryption portion (bits 0-2) of acc_(imap|sieve|smtp)_ssl,
+	 * ie. one of SSL_NONE/SSL_STARTTLS/SSL_TLS/SSL_SSL/JMAP_HTTP/JMAP_HTTPS
+	 */
+	const PROTOCOL_MASK = 7;
+	/**
+	 * If set, verify certificate - kept for backwards compatibility, same value as
+	 * VERIFY_ENABLED below (see the 3-state certificate-verification field docs there).
 	 */
 	const SSL_VERIFY = 8;
+	/**
+	 * Certificate-verification state (bits 3-4 of acc_(imap|sieve|smtp)_ssl) - a 3-state field,
+	 * NOT a simple boolean, so existing (pre-2026-08-24) rows transition safely without ever
+	 * requiring the wizard/account-edit to be revisited:
+	 * - VERIFY_UNDECIDED (0): every row before this feature existed, and never written by new
+	 *   code - the connecting code notices this on the account's next real connection attempt,
+	 *   performs one silent strict-TLS probe, and persists ENABLED/DISABLED so it only ever
+	 *   happens once.
+	 * - VERIFY_ENABLED (8, same value as the historical SSL_VERIFY): verification confirmed
+	 *   possible, enforced from now on.
+	 * - VERIFY_DISABLED (16): verification failed (or was explicitly rejected by an admin
+	 *   accepting the risk), never enforced. Shown in the UI as the "disable certificate
+	 *   validation" checkbox checked.
+	 */
+	const VERIFY_UNDECIDED = 0;
+	const VERIFY_ENABLED = self::SSL_VERIFY;
+	const VERIFY_DISABLED = 16;
+	/**
+	 * Mask for the certificate-verification portion (bits 3-4) of acc_(imap|sieve|smtp)_ssl
+	 */
+	const VERIFY_MASK = self::VERIFY_ENABLED | self::VERIFY_DISABLED;
 
 	/**
 	 * Default timeout, if no account specific one is set
@@ -250,7 +292,7 @@ class Account implements \ArrayAccess
 	 * @param int $called_for=null if set access to given user (without smtp credentials!),
 	 *	default current user AND read username/password from current users session
 	 */
-	public function __construct(array $params, $called_for=null)
+	public function __construct(array $params, $called_for=null, bool $replace_placeholders=true)
 	{
 		// tracker_mailhandling instantiates class without our database (acc_id==="tracker*")
 		if ((int)$params['acc_id'] > 0)
@@ -275,7 +317,8 @@ class Account implements \ArrayAccess
 			{
 				// get username/password from current user, let it overwrite credentials for all/no session
 				$params = Credentials::from_session(
-						(!isset($called_for) ? array() : array('acc_smtp_auth_session' => false)) + $params, !isset($called_for)
+						(!isset($called_for) ? array() : array('acc_smtp_auth_session' => false)) + $params,
+						$replace_placeholders && !isset($called_for)
 					) + $params;
 
 				// check if we should use admin-credentials, if no session password exists, eg. SSO without password
@@ -297,19 +340,294 @@ class Account implements \ArrayAccess
 	public static function ssl2secure($ssl)
 	{
 		$secure = false;
-		switch((int)$ssl & ~self::SSL_VERIFY)
+		switch((int)$ssl & self::PROTOCOL_MASK)
 		{
 			case self::SSL_STARTTLS:
 				$secure = 'tls';	// Horde uses 'tls' for STARTTLS, not ssl connection with tls version >= 1 and no sslv2/3
 				break;
-			case self::SSL_SSL:
-				$secure = 'ssl';
-				break;
+			case self::SSL_SSL:	// legacy alias, unified with SSL_TLS - see SSL_SSL's docblock
 			case self::SSL_TLS:
 				$secure = 'tlsv1';	// since Horde_Imap_Client-1.16.0 requiring Horde_Socket_Client-1.1.0
 				break;
 		}
 		return $secure;
+	}
+
+	/**
+	 * Build the stream_context_create() options Horde's IMAP/SMTP/Sieve socket clients need to
+	 * actually verify (or not) the server's TLS certificate.
+	 *
+	 * Horde's own Horde\Socket\Client hardcodes verify_peer=false/verify_peer_name=false unless
+	 * explicitly overridden via this 'context' config key - so despite acc_(imap|sieve|smtp)_ssl
+	 * having always had a VERIFY bit, nothing in this codebase ever actually enabled real
+	 * certificate verification until this was wired up. See VERIFY_UNDECIDED's docblock for the
+	 * 3-state field this reads.
+	 *
+	 * @param int $ssl raw acc_(imap|sieve|smtp)_ssl value
+	 * @return array suitable as the 'context' key of a Horde_Imap_Client_Socket/Horde_Smtp/
+	 *  Horde\ManageSieve config array
+	 */
+	public static function sslContext(int $ssl) : array
+	{
+		$verify = ($ssl & self::VERIFY_MASK) === self::VERIFY_ENABLED;
+		return ['ssl' => ['verify_peer' => $verify, 'verify_peer_name' => $verify]];
+	}
+
+	/**
+	 * Build a JMAP endpoint URL from a host/port/ssl triple (any of acc_imap_*, acc_smtp_*)
+	 *
+	 * Shared between Imap\Jmap::jmapUrl() (real usage) and Transport\Jmap (submission) - moved
+	 * here instead of duplicated, since both need the exact same sentinel/scheme handling.
+	 *
+	 * @param string $host bare hostname, or an already-schemed URL, or one of EGroupware's own
+	 *  sentinel service-names ('mail', 'stalwart', 'internal.k8s.farm.egroupware.org') - those
+	 *  MUST be passed through unchanged, never turned into eg. "https://mail", which is not a
+	 *  real, resolvable host (broke acc_id=1 in production, found live 2026-08-24)
+	 * @param int $port 0/falsy to always use the scheme's default port
+	 * @param int $ssl raw acc_(imap|smtp)_ssl value - only the JMAP_HTTP/JMAP_HTTPS protocol
+	 *  bits matter here, JMAP_HTTP selects http, anything else (incl. JMAP_HTTPS) selects https
+	 * @return string
+	 */
+	public static function jmapUrl(string $host, int $port, int $ssl) : string
+	{
+		if (in_array($host, ['mail', 'stalwart', 'internal.k8s.farm.egroupware.org'], true) ||
+			preg_match('#^https?://#', $host))
+		{
+			return $host;
+		}
+		$scheme = ($ssl & self::PROTOCOL_MASK) === self::JMAP_HTTP ? 'http' : 'https';
+		$default_port = $scheme === 'http' ? 80 : 443;
+		$portStr = $port && $port !== $default_port ? ':'.$port : '';
+		return $scheme.'://'.$host.$portStr;
+	}
+
+	/**
+	 * Heuristic: does this exception's message look like a TLS certificate verification failure
+	 * (as opposed to a real connection/auth failure)?
+	 *
+	 * Used by the "optimistic verification" pattern: attempt a connection with strict
+	 * certificate verification first (for a still-undecided account), and only fall back to a
+	 * lenient retry of the SAME attempt when it's plausibly the certificate's fault - any other
+	 * failure (wrong credentials, host down, ...) must still surface normally, not be masked by
+	 * a pointless lenient retry.
+	 *
+	 * Also checks a `details` property, if present (eg. Horde_Imap_Client_Exception's, populated
+	 * from Horde\Socket\Client\Exception's own `details`) - Horde's own IMAP socket code
+	 * (Horde_Imap_Client_Socket::_connect()) deliberately wraps the real
+	 * Horde\Socket\Client\Exception into a generic, translated "Error connecting to mail
+	 * server."/getCode()===SERVER_CONNECT exception, copying the ORIGINAL exception's `details`
+	 * (the raw stream_socket_client() error string, eg. "[0] stream_socket_client(): SSL
+	 * operation failed with code 1... certificate verify failed") across - checking getMessage()
+	 * alone therefore misses this generic-message case entirely (confirmed live 2026-08-26: a
+	 * real cert mismatch on an implicit-TLS IMAP connection surfaced as this exact generic
+	 * message, silently skipping the lenient retry below and the wizard's own certificate
+	 * warning as a result).
+	 *
+	 * @param \Throwable $e
+	 * @return bool
+	 */
+	public static function isCertificateError(\Throwable $e) : bool
+	{
+		if (preg_match('/certificate|ssl|tls/i', $e->getMessage()))
+		{
+			return true;
+		}
+		$details = $e->details ?? null;
+		return is_string($details) && (bool)preg_match('/certificate|ssl|tls/i', $details);
+	}
+
+	/**
+	 * Test whether $host:$port's TLS certificate passes strict verification
+	 *
+	 * A raw socket probe, not a full protocol login - just enough of the STARTTLS handshake
+	 * (IMAP/SMTP/Sieve all use a short literal STARTTLS command) to make PHP perform the real
+	 * TLS handshake with strict certificate verification enabled, then closes the connection.
+	 * Used once by resolveVerification() to decide VERIFY_ENABLED vs. VERIFY_DISABLED for a
+	 * still-undecided account.
+	 *
+	 * @param string $host
+	 * @param int $port
+	 * @param string|false $secure Horde "secure" mode: 'ssl'|'tlsv1' (implicit TLS from
+	 *  connect), 'tls' (STARTTLS), false (no encryption at all - nothing to verify, always false)
+	 * @param string $starttls_command only used when $secure === 'tls', eg. "a1 STARTTLS\r\n"
+	 *  (IMAP) or "STARTTLS\r\n" (SMTP/Sieve)
+	 * @return bool true if the certificate verifies
+	 */
+	public static function probeCertVerification(string $host, int $port, $secure, string $starttls_command='') : bool
+	{
+		if (!$secure)
+		{
+			return false;	// unencrypted - there is no certificate to verify
+		}
+		$scheme = in_array($secure, ['ssl', 'tlsv1'], true) ? 'ssl' : 'tcp';
+		$context = stream_context_create(['ssl' => ['verify_peer' => true, 'verify_peer_name' => true]]);
+		$error_number = $error_string = null;
+		// short connect timeout - this is a one-time housekeeping probe, not a real mail
+		// operation a user is waiting on for its own sake; a hung/slow TLS handshake here must
+		// not stack multiple extra seconds onto the wizard's already-multi-step connection tests
+		if (!($stream = @stream_socket_client("$scheme://$host:$port", $error_number, $error_string,
+			3, STREAM_CLIENT_CONNECT, $context)))
+		{
+			return false;
+		}
+		try {
+			// the connect timeout above does NOT bound subsequent fgets()/fwrite() calls (those
+			// otherwise fall back to PHP's default_socket_timeout, commonly 60s) - cap those too
+			stream_set_timeout($stream, 3);
+			if ($secure === 'tls')
+			{
+				fgets($stream);	// discard greeting
+				fwrite($stream, $starttls_command);
+				fgets($stream);	// discard STARTTLS acknowledgement
+				if (stream_get_meta_data($stream)['timed_out'] ||
+					!@stream_socket_enable_crypto($stream, true, STREAM_CRYPTO_METHOD_TLS_CLIENT))
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+		finally {
+			fclose($stream);
+		}
+	}
+
+	/**
+	 * Diagnose why a connection is failing right now - a real, on-demand check, meant to be
+	 * triggered only when a user is actually looking at the account-edit popup because a
+	 * connection just aborted (admin_mail::edit()'s checkCert GET param, see mail/js/app.ts) -
+	 * deliberately NOT run proactively before every ordinary connection, that's
+	 * resolveVerification()'s job, silently, in the background.
+	 *
+	 * Distinguishes two situations users otherwise conflate into "just disable certificate
+	 * validation":
+	 * - the server isn't reachable at all (wrong host/port, firewalled, down) - a "connection"
+	 *   problem, where disabling certificate validation wouldn't help at all
+	 * - the server IS reachable, but presents a certificate for a different name than expected -
+	 *   a real, security-relevant mismatch (wrong DNS/hosts entry, a load-balancer routing to the
+	 *   wrong backend, ...), not merely an outdated/self-signed certificate. The returned message
+	 *   names the actual certificate, so it reads as "this is the wrong server" rather than "this
+	 *   security check is in your way".
+	 *
+	 * @param string $host
+	 * @param int $port
+	 * @param string|false $secure Horde "secure" mode, see probeCertVerification()
+	 * @param string $starttls_command see probeCertVerification()
+	 * @return array ['problem' => 'none'|'connection'|'certificate', 'message' => string|null]
+	 */
+	public static function diagnoseConnection(string $host, int $port, $secure, string $starttls_command='') : array
+	{
+		if (!$host || !$port)
+		{
+			return ['problem' => 'connection', 'message' => lang('No host/port configured.')];
+		}
+		// step 1: plain TCP reachability - same socket for STARTTLS and implicit-TLS modes
+		$error_number = $error_string = null;
+		if (!($stream = @stream_socket_client("tcp://$host:$port", $error_number, $error_string,
+			5, STREAM_CLIENT_CONNECT)))
+		{
+			return ['problem' => 'connection', 'message' => lang('Could not connect to "%1:%2": %3',
+				$host, $port, $error_string ?: lang('connection refused or timed out'))];
+		}
+		stream_set_timeout($stream, 5);
+		if (!$secure)
+		{
+			fclose($stream);
+			return ['problem' => 'none', 'message' => null];
+		}
+		if ($secure === 'tls' && $starttls_command)
+		{
+			fgets($stream);	// discard greeting
+			fwrite($stream, $starttls_command);
+			fgets($stream);	// discard STARTTLS acknowledgement
+		}
+		// step 2: lenient upgrade, purely to read the certificate the server actually presents -
+		// verify_peer=true would abort the handshake before PHP ever exposes the peer certificate
+		stream_context_set_option($stream, 'ssl', 'capture_peer_cert', true);
+		stream_context_set_option($stream, 'ssl', 'verify_peer', false);
+		stream_context_set_option($stream, 'ssl', 'verify_peer_name', false);
+		if (stream_get_meta_data($stream)['timed_out'] ||
+			!@stream_socket_enable_crypto($stream, true, STREAM_CRYPTO_METHOD_TLS_CLIENT))
+		{
+			fclose($stream);
+			return ['problem' => 'connection', 'message' => lang('Could not establish a TLS connection to "%1:%2" - wrong port or protocol?', $host, $port)];
+		}
+		$cert = stream_context_get_params($stream)['options']['ssl']['peer_certificate'] ?? null;
+		$cn = null;
+		if ($cert && ($parsed = openssl_x509_parse($cert)))
+		{
+			$cn = $parsed['subject']['CN'] ?? $parsed['extensions']['subjectAltName'] ?? null;
+		}
+		fclose($stream);
+
+		// step 3: the actual strict check, on a FRESH connection - a stream can't be safely
+		// downgraded/re-upgraded after crypto was already enabled once above
+		if (static::probeCertVerification($host, $port, $secure, $starttls_command))
+		{
+			return ['problem' => 'none', 'message' => null];
+		}
+		return [
+			'problem' => 'certificate',
+			'message' => lang('The server "%1" answered, but presented a certificate issued for "%2" - NOT for "%1". This usually means a wrong hostname/DNS entry, or a load-balancer routing to the wrong backend - not just an outdated certificate. Disabling certificate validation lets you connect anyway, but makes the connection vulnerable to a man-in-the-middle attack - only do that if you understand and accept that risk.',
+				$host, $cn ?: lang('an unrecognized host')),
+		];
+	}
+
+	/**
+	 * Resolve a still-undecided certificate-verification state (see VERIFY_UNDECIDED's docblock)
+	 * exactly once
+	 *
+	 * Called by each connection-establishing class right after ITS OWN normal (non-strict)
+	 * connection already succeeded. If the state is already decided (existing behaviour is
+	 * untouched), this is a cheap no-op. Persists the resolved bits via a narrow, direct column
+	 * update - deliberately NOT a full write()/save() round-trip, since this can fire during any
+	 * user's ordinary connection on a shared multi-user account and must neither require
+	 * admin/ACL rights nor create edit-audit noise. A failed persistence attempt is swallowed -
+	 * not worth failing the actual mail connection over, it simply retries next time.
+	 *
+	 * @param int $acc_id
+	 * @param string $column one of 'acc_imap_ssl'/'acc_sieve_ssl'/'acc_smtp_ssl'
+	 * @param int $ssl current raw column value
+	 * @param string $host
+	 * @param int $port
+	 * @param string|false $secure Horde "secure" mode, see probeCertVerification()
+	 * @param string $starttls_command see probeCertVerification()
+	 * @return int the (possibly updated) $ssl value
+	 */
+	public static function resolveVerification(int $acc_id, string $column, int $ssl, string $host, int $port,
+		$secure, string $starttls_command='') : int
+	{
+		if (($ssl & self::VERIFY_MASK) !== self::VERIFY_UNDECIDED)
+		{
+			return $ssl;
+		}
+		$verified = static::probeCertVerification($host, $port, $secure, $starttls_command);
+		$ssl = ($ssl & ~self::VERIFY_MASK) | ($verified ? self::VERIFY_ENABLED : self::VERIFY_DISABLED);
+
+		self::persistVerification($acc_id, $column, $ssl);
+
+		return $ssl;
+	}
+
+	/**
+	 * Narrow, direct persistence of a resolved acc_(imap|sieve|smtp)_ssl value - the write half
+	 * of resolveVerification(), split out for JMAP (curl already verifies TLS certificates by
+	 * default, so its "probe" is simply whether the real connection itself succeeded or failed
+	 * on a certificate error - see Imap\Jmap::jmapClient() - with no separate raw-socket probe
+	 * needed the way IMAP/SMTP/Sieve's resolveVerification() call requires).
+	 *
+	 * @param int $acc_id
+	 * @param string $column one of 'acc_imap_ssl'/'acc_sieve_ssl'/'acc_smtp_ssl'
+	 * @param int $ssl the already-resolved value to persist
+	 */
+	public static function persistVerification(int $acc_id, string $column, int $ssl) : void
+	{
+		try {
+			self::$db->update(self::TABLE, [$column => $ssl], ['acc_id' => $acc_id], __LINE__, __FILE__, self::APP);
+		}
+		catch (\Throwable $e) {
+			unset($e);	// best-effort only, see resolveVerification()'s docblock
+		}
 	}
 
 	/**
@@ -460,6 +778,29 @@ class Account implements \ArrayAccess
 	}
 
 	/**
+	 * Get this account's JMAP session - real JMAP-over-HTTP (Http) for a Stalwart-classed
+	 * account, or the local plain-IMAP JMAP-shaped emulation (JmapShim) for every other account
+	 * (Dovecot, Cyrus, even OAuth-authenticated external accounts) - both share the same
+	 * `Api\Jmap\Base` per-type get()/query()/set() contract (`$session->mailbox`/`$session->email`),
+	 * so callers don't need their own instanceof check.
+	 *
+	 * Single reusable factory for the `instanceof Imap\Jmap` branch ~32 existing call sites across
+	 * mail/src and api/src/Mail.php already duplicate inline - new code should call this instead
+	 * of adding a 33rd (see doc/ai/projects/mail-rest-jmap-lite.md).
+	 *
+	 * @return JmapSessionBase
+	 */
+	public function jmapSession() : JmapSessionBase
+	{
+		$icServer = $this->imapServer();
+		if ($icServer instanceof ImapJmap)
+		{
+			return $icServer->jmapClient();
+		}
+		return new JmapShim((string)$this->acc_id);
+	}
+
+	/**
 	 * Check if account is an imap account
 	 *
 	 * Checks if an imap host, username and for managaged mail-servers accountStatus="active" and NOT deliveryMode="forwardOnly" is set
@@ -499,7 +840,7 @@ class Account implements \ArrayAccess
 				unset($ex);
 			}
 		}
-		return $this->deliveryMode != Smtp::FORWARD_ONLY && $this->accountStatus == Smtp::MAIL_ENABLED;
+		return $this->deliveryMode != Smtp::FORWARD_ONLY && isset($this->accountStatus);
 	}
 
 	/**
@@ -513,17 +854,21 @@ class Account implements \ArrayAccess
 		{
 			$params = $this->getParamOverwrites();
 			$class = $params['acc_smtp_type'];
-			$this->smtpServer = new $class($params);
+			$this->smtpServer = new $class($params, $this);
 			$this->smtpServer->editForwardingAddress = false;
 			$this->smtpServer->host = $params['acc_smtp_host'];
 			$this->smtpServer->port = $params['acc_smtp_port'];
-			switch($params['acc_smtp_ssl'])
+			// (int) cast: acc_smtp_ssl can legitimately be the literal string 'no' (the "no
+			// encryption" sentinel, see sslTypes()/mergeVerifyCheckbox()) - PHP 8's bitwise &
+			// throws "Unsupported operand types: string & int" for a non-numeric string operand
+			// instead of the pre-8 silent-0 coercion (found live 2026-09-03, any account with
+			// acc_smtp_ssl='no' crashed on every save). (int)'no' is 0 (SSL_NONE), which correctly
+			// falls through to $secure staying false below, unchanged from the intended behaviour.
+			switch((int)$params['acc_smtp_ssl'] & self::PROTOCOL_MASK)
 			{
+				case self::SSL_SSL:	// legacy alias, unified with SSL_TLS - see SSL_SSL's docblock
 				case self::SSL_TLS:
 					$this->smtpServer->host = 'tlsv1://'.$this->smtpServer->host;
-					break;
-				case self::SSL_SSL:
-					$this->smtpServer->host = 'ssl://'.$this->smtpServer->host;
 					break;
 				case self::SSL_STARTTLS:
 					$this->smtpServer->host = 'tls://'.$this->smtpServer->host;
@@ -540,22 +885,32 @@ class Account implements \ArrayAccess
 	/**
 	 * Get Horde mail transport object
 	 *
-	 * @return Horde_Mail_Transport_Smtphorde
+	 * @return Horde_Mail_Transport_Smtphorde|Jmap\Transport
 	 */
 	public function smtpTransport()
 	{
 		if (!isset($this->smtpTransport))
 		{
 			$params = $this->getParamOverwrites();
+
+			// JMAP submission (RFC 8621 §7) - selected via acc_smtp_ssl's protocol bits, same as
+			// acc_imap_ssl/acc_sieve_ssl already select JMAP for their own protocols, NOT via
+			// acc_smtp_type (that stays the unrelated account-provisioning selector)
+			if (((int)$params['acc_smtp_ssl'] & self::PROTOCOL_MASK) === self::JMAP_HTTP ||
+				((int)$params['acc_smtp_ssl'] & self::PROTOCOL_MASK) === self::JMAP_HTTPS)
+			{
+				return $this->smtpTransport = new Jmap\Transport($this);
+			}
+
 			$secure = false;
-			switch($params['acc_smtp_ssl'] & ~self::SSL_VERIFY)
+			// (int) cast: see smtpServer()'s identical comment - acc_smtp_ssl can legitimately be
+			// the literal string 'no', which throws under PHP 8's bitwise & without this
+			switch((int)$params['acc_smtp_ssl'] & self::PROTOCOL_MASK)
 			{
 				case self::SSL_STARTTLS:
 					$secure = 'tls';	// Horde uses 'tls' for STARTTLS, not ssl connection with tls version >= 1 and no sslv2/3
 					break;
-				case self::SSL_SSL:
-					$secure = 'ssl';
-					break;
+				case self::SSL_SSL:	// legacy alias, unified with SSL_TLS - see SSL_SSL's docblock
 				case self::SSL_TLS:
 					$secure = 'tlsv1';	// since Horde_Smtp-1.3.0 requiring Horde_Socket_Client-1.1.0
 					break;
@@ -563,12 +918,26 @@ class Account implements \ArrayAccess
 			// Horde use locale for translation of error messages
 			Api\Preferences::setlocale(LC_MESSAGES);
 
+			// NOTE: no eager certificate-verification upgrade here (removed 2026-08-24) - it
+			// used to open a SEPARATE raw-socket probe connection to the same server before the
+			// real transport even connects, which on a real hardened mail server collided badly
+			// with the wizard's own just-finished test connection (found live, see project doc).
+			// New accounts get their verification state resolved directly by the wizard at
+			// creation time (admin_mail::smtp()) before ever reaching here undecided; a
+			// pre-existing account that predates this feature simply keeps using an unverified
+			// connection until explicitly re-tested via the wizard - deliberately deferred
+			// rather than risk the same collision here too.
+
 			$config = [
 				'username' => $params['acc_smtp_username'] ?? null,
 				'password' => $params['acc_smtp_password'] ?? null,
 				'host' => $params['acc_smtp_host'],
 				'port' => $params['acc_smtp_port'],
 				'secure' => $secure,
+				// (int) cast: sslContext()'s own $ssl param is int-typed - 'no' (non-numeric
+				// string) throws a TypeError at this call boundary otherwise, same root cause as
+				// the switch() above
+				'context' => self::sslContext((int)$params['acc_smtp_ssl']),
 				'debug' => self::SMTP_DEBUG_LOG,
 				//'timeout' => self::TIMEOUT,
 			];
@@ -1066,14 +1435,22 @@ class Account implements \ArrayAccess
 	 * @param int $acc_id
 	 * @param int $called_for =null if set admin access to given user, default current user
 	 *	AND read username/password from current users session, 0: find accounts from all users
+	 * @param bool $replace_placeholders =true false: leave an empty ident_realname/ident_email
+	 *	empty, instead of filling it with the current user's own account_fullname/account_email -
+	 *	must be false for any read whose result will be merged with a partial update and written
+	 *	back (eg. a REST PATCH), otherwise the substituted display value permanently overwrites
+	 *	the stored (deliberately empty, per-viewer-substituted) value
 	 * @return self
 	 * @throws Api\Exception\NotFound if account was not found (or not valid for current user)
 	 */
-	public static function read($acc_id, $called_for=null)
+	public static function read($acc_id, $called_for=null, bool $replace_placeholders=true)
 	{
 		//error_log(__METHOD__."($acc_id, ".array2string($called_for).")");
-		// some caching, but only for regular usage/users
-		if (!isset($called_for) && (!isset(self::$instances[$acc_id]) || self::$instances[$acc_id]->user == $GLOBALS['egw_info']['user']['account_id']))
+		// some caching, but only for regular usage/users with placeholder substitution enabled
+		// (the default, cacheable mode) - a caller explicitly suppressing it must always get a
+		// fresh, uncached instance, and must never pollute the shared cache with
+		// placeholder-suppressed data other (normal) callers would then wrongly reuse
+		if ($replace_placeholders && !isset($called_for) && (!isset(self::$instances[$acc_id]) || self::$instances[$acc_id]->user == $GLOBALS['egw_info']['user']['account_id']))
 		{
 			// act as singleton: if we already have an instance, return it
 			if (isset(self::$instances[$acc_id]))
@@ -1120,12 +1497,12 @@ class Account implements \ArrayAccess
 		$data = self::db2data($data);
 		//error_log(__METHOD__."($acc_id, $only_current_user) returning ".array2string($data));
 
-		if (!isset($called_for))
+		if ($replace_placeholders && !isset($called_for))
 		{
 			//error_log(__METHOD__."($acc_id) creating instance and caching data read from db");
 			$ret =& self::$instances[$acc_id];
 		}
-		return $ret = new Account($data, $called_for);
+		return $ret = new Account($data, $called_for, $replace_placeholders);
 	}
 
 	/**

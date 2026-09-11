@@ -308,7 +308,6 @@ ldap settings for contacts	admin	pl	Ustawienia LDAP dla kontaktu
 ldif	addressbook	pl	LDIF
 line 2	addressbook	pl	Wiersz 2
 link title for contacts show	addressbook	pl	Tytuł linku przy pokazywaniu kontaktów
-links	addressbook	pl	Linki
 links and attached files	addressbook	pl	Łącza i załączone pliki
 list all categories	addressbook	pl	Wywietl wszystkie kategorie
 list all customfields	addressbook	pl	Pokaż wszystkie pola użytkownika

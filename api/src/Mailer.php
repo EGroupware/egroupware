@@ -50,6 +50,24 @@ class Mailer extends Horde_Mime_Mail
 	protected $cc;
 	protected $bcc;
 	protected $replyto;
+
+	/**
+	 * Whether _send() (a real send, or getRaw()'s own null-transport fallback) has actually run yet
+	 * and therefore synced $this->_headers' Content-Type/MIME-Version/Message-ID/Date/User-Agent
+	 * from the base part - see getRaw()'s own docblock for why this can't just check whether $_base
+	 * is set: smimeEncrypt() sets it DIRECTLY ($this->_base = $smime->signMIMEPart(...)), bypassing
+	 * _send() entirely, so getRaw()'s OLD "does getBasePart() throw" check never caught that case at
+	 * all - found live 2026-09-02 via a genuinely double-wrapped sign-only send (JmapImap::
+	 * smimeEncryptEmailProperties()'s TYPE_SIGN path calls getRaw() right after smimeEncrypt(), with
+	 * no real send() in between): the outgoing message's own top-level headers ended up as
+	 * whatever $this->_headers already had (From/To/Subject only - no Content-Type, no Message-ID)
+	 * concatenated with the base part's own content with ITS OWN headers suppressed, so mail clients
+	 * saw a bare (wrongly implied text/plain) top-level entity whose "body" was the base part's
+	 * lower-level content with no Content-Type of its own to make sense of.
+	 *
+	 * @var bool
+	 */
+	private $_headersSynced = false;
 	/**
 	 * Translates between interal Horde_Mail_Rfc822_List attributes and header names
 	 *
@@ -766,6 +784,7 @@ class Mailer extends Horde_Mime_Mail
 
 		/* Remember the basepart */
 		$this->_base = $basepart;
+		$this->_headersSynced = true;
     }
 
 	/**
@@ -795,27 +814,37 @@ class Mailer extends Horde_Mime_Mail
 	 * $this->send(new Horde_Mail_Transport_Null()),
 	 * if no base-part is set, because send is not called before.
 	 *
+	 * Checks $this->_headersSynced, NOT whether getBasePart() throws (found live 2026-09-02: a
+	 * genuinely double-wrapped sign-only message - smimeEncrypt() sets $this->_base DIRECTLY, so
+	 * getBasePart() never throws even though $this->_headers was never actually synced with it,
+	 * silently skipping the null-transport send() below entirely) - see $_headersSynced's own
+	 * docblock for the full story.
+	 *
      * @param  boolean $stream  If true, return a stream resource, otherwise
      * @return stream|string  The raw email data.
      */
 	function getRaw($stream=true)
 	{
-		try {
-			$this->getBasePart();
-		}
-		catch(Horde_Mail_Exception $e)
-		{
-			unset($e);
-			self::checkSetRequiredHeaders($this->_headers);
-			parent::send(new Horde_Mail_Transport_Null(), true);	// true: keep Message-ID
-		}
 		// code copied from Horde_Mime_Mail::getRaw(), as there is no way to inject charset in
 		// _headers->toString(), which is required to encode headers containing non-ascii chars correct
+		// Smime sign needs to be 7bit encoded to avoid any changes
+		$encode = $this->_base && $this->_base->getMetadata('X-EGroupware-Smime-signed')?
+				Horde_Mime_Part::ENCODE_7BIT :
+				(Horde_Mime_Part::ENCODE_7BIT | Horde_Mime_Part::ENCODE_8BIT | Horde_Mime_Part::ENCODE_BINARY);
+		if (!$this->_headersSynced)
+		{
+			self::checkSetRequiredHeaders($this->_headers);
+			// same $encode as below, NOT parent::send()'s own hardcoded ENCODE_7BIT-only default -
+			// found live 2026-09-03 (ralf: a shim-sent plain-text reply with umlauts arrived
+			// garbled): a message never explicitly send() before getRaw() (the saveAsDraft() case
+			// this override exists for) used to finalize its Content-Transfer-Encoding header here
+			// with a NARROWER mask than the body bytes below then got serialized with, picking a
+			// different, inconsistent encoding/escaping for the same content than what that
+			// already-written header declares.
+			$this->_send(new Horde_Mail_Transport_Null(), true, true, ['encode' => $encode]);	// true, true: keep Message-ID, use flowed format
+			$this->_headersSynced = true;
+		}
         if ($stream) {
-			// Smime sign needs to be 7bit encoded to avoid any changes
-			$encode = $this->_base && $this->_base->getMetadata('X-EGroupware-Smime-signed')?
-					Horde_Mime_Part::ENCODE_7BIT :
-					(Horde_Mime_Part::ENCODE_7BIT | Horde_Mime_Part::ENCODE_8BIT | Horde_Mime_Part::ENCODE_BINARY);
             $hdr = new Horde_Stream();
             $hdr->add($this->_headers->toString(array('charset' => 'utf-8', 'canonical' => true)), true);
             return Horde_Stream_Wrapper_Combine::getStream(
@@ -826,8 +855,17 @@ class Mailer extends Horde_Mime_Mail
             );
         }
 
+		// found live 2026-09-03 (ralf: a shim-sent plain-text reply with umlauts arrived garbled,
+		// missing its charset param entirely) - this branch used to call toString() WITHOUT the
+		// 'encode' option above, defaulting to ENCODE_7BIT alone. send() (called earlier, via a
+		// REAL SMTP transport that may have negotiated 8BITMIME) already finalized a
+		// Content-Transfer-Encoding header in $this->_headers based on the WIDER encode mask above;
+		// re-serializing the body here with a NARROWER one picks a different, inconsistent
+		// encoding/escaping for the actual bytes than what that already-written header declares -
+		// same 'encode' value as the stream branch, so both stay consistent with whatever send()
+		// (or getBasePart()'s own prior toString() calls) actually decided.
         return $this->_headers->toString(array('charset' => 'utf-8', 'canonical' => true)) .
-			$this->getBasePart()->toString(array('canonical' => true));
+			$this->getBasePart()->toString(array('canonical' => true, 'encode' => $encode));
     }
 
 	/**
@@ -1177,6 +1215,37 @@ class Mailer extends Horde_Mime_Mail
 			{
 				return false;
 			}
+			// Horde_Crypt_Smime::signMIMEPart() signs $this->_base->toString(['headers' => true])
+			// AS IS - if $this->_base still carries the STATUS_BASEPART flag from an earlier
+			// "build the initial unsigned message" step (getBasePart()'s own null-transport
+			// fallback just above calls Horde_Mime_Mail::send(), which does $basepart->isBasePart(true)
+			// on exactly this object), addMimeHeaders() bakes in a "MIME-Version: 1.0" header for
+			// $this->_base itself (Horde_Mime_Part.php: "if ($this->_status & self::STATUS_BASEPART)
+			// ... addHeaderOb(Horde_Mime_Headers_MimeVersion::create())") - a header a NESTED
+			// sub-part should never carry per RFC 2045 (MIME-Version is message-top-level only), and
+			// $this->_base becomes exactly that once signMIMEPart() wraps it inside a
+			// multipart/signed envelope below. As long as the SAME PHP object instance is used
+			// throughout (the common case: sign, then immediately send/getRaw()), the stale flag
+			// stays consistent and this is invisible. Found live 2026-09-02 via a real shim-sent
+			// signed message that verified successfully in-process but arrived flagged "this
+			// message may have been tampered with": emailSubmissionSet()'s own resend step stores
+			// the signed message, then re-parses it fresh from those raw bytes
+			// (Horde_Mime_Part::parseMessage() - which has no way to infer an in-memory-only status
+			// flag from raw text) to resend it, and a freshly-parsed sub-part naturally has no
+			// STATUS_BASEPART flag at all - correctly omitting "MIME-Version" per RFC 2045, but
+			// DIFFERENT bytes than what was actually signed, invalidating the signature outright.
+			// Clearing the flag before signing makes the signed bytes match what ANY reparse of the
+			// same content (fresh or original) will always produce.
+			$this->_base->isBasePart(false);
+			// Same "must match what a reparse always produces" reasoning for Content-Type
+			// parameter NAME casing: Horde_Mime_Mail::send()'s own flowed-text handling calls
+			// setContentTypeParameter('DelSp', 'Yes') (mixed case, verbatim), which
+			// setContentTypeParameter() stores AS GIVEN - but MIME parameter names are
+			// case-insensitive (RFC 2045), and Horde_Mime_Part::parseMessage() lowercases them on
+			// read, so a fresh reparse of the very same stored bytes reports "delsp", not "DelSp".
+			// Found live 2026-09-02 as the SECOND divergence behind the exact same
+			// tampered-with-signature bug above, once the STATUS_BASEPART one was fixed.
+			self::lowercaseContentTypeParameterNames($this->_base);
 		}
 
 		if (!isset($params['recipientsCerts']) && ($type == Mail\Smime::TYPE_ENCRYPT || $type == Mail\Smime::TYPE_SIGN_ENCRYPT))
@@ -1214,6 +1283,38 @@ class Mailer extends Horde_Mime_Mail
 				$this->_base = $smime->signAndEncryptMIMEPart($this->_base, $sign_params, $encrypt_params);
 				break;
 		}
+		// $this->_headers was, if anything, only ever synced (by the getBasePart()-throws fallback
+		// above, or an earlier real send()) against the PRE-sign/encrypt $_base - now stale against
+		// the NEW one just assigned above, so a subsequent getRaw() must re-sync (see
+		// $_headersSynced's own docblock for the live bug this fixes: a genuinely double-wrapped
+		// sign-only message, since getRaw()'s OLD check never noticed $_base had changed under it)
+		$this->_headersSynced = false;
 		return true;
+	}
+
+	/**
+	 * Recursively lowercase every Content-Type parameter NAME on $part and its descendants -
+	 * see smimeEncrypt()'s own call site for why (MIME parameter names are case-insensitive per
+	 * RFC 2045, but Horde_Mime_Part::parseMessage() lowercases them on read while
+	 * setContentTypeParameter() stores whatever case it's given - a part signed with a
+	 * mixed-case parameter name reparses with a different one).
+	 *
+	 * @param \Horde_Mime_Part $part
+	 */
+	private static function lowercaseContentTypeParameterNames(\Horde_Mime_Part $part) : void
+	{
+		foreach ($part->getAllContentTypeParameters() as $name => $value)
+		{
+			$lower = strtolower($name);
+			if ($lower !== $name)
+			{
+				$part->setContentTypeParameter($name, null);
+				$part->setContentTypeParameter($lower, $value);
+			}
+		}
+		foreach ($part->getParts() as $child)
+		{
+			self::lowercaseContentTypeParameterNames($child);
+		}
 	}
 }

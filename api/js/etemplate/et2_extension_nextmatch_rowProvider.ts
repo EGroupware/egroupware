@@ -9,15 +9,6 @@
  * @copyright EGroupware GmbH 2011-2021
  */
 
-/*egw:uses
-	/vendor/bower-asset/jquery/dist/jquery.js;
-	et2_core_inheritance;
-	et2_core_interfaces;
-	et2_core_arrayMgr;
-	et2_core_widget;
-	et2_dataview_view_rowProvider;
-*/
-
 import {et2_widget} from "./et2_core_widget";
 import {et2_arrayMgrs_expand} from "./et2_core_arrayMgr";
 import {et2_dataview_grid} from "./et2_dataview_view_grid";
@@ -48,7 +39,6 @@ export class et2_nextmatch_rowProvider
 	 */
 	constructor(_rowProvider, _subgridCallback, _context)
 	{
-
 
 		// Copy the arguments
 		this._rowProvider = _rowProvider;

@@ -48,7 +48,6 @@ last year	timesheet	sv	Förra året
 leaves without saveing	timesheet	sv	lämnas utan att sparas
 length<br>rows	timesheet	sv	Längd<br>Rader
 link title	timesheet	sv	Länka titel
-links	timesheet	sv	Länkar
 make timesheets readable by infolog delegation	timesheet	sv	Gör tidrapporter läsbara för InfoLog-delegationen
 max length of the input [, length of the inputfield (optional)]	timesheet	sv	max indata längd[, Indatafälts längd (option)]
 mode	timesheet	sv	Läget

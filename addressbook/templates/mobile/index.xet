@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="addressbook.index.right_add" template="" lang="" group="0" version="1.7.001">
+	<et2-template  id="addressbook.index.right_add" template="" lang="" group="0" version="1.7.001">
 		<et2-hbox>
 			<et2-select  align="right" label="Type" id="col_filter[tid]" emptyLabel="All"></et2-select>
 		</et2-hbox>
-	</template>
-	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.9.005">
+	</et2-template>
+	<et2-template  id="addressbook.index.rows" template="" lang="" group="0" version="1.9.005">
 		<grid width="100%">
 			<columns>
 				<column width="10"/>
@@ -15,11 +16,14 @@
 			</columns>
 			<rows>
 				<row class="th">
+					<et2-description></et2-description>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
 				</row>
 				<row class="$row_cont[class]" valign="top">
 					<et2-description  class="cat_$row_cont[cat_id] mobile_cat_col"></et2-description>
 					<et2-vbox  class="addressbookCol1">
-						<customfields-list id="$row" class="customfields" app="addressbook" disabled="true"/>
+						<et2-customfields-list  id="$row" class="customfields" app="addressbook" disabled="true"/>
 						<et2-vbox  id="${row}[id]">
 							<et2-description  id="${row}[line2]" noLang="1"></et2-description>
 							<et2-description  id="${row}[line1]" noLang="1"></et2-description>
@@ -31,9 +35,9 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="addressbook.index" template="" lang="" group="0" version="1.9.002">
-		<nextmatch id="nm" template="addressbook.index.rows" header_right="addressbook.index.right_add"/>
+	</et2-template>
+	<et2-template  id="addressbook.index" template="" lang="" group="0" version="1.9.002">
+		<et2-nextmatch  id="nm" template="addressbook.index.rows"></et2-nextmatch>
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -48,11 +52,11 @@
 			</columns>
 			<rows>
 				<row disabled="1">
-					<template align="right" id="addressbook.index.right_add"/>
+					<et2-template  align="right" id="addressbook.index.right_add"></et2-template>
 				</row>
 				<row>
 					<et2-hbox>
-						<et2-button  class="plus_button" size="large" statustext="Add a new contact" id="plus_button" onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'850','440','_blank','addressbook',null,true); return false;" noSubmit="true"></et2-button>
+						<et2-button-icon  class="plus_button" size="large" statustext="Add a new contact" id="plus_button" onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'850','440','_blank','addressbook',null,true); return false;" noSubmit="true" image="plus-lg"></et2-button-icon>
 					</et2-hbox>
 				</row>
 				<row class="noPrint dialogFooterToolbar" disabled="!@nm[selectcols]=/legacy_actions/">
@@ -64,5 +68,5 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

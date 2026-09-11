@@ -20,9 +20,11 @@ export class Et2UrlFaxReadonly extends Et2UrlReadonly
 	{
 		if (typeof attrs.onclick === 'undefined')
 		{
-			attrs.onclick = () =>
+			// Use the clicked widget, not the template widget that created this handler.
+			attrs.onclick = function(event)
 			{
-				Et2UrlFax.action(this.value);
+				const widget = event?.currentTarget || this;
+				Et2UrlFax.action(widget.value);
 			}
 		}
 		super.transformAttributes(attrs);

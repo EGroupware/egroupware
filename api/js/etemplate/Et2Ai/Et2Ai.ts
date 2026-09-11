@@ -11,6 +11,7 @@ import {classMap} from "lit/directives/class-map.js";
 import {Et2SelectWidgets, StaticOptions} from "../Et2Select/StaticOptions";
 import {SelectOption} from "../Et2Select/FindSelectOptions";
 import {until} from "lit/directives/until.js";
+import {Et2MarkdownMixin} from "../Markdown/Et2MarkdownMixin";
 
 // etemplate2 helper (globally available)
 declare const etemplate2 : {
@@ -78,6 +79,7 @@ const AI_TOOLS_ICON_SVG = `<svg version="1.1" x="0px" y="0px" width="24px" heigh
  * @csspart loader - Specific part for the result card when in loading state.
  * @csspart spinner - The loading spinner.
  * @csspart result-content - The container for the returned AI text/HTML.
+ * @csspart markdown - The wrapper around markdown-rendered result content.
  * @csspart apply-button - The button used to apply the result.
  * @csspart dropdown - The Shoelace dropdown containing prompts.
  * @csspart menu - The menu inside the dropdown.
@@ -87,7 +89,7 @@ const AI_TOOLS_ICON_SVG = `<svg version="1.1" x="0px" y="0px" width="24px" heigh
  * @cssproperty --max-result-height - Automatically calculated based on the slotted element's height to ensure the result card fits.
  */
 @customElement("et2-ai")
-export class Et2Ai extends Et2Widget(LitElement)
+export class Et2Ai extends Et2MarkdownMixin(Et2Widget(LitElement))
 {
 	static get styles()
 	{
@@ -906,7 +908,9 @@ export class Et2Ai extends Et2Widget(LitElement)
                         class="et2-ai-result-content ${isHtml ? "html" : "text"}"
                 >${isHtml
                       ? unsafeHTML(<string>result)
-                      : result.toString().trim()
+                      : this.markdown
+                        ? this._markdownTemplate(result.toString())
+                        : result.toString().trim()
                     }
                 </div>
                 <et2-hbox slot="footer">

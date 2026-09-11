@@ -11,7 +11,6 @@ general	resources	ca	General
 global categories	resources	ca	Categories globals
 hours	resources	ca	hores
 implies read permission	resources	ca	implica permís de lectura
-links	resources	ca	Enllaços
 location	resources	ca	Lloc
 quantity	resources	ca	Quantitat
 read permissions	resources	ca	Llegir permissos

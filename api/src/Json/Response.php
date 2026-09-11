@@ -229,8 +229,13 @@ class Response extends Msg
 		$inst = self::get();
 
 		// Wrap the result array into a parent "response" Object
+		// epoch rides every response, not just the initial page render: a periodic GET like
+		// build-epoch.json can be served stale by an intermediate cache indefinitely, while this
+		// response is dynamic and already flowing - piggybacking here needs no extra request and
+		// no cache to bust (ticket #124112).
 		$res = array(
 			'response' => $inst->responseArray,
+			'epoch' => Api\Framework::currentBuildEpoch(),
 		)+Api\Framework::get_page_generation_time();
 
 		return self::json_encode($res);	//PHP5.3+, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);

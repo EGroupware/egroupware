@@ -10,7 +10,7 @@
  */
 
 
-import {css, html, LitElement, nothing, PropertyValues, render, TemplateResult} from "lit";
+import {html, LitElement, nothing, PropertyValues, render, TemplateResult} from "lit";
 import {until} from "lit/directives/until.js";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {LinkInfo} from "./Et2Link";
@@ -18,7 +18,9 @@ import {et2_IDetachedDOM} from "../et2_core_interfaces";
 import {property} from "lit/decorators/property.js";
 import {customElement} from "lit/decorators/custom-element.js";
 import {repeat} from "lit/directives/repeat.js";
+import {Et2LazyLoadController} from "../Et2Widget/Et2LazyLoadController";
 
+import styles from "./Et2LinkString.styles";
 /**
  * Display a list of entries in a comma separated list
  *
@@ -36,36 +38,7 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 	{
 		return [
 			...super.styles,
-			css`
-				:host {
-					list-style-type: none;
-					display: inline;
-					padding: 0px;
-				}
-
-				et2-link, et2-link::part(base), et2-description {
-					display: inline;
-				}
-
-				et2-link::part(icon), et2-link::part(remark) {
-					display: none;
-				}
-
-				et2-link:hover {
-					text-decoration: underline;
-				}
-
-
-				/* CSS for child elements */
-
-				et2-link::part(title):after {
-					content: ", "
-				}
-
-				et2-link:last-child::part(title):after {
-					content: initial;
-				}
-			`
+			styles
 		];
 	}
 
@@ -121,6 +94,26 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 	protected _link_list : LinkInfo[] = [];
 	protected _loadingPromise : Promise<LinkInfo[]> = Promise.resolve([]);
 	protected _loading = false;
+	/**
+	 * Identifies the request currently in flight, so a request for something else can replace
+	 * it and its (now obsolete) answer can be discarded when it arrives.
+	 */
+	protected _loadingRequest = "";
+	/**
+	 * Identifies the entry _link_list was collected for, so links from a previous entry are
+	 * not kept when this widget gets re-used for another one.
+	 */
+	protected _loadedFor = "";
+	/**
+	 * Fetching the links is pointless while we're not being displayed - in a nextmatch row
+	 * that's a link lookup plus a title for every row on the page, all thrown away.  This
+	 * tells us when we start being rendered, so the request can wait until then.
+	 */
+	protected _visibility = new Et2LazyLoadController(this, () => this._loadDeferred());
+	/**
+	 * Arguments of the get_links() call that is waiting for us to be displayed, if any.
+	 */
+	protected _deferredLoad : { not_saved_links : LinkInfo[], offset : number } | null = null;
 
 	constructor()
 	{
@@ -190,7 +183,7 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 		// CSV list of IDs for one app
 		if(typeof _value === "string")
 		{
-			let ids = _value.split(",");
+			let ids = _value.split(",").filter(id => id !== "");
 			ids.forEach((id) => (<LinkInfo[]>this._link_list).push(<LinkInfo>{app: this.application, id: id}));
 		}
 		// List of LinkInfo
@@ -215,11 +208,17 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 		super.updated(changedProperties);
 
 		if((changedProperties.has("application") || changedProperties.has("entryId") || changedProperties.has("onlyApp") || changedProperties.has("linkType")) &&
-			this.application && this.entryId
+			this.application && this._hasEntryId()
 		)
 		{
 			// Something changed, and we have the information needed to get the matching links
 			this.get_links();
+		}
+		if(this._deferredLoad)
+		{
+			// Re-rendering can be what makes us visible, and that's not something the observer
+			// in _visibility is guaranteed to report before this update is done
+			this._loadDeferred();
 		}
 	}
 
@@ -335,12 +334,10 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 	 */
 	public get_links(not_saved_links? : LinkInfo[], offset = 0)
 	{
-		if(this._loading)
+		if(!this._hasEntryId())
 		{
-			// Already waiting
 			return;
 		}
-		this._loading = true;
 
 		if(typeof not_saved_links === "undefined")
 		{
@@ -354,10 +351,46 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 			limit: [offset, /* num_rows: */this.limit]
 		};
 
+		// Inside a nextmatch row the entry ID arrives after the row is rendered, and the same
+		// widget is re-used for other entries while scrolling or on refresh.  Both change what
+		// we have to ask for while an earlier request may still be running, so requests are
+		// identified: an identical one is not repeated, a different one replaces the running
+		// one, and a late answer to a replaced request is discarded instead of being shown for
+		// (or mixed into) the entry we now display.
+		const entry = JSON.stringify([_value.to_app, _value.to_id, _value.only_app, _value.show_deleted]);
+		const request = JSON.stringify([entry, offset]);
+		if(this._loading && this._loadingRequest === request)
+		{
+			// Already waiting for exactly this
+			return;
+		}
+		if(this._loadedFor !== entry)
+		{
+			// Whatever we collected so far belongs to a different entry
+			this._link_list = [];
+			this._totalResults = 0;
+			this._loadedFor = entry;
+		}
+		if(!this._visibility.ready)
+		{
+			// Nobody can see the answer, so don't ask - _loadDeferred() picks this up as soon
+			// as we're displayed, with whatever entry we show by then
+			this._deferredLoad = {not_saved_links: not_saved_links, offset: offset};
+			return;
+		}
+		this._deferredLoad = null;
+		this._loading = true;
+		this._loadingRequest = request;
+
 		this._loadingPromise = <Promise<LinkInfo[]>>(this.egw().jsonq('EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_list', [_value]))
 			.then(_value =>
 			{
-				if(typeof _value.total)
+				if(this._loadingRequest !== request)
+				{
+					// Superseded while we were waiting, the newer request provides the links
+					return this._link_list;
+				}
+				if(typeof _value?.total !== "undefined")
 				{
 					this._totalResults = _value.total;
 					delete _value.total;
@@ -376,7 +409,43 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 				}
 				this._loading = false;
 				this.requestUpdate();
+				return this._link_list;
 			})
+	}
+
+	/**
+	 * Run the request that was waiting for us to be displayed
+	 *
+	 * Deliberately goes through get_links() again instead of sending the request it built at
+	 * the time: while we were hidden the row may have been re-used for a different entry, and
+	 * get_links() decides against the entry we show now.
+	 */
+	protected _loadDeferred()
+	{
+		if(!this._deferredLoad || !this._visibility.ready)
+		{
+			return;
+		}
+		const deferred = this._deferredLoad;
+		this._deferredLoad = null;
+		this.get_links(deferred.not_saved_links, deferred.offset);
+	}
+
+	protected _hasEntryId() : boolean
+	{
+		if(!this.entryId)
+		{
+			return false;
+		}
+		if(typeof this.entryId !== "string")
+		{
+			return true;
+		}
+		// Row templates are rendered with their placeholders still in place and only get the
+		// actual entry ID afterwards, when the row is bound to its data.  Depending on where
+		// the row comes from that placeholder is "$row_cont[ts_id]", "${row}[ts_id]" or the
+		// shorthand "$ts_id" - none of them is something we can ask the server about.
+		return !this.entryId.startsWith("$") && !this.entryId.includes("${") && !this.entryId.includes("$row");
 	}
 
 	getDetachedAttributes(_attrs : string[])

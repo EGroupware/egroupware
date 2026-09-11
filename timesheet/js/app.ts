@@ -8,24 +8,22 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
-/*egw:uses
-	/api/js/jsapi/egw_app.js
- */
-import '../../api/js/jsapi/egw_global';
-
 import {EgwApp} from '../../api/js/jsapi/egw_app';
-import {egw} from "../../api/js/jsapi/egw_global";
 import {Et2DateTimeReadonly} from "../../api/js/etemplate/Et2Date/Et2DateTimeReadonly";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {Et2DateTime} from "../../api/js/etemplate/Et2Date/Et2DateTime";
-import {et2_grid} from "../../api/js/etemplate/et2_widget_grid";
+import type {Et2Date} from "../../api/js/etemplate/Et2Date/Et2Date";
+import type {et2_grid} from "../../api/js/etemplate/et2_widget_grid";
 import type {Et2ButtonToggle} from "../../api/js/etemplate/Et2Button/Et2ButtonToggle";
 import type {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
+import type {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatch";
+// egw/app are ambient globals (declare global {} in egw_global.d.ts, unconditionally included
+// via tsconfig's "**/*.d.ts") - no import needed or possible.
 
 /**
  * UI for timesheet
  *
- * @augments AppJS
+ * @augments EgwApp
  */
 class TimesheetApp extends EgwApp
 {
@@ -55,8 +53,53 @@ class TimesheetApp extends EgwApp
 		if (name == 'timesheet.index')
 		{
 			this.filter_change();
-			this.filter2_change();
+
+			// Show / hide descriptions according to details filter, and sync toolbar toggle with it
+			const detailsToggle : Et2ButtonToggle = this.et2.getWidgetById('details');
+			if (this.nm && detailsToggle)
+			{
+				detailsToggle.value = this.nm.activeFilters.filter2 == '1';
+				this.filter2_change(null, detailsToggle);
+			}
 		}
+	}
+
+	/**
+	 * Set the split Save button's main label to match its current value
+	 * ("save", "save_new" or "save_reset") - the icon stays the same regardless, it's declared
+	 * once in the template.  Et2DropdownButton's own defaultPreference handles reading/storing
+	 * which option is selected - it just doesn't update the label for us on selection.
+	 */
+	private updateSaveSplitLabel(widget)
+	{
+		const option = (widget.select_options || []).find(o => o.value == widget.value);
+		widget.label = this.egw.lang(option?.label || 'Save');
+	}
+
+	/**
+	 * Save split button was clicked (main part, using its current default) or a menu item was
+	 * picked - either way, submit the form with the chosen action.
+	 *
+	 * @param {Event} _ev
+	 * @param {Et2DropdownButton} _widget
+	 */
+	save_split_action(_ev : Event, _widget)
+	{
+		const action = _widget.value || 'save';
+		this.updateSaveSplitLabel(_widget);
+		(<HTMLElement><unknown>this.et2.getWidgetById('button[' + action + ']'))?.click();
+	}
+
+	/**
+	 * "Ignore conflict" button in the scheduling-conflict dialog: flip the bypass flag and
+	 * re-click whichever save-family button originally triggered the conflict check
+	 */
+	ignoreConflict(_ev : Event, _widget)
+	{
+		const button = this.et2.getValueById('conflict_button') || 'save';
+		// type="hidden" gives a legacy et2_textbox, which only picks up a value via set_value()
+		this.et2.getWidgetById('ignore_conflicts').set_value('1');
+		(<HTMLElement><unknown>this.et2.getWidgetById('button[' + button + ']'))?.click();
 	}
 
 	/**
@@ -68,21 +111,22 @@ class TimesheetApp extends EgwApp
 	 * @param ev
 	 * @param filter
 	 */
-	filter_change(ev : Event, filter : Et2Select)
+	filter_change(ev? : Event, filter? : Et2Select)
 	{
 		const dates = this.et2.getWidgetById('timesheet.index.dates');
 		if (filter && dates)
 		{
+			const nm = <Et2Nextmatch>this.nm;
 			dates.set_disabled(filter.value !== "custom");
-			if (!filter.value) this.nm.activeFilters.startdate = null;
+			if (!filter.value) nm.applyFilters({startdate: null, enddate: null}, {reload: false});
 			if (filter.value === "custom")
 			{
-				const filterDrawer = filter.closest('egw-app').filtersDrawer;
-				if (filterDrawer && !filterDrawer.open)
+				// Focusing an empty date field can make it silently pick today and fire its own
+				// change, overwriting dates a favorite just applied - only focus if nm really has none.
+				if (!nm.activeFilters.startdate)
 				{
-					filterDrawer.open = true;
+					nm.updateComplete.then(() => dates.getWidgetById('startdate').focus());
 				}
-				window.setTimeout(() => dates.getWidgetById('startdate').focus());
 			}
 		}
 		return true;
@@ -95,13 +139,20 @@ class TimesheetApp extends EgwApp
 	 * @param ev
 	 * @param filter2
 	 */
-	filter2_change(ev : Event, filter2 : Et2Select)
+	filter2_change(ev : Event, filter2 : Et2Select | Et2ButtonToggle)
 	{
 		if (this.nm && filter2)
 		{
-			egw.css("#timesheet-index span.timesheet_titleDetails","font-weight:" + (filter2.getValue() == '1' ? "bold;" : "normal;"));
+			const nm = <Et2Nextmatch>this.nm;
+			const show = typeof filter2.value === "boolean" ? filter2.value : filter2.value == '1';
+			// Rows render inside Et2Datagrid's shadow DOM, so use a custom property (see rows.css)
+			// instead of egw.css(), which only reaches the light DOM.
+			nm.style.setProperty("--timesheet-ts-details-weight", show ? "bold" : "normal");
 			// Show / hide descriptions
-			egw.css(".ts_description", "display:" + (filter2.value == '1' ? "flex;" : "none;"));
+			nm.style.setProperty("--timesheet-ts-details-display", show ? "flex" : "none");
+			// Show / hide the linked entries.  Separate property because that list is inline
+			// and must not become a flex container - see .ts_links in rows.less
+			nm.style.setProperty("--timesheet-ts-details-display-inline", show ? "inline" : "none");
 		}
 	}
 
@@ -116,7 +167,7 @@ class TimesheetApp extends EgwApp
 	 */
 	add_action_handler(action, selected)
 	{
-		var nm = action.getManager().data.nextmatch || false;
+		const nm = action.data?.nextmatch || false;
 		if(nm)
 		{
 			this.add_with_extras(nm);
@@ -131,10 +182,10 @@ class TimesheetApp extends EgwApp
 	 */
 	add_with_extras(widget)
 	{
-		var nm = widget.getRoot().getWidgetById('nm');
-		var nm_value = nm.getValue() || {};
+		const nm = widget.getRoot().getWidgetById('nm');
+		const nm_value = nm.getValue() || {};
 
-		var extras : any = {};
+		const extras : any = {};
 		if (nm_value.cat_id)
 		{
 			extras.cat_id = nm_value.cat_id;
@@ -177,16 +228,55 @@ class TimesheetApp extends EgwApp
 	pm_id_changed(_egw, _widget)
 	{
 		// Update price list
-		var ts_pricelist = _widget.getRoot().getWidgetById('pl_id');
-		egw.json('projectmanager_widget::ajax_get_pricelist',[_widget.getValue()],function(value) {
+		const ts_pricelist = _widget.getRoot().getWidgetById('pl_id');
+		egw.request('projectmanager_widget::ajax_get_pricelist', [_widget.getValue()]).then(value =>
+		{
 			ts_pricelist.set_select_options(value||{})
-		}).sendRequest(true);
+		});
 
-		var ts_project = this.et2.getWidgetById('ts_project');
+		const ts_project = this.et2.getWidgetById('ts_project');
 		if (ts_project)
 		{
 			ts_project.placeholder = _widget.getValue() ?_widget._searchNode?.optionSearch(_widget.value)?.label : '';
 		}
+	}
+
+	/**
+	 * Date changed while editing a new entry: if the "start at end of last entry" preference
+	 * is set, fetch the end-time of the last entry on the new day and use it as the start-time
+	 *
+	 * @param {Event} _ev
+	 * @param {Et2Date} _widget
+	 */
+	ts_start_changed(_ev : Event, _widget : Et2Date)
+	{
+		const ts_id = this.et2.getValueById('ts_id');
+		const start_time = <Et2DateTime>this.et2.getWidgetById('start_time');
+		const end_time = <Et2DateTime>this.et2.getWidgetById('end_time');
+		if (ts_id || !start_time || this.egw.preference('new_entry_default', 'timesheet') !== 'start_time')
+		{
+			return;
+		}
+
+		start_time.disabled = true;
+		this.egw.loading_prompt('ts_start_changed', true, '', start_time);
+		egw.request('timesheet.timesheet_ui.ajax_get_last_end',
+			[this.et2.getValueById('ts_owner'), _widget.getValue()]
+		).then((last_end) =>
+		{
+			// Et2DateTimeOnly.value expects something new Date() can parse - a bare "H:i"
+			// string is not, so wrap it to match the widget's own internal dateFormat
+			start_time.value = last_end ? '1970-01-01T' + last_end + ':00Z' : '';
+			// force empty end-time, unless continuing from last entry (mirrors edit())
+			if (last_end && end_time)
+			{
+				end_time.value = '';
+			}
+		}).finally(() =>
+		{
+			start_time.disabled = false;
+			this.egw.loading_prompt('ts_start_changed', false);
+		});
 	}
 
 	/**
@@ -196,16 +286,42 @@ class TimesheetApp extends EgwApp
 	{
 		if(this && this.et2)
 		{
-			var nm = this.et2.getWidgetById('nm');
+			const nm = this.et2.getWidgetById('nm');
 			if(nm)
 			{
-				// Toggle update_in_progress to avoid another request
-				nm.update_in_progress = true;
-				this.et2.getWidgetById('startdate').set_value(start);
-				this.et2.getWidgetById('enddate').set_value(end);
-				nm.activeFilters.startdate = start;
-				nm.activeFilters.enddate = end;
-				nm.update_in_progress = false;
+				// This is only ever sent by the server for a non-'custom' filter (see
+				// timesheet_ui::get_rows()) - a "sensible starting point" hint for if the user
+				// later switches to custom. But the request that produced this response can be
+				// stale: if nm's real filter is already 'custom' by the time this (possibly
+				// out-of-order) response arrives - eg. a slower "No filters" request's response
+				// landing after a faster, later "custom favorite" request's response - the hint
+				// is moot and must not overwrite the real dates that are already active.
+				if(nm.activeFilters.filter === 'custom')
+				{
+					return;
+				}
+				// startdate/enddate widgets are not part of every template (eg. mobile)
+				this.et2.getWidgetById('startdate')?.set_value(start);
+				this.et2.getWidgetById('enddate')?.set_value(end);
+				// Only feed the resolved range back into nm's real filters for an actual dated preset.
+				// The default/'All' filter has no real date window - the server reports 'now' here
+				// purely so the (hidden) date pickers have a sensible starting point if the user later
+				// switches to 'custom' - so a fresh/no-filter session must stay filter-less: no filter,
+				// no startdate, no time range, and (see get_rrows()) no day/week/month/year summary rows.
+				if (nm.activeFilters.filter)
+				{
+					// The first time this fires for a real preset, nm has no startdate yet, so the rows
+					// already on screen were fetched without one (missing the summary rows). Reload once
+					// to bring them in; after that, don't reload on every call, since "start" drifts by a
+					// second on every request when it's still just 'now' - reloading on every drift would
+					// loop forever.
+					const reload = !nm.activeFilters.startdate;
+					// This is called from a server response that's still being processed, so defer past
+					// the current synchronous handling - otherwise mutating the filters now would make
+					// Et2Datagrid think the in-flight fetch that triggered this call is stale, and discard
+					// its (valid) response.
+					window.setTimeout(() => nm.applyFilters({startdate: start, enddate: end}, {reload}));
+				}
 			}
 		}
 	}
@@ -267,7 +383,7 @@ class TimesheetApp extends EgwApp
 		{
 			ids.push(_senders[i].id.split("::").pop());
 		}
-		egw.json("timesheet.timesheet_ui.ajax_action",[_action.id, ids, all]).sendRequest(true);
+		egw.request("timesheet.timesheet_ui.ajax_action", [_action.id, ids, all]);
 	}
 
 	/**
@@ -294,23 +410,25 @@ class TimesheetApp extends EgwApp
 			// start-time set end-time as max
 			if (0+tse_type & 1)
 			{
-				time.set_max((<Et2DateTimeReadonly><any>grid.getWidgetById(_widget.id.replace(/^(\d+)/,
+				// Et2DateTimeReadonly's "value" is only declared via Lit's old-style static
+				// properties() (no typed class field), so TS doesn't know it exists - <any> needed.
+				time.set_max((<any>grid.getWidgetById(_widget.id.replace(/^(\d+)/,
 					n => (parseInt(n)+1).toString()))).value);
 			}
 			// stop- or pause-time, set start-time as min
 			else
 			{
-				time.set_min((<Et2DateTimeReadonly><any>grid.getWidgetById(_widget.id.replace(/^(\d+)/,
+				time.set_min((<any>grid.getWidgetById(_widget.id.replace(/^(\d+)/,
 					n => (parseInt(n)-1).toString()))).value);
 			}
 		});
 		// Set attributes.  They can be set in any way, but this is convenient.
 		dialog.transformAttributes({
 			callback: (_button, _values) => {
-				const change = (new Date(_widget.value)).valueOf() - (new Date(_values.time)).valueOf();
+				const change = (new Date((<any>_widget).value)).valueOf() - (new Date(_values.time)).valueOf();
 				if (_button === Et2Dialog.OK_BUTTON && change)
 				{
-					_widget.value = _values.time;
+					(<any>_widget).value = _values.time;
 					egw.request('timesheet.EGroupware\\Timesheet\\Events.ajax_updateTime',
 						[tse_id, new Date((new Date(_values.time)).valueOf() + egw.getTimezoneOffset() * 60000)])
 						.then(_data =>
@@ -324,7 +442,7 @@ class TimesheetApp extends EgwApp
 			template: 'timesheet.edit.events.change',
 			buttons: Et2Dialog.BUTTONS_OK_CANCEL,
 			value: {
-				content: { time: _widget.value }
+				content: { time: (<any>_widget).value }
 			}
 		});
 		// Add to DOM, dialog will auto-open
@@ -332,11 +450,41 @@ class TimesheetApp extends EgwApp
 	}
 
 	/**
+	 * Run filter_change()'s side effects (date-widget disable/focus, stale startdate/enddate
+	 * cleanup) whenever nm's own "filter" value actually transitions - regardless of what
+	 * triggered it: the toolbar select's onchange, a restored favorite, or the framework's
+	 * "Clear filters" button (which sets widget values programmatically and calls
+	 * nm.applyFilters() directly, never going through changeNmFilter()/checkNmFilterChanged() at
+	 * all). Comparing oldFilters/activeFilters from the event is reliable where widget.value is
+	 * not: by the time any change-triggered sync runs, the widget's own value already reflects
+	 * the new state, so a before/after comparison against it never sees a difference.
+	 */
+	nmFilterChange(_ev : Event)
+	{
+		const detail = (<CustomEvent>_ev).detail;
+		const oldFilter = detail?.oldFilters?.filter;
+		const newFilter = detail?.activeFilters?.filter;
+		super.nmFilterChange(_ev);
+		if(oldFilter !== newFilter)
+		{
+			const filterWidget = this.et2.getWidgetById('filter');
+			if(filterWidget)
+			{
+				this.filter_change(null, <Et2Select>filterWidget);
+			}
+		}
+	}
+
+	/**
 	 * Show details has been clicked
 	 */
 	toggleDetails(_ev : Event, _widget : Et2ButtonToggle)
 	{
-		this.nm && this.nm.applyFilters({filter2: _widget.value ? '1' : ''});
+		if (!this.nm) return;
+		this.nm.applyFilters({filter2: _widget.value ? '1' : ''});
+		// _widget.value is already updated by the time this onchange fires, so
+		// checkNmFilterChanged()'s value-changed check below won't see a difference - update directly
+		this.filter2_change(_ev, _widget);
 	}
 
 	/**
@@ -352,22 +500,15 @@ class TimesheetApp extends EgwApp
 
 		if (id === 'filter2')
 		{
-			const details_toggle = this.et2.getWidgetById('details');
-			if (details_toggle && details_toggle.value != (value === '1')) {
-				details_toggle.value = value === '1';
-			}
-			// if it's a real change, we also need to call this.filter2_change, with the already changed value!
-			const filter2 = this.et2.getWidgetById(id);
-			if (filter2 && filter2.value != value)
+			const details_toggle : Et2ButtonToggle = this.et2.getWidgetById('details');
+			if (details_toggle && details_toggle.value != (value === '1'))
 			{
-				filter2.value = value;
-				this.filter2_change(null, filter2);
+				details_toggle.value = value === '1';
+				// if it's a real change, we also need to call this.filter2_change, with the already changed value!
+				this.filter2_change(null, details_toggle);
 			}
 		}
-		else if (id === 'filter')
-		{
-			this.filter_change(null, this.et2.getWidgetById(id));
-		}
+		// "filter" is handled in nmFilterChange() instead - see its docblock for why.
 	}
 }
 

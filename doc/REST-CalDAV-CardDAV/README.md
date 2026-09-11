@@ -52,13 +52,14 @@ from the data of an `allprop` PROPFIND, allow browsing CalDAV/CardDAV tree with 
 - [Mail](Mail.md) 
   * currently only sending mails, 
   * opening interactive compose windows, 
-  * view and reply to eml files and 
-  * vacation handling
+  * view and reply to eml files, 
+  * vacation handling and 
+  * read-only listing of folders and emails, downloading attachments/raw eml (JMAP-lite, not full JMAP)
 - [Timesheet](Timesheet.md)
 - [ViDoTeach](https://github.com/EGroupware/smallpart/blob/master/doc/REST-API.md)
 - [ProjectManager](https://github.com/EGroupware/projectmanager/blob/master/doc/REST-API.md)
 - [RAG](https://github.com/EGroupware/rag/blob/master/doc/REST-API.md)
-- [Tracker](Tracker.md)
+- [Tracker](https://github.com/EGroupware/tracker/blob/master/doc/Tracker.md)
 - [Invoices](Invoices.md) (EPL only)
 - [Links and attachments](Links-and-attachments.md)
   * linking application entries to other application entries
@@ -84,7 +85,7 @@ Following RFCs / drafts used/planned for JSON encoding of resources
 - [X] Calendar (recurring events and alarms are readonly)
   - [ ] support creating and modifying recurring events and alarms
 - [X] Mail
-  - [ ] querying received mails
+  - [X] querying received mails (JMAP-lite, read-only - see [Mail](Mail.md)'s own "Folders and Emails" section)
 - [X] relatedTo, links and attachments, see [links sub-collection to add attachments and links to other application-entries](Links-and-attachments.md)
 - [X] Tracker
 - [X] ProjectManager: only projects itself are currently supported

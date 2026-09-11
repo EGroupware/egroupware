@@ -11,6 +11,7 @@ import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {Et2FileItem} from "./Et2FileItem";
 import Resumable from "../../Resumable/resumable";
 import {HasSlotController} from "../Et2Widget/slot";
+import {humanFileSize} from "../Et2Vfs/Et2VfsSize";
 
 // ResumableFile not defined in a way we can use it
 export interface FileInfo extends ResumableFile
@@ -328,6 +329,13 @@ export class Et2File extends Et2InputWidget(LitElement)
 
 	protected async resumableFileAdded(file : FileInfo, event)
 	{
+		// Guards both the browse button (handleBrowseFileClick() already blocks that) and
+		// drag-and-drop onto dropTarget, which Resumable wires up unconditionally in
+		// createResumable() and has no readonly/disabled check of its own
+		if(this.disabled || this.readonly)
+		{
+			return;
+		}
 		this.set_validation_error(false);
 		file = {
 			accepted: true,
@@ -482,6 +490,11 @@ export class Et2File extends Et2InputWidget(LitElement)
 			fileItem.requestUpdate("progress");
 			fileItem.requestUpdate("variant");
 		}
+		// Per-file completion signal (success path).  Consumers that report
+		// upload status (e.g. nextmatch row drop) listen here instead of the
+		// batch `change`, because `change` fires after the file is removed from
+		// the list and can no longer be inspected.
+		this.dispatchEvent(new CustomEvent("et2-file-complete", {bubbles: true, detail: {file, success: !file.warning}}));
 	}
 
 	protected resumableFileError(file, jsonResponse)
@@ -500,10 +513,15 @@ export class Et2File extends Et2InputWidget(LitElement)
 				fileItem.error(file.warning);
 			}
 		}
-		fileItem.loading = false;
-
-		fileItem.requestUpdate("variant");
-		fileItem.requestUpdate("loading");
+		if(fileItem)
+		{
+			fileItem.loading = false;
+			fileItem.requestUpdate("variant");
+			fileItem.requestUpdate("loading");
+		}
+		// Per-file completion signal (error path).  Without this, failed uploads
+		// emit nothing and consumers get no feedback at all.
+		this.dispatchEvent(new CustomEvent("et2-file-complete", {bubbles: true, detail: {file, success: !file.warning}}));
 	}
 
 	protected resumableUploadComplete()
@@ -561,8 +579,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 		else if(!hasValidFileSize(file, this.maxFileSize))
 		{
 			fileInfo.accepted = false;
-			// TODO: Stop using et2_vfsSize
-			//fileInfo.warning = this.egw().lang("File too large.  Maximum %1", et2_vfsSize.prototype.human_size(this.maxFileSize));
+			fileInfo.warning = this.egw().lang("File too large.  Maximum %1", humanFileSize(this.maxFileSize));
 		}
 
 		else
@@ -638,7 +655,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 
 	handleBrowseFileClick()
 	{
-		if(this.disabled)
+		if(this.disabled || this.readonly)
 		{
 			return;
 		}
@@ -828,7 +845,7 @@ export class Et2File extends Et2InputWidget(LitElement)
                                     class="file__button"
                                     id="visible-button"
                                     ?disabled=${this.disabled}
-                                    title=${this.helptext ?? this.egw().lang("fileupload")}
+                                    title=${this.helpText ?? this.egw().lang("fileupload")}
                                     noSubmit
                                     image=${!this.loading ? this.image : ""}
                         >

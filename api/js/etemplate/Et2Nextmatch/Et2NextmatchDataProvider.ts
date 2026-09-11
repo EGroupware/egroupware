@@ -4,7 +4,8 @@ import {
 	Et2DatagridRefreshResult,
 	Et2DatagridRow,
 	Et2DatagridUpdateType
-} from "./Et2Datagrid.types";
+} from "../Et2Datagrid/Et2Datagrid.types";
+import type {ReactiveController} from "lit";
 import {Et2Nextmatch} from "./Et2Nextmatch";
 import {IegwData} from "../../jsapi/egw_global";
 
@@ -12,12 +13,44 @@ import {IegwData} from "../../jsapi/egw_global";
  * Nextmatch server adapter for Et2Datagrid.
  * It wraps dataFetch + dataRegisterUID in a generic page provider API.
  */
-export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
+export class Et2NextmatchDataProvider implements Et2DatagridDataProvider, ReactiveController
 {
 	private host : Et2Nextmatch;
+	/**
+	 * UIDs this provider is holding in egw's central cache for the current query.
+	 *
+	 * Et2Datagrid stores only row ids; the row *data* lives in the central cache and is
+	 * read back through getRowData(), so anything the grid can still render has to stay
+	 * cached. That cache evicts entries older than 5min which have no registered
+	 * listener, so each retained row gets one - all of them the single shared
+	 * `_rowKeepAlive` below rather than a closure per row, and all of them tracked here
+	 * so releaseRetainedRows() can hand them back when the query changes or the host
+	 * goes away. Covers preloaded rows (storeRows()), fetched pages (fetchPage()), and
+	 * rows added/updated by a single-row refresh (_refreshSingleRow()).
+	 */
+	private _retainedRowUids : Set<string> = new Set();
+
+	/**
+	 * Same uids as _retainedRowUids, grouped by the branch that retained them ("" for
+	 * the root query, otherwise a child grid's toProviderRowId()-normalized parent row
+	 * id). Lets releaseRetainedRowsForBranch() release exactly one collapsed subgrid's
+	 * rows instead of only being able to release everything at once.
+	 */
+	private _retainedRowUidsByBranch : Map<string, Set<string>> = new Map();
+
+	/**
+	 * The one listener registered for every retained row. Its only job is to exist:
+	 * egw's cache sweep skips any uid that has a listener. Shared deliberately - a
+	 * fresh closure per row is what made this leak, since each captured its whole
+	 * fetch page and egw's registry appends without deduping.
+	 */
+	private readonly _rowKeepAlive : () => void = () => {};
 	/** Tracks one in-flight refresh promise per normalized row id so concurrent callers share one server request. */
 	private _inFlightRefreshes : Map<string, Promise<Et2DatagridRefreshResult>> = new Map();
 
+	/**
+	 * Build the current server request context shared by page and refresh calls.
+	 */
 	private _requestContext()
 	{
 		return {
@@ -100,18 +133,135 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 	constructor(host : Et2Nextmatch)
 	{
 		this.host = host;
+		// Optional chaining because some tests construct this against a bare mock
+		// object rather than a real (LitElement-backed) Et2Nextmatch.
+		host.addController?.(this);
+	}
+
+	/**
+	 * No-op - fetching/caching is entirely on-demand, triggered by page/refresh
+	 * requests rather than host connection.
+	 */
+	hostConnected() : void
+	{
+	}
+
+	hostDisconnected() : void
+	{
+		this.releaseRetainedRows();
+	}
+
+	/**
+	 * Retain one row's cache entry for this query, if it is not retained already.
+	 *
+	 * @param branchKey Groups this uid for releaseRetainedRowsForBranch() - "" for the
+	 * root query, or a child grid's branch key for rows fetched under an expanded
+	 * parent row.
+	 */
+	private _retainRow(uid : string, execId : string, widgetId : string, branchKey : string = "") : void
+	{
+		if(!uid || this._retainedRowUids.has(uid))
+		{
+			return;
+		}
+		this._retainedRowUids.add(uid);
+		let branchUids = this._retainedRowUidsByBranch.get(branchKey);
+		if(!branchUids)
+		{
+			branchUids = new Set();
+			this._retainedRowUidsByBranch.set(branchKey, branchUids);
+		}
+		branchUids.add(uid);
+		this.host.egw().dataRegisterUID?.(uid, this._rowKeepAlive, this.host, execId, widgetId);
+	}
+
+	/**
+	 * Release every row this query was holding in egw's cache, letting the normal
+	 * eviction sweep reclaim them. Called when the query changes or the host detaches -
+	 * both points where the grid has dropped its rows, so nothing can still be rendered
+	 * from them. Only this provider's own listeners are removed, by passing both the
+	 * shared callback and the host as context.
+	 */
+	releaseRetainedRows() : void
+	{
+		const egw = this.host.egw();
+		for(const uid of this._retainedRowUids)
+		{
+			egw.dataUnregisterUID?.(uid, this._rowKeepAlive, this.host);
+		}
+		this._retainedRowUids.clear();
+		this._retainedRowUidsByBranch.clear();
+	}
+
+	/**
+	 * Release the rows retained by one collapsed subgrid branch, without disturbing
+	 * rows held by the root query or by any other still-expanded branch.
+	 *
+	 * Without this, collapsing an expanded row only dropped Et2Nextmatch's own
+	 * snapshots/child-provider entry (see _forgetExpandedBranch()) - the branch's rows
+	 * stayed pinned in egw's central cache via their keep-alive listener for the rest
+	 * of the page's life, since the only other release path is a full query change.
+	 */
+	releaseRetainedRowsForBranch(branchKey : string) : void
+	{
+		const branchUids = this._retainedRowUidsByBranch.get(branchKey);
+		if(!branchUids)
+		{
+			return;
+		}
+		const egw = this.host.egw();
+		for(const uid of branchUids)
+		{
+			egw.dataUnregisterUID?.(uid, this._rowKeepAlive, this.host);
+			this._retainedRowUids.delete(uid);
+		}
+		this._retainedRowUidsByBranch.delete(branchKey);
+	}
+
+	/**
+	 * Kept as the previous name for this operation, which Et2Nextmatch calls on filter
+	 * changes and row replacement.
+	 * @deprecated use releaseRetainedRows()
+	 */
+	clearInitialRowRegistrations() : void
+	{
+		this.releaseRetainedRows();
+	}
+
+	/**
+	 * Set while an explicit hard reload (Et2Nextmatch.refresh() with no row ids) is in
+	 * flight, so every page fetched during that reload tells the server it knows nothing
+	 * - see fetchPage()'s use of this flag below.
+	 */
+	private _forceFreshKnownUids = false;
+
+	/**
+	 * Toggle "pretend the client has no cached rows" for page fetches.
+	 *
+	 * fetchPage() normally passes `null` as dataFetch()'s knownUids, and egw_data.ts's
+	 * dataFetch() falls back to egw.dataKnownUIDs(prefix) - which scans the shared,
+	 * otherwise never-cleared cache and finds this query's previously-loaded rows still
+	 * sitting in it. The server then legitimately omits their data as "unchanged since
+	 * last known" - correct for a normal scroll/page fetch, but wrong for an explicit
+	 * reload where the UI just cleared its own rows and has nothing to fall back on.
+	 * Callers must turn this back off once the reload's fetch(es) have settled.
+	 */
+	setForceFreshKnownUids(force : boolean) : void
+	{
+		this._forceFreshKnownUids = force;
 	}
 
 	/**
 	 * Process additional data Nextmatch sent such as new SelectOptions or flags.
 	 *
-	 * @private
+	 * Also used by Et2Nextmatch for the same scalars when they arrive mixed into the
+	 * initial `rows` attribute instead of a refresh response.
 	 */
-	private _processAdditionalData(additionalData)
+	processAdditionalData(additionalData)
 	{
 		for(let i in additionalData)
 		{
-			if(Number.isInteger(i) || !i)
+			if(!i || /^\d+$/.test(i))
 			{
 				continue;
 			}
@@ -171,6 +321,11 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 				}
 			}
 		}
+		// A column can be hidden by an expression reading one of the flags just written, eg.
+		// infolog's `<column disabled="@no_customfields"/>`.  Nothing about writing into the
+		// content array manager is reactive, so the grid keeps the columns it last rendered
+		// unless we ask it to look again.
+		this.host.refreshColumnVisibility();
 	}
 
 	/**
@@ -181,14 +336,60 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 		return this._stableSerialize(this._currentFilters());
 	}
 
+	/**
+	 * Create a provider for a nested child grid under one parent row.
+	 *
+	 * Child providers reuse the same row-id normalization and refresh path as the
+	 * root provider, but add `parent_id` to page fetches and query signatures.
+	 */
+	createChildProvider(parentRowId : string) : Et2DatagridDataProvider
+	{
+		const provider = this;
+		const parentProviderRowId = this.toProviderRowId(String(parentRowId || ""));
+		return {
+			fetchPage(start : number, pageSize : number) : Promise<Et2DatagridPageResult>
+			{
+				return provider._fetchPageWithRange(start, pageSize, {parent_id: parentProviderRowId});
+			},
+			getQuerySignature() : string
+			{
+				return provider._stableSerialize({
+					filters: provider._currentFilters(),
+					parent_id: parentProviderRowId
+				});
+			},
+			getDataStorePrefix() : string
+			{
+				return provider.getDataStorePrefix();
+			},
+			getRowData(rowId : string) : any
+			{
+				return provider.getRowData(rowId);
+			},
+			normalizeRowId(rowId : string | number, ensurePrefix : boolean = false) : string
+			{
+				return provider.normalizeRowId(rowId, ensurePrefix);
+			},
+			toProviderRowId(dataStoreRowId : string) : string
+			{
+				return provider.toProviderRowId(dataStoreRowId);
+			},
+			refresh(rowIds : string[], type : Et2DatagridUpdateType) : Promise<Et2DatagridRefreshResult>
+			{
+				return provider.refresh(rowIds, type);
+			}
+		};
+	}
+
 	getDataStorePrefix() : string
 	{
-		const app = this.host.getInstanceManager?.()?.app || this.host.egw?.()?.app_name?.();
-		if(app)
+		// Use dataStorePrefix setting or fall back to the nextmatch's own app
+		const configured = (this.host as any)?.settings?.dataStorePrefix;
+		if(configured)
 		{
-			return String(app);
+			return String(configured);
 		}
-		return String(this.host.id || this.host.getAttribute("id") || "row");
+		return String(this.host.getInstanceManager?.()?.app || this.host.egw?.()?.app_name?.() || "");
 	}
 
 	/**
@@ -203,6 +404,77 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 		}
 		const prefix = `${this.getDataStorePrefix()}::`;
 		return normalized.startsWith(prefix) ? normalized : `${prefix}${normalized}`;
+	}
+
+	/**
+	 * Resolve the configured application row-id field, defaulting consistently to `id`.
+	 */
+	private _rowIdField() : string
+	{
+		return String((this.host as any)?.settings?.row_id || "id").trim() || "id";
+	}
+
+	/**
+	 * Resolve the canonical datagrid row id.
+	 *
+	 * Internally the datagrid, datastore and actions all use prefixed datastore
+	 * UIDs. If the configured row id is missing from row data, fall back to the
+	 * resolved datastore UID so one bad row cannot collapse a page into duplicate
+	 * empty ids.
+	 */
+	private _rowIdFromData(rowData : Record<string, any> | null | undefined, fallbackUid : string) : string
+	{
+		const rowIdField = this._rowIdField();
+		if(rowData && Object.prototype.hasOwnProperty.call(rowData, rowIdField))
+		{
+			const rowId = rowData[rowIdField];
+			if(rowId !== undefined && rowId !== null && String(rowId) !== "")
+			{
+				return this.normalizeRowId(rowId, true);
+			}
+		}
+		return this.normalizeRowId(fallbackUid, true);
+	}
+
+	/**
+	 * Resolve the canonical datagrid/action row id for already-available row data.
+	 */
+	rowIdForData(rowData : Record<string, any> | null | undefined, fallbackIndex : string | number = "") : string
+	{
+		return this._rowIdFromData(rowData, String(fallbackIndex));
+	}
+
+	/**
+	 * Store already-available row data in egw's UID cache using the same row-id
+	 * normalization as fetched rows.  This preserves the Nextmatch
+	 * contract that visible rows are discoverable through egw.dataKnownUIDs().
+	 */
+	storeRows(rows : any[], skipCallback : boolean = false) : void
+	{
+		const egw = this.host.egw();
+		if(typeof egw?.dataStoreUID !== "function")
+		{
+			return;
+		}
+		const {execId, widgetId} = this._requestContext();
+		(rows || []).forEach((row, index) =>
+		{
+			if(!row || typeof row !== "object")
+			{
+				return;
+			}
+			const uid = this._rowIdFromData(row, String(index));
+			if(uid)
+			{
+				egw.dataStoreUID(uid, row, skipCallback);
+				// Initial rows are supplied directly rather than through fetchPage(),
+				// so they otherwise have no UID registration. The global store expires
+				// unregistered entries after five minutes while the virtualizer still
+				// retains their ids. A keep-alive registration gives them the same
+				// lifetime as fetched rows without duplicating row data in another cache.
+				this._retainRow(uid, execId, widgetId);
+			}
+		});
 	}
 
 	/**
@@ -223,15 +495,24 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 	 */
 	private _cachedRow(rowId : string) : Et2DatagridRow | null
 	{
-		const cached = this.host.egw().dataGetUIDdata?.(rowId) as IegwData | undefined;
-		if(!cached?.data)
+		const rowData = this.getRowData(rowId);
+		if(!rowData)
 		{
 			return null;
 		}
 		return {
-			id: rowId,
-			data: cached.data
+			id: this._rowIdFromData(rowData, rowId)
 		};
+	}
+
+	/**
+	 * Resolve canonical row data from egw's UID cache.
+	 */
+	getRowData(rowId : string) : any
+	{
+		const normalizedId = this.normalizeRowId(rowId, true);
+		const cached = this.host.egw().dataGetUIDdata?.(normalizedId) as IegwData | undefined;
+		return cached?.data ?? null;
 	}
 
 	/**
@@ -263,7 +544,7 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 		{
 			try
 			{
-				this.host.egw().dataFetch(
+				const fetchPromise = this.host.egw().dataFetch(
 					execId,
 					{refresh: [bareRowId]},
 					filters,
@@ -279,12 +560,28 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 						if(response?.rows)
 						{
 							// Nextmatch may piggyback select options / filter state on refresh responses too.
-							this._processAdditionalData(response.rows);
+							this.processAdditionalData(response.rows);
 						}
 
 						// Row payload is already stored in the central egw cache by dataFetch().
 						const refreshedRow = this._cachedRow(normalizedId);
 						const rowExists = typeof response?.total === "number" ? response.total >= 1 : !!refreshedRow;
+						if(rowExists && refreshedRow)
+						{
+							// Unlike a normal page fetch (fetchPage(), which registers a keep-alive
+							// listener per row via egw.dataRegisterUID() - see storeRows()), this path
+							// only ever calls egw.dataStoreUID() once, indirectly, inside dataFetch()'s
+							// response parsing. Without a registered listener, the central egw cache's
+							// periodic cleanup sweep (api/js/jsapi/egw_data.ts, 5min idle/no-listener)
+							// evicts the row after 5 minutes - harmless while it's still displayed and
+							// gets refreshed again, but a row added/updated via a push held back while
+							// this grid wasn't visible (see Et2Datagrid's virtualizer, which renders
+							// nothing while hidden) can easily sit that long before ever being rendered,
+							// so it would render with no data (bare avatar, blank subject/date) the
+							// first time it finally does. Give it the same keep-alive registration as
+							// any other row so its data survives until actually rendered.
+							this._retainRow(normalizedId, execId, widgetId);
+						}
 						resolve(rowExists && refreshedRow ? {
 							rows: [refreshedRow],
 							removedRowIds: []
@@ -296,6 +593,11 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 					{type, prefix: this.getDataStorePrefix()},
 					[bareRowId]
 				);
+				// dataFetch() rejects if the underlying request failed - without this, a failed
+				// request never calls the success callback above, leaving this promise hanging
+				// forever: the .finally() below never runs, so this row stays stuck in
+				// _inFlightRefreshes and never refreshes again.
+				fetchPromise?.catch(reject);
 			}
 			catch(e)
 			{
@@ -316,18 +618,45 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 	 * Fetch one page of rows through Nextmatch APIs and return normalized datagrid rows.
 	 * We preserve server order by resolving rows into an indexed array before emitting.
 	 */
-	async fetchPage(start : number, pageSize : number) : Promise<Et2DatagridPageResult>
+	fetchPage(start : number, pageSize : number) : Promise<Et2DatagridPageResult> & { abort? : () => void }
+	{
+		return this._fetchPageWithRange(start, pageSize);
+	}
+
+	/**
+	 * Fetch a page of rows with optional Nextmatch range fields such as `parent_id`.
+	 */
+	private _fetchPageWithRange(
+		start : number,
+		pageSize : number,
+		rangeOverrides : Record<string, any> = {}
+	) : Promise<Et2DatagridPageResult> & { abort? : () => void }
 	{
 		const {execId, widgetId, filters} = this._requestContext();
 		const context = {prefix: this.getDataStorePrefix()};
+		const request = {
+			start,
+			num_rows: pageSize,
+			...rangeOverrides
+		};
+		// Rows fetched for an expanded child grid must be released as a unit when that
+		// row collapses (see releaseRetainedRowsForBranch()), not lumped in with the
+		// root query's rows.
+		const branchKey = rangeOverrides.parent_id !== undefined ? String(rangeOverrides.parent_id) : "";
 
-		return await new Promise((resolve, reject) =>
+		// Not async/await here: an async function always adopts a returned thenable's
+		// *resolution* into a brand-new Promise object, discarding any extra property
+		// (like the .abort attached below) from what was actually returned. Both this
+		// method and fetchPage() must return the exact same Promise object all the way
+		// out for a caller (Et2Datagrid._fetchPage()) to be able to abort the request.
+		let fetchPromise : any;
+		const resultPromise : any = new Promise((resolve, reject) =>
 		{
 			try
 			{
-				this.host.egw().dataFetch(
+				fetchPromise = this.host.egw().dataFetch(
 					execId,
-					{start, num_rows: pageSize},
+					request,
 					filters,
 					widgetId,
 					(resp : any) =>
@@ -338,7 +667,7 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 							return;
 						}
 						// Extra data from nextmatch
-						this._processAdditionalData(resp.rows);
+						this.processAdditionalData(resp.rows || {});
 
 						const order : string[] = Array.isArray(resp.order) ? resp.order : [];
 						if(!order.length)
@@ -351,27 +680,60 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 						}
 
 						const rowsByIndex : Array<Et2DatagridRow | null> = new Array(order.length).fill(null);
+						// Each entry's listener exists only to deliver that row once. Leaving
+						// them registered pinned the whole fetch response in memory (every
+						// closure captures rowsByIndex/resp/resolve), blocked egw's cache
+						// sweep for good, and - because dataRegisterUID appends without
+						// deduping - stacked another dead listener on the same uid on every
+						// reload, all of them re-run on each later push for that row. So swap
+						// them for the shared keep-alive as soon as the page is delivered.
+						const deliveryListeners : Array<{ uid : string; callback : Function }> = [];
+						const retainDeliveredRows = () =>
+						{
+							const egw = this.host.egw();
+							for(const {uid: listenerUid, callback} of deliveryListeners)
+							{
+								egw.dataUnregisterUID?.(listenerUid, callback, this.host);
+							}
+							deliveryListeners.length = 0;
+							for(const row of rowsByIndex)
+							{
+								if(row)
+								{
+									this._retainRow(row.id, execId, widgetId, branchKey);
+								}
+							}
+						};
 						let pending = order.length;
 						order.forEach((uid, index) =>
 						{
 							// dataRegisterUID can return out-of-order; capture by original position.
+							const deliverRow = (data : any, resolvedUid : string) =>
+							{
+								const rowData = data || {};
+								const rowId = this._rowIdFromData(rowData, String(resolvedUid || uid));
+								this.host.egw().dataStoreUID?.(rowId, rowData, true);
+								rowsByIndex[index] = {
+									id: rowId
+								};
+								pending--;
+								if(pending <= 0)
+								{
+									resolve({
+										rows: rowsByIndex.filter(Boolean) as Et2DatagridRow[],
+										total: typeof resp.total !== "undefined" ? resp.total : null
+									});
+									// Deferred a microtask: this can be running inside egw's own
+									// iteration over this uid's listener list (dataStoreUID calls
+									// them in place), and removing entries from under that loop
+									// would skip its neighbours.
+									void Promise.resolve().then(retainDeliveredRows);
+								}
+							};
+							deliveryListeners.push({uid, callback: deliverRow});
 							this.host.egw().dataRegisterUID(
 								uid,
-								(data : any, resolvedUid : string) =>
-								{
-									rowsByIndex[index] = {
-										id: String(resolvedUid || uid),
-										data: data || {}
-									};
-									pending--;
-									if(pending <= 0)
-									{
-										resolve({
-											rows: rowsByIndex.filter(Boolean) as Et2DatagridRow[],
-											total: typeof resp.total !== "undefined" ? resp.total : null
-										});
-									}
-								},
+								deliverRow,
 								this.host,
 								execId,
 								widgetId
@@ -379,14 +741,25 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 						});
 					},
 					context,
-					null
+					this._forceFreshKnownUids ? [] : null
 				);
+				// dataFetch() rejects if the underlying request failed (network error, no
+				// response, ...) - without this, a failed request never calls the success
+				// callback above, leaving this promise - and the datagrid's in-flight tracking
+				// for this page - hanging forever, so a later refresh/retry sees the range as
+				// still "in flight" and skips it.
+				fetchPromise?.catch(reject);
 			}
 			catch(e)
 			{
 				reject(e);
 			}
 		});
+		if(typeof fetchPromise?.abort === "function")
+		{
+			resultPromise.abort = () => fetchPromise.abort();
+		}
+		return resultPromise;
 	}
 
 	/**

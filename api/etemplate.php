@@ -12,12 +12,12 @@
 
 use EGroupware\Api;
 
-// add et2- prefix to following widgets/tags, if NO <overlay legacy="true"
+// add et2- prefix to following widgets/tags (box/hbox/vbox/vfs-select)
 const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box)|vfs-select)(/?|\s[^>]*)>#m';
 const ADD_ET2_PREFIX_LAST_GROUP = 4;
 
-// unconditional of legacy add et2- prefix to this widgets
-const ADD_ET2_PREFIX_LEGACY_REGEXP = '#<((/?)(template|tabbox|description|searchbox|textbox|toolbar|label|avatar|lavatar|image|appicon|colorpicker|checkbox|file|url(-email|-phone|-fax)?|vfs-mime|vfs-uid|vfs-gid|vfs-select|vfs-name|vfs-upload|link|link-[a-z]+|favorites|htmlarea))(/?|\s[^>]*)>#m';
+// add et2- prefix to this (larger) set of widgets
+const ADD_ET2_PREFIX_LEGACY_REGEXP = '#<((/?)(template|tabbox|description|searchbox|textbox|hidden|toolbar|label|avatar|lavatar|image|appicon|colorpicker|checkbox|file|iframe|url(-email|-phone|-fax)?|vfs-mime|vfs-uid|vfs-gid|vfs-select|vfs-name|vfs-upload|vfs-mode|link|link-[a-z]+|favorites|html|htmlarea|styles))(/?|\s[^>]*)>#m';
 const ADD_ET2_PREFIX_LEGACY_LAST_GROUP = 5;
 
 // switch evtl. set output-compression off, as we can't calculate a Content-Length header with transparent compression
@@ -92,7 +92,10 @@ function send_template()
 	}
 	// check for customized template in VFS
 	list(, $app, , $template, $name) = explode('/', $fspath);
-	$path = Api\Etemplate::rel2path(Api\Etemplate::relPath($app . '.' . basename($name, '.xet'), $template));
+	// CLI conversion targets the given physical file, NOT a live VFS-customized override of it
+	// (relPath() deliberately prefers a mounted /etemplates VFS customization for real serving)
+	$path = PHP_SAPI === 'cli' ? Api\Etemplate::rel2path($fspath) :
+		Api\Etemplate::rel2path(Api\Etemplate::relPath($app . '.' . basename($name, '.xet'), $template));
 	if(empty($path) || !file_exists($path) || !is_readable($path))
 	{
 		if (PHP_SAPI === 'cli')
@@ -240,7 +243,10 @@ function send_template()
 		$str = preg_replace('#<textbox(.*?\srows="\d+".*?)/>#', '<et2-textarea$1></et2-textarea>', $str);
 
 		// fix <(textbox|int(eger)?|float|passwd) precision="int(eger)?|float|passwd" .../> --> <et2-number precision=.../>, <et2-password .../> or <et2-textbox .../>
-		$str = preg_replace_callback('#<(textbox|int(eger)?|float|number|passwd).*?\s(type="(int(eger)?|float|passwd)")?.*?(/|></textbox)>#',
+		// the "(?:\s(type=...))?" wrapping - rather than a bare mandatory \s before an optional
+		// group - matters: a completely bare, attribute-less <int/>/<integer/>/<float/> has no
+		// whitespace at all to match, so a mandatory \s there made the whole pattern never match
+		$str = preg_replace_callback('#<(textbox|int(eger)?|float|number|passwd).*?(?:\s(type="(int(eger)?|float|passwd)"))?.*?(/|></textbox)>#',
 			static function ($matches)
 			{
 				if ($matches[1] === 'passwd' || $matches['4'] === 'passwd')
@@ -255,13 +261,65 @@ function send_template()
 				$type = $matches[1] === 'float' || $matches[4] === 'float' ? 'float' : 'int';
 				$tag = str_replace('<' . $matches[1], '<et2-number', substr($matches[0], 0, -2));
 				if (!empty($matches[3])) $tag = str_replace($matches[3], '', $tag);
-				if ($type !== 'float') $tag .= ' precision="0"';
+				// don't clobber an explicitly-given precision with the int/integer default
+				if ($type !== 'float' && !preg_match('/\sprecision="/', $tag)) $tag .= ' precision="0"';
 				return $tag . '></et2-number>';
 			}, $str);
+
+		// fix already-converted <et2-textbox type="int(eger)?|float|hidden" .../> -->
+		// <et2-number precision=.../> or <et2-hidden .../>
+		// (et2-textbox has no styling/behaviour for any of these - it was never meant to be
+		// used that way; this is the et2-prefixed equivalent of the type="int(eger)?|float"
+		// case handled above, for templates that were hand-written/converted using
+		// et2-textbox instead of the bare tag)
+		$str = preg_replace_callback('#<et2-textbox([^>]*)></et2-textbox>#', static function (array $matches)
+		{
+			$attrs = parseAttrs($matches[1]);
+			if (empty($attrs['type']) || !in_array($attrs['type'], ['int', 'integer', 'float', 'hidden'], true))
+			{
+				return $matches[0];
+			}
+			if ($attrs['type'] === 'hidden')
+			{
+				unset($attrs['type']);
+				return '<et2-hidden'.stringAttrs($attrs).'></et2-hidden>';
+			}
+			$float = $attrs['type'] === 'float';
+			unset($attrs['type']);
+			if (!$float) $attrs['precision'] = '0';
+			return '<et2-number'.stringAttrs($attrs).'></et2-number>';
+		}, $str);
+
+		// strip a redundant type="int(eger)?|float" left over on an already-<et2-number> tag
+		// (eg. from a hand-edit that renamed the tag but not the now-meaningless type attribute) -
+		// otherwise it wins over the tag name (see Et2Widget.createElementFromNode()) and routes
+		// straight back to the legacy et2_number class despite the tag already being et2-number
+		$str = preg_replace_callback('#<et2-number([^>]*)></et2-number>#', static function (array $matches)
+		{
+			$attrs = parseAttrs($matches[1]);
+			if (empty($attrs['type']) || !in_array($attrs['type'], ['int', 'integer', 'float'], true))
+			{
+				return $matches[0];
+			}
+			$float = $attrs['type'] === 'float';
+			unset($attrs['type']);
+			if (!$float && !isset($attrs['precision'])) $attrs['precision'] = '0';
+			return '<et2-number'.stringAttrs($attrs).'></et2-number>';
+		}, $str);
 
 		// replace just description, as they often contain >, like label="> %s"
 		$str = preg_replace('#<description\s*/>#', '<et2-description></et2-description>', $str);
 		$str = preg_replace('#<description\s(.*?")\s*/>#s', '<et2-description $1></et2-description>', $str);
+
+		// fix <vfs ...(/|></vfs)> --> <et2-vfs-path readonly="true" ...></et2-vfs-path>
+		// (bare vfs is a read-only, clickable path breadcrumb bound to row data - same
+		// widget et2-vfs-path already implements for its editable use, just forced readonly)
+		$str = preg_replace_callback('#<vfs\s(.*?)(/|></vfs)>#s', static function (array $matches)
+		{
+			$attrs = parseAttrs($matches[1]);
+			$attrs['readonly'] = 'true';
+			return '<et2-vfs-path'.stringAttrs($attrs).'></et2-vfs-path>';
+		}, $str);
 
 		// modify <(vfs-mime|link-string|link-list) --> <et2-*
 		$str = preg_replace_callback(ADD_ET2_PREFIX_LEGACY_REGEXP, static function (array $matches) {
@@ -319,7 +377,7 @@ function send_template()
 				// only set (default) searchUrl for regular taglist or taglist-email, or if a non-empty autocomplete_url was given
 				if (empty($matches['2']) || $matches[2] === '-email' || !empty($attrs['autocomplete_url']))
 				{
-					$attrs['searchUrl'] = $attrs['autocomplete_url'] ?? 'EGroupware\\Api\\Etemplate\\Widget\\Taglist::'.
+					$attrs['searchUrl'] = $attrs['autocomplete_url'] ?? 'EGroupware\\Api\\Etemplate\\Widget\\Select::'.
 						($matches[2] === '-email' ? 'ajax_email' : 'ajax_search');
 
 					if (isset($attrs['autocomplete_params']))
@@ -366,9 +424,6 @@ function send_template()
 
 		// use et2-email instead of et2-select-email
 		$str = preg_replace('#<et2-select-email\s(.*?")\s*/?>(</et2-select-email>)?#s', '<et2-email $1></et2-email>', $str);
-
-		// use et2-select-cat instead of et2-tree-cat
-		$str = preg_replace('#<et2-tree-cat\s(.*?")\s*/?>(</et2-tree-cat>)?#s', '<et2-select-cat $1></et2-select-cat>', $str);
 
 		// nextmatch headers
 		// replace all filters with NM headers, if not running via cli (as we currently don't want to remove them permanently!)
@@ -467,6 +522,12 @@ function send_template()
 		// replace no longer used <et2-tree-multiple.../> with <et2-tree multiple="true".../>
 		$str = preg_replace('#<et2-tree-multiple ([^>]+)(/>|</et2-tree-multiple>)#', '<et2-tree multiple="true" $1></et2-tree>', $str);
 
+		// use et2-select-cat instead of et2-tree-cat - must run after the bare tree(-cat)
+		// rewrite above, since that's what actually produces et2-tree-cat in the first place;
+		// this used to run before it, so a bare <tree-cat> only reached et2-tree-cat, not
+		// et2-select-cat, in a single pass (needed a second conversion pass to fully resolve)
+		$str = preg_replace('#<et2-tree-cat\s(.*?")\s*/?>(</et2-tree-cat>)?#s', '<et2-select-cat $1></et2-select-cat>', $str);
+
 		if ($template === 'mobile')
 		{
 			// Fix add button
@@ -505,18 +566,15 @@ function send_template()
 			return "<et2-ai{$span}><$tag $attrs></$tag></et2-ai>";
 		}, $str);
 
-		// ^^^^^^^^^^^^^^^^ above widgets get transformed independent of legacy="true" set in overlay ^^^^^^^^^^^^^^^^^^
-
-		// eTemplate marked as legacy --> replace only some widgets (eg. requiring jQueryUI) with web-components
-		if (!preg_match('/<overlay[^>]* legacy="true"/', $str))
-		{
-			$str = preg_replace_callback(ADD_ET2_PREFIX_REGEXP, static function (array $matches) {
-				return '<' . $matches[2] . 'et2-' . $matches[3] .
-					// web-components must not be self-closing (no "<et2-button .../>", but "<et2-button ...></et2-button>")
-					(substr($matches[ADD_ET2_PREFIX_LAST_GROUP], -1) === '/' ? substr($matches[ADD_ET2_PREFIX_LAST_GROUP], 0, -1) .
-						'></et2-' . $matches[3] : $matches[ADD_ET2_PREFIX_LAST_GROUP]) . '>';
-			}, $str);
-		}
+		// box/hbox/vbox/vfs-select --> et2-box/et2-hbox/et2-vbox/et2-vfs-select
+		// (used to be skipped for <overlay legacy="true">, an escape hatch no template needs any more -
+		// api/templates/default/show_replacements.xet was the last one, see widget-migration-status.md)
+		$str = preg_replace_callback(ADD_ET2_PREFIX_REGEXP, static function (array $matches) {
+			return '<' . $matches[2] . 'et2-' . $matches[3] .
+				// web-components must not be self-closing (no "<et2-button .../>", but "<et2-button ...></et2-button>")
+				(substr($matches[ADD_ET2_PREFIX_LAST_GROUP], -1) === '/' ? substr($matches[ADD_ET2_PREFIX_LAST_GROUP], 0, -1) .
+					'></et2-' . $matches[3] : $matches[ADD_ET2_PREFIX_LAST_GROUP]) . '>';
+		}, $str);
 
 		// change all attribute-names of new et2-* widgets to camelCase, and other attribute modifications for all web-components
 		$str = preg_replace_callback('#<(et2|records)-([a-z-]+)\s(.*?")\s*/?>#s', static function(array $matches)

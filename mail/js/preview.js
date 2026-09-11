@@ -8,10 +8,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
-/*egw:uses
-*/
-
-
 document.body.addEventListener('click', function (event)
 {
 	//event.target might not be a link

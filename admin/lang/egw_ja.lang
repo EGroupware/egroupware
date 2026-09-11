@@ -450,7 +450,6 @@ if you ignore that error as admin, you should check "%1"!	admin	ja	If you ignore
 if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)	admin	ja	Sieveサーバのポートとしてポート5190を指定すると、SieveのSSLが強制されます(サーバがサポートしている必要があります)。
 imap admin password	admin	ja	IMAP admin password
 imap admin user	admin	ja	IMAP admin user
-imap server	admin	ja	IMAP server
 imap server closed the connection.	admin	ja	IMAP server closed the connection.
 imap server closed the connection. server responded: %s	admin	ja	IMAP Server closed the connection. Server Responded: %s
 imap server hostname or ip address	admin	ja	IMAP server hostname or ip address

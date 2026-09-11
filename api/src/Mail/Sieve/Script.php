@@ -716,7 +716,18 @@ class Script
 				$newscriptbody .= 'notify :message "'.$notification_body.'" :method "mailto" :options "'.$notification_email.'";'."\n";
 				//$newscriptbody .= 'notify :message "'.$notification_body.'" :method "mailto" :options "'.$notification_email.'?subject='.$notification_subject.'";'."\n";
 			}
-			$newscriptbody .= 'keep;'."\n\n";
+			// found live 2026-09-09 (ralf, following up on the vacation-modus "notice" fix,
+			// c7db44df): this keep used to fire UNCONDITIONALLY whenever email notification was
+			// on, silently undoing that very fix - an already-executed "discard;" further up
+			// (vacation modus "notice") can't be cancelled by a later explicit keep any more than
+			// the reverse, so a user with both vacation-notice AND email notification enabled
+			// still got the message kept in INBOX. Notify itself doesn't affect the implicit keep
+			// (RFC 5435), so this keep is only actually needed to explicitly re-affirm normal
+			// delivery - never appropriate when vacation already decided to discard the message.
+			if (empty($vacation_active) || empty($vacation['modus']) || $vacation['modus'] !== 'notice')
+			{
+				$newscriptbody .= 'keep;'."\n\n";
+			}
 		}
 
 		// generate the script head
@@ -755,9 +766,19 @@ class Script
 			}
 			if ($this->emailNotification && $this->emailNotification['status'] == 'on')
 			{
-				if ($this->vacation && $vacation_active)
+				// found live 2026-09-09: this used to check "$this->vacation && $vacation_active"
+				// instead of $closeRequired - whenever vacation was CONFIGURED but not currently
+				// active (status not 'on'/'by_date'), the "require[" opened above never got
+				// closed, and a completely separate "require [...]" got appended right after it,
+				// producing an invalid two-requires-glued-together statement; and whenever
+				// vacation WAS active, this branch's own trailing "];" collided with the
+				// unconditional one below, producing a duplicate "];" that failed to compile
+				// entirely (confirmed via sieve-test) - silently disabling forwarding, the
+				// vacation notice AND discard alike, not just the "still kept in INBOX" symptom.
+				// $closeRequired is the single source of truth for "is a require[ already open".
+				if ($closeRequired)
 				{
-					$newscripthead .= ",\"".($connection->hasExtension('enotify')?'e':'')."notify\"".($connection->hasExtension('variables')?',"variables"':'')."];\n\n"; // Added email notifications
+					$newscripthead .= ",\"".($connection->hasExtension('enotify')?'e':'')."notify\"".($connection->hasExtension('variables')?',"variables"':'');
 				}
 				else
 				{

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="admin.statistics" template="" lang="" group="0" version="1.7.001">
-		<groupbox span="all" class="bigger">
-			<caption label="Official EGroupware usage statistic"/>
+	<et2-template  id="admin.statistics" template="" lang="" group="0" version="1.7.001">
+		<et2-groupbox  span="all" class="bigger" summary="Official EGroupware usage statistic">
 			<et2-vbox>
 				<et2-description  value="We ask for the data to improve our profile in the press and to get a better understanding of EGroupware's user base and it's needs."></et2-description>
 				<et2-url  label="The cumulated and anonymised data will be publically available:" id="statistic_url" readonly="true"></et2-url>
@@ -11,7 +11,7 @@
 				<et2-description  label="Only below displayed information is directly submitted to %s." id="submit_host"></et2-description>
 				<et2-textbox  label="To allow us to track the growth of your individual installation use this submit ID, otherwise delete it:" id="submit_id" maxlength="40"></et2-textbox>
 			</et2-vbox>
-		</groupbox>
+		</et2-groupbox>
 		<grid>
 			<columns>
 				<column width="140"/>
@@ -55,8 +55,7 @@
 					<et2-select  id="install_type"></et2-select>
 				</row>
 				<row valign="top">
-					<et2-description  value="Applications"></et2-description>
-					<et2-textarea  rows="10" cols="40" id="apps" statustext="Installed applications, percentage of allowed users and total number of entries."></et2-textarea>
+					<et2-description  value="Applications"></et2-description><et2-ai><et2-textarea  rows="10" cols="40" id="apps" statustext="Installed applications, percentage of allowed users and total number of entries."></et2-textarea></et2-ai>
 				</row>
 				<row disabled="!@last_submitted">
 					<et2-description  value="Last submission:"></et2-description>
@@ -75,7 +74,7 @@
 				</row>
 			</rows>
 		</grid>
-		<styles>
+		<et2-styles>
 			.bold { font-weight: bold; }
 fieldset.bigger legend {
   font-weight: bold;
@@ -83,6 +82,6 @@ fieldset.bigger legend {
   padding-left: 5px;
   padding-right: 5px;
 }
-		</styles>
-	</template>
+		</et2-styles>
+	</et2-template>
 </overlay>

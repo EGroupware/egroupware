@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="api.prompt" template="" lang="" group="0" version="1.9.001">
+	<et2-template  id="api.prompt" template="" lang="" group="0" version="1.9.001">
 		<et2-hbox  class="et2_prompt">
 			<et2-image  src="dialog_help" class="dialog_icon"></et2-image>
 			<et2-vbox  class="ui-dialog-content">
@@ -9,5 +10,5 @@
 				<et2-textbox  id="value" width="90%"></et2-textbox>
 			</et2-vbox>
 		</et2-hbox>
-	</template>
+	</et2-template>
 </overlay>

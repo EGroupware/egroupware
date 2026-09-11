@@ -8,10 +8,6 @@
  * @author Nathan Gray
  */
 
-/*egw:uses
-	et2_core_inputWidget;
-*/
-
 import {et2_inputWidget} from "./et2_core_inputWidget";
 import {WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
@@ -162,7 +158,6 @@ export class et2_editableWidget extends et2_inputWidget implements et2_ISubmitLi
 
 		// No change, do nothing
 		if(value == oldValue) return;
-
 
 		// Submit
 		if(this.options.save_callback)

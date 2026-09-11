@@ -310,7 +310,6 @@ if disabled existing tokens immediatly stop working.	admin	el	Αν απενερ�
 if no acl records for user or any group the user is a member of	admin	el	αν καμία εγγραφή ACL για χρήστη ή όποιας ομάδας είναι μέλος του
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	el	Αν χρησημοποιήτε LDAP, θέλετε να διαχειριστείτε τον αρχικό κατάλογο και τα χαρακτηριστικά κέλυφους εισαγωγής;
 if using ssl or tls, you must have the php openssl extension loaded.	admin	el	Αν χρησιμοποιείται SSL ή TLS, πρέπει να έχετε την PHP openssl επέκταση φορτωμένη.
-imap server	admin	el	IMAP Server
 imap server closed the connection.	admin	el	Ο IMAP Server έκλεισε τη σύνδεση.
 imap server closed the connection. server responded: %s	admin	el	Ο IMAP Server έκλεισε τη σύνδεση. Ο Server απάντησε: %s
 in mbyte	admin	el	σε MByte

@@ -5,7 +5,7 @@ namespace EGroupware\Infolog;
 
 use EGroupware\Api\Categories;
 use EGroupware\Api\Etemplate;
-use Egroupware\Api\Link;
+use EGroupware\Api\Link;
 use EGroupware\Api\TestEtemplate;
 
 require_once realpath(__DIR__ . '/../../api/tests/EtemplateTest.php');
@@ -50,48 +50,70 @@ class DoubleLinkPMTest extends \EGroupware\Api\EtemplateTest
 
 		$this->bo->tracking = $this->createStub(\infolog_tracking::class);
 		$this->bo->tracking->method('track')->willReturn(0);
+		// projectmanager_bo::save() lazily creates a real projectmanager_tracking and calls its
+		// (real, unmocked) track(), which can fail under heavy load and make save() return a
+		// truthy error string instead of 0, failing makeProject()'s assertFalse() check.
+		$this->pm_bo->tracking = $this->createStub(\projectmanager_tracking::class);
+		$this->pm_bo->tracking->method('track')->willReturn(0);
 
 		// Make sure projects are not there first
-		$pm_numbers = array(
-			'TEST 1',
-			'TEST 2',
-			'TEST 3'
-		);
-		foreach($pm_numbers as $number)
+		foreach(array('TEST 1', 'TEST 2', 'TEST 3') as $number)
 		{
-			$project = $this->pm_bo->read(array('pm_number' => $number));
-			if($project && $project['pm_id'])
-			{
-				$this->pm_bo->delete($project);
-			}
+			$this->purgeStaleProjectFixture($this->pm_bo, $number);
 		}
 
-		$this->makeProject("1");
+		// PHPUnit never calls tearDown() when setUp() itself throws - if the 2nd makeProject()
+		// fails after the 1st already succeeded, the 1st project's id is already tracked in
+		// $this->pm_id (set inside makeProject()) but nothing would ever call deleteProject() to
+		// clean it up. Catch and clean up whatever got created so far before rethrowing.
+		try
+		{
+			$this->makeProject("1");
 
-		// Make another project, we need 2
-		$this->makeProject("2");
+			// Make another project, we need 2
+			$this->makeProject("2");
+		}
+		catch (\Throwable $e)
+		{
+			$this->deleteProject();
+			throw $e;
+		}
 	}
 
 	protected function tearDown() : void
 	{
-		// Remove infolog under test
-		if($this->info_id)
+		// Nested try/finally: if deleting the infolog entry throws, the projects must still
+		// get a cleanup attempt, and the bo's/request globals must still get reset either way -
+		// otherwise a stuck 'TEST N'-numbered project or global bo silently breaks unrelated
+		// tests running later in the same PHPUnit process.
+		try
 		{
-			$this->bo->delete($this->info_id, False, False, True);
-			// One more time for history
-			$this->bo->delete($this->info_id, False, False, True);
+			// Remove infolog under test
+			if($this->info_id)
+			{
+				$this->bo->delete($this->info_id, False, False, True);
+				// One more time for history
+				$this->bo->delete($this->info_id, False, False, True);
+			}
 		}
+		finally
+		{
+			try
+			{
+				// Remove the test projects
+				$this->deleteProject();
+			}
+			finally
+			{
+				$this->bo = null;
+				$this->pm_bo = null;
 
-		// Remove the test projects
-		$this->deleteProject();
+				// Clean up the request
+				$_GET = $_POST = $_REQUEST = array();
 
-		$this->bo = null;
-		$this->pm_bo = null;
-
-		// Clean up the request
-		$_GET = $_POST = $_REQUEST = array();
-
-		parent::tearDown();
+				parent::tearDown();
+			}
+		}
 	}
 
 
@@ -313,12 +335,11 @@ class DoubleLinkPMTest extends \EGroupware\Api\EtemplateTest
 
 		$this->assertFalse((boolean)$result, 'Error making test project');
 		$this->assertArrayHasKey('pm_id', $this->pm_bo->data, 'Could not make test project');
-		$this->assertThat($this->pm_bo->data['pm_id'],
-						  $this->logicalAnd(
-							  $this->isType('integer'),
-							  $this->greaterThan(0)
-						  )
-		);
+		// Accept int or numeric string: Storage\Base::read() never casts DB columns (they come
+		// back as strings from mysqli), and any intervening read of this project - eg. via
+		// notification processing - re-hydrates pm_id as a string. Only the numeric value matters.
+		$this->assertTrue(is_numeric($this->pm_bo->data['pm_id']) && $this->pm_bo->data['pm_id'] > 0,
+			'pm_id is not a positive number: '.var_export($this->pm_bo->data['pm_id'], true));
 		$this->pm_id[] = $this->pm_bo->data['pm_id'];
 	}
 
@@ -351,14 +372,79 @@ class DoubleLinkPMTest extends \EGroupware\Api\EtemplateTest
 
 		// Force to ignore setting
 		$this->pm_bo->history = '';
-		foreach($this->pm_id as $pm_id)
+		try
 		{
-			$this->pm_bo->delete($pm_id, true);
+			foreach($this->pm_id as $pm_id)
+			{
+				// One project's delete failing (eg. an ACL check, or any other exception)
+				// must not abort the loop and leave later projects in $this->pm_id undeleted.
+				try
+				{
+					$this->pm_bo->delete($pm_id, true);
+				}
+				catch (\Throwable $e)
+				{
+					error_log(__METHOD__."() failed to delete pm_id=$pm_id: ".$e);
+				}
+			}
 		}
+		finally
+		{
+			// Force links to run notification now, or elements might stay
+			// usually waits until Egw::on_shutdown();
+			Link::run_notifies();
 
-		// Force links to run notification now, or elements might stay
-		// usually waits until Egw::on_shutdown();
-		Link::run_notifies();
+			foreach($this->pm_id as $pm_id)
+			{
+				$this->forcePurgeProjectIfStillThere($pm_id);
+			}
+		}
 	}
 
+	/**
+	 * Force-purge a stray projectmanager project by id, bypassing ACL, IF it's still there
+	 * after a normal projectmanager_bo delete attempt.
+	 *
+	 * Same helper as \EGroupware\Api\AppTest::forcePurgeProjectIfStillThere() - duplicated here
+	 * because this class extends EtemplateTest, not AppTest. See that method's docblock for why
+	 * this is needed.
+	 *
+	 * @param int|string|null $pm_id
+	 */
+	protected function forcePurgeProjectIfStillThere($pm_id)
+	{
+		if (!$pm_id)
+		{
+			return;
+		}
+		$so = new \projectmanager_so();
+		if ($so->read($pm_id))
+		{
+			$so->delete($pm_id);
+		}
+	}
+
+	/**
+	 * Make sure no stray projectmanager project with the given pm_number is left over from an
+	 * earlier, interrupted test run, before a fresh fixture gets created under the same number.
+	 *
+	 * Same helper as \EGroupware\Api\AppTest::purgeStaleProjectFixture() - duplicated here
+	 * because this class extends EtemplateTest, not AppTest. See that method's docblock for why
+	 * this is needed.
+	 *
+	 * @param \projectmanager_bo $bo used for the normal (cascade-aware) delete attempt
+	 * @param string $pm_number
+	 */
+	protected function purgeStaleProjectFixture(\projectmanager_bo $bo, $pm_number)
+	{
+		$so = new \projectmanager_so();
+		$project = $so->read(array('pm_number' => $pm_number));
+		if (!$project || !$project['pm_id'])
+		{
+			return;
+		}
+		$bo->history = '';
+		$bo->delete($project['pm_id'], true);
+		$this->forcePurgeProjectIfStillThere($project['pm_id']);
+	}
 }

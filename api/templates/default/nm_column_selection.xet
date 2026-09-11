@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-    <template id="nm_column_selection" template="" lang="" group="0" version="16.1">
+    <et2-template  id="nm_column_selection" template="" lang="" group="0" version="16.1">
         <et2-nextmatch-columnselection  id="columns"></et2-nextmatch-columnselection>
         <et2-hbox>
             <et2-select  id="autoRefresh" emptyLabel="Refresh" statustext="Automatically refresh list">
@@ -17,5 +18,5 @@
                 <option value="force" title="Force column preference so users cannot change it">Force</option>
             </et2-select>
         </et2-hbox>
-    </template>
+    </et2-template>
 </overlay>

@@ -279,10 +279,14 @@ class ResetParticipantStatusTest extends \EGroupware\Api\AppTest
 			'account_firstname' => 'Test',
 			'account_lastname' => 'Test'
 		);
-		$command = new \admin_cmd_edit_user(false, $account);
-		$command->comment = 'Needed for unit test ' . $this->name();
-		$command->run();
-		return $command->account;
+		// admin_cmd_edit_user requires the CURRENT session to be a real admin
+		return $this->asAdmin(function() use ($account)
+		{
+			$command = new \admin_cmd_edit_user(false, $account);
+			$command->comment = 'Needed for unit test ' . $this->name();
+			$command->run();
+			return $command->account;
+		});
 	}
 
 	/**

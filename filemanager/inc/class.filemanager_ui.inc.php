@@ -103,10 +103,11 @@ class filemanager_ui
 	 */
 	public static function get_view()
 	{
-		$view =& Api\Cache::getSession('filemanager', 'view');
+		$view = Api\Cache::getSession('filemanager', 'view');
 		if (isset($_GET['view']))
 		{
 			$view = $_GET['view'];
+			Api\Cache::setSession('filemanager', 'view', $view);
 		}
 		if (!isset(static::$views[$view]))
 		{
@@ -731,7 +732,7 @@ class filemanager_ui
 					if (strpos($path, 'mail::') === 0 && $path = substr($path, 6))
 					{
 						// Support for dropping mail in filemanager - Pass mail back to mail app
-						if(ExecMethod2('mail.mail_ui.vfsSaveMessages', $path, $dir))
+						if(ExecMethod2('mail.EGroupware\\Mail\\Ui.vfsSaveMessages', $path, $dir))
 						{
 							++$files;
 						}
@@ -816,6 +817,11 @@ class filemanager_ui
 						}
 					}
 					if ($target[0] != '/') $target = Vfs::concat($dir, $target);
+					if ($target === $link || str_starts_with(rtrim($link,'/').'/', rtrim($target,'/').'/') ||
+						str_starts_with(rtrim($target,'/').'/', rtrim($link,'/').'/'))
+					{
+						return lang('Cannot create symlink: %1 and %2 would create a loop!', Vfs::decodePath($target), Vfs::decodePath($link));
+					}
 					if (!Vfs::stat($target))
 					{
 						return lang('Link target %1 not found!', Vfs::decodePath($target));
@@ -971,6 +977,23 @@ class filemanager_ui
 	}
 
 	/**
+	 * Convert a vfs mtime/ctime, which is a real Unix timestamp (unlike most other EGroupware
+	 * timestamps, which use server-time wallclock digits misencoded as a Unix timestamp), into
+	 * an Api\DateTime object in the user's timezone
+	 *
+	 * @param int $vfs_time real Unix timestamp, eg. from Vfs stat() / url_stat()
+	 * @return Api\DateTime|int|null
+	 */
+	protected static function vfs_time2user($vfs_time)
+	{
+		if (empty($vfs_time)) return $vfs_time;
+
+		$time = new Api\DateTime('@'.$vfs_time);
+		$time->setUser();
+		return $time;
+	}
+
+	/**
 	 * Callback to fetch the rows for the nextmatch widget
 	 *
 	 * @param array $query
@@ -989,7 +1012,17 @@ class filemanager_ui
 			$store_query = array_diff_key ($query, array_flip(array('rows','actions','action_links','placeholder_actions')));
 			// Don't store mime filter from expose, just in case user reloads and the UI can't remove it
 			unset($store_query['col_filter']['mime']);
-			Api\Cache::setSession('filemanager', 'index', $store_query);
+			// filemanager_favorite_portlet::get_rows() reuses this method directly to render Home
+			// favorites, with its own 'get_rows' callback name - without keying on that (same check
+			// already used a few lines down for the 'nm_view' preference), both the portlet and the
+			// real index page would store under the same literal 'index' key, so whichever renders
+			// last silently overwrites the other's cached settings, incl. columnselection_pref.
+			// Match the portlet specifically (not "anything that isn't the real index"): this method
+			// also runs for AnonymousList::get_rows() (share links) and any future caller with a
+			// different 'get_rows' name - those aren't known to collide with anything, so they must
+			// keep writing to 'index' exactly as before, unchanged by this fix.
+			$session_key = $query['get_rows'] === 'filemanager.filemanager_favorite_portlet.get_rows' ? 'home' : 'index';
+			Api\Cache::setSession('filemanager', $session_key, $store_query);
 		}
 
 		// Change template to match selected view
@@ -1111,7 +1144,7 @@ class filemanager_ui
 
 			foreach(['mtime', 'ctime'] as $date_field)
 			{
-				$row[$date_field] = Api\DateTime::server2user($row[$date_field]);
+				$row[$date_field] = self::vfs_time2user($row[$date_field]);
 			}
 			// do NOT send URL to client-side, it can contain passwords
 			unset($row['url']);
@@ -1563,12 +1596,10 @@ class filemanager_ui
 			['value' => '0', 'label' => lang("root")]
 		);
 
-		// Times are in server time, convert to user timezone
+		// vfs mtime/ctime are real Unix timestamps, convert to the timestamp format Api\DateTime expects
 		foreach(['mtime', 'ctime'] as $date_field)
 		{
-			$time = new Api\DateTime($content[$date_field], Api\DateTime::$server_timezone);
-			$time->setUser();
-			$content[$date_field] = $time->format('ts');
+			$content[$date_field] = self::vfs_time2user($content[$date_field]);
 		}
 
 		// mergeapp

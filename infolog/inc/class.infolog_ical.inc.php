@@ -12,7 +12,6 @@
  */
 
 use EGroupware\Api;
-use EGroupware\Api\Acl;
 
 /**
  * InfoLog: Create and parse iCal's
@@ -581,17 +580,18 @@ class infolog_ical extends infolog_bo
 			$taskData['info_datecompleted'] = 0;
 		}
 
-		// setting owner or responsible for new tasks based on folder
+		// setting owner for new tasks based on folder - write()'s own ACL gate
+		// (check_access(0, Acl::EDIT/ADD, $values['info_owner']), a few calls downstream) is the
+		// real, authoritative enforcement point for whether the acting user may create an entry
+		// owned by $user; this just needs to stamp the intended owner so that gate checks rights
+		// against the actual target owner instead of degenerating into a self-check when
+		// info_owner is left unset. (Previously gated on check_access($taskData, Acl::ADD) - that
+		// check, given an ownerless $taskData, could only ever accidentally evaluate true for any
+		// authenticated caller; see doc/ai/projects/infolog-storage-migration.md's ACL-relocation
+		// notes for the full history of why that gate never did anything real.)
 		if (!is_null($user) && $_taskID <= 0)
 		{
-			if ($this->check_access($taskData, Acl::ADD))
-			{
-				$taskData['info_owner'] = $user;
-			}
-			elseif (!in_array($user, (array)$taskData['info_responsible']))
-			{
-				$taskData['info_responsible'][] = $user;
-			}
+			$taskData['info_owner'] = $user;
 		}
 
 		if ($this->log)

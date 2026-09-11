@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-    <template id="api.toolbarAdminSettings" template="" lang="" group="0" version="1.9.001" height="100%">
-        <et2-vbox height="100%">
-            <et2-listbox id="actions" multiple="true"
-                        label="show"
-                        helpText="show these toolbar items helptext"
-                        height="100%"
+    <et2-template  id="api.toolbarAdminSettings" template="" lang="" group="0" version="1.9.001" height="100%">
+        <et2-vbox  height="100%">
+            <et2-listbox  id="actions" multiple="true" label="show" helpText="show these toolbar items helptext" height="100%"
             ></et2-listbox>
-            <et2-vbox hidden="!@isAdmin">
-                <et2-checkbox id="default" label="Set as default" statustext="Save as default preference for all users"></et2-checkbox>
-                <et2-checkbox id="reset" label="reset all to default" statustext="This will reset toolbar preferences for all users and set them to configured default prefs."></et2-checkbox>
+            <et2-vbox  hidden="!@isAdmin">
+                <et2-checkbox  id="default" label="Set as default" statustext="Save as default preference for all users"></et2-checkbox>
+                <et2-checkbox  id="reset" label="reset all to default" statustext="This will reset toolbar preferences for all users and set them to configured default prefs."></et2-checkbox>
             </et2-vbox>
         </et2-vbox>
-        <styles>
+        <et2-styles>
             #api-toolbarAdminSettings {
             height: 100%;
             }
@@ -22,6 +20,6 @@
             max-height: 25em;
             overflow-y: auto;
             }
-        </styles>
-    </template>
+        </et2-styles>
+    </et2-template>
 </overlay>

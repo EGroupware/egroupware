@@ -92,8 +92,9 @@
     <p><em>Learn more about <a href="{{ rootUrl('/getting-started/usage#slots') }}">using slots</a>.</em></p>
   {% endif %}
 
-  {# Properties #}
-  {% if component.properties.length %}
+  {# Properties - own only; inherited ones get their own collapsed section below so subclass
+     pages don't repeat the same id/label/statustext/... wall on every single variation page #}
+  {% if component.ownProperties.length %}
     <h2>Properties</h2>
 
     <table>
@@ -107,7 +108,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for prop in component.properties %}
+        {% for prop in component.ownProperties %}
           <tr>
             <td>
               <code class="nowrap {%if prop.deprecated %} deprecated {% endif %}">{{ prop.name }}</code>
@@ -150,20 +151,50 @@
             </td>
           </tr>
         {% endfor %}
-        <tr>
-          <td class="nowrap"><code>updateComplete</code></td>
-          <td>
-            A read-only promise that resolves when the component has
-            <a href="/getting-started/usage?#component-rendering-and-updating">finished updating</a>.
-          </td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
       </tbody>
     </table>
 
     <p><em>Learn more about <a href="{{ rootUrl('/getting-started/usage#properties') }}">attributes and properties</a>.</em></p>
+  {% endif %}
+
+  {# Inherited properties - collapsed by default, terser (name + description only), grouped by
+     ancestor with a link back to that ancestor's own page for the full table #}
+  {% if component.inheritedProperties.length %}
+    {% set inheritedPropertyCount = 0 %}
+    {% for group in component.inheritedProperties %}{% set inheritedPropertyCount = inheritedPropertyCount + group.members.length %}{% endfor %}
+    <details>
+      <summary>Inherited properties ({{ inheritedPropertyCount }})</summary>
+      {% for group in component.inheritedProperties %}
+        {% set ancestorDoc = findAncestorDoc(group.name, group.module) %}
+        <h3>
+          {% if ancestorDoc.type == 'component' %}
+            <a href="/components/{{ ancestorDoc.tagName }}">{{ group.name | classNameToComponentName }}</a>
+          {% elif ancestorDoc.type == 'mixin' %}
+            <a href="/mixins/{{ ancestorDoc.name | slugify }}">{{ group.name }}</a>
+          {% elif ancestorDoc.type == 'shoelace' %}
+            <a href="{{ ancestorDoc.url }}">{{ group.name }}</a> (Shoelace)
+          {% else %}
+            {{ group.name }}
+          {% endif %}
+        </h3>
+        <table>
+          <thead>
+            <tr>
+              <th class="table-name">Name</th>
+              <th class="table-description">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for prop in group.members %}
+              <tr>
+                <td class="nowrap"><code>{{ prop.name }}</code></td>
+                <td>{{ prop.description | markdownInline | safe }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endfor %}
+    </details>
   {% endif %}
 
   {# Events #}
@@ -205,8 +236,8 @@
     <p><em>Learn more about <a href="{{ rootUrl('/getting-started/usage#events') }}">events</a>.</em></p>
   {% endif %}
 
-  {# Methods #}
-  {% if component.methods.length %}
+  {# Methods - own only, same reasoning as Properties above #}
+  {% if component.ownMethods.length %}
     <h2>Methods</h2>
 
     <table>
@@ -218,7 +249,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for method in component.methods %}
+        {% for method in component.ownMethods %}
           <tr>
             <td class="nowrap">
               <code class="{% if method.deprecated %} deprecated {% endif %}">{{ method.name }}()</code>
@@ -246,6 +277,45 @@
     </table>
 
     <p><em>Learn more about <a href="{{ rootUrl('/getting-started/usage#methods') }}">methods</a>.</em></p>
+  {% endif %}
+
+  {# Inherited methods - same collapsed, grouped-by-ancestor treatment as properties above #}
+  {% if component.inheritedMethods.length %}
+    {% set inheritedMethodCount = 0 %}
+    {% for group in component.inheritedMethods %}{% set inheritedMethodCount = inheritedMethodCount + group.members.length %}{% endfor %}
+    <details>
+      <summary>Inherited methods ({{ inheritedMethodCount }})</summary>
+      {% for group in component.inheritedMethods %}
+        {% set ancestorDoc = findAncestorDoc(group.name, group.module) %}
+        <h3>
+          {% if ancestorDoc.type == 'component' %}
+            <a href="/components/{{ ancestorDoc.tagName }}">{{ group.name | classNameToComponentName }}</a>
+          {% elif ancestorDoc.type == 'mixin' %}
+            <a href="/mixins/{{ ancestorDoc.name | slugify }}">{{ group.name }}</a>
+          {% elif ancestorDoc.type == 'shoelace' %}
+            <a href="{{ ancestorDoc.url }}">{{ group.name }}</a> (Shoelace)
+          {% else %}
+            {{ group.name }}
+          {% endif %}
+        </h3>
+        <table>
+          <thead>
+            <tr>
+              <th class="table-name">Name</th>
+              <th class="table-description">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for method in group.members %}
+              <tr>
+                <td class="nowrap"><code>{{ method.name }}()</code></td>
+                <td>{{ method.description | markdownInline | safe }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endfor %}
+    </details>
   {% endif %}
 
   {# Custom Properties #}
@@ -331,6 +401,42 @@
     <ul>
       {% for dependency in component.dependencies %}
         <li><code>&lt;{{ dependency }}&gt;</code></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  {# Belongs to - either a feature-area subsystem (e.g. "Filemanager") or, when a mixin/purpose
+     override placed this widget elsewhere, its actual inheritance parent (e.g. "Et2Select").
+     Shown here rather than in the sidebar, which just lists each component plainly. #}
+  {% if component.belongsTo %}
+    <h2>Belongs to</h2>
+    <p>
+      {% if isFeatureArea(component.belongsTo) %}
+        <a href="/reference/{{ component.belongsTo | slugify }}/">{{ component.belongsTo }}</a>
+      {% else %}
+        {% set belongsToDoc = findAncestorDoc(component.belongsTo) %}
+        {% if belongsToDoc.type == 'component' %}
+          <a href="/components/{{ belongsToDoc.tagName }}">{{ belongsToDoc.name | classNameToComponentName }}</a>
+        {% elif belongsToDoc.type == 'mixin' %}
+          <a href="/mixins/{{ belongsToDoc.name | slugify }}">{{ belongsToDoc.name }}</a>
+        {% else %}
+          {{ component.belongsTo | classNameToComponentName }}
+        {% endif %}
+      {% endif %}
+    </p>
+  {% endif %}
+
+  {# Related - same naming-family peers that are neither inheritance variations nor associated
+     sub-widgets (e.g. Et2Date / Et2DateDuration / Et2DateRange / Et2DateSince). Shown here rather
+     than in the sidebar, which just lists each one as its own separate entry. #}
+  {% if component.related.length %}
+    <h2>Related</h2>
+
+    <p>These widgets are related by naming but not by inheritance or sub-widget composition.</p>
+
+    <ul>
+      {% for r in component.related %}
+        <li><a href="/components/{{ r.tagName }}">{{ r.name | classNameToComponentName }}</a></li>
       {% endfor %}
     </ul>
   {% endif %}

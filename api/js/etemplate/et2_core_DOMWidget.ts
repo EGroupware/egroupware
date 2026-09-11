@@ -8,12 +8,6 @@
  * @author Andreas Stöckel
  */
 
-/*egw:uses
-	et2_core_interfaces;
-	et2_core_widget;
-	/api/js/egw_action/egw_action;
-*/
-
 import {ClassWithAttributes} from './et2_core_inheritance';
 import {et2_IDOMNode} from "./et2_core_interfaces";
 import {et2_hasChild, et2_no_init} from "./et2_core_common";

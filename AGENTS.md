@@ -72,6 +72,10 @@ Primary expectations:
     (`Api\Translation::add_app('admin')`), so for this particular pair both lang files are cross-loaded regardless
     of entry point, and a phrase used by either class can go in either `admin/lang/*` or `mail/lang/*`. Don't
     assume a one-directional gap from checking only the class you're touching - check the other side too.
+- When modifying a `.xet` file under an app's `templates/default/`, check for a `templates/mobile/` counterpart
+  with the same template id (`<template id="...">`) and apply the equivalent change there too, and vice versa.
+  These commonly drift independently - eg. a stale `autoloading=`/menuaction attribute cleaned up on one device's
+  template but left behind on the other's, even though both share the same JS app class and `et2_ready()` logic.
 - Do not make commits without explicit instructions.
 - For major/user-visible features (not routine fixes/refactors), the commit message's first line must be
   `* <app-name>: <message>` (eg. `* mail: add S/MIME CSR export/import`), so it gets picked up by the automated
@@ -82,7 +86,11 @@ Primary expectations:
 
 ## Coding standards
 
-See `doc/ai/coding-standards.md`.
+See `doc/etemplate2/pages/tutorials/web-component-authoring.md` for information on coding standards and best practices
+for webComponents.
+
+For standing incremental-modernization rules (jQuery removal, preferred ajax patterns, PHP warning
+hygiene, ...) that apply whenever you touch a section of code, see `doc/ai/modernization.md`.
 
 ## Testing
 
@@ -98,9 +106,151 @@ Before finalizing:
 
 For code review behaviour, follow `doc/ai/review-checklist.md`.
 
+## Ongoing/major project docs
+
+Larger, multi-session efforts get a dedicated doc under `doc/ai/projects/` instead of living only in
+session notes - check there before starting related work, and add one when starting a project of
+similar scope.
+
+- `doc/ai/projects/mail-jmap-modernization.md` - mail app's move to JMAP (client-side row-fetch/body
+  rendering, server-side `Api\Mail` JMAP-native dispatch for Stalwart, local JMAP shim for plain
+  IMAP accounts). Covers architecture, current status, deliberately-out-of-scope areas, and known
+  gotchas.
+- `doc/ai/projects/jsapi-modernization.md` - `api/js/jsapi`'s TS-typing port and follow-on
+  factory-closure-to-class conversion (`egw.extend()`'s ~20 modules). Covers the enumerable-merge
+  constraint that shapes every conversion, the `#private`-vs-TS-`private` field bug class, the
+  dynamic-`this`/self-capture patterns, deliberately-out-of-scope files, postponed jQuery removal,
+  and every preserved-not-fixed `KNOWN BUG`/`KNOWN QUIRK`.
+- `doc/ai/projects/et2-nextmatch-conversion.md` - per-app migration from the legacy
+  `et2_extension_nextmatch` widget (`<nextmatch>`) to the `Et2Nextmatch` web component
+  (`<et2-nextmatch>`). Covers the template-rename checklist, the legacy-widget-API-to-`Et2Nextmatch`
+  replacement table for app JS/TS, lifecycle timing pitfalls, and the `columnselection_pref` ->
+  `columnPreferenceName` audit/fix for apps already converted.
+- `doc/ai/projects/mail-bo-decoupling.md` - breaking `Api\Mail`/`mail_ui` apart into smaller,
+  independently-testable components, to fix the "large heavily-coupled legacy class with no test
+  coverage" problem shared by those two and `MailApp` (client-side). Phase 1 (4 low-risk `Api\Mail`
+  groups) done; covers the full method inventory, per-group coupling/risk assessment, and the
+  extraction discipline that emerged (no wrapper unless a separate-repo consumer needs it; delete
+  confirmed-dead code; re-check "no callers" case-insensitively for PHP method names).
+- `doc/ai/projects/mail-folder-tree-jmap.md` - planned migration of the mail folder-tree
+  (listing/autoloading/CRUD) from server-side PHP to client-side + JMAP, plus persisting tree
+  expand/collapse state per user. Covers why this must happen before decoupling the overlapping
+  `Api\Mail`/`mail_ui` folder groups, and the hard constraint that admin-impersonation of another
+  user's mailbox (`mail_acl.inc.php`) can never move client-side.
+- `doc/ai/projects/mail-wizard-jmap-oauth.md` - Mail Wizard (`admin_mail`/`mail_wizard`)
+  test harness (Phase 1, done) plus a feature roadmap (Phase 2, not started): DNS SRV
+  discovery for JMAP/IMAP/SMTP, broader OAuth support, JMAP-only account creation without
+  touching IMAP, a Stalwart-integrated-login OAuth workaround, and splitting general-JMAP
+  vs. Stalwart-specific support. Covers the wizard's step-chaining architecture, the
+  DNS/HTTP testability seam added to `admin_mail`, and a known pre-existing environment
+  blocker for the REST test (a malformed JMAP/Stalwart endpoint URL on the dev box used).
+- `doc/ai/projects/infolog-storage-migration.md` - planned replacement of InfoLog's hand-rolled
+  `infolog_so` SQL backend with the generic `Api\Storage` class, to get automatic `Api\DateTime`/
+  timezone handling and built-in custom-field support instead of InfoLog's parallel
+  implementations of both. Covers the full `infolog_so`/`infolog_bo` method inventory, the
+  non-UI consumer map (CalDAV/REST, ActiveSync/z-push, cross-app callers), the all-day-across-
+  timezones semantic gap that needs a product decision, and the phased plan (test harness first,
+  then swap only what's behind `$this->so`, external contract unchanged until a later phase).
+- `doc/ai/projects/accounts-import-test-coverage.md` - test coverage for `Api\Accounts\Import`
+  (LDAP/ADS/Univention account sync) across its 3 run modes and full config-option space, without a
+  live LDAP/AD server. Covers the code map, config-option interaction matrix, why LDAP-protocol mocking
+  is the wrong boundary (mock the backend-object contract instead), the testability obstacles found
+  (no DI seam, `self::`-bound factories, process-static caches, the `hookEditAccount` feedback loop),
+  why deletion tests are dry-run-only (the real query is unscoped against the whole shared accounts
+  table - Ralf's call: verify candidate-detection, not execution), and `run()`'s `$save_state=false`
+  testability parameter (non-test `run()` calls otherwise persist `account_import_lastrun` to real
+  config on every call, even under `dry_run`, and drifted this shared box's real value before the
+  parameter existed). ALL 5 PHASES DONE and green in `api/tests/Accounts/` (40 tests covering config
+  validation, users+groups create/update/rerun incl. primary-group remap and the Ads `getMembers()`
+  path, local-groups membership preservation, dry-run deletion-candidate detection incl. the
+  `anonymous` carve-out, incremental sync, the `dn_regexp` sharp edge, `installAsyncJob()`'s
+  frequency->cron-shape mapping, alias sync incl. LDIF export, and the full
+  `account_import_update_source` write-back path via `hookEditAccount()` incl.
+  `editaccountcontact`'s GUID-validation-failure recovery sub-branch - the write-back tests use a
+  plain `Import` subclass overriding its 2 factory methods (no reflection needed for `Import`
+  itself, since `hookEditAccount()` is a static method), plus 2 *more* reflection-based seams found
+  along the way: `Api\Config` reads its own separate private static cache (distinct from `run()`'s
+  `$GLOBALS['egw_info']['server']` path), and `Api\Contacts`'s constructor needed the same
+  `newInstanceWithoutConstructor()` bypass as `Api\Accounts` did. Found+fixed **four real production
+  bugs** along the way (see the doc's "Bugs found" section) plus confirmed two initially-suspicious
+  behaviors as intentional by design (`dn_regexp` delete-candidate interaction; `firstRunToday()`
+  never reading `account_import_time`) - and, while chasing a 3rd suspected limitation
+  (`editaccountcontact`'s recovery branch, initially believed structurally untestable), found and
+  documented a `self::`/`static::`-and-late-static-binding misunderstanding worth knowing generally:
+  `self::` calls ARE forwarding for late static binding (unlike a literal `ClassName::` call) -
+  only method *resolution* differs between `self::` (always the literal defining class's own
+  declaration) and `static::` (the possibly-overridden, late-static-bound one).
+- `doc/ai/projects/hashed-entries-build-pinning.md` - giving rollup's entry files (`app.min.js`,
+  `egw.min.js`, `etemplate2.js`) content hashes and pinning a document to one build's file graph, so
+  opening a not-yet-opened app after a rebuild stops forcing the user into a reload the build-epoch
+  design deliberately set out to spare them. Covers why the already-caught "Illegal constructor"
+  crash is not the motivation, why hashing without pinning fixes nothing, the confirmed-dead
+  `getImportMap()` trio and why an import map is probably unnecessary, the way hashing would silently
+  disable the existing `egw_import` dedup defence, the app-disclosure problem a verbatim manifest
+  would create, and why the pin must NOT live in the session (it would survive a reload and make the
+  "reload at your convenience" prompt a lie). Implemented and live (`a77de36152` +co-commits); the doc
+  now also tracks ticket #124112's follow-up findings and a running commit list. Two residual bugs
+  from that ticket still open - see the doc's "Status" section.
+- `doc/ai/projects/app-ts-modernization.md` - per-app modernization pass over each app's
+  `$app/js/app.ts`: legacy `et2_*` widget imports -> web-component imports (`import type` when the
+  widget is only ever used as a TS type), `var` -> `const`/`let`, fixing the file's own TS errors, and
+  removing jQuery in favor of native DOM APIs. One app at a time; covers the workflow used to isolate a
+  file's real TS errors from the ~5000 pre-existing repo-wide ones, and the specific fixes found so far
+  (the `Et2WidgetClass#_inst` private-field break with its `getInstanceManager()` replacement, the
+  `EgwApp.nm : Et2Nextmatch | et2_nextmatch` union needing a per-method cast, and the `app.stylite`-is-
+  untyped-EPL problem). infolog done; other apps not started.
+- `doc/ai/projects/knowledgebase-app.md` - design of a brand-new `knowledgebase` app to supersede
+  the deprecated `phpbrain` (Knowledge Base) and `wiki` apps, built on `Api\Storage`/
+  `Api\Storage\Tracking`/`Api\Categories`/`Api\Acl` rather than either legacy app's bespoke
+  persistence/ACL/history. Covers the 3-pane (category tree / nextmatch list / document view)
+  UI, the new document/comment/rating/related-document schema, the 3-tier document>category>owner
+  `Api\Acl` model (designed specifically so both legacy apps' data can be imported), dual
+  Markdown/HTML content support reusing the existing `Et2MarkdownEditMixin`/`Et2HtmlArea` widgets
+  (no new editor needed), history via the shared `egw_history_log`/`<historylog>` widget instead
+  of wiki's full-copy-per-revision storage, and migration mappings from both legacy apps. Design
+  phase, no code written yet - deferred for later phases: multi-category-per-document, public/
+  anonymous access, and phpbrain's FAQ-style question-intake pipeline.
+- `doc/ai/projects/link-url-support.md` - `Api\Link`/`egw_links` enhancement letting any app's
+  entry hold arbitrary external URLs, via a new `Link::URL_APPNAME = 'url'` pseudo-app (mirrors
+  the existing `VFS_APPNAME` special case) rather than a per-app URL table. Covers the schema
+  change (`link_id2` widened to `varchar(1024)`, prefix-indexed to 64 chars via the schema DSL's
+  `'colname(64)'` length-suffix syntax, `link_lastmod` split out into its own standalone index),
+  the `Link::title()`/`Link\Storage::_add2links()` fixes a pseudo-app needs (both silently drop
+  such links otherwise - the ACL/access-checking code's assumption that every "other side" of a
+  link is a real installed app), the `et2-link*` widget UI (an "URL" option in the existing link-
+  app picker swaps the search combo for a plain URL input, then the existing (Link) button/ajax
+  path - already fully generic - just works, no new widgets or endpoints needed), and a small
+  inline-SVG icon (no new asset file). Done and tested.
+- `doc/ai/projects/calendar-rrule-standards-gap.md` - maps how far `calendar_rrule` (the whole
+  recurrence engine, shared by the UI, DB storage, iCal import/export, and the JSCalendar REST read
+  path) falls short of RFC 5545 - single-implicit-BYDAY/BYMONTHDAY only, no BYMONTH/BYYEARDAY/
+  BYWEEKNO/BYSETPOS/BYHOUR-MINUTE-SECOND, COUNT irreversibly collapsed to UNTIL, RRULE+RDATE
+  mutually exclusive, WKST read from the viewing user's live preference instead of stored per
+  event - ahead of two future features (a real stored RRULE + library-based interpretation, and
+  REST support for creating/updating recurring events). Covers the full gap table plus several
+  concrete bugs found while building the harness (a crash importing RRULE+RDATE together with
+  UNTIL, order-dependent semantic loss for RRULE+RDATE without UNTIL, a `monthly_byday_num`
+  int/float docblock mismatch, YEARLY leap-day drift, JSCalendar's `byDay` not being a JSON array
+  as RFC 8984 requires). Mapping + test harness (`calendar/tests/RruleTest.php`,
+  `IcalRruleRoundtripTest.php`, `JsCalendarRecurrenceTest.php`) done; schema redesign and REST
+  write support are future phases, not started.
+
 ## Security and data handling
 
 - Do not commit secrets, tokens, credentials, private keys, or production data.
+- Do not put a real person's personal data - email addresses, names, message subjects/content, IP
+  addresses, or similar - into test fixtures, code comments, commit messages, or docs, even when
+  describing a real bug found against a real message/account (own accounts under your control, e.g.
+  ralf@/rb@egroupware.org, are fine to reference). There is no consent to publish a third party's
+  data this way, and unlike a private bug tracker this repo's history is public. If a real example
+  is genuinely useful for understanding the bug, replace it with an anonymized/synthetic
+  equivalent that demonstrates the same shape (a fake name/address like `sender@example.invalid`, a
+  generated key/message fixture, a made-up subject line) - describe the fact pattern ("a sender
+  using Content-Transfer-Encoding: base64 on the signature part"), not the identity behind it. This
+  applies retroactively too: if you notice already-committed text like this (yours or someone
+  else's), redact it in a new commit rather than leaving it - and flag to the user immediately if
+  it turns out to already be pushed to a public remote, since a new commit alone doesn't remove it
+  from history.
 - Do not weaken authentication, authorization, validation, escaping, or CSRF protections.
 - Treat user input as unsafe.
 - Preserve existing permission checks.

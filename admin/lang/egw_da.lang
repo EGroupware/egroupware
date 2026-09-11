@@ -275,7 +275,6 @@ if no acl records for user or any group the user is a member of	admin	da	Hvis in
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	da	Hvis LDAP bruges, vil du håndtere hjemmemapper og loginshells atributter?
 imap admin password	admin	da	IMAP admin adgangskode
 imap admin user	admin	da	IMAP admin bruger
-imap server	admin	da	IMAP Server
 imap server hostname or ip address	admin	da	IMAP server domænenavn eller IP adresse
 imap server logintyp	admin	da	IMAP server login type
 imap server port	admin	da	IMAP server port

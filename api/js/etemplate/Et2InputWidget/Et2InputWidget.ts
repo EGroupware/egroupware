@@ -1,4 +1,4 @@
-import {css, html, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
+import {html, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
 import {et2_IInput, et2_IInputNode, et2_ISubmitListener} from "../et2_core_interfaces";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {HasSlotController} from "../Et2Widget/slot";
@@ -13,6 +13,7 @@ import {Et2TabPanel} from "../Layout/Et2Tabs/Et2TabPanel";
 import type {Et2Tabs} from "../Layout/Et2Tabs/Et2Tabs";
 
 
+import styles from "./Et2InputWidget.styles";
 /**
  * This mixin will allow any LitElement to become an Et2InputWidget
  *
@@ -198,77 +199,40 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		{
 			return [
 				...super.styles,
-				css`
-				  /* Allow actually disabled inputs */
-
-				  :host([disabled]) {
-					display: initial;
-				  }
-
-				  /* Needed so required can show through */
-
-				  ::slotted(input), input {
-					background-color: transparent;
-				  }
-
-				  /* Used to allow auto-sizing on slotted inputs */
-
-				  .input-group__container > .input-group__input ::slotted(.form-control) {
-					width: 100%;
-				  }
-
-				  .form-control__help-text {
-					position: relative;
-					  width: 100%;
-				  }
-				`
+				styles
 			];
 		}
 
-		static get properties()
-		{
-			return {
-				...super.properties,
-				/**
-				 * The label of the widget
-				 * Overridden from parent to use our accessors
-				 */
-				label: {
-					type: String, noAccessor: true
-				},
+		// readonly is what is in the templates
+		// I put this in here so loadWebComponent finds it when it tries to set it from the template
+		@property({type: Boolean, reflect: true})
+		readonly : boolean = false;
 
-				// readonly is what is in the templates
-				// I put this in here so loadWebComponent finds it when it tries to set it from the template
-				readonly: {
-					type: Boolean,
-					reflect: true
-				},
+		@property({type: Boolean, reflect: true})
+		required : boolean = false;
 
-				required: {
-					type: Boolean,
-					reflect: true
-				},
-				onchange: {
-					type: Function
-				},
-				/**
-				 * Have browser focus this input on load.
-				 * Overrides etemplate2.focusOnFirstInput(), use only once per page
-				 * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attributes
-				 */
-				autofocus: {
-					type: Boolean,
-					reflect: true
-				},
+		@property({type: Function})
+		onchange : any;
 
-				autocomplete: {
-					type: String
-				},
-				ariaLabel : String,
-				ariaDescription : String,
-				helpText : String,
-			};
-		}
+		/**
+		 * Have browser focus this input on load.
+		 * Overrides etemplate2.focusOnFirstInput(), use only once per page
+		 * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attributes
+		 */
+		@property({type: Boolean, reflect: true})
+		autofocus : boolean;
+
+		@property({type: String})
+		autocomplete : string = 'on';
+
+		@property()
+		ariaLabel : string;
+
+		@property()
+		ariaDescription : string;
+
+		@property()
+		helpText : string;
 
 		/**
 		 * List of properties that get translated
@@ -315,14 +279,11 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			this.defaultValidators = [];
 			this._messagesHeldWhileFocused = [];
 
-			this.readonly = false;
-			this.required = false;
 			this._oldValue = this.getValue();
 
 			this.et2HandleFocus = this.et2HandleFocus.bind(this);
 			this.et2HandleBlur = this.et2HandleBlur.bind(this);
 			this.handleSlChange = this.handleSlChange.bind(this);
-			this.autocomplete = 'on';
 		}
 
 		connectedCallback()
@@ -390,6 +351,17 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		 *
 		 * @param changedProperties
 		 */
+		willUpdate(changedProperties : PropertyValues)
+		{
+			super.willUpdate(changedProperties);
+
+			if(changedProperties.has("value"))
+			{
+				// Base off this.value, not this.getValue(), to ignore readonly
+				this.classList.toggle("hasValue", !(this.value == null || this.value == ""));
+			}
+		}
+
 		updated(changedProperties : PropertyValues)
 		{
 			super.updated(changedProperties);
@@ -403,12 +375,6 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 				{
 					this.validators.push(new Required());
 				}
-			}
-
-			if(changedProperties.has("value"))
-			{
-				// Base off this.value, not this.getValue(), to ignore readonly
-				this.classList.toggle("hasValue", !(this.value == null || this.value == ""));
 			}
 
 			// pass aria-attributes to our input node

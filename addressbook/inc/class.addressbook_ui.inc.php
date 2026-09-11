@@ -226,7 +226,9 @@ class addressbook_ui extends addressbook_bo
 			Framework::message($msg ? $msg : $_GET['msg']);
 		}
 
-		//$content['nm'] = Api\Cache::getSession('addressbook', str_replace('addressbook.', '', $template ?? 'index'));
+		// restore the full nm state (incl. get_rows, actions, row_id, ...) cached by the last get_rows() call,
+		// so a resubmit (eg. an action) does not fall through to the defaults below and overwrite filter2/search
+		$content['nm'] = Api\Cache::getSession('addressbook', str_replace('addressbook.', '', $template ?? 'index'));
 		if (!is_array($content['nm']))
 		{
 			$content['nm'] = array(
@@ -235,7 +237,12 @@ class addressbook_ui extends addressbook_bo
 				'never_hide'     => True,		// I  never hide the nextmatch-line if less then maxmatch entrie
 				'start'          =>	0,			// IO position in list
 				'cat_id'         =>	'',			// IO category, if not 'no_cat' => True
-				'search'         =>	($template ?? 'addressbook.index') === 'addressbook.select' ? '@' : '', // IO search pattern
+				// "@" alone only reliably matches emails via legacy substring search; force that with the
+				// "legacy:" prefix, but only when the rag app is installed to strip it again --- without
+				// rag, Api\Storage::process_search() never parses that prefix at all and passes it through
+				// literally, which would break the match instead of fixing it
+				'search'         =>	($template ?? 'addressbook.index') === 'addressbook.select'
+					? (class_exists('EGroupware\\Rag\\Embedding') ? 'legacy:@' : '@') : '', // IO search pattern
 				'main-template'  => $template ?? 'addressbook.index',   // do NOT use "template"!
 				'order'          =>	'n_family',	// IO name of the column to sort after (optional for the sortheaders)
 				'sort'           =>	'ASC',		// IO direction of the sort: 'ASC' or 'DESC'
@@ -2114,14 +2121,14 @@ class addressbook_ui extends addressbook_bo
 					if ($show_custom_fields)
 					{
 						$selected_cfs = array();
-						if(in_array('customfields',$columselection))
+						foreach($columselection as $col)
 						{
-							foreach($columselection as $col)
-							{
-								if ($col[0] == '#') $selected_cfs[] = substr($col,1);
-							}
+							if ($col[0] == '#') $selected_cfs[] = substr($col,1);
 						}
 						$selected_cfs = array_unique(array_merge($selected_cfs, (array)$this->config['index_load_cfs']));
+						// no individual custom fields selected as their own columns: the "customfields"
+						// column shows them all, so load them all instead of nothing
+						if (!$selected_cfs) $selected_cfs = array_keys($this->customfields);
 						$customfields = $this->read_customfields($ids,$selected_cfs);
 					}
 					if ($show_calendar && !empty($ids)) $calendar = $this->read_calendar($calendar_participants);
@@ -3464,34 +3471,23 @@ class addressbook_ui extends addressbook_bo
 	/**
 	 * convert email-address in compose link
 	 *
+	 * Used to dispatch to whichever mail-ish app was installed, each via its own classic
+	 * menuaction (mail.mail_compose.compose, dropped together with mail_compose::compose() itself;
+	 * felamimail and the "email" app are long gone too) - all replaced by a plain "mailto:" href,
+	 * which egw_open.ts's own open_link() already special-cases, routing it through mailto()'s
+	 * client-side parsing into mail/compose.php's own compose popup (doc/ai/projects/
+	 * mail-compose-jmap-migration.md, Step 10) - no menuaction/app-installed check needed at all,
+	 * a mailto: href degrades gracefully to the browser's own default handler regardless (found
+	 * live 2026-09-08, ralf: "addressbook_ui and collabora app have the same issue" as invoices'
+	 * own dropped-menuaction bug; "remove the felamimail case" / "also the 'email' case, also dead").
+	 *
 	 * @param string $email email-addresse
-	 * @return array/string array with get-params or mailto:$email, or '' or no mail addresse
+	 * @return string mailto:$email, or '' for no mail address
 	 */
 	function email2link($email)
 	{
 		if (strpos($email,'@') == false) return '';
 
-		if($GLOBALS['egw_info']['user']['apps']['mail'])
-		{
-			return array(
-				'menuaction' => 'mail.mail_compose.compose',
-				'send_to'    => base64_encode($email)
-			);
-		}
-		if($GLOBALS['egw_info']['user']['apps']['felamimail'])
-		{
-			return array(
-				'menuaction' => 'felamimail.uicompose.compose',
-				'send_to'    => base64_encode($email)
-			);
-		}
-		if($GLOBALS['egw_info']['user']['apps']['email'])
-		{
-			return array(
-				'menuaction' => 'email.uicompose.compose',
-				'to' => $email,
-			);
-		}
 		return 'mailto:' . $email;
 	}
 

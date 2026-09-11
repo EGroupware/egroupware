@@ -71,7 +71,6 @@ is resource buyable?	resources	nl	Is hulpbron te kopen?
 is the ressource bookable?	resources	nl	Is het middel boekbaar?
 is this resource bookable?	resources	nl	Is deze hulpbron te boeken?
 is this resource buyable?	resources	nl	Is deze hulpbron te kopen?
-links	resources	nl	Links
 location	resources	nl	Locatie
 location of resource	resources	nl	Locatie van de hulpbron
 location:	resources	nl	Locatie

@@ -189,7 +189,6 @@ ldap settings for contacts	admin	ca	Paràmetres LDAP per contactes
 ldif	addressbook	ca	LDIF
 line 2	addressbook	ca	Línia 2
 link title for contacts show	addressbook	ca	Títol d'enllaç per mostrar contactes
-links	addressbook	ca	Enllaços
 list all categories	addressbook	ca	Llista totes les categories
 list all customfields	addressbook	ca	Llista tots els camps personalitzats
 list already exists!	addressbook	ca	La llista ja existeix!

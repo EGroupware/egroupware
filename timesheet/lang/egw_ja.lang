@@ -82,7 +82,6 @@ leave it empty for a full week	timesheet	ja	空にすると週7日間全部
 leaves without saveing	timesheet	ja	保存せずに終了
 length<br>rows	timesheet	ja	長さ<br>行
 link title	timesheet	ja	リンクタイトル
-links	timesheet	ja	リンク
 links and attached files	timesheet	ja	リンクと添付ファイル
 links to specified application.  example: {{links/infolog}}	timesheet	ja	指定されたアプリケーションへのリンク。  例: {{links/infolog}}
 list of files linked to the current record	timesheet	ja	現在のレコードにリンクされているファイルの一覧

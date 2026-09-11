@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="filemanager.index.rows" template="" lang="" group="0" version="1.7.002">
+	<et2-template  id="filemanager.index.rows" template="" lang="" group="0" version="1.7.002">
 		<grid width="100%">
 			<columns>
 				<column width="10"/>
@@ -18,18 +19,18 @@
 						<et2-vfs-mime  align="center" id="$row"></et2-vfs-mime>
 					</et2-vbox>
 					<et2-vbox>
-						<et2-vfs-name id="${row}[name]" readonly="true"/>
+						<et2-vfs-name  id="${row}[name]" readonly="true"/>
 						<et2-description  id="${row}[comment]"></et2-description>
 					</et2-vbox>
 					<et2-vbox>
-						<vfs-size align="right" id="${row}[size]"/>
-						<et2-date-time-today id="${row}[mtime]"></et2-date-time-today>
+						<et2-vfs-size  align="right" id="${row}[size]"/>
+						<et2-date-time-today  id="${row}[mtime]"></et2-date-time-today>
 					</et2-vbox>
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="filemanager.index.header_right" template="" lang="" group="0" version="1.9.002">
+	</et2-template>
+	<et2-template  id="filemanager.index.header_right" template="" lang="" group="0" version="1.9.002">
 		<et2-hbox  class="buttons">
 			<et2-button  statustext="Rename, change permissions or ownership" label="Edit settings" id="button[edit]" onclick="app.filemanager.editprefs();" image="edit" noSubmit="true"></et2-button>
 			<et2-button  label="Create directory" id="button[createdir]" onclick="app.filemanager.createdir();" image="button_createdir" noSubmit="true" roImage="createdir_disabled"></et2-button>
@@ -42,25 +43,20 @@
 			<et2-button  label="File a file" onclick="window.open(egw::link('/index.php','menuaction=stylite.stylite_filemanager.upload'),'_blank','dependent=yes,width=550,height=350,scrollbars=yes,status=yes'); return false;" image="upload"></et2-button>
 		</et2-hbox>
 		<et2-dropdown-button  id="new" onchange="app.filemanager.create_new" label="New" onclick="app.filemanager.create_new"></et2-dropdown-button>
-	</template>
-	<template id="filemanager.index" template="" lang="" group="0" version="1.9.003">
+	</et2-template>
+	<et2-template  id="filemanager.index" template="" lang="" group="0" version="1.9.003">
         <!-- toolbar slot is modified by app.ts -->
-        <et2-toolbar id="toolbar" slot="main-header">
-            <et2-button label="Go to your home directory" image="gohome" onclick="app.filemanager.change_dir('~',widget);" id="home"></et2-button>
-            <et2-button label="Up" image="goup" onclick="app.filemanager.change_dir('..',widget);" id="up"></et2-button>
-            <et2-vfs-path label="Path" id="path" onchange="app.filemanager.handlePathChange" class="address">
-                <et2-image src="filemanager/navbar" slot="prefix"></et2-image>
+        <et2-toolbar  id="toolbar" slot="main-header">
+            <et2-button  label="Go to your home directory" image="gohome" onclick="app.filemanager.change_dir('~',widget);" id="home"></et2-button>
+            <et2-button  label="Up" image="goup" onclick="app.filemanager.change_dir('..',widget);" id="up"></et2-button>
+            <et2-vfs-path  label="Path" id="path" onchange="app.filemanager.handlePathChange" class="address">
+                <et2-image  src="filemanager/navbar" slot="prefix"></et2-image>
             </et2-vfs-path>
         </et2-toolbar>
-        <et2-vfs-upload aria-label="Upload" statustext="Select file to upload in current directory" id="upload" class="plus_button"
-                        style="flex: none;"
-                        path="{$cont['path']}/"
-                        dropTarget="filemanager-index" multiple="true"
-                        onchange="widget.value={}; return false;"
-                        image="plus-circle"
+        <et2-vfs-upload  statustext="Select file to upload in current directory" id="upload" class="plus_button" style="flex: none;" path="{$cont['path']}/" dropTarget="filemanager-index" multiple="true" onchange="widget.value={}; return false;" image="plus-circle" ariaLabel="Upload"
         >
-            <et2-button class="plus_button" size="large" noSubmit="true" slot="button"></et2-button>
+            <et2-button-icon  class="plus_button" size="large" noSubmit="true" slot="button" image="plus-lg"></et2-button-icon>
         </et2-vfs-upload>
-        <nextmatch id="nm" template="filemanager.index.rows" header_right="filemanager.index.header_right"/>
-	</template>
+        <et2-nextmatch  id="nm" template="filemanager.index.rows" headerRight="filemanager.index.header_right"></et2-nextmatch>
+	</et2-template>
 </overlay>

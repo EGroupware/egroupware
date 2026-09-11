@@ -484,6 +484,117 @@ class Cache
 	const SESSION_EXPIRATION_PREFIX = '*expiration*';
 
 	/**
+	 * Pending session-cache writes made while the PHP session is closed ([app][location] => data,
+	 * or a closure for values obtained by-reference via getSession() and possibly mutated after the
+	 * session was closed - see getSession()'s docblock).
+	 *
+	 * Only used/populated when a caller mutates the session cache while session_status() is not
+	 * PHP_SESSION_ACTIVE (eg. after Json\Request closes the session early to not block concurrent
+	 * requests) - flushed and cleared by flush_session_writes().
+	 *
+	 * @var array
+	 */
+	private static array $closed_session_writes = [];
+
+	/**
+	 * Record a session-cache write made while the session is closed, instead of touching $_SESSION
+	 * directly (writing into a CLOSED session's $_SESSION is silently lost the next time
+	 * session_start() reloads it from storage - it must go through this buffer instead).
+	 *
+	 * @param string $app
+	 * @param string $location
+	 * @param mixed $data null: unset, otherwise value to set, or a closure re-evaluated in
+	 *  flush_session_writes() returning the value to set, or null to not write anything
+	 */
+	private static function recordClosedSessionWrite($app, $location, $data)
+	{
+		if (session_status() !== PHP_SESSION_ACTIVE)
+		{
+			self::$closed_session_writes[$app][$location] = $data;
+		}
+	}
+
+	/**
+	 * Apply any pending writes recorded while the session was closed
+	 *
+	 * If there's anything to write, reopens the session (safe here: nothing in the buffer has
+	 * touched $_SESSION itself, so reloading it fresh from storage can't clobber anything),
+	 * applies the buffered writes, and leaves the session open for the caller (typically
+	 * Egw::__destruct()'s own commit_session() call right after) to close normally.
+	 *
+	 * Registered via Egw::on_shutdown() - the method name deliberately contains "session" so it
+	 * runs in Egw::__destruct()'s pre-close pass, before the response is flushed to the client.
+	 */
+	public static function flush_session_writes()
+	{
+		// first resolve closures (getSession()-by-reference values that may have been mutated
+		// after the session closed) to the value they should be written as, if changed at all
+		foreach(self::$closed_session_writes as $app => $app_data)
+		{
+			foreach($app_data as $location => $data)
+			{
+				if ($data instanceof \Closure)
+				{
+					$resolved = $data();
+					if (isset($resolved))
+					{
+						self::$closed_session_writes[$app][$location] = $resolved;
+					}
+					else
+					{
+						unset(self::$closed_session_writes[$app][$location]);
+						if (!self::$closed_session_writes[$app]) unset(self::$closed_session_writes[$app]);
+					}
+				}
+			}
+		}
+		if (!self::$closed_session_writes)
+		{
+			return;
+		}
+		if (empty($GLOBALS['egw']->session) || empty($GLOBALS['egw']->session->sessionid))
+		{
+			self::$closed_session_writes = [];	// no session (eg. async service) to write to
+			return;
+		}
+		// PHP's session_start() unconditionally refuses to (re)start a session once headers/output
+		// have been sent, regardless of session.use_cookies - so this must run before the response
+		// is flushed (Egw::__destruct() runs "session"-named on_shutdown callbacks, this one
+		// included, before Json\Response::sendResult() for exactly this reason). Cookie/cache-limiter
+		// header sending is still disabled here as defense in depth for the one legitimate case that
+		// genuinely reopens post-flush (importexport_import_ui::feedback()'s explicit
+		// fastcgi_finish_request()-then-keep-processing pattern, which only tells the webserver the
+		// response is complete - the PHP worker keeps running) - the session's cookie was already
+		// sent earlier for an existing session, so it doesn't need sending again, matching the same
+		// pattern Session::init_handler() uses for its own programmatic session_start() calls.
+		ini_set('session.use_cookies', 0);
+		session_cache_limiter('');
+		session_name(Session::EGW_SESSION_NAME);
+		session_id($GLOBALS['egw']->session->sessionid);
+		if (!session_start())
+		{
+			error_log(__METHOD__."() could NOT reopen session to write: ".json_encode(self::$closed_session_writes));
+			self::$closed_session_writes = [];
+			return;
+		}
+		foreach(self::$closed_session_writes as $app => $app_data)
+		{
+			foreach($app_data as $location => $data)
+			{
+				if (isset($data))
+				{
+					self::setSession($app, $location, $data);
+				}
+				else
+				{
+					self::unsetSession($app, $location);
+				}
+			}
+		}
+		self::$closed_session_writes = [];
+	}
+
+	/**
 	 * Set some data in the cache for the whole source tree (all instances)
 	 *
 	 * @param string $app application storing data
@@ -504,11 +615,27 @@ class Cache
 		{
 			return false;
 		}
+		// Written to $_SESSION unconditionally (not just while PHP_SESSION_ACTIVE): a closed
+		// session's $_SESSION is otherwise stale for the rest of THIS request too (not just
+		// across a later reopen), eg. a json.php request setSession()-ing then getSession()-ing
+		// the same value while the session stays closed the whole time (real example:
+		// Mail\Smime's cached passphrase) would read back null. Safe to do even though the
+		// session is closed: nothing re-reads $_SESSION from storage until flush_session_writes()
+		// (or a real session_start()) does, and that always replays every buffered write back in
+		// afterwards regardless of what $_SESSION held in between - see flush_session_writes().
 		$_SESSION[Session::EGW_APPSESSION_VAR][$app][$location] = $data;
+		if (session_status() !== PHP_SESSION_ACTIVE)
+		{
+			self::recordClosedSessionWrite($app, $location, $data);
+		}
 
 		if ($expiration > 0)
 		{
 			$_SESSION[Session::EGW_APPSESSION_VAR][self::SESSION_EXPIRATION_PREFIX.$app][$location] = time()+$expiration;
+			if (session_status() !== PHP_SESSION_ACTIVE)
+			{
+				self::recordClosedSessionWrite(self::SESSION_EXPIRATION_PREFIX.$app, $location, time()+$expiration);
+			}
 		}
 
 		return true;
@@ -517,7 +644,10 @@ class Cache
 	/**
 	 * Get some data from the cache for the whole source tree (all instances)
 	 *
-	 * Returns a reference to the var in the session!
+	 * Returns a reference to the var in the session! @deprecated using that reference to mutate
+	 * the value instead of calling setSession() explicitly still works, but is only detected via a
+	 * comparison snapshot at shutdown (a performance penalty paid only by callers still using this
+	 * pattern) - prefer reading the return value and calling setSession() explicitly for new code.
 	 *
 	 * @param string $app application storing data
 	 * @param string $location location name for data
@@ -551,6 +681,22 @@ class Cache
 		if (!isset($_SESSION[Session::EGW_APPSESSION_VAR][$app][$location]) && !is_null($callback))
 		{
 			$_SESSION[Session::EGW_APPSESSION_VAR][$app][$location] = call_user_func_array($callback,$callback_params);
+			if (session_status() !== PHP_SESSION_ACTIVE)
+			{
+				self::recordClosedSessionWrite($app, $location, $_SESSION[Session::EGW_APPSESSION_VAR][$app][$location]);
+			}
+		}
+		// the returned reference could be used to mutate the value without calling setSession() -
+		// only relevant if the session is (or becomes) closed, so only guard against that case:
+		// snapshot the current value and register a closure re-checking it at flush time.
+		if (session_status() !== PHP_SESSION_ACTIVE)
+		{
+			$snapshot = $_SESSION[Session::EGW_APPSESSION_VAR][$app][$location] ?? null;
+			self::recordClosedSessionWrite($app, $location, static function() use ($app, $location, $snapshot)
+			{
+				$current = $_SESSION[Session::EGW_APPSESSION_VAR][$app][$location] ?? null;
+				return $current !== $snapshot ? $current : null;
+			});
 		}
 		return $_SESSION[Session::EGW_APPSESSION_VAR][$app][$location];
 	}
@@ -573,14 +719,25 @@ class Cache
 		if (isset($_SESSION[Session::EGW_APPSESSION_VAR][self::SESSION_EXPIRATION_PREFIX.$app][$location]) &&
 			$_SESSION[Session::EGW_APPSESSION_VAR][self::SESSION_EXPIRATION_PREFIX.$app][$location] < time())
 		{
+			// see setSession()'s comment: $_SESSION is unset unconditionally, not just while
+			// PHP_SESSION_ACTIVE, so a same-request read while still closed sees it too
 			unset($_SESSION[Session::EGW_APPSESSION_VAR][$app][$location],
 				$_SESSION[Session::EGW_APPSESSION_VAR][self::SESSION_EXPIRATION_PREFIX.$app][$location]);
+			if (session_status() !== PHP_SESSION_ACTIVE)
+			{
+				self::recordClosedSessionWrite($app, $location, null);
+				self::recordClosedSessionWrite(self::SESSION_EXPIRATION_PREFIX.$app, $location, null);
+			}
 		}
 		if (!isset($_SESSION[Session::EGW_APPSESSION_VAR][$app][$location]))
 		{
 			return false;
 		}
 		unset($_SESSION[Session::EGW_APPSESSION_VAR][$app][$location]);
+		if (session_status() !== PHP_SESSION_ACTIVE)
+		{
+			self::recordClosedSessionWrite($app, $location, null);
+		}
 
 		return true;
 	}

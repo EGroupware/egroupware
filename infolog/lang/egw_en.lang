@@ -286,7 +286,6 @@ limit number of description lines (default 5, 0 for no limit)	infolog	en	Limit n
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	en	Limit width of description column. Effective only if lines limit is set. 0 = no limit.
 link	infolog	en	Link
 linked to %1	infolog	en	Linked to %1
-links	infolog	en	Links
 links and attached files	infolog	en	Links and attached files
 links of this entry	infolog	en	Links of this entry
 links to specified application.  example: {{links/infolog}}	infolog	en	Links to specified application. Example: {{links/infolog}}

@@ -1,6 +1,6 @@
 # Tracker REST API
 
-A full **CRUD REST API** for the EGroupware **Tracker** app (bug/issue tracker), exposed via the
+A **CRUD REST API** for the EGroupware **Tracker** app (bug/issue tracker), exposed via the
 GroupDAV endpoint alongside Addressbook, Calendar, Infolog, and Timesheet.
 
 ---
@@ -11,10 +11,9 @@ GroupDAV endpoint alongside Addressbook, Calendar, Infolog, and Timesheet.
 https://example.egroupware.org/egroupware/groupdav.php/{user}/tracker/
 ```
 
-| Part   | Description |
-|--------|-------------|
+| Part | Description |
+|------|-------------|
 | `{user}` | EGroupware username (e.g. `admin`, `sysop`). Scopes the collection to that user's tickets. |
-
 
 **Required headers for JSON:**
 
@@ -23,25 +22,22 @@ https://example.egroupware.org/egroupware/groupdav.php/{user}/tracker/
 | All reads | `Accept: application/json` |
 | POST / PUT / PATCH | `Content-Type: application/json` |
 
-
 ---
 
 ## 2. Endpoints Overview
 
 | Method | URL | Description |
 |--------|-----|-------------|
-| `GET` | `.../tracker/` | List all accessible tickets |
-| `GET` | `.../tracker/{id}` | Fetch a single ticket (includes all replies) |
+| `GET` | `.../tracker/` | List all accessible tickets (up to 500) |
+| `GET` | `.../tracker/{id}` | Fetch a single ticket |
 | `POST` | `.../tracker/` | Create a new ticket |
 | `PATCH` | `.../tracker/{id}` | Partial update (only supplied fields) |
 | `PUT` | `.../tracker/{id}` | Full replace |
 | `DELETE` | `.../tracker/{id}` | Delete a ticket |
-| `GET` | `.../tracker/{id}/replies/` | List all replies on a ticket |
-| `GET` | `.../tracker/{id}/replies/{reply_id}` | Fetch a single reply |
-| `POST` | `.../tracker/{id}/replies/` | Add a reply to a ticket |
-| `PUT` | `.../tracker/{id}/replies/{reply_id}` | Replace a reply |
-| `PATCH` | `.../tracker/{id}/replies/{reply_id}` | Partially update a reply |
-| `DELETE` | `.../tracker/{id}/replies/{reply_id}` | Delete a reply |
+
+> **Replies/comments** and **filter parameters** are not yet exposed through this REST API.
+> Attachments are accessible via the standard Links/Attachments facility described in
+> [Links-and-attachments.md](Links-and-attachments.md).
 
 ---
 
@@ -51,31 +47,17 @@ This is the canonical shape returned by GET and accepted by POST / PUT / PATCH.
 
 ```json
 {
-  "@type":       "Ticket",
-  "id":          42,
-  "summary":     "Login page crashes on mobile",
+  "@type":      "Ticket",
+  "id":         42,
+  "uid":        "42",
+  "title":      "Login page crashes on mobile",
   "description": "Steps to reproduce: ...",
-  "tracker":     8,
-  "status":      "Open",
-  "priority":    5,
-  "completion":  0,
-  "startDate":   "2026-05-25T00:00:00Z",
-  "dueDate":     "2026-06-01T00:00:00Z",
-  "closed":      null,
-  "private":     false,
-  "category":    "Bug",
-  "version":     null,
-  "creator":     "admin",
-  "created":     "2026-05-25T10:00:00Z",
-  "modified":    "2026-05-25T11:30:00Z",
-  "modifier":    "admin",
-  "assigned": [
-    { "uid": "urn:ietf:params:scim:schemas:core:2.0:User:admin" }
-  ],
-  "cc":   null,
-  "group": "Admins",
-  "egroupware.org:customfields": {},
-  "etag": "42:1748167200"
+  "status":     "open",
+  "priority":   5,
+  "private":    false,
+  "created":    "2026-05-25T10:00:00+00:00",
+  "modified":   "2026-05-25T11:30:00+00:00",
+  "closed":     null
 }
 ```
 
@@ -85,27 +67,15 @@ This is the canonical shape returned by GET and accepted by POST / PUT / PATCH.
 |-------|------|----------|-------------|
 | `@type` | `"Ticket"` | No | Always `"Ticket"`. Ignored on write. |
 | `id` | integer | No | Ticket ID. Auto-assigned on POST. |
-| `summary` | string | Yes | **Required on POST/PUT.** One-line title. |
-| `description` | string | Yes | Full description. Only settable on creation (read-only on PATCH/PUT for non-admins). |
-| `tracker` | integer | Yes | Queue/category ID. Auto-set to first available queue if omitted on POST. |
-| `status` | string | Yes | See [Status Values](#11-status-values). |
-| `priority` | integer (1–9) | Yes | See [Priority Values](#12-priority-values). |
-| `completion` | integer (0–100) | Yes* | Percentage complete. *Requires assignee or admin role. |
-| `startDate` | UTC datetime | Yes | ISO 8601, e.g. `"2026-05-25T00:00:00Z"`. |
-| `dueDate` | UTC datetime | Yes | ISO 8601. |
-| `closed` | UTC datetime | No | Auto-set when status → Closed. |
+| `uid` | string | No | Stable identifier — the caldav_name if the ticket was created via REST, otherwise the numeric ID as a string. |
+| `title` | string | Yes | **Required on POST/PUT.** One-line summary. |
+| `description` | string | Yes | Full description. Omitted from the response when empty. |
+| `status` | string | Yes | Lowercase status string. See [Status Values](#6-status-values). |
+| `priority` | integer (1–9) | Yes | See [Priority Values](#7-priority-values). |
 | `private` | boolean | Yes | `true` = visible only to creator and admins. |
-| `category` | string/int | Yes | EGroupware category name or ID. |
-| `version` | string/int | Yes | Version category name or ID. |
-| `creator` | string | Yes* | Username. Auto-set to authenticated user on POST. |
-| `created` | UTC datetime | No | Auto-set on creation. |
-| `modified` | UTC datetime | No | Auto-set on every save. |
-| `modifier` | string | No | Auto-set on every save. |
-| `assigned` | array | Yes | Array of `{ "uid": "urn:ietf:params:scim:...User:{login}" }` objects. |
-| `cc` | string | Yes | Comma-separated email addresses for CC notifications. |
-| `group` | string | Yes* | Responsible group name. Requires technician or admin role. |
-| `egroupware.org:customfields` | object | Yes | Custom field key → value map. |
-| `etag` | string | No | Used for optimistic concurrency (`If-Match` header). |
+| `created` | ISO 8601 datetime | No | Auto-set on creation. Omitted when not available. |
+| `modified` | ISO 8601 datetime | No | Auto-set on every save. Omitted when not available. |
+| `closed` | ISO 8601 datetime | No | Auto-set when status → `closed`. Omitted when not set. |
 
 ---
 
@@ -117,19 +87,7 @@ Accept: application/json
 ```
 
 Returns a JSON object keyed by the ticket's path. Each value is a ticket object.
-
-**Query Parameters:**
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `nresults` | integer | Limit the number of results (default: unlimited). |
-| `filters[search]` | string | Full-text search across summary and description. |
-| `filters[status]` | string | Filter by status label (`Open`, `Closed`, `Pending`). |
-| `filters[priority]` | integer | Filter by priority (1–9). |
-| `filters[tracker]` | integer | Filter by queue/category ID. |
-| `filters[assigned]` | string/int | Filter by assigned user (login name or account ID). |
-| `filters[linked]` | string | Filter by linked record, format: `"<app>:<id>"` e.g. `"infolog:5"`. |
-| `filters[#cf_name]` | string | Filter by custom field value (prefix name with `#`). |
+The collection is limited to 500 tickets and no filter parameters are supported.
 
 **Response `200 OK`:**
 
@@ -137,20 +95,17 @@ Returns a JSON object keyed by the ticket's path. Each value is a ticket object.
 {
   "responses": {
     "/admin/tracker/2": {
-      "@type": "Ticket",
-      "id": 2,
-      "summary": "Fix login crash",
-      "status": "Open",
+      "@type":    "Ticket",
+      "id":       2,
+      "uid":      "2",
+      "title":    "Fix login crash",
+      "status":   "open",
       "priority": 5,
-      "creator": "admin",
-      "created": "2026-05-20T15:55:24Z",
-      "modified": "2026-05-20T16:15:18Z",
-      "modifier": "admin",
-      "group": "Admins",
-      "etag": "2:1779293718",
-      "private": false
+      "private":  false,
+      "created":  "2026-05-20T15:55:24+00:00",
+      "modified": "2026-05-20T16:15:18+00:00"
     },
-    "/admin/tracker/3": { ... }
+    "/admin/tracker/3": { "..." : "..." }
   }
 }
 ```
@@ -164,216 +119,50 @@ GET /egroupware/groupdav.php/{user}/tracker/{id}
 Accept: application/json
 ```
 
-Returns the full ticket object directly (not wrapped in `responses`).  
-The response always includes a `replies` object whose keys are reply IDs (as strings).
+Returns the full ticket object directly (not wrapped in `responses`).
 
 **Response `200 OK`:**
 
 ```json
 {
-  "@type": "Ticket",
-  "id": 42,
-  "summary": "Login page crashes on mobile",
-  "status": "Open",
-  "priority": 5,
-  "creator": "admin",
-  "created": "2026-05-25T10:00:00Z",
-  "private": false,
-  "etag": "42:1748167200",
-  "replies": {
-    "101": {
-      "@type":      "Reply",
-      "id":         101,
-      "message":    "Reproduced on Chrome/Android. Assigning to mobile team.",
-      "creator":    "admin",
-      "created":    "2026-05-25T12:00:00Z",
-      "restricted": false
-    },
-    "102": {
-      "@type":      "Reply",
-      "id":         102,
-      "message":    "Internal note — only visible to staff.",
-      "creator":    "techuser",
-      "created":    "2026-05-25T13:30:00Z",
-      "restricted": true
-    }
-  }
+  "@type":       "Ticket",
+  "id":          42,
+  "uid":         "42",
+  "title":       "Login page crashes on mobile",
+  "description": "Steps to reproduce:\n1. Open mobile browser\n2. Navigate to /login\n3. Crash",
+  "status":      "open",
+  "priority":    5,
+  "private":     false,
+  "created":     "2026-05-25T10:00:00+00:00",
+  "modified":    "2026-05-25T11:30:00+00:00"
 }
 ```
-
-If a ticket has no replies the `replies` key is absent.  
-Restricted replies (`"restricted": true`) are only included when the authenticated user is an admin, technician, or assignee of the queue.
 
 **Response headers:**
 
 ```
 ETag: "42:1748167200"
-Content-Type: application/json
+Content-Type: application/json; charset=utf-8
 ```
+
+**Access control:** Private tickets are only visible to the creator, assignees, and tracker admins.
 
 ---
 
-## 6. POST — Create Ticket
+## 6. Status Values
 
-```
-POST /egroupware/groupdav.php/{user}/tracker/
-Content-Type: application/json
-Accept: application/json
-```
-
-**Minimum request body (only `summary` is required):**
-
-```json
-{
-  "summary": "New bug report"
-}
-```
-
-**Full request body:**
-
-```json
-{
-  "summary":     "Login page crashes on mobile",
-  "description": "Steps to reproduce:\n1. Open mobile browser\n2. Navigate to /login\n3. Crash",
-  "status":      "Open",
-  "priority":    7,
-  "startDate":   "2026-05-25T00:00:00Z",
-  "dueDate":     "2026-06-01T00:00:00Z",
-  "private":     false,
-  "assigned": [
-    { "uid": "urn:ietf:params:scim:schemas:core:2.0:User:john" }
-  ],
-  "cc": "manager@example.com"
-}
-```
-
-**Response `201 Created`:**
-
-```
-Location: /egroupware/groupdav.php/admin/tracker/42
-ETag: "42:1748167200"
-```
-
-No body is returned. The new ticket ID is extracted from the `Location` header (last path segment).
-
-**Auto-defaults on creation:**
-
-| Field | Default |
-|-------|---------|
-| `tracker` | First available queue the user has access to |
-| `creator` | Authenticated user |
-| `status` | `Open` |
-| `priority` | Queue default (or `5 - medium`) |
-
----
-
-## 7. PATCH — Partial Update
-
-```
-PATCH /egroupware/groupdav.php/{user}/tracker/{id}
-Content-Type: application/json
-```
-
-Only the fields present in the request body are updated. All other fields retain their current values.
-
-**Request body:**
-
-```json
-{
-  "summary":  "Updated title",
-  "status":   "Closed",
-  "priority": 3
-}
-```
-
-**Response `204 No Content`** — no body.
-
-**Behaviour notes:**
-- Fields the authenticated user cannot modify (based on their role in the queue) are **silently skipped** rather than causing an error. This is intentional — the caller cannot always know which fields are read-only for their role.
-- `description` is always read-only on PATCH (it can only be set at creation).
-- `completion`, `resolution`, `budget` require the user to be an **assignee** or **queue admin**.
-- `group` requires **technician** or **queue admin** role.
-
----
-
-## 8. PUT — Full Replace
-
-```
-PUT /egroupware/groupdav.php/{user}/tracker/{id}
-Content-Type: application/json
-```
-
-Replaces the ticket with the supplied body. Fields not included in the body are reset to their defaults (similar to a full overwrite). Requires the same writable fields as POST.
-
-**`summary` is required.**
-
-**Request body:**
-
-```json
-{
-  "summary":     "Replaced title",
-  "description": "Full replacement",
-  "status":      "Open",
-  "priority":    5
-}
-```
-
-**Response `204 No Content`** — no body.
-
-**ETag precondition (optimistic locking):**
-
-```
-If-Match: "42:1748167200"
-```
-
-If the ticket was modified since the ETag was fetched, the server returns `412 Precondition Failed`.
-
----
-
-## 9. DELETE — Delete Ticket
-
-```
-DELETE /egroupware/groupdav.php/{user}/tracker/{id}
-```
-
-**Response `204 No Content`** — ticket deleted, no body.
-
----
-
-## 10. Filter Reference
-
-Filters are passed as query parameters using the `filters[key]=value` pattern.
-
-```
-GET /egroupware/groupdav.php/admin/tracker/?filters[status]=Open&filters[priority]=9&nresults=20
-```
-
-| Filter key | Example value | Notes |
-|------------|---------------|-------|
-| `search` | `mobile login` | Full-text search in summary + description |
-| `status` | `Open` | One of: `Open`, `Closed`, `Pending`, `Deleted`, or custom queue status |
-| `priority` | `9` | Integer 1–9 |
-| `tracker` | `8` | Queue ID (from EGroupware Tracker admin) |
-| `assigned` | `john` or `15` | Login name or account ID |
-| `linked` | `infolog:5` | Only tickets linked to the given record |
-| `#cf_fieldname` | `high` | Custom field filter (prefix the field name with `#`) |
-
----
-
-## 11. Status Values
+Status strings are **lowercase** in the API.
 
 | String value | Internal code | Description |
 |---|---|---|
-| `"Open"` | `-100` | Active, unresolved ticket |
-| `"Closed"` | `-101` | Resolved/completed ticket |
-| `"Deleted"` | `-102` | Soft-deleted (not shown in normal lists) |
-| `"Pending"` | `-103` | Waiting for external input |
-
-Custom per-queue statuses can also be configured in the EGroupware Tracker admin. These are returned and accepted as their label string.
+| `"open"` | `-100` | Active, unresolved ticket |
+| `"closed"` | `-101` | Resolved/completed ticket |
+| `"deleted"` | `-102` | Soft-deleted (not shown in normal lists) |
+| `"pending"` | `-103` | Waiting for external input |
 
 ---
 
-## 12. Priority Values
+## 7. Priority Values
 
 Priority is an **integer from 1 (lowest) to 9 (highest)**. Default stock labels:
 
@@ -393,14 +182,123 @@ Priority is an **integer from 1 (lowest) to 9 (highest)**. Default stock labels:
 
 ---
 
-## 13. curl Examples
+## 8. POST — Create Ticket
 
-### List all open tickets
+```
+POST /egroupware/groupdav.php/{user}/tracker/
+Content-Type: application/json
+Accept: application/json
+```
+
+**Minimum request body (`title` is the only required field):**
+
+```json
+{ "title": "New bug report" }
+```
+
+**Full request body:**
+
+```json
+{
+  "title":       "Login page crashes on mobile",
+  "description": "Steps to reproduce:\n1. Open mobile browser\n2. Navigate to /login\n3. Crash",
+  "status":      "open",
+  "priority":    7,
+  "private":     false
+}
+```
+
+**Response `201 Created`:**
+
+```
+Location: /egroupware/groupdav.php/admin/tracker/42
+ETag: "42:1748167200"
+```
+
+No body is returned. The new ticket ID is extracted from the `Location` header (last path segment).
+
+---
+
+## 9. PATCH — Partial Update
+
+```
+PATCH /egroupware/groupdav.php/{user}/tracker/{id}
+Content-Type: application/json
+```
+
+Only the fields present in the request body are updated. All other fields retain their current values.
+
+**Request body:**
+
+```json
+{
+  "title":    "Updated title",
+  "status":   "closed",
+  "priority": 3
+}
+```
+
+**Response `204 No Content`** — no body.
+
+**Behaviour notes:**
+- Only `title`, `description`, `status`, `priority`, and `private` are accepted.
+- Fields the authenticated user cannot modify (based on their role in the queue) are **silently skipped**.
+
+---
+
+## 10. PUT — Full Replace
+
+```
+PUT /egroupware/groupdav.php/{user}/tracker/{id}
+Content-Type: application/json
+```
+
+Replaces the ticket with the supplied body. Fields not included in the body are reset to their defaults. **`title` is required.**
+
+**Request body:**
+
+```json
+{
+  "title":       "Replaced title",
+  "description": "Full replacement description",
+  "status":      "open",
+  "priority":    5
+}
+```
+
+**Response `204 No Content`** — no body.
+
+**ETag precondition (optimistic locking):**
+
+```
+If-Match: "42:1748167200"
+```
+
+If the ticket was modified since the ETag was fetched, the server returns `412 Precondition Failed`.
+The same `If-Match` precondition is honored on **PATCH** and **DELETE** as well.
+
+---
+
+## 11. DELETE — Delete Ticket
+
+```
+DELETE /egroupware/groupdav.php/{user}/tracker/{id}
+```
+
+**Response `204 No Content`** — ticket deleted, no body.
+
+Only tracker admins (full EGroupware admin or tracker `admin` ACL right) may delete tickets.
+
+---
+
+## 12. curl Examples
+
+### List all tickets
 
 ```bash
 curl -sk \
   -u "admin:YOUR_APP_PASSWORD" \
-  "https://personal.egroupware.org/egroupware/groupdav.php/admin/tracker/?filters[status]=Open" \
+  "https://example.egroupware.org/egroupware/groupdav.php/admin/tracker/" \
   -H "Accept: application/json" | python3 -m json.tool
 ```
 
@@ -409,15 +307,14 @@ curl -sk \
 ```bash
 curl -sk \
   -u "admin:YOUR_APP_PASSWORD" \
-  "https://personal.egroupware.org/egroupware/groupdav.php/admin/tracker/" \
+  "https://example.egroupware.org/egroupware/groupdav.php/admin/tracker/" \
   -X POST \
   -H "Content-Type: application/json" \
   -H "Accept: application/json" \
   -d '{
-    "summary":  "Button not working in Firefox",
+    "title":    "Button not working in Firefox",
     "priority": 7,
-    "status":   "Open",
-    "assigned": [{"uid": "urn:ietf:params:scim:schemas:core:2.0:User:admin"}]
+    "status":   "open"
   }' -i | grep -E "HTTP|Location"
 ```
 
@@ -426,29 +323,20 @@ curl -sk \
 ```bash
 curl -sk \
   -u "admin:YOUR_APP_PASSWORD" \
-  "https://personal.egroupware.org/egroupware/groupdav.php/admin/tracker/42" \
+  "https://example.egroupware.org/egroupware/groupdav.php/admin/tracker/42" \
   -H "Accept: application/json" | python3 -m json.tool
 ```
 
-### Update status and summary (PATCH)
+### Update status and title (PATCH)
 
 ```bash
 curl -sk \
   -u "admin:YOUR_APP_PASSWORD" \
-  "https://personal.egroupware.org/egroupware/groupdav.php/admin/tracker/42" \
+  "https://example.egroupware.org/egroupware/groupdav.php/admin/tracker/42" \
   -X PATCH \
   -H "Content-Type: application/json" \
-  -d '{"status": "Closed", "summary": "Fixed: Button not working in Firefox"}' \
+  -d '{"status": "closed", "title": "Fixed: Button not working in Firefox"}' \
   -w "HTTP %{http_code}\n"
-```
-
-### Search tickets by keyword
-
-```bash
-curl -sk \
-  -u "admin:YOUR_APP_PASSWORD" \
-  "https://personal.egroupware.org/egroupware/groupdav.php/admin/tracker/?filters[search]=login&nresults=10" \
-  -H "Accept: application/json" | python3 -m json.tool
 ```
 
 ### Delete a ticket
@@ -456,7 +344,7 @@ curl -sk \
 ```bash
 curl -sk \
   -u "admin:YOUR_APP_PASSWORD" \
-  "https://personal.egroupware.org/egroupware/groupdav.php/admin/tracker/42" \
+  "https://example.egroupware.org/egroupware/groupdav.php/admin/tracker/42" \
   -X DELETE \
   -w "HTTP %{http_code}\n"
 ```
@@ -464,13 +352,13 @@ curl -sk \
 ### Full-cycle example (create → update → delete)
 
 ```bash
-BASE="https://personal.egroupware.org/egroupware/groupdav.php/admin/tracker"
+BASE="https://example.egroupware.org/egroupware/groupdav.php/admin/tracker"
 AUTH="admin:YOUR_APP_PASSWORD"
 
 # Create
 LOC=$(curl -si -u "$AUTH" "$BASE/" -X POST \
   -H "Content-Type: application/json" \
-  -d '{"summary":"Test ticket","priority":3}' \
+  -d '{"title":"Test ticket","priority":3}' \
   | grep -i "^location:" | tr -d '\r\n')
 ID=$(echo "$LOC" | sed 's|.*tracker/||' | tr -d '/ \r\n')
 echo "Created ticket ID=$ID"
@@ -481,7 +369,7 @@ curl -sk -u "$AUTH" "$BASE/$ID" -H "Accept: application/json" | python3 -m json.
 # Update
 curl -sk -u "$AUTH" "$BASE/$ID" -X PATCH \
   -H "Content-Type: application/json" \
-  -d '{"status":"Closed"}' -w "PATCH: HTTP %{http_code}\n"
+  -d '{"status":"closed"}' -w "PATCH: HTTP %{http_code}\n"
 
 # Delete
 curl -sk -u "$AUTH" "$BASE/$ID" -X DELETE -w "DELETE: HTTP %{http_code}\n"
@@ -489,246 +377,50 @@ curl -sk -u "$AUTH" "$BASE/$ID" -X DELETE -w "DELETE: HTTP %{http_code}\n"
 
 ---
 
-## 14. Replies Sub-Resource
+## 13. Attachments
 
-Each ticket can have one or more **replies** (comments / notes). Replies appear as a child collection at `/tracker/{id}/replies/`.
-
-### Reply JSON Object
-
-```json
-{
-  "@type":      "Reply",
-  "id":         101,
-  "message":    "Can you provide more details?",
-  "creator":    "admin",
-  "created":    "2026-05-26T09:00:00Z",
-  "restricted": false
-}
-```
-
-| Field | Type | Writable | Description |
-|-------|------|----------|-------------|
-| `@type` | `"Reply"` | No | Always `"Reply"`. |
-| `id` | integer | No | Reply ID. Auto-assigned on POST. |
-| `message` | string | Yes | **Required on POST/PUT.** The reply text. |
-| `creator` | string | No | Auto-set to the authenticated user on creation. |
-| `created` | UTC datetime | No | Auto-set on creation. |
-| `restricted` | boolean | Yes | `true` = visible only to admins, technicians, and assignees. Default `false`. |
-
-### ACL rules
-
-| Operation | Who can perform it |
-|-----------|-------------------|
-| GET (read) | Anyone who can read the ticket (same as ticket read ACL) |
-| POST (create) | Anyone who can read the ticket (`TRACKER_USER` or higher) |
-| PUT/PATCH (update) | The reply's **creator** OR queue admin/technician |
-| DELETE | The reply's **creator** OR queue admin/technician |
-
-### List replies
-
-```
-GET /egroupware/groupdav.php/{user}/tracker/{id}/replies/
-Accept: application/json
-```
-
-Returns a JSON object whose keys are reply IDs (as strings):
-
-```json
-{
-  "101": { "@type": "Reply", "id": 101, "message": "First reply", "creator": "admin", "created": "2026-05-26T09:00:00Z", "restricted": false },
-  "102": { "@type": "Reply", "id": 102, "message": "Staff-only note", "creator": "techuser", "created": "2026-05-26T10:00:00Z", "restricted": true }
-}
-```
-
-### Fetch a single reply
-
-```
-GET /egroupware/groupdav.php/{user}/tracker/{id}/replies/{reply_id}
-Accept: application/json
-```
-
-Returns the single Reply object or `404` if not found / not visible.
-
-### Create a reply (POST)
-
-```
-POST /egroupware/groupdav.php/{user}/tracker/{id}/replies/
-Content-Type: application/json
-```
-
-```json
-{ "message": "I can reproduce this. Working on a fix." }
-```
-
-Or with a restricted (staff-only) note:
-
-```json
-{ "message": "Internal: do NOT close yet — waiting for customer confirmation.", "restricted": true }
-```
-
-**Response `201 Created`:**
-
-```
-Location: /egroupware/groupdav.php/admin/tracker/42/replies/101
-```
-
-No body is returned. The new reply ID is in the `Location` header.
-
-### Update a reply (PUT / PATCH)
-
-```
-PUT  /egroupware/groupdav.php/{user}/tracker/{id}/replies/{reply_id}
-PATCH /egroupware/groupdav.php/{user}/tracker/{id}/replies/{reply_id}
-Content-Type: application/json
-```
-
-PUT replaces the reply fully (message required); PATCH applies only the supplied fields:
-
-```json
-{ "message": "Updated reply text." }
-```
-
-```json
-{ "restricted": true }
-```
-
-**Response `204 No Content`** — no body.
-
-### Delete a reply
-
-```
-DELETE /egroupware/groupdav.php/{user}/tracker/{id}/replies/{reply_id}
-```
-
-**Response `204 No Content`** — reply deleted.
-
-### curl examples — replies
-
-```bash
-BASE="https://personal.egroupware.org/egroupware/groupdav.php/admin/tracker"
-AUTH="admin:YOUR_APP_PASSWORD"
-TICKET_ID=42
-
-# List all visible replies
-curl -sk -u "$AUTH" "$BASE/$TICKET_ID/replies/" -H "Accept: application/json" | python3 -m json.tool
-
-# Add a public reply
-LOC=$(curl -si -u "$AUTH" "$BASE/$TICKET_ID/replies/" -X POST \
-  -H "Content-Type: application/json" \
-  -d '{"message":"Working on a fix now."}' \
-  | grep -i "^location:" | tr -d '\r\n')
-REPLY_ID=$(echo "$LOC" | sed 's|.*/replies/||' | tr -d '/ \r\n')
-echo "Created reply ID=$REPLY_ID"
-
-# Fetch that reply
-curl -sk -u "$AUTH" "$BASE/$TICKET_ID/replies/$REPLY_ID" -H "Accept: application/json"
-
-# Edit the reply text (PATCH)
-curl -sk -u "$AUTH" "$BASE/$TICKET_ID/replies/$REPLY_ID" -X PATCH \
-  -H "Content-Type: application/json" \
-  -d '{"message":"Fixed in commit abc123."}' -w "PATCH: HTTP %{http_code}\n"
-
-# Delete the reply
-curl -sk -u "$AUTH" "$BASE/$TICKET_ID/replies/$REPLY_ID" -X DELETE -w "DELETE: HTTP %{http_code}\n"
-```
-
----
-
-## 15. Attachments and Links
-
-Tickets and replies both support file attachments via EGroupware's **Links and Attachments** facility.  
+Ticket attachments are accessible through EGroupware's **Links and Attachments** facility.
 See [Links-and-attachments.md](Links-and-attachments.md) for the complete reference.
 
-### Ticket-level attachments
-
-Attachments on a ticket are accessed through the links sub-collection:
+The links sub-collection for a ticket is at:
 
 ```
 /egroupware/groupdav.php/{user}/tracker/{id}/links/
 ```
 
-#### List attachments on a ticket
+### List attachments
 
 ```bash
 curl -sk -u "admin:PASSWORD" \
-  "https://personal.egroupware.org/egroupware/groupdav.php/admin/tracker/42/links/" \
+  "https://example.egroupware.org/egroupware/groupdav.php/admin/tracker/42/links/" \
   -H "Accept: application/json" | python3 -m json.tool
 ```
 
-#### Upload an attachment to a ticket (POST multipart)
+### Upload an attachment (POST multipart)
 
 ```bash
 curl -sk -u "admin:PASSWORD" \
-  "https://personal.egroupware.org/egroupware/groupdav.php/admin/tracker/42/links/" \
+  "https://example.egroupware.org/egroupware/groupdav.php/admin/tracker/42/links/" \
   -X POST \
   -F "file=@/path/to/screenshot.png;type=image/png" \
   -i | grep -E "HTTP|Location"
 ```
 
-#### Upload an attachment as raw bytes (PUT)
+### Upload an attachment as raw bytes (PUT)
 
 ```bash
 curl -sk -u "admin:PASSWORD" \
-  "https://personal.egroupware.org/egroupware/groupdav.php/admin/tracker/42/links/screenshot.png" \
+  "https://example.egroupware.org/egroupware/groupdav.php/admin/tracker/42/links/screenshot.png" \
   -X PUT \
   -H "Content-Type: image/png" \
   --data-binary "@/path/to/screenshot.png" \
   -w "HTTP %{http_code}\n"
 ```
 
-#### Delete an attachment from a ticket
+### Delete an attachment
 
 ```bash
 curl -sk -u "admin:PASSWORD" \
-  "https://personal.egroupware.org/egroupware/groupdav.php/admin/tracker/42/links/{link_id}" \
+  "https://example.egroupware.org/egroupware/groupdav.php/admin/tracker/42/links/{link_id}" \
   -X DELETE -w "HTTP %{http_code}\n"
 ```
-
-### Reply-level attachments
-
-Replies store attachments via EGroupware's WebDAV VFS tree (not the `/links/` endpoint).  
-The WebDAV path for reply attachments is:
-
-```
-/egroupware/webdav.php/apps/tracker/{ticket_id}/comments/{reply_id}/
-```
-
-#### Upload a file to a reply via WebDAV
-
-```bash
-curl -sk -u "admin:PASSWORD" \
-  -X PUT \
-  -H "Content-Type: image/png" \
-  --data-binary "@/path/to/attachment.png" \
-  "https://personal.egroupware.org/egroupware/webdav.php/apps/tracker/42/comments/101/attachment.png" \
-  -w "HTTP %{http_code}\n"
-```
-
-#### List attachments on a reply
-
-```bash
-curl -sk -u "admin:PASSWORD" \
-  -X PROPFIND \
-  -H "Depth: 1" \
-  "https://personal.egroupware.org/egroupware/webdav.php/apps/tracker/42/comments/101/" \
-  -w "HTTP %{http_code}\n"
-```
-
-#### Download an attachment from a reply
-
-```bash
-curl -sk -u "admin:PASSWORD" \
-  "https://personal.egroupware.org/egroupware/webdav.php/apps/tracker/42/comments/101/attachment.png" \
-  -o attachment.png
-```
-
-#### Delete an attachment from a reply
-
-```bash
-curl -sk -u "admin:PASSWORD" \
-  -X DELETE \
-  "https://personal.egroupware.org/egroupware/webdav.php/apps/tracker/42/comments/101/attachment.png" \
-  -w "HTTP %{http_code}\n"
-```
-
-> **Tip:** EGroupware's WebDAV endpoint (`webdav.php`) supports the full WebDAV protocol (PROPFIND, PUT, GET, DELETE, MKCOL, COPY, MOVE). Clients such as `cadaver`, WinSCP, and macOS Finder can mount the VFS tree directly for drag-and-drop file management on both tickets and replies.

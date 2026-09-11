@@ -331,7 +331,6 @@ ldap settings for contacts	admin	it	Impostazioni LDAP per i contatti
 ldif	addressbook	it	LDIF
 line 2	addressbook	it	Linea 2
 link title for contacts show	addressbook	it	Link per i contatti
-links	addressbook	it	Collegamenti
 links and attached files	addressbook	it	Collegamenti e file allegati
 links to specified application.  example: {{links/infolog}}	addressbook	it	Collegamenti alla applicazione specificata. Esempio: {{links/infolog}}
 list all categories	addressbook	it	Elenca tutte le categorie

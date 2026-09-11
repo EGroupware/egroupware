@@ -302,7 +302,6 @@ if no acl records for user or any group the user is a member of	admin	pt	Se não
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	pt	Se estiver a utilizar o LDAP, deseja definir atributos de directoria principal e shell de acesso ?
 imap admin password	admin	pt	Senha do administrador IMAP
 imap admin user	admin	pt	Utilizador do administrador IMAP
-imap server	admin	pt	Servidor IMAP
 imap server hostname or ip address	admin	pt	Nome do servidor ou endereço IP do servidor IMAP
 imap server logintyp	admin	pt	Tipo de acesso do servidor IMAP
 imap server port	admin	pt	Porto do servidor IMAP

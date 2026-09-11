@@ -361,7 +361,6 @@ limit search for conflicts in recurrences to given number of recurrences	calenda
 limit search for conflicts in recurrences to given time in seconds (default 3)	calendar	it	LimitareLimitare la ricerca per conflitti nelle ricorrenze ad un certo numero di secondi (predefinito 3)
 link title for events to show	calendar	it	Titolo del link per gli eventi da mostrare
 link to view the event	calendar	it	Collegamento per visualizzare l'evento
-links	calendar	it	Collegamenti
 links and attached files	calendar	it	Collegamenti e file allegati
 links to specified application.  example: {{links/infolog}}	calendar	it	Collegamenti alla applicazione specificata. Esempio: {{links/infolog}}
 links, attachments	calendar	it	Collegamenti, Allegati

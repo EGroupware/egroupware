@@ -8,12 +8,6 @@
  * @author Ralf Becker
  */
 
-/*egw:uses
-	/vendor/bower-asset/jquery/dist/jquery.js;
-	et2_core_interfaces;
-	et2_core_valueWidget;
-*/
-
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_valueWidget} from "./et2_core_valueWidget";
 import {ClassWithAttributes} from "./et2_core_inheritance";

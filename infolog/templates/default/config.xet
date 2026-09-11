@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="infolog.config.configuration" template="" lang="" group="0" version="">
+	<et2-template  id="infolog.config.configuration" template="" lang="" group="0" version="">
 		<grid width="100%">
 			<columns>
 				<column width="60%"/>
@@ -34,41 +35,41 @@
                     </et2-select>
                 </row>
                 <row class="th">
-                    <et2-description value="History logging" span="all"></et2-description>
+                    <et2-description  value="History logging" span="all"></et2-description>
                 </row>
                 <row>
-                    <et2-description value="History logging and deleting of items"></et2-description>
-                    <et2-select id="history"></et2-select>
+                    <et2-description  value="History logging and deleting of items"></et2-description>
+                    <et2-select  id="history"></et2-select>
                 </row>
                 <row>
-                    <et2-description value="Handling of status 'archived'"></et2-description>
-                    <et2-select id="archived_readonly">
+                    <et2-description  value="Handling of status 'archived'"></et2-description>
+                    <et2-select  id="archived_readonly">
                         <option value="">{No special handling} ({Default})</option>
                         <option value="yes">Entry can NOT be changed anymore, after status is set</option>
                         <option value="but_admins">Entry can NOT be changed by anybody, but EGroupware admins</option>
                     </et2-select>
                 </row>
                 <row>
-                    <et2-description value="Editable fields for status 'archived'"></et2-description>
-                    <et2-select id="archived_editable" multiple="true" placeholder="all"></et2-select>
+                    <et2-description  value="Editable fields for status 'archived'"></et2-description>
+                    <et2-select  id="archived_editable" multiple="true" placeholder="all"></et2-select>
                 </row>
                 <row class="th">
-                    <et2-description value="Other configurations" span="all"></et2-description>
+                    <et2-description  value="Other configurations" span="all"></et2-description>
                 </row>
                 <row>
-                    <et2-description value="Respect timesheet run and read permissions for time totals" labelFor="respect_timesheet_rights"></et2-description>
-                    <et2-checkbox id="respect_timesheet_rights"></et2-checkbox>
+                    <et2-description  value="Respect timesheet run and read permissions for time totals" labelFor="respect_timesheet_rights"></et2-description>
+                    <et2-checkbox  id="respect_timesheet_rights"></et2-checkbox>
                 </row>
                 <row>
-                    <et2-description value="Fields to exclude when copying an infolog:"></et2-description>
-                    <et2-select id="copy_excludefields" rows="6" multiple="1"></et2-select>
+                    <et2-description  value="Fields to exclude when copying an infolog:"></et2-description>
+                    <et2-select  id="copy_excludefields" rows="6" multiple="1"></et2-select>
                 </row>
                 <row>
-                    <et2-description value="Load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)"></et2-description>
-                    <et2-select id="index_load_cfs" rows="6" options=",,,,,,1" multiple="1"></et2-select>
+                    <et2-description  value="Load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)"></et2-description>
+                    <et2-select  id="index_load_cfs" rows="6" options=",,,,,,1" multiple="1"></et2-select>
                 </row>
                 <row>
-                    <et2-description value="Prefix for sub-entries (default: Re:)"></et2-description>
+                    <et2-description  value="Prefix for sub-entries (default: Re:)"></et2-description>
 					<et2-textbox  id="sub_prefix" noLang="1" placeholder="Re:"></et2-textbox>
 				</row>
 				<row>
@@ -98,8 +99,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="infolog.config.notification" template="" lang="" group="0" version="">
+	</et2-template>
+	<et2-template  id="infolog.config.notification" template="" lang="" group="0" version="">
 		<grid width="100%">
 			<columns>
                 <column/>
@@ -110,8 +111,7 @@
                     <et2-select  label="Type" id="notification_type" onchange="1"></et2-select>
                     <et2-checkbox  label="Use custom notification message" id="notification[use_custom]"></et2-checkbox>
                 </row>
-                <row>
-                    <htmlarea id="notification[message]" height="180px" width="100%" toolbar="false" span="all"/>
+                <row><et2-ai  span="all"><et2-htmlarea  id="notification[message]" width="100%" noToolbar="true"></et2-htmlarea></et2-ai>
                 </row>
                 <row>
                     <et2-description  value="Full list of placeholder names" href="infolog.infolog_merge.show_replacements" extraLinkTarget="_blank"></et2-description>
@@ -119,8 +119,8 @@
                 </row>
             </rows>
         </grid>
-    </template>
-    <template id="infolog.config" template="" lang="" group="0" version="1.9.001">
+    </et2-template>
+    <et2-template  id="infolog.config" template="" lang="" group="0" version="1.9.001">
         <et2-vbox>
             <et2-description  id="msg" span="all" class="message"></et2-description>
             <et2-tabbox  id="configuration|notification" cfDisabled="true">
@@ -129,8 +129,8 @@
                     <tab id="notification" label="Notification"/>
                 </tabs>
                 <tabpanels>
-                    <template id="infolog.config.configuration"/>
-                    <template id="infolog.config.notification"/>
+                    <et2-template  id="infolog.config.configuration"></et2-template>
+                    <et2-template  id="infolog.config.notification"></et2-template>
                 </tabpanels>
             </et2-tabbox>
             <et2-hbox  class="dialogFooterToolbar" id="button">
@@ -139,9 +139,9 @@
                 <et2-button  statustext="Exit without saving" label="Cancel" id="cancel" noValidation="true"></et2-button>
             </et2-hbox>
         </et2-vbox>
-        <styles>select {
+        <et2-styles>select {
             min-width: 30em;
             }
-        </styles>
-    </template>
+        </et2-styles>
+    </et2-template>
 </overlay>

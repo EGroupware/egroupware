@@ -67,6 +67,14 @@ class StatusTest extends \EGroupware\Api\AppTest
 
 	protected function tearDown() : void
 	{
+		// Double delete to make sure it's gone, not preserved due to history setting.
+		// checkOne() already does this on the success path; this is the fallback for
+		// when an assertion in checkOne() throws before it gets there.
+		if($this->info_id)
+		{
+			$this->bo->delete($this->info_id, False, False, True);
+			$this->bo->delete($this->info_id, False, False, True);
+		}
 		$this->bo = null;
 	}
 

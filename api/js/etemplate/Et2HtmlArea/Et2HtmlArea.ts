@@ -8,7 +8,7 @@
  * @author Nathan Gray
  */
 
-import {css, html, LitElement, nothing, PropertyValues} from "lit";
+import {html, LitElement, nothing, PropertyValues} from "lit";
 import {ifDefined} from "lit/directives/if-defined.js";
 import {classMap} from "lit/directives/class-map.js";
 import {unsafeHTML} from "lit/directives/unsafe-html.js";
@@ -62,7 +62,9 @@ import "tinymce/plugins/visualchars";
 import "tinymce/plugins/wordcount";
 import "@tinymce/tinymce-webcomponent";
 import "./Et2HtmlAreaReadonly";
+import {Et2MarkdownEditMixin} from "../Markdown/Et2MarkdownEditMixin";
 
+import styles from "./Et2HtmlArea.styles";
 type TinyMceConfig = RawEditorOptions;
 type TinyMceUploadHandler = NonNullable<TinyMceConfig["images_upload_handler"]>;
 type TinyMceFilePickerCallback = NonNullable<TinyMceConfig["file_picker_callback"]>;
@@ -127,80 +129,20 @@ type TinyMceSetupHook = (editor : TinyMceEditor) => void;
  * @csspart form-control - The form control wrapper containing label, editor, and help text.
  * @csspart form-control-input - The editor wrapper.
  * @csspart readonly-content - The readonly value container when `readonly` is set.
+ * @csspart markdown-shell - Wraps source and preview, only when `markdown` is on in ascii mode.
+ * @csspart markdown-view - The edit / split / preview switcher.
+ * @csspart markdown-preview - The rendered markdown pane.
+ * @csspart markdown-popup - The format popup shown over a selection.
  */
 @customElement("et2-htmlarea")
-export class Et2HtmlArea extends Et2InputWidget(LitElement)
+export class Et2HtmlArea extends Et2MarkdownEditMixin(Et2InputWidget(LitElement))
 {
 	static get styles()
 	{
 		return [
 			// @ts-ignore
 			...super.styles,
-			css`
-				:host {
-					display: flex;
-					flex-direction: column;
-					width: 100%;
-					height: 100%;
-				}
-
-				.form-control {
-					display: flex;
-					align-items: stretch;
-					flex-direction: column;
-					flex-wrap: nowrap;
-					flex: 1 1 auto;
-				}
-
-				.form-control-input {
-					display: flex;
-					flex-direction: column;
-					flex: 1 1 auto;
-					min-width: 40em;
-					min-height: 10em;
-				}
-
-				.form-control__help-text {
-					display: none;
-					flex-basis: 2em;
-				}
-
-				.form-control--has-help-text .form-control__help-text {
-					display: block;
-				}
-
-				tinymce-editor,
-				textarea {
-                    display: flex;
-                    flex-direction: column;
-					flex: 1 1 auto;
-					height: 100%;
-					min-height: 0;
-					width: 100%;
-					box-sizing: border-box;
-				}
-
-				textarea {
-					resize: vertical;
-					font: inherit;
-				}
-
-				.htmlarea__has-menu, .htmlarea__has-toolbar {
-					min-height: 15em;
-				}
-
-				.htmlarea__has-menu.htmlarea__has-toolbar {
-					min-height: 20em;
-				}
-				
-				.htmlarea__readonly {
-					flex: 1 1 auto;
-					min-height: 0;
-					min-width: 0;
-					overflow-wrap: anywhere;
-					white-space: pre-wrap;
-				}
-			`
+			styles
 		];
 	}
 
@@ -1244,7 +1186,7 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 
 		if(this._isAsciiMode)
 		{
-			return html`
+			const source = html`
                 <textarea
                         id=${this._editorId}
                         .value=${this.value ?? ""}
@@ -1255,6 +1197,10 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
                         @change=${this._handleAsciiChange}
                 ></textarea>
 			`;
+
+			// markdown is a plain-text feature: only ascii mode holds markdown source, and the
+			// TinyMCE branch below is deliberately left alone so `markdown` cannot affect it
+			return this.markdown ? this._markdownShellTemplate(source) : source;
 		}
 
 		const configPath = this._publishConfig();

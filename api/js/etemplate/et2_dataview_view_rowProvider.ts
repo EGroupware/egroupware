@@ -9,14 +9,6 @@
  * @copyright EGroupware GmbH 2011-2021
  */
 
-/*egw:uses
-	/vendor/bower-asset/jquery/dist/jquery.js;
-	et2_core_inheritance;
-	et2_core_interfaces;
-	et2_core_arrayMgr;
-	et2_core_widget;
-*/
-
 /**
  * The row provider contains prototypes (full clonable dom-trees)
  * for all registered row types.
@@ -94,9 +86,7 @@ export class et2_dataview_rowProvider
 		return this._prototypes[_name].clone();
 	}
 
-
 	/* ---- PRIVATE FUNCTIONS ---- */
-
 
 	_createFullRowPrototype( )
 	{

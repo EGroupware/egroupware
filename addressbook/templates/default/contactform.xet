@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="addressbook.contactform" template="" lang="" group="0" version="1.5.001">
+	<et2-template  id="addressbook.contactform" template="" lang="" group="0" version="1.5.001">
 		<grid border="0">
 			<columns>
 				<column/>
@@ -122,15 +123,14 @@
 				</row>
 				<row valign="top" disabled="!@show[note]">
 					<et2-image  src="edit.png"></et2-image>
-					<et2-description  value="Message"></et2-description>
-					<et2-textarea  rows="5" cols="45" span="4" class="width100" id="note" required="1"></et2-textarea>
+					<et2-description  value="Message"></et2-description><et2-ai  span="4"><et2-textarea  rows="5" cols="45" class="width100" id="note" required="1"></et2-textarea></et2-ai>
 				</row>
 				<row disabled="!@show[sep5]">
 					<hrule span="all"/>
 				</row>
 				<row disabled="!@show[recaptcha]">
 					<et2-description  span="2"></et2-description>
-					<html id="recaptcha"/>
+					<et2-html  id="recaptcha"></et2-html>
 					<et2-description></et2-description>
 				</row>
 				<row disabled="!@show[captcha]">
@@ -151,8 +151,8 @@
 				</row>
 			</rows>
 		</grid>
-		<styles>
+		<et2-styles>
 			.width100 textarea { width: 99%; }
-		</styles>
-	</template>
+		</et2-styles>
+	</et2-template>
 </overlay>

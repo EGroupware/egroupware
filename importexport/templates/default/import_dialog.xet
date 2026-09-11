@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="importexport.import_dialog.csv" template="" lang="" group="0" version="1.9.005">
+	<et2-template  id="importexport.import_dialog.csv" template="" lang="" group="0" version="1.9.005">
 		<grid>
 			<columns>
 				<column/>
@@ -9,31 +10,28 @@
 			</columns>
 			<rows>
 				<row>
-                    <et2-hbox cellpadding="0" cellspacing="0" noLang="1">
-                        <et2-select id="delimiter" label="Delimiter" class="et2-label-fixed"
-                                    onchange="let text = widget.getParent().getWidgetById('other_delimiter'); if(widget.value =='other') {text.value ='';text.classList.remove('hide'); text.focus();} else {text.classList.add('hide');}"
-                                    noLang="1"></et2-select>
-                        <et2-textbox id="other_delimiter" maxlength="1" class="hide"></et2-textbox>
+                    <et2-hbox  cellpadding="0" cellspacing="0" noLang="1">
+                        <et2-select  id="delimiter" label="Delimiter" class="et2-label-fixed" onchange="let text = widget.getParent().getWidgetById('other_delimiter'); if(widget.value =='other') {text.value ='';text.classList.remove('hide'); text.focus();} else {text.classList.add('hide');}" noLang="1"></et2-select>
+                        <et2-textbox  id="other_delimiter" maxlength="1" class="hide"></et2-textbox>
                     </et2-hbox>
                 </row>
 			</rows>
 		</grid>
-	</template>
-	<template id="importexport.import_dialog" template="" lang="" group="0" version="1.9.005">
-        <et2-vbox id="preview_box" span="all" class="preview">
-            <html id="preview" class="content"/>
-            <et2-box align="center" id="buttons">
-                <et2-button align="center" label="OK" onclick="jQuery(this).parents('.preview').css('display','none'); return false;" noSubmit="true"></et2-button>
+	</et2-template>
+	<et2-template  id="importexport.import_dialog" template="" lang="" group="0" version="1.9.005">
+        <et2-vbox  id="preview_box" span="all" class="preview">
+            <et2-html  id="preview" class="content"></et2-html>
+            <et2-box  align="center" id="buttons">
+                <et2-button  align="center" label="OK" onclick="jQuery(this).parents('.preview').css('display','none'); return false;" noSubmit="true"></et2-button>
             </et2-box>
         </et2-vbox>
-        <et2-vbox id="progress_box" span="all" class="import_progress hideme">
-            <et2-description id="progress_title"></et2-description>
-            <et2-description id="progress_record"></et2-description>
+        <et2-vbox  id="progress_box" span="all" class="import_progress hideme">
+            <et2-description  id="progress_title"></et2-description>
+            <et2-description  id="progress_record"></et2-description>
             <!--<sl-progress-bar id="progress" indeterminate="true"></sl-progress-bar>-->
-            <et2-box class="log">
-                <et2-textarea id="import_log"></et2-textarea>
+            <et2-box  class="log"><et2-ai><et2-textarea  id="import_log"></et2-textarea></et2-ai>
             </et2-box>
-            <et2-button label="OK" onclick="app.importexport._closeProgress"></et2-button>
+            <et2-button  label="OK" onclick="app.importexport._closeProgress"></et2-button>
         </et2-vbox>
         <grid width="100%">
             <columns>
@@ -42,7 +40,7 @@
             </columns>
             <rows>
                 <row disabled="!@message">
-                    <html id="message" span="all" class="message"/>
+                    <et2-html  id="message" span="all" class="message"></et2-html>
                     <et2-description></et2-description>
                 </row>
                 <row>
@@ -55,10 +53,10 @@
                 </row>
                 <row>
                     <et2-description  value="Please select file to import"></et2-description>
-                    <file id="file" accept="@file_type"/>
+                    <et2-file  id="file" accept="@file_type"></et2-file>
                 </row>
                 <row disabled="!@plugin_options_template">
-                    <template template="@plugin_options_template"/>
+                    <et2-template  template="@plugin_options_template"></et2-template>
                 </row>
 				<row>
 					<et2-hbox  span="all">
@@ -70,5 +68,5 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

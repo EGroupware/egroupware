@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="admin.accesslog.rows" template="" lang="" group="0" version="1.9.003">
+	<et2-template  id="admin.accesslog.rows" template="" lang="" group="0" version="1.9.003">
 		<grid width="100%">
 			<columns>
 				<column width="30%"/>
@@ -17,16 +18,16 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<et2-nextmatch-header-account  id="account_id" label="LoginID" emptyLabel="All"/>
-					<nextmatch-header label="Login-Status" id="sessionstatus"/>
+					<et2-nextmatch-header-account  id="account_id" label="LoginID" emptyLabel="All"></et2-nextmatch-header-account>
+					<et2-nextmatch-header  label="Login-Status" id="sessionstatus"></et2-nextmatch-header>
 					<nextmatch-sortheader label="Loginid" id="loginid"/>
 					<nextmatch-sortheader label="IP" id="ip"/>
 					<nextmatch-sortheader label="Login" id="li"/>
 					<nextmatch-sortheader label="Logout" id="lo"/>
-					<nextmatch-header label="Total" id="total"/>
+					<et2-nextmatch-header  label="Total" id="total"></et2-nextmatch-header>
 					<nextmatch-sortheader label="Idle" id="session_dla"/>
 					<nextmatch-sortheader label="User-Agent" id="user_agent"/>
-					<nextmatch-header label="Action" id="session_action"/>
+					<et2-nextmatch-header  label="Action" id="session_action"></et2-nextmatch-header>
 				</row>
 				<row class="row $row_cont[class]">
 					<et2-hbox>
@@ -45,19 +46,19 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<et2-template id="admin.accesslog.header" template="" lang="" group="0" version="1.9.001">
-		<et2-template template="api.search-button"></et2-template>
-		<et2-select-account id="account_id" emptyLabel="LoginID" onchange="app.admin.changeNmFilter"></et2-select-account>
 	</et2-template>
-	<template id="admin.accesslog" template="" lang="" group="0" version="1.9.001">
-		<et2-template template="admin.accesslog.header" slot="main-header"></et2-template>
+	<et2-template  id="admin.accesslog.header" template="" lang="" group="0" version="1.9.001">
+		<et2-template  template="api.search-button"></et2-template>
+		<et2-select-account  id="account_id" emptyLabel="LoginID" onchange="app.admin.changeNmFilter"></et2-select-account>
+	</et2-template>
+	<et2-template  id="admin.accesslog" template="" lang="" group="0" version="1.9.001">
+		<et2-template  template="admin.accesslog.header" slot="main-header"></et2-template>
 		<et2-vbox>
 			<nextmatch id="nm" options="admin.accesslog.rows" span="all"/>
-			<et2-number label="{Percent of users that logged out}: %s %" id="percent" precision="1" readonly="true"></et2-number>
+			<et2-number  label="{Percent of users that logged out}: %s %" id="percent" precision="1" readonly="true"></et2-number>
 		</et2-vbox>
-		<styles>
+		<et2-styles>
 			.selectAllArrow { padding-right: 12px; }
-		</styles>
-	</template>
+		</et2-styles>
+	</et2-template>
 </overlay>

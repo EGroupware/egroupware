@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="infolog.home" template="" lang="" group="0" version="1.9.005">
+	<et2-template  id="infolog.home" template="" lang="" group="0" version="1.9.005">
 		<grid width="100%">
 			<columns>
 				<column width="120"/>
@@ -17,8 +18,8 @@
 			<rows>
 				<row class="th">
 					<et2-vbox>
-						<et2-nextmatch-header-filter  id="info_type" noLang="1" emptyLabel="Type"/>
-						<et2-nextmatch-header-filter  align="center" id="info_status" class="selectboxFullWidth" emptyLabel="Status"/>
+						<et2-nextmatch-header-filter  id="info_type" noLang="1" emptyLabel="Type"></et2-nextmatch-header-filter>
+						<et2-nextmatch-header-filter  align="center" id="info_status" class="selectboxFullWidth" emptyLabel="Status"></et2-nextmatch-header-filter>
 						<nextmatch-sortheader align="right" label="Completed" id="info_percent"/>
 					</et2-vbox>
 					<grid width="100%" spacing="0" padding="0">
@@ -42,7 +43,7 @@
 						</rows>
 					</grid>
 					<nextmatch-customfields id="customfields"/>
-					<nextmatch-header label="Category" id="cat_id"/>
+					<et2-nextmatch-header  label="Category" id="cat_id"></et2-nextmatch-header>
 					<et2-vbox>
 						<nextmatch-sortheader label="Startdate" id="info_startdate" sortmode="DESC"/>
 						<nextmatch-sortheader label="Enddate" id="info_enddate" sortmode="DESC"/>
@@ -58,27 +59,27 @@
 						<nextmatch-sortheader label="Re-planned" id="info_replanned_time" class="replanned"/>
 					</et2-vbox>
 					<et2-vbox>
-						<et2-nextmatch-header-account  statustext="Select to filter by owner" id="info_owner" class="infolog_user_filter" emptyLabel="Owner" accountType="both"/>
-						<et2-nextmatch-header-account  statustext="Select to filter by responsible" id="info_responsible" class="infolog_user_filter" emptyLabel="Responsible" accountType="both"/>
+						<et2-nextmatch-header-account  statustext="Select to filter by owner" id="info_owner" class="infolog_user_filter" emptyLabel="Owner" accountType="both"></et2-nextmatch-header-account>
+						<et2-nextmatch-header-account  statustext="Select to filter by responsible" id="info_responsible" class="infolog_user_filter" emptyLabel="Responsible" accountType="both"></et2-nextmatch-header-account>
 					</et2-vbox>
 					<nextmatch-sortheader label="last changed" id="info_datemodified" options="DESC"/>
 				</row>
 				<row class="$row_cont[info_cat] $row_cont[class]" valign="top">
 					<et2-hbox  align="center">
 						<et2-image  label="$row_cont[info_type]" src="${row}[info_type]" defaultSrc="infolog/navbar"></et2-image>
-						<et2-image  label="$row_cont[info_status_label]" id="edit_status[$row_cont[info_id]]" href="javascript:egw.open($row_cont[info_id],'infolog');" src="$row_cont[info_status_label]" defaultSrc="status"></et2-image>
-						<et2-image  label="$row_cont[info_percent]" id="edit_percent[$row_cont[info_id]]" href="javascript:egw.open($row_cont[info_id],'infolog');" src="$row_cont[info_percent]"></et2-image>
-						<progress label="$row_cont[info_percent]" id="{$row}[info_percent2]" href="javascript:egw.open($row_cont[info_id],'infolog');"/>
+						<et2-image  label="$row_cont[info_status_label]" id="edit_status[$row_cont[info_id]]" href="javascript:egw.open('$row_cont[info_id]','infolog');" src="$row_cont[info_status_label]" defaultSrc="status"></et2-image>
+						<et2-image  label="$row_cont[info_percent]" id="edit_percent[$row_cont[info_id]]" href="javascript:egw.open('$row_cont[info_id]','infolog');" src="$row_cont[info_percent]"></et2-image>
+						<progress label="$row_cont[info_percent]" id="${row}[info_percent2]" href="javascript:egw.open('$row_cont[info_id]','infolog');"/>
 					</et2-hbox>
 					<et2-vbox  class="infolog_fullWidth">
 						<et2-hbox>
 							<et2-description  id="${row}[info_subject]" class="$row_cont[sub_class]" noLang="1"></et2-description>
-							<et2-description  align="right" id="{$row}[info_number]" class="infolog_infoId" noLang="1"></et2-description>
+							<et2-description  align="right" id="${row}[info_number]" class="infolog_infoId" noLang="1"></et2-description>
 						</et2-hbox>
 						<et2-box  class="infoDes">
 							<et2-description  id="${row}[info_des]" noLang="1" activateLinks="1"></et2-description>
 						</et2-box>
-						<et2-link-string  id="${row}[filelinks]"></et2-link-string>
+						<et2-link-string  id="${row}[filelinks]" class="$row_cont[filelinks_class]"></et2-link-string>
 					</et2-vbox>
 					<customfields-list id="$row" class="customfields"/>
 					<et2-select-cat  id="${row}[info_cat]" readonly="true"></et2-select-cat>
@@ -123,5 +124,5 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

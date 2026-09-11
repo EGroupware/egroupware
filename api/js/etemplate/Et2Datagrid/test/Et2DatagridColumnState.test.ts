@@ -1,0 +1,296 @@
+import {assert} from "@open-wc/testing";
+import {Et2DatagridColumnState} from "../Et2DatagridColumnState.ts";
+import {Et2DatagridColumn} from "../Et2Datagrid.types.ts";
+
+describe("Et2DatagridColumnState", () =>
+{
+	/**
+	 * Contract under test:
+	 * - Column selection ids preserve keys containing spaces via reversible encoding.
+	 *
+	 * Setup strategy:
+	 * - Encode then decode a key containing spaces.
+	 *
+	 * Pass criteria:
+	 * - Encoded id replaces spaces.
+	 * - Decoded id matches original key exactly.
+	 */
+	it("maps chooser ids with space-safe encoding", () =>
+	{
+		const state = new Et2DatagridColumnState();
+		const key = "Project Name";
+		const encoded = state.encodeSelectionId(key);
+		const decoded = state.decodeSelectionId(encoded);
+
+		assert.equal(encoded, "Project___Name", "spaces should be encoded for chooser");
+		assert.equal(decoded, key, "encoded chooser id should decode to original key");
+	});
+
+	/**
+	 * Contract under test:
+	 * - Visible column filtering excludes hidden and disabled columns.
+	 *
+	 * Setup strategy:
+	 * - Provide columns with hidden flag and multiple disabled value styles.
+	 *
+	 * Pass criteria:
+	 * - Only non-hidden, non-disabled column keys remain visible.
+	 */
+	it("filters visible columns from hidden and disabled flags", () =>
+	{
+		const state = new Et2DatagridColumnState();
+		const columns : Et2DatagridColumn[] = [
+			{key: "a", title: "A"},
+			{key: "b", title: "B", hidden: true},
+			{key: "c", title: "C", disabled: "true"},
+			{key: "d", title: "D", disabled: true},
+			{key: "f", title: "F", disabled: "1"}
+		];
+		const visible = state.visibleColumns(columns);
+
+		assert.deepEqual(
+			visible.map((column) => column.key),
+			["a"],
+			"visible columns should exclude hidden and disabled columns"
+		);
+	});
+
+	/**
+	 * Contract under test:
+	 * - Selection order mapping keeps selected keys in chooser order and hides unselected columns.
+	 *
+	 * Setup strategy:
+	 * - Apply a selection order that reorders two keys and omits one key.
+	 *
+	 * Pass criteria:
+	 * - Selected keys are visible in selected order slots.
+	 * - Unselected keys remain in-place but hidden.
+	 */
+	it("applies chooser order and hides unselected columns", () =>
+	{
+		const state = new Et2DatagridColumnState();
+		const columns : Et2DatagridColumn[] = [
+			{key: "a", title: "A"},
+			{key: "b", title: "B"},
+			{key: "c", title: "C"}
+		];
+		const next = state.applySelectionOrder(columns, ["c", "a"]);
+
+		assert.equal(next[0].key, "c", "first selected key should move to first selected slot");
+		assert.equal(next[0].hidden, false, "selected column should be visible");
+		assert.equal(next[1].key, "b", "unselected middle slot should keep original column");
+		assert.equal(next[1].hidden, true, "unselected column should be hidden");
+		assert.equal(next[2].key, "a", "second selected key is applied at the next selected slot");
+		assert.equal(next[2].hidden, false, "selected column should be visible");
+	});
+
+	/**
+	 * Contract under test:
+	 * - A column disabled by its template expression overrides the user's preference while the
+	 *   expression holds, but must not replace it: applying a chooser selection has to leave
+	 *   that column's stored `hidden` alone, because the chooser never offered it and so
+	 *   "unselected" carries no intent.
+	 *
+	 * Setup strategy:
+	 * - Three columns, the middle one disabled by expression, one of the others genuinely
+	 *   deselected.  The parser reports the expression as true, matching what the chooser saw
+	 *   when it filtered that column out.
+	 *
+	 * Pass criteria:
+	 * - The genuinely unselected column is hidden.
+	 * - The disabled column keeps the `hidden` it came in with, in both states.
+	 */
+	it("keeps the stored preference of an expression-disabled column when applying a selection", () =>
+	{
+		const state = new Et2DatagridColumnState();
+		const parseExpression = (expression : string) => expression === "@no_customfields";
+		const columns : Et2DatagridColumn[] = [
+			{key: "subject", title: "Subject"},
+			{key: "customfields", title: "Custom fields", disabled: "@no_customfields", hidden: false},
+			{key: "modified", title: "Modified"}
+		];
+
+		const next = state.applySelectionOrder(columns, ["subject"], parseExpression);
+
+		assert.equal(next[0].hidden, false, "selected column stays visible");
+		assert.equal(next[1].hidden, false, "user had the disabled column shown - that choice must survive");
+		assert.equal(next[2].hidden, true, "a column the user really did deselect is hidden");
+
+		const userHidThem = columns.map((column) => ({...column, hidden: true}));
+		const alsoNext = state.applySelectionOrder(userHidThem, ["subject"], parseExpression);
+		assert.equal(alsoNext[1].hidden, true, "a disabled column the user had hidden stays hidden");
+	});
+
+	/**
+	 * Contract under test:
+	 * - Customfield chooser ids are plain customfield names.
+	 *
+	 * Setup strategy:
+	 * - Build selection metadata from one customfields-capable header.
+	 *
+	 * Pass criteria:
+	 * - Child customfield id equals the customfield name.
+	 */
+	it("uses plain customfield names for chooser ids", () =>
+	{
+		const state = new Et2DatagridColumnState();
+		const header = {
+			getCustomfieldSelectionItems: () => [
+				{name: "cf_text", label: "Text", visible: true}
+			]
+		};
+		const items = state.toSelectionItems([
+			{key: "customfields", title: "Custom fields", header: header as any}
+		]);
+		assert.equal(items[0].customFields?.[0]?.id, "cf_text", "customfield id should be the field name");
+	});
+
+	/**
+	 * Contract under test:
+	 * - Column selection labels use the prepared header widget label when present.
+	 *
+	 * Setup strategy:
+	 * - Provide a raw column title and a prepared header with a different label.
+	 *
+	 * Pass criteria:
+	 * - Chooser title and caption match the prepared header label.
+	 */
+	it("uses prepared header labels for chooser captions", () =>
+	{
+		const state = new Et2DatagridColumnState();
+		const header = {
+			label: "Business phone",
+			cloneNode: () => null
+		};
+		const items = state.toSelectionItems([
+			{key: "tel_work", title: "phone_label", header: header as any}
+		]);
+
+		assert.equal(items[0].caption, "Business phone", "chooser caption should use translated header label");
+		assert.equal(items[0].title, "Business phone", "chooser title should use translated header label");
+	});
+
+	/**
+	 * Contract under test:
+	 * - Column selection metadata includes nested customfields from header providers.
+	 *
+	 * Setup strategy:
+	 * - Provide a customfields-capable header stub exposing selection items.
+	 *
+	 * Pass criteria:
+	 * - Selection item marks column as customfields and includes child field entries.
+	 */
+	it("includes nested customfield selection items from header", () =>
+	{
+		const state = new Et2DatagridColumnState();
+		const header = {
+			getCustomfieldSelectionItems: () => [
+				{name: "cf_text", label: "Text", visible: true},
+				{name: "cf_private", label: "Private", visible: false}
+			]
+		};
+		const items = state.toSelectionItems([
+			{key: "customfields", title: "Custom fields", header: header as any}
+		]);
+		assert.equal(items.length, 1, "one column should produce one top-level chooser row");
+		assert.isTrue(items[0].isCustomfields, "column should be marked as customfields-aware");
+		assert.deepEqual(
+			(items[0].customFields || []).map((field) => field.name),
+			["cf_text", "cf_private"],
+			"customfield chooser entries should be derived from header selection items"
+		);
+	});
+
+	/**
+	 * Contract under test:
+	 * - Selecting the customfields parent and child applies
+	 *   per-field visibility back to header state.
+	 *
+	 * Setup strategy:
+	 * - Apply selection containing the parent customfields column and one child customfield id.
+	 *
+	 * Pass criteria:
+	 * - Parent customfields column is visible.
+	 * - Header receives a complete field visibility map.
+	 */
+	it("applies child customfield selection to parent column visibility and header map", () =>
+	{
+		const state = new Et2DatagridColumnState();
+		const headerState = {
+			visibility: {cf_text: true, cf_private: true}
+		};
+		const header = {
+			getCustomfieldSelectionItems: () => [
+				{name: "cf_text", label: "Text", visible: headerState.visibility.cf_text},
+				{name: "cf_private", label: "Private", visible: headerState.visibility.cf_private}
+			],
+			setCustomfieldVisibility: (visibility : Record<string, boolean>) =>
+			{
+				headerState.visibility = {...visibility};
+			}
+		};
+
+		const columns : Et2DatagridColumn[] = [
+			{key: "subject", title: "Subject"},
+			{key: "customfields", title: "Custom fields", header: header as any}
+		];
+		const selected = [
+			"customfields",
+			"cf_private"
+		];
+		const next = state.applySelectionOrder(columns, selected);
+		const byKey = new Map(next.map((column) => [String(column.key), column]));
+
+		assert.isFalse(byKey.get("customfields")?.hidden, "customfields column should remain visible when one child field is selected");
+		assert.isTrue(byKey.get("subject")?.hidden, "unselected regular columns should be hidden");
+		assert.deepEqual(
+			headerState.visibility,
+			{cf_text: false, cf_private: true},
+			"header should receive field-level visibility map from chooser selection"
+		);
+	});
+
+	/**
+	 * Contract under test:
+	 * - Omitting the customfields parent column hides the whole column but keeps
+	 *   child customfield visibility.
+	 *
+	 * Setup strategy:
+	 * - Apply a selection that includes only a normal column.
+	 *
+	 * Pass criteria:
+	 * - Customfields column is hidden.
+	 * - Header receives the selected child customfield visibility map.
+	 */
+	it("keeps customfield visibility when parent column is omitted", () =>
+	{
+		const state = new Et2DatagridColumnState();
+		const headerState = {
+			visibility: {cf_text: true, cf_private: true}
+		};
+		const header = {
+			getCustomfieldSelectionItems: () => [
+				{name: "cf_text", label: "Text", visible: headerState.visibility.cf_text},
+				{name: "cf_private", label: "Private", visible: headerState.visibility.cf_private}
+			],
+			setCustomfieldVisibility: (visibility : Record<string, boolean>) =>
+			{
+				headerState.visibility = {...visibility};
+			}
+		};
+
+		const columns : Et2DatagridColumn[] = [
+			{key: "subject", title: "Subject"},
+			{key: "customfields", title: "Custom fields", header: header as any}
+		];
+		const next = state.applySelectionOrder(columns, ["subject", "cf_private"]);
+		const byKey = new Map(next.map((column) => [String(column.key), column]));
+
+		assert.isTrue(byKey.get("customfields")?.hidden, "customfields column should be hidden");
+		assert.deepEqual(
+			headerState.visibility,
+			{cf_text: false, cf_private: true},
+			"selected customfield children should be remembered when the parent column is omitted"
+		);
+	});
+});

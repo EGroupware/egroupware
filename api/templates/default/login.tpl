@@ -1,5 +1,5 @@
 <div id="loginMainDiv" class="{stock_background_class}">
-    <div id="loginBackgroundImage" style="background-image:url({background_file})"></div>
+    <div id="loginBackgroundImage" style="{background_style}"></div>
     <div id="divAppIconBar" style="position:relative;">
         <div id="divLogo">
             <div class="login_logo_container">

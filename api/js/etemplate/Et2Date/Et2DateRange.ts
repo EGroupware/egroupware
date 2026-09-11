@@ -1,5 +1,6 @@
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {css, html, LitElement, TemplateResult} from "lit";
+import {property} from "lit/decorators/property.js";
 import {classMap} from "lit/directives/class-map.js";
 import {ifDefined} from "lit/directives/if-defined.js";
 import shoelace from "../Styles/shoelace";
@@ -33,25 +34,37 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/**
-			 * Is the date range relative (this week) or absolute (2016-02-15 - 2016-02-21).  This will affect the value returned.
-			 */
-			relative: {type: Boolean},
+	/**
+	 * Is the date range relative (this week) or absolute (2016-02-15 - 2016-02-21).  This will affect the value returned.
+	 */
+	@property({type: Boolean})
+	relative : boolean;
 
-			/**
-			 * An object with keys 'from' and 'to' for absolute ranges, or a relative range string
-			 */
-			value: {type: Object}
-		}
-	}
+	/**
+	 * Value set while not connected, applied once the element connects.
+	 * The setter must not wait on updateComplete while disconnected: on an element
+	 * that never (re-)connects updateComplete is already resolved, so the retry
+	 * re-enters the setter in an endless microtask loop and freezes the tab.
+	 */
+	private _disconnectedValue : { to : string, from : string } | string;
 
 	constructor()
 	{
 		super();
+	}
+
+	connectedCallback()
+	{
+		super.connectedCallback();
+		if(typeof this._disconnectedValue !== "undefined")
+		{
+			const value = this._disconnectedValue;
+			this._disconnectedValue = undefined;
+			this.updateComplete.then(() =>
+			{
+				this.value = value;
+			});
+		}
 	}
 
 	_handleChange(event)
@@ -186,14 +199,15 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 		return (val.from || val.to) ? val : null;
 	}
 
+	/**
+	 * An object with keys 'from' and 'to' for absolute ranges, or a relative range string
+	 */
+	@property({type: Object, noAccessor: true})
 	public set value(new_value : {to:string,from:string}|string)
 	{
 		if(!this.isConnected)
 		{
-			this.updateComplete.then(() =>
-			{
-				this.value = new_value;
-			});
+			this._disconnectedValue = new_value;
 			return;
 		}
 		if(this.relative)

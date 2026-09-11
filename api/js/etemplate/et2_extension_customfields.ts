@@ -9,14 +9,6 @@
  * @copyright Nathan Gray 2011
  */
 
-/*egw:uses
-	lib/tooltip;
-	/vendor/bower-asset/jquery/dist/jquery.js;
-	et2_core_xml;
-	et2_core_DOMWidget;
-	et2_core_inputWidget;
-*/
-
 import {et2_createWidget, et2_register_widget, et2_registry, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_valueWidget} from "./et2_core_valueWidget";

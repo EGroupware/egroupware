@@ -319,7 +319,6 @@ ldap settings for contacts	admin	fi	Yhteystietojen LDAP asetukset
 ldif	addressbook	fi	LDIF
 line 2	addressbook	fi	Rivi 2
 link title for contacts show	addressbook	fi	Linkitä otsikko näyttämään yhteystieto
-links	addressbook	fi	Linkit
 links and attached files	addressbook	fi	Linkit ja liitetyt tiedostot
 links to specified application.  example: {{links/infolog}}	addressbook	fi	Linkki määriteltyyn sovellukseen. Esim. {{links/infolog}}
 list all categories	addressbook	fi	Näytä kaikki kategoriat

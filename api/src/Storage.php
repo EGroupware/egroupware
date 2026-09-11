@@ -692,62 +692,8 @@ class Storage extends Storage\Base
 			}
 		}
 		// check if we order by a custom field --> join cf table for given cf and order by it's value
-		if (strpos($order_by,self::CF_PREFIX) !== false)
-		{
-			// if $order_by contains more then order by columns (eg. group by) split it off before
-			if (($pos = stripos($order_by, 'order by')) !== false)
-			{
-				$group_by = substr($order_by, 0, $pos+9);
-				$order_by = substr($order_by, $pos+9);
-			}
-			// fields to order by, as cutomfields may have names with spaces, we examine each order by criteria
-			$fields2order = explode(',',$order_by);
-			foreach($fields2order as $v)
-			{
-				if (strpos($v,self::CF_PREFIX) !== false)
-				{
-					// we found a customfield, so we split that part by space char in order to get Sorting Direction and Fieldname
-					$buff = explode(' ',trim($v));
-					$orderDir = array_pop($buff);
-					$key = substr(trim(implode(' ',$buff)), 1);
-					if (!isset($this->customfields[$key]))
-					{
-						$order_by = preg_replace('/'.preg_quote($v, '/').',?/', '', $order_by);
-						continue;	// ignore unavaiable CF
-					}
-					switch($this->customfields[$key]['type'])
-					{
-						case 'int':
-							$order_by = str_replace($v, 'extra_order.'.$this->extra_value.' IS NULL,'.
-								$this->db->to_int('extra_order.'.$this->extra_value).' '.$orderDir, $order_by);
-							break;
-						case 'float':
-							$order_by = str_replace($v, 'extra_order.'.$this->extra_value.' IS NULL,'.
-								$this->db->to_double('extra_order.'.$this->extra_value).' '.$orderDir, $order_by);
-							break;
-						default:
-							$order_by = str_replace($v, 'extra_order.'.$this->extra_value.' IS NULL,extra_order.'.
-								$this->extra_value.' '.$orderDir, $order_by);
-					}
-					// postgres requires that expressions in order by appear in the columns of a distinct select
-					if ($this->db->Type != 'mysql')
-					{
-						if (!is_array($extra_cols))
-						{
-							$extra_cols = $extra_cols ? explode(',', $extra_cols) : array();
-						}
-						$extra_cols[] = 'extra_order.'.$this->extra_value;
-						$extra_cols[] = 'extra_order.'.$this->extra_value.' IS NULL';
-					}
-					$join .= $this->extra_join_order.' AND extra_order.'.$this->extra_key.'='.$this->db->quote($key);
-				}
-			}
-			// add group by again
-			if (isset($group_by))
-			{
-				$order_by = $group_by.$order_by;
-			}
-		}
+		$this->order_by_cf($order_by, $join, $extra_cols);
+
 		// check if we filter by a CF
 		$this->cf_filter($filter, $join, $wildcard);
 
@@ -810,6 +756,76 @@ class Storage extends Storage\Base
 	{
 		return $this->allow_multiple_values && in_array($this->customfields[$name]['type'],array('select','select-account')) &&
 			$this->customfields[$name]['rows'] > 1;
+	}
+
+	/**
+	 * Check if we order by a custom field --> join cf table for given cf and order by it's value
+	 *
+	 * A "#name" entry in $order_by (self::CF_PREFIX) is replaced by an expression ordering by
+	 * that custom field's value (type-cast for "int"/"float" cfs), and the join needed for that
+	 * ("extra_order" aliased) is appended to $join.
+	 *
+	 * @param string &$order_by SQL order-by criteria(s), may contain "#name ASC|DESC" custom-field references
+	 * @param string &$join on return additional joins, if we order by a customfield
+	 * @param mixed &$extra_cols on return, extra columns to select (postgres needs order-by expressions in the select for DISTINCT)
+	 */
+	protected function order_by_cf(&$order_by, &$join, &$extra_cols)
+	{
+		if (strpos($order_by,self::CF_PREFIX) === false) return;
+
+		// if $order_by contains more then order by columns (eg. group by) split it off before
+		if (($pos = stripos($order_by, 'order by')) !== false)
+		{
+			$group_by = substr($order_by, 0, $pos+9);
+			$order_by = substr($order_by, $pos+9);
+		}
+		// fields to order by, as cutomfields may have names with spaces, we examine each order by criteria
+		$fields2order = explode(',',$order_by);
+		foreach($fields2order as $v)
+		{
+			if (strpos($v,self::CF_PREFIX) !== false)
+			{
+				// we found a customfield, so we split that part by space char in order to get Sorting Direction and Fieldname
+				$buff = explode(' ',trim($v));
+				$orderDir = array_pop($buff);
+				$key = substr(trim(implode(' ',$buff)), 1);
+				if (!isset($this->customfields[$key]))
+				{
+					$order_by = preg_replace('/'.preg_quote($v, '/').',?/', '', $order_by);
+					continue;	// ignore unavaiable CF
+				}
+				switch($this->customfields[$key]['type'])
+				{
+					case 'int':
+						$order_by = str_replace($v, 'extra_order.'.$this->extra_value.' IS NULL,'.
+							$this->db->to_int('extra_order.'.$this->extra_value).' '.$orderDir, $order_by);
+						break;
+					case 'float':
+						$order_by = str_replace($v, 'extra_order.'.$this->extra_value.' IS NULL,'.
+							$this->db->to_double('extra_order.'.$this->extra_value).' '.$orderDir, $order_by);
+						break;
+					default:
+						$order_by = str_replace($v, 'extra_order.'.$this->extra_value.' IS NULL,extra_order.'.
+							$this->extra_value.' '.$orderDir, $order_by);
+				}
+				// postgres requires that expressions in order by appear in the columns of a distinct select
+				if ($this->db->Type != 'mysql')
+				{
+					if (!is_array($extra_cols))
+					{
+						$extra_cols = $extra_cols ? explode(',', $extra_cols) : array();
+					}
+					$extra_cols[] = 'extra_order.'.$this->extra_value;
+					$extra_cols[] = 'extra_order.'.$this->extra_value.' IS NULL';
+				}
+				$join .= $this->extra_join_order.' AND extra_order.'.$this->extra_key.'='.$this->db->quote($key);
+			}
+		}
+		// add group by again
+		if (isset($group_by))
+		{
+			$order_by = $group_by.$order_by;
+		}
 	}
 
 	/**

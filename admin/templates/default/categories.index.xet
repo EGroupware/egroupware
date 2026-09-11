@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="admin.categories.index.rows" template="" lang="" group="0" version="1.9.002">
+	<et2-template  id="admin.categories.index.rows" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%">
 			<columns>
 				<column width="45%"/>
@@ -18,45 +19,42 @@
 				<row class="th">
 					<nextmatch-sortheader label="Name" id="name"/>
 					<nextmatch-sortheader label="Description" id="description"/>
-					<et2-nextmatch-header-filter  label="Application" id="app"/>
-					<et2-nextmatch-header-account  label="Owner" id="owner" emptyLabel="all" accountType="both"/>
-					<et2-nextmatch-header-filter  label="Private" id="access" emptyLabel="All"/>
-					<nextmatch-header align="center" label="Icon" id="icon"/>
-					<nextmatch-header label="Color" id="color"/>
+					<et2-nextmatch-header-filter  label="Application" id="app"></et2-nextmatch-header-filter>
+					<et2-nextmatch-header-account  label="Owner" id="owner" emptyLabel="all" accountType="both"></et2-nextmatch-header-account>
+					<et2-nextmatch-header-filter  label="Private" id="access" emptyLabel="All"></et2-nextmatch-header-filter>
+					<et2-nextmatch-header  align="center" label="Icon" id="icon"></et2-nextmatch-header>
+					<et2-nextmatch-header  label="Color" id="color"></et2-nextmatch-header>
 					<nextmatch-sortheader label="Modified" id="last_mod"/>
-					<nextmatch-header align="center" label="Children" id="subs"/>
+					<et2-nextmatch-header  align="center" label="Children" id="subs"></et2-nextmatch-header>
 				</row>
 				<row class="$row_cont[id] $row_cont[class]">
 					<et2-hbox  cellpadding="0" cellspacing="0" >
-						<html id="${row}[level_spacer]" class="level_spacer"/>
+						<et2-html  id="${row}[level_spacer]" class="level_spacer"></et2-html>
 						<et2-description  id="${row}[name]" class="$row_cont[class]" noLang="true"></et2-description>
 					</et2-hbox>
 					<et2-description  id="${row}[description]"></et2-description>
 					<et2-select  id="${row}[appname]" readonly="true"></et2-select>
 					<et2-select-account  id="${row}[owner]" readonly="true" emptyLabel="All users" accountType="groups"></et2-select-account>
 					<et2-checkbox  align="center" id="${row}[access]" readonly="true" selectedValue="private" unselectedValue="public" ></et2-checkbox>
-					<et2-image align="center" label="{$row_cont['data']['icon']}"
-                               src="$row_cont[icon_url]"></et2-image>
+					<et2-image  align="center" label="{$row_cont['data']['icon']}" src="$row_cont[icon_url]"></et2-image>
 					<et2-description  id="${row}[data][color]"></et2-description>
 					<et2-date-time  id="${row}[last_mod]" readonly="true"></et2-date-time>
 					<et2-description  align="center" id="${row}[subs]"></et2-description>
 				</row>
 			</rows>
 		</grid>
-	</template>
-    <template id="admin.categories.index.header">
-        <et2-toolbar id="cats-toolbar">
-            <et2-button label="Add" id="add" slot="prefix"
-                        onclick="egw.open_link(widget.getRoot().getArrayMgr('content').getEntry('add_link'),'_blank','600x380'); return false;" noSubmit="true"></et2-button>
-			<template template="api.search-button" slot="prefix"></template>
-            <et2-select id="filter" noLang="1" emptyLabel="All categories" label="Filter" onchange="app.admin.changeNmFilter"></et2-select>
-            <et2-select id="owner" emptyLabel="Owner" onchange="app.admin.changeNmFilter"></et2-select>
-            <et2-button-icon id="back_to_list" image="back" label="Back to list" slot="suffix"
-				onclick="widget.closest('egw-app').refresh(); return false;" noSubmit="true"></et2-button-icon>
+	</et2-template>
+    <et2-template  id="admin.categories.index.header">
+        <et2-toolbar  id="cats-toolbar">
+            <et2-button  label="Add" id="add" slot="prefix" onclick="egw.open_link(widget.getRoot().getArrayMgr('content').getEntry('add_link'),'_blank','600x380'); return false;" noSubmit="true"></et2-button>
+			<et2-template  template="api.search-button" slot="prefix"></et2-template>
+            <et2-select  id="filter" noLang="1" emptyLabel="All categories" label="Filter" onchange="app.admin.changeNmFilter"></et2-select>
+            <et2-select  id="owner" emptyLabel="Owner" onchange="app.admin.changeNmFilter"></et2-select>
+            <et2-button-icon  id="back_to_list" image="back" label="Back to list" slot="suffix" onclick="widget.closest('egw-app').refresh(); return false;" noSubmit="true"></et2-button-icon>
         </et2-toolbar>
-	</template>
-	<template id="admin.categories.index" template="" lang="" group="0" version="1.9.001">
-        <et2-template template="admin.categories.index.header" slot="main-header"></et2-template>
+	</et2-template>
+	<et2-template  id="admin.categories.index" template="" lang="" group="0" version="1.9.001">
+        <et2-template  template="admin.categories.index.header" slot="main-header"></et2-template>
         <nextmatch id="nm" template="admin.categories.index.rows" span="all"/>
 		<et2-box  class="action_popup prompt" id="owner_popup">
 			<et2-vbox>
@@ -71,7 +69,7 @@
 				</et2-hbox>
 			</et2-vbox>
 		</et2-box>
-		<styles>
+		<et2-styles>
             .level0 { font-weight: bold; }
             .level_spacer { flex: 0 0 auto;}
             .action_popup {
@@ -101,6 +99,6 @@
 .action_select {
 	width: 100%
 }
-		</styles>
-	</template>
+		</et2-styles>
+	</et2-template>
 </overlay>

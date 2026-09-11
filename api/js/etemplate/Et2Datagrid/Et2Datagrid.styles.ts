@@ -1,0 +1,553 @@
+import {css} from "lit";
+
+export default css`
+	:host {
+		display: block;
+		height: 100%;
+		min-height: 0;
+	}
+
+	:host([auto-height]) {
+		height: auto;
+	}
+
+	:host(.print),
+	:host(.print) .dg-root,
+	:host(.print) .dg-body {
+		height: auto;
+		overflow: visible;
+	}
+
+	:host(.print) .dg-colselection,
+	:host(.print) .dg-resize-helper {
+		display: none;
+	}
+
+	/* Same-tbody print mode: #rows is the one element that holds both the
+	 * normal virtualized rows and the static print rows, so retain table
+	 * fragmentation on it instead of treating it as one CSS grid fragment. */
+	:host(.print) .dg-body #rows {
+		display: table-row-group;
+		height: auto !important;
+		min-height: 0 !important;
+		contain: none !important;
+		/* The very last printed row can still end up slightly clipped at the page
+		 * bottom. Physical units are used here rather than em/vh because they 
+		 * resolve consistently across print contexts; the margin is sized to roughly a full page so the last row
+		 * has somewhere safe to overflow into even if the driver is a full page short.
+		 */
+		padding-bottom: 250mm;
+	}
+
+	:host(.print) .dg-body tbody {
+		display: grid;
+		grid-auto-rows: max-content;
+		height: auto;
+		min-height: 0 !important;
+		contain: none !important;
+	}
+
+	:host(.print) .dg-body table {
+		display: table;
+		height: auto;
+		overflow: visible;
+	}
+
+	:host(.print) .dg-body thead {
+		display: table-header-group;
+	}
+
+	:host(.print) .dg-body tbody > tr {
+		display: grid;
+		grid-template-columns: var(--meta-column-width, 0px) var(--column-sizes, repeat(var(--column-count), 1fr));
+		width: 100%;
+		position: relative !important;
+		transform: none !important;
+		break-inside: avoid;
+		page-break-inside: avoid;
+		page-break-after: auto;
+	}
+
+	:host(.print) .dg-body tbody > tr > td,
+	:host(.print) .dg-body tbody > tr > th {
+		max-height: none;
+		overflow: visible;
+	}
+
+	:host(.print) .dg-body tbody > tr > td et2-vbox {
+		height: auto;
+		min-height: max-content;
+	}
+
+	:host(.print) .dg-body tbody > tr > td et2-vbox > * {
+		flex: 0 0 auto !important;
+	}
+
+	:host([embedded-virtualized]) {
+		height: var(--embedded-virtualized-height, auto);
+		overflow: visible;
+	}
+
+	.dg-root {
+		display: flex;
+		flex-direction: column;
+		position: relative;
+		height: 100%;
+		min-height: 0;
+		border: none;
+		overflow: hidden;
+		--column-sizes: '';
+		--column-count: 1;
+		--scrollbar-space: 0px;
+		--column-selection-width: clamp(16px, var(--scrollbar-space), 24px);
+	}
+
+	:host([auto-height]) .dg-root {
+		height: auto;
+		overflow: visible;
+	}
+
+	:host([embedded-virtualized]) .dg-root {
+		height: 100%;
+		overflow: visible;
+	}
+
+	.dg-header {
+		--sl-panel-background-color: var(--sl-color-neutral-100);
+		position: relative;
+		display: grid;
+		grid-template-columns: var(--meta-column-width, 0px) var(--column-sizes);
+		background: var(--sl-panel-background-color);
+		border-bottom: var(--sl-panel-border-width) solid var(--sl-color-neutral-400);
+		align-items: stretch;
+		min-height: var(--sl-spacing-x-large);
+		flex: 0 0 min-content;
+		padding-right: var(--column-selection-width);
+	}
+
+	.dg-col {
+		position: relative;
+		padding: var(--sl-spacing-2x-small) var(--sl-spacing-small);
+		border-right: var(--sl-panel-border-width) solid var(--sl-color-neutral-400);
+		box-sizing: border-box;
+
+		/* Inner div lets us have clear space on the right edge of the column header */
+
+		.dg-col-inner {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	}
+
+	.dg-col--lead {
+		grid-column: span 2;
+	}
+
+	.dg-col-resize-handle {
+		position: absolute;
+		top: 0;
+		right: calc(-1 * var(--sl-spacing-2x-small));
+		width: var(--sl-spacing-small);
+		height: 100%;
+		cursor: ew-resize;
+		touch-action: none;
+		z-index: 2;
+	}
+
+	:host(.dg-resizing),
+	:host(.dg-resizing) * {
+		cursor: ew-resize !important;
+		user-select: none;
+	}
+
+	:host(.dg-resizing.dg-resize-limit-min),
+	:host(.dg-resizing.dg-resize-limit-min) *,
+	:host(.dg-resizing.dg-resize-limit-max),
+	:host(.dg-resizing.dg-resize-limit-max) * {
+		cursor: not-allowed !important;
+	}
+
+	.dg-resize-helper {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		border: 1px solid var(--sl-color-primary-600, #2869db);
+		background: rgba(40, 105, 219, 0.15);
+		box-sizing: border-box;
+		pointer-events: none;
+		z-index: var(--sl-z-index-tooltip);
+	}
+
+	:host(.dg-resize-limit-min) .dg-resize-helper,
+	:host(.dg-resize-limit-max) .dg-resize-helper {
+		border-right-color: var(--sl-color-danger-600);
+	}
+	.dg-colselection {
+		position: absolute;
+		right: 0px;
+		width: var(--column-selection-width);
+		padding: 0;
+		justify-items: center;
+		/* Give it a background color in case insufficient space makes it overlap */
+		background-color: var(--sl-color-neutral-100);
+	}
+
+	.dg-body {
+		flex: 1 1 auto;
+		overflow-y: auto;
+		overflow-x: hidden;
+		overflow-anchor: none;
+		min-height: 0;
+		position: relative;
+		scrollbar-gutter: stable;
+		/* Opt the row area out of the browser's own horizontal-swipe gestures (edge
+		 * swipe-to-go-back on mobile Chrome/Safari) so a mobile mark/unmark swipe
+		 * isn't hijacked into a page navigation - vertical panning stays native. */
+		touch-action: pan-y;
+
+		table {
+			width: 100%;
+			box-sizing: border-box;
+			display: grid;
+			grid-template-columns: var(--meta-column-width, 0px) var(--column-sizes, repeat(var(--column-count), 1fr));
+
+			tbody {
+				display: grid;
+				grid-template-columns: var(--meta-column-width, 0px) var(--column-sizes, repeat(var(--column-count), 1fr));
+				grid-column: 1 / -1;
+				row-gap: var(--sl-spacing-2x-small);
+			}
+		}
+
+		thead {
+			position: absolute;
+			clip-path: inset(50%);
+			height: 1px;
+			width: 1px;
+			margin: -1px;
+			overflow: hidden;
+			padding: 0;
+			border: 0;
+			white-space: nowrap;
+		}
+
+		tbody > tr {
+			display: grid;
+			grid-template-columns: var(--meta-column-width, 0px) var(--column-sizes, repeat(var(--column-count), 1fr));
+			grid-column: 1 / -1;
+			box-sizing: border-box;
+			outline: none;
+			width: 100%;
+			min-height: max(2em, var(--row-height, 35px));
+			border-bottom: var(--sl-panel-border-width) solid var(--sl-color-neutral-200);
+		}
+
+		tbody > tr.dg-row-expanded {
+			grid-template-columns: var(--meta-column-width, 0px) var(--column-sizes, repeat(var(--column-count), 1fr));
+			min-height: 0;
+			border-bottom: 0;
+		}
+
+		tbody > *[aria-selected="true"] {
+			background: var(--sl-color-primary-200, #d4dfe8);
+		}
+
+		tbody > [data-row-id].dg-row-active {
+			box-shadow: inset 0 0 0 2px var(--sl-color-primary-600, #2869db);
+		}
+
+		tbody > [data-row-id].dg-row--refreshed {
+			animation: dg-row-refresh-pulse 5s ease-out forwards;
+		}
+
+		tbody > [data-row-id].drop-hover {
+			background: var(--sl-color-primary-100);
+			box-shadow: var(--sl-shadow-large);
+		}
+
+		tbody td,
+		tbody th {
+			box-sizing: border-box;
+			padding: 0px var(--sl-spacing-x-small);
+			min-width: 0;
+			max-height: var(--row-cell-max-height, 10em);
+			overflow-x: hidden;
+			overflow-y: auto;
+			text-overflow: ellipsis;
+		}
+
+		tbody td[data-dg-meta-cell="1"] {
+			padding: 0;
+			min-width: 0;
+			max-height: none;
+			overflow: hidden;
+			display: flex;
+			align-items: flex-start;
+			justify-content: center;
+		}
+
+	}
+
+	:host([fixed-row-height]) .dg-body tbody > tr[data-row-id]:not(.dg-row-expanded) {
+		height: var(--row-height, 44px);
+		min-height: var(--row-height, 44px);
+		max-height: var(--row-height, 44px);
+		overflow: hidden;
+	}
+
+	:host([fixed-row-height]) .dg-body tbody > tr[data-row-id]:not(.dg-row-expanded) > td,
+	:host([fixed-row-height]) .dg-body tbody > tr[data-row-id]:not(.dg-row-expanded) > th {
+		max-height: var(--row-height, 44px);
+		overflow: hidden;
+	}
+
+	.dg-row-expander {
+		appearance: none;
+		border: 0;
+		background: transparent;
+		color: var(--sl-color-neutral-700);
+		cursor: pointer;
+		inline-size: var(--row-expander-size, var(--sl-spacing-large));
+		block-size: var(--row-expander-size, var(--sl-spacing-large));
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0;
+		margin: 0;
+	}
+
+	.dg-row-expander:hover {
+		color: var(--sl-color-neutral-900);
+	}
+
+	.dg-row-expander:focus-visible {
+		outline: 2px solid var(--sl-color-primary-600);
+		outline-offset: -2px;
+	}
+
+	.dg-row-expander__icon {
+		display: inline-grid;
+		align-items: center;
+		justify-content: center;
+		transition: transform 120ms ease-out;
+	}
+
+	.dg-row-expander slot[name="expand-icon"],
+	.dg-row-expander slot[name="collapse-icon"] {
+		grid-area: 1 / 1;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		transition: opacity 120ms ease-out;
+	}
+
+	.dg-row-expander__chevron {
+		inline-size: 0;
+		block-size: 0;
+		border-block-start: calc(var(--row-expander-icon-size, 0.5em) * 0.8) solid transparent;
+		border-block-end: calc(var(--row-expander-icon-size, 0.5em) * 0.8) solid transparent;
+		border-inline-start: var(--row-expander-icon-size, 0.5em) solid currentColor;
+		transform-origin: 45% 50%;
+	}
+
+	.dg-row-expander--expanded .dg-row-expander__icon {
+		transform: rotate(90deg);
+	}
+
+	.dg-row-expander slot[name="collapse-icon"] {
+		opacity: 0;
+	}
+
+	.dg-row-expander--expanded slot[name="collapse-icon"] {
+		opacity: 1;
+	}
+
+	.dg-row-expander--expanded slot[name="expand-icon"] {
+		opacity: 0;
+	}
+
+	.dg-row-placeholder {
+		background: transparent;
+	}
+
+	.dg-body tbody td.dg-expanded-cell {
+		grid-column: 1 / -1;
+		padding: 0;
+		max-height: none;
+		overflow: visible;
+	}
+
+	.dg-expanded-content {
+		min-height: 0;
+		overflow: visible;
+		margin-left: var(--sl-spacing-large);
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.dg-row-expanded {
+			animation: dg-expanded-row-reveal 160ms ease-out;
+		}
+
+		.dg-row-expanded .dg-expanded-content {
+			animation: dg-expanded-content-reveal 160ms ease-out;
+			transform-origin: top;
+		}
+	}
+
+	@keyframes dg-expanded-row-reveal {
+		from {
+			clip-path: inset(0 0 100% 0);
+		}
+		to {
+			clip-path: inset(0);
+		}
+	}
+
+	@keyframes dg-expanded-content-reveal {
+		from {
+			opacity: 0;
+			transform: translateY(-0.25rem);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	@keyframes dg-row-refresh-pulse {
+		0% {
+			background-color: color-mix(in srgb, var(--sl-color-warning-200) 0%, transparent);
+		}
+		15% {
+			background-color: var(--sl-color-warning-200);
+		}
+		100% {
+			background-color: color-mix(in srgb, var(--sl-color-warning-200) 35%, transparent);
+		}
+	}
+
+	:host([auto-height]) .dg-body {
+		flex: 0 0 auto;
+		overflow: visible;
+		scrollbar-gutter: auto;
+	}
+
+	:host([embedded-virtualized]) .dg-body {
+		flex: 1 1 auto;
+		overflow: visible;
+		scrollbar-gutter: auto;
+	}
+
+	:host([embedded-virtualized]) .dg-body tbody {
+		/*
+		 * Embedded virtualized rows are positioned from an explicit row-height
+		 * pitch. A tbody grid row-gap is outside that pitch, so it accumulates as
+		 * unreserved vertical space and eventually makes later rows overlap or
+		 * leaves a false spacer at the end. Keep the embedded pitch entirely in
+		 * the row height itself.
+		 */
+		row-gap: 0;
+		overflow-anchor: none;
+	}
+
+	:host([view="tile"]) .dg-body {
+		overflow-y: auto;
+		overflow-x: hidden;
+	}
+
+	.dg-tile-grid {
+		position: relative;
+		width: 100%;
+		min-height: 100%;
+		outline: none;
+	}
+
+	.dg-tile-grid > [data-row-id] {
+		box-sizing: border-box;
+		outline: none;
+		border: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
+		border-radius: var(--sl-panel-border-radius);
+		position: relative;
+		display: flex;
+		align-items: stretch;
+		justify-content: center;
+		overflow: hidden;
+	}
+
+	/* Same selection tint as the table view above - see the comment there. */
+	.dg-tile-grid > [data-row-id][aria-selected="true"] {
+		background: var(--highlight-background-color, var(--sl-color-primary-100, #eef5ff));
+	}
+
+	.dg-tile-grid > [data-row-id].dg-row-active {
+		box-shadow: inset 0 0 0 2px var(--sl-color-primary-600, #2869db);
+	}
+
+	.dg-tile-grid > [data-row-id].dg-row--refreshed {
+		animation: dg-row-refresh-pulse 5s ease-out forwards;
+	}
+
+	.dg-tile-grid > [data-row-id].drop-hover {
+		background: var(--sl-color-primary-100);
+		box-shadow: var(--sl-shadow-large);
+	}
+
+	.dg-tile-grid > [data-row-id] > [data-dg-meta-cell="1"] {
+		display: none;
+	}
+
+	.dg-tile-placeholder {
+		padding: var(--sl-spacing-x-small);
+	}
+
+	.dg-placeholder-cell {
+		grid-column: 1 / -1;
+		padding: 6px 8px;
+		align-content: center;
+		--color: var(--sl-color-neutral-50);
+		--sheen-color: var(--sl-color-neutral-200);
+	}
+
+	.skeleton-row {
+		display: flex;
+		padding: var(--sl-spacing-large);
+	}
+
+	.dg-state {
+		padding: var(--sl-spacing-large);
+	}
+
+	.dg-state sl-alert {
+		display: block;
+	}
+
+	.dg-state--empty {
+		padding: 0;
+	}
+
+	.dg-empty-row {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		align-items: center;
+		width: 100%;
+		min-height: var(--row-height, 44px);
+		box-sizing: border-box;
+		background: var(--sl-color-neutral-0);
+		border-bottom: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
+		color: var(--sl-color-neutral-600);
+	}
+
+	.dg-empty-cell {
+		display: flex;
+		align-items: center;
+		min-width: 0;
+		padding: 0 var(--sl-spacing-small);
+		box-sizing: border-box;
+	}
+
+	.dg-empty-action-menu {
+		margin-inline-end: var(--sl-spacing-x-small);
+	}
+
+`;

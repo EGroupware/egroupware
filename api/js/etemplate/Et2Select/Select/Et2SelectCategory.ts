@@ -11,6 +11,7 @@ import {Et2TreeDropdown} from "../../Et2Tree/Et2TreeDropdown";
 import {Et2CategoryTag} from "../Tag/Et2CategoryTag";
 import {Et2StaticSelectMixin, StaticOptions as so} from "../StaticOptions";
 
+import styles from "./Et2SelectCategory.styles";
 /**
  * @since 23.1.x
  * This is not a classical Select box but a structured tree
@@ -22,34 +23,7 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2TreeDropdown)
 	{
 		return [
 			...super.styles,
-			css`
-				:host {
-					--category-color: transparent;
-				}
-
-				/* Color on tree items */
-				::part(item-item) {
-					border-inline-start: 4px solid transparent;
-					border-inline-start-color: var(--category-color, transparent);
-				}
-
-				/* Color on tags */
-				:host(:not([multiple])) .tree_tag::part(base) {
-					border-inline-start: 4px solid transparent;
-					border-inline-start-color: var(--category-color, transparent);
-				}
-
-				/* Color on single value */
-
-				:host(:not([multiple])) .tree-dropdown:not(.tree-dropdown--has-value) .tree-dropdown__combobox {
-					padding-inline-start: 3px;
-				}
-
-				:host(:not([multiple])) .tree-dropdown--has-value .tree-dropdown__combobox {
-					border-inline-start: 4px solid;
-					border-inline-start-color: var(--category-color, var(--sl-input-border-color));
-				}
-			`
+			styles
 		];
 	}
 	/**

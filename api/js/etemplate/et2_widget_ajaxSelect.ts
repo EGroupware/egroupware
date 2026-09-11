@@ -10,12 +10,6 @@
  * @copyright Nathan Gray 2012
  */
 
-/*egw:uses
-	/vendor/bower-asset/jquery/dist/jquery.js;
-	et2_core_inputWidget;
-	et2_core_valueWidget;
-*/
-
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_inputWidget} from "./et2_core_inputWidget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
@@ -262,5 +256,4 @@ export class et2_ajaxSelect_ro extends et2_valueWidget implements et2_IDetachedD
 	}
 }
 et2_register_widget(et2_ajaxSelect_ro, ["ajax_select_ro"]);
-
 

@@ -285,7 +285,6 @@ limit number of description lines (default 5, 0 for no limit)	infolog	cs	Omezit 
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	cs	Omezení šířky pole pro popis. Má význam pouze, pokud je také nastaveno omezení pro počet řádků. Nula znamená bez omezení.
 link	infolog	cs	Propojení
 linked to %1	infolog	cs	Propojení na %1
-links	infolog	cs	Propojení
 links and attached files	infolog	cs	Propojení a připojené soubory
 links of this entry	infolog	cs	Odkazy tohoto záznamu
 links to specified application.  example: {{links/infolog}}	infolog	cs	Propojení na konkrétní aplikace. Příklad: {{links/infolog}}

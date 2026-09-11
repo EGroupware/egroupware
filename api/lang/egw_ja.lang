@@ -798,6 +798,7 @@ linkapps	common	ja	Link apps
 linked	common	ja	Linked
 linkentry	common	ja	Link entry
 linklist	common	ja	Link list
+links	common	ja	リンク
 links and attached files	preferences	ja	Links and attached files
 links to specified application.  example: {{links/addressbook}}	common	ja	Links to specified application. Example: {{links/addressbook}}
 linkstring	common	ja	Link string

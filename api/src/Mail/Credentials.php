@@ -270,7 +270,11 @@ class Credentials
 					{
 						unset($results[$prefix.'password']);
 						$results[$prefix.'refresh_token'] = self::UNAVAILABLE;  // no need to make it available
-						$results[$prefix.'access_token'] = self::getAccessToken($row['cred_username'], $password, $mailserver, $acc_id, $row['account_id']);
+						// lazy: only actually refreshes the token (real HTTP request) the first time
+						// it's used as a string (Horde_(Imap|Smtp)_Password_Xoauth2::getPassword())
+						// during a real login attempt - see Credentials\AccessToken's own docblock
+						$results[$prefix.'access_token'] = new Credentials\AccessToken(
+							$row['cred_username'], $password, $mailserver, $acc_id, $row['account_id']);
 						// if no extra imap&smtp username set, set the oauth one
 						foreach(['acc_imap_', 'acc_smtp_'] as $pre)
 						{
@@ -328,7 +332,7 @@ class Credentials
 	 * @param ?int $account_id ----------- " ------------
 	 * @return string|null
 	 */
-	static protected function getAccessToken(string $username, string $refresh_token, ?string $mailserver=null, ?int $acc_id=null, ?int $account_id=null)
+	static public function getAccessToken(string $username, string $refresh_token, ?string $mailserver=null, ?int $acc_id=null, ?int $account_id=null)
 	{
 		return Api\Cache::getInstance(__CLASS__, 'access-token-'.$username.'-'.md5($refresh_token), static function() use ($acc_id, $account_id, $username, $refresh_token, $mailserver)
 		{
@@ -985,6 +989,44 @@ class Credentials
 	static public function get_db()
 	{
 		return isset($GLOBALS['egw_setup']) ? $GLOBALS['egw_setup']->db : $GLOBALS['egw']->db;
+	}
+
+	/**
+	 * Cached result of maxPasswordLength(), null until first call
+	 */
+	private static ?int $maxPasswordLength = null;
+
+	/**
+	 * Maximum number of bytes write() can store in cred_password
+	 *
+	 * Introspects the actual column size instead of assuming a value fixed in code, so a site that
+	 * enlarged the column (eg. to fit larger S/MIME certificate chains, see
+	 * admin_mail::import_smime_cert()) is correctly recognised without a matching code change.
+	 * Falls back to the size currently in api/setup/tables_current.inc.php, if introspection fails.
+	 *
+	 * A blob/text column reports no fixed precision - ADOdb's MySQL driver gives max_length -1 for
+	 * those, since eg. "longblob" has no "(length)" to parse out of MySQL's COLUMN_TYPE - that
+	 * genuinely means "no meaningful ceiling", NOT "essentially zero", so it must NOT be used
+	 * as-is here (a naive (int) cast would turn "no limit" into "reject everything").
+	 *
+	 * @return int
+	 */
+	public static function maxPasswordLength() : int
+	{
+		if (self::$maxPasswordLength === null)
+		{
+			self::$maxPasswordLength = 16384;
+			foreach (self::get_db()->metadata(self::TABLE) as $column)
+			{
+				if (($column['name'] ?? null) === 'cred_password')
+				{
+					$len = (int)($column['len'] ?? 0);
+					self::$maxPasswordLength = $len > 0 ? $len : PHP_INT_MAX;
+					break;
+				}
+			}
+		}
+		return self::$maxPasswordLength;
 	}
 }
 

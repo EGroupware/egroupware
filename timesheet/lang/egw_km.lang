@@ -80,7 +80,6 @@ last year	timesheet	km	ឆ្នាំមុន
 leave it empty for a full week	timesheet	km	ទុកវាចោលពេញមួយសប្តាហ៍
 leaves without saveing	timesheet	km	ស្លឹកដោយមិនរក្សាទុក
 length<br>rows	timesheet	km	ប្រវែង<br>ជួរដេក
-links	timesheet	km	តំណភ្ជាប់
 links and attached files	timesheet	km	តំណភ្ជាប់និងឯកសារភ្ជាប់
 links to specified application.  example: {{links/infolog}}	timesheet	km	តំណភ្ជាប់ទៅកម្មវិធីដែលបានបញ្ជាក់ ឧទាហរណ៍៖ {{links/infolog}}
 list of files linked to the current record	timesheet	km	បញ្ជីឯកសារដែលភ្ជាប់ទៅកំណត់ត្រាបច្ចុប្បន្ន

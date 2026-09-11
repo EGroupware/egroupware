@@ -73,10 +73,13 @@ class timesheet_ui extends timesheet_bo
 			}
 			else	// new entry
 			{
+				$last_end = $GLOBALS['egw_info']['user']['preferences']['timesheet']['new_entry_default'] === 'start_time' ?
+					$this->get_last_end($GLOBALS['egw_info']['user']['account_id']) : null;
+
 				$this->data = array(
-					'ts_start' => $this->today,
-					'start_time' => '',    // force empty start-time
-					'end_time' => Api\DateTime::to($this->now, 'H:i'),
+					'ts_start' => $last_end ? (clone $last_end)->setTime(0, 0, 0)->format() : $this->today,
+					'start_time' => $last_end ? $last_end->format('H:i') : '',    // force empty start-time, unless continuing from last entry
+					'end_time' => $last_end ? '' : Api\DateTime::to($this->now, 'H:i'),
 					'ts_owner' => $GLOBALS['egw_info']['user']['account_id'],
 					'cat_id' => (int)$_REQUEST['cat_id'],
 					'ts_status' => $GLOBALS['egw_info']['user']['preferences']['timesheet']['predefined_status'],
@@ -184,7 +187,7 @@ class timesheet_ui extends timesheet_bo
 			$referer = $content['referer'];
 			$content['ts_project_blur'] = $content['pm_id'] ? Link::title('projectmanager', $content['pm_id']) : '';
 			$this->data = $content;
-			foreach(array('button','view','referer','tabs','start_time') as $key)
+			foreach(array('button','view','referer','tabs','start_time','ignore_conflicts','conflict_button') as $key)
 			{
 				unset($this->data[$key]);
 			}
@@ -204,6 +207,7 @@ class timesheet_ui extends timesheet_bo
 					// fall through
 				case 'save':
 				case 'save_new':
+				case 'save_reset':
 				case 'apply':
 					if ($this->data['ts_quantity'] === '' && $this->data['ts_duration'])	// set the quantity (in h) from the duration (in min)
 					{
@@ -238,6 +242,26 @@ class timesheet_ui extends timesheet_bo
 						}
 					}
 					if ($etpl->validation_errors()) break;	// the user need to fix the error, before we can save the entry
+
+					// conflicts() works in Api\DateTime objects and expects the start in server
+					// time, while $this->data holds user-time until save() converts it
+					if (empty($content['ignore_conflicts']) && !empty($this->data['ts_start']) &&
+						($ts_conflicts = $this->conflicts(array(
+							'ts_start' => (new Api\DateTime($this->data['ts_start']))->setServer(),
+						) + $this->data)))
+					{
+						// legacy <grid> auto-repeat indexes its content rows by grid row number, so the
+						// first repeated row after the header row is $content['conflicts'][1], not [0]
+						$content['conflicts'] = array(false);
+						foreach($ts_conflicts as $conflict)
+						{
+							$conflict['ts_start'] = $conflict['ts_start']->setUser()->format('ts');
+							$content['conflicts'][] = $conflict;
+						}
+						$content['has_conflicts'] = true;
+						$content['conflict_button'] = $button;
+						break;	// don't save - let the user ignore the conflict or re-edit
+					}
 
 					// account for changed project --> remove old one from links and add new one
 					if ((int) $this->data['pm_id'] != (int) $this->data['old_pm_id'])
@@ -292,7 +316,12 @@ class timesheet_ui extends timesheet_bo
 							}, $content['events']));
 						}
 					}
-					Framework::refresh_opener($msg, 'timesheet', $this->data['ts_id'], $content['ts_id'] ? 'edit' : 'add');
+					// Apply/Save & New/Save & Reset keep the dialog open, so $content['msg'] below already
+					// shows the message locally - passing it to refresh_opener too would double it up
+					// (opener and dialog end up being the same window whenever this isn't a real separate
+					// popup, e.g. a plain page load or a single-window/inline theme).
+					Framework::refresh_opener(in_array($button, array('apply', 'save_new', 'save_reset')) ? '' : $msg,
+						'timesheet', $this->data['ts_id'], $content['ts_id'] ? 'edit' : 'add');
 					if ($button == 'apply') break;
 					if ($button == 'save_new')
 					{
@@ -306,7 +335,7 @@ class timesheet_ui extends timesheet_bo
 								Link::link(TIMESHEET_APP,$content['link_to']['to_id'],$link['app'],$link['id'],$link['remark']);
 							}
 						}
-						// create a new entry
+						// create a new entry, continuing from the end of the current one
 						$this->data['ts_start'] += 60 * $this->data['ts_duration'];
 						foreach(array('ts_id', 'ts_title', 'ts_description', 'ts_duration', 'ts_quantity',
 									  'ts_modified', 'ts_modifier', 'link_to', 'events') as $name)
@@ -319,6 +348,20 @@ class timesheet_ui extends timesheet_bo
 						{
 							unset($this->data['pm_id']);
 						}
+						break;
+					}
+					if ($button == 'save_reset')
+					{
+						$msg .= ', '.lang('creating new entry');		// giving some feedback to the user
+
+						// keep ONLY the date/time, continuing from the end of the current entry -
+						// everything else resets to the same defaults a fresh "Add" would use
+						$this->data = array(
+							'ts_start'  => $this->data['ts_start'] + 60 * $this->data['ts_duration'],
+							'ts_owner'  => $GLOBALS['egw_info']['user']['account_id'],
+							'ts_status' => $GLOBALS['egw_info']['user']['preferences']['timesheet']['predefined_status'],
+							'events'    => [],
+						);
 						break;
 					}
 					// fall-through for save
@@ -361,6 +404,9 @@ class timesheet_ui extends timesheet_bo
 			'pm_integration'   => $this->pm_integration,
 			'no_ts_status'     => !$this->status_labels && ($this->data['ts_status'] != self::DELETED_STATUS),
 			'tabs'             => $_GET['tabs'] ?? 'general',
+			'conflicts'        => $content['conflicts'] ?? [],
+			'has_conflicts'    => $content['has_conflicts'] ?? false,
+			'conflict_button'  => $content['conflict_button'] ?? null,
 		));
 		$links = array();
 		// create links specified in the REQUEST (URL)
@@ -450,14 +496,16 @@ class timesheet_ui extends timesheet_bo
 		// or the preserved project-blur comming from the current selected project
 		$content['ts_title_blur'] = $preserv['ts_title_blur'] ? $preserv['ts_title_blur'] : $content['ts_project_blur'];
 		$readonlys = array(
-			'button[delete]'   => !$this->data['ts_id'] || !$this->check_acl(Acl::DELETE) ||
+			'button[delete]'     => !$this->data['ts_id'] || !$this->check_acl(Acl::DELETE) ||
 				$this->data['ts_status'] == self::DELETED_STATUS ||$only_admin_edit ,
-			'button[undelete]' => $this->data['ts_status'] != self::DELETED_STATUS,
-			'button[edit]'     => !$view || !$this->check_acl(Acl::EDIT) || $only_admin_edit,
-			'button[save]'     => $view,
-			'button[save_new]' => $view,
-			'button[apply]'    => $view,
-			'tabs[events]'     => empty($this->data['events']), // hide events tab, if we have none
+			'button[undelete]'   => $this->data['ts_status'] != self::DELETED_STATUS,
+			'button[edit]'       => !$view || !$this->check_acl(Acl::EDIT) || $only_admin_edit,
+			'button[save]'       => $view,
+			'button[save_new]'   => $view,
+			'button[save_reset]' => $view,
+			'save_split'         => $view,
+			'button[apply]'      => $view,
+			'tabs[events]'       => empty($this->data['events']), // hide events tab, if we have none
 		);
 
 		if ($view)
@@ -546,17 +594,24 @@ class timesheet_ui extends timesheet_bo
 		$end_date = false;
 
 		// Date filter
+		// Use local $start_date/$end_date, not $query_in directly: $query_in is the same
+		// array Nextmatch::beforeSendToClient() sends to the client, so mutating it here
+		// would leak the internal raw timestamp instead of the ISO string the date widgets
+		// expect.
+		$start_date = $query_in['startdate'];
 		if($query_in['filter'] === 'custom')
 		{
 			$end_date = $query_in['enddate'] ? $query_in['enddate'] : false;
-			$query_in['startdate'] = $query_in['startdate'] ? $query_in['startdate'] : 1;
+			// No real range yet (eg. first ajax_get_rows on a fresh page) - leave it falsy,
+			// sql_filter() and the summary-row logic below both handle that correctly.
+			$start_date = $start_date ? $start_date : false;
 		}
-		$date_filter = $this->date_filter($query_in['filter'],$query_in['startdate'],$end_date);
+		$date_filter = $this->date_filter($query_in['filter'],$start_date,$end_date);
 
-		if ($query_in['startdate'])
+		if ($start_date)
 		{
-			$start = explode('-',date('Y-m-d',$query_in['startdate']+12*60*60));
-			$end   = explode('-',date('Y-m-d',$end_date ? $end_date : $query_in['startdate']+7.5*24*60*60));
+			$start = explode('-',date('Y-m-d',$start_date+12*60*60));
+			$end   = explode('-',date('Y-m-d',$end_date ? $end_date : $start_date+7.5*24*60*60));
 
 			// show year-sums, if we are year-aligned (show full years)?
 			if ((int)$start[2] == 1 && (int)$start[1] == 1 && (int)$end[2] == 31 && (int)$end[1] == 12)
@@ -577,15 +632,19 @@ class timesheet_ui extends timesheet_bo
 				case 'Monday': $week_end_day = 'Sunday'; break;
 				case 'Saturday': $week_end_day = 'Friday'; break;
 			}
-			$filter_start_day = date('l',$query_in['startdate']+12*60*60);
+			$filter_start_day = date('l',$start_date+12*60*60);
 			$filter_end_day   = $end_date ? date('l',$end_date+12*60*60) : false;
 			//echo "<p align=right>prefs: $week_start_day - $week_end_day, filter: $filter_start_day - $filter_end_day</p>\n";
-			if ($filter_start_day == $week_start_day && (!$filter_end_day || $filter_end_day == $week_end_day))
+			// A calendar month is too coarse for daily sums but rarely lands on week
+			// boundaries, so force week-sums here whenever month/year-sums are shown.
+			if (in_array('month', (array)$this->show_sums) || in_array('year', (array)$this->show_sums) ||
+				($filter_start_day == $week_start_day && (!$filter_end_day || $filter_end_day == $week_end_day)))
 			{
 				$this->show_sums[] = 'week';
 			}
-			// show day-sums, if range <= 5 weeks
-			if (!$end_date || $end_date - $query_in['startdate'] < 36*24*60*60)
+			// show day-sums, if range <= 5 weeks and we're not already showing month/year sums
+			if (!in_array('month', (array)$this->show_sums) && !in_array('year', (array)$this->show_sums) &&
+				(!$end_date || $end_date - $start_date < 36*24*60*60))
 			{
 				$this->show_sums[] = 'day';
 			}
@@ -599,6 +658,7 @@ class timesheet_ui extends timesheet_bo
 		$query_in['actions'] = $this->get_actions($query_in);
 
 		$query = $query_in;	// keep the original query
+		$query['startdate'] = $start_date;
 		$query['enddate'] = $end_date;
 
 		if ($query['no_status']) $query_in['options-selectcols']['ts_status'] = false;
@@ -791,6 +851,7 @@ class timesheet_ui extends timesheet_bo
 
 		$readonlys = array();
 		$have_cats = false;
+		$now = time();
 		foreach($rows as &$row)
 		{
 			if ($row['cat_id']) $have_cats = true;
@@ -806,6 +867,12 @@ class timesheet_ui extends timesheet_bo
 				// Set flag to avoid actions on these rows
 				$row['no_actions'] = true;
 
+				// A week/month/year-sum only covers the days that are both inside the
+				// report range and not in the future - flag it "partial" whenever its full
+				// period isn't covered, so the title/class can tell the user it's not a
+				// complete sum (eg. the first/last week of a month range, or the current,
+				// still-running week/month/year).
+				$partial = false;
 				switch($row['ts_id'])
 				{
 					case 0:	// day-sum
@@ -813,24 +880,54 @@ class timesheet_ui extends timesheet_bo
 						$row['ts_id'] = 'sum-day-'.$row['ts_start'];
 						break;
 					case -1:	// week-sum
-						$row['ts_title'] = lang('Sum %1:',lang('week').' '.substr($row['ts_week'],4).'/'.substr($row['ts_week'],0,4));
+						// $start_date/$end_date come from Api\DateTime::sql_filter(), which - via
+						// DateTime::user2server() - leaves its $start/$end objects converted to
+						// server timezone *before* the final format('ts') that produces them.
+						// format('ts') just re-encodes whatever timezone the object currently
+						// displays, so period_start/period_end need the same setServer() call
+						// first, or they'd be off by the user/server timezone difference.
+						$week_start_dow = array('Monday' => 1, 'Saturday' => 6)[$week_start_day] ?? 7;	// ISO 1=Monday..7=Sunday
+						$period = new Api\DateTime($row['ts_start']);
+						$period->setTime(0, 0, 0);
+						$period->modify('-'.(((int)$period->format('N') - $week_start_dow + 7) % 7).' days');
+						$period_start = (int)$period->setServer()->format('ts');
+						$period->setUser()->modify('+6 days');
+						$period_end = (int)$period->setServer()->format('ts');
+						$partial = $period_start < $start_date || ($end_date && $period_end > $end_date) || $period_end > $now;
+						$row['ts_title'] = lang($partial ? 'Partial timespan %1' : 'Sum %1:',lang('week').' '.substr($row['ts_week'],4).'/'.substr($row['ts_week'],0,4));
 						$row['ts_id'] = 'sum-week-'.$row['ts_week'];
 						break;
 					case -2:	// month-sum
-						$row['ts_title'] = lang('Sum %1:',lang(date('F',$row['ts_start'])).' '.substr($row['ts_month'],0,4));
+						$period = new Api\DateTime();
+						$period->setDate((int)substr($row['ts_month'],0,4), (int)substr($row['ts_month'],4,2), 1);
+						$period->setTime(0, 0, 0);
+						$period_start = (int)$period->setServer()->format('ts');
+						$period->setUser()->modify('+1 month')->modify('-1 day');
+						$period_end = (int)$period->setServer()->format('ts');
+						$partial = $period_start < $start_date || ($end_date && $period_end > $end_date) || $period_end > $now;
+						$row['ts_title'] = lang($partial ? 'Partial timespan %1' : 'Sum %1:',lang(date('F',$row['ts_start'])).' '.substr($row['ts_month'],0,4));
 						$row['ts_id'] = 'sum-month-'.$row['ts_month'];
 						break;
 					case -3:	// year-sum
-						$row['ts_title'] = lang('Sum %1:',$row['ts_year']);
+						$period = new Api\DateTime();
+						$period->setDate((int)$row['ts_year'], 1, 1);
+						$period->setTime(0, 0, 0);
+						$period_start = (int)$period->setServer()->format('ts');
+						$period->setUser()->modify('+1 year')->modify('-1 day');
+						$period_end = (int)$period->setServer()->format('ts');
+						$partial = $period_start < $start_date || ($end_date && $period_end > $end_date) || $period_end > $now;
+						$row['ts_title'] = lang($partial ? 'Partial timespan %1' : 'Sum %1:',$row['ts_year']);
 						$row['ts_id'] = 'sum-year-'.$row['ts_year'];
 						break;
 				}
 				$row['ts_start'] = $row['ts_unitprice'] = '';
 				if (!$this->quantity_sum) $row['ts_quantity'] = '';
-				$row['class'] = 'th rowNoEdit rowNoDelete rowNoUndelete rowSum';
+				$row['class'] = 'th rowNoEdit rowNoDelete rowNoUndelete rowSum'.($partial ? ' rowSumPartial' : '');
 				$row['titleClass'] = 'timesheet_titleSum';
 				continue;
 			}
+			$row['ts_end_time'] = $row['ts_start'] + 60 * $row['ts_duration'];
+
 			if($row['ts_quantity'])
 			{
 				$row['ts_quantity'] = round($row['ts_quantity'], 2);
@@ -871,9 +968,17 @@ class timesheet_ui extends timesheet_bo
 			if(!$row['titleClass']) $row['titleClass'] = 'timesheet_titleDetails';
 
 		}
-		$rows['no_cat_id'] = (!$have_cats || $query['cat_id']);
-		if ($query['col_filter']['ts_owner']) $rows['ownerClass'] = 'noPrint';
-		$rows['no_owner_col'] = $query['no_owner_col'];
+		// Column visibility markers for the row template's `disabled="@..."` column attributes.
+		// These must live on $query_in (which becomes content.nm at the top level), NOT $rows
+		// (which becomes content.nm.rows) - the client resolves @expr column attributes against
+		// the widget's own content.nm scope, so a flag nested under .rows is never found and the
+		// column silently never disables.
+		// Unlike $rows (rebuilt fresh from the DB every call), $query_in round-trips across
+		// requests via session (Api\Cache::setSession() below) - a flag only ever set in the
+		// truthy branch, never cleared in the falsy one, would stick as a stale leftover value
+		// once triggered even after the condition that caused it no longer holds.
+		$query_in['no_cat_id'] = (!$have_cats || $query['cat_id']);
+		$query_in['no_owner_col'] = $query['no_owner_col'];
 		if(is_string($query['selectcols']))
 		{
 			$query['selectcols'] = explode(',', $query['selectcols']);
@@ -881,8 +986,9 @@ class timesheet_ui extends timesheet_bo
 
 		$rows += $this->summary;
 
-		$rows['pm_integration'] = $this->pm_integration;
-		$rows['no_ts_quantity'] = $rows['no_ts_unitprice'] = $rows['no_ts_total'] = false;
+		// pm_integration is already exposed at content.nm top level via the nm settings built
+		// in index(), no need to duplicate it here.
+		$query_in['no_ts_quantity'] = $query_in['no_ts_unitprice'] = $query_in['no_ts_total'] = false;
 		if($query['selectcols'])
 		{
 			#_debug_array($query['selectcols']);
@@ -890,11 +996,11 @@ class timesheet_ui extends timesheet_bo
 				$query['selectcols'] = explode(',',$query['selectcols']);
 			}
 			#ts_quantity,ts_unitprice,ts_total
-			if ($query['selectcols'] && in_array('ts_quantity_quantity',$query['selectcols'])===false) $rows['no_ts_quantity'] = 1;
-			if ($query['selectcols'] && in_array('ts_unitprice', $query['selectcols'])===false) $rows['no_ts_unitprice'] = 1;
-			if ($query['selectcols'] && in_array('ts_total_price',$query['selectcols'])===false) $rows['no_ts_total'] = 1;
+			if ($query['selectcols'] && in_array('ts_quantity_quantity',$query['selectcols'])===false) $query_in['no_ts_quantity'] = 1;
+			if ($query['selectcols'] && in_array('ts_unitprice', $query['selectcols'])===false) $query_in['no_ts_unitprice'] = 1;
+			if ($query['selectcols'] && in_array('ts_total_price',$query['selectcols'])===false) $query_in['no_ts_total'] = 1;
 		}
-		$rows['no_ts_status'] = is_array($query['selectcols']) && in_array('ts_status', $query['selectcols']) === false && !$this->config_data['history'] ||
+		$query_in['no_ts_status'] = is_array($query['selectcols']) && in_array('ts_status', $query['selectcols']) === false && !$this->config_data['history'] ||
 			$query['no_status'];
 
 		if ($query['search'])
@@ -964,6 +1070,19 @@ class timesheet_ui extends timesheet_bo
 			'nm' => Api\Cache::getSession(TIMESHEET_APP, 'index'),
 			'msg' => $msg,
 		);
+		if (is_array($content['nm']) && $content['nm']['filter'] === 'custom')
+		{
+			// Session stores startdate/enddate as a raw Unix timestamp, but the client-side
+			// date widgets expect an ISO string - a raw value gets misread as milliseconds
+			// and renders as a near-epoch date.
+			foreach(array('startdate', 'enddate') as $field)
+			{
+				if (!empty($content['nm'][$field]) && is_numeric($content['nm'][$field]))
+				{
+					$content['nm'][$field] = Api\DateTime::to($content['nm'][$field], Api\DateTime::ET2);
+				}
+			}
+		}
 		if (!is_array($content['nm']))
 		{
 			$date_filters = array('' => 'All');
@@ -989,7 +1108,7 @@ class timesheet_ui extends timesheet_bo
 				//'actions'        => $this->get_actions(),
 				'default_cols'   => '!legacy_actions',	// switch legacy actions column and row off by default
 				'pm_integration' => $this->pm_integration,
-				'placeholder_actions' => array('add'),
+				'placeholder_actions' => array('new'),
 				'disable_autorefresh' => true,	// we have push
 			);
 		}
@@ -1016,6 +1135,7 @@ class timesheet_ui extends timesheet_bo
 								 array('value' => 0, 'label' => lang('None'))),
 			'ts_status' => $this->status_labels + [
 				self::BILLABLE => lang('Billable').'...',
+				self::ALL_STATUS => lang('All status'),
 				'0' => lang('No status'),
 			],
 		);
@@ -1091,23 +1211,20 @@ class timesheet_ui extends timesheet_bo
 				'disableClass' => 'rowNoEdit',
 			),
 */
-			'add' => array(
-				'caption' => 'Add',
+
+			'new' => array(
+				'caption' => 'New',
+				'onExecute' => 'javaScript:app.timesheet.add_action_handler',
+				'icon' => 'new',
 				'group' => $group,
-				'children' => array(
-					'new' => array(
-						'caption' => 'New',
-						'onExecute' => 'javaScript:app.timesheet.add_action_handler',
-						'icon' => 'new',
-					),
-					'copy' => array(
-						'caption' => 'Copy',
-						'url' => 'menuaction=timesheet.timesheet_ui.edit&action=copy&ts_id=$id',
-						'popup' => Link::get_registry('infolog', 'add_popup'),
-						'allowOnMultiple' => false,
-						'icon' => 'copy',
-					),
-				)
+			),
+			'copy' =>	array(
+				'caption' => 'Copy',
+				'url' => 'menuaction=timesheet.timesheet_ui.edit&action=copy&ts_id=$id',
+				'popup' => Link::get_registry('infolog', 'add_popup'),
+				'allowOnMultiple' => false,
+				'icon' => 'copy',
+				'group' => $group,
 			),
 			'cat' => Etemplate\Widget\Nextmatch::category_action(
 				'timesheet',++$group,'Change category','cat_'
@@ -1216,6 +1333,33 @@ class timesheet_ui extends timesheet_bo
 		$app = Api\Json\Push::onlyFallback() || $all_selected ? 'timesheet' : 'msg-only-push-refresh';
 		Api\Json\Response::get()->call('egw.refresh', $msg, $app, $selected[0], $all_selected || count($selected) > 1 ? null :
 			($action === 'delete' ? 'delete' : 'update'), $app, null, null, $failed ? 'error' : 'success');
+	}
+
+	/**
+	 * Fetch the end-time of a user's last timesheet on a given day
+	 *
+	 * Used to update the suggested start-time while editing a new entry, when the user changes
+	 * the date and the "new_entry_default" preference asks to continue from the last entry.
+	 *
+	 * @param int $ts_owner requested owner, or 0/empty to use the current user
+	 * @param string|int $date day to check
+	 * @throws Api\Exception\NoPermission if $ts_owner is given, but not one the current user
+	 *	has READ rights for (see get_last_end())
+	 */
+	public function ajax_get_last_end($ts_owner, $date)
+	{
+		try
+		{
+			$date = new Api\DateTime($date);
+		}
+		catch (\Exception $e)
+		{
+			Api\Json\Response::get()->data(null);	// $date could not be parsed
+			return;
+		}
+		$last_end = $this->get_last_end((int)$ts_owner ?: $this->user, $date);
+
+		Api\Json\Response::get()->data($last_end ? $last_end->format('H:i') : null);
 	}
 
 	/**
@@ -1458,6 +1602,16 @@ class timesheet_ui extends timesheet_bo
 		unset($this->data['ts_modified']);
 		unset($this->data['ts_modifier']);
 		$this->data['ts_owner'] = !(int)$this->data['ts_owner'] || !$this->check_acl(Acl::ADD,NULL,$this->data['ts_owner']) ? $this->user : $this->data['ts_owner'];
+
+		// if preference asks to continue from the last entry, adjust the start-time accordingly,
+		// otherwise leave the copied start- and end-time as they are
+		$last_end = $GLOBALS['egw_info']['user']['preferences']['timesheet']['new_entry_default'] === 'start_time' ?
+			$this->get_last_end($GLOBALS['egw_info']['user']['account_id']) : null;
+		if ($last_end)
+		{
+			$this->data['start_time'] = $last_end->format('H:i');
+			$this->data['end_time'] = '';
+		}
 
 		// Copy links
 		if(!is_array($this->data['link_to'])) $this->data['link_to'] = array();

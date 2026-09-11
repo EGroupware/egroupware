@@ -4,6 +4,7 @@
 (no subject)	mail	en	(no subject)
 (not connected)	mail	en	(not connected)
 %1 attachments	mail	en	%1 attachments
+%1 attachments downloaded	mail	en	%1 attachments downloaded
 %1 for all users	mail	en	%1 for all users
 %1 has been added to blacklisted email addresses	mail	en	%1 has been added to blacklisted email addresses
 %1 has been added to whiltelisted email addresses	mail	en	%1 has been added to whiltelisted email addresses
@@ -12,7 +13,9 @@
 %1 is not writable by you!	mail	en	%1 is NOT writable by you!
 %1 mails selected	mail	en	%1 emails selected
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	en	%1 requires Sieve extension %2, maybe try %1 or higher number of days.
+account	mail	en	Account
 account editable by user	mail	en	Account editable by user
+account not reachable	mail	en	Account not reachable
 acl rights retrieve failed, seems there are no rights set!	mail	en	ACL rights retrieve failed, seems there are no rights set!
 acl rights retrieved successfully	mail	en	ACL rights retrieved successfully
 activating by date requires a start- and end-date!	mail	en	Activating by date requires a start- AND end-date!
@@ -27,6 +30,7 @@ add files as %1	mail	en	Add files as %1
 add folder	mail	en	Add folder
 add raw message, ignore mail attachments	mail	en	Convert email to item, add raw message text (ignore email attachments)
 add this certificate into contact	mail	en	Add this certificate into contact
+add this key into contact	mail	en	Add this key into contact
 add to addressbook	mail	en	Add to addressbook
 adding %1 to blacklisted email addresses failed because of %2	mail	en	Adding %1 to blacklisted email addresses failed because of %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	en	Adding %1 to whiltelisted email addresses failed because of %2
@@ -37,6 +41,7 @@ all	mail	en	all
 all adresses:	mail	en	All addresses:
 all available info	admin	en	all available info
 all filtered	mail	en	all filtered
+all folders	mail	en	All folders
 all messages in the folder will be lost	mail	en	All messages in the folder will be lost.
 all my email addresses	mail	en	all my email addresses
 all of	mail	en	all of
@@ -61,10 +66,14 @@ any status	mail	en	any status
 append	mail	en	append
 appended after reply before sending	mail	en	Appended after reply before sending
 application mail expected but got: %1	mail	en	Application email expected but got: %1
+applying rights	mail	en	Applying rights
+applying rights to %1 folders ...	mail	en	Applying rights to %1 folders ...
+archive	mail	en	Archive
 archive folder	mail	en	Archive Folder
 are you sure you want to delete all selected folders?	mail	en	Are you sure you want to delete all selected folders?
 are you sure you want to move folder %1 to folder %2?	mail	en	Are you sure you want to move folder %1 to folder %2?
 arrival	mail	en	Received
+ask	mail	en	ask
 ask for permission	mail	en	Ask for permission
 attach files	mail	en	Attach files
 attach users vcard at compose to every new mail	mail	en	Attach users vCard at compose to every new email.
@@ -79,6 +88,7 @@ be aware by adding all selected files as %1 mode, it will also change all existi
 be aware that all attachments will be sent as %1!	mail	en	Be aware that all attachments will be sent as %1!
 before reply, visible during compose	mail	en	Before reply, visible during compose
 blacklisted mails are marked as spam	mail	en	Blacklisted emails are marked as spam
+blue	mail	en	Blue
 but check shared folders	mail	en	but check shared folders
 by date	mail	en	By date
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	en	By default 'http://' is just replaced with 'https://'. Feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.
@@ -86,7 +96,10 @@ caching of flags	mail	en	Caching of flags
 can not open imap connection	mail	en	Can not open IMAP connection
 can not resolve the winmail.dat attachment!	mail	en	Can not resolve the winmail.dat attachment!
 canceled deletion due to user interaction	mail	en	canceled deletion due to user interaction
+certificate chain too large to store (%1 certificates incl. retired ones) - contact an administrator.	mail	en	Certificate chain too large to store (%1 certificates incl. retired ones) - contact an administrator.
 certificate details	mail	en	Certificate Details
+certificate does not match the stored private key!	mail	en	Certificate does not match the stored private key!
+certificate imported.	mail	en	Certificate imported.
 certificate in text	mail	en	Certificate in text
 certificate info for email %1	mail	en	Certificate info for email %1
 certificate issued by	mail	en	Certificate issued by
@@ -102,9 +115,9 @@ check to save as tracker entry on send	mail	en	Check button to create as ticket 
 checking admin credentials failed	mail	en	Checking admin credentials failed
 choose file	mail	en	Choose file
 common acl	mail	en	Common access rights
+common name and email address are required!	mail	en	Common name and email address are required!
 compose	mail	en	Compose
 compose as new	mail	en	Compose as new
-compress folder	mail	en	Compress folder
 condition	mail	en	Condition
 configuration settings	mail	en	Configuration settings
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	en	Configured values will be set automatically on compose dialog for respected field when composing a new email.
@@ -112,6 +125,7 @@ confirm	mail	en	Confirm
 confirm attach message	mail	en	Confirm attach message
 confirm move to folder	mail	en	Confirm move to folder
 connect to profile %1	mail	en	Connect to profile %1
+connection could not be established, use the wizard to check why!	mail	en	Connection could not be established, use the wizard to check why!
 connection status	mail	en	Connection status
 contact label	mail	en	Contact label
 contains	mail	en	contains
@@ -121,12 +135,21 @@ convert mail to item and attach its attachments to this item (standard)	mail	en	
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	en	Convert email to item, attach its attachments and add raw message (.eml) as attachment
 convert only mail to item (ignore possible attachments)	mail	en	Convert only email to item (ignore possible attachments)
 copied %1 message(s) from %2 to %3	mail	en	Copied %1 message(s) from %2 to %3.
+copy selected to	mail	en	Copy selected to
 copy to	mail	en	Copy to
 could not append message:	mail	en	Could not append Message:
 could not attach '%1': the original message is no longer available (deleted or moved).	mail	en	Could not attach '%1': the original message is no longer available (deleted or moved).
+could not decrypt stored private key, wrong passphrase?	mail	en	Could not decrypt stored private key, wrong passphrase?
+could not download %1	mail	en	Could not download %1
+could not generate certificate!	mail	en	Could not generate certificate!
+could not generate csr.	mail	en	Could not generate CSR.
+could not read uploaded certificate!	mail	en	Could not read uploaded certificate!
 could not save the acl because some names are empty	mail	en	Could not save the ACL because some names are empty
+create folder	mail	en	Create folder
 create mailboxes (create new sub-mailboxes in any implementation-defined hierarchy, parent mailbox for the new mailb	mail	en	Create mailboxes (CREATE new sub-mailboxes in any implementation-defined hierarchy, parent mailbox for the new mailb
 create new account	mail	en	Create new account
+create private key and export csr	mail	en	Create private key and export CSR
+create self-signed certificate	mail	en	Create self-signed certificate
 cross account forward attachment is not allowed!	mail	en	Cross account forward attachment is not allowed!
 current folder	mail	en	current folder
 current subject	mail	en	Current subject
@@ -143,6 +166,7 @@ defines what to show as identity label on mail folder header	common	en	Defines w
 delete folder	mail	en	Delete folder
 delete folder %1 ?	mail	en	DELETE folder %1?
 delete mailbox (delete mailbox, old mailbox name in rename)	mail	en	Delete mailbox (DELETE mailbox, old mailbox name in RENAME)
+delete messages	mail	en	Delete messages
 delete messages (set or clear \deleted flag via store, set \deleted flag during append/copy)	mail	en	Delete messages (set or clear \DELETED flag via STORE, set \DELETED flag during APPEND/COPY)
 delete selected folders	mail	en	Delete selected folders
 delete this acl	mail	en	Delete this ACL
@@ -189,6 +213,7 @@ don't use draft folder	mail	en	Don't use draft folder
 don't use sent	mail	en	Don't use Sent
 don't use template folder	mail	en	Don't use Template Folder
 don't use trash	mail	en	Don't use Trash
+download all attachments	mail	en	Download all attachments
 download attachments	mail	en	Download attachments
 draft	mail	en	Draft
 draft folder	mail	en	Draft Folder
@@ -233,21 +258,36 @@ every %1. day	mail	en	Every %1. day
 everyone	mail	en	Everyone
 examine namespace to retrieve folders in others and shared	mail	en	Examine namespace to retrieve folders in others and shared
 exclude attachments greater than given size from automatic saving as draft (in mb)	admin	en	Exclude attachments greater than given size from automatic saving as draft (in MB)
+export csr	mail	en	Export CSR
+expunge	mail	en	Expunge
 extended	mail	en	Extended
 extra sent folders	mail	en	Extra Sent Folders
+failed to copy messages	mail	en	Failed to copy messages
+failed to create folder %1	mail	en	Failed to create folder %1
 failed to delete %1	mail	en	Failed to delete %1
 failed to delete %1 ! reason: %2	mail	en	Failed to delete %1! Reason: %2
 failed to delete %1. server responded:	mail	en	Failed to delete %1! Server responded:
+failed to delete folder %1	mail	en	Failed to delete folder %1
+failed to delete messages	mail	en	Failed to delete messages
+failed to empty junk	mail	en	Failed to empty junk
+failed to empty trash	mail	en	Failed to empty trash
+failed to load original message(s)	mail	en	Failed to load original message(s)
 failed to move %1 ! reason: %2	mail	en	Failed to move %1! Reason: %2
+failed to move folder %1	mail	en	Failed to move folder %1
+failed to move messages	mail	en	Failed to move messages
 failed to rename %1 ! reason: %2	mail	en	Failed to rename %1! Reason: %2
+failed to rename folder %1	mail	en	Failed to rename folder %1
 failed to subscribe folder %1!	mail	en	Failed to subscribe folder %1!
+failed to subscribe/unsubscribe folder %1	mail	en	Failed to subscribe/unsubscribe folder %1
 failed to unsubscribe folder %1!	mail	en	Failed to unsubscribe folder %1!
+failed to update messages	mail	en	Failed to update messages
 file into	mail	en	Move to
 file into:	mail	en	Move to:
 file rejected, no %2. is:%1	mail	en	File rejected, no %2. Is: %1
 filemanager	mail	en	Filemanager
 filemode has been switched to %1	mail	en	Filemode has been switched to: %1
 files	mail	en	Files
+filter by flag	mail	en	Filter by flag
 flag / unflag	mail	en	Flag / Unflag
 flag or unflag a mail	mail	en	Flag or unflag a email
 flagged	mail	en	Flagged
@@ -256,6 +296,7 @@ flagged %1 messages as %2 in %3	mail	en	Flagged %1 message(s) as "%2" in %3.
 flagged %1 messages as flagged in %2	mail	en	Flagged %1 message(s) as flagged in %2.
 flagged %1 messages as unflagged in %2	mail	en	Flagged %1 message(s) as unflagged in %2.
 folder	mail	en	Folder
+folder '%1' not found	mail	en	Folder '%1' not found
 folder %1 %2 failed because of %3!	mail	en	Folder %1 %2 failed because of %3!
 folder %1 %2 failed!	mail	en	Folder %1 %2 failed!
 folder %1 has been created successfully, although the subscription failed because of %2	mail	en	Folder %1 has been created successfully, although the subscription failed because of %2
@@ -279,6 +320,8 @@ general	admin	en	General
 general settings	mail	en	General settings
 get acl rights failed from imap server!	mail	en	Get ACL rights failed from IMAP server!
 greater than	mail	en	Greater than
+green	mail	en	Green
+group messages by thread	mail	en	Group messages by thread
 ham folder	mail	en	Ham folder
 handling of external http images / mixed content in mails	mail	en	Handling of external images / mixed content in emails
 header	mail	en	Header
@@ -317,6 +360,8 @@ imap - incoming mail	mail	en	IMAP - incoming email
 imap administration	mail	en	IMAP administration
 imap server	mail	en	IMAP server
 imap timeout	mail	en	IMAP timeout
+import ca-signed certificate for this key	mail	en	Import CA-signed certificate for this key
+import certificate	mail	en	Import certificate
 import message	mail	en	Import message
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	en	Import of message %1 failed. Could not save message to folder %2 due to: %3
 import of message %1 failed. destination folder %2 does not exist.	mail	en	Import of message %1 failed. Destination folder %2 does not exist.
@@ -330,13 +375,16 @@ inbox	mail	en	Inbox
 information to show on email tag	mail	en	Information to show on email tag
 initialization of mail failed. please use the wizard to cope with the problem.	mail	en	The initialisation of the E-Mail module failed. Please use the configuration wizard to correct the configuration.
 inline	mail	en	Forward
+insert	mail	en	Insert
 insert (perform append, copy into mailbox)	mail	en	Insert (perform APPEND, COPY into mailbox)
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	en	insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)
+internal error building the s/mime message.	mail	en	Internal error building the S/MIME message.
 job	mail	en	Job
 junk	mail	en	Junk
 junk folder	mail	en	Junk folder
 keep a copy	mail	en	Keep a copy
 keep a copy of the message in your inbox	mail	en	Keep a copy of the message in your inbox
+key fingerprint	mail	en	Key fingerprint
 kilobytes	mail	en	kilobytes
 last used signature	mail	en	Last used signature
 later	mail	en	Later
@@ -345,6 +393,7 @@ learning as spam failed because of %1	mail	en	Learning as spam failed because of
 less than	mail	en	less than
 limit mailing list results when searching for addresses	mail	en	Limit mailing list results when searching for addresses
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	en	List of actions to be switched/activated on by default (eg. email compose "Save as InfoLog" action).
+lookup	mail	en	Lookup
 lookup (mailbox is visible to list/lsub commands, subscribe mailbox)	mail	en	Lookup (mailbox is visible to LIST/LSUB commands, SUBSCRIBE mailbox)
 low priority	mail	en	Low priority
 mail	common	en	Mail
@@ -393,6 +442,8 @@ name and email	mail	en	Name and email
 name of account	mail	en	Name of account
 name of header, only letters, numbers and dash (-) allowed	mail	en	Name of header, only letters, numbers and dash (-) allowed
 name of imap servers (space separated host or host:port)	mail	en	Name of IMAP servers (space separated host or host:port)
+never ask	mail	en	never ask
+never ask again	mail	en	Never ask again
 never display html emails	mail	en	Never display HTML emails
 never show	mail	en	Never show
 never show notification	mail	en	Never show notification
@@ -405,11 +456,14 @@ no access	mail	en	no access
 no action defined!	mail	en	No action defined!
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	en	No address TO/CC/BCC supplied, and no folder to save message to provided.
 no adress, to send this mail to, supplied	mail	en	no address was supplied to whom to send this email
+no filter	mail	en	No filter
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	en	No folder destination supplied, and no folder to save message or other measure to store the email (save to InfoLog/Tracker) provided, but required.
 no folders	mail	en	no folders
 no message body supplied	mail	en	No message body supplied
 no plain text part found	mail	en	No plain text part found
+no private key stored to import a certificate for!	mail	en	No private key stored to import a certificate for!
 no recipient address given!	mail	en	No recipient address given!
+no s/mime private key stored for this account.	mail	en	No S/MIME private key stored for this account.
 no send folder set in preferences	mail	en	No Send Folder set in preferences
 no signature	mail	en	no signature
 no sneak preview in list	mail	en	No sneak preview in list
@@ -425,6 +479,7 @@ notify about new mail in this folders	mail	en	Notify about new email in these fo
 notify when new mails arrive in these folders	mail	en	notify when new emails arrive in these folders
 obsolet create right, combination rights of k and x	mail	en	Obsolet create right, combination rights of K and X
 obsolete delete right, combination rights of e, t and x	mail	en	Obsolete delete right, combination rights of E, T and X
+offer to add sender's s/mime certificate or pgp key to contact	mail	en	Offer to add sender's S/MIME certificate or PGP key to contact
 on	mail	en	on
 on behalf of	mail	en	On behalf of
 on vacation	mail	en	On vacation
@@ -441,15 +496,22 @@ only store message in inbox, do not send vacation notice	mail	en	Only store mess
 open in html mode	mail	en	Open in HTML mode
 open in text mode	mail	en	Open in Text mode
 open with collabora office	mail	en	Open with Collabora Online
+orange	mail	en	Orange
 organisation	admin	en	Organisation
 organization	mail	en	Organisation
 organization | real name email	mail	en	Organisation | Real name [Email]
 original message	mail	en	Original message
 outbox	mail	en	Outbox
+passphrase, if private key is protected	mail	en	Passphrase, if private key is protected
 password protect	mail	en	password protect
 perform expunge and expunge as a part of close	mail	en	Perform EXPUNGE and expunge as a part of CLOSE
 permission denied	mail	en	Permission denied
 personal signature	mail	en	Personal signature
+pgp key info for email %1	mail	en	PGP key info for email %1
+pgp/mime signed message, no public key found to verify the signature	mail	en	PGP/MIME signed message, no public key found to verify the signature
+pgp/mime signed message, signature does not belong to sender %1	mail	en	PGP/MIME signed message, signature does NOT belong to sender %1
+pgp/mime signed message, signature verification failed for %1	mail	en	PGP/MIME signed message, signature verification FAILED for %1
+pgp/mime signed message, signature verified for %1	mail	en	PGP/MIME signed message, signature verified for %1
 please configure access to an existing individual imap account.	mail	en	Please configure access to an existing individual IMAP account.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	en	Please configure your S/MIME certificate in Encryption tab located at Edit Account dialog.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	en	Please contact your Administrator to validate if your server supports serverside filterrules, and how to enable them in EGroupware for your active account (%1) with ID: %2.
@@ -470,8 +532,11 @@ preview pane	mail	en	Window layout
 primary profile	mail	en	Primary Profile
 printing	mail	en	Printing
 printview	mail	en	Printview
+private key created, downloading csr...	mail	en	Private key created, downloading CSR...
 processing of file %1 failed. failed to meet basic restrictions.	mail	en	Processing of file %1 failed. Failed to meet basic restrictions.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	en	Provide a default vacation text, (used on new vacation messages when there was no message set up previously)
+public key	mail	en	Public key
+purple	mail	en	Purple
 push notifications	mail	en	Push notifications
 quicksearch	mail	en	Quicksearch
 quicksearch (with cc)	mail	en	Quicksearch (+Copy)
@@ -488,6 +553,7 @@ real name organization email	mail	en	Real name Organisation [Email]
 reason!	mail	en	reason!
 receive notification	mail	en	Receive notification
 recursively	mail	en	Recursively
+red	mail	en	Red
 refresh time in minutes	mail	en	Refresh time in minutes
 refused to delete folder inbox	mail	en	refused to delete folder Inbox
 refused to delete folder with subfolders	mail	en	refused to delete folder with subfolders
@@ -504,6 +570,8 @@ remove immediately	mail	en	Remove immediately
 removed folder %1	mail	en	Removed folder %1
 removing %1 from blacklisted email addresses failed because of %2	mail	en	Removing %1 from blacklisted email addresses failed because of %2
 removing %1 from whiltelisted email addresses failed because of %2	mail	en	Removing %1 from whiltelisted email addresses failed because of %2
+removing rights	mail	en	Removing rights
+removing rights from %1 folders ...	mail	en	Removing rights from %1 folders ...
 rename folder	mail	en	Rename folder
 rename folder %1 ?	mail	en	Rename folder %1?
 rename folder %1 to:	mail	en	Rename folder %1 to:
@@ -531,7 +599,10 @@ rights	mail	en	Rights
 rule priority position	mail	en	Rule priority position
 rule with priority	mail	en	rule with priority
 rules	mail	en	Rules
+s/mime encryption failed	mail	en	S/MIME encryption failed
+s/mime encryption failed because no certificate has been found for following addresses: %1	mail	en	S/MIME Encryption failed because no certificate has been found for following addresses: %1
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	en	S/MIME Encryption failed because no certificate has been found for sender address: %1
+s/mime signed message, signature does not belong to sender %1	mail	en	S/MIME signed message, signature does NOT belong to sender %1
 save all	mail	en	Save all
 save all attachments to filemanager	mail	en	Save all to File Manager
 save as calendar	mail	en	Save as Calendar
@@ -559,6 +630,7 @@ saving of message %1 succeeded. check folder %2.	mail	en	Saving of message %1 su
 saving the rule failed:	mail	en	Saving the rule failed:
 security	mail	en	Security
 see attachments for content of the orignial mail	mail	en	See attachments for content of the original email
+seen	mail	en	Seen
 select a date	mail	en	Select a date
 select all	mail	en	Select all
 select an existing entry in order to append mail content to it	mail	en	Select an existing entry in order to append email content to it
@@ -572,6 +644,7 @@ select multiple	mail	en	Select multiple
 select or insert email address	mail	en	Select or insert email address
 selected	mail	en	selected.
 selected date range (with quicksearch)	mail	en	Selected date range (with quicksearch)
+self-signed certificate created.	mail	en	Self-signed certificate created.
 send a reject message:	mail	en	Send a reject message:
 send attachments greater than given size as download link instead (in mb)	mail	en	Send attachments greater than given size as download link instead (in MB)
 send files as	mail	en	Send files as
@@ -630,7 +703,7 @@ spamtitan api url	mail	en	SpamTitan API URL
 spamtitan integration requires epl version	mail	en	SpamTitan integration requires EPL version
 start new messages with mime type plain/text or html?	mail	en	Start new messages with Text or HTML?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	en	Reply to and forward emails in text format, in HTML format, or according to the format in which the email was originally composed by the sender (default).
-step 1: imap - incoming mail	mail	en	Step 1: IMAP - incoming email
+step 1: jmap/imap - incoming mail	mail	en	Step 1: JMAP/IMAP - incoming mail
 step 2: folder	mail	en	Step 2: Folder
 step 3: sieve - server side mail filtering	mail	en	Step 3: Sieve - server side email filtering
 step 4: smtp - outgoing mail	mail	en	Step 4: SMTP - outgoing email
@@ -657,10 +730,14 @@ the imap server need to meet certain requirements and be configured for it:	mail
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	en	The message sender has requested a response to indicate that you have read this message. Would you like to send a receipt?
 the mimeparser can not parse this message.	mail	en	The MIME parser can not parse this message.
 the rule with priority %1 successfully saved!	mail	en	The rule with priority %1 successfully saved!
+the s/mime certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.	mail	en	The S/MIME certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.
+the s/mime certificate stored in the address book for %1 is not valid - check for duplicate/broken address book entries for this address.	mail	en	The S/MIME certificate stored in the address book for %1 is not valid - check for duplicate/broken address book entries for this address.
+the total size of the attachments exceeds the limit of %1 mb	mail	en	The total size of the attachments exceeds the limit of %1 MB
 the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	en	The total size of the attachments exceeds the limit of %1 MB. Switched to download link
 then	mail	en	THEN
 there is no imap server configured.	mail	en	There is no IMAP server configured.
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	en	There is no space left to store Sieve script, please check sieve_maxscriptsize option on your mailserver's config.
+this action affects every message in the selected thread(s) - %1 messages in total. continue?	mail	en	This action affects every message in the selected thread(s) - %1 messages in total. Continue?
 this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	en	This email contains external images served via insecure HTTP protocol. Be aware showing or allowing them can compromise your security!
 this message is smime encrypted and password protected.	mail	en	This message is S/MIME encrypted and password protected.
 timeout on connections to your imap server	mail	en	Timeout on connections to your IMAP Server
@@ -672,6 +749,7 @@ trust servers seen / unseen info	mail	en	Trust servers SEEN / UNSEEN info
 trust the server when retrieving the folder status. if you select no, we will search for the unseen messages and count them ourselves	mail	en	Trust the server when retrieving the folder status. if you select no, we will search for the UNSEEN messages and count them ourselves.
 trying to recover from session data	mail	en	Trying to recover from session data
 turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	en	Turn off horizontal line between signature and composed message.\nIf you use templates, this option is only applied to the text part of the message.
+type of search	mail	en	Type of search
 unable to fetch vacation!	mail	en	Unable to fetch vacation!
 unconditional	mail	en	Unconditional
 undelete	mail	en	Undelete
@@ -703,12 +781,13 @@ what do do with html email	mail	en	What to do with HTML email.
 what order the list columns are in	mail	en	What order the list columns are in
 what to do when you delete a message	mail	en	What to do when you delete a message.
 what to do when you send a message	mail	en	What to do when you send a message.
+when a signed message reveals a certificate/key not yet stored for that sender, ask whether to add it - a verified signature from an already-known contact is always added automatically without asking	mail	en	When a signed message reveals a certificate/key not yet stored for that sender, ask whether to add it - a verified signature from an already-known contact is always added automatically without asking
 when deleting messages	mail	en	When deleting messages
 when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	en	When displaying messages in a popup, re-use the same popup for all or open a new popup for each message
 when saving messages as item of a different app	mail	en	When saving messages as item of a different EGroupware app.
 when sending messages	mail	en	When sending messages
-which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	en	which folders (additional to the Sent Folder) should be displayed using the Sent Folder view schema
 which folders - in general - should not be automatically created, if not existing	mail	en	which folders - in general - should NOT be automatically created, if not existing
+which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	en	which folders (additional to the Sent Folder) should be displayed using the Sent Folder view schema
 which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	en	Which mail identity (signature) do you want to start with. For personal signature we always use the first personal signature.
 which method to use when forwarding a message	mail	en	Which method to use when forwarding a message
 whitelisted mails are not marked as spam	mail	en	Whitelisted emails are not marked as spam
@@ -717,14 +796,16 @@ with message:	mail	en	With message:
 wizard	mail	en	Wizard
 writable sharing requires epl version!	mail	en	Writable sharing requires EPL version!
 write	mail	en	write
-write & delete	mail	en	write & delete
 write (set or clear flags other than \seen and \deleted via store, also set them during append/copy)	mail	en	Write (set or clear flags other than \SEEN and \DELETED via STORE, also set them during APPEND/COPY)
+write & delete	mail	en	write & delete
 wrote	mail	en	wrote
 yes, offer copy option	mail	en	Yes, offer copy option
 you can select what info to be displayed on email tag	mail	en	You can select what info to be displayed on email tag.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	en	You can use $$start$$ for the above start date and $$end$$ for the end date.
 you may add this certificate into your contact, if you trust this signature.	mail	en	You may add this certificate into your contact, if you trust this signature.
+you may add this key into your contact, if you trust this signature.	mail	en	You may add this key into your contact, if you trust this signature.
 you need to enter your s/mime passphrase to send this message.	mail	en	You need to enter your S/MIME passphrase to send this message.
+you need to enter your s/mime passphrase to view this message.	mail	en	You need to enter your S/MIME passphrase to view this message.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	en	You need to install Mailvelope plugin available for Chrome and Firefox from %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	en	You need to save the message as draft first before to be able to save it into VFS
 you need to select some folders first (by clicking on them)!	mail	en	You need to select some folders first (by clicking on them)!

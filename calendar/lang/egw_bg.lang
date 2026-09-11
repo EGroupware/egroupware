@@ -360,7 +360,6 @@ limit search for conflicts in recurrences to given number of recurrences	calenda
 limit search for conflicts in recurrences to given time in seconds (default 3)	calendar	bg	Ограничаване на търсенето на конфликти в повторенията до зададено време в секунди (по подразбиране 3 сек.)
 link title for events to show	calendar	bg	Показване на заглавия на връзки към събития
 link to view the event	calendar	bg	Връзка за преглед на събитието
-links	calendar	bg	Връзки
 links and attached files	calendar	bg	Връзки и прикачени файлове
 links to specified application.  example: {{links/infolog}}	calendar	bg	Връзки към определено приложение. Например: {{links/infolog}}
 links, attachments	calendar	bg	Връзки, прикачени файлове

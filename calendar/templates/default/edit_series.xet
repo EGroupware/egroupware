@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="calendar.edit_series" template="" lang="" group="0" version="1.7.003">
+	<et2-template  id="calendar.edit_series" template="" lang="" group="0" version="1.7.003">
 		<et2-vbox  rows="1" cols="1" id="edit_series">
 			<et2-hbox  id="dialogHeader" class="promptheader">
 				<et2-description  value="This event is part of a series"></et2-description>
@@ -15,5 +16,5 @@
 				</et2-hbox>
 			</et2-vbox>
 		</et2-vbox>
-	</template>
+	</et2-template>
 </overlay>

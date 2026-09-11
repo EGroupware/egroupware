@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="mail.moveFolder" template="" lang="" group="0" version="1.9.001">
+	<et2-template  id="mail.moveFolder" template="" lang="" group="0" version="1.9.001">
 		<et2-hbox><et2-description  value="Move Folder:"></et2-description><et2-textbox  readonly="true" id="selectedLeaf"></et2-textbox></et2-hbox>
 		<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="selectedNode"></et2-textbox>
 		<et2-vbox  class="mailChooseFolder">
-			<et2-select  id="folder" width="88%" allowFreeEntries="false" onclick="app.mail.address_click" searchUrl="mail.mail_compose.ajax_searchFolder" searchOptions='{"noPrefixId": "true"}'></et2-select>
+			<et2-select  id="folder" width="88%" allowFreeEntries="false" onclick="app.mail.addressClick" searchUrl="mail.EGroupware\Mail\Compose.ajax_searchFolder" searchOptions="{&quot;noPrefixId&quot;: &quot;true&quot;}"></et2-select>
 			<et2-description  value="The folder will be copied as a new child to the node selected above, and on sucess deleted."></et2-description>
 		</et2-vbox>
-	</template>
+	</et2-template>
 </overlay>

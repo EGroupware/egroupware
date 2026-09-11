@@ -28,9 +28,9 @@ class filemanager_admin extends filemanager_ui
 	 * @var array
 	 */
 	public $public_functions = array(
-		'index' => true,
-		'fsck'  => true,
-		'quota' => true,
+		'index'  => true,
+		'fsck'   => true,
+		'config' => true,
 	);
 
 	/**
@@ -349,28 +349,39 @@ class filemanager_admin extends filemanager_ui
 	}
 
 	/**
-	 * Admin tasks related to quota
+	 * Filemanager's App configuration (Configuration + Notification tabs)
 	 *
-	 * Manually trigger a directory size recalculation
+	 * The Configuration tab holds the Quota section (more sections to follow).
+	 * Also handles the Quota section's manually triggered directory size recalculation.
 	 *
 	 * @param array $content
 	 * @return void
 	 * @throws Api\Exception\AssertionFailed
 	 */
-	public function quota(array $content = null)
+	public function config(array $content = null)
 	{
-		if(is_array($content))
+		$has_epl = !empty($GLOBALS['egw_info']['user']['apps']['stylite']);
+		$submitted = is_array($content);
+		$button = null;
+		if($submitted)
 		{
-			$button = key($content['button']);
+			$button = key($content['button'] ?? []);
 			unset($content['button']);
 			switch($button)
 			{
-				case  'recalculate':
+				case 'recalculate':
 					Framework::message($this->quotaRecalc());
 					break;
 				case 'save':
 				case 'apply':
 
+					if($has_epl)
+					{
+						Api\Config::save_value(Api\Storage\Tracking::CUSTOM_NOTIFICATION, array(
+							'use_custom' => !empty($content['notification_use_custom']),
+							'message'    => $content['notification_message'],
+						), 'filemanager');
+					}
 
 					if($button == 'apply')
 					{
@@ -393,14 +404,30 @@ class filemanager_admin extends filemanager_ui
 		}
 
 		$content = $content ?: [];
-		if($button == 'recalculate')
+		if($button === 'recalculate')
 		{
 			$content['check_oversize'] = true;
 		}
-		
-		$tpl = new Etemplate('filemanager.quota');
-		$GLOBALS['egw_info']['flags']['app_header'] = lang('Quota');
-		$tpl->exec('filemanager.filemanager_admin.quota', $content, $sel_options, $readonlys);
+
+		$content['quota_header'] = lang('Quota');
+		$content['notification_header'] = lang('Subscription').(!$has_epl ? ' ('.lang('EPL only').')' : '');
+
+		if(!$submitted)
+		{
+			$fm_config = Api\Config::read('filemanager');
+			$custom_notification = $fm_config[Api\Storage\Tracking::CUSTOM_NOTIFICATION] ?? [];
+			$content['notification_use_custom'] = !empty($custom_notification['use_custom']);
+			$content['notification_message'] = $custom_notification['message'] ?? '';
+		}
+
+		$sel_options = [];
+		$readonlys = array(
+			'notification_use_custom' => !$has_epl,
+			'notification_message'    => !$has_epl,
+		);
+		$tpl = new Etemplate('filemanager.config');
+		$GLOBALS['egw_info']['flags']['app_header'] = lang('Site configuration');
+		$tpl->exec('filemanager.filemanager_admin.config', $content, $sel_options, $readonlys);
 	}
 
 	/**

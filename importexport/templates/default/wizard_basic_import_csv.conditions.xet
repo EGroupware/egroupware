@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="importexport.wizard_basic_import_csv.conditions" template="" lang="" group="0" version="1.9.002">
+	<et2-template  id="importexport.wizard_basic_import_csv.conditions" template="" lang="" group="0" version="1.9.002">
 		<et2-vbox  cols="4" rows="1">
 			<et2-description  value="How to merge with existing data? For each record, all conditions are evaluated from top to bottom, or stop. For blind insert, leave blank." class="condition_help"></et2-description>
 			<grid id="conditions">
@@ -47,10 +48,10 @@
 			</grid>
 			<et2-button  statustext="Add an additional condition" label="add" id="button[add]"></et2-button>
 		</et2-vbox>
-		<styles>
+		<et2-styles>
 			.condition_help {
 	white-space: normal;
 }
-		</styles>
-	</template>
+		</et2-styles>
+	</et2-template>
 </overlay>

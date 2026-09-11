@@ -38,7 +38,6 @@ implies read permission	resources	el	υπονοεί άδεια ανάγνωση�
 imports a list of resources from a csv file.	resources	el	Εισαγωγή μιας λίστας πόρων από ένα αρχείο CSV.
 is resource bookable?	resources	el	Είναι ο πόρος διαθέσιμος για κράτηση
 is the ressource bookable?	resources	el	Είναι ο πόρος διαθέσιμος για κράτηση;
-links	resources	el	Σύνδεσμοι
 location	resources	el	Τοποθεσία
 new accessory	resources	el	Νέο αξεσουάρ
 new resource	resources	el	Νέος πόρος

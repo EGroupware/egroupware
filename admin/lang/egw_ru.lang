@@ -397,7 +397,6 @@ if using ldap, do you want to manage homedirectory and loginshell attributes?	ad
 if using ssl or tls, you must have the php openssl extension loaded.	admin	ru	При использовании SSL или TLS, у вас должен быть установлен PHP с загруженным расширением openssl
 imap admin password	admin	ru	пароль администратора IMAP
 imap admin user	admin	ru	Имя пользователя для администратора IMAP
-imap server	admin	ru	Сервер IMAP
 imap server closed the connection.	admin	ru	Сервер IMAP разорвал соединение.
 imap server closed the connection. server responded: %s	admin	ru	Сервер IMAP разорвал соединение. Сервер сообщил: %s
 imap server hostname or ip address	admin	ru	Имя сервера IMAP или его ip-адрес

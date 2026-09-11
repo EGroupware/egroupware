@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="filemanager.index.rows" template="" lang="" group="0" version="1.7.002">
+	<et2-template  id="filemanager.index.rows" template="" lang="" group="0" version="1.7.002">
+		<et2-styles  src="rows.css"></et2-styles>
 		<grid width="100%">
 			<columns>
 				<column width="150"/>
@@ -19,70 +21,69 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<nextmatch-sortheader align="center" label="Type" id="mime"/>
-                    <nextmatch-header align="center" label="Lock" id="lock"/>
-					<nextmatch-sortheader label="Name" id="name"/>
-					<nextmatch-sortheader label="Size" id="size"/>
-					<nextmatch-sortheader label="Modified" id="mtime"/>
-					<nextmatch-sortheader label="Created" id="ctime"/>
-					<nextmatch-sortheader label="Permissions" id="mode"/>
-					<nextmatch-sortheader label="Owner" id="uid"/>
-					<nextmatch-sortheader label="Group" id="gid"/>
-					<nextmatch-header label="Comment" id="comment"/>
-					<nextmatch-customfields id="customfields" readonly="true"/>
-                    <nextmatch-header label="Kanban" id="kanban"/>
+                    <et2-nextmatch-sortheader  align="center" label="Type" id="mime"/>
+                    <et2-nextmatch-header  align="center" label="Lock" id="lock"></et2-nextmatch-header>
+                    <et2-nextmatch-sortheader  label="Name" id="name"/>
+                    <et2-nextmatch-sortheader  label="Size" id="size"/>
+                    <et2-nextmatch-sortheader  label="Modified" id="mtime"/>
+                    <et2-nextmatch-sortheader  label="Created" id="ctime"/>
+                    <et2-nextmatch-sortheader  label="Permissions" id="mode"/>
+                    <et2-nextmatch-sortheader  label="Owner" id="uid"/>
+                    <et2-nextmatch-sortheader  label="Group" id="gid"/>
+                    <et2-nextmatch-header  label="Comment" id="comment"></et2-nextmatch-header>
+                    <et2-nextmatch-header-customfields  id="customfields" readonly="true"/>
+                    <et2-nextmatch-header  label="Kanban" id="kanban"></et2-nextmatch-header>
 				</row>
                 <row class="row $row_cont[class]">
-                    <et2-vfs-mime align="center" id="$row" width="100%"></et2-vfs-mime>
-                    <et2-image src="${row}[locked]" label="$row_cont[locked_status]" statustext="$row_cont[locked_status]"></et2-image>
-                    <vfs id="$row" no_lang="1"/>
-                    <vfs-size align="right" id="${row}[size]"/>
-                    <et2-date-time id="${row}[mtime]" readonly="true"></et2-date-time>
-                    <et2-date-time id="${row}[ctime]" readonly="true"></et2-date-time>
-                    <vfs-mode id="${row}[mode]"/>
-                    <et2-vfs-uid id="${row}[uid]" noLang="1"></et2-vfs-uid>
-                    <et2-vfs-gid id="${row}[gid]" noLang="1"></et2-vfs-gid>
-                    <et2-description id="${row}[comment]"></et2-description>
-                    <customfields-list id="$row" class="customfields"/>
-                    <et2-link-string entryId="$row_cont[path]" application="filemanager"
-                                     onlyApp="kanban"></et2-link-string>
+                    <et2-vfs-mime  align="center" id="$row" width="100%"></et2-vfs-mime>
+                    <et2-image  src="${row}[locked]" label="$row_cont[locked_status]" statustext="$row_cont[locked_status]"></et2-image>
+                    <et2-vfs-name  id="$row" class="et2_link" onclick="widget.open(); return false;" noLang="1"/>
+                    <et2-vfs-size  align="right" id="${row}[size]"/>
+                    <et2-date-time  id="${row}[mtime]" readonly="true"></et2-date-time>
+                    <et2-date-time  id="${row}[ctime]" readonly="true"></et2-date-time>
+                    <et2-vfs-mode  id="${row}[mode]"/>
+                    <et2-vfs-uid  id="${row}[uid]" noLang="1"></et2-vfs-uid>
+                    <et2-vfs-gid  id="${row}[gid]" noLang="1"></et2-vfs-gid>
+                    <et2-description  id="${row}[comment]"></et2-description>
+                    <et2-customfields-list  id="$row" class="customfields"/>
+                    <et2-link-string  entryId="$row_cont[path]" application="filemanager" onlyApp="kanban"></et2-link-string>
                 </row>
 			</rows>
 		</grid>
-	</template>
-	<et2-template id="filemanager.index.app-toolbar" template="" lang="" group="0" version="1.9.002">
+	</et2-template>
+	<et2-template  id="filemanager.index.app-toolbar" template="" lang="" group="0" version="1.9.002">
         <!-- Anonymous view has some extras - logo & button -->
-		<et2-toolbar id="toolbar">
-			<et2-image id="logo" disabled="!@show_refresh" hideOnReadonly="true"></et2-image>
-			<et2-button  id="reload" label="Reload" statustext="Reload" onclick="app.filemanager.et2.getInstanceManager().refresh()"
-				disabled="!@show_refresh" hideOnReadonly="true" image="reload" noSubmit="true"></et2-button>
-			<et2-vfs-upload label="Upload" statustext="Select file to upload in current directory" id="upload" class="et2_toolbar_hasCaption toolbar--needsCaption"
-                            path="$cont[path]/"
-							dropTarget="filemanager-index" multiple="true"
-							onchange="widget.updateComplete.then(() => {window.setTimeout(()=>{widget.value={};}, 1000)});"
+		<et2-toolbar  id="toolbar">
+			<et2-image  id="logo" disabled="!@show_refresh" hideOnReadonly="true"></et2-image>
+			<et2-button  id="reload" label="Reload" statustext="Reload" onclick="app.filemanager.et2.getInstanceManager().refresh()" disabled="!@show_refresh" hideOnReadonly="true" image="reload" noSubmit="true"></et2-button>
+			<et2-vfs-upload  label="Upload" statustext="Select file to upload in current directory" id="upload" class="et2_toolbar_hasCaption toolbar--needsCaption" path="$cont[path]/" multiple="true" onchange="widget.updateComplete.then(() => {window.setTimeout(()=>{widget.value={};}, 1000)});"
 			></et2-vfs-upload>
-			<template template="api.search-button"></template>
+			<et2-template  template="api.search-button"></et2-template>
 			<et2-button  id="home" label="Go to your home directory" statustext="Go to your home directory" image="gohome" onclick="app.filemanager.change_dir('~',widget);" noSubmit="true"></et2-button>
 			<et2-button  id="up" label="Up" statustext="Up" image="goup" onclick="app.filemanager.change_dir('..',widget);" noSubmit="true"></et2-button>
-			<et2-vfs-path id="path" onchange="app.filemanager.handlePathChange" size="80" class="address">
-				<et2-image src="filemanager/navbar" slot="prefix"></et2-image>
+			<et2-vfs-path  id="path" onchange="app.filemanager.handlePathChange" class="address">
+				<et2-image  src="filemanager/navbar" slot="prefix"></et2-image>
 			</et2-vfs-path>
 			<et2-button  label="Tile view" statustext="Tile view" id="button[change_view]" onclick="app.filemanager.change_view" image="list_tile" noSubmit="true"></et2-button>
 
 			<et2-dropdown-button  id="new" onchange="app.filemanager.create_new" label="New" onclick="app.filemanager.create_new"></et2-dropdown-button>
-            <et2-button label="Rename, change permissions or ownership" statustext="Rename, change permissions or ownership" id="button[edit]" onclick="app.filemanager.editprefs();" image="edit" noSubmit="true"></et2-button>
-            <et2-button label="Create directory" statustext="Create directory" id="button[createdir]" onclick="app.filemanager.createdir();" image="button_createdir" noSubmit="true"></et2-button>
-            <et2-button label="Create a link" statustext="Create a link" id="button[symlink]" onclick="app.filemanager.symlink();" image="link" noSubmit="true"></et2-button>
+            <et2-button  label="Rename, change permissions or ownership" statustext="Rename, change permissions or ownership" id="button[edit]" onclick="app.filemanager.editprefs();" image="edit" noSubmit="true"></et2-button>
+            <et2-button  label="Create directory" statustext="Create directory" id="button[createdir]" onclick="app.filemanager.createdir();" image="button_createdir" noSubmit="true"></et2-button>
+            <et2-button  label="Create a link" statustext="Create a link" id="button[symlink]" onclick="app.filemanager.symlink();" image="link" noSubmit="true"></et2-button>
 			<!--
 			<et2-button  statustext="Paste" id="button[paste]" onclick="app.filemanager.paste('paste');" image="editpaste" noSubmit="true"></et2-button>
 			<et2-button  statustext="Paste link" id="button[linkpaste]" onclick="app.filemanager.paste('linkpaste');" image="linkpaste" noSubmit="true"></et2-button>
 			<et2-button  statustext="Mail paste" id="button[mailpaste]" onclick="app.filemanager.paste('mailpaste');" image="mailpaste" noSubmit="true"></et2-button>
 			-->
-            <et2-button label="File a file" statustext="File a file" id="file_a_file" onclick="app.filemanager.fileafile" image="upload" noSubmit="true"></et2-button>
+            <et2-button  label="File a file" statustext="File a file" id="file_a_file" onclick="app.filemanager.fileafile" image="upload" noSubmit="true"></et2-button>
 		</et2-toolbar>
 	</et2-template>
-	<template id="filemanager.index" template="" lang="" group="0" version="1.9.003">
-		<et2-template template="filemanager.index.app-toolbar" slot="main-header"></et2-template>
-        <nextmatch id="nm" template="filemanager.index.rows"/>
-	</template>
+	<et2-template  id="filemanager.index" template="" lang="" group="0" version="1.9.003">
+		<et2-template  template="filemanager.index.app-toolbar" slot="main-header"></et2-template>
+        <!-- filter_template is set explicitly because it can not be derived: the rows-template
+             changes with the view (filemanager.index.rows vs. filemanager.tile), so Nextmatch
+             would derive a different filter-template name per view, while both views share
+             the same filters. -->
+        <et2-nextmatch  id="nm" template="filemanager.index.rows" filterTemplate="filemanager.filter"/>
+	</et2-template>
 </overlay>

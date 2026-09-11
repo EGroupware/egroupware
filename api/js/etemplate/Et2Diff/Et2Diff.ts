@@ -10,8 +10,11 @@ import {property} from "lit/decorators/property.js";
 import shoelace from "../Styles/shoelace";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 
+import styles from "./Et2Diff.styles";
 /**
  * Show a nicely formatted diff
+ *
+ * @category display
  */
 @customElement("et2-diff")
 export class Et2Diff extends Et2InputWidget(LitElement)
@@ -33,35 +36,7 @@ export class Et2Diff extends Et2InputWidget(LitElement)
 		return [
 			shoelace,
 			...super.styles,
-			css`
-				:host {
-					position: relative;
-				}
-
-				.expand-icon {
-					display: none;
-					position: absolute;
-					bottom: var(--sl-spacing-medium);
-					right: var(--sl-spacing-medium);
-					background-color: var(--sl-panel-background-color);
-					z-index: 1;
-				}
-
-				:host(:hover) {
-					.expand-icon {
-						display: initial;
-					}
-				}
-
-				:host(:not([open])) {
-					cursor: pointer;
-				}
-
-				:host(:not([noDialog])) .form-control-input {
-					max-height: 9em;
-					overflow: hidden;
-				}
-			`
+			styles
 		];
 	}
 

@@ -322,7 +322,6 @@ ldap settings for contacts	admin	ru	Установки LDAP для контак�
 ldif	addressbook	ru	LDIF
 line 2	addressbook	ru	Строка 2
 link title for contacts show	addressbook	ru	Заголовок ссылки отображаемых контактов
-links	addressbook	ru	Ссылки
 links and attached files	addressbook	ru	Ссылки и прикреплённые файлы
 links to specified application.  example: {{links/infolog}}	addressbook	ru	Ссылки на указанное приложение. Пример: {{links/infolog}}
 list all categories	addressbook	ru	Список всех категорий

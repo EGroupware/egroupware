@@ -60,6 +60,11 @@ class AnonymousList extends filemanager_ui
 		$content['show_refresh'] = true;
 		$content['nm']['no_filter'] = true;
 		$content['nm']['favorites'] = false;
+		// A share has no framework around it, so nothing provides a filter-slot for the filterbox to go
+		// into - it would render inline in the page instead. Nextmatch only skips creating it for an
+		// empty filter-template, and it has to come from the content: the setElementAttribute() below
+		// happens after the template (and with it index.xet's filter_template attribute) was read.
+		$content['nm']['filter_template'] = '';
 		$content['nm']['num_rows'] = Nextmatch::INITIAL_ROWS;
 
 		$logo = !empty($GLOBALS['egw_info']['server']['login_logo_header']) ? Api\Framework::get_login_logo_or_bg_url('login_logo_header', 'logo')
@@ -86,6 +91,7 @@ class AnonymousList extends filemanager_ui
 		$this->etemplate->setElementAttribute("toolbar[reload]","disabled", false);
 		// No egw-app, no main-header, no filterbox
 		$this->etemplate->setElementAttribute("toolbar[search]", "onchange", "window.app.filemanager.changeNmFilter(null, widget); return false;");
+		// also clear it client-side, to override the attribute index.xet sets on the widget
 		$this->etemplate->setElementAttribute("nm", "filter_template", "");
 
 		// No framework, no slots available

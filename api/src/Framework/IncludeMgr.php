@@ -314,7 +314,13 @@ class IncludeMgr
 	 */
 	private function translate_params($package, $file=null, $app='api')
 	{
-		if ($package && $package[0] == '/' && is_readable(EGW_SERVER_ROOT.parse_url($path = $package, PHP_URL_PATH)) ||
+		// An entry (app.min.js, etemplate2.js) is built to a content-hashed name in chunks/, so its
+		// literal path is NOT on disk and the is_readable() tests below would drop the include
+		// entirely, leaving the app without its JS. It is still a valid include: js_includes()
+		// emits this logical path and the client resolves it through the manifest. Nothing
+		// downstream needs the file itself - parse_deps() no longer reads it.
+		if ($package && $package[0] == '/' && Bundle::resolveEntry($path = parse_url($package, PHP_URL_PATH)) ||
+			$package && $package[0] == '/' && is_readable(EGW_SERVER_ROOT.parse_url($path = $package, PHP_URL_PATH)) ||
 			// fix old /phpgwapi/js/ path by replacing it with /api/js/
 			substr($package, 0, 13) == '/phpgwapi/js/' && is_readable(EGW_SERVER_ROOT.parse_url($path = str_replace('/phpgwapi/js/', '/api/js/', $package), PHP_URL_PATH)) ||
 			$package && $package[0] == '/' && is_readable(EGW_SERVER_ROOT.($path = $package)) ||
@@ -426,20 +432,6 @@ class IncludeMgr
 		$ret = array_keys($this->included_files);
 		if ($clear_files) $this->included_files = array();
 		return $ret;
-	}
-
-	/**
-	 * Get importMap for browser
-	 */
-	public function getImportMap()
-	{
-		$files = $this->get_included_files();
-		$imports = array_combine(array_map(static function($url)
-		{
-			return parse_url($url, PHP_URL_PATH);
-		}, $files), $files);
-
-		return ['imports' => $imports];
 	}
 
 	/**

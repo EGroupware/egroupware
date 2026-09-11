@@ -70,7 +70,6 @@ is resource buyable?	resources	fi	Onko resurssi ostettavissa?
 is the ressource bookable?	resources	fi	Onko resurssi varattavissa?
 is this resource bookable?	resources	fi	Onko tämä resurssi varattavissa?
 is this resource buyable?	resources	fi	Onko tämä resurssi ostettavissa?
-links	resources	fi	Linkit
 location	resources	fi	Sijainti
 location of resource	resources	fi	Resurssin sijainti
 location:	resources	fi	Sijainti:

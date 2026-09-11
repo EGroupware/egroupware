@@ -6,6 +6,8 @@
 *.min.js.map
 *.min.css
 *.min.css.map
+# generated from widgets.less - unlike the other kdots/css/src/*.css it is not committed
+kdots/css/src/widgets.css
 *.js.map
 *.sql
 *.diff
@@ -84,3 +86,5 @@ preferences/js/app.js
 resources/js/app.js
 timesheet/js/app.js
 /doc/.phpunit.result.cache
+/api/js/build-epoch.json
+/api/js/build-manifest.json

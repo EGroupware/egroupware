@@ -5,6 +5,7 @@
 2 years ago	timesheet	fr	Il y a 2 ans
 3 years ago	timesheet	fr	Il y a 3 ans
 all projects	timesheet	fr	Tous les projets
+all status	timesheet	fr	Tous les statuts
 and its members	timesheet	fr	Et ses mebres
 applies the changes	timesheet	fr	appliquer les changements
 apply the action on the whole query, not only the shown timesheets!!!	timesheet	fr	Appliquer l'action sur la requête entière, PAS SEULEMENT sur les feuilles de temps affichés !
@@ -85,7 +86,6 @@ leave it empty for a full week	timesheet	fr	Laisser vide pour une semaine pleine
 leaves without saveing	timesheet	fr	Quitter sans enregistrer
 length<br>rows	timesheet	fr	Longueur\nlignes
 link title	timesheet	fr	Lien vers le titre
-links	timesheet	fr	Liens
 links and attached files	timesheet	fr	Liens et fichiers attachés
 links to specified application.  example: {{links/infolog}}	timesheet	fr	Liens vers les applications spécifiés. Exemple :  {{links/infolog}}
 list of files linked to the current record	timesheet	fr	Listes des fichiers liés à l'enregistrement courant
@@ -110,6 +110,7 @@ order	timesheet	fr	Ordre
 overwrite time	common	fr	Surcharger le temps
 overwriting start or stop time	timesheet	fr	Surcharger le temps de début ou de fin
 parent	admin	fr	Parent
+partial timespan %1	timesheet	fr	Partiel %1 :
 pause	common	fr	Pause
 pause time	timesheet	fr	Temps de pause
 paused	timesheet	fr	En pause

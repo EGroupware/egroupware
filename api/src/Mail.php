@@ -24,12 +24,10 @@ use Horde_Imap_Client_DateTime;
 use Horde_Mime_Headers;
 use Horde_Compress;
 use Horde_Mime_Magic;
-use Horde_Mail_Rfc822;
 use Horde_Mail_Rfc822_List;
 use Horde_Mime_Mdn;
 use Horde_Translation;
 use Horde_Translation_Handler_Gettext;
-use EGroupware\Api;
 
 use tidy;
 use function PHPUnit\Framework\isEmpty;
@@ -72,6 +70,18 @@ class Mail
 	const DELIMITER = '::';
 
 	/**
+	 * Custom mail labels indexed by their action ID
+	 *
+	 * Fallback used by Mail\CustomLabels::getCustomLabels() when Categories aren't available -
+	 * kept here (not moved with the rest of that group) since it's public API a deployment could
+	 * conceivably set directly.
+	 *
+	 * @var array<string,array{name:string,color:string}>
+	 */
+	public static array $customLabels = array();
+	public static ?array $customLabelsCache = null;
+
+	/**
 	 * the current display char set
 	 * @var string
 	 */
@@ -104,14 +114,14 @@ class Mail
 	/**
 	 * Active incomming (IMAP) Server Object
 	 *
-	 * @var Api\Mail\Imap
+	 * @var Mail\Imap
 	 */
 	var $icServer;
 
 	/**
 	 * Active outgoing (smtp) Server Object
 	 *
-	 * @var Api\Mail\Smtp
+	 * @var Mail\Smtp
 	 */
 	var $ogServer;
 
@@ -317,6 +327,55 @@ class Mail
 	}
 
 	/**
+	 * Split a mail row-id (see mail_ui::generateRowID()/generateJmapRowID()) into its parts,
+	 * resolving the folder+uid tail into a real folder name and message UID.
+	 *
+	 * RowIDs come in two flavours, distinguished by whether the last segment is numeric:
+	 * - classic IMAP rows: folder is base64-encoded, msgUID is a numeric IMAP UID - this is
+	 *   also what rows from mail/jmap.php's local JMAP shim (plain IMAP accounts) look like
+	 * - JMAP-sourced rows (see generateJmapRowID): folderID is a raw JMAP Mailbox id (NOT
+	 *   base64-encoded), emailID is Stalwart's own opaque JMAP Email id (never purely numeric)
+	 *
+	 * The actual folder/uid resolution is delegated to the account's IMAP connection object
+	 * (Imap::splitRowID()/Imap\Jmap::splitRowID() override) - polymorphism, instead of this
+	 * method needing to know which backend classes exist. The connection itself comes from
+	 * self::getInstance(), reusing whatever instance/connection is already cached for that
+	 * profileID in this request rather than resolving a fresh one for every row.
+	 *
+	 * Note: like every other getInstance() caller, an invalid/inaccessible profileID does NOT
+	 * throw here - validateProfileID() (called unconditionally by the Mail constructor) silently
+	 * falls back to another of the *current user's own* valid accounts. That's existing,
+	 * shared behaviour, not something specific to this method.
+	 *
+	 * @param string|null $rowID colon-separated string in the form [app::]accountID::profileID::folder::uid
+	 * @return Mail\RowIdParts with values for keys "app", "accountID", "profileID", "folder",
+	 *  "msgUID", "folderID", "emailID", "is_jmap" - behaves exactly like the plain array this used
+	 *  to return (bracket read/write/isset/unset, foreach, count()), except "folder"/"msgUID" are
+	 *  only actually resolved (which, for a Stalwart opaque-id row, means a real IMAP EMAILID
+	 *  search) the first time either is read - see Mail\RowIdParts
+	 */
+	public static function splitRowID(?string $rowID) : Mail\RowIdParts
+	{
+		$res = $rowID ? explode(self::DELIMITER, $rowID) : [];
+		// as a rowID is prefixed with "$app::", should be mail!
+		if (count($res) === 4 && is_numeric($res[0]))
+		{
+			// we have an own created rowID; prepend app=mail
+			array_unshift($res, 'mail');
+		}
+		$result = ['app' => $res[0] ?? null, 'accountID' => $res[1] ?? null, 'profileID' => $res[2] ?? null];
+
+		if (!isset($res[2]))
+		{
+			return new Mail\RowIdParts($result + ['folderID' => null, 'emailID' => null, 'is_jmap' => false],
+				fn() => ['folder' => null, 'msgUID' => null]);
+		}
+		$profileID = (int)$res[2];
+		$mail = self::getInstance(true, $profileID, false);
+		return $mail->icServer->splitRowID((string)($res[3] ?? ''), (string)($res[4] ?? ''))->withEager($result);
+	}
+
+	/**
 	 * This method tries to fix alias address lacking domain part
 	 * by trying to add domain part extracted from given reference address
 	 *
@@ -345,7 +404,17 @@ class Mail
 		{
 			$oldProfileID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
 		}
-		if ($_testConnection)
+		// JMAP-FALLTHROUGH-GUARD (see [[project_jmap_imap_fallthrough_cleanup]]): getCurrentMailbox()
+		// -> mailboxExist() -> openMailbox() all fall through to Horde_Imap_Client_Socket methods
+		// neither Imap\Jmap nor Imap\Stalwart override - for a JMAP account this is a REAL raw IMAP
+		// socket attempt against acc_imap_host:acc_imap_port, which for Stalwart is a JMAP(S)
+		// endpoint, not an IMAP server, hanging until a read/timeout error (found live 2026-09-09,
+		// ralf: mail_ui::changeProfile() took ~20s switching TO a Stalwart account - same underlying
+		// bug as openConnection()'s own guard just above, but this method has no such guard at all).
+		// A successful JMAP access-token grant (Imap\Stalwart::login(), already run earlier in this
+		// same request via Account::is_imap()) already proves connectivity - nothing meaningful for
+		// a JMAP account to test here.
+		if ($_testConnection && !($_icServerObject instanceof Mail\Imap\Jmap))
 		{
 			try
 			{
@@ -467,22 +536,6 @@ class Mail
 	}
 
 	/**
-	 * forceEAProfileLoad
-	 * used to force the load of a specific emailadmin profile; we assume administrative use only (as of now)
-	 * @param int $_profile_id
-	 * @return object instance of Mail (by reference)
-	 */
-	public static function &forceEAProfileLoad($_profile_id)
-	{
-		self::unsetCachedObjects($_profile_id);
-		$mail = self::getInstance(false, $_profile_id,false);
-		//_debug_array( $_profile_id);
-		$mail->icServer = Mail\Account::read($_profile_id)->imapServer();
-		$mail->ogServer = Mail\Account::read($_profile_id)->smtpServer();
-		return $mail;
-	}
-
-	/**
 	 * trigger the force of the reload of the SessionData by resetting the session to an empty array
 	 * @param int $_profile_id
 	 * @param boolean $_resetFolderObjects
@@ -514,36 +567,6 @@ class Mail
 		{
 			$this->sessionData['mailbox'] = explode('::', $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'])[1] ?? 'INBOX';
 		}
-	}
-
-	/**
-	 * saveSessionData saves session data
-	 */
-	function saveSessionData()
-	{
-		//error_log(__METHOD__.' ('.__LINE__.') '.array2string(array_keys($this->sessionData)));
-		foreach ($this->sessionData as $key => $value)
-		{
-			if (!is_array(self::$activeFolderCache) && empty(self::$activeFolderCache[$this->profileID]))
-			{
-				self::$activeFolderCache = array($this->profileID => array($key => $value));
-			}
-			else if(empty(self::$activeFolderCache[$this->profileID]))
-			{
-				self::$activeFolderCache += array($this->profileID => array($key => $value));
-			}
-			else
-			{
-				self::$activeFolderCache[$this->profileID] =  array_merge(self::$activeFolderCache[$this->profileID], array($key => $value));
-			}
-		}
-
-		if (isset(self::$activeFolderCache) && is_array(self::$activeFolderCache))
-		{
-			Cache::setCache(Cache::INSTANCE,'email','activeMailbox'.trim($GLOBALS['egw_info']['user']['account_id']),self::$activeFolderCache, 60*60*10);
-		}
-		// no need to block session any longer
-		$GLOBALS['egw']->session->commit_session();
 	}
 
 	/**
@@ -711,66 +734,6 @@ class Mail
 	}
 
 	/**
-	 * checks if the imap server supports a given capability
-	 *
-	 * @param string $_capability the name of the capability to check for
-	 * @return bool
-	 */
-	function hasCapability($_capability)
-	{
-		$rv = $this->icServer->hasCapability(strtoupper($_capability));
-		//error_log(__METHOD__.' ('.__LINE__.') '." $_capability:".array2string($rv));
-		return $rv;
-	}
-
-	/**
-	 * getUserEMailAddresses - function to gather the emailadresses connected to the current mail-account
-	 * @param string $_profileID the ID of the mailaccount to check for identities, if null current mail-account is used
-	 * @return array - array(email=>realname)
-	 */
-	function getUserEMailAddresses($_profileID=null)
-	{
-		$acc = Mail\Account::read((!empty($_profileID)?$_profileID:$this->profileID));
-		//error_log(__METHOD__.' ('.__LINE__.') '.':'.array2string($acc));
-		$identities = Mail\Account::identities($acc);
-
-		$userEMailAdresses = array($acc['ident_email']=>$acc['ident_realname']);
-
-		foreach($identities as $ik => $ident) {
-			//error_log(__METHOD__.' ('.__LINE__.') '.':'.$ik.'->'.array2string($ident));
-			$identity = Mail\Account::read_identity($ik);
-			if (!empty($identity['ident_email']) && !isset($userEMailAdresses[$identity['ident_email']])) $userEMailAdresses[$identity['ident_email']] = $identity['ident_realname'];
-		}
-		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($userEMailAdresses));
-		return $userEMailAdresses;
-	}
-
-	/**
-	 * getAllIdentities - function to gather the identities connected to the current user
-	 * @param string/int $_accountToSearch = null if set search accounts for user specified
-	 * @param boolean $resolve_placeholders wether or not resolve possible placeholders in identities
-	 * @return array - array(email=>realname)
-	 */
-	static function getAllIdentities($_accountToSearch=null,$resolve_placeholders=false)
-	{
-		$userEMailAdresses = array();
-		foreach(Mail\Account::search($only_current_user=($_accountToSearch?$_accountToSearch:true), $just_name=true) as $acc_id => $identity_name)
-		{
-			$acc = Mail\Account::read($acc_id,($_accountToSearch?$_accountToSearch:null));
-			if (!$resolve_placeholders) $userEMailAdresses[$acc['ident_id']] = array('acc_id'=>$acc_id,'ident_id'=>$acc['ident_id'],'ident_email'=>$acc['ident_email'],'ident_org'=>$acc['ident_org'],'ident_realname'=>$acc['ident_realname'],'ident_signature'=>$acc['ident_signature'],'ident_name'=>$acc['ident_name']);
-
-			foreach(Mail\Account::identities($acc) as $ik => $ident) {
-				//error_log(__METHOD__.' ('.__LINE__.') '.':'.$ik.'->'.array2string($ident));
-				$identity = Mail\Account::read_identity($ik,$resolve_placeholders);
-				//error_log(__METHOD__.' ('.__LINE__.') '.':'.$ik.'->'.array2string($identity));
-				if (!isset($userEMailAdresses[$identity['ident_id']])) $userEMailAdresses[$identity['ident_id']] = array('acc_id'=>$acc_id,'ident_id'=>$identity['ident_id'],'ident_email'=>$identity['ident_email'],'ident_org'=>$identity['ident_org'],'ident_realname'=>$identity['ident_realname'],'ident_signature'=>$identity['ident_signature'],'ident_name'=>$identity['ident_name']);
-			}
-		}
-		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($userEMailAdresses));
-		return $userEMailAdresses;
-	}
-
-	/**
 	 * Get all identities of given mailaccount
 	 *
 	 * @param int|Mail\Account $account account-object or acc_id
@@ -802,50 +765,6 @@ class Mail
 		}
 
 		return $userEMailAdresses;
-	}
-
-	/**
-	 * Function to gather the default identitiy connected to the current mailaccount
-	 *
-	 * @return int - id of the identity
-	 */
-	function getDefaultIdentity()
-	{
-		// retrieve the signature accociated with the identity
-		$_accountData=array();
-		$id = $this->getIdentitiesWithAccounts($_accountData);
-		foreach(Mail\Account::identities($_accountData[$this->profileID] ?
-			$this->profileID : $_accountData[$id],false,'ident_id') as $accountData)
-		{
-			return $accountData;
-		}
-	}
-
-	/**
-	 * getIdentitiesWithAccounts
-	 *
-	 * @param array reference to pass all identities back
-	 * @return int the default Identity (active) or 0
-	 */
-	function getIdentitiesWithAccounts(&$identities)
-	{
-		// account select box
-		$selectedID = $this->profileID;
-		$allAccountData = Mail\Account::search($only_current_user=true, false, null);
-		if ($allAccountData) {
-			$rememberFirst=$selectedFound=null;
-			foreach ($allAccountData as $tmpkey => $icServers)
-			{
-				if (!isset($rememberFirst)) $rememberFirst = $tmpkey;
-				if ($tmpkey == $selectedID) $selectedFound=true;
-				//error_log(__METHOD__.' ('.__LINE__.') '.' Key:'.$tmpkey.'->'.array2string($icServers->acc_imap_host));
-				$host = $icServers->acc_imap_host;
-				if (empty($host)) continue;
-				$identities[$icServers->acc_id] = $icServers['ident_realname'].' '.$icServers['ident_org'].' <'.$icServers['ident_email'].'>';
-				//error_log(__METHOD__.' ('.__LINE__.') '.' Key:'.$tmpkey.'->'.array2string($identities[$icServers->acc_id]));
-			}
-		}
-		return ($selectedFound?$selectedID:$rememberFirst);
 	}
 
 	/**
@@ -930,6 +849,19 @@ class Mail
 	{
 		//error_log( "-------------------------->open connection ".function_backtrace());
 		//error_log(__METHOD__.' ('.__LINE__.') '.' ->'.array2string($this->icServer));
+		// JMAP-FALLTHROUGH-GUARD (see [[project_jmap_imap_fallthrough_cleanup]]):
+		// getCurrentMailbox()/examineMailbox()/getHierarchyDelimiter()/getSpecialUseFolders() all
+		// call Horde_Imap_Client_Socket methods that neither Imap\Jmap nor Imap\Stalwart override -
+		// for a JMAP account these fall through to a REAL raw IMAP socket attempt against
+		// acc_imap_host:acc_imap_port, which for Stalwart is a JMAP(S) endpoint, not an IMAP
+		// server, hanging until a read/timeout error (found live 2026-08-24 via the IMAP debug
+		// log: "Connection to: imap://stalwart.egroupware.org:443/" ... "Slow Command: 20 seconds").
+		// Folders are already fully client-side JMAP for these accounts, so there's nothing here
+		// for a JMAP account to gain from opening a classic IMAP connection at all.
+		if ($this->icServer instanceof Mail\Imap\Jmap)
+		{
+			return;
+		}
 		if (self::$debugTimes) $starttime = microtime (true);
 		$mailbox=null;
 		try
@@ -1013,18 +945,6 @@ class Mail
 	}
 
 	/**
-	 * getTimeOut
-	 *
-	 * @param string _use decide if the use is for IMAP or SIEVE, by now only the default differs
-	 *
-	 * @return int - timeout (either set or default 20/10)
-	 */
-	static function getTimeOut($_use='IMAP')
-	{
-		return $_use=='SIEVE' ? 10 : 20; // this is the default value
-	}
-
-	/**
 	 * Fetch the namespace from icServer
 	 *
 	 * An IMAPServer may present several namespaces under each key:
@@ -1097,6 +1017,18 @@ class Mail
 	 */
 	function getHierarchyDelimiter($_useCache=true)
 	{
+		// JMAP-FALLTHROUGH-GUARD (see [[project_jmap_imap_fallthrough_cleanup]]):
+		// JMAP has no IMAP-style hierarchy-delimiter concept (folder nesting is parentId
+		// references, not delimited path strings) - '/' is already this method's own fallback
+		// for every error case below, so returning it directly is consistent, and avoids
+		// getCurrentMailbox() falling through to a raw IMAP connection attempt against a JMAP(S)
+		// endpoint neither Imap\Jmap nor Imap\Stalwart guard against (found live 2026-08-24, same
+		// root cause as openConnection()/_getSpecialUseFolder() above, this time reached via
+		// FolderHandler::setFolderStatus()).
+		if ($this->icServer instanceof Mail\Imap\Jmap)
+		{
+			return '/';
+		}
 		static $HierarchyDelimiter = null;
 		if (!isset($HierarchyDelimiter)) $HierarchyDelimiter = Cache::getCache(Cache::INSTANCE,'email','HierarchyDelimiter'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),60*60*24*5);
 		if ($_useCache===false) unset($HierarchyDelimiter[$this->icServer->ImapServerId]);
@@ -1431,6 +1363,10 @@ class Mail
 	 */
 	function getHeaders($_folderName, $_startMessage, $_numberOfMessages, $_sort, $_reverse, $_filter, $_thisUIDOnly=null, $_cacheResult=true, $_fetchPreviews=false)
 	{
+		if (($jmapResult = $this->jmapHeaders($_thisUIDOnly)) !== null)
+		{
+			return $jmapResult;
+		}
 		//self::$debug=true;
 		if (self::$debug) error_log(__METHOD__.' ('.__LINE__.') '.function_backtrace());
 		if (self::$debug) error_log(__METHOD__.' ('.__LINE__.') '."$_folderName,$_startMessage, $_numberOfMessages, $_sort, $_reverse, ".array2string($_filter).", $_thisUIDOnly");
@@ -1623,11 +1559,11 @@ class Mail
 					continue;
 				}
 				if ( isset($headerForPrio['DISPOSITION-NOTIFICATION-TO']) ) {
-					$headerObject['DISPOSITION-NOTIFICATION-TO'] = self::decode_header(trim($headerForPrio['DISPOSITION-NOTIFICATION-TO']));
+					$headerObject['DISPOSITION-NOTIFICATION-TO'] = Mail\AddressList::decode_header(trim($headerForPrio['DISPOSITION-NOTIFICATION-TO']));
 				} else if ( isset($headerForPrio['RETURN-RECEIPT-TO']) ) {
-					$headerObject['DISPOSITION-NOTIFICATION-TO'] = self::decode_header(trim($headerForPrio['RETURN-RECEIPT-TO']));
+					$headerObject['DISPOSITION-NOTIFICATION-TO'] = Mail\AddressList::decode_header(trim($headerForPrio['RETURN-RECEIPT-TO']));
 				} else if ( isset($headerForPrio['X-CONFIRM-READING-TO']) ) {
-					$headerObject['DISPOSITION-NOTIFICATION-TO'] = self::decode_header(trim($headerForPrio['X-CONFIRM-READING-TO']));
+					$headerObject['DISPOSITION-NOTIFICATION-TO'] = Mail\AddressList::decode_header(trim($headerForPrio['X-CONFIRM-READING-TO']));
 				} /*else $sent_not = "";*/
 				//error_log(__METHOD__.' ('.__LINE__.') '.array2string($headerObject));
 				$headerObject['DATE'] = $headerForPrio['DATE'];
@@ -1806,23 +1742,23 @@ class Mail
 				}
 				//error_log(__METHOD__.' ('.__LINE__.') '.$headerObject['SUBJECT'].'->'.array2string($_headerObject->getEnvelope()->__get('from')));
 				if(!empty($headerObject['FROM'][0])) {
-					$retValue['header'][$sortOrder[$uid]]['sender_address'] = self::decode_header($headerObject['FROM'][0],true);
+					$retValue['header'][$sortOrder[$uid]]['sender_address'] = Mail\AddressList::decode_header($headerObject['FROM'][0],true);
 					if (count($headerObject['FROM'])>1)
 					{
 						$ki=0;
 						foreach($headerObject['FROM'] as $k => $add)
 						{
 							if ($k==0) continue;
-							$retValue['header'][$sortOrder[$uid]]['additional_from_addresses'][$ki] = self::decode_header($add,true);
+							$retValue['header'][$sortOrder[$uid]]['additional_from_addresses'][$ki] = Mail\AddressList::decode_header($add,true);
 							$ki++;
 						}
 					}
 				}
 				if(!empty($headerObject['REPLY-TO'][0])) {
-					$retValue['header'][$sortOrder[$uid]]['reply_to_address'] = self::decode_header($headerObject['REPLY-TO'][0],true);
+					$retValue['header'][$sortOrder[$uid]]['reply_to_address'] = Mail\AddressList::decode_header($headerObject['REPLY-TO'][0],true);
 				}
 				if(!empty($headerObject['TO'][0])) {
-					$retValue['header'][$sortOrder[$uid]]['to_address'] = self::decode_header($headerObject['TO'][0],true);
+					$retValue['header'][$sortOrder[$uid]]['to_address'] = Mail\AddressList::decode_header($headerObject['TO'][0],true);
 					if (count($headerObject['TO'])>1)
 					{
 						$ki=0;
@@ -1830,7 +1766,7 @@ class Mail
 						{
 							if ($k==0) continue;
 							//error_log(__METHOD__.' ('.__LINE__.') '."-> $k:".array2string($add));
-							$retValue['header'][$sortOrder[$uid]]['additional_to_addresses'][$ki] = self::decode_header($add,true);
+							$retValue['header'][$sortOrder[$uid]]['additional_to_addresses'][$ki] = Mail\AddressList::decode_header($add,true);
 							//error_log(__METHOD__.' ('.__LINE__.') '.array2string($retValue['header'][$sortOrder[$uid]]['additional_to_addresses'][$ki]));
 							$ki++;
 						}
@@ -1841,7 +1777,7 @@ class Mail
 					foreach($headerObject['CC'] as $k => $add)
 					{
 						//error_log(__METHOD__.' ('.__LINE__.') '."-> $k:".array2string($add));
-						$retValue['header'][$sortOrder[$uid]]['cc_addresses'][$ki] = self::decode_header($add,true);
+						$retValue['header'][$sortOrder[$uid]]['cc_addresses'][$ki] = Mail\AddressList::decode_header($add,true);
 						//error_log(__METHOD__.' ('.__LINE__.') '.array2string($retValue['header'][$sortOrder[$uid]]['additional_to_addresses'][$ki]));
 						$ki++;
 					}
@@ -1851,7 +1787,7 @@ class Mail
 					foreach($headerObject['BCC'] as $k => $add)
 					{
 						//error_log(__METHOD__.' ('.__LINE__.') '."-> $k:".array2string($add));
-						$retValue['header'][$sortOrder[$uid]]['bcc_addresses'][$ki] = self::decode_header($add,true);
+						$retValue['header'][$sortOrder[$uid]]['bcc_addresses'][$ki] = Mail\AddressList::decode_header($add,true);
 						//error_log(__METHOD__.' ('.__LINE__.') '.array2string($retValue['header'][$sortOrder[$uid]]['additional_to_addresses'][$ki]));
 						$ki++;
 					}
@@ -1913,8 +1849,913 @@ class Mail
 		$retValue['label3']   = in_array('$label3', $headerFlags);
 		$retValue['label4']   = in_array('$label4', $headerFlags);
 		$retValue['label5']   = in_array('$label5', $headerFlags);
+		$retValue['customFlag1'] = in_array('$customflag1', $headerFlags);
+		$retValue['customFlag2'] = in_array('$customflag2', $headerFlags);
+		$retValue['customFlag3'] = in_array('$customflag3', $headerFlags);
+		$retValue['customFlag4'] = in_array('$customflag4', $headerFlags);
+		$retValue['customFlag5'] = in_array('$customflag5', $headerFlags);
+		$retValue['keywords'] = array();
+		foreach (array_keys(Mail\CustomLabels::getCustomLabels()) as $id)
+		{
+			$keyword = Mail\CustomLabels::validateKeyword($id);
+			if (in_array('$'.$keyword, $headerFlags))
+			{
+				$retValue['keywords'][$id] = true;
+			}
+		}
 		//error_log(__METHOD__.' ('.__LINE__.') '.$headerObject['SUBJECT'].':'.array2string($retValue));
 		return $retValue;
+	}
+
+	/**
+	 * JMAP keyword => real IMAP flag string, for building a prepareFlagsArray()-compatible
+	 * 'FLAGS' list from a JMAP Email's keywords - mirrors JmapShim::importKeywordToFlag()'s
+	 * mapping (kept separate rather than reusing that private method, to avoid a cross-class
+	 * visibility change for this).
+	 */
+	private const JMAP_KEYWORD_TO_FLAG = [
+		'$seen' => '\\Seen', '$answered' => '\\Answered', '$flagged' => '\\Flagged', '$draft' => '\\Draft',
+		'$forwarded' => '$Forwarded', '$mdnsent' => 'MDNSent', '$mdnnotsent' => 'MDNnotSent',
+	];
+
+	/**
+	 * $_flag (flagMessages()'s first param) => [JMAP keyword, set-or-unset]
+	 */
+	private const JMAP_FLAG_KEYWORDS = [
+		'flagged' => ['$flagged', true],	// 'unflagged' is handled separately in jmapFlagMessages(), it also clears the custom flags
+		'read' => ['$seen', true], 'seen' => ['$seen', true],
+		'unread' => ['$seen', false], 'unseen' => ['$seen', false],
+		'answered' => ['$answered', true], 'forwarded' => ['$forwarded', true],
+		'mdnsent' => ['$mdnsent', true], 'mdnnotsent' => ['$mdnnotsent', true],
+		'label1' => ['$label1', true], 'labelone' => ['$label1', true],
+		'label2' => ['$label2', true], 'labeltwo' => ['$label2', true],
+		'label3' => ['$label3', true], 'labelthree' => ['$label3', true],
+		'label4' => ['$label4', true], 'labelfour' => ['$label4', true],
+		'label5' => ['$label5', true], 'labelfive' => ['$label5', true],
+	];
+
+	/**
+	 * Recognize a message-id (or list of them) as coming from a JMAP-native path (this class's
+	 * own jmapSortedList()/jmapHeaders()) - a real JMAP Email.id is an opaque, non-numeric
+	 * string, never a plain IMAP UID. Same "numeric = classic, opaque string = JMAP" dispatch
+	 * Mail\Imap\Jmap::splitRowID() already uses.
+	 *
+	 * @param mixed $_messageUID
+	 * @return string[]|null null = not JMAP-native (numeric UID(s), 'all', or a
+	 *  Horde_Imap_Client_Ids object) - caller should use the classic path
+	 */
+	private function jmapMessageIds($_messageUID) : ?array
+	{
+		if (is_object($_messageUID) || $_messageUID === 'all' || $_messageUID === null || $_messageUID === '')
+		{
+			return null;
+		}
+		$ids = is_array($_messageUID) ? array_values($_messageUID) : [$_messageUID];
+		foreach ($ids as $id)
+		{
+			if ($id === '' || $id === null || is_numeric($id))
+			{
+				return null;
+			}
+		}
+		return $ids;
+	}
+
+	/**
+	 * Resolve an opaque JMAP Email.id (or array of them) to real IMAP UID(s), for the classic
+	 * fallback branch of a getMessageHeader()/getMessageRawHeader()/getMessageRawBody()/
+	 * getMessageBody()/getMessageAttachments()/getAttachment()/getMessageEnvelope() call whose
+	 * JMAP-native attempt bailed for a reason unrelated to the id itself (a sub-part request, a
+	 * text/calendar part, a TNEF attachment, an unsupported $_htmlOptions, ...).
+	 *
+	 * Without this, the classic body would receive the same opaque id it was given -
+	 * Horde_Imap_Client_Ids silently treats a non-numeric id as an empty id set rather than
+	 * erroring, so the "fallback" would silently return wrong (empty) data instead of a real
+	 * fallback result. Only ever does real IMAP work in this rare bail case - every other
+	 * (successful JMAP, or already-classic-numeric) call path never reaches this.
+	 *
+	 * @param mixed $_uid single id, array of ids, or already non-JMAP (returned unchanged if so)
+	 * @param string $_folder real IMAP folder path the message is in
+	 * @return mixed same shape as $_uid, opaque ids replaced by their real UID where resolvable
+	 */
+	private function jmapResolveUid($_uid, string $_folder)
+	{
+		if (!($this->icServer instanceof Mail\Imap\Jmap) || ($ids = $this->jmapMessageIds($_uid)) === null)
+		{
+			return $_uid;
+		}
+		$resolved = [];
+		foreach ($ids as $id)
+		{
+			$uid = $this->icServer->emailId2uidByPath($id, $_folder);
+			if ($uid !== null)
+			{
+				$resolved[] = $uid;
+			}
+		}
+		if (!$resolved)
+		{
+			return $_uid;	// couldn't resolve anything - let classic's own not-found handling apply
+		}
+		return is_array($_uid) ? $resolved : $resolved[0];
+	}
+
+	/**
+	 * Build a prepareFlagsArray()-compatible 'FLAGS' list from a JMAP Email's keywords object.
+	 *
+	 * @param array<string,bool> $keywords
+	 * @return string[] real IMAP-style flag strings, e.g. ['\\Seen', '$label1']
+	 */
+	private function jmapFlagsFromKeywords(array $keywords) : array
+	{
+		$flags = [];
+		foreach ($keywords as $keyword => $set)
+		{
+			if (!$set)
+			{
+				continue;
+			}
+			$keyword = strtolower($keyword);
+			if (isset(self::JMAP_KEYWORD_TO_FLAG[$keyword]))
+			{
+				$flags[] = self::JMAP_KEYWORD_TO_FLAG[$keyword];
+			}
+			elseif (str_starts_with($keyword, '$label') || str_starts_with($keyword, '$customflag'))
+			{
+				$flags[] = $keyword;
+			}
+		}
+		return $flags;
+	}
+
+	/**
+	 * Translate getSortedList()'s $_sort param to a JMAP Email/query sort property - only the
+	 * plain "by date" sort is supported, everything else (from/to/subject/size sort) falls back
+	 * to the classic path.
+	 *
+	 * @param mixed $_sort
+	 * @return ?string null = unsupported
+	 */
+	private function jmapSortProperty($_sort) : ?string
+	{
+		if (is_numeric($_sort))
+		{
+			return (int)$_sort === 0 ? 'sentAt' : null;
+		}
+		return strtoupper((string)$_sort) === 'DATE' ? 'sentAt' : null;
+	}
+
+	/**
+	 * Translate a narrow subset of getSortedList()'s $_filter shape (status-keyword list + at
+	 * most one TO/FROM/SUBJECT/BODY/TEXT text search, nothing else - no date ranges, no
+	 * OR-combinations, no category filter) into JMAP FilterCondition objects.
+	 *
+	 * This deliberately does NOT attempt to cover createIMAPFilter()'s full filter language - it
+	 * only needs to recognize tracker_mailhandler::check_mail()'s actual ['status' =>
+	 * ['UNSEEN','UNDELETED'], 'type' => 'TO', 'string' => ...] shape (and similarly narrow
+	 * shapes from other callers). Anything it doesn't recognize returns null so the caller falls
+	 * back to the classic, fully-general IMAP search.
+	 *
+	 * @param array $_filter
+	 * @return array[]|null null = not translatable
+	 */
+	private function jmapFilterConditions(array $_filter) : ?array
+	{
+		static $statusMap = [
+			'SEEN' => ['hasKeyword' => '$seen'], 'UNSEEN' => ['notKeyword' => '$seen'],
+			'ANSWERED' => ['hasKeyword' => '$answered'], 'UNANSWERED' => ['notKeyword' => '$answered'],
+			'FLAGGED' => ['hasKeyword' => '$flagged'], 'UNFLAGGED' => ['notKeyword' => '$flagged'],
+		];
+		$conditions = [];
+		foreach ((array)($_filter['status'] ?? []) as $status)
+		{
+			$status = is_string($status) ? strtoupper($status) : null;
+			// no JMAP equivalent needed: Email/set destroy is immediate, nothing stays "\Deleted"
+			if ($status === 'UNDELETED')
+			{
+				continue;
+			}
+			if ($status === null || !isset($statusMap[$status]))
+			{
+				return null;	// DELETED, a custom-label criterion, ... - not translated here
+			}
+			$conditions[] = $statusMap[$status];
+		}
+		if (!empty($_filter['string']))
+		{
+			static $fieldMap = ['TO' => 'to', 'FROM' => 'from', 'SUBJECT' => 'subject', 'BODY' => 'body', 'TEXT' => 'text'];
+			$field = $fieldMap[strtoupper((string)($_filter['type'] ?? ''))] ?? null;
+			if ($field === null)
+			{
+				return null;
+			}
+			$conditions[] = [$field => $_filter['string']];
+		}
+		foreach (array_keys($_filter) as $key)
+		{
+			if (!in_array($key, ['status', 'type', 'string'], true))
+			{
+				return null;	// range/date/cat_id/... not supported by this narrow translator
+			}
+		}
+		return $conditions;
+	}
+
+	/**
+	 * JMAP-native search/list for getSortedList()'s narrow, tracker-shaped subset of its filter
+	 * language (see jmapFilterConditions()) - null (fall back to classic IMAP search) for
+	 * anything outside that subset, a non-Stalwart connection, or on any JMAP failure.
+	 *
+	 * Unlike a numeric IMAP UID, the ids returned here are opaque JMAP Email.id strings - every
+	 * downstream call using them (jmapHeaders(), jmapFlagMessages(), jmapDeleteMessages(), ...)
+	 * recognizes that shape via jmapMessageIds() and stays JMAP-native too, with no UID
+	 * translation ever happening (a real IMAP SEARCH would be needed for that translation - see
+	 * the plan file for why doing it per-call would cost more than it saves).
+	 *
+	 * @return array{match:object,count:int}|null
+	 */
+	private function jmapSortedList($_folderName, $_sort, $_reverse, $_filter) : ?array
+	{
+		if (!($this->icServer instanceof Mail\Imap\Jmap) || !is_array($_filter))
+		{
+			return null;
+		}
+		$conditions = $this->jmapFilterConditions($_filter);
+		$sortProperty = $this->jmapSortProperty($_sort);
+		if ($conditions === null || $sortProperty === null)
+		{
+			return null;
+		}
+		try
+		{
+			$ids = $this->icServer->jmapClient()->emailQuery($_folderName, $conditions, $sortProperty, !$_reverse);
+			$match = new \stdClass();
+			$match->ids = $ids;
+			return ['match' => $match, 'count' => count($ids)];
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+			return null;
+		}
+	}
+
+	/**
+	 * JMAP-native header/flag fetch for getHeaders()'s "specific known id(s)" mode
+	 * ($_thisUIDOnly set) - the shape tracker_mailhandler::process_message2() and
+	 * mail_ui::displayMessage()'s meeting-invite path both use. Only a minimal field set is
+	 * returned (subject, size, date, sender/to address, prepareFlagsArray()'s flag booleans) -
+	 * enough for those callers, NOT a full replacement for the general listing branch
+	 * ($_thisUIDOnly === null, used by mail_zpush/mail_hooks), which always stays classic.
+	 *
+	 * @return array{header:array[],info:array}|null
+	 */
+	private function jmapHeaders($_thisUIDOnly) : ?array
+	{
+		if (!($this->icServer instanceof Mail\Imap\Jmap) || $_thisUIDOnly === null ||
+			($ids = $this->jmapMessageIds($_thisUIDOnly)) === null)
+		{
+			return null;
+		}
+		try
+		{
+			$jmap = $this->icServer->jmapClient();
+			$header = [];
+			foreach (array_values($ids) as $i => $id)
+			{
+				$email = $jmap->emailGet($id, ['subject', 'keywords', 'size', 'receivedAt', 'from', 'to'], false);
+				$row = self::prepareFlagsArray(['FLAGS' => $this->jmapFlagsFromKeywords($email['keywords'] ?? [])]);
+				$row['uid'] = $id;
+				$row['subject'] = $this->decode_subject($email['subject'] ?? '');
+				$row['size'] = $email['size'] ?? null;
+				$row['date'] = $row['internaldate'] = self::_strtotime($email['receivedAt'] ?? 'now', 'ts', true);
+				$from = $email['from'][0] ?? null;
+				if ($from)
+				{
+					$row['sender_address'] = empty($from['name']) ? $from['email'] : $from['name'].' <'.$from['email'].'>';
+				}
+				$to = $email['to'][0] ?? null;
+				if ($to)
+				{
+					$row['to_address'] = empty($to['name']) ? $to['email'] : $to['name'].' <'.$to['email'].'>';
+				}
+				$header[$i] = $row;
+			}
+			return ['header' => $header, 'info' => ['total' => count($header), 'first' => 0, 'last' => count($header)]];
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+			return null;
+		}
+	}
+
+	/**
+	 * JMAP-native flag update via Email/set keywords patch - null (fall back to the classic
+	 * per-UID IMAP STORE) for a non-Stalwart connection, a non-JMAP id (including 'all', which
+	 * this doesn't attempt to translate to a JMAP-wide operation), or an unrecognized flag name.
+	 *
+	 * @return bool|null null = not applicable, use the classic path
+	 */
+	private function jmapFlagMessages($_flag, $_messageUID) : ?bool
+	{
+		if (!($this->icServer instanceof Mail\Imap\Jmap) || ($ids = $this->jmapMessageIds($_messageUID)) === null)
+		{
+			return null;
+		}
+		if ($_flag === 'unlabel')
+		{
+			$patch = [];
+			foreach (['$label1', '$label2', '$label3', '$label4', '$label5'] as $keyword)
+			{
+				$patch['keywords/'.$keyword] = null;
+			}
+		}
+		elseif ($_flag === 'unflagged')
+		{
+			// a colored custom flag implies $flagged, so clearing it must remove every colored keyword too
+			$patch = [];
+			foreach (['$flagged', '$customflag1', '$customflag2', '$customflag3', '$customflag4', '$customflag5'] as $keyword)
+			{
+				$patch['keywords/'.$keyword] = null;
+			}
+		}
+		elseif (isset(self::JMAP_FLAG_KEYWORDS[$_flag]))
+		{
+			[$keyword, $set] = self::JMAP_FLAG_KEYWORDS[$_flag];
+			$patch = ['keywords/'.$keyword => $set ? true : null];
+		}
+		else
+		{
+			return null;	// 'delete'/'undelete' (see jmapDeleteMessages()) or unrecognized - classic
+		}
+		try
+		{
+			$this->icServer->jmapClient()->emailSetKeywords($ids, $patch);
+			return true;
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+			return false;	// no classic fallback possible - $ids aren't real IMAP UIDs
+		}
+	}
+
+	/**
+	 * JMAP-native delete via Email/set (mailboxIds-move to Trash, or destroy for immediate
+	 * removal) - null (fall back to the classic per-UID IMAP COPY+STORE+EXPUNGE) for a
+	 * non-Stalwart connection or a non-JMAP id.
+	 *
+	 * @return bool|null null = not applicable, use the classic path
+	 */
+	private function jmapDeleteMessages($_messageUID, $_folder, $_forceDeleteMethod) : ?bool
+	{
+		if (!($this->icServer instanceof Mail\Imap\Jmap) || ($ids = $this->jmapMessageIds($_messageUID)) === null)
+		{
+			return null;
+		}
+		try
+		{
+			$deleteOptions = $_forceDeleteMethod !== 'no' && in_array($_forceDeleteMethod, ['move_to_trash', 'remove_immediately'], true)
+				? $_forceDeleteMethod : ($this->mailPreferences['deleteOptions'] ?: 'move_to_trash');
+			$trashFolder = $this->getTrashFolder();
+			$jmap = $this->icServer->jmapClient();
+			if ($deleteOptions === 'remove_immediately' ||
+				(!empty($trashFolder) && strtolower((string)$_folder) === strtolower($trashFolder)))
+			{
+				$jmap->emailDestroy($ids);
+			}
+			elseif (!empty($trashFolder))
+			{
+				$jmap->emailMove($ids, $trashFolder);
+			}
+			else
+			{
+				return null;	// no trash folder known - handled classically (will likely also fail there)
+			}
+			return true;
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+			return false;	// no classic fallback possible - $ids aren't real IMAP UIDs
+		}
+	}
+
+	/**
+	 * JMAP-native move for moveMessages()'s same-account, real-move case (deleteAfterMove=true,
+	 * no cross-account target) - reuses Api\Mail\Jmap::emailMove() (full mailboxIds replace).
+	 * Copy-without-delete and cross-account moves are NOT translated here (both explicitly out
+	 * of scope for this project - cross-account already needs fetch+append regardless of
+	 * protocol, see [[mail-jmap-imap-shim]]) - null falls back to the classic implementation.
+	 *
+	 * @return bool|string[]|null null = not applicable, use the classic path
+	 */
+	private function jmapMoveMessages($_foldername, $_messageUID, $deleteAfterMove, $returnUIDs, $_sourceProfileID, $_targetProfileID)
+	{
+		if (!($this->icServer instanceof Mail\Imap\Jmap) || !$deleteAfterMove ||
+			($_sourceProfileID !== null && $_sourceProfileID !== $this->icServer->ImapServerId) ||
+			($_targetProfileID !== null && $_targetProfileID !== $this->icServer->ImapServerId) ||
+			($ids = $this->jmapMessageIds($_messageUID)) === null)
+		{
+			return null;
+		}
+		try
+		{
+			$this->icServer->jmapClient()->emailMove($ids, $_foldername);
+			// a JMAP move keeps the same Email.id (unlike a real IMAP move, which always assigns a
+			// new UID in the destination - see [[feedback-imap-uid-per-mailbox]]), so the "new" id
+			// to hand back is simply the same one
+			return $returnUIDs ? $ids : true;
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+			return false;	// no classic fallback possible - $ids aren't real IMAP UIDs
+		}
+	}
+
+	/**
+	 * Fetch the raw whole-message blob and slice it at the first blank line into header/body
+	 * text - shared by the getMessageHeader()/getMessageRawHeader()/getMessageRawBody()
+	 * JMAP-native paths below, mirroring the same technique MailJmap.fetchRawHeader() already
+	 * uses client-side (mail/js/jmap.ts) for the "view header" feature.
+	 *
+	 * @return array{header:string,body:string}
+	 * @throws Api\Exception
+	 */
+	private function jmapRawMessageParts(string $id) : array
+	{
+		$jmap = $this->icServer->jmapClient();
+		$blobId = $jmap->emailGet($id, ['blobId'], false)['blobId'] ??
+			throw new Exception\AssertionFailed("Email '$id' has no blobId");
+		$raw = $jmap->downloadBlob($blobId, 'message.eml', 'message/rfc822');
+		$pos = strpos($raw, "\r\n\r\n");
+		$sepLen = 4;
+		if ($pos === false)
+		{
+			$pos = strpos($raw, "\n\n");
+			$sepLen = 2;
+		}
+		if ($pos === false)
+		{
+			return ['header' => $raw, 'body' => ''];
+		}
+		return ['header' => substr($raw, 0, $pos), 'body' => substr($raw, $pos + $sepLen)];
+	}
+
+	/**
+	 * JMAP-native header fetch for getMessageHeader() - sub-part headers ($_partID set) are NOT
+	 * translated here (JMAP's bodyStructure partId values aren't guaranteed to match the classic
+	 * dotted IMAP mime-id scheme callers pass in) - null falls back to the classic path.
+	 *
+	 * @return array|Horde_Mime_Headers|null null = not applicable, use the classic path
+	 */
+	private function jmapGetMessageHeader($_uid, $_partID, $decode)
+	{
+		if (!($this->icServer instanceof Mail\Imap\Jmap) || ($_partID !== null && $_partID !== '') ||
+			($ids = $this->jmapMessageIds($_uid)) === null || count($ids) !== 1)
+		{
+			return null;
+		}
+		try
+		{
+			$headers = Horde_Mime_Headers::parseHeaders($this->jmapRawMessageParts($ids[0])['header']);
+			if ($decode === 'object')
+			{
+				$headers->setUserAgent('EGroupware API '.$GLOBALS['egw_info']['server']['versions']['phpgwapi']);
+				return $headers;
+			}
+			$retValue = array_change_key_case($headers->toArray(), CASE_UPPER);
+			if (is_array($retValue['SUBJECT'] ?? null))
+			{
+				$retValue['SUBJECT'] = $retValue['SUBJECT'][count($retValue['SUBJECT'])-1];
+			}
+			if ($decode)
+			{
+				foreach ($retValue as $key => $rvV)
+				{
+					$retValue[$key] = Mail\AddressList::decode_header($rvV, in_array($key, ['FROM', 'TO', 'CC', 'BCC', 'SENDER', 'REPLY-TO']));
+				}
+			}
+			return $retValue;
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+			return null;
+		}
+	}
+
+	/**
+	 * JMAP-native envelope fetch for getMessageEnvelope() - built on top of jmapGetMessageHeader()
+	 * rather than a separate JMAP call, reshaping into the address-array envelope shape, the same
+	 * way the classic method's own $_useHeaderInsteadOfEnvelope=true branch already does
+	 * ($env->$v->addresses and this reshaping both produce RFC822-formatted "Name <email>"
+	 * strings, so both of getMessageEnvelope()'s classic branches are shape-compatible enough to
+	 * unify into one JMAP path here, regardless of which one the caller asked for).
+	 *
+	 * @return array|null null = not applicable, use the classic path
+	 */
+	private function jmapGetMessageEnvelope($_uid, $_partID, $decode) : ?array
+	{
+		$headers = $this->jmapGetMessageHeader($_uid, $_partID, true);
+		if (!is_array($headers))
+		{
+			return null;
+		}
+		$newData = [
+			'DATE' => $headers['DATE'] ?? null,
+			'SUBJECT' => $decode ? Mail\AddressList::decode_header($headers['SUBJECT'] ?? '') : ($headers['SUBJECT'] ?? null),
+			'MESSAGE_ID' => $headers['MESSAGE-ID'] ?? null,
+		];
+		foreach (['IN-REPLY-TO', 'REFERENCES', 'THREAD-TOPIC', 'THREAD-INDEX', 'LIST-ID', 'SIZE'] as $key)
+		{
+			if (isset($headers[$key]))
+			{
+				$newData[$key] = $headers[$key];
+			}
+		}
+		foreach (['FROM', 'TO', 'CC', 'BCC', 'SENDER', 'REPLY-TO'] as $recipientType)
+		{
+			if (isset($headers[$recipientType]))
+			{
+				foreach (self::parseAddressList($headers[$recipientType]) as $singleAddress)
+				{
+					$newData[$recipientType][] = $singleAddress->personal ?
+						imap_rfc822_write_address($singleAddress->mailbox, $singleAddress->host, $singleAddress->personal) :
+						($singleAddress->host ? $singleAddress->mailbox.'@'.$singleAddress->host : $singleAddress->mailbox);
+				}
+			}
+			elseif ($recipientType === 'SENDER' || $recipientType === 'REPLY-TO')
+			{
+				$newData[$recipientType] = $newData['FROM'] ?? [];
+			}
+			else
+			{
+				$newData[$recipientType] = [];
+			}
+		}
+		return $newData;
+	}
+
+	/**
+	 * JMAP-native raw header fetch for getMessageRawHeader() - same $_partID scope-limit as
+	 * jmapGetMessageHeader().
+	 *
+	 * @return string|null null = not applicable, use the classic path
+	 */
+	private function jmapGetMessageRawHeader($_uid, $_partID) : ?string
+	{
+		if (!($this->icServer instanceof Mail\Imap\Jmap) || ($_partID !== null && $_partID !== '') ||
+			($ids = $this->jmapMessageIds($_uid)) === null || count($ids) !== 1)
+		{
+			return null;
+		}
+		try
+		{
+			return $this->jmapRawMessageParts($ids[0])['header'];
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+			return null;
+		}
+	}
+
+	/**
+	 * JMAP-native raw whole-message fetch for getMessageRawBody() - only the "whole message,
+	 * non-streamed" mode is translated ($_partID==='', $_stream===false, tracker's and
+	 * mail_compose's actual usage) - a specific body part or a stream result fall back to the
+	 * classic path.
+	 *
+	 * @return string|null null = not applicable, use the classic path
+	 */
+	private function jmapGetMessageRawBody($_uid, $_partID, $_stream) : ?string
+	{
+		if (!($this->icServer instanceof Mail\Imap\Jmap) || $_stream || ($_partID !== null && $_partID !== '') ||
+			($ids = $this->jmapMessageIds($_uid)) === null || count($ids) !== 1)
+		{
+			return null;
+		}
+		try
+		{
+			$jmap = $this->icServer->jmapClient();
+			$blobId = $jmap->emailGet($ids[0], ['blobId'], false)['blobId'] ??
+				throw new Exception\AssertionFailed("Email '{$ids[0]}' has no blobId");
+			return $jmap->downloadBlob($blobId, 'message.eml', 'message/rfc822');
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+			return null;
+		}
+	}
+
+	/**
+	 * Recursively check a JMAP bodyStructure for a text/calendar part - getMessageBody()'s JMAP
+	 * path doesn't populate $calendar_part (meeting-invite detection), so it bails to the classic
+	 * path whenever one is present rather than silently dropping that feature.
+	 */
+	private function jmapHasCalendarPart(array $structure) : bool
+	{
+		if (($structure['type'] ?? null) === 'text/calendar')
+		{
+			return true;
+		}
+		foreach ($structure['subParts'] ?? [] as $sub)
+		{
+			if ($this->jmapHasCalendarPart($sub))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * JMAP-native body fetch for getMessageBody()'s plain "give me the text/html body" case -
+	 * built from Email/get's textBody/htmlBody/bodyValues (already flattened/decoded server-side
+	 * by JMAP, no need to walk bodyStructure the way the classic multipart-type-switch does).
+	 * Bails to classic for: a specific sub-part request, a caller-supplied $_structure (they
+	 * already did their own IMAP fetch), any $_htmlOptions other than the two tracker/mail_compose
+	 * actually use, a message with no text/html body at all (e.g. a bare pdf/image - the classic
+	 * path's $output_no_body echo-and-exit special case isn't replicated here), or a message
+	 * containing a text/calendar part (meeting invites stay on the classic $calendar_part path).
+	 *
+	 * @return array[]|null null = not applicable, use the classic path
+	 */
+	private function jmapGetMessageBody($_uid, $_htmlOptions, $_partID, $_structure) : ?array
+	{
+		if (!($this->icServer instanceof Mail\Imap\Jmap) || $_structure !== null ||
+			($_partID !== null && $_partID !== '') ||
+			!in_array($_htmlOptions, ['always_display', 'only_if_no_text'], true) ||
+			($ids = $this->jmapMessageIds($_uid)) === null || count($ids) !== 1)
+		{
+			return null;
+		}
+		try
+		{
+			$jmap = $this->icServer->jmapClient();
+			$email = $jmap->emailGet($ids[0], ['bodyStructure', 'textBody', 'htmlBody', 'bodyValues'], true);
+			if ($this->jmapHasCalendarPart($email['bodyStructure'] ?? []))
+			{
+				return null;
+			}
+			$textPart = $email['textBody'][0] ?? null;
+			$htmlPart = $email['htmlBody'][0] ?? null;
+			$preferHtml = $_htmlOptions === 'always_display';
+			$chosen = $preferHtml ? ($htmlPart ?? $textPart) : ($textPart ?? $htmlPart);
+			if ($chosen === null)
+			{
+				return null;	// no text/html body at all - let classic handle its special-case output
+			}
+			$isHtml = $chosen === $htmlPart && ($chosen['type'] ?? '') === 'text/html';
+			return [[
+				'body' => $email['bodyValues'][$chosen['partId']]['value'] ?? '',
+				'mimeType' => $isHtml ? 'text/html' : 'text/plain',
+				'charSet' => 'utf-8',
+			]];
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+			return null;
+		}
+	}
+
+	/**
+	 * Detect if a JMAP attachments list contains anything requiring TNEF/winmail.dat unpacking -
+	 * getMessageAttachments()'s classic resolveTNEF logic isn't replicated here, so bail to
+	 * classic whenever one is present rather than silently returning it unpacked.
+	 */
+	private function jmapHasTnefAttachment(array $attachments) : bool
+	{
+		foreach ($attachments as $attachment)
+		{
+			if (($attachment['type'] ?? '') === 'application/ms-tnef' || !strcasecmp($attachment['name'] ?? '', 'winmail.dat'))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * JMAP-native attachment listing for getMessageAttachments() - mirrors
+	 * EGroupware\Mail\Ui\AttachmentJmap::jmapAttachmentsToLegacy()'s existing mapping (Tier 1 work) almost exactly, since
+	 * JMAP's "attachments" property already gives a flat, pre-classified list - no bodyStructure
+	 * walking needed. Bails to classic for: a specific sub-part request, a caller-supplied
+	 * $_structure, $fetchTextCalendar (not implemented here), or any TNEF/winmail.dat attachment
+	 * present (see jmapHasTnefAttachment()).
+	 *
+	 * @return array|null null = not applicable, use the classic path
+	 */
+	private function jmapGetMessageAttachments($_uid, $_partID, $_structure, $fetchEmbeddedImages, $fetchTextCalendar, $resolveTNEF) : ?array
+	{
+		if (!($this->icServer instanceof Mail\Imap\Jmap) || $_structure !== null ||
+			($_partID !== null && $_partID !== '') || $fetchTextCalendar ||
+			($ids = $this->jmapMessageIds($_uid)) === null || count($ids) !== 1)
+		{
+			return null;
+		}
+		try
+		{
+			$jmap = $this->icServer->jmapClient();
+			$attachments = $jmap->emailGet($ids[0], ['attachments'], false)['attachments'] ?? [];
+			if ($resolveTNEF && $this->jmapHasTnefAttachment($attachments))
+			{
+				return null;
+			}
+			$legacy = [];
+			foreach ($attachments as $attachment)
+			{
+				if (!empty($attachment['cid']) && !$fetchEmbeddedImages)
+				{
+					continue;
+				}
+				$name = $attachment['name'] ?: '';
+				if ($name === '')
+				{
+					$ext = MimeMagic::mime2ext($attachment['type'] ?? 'application/octet-stream');
+					$name = (!empty($attachment['cid']) ? trim($attachment['cid'], '<>') :
+						lang('unknown').'_Part'.$attachment['partId']).($ext ? '.'.$ext : '');
+				}
+				$entry = [
+					'uid' => $ids[0],
+					'partID' => $attachment['partId'],
+					'mimeType' => $attachment['type'] ?? 'application/octet-stream',
+					'name' => $name,
+					'size' => $attachment['size'] ?? 0,
+					'disposition' => $attachment['disposition'] ?? null,
+				];
+				if (!empty($attachment['cid']))
+				{
+					$entry['cid'] = $attachment['cid'];
+				}
+				$legacy[] = $entry;
+			}
+			return $legacy;
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+			return null;
+		}
+	}
+
+	/**
+	 * JMAP-native attachment content fetch for getAttachment()'s "array of
+	 * type/charset/filename/attachment" mode (Mail::get_mailcontent()'s actual usage, called once
+	 * per entry from jmapGetMessageAttachments()'s own listing) - object-returning mode
+	 * ($_returnPart=true) and TNEF-decode mode ($_winmail_nr set) both stay classic.
+	 *
+	 * @return array|null null = not applicable, use the classic path
+	 */
+	private function jmapGetAttachment($_uid, $_partID, $_winmail_nr, $_returnPart) : ?array
+	{
+		if (!($this->icServer instanceof Mail\Imap\Jmap) || $_returnPart || $_winmail_nr ||
+			($ids = $this->jmapMessageIds($_uid)) === null || count($ids) !== 1)
+		{
+			return null;
+		}
+		try
+		{
+			$jmap = $this->icServer->jmapClient();
+			$attachments = $jmap->emailGet($ids[0], ['attachments'], false)['attachments'] ?? [];
+			$part = null;
+			foreach ($attachments as $attachment)
+			{
+				if ((string)($attachment['partId'] ?? '') === (string)$_partID)
+				{
+					$part = $attachment;
+					break;
+				}
+			}
+			if ($part === null || empty($part['blobId']))
+			{
+				return null;
+			}
+			$name = $part['name'] ?: '';
+			if ($name === '')
+			{
+				$ext = MimeMagic::mime2ext($part['type'] ?? 'application/octet-stream');
+				$name = (!empty($part['cid']) ? trim($part['cid'], '<>') :
+					lang('unknown').'_Part'.$part['partId']).($ext ? '.'.$ext : '');
+			}
+			$type = $part['type'] ?? 'application/octet-stream';
+			return [
+				'type' => $type,
+				'charset' => $part['charset'] ?? null,
+				'filename' => $name,
+				'attachment' => $jmap->downloadBlob($part['blobId'], $name, $type),
+			];
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+			return null;
+		}
+	}
+
+	/**
+	 * JMAP-native inline-image (cid:) attachment fetch for getAttachmentByCID() - matches JMAP's
+	 * flat Email.attachments listing (which already carries 'cid'/'name'/'type', RFC 8621) using
+	 * the exact same fuzzy cid/name matching (incl. the image-type-only restriction on the cid
+	 * branch - a quirk of the classic bodyStructure-walking method's condition, replicated as-is,
+	 * not "fixed") as the classic method it replaces. A sub-part-scoped request ($_part non-empty -
+	 * used by Mail::get_mailcontent()'s embedded-attachment fallback, reached only when
+	 * getAttachment() itself already bailed) stays classic, same bail rule as every other jmap*
+	 * method here.
+	 *
+	 * @return Horde_Mime_Part|false|null null = not applicable, use classic; false = no match
+	 *  found (matches classic's own not-found contract)
+	 */
+	private function jmapGetAttachmentByCID($_uid, $_cid, $_part, $_stream)
+	{
+		if (!($this->icServer instanceof Mail\Imap\Jmap) || !empty($_part) || empty($_cid) ||
+			($ids = $this->jmapMessageIds($_uid)) === null || count($ids) !== 1)
+		{
+			return null;
+		}
+		try
+		{
+			$jmap = $this->icServer->jmapClient();
+			$attachments = $jmap->emailGet($ids[0], ['attachments'], false)['attachments'] ?? [];
+			$match = null;
+			foreach ($attachments as $attachment)
+			{
+				$cid = $attachment['cid'] ?? '';
+				$name = $attachment['name'] ?? '';
+				$type = $attachment['type'] ?? '';
+				$cidMatch = $cid !== '' && !strncasecmp($type, 'image/', 6) &&
+					(strpos($cid, $_cid) !== false || strpos($_cid, $cid) !== false);
+				$nameMatch = $name !== '' && (strpos($name, $_cid) !== false || strpos($_cid, $name) !== false);
+				if ($cidMatch || $nameMatch)
+				{
+					$match = $attachment;
+					break;
+				}
+			}
+			if ($match === null)
+			{
+				return false;
+			}
+			if (isset($_stream) && empty($match['blobId']))
+			{
+				return null;	// content was requested but JMAP can't supply it - let classic try
+			}
+			$name = $match['name'] ?: '';
+			if ($name === '')
+			{
+				$ext = MimeMagic::mime2ext($match['type'] ?? 'application/octet-stream');
+				$name = (!empty($match['cid']) ? trim($match['cid'], '<>') :
+					lang('unknown').'_Part'.$match['partId']).($ext ? '.'.$ext : '');
+			}
+			$type = $match['type'] ?: 'application/octet-stream';
+			$part = new Horde_Mime_Part();
+			$part->setType($type);
+			$part->setDispositionParameter('filename', $name);
+			$part->setDisposition($match['disposition'] ?: 'inline');
+			if (isset($_stream))
+			{
+				$part->setContents($jmap->downloadBlob($match['blobId'], $name, $type), ['encoding' => '8bit']);
+			}
+			if ($part->getType() === 'application/octet-stream')
+			{
+				$part->setType(MimeMagic::filename2mime($name));
+			}
+			return $part;
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+			return null;
+		}
+	}
+
+	/**
+	 * Explicit opt-in wrapper around getSortedList() for callers that can handle opaque JMAP
+	 * Email.id strings coming back instead of real IMAP UIDs (i.e. callers that only pass the
+	 * result on to getHeaders()'s single-id mode / flagMessages() / deleteMessages(), all of
+	 * which recognize that shape themselves - see jmapMessageIds()).
+	 *
+	 * Deliberately NOT the default behaviour of getSortedList() itself: that method's return
+	 * value already flows into several OTHER call sites (getHeaders()'s own general-listing
+	 * branch, a few mail_ui.inc.php search features, this class's own deleted-message-count
+	 * check) that assume a real numeric UID list and would break silently if fed opaque JMAP
+	 * ids instead - auto-detecting by filter shape alone can't tell those callers apart from a
+	 * caller like tracker_mailhandler::check_mail() that genuinely wants the JMAP-native id.
+	 *
+	 * @see getSortedList() for all parameters
+	 */
+	function jmapAwareSortedList($_folderName, $_sort, &$_reverse, $_filter, &$resultByUid=true, $setSession=true)
+	{
+		if (($jmapResult = $this->jmapSortedList($_folderName, $_sort, $_reverse, $_filter)) !== null)
+		{
+			return $jmapResult;
+		}
+		return $this->getSortedList($_folderName, $_sort, $_reverse, $_filter, $resultByUid, $setSession);
 	}
 
 	/**
@@ -2158,11 +2999,24 @@ class Mail
 		// statusQuery MUST be placed first, as search for subject/mailbody and such is
 		// depending on charset. flagSearch is not BUT messes the charset if called afterwards
 		$statusQueryValid = false;
-		foreach((array)$_criterias['status'] as $k => $criteria) {
+		$statusCriteria = $_criterias['status'] ?? array();
+		if (is_array($statusCriteria) && array_key_exists('keyword', $statusCriteria))
+		{
+			$statusCriteria = array($statusCriteria);
+		}
+		foreach((array)$statusCriteria as $k => $criteria) {
 			$imapStatusFilter = new Horde_Imap_Client_Search_Query();
 			$imapStatusFilter->charset('UTF-8');
-			$criteria = strtoupper($criteria);
-			switch ($criteria) {
+			$statusQueryValid = false;
+			if ($labelSearch = Mail\CustomLabels::labelSearchFromStatus($criteria))
+			{
+				$imapStatusFilter->flag('$'.$labelSearch['keyword'], $labelSearch['set']);
+				$queryValid = $statusQueryValid = true;
+			}
+			else
+			{
+				$criteria = strtoupper($criteria);
+				switch ($criteria) {
 				case 'ANSWERED':
 				case 'DELETED':
 				case 'FLAGGED':
@@ -2171,21 +3025,18 @@ class Mail
 					$imapStatusFilter->flag($criteria, $set=true);
 					$queryValid = $statusQueryValid =true;
 					break;
-				case 'READ':
-					$imapStatusFilter->flag('SEEN', $set=true);
+				// the colored custom flags of mail's app-header flag filter (mail_ui::CUSTOM_FLAGS),
+				// stored as keywords the same way the labels above are
+				case 'CUSTOMFLAG1':
+				case 'CUSTOMFLAG2':
+				case 'CUSTOMFLAG3':
+				case 'CUSTOMFLAG4':
+				case 'CUSTOMFLAG5':
+					$imapStatusFilter->flag('$customflag'.substr($criteria, -1), $set=true);
 					$queryValid = $statusQueryValid =true;
 					break;
-				case 'LABEL1':
-				case 'KEYWORD1':
-				case 'LABEL2':
-				case 'KEYWORD2':
-				case 'LABEL3':
-				case 'KEYWORD3':
-				case 'LABEL4':
-				case 'KEYWORD4':
-				case 'LABEL5':
-				case 'KEYWORD5':
-					$imapStatusFilter->flag(str_ireplace('KEYWORD','$LABEL',$criteria), $set=true);
+				case 'READ':
+					$imapStatusFilter->flag('SEEN', $set=true);
 					$queryValid = $statusQueryValid =true;
 					break;
 				case 'NEW':
@@ -2218,21 +3069,9 @@ class Mail
 					$imapStatusFilter->flag('SEEN', $set=false);
 					$queryValid = $statusQueryValid =true;
 					break;
-				case 'UNLABEL1':
-				case 'UNKEYWORD1':
-				case 'UNLABEL2':
-				case 'UNKEYWORD2':
-				case 'UNLABEL3':
-				case 'UNKEYWORD3':
-				case 'UNLABEL4':
-				case 'UNKEYWORD4':
-				case 'UNLABEL5':
-				case 'UNKEYWORD5':
-					$imapStatusFilter->flag(str_ireplace(array('UNKEYWORD','UNLABEL'),'$LABEL',$criteria), $set=false);
-					$queryValid = $statusQueryValid =true;
-					break;
 				default:
 					$statusQueryValid = false;
+				}
 			}
 			if ($statusQueryValid)
 			{
@@ -2507,75 +3346,6 @@ class Mail
 	}
 
 	/**
-	 * decode header (or envelope information)
-	 * if array given, note that only values will be converted
-	 * @param  mixed $_string input to be converted, if array call decode_header recursively on each value
-	 * @param  boolean|string $_tryIDNConversion (true/false AND 'FORCE'): try IDN Conversion on domainparts of emailADRESSES
-	 * @return mixed - based on the input type
-	 */
-	static function decode_header($_string, $_tryIDNConversion=false)
-	{
-		if (is_array($_string))
-		{
-			foreach($_string as $k=>$v)
-			{
-				$_string[$k] = self::decode_header($v, $_tryIDNConversion);
-			}
-			return $_string;
-		}
-		else
-		{
-			$_string = Mail\Html::decodeMailHeader($_string,self::$displayCharset);
-			$test = @json_encode($_string);
-			//error_log(__METHOD__.__LINE__.' ->'.strlen($singleBodyPart['body']).' Error:'.json_last_error().'<- BodyPart:#'.$test.'#');
-			if (($test=="null" || $test === false || !isset($test)) && strlen($_string)>0)
-			{
-				// try to fix broken utf8
-				$x = utf8_encode($_string);
-				$test = @json_encode($x);
-				if (($test=="null" || $test === false || !isset($test)) && strlen($_string)>0)
-				{
-					// this should not be needed, unless something fails with charset detection/ wrong charset passed
-					$_string = (function_exists('mb_convert_encoding')?mb_convert_encoding($_string,'UTF-8','UTF-8'):(function_exists('iconv')?@iconv("UTF-8","UTF-8//IGNORE",$_string):$_string));
-				}
-				else
-				{
-					$_string = $x;
-				}
-			}
-
-			if ($_tryIDNConversion===true && stripos($_string,'@')!==false)
-			{
-				$rfcAddr = self::parseAddressList($_string);
-				$stringA = array();
-				foreach ($rfcAddr as $_rfcAddr)
-				{
-					if (!$_rfcAddr->valid)
-					{
-						$stringA = array();
-						break; // skip idna conversion if we encounter an error here
-					}
-					try {
-						$stringA[] = imap_rfc822_write_address($_rfcAddr->mailbox,Horde_Idna::decode($_rfcAddr->host),$_rfcAddr->personal);
-					}
-					// if Idna conversation fails, leave address unchanged
-					catch(\Exception $e) {
-						unset($e);
-						$stringA[] = imap_rfc822_write_address($_rfcAddr->mailbox, $_rfcAddr->host, $_rfcAddr->personal);
-					}
-				}
-				if (!empty($stringA)) $_string = implode(',',$stringA);
-			}
-			if ($_tryIDNConversion==='FORCE')
-			{
-				//error_log(__METHOD__.' ('.__LINE__.') '.'->'.$_string.'='.Horde_Idna::decode($_string));
-				$_string = Horde_Idna::decode($_string);
-			}
-			return $_string;
-		}
-	}
-
-	/**
 	 * decode subject
 	 * if array given, note that only values will be converted
 	 * @param  mixed $_string input to be converted, if array call decode_header recursively on each value
@@ -2584,52 +3354,7 @@ class Mail
 	 */
 	function decode_subject($_string,$decode=true)
 	{
-		#$string = $_string;
-		if($_string=='NIL')
-		{
-			return 'No Subject';
-		}
-		if ($decode) $_string = self::decode_header($_string);
-		// make sure its utf-8
-		$test = @json_encode($_string);
-		if (($test=="null" || $test === false || !isset($test)) && strlen($_string)>0)
-		{
-			$_string = utf8_encode($_string);
-		}
-		return $_string;
-
-	}
-
-	/**
-	 * decodeEntityFolderName - remove html entities
-	 * @param string _folderName the foldername
-	 * @return string the converted string
-	 */
-	function decodeEntityFolderName($_folderName)
-	{
-		return html_entity_decode($_folderName, ENT_QUOTES, self::$displayCharset);
-	}
-
-	/**
-	 * convert a mailboxname from utf7-imap to displaycharset
-	 *
-	 * @param string _folderName the foldername
-	 * @return string the converted string
-	 */
-	function encodeFolderName($_folderName)
-	{
-		return Translation::convert($_folderName, 'UTF7-IMAP', self::$displayCharset);
-	}
-
-	/**
-	 * convert the foldername from display charset to UTF-7
-	 *
-	 * @param string _parent the parent foldername
-	 * @return ISO-8859-1 / UTF7-IMAP encoded string
-	 */
-	function _encodeFolderName($_folderName) {
-		return Translation::convert($_folderName, self::$displayCharset, 'ISO-8859-1');
-		#return Translation::convert($_folderName, self::$displayCharset, 'UTF7-IMAP');
+		return Mail\AddressList::decode_subject($_string, $decode);
 	}
 
 	/**
@@ -2644,8 +3369,8 @@ class Mail
 	function createFolder($_parent, $_folderName, &$_error)
 	{
 		if (self::$debug) error_log(__METHOD__.' ('.__LINE__.') '."->"."$_parent, $_folderName called from:".function_backtrace());
-		$parent		= $_parent;//$this->_encodeFolderName($_parent);
-		$folderName	= $_folderName;//$this->_encodeFolderName($_folderName);
+		$parent		= $_parent;
+		$folderName	= $_folderName;
 
 		if(empty($parent)) {
 			$newFolderName = $folderName;
@@ -2701,9 +3426,9 @@ class Mail
 	 */
 	function renameFolder($_oldFolderName, $_parent, $_folderName)
 	{
-		$oldFolderName	= $_oldFolderName;//$this->_encodeFolderName($_oldFolderName);
-		$parent		= $_parent;//$this->_encodeFolderName($_parent);
-		$folderName	= $_folderName;//$this->_encodeFolderName($_folderName);
+		$oldFolderName	= $_oldFolderName;
+		$parent		= $_parent;
+		$folderName	= $_folderName;
 
 		if(empty($parent)) {
 			$newFolderName = $folderName;
@@ -2737,7 +3462,6 @@ class Mail
 	 */
 	function deleteFolder($_folderName)
 	{
-		//$folderName = $this->_encodeFolderName($_folderName);
 		try
 		{
 			$this->icServer->subscribeMailbox($_folderName,false);
@@ -2751,20 +3475,6 @@ class Mail
 		Cache::setCache(Cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($GLOBALS['egw_info']['user']['account_id']),null,60*60*5);
 
 		return true;
-	}
-
-	/**
-	 * fetchUnSubscribedFolders: get unsubscribed IMAP folder list
-	 *
-	 * returns an array of unsubscribed IMAP folder names.
-	 *
-	 * @return array with folder names. eg.: 1 => INBOX/TEST
-	 */
-	function fetchUnSubscribedFolders()
-	{
-		$unSubscribedMailboxes = $this->icServer->listUnSubscribedMailboxes();
-		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($unSubscribedMailboxes));
-		return $unSubscribedMailboxes;
 	}
 
 	/**
@@ -2865,7 +3575,17 @@ class Mail
 								$subscribedMailboxes = $this->icServer->listSubscribedMailboxes($singleNameSpace['prefix'],0,true);
 							}
 						}
-						catch(Exception $e)
+						// was catch(Exception $e) - EGroupware\Api\Exception in this namespace, which
+						// never actually caught a real IMAP failure: listSubscribedMailboxes() falls
+						// through to Horde_Imap_Client_Socket's raw LIST/LSUB command (unguarded on
+						// Imap\Jmap/Stalwart - see project_jmap_imap_fallthrough_cleanup), throwing the
+						// global-namespace Horde_Imap_Client_Exception, not an instance of THIS
+						// namespace's Exception class - so the intended "skip this namespace" fail-soft
+						// never actually fired for a JMAP account (found live 2026-09-08 via
+						// Compose::ajax_searchFolder() on a Stalwart account). Same root cause already
+						// documented+fixed once in this file (see importMessageToMergeAndSend()'s own
+						// catch(\Throwable $e) comment).
+						catch(\Throwable $e)
 						{
 							continue;
 						}
@@ -3028,7 +3748,7 @@ class Mail
 						$folderObject->shortDisplayName = $shortName;
 					}
 					//$folderName = $folderName;
-					if (in_array($shortName,self::$autoFolders)&&self::searchValueInFolderObjects($shortName,$autoFolderObjects)===false) {
+					if (in_array($shortName,self::$autoFolders)&&Mail\FolderHelpers::searchValueInFolderObjects($shortName,$autoFolderObjects)===false) {
 						$autoFolderObjects[$folderName] = $folderObject;
 					} else {
 						$folders[$folderName] = $folderObject;
@@ -3043,7 +3763,11 @@ class Mail
 			}
 		}
 		if (is_array($autoFolderObjects) && !empty($autoFolderObjects)) {
-			uasort($autoFolderObjects,array($this,"sortByAutoFolderPos"));
+			uasort($autoFolderObjects, function($a, $b) {
+				$pos1 = array_search(trim($a->shortFolderName), self::$autoFolders);
+				$pos2 = array_search(trim($b->shortFolderName), self::$autoFolders);
+				return $pos1 == $pos2 ? 0 : ($pos1 < $pos2 ? -1 : 1);
+			});
 		}
 		// check if some standard folders are missing and need to be created
 		if (count($autofolder_exists) < count(self::$autoFolders) && $this->check_create_autofolders($autofolder_exists))
@@ -3051,7 +3775,7 @@ class Mail
 			// if new folders have been created, re-read folders ignoring the cache
 			return $this->getFolderObjects($_subscribedOnly, $_getCounters, $_alwaysGetDefaultFolders, false);	// false = do NOT use cache
 		}
-		if (is_array($folders)) uasort($folders,array($this,"sortByDisplayName"));
+		if (is_array($folders)) uasort($folders, fn($a, $b) => strcasecmp($a->displayName, $b->displayName));
 		//$folders2return = array_merge($autoFolderObjects,$folders);
 		//_debug_array($folders2return); #exit;
 		$folders2return[$this->icServer->ImapServerId] = array_merge((array)$inboxFolderObject,(array)$autoFolderObjects,(array)$folders);
@@ -3065,366 +3789,6 @@ class Mail
 		Cache::setCache(Cache::INSTANCE,'email','folderBasicInfo'.trim($GLOBALS['egw_info']['user']['account_id']),$folderBasicInfo,$expiration=60*60*1);
 		if (self::$debugTimes) self::logRunTimes($starttime,null,function_backtrace(),__METHOD__.' ('.__LINE__.') ');
 		return $folders2return[$this->icServer->ImapServerId];
-	}
-
-	/**
-	 * Get IMAP folders for a mailbox
-	 *
-	 * @param string $_nodePath = null folder name to fetch from IMAP,
-	 *			null means all folders
-	 * @param boolean $_onlyTopLevel if set to true only top level objects
-	 *			will be return and nodePath would be ignored
-	 * @param int $_search = 2 search restriction in given mailbox
-	 *	0:All folders recursively from the $_nodePath
-	 *  1:Only folder of specified $_nodePath
-	 *	2:All folders of $_nodePath in the same heirachy level
-	 *
-	 * @param boolean $_subscribedOnly = false Command to fetch only the subscribed folders
-	 * @param boolean $_getCounter = false Command to fetch mailbox counter
-	 *
-	 * @return array arrays of folders
-	 */
-	function getFolderArrays ($_nodePath = null, $_onlyTopLevel = false, $_search= 2, $_subscribedOnly = false, $_getCounter = false)
-	{
-		// delimiter
-		$delimiter = $this->getHierarchyDelimiter();
-
-		$folders = $nameSpace =  array();
-		$nameSpaceTmp = $this->_getNameSpaces();
-		foreach($nameSpaceTmp as $k => $singleNameSpace) {
-			$nameSpace[$singleNameSpace['type']]=$singleNameSpace;
-		}
-		unset($nameSpaceTmp);
-
-		//error_log(__METHOD__.__LINE__.array2string($nameSpace));
-		// Get special use folders
-		if (!isset(self::$specialUseFolders)) $this->getSpecialUseFolders (); // Set self::$specialUseFolders
-		// topLevelQueries generally ignore the $_search param. Except for Config::examineNamespace
-		if ($_onlyTopLevel) // top level leaves
-		{
-			// Get top mailboxes of icServer
-			$topFolders = $this->icServer->getMailboxes("", 2, true);
-			// Trigger examination of namespace to retrieve
-			// folders located in other and shared; needed only for some servers
-			if (!isset(self::$mailConfig)) self::$mailConfig = Config::read('mail');
-			if (!empty(self::$mailConfig['examineNamespace']))
-			{
-				$prefixes=array();
-				if (is_array($nameSpace))
-				{
-					foreach($nameSpace as $k => $singleNameSpace) {
-						$type = $singleNameSpace['type'];
-
-						if(is_array($singleNameSpace) && $singleNameSpace['prefix']){
-							$prefixes[$type] = $singleNameSpace['prefix'];
-							//regard extra care for nameSpacequeries when configured AND respect $_search
-							$result = $this->icServer->getMailboxes($singleNameSpace['prefix'], $_search==0?0:2, true);
-							if (is_array($result))
-							{
-								ksort($result);
-								$topFolders = array_merge($topFolders,$result);
-							}
-						}
-					}
-				}
-			}
-
-			$autofolders = array();
-
-			foreach(self::$specialUseFolders as $path => $folder)
-			{
-				if ($this->folderExists($path))
-				{
-					$autofolders[$folder] = $folder;
-				}
-			}
-			// Check if the special use folders are there, otherwise try to create them
-			if (count($autofolders) < count(self::$autoFolders) && $this->check_create_autofolders ($autofolders))
-			{
-				return $this->getFolderArrays ($_nodePath, $_onlyTopLevel, $_search, $_subscribedOnly, $_getCounter);
-			}
-
-			// now process topFolders for next level
-			foreach ($topFolders as &$node)
-			{
-				$pattern = "/\\".$delimiter."/";
-				$reference = preg_replace($pattern, '', $node['MAILBOX']);
-				if(!empty($prefixes))
-				{
-					$reference = '';
-					$tmpArray = explode($delimiter,$node['MAILBOX']);
-					foreach($tmpArray as $p)
-					{
-						$reference = empty($reference)?$p:$reference.$delimiter.$p;
-					}
-				}
-
-				if ($_subscribedOnly)
-				{
-					$mainFolder = $this->icServer->listSubscribedMailboxes($reference, 1, true);
-				}
-				else
-				{
-					$mainFolder = $this->icServer->getMailboxes($reference, 1, true);
-				}
-
-				// as we need/want to show unsubscribed folders with subscribed children, we always have to look at all subfolders
-				$subFolders = $this->icServer->getMailboxes($node['MAILBOX'].$node['delimiter'], $_search, true);
-				// and throw away the unsubscribed ones without (subscribed) children
-				if ($_subscribedOnly && $subFolders)
-				{
-					foreach ($subFolders as $path => $folder)
-					{
-						// check if the unsubscribed folder has subscribed children
-						if (!$folder['SUBSCRIBED'])
-						{
-							$child = null;
-							if (in_array('\\haschildren', array_map('strtolower', $folder['ATTRIBUTES'])))
-							{
-								foreach ($this->icServer->listSubscribedMailboxes($folder['MAILBOX'] . $folder['delimiter'], $_search, true) ?? [] as $child)
-								{
-									if ($child['SUBSCRIBED'])
-									{
-										break;
-									}
-								}
-							}
-							if (!($child['SUBSCRIBED'] ?? false))
-							{
-								unset($subFolders[$path]);
-							}
-						}
-					}
-				}
-
-				if (isset($mainFolder['INBOX']) && is_array($mainFolder['INBOX']))
-				{
-					// Array container of auto folders
-					$aFolders = array();
-
-					// Array container of non auto folders
-					$nFolders = array();
-
-					foreach ((array)$subFolders as $path => $folder)
-					{
-						$folderInfo = self::pathToFolderData($folder['MAILBOX'], $folder['delimiter']);
-						if (in_array(trim($folderInfo['name']), $autofolders) || in_array(trim($folderInfo['name']), self::$autoFolders))
-						{
-							$aFolders [$path] = $folder;
-						}
-						else
-						{
-							$nFolders [$path] = $folder;
-						}
-					}
-					if (is_array($aFolders)) uasort ($aFolders, array($this,'sortByAutofolder'));
-					//ksort($aFolders);
-
-					// Sort none auto folders base on mailbox name
-					uasort($nFolders,array($this,'sortByMailbox'));
-
-					$subFolders = array_merge($aFolders,$nFolders);
-				}
-				else
-				{
-					if (is_array($subFolders)) ksort($subFolders);
-				}
-				$folders = array_merge($folders,(array)$mainFolder, (array)$subFolders);
-			}
-		}
-		elseif ($_nodePath) // single node
-		{
-			switch ($_search)
-			{
-				// Including children
-				case 0:
-				case 2:
-					$path = $_nodePath.''.$delimiter;
-					break;
-				// Node itself
-				// shouldn't contain next level delimiter
-				case 1:
-					$path = $_nodePath;
-					break;
-			}
-			if ($_subscribedOnly)
-			{
-				$folders = $this->icServer->listSubscribedMailboxes($path, $_search, true);
-			}
-			else
-			{
-				$folders = $this->icServer->getMailboxes($path, $_search, true);
-			}
-
-			if (is_array($folders)) uasort($folders, array($this,'sortByMailbox'));
-		}
-		elseif(!$_nodePath) // all
-		{
-			if ($_subscribedOnly)
-			{
-				$folders = $this->icServer->listSubscribedMailboxes('', 0, true);
-			}
-			else
-			{
-				$folders = $this->icServer->getMailboxes('', 0, true);
-			}
-		}
-		// only sort (autofolders, shared, others ...) when retrieving all folders or toplevelquery
-		if ($_onlyTopLevel || !$_nodePath)
-		{
-			// SORTING FOLDERS
-			//self::$debugTimes=true;
-			if (self::$debugTimes) $starttime = microtime (true);
-			// Merge of all auto folders and specialusefolders
-			$autoFoldersTmp = array_unique((array_merge(self::$autoFolders, array_values(self::$specialUseFolders))));
-			if (is_array($folders)) uasort($folders,array($this,'sortByMailbox'));//ksort($folders);
-			$tmpFolders = $folders;
-			$inboxFolderObject=$inboxSubFolderObjects=$autoFolderObjects=$typeFolderObject=$mySpecialUseFolders=array();
-			$googleMailFolderObject=$googleAutoFolderObjects=$googleSubFolderObjects=array();
-			$isGoogleMail=false;
-			foreach($autoFoldersTmp as $afk=>$aF)
-			{
-				if (!isset($mySpecialUseFolders[$aF]) && $aF) $mySpecialUseFolders[$aF]=$this->getFolderByType($aF,false);
-				//error_log($afk.':'.$aF.'->'.$mySpecialUseFolders[$aF]);
-			}
-			//error_log(array2string($mySpecialUseFolders));
-			foreach ($tmpFolders as $k => $f) {
-				$sorted=false;
-				if (strtoupper(substr($k,0,5))=='INBOX') {
-					if (strtoupper($k)=='INBOX') {
-						//error_log(__METHOD__.__LINE__.':'.strtoupper(substr($k,0,5)).':'.$k);
-						$inboxFolderObject[$k]=$f;
-						unset($folders[$k]);
-						$sorted=true;
-					} else {
-						$isAutoFolder=false;
-						foreach($autoFoldersTmp as $afk=>$aF)
-						{
-							//error_log(__METHOD__.__LINE__.$k.':'.$aF.'->'.$mySpecialUseFolders[$aF]);
-							if($aF && strlen($mySpecialUseFolders[$aF])&&/*strlen($k)>=strlen($mySpecialUseFolders[$aF])&&*/
-								($mySpecialUseFolders[$aF]==$k || substr($k,0,strlen($mySpecialUseFolders[$aF].$delimiter))==$mySpecialUseFolders[$aF].$delimiter || //k may be child of an autofolder
-								stristr($mySpecialUseFolders[$aF],$k.$delimiter)!==false)) // k is parent of an autofolder
-							{
-								//error_log(__METHOD__.__LINE__.$k.'->'.$mySpecialUseFolders[$aF]);
-								$isAutoFolder=true;
-								$autoFolderObjects[$k]=$f;
-								break;
-							}
-						}
-						if ($isAutoFolder==false) $inboxSubFolderObjects[$k]=$f;
-						unset($folders[$k]);
-						$sorted=true;
-					}
-				} elseif (strtoupper(substr($k,0,13))=='[GOOGLE MAIL]') {
-					$isGoogleMail=true;
-					if (strtoupper($k)=='[GOOGLE MAIL]') {
-						$googleMailFolderObject[$k]=$f;
-						unset($folders[$k]);
-						$sorted=true;
-					} else {
-						$isAutoFolder=false;
-						foreach($autoFoldersTmp as $afk=>$aF)
-						{
-							//error_log($k.':'.$aF.'->'.$mySpecialUseFolders[$aF]);
-							if($aF && strlen($mySpecialUseFolders[$aF])&&/*strlen($k)>=strlen($mySpecialUseFolders[$aF])&&*/
-								($mySpecialUseFolders[$aF]==$k || substr($k,0,strlen($mySpecialUseFolders[$aF].$delimiter))==$mySpecialUseFolders[$aF].$delimiter|| //k may be child of an autofolder
-								stristr($mySpecialUseFolders[$aF],$k.$delimiter)!==false)) // k is parent of an autofolder
-							{
-								//error_log($k.'->'.$mySpecialUseFolders[$aF]);
-								$isAutoFolder=true;
-								$googleAutoFolderObjects[$k]=$f;
-								break;
-							}
-						}
-						if ($isAutoFolder==false) $googleSubFolderObjects[$k]=$f;
-						unset($folders[$k]);
-						$sorted=true;
-					}
-				} else {
-					$isAutoFolder=false;
-					foreach($autoFoldersTmp as $afk=>$aF)
-					{
-						//error_log($k.':'.$aF.'->'.$mySpecialUseFolders[$aF]);
-						if($aF && strlen($mySpecialUseFolders[$aF])&&/*strlen($k)>=strlen($mySpecialUseFolders[$aF])&&*/
-								($mySpecialUseFolders[$aF]==$k || substr($k,0,strlen($mySpecialUseFolders[$aF].$delimiter))==$mySpecialUseFolders[$aF].$delimiter|| //k may be child of an autofolder
-								stristr($mySpecialUseFolders[$aF],$k.$delimiter)!==false)) // k is parent of an autofolder
-						{
-							//error_log($k.'->'.$mySpecialUseFolders[$aF]);
-							$isAutoFolder=true;
-							$autoFolderObjects[$k]=$f;
-							unset($folders[$k]);
-							$sorted=true;
-							break;
-						}
-					}
-				}
-
-				if ($sorted==false)
-				{
-					foreach(array('others','shared') as $type)
-					{
-						if (!empty($nameSpace[$type]['prefix_present']) && !empty($nameSpace[$type]['prefix']))
-						{
-							if (substr($k,0,strlen($nameSpace[$type]['prefix']))==$nameSpace[$type]['prefix']||
-								substr($k,0,strlen($nameSpace[$type]['prefix'])-strlen($nameSpace[$type]['delimiter']))==substr($nameSpace[$type]['prefix'],0,strlen($nameSpace[$type]['delimiter'])*-1)) {
-								//error_log(__METHOD__.__LINE__.':'.substr($k,0,strlen($nameSpace[$type]['prefix'])).':'.$k);
-								$typeFolderObject[$type][$k]=$f;
-								unset($folders[$k]);
-							}
-						}
-					}
-				}
-			}
-			//error_log(__METHOD__.__LINE__.array2string($autoFolderObjects));
-			// avoid calling sortByAutoFolder as it is not regarding subfolders
-			$autoFolderObjectsTmp = $autoFolderObjects;
-			$autoFolderObjects = [];
-			uasort($autoFolderObjectsTmp, array($this,'sortByMailbox'));
-			foreach($autoFoldersTmp as $afk=>$aF)
-			{
-				foreach($autoFolderObjectsTmp as $k => $f)
-				{
-					if($aF && ($mySpecialUseFolders[$aF]==$k ||
-						substr($k,0,strlen($mySpecialUseFolders[$aF].$delimiter))==$mySpecialUseFolders[$aF].$delimiter ||
-						stristr($mySpecialUseFolders[$aF],$k.$delimiter)!==false))
-					{
-						$autoFolderObjects[$k]=$f;
-					}
-				}
-			}
-			//error_log(__METHOD__.__LINE__.array2string($autoFolderObjects));
-			if (!$isGoogleMail) {
-				$folders = array_merge($inboxFolderObject,$autoFolderObjects,(array)$inboxSubFolderObjects,(array)$folders,(array)($typeFolderObject['others'] ?? []),(array)($typeFolderObject['shared'] ?? []));
-			} else {
-				// avoid calling sortByAutoFolder as it is not regarding subfolders
-				$gAutoFolderObjectsTmp = $googleAutoFolderObjects;
-				unset($googleAutoFolderObjects);
-				uasort($gAutoFolderObjectsTmp, array($this,'sortByMailbox'));
-				foreach($autoFoldersTmp as $afk=>$aF)
-				{
-					foreach($gAutoFolderObjectsTmp as $k => $f)
-					{
-						if($aF && ($mySpecialUseFolders[$aF]==$k || substr($k,0,strlen($mySpecialUseFolders[$aF].$delimiter))==$mySpecialUseFolders[$aF].$delimiter))
-						{
-							$googleAutoFolderObjects[$k]=$f;
-						}
-					}
-				}
-				$folders = array_merge($inboxFolderObject,$autoFolderObjects,(array)$folders,(array)$googleMailFolderObject,$googleAutoFolderObjects,$googleSubFolderObjects,(array)$typeFolderObject['others'],(array)$typeFolderObject['shared']);
-			}
-			if (self::$debugTimes) self::logRunTimes($starttime,null,function_backtrace(),__METHOD__.' ('.__LINE__.') Sorting:');
-			//self::$debugTimes=false;
-		}
-		// Get counter information and add them to each fetched folders array
-		// TODO:  do not fetch counters for user .... as in shared / others
-		if ($_getCounter)
-		{
-			foreach ($folders as &$folder)
-			{
-				$folder['counter'] = $this->icServer->getMailboxCounters($folder['MAILBOX']);
-			}
-		}
-		return $folders;
 	}
 
 
@@ -3447,110 +3811,6 @@ class Mail
 			}
 		}
 		return $num_created;
-	}
-
-	/**
-	 * search Value In FolderObjects
-	 *
-	 * Helper function to search for a specific value within the foldertree objects
-	 * @param string $needle
-	 * @param array $haystack array of folderobjects
-	 * @return MIXED false or key
-	 */
-	static function searchValueInFolderObjects($needle, $haystack)
-	{
-		$rv = false;
-		foreach ($haystack as $k => $v)
-		{
-			foreach($v as &$sv) {if (trim($sv)==trim($needle)) return $k;}
-		}
-		return $rv;
-	}
-
-	/**
-	 * sortByMailbox
-	 *
-	 * Helper function to sort folders array by mailbox
-	 * @param array $a
-	 * @param array $b array of folders
-	 * @return int expect values (0, 1 or -1)
-	 */
-	function sortByMailbox($a,$b)
-	{
-		return strcasecmp($a['MAILBOX'],$b['MAILBOX']);
-	}
-
-	/**
-	 * Get folder data from path
-	 *
-	 * @param string $_path a node path
-	 * @param string $_hDelimiter hierarchy delimiter
-	 * @return array returns an array of data extracted from given node path
-	 */
-	static function pathToFolderData ($_path, $_hDelimiter)
-	{
-		if (!strpos($_path, self::DELIMITER)) $_path = self::DELIMITER.$_path;
-		list(,$path) = explode(self::DELIMITER, $_path);
-		$path_chain = $parts = explode($_hDelimiter, $path);
-		$name = array_pop($parts);
-		return array (
-			'name' => $name,
-			'mailbox' => $path,
-			'parent' => implode($_hDelimiter, $parts),
-			'text' => $name,
-			'tooltip' => $name,
-			'path' => $path_chain
-		);
-	}
-
-	/**
-	 * sortByAutoFolder
-	 *
-	 * Helper function to sort folder-objects by auto Folder Position
-	 * @param array $_a
-	 * @param array $_b
-	 * @return int expect values (0, 1 or -1)
-	 */
-	function sortByAutoFolder($_a, $_b)
-	{
-		// 0, 1 und -1
-		$a = self::pathToFolderData($_a['MAILBOX'], $_a['delimiter']);
-		$b = self::pathToFolderData($_b['MAILBOX'], $_b['delimiter']);
-		$pos1 = array_search(trim($a['name']),self::$autoFolders);
-		$pos2 = array_search(trim($b['name']),self::$autoFolders);
-		if ($pos1 == $pos2) return 0;
-		return ($pos1 < $pos2) ? -1 : 1;
-	}
-
-	/**
-	 * sortByDisplayName
-	 *
-	 * Helper function to sort folder-objects by displayname
-	 * @param object $a
-	 * @param object $b array of folderobjects
-	 * @return int expect values (0, 1 or -1)
-	 */
-	function sortByDisplayName($a,$b)
-	{
-		// 0, 1 und -1
-		return strcasecmp($a->displayName,$b->displayName);
-	}
-
-	/**
-	 * sortByAutoFolderPos
-	 *
-	 * Helper function to sort folder-objects by auto Folder Position
-	 * @param object $a
-	 * @param object $b array of folderobjects
-	 * @return int expect values (0, 1 or -1)
-	 */
-	function sortByAutoFolderPos($a,$b)
-	{
-		// 0, 1 und -1
-		$pos1 = array_search(trim($a->shortFolderName),self::$autoFolders);
-		$pos2 = array_search(trim($b->shortFolderName),self::$autoFolders);
-		if ($pos1 == $pos2) return 0;
-		return ($pos1 < $pos2) ? -1 : 1;
 	}
 
 	/**
@@ -3685,6 +3945,22 @@ class Mail
 			// we know that outbox is not supported, but we use this here, as we autocreate expected SpecialUseFolders in this function
 			if ($_type != 'Outbox') error_log(__METHOD__.' ('.__LINE__.') '.' Failed to retrieve Folder for '.array2string($types[$_type]).":".$e->getMessage());
 			$_folderName = false;
+		}
+		// JMAP-FALLTHROUGH-GUARD (see [[project_jmap_imap_fallthrough_cleanup]]):
+		// the existence-check/auto-create logic below calls folderExists()/createFolder(), which
+		// (like openConnection() above) fall through to Horde_Imap_Client_Socket methods neither
+		// Imap\Jmap nor Imap\Stalwart override - for a JMAP account these attempt a REAL raw IMAP
+		// login against acc_imap_host:acc_imap_port, which for Stalwart is configured as the
+		// JMAP(S) endpoint (eg. :443), not the IMAP one (eg. :993) - Stalwart\login() unconditionally
+		// tries a real IMAP XOAUTH2 login there (it's designed for accounts where acc_imap_port
+		// genuinely is the IMAP port, which a pure-JMAP wizard-created account's isn't), hanging or
+		// getting back a "400 Bad Request" from nginx (found live 2026-08-24 via a debug_backtrace()
+		// temporarily patched into Horde_Imap_Client_Socket_Connection_Base::_connect()). Special-use
+		// folders are already resolved JMAP-natively at wizard time (admin_mail::jmapMailboxes()),
+		// so the configured name can just be trusted here instead.
+		if ($this->icServer instanceof Mail\Imap\Jmap)
+		{
+			return $_folderName ?: false;
 		}
 		// do not try to autocreate configured Archive-Folder. Return false if configured folder does not exist
 		if ($_type == 'Archive') {
@@ -4092,13 +4368,17 @@ class Mail
 	 *
 	 * @param mixed array/string _messageUID array of ids to flag, or 'all'
 	 * @param string _folder foldername
-	 * @param string _forceDeleteMethod - "no", or deleteMethod like 'move_to_trash',"mark_as_deleted","remove_immediately"
+	 * @param string _forceDeleteMethod - "no", or deleteMethod like 'move_to_trash',"remove_immediately"
 	 *
 	 * @return bool true, as we do not handle return values yet
 	 * @throws Exception
 	 */
 	function deleteMessages($_messageUID, $_folder=NULL, $_forceDeleteMethod='no')
 	{
+		if (($jmapResult = $this->jmapDeleteMessages($_messageUID, $_folder, $_forceDeleteMethod)) !== null)
+		{
+			return $jmapResult;
+		}
 		//error_log(__METHOD__.' ('.__LINE__.') '.'->'.array2string($_messageUID).','.array2string($_folder).', '.$_forceDeleteMethod);
 		$oldMailbox = '';
 		if (empty($_folder) && !empty($this->sessionData['mailbox'])) $_folder = $this->sessionData['mailbox'];
@@ -4118,7 +4398,7 @@ class Mail
 			$uidsToDelete->add($_messageUID);
 		}
 		$deleteOptions = $_forceDeleteMethod; // use forceDeleteMethod if not "no", or unknown method
-		if ($_forceDeleteMethod === 'no' || !in_array($_forceDeleteMethod,array('move_to_trash',"mark_as_deleted","remove_immediately"))) $deleteOptions  = ($this->mailPreferences['deleteOptions']?$this->mailPreferences['deleteOptions']:"mark_as_deleted");
+		if ($_forceDeleteMethod === 'no' || !in_array($_forceDeleteMethod,array('move_to_trash',"remove_immediately"))) $deleteOptions  = ($this->mailPreferences['deleteOptions']?:"move_to_trash");
 		//error_log(__METHOD__.' ('.__LINE__.') '.'->'.array2string($_messageUID).','.$_folder.'/'.$this->sessionData['mailbox'].' Option:'.$deleteOptions);
 		$trashFolder    = $this->getTrashFolder();
 		$draftFolder	= $this->getDraftFolder(); //$GLOBALS['egw_info']['user']['preferences']['mail']['draftFolder'];
@@ -4151,26 +4431,6 @@ class Mail
 				}
 				break;
 
-			case "mark_as_deleted":
-				//error_log(__METHOD__.' ('.__LINE__.') ');
-				// mark messages as deleted
-				if (!isset($_messageUID)) $_messageUID='all';
-				foreach((array)$_messageUID as $key =>$uid)
-				{
-					//flag messages, that are flagged for deletion as seen too
-					$this->flagMessages('read', $uid, $_folder);
-					$flags = $this->getFlags($uid);
-					$this->flagMessages('delete', $uid, $_folder);
-					//error_log(__METHOD__.' ('.__LINE__.') '.array2string($flags));
-					if (strpos( array2string($flags),'Deleted')!==false) $undelete[] = $uid;
-					unset($flags);
-				}
-				foreach((array)$undelete as $key =>$uid)
-				{
-					$this->flagMessages('undelete', $uid, $_folder);
-				}
-				break;
-
 			case "remove_immediately":
 				//error_log(__METHOD__.' ('.__LINE__.') ');
 				$updateCache = true;
@@ -4200,70 +4460,6 @@ class Mail
 	}
 
 	/**
-	 * get flags for a Message
-	 *
-	 * @param mixed string _messageUID array of id to retrieve the flags for
-	 *
-	 * @return null/array flags
-	 */
-	function getFlags ($_messageUID) {
-		try
-		{
-			$uidsToFetch = new Horde_Imap_Client_Ids();
-			if (!(is_object($_messageUID) || is_array($_messageUID))) $_messageUID = (array)$_messageUID;
-			$uidsToFetch->add($_messageUID);
-			$_folderName = $this->icServer->getCurrentMailbox();
-			$fquery = new Horde_Imap_Client_Fetch_Query();
-			$fquery->flags();
-			$headersNew = $this->icServer->fetch($_folderName, $fquery, array(
-				'ids' => $uidsToFetch,
-			));
-			if (is_object($headersNew)) {
-				foreach($headersNew->ids() as $id) {
-					$_headerObject = $headersNew->get($id);
-					$flags = $_headerObject->getFlags();
-				}
-			}
-		}
-		catch (\Exception $e)
-		{
-			error_log(__METHOD__.' ('.__LINE__.') '."Failed to fetch flags for ".array2string($_messageUID)." Error:".$e->getMessage());
-			return null;
-			//throw new Exception("Failed to fetch flags for ".array2string($_messageUID)" Error:".$e->getMessage());
-		}
-		return $flags;
-	}
-
-	/**
-	 * get and parse the flags response for the Notifyflag for a Message
-	 *
-	 * @param string _messageUID array of id to retrieve the flags for
-	 * @param array flags - to avoid additional server call
-	 *
-	 * @return null/boolean
-	 */
-	function getNotifyFlags ($_messageUID, $flags=null)
-	{
-		if (self::$debug) error_log(__METHOD__.$_messageUID.' Flags:'.array2string($flags));
-		try
-		{
-			if($flags===null) $flags =  $this->getFlags($_messageUID);
-		}
-		catch (\Exception $e)
-		{
-			return null;
-		}
-
-		if ( stripos( array2string($flags),'MDNSent')!==false)
-			return true;
-
-		if ( stripos( array2string($flags),'MDNnotSent')!==false)
-			return false;
-
-		return null;
-	}
-
-	/**
 	 * flag a Message
 	 *
 	 * @param string _flag (readable name)
@@ -4276,10 +4472,26 @@ class Mail
 	 */
 	function flagMessages($_flag, $_messageUID,$_folder=NULL)
 	{
+		if (($jmapResult = $this->jmapFlagMessages($_flag, $_messageUID)) !== null)
+		{
+			return $jmapResult;
+		}
 		//error_log(__METHOD__.' ('.__LINE__.') '.'->' .$_flag." ".array2string($_messageUID).",$_folder /".$this->sessionData['mailbox']);
 		if (empty($_messageUID))
 		{
 			if (self::$debug) error_log(__METHOD__." no messages Message(s): ".implode(',',$_messageUID));
+			return false;
+		}
+		// JMAP-FALLTHROUGH-GUARD (see [[project_jmap_imap_fallthrough_cleanup]]): jmapFlagMessages()
+		// above already handles every JMAP-native id shape - reaching here on a JMAP icServer means
+		// a numeric/classic-style $_messageUID that has no raw IMAP connection to fall back to
+		// either (found live 2026-08-27: openMailbox() raw-socket-connecting to a JMAP(S)-only
+		// endpoint, "Error when communicating with the mail server" - and worse, that failed Horde
+		// connection attempt appears to poison the memoized Account::imapServer() instance for
+		// unrelated LATER calls too, e.g. mail_compose's own Api\Mail::getInstance() failing right
+		// after). No classic fallback possible here, same as jmapFlagMessages()'s own catch block.
+		if ($this->icServer instanceof Mail\Imap\Jmap)
+		{
 			return false;
 		}
 		$this->icServer->openMailbox($_folder ?: $this->sessionData['mailbox']);
@@ -4333,7 +4545,8 @@ class Mail
 						$this->icServer->store($folder, array('add'=>array('\\Answered'), 'ids'=> $uidsToModify));
 						break;
 					case "unflagged":
-						$this->icServer->store($folder, array('remove'=>array('\\Flagged'), 'ids'=> $uidsToModify));
+						// a colored custom flag implies \Flagged, so clearing it must remove every colored keyword too
+						$this->icServer->store($folder, array('remove'=>array('\\Flagged','$customflag1','$customflag2','$customflag3','$customflag4','$customflag5'), 'ids'=> $uidsToModify));
 						break;
 					case "unread":
 					case "unseen":
@@ -4349,41 +4562,21 @@ class Mail
 					case "labelone":
 						$this->icServer->store($folder, array('add'=>array('$label1'), 'ids'=> $uidsToModify));
 						break;
-					case "unlabel1":
-					case "unlabelone":
-						$this->icServer->store($folder, array('remove'=>array('$label1'), 'ids'=> $uidsToModify));
-						break;
 					case "label2":
 					case "labeltwo":
 						$this->icServer->store($folder, array('add'=>array('$label2'), 'ids'=> $uidsToModify));
-						break;
-					case "unlabel2":
-					case "unlabeltwo":
-						$this->icServer->store($folder, array('remove'=>array('$label2'), 'ids'=> $uidsToModify));
 						break;
 					case "label3":
 					case "labelthree":
 						$this->icServer->store($folder, array('add'=>array('$label3'), 'ids'=> $uidsToModify));
 						break;
-					case "unlabel3":
-					case "unlabelthree":
-						$this->icServer->store($folder, array('remove'=>array('$label3'), 'ids'=> $uidsToModify));
-						break;
 					case "label4":
 					case "labelfour":
 						$this->icServer->store($folder, array('add'=>array('$label4'), 'ids'=> $uidsToModify));
 						break;
-					case "unlabel4":
-					case "unlabelfour":
-						$this->icServer->store($folder, array('remove'=>array('$label4'), 'ids'=> $uidsToModify));
-						break;
 					case "label5":
 					case "labelfive":
 						$this->icServer->store($folder, array('add'=>array('$label5'), 'ids'=> $uidsToModify));
-						break;
-					case "unlabel5":
-					case "unlabelfive":
-						$this->icServer->store($folder, array('remove'=>array('$label5'), 'ids'=> $uidsToModify));
 						break;
 					case "unlabel":
 						$this->icServer->store($folder, array('remove'=>array('$label1'), 'ids'=> $uidsToModify));
@@ -4427,6 +4620,10 @@ class Mail
 	 */
 	function moveMessages($_foldername, $_messageUID, $deleteAfterMove=true, $currentFolder = Null, $returnUIDs = false, $_sourceProfileID = Null, $_targetProfileID = Null)
 	{
+		if (($jmapResult = $this->jmapMoveMessages($_foldername, $_messageUID, $deleteAfterMove, $returnUIDs, $_sourceProfileID, $_targetProfileID)) !== null)
+		{
+			return $jmapResult;
+		}
 		$source = Mail\Account::read(($_sourceProfileID?$_sourceProfileID:$this->icServer->ImapServerId))->imapServer();
 		//$deleteOptions  = $GLOBALS['egw_info']["user"]["preferences"]["mail"]["deleteOptions"];
 		if (empty($_messageUID))
@@ -4588,133 +4785,8 @@ class Mail
 	}
 
 	/**
-	 * htmlentities
-	 * helperfunction to cope with wrong encoding in strings
-	 * @param string $_string  input to be converted
-	 * @param mixed $_charset false or string -> Target charset, if false Mail displayCharset will be used
-	 * @return string
-	 */
-	static function htmlentities($_string, $_charset=false)
-	{
-		//setting the charset (if not given)
-		if ($_charset===false) $_charset = self::$displayCharset;
-		$string = @htmlentities($_string, ENT_QUOTES, $_charset, false);
-		if (empty($string) && !empty($_string)) $string = @htmlentities(Translation::convert($_string,Translation::detect_encoding($_string),$_charset),ENT_QUOTES | ENT_IGNORE,$_charset, false);
-		return $string;
-	}
-
-	/**
-	 * clean a message from elements regarded as potentially harmful
-	 * param string/reference $_html is the text to be processed
-	 * return nothing
-	 */
-	static function getCleanHTML(&$_html)
-	{
-		// remove CRLF and TAB as it is of no use in HTML.
-		// but they matter in <pre>, so we rather don't
-		//$_html = str_replace("\r\n",' ',$_html);
-		//$_html = str_replace("\t",' ',$_html);
-		//error_log(__METHOD__.__LINE__.':'.$_html);
-		//repair doubleencoded ampersands, and some stuff htmLawed stumbles upon with balancing switched on
-		$_html = str_replace(array('&amp;amp;','<DIV><BR></DIV>',"<DIV>&nbsp;</DIV>",'<div>&nbsp;</div>','</td></font>','<br><td>','<tr></tr>','<o:p></o:p>','<o:p>','</o:p>'),
-							 array('&amp;',    '<BR>',           '<BR>',             '<BR>',             '</font></td>','<td>',    '',         '',           '',  ''),$_html);
-		//$_html = str_replace(array('&amp;amp;'),array('&amp;'),$_html);
-		if (stripos($_html,'style')!==false) Mail\Html::replaceTagsCompletley($_html,'style'); // clean out empty or pagewide style definitions / left over tags
-		if (stripos($_html,'head')!==false) Mail\Html::replaceTagsCompletley($_html,'head'); // Strip out stuff in head
-		//if (stripos($_html,'![if')!==false && stripos($_html,'<![endif]>')!==false) Mail\Html::replaceTagsCompletley($_html,'!\[if','<!\[endif\]>',false); // Strip out stuff in ifs
-		//if (stripos($_html,'!--[if')!==false && stripos($_html,'<![endif]-->')!==false) Mail\Html::replaceTagsCompletley($_html,'!--\[if','<!\[endif\]-->',false); // Strip out stuff in ifs
-		//error_log(__METHOD__.' ('.__LINE__.') '.$_html);
-
-		if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() === 1) $_html = stripslashes($_html);
-		// Strip out doctype in head, as htmlLawed cannot handle it TODO: Consider extracting it and adding it afterwards
-		if (stripos($_html,'!doctype')!==false) Mail\Html::replaceTagsCompletley($_html,'!doctype');
-		if (stripos($_html,'?xml:namespace')!==false) Mail\Html::replaceTagsCompletley($_html,'\?xml:namespace','/>',false);
-		if (stripos($_html,'?xml version')!==false) Mail\Html::replaceTagsCompletley($_html,'\?xml version','\?>',false);
-		if (strpos($_html,'!CURSOR')!==false) Mail\Html::replaceTagsCompletley($_html,'!CURSOR');
-		// htmLawed filter only the 'body'
-		//preg_match('`(<htm.+?<body[^>]*>)(.+?)(</body>.*?</html>)`ims', $_html, $matches);
-		//if ($matches[2])
-		//{
-		//	$hasOther = true;
-		//	$_html = $matches[2];
-		//}
-		// purify got switched to htmLawed
-		// some testcode to test purifying / htmlawed
-		//$_html = "<BLOCKQUOTE>hi <div> there </div> kram <br> </blockquote>".$_html;
-		$_html = Html\HtmLawed::purify($_html,self::$htmLawed_config,array(),true);
-		//if ($hasOther) $_html = $matches[1]. $_html. $matches[3];
-		// clean out comments , should not be needed as purify should do the job.
-		$search = array(
-			'@url\(http:\/\/[^\)].*?\)@si',  // url calls e.g. in style definitions
-			'@<!--[\s\S]*?[ \t\n\r]*-->@',         // Strip multi-line comments including CDATA
-		);
-		$_html = preg_replace($search,"",$_html);
-		// remove non printable chars
-		$_html = preg_replace('/([\000-\011])/','',$_html);
-		//error_log(__METHOD__.':'.__LINE__.':'.$_html);
-	}
-
-	/**
 	 * Header and Bodystructure stuff
 	 */
-
-	/**
-	 * getMimePartCharset - fetches the charset mimepart if it exists
-	 * @param $_mimePartObject structure object
-	 * @return mixed mimepart or false if no CHARSET is found, the missing charset has to be handled somewhere else,
-	 *		as we cannot safely assume any charset as we did earlier
-	 */
-	function getMimePartCharset($_mimePartObject)
-	{
-		//$charSet = 'iso-8859-1';//self::$displayCharset; //'iso-8859-1'; // self::displayCharset seems to be asmarter fallback than iso-8859-1
-		$CharsetFound=false;
-		//echo "#".$_mimePartObject->encoding.'#<br>';
-		if(is_array($_mimePartObject->parameters)) {
-			if(isset($_mimePartObject->parameters['CHARSET'])) {
-				$charSet = $_mimePartObject->parameters['CHARSET'];
-				$CharsetFound=true;
-			}
-		}
-		// this one is dirty, but until I find something that does the trick of detecting the encoding, ....
-		//if ($CharsetFound == false && $_mimePartObject->encoding == "QUOTED-PRINTABLE") $charSet = 'iso-8859-1'; //assume quoted-printable to be ISO
-		//if ($CharsetFound == false && $_mimePartObject->encoding == "BASE64") $charSet = 'utf-8'; // assume BASE64 to be UTF8
-		return ($CharsetFound ? $charSet : $CharsetFound);
-	}
-
-	/**
-	 * decodeMimePart - fetches the charset mimepart if it exists
-	 * @param string $_mimeMessage - the message to be decoded
-	 * @param string $_encoding - the encoding used BASE64 and QUOTED-PRINTABLE is supported
-	 * @param string $_charset - not used
-	 * @return string decoded mimePart
-	 */
-	function decodeMimePart($_mimeMessage, $_encoding, $_charset = '')
-	{
-		// decode the part
-		if (self::$debug) error_log(__METHOD__."() with $_encoding and $_charset:".print_r($_mimeMessage,true));
-		switch (strtoupper($_encoding))
-		{
-			case 'BASE64':
-				// use imap_base64 to decode, not any longer, as it is strict, and fails if it encounters invalid chars
-				return base64_decode($_mimeMessage);
-
-			case 'QUOTED-PRINTABLE':
-				// use imap_qprint to decode
-				return quoted_printable_decode($_mimeMessage);
-
-			case 'WEDONTKNOWTHEENCODING':
-				// try base64
-				$r = base64_decode($_mimeMessage);
-				if (json_encode($r))
-				{
-					return $r;
-				}
-				//we do not know the encoding, so we do not decode
-			default:
-				// it is either not encoded or we don't know about it
-				return $_mimeMessage;
-		}
-	}
 
 	/**
 	 * get part of the message, if its stucture is indicating its of multipart alternative style
@@ -5088,9 +5160,6 @@ class Mail
 		}
 		else
 		{
-			// some Servers append PropertyFile___ ; strip that here for display
-			// RB: not sure what this is: preg_replace('/PropertyFile___$/','',$this->decodeMimePart($mimePartBody, $_structure->encoding, $this->getMimePartCharset($_structure))),
-
 			// Should not try to fetch if the content is already there (e.g. Smime encrypted message)
 			try {
 				if (empty($_structure->getContents())) $this->fetchPartContents($_uid, $_structure, $_stream, $_preserveSeen);
@@ -5131,6 +5200,10 @@ class Mail
 	function getMessageBody($_uid, $_htmlOptions='', $_partID=null, ?Horde_Mime_Part $_structure=null, $_preserveSeen = false,
 	                        $_folder = '', &$calendar_part=null, ?bool $output_no_body=true)
 	{
+		if (($jmapResult = $this->jmapGetMessageBody($_uid, $_htmlOptions, $_partID, $_structure)) !== null)
+		{
+			return $jmapResult;
+		}
 		if (self::$debug) echo __METHOD__."$_uid, $_htmlOptions, $_partID<br>";
 		if($_htmlOptions != '') {
 			$this->htmlOptions = $_htmlOptions;
@@ -5143,6 +5216,7 @@ class Mail
 		{
 			$this->sessionData['mailbox'] = $_folder;
 		}
+		$_uid = $this->jmapResolveUid($_uid, $_folder ?: $this->icServer->getCurrentMailbox());
 
 		if (!isset($_structure))
 		{
@@ -5205,7 +5279,7 @@ class Mail
 						$bodyParts = $this->getMultipartRelated($_uid, $_structure, $this->htmlOptions, $_preserveSeen, $calendar_part);
 						break;
 				}
-				return self::normalizeBodyParts($bodyParts);
+				return Mail\BodyDecoding::normalizeBodyParts($bodyParts);
 
 			case 'video':
 			case 'audio': // some servers send audiofiles and imagesfiles directly, without any stuff surround it
@@ -5234,7 +5308,7 @@ class Mail
 				} else {
 					// what if the structure->disposition is attachment ,...
 				}
-				return self::normalizeBodyParts($bodyPart);
+				return Mail\BodyDecoding::normalizeBodyParts($bodyPart);
 
 			case 'attachment':
 			case 'message':
@@ -5243,7 +5317,7 @@ class Mail
 					case 'rfc822':
 						$newStructure = $_structure->getParts();
 						if (self::$debug) {echo __METHOD__." Message -> RFC -> NewStructure:"; _debug_array($newStructure[0]);}
-						return self::normalizeBodyParts($this->getMessageBody($_uid, $_htmlOptions, $newStructure[0]->getMimeId(), $newStructure[0], $_preserveSeen, $_folder));
+						return Mail\BodyDecoding::normalizeBodyParts($this->getMessageBody($_uid, $_htmlOptions, $newStructure[0]->getMimeId(), $newStructure[0], $_preserveSeen, $_folder));
 				}
 				break;
 
@@ -5257,34 +5331,6 @@ class Mail
 					)
 				);
 		}
-	}
-
-	/**
-	 * normalizeBodyParts - function to gather and normalize all body Information
-	 * as we may receive a bodyParts structure from within getMessageBody nested deeper than expected
-	 * so this is used to normalize the output, so we are able to rely on our expectation
-	 * @param _bodyParts - Body Array
-	 * @return array - a normalized Bodyarray
-	 */
-	static function normalizeBodyParts($_bodyParts)
-	{
-		if (is_array($_bodyParts))
-		{
-			foreach($_bodyParts as $singleBodyPart)
-			{
-				if (!isset($singleBodyPart['body'])) {
-					$buff = self::normalizeBodyParts($singleBodyPart);
-					foreach ((array)$buff as $val) { $body2return[] = $val;}
-					continue;
-				}
-				$body2return[] = $singleBodyPart;
-			}
-		}
-		else
-		{
-			$body2return = $_bodyParts;
-		}
-		return $body2return ?? null;
 	}
 
 	/**
@@ -5394,7 +5440,7 @@ class Mail
 					if ($preserveHTML==false) $newBody = Mail\Html::convertHTMLToText($newBody,self::$displayCharset,true,true);
 					//error_log(__METHOD__.' ('.__LINE__.') '.' after convertHTMLToText:'.$newBody);
 					if ($preserveHTML==false) $newBody = nl2br($newBody); // we need this, as htmLawed removes \r\n
-					/*if (!$alreadyHtmlLawed) */ $mailClass->getCleanHTML($newBody); // remove stuff we regard as unwanted
+					Mail\BodyDecoding::getCleanHTML($newBody); // remove stuff we regard as unwanted
 					if ($preserveHTML==false) $newBody = str_replace("<br />","\r\n",$newBody);
 					//error_log(__METHOD__.' ('.__LINE__.') '.' after getClean:'.$newBody);
 				}
@@ -5414,57 +5460,6 @@ class Mail
 		return $message;
 	}
 
-	static function wordwrap($str, $cols, $cut, $dontbreaklinesstartingwith=false)
-	{
-		$lines = explode("\n", $str);
-		$newStr = '';
-		foreach($lines as $line)
-		{
-			// replace tabs by 8 space chars, or any tab only counts one char
-			//$line = str_replace("\t","        ",$line);
-			//$newStr .= wordwrap($line, $cols, $cut);
-			$allowedLength = $cols-strlen($cut);
-			//dont try to break lines with links, chance is we mess up the text is way too big
-			if (strlen($line) > $allowedLength && stripos($line,'href=')===false &&
-				($dontbreaklinesstartingwith==false ||
-				 ($dontbreaklinesstartingwith &&
-				  strlen($dontbreaklinesstartingwith)>=1 &&
-				  substr($line,0,strlen($dontbreaklinesstartingwith)) != $dontbreaklinesstartingwith
-				 )
-				)
-			   )
-			{
-				$s=explode(" ", $line);
-				$line = "";
-				$linecnt = 0;
-				foreach ($s as &$v) {
-					$cnt = strlen($v);
-					// only break long words within the wordboundaries,
-					// but it may destroy links, so we check for href and dont do it if we find one
-					// we check for any html within the word, because we do not want to break html by accident
-					//do not break apart links like https://...
-					if($cnt > $allowedLength && !preg_match('#(https?|www\.)#', $v) &&
-						stripos($v,'href=')===false && stripos($v,'onclick=')===false &&
-						$cnt == strlen(html_entity_decode($v)))
-					{
-						$v=wordwrap($v, $allowedLength, $cut, true);
-					}
-					// the rest should be broken at the start of the new word that exceeds the limit
-					if ($linecnt+$cnt > $allowedLength) {
-						$v=$cut.$v;
-						#$linecnt = 0;
-						$linecnt =strlen($v)-strlen($cut);
-					} else {
-						$linecnt += $cnt;
-					}
-					if (strlen($v)) $line .= (strlen($line) ? " " : "").$v;
-				}
-			}
-			$newStr .= $line . "\n";
-		}
-		return $newStr;
-	}
-
 	/**
 	 * getMessageEnvelope
 	 * get parsed headers from message
@@ -5477,8 +5472,13 @@ class Mail
 	 */
 	function getMessageEnvelope($_uid, $_partID = '',$decode=false, $_folder='', $_useHeaderInsteadOfEnvelope=false)
 	{
+		if (($jmapResult = $this->jmapGetMessageEnvelope($_uid, $_partID, $decode)) !== null)
+		{
+			return $jmapResult;
+		}
 		//error_log(__METHOD__.' ('.__LINE__.') '.":$_uid,$_partID,$decode,$_folder".function_backtrace());
 		if (empty($_folder)) $_folder = $this->sessionData['mailbox'] ?? $this->icServer->getCurrentMailbox();
+		$_uid = $this->jmapResolveUid($_uid, $_folder);
 		//error_log(__METHOD__.' ('.__LINE__.') '.":$_uid,$_partID,$decode,$_folder");
 		if((empty($_partID)||$_partID=='null')&&$_useHeaderInsteadOfEnvelope===false) {
 			$uidsToFetch = new Horde_Imap_Client_Ids();
@@ -5543,7 +5543,7 @@ class Mail
 				foreach ($envelope as $key => $rvV)
 				{
 					//try idn conversion only on 'FROM', 'TO', 'CC', 'BCC', 'SENDER', 'REPLY-TO'
-					$envelope[$key]=self::decode_header($rvV,in_array($key,array('FROM', 'TO', 'CC', 'BCC', 'SENDER', 'REPLY-TO')));
+					$envelope[$key]=Mail\AddressList::decode_header($rvV,in_array($key,array('FROM', 'TO', 'CC', 'BCC', 'SENDER', 'REPLY-TO')));
 				}
 			}
 			return $envelope;
@@ -5555,7 +5555,7 @@ class Mail
 			//_debug_array($headers);
 			$newData = array(
 				'DATE'		=> $headers['DATE'],
-				'SUBJECT'	=> ($decode ? self::decode_header($headers['SUBJECT']):$headers['SUBJECT']),
+				'SUBJECT'	=> ($decode ? Mail\AddressList::decode_header($headers['SUBJECT']):$headers['SUBJECT']),
 				'MESSAGE_ID'	=> $headers['MESSAGE-ID']
 			);
 			if (isset($headers['IN-REPLY-TO'])) $newData['IN-REPLY-TO'] = $headers['IN-REPLY-TO'];
@@ -5568,7 +5568,7 @@ class Mail
 			$recepientList = array('FROM', 'TO', 'CC', 'BCC', 'SENDER', 'REPLY-TO');
 			foreach($recepientList as $recepientType) {
 				if(isset($headers[$recepientType])) {
-					if ($decode) $headers[$recepientType] =  self::decode_header($headers[$recepientType],true);
+					if ($decode) $headers[$recepientType] =  Mail\AddressList::decode_header($headers[$recepientType],true);
 					//error_log(__METHOD__.__LINE__." ".$recepientType."->".array2string($headers[$recepientType]));
 					foreach(self::parseAddressList($headers[$recepientType]) as $singleAddress) {
 						$addressData = array(
@@ -5610,8 +5610,13 @@ class Mail
 	 */
 	function getMessageHeader($_uid, $_partID = '',$decode=false, $preserveUnSeen=false, $_folder='')
 	{
+		if (($jmapResult = $this->jmapGetMessageHeader($_uid, $_partID, $decode)) !== null)
+		{
+			return $jmapResult;
+		}
 		//error_log(__METHOD__.' ('.__LINE__.') '.':'.$_uid.', '.$_partID.', '.$decode.', '.$preserveUnSeen.', '.$_folder);
 		if (empty($_folder)) $_folder = $this->sessionData['mailbox'] ?? $this->icServer->getCurrentMailbox();
+		$_uid = $this->jmapResolveUid($_uid, $_folder);
 		$uidsToFetch = new Horde_Imap_Client_Ids();
 		if (!(is_object($_uid) || is_array($_uid))) $_uid = (array)$_uid;
 		$uidsToFetch->add($_uid);
@@ -5668,13 +5673,12 @@ class Mail
 		{
 			$retValue['SUBJECT'] = $retValue['SUBJECT'][count($retValue['SUBJECT'])-1];
 		}
-		//error_log(__METHOD__.' ('.__LINE__.') '.':'.array2string($decode ? self::decode_header($retValue,true):$retValue));
 		if ($decode)
 		{
 			foreach ($retValue as $key => $rvV)
 			{
 				//try idn conversion only on 'FROM', 'TO', 'CC', 'BCC', 'SENDER', 'REPLY-TO'
-				$retValue[$key]=self::decode_header($rvV,in_array($key,array('FROM', 'TO', 'CC', 'BCC', 'SENDER', 'REPLY-TO')));
+				$retValue[$key]=Mail\AddressList::decode_header($rvV,in_array($key,array('FROM', 'TO', 'CC', 'BCC', 'SENDER', 'REPLY-TO')));
 			}
 		}
 		return $retValue;
@@ -5690,8 +5694,13 @@ class Mail
 	 */
 	function getMessageRawHeader($_uid, $_partID = '', $_folder = '')
 	{
+		if (($jmapResult = $this->jmapGetMessageRawHeader($_uid, $_partID)) !== null)
+		{
+			return $jmapResult;
+		}
 		static $rawHeaders;
 		if (empty($_folder)) $_folder = $this->sessionData['mailbox'] ?? $this->icServer->getCurrentMailbox();
+		$_uid = $this->jmapResolveUid($_uid, $_folder);
 		//error_log(__METHOD__.' ('.__LINE__.') '." Try Using Cache for raw Header $_uid, $_partID in Folder $_folder");
 
 		if (!isset($rawHeaders)||!is_array($rawHeaders)) $rawHeaders = Cache::getCache(Cache::INSTANCE,'email','rawHeadersCache'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),60*60*1);
@@ -5740,75 +5749,6 @@ class Mail
 	}
 
 	/**
-	 * getStyles - extracts the styles from the given bodyparts
-	 * @param array $_bodyParts  with the bodyparts
-	 * @return string a preformatted string with the mails converted to text
-	 */
-	static function &getStyles($_bodyParts)
-	{
-		$style = $ret = '';
-		if (empty($_bodyParts)) return $ret;
-		foreach((array)$_bodyParts as $singleBodyPart) {
-			if (!isset($singleBodyPart['body'])) {
-				$singleBodyPart['body'] = self::getStyles($singleBodyPart);
-				$style .= $singleBodyPart['body'];
-				continue;
-			}
-
-			if (empty($singleBodyPart['charSet'])) $singleBodyPart['charSet'] = Translation::detect_encoding($singleBodyPart['body']);
-			$singleBodyPart['body'] = Translation::convert(
-				$singleBodyPart['body'],
-				strtolower($singleBodyPart['charSet'])
-			);
-			$ct = 0;
-			$newStyle=array();
-			if (stripos($singleBodyPart['body'],'<style')!==false)  $ct = preg_match_all('#<style(?:\s.*)?>(.+)</style>#isU', $singleBodyPart['body'], $newStyle);
-			if ($ct>0)
-			{
-				//error_log(__METHOD__.' ('.__LINE__.') '.'#'.$ct.'#'.array2string($newStyle));
-				$style2buffer = implode('',$newStyle[0]);
-			}
-			if (!empty($style2buffer) && strtoupper(self::$displayCharset) == 'UTF-8')
-			{
-				//error_log(__METHOD__.' ('.__LINE__.') '.array2string($style2buffer));
-				$test = json_encode($style2buffer);
-				//error_log(__METHOD__.' ('.__LINE__.') '.'#'.$test.'# ->'.strlen($style2buffer).' Error:'.json_last_error());
-				//if (json_last_error() != JSON_ERROR_NONE && strlen($style2buffer)>0)
-				if ($test=="null" && strlen($style2buffer)>0)
-				{
-					// this should not be needed, unless something fails with charset detection/ wrong charset passed
-					error_log(__METHOD__.' ('.__LINE__.') '.' Found Invalid sequence for utf-8 in CSS:'.$style2buffer.' Charset Reported:'.$singleBodyPart['charSet'].' Carset Detected:'.Translation::detect_encoding($style2buffer));
-					$style2buffer = utf8_encode($style2buffer);
-				}
-			}
-			$style .= $style2buffer ?? '';
-		}
-		// clean out comments and stuff
-		$search = array(
-			'@url\(http:\/\/[^\)].*?\)@si',  // url calls e.g. in style definitions
-//			'@<!--[\s\S]*?[ \t\n\r]*-->@',   // Strip multi-line comments including CDATA
-//			'@<!--[\s\S]*?[ \t\n\r]*--@',    // Strip broken multi-line comments including CDATA
-		);
-		$style = preg_replace($search,"",$style);
-
-		// CSS Security
-		// http://code.google.com/p/browsersec/wiki/Part1#Cascading_stylesheets
-		$css = preg_replace('/(javascript|expression|-moz-binding)/i','',$style);
-		if (stripos($css,'script')!==false) Mail\Html::replaceTagsCompletley($css,'script'); // Strip out script that may be included
-		// we need this, as styledefinitions are enclosed with curly brackets; and template stuff tries to replace everything between curly brackets that is having no horizontal whitespace
-		// as the comments as <!-- styledefinition --> in stylesheet are outdated, and ck-editor does not understand it, we remove it
-		$css = str_replace(array(':','<!--','-->'),array(': ','',''),$css);
-		//error_log(__METHOD__.' ('.__LINE__.') '.$css);
-
-		// check if the outlook style fix is there then set the initial line-height, since the fix is setting it to line-height:0
-		// which breaks all tr lines in the content.
-		if (preg_match('/Outlook 2016 Height Fix/i', $css)) $css .='<style>tr {line-height: initial} </style>';
-
-		// TODO: we may have to strip urls and maybe comments and ifs
-		return $css;
-	}
-
-	/**
 	 * getMessageRawBody
 	 * get the message raw body
 	 * @param string/int $_uid the messageuid,
@@ -5819,9 +5759,14 @@ class Mail
 	 */
 	function getMessageRawBody($_uid, $_partID = '', $_folder='', $_stream=false)
 	{
+		if (($jmapResult = $this->jmapGetMessageRawBody($_uid, $_partID, $_stream)) !== null)
+		{
+			return $jmapResult;
+		}
 		static $rawBody;
 		$body = null;
 		if (empty($_folder)) $_folder = $this->sessionData['mailbox']?? $this->icServer->getCurrentMailbox();
+		$_uid = $this->jmapResolveUid($_uid, $_folder);
 		$_uid = !(is_object($_uid) || is_array($_uid)) ? (array)$_uid : $_uid;
 
 		if (!$_stream && isset($rawBody[$this->icServer->ImapServerId][(string)$_folder][$_uid[0]][(empty($_partID)?'NIL':$_partID)]))
@@ -5950,8 +5895,13 @@ class Mail
 	 */
 	function getMessageAttachments($_uid, $_partID=null, ?Horde_Mime_Part $_structure=null, $fetchEmbeddedImages=true, $fetchTextCalendar=false, $resolveTNEF=true, $_folder='')
 	{
+		if (($jmapResult = $this->jmapGetMessageAttachments($_uid, $_partID, $_structure, $fetchEmbeddedImages, $fetchTextCalendar, $resolveTNEF)) !== null)
+		{
+			return $jmapResult;
+		}
 		if (self::$debug) error_log( __METHOD__.":$_uid, $_partID");
 		if (empty($_folder)) $_folder = $this->sessionData['mailbox'] ?? $this->icServer->getCurrentMailbox();
+		$_uid = $this->jmapResolveUid($_uid, $_folder);
 		$attachments = array();
 		if (!isset($_structure))
 		{
@@ -6098,7 +6048,7 @@ class Mail
 	 * @return boolean|Horde_Mime_part Multipart/Mixed part decoded attachments |
 	 *	return false if there's no attachments or failure
 	 */
-	public function tnef_decoder( $data )
+	public static function tnef_decoder( $data )
 	{
 		foreach(array('Horde_Compress', 'Horde_Icalendar', 'Horde_Mapi') as $class)
 		{
@@ -6221,8 +6171,13 @@ class Mail
 	 */
 	function getAttachment($_uid, $_partID, $_winmail_nr=0, $_returnPart=true, $_stream=false, $_folder=null)
 	{
+		if (($jmapResult = $this->jmapGetAttachment($_uid, $_partID, $_winmail_nr, $_returnPart)) !== null)
+		{
+			return $jmapResult;
+		}
 		//error_log(__METHOD__.__LINE__."Uid:$_uid, PartId:$_partID, WinMailNr:$_winmail_nr, ReturnPart:$_returnPart, Stream:$_stream, Folder:$_folder".function_backtrace());
 		if (!isset($_folder)) $_folder = $this->sessionData['mailbox'] ?? $this->icServer->getCurrentMailbox();
+		$_uid = $this->jmapResolveUid($_uid, $_folder);
 
 		$uidsToFetch = new Horde_Imap_Client_Ids();
 		if (!(is_object($_uid) || is_array($_uid))) $_uid = (array)$_uid;
@@ -6391,11 +6346,17 @@ class Mail
 	 */
 	function getAttachmentByCID($_uid, $_cid, $_part, $_stream=null)
 	{
+		if (($jmapResult = $this->jmapGetAttachmentByCID($_uid, $_cid, $_part, $_stream)) !== null)
+		{
+			return $jmapResult;
+		}
 		// some static variables to avoid fetching the same mail multiple times
 		static $uid=null, $part=null, $structure=null;
 		//error_log(__METHOD__.' ('.__LINE__.') '.":$_uid, $_cid, $_part");
 
 		if(empty($_cid)) return false;
+
+		$_uid = $this->jmapResolveUid($_uid, $this->icServer->getCurrentMailbox());
 
 		if ($_uid != $uid || $_part != $part)
 		{
@@ -6528,6 +6489,51 @@ class Mail
 			//error_log(__METHOD__.' ('.__LINE__.') '."$_folderName, $_header, $_body, $_flags");
 			$_header = ltrim(str_replace("\n","\r\n",$_header));
 			$_header .= str_replace("\n","\r\n",$_body);
+		}
+		// JMAP-FALLTHROUGH-GUARD (see [[project_jmap_imap_fallthrough_cleanup]]): the classic
+		// icServer->append() below falls through to Horde_Imap_Client_Socket, unguarded for a
+		// JMAP account (same bug class already fixed once at ImportHandler::importMessageToFolder()'s
+		// own JMAP-FALLTHROUGH-GUARD - a JMAP account has no raw IMAP connection to append to in
+		// the first place). Materialize via genuine Email/import (RFC 8621 §4.8) instead, uniformly
+		// available for both Stalwart and the local shim via jmapClient() (found again live
+		// 2026-09-07, this time via ajax_mergeSingle()'s save-as-draft branch - a different caller
+		// of this same method; ImportHandler couldn't just call this method since it needed its own
+		// copy of this fix before this one existed).
+		if ($this->icServer instanceof Mail\Imap\Jmap)
+		{
+			$raw = is_resource($_header) ? stream_get_contents($_header) : $_header;
+			try
+			{
+				$jmap = $this->icServer->jmapClient();
+				$mailboxId = $jmap->mailbox->getMailboxId($_folderName);
+				if (!$mailboxId)
+				{
+					throw new Exception\WrongUserinput(lang("Destination Folder %1 does not exist.", $_folderName));
+				}
+				// map IMAP-style '\Flag' names (eg. '\Draft', '\Seen') to their JMAP keyword
+				// equivalent ('$draft', '$seen') - '\Recent' is server-managed, has no JMAP
+				// keyword, and is silently dropped, same as it's never a real settable flag on
+				// the classic path either
+				$keywords = [];
+				foreach (is_array($_flags) ? $_flags : explode(',', (string)$_flags) as $flag)
+				{
+					if (($flag = trim($flag, " \t\\")) === '' || strcasecmp($flag, 'Recent') === 0)
+					{
+						continue;
+					}
+					$keywords['$'.strtolower($flag)] = true;
+				}
+				$blobId = $jmap->uploadBlob($raw, 'message/rfc822');
+				return $jmap->emailImport($blobId, $_folderName, $keywords);
+			}
+			catch (Exception\WrongUserinput $e)
+			{
+				throw $e;
+			}
+			catch (\Throwable $e)
+			{
+				throw new Exception\WrongUserinput(lang("Could not append Message:").' '.$e->getMessage());
+			}
 		}
 		// the recent flag is the default enforced here ; as we assume the _flags is always set,
 		// we default it to hordes default (Recent) (, other wise we should not pass the parameter
@@ -6686,7 +6692,10 @@ class Mail
 					}
 					else
 					{
-						$attachments[$num] = array_merge($attachments[$num],$mailClass->getAttachment($uid, $attachment['partID'],0,false,false));
+						// $attachment['is_winmail'] (uid@partID@mimeId) is set for individual unpacked
+						// TNEF/winmail.dat children - without it getAttachment() can't tell which
+						// child to decode and returns the raw, still-packed winmail.dat bytes
+						$attachments[$num] = array_merge($attachments[$num],$mailClass->getAttachment($uid, $attachment['partID'],$attachment['is_winmail'] ?? 0,false,false));
 
 						if (empty($attachments[$num]['attachment'])&&$attachments[$num]['cid'])
 						{
@@ -6763,11 +6772,11 @@ class Mail
 		$headdata = null;
 		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($header).function_backtrace());
 		if ($header['SUBJECT']) $headdata = lang('subject').': '.$header['SUBJECT'].($createHTML?"<br />":"\n");
-		if ($header['FROM']) $headdata .= lang('from').': '.self::convertAddressArrayToString($header['FROM'], $createHTML).($createHTML?"<br />":"\n");
-		if ($header['SENDER']) $headdata .= lang('sender').': '.self::convertAddressArrayToString($header['SENDER'], $createHTML).($createHTML?"<br />":"\n");
-		if ($header['TO']) $headdata .= lang('to').': '.self::convertAddressArrayToString($header['TO'], $createHTML).($createHTML?"<br />":"\n");
-		if ($header['CC']) $headdata .= lang('cc').': '.self::convertAddressArrayToString($header['CC'], $createHTML).($createHTML?"<br />":"\n");
-		if ($header['BCC']) $headdata .= lang('bcc').': '.self::convertAddressArrayToString($header['BCC'], $createHTML).($createHTML?"<br />":"\n");
+		if ($header['FROM']) $headdata .= lang('from').': '.Mail\AddressList::convertAddressArrayToString($header['FROM'], $createHTML).($createHTML?"<br />":"\n");
+		if ($header['SENDER']) $headdata .= lang('sender').': '.Mail\AddressList::convertAddressArrayToString($header['SENDER'], $createHTML).($createHTML?"<br />":"\n");
+		if ($header['TO']) $headdata .= lang('to').': '.Mail\AddressList::convertAddressArrayToString($header['TO'], $createHTML).($createHTML?"<br />":"\n");
+		if ($header['CC']) $headdata .= lang('cc').': '.Mail\AddressList::convertAddressArrayToString($header['CC'], $createHTML).($createHTML?"<br />":"\n");
+		if ($header['BCC']) $headdata .= lang('bcc').': '.Mail\AddressList::convertAddressArrayToString($header['BCC'], $createHTML).($createHTML?"<br />":"\n");
 		if ($header['DATE']) $headdata .= lang('date').': '.$header['DATE'].($createHTML?"<br />":"\n");
 		if ($header['PRIORITY'] && $header['PRIORITY'] != 'normal') $headdata .= lang('priority').': '.$header['PRIORITY'].($createHTML?"<br />":"\n");
 		if ($header['IMPORTANCE'] && $header['IMPORTANCE'] !='normal') $headdata .= lang('importance').': '.$header['IMPORTANCE'].($createHTML?"<br />":"\n");
@@ -6821,64 +6830,6 @@ class Mail
 		$subject = str_replace('$$','__',($subject?$subject:lang('(no subject)')));
 		$subject = str_ireplace(array('[FWD]','[',']','{','}','<','>'),array('Fwd:',' ',' ',' ',' ',' ',' '),trim($subject));
 		return $subject;
-	}
-
-	/**
-	 * convertAddressArrayToString - converts an mail envelope Address Array To String
-	 * @param array $rfcAddressArray  an addressarray as provided by mail retieved via egw_pear....
-	 * @return string a comma separated string with the mailaddress(es) converted to text
-	 */
-	static function convertAddressArrayToString($rfcAddressArray)
-	{
-		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($rfcAddressArray));
-		$returnAddr ='';
-		if (is_array($rfcAddressArray))
-		{
-			foreach((array)$rfcAddressArray as $addressData) {
-				//error_log(__METHOD__.' ('.__LINE__.') '.array2string($addressData));
-				if($addressData['MAILBOX_NAME'] == 'NIL') {
-					continue;
-				}
-				if(strtolower($addressData['MAILBOX_NAME']) == 'undisclosed-recipients') {
-					continue;
-				}
-				if ($addressData['RFC822_EMAIL'])
-				{
-					$addressObjectA = self::parseAddressList($addressData['RFC822_EMAIL']);
-				}
-				else
-				{
-					$emailaddress = ($addressData['PERSONAL_NAME']?$addressData['PERSONAL_NAME'].' <'.$addressData['EMAIL'].'>':$addressData['EMAIL']);
-					$addressObjectA = self::parseAddressList($emailaddress);
-				}
-				$addressObject = $addressObjectA[0];
-				//error_log(__METHOD__.' ('.__LINE__.') '.array2string($addressObject));
-				if (!$addressObject->valid) continue;
-				//$mb =(string)$addressObject->mailbox;
-				//$h = (string)$addressObject->host;
-				//$p = (string)$addressObject->personal;
-				$returnAddr .= (strlen($returnAddr)>0?',':'');
-				//error_log(__METHOD__.' ('.__LINE__.') '.$p.' <'.$mb.'@'.$h.'>');
-				try {
-					$buff = imap_rfc822_write_address($addressObject->mailbox, Horde_Idna::decode($addressObject->host), $addressObject->personal);
-				}
-				// if Idna conversation fails, leave address unchanged
-				catch (\Exception $e) {
-					unset($e);
-					$buff = imap_rfc822_write_address($addressObject->mailbox, $addressObject->host, $addressObject->personal);
-				}
-				$returnAddr .= str_replace(array('<','>','"\'','\'"'),array('[',']','"','"'),$buff);
-				//error_log(__METHOD__.' ('.__LINE__.') '.' Address: '.$returnAddr);
-			}
-		}
-		else
-		{
-			// do not mess with strings, return them untouched /* ToDo: validate string as Address */
-			$rfcAddressArray = self::decode_header($rfcAddressArray,true);
-			$rfcAddressArray = str_replace(array('<','>','"\'','\'"'),array('[',']','"','"'),$rfcAddressArray);
-			if (is_string($rfcAddressArray)) return $rfcAddressArray;
-		}
-		return $returnAddr;
 	}
 
 	/**
@@ -6938,11 +6889,6 @@ class Mail
 			settype($bytes, 'integer');
 
 		return $bytes . ' ' . $type ;
-	}
-
-	static function detect_qp($string)
-	{
-		return preg_match('/(=[0-9][A-F])|(=[A-F][0-9])|(=[A-F][A-F])|(=[0-9][0-9])[\s|=]/', $string);
 	}
 
 	/**
@@ -7330,8 +7276,8 @@ class Mail
 				}
 				foreach ($SendAndMergeTocontacts as $k => $val)
 				{
-					$errorInfo = $email = '';
-					$sendOK = $openComposeWindow = $openAsDraft = null;
+					$errorInfo = $email = $nfn = '';
+					$sendOK = $openComposeWindow = $openAsDraft = $noEmailFound = null;
 					//error_log(__METHOD__.' ('.__LINE__.') '.' Id To Merge:'.$val);
 					if ((count($SendAndMergeTocontacts) > 1 || $_folder === FALSE) && $val &&
 						(is_numeric($val) || $GLOBALS['egw']->accounts->name2id($val))) // do the merge
@@ -7350,60 +7296,101 @@ class Mail
 							}
 						}
 
-						// No addresses from placeholders?  Treat it as just a contact ID
-						if (!$email)
+						// No "to" address resolved from the placeholders (eg. entry has no linked
+						// contact, or the linked contact has no email address). For addressbook's own
+						// merge $val IS a contacts id, so a blank "to" template field has always
+						// resolved to that contact directly. For every other app $val is that app's own
+						// entity id, not a contacts id - reading it as one would silently email an
+						// unrelated, coincidentally-numbered contact, so fail this recipient instead of
+						// guessing.
+						if (!$email && $bo_merge instanceof Contacts\Merge)
 						{
 							$contact = $bo_merge->contacts->read($val);
-							//error_log(__METHOD__.' ('.__LINE__.') '.' ID:'.$val.' Data:'.array2string($contact));
 							$email = ($contact['email'] ? $contact['email'] : $contact['email_home']);
 							$nfn = ($contact['n_fn'] ? $contact['n_fn'] : $contact['n_given'].' '.$contact['n_family']);
-							if($email)
+							if ($email)
 							{
 								$mailObject->addAddress(Horde_Idna::encode($email), $nfn);
 							}
 						}
 
-						$activeMailProfiles = $this->getAccountIdentities($this->profileID);
-						$activeMailProfile = self::getStandardIdentityForProfile($activeMailProfiles,$this->profileID);
-						//error_log(__METHOD__.' ('.__LINE__.') '.array2string($activeMailProfile));
-						$mailObject->setFrom($activeMailProfile['ident_email'],
-							self::generateIdentityString($activeMailProfile,false));
-
-						$mailObject->removeHeader('Message-ID');
-						$mailObject->removeHeader('Date');
-						$mailObject->clearCustomHeaders();
-						if (strpos($Subject, '{{') !== false)
+						if (!$email)
 						{
-							$mailObject->addHeader('Subject', $bo_merge->merge_string($Subject, $val, $e, 'text/plain', array(), self::$displayCharset));
-						}
-						//error_log(__METHOD__.' ('.__LINE__.') '.' ContentType:'.$mailObject->BodyContentType);
-						if($text_body) $text_body->setContents($bo_merge->merge_string($Body, $val, $e, 'text/plain', array(), self::$displayCharset),array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
-						//error_log(__METHOD__.' ('.__LINE__.') '.' Result:'.$mailObject->Body.' error:'.array2string($e));
-						if($html_body) $html_body->setContents($bo_merge->merge_string($AltBody, $val, $e, 'text/html', array(), self::$displayCharset),array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
-
-						// add attachments from app-specific merge-class
-						foreach($bo_merge->getAttachments($val) as $file)
-						{
-							$mailObject->addAttachment($file);
-						}
-
-						//error_log(__METHOD__.' ('.__LINE__.') '.array2string($mailObject));
-						// set a higher timeout for big messages
-						@set_time_limit(120);
-						$sendOK = true;
-						try {
-							$mailObject->send();
-							$message_id = $mailObject->getHeader('Message-ID');
-							if($_folder)
-							{
-								$id = $this->appendMessage($_folder, $mailObject->getRaw(), '');
-								$importID = $id->current();
-							}
-						}
-						catch(Exception $e) {
 							$sendOK = false;
-							$errorInfo = $e->getMessage();
-							//error_log(__METHOD__.' ('.__LINE__.') '.array2string($errorInfo));
+							$noEmailFound = true;
+							$app = $bo_merge->get_app();
+							$errorInfo = lang('No email address found for %1', $app ? Link::title($app, $val) : $val);
+						}
+						else
+						{
+							$activeMailProfiles = $this->getAccountIdentities($this->profileID);
+							$activeMailProfile = self::getStandardIdentityForProfile($activeMailProfiles,$this->profileID);
+							//error_log(__METHOD__.' ('.__LINE__.') '.array2string($activeMailProfile));
+							$mailObject->setFrom($activeMailProfile['ident_email'],
+								self::generateIdentityString($activeMailProfile,false));
+
+							$mailObject->removeHeader('Message-ID');
+							$mailObject->removeHeader('Date');
+							$mailObject->clearCustomHeaders();
+							if (strpos($Subject, '{{') !== false)
+							{
+								$mailObject->addHeader('Subject', $bo_merge->merge_string($Subject, $val, $e, 'text/plain', array(), self::$displayCharset));
+							}
+							//error_log(__METHOD__.' ('.__LINE__.') '.' ContentType:'.$mailObject->BodyContentType);
+							if($text_body) $text_body->setContents($bo_merge->merge_string($Body, $val, $e, 'text/plain', array(), self::$displayCharset),array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
+							//error_log(__METHOD__.' ('.__LINE__.') '.' Result:'.$mailObject->Body.' error:'.array2string($e));
+							if($html_body) $html_body->setContents($bo_merge->merge_string($AltBody, $val, $e, 'text/html', array(), self::$displayCharset),array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
+
+							// add attachments from app-specific merge-class
+							foreach($bo_merge->getAttachments($val) as $file)
+							{
+								$mailObject->addAttachment($file);
+							}
+
+							//error_log(__METHOD__.' ('.__LINE__.') '.array2string($mailObject));
+							// set a higher timeout for big messages
+							@set_time_limit(120);
+							$sendOK = true;
+							try {
+								$mailObject->send();
+								$message_id = $mailObject->getHeader('Message-ID');
+								// Mail\Jmap\Transport (RFC 8621 EmailSubmission, selected transparently by
+								// Mailer::send() -> Mail\Account::smtpTransport() whenever this account's
+								// acc_smtp_ssl is configured for JMAP submission - see that method's own
+								// docblock) already creates the message in Drafts, submits it, and moves
+								// that SAME copy to Sent as part of send() itself - appending another raw
+								// copy here would duplicate it. Classic SMTP has no such concept, so still
+								// needs this explicit append. Known gap: $importID stays empty for a
+								// JMAP-transport send (no UID to report back), so a merge send's own
+								// to_infolog/to_app row-linking (ajax_merge()'s caller) won't resolve a
+								// rowid in that case - not a regression (this combination was never
+								// exercised/working before Mail\Jmap\Transport existed either), just not
+								// yet wired up.
+								if ($_folder && !(Mail\Account::read($this->profileID)->smtpTransport() instanceof Mail\Jmap\Transport))
+								{
+									$id = $this->appendMessage($_folder, $mailObject->getRaw(), '');
+									$importID = $id->current();
+								}
+							}
+							catch(\Throwable $e) {
+								// was catch(Exception $e) - EGroupware\Api\Exception in this namespace,
+								// which never actually caught a real send failure: Mailer::send()'s own
+								// internal errors (both classic Horde_Mail_Exception/SMTP and the newer
+								// Mail\Jmap\Transport's, both global-namespace \Horde_Mail_Exception) are
+								// NOT instances of THIS namespace's Exception class. Found investigating
+								// Step 8 (doc/ai/projects/mail-compose-jmap-migration.md) - pre-existing,
+								// not introduced by the JMAP work, just newly relevant now that a second
+								// transport can throw through here. The practical effect: any single
+								// recipient's send failure propagated all the way out of this whole
+								// per-recipient loop uncaught (well, caught by mail_compose.inc.php's own
+								// OUTER catch, since that file has no namespace - but only after aborting
+								// every REMAINING recipient in the same merge run, and losing this
+								// function's own $processStats success/failure breakdown for whichever
+								// recipients it had already handled).
+								$sendOK = false;
+								$errorInfo = $e->getMessage();
+								//error_log(__METHOD__.' ('.__LINE__.') '.array2string($errorInfo));
+							}
 						}
 					}
 					elseif (!$k)	// 1. entry, further entries will fail for apps other then addressbook
@@ -7432,9 +7419,15 @@ class Mail
 						}
 						$mailObject->forceBccHeader();
 
-						// No addresses from placeholders?  Treat it as just a contact ID
+						// No "to" address resolved from the placeholders. For addressbook's own merge
+						// $val IS a contacts id, so a blank "to" template field has always resolved to
+						// that contact directly. For every other app $val is that app's own entity id,
+						// not a contacts id - reading it as one would silently draft/send to an
+						// unrelated, coincidentally-numbered contact, so leave "to" empty instead of
+						// guessing.
 						if (count($mailObject->getAddresses('to',true)) == 0 &&
-							is_numeric($val) || $GLOBALS['egw']->accounts->name2id($val)) // do the merge
+							($bo_merge instanceof Contacts\Merge) &&
+							(is_numeric($val) || $GLOBALS['egw']->accounts->name2id($val)))
 						{
 							$contact = $bo_merge->contacts->read($val);
 							//error_log(__METHOD__.' ('.__LINE__.') '.array2string($contact));
@@ -7467,12 +7460,26 @@ class Mail
 					{
 						if ($openAsDraft)
 						{
-							if($this->folderExists($_folder,true))
+							// JMAP-FALLTHROUGH-GUARD (see [[project_jmap_imap_fallthrough_cleanup]]):
+							// folderExists() falls through to Horde_Imap_Client_Socket for a JMAP
+							// icServer, opening a real raw IMAP connection to what is (for a JMAP/
+							// Stalwart account) a JMAP(S)-only endpoint - always fails, so $_folder
+							// (already resolved JMAP-natively via getDraftFolder()/getSentFolder(),
+							// see _getSpecialUseFolder()'s own guard above) would always be treated
+							// as "does not exist" here, silently dropping the merge (found live
+							// 2026-09-07 testing ajax_mergeSingle(), mail-compose-jmap-migration.md
+							// Step 10's 3rd caller - the first real caller of this branch; ajax_merge()'s
+							// multi-recipient path always forces the send branch above instead).
+							// isSentFolder()/isDraftFolder() below have the same fallthrough in their
+							// own internal folderExists() call, so also skip their existence check
+							// (checkexistance=false) - the folder is already known to exist by then.
+							$folderKnownToExist = $this->icServer instanceof Mail\Imap\Jmap || $this->folderExists($_folder,true);
+							if($folderKnownToExist)
 							{
-								if($this->isSentFolder($_folder))
+								if($this->isSentFolder($_folder, false))
 								{
 									$flags = '\\Seen';
-								} elseif($this->isDraftFolder($_folder)) {
+								} elseif($this->isDraftFolder($_folder, false)) {
 									$flags = '\\Draft';
 								} else {
 									$flags = '';
@@ -7509,12 +7516,12 @@ class Mail
 						}
 						else
 						{
-							if (!$openComposeWindow) $processStats['failed'][$val] = $errorInfo?$errorInfo:'Send failed to '.$nfn.'<'.$email.'> See error_log for details';
+							if (!$openComposeWindow) $processStats[$noEmailFound ? 'no_email' : 'failed'][$val] = $errorInfo?$errorInfo:'Send failed to '.$nfn.'<'.$email.'> See error_log for details';
 						}
 					}
 					if (isset($sendOK) && $sendOK===false && !isset($openComposeWindow))
 					{
-						$processStats['failed'][$val] = $errorInfo?$errorInfo:'Send failed to '.$nfn.'<'.$email.'> See error_log for details';
+						$processStats[$noEmailFound ? 'no_email' : 'failed'][$val] = $errorInfo?$errorInfo:'Send failed to '.$nfn.'<'.$email.'> See error_log for details';
 					}
 
 				}
@@ -7706,66 +7713,7 @@ class Mail
 	 */
 	public static function parseAddressList($addresses, $default_domain=null)
 	{
-		$rfc822 = new Horde_Mail_Rfc822();
-		$ret = $rfc822->parseAddressList($addresses, $default_domain ? array('default_domain' => $default_domain) : array());
-		//error_log(__METHOD__.__LINE__.'#'.array2string($addresses).'#'.array2string($ret).'#'.$ret->count().'#'.$ret->count.function_backtrace());
-		if ((empty($ret) || $ret->count()==0)&& is_string($addresses) && strlen($addresses)>0)
-		{
-			$matches = array();
-			preg_match_all("/[\w\.,-.,_.,0-9.]+@[\w\.,-.,_.,0-9.]+/",$addresses,$matches);
-			//error_log(__METHOD__.__LINE__.array2string($matches));
-			foreach ($matches[0] as &$match) {$match = trim($match,', ');}
-			$addresses = implode(',',$matches[0]);
-			//error_log(__METHOD__.__LINE__.array2string($addresses));
-			$ret = $rfc822->parseAddressList($addresses, $default_domain ? array('default_domain' => $default_domain) : array());
-			//error_log(__METHOD__.__LINE__.'#'.array2string($addresses).'#'.array2string($ret).'#'.$ret->count().'#'.$ret->count);
-		}
-		$previousFailed=false;
-		$ret2 = new Horde_Mail_Rfc822_List();
-		// handle known problems on emailaddresses
-		foreach($ret as $i => $adr)
-		{
-			//mailaddresses enclosed in single quotes like 'me@you.com' show up as 'me as mailbox and you.com' as host
-			if ($adr->mailbox && stripos($adr->mailbox,"'")== 0 &&
-					$adr->host && stripos($adr->host,"'")== (strlen($adr->host) -1))
-			{
-				$adr->mailbox = str_replace("'","",$adr->mailbox);
-				$adr->host = str_replace("'","",$adr->host);
-			}
-
-
-			// try to strip extra quoting or slashes from personal part
-			$adr->personal = stripslashes($adr->personal);
-			if ($adr->personal && (stripos($adr->personal, '"') == 0 &&
-					substr($adr->personal, -1) == '"') ||
-					(substr($adr->personal, -2) == '""'))
-			{
-				$adr->personal = str_replace('"', "", $adr->personal);
-			}
-
-
-			// no mailbox or host part as 'Xr\xc3\xa4hlyz, User <mailboxpart1.mailboxpart2@yourhost.com>' is parsed as 2 addresses separated by ','
-			//#'Xr\xc3\xa4hlyz, User <mailboxpart1.mailboxpart2@yourhost.com>'
-			//#Horde_Mail_Rfc822_List Object([_data:protected] => Array(
-			//[0] => Horde_Mail_Rfc822_Address Object([comment] => Array()[mailbox] => Xr\xc3\xa4hlyz[_host:protected] => [_personal:protected] => )
-			//[1] => Horde_Mail_Rfc822_Address Object([comment] => Array()[mailbox] => mailboxpart1.mailboxpart2[_host:protected] => youthost.com[_personal:protected] => User))[_filter:protected] => Array()[_ptr:protected] => )#2#,
-			if (strlen($adr->mailbox)==0||strlen($adr->host)==0)
-			{
-				$remember = ($adr->mailbox?$adr->mailbox:($adr->host?$adr->host:''));
-				$previousFailed=true;
-				//error_log(__METHOD__.__LINE__."('$addresses', $default_domain) parsed $i: mailbox=$adr->mailbox, host=$adr->host, personal=$adr->personal");
-			}
-			else
-			{
-				if ($previousFailed && $remember) $adr->personal = $remember. ' ' . $adr->personal;
-				$remember = '';
-				$previousFailed=false;
-				//error_log(__METHOD__.__LINE__."('$addresses', $default_domain) parsed $i: mailbox=$adr->mailbox, host=$adr->host, personal=$adr->personal");
-				$ret2->add($adr);
-			}
-		}
-		//error_log(__METHOD__.__LINE__.'#'.array2string($addresses).'#'.array2string($ret2).'#'.$ret2->count().'#'.$ret2->count);
-		return $ret2;
+		return Mail\AddressList::parseAddressList($addresses, $default_domain);
 	}
 
 	/**
@@ -7802,71 +7750,6 @@ class Mail
 	}
 
 	/**
-	 * Hook stuff
-	 */
-
-	/**
-	 * hook to add account
-	 *
-	 * this function is a wrapper function for emailadmin
-	 *
-	 * @param _hookValues contains the hook values as array
-	 * @return nothing
-	 */
-	function addAccount($_hookValues)
-	{
-		error_log(__METHOD__.' ('.__LINE__.') '.' NOT DONE YET!' . ' hookValue = '. $_hookValues);
-
-	}
-
-	/**
-	 * hook to delete account
-	 *
-	 * this function is a wrapper function for emailadmin
-	 *
-	 * @param _hookValues contains the hook values as array
-	 * @return nothing
-	 */
-	function deleteAccount($_hookValues)
-	{
-		error_log(__METHOD__.' ('.__LINE__.') '.' NOT DONE YET!' . ' hookValue = '. $_hookValues);
-
-	}
-
-	/**
-	 * hook to update account
-	 *
-	 * this function is a wrapper function for emailadmin
-	 *
-	 * @param _hookValues contains the hook values as array
-	 * @return nothing
-	 */
-	function updateAccount($_hookValues)
-	{
-		error_log(__METHOD__.' ('.__LINE__.') '.' NOT DONE YET!' . ' hookValue = '. $_hookValues);
-
-	}
-
-	/**
-	 * This function gets array of email addresses in RFC822 format
-	 * and tries to normalize the addresses into only email addresses.
-	 *
-	 * @param array $_addresses Addresses
-	 */
-	static function stripRFC822Addresses ($_addresses)
-	{
-		$matches = array();
-		foreach ($_addresses as &$address)
-		{
-			preg_match("/<([^\'\" <>]+)>$/", $address, $matches);
-			if (!empty($matches[1])) $address = $matches[1];
-		}
-		return $_addresses;
-	}
-
-
-
-	/**
 	 * Resolve certificate and encrypted message from smime attachment
 	 *
 	 * @param Horde_Mime_Part $_mime_part
@@ -7898,7 +7781,7 @@ class Mail
 		{
 			try{
 				$message = $this->_decryptSmimeBody($message, $params['passphrase'] !='' ?
-						$params['passphrase'] : Api\Cache::getSession('mail', 'smime_passphrase'));
+						$params['passphrase'] : Cache::getSession('mail', 'smime_passphrase'));
 			}
 			catch(\Horde_Crypt_Exception $e)
 			{
@@ -7931,7 +7814,7 @@ class Mail
 		if ($cert) // signed message, it might be encrypted too
 		{
 			$envelope = $this->getMessageEnvelope($params['uid'], '', false, $params['mailbox']);
-			$from = $this->stripRFC822Addresses($envelope['FROM']);
+			$from = Mail\AddressList::stripRFC822Addresses($envelope['FROM']);
 			$message_parts = $this->smime->extractSignedContents($message);
 			$cert_email = strtolower($cert->email);
 			//$f = $message_parts->_headers->getHeader('from');
@@ -7986,12 +7869,9 @@ class Mail
 			);
 		}
 
-		$params  = array (
-			'type'      => 'message',
-			'pubkey'    => $certkey[strtolower($acc_smime['acc_smime_username'])],
-			'privkey'   => $acc_smime['pkey'],
-			'passphrase'=> $_passphrase
-		);
-		return $this->smime->decrypt($_message, $params);
+		return Mail\Smime::decryptWithCandidates($this->smime, $_message, array_merge([
+			$certkey[strtolower($acc_smime['acc_smime_username'])] ?? '',
+			$acc_smime['cert'] ?? '',
+		], $acc_smime['extracerts'] ?? []), $acc_smime['pkey'], $_passphrase);
 	}
 }

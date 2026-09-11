@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="addressbook.edit.upload" template="" lang="" group="0" version="1.3.004">
+	<et2-template  id="addressbook.edit.upload" template="" lang="" group="0" version="1.3.004">
 		<grid class="uploadphoto">
 			<columns>
 				<column/>
@@ -11,15 +12,15 @@
 					<et2-checkbox  statustext="Deletes the photo" label="delete" id="delete_photo"></et2-checkbox>
 				</row>
 				<row>
-					<file statustext="Select a portrait format jpeg photo. It will be resized to 60 pixel width." id="upload_photo" class="photo"/>
+					<et2-file  statustext="Select a portrait format jpeg photo. It will be resized to 60 pixel width." id="upload_photo" class="photo"></et2-file>
 				</row>
 				<row>
 					<et2-button  align="center" label="Ok" onclick="jQuery('table.uploadphoto').css('display','none'); return false;" image="check"></et2-button>
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="addressbook.editname" template="" lang="" group="0" version="1.9.001">
+	</et2-template>
+	<et2-template  id="addressbook.editname" template="" lang="" group="0" version="1.9.001">
 		<grid class="editname">
 			<columns>
 				<column width="85"/>
@@ -52,8 +53,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="addressbook.edit.general" template="" lang="" group="0" version="1.9.003">
+	</et2-template>
+	<et2-template  id="addressbook.edit.general" template="" lang="" group="0" version="1.9.003">
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
@@ -117,8 +118,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="addressbook.edit.details" template="" lang="" group="0" version="1.9.002">
+	</et2-template>
+	<et2-template  id="addressbook.edit.details" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
@@ -130,12 +131,10 @@
 					<et2-select-cat  id="cat_id" multiple="true" placeholder="Select categories"></et2-select-cat>
 				</row>
 				<row>
-					<et2-description  value="Notes"></et2-description>
-					<et2-textarea  id="note" rows="10" height="200" resizeRatio="0"></et2-textarea>
+					<et2-description  value="Notes"></et2-description><et2-ai><et2-textarea  id="note" rows="10" resizeRatio="0"></et2-textarea></et2-ai>
 				</row>
 				<row>
-					<et2-description  for="pubkey" value="Public key"></et2-description>
-					<et2-textarea  id="pubkey" rows="4" resizeRatio="0"></et2-textarea>
+					<et2-description  for="pubkey" value="Public key"></et2-description><et2-ai><et2-textarea  id="pubkey" rows="4" resizeRatio="0"></et2-textarea></et2-ai>
 				</row>
 				<row disabled="@hidebuttons">
 					<et2-description  value="Last date"></et2-description>
@@ -147,8 +146,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="addressbook.edit.home" template="" lang="" group="0" version="1.9.001">
+	</et2-template>
+	<et2-template  id="addressbook.edit.home" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
@@ -212,8 +211,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="addressbook.edit.links" template="" lang="" group="0" version="1.9.001">
+	</et2-template>
+	<et2-template  id="addressbook.edit.links" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -230,8 +229,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="addressbook.edit.distribution_list" template="" lang="" group="0" version="1.9.001">
+	</et2-template>
+	<et2-template  id="addressbook.edit.distribution_list" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
@@ -245,8 +244,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="addressbook.edit.ownership" template="" lang="" group="0" version="16.1.00">
+	</et2-template>
+	<et2-template  id="addressbook.edit.ownership" template="" lang="" group="0" version="16.1.00">
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
@@ -287,9 +286,9 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="addressbook.edit" template="" lang="" group="0" version="1.9.004">
-		<template id="addressbook.editname"/>
+	</et2-template>
+	<et2-template  id="addressbook.edit" template="" lang="" group="0" version="1.9.004">
+		<et2-template  id="addressbook.editname"></et2-template>
 		<grid border="1" width="100%">
 			<columns>
 				<column width = "120"/>
@@ -299,7 +298,7 @@
 				<row disabled="@hidebuttons" class="dialogHeadbar" >
 					<et2-hbox  span="all" width="100%">
 						<et2-button-icon  id="button[apply]" class="button_apply" image="apply"></et2-button-icon>
-                        <et2-button-icon id="button[delete]" class="button_delete" onclick="Et2Dialog.confirm(widget,'Do you really want to delete this contact?','Delete')" tabindex="25" image="delete"></et2-button-icon>
+                        <et2-button-icon  id="button[delete]" class="button_delete" onclick="Et2Dialog.confirm(widget,'Do you really want to delete this contact?','Delete')" tabindex="25" image="delete"></et2-button-icon>
 					</et2-hbox>
 				</row>
 				<row disabled="!@showsearchbuttons" class="dialogHeadbar">
@@ -348,7 +347,7 @@
 					<et2-url  id="url" autocomplete="url" ></et2-url>
 				</row>
 				<row>
-                    <et2-tabbox id="tabs" span="all" cfPrivateTab="!$cont[no_private_cfs]" cfTypeFilter="$cont[tid]">
+                    <et2-tabbox  id="tabs" span="all" cfPrivateTab="!$cont[no_private_cfs]" cfTypeFilter="$cont[tid]">
                         <tabs>
                             <tab id="general" label="Organisation"/>
                             <tab id="home" label="Private" statustext="Home address, Birthday, ..."/>
@@ -358,16 +357,16 @@
                             <tab id="ownership" label="Ownership"/>
                         </tabs>
                         <tabpanels>
-                            <template id="addressbook.edit.general"/>
-                            <template id="addressbook.edit.home"/>
-                            <template id="addressbook.edit.details"/>
-                            <template id="addressbook.edit.links"/>
-                            <template id="addressbook.edit.distribution_list"/>
-                            <template id="addressbook.edit.ownership"/>
+                            <et2-template  id="addressbook.edit.general"></et2-template>
+                            <et2-template  id="addressbook.edit.home"></et2-template>
+                            <et2-template  id="addressbook.edit.details"></et2-template>
+                            <et2-template  id="addressbook.edit.links"></et2-template>
+                            <et2-template  id="addressbook.edit.distribution_list"></et2-template>
+                            <et2-template  id="addressbook.edit.ownership"></et2-template>
                         </tabpanels>
                     </et2-tabbox>
                 </row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

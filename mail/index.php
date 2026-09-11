@@ -10,5 +10,5 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
-header('Location: ../index.php?menuaction=mail.mail_ui.index'.
+header('Location: ../index.php?menuaction=mail.EGroupware\\Mail\\Ui.index'.
     	(isset($_GET['sessionid']) ? '&sessionid='.$_GET['sessionid'].'&kp3='.$_GET['kp3'] : ''));

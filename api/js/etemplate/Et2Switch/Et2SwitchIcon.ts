@@ -1,4 +1,4 @@
-import {css, html, LitElement, nothing} from "lit";
+import {html, LitElement, nothing} from "lit";
 import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
 import {classMap} from "lit/directives/class-map.js";
@@ -7,6 +7,7 @@ import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {SlSwitch} from "@shoelace-style/shoelace";
 import {et2_evalBool} from "../et2_core_common";
 
+import styles from "./Et2SwitchIcon.styles";
 /**
  * @summary Switch to allow choosing between two options, displayed with two images
  *
@@ -29,73 +30,7 @@ export class Et2SwitchIcon extends Et2InputWidget(LitElement)
 	{
 		return [
 			...super.styles,
-			css`
-				:host {
-					--indicator-color: var(--sl-color-primary-600);
-					display: flex;
-				}
-
-				sl-switch {
-					font-size: 1em;
-					--height: 1em;
-				}
-
-				::part(control) {
-					display: none;
-				}
-
-				::part(label) {
-					width: 100%;
-					height: 100%;
-				}
-
-				.label {
-					display: inline-flex;
-					flex: 1 1 auto;
-					font-size: var(--height);
-					/*add more height to the image container to allow centering*/
-					height: calc(var(--height) + 4px);
-					user-select: none;
-				}
-
-				et2-image, ::slotted(:scope > *) {
-					flex: 1 1 50%;
-					font-size: var(--width);
-				}
-
-				slot {
-					color: var(--sl-input-placeholder-color);
-				}
-
-				sl-switch {
-					display: flex;
-					align-items: center;
-				}
-
-				sl-switch[checked] slot[name="on"], sl-switch:not([checked]) slot[name="off"] {
-					color: var(--indicator-color, inherit);
-					et2-image{
-						filter: var(--image-filter)
-					}
-				}
-				
-                sl-switch[checked] slot[name="off"], sl-switch:not([checked]) slot[name="on"]{
-	                et2-image{
-		                filter: var(--image-filter-off)
-                    }
-                }
-
-				sl-switch::part(label), sl-switch::part(form-control) {
-					display: flex;
-					align-items: center;
-					margin-inline-start: 0px;
-				}
-
-				.label:hover {
-					background-color: var(--sl-input-background-color-hover);
-					border-color: var(--sl-input-border-color-hover);
-				}
-			`
+			styles
 		]
 	}
 
@@ -119,6 +54,12 @@ export class Et2SwitchIcon extends Et2InputWidget(LitElement)
 	@property({reflect: true}) variant = "neutral";
 	@property({reflect: true}) size;
 
+	// Backs value - the render()'s .checked=${live(this.checked)} binding re-asserts this on
+	// every render, so set value() must go through this property, not this.switch.checked
+	// directly, or the next unrelated re-render (eg. from a hidden/disabled change) silently
+	// wipes the value back out.
+	@property({type: Boolean}) checked = false;
+
 	protected get switch() : SlSwitch { return <SlSwitch>this.shadowRoot?.querySelector("sl-switch")};
 
 	private get input() { return this.switch.shadowRoot.querySelector("input");}
@@ -136,19 +77,16 @@ export class Et2SwitchIcon extends Et2InputWidget(LitElement)
 		{
 			new_value = et2_evalBool(new_value);
 		}
+		this.checked = !!new_value;
 		if(this.switch)
 		{
-			this.switch.checked = !!new_value;
-		}
-		else
-		{
-			this.updateComplete.then(() => this.value = new_value);
+			this.switch.checked = this.checked;
 		}
 	}
 
 	get value()
 	{
-		return this.switch?.checked;
+		return this.checked;
 	}
 
 	/** Overridden from parent because something in there clears / resets the check value */
@@ -199,6 +137,16 @@ export class Et2SwitchIcon extends Et2InputWidget(LitElement)
                     @sl-change=${async(e) =>
                     {
                         e.stopPropagation();
+                        // The internal <sl-switch> flips its OWN checked state on click, but that
+                        // never flows back to this.checked/value on its own (the .checked=${live(...)}
+                        // binding above is one-way, property-to-DOM only) - without this, a click
+                        // visually toggles the switch but get_value()/set_value() (and hence every
+                        // form-submit/JS read of this widget's value) keep returning the PRE-click
+                        // value forever, and the next unrelated re-render silently snaps the switch
+                        // back to that stale value too. Found live 2026-09-11 via mail compose's
+                        // "save as infolog on send" toggle: unchecking it in the UI never actually
+                        // took effect - the message still got saved to InfoLog every time.
+                        this.value = e.target.checked;
                         await this.updateComplete;
                         this.dispatchEvent(new Event("change", {bubbles: true}));
                     }}

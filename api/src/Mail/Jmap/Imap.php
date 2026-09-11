@@ -1,0 +1,4269 @@
+<?php
+/**
+ * EGroupware Api: local JMAP server for plain IMAP accounts - Mail\Jmap\Imap session
+ *
+ * Formerly `EGroupware\Mail\JmapShim` (mail/src/JmapShim.php) - promoted into the
+ * Api\Jmap/Api\Mail\Jmap class hierarchy (see doc/ai/projects/mail-jmap-imap-inversion.md)
+ * as this app's IMAP-backed implementation of the generic JMAP session contract, alongside
+ * `Api\Mail\Jmap\Http` (the real-JMAP-over-HTTP implementation, for Stalwart).
+ *
+ * Deliberately kept almost entirely as-is in this promotion (same static methods, same
+ * bodies) rather than deeply restructured - this class is large, intricate (MIME/S-MIME/TNEF
+ * handling, a real admin-impersonation security boundary via $calledFor, ...) and already
+ * tested; a blind mechanical rewrite risked real regressions for uncertain benefit. What's new
+ * here is a thin instance layer: a constructor holding $accountId/$calledFor and $types
+ * (satisfying Api\Jmap's lazy per-type-object contract via Imap\Mailbox/Email/Thread/Quota,
+ * see the Imap/ subdirectory) - dispatch() and every static method below are UNCHANGED and
+ * keep working exactly as before for the existing browser-facing entrypoint (mail/jmap.php).
+ *
+ * mail/js/jmap.ts (MailJmap) already speaks JMAP client-side for Stalwart-backed
+ * accounts, talking directly to Stalwart's real JMAP server. Plain IMAP accounts
+ * (Dovecot, Cyrus, ...) have no JMAP server at all, so this class acts as one -
+ * but only implements the handful of methods MailJmap actually sends
+ * (Mailbox/query, Email/query, Email/get, Email/set, Thread/get, plus RFC 8620 §3.7
+ * result-reference resolution (including the "*" list-flattening extension Thread/get ->
+ * Email/get chaining needs) for its batched request), backed directly by
+ * Api\Mail\Account::read()->imapServer() (a Horde_Imap_Client_Socket) via plain
+ * IMAP search()/fetch()/store() calls. It deliberately does NOT go through
+ * mail_ui or Api\Mail (mail_bo).
+ *
+ * Row-id compatibility: emailID here is a plain IMAP UID and folderID is
+ * base64(folder path), same as mail_ui::generateRowID()'s classic scheme - so
+ * rows fetched via this class are indistinguishable from mail_ui::get_rows()'s
+ * own output to legacy action handlers. Stalwart-sourced rows use opaque JMAP
+ * ids, resolved by the Imap\Jmap row-id implementation when a legacy handler
+ * still needs an IMAP UID.
+ *
+ * accountId "0" is never a real account - it's served from an in-class fixture,
+ * to give the client-side code a stable target for testing without a real
+ * mailbox, e.g.: app.mail.jmap.getRows({selectedFolder: '0::INBOX', ...})
+ *
+ * Auth is the ordinary EGroupware session cookie (this is a same-origin fetch
+ * from the browser) - see mail_ui::ajax_jmapBootstrap()'s local-shim branch,
+ * which hands the client a fixed dummy bearer-token string, NEVER the real
+ * session id, purely to satisfy jmap-jam's required config field.
+ *
+ * The actual HTTP entrypoint is mail/jmap.php, a thin front-controller that
+ * just boots EGroupware and forwards to session()/dispatch() below.
+ *
+ * @link https://www.egroupware.org
+ * @author Ralf Becker <rb-AT-egroupware.org>
+ * @copyright (c) 2026 by EGroupware GmbH <info-AT-egroupware.org>
+ * @package api
+ * @subpackage mail
+ * @license https://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ */
+
+namespace EGroupware\Api\Mail\Jmap;
+
+use EGroupware\Api;
+use EGroupware\Api\Jmap;
+use EGroupware\Api\Mail\Account;
+use EGroupware\Api\Mail\CustomLabels;
+
+class Imap extends Jmap\Base
+{
+	/**
+	 * type-name => concrete per-type class, satisfying Api\Jmap's lazy accessor contract
+	 * (eg. $session->mailbox) - see Imap/Mailbox.php etc, each a thin adapter delegating back
+	 * to this class's own (unchanged) static methods.
+	 *
+	 * @var array<string,class-string<Jmap\Type>>
+	 */
+	protected array $types = [
+		'mailbox' => Imap\Mailbox::class,
+		'email' => Imap\Email::class,
+		'thread' => Imap\Thread::class,
+		'quota' => Imap\Quota::class,
+	];
+
+	/**
+	 * @param string $accountId
+	 * @param string|null $calledFor account_id of the mailbox owner to impersonate (admin only,
+	 *  see mailboxSet()'s docblock's SECURITY note) - null for the caller's own mailbox
+	 */
+	public function __construct(protected string $accountId, protected ?string $calledFor=null)
+	{
+	}
+
+	/**
+	 * Request-scoped state shared between this session's per-type objects (which mailbox a
+	 * preceding Email/query's ids came from, thread maps, ...) - same $context dispatch()
+	 * already threads between calls in one batch, now shared via the owning session instead so
+	 * eg. Imap\Thread::get() can see a mailbox Imap\Email::query() remembered, matching
+	 * threadGet()'s documented fallback (see its own docblock).
+	 *
+	 * @var array
+	 */
+	public array $context = [];
+
+	/**
+	 * @return mixed accountId (matching Api\Jmap's own readonly property, so per-type
+	 *  classes can treat both session flavours uniformly) or calledFor
+	 */
+	public function __get(string $name)
+	{
+		return match ($name) {
+			'accountId' => $this->accountId,
+			'calledFor' => $this->calledFor,
+			default => parent::__get($name),
+		};
+	}
+
+	/**
+	 * JMAP session-discovery object, fetched once by jmap-jam's JamClient on construction
+	 *
+	 * Only 'apiUrl'/'downloadUrl'/'uploadUrl' are actually used by our own shipped code (verified
+	 * against jmap-jam's bundled source and MailJmap's own accountId resolution, which goes through
+	 * ajax_jmapBootstrap()'s response, not session parsing) - 'accounts'/'primaryAccounts' are
+	 * populated correctly too (see $accountId below) for spec-completeness/any other JMAP-generic
+	 * code that might call jmap-jam's own getPrimaryAccount(), but nothing shipped depends on them.
+	 *
+	 * @return array
+	 */
+	public static function session() : array
+	{
+		$url = Api\Framework::getUrl(Api\Framework::link('/mail/jmap.php'));
+
+		// accountId comes from ProfileHandler::localBootstrap()'s sessionUrl (mail/src/Ui/ProfileHandler.php) - session()
+		// has no other way to know which account a given JamClient instance belongs to, since it's
+		// otherwise a shared, generic endpoint. Not present when called directly/without a bootstrap
+		// (e.g. the demo fixture) - "accounts"/"primaryAccounts" then stay empty, matching before;
+		// nothing shipped relies on them (the app resolves its own accountId via
+		// ajax_jmapBootstrap()'s response, not jmap-jam's session parsing).
+		$accountId = (string)($_GET['accountId'] ?? '');
+		$accounts = $primaryAccounts = new \stdClass();
+		if ($accountId !== '')
+		{
+			$accounts = [$accountId => [
+				'name' => (string)($GLOBALS['egw_info']['user']['account_lid'] ?? ''),
+				'isPersonal' => true,
+				'isReadOnly' => false,
+				'accountCapabilities' => [
+					'urn:ietf:params:jmap:mail' => new \stdClass(),
+				],
+			]];
+			$primaryAccounts = ['urn:ietf:params:jmap:mail' => $accountId];
+		}
+
+		return [
+			'capabilities' => [
+				Http::JMAP_CORE => new \stdClass(),
+				'urn:ietf:params:jmap:mail' => new \stdClass(),
+				Http::JMAP_QUOTA => new \stdClass(),
+			],
+			'accounts' => $accounts,
+			'primaryAccounts' => $primaryAccounts,
+			'username' => (string)($GLOBALS['egw_info']['user']['account_lid'] ?? ''),
+			'apiUrl' => $url,
+			// jmap-jam's downloadBlob() substitutes these 4 placeholders verbatim (no URL-encoding
+			// of the substituted values - see urlsafeB64Encode()'s docblock) and does a plain GET,
+			// handled by mail/jmap.php's "download" branch -> JmapShim::download()
+			'downloadUrl' => $url.'?download=1&accountId={accountId}&blobId={blobId}&type={type}&name={name}',
+			// RFC 8620 §6.1 requires the {accountId} template - jmap-jam's uploadBlob() substitutes
+			// it before POSTing the raw bytes, handled by mail/jmap.php's "upload" branch ->
+			// JmapShim::upload()
+			'uploadUrl' => $url.'?upload=1&accountId={accountId}',
+			'eventSourceUrl' => $url,
+			'state' => '0',
+		];
+	}
+
+	/**
+	 * Work queued to run AFTER the HTTP response has already been sent to the client (see
+	 * mail/jmap.php's own fastcgi_finish_request() call) - doc/ai/projects/
+	 * mail-compose-jmap-migration.md, 2026-09-03 ("sending via the shim takes an awful long time",
+	 * acc_id=42): instrumentation found the actual SMTP transmission is fast (~0.6s) - nearly 80%
+	 * of the ~6s total was TWO follow-up IMAP round trips AFTER the mail had already gone out
+	 * (appending the Sent-folder copy, deleting+expunging the old Draft), neither of which the user
+	 * needs to wait for. emailSubmissionSet() queues that work here instead of running it inline;
+	 * jmap.php runs it once the client already has its response. Matches this project's existing
+	 * tolerance for best-effort post-send bookkeeping elsewhere (eg. saveDraft()'s own old-draft
+	 * cleanup) - a failure here means a slightly-stale Sent folder or an orphaned draft, not a lost
+	 * email (the send already succeeded by the time anything is queued).
+	 *
+	 * emailSet()'s move/destroy handling (same day, ralf: "for deleting/move-to-trash we already
+	 * have a workaround on client-side... optimistically expecting it to work, and error and
+	 * revert, if not later") also queues its (confirmed even slower - up to 7.4s for a single
+	 * move, Dovecot's own server-side MOVE processing time, see that method's own docblock) IMAP
+	 * COPY+move/STORE+EXPUNGE calls here. Deliberately weaker than the send case: the IMAP
+	 * operation IS the entire requested action (nothing "already succeeded" before queuing), so a
+	 * failure during the deferred call itself (rare - invalid folder/message id etc. are still
+	 * validated synchronously before anything is queued) has no way back to the client that already
+	 * got its "OK" - accepted for now since mail/js/app.ts's callMove()/deleteMessages() already
+	 * optimistically remove the row before the server even replies and only reconcile
+	 * (nm.refresh()) on an explicit rejection, which a deferred failure can no longer produce;
+	 * follow-up idea (not built): push a revert notification over the existing WebSocket channel
+	 * (project_mail_jmap_push_notifications) for this rare case instead of leaving it to the next
+	 * incidental refresh.
+	 *
+	 * @var callable[]
+	 */
+	private static array $deferredWork = [];
+
+	/**
+	 * Queue work to run after the response has been sent - see $deferredWork's own docblock.
+	 */
+	public static function queueDeferredWork(callable $work) : void
+	{
+		self::$deferredWork[] = $work;
+	}
+
+	/** One IMAP COPY/STORE command's worth of ids - see emailSet()'s own use of this. */
+	private const ID_CHUNK_SIZE = 50;
+
+	/**
+	 * Split a large id-set into chunks small enough for one IMAP command to reliably finish before
+	 * Dovecot's own connection/command timeout - found live 2026-09-07 that a single COPY command
+	 * carrying 354 ids ran long enough for Dovecot to just close the connection mid-command
+	 * (Horde_Imap_Client_Exception: "Mail server closed the connection unexpectedly"), while a 5-id
+	 * batch completed fine (just slower than a naive first check suggested - several seconds, not
+	 * instant). Also bounds how much work a single deferred closure loses if it's interrupted
+	 * partway (eg. a host-level hard request time limit some production hosts enforce regardless
+	 * of this script's own set_time_limit(0), see mail/jmap.php) - a chunk that already ran stays
+	 * done even if a later chunk fails.
+	 */
+	private static function chunkIds(array $ids) : array
+	{
+		return array_chunk($ids, self::ID_CHUNK_SIZE);
+	}
+
+	/**
+	 * Run (and clear) all queued deferred work - called by mail/jmap.php once the client already
+	 * has its response (fastcgi_finish_request()). A failure here can no longer be reported to the
+	 * client (that response is already gone) - logged instead, same as this codebase's other
+	 * best-effort cleanup paths. mail/jmap.php's own caller already redirects error_log() to a
+	 * physical on-shutdown.log file first (same reasoning as Egw::__destruct()'s identical fix) -
+	 * whatever error_log() was pointed at before is no longer somewhere reachable once the fastcgi
+	 * connection to the webserver is finished. Uses _egw_log_exception() (not a bare error_log()
+	 * one-liner) for the same file/line/trace/user/instance detail every other uncaught exception
+	 * in this codebase gets - found live 2026-09-07 that a bare message alone wasn't enough to even
+	 * confirm a deferred move (a large "delete all matching" batch) had failed at all, let alone why.
+	 *
+	 * Also pushes a user-facing error over the existing WebSocket channel (Api\Json\Push) - the
+	 * follow-up idea from this method's own earlier "no way back to the client" note above, now
+	 * built: even though the JMAP response with its (necessarily optimistic) "success" already
+	 * went out, the session itself is still around (this runs in the same PHP process, same
+	 * session, just after the HTTP response), so a push to "the current session" reaches the exact
+	 * browser tab that triggered it, same as any other live update.
+	 */
+	public static function runDeferredWork() : void
+	{
+		$work = self::$deferredWork;
+		self::$deferredWork = [];
+		foreach ($work as $fn)
+		{
+			try
+			{
+				$fn();
+			}
+			catch (\Throwable $e)
+			{
+				_egw_log_exception($e);
+				try
+				{
+					(new Api\Json\Push())->message(
+						lang('A mail operation failed in the background').': '.$e->getMessage(),
+						'error'
+					);
+				}
+				catch (\Throwable $push_e)
+				{
+					_egw_log_exception($push_e);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Run a batch of JMAP method calls, resolving RFC 8620 §3.7 result-references between them
+	 *
+	 * @param array $methodCalls [string $method, array $args, string $callId][]
+	 * @return array [string $method, array $result, string $callId][] (or "error" method on failure)
+	 */
+	public static function dispatch(array $methodCalls) : array
+	{
+		$responses = [];
+		$context = [];	// request-scoped state, e.g. remembering which mailbox an Email/query's ids came from
+
+		foreach ($methodCalls as $call)
+		{
+			// the client already gave up on this whole batch (eg. closed the preview before a
+			// slower earlier call in it finished) - no point doing further IMAP work for calls
+			// whose result will never be read
+			if (connection_aborted()) exit;
+
+			[$method, $args, $callId] = ((array)$call) + [null, [], null];
+			try
+			{
+				$args = self::resolveRefs((array)$args, $responses);
+				$accountId = (string)($args['accountId'] ?? '0');
+
+				switch ($method)
+				{
+					case 'Mailbox/query':
+						$result = self::mailboxQuery($accountId, $args);
+						break;
+					case 'Mailbox/get':
+						// $calledFor deliberately omitted, same reasoning as Mailbox/set below
+						$result = self::mailboxGet($accountId, $args);
+						break;
+					case 'Mailbox/set':
+						// $calledFor deliberately omitted (stays null = caller's own mailbox) -
+						// see mailboxSet()'s docblock: this client-facing dispatch() must never
+						// be how an admin-impersonated connection gets reached
+						$result = self::mailboxSet($accountId, $args);
+						break;
+					case 'Email/query':
+						$result = self::emailQuery($accountId, $args, $context);
+						break;
+					case 'Email/get':
+						$result = self::emailGet($accountId, $args, $context);
+						break;
+					case 'Thread/get':
+						$result = self::threadGet($accountId, $args, $context);
+						break;
+					case 'Email/set':
+						$result = self::emailSet($accountId, $args);
+						break;
+					case 'Email/import':
+						$result = self::emailImport($accountId, $args);
+						break;
+					case 'EmailSubmission/set':
+						// doc/ai/projects/mail-compose-jmap-migration.md's Step 2 - see
+						// emailSubmissionSet()'s own docblock for the full emulation
+						$result = self::emailSubmissionSet($accountId, $args);
+						break;
+					case 'Quota/get':
+						$result = self::quotaGet($accountId, $args);
+						break;
+					case 'Identity/get':
+						// Identity::synthesize() (Api\Mail\Jmap\Identity), the same implementation
+						// Http's own Identity/get uses - see that class's own docblock for why
+						// this is never a real per-backend passthrough. accountId "0" is the
+						// DB-free demo fixture (see this class's own docblock) - no real
+						// identities to synthesize, same "skip real work" pattern quotaGet() etc.
+						// already use for it.
+						$result = $accountId === '0' ? ['accountId' => '0', 'state' => '0', 'list' => [], 'notFound' => []]
+							: Identity::synthesize((int)$accountId, $args['ids'] ?? null);
+						break;
+					default:
+						throw new \Exception("Unsupported method '$method'");
+				}
+				$responses[] = [$method, $result, $callId];
+			}
+			catch (\Throwable $e)
+			{
+				$responses[] = ['error', ['type' => 'serverFail', 'description' => $e->getMessage()], $callId];
+			}
+		}
+		return $responses;
+	}
+
+	/**
+	 * Resolve "#"-prefixed result-reference args against already-collected responses (RFC 8620 §3.7)
+	 *
+	 * @param array $args
+	 * @param array $responses methodResponses collected so far in this request
+	 * @return array $args with every "#name" key resolved into a plain "name" key
+	 */
+	public static function resolveRefs(array $args, array $responses) : array
+	{
+		foreach ($args as $key => $ref)
+		{
+			if ($key === '' || $key[0] !== '#')
+			{
+				continue;
+			}
+			$name = substr($key, 1);
+			unset($args[$key]);
+
+			foreach ($responses as $response)
+			{
+				if ($response[2] !== $ref['resultOf'])
+				{
+					continue;
+				}
+				if ($response[0] === $ref['name'])
+				{
+					$args[$name] = self::jsonPath($response[1], $ref['path']);
+					continue 2;
+				}
+				// the referenced call itself failed (recorded as an "error" response, so its
+				// method name never matches $ref['name']) - propagate its real error instead of
+				// the generic, misleading "failed to resolve reference" message below
+				if ($response[0] === 'error')
+				{
+					throw new \Exception($response[1]['description'] ?? $response[1]['type'] ?? "referenced call '{$ref['resultOf']}' failed");
+				}
+			}
+			throw new \Exception("Failed to resolve result reference for '$name'");
+		}
+		return $args;
+	}
+
+	/**
+	 * Minimal JSON-pointer-ish path lookup, e.g. "/ids" -> $value['ids']
+	 *
+	 * RFC 8620 §3.7 result references also allow a "*" path segment: "if the result of the
+	 * previous path is a list, apply the following path to each item, and concatenate all the
+	 * resulting lists into a single list". Needed for Thread/get -> Email/get chaining
+	 * ("/list/*\/emailIds": flatten every returned thread's emailIds into one combined id list) -
+	 * doc/ai/projects/mail-threaded-view.md, Phase 2. A plain (no "*") path behaves exactly as
+	 * before.
+	 *
+	 * @param array $value
+	 * @param string $path
+	 * @return mixed|null
+	 */
+	public static function jsonPath(array $value, string $path)
+	{
+		return self::jsonPathParts($value, explode('/', ltrim($path, '/')));
+	}
+
+	/**
+	 * @param mixed $value
+	 * @param string[] $parts remaining path segments
+	 * @return mixed|null
+	 */
+	private static function jsonPathParts($value, array $parts)
+	{
+		if (!$parts)
+		{
+			return $value;
+		}
+		$part = array_shift($parts);
+		if ($part === '*')
+		{
+			if (!is_array($value))
+			{
+				return null;
+			}
+			$result = [];
+			foreach ($value as $item)
+			{
+				$resolved = self::jsonPathParts($item, $parts);
+				if (is_array($resolved))
+				{
+					// the referenced field is itself a list (e.g. Thread.emailIds) - concatenate,
+					// don't nest, per RFC 8620 §3.7's "list-of-lists ... concatenated into a
+					// single list"
+					array_push($result, ...array_values($resolved));
+				}
+				elseif ($resolved !== null)
+				{
+					$result[] = $resolved;
+				}
+			}
+			return $result;
+		}
+		if (!is_array($value) || !isset($value[$part]))
+		{
+			return null;
+		}
+		return self::jsonPathParts($value[$part], $parts);
+	}
+
+	/**
+	 * Mailbox/query - two modes, matching real JMAP's own MailboxFilterCondition semantics
+	 * (parentId and name are independent, combinable filter keys):
+	 *
+	 * - filter.name given (optionally with parentId): resolve a single known path-segment to a
+	 *   folder id. Id is just base64(EGroupware-canonical "/"-joined folder path) - a pure
+	 *   encoding, not a lookup, so no IMAP round-trip is needed. Existence is implicitly
+	 *   verified later, when Email/query actually searches that mailbox. This is the mode
+	 *   MailJmap.mailboxId() (mail/js/jmap.ts) uses for per-segment path resolution - must stay
+	 *   exactly as cheap as before, no regression.
+	 * - filter.name absent (only parentId, or neither for the top level): list every direct
+	 *   child of that parent - a real one-level Horde listMailboxes() LIST call, the lazy
+	 *   per-level folder-tree loading primitive (see doc/ai/projects/mail-folder-tree-jmap.md).
+	 *   Requesting the 'children' option lets mailboxGet() report hasChildren cheaply from the
+	 *   same attributes, mirroring mail_tree.inc.php's own nodeHasChildren(). filter.isSubscribed
+	 *   (RFC 8621 MailboxFilterCondition) mirrors classic mail_ui's own default: normal browsing
+	 *   only lists subscribed mailboxes unless the "show all folders" preference is on (see
+	 *   MailJmap.getMailboxChildren(), mail/js/jmap.ts, which sets this from that preference) -
+	 *   without it, MBOX_ALL_SUBSCRIBED below returns literally everything regardless of
+	 *   subscription (a confusingly-named Horde constant - "ALL" is the operative word, it does
+	 *   NOT mean "only subscribed"), flooding the tree with stale/unsubscribed mailboxes classic
+	 *   never showed by default.
+	 *
+	 * @param string $accountId
+	 * @param array $args {filter?: {name?: string, parentId?: string, isSubscribed?: bool}}
+	 * @return array {ids: string[]}
+	 */
+	public static function mailboxQuery(string $accountId, array $args) : array
+	{
+		$name = (string)($args['filter']['name'] ?? '');
+		$parentPath = !empty($args['filter']['parentId']) ? self::folderPath($args['filter']['parentId']) : '';
+
+		if ($name !== '')
+		{
+			$path = $parentPath !== '' ? $parentPath.'/'.$name : $name;
+			return ['ids' => [base64_encode($path)]];
+		}
+
+		if ($accountId === '0' || !($imap = self::imapServer($accountId)))
+		{
+			return ['ids' => []];
+		}
+		$subscribedOnly = array_key_exists('isSubscribed', (array)($args['filter'] ?? [])) &&
+			(bool)$args['filter']['isSubscribed'];
+		return ['ids' => self::listChildIds($imap, $parentPath, $subscribedOnly)];
+	}
+
+	/**
+	 * Quota/get (RFC 9425) for the local plain-IMAP shim - wraps the same classic IMAP QUOTA
+	 * extension lookup Api\Mail::getQuotaRoot() already uses, so a plain-IMAP account exposes
+	 * quota via JMAP too instead of the client needing a classic ajax_refreshQuotaDisplay()
+	 * fallback: for a shim account, that fallback would just run the exact same IMAP QUOTA
+	 * lookup anyway, one layer further down - there's nothing to be gained by declining here.
+	 *
+	 * @param string $accountId
+	 * @param array $args {ids?: ?string[]}
+	 * @return array {accountId, state, list: array[], notFound: string[]}
+	 */
+	public static function quotaGet(string $accountId, array $args) : array
+	{
+		$ids = $args['ids'] ?? null;
+		$list = ($accountId !== '0' && ($imap = self::imapServer($accountId))) ? self::quotaFromImap($imap) : [];
+		if (is_array($ids))
+		{
+			$list = array_values(array_filter($list, static fn($q) => in_array($q['id'], $ids)));
+		}
+		return [
+			'accountId' => $accountId,
+			'state' => '0',
+			'list' => $list,
+			'notFound' => is_array($ids) ? array_values(array_diff($ids, array_column($list, 'id'))) : [],
+		];
+	}
+
+	/**
+	 * The IMAP side of quotaGet(), split out so it can be exercised directly (via ReflectionMethod)
+	 * against a mocked connection in tests, same pattern listChildIds() already uses.
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @return array[] empty if the server has no QUOTA capability or no quota root on INBOX
+	 */
+	private static function quotaFromImap(\Horde_Imap_Client_Socket $imap) : array
+	{
+		// Many IMAP servers (Dovecot included) advertise a smaller, pre-authentication
+		// capability set than the real, post-login one - QUOTA is commonly post-auth-only
+		// (RFC 2087, per-user data), so checking hasCapability() before ensuring the
+		// connection is actually logged in sees the wrong (pre-auth) list and silently
+		// concludes QUOTA isn't supported even when it is. login() is safe/idempotent if the
+		// connection is already authenticated (confirmed live 2026-08-26: acc_id=42/90, both
+		// real Dovecot QUOTA-supporting accounts, showed hasCapability(QUOTA)=false without this).
+		$imap->login();
+
+		if (!$imap->hasCapability('QUOTA'))
+		{
+			return [];
+		}
+		$quota = $imap->getStorageQuotaRoot('INBOX');
+		if (!is_array($quota) || !isset($quota['QMAX']))
+		{
+			return [];
+		}
+		return [[
+			'id' => 'mail',
+			'resourceType' => 'octets',
+			'used' => (int)$quota['USED'] * 1024,
+			'hardLimit' => (int)$quota['QMAX'] * 1024,
+			'scope' => 'account',
+			'name' => 'Mail',
+			'types' => ['Mailbox', 'Email'],
+		]];
+	}
+
+	/**
+	 * The IMAP side of mailboxQuery()'s "list children" mode, split out so it can be exercised
+	 * directly (via ReflectionMethod) against a mocked connection in tests, same pattern
+	 * mailboxCreate()/mailboxUpdate()/mailboxDestroy() already use.
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $parentPath canonical "/"-joined path, '' for the top level
+	 * @param bool $subscribedOnly see mailboxQuery()'s docblock
+	 * @return string[] base64-encoded canonical paths of every direct child
+	 */
+	private static function listChildIds(\Horde_Imap_Client_Socket $imap, string $parentPath, bool $subscribedOnly = false) : array
+	{
+		$parentMailbox = self::hordeMailbox($imap, $parentPath);
+		$delimiter = self::namespaceDelimiter($imap, 'personal');
+		// IMAP '%' matches any characters except the hierarchy delimiter - i.e. exactly one
+		// level, never grandchildren, and never the parent itself (which needs at least one
+		// more character after the delimiter to match)
+		$pattern = $parentPath === '' ? '%' : $parentMailbox.$delimiter.'%';
+
+		$mailboxes = $subscribedOnly ?
+			$imap->listMailboxes($pattern, \Horde_Imap_Client::MBOX_SUBSCRIBED, ['children' => true]) : null;
+		// same defensive fallback as Api\Mail\Imap::getMailboxes()'s own "cyrus workaround": some
+		// accounts/servers never report ANY mailbox (not even INBOX) as subscribed at all - rather
+		// than show a folder level that's completely empty (including the account's OWN top
+		// level, which classic never did), fall back to the unfiltered listing for this request
+		if ($mailboxes === null || empty($mailboxes))
+		{
+			$mailboxes = $imap->listMailboxes($pattern, \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, ['children' => true]);
+		}
+		elseif ($subscribedOnly && $parentPath === '')
+		{
+			$mailboxes += self::namespaceRootsMissingFrom($imap, $mailboxes);
+		}
+
+		$ids = [];
+		foreach ($mailboxes as $mailboxName => $info)
+		{
+			$ids[] = base64_encode(self::canonicalPath($imap, $mailboxName));
+		}
+		return $ids;
+	}
+
+	/**
+	 * Namespace roots ("user"/"shared" style Other-Users/Shared containers) are structural
+	 * navigation doorways, not individually-subscribable mailboxes in the normal IMAP sense -
+	 * classic mail_tree.inc.php's own namespace handling (setOutStructure()) always shows them
+	 * regardless of subscription state. filter.isSubscribed's strict MBOX_SUBSCRIBED mode would
+	 * otherwise hide the only way into "Other Users"/"Shared Folders" entirely, since the
+	 * namespace root itself is essentially never individually \Subscribed.
+	 *
+	 * Matches by the conventional literal names ("user"/"shared", same as jmap.ts's own
+	 * sortTopLevel()'s isNamespaceRoot check) rather than $imap->getNameSpaceArray()'s reported
+	 * NAMESPACE-extension prefixes: a real account hit exactly this gap - IMAP NAMESPACE either
+	 * wasn't advertised or wasn't reported as an "others" entry for that server, even though
+	 * "user" was a perfectly real, browsable mailbox with real accessible children underneath it.
+	 *
+	 * Only included when the namespace actually has at least one accessible child (some other
+	 * user's folder shared with this one via IMAP ACL) - classic suppresses an empty namespace
+	 * root the same way, since an always-visible-but-empty "user"/"shared" entry is a confusing
+	 * dead end for the (much more common) case of a user with nothing granted to them at all.
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param array $mailboxes already-found top-level mailboxes, keyed by real IMAP name
+	 * @return array additional {mailboxName: info} entries for any missing, non-empty namespace root
+	 */
+	private static function namespaceRootsMissingFrom(\Horde_Imap_Client_Socket $imap, array $mailboxes) : array
+	{
+		$missing = [];
+		$delimiter = self::namespaceDelimiter($imap, 'others');
+		foreach (['user', 'shared'] as $name)
+		{
+			if (isset($mailboxes[$name]))
+			{
+				continue;
+			}
+			// MBOX_SUBSCRIBED (not MBOX_ALL_SUBSCRIBED - see this class's own listMailboxes() docs a
+			// few lines up) - this whole function only ever runs for a subscribedOnly request (see
+			// listChildIds()'s calling `elseif`), so "granted" here must mean "granted AND
+			// subscribed", or an always-visible root would be a dead end whenever something is
+			// shared with this user but they haven't subscribed to any of it yet (ralf's report) -
+			// still findable via the subscription dialog, which never calls with subscribedOnly true.
+			$hasGrantedChildren = $imap->listMailboxes($name.$delimiter.'%', \Horde_Imap_Client::MBOX_SUBSCRIBED, []);
+			if (empty($hasGrantedChildren))
+			{
+				continue;
+			}
+			$info = $imap->listMailboxes($name, \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, ['children' => true]);
+			if (!empty($info))
+			{
+				$missing += $info;
+			}
+		}
+		return $missing;
+	}
+
+	/**
+	 * @param string $folderId base64-encoded folder path
+	 * @return string
+	 */
+	public static function folderPath(string $folderId) : string
+	{
+		return $folderId === '' ? '' : (string)base64_decode($folderId);
+	}
+
+	/**
+	 * Translate a real IMAP mailbox name to the EGroupware-canonical "/"-joined folder path -
+	 * the reverse of hordeMailbox(), needed to build id/parentId for mailboxGet()'s results.
+	 *
+	 * A mailbox under the shared/other-users namespace can use a DIFFERENT delimiter than the
+	 * personal one (same reasoning as hordeMailbox()'s own isNamespaceRootPath() branch, fixed
+	 * there by 96d3d0e353 but missed here, its exact mirror image) - found live 2026-09-04 (ralf:
+	 * "Renaming mail subfolder under user doesn't work and the folder is no longer displayed...
+	 * visible at the mailaccount itself"). Unconditionally using the 'personal' delimiter left a
+	 * name like "user.otheruser.Sub" (others delimiter '.') completely unsplittable by
+	 * splitPath() (no '/' in it at all) once mailboxNode() called this - so it got parentId=null,
+	 * showing up as a top-level node instead of nested under "user/...", and renaming it later
+	 * re-derived the wrong (personal) delimiter too, via hordeMailbox() no longer recognizing the
+	 * mangled path as a namespace root.
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $mailboxName
+	 * @return string
+	 */
+	public static function canonicalPath(\Horde_Imap_Client_Socket $imap, string $mailboxName) : string
+	{
+		if (strtoupper($mailboxName) === 'INBOX')
+		{
+			return 'INBOX';
+		}
+		$othersPrefix = self::namespacePrefix($imap, 'others');
+		$isNamespaceRoot = $othersPrefix !== '' && stripos($mailboxName, $othersPrefix) === 0;
+		$delimiter = self::namespaceDelimiter($imap, $isNamespaceRoot ? 'others' : 'personal');
+		return $delimiter === '/' ? $mailboxName : str_replace($delimiter, '/', $mailboxName);
+	}
+
+	/**
+	 * Resolve a mailbox's JMAP role from IMAP SPECIAL-USE attributes, falling back to the
+	 * account's own configured special-folder names when the server doesn't support
+	 * SPECIAL-USE (Horde silently drops the 'special_use' listMailboxes() option in that case -
+	 * see Base.php's createMailbox()/listMailboxes() - so live attributes alone aren't reliable
+	 * across all servers). Same information Api\Mail::getSpecialUseFolders() uses classically,
+	 * reached directly off $imap (acc_folder_*) rather than through Api\Mail/mail_bo, to keep
+	 * this class's "never goes through mail_ui/Api\Mail" discipline.
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $mailboxName real IMAP mailbox name
+	 * @param string[] $attributes lower-cased LIST attributes for this mailbox
+	 * @return string|null one of inbox/trash/sent/drafts/junk/archive (real RFC 8621 MailboxRole
+	 *  values) plus the EGroupware-specific extensions templates/outbox (classic mail_tree.inc.php's
+	 *  own $definedFolders concept - no IMAP SPECIAL-USE or JMAP role exists for either, only the
+	 *  account's own acc_folder_template/acc_folder_outbox config), or null
+	 */
+	public static function roleFor(\Horde_Imap_Client_Socket $imap, string $mailboxName, array $attributes) : ?string
+	{
+		if (strtoupper($mailboxName) === 'INBOX')
+		{
+			return 'inbox';
+		}
+		static $specialUse = [
+			'\\trash' => 'trash', '\\sent' => 'sent', '\\drafts' => 'drafts',
+			'\\junk' => 'junk', '\\archive' => 'archive',
+		];
+		foreach ($attributes as $attribute)
+		{
+			if (isset($specialUse[strtolower($attribute)]))
+			{
+				return $specialUse[strtolower($attribute)];
+			}
+		}
+		static $accFolders = [
+			'acc_folder_trash' => 'trash', 'acc_folder_sent' => 'sent', 'acc_folder_draft' => 'drafts',
+			'acc_folder_junk' => 'junk', 'acc_folder_archive' => 'archive',
+			'acc_folder_template' => 'templates', 'acc_folder_outbox' => 'outbox',
+		];
+		foreach ($accFolders as $property => $role)
+		{
+			// read into a local var first - Mail\Imap has no __isset(), so empty()/isset()
+			// directly on the magic property would never even call __get() and always report
+			// "not set", silently defeating this whole fallback
+			$folderName = $imap->$property;
+			if (!empty($folderName) && strcasecmp($folderName, $mailboxName) === 0)
+			{
+				return $role;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Mailbox/get (RFC 8621 §2.6) for the local plain-IMAP shim - full node data for a set of
+	 * mailboxes, typically the ids a preceding Mailbox/query just listed (see mailboxQuery()'s
+	 * "list children" mode) - the lazy per-level folder-tree loading pair, batched together the
+	 * same way MailJmap.getRows() already batches Email/query+Email/get via a result-reference
+	 * (see MailJmap.getMailboxChildren(), mail/js/jmap.ts).
+	 *
+	 * SECURITY: see mailboxSet()'s docblock - $calledFor is never derived from client-supplied
+	 * $args, and dispatch()'s own 'Mailbox/get' case never passes it.
+	 *
+	 * @param string $accountId
+	 * @param array $args {ids?: string[]|null} null (or omitted) means "all mailboxes" (RFC 8620
+	 *  Get semantics) - supported for completeness, though the lazy per-level path above always
+	 *  passes explicit ids from a preceding query.
+	 * @param string|null $calledFor account_id of the mailbox owner to impersonate (admin only,
+	 *  see mailboxSet()), or null for the caller's own mailbox
+	 * @return array {list: array[], notFound: string[]}
+	 */
+	public static function mailboxGet(string $accountId, array $args, ?string $calledFor = null) : array
+	{
+		if ($accountId === '0' || !($imap = self::imapServer($accountId, $calledFor)))
+		{
+			return ['list' => [], 'notFound' => array_values((array)($args['ids'] ?? []))];
+		}
+		$requestedIds = array_key_exists('ids', $args) ? $args['ids'] : null;
+		return self::mailboxGetInternal($imap, $requestedIds, $calledFor);
+	}
+
+	/**
+	 * The IMAP side of mailboxGet(), split out so it can be exercised directly (via
+	 * ReflectionMethod) against a mocked connection in tests, same pattern
+	 * mailboxCreate()/mailboxUpdate()/mailboxDestroy() already use.
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string[]|null $requestedIds null = every mailbox (RFC 8620 "ids: null")
+	 * @param string|null $calledFor see mailboxGet()
+	 * @return array {list: array[], notFound: string[]}
+	 */
+	private static function mailboxGetInternal(\Horde_Imap_Client_Socket $imap, ?array $requestedIds, ?string $calledFor) : array
+	{
+		if ($requestedIds === null)
+		{
+			// RFC 8620 "ids: null" = all - a full-account scan is the correct/only way to
+			// answer this, unlike the explicit-ids case below. 'status' batches message/unseen
+			// counts into this same LIST call (same fix as the explicit-ids branch below) -
+			// without it, an account with hundreds of folders (the exact case this whole-account
+			// mode exists for, see the subscribe-management popup) would need hundreds of
+			// separate STATUS round-trips just to render the popup.
+			$list = [];
+			foreach ($imap->listMailboxes('*', \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, [
+				'attributes' => true, 'special_use' => true, 'children' => true,
+				'status' => \Horde_Imap_Client::STATUS_MESSAGES | \Horde_Imap_Client::STATUS_UNSEEN,
+			]) as $mailboxName => $info)
+			{
+				$list[] = self::mailboxNode($imap, $mailboxName, (array)($info['attributes'] ?? []), $info['status'] ?? null);
+			}
+			return ['list' => $list, 'notFound' => []];
+		}
+
+		// explicit ids (the lazy per-level path's normal case): look up every requested mailbox
+		// in ONE batched LIST(+STATUS, via Horde's LIST-STATUS support) call - critically, NOT a
+		// '*' full-account scan, which would defeat the whole point of lazy per-level loading for
+		// accounts with hundreds of folders. Previously this looped one listMailboxes() +
+		// mailboxNode()'s own separate status() call PER id - up to 2 sequential IMAP round-trips
+		// for every single mailbox, which for a level with dozens of siblings could take many
+		// seconds and made the whole request likely to time out or exceed the client's own
+		// timeout, causing a SILENT fallback to the classic ajax_foldertree path with no visible
+		// error at all (see doc/ai/projects/mail-folder-tree-jmap.md).
+		$mailboxNames = [];
+		$idByName = [];
+		foreach ($requestedIds as $id)
+		{
+			$mailboxName = self::hordeMailbox($imap, self::folderPath((string)$id), $calledFor);
+			$mailboxNames[] = $mailboxName;
+			$idByName[$mailboxName] = (string)$id;
+		}
+		$infos = $mailboxNames ? $imap->listMailboxes($mailboxNames, \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, [
+			'attributes' => true, 'special_use' => true, 'children' => true,
+			'status' => \Horde_Imap_Client::STATUS_MESSAGES | \Horde_Imap_Client::STATUS_UNSEEN,
+		]) : [];
+
+		$list = [];
+		$notFound = [];
+		foreach ($mailboxNames as $mailboxName)
+		{
+			if (empty($infos[$mailboxName]))
+			{
+				$notFound[] = $idByName[$mailboxName];
+				continue;
+			}
+			$list[] = self::mailboxNode($imap, $mailboxName, (array)($infos[$mailboxName]['attributes'] ?? []),
+				$infos[$mailboxName]['status'] ?? null);
+		}
+		return ['list' => $list, 'notFound' => $notFound];
+	}
+
+	/**
+	 * Build one Mailbox/get result entry - shared by both mailboxGet() modes
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $mailboxName real IMAP mailbox name
+	 * @param string[] $rawAttributes LIST attributes as returned by Horde (mixed case)
+	 * @param array|null $status pre-fetched {messages, unseen} (from listMailboxes()'s own
+	 *  'status' option, see mailboxGetInternal()'s explicit-ids batch) - avoids a separate STATUS
+	 *  round-trip per mailbox; null means "fetch it here" (the ids:null full-scan mode, which
+	 *  doesn't request 'status' on its own listMailboxes() call)
+	 * @return array
+	 */
+	private static function mailboxNode(\Horde_Imap_Client_Socket $imap, string $mailboxName, array $rawAttributes, ?array $status = null) : array
+	{
+		$path = self::canonicalPath($imap, $mailboxName);
+		[$parentPath, $leafName] = self::splitPath($path);
+		$attributes = array_map('strtolower', $rawAttributes);
+
+		$counts = ['messages' => 0, 'unseen' => 0];
+		if ($status === null)
+		{
+			try
+			{
+				$status = $imap->status($mailboxName, \Horde_Imap_Client::STATUS_MESSAGES | \Horde_Imap_Client::STATUS_UNSEEN);
+			}
+			catch (\Throwable $e)
+			{
+				// \Noselect namespace-separator mailboxes (and similar) can throw on STATUS -
+				// leave the zero-defaults rather than failing the whole mailboxGet() call
+				$status = [];
+			}
+		}
+		$counts['messages'] = (int)($status['messages'] ?? 0);
+		$counts['unseen'] = (int)($status['unseen'] ?? 0);
+
+		return [
+			'id' => base64_encode($path),
+			'name' => $path === 'INBOX' ? 'INBOX' : $leafName,
+			'parentId' => $parentPath !== '' ? base64_encode($parentPath) : null,
+			'sortOrder' => 0,
+			'isSubscribed' => in_array('\\subscribed', $attributes, true),
+			'totalEmails' => $counts['messages'],
+			'unreadEmails' => $counts['unseen'],
+			'role' => self::roleFor($imap, $mailboxName, $attributes),
+			'hasChildren' => in_array('\\haschildren', $attributes, true) ? true :
+				(in_array('\\hasnochildren', $attributes, true) ? false : true),
+			// RFC 8621's Mailbox object has no such property - real JMAP (Stalwart) has no
+			// namespace-root concept at all, so this only ever appears (as false) for the local
+			// IMAP shim's own synthetic "user"/"shared" namespace-root entries
+			// (namespaceRootsMissingFrom()) - found live 2026-09-10: a REST/JMAP-lite client has
+			// no other way to know one of the folders it just listed isn't a real, queryable
+			// mailbox (see emailQuery()'s/emailGet()'s own isBareNamespaceRoot() guard, which
+			// rejects trying anyway rather than relying on every caller checking this first).
+			// Derived from the real IMAP \Noselect LIST attribute (already fetched into
+			// $attributes above) rather than re-deriving "is this a namespace root" from the name
+			// again - more general (covers any other \Noselect mailbox a server might report, not
+			// just the two known namespace-root names) and free (no extra IMAP round trip).
+			'isSelectable' => !in_array('\\noselect', $attributes, true),
+			// classic mail_tree.inc.php's own "Set Acl capability for INBOX" - only ever checked
+			// there, since ACL editing is an account-level feature, not a per-folder one; a live
+			// IMAP connection to this account is already open by the time any of its mailboxes are
+			// fetched, so queryCapability() (an in-memory lookup against the already-fetched
+			// CAPABILITY response) costs nothing extra here - see mail/js/app.ts's aclEnabled()
+			// (reads it back via folderTree.ts's buildNode(), as node.data.acl) and
+			// MailJmap.resolveAclCapable() for the real-JMAP/Stalwart equivalent.
+			'aclCapable' => $path === 'INBOX' && $imap->queryCapability('ACL'),
+		];
+	}
+
+	/**
+	 * Mailbox/set (RFC 8621 §2.5): create/rename/move/(un)subscribe/delete real IMAP mailboxes
+	 * for the local-shim path, backed directly by Horde's createMailbox()/renameMailbox()/
+	 * deleteMailbox()/subscribeMailbox() - the same primitives Api\Mail::createFolder()/
+	 * renameFolder()/deleteFolder() use classically (see doc/ai/projects/mail-folder-tree-jmap.md).
+	 *
+	 * Unlike emailSet() (which relies on dispatch()'s outer try/catch for the whole call), every
+	 * create/update/destroy entry here is individually try/caught into its own notCreated/
+	 * notUpdated/notDestroyed SetError - folder operations routinely fail per-item ("already
+	 * exists", "not empty", permission denied) in ways a batch of otherwise-independent folder
+	 * edits shouldn't all abort for.
+	 *
+	 * SECURITY: $calledFor is how an admin-impersonated connection (managing another user's
+	 * mailbox) reaches this method - it is NEVER read from client-supplied $args, and
+	 * dispatch()'s own 'Mailbox/set' case NEVER passes it. Per
+	 * doc/ai/projects/mail-folder-tree-jmap.md's hard constraint, the ordinary client-facing
+	 * JMAP endpoint (mail/jmap.php -> dispatch()) must never let a browser session act as anyone
+	 * but the logged-in user. $calledFor exists solely for a *trusted server-side PHP caller* to
+	 * call this method directly, after running its own admin-permission check - mirroring
+	 * mail_acl::_require_admin_permission()'s existing gate for classic ACL editing. This isn't
+	 * a hypothetical caller shape: admin >> Manage users >> (edit a mail account) already reaches
+	 * mail_acl.inc.php exactly this way today, for ACL editing specifically - see
+	 * mail_hooks::emailadmin_edit()'s 'mail_acl' action, a hook-registered toolbar button linking
+	 * to menuaction mail.mail_acl.edit with an explicit acc_id+account_id (the same hook also
+	 * wires up 'mail_vacation' -> mail_sieve.editVacation the same way). If a folder-CRUD admin
+	 * screen is ever built, that same hook + $_GET['account_id'] + _require_admin_permission()
+	 * wiring is the template to follow - mail_acl.inc.php itself just doesn't do folder CRUD
+	 * (create/rename/delete/subscribe), only ACL grants, so no caller reaches this method's
+	 * $calledFor branch yet. Never wire $calledFor to anything reachable from raw HTTP request
+	 * data.
+	 *
+	 * @param string $accountId
+	 * @param array $args {create?: {creationId: {name, parentId?, isSubscribed?}},
+	 *  update?: {mailboxId: {name?, parentId?, isSubscribed?}}, destroy?: [mailboxId],
+	 *  onDestroyRemoveEmails?: bool}
+	 * @param string|null $calledFor account_id of the mailbox owner to impersonate (admin only,
+	 *  see SECURITY above), or null for the caller's own mailbox
+	 * @return array RFC 8620 §5.3 Set response shape
+	 */
+	public static function mailboxSet(string $accountId, array $args, ?string $calledFor = null) : array
+	{
+		$created = [];
+		$notCreated = [];
+		$updated = [];
+		$notUpdated = [];
+		$destroyed = [];
+		$notDestroyed = [];
+		$imap = $accountId !== '0' ? self::imapServer($accountId, $calledFor) : null;
+
+		foreach ((array)($args['create'] ?? []) as $creationId => $props)
+		{
+			$creationId = (string)$creationId;
+			if (!$imap)
+			{
+				$notCreated[$creationId] = ['type' => 'forbidden', 'description' => 'No mailbox connection'];
+				continue;
+			}
+			try
+			{
+				$created[$creationId] = self::mailboxCreate($imap, (array)$props, $calledFor);
+			}
+			catch (\Throwable $e)
+			{
+				$notCreated[$creationId] = ['type' => 'invalidProperties', 'description' => $e->getMessage()];
+			}
+		}
+
+		foreach ((array)($args['update'] ?? []) as $id => $patch)
+		{
+			$id = (string)$id;
+			if (!$imap)
+			{
+				$notUpdated[$id] = ['type' => 'forbidden', 'description' => 'No mailbox connection'];
+				continue;
+			}
+			try
+			{
+				self::mailboxUpdate($imap, $id, (array)$patch, $calledFor);
+				$updated[$id] = null;
+			}
+			catch (\Throwable $e)
+			{
+				$notUpdated[$id] = ['type' => 'notFound', 'description' => $e->getMessage()];
+			}
+		}
+
+		$removeEmails = !empty($args['onDestroyRemoveEmails']);
+		foreach ((array)($args['destroy'] ?? []) as $id)
+		{
+			$id = (string)$id;
+			if (!$imap)
+			{
+				$notDestroyed[$id] = ['type' => 'forbidden', 'description' => 'No mailbox connection'];
+				continue;
+			}
+			try
+			{
+				self::mailboxDestroy($imap, $id, $removeEmails, $calledFor);
+				$destroyed[] = $id;
+			}
+			catch (\Throwable $e)
+			{
+				$notDestroyed[$id] = [
+					'type' => $e->getMessage() === 'mailboxHasEmail' ? 'mailboxHasEmail' : 'notFound',
+					'description' => $e->getMessage(),
+				];
+			}
+		}
+
+		return [
+			'accountId' => $accountId,
+			'oldState' => '0',
+			'newState' => '0',
+			'created' => (object)$created,
+			'notCreated' => (object)$notCreated,
+			'updated' => (object)$updated,
+			'notUpdated' => (object)$notUpdated,
+			'destroyed' => $destroyed,
+			'notDestroyed' => (object)$notDestroyed,
+		];
+	}
+
+	/**
+	 * Split a canonical "/"-joined folder path into its parent path and leaf name
+	 *
+	 * @param string $path
+	 * @return array{0: string, 1: string} [$parentPath, $leafName]
+	 */
+	public static function splitPath(string $path) : array
+	{
+		$pos = strrpos($path, '/');
+		return $pos === false ? ['', $path] : [substr($path, 0, $pos), substr($path, $pos + 1)];
+	}
+
+	/**
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param array $props {name: string, parentId?: string, isSubscribed?: bool}
+	 * @param string|null $calledFor see mailboxSet()
+	 * @return array {id: string}
+	 */
+	private static function mailboxCreate(\Horde_Imap_Client_Socket $imap, array $props, ?string $calledFor) : array
+	{
+		$name = (string)($props['name'] ?? '');
+		if ($name === '')
+		{
+			throw new \InvalidArgumentException("'name' is required");
+		}
+		$parentPath = !empty($props['parentId']) ? self::folderPath((string)$props['parentId']) : '';
+		$path = $parentPath !== '' ? $parentPath.'/'.$name : $name;
+		$mailbox = self::hordeMailbox($imap, $path, $calledFor);
+
+		$imap->createMailbox($mailbox);
+		// default to subscribed, matching Api\Mail::createFolder()'s classic behaviour, unless
+		// the client explicitly asked otherwise
+		$imap->subscribeMailbox($mailbox, !array_key_exists('isSubscribed', $props) || (bool)$props['isSubscribed']);
+
+		return ['id' => base64_encode($path)];
+	}
+
+	/**
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $id base64-encoded folder path
+	 * @param array $patch {name?: string, parentId?: string|null, isSubscribed?: bool}
+	 * @param string|null $calledFor see mailboxSet()
+	 */
+	private static function mailboxUpdate(\Horde_Imap_Client_Socket $imap, string $id, array $patch, ?string $calledFor) : void
+	{
+		if (($unknown = array_diff(array_keys($patch), ['name', 'parentId', 'isSubscribed'])))
+		{
+			throw new \InvalidArgumentException('Unsupported propert'.(count($unknown) > 1 ? 'ies' : 'y').': '.implode(', ', $unknown));
+		}
+		$path = self::folderPath($id);
+		if ($path === '')
+		{
+			throw new \InvalidArgumentException('Cannot update the mailbox root');
+		}
+		[$parentPath, $leafName] = self::splitPath($path);
+
+		$newParentPath = array_key_exists('parentId', $patch)
+			? ($patch['parentId'] !== null ? self::folderPath((string)$patch['parentId']) : '')
+			: $parentPath;
+		$newLeafName = array_key_exists('name', $patch) ? (string)$patch['name'] : $leafName;
+		$newPath = $newParentPath !== '' ? $newParentPath.'/'.$newLeafName : $newLeafName;
+
+		if ($newPath !== $path)
+		{
+			$imap->renameMailbox(self::hordeMailbox($imap, $path, $calledFor), self::hordeMailbox($imap, $newPath, $calledFor));
+		}
+		if (array_key_exists('isSubscribed', $patch))
+		{
+			$imap->subscribeMailbox(self::hordeMailbox($imap, $newPath, $calledFor), (bool)$patch['isSubscribed']);
+		}
+	}
+
+	/**
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $id base64-encoded folder path
+	 * @param bool $removeEmails RFC 8621 onDestroyRemoveEmails - false rejects (throws with
+	 *  message 'mailboxHasEmail', matched by mailboxSet()'s catch) a non-empty mailbox instead
+	 *  of silently deleting its messages along with it
+	 * @param string|null $calledFor see mailboxSet()
+	 */
+	private static function mailboxDestroy(\Horde_Imap_Client_Socket $imap, string $id, bool $removeEmails, ?string $calledFor) : void
+	{
+		$path = self::folderPath($id);
+		if ($path === '')
+		{
+			throw new \InvalidArgumentException('Cannot destroy the mailbox root');
+		}
+		$mailbox = self::hordeMailbox($imap, $path, $calledFor);
+
+		if (!$removeEmails)
+		{
+			$status = $imap->status($mailbox, \Horde_Imap_Client::STATUS_MESSAGES);
+			if (!empty($status['messages']))
+			{
+				throw new \RuntimeException('mailboxHasEmail');
+			}
+		}
+		// same order Api\Mail::deleteFolder() uses classically: unsubscribe first, then delete
+		$imap->subscribeMailbox($mailbox, false);
+		$imap->deleteMailbox($mailbox);
+	}
+
+	/**
+	 * URL-safe base64 (RFC 4648 §5) - used for blobId (see bodyPartToJmap()), since jmap-jam's
+	 * downloadBlob() substitutes it into a URL template *without* URL-encoding the value first, so
+	 * plain base64's '+', '/', '=' would otherwise corrupt the value ('+' in particular is decoded
+	 * as a space by PHP's own $_GET parsing).
+	 */
+	public static function urlsafeB64Encode(string $data) : string
+	{
+		return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
+	}
+
+	public static function urlsafeB64Decode(string $data) : string
+	{
+		return (string)base64_decode(strtr($data, '-_', '+/'));
+	}
+
+	/**
+	 * Get (and cache, per request) the Horde_Imap_Client for a real account, or null for the demo account
+	 *
+	 * $calledFor requests an admin-impersonated connection for another user's mailbox - same
+	 * meaning as Mail\Account::read()'s $called_for / Mail\Account::imapServer()'s
+	 * $_adminConnection, and same security expectation: the CALLER is responsible for verifying
+	 * the current user is actually allowed to impersonate $calledFor (mirrors
+	 * mail_acl::_require_admin_permission()) before ever passing it here - this method itself
+	 * does no such check, it only opens the connection. See mailboxSet()'s docblock for why
+	 * dispatch() (the client-facing entry point) must never be the source of a non-null
+	 * $calledFor.
+	 *
+	 * @param string $accountId
+	 * @param string|null $calledFor account_id of the mailbox owner to impersonate (admin only), or
+	 *  null for the caller's own mailbox
+	 * @return \Horde_Imap_Client_Socket|null
+	 */
+	public static function imapServer(string $accountId, ?string $calledFor = null) : ?\Horde_Imap_Client_Socket
+	{
+		static $servers = [];
+		if ($accountId === '0')
+		{
+			return null;
+		}
+		$key = $accountId.'|'.($calledFor ?? '');
+		// Classic Mail\Imap's own default socket timeout (Imap::getTimeOut(), 20s) is tuned for a
+		// single synchronous server-rendered request per user action - the shim's per-request-
+		// fresh-connection model (no cross-request pooling, no WebSocket to amortize it) fires
+		// several independent small requests per action instead, and under real backend I/O
+		// pressure that concurrency was enough to make a legitimately-still-working command hit
+		// that 20s ceiling and throw (found live 2026-08-27 - Dovecot's own MOVE response reported
+		// "Move completed (24.933 ... secs)" server-side, not a hang). Since the hosting farm
+		// already kills any request over 300s regardless, a shorter in-process timeout here only
+		// ever produces a false-alarm error for a request that's still legitimately working -
+		// same reasoning as the client-side request-timeout removal in jmap-jam-websocket.ts.
+		// self::IMAP_TIMEOUT comfortably exceeds that 300s ceiling so it's never the limiting factor.
+		return $servers[$key] ??= Account::read((int)$accountId, $calledFor)
+			->imapServer($calledFor !== null ? (int)$calledFor : false, self::IMAP_TIMEOUT);
+	}
+
+	/**
+	 * Socket read timeout (seconds) for connections opened via imapServer() above - see that
+	 * method's docblock for why this deliberately exceeds the hosting farm's own 300s request
+	 * kill instead of using Mail\Imap's classic 20s default.
+	 */
+	const IMAP_TIMEOUT = 600;
+
+	/**
+	 * Translate an EGroupware-canonical "/"-joined folder path to the account's real IMAP mailbox name
+	 *
+	 * With $calledFor set, the path is resolved under the impersonated user's own mailbox
+	 * namespace root instead of the connection-owner's personal one - same root
+	 * mail_acl::edit() resolves via getUserMailboxString($account_id) for its own (ACL-only)
+	 * admin-impersonated screens, joined with the "others" namespace's own delimiter (which can
+	 * differ from the "personal" one $imap's own account normally uses).
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $path
+	 * @param string|null $calledFor account_id of the mailbox owner to impersonate (admin only), or
+	 *  null for $imap's own connection owner
+	 * @return string
+	 */
+	public static function hordeMailbox(\Horde_Imap_Client_Socket $imap, string $path, ?string $calledFor = null) : string
+	{
+		if ($calledFor !== null)
+		{
+			if ($path === '')
+			{
+				return $imap->getUserMailboxString($calledFor);
+			}
+			$delimiter = self::namespaceDelimiter($imap, 'others');
+
+			return $imap->getUserMailboxString($calledFor, str_replace('/', $delimiter, $path));
+		}
+
+		if ($path === '' || strtoupper($path) === 'INBOX')
+		{
+			return 'INBOX';
+		}
+		// A path under the shared/other-users namespace root ("user/..."/"shared/...", see
+		// isNamespaceRootPath()) lives in that namespace, not "personal" - its delimiter can differ
+		// (same reasoning as the $calledFor branch above, and namespaceRootsMissingFrom()'s own use
+		// of the "others" delimiter for both root names).
+		$delimiter = self::namespaceDelimiter($imap, self::isNamespaceRootPath($path) ? 'others' : 'personal');
+
+		return $delimiter === '/' ? $path : str_replace('/', $delimiter, $path);
+	}
+
+	/**
+	 * Whether $path's first "/"-segment is a shared/other-users namespace root ("user"/"shared") -
+	 * PHP counterpart of folderTree.ts's isNamespaceRootName(), same convention (case-insensitive,
+	 * matched by literal name only, not by the server's advertised NAMESPACE prefixes).
+	 *
+	 * @param string $path
+	 * @return bool
+	 */
+	private static function isNamespaceRootPath(string $path) : bool
+	{
+		return (bool)preg_match('#^(user|shared)(/|$)#i', $path);
+	}
+
+	/**
+	 * Whether $path IS, exactly, the bare shared/other-users namespace root itself ("user" or
+	 * "shared", no sub-path) - deliberately narrower than isNamespaceRootPath() above, which also
+	 * matches every path UNDER that root (eg. "user/otherperson/INBOX", a perfectly normal,
+	 * selectable mailbox once shared). Only the bare root is a real IMAP server never actually
+	 * has "as a mailbox" - it's a synthetic navigation-only entry namespaceRootsMissingFrom()
+	 * deliberately injects into the folder listing (so a client can expand into other users'
+	 * shared mailboxes at all), matching the classic tree's own \Noselect-flagged rendering of it
+	 * (see folderTree.ts's isNamespaceRootName()/noSelect) - JMAP itself has no concept of this at
+	 * all (no multiple namespaces), so nothing about it is visible to a real-JMAP/Stalwart client.
+	 *
+	 * Found live 2026-09-10 (ralf, via a real REST client): a JMAP-lite REST caller that lists
+	 * folders and then blindly fetches "emails" from every listed folder id has no way to know
+	 * this one isn't real - the shim just forwarded the bare path straight to IMAP SELECT, and the
+	 * server understandably refused ("Could not open mailbox 'user'"), surfacing as a raw 500 with
+	 * an internal Horde stack trace instead of a clean, documented error.
+	 *
+	 * @param string $path
+	 * @return bool
+	 */
+	private static function isBareNamespaceRoot(string $path) : bool
+	{
+		return (bool)preg_match('#^(user|shared)$#i', $path);
+	}
+
+	/**
+	 * Get (and cache, per request/connection) one of $imap's namespace delimiters
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $namespace 'personal'|'others'|'shared' (Horde_Imap_Client_Socket::getNameSpaceArray()'s keys)
+	 * @return string
+	 */
+	private static function namespaceDelimiter(\Horde_Imap_Client_Socket $imap, string $namespace) : string
+	{
+		static $delimiters = [];
+		$key = spl_object_id($imap).'|'.$namespace;
+		return $delimiters[$key] ??= $imap->getNameSpaceArray()[$namespace][0]['delimiter'] ?? '/';
+	}
+
+	/**
+	 * Get (and cache, per request/connection) one of $imap's namespace prefixes - the raw IMAP
+	 * mailbox-name prefix identifying that namespace (eg. "user" + delimiter) - canonicalPath()'s
+	 * own counterpart of namespaceDelimiter(), needed to recognize a shared/other-users mailbox
+	 * name BEFORE it is translated to a canonical path (isNamespaceRootPath() only works on the
+	 * canonical "/"-joined form, the very thing canonicalPath() is building).
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $namespace 'personal'|'others'|'shared' (Horde_Imap_Client_Socket::getNameSpaceArray()'s keys)
+	 * @return string
+	 */
+	private static function namespacePrefix(\Horde_Imap_Client_Socket $imap, string $namespace) : string
+	{
+		static $prefixes = [];
+		$key = spl_object_id($imap).'|'.$namespace;
+		return $prefixes[$key] ??= (string)($imap->getNameSpaceArray()[$namespace][0]['name'] ?? '');
+	}
+
+	/**
+	 * The best server-side IMAP THREAD algorithm this account can use, or null if none - ORDEREDSUBJECT
+	 * is deliberately never returned even if it's the only one advertised (doc/ai/projects/
+	 * mail-threaded-view.md, Phase 1 decision: too weak - subject+date only, no real reply-chain
+	 * awareness - to offer as "threading support" at all), matching
+	 * ProfileHandler::jmapBootstrap()'s identical REFERENCES/REFS-only capability gate for
+	 * supportsThreading.
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @return int|null one of Horde_Imap_Client::THREAD_REFERENCES/THREAD_REFS (both plain int
+	 *  constants - NOT ?string, which would silently coerce them to "2"/"3")
+	 */
+	private static function threadCriteria(\Horde_Imap_Client_Socket $imap) : ?int
+	{
+		$algorithms = (array)($imap->queryCapability('THREAD') ?: []);
+		if (in_array('REFERENCES', $algorithms, true))
+		{
+			return \Horde_Imap_Client::THREAD_REFERENCES;
+		}
+		if (in_array('REFS', $algorithms, true))
+		{
+			return \Horde_Imap_Client::THREAD_REFS;
+		}
+		return null;
+	}
+
+	/**
+	 * uid -> threadId map for every message in $mailbox, via the server's real IMAP THREAD command
+	 * (Horde_Imap_Client_Base::thread(), which transparently uses Horde's own IMAP result cache -
+	 * no bespoke caching needed here, same as search() below already relies on). Memoized per
+	 * mailbox in $context so one dispatch() batch never issues the underlying THREAD command twice
+	 * (Email/query+Email/get both wanting it, or a standalone Thread/get).
+	 *
+	 * threadId is simply the thread's lowest/root uid (Horde's own "base", RFC 5256 terminology) -
+	 * a singleton thread (no other message references it) has no base, so it's its own threadId,
+	 * matching real JMAP's Email.threadId semantics for an unthreaded message.
+	 *
+	 * Servers with no THREAD=REFERENCES/REFS support (threadCriteria() returns null) get an empty
+	 * map back - every lookup then falls back to "this message is its own thread", i.e. behaves
+	 * exactly like collapseThreads/threadId were never requested. Reachable only defensively: real
+	 * callers only ever ask for this once ProfileHandler::jmapBootstrap() has already gated
+	 * supportsThreading on the same capability check.
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $mailbox
+	 * @param array &$context see emailQuery()
+	 * @param string $accountId
+	 * @return array uid(string) => threadId(string)
+	 */
+	private static function threadMap(\Horde_Imap_Client_Socket $imap, string $mailbox, array &$context, string $accountId) : array
+	{
+		if (isset($context['threadMap'][$accountId][$mailbox]))
+		{
+			return $context['threadMap'][$accountId][$mailbox];
+		}
+		$criteria = self::threadCriteria($imap);
+		if (!$criteria)
+		{
+			return $context['threadMap'][$accountId][$mailbox] = [];
+		}
+		$map = [];
+		foreach ($imap->thread($mailbox, ['criteria' => $criteria])->getThreads() as $group)
+		{
+			foreach ($group as $uid => $info)
+			{
+				$map[(string)$uid] = (string)($info->base ?? $uid);
+			}
+		}
+		return $context['threadMap'][$accountId][$mailbox] = $map;
+	}
+
+	/**
+	 * Email/query: translate MailJmap.buildFilter()'s filter tree + buildSort()'s sort into a
+	 * single Horde_Imap_Client::search() call, mirroring mail_ui::get_rows()'s pagination.
+	 *
+	 * collapseThreads (RFC 8621 §4.4.4, doc/ai/projects/mail-threaded-view.md Phase 2): fold the
+	 * already-sorted id list down to one representative per thread, keeping each thread's first
+	 * (in sort order) message - same semantics real JMAP servers use, computed here via
+	 * threadMap() instead of a server-side collapse operation IMAP has no equivalent for.
+	 *
+	 * @param string $accountId
+	 * @param array $args {filter: array, sort?: array, position?: int, limit?: int, collapseThreads?: bool}
+	 * @param array &$context request-scoped state, used by the matching Email/get to know which
+	 *  mailbox the returned ids belong to (our ids are plain per-mailbox IMAP UIDs, not the
+	 *  globally-unique ids real JMAP requires - see the class docblock)
+	 * @return array {accountId: string, ids: string[], total: int}
+	 */
+	public static function emailQuery(string $accountId, array $args, array &$context) : array
+	{
+		$filter = (array)($args['filter'] ?? []);
+		$folder = self::folderPath((string)self::findInMailbox($filter));
+
+		if ($accountId === '0')
+		{
+			return self::demoEmailQuery($folder, $args, $context);
+		}
+		// found live 2026-09-10: the shared/other-users namespace root itself ("user"/"shared",
+		// see isBareNamespaceRoot()'s own docblock) is a real folder-tree entry (so a client can
+		// navigate INTO it), but never a real, selectable IMAP mailbox - querying it always fails
+		// server-side. Caught here, before ever reaching IMAP, so a REST client gets a clean 400
+		// instead of a raw Horde SELECT-failure stack trace.
+		if (self::isBareNamespaceRoot($folder))
+		{
+			throw new \Exception("Folder '$folder' is a shared-mailboxes namespace root, not a real mailbox - list its children instead", 400);
+		}
+
+		$imap = self::imapServer($accountId);
+		$mailbox = self::hordeMailbox($imap, $folder);
+
+		$query = self::filterToQuery($filter);
+		// JMAP never exposes messages with the IMAP \Deleted flag (RFC 8621 §4.1.1) - match that
+		$query->flag(\Horde_Imap_Client::FLAG_DELETED, false);
+
+		$sorted = $imap->search($mailbox, $query, [
+			'sort' => self::buildSort((array)($args['sort'] ?? [])),
+		]);
+		$ids = array_values($sorted['match']->ids ?? []);
+		$total = (int)($sorted['count'] ?? count($ids));
+
+		if (!empty($args['collapseThreads']))
+		{
+			$map = self::threadMap($imap, $mailbox, $context, $accountId);
+			$seenThreads = $ids = [];
+			foreach (array_values($sorted['match']->ids ?? []) as $uid)
+			{
+				$threadId = $map[(string)$uid] ?? (string)$uid;
+				if (isset($seenThreads[$threadId]))
+				{
+					continue;
+				}
+				$seenThreads[$threadId] = true;
+				$ids[] = $uid;
+			}
+			$total = count($ids);
+		}
+
+		$position = max(0, (int)($args['position'] ?? 0));
+		$limit = (int)($args['limit'] ?? 50) ?: 50;
+		$page = array_slice($ids, $position, $limit);
+
+		// remembered for the Email/get that MailJmap always batches right after this call
+		$context['mailbox'][$accountId] = $mailbox;
+
+		return [
+			'accountId' => $accountId,
+			'ids' => array_map('strval', $page),
+			'total' => $total,
+		];
+	}
+
+	/**
+	 * Find the (always exactly one) "inMailbox" condition anywhere in a filter tree
+	 *
+	 * @param array $filter
+	 * @return string|null
+	 */
+	public static function findInMailbox(array $filter) : ?string
+	{
+		if (isset($filter['inMailbox']))
+		{
+			return $filter['inMailbox'];
+		}
+		foreach ((array)($filter['conditions'] ?? []) as $condition)
+		{
+			if (($id = self::findInMailbox((array)$condition)) !== null)
+			{
+				return $id;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Translate a filter tree (AND/OR/NOT of conditions, exactly what MailJmap.buildFilter() sends)
+	 * into a Horde_Imap_Client_Search_Query, pushing NOT down to each leaf's own $not flag via
+	 * De Morgan's laws (Horde has no query-level negation, only per-condition $not).
+	 *
+	 * @param array $filter
+	 * @param bool $negate
+	 * @return \Horde_Imap_Client_Search_Query
+	 */
+	public static function filterToQuery(array $filter, bool $negate=false) : \Horde_Imap_Client_Search_Query
+	{
+		$query = new \Horde_Imap_Client_Search_Query();
+
+		if (isset($filter['operator']))
+		{
+			if ($filter['operator'] === 'NOT')
+			{
+				return self::filterToQuery((array)$filter['conditions'][0], !$negate);
+			}
+			$isAnd = $filter['operator'] === 'AND';
+			$effectiveAnd = $negate ? !$isAnd : $isAnd;
+			foreach ((array)$filter['conditions'] as $condition)
+			{
+				$sub = self::filterToQuery((array)$condition, $negate);
+				$effectiveAnd ? $query->andSearch($sub) : $query->orSearch($sub);
+			}
+			return $query;
+		}
+
+		foreach ($filter as $key => $value)
+		{
+			self::applyCondition($query, (string)$key, $value, $negate);
+		}
+		return $query;
+	}
+
+	/**
+	 * Apply a single leaf filter condition (as sent by MailJmap.buildFilter()) to a search query
+	 *
+	 * @param \Horde_Imap_Client_Search_Query $query
+	 * @param string $key
+	 * @param mixed $value
+	 * @param bool $not
+	 */
+	public static function applyCondition(\Horde_Imap_Client_Search_Query $query, string $key, $value, bool $not) : void
+	{
+		switch ($key)
+		{
+			case 'subject':
+				$query->headerText('SUBJECT', (string)$value, $not);
+				break;
+			case 'from':
+				$query->headerText('FROM', (string)$value, $not);
+				break;
+			case 'to':
+				$query->headerText('TO', (string)$value, $not);
+				break;
+			case 'cc':
+				$query->headerText('CC', (string)$value, $not);
+				break;
+			case 'body':
+				$query->text((string)$value, true, $not);
+				break;
+			case 'text':
+				$query->text((string)$value, false, $not);
+				break;
+			case 'minSize':
+				$query->size((float)$value, true, $not);
+				break;
+			case 'maxSize':
+				$query->size((float)$value, false, $not);
+				break;
+			case 'after':
+				$query->dateSearch(new \DateTime((string)$value), \Horde_Imap_Client_Search_Query::DATE_SINCE, true, $not);
+				break;
+			case 'before':
+				$query->dateSearch(new \DateTime((string)$value), \Horde_Imap_Client_Search_Query::DATE_BEFORE, true, $not);
+				break;
+			case 'hasKeyword':
+				$query->flag(self::keywordToFlag((string)$value), !$not);
+				break;
+			case 'notKeyword':
+				$query->flag(self::keywordToFlag((string)$value), $not);
+				break;
+			case 'inMailbox':
+				break;	// handled separately by findInMailbox(), not a search criterion
+		}
+	}
+
+	/**
+	 * @param string $keyword JMAP keyword, e.g. "$flagged"
+	 * @return string flag/keyword name as Horde_Imap_Client_Search_Query::flag() expects
+	 */
+	public static function keywordToFlag(string $keyword) : string
+	{
+		return match ($keyword)
+		{
+			'$seen' => 'Seen',
+			'$answered' => 'Answered',
+			'$flagged' => 'Flagged',
+			default => $keyword,
+		};
+	}
+
+	/**
+	 * Translate MailJmap.buildSort()'s Comparator array into Horde's SORT_* option array
+	 *
+	 * @param array $sortSpec {property: string, isAscending: bool}[]
+	 * @return array
+	 */
+	public static function buildSort(array $sortSpec) : array
+	{
+		static $map = [
+			'subject' => \Horde_Imap_Client::SORT_SUBJECT,
+			'size' => \Horde_Imap_Client::SORT_SIZE,
+			'from' => \Horde_Imap_Client::SORT_FROM,
+			'to' => \Horde_Imap_Client::SORT_TO,
+			'receivedAt' => \Horde_Imap_Client::SORT_ARRIVAL,
+			'sentAt' => \Horde_Imap_Client::SORT_DATE,
+		];
+		$sort = [];
+		foreach ($sortSpec as $criterion)
+		{
+			if (empty($criterion['isAscending']))
+			{
+				$sort[] = \Horde_Imap_Client::SORT_REVERSE;
+			}
+			$sort[] = $map[$criterion['property'] ?? ''] ?? \Horde_Imap_Client::SORT_DATE;
+		}
+		return $sort ?: [\Horde_Imap_Client::SORT_REVERSE, \Horde_Imap_Client::SORT_DATE];
+	}
+
+	/**
+	 * Email/get: fetch exactly the properties MailJmap.getRows()/refreshRows() request for a
+	 * batch of ids
+	 *
+	 * Needs to know which mailbox $ids live in (they're plain per-mailbox IMAP UIDs, not
+	 * globally-unique real-JMAP ids - see the class docblock): either taken from the request's
+	 * preceding Email/query (MailJmap.getRows()'s normal batching), or, when called standalone
+	 * (MailJmap.refreshRows()), from an explicit "mailboxId" argument - our own local-only
+	 * extension, same idea as emailSet()'s.
+	 *
+	 * @param string $accountId
+	 * @param array $args {ids: string[], mailboxId?: string}
+	 * @param array &$context see emailQuery()
+	 * @return array {accountId: string, list: array[], notFound: string[]}
+	 */
+	public static function emailGet(string $accountId, array $args, array &$context) : array
+	{
+		$ids = array_map('strval', (array)($args['ids'] ?? []));
+		// absent/empty "properties" means "all", per RFC 8621 - our own client always sends an
+		// explicit list though, and only includes "preview" when the "Sneak preview in list"
+		// toggle is on (mirrors mail_ui::get_rows()'s fetchPreview), to skip the extra IMAP work
+		$properties = (array)($args['properties'] ?? []);
+		$wantPreview = !$properties || in_array('preview', $properties, true);
+		// body fields (mail/js/jmap.ts's MailJmap.fetchBody()) are only requested one id at a
+		// time, and cost an extra per-message IMAP round trip below - skip for the row-list fetch
+		static $bodyProperties = ['bodyStructure', 'textBody', 'htmlBody', 'attachments', 'bodyValues'];
+		$wantBody = !$properties || array_intersect($properties, $bodyProperties);
+		// MDN (read-receipt) prompt detection - MailJmap.email2row() reads this same property
+		// name back verbatim, matching how a real JMAP server echoes header:X:form property keys
+		$wantMdn = !$properties || in_array(self::MDN_HEADER_PROPERTY, $properties, true);
+		// message-list attachment-icon S/MIME-wrapper detection - MailJmap.email2row() reads this
+		// same property name back verbatim, see its isSmimeWrapperOnly()
+		$wantContentType = !$properties || in_array(self::CONTENT_TYPE_HEADER_PROPERTY, $properties, true);
+		// Thread-Topic/Thread-Index/List-Id propagation on reply (classic mail_compose's own
+		// getReplyData(), removed 2014 commit 2172fc769d "support the propagation of Thread-Topic,
+		// Thread-Index and List-Id on reply too" - found missing here entirely 2026-09-09, ralf:
+		// "Does that mean they are lost when replying to a mail? ... it would be a real
+		// regression" - confirmed: MailJmap.fetchForReply() never requested/read them at all, so
+		// the JMAP-native reply path silently dropped this propagation outright) -
+		// MailJmap.fetchForReply() (mail/js/jmap.ts) reads these same 3 property names back
+		// verbatim, one combined flag since they're always fetched together for that one purpose.
+		$wantThreadHeaders = !$properties || array_intersect(
+			[self::THREAD_TOPIC_HEADER_PROPERTY, self::THREAD_INDEX_HEADER_PROPERTY, self::LIST_ID_HEADER_PROPERTY],
+			$properties);
+		// header:X-Priority/header:Disposition-Notification-To propagation for
+		// emailSubmissionSet()'s own re-fetch-then-resend flow (found missing 2026-09-09 alongside
+		// replyTo above - ralf, relaying a tester report: "the selected ReplyTo is NOT send with
+		// the mail" - buildMailerFromEmailProperties() already reads these two exact bare-form
+		// property names when building the Mailer, but nothing ever populated them back from an
+		// already-stored message, so both were silently dropped again at actual send time even
+		// after the CREATE-time fix)
+		$wantSendHeaders = !$properties || array_intersect(
+			[self::PRIORITY_HEADER_PROPERTY, self::DISPOSITION_REQUEST_HEADER_PROPERTY], $properties);
+		// Autocrypt (https://docs.autocrypt.org/level1.html) - Phase 5 item 4's own read side
+		// (MailJmap.fetchForReply()) AND emailSubmissionSet()'s re-fetch-then-resend flow both read
+		// this back - found live 2026-09-09 (ralf: "It sends now, but no Autocrypt header", isolated
+		// to isLocal/shim accounts specifically): unlike Stalwart's own native JMAP-over-HTTP, which
+		// genuinely supports ANY "header:X:form" property per RFC 8621 §4.1.3 with no server-side
+		// code needed here at all (confirmed live against a real Stalwart account BEFORE this fix -
+		// this shim's own emailGet() has NO generic header mechanism whatsoever, only this explicit
+		// per-header allowlist, same as every other $wantXxx flag above), this account type needs
+		// its own dedicated IMAP header fetch + mapping, exactly like every other header property
+		// here already has.
+		$wantAutocrypt = !$properties || in_array(self::AUTOCRYPT_HEADER_PROPERTY, $properties, true);
+		// whole-message blobId (RFC 8621 top-level Email.blobId) - MailJmap.fetchRawHeader()'s
+		// "view header" fast path, no extra IMAP work needed (same self-describing scheme
+		// bodyPartToJmap() uses per-part, just with an empty partId - see download())
+		$wantBlobId = !$properties || in_array('blobId', $properties, true);
+		// doc/ai/projects/mail-threaded-view.md, Phase 2 - only computed (an extra, Horde-cached
+		// IMAP THREAD command via threadMap()) when actually requested, since every ordinary
+		// (non-threaded) row fetch has no use for it
+		$wantThreadId = !$properties || in_array('threadId', $properties, true);
+
+		if ($accountId === '0')
+		{
+			return self::demoEmailGet($ids, $wantPreview);
+		}
+		if (!$ids)
+		{
+			return ['accountId' => $accountId, 'list' => [], 'notFound' => []];
+		}
+		$imap = self::imapServer($accountId);
+		if (!empty($args['mailboxId']))
+		{
+			$folder = self::folderPath((string)$args['mailboxId']);
+			// same namespace-root guard as emailQuery() - see isBareNamespaceRoot()'s own docblock
+			if (self::isBareNamespaceRoot($folder))
+			{
+				throw new \Exception("Folder '$folder' is a shared-mailboxes namespace root, not a real mailbox - list its children instead", 400);
+			}
+			$mailbox = self::hordeMailbox($imap, $folder);
+		}
+		else
+		{
+			$mailbox = $context['mailbox'][$accountId] ?? null;
+			if ($mailbox === null)
+			{
+				throw new \Exception('Email/get without a preceding Email/query or a mailboxId for the same accountId in this request');
+			}
+		}
+
+		$query = new \Horde_Imap_Client_Fetch_Query();
+		$query->envelope();
+		// From/To/Cc/Bcc are re-parsed from the raw header text below (addressListFromHeader()),
+		// not trusted from $envelope->from/to/cc/bcc as-is - the IMAP server's own ENVELOPE address
+		// parser isn't RFC 2047-aware and can misparse a sending MUA's malformed encoded-word (eg.
+		// one containing a literal, unencoded comma inside a quoted display name), splitting it into
+		// bogus extra addresses. Api\Mail::parseAddressList() already has the repair logic for
+		// exactly this (see its "no mailbox or host part" handling) that the classic pre-JMAP code
+		// path has long relied on - this restores that same robustness for the JMAP-native path.
+		// Reply-To added 2026-09-09 alongside 'replyTo' below (see emailFromFetch()) - same
+		// regression as header:X-Priority/header:Disposition-Notification-To further down.
+		$query->headers('addresses', ['From', 'To', 'Cc', 'Bcc', 'Reply-To'], ['cache' => true, 'peek' => true]);
+		$query->flags();
+		$query->size();
+		$query->structure();
+		// without this, Horde_Imap_Client_Data_Fetch::getImapDate() silently falls back to "now"
+		// instead of the message's real INTERNALDATE - emailFromFetch() relies on it for receivedAt
+		$query->imapDate();
+		if ($wantPreview)
+		{
+			$query->bodyText(['length' => 800, 'peek' => true]);
+		}
+		if ($wantMdn)
+		{
+			// same 3-header priority Api\Mail::getHeaders() uses (DISPOSITION-NOTIFICATION-TO,
+			// falling back to the older RETURN-RECEIPT-TO/X-CONFIRM-READING-TO conventions)
+			$query->headers('mdn', ['Disposition-Notification-To', 'Return-Receipt-To', 'X-Confirm-Reading-To'],
+				['cache' => true, 'peek' => true]);
+		}
+		if ($wantContentType)
+		{
+			$query->headers('contenttype', ['Content-Type'], ['cache' => true, 'peek' => true]);
+		}
+		if ($wantThreadHeaders)
+		{
+			$query->headers('threadheaders', ['Thread-Topic', 'Thread-Index', 'List-Id'],
+				['cache' => true, 'peek' => true]);
+		}
+		if ($wantSendHeaders)
+		{
+			$query->headers('sendheaders', ['X-Priority', 'Disposition-Notification-To'],
+				['cache' => true, 'peek' => true]);
+		}
+		if ($wantAutocrypt)
+		{
+			$query->headers('autocrypt', ['Autocrypt'], ['cache' => true, 'peek' => true]);
+		}
+
+		$results = $imap->fetch($mailbox, $query, [
+			'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $ids)),
+		]);
+		// the client may have already navigated away while this (pre)view fetch was in flight -
+		// the further per-message IMAP round trips below (preview()/emailBodyFields()) are the
+		// expensive part, not worth starting for a response nobody will read
+		if (connection_aborted()) exit;
+
+		// IMAP FETCH responses come back in whatever order the server chooses (typically ascending
+		// UID, NOT the order of the id-set given), so $results must NOT be iterated directly - that
+		// would silently undo Email/query's sort (e.g. turning "newest first" into "oldest first"
+		// within the page). Rebuild the list in the order Email/query already determined instead.
+		$threadMap = $wantThreadId ? self::threadMap($imap, $mailbox, $context, $accountId) : [];
+		$list = [];
+		foreach ($ids as $id)
+		{
+			if (($data = $results[(int)$id] ?? null))
+			{
+				/** @var \Horde_Imap_Client_Data_Fetch $data */
+				$email = self::emailFromFetch($imap, $mailbox, $id, $data, $wantPreview, (bool)$wantBody, $wantMdn, $wantBlobId, $wantContentType, (bool)$wantThreadHeaders, (bool)$wantSendHeaders, $wantAutocrypt);
+				if ($wantThreadId)
+				{
+					$email['threadId'] = $threadMap[$id] ?? $id;
+				}
+				$list[] = $email;
+			}
+		}
+		$found = array_column($list, 'id');
+
+		return [
+			'accountId' => $accountId,
+			'list' => $list,
+			'notFound' => array_values(array_diff($ids, $found)),
+		];
+	}
+
+	/**
+	 * Thread/get (RFC 8621 §3.3), doc/ai/projects/mail-threaded-view.md Phase 2.
+	 *
+	 * Requires our own local-only 'mailboxId' extension (same reasoning as Email/get's - IMAP
+	 * UIDs/threads are per-mailbox, not globally unique the way real JMAP ids are): a real JMAP
+	 * thread id is inherently account-scoped, not mailbox-scoped, but this IMAP-backed emulation
+	 * has no way to know which mailbox to search without it. MailJmap only ever calls this for a
+	 * thread row it already knows the mailboxId of (embedded in the thread row's own row_id, see
+	 * jmap.ts's emails2threadRow()/getThreadMemberRows()/threadMemberRowIds()), so the extension
+	 * is always available in practice - falls back to a preceding Email/query's remembered mailbox
+	 * in the same batch otherwise, mirroring emailGet()'s identical fallback.
+	 *
+	 * @param string $accountId
+	 * @param array $args {ids: string[], mailboxId?: string}
+	 * @param array &$context see emailQuery()
+	 * @return array {accountId: string, list: {id: string, emailIds: string[]}[], notFound: string[]}
+	 */
+	public static function threadGet(string $accountId, array $args, array &$context) : array
+	{
+		$ids = array_map('strval', (array)($args['ids'] ?? []));
+		if ($accountId === '0' || !$ids)
+		{
+			return ['accountId' => $accountId, 'list' => [], 'notFound' => $ids];
+		}
+		$imap = self::imapServer($accountId);
+		if (!empty($args['mailboxId']))
+		{
+			$mailbox = self::hordeMailbox($imap, self::folderPath((string)$args['mailboxId']));
+		}
+		else
+		{
+			$mailbox = $context['mailbox'][$accountId] ?? null;
+			if ($mailbox === null)
+			{
+				throw new \Exception('Thread/get without a preceding Email/query or a mailboxId for the same accountId in this request');
+			}
+		}
+
+		$membersByThread = [];
+		foreach (self::threadMap($imap, $mailbox, $context, $accountId) as $uid => $threadId)
+		{
+			$membersByThread[$threadId][] = $uid;
+		}
+
+		$list = $notFound = [];
+		foreach ($ids as $threadId)
+		{
+			if (isset($membersByThread[$threadId]))
+			{
+				$list[] = ['id' => $threadId, 'emailIds' => $membersByThread[$threadId]];
+			}
+			else
+			{
+				$notFound[] = $threadId;
+			}
+		}
+		return ['accountId' => $accountId, 'list' => $list, 'notFound' => $notFound];
+	}
+
+	/**
+	 * Email/set: apply the supported JMAP keyword patches directly through Horde IMAP.
+	 *
+	 * The local shim uses mailbox-local numeric IMAP UIDs as Email ids, therefore the
+	 * browser includes our local-only mailboxId extension.  Real JMAP servers never
+	 * receive that extension.
+	 *
+	 * @param string $accountId
+	 * @param array $args {mailboxId:string, update:array<string,array<string,bool|null>>}
+	 * @return array JMAP Email/set response
+	 */
+	public static function emailSet(string $accountId, array $args) : array
+	{
+		$updated = [];
+		$notUpdated = [];
+		$add = [];
+		$remove = [];
+		// id => target folder path (base64-decoded from the mailboxIds patch's one truthy key) -
+		// a move (full-property replacement, {"mailboxIds": {newId: true}}), see
+		// MailJmap.moveMessages() (mail/js/jmap.ts) - there's always exactly one truthy entry to
+		// look at
+		$moves = [];
+		// id => target folder path, from a "mailboxIds/<id>": true PatchObject path (RFC 8620
+		// §5.3) - a copy (adds the target mailbox without touching existing ones), see
+		// MailJmap.copyMessages() (mail/js/jmap.ts)
+		$copies = [];
+		$allowed = self::writableKeywords();
+
+		foreach ((array)($args['update'] ?? []) as $id => $patch)
+		{
+			$id = (string)$id;
+			if (!ctype_digit($id) || !is_array($patch))
+			{
+				$notUpdated[$id] = ['type' => 'invalidArguments'];
+				continue;
+			}
+			$operations = [];
+			$moveTo = null;
+			$copyTo = null;
+			foreach ($patch as $path => $value)
+			{
+				if ((string)$path === 'mailboxIds' && is_array($value))
+				{
+					$target = array_key_first(array_filter($value));
+					if ($target === null)
+					{
+						$notUpdated[$id] = ['type' => 'invalidProperties', 'properties' => ['mailboxIds']];
+						continue 2;
+					}
+					$moveTo = self::folderPath((string)$target);
+					continue;
+				}
+				if (str_starts_with((string)$path, 'mailboxIds/') && $value === true)
+				{
+					$copyTo = self::folderPath(substr((string)$path, strlen('mailboxIds/')));
+					continue;
+				}
+				if (!str_starts_with((string)$path, 'keywords/'))
+				{
+					$notUpdated[$id] = ['type' => 'invalidProperties', 'properties' => [(string)$path]];
+					continue 2;
+				}
+				$keyword = strtolower(substr((string)$path, strlen('keywords/')));
+				if (!isset($allowed[$keyword]) || ($value !== true && $value !== null))
+				{
+					$notUpdated[$id] = ['type' => 'invalidProperties', 'properties' => [(string)$path]];
+					continue 2;
+				}
+				$operations[] = [$allowed[$keyword], $value === true];
+			}
+			foreach ($operations as [$keyword, $set])
+			{
+				if ($set)
+				{
+					$add[$keyword][] = $id;
+				}
+				else
+				{
+					$remove[$keyword][] = $id;
+				}
+			}
+			if ($moveTo !== null)
+			{
+				$moves[$moveTo][] = $id;
+			}
+			if ($copyTo !== null)
+			{
+				$copies[$copyTo][] = $id;
+			}
+			$updated[$id] = null;
+		}
+
+		$destroyed = [];
+		$notDestroyed = [];
+		foreach ((array)($args['destroy'] ?? []) as $id)
+		{
+			$id = (string)$id;
+			if (!ctype_digit($id))
+			{
+				$notDestroyed[$id] = ['type' => 'invalidArguments'];
+				continue;
+			}
+			$destroyed[] = $id;
+		}
+
+		// 'create' (doc/ai/projects/mail-compose-jmap-migration.md's Step 2) - unlike update/
+		// destroy above, each entry carries its OWN target mailbox (mailboxIds, RFC 8621 §4.1.1),
+		// same convention emailImport() already uses just above - so this runs independently of
+		// the single-mailboxId requirement below, which only ever applied to update/destroy.
+		// Builds the actual message via buildMailerFromEmailProperties() (the shim's own
+		// mail_compose::createMessage() equivalent) then appends the finished raw bytes - the
+		// shim has no native "create a message from JSON properties" capability, unlike a real
+		// JMAP server, so this is fundamentally new work, not a passthrough.
+		$created = [];
+		$notCreated = [];
+		if (!empty($args['create']) && $accountId !== '0')
+		{
+			$imapForCreate = self::imapServer($accountId);
+			foreach ((array)$args['create'] as $creationId => $email)
+			{
+				$creationId = (string)$creationId;
+				try
+				{
+					$target = array_key_first(array_filter((array)($email['mailboxIds'] ?? [])));
+					$createFolder = $target !== null ? self::folderPath((string)$target) : '';
+					if ($createFolder === '')
+					{
+						$notCreated[$creationId] = ['type' => 'invalidProperties', 'properties' => ['mailboxIds']];
+						continue;
+					}
+					$mailer = self::buildMailerFromEmailProperties($accountId, (array)$email);
+					// visible in the stored copy (a draft, or later moved/copied into Sent) - see
+					// forceBccHeader()'s own docblock: "normally Bcc is only added to recipients
+					// while sending, but not added visible as header" - not sending here at all,
+					// so make it visible immediately, matching mail_compose::saveAsDraft()'s own
+					// identical call before its own getRaw()+appendMessage()
+					$mailer->forceBccHeader();
+					$raw = $mailer->getRaw(false);
+
+					$flags = [];
+					foreach ((array)($email['keywords'] ?? []) as $keyword => $set)
+					{
+						if ($set && ($flag = self::importKeywordToFlag(strtolower((string)$keyword))) !== null)
+						{
+							$flags[] = $flag;
+						}
+					}
+					$createMailbox = self::hordeMailbox($imapForCreate, $createFolder);
+					$appended = self::appendRawMessage($imapForCreate, $createMailbox, $raw, $flags);
+					$created[$creationId] = ['id' => $appended['id'], 'threadId' => $appended['id'], 'size' => $appended['size']];
+				}
+				catch (\Throwable $e)
+				{
+					$notCreated[$creationId] = ['type' => 'serverFail', 'description' => $e->getMessage()];
+				}
+			}
+		}
+
+		if ($accountId === '0')
+		{
+			return [
+				'accountId' => $accountId,
+				'oldState' => '0',
+				'newState' => '0',
+				'created' => (object)$created,
+				'notCreated' => (object)$notCreated,
+				'updated' => (object)$updated,
+				'notUpdated' => (object)$notUpdated,
+				'destroyed' => $destroyed,
+				'notDestroyed' => (object)$notDestroyed,
+			];
+		}
+
+		// only update/destroy (never create, handled independently above) need a single shared
+		// mailboxId - skip resolving/requiring one at all for a create-only request
+		if ($updated || $notUpdated || $destroyed || $notDestroyed)
+		{
+			$mailboxId = (string)($args['mailboxId'] ?? '');
+			$folder = self::folderPath($mailboxId);
+			if ($folder === '')
+			{
+				throw new \InvalidArgumentException('Email/set requires mailboxId for the local IMAP shim');
+			}
+			$imap = self::imapServer($accountId);
+			$mailbox = self::hordeMailbox($imap, $folder);
+			// Remove first so replacing a custom flag never leaves two selected if the
+			// following add fails.
+			foreach ([['remove', $remove], ['add', $add]] as [$operation, $operations])
+			{
+				foreach ($operations as $keyword => $ids)
+				{
+					$imap->store($mailbox, [
+						$operation => [$keyword],
+						'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $ids)),
+					]);
+				}
+			}
+			// same primitive Mail::moveMessages()'s same-account branch uses (api/src/Mail.php),
+			// called directly - a server-internal IMAP COPY+move, no message bytes handled by us.
+			// Deferred (see $deferredWork's own docblock) - confirmed live 2026-09-03 that a single
+			// move's IMAP COPY+STORE+EXPUNGE can take several seconds, almost entirely Dovecot's
+			// own server-side processing time, not anything on our end.
+			if ($moves)
+			{
+				self::queueDeferredWork(function() use ($imap, $mailbox, $moves)
+				{
+					foreach ($moves as $targetFolder => $ids)
+					{
+						$targetMailbox = self::hordeMailbox($imap, $targetFolder);
+						// chunked (see chunkIds()'s own docblock) - a single COPY carrying all of a
+						// large "delete/move all matching" batch (eg. 354 ids) was found live
+						// 2026-09-07 to run long enough for Dovecot to just close the connection
+						// mid-command (Horde_Imap_Client_Exception: "Mail server closed the
+						// connection unexpectedly") - a 5-id batch completed fine, just slower than
+						// expected.
+						foreach (self::chunkIds($ids) as $chunk)
+						{
+							$imap->copy($mailbox, $targetMailbox, [
+								'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $chunk)),
+								'move' => true,
+							]);
+						}
+					}
+				});
+			}
+			// same IMAP COPY primitive, without 'move' - the message stays in $mailbox too, see
+			// MailJmap.copyMessages(). Left synchronous - unlike move/destroy, nothing disappears
+			// from the current view for this to reconcile, and there's no evidence (yet) it's slow.
+			foreach ($copies as $targetFolder => $ids)
+			{
+				$targetMailbox = self::hordeMailbox($imap, $targetFolder);
+				$imap->copy($mailbox, $targetMailbox, [
+					'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $ids)),
+				]);
+			}
+			if ($destroyed)
+			{
+				// same primitive Mail::deleteMessages()'s "remove_immediately" mode uses - deferred,
+				// same reasoning as the move branch above (same store()+expunge() primitive
+				// emailSubmissionSet()'s old-draft cleanup already defers). Chunked same as the move
+				// branch above - one expunge() at the end covers every chunk's \Deleted flags, no
+				// need to repeat it per chunk.
+				self::queueDeferredWork(function() use ($imap, $mailbox, $destroyed)
+				{
+					foreach (self::chunkIds($destroyed) as $chunk)
+					{
+						$imap->store($mailbox, [
+							'add' => ['\\Deleted'],
+							'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $chunk)),
+						]);
+					}
+					$imap->expunge($mailbox);
+				});
+			}
+		}
+
+		return [
+			'accountId' => $accountId,
+			'oldState' => '0',
+			'newState' => '0',
+			'created' => (object)$created,
+			'notCreated' => (object)$notCreated,
+			'updated' => (object)$updated,
+			'notUpdated' => (object)$notUpdated,
+			'destroyed' => $destroyed,
+			'notDestroyed' => (object)$notDestroyed,
+		];
+	}
+
+	/**
+	 * Email/import (RFC 8621 §4.8): append an uploaded (or existing) blob to a mailbox as a new
+	 * message - the local-shim counterpart of a real JMAP server's import, needed for client-side
+	 * message composition (e.g. saving to Sent) without going through mail_ui/Api\Mail. Same
+	 * Horde_Imap_Client_Socket::append() primitive Mail::appendMessage() uses.
+	 *
+	 * Only a single target mailbox per email is supported (the common case, and all MailJmap
+	 * currently sends) - if more than one truthy id is given, the first is used.
+	 *
+	 * @param string $accountId
+	 * @param array $args {emails: {creationId: {blobId, mailboxIds, keywords?}}}
+	 * @return array
+	 */
+	public static function emailImport(string $accountId, array $args) : array
+	{
+		$imap = self::imapServer($accountId);
+		$created = [];
+		$notCreated = [];
+
+		foreach ((array)($args['emails'] ?? []) as $creationId => $email)
+		{
+			$creationId = (string)$creationId;
+			try
+			{
+				if (!$imap)
+				{
+					throw new \InvalidArgumentException('Unknown account');
+				}
+				$blobId = (string)($email['blobId'] ?? '');
+				$raw = $blobId !== '' ? self::readUploadedBlob($accountId, $blobId) : null;
+				if ($raw === null)
+				{
+					$notCreated[$creationId] = ['type' => 'invalidProperties', 'properties' => ['blobId']];
+					continue;
+				}
+				$target = array_key_first(array_filter((array)($email['mailboxIds'] ?? [])));
+				$folder = $target !== null ? self::folderPath((string)$target) : '';
+				if ($folder === '')
+				{
+					$notCreated[$creationId] = ['type' => 'invalidProperties', 'properties' => ['mailboxIds']];
+					continue;
+				}
+				$mailbox = self::hordeMailbox($imap, $folder);
+
+				$flags = [];
+				foreach ((array)($email['keywords'] ?? []) as $keyword => $set)
+				{
+					if ($set && ($flag = self::importKeywordToFlag(strtolower((string)$keyword))) !== null)
+					{
+						$flags[] = $flag;
+					}
+				}
+
+				$appended = self::appendRawMessage($imap, $mailbox, $raw, $flags);
+				$created[$creationId] = ['id' => $appended['id'], 'blobId' => $blobId, 'threadId' => $appended['id'], 'size' => $appended['size']];
+				if (str_starts_with($blobId, 'upload:'))
+				{
+					@unlink(self::uploadPath(substr($blobId, strlen('upload:'))));
+				}
+			}
+			catch (\Throwable $e)
+			{
+				$notCreated[$creationId] = ['type' => 'serverFail', 'description' => $e->getMessage()];
+			}
+		}
+
+		return [
+			'accountId' => $accountId,
+			'oldState' => '0',
+			'newState' => '0',
+			'created' => (object)$created,
+			'notCreated' => (object)$notCreated,
+		];
+	}
+
+	/**
+	 * Append a raw RFC822 message to a mailbox and resolve the assigned UID - the core of
+	 * emailImport() above, extracted (doc/ai/projects/mail-compose-jmap-migration.md's Step 2) so
+	 * emailSet()'s new 'create' handling and emailSubmissionSet() (both needing to append a
+	 * message they just BUILT in memory via Api\Mailer, not one already uploaded as a blob) can
+	 * reuse it directly, without a wasteful "upload as a blob, then immediately read it straight
+	 * back via readUploadedBlob()" round trip.
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $mailbox real IMAP mailbox name (hordeMailbox()'s own return type, despite the
+	 *  confusingly-named \Horde_Imap_Client_Mailbox class elsewhere in this API - append()/store()
+	 *  etc. all accept a plain string here, not an instance of that class)
+	 * @param string $raw raw RFC822 message bytes
+	 * @param string[] $flags IMAP flags to set on the new message, e.g. ['\Seen']
+	 * @return array{id: string, size: int}
+	 * @throws \Exception if the server never reports a UID for the new message (should not happen)
+	 */
+	private static function appendRawMessage(\Horde_Imap_Client_Socket $imap, string $mailbox, string $raw, array $flags=[]) : array
+	{
+		$ret = $imap->append($mailbox, [['data' => $raw, 'flags' => $flags]]);
+		$uid = is_object($ret) && isset($ret->ids) ? (string)current($ret->ids) : null;
+		if ($uid === null || $uid === '')
+		{
+			// server didn't report UIDPLUS-style ids (append() returned plain true) - same
+			// fallback Mail::appendMessage() uses: the just-appended message is always the
+			// newest by arrival, found directly rather than via Api\Mail (see class docblock)
+			$sorted = $imap->search($mailbox, new \Horde_Imap_Client_Search_Query(), [
+				'sort' => [\Horde_Imap_Client::SORT_REVERSE, \Horde_Imap_Client::SORT_ARRIVAL],
+			]);
+			$uid = (string)(array_values($sorted['match']->ids ?? [])[0] ?? '');
+		}
+		if ($uid === '')
+		{
+			throw new \Exception('IMAP server did not report the new message UID');
+		}
+		return ['id' => $uid, 'size' => strlen($raw)];
+	}
+
+	/**
+	 * Build an Api\Mailer instance from RFC 8621 Email properties (to/cc/bcc/replyTo/subject/
+	 * inReplyTo/references/header:X-Priority/header:Disposition-Notification-To/bodyValues +
+	 * either the htmlBody/textBody convenience shortcut or a full bodyStructure) -
+	 * doc/ai/projects/mail-compose-jmap-migration.md's Step 2, the shim's own
+	 * equivalent of classic mail_compose::createMessage(). Used by both emailSet()'s new 'create'
+	 * handling (building a Draft/Email to store) and emailSubmissionSet() (re-fetching an existing
+	 * Draft's own properties via emailGet() and resending them). Doesn't call send()/getRaw()
+	 * itself - callers decide what to do with the finished Mailer (store as a draft, or actually
+	 * send it), same separation classic mail_compose::send()/saveAsDraft() already have around
+	 * their own shared createMessage() call.
+	 *
+	 * bodyStructure is walked the same way mail/js/jmap.ts's own draftEmailProperties() builds it
+	 * client-side: multipart/mixed (attachments) > multipart/related (inline images) >
+	 * multipart/alternative (text/plain+text/html) - each layer only present when actually
+	 * needed - so a bare recursive "does this leaf's partId have a bodyValues entry (body text) or
+	 * not (attachment/inline, use its blobId)" walk correctly finds everything regardless of how
+	 * many of those layers are actually present for a given message.
+	 *
+	 * @param string $accountId numeric EGroupware acc_id, as a string (dispatch()'s own convention)
+	 * @param array $email RFC 8621 Email property set - either a create-shape (client-supplied) or
+	 *  Email/get's own read-shape (re-fetched from an existing message) - both are handled
+	 *  identically here, only the properties this method actually reads matter. `from` (if
+	 *  present) always wins over the account's own default identity - the client's own
+	 *  draftEmailProperties() (mail/js/jmap.ts) always sets it explicitly from whichever identity
+	 *  the "From" dropdown actually has selected, and RFC 8621's Email object has no separate
+	 *  "identity" concept of its own to fall back on anyway - emailSubmissionSet()'s own re-fetch
+	 *  via emailGet() naturally carries this same value through unchanged, since it's just the
+	 *  Draft's own already-stored From header, reparsed like any other message's.
+	 */
+	private static function buildMailerFromEmailProperties(string $accountId, array $email) : Api\Mailer
+	{
+		$mailer = new Api\Mailer((int)$accountId);
+
+		if (!empty($email['from'][0]['email']))
+		{
+			$mailer->setFrom($email['from'][0]['email'], $email['from'][0]['name'] ?? $email['from'][0]['email']);
+		}
+
+		// 'replyTo' (2026-09-09: found missing here entirely, alongside header:X-Priority/
+		// header:Disposition-Notification-To below - ralf, relaying a tester report: "the
+		// selected ReplyTo is NOT send with the mail") - same addAddress(..., 'replyto') call as
+		// to/cc/bcc, just keyed by the RFC 8621 property's own camelCase name rather than a
+		// lowercase Mailer type string.
+		foreach (['to' => 'to', 'cc' => 'cc', 'bcc' => 'bcc', 'replyTo' => 'replyto'] as $prop => $type)
+		{
+			foreach ((array)($email[$prop] ?? []) as $address)
+			{
+				if (!empty($address['email']))
+				{
+					$mailer->addAddress($address['email'], $address['name'] ?? '', $type);
+				}
+			}
+		}
+		$mailer->addHeader('Subject', (string)($email['subject'] ?? ''));
+
+		foreach (['inReplyTo' => 'In-Reply-To', 'references' => 'References'] as $prop => $header)
+		{
+			if (!empty($email[$prop]))
+			{
+				$mailer->addHeader($header, implode(' ', array_map(
+					fn($id) => '<'.trim((string)$id, '<>').'>', (array)$email[$prop])));
+			}
+		}
+		// RFC 8621 §4.1.3 header:HeaderName (raw form) - MailJmap.draftEmailProperties()'s own
+		// equivalent of classic ComposeMessageBuilder::createMessage()'s unconditional
+		// addHeader('X-Priority', ...) and checkbox-gated addHeader('Disposition-Notification-To',
+		// $_identity['ident_email']) - found missing here alongside replyTo above.
+		if (isset($email[self::PRIORITY_HEADER_PROPERTY]) && $email[self::PRIORITY_HEADER_PROPERTY] !== '')
+		{
+			$mailer->addHeader('X-Priority', (string)$email[self::PRIORITY_HEADER_PROPERTY]);
+		}
+		if (!empty($email[self::DISPOSITION_REQUEST_HEADER_PROPERTY]))
+		{
+			$mailer->addHeader('Disposition-Notification-To', (string)$email[self::DISPOSITION_REQUEST_HEADER_PROPERTY]);
+		}
+		// Thread-Topic/Thread-Index/List-Id propagation on reply (classic getReplyData()'s
+		// equivalent, removed 2014 commit 2172fc769d, found missing here entirely 2026-09-09 - see
+		// emailGet()'s own docblock note) - MailJmap.draftEmailProperties() sets these from
+		// whatever the original message being replied to had, once fetchForReply() found them.
+		//
+		// Two possible key forms for the SAME property, checked in order: the bare form is what a
+		// direct client CREATE submission uses (matches draftEmailProperties() exactly); the
+		// ":asText" form (THREAD_*_HEADER_PROPERTY) is emailGet()'s own read-shape, used when
+		// emailSubmissionSet()'s re-fetch-then-resend flow re-reads an already-stored draft
+		// instead (found missing 2026-09-09 - same re-fetch gap as header:X-Priority/
+		// header:Disposition-Notification-To/replyTo above, just for a property that already had
+		// READ support for a different consumer, fetchForReply(), under a different key form).
+		foreach ([
+			'header:Thread-Topic' => ['Thread-Topic', self::THREAD_TOPIC_HEADER_PROPERTY],
+			'header:Thread-Index' => ['Thread-Index', self::THREAD_INDEX_HEADER_PROPERTY],
+			'header:List-Id' => ['List-Id', self::LIST_ID_HEADER_PROPERTY],
+		] as $prop => [$header, $readFormProp])
+		{
+			$value = $email[$prop] ?? $email[$readFormProp] ?? null;
+			if (!empty($value))
+			{
+				$mailer->addHeader($header, (string)$value);
+			}
+		}
+		// Autocrypt (https://docs.autocrypt.org/level1.html), Phase 5 item 3's sending half - same
+		// two-key-form duality as Thread-Topic/-Index/List-Id above (bare `header:Autocrypt` from a
+		// direct client CREATE submission, MailJmap.draftEmailProperties(); AUTOCRYPT_HEADER_
+		// PROPERTY's `:all` array form from emailSubmissionSet()'s own re-fetch-then-resend flow) -
+		// found missing here entirely 2026-09-09 (ralf, live-testing the just-added send-side
+		// Autocrypt header: "It sends now, but no Autocrypt header"). Live-debugged down to TWO
+		// gaps, both now fixed: this bare-form read here (the CREATE-time half - confirmed correct
+		// via a real send, "Autocrypt:" present in the built raw MIME bytes) was only half the
+		// story - the re-fetch's OWN `emailGet()`/emailFromFetch() had no Autocrypt handling AT ALL
+		// (unlike Stalwart's native JMAP-over-HTTP, this shim's emailGet() has no generic
+		// "header:X:form" mechanism, only this explicit per-header allowlist - see emailGet()'s own
+		// $wantAutocrypt comment), so the SECOND buildMailerFromEmailProperties() call (the one
+		// whose output is what's actually transmitted) never received the value at all even once
+		// this bare-form read worked. Only ever a single value (never multiple Autocrypt headers on
+		// send), so the `:all` array form's first element is all that's needed here, not the
+		// general "possibly many" case parseAutocryptHeaders() (client-side, reading an INCOMING
+		// message) has to handle.
+		$autocrypt = $email['header:Autocrypt'] ?? (($email[self::AUTOCRYPT_HEADER_PROPERTY] ?? [])[0] ?? null);
+		if (!empty($autocrypt))
+		{
+			// A real keydata= value is several KB of unbroken base64 (no whitespace at all), and
+			// Horde_Mime_Headers::toArray()'s own line-folding is just wordwrap($val, 76, $eol.' ')
+			// with NO $cut=true - wordwrap() only ever breaks AT existing whitespace, so a "word"
+			// (here, the entire header value) longer than the wrap width is left as one single,
+			// unbroken line. Horde_Smtp_Filter_Body then classifies any line >998 octets with no
+			// CR/LF as "binary" data (RFC 2045 §2.8), and if the SMTP server doesn't advertise
+			// BINARYMIME (RFC 3030) - true here - sending then fails outright with "Server does not
+			// support binary message data." (live-found 2026-09-09, ralf, acc_id=42/shim, a real key
+			// long enough to trigger it). Fix: insert a plain space every 76 chars ourselves first,
+			// giving wordwrap() break points to fold on - safe because keydata is base64 (whitespace
+			// carries no meaning) and both the incoming-header parser (parseAutocryptHeader()) and
+			// the armored-key roundtrip (MailJmap.autocryptKeydataToArmoredKey()) already strip all
+			// whitespace before base64-decoding.
+			$mailer->addHeader('Autocrypt', trim(chunk_split((string)$autocrypt, 76, ' ')));
+		}
+
+		// S/MIME encrypt-only/sign+encrypt body swap (createDraftEmail()'s bodyOverride, see
+		// smimeEncryptEmailProperties()'s own docblock) - a bare {type, blobId} bodyStructure with
+		// no subParts and no bodyValues at all is meant to BE the entire message body verbatim
+		// (already-encrypted application/pkcs7-mime bytes), not one attachment among others.
+		// Falling through to the generic $collect()/addAttachmentPart() path below (its only path
+		// for a blobId part with no matching bodyValues entry) wraps it in a fresh multipart/mixed
+		// alongside an unwanted, always-added empty placeholder body part instead - found live
+		// 2026-09-02, ralf: a received shim-sent encrypted mail showed exactly that shape
+		// (multipart/mixed containing an empty application/octet-stream leaf, a second empty
+		// "attachment" leaf, and the REAL pkcs7-mime bytes as a THIRD, attachment-dispositioned
+		// part) instead of the message's own top-level Content-Type simply BEING
+		// application/pkcs7-mime. setBasePart() bypasses all of that - nothing else in this method
+		// applies to this shape anyway (no bodyValues, no attachments to add), hence the early
+		// return. A real Stalwart/JMAP account never reaches this at all (Email/set create is
+		// handled natively there, this method is shim-only).
+		if (!empty($email['bodyStructure']) && empty($email['bodyStructure']['subParts']) &&
+			!empty($email['bodyStructure']['blobId']))
+		{
+			$raw = self::readUploadedBlob($accountId, (string)$email['bodyStructure']['blobId']);
+			if ($raw !== null)
+			{
+				$part = new \Horde_Mime_Part();
+				$part->setType((string)$email['bodyStructure']['type']);
+				$part->setContents($raw);
+				$mailer->setBasePart($part);
+				return $mailer;
+			}
+		}
+
+		// PGP encrypt body swap (createDraftEmail()'s bodyOverride, MailJmap.pgpEncryptBody()) - a
+		// {type: "multipart/encrypted...", subParts: [{application/pgp-encrypted}, {application/
+		// octet-stream}]} bodyStructure with no bodyValues at all is Mailvelope's already-encrypted
+		// armored ciphertext (the octet-stream subPart's blobId), needing the exact same RFC 3156 §4
+		// two-part wrapping Api\Mailer::setOpenPgpBody() already builds for the classic postback path
+		// (mail/src/ComposeMessageBuilder.php's own 'openpgp' case) - reuse it directly rather than
+		// re-implementing the same structure by hand. Same live-verified-against-Stalwart shape as
+		// the client's own pgpEncryptBody() (2026-09-08) - a real Stalwart/JMAP account never reaches
+		// this at all (Email/set create is handled natively there).
+		if (!empty($email['bodyStructure']['subParts']) && count($email['bodyStructure']['subParts']) === 2 &&
+			str_starts_with((string)($email['bodyStructure']['type'] ?? ''), 'multipart/encrypted') &&
+			($email['bodyStructure']['subParts'][1]['type'] ?? '') === 'application/octet-stream')
+		{
+			$raw = self::readUploadedBlob($accountId, (string)$email['bodyStructure']['subParts'][1]['blobId']);
+			if ($raw !== null)
+			{
+				$mailer->setOpenPgpBody($raw);
+				return $mailer;
+			}
+		}
+
+		$bodyValues = (array)($email['bodyValues'] ?? []);
+		$textBody = null;
+		$htmlBody = null;
+		$attachments = [];
+		$collect = function(array $part) use (&$collect, &$textBody, &$htmlBody, &$attachments, $bodyValues)
+		{
+			if (!empty($part['subParts']))
+			{
+				foreach ((array)$part['subParts'] as $subPart)
+				{
+					$collect((array)$subPart);
+				}
+				return;
+			}
+			$partId = $part['partId'] ?? null;
+			$type = strtolower((string)($part['type'] ?? ''));
+			// bodyValues presence alone is the correct signal, NOT blobId emptiness - a real
+			// Email/get response (emailBodyFields()/bodyPartToJmap()) sets blobId on EVERY part,
+			// body text included (RFC 8621 gives every part a blobId for individual download), and
+			// bodyValues is only ever populated for the text/html body partIds to begin with
+			// (emailBodyFields() explicitly excludes them from its own attachments loop) - so this
+			// can never collide with a genuine attachment/inline part
+			if ($partId !== null && isset($bodyValues[$partId]))
+			{
+				$value = (string)($bodyValues[$partId]['value'] ?? '');
+				if ($type === 'text/html')
+				{
+					$htmlBody = $value;
+				}
+				elseif ($type === 'text/plain')
+				{
+					$textBody = $value;
+				}
+				return;
+			}
+			// 'vfsPath' (2026-08-31, VFS-attach follow-up, ralf: "leave the attachment on the
+			// EGroupware server... no round-trip via the client") - a bare VFS path reference the
+			// client never uploaded/downloaded at all, read directly below via the Vfs stream
+			// wrapper, same as classic mail_compose::getComposeFrom()'s own
+			// "vfs://default".$path staged-attachment handling.
+			if (!empty($part['blobId']) || !empty($part['vfsPath']))
+			{
+				$attachments[] = $part;
+			}
+		};
+		if (!empty($email['bodyStructure']))
+		{
+			$collect((array)$email['bodyStructure']);
+		}
+		else
+		{
+			foreach (['textBody', 'htmlBody'] as $prop)
+			{
+				foreach ((array)($email[$prop] ?? []) as $part)
+				{
+					$collect((array)$part);
+				}
+			}
+		}
+
+		if ($textBody !== null)
+		{
+			$mailer->setBody($textBody);
+		}
+		if ($htmlBody !== null)
+		{
+			// false = don't auto-generate an alternative - a real one was already supplied above
+			// if the client sent one, matching classic mail_compose::createMessage()'s own
+			// "setBody() then setHtmlBody($body, null, false)" convention exactly
+			$mailer->setHtmlBody($htmlBody, null, false);
+		}
+
+		foreach ($attachments as $part)
+		{
+			$vfsPath = (string)($part['vfsPath'] ?? '');
+			$name = (string)($part['name'] ?? 'attachment');
+			$type = (string)($part['type'] ?? 'application/octet-stream');
+			// 'vfsPath' (2026-08-31, VFS-attach follow-up) - opened as a resource via Api\Vfs::fopen()
+			// (ensures the 'vfs://' stream wrapper is actually registered, unlike a plain fopen()
+			// on Vfs::PREFIX.$path) and fed straight into Api\Mailer::addAttachment()/
+			// addEmbeddedImage() as a resource, never read into a PHP string first (ralf:
+			// "file_get_contents() can easily get over PHP's memory-limit" - both methods already
+			// accept "an open file-handle", same as Vfs::fopen() itself returns).
+			if ($vfsPath !== '')
+			{
+				$handle = Api\Vfs::fopen($vfsPath, 'r');
+				if (!$handle)
+				{
+					continue;
+				}
+				if (($part['disposition'] ?? '') === 'inline' && !empty($part['cid']))
+				{
+					$mailer->addEmbeddedImage($handle, trim((string)$part['cid'], '<>'), $name, $type);
+				}
+				else
+				{
+					self::addAttachmentPart($mailer, $handle, $name, $type);
+				}
+				continue;
+			}
+			$blobId = (string)($part['blobId'] ?? '');
+			$raw = $blobId !== '' ? self::readUploadedBlob($accountId, $blobId) : null;
+			if ($raw === null)
+			{
+				continue;
+			}
+			if (($part['disposition'] ?? '') === 'inline' && !empty($part['cid']))
+			{
+				// addEmbeddedImage() only accepts a path or an open resource, never a raw string
+				// (unlike addStringAttachment() below) - a php://temp stream avoids a real temp
+				// file just to satisfy that
+				$stream = fopen('php://temp', 'r+');
+				fwrite($stream, $raw);
+				rewind($stream);
+				$mailer->addEmbeddedImage($stream, trim((string)$part['cid'], '<>'), $name, $type);
+			}
+			else
+			{
+				self::addAttachmentPart($mailer, $raw, $name, $type);
+			}
+		}
+
+		return $mailer;
+	}
+
+	/**
+	 * S/MIME sign/encrypt an about-to-be-sent/saved message (doc/ai/projects/
+	 * mail-compose-jmap-migration.md's Step 6, "send-side" S/MIME - the send-side counterpart to
+	 * resolveSmime()'s already-built read-side decrypt). Backend-uniform since 2026-08-31
+	 * (readUploadedBlob() now resolves both a real-JMAP account's own opaque blobIds and the
+	 * shim's self-describing ones) - builds a full Api\Mailer from the given (not-yet-sent) Email
+	 * properties via buildMailerFromEmailProperties(), signs/encrypts/both via the exact same
+	 * Api\Mailer::smimeEncrypt()/Mail\Smime primitives classic mail_compose::_encrypt() already
+	 * uses.
+	 *
+	 * TYPE_ENCRYPT/TYPE_SIGN_ENCRYPT both produce a single opaque application/pkcs7-mime leaf - for
+	 * those, only the resulting body ENTITY's raw bytes are returned (not the whole message);
+	 * From/To/Subject/etc. stay as separate JMAP Email properties untouched by this, only the
+	 * body's own MIME shape changes. The caller uploads those bytes as a blob
+	 * (AttachmentJmap::uploadBlobBytes()) and swaps that single blobId into Email/set's
+	 * bodyStructure in place of the multipart structure it would otherwise build - decided
+	 * 2026-08-27, see this doc's own "New pieces needed" section.
+	 *
+	 * TYPE_SIGN produces a genuine multipart/signed (two real sub-parts plus `protocol`/`micalg`
+	 * Content-Type parameters) - unlike the leaf case above, that can't be expressed via a
+	 * `{type, blobId}` bodyStructure swap (RFC 8621 §4.1.4's EmailBodyPart.type is bare
+	 * "type/subtype" only, and `headers` MUST NOT be given on Email/set create at all, so there is
+	 * no spec-compliant way to inject the missing parameters). For TYPE_SIGN this returns the WHOLE
+	 * raw message (Mailer::getRaw()) instead, for the caller to upload as a blob and create/send via
+	 * Email/import (RFC 8621 §4.8) rather than Email/set create + EmailSubmission/set's own
+	 * rebuild-from-properties path - see extractSmimeBodyBlob()'s docblock for why any
+	 * reconstruction of the body would invalidate the signature.
+	 *
+	 * @param string $accountId
+	 * @param array $email JMAP-shaped Email properties (same shape Email/set 'create' and
+	 *  buildMailerFromEmailProperties() already take) - from/to/cc/bcc/subject/bodyValues/
+	 *  textBody/htmlBody/attachments
+	 * @param string $type Api\Mail\Smime::TYPE_SIGN|TYPE_ENCRYPT|TYPE_SIGN_ENCRYPT
+	 * @param string $passphrase = '' falls back to the session-cached passphrase, same as
+	 *  Smime::resolveMessage()
+	 * @return array{type: string, raw: string}|array{whole: true, raw: string} the latter shape
+	 *  only for TYPE_SIGN - see above
+	 * @throws Api\Mail\Smime\PassphraseMissing no cached/given passphrase was enough to unlock the
+	 *  sender's own private key
+	 * @throws \Exception no certificate found for the sender or a recipient
+	 */
+	public static function smimeEncryptEmailProperties(string $accountId, array $email, string $type, string $passphrase='',
+		int $passExpMinutes=10) : array
+	{
+		$mailer = self::buildMailerFromEmailProperties($accountId, $email);
+
+		$sender = (string)($email['from'][0]['email'] ?? '');
+		$recipients = array_values(array_filter(array_map(
+			static fn($address) => $address['email'] ?? null,
+			array_merge((array)($email['to'] ?? []), (array)($email['cc'] ?? []), (array)($email['bcc'] ?? [])))));
+
+		$AB = new \addressbook_bo();
+		$params = [];
+		// ENCRYPT's recipient-cert check first, deliberately - independent of signing/passphrase,
+		// so a missing recipient cert throws BEFORE the passphrase is ever written to the session
+		// cache below (nothing to unwind yet in that case)
+		if (in_array($type, [Api\Mail\Smime::TYPE_ENCRYPT, Api\Mail\Smime::TYPE_SIGN_ENCRYPT], true))
+		{
+			$params['recipientsCerts'] = $AB->get_smime_keys($recipients);
+			$missing = array_filter($recipients, fn($r) => empty($params['recipientsCerts'][strtolower($r)]));
+			if ($missing)
+			{
+				throw new \Exception(lang('S/MIME Encryption failed because no certificate has been found for following addresses: %1',
+					implode(', ', $missing)));
+			}
+			foreach ($params['recipientsCerts'] as $certEmail => $cert)
+			{
+				self::assertValidSmimeCert($cert, $certEmail);
+			}
+		}
+		if (!in_array($type, [Api\Mail\Smime::TYPE_SIGN, Api\Mail\Smime::TYPE_SIGN_ENCRYPT], true))
+		{
+			// TYPE_ENCRYPT only - no signing, no passphrase/private key involved at all
+			if (!$mailer->smimeEncrypt($type, $params))
+			{
+				throw new \Exception(lang('S/MIME encryption failed'));
+			}
+			return self::extractSmimeBodyBlob($mailer->getBasePart());
+		}
+
+		$senderCert = $AB->get_smime_keys($sender);
+		if (!$senderCert)
+		{
+			throw new \Exception(lang("S/MIME Encryption failed because no certificate has been found for sender address: %1", $sender));
+		}
+		$params['senderPubKey'] = $senderCert[strtolower($sender)];
+		self::assertValidSmimeCert($params['senderPubKey'], $sender);
+		// Api\Mailer::smimeEncrypt() unconditionally OVERWRITES $params['passphrase'] with whatever
+		// is session-cached, if anything is - a stale/empty/different-account value there would
+		// silently clobber a correctly-given passphrase otherwise (found live 2026-09-01: "keeps
+		// popping up... doesn't matter if correct or wrong passphrase" - no exception anywhere,
+		// verifyPassphrase() just cleanly failed against the WRONG value). Classic mail_compose::
+		// send() avoids this by writing the freshly-typed passphrase into that same session slot
+		// before calling _encrypt() - mirrored here, but with $passExpMinutes given EXPLICITLY by
+		// the caller rather than read from the 'smime_pass_exp' preference: found live 2026-09-01
+		// (ralf: "I have not seen the cache-timeout in the passphrase dialog been send to
+		// server-side, nor it been used there") that egw.set_preference()'s own jsonq() send can
+		// still be in flight when this very request already needs the value. UNLIKE classic
+		// though, this write is unwound (unsetSession() in the catch below) on ANY failure from
+		// this point on, not just left there for its own full expiry to silently poison a later
+		// attempt within that window (found live 2026-09-01, ralf: "we must not cache the
+		// passphrase before it proved ok").
+		if ($passphrase !== '')
+		{
+			Api\Cache::setSession('mail', 'smime_passphrase', $passphrase, max(1, $passExpMinutes) * 60);
+		}
+		try
+		{
+			$acc_smime = Api\Mail\Smime::get_acc_smime($accountId, $passphrase);
+			// The addressbook's own stored copy of the SENDER's "own" certificate (get_smime_keys()
+			// above) is a SEPARATE record from the account's own p12 (acc_smime) - normally the same
+			// certificate, but nothing enforces that, and addressbook_bo::get_keys() has no
+			// deterministic tie-break when more than one contact shares the same email (silently
+			// keeps whichever the search happens to return last, and falls back to a stale legacy
+			// inline pubkey field if a contact's own stored file can't be read) - found live
+			// 2026-09-01: three OTHER contacts sharing ralf's email had unreadable cert files
+			// (VFS fopen failures) and none was his real one (contact #46) - openssl_pkcs7_sign()
+			// only ever surfaced this as an opaque "Could not S/MIME sign message.", not naming
+			// which contact/cert was actually wrong. Fail clearly here instead, before ever
+			// attempting to sign with a cert that doesn't even belong to this key.
+			if (!empty($acc_smime['pkey']) && !openssl_x509_check_private_key($params['senderPubKey'], [$acc_smime['pkey'], $passphrase]))
+			{
+				throw new \Exception(lang("The S/MIME certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.", $sender));
+			}
+			$params['senderPrivKey'] = $acc_smime['pkey'] ?? null;
+			$params['passphrase'] = $passphrase;
+			// extracerts also holds retired own certificates kept around to still decrypt old mail
+			// (see Smime::decryptWithCandidates()) - only actual CA/intermediate certificates (not
+			// belonging to our own key) belong in the chain sent with outgoing signed mail, same
+			// filter classic mail_compose::_encrypt() applies
+			$params['extracerts'] = !empty($acc_smime['extracerts']) ?
+				array_values(array_filter($acc_smime['extracerts'],
+					fn($c) => !Api\Mail\Smime::isOwnCertificate($c, $acc_smime['pkey'], $passphrase))) : null;
+
+			if (!$mailer->smimeEncrypt($type, $params))
+			{
+				throw new Api\Mail\Smime\PassphraseMissing(lang('You need to enter your S/MIME passphrase to send this message.'));
+			}
+		}
+		catch (\Throwable $e)
+		{
+			Api\Cache::unsetSession('mail', 'smime_passphrase');
+			throw $e;
+		}
+		// the 'smime_pass_exp' PREFERENCE itself is persisted client-side (smimePassDialog()'s own
+		// egw.set_preference() call, mail/js/app.ts) - no server-side duplicate here, which would
+		// only add an inconsistent second write path gated differently (always-on-submit
+		// client-side vs only-on-confirmed-sign/encrypt here)
+		if ($passphrase !== '')
+		{
+			Api\Mail\Smime::resyncAddressbookCert((int)$accountId, $passphrase);
+		}
+		if ($type === Api\Mail\Smime::TYPE_SIGN)
+		{
+			// multipart/signed can't be expressed via a single {type, blobId} bodyStructure leaf
+			// like TYPE_ENCRYPT/TYPE_SIGN_ENCRYPT's opaque application/pkcs7-mime below - RFC 8621
+			// §4.1.4's EmailBodyPart.type is bare "type/subtype" only (no boundary/protocol/micalg
+			// params), and headers MUST NOT be given on Email/set create at all (RFC 8621 explicit),
+			// so there's no spec-compliant way to inject them. Returning the WHOLE raw message
+			// instead (Mailer::getRaw(), same top-level-headers + base-part serialization classic
+			// mail_compose::send() already relies on for its own Sent-folder copy) - the caller
+			// uploads this as a blob and creates/sends it via Email/import (RFC 8621 §4.8) instead
+			// of Email/set create + EmailSubmission/set's rebuild-from-properties path, since ANY
+			// reconstruction of a multipart/signed body invalidates its signature (the signature
+			// covers the exact byte-for-byte MIME framing of the content part).
+			return ['whole' => true, 'raw' => $mailer->getRaw(false)];
+		}
+		return self::extractSmimeBodyBlob($mailer->getBasePart());
+	}
+
+	/**
+	 * Extract the signed/encrypted body ENTITY's raw content for upload as a blob - found live
+	 * 2026-09-01 that `toString(['headers' => true])` (the default) DOUBLE-WRAPS: it bakes the
+	 * part's own Content-Type/Content-Transfer-Encoding HEADERS in as literal text ahead of the
+	 * body, so the client's later `bodyStructure: {type, blobId}` swap ends up nesting one
+	 * complete MIME entity (headers, blank line, base64 body) inside another - the received
+	 * message's body was an unreadable "Content-Type: application/pkcs7-mime..." text blob, not
+	 * real PKCS7 ciphertext. `getContents()` is correct here instead: `Horde_Crypt_Smime::
+	 * encryptMIMEPart()`/`signAndEncryptMIMEPart()` build the resulting part via
+	 * `setContents($base64text, ['encoding' => 'base64'])`, and `Horde_Mime_Part::setContents()`
+	 * transfer-DECODES immediately on the way in (`_transferDecode()`) - so `_contents` (what
+	 * `getContents()` returns) is already the raw, unencoded CMS/DER bytes, no headers, no
+	 * transfer-encoding artifact - exactly the shape every other attachment blob already uses
+	 * (`Api\Jmap::uploadBlob($rawBytes, $type)`), letting the JMAP server pick transfer-encoding
+	 * itself when it assembles the final message.
+	 *
+	 * Only ever called for TYPE_ENCRYPT/TYPE_SIGN_ENCRYPT (see smimeEncryptEmailProperties()'s own
+	 * docblock) - TYPE_SIGN's multipart/signed result takes a completely different path (the WHOLE
+	 * message, via Email/import) since `Horde_Crypt_Smime::signMIMEPart()` returns a genuine
+	 * multipart container (two real sub-parts plus `protocol`/`micalg` Content-Type parameters) that
+	 * can't be expressed via this method's single-leaf `{type, blobId}` bodyStructure swap at all.
+	 * The multipart check below is defense-in-depth only (should never trigger given the caller
+	 * already branches on $type first).
+	 *
+	 * @param \Horde_Mime_Part $base
+	 * @return array{type: string, raw: string}
+	 * @throws \Exception $base unexpectedly turned out to be multipart
+	 */
+	private static function extractSmimeBodyBlob(\Horde_Mime_Part $base) : array
+	{
+		if ($base->getPrimaryType() === 'multipart')
+		{
+			throw new \Exception(lang('Internal error building the S/MIME message.'));
+		}
+		return ['type' => $base->getType(), 'raw' => $base->getContents()];
+	}
+
+	/**
+	 * Fail clearly (naming the exact address) if a certificate addressbook_bo::get_smime_keys()
+	 * returned isn't actually a parseable X.509 certificate - found live 2026-09-01: a contact
+	 * whose own stored cert FILE is unreadable (VFS fopen failure) can still fall through to a
+	 * stale legacy inline pubkey-field value that "matches" the storage regexp without being valid
+	 * X.509 at all, which openssl_pkcs7_sign()/openssl_pkcs7_encrypt() would otherwise only ever
+	 * surface as an opaque "Could not S/MIME sign/encrypt message." with no indication of which
+	 * certificate, or why.
+	 *
+	 * @param string $cert
+	 * @param string $email
+	 * @throws \Exception
+	 */
+	private static function assertValidSmimeCert(string $cert, string $email) : void
+	{
+		if (!openssl_x509_parse($cert))
+		{
+			throw new \Exception(lang("The S/MIME certificate stored in the address book for %1 is not valid - check for duplicate/broken address book entries for this address.", $email));
+		}
+	}
+
+	/**
+	 * Add a non-inline attachment part, working around a real Horde_Mime_Part limitation for
+	 * message/rfc822 specifically - found live 2026-08-31: a forward-as-attachment's carried
+	 * message never showed up in the RECIPIENT's own "Attachments" list after actually being sent
+	 * and received. Root cause: Horde_Mime_Part::addMimeHeaders() hard-codes "message/* parts
+	 * require no additional header information" (RFC 2046 [5.2.1]) and unconditionally skips
+	 * Content-Disposition (among others) for ANY part whose primary type is "message" - correct
+	 * per that RFC's strict reading, but real-world MUAs/JMAP servers commonly rely on a real
+	 * "Content-Disposition: attachment; filename=..." to recognize a forwarded message as an
+	 * attachment at all. `addStringAttachment()`/`addAttachment()` both hit this same restriction
+	 * regardless of which one is used - not fixable by calling them differently. Api\Mail\Jmap\
+	 * Rfc822AttachmentPart (this file's own end) re-adds the header Horde drops, only for
+	 * message/rfc822 - built manually here (mirroring what addStringAttachment()/addAttachment()
+	 * do internally) since neither lets a caller substitute the Horde_Mime_Part subclass they
+	 * construct internally.
+	 *
+	 * @param Api\Mailer $mailer
+	 * @param string|resource $content raw bytes, or an open file-handle (Api\Vfs::fopen()'s own
+	 *  return type) - same duck-typed contract Horde_Mime_Part::setContents() itself accepts
+	 * @param string $name attachment filename
+	 * @param string $type MIME type
+	 */
+	private static function addAttachmentPart(Api\Mailer $mailer, $content, string $name, string $type) : void
+	{
+		if (strtolower($type) !== 'message/rfc822')
+		{
+			if (is_resource($content))
+			{
+				$mailer->addAttachment($content, $name, $type);
+			}
+			else
+			{
+				$mailer->addStringAttachment($content, $name, $type);
+			}
+			return;
+		}
+		$part = new Rfc822AttachmentPart();
+		$part->setType($type);
+		$part->setContents($content);
+		$part->setName($name);
+		$part->setDisposition('attachment');
+		$mailer->addMimePart($part);
+	}
+
+	/**
+	 * EmailSubmission/set (RFC 8621 §7) for the local IMAP shim - doc/ai/projects/
+	 * mail-compose-jmap-migration.md's Step 2. A real JMAP server (Stalwart, via Http.php's own
+	 * pure passthrough EmailSubmission class) handles this natively; plain IMAP has no concept of
+	 * it at all, so this emulates it end to end:
+	 *
+	 * 1. Re-fetch the already-created Draft's own JMAP properties via emailGet() - the exact same
+	 *    properties Email/get would return for any other message, NOT a second, separate rebuild
+	 *    from whatever the client originally sent to Email/set create (nothing server-side retains
+	 *    that once the message is already stored).
+	 * 2. Rebuild an Api\Mailer from those properties (buildMailerFromEmailProperties(), shared
+	 *    with Email/set's own 'create' handling above).
+	 * 3. Actually send it, THEN reuse that SAME Mailer's own getRaw() (not a second rebuild) for
+	 *    the Sent-folder copy - guaranteeing it always exactly matches what was actually
+	 *    transmitted, mirroring classic mail_compose::send()'s own "$mail->send(); ... [later]
+	 *    $mail->forceBccHeader(); $mail->getRaw()" sequence exactly (Bcc is only ever visible in
+	 *    the stored/Sent copy, never in what's actually transmitted to recipients - Horde's own
+	 *    send() already strips it from the wire while still using it for the SMTP envelope, same
+	 *    as classic compose has always relied on - forceBccHeader() only needs to run afterward,
+	 *    for the copy we store).
+	 * 4. Append that raw copy into the target (Sent) mailbox and delete the old Draft outright -
+	 *    NOT a "move" of the draft's own stored bytes, since the just-transmitted Mailer's own
+	 *    getRaw() is the correct, authoritative copy.
+	 *
+	 * `mailboxId` isn't a standard EmailSubmission/set property and the client doesn't send one -
+	 * the Draft's current mailbox is derived from `onSuccessUpdateEmail`'s own patch instead (its
+	 * `mailboxIds/<id>: null` entry - "the mailbox this message is being removed from" - by
+	 * construction, that's always wherever it currently lives; this is also where the target
+	 * (`mailboxIds/<id>: true`) and keyword patches for the Sent copy come from). A bare
+	 * EmailSubmission/set with no onSuccessUpdateEmail at all is valid per RFC 8621 but not
+	 * something this codebase's own client ever sends, so isn't supported here - fails with
+	 * invalidProperties instead of guessing a fallback mailbox.
+	 */
+	public static function emailSubmissionSet(string $accountId, array $args) : array
+	{
+		$created = [];
+		$notCreated = [];
+		if ($accountId === '0')
+		{
+			return ['accountId' => $accountId, 'oldState' => '0', 'newState' => '0',
+				'created' => (object)$created, 'notCreated' => (object)$notCreated];
+		}
+		$imap = self::imapServer($accountId);
+
+		foreach ((array)($args['create'] ?? []) as $creationId => $submission)
+		{
+			$creationId = (string)$creationId;
+			try
+			{
+				$emailId = (string)($submission['emailId'] ?? '');
+				if ($emailId === '' || !ctype_digit($emailId))
+				{
+					$notCreated[$creationId] = ['type' => 'invalidProperties', 'properties' => ['emailId']];
+					continue;
+				}
+				$patch = (array)($args['onSuccessUpdateEmail']['#'.$creationId] ?? []);
+				$sourceFolder = null;
+				$targetFolder = null;
+				$sentFlags = [];
+				foreach ($patch as $path => $value)
+				{
+					if (str_starts_with((string)$path, 'mailboxIds/'))
+					{
+						$folder = self::folderPath(substr((string)$path, strlen('mailboxIds/')));
+						if ($value === true)
+						{
+							$targetFolder = $folder;
+						}
+						elseif ($value === null)
+						{
+							$sourceFolder = $folder;
+						}
+						continue;
+					}
+					if (str_starts_with((string)$path, 'keywords/') && $value === true)
+					{
+						$keyword = strtolower(substr((string)$path, strlen('keywords/')));
+						if (($flag = self::importKeywordToFlag($keyword)) !== null)
+						{
+							$sentFlags[] = $flag;
+						}
+					}
+				}
+				if ($sourceFolder === null)
+				{
+					$notCreated[$creationId] = ['type' => 'invalidProperties', 'properties' => ['onSuccessUpdateEmail']];
+					continue;
+				}
+
+				$emailContext = [];
+				// found missing 2026-09-09 (ralf, relaying a tester report: "the selected ReplyTo
+				// is NOT send with the mail"): 'replyTo' plus every header:X property
+				// buildMailerFromEmailProperties() reads (X-Priority/Disposition-Notification-To/
+				// Thread-Topic/Thread-Index/List-Id) were all absent from this list, so all five
+				// were silently dropped at actual send time - each was only ever populated from a
+				// direct client CREATE submission, never read back from the already-stored draft
+				// this re-fetches. Autocrypt (same day, same bug class - found live once item 3's
+				// send-side header existed to actually test) joined this list too, via its own
+				// AUTOCRYPT_HEADER_PROPERTY `:all` read-form.
+				$fetched = self::emailGet($accountId, [
+					'ids' => [$emailId],
+					'mailboxId' => base64_encode($sourceFolder),
+					'properties' => ['from', 'to', 'cc', 'bcc', 'replyTo', 'subject', 'inReplyTo', 'references',
+						self::PRIORITY_HEADER_PROPERTY, self::DISPOSITION_REQUEST_HEADER_PROPERTY,
+						self::THREAD_TOPIC_HEADER_PROPERTY, self::THREAD_INDEX_HEADER_PROPERTY, self::LIST_ID_HEADER_PROPERTY,
+						self::AUTOCRYPT_HEADER_PROPERTY,
+						'bodyStructure', 'textBody', 'htmlBody', 'bodyValues'],
+				], $emailContext);
+				$email = ($fetched['list'] ?? [])[0] ?? null;
+				if (!$email)
+				{
+					$notCreated[$creationId] = ['type' => 'notFound'];
+					continue;
+				}
+
+				$mailer = self::buildMailerFromEmailProperties($accountId, (array)$email);
+				// a genuinely-signed draft (see smimeEncryptEmailProperties()'s own TYPE_SIGN
+				// docblock - the Email/import path used to create such a draft in the first place)
+				// must be sent/stored with its EXACT stored body bytes, never rebuilt from
+				// properties: buildMailerFromEmailProperties()'s own bodyStructure walk has no
+				// concept of multipart/signed and would silently re-derive a completely different
+				// (unsigned) body, and ANY reconstruction of a multipart/signed body invalidates its
+				// signature anyway (it covers the exact byte-for-byte MIME framing of the content
+				// part). From/To/Cc/Bcc/Subject/threading headers above are still safely rebuilt from
+				// properties as usual - Horde_Mime_Mail::send() already strips Bcc from the wire
+				// transmission while keeping it for the stored copy, same as any other message - only
+				// the BODY needs the untouched original.
+				if (($email['bodyStructure']['type'] ?? '') === 'multipart/signed')
+				{
+					$sourceMailboxForRaw = self::hordeMailbox($imap, $sourceFolder);
+					$rawStored = self::fetchRawMessage($imap, $sourceMailboxForRaw, $emailId);
+					if ($rawStored === null)
+					{
+						throw new \Exception("Message '$emailId' not found in '$sourceFolder'!");
+					}
+					$parsedBase = \Horde_Mime_Part::parseMessage($rawStored, ['forcemime' => true]);
+					// Api\Mailer::send()'s own "sign needs 7bit encoding" safety check
+					// ($this->_base->getMetadata('X-EGroupware-Smime-signed')) only ever sees metadata
+					// set on THIS EXACT object instance - signMIMEPart() set it on the ORIGINAL part
+					// that's long gone by now, and parseMessage() above built a completely fresh
+					// object with no memory of it. Found live 2026-09-02 (ralf: a real shim-sent
+					// signed message arrived flagged "verification failed - this message may have
+					// been tampered with", not merely an untrusted self-signed CA): without this,
+					// Horde_Mime_Part::send()'s own SMTP-transport encode selection falls through to
+					// its 8BITMIME-capability check instead, re-encoding the (already correctly
+					// quoted-printable-encoded, per what was actually signed) content as raw 8bit -
+					// different bytes than what the signature covers, breaking it outright.
+					$parsedBase->setMetadata('X-EGroupware-Smime-signed', true);
+					$mailer->setBasePart($parsedBase);
+				}
+				$mailer->send();
+				// only now - see this method's own docblock for why not before send()
+				$mailer->forceBccHeader();
+				$raw = $mailer->getRaw(false);
+
+				// Stash the exact bytes just sent as a blob NOW, synchronously (uploadBytes() is a
+				// local file write, not an IMAP round trip - negligible cost even though most sends
+				// never need it) - found live 2026-09-04 (ralf: "to_infolog attaches the wrong
+				// mail/eml"): MailCompose.integrateSentMessage() used to re-fetch "the just-sent
+				// message" afterward via (mailboxId=Sent, emailId=<this Draft's own UID>) - correct
+				// for real Stalwart (Email.id is stable across a mailboxIds move by spec) but WRONG
+				// for this shim, where the deferred Sent-copy below is a fresh IMAP APPEND that gets
+				// its own brand-new UID in Sent's own independent per-mailbox UID sequence, unrelated
+				// to the old Draft's UID number - that stale (folder, uid) pair could silently
+				// resolve to a completely different, unrelated real message that happens to already
+				// have that UID in Sent, with no error at all. `blobId` here sidesteps the whole
+				// problem: the client downloads these exact bytes directly, never needing to
+				// rediscover "where did the sent copy end up" by UID at all.
+				$rawBlobId = self::uploadBytes($raw, 'message/rfc822')['blobId'];
+
+				// the mail has ALREADY gone out at this point - appending the Sent-folder copy and
+				// deleting+expunging the old Draft are best-effort bookkeeping the user shouldn't
+				// have to wait for (see $deferredWork's own docblock) - queued to run once jmap.php
+				// has already sent the response to the client instead of inline here.
+				self::queueDeferredWork(function() use ($imap, $targetFolder, $sourceFolder, $raw, $sentFlags, $emailId)
+				{
+					if ($targetFolder !== null)
+					{
+						$targetMailbox = self::hordeMailbox($imap, $targetFolder);
+						self::appendRawMessage($imap, $targetMailbox, $raw, $sentFlags);
+					}
+					// remove the old Draft outright (matches classic mail_compose::send()'s own
+					// deleteMessages(..., 'remove_immediately') cleanup after a successful
+					// send-from-draft)
+					$sourceMailbox = self::hordeMailbox($imap, $sourceFolder);
+					$imap->store($sourceMailbox, [
+						'add' => ['\\Deleted'],
+						'ids' => new \Horde_Imap_Client_Ids([(int)$emailId]),
+					]);
+					$imap->expunge($sourceMailbox);
+				});
+
+				$created[$creationId] = ['id' => $creationId, 'sendAt' => gmdate('Y-m-d\TH:i:s\Z'),
+					'undoStatus' => 'final',
+					// not an RFC 8621 EmailSubmission property - a shim-only extension, see this
+					// block's own comment above. A real Stalwart account never reaches this class
+					// for its own EmailSubmission/set at all (real passthrough, see class docblock),
+					// so this key is simply absent from its response - MailJmap.sendNewEmail() falls
+					// back to the (safe-for-Stalwart) fetchRawSource(rowId) path when it's missing.
+					'blobId' => $rawBlobId];
+			}
+			catch (\Throwable $e)
+			{
+				$notCreated[$creationId] = ['type' => 'serverFail', 'description' => $e->getMessage()];
+			}
+		}
+
+		return [
+			'accountId' => $accountId,
+			'oldState' => '0',
+			'newState' => '0',
+			'created' => (object)$created,
+			'notCreated' => (object)$notCreated,
+		];
+	}
+
+	/**
+	 * Standard IMAP flags an imported message's "keywords" may set - broader than
+	 * writableKeywords() (which only covers what the UI may *mutate* on an existing message via
+	 * Email/set - labels/customflags/$flagged/$seen/$answered/$forwarded, deliberately excluding
+	 * \Draft). Unrecognised keywords are silently ignored rather than failing the whole import.
+	 *
+	 * @param string $keyword lowercased JMAP keyword, e.g. "$seen"
+	 * @return ?string IMAP flag, or null if not a recognised standard keyword
+	 */
+	private static function importKeywordToFlag(string $keyword) : ?string
+	{
+		return match ($keyword)
+		{
+			'$seen' => '\\Seen',
+			'$answered' => '\\Answered',
+			'$flagged' => '\\Flagged',
+			'$draft' => '\\Draft',
+			default => self::writableKeywords()[$keyword] ?? null,
+		};
+	}
+
+	/**
+	 * Keywords the Mail UI is allowed to mutate through the local shim.
+	 *
+	 * @return array<string,string> JMAP keyword to IMAP flag / keyword
+	 */
+	public static function writableKeywords() : array
+	{
+		// 'MDNSent'/'MDNnotSent' (no '$' prefix) is the real IMAP keyword classic
+		// Api\Mail::flagMessages() already writes - matched here so a message flagged through
+		// either code path is recognized identically by the other. $seen is here for
+		// MailJmap.setSystemFlag()'s explicit-selection bulk read/unread action. $answered/
+		// $forwarded (2026-09-09) are for that same method's OTHER caller, MailCompose's
+		// post-send source-message marking (mail/js/compose.ts) - the JMAP-native send path's
+		// equivalent of classic Api\Mail::flagMessages("answered"/"forwarded", ...)
+		// (mail/src/Send.php), which never runs for it at all.
+		$keywords = ['$flagged' => '\\Flagged', '$seen' => '\\Seen', '$answered' => '\\Answered',
+			'$forwarded' => '$Forwarded', '$mdnsent' => 'MDNSent', '$mdnnotsent' => 'MDNnotSent'];
+		foreach (['label1', 'label2', 'label3', 'label4', 'label5',
+			'customflag1', 'customflag2', 'customflag3', 'customflag4', 'customflag5'] as $keyword)
+		{
+			$keywords['$'.$keyword] = '$'.$keyword;
+		}
+		foreach (array_keys(CustomLabels::getCustomLabels()) as $keyword)
+		{
+			$keywords['$'.strtolower($keyword)] = '$'.strtolower($keyword);
+		}
+		return $keywords;
+	}
+
+	/**
+	 * Whether a message's parsed structure counts as "has an attachment" for the row-level
+	 * hasAttachment flag - mirrors Api\Mail's old per-row heuristic (getHeaders(), classic
+	 * pre-JMAP code) rather than Horde_Mime_Part::isAttachment(): that method has no carve-out
+	 * for an inline image with no Content-ID (can never be resolved as a cid: reference, so it
+	 * must be listed/downloadable) or for image/tiff (browsers can't display it inline regardless
+	 * of disposition), both of which the classic per-row flag always treated as "has an
+	 * attachment".
+	 *
+	 * @param \Horde_Mime_Part $structure
+	 * @return bool
+	 */
+	public static function structureHasAttachment(\Horde_Mime_Part $structure) : bool
+	{
+		foreach ($structure->partIterator() as $part)
+		{
+			/** @var \Horde_Mime_Part $part */
+			$partDisposition = $part->getDisposition();
+			$partPrimaryType = $part->getPrimaryType();
+			if ($partDisposition === 'attachment' ||
+				($partDisposition === 'inline' && $partPrimaryType === 'image' && $part->getType() === 'image/tiff') ||
+				($partDisposition === 'inline' && $partPrimaryType === 'image' && !$part->getContentId()) ||
+				($partDisposition === 'inline' && $partPrimaryType !== 'image' && $partPrimaryType !== 'multipart' && $partPrimaryType !== 'text'))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Map a single fetched message to a JMAP-shaped Email object (only the properties
+	 * MailJmap.getRows() requests - see the class docblock for the full scope note)
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $mailbox
+	 * @param string $uid
+	 * @param \Horde_Imap_Client_Data_Fetch $data
+	 * @param bool $wantPreview false skips the (extra IMAP round-trip) preview snippet entirely
+	 * @param bool $wantMdn true adds the MDN_HEADER_PROPERTY field (needs a preceding
+	 *  $query->headers('mdn', ...) call, see emailGet())
+	 * @param bool $wantBlobId true adds the whole-message 'blobId' field (RFC 8621 top-level
+	 *  Email.blobId) - no extra IMAP work, same self-describing scheme bodyPartToJmap() uses
+	 * @param bool $wantContentType true adds the CONTENT_TYPE_HEADER_PROPERTY field (needs a
+	 *  preceding $query->headers('contenttype', ...) call, see emailGet())
+	 * @param bool $wantThreadHeaders true adds the THREAD_TOPIC_HEADER_PROPERTY/
+	 *  THREAD_INDEX_HEADER_PROPERTY/LIST_ID_HEADER_PROPERTY fields (needs a preceding
+	 *  $query->headers('threadheaders', ...) call, see emailGet()) - MailJmap.fetchForReply()'s
+	 *  own reply-propagation fetch (classic getReplyData()'s equivalent)
+	 * @param bool $wantSendHeaders true adds the PRIORITY_HEADER_PROPERTY/
+	 *  DISPOSITION_REQUEST_HEADER_PROPERTY fields (needs a preceding
+	 *  $query->headers('sendheaders', ...) call, see emailGet()) - emailSubmissionSet()'s own
+	 *  re-fetch-then-resend flow, reading a saved draft's own Priority/read-receipt-request back
+	 * @param bool $wantAutocrypt true adds the AUTOCRYPT_HEADER_PROPERTY field, ALL raw instances
+	 *  as an array per RFC 8621 §4.1.3's ":all" suffix (needs a preceding $query->headers(
+	 *  'autocrypt', ...) call, see emailGet()) - MailJmap.fetchForReply()'s own read (Phase 5 item
+	 *  4) and emailSubmissionSet()'s re-fetch-then-resend flow (item 3's sending half)
+	 * @return array
+	 */
+	public static function emailFromFetch(\Horde_Imap_Client_Socket $imap, string $mailbox, string $uid, \Horde_Imap_Client_Data_Fetch $data, bool $wantPreview = true, bool $wantBody = false, bool $wantMdn = false, bool $wantBlobId = false, bool $wantContentType = false, bool $wantThreadHeaders = false, bool $wantSendHeaders = false, bool $wantAutocrypt = false) : array
+	{
+		$envelope = $data->getEnvelope();
+		$structure = $data->getStructure();
+		$addressHeaders = $data->getHeaders('addresses', \Horde_Imap_Client_Data_Fetch::HEADER_PARSE);
+
+		$hasAttachment = $structure && self::structureHasAttachment($structure);
+
+		$email = [
+			'id' => $uid,
+			// RFC 8621 §4.1.1 - real JMAP always includes this; found missing here entirely
+			// 2026-09-09 while planning doc/ai/projects/mail-rest-jmap-lite.md (the shim tracked
+			// "current mailbox" only out-of-band via $context, never as an Email property). Cheap
+			// to add - $imap/$mailbox are already in scope, no extra IMAP round trip - and uses the
+			// exact same id scheme as Mailbox::getMailboxId() (base64 of the canonical path), so a
+			// mailboxIds key here always matches a real Mailbox.id from the same session.
+			'mailboxIds' => [base64_encode(self::canonicalPath($imap, $mailbox)) => true],
+			'keywords' => self::flagsToKeywords($data->getFlags()),
+			'size' => $data->getSize(),
+			'receivedAt' => self::imapDate($data->getImapDate()),
+			'sentAt' => self::imapDate($envelope->date),
+			'subject' => (string)$envelope->subject,
+			'preview' => $wantPreview ? self::preview($imap, $mailbox, $uid, $structure, $data) : '',
+			'from' => self::addressListFromHeader($addressHeaders, 'From') ?? self::addressList($envelope->from),
+			'to' => self::addressListFromHeader($addressHeaders, 'To') ?? self::addressList($envelope->to),
+			'cc' => self::addressListFromHeader($addressHeaders, 'Cc') ?? self::addressList($envelope->cc),
+			'bcc' => self::addressListFromHeader($addressHeaders, 'Bcc') ?? self::addressList($envelope->bcc),
+			// RFC 8621 §4.1.1 - found missing here entirely 2026-09-09 (ralf, relaying a tester
+			// report: "the selected ReplyTo is NOT send with the mail") - same
+			// addressListFromHeader()-with-envelope-fallback pattern as to/cc/bcc above, unconditional
+			// (not gated) since it costs nothing extra: 'Reply-To' was added to the SAME 'addresses'
+			// header fetch those already use.
+			'replyTo' => self::addressListFromHeader($addressHeaders, 'Reply-To') ?? self::addressList($envelope->reply_to),
+			'hasAttachment' => $hasAttachment,
+		];
+		if ($wantBlobId)
+		{
+			$email['blobId'] = self::urlsafeB64Encode($mailbox).':'.$uid.':';
+		}
+		if ($wantMdn)
+		{
+			$mdnHeaders = $data->getHeaders('mdn', \Horde_Imap_Client_Data_Fetch::HEADER_PARSE);
+			$email[self::MDN_HEADER_PROPERTY] = $mdnHeaders ? self::firstHeaderValue($mdnHeaders,
+				['Disposition-Notification-To', 'Return-Receipt-To', 'X-Confirm-Reading-To']) : null;
+		}
+		if ($wantContentType)
+		{
+			$contentTypeHeaders = $data->getHeaders('contenttype', \Horde_Imap_Client_Data_Fetch::HEADER_PARSE);
+			$email[self::CONTENT_TYPE_HEADER_PROPERTY] = $contentTypeHeaders ?
+				self::firstHeaderValue($contentTypeHeaders, ['Content-Type']) : null;
+		}
+		if ($wantThreadHeaders)
+		{
+			$threadHeaders = $data->getHeaders('threadheaders', \Horde_Imap_Client_Data_Fetch::HEADER_PARSE);
+			$email[self::THREAD_TOPIC_HEADER_PROPERTY] = $threadHeaders ?
+				self::firstHeaderValue($threadHeaders, ['Thread-Topic']) : null;
+			$email[self::THREAD_INDEX_HEADER_PROPERTY] = $threadHeaders ?
+				self::firstHeaderValue($threadHeaders, ['Thread-Index']) : null;
+			$email[self::LIST_ID_HEADER_PROPERTY] = $threadHeaders ?
+				self::firstHeaderValue($threadHeaders, ['List-Id']) : null;
+		}
+		if ($wantSendHeaders)
+		{
+			$sendHeaders = $data->getHeaders('sendheaders', \Horde_Imap_Client_Data_Fetch::HEADER_PARSE);
+			$email[self::PRIORITY_HEADER_PROPERTY] = $sendHeaders ?
+				self::firstHeaderValue($sendHeaders, ['X-Priority']) : null;
+			$email[self::DISPOSITION_REQUEST_HEADER_PROPERTY] = $sendHeaders ?
+				self::firstHeaderValue($sendHeaders, ['Disposition-Notification-To']) : null;
+		}
+		if ($wantAutocrypt)
+		{
+			$autocryptHeaders = $data->getHeaders('autocrypt', \Horde_Imap_Client_Data_Fetch::HEADER_PARSE);
+			$email[self::AUTOCRYPT_HEADER_PROPERTY] = $autocryptHeaders ?
+				self::allHeaderValues($autocryptHeaders, 'Autocrypt') : [];
+		}
+		if ($wantBody && $structure)
+		{
+			$email += self::emailBodyFields($imap, $mailbox, $uid, $structure);
+		}
+		return $email;
+	}
+
+	/**
+	 * RFC 8621 §4.1.3 header-property name for the MDN (read-receipt) prompt - MailJmap.email2row()
+	 * (mail/js/jmap.ts) reads this exact key back from both backends' Email/get response, matching
+	 * how a real JMAP server echoes "header:X:form" property keys verbatim.
+	 */
+	const MDN_HEADER_PROPERTY = 'header:disposition-notification-to:asText';
+
+	/**
+	 * Same RFC 8621 §4.1.3 header-property mechanism, for the top-level Content-Type header -
+	 * MailJmap.email2row()'s isSmimeWrapperOnly() reads this to suppress the row-list attachment
+	 * icon for a message that's entirely an S/MIME signature/encryption wrapper. Bare form (no
+	 * ":asText"/":asRaw" suffix) - see mail/js/jmap.ts's own copy of this constant for why.
+	 */
+	const CONTENT_TYPE_HEADER_PROPERTY = 'header:content-type';
+
+	/**
+	 * Same RFC 8621 §4.1.3 header-property mechanism, for reply propagation (classic
+	 * getReplyData()'s equivalent, see emailGet()'s own docblock note on why this was added
+	 * 2026-09-09) - MailJmap.fetchForReply() (mail/js/jmap.ts) reads these exact keys back
+	 * verbatim.
+	 */
+	const THREAD_TOPIC_HEADER_PROPERTY = 'header:thread-topic:asText';
+	const THREAD_INDEX_HEADER_PROPERTY = 'header:thread-index:asText';
+	const LIST_ID_HEADER_PROPERTY = 'header:list-id:asText';
+
+	/**
+	 * RFC 8621 §4.1.3 ":all" suffix (array of every instance) - matches MailJmap's own read-side
+	 * key exactly (mail/js/jmap.ts). Real Stalwart JMAP-over-HTTP supports this generically for any
+	 * `header:X:form` property with no server-side code needed; THIS shim does not (isLocal:true -
+	 * emailGet() below has no generic header mechanism, only an explicit per-header allowlist), so
+	 * this constant's emailGet()/emailFromFetch() wiring (the $wantAutocrypt block below) had to be
+	 * added by hand - missing at first (live-found 2026-09-09, ralf: "It sends now, but no Autocrypt
+	 * header"), now fixed and live-verified against this shim. Used ONLY for the
+	 * emailSubmissionSet() re-fetch below (its own docblock note on PRIORITY_HEADER_PROPERTY
+	 * explains why a re-fetch form is needed at all) - the bare `header:Autocrypt` form (single
+	 * string, no `:all`) is what a direct client CREATE submission sends (MailJmap.
+	 * draftEmailProperties()), read directly in buildMailerFromEmailProperties() below without
+	 * needing its own named constant.
+	 */
+	const AUTOCRYPT_HEADER_PROPERTY = 'header:Autocrypt:all';
+
+	/**
+	 * RFC 8621 §4.1.3 header-property mechanism, bare form (not ":asText" - matches
+	 * MailJmap.draftEmailProperties()'s own write-side key exactly, see
+	 * buildMailerFromEmailProperties()) - found missing 2026-09-09 alongside 'replyTo': these were
+	 * only ever populated from a direct client CREATE submission, never read back from an
+	 * already-stored message, so emailSubmissionSet()'s re-fetch-then-resend flow silently dropped
+	 * both again even after that fix.
+	 */
+	const PRIORITY_HEADER_PROPERTY = 'header:X-Priority';
+
+	/**
+	 * Same, for the read-receipt-REQUEST header a compose sets when the user checks "request a
+	 * read receipt" - NOT MDN_HEADER_PROPERTY above, which detects the OPPOSITE direction (an
+	 * INCOMING message asking US for a receipt).
+	 */
+	const DISPOSITION_REQUEST_HEADER_PROPERTY = 'header:Disposition-Notification-To';
+
+	/**
+	 * First non-empty value among a priority list of header names, decoded (RFC 2047) and trimmed -
+	 * same 3-header priority/decoding Api\Mail::getHeaders() uses, deliberately reimplemented here
+	 * rather than calling that mail_bo-coupled method (see class docblock).
+	 *
+	 * @param \Horde_Mime_Headers $headers
+	 * @param string[] $names tried in order, first present+non-empty wins
+	 * @return ?string
+	 */
+	private static function firstHeaderValue(\Horde_Mime_Headers $headers, array $names) : ?string
+	{
+		$arr = array_change_key_case($headers->toArray(), CASE_UPPER);
+		foreach ($names as $name)
+		{
+			$value = $arr[strtoupper($name)] ?? null;
+			$value = is_array($value) ? reset($value) : $value;
+			if ($value !== null && trim((string)$value) !== '')
+			{
+				return \iconv_mime_decode(trim((string)$value), 0, 'UTF-8');
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * ALL instances of one header, as an array (RFC 8621 §4.1.3 ":all" suffix), instead of
+	 * firstHeaderValue()'s single "first non-empty of a priority list" result. No explicit RFC 2047
+	 * decoding call here (unlike firstHeaderValue()'s `iconv_mime_decode()`) - but the value has
+	 * already been decoded by this point regardless, since `Horde_Mime_Headers::parseHeaders()`
+	 * (invoked internally by the `HEADER_PARSE` fetch mode both this and firstHeaderValue() rely on)
+	 * does its own RFC 2047 decoding while parsing, before either method ever sees the value; an
+	 * extra `iconv_mime_decode()` call here would be redundant at best (a harmless no-op on
+	 * already-decoded text) and can fail outright on already-decoded non-ASCII bytes (verified: it
+	 * returns `false` when re-run on text containing a decoded "©"), so don't add one. Harmless for
+	 * Autocrypt specifically (its only realistic user, currently) - `keydata=`'s own value is pure
+	 * base64, whose alphabet (A-Za-z0-9+/=) can never contain the "?" an RFC 2047 encoded word
+	 * requires, so real Autocrypt header values are never actually altered by this decoding.
+	 *
+	 * @param \Horde_Mime_Headers $headers
+	 * @param string $name
+	 * @return string[] empty array if the header is absent
+	 */
+	private static function allHeaderValues(\Horde_Mime_Headers $headers, string $name) : array
+	{
+		$arr = array_change_key_case($headers->toArray(), CASE_UPPER);
+		$value = $arr[strtoupper($name)] ?? null;
+		if ($value === null)
+		{
+			return [];
+		}
+		return array_map(static fn($v) => trim((string)$v), (array)$value);
+	}
+
+	/**
+	 * Build the RFC 8621 body fields (bodyStructure/textBody/htmlBody/attachments/bodyValues) for
+	 * one message - direct Imap/Horde MIME work, deliberately NOT going through mail_ui/Api\Mail
+	 * (see class docblock). Ported subset of Mail::getMultipartAlternative()/getTextPart()'s
+	 * essential logic (best-body selection via Horde_Mime_Part::findBody(), transfer-decode +
+	 * charset-convert), not a call into those methods.
+	 *
+	 * mail/js/jmap.ts's MailJmap.fetchBody() decides client-side (from bodyStructure/attachments
+	 * alone, before ever calling this) whether a message needs the legacy server-side path instead
+	 * (S/MIME, winmail.dat, meeting invites) - this method is only reached for the remaining "plain
+	 * mail" case (which now includes PGP/MIME - Mailvelope decrypts it entirely client-side, see
+	 * MailJmap.findPgpPart()/downloadPartText(), fetching the raw ciphertext part via the blobId
+	 * scheme below), so it doesn't need to special-case any of those itself.
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $mailbox
+	 * @param string $uid
+	 * @param \Horde_Mime_Part $structure
+	 * @return array {bodyStructure: array, textBody: array[], htmlBody: array[], attachments: array[], bodyValues: array}
+	 */
+	public static function emailBodyFields(\Horde_Imap_Client_Socket $imap, string $mailbox, string $uid, \Horde_Mime_Part $structure) : array
+	{
+		$textId = $structure->findBody('plain');
+		$htmlId = $structure->findBody('html');
+
+		$attachments = [];
+		foreach ($structure->partIterator() as $part)
+		{
+			/** @var \Horde_Mime_Part $part */
+			$id = $part->getMimeId();
+			if ($part->getPrimaryType() === 'multipart' || $id === $textId || $id === $htmlId)
+			{
+				continue;
+			}
+			$attachments[] = self::bodyPartToJmap($part, $mailbox, $uid);
+		}
+
+		$bodyValues = [];
+		foreach (array_unique(array_filter([$textId, $htmlId])) as $partId)
+		{
+			$bodyValues[$partId] = self::fetchBodyValue($imap, $mailbox, $uid, $structure, $partId);
+		}
+
+		return [
+			'bodyStructure' => self::bodyPartToJmap($structure, $mailbox, $uid),
+			'textBody' => $textId !== null ? [self::bodyPartToJmap($structure->getPart($textId), $mailbox, $uid)] : [],
+			'htmlBody' => $htmlId !== null ? [self::bodyPartToJmap($structure->getPart($htmlId), $mailbox, $uid)] : [],
+			'attachments' => $attachments,
+			'bodyValues' => $bodyValues,
+		];
+	}
+
+	/**
+	 * One Horde_Mime_Part -> one RFC 8621 EmailBodyPart, recursing into subParts for multipart
+	 *
+	 * blobId is self-describing (base64($mailbox).':'.$uid.':'.partId) since the local shim has no
+	 * separate blob store/registry to look one up in later, unlike a real JMAP server - download()
+	 * below decodes it back. Mirrors how row-ids already encode base64(folder)/uid for the same
+	 * reason (see class docblock).
+	 *
+	 * @param \Horde_Mime_Part $part
+	 * @param string $mailbox real (already delimiter-translated) IMAP mailbox name
+	 * @param string $uid
+	 * @return array
+	 */
+	public static function bodyPartToJmap(\Horde_Mime_Part $part, string $mailbox, string $uid) : array
+	{
+		$contentId = $part->getContentId();
+		$result = [
+			'partId' => $part->getMimeId(),
+			'blobId' => self::urlsafeB64Encode($mailbox).':'.$uid.':'.$part->getMimeId(),
+			'size' => $part->getBytes(),
+			'name' => $part->getName() ?: null,
+			'type' => strtolower((string)$part->getType()),
+			'charset' => $part->getContentTypeParameter('charset') ?: null,
+			'disposition' => $part->getDisposition() ?: null,
+			'cid' => $contentId ? trim($contentId, '<>') : null,
+		];
+		if ($part->getPrimaryType() === 'multipart')
+		{
+			$result['subParts'] = array_map(static fn($sub) => self::bodyPartToJmap($sub, $mailbox, $uid), $part->getParts());
+		}
+		return $result;
+	}
+
+	/**
+	 * Fetch + transfer-decode + charset-convert (to UTF-8) one body part's text content
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $mailbox
+	 * @param string $uid
+	 * @param \Horde_Mime_Part $structure
+	 * @param string $partId
+	 * @return array {value: string, isEncodingProblem: bool, isTruncated: bool}
+	 */
+	public static function fetchBodyValue(\Horde_Imap_Client_Socket $imap, string $mailbox, string $uid, \Horde_Mime_Part $structure, string $partId) : array
+	{
+		$query = new \Horde_Imap_Client_Fetch_Query();
+		// 'decode' asks the IMAP server to reverse Content-Transfer-Encoding itself (RFC 3516
+		// BINARY) - not guaranteed to happen (Dovecot commonly doesn't for quoted-printable/base64
+		// text parts), so getBodyPartDecode() below must still be checked and, same as
+		// Mail::fetchPartContents()'s established recipe, decoded client-side via the part's own
+		// setContents()/getContents() (which falls back to the part's own parsed
+		// Content-Transfer-Encoding header when $encoding is null) whenever it didn't
+		$query->bodyPart($partId, ['decode' => true, 'peek' => true]);
+		$results = $imap->fetch($mailbox, $query, [
+			'ids' => new \Horde_Imap_Client_Ids([(int)$uid]),
+		]);
+		if (connection_aborted()) exit;
+		$partData = $results[(int)$uid] ?? null;
+		$raw = $partData ? (string)$partData->getBodyPart($partId) : '';
+		$encoding = $partData ? $partData->getBodyPartDecode($partId) : null;
+
+		$part = $structure->getPart($partId);
+		$part->setContents($raw, ['encoding' => $encoding]);
+		// default to utf-8, not us-ascii which Horde chooses (same convention already established
+		// in Api\Mail's own Horde_Mime_Part::$defaultCharset override, api/src/Mail.php) - our own
+		// outgoing plain-text bodies are always utf-8, and a genuinely us-ascii message decodes
+		// identically either way (us-ascii is a strict subset of utf-8), so this can only help:
+		// found live 2026-09-03 (ralf: a shim-account plain-text reply with umlauts previewed as
+		// mojibake - Thunderbird displayed the very same message correctly, since it also assumes
+		// utf-8 rather than us-ascii for an undeclared charset)
+		$charset = $part->getContentTypeParameter('charset') ?: 'utf-8';
+
+		return [
+			'value' => Api\Translation::convert($part->getContents(), $charset, 'utf-8'),
+			'isEncodingProblem' => false,
+			'isTruncated' => false,
+		];
+	}
+
+	/**
+	 * JMAP Blob download (RFC 8620 §6.2) for the local shim - streams one part's raw,
+	 * transfer-decoded bytes (or the whole raw RFC822 message, blobId's partId segment empty).
+	 *
+	 * Called from mail/jmap.php's GET route matching the "downloadUrl" template returned by
+	 * session() - authenticated the same way as everything else here (same-origin session cookie,
+	 * see class docblock), not by the bearer token in the Authorization header jmap-jam sends (that
+	 * header is otherwise unused/ignored by this shim, same as the JSON POST dispatch).
+	 *
+	 * @param string $accountId
+	 * @param string $blobId see bodyPartToJmap() - base64($mailbox).':'.$uid.':'.$partId - OR a
+	 *  freshly-uploaded, not-yet-imported "upload:<token>" blob (see upload()/readUploadedBlob())
+	 *  - needed so a genuinely new local attachment can be re-downloaded (e.g.
+	 *  MailJmap.reuploadAttachmentForAccount(), after an identity switch moves it to a different
+	 *  account) BEFORE it's ever actually imported into a message - found live 2026-08-31,
+	 *  "Failed to download blob" - this method only ever knew the mailbox:uid:partId shape.
+	 * @param string $name suggested filename for Content-Disposition
+	 * @param string $type Content-Type to send
+	 */
+	public static function download(string $accountId, string $blobId, string $name, string $type) : void
+	{
+		if (str_starts_with($blobId, 'upload:'))
+		{
+			$bytes = self::readUploadedBlob($accountId, $blobId);
+		}
+		else
+		{
+			[$mailboxB64, $uid, $partId] = array_pad(explode(':', $blobId, 3), 3, null);
+			$imap = ($mailboxB64 !== null && $uid) ? self::imapServer($accountId) : null;
+			$bytes = $imap ? ($partId !== '' ?
+				self::fetchRawPart($imap, self::urlsafeB64Decode($mailboxB64), $uid, $partId) :
+				self::fetchRawMessage($imap, self::urlsafeB64Decode($mailboxB64), $uid)) : null;
+		}
+		if ($bytes === null)
+		{
+			http_response_code(404);
+			return;
+		}
+
+		header('Content-Type: '.$type);
+		header('Content-Disposition: inline; filename="'.addslashes($name).'"');
+		header('Content-Length: '.strlen($bytes));
+		echo $bytes;
+	}
+
+	/**
+	 * Blob upload (RFC 8620 §6.3): plain POST of raw bytes matching the "uploadUrl" template from
+	 * session() above - a prerequisite for Email/import (composing a new message client-side and
+	 * saving it, e.g. to Sent, without going through mail_ui/Api\Mail).
+	 *
+	 * Unlike downloaded/existing-message blobs (self-describing "mailbox:uid:partId", resolved live
+	 * via IMAP FETCH - see class docblock), an uploaded blob has no IMAP message to describe yet, so
+	 * it needs actual temporary storage: written to a randomly-named file under temp_dir, referenced
+	 * by an "upload:<token>" blobId. The token is generated here (never client-supplied), so there's
+	 * no path-traversal risk from a crafted blobId. Consumed (and deleted) by emailImport() below;
+	 * see readUploadedBlob()'s docblock for the case where import never follows.
+	 *
+	 * @param string $accountId
+	 */
+	public static function upload(string $accountId) : void
+	{
+		$type = $_SERVER['CONTENT_TYPE'] ?? 'application/octet-stream';
+		$bytes = file_get_contents('php://input');
+
+		echo json_encode(array_merge(['accountId' => $accountId], self::uploadBytes($bytes, $type)),
+			JSON_UNESCAPED_SLASHES);
+	}
+
+	/**
+	 * Pure half of upload() above - write raw bytes to temp storage, return the "upload:<token>"
+	 * blobId. Split out so server-side callers with bytes already in hand (no HTTP request to read
+	 * from) can reuse the exact same temp-storage scheme without a round-trip through this class's
+	 * own HTTP endpoint - see AttachmentJmap::uploadBlobBytes()'s backend-uniform dispatch
+	 * (groundwork for a planned S/MIME sign/encrypt-on-send endpoint, not built yet).
+	 *
+	 * @param string $bytes
+	 * @param string $type mime-type, purely informational (stored temp files have no metadata of
+	 *  their own - see readUploadedBlob(), which never needs the type back)
+	 * @return array{blobId: string, type: string, size: int}
+	 */
+	public static function uploadBytes(string $bytes, string $type='application/octet-stream') : array
+	{
+		$token = bin2hex(random_bytes(16));
+		file_put_contents(self::uploadPath($token), $bytes);
+
+		return ['blobId' => 'upload:'.$token, 'type' => $type, 'size' => strlen($bytes)];
+	}
+
+	/**
+	 * @param string $token hex string only - never build this from unvalidated client input
+	 * @return string absolute path of the temp file backing an "upload:<token>" blobId
+	 */
+	private static function uploadPath(string $token) : string
+	{
+		if (!ctype_xdigit($token) || $token === '')
+		{
+			throw new \InvalidArgumentException('Invalid upload token');
+		}
+		return $GLOBALS['egw_info']['server']['temp_dir'].'/jmap_upload_'.$token;
+	}
+
+	/**
+	 * Resolve an Email/import blobId to raw bytes - either a freshly uploaded blob ("upload:<token>",
+	 * see upload() above) or an existing message/part already on the server (the same self-describing
+	 * "mailbox:uid:partId" scheme download() decodes), for re-importing already-downloaded content.
+	 *
+	 * Uploaded blobs are single-use: deleted by emailImport() after a successful import. If upload()
+	 * is called but import never follows (e.g. the user aborts composing), the temp file is orphaned -
+	 * accepted as a known limitation given how small/rare this is, rather than adding a GC sweep for
+	 * it; a stale jmap_upload_* file is always safe to delete manually if this ever matters in practice.
+	 *
+	 * @param string $accountId
+	 * @param string $blobId
+	 * @return ?string null if not found/resolvable
+	 */
+	private static function readUploadedBlob(string $accountId, string $blobId) : ?string
+	{
+		if (str_starts_with($blobId, 'upload:'))
+		{
+			$path = self::uploadPath(substr($blobId, strlen('upload:')));
+			return is_file($path) ? file_get_contents($path) : null;
+		}
+		$icServer = self::imapServer($accountId);
+		if ($icServer instanceof Api\Mail\Imap\Jmap)
+		{
+			// Stalwart's own opaque blobId (eg. an attachment already sitting on its blob store from
+			// a prior Email/get or upload) - never matches the shim-scheme parse below, so route it
+			// through the real JMAP download instead. Added (2026-08-31) for
+			// buildMailerFromEmailProperties()'s planned S/MIME sign/encrypt caller - this method and
+			// its only caller so far were shim-only (a real-JMAP account never reaches this class for
+			// its normal Email/set/EmailSubmission/set traffic, see class docblock), but a uniform
+			// sign/encrypt endpoint needs both backends' attachment bytes resolvable here.
+			try
+			{
+				return $icServer->jmapClient()->downloadBlob($blobId, 'attachment', 'application/octet-stream');
+			}
+			catch (\Throwable $e)
+			{
+				return null;
+			}
+		}
+		[$mailboxB64, $uid, $partId] = array_pad(explode(':', $blobId, 3), 3, null);
+		if (!$icServer || $mailboxB64 === null || !$uid)
+		{
+			return null;
+		}
+		$mailbox = self::urlsafeB64Decode($mailboxB64);
+		return $partId !== '' ? self::fetchRawPart($icServer, $mailbox, $uid, $partId) : self::fetchRawMessage($icServer, $mailbox, $uid);
+	}
+
+	/**
+	 * Fetch one body-part's raw, transfer-decoded bytes - deliberately WITHOUT fetchBodyValue()'s
+	 * charset conversion, since this must return exact original bytes (binary attachments, PGP
+	 * data, a TNEF/winmail.dat attachment for Mail::tnef_decoder()'s Horde_Compress input, ...).
+	 *
+	 * Direct Imap/Horde MIME work, deliberately NOT going through mail_ui/Api\Mail (see class
+	 * docblock) - reused by download() (the browser-facing JMAP Blob download) and by the
+	 * server-side JMAP-native S/MIME/TNEF resolvers (Imap\Jmap for Stalwart, this class for the
+	 * local shim - see plan) fetching a part in-process, no HTTP round trip needed.
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $mailbox
+	 * @param string $uid
+	 * @param string $partId
+	 * @return ?string null if the message/part wasn't found
+	 */
+	public static function fetchRawPart(\Horde_Imap_Client_Socket $imap, string $mailbox, string $uid, string $partId) : ?string
+	{
+		$query = new \Horde_Imap_Client_Fetch_Query();
+		$query->structure();
+		$query->bodyPart($partId, ['decode' => true, 'peek' => true]);
+		$results = $imap->fetch($mailbox, $query, [
+			'ids' => new \Horde_Imap_Client_Ids([(int)$uid]),
+		]);
+		$data = $results[(int)$uid] ?? null;
+		if (!$data)
+		{
+			return null;
+		}
+		// same transfer-decode recipe as fetchBodyValue()
+		$raw = (string)$data->getBodyPart($partId);
+		$encoding = $data->getBodyPartDecode($partId);
+		$part = $data->getStructure()->getPart($partId);
+		$part->setContents($raw, ['encoding' => $encoding]);
+		return $part->getContents();
+	}
+
+	/**
+	 * Fetch the whole raw RFC822 message - the JMAP-native equivalent of Mail::getMessageRawBody()
+	 * (which uses the exact same Horde_Imap_Client_Fetch_Query::fullText() primitive, just via
+	 * mail_bo), needed by the S/MIME resolver (Mail\Smime/Horde_Crypt_Smime decrypt/verify the
+	 * *whole* message, not one part).
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $mailbox
+	 * @param string $uid
+	 * @return ?string null if the message wasn't found
+	 */
+	public static function fetchRawMessage(\Horde_Imap_Client_Socket $imap, string $mailbox, string $uid) : ?string
+	{
+		$query = new \Horde_Imap_Client_Fetch_Query();
+		$query->fullText(['peek' => true]);
+		$results = $imap->fetch($mailbox, $query, [
+			'ids' => new \Horde_Imap_Client_Ids([(int)$uid]),
+		]);
+		$data = $results[(int)$uid] ?? null;
+		return $data ? (string)$data->getFullMsg() : null;
+	}
+
+	/**
+	 * Bare structure-only fetch (no body/preview) - used by mail_ui::get_load_email_data()'s
+	 * JMAP-native dispatch (see plan) to cheaply decide, before fetching any body content, whether
+	 * a message needs the S/MIME/TNEF resolvers or falls through to the classic path.
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $mailbox
+	 * @param string $uid
+	 * @return ?\Horde_Mime_Part null if not found
+	 */
+	public static function structureGet(\Horde_Imap_Client_Socket $imap, string $mailbox, string $uid) : ?\Horde_Mime_Part
+	{
+		$query = new \Horde_Imap_Client_Fetch_Query();
+		$query->structure();
+		$results = $imap->fetch($mailbox, $query, [
+			'ids' => new \Horde_Imap_Client_Ids([(int)$uid]),
+		]);
+		$data = $results[(int)$uid] ?? null;
+		return $data ? $data->getStructure() : null;
+	}
+
+	// top-level content-types that need the JMAP-native S/MIME resolver (resolveSmime()/
+	// resolveSmimeJmap()) - same list mail/js/jmap.ts's MailJmap.SPECIAL_CASE_TYPES uses for S/MIME.
+	// 'multipart/signed' deliberately NOT included here (see specialCaseType()'s own dedicated
+	// check below) - matches mail/js/jmap.ts's own SPECIAL_CASE_TYPES docblock: RFC 1847's wrapper
+	// is shared by RFC 3156 PGP/MIME's detached signature too, not S/MIME-exclusive.
+	private const SMIME_TYPES = [
+		'application/pkcs7-mime', 'application/x-pkcs7-mime',
+		'application/pkcs7-signature', 'application/x-pkcs7-signature',
+	];
+
+	/**
+	 * Decide whether a message's *top-level* bodyStructure needs the JMAP-native S/MIME or TNEF
+	 * resolver - top-level only (not a recursive walk), matching both Mail::getStructure()'s own
+	 * original S/MIME check (top-level type/protocol only) and this plan's TNEF scoping (only the
+	 * whole-message-is-TNEF case, not TNEF-as-a-regular-attachment - see JmapShim::resolveTnef()'s
+	 * docblock).
+	 *
+	 * @param array $bodyStructure RFC 8621 EmailBodyPart shape (bodyPartToJmap()/Email/get), or a
+	 *  plain {type: string, ...} - only the top-level "type" is inspected
+	 * @return string|null 'smime', 'tnef', or null (not a special case, fall through to the
+	 *  classic path - meeting invites and anything else)
+	 */
+	public static function specialCaseType(array $bodyStructure) : ?string
+	{
+		$type = strtolower($bodyStructure['type'] ?? '');
+		if ($type === 'multipart/signed')
+		{
+			// RFC 1847's multipart/signed wrapper is shared by RFC 3156 PGP/MIME's own detached
+			// signature (application/pgp-signature) - only actually needs the S/MIME resolver
+			// when its own detached-signature sub-part is really S/MIME (pkcs7). This is the
+			// server-side twin of mail/js/jmap.ts's own isSpecialCase() fix (2026-09-08, commit
+			// a27d40f064) - missed at the time, so a PGP-signed message kept showing red/
+			// unverified in the popup/display view specifically (found live 2026-09-09, ralf):
+			// loadEmailBody()'s classic iframe src, the popup's own initial body source, always
+			// goes through this method via tryJmapNativeSpecialCase(), bypassing the client-side-
+			// only fix entirely - the preview pane (pure client-side JMAP path) was already correct.
+			foreach (($bodyStructure['subParts'] ?? []) as $subPart)
+			{
+				$subType = strtolower($subPart['type'] ?? '');
+				if ($subType === 'application/pkcs7-signature' || $subType === 'application/x-pkcs7-signature')
+				{
+					return 'smime';
+				}
+			}
+			return null;
+		}
+		if (in_array($type, self::SMIME_TYPES, true))
+		{
+			return 'smime';
+		}
+		if ($type === 'application/ms-tnef')
+		{
+			return 'tnef';
+		}
+		return null;
+	}
+
+	/**
+	 * Build the flat attachment-array shape EGroupware\Mail\Ui\AttachmentJmap::createAttachmentBlock()
+	 * expects, from a
+	 * TNEF-decoded Horde_Mime_Part tree (Mail::tnef_decoder()'s output) - ported from the
+	 * equivalent loop in Mail::getMessageAttachments() (api/src/Mail.php:6254-6286), not a call
+	 * into it, since that method also does the (unrelated, IMAP-based) surrounding attachment
+	 * enumeration this doesn't need - used by mail_ui::ajax_resolveWinmail()'s JMAP-native path,
+	 * for a winmail.dat attached alongside a normal message (as opposed to the whole-message-is-
+	 * TNEF case, see resolveTnef()/specialCaseType() above, an unrelated/rarer case).
+	 *
+	 * @param string $uid original message uid (the winmail.dat attachment's own container message)
+	 * @param string $partID original winmail.dat part's MIME id within that message
+	 * @param \Horde_Mime_Part $decoded Mail::tnef_decoder()'s output
+	 * @return array[] attachment entries, same shape Mail::getMessageAttachments() produces
+	 */
+	public static function tnefAttachments(string $uid, string $partID, \Horde_Mime_Part $decoded) : array
+	{
+		$attachments = [];
+		foreach ($decoded->getParts() as $mime_id => $part)
+		{
+			/** @var \Horde_Mime_Part $part */
+			$attachment = $part->getAllDispositionParameters();
+			$attachment['disposition'] = $part->getDisposition();
+			$attachment['mimeType'] = $part->getType();
+			$attachment['uid'] = $uid;
+			$attachment['partID'] = $partID;
+			$attachment['is_winmail'] = $uid.'@'.$partID.'@'.$mime_id;
+			if (empty($attachment['name']))
+			{
+				$attachment['name'] = Api\Mail::attachmentName($part);
+			}
+			$attachment['size'] = $part->getBytes();
+			if (($cid = $part->getContentId()))
+			{
+				$attachment['cid'] = $cid;
+			}
+			if (empty($attachment['name']))
+			{
+				$attachment['name'] = (!empty($attachment['cid']) ? $attachment['cid'] :
+					'unknown_Uid'.$uid.'_Part'.$mime_id).'.'.Api\MimeMagic::mime2ext($attachment['mimeType']);
+			}
+			$attachments[] = $attachment;
+		}
+		return $attachments;
+	}
+
+	/**
+	 * Render an already-fully-parsed (in-memory) Horde_Mime_Part tree to final sanitized HTML -
+	 * shared by the JMAP-native S/MIME and TNEF resolvers (resolveSmime()/resolveTnef() below, and
+	 * Imap\Jmap's equivalents for Stalwart). Deliberately new code, not a call into
+	 * mail_ui::getdisplayableBody()/showBody() - mirrors mail/js/jmap.ts's
+	 * MailJmap.assembleBodyHtml()'s selection logic (best-body via findBody(), prefer html unless
+	 * "only_if_no_text"), server-side HTML sanitization via the existing generic Api\Html\HtmLawed
+	 * (not mail-specific, same allowlist config the client-side DOMPurify path is modelled on)
+	 * instead of the classic getdisplayableBody()/htmLawed-with-tidy pipeline.
+	 *
+	 * Attachment listing is still out of scope here (has its own mechanism for the normal mail
+	 * path) - but inline cid: images ARE resolved (see inlineCidImages()), unconditionally as
+	 * data: URIs regardless of size: unlike the classic resolve_inline_image_byType()'s size-gated
+	 * data-URI-vs-link choice (avoiding a second round trip for a fresh IMAP fetch), every part
+	 * here is already fully fetched/decrypted in memory - a data: URI is strictly cheaper than a
+	 * link that would otherwise require redoing the whole decrypt from scratch.
+	 *
+	 * @param \Horde_Mime_Part $structure all parts' contents already populated (true after
+	 *  Horde_Mime_Part::parseMessage() parses a complete raw message) - no fetch happens in here
+	 * @param string $htmlOptions 'only_if_no_text' prefers text/plain if present, else default
+	 *  (prefer html when present)
+	 * @return string sanitized HTML body only (no document wrapper - callers still use
+	 *  mail_ui::get_email_header()/showBody() for that, unchanged page chrome)
+	 */
+	public static function structureToHtml(\Horde_Mime_Part $structure, string $htmlOptions='') : string
+	{
+		$textId = $structure->findBody('plain');
+		$htmlId = $structure->findBody('html');
+		$useHtml = $htmlId !== null && $htmlOptions !== 'only_if_no_text';
+		$partId = $useHtml ? $htmlId : ($textId ?? $htmlId);
+
+		if ($partId === null)
+		{
+			return '';
+		}
+		$part = $structure->getPart($partId);
+		// default to utf-8, not us-ascii - see fetchBodyValue()'s identical fix/docblock above
+		$charset = $part->getContentTypeParameter('charset') ?: 'utf-8';
+		$raw = Api\Translation::convert($part->getContents(), $charset, 'utf-8');
+
+		if ($useHtml && $partId === $htmlId)
+		{
+			$raw = self::inlineCidImages($raw, $structure);
+			$htmLawed = new Api\Html\HtmLawed();
+			return $htmLawed->run($raw, Api\Mail::$htmLawed_config);
+		}
+		return '<pre>'.htmlspecialchars($raw, ENT_QUOTES, 'UTF-8').'</pre>';
+	}
+
+	/**
+	 * Replace src="cid:..." / background="cid:..." references in an HTML body with data: URIs,
+	 * looked up against an already-fully-parsed-in-memory Horde_Mime_Part tree (see
+	 * structureToHtml()). No fetch/network access - every referenced part's contents are already
+	 * populated (Horde_Mime_Part::parseMessage() populates every part up front).
+	 *
+	 * @param string $html
+	 * @param \Horde_Mime_Part $structure
+	 * @return string $html with every resolvable cid: reference replaced by a data: URI (any cid:
+	 *  with no matching part is left untouched)
+	 */
+	private static function inlineCidImages(string $html, \Horde_Mime_Part $structure) : string
+	{
+		if (stripos($html, 'cid:') === false)
+		{
+			return $html;
+		}
+		$dataUris = [];
+		$resolve = static function(string $cid) use ($structure, &$dataUris)
+		{
+			$cid = trim($cid, '<>');
+			if (array_key_exists($cid, $dataUris))
+			{
+				return $dataUris[$cid];
+			}
+			foreach ($structure->partIterator() as $part)
+			{
+				/** @var \Horde_Mime_Part $part */
+				if (trim((string)$part->getContentId(), '<>') === $cid)
+				{
+					return $dataUris[$cid] = 'data:'.$part->getType().';base64,'.base64_encode($part->getContents());
+				}
+			}
+			return $dataUris[$cid] = null;
+		};
+		return preg_replace_callback('#((?:src|background)\s*=\s*)(["\'])cid:([^"\']+)\2#i',
+			static function(array $matches) use ($resolve)
+			{
+				$dataUri = $resolve(urldecode($matches[3]));
+				return $dataUri ? $matches[1].$matches[2].$dataUri.$matches[2] : $matches[0];
+			}, $html);
+	}
+
+	/**
+	 * JMAP-native S/MIME resolution for the local shim - fetches the raw message directly (no
+	 * mail_ui/Api\Mail involved, see class docblock), decrypts/verifies via the existing
+	 * Api\Mail\Smime::resolveMessage() (shared with Imap\Jmap's Stalwart equivalent), and renders
+	 * via structureToHtml() above.
+	 *
+	 * @param string $accountId
+	 * @param string $mailboxId JMAP Mailbox id (base64 folder path)
+	 * @param string $uid
+	 * @param string $topLevelType see Api\Mail\Smime::resolveMessage()
+	 * @param string $fromAddress
+	 * @param string $htmlOptions
+	 * @param string $passphrase
+	 * @return array{body: string, smime: ?array} sanitized HTML body, plus the decrypt/verify
+	 *  metadata (Api\Mail\Smime::resolveMessage()'s 'X-EGroupware-Smime' convention) for the
+	 *  caller to push to the client (app.mail.setSmimeFlags) - never sent to the client itself
+	 * @throws Api\Mail\Smime\PassphraseMissing
+	 * @throws \Exception message/mailbox not found
+	 */
+	public static function resolveSmime(string $accountId, string $mailboxId, string $uid, string $topLevelType,
+		string $fromAddress, string $htmlOptions='', string $passphrase='') : array
+	{
+		$imap = self::imapServer($accountId);
+		$mailbox = self::hordeMailbox($imap, self::folderPath($mailboxId));
+		$raw = self::fetchRawMessage($imap, $mailbox, $uid);
+		if ($raw === null)
+		{
+			throw new \Exception("Message '$uid' not found in '$mailbox'!");
+		}
+		$structure = Api\Mail\Smime::resolveMessage((int)$accountId, $raw, $topLevelType, $passphrase, $fromAddress);
+		return [
+			'body' => self::structureToHtml($structure, $htmlOptions),
+			'smime' => $structure->getMetadata('X-EGroupware-Smime'),
+		];
+	}
+
+	/**
+	 * JMAP-native TNEF resolution for the local shim, for the case where the *entire* message is a
+	 * TNEF/winmail.dat blob (single-part application/ms-tnef, no separate real body - see
+	 * MailJmap.isSpecialCase()'s client-side detection this mirrors). Uses the existing
+	 * Api\Mail::tnef_decoder() (Horde_Compress, transport-agnostic, unchanged) fed JMAP-fetched
+	 * bytes instead of an IMAP-fetched attachment.
+	 *
+	 * @param string $accountId
+	 * @param string $mailboxId JMAP Mailbox id (base64 folder path)
+	 * @param string $uid
+	 * @param string $partId the whole-message TNEF part's id (usually "1")
+	 * @param string $htmlOptions
+	 * @return string sanitized HTML body
+	 * @throws \Exception message/part not found, or TNEF decoding failed
+	 */
+	public static function resolveTnef(string $accountId, string $mailboxId, string $uid, string $partId, string $htmlOptions='') : string
+	{
+		$imap = self::imapServer($accountId);
+		$mailbox = self::hordeMailbox($imap, self::folderPath($mailboxId));
+		$raw = self::fetchRawPart($imap, $mailbox, $uid, $partId);
+		if ($raw === null)
+		{
+			throw new \Exception("Message '$uid' part '$partId' not found in '$mailbox'!");
+		}
+		// Mail::tnef_decoder() is pure Horde_Compress orchestration with no $this/IMAP usage at
+		// all - made static (was an unnecessary instance method) so it's callable directly here
+		$decoded = Api\Mail::tnef_decoder($raw);
+		if (!$decoded)
+		{
+			throw new \Exception('Could not decode TNEF data');
+		}
+		return self::structureToHtml($decoded, $htmlOptions);
+	}
+
+	/**
+	 * Get a clean preview snippet.
+	 *
+	 * For a multipart message, the base message's body-text (used directly for a
+	 * singlepart message) is the *raw* multipart content - MIME boundaries, sub-part
+	 * headers and all - so for multipart messages we do one extra, per-message
+	 * bodyPart() fetch for the actual first text part (Horde_Mime_Part::findBody()),
+	 * instead of showing that raw MIME structure to the user.
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $mailbox
+	 * @param string $uid
+	 * @param \Horde_Mime_Part|null $structure
+	 * @param \Horde_Imap_Client_Data_Fetch $data
+	 * @return string
+	 */
+	public static function preview(\Horde_Imap_Client_Socket $imap, string $mailbox, string $uid, ?\Horde_Mime_Part $structure, \Horde_Imap_Client_Data_Fetch $data) : string
+	{
+		if ($structure && stripos((string)$structure->getType(), 'multipart/') === 0 &&
+			($bodyId = $structure->findBody('plain') ?? $structure->findBody()) !== null)
+		{
+			try
+			{
+				$partQuery = new \Horde_Imap_Client_Fetch_Query();
+				$partQuery->bodyPart($bodyId, ['decode' => true, 'length' => 800, 'peek' => true]);
+				$partResults = $imap->fetch($mailbox, $partQuery, [
+					'ids' => new \Horde_Imap_Client_Ids([(int)$uid]),
+				]);
+				if (connection_aborted()) exit;
+				if (($partData = $partResults[(int)$uid] ?? null))
+				{
+					/** @var \Horde_Imap_Client_Data_Fetch $partData */
+					return self::cleanPreview((string)$partData->getBodyPart($bodyId));
+				}
+			}
+			catch (\Throwable $e)
+			{
+				// fall through to the (possibly noisy) top-level body text below
+			}
+		}
+		return self::cleanPreview((string)$data->getBodyText(0));
+	}
+
+	/**
+	 * Strip MIME header/boundary lines and collapse whitespace, then truncate
+	 *
+	 * @param string $text
+	 * @return string
+	 */
+	public static function cleanPreview(string $text) : string
+	{
+		$lines = array_filter(preg_split('/\r?\n/', $text), static function ($line)
+		{
+			$line = trim($line);
+			return $line !== '' && !preg_match('/^(--|[\w-]+:\s)/', $line);
+		});
+		$preview = trim(preg_replace('/\s+/u', ' ', strip_tags(implode(' ', $lines))));
+		return mb_substr($preview, 0, 200);
+	}
+
+	/**
+	 * Re-parse a raw From/To/Cc/Bcc header via Api\Mail::parseAddressList() instead of trusting
+	 * the IMAP server's own ENVELOPE-parsed addresses - see emailGet()'s query() comment for why
+	 * (a sending MUA's malformed encoded-word containing a literal, unencoded comma inside a
+	 * quoted display name can trip up the server's own, not-2047-aware address splitter, which
+	 * Api\Mail::parseAddressList() already has repair logic for - see its "no mailbox or host
+	 * part" handling, long relied on by the classic pre-JMAP code path).
+	 *
+	 * Returns null (caller falls back to the envelope-derived list) when the header is missing
+	 * or empty - NOT the same as "parsed to zero addresses", which is a valid, different result
+	 * for a genuinely absent header (eg. no Cc) that the caller must not fall back away from.
+	 *
+	 * @param ?\Horde_Mime_Headers $headers
+	 * @param string $name header name, eg. "From"
+	 * @return ?array [{name?: string, email: string}]
+	 */
+	private static function addressListFromHeader(?\Horde_Mime_Headers $headers, string $name) : ?array
+	{
+		if (!$headers)
+		{
+			return null;
+		}
+		$arr = array_change_key_case($headers->toArray(), CASE_UPPER);
+		$value = $arr[strtoupper($name)] ?? null;
+		$value = is_array($value) ? reset($value) : $value;
+		if ($value === null || trim((string)$value) === '')
+		{
+			return null;
+		}
+		return self::addressList(Api\Mail::parseAddressList((string)$value));
+	}
+
+	/**
+	 * @param iterable|null $list Horde_Mail_Rfc822_List
+	 * @return array [{name?: string, email: string}]
+	 */
+	public static function addressList($list) : array
+	{
+		$result = [];
+		foreach ($list ?? [] as $address)
+		{
+			/** @var \Horde_Mail_Rfc822_Address $address */
+			$entry = ['email' => $address->bare_address];
+			if (($personal = (string)$address->personal) !== '')
+			{
+				$entry['name'] = $personal;
+			}
+			$result[] = $entry;
+		}
+		return $result;
+	}
+
+	/**
+	 * IMAP flags/keywords (e.g. "\Seen", "$Forwarded", "$label1") -> JMAP keywords object
+	 * with the exact "$seen"/"$answered"/"$flagged"/"$forwarded"/"$labelN" naming
+	 * MailJmap.email2row() already expects.
+	 *
+	 * @param string[] $flags
+	 * @return array<string, true>
+	 */
+	public static function flagsToKeywords(array $flags) : array
+	{
+		$keywords = [];
+		foreach ($flags as $flag)
+		{
+			$flag = ltrim($flag, '\\');
+			$keywords[strtolower($flag[0] === '$' ? $flag : '$'.$flag)] = true;
+		}
+		return $keywords;
+	}
+
+	/**
+	 * @param \DateTime|null $date
+	 * @return string|null
+	 */
+	public static function imapDate(?\DateTime $date) : ?string
+	{
+		if (!$date)
+		{
+			return null;
+		}
+		// RFC 8621 UTCDate: real UTC, matching what a real JMAP server (Stalwart) returns - IMAP's
+		// INTERNALDATE and RFC 5322's Date: header both always carry an explicit offset, so Horde's
+		// DateTime objects already know their true instant; converting to UTC needs nothing from
+		// Api\DateTime (no dependency on $user_timezone/$server_timezone). The eTemplate/get_rows()
+		// "fake Z, user-tz digits" convention is applied client-side instead (MailJmap.jmapUtcToUserTz()),
+		// uniformly for both backends, so this shim doesn't need to special-case it here.
+		return (clone $date)->setTimezone(new \DateTimeZone('UTC'))->format('Y-m-d\TH:i:s\Z');
+	}
+
+	/**
+	 * Static in-class fixture (2 mailboxes with mail, plus one always-empty one), used only for
+	 * accountId "0" - lets the client-side JMAP code be exercised/tested without a real mailbox.
+	 *
+	 * @return array {mailboxes: string[], emails: array<string, array>} keyed by (fake) UID
+	 */
+	public static function demoFixture() : array
+	{
+		static $fixture = null;
+		if ($fixture !== null)
+		{
+			return $fixture;
+		}
+
+		$subjects = [
+			['Welcome to EGroupware', 'info', 'Info', ['$seen'], 'INBOX'],
+			['Your invoice #1042', 'billing', 'Billing', ['$seen', '$flagged'], 'INBOX'],
+			['Re: Project kickoff', 'alice', 'Alice Adams', ['$seen', '$answered'], 'INBOX'],
+			['Meeting notes 2026-08-04', 'bob', 'Bob Brown', [], 'INBOX'],
+			['Fwd: Quarterly report', 'carol', 'Carol Clark', ['$forwarded'], 'INBOX'],
+			['Server maintenance window', 'ops', 'Ops Team', ['$seen'], 'INBOX'],
+			['Newsletter August 2026', 'news', 'Newsletter', [], 'INBOX'],
+			['Action required: password expiry', 'security', 'Security', ['$flagged'], 'INBOX'],
+			['Re: Your ticket', 'support', 'Support', ['$seen', '$answered'], 'INBOX/Sent'],
+		];
+
+		$emails = [];
+		foreach ($subjects as $i => [$subject, $local, $name, $keywords, $mailbox])
+		{
+			$id = (string)($i + 1);
+			$when = self::imapDate(new \DateTime('-'.$i.' hours', new \DateTimeZone('UTC')));
+			$emails[$id] = [
+				'id' => $id,
+				'mailbox' => $mailbox,
+				'keywords' => array_fill_keys($keywords, true),
+				'size' => 1024 * (2 + $i),
+				'receivedAt' => $when,
+				'sentAt' => $when,
+				'subject' => $subject,
+				'preview' => 'This is a demo message body, used to exercise the client-side JMAP get_rows() path without a real mailbox.',
+				'from' => [['name' => $name, 'email' => $local.'@example.com']],
+				'to' => [['email' => 'demo@example.com']],
+				'cc' => [],
+				'bcc' => [],
+				'hasAttachment' => $i % 3 === 0,
+			];
+		}
+		return $fixture = [
+			'mailboxes' => ['INBOX', 'INBOX/Sent', 'INBOX/Drafts'],
+			'emails' => $emails,
+		];
+	}
+
+	/**
+	 * @param string $folder
+	 * @param array $args
+	 * @param array &$context unused for the demo account, kept for signature symmetry
+	 * @return array {accountId: string, ids: string[], total: int}
+	 */
+	public static function demoEmailQuery(string $folder, array $args, array &$context) : array
+	{
+		unset($context);
+		$folder = $folder ?: 'INBOX';
+		// array_keys() would silently cast these numeric-string ids back to int (PHP array-key
+		// coercion), so re-stringify to keep ids consistent with the real (non-demo) IMAP path
+		$ids = array_map('strval', array_keys(array_filter(
+			self::demoFixture()['emails'],
+			static fn($email) => $email['mailbox'] === $folder,
+		)));
+		$total = count($ids);
+
+		$position = max(0, (int)($args['position'] ?? 0));
+		$limit = (int)($args['limit'] ?? 50) ?: 50;
+
+		return [
+			'accountId' => '0',
+			'ids' => array_slice($ids, $position, $limit),
+			'total' => $total,
+		];
+	}
+
+	/**
+	 * @param string[] $ids
+	 * @param bool $wantPreview false blanks the "preview" property, mirroring the real-account path
+	 * @return array {accountId: string, list: array[], notFound: string[]}
+	 */
+	public static function demoEmailGet(array $ids, bool $wantPreview = true) : array
+	{
+		$emails = self::demoFixture()['emails'];
+		$list = [];
+		foreach ($ids as $id)
+		{
+			if (isset($emails[$id]))
+			{
+				$list[] = $wantPreview ? $emails[$id] : ['preview' => ''] + $emails[$id];
+			}
+		}
+		$found = array_column($list, 'id');
+
+		return [
+			'accountId' => '0',
+			'list' => $list,
+			'notFound' => array_values(array_diff($ids, $found)),
+		];
+	}
+}
+
+/**
+ * Horde_Mime_Part deliberately omits Content-Disposition (and Content-Transfer-Encoding, Content-
+ * Language, Content-Description, ...) for ANY part whose primary type is "message" -
+ * addMimeHeaders(): "message/* parts require no additional header information" (RFC 2046
+ * [5.2.1]), a hard-coded early return with no override hook in Horde's own public API. Correct per
+ * that RFC's strict reading, but real-world mail clients/JMAP servers commonly rely on a real
+ * Content-Disposition to recognize a forwarded message/rfc822 as an attachment at all - found live
+ * 2026-08-31 (Imap::addAttachmentPart()'s own docblock has the full story) that without it, a
+ * forward-as-attachment's carried message never showed up in the recipient's own "Attachments"
+ * list once actually delivered. This re-adds JUST that one header, reusing the exact same header
+ * object setDisposition()/setDispositionParameter() already populated (never rebuilt from
+ * scratch) - used ONLY for message/rfc822 attachments, via Imap::addAttachmentPart().
+ */
+class Rfc822AttachmentPart extends \Horde_Mime_Part
+{
+	public function addMimeHeaders($options = array())
+	{
+		$headers = parent::addMimeHeaders($options);
+		$cd = $this->_headers['content-disposition'];
+		if (!$cd->isDefault())
+		{
+			$headers->addHeaderOb($cd);
+		}
+		return $headers;
+	}
+}

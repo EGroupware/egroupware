@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="mail.smimeCertAddToContact" template="" lang="" group="0" version="17.1">
+	<et2-template  id="mail.smimeCertAddToContact" template="" lang="" group="0" version="17.1">
 		<grid width="100%">
 			<columns>
 				<column width="120"/>
@@ -39,12 +40,11 @@
 							<tab id="certificate" label="Certificate in text"/>
 						</tabs>
 						<tabpanels>
-							<html multiline="true" id="certHtml" readonly="true"/>
-							<et2-textarea  id="cert" readonly="true" ></et2-textarea>
+							<et2-html  multiline="true" id="certHtml" readonly="true"></et2-html><et2-ai><et2-textarea  id="cert" readonly="true"></et2-textarea></et2-ai>
 						</tabpanels>
 					</et2-tabbox>
 				</row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

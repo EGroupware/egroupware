@@ -11,11 +11,14 @@
 
 import path from 'path';
 import babel from '@babel/core';
-import { readFileSync, readdirSync, statSync, unlinkSync  } from "fs";
+import { readFileSync, readdirSync, statSync, unlinkSync, writeFileSync, renameSync  } from "fs";
 //import rimraf from 'rimraf';
-import { minify } from 'terser';
+// Default import: terser 4.x ships a minified CJS bundle with no exports map, so Node
+// cannot detect its named exports and "import { minify }" fails to load this config.
+import terser from 'terser';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
+import { legacyWidgetShimPlugin } from './api/js/etemplate/rollup-legacy-widget-shim.mjs';
 
 // Best practice: use this
 //rimraf.sync('./dist/');
@@ -27,6 +30,25 @@ readdirSync('./chunks').forEach(name => {
     const stat = statSync('./chunks/'+name);
     if (stat.atimeMs < rm_older) unlinkSync('./chunks/'+name);
 });
+
+// Timestamp identifying this build, written to build-epoch.json below so a running session
+// can cheaply poll for "is a newer build available" without re-fetching any JS bundle.
+//
+// Reassigned in buildStart below (not just set once here) because rollup's watch mode keeps
+// this same config module instance alive across every incremental rebuild - a plain top-level
+// const would freeze both this and entryManifest's filename to whatever they were when the
+// watcher started, so a later rebuild would silently overwrite that same
+// chunks/build-manifest-<epoch>.json with fresh hashes instead of writing a new one. That would
+// rot the pin for any document already open: it always asks for its own epoch's manifest, but
+// the file behind that epoch would have quietly become a different build.
+let buildEpoch = Date.now();
+
+// Populated in generateBundle below: logical entry path relative to EGW_SERVER_ROOT (eg.
+// "/infolog/js/app.min.js") -> this build's hashed physical path (eg.
+// "/chunks/infolog-js-app.min-<hash>.js"). Written to chunks/build-manifest-<epoch>.json so the
+// server can resolve an entry against the exact build a document was pinned to, even after a
+// later build moves that entry to a new hash. Reset in buildStart below, same reason as buildEpoch.
+let entryManifest = {};
 
 // Turn on minification
 const do_minify = false;
@@ -72,23 +94,34 @@ const config = {
         }
     },
     output: {
-        // TODO: Hashed entries, when server supports
-        //entryFileNames: '[name]-[hash].js',
-        entryFileNames: '[name].js',
+        // Hashed entries, addressable like chunks already are - entries land in chunks/ too, so
+        // an old build stays servable as long as its files aren't swept by the atime GC above.
+        // Flattens the input key's slashes into a collision-free name across all apps, eg.
+        // "infolog/js/app.min" -> "chunks/infolog-js-app.min-<hash>.js"
+        entryFileNames: (chunkInfo) => 'chunks/' + chunkInfo.name.replace(/\//g, '-') + '-[hash].js',
         chunkFileNames: 'chunks/[name]-[hash].js',
         // Best practice: use this:
         //dir: './dist',
         dir: '.',
         sourcemap: true
     },
-    plugins: [{
+    plugins: [
+    // must run before the extensionless .ts/.js resolver below, so it can
+    // synthesize the legacy et2_widget_*.ts shims that no longer exist on disk
+    legacyWidgetShimPlugin(),
+    {
         resolveId (id, parentId) {
             // Delegate bare specifiers to node_modules resolver
             if (isBareSpecifier(id))
             {
                 return;
             }
-            if (!parentId || parentId.indexOf(path.sep + 'node_modules' + path.sep) !== -1)
+            // Leave node_modules alone, whether we got here from one or resolved into one.
+            // Another plugin can re-resolve an already-absolute dependency path through this
+            // hook, and the extension rewriting below only makes sense for first-party source -
+            // without this a dependency resolving to index.mjs becomes index.mjs.js.
+            const nodeModules = path.sep + 'node_modules' + path.sep;
+            if (!parentId || parentId.indexOf(nodeModules) !== -1 || id.indexOf(nodeModules) !== -1)
             {
                 return;
             }
@@ -107,11 +140,30 @@ const config = {
                 const jsPath =path.resolve(path.dirname(parentId), id + '.js');
                 try {
                     readFileSync(tsPath);
+                    return tsPath;
                 }
-                catch (e) {
+                catch (e) {}
+                try {
+                    readFileSync(jsPath);
                     return jsPath;
                 }
-                return tsPath;
+                catch (e) {}
+                // Neither exists, so this is not an extensionless module import - it is a file
+                // that already names its own extension (eg. a .css imported for its text).
+                // Leave it to the other plugins rather than inventing a ".js" path
+                // that isn't there.
+                return;
+            }
+        }
+    },
+    {
+        // Let a component import a stylesheet as text, for lit's unsafeCSS().
+        // Keeps a .less/.css file the single source of truth for styles that are needed
+        // both in a shadow root and in the document.
+        load (id) {
+            if (id.endsWith('.css') && id.indexOf(path.sep + 'node_modules' + path.sep) === -1)
+            {
+                return 'export default ' + JSON.stringify(readFileSync(id, 'utf-8')) + ';';
             }
         }
     },
@@ -169,7 +221,7 @@ const config = {
             {
                 return;
             }
-            return minify(code, {
+            return terser.minify(code, {
                 mangle: false,
                 sourceMap: true,
                 output: {
@@ -183,6 +235,58 @@ const config = {
 `
                 }
             });
+        }
+    },
+    {
+        // Fresh identity for this build, before anything else in the pipeline runs - see the
+        // comments on buildEpoch/entryManifest above for why this can't just be top-level state.
+        buildStart () {
+            buildEpoch = Date.now();
+            entryManifest = {};
+        }
+    },
+    {
+        // Record this build's logical-entry -> hashed-physical-path mapping (see entryManifest
+        // above). generateBundle sees final hashed fileNames, before they're written to disk.
+        generateBundle (options, bundle) {
+            for (const file of Object.values(bundle)) {
+                if (file.type === 'chunk' && file.isEntry) {
+                    entryManifest['/' + file.name + '.js'] = '/' + file.fileName;
+                }
+            }
+        }
+    },
+    {
+        // Write out this build's epoch, so a running session can cheaply poll for
+        // "is a newer build available" (see api/js/jsapi/egw.js) without touching any JS bundle.
+        // The manifest is unversioned, same as this - the server only ever resolves an entry
+        // against the current build (a fresh page render) or not at all (ajax_exec, where the
+        // client resolves against its own already-resident copy instead), so there is nothing to
+        // keep a history of and nothing for the chunks/ GC to sweep here.
+        //
+        // Guards against a stale rebuild overwriting a fresher one (eg. two concurrent
+        // "rollup -cw" processes on the same tree): skip the write (both files, together)
+        // if this build's epoch is older than what's already on disk, and write each file
+        // via a same-directory temp file + rename so a concurrent reader never sees a
+        // half-written one.
+        writeBundle () {
+            const epochPath = './api/js/build-epoch.json';
+            let existingEpoch = 0;
+            try {
+                existingEpoch = JSON.parse(readFileSync(epochPath, 'utf-8')).epoch || 0;
+            }
+            catch (e) {}
+            if (buildEpoch < existingEpoch)
+            {
+                return;
+            }
+            const atomicWrite = (path, content) => {
+                const tmpPath = path + '.' + process.pid + '.tmp';
+                writeFileSync(tmpPath, content);
+                renameSync(tmpPath, path);
+            };
+            atomicWrite(epochPath, JSON.stringify({epoch: buildEpoch}));
+            atomicWrite('./api/js/build-manifest.json', JSON.stringify(entryManifest));
         }
     }],
 

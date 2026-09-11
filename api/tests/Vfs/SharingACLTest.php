@@ -46,11 +46,14 @@ class SharingACLTest extends SharingBase
 			$GLOBALS['egw']->accounts->delete($account_id);
 		}
 
-		// Execute
-		$command = new \admin_cmd_edit_user(false, $this->account);
-		$command->comment = 'Needed for unit test ' . $this->name();
-		$command->run();
-		$this->account_id = $command->account;
+		// admin_cmd_edit_user requires the CURRENT session to be a real admin
+		$this->asAdmin(function()
+		{
+			$command = new \admin_cmd_edit_user(false, $this->account);
+			$command->comment = 'Needed for unit test ' . $this->name();
+			$command->run();
+			$this->account_id = $command->account;
+		});
 	}
 
 	protected function tearDown() : void

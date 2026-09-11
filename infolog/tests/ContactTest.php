@@ -28,6 +28,11 @@ class ContactTest extends \EGroupware\Api\AppTest
 	// Infolog under test
 	protected $info_id = null;
 
+	// Parent infolog under test, only used by testSubEntry() - tracked separately from
+	// $info_id (the sub-entry) so tearDown() can clean up both regardless of which
+	// assertion in testSubEntry() throws first
+	protected $parent_info_id = null;
+
 	protected function setUp() : void
 	{
 		$this->ui = new \infolog_ui();
@@ -47,7 +52,20 @@ class ContactTest extends \EGroupware\Api\AppTest
 			$this->bo->delete($this->info_id);
 			$this->bo->delete($this->info_id);
 		}
+		if($this->parent_info_id)
+		{
+			$this->bo->delete($this->parent_info_id);
+			$this->bo->delete($this->parent_info_id);
+		}
 		$this->bo = null;
+
+		// testFreeText()/testLinkedEntry()/testSubEntry() set these to simulate a URL-based
+		// edit() call. $_REQUEST is a process-wide superglobal that PHPUnit does not reset
+		// between tests, so leaving them set leaks into the next test's edit() call - and since
+		// tearDown() runs even when a test fails partway through an assertion, this catches the
+		// leak even when the in-method unset() (eg. testLinkedEntry()) got skipped by a thrown
+		// expectation failure.
+		unset($_REQUEST['info_id'], $_REQUEST['action'], $_REQUEST['action_id']);
 	}
 
 	/**
@@ -173,7 +191,7 @@ class ContactTest extends \EGroupware\Api\AppTest
 		$parent = $this->getTestInfolog($content);
 
 		// Skipping notifications - save initial state
-		$parent_id = $this->bo->write($parent, true, true, true, true);
+		$parent_id = $this->parent_info_id = $this->bo->write($parent, true, true, true, true);
 
 		// Mock the etemplate call to check sub gets parent's contact
 		$sub = array();

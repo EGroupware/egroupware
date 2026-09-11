@@ -208,7 +208,6 @@ if different from email address	admin	et	Kui erineb e-posti aadressist
 if disabled existing tokens immediatly stop working.	admin	et	Kui olemasolevad märgid on keelatud, lakkavad need kohe töötamast.
 imap admin password	admin	et	IMAP admin parool
 imap admin user	admin	et	IMAP admin kasutaja
-imap server	admin	et	IMAP Server
 imap server closed the connection.	admin	et	IMAP server sulges ühenduse.
 imap server closed the connection. server responded: %s	admin	et	IMAP Server sulges ühenduse. Server Vastas: %s
 imap server name	admin	et	IMAP serveri nimi

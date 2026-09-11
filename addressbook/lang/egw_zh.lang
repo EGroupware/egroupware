@@ -277,7 +277,6 @@ ldap settings for contacts	admin	zh	联系人的 LDAP 设定
 ldif	addressbook	zh	LDIF
 line 2	addressbook	zh	第2行
 link title for contacts show	addressbook	zh	显示联系人的链接标题
-links	addressbook	zh	链接
 list all categories	addressbook	zh	列出所有类别
 list all customfields	addressbook	zh	列出所有自定义字段
 list already exists!	addressbook	zh	列表已经存在！

@@ -594,7 +594,7 @@ abstract class Ajax extends Api\Framework
 			//error_log(__METHOD__."() app=$app, menuaction=$_GET[menuaction], PHP_SELF=$_SERVER[PHP_SELF] --> sidebox request ignored");
 			return;
 		}
-		$md5_session =& Api\Cache::getSession(__CLASS__,'sidebox_md5');
+		$md5_session = Api\Cache::getSession(__CLASS__,'sidebox_md5');
 
 		//Set the sidebox content
 		$sidebox = $this->get_sidebox($app);
@@ -605,6 +605,7 @@ abstract class Ajax extends Api\Framework
 		{
 			//error_log(__METHOD__."() header changed md5_session[$app]!=='$md5' --> setting it on self::\$extra[setSidebox]");
 			$md5_session[$target] = $md5;    // update md5 in session
+			Api\Cache::setSession(__CLASS__, 'sidebox_md5', $md5_session);
 			self::$extra['setSidebox'] = array($target, $sidebox, $md5);
 		}
 		elseif(Api\Json\Request::isJSONRequest())
@@ -996,7 +997,7 @@ abstract class Ajax extends Api\Framework
 		}
 
 		// check if user called a specific url --> open it as active tab
-		$last_direct_url =& Api\Cache::getSession(__CLASS__, 'last_direct_url');
+		$last_direct_url = Api\Cache::getSession(__CLASS__, 'last_direct_url');
 		if ($last_direct_url)
 		{
 			$url = str_replace('%255C', '%5C', $last_direct_url);	// fix double encoding of backlash in class-names
@@ -1008,6 +1009,15 @@ abstract class Ajax extends Api\Framework
 			// Coming in with a specific URL, save it and redirect to index.php
 			// so reloads work nicely, but strip cd=yes or we'll get the framework again
 			$last_direct_url = preg_replace('/[&?]cd=yes/','',$url);
+
+			// Make sure it's opened the same way as every other app tab (ajax_exec, not
+			// a nested iframe), or the sidebox/tree and its toggle chevron never show up
+			if (strpos($last_direct_url, 'ajax=') === false)
+			{
+				$last_direct_url .= (strpos($last_direct_url, '?') !== false ? '&' : '?') . 'ajax=true';
+			}
+			// must persist BEFORE redirect_link(), which does not return (calls exit)
+			Api\Cache::setSession(__CLASS__, 'last_direct_url', $last_direct_url);
 			Api\Framework::redirect_link('/index.php?cd=yes');
 		}
 		else

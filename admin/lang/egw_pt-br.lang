@@ -386,7 +386,6 @@ if using ldap, do you want to manage homedirectory and loginshell attributes?	ad
 if using ssl or tls, you must have the php openssl extension loaded.	admin	pt-br	Se estiver usando SSL ou TLS, você deverá ter a extensão PHP 'openssl' carretada.
 imap admin password	admin	pt-br	Senha do administrador IMAP
 imap admin user	admin	pt-br	Usuário administrador do IMAP
-imap server	admin	pt-br	Servidor IMAP
 imap server closed the connection.	admin	pt-br	O servidor IMAP fechou a conexão.
 imap server closed the connection. server responded: %s	admin	pt-br	O servidor IMAP fechou a conexão. Resposta do servidor: %s
 imap server hostname or ip address	admin	pt-br	Nome ou IP do servidor IMAP

@@ -805,6 +805,7 @@ linkapps	common	sl	Povezava - aplikacija
 linked	common	sl	Povezano
 linkentry	common	sl	Povezava - vnos
 linklist	common	sl	Povezava - seznam
+links	common	sl	Povezave
 links and attached files	preferences	sl	Povezave in priložene datoteke
 links to specified application.  example: {{links/addressbook}}	common	sl	Povezave do določene aplikacije. Primer: {{links/addressbook}}
 linkstring	common	sl	Povezava - besedilo

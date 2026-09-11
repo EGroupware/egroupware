@@ -57,7 +57,6 @@ leave it empty for a full week	timesheet	pt	Deixar vário para uma semana interi
 leaves without saveing	timesheet	pt	Continua sem guardar
 length<br>rows	timesheet	pt	Altura<br>Linhas
 link title	timesheet	pt	Título da ligação
-links	timesheet	pt	Ligações
 links and attached files	timesheet	pt	Links e arquivos anexados
 list of files linked to the current record	timesheet	pt	Lista de arquivos vinculados ao registro atual
 max length of the input [, length of the inputfield (optional)]	timesheet	pt	comprimento máximo [, comprimento do campo (opcional)]

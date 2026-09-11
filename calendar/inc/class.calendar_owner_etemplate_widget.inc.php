@@ -21,7 +21,7 @@ use EGroupware\Api\Etemplate;
  *
  * The naming convention is <appname>_<subtype>_etemplate_widget
  */
-class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
+class calendar_owner_etemplate_widget extends Etemplate\Widget\Select
 {
 
 	/**
@@ -413,7 +413,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 				// Add email
 				if(isset($value['email']) || isset($contact['email']) || isset($contact['email_home']))
 				{
-					$email = \EGroupware\Api\Mail::stripRFC822Addresses(array($value['email'] ?: $contact['email'] ?: $contact['email_home']));
+					$email = \EGroupware\Api\Mail\AddressList::stripRFC822Addresses(array($value['email'] ?: $contact['email'] ?: $contact['email_home']));
 					$value['title'] = $email ? (' <' . $email[0] . '>') : "";
 				}
 				if($id < 0)

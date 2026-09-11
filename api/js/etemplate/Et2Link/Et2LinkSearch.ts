@@ -8,6 +8,7 @@
  */
 
 import {css} from "lit";
+import {property} from "lit/decorators/property.js";
 import {Et2Select} from "../Et2Select/Et2Select";
 import {Et2LinkAppSelect} from "./Et2LinkAppSelect";
 import {Et2Link} from "./Et2Link";
@@ -32,13 +33,8 @@ export class Et2LinkSearch extends Et2Select
 	}
 
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			app: {type: String, reflect: true}
-		}
-	}
+	@property({type: String, reflect: true})
+	app : string;
 
 	constructor()
 	{

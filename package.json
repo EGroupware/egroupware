@@ -10,7 +10,7 @@
     "docs": "node doc/scripts/build.mjs --dev",
     "docs:serve": "node doc/scripts/build.mjs --dev --serve",
     "css": "node build-css.mjs",
-    "typecheck": "node ./node_modules/typescript/bin/tsc -p tsconfig.json",
+    "typecheck": "node ./node_modules/typescript/bin/tsc -p tsconfig.json --noEmit",
     "jstest": "npm run --silent typecheck >/dev/null 2>&1; web-test-runner",
     "jstest:watch": "web-test-runner  --node-resolve --watch"
   },
@@ -28,6 +28,7 @@
     "@rollup/plugin-node-resolve": "^13.0.0",
     "@rollup/plugin-typescript": "^8.2.1",
     "@types/chai": "^4.2.21",
+    "@types/html-to-text": "^9.0.4",
     "@types/mocha": "^10.0.3",
     "@web/dev-server": "^1.0.0",
     "@web/dev-server-esbuild": "^2.0.0",
@@ -49,7 +50,6 @@
     "globby": "^14.0.1",
     "jsdom": "^28.1.0",
     "lunr": "^2.3.9",
-    "markdown-it": "^14.1.1",
     "markdown-it-container": "^3.0.0",
     "markdown-it-ins": "^3.0.1",
     "markdown-it-kbd": "^2.2.2",
@@ -96,9 +96,13 @@
     "dexie": "^3.2.4",
     "diff2html": "^3.4.56",
     "dompurify": "^3.4.12",
+    "html-to-text": "^10.0.1",
     "imask": "^7.6.1",
+    "jmap-jam": "^0.13.3",
     "lit": "^2.7.5",
     "lit-flatpickr": "^0.3.0",
+    "markdown-it": "^14.1.1",
+    "openpgp": "^6.3.1",
     "shortcut-buttons-flatpickr": "^0.4.0",
     "sortablejs": "^1.14.0",
     "tinymce": "^8.6.0"
@@ -117,7 +121,6 @@
     "core-js@3.29.1": true,
     "esbuild@0.28.1": true,
     "fsevents@2.3.3": true,
-    "fsevents@2.3.2": true,
-    "core-js-pure@3.37.1": true
+    "fsevents@2.3.2": true
   }
 }

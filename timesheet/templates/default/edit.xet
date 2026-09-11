@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="timesheet.edit.general" template="" lang="" group="0" version="1.7.002">
+	<et2-template  id="timesheet.edit.general" template="" lang="" group="0" version="1.7.002">
 		<grid width="100%" >
 			<columns>
 				<column width="100"/>
@@ -36,26 +37,25 @@
 					</et2-hbox>
 				</row>
                 <row class="row">
-                    <et2-description value="Quantity" for="ts_quantity"></et2-description>
-                    <et2-number statustext="empty if identical to duration" id="ts_quantity" precision="3" placeholder="@ts_quantity_blur"></et2-number>
+                    <et2-description  value="Quantity" for="ts_quantity"></et2-description>
+                    <et2-number  statustext="empty if identical to duration" id="ts_quantity" precision="3" placeholder="@ts_quantity_blur"></et2-number>
 					<et2-description></et2-description>
-					<et2-date-duration label="Pause time" id="ts_paused" displayFormat="hm" span="all"></et2-date-duration>
+					<et2-date-duration  label="Pause time" id="ts_paused" displayFormat="hm" span="all"></et2-date-duration>
 				</row>
 				<row class="row">
-					<et2-description value="Category" for="cat_id"></et2-description>
-					<et2-select-cat span="all" id="cat_id" application="timesheet" emptyLabel="None"></et2-select-cat>
+					<et2-description  value="Category" for="cat_id"></et2-description>
+					<et2-select-cat  span="all" id="cat_id" application="timesheet" emptyLabel="None"></et2-select-cat>
 				</row>
 				<row class="row">
-					<et2-description value="Readable" for="ts_readable"></et2-description>
-					<et2-select-account span="all" id="ts_readable" emptyLabel="Give additional users access" multiple="true"></et2-select-account>
+					<et2-description  value="Readable" for="ts_readable"></et2-description>
+					<et2-select-account  span="all" id="ts_readable" emptyLabel="Give additional users access" multiple="true"></et2-select-account>
 				</row>
             </rows>
 		</grid>
-	</template>
-	<template id="timesheet.edit.notes" template="" lang="" group="0" version="1.5.001">
-		<et2-textarea  id="ts_description" rows="9" cols="70"></et2-textarea>
-	</template>
-	<template id="timesheet.edit.links" template="" lang="" group="0" version="0.1.001">
+	</et2-template>
+	<et2-template  id="timesheet.edit.notes" template="" lang="" group="0" version="1.5.001"><et2-ai><et2-textarea  id="ts_description" rows="9" cols="70"></et2-textarea></et2-ai>
+	</et2-template>
+	<et2-template  id="timesheet.edit.links" template="" lang="" group="0" version="0.1.001">
 		<grid width="100%" overflow="auto">
 			<columns>
 				<column width="99%"/>
@@ -72,11 +72,11 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="timesheet.edit.history" template="" lang="" group="0" version="1.7.001">
+	</et2-template>
+	<et2-template  id="timesheet.edit.history" template="" lang="" group="0" version="1.7.001">
 		<historylog id="history"/>
-	</template>
-	<template id="timesheet.edit.events" template="" lang="" group="0" version="0.1.001">
+	</et2-template>
+	<et2-template  id="timesheet.edit.events" template="" lang="" group="0" version="0.1.001">
 		<grid width="100%" overflow="auto" id="events">
 			<columns>
 				<column/>
@@ -105,11 +105,40 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="timesheet.edit.events.change" template="" lang="" group="0" version="1.7.002">
+	</et2-template>
+	<et2-template  id="timesheet.edit.events.change" template="" lang="" group="0" version="1.7.002">
 		<et2-date-time  id="time" required="true"/>
-	</template>
-	<template id="timesheet.edit" template="" lang="" group="0" version="1.9.002">
+	</et2-template>
+	<et2-template  id="timesheet.edit.conflicts" template="" lang="" group="0" version="1.9.002">
+		<et2-dialog  title="Scheduling conflict" open="@has_conflicts" buttons="" destroyOnClose="false" isModal="true">
+			<et2-description  value="This timesheet overlaps with the following existing entries:"></et2-description>
+			<grid width="100%" id="conflicts">
+				<columns>
+					<column/>
+					<column/>
+					<column/>
+				</columns>
+				<rows>
+					<row class="th">
+						<et2-description  value="Title"></et2-description>
+						<et2-description  value="Starttime"></et2-description>
+						<et2-description  value="Duration"></et2-description>
+					</row>
+					<row id="timesheet-conflict::$row_cont[ts_id]">
+						<et2-description  id="${row}[ts_title]"></et2-description>
+						<et2-date-time  id="${row}[ts_start]" readonly="true"></et2-date-time>
+						<et2-date-duration  id="${row}[ts_duration]" readonly="true" displayFormat="hm"></et2-date-duration>
+					</row>
+				</rows>
+			</grid>
+			<et2-button  slot="footer" label="Ignore conflict" image="check" noSubmit="true" id="ignoreConflict" onclick="app.timesheet.ignoreConflict(event, widget);"></et2-button>
+			<et2-button  slot="footer" label="Re-edit timesheet" image="edit" noSubmit="true" onclick="widget.closest('et2-dialog').close();"></et2-button>
+		</et2-dialog>
+		<et2-hidden  id="ignore_conflicts"></et2-hidden>
+		<et2-hidden  id="conflict_button"></et2-hidden>
+	</et2-template>
+	<et2-template  id="timesheet.edit" template="" lang="" group="0" version="1.9.002">
+		<et2-template  id="timesheet.edit.conflicts"></et2-template>
 		<grid width="100%">
 			<columns>
 				<column width="100"/>
@@ -129,18 +158,17 @@
 				</row>
 				<row class="dialogHeader2">
 					<et2-description  value="Date" for="ts_start"></et2-description>
-					<et2-date  id="ts_start" required="1"></et2-date>
+					<et2-date  id="ts_start" required="1" onchange="app.timesheet.ts_start_changed"></et2-date>
 					<et2-description></et2-description>
 					<et2-description  value="Starttime"></et2-description>
-					<et2-date-timeonly id="start_time" freeMinuteEntry="true"></et2-date-timeonly>
+					<et2-date-timeonly  id="start_time" freeMinuteEntry="true"></et2-date-timeonly>
 				</row>
 				<row class="row dialogHeader3">
-                    <et2-description value="Duration" for="ts_duration"></et2-description>
-                    <et2-date-duration id="ts_duration" displayFormat="hm"
-                                       onchange="app.timesheet.update_quantity"></et2-date-duration>
+                    <et2-description  value="Duration" for="ts_duration"></et2-description>
+                    <et2-date-duration  id="ts_duration" displayFormat="hm" onchange="app.timesheet.update_quantity"></et2-date-duration>
                     <et2-description></et2-description>
-                    <et2-description value="or endtime" class="et2_noWrap"></et2-description>
-                    <et2-date-timeonly id="end_time" freeMinuteEntry="true"></et2-date-timeonly>
+                    <et2-description  value="or endtime" class="et2_noWrap"></et2-description>
+                    <et2-date-timeonly  id="end_time" freeMinuteEntry="true"></et2-date-timeonly>
                 </row>
 				<row>
 					<et2-tabbox  id="tabs" class="et2_nowrap" width="100%" span="all" tabHeight="225">
@@ -152,11 +180,11 @@
 							<tab id="events" label="Events"/>
 						</tabs>
 						<tabpanels class="dialog-main-timeframe">
-							<template id="timesheet.edit.notes"/>
-							<template id="timesheet.edit.general"/>
-							<template id="timesheet.edit.links"/>
-							<template id="timesheet.edit.history"/>
-							<template id="timesheet.edit.events"/>
+							<et2-template  id="timesheet.edit.notes"></et2-template>
+							<et2-template  id="timesheet.edit.general"></et2-template>
+							<et2-template  id="timesheet.edit.links"></et2-template>
+							<et2-template  id="timesheet.edit.history"></et2-template>
+							<et2-template  id="timesheet.edit.events"></et2-template>
 						</tabpanels>
 					</et2-tabbox>
 				</row>
@@ -181,17 +209,23 @@
 					<et2-hbox  orient="0" span="all">
 						<et2-hbox>
 							<et2-button  hideOnReadonly="true" statustext="Edit this entry" label="Edit" id="button[edit]" image="edit"></et2-button>
-							<et2-button  hideOnReadonly="true" statustext="Saves this entry and add a new one" label="Save &amp; New" id="button[save_new]" image="save_new"></et2-button>
-							<et2-button  hideOnReadonly="true" statustext="Saves the changes made" label="Save" id="button[save]" image="save"></et2-button>
-							<et2-button  hideOnReadonly="true" statustext="Applies the changes made" label="Apply" id="button[apply]" image="apply"></et2-button>
+                            <et2-dropdown-button  id="save_split" statustext="Saves the changes made" defaultPreference="save_new" onclick="app.timesheet.save_split_action" onchange="app.timesheet.save_split_action">
+                                <et2-image  slot="prefix" src="save_new"/>
+                                <option value="save_new" default="save_new">Save &amp; New</option>
+                                <option value="save_reset">Save &amp; Reset</option>
+                            </et2-dropdown-button>
+                            <et2-button  hideOnReadonly="true" label="Save" id="button[save]" image="save" tabindex="-1"/>
+                            <et2-button  hideOnReadonly="true" label="Save &amp; New" id="button[save_new]" image="save_new" style="display:none" tabindex="-1"/>
+                            <et2-button  hideOnReadonly="true" label="Save &amp; Reset" id="button[save_reset]" image="reload" style="display:none" tabindex="-1"/>
+                            <et2-button  hideOnReadonly="true" statustext="Applies the changes made" label="Apply" id="button[apply]" image="apply"></et2-button>
 							<et2-button  statustext="closes the window without saving the changes" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel"></et2-button>
-							<html id="js"/>
+							<et2-html  id="js"></et2-html>
 						</et2-hbox>
-                        <et2-button hideOnReadonly="true" align="right" statustext="Delete this entry" label="Delete" id="button[delete]" onclick="Et2Dialog.confirm(widget,'Delete this entry','Delete')" image="delete"></et2-button>
+                        <et2-button  hideOnReadonly="true" align="right" statustext="Delete this entry" label="Delete" id="button[delete]" onclick="Et2Dialog.confirm(widget,'Delete this entry','Delete')" image="delete"></et2-button>
 						<et2-button  hideOnReadonly="true" align="right" statustext="Restore this entry" label="Undelete" id="button[undelete]" image="undelete"></et2-button>
 					</et2-hbox>
 				</row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

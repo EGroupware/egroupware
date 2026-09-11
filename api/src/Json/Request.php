@@ -125,14 +125,27 @@ class Request
 		// do we have a single request or an array of queued requests
 		if ($menuaction === 'api.queue')
 		{
-			// close session to NOT block other requests (api.queue should NOT be used for changing something in session)
-			$GLOBALS['egw']->session->commit_session();
+			// session is already closed early by json.php for every request now
 			$responses = array();
 			$response = Response::get();
 			foreach($parameters[0] as $uid => $data)
 			{
 				//error_log("$uid: menuaction=$data[menuaction], parameters=".array2string($data['parameters']));
-				$this->handleRequest($data['menuaction'], (array)$data['parameters']);
+				try {
+					$this->handleRequest($data['menuaction'], (array)$data['parameters']);
+				}
+				// one queued job failing must NOT abort the whole batch and strand every other
+				// job's promise unresolved on the client - isolate it and report it as that job's
+				// own response instead (see Jsonq.jsonqSend() "error" handling on the client side)
+				catch (\Throwable $e)
+				{
+					$headline = null;
+					if (function_exists('_egw_log_exception'))
+					{
+						_egw_log_exception($e, $headline);
+					}
+					$response->error($headline ? $headline."\n\n".$e->getMessage() : $e->getMessage());
+				}
 				$responses[$uid] = $response->initResponseArray();
 				//error_log("responses[$uid]=".array2string($responses[$uid]));
 			}
@@ -214,7 +227,11 @@ class Request
 		}
 
 		// Check for a real static method, avoid instantiation if it is
-		if (strpos($menuaction,'::') !== false && strpos($menuaction,'.') === false)
+		// method_exists() first: ReflectionMethod would throw a ReflectionException for a
+		// misspelled method, hiding the real problem behind a stack trace from this file. Let it
+		// fall through to the rejection below instead, which names the menuaction.
+		if (strpos($menuaction,'::') !== false && strpos($menuaction,'.') === false &&
+			method_exists($className, $functionName))
 		{
 			$m = new ReflectionMethod($menuaction);
 			if($m->isStatic())
@@ -234,6 +251,17 @@ class Request
 			throw new Exception\InvalidName($_SERVER['PHP_SELF']. ' stopped for security reason. '.$menuaction.' is not valid. class- or function-name must start with ajax!!!');
 		}
 
+		// A menuaction naming a method the class does not have is a client-side mistake (typo, an
+		// endpoint that was renamed or never existed), not a server fault. Rejected here, ahead of
+		// the class being constructed, so that probing a bad menuaction cannot set off a
+		// constructor's side effects. Only autoloadable classes can be checked this far up; the
+		// rest are covered by the is_callable() check after they are built.
+		if (!isset($template) && !isset($ajaxClass) && class_exists($className) &&
+			!method_exists($className, $functionName))
+		{
+			throw self::invalidMenuaction($menuaction, $className, $functionName);
+		}
+
 		if (isset($template))
 		{
 			$ajaxClass = $GLOBALS['egw']->framework;
@@ -243,12 +271,56 @@ class Request
 			$ajaxClass = class_exists($className) ? new $className() : CreateObject($appName.'.'.$className);
 		}
 
+		// What the check above could not see: a legacy class only reachable via CreateObject(), the
+		// framework object, and methods that do exist but are not public. Without this,
+		// call_user_func_array() below raises an uncaught TypeError, which reaches the user as a
+		// generic "An error happened!" plus this file's path and line, and says nothing about the
+		// menuaction that is actually wrong.
+		if (!is_callable([$ajaxClass, $functionName]))
+		{
+			throw self::invalidMenuaction($menuaction,
+				is_object($ajaxClass) ? get_class($ajaxClass) : $className, $functionName);
+		}
+
 		// for Ajax: no need to load the "standard" javascript files,
 		// they are already loaded, in fact jquery has a problem if loaded twice
 		Api\Framework::js_files(array());
 
 		call_user_func_array(array($ajaxClass, $functionName),
 			Api\Translation::convert($parameters, 'utf-8'));
+	}
+
+	/**
+	 * Log, and build the exception for, a menuaction naming a method that can not be called
+	 *
+	 * \InvalidArgumentException, not Exception\InvalidName: the latter is a NoPermission subclass,
+	 * which would head the message with "Permission denied!" and point whoever reads it at ACL
+	 * instead of at the typo. It also gets json.php's dedicated catch, which answers 400 with just
+	 * this message - an uncaught throwable there would instead hand the client this file's path and
+	 * line (and its whole trace, where exception_show_trace is on) via ajax_exception_handler().
+	 *
+	 * That catch logs nothing though, so the logging happens here, in the same shape as the
+	 * security check above: one line naming what was asked for, rather than the stack trace the
+	 * uncaught TypeError used to leave behind for the very same mistake.
+	 *
+	 * Callers must be past handleRequest()'s security check, which is what limits $menuaction (and
+	 * with it $class and $method, cut from the same string) to [A-Za-z0-9_\\-] plus the '.'/'::'
+	 * separators - so nothing quoted back here, into the response or the log, can carry markup or
+	 * a line break.
+	 *
+	 * @param string $menuaction as requested, to name what has to be corrected
+	 * @param string $class resolved class name, which is not always the one $menuaction spells
+	 * @param string $method
+	 * @return \InvalidArgumentException code 996, in the same series as checkMenuAction()'s 997
+	 */
+	private static function invalidMenuaction(string $menuaction, string $class, string $method) : \InvalidArgumentException
+	{
+		$message = $menuaction.' is not a valid menuaction: class '.$class.
+			' has no callable method "'.$method.'"';
+
+		error_log(($_SERVER['PHP_SELF'] ?? 'json.php').': '.$message);
+
+		return new \InvalidArgumentException($message, 996);
 	}
 }
 

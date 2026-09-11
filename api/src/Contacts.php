@@ -2786,7 +2786,7 @@ class Contacts extends Contacts\Storage
 
 		if (!$contact_id && !empty($_GET['email']))
 		{
-			$email = strtolower(current(Mail::stripRFC822Addresses([$_GET['email']])));
+			$email = strtolower(current(Mail\AddressList::stripRFC822Addresses([$_GET['email']])));
 
 			$contact = current($this->search(
 				['contact_email' => $email, 'contact_email_home' => $email],

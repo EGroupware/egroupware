@@ -5,6 +5,7 @@
 2 years ago	timesheet	en	2 years ago
 3 years ago	timesheet	en	3 years ago
 all projects	timesheet	en	All projects
+all status	timesheet	en	All status
 and its members	timesheet	en	And its members
 applies the changes	timesheet	en	Applies the changes
 apply the action on the whole query, not only the shown timesheets!!!	timesheet	en	Apply the action on the whole query, NOT only the shown timesheets!
@@ -72,6 +73,7 @@ if you specify a directory (full vfs path) here, %1 displays an action for each 
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	timesheet	en	If you specify a document (full VFS path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.
 if you specify an export definition, it will be used when you export	timesheet	en	If you specify an export definition, it will be used when you export
 ignore	timesheet	en	Ignore
+ignore conflict	timesheet	en	Ignore conflict
 import options	timesheet	en	Import options
 imports entries into the timesheet from a csv file.	timesheet	en	Imports entries into Time Sheet from a CSV file
 insert	timesheet	en	Insert
@@ -87,7 +89,6 @@ leave it empty for a full week	timesheet	en	Leave it empty for a full week
 leaves without saveing	timesheet	en	Leaves without saving
 length<br>rows	timesheet	en	Length\nRows
 link title	timesheet	en	Link title
-links	timesheet	en	Links
 links and attached files	timesheet	en	Links and attached files
 links to specified application.  example: {{links/infolog}}	timesheet	en	Links to specified application. Example: {{links/infolog}}
 list of files linked to the current record	timesheet	en	List of files linked to the current record
@@ -113,6 +114,7 @@ order	timesheet	en	Order
 overwrite time	common	en	Overwrite time
 overwriting start or stop time	timesheet	en	Overwriting start or stop time
 parent	admin	en	Parent
+partial timespan %1	timesheet	en	Partial %1:
 pause	common	en	Pause
 pause time	timesheet	en	Pause time
 paused	timesheet	en	Paused
@@ -126,12 +128,15 @@ quantity	timesheet	en	Quantity
 readable	timesheet	en	Readable
 recorded	timesheet	en	Recorded
 recovered	timesheet	en	recovered
+re-edit timesheet	timesheet	en	Re-edit timesheet
 replacements for inserting entries into documents	timesheet	en	Replacements for inserting entries into documents
 restore this entry	timesheet	en	Restore this entry
 save & new	timesheet	en	Save & New
+save & reset	timesheet	en	Save & Reset
 saves the changes made	timesheet	en	Saves the changes made
 saves the changes made and leaves	timesheet	en	Saves the changes made and leaves
 saves this entry and add a new one	timesheet	en	Saves this entry and add a new one
+scheduling conflict	timesheet	en	Scheduling conflict
 select a price	timesheet	en	Select a price
 select a project	timesheet	en	Select a project
 select a status of the timesheet	timesheet	en	Select a status of the timesheet
@@ -142,6 +147,7 @@ set to	timesheet	en	Set to
 show a quantity sum (eg. to sum up negative overtime)	admin	en	Show a quantity sum e.g. to sum up negative overtime
 skip record	timesheet	en	Skip record
 start	timesheet	en	Start
+start time is after last timesheet	timesheet	en	Start time is after last timesheet
 start & stop timer	common	en	Start & stop timer
 start timer	common	en	Start timer
 start-time can not be before last stop- or pause-time %1!	common	en	Start-time can not be before last stop- or pause-time %1!
@@ -160,9 +166,11 @@ the following document-types are supported:	timesheet	en	The following document-
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	en	The name used internally, <= 20 chars, changing it makes existing data unavailable
 the text displayed to the user	timesheet	en	Text displayed to the user
 this month	timesheet	en	This month
+this timesheet overlaps with the following existing entries:	timesheet	en	This timesheet overlaps with the following existing entries:
 this week	timesheet	en	This week
 this year	timesheet	en	This year
 ticket modified by %1 at %2	timesheet	en	Ticket modified by %1 at %2
+time default for new timesheet entries	timesheet	en	Time default for new timesheet entries
 timer	common	en	Timer
 timer already running or paused	common	en	Timer already running or paused
 timesheet	common	en	Time Sheet
@@ -178,12 +186,14 @@ titles of any entries linked to the current record, excluding attached files	tim
 unable to convert "%1" to account id.  using plugin setting (%2) for %3.	timesheet	en	Unable to convert "%1" to account ID. Using plugin setting (%2) for %3.
 undelete	timesheet	en	Undelete
 unitprice	timesheet	en	Unit price
+use current time as end time	timesheet	en	Use current time as end time
 use field from csv if possible	timesheet	en	Use field from CSV if possible
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	en	Use this tag for address labels. Put the content, you want to repeat, between two tags.
 values for selectbox	timesheet	en	Values for select box
 view this entry	timesheet	en	View this entry
 week	timesheet	en	Week
 what should be done with unknown values?	timesheet	en	What should be done with unknown values?
+when adding a new timesheet: prefill the endtime with the current time, or continue the starttime from the endtime of your last timesheet	timesheet	en	When adding a new timesheet: prefill the end time with the current time, or set the start time from the end of your last timesheet.
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/ralf)	timesheet	en	When you merge entries into documents, they will be stored here. If no directory is provided, they will be stored in your home directory (/home/ralf)
 will be created when saving ...	common	en	Will be created when saving ...
 working time	common	en	Working time

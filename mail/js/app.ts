@@ -19,20 +19,65 @@ import {
 	EGW_KEY_ARROW_UP
 } from "../../api/js/egw_action/egw_action_constants";
 import {loadWebComponent} from "../../api/js/etemplate/Et2Widget/Et2Widget";
-import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
+import type {Et2DatagridUpdateType} from "../../api/js/etemplate/Et2Datagrid/Et2Datagrid.types";
+import {Et2DatagridUpdateTypes} from "../../api/js/etemplate/Et2Datagrid/Et2Datagrid.types";
+import type {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatch";
 import {MailCompose} from "./compose";
-import {egw} from "../../api/js/jsapi/egw_global";
-import {Et2Details} from "../../api/js/etemplate/Layout/Et2Details/Et2Details";
-import type {EgwActionObject} from "../../api/js/egw_action/EgwActionObject";
-import type {Et2Image} from "../../api/js/etemplate/Et2Image/Et2Image";
+import {formatJmapAddress, isPreferenceOn, JmapBodyResult, JmapMessageReference, JmapUserError, MailJmap} from "./jmap";
+import {renderAttachmentIndex} from "./attachmentIndex";
+import {attachmentSaveUrl, downloadAttachments} from "./attachmentDownload";
+import {buildErrorNode, buildFolderLevel, buildMailboxPaths, FolderTreeNode, isNamespaceRootName} from "./folderTree";
+// egw/egw_getFramework are ambient globals (declare global {} in egw_global.d.ts,
+// unconditionally included via tsconfig's "**/*.d.ts") - no import needed or possible.
 
-/* required dependency, commented out because no module, but egw:uses is no longer parsed
-*/
+import type {Et2Details} from "../../api/js/etemplate/Layout/Et2Details/Et2Details";
+import type {Et2Tree} from "../../api/js/etemplate/Et2Tree/Et2Tree";
+import {etemplate2} from "../../api/js/etemplate/etemplate2";
+import type {Et2Description} from "../../api/js/etemplate/Et2Description/Et2Description";
+import type {Et2Textbox} from "../../api/js/etemplate/Et2Textbox/Et2Textbox";
+
+interface CustomLabel
+{
+	name: string;
+	color: string;
+	icon?: string;
+}
+
+type CustomLabels = Record<string, CustomLabel>
+
+/**
+ * Matches an already-open compose popup's own url (mail/compose.php,
+ * doc/ai/projects/mail-compose-jmap-migration.md Step 10) - used by every "reuse an already-open
+ * compose window instead of opening a new one" call (egw.openWithinWindow()'s own popups_get()
+ * regex param). No longer needs to also match the classic mail_compose::compose() postback url -
+ * that class was deleted/moved entirely 2026-09-07/08, so no popup can carry that url any more.
+ */
+const COMPOSE_POPUP_URL_PATTERN = /\/mail\/compose\.php/;
+
+/**
+ * Extract the profileID (the account to compose FROM) out of a mail row id - `mail::<accountID>::
+ * <profileID>::<folderID>::<emailID>` (Api\Mail::splitRowID()'s own canonical 5-part shape, see
+ * its own docblock; the app-name prefix is always the literal string "mail", never the profile).
+ * `id` may be a single row id, or several comma-joined ones (composeMessage()'s own batch-forward
+ * case) - only the FIRST one's profileID is ever needed (an "email selected messages" batch is
+ * always composed from a single account).
+ *
+ * Found live 2026-09-07 (real tester report, pole.egroupware.org): reply/forward's own accId
+ * computation used `.split('::')[0]` instead of `[2]` - always resolving to the literal string
+ * "mail" (the app-name segment, not an account id at all), so compose.php's own url carried
+ * `acc_id=mail`. bootstrapComposePopup() then couldn't resolve any real account from that,
+ * sometimes surfacing as mail_wizard's own "add account" dialog opening instead, empty - not a
+ * separate bug, the same wrong acc_id read as "no valid account configured".
+ */
+function rowIdProfileID(id : string) : string
+{
+	return id.split(',')[0].split('::')[2] || '';
+}
 
 /**
  * UI for mail
  *
- * @augments AppJS
+ * @augments EgwApp
  */
 export class MailApp extends EgwApp
 {
@@ -44,31 +89,28 @@ export class MailApp extends EgwApp
 	/**
 	 * et2 widget container
 	 */
-	nm : any = null;
+	nm : Et2Nextmatch = null;
 	doStatus : any = null;
 
-	mail_queuedFolders : any = [];
-	mail_queuedFoldersIndex : any = 0;
+	queuedFolders : any = [];
+	queuedFoldersIndex : any = 0;
 
-	mail_selectedMails : any = [];
-	mail_currentlyFocussed : any = '';
-	mail_previewAreaActive : any = true; // we start with the area active
+	selectedMails : any = [];
+	currentlyFocussed : any = '';
+	previewAreaActive : any = true; // we start with the area active
 
 	nm_index : any = 'nm'; // nm name of index
-	mail_fileSelectorWindow : any = null;
-	mail_isMainWindow : any = true;
+	fileSelectorWindow : any = null;
+	isMainWindow : any = true;
 
-	// Some state variables to track preview pre-loading
-	preview_preload : any = {
-		timeout: null,
-		request: null
-	}
+	// Aborts the in-flight fetchBody() request when a newer selection supersedes it.
+	previewFetchAbort : AbortController = null;
 	/**
 	 *
 	 */
 	subscription_treeLastState : "";
 
-	tree_wdg : null;
+	tree_wdg: Et2Tree = null;
 
 	/**
 	 * abbrevations for common access rights
@@ -90,15 +132,24 @@ export class MailApp extends EgwApp
 	W_INTERVALS : any = [];
 
 	/**
-	 *
-	 * @array of setted timeouts
+	 * Pending preview-body-load debounce timers, see mail_preview().
+	 * Cleared entries are spliced out there too, so this doesn't just grow forever.
 	 */
-	W_TIMEOUTS : any = [];
+	W_TIMEOUTS: number[] = [];
+	/**
+	 * the number of currently in flight requests for fetchEmailBody() in the mail preview
+	 * this should usually be 0 or 1,
+	 * since we abort the last request, when sending a new one
+	 * used to calculate if we should wait before sending a new one
+	 * */
+	inFlightRequests: number = 0;
 
 	/**
 	 * Replace http:// in external image urls with
 	 */
 	image_proxy : any = 'https://';
+
+	customLabels: CustomLabels = {};
 
 	/**
 	 * stores push activated acc ids
@@ -106,6 +157,61 @@ export class MailApp extends EgwApp
 	push_active : any = {};
 
 	private _compose : MailCompose;
+	private _jmap : MailJmap;
+
+	/**
+	 * Pending subscribe/unsubscribe changes for the currently open mail.subscribe popup, recorded
+	 * directly as the user toggles checkboxes (id -> desired subscribed state) rather than diffed
+	 * from a full "original vs current" tree snapshot at save time - an unloaded/never-touched
+	 * node simply never fires a toggle, so there's no need to eagerly load the whole account
+	 * before Save can know what changed. null means the JMAP load never ran/succeeded, so
+	 * subscriptionSave() must leave the classic submit untouched.
+	 */
+	private _subscriptionChanges : Map<string, boolean> | null = null;
+
+	/**
+	 * rowId -> in-flight promise of markOpenedMessageRead()'s own auto-mark-as-read JMAP call.
+	 *
+	 * Found live 2026-09-04 (ralf: "gelesen/ungelesen markieren geht in der mobilen Ansicht nicht
+	 * wenn man eine einzelne E-Mail geöffnet hat"): opening a message always fires this call, and a
+	 * manual read/unread toggle done shortly afterward fires its OWN, completely independent
+	 * setSystemFlag() call for the same row - with no ordering between the two requests. Whichever
+	 * one's response the server processes last wins, so a user who opens a message and immediately
+	 * flips it back to unread would see their own toggle silently overwritten a moment later by the
+	 * slower auto-mark-read request landing after it. flagMessages() awaits this entry (if any)
+	 * before firing a manual $seen change for the same row, so the two always apply in the order
+	 * they were actually intended, regardless of which network round-trip happens to finish first.
+	 */
+	private pendingReadMark : Map<string, Promise<void>> = new Map();
+
+	/**
+	 * accId -> in-flight/resolved promise of ajax_getComposeToolbarData()'s {actions, sel_options}
+	 *
+	 * Mostly static per account for a session, so cached here rather than re-fetched by every
+	 * compose popup - a clientSidePopup() compose gets a fresh MailApp instance of its own (each
+	 * window has its own JS realm, so a module-level/static cache wouldn't be shared), so it calls
+	 * this method on the OPENER's own app.mail instance via window.opener instead of its own,
+	 * making the server round-trip happen once per account for the life of the main window, not
+	 * once per popup open (doc/ai/projects/mail-compose-jmap-migration.md, Step 10, Phase B).
+	 */
+	private composeToolbarDataPromises : { [accId : string] : Promise<{ actions : object, sel_options : object, content : object }> } = {};
+
+	/**
+	 * The subscribe popup's own profileID (mail_ui::subscription()'s $content['profileId']),
+	 * remembered alongside _subscriptionChanges since it's needed to apply them on Save.
+	 */
+	private _subscriptionProfileID : string | null = null;
+
+	/**
+	 * The subscribe popup tree's own .value array as of the last time it was inspected (either
+	 * freshly-loaded original data being seeded in, or an actual user toggle already recorded) -
+	 * the baseline recordSubscriptionChange() diffs against to find what's new since then.
+	 */
+	private _subscriptionKnownValue : Set<string> = new Set();
+	et2_obj: etemplate2;
+// defer calls to refreshFolderStatus,
+// to accumulate updates of multiple rows e.g. deleting multiple emails
+	refresh_timeout: any;
 	/**
 	 * Compose functions sub-object (gets automatic instanciated, if used)
 	 */
@@ -119,6 +225,33 @@ export class MailApp extends EgwApp
 	}
 
 	/**
+	 * Direct client-side JMAP access sub-object (gets automatically instanciated, if used)
+	 *
+	 * Uses a server's native JMAP endpoint or the local plain-IMAP shim.
+	 *
+	 * Reuses the opener's own instance (and its one WebSocket connection per account) when
+	 * called from a popup, instead of needlessly opening a second connection to the same
+	 * account - same established window.opener.app.mail.* pattern already used elsewhere in
+	 * this file (nmOwner(), customLabels, ...), matching how window.egw itself is already
+	 * shared with the opener (see nmOwner()'s own docblock) - found live 2026-08-27 (ralf).
+	 * Re-checked on every access (not cached once) so a popup that outlives its opener falls
+	 * back to building its own instance instead of reusing one tied to a now-gone window.
+	 */
+	get jmap() : MailJmap
+	{
+		const openerJmap = window.opener && !window.opener.closed ? window.opener.app?.mail?.jmap : undefined;
+		if (openerJmap)
+		{
+			return openerJmap;
+		}
+		if(!window.app._jmap)
+		{
+			window.app._jmap = new MailJmap(this);
+		}
+		return window.app._jmap;
+	}
+
+	/**
 	 * Initialize javascript for this application
 	 *
 	 * @memberOf mail
@@ -128,21 +261,20 @@ export class MailApp extends EgwApp
 		super('mail', _wnd);
 
 		if (!this.egw.is_popup())
+		{
 			// Turn on client side, persistent cache
 			// egw.data system runs encapsulated below etemplate, so this must be
 			// done before the nextmatch is created.
 			this.egw.dataCacheRegister('mail',
 				// Called to determine cache key
-				this.nm_cache,
-				// Called whenever cache is used
-				// TODO: Change this as needed
-				function(server_query)
-				{
-					// Unlock tree if using a cache, since the server won't
-					if(!server_query) this.unlock_tree();
-				},
+				this.nmCache,
 				this
 			);
+
+			// Let mail's direct-JMAP path (see jmap.ts) answer NextMatch's regular row-fetch itself for Stalwart-backed accounts, instead of round-tripping through get_rows.
+			// Not from a popup: it shares this dataRegister with the window that opened it.
+			this.egw.dataRegisterFetch('mail', this.jmap.fetchRows, this.jmap);
+		}
 	}
 
 	/**
@@ -150,18 +282,16 @@ export class MailApp extends EgwApp
 	 */
 	destroy()
 	{
-		// Unbind from nm refresh
-		if(this.et2 != null)
-		{
-			var nm = this.et2.getWidgetById(this.nm_index);
-			if(nm != null)
-			{
-				jQuery(nm).off('refresh');
-			}
-		}
 
-		// Unregister client side cache
-		this.egw.dataCacheUnregister('mail');
+		// Only if we are the window that registered them (see constructor):
+		// dataCacheUnregister() resets the *entire* callback list for the 'mail' prefix, and that list is shared with popups,
+		// so calling it from a closing popup tore down the main window's wiring too.
+		if (!this.egw.is_popup())
+		{
+			this.egw.dataCacheUnregister('mail');
+			//only unregister the fetch that was actually registered
+			this.egw.dataUnregisterFetch('mail',this.jmap.fetchRows, this.jmap);
+		}
 
 		this.tree_wdg?.destroy && this.tree_wdg.destroy();
 		this.tree_wdg?.remove && this.tree_wdg.remove();
@@ -173,6 +303,10 @@ export class MailApp extends EgwApp
 		this._compose?.destroy();
 		delete this._compose;
 
+		// delete jmap sub-object
+		this._jmap?.destroy();
+		delete this._jmap;
+
 		// call parent
 		super.destroy.apply(this, arguments);
 	}
@@ -182,14 +316,6 @@ export class MailApp extends EgwApp
 	 *
 	 * @param {bool} _disable
 	 */
-	disable_autorefresh(_disable)
-	{
-		if (this.checkET2())
-		{
-			this.et2.getWidgetById('nm').set_disable_autorefresh(_disable);
-		}
-	}
-
 	/**
 	 * check and try to reinitialize et2 of module
 	 */
@@ -230,22 +356,40 @@ export class MailApp extends EgwApp
 			case 'mail.sieve.vacation':
 				this.vacationFilterStatusChange();
 				break;
+			case 'mail.importMessage':
+				this.importMessageInit();
+				break;
 			case 'mail.index':
-				jQuery('iframe#mail-index_messageIFRAME').on('load', function ()
+				this.et2?.getWidgetById('messageIFRAME')?.iframe?.addEventListener('load', () =>
 				{
-					// decrypt preview body if mailvelope is available
-					self.mailvelopeAvailable(self.mailvelopeDisplay);
-					self.mail_prepare_print();
+					// mailvelopeAvailable(mailvelopeDisplay) moved to loadMessageBody()'s own fast
+					// path AND loadClassicBody() (2026-09-08) - this same 'load' listener stays
+					// attached for the whole life of the template and fired alongside those on every
+					// message selection, decrypting the SAME message twice into two separate
+					// Mailvelope display containers side by side (found live testing the
+					// mail.display case's identical duplicate pattern - see that listener's own
+					// comment below)
+					self.preparePrint();
 				});
-				var nm = this.et2.getWidgetById(this.nm_index);
-				this.mail_isMainWindow = true;
+				const nm = this.et2.getWidgetById(this.nm_index);
+				this.isMainWindow = true;
+
+				this.wireLabelFlagDropdowns(this.et2.getWidgetById('toolbar'));
+
+				// Merge in the client-remembered "Move selected to"/"Copy selected to" quick-submenus,
+				// see rememberUsedFolder()/updateFolderQuickAction().
+				this.updateFolderQuickAction('move');
+				this.updateFolderQuickAction('copy');
 
 				// Stop list from focussing next row on keypress
-				let aom = egw_getObjectManager('mail').getObjectById('nm');
-				// @ts-ignore
-				aom.flags = egwSetBit(aom.flags, EGW_AO_FLAG_DEFAULT_FOCUS, false);
+				const aom = egw_getObjectManager('mail').getObjectById('nm');
+				if (aom)
+				{
+					// @ts-ignore
+					aom.flags = egwSetBit(aom.flags, EGW_AO_FLAG_DEFAULT_FOCUS, false);
+				}
 
-				let splitter = this.et2.getWidgetById('mailSplitter');
+				const splitter = this.et2.getWidgetById('mailSplitter');
 				if (splitter && egw.preference('previewPane', 'mail') == 'expand')
 				{
 					splitter.style.setProperty('--max', '100%');
@@ -255,36 +399,43 @@ export class MailApp extends EgwApp
 					});
 				}
 				// Set preview pane state
-				this.mail_disablePreviewArea(!this.getPreviewPaneState());
+				this.disablePreviewArea(!this.getPreviewPaneState());
 
 				//Get initial folder status
-				this.mail_refreshFolderStatus(undefined, undefined, false);
+				this.refreshFolderStatus(undefined, undefined, false);
 
 				// Bind to nextmatch refresh to update folder status
-				if (nm != null && (typeof jQuery._data(nm).events == 'undefined' || typeof jQuery._data(nm).events.refresh == 'undefined'))
+				if (nm != null)
 				{
-					jQuery(nm).on('refresh', (_event, _widget, _row_id, _type) =>
+					nm.addEventListener('refresh', (_event) =>
 					{
-						if (!self.push_active[_widget.settings.foldertree.split("::")[0]])
+						if (!self.push_active[nm.activeFilters.selectedFolder.split("::")[0]])
 						{
-							// defer calls to mail_refreshFolderStatus for 2s, to accumulate updates of multiple rows e.g. deleting multiple emails
-							if (typeof self.refresh_timeout === 'undefined')
+							// defer calls to refreshFolderStatus for 2s, to accumulate updates of multiple rows e.g. deleting multiple emails
+							if (!self.refresh_timeout)
 							{
 								self.refresh_timeout = window.setTimeout(() =>
 								{
-									delete self.refresh_timeout;
-									self.mail_refreshFolderStatus.call(self, undefined, undefined, false);
+									self.refresh_timeout = null;
+									self.refreshFolderStatus.call(self, undefined, undefined, false);
 								}, 2000);
 							}
 						}
 					});
 				}
-				if(!this.tree_wdg){
-					this.tree_wdg = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-				}
+				// Always refetch, never reuse a cached reference: a client-side reload of this
+				// same 'mail.index' template (e.g. mail app-header menu -> Categories -> "Back to
+				// list") builds a brand new tree widget/DOM node, and destroy() (the only place
+				// that resets tree_wdg to null) only runs when the whole mail app closes - so a
+				// stale guard here would silently keep wiring up the old, detached widget below
+				// (autoloading, openStatePreference, ...) while the new, visible tree stays at its
+				// unconfigured defaults (found live 2026-09-03: empty autoloading crashed the
+				// server with "Invalid $GLOBALS[egw_info][flags][currentapp]!" on expand).
+				this.tree_wdg = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 				if (this.tree_wdg) {
 					// show / open selected folder, if necessary autoload it
-					if (this.tree_wdg.value && !this.tree_wdg.scrollToSelected()) {
+					if (typeof this.tree_wdg.value === "string" && !this.tree_wdg.scrollToSelected())
+					{
 						const parts = this.tree_wdg.value.split('::');
 						const path_parts = parts[1].split('/');
 						const do_open = (folder) => {
@@ -298,43 +449,50 @@ export class MailApp extends EgwApp
 						path_parts && do_open(parts[0]+'::'+path_parts.shift());
 					}
 					//TODO check if there are changes necessary
-					this.tree_wdg.set_onopenstart(jQuery.proxy(this.openstart_tree, this));
-					this.tree_wdg.set_onopenend(jQuery.proxy(this.openend_tree, this));
+					this.tree_wdg.set_onopenstart(this.openStartTree.bind(this));
+					this.tree_wdg.set_onopenend(this.openEndTree.bind(this));
+
+					// Lazy per-level JMAP folder loading (see doc/ai/projects/mail-folder-tree-jmap.md),
+					// replacing the classic ajax_foldertree menuaction (now removed) for both
+					// desktop and mobile, which share this same template id/case. One preference
+					// for the whole tree (not per-profile): node ids already carry
+					// "profileID::path", so a single flat expanded-ids list already covers every
+					// account shown in this one tree instance.
+					this.tree_wdg.autoloading = this.folderTreeAutoload.bind(this);
+					this.tree_wdg.openStatePreference = 'mail.ExpandedFolders';
 				}
-				// Show vacation notice on load for the current profile (if not called by mail_searchtype_change())
+				// Show vacation notice on load for the current profile (if not called by searchtypeChange())
 				const cat_id = this.et2.getWidgetById('cat_id');
-				cat_id.value = this.nm.activeFilters.cat_id;	// not sure why this is necessary to get the current value
-				var alreadyrefreshed = this.mail_searchtype_change(null, cat_id);
-				if (!alreadyrefreshed) this.mail_callRefreshVacationNotice();
+				const already_refreshed = this.searchtypeChange(null, cat_id);
+				if (!already_refreshed) this.callRefreshVacationNotice();
 				break;
 			case 'mail.display':
 				// Prepare display dialog for printing
 				// copies iframe content to a DIV, as iframe causes
 				// trouble for multipage printing
 
-				jQuery('iframe#mail-display_mailDisplayBodySrc').on('load', function(e)
+				this.et2?.getWidgetById('mailDisplayBodySrc')?.iframe?.addEventListener('load', function(e)
 				{
-					// encrypt body if mailvelope is available
-					self.mailvelopeAvailable(self.mailvelopeDisplay);
-					self.mail_prepare_print();
-					self.resolveExternalImages(this.contentWindow.document, window.location.search.endsWith('&mode=print_images'));
+					// mailvelopeAvailable(mailvelopeDisplay) moved to loadMessageBody()'s own fast
+					// path AND loadClassicBody() (2026-09-08) - this listener stays attached for the
+					// template's whole lifetime and re-fires on every navigation of THIS iframe,
+					// alongside loadMessageBody()'s own once-per-load listener on the same element -
+					// calling it from both created two separate Mailvelope display containers side
+					// by side for the same message (found live 2026-09-08, ralf: "It showed 3
+					// versions of the message side by side... twice the message with mailvelope").
+					self.preparePrint();
+					self.resolveExternalImages((this as HTMLIFrameElement).contentWindow.document, window.location.search.endsWith('&mode=print_images'));
 					// Trigger print command if the mail oppend for printing porpuse
 					// load event fires twice in IE and the first time the content is not ready
 					// Check if the iframe content is loaded then trigger the print command
-					if (window.location.search.search('&print=') >= 0 && jQuery(this.contentWindow.document.body).children().length >0 )
+					if (window.location.search.search('&print=') >= 0 && (this as HTMLIFrameElement).contentWindow.document.body.children.length > 0)
 					{
-						self.mail_print();
+						self.print();
 					}
 				});
 
-				this.mail_isMainWindow = false;
-				this.mail_display();
-
-				// Register attachments for drag
-				this.register_for_drag(
-					this.et2.getArrayMgr("content").getEntry('mail_id'),
-					this.et2.getArrayMgr("content").getEntry('mail_displayattachments')
-				);
+				this.isMainWindow = false;
+				this.display();
 
 				break;
 			case 'mail.compose':
@@ -349,12 +507,11 @@ export class MailApp extends EgwApp
 				// 	egw.debug("warn","could not set initial values for compose toolbar helper")
 				// }
 				if (composeToolbar?.getWidgetById('pgp')?.value ||
-					this.et2.getArrayMgr('content').data.mail_plaintext &&
-						this.et2.getArrayMgr('content').data.mail_plaintext.indexOf(this.begin_pgp_message) != -1)
+					(this.et2.getArrayMgr('content').data as any)?.mail_plaintext?.includes(this.begin_pgp_message))
 				{
 					this.mailvelopeAvailable(this.mailvelopeCompose);
 				}
-				this.mail_isMainWindow = false;
+				this.isMainWindow = false;
 				// add predefined addresses, but only if not already added (happens on several server-side roundtrips!)
 				//NOTE: THIS NOW HAPPENS SERVER SIDE ON LOAD
 				/*
@@ -372,23 +529,21 @@ export class MailApp extends EgwApp
 					}
 				}*/
 				this.compose.fieldExpanderInit();
-				this.compose.checkSharingFilemode();
+				this.compose.checkSharingFilemode(undefined);
 
 				this.compose.subject2title();
 
-				var that = this;
-				var plainText = this.et2.getWidgetById('mail_plaintext');
-				var textAreaWidget = this.et2.getWidgetById('mail_htmltext');
+				const that = this;
+				const plainText = this.et2.getWidgetById('mail_plaintext');
+				const textAreaWidget = this.et2.getWidgetById('mail_htmltext');
 
 				/* Control focus actions on subject to handle expanders properly.*/
-				jQuery("#mail-compose_subject").on({
-					focus(){
-						that.compose.fieldExpanderInit();
-						that.compose.fieldExpander();
-					}
+				document.querySelector('#mail-compose_subject')?.addEventListener('focus', () =>{
+					that.compose.fieldExpanderInit();
+					that.compose.fieldExpander();
 				});
 				/*Trigger after the TinyMCE is fully loaded*/
-				jQuery('#mail-compose').on ('load',function() {
+				document.querySelector('#mail-compose')?.addEventListener('load', () => {
 
 					if (textAreaWidget && textAreaWidget.tinymce)
 					{
@@ -396,7 +551,7 @@ export class MailApp extends EgwApp
 						{
 							if (textAreaWidget.editor)
 							{
-								jQuery(textAreaWidget.editor.iframeElement.contentWindow.document).on('dragenter', function ()
+								textAreaWidget.editor.iframeElement.contentWindow.document.addEventListener('dragenter', () =>
 								{
 									// anything to bind on tinymce iframe
 								});
@@ -410,7 +565,7 @@ export class MailApp extends EgwApp
 				});
 
 				//Resize compose after window resize to not getting scrollbar
-				jQuery(window).on ('resize',function(e) {
+				window.addEventListener('resize', (e) => {
 					// Stop immediately the resize event if we are in mobile template
 					if (egwIsMobile())
 					{
@@ -433,11 +588,13 @@ export class MailApp extends EgwApp
 					if (content.is_plain)
 					{
 						// focus
-						jQuery(plainText.getDOMNode()).focus();
+						plainText.getDOMNode().focus();
 						// get the cursor to the top of the textarea
-						if (typeof plainText.getDOMNode().setSelectionRange !='undefined' && !jQuery(plainText.getDOMNode()).is(":hidden"))
+						const plainTextNode = plainText.getDOMNode();
+						const isHidden = plainTextNode.offsetWidth === 0 && plainTextNode.offsetHeight === 0;
+						if (typeof plainTextNode.setSelectionRange !='undefined' && !isHidden)
 						{
-							setTimeout(function ()
+							setTimeout(() =>
 							{
 								plainText.getDOMNode().setSelectionRange(0, 0)
 								plainText.focus();
@@ -447,12 +604,12 @@ export class MailApp extends EgwApp
 					}
 					else if(textAreaWidget && textAreaWidget.tinymce)
 					{
-						textAreaWidget.tinymce.then(()=>{setTimeout(function(){textAreaWidget.editor.focus()}, 500);});
+						textAreaWidget.tinymce.then(()=>{setTimeout(() =>{textAreaWidget.editor.focus()}, 500);});
 					}
 				}
 				else if(to)
 				{
-					jQuery('input',to.getDOMNode()).focus();
+					to.getDOMNode().querySelector('input')?.focus();
 					// set cursor to the begining of the textarea only for first focus
 					if (content.is_plain
 						&& typeof plainText.getDOMNode().setSelectionRange !='undefined')
@@ -476,14 +633,190 @@ export class MailApp extends EgwApp
 					}
 				}
 				break;
-			case 'mail.view':
-				// we need to set mail_currentlyFocused var otherwise mail
-				// defined actions won't work
-				this.mail_currentlyFocussed = this.et2.mail_currentlyFocussed;
-
+			case 'mail.subscribe':
+				this.subscriptionLoad();
+				break;
+			case 'mail.folder_management':
+				this.folderManagementLoad();
+				break;
 		}
+		this.customLabels = this.et2.getArrayMgr('content').getEntry('customLabels') ||
+			window.opener?.app?.mail?.customLabels || this.customLabels;
+		this.updateCustomLabelStylesheet();
 		// set image_proxy for resolveExternalImages
 		this.image_proxy = this.et2.getArrayMgr('content').getEntry('image_proxy') || 'https://';
+	}
+
+	/**
+	 * Get configured custom labels, including from the opener for popup actions
+	 */
+	getCustomLabels(): CustomLabels
+	{
+		return Object.keys(this.customLabels).length ? this.customLabels :
+			window.opener?.app?.mail?.customLabels || {};
+	}
+
+	/**
+	 * Resolve a case-insensitive IMAP keyword to its category-name label ID
+	 */
+	getCustomLabelId(_id: string)
+	{
+		return Object.keys(this.getCustomLabels()).find(
+			labelId => labelId.toLowerCase() === _id.toLowerCase()
+		);
+	}
+
+	/**
+	 * Check if an action or IMAP keyword is a configured custom label
+	 */
+	isCustomLabel(_id: string)
+	{
+		return typeof this.getCustomLabelId(_id) !== 'undefined';
+	}
+
+	/**
+	 * The 5 built-in labels aren't Categories-backed like getCustomLabels(), so their name/color
+	 * isn't available from there - mirrors the same defaults mail_ui.inc.php's action tree uses
+	 * for label1..5 (captions) and rows.less's own @labels map (colors).
+	 */
+	private static readonly BUILTIN_LABELS: CustomLabels = {
+		label1: {name: 'important', color: '#ff0080'},
+		label2: {name: 'job', color: '#ff8000'},
+		label3: {name: 'personal', color: '#008000'},
+		label4: {name: 'to do', color: '#0000ff'},
+		label5: {name: 'later', color: '#8000ff'},
+	};
+
+	/**
+	 * Every label that exists - the 5 built-ins plus whatever's configured via Categories -
+	 * with name and color, the single source used for the row label-chip line and (later) the
+	 * toolbar label dropdown.
+	 */
+	getAllLabels(): CustomLabels
+	{
+		const builtin: CustomLabels = {};
+		for (const id of Object.keys(MailApp.BUILTIN_LABELS))
+		{
+			builtin[id] = {...MailApp.BUILTIN_LABELS[id], name: this.egw.lang(MailApp.BUILTIN_LABELS[id].name)};
+		}
+		return {...builtin, ...this.getCustomLabels()};
+	}
+
+	/**
+	 * All labels represented in row flags
+	 */
+	getLabelIds()
+	{
+		return Object.keys(this.getAllLabels());
+	}
+
+	/**
+	 * Check if an action is a built-in or configured label
+	 */
+	isLabel(_id: string)
+	{
+		return this.getLabelIds().includes(_id);
+	}
+
+	/**
+	 * Labels currently set on a row, as {value, label} pairs for Et2CategoryBox - never includes
+	 * customFlag1-5.  Callers decide whether the count found justifies displaying anything.
+	 */
+	getRowLabelTags(flags: Record<string, string>): Array<{ value: string, label: string }>
+	{
+		const labels = this.getAllLabels();
+		return Object.keys(flags)
+			.filter(id => !!labels[id])
+			.map(id => ({value: id, label: labels[id].name}));
+	}
+
+	/**
+	 * Inject every label's colors (built-in label1-5 and configured ones alike) as a row stylesheet
+	 */
+	updateCustomLabelStylesheet()
+	{
+		const style = new CSSStyleSheet();
+		const customLabels = this.getAllLabels();
+		for (const labelId of Object.keys(customLabels))
+		{
+			const customLabel = customLabels[labelId];
+			// Et2CategoryTag (row label-chip line) resolves its color via --cat-<id>-color, keyed by the same name-based id used everywhere else here
+			// so it has to be added here.
+			// :host, not :root - this sheet is adopted into the datagrid's own shadow root (addRowStylesheet()), not applied document-globally.
+			style.insertRule(
+				`:host { --cat-${CSS.escape(labelId)}-color: ${customLabel.color}; }`
+			)
+			style.insertRule(
+				`tr.mail.${CSS.escape(labelId)} { --mail-left-border-color: ${customLabel.color}; }`
+			)
+		}
+		this.nm?.addRowStylesheet(style);
+	}
+
+	/**
+	 * Fixed set of flagging options - flagged + the 5 colored custom flags, in toolbar order
+	 */
+	private static readonly FLAG_IDS = ['flagged', 'customFlag1', 'customFlag2', 'customFlag3', 'customFlag4', 'customFlag5'];
+
+	/**
+	 * Wire the "Set / Remove Labels" and "Flag / Unflag" toolbar dropdowns (mail_ui.inc.php's
+	 * get_toolbar_actions(), ids 'setLabel'/'flag') so each shows a checkmark for whichever of
+	 * its options are actually set on the currently focussed message.
+	 *
+	 * Called once per toolbar instance (list+preview's persistent 'toolbar', or a fresh
+	 * 'displayToolbar' per full-view page load) - the toolbar itself decides which of its
+	 * children exist, this only looks up the two dropdown-button ids if/when they're there
+	 * (eg. 'setLabel' is hidden entirely without SUPPORTS_KEYWORDS).
+	 *
+	 * @param toolbar the <et2-toolbar> widget instance
+	 */
+	async wireLabelFlagDropdowns(toolbar: any)
+	{
+		if (!toolbar) return;
+		// Actions are applied via a reactive property (Et2Toolbar.actions=...) - the dropdown-
+		// button children it builds from them don't exist synchronously right after that
+		// assignment, only once its own pending Lit update has actually committed.
+		await toolbar.updateComplete;
+
+		// Et2DropdownButton's `id` is its own reactive property, not reflected onto the actual
+		// HTML id attribute - a "#setLabel" CSS selector never matches it, so look up by the
+		// property instead.
+		const dropdowns: any[] = Array.from(toolbar.querySelectorAll('et2-dropdown-button'));
+		this.wireDropdownCheckedState(dropdowns.find(d => d.id === 'setLabel'), () => this.getLabelIds());
+		this.wireDropdownCheckedState(dropdowns.find(d => d.id === 'flag'), () => MailApp.FLAG_IDS);
+	}
+
+	/**
+	 * @param dropdown an <et2-dropdown-button> instance, or null/undefined if this toolbar
+	 *  doesn't have one (eg. 'setLabel' without SUPPORTS_KEYWORDS)
+	 * @param getIds returns the full set of ids this dropdown's options can match against -
+	 *  called lazily (labels can be added/removed via Categories admin after page load)
+	 */
+	private wireDropdownCheckedState(dropdown: any, getIds: () => string[])
+	{
+		if (!dropdown || dropdown._flagStateWired) return;
+		dropdown._flagStateWired = true;
+
+		// Lazy - only recomputed when the dropdown is actually opened, since each click already
+		// closes it and re-executes the existing mail_flag/flag action path unchanged, so there's
+		// no need to keep options "live" mid-interaction.
+		dropdown.dropdownNode?.addEventListener('sl-show', () => this.refreshDropdownCheckedState(dropdown, getIds()));
+	}
+
+	/**
+	 * Recompute one toolbar dropdown's checked options from the currently focussed message
+	 *
+	 * @param dropdown an <et2-dropdown-button> instance
+	 * @param ids the ids from `getIds()` that this dropdown's options can match against
+	 */
+	refreshDropdownCheckedState(dropdown: any, ids: string[])
+	{
+		const dataElem = egw.dataGetUIDdata(this.currentlyFocussed);
+		const flags = dataElem?.data?.flags || {};
+		dropdown.select_options = (dropdown.select_options || []).map(option => ({
+			...option,
+			checked: ids.includes(option.value) ? !!flags[option.value] : option.checked,
+		}));
 	}
 
 	/**
@@ -509,24 +842,61 @@ export class MailApp extends EgwApp
 		// don't care about other apps data, reimplement if your app does care eg. calendar
 		if (pushData.app !== this.appname) return;
 
-		let id0 = typeof pushData.id === 'string' ? pushData.id : pushData.id[0];
-		let acc_id = id0.split('::')[1];
-		let folder = acc_id+'::'+atob(id0.split('::')[2]);
-		let foldertree = this.et2 ? this.et2.getWidgetById('nm[foldertree]') : null;
+		const id0 = typeof pushData.id === 'string' ? pushData.id : pushData.id[0];
+		const acc_id = id0.split('::')[1];
+		// pushData.acl.folder (a real "/"-joined path, e.g. "INBOX/Sub") is already computed by
+		// every caller for the Trash/Junk/Drafts/Sent check below - use it here too instead of
+		// re-deriving it from id0's own third segment, which isn't reliably a base64(path) at all:
+		// JMAP-native row ids (accountId::profileID::folderId::emailId, used for real JMAP/Stalwart
+		// accounts) put the raw JMAP Mailbox id there, not base64(path) like the classic
+		// accountId::profileID::base64(path)::uid shape does - atob() on that would silently
+		// produce garbage instead of throwing, breaking folder-tree badge updates below.
+		const folder = acc_id+'::'+pushData.acl.folder;
+		const foldertree = this.et2 ? this.et2.getWidgetById('nm[foldertree]') : null;
 		this.push_active[acc_id] = true;
 
 		// update unseen counter in folder-tree (also for delete)
 		if (foldertree && pushData.acl.folder && typeof pushData.acl.unseen !== 'undefined')
 		{
-			let folder_id = {};
+			const folder_id = {};
 			folder_id[folder] = pushData.acl.unseen;
-			this.mail_setFolderStatus(folder_id);
+			this.setFolderStatus(folder_id);
 		}
 
 		// only handle delete by default, for simple case of uid === "$app::$id"
 		if (pushData.type === 'delete')
 		{
 			[].concat(pushData.id).forEach(uid => {
+				const parts = uid.split('::');
+				// a destroyed mailbox (id has no emailId segment) - only ever sent once its real
+				// path is known (see MailJmap.buildWsPushPayload()'s folderPaths-cache lookup), so
+				// remove its folder-tree node directly: egw.data has no notion of folder-tree
+				// nodes at all, there's no dataHasUID()-based path for this like there is for rows
+				if (parts.length === 3)
+				{
+					this.removeLeaf({[folder]: pushData.acl.folder});
+					return;
+				}
+				// a destroyed email's folder can never be resolved via JMAP after the fact (see
+				// MailJmap.buildEmailDeletePush()/Api\Mail\Imap\Jmap::pushCallback()'s own comments
+				// for why) - the folderId segment is a literal "*" wildcard in that case. Email ids
+				// are unique per account, so search the row cache directly instead of an exact-match
+				// lookup: whichever folder(s) currently have this row cached get it removed.
+				if (parts[2] === '*')
+				{
+					const escaped = [parts[0], parts[1], parts[3]].map(s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+					const regexp = new RegExp(`^${this.appname}::${escaped[0]}::${escaped[1]}::.*::${escaped[2]}$`);
+					// dataRefreshUIDs() only notifies widgets that previously registered via
+					// dataRegisterUID() for that exact uid - our NextMatch doesn't use that
+					// mechanism, so it would silently do nothing (confirmed live). Use
+					// dataSearchUIDs() just to discover the real cached uid(s) instead, then feed
+					// each one through the same already-working exact-match delete below.
+					Object.keys(this.egw.dataSearchUIDs(regexp)).forEach(fullUid => {
+						pushData.id = fullUid.replace(new RegExp(`^${this.appname}::`), '');
+						super.push(pushData);
+					});
+					return;
+				}
 				pushData.id = uid;
 				super.push(pushData);
 			});
@@ -539,14 +909,14 @@ export class MailApp extends EgwApp
 			// never notify for Trash, Junk, Drafts or Sent folder (user might use Sieve to move mails there!)
 			if (pushData.acl.folder.match(/^(INBOX.)?(Trash|Spam|Junk|Drafts|Sent)$/)) return;
 			// increment notification counter on (closed) mail tab
-			let framework = egw_getFramework();
+			const framework = egw_getFramework();
 			if (framework && framework.notifyAppTab) framework.notifyAppTab('mail');
 			// check if user wants a new mail notification
 			this.notifyNew(pushData);
 		}
 		// check if we might not see it because we are on a different mail account or folder
-		let nm = this.et2 ? this.et2.getWidgetById('nm') : null;
-		let nm_value = nm ? nm.getValue() : null;
+		const nm = this.et2 ? this.et2.getWidgetById('nm') : null;
+		const nm_value = nm ? nm.getValue() : null;
 
 		// nm_value.selectedFolder is not always set, read it from foldertree, if not
 		let displayed_folder = (nm_value ? nm_value.selectedFolder : null) || (foldertree ? foldertree.getValue() : '');
@@ -561,12 +931,11 @@ export class MailApp extends EgwApp
 					if (pushData.acl.flags.includes('\\Deleted') || pushData.acl.flags.includes('$deleted'))
 					{
 						pushData.type = 'delete';
-						return this._super.call(this, pushData);
+						return super.push(pushData);
 					}
-					this.pushUpdateFlags(pushData);
-					break;
+					// fall through - a flag/keyword change is a plain in-place row refresh either way
 				case 'FlagsClear':
-					this.pushUpdateFlags(pushData);
+					nm.refresh(pushData.id, Et2DatagridUpdateTypes.UPDATE_IN_PLACE);
 					break;
 				default:
 					// Just update the nm (todo: pushData.message = total number of messages in folder)
@@ -582,8 +951,8 @@ export class MailApp extends EgwApp
 	 */
 	notifyNew(pushData)
 	{
-		let framework = egw_getFramework();
-		let notify = this.egw.preference('new_mail_notification', 'mail');
+		const framework = egw_getFramework();
+		const notify = this.egw.preference('new_mail_notification', 'mail');
 		const message = egw.lang('New mail from %1', pushData.acl.from)+'\n'+pushData.acl.subject+'\n'+pushData.acl.snippet;
 		if (typeof notify === 'undefined' || notify === 'always' ||
 			notify === 'not-mail' && framework && framework.activeApp.appName !== 'mail')
@@ -591,70 +960,6 @@ export class MailApp extends EgwApp
 			this.egw.message(message, 'success');
 			this.egw.notification(egw.lang('new mail'), {body: message, tag: 'mail', icon: egw.image('navbar', 'mail')});
 		}
-	}
-
-	/**
-	 * Updates flags on respective rows
-	 *
-	 * @param {type} pushData
-	  */
-	pushUpdateFlags(pushData)
-	{
-		// Stalwart/JMAP currently pushes just the current flags, not the ones set or unset
-		// therefore, we set all current ones and unset all not set ones
-		if (pushData.acl.event === 'Flags')
-		{
-			if (pushData.acl.flags.length)
-			{
-				pushData.acl.event = 'FlagsSet';
-				this.pushUpdateFlags(pushData);
-			}
-			pushData.acl.flags = ['$seen', '$delete', '$flagged', '$label1', '$label2', '$label3', '$label4', '$label5'].filter((flag => !pushData.acl.flags.includes(flag)));
-			if (pushData.acl.flags.length)
-			{
-				pushData.acl.event = 'FlagsClear';
-				this.pushUpdateFlags(pushData);
-			}
-			return;
-		}
-		const flags = [...(pushData.acl.flags ?? []),
-			...(pushData.acl.keywords ?? [])];
-		(flags).forEach(flag =>
-		{
-			let unset = (pushData.acl.flags_old && pushData.acl.flags_old.indexOf(flag) > -1) ||
-				(pushData.acl.keywords_old && pushData.acl.keywords_old.indexOf(flag) > -1) ||
-				pushData.acl.event === 'FlagsClear';
-			let rowClass = '';
-			if (flag[0] == '\\' || flag[0] == '$') flag = flag.slice(1).toLowerCase();
-			let ids = typeof pushData.id == "string" ? [pushData.id] : pushData.id;
-			for (let i in ids)
-			{
-				let msg = {msg:['mail::'+ids[i]]};
-				switch(flag)
-				{
-					case 'seen':
-						this.mail_removeRowClass(msg, (unset) ? 'seen' : 'unseen');
-						rowClass = (unset) ? 'unseen' : 'seen';
-						break;
-					case 'label1':
-					case 'label2':
-					case 'label3':
-					case 'label4':
-					case 'label5':
-					case 'flagged':
-						if (unset)
-						{
-							this.mail_removeRowClass(msg, flag);
-						}
-						else
-						{
-							rowClass = flag;
-						}
-						break;
-				}
-				this.mail_setRowClass(msg, rowClass);
-			}
-		});
 	}
 
 	/**
@@ -683,13 +988,13 @@ export class MailApp extends EgwApp
 			case 'mail':
 				if (_id === 'sieve')
 				{
-					var iframe = this.et2.getWidgetById('extra_iframe');
+					const iframe = this.et2.getWidgetById('extra_iframe');
 					if (iframe && iframe.getDOMNode())
 					{
-						var contentWindow = iframe.getDOMNode().contentWindow;
+						const contentWindow = iframe.getDOMNode().contentWindow;
 						if (contentWindow && contentWindow.app && contentWindow.app.mail)
 						{
-							contentWindow.app.mail.sieve_refresh();
+							contentWindow.app.mail.sieveRefresh();
 						}
 					}
 					return false;	// mail nextmatch needs NOT to be refreshed
@@ -701,9 +1006,9 @@ export class MailApp extends EgwApp
 				break;
 
 			case 'mail-account':	// update tree with given mail account _id and _type
-				var tree = this.et2 ? this.et2.getWidgetById(this.nm_index+'[foldertree]') : null;
+				const tree = this.et2 ? this.et2.getWidgetById(this.nm_index+'[foldertree]') : null;
 				if (!tree) break;
-				var node = tree.getNode(_id);
+				const node = tree.getNode(_id);
 				// Make sure ID is a string, that's what tree uses
 				_id = "" + _id;
 				switch(_type)
@@ -719,9 +1024,12 @@ export class MailApp extends EgwApp
 					case 'edit':
 						if (node)	// we dont care for updated accounts not shown (eg. other users)
 						{
-							//tree.refreshItem(_id);
-							egw.json('mail.mail_ui.ajax_reloadNode',[_id])
-								.sendRequest(true);
+							// refreshItem() with no data re-runs the tree's own JMAP-first
+							// autoloading callback (folderTreeAutoload()) for this account's
+							// root node - same mechanism the 'add' case below already uses
+							// successfully, no need for the classic-only ajax_reloadNode round
+							// trip anymore
+							tree.refreshItem(_id);
 						}
 						break;
 					case 'add':
@@ -738,32 +1046,55 @@ export class MailApp extends EgwApp
 						tree.requestUpdate("_selectOptions");
 						tree.updateComplete.then(async () =>
 						{
-							// need to wait tree is refreshed: current and new id are there AND current folder is selected again
-							await tree.refreshItem(_id);
-							if (tree.getNode(_id) && tree.getNode(current_id))
+							try
 							{
-								if (!tree.getSelectedNode())
+								// need to wait tree is refreshed: current and new id are there AND current folder is selected again
+								await tree.refreshItem(_id);
+								if (tree.getNode(_id) && tree.getNode(current_id))
 								{
-									tree.reSelectItem(current_id);
-								}
-								else
-								{
-									// open new account
-									// need to wait new folders are loaded AND current folder is selected again
-									await tree.openItem(_id, true);
-									if (tree.getNode(_id + '::INBOX'))
+									if (!tree.getSelectedNode())
 									{
-										if (!tree.getSelectedNode())
+										tree.reSelectItem(current_id);
+									}
+									else
+									{
+										// open new account
+										// need to wait new folders are loaded AND current folder is selected again
+										await tree.openItem(_id, true);
+										if (tree.getNode(_id + '::INBOX'))
 										{
-											tree.reSelectItem(current_id);
-										}
-										else
-										{
-											this.mail_changeFolder(_id + '::INBOX', tree, current_id);
-											tree.reSelectItem(_id + '::INBOX');
+											if (!tree.getSelectedNode())
+											{
+												tree.reSelectItem(current_id);
+											}
+											else
+											{
+												this.changeFolder(_id + '::INBOX', tree, current_id);
+												tree.reSelectItem(_id + '::INBOX');
+											}
 										}
 									}
 								}
+							}
+							catch (e)
+							{
+								// refreshItem() has no internal error-leaf fallback for a
+								// freshly-added account's placeholder node (unlike the ordinary
+								// expand-a-node path, see folderTreeAutoload()) - without this,
+								// an unhandled rejection here left the "Loading..." placeholder
+								// stuck forever with no visible error
+								const stuck = tree._selectOptions.findIndex((option: any) => option.id === "" + _id);
+								if (stuck !== -1)
+								{
+									tree._selectOptions[stuck] = {
+										...tree._selectOptions[stuck],
+										text: this.egw.lang("Error loading account %1: %2", _id, e?.message || e),
+										loading: false,
+										lazy: false,
+									};
+									tree.requestUpdate("_selectOptions");
+								}
+								console.error("mail-account 'add' push handler failed", e);
 							}
 						});
 						break;
@@ -786,7 +1117,7 @@ export class MailApp extends EgwApp
 	 * @param {object} query_context Query information from egw.dataFetch()
 	 * @returns {string|false} Cache key, or false to not cache
 	 */
-	nm_cache(query_context)
+	nmCache(query_context)
 	{
 		// Only cache first chunk of rows, if no search filter
 		if((!query_context || !query_context.start) && query_context.count == 0 &&
@@ -795,8 +1126,7 @@ export class MailApp extends EgwApp
 		)
 		{
 			// Make sure keys match, even if some filters are not defined
-			// using JSON.stringfy() directly gave a crash in Safari 7.0.4
-			return this.egw.jsonEncode({
+			return JSON.stringify({
 				selectedFolder: query_context.filters.selectedFolder || '',
 				cat_id: query_context.filters.cat_id || '',
 				filter: query_context.filters.filter || '',
@@ -810,125 +1140,139 @@ export class MailApp extends EgwApp
 	/**
 	 * nextmatch normally handles updates and selection of next row after delete, but mail is different
 	 *
-	 * Mail uses et2_nextmatch option "disable_selection_advance" so here we handle the selection of the "next" row by
-	 * special rules - remember the above & below messages and only select the "next" row if the user uses
-	 * arrow keys in the next 10 seconds.
+	 * Mail uses the delete event's remembered neighbours and selects one only if
+	 * the user uses an arrow key in the next 10 seconds.
 	 *
-	 * @param et2_extension_nextmatch nm
+	 * The datagrid also has its own native Up/Down handling bound on its table, which
+	 * would otherwise race this listener depending on where the browser happens to park
+	 * focus after the deleted row's DOM node is removed. Listening on the
+	 * capture phase makes mail see the key first, but we only actually act - and stop the
+	 * event - when real focus has NOT already recovered onto a rendered grid row.  Once
+	 * focus is back on a row (which is normally the case well before a human can react),
+	 * the grid's own activeRowIndex is trustworthy again and must be left to handle
+	 * navigation (and, via Et2Nextmatch's own capture-phase action-shortcut handler,
+	 * subsequent Delete-key presses) as usual.
+	 *
+	 * @param Et2Nextmatch nm
 	 * @param string[] row_ids
 	 * @param string type
 	 */
-	refresh(nm, row_ids, type)
+	refresh(nm : Et2Nextmatch, row_ids : string[], type : Et2DatagridUpdateType)
 	{
-		// Note above and below rows
-		const rows = {above: null, below: null};
-
-		// Find 'top' & 'bottom', since selection order depends on which way user was moving
-		let entry = null;
-		row_ids.forEach(r =>
+		const selectRemembered = (event : CustomEvent<{previousRowId : string | null; nextRowId : string | null}>) =>
 		{
-			const rowEntry = nm.controller._selectionMgr._getRegisteredRowsEntry(r);
-			if (rows.above == null || rowEntry?.idx < rows.above.idx)
+			const selectNeighbour = (e : KeyboardEvent) =>
 			{
-				rows.above = rowEntry;
-			}
-			if (rows.below == null || rowEntry?.idx > rows.below.idx)
-			{
-				rows.below = rowEntry;
-			}
-		})
-		rows.above = rows.above.ao.getPrevious(1);
-		rows.below = rows.below?.ao?.getNext(1) ?? rows.above;
+				if(e.keyCode !== EGW_KEY_ARROW_UP && e.keyCode !== EGW_KEY_ARROW_DOWN)
+				{
+					return;
+				}
+				// Focus already resting on a real row means the grid's own navigation
+				// has recovered and is trustworthy - defer to it instead of hijacking
+				// what may be unrelated, later keyboard navigation.
+				let active : Element | null = document.activeElement;
+				while(active?.shadowRoot?.activeElement)
+				{
+					active = active.shadowRoot.activeElement;
+				}
+				if(active?.closest?.("[data-row-index]"))
+				{
+					return;
+				}
 
-		// Immediately refresh (remove from) nextmatch with normal refresh()
-		nm.refresh(row_ids, type);
-
-		// Wait to see if user moves the cursor via keyboard
-		const grid = nm.controller._grid.innerTbody.get(0);
-		const selectRemembered = (e) =>
-		{
-			let next = null;
-			if (e.keyCode === EGW_KEY_ARROW_UP && rows.above)
-			{
-				next = rows.above;
-			}
-			else if (e.keyCode === EGW_KEY_ARROW_DOWN)
-			{
-				next = rows.below;
-			}
-			if (next)
-			{
-				// Prevent double-move
 				e.preventDefault();
 				e.stopImmediatePropagation();
-				// Focus with action system
-				nm.controller._selectionMgr.setSelected(next.id, true);
-				nm.controller._selectionMgr.setFocused(next.id, true);
-				// Scroll into view
-				next.iface.getDOMNode().scrollIntoViewIfNeeded();
-			}
-		}
-		// Bind listener
-		document.body.addEventListener("keydown", selectRemembered, {once: true});
 
-		// Remove listener after 10s
-		window.setTimeout(() =>
-		{
-			document.body.removeEventListener("keydown", selectRemembered);
-		}, 10000);
+				const rowId = e.keyCode === EGW_KEY_ARROW_UP ? event.detail.previousRowId : event.detail.nextRowId;
+				if(!rowId) return;
+				nm.selectSingleRow(rowId);
+				nm.focusRowById(rowId);
+			};
+			document.addEventListener("keydown", selectNeighbour, {capture: true, once: true});
+			window.setTimeout(() => document.removeEventListener("keydown", selectNeighbour, {capture: true}), 10000);
+		};
+		nm.addEventListener("et2-rows-deleted", selectRemembered as EventListener, {once: true});
+		nm.refresh(row_ids, type);
+		window.setTimeout(() => nm.removeEventListener("et2-rows-deleted", selectRemembered as EventListener), 0);
 	}
 
 		/**
 	 * mail rebuild Action menu On nm-list
 	 *
+	 * Et2Nextmatch has no set_actions() (that was the legacy nextmatch_widget's API) - actions are
+	 * pushed through its reactive `actions` property instead, which merges by action id rather than
+	 * replacing wholesale (see updateCopyToAction() for the full explanation). Calling the no-longer-
+	 * existent set_actions() here silently threw, so a server-pushed "moveto" refresh (after a real
+	 * move) never actually reached the menu.
+	 *
 	 * @param _actions
 	 */
-	mail_rebuildActionsOnList(_actions)
+	rebuildActionsOnList(_actions)
 	{
-		this.et2.getWidgetById(this.nm_index).set_actions(_actions);
+		(this.et2.getWidgetById(this.nm_index) as any).actions = _actions;
 	}
 
 	/**
-	 * mail_fetchCurrentlyFocussed - implementation to decide wich mail of all the selected ones is the current
+	 * Does _id look like a real "(mail::)?accountID::profileID::mailboxId::emailId" message row
+	 * id - i.e. would MailJmap.messageReference() accept it? Mirrors that method's own shape
+	 * check (kept in sync manually, jmap.ts's version is private) - used to defensively filter
+	 * out anything else (e.g. a bare folder id) before handing it to egw.dataRefreshUID(), which
+	 * has no validation of its own. See feedback_et2nextmatch_mail_regression memory.
+	 */
+	private isValidRowId(id : string) : boolean
+	{
+		let parts = String(id || '').split('::');
+		if (parts[0] === 'mail') parts = parts.slice(1);
+		return parts.length === 4 && !!parts[1] && !!parts[2] && !!parts[3];
+	}
+
+	/**
+	 * fetchCurrentlyFocussed - implementation to decide wich mail of all the selected ones is the current
 	 *
 	 * @param _selected array of the selected mails
 	 * @param _reset bool - tell the function to reset the global vars used
 	 */
-	mail_fetchCurrentlyFocussed(_selected, _reset) {
+	fetchCurrentlyFocussed(_selected, _reset?) {
 		// reinitialize the buffer-info on selected mails
 		if (_reset == true || typeof _selected == 'undefined')
 		{
 			if (_reset == true)
 			{
-				// Request updated data, if possible
-				if (this.mail_currentlyFocussed!='') egw.dataRefreshUID(this.mail_currentlyFocussed);
-				for(let k = 0; k < this.mail_selectedMails.length; k++) egw.dataRefreshUID(this.mail_selectedMails[k]);
-				//nm.refresh(this.mail_selectedMails,'delete');
+				// Request updated data, if possible - skip anything that isn't shaped like a real
+				// message row id (a known, not yet root-caused issue can leave something else
+				// here instead, e.g. a folder id - see feedback_et2nextmatch_mail_regression
+				// memory; dataRefreshUID() has no validation of its own)
+				if (this.currentlyFocussed!='' && this.isValidRowId(this.currentlyFocussed)) egw.dataRefreshUID(this.currentlyFocussed);
+				for(let k = 0; k < this.selectedMails.length; k++)
+				{
+					if (this.isValidRowId(this.selectedMails[k])) egw.dataRefreshUID(this.selectedMails[k]);
+				}
+				//nm.refresh(this.selectedMails,'delete');
 			}
-			this.mail_selectedMails = [];
-			this.mail_currentlyFocussed = '';
+			this.selectedMails = [];
+			this.currentlyFocussed = '';
 			return '';
 		}
 		for(let k = 0; k < _selected.length; k++)
 		{
-			if (jQuery.inArray(_selected[k],this.mail_selectedMails)==-1)
+			if (this.selectedMails.indexOf(_selected[k])==-1)
 			{
-				this.mail_currentlyFocussed = _selected[k];
+				this.currentlyFocussed = _selected[k];
 				break;
 			}
 		}
-		this.mail_selectedMails = _selected;
-		return this.mail_currentlyFocussed;
+		this.selectedMails = _selected;
+		return this.currentlyFocussed;
 	}
 
 	/**
-	 * mail_open - implementation of the open action
+	 * openMessage - implementation of the open action
 	 *
 	 * @param _action
 	 * @param _senders - the representation of the elements(s) the action is to be performed on
 	 * @param _mode - you may pass the mode. if not given view is used (tryastext|tryashtml are supported)
 	 */
-	mail_open(_action, _senders, _mode)
+	openMessage(_action, _senders, _mode)
 	{
 		if(typeof _senders == 'undefined' || _senders.length == 0)
 		{
@@ -937,34 +1281,34 @@ export class MailApp extends EgwApp
 				_senders = [];
 				_senders.push({id: this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
-			if((typeof _senders == 'undefined' || _senders.length == 0) && this.mail_isMainWindow)
+			if((typeof _senders == 'undefined' || _senders.length == 0) && this.isMainWindow)
 			{
-				if(this.mail_currentlyFocussed)
+				if(this.currentlyFocussed)
 				{
 					_senders = [];
-					_senders.push({id: this.mail_currentlyFocussed});
+					_senders.push({id: this.currentlyFocussed});
 				}
 			}
 		}
-		var _id = _senders[0].id;
+		const _id = _senders[0].id;
 		// reinitialize the buffer-info on selected mails
 		if(!['tryastext', 'tryashtml', 'view', 'print', 'print_images'].includes(_mode))
 		{
 			_mode = 'view';
 		}
-		this.mail_selectedMails = [];
-		this.mail_selectedMails.push(_id);
-		this.mail_currentlyFocussed = _id;
+		this.selectedMails = [];
+		this.selectedMails.push(_id);
+		this.currentlyFocussed = _id;
 
-		var dataElem = egw.dataGetUIDdata(_id);
-		var subject = dataElem.data.subject;
+		const dataElem = egw.dataGetUIDdata(_id);
+		const subject = dataElem.data.subject;
 		let command = _mode;
 		if(command == 'print_images')
 		{
 			command = 'print';
 		}
 		//alert('Open Message:'+_id+' '+subject);
-		var h = egw().open(_id, 'mail', 'view', command + '=' + _id.replace(/=/g, "_") + '&mode=' + _mode);
+		const h:any = egw().open(_id, 'mail', 'view', command + '=' + _id.replace(/=/g, "_") + '&mode=' + _mode);
 		const setTitle = async(w) =>
 		{
 			await egw(w).ready;
@@ -978,20 +1322,7 @@ export class MailApp extends EgwApp
 		{
 			setTitle(h);
 		}
-		// THE FOLLOWING IS PROBABLY NOT NEEDED, AS THE UNEVITABLE PREVIEW IS HANDLING THE COUNTER ISSUE
-		var messages = {};
-		messages['msg'] = [_id];
-		// When body is requested, mail is marked as read by the mail server.  Update UI to match.
-		if (typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data.flags != 'undefined' && typeof dataElem.data.flags.read != 'undefined') dataElem.data.flags.read = 'read';
-		if (typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data['class'] != 'undefined' && (dataElem.data['class'].indexOf('unseen') >= 0 || dataElem.data['class'].indexOf('recent') >= 0))
-		{
-			this.mail_removeRowClass(messages,'recent');
-			this.mail_removeRowClass(messages,'unseen');
-			// reduce counter without server roundtrip
-			this.mail_reduceCounterWithoutServerRoundtrip();
-			// not needed, as an explizit read flags the message as seen anyhow
-			//egw.jsonq('mail.mail_ui.ajax_flagMessages',['read', messages, false]);
-		}
+		this.markOpenedMessageRead(_id, dataElem.data);
 	}
 
 	/**
@@ -1000,9 +1331,9 @@ export class MailApp extends EgwApp
 	 * @param _action
 	 * @param _elems _elems[0].id is the row-id
 	 */
-	mail_openAsHtml(_action, _elems)
+	openAsHtml(_action, _elems)
 	{
-		this.mail_open(_action, _elems,'tryashtml');
+		this.openMessage(_action, _elems,'tryashtml');
 	}
 
 	/**
@@ -1011,39 +1342,52 @@ export class MailApp extends EgwApp
 	 * @param _action
 	 * @param _elems _elems[0].id is the row-id
 	 */
-	mail_openAsText(_action, _elems)
+	openAsText(_action, _elems)
 	{
-		this.mail_open(_action, _elems,'tryastext');
+		this.openMessage(_action, _elems,'tryastext');
 	}
 
 	/**
 	 * Compose, reply or forward a message
+	 *
+	 * Named composeMessage() rather than compose() to avoid colliding with the get compose():
+	 * MailCompose accessor below - a later same-named class member (this one) always overwrites an
+	 * earlier accessor on the prototype, which had silently made every this.compose.xxx() call
+	 * (fieldExpander, recipientsOnChange, setEtemplate, ...) throw "not a function" since this method
+	 * and that accessor were first introduced together.
 	 *
 	 * @function
 	 * @memberOf mail
 	 * @param _action _action.id is 'compose', 'composeasnew', 'reply', 'reply_all' or 'forward' (forward can be multiple messages)
 	 * @param _elems _elems[0].id is the row-id
 	 */
-	mail_compose(_action, _elems)
+	composeMessage(_action, _elems)
 	{
-		if (typeof _elems == 'undefined' || _elems.length==0)
+		// The "New message" toolbar button (index.xet's button[mailcreate]/mobile's composeMail)
+		// calls this as composeMessage(false) - a genuinely blank compose, never contextual to
+		// whatever message happens to be currently open/focused. The backfill below (meant for
+		// reply/reply_all/forward/composeasnew invoked without an explicit row selection, eg. a
+		// keyboard shortcut while previewing a message) must NOT run for that case - found live
+		// 2026-09-08 (ralf): it was leaking the currently-focused message's own id (and, via
+		// settings.smime_type below, its S/MIME status) into an otherwise-blank compose.php url.
+		if ((typeof _elems == 'undefined' || _elems.length==0) && _action && _action.id)
 		{
 			if (this.et2 && this.et2.getArrayMgr("content").getEntry('mail_id'))
 			{
 				_elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
-			if ((typeof _elems == 'undefined' || _elems.length==0) && this.mail_isMainWindow)
+			if ((typeof _elems == 'undefined' || _elems.length==0) && this.isMainWindow)
 			{
-				if (this.mail_currentlyFocussed)
+				if (this.currentlyFocussed)
 				{
 					_elems = [];
-					_elems.push({id:this.mail_currentlyFocussed});
+					_elems.push({id:this.currentlyFocussed});
 				}
 			}
 		}
 		// Extra info passed to egw.open()
-		var settings = {
+		const settings: { id: string; from: string; smime_type?: string; mode?: string; pgp_encrypted?: string } = {
 			// 'Source' Mail UID
 			id: '',
 			// How to pull data from the Mail IDs for the compose
@@ -1052,8 +1396,18 @@ export class MailApp extends EgwApp
 
 		// We only handle one for everything but forward
 		settings.id = ((typeof _elems == 'undefined'|| _elems.length == 0)?'':_elems[0].id);
-		var content = egw.dataGetUIDdata(settings.id);
+		const content = egw.dataGetUIDdata(settings.id);
 		if (content) settings.smime_type = content.data['smime'];
+		// PGP has no server-known row field to mirror smime_type above with (100% client-side
+		// detection, unlike S/MIME's own `smime` row field) - reuses whatever fetchBody() already
+		// found for this exact message the last time it was displayed (MailJmap.peekPgpEncrypted(),
+		// a synchronous cache read - see its own docblock). Never triggers a fresh check here:
+		// composeMessage() needs to stay fast, and a message that was never actually opened/viewed
+		// simply doesn't get the reply/forward auto-match, same as forwarding a batch of still-
+		// loading messages. The `pgp` compose action is encryption only (Mailvelope) - there's no
+		// equivalent for "was this PGP-signed" yet, since PGP has no sign-on-send mechanism at all
+		// (doc/ai/projects/mail-pgp-signature-verification.md's "Planned follow-up" #3).
+		if (this.jmap.peekPgpEncrypted(settings.id)) settings.pgp_encrypted = '1';
 		switch(_action.id)
 		{
 			case 'compose':
@@ -1063,7 +1417,7 @@ export class MailApp extends EgwApp
 				}
 				else
 				{
-					return this.mail_compose('forward',_elems);
+					return this.composeMessage('forward',_elems);
 				}
 				break;
 			case 'forward':
@@ -1075,9 +1429,27 @@ export class MailApp extends EgwApp
 					settings.mode = 'forwardasattach';
 					if (typeof _elems != 'undefined' && _elems.length>1)
 					{
-						for(var j = 1; j < _elems.length; j++)
+						for(let j = 1; j < _elems.length; j++)
 						settings.id = settings.id + ',' + _elems[j].id;
 					}
+					// The reuse-detection regex matches compose.php - an already-open popup from any
+					// of the entry points this project already converted has that url, and
+					// setCompose() below works the same way regardless (it only ever touches the
+					// loaded etemplate2/widgets, never the popup's own opening url).
+					//
+					// MailCompose.bootstrapForwardAsAttachment() (mail/js/compose.ts) is already
+					// fully JMAP-native and already dispatched by bootstrapCompose() for
+					// from='forward'+mode='forwardasattach' - so the "nothing to reuse" case now
+					// opens via mail/compose.php too, same as every other action - falling back to
+					// openComposePopupUrlPost() (a real POST fallback, closing the gap this comment
+					// used to document) when the resulting url would be too long for a GET request
+					// (many forwarded messages), same "GET when short, POST when not" split
+					// composeWithPreset() already uses.
+					const accId = rowIdProfileID(settings.id);
+					const tooLong = egw.urlParamsTooLong({
+						from: settings.from, id: settings.id, acc_id: accId,
+						mode: settings.mode, smime_type: '',
+					});
 					return egw.openWithinWindow("mail", "setCompose", {
 						data:{
 							emails:{
@@ -1085,7 +1457,8 @@ export class MailApp extends EgwApp
 								processedmail_id: settings.id
 							}
 						}
-						}, settings, /mail.mail_compose.compose/);
+						}, settings, COMPOSE_POPUP_URL_PATTERN, undefined,
+						tooLong ? () => this.openComposePopupUrlPost(settings, accId) : () => this.openComposePopupUrl(settings, accId));
 				}
 				else
 				{
@@ -1097,9 +1470,492 @@ export class MailApp extends EgwApp
 				// No further client side processing needed for these
 				settings.from = _action.id;
 		}
-		var compose_list = egw.getOpenWindows("mail", /^compose_/);
-		var window_name = 'compose_' + compose_list.length + '_'+ (settings.from || '') + '_' + settings.id;
-		return egw().open('','mail','add',settings,window_name,'mail');
+		// doc/ai/projects/mail-compose-jmap-migration.md, Step 10 - every single-message compose
+		// (new/reply/reply_attachments/reply_all/composeasnew/inline forward) now opens via
+		// mail/compose.php, a thin real page (no IMAP/session work of its own - see that file's
+		// own docblock) whose only job is to carry egw.js's bootstrap script tag plus a
+		// data-mail-start attribute calling MailApp.bootstrapComposePopup() once ready - not a
+		// server round-trip to mail_compose::compose() at all. Used to be an about:blank popup
+		// built via egw.clientSidePopup() (still used/kept as a generic primitive for other future
+		// callers), moved to this real-page approach instead (ralf, 2026-09-07): an about:blank
+		// document has no real top-level HTTP response of its own, so its security context stayed
+		// opaque even for same-origin script/fetch traffic, which Chrome flags as "third-party
+		// cookie" use - and a reload/F5 had nothing to re-run at all (just an empty about:blank
+		// page), where a real URL naturally re-triggers the same bootstrap (egw.js's own
+		// "opener-reuse" branch takes over if window.opener is still alive). Used to be gated
+		// behind a "jmapCompose" testing toggle (removed - ralf: "it was only a temporary means
+		// for testing").
+		// A genuinely blank new message (settings.from still '') composes from the user's current
+		// ActiveProfileID, same as classic mail_compose's own constructor default - NOT from
+		// settings.id, which may be backfilled from the currently-selected/previewed message for
+		// unrelated reasons (see the backfill above) even when this action itself is 'compose'.
+		const accId = settings.from && settings.id ?
+			rowIdProfileID(settings.id) : (this.egw.preference('ActiveProfileID', 'mail') || '');
+		return this.openComposePopupUrl(settings, accId);
+	}
+
+	/**
+	 * Build and open a mail/compose.php popup url from composeMessage()'s own `settings` shape -
+	 * factored out so the batch-forwardasattach branch above can call it too, as an `_open_new`
+	 * override for openWithinWindow()'s "nothing to reuse" case (see its own comment).
+	 */
+	private openComposePopupUrl(settings : { id : string, from : string, smime_type? : string, mode? : string, pgp_encrypted? : string }, accId : string)
+	{
+		const compose_list = egw.getOpenWindows("mail", /^compose_/);
+		const window_name = 'compose_' + compose_list.length + '_'+ (settings.from || '') + '_' + settings.id;
+		const url = this.egw.link('/mail/compose.php', {
+			from: settings.from || '',
+			id: settings.id || '',
+			acc_id: accId,
+			mode: settings.mode || '',
+			smime_type: settings.smime_type || '',
+			pgp_encrypted: settings.pgp_encrypted || '',
+		});
+		return egw.openPopup(url, 870, 'availHeight', window_name, 'mail');
+	}
+
+	/**
+	 * openComposePopupUrl()'s own POST fallback, for when `settings.id` (many comma-joined message
+	 * ids, batch forward-as-attachment) makes the GET url too long - closes the gap its own
+	 * docblock used to document (falling back to egw.openWithinWindow()'s classic
+	 * urlParamsTooLong()/openComposePost() path, which posted into the classic mail_compose::
+	 * compose() postback; both removed together with compose() itself). Same technique
+	 * composeWithPresetPost() already uses: open a blank popup via egw.open() first, then POST the
+	 * (potentially long) `id` into that same window as compose.php's own bootstrap target - `from`/
+	 * `acc_id`/`mode`/`smime_type` stay in the url's query string (always short), only `id` needs to
+	 * be a form field. compose.php reads `id` via `$_REQUEST` (not `$_GET`-only) specifically so
+	 * this works.
+	 */
+	private async openComposePopupUrlPost(settings : { id : string, from : string, smime_type? : string, mode? : string, pgp_encrypted? : string }, accId : string) : Promise<void>
+	{
+		const compose_list = egw.getOpenWindows("mail", /^compose_/);
+		const window_name = 'compose_' + compose_list.length + '_' + (settings.from || '') + '_post';
+		const popup : any = await egw.open('', 'mail', 'add', '', window_name, 'mail');
+		if (!popup) return;	// popup blocked, or blocker-warning dialog already shown
+		const target = typeof popup.name === 'string' && popup.name ? popup.name : '_blank';
+		const url = this.egw.link('/mail/compose.php', {
+			from: settings.from || '', acc_id: accId, mode: settings.mode || '', smime_type: settings.smime_type || '',
+			pgp_encrypted: settings.pgp_encrypted || '',
+		});
+		const doc = document;
+		const form = doc.createElement('form');
+		form.target = target;
+		form.action = url;
+		form.method = 'post';
+		const input = doc.createElement('input');
+		input.type = 'hidden';
+		input.name = 'id';
+		input.value = settings.id || '';
+		form.appendChild(input);
+		doc.body.appendChild(form);
+		form.submit();
+		form.remove();
+	}
+
+	/**
+	 * Open a fresh client-side compose popup with a preset - the "nothing to reuse" fallback
+	 * several other apps' own "email this"/"attach this" actions call (via openWithinWindow()'s
+	 * `_open_new` override) instead of a classic menuaction url, closing off entry points from
+	 * doc/ai/projects/mail-compose-jmap-migration.md's own Step 10 "explicitly deferred" list one
+	 * at a time - each caller already has (or can cheaply derive) its own preset entirely
+	 * client-side, so there was nothing server-side left for these to depend on; compose.php just
+	 * carries the preset through to bootstrapComposePopup() (see its own @param preset docblock),
+	 * same as from/id/acc_id/mode/smime_type already do.
+	 *
+	 * A preset carrying real content (calendar's own meeting-invite conversion: an event
+	 * description that can be a whole mail, plus the full .ics text) can be too long for a GET url
+	 * (help.egroupware.org/t/78981's own "414 Request-URI Too Large", the same bug
+	 * CustomMailLongBody.test.ts already guards against for the classic path) - falls back to
+	 * composeWithPresetPost() in that case, same "GET when short, POST when not" split
+	 * egw.openWithinWindow()'s own urlParamsTooLong() check already uses for the classic path.
+	 *
+	 * @param preset {to?, cc?, bcc?, subject?, files?, filemode?, body?, bodyMimeType?, mimeType?,
+	 *  attachmentContents?, msg?} - see bootstrapComposePopup()'s own preset docblock for the full
+	 *  shape/semantics of each field
+	 */
+	composeWithPreset(preset : {
+		to? : any, cc? : any, bcc? : any, subject? : string,
+		files? : { path : string, name : string, type : string }[],
+		filemode? : string, body? : string, bodyMimeType? : 'plain' | 'html', mimeType? : string,
+		attachmentContents? : { name : string, type : string, content : string }[],
+		msg? : string,
+	}) : void
+	{
+		const accId = this.egw.preference('ActiveProfileID', 'mail') || '';
+		const window_name = 'compose_preset_' + Date.now();
+		const presetJson = JSON.stringify(preset);
+		if (egw.urlParamsTooLong({preset: presetJson}))
+		{
+			void this.composeWithPresetPost(preset, accId);
+			return;
+		}
+		const url = this.egw.link('/mail/compose.php', {
+			from: '',
+			id: '',
+			acc_id: accId,
+			mode: '',
+			smime_type: '',
+			preset: presetJson,
+		});
+		egw.openPopup(url, 870, 'availHeight', window_name, 'mail');
+	}
+
+	/**
+	 * composeWithPreset()'s own POST fallback for a too-long preset - same technique
+	 * openComposePopupUrlPost() above uses: open a popup via egw.open() first (sized/named the
+	 * same way, briefly blank - cosmetic only, this is the rare long-content case), then POST the
+	 * preset into that SAME window, replacing it with this popup's own client-side bootstrap.
+	 * compose.php reads $_REQUEST['preset'] (not $_GET-only) specifically so this works.
+	 */
+	private async composeWithPresetPost(preset : object, accId : string) : Promise<void>
+	{
+		const window_name = 'compose_preset_' + Date.now();
+		const popup : any = await egw.open('', 'mail', 'add', '', window_name, 'mail');
+		if (!popup) return;	// popup blocked, or blocker-warning dialog already shown
+		const target = typeof popup.name === 'string' && popup.name ? popup.name : '_blank';
+		const url = this.egw.link('/mail/compose.php', {
+			from: '', id: '', acc_id: accId, mode: '', smime_type: '',
+		});
+		const doc = document;
+		const form = doc.createElement('form');
+		form.target = target;
+		form.action = url;
+		form.method = 'post';
+		const input = doc.createElement('input');
+		input.type = 'hidden';
+		input.name = 'preset';
+		input.value = JSON.stringify(preset);
+		form.appendChild(input);
+		doc.body.appendChild(form);
+		form.submit();
+		form.remove();
+	}
+
+	/**
+	 * @deprecated use composeWithPreset({to, cc, bcc}) directly - kept as a thin wrapper only
+	 * because egw_open.ts's own mailto() already references this name by its own literal string
+	 * (`window.app.mail?.composeMailto`), not worth touching for a pure rename.
+	 */
+	composeMailto(content : { to? : any, cc? : any, bcc? : any }) : void
+	{
+		this.composeWithPreset(content);
+	}
+
+	/**
+	 * Toolbar-action-tree + sel_options needed to bootstrap a client-side compose popup, cached
+	 * per account for the life of the MAIN window - see composeToolbarDataPromises's own docblock.
+	 *
+	 * Same "defer to the opener's own instance instead of caching separately" pattern as the
+	 * `jmap` getter above - a clientSidePopup() compose popup gets its own freshly-instantiated
+	 * MailApp (no shared module-level state across windows), so this transparently redirects to
+	 * window.opener's instance rather than every popup building/caching its own copy. Re-checked
+	 * on every call (not cached once) so a popup that outlives its opener falls back to its own
+	 * instance/cache instead of reusing one tied to a now-gone window.
+	 *
+	 * @param accId account/profile id, "acc_id:ident_id" is fine too - the server only uses acc_id
+	 */
+	getComposeToolbarData(accId : string) : Promise<{ actions : object, sel_options : object, content : object }>
+	{
+		const openerMail : MailApp = window.opener && !window.opener.closed ? window.opener.app?.mail : undefined;
+		if (openerMail && openerMail !== this)
+		{
+			return openerMail.getComposeToolbarData(accId);
+		}
+		if (!this.composeToolbarDataPromises[accId])
+		{
+			this.composeToolbarDataPromises[accId] = this.egw.request(
+				'mail.EGroupware\\Mail\\Compose.ajax_getComposeToolbarData', [accId.split(':')[0]]
+			);
+		}
+		return this.composeToolbarDataPromises[accId];
+	}
+
+	/**
+	 * Bootstrap a compose popup entirely client-side - no server round-trip to
+	 * mail_compose::compose() at all for opening it (doc/ai/projects/mail-compose-jmap-migration.md,
+	 * Step 10). Run INSIDE the popup itself, via composeMessage()'s
+	 * `egw.clientSidePopup('app.mail.bootstrapComposePopup', [...])` call - not meant to be called
+	 * any other way.
+	 *
+	 * Mirrors what a real mail_compose::compose() postback + its own et2_ready 'mail.compose' case
+	 * normally do, but with getComposeToolbarData()'s (cached, opener-served) actions/sel_options/
+	 * content standing in for the server-rendered ones - EgwApp.bootstrapClientSideTemplate() does
+	 * the actual from-scratch DOM/etemplate2 construction (generic, not mail-specific). Its own
+	 * etemplate2.load() call fires et2_ready() normally, so the existing 'mail.compose' case in
+	 * this file's own et2_ready() runs exactly as it would for a classic postback - no need to
+	 * duplicate that wiring here.
+	 *
+	 * @param from '' | 'reply' | 'reply_attachments' | 'reply_all' | 'forward' | 'composeasnew' -
+	 *  same values MailCompose.bootstrapCompose() already dispatches on
+	 * @param sourceId source message row id, or null for a blank new compose
+	 * @param accId account/profile id to compose from
+	 * @param mode 'forwardinline' or null - only meaningful together with from='forward'
+	 * @param smimeType the source message's own Mail\Smime::TYPE_* (empty if none/not applicable) -
+	 *  pre-checks the composeToolbar's smime_sign/smime_encrypt actions to match, same as classic
+	 *  compose()'s own `$_content['composeToolbar']['smime_sign'/'smime_encrypt']` presets
+	 *  (class.mail_compose.inc.php:563-565)
+	 * @param pgpEncrypted '1' when the source message was PGP-encrypted (composeMessage()'s own
+	 *  MailJmap.peekPgpEncrypted() cache read - see its own docblock for why this can't be a fresh
+	 *  check here), '' otherwise - pre-checks the composeToolbar's `pgp` action (PGP encryption via
+	 *  Mailvelope) to match, same idea as smimeType above but PGP has no server-known row field to
+	 *  read it from directly. Reply/forward auto-matching the source message's encrypted state
+	 *  (doc/ai/projects/mail-pgp-signature-verification.md's "Planned follow-up" #4) - default only,
+	 *  never enforced: the user can still switch it back off for this one reply/forward. The
+	 *  "signed" half of that follow-up isn't wired here: `pgp` is PGP *encryption* only, and there's
+	 *  no PGP *sign*-on-send mechanism yet to pre-check against (Mailvelope's own integration is
+	 *  encrypt-only today - see "Planned follow-up" #3, "Mailvelope sign-on-send").
+	 * @param bootstrap {name, url, etemplate_exec_id} - Api\Etemplate::clientSideBootstrap()'s own
+	 *  result, computed server-side by mail/compose.php itself (a cheap file-lookup + Api\Cache
+	 *  write, not a session write) and handed down via data-mail-start's own args - used to be a
+	 *  separate mail.mail_compose.ajax_getComposeSession() round-trip fetched here client-side, but
+	 *  that was only ever a workaround to get an exec_id before compose.php existed to compute one
+	 *  upfront (ralf, 2026-09-07: "that's the workaround we used ..., so there's no need for it now")
+	 * @param preset {to?, cc?, bcc?, subject?, files?, filemode?, body?, bodyMimeType?, mimeType?,
+	 *  attachmentContents?, msg?} - MailApp.composeWithPreset()'s own param, round-tripped through
+	 *  compose.php's own $_REQUEST['preset'], appended onto whatever getComposeToolbarData()'s
+	 *  content already has, or {} for every other caller.
+	 *  - `subject` overwrites (a blank compose never has one already, unlike to/cc/bcc's append).
+	 *  - `files` are VFS paths (addressbook vCard-attach, filemanager "mail selected files") -
+	 *    {path, name, type} each, turned into a bare `jmapVfsPath` marker attachment entry (same
+	 *    shape MailCompose.vfsUpload() itself builds for an already-open popup's own VFS-attach
+	 *    picker, minus any actual upload - MailJmap.uploadVfsAttachment()/the shim's own
+	 *    zero-byte-moved reference resolve it at send time, see uploadAttachmentsViaJmap()'s own
+	 *    docblock).
+	 *  - `attachmentContents` are already-known bytes with nothing server-side left to reference
+	 *    (calendar's own meeting-invite .ics, generated fresh per compose, never staged anywhere) -
+	 *    {name, type, content} each, uploaded as a real JMAP blob immediately (MailCompose.
+	 *    applyPresetAttachmentContent()), same jmapBlobId-tagged shape carryForwardAttachments()
+	 *    already uses for a reply's own carried-forward attachments.
+	 *  - `body`/`bodyMimeType` - preset body text/its own type ('plain'|'html', default 'html') -
+	 *    MailCompose.applyPresetBody() converts plain to html itself if the compose is actually in
+	 *    html mode, mirroring classic mergePresetBody(). `mimeType` (no `body` prefix) is a
+	 *    DIFFERENT thing - forces the compose's own OVERALL mode (filemanager's own VFS-attach/
+	 *    share-link callers force 'html' regardless of the user's own composeOptions preference);
+	 *    calendar's own preset leaves this unset, so the user's normal default mode applies, same
+	 *    as classic custom_mail()'s own (non-forcing) `mimeType` derivation.
+	 *  - `msg` - an info message to show once the popup has loaded (calendar's own meeting-request
+	 *    disclaimer, classic compose()'s own Framework::message($msg) equivalent for this path).
+	 */
+	async bootstrapComposePopup(from : string, sourceId : string, accId : string, mode : string, smimeType : string,
+		pgpEncrypted : string,
+		bootstrap : {name : string, url : string, etemplate_exec_id : string},
+		preset? : {
+			to? : string[], cc? : string[], bcc? : string[], subject? : string,
+			files? : { path : string, name : string, type : string }[],
+			filemode? : string, body? : string, bodyMimeType? : 'plain' | 'html', mimeType? : string,
+			attachmentContents? : { name : string, type : string, content : string }[],
+			msg? : string,
+		}) : Promise<void>
+	{
+		const {name, url, etemplate_exec_id} = bootstrap;
+
+		// getComposeToolbarData()'s result is a shared, cached object (one per account, reused by
+		// every compose popup for that account) - content gets handed to etemplate2.load(), which
+		// wraps it in an array manager that widgets then mutate in place via set_value(), so it MUST
+		// be cloned here first, or one popup's edits would corrupt every other (and future) popup's
+		// starting content for the same account. Same for actions - the smime_sign/smime_encrypt
+		// pre-check below mutates it too.
+		//
+		// mail_compose_prepare hook (doc/ai/projects/mail-compose-jmap-migration.md, Step 10) -
+		// classic compose() runs this hook completely unconditionally (never gated on from/id), so
+		// mirror that here too rather than trying to guess "is this a plain new compose" - a
+		// 3rd-party registrant's own content merges in exactly like classic's own array_merge did,
+		// and (same as classic) a reply/forward's OWN to/cc/subject/body still lands afterward via
+		// bootstrapCompose()'s own set_value() calls once its JMAP fetch resolves, so a hook whose
+		// own $_GET params never coincide with from=reply/forward (eg. achelper's mode/template/
+		// info_id) is unaffected either way, exactly as before. Only ever costs a round trip when
+		// hasComposePrepareHook() says something is actually registered (cached per profileID
+		// alongside every other JMAP bootstrap fact - see MailJmap.ensureToken()).
+		const [{actions, sel_options, content}, prepared] = await Promise.all([
+			this.getComposeToolbarData(accId),
+			this.jmap.hasComposePrepareHook(accId).then(has => has ?
+				this.egw.request('mail.EGroupware\\Mail\\Compose.ajax_prepareCompose', []) : null)
+		]);
+		const actionsCopy : any = {...actions};
+		// content/sel_options are the SAME shared, cached objects getComposeToolbarData() reuses
+		// per account - this copy MUST happen unconditionally (found live 2026-09-08, ralf: replying
+		// to one message showed a PREVIOUS message's own Cc, and even a brand-new blank "Compose"
+		// opened with leftover recipients/attachments): the `prepared ? ... : content` form below
+		// used to skip cloning entirely whenever no mail_compose_prepare hook is registered - the
+		// common case - leaving `contentCopy === content`, the exact same object getComposeToolbarData()
+		// caches and reuses for every future popup of this account. MailCompose's own
+		// mergeAttachmentEntries()/deleteAttachment()/checkSharingFilemode() (mail/js/compose.ts) all
+		// reassign top-level keys straight onto `this.et2.getArrayMgr('content').data` - which
+		// et2_arrayMgr holds by reference, not by copy - so any one popup's edits permanently
+		// corrupted the shared per-account baseline every later popup (including an unrelated blank
+		// compose) starts from. A shallow copy is enough since every existing mutation site reassigns
+		// a top-level key rather than pushing into a shared nested array/object in place.
+		const contentCopy : any = {...content, ...(prepared?.content || {})};
+		const selOptionsCopy : any = {...sel_options, ...(prepared?.sel_options || {})};
+
+		// preset (compose.php's own $_GET['preset'], MailApp.composeMailto()) - a mailto: link's
+		// own to/cc/bcc, appended onto whatever's already there (same "append, don't overwrite"
+		// convention the predefined-compose-addresses preference merge already uses server-side,
+		// class.mail_compose.inc.php's ajax_getComposeToolbarData()) rather than replacing it.
+		// Array.isArray() guard (not just truthy/length) - mailto()'s own content.to/cc/bcc is
+		// only ever a non-array when it's the empty-string default (falsy either way), but this
+		// stays correct even if that assumption ever changes: spreading a plain string via `...`
+		// would silently explode it into one array entry per CHARACTER instead of one address.
+		for (const field of ['to', 'cc', 'bcc'])
+		{
+			if (Array.isArray(preset?.[field]) && preset[field].length)
+			{
+				contentCopy[field] = [...(contentCopy[field] || []), ...preset[field]];
+			}
+		}
+		// preset.subject (calendar's own meeting-invite title) - a blank compose never has one
+		// already, so a plain overwrite (not append) is correct here, unlike to/cc/bcc above; the
+		// `subject` widget's own array-manager key matches its id directly (unlike mail_htmltext/
+		// mail_plaintext's body indirection), so this - like to/cc/bcc - is safe as part of the
+		// INITIAL content etemplate2.load() itself processes.
+		if (preset?.subject)
+		{
+			contentCopy.subject = preset.subject;
+		}
+
+		// preset.files (addressbook vCard-attach, filemanager "mail selected files") is applied
+		// AFTER the template loads, via MailCompose.applyPresetFiles() below - NOT folded into this
+		// initial content: found live 2026-09-07 that doing it here leaves the attachments block's
+		// own disabled/collapsed widget state stuck (exactly the bug mergeAttachmentEntries()'s own
+		// UI-visibility fix exists for on the "reuse an existing popup" path - applyPresetFiles()
+		// reuses that same fix instead of reproducing it).
+		if (preset?.filemode)
+		{
+			contentCopy.filemode = preset.filemode;
+		}
+		// preset.body (filemanager "share link") is applied AFTER the template loads too, via
+		// MailCompose.applyPresetBody() below - same reason as preset.files above: a blank
+		// compose's initial content.body/mail_htmltext is never read at all, only
+		// bootstrapSignature()'s own direct widget set_value() populates it.
+		// classic mail_compose.inc.php's own "always open compose in html mode, as attachment
+		// links look a lot nicer in html" (filemanager's own VFS-attach/share-link callers force
+		// this regardless of the user's own composeOptions preference)
+		if (preset?.mimeType)
+		{
+			contentCopy.mimeType = preset.mimeType;
+			contentCopy.is_html = preset.mimeType === 'html' ? true : '';
+			contentCopy.is_plain = preset.mimeType === 'html' ? '' : true;
+		}
+
+		// Mirror class.mail_compose.inc.php:553-565 - only pre-checks an action that actually
+		// EXISTS (getToolbarActions() only adds smime_sign/smime_encrypt at all when the account
+		// has S/MIME configured, Mail\Smime::get_acc_smime()) - matches the classic code's own
+		// implicit gate without needing to re-check account S/MIME config here too. Values mirror
+		// MailCompose's own SMIME_TYPE_SIGN/SMIME_TYPE_ENCRYPT/SMIME_TYPE_SIGN_ENCRYPT constants
+		// (mail/js/compose.ts), which themselves mirror Api\Mail\Smime::TYPE_*'s exact string values.
+		if (smimeType)
+		{
+			if (actionsCopy.smime_sign)
+			{
+				actionsCopy.smime_sign = {...actionsCopy.smime_sign,
+					checked: smimeType === 'smime_sign' || smimeType === 'smime_sign_encrypt'};
+			}
+			if (actionsCopy.smime_encrypt)
+			{
+				actionsCopy.smime_encrypt = {...actionsCopy.smime_encrypt, checked: smimeType === 'smime_encrypt'};
+			}
+		}
+		// Pre-checking `pgp` here alone (same shape as smime_sign/smime_encrypt above) only gets the
+		// button LOOKING toggled on - unlike S/MIME, which reads its state straight off the widget
+		// at send time (MailCompose.trySendViaJmap()), PGP/Mailvelope needs a real, initialized
+		// `this.mailvelope_editor` to exist, or trySendViaJmap() silently sends unencrypted despite
+		// the button showing checked. et2_ready()'s own 'mail.compose' case does call
+		// this.mailvelopeAvailable(this.mailvelopeCompose) when the `pgp` widget is already checked
+		// at load time, BUT that path skips mailvelopeGetCheckRecipients() - the step that actually
+		// imports the recipient's public key into Mailvelope's OWN keyring (fetching it from the
+		// addressbook server-side first if needed) - unlike a real click (togglePgpEncrypt()) always
+		// does. Confirmed live (2026-09-09, ralf: "just setting the toggle seems not to trigger
+		// Mailvelope"): relying on that shortcut alone was not enough. So this pre-checks the button
+		// (so it LOOKS right immediately) but triggers the real activation explicitly below, via the
+		// exact same code path a real click uses (including its own recipient-key/no-mailvelope
+		// error handling) rather than the simpler shortcut.
+		if (pgpEncrypted === '1' && actionsCopy.pgp)
+		{
+			actionsCopy.pgp = {...actionsCopy.pgp, checked: true};
+		}
+
+		// Pre-construct MailCompose with the explicit bootstrap params BEFORE anything (in
+		// particular et2_ready()'s 'mail.compose' case below, triggered by etemplate2.load() itself)
+		// touches the `compose` getter - that getter lazily builds a plain, URL-parsing instance if
+		// none exists yet, which is the right thing for a classic postback but wrong here (this
+		// popup's own document was never loaded from a real URL at all).
+		(<any>window).app._compose = new MailCompose(this, {from, sourceId, mode});
+
+		await this.bootstrapClientSideTemplate(name, {
+			content: contentCopy,
+			sel_options: selOptionsCopy,
+			readonlys: prepared?.readonlys ?? {},
+			modifications: {composeToolbar: {actions: actionsCopy}},
+			currentapp: 'mail',
+			etemplate_exec_id
+		}, url);
+
+		// preset.files/attachmentContents/body - see the comments where each is read above for why
+		// these have to run AFTER the template has loaded (MailCompose.applyPresetFiles()/
+		// applyPresetAttachmentContent()/applyPresetBody()'s own docblocks) rather than as part of
+		// the content bootstrapClientSideTemplate() was just given. Awaiting bootstrapPromise first
+		// so this runs after bootstrapSignature() has already inserted the signature, not racing
+		// with it. attachmentContents (a real upload) before body, so a share-link-style body
+		// insertion (none of today's callers combine the two, but nothing stops a future one)
+		// wouldn't ever reference an attachment that hasn't finished uploading yet.
+		//
+		// Also where the pgp reply/forward auto-match above actually gets armed (see the
+		// `actionsCopy.pgp` pre-check's own comment for why the pre-check alone isn't enough): a
+		// reply/forward's own recipient (unlike a mailto:/preset one, already in `contentCopy`
+		// above) is filled in ASYNCHRONOUSLY by MailCompose.bootstrapReply() - the SAME
+		// `bootstrapPromise` this block already awaits for its own, unrelated reason - so
+		// mailvelopeGetCheckRecipients() (called via togglePgpEncrypt() below) sees the real "To"
+		// address, not an empty field. Confirmed live (2026-09-09, ralf: "just setting the toggle
+		// seems not to trigger Mailvelope") that triggering this too early, right after the initial
+		// template bootstrap rather than after this await, silently checked/imported keys for
+		// nobody. `bootstrapPromise` must therefore be awaited HERE UNCONDITIONALLY now, not only
+		// when a preset needs it.
+		await (<any>window).app._compose.bootstrapPromise;
+		if (preset?.files?.length)
+		{
+			(<any>window).app._compose.applyPresetFiles(preset.files);
+		}
+		// contentCopy.filemode above only preselects the widget - a "send as link/share" the user
+		// picked in filemanager has to count as their explicit choice too, or the send would
+		// silently attach the files anyway (MailCompose.applyPresetFilemode()'s own docblock)
+		if (preset?.filemode)
+		{
+			(<any>window).app._compose.applyPresetFilemode(preset.filemode);
+		}
+		if (preset?.attachmentContents?.length)
+		{
+			await (<any>window).app._compose.applyPresetAttachmentContent(preset.attachmentContents);
+		}
+		if (preset?.body)
+		{
+			(<any>window).app._compose.applyPresetBody(preset.body, preset.bodyMimeType);
+		}
+		if (pgpEncrypted === '1' && actionsCopy.pgp)
+		{
+			this.togglePgpEncrypt({checked: true});
+		}
+		if (preset?.msg)
+		{
+			this.egw.message(preset.msg, 'info');
+		}
+	}
+
+	/**
+	 * The {path, name, type}[] MailCompose.applyPresetFiles() wants, from setCompose()'s classic
+	 * `content.data.files` shape: parallel arrays `file` (vfs://default/... paths, required) and
+	 * optional `name`/`type` (same index). A missing name falls back to the path's basename, a
+	 * missing type to application/octet-stream - the type is what the JMAP upload at send time
+	 * declares, so callers that know the real mime (filemanager's row cache, a mail attachment's
+	 * own part) pass it along.
+	 */
+	vfsFilesFromComposeContent(files : any) : { path : string, name : string, type : string }[]
+	{
+		const paths : string[] = Array.isArray(files?.file) ? files.file : [];
+		return paths.filter(Boolean).map((path, i) => ({
+			path,
+			name: files.name?.[i] || path.split('/').pop() || path,
+			type: files.type?.[i] || 'application/octet-stream',
+		}));
 	}
 
 	/**
@@ -1124,32 +1980,81 @@ export class MailApp extends EgwApp
 		if(!compose || compose.closed) return false;
 
 		// Get etemplate of popup
-		var compose_et2 = compose.etemplate2.getByApplication('mail');
+		const compose_et2 = compose.etemplate2.getByApplication('mail');
 		if(!compose_et2 || compose_et2.length != 1 || !compose_et2[0].widgetContainer)
 		{
 			return false;
 		}
 
 		// Set each field provided
-		var success = true;
-		var arrContent = [];
-		for(var field in content)
+		let success = true;
+		let arrContent = [];
+		for(const field in content)
 		{
 			try
 			{
 				if (field == 'data')
 				{
-					var w = compose_et2[0].widgetContainer.getWidgetById('appendix_data');
+					// doc/ai/projects/mail-compose-jmap-migration.md, "Merge into an already-open
+					// compose popup" - deliberately deferred 2026-08-31 for lack of any way to
+					// reach INTO an already-loaded popup's JMAP state; MailCompose gained exactly
+					// that (isJmapModeActive + mergeForwardAttachments()) since. Only the
+					// forward-as-attachment content shape ({data:{emails:{ids,...}}}, the one
+					// action actually reachable while a popup is already open - see composeMessage()'s
+					// own 'forward'/'forwardasattach' branch) is handled client-side-only here; a
+					// classic-mode target (isJmapModeActive false) falls through to the unchanged
+					// appendix_data+submit() postback below, same as it always has.
+					const ids = content[field]?.['emails']?.['ids'];
+					if (ids && this.compose.isJmapModeActive)
+					{
+						this.compose.mergeForwardAttachments(String(ids).split(',').filter(Boolean));
+						return true;
+					}
+					// VFS files (filemanager "attach to mail", addressbook vCard-attach, a mail
+					// attachment re-attached via ajax_vfsOpen): the other content shape reachable
+					// while a popup is already open. Found live 2026-09-10: it fell through to the
+					// classic appendix_data+submit() postback below, which the client-side compose
+					// (mail/compose.php) has nothing to answer - the popup sat on its "please wait"
+					// prompt for ever, no request even left. Same bare jmapVfsPath marker rows the
+					// "nothing to reuse" path builds via composeWithPreset({files}), through the same
+					// MailCompose.applyPresetFiles().
+					const vfsFiles = this.vfsFilesFromComposeContent(content[field]?.['files']);
+					const filemode = compose_et2[0].widgetContainer.getWidgetById('filemode');
+					if (vfsFiles.length && this.compose.isJmapModeActive)
+					{
+						const wanted = content[field]['files']['filemode'];
+						if (wanted && filemode && filemode.get_value() != wanted)
+						{
+							const filemode_label = (filemode.select_options || []).filter(_item => _item.value == wanted)[0]?.['label'] || wanted;
+							Et2Dialog.show_dialog((_button) =>
+								{
+									if (_button == Et2Dialog.YES_BUTTON)
+									{
+										// the confirmed answer IS the explicit share-mode choice the send path
+										// requires - a bare filemode.set_value() would not count
+										this.compose.applyPresetFilemode(wanted);
+										this.compose.applyPresetFiles(vfsFiles);
+									}
+								},
+								this.egw.lang(
+									'Be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. Would you like to proceed?',
+									filemode_label, filemode_label),
+								this.egw.lang('Add files as %1', filemode_label), {}, Et2Dialog.BUTTONS_YES_NO, Et2Dialog.WARNING_MESSAGE);
+							return true;
+						}
+						this.compose.applyPresetFiles(vfsFiles);
+						return true;
+					}
+					const w = compose_et2[0].widgetContainer.getWidgetById('appendix_data');
 					w.set_value(JSON.stringify(content[field]));
-					var filemode = compose_et2[0].widgetContainer.getWidgetById('filemode');
 					if (content[field]['files'] && content[field]['files']['filemode']
 							&& filemode && filemode.get_value() != content[field]['files']['filemode'])
 					{
-						var filemode_label = filemode.select_options.filter(_item =>
+						const filemode_label = filemode.select_options.filter(_item =>
 						{
 							return _item.value == content[field]['files']['filemode']
                             })[0]['label'];
-						Et2Dialog.show_dialog(function (_button)
+						Et2Dialog.show_dialog((_button) =>
 							{
 								if (_button == Et2Dialog.YES_BUTTON)
 								{
@@ -1159,29 +2064,29 @@ export class MailApp extends EgwApp
 							this.egw.lang(
 								'Be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. Would you like to proceed?',
 								filemode_label, filemode_label),
-							this.egw.lang('Add files as %1', filemode_label), '', Et2Dialog.BUTTONS_YES_NO, Et2Dialog.WARNING_MESSAGE);
+							this.egw.lang('Add files as %1', filemode_label), {}, Et2Dialog.BUTTONS_YES_NO, Et2Dialog.WARNING_MESSAGE);
 						return;
 					}
 					else
 					{
-						return compose_et2[0].widgetContainer._inst.submit();
+						return compose_et2[0].widgetContainer.getInstanceManager().submit();
 					}
 				}
 
-				var widget = compose_et2[0].widgetContainer.getWidgetById(field);
+				const widget = compose_et2[0].widgetContainer.getWidgetById(field);
 
 				// Merge array values, replace strings
-				var value = widget.getValue() || content[field];
-				if(jQuery.isArray(value) || jQuery.isArray(content[field]))
+				let value = widget.getValue() || content[field];
+				if(Array.isArray(value) || Array.isArray(content[field]))
 				{
-					if(jQuery.isArray(content[field]))
+					if(Array.isArray(content[field]))
 					{
 						value = value.concat(content[field]);
 					}
 					else
 					{
 						arrContent = content[field].split(',');
-						for (var k=0;k < arrContent.length;k++)
+						for (let k=0;k < arrContent.length;k++)
 						{
 							value.push(arrContent[k]);
 						}
@@ -1205,20 +2110,20 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_disablePreviewArea - implementation of the disablePreviewArea action
+	 * disablePreviewArea - implementation of the disablePreviewArea action
 	 *
 	 * @param _value
 	 */
-	mail_disablePreviewArea(_value) {
-		var splitter = this.et2.getWidgetById('mailSplitter');
-		var previewPane = this.egw.preference('previewPane', 'mail') || 'vertical';
+	disablePreviewArea(_value) {
+		const splitter = this.et2.getWidgetById('mailSplitter');
+		const previewPane = this.egw.preference('previewPane', 'mail') || 'vertical';
 		// return if there's no splitter we maybe in mobile mode
 		if (typeof splitter == 'undefined' || splitter == null || previewPane == 'vertical') return;
-		let dock = function(){
+		const dock = () =>{
 			splitter.style.setProperty('--max','100%');
 			splitter.dock();
 		};
-		let undock = function ()
+		const undock = () =>
 		{
 			splitter.style.setProperty('--max','70%');
 			splitter.undock();
@@ -1226,28 +2131,28 @@ export class MailApp extends EgwApp
 
 		if(splitter.isDocked())
 		{
-			this.mail_previewAreaActive = false;
+			this.previewAreaActive = false;
 		}
 		this.et2.getWidgetById('mailPreview').set_disabled(_value);
 		//Dock the splitter always if we are browsing with mobile
 		if (egwIsMobile())
 		{
-			this.mail_disablePreviewArea = _value = true;
+			_value = true;
 		}
 
 		if (_value==true)
 		{
-			if (this.mail_previewAreaActive) dock();
-			this.mail_previewAreaActive = false;
+			if (this.previewAreaActive) dock();
+			this.previewAreaActive = false;
 		}
 		else
 		{
-			if (!this.mail_previewAreaActive)
+			if (!this.previewAreaActive)
 			{
 				undock();
 				//window.setTimeout(function(){splitter.left.trigger('resize.et2_split.mailSplitter');},200);
 			}
-			this.mail_previewAreaActive = true;
+			this.previewAreaActive = true;
 		}
 	}
 
@@ -1256,20 +2161,103 @@ export class MailApp extends EgwApp
 	 * Additionally, apply expand on click feature on thier widgets
 	 *
 	 */
-	mail_display()
+	display()
 	{
-		var dataElem = {data:{FROM:"",SENDER:"",TO:"",CC:"",BCC:""}};
-		var content = this.et2.getArrayMgr('content').data;
+		const dataElem : {data : any} = {data:{FROM:"",SENDER:"",TO:"",CC:"",BCC:""}};
+		const content = this.et2.getArrayMgr('content').data;
 
-		if (typeof  content != 'undefiend')
+		if (typeof  content != 'undefined')
 		{
-			dataElem.data = jQuery.extend(dataElem.data, content);
+			dataElem.data = Object.assign(dataElem.data, content);
 
-			var toolbaractions = ((typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data.displayToolbaractions != 'undefined')?JSON.parse(dataElem.data.displayToolbaractions):undefined);
+			const toolbaractions = ((typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data.displayToolbaractions != 'undefined')?JSON.parse(dataElem.data.displayToolbaractions):undefined);
 			if (toolbaractions)
 			{
 				this.et2.getWidgetById('displayToolbar').actions = toolbaractions;
 			}
+			this.wireLabelFlagDropdowns(this.et2.getWidgetById('displayToolbar'));
+
+			// Popup content isn't fetched server-side (see mail_ui::displayMessage()) - fill it
+			// the same way the preview panel does, from the row already cached in the window
+			// that opened this popup, or a fallback ajax call if that's unavailable.
+			const rowId = content.mail_id;
+			const details = this.et2.getWidgetById('mailDisplayDetails');
+			if (rowId && details)
+			{
+				this.renderPopupMessage(details, rowId);
+			}
+
+			// Body: same JMAP-native fast path the main preview pane already has
+			// (loadMessageBody(), falling back to the classic server-rendered iframe src for
+			// special-case messages or any fetch failure) - this standalone popup never had it at
+			// all before (2026-08-31 follow-up), relying purely on the .xet template's own
+			// server-rendered mailDisplayBodySrc iframe src, which needs a real IMAP UID and can
+			// hang/return empty against Stalwart for some messages (found live via a bounce/NDM's
+			// own nested original message, content.part - a message/rfc822 SUB-part with no real
+			// row-id of its own to fetch normally).
+			const bodyIframe = this.et2.getWidgetById('mailDisplayBodySrc');
+			if (rowId && bodyIframe)
+			{
+				this.loadMessageBody(bodyIframe, rowId, (doc) =>
+				{
+					this.resolveExternalImages(doc);
+				}, undefined, content.part || undefined);
+			}
+		}
+	}
+
+	/**
+	 * Populate the "view" popup's header/address/attachments
+	 *
+	 * Sources data from the row already cached in the window that opened this popup (the
+	 * established window.opener.<egw|etemplate2|app> pattern already used elsewhere in this
+	 * codebase for popups, e.g. this.et2.getById() lookups via window.opener further down this
+	 * file) - no extra IMAP round-trip, same data the list/preview panel already fetched.
+	 * Falls back to one ajax call (ajax_fetchMessageDetails) when that's unavailable: a
+	 * bookmarked/direct link, or the opener window was closed.
+	 *
+	 * @param template the mailDisplayDetails grid widget
+	 * @param rowId
+	 */
+	renderPopupMessage(template, rowId : string)
+	{
+		let openerData : any;
+		try
+		{
+			openerData = window.opener && !window.opener.closed && window.opener.egw ?
+				window.opener.egw.dataGetUIDdata(rowId)?.data : undefined;
+		}
+		catch (e)
+		{
+			// window.opener can be from a different origin in some conditions - fall through to ajax
+		}
+
+		if (openerData && Object.keys(openerData).length)
+		{
+			const data = this.renderMessageInto(template, rowId, openerData);
+			this.registerForDrag(rowId, data.attachmentsBlock);
+		}
+		else
+		{
+			// Not this.egw.jsonq() (queues under menuaction=api.queue): the server side
+			// generates a Link::set_data() download token for each attachment, which needs to
+			// persist in the session - api.queue's handler closes/commits the session up front
+			// (to avoid blocking other concurrent queued requests), silently discarding that
+			// write. egw.request() sends a normal, immediate, non-queued request instead.
+			this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_fetchMessageDetails', [rowId]).then((_data) =>
+			{
+				if (_data)
+				{
+					egw.dataStoreUID(_data.uid ?? rowId, _data);
+					const data = this.renderMessageInto(template, rowId, _data);
+					this.registerForDrag(rowId, data.attachmentsBlock);
+				}
+			}).catch((e) =>
+			{
+				// Previously unhandled - a rejection here (eg. a session/network hiccup) left
+				// the popup's headers silently blank with no error shown at all.
+				console.error('renderPopupMessage(): ajax_fetchMessageDetails failed', e);
+			});
 		}
 	}
 
@@ -1290,49 +2278,166 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_preview - implementation of the preview action
+	 * Resolve a JMAP-native row's attachmentsBlock: fetch the raw JMAP attachment metadata
+	 * client-side first (MailJmap.fetchAttachmentsMetadata()), and when it contains a TNEF/
+	 * winmail.dat entry, splice that entry's own server-decoded sub-attachments into the
+	 * displayed list IN PLACE OF the one raw entry - preserving any OTHER, non-TNEF attachments
+	 * in the same message untouched (doc/ai/projects/mail-compose-jmap-migration.md's
+	 * attachment-listing follow-up, 2026-09-02: a TNEF meeting invite mixed in among ordinary
+	 * attachments used to be shown as an inert winmail.dat instead of its unpacked .ics - the
+	 * classic Api\Mail::getMessageAttachments() path already handled this; the JMAP-native path,
+	 * added later, never gained the same TNEF-awareness since attachment listing there only ever
+	 * dealt with "the whole message is TNEF", never "one attachment among several is").
 	 *
-	 * @param nextmatch et2_nextmatch The widget whose row was selected
-	 * @param selected Array Selected row IDs.  May be empty if user unselected all rows.
+	 * Falls back to the classic single ajax_fetchAttachments() round trip (no client-fetched
+	 * metadata) whenever the client-side JMAP metadata fetch itself fails (non-JMAP-native
+	 * account, or any other error) - same "PHP re-derives everything itself" fallback
+	 * ajax_fetchAttachments()/resolveAttachmentsJmap() always had.
+	 *
+	 * @return {attachmentsBlock: any[]} - same response shape ajax_fetchAttachments() itself returns
 	 */
-	mail_preview(selected, nextmatch) {
-		let data:any = {};
-		let rowId = '';
-		let sel_options = {}
-		let attachmentsBlock = this.et2.getWidgetById('attachmentsBlock');
-		let mailPreview = this.et2.getWidgetById('mailPreview');
-		let previewPane = this.egw.preference('previewPane', 'mail')||'vertical';
-		// don't go further if the preview is supposed to be disabled and we're not in mobile view
-		if (previewPane == 'hide' && !egwIsMobile()) return;
-
-		if(typeof selected != 'undefined' && selected.length == 1 && selected[0])
+	private async resolveJmapAttachmentsBlock(rowId : string) : Promise<{attachmentsBlock : any[]}>
+	{
+		const metadata = await this.jmap.fetchAttachmentsMetadata(rowId);
+		if (metadata === null)
 		{
-			rowId = this.mail_fetchCurrentlyFocussed(selected);
-			data = egw.dataGetUIDdata(rowId).data;
-			data.emailTag = egw.preference('emailTag', 'mail') ?? 'onlyname';
-			// Try to resolve winmail.data attachment
-			if (data && data.attachmentsBlock[0]
-					&& data.attachmentsBlock[0].winmailFlag
-					&& (data.attachmentsBlock[0].mimetype =='application/ms-tnef' ||
-					data.attachmentsBlock[0].filename == "winmail.dat"))
+			return this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_fetchAttachments', [rowId]);
+		}
+		const isTnef = (a : any) => (a.type || '').toLowerCase() === 'application/ms-tnef' ||
+			(a.name || '').toLowerCase() === 'winmail.dat';
+		const tnefIndex = metadata.findIndex(isTnef);
+		if (tnefIndex === -1)
+		{
+			return this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_fetchAttachments', [rowId, metadata]);
+		}
+		const tnefEntry = metadata[tnefIndex];
+		const siblings = metadata.filter((_, i) => i !== tnefIndex);
+		const [siblingsResult, tnefResult] = await Promise.all([
+			siblings.length ? this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_fetchAttachments', [rowId, siblings])
+				: Promise.resolve({attachmentsBlock: []}),
+			this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_resolveWinmail', [rowId, tnefEntry.partId, tnefEntry.blobId]),
+		]);
+		if (!Array.isArray(tnefResult) || !tnefResult.length)
+		{
+			// decoding failed (or it turned out not to be real TNEF after all) - fall back to the
+			// classic full-list resolution rather than silently dropping the winmail.dat entry
+			return this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_fetchAttachments', [rowId]);
+		}
+		// siblings omits the TNEF entry, so splitting its (equally TNEF-less) result array at the
+		// TNEF entry's own original position gives exactly the "everything before"/"everything
+		// after" halves to splice the decoded sub-attachments in between
+		const resolved = siblingsResult?.attachmentsBlock || [];
+		const merged = [...resolved.slice(0, tnefIndex), ...tnefResult, ...resolved.slice(tnefIndex)];
+		merged.forEach((item, index) => item.attachment_number = index);
+		return {attachmentsBlock: merged};
+	}
+
+	/**
+	 * Resolve a row's data (from cache, or a caller-supplied object) and fill the given
+	 * template with it: address concat, on-demand attachmentsBlock resolution (winmail.dat or
+	 * JMAP rows missing a resolved block - see mail/js/jmap.ts), then template.set_value().
+	 *
+	 * Shared by preview() (below, sourcing data from this window's own row cache) and the
+	 * "view" popup (openMessage()'s target page, sourcing data from window.opener's cache or a
+	 * server fallback) - both render the same message the same way, from the same data shape.
+	 *
+	 * @param template et2 widget with set_value({content, sel_options}), e.g. the mailPreview grid
+	 * @param rowId
+	 * @param data optional pre-resolved row data (e.g. from window.opener's cache); defaults to
+	 *  this window's own egw.dataGetUIDdata(rowId).data
+	 * @return the row data object (attachmentsBlock may still be updating asynchronously)
+	 */
+	renderMessageInto(template, rowId : string, data? : any) : any
+	{
+		const sel_options = {};
+		const attachmentsBlock = this.et2.getWidgetById('attachmentsBlock');
+		data = data ?? egw.dataGetUIDdata(rowId).data ?? {};
+		data.emailTag = egw.preference('emailTag', 'mail') ?? 'onlyname';
+
+		// Try to resolve winmail.data attachment
+		if (data && data.attachmentsBlock && data.attachmentsBlock[0]
+				&& data.attachmentsBlock[0].winmailFlag
+				&& (data.attachmentsBlock[0].mimetype =='application/ms-tnef' ||
+				data.attachmentsBlock[0].filename == "winmail.dat"))
+		{
+			if (attachmentsBlock) attachmentsBlock.getDOMNode().classList.add('loading');
+			// Not this.egw.jsonq() - see the ajax_fetchMessageDetails call above for why: this
+			// also generates a Link::set_data() token that needs to survive in the session.
+			this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_resolveWinmail',[rowId]).then((_data) =>
 			{
-				attachmentsBlock.getDOMNode().classList.add('loading');
-				this.egw.jsonq('mail.mail_ui.ajax_resolveWinmail',[rowId], jQuery.proxy(function(_data){
-					attachmentsBlock.getDOMNode().classList.remove('loading');
-					if (typeof _data == 'object')
+				if (attachmentsBlock) attachmentsBlock.getDOMNode().classList.remove('loading');
+				if (typeof _data == 'object')
+				{
+					data.attachmentsBlock = _data;
+					data.attachmentsBlockTitle = _data.length > 1 ? `+${_data.length-1}` : '';
+					// Update client cache to avoid resolving winmail.dat attachment again
+					egw.dataStoreUID(data.uid, data);
+					if (!egwIsMobile() && template) template.set_value({content:data});
+				}
+				else
+				{
+					console.log('Can not resolve the winmail.data!');
+				}
+			});
+		}
+		// Rows fetched via client-side JMAP (see mail/js/jmap.ts) don't carry a resolved
+		// attachmentsBlock (building it needs a server-side mime_data/download token via
+		// Link::set_data(), not just JMAP metadata) - fetch it on demand, same as the
+		// winmail.dat resolution above, whenever the row indicates it has attachment(s).
+		else if (data && Array.isArray(data.attachmentsBlock) && data.attachmentsBlock.length === 0
+			&& data.attachments && data.attachments !== '&nbsp;')
+		{
+			if (attachmentsBlock) attachmentsBlock.getDOMNode().classList.add('loading');
+			// Not this.egw.jsonq() - same reason as above.
+			this.resolveJmapAttachmentsBlock(rowId).then(async(_data) =>
+			{
+				if (attachmentsBlock) attachmentsBlock.getDOMNode().classList.remove('loading');
+				if (_data && Array.isArray(_data.attachmentsBlock) && _data.attachmentsBlock.length)
+				{
+					data.attachmentsBlock = _data.attachmentsBlock;
+					this.setupViewAttachmentActions(data, sel_options);
+					await this.resolveAttachmentViewUrls(rowId, data.attachmentsBlock);
+					// Update client cache to avoid re-fetching the attachment block again
+					egw.dataStoreUID(data.uid, data);
+					if (!egwIsMobile() && template) template.set_value({content:data, sel_options:sel_options});
+					// body may have already finished loading (empty) before this resolved -
+					// retry the auto-index now that attachmentsBlock is known
+					this.retryAttachmentIndexForRow(rowId, data.attachmentsBlock);
+				}
+			});
+		}
+		// A real JMAP server (eg. Stalwart) parses From/To/Cc/Bcc itself - if its own address
+		// parser isn't RFC 2047-aware, MailJmap.email2row() flags the affected field(s) here
+		// (an entry with no usable email address). Re-fetch+re-parse just that one broken field,
+		// on demand, the same "only when it actually looks wrong" way attachmentsBlock is above -
+		// never for every message. The local IMAP shim never sets this (it already re-parses raw
+		// headers unconditionally), so this only ever fires for a real server's own mistake.
+		if (Array.isArray(data.suspectAddressFields) && data.suspectAddressFields.length)
+		{
+			const fields = data.suspectAddressFields;
+			data.suspectAddressFields = [];
+			fields.forEach((field : 'from' | 'to' | 'cc' | 'bcc') =>
+			{
+				this.jmap.repairAddressField(rowId, field).then((list) =>
+				{
+					if (!list)
 					{
-						data.attachmentsBlock = _data;
-						data.attachmentsBlockTitle = _data.length > 1 ? `+${_data.length-1}` : '';
-						// Update client cache to avoid resolving winmail.dat attachment again
-						egw.dataStoreUID(data.uid, data);
-						if (!egwIsMobile() && mailPreview) mailPreview.set_value({content:data});
+						return;
+					}
+					const formatted = list.map(formatJmapAddress);
+					if (field === 'from' || field === 'to')
+					{
+						data[field + 'address'] = formatted[0] || '';
+						data['additional' + field + 'address'] = formatted.slice(1);
 					}
 					else
 					{
-						console.log('Can not resolve the winmail.data!');
+						data[field + 'address'] = formatted;
 					}
-				},data));
-			}
+					egw.dataStoreUID(data.uid, data);
+					if (!egwIsMobile() && template) template.set_value({content: data, sel_options: sel_options});
+				});
+			});
 		}
 
 		if (data.toaddress||data.fromaddress)
@@ -1350,14 +2455,227 @@ export class MailApp extends EgwApp
 		if (data.attachmentsBlock)
 		{
 			this.setupViewAttachmentActions(data, sel_options);
+			this.resolveAttachmentViewUrls(rowId, data.attachmentsBlock).then((changed) =>
+			{
+				if (changed)
+				{
+					egw.dataStoreUID(data.uid, data);
+					if (!egwIsMobile() && template) template.set_value({content: data, sel_options: sel_options});
+				}
+			});
 		}
 
-		if (!egwIsMobile() && mailPreview) mailPreview.set_value({content:data, sel_options:sel_options});
+		if (!egwIsMobile() && template) template.set_value({content:data, sel_options:sel_options});
+
+		return data;
+	}
+
+	/**
+	 * Retry the auto-index (renderAttachmentIndex(), mail/js/attachmentIndex.ts) once an
+	 * on-demand attachmentsBlock fetch resolves - renderMessageInto()'s own on-demand JMAP
+	 * attachmentsBlock resolution (resolveJmapAttachmentsBlock()) is async, so the message body
+	 * may have already finished loading (and found itself empty, before any attachments were
+	 * known) by the time this lands. Only renders into the iframe still actually showing THIS
+	 * row - loadMessageBody() marks the iframe's own dataset.rowId, so a user who has since
+	 * selected a DIFFERENT row while this fetch was in flight never gets a stale row's
+	 * attachments rendered into the CURRENT iframe.
+	 *
+	 * Extracted into its own method (2026-09-09) purely for unit testability -
+	 * renderMessageInto() itself has too many unrelated preconditions (winmail.dat resolution,
+	 * attachmentsBlock widget, template.set_value()) to drive in a focused test.
+	 */
+	private retryAttachmentIndexForRow(rowId : string, attachmentsBlock : any[]) : void
+	{
+		const iframeDoc = this.et2?.getWidgetById('messageIFRAME')?.iframe?.contentDocument;
+		if (iframeDoc?.documentElement?.dataset.rowId === rowId)
+		{
+			renderAttachmentIndex(iframeDoc, attachmentsBlock, this.egw);
+		}
+	}
+
+	/**
+	 * For attachment rows resolvable via client-side JMAP (blobId present, JMAP-native backend),
+	 * fetch the bytes directly from Stalwart/the shim and replace the row's mime_url with a local
+	 * `blob:` object URL - the same client.downloadBlob() primitive downloadOneAsFile's
+	 * client-side path already uses (saveAttachmentHandler() below), now also covering the
+	 * "click to view" path (Et2DescriptionExpose's `href`), skipping the classic
+	 * mail_ui::getAttachment() server round-trip entirely. message/rfc822 (a whole sub-message
+	 * view, not a blob render) and the vCard/iCalendar branches (server-side import with real side
+	 * effects - creates a contact/event) keep using the classic server URL.
+	 *
+	 * @return true if any row's mime_url was replaced (caller should re-render)
+	 */
+	private async resolveAttachmentViewUrls(rowId : string, attachmentsBlock : any[]) : Promise<boolean>
+	{
+		const excluded = ['message/rfc822', 'text/vcard', 'text/x-vcard', 'text/calendar', 'text/x-vcalendar'];
+		let profileID : string;
+		try
+		{
+			profileID = this.jmap.messageReference(rowId).profileID;
+		}
+		catch (e)
+		{
+			return false;
+		}
+		const eligible = attachmentsBlock.filter((item) => item.blobId && !excluded.includes((item.type || '').toLowerCase()));
+		if (!eligible.length)
+		{
+			return false;
+		}
+		this.jmap.revokeAttachmentViewUrls(rowId);
+		const results = await Promise.all(eligible.map((item) =>
+			this.jmap.getAttachmentViewUrl(rowId, profileID, item.blobId, item.filename, item.type)
+				.then((url) => { item.mime_url = url; return true; })
+				.catch((e) =>
+				{
+					console.error('resolveAttachmentViewUrls(): failed for', item.filename, e);
+					return false;
+				})
+		));
+		return results.some(Boolean);
+	}
+
+	/**
+	 * Mark an opened message as read, updating the row immediately and persisting the flag.
+	 *
+	 * @param rowId nextmatch row id
+	 * @param data cached row data
+	 */
+	private markOpenedMessageRead(rowId : string, data : any) : void
+	{
+		if (typeof data == 'undefined' || typeof data['class'] == 'undefined' ||
+			(data['class'].indexOf('unseen') < 0 && data['class'].indexOf('recent') < 0))
+		{
+			return;
+		}
+
+		const messages = {msg: [rowId]};
+		if (typeof data.flags != 'undefined') data.flags.read = 'read';
+		data['class'] = data['class'].split(' ')
+			.filter((className) => className != 'unseen' && className != 'recent').join(' ');
+		this.patchRow(rowId);
+		this.reduceCounterWithoutServerRoundtrip();
+
+		// A JMAP Email/get has no side effects, so persist $seen explicitly.  Non-JMAP rows
+		// fall back to the classic body request, which already marks the message read.
+		try
+		{
+			// Tracked in pendingReadMark (see its own docblock) so a manual toggle done shortly
+			// after opening waits for this request to actually land first, instead of racing it.
+			const promise = this.jmap.setSystemFlag([this.jmap.messageReference(rowId)], '$seen', true)
+				.catch((e) => console.error('markOpenedMessageRead(): failed to mark message as read', e));
+			this.pendingReadMark.set(rowId, promise);
+			promise.finally(() =>
+			{
+				if (this.pendingReadMark.get(rowId) === promise) this.pendingReadMark.delete(rowId);
+			});
+		}
+		catch (e) { /* non-JMAP row id - classic fallback already handled this server-side */ }
+
+		if (typeof data.dispositionnotificationto != 'undefined' && data.dispositionnotificationto &&
+			typeof data.flags.mdnsent == 'undefined' && typeof data.flags.mdnnotsent == 'undefined')
+		{
+			const buttons = [
+				{label: this.egw.lang("Yes"), id: "mdnsent", image: "check"},
+				{label: this.egw.lang("No"), id: "mdnnotsent", image: "cancelled"}
+			];
+			Et2Dialog.show_dialog((_button_id, _value) =>
+				{
+					switch (_button_id)
+					{
+						case "mdnsent":
+							egw.jsonq('mail.EGroupware\\Mail\\Ui.ajax_sendMDN', [messages]);
+							this.trySetMdnFlag(messages, true);
+							return;
+						case "mdnnotsent":
+							this.trySetMdnFlag(messages, false);
+					}
+				},
+			this.egw.lang("The message sender has requested a response to indicate that you have read this message. Would you like to send a receipt?"),
+			this.egw.lang("Confirm"),
+			messages, buttons);
+		}
+		egw.jsonq('mail.EGroupware\\Mail\\Ui.ajax_flagMessages', ['read', messages, false]);
+	}
+
+	/**
+	 * preview - implementation of the preview action
+	 *
+	 * @param nextmatch Et2Nextmatch The widget whose row was selected
+	 * @param selected Array Selected row IDs.  May be empty if user unselected all rows.
+	 */
+	preview(selected?, nextmatch?) {
+		let data:any = {};
+		let rowId = '';
+		const attachmentsBlock = this.et2.getWidgetById('attachmentsBlock');
+		const mailPreview = this.et2.getWidgetById('mailPreview');
+		const previewPane = this.egw.preference('previewPane', 'mail')||'vertical';
+		// don't go further if the preview is supposed to be disabled and we're not in mobile view
+		if (previewPane == 'hide' && !egwIsMobile()) return;
+
+		// Re-selecting the exact same, already-rendered message is a genuine no-op click (most
+		// mail clients treat it as free) - skip the whole reload rather than re-running it.
+		// Not just an optimization: re-running the full load+render cycle for a PGP message
+		// confused Mailvelope's own state and dropped its decrypted view entirely (found live
+		// 2026-09-08, ralf: "clicked on the same, PGP encrypted message" - a second
+		// createDisplayContainer() call for identical content, or a race with the reset-cleanup
+		// mailvelopeDisplay() does on every call, is the likely underlying cause, but skipping the
+		// redundant reload here sidesteps needing to root-cause that at all).
+		if (selected?.length === 1 && selected[0] && selected[0] === this.currentlyFocussed)
+		{
+			const loadedRowId = (this.et2.getWidgetById('messageIFRAME') as any)
+				?.iframe?.contentDocument?.documentElement?.dataset?.rowId;
+			if (loadedRowId === selected[0]) return;
+		}
+
+		// A newer selection supersedes any body-fetch still in flight for the previous one
+		if (this.previewFetchAbort)
+		{
+			this.previewFetchAbort.abort();
+			this.previewFetchAbort = null;
+		}
+
+		if(typeof selected != 'undefined' && selected.length == 1 && selected[0])
+		{
+			rowId = this.fetchCurrentlyFocussed(selected);
+			data = this.renderMessageInto(mailPreview, rowId);
+		}
+		else
+		{
+			if (!egwIsMobile() && mailPreview)
+			{
+				mailPreview.set_value({content:data, sel_options:{}});
+			}
+			// Genuinely nothing selected (undefined - eg. after switching folder, this.preview()'s
+			// own no-arg callers - or an explicitly empty array, eg. after a move/delete) - clear the
+			// stale currentlyFocussed/selectedMails too, not just the visible preview pane, so a
+			// later reply/reply-all/forward invoked with no explicit row selection (composeMessage()'s
+			// own "nothing selected, fall back to whatever is currently focused/previewed" backfill)
+			// can't silently target the PREVIOUS message instead of correctly having nothing to act
+			// on (found live 2026-09-08, ralf: "wenn man im Preview auf 'antworten/allen Antworten'
+			// klickt und aber noch keine neue Mail ausgewählt ist, triggert das ein Antworten auf die
+			// vorher ausgewählte Mail"). Deliberately NOT done for a genuine multi-selection
+			// (selected.length > 1) - composeMessage()'s own action dispatch already passes that
+			// selection through explicitly, so there's no stale-fallback risk to guard against there.
+			if (typeof selected == 'undefined' || selected.length === 0)
+			{
+				this.currentlyFocussed = '';
+				this.selectedMails = [];
+			}
+		}
 		// We cannot do any sensible thing if there is no rowId (or data) to act on after the mailPreview is cleared
 		if(!rowId && Object.keys(data).length === 0) return
 
 		if (selected && selected.length>1)
 		{
+			// A pending single-selection body-load timer
+			// (scheduled below, in the plain-selection branch) targets a rowId that is no longer selected now
+			// without this, it can still
+			// fire ~300ms later and load that stale row's body into the iframe this branch just
+			// blanked/disabled.
+			this.W_TIMEOUTS.forEach((t) => window.clearTimeout(t));
+			//empty the array
+			this.W_TIMEOUTS.length = 0;
 			// Leave if we're here and there is nothing selected, too many, or no data
 			if (attachmentsBlock)
 			{
@@ -1369,7 +2687,7 @@ export class MailApp extends EgwApp
 				}
 				const IframeHandle = this.et2.getWidgetById('messageIFRAME');
 				if(IframeHandle) IframeHandle.set_src('about:blank');
-				this.mail_disablePreviewArea(true);
+				this.disablePreviewArea(true);
 			}
 			if (!egwIsMobile())return;
 		}
@@ -1380,73 +2698,47 @@ export class MailApp extends EgwApp
 			const IframeHandle = this.et2.getWidgetById('messageIFRAME');
 			IframeHandle.set_src('about:blank');
 
-			this.smime_clear_flags([this.et2.getWidgetById('mailPreviewContainer').getDOMNode()]);
+			this.smimeClearFlags([this.et2.getWidgetById('mailPreviewContainer').getDOMNode()]);
+			this.pgpClearFlags([this.et2.getWidgetById('mailPreviewContainer').getDOMNode()]);
 
 			// show iframe, in case we hide it from mailvelopes one and remove that
-			jQuery(IframeHandle.getDOMNode()).show()
-				.next(this.mailvelope_iframe_selector).remove();
+			const iframeNode = IframeHandle.getDOMNode();
+			iframeNode.style.display = '';
+			const mailvelopeSibling = iframeNode.nextElementSibling;
+			if (mailvelopeSibling?.matches(this.mailvelope_iframe_selector)) mailvelopeSibling.remove();
 
 			// need to have the DOM ready for calculation.
-			this.mail_disablePreviewArea((typeof selected == 'undefined' || selected.length == 0 && previewPane == 'expand'));
+			this.disablePreviewArea((typeof selected == 'undefined' || selected.length == 0 && previewPane == 'expand'));
 
 			// Update the internal list of selected mails, if needed
-			if(this.mail_selectedMails.indexOf(rowId) < 0)
+			if(this.selectedMails.indexOf(rowId) < 0)
 			{
-				this.mail_selectedMails.push(rowId);
+				this.selectedMails.push(rowId);
 			}
-			var self = this;
 
 			// Try to avoid sending so many request when user tries to scroll on list
 			// via key up/down quite fast.
-			for (var t in this.W_TIMEOUTS) {window.clearTimeout(this.W_TIMEOUTS[t]);}
-			this.W_TIMEOUTS.push(window.setTimeout(function(){
-
-				console.log(rowId);
-				// Request email body from server
-				IframeHandle.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:rowId}));
-				IframeHandle.getDOMNode().addEventListener("load", function (e)
+			this.W_TIMEOUTS.forEach((t) => window.clearTimeout(t));
+			this.W_TIMEOUTS.length = 0;
+			this.W_TIMEOUTS.push(window.setTimeout(() =>
 				{
-					self.resolveExternalImages (this.contentWindow.document);
-				}, {once: true});
-			}, 300));
-		}
-
-		var messages = {};
-		messages['msg'] = [rowId];
-
-		// When body is requested, mail is marked as read by the mail server.  Update UI to match.
-		if (typeof data != 'undefined' && typeof data != 'undefined' && typeof data.flags != 'undefined' && typeof data.flags.read != 'undefined') data.flags.read = 'read';
-		if (typeof data != 'undefined' && typeof data != 'undefined' && typeof data['class']  != 'undefined' && (data['class'].indexOf('unseen') >= 0 || data['class'].indexOf('recent') >= 0))
-		{
-			this.mail_removeRowClass(messages,'recent');
-			this.mail_removeRowClass(messages,'unseen');
-			// reduce counter without server roundtrip
-			this.mail_reduceCounterWithoutServerRoundtrip();
-			if (typeof data.dispositionnotificationto != 'undefined' && data.dispositionnotificationto &&
-				typeof data.flags.mdnsent == 'undefined' && typeof data.flags.mdnnotsent == 'undefined')
-			{
-				var buttons = [
-					{label: this.egw.lang("Yes"), id: "mdnsent", image: "check"},
-					{label: this.egw.lang("No"), id: "mdnnotsent", image: "cancelled"}
-				];
-				Et2Dialog.show_dialog(function (_button_id, _value)
-					{
-						switch (_button_id)
+					// an actual request will be started by loadMessageBody() that will execute
+					// the supplied onload function and might set the iframe content after the requestPromise resolves
+					const controller = new AbortController();
+					this.previewFetchAbort = controller;
+					this.loadMessageBody(IframeHandle, rowId,
+						(doc) =>
 						{
-							case "mdnsent":
-								egw.jsonq('mail.mail_ui.ajax_sendMDN', [messages]);
-								egw.jsonq('mail.mail_ui.ajax_flagMessages', ['mdnsent', messages, true]);
-								return;
-							case "mdnnotsent":
-								egw.jsonq('mail.mail_ui.ajax_flagMessages', ['mdnnotsent', messages, true]);
-						}
-					},
-				this.egw.lang("The message sender has requested a response to indicate that you have read this message. Would you like to send a receipt?"),
-				this.egw.lang("Confirm"),
-				messages, buttons);
-			}
-			egw.jsonq('mail.mail_ui.ajax_flagMessages',['read', messages, false]);
+							this.resolveExternalImages(doc);
+							renderAttachmentIndex(doc, data.attachmentsBlock, this.egw);
+						},
+						controller.signal);
+				},
+				Math.min(this.inFlightRequests * 200, 300)
+			));
 		}
+
+		this.markOpenedMessageRead(rowId, data);
 	}
 
 	protected setupViewAttachmentActions(data, sel_options)
@@ -1457,6 +2749,12 @@ export class MailApp extends EgwApp
 				label: 'Download',
 				icon: 'fileexport',
 				value: 'downloadOneAsFile'
+			},
+			{
+				id: 'downloadAllAsFiles',
+				label: 'Download all attachments',
+				icon: 'file-earmark-arrow-down',
+				value: 'downloadAllAsFiles'
 			},
 			{
 				id: 'saveOneToVfs',
@@ -1525,6 +2823,135 @@ export class MailApp extends EgwApp
 
 		sel_options.attachmentsBlock.actions = actions;
 	}
+
+	/**
+	 * Load a message body into an iframe widget: try the fast client-side JMAP body-fetch first
+	 * (mail/js/jmap.ts's MailJmap.fetchBody()), falling back to the existing full server-rendered
+	 * page load - identical fallback behaviour to before this feature - for special-case messages
+	 * (S/MIME, winmail.dat, meeting invites, PGP/MIME) or any fetch failure.
+	 *
+	 * Deliberately does not call resolveExternalImages() itself - the two call sites (preview
+	 * panel, popup) already did that differently (popup skips it for meeting-invite content) - left
+	 * to $onLoad, same as before this method existed. resolveInlineImages() (cid: images) has no
+	 * such per-caller difference, so it *is* called here, for the fast path only (the fallback path
+	 * still resolves cid: images server-side, same as always).
+	 *
+	 * @param iframeWidget the et2 iframe widget (messageIFRAME)
+	 * @param rowId
+	 * @param onLoad called with the iframe's contentDocument once loaded, either path
+	 * @param signal aborted if a newer selection supersedes this fetch before it resolves; when
+	 *        given, the result is also dropped if rowId no longer matches currentlyFocussed
+	 */
+	/**
+	 * @param partID non-empty only for a message/rfc822 SUB-part (eg. a bounce/NDM's own original
+	 *  message, mail_ui::displayMessage()'s own `part` GET param, threaded through as content.part)
+	 *  - routes through MailJmap.fetchBodyFromMessagePart() instead of fetchBody(), since a
+	 *  sub-part has no real, independently-addressable row-id of its own to fetch normally.
+	 */
+	/** Shared by loadMessageBody()'s {special:true} result and its own catch() fallback below. */
+	private loadClassicBody(iframeWidget: any, iframe: HTMLIFrameElement, rowId: string, onLoad: (doc: Document) => void,
+		partID?: string): void
+	{
+		iframe.addEventListener('load', () =>
+		{
+			const doc = iframe.contentWindow.document;
+			doc.documentElement.dataset.rowId = rowId;
+			// classic-fallback counterpart of loadMessageBody()'s own fast-path trigger below - the
+			// ONLY place left that calls this for the classic-navigation case, now that et2_ready()'s
+			// own template-lifetime listeners no longer do (see their own comments)
+			this.mailvelopeAvailable(this.mailvelopeDisplay);
+			this.jmap.verifyPgpSignature(rowId).then((result) =>
+			{
+				if (result && rowId === this.currentlyFocussed) this.setPgpSignatureFlags(result);
+			}).catch((e) => console.error('MailApp.loadClassicBody(): verifyPgpSignature failed', e));
+			onLoad(doc);
+		}, {once: true});
+		iframeWidget.set_src(egw.link('/index.php', {
+			menuaction: 'mail.EGroupware\\Mail\\Ui.loadEmailBody', _messageID: rowId,
+			...(partID ? {_partID: partID} : {}),
+		}));
+	}
+
+	private loadMessageBody(iframeWidget: any, rowId: string, onLoad: (doc: Document) => void, signal?: AbortSignal,
+		partID?: string, passphrase?: string, passExpMinutes?: number): void
+	{
+		//we now fire the request so increase inFlight request by one
+		this.inFlightRequests += 1;
+		const iframe = iframeWidget?.iframe;
+		const fetchPromise = partID ?
+			this.jmap.fetchBodyFromMessagePart(rowId, partID) :
+			this.jmap.fetchBody(rowId, undefined, signal, passphrase, passExpMinutes);
+		fetchPromise.then((result) =>
+		{
+			//a request returned so we have one less in flight.
+			// Sanity checked to never have negative requests in flight
+			this.inFlightRequests = Math.max(0, this.inFlightRequests - 1);
+			// superseded by a newer selection while this request was in flight - drop it
+			if (signal?.aborted) return;
+			// belt-and-suspenders alongside the abort check above, scoped to the preview-pane
+			// call site (the only one that passes a signal) - mobileView()'s single-message
+			// dialog has no comparable "currently selected" concept to check against.
+			if (signal && rowId !== this.currentlyFocussed) return;
+			if (result.special)
+			{
+				this.loadClassicBody(iframeWidget, iframe, rowId, onLoad, partID);
+				return;
+			}
+			// explicit cast, not relying on control-flow narrowing of the "special" discriminant -
+			// this project's tsconfig has strictNullChecks off, where that narrowing doesn't hold
+			const fast = result as Extract<JmapBodyResult, { special : false }>;
+			// only set for a resolveSpecialCaseBody() S/MIME result (MailJmap.fetchBody()'s fast
+			// path for S/MIME/TNEF) - smimeClearFlags() already ran for any other message via the
+			// normal pre-load reset, same as the classic per-page-load path's own setSmimeFlags().
+			if (fast.smime) this.setSmimeFlags(fast.smime);
+			iframe.addEventListener('load', () =>
+			{
+				const doc = iframe.contentWindow.document;
+				doc.documentElement.dataset.rowId = rowId;
+				this.jmap.resolveInlineImages(doc, rowId, fast).catch((e) =>
+					console.error('MailApp.loadMessageBody(): resolveInlineImages failed', e));
+				// PGP/MIME (MailJmap.fetchBody()'s own PGP branch, jmap.ts) renders the raw armored
+				// text into this SAME `td.td_display > pre` shape specifically so mailvelopeDisplay()
+				// can find and decrypt it - et2_ready()'s own `iframe.addEventListener('load', ...)`
+				// call to this (mail.index/mail.display cases) only ever fires for the CLASSIC
+				// full-page iframe load, once, at template-ready time; this JMAP-native fast path
+				// re-sets `.srcdoc` on every message selection without ever re-triggering that
+				// original listener, so a PGP-encrypted preview silently never called Mailvelope at
+				// all (found live 2026-09-08, ralf: "preview shows the raw PGP message, but does NOT
+				// trigger Mailvelope"). mailvelopeDisplay() itself already no-ops immediately for any
+				// non-PGP body (checks for the armored header before doing anything).
+				this.mailvelopeAvailable(this.mailvelopeDisplay);
+				this.jmap.verifyPgpSignature(rowId).then((result) =>
+				{
+					if (result && rowId === this.currentlyFocussed) this.setPgpSignatureFlags(result);
+				}).catch((e) => console.error('MailApp.loadMessageBody(): verifyPgpSignature failed', e));
+				onLoad(doc);
+			}, {once: true});
+			iframe.srcdoc = fast.html;
+		}).catch((e) =>
+		{
+			this.inFlightRequests = Math.max(0, this.inFlightRequests - 1);
+			if (signal?.aborted) return;
+			if (signal && rowId !== this.currentlyFocussed) return;
+			// MailJmap.fetchBody()'s own JMAP-native S/MIME resolver needs a passphrase it doesn't
+			// have (2026-09-01 follow-up, ralf: "if the passphrase is missing it should throw and
+			// client-side should ask the passphrase") - the classic fallback below is NOT a usable
+			// substitute for this specific case: it pays the exact "20s timeout, empty response"
+			// raw-IMAP-EMAILID-search cost this whole JMAP-native path exists to avoid for a
+			// Stalwart-opaque-id row (MessageDisplayHandler::loadEmailBody() resolves folder/msgUID
+			// unconditionally before ever reaching the S/MIME resolver). Prompt and retry the SAME
+			// fast path with the entered passphrase instead of falling through.
+			if (e?.constructor?.name === 'JmapSmimePassphraseError')
+			{
+				this.smimeViewPassDialog(e.message, (enteredPassphrase, enteredExpMinutes) =>
+					this.loadMessageBody(iframeWidget, rowId, onLoad, signal, partID, enteredPassphrase, enteredExpMinutes));
+				return;
+			}
+			console.error('MailApp.loadMessageBody(): fetch failed, falling back to the server-rendered body', e);
+			this.loadClassicBody(iframeWidget, iframe, rowId, onLoad, partID);
+		});
+	}
+
 		/**
 		 * Show external images
 		 * @param _node
@@ -1532,26 +2959,26 @@ export class MailApp extends EgwApp
 		 */
 		resolveExternalImages(_node, show = null)
 	{
-		let image_proxy = this.image_proxy;
+		const image_proxy = this.image_proxy;
 		//Do not run resolve images if it's forced already to show them all
 		// or forced to not show them all.
-		var pref_img = egw.preference('allowExternalIMGs', 'mail');
+		const pref_img = egw.preference('allowExternalIMGs', 'mail');
 		if (!show && pref_img == 0)
 		{
 			return;
 		}
 
-		var external_images = jQuery(_node).find('img[alt*="[blocked external image:"]');
-		if (external_images.length > 0 && jQuery(_node).find('.mail_externalImagesMsg').length == 0)
+		const external_images = _node.querySelectorAll('img[alt*="[blocked external image:"]');
+		if (external_images.length > 0 && _node.querySelector('.mail_externalImagesMsg') === null)
 		{
-			var container = jQuery(document.createElement('div'))
-					.click(function(){jQuery(this).remove();})
-					.addClass('mail_externalImagesMsg');
-			var getUrlParts = function (_rawUrl) {
-				var u = _rawUrl.split('[blocked external image:');
+			const container = document.createElement('div');
+			container.classList.add('mail_externalImagesMsg');
+			container.addEventListener('click', () =>{ container.remove(); });
+			const getUrlParts = (_rawUrl) => {
+				let u = _rawUrl.split('[blocked external image:');
 				u = u[1].replace(']','');
-				var url = u;
-				var protocol = '';
+				let url = u;
+				let protocol = '';
 				if (u.substr(0,7) == 'http://')
 				{
 					u = u.replace ('http://','');
@@ -1563,7 +2990,7 @@ export class MailApp extends EgwApp
 					u = u.replace ('https://','');
 					protocol = 'https';
 				}
-				var url_parts = u.split('/');
+				const url_parts = u.split('/');
 				return {
 					url: url,
 					domain: url_parts[0],
@@ -1571,12 +2998,12 @@ export class MailApp extends EgwApp
 				};
 			};
 
-			var host = getUrlParts(external_images[0].alt);
-			var showImages = function (_images, _save)
+			const host = getUrlParts(external_images[0].alt);
+			const showImages = (_images, _save?) =>
 			{
-				var save = _save || false;
-				_images.each(function(i, node) {
-					var parts = getUrlParts (node.alt);
+				const save = _save || false;
+				_images.forEach((node) => {
+					const parts = getUrlParts (node.alt);
 					if (save)
 					{
 						if (pref && pref.length)
@@ -1600,7 +3027,7 @@ export class MailApp extends EgwApp
 			{
 				return showImages(external_images, false);
 			}
-			var pref = egw.preference('allowExternalDomains', 'mail') || {};
+			let pref = egw.preference('allowExternalDomains', 'mail') || {};
 			pref = Object.values(pref);
 			if (pref.indexOf(host.domain)>-1)
 			{
@@ -1608,14 +3035,14 @@ export class MailApp extends EgwApp
 				return;
 			}
 			let message = this.egw.lang('In order to protect your privacy all external sources within this email are blocked.');
-			for(let i in external_images)
+			for (const img of external_images)
 			{
-				if (!external_images[i].alt) continue;
-				let r = getUrlParts(external_images[i].alt);
+				if (!img.alt) continue;
+				const r = getUrlParts(img.alt);
 				if (r && r.protocol == 'http')
 				{
 					message = this.egw.lang('This mail contains external images served via insecure HTTP protocol. Be aware showing or allowing them can compromise your security!');
-					container.addClass('red');
+					container.classList.add('red');
 					break;
 				}
 			}
@@ -1631,48 +3058,56 @@ export class MailApp extends EgwApp
 				}
 			}
 
-			jQuery(document.createElement('p'))
-					.text(message)
-					.appendTo(container);
-			jQuery(document.createElement('button'))
-					.addClass ('closeBtn')
-					.click (function (){
-						container.remove();
-					})
-					.appendTo(container);
-			jQuery(document.createElement('button'))
-					.text(this.egw.lang('Allow'))
-					.attr ('title', this.egw.lang('Always allow external sources from %1', host.domain))
-					.click (function (){
-						showImages(external_images, true);
-						container.remove();
-					})
-					.appendTo(container);
-			jQuery(document.createElement('button'))
-					.text(this.egw.lang('Show'))
-					.attr ('title', this.egw.lang('Show them this time only'))
-				.click(() =>
-				{
-					showImages(external_images);
-					container.remove();
-					if (_node.querySelector("body"))
-					{
-						_node.querySelector("body").dispatchEvent(new Event('load'));
-					}
-					const print = toolbar.getActionById('print');
-					if (print)
-					{
-						if (!print.data)
-						{
-							print.data = {};
-						}
-						print.data.images = true;
-						// Reload temp print
+			const messageP = document.createElement('p');
+			messageP.textContent = message;
+			container.appendChild(messageP);
 
+			const closeBtn = document.createElement('button');
+			closeBtn.classList.add('closeBtn');
+			closeBtn.addEventListener('click', () =>{
+				container.remove();
+			});
+			container.appendChild(closeBtn);
+
+			const allowBtn = document.createElement('button');
+			allowBtn.textContent = this.egw.lang('Allow');
+			allowBtn.title = this.egw.lang('Always allow external sources from %1', host.domain);
+			allowBtn.addEventListener('click', () =>{
+				showImages(external_images, true);
+				container.remove();
+			});
+			container.appendChild(allowBtn);
+
+			const showBtn = document.createElement('button');
+			showBtn.textContent = this.egw.lang('Show');
+			showBtn.title = this.egw.lang('Show them this time only');
+			showBtn.addEventListener('click', () =>
+			{
+				showImages(external_images);
+				container.remove();
+				if (_node.querySelector("body"))
+				{
+					_node.querySelector("body").dispatchEvent(new Event('load'));
+				}
+				// found live 2026-09-09 while adding test coverage: no guard here for the
+				// (real, unremarkable) case where no toolbar/displayToolbar action manager
+				// exists yet - eg. a popup/mobile view without one, or just timing - crashing
+				// with an uncaught TypeError right after the images were already shown, same
+				// null-check this method's own OTHER toolbar access already has above.
+				const print = toolbar?.getActionById('print');
+				if (print)
+				{
+					if (!print.data)
+					{
+						print.data = {};
 					}
-				})
-				.appendTo(container);
-			container.appendTo(_node.body? _node.body:_node);
+					print.data.images = true;
+					// Reload temp print
+
+				}
+			});
+			container.appendChild(showBtn);
+			(_node.body ? _node.body : _node).appendChild(container);
 		}
 	}
 
@@ -1684,102 +3119,118 @@ export class MailApp extends EgwApp
 	 *
 	 * requires: mainWindow, one mail selected for preview
 	 *
-	 * @param {jQuery event} event
+	 * @param {Event} event
 	 * @param {Object} widget
 	 * @param {DOMNode} button
 	 */
 	showAllHeader(event,widget,button) {
 		// Show list as a list
-		var list = jQuery(button).prev();
-	/*	if (list.length <= 0)
-		{
-			list = jQuery(button.target).prev();
-		}*/
+		const list = button.previousElementSibling;
 
-		list.toggleClass('visible');
+		list.classList.toggle('visible');
 
 		// Revert if user clicks elsewhere
-		jQuery('body').one('click', list, function(ev) {
-			ev.data.removeClass('visible');
-		});
+		document.body.addEventListener('click', () => {
+			list.classList.remove('visible');
+		}, {once: true});
 	}
 
-	mail_setMailBody(content) {
-		var IframeHandle = this.et2.getWidgetById('messageIFRAME');
+	setMailBody(content) {
+		const IframeHandle = this.et2.getWidgetById('messageIFRAME');
 		IframeHandle.set_value('');
 	}
 
 	/**
-	 * mail_refreshFolderStatus, function to call to read the counters of a folder and apply them
+	 * refreshFolderStatus, function to call to read the counters of a folder and apply them
 	 *
-	 * @param {stirng} _nodeID
+	 * @param {string} _nodeID
 	 * @param {string} mode
 	 * @param {boolean} _refreshGridArea
 	 * @param {boolean} _refreshQuotaDisplay
 	 *
 	 */
-	mail_refreshFolderStatus(_nodeID,mode,_refreshGridArea,_refreshQuotaDisplay) {
-		if (typeof _nodeID != 'undefined' && typeof _nodeID[_nodeID] != 'undefined' && _nodeID[_nodeID])
-		{
-			_refreshGridArea = _nodeID[_refreshGridArea];
-			mode = _nodeID[mode];
-			_nodeID = _nodeID[_nodeID];
-		}
-		var nodeToRefresh = 0;
-		var mode2use = "none";
-		if (typeof _refreshGridArea == 'undefined') _refreshGridArea=true;
-		if (typeof _refreshQuotaDisplay == 'undefined') _refreshQuotaDisplay=true;
+	refreshFolderStatus(_nodeID: string, mode: string, _refreshGridArea = true, _refreshQuotaDisplay = true)
+	{
+		let nodeToRefresh: string | 0 = 0;
+		let mode2use = "none";
 		if (_nodeID) nodeToRefresh = _nodeID;
 		if (mode) {
 			if (mode == "forced") {mode2use = mode;}
 		}
 		try
 		{
-			if(!this.tree_wdg){
-				this.tree_wdg = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-			}
+			// Always refetch - see the matching comment in et2_ready()'s 'mail.index' case for why
+			// a cached tree_wdg can point at a stale, detached widget after a client-side template
+			// reload.
+			this.tree_wdg = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 
 			const activeFolders = this.tree_wdg.getTreeNodeOpenItems(nodeToRefresh,mode2use);
 			//alert(activeFolders.join('#,#'));
-			this.mail_queueRefreshFolderList((mode=='thisfolderonly'&&nodeToRefresh?[_nodeID]:activeFolders));
+			this.queueRefreshFolderList((mode=='thisfolderonly'&&nodeToRefresh?[_nodeID]:activeFolders));
 			if (_refreshGridArea)
 			{
 				// maybe to use the mode forced as trigger for grid reload and using the grids own autorefresh
 				// would solve the refresh issue more accurately
-				//if (mode == "forced") this.mail_refreshMessageGrid();
-				this.mail_refreshMessageGrid();
+				//if (mode == "forced") this.refreshMessageGrid();
+				this.refreshMessageGrid();
 			}
 			if (_refreshQuotaDisplay)
 			{
-				this.mail_refreshQuotaDisplay();
+				this.refreshQuotaDisplay();
 			}
 		} catch(e) {
 		} // ignore the error; maybe the template is not loaded yet
 	}
 
 	/**
-	 * mail_refreshQuotaDisplay, function to call to read the quota for the active server
+	 * refreshQuotaDisplay, function to call to read the quota for the active server
 	 *
-	 * @param {object} _server
+	 * Tries MailJmap.getQuota() (direct JMAP, no server round-trip at all) first - falls back to
+	 * the classic ajax_refreshQuotaDisplay() round-trip only if that declines, which now only
+	 * happens for a real JMAP server not advertising the Quota extension (a genuinely different
+	 * capability, worth trying via classic IMAP) - an unreachable account gets a "not reachable"
+	 * display directly from getQuota() instead of falling back (see its own docblock for why).
+	 *
+	 * @param {object} _server omitting uses the currently active profile
 	 *
 	 */
-	mail_refreshQuotaDisplay(_server)
+	refreshQuotaDisplay(_server?: any)
 	{
-		egw.json('mail.mail_ui.ajax_refreshQuotaDisplay',[_server])
-			.sendRequest(true);
+		// same "not always set, read it from foldertree" fallback fetchRows()/buildJmapQuery()
+		// already use for resolving the currently active profile client-side
+		const profileID = String(_server ||
+			this.et2?.getWidgetById(this.nm_index + '[foldertree]')?.getValue() ||
+			this.egw.preference('ActiveProfileID', 'mail') || '').split('::')[0];
+
+		const classicFallback = () => egw.json('mail.EGroupware\\Mail\\Ui.ajax_refreshQuotaDisplay', [_server]).sendRequest(true);
+
+		if (!profileID)
+		{
+			classicFallback();
+			return;
+		}
+		this.jmap.getQuota(profileID).then((data) =>
+		{
+			if (data)
+			{
+				this.setQuotaDisplay(data);
+				return;
+			}
+			classicFallback();
+		});
 	}
 
 	/**
-	 * mail_setQuotaDisplay, function to call to read the quota for the active server
+	 * setQuotaDisplay, function to call to read the quota for the active server
 	 *
 	 * @param {object} _data
 	 *
 	 */
-	mail_setQuotaDisplay(_data)
+	setQuotaDisplay(_data)
 	{
 		if (!this.et2 && !this.checkET2()) return;
 
-		var quotabox = this.et2.getWidgetById(this.nm_index+'[quotainpercent]');
+		const quotabox = this.et2.getWidgetById(this.nm_index+'[quotainpercent]');
 
 		// Check to make sure it's there
 		if(quotabox)
@@ -1790,37 +3241,37 @@ export class MailApp extends EgwApp
 			quotabox.set_label(_data.data.quota);
 			if (_data.quotawarning)
 			{
-				var self = this;
-				var buttons = [
+				const self = this;
+				const buttons = [
 					{label: this.egw.lang("Empty Trash and Junk"), id: "cleanup", class: "ui-priority-primary", default: true, image: "delete"},
 					{label: this.egw.lang("Cancel"), id: "cancel", image:'cancelDialog'}
 				];
-				var server = [{iface:{id: _data.data.profileid+'::'}}];
-				Et2Dialog.show_dialog(function (_button_id)
+				const server = [{iface:{id: _data.data.profileid+'::'}}];
+				Et2Dialog.show_dialog((_button_id) =>
 					{
 						if (_button_id == "cleanup")
 						{
-							self.mail_emptySpam(null, server);
-							self.mail_emptyTrash(null, server);
+							self.emptySpam(null, server);
+							self.emptyTrash(null, server);
 						}
 						return;
 					},
 					this.egw.lang("Your remaining quota %1 is too low, you may not be able to send/receive further emails.\n Although cleaning up emails in trash or junk folder might help you to get some free space back.\n If that didn't help, please ask your administrator for more quota.", _data.data.quotafreespace),
 					this.egw.lang("Mail cleanup"),
-					'', buttons, Et2Dialog.WARNING_MESSAGE);
+					{}, buttons, Et2Dialog.WARNING_MESSAGE);
 			}
 		}
 	}
 
 	/**
-	 * mail_callRefreshVacationNotice, function to call the serverside function to refresh the vacationnotice for the active server
+	 * callRefreshVacationNotice, function to call the serverside function to refresh the vacationnotice for the active server
 	 *
 	 * @param {object} _server
 	 *
 	 */
-	mail_callRefreshVacationNotice(_server)
+	callRefreshVacationNotice(_server?)
 	{
-		egw.jsonq('mail_ui::ajax_refreshVacationNotice',[_server]);
+		egw.jsonq('EGroupware\\Mail\\Ui::ajax_refreshVacationNotice',[_server]);
 	}
 	/**
 	 * Make sure attachments have all needed data, so they can be found for
@@ -1829,10 +3280,10 @@ export class MailApp extends EgwApp
 	 * @param {string} mail_id Mail UID
 	 * @param {array} attachments Attachment information.
 	 */
-	register_for_drag(mail_id, attachments)
+	registerForDrag(mail_id, attachments)
 	{
 		// Put required info in global store
-		var data = {};
+		let data : any = {};
 		if (!attachments) return;
 		for (let i = 0; i < attachments.length; i++)
 		{
@@ -1842,7 +3293,7 @@ export class MailApp extends EgwApp
 			// Add required info
 			data.mime = data.type;
 			data.download_url = egw.link('/index.php', {
-				menuaction: 'mail.mail_ui.getAttachment',
+				menuaction: 'mail.EGroupware\\Mail\\Ui.getAttachment',
 				id: mail_id,
 				part: data.partID,
 				is_winmail: data.winmailFlag
@@ -1858,40 +3309,40 @@ export class MailApp extends EgwApp
 	 * @param {egwActionElement[]} _elems
 	 * @returns {DOMNode}
 	 */
-	drag_attachment(_action, _elems)
+	dragAttachment(_action, _elems)
 	{
-		var div = jQuery(document.createElement("div"))
-			.css({
-				position: 'absolute',
-				top: '0px',
-				left: '0px',
-				width: '300px'
-			});
+		const div = document.createElement("div");
+		div.style.position = 'absolute';
+		div.style.top = '0px';
+		div.style.left = '0px';
+		div.style.width = '300px';
 
-		var data = _elems[0].data || {};
+		const data = _elems[0].data || {};
 
-		var text = jQuery(document.createElement('div')).css({left: '30px', position: 'absolute'});
+		const text = document.createElement('div');
+		text.style.left = '30px';
+		text.style.position = 'absolute';
 		// add filename or number of files for multiple files
-		text.text(_elems.length > 1 ? _elems.length+' '+this.egw.lang('files') : data.name || '');
+		text.textContent = _elems.length > 1 ? _elems.length+' '+this.egw.lang('files') : data.name || '';
 		div.append(text);
 
 		// Add notice of Ctrl key, if supported
 		if(window.FileReader && 'draggable' in document.createElement('span') &&
 			navigator && navigator.userAgent.indexOf('Chrome') >= 0)
 		{
-			var key = ["Mac68K","MacPPC","MacIntel"].indexOf(window.navigator.platform) < 0 ? 'Ctrl' : 'Command';
-			text.append('<br />' + this.egw.lang('Hold %1 to drag files to your computer',key));
+			const key = ["Mac68K","MacPPC","MacIntel"].indexOf(window.navigator.platform) < 0 ? 'Ctrl' : 'Command';
+			text.insertAdjacentHTML('beforeend', '<br />' + this.egw.lang('Hold %1 to drag files to your computer',key));
 		}
 		return div;
 	}
 
 	/**
-	 * mail_refreshVacationNotice, function to call with appropriate data to refresh the vacationnotice for the active server
+	 * refreshVacationNotice, function to call with appropriate data to refresh the vacationnotice for the active server
 	 *
 	 * @param {object} _data
 	 *
 	 */
-	mail_refreshVacationNotice(_data)
+	refreshVacationNotice(_data)
 	{
 		if (!this.et2 && !this.checkET2()) return;
 		if (_data == null)
@@ -1917,7 +3368,7 @@ export class MailApp extends EgwApp
 	 * @param ev : Event|undefined
 	 * @param filter : Et2Select cat_id filter
 	 */
-	mail_searchtype_change(ev, filter)
+	searchtypeChange(ev, filter)
 	{
 		const nm = this.et2.getWidgetById(this.nm_index);
 		const dates = this.et2.getWidgetById('mail.index.dates');
@@ -1936,14 +3387,14 @@ export class MailApp extends EgwApp
 						}
 						ev && window.setTimeout(() => dates.getWidgetById('startdate').focus());
 					}
-					this.mail_callRefreshVacationNotice();
+					this.callRefreshVacationNotice();
 					return true;
 				default:
 					if (dates)
 					{
 						dates.set_disabled(true);
 					}
-					this.mail_callRefreshVacationNotice();
+					this.callRefreshVacationNotice();
 					return true;
 			}
 		}
@@ -1951,21 +3402,21 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_refreshFilter2Options, function to call with appropriate data to refresh the filter2 options for the active server
+	 * refreshFilter2Options, function to call with appropriate data to refresh the filter2 options for the active server
 	 *
 	 * @param {object} _data
 	 *
 	 */
-	mail_refreshFilter2Options(_data)
+	refreshFilter2Options(_data)
 	{
-		//alert('mail_refreshFilter2Options');
+		//alert('refreshFilter2Options');
 		if (_data == null) return;
 		if (!this.et2 && !this.checkET2()) return;
 
-		var filter2 = this.et2.getWidgetById('filter2');
-		var current = filter2.value;
-		var currentexists=false;
-		for (var k in _data)
+		const filter2 = this.et2.getWidgetById('filter2');
+		const current = filter2.value;
+		let currentexists=false;
+		for (const k in _data)
 		{
 			if (k==current) currentexists=true;
 		}
@@ -1974,21 +3425,21 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_refreshFilterOptions, function to call with appropriate data to refresh the filter options for the active server
+	 * refreshFilterOptions, function to call with appropriate data to refresh the filter options for the active server
 	 *
 	 * @param {object} _data
 	 *
 	 */
-	mail_refreshFilterOptions(_data)
+	refreshFilterOptions(_data)
 	{
-		//alert('mail_refreshFilterOptions');
+		//alert('refreshFilterOptions');
 		if (_data == null) return;
 		if (!this.et2 && !this.checkET2()) return;
 
-		var filter = this.et2.getWidgetById('filter');
-		var current = filter.value;
-		var currentexists=false;
-		for (var k in _data)
+		const filter = this.et2.getWidgetById('filter');
+		const current = filter.value;
+		let currentexists=false;
+		for (const k in _data)
 		{
 			if (k==current) currentexists=true;
 		}
@@ -1998,21 +3449,44 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_refreshCatIdOptions, function to call with appropriate data to refresh the filter options for the active server
+	 * Refresh the app-header flag filter's options for the active server, whose colored custom
+	 * flags need the server to support arbitrary keywords - called from mail_ui::ajax_refreshFilters()
+	 *
+	 * @param {Array} _data select-options as mail_ui::flagFilterOptions() builds them
+	 */
+	refreshFlagFilterOptions(_data)
+	{
+		if (_data == null) return;
+		if (!this.et2 && !this.checkET2()) return;
+
+		const flagFilter = this.et2.getWidgetById('flagFilter');
+		if (!flagFilter) return;
+		// the option filtered for may not exist on the new server - fall back to "No filter",
+		// and let the list drop the now-stale filter with it
+		if (!_data.some(option => option.value == flagFilter.value))
+		{
+			flagFilter.set_value('');
+			this.changeNmFilter(null, flagFilter);
+		}
+		flagFilter.set_select_options(_data);
+	}
+
+	/**
+	 * refreshCatIdOptions, function to call with appropriate data to refresh the filter options for the active server
 	 *
 	 * @param {object} _data
 	 *
 	 */
-	mail_refreshCatIdOptions(_data)
+	refreshCatIdOptions(_data)
 	{
-		//alert('mail_refreshCatIdOptions');
+		//alert('refreshCatIdOptions');
 		if (_data == null) return;
 		if (!this.et2 && !this.checkET2()) return;
 
-		var filter = this.et2.getWidgetById('cat_id');
-		var current = filter.value;
-		var currentexists=false;
-		for (var k in _data)
+		const filter = this.et2.getWidgetById('cat_id');
+		const current = filter.value;
+		let currentexists=false;
+		for (const k in _data)
 		{
 			if (k==current) currentexists=true;
 		}
@@ -2027,29 +3501,29 @@ export class MailApp extends EgwApp
 	 *
 	 * @param {array} _folders description
 	 */
-	mail_queueRefreshFolderList(_folders)
+	queueRefreshFolderList(_folders)
 	{
-		var self = this;
+		const self = this;
 		// as jsonq is too fast wrap it to be delayed a bit, to ensure the folder actions
 		// are executed last of the queue
-		window.setTimeout(function() {
-			egw.jsonq('mail.mail_ui.ajax_setFolderStatus',[_folders], function (){self.unlock_tree();});
+		window.setTimeout(() => {
+			egw.jsonq('mail.EGroupware\\Mail\\Ui.ajax_setFolderStatus',[_folders], () =>{self.unlockTree();});
 		}, 500);
 	}
 
 	/**
-	 * mail_CheckFolderNoSelect - implementation of the mail_CheckFolderNoSelect action to control right click options on the tree
+	 * checkFolderNoSelect - implementation of the checkFolderNoSelect action to control right click options on the tree
 	 *
 	 * @param {object} action
 	 * @param {object} _senders the representation of the tree leaf to be manipulated
 	 * @param {object} _currentNode
 	 */
-	mail_CheckFolderNoSelect(action,_senders,_currentNode) {
+	checkFolderNoSelect(action,_senders,_currentNode) {
 
 		// Abort if user selected an un-selectable node
 		// Use image over anything else because...?
-		var ftree, node;
-		ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		let node;
 		if (ftree)
 		{
 			node = ftree.getNode(_senders[0].id);
@@ -2058,6 +3532,20 @@ export class MailApp extends EgwApp
 		if (node && node?.im0?.indexOf('NoSelect') !== -1)
 		{
 			//ftree.reSelectItem(_previous);
+			return false;
+		}
+
+		// Rename/Move/Delete only make sense on a real folder, never a bare account-root node
+		// (jmapRenameFolder()/jmapMoveFolder()/jmapDeleteFolder() all reject one too, "an account
+		// itself cannot be renamed/moved/deleted here") - without this, those 3 actions stayed
+		// enabled for an account root and fell through to their now-removed classic
+		// ajax_renameFolder/ajax_MoveFolder/ajax_deleteFolder counterparts (mail_ui no longer has
+		// them, see doc/ai/projects/mail-folder-tree-jmap.md). 'add'/'subscribe'/'unsubscribe'/
+		// 'foldermanagement' are deliberately excluded - each is a real, supported operation on an
+		// account root (adding its first top-level folder, managing the whole account's
+		// subscriptions).
+		if (['edit', 'move', 'delete'].includes(action.id) && _senders[0].id.indexOf('::') === -1)
+		{
 			return false;
 		}
 
@@ -2073,11 +3561,11 @@ export class MailApp extends EgwApp
 	 * @param {object} _senders the representation of the tree leaf to be manipulated
 	 * @param {object} _currentNode
 	 */
-	spamfolder_enabled(_action,_senders,_currentNode)
+	spamfolderEnabled(_action,_senders,_currentNode)
 	{
-		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		var acc_id = _senders[0].id.split('::')[0];
-		var node = ftree ? ftree.getNode(acc_id) : null;
+		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		const acc_id = _senders[0].id.split('::')[0];
+		const node = ftree ? ftree.getNode(acc_id) : null;
 
 		return node && node.data && node.data.spamfolder;
 	}
@@ -2092,11 +3580,11 @@ export class MailApp extends EgwApp
 	 * @param {object} _senders the representation of the tree leaf to be manipulated
 	 * @param {object} _currentNode
 	 */
-	archivefolder_enabled(_action,_senders,_currentNode)
+	archivefolderEnabled(_action,_senders,_currentNode)
 	{
-		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		var acc_id = _currentNode.id.split('::')[2]; // this is operating on mails
-		var node = ftree && acc_id ? ftree.getNode(acc_id) : null;
+		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		const acc_id = _currentNode.id.split('::')[2]; // this is operating on mails
+		const node = ftree && acc_id ? ftree.getNode(acc_id) : null;
 
 		return node && node.data && node.data.archivefolder;
 	}
@@ -2110,11 +3598,11 @@ export class MailApp extends EgwApp
 	 * @param {object} _senders the representation of the tree leaf to be manipulated
 	 * @param {object} _currentNode
 	 */
-	sieve_enabled(_action,_senders,_currentNode)
+	sieveEnabled(_action,_senders,_currentNode)
 	{
-		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		var acc_id = _senders[0].id.split('::')[0];
-		var node = ftree ? ftree.getNode(acc_id) : null;
+		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		const acc_id = _senders[0].id.split('::')[0];
+		const node = ftree ? ftree.getNode(acc_id) : null;
 
 		return node && node.data && node.data.sieve;
 	}
@@ -2129,24 +3617,24 @@ export class MailApp extends EgwApp
 	 * @param {object} _senders the representation of the tree leaf to be manipulated
 	 * @param {object} _currentNode
 	 */
-	acl_enabled(_action,_senders,_currentNode)
+	aclEnabled(_action,_senders,_currentNode)
 	{
-		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		var inbox = _senders[0].id.split('::')[0]+'::INBOX';
-		var node = ftree ? ftree.getNode(inbox) : null;
+		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		const inbox = _senders[0].id.split('::')[0]+'::INBOX';
+		const node = ftree ? ftree.getNode(inbox) : null;
 
-		return node && node.data && node.data.acl && this.mail_CheckFolderNoSelect(_action,_senders,_currentNode);
+		return node && node.data && node.data.acl && this.checkFolderNoSelect(_action,_senders,_currentNode);
 	}
 
 	/**
-	 * mail_setFolderStatus, function to set the status for the visible folders
+	 * setFolderStatus, function to set the status for the visible folders
 	 *
 	 * @param {array} _status
 	 *
 	 * type _status =
 	 * {'folderId':{displayName:String, unseenCount?:number}}
 	 */
-	mail_setFolderStatus(_status) {
+	setFolderStatus(_status) {
 		if (!this.et2 && !this.checkET2()) return;
 		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		if (!ftree) return;
@@ -2167,15 +3655,15 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_setLeaf, function to set the id and description for the folder given by status key
+	 * setLeaf, function to set the id and description for the folder given by status key
 	 * @param {array} _status status array with the required data (new id, desc, old desc)
 	 *		key is the original id of the leaf to change
-	 *		multiple sets can be passed to mail_setLeaf
+	 *		multiple sets can be passed to setLeaf
 	 */
-	mail_setLeaf(_status) {
-		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-            var selectedNode = ftree.getSelectedItem();
-		for (var i in _status)
+	setLeaf(_status) {
+		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+            const selectedNode = ftree.getSelectedItem();
+		for (const i in _status)
 		{
 			// if olddesc is undefined or #skip# then skip the message, as we process subfolders
 			if (typeof _status[i]['olddesc'] !== 'undefined' && _status[i]['olddesc'] !== '#skip-user-interaction-message#') this.egw.message(this.egw.lang("Renamed Folder %1 to %2",_status[i]['olddesc'],_status[i]['desc']), 'success');
@@ -2184,48 +3672,46 @@ export class MailApp extends EgwApp
 			//alert(i +'->'+_status[i]['id']+'+'+_status[i]['desc']);
 			if (_status[i]['id']==selectedNode.id)
 			{
-				var nm = this.et2.getWidgetById(this.nm_index);
-				nm.activeFilters["selectedFolder"] = _status[i]['id'];
-				nm.applyFilters();
+				const nm = this.et2.getWidgetById(this.nm_index);
+				nm.applyFilters({selectedFolder: _status[i]['id']});
 			}
 		}
 	}
 
 	/**
-	 * mail_removeLeaf, function to remove the leaf represented by the given ID
+	 * removeLeaf, function to remove the leaf represented by the given ID
 	 * @param {array} _status status array with the required data (KEY id, VALUE desc)
 	 *		key is the id of the leaf to delete
 	 *		multiple sets can be passed to mail_deleteLeaf
 	 */
-	mail_removeLeaf(_status) {
-		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		var selectedNode = ftree.getSelectedNode();
-		for (var i in _status)
+	removeLeaf(_status) {
+		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		const selectedNode = ftree.getSelectedNode();
+		for (const i in _status)
 		{
 			// if olddesc is undefined or #skip# then skip the message, as we process subfolders
 			if (typeof _status[i] !== 'undefined' && _status[i] !== '#skip-user-interaction-message#') this.egw.message(this.egw.lang("Removed Folder %1 ",_status[i]), 'success');
 			ftree.deleteItem(i,(selectedNode.id==i));
-			var selectedNodeAfter = ftree.getSelectedNode();
+			const selectedNodeAfter = ftree.getSelectedNode();
 			//alert(i +'->'+_status[i]['id']+'+'+_status[i]['desc']);
 			if (selectedNodeAfter.id!=selectedNode.id && selectedNode.id==i)
 			{
-				var nm = this.et2.getWidgetById(this.nm_index);
-				nm.activeFilters["selectedFolder"] = selectedNodeAfter.id;
-				nm.applyFilters();
+				const nm = this.et2.getWidgetById(this.nm_index);
+				nm.applyFilters({selectedFolder: selectedNodeAfter.id});
 			}
 		}
 	}
 
 	/**
-	 * mail_reloadNode, function to reload the leaf represented by the given ID
+	 * reloadNode, function to reload the leaf represented by the given ID
 	 * @param {Object.<string,string>|Object.<string,Object}}  _status
 	 *		Object with the required data (KEY id, VALUE desc), or ID => {new data}
 	 */
-	mail_reloadNode(_status) {
-		var ftree = this.et2?this.et2.getWidgetById(this.nm_index+'[foldertree]'):null;
+	reloadNode(_status) {
+		const ftree = this.et2?this.et2.getWidgetById(this.nm_index+'[foldertree]'):null;
 		if (!ftree) return;
-		var selectedNode = ftree.getSelectedNode();
-		for (var i in _status)
+		const selectedNode = ftree.getSelectedNode();
+		for (const i in _status)
 		{
 			// if olddesc is undefined or #skip# then skip the message, as we process subfolders
 			if (typeof _status[i] !== 'undefined' && _status[i] !== '#skip-user-interaction-message#')
@@ -2238,28 +3724,26 @@ export class MailApp extends EgwApp
 			if (typeof _status[i] == "string") ftree.setStyle(i, 'font-weight: '+(_status[i].match(this._unseen_regexp) ? 'bold' : 'normal'));
 		}
 
-		var selectedNodeAfter = ftree.getSelectedNode();
+		const selectedNodeAfter = ftree.getSelectedNode();
 
 		// If selected folder changed, refresh nextmatch
 		if (selectedNodeAfter != null && selectedNodeAfter.id!=selectedNode.id)
 		{
-			var nm = this.et2.getWidgetById(this.nm_index);
-			nm.activeFilters["selectedFolder"] = selectedNodeAfter.id;
-			nm.applyFilters();
+			const nm = this.et2.getWidgetById(this.nm_index);
+			nm.applyFilters({selectedFolder: selectedNodeAfter.id});
 		}
 	}
 
 	/**
-	 * mail_refreshMessageGrid, function to call to reread ofthe current folder
+	 * refreshMessageGrid, function to call to reread ofthe current folder
 	 *
 	 * @param {boolean} _isPopup
 	 * @param {boolean} _refreshVacationNotice
 	 */
-	mail_refreshMessageGrid(_isPopup, _refreshVacationNotice) {
-		if (typeof _isPopup == 'undefined') _isPopup = false;
-		if (typeof _refreshVacationNotice == 'undefined') _refreshVacationNotice = false;
-		var nm;
-		if (_isPopup && !this.mail_isMainWindow)
+	refreshMessageGrid(_isPopup: boolean = false, _refreshVacationNotice: boolean = false)
+	{
+		let nm: Et2Nextmatch;
+		if (_isPopup && !this.isMainWindow)
 		{
 			nm = window.opener.etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index);
 		}
@@ -2267,48 +3751,47 @@ export class MailApp extends EgwApp
 		{
 			nm = this.et2.getWidgetById(this.nm_index);
 		}
-		var dates = this.et2.getWidgetById('mail.index.datefilter');
-		var filter = this.et2.getWidgetById('cat_id');
+		const dates = this.et2.getWidgetById('mail.index.datefilter');
+		const filter = this.et2.getWidgetById('cat_id');
 		if(nm && filter)
 		{
-			nm.activeFilters["startdate"]=null;
-			nm.activeFilters["enddate"]=null;
+			const filters: any = {startdate: null, enddate: null};
 			switch(filter.getValue())
 			{
 				case 'bydate':
 
 					if (filter && dates)
 					{
-						if (this.et2.getWidgetById('startdate') && this.et2.getWidgetById('startdate').get_value()) nm.activeFilters["startdate"] = this.et2.getWidgetById('startdate').value;
-						if (this.et2.getWidgetById('enddate') && this.et2.getWidgetById('enddate').get_value()) nm.activeFilters["enddate"] = this.et2.getWidgetById('enddate').value;
+						if (this.et2.getWidgetById('startdate') && this.et2.getWidgetById('startdate').get_value()) filters.startdate = this.et2.getWidgetById('startdate').value;
+						if (this.et2.getWidgetById('enddate') && this.et2.getWidgetById('enddate').get_value()) filters.enddate = this.et2.getWidgetById('enddate').value;
 					}
 			}
+			nm.applyFilters(filters); // this should refresh the active folder
 		}
-		nm.applyFilters(); // this should refresh the active folder
-		if (_refreshVacationNotice) this.mail_callRefreshVacationNotice();
+		if (_refreshVacationNotice) this.callRefreshVacationNotice();
 	}
 
 	/**
-	 * mail_getMsg - gets the current Message
+	 * getMsg - gets the current Message
 	 * @return string
 	 */
-	mail_getMsg()
+	getMsg()
 	{
-		var msg_wdg = this.et2.getWidgetById('msg');
+		const msg_wdg = this.et2.getWidgetById('msg');
 		if (msg_wdg)
 		{
-			return msg_wdg.valueOf().htmlNode[0].innerHTML;
+			return msg_wdg.value;
 		}
 		return "";
 	}
 
 	/**
-	 * mail_setMsg - sets a Message, with the msg container, and controls if the container is enabled/disabled
+	 * setMsg - sets a Message, with the msg container, and controls if the container is enabled/disabled
 	 * @param {string} myMsg - the message
 	 */
-	mail_setMsg(myMsg)
+	setMsg(myMsg)
 	{
-		var msg_wdg = this.et2.getWidgetById('msg');
+		const msg_wdg = this.et2.getWidgetById('msg');
 		if (msg_wdg)
 		{
 			msg_wdg.set_value(myMsg);
@@ -2322,9 +3805,9 @@ export class MailApp extends EgwApp
 	 * @param _action
 	 * @param _elems
 	 */
-	mail_delete(_action,_elems)
+	deleteMessage(_action,_elems)
 	{
-		this.mail_checkAllSelected(_action,_elems,null,true);
+		this.checkAllSelected(_action,_elems,null,true);
 	}
 
 	/**
@@ -2334,9 +3817,9 @@ export class MailApp extends EgwApp
 	 * @param {array} _elems
 	 * @param {boolean} _allMessagesChecked
 	 */
-	mail_callDelete(_action,_elems,_allMessagesChecked)
+	callDelete(_action,_elems,_allMessagesChecked)
 	{
-		var calledFromPopup = false;
+		let calledFromPopup = false;
 		if (typeof _allMessagesChecked == 'undefined') _allMessagesChecked=false;
 		if (typeof _elems == 'undefined' || _elems.length==0)
 		{
@@ -2346,40 +3829,39 @@ export class MailApp extends EgwApp
 				_elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
-			if ((typeof _elems == 'undefined' || _elems.length==0) && this.mail_isMainWindow)
+			if ((typeof _elems == 'undefined' || _elems.length==0) && this.isMainWindow)
 			{
-				if (this.mail_currentlyFocussed)
+				if (this.currentlyFocussed)
 				{
 					_elems = [];
-					_elems.push({id:this.mail_currentlyFocussed});
+					_elems.push({id:this.currentlyFocussed});
 				}
 			}
 		}
-		var msg = this.mail_getFormData(_elems);
+		const msg = this.getFormData(_elems);
 		msg['all'] = _allMessagesChecked;
 		if (msg['all']=='cancel') return false;
-		if (msg['all']) msg['activeFilters'] = this.mail_getActiveFilters(_action);
+		if (msg['all']) msg['activeFilters'] = this.getActiveFilters(_action);
 		//alert(_action.id+','+ msg);
-		if (!calledFromPopup) this.mail_setRowClass(_elems,'deleted');
-		this.mail_deleteMessages(msg,'no',calledFromPopup);
-		if (calledFromPopup && this.mail_isMainWindow==false)
+		this.deleteMessages(msg,'no',calledFromPopup);
+		if (calledFromPopup && this.isMainWindow==false)
 		{
 			egw(window).close();
 		}
-		else if (typeof this.et2_view!='undefined' && typeof this.et2_view.close == 'function')
+		else if (typeof this.et2_view!='undefined' && typeof (this.et2_view as any).close == 'function')
 		{
-			this.et2_view.close();
+			(this.et2_view as any).close();
 		}
 	}
 
 	/**
 	 * function to find (and reduce) unseen count from folder-name
 	 */
-	mail_reduceCounterWithoutServerRoundtrip()
+	reduceCounterWithoutServerRoundtrip()
 	{
 		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		const _foldernode = ftree?.getSelectedItem();
-		let counter = _foldernode?.badge;
+		const counter = _foldernode?.badge;
 		let icounter = 0;
 		if (counter) icounter = parseInt(counter);
 		if (icounter>0)
@@ -2388,9 +3870,9 @@ export class MailApp extends EgwApp
 			if (newcounter === 0)
 			{
 				newcounter = null;
-				ftree.setClass(_foldernode.id, 'unread','-');
+				ftree.setClass(_foldernode.value, 'unread','-');
 			}
-			ftree.set_badge(_foldernode.id, newcounter?.toString());
+			ftree.set_badge(_foldernode.value, newcounter?.toString());
 		}
 	}
 
@@ -2400,14 +3882,14 @@ export class MailApp extends EgwApp
 	_unseen_regexp = / \([0-9]+\)$/;
 
 	/**
-	 * mail_splitRowId
+	 * splitRowId
 	 *
 	 * @param {string} _rowID
 	 *
 	 */
-	mail_splitRowId(_rowID)
+	splitRowId(_rowID)
 	{
-		var res = _rowID.split('::');
+		const res = _rowID.split('::');
 		// as a rowID is perceeded by app::, should be mail!
 		if (res.length==4 && !isNaN(parseInt(res[0])))
 		{
@@ -2424,13 +3906,82 @@ export class MailApp extends EgwApp
 	 * then removes the rows & selects the next row for focus.  In mail we tell the nextmatch to remove the rows
 	 * immediately and keep track of the rows above & below the deleted row(s), not setting focus to a new row.
 	 * Then tell the server, and if the user presses up or down arrow in the next 10s, we focus the above or below row.
-	 * see et2_extension_nextmatch option "disable_selection_advance"
+	 * Mail keeps its delayed-arrow selection behaviour via the nextmatch delete event.
 	 *
 	 * @param {string} _msg - message list
 	 * @param {object} _action - optional action
 	 * @param {object} _calledFromPopup
 	 */
-	mail_deleteMessages(_msg,_action,_calledFromPopup)
+	/**
+	 * Shared catch handler for every mail_tryJmapXxx() fast-path wrapper: a JmapUserError means
+	 * JMAP was actually reached and gave a definitive answer (a real ["error",...] response, or a
+	 * Mailbox/set|Email/set per-item SetError) - rethrown rather than also attempting the classic
+	 * fallback, which would very likely fail the same way for the same reason. Any other caught
+	 * value (network failure, ineligible account) keeps today's silent-fallback behaviour
+	 * unchanged - falls back to the classic ajax call, whose own success/failure is what the
+	 * returned promise now settles with.
+	 *
+	 * Deliberately shows no message and touches no UI itself - every caller optimistically
+	 * changes something before firing the request that ends up here, so only the caller knows
+	 * what needs reconciling on failure. Callers must catch the promise this feeds into, show
+	 * the resulting error (e.message for a JmapUserError, a generic one otherwise), and reconcile
+	 * their own optimistic change - this used to just swallow the error via a "silently keep the
+	 * optimistic UI change" default, leaving the UI showing something that was never actually
+	 * confirmed server-side.
+	 *
+	 * @param e the caught rejection
+	 * @param fallback the classic ajax call to run when e is NOT a JmapUserError
+	 */
+	private handleJmapError(e : any, fallback : () => any) : any
+	{
+		// compares by name, not `instanceof` - this.jmap may be a popup's OPENER's own instance
+		// (see MailApp.jmap's own docblock), so an error it throws can be an instance of a
+		// DIFFERENT window's separately-loaded JmapUserError class, which `instanceof` would
+		// never match even for a real one (same pitfall as feedback_cross_realm_instanceof)
+		if (e?.constructor?.name === 'JmapUserError')
+		{
+			throw e;
+		}
+		console.error('MailApp: JMAP action failed, falling back to classic', e);
+		return fallback();
+	}
+
+	/**
+	 * Try the fast client-side JMAP delete path - MailJmap.deleteMessages() for an explicit
+	 * selection, or deleteAllMatching() for "select all matching the current filter". Returns null
+	 * if not applicable at all (caller falls back to the unchanged ajax_deleteMessages() call
+	 * directly); otherwise a Promise that either succeeds via JMAP or, on any failure, falls back
+	 * to that same classic call internally - so the caller can treat the return value uniformly
+	 * (e.g. .finally()) either way.
+	 */
+	private tryJmapDelete(_msg : any, _action : any) : Promise<any> | null
+	{
+		const mode : 'trash' | 'destroy' = _action === 'remove_immediately' ? 'destroy' :
+			_action === 'move_to_trash' ? 'trash' :
+			(this.egw.preference('deleteOptions', 'mail') === 'remove_immediately' ? 'destroy' : 'trash');
+		const fallback = () => egw.json('mail.EGroupware\\Mail\\Ui.ajax_deleteMessages',
+			[_msg, (typeof _action == 'undefined' ? 'no' : _action)]).sendRequest(true);
+
+		if (_msg['all'])
+		{
+			return this.jmap.deleteAllMatching(this.buildJmapQuery(_msg), mode)
+				.catch((e) => this.handleJmapError(e, fallback));
+		}
+		if (!Array.isArray(_msg['msg']) || !_msg['msg'].length)
+		{
+			return null;
+		}
+		// doc/ai/projects/mail-threaded-view.md, "Bulk actions on collapsed thread rows" - a
+		// same-tick no-op today (nothing selected is ever a thread row while
+		// ProfileHandler::THREADING_ENABLED is false), so this changes no current behaviour.
+		return this.jmap.expandThreadRowIds(_msg['msg']).then((expandedIds) =>
+		{
+			const references = expandedIds.map((id : string) => this.jmap.messageReference(id));
+			return this.jmap.deleteMessages(references, mode);
+		}).catch((e) => this.handleJmapError(e, fallback));
+	}
+
+	deleteMessages(_msg,_action,_calledFromPopup?)
 	{
 		let message, ftree, _foldernode, displayname;
 		if (_calledFromPopup)
@@ -2450,43 +4001,45 @@ export class MailApp extends EgwApp
 		{
                 _foldernode = ftree.getSelectedItem();
 
-                displayname = _foldernode.text.replace(this._unseen_regexp, '');
+                displayname = _foldernode.label.replace(this._unseen_regexp, '');
             } else {
-			message = this.mail_splitRowId(_msg['msg'][0]);
+			message = this.splitRowId(_msg['msg'][0]);
 			if (message[3]) _foldernode = displayname = atob(message[3]);
 		}
-		// nextmatch normally handles selection of next row after delete, but mail is different
-		// (uses et2_nextmatch option disable_selection_advance)
+		// Mail only selects an adjacent row after the user's next arrow key.
 		const nm = _calledFromPopup ?
 			window?.egw?.window?.app?.mail?.et2?.getWidgetById(this.nm_index) :
 			this.et2.getWidgetById(this.nm_index);
-		const row_ids = _msg["msg"];
-		if (!_msg["all"])
-		{
-			this.refresh(nm, _msg["msg"], et2_nextmatch.DELETE);
-		}
+		// Optimistic client-side removal, for "select all matching filter" too, not just an
+		// explicit selection - _msg["msg"] already holds every row id that was actually checked
+		// (getFormData(), same array either way; "select all" checks every currently-loaded row).
+		// A real server-side "delete all" (mode='trash') never happens synchronously - Imap::
+		// emailSet() queues the actual IMAP move via queueDeferredWork(), which only runs AFTER
+		// the JMAP response is already sent (mail/jmap.php's own fastcgi_finish_request() then
+		// JmapImap::runDeferredWork()) - so re-querying the folder right after a "success" response
+		// (the old this.egw.refresh() call below) is a race this side can never win: the deferred
+		// move hasn't necessarily run yet, and the re-query would show the same rows as still
+		// there (found live 2026-09-07, ralf: "deleting all drafts... seems to do nothing" - the
+		// delete itself deferred-ran fine moments later, this refresh's own re-query just fired too
+		// early and clobbered the optimistic removal with stale data).
+		this.refresh(nm, _msg["msg"], Et2DatagridUpdateTypes.DELETE);
 
-		// If auto-refresh is on, turn it off until the delete request finishes
-		const nm_autorefresh = nm._get_autorefresh();
-		if (nm_autorefresh)
-		{
-			nm._set_autorefresh(0);
-		}
-
-		// Tell server
-		egw.json('mail.mail_ui.ajax_deleteMessages', [_msg, (typeof _action == 'undefined' ? 'no' : _action)])
-			.sendRequest(true)
-			.finally(() =>
+		// Tell server - fast client-side JMAP path for the common case (explicit selection, not
+		// "select all matching the current filter"), falling back to the classic ajax call
+		// unchanged for anything else. Reconciles the optimistic removal above on failure either
+		// way (below) - a message that was never actually deleted server-side must come back,
+		// not silently vanish until the next reload reveals it.
+		Promise.resolve(this.tryJmapDelete(_msg, _action) ??
+			egw.json('mail.EGroupware\\Mail\\Ui.ajax_deleteMessages', [_msg, (typeof _action == 'undefined' ? 'no' : _action)]).sendRequest(true))
+			.then(() =>
 			{
-				// Restart autorefresh
-				if (nm_autorefresh)
-				{
-					nm._set_autorefresh(nm_autorefresh);
-				}
+				this.egw.message(this.egw.lang("deleted %1 messages in %2", (_msg['all'] ? egw.lang('all') : _msg['msg'].length), (displayname ? displayname : egw.lang('current Folder'))), 'success');
 			})
-
-		if (_msg['all']) this.egw.refresh(this.egw.lang("deleted %1 messages in %2",(_msg['all']?egw.lang('all'):_msg['msg'].length),(displayname?displayname:egw.lang('current folder'))),'mail');//,ids,'delete');
-		this.egw.message(this.egw.lang("deleted %1 messages in %2", (_msg['all'] ? egw.lang('all') : _msg['msg'].length), (displayname ? displayname : egw.lang('current Folder'))), 'success');
+			.catch((e) =>
+			{
+				this.egw.message(e?.message || this.egw.lang('Failed to delete messages'), 'error');
+				nm.refresh();
+			});
 	}
 
 	/**
@@ -2494,7 +4047,7 @@ export class MailApp extends EgwApp
 	 * takes in all arguments
 	 * @param _msg - message list
 	 */
-	mail_deleteMessagesShowResult(_msg)
+	deleteMessagesShowResult(_msg)
 	{
 		// Update list
 
@@ -2505,7 +4058,7 @@ export class MailApp extends EgwApp
 		}
 		else
 		{
-			for (var i = 0; i < _msg['msg'].length; i++)
+			for (let i = 0; i < _msg['msg'].length; i++)
 			{
 				this.egw.refresh(_msg['egw_message'], 'mail', _msg['msg'][i].replace(/mail::/, ''), 'delete');
 			}
@@ -2518,25 +4071,24 @@ export class MailApp extends EgwApp
 	 * 	 reason - reason to report
 	 * 	 messageList
 	 */
-	mail_retryForcedDelete(responseObject)
+	retryForcedDelete(responseObject)
 	{
 		// Start a full list refresh to show current data
 		const nm = this.et2.getWidgetById('nm');
 		nm?.refresh();
 
-		var reason = responseObject['response'];
-		var messageList = responseObject['messageList'];
+		const reason = responseObject['response'];
+		const messageList = responseObject['messageList'];
 		if (confirm(reason))
 		{
-			this.mail_deleteMessages(messageList,'remove_immediately');
+			this.deleteMessages(messageList,'remove_immediately');
 		}
 		else
 		{
 			this.egw.message(this.egw.lang('canceled deletion due to user interaction'), 'success');
-			this.mail_removeRowClass(messageList,'deleted');
 		}
-		this.mail_refreshMessageGrid();
-		this.mail_preview();
+		this.refreshMessageGrid();
+		this.preview();
 	}
 
 	/**
@@ -2544,31 +4096,59 @@ export class MailApp extends EgwApp
 	 *
 	 * @param _messageList
 	 */
-	mail_undeleteMessages(_messageList) {
+	undeleteMessages(_messageList) {
 	// setting class of row, the old style
 	}
 
 	/**
-	 * mail_emptySpam
+	 * Try the fast client-side JMAP path (MailJmap.purgeFolder()) for "empty junk"/"empty trash" -
+	 * always applicable (no "select all"/single-selection distinction, it's a whole-folder purge),
+	 * but purgeFolder() throws if the profile has no junk/trash folder configured, or on any JMAP
+	 * failure - either way this falls back to the given classic ajax call unchanged, which has its
+	 * own completion callback (unlockTree()) already - not duplicated here. On success, replicates
+	 * the two client-visible effects the classic call's server response used to push: clear the
+	 * folder-tree badge (setFolderStatus - the folder is now empty) and, if the purged folder
+	 * is the one currently displayed, refresh the grid (classic path's conditional egw.refresh()).
+	 */
+	private tryJmapPurgeFolder(profileID : string, which : 'trash' | 'junk', selectedFolder : string,
+		onSuccess : () => void, fallback : () => Promise<any>) : Promise<any>
+	{
+		return this.jmap.purgeFolder(profileID, which).then((purgedFolder) =>
+		{
+			this.setFolderStatus({[purgedFolder]: 0});
+			if (purgedFolder === selectedFolder)
+			{
+				this.refreshMessageGrid();
+			}
+			onSuccess();
+		}, (e) => this.handleJmapError(e, fallback));
+	}
+
+	/**
+	 * emptySpam
 	 *
 	 * @param {object} action
 	 * @param {object} _senders
 	 */
-	mail_emptySpam(action,_senders) {
-		var server = _senders[0].id.split('::');
-		var activeFilters = this.mail_getActiveFilters();
-		var self = this;
+	emptySpam(action,_senders) {
+		const server = _senders[0].id.split('::');
+		const activeFilters = this.getActiveFilters();
+		const self = this;
 
+		this.jmap.invalidateQuota(server[0]);
 		this.egw.message(this.egw.lang('empty junk'), 'success');
-		egw.json('mail.mail_ui.ajax_emptySpam',[server[0], activeFilters['selectedFolder']? activeFilters['selectedFolder']:null],function(){self.unlock_tree();})
-			.sendRequest(true);
+		const classicEmptySpam = () => egw.json('mail.EGroupware\\Mail\\Ui.ajax_emptySpam',
+			[server[0], activeFilters['selectedFolder']? activeFilters['selectedFolder']:null],
+			() =>{self.unlockTree();}).sendRequest(true);
+		this.tryJmapPurgeFolder(server[0], 'junk', activeFilters['selectedFolder'], () => self.unlockTree(), classicEmptySpam)
+			.catch((e) => this.egw.message(e?.message || this.egw.lang('Failed to empty junk'), 'error'));
 
 		// Directly delete any trash cache for selected server
 		if(window.localStorage)
 		{
-			for(var i = 0; i < window.localStorage.length; i++)
+			for(let i = 0; i < window.localStorage.length; i++)
 			{
-				var key = window.localStorage.key(i);
+				const key = window.localStorage.key(i);
 
 				// Find directly by what the key would look like
 				if(key.indexOf('cached_fetch_mail::{"selectedFolder":"'+server[0]+'::') == 0 &&
@@ -2581,26 +4161,30 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_emptyTrash
+	 * emptyTrash
 	 *
 	 * @param {object} action
 	 * @param {object} _senders
 	 */
-	mail_emptyTrash(action,_senders) {
-		var server = _senders[0].id.split('::');
-		var activeFilters = this.mail_getActiveFilters();
-		var self = this;
+	emptyTrash(action,_senders) {
+		const server = _senders[0].id.split('::');
+		const activeFilters = this.getActiveFilters();
+		const self = this;
 
+		this.jmap.invalidateQuota(server[0]);
 		this.egw.message(this.egw.lang('empty trash'), 'success');
-		egw.json('mail.mail_ui.ajax_emptyTrash',[server[0], activeFilters['selectedFolder']? activeFilters['selectedFolder']:null],function(){self.unlock_tree();})
-			.sendRequest(true);
+		const classicEmptyTrash = () => egw.json('mail.EGroupware\\Mail\\Ui.ajax_emptyTrash',
+			[server[0], activeFilters['selectedFolder']? activeFilters['selectedFolder']:null],
+			() =>{self.unlockTree();}).sendRequest(true);
+		this.tryJmapPurgeFolder(server[0], 'trash', activeFilters['selectedFolder'], () => self.unlockTree(), classicEmptyTrash)
+			.catch((e) => this.egw.message(e?.message || this.egw.lang('Failed to empty trash'), 'error'));
 
 		// Directly delete any trash cache for selected server
 		if(window.localStorage)
 		{
-			for(var i = 0; i < window.localStorage.length; i++)
+			for(let i = 0; i < window.localStorage.length; i++)
 			{
-				var key = window.localStorage.key(i);
+				const key = window.localStorage.key(i);
 
 				// Find directly by what the key would look like
 				if(key.indexOf('cached_fetch_mail::{"selectedFolder":"'+server[0]+'::') == 0 &&
@@ -2613,23 +4197,7 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_compressFolder
-	 *
-	 * @param {object} action
-	 * @param {object} _senders
-	 *
-	 */
-	mail_compressFolder(action,_senders) {
-		this.egw.message(this.egw.lang('compress folder'), 'success');
-		egw.jsonq('mail.mail_ui.ajax_compressFolder',[_senders[0].id]);
-		//	.sendRequest(true);
-		// since the json reply is using this.egw.refresh, we should not need to call refreshFolderStatus
-		// as the actions thereof are now bound to run after grid refresh
-		//this.mail_refreshFolderStatus();
-	}
-
-	/**
-	 * mail_changeProfile
+	 * changeProfile
 	 *
 	 * @param {string} folder the ID of the selected Node -> should be an integer
 	 * @param {object} _widget handle to the tree widget
@@ -2637,10 +4205,25 @@ export class MailApp extends EgwApp
 	 *		folders.  False means they're already loaded in the tree, and we don't need
 	 *		them again
 	 */
-	mail_changeProfile(folder,_widget, getFolders) {
+	/**
+	 * @param folder bare account id (eg. "42") to switch to
+	 * @param _widget foldertree widget
+	 * @param getFolders
+	 * @param _targetFolder the tree-node id to select once the switch is done - defaults to this
+	 *  account's INBOX, but a direct click on a *specific* folder of a not-yet-active account
+	 *  (see changeFolder()'s own caller of this method) should land there, not always on INBOX -
+	 *  otherwise both the actually-clicked folder (selected client-side before this async call
+	 *  even started) and INBOX (selected below once the switch completes) end up shown as
+	 *  selected simultaneously (confirmed live 2026-08-26).
+	 */
+	changeProfile(folder,_widget, getFolders, _targetFolder?: string) {
 		if(typeof getFolders == 'undefined')
 		{
 			getFolders = true;
+		}
+		if (!_targetFolder)
+		{
+			_targetFolder = folder+"::INBOX";
 		}
 	//	alert(folder);
 		this.egw.message(this.egw.lang('Connect to Profile %1',_widget.getSelectedLabel().replace(this._unseen_regexp, '')), 'success');
@@ -2648,42 +4231,48 @@ export class MailApp extends EgwApp
 		//Open unloaded tree to get loaded
             _widget.getSelectedNode().expanded = true;
 
-		this.lock_tree();
-		egw.json('mail_ui::ajax_changeProfile',[folder, getFolders, this.et2._inst.etemplate_exec_id], jQuery.proxy(function() {
-			// Profile changed, select inbox
-			var inbox = folder + '::INBOX';
-                //_widget.reSelectItem(inbox);
-
-			this.unlock_tree();
-		},this))
+		this.lockTree();
+		egw.json('EGroupware\\Mail\\Ui::ajax_changeProfile',[folder, getFolders, this.et2.getInstanceManager().etemplate_exec_id], () => {
+			this.unlockTree();
+		})
 			.sendRequest(true);
             _widget.finishedLazyLoading().then (() => {
-                this.mail_changeFolder(folder+"::INBOX", _widget, '');
-                _widget.reSelectItem(folder+"::INBOX")
+                // pass "folder" (not "") as _previous - the profile switch already happened
+                // above, this call is only to select+apply _targetFolder, not to trigger another
+                // one. An empty-string _previous doesn't count as "same account" (''.split('::')
+                // is [''], which never equals server[0]), so changeFolder()'s own cross-account
+                // check would otherwise see it as yet another account change and recurse into
+                // changeProfile() again - infinite loop (confirmed live 2026-08-26).
+                this.changeFolder(_targetFolder, _widget, folder);
+                _widget.reSelectItem(_targetFolder)
             });
 
 		return true;
 	}
 
 	/**
-	 * mail_changeFolder
+	 * changeFolder
 	 * @param {string} _folder the ID of the selected Node
          * @param {Et2Tree} _widget handle to the tree widget
 	 * @param {string} _previous - Previously selected node ID
 	 */
-	mail_changeFolder(_folder,_widget, _previous) {
+	changeFolder(_folder,_widget, _previous) {
 
 		// to reset iframes to the normal status
 		this.loadIframe();
 
 		// reset nm action selection, seems actions system accumulate selected items
 		// and that leads to corruption for selected all actions
-		this.et2.getWidgetById(this.nm_index).controller._selectionMgr.resetSelection();
+		(this.et2.getWidgetById(this.nm_index) as Et2Nextmatch).clearSelection();
 
-		// Abort if user selected an un-selectable node
-		// Use image over anything else because...?
-		const img = _widget.getSelectedItem()?.im0 ?? "";
-		if (img.indexOf('NoSelect') !== -1)
+		// Abort if user selected an un-selectable node (a namespace root like "user"/"shared" -
+		// a structural navigation doorway, not a real mailbox). The JMAP-native tree
+		// (folderTree.ts) signals this via node.data.noSelect; classic mail_tree.inc.php's
+		// server-rendered initial tree instead uses a dedicated NoSelect icon - check both, since
+		// either tree can be what's currently selected.
+		const selectedItem = _widget.getSelectedItem();
+		const img = selectedItem?.im0 ?? "";
+		if (img.indexOf('NoSelect') !== -1 || (selectedItem?.data as {noSelect?: boolean})?.noSelect)
 		{
 			_widget.reSelectItem(_previous);
 			return;
@@ -2697,59 +4286,88 @@ export class MailApp extends EgwApp
 
 		// Check if this is a top level node and
 		// change profile if server has changed
-		var server = _folder.split('::');
-		var previousServer = _previous?.split('::');
-		var profile_selected = (_folder.indexOf('::') === -1);
-		if ((!previousServer || server[0] != previousServer[0]) && profile_selected)
+		const server = _folder.split('::');
+		const previousServer = _previous?.split('::');
+		const profile_selected = (_folder.indexOf('::') === -1);
+		// Account changed - switch profile first, regardless of whether the clicked node is the
+		// bare account itself or a specific folder under it. A direct click on eg. "42::INBOX"
+		// while a different account was active must still trigger the profile switch - previously
+		// gated behind "&& profile_selected", so a direct cross-account folder click silently
+		// skipped mail_ui::ajax_changeProfile()/storeActiveProfileIDToPref(): the row list still
+		// showed the right folder (via applyFilters() below), but ActiveProfileID never persisted,
+		// so a reload reverted to the previous account.
+		if (!previousServer || server[0] != previousServer[0])
 		{
-			// mail_changeProfile triggers a refresh, no need to do any more
-			return this.mail_changeProfile(_folder,_widget, _widget.getSelectedNode().childsCount == 0);
+			// changeProfile triggers a refresh, no need to do any more - pass the actually-clicked
+			// folder along (unless a bare account node was clicked) so it lands there instead of
+			// always reopening INBOX, see changeProfile()'s own docblock for why that matters.
+			return this.changeProfile(server[0],_widget, _widget.getSelectedNode().childsCount == 0,
+				profile_selected ? undefined : _folder);
 		}
 
 		// Apply new selected folder to list, which updates data
-		var nm = _widget.getRoot().getWidgetById(this.nm_index);
+		const nm = _widget.getRoot().getWidgetById(this.nm_index);
 		if(nm)
 		{
-			this.lock_tree();
+			this.lockTree();
 			nm.applyFilters({'selectedFolder': _folder});
 		}
+
+		// Remember this as the last-used folder for this profile, so mail reopens here next time
+		const [profileID, folderName] = _folder.split('::');
+		if (profileID && folderName) this.egw.set_preference('mail', profileID + '_LastFolder', folderName);
 
 		// Get nice folder name for message, if selected is not a profile
 		if(!profile_selected)
 		{
-			var displayname = _widget.getSelectedLabel();
-			var myMsg = (displayname?displayname:_folder).replace(this._unseen_regexp, '')+' '+this.egw.lang('selected');
+			const displayname = _widget.getSelectedLabel();
+			const myMsg = (displayname?displayname:_folder).replace(this._unseen_regexp, '')+' '+this.egw.lang('selected');
 			this.egw.message(myMsg, 'success');
 		}
 
 		// Update non-grid
-		this.mail_refreshFolderStatus(_folder,'forced',false,false);
-		this.mail_refreshQuotaDisplay(server[0]);
-		this.mail_preview();
-		this.mail_callRefreshVacationNotice(server[0]);
-		if (previousServer && server[0] != previousServer[0])
-		{
-			egw.jsonq('mail.mail_ui.ajax_refreshFilters',[server[0]]);
-		}
+		this.refreshFolderStatus(_folder,'forced',false,false);
+		this.refreshQuotaDisplay(server[0]);
+		this.preview();
+		this.callRefreshVacationNotice(server[0]);
 	}
 
 	/**
-	 * mail_checkAllSelected
+	 * checkAllSelected
 	 *
 	 * @param _action
 	 * @param _elems
 	 * @param _target
 	 * @param _confirm
 	 */
-	mail_checkAllSelected(_action, _elems, _target, _confirm)
+	checkAllSelected(_action, _elems, _target, _confirm)
 	{
 		if (typeof _confirm == 'undefined') _confirm = false;
+		const that = this;
+		// doc/ai/projects/mail-threaded-view.md, "Bulk actions on collapsed thread rows" - ralf's
+		// decision: a selected thread row (see emails2threadRow() in jmap.ts) applies to every one
+		// of its member messages, and always gets this same "are you sure" treatment, even when
+		// only one (thread) row is checked. Same-tick no-op today: expandedSelectionCount() only
+		// ever differs from _elems.length once a thread row (thread_count > 1) is actually
+		// selectable, which needs ProfileHandler::THREADING_ENABLED - false right now.
+		const expandedCount = this.expandedSelectionCount(_elems);
+		if (_confirm && expandedCount > _elems.length)
+		{
+			return Et2Dialog.show_dialog((_button_id) =>
+			{
+				if (_button_id === Et2Dialog.YES_BUTTON)
+				{
+					that.lockTree();
+					that.dispatchMailAction(_action, _elems, _target, false);
+				}
+			}, this.egw.lang('This action affects every message in the selected thread(s) - %1 messages in total. Continue?', expandedCount),
+				this.egw.lang('Confirm'), {}, Et2Dialog.BUTTONS_YES_NO, Et2Dialog.WARNING_MESSAGE);
+		}
 		// we can NOT query global object manager for this.nm_index="nm", as we might not get the one from mail,
 		// if other tabs are open, we have to query for obj_manager for "mail" and then it's child with id "nm"
-		var obj_manager = egw_getObjectManager(this.appname).getObjectById(this.nm_index);
-		let tree = this.et2.getWidgetById('nm[foldertree]');
-		var that = this;
-		var rvMain = false;
+		const obj_manager = egw_getObjectManager(this.appname).getObjectById(this.nm_index);
+		const tree = this.et2.getWidgetById('nm[foldertree]');
+		let rvMain = false;
 		if ((obj_manager && _elems.length>1 && obj_manager.getAllSelected() && !_action.paste) || _action.id=='readall')
 		{
 			try {
@@ -2772,12 +4390,18 @@ export class MailApp extends EgwApp
 
 			if (_confirm)
 			{
-				var buttons = [
+				const buttons = [
 					{label: this.egw.lang("Yes"), id: "all", "class": "ui-priority-primary", "default": true, image: 'check'},
 					{label: this.egw.lang("Cancel"), id: "cancel", image: 'cancelDialog'},
 				];
-				var messageToDisplay = '';
-				var actionlabel =_action.id;
+				let messageToDisplay = '';
+				// label1-5/customFlag1-5 just pick a human-readable name for the shared
+				// "toggle flag/label" confirmation below - not used for any other case.
+				const labelNames = {
+					label1: "important", label2: "job", label3: "personal", label4: "to do", label5: "later",
+					customFlag1: "red", customFlag2: "orange", customFlag3: "green", customFlag4: "blue", customFlag5: "purple"
+				};
+				const actionlabel = labelNames[_action.id] ?? _action.id;
 				switch (_action.id)
 				{
 					case "readall":
@@ -2787,15 +4411,15 @@ export class MailApp extends EgwApp
 						messageToDisplay = this.egw.lang("Do you really want to remove ALL labels from ALL messages in the current folder?")+" ";
 						break;
 					case "label1":
-						if (_action.id=="label1") actionlabel="important";
 					case "label2":
-						if (_action.id=="label2") actionlabel="job";
 					case "label3":
-						if (_action.id=="label3") actionlabel="personal";
 					case "label4":
-						if (_action.id=="label4") actionlabel="to do";
 					case "label5":
-						if (_action.id=="label5") actionlabel="later";
+					case "customFlag1":
+					case "customFlag2":
+					case "customFlag3":
+					case "customFlag4":
+					case "customFlag5":
 					case "flagged":
 					case "read":
 					case "undelete":
@@ -2803,7 +4427,15 @@ export class MailApp extends EgwApp
 						if (_action.id.substr(0,5)=='label') messageToDisplay = this.egw.lang("Do you really want to toggle label %1 for ALL messages in the current view?",this.egw.lang(actionlabel))+" ";
 						break;
 					default:
-						var type = null;
+						if (this.isCustomLabel(_action.id))
+						{
+							messageToDisplay = this.egw.lang(
+								"Do you really want to toggle label %1 for ALL messages in the current view?",
+								_action.caption
+							) + " ";
+							break;
+						}
+						let type = null;
 						if (_action.id.substr(0,4)=='move' || _action.id === "drop_move_mail")
 						{
 							type = 'Move';
@@ -2814,9 +4446,9 @@ export class MailApp extends EgwApp
 						}
 						messageToDisplay = this.egw.lang("Do you really want to apply %1 to ALL messages in the current view?",this.egw.lang(type?type:_action.id))+" ";
 				}
-				return Et2Dialog.show_dialog(function (_button_id)
+				return Et2Dialog.show_dialog((_button_id) =>
 				{
-					var rv = false;
+					let rv : boolean | string = false;
 					switch (_button_id)
 					{
 						case "all":
@@ -2827,35 +4459,9 @@ export class MailApp extends EgwApp
 					}
 					if (rv != "cancel")
 					{
-						that.lock_tree();
+						that.lockTree();
 					}
-					switch (_action.id)
-					{
-						case "delete":
-							that.mail_callDelete(_action, _elems, rv);
-							break;
-						case "readall":
-						case "unlabel":
-						case "label1":
-						case "label2":
-						case "label3":
-						case "label4":
-						case "label5":
-						case "flagged":
-						case "read":
-						case "undelete":
-							that.mail_callFlagMessages(_action, _elems, rv);
-							break;
-						case "drop_move_mail":
-							that.mail_callMove(_action, _elems, _target, rv);
-							break;
-						case "drop_copy_mail":
-							that.mail_callCopy(_action, _elems, _target, rv);
-							break;
-						default:
-							if (_action.id.substr(0, 4) == 'move') that.mail_callMove(_action, _elems, _target, rv);
-							if (_action.id.substr(0, 4) == 'copy') that.mail_callCopy(_action, _elems, _target, rv);
-					}
+					that.dispatchMailAction(_action, _elems, _target, rv);
 				}, messageToDisplay, this.egw.lang("Confirm"), null, buttons);
 			}
 			else
@@ -2863,66 +4469,120 @@ export class MailApp extends EgwApp
 				rvMain = true;
 			}
 		}
+		this.dispatchMailAction(_action, _elems, _target, rvMain);
+	}
+
+	/**
+	 * Shared bulk-action dispatch for checkAllSelected()'s three call paths (the "select all
+	 * matching filter" dialog's Yes callback, the new thread-expansion confirmation dialog's Yes
+	 * callback, and the plain no-confirmation-needed fallthrough) - extracted so the same routing
+	 * logic isn't triplicated once the thread-confirmation dialog needed it too.
+	 *
+	 * @param rv false for a plain bounded selection, true for "apply to everything matching the
+	 *  current filter" (see callDelete()/callMove()/callCopy()/callFlagMessages()'s own
+	 *  "_allMessagesChecked" parameter) - or the string 'cancel' from the "select all matching"
+	 *  dialog's Cancel button, passed through unchanged exactly as this always did before this
+	 *  method existed as its own thing (not touched/fixed here, out of scope)
+	 */
+	private dispatchMailAction(_action, _elems, _target, rv : boolean | string)
+	{
 		switch (_action.id)
 		{
 			case "delete":
 				//If in main Window (nm view) and we have no selection, do not try to
-				// delete anything
-				if (!this.egw.is_popup() && _elems.length === 0 && !_elems.all
+				// delete anything - except while the mobile message view is open (et2_view),
+				// where the message it shows is the target and there is no list selection at
+				// all: a single tap runs the "open" action without selecting the row.
+				// callDelete() resolves that message from currentlyFocussed and closes the view.
+				if (!this.egw.is_popup() && typeof this.et2_view == 'undefined'
+					&& _elems.length === 0 && !_elems.all
 					&& !this.nm?.getSelection()?.all && this.nm?.getSelection()?.ids?.length === 0)
 				{
 					egw.debug('warn',"Tried to delete a mail when no mail was selected. NoOp!")
 					break
 				}
-				this.mail_callDelete(_action, _elems,rvMain);
+				this.callDelete(_action, _elems, rv);
 				break;
+			case "readall":
 			case "unlabel":
 			case "label1":
 			case "label2":
 			case "label3":
 			case "label4":
 			case "label5":
+			case "customFlag1":
+			case "customFlag2":
+			case "customFlag3":
+			case "customFlag4":
+			case "customFlag5":
 			case "flagged":
 			case "read":
 			case "undelete":
-				this.mail_callFlagMessages(_action, _elems,rvMain);
+				this.callFlagMessages(_action, _elems, rv);
 				break;
 			case "drop_move_mail":
-				this.mail_callMove(_action, _elems,_target, rvMain);
+				this.callMove(_action, _elems, _target, rv);
 				break;
 			case "drop_copy_mail":
-				this.mail_callCopy(_action, _elems,_target, rvMain);
+				this.callCopy(_action, _elems, _target, rv);
 				break;
 			default:
-				if (_action.id.substr(0,4)=='move') this.mail_callMove(_action, _elems,_target, rvMain);
-				if (_action.id.substr(0,4)=='copy') this.mail_callCopy(_action, _elems,_target, rvMain);
+				if (this.isCustomLabel(_action.id))
+				{
+					this.callFlagMessages(_action, _elems, rv);
+				}
+				else if (_action.id.substr(0, 4) == 'move')
+				{
+					this.callMove(_action, _elems, _target, rv);
+				}
+				else if (_action.id.substr(0, 4) == 'copy')
+				{
+					this.callCopy(_action, _elems, _target, rv);
+				}
 		}
 	}
 
 	/**
-	 * mail_doActionCall
+	 * Sum how many real messages a selection represents once every thread-parent row (see
+	 * emails2threadRow() in jmap.ts) is expanded to its cached member count - equal to
+	 * _elems.length whenever nothing selected is a thread row, i.e. always today, while
+	 * ProfileHandler::THREADING_ENABLED is false. Reads thread_count directly off each row's
+	 * already-loaded egw.data cache entry - no JMAP round trip needed just to count, unlike the
+	 * actual expansion (MailJmap.expandThreadRowIds()) used right before the JMAP call itself.
+	 */
+	private expandedSelectionCount(_elems : any[]) : number
+	{
+		return (_elems || []).reduce((sum : number, elem : any) =>
+		{
+			const rowData = egw.dataGetUIDdata(elem?.id)?.data;
+			return sum + (rowData?.is_parent ? (rowData.thread_count || 1) : 1);
+		}, 0);
+	}
+
+	/**
+	 * doActionCall
 	 *
 	 * @param _action
 	 * @param _elems
 	 */
-	mail_doActionCall(_action, _elems)
+	doActionCall(_action, _elems)
 	{
 	}
 
 	/**
-	 * mail_getActiveFilters
+	 * getActiveFilters
 	 *
 	 * @param _action
 	 * @return mixed boolean/activeFilters object
 	 */
-	mail_getActiveFilters(_action)
+	getActiveFilters(_action?)
 	{
 		// we can NOT query global object manager for this.nm_index="nm", as we might not get the one from mail,
 		// if other tabs are open, we have to query for obj_manager for "mail" and then it's child with id "nm"
-		var obj_manager = egw_getObjectManager(this.appname).getObjectById(this.nm_index);
+		const obj_manager = egw_getObjectManager(this.appname).getObjectById(this.nm_index);
 		if (obj_manager && obj_manager.manager && obj_manager.manager.data && obj_manager.manager.data.nextmatch && obj_manager.manager.data.nextmatch.activeFilters)
 		{
-			var af = obj_manager.manager.data.nextmatch.activeFilters;
+			const af = obj_manager.manager.data.nextmatch.activeFilters;
 			// merge startdate and enddate into the active filters (if set)
 			['startdate','enddate'].forEach((date) => {
 				if (this.et2.getWidgetById(date)?.value)
@@ -2941,9 +4601,84 @@ export class MailApp extends EgwApp
 	 * @param _action _action.id is 'read', 'unread', 'flagged' or 'unflagged'
 	 * @param _elems
 	 */
-	mail_flag(_action, _elems)
+	flag(_action, _elems)
 	{
-		this.mail_checkAllSelected(_action,_elems,null,true);
+		this.checkAllSelected(_action,_elems,null,true);
+	}
+
+	/**
+	 * Trigger a targeted, in-place refresh of specific nextmatch rows from the server/JMAP's
+	 * actual current state - a real network round-trip (Et2NextmatchDataProvider.refresh(), which
+	 * for mail routes through MailApp's dataRegisterFetch('mail', jmap.fetchRows) wiring to a real
+	 * JMAP Email/get call). Too slow to use for every optimistic flag click (that's what
+	 * patchRow() is for) - use this to reconcile back to truth after a failed optimistic
+	 * change, or for changes with no local guess to make (push notifications from other sessions).
+	 */
+	refreshRows(_ids: string[]): void
+	{
+		if (!_ids?.length) return;
+		this.nmOwner()?.nm.refresh(_ids, Et2DatagridUpdateTypes.UPDATE_IN_PLACE);
+	}
+
+	/**
+	 * The mail app instance owning the nextmatch, plus that nextmatch:
+	 * `this` instance in the main window, the opener's when called from a "view" popup (which has no list itself).
+	 *
+	 * egw  data cache is shared with the opener
+	 * (api/js/jsapi/egw.js does window.egw = window.opener.top.egw),
+	 * but window.app is not: a popup builds its own MailApp and MailJmap.
+	 * So whatever does changes on the nm has to use the owner nm.
+	 * the optimistic marker the fetch() handler reads has to go through the owning instance, not `this`.
+	 *
+	 * @return null if no reachable window has a message list (e.g. popup whose opener is gone)
+	 */
+	private nmOwner(): { app: MailApp, nm: Et2Nextmatch } | null
+	{
+		for (const app of [this, window.opener?.app?.mail as MailApp])
+		{
+			const nm = (app?.nm ?? app?.et2?.getWidgetById(app?.nm_index)) as Et2Nextmatch;
+			if (nm) return {app, nm};
+		}
+		return null;
+	}
+
+	/**
+	 * Instantly reflect a keyword/class change on an already-rendered row
+	 * Caller must already have written the row's
+	 * *new* flags/class into dataElem.data (the "what should this look like now" computation stays
+	 * with the caller, e.g. callFlagMessages's toggle logic).
+	 * mark the row as an unconfirmed guess (MailJmap.markOptimistic()), and asks the nextmatch to refresh it.
+	 * jmap.ts's fetchRows()/refreshRows() (registered via egw.dataRegisterFetch()) sees the guess
+	 * and echoes it straight back with no JMAP round-trip, so the row re-renders without one -
+	 * see MailJmap.optimisticRows for why the guess is then trusted rather than re-checked.
+	 *
+	 * Works from the "view" popup too: the data cache is shared with the opener, and the marker
+	 *
+	 * @param _uid row uid, already updated in egw's central data cache
+	 */
+	patchRow(_uid: string): void
+	{
+		// Nothing anywhere renders this row - skip, rather than mark a guess no refresh can consume
+		const owner = this.nmOwner();
+		if (!owner) return;
+
+		const dataElem = egw.dataGetUIDdata(_uid);
+		if (!dataElem) return;
+
+		// Mirrors MailJmap.email2row()'s status_icon logic exactly, so a locally-guessed value
+		// renders identically to what a real JMAP re-fetch would later produce.
+		const flags = dataElem.data.flags || {};
+		dataElem.data.status_icon = flags.forwarded ? 'mail_forward' :
+			flags.replied ? 'mail_reply' : !flags.read ? 'mail_unseen' : '';
+		const hasFlag = !!flags.flagged ||
+			['customFlag1', 'customFlag2', 'customFlag3', 'customFlag4', 'customFlag5'].some(f => !!flags[f]);
+		dataElem.data.flagged_icon = hasFlag ? 'unread_flagged_small' : '';
+		const labelTags = this.getRowLabelTags(flags);
+		dataElem.data.labelTags = labelTags.length >= 2 ? labelTags : [];
+
+		egw.dataStoreUID(_uid, dataElem.data, false);
+		owner.app.jmap.markOptimistic(_uid);
+		owner.nm.refresh([_uid], Et2DatagridUpdateTypes.UPDATE_IN_PLACE);
 	}
 
 	/**
@@ -2953,247 +4688,312 @@ export class MailApp extends EgwApp
 	 * @param _elems
 	 * @param _allMessagesChecked
 	 */
-	mail_callFlagMessages(_action, _elems, _allMessagesChecked)
+	callFlagMessages(_action, _elems, _allMessagesChecked)
 	{
 		/**
 		 * vars
 		 */
 		let folder = '';
-		let data = {
+		const data : any = {
 				msg: [this.et2.getArrayMgr("content").getEntry('mail_id')] || '',
 				all: _allMessagesChecked || false,
 				popup: typeof this.et2_view!='undefined' || egw(window).is_popup() || false,
-				activeFilters: _action.id == 'readall'? false : this.mail_getActiveFilters(_action)
+				activeFilters: _action.id == 'readall'? false : this.getActiveFilters(_action)
 		}
-		let rowClass = _action.id;
 
 		if (typeof _elems === 'undefined' || _elems.length == 0)
 		{
-			if (this.mail_isMainWindow && this.mail_currentlyFocussed)
+			if (this.isMainWindow && this.currentlyFocussed)
 			{
-				data.msg = [this.mail_currentlyFocussed];
+				data.msg = [this.currentlyFocussed];
 				_elems = data;
-				data.msg = this.mail_getFormData(_elems).msg;
+				data.msg = this.getFormData(_elems).msg;
 			}
 		}
 		else // action called by contextmenu
 		{
-			data.msg = this.mail_getFormData(_elems).msg;
+			data.msg = this.getFormData(_elems).msg;
 		}
-		switch (_action.id)
+		if (_action.id == 'read')
 		{
-			case 'read':
-				rowClass = 'seen';
-				let tree;
-				if (data.popup)
-				{
-					const et_2 = typeof this.et2_view != 'undefined' ? etemplate2 : opener.etemplate2;
-					tree = et_2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index+'[foldertree]');
-				}
-				else
-				{
-					tree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-				}
-				folder = tree.value;
-				break;
-			case 'readall':
-				rowClass = 'seen';
-				break;
-			case 'label1':
-				rowClass = 'label1';
-				break;
-			case 'label2':
-				rowClass = 'label2';
-				break;
-			case 'label3':
-				rowClass = 'label3';
-				break;
-			case 'label4':
-				rowClass = 'label4';
-				break;
-			case 'label5':
-				rowClass = 'label5';
-				break;
-			default:
-				break;
-		}
-		// jQuery(data).extend({},data, formData);
-		if (data['all']=='cancel') return false;
-
-		if (_action.id.substring(0,2)=='un') {
-			//old style, only available for undelete and unlabel (no toggle)
-			if ( _action.id=='unlabel') // this means all labels should be removed
+			let tree;
+			if (data.popup)
 			{
-				const labels = ['label1','label2','label3','label4','label5'];
-				for (let i=0; i<labels.length; i++)	this.mail_removeRowClass(_elems,labels[i]);
-				this.mail_flagMessages(_action.id,data);
+				const et_2 = typeof this.et2_view != 'undefined' ? etemplate2 : opener.etemplate2;
+				tree = et_2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index+'[foldertree]');
 			}
 			else
 			{
-				this.mail_removeRowClass(_elems,_action.id.substring(2));
-				this.mail_setRowClass(_elems,_action.id);
-				this.mail_flagMessages(_action.id,data);
+				tree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 			}
+			folder = tree.value;
+		}
+		if (data['all']=='cancel') return false;
+
+		// 'unlabel' is the only action id actually reaching this branch today (no other action id
+		// starts with "un" - customFlag1-5/label1-5/flagged/read are all plain toggles handled below)
+		if (_action.id == 'unlabel')
+		{
+			// Optimistically clear all labels locally so the row updates instantly - flagMessages()
+			// falls back to refreshRows() (a real re-fetch) only if the JMAP call actually fails.
+			const labels = this.getLabelIds();
+			for (const uid of data.msg)
+			{
+				const dataElem = egw.dataGetUIDdata(uid);
+				if (!dataElem) continue;
+				dataElem.data.flags ||= {};
+				let classes = (dataElem.data['class'] || '').split(' ');
+				labels.forEach(label =>
+				{
+					delete dataElem.data.flags[label];
+					classes = classes.filter(className => className != label && className != 'un' + label);
+				});
+				dataElem.data['class'] = classes.join(' ');
+				this.patchRow(uid);
+			}
+			this.flagMessages(_action.id, data);
 		}
 		else if (_action.id=='readall')
 		{
-			this.mail_flagMessages('read',data);
+			this.flagMessages('read',data);
 		}
 		else
 		{
-			var msg_set = {msg:[]};
-			var msg_unset = {msg:[]};
-			var dataElem;
-			let flags: {};
-			let classes: string[];
+			// Toggle flags/class locally first, for instant feedback - flagMessages() falls back
+			// to refreshRows() (a real re-fetch) only if the JMAP call it fires below actually
+			// fails, reconciling back to the server's real state for whichever rows the guess got wrong.
+			const customFlags = ['customFlag1', 'customFlag2', 'customFlag3', 'customFlag4', 'customFlag5'];
+			const rowClass = _action.id;
+			const msg_set = {msg:[]};
+			const msg_unset = {msg:[]};
 			for (let i = 0; i < data.msg.length; i++)
 			{
-				const currentIndex = i;
-				dataElem = egw.dataGetUIDdata(data.msg[i]);
-				if(typeof dataElem.data.flags == 'undefined')
+				const dataElem = egw.dataGetUIDdata(data.msg[i]);
+				if (!dataElem) continue;
+				dataElem.data.flags ||= {};
+				const flags = dataElem.data.flags;
+				let classes = (dataElem.data['class'] || '').split(' ');
+
+				if (_action.id === 'read')
 				{
-					dataElem.data.flags = {};
+					// Real convention (MailJmap.email2row()): being read has no class of its own -
+					// unread is signalled by the presence of 'unseen', not by a generic
+					// rowClass/'un'+rowClass pair the way flagged/label toggles below work.
+					classes = classes.filter((className) => className != 'unseen');
+					if (flags.read)
+					{
+						msg_unset['msg'].push(data.msg[i]);
+						delete flags.read;
+						classes.push('unseen');
+					} else
+					{
+						msg_set['msg'].push(data.msg[i]);
+						flags.read = 'read';
+					}
+					dataElem.data['class'] = classes.join(' ');
+					this.patchRow(data.msg[i]);
+					this.updateFilterData(data.msg[i], data.activeFilters, flags);
+					continue;
 				}
-				flags = dataElem.data.flags;
-				classes = dataElem.data['class']?.split(' ') || [];
-				//classes = classes.split(' ');
+
 				// since we toggle we need to unset the ones already set, and set the ones not set
 				// flags is data, UI is done by class, so update both
 				// Flags are there or not, class names are flag or 'un'+flag
-				if(classes.indexOf(rowClass) >= 0)
+				if (classes.indexOf(rowClass) >= 0)
 				{
-					classes.splice(classes.indexOf(rowClass),1);
+					classes.splice(classes.indexOf(rowClass), 1);
 				}
-				if(classes.indexOf('un' + rowClass) >= 0)
+				if (classes.indexOf('un' + rowClass) >= 0)
 				{
-					classes.splice(classes.indexOf('un' + rowClass),1);
+					classes.splice(classes.indexOf('un' + rowClass), 1);
 				}
+
 				if (flags[_action.id])
 				{
 					msg_unset['msg'].push(data.msg[i]);
-					classes.push('un'+rowClass);
+					if (customFlags.includes(_action.id))
+					{
+						delete flags['flagged'];
+						classes = classes.filter((className) => className != 'flagged' && className != 'unflagged');
+					} else if (!this.isLabel(_action.id))
+					{
+						classes.push('un' + rowClass);
+						if (_action.id === 'flagged')
+						{
+							// Plain unflag clears any colored custom flag too - a customFlag implies
+							// $flagged (jmap.ts), so leaving one set here would make the row look
+							// flagged again on the next render.
+							customFlags.forEach(customFlag =>
+							{
+								delete flags[customFlag];
+								classes = classes.filter((className) => className != customFlag && className != 'un' + customFlag);
+							});
+						}
+					}
 					delete flags[_action.id];
-				}
-				else
+				} else
 				{
+					if (customFlags.includes(_action.id))
+					{
+						customFlags.forEach(customFlag =>
+						{
+							if (customFlag != _action.id)
+							{
+								delete flags[customFlag];
+								classes = classes.filter((className) => className != customFlag && className != 'un' + customFlag);
+							}
+						});
+						flags['flagged'] = 'flagged';
+						classes = classes.filter((className) => className != 'flagged' && className != 'unflagged');
+						classes.push('flagged');
+					}
 					msg_set['msg'].push(data.msg[i]);
 					flags[_action.id] = _action.id;
 					classes.push(rowClass);
 				}
 
-				// Update cache & call callbacks - updates list
-				//do not update flags that are already correctly set
-				dataElem.data['class']  = classes.join(' ');
-				const nmRow = data.popup ?
-					(opener?.app?.mail?.nm?.controller?.getObjectManager()?.children?.find(
-							(item: EgwActionObject) =>
-							{
-								if (item.id === data.msg[0]) return item;
-							}
-						)
-					)
-					:
-					((_elems[currentIndex]) ||
-						(this?.nm?.controller?.getObjectManager()?.selectedChildren?.find((item: EgwActionObject) =>
-					{
-						if (item.id === this.mail_currentlyFocussed) return item
-					})));
-				const nmNode : HTMLElement = nmRow?.iface.getDOMNode();
+				dataElem.data['class'] = classes.join(' ');
+				this.patchRow(data.msg[i]);
 
-				//only the class attribute in data has changed, so
-				//we do not need to trigger the nm callbacks we can just
-				//update local Storage and set the classes on the nm row
-				egw.dataStoreUID(data.msg[i], dataElem.data);
-
-				//set or remove the flag in the DOM since it can no longer come from the server because we do not trigger a full reload
-				//this needs to happen after egw.dataStoreUID since that triggers a redrawing of the row
-				if (classes.includes("unseen"))
-				{
-					//image src usually comes from the server but can't anymore in this case so we set it directly
-					const img: Et2Image = nmNode.querySelector(".status_img");
-					if (img) img.src = egw.image("mail_unseen")
-				}
-				if (flags['flagged'] == 'flagged')
-				{
-					if (!nmNode?.querySelector('#' + CSS.escape('mail-index_${row}[attachments]') + ' et2-image#flaggedImage'))
-					{
-						const flagElem: Et2Image = document.createElement('et2-image') as Et2Image
-						flagElem.src = "unread_flagged_small"
-						nmNode?.querySelector('#' + CSS.escape('mail-index_${row}[attachments]'))?.appendChild(flagElem);
-					}
-				} else
-				{
-					nmNode?.querySelector('#' + CSS.escape('mail-index_${row}[attachments]') + ' et2-image#flaggedImage')?.remove();
-				}
-
-
-				//Refresh the nm rows after we told dataComponent about all changes, since the dataComponent doesn't talk to nm, we need to do it manually
-				this.updateFilter_data(data.msg[i], _action.id, data.activeFilters);
+				// Hide this row now if it no longer matches the active status filter (e.g. viewing
+				// "Unread" and marking read) - independent of the class/icon patch above, and not
+				// knowable from a server response since the server doesn't know our active filter.
+				this.updateFilterData(data.msg[i], data.activeFilters, flags);
 			}
 
 			// Notify server of changes
-			if (msg_unset['msg'] && msg_unset['msg'].length)
+			if (msg_unset['msg'].length && !data['all'])
 			{
-				if (!data['all']) this.mail_flagMessages('un'+_action.id,msg_unset);
+				this.flagMessages(
+					this.isLabel(_action.id) ?
+						{customLabel: _action.id, set: false} : 'un'+_action.id,
+					msg_unset
+				);
 			}
-			if (msg_set['msg'] && msg_set['msg'].length)
+			if (msg_set['msg'].length && !data['all'])
 			{
-				if (!data['all']) this.mail_flagMessages(_action.id,msg_set);
+				this.flagMessages(
+					this.isLabel(_action.id) ?
+						{customLabel: _action.id, set: true} : _action.id,
+					msg_set
+				);
 			}
 			//server must do the toggle, as we apply to ALL, not only the visible
-			if (data['all']) this.mail_flagMessages(_action.id,data);
+			if (data['all']) this.flagMessages(_action.id,data);
 			// No further update needed, only in case of read, the counters should be refreshed
-			if (_action.id=='read') this.mail_refreshFolderStatus(folder,'thisfolderonly',false,true);
+			if (_action.id=='read') this.refreshFolderStatus(folder,'thisfolderonly',false,true);
 			return;
 		}
 	}
 
 	/**
-	 * Update changes on filtered mail rows in nm, triggers manual refresh
+	 * Hide a row from the active filters if its just-updated flags no longer match them.
+	 *
+	 * Checks the row's actual resulting flags against the filters, rather than inferring a match
+	 * from which action id was clicked - e.g. switching between customFlag colors while viewing the
+	 * "flagged" filter is a set on the new color and (usually) an unset on the old one, but the row
+	 * stays flagged throughout and must never be deleted for either half of that switch; a plain
+	 * "did this action's name match the filter's name" check can't tell the two apart from a single
+	 * action id, since both the customFlag being set AND the one being unset map to the same
+	 * 'flagged' filter name.
+	 *
+	 * The status filter and the app-header flag filter are independent criteria the list ANDs
+	 * together (MailJmap.buildFilter()), so the row has to keep matching both of them to stay.
 	 *
 	 * @param {type} _uid mail uid
-	 * @param {type} _actionId action id sended by nm action
 	 * @param {type} _filters activefilters
+	 * @param {type} _flags the row's flags, already updated to reflect this action
 	 */
-	updateFilter_data(_uid, _actionId, _filters)
+	updateFilterData(_uid, _filters, _flags)
 	{
-		var uid = _uid.replace('mail::','');
-		var action = '';
-		switch (_actionId)
+		if (this.matchesStatusFilter(_filters?.filter, _flags) === false ||
+			this.matchesFlagFilter(_filters?.col_filter?.flagFilter, _flags) === false)
 		{
+			egw.refresh('', 'mail', _uid.replace('mail::', ''), 'delete');
+		}
+	}
+
+	/**
+	 * Does a row's flags match an active status filter?
+	 *
+	 * @param {string} _filter active status filter, see mail_ui::$statusTypes
+	 * @param {object} _flags the row's flags
+	 * @return {boolean|null} null if there is no status filter this action could ever affect
+	 */
+	private matchesStatusFilter(_filter, _flags) : boolean | null
+	{
+		if (!_filter) return null;
+		switch (_filter)
+		{
+			// still honoured although 'flagged' moved to the flag filter, for favorites saved
+			// while it was a status filter option - and with the same meaning it has there
 			case 'flagged':
-				action = 'flagged';
-				break;
-			case 'read':
-				if (_filters.filter == 'seen')
-				{
-					action = 'seen';
-				}
-				else if (_filters.filter == 'unseen')
-				{
-					action = 'unseen';
-				}
-				break;
-			case 'label1':
-				action = 'keyword1';
-				break;
-			case 'label2':
-				action = 'keyword2';
-				break;
-			case 'label3':
-				action = 'keyword3';
-				break;
-			case 'label4':
-				action = 'keyword4';
-				break;
-			case 'label4':
-				action = 'keyword4';
-				break;
+				return this.matchesFlagFilter('flagged', _flags);
+			case 'seen':
+				return !!_flags.read;
+			case 'unseen':
+				return !_flags.read;
+			case 'keyword1':
+			case 'keyword2':
+			case 'keyword3':
+			case 'keyword4':
+			case 'keyword5':
+				return !!_flags['label' + _filter.slice(-1)];
+			default:
+				// custom labels use their own id as both the flag key and the filter value
+				if (this.isCustomLabel(_filter)) return !!_flags[_filter];
+				// a filter this action can never affect (e.g. 'deleted') - nothing to check
+				return null;
 		}
-		if (action == _filters.filter)
+	}
+
+	/**
+	 * Does a row's flags match the active app-header flag filter?
+	 *
+	 * @param {string} _flagFilter '' | 'flagged' | 'customFlag1'-'customFlag5', see mail_ui::flagFilterOptions()
+	 * @param {object} _flags the row's flags
+	 * @return {boolean|null} null if no flag filter is active
+	 */
+	private matchesFlagFilter(_flagFilter, _flags) : boolean | null
+	{
+		if (!_flagFilter) return null;
+		// "flagged" means the same thing here as the row's flag icon:  'flagged' itself, or any colored custom flag -
+		// setting one of those sets 'flagged' too, but a message flagged before it did
+		// or one that got a customFlag set in a different mail client may still carry only the custom flag
+		return _flagFilter === 'flagged' ?
+			MailApp.FLAG_IDS.some(flag => !!_flags[flag]) : !!_flags[_flagFilter];
+	}
+
+	/**
+	 * Turn a "select all matching filter" _elems/_msg object's activeFilters into the
+	 * JmapGetRowsQuery shape MailJmap.buildFilter() (and everything built on it - toggleForAll(),
+	 * clearLabelsForAll(), moveAllMatching(), deleteAllMatching()) expects.
+	 *
+	 * @param {object} _elems _msg/_elems object with an .activeFilters property (only present/used
+	 *  when .all is truthy)
+	 */
+	private buildJmapQuery(_elems) : any
+	{
+		const filters = _elems.activeFilters || {};
+		let selectedFolder = filters.selectedFolder ||
+			this.et2?.getWidgetById(this.nm_index + '[foldertree]')?.getValue() ||
+			this.egw.preference('ActiveProfileID', 'mail');
+		if (selectedFolder && !selectedFolder.includes('::')) selectedFolder += '::INBOX';
+		const query : any = {
+			selectedFolder,
+			cat_id: filters.cat_id,
+			search: filters.search,
+			filter: filters.filter,
+			flagFilter: filters.col_filter?.flagFilter,
+			startdate: filters.startdate,
+			enddate: filters.enddate,
+		};
+		if (filters.sort && typeof filters.sort === 'object')
 		{
-			egw.refresh('','mail',uid, 'delete');
+			query.order = filters.sort.id;
+			query.sort = filters.sort.asc ? 'ASC' : 'DESC';
 		}
+		return query;
 	}
 
 	/**
@@ -3203,12 +5003,83 @@ export class MailApp extends EgwApp
 	 * @param {object} _elems
 	 * @param {boolean} _isPopup
 	 */
-	mail_flagMessages(_flag, _elems,_isPopup)
+	flagMessages(_flag, _elems,_isPopup?)
 	{
+		const labelOperation = typeof _flag === 'object' && typeof _flag?.customLabel === 'string' ? _flag : null;
+		const actionId = labelOperation?.customLabel || String(_flag);
+		const customFlag = actionId.replace(/^un/, '').match(/^customFlag[1-5]$/) ? actionId.replace(/^un/, '') : null;
+		// standard system flags (read/unread, flagged/unflagged) - JMAP-native only for an
+		// explicit selection (fixes the "N selected rows, one emailId2uid() search each" gap);
+		// "select all matching filter" keeps the classic path for these two, whose semantics are
+		// filter-aware (e.g. "mark all as read" while viewing the Unseen filter), not a plain
+		// per-row toggle - not replicated here
+		const systemFlagKeyword = !_elems.all ? MailJmap.systemFlagKeyword(actionId.replace(/^un/, '')) : null;
+		const jmapKeywordAction = !!labelOperation || this.isLabel(actionId) || !!customFlag ||
+			actionId === 'unlabel' || !!systemFlagKeyword;
+
+		if (jmapKeywordAction)
+		{
+			let operation : Promise<void>;
+			if (_elems.all)
+			{
+				const query = this.buildJmapQuery(_elems);
+				operation = actionId === 'unlabel' ?
+					this.jmap.clearLabelsForAll(query) : this.jmap.toggleForAll(query, actionId);
+			}
+			else
+			{
+				// pendingReadMark (see its own docblock): wait for markOpenedMessageRead()'s own
+				// auto-mark-as-read call for these same rows to actually land first, so a manual
+				// read/unread toggle right after opening a message can't be silently overwritten by
+				// that earlier-fired but slower request landing after this one.
+				const waitForAutoMarkRead = systemFlagKeyword === '$seen' ?
+					Promise.all((_elems.msg || []).map((id : string) => this.pendingReadMark.get(id) ?? Promise.resolve())) :
+					Promise.resolve();
+
+				// doc/ai/projects/mail-threaded-view.md, "Bulk actions on collapsed thread rows" -
+				// see tryJmapDelete()'s identical comment; a thrown messageReference() below still
+				// ends up a rejected `operation`, same as the try/catch this replaced.
+				operation = waitForAutoMarkRead.then(() => this.jmap.expandThreadRowIds(_elems.msg || [])).then((expandedIds) =>
+				{
+					const references = expandedIds.map(id => this.jmap.messageReference(id));
+					if (actionId === 'unlabel')
+					{
+						return this.jmap.clearLabels(references);
+					}
+					if (customFlag)
+					{
+						return this.jmap.setCustomFlag(references, customFlag, !actionId.startsWith('un'));
+					}
+					if (systemFlagKeyword)
+					{
+						return this.jmap.setSystemFlag(references, systemFlagKeyword, !actionId.startsWith('un'));
+					}
+					return this.jmap.setLabel(references, actionId, labelOperation?.set ?? true);
+				});
+			}
+			operation.then(() =>
+			{
+				// Nothing to do here for an explicit selection - the caller already patched the
+				// row(s) optimistically (patchRow()) before firing this JMAP call, and the
+				// operation just confirmed that guess was correct. "select all matching filter" has
+				// no such local guess (arbitrarily many rows, not all loaded client-side), so it
+				// always needs the real refresh.
+				if (_elems.all) this.refreshMessageGrid(!!_elems.popup);
+			}).catch((error) =>
+			{
+				this.egw.message(error?.message || this.egw.lang('Failed to update messages'), 'error');
+				// The optimistic patch (or "all" case) may now be showing the wrong thing - reconcile
+				// with the server's real current state.
+				if (_elems.all) this.refreshMessageGrid(!!_elems.popup);
+				else this.refreshRows(_elems.msg);
+			});
+			return;
+		}
+
 		//false means do not send back a request response
 		//if we selected only some mails the handling is done clientside already
 		const needsResponse = _elems.all || this.egw.is_popup();
-		egw.jsonq('mail.mail_ui.ajax_flagMessages', [_flag, _elems, needsResponse]);
+		egw.jsonq('mail.EGroupware\\Mail\\Ui.ajax_flagMessages', [_flag, _elems, needsResponse]);
 		//	.sendRequest(true);
 	}
 
@@ -3217,9 +5088,9 @@ export class MailApp extends EgwApp
 	 *
 	 * @param _url
 	 */
-	mail_displayHeaderLines(_url) {
+	displayHeaderLines(_url) {
 		// only used by right clickaction
-		egw.openPopup(_url, '870', '600', null, 'mail');
+		egw.openPopup(_url, 870, 600, null, 'mail');
 	}
 
 	/**
@@ -3228,7 +5099,7 @@ export class MailApp extends EgwApp
 	 * @param _action
 	 * @param _elems _elems[0].id is the row-id
 	 */
-	mail_header(_action, _elems)
+	header(_action, _elems)
 	{
 		if (typeof _elems == 'undefined'|| _elems.length==0)
 		{
@@ -3237,20 +5108,39 @@ export class MailApp extends EgwApp
 				_elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
-			if ((typeof _elems == 'undefined' || _elems.length==0) && this.mail_isMainWindow)
+			if ((typeof _elems == 'undefined' || _elems.length==0) && this.isMainWindow)
 			{
-				if (this.mail_currentlyFocussed)
+				if (this.currentlyFocussed)
 				{
 					_elems = [];
-					_elems.push({id:this.mail_currentlyFocussed});
+					_elems.push({id:this.currentlyFocussed});
 				}
 			}
 		}
-		//alert('mail_header('+_elems[0].id+')');
-		let url = window.egw_webserverUrl+'/index.php?';
-		url += 'menuaction=mail.mail_ui.displayHeader';	// todo compose for Draft folder
-		url += '&id='+_elems[0].id;
-		this.mail_displayHeaderLines(url);
+		//alert('header('+_elems[0].id+')');
+		const rowId = _elems[0].id;
+		const classicHeaderPopup = () =>
+		{
+			let url = this.egw.webserverUrl+'/index.php?';
+			url += 'menuaction=mail.EGroupware\\Mail\\Ui.displayHeader';	// todo compose for Draft folder
+			url += '&id='+rowId;
+			this.displayHeaderLines(url);
+		};
+		this.jmap.fetchRawHeader(rowId).then(async(text : string) =>
+		{
+			// egw.openPopup() (kdots framework) returns a Promise resolving to the actual
+			// popup Window, not the Window itself - must be awaited before touching .document
+			const popup = await egw.openPopup('about:blank', 870, 600, null, 'mail', true) as any as Window;
+			if (!popup || !popup.document)
+			{
+				classicHeaderPopup();
+				return;
+			}
+			const escaped = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+			popup.document.open();
+			popup.document.write('<pre>'+escaped+'</pre>');
+			popup.document.close();
+		}).catch((e) => this.egw.message(e.message, 'error'));
 	}
 
 	/**
@@ -3259,7 +5149,7 @@ export class MailApp extends EgwApp
 	 * @param _action
 	 * @param _elems _elems[0].id is the row-id
 	 */
-	mail_mailsource(_action, _elems)
+	mailSource(_action, _elems)
 	{
 		if (typeof _elems == 'undefined' || _elems.length==0)
 		{
@@ -3268,21 +5158,40 @@ export class MailApp extends EgwApp
 				_elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
-			if ((typeof _elems == 'undefined'|| _elems.length==0) && this.mail_isMainWindow)
+			if ((typeof _elems == 'undefined'|| _elems.length==0) && this.isMainWindow)
 			{
-				if (this.mail_currentlyFocussed)
+				if (this.currentlyFocussed)
 				{
 					_elems = [];
-					_elems.push({id:this.mail_currentlyFocussed});
+					_elems.push({id:this.currentlyFocussed});
 				}
 			}
 		}
-		//alert('mail_mailsource('+_elems[0].id+')');
-		var url = window.egw_webserverUrl+'/index.php?';
-		url += 'menuaction=mail.mail_ui.saveMessage';	// todo compose for Draft folder
-		url += '&id='+_elems[0].id;
-		url += '&location=display';
-		this.mail_displayHeaderLines(url);
+		//alert('mailSource('+_elems[0].id+')');
+		const rowId = _elems[0].id;
+		const classicSourcePopup = () =>
+		{
+			let url = this.egw.webserverUrl+'/index.php?';
+			url += 'menuaction=mail.EGroupware\\Mail\\Ui.saveMessage';	// todo compose for Draft folder
+			url += '&id='+rowId;
+			url += '&location=display';
+			this.displayHeaderLines(url);
+		};
+		this.jmap.fetchRawSource(rowId).then(async(text : string) =>
+		{
+			// egw.openPopup() (kdots framework) returns a Promise resolving to the actual
+			// popup Window, not the Window itself - must be awaited before touching .document
+			const popup = await egw.openPopup('about:blank', 870, 600, null, 'mail', true) as any as Window;
+			if (!popup || !popup.document)
+			{
+				classicSourcePopup();
+				return;
+			}
+			const escaped = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+			popup.document.open();
+			popup.document.write('<pre>'+escaped+'</pre>');
+			popup.document.close();
+		}).catch((e) => this.egw.message(e.message, 'error'));
 	}
 
 	/**
@@ -3291,7 +5200,7 @@ export class MailApp extends EgwApp
 	 * @param _action
 	 * @param _elems _elems[0].id is the row-id
 	 */
-	mail_save(_action, _elems)
+	save(_action, _elems)
 	{
 		if (typeof _elems == 'undefined' || _elems.length==0)
 		{
@@ -3300,30 +5209,29 @@ export class MailApp extends EgwApp
 				_elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
-			if ((typeof _elems == 'undefined' || _elems.length==0) && this.mail_isMainWindow)
+			if ((typeof _elems == 'undefined' || _elems.length==0) && this.isMainWindow)
 			{
-				if (this.mail_currentlyFocussed)
+				if (this.currentlyFocussed)
 				{
 					_elems = [];
-					_elems.push({id:this.mail_currentlyFocussed});
+					_elems.push({id:this.currentlyFocussed});
 				}
 			}
 		}
 
-		for (var i in _elems)
+		for (const i in _elems)
 		{
-			//alert('mail_save('+_elems[0].id+')');
-			var url = window.egw_webserverUrl+'/index.php?';
-			url += 'menuaction=mail.mail_ui.saveMessage';	// todo compose for Draft folder
+			//alert('save('+_elems[0].id+')');
+			let url = this.egw.webserverUrl+'/index.php?';
+			url += 'menuaction=mail.EGroupware\\Mail\\Ui.saveMessage';	// todo compose for Draft folder
 			url += '&id='+_elems[i].id;
-			var a = document.createElement('a');
-			a = jQuery(a)
-				.prop('href', url)
-				.prop('download',"")
-				.appendTo(this.et2.getDOMNode());
-			var evt = document.createEvent('MouseEvent');
+			const a = document.createElement('a');
+			a.href = url;
+			a.download = "";
+			this.et2.getDOMNode().appendChild(a);
+			const evt = document.createEvent('MouseEvent');
 			evt.initMouseEvent('click', true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null);
-			a[0].dispatchEvent(evt);
+			a.dispatchEvent(evt);
 			a.remove();
 		}
 	}
@@ -3336,9 +5244,153 @@ export class MailApp extends EgwApp
 	 *
 	 * @todo seems this function is not implemented, need to be checked if it is neccessary at all
 	 */
-	address_click(tag_info, widget)
+	addressClick(tag_info, widget)
 	{
 
+	}
+
+	/**
+	 * Client-side JMAP folder search for the FOLDER/folder et2-select fields (compose.xet,
+	 * predefinedAddressesDialog.xet, importMessage.xet) - replaces the classic
+	 * mail.EGroupware\Mail\Compose.ajax_searchFolder server round-trip, which is IMAP-only and
+	 * unreachable for a JMAP/Stalwart account (found live 2026-09-08 via importMessage(), see
+	 * doc/ai/projects/mail-folder-tree-jmap.md). Wired via searchUrl="app.mail.searchFolder"
+	 * (SearchMixin.ts's new "app." string convention).
+	 *
+	 * @param search substring to match, case-insensitively, against each folder's canonical path
+	 *  or translated display label - same two-way match classic ajax_searchFolder() did (folder
+	 *  key vs. displayName)
+	 * @param options static searchOptions from the widget's own attribute - every current
+	 *  template passes {noPrefixId: "true"}, honoured for symmetry with the classic version. An
+	 *  explicit options.profileID overrides the account guess below - not used by any current
+	 *  template (searchOptions is a static XML attribute, can't carry a value that changes per
+	 *  dialog open), but predefinedAddressesDialog.xet's own opener (see the ~line 8579
+	 *  loadWebComponent("et2-dialog", ...) call) already knows the target profileID and could set
+	 *  the rendered widget's searchOptions after load to fix that dialog's own "always searches
+	 *  ActiveProfileID, not the account the tree action was invoked on" gap - not done here, out
+	 *  of scope for this pass.
+	 * @return {value, label} pairs - value is "profileID::path" unless noPrefixId is set (then
+	 *  just "path", matching classic's own $_noPrefixId branch)
+	 */
+	async searchFolder(search : string, options : any) : Promise<{ value : string, label : string }[]>
+	{
+		if(!search || search.length < 2) return [];
+
+		const mailaccountValue = String(this.et2?.getWidgetById?.('mailaccount')?.get_value?.() ?? '');
+		const profileID = String(options?.profileID ?? '') || mailaccountValue.split(':', 2)[0] ||
+			this.egw.preference('ActiveProfileID', 'mail') || '';
+		if(!profileID) return [];
+
+		const mailboxes = await this.jmap.getAllMailboxes(profileID);
+		if(!mailboxes) return [];
+
+		const paths = buildMailboxPaths(mailboxes, this.egw);
+		const noPrefixId = options?.noPrefixId === true || options?.noPrefixId === 'true';
+		const lowerSearch = search.toLowerCase();
+		return mailboxes
+			.filter((mailbox) => !isNamespaceRootName(mailbox.name))
+			.map((mailbox) => ({mailbox, ...paths.get(mailbox.id)}))
+			.filter(({path, label}) => path.toLowerCase().includes(lowerSearch) || label.toLowerCase().includes(lowerSearch))
+			.map(({path, label}) => ({
+				value: noPrefixId ? path : profileID + '::' + path,
+				label,
+			}));
+	}
+
+	/**
+	 * importMessage.xet's own 'mailaccount' onchange - resets FOLDER to the newly-selected
+	 * account's own Drafts folder (falling back to INBOX, which always exists, if that account
+	 * has none or a JMAP lookup fails) so the two fields never disagree (FOLDER's previous value
+	 * belonged to the OLD account, and noPrefixId is off for this template - see Ui::
+	 * importMessage()'s own docblock - so a stale value would silently file the import into the
+	 * wrong account, not just the wrong folder). Added 2026-09-08 (ralf's report): with more than
+	 * one account configured, there was previously no way to choose which account to import into
+	 * at all.
+	 *
+	 * @param _egw
+	 * @param _widget the 'mailaccount' et2-select itself
+	 */
+	async importMessageAccountChanged(_egw, _widget)
+	{
+		if(!_widget || Object.keys(_widget).length === 0) return;
+		const profileID = String(_widget.getValue() ?? '');
+		const folderWidget = _widget.getRoot()?.getWidgetById?.('FOLDER');
+		if(!profileID || !folderWidget) return;
+
+		let path = 'INBOX';
+		try
+		{
+			const mailboxes = await this.jmap.getAllMailboxes(profileID);
+			const drafts = mailboxes?.find((mailbox) => mailbox.role === 'drafts');
+			if(drafts)
+			{
+				path = buildMailboxPaths(mailboxes, this.egw).get(drafts.id)?.path ?? path;
+			}
+		}
+		catch(e)
+		{
+			// a JMAP hiccup resolving the Drafts folder shouldn't block picking an account at all -
+			// INBOX (set above) always exists
+		}
+		folderWidget.set_value(profileID + '::' + path);
+	}
+
+	/**
+	 * importMessage.xet's own et2_ready() init (ralf's ask 2026-09-08):
+	 * - preselects the account+folder from whatever the opener's own mail list currently has
+	 *   open, instead of always defaulting to the user's default account's Drafts folder (Ui::
+	 *   importMessage()'s own server-side default, still used as the fallback below) - same
+	 *   established window.opener.app.mail.* reuse pattern already used elsewhere in this file
+	 *   (customLabels above, MailApp's own jmap getter, ...).
+	 * - hides the account selector entirely when only one account is configured - with a single
+	 *   account there's nothing to choose, so showing it would just be a confusing, always-
+	 *   disabled-feeling extra field.
+	 * - resolves and seeds a real label for whichever folder ends up selected (the opener's, or
+	 *   the server's own default) - FOLDER has no eagerly-fetched sel_options at all (see Ui::
+	 *   importMessage()'s own docblock, avoiding a live IMAP round trip on every render), so
+	 *   without this the widget shows nothing selected even though its value IS set correctly
+	 *   (found live 2026-09-08 - ralf's report).
+	 */
+	private async importMessageInit() : Promise<void>
+	{
+		const mailaccountWidget : any = this.et2.getWidgetById('mailaccount');
+		if(mailaccountWidget && (mailaccountWidget.select_options || []).length <= 1)
+		{
+			const row = mailaccountWidget.getDOMNode()?.closest('tr');
+			if(row) row.hidden = true;
+		}
+
+		const folderWidget : any = this.et2.getWidgetById('FOLDER');
+		if(!folderWidget) return;
+
+		// no opener (eg. opened directly, or the opener window was closed), or the opener's own
+		// mail list has nothing selected yet - fall back to the server's own default, which is
+		// already this widget's current value
+		const openerSelectedFolder = (window.opener as any)?.app?.mail?.getActiveFilters?.()?.selectedFolder;
+		const targetValue = String(openerSelectedFolder || folderWidget.getValue() || '');
+		const [profileID, path] = targetValue.split('::', 2);
+		if(!profileID || !path) return;
+
+		if(mailaccountWidget && openerSelectedFolder) mailaccountWidget.set_value(profileID);
+
+		let label = path;
+		try
+		{
+			const mailboxes = await this.jmap.getAllMailboxes(profileID);
+			if(mailboxes)
+			{
+				const paths = buildMailboxPaths(mailboxes, this.egw);
+				const match = mailboxes.find((mailbox) => paths.get(mailbox.id)?.path === path);
+				if(match) label = paths.get(match.id).label;
+			}
+		}
+		catch(e)
+		{
+			// a JMAP hiccup resolving the label shouldn't block preselecting a folder at all -
+			// the raw path (set above) is still shown, not nothing
+		}
+		folderWidget.select_options = [{value: targetValue, label}];
+		folderWidget.set_value(targetValue);
 	}
 
 	/**
@@ -3350,48 +5402,48 @@ export class MailApp extends EgwApp
 	 */
 	displayAttachment(tag_info, widget, calledForCompose)
 	{
-		var mailid;
-		var attgrid;
+		let mailid;
+		let attgrid;
 		if (typeof calledForCompose == 'undefined' || typeof calledForCompose == 'object') calledForCompose=false;
 		if (calledForCompose===false)
 		{
-			if (this.mail_isMainWindow)
+			if (this.isMainWindow)
 			{
-				mailid = this.mail_currentlyFocussed;//this.et2.getArrayMgr("content").getEntry('mail_id');
-				var p = widget.getParent();
-				var cont = p.getArrayMgr("content").data;
+				mailid = this.currentlyFocussed;//this.et2.getArrayMgr("content").getEntry('mail_id');
+				const p = widget.getParent();
+				const cont = p.getArrayMgr("content").data;
 				attgrid = cont[widget.id.replace(/\[filename\]/,'')];
 			}
 			else
 			{
 				mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
-				attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments')[widget.id.replace(/\[filename\]/,'')];
+				attgrid = this.et2.getArrayMgr("content").getEntry('attachmentsBlock')[widget.id.replace(/\[filename\]/,'')];
 			}
 		}
 		if (calledForCompose===true)
 		{
 			// CALLED FOR COMPOSE; processedmail_id could hold several IDs seperated by comma
 			attgrid = this.et2.getArrayMgr("content").getEntry('attachments')[widget.id.replace(/\[name\]/,'')];
-			var mailids = this.et2.getArrayMgr("content").getEntry('processedmail_id');
-			var mailida = mailids.split(',');
+			const mailids = this.et2.getArrayMgr("content").getEntry('processedmail_id');
+			const mailida = mailids.split(',');
 			// either several attachments of one email, or multiple emlfiles
 			mailid = mailida.length==1 ? mailida[0] : mailida[widget.id.replace(/\[name\]/,'')];
 			if (typeof attgrid.uid != 'undefined' && attgrid.uid && mailid.indexOf(attgrid.uid)==-1)
 			{
-				for (var i=0; i<mailida.length; i++)
+				for (let i=0; i<mailida.length; i++)
 				{
 					if (mailida[i].indexOf('::'+attgrid.uid)>-1) mailid = mailida[i];
 				}
 			}
 		}
-		var url = window.egw_webserverUrl+'/index.php?';
-		var width;
-		var height;
-		var windowName ='mail';
+		let url = this.egw.webserverUrl+'/index.php?';
+		let width;
+		let height;
+		let windowName ='mail';
 		switch(attgrid.type.toUpperCase())
 		{
 			case 'MESSAGE/RFC822':
-				url += 'menuaction=mail.mail_ui.displayMessage';	// todo compose for Draft folder
+				url += 'menuaction=mail.EGroupware\\Mail\\Ui.displayMessage';	// todo compose for Draft folder
 				url += '&mode=display';//message/rfc822 attachments should be opened in display mode
 				url += '&id='+mailid;
 				url += '&part=' + (attgrid.partID ?? "");
@@ -3424,13 +5476,13 @@ export class MailApp extends EgwApp
 			case 'TEXT/VCARD':
 			case 'TEXT/CALENDAR':
 			case 'TEXT/X-VCALENDAR':
-				url += 'menuaction=mail.mail_ui.getAttachment';	// todo compose for Draft folder
+				url += 'menuaction=mail.EGroupware\\Mail\\Ui.getAttachment';	// todo compose for Draft folder
 				url += '&id='+mailid;
 				url += '&part='+attgrid.partID;
 				url += '&is_winmail='+attgrid.winmailFlag;
 				windowName = windowName+'displayAttachment_'+mailid+'_'+attgrid.partID;
-				var reg = '800x600';
-				var reg2;
+				let reg = '800x600';
+				let reg2;
 				// handle calendar/vcard
 				if (attgrid.type.toUpperCase()=='TEXT/CALENDAR')
 				{
@@ -3450,12 +5502,12 @@ export class MailApp extends EgwApp
 						reg = reg2['add_popup'];
 					}
 				}
-				var w_h =reg.split('x');
+				const w_h =reg.split('x');
 				width = w_h[0];
 				height = w_h[1];
 				break;
 			default:
-				url += 'menuaction=mail.mail_ui.getAttachment';	// todo compose for Draft folder
+				url += 'menuaction=mail.EGroupware\\Mail\\Ui.getAttachment';	// todo compose for Draft folder
 				url += '&id='+mailid;
 				url += '&part='+attgrid.partID;
 				url += '&is_winmail='+attgrid.winmailFlag;
@@ -3464,7 +5516,7 @@ export class MailApp extends EgwApp
 				height = 600;
 				break;
 		}
-		egw_openWindowCentered(url,windowName,width,height);
+		egw.openPopup(url, width, height, windowName, false, true, 'no');
 	}
 
 	/**
@@ -3488,16 +5540,24 @@ export class MailApp extends EgwApp
 	{
 		let mail_id, attachments,attachment;
 
-		if (this.mail_isMainWindow)
+		if (this.isMainWindow)
 		{
-			mail_id = this.mail_currentlyFocussed || app.mail.mail_currentlyFocussed;
+			mail_id = this.currentlyFocussed || (app.mail as unknown as MailApp).currentlyFocussed;
 			const p = widget.getParent();
 			attachments = p.getArrayMgr("content").data;
 		}
 		else
 		{
-			mail_id = this.et2.getArrayMgr("content").getEntry('mail_id');
-			attachments = this.et2.getArrayMgr("content").getEntry('mail_displayattachments');
+			// this.et2 does not reliably resolve to the "view" popup's own template (its
+			// getArrayMgr("content").getEntry(...) calls silently return undefined there,
+			// crashing every action below on a single-attachment message) - walk up from the
+			// clicked widget itself instead, same as the main-window branch above, and read
+			// mail_id off the attachment row itself (createAttachmentBlock() in
+			// class.mail_ui.inc.php always sets it there) rather than a separate lookup
+			const p = widget.getParent();
+			attachments = p.getArrayMgr("content").data;
+			mail_id = (attachments && (attachments[row_id] ?? attachments[0]))?.mail_id ??
+				this.et2.getArrayMgr("content").getEntry('mail_id');
 		}
 
 		switch (action)
@@ -3513,29 +5573,29 @@ export class MailApp extends EgwApp
 						ids.push(mail_id+'::'+attachment.partID+'::'+attachment.winmailFlag+'::'+attachment.filename);
 					}
 				}
-				let vfs_select = loadWebComponent('et2-vfs-select', {
+				const vfs_select = loadWebComponent('et2-vfs-select', {
 					mode: action === 'saveOneToVfs' ? 'saveas' : 'select-dir',
-					method: 'mail.mail_ui.ajax_vfsSave',
+					method: 'mail.EGroupware\\Mail\\Ui.ajax_vfsSave',
 					buttonLabel: this.egw.lang(action === 'saveOneToVfs' ? 'Save' : 'Save all'),
 					title: this.egw.lang(action === 'saveOneToVfs' ? 'Save attachment' : 'Save attachments'),
 					filename: action === 'saveOneToVfs' ? attachments[0]['filename'] : null
 				}, this.et2 ?? app.mail.et2);
 				// Serious violation of type - methodId is a string
 				// Set it to an array here bypassing normal checking
-				vfs_select.methodId = ids.length > 1 ? {ids: ids, action: 'attachment'} : {ids: ids[0], action: 'attachment'},
-					vfs_select.updateComplete.then(() => vfs_select.click());
+				(vfs_select as any).methodId = ids.length > 1 ? {ids: ids, action: 'attachment'} : {ids: ids[0], action: 'attachment'},
+					(vfs_select as any).updateComplete.then(() => vfs_select.click());
 				// Single use only, remove when done
 				vfs_select.addEventListener("change", () => vfs_select.remove());
 				break;
 			case 'collabora':
 				attachment = attachments[row_id];
-				let id = mail_id + '::' + attachment.partID + '::' + attachment.winmailFlag + '::' + attachment.filename;
+				const id = mail_id + '::' + attachment.partID + '::' + attachment.winmailFlag + '::' + attachment.filename;
 
 				// This can take a few seconds, show loader
 				this.egw.loading_prompt('mail_open_file', true, attachment.filename);
 
 				// Temp save to VFS
-				this.egw.request('mail.mail_ui.ajax_vfsOpen', [id, attachment.filename]).then((temp_path) =>
+				this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_vfsOpen', [id, attachment.filename]).then((temp_path) =>
 				{
 					if (temp_path)
 					{
@@ -3553,20 +5613,52 @@ export class MailApp extends EgwApp
 				});
 				break;
 
+			case 'downloadAllAsFiles':
+				this.downloadAllAttachments(Object.values(attachments ?? {}));
+				break;
+
 			case 'downloadOneAsFile':
 			case 'downloadAllToZip':
 				attachment = attachments[row_id];
-				let url = window.egw_webserverUrl+'/index.php?';
-				url += new URLSearchParams({
-					menuaction: action === 'downloadOneAsFile' ?
-						'mail.mail_ui.getAttachment' : 'mail.mail_ui.download_zip',
-					mode: 'save',
-					id: attachment.mail_id,
-					part: attachment.partID,
-					is_winmail: attachment.winmailFlag,
-					smime_type: attachment.smime_type ?? ''
-				}).toString();
-				window.etemplate2.prototype.download(url);
+				const classicDownload = () =>
+				{
+					// same per-attachment save URL "Download all attachments" uses for its
+					// classic path, see downloadAllAttachments() below
+					const url = action === 'downloadOneAsFile' ? attachmentSaveUrl(this.egw, attachment) :
+						this.egw.webserverUrl + '/index.php?' + new URLSearchParams({
+							menuaction: 'mail.EGroupware\\Mail\\Ui.download_zip',
+							mode: 'save',
+							id: attachment.mail_id,
+							part: attachment.partID,
+							is_winmail: attachment.winmailFlag,
+							smime_type: attachment.smime_type ?? ''
+						}).toString();
+					etemplate2.prototype.download(url);
+				};
+				// Fast client-side JMAP path for a single attachment with a known blobId (set by
+				// mail_ui::jmapAttachmentsToLegacy(), both backends). downloadAllToZip stays on the
+				// classic path (server-side zip assembly, not a per-file fetch); an unparseable
+				// mail_id or missing blobId falls back to it too (not a JMAP failure, just not
+				// applicable) - but once the JMAP download itself is attempted, any failure shows
+				// the error directly, there's no classic fallback (see folderTreeAutoload()'s
+				// docblock for why).
+				if (action === 'downloadOneAsFile' && attachment.blobId)
+				{
+					let profileID : string;
+					try
+					{
+						profileID = this.jmap.messageReference(attachment.mail_id).profileID;
+					}
+					catch (e)
+					{
+						classicDownload();
+						break;
+					}
+					this.jmap.downloadAttachment(profileID, attachment.blobId, attachment.filename, attachment.type)
+						.catch((e) => this.egw.message(e.message, 'error'));
+					break;
+				}
+				classicDownload();
 				break;
 			case 'forward':
 				// Give some UI feedback, this might take a second
@@ -3574,7 +5666,7 @@ export class MailApp extends EgwApp
 
 				// Move the attachment to VFS
 				const file_id = mail_id+'::'+attachments[row_id].partID+'::'+attachments[row_id].winmailFlag+'::'+attachments[row_id].filename;
-				this.egw.request("mail.mail_ui.ajax_vfsOpen", [file_id,attachments[row_id].filename])
+				this.egw.request("mail.EGroupware\\Mail\\Ui.ajax_vfsOpen", [file_id,attachments[row_id].filename])
 					.then((vfs_path) => {
 						if(!vfs_path)
 						{
@@ -3584,13 +5676,29 @@ export class MailApp extends EgwApp
 
 						// File is in VFS, put it in a compose window
 						const params = {};
-						let content = {data:{files:{file:[]}}};
-						params['preset[file][]'] = 'vfs://default'+vfs_path;
-						content.data.files.file.push('vfs://default'+vfs_path);
+						const content = {data:{files:{file:[]}}};
+						const vfsPath = 'vfs://default'+vfs_path;
+						params['preset[file][]'] = vfsPath;
+						content.data.files.file.push(vfsPath);
 						content.data.files["filemode"] = params['preset[filemode]'];
 						// always open compose in html mode, as attachment links look a lot nicer in html
 						params["mimeType"] = 'html';
-						egw.openWithinWindow("mail", "setCompose", content, params, /mail.mail_compose.compose/, true);
+						// preset.files (doc/ai/projects/mail-compose-jmap-migration.md, Step 10) -
+						// same jmapVfsPath-marker mechanism filemanager's own open_mail()/addressbook's
+						// vCard-attach already use, closing off the last still-classic
+						// egw.openWithinWindow("mail",...) call site (found auditing compose()'s own
+						// remaining callers, 2026-09-07).
+						const files = [{
+							path: vfsPath,
+							name: attachments[row_id].filename,
+							type: attachments[row_id].type || 'application/octet-stream',
+						}];
+						// the same name/type for the "reuse an already-open popup" case, which
+						// setCompose() resolves client-side too (vfsFilesFromComposeContent())
+						content.data.files["name"] = files.map(f => f.name);
+						content.data.files["type"] = files.map(f => f.type);
+						egw.openWithinWindow("mail", "setCompose", content, params, COMPOSE_POPUP_URL_PATTERN, true,
+							() => this.composeWithPreset({files, mimeType: 'html'}));
 					})
 					.finally(() => {
 						// No matter what, clear the waiting style
@@ -3604,12 +5712,42 @@ export class MailApp extends EgwApp
 	}
 
 	/**
+	 * "Download all attachments": save every attachment of the message as its own file, the
+	 * download counterpart to "Save all attachments to Filemanager" (and the per-file
+	 * alternative to "Save as ZIP").
+	 *
+	 * The loop itself lives in mail/js/attachmentDownload.ts (standalone, so it stays
+	 * unit-testable without importing MailApp) and reports nothing itself - the outcome for all
+	 * files is summarized in a single message here, instead of one message per attachment.
+	 *
+	 * Note browsers ask for permission the first time a site saves several files at once; if the
+	 * user denies it, only the first file arrives, which JS cannot detect - the count in the
+	 * success message is what makes such a partial result visible.
+	 *
+	 * @param attachments attachmentsBlock rows of the message
+	 */
+	private downloadAllAttachments(attachments : any[]) : void
+	{
+		downloadAttachments(attachments, {egw: this.egw, jmap: this.jmap}).then(({downloaded, failed}) =>
+		{
+			if (failed.length)
+			{
+				this.egw.message(this.egw.lang('Could not download %1', failed.join(', ')), 'error');
+			}
+			else if (downloaded > 1)
+			{
+				this.egw.message(this.egw.lang('%1 attachments downloaded', downloaded), 'success');
+			}
+		});
+	}
+
+	/**
 	 * Save a message to filemanager
 	 *
 	 * @param _action
 	 * @param _elems _elems[0].id is the row-id
 	 */
-	mail_save2fm(_action, _elems)
+	save2Fm(_action, _elems)
 	{
 		if (typeof _elems == 'undefined' || _elems.length==0)
 		{
@@ -3618,42 +5756,42 @@ export class MailApp extends EgwApp
 				_elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
-			if ((typeof _elems == 'undefined' || _elems.length==0) && this.mail_isMainWindow)
+			if ((typeof _elems == 'undefined' || _elems.length==0) && this.isMainWindow)
 			{
-				if (this.mail_currentlyFocussed)
+				if (this.currentlyFocussed)
 				{
 					_elems = [];
-					_elems.push({id:this.mail_currentlyFocussed});
+					_elems.push({id:this.currentlyFocussed});
 				}
 			}
 		}
-		var ids = [], names = [];
+		const ids = [], names = [];
 		for (const i in _elems)
 		{
 			const _id = _elems[i].id;
 			const dataElem = egw.dataGetUIDdata(_id);
 			let subject = dataElem? dataElem.data.subject: _elems[i].subject;
-			if (this.egw.is_popup() && this.et2._inst.name == 'mail.display')
+			if (this.egw.is_popup() && this.et2.getInstanceManager().name == 'mail.display')
 			{
-				subject = this.et2.getArrayMgr('content').getEntry('mail_displaysubject');
+				subject = this.et2.getArrayMgr('content').getEntry('subject');
 			}
 			// Replace these now, they really cause problems later
 			const filename = subject ? subject.replace(/[\f\n\t\v\x0b\:*#?<>%"\/\\\?]/g,"_") : 'unknown';
 			ids.push(_id);
 			names.push(filename+'.eml');
 		}
-		let vfs_select = loadWebComponent('et2-vfs-select', {
+		const vfs_select = loadWebComponent('et2-vfs-select', {
 			mode: _elems.length > 1 ? 'select-dir' : 'saveas',
 			mime: 'message/rfc822',
-			method: 'mail.mail_ui.ajax_vfsSave',
+			method: 'mail.EGroupware\\Mail\\Ui.ajax_vfsSave',
 			buttonLabel: _elems.length > 1 ? egw.lang('Save all') : egw.lang('save'),
 			title: this.egw.lang("Save email"),
 			filename: _elems.length > 1 ? names : names[0],
 		}, this.et2);
 		// Serious violation of type - methodId is a string
 		// Set it to an array here bypassing normal checking
-		vfs_select.methodId = _elems.length > 1 ? {ids: ids, action: 'message'} : {ids: ids[0], action: 'message'};
-		vfs_select.updateComplete.then(() => vfs_select.click());
+		(vfs_select as any).methodId = _elems.length > 1 ? {ids: ids, action: 'message'} : {ids: ids[0], action: 'message'};
+		(vfs_select as any).updateComplete.then(() => vfs_select.click());
 		// Single use only, remove when done
 		vfs_select.addEventListener("change", () => vfs_select.remove());
 	}
@@ -3664,15 +5802,16 @@ export class MailApp extends EgwApp
 	 * @param _action
 	 * @param _elems _elems[0].id is the row-id
 	 */
-	mail_integrate(_action, _elems)
+	integrate(_action, _elems)
 	{
 		const app = _action.id;
 		let w_h = ['750','580']; // define a default wxh if there's no popup size registered
+		let mail_import_hook;
 
 		if (typeof _action.data != 'undefined' )
 		{
 			if (typeof _action.data.popup != 'undefined' && _action.data.popup) w_h = _action.data.popup.split('x');
-			if (typeof _action.data.mail_import != 'undefined') var mail_import_hook = _action.data.mail_import;
+			if (typeof _action.data.mail_import != 'undefined') mail_import_hook = _action.data.mail_import;
 		}
 
 		if (typeof _elems == 'undefined' || _elems.length==0)
@@ -3682,30 +5821,30 @@ export class MailApp extends EgwApp
 				_elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
-			if ((typeof _elems == 'undefined' || _elems.length==0) && this.mail_isMainWindow)
+			if ((typeof _elems == 'undefined' || _elems.length==0) && this.isMainWindow)
 			{
-				if (this.mail_currentlyFocussed)
+				if (this.currentlyFocussed)
 				{
 					_elems = [];
-					_elems.push({id:this.mail_currentlyFocussed});
+					_elems.push({id:this.currentlyFocussed});
 				}
 			}
 		}
 
-		var url = window.egw_webserverUrl+ '/index.php?menuaction=mail.mail_integration.integrate&rowid=' + _elems[0].id + '&app='+app;
+		const url = this.egw.webserverUrl+ '/index.php?menuaction=mail.mail_integration.integrate&rowid=' + _elems[0].id + '&app='+app;
 
 		if (mail_import_hook && typeof mail_import_hook.app_entry_method != 'undefined')
 		{
-			var data = egw.dataGetUIDdata(_elems[0].id);
-			var title = egw.lang('Select') + ' ' + egw.lang(app) + ' ' + (egw.link_get_registry(app, 'entry') ? egw.link_get_registry(app, 'entry') : egw.lang('entry'));
-			var subject = (data && typeof data.data != 'undefined')? data.data.subject : '';
-			this.integrate_checkAppEntry(title, app, subject, url,  mail_import_hook.app_entry_method, function (args){
-				egw_openWindowCentered(args.url+ (args.entryid ?'&entry_id=' + args.entryid: ''),'import_mail_'+_elems[0].id,w_h[0],w_h[1]);
+			const data = egw.dataGetUIDdata(_elems[0].id);
+			const title = egw.lang('Select') + ' ' + egw.lang(app) + ' ' + (egw.link_get_registry(app, 'entry') ? egw.link_get_registry(app, 'entry') : egw.lang('entry'));
+			const subject = (data && typeof data.data != 'undefined')? data.data.subject : '';
+			this.integrateCheckAppEntry(title, app, subject, url,  mail_import_hook.app_entry_method, (args) =>{
+				egw.openPopup(args.url+ (args.entryid ?'&entry_id=' + args.entryid: ''), Number(w_h[0]), Number(w_h[1]), 'import_mail_'+_elems[0].id, false, true, 'no');
 			});
 		}
 		else
 		{
-			egw_openWindowCentered(url,'import_mail_'+_elems[0].id,w_h[0],w_h[1]);
+			egw.openPopup(url, Number(w_h[0]), Number(w_h[1]), 'import_mail_'+_elems[0].id, false, true, 'no');
 		}
 
 	}
@@ -3722,17 +5861,17 @@ export class MailApp extends EgwApp
 	* @param {string} _appCheckCallback registered mail_import hook method
 	* @param {function} _execCallback function to get called on dialog actions
 	*/
-	integrate_checkAppEntry(_title, _appName, _subject ,_url, _appCheckCallback, _execCallback)
+	integrateCheckAppEntry(_title, _appName, _subject ,_url, _appCheckCallback, _execCallback)
 	{
-	   var subject = _subject || '';
-	   var execCallback = _execCallback;
+	   const subject = _subject || '';
+	   const execCallback = _execCallback;
 	   egw.json(_appCheckCallback, subject,function(_entryId){
 
 		   // if there's no entry saved already
 		   // open dialog in order to select one
 		   if (!_entryId)
 		   {
-			   var buttons = [
+			   const buttons = [
 				   {label: app.mail.egw.lang('Append'), id: 'append', image: 'check', default: true},
 				   {label: app.mail.egw.lang('Add as new'), id: 'new', image: 'check'},
 				   {label: app.mail.egw.lang('Cancel'), id: 'cancel', image: 'check'}
@@ -3770,14 +5909,14 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_getFormData
+	 * getFormData
 	 *
 	 * @param {object} _actionObjects the senders
 	 *
 	 * @return structured array of message ids: array(msg=>message-ids)
 	 */
-	mail_getFormData(_actionObjects) {
-		var messages = {};
+	getFormData(_actionObjects) {
+		const messages = {};
 		// if
 		if (typeof _actionObjects['msg'] != 'undefined' && _actionObjects['msg'].length>0) return _actionObjects;
 		if (_actionObjects.length>0)
@@ -3785,7 +5924,7 @@ export class MailApp extends EgwApp
 			messages['msg'] = [];
 		}
 
-		for (var i = 0; i < _actionObjects.length; i++)
+		for (let i = 0; i < _actionObjects.length; i++)
 		{
 			if (_actionObjects[i].id.length>0)
 			{
@@ -3797,214 +5936,109 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_setRowClass
-	 *
-	 * @param {object} _actionObjects the senders
-	 * @param {string} _class
-	 */
-	mail_setRowClass(_actionObjects,_class) {
-		if (typeof _class == 'undefined') return false;
-
-		if (typeof _actionObjects['msg'] == 'undefined')
-		{
-			for (let i = 0; i < _actionObjects.length; i++)
-			{
-				// Check that the ID & interface is there.  Paste is missing iface.
-				if (_actionObjects[i].id.length>0 && _actionObjects[i].iface)
-				{
-					const dataElem: HTMLElement = (_actionObjects[i].iface.getDOMNode());
-					dataElem?.classList.add(_class);
-
-				}
-			}
-		}
-		else
-		{
-			let actions: EgwActionObject[] = this.nm?.controller?.getObjectManager().children;
-			for (let i = 0; i < _actionObjects['msg'].length; i++)
-			{
-				const mail_uid = _actionObjects['msg'][i];
-
-				// Get the record from data cache
-				const dataElem = egw.dataGetUIDdata(mail_uid);
-				if(dataElem == null || typeof dataElem == undefined)
-				{
-					// Unknown ID, nothing to update
-					return;
-				}
-
-				// Update class
-				let changed = true;
-				if (dataElem.data['class'].includes(_class))
-					changed = false;
-				if (changed) dataElem.data['class'] += ' ' + _class;
-
-				// need to update flags too
-				switch(_class)
-				{
-					case 'unseen':
-						delete dataElem.data.flags.read;
-						break;
-				}
-				//check current UI state
-				const action = actions.find(action =>
-				{
-					if (action.id === mail_uid) return action
-				});
-				if (action)
-				{
-					try
-					{
-						const nmNode = action.iface.getDOMNode();
-						if (_class === "unseen")
-						{
-							//image src usually comes from the server but can't anymore in this case so we set it directly
-							const img: Et2Image = nmNode.querySelector(".status_img");
-							if (img) img.src = egw.image("mail_unseen")
-						}
-						nmNode.classList.add(_class)
-						//egwData already hs the correct entrys -- no need to call it again
-						if (changed) egw.dataStoreUID(mail_uid, dataElem.data, true);
-						return;
-					} catch (e)
-					{
-					}
-				}
-
-				// Update record, which updates all listeners (including nextmatch)
-				egw.dataStoreUID(mail_uid,dataElem.data);
-			}
-		}
-	}
-
-	/**
-	 * mail_removeRowFlag
-	 * Removes a flag and updates the CSS class.  Updates the UI, but not the server.
-	 *
-	 * @param {action object} _actionObjects the senders, or a messages object
-	 * @param {string} _class the class to be removed
-	 */
-	mail_removeRowClass(_actionObjects,_class) {
-		if (typeof _class == 'undefined') return false;
-
-		if (typeof _actionObjects['msg'] == 'undefined')
-		{
-			for (let i = 0; i < _actionObjects.length; i++)
-			{
-				if (_actionObjects[i].id.length>0)
-				{
-					const dataElem: HTMLElement = _actionObjects[i].iface.getDOMNode();
-					dataElem.classList.remove(_class);
-
-				}
-			}
-		}
-		else
-		{
-			let actions: EgwActionObject[] = this.nm?.controller?.getObjectManager().children;
-			for (let i = 0; i < _actionObjects['msg'].length; i++)
-			{
-				const mail_uid = _actionObjects['msg'][i];
-
-				// Get the record from data cache
-				const dataElem = egw.dataGetUIDdata(mail_uid);
-				if(dataElem == null || typeof dataElem == undefined)
-				{
-					// Unknown ID, nothing to update
-					return;
-				}
-
-				// Update class
-				let classes = dataElem.data['class'] || "";
-				classes = classes.split(' ');
-				if(classes.indexOf(_class) >= 0)
-				{
-					for(const c in classes)
-					{
-						classes.splice(classes.indexOf(_class),1);
-						if (classes.indexOf(_class) < 0) break;
-					}
-					dataElem.data['class'] = classes.join(' ');
-
-					// need to update flags too
-					switch(_class)
-					{
-						case 'unseen':
-							dataElem.data.flags.read = true;
-							break;
-					}
-
-					//only the class attribute has changed, so
-					//we do not need to trigger the nm callbacks we can just
-					//update local Storage and set the classes in the nm row directly
-					// the advantage is, that nm row does not need to be redrawn
-					let skipCallback = false
-					const action = actions.find(action =>
-					{
-						if (action.id === mail_uid) return action
-					});
-					if (action)
-					{
-						try
-						{
-							const nmNode = action.iface.getDOMNode();
-							nmNode.classList.remove(_class);
-							//we found the nm DOM node and removed the class from it
-							// that means we don't need to trigger a nm redraw
-							//(the callback would trigger a redraw)
-							//(the callback would trigger a redraw)
-							skipCallback = true;
-						} catch (e)
-						{
-							skipCallback = false
-						}
-					}
-					egw.dataStoreUID(mail_uid, dataElem.data, skipCallback);
-				}
-			}
-		}
-	}
-
-	/**
-	 * mail_move2folder - implementation of the move action from action menu
+	 * move2Folder - implementation of the move action from action menu
 	 *
 	 * @param _action _action.id holds folder target information
 	 * @param _elems - the representation of the elements to be affected
 	 */
-	mail_move2folder(_action, _elems) {
-		this.mail_move(_action, _elems, null);
+	move2Folder(_action, _elems) {
+		this.move(_action, _elems, null);
 	}
 
 	/**
-	 * mail_move - implementation of the move action from drag n drop
+	 * move - implementation of the move action from drag n drop
 	 *
 	 * @param _action
 	 * @param _senders - the representation of the elements dragged
 	 * @param _target - the representation of the target
 	 */
-	mail_move(_action,_senders,_target) {
-		this.mail_checkAllSelected(_action,_senders,_target,true);
+	move(_action,_senders,_target) {
+		this.checkAllSelected(_action,_senders,_target,true);
 	}
 
 	/**
-	 * mail_move - implementation of the move action from drag n drop
+	 * Try the fast client-side JMAP move path - MailJmap.moveMessages() for an explicit selection,
+	 * or moveAllMatching() for "select all matching the current filter" - within one account, and
+	 * not the "move to archive" shortcut (that needs the server to resolve the actual archive
+	 * folder, see ajax_copyMessages()'s $_move2ArchiveMarker). Cross-account moves fall through to
+	 * the classic path too (moveMessages()/moveAllMatching() both throw for those). Returns null if
+	 * not applicable (caller falls back to the unchanged classic call directly); otherwise a
+	 * Promise that either succeeds via JMAP or, on any failure, falls back to that same classic call.
+	 */
+	private tryJmapMove(target : string, messages : any, isArchiveShortcut : boolean,
+		classicMove : () => Promise<any>) : Promise<any> | null
+	{
+		if (isArchiveShortcut)
+		{
+			return null;
+		}
+		const sepIndex = target.indexOf('::');
+		const targetProfileID = sepIndex > 0 ? target.substring(0, sepIndex) : '';
+		const targetFolderPath = sepIndex > 0 ? target.substring(sepIndex + 2) : '';
+		if (!targetProfileID || !targetFolderPath)
+		{
+			return null;
+		}
+		if (messages['all'])
+		{
+			return this.jmap.moveAllMatching(this.buildJmapQuery(messages), targetProfileID, targetFolderPath)
+				.catch((e) => this.handleJmapError(e, classicMove));
+		}
+		if (!Array.isArray(messages.msg) || !messages.msg.length)
+		{
+			return null;
+		}
+		// doc/ai/projects/mail-threaded-view.md, "Bulk actions on collapsed thread rows" - see
+		// tryJmapDelete()'s identical comment.
+		return this.jmap.expandThreadRowIds(messages.msg).then((expandedIds) =>
+		{
+			const references = expandedIds.map((id : string) => this.jmap.messageReference(id));
+			return this.jmap.moveMessages(references, targetProfileID, targetFolderPath);
+		}).catch((e) => this.handleJmapError(e, classicMove));
+	}
+
+	/**
+	 * Try the fast client-side JMAP path for the MDN Yes/No dialog's flag write
+	 * (MailJmap.setMdnFlag()) - always a single previewed message, no "select all" case. Falls back
+	 * to the classic ajax_flagMessages() call on any failure (reference-building or the JMAP call
+	 * itself). ajax_sendMDN() (the actual outbound receipt) is unrelated and unchanged.
+	 */
+	private trySetMdnFlag(messages : any, sent : boolean) : void
+	{
+		const classicFallback = () =>
+			egw.jsonq('mail.EGroupware\\Mail\\Ui.ajax_flagMessages', [sent ? 'mdnsent' : 'mdnnotsent', messages, true]);
+		// doc/ai/projects/mail-threaded-view.md, "Bulk actions on collapsed thread rows" - a
+		// same-tick no-op in practice here (this is always a single previewed message, which can't
+		// be a thread-parent row - opening one expands it instead of previewing a body), kept for
+		// consistency with the other four messageReference() call sites.
+		this.jmap.expandThreadRowIds(messages.msg || []).then((expandedIds) =>
+		{
+			const references = expandedIds.map((id : string) => this.jmap.messageReference(id));
+			return this.jmap.setMdnFlag(references, sent);
+		})
+			.catch((e) => this.handleJmapError(e, classicFallback))
+			.catch((e) => this.egw.message(e?.message || this.egw.lang('Failed to update messages'), 'error'));
+	}
+
+	/**
+	 * move - implementation of the move action from drag n drop
 	 *
 	 * @param _action
 	 * @param _senders - the representation of the elements dragged
 	 * @param _target - the representation of the target
 	 * @param _allMessagesChecked
 	 */
-	mail_callMove(_action,_senders,_target,_allMessagesChecked) {
-		var target = _action.id == 'drop_move_mail' ? _target.id : _action.id.substr(5);
-		var messages = this.mail_getFormData(_senders);
+	callMove(_action,_senders,_target,_allMessagesChecked) {
+		let target = _action.id == 'drop_move_mail' ? _target.id : _action.id.substr(5);
+		const messages = this.getFormData(_senders);
 		if (typeof _allMessagesChecked=='undefined') _allMessagesChecked=false;
 
 		// Directly delete any cache for target
 		if(window.localStorage)
 		{
-			for(var i = 0; i < window.localStorage.length; i++)
+			for(let i = 0; i < window.localStorage.length; i++)
 			{
-				var key = window.localStorage.key(i);
+				const key = window.localStorage.key(i);
 
 				// Find directly by what the key would look like
 				if(key.indexOf('cached_fetch_mail::{"selectedFolder":"'+target+'"') == 0)
@@ -4017,108 +6051,289 @@ export class MailApp extends EgwApp
 		// as the "onNodeSelect" function!
 		messages['all'] = _allMessagesChecked;
 		if (messages['all']=='cancel') return false;
-		if (messages['all']) messages['activeFilters'] = this.mail_getActiveFilters(_action);
+		if (messages['all']) messages['activeFilters'] = this.getActiveFilters(_action);
 
 		// Make sure a default target folder is set in case of drop target is parent 0 (mail account name)
 		if (!target.match(/::/g)) target += '::INBOX';
 
-		var self = this;
-		var nm = this.et2.getWidgetById(this.nm_index);
-		// Nextmatch automatically selects the next row and calls preview.
-		// Stop it for now, we'll put it back when the copy is done
-		let on_select = nm.options.onselect;
-		nm.options.onselect = null;
+		const self = this;
+		const nm = this.et2.getWidgetById(this.nm_index);
+		// The legacy callback is cancelable through its selection event, rather
+		// than changing the component's callback property.
+		const suppressPreview = (event : Event) => event.preventDefault();
+		nm.addEventListener("et2-selection-changed", suppressPreview, {capture: true, once: true});
 		_senders[0].parent.setAllSelected(false);
-		this.mail_preview([],nm);
-		// Restore onselect handler
-		nm.options.onselect = on_select;
-
-		// If auto-refresh is on, turn it off until the move request finishes
-		const nm_autorefresh = nm._get_autorefresh();
-		if (nm_autorefresh)
-		{
-			nm._set_autorefresh(0);
-		}
+		queueMicrotask(() => nm.removeEventListener("et2-selection-changed", suppressPreview, {capture: true}));
+		this.preview([], nm);
 
 		// Remove from nm immediately so the user gets immediate feedback, we send an error message later in case something went wrong
-		this.refresh(nm, messages.msg, et2_nextmatch.DELETE);
+		this.refresh(nm, messages.msg, Et2DatagridUpdateTypes.DELETE);
 
 		// thev 4th param indicates if it is a normal move messages action. if not the action is a move2.... (archiveFolder) action
-		egw.json('mail.mail_ui.ajax_copyMessages',[target, messages, 'move', (_action.id.substr(0,4)=='move'&&_action.id.substr(4,1)=='2'?'2':'_') ], function(){
-			self.unlock_tree();
+		const isArchiveShortcut = _action.id.substr(0,4)=='move'&&_action.id.substr(4,1)=='2';
+		const classicMove = () => egw.json('mail.EGroupware\\Mail\\Ui.ajax_copyMessages',[target, messages, 'move', (isArchiveShortcut?'2':'_') ], () =>{
+			self.unlockTree();
 
 			// Server response may contain refresh, but it's always delete
 			// Refresh list if current view is the target (happens when pasting)
-			var tree = self.et2.getWidgetById('nm[foldertree]');
+			const tree = self.et2.getWidgetById('nm[foldertree]');
 			if(nm && tree && target == tree.getValue())
 			{
 				// Can't trust the sorting, needs to be full refresh
 				nm.refresh();
 			}
-		})
-			.sendRequest(true)
-			.finally(() =>
+		}).sendRequest(true);
+
+		// Fast client-side JMAP path for the common case, falling back to the classic ajax call
+		// unchanged for anything else (see tryJmapMove()). Reconciles the optimistic removal
+		// above on failure either way - a message that never actually moved must come back, not
+		// silently vanish until the next reload reveals it.
+		Promise.resolve(this.tryJmapMove(target, messages, isArchiveShortcut, classicMove) ?? classicMove())
+			.then(() =>
 			{
-				// Restart autorefresh
-				if (nm_autorefresh)
-				{
-					nm._set_autorefresh(nm_autorefresh);
-				}
+				if (!isArchiveShortcut) this.rememberUsedFolder('move', target);
+			})
+			.catch((e) =>
+			{
+				this.egw.message(e?.message || this.egw.lang('Failed to move messages'), 'error');
+				if (!messages['all']) nm.refresh();
 			});
 	}
 
 	/**
-	 * mail_copy - implementation of the move action from drag n drop
+	 * copy - implementation of the move action from drag n drop
 	 *
 	 * @param _action
 	 * @param _senders - the representation of the elements dragged
 	 * @param _target - the representation of the target
 	 */
-	mail_copy(_action,_senders,_target) {
-		this.mail_checkAllSelected(_action,_senders,_target,true);
+	copy(_action,_senders,_target) {
+		this.checkAllSelected(_action,_senders,_target,true);
 	}
 
 	/**
-	 * mail_callCopy - implementation of the copy action from drag n drop
+	 * copy2Folder - implementation of the copy action from action menu
+	 *
+	 * @param _action _action.id holds folder target information
+	 * @param _elems - the representation of the elements to be affected
+	 */
+	copy2Folder(_action, _elems) {
+		this.copy(_action, _elems, null);
+	}
+
+	/**
+	 * Try the fast client-side JMAP copy path - MailJmap.copyMessages() for an explicit selection,
+	 * or copyAllMatching() for "select all matching the current filter" - within one account.
+	 * Cross-account copies fall through to the classic path (copyMessages()/copyAllMatching() both
+	 * throw for those). Returns null if not applicable (caller falls back to the unchanged classic
+	 * call directly); otherwise a Promise that either succeeds via JMAP or, on any failure, falls
+	 * back to that same classic call. Mirrors tryJmapMove() exactly, minus the "move to
+	 * archive" shortcut concept, which doesn't apply to copy.
+	 */
+	private tryJmapCopy(target : string, messages : any, classicCopy : () => Promise<any>) : Promise<any> | null
+	{
+		const sepIndex = target.indexOf('::');
+		const targetProfileID = sepIndex > 0 ? target.substring(0, sepIndex) : '';
+		const targetFolderPath = sepIndex > 0 ? target.substring(sepIndex + 2) : '';
+		if (!targetProfileID || !targetFolderPath)
+		{
+			return null;
+		}
+		if (messages['all'])
+		{
+			return this.jmap.copyAllMatching(this.buildJmapQuery(messages), targetProfileID, targetFolderPath)
+				.catch((e) => this.handleJmapError(e, classicCopy));
+		}
+		if (!Array.isArray(messages.msg) || !messages.msg.length)
+		{
+			return null;
+		}
+		// doc/ai/projects/mail-threaded-view.md, "Bulk actions on collapsed thread rows" - see
+		// tryJmapDelete()'s identical comment.
+		return this.jmap.expandThreadRowIds(messages.msg).then((expandedIds) =>
+		{
+			const references = expandedIds.map((id : string) => this.jmap.messageReference(id));
+			return this.jmap.copyMessages(references, targetProfileID, targetFolderPath);
+		}).catch((e) => this.handleJmapError(e, classicCopy));
+	}
+
+	/**
+	 * callCopy - implementation of the copy action from drag n drop
 	 *
 	 * @param _action
 	 * @param _senders - the representation of the elements dragged
 	 * @param _target - the representation of the target
 	 * @param _allMessagesChecked
 	 */
-	mail_callCopy(_action,_senders,_target,_allMessagesChecked) {
-		var target = _action.id == 'drop_copy_mail' ? _target.id : _action.id.substr(5);
-		var messages = this.mail_getFormData(_senders);
+	callCopy(_action,_senders,_target,_allMessagesChecked) {
+		const target = _action.id == 'drop_copy_mail' ? _target.id : _action.id.substr(5);
+		const messages = this.getFormData(_senders);
 		if (typeof _allMessagesChecked=='undefined') _allMessagesChecked=false;
 		// TODO: Write move/copy function which cares about doing the same stuff
 		// as the "onNodeSelect" function!
 		messages['all'] = _allMessagesChecked;
 		if (messages['all']=='cancel') return false;
-		if (messages['all']) messages['activeFilters'] = this.mail_getActiveFilters(_action);
-		var self = this;
-		egw.json('mail.mail_ui.ajax_copyMessages',[target, messages],function (){self.unlock_tree();})
+		if (messages['all']) messages['activeFilters'] = this.getActiveFilters(_action);
+		const self = this;
+		const classicCopy = () => egw.json('mail.EGroupware\\Mail\\Ui.ajax_copyMessages',[target, messages],() =>{self.unlockTree();})
 			.sendRequest();
 		// Server response contains refresh
+
+		// Fast client-side JMAP path for the common case, falling back to the classic ajax call
+		// unchanged for anything else (see tryJmapCopy()). No optimistic UI change to
+		// reconcile here (copy never removes/alters the source row), but still needs a message on
+		// failure - handleJmapError() no longer shows one itself.
+		Promise.resolve(this.tryJmapCopy(target, messages, classicCopy) ?? classicCopy())
+			.then(() => this.rememberUsedFolder('copy', target))
+			.catch((e) => this.egw.message(e?.message || this.egw.lang('Failed to copy messages'), 'error'));
 	}
 
 	/**
-	 * mail_AddFolder - implementation of the AddFolder action of right click options on the tree
+	 * Static config for the "Move selected to"/"Copy selected to" quick-submenus - see
+	 * rememberUsedFolder()/updateFolderQuickAction(). Both kinds work identically, just with
+	 * different preference keys, action ids and captions.
+	 */
+	private static readonly FOLDER_QUICK_ACTIONS = {
+		move: {
+			prefKey: 'moveFolderUsage', actionId: 'moveto', actionPrefix: 'move_',
+			caption: 'Move selected to', icon: 'move', onExecute: 'javaScript:app.mail.move2Folder'
+		},
+		copy: {
+			prefKey: 'copyFolderUsage', actionId: 'copyto', actionPrefix: 'copy_',
+			caption: 'Copy selected to', icon: 'copy', onExecute: 'javaScript:app.mail.copy2Folder'
+		},
+	};
+
+	/**
+	 * Bump the use-counter for a move/copy target folder, entirely client-side: stored as an implicit
+	 * preference (mail/moveFolderUsage or mail/copyFolderUsage, {"<profileID>::<folder>": count, ...})
+	 * via egw.preference()/set_preference() - same mechanism already used for e.g. the per-profile
+	 * "last folder" pref (see onNodeSelect() above) - and immediately reflected in the quick-submenu
+	 * via updateFolderQuickAction(), without waiting for any server round trip. Deliberately not
+	 * tracked server-side: the JMAP fast move/copy path (tryJmapMove()/tryJmapCopy()) never
+	 * touches the server's ajax_copyMessages() at all, so a server-side counter (what both used to be,
+	 * see mail_ui::get_actions()'s pre-195852cc34 history for move) silently stops updating for
+	 * exactly the common case.
+	 *
+	 * @param kind 'move' or 'copy'
+	 * @param target string "<profileID>::<folder>" target, as built by callMove()/callCopy()
+	 */
+	private rememberUsedFolder(kind : 'move' | 'copy', target : string) : void
+	{
+		if (!target || target.indexOf('::') < 0) return;
+		const cfg = MailApp.FOLDER_QUICK_ACTIONS[kind];
+		const usage : Record<string, number> = Object.assign({}, this.egw.preference(cfg.prefKey, 'mail') || {});
+		usage[target] = (usage[target] || 0) + 1;
+		// keep the stored list from growing without bound, well beyond the top 10 actually shown
+		const keys = Object.keys(usage);
+		if (keys.length > 30)
+		{
+			keys.sort((a, b) => usage[b] - usage[a]).slice(30).forEach(k => delete usage[k]);
+		}
+		this.egw.set_preference('mail', cfg.prefKey, usage);
+		this.updateFolderQuickAction(kind, usage);
+	}
+
+	/**
+	 * (Re)build the "Move selected to"/"Copy selected to" quick-submenu from its usage preference,
+	 * showing the 10 highest-used target folders, and merge it into the nextmatch's live action
+	 * definitions.
+	 *
+	 * Et2Nextmatch (unlike the legacy nextmatch_widget) has no set_actions()/options.actions - actions
+	 * are pushed through its reactive `actions` property (Et2Widget.ts's `set actions()`), which feeds
+	 * Et2NextmatchActionController.initActions() -> EgwAction.updateActions(). That's a real
+	 * add-or-update merge keyed by action id (see EgwAction.ts), not a destructive replace, so handing
+	 * it just the one changed key here correctly leaves every other action (open/reply/.../the other
+	 * kind's quick-submenu) untouched - no need to read back/clone the current action set first.
+	 *
+	 * The 'moveto'/'copyto' action ids already exist (see mail_ui::get_actions()'s placeholders,
+	 * defined directly above "Move to archive" so that's where they stay - updateActions() updates an
+	 * existing action in place rather than re-appending it, so this never needs to set the group here.
+	 * With no usage yet (top.length == 0), the action is left with no children - its 'enabled' callback
+	 * (folderQuickActionEnabled() below) then greys it out via the normal disabled styling, staying
+	 * visible since 'hideOnDisabled' defaults to false.
+	 *
+	 * @param kind 'move' or 'copy'
+	 * @param usage optional already-loaded usage preference, to avoid re-reading it
+	 */
+	private updateFolderQuickAction(kind : 'move' | 'copy', usage? : Record<string, number>) : void
+	{
+		const cfg = MailApp.FOLDER_QUICK_ACTIONS[kind];
+		usage = usage || this.egw.preference(cfg.prefKey, 'mail') || {};
+		const nm : any = this.et2.getWidgetById(this.nm_index);
+		if (!nm) return;
+		const currentFolder = nm.activeFilters?.selectedFolder;
+		const top = Object.keys(usage)
+			.filter(target => target !== currentFolder)
+			.sort((a, b) => (usage[b] || 0) - (usage[a] || 0))
+			.slice(0, 10);
+		const ftree : any = this.et2.getWidgetById(this.nm_index + '[foldertree]');
+		const children = {};
+		top.forEach(target =>
+		{
+			// Always prefix with the account's own email address - folder names like "Sent"/"Trash"
+			// are common across accounts, and target itself (used for storage/lookup/sorting
+			// throughout this method) is always the full "<profileID>::<folder>" string, so different
+			// accounts' folders are never confused regardless of their hierarchy separator or
+			// namespace prefix; this is purely about the caption not being ambiguous to the user.
+			const sepIndex = target.indexOf('::');
+			const profileID = target.substring(0, sepIndex);
+			// Fallback for a folder whose tree node isn't currently loaded (lazy per-level loading) -
+			// no "<profileID>::" prefix, and run through translation like the server side's lang($folder)
+			// does, so standard folder names (INBOX, Trash, ...) still show localized.
+			let caption = this.egw.lang(target.substring(sepIndex + 2));
+			const label = ftree?.getLabel ? ftree.getLabel(target) : null;
+			if (label) caption = label.replace(this._unseen_regexp, '');
+			// Use the account's bare email address, not its (possibly long) configured identity
+			// label - see mail_tree::getAccountsRootNode()'s 'email' node data.
+			const accountEmail = ftree?.getNode ? ftree.getNode(profileID)?.data?.email : null;
+			if (accountEmail) caption = accountEmail + ': ' + caption;
+			children[cfg.actionPrefix + target] = {
+				caption: caption,
+				icon: cfg.icon,
+				onExecute: cfg.onExecute,
+				allowOnMultiple: true,
+			};
+		});
+		nm.actions = {
+			[cfg.actionId]: {
+				caption: this.egw.lang(cfg.caption),
+				icon: cfg.icon,
+				children: children,
+			}
+		};
+	}
+
+	/**
+	 * 'enabled' callback for the 'moveto'/'copyto' quick-submenus (see mail_ui::get_actions() and
+	 * updateFolderQuickAction() above) - grays them out via the normal disabled styling while there's
+	 * nothing to move/copy to yet, instead of leaving them permanently clickable-but-inert.
+	 *
+	 * @param _action the 'moveto'/'copyto' EgwAction itself, kept in sync by updateFolderQuickAction()
+	 */
+	folderQuickActionEnabled(_action) : boolean
+	{
+		return !!_action?.children?.length;
+	}
+
+	/**
+	 * addFolder - implementation of the AddFolder action of right click options on the tree
 	 *
 	 * @param _action
 	 * @param _senders - the representation of the tree leaf to be manipulated
 	 */
-	mail_AddFolder(_action,_senders) {
+	addFolder(_action,_senders) {
 		//action.id == 'add'
 		//_senders.iface.id == target leaf / leaf to edit
-		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		var OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'');
-		var buttons = [
+		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		const OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'');
+		const buttons = [
 			{label: this.egw.lang("Add"), id: "add", image:'plus', "class": "ui-priority-primary", "default": true},
 			{label: this.egw.lang("Cancel"), id: "cancel", image:'cancelDialog'}
 		];
-		Et2Dialog.show_prompt(function (_button_id, _value)
+		Et2Dialog.show_prompt((_button_id, _value) =>
 			{
-				var NewFolderName = null;
+				let NewFolderName = null;
 				if (_value.length > 0)
 				{
 					NewFolderName = _value;
@@ -4129,8 +6344,7 @@ export class MailApp extends EgwApp
 					switch (_button_id)
 					{
 						case "add":
-							egw.json('mail.mail_ui.ajax_addFolder', [_senders[0].id, NewFolderName])
-								.sendRequest(true);
+							this.jmapAddFolder(_senders[0].id, NewFolderName);
 							return;
 					case "cancel":
 				}
@@ -4142,23 +6356,40 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_RenameFolder - implementation of the RenameFolder action of right click options on the tree
+	 * Client-side JMAP create-folder path - MailJmap.createMailbox(). Refreshes the parent's tree
+	 * level on success; on failure shows the error directly - no classic fallback any more
+	 * (mail_ui::ajax_addFolder()/FolderHandler::addFolder() removed 2026-09-08, see
+	 * doc/ai/projects/mail-folder-tree-jmap.md).
+	 */
+	private jmapAddFolder(parentTreeId : string, name : string) : Promise<any>
+	{
+		const [profileID, parentPath] : [string, string] = parentTreeId.indexOf('::') !== -1 ?
+			parentTreeId.split('::', 2) as [string, string] : [parentTreeId, ''];
+
+		return this.jmap.createMailbox(profileID, parentPath, name).then(() =>
+		{
+			return this.refreshFolderLevel(profileID, parentPath);
+		}).catch((e) => this.egw.message(e.message, 'error'));
+	}
+
+	/**
+	 * renameFolder - implementation of the RenameFolder action of right click options on the tree
 	 *
 	 * @param _action
 	 * @param _senders - the representation of the tree leaf to be manipulated
 	 */
-	mail_RenameFolder(_action,_senders) {
+	renameFolder(_action,_senders) {
 		//action.id == 'rename'
 		//_senders.iface.id == target leaf / leaf to edit
-		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		var OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'');
-		var buttons = [
+		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		const OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'');
+		const buttons = [
 			{label: this.egw.lang("Rename"), id: "rename", "class": "ui-priority-primary", image: 'edit', "default": true},
 			{label: this.egw.lang("Cancel"), id: "cancel", image:'cancelDialog'}
 		];
-		Et2Dialog.show_prompt(function (_button_id, _value)
+		Et2Dialog.show_prompt((_button_id, _value) =>
 			{
-				var NewFolderName = null;
+				let NewFolderName = null;
 				if (_value.length > 0)
 				{
 					NewFolderName = _value;
@@ -4169,8 +6400,7 @@ export class MailApp extends EgwApp
 					switch (_button_id)
 					{
 						case "rename":
-							egw.json('mail.mail_ui.ajax_renameFolder', [_senders[0].id, NewFolderName])
-								.sendRequest(true);
+							this.jmapRenameFolder(_senders[0].id, NewFolderName);
 							return;
 					case "cancel":
 				}
@@ -4182,43 +6412,70 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_MoveFolder - implementation of the MoveFolder action on the tree
+	 * Client-side JMAP rename path - MailJmap.renameMailbox() (same parent, new leaf name only -
+	 * matches the removed classic ajax_renameFolder()'s own "rename in place" semantics, no move).
+	 * Refreshes the parent's tree level on success; on failure shows the error directly - no
+	 * classic fallback any more (mail_ui::ajax_renameFolder()/FolderHandler::renameFolder()
+	 * removed 2026-09-08, see doc/ai/projects/mail-folder-tree-jmap.md).
+	 *
+	 * treeId is never a bare account-root id in practice - checkFolderNoSelect() disables the
+	 * Rename action entirely for one - but this stays defensive (a plain error instead of a crash
+	 * a few lines down) in case some other caller ever passes one anyway.
+	 */
+	private jmapRenameFolder(treeId : string, newName : string) : Promise<any>
+	{
+		if (treeId.indexOf('::') === -1)
+		{
+			this.egw.message(this.egw.lang('An account itself cannot be renamed here.'), 'error');
+			return Promise.resolve();
+		}
+		const [profileID, path] : [string, string] = treeId.split('::', 2) as [string, string];
+		const parentPath = path.includes('/') ? path.substring(0, path.lastIndexOf('/')) : '';
+
+		return this.jmap.renameMailbox(profileID, path, newName).then(() =>
+		{
+			return this.refreshFolderLevel(profileID, parentPath);
+		}).catch((e) => this.egw.message(e.message, 'error'));
+	}
+
+	/**
+	 * moveFolder - implementation of the MoveFolder action on the tree
 	 *
 	 * @param {egwAction} _action
 	 * @param {egwActionObject[]} _senders - the representation of the tree leaf to be manipulated
 	 * @param {egwActionObject} destination Drop target egwActionObject representing the destination
 	 */
-	mail_MoveFolder(_action,_senders,destination) {
+	moveFolder(_action,_senders,destination) {
 		if(!destination || !destination.id)
 		{
 			egw.debug('warn', "Move folder, but no target");
 			return;
 		}
-		var sourceProfile = _senders[0].id.split('::');
-		var targetProfile = destination.id.split('::');
+		const sourceProfile = _senders[0].id.split('::');
+		const targetProfile = destination.id.split('::');
 		if (sourceProfile[0]!=targetProfile[0])
 		{
 			egw.message(this.egw.lang('Moving Folders from one Mailaccount to another is not supported'), 'error');
 			return;
 		}
-		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		var src_label = _senders[0].id.replace(/^[0-9]+::/,'');
-		var dest_label = destination.id.replace(/^[0-9]+::/,'');
+		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		const src_label = _senders[0].id.replace(/^[0-9]+::/,'');
+		const dest_label = destination.id.replace(/^[0-9]+::/,'');
 
-		var callback = function (_button)
+		const callback = (_button) =>
 		{
 			if (_button == Et2Dialog.YES_BUTTON)
 			{
 				egw.appName = 'mail';
 				egw.message(egw.lang('Folder %1 is moving to folder %2', src_label, dest_label));
 				egw.loading_prompt('mail_moveFolder', true, '', '#egw_fw_basecontainer');
-				for (var i = 0; i < _senders.length; i++)
+				for (let i = 0; i < _senders.length; i++)
 				{
-					egw.request('mail.mail_ui.ajax_MoveFolder', [_senders[i].id, destination.id])
+					this.jmapMoveFolder(_senders[i].id, destination.id)
 						.finally(() =>
 							{
 								// Move is done (successfully or not), remove loading
-								var id = destination.id.split('::');
+								const id = destination.id.split('::');
 								//refersh the top parent
 								ftree.refreshItem(id[0], null);
 								egw.loading_prompt('mail_moveFolder', false);
@@ -4232,28 +6489,60 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_DeleteFolder - implementation of the DeleteFolder action of right click options on the tree
+	 * Client-side JMAP move path - MailJmap.moveMailbox(). Same-account only (moveFolder() already
+	 * rejected a cross-account move before ever reaching this). Refreshes *both* the source's old
+	 * parent level and the destination level on success (the moved node disappears from one,
+	 * appears in the other); on failure shows the error directly - no classic fallback any more
+	 * (mail_ui::ajax_MoveFolder()/FolderHandler::moveFolder() removed 2026-09-08, see
+	 * doc/ai/projects/mail-folder-tree-jmap.md).
+	 *
+	 * sourceTreeId is never a bare account-root id in practice - checkFolderNoSelect() disables
+	 * dragging one as a move source entirely - but this stays defensive (a plain error instead of
+	 * a crash a few lines down) in case some other caller ever passes one anyway.
+	 */
+	private jmapMoveFolder(sourceTreeId : string, destTreeId : string) : Promise<any>
+	{
+		if (sourceTreeId.indexOf('::') === -1)
+		{
+			this.egw.message(this.egw.lang('An account itself cannot be moved here.'), 'error');
+			return Promise.resolve();
+		}
+		const [profileID, sourcePath] : [string, string] = sourceTreeId.split('::', 2) as [string, string];
+		const sourceParentPath = sourcePath.includes('/') ? sourcePath.substring(0, sourcePath.lastIndexOf('/')) : '';
+		const destPath = destTreeId.indexOf('::') !== -1 ? destTreeId.split('::', 2)[1] : '';
+
+		return this.jmap.moveMailbox(profileID, sourcePath, destPath).then(() =>
+		{
+			return Promise.all([
+				this.refreshFolderLevel(profileID, sourceParentPath),
+				this.refreshFolderLevel(profileID, destPath),
+			]);
+		}).catch((e) => this.egw.message(e.message, 'error'));
+	}
+
+	/**
+	 * deleteFolder - implementation of the DeleteFolder action of right click options on the tree
 	 *
 	 * @param _action
 	 * @param _senders - the representation of the tree leaf to be manipulated
 	 */
-	mail_DeleteFolder(_action,_senders)
+	deleteFolder(_action,_senders)
 	{
 		//action.id == 'delete'
 		//_senders.iface.id == target leaf / leaf to edit
-		var ftree = this.et2.getWidgetById(this.nm_index + '[foldertree]');
-		var OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp, '');
-		var buttons = [
+		const ftree = this.et2.getWidgetById(this.nm_index + '[foldertree]');
+		const OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp, '');
+		const buttons = [
 			{label: this.egw.lang("Yes"), id: "delete", "class": "ui-priority-primary", "default": true, image: "check"},
 			{label: this.egw.lang("Cancel"), id: "cancel", image: "cancel"}
 		];
-		Et2Dialog.show_dialog(function (_button_id, _value)
+		Et2Dialog.show_dialog((_button_id, _value) =>
 			{
 				switch (_button_id)
 				{
 					case "delete":
-						egw.json('mail.mail_ui.ajax_deleteFolder', [_senders[0].id])
-							.sendRequest(true);
+						this.jmap.invalidateQuota(_senders[0].id.split('::', 1)[0]);
+						this.jmapDeleteFolder(_senders[0].id);
 						return;
 					case "cancel":
 				}
@@ -4261,6 +6550,32 @@ export class MailApp extends EgwApp
 			this.egw.lang("Do you really want to DELETE Folder %1 ?", OldFolderName) + " " + (ftree.hasChildren(_senders[0].id) ? this.egw.lang("All subfolders will be deleted too, and all messages in all affected folders will be lost") : this.egw.lang("All messages in the folder will be lost")),
 			this.egw.lang("DELETE Folder %1 ?", OldFolderName),
 			OldFolderName, buttons);
+	}
+
+	/**
+	 * Client-side JMAP delete path - MailJmap.deleteMailbox(). Refreshes the parent's tree level
+	 * on success; on failure shows the error directly - no classic fallback any more
+	 * (mail_ui::ajax_deleteFolder()/FolderHandler::deleteFolder() removed 2026-09-08, see
+	 * doc/ai/projects/mail-folder-tree-jmap.md).
+	 *
+	 * treeId is never a bare account-root id in practice - checkFolderNoSelect() disables the
+	 * Delete action entirely for one - but this stays defensive (a plain error instead of a crash
+	 * a few lines down) in case some other caller ever passes one anyway.
+	 */
+	private jmapDeleteFolder(treeId : string) : Promise<any>
+	{
+		if (treeId.indexOf('::') === -1)
+		{
+			this.egw.message(this.egw.lang('An account itself cannot be deleted here.'), 'error');
+			return Promise.resolve();
+		}
+		const [profileID, path] : [string, string] = treeId.split('::', 2) as [string, string];
+		const parentPath = path.includes('/') ? path.substring(0, path.lastIndexOf('/')) : '';
+
+		return this.jmap.deleteMailbox(profileID, path).then(() =>
+		{
+			return this.refreshFolderLevel(profileID, parentPath);
+		}).catch((e) => this.egw.message(e.message, 'error'));
 	}
 
 	/**
@@ -4277,10 +6592,10 @@ export class MailApp extends EgwApp
 		{
 			//_path = this.get_path();
 		}
-		if (_file_count && !jQuery.isEmptyObject(_event.data.getValue()))
+		if (_file_count && Object.keys(_event.data.getValue() || {}).length > 0)
 		{
-			var widget = _event.data;
-//			var request = new egw_json_request('mail_ui::ajax_importMessage', ['upload', widget.getValue(), _path], this);
+			const widget = _event.data;
+//			var request = new egw_json_request('EGroupware\\Mail\\Ui::ajax_importMessage', ['upload', widget.getValue(), _path], this);
 //			widget.set_value('');
 //			request.sendRequest();//false, this._upload_callback, this);
 			this.et2_obj.submit();
@@ -4295,8 +6610,8 @@ export class MailApp extends EgwApp
 	* @param {window object} _window
 	*/
 	vfsUploadForImport(_egw, _widget, _window) {
-		if (jQuery.isEmptyObject(_widget)) return;
-		if (!jQuery.isEmptyObject(_widget.getValue()))
+		if (!_widget || Object.keys(_widget).length === 0) return;
+		if (Object.keys(_widget.getValue() || {}).length > 0)
 		{
 			this.et2_obj.submit();
 		}
@@ -4309,7 +6624,7 @@ export class MailApp extends EgwApp
 	 * @param {object} _widget taglist
 	 *
 	 */
-	sieve_focus_radioBtn(_ev, _widget)
+	sieveFocusRadioBtn(_ev, _widget)
 	{
 		_widget.getRoot().getWidgetById('action').set_value(_widget.id.replace(/^action_([^_]+)_text$/, '$1'));
 	}
@@ -4318,20 +6633,20 @@ export class MailApp extends EgwApp
 	 * Select all aliases
 	 *
 	 */
-	sieve_vac_all_aliases()
+	sieveVacAllAliases()
 	{
-		var aliases = [];
-		var tmp = [];
-		var addr = this.et2.getWidgetById('addresses');
-		var addresses = this.et2.getArrayMgr('sel_options').data.addresses;
+		let aliases = [];
+		let tmp = [];
+		const addr = this.et2.getWidgetById('addresses');
+		const addresses = this.et2.getArrayMgr('sel_options').data.addresses;
 
-		for(var id in addresses) aliases.push(id);
+		for(const id in addresses) aliases.push(id);
 		if (addr)
 		{
 			tmp = aliases.concat(addr.get_value());
 
 			// returns de-duplicate items of an array
-			var deDuplicator = function (item,pos)
+			const deDuplicator = (item,pos) =>
 			{
 				return tmp.indexOf(item) == pos;
 			};
@@ -4347,10 +6662,10 @@ export class MailApp extends EgwApp
 	 */
 	vacationFilterStatusChange()
 	{
-		var status = this.et2.getWidgetById('status');
-		var s_date = this.et2.getWidgetById('start_date');
-		var e_date = this.et2.getWidgetById('end_date');
-		var by_date_label = this.et2.getWidgetById('by_date_label');
+		const status = this.et2.getWidgetById('status');
+		const s_date = this.et2.getWidgetById('start_date');
+		const e_date = this.et2.getWidgetById('end_date');
+		const by_date_label = this.et2.getWidgetById('by_date_label');
 
 		if (status && s_date && e_date && by_date_label)
 		{
@@ -4368,11 +6683,11 @@ export class MailApp extends EgwApp
 	 */
 	action(_type, _selected)
 	{
-		var  actionData ;
-		var that = this;
-		var typeId = _type.id;
-		var linkData = '';
-		var ruleID = ((_selected[0].id.split("_").pop()) - 1); // subtract the row id from 1 because the first row id is reserved by grid header
+		let  actionData ;
+		const that = this;
+		const typeId = _type.id;
+		let linkData = '';
+		const ruleID = ((_selected[0].id.split("_").pop()) - 1); // subtract the row id from 1 because the first row id is reserved by grid header
 		if (_type)
 		{
 
@@ -4380,15 +6695,15 @@ export class MailApp extends EgwApp
 			{
 				case 'delete':
 
-					var callbackDeleteDialog = function (button_id)
+					const callbackDeleteDialog = (button_id) =>
 					{
 						if (button_id == Et2Dialog.YES_BUTTON)
 						{
 							actionData = _type.parent.data.widget.getArrayMgr('content');
-							that._do_action(typeId, actionData['data'], ruleID);
+							that.sieveDoAction(typeId, actionData['data'], ruleID);
 						}
 					};
-					Et2Dialog.show_dialog(callbackDeleteDialog, this.egw.lang("Do you really want to DELETE this Rule"), this.egw.lang("Delete"), {}, Et2Dialog.BUTTONS_YES_CANCEL, Et2Dialog.WARNING_MESSAGE);
+					Et2Dialog.show_dialog(callbackDeleteDialog, this.egw.lang("Do you really want to DELETE this Rule"), this.egw.lang("Delete"), {}, Et2Dialog.BUTTONS_YES_NO, Et2Dialog.WARNING_MESSAGE);
 
 					break;
 				case 'add'	:
@@ -4401,11 +6716,11 @@ export class MailApp extends EgwApp
 					break;
 				case 'enable':
 					actionData = _type.parent.data.widget.getArrayMgr('content');
-					this._do_action(typeId,actionData['data'],ruleID);
+					this.sieveDoAction(typeId,actionData['data'],ruleID);
 					break;
 				case 'disable':
 					actionData = _type.parent.data.widget.getArrayMgr('content');
-					this._do_action(typeId,actionData['data'],ruleID);
+					this.sieveDoAction(typeId,actionData['data'],ruleID);
 					break;
 
 			}
@@ -4416,17 +6731,23 @@ export class MailApp extends EgwApp
 	/**
 	* Send back sieve action result to server
 	*
+	* Named sieveDoAction() rather than _do_action() to avoid an incompatible-override collision
+	* with EgwApp._do_action(action_id, selected) - a documented generic extension point called by
+	* EgwApp.action(), but action() (see this class's own override just above) is ALSO fully
+	* overridden here to call this method directly with its own 4-arg sieve-specific shape, so
+	* there was never any real shared behavior between the two, just an accidental same name.
+	*
 	* @param {string} _typeID action name
 	* @param {object} _data content
 	* @param {string} _selectedID selected row id
 	* @param {string} _msg message
 	*
 	*/
-	_do_action(_typeID, _data,_selectedID,_msg)
+	sieveDoAction(_typeID, _data,_selectedID,_msg?)
 	{
 		if (_typeID && _data)
 		{
-			var request = this.egw.json('mail.mail_sieve.ajax_action', [_typeID,_selectedID,_msg],null,null,true);
+			const request = this.egw.json('mail.mail_sieve.ajax_action', [_typeID,_selectedID,_msg],null,null,true);
 			request.sendRequest();
 		}
 	}
@@ -4434,22 +6755,22 @@ export class MailApp extends EgwApp
 	/**
 	* Send ajax request to server to refresh the sieve grid
 	*/
-	sieve_refresh()
+	sieveRefresh()
 	{
-		this.et2._inst.submit();
+		this.et2.getInstanceManager().submit();
 	}
 
 	/**
 	 * Select the right combination of the rights for radio buttons from the selected common right
 	 *
-	 * @@param {jQuery event} event
+	 * @param {Event} event
 	 * @param {widget} widget common right selectBox
 	 *
 	 */
-	acl_common_rights_selector(event,widget)
+	aclCommonRightsSelector(event,widget)
 	{
-		var rowId = widget.id.replace(/[^0-9.]+/g, '');
-		var rights = [];
+		const rowId = widget.id.replace(/[^0-9.]+/g, '');
+		let rights = [];
 
 		switch (widget.get_value())
 		{
@@ -4463,10 +6784,10 @@ export class MailApp extends EgwApp
 		}
 		if (rights.length > 0)
 		{
-			for (var i=0;i<this.aclRights.length;i++)
+			for (let i=0;i<this.aclRights.length;i++)
 			{
-				var rightsWidget = this.et2.getWidgetById(rowId+'[acl_' + this.aclRights[i]+ ']');
-				rightsWidget.set_value((jQuery.inArray(this.aclRights[i],rights) != -1 )?true:false);
+				const rightsWidget = this.et2.getWidgetById(rowId+'[acl_' + this.aclRights[i]+ ']');
+				rightsWidget.set_value((rights.indexOf(this.aclRights[i]) != -1 )?true:false);
 				if ((rights.indexOf('c') == -1 && ['k','x'].indexOf(this.aclRights[i]) > -1)
 						|| (rights.indexOf('d') == -1 && ['e','x','t'].indexOf(this.aclRights[i]) > -1 ))
 				{
@@ -4480,22 +6801,29 @@ export class MailApp extends EgwApp
 	 *
 	 * Choose the right common right option for common ACL selecBox
 	 *
-	 * @param {jQuery event} event
+	 * Named aclRightChanged() rather than aclCommonRights() to avoid colliding with the
+	 * aclCommonRights: any[] property above - a later same-named class member always
+	 * overwrites an earlier one on the prototype (same root cause as the compose/
+	 * MailCompose collision, see project-mail-jquery-removal memory), which had made
+	 * every `this.aclCommonRights.xxx` read below actually call this method's own
+	 * `.length`/(nonexistent) `.indexOf` instead of the real array.
+	 *
+	 * @param {Event} event
 	 * @param {widget} widget radioButton rights
 	 *
 	 */
-	acl_common_rights(event, widget)
+	aclRightChanged(event, widget)
 	{
-		var rowId = widget.id.replace(/[^0-9.]+/g, '');
-		var aclCommonWidget = this.et2.getWidgetById(rowId + '[acl]');
-		var rights = '';
-		var selectedBox = widget.id;
-		var virtualDelete = ['e','t','x'];
-		var virtualCreate = ['k','x'];
+		const rowId = widget.id.replace(/[^0-9.]+/g, '');
+		const aclCommonWidget = this.et2.getWidgetById(rowId + '[acl]');
+		let rights = '';
+		const selectedBox = widget.id;
+		const virtualDelete = ['e','t','x'];
+		const virtualCreate = ['k','x'];
 
 		for (let i=0;i<this.aclRights.length;i++)
 		{
-			var rightsWidget = this.et2.getWidgetById(rowId+'[acl_' + this.aclRights[i]+ ']');
+			const rightsWidget = this.et2.getWidgetById(rowId+'[acl_' + this.aclRights[i]+ ']');
 			if (selectedBox == rowId+'[acl_c]' && virtualCreate.indexOf(this.aclRights[i])>-1)
 			{
 				rightsWidget.set_value(false);
@@ -4515,7 +6843,7 @@ export class MailApp extends EgwApp
 			if (rights.split("").sort().toString() == this.aclCommonRights[i].split("").sort().toString())
 				rights = this.aclCommonRights[i];
 		}
-		if (jQuery.inArray(rights,this.aclCommonRights ) == -1 && rights !='lrswipcda')
+		if (this.aclCommonRights.indexOf(rights) == -1 && rights !='lrswipcda')
 		{
 			aclCommonWidget.set_value('custom');
 		}
@@ -4536,11 +6864,11 @@ export class MailApp extends EgwApp
 	 * @param {sender} _senders
 	 *
 	 */
-	edit_sieve(_action, _senders)
+	editSieve(_action, _senders)
 	{
-		var acc_id = parseInt(_senders[0].id);
+		const acc_id = parseInt(_senders[0].id);
 
-		var url = this.egw.link('/index.php',{
+		const url = this.egw.link('/index.php',{
 					'menuaction': 'mail.mail_sieve.index',
 					'acc_id': acc_id,
 					'ajax': 'true'
@@ -4566,11 +6894,11 @@ export class MailApp extends EgwApp
 	 *
 	 * @return {boolean} return TRUE if success, and FALSE if iframe not given
 	 */
-	loadIframe(_url, _iFrame)
+	loadIframe(_url?, _iFrame?)
 	{
-		var mailSplitter = this.et2.getWidgetById('splitter');
-		var quotaipercent = this.et2.getWidgetById('nm[quotainpercent]');
-		var iframe = _iFrame || this.et2.getWidgetById('extra_iframe');
+		const mailSplitter = this.et2.getWidgetById('splitter');
+		const quotaipercent = this.et2.getWidgetById('nm[quotainpercent]');
+		const iframe = _iFrame || this.et2.getWidgetById('extra_iframe');
 		if (typeof iframe != 'undefined' && iframe)
 		{
 			if (_url)
@@ -4591,7 +6919,7 @@ export class MailApp extends EgwApp
 			{
 				if (egwIsMobile())
 				{
-					var nm = this.et2.getWidgetById(this.nm_index);
+					const nm = this.et2.getWidgetById(this.nm_index);
 					nm.set_disabled(!!_url);
 					iframe.set_disabled(!_url);
 				}
@@ -4619,7 +6947,7 @@ export class MailApp extends EgwApp
 	 * @param {action} _action
 	 * @param {sender} _senders
 	 */
-	edit_vacation(_action, _senders)
+	editVacation(_action, _senders)
 	{
 		let acc_id;
 		if (!Array.isArray(_senders))
@@ -4635,7 +6963,7 @@ export class MailApp extends EgwApp
 		this.egw.open_link('mail.mail_sieve.editVacation&acc_id=' + acc_id, '_blank', '700x800');
 	}
 
-	subscription_refresh(_data)
+	subscriptionRefresh(_data)
 	{
 		console.log(_data);
 	}
@@ -4646,10 +6974,10 @@ export class MailApp extends EgwApp
 	 * @param {action} _action
 	 * @param {sender} _senders
 	 */
-	edit_subscribe(_action,_senders)
+	editSubscribe(_action,_senders)
 	{
-		var acc_id = parseInt(_senders[0].id);
-		this.egw.open_link('mail.mail_ui.subscription&acc_id='+acc_id, '_blank', '720x580');
+		const acc_id = parseInt(_senders[0].id);
+		this.egw.open_link('mail.EGroupware\\Mail\\Ui.subscription&acc_id='+acc_id, '_blank', '720x580');
 	}
 
 	/**
@@ -4658,14 +6986,38 @@ export class MailApp extends EgwApp
 	 * @param {action} _action
 	 * @param {sender} _senders
 	 */
-	subscribe_folder(_action,_senders)
+	subscribeFolder(_action,_senders)
 	{
-		var mailbox = _senders[0].id.split('::');
-		var folder = mailbox[1], acc_id = mailbox[0];
-		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		const mailbox = _senders[0].id.split('::');
+		const folder = mailbox[1], acc_id = mailbox[0];
+		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		this.egw.message(this.egw.lang('Subscribe to Folder %1',ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'')), 'success');
-		egw.json('mail.mail_ui.ajax_foldersubscription',[acc_id,folder,true])
-			.sendRequest();
+		(this.tryJmapSetSubscribed(_senders[0].id, true) ??
+			egw.json('mail.EGroupware\\Mail\\Ui.ajax_foldersubscription',[acc_id,folder,true]).sendRequest());
+	}
+
+	/**
+	 * Try the fast client-side JMAP (un)subscribe path - MailJmap.setMailboxSubscribed(). No tree
+	 * level refresh needed (unlike add/rename/move/delete) - the node's own id doesn't change, so
+	 * just flip its `checked` field locally for instant feedback, matching the classic path's own
+	 * fire-and-forget behaviour (it doesn't reshuffle the tree live either). On failure shows the
+	 * error directly, there's no classic fallback (see folderTreeAutoload()'s docblock for why).
+	 */
+	private tryJmapSetSubscribed(treeId : string, subscribed : boolean) : Promise<any> | null
+	{
+		if (treeId.indexOf('::') === -1) return null;	// an account root has no subscription state
+		const [profileID, path] : [string, string] = treeId.split('::', 2) as [string, string];
+
+		return this.jmap.setMailboxSubscribed(profileID, path, subscribed).then(() =>
+		{
+			const ftree = this.et2?.getWidgetById(this.nm_index + '[foldertree]');
+			const node = ftree?.getNode(treeId);
+			if (node)
+			{
+				node.checked = subscribed;
+				ftree.requestUpdate();
+			}
+		}).catch((e) => this.egw.message(e.message, 'error'));
 	}
 
 	/**
@@ -4674,14 +7026,14 @@ export class MailApp extends EgwApp
 	 * @param {action} _action
 	 * @param {sender} _senders
 	 */
-	unsubscribe_folder(_action,_senders)
+	unsubscribeFolder(_action,_senders)
 	{
-		var mailbox = _senders[0].id.split('::');
-		var folder = mailbox[1], acc_id = mailbox[0];
-		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		const mailbox = _senders[0].id.split('::');
+		const folder = mailbox[1], acc_id = mailbox[0];
+		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		this.egw.message(this.egw.lang('Unsubscribe from Folder %1',ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'')), 'success');
-		egw.json('mail.mail_ui.ajax_foldersubscription',[acc_id,folder,false])
-			.sendRequest();
+		(this.tryJmapSetSubscribed(_senders[0].id, false) ??
+			egw.json('mail.EGroupware\\Mail\\Ui.ajax_foldersubscription',[acc_id,folder,false]).sendRequest());
 	}
 
 	/**
@@ -4692,19 +7044,251 @@ export class MailApp extends EgwApp
 	 * @param {string} _id id of clicked node
 	 * @param {et2_tree} _widget reference to tree widget
 	 * @param {PoinerEvent} _ev
+	 * @return {Promise<any>} resolves once the (un)check - including the "autoload subitems
+	 *  first" case - is fully applied; subscriptionSubselect() chains onto this to know when
+	 *  it's safe to record what changed.
 	 */
-	foldertree_subselect(_id, _widget, _ev)
+	folderTreeSubselect(_id, _widget, _ev) : Promise<any>
 	{
 		const node = _widget.getNode(_id);
 		// do we need to autoload the subitems first
-		if (node.child && !node.item.length)
+		if (node.hasChildren && !node.children.length)
 		{
-			_widget.refreshItem(_id).then(() =>_widget.setSubChecked(_id, "toggle"));
+			return _widget.refreshItem(_id).then(() => _widget.setSubChecked(_id, "toggle"));
 		}
-		else
+		return Promise.resolve(_widget.setSubChecked(_id, "toggle"));
+	}
+
+	/**
+	 * mail.subscribe popup's own onclick (bound in subscriptionLoad(), replacing the
+	 * template's static onclick="app.mail.folderTreeSubselect") - runs the same "(un)check
+	 * including all children" behaviour, then records whatever it just changed.
+	 */
+	private subscriptionSubselect(_id : string, _widget : any, _ev : any) : void
+	{
+		Promise.resolve(this.folderTreeSubselect(_id, _widget, _ev)).then(() =>
+			this.recordSubscriptionChange(_widget));
+	}
+
+	/**
+	 * mail.subscribe popup load (et2_ready()'s 'mail.subscribe' case): try to replace the classic
+	 * server-rendered subscription tree with one loaded via JMAP - lazily, one level at a time,
+	 * exactly like the main index tree/folder-management dialog (folderTreeAutoload()/
+	 * folderManagementLoad()), not the whole account fetched up front.  Always shows every
+	 * folder regardless of showAllFoldersInFolderPane, same reasoning as
+	 * folderManagementLoad() - this dialog manages subscriptions, including for currently
+	 * unsubscribed folders.
+	 *
+	 * A checkbox tree's rendering only ever consults its own .value array, never a node's own
+	 * .checked field (Et2Tree.ts's _optionTemplate()) - seedSubscriptionValue() is what seeds
+	 * .value from freshly-loaded .checked data, both here and for every later interactive expand
+	 * (see the tree.autoloading wrapper below). Since a not-yet-loaded node obviously can't have
+	 * been toggled, subscriptionSave() never needs to force-load the rest of the account
+	 * first - see recordSubscriptionChange()'s own docblock.
+	 *
+	 * On any failure (network, non-JMAP-capable account) this is a no-op: the tree the server
+	 * already rendered (with the right initial selection) is left exactly as-is, and
+	 * subscriptionSave() falls back to a plain classic submit since _subscriptionChanges
+	 * stays null.
+	 */
+	private subscriptionLoad() : void
+	{
+		const ftree : any = this.et2.getWidgetById('foldertree');
+		// mail_ui::subscription() only ever sets profileId into $preserv (for its own next
+		// submit round-trip), not into $content directly - that never actually surfaces via
+		// getArrayMgr('content') on the initial load, so read the same acc_id the PHP side
+		// itself resolved from, straight off this popup's own URL (editSubscribe() always
+		// opens it as .../mail.EGroupware\\Mail\\Ui.subscription&acc_id=X)
+		const profileID = new URLSearchParams(window.location.search).get('acc_id') ??
+			String(this.et2.getArrayMgr('content').getEntry('profileId') ?? '');
+		if (!ftree || !profileID) return;
+
+		this._subscriptionChanges = new Map();
+		this._subscriptionProfileID = profileID;
+		this._subscriptionKnownValue = new Set();
+		// replaces the template's static onclick="app.mail.folderTreeSubselect" - same "(un)check
+		// including all children" behaviour, plus recording what that changed
+		ftree.onclick = (id : string, widget : any, ev : any) => this.subscriptionSubselect(id, widget, ev);
+		ftree.addEventListener('et2-selection-change', () => this.recordSubscriptionChange(ftree));
+		ftree.autoloading = (item : any) => this.folderTreeAutoload(item, false).then((result) =>
 		{
-			_widget.setSubChecked(_id, "toggle");
-		}
+			this.seedSubscriptionValue(ftree, result?.children ?? []);
+			return result;
+		});
+
+		this.buildRootFolderData(profileID, false).then((data) =>
+		{
+			if (data === null)
+			{
+				// no classic server-rendered tree to fall back to any more (dropped 2026-09-08,
+				// mail_ui::subscription() no longer seeds one) - show an error leaf instead, same
+				// as folderTreeAutoload()'s own errorLeaf() for a single-node expand failure
+				this._subscriptionChanges = null;
+				ftree.select_options = [buildErrorNode(profileID, '',
+					this.egw.lang('Connection could not be established, use the wizard to check why!'), egw)];
+				return;
+			}
+			ftree.select_options = data;
+			this.seedSubscriptionValue(ftree, data);
+			// buildRootFolderData() already eagerly embeds INBOX's own children (it's always
+			// auto-opened) - seed those too, since they never go through the autoloading wrapper
+			const inbox = data.find((node) => node.value === profileID + '::INBOX');
+			if (inbox) this.seedSubscriptionValue(ftree, inbox.children);
+		}).catch((e) =>
+		{
+			this._subscriptionChanges = null;
+			const message = e?.constructor?.name === 'JmapUserError' ? e.message :
+				this.egw.lang('Connection could not be established, use the wizard to check why!');
+			this.egw.message(message, 'error');
+			ftree.select_options = [buildErrorNode(profileID, '', message, egw)];
+			console.error('MailApp.subscriptionLoad(): JMAP tree load failed', e);
+		});
+	}
+
+	/**
+	 * Seed the tree widget's own .value array from freshly-loaded nodes' .checked state, since
+	 * Et2Tree's checkbox rendering only ever consults .value, never a node's own .checked field -
+	 * called for every batch of nodes as soon as it's loaded (the initial root fetch and every
+	 * later interactive expand). Also updates _subscriptionKnownValue to match, so this seeding
+	 * itself is never mistaken for a user-driven change by recordSubscriptionChange() - only
+	 * an actual toggle *after* a node is already known moves it into _subscriptionChanges.
+	 */
+	private seedSubscriptionValue(ftree : any, nodes : FolderTreeNode[]) : void
+	{
+		if (!this._subscriptionChanges || !nodes.length) return;
+		const value = new Set<string>(ftree.value || []);
+		nodes.forEach((node) =>
+		{
+			if (node.checked) value.add(node.value);
+		});
+		ftree.value = [...value];
+		this._subscriptionKnownValue = value;
+	}
+
+	/**
+	 * Record whatever just changed in the tree's .value array (since the last time it was
+	 * inspected, either by this method or by seedSubscriptionValue()'s own baseline update)
+	 * into _subscriptionChanges - called after every user-driven toggle, both a plain click
+	 * (the 'et2-selection-change' listener subscriptionLoad() attaches, which fires once
+	 * .value already reflects the single clicked node's new state) and the "(un)check all
+	 * children" cascade (subscriptionSubselect(), which can flip several already-loaded
+	 * descendants' state at once without firing that event for each one).
+	 *
+	 * This is the whole point of tracking changes as they happen instead of diffing a full
+	 * "original vs current" snapshot at Save time: an unloaded node's checkbox can never have
+	 * been clicked, so it can never appear here - no need to eagerly load the rest of the account
+	 * first.
+	 */
+	private recordSubscriptionChange(ftree : any) : void
+	{
+		if (!this._subscriptionChanges) return;
+		const current = new Set<string>(ftree.value || []);
+		[...new Set([...this._subscriptionKnownValue, ...current])]
+			.filter((id) => this._subscriptionKnownValue.has(id) !== current.has(id))
+			.forEach((id) => this._subscriptionChanges.set(id, current.has(id)));
+		this._subscriptionKnownValue = current;
+	}
+
+	/**
+	 * Save/Apply button handler for the mail.subscribe popup (button[save] / button[apply]) -
+	 * mirrors aclSave()'s exact shape/contract (same handler for both buttons, disambiguated
+	 * by _widget.id, true/false return controls whether the normal submit proceeds).
+	 *
+	 * If subscriptionLoad() never replaced the tree with JMAP data (_subscriptionChanges is
+	 * null), this is a complete no-op: return true and let the classic submit/server-side
+	 * diff-and-apply run exactly as before - that classic diff needs the *complete* submitted
+	 * foldertree value to be trustworthy (everything not present in it is treated as
+	 * unsubscribed), which only holds when the whole dialog stayed classic-only.
+	 *
+	 * Once JMAP has taken over, falling back to that same classic submit on a failure would be
+	 * actively wrong now that the tree loads lazily: the submitted .value only reflects whatever
+	 * happened to be loaded/toggled, so the classic diff would read every untouched, never-loaded
+	 * folder as "now unsubscribed" and mass-unsubscribe the account - so on any failure this just
+	 * shows the error and leaves the popup open instead (same "no silent 2nd path" reasoning as
+	 * everywhere else this session). _subscriptionChanges is left intact, so simply pressing
+	 * Save again retries the exact same changes - reapplying an already-successful one is a
+	 * harmless no-op.
+	 *
+	 * On success, applies exactly the changes recorded in _subscriptionChanges (no reason to
+	 * eagerly load/diff the rest of the account first - an unloaded node was never touched, so it
+	 * can't be in there) via MailJmap.setMailboxSubscribed(), then refreshes the opener's own tree
+	 * and closes/re-submits like aclSave() does.
+	 *
+	 * @param {Event} _event
+	 * @param {Et2Button} _widget button[save] or button[apply]
+	 * @return {boolean} true to let the normal submit proceed, false to block it (this handler
+	 *	already triggers the submit/close itself once the JMAP calls finish)
+	 */
+	subscriptionSave(_event, _widget) : boolean
+	{
+		if (!this._subscriptionChanges) return true;
+
+		const profileID = this._subscriptionProfileID;
+		const changes = [...this._subscriptionChanges];
+
+		Promise.all(changes.map(([id, subscribed]) =>
+		{
+			const path = id.split('::', 2)[1] ?? '';
+			return this.jmap.setMailboxSubscribed(profileID, path, subscribed);
+		})).then(() =>
+		{
+			window.opener?.app?.mail?.refreshFolderLevel?.(profileID, '');
+			_widget.id === 'button[save]' ? window.close() : this.et2.getInstanceManager().submit();
+		}).catch((e) =>
+		{
+			this.egw.message(e?.message || this.egw.lang('Account not reachable'), 'error');
+			console.error('MailApp.subscriptionSave(): JMAP save failed', e);
+		});
+		return false;
+	}
+
+	/**
+	 * Populate the folder-management dialog's multi-select tree via JMAP - lazily, exactly like
+	 * the main index tree and the mail.subscribe popup (folderTreeAutoload()/
+	 * getRootFolders()): the top level and INBOX's own direct children load immediately,
+	 * everything deeper loads on demand as the user expands a node - eagerly fetching a large
+	 * account's entire tree just to populate a dialog the user might only use to delete one
+	 * folder would be wasteful.
+	 *
+	 * folderTreeAutoload() is reused as-is for expanding any deeper node - on a JMAP failure
+	 * it shows an error leaf rather than falling back to a second, classic code path (see its own
+	 * docblock).
+	 *
+	 * Always shows every folder regardless of the showAllFoldersInFolderPane preference - this
+	 * dialog manages folders, including unsubscribed ones, so it must never hide any of them (see
+	 * folderTreeAutoload()'s own subscribedOnly param docblock; matches classic
+	 * mail_tree.inc.php's own folderManagement()/ajax_folderMgmtTree_autoloading() calls, which
+	 * hardcoded $_subscribedOnly=false the same way).
+	 *
+	 * On any failure (network, non-JMAP-capable account), no classic server-rendered tree exists
+	 * to fall back to any more (dropped 2026-09-08, mail_ui::folderManagement() no longer seeds
+	 * one) - shows an error leaf instead, same as folderTreeAutoload()'s own errorLeaf() for a
+	 * single-node expand failure.
+	 */
+	private folderManagementLoad() : void
+	{
+		const tree : any = this.et2.getWidgetById('tree');
+		const profileID = String(this.et2.getArrayMgr('content').getEntry('acc_id') ?? '');
+		if (!tree || !profileID) return;
+
+		tree.autoloading = (item : any) => this.folderTreeAutoload(item, false);
+		this.buildRootFolderData(profileID, false).then((data) =>
+		{
+			if (data === null)
+			{
+				tree.select_options = [buildErrorNode(profileID, '',
+					this.egw.lang('Connection could not be established, use the wizard to check why!'), egw)];
+				return;
+			}
+			tree.select_options = data;
+		}).catch((e) =>
+		{
+			const message = e?.constructor?.name === 'JmapUserError' ? e.message :
+				this.egw.lang('Connection could not be established, use the wizard to check why!');
+			this.egw.message(message, 'error');
+			tree.select_options = [buildErrorNode(profileID, '', message, egw)];
+			console.error('MailApp.folderManagementLoad(): JMAP tree load failed', e);
+		});
 	}
 
 	/**
@@ -4713,27 +7297,194 @@ export class MailApp extends EgwApp
 	 * @param _action
 	 * @param _senders - the representation of the tree leaf to be manipulated
 	 */
-	edit_acl(_action, _senders)
+	editAcl(_action, _senders)
 	{
-		var mailbox = _senders[0].id.split('::');
-		var folder = mailbox[1] || 'INBOX', acc_id = mailbox[0];
-		this.egw.open_link('mail.mail_acl.edit&mailbox='+ btoa(folder)+'&acc_id='+acc_id, '_blank', '640x480');
+		const mailbox = _senders[0].id.split('::');
+		const folder = mailbox[1] || 'INBOX', acc_id = mailbox[0];
+		this.egw.open_link('mail.mail_acl.edit&mailbox='+ btoa(folder)+'&acc_id='+acc_id, '_blank', '1150x600');
 	}
 
 	/**
 	 * Submit new selected folder back to server in order to read its acl's rights
 	 */
-	acl_folderChange()
+	aclFolderChange()
 	{
-		var mailbox = this.et2.getWidgetById('mailbox');
+		const mailbox = this.et2.getWidgetById('mailbox');
 
 		if (mailbox)
 		{
 			if (mailbox.value.length > 0)
 			{
-				this.et2._inst.submit();
+				this.et2.getInstanceManager().submit();
 			}
 		}
+	}
+
+	/**
+	 * Enumerate all subfolders of the currently selected mailbox, then run one menuaction
+	 * call per folder through a long-task progress dialog.
+	 *
+	 * Shared by aclSave() (grant) and aclDeleteRow() (revoke): both need to expand the
+	 * mailbox tree client-side, so the server never has to recurse through possibly
+	 * thousands of IMAP folders inside a single request (which used to be able to run into
+	 * PHP's execution-time limit with no feedback to the user).
+	 *
+	 * @param {string} menuaction mail.mail_acl.ajax_setACL or mail.mail_acl.ajax_deleteACL
+	 * @param {function} buildItem(folder, isRoot, acc_id, account_id) builds the long_task
+	 *	list item for one folder; isRoot tells it whether folder is the originally selected
+	 *	mailbox itself (getSubfolders() on the server always includes it) or one of its
+	 *	descendants - needed because rows without "recursive" checked must only ever be
+	 *	applied to the root, never to descendants
+	 * @param {string} title long_task dialog title
+	 * @param {function} msgFor(count) long_task dialog message
+	 * @param {function} callback long_task completion callback
+	 */
+	aclRunRecursive(menuaction, buildItem, title, msgFor, callback)
+	{
+		// acc_id/account_id are preserved server-side state for this etemplate, not part of
+		// the submitted content - getValues() never has them. The Folder field itself is
+		// the only place the client has them, since the server put them there for its own
+		// remote-search use (edit() sets searchOptions to {acc_id, account_id}, or just
+		// {mailaccount: acc_id} for a non-admin editing their own mailbox).
+		const mailboxWidget = this.et2.getWidgetById('mailbox');
+		const mailbox = Array.isArray(mailboxWidget.value) ? mailboxWidget.value[0] : mailboxWidget.value;
+		const searchOptions : any = mailboxWidget.searchOptions || {};
+		const acc_id = searchOptions.acc_id ?? searchOptions.mailaccount;
+		const account_id = searchOptions.account_id;
+
+		const loading_id = 'mail-acl-recursive';
+		this.egw.loading_prompt(loading_id, true, this.egw.lang('please wait...'));
+		const url = this.egw.link(this.egw.ajaxUrl('mail.mail_acl.ajax_folders'), {
+			acc_id: acc_id,
+			account_id: account_id,
+			mailbox: mailbox,
+			query: ''
+		});
+		return this.egw.request(url, []).then((folders : { id : string, label : string }[]) =>
+		{
+			this.egw.loading_prompt(loading_id, false);
+			const list = folders.map(folder => buildItem(folder.id, folder.id === mailbox, acc_id, account_id));
+			Et2Dialog.long_task(callback, msgFor(list.length), title, menuaction, list, 'mail');
+		});
+	}
+
+	/**
+	 * Save/Apply button handler for the folder ACL dialog (button[save] / button[apply])
+	 *
+	 * If none of the grid rows have "recursive" checked, this falls through to the normal
+	 * ajax etemplate submit. Otherwise it expands the mailbox tree and grants the rights
+	 * one folder at a time through a long-running task with progress feedback.
+	 *
+	 * @param {Event} _event
+	 * @param {Et2Button} _widget button[save] or button[apply]
+	 * @return {boolean} true to let the normal submit proceed, false to block it (this
+	 *	handler already triggers the submit itself once the long task finishes)
+	 */
+	aclSave(_event, _widget)
+	{
+		const values = this.et2.getInstanceManager().getValues(this.et2);
+		// acc_id is only present in getValues() for a row added this session - once a row
+		// has been saved once, the server marks its account picker readonly (edit(), to
+		// stop it being reassigned to a different account) and readonly widgets are
+		// dropped from getValues(). The widget itself still has the real value though.
+		const grid : [string, any][] = Object.entries(values.grid || {}).map(([key, row]) =>
+			[key, {...(<object>row), acc_id: (<any>row).acc_id ?? this.et2.getWidgetById(key + '[acc_id]')?.value}]);
+
+		if (!grid.some(([, row]) => row.acl_recursive && row.acc_id))
+		{
+			return true;
+		}
+
+		this.aclRunRecursive('mail.mail_acl.ajax_setACL',
+			(folder, isRoot, acc_id, account_id) => ({
+				...values,
+				mailbox: folder,
+				acc_id: acc_id,
+				account_id: account_id,
+				// every row applies to the root folder, but only rows with "recursive"
+				// checked may also apply to its descendants (getSubfolders() includes the
+				// root itself, so rows without "recursive" would otherwise leak into every
+				// subfolder too)
+				grid: Object.fromEntries(grid
+					.filter(([, row]) => row.acc_id && (isRoot || row.acl_recursive))
+					.map(([key, row]) => [key, {...row, acl_recursive: false}]))
+			}),
+			this.egw.lang('Applying rights'),
+			(count) => this.egw.lang('Applying rights to %1 folders ...', count),
+			(val) =>
+			{
+				if (val)
+				{
+					// recursion is already fully handled by the long task above - reset
+					// the checkboxes before any follow-up submit/refresh, or a still-checked
+					// "recursive" would re-trigger the old unbounded synchronous loop again
+					grid.forEach(([key]) =>
+					{
+						const cb = this.et2.getWidgetById(key + '[acl_recursive]');
+						if (cb) cb.set_value(false);
+					});
+					_widget.id === 'button[save]' ? window.close() : this.et2.getInstanceManager().submit();
+				}
+			}
+		);
+		return false;
+	}
+
+	/**
+	 * Delete button handler for one grid row of the folder ACL dialog (delete[$row])
+	 *
+	 * If the row's "recursive" checkbox isn't set, this behaves exactly like before
+	 * (Et2Dialog.confirm(), which submits the row deletion itself on confirmation).
+	 * If it is set, after confirming, revokes the ACL from every subfolder one at a time
+	 * through a long-running task instead of the old unbounded server-side loop.
+	 *
+	 * @param {Event} _event
+	 * @param {Et2Button} _widget delete[$row] button
+	 * @return {boolean|void} always falsy: submitting is either delegated to
+	 *	Et2Dialog.confirm() or triggered manually once the long task finishes
+	 */
+	aclDeleteRow(_event, _widget)
+	{
+		const rowId = _widget.id.replace(/[^0-9.]+/g, '');
+		const values = this.et2.getInstanceManager().getValues(this.et2);
+		const row = values.grid?.[rowId];
+
+		if (!row || !row.acl_recursive)
+		{
+			return Et2Dialog.confirm(_widget, this.egw.lang('Do you really want to remove all rights from this account?'), this.egw.lang('Remove'));
+		}
+
+		// acc_id is readonly (and so missing from getValues()) for any row that was
+		// already saved before this session - read the real value straight from the widget
+		const identifier = row.acc_id ?? this.et2.getWidgetById(rowId + '[acc_id]')?.value;
+
+		Et2Dialog.show_dialog((button_id) =>
+		{
+			if (button_id !== Et2Dialog.YES_BUTTON) return;
+
+			this.aclRunRecursive('mail.mail_acl.ajax_deleteACL',
+				(folder, isRoot, acc_id, account_id) => ({
+					mailbox: folder,
+					identifier: identifier,
+					acc_id: acc_id,
+					account_id: account_id
+				}),
+				this.egw.lang('Removing rights'),
+				(count) => this.egw.lang('Removing rights from %1 folders ...', count),
+				(val) =>
+				{
+					if (val)
+					{
+						// same reasoning as aclSave(): never let a still-checked
+						// "recursive" box re-trigger the old synchronous loop on refresh
+						const cb = this.et2.getWidgetById(rowId + '[acl_recursive]');
+						if (cb) cb.set_value(false);
+						this.et2.getInstanceManager().submit();
+					}
+				}
+			);
+		}, this.egw.lang('Do you really want to remove all rights from this account?'), this.egw.lang('Remove'), {},
+			Et2Dialog.BUTTONS_YES_NO, Et2Dialog.WARNING_MESSAGE, undefined, this.egw);
 	}
 
 	/**
@@ -4742,26 +7493,26 @@ export class MailApp extends EgwApp
 	 * @param _action
 	 * @param _senders - the representation of the tree leaf to be manipulated
 	 */
-	edit_account(_action, _senders)
+	editAccount(_action, _senders)
 	{
-		var acc_id = parseInt(_senders[0].id);
+		const acc_id = parseInt(_senders[0].id);
 		this.egw.open_link('mail.mail_wizard.edit&acc_id='+acc_id, '_blank', '740x670');
 	}
 
 	/**
 	 * Lock tree so it does NOT receive any more mouse-clicks
 	 */
-	lock_tree()
+	lockTree()
 	{
 		// No-op.  Tree could be set disabled or readonly, but those were not implemented.
 	}
 
 	/**
-	 * Unlock tree so it receives again mouse-clicks after calling lock_tree()
+	 * Unlock tree so it receives again mouse-clicks after calling lockTree()
 	 */
-	unlock_tree()
+	unlockTree()
 	{
-		// No-op, see lock_tree()
+		// No-op, see lockTree()
 	}
 
 	/**
@@ -4771,12 +7522,12 @@ export class MailApp extends EgwApp
 	 * @param {et2_widget_tree} _widget
 	 * @param {Number} _hasChildren 0 - item has no child nodes, -1 - item is closed, 1 - item is opened
 	 */
-	openstart_tree(_id, _widget, _hasChildren)
+	openStartTree(_id, _widget, _hasChildren)
 	{
 		if (_id.indexOf('::') == -1 &&	// it's an account, not a folder in an account
 			!_hasChildren)
 		{
-			this.lock_tree();
+			this.lockTree();
 		}
 		return true;	// allow opening of node
 	}
@@ -4788,13 +7539,168 @@ export class MailApp extends EgwApp
 	 * @param {et2_widget_tree} _widget
 	 * @param {Number} _hasChildren 0 - item has no child nodes, -1 - item is closed, 1 - item is opened
 	 */
-	openend_tree(_id, _widget, _hasChildren)
+	openEndTree(_id, _widget, _hasChildren)
 	{
 		if (_id.indexOf('::') == -1 &&	// it's an account, not a folder in an account
 			_hasChildren == 1)
 		{
-			this.unlock_tree();
+			this.unlockTree();
 		}
+	}
+
+	/**
+	 * Et2Tree autoloading callback (see et2_ready()'s 'mail.index' case) - lazy per-level JMAP
+	 * folder loading, one level per expand, instead of the classic ajax_foldertree menuaction
+	 * (see doc/ai/projects/mail-folder-tree-jmap.md).
+	 *
+	 * item.value is either a bare profileID (an account root node, seeded server-side - expanding
+	 * it means "list its top-level folders", parentId null) or "profileID::canonical/path" (a
+	 * folder node built by this same callback on an earlier level - item.jmapId is then the raw
+	 * JMAP Mailbox id to pass as parentId, not derived from the path: a real JMAP/Stalwart
+	 * mailbox id is server-assigned and opaque, see FolderTreeNode's docblock in ./folderTree).
+	 *
+	 * A "profileID::path" node with no jmapId at all means this node was never built by this
+	 * callback (or buildRootFolderData()) in the first place - eg. the classic server-
+	 * rendered tree mail_ui::folderManagement()/subscription() seed shown while their own JMAP
+	 * root fetch is still in flight (or already declined), which uses the same "profileID::path"
+	 * id scheme but has no concept of a JMAP Mailbox id at all.
+	 *
+	 * Every account is JMAP-eligible in principle (a real JMAP server, or JmapShim wrapping the
+	 * exact same IMAP connection classic code would use) - "JMAP isn't reachable right now" means
+	 * the underlying connection itself is down, not that JMAP specifically is broken while classic
+	 * would still work. Retrying via the classic ajax_foldertree fetch would either hit the exact
+	 * same failure one layer down, or - worse - silently paper over a genuine bug in the JMAP/shim
+	 * code path by making it look like things still work. Shows an error leaf instead (mirroring
+	 * mail_tree.inc.php's own treeLeafNoConnectionArray()) for both a definitive JmapUserError and
+	 * a plain decline (no usable token) - no classic fallback for folder-tree browsing anymore.
+	 *
+	 * @param item the node being expanded
+	 * @param subscribedOnly explicit override - omit to fall back to the showAllFoldersInFolderPane
+	 *  preference (this callback's own default, used as-is by the main browsing tree). The
+	 *  folder-management dialog (folderManagementLoad()) binds this with `false` instead,
+	 *  matching classic mail_tree.inc.php's own folderManagement()/ajax_folderMgmtTree_autoloading()
+	 *  calls (hardcoded $_subscribedOnly=false) - that dialog manages folders, including
+	 *  unsubscribed ones, so every level of its tree must always show everything.
+	 * @return {children: FolderTreeNode[]} - Et2Tree's expected handleLazyLoading() result shape
+	 *  (Object.assign()'d straight onto the node being expanded, so the key must match
+	 *  FolderTreeNode's own `children` field, not just be "whatever Et2Tree accepts")
+	 */
+	folderTreeAutoload(item : any, subscribedOnly? : boolean) : Promise<{ children : FolderTreeNode[] } | any>
+	{
+		const hasParent = typeof item.value === "string" && item.value.indexOf('::') !== -1;
+		const [profileID, parentPath] : [string, string] = hasParent ? item.value.split('::', 2) : [item.value, ''];
+		const parentId : string | null = hasParent ? item.jmapId : null;
+		const errorLeaf = () => ({children: [buildErrorNode(profileID, parentPath,
+			this.egw.lang('Connection could not be established, use the wizard to check why!'), egw)]});
+
+		if (hasParent && !parentId)
+		{
+			return Promise.resolve(errorLeaf());
+		}
+
+		const fetchLevel = hasParent
+			? this.buildFolderLevelData(profileID, parentPath, parentId, subscribedOnly)
+			: this.buildRootFolderData(profileID, subscribedOnly);
+
+		return fetchLevel.then((data) =>
+			data === null ? errorLeaf() : {children: data}
+		).catch((e) =>
+		{
+			if (e?.constructor?.name === 'JmapUserError')
+			{
+				return {children: [buildErrorNode(profileID, parentPath, e.message, egw)]};
+			}
+			throw e;
+		});
+	}
+
+	/**
+	 * Root-level folder-tree autoload: fetches the account root AND INBOX's own direct children
+	 * in one proactive pass (MailJmap.getRootFolders()) instead of leaving Et2Tree to reactively
+	 * fire its own separate lazy-load request for INBOX right after the root level renders (INBOX
+	 * is always auto-expanded - see folderTree.ts's buildNode()). Embeds INBOX's children
+	 * directly into its node's `item` before this data ever reaches Et2Tree, so INBOX's own
+	 * `lazy` flag (Et2Tree.ts's _optionTemplate()) reads false and no further autoload fires for
+	 * it - see MailJmap.getRootFolders()'s own docblock for why this still costs two requests, not
+	 * one, and why that's still strictly better than today's reactive round trip.
+	 *
+	 * @param subscribedOnlyOverride see folderTreeAutoload()'s own param docblock
+	 */
+	private buildRootFolderData(profileID : string, subscribedOnlyOverride? : boolean) : Promise<FolderTreeNode[] | null>
+	{
+		return this.jmap.getRootFolders(profileID, subscribedOnlyOverride).then((result) =>
+		{
+			if (result === null) return null;
+			const subscribedOnly = subscribedOnlyOverride ?? !isPreferenceOn(egw.preference('showAllFoldersInFolderPane', 'mail'));
+			const top = buildFolderLevel(result.top, profileID, '', {subscribedOnly, isTopLevel: true}, egw);
+			if (result.inboxChildren !== null)
+			{
+				const inboxNode = top.find((node) => node.value === profileID + '::INBOX');
+				if (inboxNode)
+				{
+					inboxNode.children = buildFolderLevel(result.inboxChildren, profileID, 'INBOX', {subscribedOnly, isTopLevel: true}, egw);
+					inboxNode.hasChildren = inboxNode.children.length > 0;
+				}
+			}
+			return top;
+		});
+	}
+
+	/**
+	 * Fetch + build one folder-tree level (shared by folderTreeAutoload() and
+	 * refreshFolderLevel()) - null means "JMAP not reachable", same contract
+	 * MailJmap.getMailboxChildren() itself has, for the caller to decide its own fallback.
+	 *
+	 * @param subscribedOnlyOverride see folderTreeAutoload()'s own param docblock
+	 */
+	private buildFolderLevelData(profileID : string, parentPath : string, parentId : string | null,
+		subscribedOnlyOverride? : boolean) : Promise<FolderTreeNode[] | null>
+	{
+		// classic mail_tree.inc.php only ever special-cases folder icons/names (Trash, Sent,
+		// Templates, ...) at this same "top level" scope (Api\Mail::getFolderArrays()'s
+		// $_onlyTopLevel mode) - never at any deeper level, even for a folder that happens to
+		// carry a matching name/role. Which path counts as "top" depends on the mail server: some
+		// put special folders as siblings of INBOX (parentPath === ''), others nest them under it
+		// (parentPath === 'INBOX') - both are covered.
+		const isTopLevel = parentPath === '' || parentPath === 'INBOX';
+		return this.jmap.getMailboxChildren(profileID, parentId, isTopLevel, subscribedOnlyOverride).then((mailboxes) =>
+		{
+			if (mailboxes === null) return null;
+			const subscribedOnly = subscribedOnlyOverride ?? !isPreferenceOn(egw.preference('showAllFoldersInFolderPane', 'mail'));
+			return buildFolderLevel(mailboxes, profileID, parentPath, {subscribedOnly, isTopLevel}, egw);
+		});
+	}
+
+	/**
+	 * Re-fetch one folder-tree level via JMAP and push it directly into the tree (Et2Tree's
+	 * refreshItem() with data, not a lazy-load re-trigger) - used after a successful folder CRUD
+	 * fast path (create/rename/move/delete) to reflect the change immediately, without a full
+	 * page reload. Resolves false (never throws) on any failure - callers that care already ran
+	 * the actual mutation via a separate JMAP call before calling this; a refresh failure here
+	 * just means the tree looks stale until the user next expands/reloads, not that the mutation
+	 * itself failed.
+	 *
+	 * @param profileID
+	 * @param parentPath canonical path of the level to refresh, '' for the top level
+	 */
+	private refreshFolderLevel(profileID : string, parentPath : string) : Promise<boolean>
+	{
+		const ftree = this.et2?.getWidgetById(this.nm_index + '[foldertree]');
+		if (!ftree) return Promise.resolve(false);
+
+		return this.jmap.resolveMailboxId(profileID, parentPath)
+			.then((parentId) => this.buildFolderLevelData(profileID, parentPath, parentId))
+			.then((data) =>
+			{
+				if (data === null) return false;
+				const parentTreeId = parentPath !== '' ? profileID + '::' + parentPath : profileID;
+				return ftree.refreshItem(parentTreeId, {children: data}).then(() => true);
+			})
+			.catch((e) =>
+			{
+				console.error('MailApp.refreshFolderLevel(): failed to refresh the tree after a folder change', e);
+				return false;
+			});
 	}
 
 	/**
@@ -4802,18 +7708,19 @@ export class MailApp extends EgwApp
 
 	 * @param _action
 	 * @param _senders - the representation of the tree leaf to be manipulated
+	 * both parameters can be ommited if we are in a mail.display and not in mail.index
 	 */
-	mail_print(_action, _senders)
+	print(_action?, _senders?)
 	{
-		var currentTemp = this.et2._inst.name;
+		const currentTemp = this.et2_obj.name;
 
 		switch (currentTemp)
 		{
 			case 'mail.index':
-				this.mail_prev_print(_action, _senders);
+				this.prevPrint(_action, _senders);
 				break;
 			case 'mail.display':
-				this.mail_display_print();
+				this.displayPrint();
 		}
 
 	}
@@ -4822,16 +7729,16 @@ export class MailApp extends EgwApp
 	 * Bind special handler on print media.
 	 * -FF and IE have onafterprint event, and as Chrome does not have that event we bind afterprint function to onFocus
 	 */
-	print_for_compose()
+	printForCompose()
 	{
-		var afterprint = function (){
+		const afterprint = () =>{
 			egw(window).close();
 		};
 
 		if (!window.onafterprint)
 		{
 			// For browsers which does not support onafterprint event, eg. Chrome
-			setTimeout(function() {
+			setTimeout(() => {
 				egw(window).close();
 			}, 2000);
 		}
@@ -4845,13 +7752,39 @@ export class MailApp extends EgwApp
 	 * Prepare display dialog for printing
 	 * copies iframe content to a DIV, as iframe causes
 	 * trouble for multipage printing
-	 * @param {jQuery object} _iframe mail body iframe
-	 * @returns {undefined}
+	 * @param _iframe mail body iframe, can be ommited to use querySelector
 	 */
-	mail_prepare_print(_iframe)
+	preparePrint(_iframe?: HTMLIFrameElement)
 	{
-		const mainIframe = _iframe || document.body.querySelector('#mail-display_mailDisplayBodySrc');
-		let tmpPrintDiv = document.body.querySelector('#tempPrintDiv');
+		const iframeWidget : any = this.et2?.getWidgetById('mailDisplayBodySrc');
+		const mainIframe = _iframe || iframeWidget?.iframe;
+		// hostNode is where tmpPrintDiv actually gets anchored as a SIBLING - the light-DOM
+		// <et2-iframe> element itself when resolved via the widget (iframeWidget IS that host
+		// element - Lit components extend HTMLElement), deliberately NOT mainIframe (the real
+		// <iframe>, which lives inside iframeWidget's own shadow root - Et2Iframe.__getIframeNode()
+		// does `this.shadowRoot.querySelector('iframe')`). Anchoring on mainIframe would put
+		// tmpPrintDiv INSIDE that same shadow root as a descendant of the host, where it silently
+		// inherits the host's own print-time `display:none` (print.css's own
+		// `#mail-display_mailDisplayBodySrc { display: none }` rule, set on the <et2-iframe>
+		// element by id) right along with the real iframe it's supposed to replace - `display:none`
+		// on an ancestor always wins over any descendant's own inline style override, shadow
+		// boundary or not (found live 2026-09-09 - ralf: "printing of mails is not working, headers
+		// are visible but not the body"; the headers print fine since they're plain light-DOM
+		// content elsewhere in the template, untouched by this). When _iframe is passed explicitly
+		// it's assumed to already be a plain light-DOM iframe (no current caller does this), so
+		// it's already the correct anchor itself.
+		const hostNode : HTMLElement = _iframe || iframeWidget;
+		// was document.body.querySelector(...) - LIGHT-DOM-ONLY, blind to the shadow root the
+		// iframe actually lives in now that mailDisplayBodySrc is a real Et2Iframe custom element.
+		// Found live 2026-09-04 (ralf: "eml files attached to infologs... display three mails side
+		// by side like three columns"): this check ALWAYS failed to find the already-inserted copy,
+		// so EVERY preparePrint() call (the iframe's own 'load' event firing more than once is
+		// already a known, documented quirk - see this method's own callers) created yet ANOTHER
+		// duplicate #tempPrintDiv, all left visible side by side instead of the second call finding
+		// and reusing the first. Scoping the lookup to hostNode's own parent (light-DOM, not the
+		// shadow root - see hostNode's own docblock above) finds a previously-inserted copy
+		// regardless of where it lives.
+		let tmpPrintDiv = hostNode?.parentNode?.querySelector<HTMLElement>('#tempPrintDiv');
 		let notAttached = false;
 
 		if (!tmpPrintDiv)
@@ -4859,15 +7792,21 @@ export class MailApp extends EgwApp
 			tmpPrintDiv = document.createElement('div');
 			tmpPrintDiv.id = 'tempPrintDiv';
 			tmpPrintDiv.classList.add('tmpPrintDiv');
+			// api/templates/default/print.css's own `@media screen { .tmpPrintDiv { display: none }
+			// }` is a light-DOM stylesheet - now correctly reaches this element (a light-DOM
+			// sibling of hostNode, see hostNode's own docblock above), but kept as an inline style
+			// too (belt-and-suspenders, cheap): displayPrint() clears it right before actually
+			// printing and restores it after via the same inline property.
+			tmpPrintDiv.style.display = 'none';
 			notAttached = true;
 		}
 
 		if (mainIframe && tmpPrintDiv)
 		{
-			const copyContent = function ()
+			const copyContent = () =>
 			{
 				// Wait a little longer
-				window.setTimeout(function ()
+				window.setTimeout(() =>
 				{
 					tmpPrintDiv.innerHTML = mainIframe.contentDocument.body.innerHTML;
 				}, 600);
@@ -4878,9 +7817,9 @@ export class MailApp extends EgwApp
 		}
 
 		// Attach the element to the DOM after maniupulation
-		if (notAttached && mainIframe)
+		if (notAttached && hostNode)
 		{
-			mainIframe.parentNode.insertBefore(tmpPrintDiv, mainIframe.nextElementSibling);
+			hostNode.parentNode.insertBefore(tmpPrintDiv, hostNode.nextElementSibling);
 		}
 		tmpPrintDiv.querySelector('#divAppboxHeader')?.remove();
 	}
@@ -4888,12 +7827,33 @@ export class MailApp extends EgwApp
 	/**
 	 * Print a mail from Display
 	 */
-	mail_display_print()
+	displayPrint()
 	{
 		this.egw.message(this.egw.lang('Printing')+' ...', 'success');
 
 		// Make sure the print happens after the content is loaded. Seems Firefox and IE can't handle timing for print command correctly
-		setTimeout(function(){
+		setTimeout(() =>{
+			// preparePrint()'s own inline `display: none` needs an explicit inline override here
+			// too (belt-and-suspenders alongside print.css's own `@media print` rule - see
+			// preparePrint()'s docblock for why tmpPrintDiv must be anchored on the widget itself,
+			// not the real iframe inside its shadow root), restored afterward via onafterprint
+			// (Firefox/IE) or a short timeout (Chrome has no such event, same fallback
+			// printForCompose() already uses), so a cancelled print dialog doesn't leave the copy
+			// visible on screen. Looked up via the SAME hostNode-based anchor preparePrint() itself
+			// uses (the <et2-iframe> widget, not its own .iframe accessor) - querying via mainIframe.
+			// parentNode here would look inside the shadow root, where tmpPrintDiv no longer lives.
+			const iframeWidget : any = this.et2?.getWidgetById('mailDisplayBodySrc');
+			const tmpPrintDiv = iframeWidget?.parentNode?.querySelector('#tempPrintDiv') as HTMLElement;
+			if (tmpPrintDiv) tmpPrintDiv.style.display = 'block';
+			const hideAgain = () => { if (tmpPrintDiv) tmpPrintDiv.style.display = 'none'; };
+			if ('onafterprint' in window)
+			{
+				window.addEventListener('afterprint', hideAgain, {once: true});
+			}
+			else
+			{
+				setTimeout(hideAgain, 2000);
+			}
 			egw(window).window.print();
 		},1000);
 	}
@@ -4905,9 +7865,9 @@ export class MailApp extends EgwApp
 	 * @param {Object} _elems
 	 *
 	 */
-	mail_prev_print(_action, _elems)
+	prevPrint(_action, _elems)
 	{
-		this.mail_open(_action, _elems, _action.data.images ? 'print_images' : 'print');
+		this.openMessage(_action, _elems, _action.data.images ? 'print_images' : 'print');
 	}
 
 	/**
@@ -4917,7 +7877,7 @@ export class MailApp extends EgwApp
 	 * @param {widget object} _widget mail account selectbox
 	 *
 	 */
-	vacation_change_account(_egw, _widget)
+	vacationChangeAccount(_egw, _widget)
 	{
 		_widget.getInstanceManager().submit();
 	}
@@ -4925,9 +7885,9 @@ export class MailApp extends EgwApp
 	/**
 	 * Clear intervals stored in W_INTERVALS which assigned to window
 	 */
-	clearIntevals()
+	clearIntervals()
 	{
-		for(var i=0;i<this.W_INTERVALS.length;i++)
+		for(let i=0;i<this.W_INTERVALS.length;i++)
 		{
 			clearInterval(this.W_INTERVALS[i]);
 			delete this.W_INTERVALS[i];
@@ -4949,16 +7909,25 @@ export class MailApp extends EgwApp
 	 */
 	getWindowTitle()
 	{
-		//mail display uses #mail-display_mail_displaysubject text and
+		//mail display uses #mail-display_mailDisplayDetails_subject text and
 		// mail compose uses #mail-compose_subject input
-		const widget:Et2Textbox | Et2Description = document.querySelector('#mail-display_mail_displaysubject') ||
-			document.querySelector('#mail-compose_subject')
-		// neither exists for other mail.* templates (eg. the import-message popup) - called
-		// unconditionally from et2_ready() via _set_Window_title(), so throwing here aborted the
-		// REST of et2_ready() too (this.et2_obj never got assigned), breaking the unrelated-looking
-		// "upload does not submit" (found live 2026-09-04: this.et2_obj.submit() in uploadForImport()
-		// then failed with "Cannot read properties of undefined")
-		return widget?.value
+		const composeWidget : Et2Textbox = document.querySelector('#mail-compose_subject');
+		if (composeWidget)
+		{
+			// A reply/forward's real subject isn't populated yet at the very first call (this
+			// runs synchronously from et2_ready(), before MailCompose.bootstrapReply()'s own async
+			// JMAP fetch resolves) - falls back to a generic title for that brief window, same as
+			// a genuinely blank new compose has for its entire lifetime unless the user types a
+			// subject. compose.xet's own subject onchange="app.mail.compose.subject2title" (fires
+			// for bootstrapReply()'s/bootstrapComposeAsNew()'s set_value() too, same as any other
+			// programmatic set_value()) overwrites this with the real subject once it's known -
+			// found live 2026-09-07 building the clientSidePopup compose bootstrap, ralf: "we
+			// always had a change handler on the subject, setting it as title and on load we
+			// showed the subject e.g. for a reply/forward, or just lang('Compose')".
+			return composeWidget.value || this.egw.lang('Compose');
+		}
+		const displayWidget : Et2Description = document.querySelector('#mail-display_mailDisplayDetails_subject');
+		return displayWidget?.value;
 	}
 
 	/**
@@ -4967,20 +7936,23 @@ export class MailApp extends EgwApp
 	 */
 	prepareMailvelopePrint()
 	{
-		var tempPrint = jQuery('div#tempPrintDiv');
-		var mailvelopeTopContainer = jQuery('div.mailDisplayContainer');
-		var originFrame = jQuery('#mail-display_mailDisplayBodySrc');
-		var iframe = jQuery(this.mailvelope_iframe_selector);
+		const tempPrint = document.querySelector('div#tempPrintDiv') as HTMLElement;
+		const originFrame = this.et2?.getWidgetById('mailDisplayBodySrc')?.iframe;
 
-		if (tempPrint.length >0)
+		if (tempPrint)
 		{
 			// Mailvelope iframe height is approximately equal to the height of encrypted origin message
 			// we add an arbitary plus pixels to make sure it's covering the full content in print view and
 			// it is not getting acrollbar in normal view
 			// @TODO: after Mailvelope plugin provides a hieght value, we can replace the height with an accurate value
-			iframe.addClass('mailvelopeIframe').height(originFrame[0].contentWindow.document.body.scrollHeight + 400);
-			tempPrint.hide();
-			mailvelopeTopContainer.addClass('mailvelopeTopContainer');
+			const height = originFrame.contentWindow.document.body.scrollHeight + 400;
+			document.querySelectorAll(this.mailvelope_iframe_selector).forEach((el : HTMLElement) =>
+			{
+				el.classList.add('mailvelopeIframe');
+				el.style.height = height + 'px';
+			});
+			tempPrint.style.display = 'none';
+			document.querySelectorAll('div.mailDisplayContainer').forEach(el => el.classList.add('mailvelopeTopContainer'));
 		}
 	}
 
@@ -5002,55 +7974,74 @@ export class MailApp extends EgwApp
 	 */
 	mailvelopeDisplay(_keyring)
 	{
-		let self = this;
-		let iframe = jQuery('iframe#mail-display_mailDisplayBodySrc,iframe#mail-index_messageIFRAME');
-		let armored = iframe.contents().find('td.td_display > pre').text().trim();
+		const self = this;
+		const iframeWidget : any = this.et2?.getWidgetById('mailDisplayBodySrc') || this.et2?.getWidgetById('messageIFRAME');
+		const iframe = iframeWidget?.iframe;
+		const armored = iframe?.contentDocument?.querySelector('td.td_display > pre')?.textContent?.trim() || '';
+
+		// Undo a PREVIOUS message's own mailvelopeDisplay() unconditionally, before checking
+		// whether THIS message even is PGP - found live 2026-09-08 (ralf: "clicked an other time
+		// and the message is gone, looks like the iframe is not back but Mailvelope is gone"):
+		// selecting message A (PGP) sets iframe.style.display='none' once Mailvelope takes over;
+		// selecting message B (not PGP) right after loads B's real content into that SAME iframe
+		// element (loadMessageBody() reuses it, only .srcdoc changes) but never reversed A's own
+		// inline style, and this method used to `return` immediately for a non-PGP body, before
+		// ever reaching the code that would have cleared it - B's content loaded correctly, just
+		// stayed invisible. Also clears any leftover preview-pane anchor <div> (see the `else`
+		// branch below) and any Mailvelope iframe still sitting in .mailDisplayContainer from a
+		// previous message in the SAME popup - stale regardless of what THIS message turns out to
+		// be.
+		if (iframe) iframe.style.display = '';
+		document.querySelectorAll('div[id^="mailvelope-display-"]').forEach(el => el.remove());
+		document.querySelectorAll('.mailDisplayContainer ' + this.mailvelope_iframe_selector).forEach(el => el.remove());
 
 		if (armored == "" || armored.indexOf(this.begin_pgp_message) === -1) return;
 
 		// Mailvelope's own createDisplayContainer() resolves `container_selector` via ITS content
 		// script's plain document.querySelector() from the TOP-level document - no shadow-piercing
-		// capability at all. iframe.parent()[0].dom_id is undefined now (Et2Iframe is a shadow-DOM
-		// custom element - its light-DOM ancestors never carry that legacy property), so
-		// container_selector silently became "#undefined", document.querySelector() returned null,
-		// and Mailvelope's own code threw trying to appendChild into that null result. Sidesteps
-		// the whole reachability question (master fix: doc/ai/projects/mail-pgp-mailvelope-fixes.md,
-		// 2026-09-08): append a fresh, guaranteed-reachable plain <div> straight onto document.body,
-		// positioned over the iframe's current on-screen rect, instead of trying to find/walk to an
-		// existing reachable ancestor.
-		let container_selector;
-		if (this.et2._inst.name == 'mail.display')
+		// capability at all. `.iframe` (Et2Iframe.ts's own accessor) lives inside that widget's own
+		// shadow root, and (found live 2026-09-08, preview-pane case only) so does the whole chain
+		// of ancestors up through <et2-ai> - iframeWidget.parentElement resolves to a real Element,
+		// but neither IT nor any further .parentElement walk ever reaches something
+		// document.querySelector() can actually find (confirmed live: giving that element a fresh
+		// id and querying '#'+id from the top document still returns null) - unlike the
+		// 'mail.display' branch below, where `.mailDisplayContainer` (display.xet's own <et2-box>)
+		// sits genuinely in light DOM, untouched by this. Sidesteps the whole shadow-nesting
+		// question: append a fresh, guaranteed-reachable plain <div> straight onto document.body,
+		// positioned over the iframe's current on-screen rect, instead of trying to find or walk up
+		// to an existing reachable ancestor.
+		let container_selector : string;
+		if (this.et2.getInstanceManager().name == 'mail.display')
 		{
 			container_selector = '.mailDisplayContainer';
 		}
 		else
 		{
-			if (!iframe.length) return;
-			let rect = iframe[0].getBoundingClientRect();
-			jQuery('div[id^="mailvelope-display-"]').remove();
-			let anchor = document.createElement('div');
+			if (!iframe) return;
+			const rect = iframe.getBoundingClientRect();
+			const anchor = document.createElement('div');
 			anchor.id = 'mailvelope-display-' + Math.random().toString(36).slice(2);
 			anchor.style.cssText = `position: absolute; left: ${rect.left + window.scrollX}px; top: ${rect.top + window.scrollY}px; ` +
 				`width: ${rect.width}px; height: ${rect.height}px; z-index: 1;`;
 			document.body.appendChild(anchor);
 			container_selector = `#${anchor.id}`;
 		}
-		let options = {
+		const options : {showExternalContent : boolean, senderAddress? : string} = {
 			showExternalContent: this.egw.preference('allowExternalIMGs') == 1	// "1", or "0", undefined --> true or false
 		};
 		// get sender address, so Mailvelope can check signature
-		let from = this.et2._inst.name == 'mail.display' ? this.et2.getArrayMgr('content').data.from : this.et2.getWidgetById('additionalfromaddress').value;
+		const from = this.et2.getInstanceManager().name == 'mail.display' ? this.et2.getArrayMgr('content').data.from : this.et2.getWidgetById('additionalfromaddress').value;
 		if (from)
 		{
 			options.senderAddress = from[0].replace(/^.*<([^<>]+)>$/, '$1');
 		}
-		window.mailvelope.createDisplayContainer(container_selector, armored, _keyring, options).then(function()
+		window.mailvelope.createDisplayContainer(container_selector, armored, _keyring, options).then(() =>
 		{
 			// hide our iframe to give space for mailvelope iframe with encrypted content
-			iframe.hide();
+			iframe.style.display = 'none';
 			self.prepareMailvelopePrint();
 		},
-		function(_err)
+		(_err) =>
 		{
 			self.egw.message(_err.message, 'error');
 		});
@@ -5064,6 +8055,17 @@ export class MailApp extends EgwApp
 	mailvelope_editor : any = undefined;
 
 	/**
+	 * Phase 5 item 6's "default only, never enforced" guard (doc/ai/projects/
+	 * mail-pgp-signature-verification.md) - true once EITHER a real user click on the `pgp` toolbar
+	 * action OR checkMutualAutoEncrypt()'s own auto-enable has happened for THIS compose popup, so
+	 * later recipient changes never re-trigger (or re-override) a decision already made. Set
+	 * unconditionally at the top of togglePgpEncrypt() itself (every call, real click or
+	 * programmatic - including item 4's own reply/forward pre-check in bootstrapComposePopup()), so
+	 * a reply/forward that already pre-decided its own pgp state is correctly left alone too.
+	 */
+	pgpMutualAutoDecided : boolean = false;
+
+	/**
 	 * Called on compose, if mailvelope is available
 	 *
 	 * @param {Keyring} _keyring Mailvelope keyring to use
@@ -5073,18 +8075,18 @@ export class MailApp extends EgwApp
 		delete this.mailvelope_editor;
 
 		// currently Mailvelope only supports plain-text, to this is unnecessary
-		var mimeType = this.et2.getWidgetById('mimeType');
-		var is_html = mimeType.get_value();
-		var container = is_html ? '.mailComposeHtmlContainer' : '.mailComposeTextContainer';
-		var editor = this.et2.getWidgetById(is_html ? 'mail_htmltext' : 'mail_plaintext');
-		var options = { predefinedText: editor.get_value() };
+		const mimeType = this.et2.getWidgetById('mimeType');
+		const is_html = mimeType.get_value();
+		const container = is_html ? '.mailComposeHtmlContainer' : '.mailComposeTextContainer';
+		const editor = this.et2.getWidgetById(is_html ? 'mail_htmltext' : 'mail_plaintext');
+		let options : {predefinedText : any, quotedMailHeader? : string, quotedMail? : any, quotedMailIndent? : boolean, signMsg? : boolean} = { predefinedText: editor.get_value() };
 
 		// check if we have some sort of reply to an encrypted message
 		// --> parse header, encrypted mail to quote and signature so Mailvelope understands it
-		var start_pgp = options.predefinedText.indexOf(this.begin_pgp_message);
+		const start_pgp = options.predefinedText.indexOf(this.begin_pgp_message);
 		if (start_pgp != -1)
 		{
-			var end_pgp = options.predefinedText.indexOf(this.end_pgp_message);
+			const end_pgp = options.predefinedText.indexOf(this.end_pgp_message);
 			if (end_pgp != -1)
 			{
 				options = {
@@ -5094,23 +8096,24 @@ export class MailApp extends EgwApp
 					predefinedText: options.predefinedText.slice(end_pgp+this.end_pgp_message.length+1).replace(/^> \s*/m,''),
 					signMsg: true	// for now (no UI) always sign, when we encrypt
 				};
-				// set encrypted checkbox, if not already set
-				var composeToolbar = this.et2.getWidgetById('composeToolbar');
-				if (!composeToolbar.checkbox('pgp'))
+				// set encrypted checkbox, if not already set - .checkbox('pgp') no longer exists on
+				// this widget, same stale API as togglePgpEncrypt()'s own set_checked() call sites
+				const pgpAction = this.et2.getWidgetById('composeToolbar')._actionManager.getActionById('pgp');
+				if (!pgpAction.checked)
 				{
-					composeToolbar.checkbox('pgp',true);
+					pgpAction.set_checked(true);
 				}
 			}
 		}
 
-		var self = this;
-		mailvelope.createEditorContainer(container, _keyring, options).then(function(_editor)
+		const self = this;
+		mailvelope.createEditorContainer(container, _keyring, options).then((_editor) =>
 		{
 			self.mailvelope_editor = _editor;
 			editor.set_disabled(true);
 			mimeType.set_readonly(true);
 		},
-		function(_err)
+		(_err) =>
 		{
 			self.egw.message(_err.message, 'error');
 		});
@@ -5123,7 +8126,9 @@ export class MailApp extends EgwApp
 	 */
 	togglePgpEncrypt(_action)
 	{
-		var self = this;
+		// Phase 5 item 6 - see pgpMutualAutoDecided's own docblock for why this is unconditional
+		this.pgpMutualAutoDecided = true;
+		const self = this;
 		if (_action.checked)
 		{
 			if (typeof mailvelope == 'undefined')
@@ -5131,47 +8136,54 @@ export class MailApp extends EgwApp
 				this.mailvelopeInstallationOffer();
 				// switch encrypt button off again
 				this.et2.getWidgetById('composeToolbar')._actionManager.getActionById('pgp').set_checked(false);
-				jQuery('button#composeToolbar-pgp').toggleClass('toolbar_toggled');
+				document.querySelector('button#composeToolbar-pgp')?.classList.toggle('toolbar_toggled');
 				return;
 			}
 			// check if we have keys for all recipents, before switching
-			this.mailvelopeGetCheckRecipients().then(function(_recipients)
+			this.mailvelopeGetCheckRecipients().then((_recipients) =>
 			{
-				var mimeType = self.et2.getWidgetById('mimeType');
+				const mimeType = self.et2.getWidgetById('mimeType');
 				// currently Mailvelope only supports plain-text, switch to it if necessary
 				if (mimeType.get_value())
 				{
 					mimeType.set_value(false);
-					self.et2._inst.submit();
-					return;	// ToDo: do that without reload
+					// entirely client-side (compose.ts's switchMimeTypeClientSide()), matching what
+					// the compose HTML/plain toggle itself does now - a full submit()/reload used to
+					// run here, but compose no longer registers a postback menuaction to submit to,
+					// so it just hung forever on the loading spinner (found live 2026-09-08)
+					self.compose.switchMimeTypeClientSide(false);
 				}
-				self.mailvelopeOpenKeyring().then(function(_keyring)
+				self.mailvelopeOpenKeyring().then((_keyring) =>
 				{
 					self.mailvelopeCompose(_keyring);
 				});
 			})
-			.catch(function(_err)
+			.catch((_err) =>
 			{
 				self.egw.message(_err.message, 'error');
 				self.et2.getWidgetById('composeToolbar')._actionManager.getActionById('pgp').set_checked(false);
-				jQuery('button#composeToolbar-pgp').toggleClass('toolbar_toggled');
+				document.querySelector('button#composeToolbar-pgp')?.classList.toggle('toolbar_toggled');
 				return;
 			});
 		}
 		else
 		{
 			// switch Mailvelop off again, but warn user he will loose his content
-			Et2Dialog.show_dialog(function (_button_id)
+			Et2Dialog.show_dialog((_button_id) =>
 				{
 					if (_button_id == Et2Dialog.YES_BUTTON)
 					{
 						self.et2.getWidgetById('mimeType').set_readonly(false);
 						self.et2.getWidgetById('mail_plaintext').set_disabled(false);
-						jQuery(self.mailvelope_iframe_selector).remove();
+						document.querySelectorAll(self.mailvelope_iframe_selector).forEach(el => el.remove());
 					}
 					else
 					{
-						self.et2.getWidgetById('composeToolbar').checkbox('pgp', true);
+						// same re-check pattern as the other set_checked() call sites in this method -
+						// .checkbox('pgp', true) no longer exists on this widget (found live 2026-09-08,
+						// clicking "No" here to keep encryption on threw "checkbox is not a function")
+						self.et2.getWidgetById('composeToolbar')._actionManager.getActionById('pgp').set_checked(true);
+						document.querySelector('button#composeToolbar-pgp')?.classList.toggle('toolbar_toggled');
 					}
 				},
 				this.egw.lang('You will loose current message body, unless you save it to your clipboard!'),
@@ -5196,6 +8208,65 @@ export class MailApp extends EgwApp
 	}
 
 	/**
+	 * Phase 5 item 6, doc/ai/projects/mail-pgp-signature-verification.md - the "mutual" auto-encrypt
+	 * preference's compose-time half: for a NEW compose (no source message to read a pre-existing
+	 * state from, unlike item 4's reply/forward pre-check in bootstrapComposePopup()), auto-enable
+	 * PGP once ALL current recipients have their OWN Autocrypt `prefer-encrypt=mutual` stored AND
+	 * our own sending identity would ALSO advertise it (a real PGP key on file for that identity,
+	 * the same pre-condition MailJmap.buildAutocryptHeader() itself checks before adding the
+	 * attribute at actual send time) - true "both sides prefer mutual" semantics, not just one.
+	 *
+	 * Called from MailCompose.recipientsOnChange() - fires again on every recipient change, but
+	 * `pgpMutualAutoDecided` (see its own docblock) makes this a one-shot decision per compose popup,
+	 * same "default only, never enforced" contract item 4's own reply/forward pre-check already
+	 * established: once decided (by a real click OR by this method), never re-evaluated or
+	 * overridden again for the rest of this compose window's lifetime.
+	 */
+	async checkMutualAutoEncrypt() : Promise<void>
+	{
+		if (this.pgpMutualAutoDecided || this.mailvelope_editor) return;
+		if (!isPreferenceOn(this.egw.preference('pgp_autocrypt_mutual', 'mail'))) return;
+
+		// same rfc822-to-plain-email extraction egw_app.ts's own mailvelopeGetCheckRecipients() does -
+		// the addressbook lookup below needs bare addresses, not "Name <email>" display strings
+		const rfc822Preg = /<([^'" <>]+)>$/;
+		const toPlainEmail = (recipient : string) =>
+		{
+			const matches = recipient.match(rfc822Preg);
+			return (matches ? matches[1] : recipient).toLowerCase();
+		};
+		let recipients : string[] = this.et2.getWidgetById('to')?.get_value() || [];
+		recipients = recipients.concat(this.et2.getWidgetById('cc')?.get_value() || []);
+		recipients = recipients.concat(this.et2.getWidgetById('bcc')?.get_value() || []);
+		recipients = recipients.map(toPlainEmail);
+		if (!recipients.length) return;
+
+		const mailaccountValue = String(this.et2?.getWidgetById?.('mailaccount')?.get_value?.() ?? '');
+		const [accId, identId] = mailaccountValue.split(':', 2);
+		if (!accId) return;
+
+		let ownEmail : string | undefined;
+		try
+		{
+			const identities = await this.jmap.getIdentities(accId);
+			ownEmail = identities.find((i : any) => i.id === identId)?.email?.toLowerCase();
+		}
+		catch (e)
+		{
+			return;	// no identity resolved - fail closed, same as allRecipientsPreferMutualEncryption()
+		}
+		if (!ownEmail) return;
+
+		const [recipientsMutual, ownKeys] : [boolean, Record<string, string>] = await Promise.all([
+			this.jmap.allRecipientsPreferMutualEncryption(recipients),
+			this.egw.request('addressbook.addressbook_bo.ajax_get_pgp_keys', [[ownEmail]]).catch(() => ({})),
+		]);
+		if (!recipientsMutual || !ownKeys?.[ownEmail] || this.pgpMutualAutoDecided) return;
+
+		this.togglePgpEncrypt({checked: true});
+	}
+
+	/**
 	 * Folder Management, opens the folder magnt. dialog
 	 * with the selected acc_id from index tree
 	 *
@@ -5204,66 +8275,8 @@ export class MailApp extends EgwApp
 	 */
 	folderManagement(_action,_senders)
 	{
-		var acc_id = parseInt(_senders[0].id);
-		this.egw.open_link('mail.mail_ui.folderManagement&acc_id='+acc_id, '_blank', '720x580');
-	}
-
-	/**
-	 * Range selection for old dhtmlx tree currently NOT used
-	 *
-	 * @param {type} _ids
-	 * @param {type} _widget
-	 * @returns {undefined}
-	 */
-	folderMgmt_onSelect(_ids, _widget)
-	{
-		// Flag to reset selected items
-		var resetSelection = false;
-
-		var self = this;
-
-		/**
-		 * helper function to multiselect range of nodes in same level
-		 *
-		 * @param {string} _a start node id
-		 * @param {string} _b end node id
-		 * @param {string} _branch total node ids in the level
-		 */
-		var rangeSelector = function(_a,_b, _branch)
-		{
-			var branchItems = _branch.split(_widget.input.dlmtr);
-			var _aIndex = _widget.input.getIndexById(_a);
-			var _bIndex = _widget.input.getIndexById(_b);
-			if (_bIndex<_aIndex)
-			{
-				var tmpIndex = _aIndex;
-				_aIndex = _bIndex;
-				_bIndex = tmpIndex;
-			}
-			for(var i =_aIndex;i<=_bIndex;i++)
-			{
-				self.folderMgmt_setCheckbox(_widget, branchItems[i], !_widget.input.isItemChecked(branchItems[i]));
-			}
-		};
-
-		// extract items ids
-		var itemIds = _ids.split(_widget.input.dlmtr);
-
-		if(itemIds.length == 2) // there's a range selected
-		{
-			var branch = _widget.input.getSubItems(_widget.input.getParentId(itemIds[0]));
-			// Set range of selected/unselected
-			rangeSelector(itemIds[0], itemIds[1], branch);
-		}
-		else if(itemIds.length != 1)
-		{
-			resetSelection = true;
-		}
-
-		if (resetSelection)
-		{
-			_widget.input._unselectItems();
-		}
+		const acc_id = parseInt(_senders[0].id);
+		this.egw.open_link('mail.EGroupware\\Mail\\Ui.folderManagement&acc_id='+acc_id, '_blank', '720x580');
 	}
 
 	/**
@@ -5271,10 +8284,9 @@ export class MailApp extends EgwApp
 	 * triggers longTask dialog and send delete operation url
 	 *
 	 */
-	folderMgmt_deleteBtn()
+	folderManagementDeleteBtn()
 	{
 		const tree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('tree');
-		const menuaction= 'mail.mail_ui.ajax_folderMgmt_delete';
 
 		if (!tree.value.length)
 		{
@@ -5282,7 +8294,7 @@ export class MailApp extends EgwApp
 			return;
 		}
 
-		const callbackDialog = function(_btn)
+		const callbackDialog = (_btn) =>
 		{
 			egw.appName='mail';
 			if (_btn === Et2Dialog.YES_BUTTON)
@@ -5293,41 +8305,72 @@ export class MailApp extends EgwApp
 					if (selFolders && selFolders.length)
 					{
 						const msg = egw.lang('Deleting %1 folders in progress ...', selFolders.length);
-						Et2Dialog.long_task(function (_val, _resp)
+						Et2Dialog.long_task((_val, _resp) =>
 						{
 							if (_val && _resp.type !== 'error')
 							{
 								const stat = selFolders.map(id => id.split('::')[1]);
 								// delete the item from index folderTree
-								egw.window.app.mail.mail_removeLeaf(stat);
+								egw.window.app.mail.removeLeaf(stat);
 							}
 							else
 							{
 								// submit
-								etemplate2.getByApplication('mail')[0].widgetContainer._inst.submit();
+								etemplate2.getByApplication('mail')[0].widgetContainer.getInstanceManager().submit();
 							}
-						}, msg, egw.lang('Deleting folders'), menuaction, selFolders, 'mail');
+						}, msg, egw.lang('Deleting folders'), (treeId : string) => this.folderManagementDeleteOne(treeId), selFolders, 'mail');
 						return true;
 					}
 				}
 			}
 		};
 		Et2Dialog.show_dialog(callbackDialog, this.egw.lang('Are you sure you want to delete all selected folders?'), this.egw.lang('Delete folder'), {},
-			Et2Dialog.BUTTON_YES_NO, Et2Dialog.WARNING_MESSAGE, undefined, this.egw);
+			Et2Dialog.BUTTONS_YES_NO, Et2Dialog.WARNING_MESSAGE, undefined, this.egw);
+	}
+
+	/**
+	 * Per-folder delete for the folder-management dialog's long_task() batch (folderManagementDeleteBtn())
+	 * - the JMAP-first counterpart of the classic ajax_folderMgmt_delete/FolderHandler::folderMgmtDelete(),
+	 * now called directly client-side instead of driving long_task's per-item server round-trip
+	 * (see Et2Dialog.long_task()'s _item_callback param). Resolves the deleted folder's own (leaf)
+	 * name on success - the exact same per-item contract folderMgmtDelete() already had, so
+	 * folderManagementDeleteBtn()'s own success-handling (removeLeaf()) needs no change at all.
+	 *
+	 * On any failure throws a plain Error (long_task()'s own per-item failure contract) with the
+	 * folder name and JMAP's error message - there's no classic fallback (see
+	 * folderTreeAutoload()'s docblock for why).
+	 */
+	private folderManagementDeleteOne(treeId : string) : Promise<string>
+	{
+		const [profileID, path] = treeId.split('::', 2) as [string, string];
+		const folderName = path.includes('/') ? path.substring(path.lastIndexOf('/') + 1) : path;
+
+		return this.jmap.deleteMailbox(profileID, path).then(() => folderName)
+			.catch((e) =>
+			{
+				throw new Error(this.egw.lang('Failed to delete %1', folderName) + ': ' + e.message);
+			});
 	}
 
 	/**
 	 * Spam Actions handler
 	 *
+	 * Renamed from the old spam_actions (cf12cc7f6c, "drop snake_case from remaining misc UI
+	 * methods") - that commit updated mail_ui.inc.php's own onExecute string to
+	 * 'javaScript:app.mail.spamActions' but missed renaming the method itself, so "Report as
+	 * Spam"/"Report as Ham" threw "not a function" and never reached ajax_spamAction() at all -
+	 * no folder move, no SpamTitan report (found live 2026-09-04, ralf: "Marking as Spam also does
+	 * NOT move the mail to Spam folder, and send it to SpamTitan").
+	 *
 	 * @param {object} _action egw action
 	 * @param {object} _senders nm row
 	 */
-	spam_actions(_action, _senders)
+	spamActions(_action, _senders)
 	{
-		var id,fromaddress,domain, email = '';
-		var data = {};
-		var items = [];
-		//if call happens from a popup this.et2 is the wrong reference --- see mail_deleteMessages
+		let id,fromaddress,domain, email = '';
+		let data : any = {};
+		const items = [];
+		//if call happens from a popup this.et2 is the wrong reference --- see deleteMessages
 		const nm = this.et2.getWidgetById(this.nm_index) ??
 			window?.egw?.window?.app?.mail?.et2?.getWidgetById(this.nm_index)
 		// called action for a single row from toolbar
@@ -5336,7 +8379,7 @@ export class MailApp extends EgwApp
 			_senders = [{id:nm.getSelection().ids[0]}];
 		}
 
-		for (var i in _senders)
+		for (const i in _senders)
 		{
 			id = _senders[i].id;
 			data = egw.dataGetUIDdata(id);
@@ -5351,13 +8394,13 @@ export class MailApp extends EgwApp
 			};
 		}
 
-		this.egw.json('mail.mail_ui.ajax_spamAction', [
+		this.egw.json('mail.EGroupware\\Mail\\Ui.ajax_spamAction', [
 			_action.id,items
-		], function(_data){
+		], (_data) =>{
 			if (_data[1] && _data[1].length > 0)
 			{
 				egw.refresh(_data[0],'mail',_data[1],'delete');
-				nm.controller._selectionMgr.resetSelection();
+				nm.clearSelection();
 			}
 			else
 			{
@@ -5366,15 +8409,15 @@ export class MailApp extends EgwApp
 		}).sendRequest(true);
 	}
 
-	spamTitan_setActionTitle(_action, _sender)
+	spamTitanSetActionTitle(_action, _sender)
 	{
-		var id = _sender[0].id != 'nm'? _sender[0].id:_sender[1].id;
-		var email = this.egw.lang('emails');
-		var domain = this.egw.lang('domains');
-		var data = egw.dataGetUIDdata(id);
+		const id = _sender[0].id != 'nm'? _sender[0].id:_sender[1].id;
+		let email = this.egw.lang('emails');
+		let domain = this.egw.lang('domains');
+		const data = egw.dataGetUIDdata(id);
 		if(_sender.length === 1 && data && data.data && data.data.fromaddress)
 		{
-			var fromaddress = data.data.fromaddress.match(/<([^\'\" <>]+)>$/);
+			const fromaddress = data.data.fromaddress.match(/<([^\'\" <>]+)>$/);
 			email = (fromaddress && fromaddress[1]) ?fromaddress[1]:data.data.fromaddress;
 			domain = email.split('@')[1];
 		}
@@ -5428,6 +8471,18 @@ export class MailApp extends EgwApp
 		};
 
 		if (id){
+			// Every mail action backfills its target from currentlyFocussed when the toolbar hands
+			// it an empty selection - Et2Toolbar always does (action.execute([])) - and a single
+			// tap on mobile runs the "open" action WITHOUT selecting the row, so nothing else
+			// ever sets it. Has to be the app instance, like openMessage() does for the desktop
+			// popup: this used to be stashed on the view template's widget container instead and
+			// copied over by et2_ready()'s own 'mail.view' case, which no longer runs at all
+			// (Et2Dialog loads its template with _no_et2_ready), leaving every action in the
+			// mobile message view - read/unread, flag, label, delete, reply, forward - a
+			// silent no-op on an empty message id.
+			this.selectedMails = [id];
+			this.currentlyFocussed = id;
+
 			const content = egw.dataGetUIDdata(id);
 			content.data['toolbar'] = this.et2.getArrayMgr('sel_options').getEntry('toolbar');
 			if (content.data.toaddress||content.data.fromaddress)
@@ -5449,11 +8504,12 @@ export class MailApp extends EgwApp
 			}
 			// update local storage with added toolbar actions
 			egw.dataStoreUID(id,content.data);
+			this.markOpenedMessageRead(id, content.data);
 		}
 
 
 		const self = this;
-		this.viewEntry(_action, _sender, true, function(etemplate){
+		this.viewEntry(_action, _sender, true, (etemplate) =>{
 			// et2 object in view
 			const et2 = etemplate.widgetContainer;
 			// iframe to load message
@@ -5464,9 +8520,6 @@ export class MailApp extends EgwApp
 			const attachment:Et2Details = document.querySelector('.attachments');
 			// Content
 			const content = et2.getArrayMgr('content').data;
-
-			// set the current selected row
-			et2.mail_currentlyFocussed = id;
 
 			if (content.attachmentsBlock.length>0 && content.attachmentsBlock[0].filename)
 			{
@@ -5489,24 +8542,25 @@ export class MailApp extends EgwApp
 			toolbar.actions = content.toolbar || {};
 
 
-			// Request email body from server
-			iframe.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:id}));
-			jQuery(iframe.getDOMNode()).on('load',function(){
-
-				if (jQuery(this.contentWindow.document.body).find('#calendar-meeting').length > 0)
+			// Request email body - fast client-side JMAP path, or the full server-rendered page
+			// for special-case messages (see loadMessageBody())
+			self.loadMessageBody(iframe, id, (doc) =>
+			{
+				const frame = iframe.getDOMNode();
+				if (doc.body.querySelector('#calendar-meeting') !== null)
 				{
-					var frame = this;
-					jQuery(this).show();
+					frame.style.display = '';
 					// calendar meeting mails still need to be in iframe, therefore, we calculate the height
 					// and set the iframe with a fixed height to be able to see all content without getting
 					// scrollbar becuase of scrolling issue in iframe
-					window.setTimeout(function(){jQuery(frame).height(frame.contentWindow.document.body.scrollHeight);}, 500);
+					window.setTimeout(() =>{frame.style.height = doc.body.scrollHeight + 'px';}, 500);
 				}
 				else
 				{
-					self.resolveExternalImages(this.contentWindow.document);
+					self.resolveExternalImages(doc);
+					renderAttachmentIndex(doc, content.attachmentsBlock, self.egw);
 					// Deal with scrolling by setting iframe size to content height
-					jQuery(this).height(this.contentWindow.document.body.scrollHeight);
+					frame.style.height = doc.body.scrollHeight + 'px';
 				}
 			});
 		});
@@ -5522,9 +8576,9 @@ export class MailApp extends EgwApp
 	smimeSigBtn(egw, widget)
 	{
 		let url = '';
-		if (this.mail_isMainWindow)
+		if (this.isMainWindow)
 		{
-			const content = this.egw.dataGetUIDdata(this.mail_currentlyFocussed);
+			const content = this.egw.dataGetUIDdata(this.currentlyFocussed);
 			url = content.data.smimeSigUrl;
 		}
 		else
@@ -5553,6 +8607,14 @@ export class MailApp extends EgwApp
 					const toolbar = self.et2.getWidgetById('composeToolbar');
 					if(typeof toolbar.value==="object")toolbar.value.action = 'send'
 					else toolbar.value = {action:'send'};
+					// egw.set_preference()'s own jsonq() send can still be in flight when the very
+					// next request (this same submitAction() -> trySendViaJmap()) already needs the
+					// value - found live 2026-09-01 (ralf: "I have not seen the cache-timeout in the
+					// passphrase dialog been send to server-side, nor it been used there"). Stashed
+					// on the compose instance instead, read explicitly by trySendViaJmap() - the
+					// preference write stays too, purely so the NEXT time this dialog opens it
+					// pre-fills with whatever was last entered.
+					self.compose.smimePassExpMinutes = _value.pass_exp;
 					egw.set_preference('mail', 'smime_pass_exp', _value.pass_exp);
 					self.compose.submitAction(false);
 				}
@@ -5566,26 +8628,76 @@ export class MailApp extends EgwApp
 				content:{
 					value: '',
 					message: _msg,
-					'exp_min': pass_exp
+					// widget id is "pass_exp" (password.xet) - "exp_min" here never actually bound
+					// to it, so the field silently fell back to its own placeholder="10" every time
+					// regardless of what was last entered (found live 2026-09-01, ralf: "duration is
+					// still not saved as a preference, or at least not restored from there" - the
+					// preference itself was fine, this dialog just never actually read it into the
+					// field)
+					'pass_exp': pass_exp
 			}},
 			template: egw.webserverUrl+'/api/templates/default/password.xet',
 			resizable: false
 		},undefined);
-		document.body.append(dialog);
+		document.body.append(dialog as any);
+	}
+
+	/**
+	 * S/MIME passphrase dialog for VIEWING a message (loadMessageBody()'s own JmapSmimePassphraseError
+	 * catch, 2026-09-01 follow-up) - same "etemplate.password" template/shape as smimePassDialog()
+	 * above, but generic: calls back with the entered passphrase/expiry instead of assuming a
+	 * compose-send retry, since loadMessageBody() itself already knows exactly how to retry (same
+	 * rowId/iframe/onLoad/signal/partID it was first called with).
+	 *
+	 * @param {string} _msg message
+	 * @param {function} _onSubmit called with (passphrase, passExpMinutes) once the user submits
+	 */
+	smimeViewPassDialog(_msg, _onSubmit : (passphrase : string, passExpMinutes : number) => void)
+	{
+		const pass_exp = egw.preference('smime_pass_exp', 'mail');
+		const dialog = loadWebComponent("et2-dialog", {
+			callback(_button_id, _value)
+			{
+				if (_button_id == 'send' && _value)
+				{
+					egw.set_preference('mail', 'smime_pass_exp', _value.pass_exp);
+					_onSubmit(_value.value, _value.pass_exp);
+				}
+			},
+			title: egw.lang('Request for passphrase'),
+			buttons: [
+				{label: this.egw.lang("Send"), id: "send", image:'send', "class": "ui-priority-primary", "default": true},
+				{label: this.egw.lang("Cancel"), id: "cancel", image:'cancelDialog'}
+			],
+			value:{
+				content:{
+					value: '',
+					message: _msg,
+					// widget id is "pass_exp" (password.xet) - "exp_min" here never actually bound
+					// to it, so the field silently fell back to its own placeholder="10" every time
+					// regardless of what was last entered (found live 2026-09-01, ralf: "duration is
+					// still not saved as a preference, or at least not restored from there" - the
+					// preference itself was fine, this dialog just never actually read it into the
+					// field)
+					'pass_exp': pass_exp
+			}},
+			template: egw.webserverUrl+'/api/templates/default/password.xet',
+			resizable: false
+		},undefined);
+		document.body.append(dialog as any);
 	}
 
 	/**
 	 * set attachments of smime message for mobile view
 	 * @param {type} _attachments
 	 */
-	set_smimeAttachmentsMobile(_attachments)
+	setSmimeAttachmentsMobile(_attachments)
 	{
-		var attachmentsBlock = this.et2_view.widgetContainer.getWidgetById('attachmentsBlock');
-		var $attachment = jQuery('.et2_details.attachments');
+		const attachmentsBlock = this.et2_view.widgetContainer.getWidgetById('attachmentsBlock');
 		if (attachmentsBlock && _attachments.length > 0)
 		{
 			attachmentsBlock.set_value({content:_attachments});
-			$attachment.show();
+			document.querySelectorAll('.et2_details.attachments').forEach((el : HTMLElement) => el.style.display = '');
 		}
 	}
 
@@ -5594,17 +8706,17 @@ export class MailApp extends EgwApp
 	 *
 	 * @param {object} _attachments
 	 */
-	set_smimeAttachments(_attachments)
+	setSmimeAttachments(_attachments)
 	{
 		if (egwIsMobile())
 		{
-			this.set_smimeAttachmentsMobile(_attachments);
+			this.setSmimeAttachmentsMobile(_attachments);
 			return;
 		}
-		let data = {};
+		let data : any = {};
 		let selected = [];
 
-		let cmprAttchObjs = function(_obj1,_obj2)
+		const cmprAttchObjs = (_obj1,_obj2) =>
 		{
 			for (let i=0;i<_obj1.length;i++)
 			{
@@ -5617,13 +8729,13 @@ export class MailApp extends EgwApp
 		{
 			selected = [_attachments[0]['mail_id']];
 			data = egw.dataGetUIDdata(selected[0]);
-			// do not call mail_preview if we have the attachments already resolved, avoid infinit loop
+			// do not call preview if we have the attachments already resolved, avoid infinit loop
 			if (data.data.attachmentsBlock.length>0 && cmprAttchObjs(data.data.attachmentsBlock, _attachments)) return;
 
 			data.data.attachmentsBlock = _attachments;
 			data.data.attachmentsBlockTitle = _attachments.lenght;
 			egw.dataStoreUID(selected[0], data.data);
-			this.mail_preview(selected, this.et2.getWidgetById('nm'));
+			this.preview(selected, this.et2.getWidgetById('nm'));
 		}
 	}
 	/**
@@ -5632,11 +8744,11 @@ export class MailApp extends EgwApp
 	 */
 	smimeAttachmentsCheckerInterval()
 	{
-		var self = this;
-		var attachmentArea = this.et2.getWidgetById('previewAttachmentArea');
+		const self = this;
+		const attachmentArea = this.et2.getWidgetById('previewAttachmentArea');
 		if (attachmentArea) attachmentArea.getDOMNode().classList.add('loading');
-		var interval = window.setInterval(function(){
-			self.egw.json('mail.mail_ui.ajax_smimeAttachmentsChecker',null,function(_stop){
+		const interval = window.setInterval(() =>{
+			self.egw.json('mail.EGroupware\\Mail\\Ui.ajax_smimeAttachmentsChecker',null,(_stop) =>{
 				if (_stop)
 				{
 					window.clearInterval(interval);
@@ -5650,24 +8762,24 @@ export class MailApp extends EgwApp
 	 * @param {object} _data smime resolved certificate data
 	 * @returns {undefined}
 	 */
-	set_smimeFlags(_data)
+	setSmimeFlags(_data)
 	{
 		if (!_data) return;
-		var self = this;
-		var et2_object = egwIsMobile()? this.et2_view.widgetContainer: this.et2;
-		var data = _data;
-		var attachmentArea = et2_object.getWidgetById('previewAttachmentArea');
+		const self = this;
+		const et2_object = egwIsMobile()? this.et2_view.widgetContainer: this.et2;
+		const data = _data;
+		const attachmentArea = et2_object.getWidgetById('previewAttachmentArea');
 		if (attachmentArea) attachmentArea.getDOMNode().classList.remove('loading');
-		var smime_signature = et2_object.getWidgetById('smime_signature');
-		var smime_encryption = et2_object.getWidgetById('smime_encryption');
-		var mail_container = egwIsMobile()? document.getElementsByClassName('mailContent')[0] :
-				egw(window).is_popup() ? document.getElementsByClassName('mailDisplayContainer') :
+		const smime_signature = et2_object.getWidgetById('smime_signature');
+		const smime_encryption = et2_object.getWidgetById('smime_encryption');
+		const mail_container = egwIsMobile()? document.getElementsByClassName('mailContent')[0] :
+				egw(window).is_popup() ? document.getElementsByClassName('mailDisplayContainer')[0] :
 				et2_object.getWidgetById('mailPreviewContainer').getDOMNode();
 		smime_signature.set_disabled(!data.signed);
 		smime_encryption.set_disabled(!data.encrypted);
 		if (!data.signed)
 		{
-			this.smime_clear_flags([mail_container]);
+			this.smimeClearFlags([mail_container]);
 			return;
 		}
 		else if (data.verify)
@@ -5690,30 +8802,301 @@ export class MailApp extends EgwApp
 		}
 		if (data.unknownemail)
 		{
-			mail_container.classList.add((data.class='smime_cert_unknownemail'));
+			// a cryptographically valid signature from a certificate that doesn't even claim the
+			// sender's own address proves nothing about the claimed sender - same reasoning
+			// DKIM/DMARC alignment checks exist for (found live 2026-09-09, ralf, security
+			// concern: "we only show a signature ... as validated, IF it's key matches the From
+			// header, otherwise it should be shown as invalid"). Used to render as its own,
+			// softer 'smime_cert_unknownemail' (purple) state - overridden here to the SAME
+			// 'smime_cert_notvalid' (red) severity setSmimeFlags()'s own verify/cert branches
+			// above already use for an outright broken signature, not a separate/lesser one.
+			mail_container.classList.remove('smime_cert_verified', 'smime_cert_notverified');
+			mail_container.classList.add((data.class='smime_cert_notvalid'));
 			smime_signature.set_class(data.class);
+			smime_signature.set_statustext(this.egw.lang(
+				'S/MIME signed message, signature does NOT belong to sender %1', data.email || ''));
 		}
 		data.class = data.class ? data.class : "";
-		jQuery(smime_signature.getDOMNode(), smime_encryption.getDOMNode()).off().on('click',function(){
-			self.smime_certAddToContact(data,true);
-		}).addClass('et2_clickable');
-		jQuery(smime_encryption.getDOMNode()).off().on('click',function(){
-			self.smime_certAddToContact(data, true);
-		}).addClass('et2_clickable');
+		const smimeSignatureNode = smime_signature.getDOMNode();
+		smimeSignatureNode.onclick = () =>{
+			self.smimeCertAddToContact(data,true);
+		};
+		smimeSignatureNode.classList.add('et2_clickable');
+		const smimeEncryptionNode = smime_encryption.getDOMNode();
+		smimeEncryptionNode.onclick = () =>{
+			self.smimeCertAddToContact(data, true);
+		};
+		smimeEncryptionNode.classList.add('et2_clickable');
+
+		// item 7 (auto-add for an already-known contact, no dialog) + item 5's own dialog now
+		// actually reachable from the JMAP-native flow (found live 2026-09-09 while wiring the PGP
+		// side alongside this: `data.addtocontact` was ALREADY computed server-side by
+		// Smime::resolveMessage() this whole time, but nothing client-side ever read it except the
+		// old classic-mail push path (MessageDisplayHandler.php's `$push->call('app.mail.
+		// smimeCertAddToContact', ...)`, unreachable for a JMAP-driven display) - so this "verified
+		// but not-yet-in-addressbook cert" case silently never prompted at all for JMAP mail).
+		if (data.verify && data.addtocontact)
+		{
+			this.smimeAutoOfferAddToContact(data);
+		}
+	}
+
+	/**
+	 * "Verified signature, but this cert isn't (yet, or no longer matching) what's stored for this
+	 * address" (`data.addtocontact`, Api\Mail\Smime::resolveMessage()) - offer to add it, mirroring
+	 * pgpAutoOfferAddToContact()'s own identical shape (ralf, 2026-09-09: "we want the s/mime pgp
+	 * to look similar, so users dont have to learn two different things").
+	 *
+	 * Item 7: if the sender's address already matches an EXISTING contact, `ajax_smimeAddCertToContact`
+	 * (the SAME endpoint the dialog's own "Add this certificate" button already uses) silently
+	 * updates it directly - a *verified* signature from an *already-known* contact needs no extra
+	 * confirmation. Only when nothing matched (no contact at all for this address) does this fall
+	 * back to the (now auto-triggered, not just click-triggered) consent dialog - unless the user
+	 * has opted out entirely via the `smime_pgp_add_contact` preference's "never ask" value.
+	 *
+	 * @param {object} _metadata smime resolved certificate data (same shape setSmimeFlags() itself
+	 *  received, and smimeCertAddToContact() already expects)
+	 */
+	smimeAutoOfferAddToContact(_metadata)
+	{
+		if (egwIsMobile()) return;
+		const self = this;
+		this.egw.json('mail.EGroupware\\Mail\\Ui.ajax_smimeAddCertToContact', _metadata, (_result) =>
+		{
+			if (_result)
+			{
+				// item 7: an existing contact was found and silently updated - just a quiet,
+				// non-blocking confirmation, no dialog (matches the manual "Add this certificate"
+				// button's own existing egw.message(_result) feedback)
+				this.egw.message(_result);
+				return;
+			}
+			if (this.egw.preference('smime_pgp_add_contact', 'mail') === 'never') return;
+			self.smimeCertAddToContact(_metadata, false, true);
+		}).sendRequest(true);
 	}
 
 	/**
 	 * Reset flags classes and click handler
 	 *
-	 * @param {jQuery Object} _nodes
+	 * @param {HTMLElement[]} _nodes
 	 */
-	smime_clear_flags(_nodes)
+	smimeClearFlags(_nodes)
 	{
-		for(var i=0;i<_nodes.length;i++)
+		for(let i=0;i<_nodes.length;i++)
 		{
 			_nodes[i].classList.remove(...['smime_cert_verified',
 				'smime_cert_notverified',
 				'smime_cert_notvalid', 'smime_cert_unknownemail']);
+		}
+	}
+
+	/**
+	 * Show/hide the PGP/MIME signature status icon and border, mirroring setSmimeFlags() -
+	 * a separate, deliberately non-shared trust mechanism (client-side openpgp.js verification,
+	 * MailJmap.verifyPgpSignature(), jmap.ts) so it gets its own icon and CSS classes rather than
+	 * reusing S/MIME's.
+	 *
+	 * @param {PgpSignatureResult} _data
+	 */
+	setPgpSignatureFlags(_data)
+	{
+		if (!_data) return;
+		const et2_object = egwIsMobile() ? this.et2_view.widgetContainer : this.et2;
+		const pgp_signature = et2_object.getWidgetById('pgp_signature');
+		if (!pgp_signature) return;
+		const mail_container = egwIsMobile() ? document.getElementsByClassName('mailContent')[0] :
+				egw(window).is_popup() ? document.getElementsByClassName('mailDisplayContainer')[0] :
+				et2_object.getWidgetById('mailPreviewContainer').getDOMNode();
+		// et2-image has no "hide until proven signed" server-side binding to fall back on (unlike
+		// smime_signature/smime_encryption's own `hidden="!@smime=..."` in the .xet, evaluated
+		// against content that's always known server-side) - PGP detection is 100% client-side and
+		// async, so this element is `hidden="true"` in both index.xet/display.xet by default and
+		// ONLY this call ever un-hides it. `disabled` is deliberately NOT used for that: per
+		// Et2Widget's own docblock, disabled means "still visible, greyed out, non-interactive" -
+		// it does not hide anything, so an earlier version of this code (using set_disabled() the
+		// same way setSmimeFlags() does) left the icon visibly showing on every message, including
+		// genuinely S/MIME-only ones (found live 2026-09-09, ralf: "an s/mime signed message shows
+		// now both icons, which is wrong!").
+		pgp_signature.hidden = !_data.signed;
+		if (!_data.signed || !mail_container)
+		{
+			if (mail_container) this.pgpClearFlags([mail_container]);
+			return;
+		}
+		this.pgpClearFlags([mail_container]);
+		let pgpClass, statustext;
+		if (_data.verified)
+		{
+			pgpClass = 'pgp_sig_verified';
+			statustext = this.egw.lang('PGP/MIME signed message, signature verified for %1', _data.email || '');
+		}
+		else if (_data.keySource !== 'none')
+		{
+			pgpClass = 'pgp_sig_invalid';
+			// addressMismatch: the signature itself checked out cryptographically, but the
+			// signing key doesn't claim the sender's address at all - MailJmap.
+			// verifyPgpSignature() already forces verified=false for this (see
+			// PgpSignatureResult.addressMismatch's own docblock, jmap.ts) - a more specific
+			// message than the generic "verification FAILED" helps explain why a signature that
+			// otherwise "worked" still isn't shown as trusted.
+			statustext = _data.addressMismatch ?
+				this.egw.lang('PGP/MIME signed message, signature does NOT belong to sender %1', _data.email || '') :
+				this.egw.lang('PGP/MIME signed message, signature verification FAILED for %1', _data.email || '');
+		}
+		else
+		{
+			pgpClass = 'pgp_sig_unknownkey';
+			statustext = this.egw.lang('PGP/MIME signed message, no public key found to verify the signature');
+		}
+		mail_container.classList.add(pgpClass);
+		pgp_signature.set_class(pgpClass);
+		pgp_signature.set_statustext(statustext);
+
+		const self = this;
+		const pgpSignatureNode = pgp_signature.getDOMNode();
+		pgpSignatureNode.onclick = () =>
+		{
+			self.pgpKeyAddToContact(_data, true);
+		};
+		pgpSignatureNode.classList.add('et2_clickable');
+
+		// item 5/7 (ralf, 2026-09-09: "we want the s/mime pgp to look similar, so users dont have
+		// to learn two different things") - see smimeAutoOfferAddToContact()'s own docblock for the
+		// full shape this mirrors; PgpSignatureResult.armoredKey is ONLY populated when
+		// keySource==='inline' AND the key actually verified (see its own docblock), which is
+		// exactly "found a usable key on this message that isn't in the addressbook yet".
+		if (_data.verified && _data.armoredKey)
+		{
+			this.pgpAutoOfferAddToContact(_data);
+		}
+	}
+
+	/**
+	 * PGP analogue of smimeAutoOfferAddToContact() - see its own docblock for the full shape
+	 * (item 7's "already-known contact, no dialog" auto-add + item 5's now-auto-triggered consent
+	 * dialog, sharing the SAME `smime_pgp_add_contact` "never ask" preference).
+	 *
+	 * Two callers feed this the same `{email, armoredKey, keyFingerprint, keyUid}` shape from two
+	 * different key-discovery sources: setPgpSignatureFlags() (a verified message's own inline
+	 * `application/pgp-keys` attachment - `PgpSignatureResult`, no `preferEncrypt` concept at all)
+	 * and MailCompose.bootstrapReply() (`mail/js/compose.ts` - an incoming `Autocrypt:` header,
+	 * MailJmap.autocryptResultToPgpOffer() plus its own `preferEncrypt`, item 4's remaining wiring,
+	 * 2026-09-09 - NOT yet live-verified against a real Autocrypt-header-bearing message).
+	 *
+	 * @param {object} _data {email, armoredKey, keyFingerprint, keyUid, preferEncrypt?} - preferEncrypt
+	 *  is optional/only ever `'mutual'` (item 6's own storage, `ajax_pgpAddKeyToContact`) - absent
+	 *  for the inline-key case, which has no such concept
+	 */
+	pgpAutoOfferAddToContact(_data)
+	{
+		if (egwIsMobile()) return;
+		const self = this;
+		this.egw.json('mail.EGroupware\\Mail\\Ui.ajax_pgpAddKeyToContact',
+			{email: _data.email, armoredKey: _data.armoredKey, preferEncrypt: _data.preferEncrypt}, (_result) =>
+		{
+			if (_result)
+			{
+				// item 7: an existing contact was found and silently updated
+				this.egw.message(_result);
+				return;
+			}
+			if (this.egw.preference('smime_pgp_add_contact', 'mail') === 'never') return;
+			self.pgpKeyAddToContact(_data, false, true);
+		}).sendRequest(true);
+	}
+
+	/**
+	 * Inform user about a message-supplied PGP key and offer to add it into the relevant contact
+	 * in the addressbook - PGP analogue of smimeCertAddToContact(), same dialog shape/behaviour
+	 * (same template layout, same button set, same "Never ask again" mechanism) so S/MIME and PGP
+	 * don't ask the user to learn two different flows.
+	 *
+	 * @param {PgpSignatureResult} _data
+	 * @param {boolean} _display if set to true will only show close button (user-initiated click
+	 *  on the pgp_signature icon - informational only, nothing to opt out of)
+	 * @param {boolean} _autoTriggered true when opened automatically by pgpAutoOfferAddToContact()
+	 */
+	pgpKeyAddToContact(_data, _display, _autoTriggered? : boolean)
+	{
+		if (egwIsMobile()) return;
+		if (!_data || !_data.armoredKey) return;
+		const self = this;
+		// same shape as smimeCertAddToContact()'s own content.message (always set, regardless of
+		// _display) - "you may add this key" (message2) is the only part conditional on _display
+		const content : any = {
+			message: this.egw.lang('PGP/MIME signed message, signature verified for %1', _data.email || ''),
+			email: _data.email, keyUid: _data.keyUid, keyFingerprint: _data.keyFingerprint,
+			armoredKey: _data.armoredKey, class: '',
+		};
+		const buttons : {label : any, id : string, image : string, class? : string, default? : boolean}[] = [
+			{label: this.egw.lang("Close"), id: "close", image: 'cancelDialog'},
+		];
+		if (!_display)
+		{
+			buttons[1] = {
+				label: this.egw.lang("Add this key into contact"),
+				id: "contact",
+				image: "add",
+				"class": "ui-priority-primary",
+				"default": true,
+			};
+			content.message2 = egw.lang('You may add this key into your contact, if you trust this signature.');
+		}
+		if (_autoTriggered)
+		{
+			buttons.push({label: this.egw.lang("Never ask again"), id: "never", image: "delete"});
+		}
+		const extra = {
+			'presets[email]': _data.email,
+			// keyUid is the FULL User ID string ("Name <email>") - strip the bracketed address for
+			// just the display name, matching what n_given (given/display name) actually expects
+			'presets[n_given]': (_data.keyUid || '').replace(/\s*<[^>]*>\s*$/, ''),
+			// SAME shared 'pubkey' field S/MIME's own extra.presets uses above - addressbook_bo::
+			// save() tells PGP and S/MIME content apart by which regex matches, not a separate field
+			'presets[pubkey]': _data.armoredKey,
+		};
+		const dialog = et2_createWidget('et2-dialog', {
+			callback(_button_id, _value)
+			{
+				if (_button_id == 'contact' && _value)
+				{
+					self.egw.json('mail.EGroupware\\Mail\\Ui.ajax_pgpAddKeyToContact',
+						{email: _data.email, armoredKey: _data.armoredKey, preferEncrypt: _data.preferEncrypt}, (_result) =>
+					{
+						if (!_result)
+						{
+							egw.open('', 'addressbook', 'add', extra);
+						}
+						egw.message(_result);
+					}).sendRequest(true);
+				}
+				else if (_button_id == 'never')
+				{
+					self.egw.set_preference('mail', 'smime_pgp_add_contact', 'never');
+				}
+			},
+			title: egw.lang('PGP key info for email %1', _data.email),
+			buttons: buttons,
+			minWidth: 500,
+			minHeight: 500,
+			value: {content: content},
+			template: egw.webserverUrl + '/mail/templates/default/pgpKeyAddToContact.xet?1',
+			resizable: false,
+		});
+		document.body.append(dialog as any);
+	}
+
+	/**
+	 * Reset PGP/MIME signature flag classes, mirroring smimeClearFlags()
+	 *
+	 * @param {HTMLElement[]} _nodes
+	 */
+	pgpClearFlags(_nodes)
+	{
+		for (let i = 0; i < _nodes.length; i++)
+		{
+			_nodes[i].classList.remove(...['pgp_sig_verified', 'pgp_sig_invalid', 'pgp_sig_unknownkey']);
 		}
 	}
 
@@ -5723,17 +9106,22 @@ export class MailApp extends EgwApp
 	 *
 	 * @param {type} _metadata
 	 * @param {boolean} _display if set to true will only show close button
+	 * @param {boolean} _autoTriggered true when opened automatically by smimeAutoOfferAddToContact()
+	 *  rather than by the user clicking the signature/encryption icon - adds a "Never ask again"
+	 *  button (mirroring pgpKeyAddToContact()'s identical shape) that persists the
+	 *  `smime_pgp_add_contact` preference; not offered on a user-initiated click, since there's
+	 *  nothing to opt out of when the user asked to see this themselves
 	 */
-	smime_certAddToContact(_metadata, _display)
+	smimeCertAddToContact(_metadata, _display, _autoTriggered? : boolean)
 	{
 		//do not show the dialog on mobile
 		if(egwIsMobile()){
 			return;
 		}
 		if (!_metadata || _metadata.length < 1) return;
-		var self = this;
-		var content = jQuery.extend(true, {message:_metadata.msg}, _metadata);
-		var buttons = [
+		const self = this;
+		const content = this.egw.deepExtend({message:_metadata.msg}, _metadata);
+		const buttons : {label : any, id : string, image : string, class? : string, default? : boolean}[] = [
 
 			{label: this.egw.lang("Close"), id: "close", image:'cancelDialog'}
 		];
@@ -5748,7 +9136,11 @@ export class MailApp extends EgwApp
 			};
 			content.message2 = egw.lang('You may add this certificate into your contact, if you trust this signature.');
 		}
-		var extra = {
+		if (_autoTriggered)
+		{
+			buttons.push({label: this.egw.lang("Never ask again"), id: "never", image: "delete"});
+		}
+		const extra = {
 			'presets[email]': _metadata.email,
 			'presets[n_given]': _metadata.certDetails.subject.commonName,
 			'presets[pubkey]': _metadata.cert,
@@ -5761,14 +9153,18 @@ export class MailApp extends EgwApp
 			{
 				if (_button_id == 'contact' && _value)
 				{
-					self.egw.json('mail.mail_ui.ajax_smimeAddCertToContact',
-					_metadata,function(_result){
+					self.egw.json('mail.EGroupware\\Mail\\Ui.ajax_smimeAddCertToContact',
+					_metadata,(_result) =>{
 						if (!_result)
 						{
 							egw.open('','addressbook','add',extra);
 						}
 						egw.message(_result);
 					}).sendRequest(true);
+				}
+				else if (_button_id == 'never')
+				{
+					self.egw.set_preference('mail', 'smime_pgp_add_contact', 'never');
 				}
 			},
 			title: egw.lang('Certificate info for email %1', _metadata.email),
@@ -5779,21 +9175,18 @@ export class MailApp extends EgwApp
 			template: egw.webserverUrl+'/mail/templates/default/smimeCertAddToContact.xet?1',
 			resizable: false
 		});
-		document.body.append(dialog);
+		document.body.append(dialog as any);
 	}
 
 	/**
 	 * get preview pane state base on selected preference.
 	 *
-	 * It also set a right css class for vertical state.
-	 *
 	 * @returns {Boolean} returns true for visible Pane and false for hiding
 	 */
 	getPreviewPaneState()
 	{
-		var previewPane = this.egw.preference('previewPane', 'mail') || 'vertical';
-		var nm = this.et2.getWidgetById(this.nm_index);
-		var state = false;
+		const previewPane = this.egw.preference('previewPane', 'mail') || 'vertical';
+		let state = false;
 		switch (previewPane)
 		{
 			case true:
@@ -5807,7 +9200,6 @@ export class MailApp extends EgwApp
 				break;
 			default: // default is vertical
 				state = true;
-				nm.header.right_div.addClass('vertical_splitter');
 		}
 		return state;
 	}
@@ -5820,16 +9212,16 @@ export class MailApp extends EgwApp
 	 */
 	modifyMessageSubjectDialog(_action, _sender)
 	{
-		_sender = _sender ? _sender : [{id:this.mail_currentlyFocussed}];
-		var id = (_sender && _sender.uid) ? _sender.row_id:
+		_sender = _sender ? _sender : [{id:this.currentlyFocussed}];
+		const id = (_sender && _sender.uid) ? _sender.row_id:
 			_sender[0].id != 'nm'? _sender[0].id:_sender[1].id;
-		var data = (_sender && _sender.uid) ? {data:_sender} : egw.dataGetUIDdata(id);
-		var subject = data && data.data? data.data.subject : "";
+		const data = (_sender && _sender.uid) ? {data:_sender} : egw.dataGetUIDdata(id);
+		const subject = data && data.data? data.data.subject : "";
 
 		const dialog = et2_createWidget("et2-dialog",
 		{
 			callback(_button_id, _value) {
-				var newSubject = null;
+				let newSubject = null;
 				if (_value && _value.value) newSubject = _value.value;
 
 				if (newSubject && newSubject.length>0)
@@ -5838,7 +9230,7 @@ export class MailApp extends EgwApp
 					{
 						case Et2Dialog.OK_BUTTON:
 							egw.loading_prompt('modifyMessageSubjectDialog', true);
-							egw.json('mail.mail_ui.ajax_saveModifiedMessageSubject', [id, newSubject], function (_data)
+							egw.json('mail.EGroupware\\Mail\\Ui.ajax_saveModifiedMessageSubject', [id, newSubject], (_data) =>
 							{
 								egw.loading_prompt('modifyMessageSubjectDialog', false);
 								if (_data && !_data.success)
@@ -5846,7 +9238,7 @@ export class MailApp extends EgwApp
 									egw.message(_data.msg, "error");
 									return;
 								}
-								var nm = app.mail.et2.getWidgetById('nm');
+								const nm = app.mail.et2.getWidgetById('nm');
 								if (nm)
 								{
 									nm.applyFilters();
@@ -5865,7 +9257,7 @@ export class MailApp extends EgwApp
 			resizable: false,
 			width: 500
 		});
-		document.body.append(dialog);
+		document.body.append(dialog as any);
 	}
 
 	/**
@@ -5875,11 +9267,11 @@ export class MailApp extends EgwApp
 	 * @param {type} _senders
 	 * @returns {undefined}
 	 */
-	set_predefined_addresses(action, _senders)
+	setPredefinedAddresses(action, _senders)
 	{
 		const pref_id = _senders[0].id.split('::')[0] + '_predefined_compose_addresses';
 		const prefs = egw.deepExtend({}, egw.preference(pref_id, 'mail'));
-		let selOptions = {}
+		const selOptions = {}
 		for (const predefined in prefs) {
 			selOptions[predefined] = [];
 			for (const predefinedElement of prefs[predefined]) {
@@ -5908,7 +9300,7 @@ export class MailApp extends EgwApp
 				template: egw.webserverUrl + '/mail/templates/default/predefinedAddressesDialog.xet?',
 				resizable: false,
 			});
-		document.body.append(dialog);
+		document.body.append(dialog as any);
 	}
 
 	/**
@@ -5942,6 +9334,45 @@ export class MailApp extends EgwApp
 	}
 
 	/**
+	 * doc/ai/projects/mail-threaded-view.md, Phase 1 UI toggle - same mechanism as toggleDetails()
+	 * above, an independent nextmatch filter key (not one of Et2Nextmatch's built-in filter/
+	 * filter2/cat_id/search names, seeded instead via mail_ui::index()'s 'extra_attributes').
+	 */
+	toggleThreaded(_ev, _widget)
+	{
+		this.nm && this.nm.applyFilters({threaded: _widget.value ? '1' : ''});
+	}
+
+	/**
+	 * Show/hide the "group by thread" toggle (id="threaded" in index.xet) for the given profile -
+	 * hidden by default (see the widget's own `style="display:none"`), only ever revealed once a
+	 * profile's JMAP bootstrap actually reports supportsThreading:true (nothing does yet, see
+	 * ProfileHandler::THREADING_ENABLED). Called by MailJmap.getRows() every time a profile's token
+	 * is resolved - cheap (a cached boolean, no extra round trip) and self-correcting on account
+	 * switch, since a different profile may support threading while another doesn't (Phase 2+).
+	 *
+	 * @param _supportsThreading
+	 */
+	updateThreadingToggle(_supportsThreading : boolean) : void
+	{
+		// modern (Lit-based) et2 widgets are themselves the custom element, so the object
+		// getWidgetById() returns already has a real .style - same assumption toggleDetails()'s
+		// sibling sync (checkNmFilterChanged(), just below) already makes for .value
+		const toggle = this.et2?.getWidgetById('threaded') as unknown as HTMLElement & { value? : boolean };
+		if (toggle)
+		{
+			toggle.style.display = _supportsThreading ? '' : 'none';
+		}
+		if (!_supportsThreading && toggle && toggle.value)
+		{
+			// don't leave a hidden toggle silently stuck "on" (e.g. after switching from a
+			// supporting to a non-supporting profile) - reset both the widget and the actual filter
+			toggle.value = false;
+			this.nm && this.nm.applyFilters({threaded: ''});
+		}
+	}
+
+	/**
 	 * Check if any NM filter or search in app-toolbar needs to be updated to reflect NM internal state
 	 *
 	 * Overwritten to support the details toggle.
@@ -5962,6 +9393,14 @@ export class MailApp extends EgwApp
 				details_toggle.value = value === '1';
 			}
 		}
+		// doc/ai/projects/mail-threaded-view.md, Phase 1 UI toggle - mirrors the details toggle sync
+		if (id === 'threaded')
+		{
+			const threaded_toggle = this.et2.getWidgetById('threaded');
+			if (threaded_toggle && threaded_toggle.value != (value === '1')) {
+				threaded_toggle.value = value === '1';
+			}
+		}
 	}
 
 	/**
@@ -5969,7 +9408,7 @@ export class MailApp extends EgwApp
 	 *
 	 * Use as onchange on these filters (named like the ones in NM!)
 	 *
-	 * Overwritten to call this.mail_searchtype_change() for cat_id.
+	 * Overwritten to call this.searchtypeChange() for cat_id.
 	 *
 	 * @param _ev
 	 * @param _widget
@@ -5981,7 +9420,7 @@ export class MailApp extends EgwApp
 		// open/close date filters
 		if (_widget.id === 'cat_id')
 		{
-				this.mail_searchtype_change(_ev, _widget);
+				this.searchtypeChange(_ev, _widget);
 		}
 	}
 }

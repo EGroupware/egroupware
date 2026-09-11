@@ -1,5 +1,4 @@
 import {ExposeValue} from "../Expose/ExposeMixin";
-import {et2_vfsMode} from "../et2_widget_vfs";
 import {Et2ImageExpose} from "../Expose/Et2ImageExpose";
 import {css, html} from "lit";
 import {property} from "lit/decorators/property.js";
@@ -218,7 +217,8 @@ export class Et2VfsMime extends Et2ImageExpose
 			this.src = src;
 		}
 		// add/remove link icon, if file is (not) a symlink
-		this.symlink = typeof _value.mode !== "undefined" && ((_value.mode & et2_vfsMode.types.l) == et2_vfsMode.types.l)
+		this.symlink = typeof _value.mode !== "undefined" &&
+			((_value.mode & 0xA000) === 0xA000);
 	}
 
 	get value()

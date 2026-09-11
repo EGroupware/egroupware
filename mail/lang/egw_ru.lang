@@ -1,10 +1,10 @@
+(leave empty for no quota)	mail	ru	(Оставьте пустым для отсутствия квоты)
+(no subject)	mail	ru	(без темы)
 %1 attachments	mail	ru	%1 вложение
 %1 for all users	mail	ru	%1 для всех пользователей
 %1 is not writable by you!	mail	ru	%1 недоступно для записи!
 %1 mails selected	mail	ru	%1 выбранных писем
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	ru	Для %1 требуется расширение Sieve %2, возможно, попробуйте %1 или большее количество дней.
-(leave empty for no quota)	mail	ru	(Оставьте пустым для отсутствия квоты)
-(no subject)	mail	ru	(без темы)
 acl rights retrieve failed, seems there are no rights set!	mail	ru	Не удалось получить права ACL, похоже, права не установлены!
 activating by date requires a start- and end-date!	mail	ru	Активация по дате требует наличия начальной и конечной даты!
 add all my aliases	mail	ru	Добавить все мои псевдонимы
@@ -24,7 +24,6 @@ all of	mail	ru	Все из
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	ru	Все вложенные папки также будут удалены, а все сообщения во всех затронутых папках будут потеряны
 allow external images	mail	ru	Разрешить внешние изображения
 allow images from external sources in html emails	mail	ru	Разрешать изображения из внешних источников в письмах формата HTML.
-allow users to create further identities	mail	ru	Разрешить пользователям создавать дополнительные идентичности
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	ru	Позволяет пользователю читать, писать и создавать папки и письма, отправлять в них сообщения, добавлять в них сообщения и удалять их
 always respond / auto-responder	mail	ru	Всегда отвечать / автоответчик
 always show html emails	mail	ru	Всегда показывать письма формата HTML
@@ -61,7 +60,6 @@ check message against next rule also	mail	ru	Проверить сообщени
 common acl	mail	ru	Права общего доступа
 compose	mail	ru	Новое письмо
 compose as new	mail	ru	Создать как новое
-compress folder	mail	ru	Сжать папку
 condition	mail	ru	Условия
 configuration settings	mail	ru	Установки конфигурации
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	ru	Настроенные значения будут автоматически устанавливаться в диалоге составления для уважаемого поля при составлении нового письма.
@@ -79,8 +77,6 @@ could not append message:	mail	ru	Не могу добавить сообщен�
 create new account	mail	ru	Создать учётную запись
 cross account forward attachment is not allowed!	mail	ru	Крестообразное прикрепление счета вперед запрещено!
 current subject	mail	ru	Текущая тема
-default identity for compose	mail	ru	Идентичность по умолчанию для создания письма
-default signature	mail	ru	Подпись по умолчанию
 default sorting order	mail	ru	Порядок сортировки по умолчанию
 default toolbar actions shown in mail's html editor	mail	ru	Функции, включаемые на панели инструментов HTML-редактора при составлении письма
 default value for remembering s/mime passphrase in minutes	mail	ru	Значение по умолчанию для запоминания парольной фразы S/MIME в минутах
@@ -119,7 +115,6 @@ don't use trash	mail	ru	Не использовать Trash (Корзина)
 draft	mail	ru	Каталог
 draft folder	mail	ru	Каталог черновиков
 drafts	mail	ru	Черновики
-drafts folder	mail	ru	Папка «Черновики»
 edit account	mail	ru	Редактировать учётную запись
 edit vacation settings	mail	ru	Редактировать настройки на случай отсутствия
 effective only if server supports acl at all	admin	ru	Действует, если сервер поддерживает ACL
@@ -186,7 +181,6 @@ hide from	mail	ru	Скрыть От
 high priority	mail	ru	Высокий приоритет
 home page folders	mail	ru	Заголовки домашней страницы
 how often to check with the server for new mail	mail	ru	Интервал проверки почты на сервере
-how should the available information on identities be displayed	admin	ru	Как отображать доступную информацию об идентичностях
 how to forward messages	mail	ru	Как перенаправлять сообщения
 html	mail	ru	HTML
 ident name	mail	ru	Идентификационное имя
@@ -194,7 +188,6 @@ ident name email	mail	ru	Идентификационное имя [Email]
 ident name organization email	mail	ru	Идентификационное имя Организация [Email]
 identity	mail	ru	Идентификация
 identity label	mail	ru	Метка идентификатора
-identity+signature	mail	ru	Идентичность + Подпись
 if	mail	ru	ЕСЛИ
 if different from email address	mail	ru	Если адрес электронной почты отличается от адреса
 if mail header	mail	ru	eсли заголовок письма
@@ -224,7 +217,6 @@ junk folder	mail	ru	Папка нежелательной почты
 keep a copy	mail	ru	Сохранить копию
 keep a copy of the message in your inbox	mail	ru	Хранить копию сообщений в вашей папке Входящие (inbox)
 kilobytes	mail	ru	Килобайт
-last used signature	mail	ru	Последняя использованная подпись
 later	mail	ru	Отложить
 learning as ham (not spam) failed because of %1	mail	ru	Обучение как ham (не спам) не удалось из-за %1
 learning as spam failed because of %1	mail	ru	Обучение как спам не удалось из-за %1
@@ -255,7 +247,6 @@ message preview area	mail	ru	Область предпросмотра сооб�
 message saved successfully.	mail	ru	Сообщение сохранено.
 modify subject	mail	ru	Изменить тему
 modify subject of this message	mail	ru	Изменить тему этого сообщения
-move selected mails to archive	mail	ru	Переместить выбранные электронные письма в архив
 move selected to	mail	ru	Переместить выбранное в
 move to	mail	ru	Переместить в
 move to archive	mail	ru	Переместить в архивную папку
@@ -310,7 +301,6 @@ organization | real name email	mail	ru	Организация | Реальное
 original message	mail	ru	Оригинальное сообщение
 outbox	mail	ru	Исходящие
 permission denied	mail	ru	Доступ запрещён
-personal signature	mail	ru	Личная подпись
 please configure access to an existing individual imap account.	mail	ru	Настроить доступ к существующей учетной записи IMAP.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	ru	Пожалуйста, настройте сертификат S/MIME на вкладке Шифрование в диалоге Редактирование учетной записи.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	ru	Уточните у администратора, поддерживает ли ваш сервер правила фильтрации на стороне сервера, и как включить их в EGroupware для вашей активной учетной записи (%1) с ID: %2.
@@ -367,7 +357,6 @@ save all	mail	ru	Сохранить всё
 save all attachments to filemanager	mail	ru	Сохранить все вложения в файловом менеджере
 save as calendar	mail	ru	Сохранить как событие Календаря
 save as draft	mail	ru	Сохранить как черновик
-save as draft and print	mail	ru	Сохранить как черновик и распечатать
 save as infolog	mail	ru	Сохранить в ИнфоЖурнале
 save as infolog on send	mail	ru	Сохранение в формате Infolog при отправке
 save as ticket	mail	ru	Сохранить как запись Трекера
@@ -386,7 +375,7 @@ select an existing entry in order to append mail content to it	mail	ru	Выбе�
 select an item to read	mail	ru	Выберите сообщение для просмотра
 select mail addresses from addressbook	mail	ru	Выберите адрес(ы) электронной почты из адресной книги
 select or insert email address	mail	ru	Выберите или вставьте адрес электронной почты
-selected	mail	ru	выбрано.
+selected	mail	ru	Выбранный
 selected date range (with quicksearch)	mail	ru	Выбранный диапазон дат (с быстрым поиском)
 send message and move to send folder (if configured)	mail	ru	Отправить сообщение и переместить в папку Отправленные
 send message pgp encrypted: requires keys from all recipients!	mail	ru	Отправка сообщения в PGP-шифровании: требуются ключи от всех получателей!
@@ -465,7 +454,6 @@ vacation notice is not saved yet! (but we filled in some defaults to cover some 
 vacation notice update failed	mail	ru	Обновить уведомление об отпуске не удалось
 vacation start-date must be before the end-date!	mail	ru	Дата начала действия автоответчика должно быть РАНЬШЕ даты окончания!
 validate addresses on submit:	mail	ru	Проверка адресов при отправке:
-validate selected addresses on submit:	mail	ru	Проверить выбранные адреса при отправке:
 view full mail source	mail	ru	Показать полный исходный код сообщения
 view header lines	mail	ru	Просмотр строк заголовка
 what do do with html email	mail	ru	Что делать с почтой в формате HTML
@@ -476,9 +464,8 @@ when deleting messages	mail	ru	При удалении сообщений
 when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	ru	При использовании для отображения сообщений всплывающего окна: открывать следующее сообщение в том же окне, или в новом
 when saving messages as item of a different app	mail	ru	При сохранении сообщений как материалов другого приложения (если приложение поддерживает требуемую опцию).
 when sending messages	mail	ru	При отправлении сообщений
-which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	ru	Какие дополнительные папки должны быть показаны при использовании схемы "Просмотр папки отправленные"
 which folders - in general - should not be automatically created, if not existing	mail	ru	Какие папки не должны автоматически создаваться, если не существуют
-which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	ru	С какой идентичности (подписи) вы хотите начать?\nДля параметра «Личная подпись» всегда используется первая личная подпись.
+which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	ru	Какие дополнительные папки должны быть показаны при использовании схемы "Просмотр папки отправленные"
 which method to use when forwarding a message	mail	ru	Метод, используемый при пересылке
 write	mail	ru	Записать
 write & delete	mail	ru	написать и удалить

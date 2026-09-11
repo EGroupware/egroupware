@@ -30,6 +30,14 @@ class OpenAPI
 	];
 
 	/**
+	 * The only keys of an OpenAPI 3.x Path Item Object that are actual operations (and therefore
+	 * required to carry a unique operationId) - everything else ("parameters", "summary",
+	 * "description", "servers", "$ref", or any future field) is Path Item metadata shared by every
+	 * operation on that path, not an operation itself. See scan()'s use of this.
+	 */
+	const HTTP_METHODS = ['get', 'put', 'post', 'delete', 'options', 'head', 'patch', 'trace'];
+
+	/**
 	 * Scan directory for app-specific JSON files and merge them into a single OpenAPI spec
 	 *
 	 * @param bool $inline_parameters true: replace parameter references with the actual data
@@ -98,6 +106,16 @@ class OpenAPI
 				{
 					foreach($methods as $method => &$data)
 					{
+						// OpenAPI 3.x Path Item Object fields that are NOT operations and therefore
+						// never carry an operationId - eg. a "parameters" array shared by every
+						// operation on that path (real, valid usage - doc/openapi/smallpart.json).
+						// An allow-list of actual HTTP methods, rather than trying to enumerate
+						// every non-operation field, so this stays correct if OpenAPI ever adds
+						// another Path Item field this class doesn't already know about.
+						if (!in_array(strtolower((string)$method), self::HTTP_METHODS, true))
+						{
+							continue;
+						}
 						if (empty($data['operationId']) || isset($operationIds[$data['operationId']]))
 						{
 							throw new \Exception("$method $path requires an unique operationId".

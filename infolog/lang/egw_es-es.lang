@@ -285,7 +285,6 @@ limit number of description lines (default 5, 0 for no limit)	infolog	es-es	Limi
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	es-es	Limitar el ancho de la columna de la descripción (efectivo sólo si hay límite para las líneas, 0 para sin límites)
 link	infolog	es-es	Enlace
 linked to %1	infolog	es-es	Enlazado a %1
-links	infolog	es-es	Enlaces
 links and attached files	infolog	es-es	Enlaces y ficheros adjuntos
 links of this entry	infolog	es-es	Enlaces de la entrada
 links to specified application.  example: {{links/infolog}}	infolog	es-es	Enlaces a la aplicación especificada. Ejemplo: {{links/infolog}}

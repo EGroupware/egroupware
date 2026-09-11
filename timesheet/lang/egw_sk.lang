@@ -84,7 +84,6 @@ leave it empty for a full week	timesheet	sk	Ponechajte prázdne ak chcete plný 
 leaves without saveing	timesheet	sk	uzavrieť bez uloženia zmien
 length<br>rows	timesheet	sk	Dĺžka<br>Riadkov
 link title	timesheet	sk	Názov prepojenia
-links	timesheet	sk	Odkazy
 links and attached files	timesheet	sk	Odkazy a priložené súbory
 links to specified application.  example: {{links/infolog}}	timesheet	sk	Odkazy na vybranú aplikáciu. Príklad: {{links/infolog}}
 list of files linked to the current record	timesheet	sk	Zoznam súborov priložených k súčasnému záznamu

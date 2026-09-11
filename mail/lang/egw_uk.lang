@@ -1,9 +1,9 @@
+(leave empty for no quota)	mail	uk	(Залишити порожнім за відсутності квоти)
 %1 attachments	mail	uk	%1 вкладення
 %1 for all users	mail	uk	%1 для всіх користувачів
 %1 is not writable by you!	mail	uk	%1 не може бути написаний вами!
 %1 mails selected	mail	uk	Вибрано %1 імейлів
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	uk	%1 вимагає розширення Sieve %2, можливо, спробуйте %1 або більшу кількість днів.
-(leave empty for no quota)	mail	uk	(Залишити порожнім за відсутності квоти)
 acl rights retrieve failed, seems there are no rights set!	mail	uk	Не вдалося отримати права ACL, здається, не встановлено жодних прав!
 activating by date requires a start- and end-date!	mail	uk	Активація за датою вимагає початкової та кінцевої дати!
 add all my aliases	mail	uk	Додати всі мої псевдоніми
@@ -17,7 +17,6 @@ after reply, visible during compose	mail	uk	Після відповіді, ви�
 aliases+forwards	mail	uk	Псевдоніми + переадресація
 all my email addresses	mail	uk	всі мої електронні адреси
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	uk	Усі підтеки також буде видалено, а всі повідомлення у всіх теках буде втрачено
-allow users to create further identities	mail	uk	Дозволити користувачам створювати нові профілі
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	uk	Дозволяє користувачеві читати, писати і створювати теки і поштові скриньки, писати до них, додавати до них повідомлення і видаляти повідомлення
 always respond / auto-responder	mail	uk	Завжди відповідати / автовідповідач
 always show notifiction	mail	uk	Завжди показувати сповіщення
@@ -52,8 +51,6 @@ convert only mail to item (ignore possible attachments)	mail	uk	Конверту
 copied %1 message(s) from %2 to %3	mail	uk	Скопійовано %1 повідомлення з %2 до %3.
 cross account forward attachment is not allowed!	mail	uk	Перехресне прикріплення форвардного рахунку не допускається!
 current subject	mail	uk	Поточна тема
-default identity for compose	mail	uk	Профіль за замовчуванням для створення листа
-default signature	mail	uk	Підпис за замовчуванням
 default toolbar actions shown in mail's html editor	mail	uk	Функції, які вмикаються на панелі інструментів HTML-редактора під час створення листа
 default value for remembering s/mime passphrase in minutes	mail	uk	Значення за замовчуванням для запам'ятовування S/MIME-пароля в хвилинах
 defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	uk	Визначає, що відображати в якості мітки контакту для додавання контакту в поле Кому/Копіювати/Сліпа копія при створенні імейлу. За замовчуванням - ім'я та прізвище, а порожнє значення означає, що виводитиметься все, що є в наявності.
@@ -67,11 +64,6 @@ do you really want to toggle label %1 for all messages in the current view?	mail
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	uk	Ви хочете, щоб вас запитували про підтвердження, перш ніж прикріплювати вибрані повідомлення до нового листа?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	uk	Ви хочете, щоб я запитував підтвердження перед переміщенням вибраних повідомлень до іншої папки?
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	uk	Ви хочете запобігти редагуванню/налаштуванню сповіщень електронною поштою на інші електронні адреси при надходженні листів (навіть якщо увімкнено Sieve)?
-don't use draft folder	mail	uk	Не використовувати папку «Чернетки»
-draft	mail	uk	Чернетка
-draft folder	mail	uk	Папка «Чернетки»
-drafts	mail	uk	Чернетки
-drafts folder	mail	uk	Папка «Чернетки»
 edit account	mail	uk	Редагувати рахунок
 email address	mail	uk	Адреса електронної пошти
 email notification update failed! you need to set an email address!	mail	uk	Не вдалося оновити email-сповіщення! Вам потрібно вказати адресу електронної пошти!
@@ -81,7 +73,6 @@ emails in whitelisted domains are not marked as spam	mail	uk	Листи в бі�
 enable	mail	uk	Включити
 enabled	mail	uk	Увімкнено
 encrypt your message with smime certificate	mail	uk	Шифрувати повідомлення за допомогою S/MIME сертифікату
-error: could not save message as draft	mail	uk	Помилка: Не вдалося зберегти повідомлення як чернетку
 event details follow	mail	uk	Подробиці події
 every %1. day	mail	uk	Кожного %1. дня
 everyone	mail	uk	Всі
@@ -111,13 +102,11 @@ header	mail	uk	Заголовок
 header lines	mail	uk	Рядки заголовка
 hide from	mail	uk	Приховати Від
 high priority	mail	uk	Високий пріоритет
-how should the available information on identities be displayed	admin	uk	Як відображати доступну інформацію про профілі
 html	mail	uk	HTML
 ident name	mail	uk	Ім'я користувача
 ident name email	mail	uk	Ідентифікаційне ім'я [Електронна пошта]
 ident name organization email	mail	uk	Ідентифікаційне ім'я Організація [Електронна пошта]
 identity label	mail	uk	Ідентифікаційна етикетка
-identity+signature	mail	uk	Профіль + Підпис
 if different from email address	mail	uk	Якщо відрізняється від адреси
 if mail header	mail	uk	якщо заголовок електронної пошти
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	uk	Якщо ви хочете переглянути попередній перегляд листа одним натисканням на тему, увімкніть цю опцію.
@@ -142,7 +131,6 @@ junk folder	mail	uk	Тека " Видалення
 keep a copy	mail	uk	Зберегти копію
 keep a copy of the message in your inbox	mail	uk	зберігати копію повідомлення у папці "Вхідні
 kilobytes	mail	uk	кілобайт
-last used signature	mail	uk	Останній використаний підпис
 later	mail	uk	Пізніше
 learning as ham (not spam) failed because of %1	mail	uk	Навчання як шинка (не спам) не вдалося з причини %1
 learning as spam failed because of %1	mail	uk	Навчання як спам не вдалося з причини %1
@@ -169,7 +157,6 @@ mark as deleted	mail	uk	Позначити як видалені
 message learned as spam and moved to spam folder	mail	uk	Повідомлення визначено як спам і переміщено до теки "Спам
 modify subject	mail	uk	Змінити тему
 modify subject of this message	mail	uk	Змінити тему цього повідомлення
-move selected mails to archive	mail	uk	Перемістити вибрані електронні листи до архіву
 move selected to	mail	uk	Перемістити вибране до
 move to	mail	uk	Перемістити до
 move to archive	mail	uk	Перемістити до папки архіву
@@ -204,7 +191,6 @@ organization | real name email	mail	uk	Організація | Прізвище
 original message	mail	uk	Оригінальне повідомлення
 outbox	mail	uk	Вихідні
 permission denied	mail	uk	Заборонено
-personal signature	mail	uk	Особистий підпис
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	uk	Будь ласка, налаштуйте ваш S/MIME сертифікат на вкладці Шифрування в діалоговому вікні Редагування облікового запису.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	uk	Зверніться до вашого адміністратора, щоб дізнатися, чи підтримує ваш сервер правила фільтрації на стороні сервера, і як їх увімкнути в EGroupware для вашого активного облікового запису (%1) з ID: %2.
 please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	uk	Зверніться до свого адміністратора, щоб дізнатися, чи підтримує ваш сервер серверні повідомлення про відпустку та як їх увімкнути в EGroupware для вашого активного облікового запису (%1) з ID: %2.
@@ -240,8 +226,6 @@ required pear class mail/mimedecode.php not found.	mail	uk	Необхідний 
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	uk	Необхідно вимкнути, якщо ви використовуєте Dovecot з прапорами приватного перегляду у спільній або користувацькій папці!
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	uk	Шифрування S/MIME не вдалося, оскільки для адреси відправника не знайдено сертифіката: %1
 save all attachments to filemanager	mail	uk	Зберегти всі вкладення у файл-менеджер
-save as draft	mail	uk	Зберегти як чернетку
-save as draft and print	mail	uk	Зберегти як чернетку та надрукувати
 save as infolog on send	mail	uk	Позначте кнопку, щоб створити інфо-лог після відправлення
 save as tracker on send	mail	uk	Поставте галочку, щоб після відправлення створити тікет
 save the drafted message as eml file into vfs	mail	uk	Зберегти створене повідомлення як eml-файл у файловому менеджері
@@ -254,7 +238,6 @@ select an existing entry in order to append mail content to it	mail	uk	Вибе�
 select an item to read	mail	uk	Виберіть елемент для читання
 select mail addresses from addressbook	mail	uk	Виберіть адресу з адресної книги
 select or insert email address	mail	uk	Виберіть або вставте адресу електронної пошти
-selected	mail	uk	вибрано.
 selected date range (with quicksearch)	mail	uk	Вибраний діапазон дат (за допомогою швидкого пошуку)
 send message and move to send folder (if configured)	mail	uk	Надіслати повідомлення та перемістити до папки відправки (якщо налаштовано)
 send message pgp encrypted: requires keys from all recipients!	mail	uk	Надіслати повідомлення зашифроване PGP: потрібні ключі від усіх одержувачів!
@@ -299,10 +282,8 @@ trash	mail	uk	Смітник
 trash folder	mail	uk	папка сміття
 unconditional	mail	uk	Завжди
 validate addresses on submit:	mail	uk	Підтвердити адреси після надсилання:
-validate selected addresses on submit:	mail	uk	Перевірити вибрані адреси під час надсилання:
 view header lines	mail	uk	Переглянути рядки заголовка
 what to do when you delete a message	mail	uk	Що робити, коли ви видаляєте повідомлення.
-which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	uk	З якого профілю (підпису) ви хочете почати.\nДля параметра «Особистий підпис» завжди використовується перший особистий підпис.
 write	mail	uk	Записати
 write & delete	mail	uk	запис і видалення
 you can select what info to be displayed on email tag	mail	uk	Ви можете вибрати, яка інформація буде відображатися в тезі листа.

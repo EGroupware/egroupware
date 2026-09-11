@@ -300,7 +300,6 @@ ldap settings for contacts	admin	pt-br	Configurações LDAP para contatos
 ldif	addressbook	pt-br	LDIF
 line 2	addressbook	pt-br	Linha 2
 link title for contacts show	addressbook	pt-br	Título link para exibição dos contatos
-links	addressbook	pt-br	Links
 links and attached files	addressbook	pt-br	Links e arquivos anexados
 list all categories	addressbook	pt-br	Listar todas as categorias
 list all customfields	addressbook	pt-br	Listas todos os campos personalizados

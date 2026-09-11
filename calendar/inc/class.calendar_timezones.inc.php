@@ -91,6 +91,7 @@ class calendar_timezones
 	public static function tz2id($tzid,$what='id')
 	{
 		$id =& self::$tz2id[$tzid];
+		$had_id = isset($id);
 
 		if (!isset($id))
 		{
@@ -118,11 +119,26 @@ class calendar_timezones
 		{
 			$id = self::tz2id($tzid.' Standard Time');
 		}
+		// $id is a reference into self::$tz2id[$tzid] - persist if this call newly populated it
+		// (self::tz2id() is called from all over, incl. recursively, so this only fires once per tzid)
+		if (!$had_id && isset($id))
+		{
+			self::persist_cache();
+		}
 		if (isset($id) && $what != 'id')
 		{
 			return self::id2tz($id,$what);
 		}
 		return $id;
+	}
+
+	/**
+	 * Persist self::$tz_cache/$tz2id (mutated in-place, no longer live session references) back to the session
+	 */
+	private static function persist_cache()
+	{
+		Api\Cache::setSession(__CLASS__, 'tz_cache', self::$tz_cache);
+		Api\Cache::setSession(__CLASS__, 'tz2id', self::$tz2id);
 	}
 
 	/**
@@ -141,6 +157,7 @@ class calendar_timezones
 	public static function id2tz($id,$what='tzid')
 	{
 		$data =& self::$tz_cache[$id];
+		$had_data = isset($data);
 
 		if (!isset($data))
 		{
@@ -152,10 +169,15 @@ class calendar_timezones
 				self::$tz2id[$data['tzid']] = $id;
 			}
 		}
+		if (!$had_data && isset($data))
+		{
+			self::persist_cache();
+		}
 		// if not tzid queried, resolve aliases automatically
 		if ($data && !empty($data['alias']) && $what != 'tzid' && $what != 'alias')
 		{
 			$data = self::id2tz($data['alias'],null);
+			self::persist_cache();	// $data is a reference into self::$tz_cache[$id], just overwritten with the alias's data
 		}
 		if ($what === 'component')
 		{
@@ -175,12 +197,13 @@ class calendar_timezones
 	/**
 	 * Init static variables for session and check for updated timezone information
 	 *
-	 * As we use returned references from the session, we do NOT need to care about storing the information explicitly
+	 * self::$tz_cache/$tz2id are plain copies, not live session references - tz2id()/id2tz()
+	 * persist any changes they make back via self::persist_cache().
 	 */
 	public static function init_static()
 	{
-		self::$tz_cache =& Api\Cache::getSession(__CLASS__,'tz_cache');
-		self::$tz2id =& Api\Cache::getSession(__CLASS__,'tz2id');
+		self::$tz_cache = Api\Cache::getSession(__CLASS__,'tz_cache');
+		self::$tz2id = Api\Cache::getSession(__CLASS__,'tz2id');
 
 		// init cache with mapping UTC <--> -1, as UTC is no real timezone, but we need to be able to use it in calendar
 		if (!is_array(self::$tz2id))
@@ -190,6 +213,7 @@ class calendar_timezones
 				'id' => -1,
 			));
 			self::$tz2id = array('UTC' => -1);
+			self::persist_cache();
 		}
 
 		// check for updated timezones once per session

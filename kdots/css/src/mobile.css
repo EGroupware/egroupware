@@ -7,6 +7,7 @@ html:not(.desktop) body {
   /* Stop pull-to-refresh on chrome*/
   overflow-y: hidden;
   /* copied from previous framework */
+  /* et2-nextmatch hides header on mobile */
 }
 html:not(.desktop) :root egw-framework#egw_fw_basecontainer,
 html:not(.desktop) body egw-framework#egw_fw_basecontainer {
@@ -625,6 +626,10 @@ html:not(.desktop) body .et2_nextmatch .egwGridView_outer thead tr th {
 html:not(.desktop) :root .et2_nextmatch .egwGridView_outer td img,
 html:not(.desktop) body .et2_nextmatch .egwGridView_outer td img {
   border: none;
+}
+html:not(.desktop) :root et2-nextmatch::part(header),
+html:not(.desktop) body et2-nextmatch::part(header) {
+  display: none;
 }
 html:not(.desktop) :root .et2_details .et2_details_toggle:after,
 html:not(.desktop) body .et2_details .et2_details_toggle:after {

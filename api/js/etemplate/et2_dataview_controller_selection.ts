@@ -9,12 +9,6 @@
  * @copyright EGroupware GmbH 2011-2021
  */
 
-/*egw:uses
-	et2_dataview_view_aoi;
-
-	egw_action.egw_keymanager;
-*/
-
 import {egw} from "../jsapi/egw_global";
 import {et2_bounds} from "./et2_core_common";
 import {et2_dataview_rowAOI} from "./et2_dataview_view_aoi";
@@ -362,9 +356,7 @@ export class et2_dataview_selectionManager
 		};
 	}
 
-
 	/** -- PRIVATE FUNCTIONS -- **/
-
 
 	_attachActionObjectInterface( _entry, _tr, _uid)
 	{

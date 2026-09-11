@@ -217,10 +217,20 @@ class Login
 		$tmpl->set_var('website_title', $GLOBALS['egw_info']['server']['site_title']);
 		$tmpl->set_var('template_set',$this->framework->template);
 
-		$var['background_file'] = self::pick_login_background($GLOBALS['egw_info']['server']['login_background_file']);
-		// add "stockLoginBackground" class to div#loginMainDiv to fix positions for stock background
-		$var['stock_background_class'] = strpos($var['background_file'], '/api/templates/default/images/login_background') !== false ?
-			'stockLoginBackground' : '';
+		// a configured background color replaces the background image (admin UI disables one for the other)
+		if (($background_color = self::login_background_color()))
+		{
+			$var['background_style'] = 'background-color:'.$background_color;
+			$var['stock_background_class'] = '';
+		}
+		else
+		{
+			$background_file = self::pick_login_background($GLOBALS['egw_info']['server']['login_background_file']);
+			$var['background_style'] = 'background-image:url('.$background_file.')';
+			// add "stockLoginBackground" class to div#loginMainDiv to fix positions for stock background
+			$var['stock_background_class'] = strpos($background_file, '/api/templates/default/images/login_background') !== false ?
+				'stockLoginBackground' : '';
+		}
 
 		$var['logo_file'] = \EGroupware\Api\Framework::get_login_logo_or_bg_url('login_logo_file', 'login_logo');
 
@@ -348,6 +358,22 @@ class Login
 			}
 		}
 		return $nodes;
+	}
+
+	/**
+	 * Get the configured login background color, if it is a usable CSS color
+	 *
+	 * The value is put into a style attribute, so we only accept plain color syntax -
+	 * anything else could break out of the attribute or the declaration.
+	 *
+	 * @return string CSS color or "" if none configured (or not a color)
+	 */
+	static function login_background_color()
+	{
+		$color = trim((string)($GLOBALS['egw_info']['server']['login_background_color'] ?? ''));
+
+		return preg_match('/^(#[0-9A-Fa-f]{3,8}|[A-Za-z]+|(?:rgba?|hsla?)\([0-9A-Za-z%.,\/ ]+\))$/', $color) ?
+			$color : '';
 	}
 
 	/**

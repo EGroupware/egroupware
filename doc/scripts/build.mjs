@@ -26,7 +26,9 @@ const eleventyReadyFile = path.join(sitedir, 'assets/search.json');
 let childProcess;
 let buildResults = [];
 
-const bundleDirectories = [outdir, 'doc/etemplate2/_data'];
+// Only doc/dist needs CEM-generated output; doc/etemplate2/_data is the 11ty data dir
+// and its custom-elements.json was never consumed (cem.cjs reads doc/dist/custom-elements.json).
+const bundleDirectories = [outdir];
 let packageData = JSON.parse(readFileSync(path.join(process.cwd(), 'package.json'), 'utf-8'));
 const egwVersion = JSON.stringify(packageData.version.toString());
 
@@ -413,12 +415,10 @@ if (serve)
 		console.log(data.toString());
 	});
 
-	// Eleventy's own --watch handles rebuilding the docs content. Component metadata
-	// (cem analyze) is not auto-regenerated on .ts changes here; re-run "npm run docs"
-	// if metadata drifts. The dev server only serves and reloads when the built output
-	// (sitedir) changes, so there is nothing else to rebuild here.
-	// (The previous browser-sync-based watcher here called scripts/make-themes.js and
-	// scripts/make-metadata.js, neither of which exist anywhere in this repo - already dead.)
+	// Rebuilds are handled entirely by Eleventy's --watch: eleventy.config.cjs adds
+	// api/js/etemplate as a watch target and re-runs cem analyze (metadata) in its
+	// eleventy.beforeWatch hook (only when a .ts file changed). The dev server only serves
+	// and reloads when the built output (sitedir) changes, so there is nothing to rebuild here.
 }
 
 

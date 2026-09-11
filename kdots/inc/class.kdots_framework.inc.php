@@ -264,6 +264,7 @@ class kdots_framework extends Api\Framework\Ajax
 				case 'notifications':
 				case 'darkmode':
 				case 'quick_add':
+				case 'update':
 					$vars['topmenu_info_items'] .= $item;
 					break;
 				case 'timer':

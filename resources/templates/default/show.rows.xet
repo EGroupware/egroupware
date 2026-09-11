@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="resources.show.rows" lang="" group="0" version="1.9.003">
+	<et2-template  id="resources.show.rows" lang="" group="0" version="1.9.003">
         <grid width="100%">
             <columns>
                 <column width="70"/>
@@ -31,7 +32,7 @@
 						<nextmatch-sortheader label="Location" id="location"/>
 						<et2-description  value="Storage information"></et2-description>
 					</et2-vbox>
-					<nextmatch-header label="Resource / Accessories"/>
+					<et2-nextmatch-header  label="Resource / Accessories"></et2-nextmatch-header>
 					<nextmatch-customfields id="customfields"/>
 				</row>
 				<row class="$row_cont[class]">
@@ -45,8 +46,8 @@
 						<et2-description  align="left" id="${row}[quantity]" noLang="1"></et2-description>
 					</et2-vbox>
 					<et2-vbox>
-						<et2-select-cat  id="{$row}[cat_id]" readonly="true" noLang="1"></et2-select-cat>
-						<et2-select-account  id="{$row}[admin]" readonly="true" noLang="1"></et2-select-account>
+						<et2-select-cat  id="${row}[cat_id]" readonly="true" noLang="1"></et2-select-cat>
+						<et2-select-account  id="${row}[admin]" readonly="true" noLang="1"></et2-select-account>
 					</et2-vbox>
 					<et2-vbox>
 						<et2-description  id="${row}[location]" noLang="1"></et2-description>
@@ -69,5 +70,5 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

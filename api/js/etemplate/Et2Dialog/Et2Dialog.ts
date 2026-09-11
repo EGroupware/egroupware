@@ -10,7 +10,7 @@
 
 
 import {Et2Widget} from "../Et2Widget/Et2Widget";
-import {css, html, LitElement, nothing, render} from "lit";
+import {html, LitElement, nothing, render} from "lit";
 import {classMap} from "lit/directives/class-map.js";
 import {ifDefined} from "lit/directives/if-defined.js";
 import {repeat} from "lit/directives/repeat.js";
@@ -27,6 +27,7 @@ import {waitForEvent} from "../Et2Widget/event";
 import {property} from "lit/decorators/property.js";
 import {HasSlotController} from "../Et2Widget/slot";
 
+import styles from "./Et2Dialog.styles";
 export interface DialogButton
 {
 	id : string,
@@ -131,84 +132,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		return [
 			...shoelace,
 			...(super.styles || []),
-			css`
-				:host {
-					--header-spacing: var(--sl-spacing-medium);
-					--body-spacing: var(--sl-spacing-medium);
-				    --width: auto;
-				}
-				.dialog__panel {
-					border: 1px solid silver;
-					box-shadow: -2px 1px 9px 3px var(--sl-color-gray-400);
-					min-width: 250px;
-					touch-action: none;
-				}
-				.dialog__header {
-					display: flex;
-          			border-bottom: 1px inset;
-				}
-				.dialog__title {
-					font-size: var(--sl-font-size-medium);
-					font-weight: bold;
-					user-select: none;
-					overflow: hidden;
-				}
-
-				.dialog__header-actions {
-					align-content: center;
-				}
-				.dialog__close {
-					padding: 0;
-					order: 99;
-					border-top-right-radius: calc(var(--sl-border-radius-medium) * .5);
-				}
-				.dialog__footer	{
-					--footer-spacing: 5px;
-					display: flex;
-					flex-wrap: nowrap;
-					justify-content: flex-start;
-					align-items: stretch;
-					gap: 5px;
-					border-top: 1px solid var(--sl-color-gray-400);
-					margin-top: 0.5em;
-				}
-
-				::slotted(.dialog_content) {
-					height: var(--height, 100%);
-				}
-                ::slotted(.dialog_content:not(.dialog--has_template):not(form.et2_container)) {
-                    white-space: pre-wrap;
-                }
-
-			  /* Non-modal dialogs don't have an overlay */
-
-			  :host(:not([ismodal])) .dialog, :host(:not([isModal])) .dialog__overlay {
-				pointer-events: none;
-				background: transparent;
-			  }
-
-			  :host(:not([ismodal])) .dialog__panel {
-				pointer-events: auto;
-			  }
-
-			  /* Hide close button when set */
-
-			  :host([noclosebutton]) .dialog__close {
-				display: none;
-			  }
-
-			  /* Button alignments */
-
-			  ::slotted([align="left"]) {
-				margin-right: auto;
-				order: -1;
-			  }
-
-			  ::slotted([align="right"]) {
-				margin-left: auto;
-				order: 1;
-			  }
-			`
+			styles
 		];
 	}
 
@@ -570,7 +494,15 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 	_onClick(ev : MouseEvent)
 	{
 		// @ts-ignore
-		this._button_id = ev.target?.getAttribute("button_id") ? parseInt(ev.target?.getAttribute("button_id")) : (ev.target?.getAttribute("id") || null);
+		const rawButtonId : string = ev.target?.getAttribute("button_id");
+		// Only the built-in Et2Dialog.*_BUTTON constants are numbers - a caller-defined custom
+		// button (eg. a "dont_ask_again"-style extra action, see egw_timer.ts) can use any
+		// non-numeric string as its button_id. parseInt() used to run unconditionally, silently
+		// turning any such string into NaN and making it indistinguishable from any OTHER custom
+		// string id to a callback comparing `button === "..."` - only parseInt() an actually
+		// numeric value, keep anything else as the original string.
+		// @ts-ignore
+		this._button_id = rawButtonId ? (/^-?\d+$/.test(rawButtonId) ? parseInt(rawButtonId) : rawButtonId) : (ev.target?.getAttribute("id") || null);
 
 		// we need to consider still buttons used in dialogs that may actually submit and have server-side interactions(eg.vfsSelect)
 		if(!ev.target?.getInstanceManager()?._etemplate_exec_id)
@@ -744,7 +676,9 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		}
 		if(changedProperties.has("buttons"))
 		{
-			//render(this._buttonsTemplate(), this);
+			// Button changes need the host to update its slots.  Do not re-render
+			// _contentTemplate() here: it owns the template container, and replacing
+			// that light DOM would destroy an already loaded legacy template.
 			this.requestUpdate();
 		}
 		if(changedProperties.has("width"))
@@ -898,7 +832,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		{
 			let isDefault = hasDefault && button.default || !hasDefault && index == 0;
 			return html`
-                <et2-button ._parent=${this} id=${button.id} button_id=${button.button_id}
+                <et2-button ._parent=${this} id=${button.id} button_id=${ifDefined(button.button_id)}
                             label=${button.label}
                             slot="footer"
                             .image=${ifDefined(button.image)}
@@ -1286,16 +1220,19 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 	 * @param {string} _message Message to be place in the dialog.  Usually just
 	 *	text, but DOM nodes will work too.
 	 * @param {string} _title Text in the top bar of the dialog.
-	 * @param {string} _menuaction the menuaction function which should be called and
-	 * 	which handles the actual request. If the menuaction is a full featured
-	 * 	url, this one will be used instead.
+	 * @param {string|function} _item_callback either a menuaction which should be called for each
+	 * 	item and which handles the actual request (if the menuaction is a full featured url, this
+	 * 	one will be used instead), or a client-side function(...parameters) returning a Promise -
+	 * 	called directly instead of a server round-trip, resolving with a success message (string,
+	 * 	displayed the same way a successful server response would be) or rejecting/throwing with an
+	 * 	Error (its .message displayed the same way a server-side error response would be).
 	 * @param {Array[]} _list - List of parameters, one for each call to the
 	 *	address.  Multiple parameters are allowed, in an array.
 	 * @param {string|egw} _egw_or_appname egw object with already laoded translations or application name to load translations for
 	 *
 	 * @return {Et2Dialog}
 	 */
-	static long_task(_callback, _message, _title, _menuaction, _list, _egw_or_appname)
+	static long_task(_callback, _message, _title, _item_callback, _list, _egw_or_appname)
 	{
 		// Special action for cancel
 		let buttons = [
@@ -1420,6 +1357,19 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 							sendRequest(retry_index)
 						}
 					});
+					break;
+
+				// A recognised, non-retryable per-item outcome (eg. "no email address, nothing to
+				// send") - log it plainly and count it as skipped, without the retry/abort prompt
+				// used for real (potentially transient) failures above.
+				case 'skipped':
+					let skipped_div = document.createElement("DIV");
+					skipped_div.className = "message hint";
+					skipped_div.textContent = response.data?.message ?? response.data;
+					log.appendChild(skipped_div);
+
+					totals.skipped++;
+					break;
 				default:
 					if(response && typeof response === "string")
 					{
@@ -1476,11 +1426,32 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 				updateUi({type: 'error', data: dialog.egw().lang("failed") + " " + JSON.stringify(parameters)}, index + 1)
 			}, 30000);
 
+			if(typeof _item_callback === 'function')
+			{
+				// client-side callback, no server round-trip: resolves with a success message
+				// (string) or rejects/throws with an Error, same as _item_callback.apply() would
+				// do for a real function - not the {response: [...]} envelope a server JSON
+				// response uses, since there's no server dispatcher wrapping this result
+				request = Promise.resolve()
+					.then(() => _item_callback.apply(null, parameters))
+					.then(async(response) =>
+					{
+						clearTimeout(timeout_id);
+						await updateUi(response, index + 1);
+					})
+					.catch(async(error) =>
+					{
+						clearTimeout(timeout_id);
+						updateUi({type: 'error', data: error?.message ?? error}, index + 1);
+					});
+				return request;
+			}
+
 				// Async request, we'll take the next step in the callback
 				// We can't pass index = 0, it looks like false and causes issues
 			try
 			{
-				request = dialog.egw().json(_menuaction, parameters).sendRequest()
+				request = dialog.egw().json(_item_callback, parameters).sendRequest()
 					.then(async(response) =>
 					{
 						if(response && response.response)

@@ -36,7 +36,6 @@ inventory number	resources	et	Inventari number
 inventory number:	resources	et	Inventari number:
 is resource bookable?	resources	et	Kas ressurss on broneeritav
 is the ressource bookable?	resources	et	Kan ressourcen bookes?
-links	resources	et	Lingid
 location	resources	et	Asukoht
 location:	resources	et	Asukoht:
 name:	resources	et	Nimi:

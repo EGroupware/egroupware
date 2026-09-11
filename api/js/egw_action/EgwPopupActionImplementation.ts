@@ -26,21 +26,24 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 
     registerAction = (_aoi, _callback, _context) => {
         const node = _aoi.getDOMNode();
-		let parentNode = null;
-		let parentAO = null;
-		let isNew = false;
 
-		// Is there a parent that handles action targets?
+		// If a parent already resolves action targets for this node (see findActionTarget()),
+		// the parent's own direct registration (node === its own DOM node, below) owns the real
+		// listener - this delegate must not bind its own copy. Matches egwDragActionImplementation
+		// and EgwDropActionImplementation, which already use this exact guard. A prior version of
+		// this method let a delegate bind its own extra copy directly onto the parent the first
+		// time it was asked to register ("isNew"), tracked per-delegate rather than per-parent -
+		// since e.g. Et2Nextmatch materializes a fresh delegate per virtualized row, every distinct
+		// row believed it was first and permanently stacked one more listener on the shared parent.
 		if(typeof _context.findActionTargetHandler !== "undefined" && typeof _context.findActionTargetHandler?.iface?.getWidget == "function")
 		{
-			parentAO = _context.findActionTargetHandler;
-			parentNode = parentAO.iface.getWidget();
+			const parentNode = _context.findActionTargetHandler.iface.getWidget();
+			if(parentNode && node !== parentNode)
+			{
+				return false;
+			}
 		}
-		if(!_aoi.findActionTargetHandler && parentNode && typeof parentNode.findActionTarget == "function")
-		{
-			_aoi.findActionTargetHandler = parentNode;
-			isNew = true;
-		}
+
 		if(typeof _aoi.handlers == "undefined")
 		{
 			_aoi.handlers = {};
@@ -50,23 +53,11 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 			_aoi.handlers[this.type] = [];
 		}
 
-		if(_aoi.handlers[this.type].length == 0)
+		if(node && _aoi.handlers[this.type].length == 0)
 		{
-			_aoi.handlers[this.type].push({type: 'contextmenu', listener: _callback});
-			if(isNew)
-			{
-				//if a parent is available the context menu Event-listener will only be bound once on the parent
-				this._registerDefault(parentNode, _callback, parentAO);
-				this._registerContext(parentNode, _callback, parentAO);
-
-				return true;
-			}
-			else if(node && !parentNode)
-			{
-				this._registerDefault(node, _callback, _context);
-				this._registerContext(node, _callback, _context);
-				return true;
-			}
+			this._registerDefault(node, _callback, _context);
+			this._registerContext(node, _callback, _context);
+			return true;
 		}
 		return false;
 
@@ -74,13 +65,36 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 
     unregisterAction = function (_aoi) {
         const node = _aoi.getDOMNode();
-        //TODO jQuery replacement
-        jQuery(node).off();
 
 		// Unregister handlers
 		if(_aoi.handlers)
 		{
-			_aoi.handlers[this.type]?.forEach(h => node.removeEventListener(h.type, h.listener));
+			_aoi.handlers[this.type]?.forEach(h =>
+			{
+				if(h.dispose)
+				{
+					// Not a DOM listener - a resource (e.g. a tapAndSwipe instance) that owns its
+					// own internal bindings and must be torn down through its own API.
+					h.dispose();
+					return;
+				}
+				if(!h.type || !h.listener)
+				{
+					return;
+				}
+				if(h.property)
+				{
+					// Bound via property assignment (e.g. `node.ondblclick = handler`), not
+					// addEventListener - removeEventListener() cannot undo it. Only clear it if
+					// it's still pointing at our handler, so we don't clobber a newer binding.
+					if(node[h.property] === h.listener)
+					{
+						node[h.property] = null;
+					}
+					return;
+				}
+				node.removeEventListener(h.type, h.listener);
+			});
 			delete _aoi.handlers[this.type];
 		}
         return true
@@ -119,8 +133,21 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 
 			let menu = null;
 			const managerData = _selected?.[0]?.parent?.manager?.data;
-			// Special handling for nextmatch context menu - reuse the same menu
-			if(!_target && !_context.menu && managerData?.menu)
+			// Run this before the reuse check below - _addCopyPaste() can add
+			// egw_copy/egw_copy_add/... to _links (eg. once a draggable row is
+			// selected, when the cached menu was first built for a selection/context
+			// without any drag links), and the reuse check needs to know about them.
+			if(useAutoPaste)
+			{
+				this._addCopyPaste(_links, _selected);
+			}
+			// Special handling for nextmatch context menu - reuse the same menu, but
+			// only if it can actually show everything _links now wants visible.
+			// applyContext() can only toggle existing menu items, never add ones that
+			// weren't part of the original _buildMenu() call - eg. actions hidden by a
+			// restricted placeholder-popup's first build, or egw_copy* added above for
+			// a selection the cached menu didn't have when it was built.
+			if(!_target && !_context.menu && managerData?.menu && this._menuCoversLinks(managerData.menu, _links))
 			{
 				menu = managerData.menu;
 			}
@@ -131,10 +158,6 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 			}
 			else
 			{
-				if(useAutoPaste)
-				{
-					this._addCopyPaste(_links, _selected);
-				}
 				menu.applyContext(_links, _selected, _target);
 			}
 			if(!_target && !_context.menu && managerData)
@@ -217,8 +240,12 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 
         if (window.egwIsMobile() || _context.manager.getActionsByAttr('singleClick', true).length > 0) {
             _node.addEventListener('click',defaultHandler)//jQuery(_node).on('click', defaultHandler);
+            _context.iface?.handlers[this.type]?.push({type: 'click', listener: defaultHandler});
         } else {
             _node.ondblclick = defaultHandler;
+            // Property assignment, not addEventListener - unregisterAction() must null the
+            // property, not call removeEventListener(). The `property` marker tells it which.
+            _context.iface?.handlers[this.type]?.push({type: 'dblclick', listener: defaultHandler, property: 'ondblclick'});
         }
     };
 
@@ -300,7 +327,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
     private _handleTapHold = function (_node, _callback) {
         //TODO (todo-jquery): ATM we need to convert the possible given jquery dom node object into DOM Element, this
         // should be no longer necessary after removing jQuery nodes.
-        if (_node instanceof jQuery) {
+        if (typeof jQuery !== "undefined" && _node instanceof jQuery) {
             _node = _node[0];
         }
 
@@ -318,6 +345,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
         });
         // bind a custom event tapandhold to be able to call it from nm action button
 		_node.addEventListener('tapandhold', _callback);
+        return tap;
     }
 
     /**
@@ -397,8 +425,14 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
         };
         // Safari still needs the taphold to trigger contextmenu
         // Chrome has default event on touch and hold which acts like right click
-        this._handleTapHold(_node, contextHandler);
+        const tap = this._handleTapHold(_node, contextHandler);
 		_context.iface?.handlers['popup'].push({type: 'tapandhold', listener: contextHandler})
+		// tapAndSwipe binds its own internal touchstart/touchend/touchmove/touchcancel listeners
+		// directly on _node - without disposing it here, every re-registration (e.g. Et2Nextmatch's
+		// syncDragDropRegistration() on every render) would leak another full instance's worth of
+		// touch listeners, each independently detecting the same gesture and firing its own stale
+		// callback - the same class of bug as the default-click handler, just for long-press.
+		_context.iface?.handlers['popup'].push({dispose: () => tap?.destroy()});
         if (!window.egwIsMobile())
         {
             _node.addEventListener('contextmenu', contextHandler);
@@ -513,7 +547,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
                     firstElem = false;
 
                     const item:egwMenuItem = _menu.addItem(link.actionObj.id, link.actionObj.caption,
-                        link.actionObj.iconUrl, undefined, link.actionObj.color,link.actionObj?.data?.level);
+                        link.actionObj.iconUrl, undefined, link.actionObj.color,link.actionObj?.data?.level,link.actionObj?.iconColor);
                     item.default= link.actionObj["default"];
 
                     // As this code is also used when a drag-drop popup menu is built,
@@ -566,6 +600,21 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
     };
 
     /**
+     * Whether a cached menu already has an item for every action _links wants
+     * visible right now. See the reuse check in executeImplementation() - a
+     * menu missing even one of them must be rebuilt, since applyContext() can
+     * only toggle existing items, never add new ones.
+     */
+    private _menuCoversLinks = (menu, _links) : boolean =>
+    {
+        if(typeof menu?.hasActionItem !== "function")
+        {
+            return true;
+        }
+        return Object.keys(_links).every((actionId) => !_links[actionId]?.visible || menu.hasActionItem(actionId));
+    };
+
+    /**
      * Builds the context menu from the given action links
      *
      * @param {type} _links
@@ -582,6 +631,9 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 		{
             this._addCopyPaste(_links, _selected);
         }
+
+        // Automatically add a "Link" action, right below Paste, for apps that support linking
+        this._addLinkAction(_links, _selected);
 
         for (const k in _links) {
 			_links[k].actionObj.appendToTree(tree);
@@ -741,9 +793,10 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
                 clipboard_action.group = 2.5;
             }
             let os_clipboard_caption = "";
-			if(this._context?.event)
-			{
-				os_clipboard_caption = (this._context?.event?.target?.innerText || this._context.innerText).trim().replaceAll("\n", " ");
+            if(this._context?.event)
+            {
+                const clipboardTarget = this._context.target || this._context?.event?.target;
+                os_clipboard_caption = (clipboardTarget?.innerText || clipboardTarget?.textContent || this._context.innerText).trim().replaceAll("\n", " ");
                 clipboard_action.set_caption(window.egw.lang('Copy "%1"', os_clipboard_caption.length > 20 ? os_clipboard_caption.substring(0, 20) + '...' : os_clipboard_caption));
                 clipboard_action.data.target = this._context.target;
             }
@@ -894,6 +947,79 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
                     }
                 }
             }
+        }
+    };
+
+    /**
+     * Automatically add a "Link" action to the popup menu, for any entry whose app supports
+     * linking - gated on egw.link_get_registry(), same synchronous, pre-loaded capability check
+     * Et2Nextmatch already uses for its own link-related UI. Mail is excluded purely by this
+     * capability check (its search_link() hook registers neither 'query' nor 'title'), no
+     * hardcoded app-name exception needed.
+     *
+     * The gate is per-APP, not per-row: a selection comes from one nextmatch/app, so either all
+     * of it qualifies or none of it does. Individual per-entry failures (eg. no edit-rights on
+     * one particular selected entry) are only discovered - and reported - once the user actually
+     * tries to link/unlink, inside LinkAction.
+     *
+     * @param {object[]} _links Actions for inclusion in the menu
+     * @param {EgwActionObject[]} _selected Currently selected entries
+     */
+    private _addLinkAction = (_links, _selected : EgwActionObject[]) =>
+    {
+        const app = (_selected[0]?.id || "").split("::")[0];
+        if(!app || !(window.egw.link_get_registry?.(app, 'query') || window.egw.link_get_registry?.(app, 'title')))
+        {
+            return;
+        }
+
+        const mgr = _selected[0].manager;
+        let link_action = mgr.getActionById('egw_link');
+        if(link_action == null)
+        {
+            link_action = mgr.addAction('popup', 'egw_link', window.egw.lang('Link'), window.egw.image('link'),
+                (action, selected) =>
+                {
+                    // Dynamic import, not a static one: a static import of Et2Dialog's widget
+                    // graph from here re-triggers the et2_core_widget circular-import TDZ class
+                    // of bug ("Et2Widget accessed before initialization" in Et2Image.ts) - this
+                    // module is foundational enough (imported before most et2 widgets exist yet)
+                    // that pulling in the whole dialog/widget graph at its top level reorders
+                    // initialization. Deferring the import until the action actually runs avoids
+                    // it entirely, and only loads the dialog code for users who use "Link".
+                    import("../etemplate/Et2Link/LinkAction").then(async({LinkAction}) =>
+                    {
+                        // "Select all" only ever materializes the visible/virtualized rows into
+                        // `selected` (Et2NextmatchActionController keeps allSelected as a separate
+                        // flag, exactly because a virtualized grid never instantiates an action
+                        // object for every un-rendered row) - so acting on `selected` as-is here
+                        // would silently only (un)link whatever happened to be on screen. Resolve
+                        // the real full id list the same way addressbook/js/app.ts's own
+                        // _fetchAllSelected() does for its bulk actions.
+                        const nextmatch : any = mgr.data?.nextmatch;
+                        const selection = nextmatch?.getSelection?.();
+                        let effectiveSelected = selected;
+                        if(selection?.all && typeof nextmatch.fetchAllIds === "function")
+                        {
+                            const rowApp = (selected[0]?.id || "").split("::")[0];
+                            const ids : string[] = await nextmatch.fetchAllIds();
+                            effectiveSelected = ids.map((id) => ({id: rowApp + "::" + id}));
+                        }
+                        LinkAction.open(window.egw, effectiveSelected);
+                    });
+                }, true);
+            link_action.group = 2.5;
+            link_action.order = 9.5;
+        }
+
+        if(typeof _links[link_action.id] == 'undefined')
+        {
+            _links[link_action.id] = {
+                "actionObj": link_action,
+                "enabled": true,
+                "visible": true,
+                "cnt": 0
+            };
         }
     };
     private _context: any;

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="resources.acl_edit" template="" lang="" group="0" version="16.1">
+	<et2-template  id="resources.acl_edit" template="" lang="" group="0" version="16.1">
 		<grid width="100%">
 			<columns>
 				<column width="90"/>
@@ -13,8 +14,7 @@
 					<et2-description  id="name"></et2-description>
 				</row>
 				<row valign="top">
-					<et2-description  value="Description" for="description"></et2-description>
-					<et2-textarea  id="description" rows="5" cols="50" readonly="true"></et2-textarea>
+					<et2-description  value="Description" for="description"></et2-description><et2-ai><et2-textarea  id="description" rows="5" cols="50" readonly="true"></et2-textarea></et2-ai>
 				</row>
 				<row>
 					<et2-description  value="Category admin" for="admin"></et2-description>
@@ -63,5 +63,5 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

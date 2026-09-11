@@ -240,6 +240,181 @@ class Smime extends Horde_Crypt_Smime
 	}
 
 	/**
+	 * Try decrypting a message against several candidate recipient certificates
+	 *
+	 * openssl_pkcs7_decrypt() (used by Horde_Crypt_Smime::decrypt()) picks the message's
+	 * RecipientInfo to use by matching the given certificate's issuer+serial - NOT simply by
+	 * whether the private key mathematically fits. So renewing a certificate via CSR (same key
+	 * pair, but a new issuer/serial from the CA) makes it impossible to decrypt messages that
+	 * were encrypted under the previous certificate, even though the private key never changed.
+	 * Try each candidate certificate in turn (current one first) so old mail keeps decrypting
+	 * across a renewal, as long as the matching certificate is still available as a candidate
+	 * (see import_smime_cert() in admin_mail, which retains the previous certificate for this).
+	 *
+	 * @param Horde_Crypt_Smime $smime
+	 * @param string $message
+	 * @param string[] $pubkeys candidate certificates to try, most-likely-first
+	 * @param string $privkey
+	 * @param string $passphrase
+	 * @return string decrypted message
+	 * @throws \Horde_Crypt_Exception if none of the candidates could decrypt the message
+	 */
+	public static function decryptWithCandidates(Horde_Crypt_Smime $smime, string $message,
+		array $pubkeys, string $privkey, string $passphrase='') : string
+	{
+		$exception = null;
+		foreach (array_unique(array_filter($pubkeys)) as $pubkey)
+		{
+			try
+			{
+				return $smime->decrypt($message, [
+					'type' => 'message',
+					'pubkey' => $pubkey,
+					'privkey' => $privkey,
+					'passphrase' => $passphrase,
+				]);
+			}
+			catch (\Horde_Crypt_Exception $e)
+			{
+				$exception = $e;
+			}
+		}
+		throw $exception ?: new \Horde_Crypt_Exception('No certificate to try for decryption.');
+	}
+
+	/**
+	 * Does the given certificate belong to the given private key?
+	 *
+	 * Used to tell a retired OWN leaf-certificate (kept around in extracerts by
+	 * import_smime_cert() so old messages stay decryptable, see decryptWithCandidates()) apart
+	 * from a genuine CA/intermediate certificate (belonging to the CA's key, not ours) also stored
+	 * in extracerts - only the latter belongs in the certificate chain sent along with outgoing
+	 * signed mail (mail_compose::_encrypt()).
+	 *
+	 * @param string $certPem
+	 * @param string $privkey
+	 * @param string $passphrase = ''
+	 * @return bool
+	 */
+	public static function isOwnCertificate(string $certPem, string $privkey, string $passphrase='') : bool
+	{
+		if (!($key = @openssl_pkey_get_private($privkey, $passphrase)))
+		{
+			return false;
+		}
+		return openssl_x509_check_private_key($certPem, $key);
+	}
+
+	/**
+	 * JMAP-native S/MIME resolution: decrypt/verify a raw message already fetched via JMAP (Blob
+	 * download for Stalwart - Api\Mail\Imap\Jmap - or JmapShim::fetchRawMessage() for the local
+	 * shim) instead of Mail::resolveSmimeMessage()'s IMAP-based getMessageRawBody(). Same
+	 * decrypt/verify logic as that method (Horde_Crypt_Smime, via this class, unchanged) - only
+	 * how the raw bytes were obtained differs, so this is the one place that logic lives, reused by
+	 * both backends instead of duplicated.
+	 *
+	 * @param int $profileID mail account id, for cert/key lookup (get_acc_smime())
+	 * @param string $rawMessage raw RFC822 bytes, however obtained
+	 * @param string $topLevelType top-level Content-Type of the still-encrypted message, e.g.
+	 *  "multipart/signed" or "application/pkcs7-mime" - used only to decide signature-only vs.
+	 *  encrypted, mirrors Mail\Smime::getSmimeType()'s own logic without needing a Horde_Mime_Part
+	 * @param string $passphrase = '' falls back to the cached session passphrase, same as
+	 *  Mail::_decryptSmimeBody() already does
+	 * @param ?string $fromAddress sender address (already known from the Email envelope/JMAP
+	 *  "from", no extra fetch needed) - cross-checked against the signer certificate's email
+	 * @return Horde_Mime_Part the decrypted/verified structure, with 'X-EGroupware-Smime' metadata
+	 *  attached (same convention Mail::getStructure() already uses)
+	 * @throws Smime\PassphraseMissing
+	 */
+	public static function resolveMessage(int $profileID, string $rawMessage, string $topLevelType,
+		string $passphrase='', ?string $fromAddress=null) : Horde_Mime_Part
+	{
+		$passphrase = $passphrase ?: (Api\Cache::getSession('mail', 'smime_passphrase') ?: '');
+		$metadata = ['mimeType' => $topLevelType];
+		$smime = new self;
+		$message = $rawMessage;
+
+		$signatureOnly = self::isSmimeSignatureOnly(
+			$topLevelType === 'multipart/signed' ? self::SMIME_TYPE_SIGNED_DATA : null);
+
+		if (!$signatureOnly)
+		{
+			$acc_smime = self::get_acc_smime($profileID, $passphrase);
+			if (empty($acc_smime) || !$smime->verifyPassphrase($acc_smime['pkey'] ?? '', $passphrase))
+			{
+				throw new Smime\PassphraseMissing(lang('Authentication failure!'));
+			}
+			$AB_bo = new \addressbook_bo();
+			$certkey = $AB_bo->get_smime_keys($acc_smime['acc_smime_username'] ?? '');
+			try
+			{
+				$message = self::decryptWithCandidates($smime, $message, array_merge([
+					$certkey[strtolower($acc_smime['acc_smime_username'] ?? '')] ?? '',
+					$acc_smime['cert'] ?? '',
+				], $acc_smime['extracerts'] ?? []), $acc_smime['pkey'], $passphrase);
+			}
+			catch (\Horde_Crypt_Exception $e)
+			{
+				throw new Smime\PassphraseMissing(lang('Could not decrypt '.
+					'S/MIME data. This message may not be encrypted by your '.
+					'public key and not being able to find corresponding private key.'));
+			}
+			$metadata['encrypted'] = true;
+		}
+
+		$cert = null;
+		try
+		{
+			$cert = $smime->verifySignature($message);
+		}
+		catch (\Exception $ex)
+		{
+			if (isset($message['password_required']))
+			{
+				throw new Smime\PassphraseMissing($message['msg']);
+			}
+			// verification failure - either tampered, not validly signed, or encrypted-only
+			$metadata['verify'] = false;
+			$metadata['signed'] = true;
+			$metadata['msg'] = $ex->getMessage();
+		}
+
+		if ($cert)	// signed message, might be encrypted too
+		{
+			$message_parts = $smime->extractSignedContents($message);
+			$cert_email = strtolower($cert->email);
+			$metadata = array_merge($metadata, [
+				'verify' => $cert->verify,
+				'cert' => $cert->cert,
+				'certDetails' => $smime->parseCert($cert->cert),
+				'msg' => $cert->msg,
+				'certHtml' => $smime->certToHTML($cert->cert),
+				'email' => $cert_email,
+				'signed' => true,
+			]);
+			if ($fromAddress && strcasecmp($fromAddress, $cert_email) != 0 &&
+				stripos($metadata['certDetails']['extensions']['subjectAltName'] ?? '', $fromAddress) === false)
+			{
+				$metadata['unknownemail'] = true;
+				$metadata['msg'] .= ' '.lang('Email address of signer is different from the email address of sender!');
+			}
+			$AB_bo ??= new \addressbook_bo();
+			$certkey = $AB_bo->get_smime_keys($cert_email);
+			if (!is_array($certkey) || strcasecmp(trim($certkey[$cert_email] ?? ''), trim($cert->cert)) != 0)
+			{
+				$metadata['addtocontact'] = true;
+			}
+		}
+		else	// only encrypted, or verification failed above
+		{
+			$message_parts = Horde_Mime_Part::parseMessage($message, ['forcemime' => true]);
+		}
+		$message_parts->setMetadata('X-EGroupware-Smime', $metadata);
+
+		return $message_parts;
+	}
+
+	/**
 	 * Generate certificate, private and public key pair
 	 *
 	 * @param array $_dn distinguished name to be used in certificate
@@ -467,5 +642,59 @@ class Smime extends Horde_Crypt_Smime
 			return array_merge($acc_smime, is_array($extracted) ? $extracted : array());
 		}
 		return false;
+	}
+
+	/**
+	 * Opportunistically resync the addressbook's own separate copy of this account's S/MIME
+	 * certificate (addressbook_bo::get_smime_keys()/set_smime_keys(), a VFS-file-backed contact
+	 * field - NOT the same storage as get_acc_smime()'s own Credentials/p12) - call this whenever
+	 * $passphrase is already in hand as a plain variable, right after it's been PROVEN to work
+	 * (a confirmed decrypt, or a confirmed sign/encrypt), rather than depending on
+	 * get_acc_smime()'s own session-cached-passphrase fallback surviving to a LATER, separate
+	 * request (found live 2026-09-02: session write/close instability elsewhere in the codebase -
+	 * unrelated, actively-changing work - made that fallback an unreliable trigger for
+	 * admin_mail::edit()'s own equivalent check, which only ever runs on a later account-settings
+	 * page load).
+	 *
+	 * Covers the case found live 2026-09-02: an addressbook-write ACL failure (since fixed) left
+	 * the addressbook holding a stale certificate indefinitely after a key rotation, silently
+	 * breaking outgoing signing (embeds the wrong cert - recipients see an unverifiable signature)
+	 * and encryption to this account's own address (encrypts under a possibly-retired public key)
+	 * with no other way to notice or fix it short of generating/importing a whole new certificate.
+	 *
+	 * Deliberately silent (no message shown, all failures swallowed) - unlike
+	 * admin_mail::edit()'s own resync (shown while the user is looking at S/MIME settings anyway),
+	 * this fires from otherwise-unrelated actions (viewing/sending mail), where a random "public
+	 * key added to addressbook" toast would be surprising and where a failure here should never
+	 * block the actual view/send that triggered it.
+	 *
+	 * @param int $acc_id
+	 * @param string $passphrase already-confirmed-working passphrase
+	 * @param int|null $account_id see get_acc_smime()'s own docblock - only needed when acting on
+	 *  behalf of another user
+	 * @return void
+	 */
+	public static function resyncAddressbookCert(int $acc_id, string $passphrase, ?int $account_id=null) : void
+	{
+		try
+		{
+			$acc_smime = self::get_acc_smime($acc_id, $passphrase, $account_id);
+			if (empty($acc_smime['cert']))
+			{
+				return;
+			}
+			$smime = new self();
+			$email = $smime->getEmailFromKey($acc_smime['cert']);
+			$AB_bo = new \addressbook_bo();
+			$stored = $AB_bo->get_smime_keys($email)[strtolower($email)] ?? null;
+			if ($stored === null || trim($stored) !== trim($acc_smime['cert']))
+			{
+				$AB_bo->set_smime_keys([$email => $acc_smime['cert']]);
+			}
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+		}
 	}
 }

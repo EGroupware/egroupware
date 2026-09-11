@@ -12,16 +12,25 @@
 /**
  * former templates/default/app.css
  */
-/* Minimum width for first column */
-#infolog-index.et2_container .gridCont_0_div_col_0 {
-  min-width: 45px;
-}
+/* Some row styles are reused */
 .infolog_headertext {
   color: var(--sl-color-neutral-950);
   font-size: 120%;
 }
 .infolog_lpadding5 {
   padding-left: 5px;
+}
+.infolog_subjectHeader::part(base) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  gap: 0;
+}
+.infolog_subjectHeader > :nth-child(even) {
+  justify-self: end;
+  text-align: right;
+}
+.infolog_user_filter select {
+  width: 100px;
 }
 .low,
 .low_done,
@@ -63,6 +72,68 @@
 .infolog_planned {
   font-style: italic;
 }
+.infolog_rowHasParent > td:nth-child(2) {
+  background-image: url(node_modules/bootstrap-icons/icons/caret-up-fill.svg);
+  background-repeat: no-repeat;
+  background-size: 1em;
+  background-position: round(up, 0.3em,1px) 0px;
+}
+/*get <a> tags inside description in listview with no breakline*/
+div.et2_vbox .infoDes a,
+.infoDes a {
+  display: inline-table;
+}
+.infoDes {
+  display: var(--infolog-info-details-display, block);
+  max-height: var(--descHeight, 5lh);
+  overflow: auto;
+  overflow-wrap: anywhere;
+}
+.infolog_fullWidth {
+  height: 100%;
+}
+.infolog_fullWidth .infoDes et2-description {
+  align-items: flex-start;
+}
+.infolog_fullWidth et2-link-string {
+  margin-top: auto;
+  overflow: clip auto;
+  max-height: 5lh;
+}
+.infoDescRow {
+  display: var(--infolog-info-details-display, block);
+}
+/* Spacing for parent / sub indicators */
+.infolog_CompletedClmn {
+  max-width: fit-content;
+  margin-left: 10px;
+}
+.infolog_CompletedClmn::part(base) {
+  /* Put line break for the first column*/
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+tr.infolog_rowHasParent > td:first-child .infolog_CompletedClmn {
+  margin-left: 16px;
+}
+.infolog_infoId {
+  text-align: right;
+}
+et2-hbox.infolog_CompletedClmn et2-image {
+  width: 1rem;
+}
+et2-hbox.infolog_CompletedClmn et2-image *[part="image"] {
+  vertical-align: middle;
+}
+et2-hbox.infolog_CompletedClmn progress {
+  width: 100%;
+  max-width: 2em;
+}
+/* Minimum width for first column */
+#infolog-index.et2_container .gridCont_0_div_col_0 {
+  min-width: 45px;
+}
 table.infolog_fullWidth {
   width: 100%;
 }
@@ -78,9 +149,6 @@ table.infolog_fullWidth {
 .infolog_normalWrap {
   white-space: normal;
 }
-.infolog_user_filter select {
-  width: 100px;
-}
 .inputFullWidth input {
   width: 100%;
 }
@@ -94,46 +162,12 @@ table.infolog_fullWidth {
   width: 69%;
   margin-left: 2px;
 }
-tr.infolog_rowHasParent > td:first-child {
-  background-image: url(../../../node_modules/bootstrap-icons/icons/caret-up-fill.svg);
-  background-repeat: no-repeat;
-  background-size: 1em;
-  background-position: round(up, 0.3em,1px) 0px;
-}
-/*get <a> tags inside description in listview with no breakline*/
-.et2_nextmatch .egwGridView_grid tr td div.et2_vbox .infoDes a {
-  display: inline-table;
-}
-.infoDes {
-  max-height: var(--descHeight, 5em);
-  overflow: clip;
-}
-.infoDes:hover {
-  overflow: auto;
-}
-/* break in words if necessary for description */
-.infoDes > span {
-  overflow-wrap: break-word;
-}
-/* Spacing for parent / sub indicators */
-.egwGridView_grid .infolog_CompletedClmn {
-  max-width: fit-content;
-  margin-left: 10px;
-}
-.egwGridView_grid .infolog_CompletedClmn::part(base) {
-  /* Put line break for the first column*/
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-}
-tr.infolog_rowHasParent > td:first-child .infolog_CompletedClmn {
-  margin-left: 16px;
-}
-/* Right-align extra buttons in tab */
+/* Right-align extra buttons in tab and give them the same size as other buttons */
 .infologExtraButton {
   margin-left: auto;
   display: flex;
   align-items: center;
+  font-size: 20px;
 }
 .infologExtraButton ~ .infologExtraButton {
   margin: 0;
@@ -185,27 +219,6 @@ span#infolog-index_\$\{row\}\[info_des\] {
   height: calc(100% + 50px) !important;
   left: -15px;
   width: calc(100% + 30px) !important;
-}
-/**
- * Kdots:
- */
-egw-app[name="infolog"] {
-  /* Hide nextmatch header, it's in the framework now */
-}
-egw-app[name="infolog"] .et2_nextmatch .nextmatch_header {
-  height: 0px;
-  overflow: hidden;
-}
-et2-hbox.infolog_CompletedClmn et2-image {
-  width: 1rem;
-}
-et2-hbox.infolog_CompletedClmn et2-image *[part="image"] {
-  vertical-align: middle;
-}
-et2-hbox.infolog_CompletedClmn div.et2_progress {
-  width: 100%;
-  height: var(--sl-line-height-dense, 0.7em);
-  max-width: 2em;
 }
 @media all {
   #infolog-index_nm .gridCont_0_div_col_0.innerContainer {
@@ -283,8 +296,22 @@ et2-hbox.infolog_CompletedClmn div.et2_progress {
   #infolog-view .et2_label.et2_label_empty * {
     padding-left: 0px;
   }
+  .infolog_CompletedClmn {
+    width: 100%;
+    max-width: 100%;
+  }
   .infolog_CompletedClmn .infoType {
     padding-right: 1em;
+  }
+  et2-vbox.infolog_CompletedClmn et2-image {
+    width: 1rem;
+  }
+  et2-vbox.infolog_CompletedClmn et2-image *[part="image"] {
+    vertical-align: middle;
+  }
+  et2-vbox.infolog_CompletedClmn progress {
+    width: 100%;
+    max-width: 2em;
   }
   #infolog-edit_timestamp::part(base) {
     background: transparent;
@@ -307,4 +334,3 @@ et2-hbox.infolog_CompletedClmn div.et2_progress {
     width: 100%;
   }
 }
-/*# sourceMappingURL=app.css.map */

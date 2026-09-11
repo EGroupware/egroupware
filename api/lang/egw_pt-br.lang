@@ -790,6 +790,7 @@ linkapps	common	pt-br	Link de aplicativos
 linked	common	pt-br	Vinculado
 linkentry	common	pt-br	Entradas de link
 linklist	common	pt-br	Listar link
+links	common	pt-br	Links
 links and attached files	preferences	pt-br	Links e arquivos anexados
 links to specified application.  example: {{links/addressbook}}	common	pt-br	Links para o aplicativo especificado. Exemplo: {{links/addressbook}}
 linkstring	common	pt-br	Texto para link

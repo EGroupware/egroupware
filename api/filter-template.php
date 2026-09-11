@@ -197,6 +197,7 @@ EOF;
 				$widget = $attrs['widgetType'] ?? 'et2-select';
 				switch ($match[2])
 				{
+					case 'header-customfields':
 					case 'customfields':
 						$widget = 'customfields-filters';
 						$attrs['label'] = '';
@@ -264,7 +265,7 @@ EOF;
 EOF;
 		}
 		$str = $xet . <<<EOF
-		<styles>et2-hbox.sort::part(base) {  align-items: flex-end }</styles>
+		<et2-styles>et2-hbox.sort::part(base) {  align-items: flex-end }</et2-styles>
 	</et2-template>
 </overlay>
 EOF;

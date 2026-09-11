@@ -2,6 +2,7 @@ import {assert, elementUpdated, expect, fixture, html, oneEvent} from '@open-wc/
 import * as sinon from 'sinon';
 import {Et2VfsPath} from "../Et2VfsPath";
 import {sendKeys} from "@web/test-runner-commands";
+import {inputBasicTests} from "../../Et2InputWidget/test/InputBasicTests";
 
 /**
  * Test file for Etemplate webComponent VfsPath
@@ -16,6 +17,8 @@ window.egw = {
 	jsonq: () => Promise.resolve({}),
 	lang: i => i + "*",
 	link: i => i,
+	// An /apps/<app>/<id>/... path resolves the entry's title for its breadcrumb segment
+	link_title: (_app, _id) => "Entry #" + _id,
 	preference: i => "",
 	tooltipUnbind: () => {},
 	webserverUrl: "",
@@ -139,13 +142,83 @@ describe("User interactions", () =>
 		sinon.assert.notCalled(handler);
 	})
 });
-/*
-These no longer pass (In/Out value tests > no value gives empty string)
-inputBasicTests(async() =>
-{
-	const element = await before();
-	element.noLang = true;
-	return element
-}, "/home/test", "sl-breadcrumb");
 
- */
+describe("Read-only display of a value that is not a path", () =>
+{
+	// Setup run before each test
+	beforeEach(async() =>
+	{
+		await before();
+		element.readonly = true;
+		await elementUpdated(element);
+	});
+
+	it("renders a path as a clickable breadcrumb", async() =>
+	{
+		element.set_value("/apps/infolog/1/attachment.pdf");
+		await elementUpdated(element);
+
+		assert.exists(element.shadowRoot.querySelector("sl-breadcrumb"), "No breadcrumb for a path");
+		assert.notExists(element.shadowRoot.querySelector(".vfs-path__plain"), "Path rendered as plain text");
+	});
+
+	it("renders a bare name as plain text, with no icon", async() =>
+	{
+		// eg. the historylog's "File" column for a removed attachment - only the basename is left
+		element.set_value("attachment.pdf");
+		await elementUpdated(element);
+
+		const plain = element.shadowRoot.querySelector(".vfs-path__plain");
+		assert.exists(plain, "Bare name not rendered as plain text");
+		assert.equal(plain.textContent.trim(), "attachment.pdf");
+		assert.notExists(element.shadowRoot.querySelector("sl-breadcrumb"), "Bare name rendered as a breadcrumb");
+		assert.notExists(element.shadowRoot.querySelector("et2-image"), "Bare name got a filemanager icon");
+	});
+
+	it("renders nothing for an empty value", async() =>
+	{
+		element.set_value("");
+		await elementUpdated(element);
+
+		assert.equal(element.shadowRoot.querySelector(".vfs-path__plain").textContent.trim(), "");
+		assert.notExists(element.shadowRoot.querySelector("sl-breadcrumb"), "Empty value rendered as a breadcrumb");
+		assert.notExists(element.shadowRoot.querySelector("et2-image"), "Empty value got a filemanager icon");
+	});
+
+	it("survives a null value", async() =>
+	{
+		// Nothing stops a row-bound value from arriving as null
+		element.set_value(null);
+		await elementUpdated(element);
+
+		assert.equal(element.value, "");
+		assert.isNull(element.fileInfo);
+	});
+
+	it("keeps the full stat-array from an object value in fileInfo", async() =>
+	{
+		// What the historylog's filemanager-derived rows send
+		element.set_value({path: "/apps/infolog/1/attachment.pdf", name: "attachment.pdf", mime: "application/pdf"});
+		await elementUpdated(element);
+
+		assert.equal(element.value, "/apps/infolog/1/attachment.pdf");
+		assert.equal(element.fileInfo.mime, "application/pdf");
+		assert.exists(element.shadowRoot.querySelector("sl-breadcrumb"));
+	});
+});
+// render() has 3 different branches depending on state (plain text when readonly and not a path,
+// an <input> while actively editing, a breadcrumb otherwise) - there's no single selector that
+// shows "the value" across all of them, which is why the old call here (checking a fixed
+// "sl-breadcrumb" selector unconditionally) never passed. A freshly-created, non-editing widget
+// renders the breadcrumb branch: an empty value still produces one root breadcrumb item (from
+// "".split('/')) with its "/" separator but no actual path segment text - not a bug, that's the
+// clickable root affordance, so the check strips separators/whitespace rather than requiring
+// completely empty content.
+inputBasicTests(before, "/home/test/directory", "input", {
+	checkEmptyDisplay: (element : Et2VfsPath) =>
+		assert.equal(
+			element.shadowRoot.querySelector(".vfs-path__breadcrumb")?.textContent.replace(/[/\s]/g, ""),
+			"",
+			"Displaying a path segment when there is no value"
+		)
+});

@@ -30,7 +30,7 @@ class timesheet_egw_record implements importexport_iface_egw_record
 		'select-account' => array('ts_owner','ts_modifier'),
 		'date-time' => array('ts_start', 'ts_created', 'ts_modified'),
 		'select-cat' => array('cat_id'),
-		'links' => array('pl_id'),
+		'links' => array(),
 		'select' => array('ts_status'),
 	);
 

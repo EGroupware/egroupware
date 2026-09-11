@@ -70,7 +70,6 @@ is resource bookable?	resources	km	ធនធានអាចកក់ទុកប
 is resource buyable?	resources	km	ធនធានអាចទិញបាន។
 is this resource bookable?	resources	km	តើធនធាននេះអាចកក់ទុកបានដែរឬទេ
 is this resource buyable?	resources	km	តើធនធាននេះអាចទិញបានទេ។
-links	resources	km	តំណភ្ជាប់
 location	resources	km	ទីតាំង
 location of resource	resources	km	ទីតាំងនៃធនធាន
 location:	resources	km	ទីតាំង៖

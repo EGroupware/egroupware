@@ -9,12 +9,6 @@
  * @copyright EGroupware GmbH 2020-2021
  */
 
-/*egw:uses
-	/vendor/bower-asset/jquery/dist/jquery.js;
-	et2_core_interfaces;
-	et2_core_baseWidget;
-*/
-
 import {et2_baseWidget} from './et2_core_baseWidget'
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
@@ -251,7 +245,7 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
 
                 window.addEventListener('et2_video.onYoutubeIframeAPIReady', function(){
                     self._createYoutubePlayer(self.options.video_src);
-                });
+                }, {once: true});
 			}
 			else
             {
@@ -641,6 +635,13 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
     private _isYoutube() : boolean
     {
         return !!this.options.src_type.match('youtube');
+    }
+
+    destroy()
+    {
+        window.clearInterval(this._youtubeOntimeUpdateIntrv);
+        this.youtube?.destroy();
+        super.destroy();
     }
 
     private _onStateChangeYoutube(_data)

@@ -322,7 +322,20 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		this.open = true;
 		this.requestUpdate("open", false)
 
-		return this.updateComplete.then(() => { this.openAtSelection && this._tree.scrollToSelected() });
+		return this.updateComplete.then(async() =>
+		{
+			if(!this.openAtSelection)
+			{
+				return;
+			}
+			// Wait for the tree's initial autoloading fetch, otherwise the first show() after page load
+			// races the ajax call: _selectOptions is still empty, nothing is found, and scrollToSelected()
+			// silently does nothing until a later open/close call happens to land after the fetch resolves.
+			await this._tree.finishedLazyLoading();
+			// finishedLazyLoading() resolves when the options are set, the tree still has to render them
+			await this._tree.updateComplete;
+			this._tree.scrollToSelected();
+		});
 	}
 
 	/** Hides the tree. */

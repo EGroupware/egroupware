@@ -1,0 +1,1079 @@
+/**
+ * EGroupware clientside API: opening of windows, popups or application entries
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package etemplate
+ * @subpackage api
+ * @link http://www.egroupware.org
+ * @author Andreas Stöckel (as AT stylite.de)
+ * @author Ralf Becker <RalfBecker@outdoor-training.de>
+ */
+
+import './egw_core';
+
+export interface OpenModule
+{
+	/**
+	 * View an EGroupware entry: opens a popup of correct size or redirects window.location to requested url
+	 *
+	 * Examples:
+	 * - egw.open(123,'infolog') or egw.open('infolog:123') opens popup to edit or view (if no edit rights) infolog entry 123
+	 * - egw.open('infolog:123','timesheet','add') opens popup to add new timesheet linked to infolog entry 123
+	 * - egw.open(123,'addressbook','view') opens addressbook view for entry 123 (showing linked infologs)
+	 * - egw.open('','addressbook','list',{ search: 'Becker' }) opens list of addresses containing 'Becker'
+	 *
+	 * @param id_data either just the id or if app=="" "app:id" or object with all data
+	 * 	to be able to open files you need to give: (mine-)type, path or id, app2 and id2 (path=/apps/app2/id2/id"
+	 * @param app app-name or empty (app is part of id)
+	 * @param type default "edit", possible "view", "view_list", "edit" (falls back to "view") and "add"
+	 * @param extra extra url parameters to append as object or string
+	 * @param target target of window to open
+	 * @param target_app target application to open in that tab
+	 * @param _check_popup_blocker TRUE check if browser pop-up blocker is on/off, FALSE no check
+	 * - This option only makes sense to be enabled when the open_link requested without user interaction
+	 * @return returns object for given specific target like '_tab'
+	 */
+	open(id_data : string|number|object, app? : string, type? : "edit"|"view"|"view_list"|"add"|"list",
+				   extra? : string|object, target? : string, target_app? : string, _check_popup_blocker? : boolean) : any;
+
+	/**
+	 * View an EGroupware entry: opens a framework tab for the given app entry
+	 *
+	 * @param _id either just the id or if app=="" "app:id" or object with all data
+	 * @param _app app-name or empty (app is part of id)
+	 * @param _type default "edit", possible "view", "view_list", "edit" (falls back to "view") and "add"
+	 * @param _extra extra url parameters to append as object or string
+	 * @param _framework_app framework app attributes e.g. title or displayName
+	 * @return appname of new tab
+	 */
+	openTab(_id : string|number|object, _app? : string, _type? : string, _extra? : string|object, _framework_app? : object) : string|void;
+
+	/**
+	 * Open a link, which can be either a menuaction, a EGroupware relative url or a full url
+	 *
+	 * @param _link menuaction, EGroupware relative url or a full url (incl. "mailto:" or "javascript:")
+	 * @param _target optional target / window name
+	 * @param _popup widthxheight, if a popup should be used
+	 * @param _target_app app-name for opener
+	 * @param _check_popup_blocker TRUE check if browser pop-up blocker is on/off, FALSE no check
+	 * - This option only makes sense to be enabled when the open_link requested without user interaction
+	 * @param _mime_type if given, we check if any app has registered a mime-handler for that type and use it
+	 */
+	open_link(_link : string, _target? : string, _popup? : string, _target_app? : string,
+			  _check_popup_blocker? : boolean, _mime_type? : string) : Window|void|any;
+
+	/**
+	 * Opens a menuaction in an Et2Dialog instead of a popup
+	 *
+	 * Please note:
+	 * This method does NOT (yet) work in popups, only in the main EGroupware window!
+	 * For popups you have to use the app.ts method openDialog(), which creates the dialog in the correct window / popup.
+	 *
+	 * @param _menuaction
+	 */
+	openDialog(_menuaction : string) : Promise<any>;
+
+	/**
+	 * Open a (centered) popup window with given size and url
+	 *
+	 * @param _url
+	 * @param _width
+	 * @param _height
+	 * @param _windowName or "_blank"
+	 * @param _app app-name for framework to set correct opener or false for current app
+	 * @param _returnID true: return window, false: return undefined
+	 * @param _status "yes" or "no" to display status bar of popup
+	 * @param _skip_framework
+	 */
+	openPopup(_url : string, _width : number, _height : number|"availHeight", _windowName? : string, _app? : string|boolean,
+			  _returnID? : boolean, _status? : "yes"|"no", _skip_framework? : boolean) : Window|void;
+
+	/**
+	 * Open a (centered) popup window whose content is bootstrapped entirely client-side - no
+	 * server round-trip (no menuaction URL) at all for the popup's own opening.
+	 *
+	 * Opens 'about:blank', then clones this window's own `#egw_script_id` `<script>` tag (same
+	 * `data-include`/`data-app`/etc. - already correct for whatever app/page is opening the popup)
+	 * plus its stylesheet `<link>`s into the new window's `<head>`, and appends one more inline
+	 * module `<script>` that awaits that window's own `egw_ready` and then calls `_method` there
+	 * via the same `egw(window).json.applyFunc()` dotted-path resolution every `onExecute:
+	 * 'javaScript:app.x.y'` action string already uses elsewhere - including its existing
+	 * lazy-load-the-app-bundle-if-missing behaviour, so `_method`'s own app doesn't need to already
+	 * be loaded in the opener.
+	 *
+	 * The new window sets `window.opener` (a real `window.open()`, not an iframe), so egw.js's own
+	 * bootstrap (api/js/jsapi/egw.js) reuses `window.opener.top.egw`/`.framework` instead of
+	 * re-fetching config/user/lang - same mechanism a classic full-page popup already relies on,
+	 * just without that classic popup's own initial menuaction render.
+	 *
+	 * @param _method dotted `app.method` string, resolved the same way an action's own
+	 *  `onExecute: 'javaScript:...'` string is (api/js/jsapi/egw_json.ts's `applyFunc()`)
+	 * @param _args arguments passed to `_method`
+	 * @param _width
+	 * @param _height
+	 * @param _windowName or "_blank"
+	 * @return the new popup window, or undefined if the popup was blocked
+	 */
+	clientSidePopup(_method : string, _args : any[], _width : number, _height : number|"availHeight",
+					_windowName? : string) : Window|void;
+
+	/**
+	 * Get available height of screen
+	 */
+	availHeight() : number;
+
+	/**
+	 * Use frameworks (framed template) link handler to open a url
+	 *
+	 * @param _url
+	 * @param _target
+	 */
+	link_handler(_url : string, _target? : string) : void;
+
+	/**
+	 * Close current window / popup
+	 */
+	close() : void;
+
+	/**
+	 * Check if browser pop-up blocker is on/off
+	 *
+	 * @param _link menuaction, EGroupware relative url or a full url (incl. "mailto:" or "javascript:")
+	 * @param _target optional target / window name
+	 * @param _popup widthxheight, if a popup should be used
+	 * @param _target_app app-name for opener
+	 *
+	 * @return returns false if pop-up blocker is off
+	 * - returns true if pop-up blocker is on,
+	 * - and re-call the open_link with provided parameters, after user interaction.
+	 */
+	_check_popupBlocker(_link : string, _target? : string, _popup? : string, _target_app? : string) : boolean;
+
+	/**
+	 * Check if url parameters are too long to be sent as a GET request
+	 *
+	 * Array values are counted as one "name[]=value" pair per element, as that is how they get sent.
+	 *
+	 * @param _extra url parameters as query-string or object
+	 * @return true if they have to be sent via POST, false if a GET url is fine
+	 */
+	urlParamsTooLong(_extra : string|object) : boolean;
+
+	/**
+	 * This function helps to append content/ run commands into an already
+	 * opened popup window. Popup windows now are getting stored in framework
+	 * object and can be retrieved/closed from framework.
+	 *
+	 * @param _app name of application to be requested its popups
+	 * @param _method application method implemented in app.js
+	 * @param _content content to be passed to method
+	 * @param _extra url or object of extra
+	 * @param _regexp regular expression to get specific popup with matched url
+	 * @param _check_popup_blocker TRUE check if browser pop-up blocker is on/off, FALSE no check
+	 * @param _open_new override for the "no existing popup to reuse" case - if given, called
+	 *  instead of the classic menuaction-url open (or urlParamsTooLong()'s own POST fallback).
+	 *  A caller whose target app can bootstrap itself client-side (doc/ai/projects/
+	 *  mail-compose-jmap-migration.md, Step 10) uses this to open THAT way instead, while the
+	 *  reuse-detection/multi-popup-picker logic here stays shared and unchanged.
+	 */
+	openWithinWindow(_app : string, _method : string, _content : object, _extra? : string|object, _regexp? : RegExp, _check_popup_blocker? : boolean, _open_new? : () => void) : void;
+}
+
+declare global
+{
+	interface IegwWndLocal extends OpenModule
+	{
+	}
+}
+
+/**
+ * Magic handling for mailto: uris using mail application.
+ *
+ * We check for open compose windows and add the address in as specified in
+ * the URL.  If there are no open compose windows, a new one is opened.  If
+ * there are more than one open compose window, we prompt for which one to
+ * use.
+ *
+ * The user must have set the 'Open EMail addresses in external mail program' preference
+ * to No, otherwise the browser will handle it.
+ *
+ * Touches no instance state / `this` at all (only bare egw.* globals), so
+ * kept as a plain module-scope function rather than a class member.
+ */
+function mailto(uri : string) : void
+{
+	// Parse uri into a map
+	var match : any = [], index;
+	var mailto = uri.match(/^mailto:([^?]+)/) || [];
+	var hashes = uri.slice(uri.indexOf('?') + 1).split('&');
+	for(var i = 0; i < hashes.length; i++)
+	{
+		index = hashes[i].replace(/__AMPERSAND__/g, '&').split('=');
+		match.push(index[0]);
+		match[index[0]] = index[1];
+	}
+	if (mailto[1]) mailto[1] = mailto[1].replace(/__AMPERSAND__/g, '&');
+	var content : any = {
+		to: mailto[1] || [],
+		cc: match['cc']	|| [],
+		bcc: match['bcc'] || []
+	};
+
+	// No CSV, split them here and pay attention to quoted commas
+	const split_regex = /("[^"]*" <[^>]*>)|("[^"]*")|('[^']*')|([^,]+)/g;
+	for (let index in content)
+	{
+		if (typeof content[index] == "string")
+		{
+			const matches = content[index].match(split_regex);
+			content[index] = matches ?? content[index];
+		}
+	}
+
+	// Encode html entities in the URI, otherwise server XSS protection won't
+	// allow it to pass, because it may get mistaken for some forbidden tags,
+	// e.g., "Mathias <mathias@example.com>" the first part of email "<mathias"
+	// including "<" would get mistaken for <math> tag, and server will cut it off.
+	uri = uri.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+	// Matches an already-open compose popup's own url (mail/compose.php,
+	// doc/ai/projects/mail-compose-jmap-migration.md Step 10) - MailApp.setCompose() only ever
+	// touches the loaded etemplate2/widgets, never the popup's own opening url.
+	//
+	// The "nothing to reuse, open a new one" case goes through MailApp.composeMailto() (a
+	// client-side-only bootstrap, no server round-trip) instead of openWithinWindow()'s own
+	// classic-menuaction fallback - mailto: itself already parses to/cc/bcc entirely client-side
+	// above, so there was never anything server-side left for THIS entry point to depend on
+	// (doc/ai/projects/mail-compose-jmap-migration.md, Step 10's own "explicitly deferred" list).
+	egw.openWithinWindow ("mail", "setCompose", content, {'preset[mailto]':uri},
+		/\/mail\/compose\.php/, undefined,
+		() => (<any>window).app.mail?.composeMailto(content));
+
+	for (var index in content)
+	{
+		if (content[index].length > 0)
+		{
+			var cLen = content[index];
+			egw.message(egw.lang('%1 email(s) added into %2', cLen.length, egw.lang(index)));
+			return;
+		}
+	}
+}
+
+/**
+ * Maximum length of url parameters we send as a GET request.
+ *
+ * According to microsoft, IE 10/11 can only accept a url with 2083 characters.
+ * WebServers and other browsers also have a url length limit:
+ * Firefox:~ 65k, Safari:80k, Chrome: 2MB, Apache: 4k, Nginx: 4k.
+ * Above that the request has to be sent with POST instead,
+ * otherwise the webserver answers with "414 Request-URI Too Large".
+ */
+const MAX_URL_PARAMS_LENGTH = 2083;
+
+/**
+ * Length of the query-string given url parameters would generate
+ *
+ * Array values are counted as one "name[]=value" pair per element, as that is how they get sent.
+ */
+function urlParamsLength(_extra : string|object) : number
+{
+	if (typeof _extra === "string")
+	{
+		return _extra.length;
+	}
+	let len = 0;
+	for(const [name, value] of Object.entries(_extra || {}))
+	{
+		if (Array.isArray(value))
+		{
+			value.forEach(val => len += (name + '[]=' + val + '&').length);
+		}
+		else if (value)
+		{
+			len += (name + '=' + value + '&').length;
+		}
+	}
+	return len;
+}
+
+
+class Open implements OpenModule
+{
+	#wnd : Window;
+
+	constructor(_wnd : Window)
+	{
+		this.#wnd = _wnd;
+	}
+
+	/**
+	 * View an EGroupware entry: opens a popup of correct size or redirects window.location to requested url
+	 *
+	 * Examples:
+	 * - egw.open(123,'infolog') or egw.open('infolog:123') opens popup to edit or view (if no edit rights) infolog entry 123
+	 * - egw.open('infolog:123','timesheet','add') opens popup to add new timesheet linked to infolog entry 123
+	 * - egw.open(123,'addressbook','view') opens addressbook view for entry 123 (showing linked infologs)
+	 * - egw.open('','addressbook','list',{ search: 'Becker' }) opens list of addresses containing 'Becker'
+	 *
+	 * Called as egw(app,wnd).open(...) - dispatches through this.mime_open(...)/
+	 * this.link_get_registry(...)/this.link(...)/this.callFunc(...)/this.appName/
+	 * this.openTab(...)/this.openDialog(...)/this.open_link(...), all of which
+	 * must resolve through whichever instance called it, hence a plain
+	 * `function` field. Doesn't touch this class's own state, so no `self`
+	 * capture is needed.
+	 *
+	 * @return returns object for given specific target like '_tab'
+	 */
+	open = function(this : any, id_data : any, app? : string, type? : string, extra? : any, target? : string, target_app? : string, _check_popup_blocker? : boolean) : any
+	{
+		// Log for debugging purposes - special log tag 'navigation' always
+		// goes in user log, if user log is enabled
+		egw.debug("navigation",
+			"egw.open(id_data=%o, app=%s, type=%s, extra=%o, target=%s, target_app=%s)",
+			id_data,app,type,extra,target,target_app
+		);
+
+		var id;
+		if(typeof target === 'undefined')
+		{
+			target = '_blank';
+		}
+		if (!app)
+		{
+			if (typeof id_data != 'object')
+			{
+				var app_id = id_data.split(':',2);
+				app = app_id[0];
+				id = app_id[1];
+			}
+			else
+			{
+				app = id_data.app;
+				id = id_data.id;
+				if(typeof id_data.type != 'undefined')
+				{
+					type = id_data.type;
+				}
+			}
+		}
+		else if (app != 'file')
+		{
+			id = id_data;
+			id_data = { 'id': id, 'app': app, 'extra': extra };
+		}
+		var url : any;
+		var popup : any;
+		var params : any;
+		var app_registry : any;
+		if (app == 'file')
+		{
+			url = this.mime_open(id_data);
+			if (typeof url == 'object')
+			{
+		 		if(typeof url.mime_popup != 'undefined')
+				{
+					popup = url.mime_popup;
+					delete url.mime_popup;
+				}
+		 		if(typeof url.mime_target != 'undefined')
+				{
+					target = url.mime_target;
+					delete url.mime_target;
+				}
+				if (typeof url.url == 'string')
+				{
+					url = url.url;
+				}
+				else
+				{
+					params = url;
+					url = '/index.php';
+				}
+			}
+		}
+		else
+		{
+			app_registry = this.link_get_registry(app);
+
+			if (!app || !app_registry)
+			{
+				alert('egw.open() app "'+app+'" NOT defined in link registry!');
+				return;
+			}
+			if (typeof type == 'undefined') type = 'edit';
+			if (type == 'edit' && typeof app_registry.edit == 'undefined') type = 'view';
+			if (typeof app_registry[type] == 'undefined')
+			{
+				alert('egw.open() type "'+type+'" is NOT defined in link registry for app "'+app+'"!');
+				return;
+			}
+			url = '/index.php';
+			if(typeof app_registry[type] === 'object')
+			{
+				// Copy, not get a reference, or we'll change the registry
+				params = {...app_registry[type]};
+			}
+			else if (typeof app_registry[type] === 'string' &&
+				(app_registry[type].substr(0, 11) === 'javascript:' || app_registry[type].substr(0, 4) === 'app.'))
+			{
+				// JavaScript, just pass it on
+				url = app_registry[type];
+				params = {};
+			}
+			if (type == 'view' || type == 'edit')	// add id parameter for type view or edit
+			{
+				params[app_registry[type+'_id']] = id;
+			}
+			else if (type == 'add' && id)	// add add_app and app_id parameters, if given for add
+			{
+				var app_id = id.split(':',2);
+				params[app_registry.add_app] = app_id[0];
+				params[app_registry.add_id] = app_id[1];
+			}
+
+			if (typeof extra == 'string')
+			{
+				url += '?'+extra;
+			}
+			else if (typeof extra == 'object')
+			{
+				Object.assign(params, extra);
+			}
+			popup = app_registry[type+'_popup'];
+		}
+		if (url.substr(0, 11) === 'javascript:')
+		{
+			// Add parameters into javascript
+			url = 'javascript:var params = '+ JSON.stringify(params) + '; '+ url.substr(11);
+		}
+		// app.<appname>.<method>: call app method direct with parameter object as first parameter
+		else if (url.substr(0, 4) === 'app.')
+		{
+			return this.callFunc(url, params);
+		}
+		else
+		{
+			url = this.link(url, params);
+		}
+		if (target == '_tab') return {url: url};
+		if (popup == 'dialog')
+		{
+			return this.openDialog(url.split('menuaction=')[1]);
+		}
+		if (type == 'view'  && params && params.target == 'tab') {
+			return this.openTab(params[app_registry['view_id']], app, type, params, {
+				id: params[app_registry['view_id']] + '-' + this.appName,
+				icon: params['icon'],
+				displayName: id_data['title'] + " (" + egw.lang(this.appName) + ")",
+			});
+		}
+		return this.open_link(url, target, popup, target_app, _check_popup_blocker, id_data?.type);
+	}
+
+	/**
+	 * View an EGroupware entry: opens a framework tab for the given app entry
+	 *
+	 * Called as egw(app,wnd).openTab(...) - dispatches this.open(...) through
+	 * whichever instance called it, hence a plain `function` field. `self`
+	 * reaches this Open instance's own _wnd.
+	 *
+	 * @return appname of new tab
+	 */
+	openTab = ((self : Open) => function(this : any, _id : any, _app? : string, _type? : string, _extra? : any, _framework_app? : object) : string|void
+	{
+		if ((<any>self.#wnd).framework && (<any>self.#wnd).framework.tabLinkHandler)
+		{
+			var data : any = this.open(_id, _app, _type, _extra, "_tab", false);
+			// Use framework's link handler
+			return (<any>self.#wnd).framework.tabLinkHandler(data.url, _framework_app);
+		}
+		else
+		{
+			this.open(_id, _app, _type, _extra);
+		}
+	})(this);
+
+	/**
+	 * Open a link, which can be either a menuaction, a EGroupware relative url or a full url
+	 *
+	 * Called as egw(app,wnd).open_link(...) - dispatches through
+	 * this._check_popupBlocker(...)/this.webserverUrl/this.get_mime_info(...)/
+	 * this.openPopup(...)/this.link_app_list(...)/this.link_handler(...), all
+	 * of which must resolve through whichever instance called it, hence a
+	 * plain `function` field. Its final fallback branch also needs this Open
+	 * instance's own _wnd (`_wnd.open(url, _target)` in the original), so
+	 * unlike open()/openWithinWindow() this one does need a `self` capture.
+	 */
+	open_link = ((self : Open) => function(this : any, _link : string, _target? : string, _popup? : string, _target_app? : string, _check_popup_blocker? : boolean, _mime_type? : string) : any
+	{
+		// Log for debugging purposes - don't use navigation here to avoid
+		// flooding log with details already captured by egw.open()
+		egw.debug("log",
+			"egw.open_link(_link=%s, _target=%s, _popup=%s, _target_app=%s)",
+			_link,_target,_popup,_target_app
+		);
+		//Check browser pop-up blocker
+		if (_check_popup_blocker)
+		{
+			if (this._check_popupBlocker(_link, _target, _popup, _target_app)) return;
+		}
+		var url = _link;
+		if (url.indexOf('javascript:') == 0)
+		{
+			(new Function(url.substr(11)))();
+			return;
+		}
+		if (url.indexOf('mailto:') == 0)
+		{
+			return mailto(url);
+		}
+		// link is not necessary an url, it can also be a menuaction!
+		if (url.indexOf('/') == -1 && url.split('.').length >= 3 &&
+			!(url.indexOf('mailto:') == 0 || url.indexOf('/index.php') == 0 || url.indexOf('://') != -1))
+		{
+			url = "/index.php?menuaction="+url;
+		}
+		// append the url to the webserver url, if not already contained or empty
+		if (url[0] == '/' && this.webserverUrl && this.webserverUrl != '/' && url.indexOf(this.webserverUrl+'/') != 0)
+		{
+			url = this.webserverUrl + url;
+		}
+		var mime_info : any = _mime_type ? this.get_mime_info(_mime_type, _target_app) : undefined;
+		// _link is URL-encoded (eg. namespaced menuactions like "Foo\Bar\Baz.method" have their
+		// backslashes as %5C), while mime_info.menuaction is raw - decode before comparing, or this
+		// "already wrapped?" check always misses and re-wraps an already-correct URL into itself
+		var _decoded_link : string;
+		try { _decoded_link = decodeURIComponent(_link); } catch (e) { _decoded_link = _link; }
+		if (mime_info && (mime_info.mime_url || mime_info.mime_data) && !(
+			// Don't change if already set - either matching THIS mime_info's own target
+			// specifically (original check), or ANY already-resolved menuaction URL at all
+			// (broadened 2026-08-31, found live: a caller can already have built the CORRECT,
+			// specific URL for its own context - eg. mail's own AttachmentJmap::
+			// createAttachmentBlock() resolving a proper mail_ui.displayMessage popup for a
+			// message/rfc822 attachment - only to have it silently overwritten here by a
+			// DIFFERENT, unrelated mime-type registry entry for the same type registered by some
+			// other app for a different purpose (eg. mail_hooks.inc.php's own message/rfc822
+			// entry, meant for importing a VFS-stored .eml file, not viewing a mail attachment) -
+			// the two menuactions never textually matched, so the original narrower check missed
+			// it. A link that already specifies SOME menuaction is, by definition, already
+			// resolved by its caller; there's nothing left for the generic type-based registry
+			// lookup to usefully "fix" about it.
+			_decoded_link.includes('menuaction=') ||
+			(_decoded_link.includes(mime_info.menuaction) && (_decoded_link.includes(mime_info.mime_url) || _decoded_link.includes(mime_info.mime_data)))
+		))
+		{
+			var data : any = {};
+			for(var attr in mime_info)
+			{
+				switch(attr)
+				{
+					case 'mime_popup':
+						_popup = mime_info.mime_popup;
+						break;
+					case 'mime_target':
+						_target = mime_info.mime_target;
+						break;
+					case 'mime_type':
+						data[mime_info.mime_type] = _mime_type;
+						break;
+					case 'mime_data':
+						data[mime_info[attr]] = _link;
+						break;
+					case 'mime_url':
+						data[mime_info[attr]] = url;
+						break;
+					default:
+						data[attr] = mime_info[attr];
+						break;
+				}
+			}
+			url = egw.link('/index.php', data);
+		}
+		else if (mime_info)
+		{
+			if (mime_info.mime_popup) _popup = mime_info.mime_popup;
+			if (mime_info.mime_target) _target = mime_info.mime_target;
+		}
+
+		if (_popup && _popup.indexOf('x') > 0)
+		{
+			var w_h = _popup.split('x');
+			var popup_window = this.openPopup(url, w_h[0], w_h[1], _target && _target != _target_app ? _target : '_blank', _target_app, true);
+
+			// Remember which windows are open
+			egw().storeWindow(_target_app, popup_window);
+
+			return popup_window;
+		}
+		else if ((typeof _target == 'undefined' || _target == '_self' || typeof this.link_app_list()[_target] != "undefined"))
+		{
+			if(_target == '_self')
+			{
+				// '_self' isn't allowed, but we can handle it
+				_target = undefined;
+			}
+			// Use framework's link handler, if present
+			return this.link_handler(url,_target);
+		}
+		else
+		{
+			// No mime type registered, set target properly based on browsing environment
+
+			//do not open pdfs (or other non images) on mobile, since we can not really get back when mobile browser calls _wnd.open(url,'_self') with a pdf, instantly download instead
+			if ((<any>window).egwIsMobile() && mime_info?.ext && !mime_info.ext.includes("image")){
+				url+='&mode=save'
+				(<any>window).etemplate2.prototype.download(url)
+				return
+			}
+			if (_target == '_browser')
+			{
+				_target = (<any>window).egwIsMobile()?'_self':'_blank';
+			}
+			_target = _target == '_phonecall' && _popup && _popup.indexOf('x') < 0 ? _popup:_target;
+			return self.#wnd.open(url, _target);
+		}
+	})(this);
+
+	/**
+	 * Opens a menuaction in an Et2Dialog instead of a popup
+	 *
+	 * Please note:
+	 * This method does NOT (yet) work in popups, only in the main EGroupware window!
+	 * For popups you have to use the app.ts method openDialog(), which creates the dialog in the correct window / popup.
+	 *
+	 * Doesn't dispatch through `this` for anything, only needs this Open
+	 * instance's own _wnd, so a plain arrow field is safe.
+	 */
+	openDialog = (_menuaction : string) : Promise<any> =>
+	{
+		let resolver : (value ?: any) => void;
+		let rejector : (reason ?: any) => void;
+		const dialog_promise = new Promise((resolve, reject) =>
+		{
+			resolver = value => resolve(value);
+			rejector = reason => reject(reason);
+		});
+		let request = egw.json(_menuaction.match(/^([^.:]+)/)[0] + '.jdots_framework.ajax_exec.template.' + _menuaction,
+			['index.php?menuaction=' + _menuaction, true], _response =>
+			{
+				if (Array.isArray(_response) && typeof _response[0] === 'string')
+				{
+					// jQuery(_response[0]).appendTo(...) equivalent: parse the HTML
+					// string via a <template> and move its top-level nodes into body.
+					const template = this.#wnd.document.createElement('template');
+					template.innerHTML = _response[0];
+					const nodes = Array.from(template.content.childNodes);
+					if (nodes.length > 0)
+					{
+						nodes.forEach(node => this.#wnd.document.body.appendChild(node));
+						resolver(nodes[0]);
+					}
+					else
+					{
+						console.log("Unable to add dialog with dialogExec('" + _menuaction + "')", _response);
+						rejector(new Error("Unable to add dialog"));
+					}
+				}
+				else
+				{
+					console.log("Invalid response to dialogExec('" + _menuaction + "')", _response);
+					rejector(new Error("Invalid response to dialogExec('" + _menuaction + "')"));
+				}
+			}).sendRequest();
+		return dialog_promise;
+	}
+
+	/**
+	 * Open a (centered) popup window with given size and url
+	 *
+	 * Called as egw(app,wnd).openPopup(...) - dispatches this.availHeight()
+	 * through whichever instance called it, hence a plain `function` field.
+	 * `self` reaches this Open instance's own _wnd.
+	 *
+	 * @returns {DOMWindow|undefined}
+	 */
+	openPopup = ((self : Open) => function(this : any, _url : string, _width : any, _height : any, _windowName? : string, _app? : any, _returnID? : boolean, _status? : string, _skip_framework? : boolean) : Window|void
+	{
+		// Log for debugging purposes
+		egw.debug("navigation", "openPopup(%s, %s, %s, %o, %s, %s)",_url,_windowName,_width,_height,_status,_app);
+
+		if (_height == 'availHeight') _height = this.availHeight();
+
+		// if we have a framework and we use mobile template --> let framework deal with opening popups
+		if (!_skip_framework && (<any>self.#wnd).framework)
+		{
+			return (<any>self.#wnd).framework.openPopup(_url, _width, _height, _windowName, _app, _returnID, _status, self.#wnd);
+		}
+
+		if (typeof(_app) == 'undefined') _app = false;
+		if (typeof(_returnID) == 'undefined') _returnID = false;
+
+		// jQuery(egw.top).outerWidth()/.outerHeight() on a window just reads
+		// the native outerWidth/outerHeight properties directly.
+		const top_wnd : any = egw.top;
+		var positionLeft = (top_wnd.outerWidth/2)-(_width/2)+(<any>self.#wnd).screenX;
+		var positionTop  = (top_wnd.outerHeight/2)-(_height/2)+(<any>self.#wnd).screenY;
+
+		// IE fails, if name contains eg. a dash (-)
+		if (navigator.userAgent.match(/msie/i)) _windowName = !_windowName ? '_blank' : _windowName.replace(/[^a-zA-Z0-9_]+/,'');
+
+		var windowID : any = self.#wnd.open(_url, _windowName || '_blank', "width=" + _width + ",height=" + _height +
+			",screenX=" + positionLeft + ",left=" + positionLeft + ",screenY=" + positionTop + ",top=" + positionTop +
+			",location=no,menubar=no,directories=no,toolbar=no,scrollbars=yes,resizable=yes,status="+_status);
+
+		// inject egw object
+		if (windowID) windowID.egw = (<any>self.#wnd).egw;
+
+		// returning something, replaces whole window in FF, if used in link as "javascript:egw_openWindowCentered2()"
+		if (_returnID !== false) return windowID;
+	})(this);
+
+	/**
+	 * See OpenModule.clientSidePopup()'s own docblock.
+	 *
+	 * `window.open('about:blank', ...)` MUST run synchronously in this same tick, before anything
+	 * async - popup blockers only tolerate window.open() called directly inside a user-gesture
+	 * handler, so the window is opened blank first and filled in afterward, not the other way
+	 * round.
+	 */
+	clientSidePopup = ((self : Open) => function(this : any, _method : string, _args : any[], _width : any, _height : any,
+		_windowName? : string) : Window|void
+	{
+		egw.debug("navigation", "clientSidePopup(%s, %o, %s, %s)", _method, _args, _width, _height);
+
+		if (_height == 'availHeight') _height = this.availHeight();
+
+		const top_wnd : any = egw.top;
+		const positionLeft = (top_wnd.outerWidth/2)-(_width/2)+(<any>self.#wnd).screenX;
+		const positionTop  = (top_wnd.outerHeight/2)-(_height/2)+(<any>self.#wnd).screenY;
+
+		const popup = self.#wnd.open('about:blank', _windowName || '_blank', "width=" + _width + ",height=" + _height +
+			",screenX=" + positionLeft + ",left=" + positionLeft + ",screenY=" + positionTop + ",top=" + positionTop +
+			",location=no,menubar=no,directories=no,toolbar=no,scrollbars=yes,resizable=yes");
+		if (!popup)
+		{
+			// blocked - same silent-return convention openPopup() itself uses for a falsy windowID
+			return;
+		}
+
+		const openerDoc = self.#wnd.document;
+		const doc = popup.document;
+		doc.open();
+		doc.write('<!DOCTYPE html><html><head><meta charset="utf-8"></head><body></body></html>');
+		doc.close();
+
+		// stylesheet <link>s (theme/Shoelace CSS).
+		openerDoc.querySelectorAll('link[rel="stylesheet"]').forEach((link : HTMLLinkElement) =>
+		{
+			const clone = doc.createElement('link');
+			clone.rel = 'stylesheet';
+			clone.href = link.href;
+			doc.head.appendChild(clone);
+		});
+		// Inline <style> blocks too - api/templates/default/head.tpl's own un-attributed
+		// `<style>{app_css}</style>` (api/src/Framework.php's _get_css()/fonts()/app_colors()) is
+		// where the user's own "textsize" preference and font-family land, as a plain
+		// `:root, :host, body, input { font-size: ...px; font-family: ...; }` rule - a <link>-only
+		// copy left every widget rendering at the BROWSER's default font-size instead (found live
+		// 2026-09-06, ralf: "the font-size is still off" - client-side noticeably larger than a
+		// classic postback's own compose popup). Has no id/class of its own to target specifically,
+		// so every <style> in the opener's <head> is copied, matching how every stylesheet <link>
+		// already is.
+		openerDoc.querySelectorAll('head style').forEach((style : HTMLStyleElement) =>
+		{
+			const clone = doc.createElement('style');
+			clone.textContent = style.textContent;
+			doc.head.appendChild(clone);
+		});
+
+		// The opener's own #egw_script_id tag carries the CORE bootstrap essentials this popup
+		// needs (api/src/Framework.php's _get_js()) - data-include/data-app/data-epoch are already
+		// correct for whatever app/page is opening it - but ALSO several main-framework-window-only
+		// attributes (data-navbar-apps, data-websocket-*, data-app-header, data-grants, ...) that
+		// exist to bootstrap a full app window's own navbar/push-connection/ACL-grants state. A
+		// clientSidePopup() is never a main window, so only the attributes egw.js's own bootstrap
+		// actually needs to build `window.egw`/`egw_ready` are copied - an explicit allowlist,
+		// deliberately NOT "copy everything", to avoid this popup redundantly opening its own
+		// second websocket connection or re-rendering navbar state it will never show (ralf,
+		// 2026-09-06).
+		const egwScript = openerDoc.getElementById('egw_script_id');
+		if (!egwScript)
+		{
+			console.error('egw.clientSidePopup(): no #egw_script_id in the opener - cannot bootstrap');
+			popup.close();
+			return;
+		}
+		// Built fresh rather than egwScript.cloneNode(true) - a cloned script element that already
+		// carried a (root-relative) `src` misbehaves even after that `src` is immediately
+		// overwritten with an absolute URL: neither its load/error events nor any window-level
+		// error ever fire, the fetch just silently never happens (found live 2026-09-06). A script
+		// element built from scratch, given an absolute `src` from the start and never a
+		// root-relative one at any point, works correctly.
+		const egwScriptClone = doc.createElement('script') as HTMLScriptElement;
+		egwScriptClone.type = 'module';
+		egwScriptClone.id = 'egw_script_id';	// egw.js's own bootstrap finds itself by this id
+		['data-url', 'data-app', 'data-epoch', 'data-include', 'data-manifest'].forEach((name) =>
+		{
+			const value = egwScript.getAttribute(name);
+			if (value !== null) egwScriptClone.setAttribute(name, value);
+		});
+		// `data-include` reflects the OPENER's own page, not this popup - api/src/Framework.php's
+		// _get_js() tracks, per session, which JS a given app has "already sent" this browsing
+		// session and omits it from data-include on a later internal navigation within the SAME
+		// app/window (found live 2026-09-06: opening this from the mail LIST page - which had
+		// already received mail/js/app.min.js on an earlier navigation - produced a data-include
+		// with NO mail entry at all, while a real server-rendered mail_compose.compose() popup's
+		// own tag always has one, since ITS window/session-tracking context is fresh). A
+		// clientSidePopup() is always exactly that: a fresh context that has never received
+		// _method's own app bundle, so it's added explicitly here if the copied list doesn't
+		// already have it. Entries in data-include are always the bare logical path (app.min.js
+		// is hashed at build time, but that's resolved client-side by whatever loads
+		// data-include - egw_import(), same as here - not baked into the string itself), so this
+		// is a plain string match/push, no manifest lookup needed.
+		// data-app is likewise the OPENER's own app (or, for the top framework window, "eGroupWare"
+		// itself - the opener's #egw_script_id isn't necessarily the content window's own), not
+		// _method's app - set it explicitly rather than carrying the copied value forward. Every
+		// popup with an etemplate always loads etemplate's own separate tinymce chunk regardless of
+		// app (ralf, 2026-09-06) - only data-app and _method's own app bundle entry in data-include
+		// actually vary per app, so that's all that needs fixing up here.
+		const targetApp = _method.split('.')[0] === 'app' ? _method.split('.')[1] : null;
+		if (targetApp)
+		{
+			egwScriptClone.setAttribute('data-app', targetApp);
+
+			const include : string[] = JSON.parse(egwScriptClone.getAttribute('data-include') || '[]');
+			const entry = targetApp + '/js/app.min.js';
+			if (!include.includes(entry))
+			{
+				include.push(entry);
+				egwScriptClone.setAttribute('data-include', JSON.stringify(include));
+			}
+		}
+		// the original's `src` is root-relative ("/egroupware/api/js/jsapi/egw.min.js?...") -
+		// resolving that against a document.write()-derived about:blank popup's own base URL is
+		// exactly the failure described above, so this is always resolved to a fully absolute URL
+		// here, up front - the popup DOES correctly inherit the opener's ORIGIN (same-origin access,
+		// egw.js's own opener-detection works fine), it's specifically relative-URL RESOLUTION that
+		// isn't reliable in this context.
+		egwScriptClone.src = new URL(egwScript.getAttribute('src') || '', self.#wnd.location.href).href;
+		// egw.js's own bootstrap (api/js/jsapi/egw.js) reads this new attribute at the very end of
+		// its own ready-chain and calls applyFunc(method, args, window) there - the same dotted
+		// "app.method" resolution any 'javaScript:app.x.y' onExecute action string already uses
+		// (including its lazy-load-the-app-bundle-if-missing behaviour), just invoked once the
+		// framework is ready instead of from a click. Handling this INSIDE egw.js's own bootstrap
+		// chain (rather than a separately loaded/injected tail script) sidesteps two real problems
+		// found live 2026-09-06 testing a separate-file version of this: (1) a genuinely-blank
+		// popup's document inherits the OPENER's CSP as its "responsible document" (no real HTTP
+		// response of its own), and this server's script-src has no 'unsafe-inline'/nonce/hash, so
+		// an injected INLINE script was silently blocked; (2) even a same-origin EXTERNAL tail
+		// script (CSP-compliant) has no reliable execution-order guarantee relative to this one
+		// once both are dynamically inserted - it raced ahead and ran before `window.egw_ready` had
+		// even been assigned yet, not merely unresolved.
+		egwScriptClone.setAttribute('data-start', JSON.stringify({method: _method, args: _args || []}));
+		doc.head.appendChild(egwScriptClone);
+
+		return popup;
+	})(this);
+
+	/**
+	 * Get available height of screen
+	 */
+	availHeight = () : number =>
+	{
+		return screen.availHeight < screen.height ?
+			(navigator.userAgent.match(/windows/ig)? screen.availHeight -100:screen.availHeight) // Seems chrome not counting taskbar in available height
+			: screen.height - 100;
+	}
+
+	/**
+	 * Use frameworks (framed template) link handler to open a url
+	 */
+	link_handler = (_url : string, _target? : string) : void =>
+	{
+		// if url is supposed to open in admin, use admins loader to open it in it's own iframe
+		// (otherwise there's no tree and sidebox!)
+		if (_target === 'admin' && !_url.match(/menuaction=admin\.admin_ui\.index/))
+		{
+			_url = _url.replace(/menuaction=([^&]+)/, 'menuaction=admin.admin_ui.index&load=$1');
+		}
+		if ((<any>this.#wnd).framework)
+		{
+			(<any>this.#wnd).framework.linkHandler(_url, _target);
+		}
+		else
+		{
+			this.#wnd.location.href = _url;
+		}
+	}
+
+	/**
+	 * Close current window / popup
+	 */
+	close = () : void =>
+	{
+		if ((<any>this.#wnd).framework && typeof (<any>this.#wnd).framework.popup_close == "function")
+		{
+			(<any>this.#wnd).framework.popup_close(this.#wnd);
+		}
+		else
+		{
+			this.#wnd.close();
+		}
+	}
+
+	/**
+	 * Check if browser pop-up blocker is on/off
+	 *
+	 * @return boolean returns false if pop-up blocker is off
+	 * - returns true if pop-up blocker is on,
+	 * - and re-call the open_link with provided parameters, after user interaction.
+	 */
+	_check_popupBlocker = (_link : string, _target? : string, _popup? : string, _target_app? : string) : boolean =>
+	{
+		var popup = window.open("","",'top='+(screen.height/2)+',left='+(screen.width/2)+',width=1,height=1,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,dependent=yes');
+
+		if (!popup||(<any>popup) == 'undefined'||popup == null)
+		{
+			(<any>window).Et2Dialog.show_dialog(function ()
+				{
+					(<any>window).egw.open_link(_link, _target, _popup, _target_app);
+				}, egw.lang("The browser popup blocker is on. Please click on OK button to see the pop-up.\n\nIf you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1", window.location.hostname),
+				"Popup Blocker Warning", {}, (<any>window).Et2Dialog.BUTTONS_OK, (<any>window).Et2Dialog.WARNING_MESSAGE);
+			return true;
+		}
+		else
+		{
+			popup.close();
+			return false;
+		}
+	}
+
+	/**
+	 * Check if url parameters are too long to be sent as a GET request
+	 *
+	 * Doesn't touch this class's own state and takes no dynamic `this`,
+	 * so a plain arrow function field is enough (a prototype method would
+	 * not survive egw.extend()'s enumerable-only merge).
+	 */
+	urlParamsTooLong = (_extra : string|object) : boolean => urlParamsLength(_extra) > MAX_URL_PARAMS_LENGTH;
+
+	/**
+	 * This function helps to append content/ run commands into an already
+	 * opened popup window. Popup windows now are getting stored in framework
+	 * object and can be retrieved/closed from framework.
+	 *
+	 * Called as egw(app,wnd).openWithinWindow(...) - dispatches this.lang(...)/
+	 * this.app_name()/this.webserverUrl through whichever instance called it,
+	 * hence a plain `function` field. Doesn't touch this class's own state,
+	 * so no `self` capture is needed.
+	 */
+	openWithinWindow = function(this : any, _app : string, _method : string, _content : object, _extra? : any, _regexp? : RegExp, _check_popup_blocker? : boolean, _open_new? : () => void) : void
+	{
+		var popups : any[] = (<any>window).framework.popups_get(_app, _regexp);
+
+		var openUp = (_app : string, _extra : any) => {
+
+			if (_open_new)
+			{
+				return _open_new();
+			}
+			// Every real caller (all mail-related) provides `_open_new` (own tooLong handling,
+			// eg. MailApp.openComposePopupUrlPost()) - this classic fallback's own urlParamsTooLong()
+			// special case (POST via the now-removed openComposePost(), hardcoded to the classic
+			// mail_compose::compose() postback) was never actually generic despite `_app` being a
+			// parameter, so it's gone together with compose() itself; a hypothetical future
+			// non-mail caller without `_open_new` just gets a plain GET-url open, same as always
+			// for short parameters.
+			egw.open('', _app, 'add', _extra, _app, _app, _check_popup_blocker);
+		};
+		for(var i = 0; i < popups.length; i++)
+		{
+			if(popups[i].closed)
+			{
+				(<any>window).framework.popups_grabage_collector();
+			}
+		}
+
+		 const pref_name = "mail_add_address_new_popup";
+		 const new_dialog_pref = egw.preference(pref_name, "common");
+		//If there is no popup just open a new entry instantly
+		if (popups.length == 0)
+		{
+			return openUp(_app, _extra);
+		}
+
+		const buttons = [
+			{label: this.lang("Add"), id: "add", "class": "ui-priority-primary", "default": true},
+			{label: this.lang("Cancel"), id: "cancel"}
+		];
+
+		// Fill dialog options
+		const options : any[] = [];
+		for (let i = 0; i < popups.length; i++)
+		{
+			options.push({label: popups[i].document.title || this.lang(_app), index: i});
+		}
+		options.push({label: this.lang("New %1", egw.link_get_registry(_app, "entry")), index: "new"});
+
+		// Set initial value
+		switch (new_dialog_pref)
+		{
+			case "new":
+				(<any>options).index = "new";
+				break;
+			default:
+			case "add":
+				(<any>options).index = 0;
+				break;
+		}
+		let dialog = new (<any>window).Et2Dialog(this.app_name());
+		dialog.transformAttributes({
+			callback: function (_button_id : string, _value : any)
+			{
+				//Always remember what was chosen, as preselection for next time
+				egw.set_preference("common", pref_name, _value.grid.index == "new" ? "new" : "add");
+
+				if (_value && _value.grid)
+				{
+					switch (_button_id)
+					{
+						case "add":
+							if (_value.grid.index == "new")
+							{
+								return openUp(_app, _extra);
+							}
+							popups[_value.grid.index].app[_app][_method](popups[_value.grid.index], _content);
+							return;
+						case "cancel":
+					}
+				}
+			},
+			title: this.lang("Select an opened dialog"),
+			buttons: buttons,
+			value: {content: {grid: options}},
+			template: this.webserverUrl + '/api/templates/default/promptOpenedDialog.xet?1',
+			resizable: false
+		});
+		document.body.appendChild(dialog);
+	}
+}
+
+egw.extend('open', egw.MODULE_WND_LOCAL, (_app : string, _wnd : Window) => new Open(_wnd));
+
+// Add protocol handler as an option if mail handling is not forced so mail can handle mailto:
+/* Not working consistantly yet
+jQuery(function() {
+try {
+	if(egw.user('apps').mail && (egw.preference('force_mailto','addressbook')||true) != '0')
+	{
+		var params = egw.link_get_registry('mail','add');
+		if(params)
+		{
+			params['preset[mailto]'] = ''; // %s, but egw.link will encode it
+			navigator.registerProtocolHandler("mailto",egw.link('/index.php', params)+'%s', egw.lang('mail'));
+		}
+	}
+} catch (e) {}
+});
+*/

@@ -3,20 +3,36 @@ import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
 import {Et2Widget, loadWebComponent} from "../Et2Widget/Et2Widget";
-import {Et2Datagrid} from "./Et2Datagrid";
+import {loadStylesheet} from "../Et2Widget/cssTools";
+import {Et2Datagrid, type Et2DatagridRowsSnapshot} from "../Et2Datagrid/Et2Datagrid";
 import {
 	Et2DatagridColumn,
+	Et2DatagridDataProvider,
+	Et2DatagridExpandedRowContext,
+	Et2DatagridExpansionConfig,
 	Et2DatagridRowCustomizeContext,
 	Et2DatagridTemplateData,
 	Et2DatagridUpdateType,
-	Et2DatagridUpdateTypes
-} from "./Et2Datagrid.types";
-import {Et2RowProvider} from "./Et2RowProvider";
+	Et2DatagridUpdateTypes,
+	Et2DatagridView
+} from "../Et2Datagrid/Et2Datagrid.types";
+import {type Et2DatagridColumnSelectionItem, Et2DatagridColumnState} from "../Et2Datagrid/Et2DatagridColumnState";
+import {Et2RowProvider} from "../Et2Datagrid/Et2RowProvider";
 import {Et2NextmatchDataProvider} from "./Et2NextmatchDataProvider";
 import {EgwAction} from "../../egw_action/EgwAction";
 import {Et2Filterbox} from "../Et2Filterbox/Et2Filterbox";
 import {Et2Template} from "../Et2Template/Et2Template";
+import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import {Et2NextmatchActionController} from "./Et2NextmatchActionController";
+import {Et2NextmatchAutoRefresh} from "./Et2NextmatchAutoRefresh";
+import {Et2VfsUpload} from "../Et2Vfs/Et2VfsUpload";
+import {
+	applyLegacyNextmatchColumnPreferences,
+	datagridColumnPreferenceValue,
+	type Et2NextmatchResolvedColumn,
+	legacyColumnSelectionCsv,
+	mapLegacyVisibleKeysToCurrentColumns
+} from "./Et2NextmatchColumnPreferences";
 import "./Headers/Header";
 import "./Headers/SortableHeader";
 import "./Headers/CustomfieldsHeader";
@@ -27,16 +43,35 @@ import {
 	Et2NextmatchSortEventDetail
 } from "./Headers/events";
 import styles from "./Et2Nextmatch.styles";
+import rowStyles from "./Et2Nextmatch.row.styles";
+import {et2_IInput} from "../et2_core_interfaces";
+import {styleMap} from "lit/directives/style-map.js";
+import {ref} from "lit/directives/ref.js";
+
+const LETTERSEARCH_SELECTION_ID = "~search_letter~";
+
+type Et2NextmatchPrintState = {
+	columns : Et2DatagridColumn[];
+	orientationStyle : HTMLStyleElement;
+};
 
 /**
- * @summary Nextmatch shows entries with filtering and context menu
+ * @summary Nextmatch shows entries with filtering and context menus.
+ *
+ * Et2Nextmatch uses Et2Datagrid to show application entries using a row template.
+ * Rows must be read-only, we do not allow inputs in the rows.
  *
  * @event et2-loading-start - Re-emitted from the inner datagrid when row fetching starts.
  * @event et2-loading-done - Re-emitted from the inner datagrid when all fetches complete.
  * @event et2-loading-error - Re-emitted from the inner datagrid when a fetch fails.
- * @event et2-search-result - Legacy-compatible event emitted after fetch completion.
- * @event et2-selection-changed - Re-emitted from the inner datagrid when row selection changes.
- * @event et2-columns-changed - Re-emitted from the inner datagrid when columns change.
+ * @event {CustomEvent<{total: string, nextmatch: Et2Nextmatch}>} et2-search-result - Legacy-compatible event emitted after fetch completion.
+ * @event {CustomEvent<{selectedRowIds?: string[], activeRowId?: string, allSelected?: boolean, replaceSelection?: boolean}>} et2-selection-changed - Re-emitted from the inner datagrid when row selection changes.
+ * @event {CustomEvent<{activeRowId?: string, activeRowIndex?: number}>} et2-active-row-changed - Re-emitted from the inner datagrid when active row focus changes.
+ * @event {CustomEvent<{columns: Et2DatagridColumn[]}>} et2-columns-changed - Re-emitted from the inner datagrid when columns change.
+ * @event {CustomEvent<{oldFilters: Record<string, any>, activeFilters: Record<string, any>, nm: Et2Nextmatch}>} et2-filter - Cancelable event emitted before active filters are applied.
+ * @event {CustomEvent<{rowUid: string, files: File[]}>} et2-filedrop - Native OS file drop onto a row (or empty area). `rowUid` is "" when dropped outside any row. Cancelable: call `event.preventDefault()` in a listener to suppress the framework default (upload + link into the row's VFS link dir) and handle it yourself (e.g. filemanager uploads into the row's folder).
+ * @event {CustomEvent<{rowIds: string[], previousRowId: string|null, nextRowId: string|null}>} et2-rows-deleted - Emitted after displayed rows are deleted.  The neighbour ids are captured before deletion for application-specific selection policy.
+ * @event refresh - Legacy compatibility event emitted after refresh requests are processed.
  *
  * @slot header - Optional content rendered above the datagrid.
  * @slot footer - Optional content rendered below the datagrid.
@@ -47,12 +82,14 @@ import styles from "./Et2Nextmatch.styles";
  *
  * @csspart header - Wrapper for top header slot content rendered above the grid.
  * @csspart grid - Internal `et2-datagrid` element.
+ * @csspart subgrid - Expanded child `et2-datagrid` rendered for expandable rows.
  * @csspart footer - Wrapper for bottom slot content rendered below the grid.
  * @cssproperty [--row-height=3em] - Forwarded to internal datagrid row-height estimate.
- * @cssproperty [--meta-column-width=6px] - Width of leading metadata indicator column.
+ * @cssproperty [--row-cell-max-height=10em] - Forwarded to internal datagrid row cell max height.
+ * @cssproperty [--meta-column-width=max(var(--sl-spacing-large), 6px)] - Width of leading metadata indicator/expander column.
  */
 @customElement("et2-nextmatch")
-export class Et2Nextmatch extends Et2Widget(LitElement)
+export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 {
 	/**
 	 * Compose Nextmatch host styles from shared Et2Widget styles and local layout styles.
@@ -65,17 +102,174 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		];
 	}
 
+	/**
+	 * Defaults for settings that nextmatch expects even when the server does not provide them.
+	 */
+	private static readonly DEFAULT_SETTINGS : Record<string, any> = {action_var: "action"};
+
+	/**
+	 * Content from `$content[nm]` contains both nextmatch configuration
+	 * and arbitrary app state. Only keep documented nextmatch settings here so
+	 * `settings` remains useful for action/filter behaviour without retaining
+	 * unrelated content payloads. Active fetch state like `col_filter`,
+	 * `searchletter`, `filter`, `filter2`, `cat_id` and `search` is intentionally
+	 * omitted and normalized into `_filters` instead - see `FILTER_VALUE_SETTINGS`.
+	 */
+	private static readonly ALLOWED_SETTINGS : Set<string> = new Set([
+		"action_var",
+		"actions",
+		"columnselection_pref",
+		"columns_forced",
+		"dataStorePrefix",
+		"default_cols",
+		"disable_autorefresh",
+		"extra_attributes",
+		"filter_template",
+		"is_parent",
+		"is_parent_value",
+		"lettersearch",
+		"no_columnselection",
+		"order",
+		"parent_id",
+		"placeholder",
+		"placeholder_actions",
+		"return",
+		"row_id",
+		"row_modified",
+		"rows",
+		"select_all",
+		"selectcols",
+		"selected",
+		"sort",
+		"start",
+		"template",
+		"total",
+		"view"
+	]);
+
+	/**
+	 * Simple current-filter-value settings that must land in `_filters` (read by
+	 * `Et2NextmatchDataProvider._currentFilters()` for every fetch/push-refresh check), not just
+	 * in `settings`. Without this, a filter active from persisted page-load state - rather than
+	 * changed via its header control in the current session - is silently missing from the
+	 * filters sent with a push/refresh check, so the server has no way to exclude a row that
+	 * shouldn't match it. `col_filter` and `searchletter` get the same treatment above, via
+	 * dedicated setters.
+	 */
+	private static readonly FILTER_VALUE_SETTINGS : readonly string[] = ["filter", "filter2", "cat_id", "search"];
+
+	/**
+	 * Legacy filter controls use patterned keys such as `filter_label`,
+	 * `filter2_no_lang`, and `cat_id_placeholder`. Allow these suffixes for
+	 * `filter`, `filter2`, `cat`, and `cat_id` while still rejecting unknown
+	 * app-specific content keys.
+	 */
+	private static readonly ALLOWED_SETTING_SUFFIXES : Set<string> = new Set([
+		"aria_label",
+		"help",
+		"label",
+		"no_lang",
+		"onchange",
+		"placeholder",
+		"statustext",
+		"widget"
+	]);
+
+	/**
+	 * Deduplicates deprecation warnings so each legacy API warns only once per session.
+	 */
+	private static _deprecationWarnings : Set<string> = new Set();
+
 	/** Initial rows data. Can be set directly or via setRows(). */
 	@property({type: Array})
 	rows : any[] = [];
 
-	/** Template name used to resolve columns and row layout. */
+	/**
+	 * Non-row scalars (eg. header totals) found mixed into the initial `rows` attribute,
+	 * set aside by transformAttributes() for firstUpdated() to apply once ready.
+	 * firstUpdated() is the only reader and nulls it out once applied, so it never
+	 * outlives the first update - it does not need clearing anywhere else.
+	 */
+	private _initialAdditionalData : Record<string, any> | null = null;
+
+	/**
+	 * Legacy XET selection handler.  This intentionally does not use the DOM
+	 * `onselect` property, whose native Event callback signature conflicts with
+	 * nextmatch's legacy `(selectedRowIds, nextmatch)` contract.
+	 */
+	@property({type: Function, attribute: false})
+	legacyOnselect : ((selectedRowIds : string[], nextmatch : Et2Nextmatch) => unknown) | null = null;
+
+	/**
+	 * XET file-drop handler.  Return `false` to cancel the framework's
+	 * default upload-and-link action
+	 */
+	@property({type: Function, attribute: false})
+	onfiledrop : ((rowUid : string, files : File[]) => unknown) | null = null;
+
+	/**
+	 * Template name used to resolve columns and row layout.
+	 *
+	 * This uses a custom accessor instead of Lit's generated setter so template
+	 * changes can mark configuration loading synchronously before the next render.
+	 * Without that early flag, the child datagrid can render once with no
+	 * template data and log a false missing-template warning during initial load.
+	 */
 	@property({type: String})
-	template : string = "";
+	set template(value : string)
+	{
+		const oldValue = this.template;
+		const nextValue = value || "";
+		if(nextValue === oldValue)
+		{
+			return;
+		}
+		this._template = nextValue;
+		this._templateLoading = true;
+		this.requestUpdate("template", oldValue);
+	}
+
+	get template() : string
+	{
+		return this._template;
+	}
 
 	/** Optional custom preference name for persisted datagrid column settings. */
 	@property({type: String, attribute: "column-preference-name"})
 	columnPreferenceName : string = "";
+
+	/**
+	 * App that owns this nextmatch's rows - used for sort/refresh/lettersearch preference
+	 * persistence, row-stylesheet loading and legacy action-manager registration (see
+	 * `_getAppName()`). Set this explicitly when a nextmatch is embedded in another app's
+	 * page (eg. InfoLog's CRM view inside addressbook) and the owning app can't be inferred
+	 * from `template`. Leave unset to fall back to `_getAppName()`'s own resolution.
+	 */
+	@property({type: String, attribute: "app"})
+	appName : string = "";
+
+	private _view : Et2DatagridView = "row";
+
+	/**
+	 * Visual layout mode for the inner datagrid. Row is the default.
+	 */
+	@property({type: String, reflect: true})
+	set view(value : Et2DatagridView | string)
+	{
+		const oldValue = this._view;
+		const nextValue = this._normalizeView(value);
+		if(nextValue === oldValue)
+		{
+			return;
+		}
+		this._view = nextValue;
+		this.requestUpdate("view", oldValue);
+	}
+
+	get view() : Et2DatagridView
+	{
+		return this._view;
+	}
 
 	/** Optional filter template source (template name, .xet URL, or template element). */
 	@property({attribute: false})
@@ -83,17 +277,26 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 
 	/**
 	 * Show A-Z letter search controls for filtering by leading character.
-	 * Mirrors legacy `lettersearch` nextmatch setting.
+	 * Users can still turn it off in column selection preferences
 	 */
 	@property({type: Boolean})
 	lettersearch : boolean = false;
 
 	/**
-	 * Current active letter search filter value.
-	 * `false` / empty means "all letters".
+	 * Actual letter-search bar visibility. `lettersearch` remains the settings
+	 * capability flag, while this tracks the user-controlled chooser state.
 	 */
-	@property({attribute: false})
-	searchletter : string | false = false;
+	private _lettersearchVisible : boolean = true;
+
+	/**
+	 * Defer the initial row fetch until this nextmatch's tab panel (an ancestor
+	 * `<et2-tab-panel>`) is actually shown, instead of loading immediately on connect.
+	 * Only affects the client-side `reload()` fallback in firstUpdated() - template/column
+	 * parsing and any server-preloaded rows/total are unaffected, so headers still render.
+	 * Has no effect when there's no ancestor tab panel, or it's already the active one.
+	 */
+	@property({type: Boolean})
+	lazy : boolean = false;
 
 	/**
 	 * Field / column that holds Modified date for entries.
@@ -113,15 +316,89 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	/**
 	 * Optional list of action ids allowed for placeholder context menu.
 	 */
-	@property({attribute: false})
+	@property({attribute: false, type: Array})
 	placeholderActions : string[] = [];
 
 	/**
 	 * Optional list of custom filter attributes that should round-trip through nextmatch fetches.
-	 * Mirrors legacy `extra_attributes` setting.
 	 */
-	@property({attribute: false})
+	@property({attribute: false, type: Array})
 	extraAttributes : string[] = [];
+
+	/**
+	 * Server-only. Name of the column to sort by initially, if the user has no
+	 * stored sort preference yet and the app didn't set one in PHP. Given
+	 * directly on the widget in the template, eg. `<nextmatch order="tr_modified" sort="DESC"/>`.
+	 * If omitted, falls back to the `row_modified` field (sorted newest first)
+	 * when the app has one set. Read via `$this->attrs['order']` in
+	 * `Nextmatch.php` - not a reactive client property, has no effect once the
+	 * widget is running in the browser.
+	 */
+	order? : string;
+
+	/**
+	 * Server-only. Direction ('ASC'|'DESC') paired with `order` above. Defaults
+	 * to 'ASC' if `order` is given without it.
+	 */
+	sort? : string;
+
+	/**
+	 * Additional nextmatch settings
+	 *
+	 * Additional customized settings for applications that can't follow the defaults.
+	 * Keep this available for action handlers that still use `nextmatch..settings`,
+	 * especially the server-defined action variable used by submit actions.
+	 */
+	@property({attribute: false, type: Object})
+	set settings(value : Record<string, any> | string | null | undefined)
+	{
+		const oldValue = this.settings;
+		const settings = this._settingsObject(value);
+		delete settings.rows;
+		this._normalizeTotalSetting(settings);
+		if(typeof settings.view !== "undefined")
+		{
+			settings.view = this._normalizeView(settings.view);
+			this.view = settings.view;
+			this._filters.view = settings.view;
+		}
+		if(typeof settings.col_filter !== "undefined")
+		{
+			this._setColFilterFilter(settings.col_filter);
+			delete settings.col_filter;
+		}
+		if(typeof settings.searchletter !== "undefined")
+		{
+			this._setSearchletterFilter(settings.searchletter);
+			delete settings.searchletter;
+		}
+		for(const key of Et2Nextmatch.FILTER_VALUE_SETTINGS)
+		{
+			this._seedFilterValueSetting(settings, key);
+		}
+		// Apps still drive the persisted column-preference key through the legacy
+		// `columnselection_pref` setting (e.g. to vary it per filter state). Keep that
+		// working by forwarding it to the modern `columnPreferenceName` property, which
+		// is what Et2Datagrid actually uses for column load/save.
+		if(settings.columnselection_pref)
+		{
+			this._warnDeprecatedOnce(
+				"columnselection_pref",
+				"Et2Nextmatch settings.columnselection_pref is deprecated, set the `columnPreferenceName` property instead"
+			);
+			this.columnPreferenceName = String(settings.columnselection_pref);
+		}
+		this._settings = {
+			...Et2Nextmatch.DEFAULT_SETTINGS,
+			...settings
+		};
+		this.requestUpdate("settings", oldValue);
+	}
+
+	get settings() : Record<string, any>
+	{
+		return this._settings;
+	}
 
 	/**
 	 * Prepared row template and metadata currently bound into the datagrid.
@@ -129,11 +406,22 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	@state()
 	private _templateData : Et2DatagridTemplateData | null = null;
 
+	private _template : string = "";
+
 	/**
 	 * True while a named template is being resolved asynchronously.
 	 */
 	@state()
-	private _templateLoading : boolean = false;
+	private _templateLoading : boolean = true;
+
+	private _appRowStylesheet : CSSStyleSheet | null = null;
+
+	@state()
+	private _rowStylesheets : CSSStyleSheet[] = [rowStyles.styleSheet!];
+	private _additionalRowStylesheets : CSSStyleSheet[] = [];
+
+	@state()
+	private _hasPlaceholderActions : boolean = false;
 
 	/**
 	 * Monotonic token used to ignore stale async template-load completions.
@@ -159,6 +447,33 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	 * Translates current filter/template state into datagrid fetch requests.
 	 */
 	private _dataProvider : Et2NextmatchDataProvider;
+	/** Lazily-created child providers keyed by normalized parent row id. */
+	private _childDataProviders : Map<string, Et2DatagridDataProvider> = new Map();
+	/** Loaded row snapshots for virtualized child grids, keyed by normalized parent row id. */
+	private _childGridRowsSnapshots : Map<string, Et2DatagridRowsSnapshot> = new Map();
+	/** Tracks expanded subgrids that have already triggered their initial load. */
+	private _initializedSubgrids : WeakSet<Et2Datagrid> = new WeakSet();
+	/** Controlled expansion state shared with the root datagrid. */
+	private _expandedRowIds : Set<string> = new Set();
+	/** Controlled expansion state for each rendered child grid, keyed by its parent row id. */
+	private _expandedRowIdsByParent : Map<string, Set<string>> = new Map();
+	/** Selection state per parent/child grid, merged for legacy action handling. */
+	private _selectionByGridId : Map<string, { selectedRowIds : string[]; allSelected : boolean }> = new Map();
+	/** Current datagrid column state after user preference/resizing changes. */
+	private _datagridColumns : Et2DatagridColumn[] | null = null;
+	/** Temporary runtime state which must be removed after the browser print dialog closes. */
+	private _printState : Et2NextmatchPrintState | null = null;
+	/**
+	 * Resolves once template columns are first derived (in _applyTemplateData),
+	 * so consumers can await columns without polling.  Deliberately NOT tied to
+	 * updateComplete: gating Lit readiness on this stalls etemplate2's load.
+	 */
+	private _resolveColumnsReady : () => void = () => {};
+	private _columnsReady : Promise<void> = new Promise((resolve) => { this._resolveColumnsReady = resolve; });
+	/** Frozen column snapshots for already-open child grids. */
+	private _subgridColumnSnapshots : Map<string, {
+		columns : Et2DatagridColumn[];
+	}> = new Map();
 
 	/**
 	 * Watches slot content so slot-driven templates can be reparsed on changes.
@@ -174,11 +489,18 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	 * Tracks which legacy column-preference keys were already migrated once.
 	 */
 	private _legacyColumnPreferenceApplied : Set<string> = new Set();
+	/** Visible column keys requested before template columns are available. */
+	private _pendingVisibleColumnKeys : string[] | null = null;
 
 	/**
-	 * Active nextmatch filter payload mirrored for legacy integrations and fetches.
+	 * Active nextmatch filter payload for fetching data.
 	 */
 	private _filters : Record<string, any> = {col_filter: {}};
+
+	/**
+	 * Reentrancy guard for applyFilters() - see its own docblock for why this exists.
+	 */
+	private _applyingFilters = false;
 
 	/**
 	 * Lazily created shared filterbox instance attached near the host app shell.
@@ -191,10 +513,29 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	private _actionController : Et2NextmatchActionController;
 
 	/**
-	 * Deduplicates deprecation warnings so each legacy API warns only once per session.
+	 * Background autorefresh poll - see `Et2NextmatchAutoRefresh` for the design
+	 * rationale (interval source, why a tick is a full reload, visibility pausing).
 	 */
-	private static _deprecationWarnings : Set<string> = new Set();
+	private _autoRefresh : Et2NextmatchAutoRefresh;
 
+	/**
+	 * Row element currently highlighted as a native file drop target, so we can
+	 * move/clear the highlight without thrashing during dragover.
+	 */
+	private _dropHoverRow : HTMLElement | null = null;
+
+	/**
+	 * Count of in-flight OS-file dragenter/leave pairs.  Used to tell an OS
+	 * file drag from an action-framework drag, and to keep the highlight while
+	 * moving across child elements.  `dataTransfer.files` is empty during
+	 * dragover (only populated on drop), so we detect via the `Files` type.
+	 */
+	private _osFileDragDepth = 0;
+
+	/**
+	 * Backing store for the public `settings` property.
+	 */
+	private _settings : Record<string, any> = {...Et2Nextmatch.DEFAULT_SETTINGS};
 
 	/**
 	 * Resolve the internal datagrid instance from shadow DOM.
@@ -206,12 +547,230 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	}
 
 	/**
+	 * Extend the normal widget-tree lookup with the datagrid, e.g. header widgets built from
+	 * the row template (like a sum in a column header) are Et2Datagrid's children, not ours.
+	 */
+	getWidgetById(_id : string)
+	{
+		return super.getWidgetById(_id) ?? this._datagrid?.getWidgetById(_id) ?? null;
+	}
+
+	/**
 	 * Current column definitions passed through to the datagrid.
 	 * Before a real template is parsed this can come from a placeholder templateData.
 	 */
 	private get _currentColumns() : Et2DatagridColumn[]
 	{
-		return this._templateData?.columns || [];
+		return this._datagridColumns || this._templateData?.columns || [];
+	}
+
+	/**
+	 * Resolve a column's `disabled` expression against our content, eg. `@no_customfields`.
+	 *
+	 * Bound as a field so it can be handed to Et2DatagridColumnState as a plain callback.
+	 * Without it every expression counts as "not disabled" and conditional columns leak into
+	 * places that are supposed to skip them.
+	 */
+	private _parseColumnBooleanExpression = (expression : string) : boolean =>
+	{
+		const mgr = this.getArrayMgr("content");
+		return !!mgr?.parseBoolExpression(expression);
+	};
+
+	/**
+	 * Re-evaluate conditional column visibility against the current content.
+	 *
+	 * A row template can hide a column with an expression, eg. infolog's
+	 * `<column disabled="@no_customfields"/>`, and the server supplies the flag it reads
+	 * among the non-numeric keys of the rows response.  Those keys are written straight into
+	 * the content array manager, which is not reactive, so the datagrid has to be told that
+	 * the answer may have changed.
+	 */
+	public refreshColumnVisibility()
+	{
+		this._datagrid?.refreshColumnVisibility();
+	}
+
+	/**
+	 * Resolves once the template columns have been derived, so consumers (e.g.
+	 * filemanager tile view) can await visible columns without polling:
+	 *     await nm.whenColumnsReady(); // getValue().selectcols is now populated
+	 * This is a side-channel promise, independent of updateComplete, so awaiting
+	 * it never blocks or stalls etemplate2's load.
+	 */
+	public whenColumnsReady() : Promise<void>
+	{
+		return this._columnsReady;
+	}
+
+	/**
+	 * Native OS file drops onto a row are surfaced as the `et2-filedrop` event
+	 * (`detail: { rowUid: string; files: File[] }`), dispatched on this element
+	 * with `bubbles`/`composed` so apps can listen on the widget's DOM node.
+	 * `rowUid` is "" when the drop landed outside any row, so the listener can
+	 * fall back to the current directory.  Apps do not need to call a setter — a
+	 * standard addEventListener is enough, matching the rest of the nextmatch event API.
+	 */
+
+	/**
+	 * True when the drag carries OS files (as opposed to an action-framework
+	 * row drag).  Note `dataTransfer.files` is empty during dragover — only the
+	 * `Files` type is exposed — so we test the types, not the file list.
+	 */
+	private _isOsFileDrag(event : DragEvent) : boolean
+	{
+		return !!event.dataTransfer?.types?.includes?.("Files");
+	}
+
+	/**
+	 * Allow a drop only for OS file drags; action-framework drags (no files)
+	 * are left to the action system untouched.  Highlights the row under the
+	 * pointer as the drop target.  Must run in the capture phase so the action
+	 * controller does not swallow the drag first.
+	 */
+	private _handleFileDragOver = (event : DragEvent) : void =>
+	{
+		if(!this._isOsFileDrag(event)) return;
+		// preventDefault() is what makes the browser accept the drop.
+		event.preventDefault();
+		const row = this._findDropRowElement(event);
+		if(row && row !== this._dropHoverRow)
+		{
+			this._clearDropHover();
+			row.classList.add("drop-hover");
+			this._dropHoverRow = row;
+		}
+	};
+
+	/**
+	 * Track OS-file dragenter so we can clear the highlight when the drag
+	 * truly leaves the nextmatch (not just moves between child elements).
+	 */
+	private _handleFileDragEnter = (event : DragEvent) : void =>
+	{
+		if(this._isOsFileDrag(event)) this._osFileDragDepth++;
+	};
+
+	/**
+	 * Clear the drop-target highlight when the OS-file drag leaves the
+	 * nextmatch entirely (dragleave fires on every child boundary, so we count
+	 * enter/leave pairs).
+	 */
+	private _handleFileDragLeave = (event : DragEvent) : void =>
+	{
+		if(!this._isOsFileDrag(event)) return;
+		this._osFileDragDepth = Math.max(0, this._osFileDragDepth - 1);
+		if(this._osFileDragDepth === 0) this._clearDropHover();
+	};
+
+	private _clearDropHover() : void
+	{
+		this._dropHoverRow?.classList.remove("drop-hover");
+		this._dropHoverRow = null;
+	};
+
+	/**
+	 * Emit an `et2-filedrop` event for native OS file drops onto a row, then
+	 * apply the framework default (upload + link to the row, gated on the link
+	 * registry) unless a consumer cancels it with `event.preventDefault()`.
+	 *
+	 * The default mirrors the legacy nextmatch `handle_drop`: dropping a file on
+	 * a row uploads into that entry's VFS link directory, linking the file to
+	 * the entry.  Apps that need different behaviour (e.g. filemanager uploads
+	 * into the row's folder instead of linking) listen for `et2-filedrop` and
+	 * call `preventDefault()` to suppress the framework default.
+	 */
+	private _handleFileDrop = async (event : DragEvent) : Promise<void> =>
+	{
+		const files = event.dataTransfer?.files;
+		if(!files || files.length === 0) return;
+		event.preventDefault();
+		event.stopPropagation();
+		const rowElement = this._findDropRowElement(event);
+		const rowUid = rowElement?.getAttribute("data-row-id") || "";
+		this._clearDropHover();
+		this._osFileDragDepth = 0;
+
+		const dropEvent = new CustomEvent("et2-filedrop", {
+			detail: {rowUid, files: Array.from(files)},
+			bubbles: true,
+			composed: true,
+			cancelable: true
+		});
+		this.dispatchEvent(dropEvent);
+
+		// Consumer cancelled (e.g. filemanager's folder upload) -> no default.
+		if(dropEvent.defaultPrevented) return;
+
+		await this._defaultFileDrop(rowUid, Array.from(files));
+	};
+
+	/**
+	 * Framework default for a native OS file drop: upload the files into the
+	 * target row's VFS link directory, linking them to that entry.  Only runs
+	 * when the app is linkable (`link_get_registry`) and we have a row UID.
+	 */
+	private async _defaultFileDrop(rowUid : string, files : File[]) : Promise<void>
+	{
+		if(!rowUid) return;
+
+		const split = rowUid.split("::");
+		const to_app = split.shift() || "";
+		const to_id = split.join("::");
+
+		// Respect link system settings: only link when the app is registered.
+		if(!this.egw().link_get_registry?.(to_app)) return;
+
+		const path = `/apps/${to_app}/${to_id}/`;
+		const link = <Et2VfsUpload>loadWebComponent("et2-vfs-upload", {path, multiple: true}, this);
+		this.appendChild(link);
+		await link.updateComplete;
+		files.forEach(file => link.addFile(file));
+
+		// Report results through the standard message bar, typed to upload
+		// status.  We listen to the widget's per-file `et2-file-complete` event
+		// (dispatched on both success and error) rather than the batch `change`,
+		// because `change` fires only after the file is removed from the list
+		// and can no longer be inspected.
+		let done = 0;
+		const total = files.length;
+		link.addEventListener("et2-file-complete", (e : CustomEvent) =>
+		{
+			this.refresh(rowUid, Et2DatagridUpdateTypes.UPDATE_IN_PLACE);
+
+			const file = e.detail?.file;
+			const warning = file?.warning;
+			if(!e.detail?.success || warning)
+			{
+				this.egw().message(warning ?? this.egw().lang("Failed to upload %1", file?.fileName ?? ""), "error");
+			}
+			else
+			{
+				this.egw().link_title(to_app, to_id, (title) =>
+				{
+					this.egw().message(this.egw().lang("%1 linked to %2", file?.fileName ?? "", title || rowUid), "success");
+				});
+			}
+
+			if(++done >= total)
+			{
+				link.remove();
+			}
+		});
+	}
+
+
+	private _findDropRowElement(event : DragEvent) : HTMLElement | null
+	{
+		for(const target of (event.composedPath?.() ?? []))
+		{
+			if(target instanceof HTMLElement)
+			{
+				const row = target.closest?.("[data-row-id]") as HTMLElement | null;
+				if(row) return row;
+			}
+		}
+		return null;
 	}
 
 	constructor()
@@ -230,6 +789,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		this._rowProvider = new Et2RowProvider(this as any);
 		this._dataProvider = new Et2NextmatchDataProvider(this as any);
 		this._actionController = new Et2NextmatchActionController(this as any);
+		this._autoRefresh = new Et2NextmatchAutoRefresh(this);
 	}
 
 	/**
@@ -243,14 +803,31 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		this.addEventListener(ET2_NEXTMATCH_FILTER_EVENT, this._handleHeaderFilterEvent as EventListener);
 		this.addEventListener("et2-loading-done", this._handleLoadingDone as EventListener);
 		this.addEventListener("et2-selection-changed", this._handleSelectionChanged as EventListener);
+		this.addEventListener("et2-selection-changed", this._handleLegacyOnselect as EventListener);
+		this.addEventListener("et2-filedrop", this._handleLegacyOnfiledrop as EventListener);
+		this.addEventListener("et2-active-row-changed", this._handleActiveRowChanged as EventListener);
+		this.addEventListener("et2-columns-changed", this._handleDatagridColumnsChanged as EventListener);
+		this.addEventListener("et2-column-selection-items", this._handleColumnSelectionItems as EventListener);
+		this.addEventListener("et2-column-selection-apply", this._handleColumnSelectionApply as EventListener);
 		this.addEventListener("contextmenu", this._handleContextMenu as EventListener, true);
 		this.addEventListener("dblclick", this._handleDoubleClick as EventListener, true);
+		this.addEventListener("keydown", this._handleActionShortcut as EventListener, true);
 		this.addEventListener("keydown", this._handleKeydown as EventListener);
 		this.addEventListener("pointerdown", this._handlePointerDown as EventListener);
 		this.addEventListener("pointermove", this._handlePointerMove as EventListener);
 		this.addEventListener("pointerup", this._cancelLongPress as EventListener);
 		this.addEventListener("pointercancel", this._cancelLongPress as EventListener);
+		this.addEventListener("et2-datagrid-enter-expanded-row", this._handleEnterExpandedRow as EventListener);
+		this.addEventListener("et2-datagrid-leave-child-grid", this._handleLeaveChildGrid as EventListener);
+		this.addEventListener("dragstart", this._handleDragStartCapture as EventListener, true);
 		this.addEventListener("dragend", this._cancelLongPress as EventListener, true);
+		// Native OS file drops (upload).  Distinct from action-framework drags,
+		// which are handled by the action controller.  Captured in the capture
+		// phase so the action controller does not swallow the OS file drag.
+		this.addEventListener("dragenter", this._handleFileDragEnter as EventListener, true);
+		this.addEventListener("dragover", this._handleFileDragOver as EventListener, true);
+		this.addEventListener("drop", this._handleFileDrop as EventListener, true);
+		this.addEventListener("dragleave", this._handleFileDragLeave as EventListener, true);
 	}
 
 	/**
@@ -266,26 +843,95 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		this.removeEventListener(ET2_NEXTMATCH_FILTER_EVENT, this._handleHeaderFilterEvent as EventListener);
 		this.removeEventListener("et2-loading-done", this._handleLoadingDone as EventListener);
 		this.removeEventListener("et2-selection-changed", this._handleSelectionChanged as EventListener);
+		this.removeEventListener("et2-selection-changed", this._handleLegacyOnselect as EventListener);
+		this.removeEventListener("et2-filedrop", this._handleLegacyOnfiledrop as EventListener);
+		this.removeEventListener("et2-active-row-changed", this._handleActiveRowChanged as EventListener);
+		this.removeEventListener("et2-columns-changed", this._handleDatagridColumnsChanged as EventListener);
+		this.removeEventListener("et2-column-selection-items", this._handleColumnSelectionItems as EventListener);
+		this.removeEventListener("et2-column-selection-apply", this._handleColumnSelectionApply as EventListener);
 		this.removeEventListener("contextmenu", this._handleContextMenu as EventListener, true);
 		this.removeEventListener("dblclick", this._handleDoubleClick as EventListener, true);
+		this.removeEventListener("keydown", this._handleActionShortcut as EventListener, true);
 		this.removeEventListener("keydown", this._handleKeydown as EventListener);
 		this.removeEventListener("pointerdown", this._handlePointerDown as EventListener);
 		this.removeEventListener("pointermove", this._handlePointerMove as EventListener);
 		this.removeEventListener("pointerup", this._cancelLongPress as EventListener);
 		this.removeEventListener("pointercancel", this._cancelLongPress as EventListener);
+		this.removeEventListener("et2-datagrid-enter-expanded-row", this._handleEnterExpandedRow as EventListener);
+		this.removeEventListener("et2-datagrid-leave-child-grid", this._handleLeaveChildGrid as EventListener);
+		this.removeEventListener("dragstart", this._handleDragStartCapture as EventListener, true);
 		this.removeEventListener("dragend", this._cancelLongPress as EventListener, true);
-		this._actionController.destroy();
+		this.removeEventListener("dragenter", this._handleFileDragEnter as EventListener, true);
+		this.removeEventListener("dragover", this._handleFileDragOver as EventListener, true);
+		this.removeEventListener("drop", this._handleFileDrop as EventListener, true);
+		this.removeEventListener("dragleave", this._handleFileDragLeave as EventListener, true);
 		super.disconnectedCallback();
 	}
 
 	transformAttributes(attrs)
 	{
-		// Process legacy 'settings' into properties
-		// We're before namespace creation here, so use attrs.id
-		const settings = this.getArrayMgr("content").getEntry(attrs.id || 'nm');
-		if(settings && Object.keys(settings).length > 0)
+		// `onselect` is a native HTMLElement property.  Move the legacy XET
+		// handler before the generic transformer resolves Function properties.
+		if(typeof attrs.onselect !== "undefined")
 		{
-			Object.assign(attrs, settings);
+			attrs.legacyOnselect = attrs.onselect;
+			delete attrs.onselect;
+		}
+
+		// Process 'settings' into properties
+		// We're before namespace creation here, so use attrs.id
+		const attrSettings = this._settingsObject(attrs.settings);
+		const contentSettings = this._settingsObject(this.getArrayMgr("content").getEntry(attrs.id || 'nm'));
+		for(const sourceSettings of [contentSettings, attrSettings])
+		{
+			this._normalizeTotalSetting(sourceSettings);
+			if(typeof sourceSettings.view !== "undefined")
+			{
+				sourceSettings.view = this._normalizeView(sourceSettings.view);
+				this._filters.view = sourceSettings.view;
+			}
+			if(typeof sourceSettings.col_filter !== "undefined")
+			{
+				this._setColFilterFilter(sourceSettings.col_filter);
+				delete sourceSettings.col_filter;
+			}
+			if(typeof sourceSettings.searchletter !== "undefined")
+			{
+				this._setSearchletterFilter(sourceSettings.searchletter);
+				delete sourceSettings.searchletter;
+			}
+			for(const key of Et2Nextmatch.FILTER_VALUE_SETTINGS)
+			{
+				this._seedFilterValueSetting(sourceSettings, key);
+			}
+		}
+		const settings = this._filterAllowedSettings(contentSettings);
+		const mergedSettings = {
+			...settings,
+			...attrSettings
+		};
+		if(Object.keys(mergedSettings).length > 0)
+		{
+			const retainedSettings = {...mergedSettings};
+			// Rows and actions are initialized through their own attributes.
+			delete retainedSettings.rows;
+			delete retainedSettings.actions;
+			attrs.settings = retainedSettings;
+			Object.assign(attrs, contentSettings);
+		}
+		if(typeof attrs.searchletter !== "undefined")
+		{
+			this._setSearchletterFilter(attrs.searchletter);
+			delete attrs.searchletter;
+		}
+		if(typeof attrs.col_filter !== "undefined")
+		{
+			this._setColFilterFilter(attrs.col_filter);
+			delete attrs.col_filter;
+		}
+		for(const key of Et2Nextmatch.FILTER_VALUE_SETTINGS)
+		{
+			this._seedFilterValueSetting(attrs, key);
 		}
 		// Normalize legacy snake_case settings to modern Et2Nextmatch properties.
 		for(const [modernKey, legacyKey] of [
@@ -297,15 +943,16 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 			if(typeof value !== "undefined")
 			{
 				attrs[modernKey] = this._toStringArray(value);
+				delete attrs[legacyKey];
 			}
-		}
-		if(typeof attrs.searchletter !== "undefined")
-		{
-			attrs.searchletter = attrs.searchletter || false;
 		}
 		if(typeof attrs.lettersearch !== "undefined")
 		{
 			attrs.lettersearch = !!attrs.lettersearch;
+		}
+		if(typeof attrs.view !== "undefined")
+		{
+			attrs.view = this._normalizeView(attrs.view);
 		}
 		const rowsSource = typeof attrs.rows !== "undefined" ? attrs.rows : this.getAttribute("rows");
 		if(typeof rowsSource === "string")
@@ -318,27 +965,163 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 			{
 			}
 		}
+		// The server encodes rows keyed by row id (eg. ts_id), not by a clean 0-based sequence,
+		// so PHP's json_encode emits a JSON object (`{"1": {...}, "3": {...}}`) rather than an
+		// array whenever a row is ever deleted/skipped - JSON.parse then hands back a plain
+		// object, not an array. firstUpdated()'s `this.rows.length` check requires a real array
+		// to correctly skip the initial reload when rows were already provided; normalize here
+		// rather than downstream, since every other consumer of `rows` also assumes a real array.
+		if(attrs.rows && typeof attrs.rows === "object" && !Array.isArray(attrs.rows))
+		{
+			// Some apps' get_rows callbacks (eg. timesheet's get_rrows()) mix UI metadata
+			// flags into the same $rows array as real per-record data - string-keyed
+			// scalars like 'ownerClass'/'pm_integration' alongside numeric-keyed row
+			// objects - for the legacy row template to consume. A scalar surviving this
+			// normalization would be treated as a real preloaded row further down,
+			// corrupting the datagrid with fake blank rows, so only keep actual records.
+			// The same scalars are how a refresh sends header totals (eg. timesheet's
+			// quantity/price sums) via processAdditionalData() - stash them so firstUpdated()
+			// can apply them the same way once the initial rows are set up, instead of just
+			// dropping them here. Only worth stashing before firstUpdated() has run: that's
+			// the only place _initialAdditionalData is ever read, and it clears the field
+			// once applied - collecting more here after that would just leak, unread.
+			if(!this.hasUpdated)
+			{
+				const additionalData : Record<string, any> = {};
+				for(const [key, value] of Object.entries(attrs.rows as Record<string, any>))
+				{
+					if(!value || typeof value !== "object")
+					{
+						additionalData[key] = value;
+					}
+				}
+				if(Object.keys(additionalData).length)
+				{
+					this._initialAdditionalData = {...(this._initialAdditionalData || {}), ...additionalData};
+				}
+			}
+			attrs.rows = Object.values(attrs.rows).filter((row) => row && typeof row === "object");
+		}
 		super.transformAttributes(attrs);
 	}
 
+	/**
+	 * Normalize legacy string/object settings into a plain object.
+	 */
+	private _settingsObject(value : Record<string, any> | string | null | undefined) : Record<string, any>
+	{
+		return value && typeof value === "object" && !Array.isArray(value) ? {...value} : {};
+	}
+
+	private _normalizeTotalSetting(settings : Record<string, any>)
+	{
+		if(typeof settings.total === "string")
+		{
+			settings.total = Number(settings.total);
+		}
+	}
+
+	private _normalizeView(value : string | null | undefined) : Et2DatagridView
+	{
+		return String(value || "").trim().toLowerCase() === "tile" ? "tile" : "row";
+	}
+
+	private _filterAllowedSettings(settings : Record<string, any>) : Record<string, any>
+	{
+		const allowed : Record<string, any> = {};
+		for(const [key, value] of Object.entries(settings))
+		{
+			if(this._isAllowedSetting(key))
+			{
+				allowed[key] = value;
+			}
+		}
+		return allowed;
+	}
+
+	private _isAllowedSetting(key : string) : boolean
+	{
+		if(Et2Nextmatch.ALLOWED_SETTINGS.has(key))
+		{
+			return true;
+		}
+		const match = key.match(/^(filter2?|cat(?:_id)?)_(.+)$/);
+		return !!match && Et2Nextmatch.ALLOWED_SETTING_SUFFIXES.has(match[2]);
+	}
+
+	/**
+	 * Normalize legacy settings-provided letter search into the active filters.
+	 */
+	private _setSearchletterFilter(value : any)
+	{
+		this._filters.searchletter = value && value != "false" ? value : false;
+	}
+
+	/**
+	 * Normalize legacy settings-provided column filters into the active fetch filters.
+	 */
+	private _setColFilterFilter(value : any)
+	{
+		this._filters.col_filter = value && typeof value === "object" && !Array.isArray(value) ? {...value} : {};
+	}
+
+	/**
+	 * Copy one of `FILTER_VALUE_SETTINGS` out of a settings/attrs source object and into
+	 * `_filters`, deleting it from the source so it isn't left duplicated between `settings`
+	 * and `_filters` (matching how `col_filter`/`searchletter` are handled above).
+	 */
+	private _seedFilterValueSetting(source : Record<string, any>, key : string)
+	{
+		if(typeof source[key] === "undefined")
+		{
+			return;
+		}
+		this._filters[key] = source[key];
+		delete source[key];
+	}
+
+	/**
+	 * Initialize legacy nextmatch actions through the action controller.
+	 */
 	protected _initActions(actions : EgwAction[] | { [id : string] : object })
 	{
 		this._actionController.initActions(actions);
+		this._syncPlaceholderActionAvailability();
 	}
 
-	getSelection() : { ids : string[]; all : boolean }
+	private _syncPlaceholderActionAvailability()
 	{
-		return this._actionController.getSelection();
+		this._hasPlaceholderActions = this._actionController.hasPlaceholderActions();
 	}
 
-	selectSingleRow(rowId : string)
+	/**
+	 * Expose row-target resolution to the legacy action framework's AOI bridge.
+	 */
+	findActionTarget(event : Event)
 	{
-		this._datagrid?.selectSingleRow(rowId);
+		return this._actionController.findActionTarget(event);
 	}
 
-	selectAllRows()
+	/**
+	 * Resolves once `firstUpdated()` has applied the template and seeded sort settings -
+	 * deliberately NOT once initial rows have loaded.
+	 *
+	 * Row loading (`_datagrid.reload()`) and the row stylesheet fetch happen after this
+	 * resolves and are intentionally excluded: they're a network round-trip, and nothing
+	 * that reacts to overall readiness (focus management, `resize()`, the "load" event)
+	 * should be held up waiting for rows to arrive.
+	 */
+	private _resolveFirstUpdatedComplete : () => void = () => {};
+	private _firstUpdatedComplete : Promise<void> = new Promise((resolve) =>
 	{
-		this._datagrid?.selectAllRows();
+		this._resolveFirstUpdatedComplete = resolve;
+	});
+
+	async getUpdateComplete() : Promise<boolean>
+	{
+		const result = await super.getUpdateComplete();
+		await this._firstUpdatedComplete;
+		return result;
 	}
 
 	/**
@@ -349,8 +1132,24 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	{
 		super.firstUpdated(changedProperties);
 		this._actionController.setPlaceholderActions(this.placeholderActions);
+		this._syncPlaceholderActionAvailability();
 		this._initializeExtraAttributeFilters();
 
+		try
+		{
+			// Seed sort from already-known `settings` (populated from attrs/content well
+			// before firstUpdated() runs) before awaiting anything below. This needs no
+			// template/row data, so there's no reason to delay it
+			this._initializeSettingsSort();
+		}
+		finally
+		{
+			// Resolve as soon as the minimum is ready, not waiting for template/row loading below.
+			this._resolveFirstUpdatedComplete();
+		}
+
+		// Everything from here we don't wait for, it will finish on its own.  If needed, you can wait for
+		// whenColumnsReady() or listen for the appropriate event.
 		if(this.template)
 		{
 			await this._applyTemplateFromName(this.template);
@@ -359,33 +1158,92 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		{
 			await this._applyTemplateFromSlots();
 		}
+		// Sync any sort headers that just rendered with the sort state seeded above.
+		this._updateSortHeaderState();
 
-		if(this.rows.length)
+		// A server-provided settings.total (even 0) means the initial exec already carried
+		// the authoritative row count - a genuinely empty result must not be confused with
+		// "no data was sent yet" (this.rows.length is 0 either way), or the empty-result
+		// case falls through to a redundant client fetch that can race/disagree with the
+		// filters the server actually used.
+		if(this.rows.length || typeof this.settings?.total === "number")
 		{
+			this._dataProvider.storeRows(this.rows);
+			this._applySettingsTotalToDatagrid();
 			this._datagrid?.setInitialRows(this.rows);
 			// No need to keep them
 			this.rows = [];
 		}
 		else
 		{
+			await this._whenLazyVisible();
 			await this._datagrid?.reload();
 		}
+		if(this._initialAdditionalData)
+		{
+			// Header widgets (eg. sum totals) are built from templateData/columns on the
+			// datagrid's own update cycle, which hasn't necessarily run yet at this point.
+			await this._datagrid?.updateComplete;
+			this._dataProvider.processAdditionalData(this._initialAdditionalData);
+			this._initialAdditionalData = null;
+		}
+		await this._updateRowStylesheets();
+	}
+
+	/**
+	 * Resolve immediately unless `lazy` is set and this nextmatch is sitting inside an
+	 * inactive `<et2-tab-panel>` - in that case, wait for the enclosing `<et2-tabbox>`'s
+	 * `sl-tab-show` for this panel before resolving. Mirrors the legacy pattern in
+	 * et2_widget_historylog.ts's doLoadingFinished(), adapted for a web component ancestor
+	 * instead of the legacy get_tab_info() API.
+	 */
+	private async _whenLazyVisible() : Promise<void>
+	{
+		if(!this.lazy)
+		{
+			return;
+		}
+		const panel = this.closest("et2-tab-panel");
+		const panelName = panel?.getAttribute("name");
+		if(!panel || !panelName || panel.hasAttribute("active"))
+		{
+			return;
+		}
+		const group = panel.closest("et2-tabbox");
+		if(!group)
+		{
+			return;
+		}
+		return new Promise<void>(resolve =>
+		{
+			const handler = (e : CustomEvent) =>
+			{
+				if(e.detail?.name !== panelName)
+				{
+					return;
+				}
+				group.removeEventListener("sl-tab-show", handler);
+				resolve();
+			};
+			group.addEventListener("sl-tab-show", handler);
+		});
 	}
 
 	/**
 	 * React to template changes after initial render.
 	 * Template source is mutually exclusive: explicit template name wins over slots.
 	 */
-	protected willUpdate(changedProperties : PropertyValues)
+	willUpdate(changedProperties : PropertyValues)
 	{
 		super.willUpdate(changedProperties);
-		if(changedProperties.has("searchletter"))
+		if(changedProperties.has("settings") || changedProperties.has("lettersearch"))
 		{
-			const nextValue = this.searchletter || false;
-			if(this._filters.searchletter !== nextValue)
-			{
-				this._filters.searchletter = nextValue;
-			}
+			this._lettersearchVisible = !this.lettersearch ||
+				!!this.egw().preference(this._lettersearchPreferenceKey, this.egw().app_name());
+		}
+		if(this.lettersearch && !this._lettersearchVisible && this._filters.searchletter)
+		{
+			this._filters.searchletter = false;
 		}
 	}
 
@@ -393,7 +1251,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	 * React to template changes after initial render.
 	 * Template source is mutually exclusive: explicit template name wins over slots.
 	 */
-	protected updated(changedProperties : PropertyValues)
+	updated(changedProperties : PropertyValues)
 	{
 		super.updated(changedProperties);
 		if(changedProperties.has("template"))
@@ -406,6 +1264,8 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 			{
 				this._applyTemplateFromSlots();
 			}
+			// Load new row CSS
+			void this._updateRowStylesheets();
 		}
 		if(changedProperties.has("filterTemplate"))
 		{
@@ -414,6 +1274,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		if(changedProperties.has("placeholderActions"))
 		{
 			this._actionController.setPlaceholderActions(this.placeholderActions);
+			this._syncPlaceholderActionAvailability();
 		}
 		this._actionController.syncDragDropRegistration();
 	}
@@ -428,26 +1289,324 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	}
 
 	/**
+	 * Return the current selection tracked by the action controller.
+	 */
+	getSelection() : { ids : string[]; all : boolean }
+	{
+		return this._actionController.getSelection();
+	}
+
+	/**
+	 * Execute a registered nextmatch action against the supplied or current selection.
+	 */
+	executeAction(
+		actionId : string,
+		selection : { ids? : string[]; all? : boolean } = this.getSelection(),
+		options? : { nmAction? : string }
+	) : boolean
+	{
+		return this._actionController.executeAction(actionId, selection, options);
+	}
+
+	/**
+	 * Fetch matching ids up to the requested maximum, showing a cancelable wait dialog.
+	 */
+	async fetchAllIds(pageSize : number = 200, maxRows : number = Number.POSITIVE_INFINITY) : Promise<string[]>
+	{
+		const ids : string[] = [];
+		let start = 0;
+		let total : number | null = null;
+		let cancelled = false;
+		const dialog = Et2Dialog.show_dialog(
+			() =>
+			{
+				cancelled = true;
+			},
+			this.egw().lang("Loading"),
+			this.egw().lang("please wait..."),
+			{},
+			[{
+				"button_id": Et2Dialog.CANCEL_BUTTON,
+				label: this.egw().lang("Cancel"),
+				id: "dialog[cancel]",
+				image: "cancel"
+			}],
+			Et2Dialog.INFORMATION_MESSAGE,
+			undefined,
+			this.egw()
+		);
+		try
+		{
+			do
+			{
+				if(cancelled)
+				{
+					throw new DOMException("Canceled", "AbortError");
+				}
+				const page = await this._dataProvider.fetchPage(start, Math.min(pageSize, maxRows - ids.length));
+				if(cancelled)
+				{
+					throw new DOMException("Canceled", "AbortError");
+				}
+				if(page.rows.length === 0)
+				{
+					// A lying/broken `total` that never shrinks toward ids.length would
+					// otherwise loop forever here; an empty page is a more reliable
+					// end-of-data signal than a server-reported count.
+					break;
+				}
+				ids.push(...page.rows.map((row) => this._dataProvider.toProviderRowId(row.id)));
+				total = typeof page.total === "number" ? page.total : ids.length;
+				start += pageSize;
+			}
+			while(ids.length < total && ids.length < maxRows);
+			return Array.from(new Set(ids));
+		}
+		finally
+		{
+			dialog.destroy();
+		}
+	}
+
+
+
+	/**
+	 * Prepare the current nextmatch for browser printing.
+	 *
+	 * The existing XET dialog supplies print-only columns, row count, and page
+	 * orientation.  Column/orientation choices default from `_printPreferenceKey`
+	 * (falling back to legacy Nextmatch's `<pref>_print`/`<pref>_print_orientation`
+	 * preferences if that's all that exists), and are saved back only to
+	 * `_printPreferenceKey` - see that getter for why the legacy keys are never written.
+	 */
+	async beforePrint() : Promise<void>
+	{
+		if(this._printState)
+		{
+			return;
+		}
+		await this.updateComplete;
+		const grid = this._datagrid;
+		if(!grid)
+		{
+			return;
+		}
+
+		const columnState = new Et2DatagridColumnState();
+		const columns = columnState.toSelectionItems(this._currentColumns, this._parseColumnBooleanExpression);
+		const total = Math.max(0, grid.total ?? grid.rows.length);
+		const app = this._getAppName();
+		const printDefaults = this._resolvePrintPreferenceDefaults(app);
+		const mappedDefaultIds = (printDefaults.columns || [])
+			.map((key) => columnState.encodeSelectionId(key))
+			.filter((id) => columns.some((column) => column.id === id));
+		const defaultColumnIds = mappedDefaultIds.length
+			? mappedDefaultIds
+			: columns.filter((column) => column.visibility).map((column) => column.id);
+
+		const dialog = new Et2Dialog(this.egw());
+		dialog.transformAttributes({
+			title: this.egw().lang("Print"),
+			template: this.egw().link(this.egw().webserverUrl + "/api/templates/default/nm_print_dialog.xet"),
+			buttons: Et2Dialog.BUTTONS_OK_CANCEL,
+			isModal: true,
+			value: {
+				content: {
+					row_count: Math.min(100, total),
+					columns: defaultColumnIds,
+					orientation: printDefaults.orientation ?? false
+				},
+				modifications: {columns: {columns}}
+			}
+		});
+		document.body.append(dialog);
+		const [button, value] = await dialog.getComplete();
+		if(button !== Et2Dialog.OK_BUTTON)
+		{
+			// EgwFrameworkApp treats an undefined rejection as an aborted print.
+			// Defined errors are handled there and would still open browser print.
+			return Promise.reject();
+		}
+
+		const selectedColumns = ((value as any)?.columns || [])
+			.map((column : unknown) => String(column).split("___").join(" "))
+			.filter(Boolean);
+
+		const requestedRows = Math.min(total, Math.max(0, parseInt((value as any)?.row_count, 10) || 0));
+		const orientation : "portrait" | "landscape" = (value as any)?.orientation ? "landscape" : "portrait";
+		const originalColumns = this._currentColumns.map((column) => ({...column}));
+
+		const printKey = this._printPreferenceKey;
+		if(printKey)
+		{
+			try
+			{
+				this.egw().set_preference(app, printKey, {columns: selectedColumns, orientation});
+			}
+			catch(e)
+			{
+			}
+		}
+
+		try
+		{
+			let printColumns = selectedColumns.length
+				? new Et2DatagridColumnState().applySelectionOrder(originalColumns, selectedColumns)
+				: originalColumns.filter((column) => !column.hidden);
+			this.setColumns(printColumns);
+			this.classList.add("print", orientation);
+			const orientationStyle = document.createElement("style");
+			orientationStyle.media = "print";
+			orientationStyle.textContent = `@page { size: ${orientation}; }`;
+			document.head.append(orientationStyle);
+			this._printState = {columns: originalColumns, orientationStyle};
+
+			let rowIds = grid.rows.map((row) => row.id);
+			if(requestedRows > rowIds.length)
+			{
+				rowIds = await this.fetchAllIds(200, requestedRows);
+			}
+			// setPrintRows() can now take a while for a large row count (waiting for
+			// images to load and layout to settle - see Et2Datagrid.setPrintRows()),
+			// with no dialog of its own the way fetchAllIds() has. Without this, a
+			// large print request looks like the UI hung.
+			this.egw().loading_prompt("nextmatch-print", true, this.egw().lang("please wait..."), this);
+			try
+			{
+				await grid.setPrintRows(rowIds.slice(0, requestedRows));
+			}
+			finally
+			{
+				this.egw().loading_prompt("nextmatch-print", false);
+			}
+		}
+		catch(error)
+		{
+			this.afterPrint();
+			throw error;
+		}
+	}
+
+	/** Restore normal columns and virtualized rendering after browser printing. */
+	afterPrint() : void
+	{
+		const state = this._printState;
+		this._datagrid?.clearPrintRows();
+		this.classList.remove("print", "portrait", "landscape");
+		if(!state)
+		{
+			return;
+		}
+		state.orientationStyle.remove();
+		this._printState = null;
+		this.setColumns(state.columns);
+	}
+
+	selectSingleRow(rowId : string)
+	{
+		(this._findGridContainingRow(rowId) || this._datagrid)?.selectSingleRow(rowId);
+	}
+
+	/** Focus a displayed row and scroll it into view. */
+	focusRowById(rowId : string)
+	{
+		(this._findGridContainingRow(rowId) || this._datagrid)?.focusRowById(rowId);
+	}
+
+	/**
+	 * Id of whichever row - in the parent grid or an expanded child grid - keyboard/pointer
+	 * navigation currently considers active.  `_syncActiveGrid` guarantees at most one grid
+	 * has a non-null active row at a time, so the first match found is authoritative.
+	 */
+	getActiveRowId() : string | null
+	{
+		return this._datagrid?.getActiveRowId() ||
+			this._childGrids().map((grid) => grid.getActiveRowId()).find((rowId) => !!rowId) ||
+			null;
+	}
+
+	/** Clear the displayed selection without exposing the action controller. */
+	clearSelection()
+	{
+		this._childGrids().forEach((grid) => grid.clearSelection());
+		this._datagrid?.clearSelection();
+	}
+
+	selectAllRows()
+	{
+		this._datagrid?.selectAllRows();
+	}
+
+	/**
+	 * Open the column selection dialog from outside the datagrid header.
+	 */
+	async openColumnSelection(event? : Event) : Promise<void>
+	{
+		event?.preventDefault();
+		await this.updateComplete;
+		await this._datagrid?.openColumnSelection(event);
+	}
+
+	/**
 	 * Public API to override visible columns programmatically.
 	 * Accepts legacy string arrays and normalizes them for datagrid consumption.
 	 */
-	setColumns(columns : Array<string | { key : string; title : string }>)
+	setColumns(columns : Array<string | Et2DatagridColumn>)
 	{
-		const nextColumns = (columns || []).map((column, index) =>
-			typeof column === "string" ? {key: "col" + index, title: column} : column
-		);
-		this._templateData = this._templateData
-			? {
-				...this._templateData,
-				columns: nextColumns
-			}
-			: {
+		const currentColumns = this._currentColumns.length ? this._currentColumns : this._datagrid?.columns || [];
+		const stringColumns = (columns || []).filter((column) => typeof column === "string") as string[];
+		const hasOnlyStringColumns = stringColumns.length === (columns || []).length;
+		if(hasOnlyStringColumns)
+		{
+			this._pendingVisibleColumnKeys = stringColumns.map((column) => String(column));
+		}
+		else
+		{
+			this._pendingVisibleColumnKeys = null;
+		}
+		const nextColumns = hasOnlyStringColumns && currentColumns.length
+			? this._applyVisibleColumnKeys(currentColumns, stringColumns)
+			: (columns || []).map((column, index) =>
+				typeof column === "string" ? {key: "col" + index, title: column} : column
+			);
+		this._datagridColumns = nextColumns.map((column) => ({...column}));
+		this._subgridColumnSnapshots.clear();
+		if(!this._templateData)
+		{
+			this._templateData = {
 				rowTemplate: null,
 				rowTemplateXml: null,
 				rowTemplateAttrMap: {},
 				loaderTemplate: null,
 				columns: nextColumns
 			};
+		}
+		if(this._datagrid)
+		{
+			// Explicit override (favorites, app state restore) - must reach the
+			// datagrid without the next update cycle merging the persisted
+			// column preference back over this selection.
+			this._datagrid.applyExternalColumns(nextColumns.map((column) => ({...column})));
+			this._datagrid.requestUpdate();
+		}
+		this.dispatchEvent(new CustomEvent("et2-columns-changed", {
+			detail: {columns: nextColumns},
+			bubbles: true,
+			composed: true
+		}));
+		this.requestUpdate();
+	}
+
+	/**
+	 * Apply a visible-column key list to the current template columns.
+	 */
+	private _applyVisibleColumnKeys(columns : Et2DatagridColumn[], visibleKeys : string[]) : Et2DatagridColumn[]
+	{
+		const selected = new Set((visibleKeys || []).map((key) => String(key)));
+		return (columns || []).map((column) => ({
+			...column,
+			hidden: !selected.has(String(column.key || ""))
+		}));
 	}
 
 	/**
@@ -457,36 +1616,83 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	setRows(rows : any[])
 	{
 		this.rows = rows || [];
+		this._dataProvider?.clearInitialRowRegistrations?.();
+		this._dataProvider.storeRows(this.rows);
+		this._applySettingsTotalToDatagrid();
 		this._datagrid?.setInitialRows(this.rows);
 	}
 
 	/**
-	 * Legacy nextmatch value shape used by favorites and app state restore.
+	 * Apply the server-provided total before initial rows emit loading-done.
+	 * Initial rows are only the preloaded page, not necessarily the full result.
+	 */
+	private _applySettingsTotalToDatagrid()
+	{
+		if(this._datagrid && typeof this.settings?.total === "number")
+		{
+			this._datagrid.total = this.settings.total;
+		}
+	}
+
+	/**
+	 * Nextmatch value used by submits, favourites, and app state.
 	 */
 	get value() : Record<string, any>
 	{
 		const value = {
-			...this.activeFilters
+			...this._filters
 		};
-		const selectcols = this._currentColumns
-			.filter((column) => !column.hidden)
+		// A column the row template disabled for this content (eg. `disabled="@no_customfields"`)
+		// is not rendered, so reporting it as selected would save it into favourites and app
+		// state as a visible column.
+		const selectcols = new Et2DatagridColumnState()
+			.visibleColumns(this._currentColumns, this._parseColumnBooleanExpression)
 			.map((column) => String(column.key || ""))
 			.filter(Boolean);
+		if(this.lettersearch && this._lettersearchVisible)
+		{
+			selectcols.push("lettersearch");
+		}
 		if(selectcols.length)
 		{
 			value["selectcols"] = selectcols;
 		}
-		return value;
+		return {
+			...value,
+			...(this._actionController.getActionSubmitValue() || {})
+		};
 	}
 
 	/**
-	 * Legacy nextmatch state accessor used by favorites and app state restore.
-	 * @deprecated Use `value` instead.
+	 * Get the total number of rows
+	 *
+	 * @return {number}
+	 */
+	get totalCount() : number
+	{
+		return this._datagrid?.total ?? 0;
+	}
+
+	/**
+	 * et2_IInput implementation used by eTemplate submit value collection.
 	 */
 	getValue() : Record<string, any>
 	{
-		this._warnDeprecatedOnce("getValue", "Et2Nextmatch.getValue() is deprecated, use `value` instead");
 		return this.value;
+	}
+
+	isDirty() : boolean
+	{
+		return false;
+	}
+
+	resetDirty()
+	{
+	}
+
+	isValid() : boolean
+	{
+		return true;
 	}
 
 	/**
@@ -506,12 +1712,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		{
 			return;
 		}
-		const requestedKeys = new Set(requestedColumns);
-		const nextColumns = currentColumns.map((column) => ({
-			...column,
-			hidden: !requestedKeys.has(String(column.key || ""))
-		}));
-		this.setColumns(nextColumns);
+		this.setColumns(requestedColumns);
 	}
 
 	/**
@@ -544,7 +1745,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	 * @see egw_app.nm_refresh_index()
 	 * @fires refresh
 	 */
-	public refresh(_row_ids : string[] | string, _type? : Et2DatagridUpdateType)
+	refresh(_row_ids : string[] | string, _type? : Et2DatagridUpdateType)
 	{
 		// Framework trying to refresh, but nextmatch not fully initialized
 		if(!this._datagrid || !this._dataProvider)
@@ -587,10 +1788,10 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		{
 			_type = Et2DatagridUpdateTypes.EDIT;
 		}
-		if(update_pref == "exact" && !this._isSortedByModified())
-		{
-			_type = Et2DatagridUpdateTypes.EDIT;
-		}
+		// Note: no further "exact" + not-sorted-by-modified override here - the branches above
+		// already convert "update"/"add" to "edit" for that combination. An unconditional
+		// override here would also clobber "delete" and "update-in-place", both documented as
+		// unconditional regardless of preference/sort.
 
 		this._datagrid.refresh(_row_ids, _type).then(() =>
 		{
@@ -600,6 +1801,123 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 				bubbles: true
 			}));
 		});
+	}
+
+	/** Pending "turn the fresh-known-uids override back off" timer - see _armForceFreshKnownUids(). */
+	private _forceFreshKnownUidsIdleTimer : number | null = null;
+
+	/**
+	 * How long to keep Et2NextmatchDataProvider's fresh-known-uids override on after the
+	 * datagrid last went idle, before assuming a hard reload's page-discovery is done.
+	 *
+	 * Empirically chosen: Et2Datagrid discovers it needs another page only after measuring
+	 * how the previous one rendered (a real layout/paint round-trip, not a fixed constant),
+	 * so a plain "reset on first et2-loading-done" can fire in the gap between two pages of
+	 * the very same reload.
+	 */
+	private static readonly FORCE_FRESH_KNOWN_UIDS_IDLE_MS = 1500;
+
+	/**
+	 * Turn on Et2NextmatchDataProvider.setForceFreshKnownUids() for a hard reload and keep
+	 * it on for as many rounds of page-discovery as the reload's viewport-fill needs, not
+	 * just its first fetch.
+	 *
+	 * `et2-loading-done` fires whenever nothing is currently in flight - which can happen
+	 * *between* two pages of the same reload, once page N has landed but before the
+	 * datagrid has re-measured and decided it still needs page N+1 to fill the viewport.
+	 * Debouncing the actual turn-off (any `et2-loading-start` cancels a pending one) lets
+	 * the override survive that gap instead of leaving the next page to fall back to the
+	 * stale cache again.
+	 */
+	private _armForceFreshKnownUids() : void
+	{
+		this._dataProvider?.setForceFreshKnownUids?.(true);
+		if(this._forceFreshKnownUidsIdleTimer !== null)
+		{
+			window.clearTimeout(this._forceFreshKnownUidsIdleTimer);
+			this._forceFreshKnownUidsIdleTimer = null;
+		}
+		const cleanup = () =>
+		{
+			this._datagrid?.removeEventListener("et2-loading-done", scheduleOff);
+			this._datagrid?.removeEventListener("et2-loading-error", scheduleOff);
+			this._datagrid?.removeEventListener("et2-loading-start", cancelOff);
+		};
+		const scheduleOff = () =>
+		{
+			if(this._forceFreshKnownUidsIdleTimer !== null)
+			{
+				window.clearTimeout(this._forceFreshKnownUidsIdleTimer);
+			}
+			this._forceFreshKnownUidsIdleTimer = window.setTimeout(() =>
+			{
+				this._forceFreshKnownUidsIdleTimer = null;
+				this._dataProvider?.setForceFreshKnownUids?.(false);
+				cleanup();
+			}, Et2Nextmatch.FORCE_FRESH_KNOWN_UIDS_IDLE_MS);
+		};
+		const cancelOff = () =>
+		{
+			if(this._forceFreshKnownUidsIdleTimer !== null)
+			{
+				window.clearTimeout(this._forceFreshKnownUidsIdleTimer);
+				this._forceFreshKnownUidsIdleTimer = null;
+			}
+		};
+		this._datagrid?.addEventListener("et2-loading-done", scheduleOff);
+		this._datagrid?.addEventListener("et2-loading-error", scheduleOff);
+		this._datagrid?.addEventListener("et2-loading-start", cancelOff);
+	}
+
+	/**
+	 * Adopt an additional runtime stylesheet into the main and child datagrid row shadow roots.
+	 * The stylesheet is retained when template row styles are synchronized again.
+	 */
+	addRowStylesheet(style : CSSStyleSheet) : void
+	{
+		if(this._additionalRowStylesheets.includes(style))
+		{
+			return;
+		}
+		this._additionalRowStylesheets = [...this._additionalRowStylesheets, style];
+		this._syncDatagridRowStylesheets();
+	}
+
+	/**
+	 * Refresh rows in an expanded child grid without refreshing the root grid.
+	 *
+	 * @param parentRowId Parent row id whose expanded child grid owns the rows
+	 * @param rowIds Row id(s) to refresh inside the child grid
+	 * @param type Refresh type
+	 * @return true when a rendered child grid was found and refreshed
+	 */
+	async refreshChildRows(
+		parentRowId : string,
+		rowIds : string[] | string,
+		type : Et2DatagridUpdateType = Et2DatagridUpdateTypes.EDIT
+	) : Promise<boolean>
+	{
+		if(!this._datagrid || !this._dataProvider)
+		{
+			return false;
+		}
+		const childGrid = this._findChildGridForParent(parentRowId);
+		if(!childGrid)
+		{
+			return false;
+		}
+		const rows = this._toStringArray(rowIds);
+		if(!rows.length)
+		{
+			return false;
+		}
+
+		await childGrid.refresh(rows, type);
+		this.dispatchEvent(new CustomEvent("refresh", {
+			composed: true,
+			bubbles: true
+		}));
+		return true;
 	}
 
 	/**
@@ -656,24 +1974,112 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * Legacy-compatible active filters accessor used by header/filter integrations.
-	 *
-	 * @deprecated Accessing filter state via this accessor is legacy compatibility.
-	 * Prefer event-driven updates (`applyFilters`, header filter/sort events) and
-	 * treat filter state as internal.
+	 * Active filter snapshot used by header/filter integrations and action URL expansion.
+	 * Use applyFilters() to update filter state.
 	 */
 	get activeFilters() : Record<string, any>
 	{
-		return this._filters;
+		return this._filterSnapshot(this._filters);
+	}
+
+	/**
+	 * Build a stable copy of filters for change comparison.
+	 */
+	private _filterSnapshot(filters : Record<string, any>) : Record<string, any>
+	{
+		return Object.entries(filters || {}).reduce((snapshot, [key, value]) =>
+		{
+			snapshot[key] = this._filterSnapshotValue(value);
+			return snapshot;
+		}, {} as Record<string, any>);
+	}
+
+	/**
+	 * Normalize nested filter values for stable comparison.
+	 */
+	private _filterSnapshotValue(value : any) : any
+	{
+		if(Array.isArray(value))
+		{
+			return value.map((entry) => this._filterSnapshotValue(entry));
+		}
+		if(value && typeof value === "object" && Object.getPrototypeOf(value) === Object.prototype)
+		{
+			return this._filterSnapshot(value);
+		}
+		return value;
+	}
+
+	/**
+	 * True if a col_filter value should be treated as "not set" - empty string/null/undefined,
+	 * an empty array (a multi-select column filter with nothing chosen), or a link-entry style
+	 * `{app, id}` value with no id (Et2LinkEntry reports this shape as "cleared" while still
+	 * remembering which app was last chosen, so this treats that shape as no filter here rather
+	 * than in the widget itself - if filtering by app alone is ever implemented, it'll need its
+	 * own explicit representation instead of relying on Et2LinkEntry's current "cleared" shape).
+	 */
+	private _isEmptyFilterValue(value : any) : boolean
+	{
+		if(!value)
+		{
+			return true;
+		}
+		if(Array.isArray(value))
+		{
+			return value.length === 0;
+		}
+		return typeof value === "object" && "app" in value && "id" in value && !value.id;
+	}
+
+	/**
+	 * Compare two col_filter values for equality.
+	 *
+	 * Widgets like multi-selects and link-entries hand back a fresh array/object instance
+	 * on every read, so comparing with `!==` never stabilizes and applyFilters() sees
+	 * "changed" forever even though nothing meaningful did - which, since anything that
+	 * reads filters back out of a nextmatch and re-applies them (eg. Et2Filterbox syncing
+	 * with its widgets) keeps reacting to that "change", turns into an endless reload loop.
+	 */
+	private _filterValuesEqual(a : any, b : any) : boolean
+	{
+		if(a === b)
+		{
+			return true;
+		}
+		if(this._isEmptyFilterValue(a) && this._isEmptyFilterValue(b))
+		{
+			return true;
+		}
+		if(typeof a === "object" && typeof b === "object" && a !== null && b !== null)
+		{
+			return JSON.stringify(a) === JSON.stringify(b);
+		}
+		return false;
 	}
 
 	/**
 	 * Legacy-compatible filter application entry point.
 	 * Merges updates into `activeFilters`, emits cancelable `et2-filter`, and reloads rows by default.
+	 *
+	 * Reentrancy: dispatching `et2-filter` below runs listeners (eg. Et2Filterbox) synchronously,
+	 * which can update a filter widget's `.value` to match the just-applied state - if that
+	 * widget's own value setter unconditionally re-fires a "change" event on a purely
+	 * programmatic set (found live in Et2Date: flatpickr's clear() defaults triggerChangeEvent
+	 * to true, unlike setDate()), the bubbled "change" reaches Et2Filterbox's own change handler,
+	 * which calls back into this same method - before this call has returned. Without a guard,
+	 * that's an unbounded synchronous loop that freezes the tab (reproduced live via mail's
+	 * folder-filter date field, and reportedly also seen from filemanager's nextmatch). The
+	 * _applyingFilters guard breaks it at the very first reentry - other widgets could have the
+	 * same one-sided trigger-on-clear bug we haven't found yet.
 	 */
-	applyFilters(set? : Record<string, any>, options? : { reload? : boolean })
+	applyFilters(set? : Record<string, any>, options? : { reload? : boolean, clearActions? : boolean })
 	{
-		let changed = false;
+		if(this._applyingFilters)
+		{
+			this.egw().debug("warn", "Et2Nextmatch.applyFilters() called reentrantly while already applying - ignoring to avoid an infinite loop", set);
+			return false;
+		}
+		let changed = typeof set == "undefined";
 		if(!this._filters || typeof this._filters !== "object")
 		{
 			this._filters = {col_filter: {}};
@@ -682,17 +2088,36 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		{
 			this._filters.col_filter = {};
 		}
+		// Snapshot before the full-reset branch below can replace this._filters wholesale -
+		// otherwise a "clear everything" call (set == {}) would report itself as its own
+		// oldFilters, and anything diffing oldFilters vs activeFilters (eg. egw_app.ts's
+		// nmFilterChange()) would see no keys to reset (col_filter is empty both times) and
+		// never notice that eg. `filter`/`cat_id` used to hold a value.
+		const previousFilters = {
+			...this._filters,
+			col_filter: {...(this._filters.col_filter || {})},
+			sort: this._filters.sort ? {...this._filters.sort} : undefined
+		};
 		if(typeof set !== "undefined" && typeof set === "object" && Object.keys(set).length === 0)
 		{
-			this._filters = {col_filter: {}};
+			// Explicitly blank every previously-active top-level key (not just drop them) -
+			// the server merges the filters it receives into its own session-stored copy
+			// (Nextmatch::ajax_get_rows(): `array_merge($value, $filters)`), so a key that's
+			// simply missing from the request is left holding its last known value there,
+			// not cleared. Only col_filter gets this for free, since it's always sent as its
+			// own (here empty) sub-array.
+			const blanked : Record<string, any> = {col_filter: {}};
+			for(const key of Object.keys(previousFilters))
+			{
+				if(key !== "col_filter" && key !== "sort")
+				{
+					blanked[key] = "";
+				}
+			}
+			this._filters = blanked;
 			changed = true;
 		}
 		const activeFilters = this._filters;
-		const previousFilters = {
-			...activeFilters,
-			col_filter: {...(activeFilters.col_filter || {})},
-			sort: activeFilters.sort ? {...activeFilters.sort} : undefined
-		};
 
 		if(typeof set === "object" && set !== null)
 		{
@@ -713,10 +2138,10 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 					for(const columnId of Object.keys(colFilter))
 					{
 						const nextValue = colFilter[columnId];
-						if(activeFilters.col_filter[columnId] !== nextValue)
+						if(!this._filterValuesEqual(activeFilters.col_filter[columnId], nextValue))
 						{
 							changed = true;
-							if(nextValue)
+							if(!this._isEmptyFilterValue(nextValue))
 							{
 								activeFilters.col_filter[columnId] = nextValue;
 							}
@@ -728,13 +2153,9 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 					}
 					continue;
 				}
-				if(activeFilters[key] !== set[key])
+				if(!this._filterValuesEqual(activeFilters[key], set[key]))
 				{
 					activeFilters[key] = set[key];
-					if(key === "searchletter")
-					{
-						this.searchletter = set[key] || false;
-					}
 					changed = true;
 				}
 			}
@@ -744,38 +2165,74 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 			return false;
 		}
 
-		const changeEvent = new CustomEvent("et2-filter", {
-			bubbles: true,
-			cancelable: true,
-			detail: {
-				oldFilters: previousFilters,
-				activeFilters,
-				nm: this
+		this._applyingFilters = true;
+		try
+		{
+			const changeEvent = new CustomEvent("et2-filter", {
+				bubbles: true,
+				cancelable: true,
+				detail: {
+					oldFilters: previousFilters,
+					activeFilters,
+					nm: this
+				}
+			});
+			this.dispatchEvent(changeEvent);
+			if(changeEvent.defaultPrevented)
+			{
+				return false;
 			}
-		});
-		this.dispatchEvent(changeEvent);
-		if(changeEvent.defaultPrevented)
-		{
-			return false;
-		}
-		const eventFilters = changeEvent.detail?.activeFilters;
-		if(eventFilters && typeof eventFilters === "object" && eventFilters !== this._filters)
-		{
-			this._filters = eventFilters;
-		}
-		if(!this._filters.col_filter || typeof this._filters.col_filter !== "object")
-		{
-			this._filters.col_filter = {};
-		}
+			const eventFilters = changeEvent.detail?.activeFilters;
+			if(eventFilters && typeof eventFilters === "object" && eventFilters !== this._filters)
+			{
+				this._filters = eventFilters;
+			}
+			if(!this._filters.col_filter || typeof this._filters.col_filter !== "object")
+			{
+				this._filters.col_filter = {};
+			}
+			this.egw().debug("info", "Changed nm filters", this._filters);
 
-		this._updateSortHeaderState();
-		this._actionController.clearRowActionObjects();
-		if(options?.reload !== false)
-		{
-			this._datagrid?.reload();
-		}
+			this._updateSortHeaderState();
+			if(options?.clearActions !== false)
+			{
+				this._actionController.clearRowActionObjects();
+			}
+			this._dataProvider?.clearInitialRowRegistrations?.();
+			// Keep the root expansion ids so matching parent rows stay open after the
+			// reload, but discard every child-level cache. Child providers inherit the
+			// active filters, and a snapshot keyed only by parent row id is no longer
+			// valid once those filters change.
+			if(this._clearExpandedChildBranches())
+			{
+				this.requestUpdate();
+			}
+			// A bare refresh()/applyFilters() call (no `set`) is an explicit hard reload -
+			// make every page fetched during it tell the server it knows nothing, so the
+			// server can't omit "unchanged" rows the UI just cleared and has nothing to
+			// fall back on for (see Et2NextmatchDataProvider.setForceFreshKnownUids()). A
+			// filter-driven call keeps the cheaper cache-reuse behaviour, since it's
+			// already fetching a different query.
+			const isHardReload = set === undefined;
+			if(options?.reload !== false)
+			{
+				if(isHardReload)
+				{
+					this._armForceFreshKnownUids();
+				}
+				this._datagrid?.reload();
+			}
+			else if(isHardReload)
+			{
+				this._dataProvider?.setForceFreshKnownUids?.(false);
+			}
 
-		return true;
+			return true;
+		}
+		finally
+		{
+			this._applyingFilters = false;
+		}
 	}
 
 	/**
@@ -795,10 +2252,23 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 				this._filters[attribute] = value;
 			}
 		}
-		if(this.searchletter)
+	}
+
+	/**
+	 * Seed the default sort settings into active filters for the first load
+	 * and header state reflection.
+	 */
+	private _initializeSettingsSort()
+	{
+		if(this._filters.sort || !this.settings.order || !this.settings.sort)
 		{
-			this._filters.searchletter = this.searchletter;
+			return;
 		}
+		this.sortBy(
+			String(this.settings.order),
+			String(this.settings.sort).toUpperCase() === "ASC",
+			false
+		);
 	}
 
 	/**
@@ -813,6 +2283,10 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		if(typeof value === "string")
 		{
 			return value.split(",").map((item) => item.trim()).filter(Boolean);
+		}
+		else if (typeof value === "number")
+		{
+			return [value+""];
 		}
 		return [];
 	}
@@ -866,9 +2340,57 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	{
 		this.template = template_name;
 		this._warnDeprecatedOnce("set_template", "Et2Nextmatch.set_template is deprecated, use `nm.template='...'`");
+		return this._applyTemplateFromName(template_name).then(() => this.updateComplete);
+	}
+
+	/**
+	 * Switch between row and tile layout.
+	 */
+	async setView(view : Et2DatagridView, templateName? : string)
+	{
+		const nextView = this._normalizeView(view);
+		if(templateName && templateName !== this.template)
+		{
+			this.template = templateName;
+			await this._applyTemplateFromName(templateName);
+		}
+		this.view = nextView;
 		return this.updateComplete;
 	}
 
+	/**
+	 * Switch between row and tile layout.
+	 * @deprecated Use `setView()` instead.
+	 */
+	set_view(view : Et2DatagridView)
+	{
+		this._warnDeprecatedOnce("set_view", "Et2Nextmatch.set_view is deprecated, use `nm.setView(...)`");
+		return this.setView(view);
+	}
+
+	/**
+	 * Collapse all currently expanded child grids and forget their cached layout snapshots.
+	 */
+	collapseExpandedRows()
+	{
+		if(
+			!this._expandedRowIds.size &&
+			!this._expandedRowIdsByParent.size &&
+			!this._subgridColumnSnapshots.size &&
+			!this._childDataProviders.size &&
+			!this._childGridRowsSnapshots.size
+		)
+		{
+			return false;
+		}
+		this._clearExpandedBranches();
+		this.requestUpdate();
+		return true;
+	}
+
+	/**
+	 * Emit one deprecation warning per legacy API name.
+	 */
 	private _warnDeprecatedOnce(method : string, message : string)
 	{
 		if(Et2Nextmatch._deprecationWarnings.has(method))
@@ -881,7 +2403,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 
 	/**
 	 * Watch slot mutations and re-resolve template data when no explicit template name is set.
-	 * We observe subtree+slot attributes because slotted content can be reparented dynamically.
+	 * We observe child-list changes because slotted template content can be added dynamically.
 	 */
 	private _initSlotObserver()
 	{
@@ -890,7 +2412,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		{
 			if(!this.template && this._hasAddedTemplateSlotNode(records))
 			{
-				this._applyTemplateFromSlots();
+				this._applyTemplateFromSlots().then(() => this._updateRowStylesheets());
 			}
 		});
 		this._slotObserver.observe(this, {
@@ -940,6 +2462,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		const token = ++this._templateLoadToken;
 		this._templateLoading = true;
 		this._templateLoadingName = templateName;
+		this._resetColumnsReady();
 
 		const loadPromise = (async() =>
 		{
@@ -990,14 +2513,24 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		{
 			return this._slotApplyInFlight;
 		}
+		const token = ++this._templateLoadToken;
+		const previousTemplateData = this._templateData;
+		this._resetColumnsReady();
 		this._slotApplyInFlight = (async() =>
 		{
 			await this._waitForSlottedTemplateChildrenReady();
+			const templateData = await this._rowProvider.fromSlots();
+			if(token !== this._templateLoadToken)
+			{
+				return;
+			}
 			this._templateLoading = false;
-			const templateData = this._rowProvider.fromSlots();
 			if(!templateData)
 			{
-				this._templateData = null;
+				if(this._templateData === previousTemplateData)
+				{
+					this._templateData = null;
+				}
 				return;
 			}
 			this._applyTemplateData(templateData);
@@ -1047,12 +2580,43 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	 */
 	private _applyTemplateData(templateData : Et2DatagridTemplateData)
 	{
-		const columns = templateData.columns?.length ? templateData.columns : this._currentColumns;
-		const nextColumns = this._applyLegacyNextmatchColumnPreferences(columns || [], templateData);
+		this._datagridColumns = null;
+		this._subgridColumnSnapshots.clear();
+		const columns = templateData.columns?.length ? templateData.columns : [];
+		let nextColumns = this._applyLegacyNextmatchColumnPreferences(columns || [], templateData);
+		if(this._pendingVisibleColumnKeys?.length)
+		{
+			nextColumns = this._applyVisibleColumnKeys(nextColumns, this._pendingVisibleColumnKeys);
+		}
 		this._templateData = {
 			...templateData,
+			sourceColumns: templateData.sourceColumns?.length ? templateData.sourceColumns : columns,
 			columns: nextColumns
 		};
+		this._syncDatagridRowStylesheets();
+		// Columns now exist (getValue().selectcols is populated) - let consumers proceed.
+		this._resolveColumnsReady();
+	}
+
+	private _effectiveView() : Et2DatagridView
+	{
+		if(this.view === "tile")
+		{
+			return "tile";
+		}
+		return this._templateData?.view === "tile" &&
+			(!this._templateData.rowTemplateId || this._templateData.rowTemplateId === this.template)
+		       ? "tile"
+		       : "row";
+	}
+
+	private _resetColumnsReady()
+	{
+		this._resolveColumnsReady();
+		this._columnsReady = new Promise((resolve) =>
+		{
+			this._resolveColumnsReady = resolve;
+		});
 	}
 
 	/**
@@ -1063,6 +2627,8 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	 * - `nextmatch-<row_ID>-size` -> JSON/object map `{ column_key: size }`
 	 *
 	 * This migration is legacy Nextmatch-specific compatibility behaviour
+	 *
+	 * TODO: When things stabilize, we can delete the old preferences
 	 */
 	private _applyLegacyNextmatchColumnPreferences(
 		columns : Et2DatagridColumn[],
@@ -1099,224 +2665,64 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 			return columns;
 		}
 
-		const isLegacyVisibilityCsv = typeof storedVisibility === "string" &&
+		const hasLegacyVisibility = typeof storedVisibility === "string" &&
 			!storedVisibility.trim().startsWith("[") &&
-			!storedVisibility.trim().startsWith("{");
-		const visibleKeys = isLegacyVisibilityCsv
-		                    ? storedVisibility.split(",").map((value) => String(value).trim()).filter(Boolean)
-		                    : [];
-		const mappedVisibleKeys = this._mapLegacyVisibleKeysToCurrentColumns(visibleKeys, columns);
-
-		let nextColumns = [...columns];
-		if(mappedVisibleKeys.length)
+			!storedVisibility.trim().startsWith("{") &&
+			!!storedVisibility.trim();
+		const hasLegacySizes = (typeof storedSizes === "string" && !!storedSizes.trim()) ||
+			(!!storedSizes && typeof storedSizes === "object" && !!Object.keys(storedSizes).length);
+		if(!hasLegacyVisibility && !hasLegacySizes)
 		{
-			nextColumns = this._applyLegacySelectionOrder(nextColumns, mappedVisibleKeys);
+			return columns;
 		}
 
-		let widthMap : Record<string, any> = {};
-		if(typeof storedSizes === "string")
+		const nextColumns = applyLegacyNextmatchColumnPreferences(columns, storedVisibility, storedSizes);
+		this._seedDatagridColumnPreferencesFromLegacy(rowTemplateId, app, nextColumns);
+
+		return nextColumns.map((column) =>
 		{
-			try
-			{
-				widthMap = JSON.parse(storedSizes);
-			}
-			catch(e)
-			{
-				widthMap = {};
-			}
-		}
-		else if(storedSizes && typeof storedSizes === "object")
-		{
-			widthMap = storedSizes;
-		}
-		nextColumns = nextColumns.map((column) =>
-		{
-			const key = String(column.key);
-			if(typeof widthMap[key] === "undefined")
+			if(!column.customFields)
 			{
 				return column;
 			}
-			return {
-				...column,
-				width: String(widthMap[key])
-			};
-		});
-
-		// Seed the new-format preference for datagrid persistence path.
-		/*
-		// TODO: When things stabilize, we can do this an delete the old preferences
-		if(visibleKeys.length || Object.keys(widthMap).length)
-		{
-			try
-			{
-				this.egw().set_preference(app, preferenceBase, nextColumns.map((column) => ({
-					key: String(column.key),
-					width: typeof column.width === "string" ? column.width : undefined,
-					hidden: !!column.hidden
-				})));
-			}
-			catch(e)
-			{
-			}
-		}
-
-		 */
-		return nextColumns;
-	}
-
-	/**
-	 * Apply selected-order visibility semantics used by legacy Nextmatch CSV preferences.
-	 */
-	private _applyLegacySelectionOrder(columns : Et2DatagridColumn[], selectedKeysInOrder : string[]) : Et2DatagridColumn[]
-	{
-		const selectedKeys = new Set(selectedKeysInOrder);
-		const byKey = new Map((columns || []).map((column) => [String(column.key), column]));
-		const selectedOrdered = selectedKeysInOrder
-			.map((key) => byKey.get(String(key)))
-			.filter(Boolean) as Et2DatagridColumn[];
-		let selectedCursor = 0;
-		return (columns || []).map((column) =>
-		{
-			const key = String(column.key);
-			if(selectedKeys.has(key) && selectedCursor < selectedOrdered.length)
-			{
-				const ordered = selectedOrdered[selectedCursor++];
-				return {
-					...ordered,
-					hidden: false
-				};
-			}
-			return {
-				...column,
-				hidden: true
-			};
+			const {customFields: _customFields, ...datagridColumn} = column;
+			return datagridColumn;
 		});
 	}
 
 	/**
-	 * Map legacy Nextmatch visibility keys onto current datagrid column keys.
+	 * Store legacy Nextmatch preferences in Datagrid's structured preference
+	 * shape, so Datagrid receives a single resolved source of truth.
 	 *
-	 * Older preferences can contain expanded/duplicated composite keys or historic
-	 * custom-field markers (eg `#text`) that no longer match current column keys.
+	 * This is only a migration seed. Once the datagrid has stored its own
+	 * preference, for example after a column resize, that newer preference wins.
 	 */
-	private _mapLegacyVisibleKeysToCurrentColumns(legacyKeys : string[], columns : Et2DatagridColumn[]) : string[]
+	private _seedDatagridColumnPreferencesFromLegacy(
+		rowTemplateId : string,
+		app : string,
+		columns : Et2NextmatchResolvedColumn[]
+	)
 	{
-		const currentKeys = (columns || []).map((column) => String(column.key || "")).filter(Boolean);
-		if(!legacyKeys.length || !currentKeys.length)
+		const key = String(this.columnPreferenceName || "").trim() || `nextmatch-${rowTemplateId}-prefs`;
+		try
 		{
-			return [];
-		}
-		const currentKeySet = new Set(currentKeys);
-		const used = new Set<string>();
-		const mapped : string[] = [];
-		const currentNormalized = new Map<string, string[]>();
-		for(const key of currentKeys)
-		{
-			currentNormalized.set(key, this._normalizeLegacyColumnKeyTokens(key));
-		}
-
-		for(const legacyKeyRaw of legacyKeys)
-		{
-			const legacyKey = String(legacyKeyRaw || "").trim();
-			if(!legacyKey)
+			if(this.egw().preference(key, app))
 			{
-				continue;
-			}
-			// Exact key match first.
-			if(currentKeySet.has(legacyKey) && !used.has(legacyKey))
-			{
-				mapped.push(legacyKey);
-				used.add(legacyKey);
-				continue;
-			}
-			// Historic custom-field placeholders map to `customfields` when available.
-			if(legacyKey.startsWith("#") && currentKeySet.has("customfields") && !used.has("customfields"))
-			{
-				mapped.push("customfields");
-				used.add("customfields");
-				continue;
-			}
-
-			const legacyTokens = this._normalizeLegacyColumnKeyTokens(legacyKey);
-			if(!legacyTokens.length)
-			{
-				continue;
-			}
-			let bestKey : string | null = null;
-			let bestScore = 0;
-			for(const currentKey of currentKeys)
-			{
-				if(used.has(currentKey))
-				{
-					continue;
-				}
-				const currentTokens = currentNormalized.get(currentKey) || [];
-				const score = this._legacyColumnKeySimilarityScore(legacyTokens, currentTokens);
-				if(score > bestScore)
-				{
-					bestScore = score;
-					bestKey = currentKey;
-				}
-			}
-			// Threshold tuned to prefer clearly-related composites only.
-			if(bestKey && bestScore >= 0.6)
-			{
-				mapped.push(bestKey);
-				used.add(bestKey);
+				return;
 			}
 		}
-		return mapped;
-	}
-
-	/**
-	 * Tokenize and normalize legacy/current column keys for fuzzy matching.
-	 */
-	private _normalizeLegacyColumnKeyTokens(key : string) : string[]
-	{
-		const tokens = String(key || "")
-			.toLowerCase()
-			.replace(/^#+/, "")
-			.split(/[^a-z0-9]+/)
-			.filter(Boolean);
-		// Dedupe repeated runs and global repeats while preserving order.
-		const normalized : string[] = [];
-		for(const token of tokens)
+		catch(e)
 		{
-			if(normalized[normalized.length - 1] === token)
-			{
-				continue;
-			}
-			if(normalized.includes(token))
-			{
-				continue;
-			}
-			normalized.push(token);
+			return;
 		}
-		return normalized;
-	}
-
-	/**
-	 * Similarity score for legacy/current key token lists.
-	 */
-	private _legacyColumnKeySimilarityScore(legacyTokens : string[], currentTokens : string[]) : number
-	{
-		if(!legacyTokens.length || !currentTokens.length)
+		const value = datagridColumnPreferenceValue(columns);
+		try
 		{
-			return 0;
+			this.egw().set_preference(app, key, value);
 		}
-		const currentSet = new Set(currentTokens);
-		let overlap = 0;
-		for(const token of legacyTokens)
+		catch(e)
 		{
-			if(currentSet.has(token))
-			{
-				overlap++;
-			}
 		}
-		const overlapRatio = overlap / Math.max(legacyTokens.length, currentTokens.length);
-		const legacyContainsCurrent = currentTokens.every((token) => legacyTokens.includes(token)) ? 0.35 : 0;
-		const currentContainsLegacy = legacyTokens.every((token) => currentTokens.includes(token)) ? 0.25 : 0;
-		return overlapRatio + legacyContainsCurrent + currentContainsLegacy;
 	}
 
 	/**
@@ -1356,6 +2762,386 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	};
 
 	/**
+	 * Template-set (theme) this nextmatch's own containing template was loaded from, eg. "mobile" or
+	 * "default" - so the app.css fallback in `_updateRowStylesheets()` loads the same skin's stylesheet
+	 * instead of always the default skin's.
+	 */
+	private _appRowStylesheetTemplateSet() : string
+	{
+		const url = (this.closest("et2-template") as any)?.getUrl?.() ?? "";
+		const match = url.match(/\/templates\/([^\/]+)\//);
+		return match ? match[1] : "default";
+	}
+
+	private async _updateRowStylesheets()
+	{
+		const appName = this._getAppName();
+		const templateSet = this._appRowStylesheetTemplateSet();
+		this._appRowStylesheet = await loadStylesheet(this.egw().link(`/${appName}/templates/${templateSet}/app.css`));
+		// Fall back to the default skin's app.css if this app has no skin-specific one (eg. no
+		// dedicated templates/mobile/app.css)
+		if(!this._appRowStylesheet && templateSet !== "default")
+		{
+			this._appRowStylesheet = await loadStylesheet(this.egw().link(`/${appName}/templates/default/app.css`));
+		}
+		await this.updateComplete;
+		this._syncDatagridRowStylesheets();
+	}
+
+	private _syncDatagridRowStylesheets()
+	{
+		const templateRowStylesheets = this._templateData?.rowStylesheets || [];
+		this._rowStylesheets = [
+			rowStyles.styleSheet!,
+			...(templateRowStylesheets.length ? templateRowStylesheets : (this._appRowStylesheet ? [this._appRowStylesheet] : [])),
+			...this._additionalRowStylesheets
+		];
+		const datagrid = this._datagrid;
+		if(datagrid)
+		{
+			datagrid.rowStylesheets = this._rowStylesheets;
+		}
+	}
+
+	/**
+	 * Build the generic datagrid expansion bridge from Nextmatch hierarchy settings.
+	 */
+	private _datagridExpansionConfig() : Et2DatagridExpansionConfig
+	{
+		return this._expansionConfigForSet(this._expandedRowIds, (expandedRowIds) =>
+		{
+			this._applyExpandedRowIds("", expandedRowIds);
+		});
+	}
+
+	/**
+	 * Build the reusable expansion bridge for one grid level.
+	 */
+	private _expansionConfigForSet(
+		currentExpandedRowIds : Set<string>,
+		onChanged : (expandedRowIds : Set<string>) => void
+	) : Et2DatagridExpansionConfig
+	{
+		return {
+			isExpandable: (row) => this._isExpandableNextmatchRow(row?.data),
+			renderExpandedContent: (context) => this._renderExpandedNextmatchGrid(context),
+			rendersSubgrid: true,
+			expandedRowIds: currentExpandedRowIds,
+			onExpandedRowIdsChanged: onChanged
+		};
+	}
+
+	/**
+	 * Build the same expansion bridge for a child grid, with only expansion state
+	 * scoped to the child grid's parent row.
+	 */
+	private _childDatagridExpansionConfig(parentRowId : string) : Et2DatagridExpansionConfig
+	{
+		const state = this._childExpandedRowIds(parentRowId);
+		return this._expansionConfigForSet(state, (expandedRowIds) =>
+		{
+			this._applyExpandedRowIds(parentRowId, expandedRowIds);
+		});
+	}
+
+	/**
+	 * Resolve controlled expansion state for one child grid.
+	 */
+	private _childExpandedRowIds(parentRowId : string) : Set<string>
+	{
+		if(!this._expandedRowIdsByParent.has(parentRowId))
+		{
+			this._expandedRowIdsByParent.set(parentRowId, new Set());
+		}
+		return this._expandedRowIdsByParent.get(parentRowId)!;
+	}
+
+	/**
+	 * Replace one level's expanded ids and prune snapshots/state for collapsed descendants.
+	 */
+	private _applyExpandedRowIds(parentRowId : string, expandedRowIds : Set<string>)
+	{
+		const previousExpandedRowIds = parentRowId ? this._childExpandedRowIds(parentRowId) : this._expandedRowIds;
+		for(const expandedRowId of previousExpandedRowIds)
+		{
+			if(!expandedRowIds.has(expandedRowId))
+			{
+				this._forgetExpandedBranch(expandedRowId);
+			}
+		}
+		if(parentRowId)
+		{
+			this._expandedRowIdsByParent.set(parentRowId, new Set(expandedRowIds));
+		}
+		else
+		{
+			this._expandedRowIds = new Set(expandedRowIds);
+		}
+		this.requestUpdate();
+	}
+
+	/**
+	 * Drop cached state owned by a collapsed expanded row and its descendants.
+	 */
+	private _forgetExpandedBranch(parentRowId : string)
+	{
+		const childExpandedRowIds = this._expandedRowIdsByParent.get(parentRowId);
+		// Delete before recursing: if server hierarchy data contains a cycle (a row
+		// listing itself, or A->B->A), the entry is already gone by the time the
+		// recursion could loop back to it, so it terminates instead of recursing forever.
+		this._expandedRowIdsByParent.delete(parentRowId);
+		if(childExpandedRowIds)
+		{
+			for(const childRowId of childExpandedRowIds)
+			{
+				this._forgetExpandedBranch(childRowId);
+			}
+		}
+		this._subgridColumnSnapshots.delete(parentRowId);
+		this._childDataProviders.delete(parentRowId);
+		this._childGridRowsSnapshots.delete(parentRowId);
+		// Release this branch's rows from egw's central cache - otherwise they stay
+		// pinned by their keep-alive listener (see Et2NextmatchDataProvider) for the
+		// rest of the page's life, since a full releaseRetainedRows() only happens on
+		// an actual query change, not on a plain row collapse.
+		const childBranchKey = typeof this._dataProvider.toProviderRowId === "function"
+		                        ? this._dataProvider.toProviderRowId(parentRowId)
+		                        : parentRowId;
+		this._dataProvider.releaseRetainedRowsForBranch(childBranchKey);
+	}
+
+	/**
+	 * Drop all expanded-row state and child-grid caches.
+	 */
+	private _clearExpandedBranches()
+	{
+		this._expandedRowIds.clear();
+		this._clearExpandedChildBranches();
+	}
+
+	/**
+	 * Forget state below the root expansion level while retaining root rows that
+	 * should remain expanded. Used when a root query changes: a surviving parent
+	 * row may still be valid, but its child provider and cached rows must be
+	 * recreated under the new filters.
+	 */
+	private _clearExpandedChildBranches() : boolean
+	{
+		const hasChildState = this._expandedRowIdsByParent.size > 0 ||
+		                      this._subgridColumnSnapshots.size > 0 ||
+		                      this._childDataProviders.size > 0 ||
+		                      this._childGridRowsSnapshots.size > 0;
+		this._expandedRowIdsByParent.clear();
+		this._subgridColumnSnapshots.clear();
+		this._childDataProviders.clear();
+		this._childGridRowsSnapshots.clear();
+		// A surviving DOM child grid needs another initial load after its provider
+		// and snapshot were discarded. WeakSet has no clear(), so replace it.
+		this._initializedSubgrids = new WeakSet();
+		return hasChildState;
+	}
+
+	/**
+	 * Determine whether a Nextmatch row should show a child-grid expander.
+	 */
+	private _isExpandableNextmatchRow(rowData : Record<string, any> | null | undefined) : boolean
+	{
+		if(!rowData)
+		{
+			return false;
+		}
+		const isParentField = this._settings?.is_parent;
+		if(isParentField && Object.prototype.hasOwnProperty.call(rowData, isParentField))
+		{
+			const value = rowData[isParentField];
+			const expected = this._settings?.is_parent_value;
+			return expected !== undefined && expected !== null
+			       ? String(value) === String(expected)
+			       : this._isTruthyNextmatchParentValue(value);
+		}
+		return rowData.is_parent === true;
+	}
+
+	/**
+	 * Apply legacy truthiness for configured parent-row marker values.
+	 */
+	private _isTruthyNextmatchParentValue(value : any) : boolean
+	{
+		return value !== undefined && value !== null && value !== false && value !== 0 && value !== "0" && value !== "";
+	}
+
+	/**
+	 * Render the nested datagrid used for one expanded Nextmatch parent row.
+	 */
+	private _renderExpandedNextmatchGrid(context : Et2DatagridExpandedRowContext)
+	{
+		const parentRowId = String(context.row.id || "");
+		const childProvider = this._childDataProvider(parentRowId);
+		const childParentRowId = typeof this._dataProvider.toProviderRowId === "function"
+		                         ? this._dataProvider.toProviderRowId(parentRowId)
+		                         : parentRowId;
+		const columnSnapshot = this._subgridColumnSnapshot(parentRowId);
+
+		return html`
+            <et2-datagrid
+                    class="nextmatch-subgrid"
+                    part="subgrid"
+                    embedded-virtualized
+                    ._parent=${this}
+                    .columns=${columnSnapshot.columns}
+                    .templateData=${this._templateData}
+                    .rowCustomizer=${this._customizeDatagridRow}
+					.rowStylesheets=${this._rowStylesheets}
+					.dataProvider=${childProvider}
+					.expansionConfig=${this._childDatagridExpansionConfig(parentRowId)}
+					.parentRowId=${childParentRowId}
+					.noVisibleHeader=${true}
+					.noColumnSelection=${true}
+                    .inheritColumnSizes=${true}
+                    .autoActivateFirstRow=${false}
+                    .configurationLoading=${this._templateLoading}
+                    .emptyStateText=${this.egw().lang("No visible children")}
+                    selection-mode="multiple"
+                    style=${styleMap({
+                        "--meta-column-width": "6px"
+                    })}
+                    ${ref(this._loadExpandedGrid)}
+            ></et2-datagrid>
+		`;
+	}
+
+	/**
+	 * Freeze child columns when a row expands so later parent column updates do
+	 * not change the child grid mid-render.
+	 */
+	private _subgridColumnSnapshot(
+		parentRowId : string
+	) : { columns : Et2DatagridColumn[] }
+	{
+		if(!this._subgridColumnSnapshots.has(parentRowId))
+		{
+			this._subgridColumnSnapshots.set(parentRowId, {
+				columns: (this._currentColumns || []).map((column) => ({...column}))
+			});
+		}
+		return this._subgridColumnSnapshots.get(parentRowId)!;
+	}
+
+	/**
+	 * Reuse one child data provider per parent row.
+	 */
+	private _childDataProvider(parentRowId : string) : Et2DatagridDataProvider
+	{
+		if(!this._childDataProviders.has(parentRowId))
+		{
+			this._childDataProviders.set(parentRowId, this._dataProvider.createChildProvider(parentRowId));
+		}
+		return this._childDataProviders.get(parentRowId)!;
+	}
+
+	/**
+	 * Trigger the first child-grid load after Lit has connected the expanded grid.
+	 */
+	private _loadExpandedGrid = (element ? : Element) =>
+	{
+		if(!(element instanceof Et2Datagrid) || this._templateLoading)
+		{
+			return;
+		}
+		if(this._initializedSubgrids.has(element))
+		{
+			return;
+		}
+		this._initializedSubgrids.add(element);
+		const parentRowId = this._dataProvider.normalizeRowId(String(element.parentRowId || ""), true);
+		const snapshot = this._childGridRowsSnapshots.get(parentRowId);
+		if(snapshot)
+		{
+			element.restoreRowsSnapshot(snapshot);
+			return;
+		}
+		void element.updateComplete.then(() =>
+		{
+			if(element.isConnected)
+			{
+				element.reload();
+			}
+		});
+	};
+
+	/**
+	 * Move keyboard focus from an expanded parent row into its child grid.
+	 */
+	private _handleEnterExpandedRow = (event : CustomEvent<{ parentRowId? : string }>) =>
+	{
+		const parentRowId = String(event.detail?.parentRowId || "");
+		const childGrid = this._findChildGridForParent(parentRowId);
+		if(!childGrid)
+		{
+			return;
+		}
+		event.preventDefault();
+		event.stopPropagation();
+		childGrid.focusFirstRow?.();
+	};
+
+	/**
+	 * Move keyboard focus from a child grid back to its parent row.
+	 */
+	private _handleLeaveChildGrid = (event : CustomEvent<{ parentRowId? : string }>) =>
+	{
+		const parentRowId = String(event.detail?.parentRowId || "");
+		if(!parentRowId)
+		{
+			return;
+		}
+		event.preventDefault();
+		event.stopPropagation();
+		const parentDataStoreRowId = this._dataProvider.normalizeRowId(parentRowId, true);
+		const parentGrid = this._findGridContainingRow(parentDataStoreRowId) || this._datagrid;
+		parentGrid?.focusRowById?.(parentDataStoreRowId);
+	};
+
+	/**
+	 * Find the rendered child grid belonging to an expanded parent row.
+	 */
+	private _findChildGridForParent(parentRowId : string) : Et2Datagrid | null
+	{
+		const parentDataStoreRowId = this._dataProvider.normalizeRowId(parentRowId, true);
+		for(const grid of this._renderedDatagrids())
+		{
+			const expandedRow = grid.shadowRoot?.querySelector(
+				`[data-dg-expanded-row='1'][data-parent-row-id='${CSS.escape(parentDataStoreRowId)}']`
+			) as HTMLElement | null;
+			const childGrid = expandedRow?.querySelector("et2-datagrid") as Et2Datagrid | null;
+			if(childGrid)
+			{
+				return childGrid;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Find the parent or child grid that currently renders a row id.
+	 */
+	private _findGridContainingRow(rowId : string) : Et2Datagrid | null
+	{
+		const normalizedRowId = this._dataProvider.normalizeRowId(rowId, true);
+		return this._renderedDatagrids().find((grid) =>
+			!!grid.shadowRoot?.querySelector(`[data-row-id='${CSS.escape(normalizedRowId)}']`)
+		) || null;
+	}
+
+	/**
+	 * Return the root datagrid and every rendered child grid.
+	 */
+	private _renderedDatagrids() : Et2Datagrid[]
+	{
+		return [this._datagrid, ...this._childGrids()].filter((grid) : grid is Et2Datagrid => !!grid);
+	}
+
+	/**
 	 * Keep slotted sort headers in sync with currently active sort filter.
 	 */
 	private _updateSortHeaderState()
@@ -1368,7 +3154,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		);
 		sortHeaders.forEach((header : any) =>
 		{
-			const headerId = String(header.getAttribute?.("id") || "");
+			const headerId = String(header.id || header.getAttribute?.("id") || "");
 			const headerMode = sort?.id && headerId === sort.id ? mode : "none";
 			if(typeof header.setSortmode === "function")
 			{
@@ -1382,10 +3168,31 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * Resolve app-name used for legacy sort preference persistence.
+	 * Resolve app-name used for sort preference persistence.
+	 *
+	 * Preference order: the explicit `appName` property, then the app that owns this
+	 * nextmatch's rows (the first segment of `template`, eg. "infolog" from
+	 * "infolog.index.rows"), then the instance manager's `app` as a last resort.
+	 *
+	 * Server-side, the preference is always read back under the app resolved from
+	 * `get_rows` (Nextmatch.php: `explode('.', $value['get_rows'])[0]`), which is the
+	 * same owning app - not necessarily the surrounding page/tab's app. Views that embed
+	 * one app's nextmatch inside another (eg. InfoLog's CRM view inside addressbook, which
+	 * forces currentapp to "addressbook") would otherwise save the sort preference under
+	 * the wrong namespace and never see it applied again. Set `appName` explicitly for
+	 * cases where `template` doesn't carry the owning app as its first segment.
 	 */
 	_getAppName() : string
 	{
+		if(this.appName)
+		{
+			return this.appName;
+		}
+		const template = this.template;
+		if(typeof template === "string" && template.includes("."))
+		{
+			return template.split(".")[0];
+		}
 		return String(this.getInstanceManager?.()?.app || this.egw()?.app_name?.() || "");
 	}
 
@@ -1405,7 +3212,22 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 			{
 				return;
 			}
-			this.sortBy(detail.id, detail.asc, detail.update);
+			if(detail.clear)
+			{
+				if(detail.update === false)
+				{
+					this._filters.sort = undefined;
+					this._updateSortHeaderState();
+				}
+				else
+				{
+					this.resetSort();
+				}
+			}
+			else
+			{
+				this.sortBy(detail.id, detail.asc, detail.update);
+			}
 			const appName = this._getAppName();
 			if(!appName || !this.template)
 			{
@@ -1442,11 +3264,19 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	};
 
 	/**
-	 * Emit legacy `et2-search-result` after datagrid finishes loading.
+	 * Emit `et2-search-result` after datagrid finishes loading.
 	 */
 	private _handleLoadingDone = (event : Event) =>
 	{
 		const datagrid = this._datagrid;
+		const sourceGrid = event.composedPath().find((target) => target instanceof Et2Datagrid) as Et2Datagrid | undefined;
+		if(sourceGrid && sourceGrid !== datagrid && sourceGrid.parentRowId)
+		{
+			this._childGridRowsSnapshots.set(
+				this._dataProvider.normalizeRowId(String(sourceGrid.parentRowId), true),
+				sourceGrid.rowsSnapshot()
+			);
+		}
 		if(!datagrid || !event.composedPath().includes(datagrid))
 		{
 			return;
@@ -1459,18 +3289,380 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 			bubbles: true
 		}));
 		this._actionController.syncDragDropRegistration();
+		this._autoRefresh.restart();
 	};
 
-	private _handleSelectionChanged = (event : CustomEvent<{ selectedRowIds? : string[]; activeRowId? : string; allSelected? : boolean }>) =>
+	/**
+	 * Track column changes from the root datagrid so child grids inherit them.
+	 */
+	private _handleDatagridColumnsChanged = (event : CustomEvent<{ columns? : Et2DatagridColumn[] }>) =>
+	{
+		const datagrid = this._datagrid;
+		const sourceGrid = this._eventSourceDatagrid(event);
+		if(!datagrid || sourceGrid !== datagrid || !event.detail?.columns?.length)
+		{
+			return;
+		}
+		this._datagridColumns = event.detail.columns.map((column) => ({...column}));
+		this._persistLegacyColumnSelection(this._datagridColumns);
+		this.requestUpdate();
+	};
+
+	/**
+	 * Keep the legacy Nextmatch CSV-format column-visibility preference
+	 * (`nextmatch-<rowTemplateId>`) up to date for apps whose PHP still reads it
+	 * directly, independent of whatever key Datagrid's own structured preference is
+	 * stored under (`columnPreferenceName`, which apps can point at a different,
+	 * dynamic key - see the `columnselection_pref` setting above). This is legacy
+	 * Nextmatch-specific compatibility behaviour, so it lives here rather than in
+	 * the generic `Et2Datagrid`.
+	 *
+	 * `egw().set_preference()` is a no-op when the value hasn't changed, so calling
+	 * this on every columns-changed event (including the initial load) is harmless.
+	 *
+	 * TODO: When things stabilize, we can delete the old preference.
+	 */
+	private _persistLegacyColumnSelection(columns : Et2DatagridColumn[])
+	{
+		if(this._datagrid?.noColumnPersistence || this._datagrid?.noVisibleHeader)
+		{
+			return;
+		}
+		const rowTemplateId = String(this._templateData?.rowTemplateId || "").trim();
+		const app = String(this.getInstanceManager()?.app || this.egw()?.app_name?.() || "").trim();
+		if(!rowTemplateId || !app)
+		{
+			return;
+		}
+		this.egw()?.set_preference?.(app, `nextmatch-${rowTemplateId}`, legacyColumnSelectionCsv(columns));
+	}
+
+	/**
+	 * Add letter search as a pseudo-column in the root column chooser.
+	 */
+	private _handleColumnSelectionItems = (event : CustomEvent<{ columns : Et2DatagridColumnSelectionItem[], content? : Record<string, any>, modifications? : Record<string, any> }>) =>
+	{
+		if(this._eventSourceDatagrid(event) !== this._datagrid)
+		{
+			return;
+		}
+		if(event.detail.content)
+		{
+			this._autoRefresh.seedColumnSelection(event.detail.content, event.detail.modifications || {});
+		}
+		// Admin-only - it saves the current settings as the default/forced/reset value for
+		// every user of the app, not just this user's own preference (matches legacy's dialog,
+		// which gated the same select the same way).
+		if(!this.egw().user?.('apps')?.admin && event.detail.modifications)
+		{
+			event.detail.modifications.default_preference = {hidden: true};
+		}
+		if(!this.lettersearch)
+		{
+			return;
+		}
+		const caption = this.egw().lang("Search letter");
+		event.detail.columns.push({
+			id: LETTERSEARCH_SELECTION_ID,
+			title: caption,
+			caption,
+			widget: null,
+			visibility: this.lettersearch && this._lettersearchVisible
+		});
+	};
+
+	/**
+	 * Consume the letter-search pseudo-column, and persist a changed autorefresh
+	 * interval, before real grid columns are applied. Also contributes this widget's
+	 * preference key/value pairs (autorefresh, lettersearch) into `adminPrefs`, the
+	 * bucket `Et2Datagrid._maybeSaveColumnSelectionAsAdminDefault()` bundles into one
+	 * admin save-as-default/force/reset action when `values.default_preference` is set -
+	 * unconditional, since that method (not this one) decides whether it's actually used.
+	 */
+	private _handleColumnSelectionApply = (event : CustomEvent<{ selectedOrder : string[], values : Record<string, any>, adminPrefs? : Record<string, any> }>) =>
+	{
+		if(this._eventSourceDatagrid(event) !== this._datagrid)
+		{
+			return;
+		}
+		this._autoRefresh.applyColumnSelection(event.detail?.values, event.detail?.adminPrefs);
+		if(!this.lettersearch)
+		{
+			return;
+		}
+		const selectedOrder = event.detail?.selectedOrder || [];
+		const letterIndex = selectedOrder.indexOf(LETTERSEARCH_SELECTION_ID);
+		const nextVisible = letterIndex >= 0;
+		if(letterIndex >= 0)
+		{
+			selectedOrder.splice(letterIndex, 1);
+		}
+		this._lettersearchVisible = nextVisible;
+		this.egw().set_preference(this.egw().app_name(), this._lettersearchPreferenceKey, nextVisible);
+		if(event.detail?.adminPrefs)
+		{
+			event.detail.adminPrefs[this._lettersearchPreferenceKey] = nextVisible;
+		}
+		if(!nextVisible && this._filters.searchletter)
+		{
+			this.applyFilters({searchletter: false});
+			return;
+		}
+		this.requestUpdate();
+	};
+
+	private get _lettersearchPreferenceKey() : string
+	{
+		return `nextmatch-${this.settings.columnselection_pref || this.columnPreferenceName}-lettersearch`;
+	}
+
+	/**
+	 * Legacy Nextmatch's print preference base, reproduced only far enough to find
+	 * an existing value - see et2_extension_nextmatch.ts `beforePrint()`, which
+	 * builds the same (oddly re-prefixed) base before appending `_print`/
+	 * `_print_orientation`. Nothing in this widget writes to those keys anymore.
+	 */
+	private get _legacyPrintPreferenceBase() : string
+	{
+		let pref = String(this.columnPreferenceName || "").trim();
+		if(!pref)
+		{
+			return "";
+		}
+		if(pref.indexOf("nextmatch") === 0)
+		{
+			pref = "nextmatch-" + pref;
+		}
+		return pref;
+	}
+
+	/**
+	 * The one preference key this widget writes print column/orientation choices to.
+	 *
+	 * Legacy Nextmatch's `<pref>_print`/`<pref>_print_orientation` keys are only ever
+	 * read (via `_resolvePrintPreferenceDefaults`) as a fallback default for users who
+	 * haven't printed since upgrading - once this key has a value, it wins and the
+	 * legacy keys are never consulted again, matching how column-visibility migration
+	 * already works elsewhere in this file (`_seedDatagridColumnPreferencesFromLegacy`).
+	 */
+	private get _printPreferenceKey() : string
+	{
+		const rowTemplateId = String(this._templateData?.rowTemplateId || "").trim();
+		const base = String(this.columnPreferenceName || "").trim() || (rowTemplateId ? `nextmatch-${rowTemplateId}` : "");
+		return base ? `${base}-print-prefs` : "";
+	}
+
+	/**
+	 * Resolve stored column/orientation defaults for the print dialog.
+	 *
+	 * `_printPreferenceKey` is authoritative once it holds a value. Until then, fall
+	 * back to reading (never writing) legacy Nextmatch's print preferences, mapping
+	 * its column-key CSV onto the current columns the same way general column-visibility
+	 * migration does.
+	 */
+	private _resolvePrintPreferenceDefaults(app : string) : { columns : string[] | null, orientation : boolean | null }
+	{
+		const printKey = this._printPreferenceKey;
+		try
+		{
+			const stored : any = printKey ? this.egw().preference(printKey, app) : null;
+			if(stored && typeof stored === "object")
+			{
+				const columns = Array.isArray(stored.columns) ? stored.columns.map(String) : null;
+				const orientation = typeof stored.orientation === "string" ? stored.orientation === "landscape" : null;
+				if(columns || orientation !== null)
+				{
+					return {columns, orientation};
+				}
+			}
+		}
+		catch(e)
+		{
+		}
+
+		const legacyBase = this._legacyPrintPreferenceBase;
+		if(!legacyBase)
+		{
+			return {columns: null, orientation: null};
+		}
+		try
+		{
+			const legacyColumns : any = this.egw().preference(`${legacyBase}_print`, app);
+			const legacyOrientation : any = this.egw().preference(`${legacyBase}_print_orientation`, app);
+			const mappedKeys = Array.isArray(legacyColumns)
+				? mapLegacyVisibleKeysToCurrentColumns(legacyColumns.map(String), this._currentColumns)
+				: [];
+			return {
+				columns: mappedKeys.length ? mappedKeys : null,
+				orientation: typeof legacyOrientation === "string" ? legacyOrientation === "landscape" : null
+			};
+		}
+		catch(e)
+		{
+			return {columns: null, orientation: null};
+		}
+	}
+
+	/**
+	 * Merge selection events from parent and child grids for action state.
+	 */
+	private _handleSelectionChanged = (event : CustomEvent<{
+		selectedRowIds? : string[];
+		activeRowId? : string;
+		allSelected? : boolean;
+		replaceSelection? : boolean
+	}>) =>
 	{
 		const datagrid = this._datagrid;
 		if(!datagrid || !event.composedPath().includes(datagrid))
 		{
 			return;
 		}
-		this._actionController.handleSelectionChanged(event.detail || {});
+		const sourceGrid = this._eventSourceDatagrid(event) || datagrid;
+		const gridId = this._selectionGridId(sourceGrid);
+		if((sourceGrid.selectionMode === "single" || event.detail?.replaceSelection) && event.detail?.selectedRowIds?.length)
+		{
+			this._clearOtherGridSelections(sourceGrid);
+		}
+		this._selectionByGridId.set(gridId, {
+			selectedRowIds: [...(event.detail?.selectedRowIds || [])],
+			allSelected: !!event.detail?.allSelected
+		});
+		this._syncActiveGrid(sourceGrid);
+		this._actionController.handleSelectionChanged(this._mergedSelectionDetail(event.detail || {}));
 	};
 
+	/**
+	 * Invoke a legacy `onselect` XET handler after the current selection has
+	 * been merged and passed to the action controller.
+	 */
+	private _handleLegacyOnselect = (event : CustomEvent) : void =>
+	{
+		const datagrid = this._datagrid;
+		if(!datagrid || !event.composedPath().includes(datagrid))
+		{
+			return;
+		}
+		if(!event.defaultPrevented)
+		{
+			this.legacyOnselect?.call(this, this.getSelection().ids, this);
+		}
+	};
+
+	/**
+	 * Invoke a legacy `onfiledrop` XET handler.  Returning false cancels the
+	 * same default action cancelled by preventDefault() on `et2-filedrop`.
+	 */
+	private _handleLegacyOnfiledrop = (event : CustomEvent<{rowUid : string; files : File[]}>) : void =>
+	{
+		if(this.onfiledrop?.call(this, event.detail.rowUid, event.detail.files) === false)
+		{
+			event.preventDefault();
+		}
+	};
+
+	/**
+	 * Keep only one active row visible across parent and child grids.
+	 */
+	private _handleActiveRowChanged = (event : CustomEvent<{ activeRowId? : string; activeRowIndex? : number }>) =>
+	{
+		const sourceGrid = this._eventSourceDatagrid(event);
+		if(sourceGrid && (sourceGrid === this._datagrid || this._childGrids().includes(sourceGrid)))
+		{
+			this._syncActiveGrid(sourceGrid);
+		}
+	};
+
+	/**
+	 * Clear selection from all grids except the one that just selected a row.
+	 */
+	private _clearOtherGridSelections(sourceGrid : Et2Datagrid)
+	{
+		const grids = [
+			this._datagrid,
+			...this._childGrids()
+		].filter((grid) : grid is Et2Datagrid => !!grid && grid !== sourceGrid);
+		for(const grid of grids)
+		{
+			this._selectionByGridId.delete(this._selectionGridId(grid));
+			grid.clearSelection?.(false);
+		}
+	}
+
+	/**
+	 * Resolve the datagrid instance that originated a composed event.
+	 */
+	private _eventSourceDatagrid(event : Event) : Et2Datagrid | null
+	{
+		return (event.composedPath?.() || []).find((target) => target instanceof Et2Datagrid) as Et2Datagrid | null;
+	}
+
+	/**
+	 * Build a stable key for selection state in the parent grid or a child grid.
+	 */
+	private _selectionGridId(grid : Et2Datagrid) : string
+	{
+		return grid === this._datagrid ? "parent" : `child:${grid.parentRowId || ""}`;
+	}
+
+	/**
+	 * Merge parent and child grid selections into the legacy Nextmatch detail shape.
+	 */
+	private _mergedSelectionDetail(detail : { activeRowId? : string; activeRowIndex? : number })
+	{
+		const selectedRowIds = Array.from(new Set(
+			Array.from(this._selectionByGridId.values()).flatMap((selection) => selection.selectedRowIds)
+		));
+		const allSelected = Array.from(this._selectionByGridId.values()).some((selection) => selection.allSelected);
+		return {
+			...detail,
+			selectedRowIds,
+			allSelected
+		};
+	}
+
+	/**
+	 * Clear active-row state in sibling grids when another grid takes focus.
+	 */
+	private _syncActiveGrid(activeGrid : Et2Datagrid)
+	{
+		if(activeGrid !== this._datagrid)
+		{
+			this._datagrid?.clearActiveRow?.();
+		}
+		for(const childGrid of this._childGrids())
+		{
+			if(childGrid !== activeGrid)
+			{
+				childGrid.clearActiveRow?.();
+			}
+		}
+	}
+
+	/**
+	 * Return all currently rendered child datagrids inside expanded rows.
+	 */
+	private _childGrids() : Et2Datagrid[]
+	{
+		const datagrid = this._datagrid;
+		const childGrids : Et2Datagrid[] = [];
+		const stack = datagrid ? [datagrid] : [];
+		while(stack.length)
+		{
+			const grid = stack.shift()!;
+			const directChildren = Array.from(grid.shadowRoot?.querySelectorAll("et2-datagrid") || []) as Et2Datagrid[];
+			for(const childGrid of directChildren)
+			{
+				childGrids.push(childGrid);
+				stack.push(childGrid);
+			}
+		}
+		return childGrids;
+	}
+
+	/**
+	 * Route context-menu requests to placeholder or row action popups.
+	 */
 	private _handleContextMenu = (event : MouseEvent) =>
 	{
 		// Developer abort context menu
@@ -1501,6 +3693,9 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		}
 	};
 
+	/**
+	 * Execute the default row action on non-interactive row double-click.
+	 */
 	private _handleDoubleClick = (event : MouseEvent) =>
 	{
 		if(event.defaultPrevented || event.button !== 0)
@@ -1538,16 +3733,34 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		return null;
 	}
 
+	/**
+	 * Detect row interactions that should remain native interactive element events.
+	 */
 	private _isInteractiveRowEventTarget(event : MouseEvent) : boolean
 	{
 		const rowElement = this._getContextMenuRowElement(event);
-		const target = event.target as HTMLElement | null;
-		const link = target?.closest?.("a");
-		if(!rowElement || !link)
+		if(!rowElement)
 		{
 			return false;
 		}
-		return rowElement.contains(link);
+		const interactiveSelector = [
+			"a[href]",
+			"[role='link']",
+			".et2_clickable"
+		].join(",");
+		const path = event.composedPath?.() || [];
+		for(const node of path)
+		{
+			if(node === rowElement)
+			{
+				return false;
+			}
+			if(node instanceof HTMLElement && node.matches?.(interactiveSelector))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -1571,9 +3784,9 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	 */
 	private _renderLetterSearch()
 	{
-		const currentLetterValue = this._filters.searchletter || this.searchletter || "";
+		const currentLetterValue = this._filters.searchletter || "";
 		const currentLetter = typeof currentLetterValue === "string" ? currentLetterValue : "";
-		if(!this.lettersearch && !currentLetter)
+		if((!this.lettersearch && !currentLetter) || (this.lettersearch && !this._lettersearchVisible))
 		{
 			return null;
 		}
@@ -1599,48 +3812,8 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * Render Nextmatch default no-results template into datagrid's `noResults` slot.
+	 * Open the row action popup from keyboard Enter.
 	 */
-	private _renderDefaultNoResults(actions : EgwAction[])
-	{
-		return html`
-            <sl-alert slot="noResults" variant="neutral" open>
-                <sl-icon slot="icon" name="inbox"></sl-icon>
-                <strong>${this.placeholder || this.egw().lang("No entries to display")}</strong>
-                ${actions.length > 0 ? html`
-                    <div class="nextmatch_placeholder_actions">
-                        ${actions.map((action) => html`
-                            <et2-button
-                                    class="nextmatch_placeholder_action"
-                                    noSubmit
-                                    .image=${action.iconUrl || action.id}
-                                    .label=${action.caption || action.id}
-                                    @click=${(event : MouseEvent) => this._handlePlaceholderActionClick(event, String(action.id))}
-                            ></et2-button>
-                        `)}
-                    </div>
-                ` : null}
-            </sl-alert>
-		`;
-	}
-
-	/**
-	 * Execute one placeholder action from inline loader-slot buttons.
-	 */
-	private _handlePlaceholderActionClick(event : MouseEvent, actionId : string)
-	{
-		if(!actionId)
-		{
-			return;
-		}
-		const stateElement = (event.currentTarget as HTMLElement | null)?.closest(".dg-state") as HTMLElement | null;
-		if(this._actionController.executePlaceholderAction(actionId, stateElement || this))
-		{
-			event.preventDefault();
-			event.stopPropagation();
-		}
-	}
-
 	private _handleKeydown = (event : KeyboardEvent) =>
 	{
 		if(event.key !== "Enter")
@@ -1654,11 +3827,30 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		}
 	};
 
+	/**
+	 * Let nextmatch action shortcuts run before the datagrid handles navigation
+	 * keys and stops their propagation.
+	 */
+	private _handleActionShortcut = (event : KeyboardEvent) =>
+	{
+		if(this._actionController.handleShortcut(event))
+		{
+			event.preventDefault();
+			event.stopPropagation();
+		}
+	};
+
+	/**
+	 * Forward pointerdown to the action controller for long-press/drag setup.
+	 */
 	private _handlePointerDown = (event : PointerEvent) =>
 	{
 		this._actionController.handlePointerDown(event);
 	};
 
+	/**
+	 * Forward pointer movement to cancel long-press when needed.
+	 */
 	private _handlePointerMove = (event : PointerEvent) =>
 	{
 		this._actionController.handlePointerMove(event);
@@ -1674,33 +3866,93 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	};
 
 	/**
+	 * Prevent native drag-start from resize handles before the action controller sees it.
+	 */
+	private _handleDragStartCapture = (event : DragEvent) =>
+	{
+		if(!this._isColumnResizeDragStart(event))
+		{
+			return;
+		}
+		event.preventDefault();
+		event.stopPropagation();
+		event.stopImmediatePropagation?.();
+	};
+
+	/**
+	 * Check whether a dragstart belongs to the column resize handle.
+	 */
+	private _isColumnResizeDragStart(event : DragEvent) : boolean
+	{
+		const path = event.composedPath?.() || [];
+		if(path.some((target) =>
+			target instanceof HTMLElement &&
+			!!target.closest?.(".dg-col-resize-handle")))
+		{
+			return true;
+		}
+		if(typeof event.clientX !== "number" || typeof event.clientY !== "number")
+		{
+			return false;
+		}
+		const deepTarget = this._deepElementFromPoint(this.shadowRoot, event.clientX, event.clientY);
+		return !!deepTarget?.closest?.(".dg-col-resize-handle");
+	}
+
+	/**
+	 * Resolve the deepest shadow-DOM element at a point.
+	 */
+	private _deepElementFromPoint(root : Document | ShadowRoot | null, x : number, y : number) : HTMLElement | null
+	{
+		let element = root?.elementFromPoint?.(x, y) as HTMLElement | null;
+		let lastElement : HTMLElement | null = null;
+		while(element && element !== lastElement)
+		{
+			lastElement = element;
+			const next = element.shadowRoot?.elementFromPoint?.(x, y) as HTMLElement | null;
+			if(!next || next === element)
+			{
+				break;
+			}
+			element = next;
+		}
+		return element;
+	}
+
+	/**
 	 * Render the orchestration shell.
 	 * We explicitly set `._parent` so Et2Datagrid can participate in Et2Widget array manager lookup.
 	 */
 	render()
 	{
 		const hasSlottedNoResults = !!this.querySelector("[slot='noResults']");
-		const inlinePlaceholderActions : EgwAction[] = this._actionController
-			.getInlinePlaceholderActions();
+		const metaColumnWidth = "max(var(--sl-spacing-large), 6px)";
+		const effectiveView = this._effectiveView();
 		return html`
 				<div part="header"><slot name="header"></slot></div>
                 ${this._renderLetterSearch()}
 				<et2-datagrid
                         part="grid"
-					._parent=${this}
-					.columns=${this._currentColumns}
-					.templateData=${this._templateData}
-					.rowCustomizer=${this._customizeDatagridRow}
-					.columnPreferenceName=${this.columnPreferenceName}
-					.dataProvider=${this._dataProvider}
-					.configurationLoading=${this._templateLoading}
+                        exportparts="rows, row, header"
+                        ._parent=${this}
+                        .view=${effectiveView}
+                        .columns=${this._currentColumns}
+                        .templateData=${this._templateData}
+                        .rowCustomizer=${this._customizeDatagridRow}
+                        .rowStylesheets=${this._rowStylesheets}
+                        .columnPreferenceName=${this.columnPreferenceName}
+                        .dataProvider=${this._dataProvider}
+                        .expansionConfig=${this._datagridExpansionConfig()}
+                        .configurationLoading=${this._templateLoading}
                         .emptyStateText=${this.placeholder}
-					selection-mode="multiple"
+                        .emptyStateActionMenu=${this._hasPlaceholderActions}
+                        selection-mode="multiple"
+                        style=${styleMap({"--meta-column-width": metaColumnWidth})}
                 >
                     ${hasSlottedNoResults
                       ? html`
                                 <slot name="noResults" slot="noResults"></slot>`
-                      : this._renderDefaultNoResults(inlinePlaceholderActions)}
+                      : null}
                 </et2-datagrid>
                 <div part="footer">
                     <slot name="footer"></slot>

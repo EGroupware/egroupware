@@ -73,7 +73,6 @@ leave it empty for a full week	timesheet	nl	Laat het leeg voor een volle week
 leaves without saveing	timesheet	nl	verlaat zonder opslaan
 length<br>rows	timesheet	nl	Lengte<br />Rijen
 link title	timesheet	nl	Link titel
-links	timesheet	nl	Links
 links and attached files	timesheet	nl	Link naar bijgesloten bestand
 links to specified application.  example: {{links/infolog}}	timesheet	nl	Verwijst naar een specifieke applicatie. Voorbeeld: {{links/infolog}}
 list of files linked to the current record	timesheet	nl	Lijs van bestanden gelinkt aan huidig record

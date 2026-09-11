@@ -14,8 +14,11 @@ import {
 	EGW_AO_FLAG_IS_CONTAINER,
 	EGW_AO_STATE_VISIBLE
 } from "../../egw_action/egw_action_constants";
-import {nm_action} from "../et2_extension_nextmatch_actions";
+import type {ReactiveController} from "lit";
 import type {Et2Nextmatch} from "./Et2Nextmatch";
+import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
+import {nm_open_popup} from "../et2_extension_nextmatch_actions.js";
+import {et2_warnOnce} from "../Et2Widget/Et2Widget";
 
 /**
  * Minimal AOI base used by Et2Nextmatch.
@@ -83,6 +86,9 @@ abstract class Et2NextmatchBaseAOI implements EgwActionObjectInterface
 		this.doMakeVisible();
 	}
 
+	/**
+	 * Base AOI visibility hook; concrete rows are already visible when rendered.
+	 */
 	protected doMakeVisible() : void
 	{
 	}
@@ -100,7 +106,7 @@ class Et2NextmatchDragDropAOI extends Et2NextmatchBaseAOI
 {
 	private controller : Et2NextmatchActionController;
 	private node : HTMLElement | null = null;
-	public findActionTargetHandler : Et2NextmatchActionController;
+	findActionTargetHandler : Et2NextmatchActionController;
 
 	constructor(controller : Et2NextmatchActionController, node : HTMLElement | null = null)
 	{
@@ -177,11 +183,17 @@ class Et2NextmatchRowAOI extends Et2NextmatchBaseAOI
 		this.node = node;
 	}
 
+	/**
+	 * Return the DOM row owned by this action object interface.
+	 */
 	protected doGetDOMNode() : HTMLElement
 	{
 		return this.node;
 	}
 
+	/**
+	 * Row AOIs delegate action execution to their owning action object.
+	 */
 	protected doTriggerEvent() : boolean
 	{
 		return false;
@@ -192,8 +204,13 @@ class Et2NextmatchRowAOI extends Et2NextmatchBaseAOI
  * Bridges Et2Nextmatch row rendering and selection state into the
  * `egw_action` system so popup, drag, drop and placeholder actions can reuse the
  * existing action implementations.
+ *
+ * The controller owns action-manager registration, row action-object materialization,
+ * selection mirroring, context-menu execution, touch long-press handling and native
+ * drag/drop registration. Et2Nextmatch remains responsible for data loading and
+ * rendering; this class only adapts rendered rows to the legacy action framework.
  */
-export class Et2NextmatchActionController
+export class Et2NextmatchActionController implements ReactiveController
 {
 	private static readonly PLACEHOLDER_ACTION_OBJECT_ID = "__placeholder__";
 	private _placeholderActionIds : string[] = ["add"];
@@ -203,6 +220,8 @@ export class Et2NextmatchActionController
 	private actionManager : EgwAction | null = null;
 	private objectManager : EgwActionObjectManager | null = null;
 	private rowActionObjects : Map<string, EgwActionObject> = new Map();
+	/** Detached DOM nodes used only while explicitly selected rows are virtualized out of view. */
+	private selectionProxyRows : Map<string, HTMLElement> = new Map();
 	private longPressTimer : number | null = null;
 	private longPressPointerId : number | null = null;
 	private longPressStartX : number = 0;
@@ -212,12 +231,31 @@ export class Et2NextmatchActionController
 	private dragDropAOI : Et2NextmatchDragDropAOI | null = null;
 	private dropHoverRow : HTMLElement | null = null;
 	private preparedDragRow : HTMLElement | null = null;
+	private pendingActionSubmitValue : Record<string, any> | null = null;
 
 	constructor(host : Et2Nextmatch)
 	{
 		this.host = host;
+		// Optional chaining because some tests construct this against a bare mock
+		// object rather than a real (LitElement-backed) Et2Nextmatch.
+		host.addController?.(this);
 	}
 
+	/**
+	 * No-op - setup is already fully lazy via `ensureActionManagers()`, triggered
+	 * by `initActions()`/`syncDragDropRegistration()` rather than host connection.
+	 */
+	hostConnected() : void
+	{
+	}
+
+	/**
+	 * Register or update actions supplied by the server/template.
+	 *
+	 * Actions are attached to this Nextmatch's action manager and annotated with
+	 * `data.nextmatch` so existing app handlers can find the owning widget even
+	 * when invoked through popup or drag/drop action implementations.
+	 */
 	initActions(actions : EgwAction[] | { [id : string] : object })
 	{
 		const actionEntries = Array.isArray(actions) ? actions : Object.entries(actions || {});
@@ -236,6 +274,7 @@ export class Et2NextmatchActionController
 			return;
 		}
 		this.actionManager.updateActions(actions, this.getAppName());
+		this.annotateActionsWithNextmatch(this.actionManager.children || []);
 		const data = this.actionManager.data || {};
 		this.actionManager.data = {
 			...data,
@@ -245,13 +284,7 @@ export class Et2NextmatchActionController
 		};
 		this.actionManager.setDefaultExecute((action, senders, target) =>
 		{
-			const ids = this.getSelection();
-			if(!action.data)
-			{
-				action.data = {};
-			}
-			action.data.nextmatch = this.host;
-			nm_action(action, senders, target, ids);
+			this.executeNextmatchAction(action, senders, target);
 		});
 		const selectAllAction = this.actionManager.getActionById?.("select_all");
 		selectAllAction?.set_onExecute?.(() =>
@@ -261,11 +294,159 @@ export class Et2NextmatchActionController
 		this.syncDragDropRegistration();
 	}
 
+	/**
+	 * Return a snapshot of the rows currently selected in the datagrid.
+	 *
+	 * Row ids are datagrid row ids. Callers that submit to the server should use
+	 * the normalized provider ids produced by executeNextmatchAction().
+	 */
 	getSelection() : { ids : string[]; all : boolean }
 	{
 		return {ids: [...this.selectedRowIds], all: this.allSelected};
 	}
 
+	/**
+	 * Keys the datagrid itself consumes for row navigation/selection (see
+	 * Et2Datagrid._handleTableKeydown()). handleShortcut() must leave these alone -
+	 * see the comment on the early return below for why.
+	 */
+	private static readonly GRID_OWNED_KEYS = new Set([
+		"ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight",
+		"PageUp", "PageDown", "Home", "End", " ", "a", "A"
+	]);
+
+	/**
+	 * Execute an action shortcut originating in this nextmatch.
+	 *
+	 * This is called while the event is being captured by Et2Nextmatch.  The
+	 * datagrid consumes some keys (notably Ctrl+A) for its own navigation, so
+	 * waiting for the document-level key manager would make those action
+	 * shortcuts unreachable.
+	 */
+	handleShortcut(event : KeyboardEvent) : boolean
+	{
+		const keyCode = event.keyCode;
+		if(!keyCode)
+		{
+			return false;
+		}
+
+		// This runs in the capture phase, before the datagrid's own bubble-phase keydown handler processes the same event and moves/selects rows accordingly
+		// (see Et2Datagrid._handleTableKeydown()).
+		// Calling forceActiveRowSelected() here for a grid-owned key would act on the *pre-move* active row, one step behind the row the datagrid is about to make active.
+		//for selection-toggle keys (Space,Ctrl+A) it would corrupt the pre-existing selection the datagrid's own handler still needs to read.
+		// Leave these keys to the datagrid entirely.
+		if(Et2NextmatchActionController.GRID_OWNED_KEYS.has(event.key))
+		{
+			return false;
+		}
+
+		// executeActionImplementation() below runs against `this.objectManager`, which
+		// is flagged EGW_AO_FLAG_IS_CONTAINER - so its own forceSelection() gate never
+		// fires (that only applies when a leaf row object executes an action on itself,
+		// see the popup/default-action/placeholder paths elsewhere in this file, which
+		// already select their target row - or call forceSelection() directly - before
+		// executing). Arrow-key navigation moves the active row without touching
+		// selection, so without an equivalent guard here, a shortcut like Delete would
+		// silently act on whatever was last explicitly selected (e.g. by an earlier
+		// click) rather than the row the user is now focused on.
+		this.forceActiveRowSelected();
+
+		return !!this.objectManager?.executeActionImplementation?.({
+			keyEvent: {
+				keyCode,
+				shift: event.shiftKey,
+				ctrl: event.ctrlKey || event.metaKey,
+				alt: event.altKey
+			}
+		}, "popup", EGW_AO_EXEC_SELECTED);
+	}
+
+	/**
+	 * Mirror of EgwActionObject.forceSelection() for the container-level
+	 * shortcut path: if the row currently focused via keyboard/pointer navigation
+	 * isn't part of the current selection, collapse the selection down to just that
+	 * row before a shortcut acts on "the selected rows". Left untouched when there's
+	 * no active row, the active row is already selected, or everything is selected -
+	 * so an explicit multi-selection that already includes the active row (built via
+	 * ctrl-click or the Space-bar toggle) survives intact.
+	 */
+	private forceActiveRowSelected() : void
+	{
+		const activeRowId = this.host.getActiveRowId?.();
+		if(!activeRowId || this.allSelected || this.selectedRowIds.includes(activeRowId))
+		{
+			return;
+		}
+		this.host.selectSingleRow?.(activeRowId);
+	}
+
+	/**
+	 * Return the pending submit payload produced by the last submit action.
+	 *
+	 * Et2Nextmatch includes this value in its normal eTemplate submit value so
+	 * server-side nextmatch actions receive the same fields as legacy Nextmatch.
+	 */
+	getActionSubmitValue() : Record<string, any> | null
+	{
+		return this.pendingActionSubmitValue ? {...this.pendingActionSubmitValue} : null;
+	}
+
+	/**
+	 * Execute a registered action programmatically.
+	 *
+	 * Used by app code that already knows the action id and selection and does
+	 * not need a context-menu action object. `options.nmAction` can temporarily
+	 * force the legacy nextmatch action mode (`submit`, `popup`, etc.) for this
+	 * execution without permanently changing the action definition.
+	 */
+	executeAction(
+		actionId : string,
+		selection : { ids? : string[]; all? : boolean } = this.getSelection(),
+		options : { nmAction? : string } = {}
+	) : boolean
+	{
+		this.ensureActionManagers();
+		if(!this.actionManager || !actionId)
+		{
+			return false;
+		}
+		const action = this.actionManager.getActionById?.(actionId);
+		if(!action)
+		{
+			return false;
+		}
+		if(!action.data)
+		{
+			action.data = {};
+		}
+		const hadNmAction = Object.prototype.hasOwnProperty.call(action.data, "nm_action");
+		const previousNmAction = action.data.nm_action;
+		if(options.nmAction)
+		{
+			action.data.nm_action = options.nmAction;
+		}
+		try
+		{
+			this.executeNextmatchAction(action, [], null, {ids: selection.ids || [], all: selection.all === true});
+			return true;
+		}
+		finally
+		{
+			if(options.nmAction && !hadNmAction)
+			{
+				delete action.data.nm_action;
+			}
+			else if(options.nmAction)
+			{
+				action.data.nm_action = previousNmAction;
+			}
+		}
+	}
+
+	/**
+	 * Remove all row action objects and reset mirrored selection state.
+	 */
 	clearRowActionObjects()
 	{
 		for(const rowObject of this.rowActionObjects.values())
@@ -279,15 +460,24 @@ export class Et2NextmatchActionController
 			}
 		}
 		this.rowActionObjects.clear();
+		this.selectionProxyRows.clear();
 		this.selectedRowIds = [];
 		this.allSelected = false;
 	}
 
+	/**
+	 * Mirror datagrid selection changes into the action framework.
+	 *
+	 * Explicitly selected rows remain materialized even when virtualization has
+	 * recycled their DOM; select-all remains a global flag and does not create
+	 * one action object per unloaded row.
+	 */
 	handleSelectionChanged(detail : { selectedRowIds? : string[]; activeRowId? : string; allSelected? : boolean })
 	{
 		this.selectedRowIds = [...(detail?.selectedRowIds || [])];
 		this.allSelected = !!detail?.allSelected;
 		const selectedSet = new Set(this.selectedRowIds);
+		this._pruneSelectionProxies(selectedSet);
 		const activeRowId = String(detail?.activeRowId || "");
 		this.materializeVisibleSelectedRows(selectedSet, activeRowId);
 		for(const [rowId, rowObject] of this.rowActionObjects.entries())
@@ -302,19 +492,20 @@ export class Et2NextmatchActionController
 	 */
 	private materializeVisibleSelectedRows(selectedSet : Set<string>, activeRowId : string)
 	{
-		const rowsBody = this.getRowsBody();
-		if(!rowsBody)
+		const rowsBodies = this.getRowsBodies();
+		if(!rowsBodies.length)
 		{
 			return;
 		}
-		const rowIds = this.allSelected
-		               ? Array.from(rowsBody.querySelectorAll("[data-row-id]"))
-						   .map((row) => this.getActionRowId(row as HTMLElement))
-						   .filter(Boolean) as string[]
-		               : Array.from(selectedSet);
+		// One querySelectorAll pass per rows body instead of a querySelector per row id -
+		// this runs on every selection change (click, arrow key, select-all), so a lookup
+		// scanning the DOM once per selected/visible row was O(n) scans of O(n) rows each.
+		const renderedRowsById = this.buildRenderedRowIndex(rowsBodies);
+		const rowIds = this.allSelected ? Array.from(renderedRowsById.keys()) : Array.from(selectedSet);
 		for(const rowId of rowIds)
 		{
-			const rowElement = rowsBody.querySelector(`[data-row-id="${CSS.escape(rowId)}"]`) as HTMLElement | null;
+			const rowElement = renderedRowsById.get(rowId) ||
+			                   (!this.allSelected ? this._selectionProxyRow(rowId) : null);
 			if(!rowElement)
 			{
 				continue;
@@ -325,6 +516,66 @@ export class Et2NextmatchActionController
 		}
 	}
 
+	/**
+	 * Index every rendered row (root + child grids) by action/datastore row id.
+	 */
+	private buildRenderedRowIndex(rowsBodies : HTMLElement[]) : Map<string, HTMLElement>
+	{
+		const index = new Map<string, HTMLElement>();
+		for(const rowsBody of rowsBodies)
+		{
+			for(const rowElement of Array.from(rowsBody.querySelectorAll("[data-row-id]")) as HTMLElement[])
+			{
+				const rowId = this.getActionRowId(rowElement);
+				if(rowId && !index.has(rowId))
+				{
+					index.set(rowId, rowElement);
+				}
+			}
+		}
+		return index;
+	}
+
+	/**
+	 * Return a detached row node for an explicitly selected row that is no
+	 * longer rendered.  EgwActionObject uses its object tree, not DOM placement,
+	 * to collect selected senders for popup actions.
+	 */
+	private _selectionProxyRow(rowId : string) : HTMLElement
+	{
+		let row = this.selectionProxyRows.get(rowId);
+		if(!row)
+		{
+			row = document.createElement("tr");
+			row.setAttribute("data-row-id", rowId);
+			row.setAttribute("data-et2nm-selection-proxy", "1");
+			this.selectionProxyRows.set(rowId, row);
+		}
+		return row;
+	}
+
+	/** Remove proxy action objects once their ids are no longer explicitly selected. */
+	private _pruneSelectionProxies(selectedSet : Set<string>)
+	{
+		for(const [rowId] of this.selectionProxyRows)
+		{
+			if(!this.allSelected && selectedSet.has(rowId))
+			{
+				continue;
+			}
+			this.selectionProxyRows.delete(rowId);
+			const rowObject = this.rowActionObjects.get(rowId);
+			if(rowObject?._context?.getAttribute?.("data-et2nm-selection-proxy") === "1")
+			{
+				rowObject.remove?.();
+				this.rowActionObjects.delete(rowId);
+			}
+		}
+	}
+
+	/**
+	 * Show the regular row action popup for a context-menu, keyboard or touch event.
+	 */
 	triggerPopupForRow(contextEvent : Event) : boolean
 	{
 		const row = this.findEventRow(contextEvent);
@@ -340,14 +591,19 @@ export class Et2NextmatchActionController
 		this._selectActionRow(row.rowId, rowObject);
 		const rect = row.rowElement.getBoundingClientRect();
 		const mouseEvent = contextEvent as MouseEvent;
+		const target = this.findContextTarget(contextEvent, row.rowElement);
 		return  rowObject.executeActionImplementation({
 			event: contextEvent,
 			posx: typeof mouseEvent.clientX === "number" ? mouseEvent.clientX : rect.left + (rect.width / 2),
 			posy: typeof mouseEvent.clientY === "number" ? mouseEvent.clientY : rect.top + (rect.height / 2),
-			innerText: row.rowElement.textContent || ""
+			target,
+			innerText: target?.textContent || row.rowElement.textContent || ""
 		}, "popup", EGW_AO_EXEC_SELECTED);
 	}
 
+	/**
+	 * Execute the default row action, normally from double-click.
+	 */
 	triggerDefaultActionForRow(contextEvent : Event) : boolean
 	{
 		const row = this.findEventRow(contextEvent);
@@ -405,6 +661,9 @@ export class Et2NextmatchActionController
 		}, "popup", EGW_AO_EXEC_SELECTED);
 	}
 
+	/**
+	 * Start touch/pen long-press detection and arm native mouse drag sources.
+	 */
 	handlePointerDown(event : PointerEvent)
 	{
 		if(event.pointerType === "mouse")
@@ -429,6 +688,9 @@ export class Et2NextmatchActionController
 		}, this.longPressDelayMs);
 	}
 
+	/**
+	 * Cancel a pending long-press once the pointer moves beyond the threshold.
+	 */
 	handlePointerMove(event : PointerEvent)
 	{
 		if(this.longPressPointerId === null || event.pointerId !== this.longPressPointerId)
@@ -444,6 +706,9 @@ export class Et2NextmatchActionController
 		}
 	}
 
+	/**
+	 * Cancel any pending touch/pen long-press popup.
+	 */
 	cancelLongPress = () =>
 	{
 		if(this.longPressTimer !== null)
@@ -494,6 +759,17 @@ export class Et2NextmatchActionController
 	}
 
 	/**
+	 * Check whether the current action tree contains any configured placeholder
+	 * actions. Final enabled/visible state is still evaluated by the action
+	 * framework when the menu opens.
+	 */
+	hasPlaceholderActions() : boolean
+	{
+		this.ensureActionManagers();
+		return this._resolvePlaceholderActionLinks(this.getPlaceholderActionIds()).length > 0;
+	}
+
+	/**
 	 * Resolve inline placeholder actions from configured ids.
 	 * If `add` has children, return the children entries instead of the add parent.
 	 */
@@ -532,7 +808,7 @@ export class Et2NextmatchActionController
 			resolved.push(action);
 		}
 		const seen = new Set<string>();
-		return resolved.filter((action) =>
+		const uniqueActions = resolved.filter((action) =>
 		{
 			const actionId = String(action?.id || "");
 			if(!actionId || seen.has(actionId))
@@ -542,6 +818,8 @@ export class Et2NextmatchActionController
 			seen.add(actionId);
 			return true;
 		});
+		const enabledActionIds = this._enabledPlaceholderActionIds(uniqueActions.map((action) => action.id));
+		return uniqueActions.filter((action) => enabledActionIds.has(action.id));
 	}
 
 	/**
@@ -559,6 +837,15 @@ export class Et2NextmatchActionController
 		{
 			return false;
 		}
+		if(!this._enabledPlaceholderActionIds([action.id], anchorElement || this.host).has(action.id))
+		{
+			return false;
+		}
+		if(!action.data)
+		{
+			action.data = {};
+		}
+		action.data.nextmatch = this.host;
 		const placeholderObject = this.ensurePlaceholderActionObject(anchorElement || this.host);
 		if(!placeholderObject)
 		{
@@ -566,7 +853,7 @@ export class Et2NextmatchActionController
 		}
 		try
 		{
-			nm_action(action, [placeholderObject], placeholderObject, {ids: [], all: false});
+			this.executeNextmatchAction(action, [placeholderObject], placeholderObject, {ids: [], all: false});
 			return true;
 		}
 		catch(e)
@@ -575,15 +862,25 @@ export class Et2NextmatchActionController
 		}
 	}
 
-	destroy()
+	/**
+	 * Release action objects, transient drag state and action-framework bindings.
+	 */
+	hostDisconnected() : void
 	{
 		this.clearPreparedDragRow();
 		this.cancelLongPress();
 		this.clearDropHover();
+		this.objectManager?.unregisterActions?.();
 		this.dragDropAOI?.bindNode(null);
 		this.clearRowActionObjects();
 	}
 
+	/**
+	 * Register the rendered datagrid rows container with the action framework.
+	 *
+	 * This is called after render and when action links change so drag/drop
+	 * handlers can resolve real row elements instead of the virtualized wrapper.
+	 */
 	syncDragDropRegistration()
 	{
 		this.ensureActionManagers();
@@ -594,6 +891,7 @@ export class Et2NextmatchActionController
 			this.dragDropAOI?.bindNode(null);
 			return;
 		}
+		this.objectManager.unregisterActions?.();
 		if(!rowsBody)
 		{
 			this.dragDropAOI?.bindNode(null);
@@ -607,7 +905,6 @@ export class Et2NextmatchActionController
 		{
 			this.dragDropAOI.bindNode(rowsBody);
 		}
-		this.objectManager.unregisterActions?.();
 		this.objectManager.setAOI(this.dragDropAOI);
 		this.objectManager.updateActionLinks(this.getActionLinks());
 		for(const rowObject of this.rowActionObjects.values())
@@ -621,8 +918,12 @@ export class Et2NextmatchActionController
 		this.cleanupDetachedRowActionObjects();
 	}
 
+	/**
+	 * Rebind an existing action object when a virtualized row element is recycled.
+	 */
 	customizeRowElement(rowElement : HTMLElement)
 	{
+		this.cleanupDetachedRowActionObjects();
 		if(!rowElement)
 		{
 			return;
@@ -635,6 +936,9 @@ export class Et2NextmatchActionController
 		this.ensureRowActionObject(rowId, rowElement);
 	}
 
+	/**
+	 * Resolve the action target row for drag/drop events.
+	 */
 	findActionTarget = (event : Event) : { target : HTMLElement | null; action : EgwActionObject | null } =>
 	{
 		const row = this.findEventRow(event);
@@ -646,6 +950,9 @@ export class Et2NextmatchActionController
 		return {target: row.rowElement, action: rowObject};
 	};
 
+	/**
+	 * Mark a row as the current drag/drop hover target.
+	 */
 	setDropHover(rowElement : HTMLElement | null)
 	{
 		if(this.dropHoverRow && this.dropHoverRow !== rowElement)
@@ -659,6 +966,9 @@ export class Et2NextmatchActionController
 		}
 	}
 
+	/**
+	 * Clear drag/drop hover classes from one row or the current hover row.
+	 */
 	clearDropHover(rowElement? : HTMLElement | null)
 	{
 		if(rowElement)
@@ -677,10 +987,14 @@ export class Et2NextmatchActionController
 		}
 	}
 
+	/**
+	 * Lazily create the action and object managers used by legacy actions.
+	 */
 	private ensureActionManagers()
 	{
-		const appName = this.getAppName() || this.host.egw().appName;
-		const uid = this.host.id || this.host.getInstanceManager()?.uniqueId || this.host.egw().uid?.();
+		const appName = this.getAppName() || this.host.egw().app_name?.();
+		const instanceUid = this.host.getInstanceManager()?.uniqueId;
+		const uid = this.host.id || this.host.egw().uid?.() || instanceUid;
 		if(!uid)
 		{
 			return;
@@ -702,19 +1016,19 @@ export class Et2NextmatchActionController
 			}
 			if(!appActionManager)
 			{
-				const localGlobalActionManager = new EgwActionManager();
-				try
-				{
-					appActionManager = localGlobalActionManager.addAction("actionManager", uid);
-				}
-				catch(e)
-				{
-					appActionManager = localGlobalActionManager;
-				}
+				appActionManager = new EgwActionManager();
 			}
 			try
 			{
-				this.actionManager = appActionManager?.getActionById?.(uid, 1) || appActionManager?.addAction?.("actionManager", uid) || appActionManager;
+				let parentActionManager = appActionManager;
+				const instanceActionManager = instanceUid
+					? appActionManager?.getActionById?.(instanceUid, 1) || appActionManager?.addAction?.("actionManager", instanceUid)
+					: null;
+				if(instanceActionManager)
+				{
+					parentActionManager = instanceActionManager;
+				}
+				this.actionManager = parentActionManager?.getActionById?.(uid, 1) || parentActionManager?.addAction?.("actionManager", uid) || parentActionManager;
 			}
 			catch(e)
 			{
@@ -735,16 +1049,37 @@ export class Et2NextmatchActionController
 				}
 			}
 			this.objectManager = appObjectManager?.addObject
-				? appObjectManager.addObject(new EgwActionObjectManager(uid, this.actionManager))
+				? appObjectManager.addObject(this.createObjectManager(uid, appObjectManager))
 				: new EgwActionObjectManager(uid, this.actionManager);
 			if(!this.objectManager)
 			{
 				this.objectManager = new EgwActionObjectManager(uid, this.actionManager);
 			}
 			this.objectManager.flags |= EGW_AO_FLAG_DEFAULT_FOCUS | EGW_AO_FLAG_IS_CONTAINER;
+
+			// Row action objects are only materialized for currently selected rows (lazy /
+			// virtualized selection, see materializeVisibleSelectedRows()), so the inherited
+			// children.length == selectedChildren.length comparison is trivially true as soon
+			// as any child exists, wrongly reporting "all selected" after e.g. a shift-click
+			// multi-select on a freshly (re)loaded list. Use our own authoritative allSelected
+			// flag instead, mirroring et2_dataview_controller_selection.ts's legacy override.
+			this.objectManager.getAllSelected = () => this.allSelected;
 		}
 	}
 
+	private createObjectManager(uid : string, appObjectManager : EgwActionObjectManager)
+	{
+		const existingObject = appObjectManager.getObjectById?.(uid, 1);
+		if(existingObject && existingObject !== appObjectManager)
+		{
+			existingObject.remove?.();
+		}
+		return new EgwActionObjectManager(uid, this.actionManager);
+	}
+
+	/**
+	 * Materialize or update the action object bound to one rendered row.
+	 */
 	private ensureRowActionObject(rowId : string, rowElement : HTMLElement) : EgwActionObject | null
 	{
 		if(!rowId || !rowElement)
@@ -794,11 +1129,28 @@ export class Et2NextmatchActionController
 			rowObject.findActionTargetHandler = this.objectManager;
 			rowObject.updateActionLinks(this.getActionLinks());
 		}
+		const rowData = (this.host as any)._dataProvider?.getRowData?.(rowId) ??
+			this.host.egw().dataGetUIDdata?.(rowId)?.data;
+		if(rowData && typeof rowData === "object")
+		{
+			// egwDragActionImplementation uses the selected action object's data
+			// to create Chrome's DownloadURL payload for Filemanager drag-out.
+			// Keep it refreshed as virtualized rows are recycled.
+			(rowObject as any).data = rowData;
+		}
 		return rowObject;
 	}
 
+	/**
+	 * Mirror a context-action row into both datagrid and action object selection.
+	 */
 	private _selectActionRow(rowId : string, rowObject : EgwActionObject)
 	{
+		// Context actions can be opened before every selected row has been lazily
+		// materialized as an action object.  Synchronize visible rows first so
+		// EgwActionObject.forceSelection() preserves the complete Nextmatch
+		// selection instead of reducing it to the context row.
+		this.materializeVisibleSelectedRows(new Set(this.selectedRowIds), rowId);
 		rowObject.forceSelection();
 		const rowAlreadySelected = this.allSelected || this.selectedRowIds.includes(rowId);
 		if(rowAlreadySelected)
@@ -810,6 +1162,9 @@ export class Et2NextmatchActionController
 		this.selectedRowIds = [rowId];
 	}
 
+	/**
+	 * Return top-level action ids currently available to row objects.
+	 */
 	private getActionLinks() : string[]
 	{
 		const links : string[] = [];
@@ -824,16 +1179,412 @@ export class Et2NextmatchActionController
 		return links;
 	}
 
+	/**
+	 * Execute Nextmatch action targets locally for the web component.
+	 *
+	 * This is the central bridge from `egw_action` to Nextmatch behavior. It
+	 * normalizes selected row ids, expands legacy URL placeholders, dispatches
+	 * location/popup/long-task/open-popup modes and prepares submit payloads for
+	 * the eTemplate instance manager.
+	 */
+	private executeNextmatchAction(
+		action : EgwAction,
+		senders : EgwActionObject[] = [],
+		target : any = null,
+		selection : { ids : string[]; all : boolean } = this.getSelection()
+	) : boolean | void
+	{
+		if((action as any).checkbox && (!action.data || typeof action.data.nm_action === "undefined"))
+		{
+			return;
+		}
+		if(!action.data)
+		{
+			action.data = {};
+		}
+		action.data.nextmatch = this.host;
+		if(typeof action.data.nm_action === "undefined" && (action as any).type === "popup")
+		{
+			action.data.nm_action = "submit";
+		}
+
+		const ids = this.normalizeSelection(selection, senders);
+		const url = this.buildActionUrl(action, ids);
+		const actionTarget = typeof action.data.target !== "undefined" ? action.data.target : target;
+
+		switch(action.data.nm_action)
+		{
+			case "alert":
+				window.alert(`${(action as any).caption} ('${action.id}') executed on rows: ${ids.idsCsv}`);
+				break;
+
+			case "location":
+				this.executeLocationAction(action, url, actionTarget);
+				break;
+
+			case "popup":
+				this.executePopupAction(action, url, actionTarget);
+				break;
+
+			case "long_task":
+				if(this.executeLongTaskAction(action, ids))
+				{
+					break;
+				}
+			// Fall through to egw_open for single-row long_task actions with egw_open.
+			case "egw_open":
+				this.executeEgwOpenAction(action, ids.providerIds, actionTarget);
+				break;
+
+			case "open_popup":
+				if(this.openActionPopup(action, ids.rawIds))
+				{
+					break;
+				}
+			// If no popup is available, submit the action payload.
+			case "submit":
+				this.executeSubmitAction(action, ids, senders);
+				break;
+		}
+	}
+
+	/**
+	 * Resolve selected row ids into datastore and provider ids for action execution.
+	 */
+	private normalizeSelection(selection : { ids? : string[]; all? : boolean } = {}, senders : EgwActionObject[] = [])
+	{
+		const provider = (this.host as any)._dataProvider;
+		const rawIds = (selection.ids && selection.ids.length ? selection.ids : senders.map((sender) => sender?.id))
+			.filter(Boolean)
+			.map((id) => provider?.normalizeRowId?.(String(id), true) || String(id));
+		const providerIds = rawIds
+			.map((id) => provider?.toProviderRowId?.(id) || id)
+			.filter(Boolean);
+		return {
+			rawIds,
+			providerIds,
+			all: selection.all === true,
+			rowIdsCsv: this.toCsv(providerIds),
+			idsCsv: this.toCsv(providerIds)
+		};
+	}
+
+	/**
+	 * Convert selected provider ids to the legacy comma-separated action format.
+	 */
+	private toCsv(ids : string[]) : string
+	{
+		return ids.map((id) =>
+		{
+			const value = String(id);
+			return value.indexOf(",") >= 0 ? `"${value.replace(/"/g, '""')}"` : value;
+		}).join(",");
+	}
+
+	/**
+	 * Substitute legacy row-id placeholders into an action URL template.
+	 */
+	private buildActionUrl(action : EgwAction, ids : ReturnType<Et2NextmatchActionController["normalizeSelection"]>) : string
+	{
+		const data = action.data || {};
+		if(typeof data.url === "undefined")
+		{
+			return "#";
+		}
+		let url = String(data.url);
+		if(ids.all === true && url.includes("active_filters") && this.host.activeFilters)
+		{
+			url = url.replace(/(\$|%24)active_filters/, encodeURIComponent(JSON.stringify(this.host.activeFilters)));
+		}
+		return url
+			.replace(/(\$|%24)id/, encodeURIComponent(ids.idsCsv))
+			.replace(/(\$|%24)select_all/, String(ids.all))
+			.replace(/(\$|%24)row_id/, encodeURIComponent(ids.rowIdsCsv));
+	}
+
+	/**
+	 * Execute a location-style action by navigating the requested target.
+	 */
+	private executeLocationAction(action : EgwAction, url : string, target : any)
+	{
+		if(typeof action.data?.targetapp !== "undefined")
+		{
+			(this.host.egw() as any).top?.egw_appWindowOpen(action.data.targetapp, url);
+		}
+		else if(target)
+		{
+			(this.host.egw() as any).open_link(url, target, action.data?.width ? `${action.data.width}x${action.data.height}` : false);
+		}
+		else
+		{
+			window.location.href = url;
+		}
+	}
+
+	/**
+	 * Execute a popup-style action through the legacy popup helper.
+	 */
+	private executePopupAction(action : EgwAction, url : string, target : any)
+	{
+		let popupUrl = url;
+		let postForm : HTMLFormElement | null = null;
+		if(url.length > 4000)
+		{
+			const params = url.split("&");
+			popupUrl = params.shift() || url;
+			postForm = document.createElement("form");
+			postForm.method = "post";
+			for(const param of params)
+			{
+				const values = param.split("=");
+				if(["cd", "tz", "menuaction", "hasupdate"].includes(values[0]))
+				{
+					popupUrl += `&${values.join("=")}`;
+				}
+				const input = document.createElement("input");
+				input.name = values[0];
+				input.type = "text";
+				input.value = values.slice(1).join("=");
+				postForm.append(input);
+			}
+		}
+		const popup = this.host.egw().open_link(popupUrl, target, `${action.data?.width}x${action.data?.height}`);
+		if(postForm && popup)
+		{
+			popup.name = popup.name || "postRequest";
+			postForm.target = popup.name;
+			postForm.action = popupUrl;
+			document.body.append(postForm);
+			postForm.submit();
+			postForm.remove();
+		}
+	}
+
+	/**
+	 * Execute a long-task action using the legacy egw.json transport.
+	 */
+	private executeLongTaskAction(action : EgwAction, ids : ReturnType<Et2NextmatchActionController["normalizeSelection"]>) : boolean
+	{
+		if(!ids.all && ids.providerIds.length <= 1 && typeof action.data?.egw_open !== "undefined")
+		{
+			return false;
+		}
+		const dialog = (window as any).Et2Dialog;
+		if(ids.all)
+		{
+			const datagrid = (this.host as any)._datagrid;
+			const total = Number(datagrid?.total || 0);
+			const fetchIds = total && ids.providerIds.length >= total
+			                 ? Promise.resolve(ids.providerIds)
+			                 : this.host.fetchAllIds();
+			fetchIds.then((allIds) =>
+			{
+				dialog?.long_task?.(null, action.data?.message || (action as any).caption, action.data?.title, action.data?.menuaction, allIds);
+			}).catch(() => {});
+			return true;
+		}
+		dialog?.long_task?.(null, action.data?.message || (action as any).caption, action.data?.title, action.data?.menuaction, ids.providerIds);
+		return true;
+	}
+
+	/**
+	 * Execute an egw.open action with the selected provider row ids.
+	 */
+	private executeEgwOpenAction(action : EgwAction, providerIds : string[], target : any)
+	{
+		const spec = String(action.data?.egw_open || "");
+		const params = spec.split("-");
+		let egwOpenId = providerIds[0] || "";
+		const type = params.shift();
+		const app = params.shift();
+		if(!type || !app)
+		{
+			return;
+		}
+		if(typeof params[2] !== "undefined")
+		{
+			if(egwOpenId.indexOf(":") >= 0)
+			{
+				egwOpenId = egwOpenId.split(":")[Number(params.shift())];
+			}
+			else if(params.length > 1 && params[0] === "" && params[1].indexOf("from=merge") !== -1)
+			{
+				params.shift();
+			}
+			else
+			{
+				params.shift();
+			}
+		}
+		if(params.length > 1 && params[0] === "" && params[1].indexOf("from=merge") !== -1)
+		{
+			params.shift();
+		}
+		(window as any).egw(app, window).open(egwOpenId, app, type, params.join("-"), target);
+	}
+
+	/**
+	 * Store submit action payload so Et2Nextmatch can include it in form submit data.
+	 */
+	private executeSubmitAction(
+		action : EgwAction,
+		ids : ReturnType<Et2NextmatchActionController["normalizeSelection"]>,
+		senders : EgwActionObject[] = []
+	)
+	{
+		const checkboxValues = {};
+		const checkboxes = this.actionManager?.getActionsByAttr?.("checkbox", true) || action.getManager?.()?.getActionsByAttr?.("checkbox", true) || [];
+		for(const checkbox of checkboxes)
+		{
+			checkboxValues[checkbox.id] = checkbox.checked;
+		}
+
+		const nextmatch = this.host;
+		this.pendingActionSubmitValue = Object.assign(
+			{},
+			action.data || {},
+			{
+				selected: ids.providerIds,
+				select_all: ids.all,
+				checkboxes: checkboxValues
+			}
+		);
+		delete this.pendingActionSubmitValue.id;
+		// Avoid deep structures getting passed around
+		delete this.pendingActionSubmitValue.children;
+		this.pendingActionSubmitValue[nextmatch.settings?.action_var || "action"] = action.id;
+		delete this.pendingActionSubmitValue.nextmatch;
+
+		if(action.data?.postSubmit)
+		{
+			nextmatch.getInstanceManager()?.postSubmit?.();
+		}
+		else
+		{
+			nextmatch.getInstanceManager()?.submit?.();
+		}
+	}
+
+	/**
+	 * Open a configured action popup/dialog for the selected provider row ids.
+	 *
+	 * The popup markup is normally a real `<et2-dialog>`, shown directly. Some apps still
+	 * declare it as a plain, CSS-toggled element (eg. `<et2-box class="action_popup prompt">`)
+	 * left over from the legacy `<nextmatch>` widget. For those, delegate to nm_open_popup()
+	 * (et2_extension_nextmatch_actions.js), which upgrades the element into a real dialog in
+	 * place - the same upgrade already relied on by the handful of actions whose onExecute
+	 * calls nm_open_popup() directly. This keeps both paths behaving identically instead of
+	 * silently falling through to a real form submit when the popup never opens.
+	 *
+	 * nm_open_popup() is deliberately given `selectedIds` (plain row id strings) rather than
+	 * richer `EgwActionObject` senders: it treats an object sender as a legacy
+	 * `et2_dataview_controller_selection`-style row with a `_context._widget` back-reference,
+	 * which modern Et2Nextmatch row objects don't have (`_context` is the row element itself) -
+	 * passing real senders would silently clobber the `action.data.nextmatch` we just set below
+	 * and break the resulting submit. A plain id array is exactly what the legacy `<nextmatch>`
+	 * widget's own default open_popup handling already passes it, so this matches existing,
+	 * working behaviour.
+	 */
+	private openActionPopup(action : EgwAction, selectedIds : string[]) : boolean
+	{
+		const instance = this.host.getInstanceManager?.();
+		const uid = instance?.uniqueId || "";
+		const root = instance?.DOMContainer || document.body;
+		const popup = root.querySelector(`et2-dialog[id*='${action.id}_popup']`) ||
+			document.body.querySelector(`#${uid}_${action.id}_popup`) ||
+			document.body.querySelector(`[id*='${action.id}_popup']`);
+		if(!popup)
+		{
+			return false;
+		}
+		action.data.nextmatch = this.host;
+		(popup as any).selectedIds = selectedIds;
+
+		if(popup instanceof Et2Dialog)
+		{
+			(popup as any).show();
+			return true;
+		}
+
+		et2_warnOnce(this.host, "legacy-action-popup:" + popup.id,
+			`Action popup #${popup.id} is a plain element, not an <et2-dialog>; upgrading it at ` +
+			"runtime for backwards compatibility. Please change its template to a real <et2-dialog>.",
+			popup
+		);
+		nm_open_popup(action, selectedIds);
+		return true;
+	}
+
+	/**
+	 * Preserve legacy action handlers by giving every registered action direct
+	 * access to the owning nextmatch. Some handlers are invoked outside the
+	 * default execute callback, so manager-level data is not always enough.
+	 */
+	private annotateActionsWithNextmatch(actions : EgwAction[] | { [id : string] : EgwAction })
+	{
+		const actionList = Array.isArray(actions) ? actions : Object.values(actions || {});
+		for(const action of actionList)
+		{
+			if(!action)
+			{
+				continue;
+			}
+			if(!action.data)
+			{
+				action.data = {};
+			}
+			action.data.nextmatch = this.host;
+			this.annotateActionsWithNextmatch(action.children || []);
+		}
+	}
+
+	/**
+	 * Check whether any registered action participates in drag handling.
+	 */
 	private hasDragActions() : boolean
 	{
 		return (this.actionManager?.children || []).some((child) => child?.type === "drag");
 	}
 
+	/**
+	 * Return the root datagrid rows body.
+	 */
 	private getRowsBody() : HTMLElement | null
 	{
 		return this.host.shadowRoot?.querySelector("et2-datagrid")?.shadowRoot?.getElementById("rows") as HTMLElement | null;
 	}
 
+	/**
+	 * Return rows bodies for the root grid and any currently rendered child grids.
+	 *
+	 * The action framework operates on rendered DOM rows, so nested grids need to
+	 * participate in row lookup for selection, context menus and drag/drop.
+	 */
+	private getRowsBodies() : HTMLElement[]
+	{
+		const primaryRowsBody = this.getRowsBody();
+		const rootGrid = this.host.shadowRoot?.querySelector("et2-datagrid") as HTMLElement | null;
+		if(!rootGrid?.shadowRoot)
+		{
+			return primaryRowsBody ? [primaryRowsBody] : [];
+		}
+		const grids = [
+			rootGrid,
+			...Array.from(rootGrid.shadowRoot.querySelectorAll("et2-datagrid"))
+		] as HTMLElement[];
+		const rowsBodies = grids
+			.map((grid) => grid.shadowRoot?.getElementById("rows") as HTMLElement | null)
+			.filter(Boolean) as HTMLElement[];
+		if(primaryRowsBody && !rowsBodies.includes(primaryRowsBody))
+		{
+			rowsBodies.unshift(primaryRowsBody);
+		}
+		return rowsBodies;
+	}
+
+	/**
+	 * Remove action objects whose rendered rows have left the DOM.
+	 */
 	private cleanupDetachedRowActionObjects()
 	{
 		for(const [rowId, rowObject] of this.rowActionObjects.entries())
@@ -843,7 +1594,9 @@ export class Et2NextmatchActionController
 				continue;
 			}
 			const rowElement = rowObject._context as HTMLElement | null;
-			if(rowElement?.isConnected)
+			const isSelectedProxy = rowElement?.getAttribute("data-et2nm-selection-proxy") === "1" &&
+			                        !this.allSelected && this.selectedRowIds.includes(rowId);
+			if(rowElement?.isConnected || isSelectedProxy)
 			{
 				continue;
 			}
@@ -852,6 +1605,9 @@ export class Et2NextmatchActionController
 		}
 	}
 
+	/**
+	 * Create the action object interface wrapper for one rendered row.
+	 */
 	private createRowActionObjectInterface(rowElement : HTMLElement)
 	{
 		return new Et2NextmatchRowAOI(rowElement);
@@ -892,10 +1648,34 @@ export class Et2NextmatchActionController
 		{
 			return;
 		}
+		this._disableNativeVfsThumbnailDrag(event, row.rowElement);
 		row.rowElement.draggable = true;
 		this.preparedDragRow = row.rowElement;
 	}
 
+	/**
+	 * Browser-native image dragging takes precedence over a draggable tile.  A
+	 * filemanager thumbnail is an image inside et2-vfs-mime, so explicitly
+	 * disable that image's native drag source before arming its row.  The row
+	 * then supplies the normal Nextmatch action drag instead of exposing the
+	 * thumbnail URL as a browser file drag.
+	 */
+	private _disableNativeVfsThumbnailDrag(event : PointerEvent, rowElement : HTMLElement)
+	{
+		const thumbnail = (event.composedPath?.() || []).find((node) =>
+			node instanceof HTMLImageElement &&
+			rowElement.contains(node) &&
+			!!node.closest("et2-vfs-mime")
+		) as HTMLImageElement | undefined;
+		if(thumbnail)
+		{
+			thumbnail.draggable = false;
+		}
+	}
+
+	/**
+	 * Register legacy link-based drag/drop action implementations once.
+	 */
 	private initLinkDragDropActions()
 	{
 		const mgr = this.actionManager;
@@ -907,7 +1687,7 @@ export class Et2NextmatchActionController
 		let dragAction = mgr.getActionById?.("egw_link_drag");
 		let dropCancel = mgr.getActionById?.("egw_cancel_drop");
 		const dataProvider = (this.host as any)._dataProvider;
-		const dataStorePrefix = dataProvider?.getDataStorePrefix?.() || this.host.getInstanceManager()?.app || this.host.egw().appName;
+		const dataStorePrefix = dataProvider?.getDataStorePrefix?.() || this.host.egw().appName || this.host.egw().app_name?.();
 		if(!this.host.egw().link_get_registry?.(dataStorePrefix, "query") ||
 			this.host.egw().link_get_registry?.(dataStorePrefix, "title"))
 		{
@@ -916,10 +1696,10 @@ export class Et2NextmatchActionController
 		if(!dropCancel)
 		{
 			dropCancel = mgr.addAction("drop", "egw_cancel_drop", this.host.egw().lang("Cancel"), this.host.egw().image("cancel"), function() {}, true);
-			dropCancel?.set_group?.("99");
-			if(Array.isArray(dropCancel?.acceptedTypes))
+			(dropCancel as any)?.set_group?.("99");
+			if(Array.isArray((dropCancel as any)?.acceptedTypes))
 			{
-				dropCancel.acceptedTypes = dropCancel.acceptedTypes.concat(Object.keys(this.host.egw().user?.("apps") || {}).concat(["link", "file"]));
+				(dropCancel as any).acceptedTypes = (dropCancel as any).acceptedTypes.concat(Object.keys(this.host.egw().user?.("apps") || {}).concat(["link", "file"]));
 			}
 		}
 		if(!dropAction)
@@ -962,15 +1742,15 @@ export class Et2NextmatchActionController
 				).sendRequest();
 			}, true);
 		}
-		if(Array.isArray(dropAction?.acceptedTypes) && !dropAction.acceptedTypes.includes("link"))
+		if(Array.isArray((dropAction as any)?.acceptedTypes) && !(dropAction as any).acceptedTypes.includes("link"))
 		{
-			dropAction.acceptedTypes.push("link");
+			(dropAction as any).acceptedTypes.push("link");
 		}
 		if(!dragAction)
 		{
 			dragAction = mgr.addAction("drag", "egw_link_drag", this.host.egw().lang("link"), "link", () => null, true);
 		}
-		dragAction?.set_dragType?.("link");
+		(dragAction as any)?.set_dragType?.("link");
 	}
 
 	/**
@@ -984,21 +1764,73 @@ export class Et2NextmatchActionController
 			return [];
 		}
 		const available : string[] = [];
-		for(const action of this.actionManager?.children || [])
+		const collectAvailable = (actions : EgwAction[] = []) =>
 		{
-			if(action?.id && requested.has(action.id))
+			for(const action of actions || [])
 			{
-				available.push(action.id);
-			}
-			for(const childId of Object.keys(action?.children || {}))
-			{
-				if(requested.has(childId))
+				if(action?.id && requested.has(action.id))
 				{
-					available.push(childId);
+					available.push(action.id);
 				}
+				collectAvailable(action?.children || []);
+			}
+		};
+		collectAvailable(this.actionManager?.children || []);
+		return Array.from(new Set(available));
+	}
+
+	/**
+	 * Check whether an action or any descendant is allowed in placeholder context.
+	 */
+	private _actionTreeContainsAllowed(action : EgwAction | null | undefined, allowed : Set<string>) : boolean
+	{
+		if(!action)
+		{
+			return false;
+		}
+		if(action.id && allowed.has(action.id))
+		{
+			return true;
+		}
+		for(const child of action.children || [])
+		{
+			if(this._actionTreeContainsAllowed(child, allowed))
+			{
+				return true;
 			}
 		}
-		return Array.from(new Set(available));
+		return false;
+	}
+
+	/**
+	 * Check whether an action id belongs to an allowed placeholder action branch.
+	 */
+	private _isActionInAllowedPlaceholderBranch(action : EgwAction | null | undefined, allowed : Set<string>) : boolean
+	{
+		for(let current = action; current; current = current.parent)
+		{
+			if(current.id && allowed.has(current.id))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Action framework links are top-level, but placeholder actions can target a
+	 * child menu entry such as InfoLog's add -> new. Keep the parent menu branch
+	 * available while hiding unrelated top-level actions.
+	 */
+	private _isPlaceholderContextActionAllowed(actionId : string, allowed : Set<string>) : boolean
+	{
+		if(allowed.has(actionId))
+		{
+			return true;
+		}
+		const action = this.actionManager?.getActionById?.(actionId);
+		return this._actionTreeContainsAllowed(action, allowed) ||
+			this._isActionInAllowedPlaceholderBranch(action, allowed);
 	}
 
 	/**
@@ -1013,13 +1845,110 @@ export class Et2NextmatchActionController
 	}[]
 	{
 		const allowed = new Set((allowedLinks || []).map((id) => String(id || "").trim()).filter(Boolean));
-		return this.getActionLinks().map((actionId) => ({
-			actionId,
-			enabled: allowed.has(actionId),
-			visible: allowed.has(actionId)
-		}));
+		return this.getActionLinks()
+			.filter((actionId) => (this.actionManager?.getActionById?.(actionId) as any)?.type !== "drag")
+			.filter((actionId) => (this.actionManager?.getActionById?.(actionId) as any)?.type !== "drop")
+			.map((actionId) =>
+			{
+				const allowedInPlaceholderContext = this._isPlaceholderContextActionAllowed(actionId, allowed);
+				return {
+					actionId,
+					enabled: allowedInPlaceholderContext,
+					visible: allowedInPlaceholderContext
+				};
+			});
 	}
 
+	/**
+	 * Return placeholder action ids that are enabled and visible for the placeholder context.
+	 *
+	 * This evaluates through the same action-link path as the placeholder popup once
+	 * per action type, so dynamic `enabled` callbacks and context visibility flags
+	 * are owned by the action system.
+	 */
+	private _enabledPlaceholderActionIds(actionIds : string[], anchorElement : HTMLElement = this.host) : Set<string>
+	{
+		const requested = Array.from(new Set((actionIds || []).map((id) => String(id || "").trim()).filter(Boolean)));
+		const enabled = new Set<string>();
+		this.ensureActionManagers();
+		if(!requested.length || !this.objectManager)
+		{
+			return enabled;
+		}
+		const placeholderObject = this.ensurePlaceholderActionObject(anchorElement);
+		if(!placeholderObject)
+		{
+			return enabled;
+		}
+		placeholderObject.updateActionLinks(this._getPlaceholderContextLinks(requested));
+
+		const actionTypes = new Set<string>();
+		for(const actionId of requested)
+		{
+			const action = this.actionManager?.getActionById?.(actionId);
+			actionTypes.add(String((action as any)?.type || "popup"));
+		}
+		for(const actionType of actionTypes)
+		{
+			const links = placeholderObject.getSelectedLinks?.(actionType, true)?.links || {};
+			for(const actionId of requested)
+			{
+				const link = links[actionId];
+				if(link?.enabled && link?.visible)
+				{
+					enabled.add(actionId);
+				}
+			}
+		}
+		if(!enabled.size && typeof placeholderObject.getSelectedLinks !== "function")
+		{
+			for(const actionId of requested)
+			{
+				if(this._placeholderActionEnabledByDefinition(actionId, placeholderObject))
+				{
+					enabled.add(actionId);
+				}
+			}
+		}
+		return enabled;
+	}
+
+	/**
+	 * Fallback for lightweight/legacy action objects that accept updateActionLinks()
+	 * but cannot report getSelectedLinks(). Keep this scoped to placeholder inline
+	 * filtering; full action objects continue to use egw_action's own resolver.
+	 */
+	private _placeholderActionEnabledByDefinition(actionId : string, placeholderObject : EgwActionObject) : boolean
+	{
+		const action = this.actionManager?.getActionById?.(actionId) as any;
+		if(!action)
+		{
+			return false;
+		}
+		let enabled = true;
+		try
+		{
+			if(typeof action.enabled?.exec === "function")
+			{
+				enabled = !!action.enabled.exec(action, [placeholderObject], placeholderObject);
+			}
+			else if(action.enabled === false)
+			{
+				enabled = false;
+			}
+		}
+		catch(e)
+		{
+			enabled = false;
+		}
+		const isMobile = typeof window.egwIsMobile === "function" && window.egwIsMobile();
+		const visible = (!action.hideOnMobile || !isMobile) && (enabled || !action.hideOnDisabled);
+		return enabled && visible;
+	}
+
+	/**
+	 * Materialize the placeholder action object used by empty-state actions.
+	 */
 	private ensurePlaceholderActionObject(anchorElement : HTMLElement) : EgwActionObject | null
 	{
 		if(!this.objectManager)
@@ -1079,6 +2008,71 @@ export class Et2NextmatchActionController
 	}
 
 	/**
+	 * Resolve the most specific rendered element for row popup context.
+	 *
+	 * Row actions still execute on the row action object, but generic popup
+	 * helpers such as "Copy to OS clipboard" need the clicked widget/cell text
+	 * instead of the whole row text.
+	 */
+	private findContextTarget(event : Event, rowElement : HTMLElement) : HTMLElement
+	{
+		const path = event.composedPath?.() || [];
+		for(const target of path)
+		{
+			if(!(target instanceof HTMLElement) || target === rowElement || !rowElement.contains(target))
+			{
+				continue;
+			}
+			const widget = this.closestContextWidget(target, rowElement);
+			if(widget)
+			{
+				return widget;
+			}
+			if((target.textContent || "").trim())
+			{
+				return target;
+			}
+		}
+		const pointTarget = this.findContextTargetFromPoint(event as MouseEvent, rowElement);
+		return pointTarget || rowElement;
+	}
+
+	/**
+	 * Find the nearest row widget target suitable for context action metadata.
+	 */
+	private closestContextWidget(target : HTMLElement, rowElement : HTMLElement) : HTMLElement | null
+	{
+		let node : HTMLElement | null = target;
+		while(node && node !== rowElement)
+		{
+			const tagName = node.tagName.toLowerCase();
+			if(tagName.includes("-") || node.hasAttribute("data-et2-id") || node.hasAttribute("data-id"))
+			{
+				return node;
+			}
+			node = node.parentElement;
+		}
+		return null;
+	}
+
+	/**
+	 * Resolve the deepest context target for popup actions at the pointer location.
+	 */
+	private findContextTargetFromPoint(event : MouseEvent, rowElement : HTMLElement) : HTMLElement | null
+	{
+		if(typeof event.clientX !== "number" || typeof event.clientY !== "number")
+		{
+			return null;
+		}
+		const deepTarget = this.getDeepElementFromPoint(rowElement.getRootNode() as Document | ShadowRoot, event.clientX, event.clientY);
+		if(!deepTarget || deepTarget === rowElement || !rowElement.contains(deepTarget))
+		{
+			return null;
+		}
+		return this.closestContextWidget(deepTarget, rowElement) || deepTarget;
+	}
+
+	/**
 	 * Drag events crossing the shadow boundary may only surface the rows container.
 	 * Fall back to point-based lookup inside the datagrid shadow root in that case.
 	 */
@@ -1088,27 +2082,30 @@ export class Et2NextmatchActionController
 		{
 			return null;
 		}
-		const rowsBody = this.getRowsBody();
-		if(!rowsBody)
+		const rowsBodies = this.getRowsBodies();
+		if(!rowsBodies.length)
 		{
 			return null;
 		}
-		const deepTarget = this.getDeepElementFromPoint(rowsBody.getRootNode() as Document | ShadowRoot, event.clientX, event.clientY);
-		const deepRow = deepTarget?.closest?.("[data-row-id]") as HTMLElement | null;
-		if(deepRow)
+		for(const rowsBody of rowsBodies)
 		{
-			return deepRow;
-		}
-		const rows = Array.from(rowsBody.querySelectorAll("[data-row-id]")) as HTMLElement[];
-		for(const row of rows)
-		{
-			const rect = row.getBoundingClientRect();
-			if(
-				event.clientX >= rect.left && event.clientX <= rect.right &&
-				event.clientY >= rect.top && event.clientY <= rect.bottom
-			)
+			const deepTarget = this.getDeepElementFromPoint(rowsBody.getRootNode() as Document | ShadowRoot, event.clientX, event.clientY);
+			const deepRow = deepTarget?.closest?.("[data-row-id]") as HTMLElement | null;
+			if(deepRow)
 			{
-				return row;
+				return deepRow;
+			}
+			const rows = Array.from(rowsBody.querySelectorAll("[data-row-id]")) as HTMLElement[];
+			for(const row of rows)
+			{
+				const rect = row.getBoundingClientRect();
+				if(
+					event.clientX >= rect.left && event.clientX <= rect.right &&
+					event.clientY >= rect.top && event.clientY <= rect.bottom
+				)
+				{
+					return row;
+				}
 			}
 		}
 		return null;
@@ -1141,6 +2138,11 @@ export class Et2NextmatchActionController
 	 */
 	private getActionRowId(rowElement : HTMLElement) : string
 	{
+		// virtualizer loading skeleton, not a real row - has no backing data yet
+		if(rowElement.hasAttribute("data-et2dg-placeholder"))
+		{
+			return "";
+		}
 		const rawRowId = String(rowElement.getAttribute("data-row-id") || "");
 		if(!rawRowId)
 		{

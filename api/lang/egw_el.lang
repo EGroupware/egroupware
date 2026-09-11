@@ -528,6 +528,7 @@ liechtenstein	common	el	ΛΙΧΤΕΝΣΤΑΪΝ
 light mode	common	el	Φωτεινή λειτουργία
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	el	Γραμμή 1: '%2'\ncsv δεδομένα δεν αντιστοιχούν με τη στήλη-αρίθμηση τραπεζιού %3 ==>αγνοήθηκε</b>
 link	common	el	Σύνδεσμος
+links	common	el	Σύνδεσμοι
 link is appended to mail allowing recipients to download currently attached version of files	common	el	Ο σύνδεσμος επισυνάπτεται στην αλληλογραφία επιτρέποντας στους παραλήπτες να κατεβάσουν την τρέχουσα επισυναπτόμενη έκδοση των αρχείων
 link is appended to mail allowing recipients to download or modify up to date version of files (epl only)	common	el	Ο σύνδεσμος επισυνάπτεται στην αλληλογραφία που επιτρέπει στους παραλήπτες να κατεβάζουν ή να τροποποιούν την ενημερωμένη έκδοση των αρχείων (μόνο EPL)
 link is appended to mail allowing recipients to download up to date version of files	common	el	Ο σύνδεσμος επισυνάπτεται στην αλληλογραφία που επιτρέπει στους παραλήπτες να κατεβάζουν την ενημερωμένη έκδοση των αρχείων

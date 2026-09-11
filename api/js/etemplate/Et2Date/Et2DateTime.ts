@@ -9,49 +9,20 @@
  */
 
 
-import {css} from "lit";
 import {Et2Date, formatDate, formatDateTime} from "./Et2Date";
 import type {Instance} from "flatpickr/dist/types/instance";
 import {default as ShortcutButtonsPlugin} from "shortcut-buttons-flatpickr/dist/shortcut-buttons-flatpickr";
 
 
+import styles from "./Et2DateTime.styles";
 export class Et2DateTime extends Et2Date
 {
 	static get styles()
 	{
 		return [
 			...super.styles,
-			css`
-			  :host([focused]) ::slotted(button), :host(:hover) ::slotted(button) {
-				display: inline-block;
-			  }
-
-				.form-control-input {
-					et2-textbox {
-						flex: 1 1 auto;
-						min-width: 19ex;
-					}
-
-					input[type*=date] {
-						min-width: 14.5em;
-					}
-				}
-
-			  ::slotted(.calendar_button) {
-				border: none;
-				background: transparent;
-				margin-left: -20px;
-				display: none;
-			  }
-			`,
+			styles,
 		];
-	}
-
-	static get properties()
-	{
-		return {
-			...super.properties
-		}
 	}
 
 	constructor()

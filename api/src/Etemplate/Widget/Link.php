@@ -266,7 +266,11 @@ class Link extends Etemplate\Widget
 			true, $value['show_deleted']??false, $value['limit']??null);
 
 		$only_links = [];
-		if($value['only_app'])
+		// A positive only_app makes get_links() return bare IDs, whose link data (remark, owner,
+		// ...) has to be fetched separately.  A negated one ("!projectmanager") already returns
+		// complete link arrays, and is not an app name get_links_multiple() could be asked about -
+		// passing it there fatals on the array-of-links it would get as its list of entry IDs.
+		if(!empty($value['only_app']) && $value['only_app'][0] !== '!')
 		{
 			$only_links = Api\Link::get_links_multiple($value['only_app'], $links);
 		}

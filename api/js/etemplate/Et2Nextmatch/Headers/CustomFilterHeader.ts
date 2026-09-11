@@ -4,41 +4,33 @@ import {Et2InputWidget, Et2InputWidgetInterface} from "../../Et2InputWidget/Et2I
 import {FilterMixin} from "./FilterMixin";
 import {html, LitElement} from "lit";
 import {cleanSelectOptions} from "../../Et2Select/FindSelectOptions";
+import {customElement} from "lit/decorators/custom-element.js";
+import {property} from "lit/decorators/property.js";
 
 /**
- * Filter by some other type of widget
- * Acts as a wrapper around the other widget, but handles all the nm stuff here
- * Any attributes set are passed to the filter widget
+ * @summary Nextmatch custom filter header.
+ *
+ * Wraps another eTemplate input widget and handles nextmatch filter integration
+ * while forwarding configured attributes to the inner filter widget.
+ *
+ * @slot - Hosts the dynamically created filter widget.
  */
+@customElement("et2-nextmatch-header-custom")
 export class Et2CustomFilterHeader extends FilterMixin(Et2InputWidget(LitElement))
 {
-	private widgetType : string;
-	private widgetOptions : {};
+	/**
+	 * tag of widget we want to use to filter
+	 */
+	@property({type: String})
+	private widgetType : string = "et2-description";
+
+	/**
+	 * Attributes / properties used for the filter widget
+	 */
+	@property({type: Object})
+	private widgetOptions : {} = {};
+
 	private filter_node : Et2InputWidgetInterface & LitElement;
-
-	static get properties()
-	{
-		return {
-			...super.properties,
-
-			/**
-			 * tag of widget we want to use to filter
-			 */
-			widgetType: {type: String},
-
-			/**
-			 * Attributes / properties used for the filter widget
-			 */
-			widgetOptions: {type: Object}
-		};
-	}
-
-	constructor(...args : any[])
-	{
-		super();
-		this.widgetType = "et2-description";
-		this.widgetOptions = {};
-	}
 
 	transformAttributes(attrs)
 	{
@@ -68,20 +60,8 @@ export class Et2CustomFilterHeader extends FilterMixin(Et2InputWidget(LitElement
 		this.filter_node = <LitElement>loadWebComponent(this.widgetType, {...attrs, ...this.widgetOptions}, this);
 		if(this.filter_node instanceof Et2Select)
 		{
-			this.filter_node.hoist = true;
+			(this.filter_node as any).hoist = true;
 			this.filter_node.clearable = true;
-		}
-	}
-
-	connectedCallback()
-	{
-		super.connectedCallback();
-		if(this.filter_node)
-		{
-			this.filter_node.updateComplete.then(() =>
-			{
-				this.filter_node.addEventListener("change", this.handleChange);
-			})
 		}
 	}
 
@@ -91,11 +71,11 @@ export class Et2CustomFilterHeader extends FilterMixin(Et2InputWidget(LitElement
 	 */
 	set_select_options(new_options)
 	{
-		const widget_class = window.customElements.get(this.filter_node?.localName);
-		const property = widget_class.getPropertyOptions('select_options');
+		const widget_class = window.customElements.get(this.filter_node?.localName) as any;
+		const property = widget_class?.getPropertyOptions?.('select_options');
 		if(this.filter_node && property)
 		{
-			this.filter_node.select_options = cleanSelectOptions(new_options);
+			(this.filter_node as any).select_options = cleanSelectOptions(new_options);
 		}
 	}
 
@@ -105,18 +85,17 @@ export class Et2CustomFilterHeader extends FilterMixin(Et2InputWidget(LitElement
             <slot></slot>`;
 	}
 
+	// @ts-expect-error Legacy wrapper intentionally proxies the base input value through the inner widget.
 	get value()
 	{
-		return this.filter_node?.value || undefined;
+		return (this.filter_node as any)?.value || undefined;
 	}
 
 	set value(new_value)
 	{
 		if(this.filter_node)
 		{
-			this.filter_node.value = new_value;
+			(this.filter_node as any).value = new_value;
 		}
 	}
 }
-
-customElements.define("et2-nextmatch-header-custom", Et2CustomFilterHeader);

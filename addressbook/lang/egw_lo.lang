@@ -27,7 +27,6 @@ general	admin	lo	ທົ່ວໄປ
 global categories	addressbook	lo	ໝວດທົ່ວໄປ
 h	addressbook	lo	ຊົ່ວໂມງ
 icon	addressbook	lo	Icon
-links	addressbook	lo	ເຊື່ອມຕໍ່
 location	addressbook	lo	ສະຖານທີ່
 number of records to read (%1)	addressbook	lo	ຈໍານວນຂອງບັນທຶກທີ່ຈະອ່ານ (%1)
 participants	addressbook	lo	ຜູ້ເຂົ້າຮ່ວມ

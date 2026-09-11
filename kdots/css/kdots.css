@@ -279,6 +279,25 @@ iframe pre {
   width: 1em;
   height: 1em;
 }
+#egw_fw_topmenu_info_items #topmenu_info_update {
+  color: var(--sl-color-yellow-500);
+}
+#egw_fw_topmenu_info_items #topmenu_info_update::part(base) {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  justify-content: center;
+}
+#egw_fw_topmenu_info_items #topmenu_info_update:not(.security-update) {
+  width: fit-content;
+  height: fit-content;
+}
+#egw_fw_topmenu_info_items #topmenu_info_update.security-update {
+  color: var(--sl-color-neutral-900);
+}
+#egw_fw_topmenu_info_items #topmenu_info_update.security-update::part(base) {
+  animation: security-update-pulse 3s infinite ease-in-out;
+}
 #egw_fw_topmenu_info_items > * {
   border: none;
   background-color: transparent;
@@ -341,61 +360,26 @@ iframe pre {
 #egw_fw_topmenu_info_items #topmenu_info_timer:hover {
   cursor: pointer;
 }
-#egw_fw_topmenu_info_items #topmenu_info_quick_add {
-  position: relative;
+#egw_fw_topmenu_info_items #quick_add_selectbox::part(option) {
+  padding-block: var(--sl-spacing-x-small);
 }
-#egw_fw_topmenu_info_items #topmenu_info_quick_add span#quick_add {
-  display: block;
-  background-image: url(../../node_modules/bootstrap-icons/icons/plus-circle.svg);
-  background-repeat: no-repeat;
-  background-size: 24px;
-  background-position: center;
-  width: 100%;
-  height: 100%;
-  padding-right: 3px;
-}
-#egw_fw_topmenu_info_items #topmenu_info_quick_add span#quick_add:before {
-  content: " ";
-  font-size: 2em;
-  line-height: 0.6em;
-  background-color: white;
-}
-#egw_fw_topmenu_info_items #topmenu_info_quick_add #quick_add_selectbox {
-  height: 0px;
-  display: inline-block;
-  text-align: initial;
-}
-#egw_fw_topmenu_info_items #topmenu_info_quick_add #quick_add_selectbox sl-option {
-  white-space: nowrap;
-}
-#egw_fw_topmenu_info_items #topmenu_info_quick_add #quick_add_selectbox::part(emptyLabel) {
-  /* do NOT show empty label, required for clearing value */
-  display: none;
-}
-#egw_fw_topmenu_info_items #topmenu_info_quick_add #quick_add_selectbox::part(form-control-input),
-#egw_fw_topmenu_info_items #topmenu_info_quick_add #timer_selectbox::part(form-control-input) {
-  border: none !important;
-}
-#egw_fw_topmenu_info_items #topmenu_info_quick_add #quick_add_selectbox::part(form-control),
-#egw_fw_topmenu_info_items #topmenu_info_quick_add #timer_selectbox::part(form-control) {
-  margin-left: -3em;
-}
-#egw_fw_topmenu_info_items #topmenu_info_quick_add #quick_add_selectbox::part(listbox),
-#egw_fw_topmenu_info_items #topmenu_info_quick_add #timer_selectbox::part(menu) {
-  max-height: 60vh;
-}
-#egw_fw_topmenu_info_items #topmenu_info_quick_add #quick_add_selectbox {
-  height: 0px;
-  overflow: hidden;
-}
-#egw_fw_topmenu_info_items #topmenu_info_quick_add #quick_add_selectbox::part(combobox) {
-  visibility: hidden;
+#egw_fw_topmenu_info_items #quick_add_selectbox::part(image) {
+  vertical-align: sub;
 }
 #egw_fw_topmenu_info_items #topmenu_info_user_avatar sl-menu-item et2-image {
   width: 1em;
 }
 #egw_fw_topmenu_info_items button#topmenu_info_search {
   background-image: url(../../api/templates/default/images/topmenu_items/search.svg);
+}
+@keyframes security-update-pulse {
+  0%,
+  100% {
+    background-color: var(--sl-color-danger-600);
+  }
+  50% {
+    background-color: var(--sl-color-neutral-100);
+  }
 }
 #topmenu_info_print_title {
   background-image: url(../../../api/templates/default/images/print.svg);
@@ -803,6 +787,10 @@ body egw-app,
 .popupMainDiv .dialogFooter td:last-child,
 .popupMainDiv .dialogFooterToolbar td:last-child {
   padding-right: var(--sl-spacing-x-small);
+}
+body > .popupMainDiv {
+  max-height: 100dvh;
+  overflow: auto;
 }
 /*** End popup styling ***/
 /*** WIDGETS ***/
@@ -1264,6 +1252,139 @@ et2-toolbar[slot="main-header"]::part(list),
 .blueimp-gallery:not(.blueimp-gallery-display) {
   display: none;
 }
+/*MARKDOWN STYLING FOR NON SHADOW DOM WIDGETS*/
+/* single source of truth - the same file is inlined into the bundle by
+   api/js/etemplate/Markdown/Markdown.styles.ts for shadow-DOM widgets */
+.et2_markdown {
+  /* Et2Description's "* {white-space: pre-wrap}" reaches slotted content by inheritance -
+	   block markdown has to lay out normally instead */
+  white-space: normal;
+}
+/* Outer spacing belongs to whatever contains the widget, not to the markdown */
+.et2_markdown > :first-child {
+  margin-block-start: 0;
+}
+.et2_markdown > :last-child {
+  margin-block-end: 0;
+}
+.et2_markdown p {
+  margin-block: var(--sl-spacing-x-small);
+}
+.et2_markdown h1,
+.et2_markdown h2,
+.et2_markdown h3,
+.et2_markdown h4,
+.et2_markdown h5,
+.et2_markdown h6 {
+  margin-block: var(--sl-spacing-small) var(--sl-spacing-2x-small);
+  font-weight: var(--sl-font-weight-bold);
+  line-height: var(--sl-line-height-dense);
+}
+.et2_markdown h1 {
+  font-size: var(--sl-font-size-x-large);
+}
+.et2_markdown h2 {
+  font-size: var(--sl-font-size-large);
+}
+.et2_markdown h3,
+.et2_markdown h4 {
+  font-size: var(--sl-font-size-medium);
+}
+.et2_markdown h5,
+.et2_markdown h6 {
+  font-size: var(--sl-font-size-small);
+  color: var(--sl-color-neutral-700);
+}
+.et2_markdown strong {
+  font-weight: var(--sl-font-weight-bold);
+}
+.et2_markdown s {
+  /* ~~struck~~ reads as struck-through text */
+  text-decoration: line-through;
+}
+.et2_markdown ul,
+.et2_markdown ol {
+  margin-block: var(--sl-spacing-x-small);
+  padding-inline-start: var(--sl-spacing-large);
+}
+.et2_markdown li {
+  margin-block: var(--sl-spacing-3x-small);
+}
+/* Nested lists: no double gap against the parent item, and less indent per level */
+.et2_markdown li > ul,
+.et2_markdown li > ol {
+  margin-block: var(--sl-spacing-3x-small);
+  padding-inline-start: var(--sl-spacing-medium);
+}
+/* "Loose" list items wrap their text in <p> - don't let that add a full paragraph gap */
+.et2_markdown li > p {
+  margin-block: var(--sl-spacing-3x-small);
+}
+/* No link styling here on purpose: markdown does not create links, activateLinks does,
+   and its anchors must look the same whether or not markdown rendered the text around them. */
+.et2_markdown img {
+  /* never let an image push the widget wider than its container */
+  max-width: 100%;
+  height: auto;
+}
+.et2_markdown blockquote {
+  margin-block: var(--sl-spacing-x-small);
+  margin-inline: 0;
+  padding-inline-start: var(--sl-spacing-small);
+  /* 3x-small is the quote bar width - a panel border is too faint here */
+  border-inline-start: var(--sl-spacing-3x-small) solid var(--sl-color-neutral-300);
+  color: var(--sl-color-neutral-700);
+}
+/* No explicit text colour, so code inherits and stays readable in both themes */
+.et2_markdown code {
+  font-family: var(--sl-font-mono);
+  font-size: var(--sl-font-size-small);
+  background-color: var(--sl-color-neutral-100);
+  border: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
+  border-radius: var(--sl-border-radius-small);
+  padding-inline: var(--sl-spacing-3x-small);
+}
+.et2_markdown pre {
+  margin-block: var(--sl-spacing-x-small);
+  padding: var(--sl-spacing-x-small);
+  background-color: var(--sl-color-neutral-100);
+  border: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
+  border-radius: var(--sl-border-radius-medium);
+  /* scroll a code block rather than reflowing it */
+  white-space: pre;
+  overflow-x: auto;
+}
+.et2_markdown pre code {
+  display: block;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  white-space: inherit;
+}
+/* Et2Dialog.long_task(): per-item outcome log entries */
+.long_task .message {
+  white-space: break-spaces;
+  height: inherit;
+  display: list-item;
+  border: none;
+  color: initial;
+  margin: 0px;
+  padding: 0px 0px 0px 2em;
+  background-repeat: no-repeat;
+  background-size: 1em;
+  background-image: url(../../node_modules/bootstrap-icons/icons/check-lg.svg);
+  /* A per-item outcome that's neither a success nor a failure worth retrying (eg. "no
+       email address, nothing to send") - styled distinct from both */
+}
+.long_task .message.error {
+  color: darkgray;
+  background-image: none;
+}
+.long_task .message.hint {
+  color: var(--sl-color-warning-600);
+  background-image: url(../../node_modules/bootstrap-icons/icons/info-circle.svg);
+}
 /*** END WIDGETS ***/
 /*** Action styling ***/
 div.et2_egw_action_ddHelper--grid {
@@ -1356,6 +1477,7 @@ html:not(.desktop) body {
   /* Stop pull-to-refresh on chrome*/
   overflow-y: hidden;
   /* copied from previous framework */
+  /* et2-nextmatch hides header on mobile */
 }
 html:not(.desktop) :root egw-framework#egw_fw_basecontainer,
 html:not(.desktop) body egw-framework#egw_fw_basecontainer {
@@ -1974,6 +2096,10 @@ html:not(.desktop) body .et2_nextmatch .egwGridView_outer thead tr th {
 html:not(.desktop) :root .et2_nextmatch .egwGridView_outer td img,
 html:not(.desktop) body .et2_nextmatch .egwGridView_outer td img {
   border: none;
+}
+html:not(.desktop) :root et2-nextmatch::part(header),
+html:not(.desktop) body et2-nextmatch::part(header) {
+  display: none;
 }
 html:not(.desktop) :root .et2_details .et2_details_toggle:after,
 html:not(.desktop) body .et2_details .et2_details_toggle:after {

@@ -503,7 +503,6 @@ if you specify port 5190 as sieve server port, you enforce ssl for sieve (server
 if you wish to have randomly selected images you may upload multiple images.	admin	sk	Ak chcete mať náhodné obrázky, môžete nahrať viacero obrázkov.
 imap admin password	admin	sk	Heslo správcu IMAP
 imap admin user	admin	sk	Používateľ pre správu IMAP
-imap server	admin	sk	IMAP server
 imap server closed the connection.	admin	sk	IMAP server ukončil spojenie.
 imap server closed the connection. server responded: %s	admin	sk	IMAP server ukončil spojenie. Odpoveď servera: %s
 imap server hostname or ip address	admin	sk	Názov (hostname) alebo IP adresa IMAP servera

@@ -71,7 +71,6 @@ is resource buyable?	resources	ru	Ресурс покупаемый?
 is the ressource bookable?	resources	ru	Можно ли забронировать ресурс?
 is this resource bookable?	resources	ru	Этот ресурс бронируемый?
 is this resource buyable?	resources	ru	Этот ресурс покупаемый?
-links	resources	ru	Ссылки
 location	resources	ru	Местоположение
 location of resource	resources	ru	Местоположение ресурса
 location:	resources	ru	Местоположение:

@@ -13,14 +13,15 @@
 use EGroupware\Api;
 use EGroupware\Api\Link;
 use EGroupware\Api\Mail;
+use EGroupware\Mail\Ui;
 
 /**
  * Class cotains methods and functions
  * to be used to integrate mail's message into other applications
  *
  */
-class mail_integration {
-
+class mail_integration
+{
 	/**
 	 * Public functions
 	 * @var type
@@ -152,7 +153,7 @@ class mail_integration {
 			if (!(in_array($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions'],['text_only','no_attachments']))&&is_array($_attachments))
 			{
 				// initialize mail open connection requirements
-				if (!isset($_icServerID)) $_icServerID =& Api\Cache::getSession($sessionLocation,'activeProfileID');
+				if (!isset($_icServerID)) $_icServerID = Api\Cache::getSession($sessionLocation,'activeProfileID');
 				$mo = Mail::getInstance(true,$_icServerID);
 				$mo->openConnection();
 				$messagePartId = $messageFolder = null;
@@ -185,7 +186,12 @@ class mail_integration {
 					{
 						if (!empty($attachment['folder']))
 						{
-							$is_winmail = $_GET['is_winmail'] ? $_GET['is_winmail'] : 0;
+							// this is called via Link::set_data()'s deferred callback (see
+							// mail_compose::sendMessage()), not a direct request - there is no
+							// $_GET here; each attachment carries its own composite "is_winmail" key
+							// (uid@partID@mimeId, set by mail_compose::addMessageAttachment() as
+							// 'winmailFlag') for TNEF/winmail.dat children, or none otherwise
+							$is_winmail = $attachment['winmailFlag'] ?? 0;
 							$messageFolder = $attachment['folder'];
 							$messageUid = $attachment['uid'];
 							$messagePartId = $attachment['partID'];
@@ -280,7 +286,7 @@ class mail_integration {
 		else
 		{
 			// Initializing mail connection requirements
-			$hA = mail_ui::splitRowID($_rowid);
+			$hA = Mail::splitRowID($_rowid);
 			$sessionLocation = $hA['app']; // THIS is part of the row ID, we may use this for validation
 			// Check the mail app
 			if ($sessionLocation != 'mail') throw new Api\Exception\AssertionFailed(lang('Application mail expected but got: %1',$sessionLocation));
@@ -290,7 +296,7 @@ class mail_integration {
 
 			if ($uid && $mailbox)
 			{
-				if (!isset($icServerID)) $icServerID =& Api\Cache::getSession($sessionLocation,'activeProfileID');
+				if (!isset($icServerID)) $icServerID = Api\Cache::getSession($sessionLocation,'activeProfileID');
 				$mo	= Mail::getInstance(true,$icServerID);
 				$mo->openConnection();
 				$mo->reopen($mailbox);
@@ -381,7 +387,11 @@ class mail_integration {
 				if ($uid && !$mailcontent['attachments'][$key]['add_raw'])
 				{
 					$data_attachments[$key]['egw_data'] = Link::set_data($mailcontent['attachments'][$key]['mimeType'],
-						'EGroupware\\Api\\Mail::getAttachmentAccount',array($icServerID, $mailbox, $uid, $attachment['partID'], $is_winmail, true),true);
+						// $is_winmail is only ever set in the "not yet saved mail" branch above (in
+						// the $uid-less if-block above); here (saved mail) use the current
+						// attachment's own composite "is_winmail" key (uid@partID@mimeId, set by
+						// getMessageAttachments() for TNEF/winmail.dat children), or none otherwise
+						'EGroupware\\Api\\Mail::getAttachmentAccount',array($icServerID, $mailbox, $uid, $attachment['partID'], $attachment['is_winmail'] ?? 0, true),true);
 				}
 				unset($mailcontent['attachments'][$key]['add_raw']);
 
@@ -401,7 +411,7 @@ class mail_integration {
 					};
 					foreach(array('src','url','background') as $type)
 					{
-						$mailcontent['html_message'] = mail_ui::resolve_inline_image_byType(
+						$mailcontent['html_message'] = Ui::resolve_inline_image_byType(
 								$mailcontent['html_message'],
 								$mailbox,
 								$attachment['uid'],

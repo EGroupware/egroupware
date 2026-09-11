@@ -8,12 +8,6 @@
  * @author Nathan Gray
  */
 
-
-/*egw:uses
-	et2_core_valueWidget;
-	/calendar/js/et2_widget_event.js;
-*/
-
 import {et2_createWidget, et2_register_widget, WidgetConfig} from "../../api/js/etemplate/et2_core_widget";
 import {et2_valueWidget} from "../../api/js/etemplate/et2_core_valueWidget";
 import {et2_calendar_timegrid} from "./et2_widget_timegrid";
@@ -301,7 +295,6 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 
 		// Update all the little boxes
 		this._draw();
-
 
 		// Register for updates on events for this day
 		if(this.registeredUID !== cache_id)
@@ -628,7 +621,6 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 				event.doLoadingFinished();
 			}
 		}
-
 
 		// Show holidays as events on mobile or by preference
 		if(egwIsMobile() || egw.preference('birthdays_as_events','calendar'))

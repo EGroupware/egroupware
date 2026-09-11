@@ -64,6 +64,13 @@ class admin_accesslog
 	 */
 	function get_rows($query,&$rows,&$readonlys)
 	{
+		// nextmatch calls this directly via its own ajax menuaction, bypassing index()'s gate below -
+		// check the same right here too, keyed by the same 'session_list' flag index() uses
+		if ($GLOBALS['egw']->acl->checkAdminDeny($query['session_list'] ? 'current_sessions' : 'access_log_acces', 1))
+		{
+			throw new Api\Exception\NoPermission();
+		}
+
 		$heartbeat_limit = Api\Session::heartbeat_limit();
 
 		if ($query['session_list'])	// filter active sessions

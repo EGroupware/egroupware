@@ -22,6 +22,17 @@ export default css`
 		flex-wrap: nowrap;
 	}
 
+	/**
+	 * The "list" slot's own assigned et2-file-item(s) must stack vertically regardless of the
+	 * row layout above - et2-file-item's :host is display:contents, so without this its
+	 * file-item boxes flatten straight into the surrounding row and end up side-by-side instead
+	 * of as a list, whenever more than one is slotted in (eg. display="list" without multiple).
+	 */
+	slot[name="list"] {
+		display: flex;
+		flex-direction: column;
+	}
+
 	.file__file-list {
 		width: 100%;
 		max-width: calc(100vw - var(--sl-spacing-large));
@@ -43,5 +54,15 @@ export default css`
 
 	.file--single et2-file-item[display="small"]::part(base) {
 		height: 100%;
+	}
+
+	/**
+	 * Single (non-popup) list sits inline in the button's own row, whose height
+	 * is often less than --sl-input-height-medium (eg. display="small").  The
+	 * popup-oriented max-height above then evaluates negative and clamps to 0,
+	 * hiding the file entirely, so don't constrain it here.
+	 */
+	.file--single .file__file-list {
+		max-height: none;
 	}
 `;

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <!-- $Id: edit.xet 54611 2015-12-22 17:01:32Z nathangray $ -->
 <overlay>
-	<template id="infolog.view.description" template="" lang="" group="0" version="1.6.001">
-		<et2-textarea  id="info_des" width="99.7%" height="250" noLang="1" resizeRatio="0"></et2-textarea>
-	</template>
-	<template id="infolog.view.links" template="" lang="" group="0" version="1.3.001">
+	<et2-template  id="infolog.view.description" template="" lang="" group="0" version="1.6.001"><et2-ai><et2-textarea  id="info_des" width="99.7%" noLang="1" resizeRatio="0"></et2-textarea></et2-ai>
+	</et2-template>
+	<et2-template  id="infolog.view.links" template="" lang="" group="0" version="1.3.001">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -19,8 +19,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="infolog.view.project" template="" lang="" group="0" version="1.5.004">
+	</et2-template>
+	<et2-template  id="infolog.view.project" template="" lang="" group="0" version="1.5.004">
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
@@ -52,11 +52,11 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="infolog.view.customfields" template="" lang="" group="0" version="1.0.1.001">
+	</et2-template>
+	<et2-template  id="infolog.view.customfields" template="" lang="" group="0" version="1.0.1.001">
 		<customfields type_filter="@info_type"/>
-	</template>
-	<template id="infolog.view.details" template="" lang="" group="0" version="1.9.001">
+	</et2-template>
+	<et2-template  id="infolog.view.details" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
@@ -65,7 +65,7 @@
 			<rows>
 				<row>
 					<et2-description  value="CC"></et2-description>
-					<et2-email  id="info_cc" width="100%" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email" placeholder="email"></et2-email>
+					<et2-email  id="info_cc" width="100%" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Select::ajax_email" placeholder="email"></et2-email>
 				</row>
 				<row>
 					<et2-description  value="Responsible" for="info_responsible"></et2-description>
@@ -97,8 +97,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="infolog.view.ownership" template="" lang="" group="0" version="16.1.00">
+	</et2-template>
+	<et2-template  id="infolog.view.ownership" template="" lang="" group="0" version="16.1.00">
 		<grid width="100%">
 			<columns>
 				<column width = "120"/>
@@ -128,8 +128,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="infolog.view" template="" lang="" group="0" version="1.9.101">
+	</et2-template>
+	<et2-template  id="infolog.view" template="" lang="" group="0" version="1.9.101">
 		<grid border="1" width="100%">
 			<columns>
 				<column width = "120"/>
@@ -165,7 +165,7 @@
 					<et2-select-percent  span="4" statustext="Percent completed" id="info_percent"></et2-select-percent>
 				</row>
 				<row>
-                    <et2-tabbox id="tabs" span="all">
+                    <et2-tabbox  id="tabs" span="all">
                         <tabs>
                             <tab id="description" label="Description" statustext="longer textual description"/>
                             <tab id="details" label="Details" statustext="Location, priority , ..."/>
@@ -175,16 +175,16 @@
                             <tab id="history" label="Ownership" statustext="Ownership"/>
                         </tabs>
                         <tabpanels>
-                            <template id="infolog.view.description"/>
-                            <template id="infolog.view.details"/>
-                            <template id="infolog.view.links"/>
-                            <template id="infolog.view.project"/>
-                            <template id="infolog.view.customfields"/>
-                            <template id="infolog.view.ownership"/>
+                            <et2-template  id="infolog.view.description"></et2-template>
+                            <et2-template  id="infolog.view.details"></et2-template>
+                            <et2-template  id="infolog.view.links"></et2-template>
+                            <et2-template  id="infolog.view.project"></et2-template>
+                            <et2-template  id="infolog.view.customfields"></et2-template>
+                            <et2-template  id="infolog.view.ownership"></et2-template>
                         </tabpanels>
                     </et2-tabbox>
                 </row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

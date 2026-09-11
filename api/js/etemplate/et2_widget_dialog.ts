@@ -14,6 +14,13 @@ import {et2_attribute_registry, et2_register_widget, et2_widget} from "./et2_cor
 /**
  * Just a stub that wraps Et2Dialog
  *
+ * Checked 2026-09-03: no core/default app still calls this - policy, addressbook and
+ * admin have all been migrated to Et2Dialog directly; home/js/app.ts's one match was
+ * dead code inside a commented-out block. Remaining real (non-type-only) consumers are
+ * all outside the main default app set: smallpart, ranking, profitbricks (separate,
+ * gitignored repos) and schulmanager (in-repo but not a default app). This file now
+ * exists purely as a compatibility shim for those, not for anything we maintain here.
+ *
  * Replace calls like:
  * ```ts
  * this.dialog = <et2_dialog>et2_createWidget("dialog",
@@ -148,12 +155,15 @@ export class et2_dialog extends Et2Dialog
 et2_register_widget(et2_dialog, ["dialog", "legacy_dialog"]);
 const type_map = {String: "string", Function: "js"};
 let attrs = {};
-for(const [key, value] of Object.entries(et2_dialog.properties))
+// Use elementProperties (Lit's fully-resolved property map), not the static properties
+// getter - Et2Dialog declares title/buttons/template/callback etc. via @property()
+// decorators, which never appear in properties, only in elementProperties.  Using
+// properties here silently dropped those attributes before the widget was even
+// constructed (ClassWithAttributes.generateAttributeSet() deletes anything not listed).
+(<any>et2_dialog).elementProperties.forEach((attr, key) =>
 {
-	let attr = et2_dialog.properties[key];
-
 	attrs[key] = {type: type_map[attr.type?.name || attr.name] || "any"};
-}
+});
 attrs["value"] = {type: "any"};
 et2_attribute_registry[et2_dialog.name] = attrs
 

@@ -17,7 +17,7 @@ import {et2_IInput, et2_IPrint, et2_IResizeable, et2_ISubmitListener} from "./et
 import {egw} from "../jsapi/egw_global";
 import {et2_arrayMgr, et2_readonlysArrayMgr} from "./et2_core_arrayMgr";
 import {et2_nextmatch, et2_nextmatch_header_bar} from "./et2_extension_nextmatch";
-import '../jsapi/egw_json.js';
+import '../jsapi/egw_json';
 import {egwIsMobile} from "../egw_action/egw_action_common";
 import './Layout/Et2AppBox/Et2AppBox';
 import './Layout/Et2Box/Et2Box';
@@ -69,6 +69,7 @@ import './Et2File/Et2File';
 import './Et2File/Et2FileItem';
 import './Et2Filterbox/Et2Filterbox';
 import './Et2HtmlArea/Et2HtmlArea';
+import './Et2Iframe/Et2Iframe';
 import './Et2Image/Et2Image';
 import './Et2Image/Et2AppIcon';
 import './Et2Avatar/Et2LAvatar';
@@ -94,9 +95,11 @@ import './Et2Select/Et2Select';
 import './Et2Select/SelectTypes';
 import './Et2Select/Tag/Et2Tag';
 import './Et2Select/Tag/Et2CategoryTag';
+import './Et2Select/Tag/Et2CategoryBox';
 import './Et2Select/Tag/Et2EmailTag';
 import './Et2Select/Tag/Et2ThumbnailTag';
 import './Et2Spinner/Et2Spinner';
+import './Et2Styles/Et2Styles';
 import './Et2Switch/Et2Switch';
 import './Et2Switch/Et2SwitchIcon';
 import './Et2Template/Et2Template';
@@ -104,6 +107,7 @@ import './Et2Textarea/Et2Textarea';
 import './Et2Textarea/Et2TextareaReadonly';
 import './Et2Textbox/Et2Textbox';
 import './Et2Textbox/Et2TextboxReadonly';
+import './Et2Textbox/Et2Hidden';
 import './Et2Textbox/Et2Number';
 import './Et2Textbox/Et2NumberReadonly';
 import "./Et2Toolbar/Et2Toolbar";
@@ -125,6 +129,8 @@ import "./Et2Vfs/Et2VfsSelectDialog";
 import "./Et2Vfs/Et2VfsSelectRow";
 import "./Et2Vfs/Et2VfsUid";
 import "./Et2Vfs/Et2VfsName";
+import "./Et2Vfs/Et2VfsMode.ts";
+import "./Et2Vfs/Et2VfsSize.ts";
 import "./Et2Vfs/Et2VfsUpload";
 import "./Validators/EgwValidationFeedback";
 import "./Et2Textbox/Et2Password";
@@ -134,32 +140,27 @@ import "./Et2Tree/Et2TreeDropdown";
 
 
 /* Include all widget classes here, we only care about them registering, not importing anything*/
-import './et2_widget_vfs'; // Vfs must be first (before et2_widget_file) due to import cycle
-import './et2_widget_template';
+import './legacy-shims/et2_widget_template';
 import './et2_widget_grid';
 import './et2_widget_box';
-import './et2_widget_hbox';
-import './et2_widget_button';
+import './legacy-shims/et2_widget_hbox';
+import './legacy-shims/et2_widget_button';
 import './et2_widget_entry';
-import './et2_widget_textbox';
-import './et2_widget_number';
-import './et2_widget_selectbox';
+import './legacy-shims/et2_widget_textbox';
+import './legacy-shims/et2_widget_number';
+import './legacy-shims/et2_widget_selectbox';
 import './et2_widget_radiobox';
-import './et2_widget_date';
+import './legacy-shims/et2_widget_date';
 import './et2_widget_dialog';
-import './et2_widget_diff';
-import './et2_widget_styles';
-import './et2_widget_html';
-import './et2_widget_taglist';
-import './et2_widget_toolbar';
+import './legacy-shims/et2_widget_diff';
+import './legacy-shims/et2_widget_html';
+import './legacy-shims/et2_widget_taglist';
 import './et2_widget_historylog';
 import './et2_widget_hrule';
-import './et2_widget_iframe';
-import './et2_widget_file';
+import './legacy-shims/et2_widget_file';
 import './et2_widget_placeholder';
 import './et2_widget_progress';
-import './et2_widget_portlet';
-import './et2_widget_selectAccount';
+import './legacy-shims/et2_widget_selectAccount';
 import './et2_widget_ajaxSelect';
 import './et2_widget_video';
 import './et2_widget_audio';
@@ -392,17 +393,14 @@ export class etemplate2
 		while(this.DOMContainer.lastChild) this.DOMContainer.lastChild.remove();
 
 		// Remove self from the index
-		for(const name in Et2Template.templateCache)
+		for(const name in etemplate2._byTemplate)
 		{
-			if(typeof etemplate2._byTemplate[name] == "undefined")
+			const list = etemplate2._byTemplate[name];
+			for(let i = list.length - 1; i >= 0; i--)
 			{
-				continue;
-			}
-			for(let i = 0; i < etemplate2._byTemplate[name].length; i++)
-			{
-				if(etemplate2._byTemplate[name][i] === this)
+				if(list[i] === this)
 				{
-					etemplate2._byTemplate[name].splice(i, 1);
+					list.splice(i, 1);
 				}
 			}
 		}
@@ -529,7 +527,7 @@ export class etemplate2
 				{
 					// Clean up the iframe
 					iframe.remove();
-				});
+				}, {once: true});
 			}
 		}
 	}
@@ -561,6 +559,7 @@ export class etemplate2
 	unbind_unload()
 	{
 		window.removeEventListener("beforeunload", this.destroy_session);
+		window.removeEventListener("pagehide", this.destroy_session);
 		window.removeEventListener("beforeunload", this.close_prompt);
 		if(window.onbeforeunload === this.destroy_session)
 		{
@@ -589,6 +588,15 @@ export class etemplate2
 	 */
 	download(_url)
 	{
+		//Firefox on mobile (especially on iPhone) does not use the download attribute
+		//on a programmatically clicked <a> Element correctly and destroys the egw session
+		// so we open it in a new tab
+		// that tab instantly closes after download is done, Firefox might display the downloaded file afterward but in a new tab
+		// so at least the egw tab is not destroyed
+		if(egwIsMobile() && /Firefox|FxiOS/.test(navigator.userAgent)){
+			window.open(_url,"_blank","noopener");
+			return;
+		}
 		const a = document.createElement('a');
 		a.href = _url;
 		a.download = 'download';
@@ -714,6 +722,17 @@ export class etemplate2
 			else if(appname && typeof app[appname] !== "object")
 			{
 				egw.debug("warn", "Did not load '%s' JS object", appname);
+				// app.classes[appname] missing here almost always means that app's own JS chunk
+				// failed to load because of a mid-session rebuild (ticket #124112) - every
+				// legacy inline onclick="app.<appname>...." handler in that app's templates is
+				// about to throw a confusing "Cannot read properties of undefined" with no
+				// indication why, so tell the user up front instead of leaving them guessing.
+				// Skip a 2nd reload prompt if egw_import already put one up for this document
+				// (ticket #124112: green+red messages stacking).
+				if(!(<any>window).egw_import?.updateAvailableNotified)
+				{
+					egw(window).message(egw.lang('Please reload the EGroupware desktop (F5 / Cmd+r).'), 'error');
+				}
 			}
 			// If etemplate current app does not match app owning the template,
 			// initialize the current app too
@@ -798,10 +817,7 @@ export class etemplate2
 					this._widgetContainer.updateComplete.then(async() =>
 					{
 						// Clear dirty now that it's all loaded
-						this.widgetContainer.iterateOver((_widget) =>
-						{
-							_widget.resetDirty();
-						}, this, et2_IInput);
+						this.resetDirty();
 						egw.debug("log", "Finished loading %s, triggering load event", _name);
 
 						if(typeof window.framework != 'undefined' && typeof window.framework.et2_loadingFinished != 'undefined')
@@ -904,6 +920,24 @@ export class etemplate2
 		}, this);
 
 		return dirty;
+	}
+
+	/**
+	 * Clear dirty (unsaved) state on every input widget in this template
+	 *
+	 * load() already calls this once itself, right after the initial template load finishes -
+	 * that's why server-rendered initial content is never mistaken for a user edit. Anything that
+	 * fills in values programmatically *after* that point (eg. a client-side bootstrap step
+	 * populating widgets from an API response, doc/ai/projects/mail-compose-jmap-migration.md's
+	 * Step 4 reply prefill) needs to call this again itself for the same reason - a plain
+	 * set_value() looks exactly like a real user edit to the dirty tracker either way.
+	 */
+	public resetDirty()
+	{
+		this.widgetContainer?.iterateOver((_widget) =>
+		{
+			_widget.resetDirty();
+		}, this, et2_IInput);
 	}
 
 	/**
@@ -1094,7 +1128,7 @@ export class etemplate2
 	 * @param {et2_widget|undefined} _container container to submit, default whole template
 	 * @return {boolean} true if submit was send, false if eg. validation stoped submit
 	 */
-	submit(button, async, no_validation, _container)
+	submit(button?, async?, no_validation?, _container?)
 	{
 		const api = this._widgetContainer.egw();
 
@@ -1622,8 +1656,13 @@ export class etemplate2
 		{
 			if(!data['window-close'] && window.opener && data['refresh-opener'][0])
 			{
-				// Show the message in popup
-				window.egw(window).message(data['refresh-opener'][0]);
+				// Show the message in popup - this is the "apply" case, the window stays open.
+				// [7] is Api\Framework::refresh_opener()'s $msg_type: without passing it an
+				// explicit 'error'/'warning' was lost here (while the egw.refresh() call below
+				// does honour it), so the same save showed a correctly typed toast in the opener
+				// and a text-sniffed one in the popup.  func_get_args() only returns arguments
+				// actually passed, so it is undefined for callers that don't specify one.
+				window.egw(window).message(data['refresh-opener'][0], data['refresh-opener'][7]);
 			}
 			if(window.opener || dialog)// && typeof window.opener.egw_refresh == 'function')
 			{

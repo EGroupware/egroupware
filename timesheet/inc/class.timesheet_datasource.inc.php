@@ -39,7 +39,10 @@ class timesheet_datasource extends datasource
 	function get($data_id)
 	{
 		// we use $GLOBALS['timesheet_bo'] as an already running instance is availible there
-		if (!is_object($GLOBALS['timesheet_bo']))
+		// but its ACL grants are cached at construction time, so a stale instance left behind
+		// by a since-restored user-switch (eg. LoggedInTest::asAdmin()) must not be reused,
+		// or check_acl() silently denies read-access to entries owned by the current user
+		if (!is_object($GLOBALS['timesheet_bo']) || $GLOBALS['timesheet_bo']->user != (int)$GLOBALS['egw_info']['user']['account_id'])
 		{
 			$GLOBALS['timesheet_bo'] = new timesheet_bo();
 		}
@@ -102,7 +105,8 @@ class timesheet_datasource extends datasource
 	 */
 	function delete($id)
 	{
-		if (!is_object($GLOBALS['timesheet_bo']))
+		// see get() above for why the current user must match the cached instance
+		if (!is_object($GLOBALS['timesheet_bo']) || $GLOBALS['timesheet_bo']->user != (int)$GLOBALS['egw_info']['user']['account_id'])
 		{
 			$GLOBALS['timesheet_bo'] = new timesheet_bo();
 		}
@@ -123,7 +127,8 @@ class timesheet_datasource extends datasource
 	 */
 	function change_status($id,$status)
 	{
-		if (!is_object($GLOBALS['timesheet_bo']))
+		// see get() above for why the current user must match the cached instance
+		if (!is_object($GLOBALS['timesheet_bo']) || $GLOBALS['timesheet_bo']->user != (int)$GLOBALS['egw_info']['user']['account_id'])
 		{
 			$GLOBALS['timesheet_bo'] = new timesheet_bo();
 		}

@@ -67,7 +67,6 @@ leave it empty for a full week	timesheet	pt-br	Deixar vazio para uma semana inte
 leaves without saveing	timesheet	pt-br	sair sem salvar
 length<br>rows	timesheet	pt-br	Tamanho<br>Linhas
 link title	timesheet	pt-br	Título do link
-links	timesheet	pt-br	Links
 links and attached files	timesheet	pt-br	Links e arquivos anexados
 list of files linked to the current record	timesheet	pt-br	Lista de arquivos vinculados ao registro atual
 make timesheets readable by infolog delegation	timesheet	pt-br	Torne as folhas de ponto legíveis pela delegação do InfoLog

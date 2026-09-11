@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-    <template id="mail.index.preview">
-        <toolbar id="toolbar" list_header="short"/>
+    <et2-template  id="mail.index.preview">
+        <et2-toolbar  id="toolbar" listHeader="short"></et2-toolbar>
         <grid id="mailPreview" width="100%">
             <columns>
                 <column/>
@@ -12,46 +13,51 @@
 
                 </row>
                 <row>
-                    <et2-vbox class="previewWrapper">
-                        <et2-box id="blank" disabled="@uid">
-                            <et2-image src="email"></et2-image>
-                            <et2-description value="Select an item to read"></et2-description>
+                    <et2-vbox  class="previewWrapper">
+                        <et2-box  id="blank" disabled="@uid">
+                            <et2-image  src="email"></et2-image>
+                            <et2-description  value="Select an item to read"></et2-description>
                         </et2-box>
-                        <et2-hbox class="mailPreviewHeaders">
-                            <et2-description id="subject" readonly="true" hoverAction="app.mail.modifyMessageSubjectDialog" hoverActionTitle="Modify subject of this message"></et2-description>
-                            <et2-hbox class="mailPreviewHeaders smimeIcons">
-                                <et2-image id="smime_signature" src="smime_sign" inline="true" statustext="Smime signed message" hidden="!@smime=smime_sign" align="right" width="24"></et2-image>
-                                <et2-image id="smime_encryption" src="smime_encrypt" inline="true" statustext="Smime encrypted message" hidden="!@smime=smime_encrypt" align="right" width="24"></et2-image>
+                        <et2-hbox  class="mailPreviewHeaders">
+                            <et2-description  id="subject" readonly="true" hoverAction="app.mail.modifyMessageSubjectDialog" hoverActionTitle="Modify subject of this message"></et2-description>
+                            <et2-hbox  class="mailPreviewHeaders smimeIcons">
+                                <et2-image  id="smime_signature" src="smime_sign" inline="true" statustext="Smime signed message" hidden="!@smime=smime_sign" align="right" width="24"></et2-image>
+                                <et2-image  id="smime_encryption" src="smime_encrypt" inline="true" statustext="Smime encrypted message" hidden="!@smime=smime_encrypt" align="right" width="24"></et2-image>
+                                <!-- PGP/MIME signature status (MailApp.setPgpSignatureFlags(), mail/js/app.ts) - a
+                                     different trust mechanism than S/MIME, deliberately not sharing its icon;
+                                     hidden="true" by default (no server-side content field to bind a `hidden="!@..."`
+                                     expression to like smime_signature's, PGP detection is 100% client-side/async) -
+                                     .hidden/.set_class()/.set_statustext() driven entirely client-side by
+                                     MailJmap.verifyPgpSignature(); .hidden specifically, NOT .disabled, which per
+                                     Et2Widget's own docblock stays visible (just greyed out) -->
+                                <et2-image  id="pgp_signature" src="envelope-at-fill" inline="true" hidden="true" align="right" width="24"></et2-image>
                             </et2-hbox>
                         </et2-hbox>
-                        <et2-hbox width="100%" class="mailPreviewHeaders">
-                            <et2-lavatar contactId="email:$cont[fromaddress]" lname="$cont[fromlavatar][lname]" fname="$cont[fromlavatar][fname]" shape="rounded" size="2.75em"></et2-lavatar>
+                        <et2-hbox  width="100%" class="mailPreviewHeaders">
+                            <et2-lavatar  contactId="email:$cont[fromaddress]" lname="$cont[fromlavatar][lname]" fname="$cont[fromlavatar][fname]" shape="rounded" size="2.75em"></et2-lavatar>
                             <et2-vbox>
-                                <et2-vbox class="addresses">
+                                <et2-vbox  class="addresses">
                                     <et2-hbox>
-                                        <et2-description value="From" class="firstColumnTitle"></et2-description>
-                                        <et2-email id="additionalfromaddress" readonly="true"></et2-email>
-                                        <et2-date-time align="right" id="date" readonly="true"></et2-date-time>
+                                        <et2-description  value="From" class="firstColumnTitle"></et2-description>
+                                        <et2-email  id="additionalfromaddress" readonly="true"></et2-email>
+                                        <et2-date-time  align="right" id="date" readonly="true"></et2-date-time>
                                     </et2-hbox>
-                                    <et2-hbox disabled="!@toaddress" width="100%">
-                                        <et2-description value="To" class="firstColumnTitle"></et2-description>
-                                        <et2-email id="additionaltoaddress" readonly="true" rows="1"
-                                                   onTagClick="app.mail.onclickCompose"></et2-email>
+                                    <et2-hbox  disabled="!@toaddress" width="100%">
+                                        <et2-description  value="To" class="firstColumnTitle"></et2-description>
+                                        <et2-email  id="additionaltoaddress" readonly="true" rows="1" onTagClick="app.mail.onclickCompose"></et2-email>
                                     </et2-hbox>
-                                    <et2-hbox disabled="!@ccaddress" width="100%">
-                                        <et2-description value="Cc" class="firstColumnTitle"></et2-description>
-                                        <et2-email id="ccaddress" readonly="true" rows="1"
-                                                   onTagClick="app.mail.onclickCompose"></et2-email>
+                                    <et2-hbox  disabled="!@ccaddress" width="100%">
+                                        <et2-description  value="Cc" class="firstColumnTitle"></et2-description>
+                                        <et2-email  id="ccaddress" readonly="true" rows="1" onTagClick="app.mail.onclickCompose"></et2-email>
                                     </et2-hbox>
-                                    <et2-hbox disabled="!@bccaddress" width="100%">
-                                        <et2-description value="Bcc" class="firstColumnTitle"></et2-description>
-                                        <et2-email id="bccaddress" readonly="true" rows="1"
-                                                   onTagClick="app.mail.onclickCompose"></et2-email>
+                                    <et2-hbox  disabled="!@bccaddress" width="100%">
+                                        <et2-description  value="Bcc" class="firstColumnTitle"></et2-description>
+                                        <et2-email  id="bccaddress" readonly="true" rows="1" onTagClick="app.mail.onclickCompose"></et2-email>
                                     </et2-hbox>
-                                    <et2-hbox width="100%" disabled="!@attachmentsBlock">
-                                        <et2-description value="Attachments" class="firstColumnTitle"></et2-description>
-                                        <et2-details overlaySummaryOnOpen="true" toggleAlign="right" toggleOnHover="true" hoist="true" class="attachments">
-                                            <et2-hbox slot="summary">
+                                    <et2-hbox  width="100%" disabled="!@attachmentsBlock">
+                                        <et2-description  value="Attachments" class="firstColumnTitle"></et2-description>
+                                        <et2-details  overlaySummaryOnOpen="true" toggleAlign="right" toggleOnHover="true" hoist="true" class="attachments">
+                                            <et2-hbox  slot="summary">
                                                 <grid class="previewAttachmentArea egwGridView_grid">
                                                     <columns>
                                                         <column disabled="!@showtempname"/>
@@ -63,12 +69,12 @@
                                                     </columns>
                                                     <rows>
                                                         <row class="row attachmentRow">
-                                                            <et2-description id="attachmentsBlock[0][attachment_number]"></et2-description>
-                                                            <et2-description id="attachmentsBlock[0][partID]"></et2-description>
-                                                            <et2-description id="attachmentsBlock[0][type]"></et2-description>
-                                                            <et2-description id="attachmentsBlock[0][winmailFlag]"></et2-description>
-                                                            <et2-description-expose class="et2_link useEllipsis" id="attachmentsBlock[0][filename]" mime="@attachmentsBlock[0][type]" href="@attachmentsBlock[0][mime_url]" noLang="1" mimeData="@attachmentsBlock[0][mime_data]"></et2-description-expose>
-                                                            <et2-description align="right" value="@attachmentsBlockTitle" class="et2_bold"></et2-description>
+                                                            <et2-description  id="attachmentsBlock[0][attachment_number]"></et2-description>
+                                                            <et2-description  id="attachmentsBlock[0][partID]"></et2-description>
+                                                            <et2-description  id="attachmentsBlock[0][type]"></et2-description>
+                                                            <et2-description  id="attachmentsBlock[0][winmailFlag]"></et2-description>
+                                                            <et2-description-expose  class="et2_link useEllipsis" id="attachmentsBlock[0][filename]" mime="@attachmentsBlock[0][type]" href="@attachmentsBlock[0][mime_url]" noLang="1" mimeData="@attachmentsBlock[0][mime_data]"></et2-description-expose>
+                                                            <et2-description  align="right" value="@attachmentsBlockTitle" class="et2_bold"></et2-description>
                                                         </row>
                                                     </rows>
                                                 </grid>
@@ -85,13 +91,13 @@
                                                 </columns>
                                                 <rows>
                                                     <row class="row attachmentRow" id="${row}">
-                                                        <et2-description id="${row}[attachment_number]"></et2-description>
-                                                        <et2-description id="${row}[partID]"></et2-description>
-                                                        <et2-description id="${row}[type]"></et2-description>
-                                                        <et2-description id="${row}[winmailFlag]"></et2-description>
-                                                        <et2-description-expose class="et2_link useEllipsis" id="${row}[filename]" mime="$row_cont[type]" href="$row_cont[mime_url]" noLang="1" mimeData="$row_cont[mime_data]"></et2-description-expose>
-                                                        <et2-description align="right" id="${row}[size]"></et2-description>
-                                                        <et2-dropdown-button id="${row}[actions]" label="$row_cont[actionsDefaultLabel]" onchange="app.mail.attachmentsBlockActions" onclick="app.mail.attachmentsBlockActions"/>
+                                                        <et2-description  id="${row}[attachment_number]"></et2-description>
+                                                        <et2-description  id="${row}[partID]"></et2-description>
+                                                        <et2-description  id="${row}[type]"></et2-description>
+                                                        <et2-description  id="${row}[winmailFlag]"></et2-description>
+                                                        <et2-description-expose  class="et2_link useEllipsis" id="${row}[filename]" mime="$row_cont[type]" href="$row_cont[mime_url]" noLang="1" mimeData="$row_cont[mime_data]"></et2-description-expose>
+                                                        <et2-description  align="right" id="${row}[size]"></et2-description>
+                                                        <et2-dropdown-button  id="${row}[actions]" label="$row_cont[actionsDefaultLabel]" onchange="app.mail.attachmentsBlockActions" onclick="app.mail.attachmentsBlockActions"/>
                                                     </row>
                                                 </rows>
                                             </grid>
@@ -104,13 +110,13 @@
                 </row>
             </rows>
         </grid>
-        <et2-box id="mailPreviewContainer">
+        <et2-box  id="mailPreviewContainer">
             <et2-ai>
-                <iframe frameborder="1" id="messageIFRAME" scrolling="auto"/>
+                <et2-iframe  frameborder="1" id="messageIFRAME" scrolling="auto"></et2-iframe>
             </et2-ai>
         </et2-box>
-    </template>
-    <template id="mail.index.rows.vertical" template="" lang="" group="0" version="1.9.001">
+    </et2-template>
+    <et2-template  id="mail.index.rows.vertical" template="" lang="" group="0" version="1.9.001">
         <grid width="100%">
             <columns>
                 <column width="80%"/>
@@ -118,42 +124,42 @@
             </columns>
             <rows>
                 <row class="th">
-                    <nextmatch-sortheader label="subject" id="subject"/>
-                    <nextmatch-sortheader align="center" label="date" id="date" sortmode="DESC"/>
+                    <et2-nextmatch-sortheader  label="subject" id="subject"/>
+                    <et2-nextmatch-sortheader  align="center" label="date" id="date" sortmode="DESC"/>
                 </row>
                 <row class="$row_cont[class]">
                     <et2-hbox  class="$row_cont[class] mobile_cat_col">
-                        <et2-lavatar contactId="email:$row_cont[address]" fname="$row_cont[lavatar][fname]"
-                                     lname="$row_cont[lavatar][lname]" shape="rounded" loading="lazy"></et2-lavatar>
-                        <et2-vbox>
+                        <et2-lavatar  contactId="email:$row_cont[address]" fname="$row_cont[lavatar][fname]" lname="$row_cont[lavatar][lname]" shape="rounded" loading="lazy"></et2-lavatar>
+                        <et2-vbox  class="mail_row_content">
                             <et2-url-email  id="${row}[address]" class="$row_cont[class]" readonly="true" emailDisplay="preference"></et2-url-email>
-                            <et2-hbox>
-                                <et2-description  id="${row}[subject]" class="$row_cont[class]" noLang="1"></et2-description>
-                            </et2-hbox>
+                            <et2-description  id="${row}[subject]" class="mail_subject useEllipsis $row_cont[class]" noLang="1"></et2-description>
                             <et2-description  id="${row}[bodypreview]" class="et2_label bodypreview" noLang="1"></et2-description>
+                            <et2-category-box  id="${row}[labelTags]"></et2-category-box>
                         </et2-vbox>
                     </et2-hbox>
                     <et2-vbox>
                         <et2-hbox>
-                            <et2-date-time-today class="$row_cont[class]" id="${row}[date]" readonly="true"></et2-date-time-today>
+                            <et2-date-time-today  class="$row_cont[class]" id="${row}[date]" readonly="true"></et2-date-time-today>
                         </et2-hbox>
-                        <et2-hbox class="status_icons">
-                            <et2-image src="$row_cont[status_icon]" class="status_img $row_cont[class]"></et2-image>
-                            <et2-image src="$row_cont[smime]" inline="true" class="bi"></et2-image>
-                            <html id="${row}[attachments]"/>
+                        <et2-hbox  class="status_icons">
+                            <et2-image  src="$row_cont[status_icon]" class="status_img $row_cont[class]"></et2-image>
+                            <et2-image  src="$row_cont[smime]" inline="true" class="bi"></et2-image>
+                            <et2-image  src="$row_cont[attachment_icon]"></et2-image>
+                            <et2-image  src="$row_cont[flagged_icon]" id="flaggedImage"></et2-image>
                         </et2-hbox>
                     </et2-vbox>
                 </row>
             </rows>
         </grid>
-    </template>
-    <template id="mail.index.splitter" height="100%" template="" lang="" group="0" version="1.9.001">
-        <et2-split id="mailSplitter" style="--min: 30%;--max:min(70%,calc(100% - 30em));" vertical="false">
-            <nextmatch id="nm" onselect="app.mail.mail_preview" class="" template="mail.index.rows.vertical" disable_selection_advance="true" no_dynheight="true"/>
-            <template id="mail.index.preview"/>
+        <et2-styles  src="rows.css"></et2-styles>
+    </et2-template>
+    <et2-template  id="mail.index.splitter" height="100%" template="" lang="" group="0" version="1.9.001">
+        <et2-split  id="mailSplitter" style="--min: 30%;--max:min(70%,calc(100% - 30em));" vertical="false">
+            <et2-nextmatch  id="nm" onselect="app.mail.preview" template="mail.index.rows.vertical" noDynheight="true"></et2-nextmatch>
+            <et2-template  id="mail.index.preview"></et2-template>
         </et2-split>
-    </template>
-    <template id="mail.index.rows.horizontal" template="" lang="" group="0" version="1.9.001">
+    </et2-template>
+    <et2-template  id="mail.index.rows.horizontal" template="" lang="" group="0" version="1.9.001">
         <grid width="100%">
             <columns>
                 <column minWidth="60" maxWidth="60" width="60"/>
@@ -170,78 +176,84 @@
             </columns>
             <rows>
                 <row class="th">
-                    <nextmatch-header label="avatar" id="avatar"/>
-                    <nextmatch-header statustext="Status" label="St." id="status"/>
-                    <nextmatch-header statustext="attachments, ..." label="..." id="attachments"/>
-                    <nextmatch-sortheader label="subject" id="subject"/>
-                    <nextmatch-sortheader align="center" label="date" id="date" sortmode="DESC"/>
-                    <nextmatch-sortheader align="center" label="arrival" id="arrival"/>
-                    <nextmatch-sortheader label="mail-address" id="address"/>
-                    <nextmatch-sortheader label="to" id="toaddress"/>
-                    <nextmatch-sortheader label="from" id="fromaddress"/>
-                    <nextmatch-sortheader align="center" label="size" id="size"/>
-                    <nextmatch-header statustext="security" label="Security" id="security"/>
+                    <et2-nextmatch-header  label="avatar" id="avatar"></et2-nextmatch-header>
+                    <et2-nextmatch-header  statustext="Status" label="St." id="status"></et2-nextmatch-header>
+                    <et2-nextmatch-header  statustext="attachments, ..." label="..." id="attachments"></et2-nextmatch-header>
+                    <et2-nextmatch-sortheader  label="subject" id="subject"/>
+                    <et2-nextmatch-sortheader  align="center" label="date" id="date" sortmode="DESC"/>
+                    <et2-nextmatch-sortheader  align="center" label="arrival" id="arrival"/>
+                    <et2-nextmatch-sortheader  label="mail-address" id="address"/>
+                    <et2-nextmatch-sortheader  label="to" id="toaddress"/>
+                    <et2-nextmatch-sortheader  label="from" id="fromaddress"/>
+                    <et2-nextmatch-sortheader  align="center" label="size" id="size"/>
+                    <et2-nextmatch-header  statustext="security" label="Security" id="security"></et2-nextmatch-header>
                 </row>
                 <row class="$row_cont[class]">
-                    <et2-lavatar contactId="email:$row_cont[address]" fname="$row_cont[lavatar][fname]"
-                                 lname="$row_cont[lavatar][lname]" shape="rounded"></et2-lavatar>
-                    <et2-hbox class="status_icons">
-                        <et2-image src="$row_cont[status_icon]" class="status_img $row_cont[class]"></et2-image>
+                    <et2-lavatar  contactId="email:$row_cont[address]" fname="$row_cont[lavatar][fname]" lname="$row_cont[lavatar][lname]" shape="rounded"></et2-lavatar>
+                    <et2-hbox  class="status_icons">
+                        <et2-image  src="$row_cont[status_icon]" class="status_img $row_cont[class]"></et2-image>
                     </et2-hbox>
-                    <html id="${row}[attachments]"/>
-                    <et2-vbox>
-                        <et2-description id="${row}[subject]" noLang="1"></et2-description>
-                        <et2-description id="${row}[bodypreview]" class="et2_label bodypreview"
-                                         noLang="1"></et2-description>
+                    <et2-hbox  class="status_icons">
+                        <et2-image  src="$row_cont[attachment_icon]"></et2-image>
+                        <et2-image  src="$row_cont[flagged_icon]" id="flaggedImage"></et2-image>
+                    </et2-hbox>
+                    <et2-vbox  class="mail_row_content">
+                        <et2-description  id="${row}[subject]" class="mail_subject useEllipsis" noLang="1"></et2-description>
+                        <et2-description  id="${row}[bodypreview]" class="et2_label bodypreview" noLang="1"></et2-description>
+                        <et2-category-box  id="${row}[labelTags]"></et2-category-box>
                     </et2-vbox>
                     <et2-hbox>
-                        <et2-date-time-today align="center" id="${row}[date]" readonly="true"></et2-date-time-today>
+                        <et2-date-time-today  align="center" id="${row}[date]" readonly="true"></et2-date-time-today>
                     </et2-hbox>
-                    <et2-date-time-today id="${row}[modified]" readonly="true"></et2-date-time-today>
-                    <et2-url-email id="${row}[address]" readonly="true" emailDisplay="preference"></et2-url-email>
-                    <et2-url-email id="${row}[toaddress]" readonly="true" emailDisplay="preference"></et2-url-email>
-                    <et2-url-email id="${row}[fromaddress]" readonly="true" emailDisplay="preference"></et2-url-email>
-                    <vfs-size align="right" id="${row}[size]" no_lang="1" readonly="true"/>
-                    <et2-image align="center" id="${row}[smime]" src="$row_cont[smime]" inline="true" class="horizontal_smime"></et2-image>
+                    <et2-date-time-today  id="${row}[modified]" readonly="true"></et2-date-time-today>
+                    <et2-url-email  id="${row}[address]" readonly="true" emailDisplay="preference"></et2-url-email>
+                    <et2-url-email  id="${row}[toaddress]" readonly="true" emailDisplay="preference"></et2-url-email>
+                    <et2-url-email  id="${row}[fromaddress]" readonly="true" emailDisplay="preference"></et2-url-email>
+                    <et2-vfs-size  align="right" id="${row}[size]" noLang="1" readonly="true"></et2-vfs-size>
+                    <et2-image  align="center" src="$row_cont[smime]" inline="true" class="horizontal_smime"></et2-image>
                 </row>
             </rows>
         </grid>
-    </template>
-    <template id="mail.index.nosplitter" template="" lang="" group="0" version="1.9.001">
-        <nextmatch id="nm" onselect="app.mail.mail_preview" template="mail.index.rows.horizontal" disable_selection_advance="true" no_dynheight="true"/>
-    </template>
-    <template id="mail.index.header" template="" lang="" group="0" version="1.9.001">
-        <et2-button id="button[mailcreate]" onclick="app.mail.mail_compose(false);" label="Compose" image="add" noSubmit="true"></et2-button>
-        <template template="api.search-button"></template>
-        <et2-select id="cat_id" ariaLabel="Search" class="et2-label-fixed" onchange="app.mail.changeNmFilter"/>
-        <et2-select id="filter" ariaLabel="Status" class="et2-label-fixed" onchange="app.mail.changeNmFilter"/>
-        <et2-button-toggle id="details" icon="card-text" statustext="Sneak preview in list" onchange="app.mail.toggleDetails"></et2-button-toggle>
-        <et2-dropdown id="mail.index.vacationnotice" disabled="true" class="vacationnotice" hoist="true">
-            <et2-hbox slot="trigger">
-                <et2-description value="on vacation" onclick="app.mail.edit_vacation"></et2-description>
-                <et2-button-icon image="chevron-down" noSubmit="true"></et2-button-icon>
+        <et2-styles  src="rows.css"></et2-styles>
+    </et2-template>
+    <et2-template  id="mail.index.nosplitter" template="" lang="" group="0" version="1.9.001">
+        <et2-nextmatch  id="nm" onselect="app.mail.preview" template="mail.index.rows.horizontal" noDynheight="true"></et2-nextmatch>
+    </et2-template>
+    <et2-template  id="mail.index.header" template="" lang="" group="0" version="1.9.001">
+        <et2-button  id="button[mailcreate]" onclick="app.mail.composeMessage(false);" label="Compose" image="add" noSubmit="true"></et2-button>
+        <et2-template  template="api.search-button"></et2-template>
+        <et2-select  id="cat_id" ariaLabel="Search" class="et2-label-fixed" onchange="app.mail.changeNmFilter"/>
+        <et2-select  id="filter" ariaLabel="Status" class="et2-label-fixed" onchange="app.mail.changeNmFilter"/>
+        <!-- the same colored-flag list as the toolbar's flagging dropdown, but filtering the list
+             instead of setting the flag - a col_filter, so it ANDs with the "Status" filter above
+             rather than replacing it (options come from mail_ui::flagFilterOptions()) -->
+        <et2-dropdown-button  id="flagFilter" label="Filter by flag" statustext="Filter by flag" iconOnly="true" onchange="app.mail.changeNmFilter" onclick="app.mail.changeNmFilter"></et2-dropdown-button>
+        <et2-button-toggle  id="details" icon="card-text" statustext="Sneak preview in list" onchange="app.mail.toggleDetails"></et2-button-toggle>
+        <!-- doc/ai/projects/mail-threaded-view.md, Phase 1 - hidden by default, MailApp.updateThreadingToggle()
+             reveals it only for a profile whose JMAP bootstrap reports supportsThreading (nothing does, yet) -->
+        <et2-button-toggle  id="threaded" icon="diagram-2" offIcon="list-ul" statustext="Group messages by thread" onchange="app.mail.toggleThreaded" style="display:none"></et2-button-toggle>
+        <et2-dropdown  id="mail.index.vacationnotice" disabled="true" class="vacationnotice" hoist="true" toggleOnHover="true">
+            <et2-hbox  slot="trigger">
+                <et2-description  value="on vacation" onclick="app.mail.editVacation"></et2-description>
+                <et2-button-icon  image="chevron-down" noSubmit="true"></et2-button-icon>
             </et2-hbox>
-            <et2-vbox onclick="app.mail.edit_vacation">
-                <et2-description id="nm[vacationnotice]" class="@nm[vacationclass]"></et2-description>
-                <et2-description id="nm[vacationrange]" class="@nm[vacationrangeclass]"></et2-description>
+            <et2-vbox  onclick="app.mail.editVacation">
+                <et2-description  id="nm[vacationnotice]" class="@nm[vacationclass]"></et2-description>
+                <et2-description  id="nm[vacationrange]" class="@nm[vacationrangeclass]"></et2-description>
             </et2-vbox>
         </et2-dropdown>
-        <et2-hbox id="mail.index.quotabox" class="mail-index_quotabox">
+        <et2-hbox  id="mail.index.quotabox" class="mail-index_quotabox">
             <progress id="nm[quotainpercent]" label="@nm[quota]" class="@nm[quotaclass]"/>
         </et2-hbox>
-    </template>
-    <et2-template id="mail.index.dates" template="" lang="" group="0" version="1.9.001">
-        <et2-date id="startdate" label="Start" class="et2-label-fixed" style="padding-bottom: .3rem"
-            onchange="widget.getParent().getWidgetById('enddate').set_min(widget.getValue());return true;"></et2-date>
-        <et2-date id="enddate" label="End" class="et2-label-fixed"
-            onchange="widget.getParent().getWidgetById('startdate').set_max(widget.getValue());return true;"></et2-date>
     </et2-template>
-    <template id="mail.index" template="" lang="" group="0" version="1.9.001">
-        <template template="mail.index.header" slot="main-header"></template>
-        <et2-tree autoloading="mail.mail_ui.ajax_foldertree" id="nm[foldertree]" onclick="app.mail.mail_changeFolder"
-                  onopenstart="app.mail.subscription_autoloadingStart" onopenend="app.mail.subscription_autoloadingEnd"
-                  highlighting="true" slot="left"/>
-        <template id="splitter" height="100%" template="mail.index.splitter"/>
-        <iframe frameborder="1" id="extra_iframe" scrolling="auto" disabled="true"/>
-    </template>
+    <et2-template  id="mail.index.dates" template="" lang="" group="0" version="1.9.001">
+        <et2-date  id="startdate" label="Start" class="et2-label-fixed" style="padding-bottom: .3rem" onchange="widget.getParent().getWidgetById('enddate').set_min(widget.getValue());return true;"></et2-date>
+        <et2-date  id="enddate" label="End" class="et2-label-fixed" onchange="widget.getParent().getWidgetById('startdate').set_max(widget.getValue());return true;"></et2-date>
+    </et2-template>
+    <et2-template  id="mail.index" template="" lang="" group="0" version="1.9.001">
+        <et2-template  template="mail.index.header" slot="main-header"></et2-template>
+        <et2-tree  id="nm[foldertree]" onclick="app.mail.changeFolder" onopenstart="app.mail.subscription_autoloadingStart" onopenend="app.mail.subscription_autoloadingEnd" highlighting="true" slot="left"/>
+        <et2-template  id="splitter" height="100%" template="mail.index.splitter"></et2-template>
+        <et2-iframe  frameborder="1" id="extra_iframe" scrolling="auto" disabled="true"></et2-iframe>
+    </et2-template>
 </overlay>

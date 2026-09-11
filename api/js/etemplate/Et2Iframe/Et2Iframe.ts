@@ -9,7 +9,8 @@
  */
 
 
-import {css, html, LitElement} from "lit";
+import {css, html, LitElement, PropertyValues} from "lit";
+import {property} from "lit/decorators/property.js";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 
 export class Et2Iframe extends Et2Widget(LitElement)
@@ -32,19 +33,26 @@ export class Et2Iframe extends Et2Widget(LitElement)
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			label: {type: String},
-			seamless: {type: Boolean},
-			name: {type: String},
-			fullscreen: {type: Boolean},
-			needed: {type: Boolean},
-			src: {type:String},
-			allow: {type: String}
-		}
-	}
+	@property({type: String})
+	label : string;
+
+	@property({type: Boolean})
+	seamless : boolean;
+
+	@property({type: String})
+	name : string;
+
+	@property({type: Boolean})
+	fullscreen : boolean;
+
+	@property({type: Boolean})
+	needed : boolean;
+
+	@property({type: String})
+	src : string;
+
+	@property({type: String})
+	allow : string;
 
 	constructor(...args : any[])
 	{
@@ -69,9 +77,72 @@ export class Et2Iframe extends Et2Widget(LitElement)
 		`;
 	}
 
-	__getIframeNode()
+	/**
+	 * Push a changed src property into the real `<iframe>`
+	 *
+	 * src is a reactive property, so `src="@pdf_file"` in a template or a later
+	 * widget.src = url assignment (that is how a grid hands its content down, eg. the acdms
+	 * preview) only ever set the property. render() does not bind it to the inner `<iframe>`,
+	 * so the document never loaded unless set_src() was called explicitly.
+	 */
+	updated(changedProperties : PropertyValues)
 	{
-		return this.shadowRoot.querySelector('iframe');
+		super.updated(changedProperties);
+
+		if(changedProperties.has('src') && this.src && this.src.trim() != "" && this.src !== this.__appliedSrc)
+		{
+			this.__applySrc(this.src);
+		}
+	}
+
+	__getIframeNode() : HTMLIFrameElement
+	{
+		return this.shadowRoot?.querySelector('iframe') ?? null;
+	}
+
+	/**
+	 * The real `<iframe>` DOM node inside this widget's shadow root
+	 *
+	 * getDOMNode() (inherited from Et2Widget, unoverridden) returns the `<et2-iframe>` host
+	 * element itself - generic framework code relies on that for placement/visibility/sizing.
+	 * Consumers that need the actual iframe (its contentDocument/contentWindow, a 'load'
+	 * listener, ...) should use this instead of reaching for __getIframeNode() directly.
+	 */
+	get iframe() : HTMLIFrameElement
+	{
+		return this.__getIframeNode();
+	}
+
+	/**
+	 * The url last handed to the `<iframe>`, so updated() does not load again what set_src()
+	 * has just loaded
+	 */
+	private __appliedSrc : string = "";
+
+	/**
+	 * Run callback with the real `<iframe>` node, once it exists
+	 *
+	 * transformAttributes() (initial widget-tree construction from XML, eg. an initial
+	 * value="..." or a readonly/disabled default) can call set_src()/set_value() etc. before
+	 * this element is ever connected to the document - this.shadowRoot (and so the real
+	 * `<iframe>` inside it) doesn't exist yet at that point. Run immediately if it already does,
+	 * otherwise wait for the first render to commit.
+	 */
+	private __withIframeNode(callback : (node : HTMLIFrameElement) => void) : void
+	{
+		const node = this.__getIframeNode();
+		if(node)
+		{
+			callback(node);
+		}
+		else
+		{
+			this.updateComplete.then(() =>
+			{
+				const node = this.__getIframeNode();
+				if(node) callback(node);
+			});
+		}
 	}
 
 	/**
@@ -85,24 +156,37 @@ export class Et2Iframe extends Et2Widget(LitElement)
 	{
 		if(_value.trim() != "")
 		{
+			this.src = _value;
+			this.__applySrc(_value);
+		}
+	}
+
+	private __applySrc(_value : string)
+	{
+		this.__appliedSrc = _value;
+		this.__withIframeNode((node) =>
+		{
+			// a leftover srcdoc attribute overrides src and suppresses the load event
 			if(_value.trim() == 'about:blank')
 			{
-				this.__getIframeNode().src = _value;
+				node.removeAttribute('srcdoc');
+				node.src = _value;
 			}
 			else
 			{
 				// Load the new page, but display a loader
-				let loader = jQuery('<div class="et2_iframe loading"/>');
-				this.__getIframeNode().before(loader);
+				let loader = document.createElement('div');
+				loader.className = 'et2_iframe loading';
+				node.before(loader);
 				window.setTimeout(function() {
-					this.__getIframeNode().src = _value;
-					this.__getIframeNode().addEventListener('load',function() {
+					node.removeAttribute('srcdoc');
+					node.src = _value;
+					node.addEventListener('load',function() {
 						loader.remove();
 					});
-				}.bind(this),0);
-
+				},0);
 			}
-		}
+		});
 	}
 
 	/**
@@ -112,14 +196,14 @@ export class Et2Iframe extends Et2Widget(LitElement)
 	 */
 	set_name(_name)
 	{
-		this.options.name = _name;
-		this.__getIframeNode().attribute('name', _name);
+		this.name = _name;
+		this.__withIframeNode((node) => node.setAttribute('name', _name));
 	}
 
 	set_allow (_allow)
 	{
-		this.options.allow = _allow;
-		this.__getIframeNode().attribute('allow', _allow);
+		this.allow = _allow;
+		this.__withIframeNode((node) => node.setAttribute('allow', _allow));
 	}
 	/**
 	 * Make it look like part of the containing document
@@ -128,8 +212,8 @@ export class Et2Iframe extends Et2Widget(LitElement)
 	 */
 	set_seamless(_seamless)
 	{
-		this.options.seamless = _seamless;
-		this.__getIframeNode().attribute("seamless", _seamless);
+		this.seamless = _seamless;
+		this.__withIframeNode((node) => node.setAttribute("seamless", _seamless));
 	}
 
 	set_value(_value)
@@ -157,7 +241,7 @@ export class Et2Iframe extends Et2Widget(LitElement)
 	 */
 	set_srcdoc(_value)
 	{
-		this.__getIframeNode().attribute("srcdoc", _value);
+		this.__withIframeNode((node) => node.setAttribute("srcdoc", _value));
 	}
 }
 

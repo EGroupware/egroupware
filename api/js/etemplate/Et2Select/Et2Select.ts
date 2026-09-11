@@ -8,13 +8,18 @@
  */
 
 
-import {css, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
+import {LitElement, nothing, PropertyValues, TemplateResult} from "lit";
 import {html, literal, StaticValue} from "lit/static-html.js";
 import {Et2WidgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
 import {SelectOption} from "./FindSelectOptions";
 import shoelace from "../Styles/shoelace";
+import styles from "./Et2Select.styles";
 import {RowLimitedMixin} from "../Layout/RowLimitedMixin";
-import {Et2WithSearchMixin} from "./SearchMixin";
+import {SelectSearchMixin} from "./SelectSearchMixin";
+import {FreeEntryMixin} from "./FreeEntryMixin";
+import {Et2Tag} from "./Tag/Et2Tag";
+import {FreeEntryMixinInterface} from "./FreeEntryMixin";
+import {waitForEvent} from "../Et2Widget/event";
 import {property} from "lit/decorators/property.js";
 import {SlChangeEvent, SlOption, SlSelect} from "@shoelace-style/shoelace";
 import {repeat} from "lit/directives/repeat.js";
@@ -48,7 +53,7 @@ export class Et2WidgetWithSelect extends RowLimitedMixin(Et2WidgetWithSelectMixi
  * as value instead of just a string.
  *
  * SearchMixin adds additional abilities to ALL select boxes
- * @see Et2WithSearchMixin
+ * @see SelectSearchMixin
  *
  * Override for extending widgets:
  * # Custom display of selected value
@@ -97,7 +102,7 @@ export class Et2WidgetWithSelect extends RowLimitedMixin(Et2WidgetWithSelectMixi
 
 @customElement('et2-select')
 // @ts-ignore SlSelect styles is a single CSSResult, not an array, so TS complains
-export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
+export class Et2Select extends SelectSearchMixin(FreeEntryMixin(Et2WidgetWithSelect))
 {
 	// Solves some issues with focus
 	static shadowRootOptions = {...LitElement.shadowRootOptions, delegatesFocus: true};
@@ -108,202 +113,16 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			// Parent (SlSelect) returns a single cssResult, not an array
 			shoelace,
 			super.styles,
-			css`
-				:host {
-					display: block;
-					flex: 1 0 auto;
-					--icon-width: 20px;
-				}
-
-				.form-control--has-label::part(form-control-label) {
-					margin-right: var(--sl-spacing-medium);
-				}
-
-				::slotted(img), img {
-					vertical-align: middle;
-				}
-
-				/* No wrapping */
-
-				sl-option::part(base) {
-					white-space: nowrap;
-				}
-
-				/* No horizontal scrollbar, even if options are long */
-
-				.dropdown__panel {
-					overflow-x: clip;
-				}
-
-				/* Ellipsis when too small */
-
-				::part(tags) {
-					max-width: 100%;
-					padding: var(--sl-spacing-2x-small); 
-				}
-
-				.select__label {
-					display: block;
-					text-overflow: ellipsis;
-					/* This is usually not used due to flex, but is the basis for ellipsis calculation */
-					width: 10ex;
-				}
-
-				/** multiple=true uses tags for each value **/
-				/* styling for icon inside tag (not option) */
-
-				.tag_image {
-					margin-right: var(--sl-spacing-x-small);
-				}
-
-				/* Maximum height + scrollbar on tags (+ other styling) */
-
-				::part(tags) {
-					overflow-y: auto;
-					margin-left: 0px;
-					max-height: initial;
-					min-height: auto;
-					gap: 0.1rem 0.5rem;
-				}
-
-				:host([rows]) ::part(tags) {
-					max-height: calc(var(--rows, 5) * (var(--sl-input-height-medium) * 0.8));
-				}
-
-				:host([rows='1']) ::part(tags) {
-					overflow-y: hidden;
-				}
-
-				:host([readonly][rows='1']) ::part(tags) {
-					overflow: hidden;
-				}
-
-				/* No wrapping if only 1 row */
-
-				:host([multiple][rows='1']) [open]::part(combobox) {
-					flex-flow: nowrap;
-				}
-
-				:host([multiple][rows='1']) [open]::part(tags) {
-					flex-basis: auto;
-				}
-
-				/* No rows set, default height limit about 5 rows */
-
-				:host(:not([rows])) ::part(tags) {
-					max-height: 11em;
-				}
-
-				select:hover {
-					box-shadow: 1px 1px 1px rgb(0 0 0 / 60%);
-				}
-
-				/* Hide dropdown trigger when multiple & readonly */
-
-				:host([readonly][multiple]:not([rows='1']))::part(expand-icon) {
-					display: none;
-				}
-
-				:host([search][open]) ::part(prefix) {
-					flex-flow: wrap;
-				}
-
-				/* Style for tag count if rows=1 */
-
-				.tag_limit {
-					position: absolute;
-					right: 0px;
-					top: 0px;
-					bottom: 0px;
-					box-shadow: rgb(0 0 0/50%) -1.5ex 0px 1ex -1ex, rgb(0 0 0 / 0%) 0px 0px 0px 0px;
-				}
-
-				.tag_limit::part(base) {
-					height: 100%;
-					background-color: var(--sl-input-background-color);
-					border-top-left-radius: 0;
-					border-bottom-left-radius: 0;
-					font-weight: bold;
-					min-width: 3em;
-					justify-content: center;
-				}
-
-				/* Show all rows on hover if rows=1 */
-
-				:host([ readonly ][ multiple ][ rows ]) .hover__popup {
-					width: -webkit-fill-available;
-					width: -moz-fill-available;
-					width: fill-available;
-				}
-
-				:host([readonly][multiple][rows]) .hover__popup::part(popup) {
-					z-index: var(--sl-z-index-dropdown);
-					background-color: var(--sl-color-neutral-0);
-				}
-
-				:host([ readonly ][ multiple ][ rows ]) .hover__popup .select__tags {
-					display: flex;
-					flex-wrap: wrap;
-				}
-
-				::part(listbox) {
-					z-index: 1;
-					background: var(--sl-input-background-color);
-					padding: var(--sl-input-spacing-small);
-					padding-left: 2px;
-
-					box-shadow: var(--sl-shadow-large);
-					min-width: fit-content;
-					border-radius: var(--sl-border-radius-small);
-					border: 1px solid var(--sl-color-neutral-200);
-					overflow-y: auto;
-				}
-
-				::part(display-label) {
-					margin: 0;
-				}
-
-				:host::part(display-label) {
-					max-height: 8em;
-					overflow-y: auto;
-				}
-
-				:host([readonly])::part(combobox) {
-					background: none;
-					opacity: 1;
-					border: none;
-				}
-
-				/* Position & style of group titles */
-
-				small {
-					padding: var(--sl-spacing-medium);
-				}
-			`
+			styles
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/**
-			 * Toggle between single and multiple selection
-			 */
-			multiple: {
-				type: Boolean,
-				reflect: true,
-			},
-
-			/**
-			 * Click handler for individual tags instead of the select as a whole.
-			 * Only used if multiple=true so we have tags
-			 */
-			onTagClick: {
-				type: Function,
-			}
-		}
-	}
+	/**
+	 * Click handler for individual tags instead of the select as a whole.
+	 * Only used if multiple=true so we have tags
+	 */
+	@property({type: Function})
+	onTagClick : any;
 
 
 	/** Placeholder text to show as a hint when the select is empty. */
@@ -357,6 +176,10 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		this._handleMouseLeave = this._handleMouseLeave.bind(this);
 		this._handleTagOverflow = this._handleTagOverflow.bind(this);
 		this.handleTagClick = this.handleTagClick.bind(this);
+		// used as an event handler in _tagTemplate(), so it needs its `this`
+		this.handleTagEdit = this.handleTagEdit.bind(this);
+		this._handleDoubleClick = this._handleDoubleClick.bind(this);
+		this._handleEditKeyDown = this._handleEditKeyDown.bind(this);
 	}
 	/**
 	 * List of properties that get translated
@@ -1037,6 +860,249 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		}`;
 	}
 
+
+	/**
+	 * Allow editing tags by clicking on them.  allowFreeEntries must be true.
+	 *
+	 * Tag editing lives here rather than in SelectSearchMixin: it reuses the search container but
+	 * is not search, and it needs Et2Tag, which only Et2Select has.
+	 */
+	@property({type: Boolean})
+	editModeEnabled = false;
+
+	/** The search container is also wanted when tags are editable, not only for searching */
+	protected get _needsSearchControls() : boolean
+	{
+		return super._needsSearchControls || (!this.readonly && this.editModeEnabled);
+	}
+
+	/** Our contribution to the search container */
+	protected _editControlTemplate() : TemplateResult | typeof nothing
+	{
+		if(!this.editModeEnabled)
+		{
+			return nothing;
+		}
+		return html`<input id="edit" type="text" part="input"
+                           autocomplete="off"
+                           style="width:100%"
+                           aria-label="${this.egw().lang('Edit tag')}"
+                           @keydown=${this._handleEditKeyDown}
+                           @click=${(e) => e.stopPropagation()}
+                           @blur=${this.stopEdit.bind(this)}
+        />`;
+	}
+
+	protected _onMenuShowExtras()
+	{
+		// Hide edit explicitly since it's so hard via CSS
+		if(this._needsSearchControls && this._editInputNode)
+		{
+			this._editInputNode.style.display = "none";
+		}
+
+		if(this.editModeEnabled && this.allowFreeEntries && !this.multiple && this.value)
+		{
+			this.startEdit();
+			this._editInputNode.select();
+			// Hide search explicitly since it's so hard via CSS
+			this._searchInputNode.style.display = "none";
+		}
+	}
+
+	protected _onMenuHideExtras()
+	{
+		if(this._editInputNode)
+		{
+			this._editInputNode.style.display = "";
+		}
+	}
+
+	/** A tag break in the search box ends any edit in progress */
+	protected _resetExtraControls()
+	{
+		this.stopEdit(false);
+	}
+
+	update(changedProperties)
+	{
+		super.update(changedProperties);
+
+		// Required because we explicitly create tags instead of doing it in render()
+		if(changedProperties.has("editModeEnabled") || changedProperties.has("readonly"))
+		{
+			this.select?.shadowRoot?.querySelectorAll(".select__tags > div > *").forEach((tag : Et2Tag) =>
+			{
+				tag.editable = this.editModeEnabled && !this.readonly;
+			});
+		}
+	}
+
+protected get _editInputNode() : HTMLInputElement
+	{
+		return this._activeControls?.querySelector("input#edit");
+	}
+
+_handleDoubleClick(event : MouseEvent)
+	{
+		// No edit (shouldn't happen...)
+		if(!this.editModeEnabled)
+		{
+			return;
+		}
+
+		// Find the tag
+		const path = event.composedPath();
+		const tag = <Et2Tag>path.find((el) => el instanceof Et2Tag);
+		this.hide();
+		this.updateComplete.then(() =>
+		{
+			tag.startEdit(event);
+		});
+	}
+
+protected _handleEditKeyDown(event : KeyboardEvent)
+	{
+		// Stop propagation, or parent key handler will add again
+		event.stopImmediatePropagation();
+
+		if((<typeof FreeEntryMixinInterface><unknown>this.constructor).TAG_BREAK.indexOf(event.key) !== -1 && this.allowFreeEntries)
+		{
+			this.stopEdit();
+
+			// Mess with tabindexes to allow focus to easily go to next control
+			const input = this.select.shadowRoot.querySelector('[tabindex="0"]');
+			input.setAttribute("tabindex", "-1");
+			this.updateComplete.then(() =>
+			{
+				// Set it back so we can get focus again later
+				input.setAttribute("tabindex", "0");
+			})
+			return;
+		}
+		// Abort edit, put original value back
+		else if(event.key == "Escape")
+		{
+			this.stopEdit(true);
+			// Prevent default, since that would try to close popup
+			event.preventDefault();
+		}
+	}
+
+public handleTagEdit(event)
+	{
+		let value = event.target.value;
+		let original = event.target.dataset.original_value;
+
+		if(!value || !this.allowFreeEntries || !this.validateFreeEntry(value))
+		{
+			// Not a good value, reset it.
+			event.target.variant = "danger"
+			return false;
+		}
+
+		event.target.variant = "success";
+
+		// Add to internal list
+		this.createFreeEntry(value);
+
+		// Remove original from value & DOM
+		if(value != original)
+		{
+			if(this.multiple)
+			{
+				this.value = this.value.filter(v => v !== original);
+			}
+			else
+			{
+				this.value = value;
+			}
+			this.__select_options = this.__select_options.filter(v => v.value !== original);
+		}
+	}
+
+	/**
+	 * Start editing the current value if multiple=false
+	 *
+	 * @param {Et2Tag} tag
+	 */
+	public startEdit(tag? : Et2Tag)
+	{
+		const tag_value = tag ? tag.value : this.value.toString();
+
+			// Turn on edit UI
+			this._activeControls.classList.add("editing", "active");
+
+			// Pre-set value to tag value
+			this._editInputNode.style.display = "";
+			this._editInputNode.value = tag_value
+
+			// If they abort the edit, they'll want the original back.
+			this._editInputNode.dataset.initial = tag_value;
+
+		waitForEvent(this.dropdown, "sl-after-show").then(() =>
+		{
+			this._editInputNode.focus();
+		})
+	}
+
+protected stopEdit(abort = false)
+	{
+		// type to select will focus matching entries, but we don't want to stop the edit yet
+		if(typeof abort == "object" && abort.type == "blur")
+		{
+			if(abort.relatedTarget?.localName == this.optionTag)
+			{
+				return;
+			}
+			// Edit lost focus, accept changes
+			abort = false;
+		}
+
+		const original = this._editInputNode?.dataset.initial;
+		delete this._editInputNode?.dataset.initial;
+
+		let value = abort ? original : this._editInputNode?.value;
+		if(this._editInputNode)
+		{
+			this._editInputNode.value = "";
+		}
+
+		// Remove original from value & DOM
+		if(value != original && original)
+		{
+			if(this.multiple)
+			{
+				this.value = this.value.filter(v => v !== original);
+			}
+			else
+			{
+				this.value = value;
+			}
+			this.select_options = this.select_options.filter(v => v.value !== original);
+			this.dropdown.querySelector(".freeEntry[value='" + original.replace(/'/g, "\\\'") + "']")?.remove();
+		}
+
+		if(value && value != original)
+		{
+			this.createFreeEntry(value);
+		}
+
+		this.requestUpdate("select_options");
+
+		this._activeControls.classList.remove("editing", "active");
+		if(!this.multiple)
+		{
+			this.updateComplete.then(async() =>
+			{
+				// Don't know why, but this doesn't always work leaving the value hidden by prefix
+				await this.dropdown.hide();
+				this.dropdown.classList.remove("select--open");
+			});
+		}
+	}
+
+
 	/**
 	 * Get the options we're going to render, depending on if we have them all or not
 	 *
@@ -1157,7 +1223,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 		return html`
             <et2-image slot="prefix" part="icon" style="width: var(--icon-width)"
-                       src="${option.icon}"></et2-image>`
+                       src="${option.icon}" ?inline=${!!option.inlineIcon}></et2-image>`
 	}
 
 
@@ -1275,7 +1341,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                     label=${this.label || nothing}
                     placeholder=${placeholder}
                     aria-label=${this.ariaLabel || nothing}
-                    aria-description=${this.ariaDesciption || nothing}
+                    aria-description=${this.ariaDescription || nothing}
                     ?multiple=${this.multiple}
                     ?disabled=${this.disabled || this.readonly}
                     ?clearable=${this.clearable}

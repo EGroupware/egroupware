@@ -9,65 +9,30 @@
  */
 
 
-import {css} from "lit";
+import {property} from "lit/decorators/property.js";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {SlTextarea} from "@shoelace-style/shoelace";
 import shoelace from "../Styles/shoelace";
+import {Et2MarkdownEditMixin} from "../Markdown/Et2MarkdownEditMixin";
 
 
-export class Et2Textarea extends Et2InputWidget(SlTextarea)
+import styles from "./Et2Textarea.styles";
+export class Et2Textarea extends Et2MarkdownEditMixin(Et2InputWidget(SlTextarea))
 {
+	private __width : string;
+	private __height : string;
+
 	static get styles()
 	{
 		return [
 			...shoelace,
 			...super.styles,
-			css`
-				:host {
-					display: flex;
-					flex-direction: column;
-					width: 100%;
-					height: 100%;
-				}
-
-				.textarea--resize-vertical {
-					height: 100%;
-				}
-
-				:host::part(form-control) {
-					height: 100%;
-					align-items: stretch !important;
-				}
-
-				:host::part(form-control-input), :host::part(textarea) {
-					height: 100%;
-				}
-
-				.form-control-input .textarea--standard.textarea--focused:not(.textarea--disabled){
-					width: calc(100% - (2 * var(--sl-focus-ring-width)));
-					margin-left: var(--sl-focus-ring-width);
-				}
-			`,
+			styles,
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/**
-			 * Specify the width of the text area.
-			 * If not set, it will expand to fill the space available.
-			 */
-			width: {type: String},
-			/**
-			 * Specify the height of the text area.
-			 * If not set, it will expand to fill the space available.
-			 */
-			height: {type: String},
-			onkeypress: Function,
-		}
-	}
+	@property({type: Function})
+	onkeypress : any;
 
 	constructor()
 	{
@@ -110,6 +75,11 @@ export class Et2Textarea extends Et2InputWidget(SlTextarea)
 	 *
 	 * @param value
 	 */
+	/**
+	 * Specify the width of the text area.
+	 * If not set, it will expand to fill the space available.
+	 */
+	@property({type: String, noAccessor: true})
 	set width(value)
 	{
 
@@ -120,6 +90,16 @@ export class Et2Textarea extends Et2InputWidget(SlTextarea)
 		this.requestUpdate("width", oldValue);
 	}
 
+	get width()
+	{
+		return this.__width;
+	}
+
+	/**
+	 * Specify the height of the text area.
+	 * If not set, it will expand to fill the space available.
+	 */
+	@property({type: String, noAccessor: true})
 	set height(value)
 	{
 		let oldValue = this.__height;
@@ -127,6 +107,11 @@ export class Et2Textarea extends Et2InputWidget(SlTextarea)
 		this.__height = value;
 
 		this.requestUpdate("height", oldValue);
+	}
+
+	get height()
+	{
+		return this.__height;
 	}
 
 	/** Override some parent stuff to get sizing how we like it **/
@@ -138,6 +123,19 @@ export class Et2Textarea extends Et2InputWidget(SlTextarea)
 	get _inputNode()
 	{
 		return this.shadowRoot?.querySelector("textarea");
+	}
+
+	/**
+	 * Wrap Shoelace's textarea in the markdown editor when markdown is enabled.
+	 *
+	 * The early return matters more than the wrapping: with markdown off this has to be exactly
+	 * what Shoelace renders today, so no existing textarea changes in any way.
+	 */
+	render()
+	{
+		const source = super.render();
+
+		return this.markdown ? this._markdownShellTemplate(source) : source;
 	}
 }
 

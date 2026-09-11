@@ -156,8 +156,9 @@ abstract class Framework extends Framework\Extra
 		Header\ContentSecurityPolicy::send();
 
 		// allow client-side to detect first load aka just logged in
-		$reload_count =& Cache::getSession(__CLASS__, 'framework-reload');
-		self::$extra['framework-reload'] = (int)(bool)$reload_count++;
+		$reload_count = Cache::getSession(__CLASS__, 'framework-reload');
+		self::$extra['framework-reload'] = (int)(bool)$reload_count;
+		Cache::setSession(__CLASS__, 'framework-reload', (int)$reload_count + 1);
 	}
 
 	/**
@@ -1046,7 +1047,7 @@ abstract class Framework extends Framework\Extra
 			{
 				if (file_exists(EGW_SERVER_ROOT.$theme_css)) break;
 			}
-			// no longer available in config, of you don't want minified CSS on a developer install, don't install grunt/generate the files
+			// no longer available in config, if you don't want minified CSS on a developer install, don't run "npm run css" to generate the files
 			//$debug_minify = !empty($GLOBALS['egw_info']['server']['debug_minify']) && $GLOBALS['egw_info']['server']['debug_minify'] === 'True';
 			if (/*!$debug_minify &&*/ file_exists(EGW_SERVER_ROOT.($theme_min_css = str_replace('.css', '.min.css', $theme_css))))
 			{
@@ -1151,15 +1152,30 @@ abstract class Framework extends Framework\Extra
 			return substr($str,1);
 		}, self::get_script_links(true, false, $map));
 		$extra['app'] = $GLOBALS['egw_info']['flags']['currentapp'];
+		$extra['epoch'] = self::currentBuildEpoch();
+		// filtered logical->hashed manifest, so the two client-side concat sites (a lazy
+		// app.<name> load, and a clientSidePopup()'s own data-include patch) can resolve a
+		// hashed entry instead of guessing its cache-buster
+		$extra['manifest'] = Framework\Bundle::clientManifest();
 
 		// Static things we want to make sure are loaded first
 //$java_script .='<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.44/dist/themes/base.css">
 //<script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.44/dist/shoelace.js"></script>';
 
-		// load our clientside entrypoint egw.min.js with a cache-buster
-		$java_script .= '<script type="module" src="'.$GLOBALS['egw_info']['server']['webserver_url'].
-			'/api/js/jsapi/egw.min.js?'.filemtime(EGW_SERVER_ROOT.'/api/js/jsapi/egw.min.js').
-			'" id="egw_script_id"';
+		// load our clientside entrypoint egw.min.js - hashed at build time, so a resolved path
+		// needs no separate cache-buster; falls back to a filemtime-busted literal path for a
+		// pre-hashing install (no manifest written yet)
+		if (($egw_min_path = Framework\Bundle::resolveEntry('/api/js/jsapi/egw.min.js')))
+		{
+			$java_script .= '<script type="module" src="'.$GLOBALS['egw_info']['server']['webserver_url'].
+				$egw_min_path.'" id="egw_script_id"';
+		}
+		else
+		{
+			$java_script .= '<script type="module" src="'.$GLOBALS['egw_info']['server']['webserver_url'].
+				'/api/js/jsapi/egw.min.js?'.filemtime(EGW_SERVER_ROOT.'/api/js/jsapi/egw.min.js').
+				'" id="egw_script_id"';
+		}
 
 		// add values of extra parameter and class var as data attributes to script tag of egw.js
 		foreach($extra+self::$extra as $name => $value)
@@ -1192,6 +1208,23 @@ abstract class Framework extends Framework\Extra
 	}
 
 	/**
+	 * Timestamp identifying the currently built JS, written by rollup's writeBundle hook to
+	 * build-epoch.json on every build - lets a running session poll for a newer build without
+	 * having to re-fetch or parse any JS bundle (see api/js/jsapi/egw.js)
+	 *
+	 * @return int|null null if the marker file does not exist (eg. before the first build with this feature)
+	 */
+	public static function currentBuildEpoch()
+	{
+		static $epoch = null;
+		if (!isset($epoch) && file_exists($file = EGW_SERVER_ROOT.'/api/js/build-epoch.json'))
+		{
+			$epoch = json_decode(file_get_contents($file), true)['epoch'] ?? null;
+		}
+		return $epoch;
+	}
+
+	/**
 	 * Etag for api/user.php
 	 *
 	 * @param $user
@@ -1211,42 +1244,6 @@ abstract class Framework extends Framework\Extra
 			}
 		}
 		return $GLOBALS['egw']->preferences->etag($user, $prompts ?? '');
-	}
-
-	/**
-	 * Files imported via script tag in egw.js, because they are no modules
-	 */
-	const legacy_js_imports = '#/dhtmlx|jquery|magicsuggest|resumable#';
-
-	/**
-	 * Add EGroupware URL prefix eg. '/egroupware' to files AND bundles
-	 *
-	 * @return array
-	 */
-	public static function getImportMap()
-	{
-		$imports = Bundle::getImportMap();
-
-		// adding some extra mappings
-		if (($prefix = parse_url($GLOBALS['egw_info']['server']['webserver_url'], PHP_URL_PATH)) === '/') $prefix = '';
-
-		// fix egw_global(.d.ts) import
-		$imports[$prefix.'/api/js/jsapi/egw_global'] = $prefix.'/api/js/jsapi/egw_global.js?'.
-			filemtime(EGW_SERVER_ROOT.'/api/js/jsapi/egw_global.js');
-
-		// @todo: add all node_modules as bare imports
-
-		// map all legacy-js to something "not hurting"
-		$imports = array_map(static function($url) use ($prefix)
-		{
-			return !preg_match(self::legacy_js_imports, $url) ? $url :
-				$prefix.'/api/js/jquery/jquery.noconflict.js';
-		}, $imports);
-
-		ContentSecurityPolicy::add("script-src","https://cdn.skypack.dev");
-		ContentSecurityPolicy::add("script-src","https://cdn.jsdelivr.net");
-		ContentSecurityPolicy::add("style-src","https://cdn.jsdelivr.net");
-		return ['imports' => $imports];
 	}
 
 	/**
@@ -1703,14 +1700,19 @@ abstract class Framework extends Framework\Extra
 			$response->includeCSS($GLOBALS['egw_info']['server']['webserver_url'].$path);
 		}
 
-		// try to add app specific js file
-		if (file_exists(EGW_SERVER_ROOT.($path = '/'.$app.'/js/app.min.js')) ||
+		// try to add app specific js file - app.min.js is hashed at build time and no longer
+		// exists under its literal name, so check the manifest first; a miss falls back to the
+		// literal file_exists() checks, exactly as before hashing existed
+		$path = '/'.$app.'/js/app.min.js';
+		if (Framework\Bundle::resolveEntry($path) || file_exists(EGW_SERVER_ROOT.$path) ||
 			file_exists(EGW_SERVER_ROOT.($path = '/'.$app.'/js/app.js')))
 		{
 			self::includeJS($path);
 		}
 
-		// add all js files from Framework::includeJS()
+		// add all js files from Framework::includeJS() - js_includes() leaves an entry as its
+		// bare logical path; egw_import() (egw_files.ts) resolves it client-side against the
+		// manifest this document's own page render already stamped into it
 		$files = Framework\Bundle::js_includes(self::$js_include_mgr->get_included_files());
 		foreach($files as $path)
 		{

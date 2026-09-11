@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="infolog.customfields.status" template="" lang="" group="0" version="1.2.001">
+	<et2-template  id="infolog.customfields.status" template="" lang="" group="0" version="1.2.001">
 		<grid>
 			<columns>
 				<column/>
@@ -33,10 +34,10 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="infolog.admin.types" template="" lang="" group="0" version="">
+	</et2-template>
+	<et2-template  id="infolog.admin.types" template="" lang="" group="0" version="">
 		<et2-vbox>
-			<template id="admin.customfields.types" content="content_types"/>
+			<et2-template  id="admin.customfields.types" content="content_types"></et2-template>
 			<grid id="content_type_options">
 				<columns>
 					<column width="25%"/>
@@ -44,26 +45,26 @@
 				</columns>
 				<rows>
 					<row class="header" disabled="!@type">
-						<et2-description value="@type" label="Group owner for"></et2-description>
+						<et2-description  value="@type" label="Group owner for"></et2-description>
 						<et2-select-account  class="infolog_lpadding5" statustext="If a type has a group owner, all entries of that type will be owned by the given group and NOT the user who created it!" id="group_owner" emptyLabel="None" accountType="groups"></et2-select-account>
 					</row>
 					<row class="header" disabled="!@type">
-						<et2-description value="@type" label="Icon for"></et2-description>
-						<et2-select id="icon" placeholder="Search" search="true" searchUrl="preferences.preferences_categories_ui.ajax_search"></et2-select>
+						<et2-description  value="@type" label="Icon for"></et2-description>
+						<et2-select  id="icon" placeholder="Search" search="true" searchUrl="preferences.preferences_categories_ui.ajax_search"></et2-select>
 					</row>
 					<row class="header">
-						<et2-description label="Custom status for typ" id="type" span="all"></et2-description>
+						<et2-description  label="Custom status for typ" id="type" span="all"></et2-description>
 					</row>
 					<row>
-						<template id="infolog.customfields.status" content="status" span="all"/>
+						<et2-template  id="infolog.customfields.status" content="status" span="all"></et2-template>
 					</row>
 				</rows>
 			</grid>
 			<et2-button  label="Save" id="save"></et2-button>
 			<et2-description  value="Custom fields" span="all" class="header"></et2-description>
 		</et2-vbox>
-		<styles>.header{
+		<et2-styles>.header{
 font-weight: bold;
-}</styles>
-	</template>
+}</et2-styles>
+	</et2-template>
 </overlay>

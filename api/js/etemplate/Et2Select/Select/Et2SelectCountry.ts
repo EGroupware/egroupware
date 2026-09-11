@@ -13,6 +13,7 @@ import {Et2StaticSelectMixin, StaticOptions as so} from "../StaticOptions";
 import {egw} from "../../../jsapi/egw_global";
 import {SelectOption} from "../FindSelectOptions";
 import {html} from "lit";
+import {property} from "lit/decorators/property.js";
 
 /**
  * Customised Select widget for countries
@@ -25,14 +26,9 @@ if(egw && egw(window) && typeof egw(window).includeCSS == "function")
 
 export class Et2SelectCountry extends Et2StaticSelectMixin(Et2Select)
 {
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/* Reflect the value so we can use CSS selectors */
-			value: {type: String, reflect: true}
-		}
-	}
+	/* Reflect the value so we can use CSS selectors */
+	@property({type: String, reflect: true})
+	value : string;
 
 	constructor()
 	{

@@ -183,7 +183,7 @@ export abstract class EgwApp
 	/**
 	 * reference to nextmatch with id="nm"
 	 */
-	nm : et2_nextmatch = null;
+	nm : Et2Nextmatch | et2_nextmatch = null;
 
 	/**
 	 * Initialization and setup goes here, but the etemplate2 object
@@ -365,6 +365,18 @@ export abstract class EgwApp
 				}
 			}
 		}
+
+		// If there are filters set and we get 0 rows, open the filter drawer
+		const nm = _ev.target ?? null;
+		const emptyFilter = (v : any) => typeof v == "object" && v ? Object.values(v).filter(emptyFilter).length : v;
+		if(Object.values(activeFilters).filter(emptyFilter).length !== 0)
+		{
+			const filterDrawer = nm?.closest('egw-app')?.filtersDrawer;
+			if(nm && filterDrawer && !filterDrawer.open)
+			{
+				nm.addEventListener('et2-search-result', (e : CustomEvent) => { filterDrawer.open = e.detail.total == 0;}, {once: true});
+			}
+		}
 	}
 
 	/**
@@ -525,30 +537,27 @@ export abstract class EgwApp
 	 */
 	_push_grant_check(pushData : PushData, grant_fields : string[], appname? : string) : boolean
 	{
-		let grants = egw.grants(appname || this.appname);
+		const grants = egw.grants(appname || this.appname);
 
-		// No grants known
-		if(!grants)
+		// No grants known, or nothing to check them against: we can not tell, so assume access
+		if(!grants || !pushData.acl)
 		{
 			return true;
 		}
 
 		// check user has a grant from owner or something
-		for(let i = 0; i < grant_fields.length; i++)
+		for(const field of grant_fields)
 		{
-			let grant_field = pushData.acl[grant_fields[i]];
-			if(["number", "string"].indexOf(typeof grant_field) >= 0 && grants[grant_field] !== 'undefined')
+			const value = pushData.acl[field];
+			// A field can name a single account (eg. info_owner) or several (eg. info_responsible)
+			for(const account of Array.isArray(value) ? value : [value])
 			{
-				// ACL access
-				return true;
-			}
-			else if(!Object.keys(grants).filter(function(grant_account)
-			{
-				return grant_field.indexOf(grant_account) >= 0 ||
-					grant_field.indexOf(parseInt(grant_account)).length
-			}))
-			{
-				return false;
+				// grants is indexed by the account IDs we got a grant from, so a missing entry means no access
+				if(["number", "string"].indexOf(typeof account) >= 0 && typeof grants[account] !== "undefined")
+				{
+					// ACL access
+					return true;
+				}
 			}
 		}
 		return false;
@@ -843,6 +852,14 @@ export abstract class EgwApp
 			}, this, et2_nextmatch);
 		}
 
+		// Copy col_filter - it's still the same object as the nextmatch's live _filters.col_filter
+		// (shallow copy above), so a caller deleting a key from it (eg. filemanager.getState())
+		// would otherwise clear that filter from the widget too.
+		if(state.col_filter && typeof state.col_filter === "object")
+		{
+			state.col_filter = {...state.col_filter};
+		}
+
 		return state;
 	}
 
@@ -973,6 +990,80 @@ export abstract class EgwApp
 	}
 
 	/**
+	 * Bootstrap a template entirely client-side - no server round-trip at all, for a popup opened
+	 * via egw.clientSidePopup() (api/js/jsapi/egw_open.ts), which has no server-rendered content
+	 * behind it to begin with (unlike viewEntry()'s et2-dialog above, which is still hosted inside
+	 * an already-loaded page).
+	 *
+	 * Replicates api/src/Etemplate.php's own exec()/api/templates/default/head.tpl popup-mode DOM
+	 * shape - `<div id="popupMainDiv" class="popupMainDiv">` wrapping a `<form class="et2_container">`
+	 * plus its matching hidden autocomplete-helper iframe - since CSS throughout (kdots/css/src/
+	 * popups.css, several apps' own app.css) targets that specific id/class/structure, both for
+	 * generic popup chrome (dialog header/footer spacing) and per-app layout (eg. mail's own
+	 * "#popupMainDiv { height: 100% }"), and browsers need a real enclosing `<form target="...">`
+	 * for autocomplete widgets to work at all (found live 2026-09-06 building mail's own
+	 * client-side compose popup this way, ralf: "it adds some styling currently missing").
+	 *
+	 * @param name template id, "$app.$template" form (eg. "mail.compose") - also used, with dots
+	 *  replaced by dashes, as the container's own DOM id and etemplate2's uniqueId. Passing the RAW
+	 *  dotted name as etemplate2's uniqueId instead breaks any widget whose id-derived DOM id gets
+	 *  used elsewhere as a dotted "global.path" - found live 2026-09-06: Et2HtmlArea's TinyMCE
+	 *  config/setup bridge (`window.egwEt2HtmlAreaConfigBridge['mail.compose_xxx']`) is resolved by
+	 *  the tinymce webcomponent naively splitting its "config"/"setup" attribute values on "." - a
+	 *  dotted id looked for a NESTED property instead of the one flat key that's actually there,
+	 *  resolved to undefined, and TinyMCE's own init callback into Et2HtmlArea silently never fired
+	 *  (`widget.tinymce`, and anything awaiting it, hung forever). A real server-rendered
+	 *  container's own id already gets this same dot->dash treatment (etemplate2's constructor
+	 *  itself does it for its container-id-derived fallback; api/js/etemplate/Et2Dialog/Et2Dialog.ts's
+	 *  `DOMContainer.setAttribute('id', templateID)` does it explicitly), so this only matters when
+	 *  passing an explicit uniqueId, which is exactly what a from-scratch popup has to do.
+	 * @param data {content, sel_options, readonlys, modifications, currentapp, ...} - same shape
+	 *  etemplate2.load()'s own _createArrayManagers() expects
+	 * @param url real, server-computed template url (Api\Etemplate::clientSideBootstrap()'s own
+	 *  "url", already /api/etemplate.php-routed and correctly cache-busted with the template's own
+	 *  mtime) - a real server-rendered page always has one of these (Etemplate::exec()'s own
+	 *  $load_array['url']); pass it through here too instead of leaving Et2Template.getUrl() to
+	 *  fall back to a once-a-day guess AND a direct, un-preprocessed .xet fetch (found live
+	 *  2026-09-07, ralf: "does compose.xet now have the correct cache-buster/timestamp?").
+	 * @return the loaded etemplate2 instance - its own et2_ready() has already run by the time this
+	 *  resolves (the caller's app object must already exist on `window.app` by then if it needs to
+	 *  handle that callback, same as any classic postback)
+	 */
+	async bootstrapClientSideTemplate(name : string, data : any, url? : string) : Promise<etemplate2>
+	{
+		const domId = name.replace(/\./g, '-');
+
+		// A real server-rendered page (eg. mail/compose.php) may already have this - reused rather
+		// than duplicated (two elements sharing an id is invalid HTML, and getElementById() would
+		// only ever find the first one anyway) - only a from-scratch about:blank-derived popup
+		// (egw_open.ts's clientSidePopup()) needs one built here.
+		let popupMainDiv = document.getElementById('popupMainDiv');
+		if (!popupMainDiv)
+		{
+			popupMainDiv = document.createElement('div');
+			popupMainDiv.id = 'popupMainDiv';
+			popupMainDiv.className = 'popupMainDiv';
+			document.body.appendChild(popupMainDiv);
+		}
+
+		const container = document.createElement('form');
+		container.target = 'egw_iframe_autocomplete_helper';
+		container.action = 'about:blank';
+		container.id = domId;
+		container.className = 'et2_container';
+		popupMainDiv.appendChild(container);
+
+		const autocompleteHelper = document.createElement('iframe');
+		autocompleteHelper.name = 'egw_iframe_autocomplete_helper';
+		autocompleteHelper.style.cssText = 'width:0;height:0;position:absolute;visibility:hidden;';
+		popupMainDiv.appendChild(autocompleteHelper);
+
+		const et2 = new etemplate2(container, '', domId);
+		await et2.load(name, url || '', data);
+		return et2;
+	}
+
+	/**
 	 * Opens _menuaction in an Et2Dialog
 	 *
 	 * Equivalent to egw.openDialog, though this one works in popups too.
@@ -1051,6 +1142,22 @@ export abstract class EgwApp
 			return;
 		}
 
+		// Sending emails to 2+ entries has no other confirmation anywhere in this flow - ask before
+		// actually sending, since it's not easily undone.
+		if((all || ids.length > 1) && document.documents.some(f => f.mime == "message/rfc822"))
+		{
+			const count = all ? this.egw.lang('all') : ids.length;
+			const [button_id] = await Et2Dialog.show_dialog(null,
+				this.egw.lang('You are about to send %1 emails. Continue?', count),
+				this.egw.lang('Send %1 emails?', count), null,
+				Et2Dialog.BUTTONS_YES_NO, Et2Dialog.QUESTION_MESSAGE
+			).getComplete();
+			if(button_id == Et2Dialog.NO_BUTTON)
+			{
+				return;
+			}
+		}
+
 		let vars = {
 			..._action.data.merge_data,
 			options: document.options,
@@ -1067,7 +1174,7 @@ export abstract class EgwApp
 			vars.document = document.documents[0].path;
 			// Remove not applicable options
 			['pdf', 'download'].forEach(k => delete vars.options[k]);
-			return this._mergeEmail(_action.clone(), vars);
+			return this._mergeEmail(nm, _action.clone(), vars);
 		}
 		else
 		{
@@ -1117,7 +1224,16 @@ export abstract class EgwApp
 				{
 					if(all)
 					{
-						fetchAll(ids, nm, idsArr => resolve(vars.options.individual ? idsArr : [idsArr]));
+						if(nm instanceof Et2Nextmatch)
+						{
+							nm.fetchAllIds()
+								.then(idsArr => resolve(vars.options.individual ? idsArr : [idsArr]))
+								.catch(() => {});
+						}
+						else
+						{
+							fetchAll(ids, nm, idsArr => resolve(vars.options.individual ? idsArr : [idsArr]));
+						}
 					}
 					else
 					{
@@ -1187,10 +1303,11 @@ export abstract class EgwApp
 	/**
 	 * Merge into an email, then open it in compose for a single, send directly for multiple
 	 *
+	 * @param {Et2Nextmatch|et2_nextmatch} nm nextmatch the merge action came from, or null
 	 * @param {object} data
 	 * @protected
 	 */
-	protected _mergeEmail(action, data : object)
+	protected _mergeEmail(nm, action, data : object)
 	{
 		const ids = data['id'];
 		// egw.open() used if only 1 row selected
@@ -1202,21 +1319,52 @@ export abstract class EgwApp
 		data['popup'] = this.egw.link_get_registry('mail', 'edit_popup');
 		data['message'] = this.egw.lang('insert in %1', data.document);
 
-		data['menuaction'] = 'mail.mail_compose.ajax_merge';
+		data['menuaction'] = 'mail.EGroupware\\Mail\\Merge.ajax_merge';
 		action.data = data;
 
 		if(data['select_all'] || ids.length > 1)
 		{
 			data['menuaction'] += "&document=" + data.document + "&merge=" + data.merge;
-			nm_action(action, null, data['target'], {all: data['select_all'], ids: ids});
+			if(nm instanceof Et2Nextmatch)
+			{
+				// executeAction() re-reads the action fresh from the actionManager, which would
+				// discard the menuaction/egw_open/message etc. set above - run the long-task
+				// step directly instead, same as Et2NextmatchActionController.executeLongTaskAction()
+				const idsPromise = data['select_all'] ? nm.fetchAllIds() : Promise.resolve(ids);
+				idsPromise.then(idsArr => Et2Dialog.long_task(
+					null, data['message'] || action.caption, data['title'], data['menuaction'], idsArr, this.egw
+				)).catch(() => {});
+			}
+			else
+			{
+				nm_action(action, null, data['target'], {all: data['select_all'], ids: ids});
+			}
 		}
 		else
 		{
-			this.egw.open(ids.pop(), 'mail', 'edit', {
-				from: 'merge',
-				document: data.document,
-				merge: data.merge
-			}, data['target']);
+			// mail/compose.php (doc/ai/projects/mail-compose-jmap-migration.md, Step 10) instead of
+			// the classic mail_compose::compose() postback (egw.open(id, 'mail', 'edit', ...), which
+			// resolved to that same menuaction via mail's own Link registry) - the merge itself
+			// still has to happen server-side (ajax_mergeSingle(), the exact same merge-into-drafts
+			// mechanism the multi-recipient long-task branch above already uses), but opening the
+			// resulting draft afterward is the same client-side-only "reopen a draft" MailApp.
+			// composeMessage() already does for every other draft - no reason to render a classic
+			// postback around it just for this one caller. Found auditing compose()'s own remaining
+			// callers, 2026-09-07 - this one wasn't previously identified. ajax_merge()/
+			// ajax_mergeSingle() moved into their own EGroupware\Mail\Merge class 2026-09-08 (this
+			// was already their only real caller, and neither needed anything from mail_compose
+			// beyond a connected mail_bo) - dispatched directly, no delegating stub needed.
+			this.egw.request('mail.EGroupware\\Mail\\Merge.ajax_mergeSingle', [ids.pop(), data.document, data.merge])
+				.then((result : any) =>
+				{
+					if (result?.msg)
+					{
+						this.egw.message(result.msg, 'error');
+						return;
+					}
+					(<any>window).app.mail?.composeMessage({id: 'composefromdraft'}, [{id: result.id}]);
+				})
+				.catch((e : any) => this.egw.message(e?.message || e, 'error'));
 		}
 	}
 
@@ -2233,18 +2381,18 @@ export abstract class EgwApp
 			}
 			egw.message('Failed to copy the link!');
 		};
-		jQuery("body").on("click", "[name=share_link]", copy_link_to_clipboard);
-		et2_createWidget("dialog", {
+		const dialog = loadWebComponent("et2-dialog", {
 			callback: function(button_id, value)
 			{
 				jQuery("body").off("click", "[name=share_link]", copy_link_to_clipboard);
 				return true;
 			},
-			title: _data.title ? _data.title : egw.lang("%1 Share Link", _data.writable ? egw.lang("Writable") : egw.lang("Readonly")),
+			title: _data.title ? _data.title : this.egw.lang("%1 Share Link", _data.writable ? this.egw.lang("Writable") : egw.lang("Readonly")),
 			template: _data.template,
 			width: 450,
 			value: {content: {"share_link": _data.share_link}}
-		});
+		}, this.et2);
+		document.body.append(dialog);
 	}
 
 	/**

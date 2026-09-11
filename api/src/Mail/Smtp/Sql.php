@@ -63,9 +63,9 @@ class Sql extends Mail\Smtp
 	 *
 	 * @param string $defaultDomain =null
 	 */
-	function __construct($defaultDomain=null)
+	function __construct($defaultDomain=null, ?Mail\Account $account = null)
 	{
-		parent::__construct($defaultDomain);
+		parent::__construct($defaultDomain, $account);
 
 		$this->db = $GLOBALS['egw']->db;
 	}
@@ -169,7 +169,7 @@ class Sql extends Mail\Smtp
 				{
 					case self::TYPE_ENABLED:
 						$userData['accountStatus'] = $row['mail_value'];
-						$enabled[$row['account_id']] = $row['mail_value'] == self::MAIL_ENABLED;
+						$enabled[$row['account_id']] = true;
 						break;
 
 					case self::TYPE_DELIVERY:
@@ -414,5 +414,42 @@ class Sql extends Mail\Smtp
 		$this->db->delete(self::TABLE, array('account_id' => $_hookValues['account_id']), __LINE__, __FILE__);
 
 		return true;
+	}
+
+	/**
+	 * Hook called when group is added or updated
+	 *
+	 * @param array $data values for keys "location", "account_id", "account_lid", "account_email" and "mailbox"
+	 * @return void
+	 */
+	function updateGroup(array $data)
+	{
+		// store group-email in mailaccounts table
+		try {
+			if (isset($GLOBALS['egw_setup']) && !in_array(self::TABLE, $this->db->table_names(true)))
+			{
+				// cant store email, if table not yet exists
+			}
+			elseif (empty($data['account_email']))
+			{
+				$this->db->delete(self::TABLE, array(
+					'account_id' => $data['account_id'],
+					'mail_type' => self::TYPE_ALIAS,
+				), __LINE__, __FILE__, self::APP);
+			}
+			else
+			{
+				$this->db->insert(self::TABLE, array(
+					'mail_value' => $data['account_email'],
+				), array(
+					'account_id' => $data['account_id'],
+					'mail_type' => self::TYPE_ALIAS,
+				), __LINE__, __FILE__, self::APP);
+			}
+		} 
+		// ignore not (yet) existing mailaccounts table (does NOT work in PostgreSQL, because of transaction!)
+		catch (Api\Db\Exception $e) {
+			unset($e);
+		}
 	}
 }

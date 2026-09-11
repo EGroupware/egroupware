@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="admin.customfield_edit.settings" template="" lang="" group="0" version="1.9.001">
+	<et2-template  id="admin.customfield_edit.settings" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width="100"/>
@@ -21,36 +22,35 @@
 				<row>
 					<et2-description  value="Type of field"></et2-description>
 					<customfields-types statustext="Type of customfield" id="cf_type" class="et2_fullWidth" span="2" onchange="app.admin.cf_type_change"/>
-					<et2-checkbox id="cf_needed" label="Required" style="padding-left: .5em"></et2-checkbox>
+					<et2-checkbox  id="cf_needed" label="Required" style="padding-left: .5em"></et2-checkbox>
 				</row>
 				<row disabled="!@use_private">
 					<et2-description  value="Private"></et2-description>
 					<et2-select-account  statustext="Select accounts for which the custom field should be visible" id="cf_private" rows="3" span="3" multiple="1" placeholder="Add user or group" accountType="both"></et2-select-account>
 				</row>
 				<!-- disabled until implemented row disabled="!@use_readonly">
-					<et2-description value="Readonly"></et2-description>
-					<et2-select-account statustext="Select accounts for which the custom field should be readonly" id="cf_readonly" rows="3" span="3" multiple="1" placeholder="Add user or group" accountType="both"></et2-select-account>
+					<et2-description  value="Readonly"></et2-description>
+					<et2-select-account  statustext="Select accounts for which the custom field should be readonly" id="cf_readonly" rows="3" span="3" multiple="1" placeholder="Add user or group" accountType="both"></et2-select-account>
 				</row-->
 				<row>
-					<et2-description  statustext="each value is a line like id[=label], or use @path to read options from a file in EGroupware directory" value="Options"></et2-description>
-					<et2-textarea  statustext="@statustext" id="cf_values" rows="5" span="3" width="99%"></et2-textarea>
+					<et2-description  statustext="each value is a line like id[=label], or use @path to read options from a file in EGroupware directory" value="Options"></et2-description><et2-ai  span="3"><et2-textarea  statustext="@statustext" id="cf_values" rows="5" width="99%"></et2-textarea></et2-ai>
 				</row>
 				<row>
 					<et2-description  value="Length"></et2-description>
-					<et2-number statustext="displayed length of input field (set rows=1 to limit length)" id="cf_len" precision="0"></et2-number>
-					<et2-description value="Rows"></et2-description>
-					<et2-number statustext="number of row for a multiline inputfield or line of a multi-select-box" id="cf_rows" min="0" precision="0" placeholder="1"></et2-number>
+					<et2-number  statustext="displayed length of input field (set rows=1 to limit length)" id="cf_len" precision="0"></et2-number>
+					<et2-description  value="Rows"></et2-description>
+					<et2-number  statustext="number of row for a multiline inputfield or line of a multi-select-box" id="cf_rows" min="0" precision="0" placeholder="1"></et2-number>
 				</row>
 				<row>
 					<et2-description  value="Order"></et2-description>
 					<et2-number  statustext="determines the order the fields are displayed" id="cf_order" min="1" precision="0"></et2-number>
-					<et2-description value="Tab"></et2-description>
-					<et2-textbox id="cf_tab" maxlength="64" placeholder="custom fields tab" statustext="Name of tab to create and show field in" style="min-width: 15em"></et2-textbox>
+					<et2-description  value="Tab"></et2-description>
+					<et2-textbox  id="cf_tab" maxlength="64" placeholder="custom fields tab" statustext="Name of tab to create and show field in" style="min-width: 15em"></et2-textbox>
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="admin.customfield_edit" template="" lang="" group="0" version="1.9.001">
+	</et2-template>
+	<et2-template  id="admin.customfield_edit" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width="100"/>
@@ -60,8 +60,8 @@
 			</columns>
 			<rows>
 				<row class="dialogHeader" height="28">
-					<et2-description value="Name"></et2-description>
-					<et2-textbox statustext="internal name max. 64 chars" id="cf_name" maxlength="64" span="2" required="true"></et2-textbox>
+					<et2-description  value="Name"></et2-description>
+					<et2-textbox  statustext="internal name max. 64 chars" id="cf_name" maxlength="64" span="2" required="true"></et2-textbox>
 					<et2-appicon></et2-appicon>
 				</row>
 				<row>
@@ -70,7 +70,7 @@
 							<tab id="settings" label="Settings" statustext="Settings"/>
 						</tabs>
 						<tabpanels>
-							<template id="admin.customfield_edit.settings"/>
+							<et2-template  id="admin.customfield_edit.settings"></et2-template>
 						</tabpanels>
 					</et2-tabbox>
 				</row>
@@ -80,9 +80,9 @@
 						<et2-button  statustext="Apply the changes" label="Apply" id="button[apply]" image="apply"></et2-button>
 						<et2-button  statustext="leave without saveing the entry" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel"></et2-button>
 					</et2-hbox>
-                    <et2-button align="right" statustext="delete this entry" label="Delete" id="button[delete]" image="delete" onclick="Et2Dialog.confirm(widget,'Delete this entry?','Delete')" span="all"></et2-button>
+                    <et2-button  align="right" statustext="delete this entry" label="Delete" id="button[delete]" image="delete" onclick="Et2Dialog.confirm(widget,'Delete this entry?','Delete')" span="all"></et2-button>
 				</row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

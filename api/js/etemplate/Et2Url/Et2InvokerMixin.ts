@@ -9,10 +9,12 @@
 
 /* eslint-disable import/no-extraneous-dependencies */
 import {css, html, LitElement, render} from 'lit';
+import {state} from "lit/decorators/state.js";
 import {Et2InputWidget, Et2InputWidgetInterface} from "../Et2InputWidget/Et2InputWidget";
 import {colorsDefStyles} from "../Styles/colorsDefStyles";
 import {dedupeMixin} from "@open-wc/dedupe-mixin";
 
+import styles from "./Et2InvokerMixin.styles";
 /**
  * Invoker mixing adds an invoker button to a widget to trigger some action, e.g.:
  * - searchbox to delete input
@@ -27,55 +29,24 @@ export const Et2InvokerMixin = dedupeMixin(<T extends Constructor<LitElement>>(s
 {
 	class Et2Invoker extends Et2InputWidget(superclass)
 	{
-		/** @type {any} */
-		static get properties()
-		{
-			return {
-				/**
-				 * Textual label or image specifier for egw.image()
-				 */
-				_invokerLabel: {
-					type: String,
-				},
-				_invokerTitle: {
-					type: String,
-				},
-				_invokerAction: {
-					type: Function,
-				}
-			};
-		}
+		/**
+		 * Textual label or image specifier for egw.image()
+		 */
+		@state()
+		_invokerLabel : string;
+
+		@state()
+		_invokerTitle : string;
+
+		@state()
+		_invokerAction : Function;
 
 		static get styles()
 		{
 			return [
 				...super.styles,
 				colorsDefStyles,
-				css`
-				::slotted(input), input, ::slotted(select) {
-					background-color: transparent;
-					border: none !important;
-				}
-				.input-group {
-					border: 1px solid var(--input-border-color);
-				}
-				.input-group__suffix{
-					text-align: center;
-				}
-				.input-group__container {
-					align-items: center
-				}
-				::slotted([slot="suffix"]) {
-					border: none !important;
-					background-color: transparent !important;
-					width: 2rem;
-					margin-inline-end: var(--sl-input-spacing-medium);
-				}
-				::slotted(:disabled) {cursor: default !important;}
-				:host(:hover) ::slotted([slot="suffix"]) {
-					cursor: pointer;
-				}
-			`,
+				styles,
 			];
 		}
 

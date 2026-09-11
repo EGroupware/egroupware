@@ -6,7 +6,7 @@ import {repeat} from "lit/directives/repeat.js";
 import "@shoelace-style/shoelace/dist/components/split-panel/split-panel.js";
 import styles from "./EgwFramework.styles";
 import {egw} from "../../api/js/jsapi/egw_global";
-import {SlAlert, SlDropdown, SlTabGroup} from "@shoelace-style/shoelace";
+import {SlDropdown, SlTabGroup} from "@shoelace-style/shoelace";
 import {EgwFrameworkApp} from "./EgwFrameworkApp";
 import {EgwFrameworkMessage} from "./EgwFrameworkMessage";
 import {HasSlotController} from "../../api/js/etemplate/Et2Widget/slot";
@@ -58,6 +58,10 @@ export class EgwFramework extends LitElement
 
 			// TEMP STUFF
 			css`
+				:host(.print) {
+					--egw-split-panel-slot-overflow: visible;
+				}
+
 				:host .placeholder {
 					display: none;
 				}
@@ -126,7 +130,9 @@ export class EgwFramework extends LitElement
 	public popups = new EgwPopups();
 
 	// Keep track of open messages
-	private _messages : SlAlert[] = [];
+	// Keyed by message hash, not a list - and it holds the <egw-message> elements, not the
+	// sl-alerts inside them
+	private _messages : {[hash : string] : EgwFrameworkMessage} = {};
 
 	// Watch for things (apps) getting added
 	private appDOMObserver : MutationObserver
@@ -160,6 +166,7 @@ export class EgwFramework extends LitElement
 		this.appDOMObserver = new MutationObserver(this.handleAppDOMChange);
 		this.handleDarkmodeChange = this.handleDarkmodeChange.bind(this);
 		this.handleApplicationListShow = this.handleApplicationListShow.bind(this);
+		this.handleKeydown = this.handleKeydown.bind(this);
 	}
 	connectedCallback()
 	{
@@ -181,6 +188,7 @@ export class EgwFramework extends LitElement
 		}
 
 		document.body.addEventListener("egw-darkmode-change", this.handleDarkmodeChange);
+		document.addEventListener("keydown", this.handleKeydown);
 	}
 
 	disconnectedCallback()
@@ -188,7 +196,20 @@ export class EgwFramework extends LitElement
 		super.disconnectedCallback();
 
 		document.body.removeEventListener("egw-darkmode-change", this.handleDarkmodeChange);
+		document.removeEventListener("keydown", this.handleKeydown);
 		this.appDOMObserver.disconnect();
+	}
+
+	/**
+	 * Capture Ctrl+P / Cmd+P and print the active application instead of the whole window
+	 */
+	protected handleKeydown(e : KeyboardEvent)
+	{
+		if((e.ctrlKey || e.metaKey) && e.key?.toLowerCase() === "p")
+		{
+			e.preventDefault();
+			this.print();
+		}
 	}
 
 	protected firstUpdated(_changedProperties : PropertyValues)
@@ -724,6 +745,12 @@ export class EgwFramework extends LitElement
 						this.popups.close(dialog);
 					}
 				});
+				// Catch-all: a footer button other than Cancel closes the dialog by calling
+				// hide() directly (Et2Dialog._onClick()), without ever dispatching
+				// sl-request-close. sl-after-hide fires on every real close regardless of
+				// how it was triggered, so use it to guarantee the dialog is untracked -
+				// _garbage_collector() never reclaims Et2Dialog entries on its own.
+				dialog.addEventListener("sl-after-hide", () => this.popups.close(dialog));
 			});
 
 			// Put the dialog in the correct app so it can inherit application styles & be removed if app closes
@@ -910,7 +937,7 @@ export class EgwFramework extends LitElement
 	 * @param {string} _discardID unique string id (appname:id) in order to register
 	 * the message as discardable. Discardable messages offer a checkbox to never be shown again.
 	 * If no appname given, the id will be prefixed with current app. The discardID will be stored in local storage.
-	 * @returns {Promise<EgwFrameworkMessage>} SlAlert element
+	 * @returns {Promise<EgwFrameworkMessage>} the <egw-message> element
 	 */
 	public async message(message : string, type : "" | "help" | "info" | "error" | "warning" | "success" = "", duration : null | number = null, closable = true, _discardID : null | string = null, _window : null | Window = null) : Promise<EgwFrameworkMessage>
 	{
@@ -920,8 +947,8 @@ export class EgwFramework extends LitElement
 		}
 		if(!type)
 		{
-			const error_reg_exp = new RegExp('(error|' + egw.lang('error') + ')', 'i');
-			type = message.match(error_reg_exp) ? 'error' : 'success';
+			// resolved here too (not just in the element): the dedupe below compares types
+			type = EgwFrameworkMessage.detectType(message);
 		}
 		if(!_window)
 		{
@@ -936,6 +963,12 @@ export class EgwFramework extends LitElement
 			const alert = this._messages[hash];
 			if (alert.type === type)
 			{
+				// Same message still showing: don't stack a duplicate, but do give it a fresh
+				// countdown.  sl-alert only arms auto-hide on the open false->true transition and
+				// show() early-returns while already open, so without this the repeat inherits
+				// whatever is left of the first one - save twice in quick succession and the
+				// "new" toast disappears almost immediately.
+				alert.restartAutoHide();
 				return this._messages[hash];
 			}
 			alert.hide();

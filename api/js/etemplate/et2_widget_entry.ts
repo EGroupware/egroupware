@@ -7,11 +7,6 @@
  * @author Nathan Gray
  */
 
-
-/*egw:uses
-	et2_core_valueWidget;
-*/
-
 import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_valueWidget} from "./et2_core_valueWidget";
 import {ClassWithAttributes} from "./et2_core_inheritance";

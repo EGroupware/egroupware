@@ -9,37 +9,6 @@
  * @copyright EGroupware GmbH 2011-2021
  */
 
-/*egw:uses
-
-	// Include the action system
-	egw_action.egw_action;
-	egw_action.egw_action_popup;
-	egw_action.egw_action_dragdrop;
-	egw_action.egw_menu_dhtmlx;
-
-	// Include some core classes
-	et2_core_widget;
-	et2_core_interfaces;
-	et2_core_DOMWidget;
-
-	// Include all widgets the nextmatch extension will create
-	et2_widget_template;
-	et2_widget_grid;
-	et2_widget_selectbox;
-	et2_widget_selectAccount;
-	et2_widget_taglist;
-	et2_extension_customfields;
-
-	// Include all nextmatch subclasses
-	et2_extension_nextmatch_rowProvider;
-	et2_extension_nextmatch_controller;
-	et2_widget_dynheight;
-
-	// Include the grid classes
-	et2_dataview;
-
-*/
-
 import {et2_csvSplit, et2_no_init} from "./et2_core_common";
 import {
 	et2_IInput,
@@ -53,7 +22,7 @@ import {et2_createWidget, et2_register_widget, et2_widget, WidgetConfig} from ".
 import {et2_DOMWidget} from "./et2_core_DOMWidget";
 import {et2_baseWidget} from "./et2_core_baseWidget";
 import {et2_inputWidget} from "./et2_core_inputWidget";
-import {et2_selectbox} from "./et2_widget_selectbox";
+import {et2_selectbox} from "./legacy-shims/et2_widget_selectbox";
 import {et2_nextmatch_rowProvider} from "./et2_extension_nextmatch_rowProvider";
 import {et2_nextmatch_controller} from "./et2_extension_nextmatch_controller";
 import {et2_dataview} from "./et2_dataview";
@@ -63,8 +32,8 @@ import {et2_grid} from "./et2_widget_grid";
 import {et2_dataview_grid} from "./et2_dataview_view_grid";
 import {et2_dynheight} from "./et2_widget_dynheight";
 import {et2_arrayMgr} from "./et2_core_arrayMgr";
-import {et2_button} from "./et2_widget_button";
-import {et2_template} from "./et2_widget_template";
+import type {et2_button} from "./legacy-shims/et2_widget_button";
+import {et2_template} from "./legacy-shims/et2_widget_template";
 import {egw} from "../jsapi/egw_global";
 import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
 import {egwIsMobile} from "../egw_action/egw_action_common";
@@ -310,7 +279,6 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	controller : any;
 	private rowProvider : any;
 
-
 	// Flag for an update is currently being done, to avoid a loop
 	private update_in_progress : boolean;
 
@@ -383,7 +351,6 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			attributeFilter: ["disabled", "hidden", "style"],
 			attributeOldValue: true
 		});
-
 
 		this.header = <et2_nextmatch_header_bar>et2_createWidget("nextmatch_header_bar", {}, this);
 		this.innerDiv = jQuery(document.createElement("div"))
@@ -1253,7 +1220,6 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			}
 		}
 
-
 		// Edit means refresh everything, so no need to keep queueing
 		// Too many?  Forget it, we'll refresh everything.
 		if(this._queued_refreshes.length >= max_queued || _type == et2_nextmatch.EDIT || !_type)
@@ -1491,7 +1457,6 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		}
 		return colName;
 	}
-
 
 	/**
 	 * Retrieve the user's preferences for this nextmatch merged with defaults
@@ -2003,12 +1968,19 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		if(total == 0) this.controller._emptyRow();
 
 		// Set data cache prefix to either provided custom or auto
-		if(!this.options.settings.dataStorePrefix && this.options.settings.get_rows)
+		if(!this.options.settings.dataStorePrefix)
 		{
-			// Use jsapi data module to update
-			let list = this.options.settings.get_rows.split('.', 2);
-			if(list.length < 2) list = this.options.settings.get_rows.split('_');	// support "app_something::method"
-			this.options.settings.dataStorePrefix = list[0];
+			// Use jsapi data module to update - prefer get_rows (server-side row-fetch
+			// callback), but apps without one (rows fetched entirely client-side, e.g. mail's
+			// direct JMAP access, see mail/js/jmap.ts) still need a prefix derived from
+			// somewhere: fall back to the row template, which is always "app.something...".
+			let source = this.options.settings.get_rows || this.options.template;
+			if(source)
+			{
+				let list = source.split('.', 2);
+				if(list.length < 2) list = source.split('_');	// support "app_something::method"
+				this.options.settings.dataStorePrefix = list[0];
+			}
 		}
 		this.controller.setPrefix(this.options.settings.dataStorePrefix);
 
@@ -2118,6 +2090,18 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		}
 
 		return _order;
+	}
+
+	/**
+	 * Open the column selection dialog.
+	 *
+	 * Public alias used by app containers so they do not need to call the legacy
+	 * internal click handler directly.
+	 */
+	openColumnSelection(e? : Event)
+	{
+		e?.preventDefault();
+		this._selectColumnsClick(e);
 	}
 
 	_selectColumnsClick(e)
@@ -3129,7 +3113,6 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			loadChildren()
 		}
 
-
 	}
 
 	_handleDOMMutation(mutations)
@@ -3276,7 +3259,6 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				// Set CSS for orientation
 				this.div.addClass(orientation);
 				this.egw().set_preference(app, pref + '_orientation', orientation);
-
 
 				// Try to tell browser about orientation
 				const css = '@page { size: ' + orientation + '; }',
@@ -3889,11 +3871,11 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 			{
 				definition = egw.preference('nextmatch-export-definition', this.nextmatch.egw().app_name());
 			}
-			let button = <et2_button>et2_createWidget("buttononly", {
+			let button = <et2_button>et2_createWidget("button", {
 				id: "export",
 				"statustext": "Export",
 				image: "download",
-				"background_image": true
+				noSubmit: true
 			}, this);
 			jQuery(button.getDOMNode())
 				.click(this.nextmatch, function(event)
@@ -3959,7 +3941,6 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 			this.lettersearch.hide();
 		}
 	}
-
 
 	/**
 	 * Build & bind to a sub-template into the header
@@ -4446,7 +4427,6 @@ export class et2_nextmatch_header extends et2_baseWidget implements et2_INextmat
 	{
 		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_nextmatch_header._attributes, _child || {}));
 
-
 		this.labelNode = jQuery(document.createElement("span"));
 		this.nextmatch = null;
 
@@ -4574,7 +4554,6 @@ export class et2_nextmatch_customfields extends et2_customfields_list implements
 		{
 			const field = this.options.customfields[field_name];
 			const cf_id = et2_customfields_list.PREFIX + field_name;
-
 
 			if(this.rows[field_name]) continue;
 

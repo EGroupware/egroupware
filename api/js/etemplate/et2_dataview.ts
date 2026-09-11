@@ -9,16 +9,6 @@
  * @copyright EGroupware GmbH 2011-2021
  */
 
-/*egw:uses
-	/vendor/bower-asset/jquery/dist/jquery.js;
-	et2_core_common;
-
-	et2_dataview_model_columns;
-	et2_dataview_view_grid;
-	et2_dataview_view_rowProvider;
-	et2_dataview_view_resizeable;
-*/
-
 import {et2_dataview_column, et2_dataview_columns} from './et2_dataview_model_columns';
 import {et2_dataview_view_resizable} from "./et2_dataview_view_resizeable";
 import {et2_dataview_grid} from "./et2_dataview_view_grid";
@@ -98,7 +88,6 @@ export class et2_dataview
 	private tbody: JQuery;
 	private table: JQuery;
 	private visibleColumnCount: number;
-
 
 	/**
 	 * Constructor for the grid container
@@ -270,7 +259,6 @@ export class et2_dataview
 		}
 	}
 
-
 	/* --- PRIVATE FUNCTIONS --- */
 
 	/* --- Code for building the grid container DOM-Tree elements ---- */
@@ -305,7 +293,6 @@ export class et2_dataview
 			.append(this.thead, this.tbody)
 			.appendTo(this.parentNode);
 	}
-
 
 	/* --- Code for building the header row --- */
 

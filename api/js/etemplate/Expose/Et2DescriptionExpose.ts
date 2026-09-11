@@ -13,6 +13,7 @@ import {ExposeMixin, ExposeValue, MediaValue} from "./ExposeMixin";
 import {Et2Description} from "../Et2Description/Et2Description";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 import {html} from "lit";
+import {property} from "lit/decorators/property.js";
 
 /**
  * Shows a description and if you click on it, it shows the file specified by href in gallery.
@@ -23,29 +24,19 @@ import {html} from "lit";
 //@ts-ignore Something not right with types & inheritance according to TypeScript
 export class Et2DescriptionExpose extends ExposeMixin(Et2Description) implements et2_IDetachedDOM
 {
-	static get properties()
-	{
-		return {
-			...super.properties,
+	/**
+	 * Mime type
+	 * Used to determine this widget can be exposed.  If not one of the OK mime types, will be treated
+	 * as a normal description
+	 */
+	@property({type: String, reflect: true})
+	mime : string;
 
-			/**
-			 * Mime type
-			 * Used to determine this widget can be exposed.  If not one of the OK mime types, will be treated
-			 * as a normal description
-			 */
-			mime: {
-				type: String,
-				reflect: true
-			},
-
-			/**
-			 * hash for data stored on service-side with egw_link::(get|set)_data()
-			 */
-			mimeData: {type: String},
-		}
-	}
-
-	constructor() {super();}
+	/**
+	 * hash for data stored on service-side with egw_link::(get|set)_data()
+	 */
+	@property({type: String})
+	mimeData : string;
 
 	connectedCallback()
 	{

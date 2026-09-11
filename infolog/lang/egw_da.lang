@@ -265,7 +265,6 @@ limit number of description lines (default 5, 0 for no limit)	infolog	da	Begræn
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	da	Begræns bredden af beskrivelseskolonnen. Virker kun, hvis linjegrænsen er sat. 0 = ingen grænse.
 link	infolog	da	Link
 linked to %1	infolog	da	Linket til %1
-links	infolog	da	Links
 links and attached files	infolog	da	Links og vedhæftede filer
 links of this entry	infolog	da	Links til denne postering
 links to specified application.  example: {{links/infolog}}	infolog	da	Links til det angivne program. Eksempel: {{links/infolog}}

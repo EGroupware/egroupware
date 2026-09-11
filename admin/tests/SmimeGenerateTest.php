@@ -326,4 +326,166 @@ class SmimeGenerateTest extends Api\LoggedInTest
 			}
 		}
 	}
+
+	private function generateKey(int $acc_id, int $account_id, string $email, string $passphrase)
+	{
+		$tpl = new Etemplate();
+		$content = array(
+			'acc_id' => $acc_id,
+			'smime_gen_dn' => json_encode(array(
+				'commonName' => 'No-Passphrase Test',
+				'emailAddress' => $email,
+				'passphrase' => $passphrase,
+			)),
+		);
+		$ref = new ReflectionMethod(admin_mail::class, 'generate_smime_key');
+		$ref->setAccessible(true);
+		$cred_id = $ref->invokeArgs(null, array($content, $tpl, $account_id));
+		$this->assertNotNull($cred_id, "test setup: generating the key for acc_id=$acc_id must succeed");
+		return $cred_id;
+	}
+
+	/**
+	 * "Do NOT ask passphrase" feature: stripSmimePassphrase() must unlock the already-stored key
+	 * with the CURRENT (real) passphrase, then re-store it so an EMPTY passphrase unlocks it from
+	 * then on - the actual mechanism the checkbox relies on to stop future sign/encrypt/decrypt
+	 * prompts (Smime::get_acc_smime()/resolveMessage() already try '' unconditionally, see this
+	 * method's own docblock - no other code needs to change).
+	 */
+	public function testStripSmimePassphraseProducesUnlockableWithEmptyPassphrase()
+	{
+		$acc_id = 999903;
+		$account_id = $GLOBALS['egw_info']['user']['account_id'];
+		Mail\Credentials::delete($acc_id, $account_id, Mail\Credentials::SMIME);
+
+		try
+		{
+			$cred_id = $this->generateKey($acc_id, $account_id, 'strip-test@example.org', 'correct horse');
+
+			$tpl = new Etemplate();
+			$content = array('acc_id' => $acc_id, 'acc_smime_cred_id' => $cred_id, 'smime_passphrase' => 'correct horse');
+			$result = $this->callPrivateStatic('stripSmimePassphrase', array($content, $tpl, $account_id));
+
+			$this->assertNotNull($result, 'must return a cred_id on success');
+			$acc_smime = Mail\Smime::get_acc_smime($acc_id, '', $account_id);
+			$this->assertNotEmpty($acc_smime['pkey'] ?? null,
+				'the re-exported key must now unlock with an empty passphrase');
+			$this->assertFalse(Mail\Smime::isPassphraseProtected($acc_smime['acc_smime_password']),
+				'the newly stored p12 blob itself must no longer be passphrase-protected');
+		}
+		finally
+		{
+			Mail\Credentials::delete($acc_id, $account_id, Mail\Credentials::SMIME);
+		}
+	}
+
+	/**
+	 * A wrong "current passphrase" must be rejected without touching the stored key at all -
+	 * same distinguishable error as import_smime_cert()'s equivalent check.
+	 */
+	public function testStripSmimePassphraseRejectsWrongPassphrase()
+	{
+		$acc_id = 999904;
+		$account_id = $GLOBALS['egw_info']['user']['account_id'];
+		Mail\Credentials::delete($acc_id, $account_id, Mail\Credentials::SMIME);
+
+		try
+		{
+			$cred_id = $this->generateKey($acc_id, $account_id, 'wrong-pass-test@example.org', 'correct horse');
+
+			$tpl = new Etemplate();
+			$content = array('acc_id' => $acc_id, 'acc_smime_cred_id' => $cred_id, 'smime_passphrase' => 'wrong');
+			$result = $this->callPrivateStatic('stripSmimePassphrase', array($content, $tpl, $account_id));
+
+			$this->assertNull($result);
+			$this->assertNotNull(Etemplate::get_validation_errors('smime_passphrase'));
+			// the stored key must be UNCHANGED - still needs the real passphrase, not the empty one
+			$acc_smime = Mail\Smime::get_acc_smime($acc_id, '', $account_id);
+			$this->assertEmpty($acc_smime['pkey'] ?? null, 'an empty passphrase must still not unlock the untouched key');
+		}
+		finally
+		{
+			Mail\Credentials::delete($acc_id, $account_id, Mail\Credentials::SMIME);
+		}
+	}
+
+	/**
+	 * save_smime_key() must honor smime_no_passphrase for a brand-new p12 upload too, not just
+	 * for stripSmimePassphrase()'s "already stored" case.
+	 */
+	public function testSaveSmimeKeyStripsPassphraseWhenRequested()
+	{
+		$acc_id = 999905;
+		$account_id = $GLOBALS['egw_info']['user']['account_id'];
+		Mail\Credentials::delete($acc_id, $account_id, Mail\Credentials::SMIME);
+		$cert_data = (new Mail\Smime)->generate_certificate(
+			array('commonName' => 'Upload Strip Test', 'emailAddress' => 'upload-strip-test@example.org'),
+			null, 'correct horse', 365);
+		$p12 = Mail\Smime::build_pkcs12($cert_data['privkey'], $cert_data['cert'], 'correct horse', 'correct horse');
+		$upload_file = tempnam(sys_get_temp_dir(), 'smime_test_');
+		file_put_contents($upload_file, $p12);
+
+		try
+		{
+			$tpl = new Etemplate();
+			$content = array(
+				'acc_id' => $acc_id,
+				'smimeKeyUpload' => array('tmp_name' => $upload_file),
+				'smime_passphrase' => 'correct horse',
+				'smime_no_passphrase' => true,
+			);
+			$result = $this->callPrivateStatic('save_smime_key', array($content, $tpl, $account_id));
+
+			$this->assertNotNull($result);
+			$acc_smime = Mail\Smime::get_acc_smime($acc_id, '', $account_id);
+			$this->assertNotEmpty($acc_smime['pkey'] ?? null,
+				'an uploaded p12 must be re-exported without a passphrase when requested');
+		}
+		finally
+		{
+			@unlink($upload_file);
+			Mail\Credentials::delete($acc_id, $account_id, Mail\Credentials::SMIME);
+		}
+	}
+
+	/**
+	 * Without the checkbox, save_smime_key() must keep storing the upload's own passphrase state
+	 * unchanged (regression guard for the existing/default behaviour).
+	 */
+	public function testSaveSmimeKeyKeepsPassphraseWhenNotRequested()
+	{
+		$acc_id = 999906;
+		$account_id = $GLOBALS['egw_info']['user']['account_id'];
+		Mail\Credentials::delete($acc_id, $account_id, Mail\Credentials::SMIME);
+		$cert_data = (new Mail\Smime)->generate_certificate(
+			array('commonName' => 'Upload Keep Test', 'emailAddress' => 'upload-keep-test@example.org'),
+			null, 'correct horse', 365);
+		$p12 = Mail\Smime::build_pkcs12($cert_data['privkey'], $cert_data['cert'], 'correct horse', 'correct horse');
+		$upload_file = tempnam(sys_get_temp_dir(), 'smime_test_');
+		file_put_contents($upload_file, $p12);
+
+		try
+		{
+			$tpl = new Etemplate();
+			$content = array(
+				'acc_id' => $acc_id,
+				'smimeKeyUpload' => array('tmp_name' => $upload_file),
+				'smime_passphrase' => 'correct horse',
+			);
+			$result = $this->callPrivateStatic('save_smime_key', array($content, $tpl, $account_id));
+
+			$this->assertNotNull($result);
+			$acc_smime_empty = Mail\Smime::get_acc_smime($acc_id, '', $account_id);
+			$this->assertEmpty($acc_smime_empty['pkey'] ?? null,
+				'without the checkbox, an empty passphrase must still NOT unlock the stored key');
+			$acc_smime_real = Mail\Smime::get_acc_smime($acc_id, 'correct horse', $account_id);
+			$this->assertNotEmpty($acc_smime_real['pkey'] ?? null,
+				'the real passphrase must still unlock it, unchanged from the original upload');
+		}
+		finally
+		{
+			@unlink($upload_file);
+			Mail\Credentials::delete($acc_id, $account_id, Mail\Credentials::SMIME);
+		}
+	}
 }

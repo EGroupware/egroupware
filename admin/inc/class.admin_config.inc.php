@@ -153,6 +153,16 @@ class admin_config
 			// support old validation hooks
 			$_POST = array('newsettings' => &$_content['newsettings']);
 
+			// login background color and image are mutually exclusive: the config dialog disables the image
+			// widget as soon as a color is set, and a disabled widget submits no value at all - so carry the
+			// stored images over, to have them back as soon as the color gets cleared again
+			if (!empty($_content['newsettings']['login_background_color']) &&
+				empty($_content['newsettings']['login_background_file']) &&
+				!empty($c->config_data['login_background_file']))
+			{
+				$_content['newsettings']['login_background_file'] = $c->config_data['login_background_file'];
+			}
+
 			// Remove actual files (cleanup) of deselected urls from login_background_file
 			if ($appname === 'phpgwapi' && !empty($c->config_data['login_background_file']))
 			{
@@ -283,7 +293,9 @@ class admin_config
 		$content = array(
 			'tabs' => $_content['tabs'] ?: $_GET['tab'] ?? '',
 			'tabs2' => $_content['tabs2'] ?: $_GET['tab'] ?? '',
-			'template' => $appname.'.config',
+			// append a real cache-buster (like Etemplate::rel2url() does), so the client-side
+			// et2-template does NOT fall back to its own day-granularity "reload daily" cache-buster
+			'template' => $appname.'.config?'.max(filemtime($path), filemtime(EGW_SERVER_ROOT.'/api/etemplate.php')),
 			'newsettings' => array(),
 			'need_tab' => strpos(file_get_contents(EGW_SERVER_ROOT.'/'.$appname.'/templates/default/config.xet'), '<tabpanels>') === false,
 		);
@@ -296,11 +308,19 @@ class admin_config
 		else
 		{
 			// for security reasons we do not send all config to client-side, but only ones mentioned in templates
+			$file_content = file_get_contents($path);
 			$matches = null;
-			preg_match_all('/(id|content)="newsettings\[([^]]+)\]/', file_get_contents($path), $matches, PREG_PATTERN_ORDER);
+			preg_match_all('/(id|content)="newsettings\[([^]]+)\]/', $file_content, $matches, PREG_PATTERN_ORDER);
 			foreach($matches[2] as $name)
 			{
 				$content['newsettings'][$name] = isset($config[$name]) ? $config[$name] : '';
+			}
+			// allow the "config" hook to supply computed, read-only content eg. for an
+			// emptyLabel="@some_name" attribute, to show what a setting currently defaults to
+			preg_match_all('/emptyLabel="@([a-zA-Z0-9_]+)"/', $file_content, $matches, PREG_PATTERN_ORDER);
+			foreach($matches[1] as $name)
+			{
+				if (isset($config[$name])) $content[$name] = $config[$name];
 			}
 		}
 

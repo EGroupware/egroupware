@@ -13,6 +13,8 @@
 use EGroupware\Api;
 use EGroupware\Api\Egw;
 use EGroupware\Api\Mail;
+use EGroupware\Mail\Compose;
+use EGroupware\Mail\Ui;
 
 /**
  * Class containing admin, preferences and sidebox-menus and other hooks
@@ -82,24 +84,23 @@ class mail_hooks
 
         return array(
 			'view'  => array(
-				'menuaction' => 'mail.mail_ui.displayMessage',
+				'menuaction' => 'mail.EGroupware\\Mail\\Ui.displayMessage',
 			),
 			'view_id'    => 'id',
 			'view_popup' => '870xavailHeight',
-			'view_list'	=>	'mail.mail_ui.index',
-			'add'        => array(
-				'menuaction' => 'mail.mail_compose.compose',
-			),
+			'view_list'	=>	'mail.EGroupware\\Mail\\Ui.index',
+			// no 'add'/'edit' menuaction any more - mail_compose::compose() (the classic
+			// full-page postback they used to point at) is gone, and nothing resolves them
+			// generically (EgwApp._mergeEmail(), the last real reader, now calls
+			// mail.EGroupware\Mail\Merge.ajax_mergeSingle() directly instead). *_popup sizes stay -
+			// _mergeEmail() still reads 'edit_popup' for its own popup dimensions.
 			'add_popup'  => '900xavailHeight',
-			'edit'        => array(
-				'menuaction' => 'mail.mail_compose.compose',
-			),
 			'edit_id'    => 'id',
 			'edit_popup'  => '900xavailHeight',
 			// register mail as handler for .eml files
 			'mime' => array(
 				'message/rfc822' => array(
-					'menuaction' => 'mail.mail_ui.importMessageFromVFS2DraftAndDisplay',
+					'menuaction' => 'mail.EGroupware\\Mail\\Ui.importMessageFromVFS2DraftAndDisplay',
 					'mime_url'   => 'formData[file]',
 					'mime_data'  => 'formData[data]',
 					'formData[type]' => 'message/rfc822',
@@ -149,7 +150,6 @@ class mail_hooks
 
 		$deleteOptions = array(
 			'move_to_trash'		=> lang('move to trash'),
-			'mark_as_deleted'	=> lang('mark as deleted'),
 			'remove_immediately'	=> lang('remove immediately')
 		);
 
@@ -206,7 +206,7 @@ class mail_hooks
 		$folderList['none'] = lang('no folders');
 
 		// Build toggled on actions sel options
-		$allActions = mail_compose::getToolbarActions(array(
+		$allActions = Compose::getToolbarActions(array(
 			'priority' => true,
 			'mailaccount' => (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']
 		));
@@ -476,6 +476,28 @@ class mail_hooks
 				'default' => 'vertical',
 				'reload' => true
 			),
+			'smime_pgp_add_contact' => array(
+				'type' => 'select',
+				'label' => 'Offer to add sender\'s S/MIME certificate or PGP key to contact',
+				'help' => 'When a signed message reveals a certificate/key not yet stored for that sender, ask whether to add it - a verified signature from an already-known contact is always added automatically without asking',
+				'name' => 'smime_pgp_add_contact',
+				'values' => array(
+					'' => lang('ask'),
+					'never' => lang('never ask'),
+				),
+				'default' => '',
+			),
+			'pgp_autocrypt_mutual' => array(
+				'type' => 'select',
+				'label' => 'Automatically enable PGP encryption when both sides prefer it (Autocrypt "mutual" mode)',
+				'help' => 'When on: our own outgoing Autocrypt header advertises prefer-encrypt=mutual, and a new (not reply/forward) mail to recipient(s) who ALL advertised the same via their own Autocrypt header gets PGP encryption switched on automatically - you can still switch it back off for that one mail',
+				'name' => 'pgp_autocrypt_mutual',
+				'values' => array(
+					'' => lang('no'),
+					'1' => lang('yes'),
+				),
+				'default' => '',
+			),
 			'toggledOnActions' => array(
 				'type' => 'taglist',
 				'label' => 'Toggled on actions',
@@ -535,6 +557,19 @@ class mail_hooks
 	}
 
 	/**
+	 * Hook to tell framework we use standard categories method
+	 *
+	 * @param array|string $data hook-data or location (not used)
+	 * @return boolean
+	 */
+	public static function categories($data)
+	{
+		unset($data); // not used, but required by function signature
+
+		return true;
+	}
+
+	/**
 	 * Admin hook
 	 *
 	 * @param array|string $hook_data
@@ -552,7 +587,12 @@ class mail_hooks
 
 		$file = Array(
 			'Site Configuration' => Egw::link('/index.php',array('menuaction'=>'admin.uiconfig.index','appname'=>'mail','ajax'=>'true')),
-		);
+			'Custom Labels' => Egw::link('/index.php', array(
+					'menuaction' => 'admin.admin_categories.index',
+					'appname' => $appname,
+					'global_cats' => False,
+					'ajax' => 'true',)
+			));
 		display_section($appname,$title,$file);
 	}
 
@@ -571,7 +611,7 @@ class mail_hooks
 		$appname = 'mail';
 
 		$linkData = array(
-			'menuaction' => 'mail.mail_ui.importMessage',
+			'menuaction' => 'mail.EGroupware\\Mail\\Ui.importMessage',
 		);
 
 		$GLOBALS['egw']->framework->sidebox($appname, lang('import message'), [
@@ -682,7 +722,7 @@ class mail_hooks
 					if(is_array($headers['header']) && count($headers['header']) > 0) {
 						foreach($headers['header'] as $header) {
 							// check if unseen mail has already been notified
-							$headerrowid = mail_ui::generateRowID($activeProfile, $notify_folder, $header['uid'], $_prependApp=false);
+							$headerrowid = Ui::generateRowID($activeProfile, $notify_folder, $header['uid'], $_prependApp=false);
 						 	if(!in_array($headerrowid, $notified_mail_uidsCache[$activeProfile][$notify_folder])) {
 						 		// got a REAL recent message
 						 		$header['folder'] = $notify_folder;
@@ -709,7 +749,7 @@ class mail_hooks
 							'mail_to'			=> $recent_message['to_address'],
 						);
 						// save notification status
-						$notified_mail_uidsCache[$activeProfile][$recent_message['folder']][] = mail_ui::generateRowID($activeProfile, $recent_message['folder'], $recent_message['uid'], $_prependApp=false);
+						$notified_mail_uidsCache[$activeProfile][$recent_message['folder']][] = Ui::generateRowID($activeProfile, $recent_message['folder'], $recent_message['uid'], $_prependApp=false);
 					}
 					foreach ($values as &$mail)
 					{
@@ -789,6 +829,44 @@ class mail_hooks
 	}
 
 	/**
+	 * Add the current user's real (non-sentinel) Stalwart JMAP hosts to the CSP connect-src allowlist
+	 *
+	 * Mail\Imap\Stalwart::jmapBootstrap()'s docblock says its payload is "for browser clients that
+	 * want to talk to Stalwart's JMAP API directly" - the browser fetches the JMAP session straight
+	 * from the mail server, not proxied through EGroupware. That only works if this host is allowed
+	 * by our own default "connect-src 'self'" CSP (see Api\Header\ContentSecurityPolicy); a sentinel
+	 * host ('mail'/'stalwart'/...) instead resolves to a same-origin proxied URL and needs no entry.
+	 *
+	 * Found live 2026-08-24: a wizard-created account against a real external Stalwart host
+	 * (manually entered, no SRV record) left the mail app's folder tree stuck - the browser's own
+	 * JMAP session fetch was silently blocked by CSP, not by a Stalwart-side CORS problem. The plain
+	 * https(s)/http entry alone isn't enough either - the browser's own WebSocket push upgrade
+	 * (JamWebSocketClient, mail/js/jmap-jam-websocket.ts) connects to the SAME host via wss://
+	 * (or ws:// for the http variant), which needs its own separate connect-src entry (found live
+	 * the same day: the https entry alone silently fixed the session fetch but not the WS push).
+	 *
+	 * @return string[] additional connect-src origins (scheme://host), both the http(s) and the
+	 *  matching ws(s) scheme for each host
+	 */
+	public static function csp_connect_src()
+	{
+		$sources = [];
+		foreach (Mail\Account::search(true, 'params') as $params)
+		{
+			if (($params['acc_imap_type'] ?? null) !== Mail\Imap\Stalwart::class ||
+				empty($params['acc_imap_host']) ||
+				in_array($params['acc_imap_host'], ['mail', 'stalwart', 'internal.k8s.farm.egroupware.org'], true))
+			{
+				continue;
+			}
+			$is_http = ((int)$params['acc_imap_ssl'] & Mail\Account::PROTOCOL_MASK) === Mail\Account::JMAP_HTTP;
+			$sources[] = ($is_http ? 'http' : 'https').'://'.$params['acc_imap_host'];
+			$sources[] = ($is_http ? 'ws' : 'wss').'://'.$params['acc_imap_host'];
+		}
+		return array_unique($sources);
+	}
+
+	/**
 	 * Called before displaying site configuration
 	 *
 	 * @param array $config
@@ -802,49 +880,5 @@ class mail_hooks
 				'html_toolbar' => Api\Etemplate\Widget\HtmlArea::get_toolbar_as_selOptions()
 			]
 		];
-	}
-
-	/**
-	 * options for attachments block actions
-	 * @return string[][]
-	 */
-	public static function attachmentsBlockActions()
-	{
-		$actions = [
-			'downloadOneAsFile' => [
-				'id'    => 'downloadOneAsFile',
-				'label' => 'Download',
-				'icon'  => 'fileexport',
-				'value' => 'downloadOneAsFile'
-			],
-			'saveOneToVfs'      => [
-				'id'    => 'saveOneToVfs',
-				'label' => 'Save in Filemanager',
-				'icon'  => 'filemanager/navbar',
-				'value' => 'saveOneToVfs'
-			],
-			'saveAllToVfs'      => [
-				'id'    => 'saveAllToVfs',
-				'label' => 'Save all to Filemanager',
-				'icon'  => 'mail/save_all',
-				'value' => 'saveAllToVfs'
-			],
-			'downloadAllToZip'  => [
-				'id'    => 'downloadAllToZip',
-				'label' => 'Save as ZIP',
-				'icon'  => 'mail/save_zip',
-				'value' => 'downloadAllToZip'
-			]
-		];
-		if (!empty($GLOBALS['egw_info']['user']['apps']['collabora']))
-		{
-			$actions['collabora'] = [
-				'id'    => 'collabora',
-				'label' => 'Open with Collabora',
-				'icon'  => 'open',
-				'value' => 'collabora'
-			];
-		}
-		return $actions;
 	}
 }

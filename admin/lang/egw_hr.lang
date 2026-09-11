@@ -210,7 +210,6 @@ if no acl records for user or any group the user is a member of	admin	hr	Ukoliko
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	hr	Ukoliko koristite LDAP, želite li upravljati atributima početnog direktorija i loginshell?
 imap admin password	admin	hr	IMAP admin password
 imap admin user	admin	hr	IMAP admin user
-imap server	admin	hr	IMAP Poslužitelj
 imap server hostname or ip address	admin	hr	IMAP server hostname or ip address
 imap server logintyp	admin	hr	IMAP server login type
 imap server port	admin	hr	IMAP server port

@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <overlay>
-	<template id="api.about.index.general" template="" lang="" group="0" version="1.8.001">
+	<et2-template  id="api.about.index.general" template="" lang="" group="0" version="1.8.001">
 		<grid width="600" height="100%" spacing="5" overflow="auto">
 			<columns>
 				<column/>
@@ -10,25 +11,25 @@
 					<et2-image  src="logo"></et2-image>
 				</row>
 				<row>
-					<html id="apiVersion"/>
+					<et2-html  id="apiVersion"></et2-html>
 				</row>
 				<row>
 					<hrule/>
 				</row>
 				<row>
-					<html id="text_content"/>
+					<et2-html  id="text_content"></et2-html>
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="api.about.index.applications" template="" lang="" group="0" version="14.1">
+	</et2-template>
+	<et2-template  id="api.about.index.applications" template="" lang="" group="0" version="14.1">
 		<grid width="99%" height="100%" border="0" spacing="5" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
 			<rows>
 				<row>
-					<html value="&lt;strong&gt;This is a list of your available applications.&lt;/strong&gt;&lt;br /&gt;For a complete list of applications available for EGroupware visit &lt;a href=&quot;http://www.egroupware.org/applications&quot; target=&quot;_blank&quot;&gt;www.egroupware.org/applications&lt;/a&gt;"/>
+					<et2-html  value="&lt;strong&gt;This is a list of your available applications.&lt;/strong&gt;&lt;br /&gt;For a complete list of applications available for EGroupware visit &lt;a href=&quot;http://www.egroupware.org/applications&quot; target=&quot;_blank&quot;&gt;www.egroupware.org/applications&lt;/a&gt;"></et2-html>
 				</row>
 				<row>
 					<grid id="applications" class="egwGridView_grid">
@@ -46,20 +47,20 @@
 							<row class="th">
 								<et2-description  id="applications" value="Icon"></et2-description>
 								<et2-description  value="name"></et2-description>
-								<et2-description value="Color"></et2-description>
-                                <et2-description value="Order"></et2-description>
+								<et2-description  value="Color"></et2-description>
+                                <et2-description  value="Order"></et2-description>
 								<et2-description  value="Author"></et2-description>
 								<et2-description  value="Maintainer"></et2-description>
 								<et2-description  value="Version"></et2-description>
 								<et2-description  value="license"></et2-description>
 							</row>
 							<row class="row">
-								<et2-image align="center" src="$row_cont[image]" id="${row}[app]"></et2-image>
+								<et2-image  align="center" src="$row_cont[image]" id="${row}[app]"></et2-image>
 								<et2-description  id="${row}[title]"></et2-description>
-								<et2-colorpicker id="${row}[color]" onchange="app.admin.updateAppColor('$row_cont[app]', widget.value);"></et2-colorpicker>
-                                <et2-number id="${row}[order]" min="0" step="1" onchange="app.admin.updateAppOrder('$row_cont[app]', widget.value);"></et2-number>
-								<html id="${row}[author]" no_lang="1"/>
-								<html id="${row}[maintainer]" no_lang="1"/>
+								<et2-colorpicker  id="${row}[color]" onchange="app.admin.updateAppColor('$row_cont[app]', widget.value);"></et2-colorpicker>
+                                <et2-number  id="${row}[order]" min="0" step="1" onchange="app.admin.updateAppOrder('$row_cont[app]', widget.value);"></et2-number>
+								<et2-html  id="${row}[author]" noLang="1"></et2-html>
+								<et2-html  id="${row}[maintainer]" noLang="1"></et2-html>
 								<et2-description  id="${row}[version]" noLang="1"></et2-description>
 								<et2-description  id="${row}[license]" statustext="$row_cont[license_title]" href="$row_cont[license_url]" extraLinkTarget="_blank" noLang="1"></et2-description>
 							</row>
@@ -68,7 +69,7 @@
 				</row>
 			</rows>
 		</grid>
-		<styles>
+		<et2-styles>
 			table#api-about-index_applications td {
 				padding: 2px;
 				padding-top: 5px;
@@ -82,21 +83,20 @@
 				display: inline-block;
 				font-size: 32px;
 			}
-		</styles>
-	</template>
-	<template id="api.about.index.changelog" template="" lang="" group="0" version="1.8.001">
+		</et2-styles>
+	</et2-template>
+	<et2-template  id="api.about.index.changelog" template="" lang="" group="0" version="1.8.001">
 		<grid width="100%" height="100%" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
 			<rows>
-				<row>
-					<et2-textarea  id="changelog" readonly="true" activateLinks="true"></et2-textarea>
+				<row><et2-ai><et2-textarea  id="changelog" readonly="true" activateLinks="true"></et2-textarea></et2-ai>
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="api.about.index" template="" lang="" group="0" version="1.8.001">
+	</et2-template>
+	<et2-template  id="api.about.index" template="" lang="" group="0" version="1.8.001">
 		<et2-tabbox  id="general|applications|templates|languages|changelog" tabHeight="auto" width="100%">
 			<tabs>
 				<tab id="changelog" label="Changelog"/>
@@ -104,10 +104,10 @@
 				<tab id="applications" label="Apps &amp; License"/>
 			</tabs>
 			<tabpanels>
-				<template id="api.about.index.changelog"/>
-				<template id="api.about.index.general"/>
-				<template id="api.about.index.applications"/>
+				<et2-template  id="api.about.index.changelog"></et2-template>
+				<et2-template  id="api.about.index.general"></et2-template>
+				<et2-template  id="api.about.index.applications"></et2-template>
 			</tabpanels>
 		</et2-tabbox>
-	</template>
+	</et2-template>
 </overlay>

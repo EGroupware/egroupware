@@ -15,7 +15,7 @@ $setup_info['mail']['title']     	= 'mail';
 $setup_info['mail']['version']     	= '26.1';
 $setup_info['mail']['app_order'] 	= 2;
 $setup_info['mail']['enable']    	= 1;
-$setup_info['mail']['index']    	= 'mail.mail_ui.index&ajax=true';
+$setup_info['mail']['index']    	= 'mail.EGroupware\\Mail\\Ui.index&ajax=true';
 $setup_info['mail']['autoinstall'] = true;	// install automatically on update
 
 $setup_info['mail']['author']		= 'EGroupware GmbH';
@@ -30,6 +30,7 @@ $setup_info['mail']['tables']    = array(); // former felamimail tables are used
 $setup_info['mail']['hooks']['search_link'] = 'mail_hooks::search_link';
 $setup_info['mail']['hooks']['admin'] = 'mail_hooks::admin';
 $setup_info['mail']['hooks']['settings'] = 'mail_hooks::settings';
+$setup_info['mail']['hooks']['categories'] = 'mail_hooks::categories';
 $setup_info['mail']['hooks']['sidebox_menu'] = 'mail_hooks::sidebox_menu';
 $setup_info['mail']['hooks']['session_creation'] = 'EGroupware\\Api\\Mail::resetConnectionErrorCache';
 $setup_info['mail']['hooks']['verify_settings'] = 'EGroupware\\Api\\Mail::forcePrefReload';
@@ -38,6 +39,7 @@ $setup_info['mail']['hooks']['check_notify'] = 'mail_hooks::notification_check_m
 $setup_info['mail']['hooks']['emailadmin_edit'] = 'mail_hooks::emailadmin_edit';
 $setup_info['mail']['hooks']['status-get_actions'] = 'mail_hooks::get_status_actions';
 $setup_info['mail']['hooks']['config'] = 'mail_hooks::config';
+$setup_info['mail']['hooks']['csp-connect-src'] = 'mail_hooks::csp_connect_src';
 
 /* Dependencies for this app to work */
 $setup_info['mail']['depends'][] = array(

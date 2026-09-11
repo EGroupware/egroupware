@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="addressbook.import_vcard" template="" lang="" group="0" version="1.9.001">
+	<et2-template  id="addressbook.import_vcard" template="" lang="" group="0" version="1.9.001">
         <et2-vbox>
-            <et2-select id="contact_owner" label="Import into" class="et2-label-fixed"></et2-select>
-            <et2-select class="et2-label-fixed" id="charset" noLang="1" label="Charset of file"></et2-select>
+            <et2-select  id="contact_owner" label="Import into" class="et2-label-fixed"></et2-select>
+            <et2-select  class="et2-label-fixed" id="charset" noLang="1" label="Charset of file"></et2-select>
         </et2-vbox>
-        <styles>
+        <et2-styles>
             .et2-label-fixed {
             --label-width: 180px;
             }
-        </styles>
-    </template>
+        </et2-styles>
+    </et2-template>
 </overlay>

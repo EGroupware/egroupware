@@ -61,6 +61,95 @@ describe("Dialog widget basics", () =>
 
 		assert.equal(element.shadowRoot.querySelector("#title").textContent.trim(), "Title set");
 	});
+
+	it("preserves loaded template content when buttons change", async() =>
+	{
+		const contentNode = element.querySelector(".dialog_content");
+		const loadedContent = document.createElement("div");
+		loadedContent.id = "loaded-template-content";
+		contentNode.append(loadedContent);
+
+		element.buttons = Et2Dialog.BUTTONS_OK_CANCEL;
+		await elementUpdated(element);
+
+		assert.strictEqual(element.querySelector(".dialog_content"), contentNode,
+			"Button changes must keep the template container");
+		assert.strictEqual(element.querySelector("#loaded-template-content"), loadedContent,
+			"Button changes must not destroy loaded template content");
+	});
+
+	it("resolves getComplete() with a custom string button_id as-is, not corrupted by parseInt()", async() =>
+	{
+		// Regression test: _onClick() used to unconditionally parseInt() the button_id
+		// attribute. That's correct for the built-in numeric *_BUTTON constants, but silently
+		// turned any custom string id (eg. "add"/"remove", or "dont_ask_again" in egw_timer.ts)
+		// into NaN - making two different custom buttons indistinguishable from each other to a
+		// callback comparing `button === "add"` vs `button === "remove"`.
+		//
+		// Buttons must be set as a property on the fixture's initial markup, not assigned
+		// afterwards: Et2Dialog only ever renders its (light-DOM) button elements once, in
+		// firstUpdated() - a later `element.buttons = ...` requests a re-render but does not
+		// recreate the <et2-button> elements, so the buttons used by every other test in this
+		// file (assigned post-creation) are never actually queryable in the DOM.
+		// @ts-ignore
+		const dialog = await fixture<Et2Dialog>(html`
+			<et2-dialog title="Custom buttons" .buttons=${[
+				{button_id: "add", label: "Add", id: "dialog[add]"},
+				{button_id: "remove", label: "Remove", id: "dialog[remove]"}
+			]}>
+			</et2-dialog>
+		`);
+		sinon.stub(dialog, "egw").returns(window.egw);
+		await elementUpdated(dialog);
+		await dialog.show();
+
+		const addButton = dialog.querySelector('et2-button[button_id="add"]');
+		const removeButton = dialog.querySelector('et2-button[button_id="remove"]');
+		assert.isNotNull(addButton, "Add button must be rendered");
+		assert.isNotNull(removeButton, "Remove button must be rendered");
+
+		const completePromise = dialog.getComplete();
+		(<HTMLElement>addButton).click();
+		const [buttonId] = await completePromise;
+
+		assert.strictEqual(buttonId, "add");
+		assert.notStrictEqual(<any>buttonId, <any>NaN);
+
+		await dialog.hide();
+	});
+
+	it("falls back to the button's id when it has no button_id", async() =>
+	{
+		// A caller-defined button may omit button_id entirely and only carry an id (eg. the
+		// "delete" button of Et2Portlet's edit dialog, which its callback identifies by
+		// `button_id == "delete"`). _onClick() then has to fall back to the id attribute, so
+		// keep that fallback - and make sure the (unset) button_id attribute stays absent
+		// rather than being rendered as an empty or literal "undefined" string, either of
+		// which would shadow the id.
+		// @ts-ignore
+		const dialog = await fixture<Et2Dialog>(html`
+			<et2-dialog title="Custom buttons" .buttons=${[
+				{label: "Custom", id: "custom_action", image: "check"}
+			]}>
+			</et2-dialog>
+		`);
+		sinon.stub(dialog, "egw").returns(window.egw);
+		await elementUpdated(dialog);
+		await dialog.show();
+
+		const button = dialog.querySelector('et2-button[id="custom_action"]');
+		assert.isNotNull(button, "Button must be rendered");
+		assert.isFalse(button.hasAttribute("button_id"),
+			"An unset button_id must not be rendered as an attribute");
+
+		const completePromise = dialog.getComplete();
+		(<HTMLElement>button).click();
+		const [buttonId] = await completePromise;
+
+		assert.strictEqual(buttonId, "custom_action");
+
+		await dialog.hide();
+	});
 });
 describe("Properties", async() =>
 {

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="etemplate.long_task" template="" lang="" group="0" version="1.9.001">
+	<et2-template  id="etemplate.long_task" template="" lang="" group="0" version="1.9.001">
 		<et2-hbox  class="long_task">
 			<et2-image  class="dialog_icon"></et2-image>
 			<et2-vbox  class="ui-dialog-content">
@@ -10,14 +11,16 @@
 				<et2-label  id="totals"></et2-label>
 				<et2-vbox  class="log" id="log"></et2-vbox>
 			</et2-vbox>
-            <et2-button-copy slot="footer" align="right" from="_log" copy-label="Copy">
+            <et2-button-copy  slot="footer" align="right" from="_log" copyLabel="Copy">
             </et2-button-copy>
 		</et2-hbox>
-		<styles>
-            #long_task > div {
-            width: 100%;
+		<et2-styles>
+            #long_task {
+            min-width: 30em;
+            min-height: 12em;
             }
             .long_task .log {
+            min-height: 6em;
             max-height: 10em;
             overflow: auto;
             }
@@ -25,6 +28,6 @@
             width: 100%;
             height: 1em;
             }
-        </styles>
-	</template>
+        </et2-styles>
+	</et2-template>
 </overlay>

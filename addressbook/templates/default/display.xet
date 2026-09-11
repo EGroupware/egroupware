@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="addressbook.display.rows" template="" lang="" group="0" version="1.5.001">
+	<et2-template  id="addressbook.display.rows" template="" lang="" group="0" version="1.5.001">
 		<grid width="100%" overflow="auto">
 			<columns>
 				<column/>
@@ -24,24 +25,24 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<nextmatch-header id="type"/>
-					<nextmatch-header label="Company" id="org_name"/>
-					<nextmatch-header label="Department" id="org_unit"/>
-					<nextmatch-header label="Contact" id="n_fn"/>
-					<nextmatch-header label="Email" id="email"/>
-					<nextmatch-header label="Business phone" id="tel_work"/>
-					<nextmatch-header label="Mobile phone" id="tel_cell"/>
-					<nextmatch-header id="tel_fax" label="Fax"/>
-					<nextmatch-header label="Home phone" id="tel_home"/>
-					<nextmatch-header label="Internet" id="url"/>
-					<nextmatch-header label="Street" id="adr_one_street"/>
+					<et2-nextmatch-header  id="type"></et2-nextmatch-header>
+					<et2-nextmatch-header  label="Company" id="org_name"></et2-nextmatch-header>
+					<et2-nextmatch-header  label="Department" id="org_unit"></et2-nextmatch-header>
+					<et2-nextmatch-header  label="Contact" id="n_fn"></et2-nextmatch-header>
+					<et2-nextmatch-header  label="Email" id="email"></et2-nextmatch-header>
+					<et2-nextmatch-header  label="Business phone" id="tel_work"></et2-nextmatch-header>
+					<et2-nextmatch-header  label="Mobile phone" id="tel_cell"></et2-nextmatch-header>
+					<et2-nextmatch-header  id="tel_fax" label="Fax"></et2-nextmatch-header>
+					<et2-nextmatch-header  label="Home phone" id="tel_home"></et2-nextmatch-header>
+					<et2-nextmatch-header  label="Internet" id="url"></et2-nextmatch-header>
+					<et2-nextmatch-header  label="Street" id="adr_one_street"></et2-nextmatch-header>
 					<nextmatch-sortheader label="ZIP Code" id="adr_one_postalcode"/>
-					<nextmatch-header label="City" id="adr_one_locality"/>
-					<nextmatch-header label="Region" id="adr_one_region"/>
-					<nextmatch-header label="@customlabel[1]" id="custom1"/>
-					<nextmatch-header label="@customlabel[2]" id="custom2"/>
+					<et2-nextmatch-header  label="City" id="adr_one_locality"></et2-nextmatch-header>
+					<et2-nextmatch-header  label="Region" id="adr_one_region"></et2-nextmatch-header>
+					<et2-nextmatch-header  label="@customlabel[1]" id="custom1"></et2-nextmatch-header>
+					<et2-nextmatch-header  label="@customlabel[2]" id="custom2"></et2-nextmatch-header>
 					<et2-vbox  cellpadding="0" cellspacing="0" >
-						<nextmatch-header label="select country" id="country"/>
+						<et2-nextmatch-header  label="select country" id="country"></et2-nextmatch-header>
 						<nextmatch-customfilter id="adr_one_countryname" options="select-country,Country,1" class="countrySelect"/>
 					</et2-vbox>
 				</row>
@@ -69,8 +70,8 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="addressbook.display" template="" lang="" group="0" version="1.5.001">
+	</et2-template>
+	<et2-template  id="addressbook.display" template="" lang="" group="0" version="1.5.001">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -90,5 +91,5 @@
 				</row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

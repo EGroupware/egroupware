@@ -55,9 +55,11 @@ class Template extends Etemplate\Widget
 	 * @param string $template_set =null default tries template-set from user and if not found "default"
 	 * @param string $version =''
 	 * @param string $load_via ='' use given template to load $name
+	 * @param bool $quiet =false true: do NOT log a not-found template, for callers deliberately probing
+	 *	if an optional template exists, where a missing one is a supported case and not an error
 	 * @return Template|boolean false if not found
 	 */
-	public static function instance($_name, $template_set=null, $version='', $load_via='')
+	public static function instance($_name, $template_set=null, $version='', $load_via='', $quiet=false)
 	{
 		if (Api\Header\UserAgent::mobile())
 		{
@@ -94,15 +96,17 @@ class Template extends Etemplate\Widget
 			{
 				$expand_name = self::expand_name($name, '','','','',self::$cont);
 				if ($expand_name && $expand_name != $name &&
-					($template = self::instance($expand_name, $template_set, $version, $load_via)))
+					($template = self::instance($expand_name, $template_set, $version, $load_via, $quiet)))
 				{
 					// Remember original, un-expanded name in case content changes while still cached
 					$template->original_name = $name;
 					return $template;
 				}
 			}
-			// do NOT log not found template because of missing $row_cont expansion on server-side
-			if (substr($name, 0, 10) !== '$row_cont[')
+			// do NOT log not found template for a deliberate probe, nor for a content-reference like
+			// "@type_template" or "$row_cont[...]" which could not be expanded server-side: these names
+			// never exist as a file and are (re-)resolved client-side, so they are not a missing template
+			if (!$quiet && substr($name, 0, 1) !== '@' && substr($name, 0, 10) !== '$row_cont[')
 			{
 				error_log(__METHOD__."('$name', '$template_set', '$version', '$load_via') template NOT found!");
 			}
@@ -129,8 +133,12 @@ class Template extends Etemplate\Widget
 			}
 		}
 
-		// template isn't found in file, should never happen
-		error_log(__METHOD__."('$name', '$template_set', '$version', '$load_via') template NOT found in file '$path'!");
+		// template isn't found in the file its name maps to: for a probe that just means the template
+		// does not exist (eg. a name whose file happens to exist, but defines other templates only)
+		if (!$quiet)
+		{
+			error_log(__METHOD__."('$name', '$template_set', '$version', '$load_via') template NOT found in file '$path'!");
+		}
 		return false;
 	}
 
@@ -268,6 +276,37 @@ class Template extends Etemplate\Widget
 	}
 
 	/**
+	 * Iterate over children to find the one with the given id and optional type
+	 *
+	 * Reimplemented because a bare reference tag (eg. <et2-template id="app.tpl.sub"/> for a
+	 * lazy-loaded tab-panel) is NOT expanded while the template referencing it gets parsed,
+	 * so it has no children of its own to search - resolve the referenced template here,
+	 * same as run() does for the same reason.
+	 *
+	 * @param string $id
+	 * @param string $type =null
+	 * @return Etemplate\Widget|NULL
+	 */
+	public function getElementById($id, $type=null)
+	{
+		if (($element = parent::getElementById($id, $type)))
+		{
+			return $element;
+		}
+		// only a reference tag has no children of its own, a real template always has some
+		if (empty($this->children) && ($name = $this->id ?: ($this->attrs['template'] ?? null)) &&
+			// $quiet=true: a not (yet) resolvable reference is a supported case here, not an error
+			($template = self::instance(self::expand_name($name, '', '', '', '', self::$request->content ?? []) ?: $name,
+				null, '', '', true)) &&
+			// $template !== $this: our own definition, so there is nothing more to search
+			$template !== $this && !empty($template->children))
+		{
+			return $template->getElementById($id, $type);
+		}
+		return null;
+	}
+
+	/**
 	 * Fill type options in self::$request->sel_options to be used on the client
 	 *
 	 * @param string $cname
@@ -278,7 +317,13 @@ class Template extends Etemplate\Widget
 		//error_log(__METHOD__."('$cname') this->id=$this->id, this->type=$this->type, this->attrs=".array2string($this->attrs));
 		$form_name = self::form_name($cname, $this->id, $expand);
 
-		self::setElementAttribute($form_name, 'url', self::rel2url($this->rel_path));
+		// only send an url override if we actually have one: a bare reference tag (eg. a lazy-loaded
+		// tab-panel) never gets rel_path populated, and sending an explicit null here overrides the
+		// client-side getUrl() fallback that would otherwise correctly resolve the url from the id
+		if (($url = self::rel2url($this->rel_path)))
+		{
+			self::setElementAttribute($form_name, 'url', $url);
+		}
 	}
 }
 

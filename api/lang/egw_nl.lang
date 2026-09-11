@@ -795,6 +795,7 @@ link to each entry	common	nl	Link naar elk item
 linkapps	common	nl	Linktoepassingen
 linkentry	common	nl	Linkitem
 linklist	common	nl	Linklijst
+links	common	nl	Links
 links and attached files	preferences	nl	Link naar bijgesloten bestand
 links to specified application.  example: {{links/addressbook}}	common	nl	Koppelingen naar opgegeven toepassing. Voorbeeld: {{links/addressbook}}
 linkstring	common	nl	LinkString

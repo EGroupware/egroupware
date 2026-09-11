@@ -229,7 +229,6 @@ limit number of description lines (default 5, 0 for no limit)	infolog	ko	설명 
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	ko	설명 열의 너비를 제한합니다. 줄 수 제한이 설정된 경우에만 유효합니다. 0 = 제한 없음.
 link	infolog	ko	링크
 linked to %1	infolog	ko	%1에 링크됨
-links	infolog	ko	링크들
 links and attached files	infolog	ko	링크 및 첨부 파일
 links of this entry	infolog	ko	이 엔트리의 링크
 links to specified application.  example: {{links/infolog}}	infolog	ko	지정된 응용 프로그램에 대한 링크입니다. 예시: {{links/infolog}}

@@ -15,7 +15,9 @@ import {SlCard} from "@shoelace-style/shoelace";
 import interact from "@interactjs/interactjs";
 import type {InteractEvent} from "@interactjs/core/InteractEvent";
 import {egw} from "../../jsapi/egw_global";
-import {css, html, TemplateResult} from "lit";
+import {deepExtend} from "../../jsapi/egw_utils";
+import {html, TemplateResult} from "lit";
+import {property} from "lit/decorators/property.js";
 import {classMap} from "lit/directives/class-map.js";
 import {HasSlotController} from "../Et2Widget/slot";
 import shoelace from "../Styles/shoelace";
@@ -25,112 +27,47 @@ import {HomeApp} from "../../../../home/js/app";
 import {etemplate2} from "../etemplate2";
 import {SelectOption} from "../Et2Select/FindSelectOptions";
 
+import styles from "./Et2Portlet.styles";
 /**
  * Participate in Home
  */
 
 export class Et2Portlet extends Et2Widget(SlCard)
 {
-	static get properties()
-	{
-		return {
-			...super.properties,
+	/**
+	 * Give a title
+	 * Goes in the header at the top with the icons
+	 */
+	@property({type: String})
+	title : string;
 
+	/**
+	 * Custom etemplate used to customize / set up the portlet
+	 */
+	@property({type: String})
+	editTemplate : string;
 
-			/**
-			 * Give a title
-			 * Goes in the header at the top with the icons
-			 */
-			title: {type: String},
+	/**
+	 * Set the portlet color
+	 */
+	@property({type: String})
+	color : string;
 
-			/**
-			 * Custom etemplate used to customize / set up the portlet
-			 */
-			editTemplate: {type: String},
-			/**
-			 * Set the portlet color
-			 */
-			color: {type: String},
+	/**
+	 * Array of customization settings, similar in structure to preference settings
+	 */
+	@property({type: Object})
+	settings : object;
 
-			/**
-			 * Array of customization settings, similar in structure to preference settings
-			 */
-			settings: {type: Object},
-			actions: {type: Object},
-		}
-	}
+	@property({type: Object})
+	actions : object;
 
 	static get styles()
 	{
 		return [
 			...shoelace,
 			...(super.styles || []),
-			css`
-			  :host {
-				--header-spacing: var(--sl-spacing-medium);
-			  }
-
-			  .portlet__header {
-				flex: 0 0 auto;
-				display: flex;
-				font-style: inherit;
-				font-variant: inherit;
-				font-weight: inherit;
-				font-stretch: inherit;
-				font-family: inherit;
-				font-size: var(--sl-font-size-medium);
-				line-height: var(--sl-line-height-dense);
-				padding: 0px;
-				padding-left: 0px;
-				margin: 0px;
-				position: relative;
-			  }
-
-			  .portlet__title {
-				flex: 1 1 auto;
-				font-size: var(--sl-font-size-medium);
-				user-select: none;
-			  }
-
-			  .portlet__header .portlet__settings-icon {
-				display: none;
-			  }
-
-			  .portlet__header:hover .portlet__settings-icon {
-				display: initial;
-			  }
-
-			  .portlet__header #settings {
-				position: absolute;
-				right: 0px;
-			  }
-
-			  .card {
-				width: 100%;
-				height: 100%
-			  }
-
-			  .card__header {
-				display: flex;
-				width: 100%;
-				padding: 0px;
-				padding-left: var(--sl-spacing-medium);
-				padding-right: calc(2em + var(--header-spacing));
-			  }
-
-			  .card__body {
-				/* display block to prevent overflow from our size */
-				display: block;
-				overflow: hidden;
-
-				flex: 1 1 auto;
-				padding: 0px;
-			  }
-
-
-			  ::slotted(div) {
-			  }
-			`
+			styles
 		]
 	}
 
@@ -234,7 +171,7 @@ export class Et2Portlet extends Et2Widget(SlCard)
 		}
 
 		// Add in defaults, but let provided actions override them
-		this.actions = jQuery.extend(true, {}, defaults, actions);
+		this.actions = deepExtend({}, defaults, actions);
 	}
 
 	/**

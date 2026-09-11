@@ -46,7 +46,6 @@ leave it empty for a full week	timesheet	no	La stå tom for en full uke
 leaves without saveing	timesheet	no	avslutt uten å lagre
 length<br>rows	timesheet	no	Lengde<br>Kolonner
 link title	timesheet	no	Koblingstittel
-links	timesheet	no	Lenker
 make timesheets readable by infolog delegation	timesheet	no	Gjør tidsrapporter lesbare ved hjelp av InfoLog-delegering
 max length of the input [, length of the inputfield (optional)]	timesheet	no	maks. lengde på innslag [,feltlengde (valgfri)]
 mode	timesheet	no	Modus

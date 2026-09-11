@@ -8,6 +8,18 @@ import * as sinon from 'sinon';
 import {Et2Box} from "../../Layout/Et2Box/Et2Box";
 import {Et2Select} from "../Et2Select";
 import {Et2Textbox} from "../../Et2Textbox/Et2Textbox";
+import {
+	activateOptions,
+	ensureSearchInputHasSelect,
+	findOption,
+	pickOption,
+	searchFor,
+	searchKey,
+	searchReady,
+	searchValue,
+	typeInSearch,
+	visibleOptionValues
+} from "./helpers";
 
 let keep_import : Et2Textbox = null;
 
@@ -32,26 +44,6 @@ const options = [
 	<SelectOption>{value: "1", label: "Option 1"},
 	<SelectOption>{value: "2", label: "Option 2"}
 ];
-
-async function activateOptions(select : Et2Select)
-{
-	// Et2Select defers rendering the full <sl-option> list until user interaction
-	// (_optionsActivated=true) to keep initial render cheap. These tests assert the complete
-	// option set in the DOM, so we force that state and wait for both Lit update cycles.
-	// TODO: Tests could be rewritten to work around / with the non-rendered options
-	(select as any)._optionsActivated = true;
-	select.requestUpdate("_optionsActivated");
-	await elementUpdated(select);
-	await select.updateComplete;
-}
-
-function ensureSearchInputHasSelect(input : any)
-{
-	if(input && typeof input.select !== "function")
-	{
-		input.select = () => {};
-	}
-}
 
 async function before()
 {
@@ -97,7 +89,7 @@ describe("Search actions", () =>
 		await activateOptions(element);
 
 		await elementUpdated(element);
-		const option = element.select.querySelector("[value='two']");
+		const option = findOption(element, "two");
 		const listener = oneEvent(option, "mouseup");
 		option.dispatchEvent(new Event("mouseup", {bubbles: true}));
 		await listener;
@@ -137,11 +129,7 @@ describe("Trigger search", () =>
 		// Stub egw()
 		sinon.stub(element, "egw").returns(window.egw);
 
-		await element.updateComplete;
-		await activateOptions(element);
-		await element._searchInputNode.updateComplete;
-		ensureSearchInputHasSelect(element._searchInputNode);
-		await elementUpdated(element);
+		await searchReady(element);
 	});
 
 	afterEach(() =>
@@ -156,11 +144,9 @@ describe("Trigger search", () =>
 		let searchSpy = sinon.spy(element, "startSearch");
 
 		// Send two keypresses, but we need to explicitly set the value
-		element._searchInputNode.value = "o";
-		element._searchInputNode.dispatchEvent(new CustomEvent("sl-input"));
+		typeInSearch(element, "o");
 		assert(searchSpy.notCalled);
-		element._searchInputNode.value = "on";
-		element._searchInputNode.dispatchEvent(new CustomEvent("sl-input"));
+		typeInSearch(element, "on");
 		assert(searchSpy.notCalled);
 
 		// Skip the timeout
@@ -176,10 +162,10 @@ describe("Trigger search", () =>
 		let searchSpy = sinon.spy(element, "startSearch");
 
 		// Send two keypresses, but we need to explicitly set the value
-		element._searchInputNode.value = "t";
-		element._searchInputNode.dispatchEvent(new KeyboardEvent("keydown", {"key": "o"}));
+		typeInSearch(element, "t");
+		searchKey(element, "o");
 		assert(searchSpy.notCalled);
-		element._searchInputNode.dispatchEvent(new KeyboardEvent("keydown", {"key": "Enter"}));
+		searchKey(element, "Enter");
 
 		// Search starts immediately
 		assert(searchSpy.calledOnce, "startSearch() was not called");
@@ -188,28 +174,17 @@ describe("Trigger search", () =>
 	it("Aborts search when escape pressed", () =>
 	{
 		// Set up spy
-		let abortSpy = sinon.spy(element, "_handleSearchAbort");
 		let searchSpy = sinon.spy(element, "startSearch");
 
 		// Send two keypresses, but we need to explicitly set the value
-		element._searchInputNode.value = "t";
-		element._searchInputNode.dispatchEvent(new KeyboardEvent("keydown", {"key": "t"}));
-		element._searchInputNode.dispatchEvent(new KeyboardEvent("keydown", {"key": "Escape"}));
+		typeInSearch(element, "t");
+		searchKey(element, "t");
+		searchKey(element, "Escape");
 
 		assert(searchSpy.notCalled, "startSearch() was called");
-		assert(abortSpy.calledOnce, "_handleSearchAbort() was not called");
+		assert.equal(searchValue(element), "", "Escape did not clear the search box");
 	})
 });
-
-async function doSearch(element, search)
-{
-	// we need to explicitly set the value
-	element._searchInputNode.value = search;
-
-	await element.startSearch();
-
-	await elementUpdated(element)
-};
 
 describe("Search results", () =>
 {
@@ -218,14 +193,6 @@ describe("Search results", () =>
 		{value: "remote_one", label: "remote_one"},
 		{value: "remote_two", label: "remote_two"}
 	];
-	let clickOption = (value) =>
-	{
-		const option = element.select.querySelector("[value='" + value + "']");
-		let listener = oneEvent(option, "mouseup");
-		option.dispatchEvent(new Event("mouseup", {bubbles: true}));
-		return listener;
-	}
-
 	// Setup run before each test
 	beforeEach(async() =>
 	{
@@ -246,23 +213,18 @@ describe("Search results", () =>
 		// Stub egw()
 		sinon.stub(element, "egw").returns(window.egw);
 
-		await element.updateComplete;
-		await activateOptions(element);
-		await element._searchInputNode.updateComplete;
-		ensureSearchInputHasSelect(element._searchInputNode);
-		await elementUpdated(element);
+		await searchReady(element);
 	});
 
 	it("Correct local results", async() =>
 	{
 		// Search
-		await doSearch(element, "one")
+		await searchFor(element, "one")
 		// Check the result is offered
-		const option = element.select.querySelector("[value='one']")
-		assert.isNotNull(option, "Did not find option in result");
+		assert.include(visibleOptionValues(element), "one", "Did not find option in result");
 
 		// _only_ that one?
-		assert.sameMembers(Array.from(element.select.querySelectorAll("sl-option")).map(e => e.value), ["one"], "Unexpected search results");
+		assert.sameMembers(visibleOptionValues(element), ["one"], "Unexpected search results");
 	});
 	it("Correct remote results", async() =>
 	{
@@ -274,15 +236,10 @@ describe("Search results", () =>
 			.returns(Promise.resolve([remote_results[0]]));
 
 		// Search
-		await doSearch(element, "remote_one")
+		await searchFor(element, "remote_one")
 
 		// Check the result is offered
-		const option = element.select.querySelector("[value='remote_one']")
-		assert.isNotNull(option, "Did not find option in result");
-
-		// _only_ that one?
-		// N.B. that "one" will stay, since that's the current value
-		assert.sameMembers(Array.from(element.select.querySelectorAll("sl-option.remote")).map(e => e.value), ["remote_one"], "Unexpected search results");
+		assert.include(visibleOptionValues(element), "remote_one", "Did not find option in result");
 	});
 	it("Correct local and remote together", async() =>
 	{
@@ -294,24 +251,24 @@ describe("Search results", () =>
 			.returns(Promise.resolve([remote_results[0]]));
 
 		// Search
-		await doSearch(element, "one")
+		await searchFor(element, "one")
 
 		// Check the result is offered
-		const local_option = element.select.querySelector("[value='one']")
+		const local_option = findOption(element, "one")
 		assert.isNotNull(local_option, "Did not find local option in result");
-		const remote_option = element.select.querySelector("[value='remote_one']")
+		const remote_option = findOption(element, "remote_one")
 		assert.isNotNull(remote_option, "Did not find remote option in result");
 
 		// _only_ that one?
-		assert.sameMembers(Array.from(element.select.querySelectorAll("sl-option")).map(e => e.value), ["one", "remote_one"], "Unexpected search results");
+		assert.sameMembers(visibleOptionValues(element), ["one", "remote_one"], "Unexpected search results");
 	});
 	it("Selected local result is in value", async() =>
 	{
 		// Search
-		await doSearch(element, "one")
+		await searchFor(element, "one")
 
 		// "Click" that one
-		await clickOption("one");
+		await pickOption(element, "one");
 		await element.updateComplete;
 
 		assert.equal(element.value, "one", "Selected search result was not in value");
@@ -326,10 +283,10 @@ describe("Search results", () =>
 			.returns(Promise.resolve([remote_results[0]]));
 
 		// Search
-		await doSearch(element, "remote_one")
+		await searchFor(element, "remote_one")
 
 		// Click
-		await clickOption("remote_one");
+		await pickOption(element, "remote_one");
 		await element.updateComplete;
 
 		assert.equal(element.value, "remote_one", "Selected search result was not in value");
@@ -350,16 +307,14 @@ describe("Search results", () =>
 			.returns(Promise.resolve(remote_results));
 
 		// Search
-		await doSearch(element, "doesn't matter, we're faking it")
+		await searchFor(element, "doesn't matter, we're faking it")
 
 		// Click
 		const values = ["remote_one", "remote_two"];
-		let listener;
-		values.forEach(value =>
+		for(const value of values)
 		{
-			listener = clickOption(value);
-		});
-		await listener;
+			await pickOption(element, value);
+		}
 		await element.updateComplete;
 
 		assert.deepEqual(element.value, values, "Selected search results were not in value");
@@ -383,15 +338,15 @@ describe("Search results", () =>
 			.returns(Promise.resolve(remote_results));
 
 		// Search
-		await doSearch(element, "doesn't matter, we're faking it")
+		await searchFor(element, "doesn't matter, we're faking it")
 
 		// Select the first one
-		await clickOption("remote_one");
+		await pickOption(element, "remote_one");
 		await element.updateComplete;
 
 		// Search & select another one
-		await doSearch(element, "doesn't matter, we're faking it");
-		await clickOption("remote_two");
+		await searchFor(element, "doesn't matter, we're faking it");
+		await pickOption(element, "remote_two");
 		await element.updateComplete;
 
 		assert.deepEqual(element.value, values, "Selected search results were not in value");

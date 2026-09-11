@@ -34,6 +34,8 @@ $headertime = microtime(true);
 
 use EGroupware\Api\Mail\Account as emailadmin_account;
 use EGroupware\Api\Mail\Imap as emailadmin_imap;
+use EGroupware\Mail\Ui;
+use EGroupware\Mail\Ui\MessageDisplayHandler;
 
 // on which mail account do we work, if not specified use default one (connects to imap server!)
 $acc_id = isset($_GET['acc_id']) && (int)$_GET['acc_id'] > 0 ? (int)$_GET['acc_id'] : emailadmin_account::get_default_acc_id();
@@ -64,6 +66,13 @@ echo json_encode($times, JSON_PRETTY_PRINT);
 
 function php_times($account, array &$times, $prefix='php_')
 {
+	// a JMAP account has no raw IMAP socket to profile - JMAP goes over HTTP(S), not the
+	// IMAP wire protocol this function speaks
+	if (is_a($account->acc_imap_type ?? '', \EGroupware\Api\Mail\Imap\Jmap::class, true))
+	{
+		$times[$prefix.'skipped'] = 'JMAP account, no raw IMAP socket to profile';
+		return;
+	}
 	$starttime = microtime(true);
 	switch($account->acc_imap_ssl & ~emailadmin_account::SSL_VERIFY)
 	{
@@ -135,7 +144,7 @@ function mail_times($acc_id, array &$times, $prefix='mail_')
 	// instanciate mail for given acc_id - have to set it as preference ;-)
 	$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $acc_id;
 	// instanciation should call openConnection
-	$mail_ui = new mail_ui();
+	$mail_ui = new Ui();
 	$mail_ui->mail_bo->openConnection($acc_id);
 	$logintime = microtime(true);
 
@@ -144,18 +153,12 @@ function mail_times($acc_id, array &$times, $prefix='mail_')
 		/*$_returnNodeOnly=*/true, $cache, /*$_popWizard=*/false);
 	$listmailboxestime = microtime(true);
 
-	// get first 20 mails
-	$query = array(
-		'start' => 0,
-		'num_rows' => 20,
-		'filter' => 'any',
-		'filter2' => 'quick',
-		'search' => '',
-		'order' => 'date',
-		'sort' => 'DESC',
+	// get first 20 mails (mail_ui::get_rows() no longer exists - rows are fetched client-side
+	// via direct JMAP access now, so call the underlying header fetch directly instead)
+	$sortResult = $mail_ui->mail_bo->getHeaders(
+		'INBOX', 1, 20, 'date', true, ['status' => 'any'], null, true, true
 	);
-	$rows = $readonlys = array();
-	$mail_ui->get_rows($query, $rows, $readonlys);
+	$rows = $sortResult['header'] ?? [];
 	$fetchtime = microtime(true);
 
 	if (isset($_GET['uid']) && (int)$_GET['uid'] > 0)
@@ -167,7 +170,7 @@ function mail_times($acc_id, array &$times, $prefix='mail_')
 		$row = array_shift($rows);
 		$uid = $row['uid'];
 	}
-	$mail_ui->get_load_email_data($uid, null, 'INBOX');
+	(new MessageDisplayHandler($mail_ui))->get_load_email_data($uid, null, 'INBOX');
 	$bodytime = microtime(true);
 
 	$times += array(

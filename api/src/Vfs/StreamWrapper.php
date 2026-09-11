@@ -822,7 +822,7 @@ class StreamWrapper extends Base implements StreamWrapperIface
 		$query = parse_url($url, PHP_URL_QUERY);
 		if (!$stat && $check_symlink_components)	// check if there's a symlink somewhere inbetween the path
 		{
-			$stat = self::check_symlink_components($path,$flags,$url);
+			$stat = self::check_symlink_components($path,$flags,$url,$check_symlink_depth);
 			if ($stat && isset($stat['url']) && !$query) self::symlinkCache_add($path,$stat['url']);
 		}
 		elseif(is_array($stat) && !isset($stat['url']))
@@ -899,9 +899,10 @@ class StreamWrapper extends Base implements StreamWrapperIface
 	 * @param string $path
 	 * @param int $flags =0 see url_stat
 	 * @param string &$url=null already resolved path
+	 * @param int $check_symlink_depth =self::MAX_SYMLINK_DEPTH remaining hops before we assume a circular symlink, see url_stat
 	 * @return array|boolean stat array or false if not found
 	 */
-	private function check_symlink_components($path,$flags=0,&$url=null)
+	private function check_symlink_components($path,$flags=0,&$url=null,$check_symlink_depth=self::MAX_SYMLINK_DEPTH)
 	{
 		if (is_null($url) && !($url = self::resolve_url($path)))
 		{
@@ -918,6 +919,11 @@ class StreamWrapper extends Base implements StreamWrapperIface
 			{
 				if (is_link($url) && ($lpath = Vfs::readlink($url)))
 				{
+					if (!$check_symlink_depth)
+					{
+						if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$path',$flags,'$url') maximum symlink depth exceeded, might be a circular symlink!");
+						return false;
+					}
 					if (self::LOG_LEVEL > 1) $log = "rel_path='$rel_path', url='$url': lpath='$lpath'";
 
 					if ($lpath[0] != '/')
@@ -927,7 +933,7 @@ class StreamWrapper extends Base implements StreamWrapperIface
 					//self::symlinkCache_add($path,Vfs::PREFIX.$lpath);
 					$url = Vfs::PREFIX.Vfs::concat($lpath,$rel_path);
 					if (self::LOG_LEVEL > 1) error_log("$log --> lpath='$lpath', url='$url'");
-					return $this->url_stat($url,$flags);
+					return $this->url_stat($url, $flags, false, true, $check_symlink_depth-1);
 				}
 				$url = Vfs::concat($url,$rel_path);
 				if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path',$flags,'$url') returning null");

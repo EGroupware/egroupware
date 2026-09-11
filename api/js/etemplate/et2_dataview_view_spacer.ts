@@ -9,11 +9,6 @@
  * @copyright EGroupware GmbH 2011-2021
  */
 
-/*egw:uses
-	/vendor/bower-asset/jquery/dist/jquery.js;
-	et2_dataview_view_container;
-*/
-
 import {et2_dataview_container} from "./et2_dataview_view_container";
 
 /**

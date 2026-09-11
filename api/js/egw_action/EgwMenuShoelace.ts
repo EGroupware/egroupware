@@ -203,6 +203,19 @@ export class EgwMenuShoelace extends LitElement
 			osClipboard.innerText = _links.egw_os_clipboard.actionObj.caption;
 		}
 	}
+
+	/**
+	 * Whether a menu item DOM node already exists for the given action id.
+	 * applyContext() can only toggle visibility/enabled state of existing items,
+	 * never add new ones - callers use this to detect a menu that was built
+	 * without an action it now needs, so it can be rebuilt instead of silently
+	 * dropping that action for the rest of the menu's lifetime.
+	 */
+	public hasActionItem(actionId : string) : boolean
+	{
+		return !!this.shadowRoot?.querySelector("[data-action-id='" + CSS.escape(actionId) + "']");
+	}
+
 	public hide()
 	{
 		if(this.popup)
@@ -350,7 +363,8 @@ export class EgwMenuShoelace extends LitElement
 				}, 100);
 			});
 		};
-		const captionStyle=item.color?`color:${item.color};`:''+item.indentation?`padding-left:${item.indentation}em;`:'';
+		const captionStyle = item.color ? `color:${item.color};` : '' +
+		item.indentation ? `padding-left:${item.indentation}em;` : '';
 		return html`
             <et2-menu-item
                     class=${classMap({
@@ -367,7 +381,8 @@ export class EgwMenuShoelace extends LitElement
                     ${ref(updateLoading)}
             >
                 ${item.iconUrl ? html`
-                    <et2-image slot="prefix" src="${item.iconUrl}"></et2-image>` : nothing}
+                    <et2-image slot="prefix" src="${item.iconUrl}"
+                               style=${item.iconColor ? "color: " + item.iconColor : nothing}></et2-image>` : nothing}
 				<span style=${captionStyle||nothing}>${item.caption}</span>
                 ${item.shortcutCaption ? html`<span slot="suffix" class="keyboard_shortcut">
 					${item.shortcutCaption}

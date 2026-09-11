@@ -41,7 +41,6 @@ is resource bookable?	resources	zh-tw	資源能否預約？
 is resource buyable?	resources	zh-tw	資源能否購買？
 is this resource bookable?	resources	zh-tw	這個資源能否預約？
 is this resource buyable?	resources	zh-tw	這個資源能否購買？
-links	resources	zh-tw	連結
 location	resources	zh-tw	位置
 location of resource	resources	zh-tw	資源的位置
 location:	resources	zh-tw	位置：

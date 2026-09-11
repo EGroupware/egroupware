@@ -6,15 +6,17 @@
  * @link https://www.egroupware.org
  * @author Nathan Gray
  */
-import {css, html, LitElement, nothing} from "lit";
+import {html, LitElement, nothing} from "lit";
 import {property} from "lit/decorators/property.js";
 import {classMap} from "lit/directives/class-map.js";
 import {Et2LinkAppSelect} from "./Et2LinkAppSelect";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {Et2LinkSearch} from "./Et2LinkSearch";
-import {Et2Link, LinkInfo} from "./Et2Link";
+import {Et2Link, LINK_URL_APPNAME, LinkInfo} from "./Et2Link";
+import {Et2Url} from "../Et2Url/Et2Url";
 import {HasSlotController} from "../Et2Widget/slot";
 
+import styles from "./Et2LinkEntry.styles";
 /**
  * @summary Find and select a single entry using the link system.
  *
@@ -36,28 +38,7 @@ export class Et2LinkEntry extends Et2InputWidget(LitElement)
 	{
 		return [
 			...(Array.isArray(super.styles) ? super.styles : [super.styles]),
-			css`
-				:host {
-					display: block;
-				}
-
-				:host(.hideApp) ::slotted([slot="app"]) {
-					display: none;
-				}
-
-				.form-control-input {
-					display: flex;
-					gap: 0.5rem;
-				}
-				
-				et2-link-apps {
-					flex: 1 1 auto;
-					&::part(icon){
-						margin-inline-end: 0;
-					}
-				}
-
-			`
+			styles
 		];
 	}
 
@@ -196,6 +177,11 @@ export class Et2LinkEntry extends Et2InputWidget(LitElement)
 	get _searchNode() : Et2LinkSearch
 	{
 		return <Et2LinkSearch>this.shadowRoot?.querySelector("et2-link-search");
+	}
+
+	get _urlNode() : Et2Url
+	{
+		return <Et2Url>this.shadowRoot?.querySelector("et2-url");
 	}
 
 	get placeholder() : string
@@ -359,12 +345,44 @@ export class Et2LinkEntry extends Et2InputWidget(LitElement)
 	protected handleAppChange(e)
 	{
 		this.app = this._appNode.value;
-		this._searchNode.app = this._appNode.value;
-		this._searchNode.value = "";
-		this._searchNode.clearSearch();
-		this._searchNode.focus();
+		this.value = "";
+
+		if(this.app === LINK_URL_APPNAME)
+		{
+			// no real app is registered for a url link, there's nothing to search - the
+			// search combo is hidden in favour of a plain URL input, see render()
+			this.updateComplete.then(() => this._urlNode?.focus());
+		}
+		else
+		{
+			this._searchNode.app = this._appNode.value;
+			this._searchNode.value = "";
+			this._searchNode.clearSearch();
+			this._searchNode.focus();
+		}
 
 		this.requestUpdate('value');
+	}
+
+	/**
+	 * User entered/changed a URL, while "URL" is the selected app - mirrors
+	 * handleEntrySelect()/handleEntryClear() for the search-based apps
+	 * @param event
+	 * @protected
+	 */
+	protected handleUrlChange(event)
+	{
+		const url = this._urlNode?.value ?? "";
+		this.value = url ? {app: LINK_URL_APPNAME, id: url, title: url} : "";
+		this.classList.toggle("hideApp", Boolean(url));
+
+		this.updateComplete.then(() =>
+		{
+			this.dispatchEvent(new Event("change", {bubbles: true, composed: true}));
+		});
+		this.requestUpdate('value');
+
+		this.validate();
 	}
 
 
@@ -396,9 +414,19 @@ export class Et2LinkEntry extends Et2InputWidget(LitElement)
                             .value=${this.__value?.app ? this.__value.app : nothing}
                             @change=${this.handleAppChange}
                     ></et2-link-apps>
+                    <et2-url
+                            part="link-entry__url"
+                            ?hidden=${this.app !== LINK_URL_APPNAME}
+                            ?required=${this.required}
+                            ?disabled=${this.disabled}
+                            ?readonly=${this.readonly}
+                            .value=${this.app === LINK_URL_APPNAME ? (this.__value?.id || "") : ""}
+                            @change=${this.handleUrlChange}
+                    ></et2-url>
                     <et2-link-search
                             part="link-entry__search"
                             exportparts="combobox:control"
+                            ?hidden=${this.app === LINK_URL_APPNAME}
                             ?placeholder=${this.placeholder}
                             ?required=${this.required}
                             ?disabled=${this.disabled}

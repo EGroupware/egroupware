@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="notifications.config" template="" lang="" group="0" version="16.1">
+	<et2-template  id="notifications.config" template="" lang="" group="0" version="16.1">
 		<grid width="100%" class="admin-config egwGridView_grid">
 			<columns>
 				<column width="60%"/>
@@ -12,16 +13,16 @@
 					<et2-description  value="EGroupware-Popup backend" span="all" class="subHeader"></et2-description>
 				</row>
 				<row>
-					<et2-description value="Automatic deleted notifications older than"></et2-description>
+					<et2-description  value="Automatic deleted notifications older than"></et2-description>
 					<et2-hbox>
-						<et2-number id="newsettings[popup_cut_off_days]" placeholder="30"></et2-number>
-						<et2-description value="days" width="4em"></et2-description>
+						<et2-number  id="newsettings[popup_cut_off_days]" placeholder="30"></et2-number>
+						<et2-description  value="days" width="4em"></et2-description>
 					</et2-hbox>
 				</row>
 				<row>
 					<et2-vbox>
-						<et2-description value="Poll interval"></et2-description>
-						<et2-description value="Only used if no push server available!"></et2-description>
+						<et2-description  value="Poll interval"></et2-description>
+						<et2-description  value="Only used if no push server available!"></et2-description>
 					</et2-vbox>
 					<et2-select  id="newsettings[popup_poll_interval]">
 						<option value="5">5 seconds</option>
@@ -49,5 +50,5 @@
                 </row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

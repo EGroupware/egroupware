@@ -9,31 +9,6 @@
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
  */
 
-/*egw:uses
-	egw_core;
-	egw_debug;
-	egw_preferences;
-	egw_lang;
-	egw_links;
-	egw_open;
-	egw_user;
-	egw_config;
-	egw_images;
-	egw_jsonq;
-	egw_files;
-	egw_json;
-	egw_store;
-	egw_tooltip;
-	egw_css;
-	egw_calendar;
-	egw_ready;
-	egw_data;
-	egw_tail;
-	egw_inheritance;
-	egw_message;
-	egw_notification;
-*/
-
 /**
  * Object to collect instantiated application objects
  *
@@ -47,6 +22,133 @@
  * @type object
  */
 window.app = {classes: {}};
+
+/**
+ * Import a module in THIS document's realm, resolved against THIS document's build
+ *
+ * Lives here, rather than in one of the egw modules, for two reasons that both come down to
+ * this file being loaded once per document while the modules are a shared bundle:
+ *
+ * - A module is only ever evaluated into the realm of the code that imported it, and a bundled
+ *   module's functions belong to whichever realm loaded that bundle, not to whatever window
+ *   object you call them on. A popup adopts its opener's egw object (see the bootstrap below),
+ *   so the egw module code a popup runs is the OPENER's copy - an import() written there loads
+ *   into the opener and leaves the popup without the class it just asked for.
+ * - A module only reaches a window once egw's window-local module merge has run for it, which
+ *   is not guaranteed: egw_modules.js deliberately evaluates this file BEFORE egw_core, so the
+ *   `egw(window)` access in the bootstrap below still sees the prefsOnly stub and merges
+ *   nothing. Anything the bootstrap's own include loader needs therefore cannot live in a
+ *   module, or a document nobody else calls egw(window) for comes up with no JS at all.
+ *
+ * De-dupes by logical name: once a name has been imported here, asking again resolves to the
+ * already-imported url instead of fetching and evaluating a 2nd copy. Without that, the 2nd
+ * copy's classes lose the custom-element registry race for tags the 1st copy already defined,
+ * crashing with "Failed to construct 'HTMLElement': Illegal constructor" as soon as a Lit-based
+ * widget is built from it. When a rebuilt file is skipped that way the user is told a reload
+ * would pick it up, once per document and never in a popup (whose opener shows it instead).
+ *
+ * @param {string} _url logical entry path ("/mail/js/app.min.js"), or a full absolute url as an
+ *  ajax response's js_files sends - both get egw-relativised to a single leading slash, the way
+ *  the manifest itself is keyed, then resolved through this document's window.egw_manifest.
+ *  A miss (a non-entry script, or a pre-hashing install with no manifest) falls back to that
+ *  same path, reconstructing the url it came in as.
+ * @returns {Promise<*>} the imported module, evaluated in this document's realm
+ */
+window.egw_import = (function()
+{
+	// logical name -> url actually imported for it in this document
+	const imported = {};
+	let notified = false;
+
+	/**
+	 * Remove a cache-busting timestamp query parameter, eg. /path/name.js?12345678[&other=val]
+	 *
+	 * @param {string} _src
+	 * @returns {string}
+	 */
+	function removeTS(_src)
+	{
+		return _src.replace(/[?&][0-9]+&?/, '?').replace(/\?$/, '');
+	}
+
+	/**
+	 * Make an url relative to EGW_SERVER_ROOT, discarding protocol and host if present
+	 *
+	 * @param {string} _url
+	 * @returns {string}
+	 */
+	function stripEgwUrl(_url)
+	{
+		let egw_url = window.egw_webserverUrl || '';
+		if (!egw_url.endsWith('/')) egw_url += '/';
+		// egw_url may be just a path while _url is a full url incl. protocol - prefix our own
+		// protocol and host to split on, as splitting by just the path would fail
+		const need_full_url = egw_url.startsWith('/') && _url.startsWith('http') ?
+			window.location.protocol+'//'+window.location.host : '';
+		const parts = _url.split(need_full_url+egw_url);
+		if (parts.length > 1)
+		{
+			parts.shift();	// discard protocol and host
+			return parts.join(need_full_url+egw_url);
+		}
+		return _url;
+	}
+
+	function egw_import(_url)
+	{
+		const manifest = window.egw_manifest || {};
+		let logical = stripEgwUrl(removeTS(_url));
+		if (!logical.startsWith('/')) logical = '/'+logical;
+		// a legacy, pre-rollup <app>/js/app.js may still be on the server - they are gitignored,
+		// so they survive deploys - while the manifest only keys the app.min.js rollup builds.
+		// Importing that path literally loads the stale artifact, whose own baked-in chunk and
+		// vendor imports are long gone - prefer its .min sibling when the manifest knows it.
+		if (logical.endsWith('/js/app.js') && manifest[logical.slice(0, -3)+'.min.js'])
+		{
+			logical = logical.slice(0, -3)+'.min.js';
+		}
+		// manifest keys and values are both EGW_SERVER_ROOT-relative, so either way this needs
+		// webserverUrl prepended to become fetchable
+		if (typeof manifest[logical] === 'undefined')
+		{
+			// A logical path with no manifest entry falls back to importing it literally - fine
+			// for a genuinely non-built file, but for anything that should have a hashed entry
+			// this is importing whatever's still sitting at that unhashed path (rollup no longer
+			// writes it once entries are hashed, so it's frozen at whatever it last contained,
+			// eg. a long-stale etemplate2 reference - ticket #124112). Log it either way, cheaply,
+			// so a mismatch like this is visible instead of silently loading stale content.
+			console.debug('egw_import(): no manifest entry for', logical, '- importing it literally');
+		}
+		const resolved = (window.egw_webserverUrl || '') + (manifest[logical] || logical);
+		if (typeof imported[logical] === 'undefined')
+		{
+			imported[logical] = resolved;
+		}
+		else if (imported[logical] !== resolved)
+		{
+			// someone rebuilt while this document was open - keep the already-loaded version
+			// running, but let the user know a reload would pick up the new one
+			egw_import.notifyUpdateAvailable();
+		}
+		return import(imported[logical]);
+	}
+
+	/**
+	 * Show the "new updates available" notice once, main window only
+	 *
+	 * Also called by the periodic build-epoch poll further down this file.
+	 */
+	egw_import.notifyUpdateAvailable = function()
+	{
+		if (notified || window.opener != null) return;
+
+		notified = true;
+		egw(window).message(egw.lang('New updates available. Reload when convenient to get the latest updates.'), 'info');
+	};
+	Object.defineProperty(egw_import, 'updateAvailableNotified', {get: () => notified});
+
+	return egw_import;
+})();
 
 (function()
 {
@@ -76,6 +178,9 @@ window.app = {classes: {}};
 
 	window.egw_webserverUrl = egw_script.getAttribute('data-url');
 	window.egw_appName = egw_script.getAttribute('data-app');
+	window.egw_buildEpoch = parseInt(egw_script.getAttribute('data-epoch')) || null;
+	// logical entry path -> hashed physical path, filtered server-side to this user's apps
+	window.egw_manifest = JSON.parse(egw_script.getAttribute('data-manifest')) || {};
 
 	// split includes in legacy js and modules
 	const legacy_js_regexp = /\/dhtmlx|jquery-ui|^etemplate\/|^phpbrain\/|^phpgwapi\//;
@@ -220,10 +325,14 @@ window.app = {classes: {}};
 	}
 
 	// make our promise global, as legacy code calls egw_LAB.wait which we assign to egw_ready.then
+	//
+	// An entry (app.min.js, etemplate2.js) here is hashed at build time, so window.egw_import()
+	// above resolves it against this document's own manifest rather than assuming rel_src is
+	// already a fetchable path.
 	window.egw_LAB = window.egw_ready =
 		legacy_js_import(include.filter((src) => src.match(legacy_js_regexp) !== null), window.egw_webserverUrl)
 			.then(() => Promise.all(include.filter((src) => src.match(legacy_js_regexp) === null)	//.reverse()
-				.map(rel_src => import(window.egw_webserverUrl+'/'+rel_src)
+				.map(rel_src => window.egw_import('/'+rel_src)
 					.catch((err) => {window.setTimeout(() => {throw err;},0)})
 	))).then(() =>
 	{
@@ -281,6 +390,57 @@ window.app = {classes: {}};
 			egw.open_link.apply(egw, egw_popup);
 		}
 
+		// call an app method directly, if data-start (or data-$app-start) specified: {method, args}
+		// the same dotted "app.method" string + argument list any 'javaScript:app.x.y' onExecute
+		// action string already resolves via applyFunc() (including its existing
+		// lazy-load-the-app-bundle-if-missing behaviour), just invoked here instead of from a
+		// click. Two sources use this: egw_open.ts's clientSidePopup() (bare data-start, JS-set on
+		// a from-scratch about:blank popup with no server-rendered menuaction/content array at
+		// all), and a real page setting Api\Framework::set_extra($app, 'start', ...) server-side
+		// (data-$app-start - eg. mail/compose.php, doc/ai/projects/mail-compose-jmap-migration.md
+		// Step 10 "Option B", a real navigated page instead of about:blank specifically so reload
+		// works and Chrome doesn't flag it as third-party). Deliberately part of egw.js's own
+		// bootstrap chain rather than a separately loaded/injected script - a dynamically inserted
+		// <script> has no reliable execution-order guarantee relative to this one (found live
+		// 2026-09-06: an external tail script raced ahead and ran before egw_ready even existed as
+		// a property yet, not merely unresolved).
+		var egw_start = egw_script.getAttribute('data-start') ||
+			egw_script.getAttribute('data-' + egw_script.getAttribute('data-app') + '-start');
+		if (egw_start)
+		{
+			egw_start = JSON.parse(egw_start) || {};
+			// clientSidePopup() (egw_open.ts) already makes sure data-include lists _method's own
+			// app bundle explicitly - a normal page's data-include can omit it (api/src/Framework.php's
+			// _get_js() tracks, per session, which JS a given app has "already sent" and skips
+			// re-listing it on a later internal navigation within the SAME window/app), which a fresh
+			// popup never actually received, so egw_open.ts adds it back in rather than this file
+			// needing its own separate load step here.
+			//
+			// egw_ready resolving still doesn't strictly guarantee applyFunc() (a Json instance
+			// method merged directly onto the egw instance by egw_json.ts's `egw.extend('json', ...)`
+			// - NOT nested under `egw.json`, which is itself a different Json instance method, the
+			// JsonRequest factory used as `egw.json(menuaction).sendRequest(...)`) has finished its
+			// own registration - found live 2026-09-06, and the app bundle's own nested import chain
+			// (eg. mail's own etemplate2 dependency, which itself imports more chunks) can take a few
+			// seconds on a cold cache - so this polls briefly rather than assuming either is instant.
+			(function tryStart(attemptsLeft)
+			{
+				var e = egw(window);
+				if (e && typeof e.applyFunc === 'function')
+				{
+					e.applyFunc(egw_start.method, egw_start.args || [], window);
+				}
+				else if (attemptsLeft > 0)
+				{
+					window.setTimeout(function() { tryStart(attemptsLeft - 1); }, 50);
+				}
+				else
+				{
+					console.error('egw.js: data-start="'+JSON.stringify(egw_start)+'" given, but egw(window).applyFunc never became available');
+				}
+			})(200); // ~10s of retries
+		}
+
 		// set grants if given for push
 		var egw_grants = egw_script.getAttribute('data-grants');
 		if (egw_grants)
@@ -299,18 +459,65 @@ window.app = {classes: {}};
 
 		// Make sure opener knows when we close - start a heartbeat
 		try {
-			if ((window.opener && window.opener.framework || popup) && window.name != '') {
+			if (window.opener && window.opener.framework || popup) {
+				// capture the opener's framework instance now, to notice later if the opener reloads/navigates
+				var opener_framework_at_init = window.opener && window.opener.framework;
 				// Timeout is 5 seconds, but it iks only applied(egw_utils) when something asks for the window list
 				window.setInterval(function () {
-					if (window.opener && window.opener.framework && typeof window.opener.framework.popup_idx(window) == 'undefined' && !egwIsMobile()) {
-						window.opener.framework.popups.push(window);
+					try {
+						// opener reloaded/navigated: it now has a brand new (or no) framework instance
+						if (window.opener && window.opener.framework !== opener_framework_at_init)
+						{
+							opener_framework_at_init = window.opener.framework;
+							window.egw_rejoin();
+							return;
+						}
 					}
-					egw().storeWindow(this.egw_appName, this);
+					catch(e) {
+						// ignore SecurityError exception if opener is different security context / cross-origin
+					}
+					// Only track named windows in the opener's window list
+					if (window.name != '') {
+						if (window.opener && window.opener.framework && typeof window.opener.framework.popup_idx(window) == 'undefined' && !egwIsMobile()) {
+							window.opener.framework.popups.add(window);
+						}
+						egw().storeWindow(this.egw_appName, this);
+					}
 				}, 2000);
 			}
 		}
 		catch(e) {
 			// ignore SecurityError exception if opener is different security context / cross-origin
+		}
+
+		// Poll for a newer build and show one dismissible notice once meaningfully stale (main window only)
+		if (!popup && window.egw_buildEpoch)
+		{
+			let build_check_interval = window.setInterval(function ()
+			{
+				// window.egw_import() (see egw_files.ts) may already have notified - a
+				// stale-version reload was caught sooner than 12h - stop polling once that's happened
+				if (window.egw_import.updateAvailableNotified)
+				{
+					window.clearInterval(build_check_interval);
+					return;
+				}
+				// {cache: 'no-store'} only bypasses the browser's own cache, not an intermediate
+				// proxy/nginx cache in front of the server - a plain .json response with no
+				// cache-buster can get served stale from there for days (ticket #124112), which
+				// silently defeats this whole poll. Date.now() guarantees a miss on every check.
+				fetch(window.egw_webserverUrl+'/api/js/build-epoch.json?'+Date.now(), {cache: 'no-store'})
+					.then(r => r.json())
+					.then(data =>
+					{
+						if (data.epoch && data.epoch - window.egw_buildEpoch > 12*3600000) // 12 hours
+						{
+							window.egw_import.notifyUpdateAvailable();
+							window.clearInterval(build_check_interval);
+						}
+					})
+					.catch(() => {});	// ignore network errors, just retry next interval
+			}, 15*60000);
 		}
 		// instantiate app object
 		var appname = window.egw_appName;
@@ -463,6 +670,19 @@ window.app = {classes: {}};
 				var params = JSON.parse(egw_script.getAttribute('data-message')) || [''];
 				egw(window).message.apply(egw(window), params);
 			}
+			// call a method on a top-window app object once it's ready, eg. set via
+			// Framework::set_extra('app', 'call', ['app' => 'admin', 'method' => '...', 'args' => [...]])
+			// - targets window.top, as this page (like this one's own bootstrap) may be loaded
+			// inside an iframe that never instantiates its own app objects
+			if (egw_script.getAttribute('data-app-call'))
+			{
+				var app_call = JSON.parse(egw_script.getAttribute('data-app-call'));
+				var call_target = window.top.app && window.top.app[app_call.app];
+				if (call_target && typeof call_target[app_call.method] === 'function')
+				{
+					call_target[app_call.method].apply(call_target, app_call.args || []);
+				}
+			}
 			// hide location bar for mobile browsers
 			if (egw_script.getAttribute('data-mobile'))
 			{
@@ -515,33 +735,157 @@ window.et2_call = function(_func)
 }
 
 /**
- * Main window was reloaded, rejoin
+ * Main window was reloaded - reconnect this popup to its (new) opener
+ *
+ * Called reactively from the popup heartbeat once it notices the opener's framework
+ * instance changed (ie. the opener navigated/reloaded), so the opener has typically
+ * already finished its own re-init by the time this runs - unlike a proactive
+ * "wait for the opener to load" approach, this just retries until it's ready.
  */
 window.egw_rejoin = function ()
 {
-		window.setTimeout(function ()
+	let reconnecting = egw(window).message("Reconnecting...");
+	window.setTimeout(function retry()
 	{
-		opener.addEventListener("load", () =>
-		{
-			/* It takes more than just re-setting this.framework to get everything working again, but this helps */
-			let reconnecting = egw(this).message("Reconnecting...");
-			window.setTimeout(() =>
+		try {
+			if (!window.opener || typeof window.opener.top.framework == 'undefined')
 			{
-				opener.console.log("Re-set framework");
-				reconnecting.close();
-				this.framework = this.opener.framework;
-				this.framework.egw_appWindow().console.log("Popup %s rejoined", this.location.href);
-			}, 5000);
-		});
-	}.bind(window), 500);
+				window.setTimeout(retry, 1000);
+				return;
+			}
+			window.framework = window.opener.top.framework;
+			window.egw = window.opener.top.egw;
+			window.framework.popups.add(window);
+			reconnecting.close();
+			console.log("Popup %s rejoined", window.location.href);
+		}
+		catch(e)
+		{
+			// opener still initializing, or cross-origin - try again shortly
+			window.setTimeout(retry, 1000);
+		}
+	}, 500);
 }
 /**
- * Allow egw.json to load JS into popups
+ * Run a JSON request in *this* window's realm, calling back with the parsed response
+ *
+ * Popups adopt the opener's egw object (see the bootstrap at the top of this file), so the
+ * egw modules' code - and every closure it creates, including its .then() callbacks - belongs
+ * to the opener's realm, not the popup's. Once the opener navigates, promise reactions queued
+ * while that no-longer-fully-active document is on the call stack are silently discarded: the
+ * request still reaches the server and is processed, but its response is never handled, so eg.
+ * a save in a reconnected popup would neither close the popup nor show its confirmation.
+ *
+ * Starting the chain here, in a realm that is still fully active, is what fixes it: the
+ * reactions registered below are functions of *this* realm. The onSuccess/onError handed in
+ * may well belong to a dead realm - that is fine, dead-realm functions execute normally when
+ * *called*, they just never get *scheduled*.
+ *
+ * The returned promise is passed through egw_chainable() so callers can still .then() onto it
+ * with callbacks of their own (dead) realm - see there.
  *
  * @param url
- * @returns {Promise<*>}
+ * @param init fetch() init object
+ * @param onSuccess called with the parsed JSON; its return value resolves the promise
+ * @param onError called with (error, response_ok)
+ * @returns {Promise<*>} resolving to onSuccess's return value
  */
-window.egw_import = function (url)
+window.egw_fetch_json = function (url, init, onSuccess, onError)
 {
-	return import(url);
+	let response_ok = false;
+	return window.egw_chainable(fetch(url, init)
+		.then(function (response) {
+			response_ok = response.ok;
+			if (!response.ok) {
+				throw response;
+			}
+			return response.json();
+		})
+		.then(function (data) { return onSuccess(data); })
+		.catch(function (_err) { return onError(_err, response_ok); }));
+}
+/**
+ * Wrap a callback so it can be used as a promise reaction from a document that may no longer
+ * be fully active
+ *
+ * A promise reaction whose callback function belongs to a non-fully-active document is never
+ * invoked - it is the *callback's* realm that decides, not who called then(), and not whether
+ * the promise was still pending. So a popup whose opener has navigated cannot schedule its own
+ * continuations at all: they are silently dropped, no error (verified).
+ *
+ * The returned wrapper belongs to THIS realm, so it is what actually gets scheduled, and it
+ * merely *calls* the original - dead-realm functions execute normally when called, they just
+ * never get scheduled themselves.
+ *
+ * @param {function(...*):*} _callback callback which may belong to another (dead) realm
+ * @returns {function(...*):*} wrapper of this realm, calling _callback with the same args/this
+ */
+window.egw_wrap_callback = function (_callback)
+{
+	return function () { return _callback.apply(this, arguments); };
+}
+/**
+ * Schedule a timer in *this* window's realm
+ *
+ * Timers are stricter than promises: the callback has to belong to a fully active document
+ * (as with egw_wrap_callback) AND the setTimeout/setInterval call itself has to be made from
+ * one. Calling `someLiveWindow.setInterval(...)` from a document that has been replaced is
+ * NOT enough - the timer never fires, silently. Verified both ways.
+ *
+ * So a module whose realm may be gone (anything running in a popup, see the bootstrap at the
+ * top of this file) has to route through these, which do the scheduling here and wrap the
+ * callback for good measure. Clearing needs no such helper - cancelling does not schedule
+ * anything, so clearInterval()/clearTimeout() work fine from a dead realm (verified).
+ *
+ * @param {function():void} _callback may belong to another (dead) realm
+ * @param {number} _ms
+ * @returns {number} handle for the plain clearInterval()/clearTimeout()
+ */
+window.egw_set_interval = function (_callback, _ms)
+{
+	return setInterval(window.egw_wrap_callback(_callback), _ms);
+}
+/**
+ * @see window.egw_set_interval
+ * @param {function():void} _callback
+ * @param {number} _ms
+ * @returns {number}
+ */
+window.egw_set_timeout = function (_callback, _ms)
+{
+	return setTimeout(window.egw_wrap_callback(_callback), _ms);
+}
+/**
+ * Make a promise of this realm safe to chain from a document that may no longer be fully active
+ *
+ * @see window.egw_wrap_callback for why this is needed - this is the same trick applied to a
+ * whole promise instead of a single callback.
+ *
+ * @param {Promise<*>} _promise promise created in this realm
+ * @returns {Promise<*>} the same promise, with a then() that realm-wraps its callbacks
+ */
+window.egw_chainable = function (_promise)
+{
+	const native_then = _promise.then.bind(_promise);
+
+	/**
+	 * @param {function(*):*} [_onFulfilled]
+	 * @param {function(*):*} [_onRejected]
+	 * @returns {Promise<*>}
+	 */
+	_promise.then = function (_onFulfilled, _onRejected)
+	{
+		const chained = window.egw_chainable(native_then(
+			typeof _onFulfilled === 'function' ? function (_value) { return _onFulfilled(_value); } : _onFulfilled,
+			typeof _onRejected === 'function' ? function (_reason) { return _onRejected(_reason); } : _onRejected
+		));
+		// keep abort() reachable after chaining: callers hold on to the chained promise, but
+		// abort() is assigned to the original one by egw_json's sendRequest()
+		if (typeof _promise.abort === 'function' && typeof chained.abort !== 'function')
+		{
+			chained.abort = function () { return _promise.abort(); };
+		}
+		return chained;
+	};
+	return _promise;
 }

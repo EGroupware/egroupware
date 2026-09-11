@@ -82,7 +82,6 @@ leave it empty for a full week	timesheet	ru	Оставьте незаполне�
 leaves without saveing	timesheet	ru	Оставить без сохранения
 length<br>rows	timesheet	ru	Длина<br>Ряды
 link title	timesheet	ru	Название ссылки
-links	timesheet	ru	Ссылки
 links and attached files	timesheet	ru	Ссылки и прикреплённые файлы
 links to specified application.  example: {{links/infolog}}	timesheet	ru	Ссылки на указанное приложение. Пример: {{links/infolog}}
 list of files linked to the current record	timesheet	ru	Список файлов, связанных с текущей записью

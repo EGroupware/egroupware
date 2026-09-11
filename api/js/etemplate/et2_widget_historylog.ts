@@ -9,15 +9,6 @@
  * @copyright 2012 Nathan Gray
  */
 
-/*egw:uses
-	/vendor/bower-asset/jquery/dist/jquery.js;
-	/vendor/bower-asset/jquery-ui/jquery-ui.js;
-	et2_core_valueWidget;
-
-	// Include the grid classes
-	et2_dataview;
-*/
-
 import {et2_IDataProvider} from "./et2_dataview_interfaces";
 import {et2_createWidget, et2_register_widget, et2_registry, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
@@ -27,7 +18,7 @@ import {et2_dataview_column} from "./et2_dataview_model_columns";
 import {et2_dataview_controller} from "./et2_dataview_controller";
 import {et2_IDetachedDOM, et2_IResizeable} from "./et2_core_interfaces";
 import {et2_customfields_list} from "./et2_extension_customfields";
-import {et2_selectbox} from "./et2_widget_selectbox";
+import {et2_selectbox} from "./legacy-shims/et2_widget_selectbox";
 import {loadWebComponent} from "./Et2Widget/Et2Widget";
 import {cleanSelectOptions, SelectOption} from "./Et2Select/FindSelectOptions";
 import {Et2Diff} from "./Et2Diff/Et2Diff";
@@ -316,7 +307,9 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 				value: '~file~',
 				label: this.egw().lang('File')
 			});
-			this.options.value['status-widgets']['~file~'] = 'vfs';
+			// et2-vfs-path (readonly) replaces the deleted legacy "vfs", and takes either a
+			// plain path or a full stat-array.  The dead name rendered a "vfs" placeholder box.
+			this.options.value['status-widgets']['~file~'] = 'et2-vfs-path';
 		}
 
 		// Add in handling for user-agent & action
@@ -532,7 +525,6 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 		return null;
 	}
 
-
 	dataFetch( _queriedRange, _callback, _context)
 	{
 		// Skip getting data if there's no ID
@@ -556,7 +548,6 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 			[]
 		);
 	}
-
 
 	// Needed by interface
 	dataRegisterUID( _uid, _callback, _context)

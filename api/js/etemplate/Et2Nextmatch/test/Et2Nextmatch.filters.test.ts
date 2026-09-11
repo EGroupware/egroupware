@@ -1,6 +1,10 @@
 import {assert} from "@open-wc/testing";
+import {render} from "lit";
 import {Et2Nextmatch} from "../Et2Nextmatch";
-import {ET2_NEXTMATCH_FILTER_EVENT, ET2_NEXTMATCH_SORT_EVENT} from "../Headers/events";
+import {Et2Dialog} from "../../Et2Dialog/Et2Dialog";
+import type {Et2Datagrid} from "../../Et2Datagrid/Et2Datagrid";
+import {ET2_NEXTMATCH_FILTER_EVENT, ET2_NEXTMATCH_SORT_EVENT, Et2NextmatchSortEventDetail} from "../Headers/events";
+import {et2_IInput, et2_implements_registry} from "../../et2_core_interfaces";
 import * as sinon from "sinon";
 
 /**
@@ -25,9 +29,11 @@ const egwStub = {
 	lang: (label : string) => label,
 	tooltipBind: () => {},
 	tooltipUnbind: () => {},
-	preference: () => null,
+	image: () => "",
+	preference: (key? : string) => String(key || "").endsWith("-lettersearch") ? true : null,
 	set_preference: () => {},
 	app_name: () => "addressbook",
+	link: (url : string) => url,
 	dataFetch: (_execId, _request, _filters, _widgetId, callback) => callback({order: [], total: 0}),
 	dataRegisterUID: (_uid, callback) => callback({}, "row::1"),
 	debug: () => {}
@@ -41,6 +47,14 @@ const waitForBubblingHandlers = async() =>
 	await Promise.resolve();
 };
 
+const waitForCondition = async(condition : () => boolean) =>
+{
+	for(let i = 0; i < 10 && !condition(); i++)
+	{
+		await waitForBubblingHandlers();
+	}
+};
+
 const sortableMode = (sortHeader : HTMLElement) =>
 {
 	const label = sortHeader.shadowRoot!.querySelector(".nextmatch_sortheader") as HTMLElement | null;
@@ -51,6 +65,42 @@ const sortableMode = (sortHeader : HTMLElement) =>
 
 describe("Et2Nextmatch header event handling", () =>
 {
+	/**
+	 * Contract under test:
+	 * - Initial rows must still produce a search-result signal
+	 *   when nextmatch is rendered in tile view.
+	 *
+	 * Setup strategy:
+	 * - Configure tile view and preloaded rows before connecting the nextmatch.
+	 * - Listen for the bubbling `et2-search-result` event on the host.
+	 *
+	 * Pass criteria:
+	 * - At least one search-result event is emitted with the settings total.
+	 */
+	it("emits search result for initial rows in tile view", async() =>
+	{
+		const el = new Et2Nextmatch();
+		el.view = "tile";
+		el.settings = {total: "17"};
+		el.rows = [
+			{id: "row-1", title: "Row 1"},
+			{id: "row-2", title: "Row 2"}
+		];
+
+		let eventTotal = "";
+		el.addEventListener("et2-search-result", (event : Event) =>
+		{
+			eventTotal = String((event as CustomEvent).detail?.total ?? "");
+		});
+
+		document.body.append(el);
+		await waitForCondition(() => eventTotal === "17");
+
+		assert.strictEqual(el.settings.total, 17, "string settings total should be normalized when settings are applied");
+		assert.equal(eventTotal, "17", "initial tile rows should emit a search-result event with settings total");
+		el.remove();
+	});
+
 	/**
 	 * Contract under test:
 	 * - Non-canceled header filter events merge into active filters.
@@ -147,6 +197,216 @@ describe("Et2Nextmatch header event handling", () =>
 		el.remove();
 	});
 
+	it("exposes active filters without allowing direct mutation", () =>
+	{
+		const el = new Et2Nextmatch();
+		el.applyFilters({
+			search: "term",
+			col_filter: {owner: "42"},
+			sort: {id: "title", asc: true}
+		}, {reload: false});
+
+		const filters = el.activeFilters;
+		filters.search = "changed";
+		filters.col_filter.owner = "99";
+		filters.sort.asc = false;
+
+		assert.equal(el.activeFilters.search, "term", "top-level active filter mutation should not affect internal state");
+		assert.equal(el.activeFilters.col_filter.owner, "42", "nested column filter mutation should not affect internal state");
+		assert.deepEqual(el.activeFilters.sort, {id: "title", asc: true}, "nested sort mutation should not affect internal state");
+	});
+
+	/**
+	 * Contract under test:
+	 * - applyFilters() ignores a reentrant call made from within its own synchronous "et2-filter"
+	 *   dispatch, instead of recursing forever.
+	 *
+	 * Why this matters:
+	 * - Reproduced live: a filter widget (Et2Date) whose value setter unconditionally re-fired
+	 *   "change" on a purely programmatic reset (flatpickr's clear() defaulting
+	 *   triggerChangeEvent to true) bubbled that event back into Et2Filterbox, which called back
+	 *   into this same applyFilters() before the outer call had returned - an unbounded
+	 *   synchronous loop that froze the browser tab. This guard is defense-in-depth: it protects
+	 *   against ANY widget with the same one-sided trigger-on-programmatic-set bug, not just the
+	 *   one already fixed in Et2Date.
+	 *
+	 * Pass criteria:
+	 * - The reentrant call returns false and its filter change is not applied.
+	 * - The outer call still applies and returns normally.
+	 */
+	it("ignores a reentrant applyFilters() call triggered synchronously from its own et2-filter event", () =>
+	{
+		const el = new Et2Nextmatch();
+
+		let reentrantResult : boolean | undefined;
+		el.addEventListener("et2-filter", () =>
+		{
+			reentrantResult = el.applyFilters({col_filter: {reentrant: "1"}}, {reload: false});
+		}, {once: true});
+
+		const outerResult = el.applyFilters({col_filter: {owner: "42"}}, {reload: false});
+
+		assert.isTrue(outerResult, "outer call should still apply normally");
+		assert.isFalse(reentrantResult, "reentrant call should be ignored");
+		assert.equal(el.activeFilters.col_filter.owner, "42");
+		assert.isUndefined(el.activeFilters.col_filter.reentrant, "reentrant filter must not be applied");
+	});
+
+	it("can update filter state without reloading or clearing row actions", async() =>
+	{
+		const el = new Et2Nextmatch();
+		document.body.append(el);
+		await el.updateComplete;
+		const datagrid = el.shadowRoot!.querySelector("et2-datagrid") as any;
+		const reload = sinon.spy(datagrid, "reload");
+		const clearRowActionObjects = sinon.spy();
+		(el as any)._actionController.clearRowActionObjects = clearRowActionObjects;
+
+		const changed = el.applyFilters({view: "tile"}, {reload: false, clearActions: false});
+
+		assert.isTrue(changed, "filter state should update");
+		assert.equal(el.activeFilters.view, "tile", "view should be stored in active filters");
+		assert.isFalse(reload.called, "reload should be skipped");
+		assert.isFalse(clearRowActionObjects.called, "row actions should be preserved");
+		el.remove();
+	});
+
+	/**
+	 * Contract under test:
+	 * - A filter change with reload allowed (the default - every test above this
+	 *   one passes `{reload: false}`) must actually drive the child datagrid
+	 *   through a real `reload()` and end up showing that reload's real
+	 *   rows/total, not just call `reload()` (already covered by the sinon-spy
+	 *   test above).
+	 *
+	 * Setup strategy:
+	 * - Patch only the child datagrid's `dataProvider.fetchPage()` (its other
+	 *   methods - `getQuerySignature()`, `getRowData()`, etc - stay real) so the
+	 *   real `reload()` -> `_fetchPage()` path resolves with known rows/total.
+	 *
+	 * Pass criteria:
+	 * - `applyFilters()` (no `reload: false`) reports the filter change applied.
+	 * - The child datagrid ends up with the new fetch's total and row count.
+	 */
+	it("reloads the child datagrid with real rows/total when applyFilters() is allowed to reload", async() =>
+	{
+		// Unlike Et2Datagrid.test.ts, this file does not stub ResizeObserver, so a
+		// real reload's real layout occasionally trips the harmless
+		// "ResizeObserver loop completed with undelivered notifications" warning,
+		// which the test runner otherwise treats as an uncaught error/test failure.
+		// Suppress only that message, only for this test, the same way (and for
+		// the same reason) Et2Datagrid.test.ts does for its whole file - an
+		// "error" listener alone was not enough to reliably catch this, since the
+		// runner's own `window.onerror` can see it independently.
+		const isResizeObserverLoopMessage = (text : string) => text.includes("ResizeObserver loop completed with undelivered notifications");
+		const resizeObserverErrorHandler = (event : ErrorEvent) =>
+		{
+			if(isResizeObserverLoopMessage(String(event?.message || "")))
+			{
+				event.preventDefault();
+				event.stopImmediatePropagation?.();
+			}
+		};
+		window.addEventListener("error", resizeObserverErrorHandler, true);
+		const originalWindowOnError = window.onerror;
+		window.onerror = (message, source, lineno, colno, error) =>
+		{
+			const text = String(message || error?.message || "");
+			if(isResizeObserverLoopMessage(text))
+			{
+				return true;
+			}
+			return typeof originalWindowOnError === "function"
+				   ? originalWindowOnError.call(window, message, source, lineno, colno, error)
+				   : false;
+		};
+
+		const el = new Et2Nextmatch();
+		try
+		{
+			document.body.append(el);
+			await el.updateComplete;
+			const datagrid = el.shadowRoot!.querySelector("et2-datagrid") as any;
+
+			datagrid.dataProvider.fetchPage = async() => ({
+				total: 2,
+				rows: [
+					{id: "addressbook::owner-42-a", title: "Owner 42 A"},
+					{id: "addressbook::owner-42-b", title: "Owner 42 B"}
+				]
+			});
+
+			const loaded = new Promise<void>((resolve) =>
+			{
+				datagrid.addEventListener("et2-loading-done", () => resolve(), {once: true});
+			});
+			const changed = el.applyFilters({col_filter: {owner: "42"}});
+			assert.isTrue(changed, "filter state should update");
+
+			await loaded;
+			await datagrid.updateComplete;
+
+			assert.equal(datagrid.total, 2, "child datagrid should show the reloaded query's real total");
+			assert.equal(datagrid.rows.length, 2, "child datagrid should show the reloaded query's real rows");
+			assert.deepEqual(
+				datagrid.rows.map((row : any) => row.id),
+				["addressbook::owner-42-a", "addressbook::owner-42-b"],
+				"child datagrid rows should come from the post-filter-change fetch"
+			);
+		}
+		finally
+		{
+			el.remove();
+			window.removeEventListener("error", resizeObserverErrorHandler, true);
+			window.onerror = originalWindowOnError;
+		}
+	});
+
+	/**
+	 * Contract under test:
+	 * - A changed root filter keeps root rows expanded, but no child-level data
+	 *   or expansion state survives into the new query.
+	 *
+	 * Pass criteria:
+	 * - A matching root row can remain open after reload.
+	 * - Its child provider, cached rows, nested expansion state, and initial-load
+	 *   marker are discarded so the child reloads with the new filters.
+	 */
+	it("keeps root expansions but discards subgrid caches when filters change", async() =>
+	{
+		const el = new Et2Nextmatch();
+		document.body.append(el);
+		await el.updateComplete;
+		const rootRowId = "addressbook::parent-1";
+		const childRowId = "addressbook::child-1";
+		const initializedChild = {} as Et2Datagrid;
+		(el as any)._expandedRowIds = new Set([rootRowId]);
+		(el as any)._expandedRowIdsByParent.set(rootRowId, new Set([childRowId]));
+		(el as any)._childDataProviders.set(rootRowId, {});
+		(el as any)._childGridRowsSnapshots.set(rootRowId, {
+			rowsByIndex: [{id: childRowId}],
+			total: 1,
+			displayedRowIds: [childRowId],
+			hasFetchedOnce: true
+		});
+		(el as any)._subgridColumnSnapshots.set(rootRowId, {
+			columns: [{key: "title", title: "Title"}]
+		});
+		(el as any)._initializedSubgrids.add(initializedChild);
+
+		const changed = el.applyFilters({search: "updated query"}, {reload: false});
+
+		assert.isTrue(changed, "filter change should be accepted");
+		assert.isTrue((el as any)._expandedRowIds.has(rootRowId), "root expanded rows should remain open");
+		assert.equal((el as any)._expandedRowIdsByParent.size, 0, "nested expansion state should be cleared");
+		assert.equal((el as any)._childDataProviders.size, 0, "child providers should be recreated for the new filters");
+		assert.equal((el as any)._childGridRowsSnapshots.size, 0, "cached child rows should not cross query changes");
+		assert.equal((el as any)._subgridColumnSnapshots.size, 0, "child column snapshots should be reset with the child grids");
+		assert.isFalse((el as any)._initializedSubgrids.has(initializedChild), "surviving child grids should be allowed to load again");
+
+		el.remove();
+	});
+
 	/**
 	 * Contract under test:
 	 * - Non-canceled header sort events update sort filter state.
@@ -174,6 +434,115 @@ describe("Et2Nextmatch header event handling", () =>
 		await waitForBubblingHandlers();
 
 		assert.deepEqual(el.activeFilters.sort, {id: "title", asc: true}, "sort state should be applied");
+		el.remove();
+	});
+
+	/**
+	 * Contract under test:
+	 * - Sort headers cycle through unsorted, ascending, descending, and back to
+	 *   unsorted.
+	 *
+	 * Setup strategy:
+	 * - Click a standalone sort header, applying each reflected mode between
+	 *   clicks the same way Nextmatch does after filter state changes.
+	 *
+	 * Pass criteria:
+	 * - The emitted sort detail requests asc, then desc, then clear.
+	 */
+	it("emits a clear sort event after ascending and descending states", async() =>
+	{
+		const sortHeader = document.createElement("et2-nextmatch-sortheader") as any;
+		sortHeader.id = "title";
+		document.body.append(sortHeader);
+		await sortHeader.updateComplete;
+		const sortEvents : Et2NextmatchSortEventDetail[] = [];
+		sortHeader.addEventListener(ET2_NEXTMATCH_SORT_EVENT, (event : CustomEvent<Et2NextmatchSortEventDetail>) =>
+		{
+			event.preventDefault();
+			sortEvents.push({...event.detail});
+		});
+
+		sortHeader.click();
+		sortHeader.setSortmode("asc");
+		sortHeader.click();
+		sortHeader.setSortmode("desc");
+		sortHeader.click();
+
+		assert.deepInclude(sortEvents[0], {id: "title", asc: true}, "first click should request ascending sort");
+		assert.deepInclude(sortEvents[1], {id: "title", asc: false}, "second click should request descending sort");
+		assert.equal(sortEvents[2].id, "title", "third click should still identify the column");
+		assert.isTrue(sortEvents[2].clear, "third click should request clearing the sort");
+		assert.isUndefined(sortEvents[2].asc, "clear event should not include a sort direction");
+		sortHeader.remove();
+	});
+
+	/**
+	 * Contract under test:
+	 * - Sort headers with a descending default still cycle through all three
+	 *   states.
+	 *
+	 * Setup strategy:
+	 * - Click a standalone sort header with `sortmode=DESC`, applying each
+	 *   reflected mode between clicks.
+	 *
+	 * Pass criteria:
+	 * - The emitted sort detail requests desc, then asc, then clear.
+	 */
+	it("keeps the three-state cycle when the default sort direction is descending", async() =>
+	{
+		const sortHeader = document.createElement("et2-nextmatch-sortheader") as any;
+		sortHeader.id = "modified";
+		sortHeader.sortmode = "DESC";
+		document.body.append(sortHeader);
+		await sortHeader.updateComplete;
+		const sortEvents : Et2NextmatchSortEventDetail[] = [];
+		sortHeader.addEventListener(ET2_NEXTMATCH_SORT_EVENT, (event : CustomEvent<Et2NextmatchSortEventDetail>) =>
+		{
+			event.preventDefault();
+			sortEvents.push({...event.detail});
+		});
+
+		sortHeader.click();
+		sortHeader.setSortmode("desc");
+		sortHeader.click();
+		sortHeader.setSortmode("asc");
+		sortHeader.click();
+
+		assert.deepInclude(sortEvents[0], {id: "modified", asc: false}, "first click should request descending sort");
+		assert.deepInclude(sortEvents[1], {id: "modified", asc: true}, "second click should request ascending sort");
+		assert.isTrue(sortEvents[2].clear, "third click should request clearing the sort");
+		assert.isUndefined(sortEvents[2].asc, "clear event should not include a sort direction");
+		sortHeader.remove();
+	});
+
+	/**
+	 * Contract under test:
+	 * - Nextmatch honors explicit clear-sort events from sortable headers.
+	 *
+	 * Setup strategy:
+	 * - Seed an active sort and dispatch a header sort event with `clear`.
+	 *
+	 * Pass criteria:
+	 * - `activeFilters.sort` is cleared.
+	 */
+	it("clears sort state when sort event requests clear", async() =>
+	{
+		const el = new Et2Nextmatch();
+		el.applyFilters({sort: {id: "title", asc: false}}, {reload: false});
+		document.body.append(el);
+		await el.updateComplete;
+
+		const eventSource = document.createElement("div");
+		el.append(eventSource);
+		eventSource.dispatchEvent(new CustomEvent(ET2_NEXTMATCH_SORT_EVENT, {
+			bubbles: true,
+			composed: true,
+			cancelable: true,
+			detail: {id: "title", clear: true}
+		}));
+		await waitForBubblingHandlers();
+
+		assert.isUndefined(el.activeFilters.sort, "sort state should be cleared");
 		el.remove();
 	});
 
@@ -234,6 +603,53 @@ describe("Et2Nextmatch header event handling", () =>
 		assert.equal(sortableMode(dateHeader), "asc", "active datagrid sort header should reflect current sort");
 		assert.equal(sortableMode(nameHeader), "none", "inactive datagrid sort header should be cleared");
 		assert.equal(sortableMode(customfieldSortHeader!), "none", "inactive customfield sort header should be cleared");
+		el.remove();
+	});
+
+	/**
+	 * Contract under test:
+	 * - Initial sort settings are reflected into active filters and
+	 *   sortable header state before the first load.
+	 *
+	 * Setup strategy:
+	 * - Create nextmatch with `settings.order` and `settings.sort`.
+	 * - Add matching and non-matching sortable headers to the datagrid shadow DOM
+	 *   before `firstUpdated()` initializes settings sort.
+	 *
+	 * Pass criteria:
+	 * - `activeFilters.sort` matches the configured default.
+	 * - The matching header shows the configured sort direction.
+	 */
+	it("reflects initial settings sort into sortable headers", async() =>
+	{
+		const el = new Et2Nextmatch();
+		el.settings = {
+			order: "date",
+			sort: "DESC"
+		};
+		const nameHeader = document.createElement("et2-nextmatch-sortheader") as HTMLElement;
+		nameHeader.setAttribute("id", "name");
+		const dateHeader = document.createElement("et2-nextmatch-sortheader") as HTMLElement;
+		dateHeader.setAttribute("id", "date");
+		const applySlotsStub = sinon.stub(el as any, "_applyTemplateFromSlots").callsFake(async() =>
+		{
+			const datagrid = el.shadowRoot!.querySelector("et2-datagrid") as HTMLElement & { shadowRoot : ShadowRoot };
+			assert.isNotNull(datagrid, "nextmatch should render datagrid");
+			datagrid.shadowRoot!.append(nameHeader, dateHeader);
+			await (nameHeader as any).updateComplete;
+			await (dateHeader as any).updateComplete;
+		});
+
+		document.body.append(el);
+		await el.updateComplete;
+		await waitForCondition(() => !!el.activeFilters.sort);
+		await (nameHeader as any).updateComplete;
+		await (dateHeader as any).updateComplete;
+
+		assert.deepEqual(el.activeFilters.sort, {id: "date", asc: false}, "initial settings sort should become active");
+		assert.equal(sortableMode(dateHeader), "desc", "matching header should show initial descending sort");
+		assert.equal(sortableMode(nameHeader), "none", "non-matching header should remain unsorted");
+		applySlotsStub.restore();
 		el.remove();
 	});
 
@@ -323,7 +739,6 @@ describe("Et2Nextmatch header event handling", () =>
 	{
 		const el = new Et2Nextmatch();
 		el.lettersearch = false;
-		el.searchletter = false;
 		document.body.append(el);
 		await el.updateComplete;
 
@@ -334,24 +749,84 @@ describe("Et2Nextmatch header event handling", () =>
 
 	/**
 	 * Contract under test:
-	 * - Setting `searchletter` as a property mirrors into active filters before render.
+	 * - Settings-provided `searchletter` is stored as an active filter, not as a
+	 *   retained setting.
 	 *
 	 * Setup strategy:
-	 * - Render nextmatch with a property-provided search letter.
+	 * - Render nextmatch with a settings-provided search letter.
 	 *
 	 * Pass criteria:
-	 * - `activeFilters.searchletter` matches the property value.
+	 * - `activeFilters.searchletter` matches the settings value.
+	 * - `settings.searchletter` is not retained as a setting.
 	 * - Letter-search controls render because an active letter is set.
 	 */
-	it("mirrors searchletter property into active filters before render", async() =>
+	it("moves settings searchletter into active filters before render", async() =>
 	{
 		const el = new Et2Nextmatch();
-		el.searchletter = "M";
+		el.settings = {searchletter: "M"};
 		document.body.append(el);
 		await el.updateComplete;
 
-		assert.equal(el.activeFilters.searchletter, "M", "property searchletter should be mirrored into filters");
+		assert.equal(el.activeFilters.searchletter, "M", "settings searchletter should be moved into filters");
+		assert.isUndefined(el.settings.searchletter, "searchletter should not be retained in settings");
 		assert.isNotNull(el.shadowRoot?.querySelector(".nextmatch_lettersearch"), "active searchletter should render lettersearch");
+		el.remove();
+	});
+
+	/**
+	 * Contract under test:
+	 * - Letter search participates in column selection as a pseudo-column.
+	 * - Hiding that pseudo-column clears the active search letter and removes the
+	 *   pseudo id before real column ordering is applied.
+	 *
+	 * Setup strategy:
+	 * - Render nextmatch with `lettersearch=true` and an active search letter.
+	 * - Dispatch the datagrid column-selection extension events directly.
+	 *
+	 * Pass criteria:
+	 * - The chooser item list gains `~search_letter~`.
+	 * - Applying a selection without that id clears `searchletter`.
+	 */
+	it("adds lettersearch to column selection and clears it when hidden", async() =>
+	{
+		const el = new Et2Nextmatch();
+		el.lettersearch = true;
+		el.applyFilters({searchletter: "M"}, {reload: false});
+		document.body.append(el);
+		await el.updateComplete;
+
+		const datagrid = el.shadowRoot?.querySelector("et2-datagrid") as HTMLElement | null;
+		assert.isNotNull(datagrid, "nextmatch should render a datagrid");
+
+		const columns : any[] = [];
+		datagrid!.dispatchEvent(new CustomEvent("et2-column-selection-items", {
+			detail: {columns},
+			bubbles: true,
+			composed: true
+		}));
+		assert.equal(columns[0]?.id, "~search_letter~", "lettersearch should be exposed as a chooser item");
+		assert.equal(columns[0]?.caption, "Search letter", "chooser item should use the legacy caption");
+		assert.isTrue(columns[0]?.visibility, "lettersearch chooser item should reflect current visibility");
+
+		const selectedOrder = ["name", "~search_letter~"];
+		datagrid!.dispatchEvent(new CustomEvent("et2-column-selection-apply", {
+			detail: {selectedOrder},
+			bubbles: true,
+			composed: true
+		}));
+		assert.deepEqual(selectedOrder, ["name"], "lettersearch pseudo id should be removed before column ordering");
+
+		const hiddenSelection = ["name"];
+		datagrid!.dispatchEvent(new CustomEvent("et2-column-selection-apply", {
+			detail: {selectedOrder: hiddenSelection},
+			bubbles: true,
+			composed: true
+		}));
+		await waitForBubblingHandlers();
+		await el.updateComplete;
+
+		assert.isFalse(el.activeFilters.searchletter, "hiding lettersearch should clear the active search letter");
+		assert.isNull(el.shadowRoot?.querySelector(".nextmatch_lettersearch"), "hidden lettersearch should not render");
 		el.remove();
 	});
 
@@ -374,6 +849,49 @@ describe("Et2Nextmatch header event handling", () =>
 
 		const datagrid = el.shadowRoot?.querySelector("et2-datagrid") as any;
 		assert.equal(datagrid?.emptyStateText, "Nothing here yet", "placeholder should be passed to datagrid empty-state text");
+		el.remove();
+	});
+
+	/**
+	 * Contract under test:
+	 * - Nextmatch keeps the datagrid in configuration-loading state while an
+	 *   initial named row template is still resolving.
+	 *
+	 * Setup strategy:
+	 * - Configure a template name and hold the row-provider promise open during
+	 *   first render.
+	 *
+	 * Pass criteria:
+	 * - The child datagrid receives `configurationLoading=true`.
+	 * - The missing-template warning is not logged before template resolution
+	 *   completes.
+	 */
+	it("does not warn about missing row template while initial named template is loading", async() =>
+	{
+		const el = new Et2Nextmatch();
+		el.template = "addressbook.index.rows";
+		let resolveTemplate : (value : any) => void = () => {};
+		const templatePromise = new Promise((resolve) =>
+		{
+			resolveTemplate = resolve;
+		});
+		const fromTemplate = sinon.stub((el as any)._rowProvider, "fromTemplate").returns(templatePromise);
+		const debug = sinon.spy(egwStub, "debug");
+		document.body.append(el);
+		await el.updateComplete;
+
+		const datagrid = el.shadowRoot?.querySelector("et2-datagrid") as any;
+		await datagrid?.updateComplete;
+
+		assert.isTrue(datagrid?.configurationLoading, "datagrid should stay in configuration-loading state");
+		assert.isFalse(debug.getCalls().some((call) =>
+				(call.args as any[])[0] === "warn" && (call.args as any[])[1] === "Et2Datagrid: No row template configured"),
+			"missing-template warning should not be logged while template is loading");
+
+		resolveTemplate(null);
+		await Promise.resolve();
+		debug.restore();
+		fromTemplate.restore();
 		el.remove();
 	});
 
@@ -414,6 +932,55 @@ describe("Et2Nextmatch header event handling", () =>
 		triggerPlaceholderPopup.restore();
 		triggerPopupForRow.restore();
 		el.remove();
+	});
+
+	/**
+	 * Contract under test:
+	 * - The real datagrid default empty placeholder still routes context menus
+	 *   through Nextmatch's placeholder action path.
+	 *
+	 * Setup strategy:
+	 * - Render Nextmatch with columns but no rows, leaving Datagrid to provide
+	 *   its built-in no-results placeholder.
+	 * - Dispatch a composed `contextmenu` from the actual datagrid shadow DOM
+	 *   placeholder.
+	 *
+	 * Pass criteria:
+	 * - Placeholder popup is called with configured placeholder actions.
+	 * - The event is prevented and the regular row popup path is not used.
+	 */
+	it("routes context menu from the datagrid default empty placeholder", async() =>
+	{
+		const el = new Et2Nextmatch();
+		el.placeholderActions = ["add", "import_csv"];
+		document.body.append(el);
+		const triggerPlaceholderPopup = sinon.stub((el as any)._actionController, "triggerPlaceholderPopup").returns(true);
+		const triggerPopupForRow = sinon.stub((el as any)._actionController, "triggerPopupForRow").returns(false);
+		try
+		{
+			el.setColumns([{key: "name", title: "Name"} as any]);
+			await el.updateComplete;
+			const datagrid = el.shadowRoot?.querySelector("et2-datagrid") as any;
+			await datagrid?.updateComplete;
+			await waitForCondition(() => !!datagrid?.shadowRoot?.querySelector(".dg-empty-row"));
+			const placeholder = datagrid?.shadowRoot?.querySelector(".dg-empty-row") as HTMLElement | null;
+
+			assert.isNotNull(placeholder, "datagrid should render its built-in empty placeholder");
+			const event = new MouseEvent("contextmenu", {bubbles: true, cancelable: true, composed: true});
+			placeholder!.dispatchEvent(event);
+			await waitForBubblingHandlers();
+
+			assert.isTrue(triggerPlaceholderPopup.calledOnce, "placeholder popup should be attempted from rendered placeholder");
+			assert.deepEqual(triggerPlaceholderPopup.firstCall.args[1], ["add", "import_csv"], "configured placeholderActions should be used");
+			assert.isTrue(event.defaultPrevented, "context menu should be prevented when placeholder popup opens");
+			assert.isFalse(triggerPopupForRow.called, "row popup should not run for the empty placeholder");
+		}
+		finally
+		{
+			triggerPlaceholderPopup.restore();
+			triggerPopupForRow.restore();
+			el.remove();
+		}
 	});
 
 	/**
@@ -472,7 +1039,157 @@ describe("Et2Nextmatch header event handling", () =>
 		el.remove();
 	});
 
-	it("provides deprecated getValue and set_columns compatibility", async() =>
+	it("keeps settings as an object and ignores non-object settings attributes", () =>
+	{
+		/*
+		 * Contract: legacy settings remain available for action/filter behaviour, but
+		 * initial rows and actions are exposed through their own attrs so settings
+		 * does not retain duplicate initialization payloads.
+		 */
+		const el = new Et2Nextmatch();
+		const rows = [{id: "row-1", label: "Initial row"}];
+		const settings = {
+			actions: {archive: {}},
+			action_var: "nm_action_id",
+			col_filter: {owner: "5"},
+			filter: "open",
+			filter2: "all",
+			cat_id: "7",
+			search: "urgent",
+			filter_aria_label: "Addressbook",
+			home_dir: "/home/demo",
+			not_a_nextmatch_setting: "pollution",
+			placeholder_actions: "add,import_csv",
+			searchletter: "M",
+			rows,
+			total: "17"
+		};
+		const contentMgr = {
+			getEntry: () => settings,
+			getPath: () => [],
+			expandName: (value) => value,
+			parseBoolExpression: (value) => value
+		} as any;
+		const modificationsMgr = {
+			getPerspectiveData: () => ({owner: null}),
+			getEntry: () => null
+		} as any;
+		const getArrayMgr = sinon.stub(el, "getArrayMgr");
+		getArrayMgr.withArgs("content").returns(contentMgr);
+		getArrayMgr.withArgs("modifications").returns(modificationsMgr);
+		const attrs : any = {
+			id: "nm",
+			settings: "[object Object]"
+		};
+
+		el.transformAttributes(attrs);
+
+		assert.deepEqual(attrs.rows, rows, "initial rows should still be exposed for datagrid seeding");
+		assert.equal(attrs.home_dir, "/home/demo", "legacy content attributes should still be exposed separately");
+		assert.notProperty(attrs.settings, "rows", "settings should not retain the initial row payload");
+		assert.notProperty(attrs.settings, "col_filter", "settings should not retain active column filters");
+		assert.notProperty(attrs.settings, "home_dir", "settings should not retain undocumented app attributes");
+		assert.notProperty(attrs.settings, "not_a_nextmatch_setting", "settings should ignore unknown content keys");
+		assert.notProperty(attrs.settings, "searchletter", "settings should not retain active letter-search state");
+		assert.notProperty(attrs.settings, "filter", "settings should not retain the active filter value");
+		assert.notProperty(attrs.settings, "filter2", "settings should not retain the active filter2 value");
+		assert.notProperty(attrs.settings, "cat_id", "settings should not retain the active category filter");
+		assert.notProperty(attrs.settings, "search", "settings should not retain the active search text");
+		assert.deepEqual(attrs.settings, {
+			action_var: "nm_action_id",
+			filter_aria_label: "Addressbook",
+			placeholder_actions: "add,import_csv",
+			total: 17
+		}, "settings should keep non-initialization content settings");
+		assert.deepEqual(el.activeFilters.col_filter, {owner: "5"}, "content col_filter should move into active filters");
+		assert.equal(el.activeFilters.searchletter, "M", "content searchletter should move into active filters");
+		// Regression: a filter/category/search value active from persisted page-load state (not
+		// just one changed via its header control this session) must reach `_filters`, since
+		// that's the only place a push/refresh fetch reads filters from. Missing this let a row
+		// that shouldn't match an already-loaded filter get reported as matching anyway.
+		assert.equal(el.activeFilters.filter, "open", "content filter should move into active filters");
+		assert.equal(el.activeFilters.filter2, "all", "content filter2 should move into active filters");
+		assert.equal(el.activeFilters.cat_id, "7", "content cat_id should move into active filters");
+		assert.equal(el.activeFilters.search, "urgent", "content search should move into active filters");
+		assert.notProperty(el.settings, "rows", "settings property should not retain the initial row payload");
+		assert.notProperty(el.settings, "col_filter", "settings property should not retain active column filters");
+		assert.notProperty(el.settings, "searchletter", "settings property should not retain active letter-search state");
+		assert.notProperty(el.settings, "filter", "settings property should not retain the active filter value");
+		assert.notProperty(el.settings, "cat_id", "settings property should not retain the active category filter");
+		assert.equal(el.settings.action_var, "nm_action_id", "settings property should receive the object action_var");
+		assert.deepEqual(el.placeholderActions, ["add", "import_csv"], "legacy settings should still normalize other properties");
+
+		el.settings = "[object Object]";
+		assert.deepEqual(el.settings, {action_var: "action"}, "non-object settings assignments should fall back to defaults");
+		getArrayMgr.restore();
+	});
+
+	it("warns once when settings.columnselection_pref is used", () =>
+	{
+		const el = new Et2Nextmatch();
+		(Et2Nextmatch as any)._deprecationWarnings?.clear?.();
+		const warn = sinon.stub(console, "warn");
+		try
+		{
+			el.settings = {columnselection_pref: "nextmatch-addressbook.index.rows"};
+			assert.equal(el.columnPreferenceName, "nextmatch-addressbook.index.rows",
+				"columnselection_pref should still be forwarded to columnPreferenceName");
+			assert.isTrue(warn.calledOnce, "using columnselection_pref should warn once");
+
+			el.settings = {columnselection_pref: "nextmatch-addressbook.index.rows-details"};
+			assert.isTrue(warn.calledOnce, "the deprecation warning should not repeat per settings assignment");
+		}
+		finally
+		{
+			warn.restore();
+		}
+	});
+
+	it("persists the legacy CSV-format column preference itself, independent of columnPreferenceName", () =>
+	{
+		// Et2Datagrid has no concept of the legacy Nextmatch CSV format - it only ever persists
+		// its own structured {key,hidden,...} preference. Et2Nextmatch owns writing the
+		// `nextmatch-<rowTemplateId>` CSV compatibility preference some apps' PHP still reads
+		// directly, always keyed by row-template id and never by columnPreferenceName (which can
+		// be a different, dynamic, app-chosen key - e.g. infolog's columnselection_pref).
+		const el = new Et2Nextmatch();
+		const setPreference = sinon.stub();
+		const egwStubWithSetPreference = {...egwStub, app_name: () => "infolog", set_preference: setPreference};
+		sinon.stub(el, "egw" as any).returns(egwStubWithSetPreference);
+		(el as any)._templateData = {rowTemplateId: "infolog.index.rows"};
+
+		// columnPreferenceName deliberately does NOT match the row-template id here, to prove
+		// the legacy write ignores it entirely.
+		el.columnPreferenceName = "nextmatch-infolog.index.rows-details";
+		const columns = [
+			{key: "a", title: "A", hidden: false},
+			{key: "b", title: "B", hidden: true}
+		] as any;
+		(el as any)._persistLegacyColumnSelection(columns);
+
+		assert.isTrue(setPreference.calledOnce, "should persist the legacy CSV preference");
+		const [app, key, value] = setPreference.firstCall.args;
+		assert.equal(app, "infolog");
+		assert.equal(key, "nextmatch-infolog.index.rows", "legacy key must be row-template-derived, not columnPreferenceName");
+		assert.equal(value, "a", "only the visible column key should be included");
+	});
+
+	it("moves explicit settings col_filter into active filters", () =>
+	{
+		const el = new Et2Nextmatch();
+
+		el.settings = {
+			action_var: "nm_action_id",
+			col_filter: {owner: "5"},
+			searchletter: "M"
+		};
+
+		assert.deepEqual(el.activeFilters.col_filter, {owner: "5"}, "settings col_filter should be moved into filters");
+		assert.equal(el.activeFilters.searchletter, "M", "settings searchletter should be moved into filters");
+		assert.deepEqual(el.settings, {action_var: "nm_action_id"}, "active filter state should not be retained as settings");
+	});
+
+	it("provides getValue input and deprecated set_columns compatibility", async() =>
 	{
 		const el = new Et2Nextmatch();
 		(Et2Nextmatch as any)._deprecationWarnings?.clear?.();
@@ -491,7 +1208,8 @@ describe("Et2Nextmatch header event handling", () =>
 		assert.equal(value.search, "term", "value getter should include active filter state");
 		assert.equal(value.col_filter.owner, "5", "value getter should include column filter state");
 
-		assert.deepEqual(el.getValue(), value, "getValue should proxy the deprecated state accessor to value");
+		assert.deepEqual(el.getValue(), value, "getValue should return the submitted nextmatch value");
+		assert.isFalse(warn.called, "getValue should not warn because it implements et2_IInput");
 
 		el.set_columns(["owner"]);
 		assert.deepEqual(
@@ -499,9 +1217,550 @@ describe("Et2Nextmatch header event handling", () =>
 			["owner"],
 			"set_columns should only change visibility on already defined columns"
 		);
-		assert.isAtLeast(warn.callCount, 2, "deprecated compatibility methods should warn");
+		assert.isTrue(warn.calledOnce, "deprecated set_columns compatibility method should warn");
 
 		warn.restore();
 	});
 
+	/**
+	 * Contract under test:
+	 * - `setColumns()` updates the live root datagrid, not only Nextmatch's
+	 *   submit value/template cache.
+	 *
+	 * Setup strategy:
+	 * - Render a real Et2Nextmatch so the child datagrid exists, then call
+	 *   `setColumns()` with a changed visibility state.
+	 *
+	 * Pass criteria:
+	 * - The child datagrid's current `columns` property reflects the hidden flag.
+	 */
+	it("applies setColumns changes to the rendered datagrid", async() =>
+	{
+		const el = new Et2Nextmatch();
+		document.body.append(el);
+		await el.updateComplete;
+		const columnEvents : CustomEvent[] = [];
+		el.addEventListener("et2-columns-changed", (event : CustomEvent) =>
+		{
+			columnEvents.push(event);
+		});
+
+		el.setColumns([
+			{key: "title", title: "Title"} as any,
+			{key: "owner", title: "Owner"} as any
+		]);
+		await el.updateComplete;
+
+		const grid = el.shadowRoot!.querySelector("et2-datagrid") as any;
+		assert.deepEqual(
+			grid.columns.map((column) => ({key: column.key, hidden: column.hidden === true})),
+			[
+				{key: "title", hidden: false},
+				{key: "owner", hidden: false}
+			],
+			"initial setColumns call should reach the rendered datagrid"
+		);
+		assert.equal(columnEvents.length, 1, "initial setColumns call should emit a column-change event");
+		assert.deepEqual(
+			columnEvents[0].detail.columns.map((column) => column.key),
+			["title", "owner"],
+			"setColumns event should expose the updated column list"
+		);
+
+		el.setColumns(["owner"]);
+		await el.updateComplete;
+		await grid.updateComplete;
+
+		assert.deepEqual(
+			grid.columns.map((column) => ({key: column.key, hidden: column.hidden === true})),
+			[
+				{key: "title", hidden: true},
+				{key: "owner", hidden: false}
+			],
+			"string setColumns calls should update current datagrid column visibility"
+		);
+		assert.equal(columnEvents.length, 2, "string setColumns call should emit a column-change event");
+		assert.deepEqual(
+			columnEvents[1].detail.columns.map((column) => ({key: column.key, hidden: column.hidden === true})),
+			[
+				{key: "title", hidden: true},
+				{key: "owner", hidden: false}
+			],
+			"string setColumns event should expose the updated column visibility"
+		);
+
+		el.remove();
+	});
+
+	it("implements et2_IInput so submit value collection includes it", () =>
+	{
+		const el = new Et2Nextmatch();
+
+		assert.isTrue(et2_implements_registry[et2_IInput](el as any), "Et2Nextmatch should satisfy et2_IInput structurally");
+		assert.deepEqual(el.getValue(), el.value, "getValue should provide the submitted nextmatch value");
+	});
+
+});
+
+describe("Et2Nextmatch expandable child grid wiring", () =>
+{
+	/**
+	 * Contract under test:
+	 * - Nextmatch grids reserve enough leading metadata column width for row expanders.
+	 *
+	 * Setup strategy:
+	 * - Render a minimal nextmatch and inspect the inner datagrid's explicit CSS variable.
+	 *
+	 * Pass criteria:
+	 * - The normal 6px metadata indicator width is lifted to at least Shoelace large spacing.
+	 */
+	it("widens the meta column for row expanders", async() =>
+	{
+		const el = new Et2Nextmatch();
+		document.body.append(el);
+		await el.updateComplete;
+
+		const grid = el.shadowRoot!.querySelector("et2-datagrid") as HTMLElement | null;
+		assert.isNotNull(grid, "nextmatch should render an inner datagrid");
+		assert.strictEqual(
+			grid!.style.getPropertyValue("--meta-column-width"),
+			"max(var(--sl-spacing-large), 6px)"
+		);
+
+		el.remove();
+	});
+
+	it("collapses expanded rows and forgets child-grid column snapshots", async() =>
+	{
+		const el = new Et2Nextmatch();
+		document.body.append(el);
+		await el.updateComplete;
+		(el as any)._expandedRowIds = new Set(["addressbook::parent-1"]);
+		(el as any)._subgridColumnSnapshots.set("addressbook::parent-1", {
+			columns: [{key: "title", title: "Title"}]
+		});
+		const requestUpdate = sinon.spy(el, "requestUpdate");
+
+		const changed = el.collapseExpandedRows();
+
+		assert.isTrue(changed, "collapse should report changed state");
+		assert.equal((el as any)._expandedRowIds.size, 0, "expanded row ids should be cleared");
+		assert.equal((el as any)._subgridColumnSnapshots.size, 0, "child grid column snapshots should be cleared");
+		assert.isTrue(requestUpdate.called, "collapsing expanded rows should schedule a render");
+
+		requestUpdate.resetHistory();
+		assert.isFalse(el.collapseExpandedRows(), "empty expansion state should be a no-op");
+		assert.isFalse(requestUpdate.called, "no-op collapse should not schedule another render");
+		el.remove();
+	});
+
+	it("refreshes rows in a rendered expanded child grid", async() =>
+	{
+		const el = new Et2Nextmatch();
+		document.body.append(el);
+		await el.updateComplete;
+		const datagrid = sinon.stub(el as any, "_datagrid").get(() => ({}));
+		(el as any)._dataProvider = {};
+		const refresh = sinon.stub().resolves();
+		const findChildGrid = sinon.stub(el as any, "_findChildGridForParent").returns({refresh});
+		const refreshEvent = sinon.spy();
+		el.addEventListener("refresh", refreshEvent);
+
+		const refreshed = await el.refreshChildRows("filemanager::/home/demo/Documents", ["/home/demo/Documents/report.pdf"], "update" as any);
+
+		assert.isTrue(refreshed, "refresh should report that a rendered child grid was refreshed");
+		assert.isTrue(findChildGrid.calledOnceWithExactly("filemanager::/home/demo/Documents"), "parent id should be used to find the child grid");
+		assert.isTrue(refresh.calledOnceWithExactly(["/home/demo/Documents/report.pdf"], "update"), "child grid should receive requested rows and type");
+		assert.isTrue(refreshEvent.calledOnce, "successful child refresh should emit the legacy refresh event");
+
+		findChildGrid.returns(null);
+		assert.isFalse(await el.refreshChildRows("missing-parent", ["missing-row"], "update" as any), "missing child grid should be a no-op");
+		datagrid.restore();
+		el.remove();
+	});
+
+	/**
+	 * Contract under test:
+	 * - Expanded nextmatch child content uses the same row template/columns as the parent.
+	 * - Child grids hide only their visible header and disable their column chooser.
+	 *
+	 * Setup strategy:
+	 * - Call the private render hook directly with a minimal expanded-row context.
+	 * - Render the returned template into a detached container.
+	 *
+	 * Pass criteria:
+	 * - The rendered child datagrid receives the same templateData and columns objects.
+	 * - The visible header is configured hidden while the child remains a normal datagrid.
+	 */
+		it("renders child grids with the same template data and no visible header", async() =>
+		{
+			const el = new Et2Nextmatch();
+			const columns : any[] = [{key: "title", title: "Title"}];
+		const fetchPage = sinon.stub().resolves({rows: [], total: 0});
+		const createChildProvider = sinon.stub().returns({
+			fetchPage,
+			getQuerySignature: () => "child-query",
+			getDataStorePrefix: () => "addressbook",
+			normalizeRowId: (rowId : string | number) => String(rowId ?? ""),
+			toProviderRowId: (rowId : string) => rowId,
+			refresh: async() => ({rows: [], removedRowIds: []})
+		});
+		const templateData = {
+			rowTemplateId: "infolog.index.rows",
+			rowTemplate: null,
+			rowTemplateXml: null,
+			rowTemplateAttrMap: {},
+			loaderTemplate: null,
+			columns
+		};
+		document.body.append(el);
+		await el.updateComplete;
+		(el as any)._templateData = templateData;
+		(el as any)._templateLoading = false;
+		(el as any)._dataProvider = {
+			createChildProvider,
+			toProviderRowId: (rowId : string) => rowId.replace(/^addressbook::/, ""),
+			normalizeRowId: (rowId : string | number, ensurePrefix? : boolean) =>
+			{
+				const normalized = String(rowId ?? "");
+				return ensurePrefix && !normalized.startsWith("addressbook::") ? `addressbook::${normalized}` : normalized;
+			}
+		};
+
+		const container = document.createElement("div");
+		document.body.append(container);
+		render((el as any)._renderExpandedNextmatchGrid({
+			row: {id: "addressbook::parent-1", data: {is_parent: true}},
+			rowIndex: 0,
+			parentGrid: document.createElement("et2-datagrid"),
+			columnSizes: "120px",
+			metaColumnWidth: "28px"
+		}), container);
+		await Promise.resolve();
+
+		const childGrid = container.querySelector("et2-datagrid") as any;
+		assert.isNotNull(childGrid, "expanded content should render a child datagrid");
+		// This stub bypasses Et2Datagrid's real _fetchPage(), so it does not exercise
+		// the post-fetch _reconcileRowRenderState()/_scheduleVirtualizerLayoutSync()
+		// block on this specific (Et2Nextmatch-created) embeddedVirtualized child -
+		// this test's own contract is template/column/config inheritance, not that.
+		// The virtualizer-reflow fix itself is covered directly on embeddedVirtualized
+		// grids with a real fetchPage in Et2Datagrid.test.ts (e.g. "shrinks stale
+		// embedded spacer height after final total is known", "clears later
+		// placeholder extent after final embedded page resolves"); not duplicated
+		// here since it would need a much heavier fixture for no additional coverage
+		// of the fix itself, only of Et2Nextmatch's wiring to it.
+		const reload = sinon.stub(childGrid, "reload").callsFake(async() =>
+		{
+			await fetchPage(0, childGrid.pageSize);
+		});
+		await childGrid.updateComplete;
+		await Promise.resolve();
+		assert.strictEqual(childGrid.templateData, templateData, "child grid should reuse parent template data");
+		assert.notStrictEqual(childGrid.columns, columns, "child grid should not share the parent column array");
+		assert.deepEqual(
+			childGrid.columns.map((column) => ({key: column.key, title: column.title, width: column.width})),
+			columns.map((column) => ({key: column.key, title: column.title, width: column.width})),
+			"child grid should receive equivalent parent column descriptors"
+		);
+		childGrid.columns[0].width = "320px";
+		assert.notEqual(columns[0].width, "320px", "child column width changes should not mutate parent column descriptors");
+		assert.isTrue(childGrid.noVisibleHeader, "child grid should hide only its visible header");
+		assert.isTrue(childGrid.noColumnSelection, "child grid should not expose independent column selection");
+		assert.isTrue(childGrid.inheritColumnSizes, "child grid should inherit column track sizing from the parent grid");
+		assert.isTrue(childGrid.embeddedVirtualized, "child grid should reserve virtualized height inside the parent scrollport");
+		assert.isObject(childGrid.expansionConfig, "child grid should receive the recursive expansion config");
+		assert.isTrue(
+			childGrid.expansionConfig.isExpandable({id: "addressbook::child-parent", data: {is_parent: true}}, 0),
+			"child grid should use the same parent-row marker semantics as the root"
+		);
+		assert.instanceOf(childGrid.expansionConfig.expandedRowIds, Set, "child grid should own controlled expansion state");
+		assert.notStrictEqual(
+			childGrid.expansionConfig.expandedRowIds,
+			(el as any)._expandedRowIds,
+			"child grid expansion state should be distinct from root expansion state"
+		);
+		childGrid.expansionConfig.onExpandedRowIdsChanged(new Set(["addressbook::child-parent"]));
+		await el.updateComplete;
+		assert.isTrue(
+			(el as any)._expandedRowIdsByParent.get("addressbook::parent-1").has("addressbook::child-parent"),
+			"child expansion changes should be stored under the child grid's parent row"
+		);
+		assert.isFalse(
+			(el as any)._expandedRowIds.has("addressbook::child-parent"),
+			"child expansion changes should not contaminate root expansion state"
+		);
+		assert.isFalse(childGrid.hasAttribute("auto-height"), "child grid should not use simple auto-height for large child result sets");
+		assert.isFalse(childGrid.noColumnPersistence, "child grid should rely on hidden headers for preference suppression");
+		assert.isFalse(childGrid.noColumnResize, "child grid should rely on hidden headers for resize suppression");
+		assert.isNull(
+			childGrid.shadowRoot?.querySelector(".dg-col-resize-handle"),
+			"child grid should not expose independent column resizing when its header is hidden"
+		);
+		assert.isFalse(childGrid.autoActivateFirstRow, "child grid should not create an active row simply by rendering");
+		assert.strictEqual(
+			childGrid.style.getPropertyValue("--column-sizes"),
+			"",
+			"child grid should not set its own column track string"
+		);
+		assert.strictEqual(childGrid.style.getPropertyValue("--meta-column-width"), "6px", "child grid should use a non-expander meta column width");
+		assert.isTrue(createChildProvider.calledOnceWithExactly("addressbook::parent-1"), "child provider should be created for the parent row");
+		assert.isTrue(reload.calledOnce, "child grid should be asked to reload when opened");
+		assert.isTrue(fetchPage.calledOnceWithExactly(0, 50), "child grid should fetch its first page when opened");
+
+		render(null, container);
+		container.remove();
+		el.remove();
+	});
+
+	it("restores recycled child grids from cached row snapshots instead of reloading", async() =>
+	{
+		const el = new Et2Nextmatch();
+		const columns : any[] = [{key: "title", title: "Title"}];
+		const fetchPage = sinon.stub().resolves({rows: [], total: 0});
+		const createChildProvider = sinon.stub().returns({
+			fetchPage,
+			getQuerySignature: () => "child-query",
+			getDataStorePrefix: () => "addressbook",
+			getRowData: (rowId : string) => ({id: rowId, title: rowId}),
+			normalizeRowId: (rowId : string | number, ensurePrefix? : boolean) =>
+			{
+				const normalized = String(rowId ?? "");
+				return ensurePrefix && !normalized.startsWith("addressbook::") ? `addressbook::${normalized}` : normalized;
+			},
+			toProviderRowId: (rowId : string) => rowId.replace(/^addressbook::/, ""),
+			refresh: async() => ({rows: [], removedRowIds: []})
+		});
+		document.body.append(el);
+		await el.updateComplete;
+		(el as any)._templateData = {
+			rowTemplateId: "infolog.index.rows",
+			rowTemplate: null,
+			rowTemplateXml: null,
+			rowTemplateAttrMap: {},
+			loaderTemplate: null,
+			columns
+		};
+		(el as any)._templateLoading = false;
+		(el as any)._dataProvider = {
+			createChildProvider,
+			toProviderRowId: (rowId : string) => rowId.replace(/^addressbook::/, ""),
+			normalizeRowId: (rowId : string | number, ensurePrefix? : boolean) =>
+			{
+				const normalized = String(rowId ?? "");
+				return ensurePrefix && !normalized.startsWith("addressbook::") ? `addressbook::${normalized}` : normalized;
+			}
+		};
+		(el as any)._childGridRowsSnapshots.set("addressbook::parent-1", {
+			rowsByIndex: [{id: "addressbook::child-1"}, {id: "addressbook::child-2"}],
+			total: 2,
+			displayedRowIds: ["addressbook::child-1", "addressbook::child-2"],
+			hasFetchedOnce: true
+		});
+
+		const childGrid = document.createElement("et2-datagrid") as any;
+		childGrid.parentRowId = "parent-1";
+		childGrid.dataProvider = createChildProvider("addressbook::parent-1");
+		document.body.append(childGrid);
+		const reload = sinon.stub(childGrid, "reload");
+		const restore = sinon.spy(childGrid, "restoreRowsSnapshot");
+		(el as any)._loadExpandedGrid(childGrid);
+		await childGrid.updateComplete;
+
+		assert.isTrue(restore.calledOnce, "recycled child grid should restore its cached rows immediately");
+		assert.isTrue(reload.notCalled, "recycled child grid should not clear itself and reload from scratch");
+		assert.equal(childGrid.total, 2, "restored child grid should keep its cached total");
+		assert.deepEqual(childGrid.rows.map((row) => row.id), ["addressbook::child-1", "addressbook::child-2"]);
+
+		childGrid.remove();
+		el.remove();
+	});
+
+	it("uses root datagrid column changes for first expanded child grid render", async() =>
+	{
+		const el = new Et2Nextmatch();
+		const originalColumns = [
+			{key: "title", title: "Title", width: "100px"},
+			{key: "date", title: "Date", width: "1fr"}
+		];
+		const resizedColumns = [
+			{key: "title", title: "Title", width: "260px"},
+			{key: "date", title: "Date", width: "1fr"}
+		];
+		const laterColumns = [
+			{key: "title", title: "Title", width: "320px"},
+			{key: "date", title: "Date", width: "1fr"}
+		];
+		const fetchPage = sinon.stub().resolves({rows: [], total: 0});
+		const createChildProvider = sinon.stub().returns({
+			fetchPage,
+			getQuerySignature: () => "child-query",
+			getDataStorePrefix: () => "addressbook",
+			normalizeRowId: (rowId : string | number) => String(rowId ?? ""),
+			toProviderRowId: (rowId : string) => rowId,
+			refresh: async() => ({rows: [], removedRowIds: []})
+		});
+		const templateData = {
+			rowTemplateId: "infolog.index.rows",
+			rowTemplate: null,
+			rowTemplateXml: null,
+			rowTemplateAttrMap: {},
+			loaderTemplate: null,
+			columns: originalColumns
+		};
+		document.body.append(el);
+		await el.updateComplete;
+		(el as any)._templateData = templateData;
+		(el as any)._templateLoading = false;
+		(el as any)._dataProvider = {
+			createChildProvider,
+			toProviderRowId: (rowId : string) => rowId,
+			normalizeRowId: (rowId : string | number) => String(rowId ?? "")
+		};
+		await el.requestUpdate();
+		await el.updateComplete;
+
+		const rootGrid = el.shadowRoot!.querySelector("et2-datagrid") as any;
+		rootGrid.dispatchEvent(new CustomEvent("et2-columns-changed", {
+			detail: {columns: resizedColumns},
+			bubbles: true,
+			composed: true
+		}));
+		await el.updateComplete;
+		assert.strictEqual((el as any)._templateData, templateData, "root column sync must not replace templateData and trigger preference reload loops");
+
+		const container = document.createElement("div");
+		document.body.append(container);
+		render((el as any)._renderExpandedNextmatchGrid({
+			row: {id: "addressbook::parent-1", data: {is_parent: true}},
+			rowIndex: 0,
+			parentGrid: rootGrid,
+			columnSizes: "260px 1fr",
+			metaColumnWidth: "28px"
+		}), container);
+		await Promise.resolve();
+
+		const childGrid = container.querySelector("et2-datagrid") as any;
+		assert.deepEqual(
+			childGrid.columns.map((column) => ({key: column.key, width: column.width})),
+			resizedColumns.map((column) => ({key: column.key, width: column.width})),
+			"first expanded child grid should use the root datagrid's current resized columns"
+		);
+		assert.strictEqual(
+			childGrid.style.getPropertyValue("--column-sizes"),
+			"",
+			"first expanded child grid should inherit the root datagrid's current column track"
+		);
+		assert.isTrue(childGrid.inheritColumnSizes, "child grid should be configured to inherit column track sizing");
+		assert.strictEqual(childGrid.style.getPropertyValue("--meta-column-width"), "6px", "child grid should not inherit the parent expander meta width");
+
+		rootGrid.dispatchEvent(new CustomEvent("et2-columns-changed", {
+			detail: {columns: laterColumns},
+			bubbles: true,
+			composed: true
+		}));
+		await el.updateComplete;
+		render((el as any)._renderExpandedNextmatchGrid({
+			row: {id: "addressbook::parent-1", data: {is_parent: true}},
+			rowIndex: 0,
+			parentGrid: rootGrid,
+			columnSizes: "320px 1fr",
+			metaColumnWidth: "28px"
+		}), container);
+		await Promise.resolve();
+
+		const rerenderedChildGrid = container.querySelector("et2-datagrid") as any;
+		assert.deepEqual(
+			rerenderedChildGrid.columns.map((column) => ({key: column.key, width: column.width})),
+			resizedColumns.map((column) => ({key: column.key, width: column.width})),
+			"existing child grid should keep the column snapshot captured when it was created"
+		);
+		assert.strictEqual(
+			rerenderedChildGrid.style.getPropertyValue("--column-sizes"),
+			"",
+			"existing child grid should continue inheriting the parent column track"
+		);
+
+		render(null, container);
+		container.remove();
+		el.remove();
+	});
+
+	/**
+	 * Contract under test:
+	 * - Nextmatch expansion treats settings.is_parent as the row-data key to evaluate.
+	 * - settings.is_parent_value, when set, is compared to that row-data value.
+	 * - The normalized row.is_parent boolean remains a fallback for providers that expose only normalized data.
+	 */
+	it("evaluates expandable rows from nextmatch hierarchy settings", () =>
+	{
+		const el = new Et2Nextmatch();
+		el.settings = {is_parent: "group_count"};
+		const config = (el as any)._datagridExpansionConfig();
+
+		assert.isTrue(
+			config.isExpandable({id: "group", data: {group_count: 2}}, 0),
+			"truthy configured row field should make the row expandable"
+		);
+		assert.isFalse(
+			config.isExpandable({id: "empty-group", data: {group_count: 0, is_parent: true}}, 1),
+			"present but empty configured row field should take precedence over normalized fallback"
+		);
+		el.settings = {is_parent: "node_type", is_parent_value: "folder"};
+		assert.isTrue(
+			config.isExpandable({id: "folder", data: {node_type: "folder"}}, 2),
+			"configured is_parent_value should allow matching rows"
+		);
+		assert.isFalse(
+			config.isExpandable({id: "leaf", data: {node_type: "leaf"}}, 3),
+			"configured is_parent_value should reject non-matching rows"
+		);
+		el.settings = {};
+		assert.isTrue(
+			config.isExpandable({id: "normalized-parent", data: {is_parent: true}}, 4),
+			"normalized true should remain a fallback when no hierarchy field is configured"
+		);
+	});
+
+
+	/**
+	 * Contract under test:
+	 * - Cancelling the Nextmatch print dialog rejects with the legacy
+	 *   no-value signal that aborts the framework print sequence.
+	 *
+	 * Setup strategy:
+	 * - Stub the XET dialog completion as Cancel on a rendered Nextmatch.
+	 *
+	 * Pass criteria:
+	 * - beforePrint rejects with `undefined`, rather than an error object the
+	 *   framework treats as handled before continuing to browser print.
+	 */
+	it("aborts the framework print sequence when the print dialog is cancelled", async() =>
+	{
+		const transform = sinon.stub(Et2Dialog.prototype, "transformAttributes");
+		const complete = sinon.stub(Et2Dialog.prototype, "getComplete").resolves([Et2Dialog.CANCEL_BUTTON, {}]);
+		const el = new Et2Nextmatch();
+		el.setColumns([{key: "name", title: "Name"}]);
+		document.body.append(el);
+		try
+		{
+			let rejection : unknown = Symbol("not rejected");
+			try
+			{
+				await el.beforePrint();
+			}
+			catch(error)
+			{
+				rejection = error;
+			}
+			assert.isUndefined(rejection, "cancel should use the framework's undefined rejection signal");
+		}
+		finally
+		{
+			complete.restore();
+			transform.restore();
+			document.querySelectorAll("et2-dialog").forEach((dialog) => dialog.remove());
+			el.remove();
+		}
+	});
 });

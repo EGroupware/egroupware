@@ -35,7 +35,6 @@ implies read permission	resources	uk	Включає дозвіл на читан
 imports a list of resources from a csv file.	resources	uk	Імпортує список ресурсів з файлу CSV.
 is the ressource bookable?	resources	uk	Чи можна забронювати ресурс?
 is this resource bookable?	resources	uk	Чи можна забронювати цей ресурс
-links	resources	uk	Посилання
 location	resources	uk	Місце
 manage mapping	resources	uk	Керування відображенням
 new accessory	resources	uk	Новий аксесуар

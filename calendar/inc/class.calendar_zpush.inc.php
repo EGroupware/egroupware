@@ -1237,7 +1237,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 					{
 						unset($event['recur_exception'][$key]);
 					}
-					ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."() added exception ".Api\DateTime::to($exception_time, 'Y-m-d H:i:s').' '.array2string($exception));
+					ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."() added exception ".Api\DateTime::to($ex_event['recurrence'], 'Y-m-d H:i:s').' '.array2string($exception));
 					$message->exceptions[] = $exception;
 				}
 				// add rest of exceptions as deleted

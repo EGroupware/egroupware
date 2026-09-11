@@ -219,7 +219,6 @@ if no acl records for user or any group the user is a member of	admin	fa	اگر 
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	fa	اگر از LDAP  استفاده می کنید ، آیا می خواهید مشخصات پوشه خانه و پوسته ورود را تنظیم نمائید؟
 imap admin password	admin	fa	گذرواژه مدیر IMAP
 imap admin user	admin	fa	کاربر مدیر IMAP
-imap server	admin	fa	کارگزار آی مپ
 imap server hostname or ip address	admin	fa	نام میزبان یا نشانی IP کارگزار IMAP
 imap server logintyp	admin	fa	نوع ورود کارگزار IMAP
 imap server port	admin	fa	درگاه کارگزار IMAP

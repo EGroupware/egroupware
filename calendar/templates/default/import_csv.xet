@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-    <template id="calendar.import_csv" template="" lang="" group="0" version="1.9.001">
-        <et2-calendar-owner id="cal_owner" label="Import into" emptyLabel="From file" multiple="false"
-                            class="et2-label-fixed"></et2-calendar-owner>
-        <template id="importexport.import_dialog.csv"/>
-    </template>
+    <et2-template  id="calendar.import_csv" template="" lang="" group="0" version="1.9.001">
+        <et2-calendar-owner  id="cal_owner" label="Import into" emptyLabel="From file" multiple="false" class="et2-label-fixed"></et2-calendar-owner>
+        <et2-template  id="importexport.import_dialog.csv"></et2-template>
+    </et2-template>
 </overlay>

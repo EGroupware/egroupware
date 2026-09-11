@@ -19,6 +19,11 @@ import {formatEmailAddress, splitEmail} from "../Et2Email/utils";
  */
 export class Et2UrlEmailReadonly extends Et2UrlReadonly
 {
+	// Keep the raw email separate from _value. _value is the rendered text and may
+	// become just a name/domain after async formatting, while clicks and
+	// datagrid row updates still need the current actual address.
+	protected _emailValue : string = "";
+
 	/**
 	 * What to display for the selected email addresses
 	 *
@@ -35,12 +40,29 @@ export class Et2UrlEmailReadonly extends Et2UrlReadonly
 
 	set value(val : string)
 	{
-		this._value = val;
-		const split = splitEmail(this._value);
-		super.statustext = !egwIsMobile() && split.name ? split.email : "";
-		formatEmailAddress(val, !this.emailDisplay ? "email" :
-			(this.emailDisplay === 'preference' ? null : this.emailDisplay)).then(
-				(value) => super.value = value);
+		const raw = val || "";
+		this._emailValue = raw;
+		const split = splitEmail(raw);
+		const emailDisplay = !this.emailDisplay ? "email" :
+		                     (this.emailDisplay === 'preference' ? null : this.emailDisplay);
+		super.statustext = split.email && (split.name || emailDisplay !== "email") ? split.email : (this.statustext??"");
+		const fallback = emailDisplay === "email" ? split.email : raw;
+		super.value = fallback;
+		formatEmailAddress(raw, emailDisplay).then(
+			(value) =>
+			{
+				if(this._emailValue === raw)
+				{
+					super.value = value || fallback;
+				}
+			},
+			() =>
+			{
+				if(this._emailValue === raw)
+				{
+					super.value = fallback;
+				}
+			});
 	}
 
 	get value()
@@ -52,18 +74,20 @@ export class Et2UrlEmailReadonly extends Et2UrlReadonly
 	{
 		if (typeof attrs.onclick === 'undefined')
 		{
-			attrs.onclick = () =>
+			// Use the clicked widget, not the template widget that created this handler.
+			attrs.onclick = function(event)
 			{
-				let email=this._value;
+				const widget = event?.currentTarget || this;
+				let email = widget._emailValue || widget._value;
 				if (!IsEmail.EMAIL_PREG.exec(email))
 				{
-					let name = this._value;
+					let name = widget._emailValue || widget._value;
 					// do we need to remove the domain in brackets again?
-					if ((this.emailDisplay === 'preference' ? window.egw.preference("emailTag", "mail") : this.emailDisplay) === 'domain')
+					if ((widget.emailDisplay === 'preference' ? window.egw.preference("emailTag", "mail") : widget.emailDisplay) === 'domain')
 					{
-						name = this._value.replace(/ \([^@. ]+\.[^@ )]+\)$/, '');
+						name = (widget._emailValue || widget._value).replace(/ \([^@. ]+\.[^@ )]+\)$/, '');
 					}
-					email = '"' + name + '" <' + this.statustext + '>'
+					email = '"' + name + '" <' + widget.statustext + '>'
 				}
 				if (IsEmail.EMAIL_PREG.exec(email))
 				{

@@ -6,7 +6,7 @@
  * @link https://www.egroupware.org
  * @author Nathan Gray
  */
-import {css, html, nothing, TemplateResult} from "lit";
+import {html, nothing, TemplateResult} from "lit";
 import {property} from "lit/decorators/property.js";
 import {classMap} from "lit/directives/class-map.js";
 import shoelace from "../../Styles/shoelace";
@@ -14,6 +14,7 @@ import {Et2Tag} from "./Et2Tag";
 import {checkContact, ContactInfo, formatEmailAddress} from "../../Et2Email/utils";
 import {until} from "lit/directives/until.js";
 
+import styles from "./Et2EmailTag.styles";
 /**
  * Display a single email address
  * On hover, queries the server to see if the email is associated with a contact already.  If it is, we
@@ -29,50 +30,7 @@ export class Et2EmailTag extends Et2Tag
 	{
 		return [
 			super.styles,
-			shoelace, css`
-			.tag {
-			  position: relative;
-			}
-
-			.tag__prefix {
-			  flex: 0 1 auto;
-
-			  opacity: 30%;
-			  cursor: pointer;
-
-
-				et2-lavatar {
-					--size: var(--icon-width, 1em);
-				}
-			}
-
-			.tag__has_plus et2-button-icon {
-			  visibility: visible;
-			}
-
-			:host(:hover) .tag__has_plus {
-			  opacity: 100%;
-			}
-
-			/* Address is for a contact - always show */
-
-			.tag__prefix.tag__has_contact {
-			  opacity: 100%;
-			}
-
-			.tag__remove {
-			  order: 3;
-			}
-
-			/* Shoelace disabled gives a not-allowed cursor, but we also set disabled for read-only.
-			 * We don't want the not-allowed cursor, since you can always click the email address
-			 */
-
-			:host([readonly]) {
-			  cursor: pointer !important;
-			}
-
-			`];
+			shoelace, styles];
 	}
 
 	@property({type: Boolean, reflect: true})

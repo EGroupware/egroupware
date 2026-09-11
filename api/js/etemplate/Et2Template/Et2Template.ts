@@ -275,9 +275,7 @@ export class Et2Template extends Et2Widget(LitElement)
 	 * node and goes through it, creating widgets.  This is normally called automatically when the
 	 * template is added to the DOM, but if you want to re-load or not put it in the DOM you need to call load() yourself.
 	 *
-	 *
 	 * @returns {Promise<void>}
-	 * @protected
 	 */
 	public async load(newContent? : object,
 					  newSelectOptions? : { [widgetID : string] : SelectOption[] },
@@ -610,14 +608,16 @@ export class Et2Template extends Et2Widget(LitElement)
 
 	protected getUrl()
 	{
-		if(this.url)
+		// "null" (string) can arrive here if a pushed server attribute override of null got
+		// stringified before being applied - treat it as "no url set", not a valid url
+		if(this.url && this.url !== "null")
 		{
 			return this.url;
 		}
 
 		let url = "";
 		const parts = ((this.template || this.id) + "").split('?');
-		const cache_buster = parts.length > 1 ? parts.pop() : ((new Date).valueOf() / 86400 | 0).toString();
+		const cache_buster = parts.length > 1 ? parts.pop() : ((new Date).valueOf() / 86400000 | 0).toString();
 		let template_name = this.templateName;
 
 		// Full URL passed as template?

@@ -116,6 +116,8 @@ use EGroupware\Api\Json\Push;
  *    Attached files are stored under $vfs_basedir='/infolog' in the vfs!
  * 3) It manages the link-registry, in which apps can register themselfs by implementing some hooks
  * 4) It notifies apps, who registered for that service, about changes in the links their entries
+ * 5) Linking to an arbitrary (external) URL: pass self::URL_APPNAME as $app2/$id2=$url to Link::link().
+ *    There's no app registered for it, no query()/notify() support - title() just returns the URL itself.
  *
  * Modification times in links (and deleted timestamp) are always in server-time!
  * (We dont convert them here, as most apps ignore them anyway)
@@ -136,6 +138,14 @@ class Link extends Link\Storage
 	 * appname used for linking existing files to VFS
 	 */
 	const VFS_LINK = 'link';
+
+	/**
+	 * pseudo-appname to link an arbitrary (external) URL to an entry, id is the URL itself
+	 *
+	 * Link::link($app, $id, self::URL_APPNAME, $url, $remark) - no app is registered for it,
+	 * so query()/notify() are no-ops and title() just returns the URL itself.
+	 */
+	const URL_APPNAME = 'url';
 
 	/**
 	 * Baseurl for the attachments in the vfs
@@ -527,16 +537,18 @@ class Link extends Link\Storage
 			$ids = array();
 			if (is_array($id))
 			{
-				if (($not_only = $only_app[0] == '!'))
+				if (($not_only = !empty($only_app) && $only_app[0] == '!'))
 				{
-					$only_app = substr(1,$only_app);
+					$only_app = substr($only_app, 1);
 				}
 				foreach (array_reverse($id) as $link)
 				{
 					if (is_array($link)  // check for unlink-marker
 						&&  !($only_app && $not_only == ($link['app'] == $only_app)))
 					{
-						$ids[$link['link_id']] = $only_app ? $link['id'] : $link;
+						// only a positive $only_app gives a single known app for every link, and can
+						// therefore reduce them to their IDs - a negated one keeps mixed apps
+						$ids[$link['link_id']] = $only_app && !$not_only ? $link['id'] : $link;
 					}
 				}
 			}
@@ -560,7 +572,9 @@ class Link extends Link\Storage
 			$app_ids = array();
 			foreach($ids as $link)
 			{
-				$app_ids[$only_app ? $only_app : $link['app']][] = is_array($link) ? $link['id'] : $link;
+				// links are only reduced to bare IDs for a positive $only_app - anything else
+				// (no filter, or a negated one) keeps mixed apps, which "!projectmanager" is not
+				$app_ids[is_array($link) ? $link['app'] : $only_app][] = is_array($link) ? $link['id'] : $link;
 			}
 			foreach($app_ids as $appname => $a_ids)
 			{
@@ -899,6 +913,12 @@ class Link extends Link\Storage
 			}*/
 			if (self::DEBUG) echo '<p>'.__METHOD__."('$app','$id')='$title' (file)</p>\n";
 			return $title;
+		}
+		if ($app == self::URL_APPNAME)
+		{
+			// no app registered for it, and no separate "title" of a plain URL: it's its own title
+			if (self::DEBUG) echo '<p>'.__METHOD__."('$app','$id')='$id' (url)</p>\n";
+			return $id;
 		}
 		if ($app == '' || !is_array($reg = self::$app_register[$app]) || !isset($reg['title']))
 		{
@@ -1647,7 +1667,16 @@ class Link extends Link\Storage
 			$method = $args['method'];
 			unset($args['method']);
 			//error_log(__METHOD__."() calling $method(".array2string($args).')');
-			self::exec($method, array($args));
+			try {
+				self::exec($method, array($args));
+			}
+			// one app's notify handler failing (eg. a bug in its hook, or an unrelated
+			// infrastructure issue like a broken mail backend) must not also silently drop
+			// every other unrelated notification still queued behind it - same isolation
+			// already used for title() failures in get_titles() above
+			catch (\Throwable $e) {
+				error_log(__METHOD__."() calling $method(".array2string($args).') threw '.$e);
+			}
 		}
 	}
 

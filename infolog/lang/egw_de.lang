@@ -286,7 +286,6 @@ limit number of description lines (default 5, 0 for no limit)	infolog	de	Begrenz
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	de	Beschränkt die Breite der Spalte Beschreibung. Setzten Sie den Wert 0, für kein Limit.
 link	infolog	de	Verknüpfung
 linked to %1	infolog	de	Verknüpft mit %1
-links	infolog	de	Verknüpfungen
 links and attached files	infolog	de	Verknüpfungen und Dateianhänge
 links of this entry	infolog	de	Verknüpfungen dieses Eintrags
 links to specified application.  example: {{links/infolog}}	infolog	de	Verknüpfungen zu bestimmten Anwendungen. Beispiel: {{links/infolog}}

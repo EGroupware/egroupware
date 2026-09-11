@@ -1,10 +1,20 @@
 import {customElement} from "lit/decorators.js";
 import {SlSplitPanel} from "@shoelace-style/shoelace";
-import {PropertyValues} from "lit";
+import {css, PropertyValues} from "lit";
 
 @customElement('egw-split-panel')
 export class EgwSplitPanel extends SlSplitPanel
 {
+	static styles = [
+		SlSplitPanel.styles,
+		css`
+			slot.start,
+			slot.end {
+				overflow: var(--egw-split-panel-slot-overflow, hidden);
+			}
+		`
+	];
+
 	protected willUpdate(changedProperties : PropertyValues<this>)
 	{
 		if(changedProperties.has("disabled") && !this.disabled && this.checkVisibility())

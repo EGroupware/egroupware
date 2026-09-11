@@ -12,19 +12,11 @@
  * @copyright 2011 Nathan Gray
  */
 
-/*egw:uses
-	/vendor/bower-asset/jquery/dist/jquery.js;
-	et2_core_inputWidget;
-	et2_core_valueWidget;
-	et2_extension_itempicker_actions;
-	egw_action.egw_action_common;
-*/
-
 import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_inputWidget} from "./et2_core_inputWidget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_csvSplit, et2_no_init} from "./et2_core_common";
-import {et2_button} from "./et2_widget_button";
+import type {et2_button} from "./legacy-shims/et2_widget_button";
 import {egw} from "../jsapi/egw_global";
 
 /**
@@ -190,7 +182,7 @@ export class et2_itempicker extends et2_inputWidget
 		this.button_action = <et2_button>et2_createWidget("button", {});
 		jQuery(this.button_action.getDOMNode()).addClass("et2_itempicker_button_action");
 		this.button_action.set_label(this.egw().lang(this.options.action_label));
-		this.button_action.click = function() { _self.doAction(); };
+		this.button_action.addEventListener("click", function() { _self.doAction(); });
 
 		// Itemlist
 		this.itemlist.attr("id", "itempicker_itemlist");

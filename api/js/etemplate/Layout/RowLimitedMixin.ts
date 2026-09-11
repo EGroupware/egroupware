@@ -17,13 +17,6 @@ export const RowLimitedMixin = <T extends Constructor<LitElement>>(superclass : 
 {
 	class RowLimit extends superclass
 	{
-		static get properties()
-		{
-			return {
-				...super.properties,
-			}
-		}
-
 		set rows(row_count : string | number)
 		{
 			if(isNaN(Number(row_count)) || !row_count)

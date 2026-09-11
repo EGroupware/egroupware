@@ -9,6 +9,7 @@
 
 
 import {html} from "lit";
+import {property} from "lit/decorators/property.js";
 import {parseDate, parseDateTime} from "./Et2Date";
 import {Et2DateReadonly} from "./Et2DateReadonly";
 
@@ -68,19 +69,16 @@ const formatDate = function(date : Date, options = {units: "YmdHis"})
  * time scale being dealt with, unless the units property is set.
  *
  * This is a stripped-down read-only widget used in nextmatch
+ *
+ * @category display
  */
 export class Et2DateSince extends Et2DateReadonly
 {
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/**
-			 * Allowed display units, default 'YmdHis', e.g. 'd' to display a value only in days"
-			 */
-			units: {type: String, reflect: true},
-		}
-	}
+	/**
+	 * Allowed display units, default 'YmdHis', e.g. 'd' to display a value only in days"
+	 */
+	@property({type: String, reflect: true})
+	units : string;
 
 	constructor()
 	{

@@ -14,6 +14,7 @@
 
 namespace EGroupware\Api;
 
+use PHPUnit\Framework\Attributes\Before;
 use PHPUnit\Framework\TestCase as TestCase;
 use EGroupware\Api;
 
@@ -47,6 +48,38 @@ abstract class LoggedInTest extends TestCase
 			return preg_replace('/ with data set .*/', '', $name);
 		}
 		return $name;
+	}
+
+	/**
+	 * Reopen the PHP session before each test, if a prior test closed it.
+	 *
+	 * PHPUnit runs every test - across every LoggedInTest/WidgetBaseTest subclass -
+	 * in one shared, long-running process. Plenty of normal, correct application
+	 * code commits and closes the session at the end of what it thinks is a single
+	 * web request (eg. Nextmatch::ajax_get_rows() calling
+	 * $GLOBALS['egw']->session->commit_session(), which calls session_write_close()) -
+	 * harmless for a real request, but the session then stays closed for every
+	 * later test in this process unless something reopens it. A closed session
+	 * makes Api\Cache::setSession()/getSession() silently no-op instead of
+	 * persisting, which then makes any test relying on session-backed storage (eg.
+	 * Etemplate\Request\Session, used for every WidgetBaseTest widget test) fail to
+	 * find its own just-written data - and Etemplate\Request::read()'s "not found"
+	 * fallback assumes a real web request and calls exit()/redirects, which doesn't
+	 * just fail that one test, it kills this entire shared PHPUnit process.
+	 *
+	 * Uses #[Before] rather than overriding setUp(): PHPUnit invokes every
+	 * #[Before]-attributed method up the class hierarchy automatically, regardless
+	 * of whether a subclass overrides setUp() (and whether or not it remembers to
+	 * call parent::setUp()) - the fragile alternative would be auditing every
+	 * setUp() override, in this file and any future one, forever.
+	 */
+	#[Before]
+	protected function reopenSessionIfClosed() : void
+	{
+		if (session_status() !== PHP_SESSION_ACTIVE)
+		{
+			session_start();
+		}
 	}
 
 	/**
@@ -279,7 +312,13 @@ abstract class LoggedInTest extends TestCase
 				$GLOBALS['egw']->session->sessionid = 'CLI';
 				return 'CLI';
 			}
-			die($reason ? $reason : "Wrong account or password - run tests with 'phpunit -c doc/phpunit.xml' or 'phpunit <test_dir> -c doc/phpunit.xml'\n\n");
+			// NOT die()/exit(): PHPUnit runs one shared, long-running process - killing it here
+			// (as opposed to throwing, which load_egw()'s surrounding try/catch turns into a
+			// graceful markTestSkipped()) takes down the ENTIRE suite, not just this test/class.
+			// Confirmed real: any test exercising a deliberately-wrong password (eg. a negative
+			// auth-check test, or asAdmin()/switchUser() with a stale admin password) reproduces
+			// "Fatal error: Premature end of PHP process" instead of a normal test failure.
+			throw new \Exception($reason ? $reason : "Wrong account or password - run tests with 'phpunit -c doc/phpunit.xml' or 'phpunit <test_dir> -c doc/phpunit.xml'");
 		}
 		unset($GLOBALS['egw_login_data']);
 		return $sessionid;
@@ -308,6 +347,10 @@ abstract class LoggedInTest extends TestCase
 	/**
 	 * Log out the current user, log in as the given user
 	 *
+	 * For admin actions, prefer asAdmin()/asAdminStatic() over calling this directly with the admin test account
+	 * and switching back manually afterwards - see their docblocks for why pairing two bare
+	 * switchUser() calls around admin_cmd_* usage is a hazard.
+	 *
 	 * @param $account_lid
 	 * @param $password
 	 */
@@ -318,5 +361,66 @@ abstract class LoggedInTest extends TestCase
 
 		// Log in
 		static::load_egw($account_lid,$password);
+	}
+
+	/**
+	 * Run a callback while switched to the configured admin test account, then always switch
+	 * back to the original session afterwards - even if the callback throws.
+	 *
+	 * admin_cmd_edit_user/_edit_group/_delete_account/etc. require the CURRENT session to be a
+	 * real admin (see the "Admin-only functionality" section of doc/ai/testing.md). Pairing a
+	 * switchUser() to admin with a later switchUser() back, as two independent statements, is a
+	 * hazard: if anything in between throws, the switch-back never runs, and the session stays
+	 * stuck as admin for every later test in the same PHPUnit process (a stray fixture row
+	 * created by the real test user can then become ACL-invisible to whatever's stuck, breaking
+	 * unrelated cleanup/lookup code far away from the original test). Route all admin_cmd_*
+	 * usage through this helper instead of pairing manual switchUser() calls, so the restore is
+	 * guaranteed by construction rather than by remembering a try/finally each time.
+	 *
+	 * @param callable $callback Runs while logged in as $GLOBALS['EGW_ADMIN_USER']. Use
+	 *   `function() use (&$var) {...}` to get local values back out, or set $this->... properties
+	 *   directly - both work as usual since the closure is defined in the calling method.
+	 * @return mixed the callback's return value
+	 */
+	protected function asAdmin(callable $callback)
+	{
+		$this->switchUser($GLOBALS['EGW_ADMIN_USER'], $GLOBALS['EGW_ADMIN_PASSWORD']);
+		try
+		{
+			return $callback();
+		}
+		finally
+		{
+			$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
+		}
+	}
+
+	/**
+	 * Static counterpart to asAdmin(), for setUpBeforeClass()/setUpBeforeClass()-style contexts
+	 * where switchUser() (an instance method) isn't available.
+	 *
+	 * IMPORTANT: this deliberately uses `self::tearDownAfterClass()`, NOT `static::`. `self::` is
+	 * resolved at compile time to THIS class (LoggedInTest), regardless of which subclass calls
+	 * asAdminStatic() - `static::` would follow late static binding to the CALLING subclass
+	 * instead, and some subclasses (eg. MailImportTest) override tearDownAfterClass() with
+	 * destructive account/contact cleanup that must NOT run here, only the harmless base
+	 * session-logout logic.
+	 *
+	 * @param callable $callback Runs while logged in as $GLOBALS['EGW_ADMIN_USER'].
+	 * @return mixed the callback's return value
+	 */
+	protected static function asAdminStatic(callable $callback)
+	{
+		self::tearDownAfterClass();
+		static::load_egw($GLOBALS['EGW_ADMIN_USER'], $GLOBALS['EGW_ADMIN_PASSWORD']);
+		try
+		{
+			return $callback();
+		}
+		finally
+		{
+			self::tearDownAfterClass();
+			static::load_egw($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
+		}
 	}
 }

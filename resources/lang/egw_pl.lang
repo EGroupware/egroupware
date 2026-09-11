@@ -67,7 +67,6 @@ is resource buyable?	resources	pl	Czy zasób jest do kupienia?
 is the ressource bookable?	resources	pl	Czy zasób można zarezerwować?
 is this resource bookable?	resources	pl	Czy ten zasób jest do zarezerwowania?
 is this resource buyable?	resources	pl	Czy ten zasób jest do kupienia?
-links	resources	pl	Odsyłacze
 location	resources	pl	Lokalizacja
 location of resource	resources	pl	Lokalizacja zasobu
 location:	resources	pl	Lokalizacja:

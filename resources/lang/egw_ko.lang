@@ -35,7 +35,6 @@ imports a list of resources from a csv file.	resources	ko	リソース：リソ�
 is resource bookable?	resources	ko	리소스를 예약할 수 있나요
 is the ressource bookable?	resources	ko	리소스를 예약할 수 있나요?
 is this resource bookable?	resources	ko	このリソースは予約可能ですか
-links	resources	ko	링크
 location	resources	ko	장소
 new accessory	resources	ko	새 액세서리
 new resource	resources	ko	새 리소스

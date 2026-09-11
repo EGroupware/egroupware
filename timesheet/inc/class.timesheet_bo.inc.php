@@ -39,6 +39,11 @@ class timesheet_bo extends Api\Storage
 	const BILLABLE = '**billable**';
 
 	/**
+	 * Pseudo status/filter for timesheets having any status set, excluding timesheets without a status
+	 */
+	const ALL_STATUS = '**all_status**';
+
+	/**
 	 * Timesheets Api\Config data
 	 *
 	 * @var array
@@ -541,6 +546,12 @@ class timesheet_bo extends Api\Storage
 						static fn($status) => !($status['invoiced'] || $status['not_to_invoice'])))).'))';
 				unset($filter['ts_status']); // no status set
 			}
+			elseif ($filter['ts_status'] == self::ALL_STATUS)
+			{
+				// all timesheets with a status set, excluding timesheets without a status and deleted ones
+				$filter[] = '(ts_status IS NOT NULL AND ts_status != '.self::DELETED_STATUS.')';
+				unset($filter['ts_status']);
+			}
 			elseif ($filter['ts_status'] !== 'all')
 			{
 				$filter['ts_status'] = $this->get_sub_status($filter['ts_status']);
@@ -652,6 +663,92 @@ class timesheet_bo extends Api\Storage
 			return parent::search('','',implode(',',$union_order),'','',false,'',$start);
 		}
 		return parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
+	}
+
+	/**
+	 * Get the end-time of the last timesheet booked by a given user on a given day
+	 *
+	 * Considers ALL of the user's timesheets on that day and returns the latest end-time
+	 * (ts_start+ts_duration) by actual time, NOT by ts_id or ts_start row order, as entries can
+	 * be booked or edited out of chronological order.
+	 *
+	 * @param int $user account_id to check; the caller must have READ rights for this owner,
+	 *	as we're looking at their existing entries to find the last one
+	 * @param ?Api\DateTime $date =null day to check, default today
+	 * @return Api\DateTime|null end-time of the last booked timesheet that day, or null if none found
+	 * @throws Api\Exception\NoPermission if $user is not one the current user has READ rights for
+	 */
+	function get_last_end($user, ?Api\DateTime $date=null)
+	{
+		$grant = $this->grants[$user] ?? 0;
+		if (!($grant & Acl::READ))
+		{
+			throw new Api\Exception\NoPermission("No permission to read timesheets of user #$user!");
+		}
+
+		$day_start = $date ? clone $date : new Api\DateTime($this->now);
+		$day_start->setTime(0, 0, 0);
+		$day_end = (clone $day_start)->modify('+1 day -1 second');
+
+		$last_end = $this->db->select(self::TABLE, 'MAX(ts_start + ts_duration * 60)', array(
+			'ts_owner' => $user,
+			'ts_start BETWEEN '.$this->db->quote($day_start->format('ts'), 'int').
+				' AND '.$this->db->quote($day_end->format('ts'), 'int'),
+		), __LINE__, __FILE__, false, '', TIMESHEET_APP)->fetchColumn();
+
+		return is_null($last_end) ? null : new Api\DateTime($last_end);
+	}
+
+	/**
+	 * Find other timesheets of the same owner overlapping the given start/duration
+	 *
+	 * Automatic "working time" entries (Events::workingTimeCat()) are excluded on both
+	 * sides: a working-time entry never gets reported as a conflict, and is never itself
+	 * checked for conflicts (it intentionally spans the whole booked work period).
+	 *
+	 * $ts['ts_start'] must already be in server time (as stored in the db) - this method
+	 * does no timezone conversion itself, to avoid double-converting a caller that already
+	 * did (see TimesheetBoTest::testConflictsExpectsStartInServerTime).
+	 *
+	 * @param array $ts candidate data: ts_owner, ts_start (Api\DateTime, server time),
+	 *	ts_duration (minutes), optionally ts_id (excluded from the search, eg. when editing)
+	 *	and cat_id
+	 * @return array ts_id => array with ts_id, ts_title, ts_start (Api\DateTime, server
+	 *	time), ts_duration, ordered by ts_start
+	 */
+	function conflicts(array $ts)
+	{
+		if (empty($ts['ts_owner']) || empty($ts['ts_start']) || (int)($ts['ts_duration'] ?? 0) <= 0 ||
+			(int)($ts['cat_id'] ?? 0) === (int)Events::workingTimeCat())
+		{
+			return array();
+		}
+		if (!(($this->grants[$ts['ts_owner']] ?? 0) & Acl::READ))
+		{
+			return array();	// can't see the owner's other entries
+		}
+		$start = $ts['ts_start'];
+		$end = (clone $start)->add((int)$ts['ts_duration'].' minutes');
+
+		$where = array(
+			'ts_owner' => $ts['ts_owner'],
+			'(ts_status != '.self::DELETED_STATUS.' OR ts_status IS NULL)',
+			'(cat_id != '.(int)Events::workingTimeCat().' OR cat_id IS NULL)',
+			'ts_start < '.$this->db->quote($end->format('ts'), 'int'),
+			'ts_start + ts_duration * 60 > '.$this->db->quote($start->format('ts'), 'int'),
+		);
+		if (!empty($ts['ts_id']))
+		{
+			$where[] = 'ts_id != '.(int)$ts['ts_id'];
+		}
+		$conflicts = array();
+		foreach($this->db->select(self::TABLE, 'ts_id,ts_title,ts_start,ts_duration', $where,
+			__LINE__, __FILE__, false, 'ORDER BY ts_start', TIMESHEET_APP) as $row)
+		{
+			$row['ts_start'] = new Api\DateTime($row['ts_start'], Api\DateTime::$server_timezone);
+			$conflicts[$row['ts_id']] = $row;
+		}
+		return $conflicts;
 	}
 
 	/**

@@ -48,10 +48,6 @@
 
   }
 }
-#filemanager-index_nm et2-vfs-mime img[src$="svg"], #filemanager-index_nm et2-vfs-mime svg{
-    height: 1em !important;
-}
-
 /* Override default filter width since there's only one, and limited space left */
 #filemanager-index_nm_filter {
     max-width: initial;
@@ -81,56 +77,11 @@
 	min-width: 24em;
 }
 
-#filemanager-index_nm_path {
-	flex-grow: 1;
-	min-width: 0;
-}
-
 /**
- * Tile view
+ * Row and tile view
  */
-table.egwGridView_grid .tile .file_tile {
-	height: 100px;
-    width: 135px;
-	word-break: break-all;
-	overflow: hidden;
-}
-table.egwGridView_grid .tile .file_tile et2-vfs-mime {width: 4em; margin: 0 auto;}
-
-.egwGridView_grid .tile span.iconOverlayContainer {
-	display: block;
-	max-width: 140px;
-}
-.tile .file_tile img.vfsMimeIcon, .tile .file_tile et2-vfs-mime > img {
-	height: 48px;
-	width: auto;
-	display:block;
-	margin: 0 auto;
-}
-.tile .file_tile .et2_label {
-	word-wrap: break-word;
-}
-.tile .file_tile {
-	position: relative;
-}
-.tile .file_tile[data-mime^="image"] .et2_label {
-	display: none;
-}
-.tile .file_tile[data-mime^="image"]:hover .et2_label {
-	display: block;
-	position: absolute;
-	top: 10px;
-	color: white;
-	text-shadow: 2px 2px 8px black;
-	width: 100%;
-}
-.tile .file_tile[data-mime^="image"]:hover .et2_label[id*=comment] {
-	top: 30px;
-}
-#filemanager-index_nm .file_tile[data-mime^="image"] img.vfsMimeIcon, #filemanager-index_nm .file_tile[data-mime^="image"] et2-vfs-mime > img {
-  height: auto;
-  max-height: 100px;
-}
+@import "rows.less";
+@import "tile.less";
 
 /**
  * Select file dialog
@@ -210,14 +161,7 @@ div.editInfoMarker {
 button#filemanager-index_new img {
 	display: none;
 }
-div#filemanager-index_filemanager-index-header_right {
-	display: inline-flex;
-	gap: 1ex;
-}
-/*navbar icons in filemanager should always have the save size of 32px*/
-.egwGridView_grid et2-vfs-mime img[src*='/navbar'] {
-	width: 32px !important;
-}
+
 
 [slot="main-header"] et2-toolbar {
   et2-vfs-path[slot="list"] {

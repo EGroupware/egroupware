@@ -9,10 +9,6 @@
  * @copyright Nathan Gray 2011
  */
 
-/*egw:uses
-	/vendor/bower-asset/jquery/dist/jquery.js;
-	et2_core_inputWidget;
-*/
 import {et2_inputWidget} from "./et2_core_inputWidget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
@@ -299,7 +295,6 @@ export class et2_radiobox_ro extends et2_valueWidget implements et2_IDetachedDOM
 	}
 }
 et2_register_widget(et2_radiobox_ro, ["radio_ro"]);
-
 
 /**
  * A group of radio buttons

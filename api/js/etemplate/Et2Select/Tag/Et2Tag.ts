@@ -8,13 +8,14 @@
  */
 import {Et2Widget} from "../../Et2Widget/Et2Widget";
 import {SlTag} from "@shoelace-style/shoelace";
-import {css, html, nothing, TemplateResult} from "lit";
+import {html, nothing, TemplateResult} from "lit";
 import {classMap} from "lit/directives/class-map.js";
 import shoelace from "../../Styles/shoelace";
 import {state} from "lit/decorators/state.js";
 import {property} from "lit/decorators/property.js";
 import {Et2Textbox} from "../../Et2Textbox/Et2Textbox";
 
+import styles from "./Et2Tag.styles";
 /**
  * Tag is usually used in a Select with multiple=true, but there's no reason it can't go anywhere
  */
@@ -24,56 +25,7 @@ export class Et2Tag extends Et2Widget(SlTag)
 	{
 		return [
 			super.styles,
-			shoelace, css`
-			:host {
-			  flex: 1 1 auto;
-			}
-
-			.tag--pill {
-			  overflow: hidden;
-			}
-
-			::slotted(et2-image) {
-			  height: 20px;
-				width: var(--icon-width, 20px);
-				display: inline-block;
-			}
-
-				::slotted(et2-lavatar) {
-					--size: 2rem;
-				}
-
-			.tag__prefix {
-			  line-height: normal;
-			}
-			.tag__content {
-			  padding: 0px 0.2rem;
-			  flex: 1 2 auto;
-			  overflow: hidden;
-			  text-overflow: ellipsis;
-			}
-
-			.tag__edit {
-			  flex: 10 1 auto;
-			  min-width: 20ex;
-			  width: 60ex;
-			}
-
-			/* Avoid button getting truncated by right side of button */
-
-			.tag__remove {
-			  margin-right: 0;
-			  margin-left: 0;
-			}
-
-			et2-button-icon {
-			  visibility: hidden;
-			}
-
-			:host(:hover) et2-button-icon {
-			  visibility: visible;
-			}
-			`];
+			shoelace, styles];
 	}
 
 	@property({type: Boolean}) editable = false;

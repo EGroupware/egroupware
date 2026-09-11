@@ -1,4 +1,4 @@
-import {et2_IDOMNode, et2_implements_registry} from "../et2_core_interfaces";
+import {_setEt2WidgetMixin, et2_IDOMNode, et2_implements_registry} from "../et2_core_interfaces";
 import {et2_arrayMgr} from "../et2_core_arrayMgr";
 import {et2_attribute_registry, et2_registry, et2_widget} from "../et2_core_widget";
 import type {etemplate2} from "../etemplate2";
@@ -20,6 +20,7 @@ import {EgwEt2WidgetObject} from "../../egw_action/EgwEt2WidgetObject";
 import {EgwActionObject} from "../../egw_action/EgwActionObject";
 import {EgwActionObjectInterface} from "../../egw_action/EgwActionObjectInterface";
 
+import styles from "./Et2Widget.styles";
 /**
  * This mixin will allow any LitElement to become an Et2Widget
  *
@@ -116,177 +117,62 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			return [
 				...(super.styles ? (Array.isArray(super.styles) ? super.styles : [super.styles]) : []),
 				bootstrapIcons,
-				css`
-					:host([disabled]) {
-						display: none;
-					}
-
-					/* CSS to align internal inputs according to box alignment */
-
-					:host([align="center"]) .input-group__input {
-						justify-content: center;
-					}
-
-					:host([align="right"]) .input-group__input {
-						justify-content: flex-end;
-					}
-
-					/* Put widget label to the left of the widget */
-
-					::part(form-control), .form-control {
-						display: flex;
-						align-items: center;
-						flex-wrap: wrap;
-					}
-
-					::part(form-control-label), .form-control-label {
-						flex: 0 0 auto;
-						white-space: normal;
-					}
-
-					.form-control--has-label .form-control__label {
-						margin-right: var(--sl-spacing-medium);
-					}
-
-					::part(form-control-input), .form-control-input {
-						flex: 1 1 auto;
-						position: relative;
-						max-width: 100%;
-					}
-
-					::part(form-control-help-text), .form-control-help-text {
-						flex-basis: 100%;
-						position: relative;
-					}
-
-					/* Use .et2-label-fixed class to give fixed label size */
-
-					:host(.et2-label-fixed) {
-						&::part(form-control-label), & > *::part(form-control-label), .form-control-label {
-
-							width: initial;
-							width: var(--label-width, 8em);
-						}
-					}
-
-					:host(.et2-label-fixed)::part(form-control-help-text), :host(.et2-label-fixed) .form-control-help-text {
-						left: calc(var(--sl-spacing-medium) + var(--label-width, 8em));
-					}
-            `];
+				styles];
 		}
 
-		static get properties()
-		{
-			return {
-				...super.properties,
+		/**
+		 * Defines whether this widget is visibly disabled.
+		 *
+		 * The widget is still visible, but clearly cannot be interacted with.  Widgets disabled in the template
+		 * will not return a value to the application code, even if re-enabled via javascript before submitting.
+		 * To allow a disabled widget to be re-enabled and return a value, disable via javascript in the app's
+		 * et2_ready() instead of an attribute in the template file.
+		 */
+		@property({type: Boolean, reflect: true})
+		disabled : boolean = false;
 
-				/**
-				 * Widget ID.  Optional, and not always the same as the DOM ID if the widget is inside something
-				 * else that also has an ID.
-				 * Putting this in the properties() list causes the parent portion of the DOM ID to be duplicated
-				 * due to how LitElement processes the change
-				 */
-				//id: {type: String, reflect: false},
+		/**
+		 * The widget is not visible.
+		 *
+		 * As far as the user is concerned, the widget does not exist.  Widgets hidden with an attribute in the
+		 * template may not be created in the DOM, and will not return a value.  Widgets can be hidden after creation,
+		 * and they may return a value if hidden this way.
+		 */
+		@property({type: Boolean, reflect: true})
+		hidden : boolean;
 
-				/**
-				 * CSS Class.  This class is applied to the _outside_, on the web component itself.
-				 * Due to how WebComponents work, this might not change anything inside the component.
-				 */
-				class: {type: String, reflect: true},
+		/**
+		 * Accesskey provides a hint for generating a keyboard shortcut for the current element.
+		 * The attribute value must consist of a single printable character.
+		 * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/accesskey
+		 */
+		@property({type: String, reflect: true})
+		accesskey : string;
 
-				/**
-				 * Defines whether this widget is visibly disabled.
-				 *
-				 * The widget is still visible, but clearly cannot be interacted with.  Widgets disabled in the template
-				 * will not return a value to the application code, even if re-enabled via javascript before submitting.
-				 * To allow a disabled widget to be re-enabled and return a value, disable via javascript in the app's
-				 * et2_ready() instead of an attribute in the template file.
-				 */
-				disabled: {
-					type: Boolean,
-					reflect: true
-				},
+		/**
+		 * The label of the widget
+		 * This is usually displayed in some way.  It's also important for accessability.
+		 * This is defined in the parent somewhere, and re-defining it causes labels to disappear
+		 */
+		@property({type: String})
+		label : string;
 
-				/**
-				 * The widget is not visible.
-				 *
-				 * As far as the user is concerned, the widget does not exist.  Widgets hidden with an attribute in the
-				 * template may not be created in the DOM, and will not return a value.  Widgets can be hidden after creation,
-				 * and they may return a value if hidden this way.
-				 */
-				hidden: {
-					type: Boolean,
-					reflect: true
-				},
+		@property({type: Function})
+		onclick : any;
 
-				/**
-				 * Accesskey provides a hint for generating a keyboard shortcut for the current element.
-				 * The attribute value must consist of a single printable character.
-				 * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/accesskey
-				 */
-				accesskey: {type: String, reflect: true},
+		/*** Style type attributes ***/
+		/**
+		 * Disable any translations for the widget
+		 */
+		@property({type: Boolean, reflect: false})
+		noLang : boolean;
 
-				/**
-				 * Widget ID of another node to insert this node into instead of the normal location
-				 * This isn't a normal property...
-				 */
-				parentId: {type: String, noAccessor: true},
-
-				/**
-				 * Tooltip which is shown for this element on hover
-				 */
-				statustext: {
-					type: String,
-					reflect: true,
-					noAccessor: true
-				},
-
-				/**
-				 * The label of the widget
-				 * This is usually displayed in some way.  It's also important for accessability.
-				 * This is defined in the parent somewhere, and re-defining it causes labels to disappear
-				 */
-				label: {
-					type: String
-				},
-
-				onclick: {
-					type: Function
-				},
-
-				/*** Style type attributes ***/
-				/**
-				 * Disable any translations for the widget
-				 */
-				noLang: {
-					type: Boolean,
-					reflect: false
-				},
-
-				/**
-				 * Used by Et2Box to determine alignment.
-				 * Allowed values are left, right
-				 */
-				align: {
-					type: String,
-					reflect: true
-				},
-
-				/**
-				 * comma-separated name:value pairs set as data attributes on DOM node
-				 * data="mime:${row}[mime]" would generate data-mime="..." in DOM, eg. to use it in CSS on a parent
-				 */
-				data: {
-					type: String,
-					reflect: false,
-					noAccessor: true
-				},
-
-				actions: {
-					type: Object
-				}
-			};
-		}
+		/**
+		 * Used by Et2Box to determine alignment.
+		 * Allowed values are left, right
+		 */
+		@property({type: String, reflect: true})
+		align : string;
 
 		/**
 		 * List of properties that get translated
@@ -322,7 +208,6 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				this._widget_id = this.getAttribute("id");
 			}
 
-			this.disabled = false;
 			this._handleClick = this._handleClick.bind(this);
 
 			// make all sizable widgets large by default on mobile template
@@ -426,6 +311,10 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			this.statustext = value;
 		}
 
+		/**
+		 * Tooltip which is shown for this element on hover
+		 */
+		@property({type: String, reflect: true, noAccessor: true})
 		set statustext(value : string)
 		{
 			let oldValue = this.__statustext;
@@ -512,6 +401,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		 * Set the dataset from a CSV
 		 * @param {string} value
 		 */
+		@property({type: String, reflect: false, noAccessor: true})
 		set data(value : string)
 		{
 			// Clear existing
@@ -568,7 +458,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		 * @param {object} actions {ID: {attributes..}+} map of egw action information
 		 * @see api/src/Etemplate/Widget/Nextmatch.php egw_actions() method
 		 */
-		@property({type: Object})
+		@property({type: Object, noAccessor: true})
 		set actions(actions : EgwAction[] | { [id : string] : object })
 		{
 			this._initActions(actions);
@@ -703,6 +593,16 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		 *
 		 * @param  changedProperties
 		 */
+		willUpdate(changedProperties : PropertyValues)
+		{
+			super.willUpdate(changedProperties);
+
+			if(changedProperties.has("onclick"))
+			{
+				this.classList.toggle("et2_clickable", this.onclick != null && typeof this.onclick != "undefined");
+			}
+		}
+
 		updated(changedProperties : PropertyValues)
 		{
 			super.updated(changedProperties);
@@ -719,10 +619,6 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				{
 					this.bindTooltip()
 				}
-			}
-			if(changedProperties.has("onclick"))
-			{
-				this.classList.toggle("et2_clickable", this.onclick != null && typeof this.onclick != "undefined");
 			}
 		}
 
@@ -781,6 +677,11 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			}
 		}
 
+		/**
+		 * CSS Class.  This class is applied to the _outside_, on the web component itself.
+		 * Due to how WebComponents work, this might not change anything inside the component.
+		 */
+		@property({type: String, reflect: true, noAccessor: true})
 		set class(value : string)
 		{
 			let oldValue = this.classList.value;
@@ -1307,6 +1208,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		 *
 		 * @param {string} parent
 		 */
+		@property({type: String, noAccessor: true})
 		set parentId(parent : string | Element)
 		{
 			this.__parentId = parent;
@@ -1712,6 +1614,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 	return Et2WidgetClass as unknown as Constructor<Et2WidgetClass> & T;
 }
 export const Et2Widget = dedupeMixin(Et2WidgetMixin);
+_setEt2WidgetMixin(Et2Widget);
 
 /**
  * Load a Web Component
@@ -1773,10 +1676,16 @@ export function loadWebComponent(_nodeName : string, _template_node : Element|{[
 		//return null;
 	}
 
+	// Avoid parent.options, which is deprecated and logs a warning - only legacy (non-WebComponent)
+	// widgets need it, since WebComponent parents either declare readonly as a property (caught above)
+	// or have it as a plain DOM attribute (checked here via the native getAttribute, not et2_widget's
+	// schema-checked getAttribute() which logs its own error for unregistered attributes)
+	const parentReadonly = typeof parent?.readonly !== "undefined" ? parent.readonly :
+						   parent instanceof HTMLElement ? parent.getAttribute("readonly") :
+						   (<any>parent)?.options?.readonly;
 	const readonly = parent?.getArrayMgr("readonlys") ?
 					 (<any>parent.getArrayMgr("readonlys")).isReadOnly(
-						 attrs["id"], attrs["readonly"],
-						 typeof parent?.readonly !== "undefined" ? parent.readonly : parent.options?.readonly || false) : false;
+						 attrs["id"], attrs["readonly"], parentReadonly || false) : false;
 	if(readonly === true && typeof window.customElements.get(_nodeName + "_ro") != "undefined")
 	{
 		_nodeName += "_ro";
@@ -1903,6 +1812,12 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 					// Need row context, defer it until later
 					// Repeating rows & nextmatch will parse it again when doing the row
 					widget.deferredProperties[attribute] = attrValue;
+					// The deferred value will be transformed with its row context.
+					// Do not leave it as an inline event attribute in the meantime.
+					if(attribute.startsWith("on"))
+					{
+						widget.removeAttribute(attribute);
+					}
 					widget.egw().debug("info", "Had to defer %s parsing for %o\nCan it be rewritten to avoid $row & $row_cont?", attribute, widget);
 					break;
 				}
@@ -1910,6 +1825,7 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 				// Leaving it to the LitElement conversion loses the widget as context
 				if(typeof attrValue !== "function")
 				{
+					//et2_warnLegacyEventHandler(widget, attrValue);
 					attrValue = et2_compileLegacyJS(attrValue, widget, widget);
 				}
 				break;
@@ -1922,7 +1838,9 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 				}
 			// fall through to look in content
 			default:
-				attrValue = mgr ? mgr.expandName("" + attrValue) : attrValue;
+				// Do not stringify a real null into the string "null" - that would make it a
+				// truthy value where the widget's own default/fallback logic expects falsy
+				attrValue = (mgr && attrValue !== null) ? mgr.expandName("" + attrValue) : attrValue;
 				if(attrValue && typeof attrValue == "string" && widget_class.translate[attribute])
 				{
 					// allow attribute to contain multiple translated sub-strings eg: {Firstname}.{Lastname}
@@ -1960,7 +1878,14 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 		// (handlers can only be bound _after_ the widget is added to the DOM
 		if(attribute.startsWith("on") && typeof attrValue == "function")
 		{
-			//widget.updateComplete.then(() => addEventListener(attribute, attrValue));
+			// Never reflect legacy handler source back to an inline DOM attribute.
+			// Apart from violating CSP, that would replace this compiled function with
+			// a browser-created handler when the event is dispatched.
+			widget.removeAttribute(attribute);
+			const old_value = widget[attribute];
+			widget[attribute] = attrValue;
+			widget.requestUpdate(attribute, old_value);
+			continue;
 		}
 
 		// Set as attribute or property, as appropriate.  Don't set missing attributes.
@@ -2035,4 +1960,37 @@ export function cssImage(image_name : string, app_name? : string)
 	{
 		return css``;
 	}
+}
+
+const warnedMessages = new Set<string>();
+
+/**
+ * Log a warning only once for a stable caller-provided key.
+ *
+ * This is shared by legacy and web-component widgets, where repeated row or
+ * cell processing can otherwise flood the debug log with the same warning.
+ */
+export function et2_warnOnce(widget : any, key : string, ...args : any[]) : boolean
+{
+	if(warnedMessages.has(key))
+	{
+		return false;
+	}
+	warnedMessages.add(key);
+	widget.egw?.()?.debug?.("warn", ...args);
+	return true;
+}
+
+/**
+ * Warn once per legacy handler source when templates use executable JavaScript
+ * instead of a direct dotted method reference.
+ */
+export function et2_warnLegacyEventHandler(widget : any, source : unknown)
+{
+	if(typeof source !== "string" || /^(?:app\.)?[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*)+$/.test(source.trim()))
+	{
+		return;
+	}
+	et2_warnOnce(widget, "legacy-event-handler:" + source,
+		"Legacy event handler uses JavaScript; prefer an app.<appname>.<method> reference", source);
 }

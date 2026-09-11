@@ -9,12 +9,13 @@
 import {EgwApp} from '../../api/js/jsapi/egw_app';
 import type {Et2Button} from "../../api/js/etemplate/Et2Button/Et2Button";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
-import {egw} from "../../api/js/jsapi/egw_global";
+// app is an ambient global (declare global {} in egw_global.d.ts, unconditionally included
+// via tsconfig's "**/*.d.ts") - no import needed or possible.
 
 /**
  * JavaScript for Preferences
  *
- * @augments AppJS
+ * @augments EgwApp
  */
 export class PreferencesApp extends EgwApp
 {
@@ -59,5 +60,4 @@ export class PreferencesApp extends EgwApp
 	}
 }
 
-// @ts-ignore
 app.classes.preferences = PreferencesApp;

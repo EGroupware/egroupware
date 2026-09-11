@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="admin.mailwizard.smtp" template="" lang="" group="0" version="1.9.001">
+	<et2-template  id="admin.mailwizard.smtp" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column width="120"/>
@@ -38,20 +39,21 @@
 					<et2-textbox  id="acc_smtp_host" maxlength="128" placeholder="Hostname or IP"></et2-textbox>
 				</row>
 				<row class="@manual_class">
-					<et2-description  value="Secure connection" for="acc_smtp_ssl"></et2-description>
+					<et2-description  value="Protocol (encryption)" for="acc_smtp_ssl"></et2-description>
 					<et2-hbox>
 						<et2-select  id="acc_smtp_ssl" onchange="app.admin.wizard_smtp_ssl_onchange" class="emailadmin_ssl"></et2-select>
-						<et2-number  label="Port" id="acc_smtp_port" class="emailadmin_port" precision="0"></et2-number>
+						<et2-description  value="Port" for="acc_smtp_port"></et2-description>
+						<et2-number  id="acc_smtp_port" class="emailadmin_port" precision="0"></et2-number>
+						<et2-checkbox  label="Disable certificate validation" id="acc_smtp_ssl_noverify" onchange="if (widget.getValue()) Et2Dialog.show_dialog(function(button_id){ if (button_id !== Et2Dialog.YES_BUTTON) widget.value = false; }, 'Disabling certificate validation makes this connection vulnerable to a man-in-the-middle attack - only do this if you understand and accept that risk.', 'Disable certificate validation', {}, Et2Dialog.BUTTONS_YES_NO, Et2Dialog.WARNING_MESSAGE);"></et2-checkbox>
 					</et2-hbox>
 				</row>
 				<row>
 					<et2-image  src="admin/progress" span="all" class="emailadmin_progress"></et2-image>
 					<et2-description></et2-description>
 				</row>
-				<row>
-					<et2-textarea  id="smtp_output" readonly="true" span="all"></et2-textarea>
+				<row><et2-ai  span="all"><et2-textarea  id="smtp_output" readonly="true"></et2-textarea></et2-ai>
 				</row>
 			</rows>
 		</grid>
-	</template>
+	</et2-template>
 </overlay>

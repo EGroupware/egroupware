@@ -40,7 +40,19 @@ $widgets_choice = getByName($grammar, 'Widgets')->choice;
  */
 $overwrites = [
 	// RE to remove no longer used legacy widgets not matching "et2-<legacy-name>"
-	'.remove' => '/^(button|dropdown_button|int|float|menu|select|taglist|tree|passwd|date|time|ajax_select|vfs-(select|path))/',
+	'.remove' => '/^(button|dropdown_button|int|float|menu|select|taglist|tree|passwd|date|time|ajax_select|vfs-(select|path)|vfs$)/',
+	// legacy widgets to NOT auto-remove below despite having a same-named et2-<name> webcomponent:
+	// customfields/customfields-list still have a real, actively used legacy implementation
+	// (api/etemplate.php's preprocessor deliberately does not rewrite these tags, unlike almost
+	// everything else - see widget-migration-status.md, "1b - kept for a dependent")
+	// same issue as customfields/customfields-list above: created by missing_legacy_attributes
+	// below (real attrs added there), then immediately deleted again by the main per-component
+	// loop since each has a same-stripped-name et2- replacement - api/etemplate.php's own
+	// preprocessor deliberately never rewrites these when run non-interactively (see its
+	// "$replace_filters = PHP_SAPI !== 'cli' && ..." - "as we currently don't want to remove
+	// them permanently!"), so they're still real, live tag names in every converted template
+	'.keep' => ['customfields', 'customfields-list', 'nextmatch', 'nextmatch-header',
+		'nextmatch-sortheader', 'nextmatch-customfields'],
 	'*' => [    // all widgets, DOM attributes are NOT reported
 		'.attrs' => [
 			'id' => 'string',   // commented out with some reasoning in Et2Widget
@@ -49,6 +61,41 @@ $overwrites = [
 			'slot' => 'string', // would be nice, if we could list parent slots ...
             'style' => 'string',
 			'span' => "'all' | '2' | '3' | '4'",    // eT2 grid span
+			// Widget.php::$bool_attr_default - real, generic server-side attributes every
+			// widget class inherits, not just widgets whose own TS component happens to reflect
+			// them (readonly via is_readonly(), the rest via set_attrs()'s XML-bool casting)
+			'readonly' => 'boolean',
+			'disabled' => 'boolean',
+			'statustextHtml' => 'boolean',
+			'noLang' => 'boolean',
+			'required' => 'boolean',
+		],
+	],
+	// the analyzer does not resolve members contributed by a mixin, so the markdown attribute
+	// has to be declared here.  Class name, so everything descending from it inherits: covers
+	// et2-label, et2-textbox_ro, et2-textarea_ro and et2-number_ro.
+	// Also Description.php: $legacy_options = 'bold-italic,link,activate_links,label_for,
+	// link_target,link_popup_size,link_title' - real, server-side legacy attributes
+	'Et2Description' => [
+		'.attrs' => [
+			'markdown' => 'boolean',
+			// not a boolean despite the name - real usage passes a mode string (eg. "b")
+			'boldItalic' => 'string',
+			'link' => 'string',
+			'activateLinks' => 'boolean',
+			'labelFor' => 'string',
+			'linkTarget' => 'string',
+			'linkPopupSize' => 'string',
+			'linkTitle' => 'string',
+		],
+	],
+	// Link.php: $legacy_options = 'only_app' - real, server-side legacy attribute
+	'et2-link-entry' => [
+		'.attrs' => [
+			'onlyApp' => 'string',
+			// real per components.json (Et2LinkEntry.placeholder), just missing the "attribute:"
+			// reflection metadata the analyzer usually reports
+			'placeholder' => 'string',
 		],
 	],
 	'Et2InputWidget' => [
@@ -56,27 +103,88 @@ $overwrites = [
 			'tabindex' => 'int',    // not reported, probably because DOM attributeq
 		],
 	],
+	'Et2HtmlAreaReadonly' => [
+		'.attrs' => [
+			'markdown' => 'boolean',
+		],
+	],
+	'Et2Textarea' => [
+		'.attrs' => [
+			'markdown' => 'boolean',
+			'markdownMode' => "'edit' | 'split' | 'view'",
+		],
+	],
+	'Et2HtmlArea' => [
+		'.attrs' => [
+			'markdown' => 'boolean',
+			'markdownMode' => "'edit' | 'split' | 'view'",
+			// same "not resolved via mixin" gap as markdown/markdownMode above
+			'applyDefaultFont' => 'boolean',
+			'imageUpload' => 'string',
+			'noMenubar' => 'boolean',
+			'noStatusbar' => 'boolean',
+			'noToolbar' => 'boolean',
+			'toolbarMode' => "'floating' | 'sliding' | 'scrolling' | 'wrap'",
+			'validChildren' => 'string',
+		],
+	],
+	'Et2VfsUid' => [   // inherited by et2-vfs-gid too (Et2VfsGid extends Et2VfsUid)
+		'.attrs' => [
+			'noLang' => 'boolean',
+		],
+	],
+	'et2-dropdown' => [
+		'.attrs' => [
+			'stayOpenOnSelect' => 'boolean',
+		],
+		'.children' => ['.quantity' => 'zeroOrMore', 'Widgets'],
+	],
+	'et2-date-time-today' => [
+		'.attrs' => [
+			'align' => 'string',
+			'class' => 'string',
+			'noLang' => 'boolean',
+		],
+	],
+	'et2-button-copy' => [
+		'.attrs' => [
+			'copyLabel' => 'string',
+		],
+	],
+	'et2-vfs-select' => [
+		'.attrs' => [
+			'methodId' => 'string',
+		],
+	],
 	'et2-textbox' => [
 			'.children' => ['.quantity' => 'optional', 'et2-image'],
 	],
-	'et2-date' => [
+	// class name, not tag name: Et2DateTime extends Et2Date and Et2DateTimeOnly extends
+	// Et2DateTime, so this also covers et2-date-time/et2-date-timeonly's own dataFormat
+	// (Date.php: $this->attrs['dataFormat'] ?? $this->attrs['data_format'], real server-side)
+	'Et2Date' => [
 		'.attrs' => [
 			'yearRange' => 'string',
 			'dataFormat' => 'string',
 		],
 	],
+	// zeroOrMore, not the default oneOrMore: real templates use genuinely empty box/hbox/vbox
+	// too (eg. <et2-box id="ajax_target" disabled="true"></et2-box> - a pure JS-populated target)
 	'et2-hbox' => [
-		'.children' => 'Widgets',
+		'.children' => ['.quantity' => 'zeroOrMore', 'Widgets'],
 	],
 	'et2-vbox' => [
-		'.children' => 'Widgets',
+		'.children' => ['.quantity' => 'zeroOrMore', 'Widgets'],
 	],
 	'et2-box' => [
-		'.children' => 'Widgets',
+		'.children' => ['.quantity' => 'zeroOrMore', 'Widgets'],
 	],
 	'Et2Box' => [   // inherited by et2-(v|h)box too
 		'.attrs' => [
 			'overflow' => 'string', // DOM attributes
+			// Box.php: $legacy_options includes cellpadding/cellspacing for box/hbox/vbox/groupbox
+			'cellpadding' => 'string',
+			'cellspacing' => 'string',
 		],
 	],
 	'et2-tabbox' => [
@@ -91,6 +199,11 @@ $overwrites = [
 	],
 	'et2-tab' => null,  // remove/skip, as we currently use legacy tabs and tabpanels
 	'et2-tab-panel' => null,
+	// skip: Et2Template's own TS-declared properties are near-empty - the real classic
+	// <template id="..." template="..." group="..." version="..." lang="..." .../> attributes
+	// and its Widgets* content model belong to the ORIGINAL legacy <template> definition, not to
+	// anything the CEM analyzer can see. Renamed from the original instead, see below.
+	'et2-template' => null,
 	'et2-details' => [
 		'.children' => 'Widgets',
 	],
@@ -108,6 +221,27 @@ $overwrites = [
 	'et2-nextmatch-header-custom' => [
 		'.attrs' => [
 			'emptyLabel' => 'string',
+			'tracker' => 'string',   // app-specific column-header customization for the tracker app
+		],
+	],
+	// server-side-only, same class of gap as customfields/vfs-upload above - real per
+	// Nextmatch.php's docblock/code, never reach the client as reflected TS properties
+	'et2-nextmatch' => [
+		'.attrs' => [
+			'filterTemplate' => 'string',
+			'headerRight' => 'string',
+			'onselect' => 'string',
+		],
+	],
+	'et2-nextmatch-header-filter' => [
+		'.attrs' => [
+			'search' => 'string',
+		],
+	],
+	'et2-nextmatch-header-customfields' => [
+		'.attrs' => [
+			'app' => 'string',
+			'readonly' => 'boolean',
 		],
 	],
 	'Et2Button' => [
@@ -115,6 +249,9 @@ $overwrites = [
 			'image' => 'string',
 			'noSubmit' => 'boolean',
 			'hideOnReadonly' => 'boolean',
+			// ButtonMixin.ts: noValidation:boolean=false, used to skip client-side validation on
+			// submit - a real mixin member the analyzer doesn't resolve, same as noSubmit above
+			'noValidation' => 'boolean',
 		],
 	],
 	'Et2ButtonIcon' => 'Et2Button',     // no inheritance from Et2Button, but Et2ButtonMixin, which is not recognised
@@ -124,16 +261,109 @@ $overwrites = [
 			'rows' => 'int',
 			'tabindex' => 'int',
 			'allowFreeEntries' => 'boolean',
+			// server-side only: Select.php/Taglist.php both read $this->attrs['searchUrl']
+			'searchUrl' => 'string',
+			// Taglist.php: 'editModeEnabled' => true (real, server-side default)
+			'editModeEnabled' => 'boolean',
+			// api/etemplate.php's own preprocessor deliberately generates this (from legacy
+			// autocomplete_params) when converting taglist -> et2-select
+			'searchOptions' => 'string',
 		],
 	],
 	'et2-select' => [
+		'.children' => ['.quantity' => 'zeroOrMore', 'option'],
+	],
+	'Et2SelectAccount' => [   // real, Lit-reflected, missed by the analyzer like the others above
+		'.attrs' => [
+			'accountType' => 'string',
+		],
+	],
+	'et2-checkbox' => [
+		'.attrs' => [
+			// components.json infers 'boolean' (default: true/false), but real usage stores an
+			// arbitrary string as the "checked"/"unchecked" value (eg. selectedValue="active") -
+			// a checkbox representing a non-boolean value pair, not just an on/off toggle
+			'selectedValue' => 'string',
+			'unselectedValue' => 'string',
+		],
+	],
+	'et2-textarea' => [
+		'.attrs' => [
+			'size' => 'string',
+		],
+	],
+	'et2-select-app' => [
+		'.children' => ['.quantity' => 'zeroOrMore', 'option'],
+		'.attrs' => [
+			'apps' => 'string',
+		],
+	],
+	// real usage nests a filter <option> (eg. id="0" "All users") the same way et2-select does
+	'et2-nextmatch-header-account' => [
+		'.children' => ['.quantity' => 'zeroOrMore', 'option'],
+	],
+	// real usage nests an icon, eg. <et2-image slot="prefix"> for the path's leading icon
+	'et2-vfs-path' => [
+		'.children' => ['.quantity' => 'zeroOrMore', 'Widgets'],
+	],
+	'Et2DateTimeToday' => [
+		'.attrs' => [
+			'onclick' => 'function',
+		],
+	],
+	'et2-select-number' => [
 		'.children' => ['.quantity' => 'zeroOrMore', 'option'],
 	],
 	'et2-email' => [
 		'.attrs' => [
 			'onTagClick' => 'function',
 			'multiple' => 'boolean',
+			// Taglist.php: 'allowFreeEntries' => true (real, server-side default)
+			'allowFreeEntries' => 'boolean',
 		],
+	],
+	// slot doc: "the target widget (e.g. et2-textarea, et2-vbox, iframe) is placed" - real usage
+	// also confirms et2-htmlarea (admin.mailaccount.identity's signature field); not restricted
+	// further than that, same as the et2-(v|h)box/et2-details/et2-groupbox/et2-split family below
+	'et2-ai' => [
+		'.children' => 'Widgets',
+	],
+	// server-side-only attributes (Api\Etemplate\Widget\File/Vfs, never reach the client as a
+	// reflected TS property, so components.json can't see them - real and documented though:
+	// File.php's docblock: "attribute 'callback' for a server-side callback ... for file or
+	// vfs-upload widgets"; Vfs.php: "// Legacy option for vfs-upload" -> $legacy_options = "mime"
+	'Et2File' => [   // covers et2-file and et2-vfs-upload (Et2VfsUpload extends Et2File)
+		'.attrs' => [
+			'callback' => 'string',
+			// real on both, not just vfs-upload - confirmed via mail/invoices real usage
+			'mime' => 'string',
+		],
+	],
+	'et2-vfs-upload' => [
+		// real usage: et2-button-icon (upload trigger override), often self-closed with none
+		'.children' => ['.quantity' => 'zeroOrMore', 'Widgets'],
+	],
+	// generic container widgets real templates nest arbitrary content into (or self-close with
+	// none) - same treatment as the et2-(v|h)box/et2-details/et2-groupbox/et2-split/et2-ai
+	// family above, but zeroOrMore since these are commonly self-closed too
+	'et2-toolbar' => [
+		'.children' => ['.quantity' => 'zeroOrMore', 'Widgets'],
+	],
+	'et2-dropdown-button' => [
+		'.children' => ['.quantity' => 'zeroOrMore', 'Widgets'],
+	],
+	'et2-searchbox' => [
+		'.children' => ['.quantity' => 'zeroOrMore', 'Widgets'],
+	],
+	'et2-filterbox' => [
+		'.children' => ['.quantity' => 'zeroOrMore', 'Widgets'],
+	],
+	'et2-dialog' => [
+		'.children' => ['.quantity' => 'zeroOrMore', 'Widgets'],
+	],
+	// input-widget prefix/suffix slot content, eg. <et2-number><et2-label slot="suffix"/></et2-number>
+	'et2-number' => [
+		'.children' => ['.quantity' => 'zeroOrMore', 'Widgets'],
 	],
 ];
 
@@ -145,11 +375,14 @@ removeNode($grammar->start->choice);
 $grammar->start->addChild('ref')->addAttribute('name', 'overlay');
 // fix legacy widgets: attribute-name => (array of) widgets
 $missing_legacy_attributes = [
-	'app' => 'customfields-types',
+	'app' => ['customfields-types', 'customfields', 'customfields-list'],
     'callback' => 'vfs-upload',
+	'align' => 'nextmatch-sortheader',
 	'class' => ['nextmatch','nextmatch-header', 'nextmatch-customfields', 'nextmatch-sortheader', 'customfields-types'],
 	'disabled' => 'nextmatch',
 	'exclude' => 'customfields',
+	'filter_template' => 'nextmatch',   // Nextmatch.php: $this->attrs['filterTemplate'] ?? $this->attrs['filter_template']
+	'height' => 'nextmatch',
 	'id' => [
 		'.optional' => false,
 		'nextmatch-header', 'nextmatch-sortheader', 'nextmatch-customfields', 'nextmatch', 'customfields-types',
@@ -157,25 +390,39 @@ $missing_legacy_attributes = [
 	'header_left' => 'nextmatch',
 	'header_right' => 'nextmatch',
 	'header_row' => 'nextmatch',
-	'label' => [
-		'.optional' => false,
-		'nextmatch-header', 'nextmatch-sortheader',
-	],
+	// nextmatch-customfields is real without a label just as often as with one (eg.
+	// <nextmatch-customfields id="customfields"/>), unlike its header/sortheader siblings - since
+	// this array can only have one 'label' key (a duplicate key would just silently discard the
+	// first), keep it optional for all three rather than fighting a per-widget split
+	'label' => ['nextmatch-header', 'nextmatch-sortheader', 'nextmatch-customfields'],
 	'maxWidth' => 'column',
 	'minWidth' => 'column',
+	'no_lang' => 'nextmatch',
 	'onchange'  => 'customfields-types',
 	'onselect' => 'nextmatch',
     'value' => 'option',
-	'readonly' => 'customfields-types',
+	'readonly' => ['customfields-types', 'nextmatch-customfields', 'nextmatch-sortheader'],
+	// Nextmatch.php: "$replace_filters = ... !preg_match('/<nextmatch [^>]*replaceFilters=\"false\"/', ...)"
+	'replaceFilters' => 'nextmatch',
+	// Nextmatch.php docblock: "'search' => // IO search pattern"
+	'search' => 'nextmatch-header-filter',
     'sortmode' => [
         '.values' => ['ASC', 'DESC'],
         '.default' => 'ASC',
 	    'nextmatch-sortheader',
     ],
 	'span' => ['nextmatch', 'nextmatch-header', 'nextmatch-customfields', 'nextmatch-sortheader', 'customfields-types'],
-	'statustext' => ['tab', 'customfields-types', 'option'],
-	'template' => ['.optional' => false, 'nextmatch'],
+	'statustext' => ['tab', 'customfields-types', 'option', 'nextmatch-sortheader'],
+	// NOT required despite looking that way: Nextmatch.php falls back to $this->attrs['options']
+	// for the same purpose (row template name) when 'template' isn't given - real usage like
+	// <nextmatch id="nm" options="app.prompts.rows"/> has only 'options', never 'template'
+	'template' => ['nextmatch'],
+	'options' => ['nextmatch', 'nextmatch-sortheader'],
 	'tab'     => 'customfields',
+	// app-specific column-header customization for the tracker app
+	'tracker' => 'nextmatch-header-custom',
+	'width' => 'nextmatch-header',
+	'title' => 'option',  // real: Select.php reads $val['title'] as a tooltip alongside/instead of label
 ];
 foreach($missing_legacy_attributes as $attribute => $widgets)
 {
@@ -192,6 +439,10 @@ foreach($missing_legacy_attributes as $attribute => $widgets)
             $element->addChild('empty');	// no children allowed
 	        $grammar->addChild('define')->addAttribute('name', 'attlist.'.$widget);
         }
+        // skip if already declared (e.g. "option" already has "value" in the legacy
+        // DTD-derived RNG) - a duplicate <attribute name="..."/> here would merge into
+        // an invalid duplicate ATTLIST entry once PHPStorm flattens this into a DTD
+        if (hasAttribute(getByName($grammar, 'attlist.'.$widget), $attribute)) continue;
         // add (optional) attribute
         if (!is_array($widgets) || (!isset($widgets['.optional']) || $widgets['.optional'] === true))
         {
@@ -282,8 +533,117 @@ foreach($components as $component)
         }
     }
 
-    // remove corresponding legacy widget
-    removeWidget(str_replace('et2-', '', $component['tagName']));
+    // remove corresponding legacy widget, unless explicitly kept (still has a real legacy impl)
+    $legacyName = str_replace('et2-', '', $component['tagName']);
+    if (!in_array($legacyName, $overwrites['.keep'] ?? [], true))
+    {
+        removeWidget($legacyName);
+    }
+}
+
+// old-box: et2_box's still-live "old-box" auto-repeat escape hatch (see widget-migration-status.md,
+// "old-box auto-repeat" section) - same widget class/attributes/children as et2-box, but was never
+// part of the legacy etemplate2.dtd's Widgets choice and is deliberately never preprocessor-rewritten
+// (unlike plain box/vbox/hbox), so it needs adding here rather than relying on the components.json-
+// driven loop above
+$widgets_choice->addChild('ref')->addAttribute('name', 'old-box');
+($define = $grammar->addChild('define'))->addAttribute('name', 'old-box');
+($element = $define->addChild('element'))->addAttribute('name', 'old-box');
+$element->addChild('ref')->addAttribute('name', 'attlist.et2-box');
+$element->addChild('oneOrMore')->addChild('ref')->addAttribute('name', 'Widgets');
+
+// et2-template: rename the classic legacy <template>/<attlist.template> definitions - they
+// already have the right Widgets* content model and full legacy attribute list (id/template/
+// group/version/lang/content/url/onload/disabled/.../readonly/attributes) - to survive as
+// et2-template, instead of being replaced by Et2Template's own near-empty auto-generated
+// definition (skipped above via 'et2-template' => null)
+if (($define = getByName($grammar, 'template')))
+{
+	$define['name'] = 'et2-template';
+	$define->element['name'] = 'et2-template';
+	$define->element->ref['name'] = 'attlist.et2-template';   // was <ref name="attlist.template"/>
+}
+if (($attrs = getByName($grammar, 'attlist.template')))
+{
+	$attrs['name'] = 'attlist.et2-template';
+}
+removeByName($widgets_choice, 'template');
+$widgets_choice->addChild('ref')->addAttribute('name', 'et2-template');
+
+// app-specific widgets with no generic webcomponent (calendar/kanban/projectmanager/smallpart -
+// see widget-migration-status.md's "App-specific widgets" section, all "2-not-migrated"), plus a
+// few other real legacy leaf tags that never got a components.json entry at all. None of these
+// have their own children (real usage is always a leaf tag), so unlike missing_legacy_attributes
+// this is keyed by widget name -> its full real attribute list, all generic optional strings -
+// exact types don't matter much for widgets this narrowly-used and unlikely to gain a real
+// webcomponent soon.
+$app_specific_widgets = [
+	'calendar-date' => ['id', 'aria-labelledby'],
+	'calendar-planner' => ['id', 'onchange', 'onevent_change'],
+	'calendar-timegrid' => ['id', 'onchange', 'onevent_change'],
+	'calendar-daycol' => ['id'],
+	'calendar-planner_row' => ['id'],
+	'et2-calendar-owner' => ['id', 'class', 'span', 'label', 'placeholder', 'emptyLabel', 'helpText',
+		'multiple', 'allowFreeEntries', 'autocompleteUrl', 'onchange', 'tabindex'],
+	'contact-fields' => ['id'],
+	'infolog-fields' => ['id', 'label', 'span', 'statustext'],
+	'kanban-board' => ['id', 'name', 'color', 'columns', 'column_actions', 'swimlanes'],
+	'kanban-card' => ['id', 'class', 'actions', 'template'],
+	'projectmanager-gantt' => ['id', 'class', 'span', 'autoload', 'ajax_update'],
+	'projectmanager-pricelist' => ['id', 'class', 'span', 'statustext', 'onchange', 'options',
+		'readonly', 'value', 'width', 'e'],
+	'projectmanager-select' => ['id', 'no_lang', 'onchange', 'options', 'checked'],
+	'projectmanager-select-erole' => ['id', 'label', 'span', 'no_lang', 'options', 'readonly'],
+	'smallpart-cats-select' => ['id', 'action', 'categoryType', 'comment_cat', 'disabled',
+		'emptyLabel', 'filled', 'hidden', 'multiple', 'noSubs', 'onchange', 'onlySubs',
+		'placeholder', 'readonly'],
+	'smallpart-cl-measurement-L' => ['id', 'activation_period', 'disabled', 'running_interval',
+		'running_interval_range', 'steps_className'],
+	'smallpart-comment-timespan' => ['id', 'action', 'disabled', 'readonly', 'starttime',
+		'stoptime', 'videobar'],
+	'smallpart-comment' => ['id', 'style'],
+	'smallpart-flag-time' => ['id', 'label', 'noSubmit', 'onclick'],
+	'smallpart-lf-button' => ['id', 'class', 'color', 'label', 'onclick'],
+	'smallpart-livefeedback-report' => ['id', 'onclick_callback', 'seekable', 'videobar', 'width'],
+	'smallpart-media-recorder' => ['id', 'autoUpload', 'disabled', 'hidden', 'hideMediaSelectors',
+		'videoName', 'width'],
+	'smallpart-videobar' => ['id', 'class', 'disabled', 'multi_src', 'slider_callback',
+		'slider_tags', 'src_type', 'starttime', 'video_src', 'width'],
+	'smallpart-videooverlay' => ['id', 'course_id', 'editable', 'get_elements_callback',
+		'test_display', 'toolbar_add', 'toolbar_add_question', 'toolbar_cancel', 'toolbar_delete',
+		'toolbar_duration', 'toolbar_edit', 'toolbar_offset', 'toolbar_play', 'toolbar_save',
+		'toolbar_starttime', 'video_id', 'videobar'],
+	// generic dynamic-type placeholder widget (id/type/select_options resolved server-side)
+	'widget' => ['id', 'class', 'type', 'size', 'no_lang', 'onchange', 'select_options', 'attributes'],
+	// bare vfs-* leaf tags the preprocessor doesn't (yet) rewrite - see et2-vfs-{path,size} for
+	// their et2- prefixed, webcomponent-backed equivalents
+	'vfs-path' => ['id', 'class', 'align', 'size', 'width', 'onchange'],
+	'vfs-size' => ['id', 'class', 'align', 'options', 'value'],
+	'vfs-name_ro' => ['id'],
+	'et2-select-account_ro' => ['id'],
+	'et2-tracker-assigned' => ['id', 'class', 'multiple', 'noLang', 'placeholder', 'tracker'],
+	// real, live legacy tags never referenced by missing_legacy_attributes at all (unlike their
+	// nextmatch-* siblings above, so never even created in the first place, let alone removed)
+	'nextmatch-customfilter' => ['id', 'class', 'options'],
+	'filter' => ['id', 'relative_dates'],
+];
+foreach ($app_specific_widgets as $widget => $attrs)
+{
+	if (!getByName($grammar, $widget))
+	{
+		$widgets_choice->addChild('ref')->addAttribute('name', $widget);
+		($define = $grammar->addChild('define'))->addAttribute('name', $widget);
+		($element = $define->addChild('element'))->addAttribute('name', $widget);
+		$element->addChild('ref')->addAttribute('name', 'attlist.'.$widget);
+		$element->addChild('empty');
+		$attlist = $grammar->addChild('define');
+		$attlist->addAttribute('name', 'attlist.'.$widget);
+		$attlist->addAttribute('combine', 'interleave');
+		foreach ($attrs as $attr)
+		{
+			$attlist->addChild('optional')->addChild('attribute')->addAttribute('name', $attr);
+		}
+	}
 }
 
 $remove = [];
@@ -303,15 +663,127 @@ $dom = new DOMDocument("1.0");
 $dom->preserveWhiteSpace = false;
 $dom->formatOutput = true;
 $dom->loadXML($grammar->asXML());
+
+// fix now-dangling <ref name="X"/> left pointing at a removed legacy widget that was replaced by
+// "et2-X" - definitions we don't otherwise regenerate (e.g. overlay's and tabpanels' own content
+// models, both still <ref name="template"/> from the legacy DTD) aren't touched by removeWidget()
+// above, which only removes the <define>/Widgets-choice entries themselves, not other references
+// to that name elsewhere in the grammar
+$xpath = new DOMXPath($dom);
+$xpath->registerNamespace('x', 'http://relaxng.org/ns/structure/1.0');
+$defined = [];
+foreach ($xpath->query('//x:define/@name') as $name)
+{
+	$defined[$name->value] = true;
+}
+foreach ($xpath->query('//x:ref') as $ref)
+{
+	$name = $ref->getAttribute('name');
+	if (!isset($defined[$name]) && isset($defined['et2-'.$name]))
+	{
+		$ref->setAttribute('name', 'et2-'.$name);
+	}
+}
+
+// enrich every boolean-like <choice> uniformly, regardless of whether it came from attributes()'s
+// case 'boolean' above (already false/true/1) or is a legacy widget's hand-authored true/false
+// choice carried over unchanged from the original DTD-derived etemplate2.rng (grid/et2-template/
+// historylog/tab/... never go through attributes() at all): make sure "1" is present, and add a
+// dynamic-expression pattern branch (disabled="!@showsearchbuttons", private="$cont[no_private_cfs]")
+// - correct for anything that validates against the .rng directly, but does NOT survive conversion
+// to DTD: DTD attribute types are either a fixed keyword or a literal enumeration, never both, so
+// PHPStorm's RNG->DTD step has no way to carry this branch through (confirmed - a plain <text/>
+// here hit the same wall, see git blame). By team decision (2026-09-07) the DTD keeps the strict
+// enum and tolerates these being flagged there.
+foreach ($xpath->query('//x:choice') as $choice)
+{
+	$values = [];
+	$isBoolean = true;
+	foreach ($choice->childNodes as $child)
+	{
+		if ($child->nodeType !== XML_ELEMENT_NODE) continue;
+		if ($child->localName !== 'value') { $isBoolean = false; break; }
+		$values[$child->textContent] = true;
+	}
+	if (!$isBoolean || !array_intersect_key($values, ['true' => 1, 'false' => 1])) continue;
+	foreach (['false', 'true', '1'] as $value)
+	{
+		if (!isset($values[$value]))
+		{
+			$choice->appendChild($dom->createElementNS('http://relaxng.org/ns/structure/1.0', 'value', $value));
+		}
+	}
+	$data = $choice->appendChild($dom->createElementNS('http://relaxng.org/ns/structure/1.0', 'data'));
+	// the "pattern" facet param needs the XSD datatype library - RelaxNG's own built-in library
+	// (used when datatypeLibrary is omitted) doesn't support any <param>s at all
+	$data->setAttribute('datatypeLibrary', 'http://www.w3.org/2001/XMLSchema-datatypes');
+	$data->setAttribute('type', 'token');
+	$param = $data->appendChild($dom->createElementNS('http://relaxng.org/ns/structure/1.0', 'param', '!?[@$].*'));
+	$param->setAttribute('name', 'pattern');
+}
+
+// legacy (non et2-*) widgets never go through attributes()/overwriteAttributes(), so they never
+// get the '*' global attrs (id/width/height/slot/style/span) every et2-* component automatically
+// receives - add whichever of those a legacy widget's attlist doesn't already declare. Covers
+// every legacy attlist.*, not just top-level Widgets choice members, since structural
+// sub-elements like row/tab (children of grid/tabs, never Widgets members themselves) need this
+// just as much.
+$globalAttrs = ['id', 'width', 'height', 'slot', 'style', 'span'];
+// et2-template is a special case: despite its et2- prefixed name, it's the renamed legacy
+// <template> definition (see above) and never goes through attributes()/overwriteAttributes()
+// either - explicitly included alongside the true legacy widgets
+foreach ($xpath->query('//x:define[(starts-with(@name, "attlist.") and not(starts-with(@name, "attlist.et2-"))) or @name="attlist.et2-template"]') as $attlistDefine)
+{
+	$existing = [];
+	foreach ($xpath->query('.//x:attribute/@name', $attlistDefine) as $a) { $existing[$a->value] = true; }
+	// a bare <empty/> ("no attributes") sibling alongside real <optional> attribute patterns
+	// under the same combine="interleave" define breaks libxml's RelaxNG compilation in a way
+	// that cascades into unrelated-looking content-model errors elsewhere in the schema - remove
+	// it, since it becomes redundant the moment this attlist gains a real attribute anyway
+	foreach ($xpath->query('./x:empty', $attlistDefine) as $empty) { $attlistDefine->removeChild($empty); }
+	foreach ($globalAttrs as $attr)
+	{
+		if (isset($existing[$attr])) continue;
+		$optional = $attlistDefine->appendChild($dom->createElementNS('http://relaxng.org/ns/structure/1.0', 'optional'));
+		$attribute = $optional->appendChild($dom->createElementNS('http://relaxng.org/ns/structure/1.0', 'attribute'));
+		$attribute->setAttribute('name', $attr);
+	}
+}
+
+// <row> requires oneOrMore Widgets in the legacy DTD-derived RNG, but real templates use
+// genuinely empty rows too (eg. a spacer/placeholder row) - widen to zeroOrMore
+foreach ($xpath->query('//x:define[@name="row"]/x:element/x:oneOrMore[x:ref[@name="Widgets"]]') as $oneOrMore)
+{
+	$zeroOrMore = $dom->createElementNS('http://relaxng.org/ns/structure/1.0', 'zeroOrMore');
+	while ($oneOrMore->firstChild) { $zeroOrMore->appendChild($oneOrMore->firstChild); }
+	$oneOrMore->parentNode->replaceChild($zeroOrMore, $oneOrMore);
+}
+
+// widen span's enum to the values real templates actually use (grid-span, not just 'all')
+foreach ($xpath->query('//x:attribute[@name="span"]/x:choice/x:value[text()="4"]') as $value)
+{
+	foreach (['1', '5'] as $extra)
+	{
+		$value->parentNode->insertBefore($dom->createElementNS('http://relaxng.org/ns/structure/1.0', 'value', $extra), $value);
+	}
+}
+
+// <option>text</option> and <et2-styles>css</et2-styles> hold real text content (the option's
+// visible label, resp. inline CSS rules) - both declared <empty/> since neither's "children" is
+// a Widgets ref this script otherwise knows how to add
+foreach (['option', 'et2-styles'] as $name)
+{
+	foreach ($xpath->query('//x:define[@name="'.$name.'"]/x:element/x:empty') as $empty)
+	{
+		$empty->parentNode->replaceChild($dom->createElementNS('http://relaxng.org/ns/structure/1.0', 'text'), $empty);
+	}
+}
+
 if (php_sapi_name() !== "cli")
 {
 	header('Content-Type: application/xml; charset=utf-8');
 }
-// add <value>1</value> to legacy widget boolean attributes
-echo preg_replace('#<choice>
-(\s+)<value>true</value>
-(\s+)<value>false</value>
-(\s+)</choice>#', "<choice>\n\$1<value>false</value>\n\$1<value>true</value>\n\$1<value>1</value>\n\$3</choice>",
+echo
 	// update the header
 	preg_replace('#<!--.*-->#s', '<!--
     ==========================================================
@@ -332,7 +804,7 @@ echo preg_replace('#<choice>
         ...
         </overlay>
     ==========================================================
--->', $dom->saveXML()));
+-->', $dom->saveXML());
 
 /**
  * Remove (legacy-)widget with given name from schema
@@ -383,6 +855,24 @@ function getByName(SimpleXMLElement $parent, string $name) : ?SimpleXMLElement
 }
 
 /**
+ * Check whether an <attribute name="..."/> already exists anywhere under a given attlist
+ * (directly or wrapped in <optional>), regardless of RelaxNG nesting/namespace
+ *
+ * @param SimpleXMLElement|null $attlist
+ * @param string $name
+ * @return bool
+ */
+function hasAttribute(?SimpleXMLElement $attlist, string $name) : bool
+{
+	if (!isset($attlist)) return false;
+	foreach (dom_import_simplexml($attlist)->getElementsByTagName('attribute') as $attr)
+	{
+		if ($attr->getAttribute('name') === $name) return true;
+	}
+	return false;
+}
+
+/**
  * Overwrite attributes in given element / class
  * @param array& $element
  * @param string|null $name overwrites to use e.g. "*", default use $element['name']
@@ -407,11 +897,24 @@ function overwriteAttributes(array& $element, ?string $name=null)
 	{
 		if (isset($type))
 		{
-            // only add it, if not already there
-            if (!array_filter($element['attributes']??[], static function($attribute) use ($attr)
+            // replace the type if the attribute already exists (eg. components.json's own
+            // inferred type is wrong or too narrow for real usage), otherwise add it -
+            // "foreach ($element['attributes'] ?? [] as &$x)" would NOT do this: the ?? produces
+            // a temporary value, so a by-reference foreach over it never writes back
+            $replaced = false;
+            if (isset($element['attributes']))
             {
-                return isset($attribute) && $attribute['name'] === $attr;
-            }))
+                foreach($element['attributes'] as &$attribute)
+                {
+                    if (isset($attribute) && $attribute['name'] === $attr)
+                    {
+                        $attribute['type'] = ['text' => $type];
+                        $replaced = true;
+                    }
+                }
+                unset($attribute);
+            }
+            if (!$replaced)
             {
                 $element['attributes'][] = ['name' => $attr, 'type' => ['text' => $type]];
             }
@@ -488,8 +991,12 @@ function attributes(array $component, ?SimpleXMLElement $attrs=null)
 				$choice->addChild('value', 'false');
 				$choice->addChild('value', 'true');
 				$choice->addChild('value', '1');    // often used in our templates
-				// not understood by DTD :(
-				//$choice->addChild('text');  // as we allow "@<attr>" or "$cont[name]"
+				// dynamic-expression pattern branch (disabled="!@showsearchbuttons", private=
+				// "$cont[no_private_cfs]") is added uniformly to every boolean-like <choice> in a
+				// single DOM pass below - including legacy widgets' hand-authored true/false
+				// choices carried over unchanged from the original DTD-derived etemplate2.rng
+				// (grid/et2-template/historylog/tab/... - these never go through this function at
+				// all), which would otherwise be missed if handled only here
 				break;
             case 'any':
                 break;

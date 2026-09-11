@@ -8,12 +8,6 @@
  * @author Andreas Stöckel
  */
 
-/*egw:uses
-	et2_core_common;
-	egw_inheritance;
-	et2_core_phpExpressionCompiler;
-*/
-
 import {et2_evalBool} from "./et2_core_common";
 import type {et2_widget} from "./et2_core_widget";
 import {egw} from "../jsapi/egw_global";
@@ -27,7 +21,7 @@ import {et2_compilePHPExpression} from "./et2_core_phpExpressionCompiler";
 export class et2_arrayMgr
 {
 	splitIds : boolean = true;
-	public data : object;
+	public data : any;
 	// Holds information about the current perspective
 	public perspectiveData : { owner : et2_widget; row : number; key : string } = {
 		"owner": null,
@@ -162,7 +156,7 @@ export class et2_arrayMgr
 			const children = indexes[1].split('][');
 			if(children.length)
 			{
-				indexes = jQuery.merge([indexes[0]], children);
+				indexes = [indexes[0], ...children];
 			}
 		}
 		return indexes;
@@ -231,7 +225,7 @@ export class et2_arrayMgr
 			// Abort if the current entry is not an object (associative array) and
 			// we should descend further into it.
 			const isObject = typeof entry === 'object';
-			if(!isObject && !_referenceInto || entry == null || jQuery.isEmptyObject(entry))
+			if(!isObject && !_referenceInto || entry == null || Object.keys(entry).length === 0)
 			{
 				return null;
 			}
@@ -479,7 +473,7 @@ export class et2_readonlysArrayMgr extends et2_arrayMgr
 			// under current namespace, we look into parent
 			// (if there is anything namespaced, we will NOT look for parent!)
 			let mgr : et2_arrayMgr = this;
-			while(mgr.getParentMgr() && jQuery.isEmptyObject(mgr.data))
+			while(mgr.getParentMgr() && Object.keys(mgr.data).length === 0)
 			{
 				mgr = mgr.getParentMgr();
 			}

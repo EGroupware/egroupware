@@ -97,7 +97,6 @@ last modified	addressbook	iw	שונה לאחרונה
 ldap context for contacts	admin	iw	לאנשי קשר LDAP ההקשר של
 ldap host for contacts	admin	iw	לאנשי קשר host LDAP
 line 2	addressbook	iw	שורה 2
-links	addressbook	iw	קישורים
 list all categories	addressbook	iw	הצג את כל הקטגוריות
 list all customfields	addressbook	iw	הצג את כל שדות המותאמות אישית
 load vcard	addressbook	iw	VCard טען

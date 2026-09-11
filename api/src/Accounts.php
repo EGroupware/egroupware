@@ -820,6 +820,12 @@ class Accounts
 		{
 			self::add_default_group_description($data);
 		}
+		// capture cleartext password and lid before backend->save() hashes account_passwd in place,
+		// so we can invalidate a possibly cached failed Auth::authenticate() attempt for it further down
+		$new_lid = $data['account_lid'] ?? null;
+		$new_passwd = !empty($data['account_passwd']) && $data['account_passwd'] !== '*unchanged*' ?
+			$data['account_passwd'] : null;
+
 		if (($id = $this->backend->save($data)) && $data['account_type'] != 'g')
 		{
 			// if we are not on a pure LDAP system, we have to write the account-date via the contacts class now
@@ -857,6 +863,17 @@ class Accounts
 		$invalidate = isset($data['account_members']) ? $data['account_members'] : array();
 		$invalidate[] = $data['account_id'];
 		self::cache_invalidate($invalidate);
+
+		// a (new) cleartext password was just written (eg. on account creation): make sure a previously
+		// cached failed Auth::authenticate() result for this exact lid+password (eg. a transient race
+		// right after account creation) does not keep rejecting the now-valid credentials for the
+		// remainder of Auth::AUTH_CACHE_TIME, same as Auth::change_password() already does for changes
+		if ($id && $new_passwd !== null && ($new_lid ?? ($new_lid = $this->id2name($id))))
+		{
+			Cache::unsetCache($GLOBALS['egw_info']['server']['install_id'], Auth::class,
+				sha1($new_lid.':'.$new_passwd.':text:'.get_class(Auth::backend()))
+			);
+		}
 
 		// Notify linked apps about changes in the account data
 		Link::notify_update('admin',  $id, $data, $update_type);

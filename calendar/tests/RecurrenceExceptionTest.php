@@ -71,9 +71,13 @@ class RecurrenceExceptionTest extends \EGroupware\Api\AppTest
 		foreach($this->account_ids as $account_id)
 		{
 			try {
-				$command = new \admin_cmd_delete_account((int)$account_id, null, true);
-				$command->comment = 'Removing in tearDown for unit test ' . $this->name();
-				$command->run();
+				// admin_cmd_delete_account requires the CURRENT session to be a real admin
+				$this->asAdmin(function() use ($account_id)
+				{
+					$command = new \admin_cmd_delete_account((int)$account_id, null, true);
+					$command->comment = 'Removing in tearDown for unit test ' . $this->name();
+					$command->run();
+				});
 			}
 			catch(\Throwable $e) {
 				// ignore cleanup failures in tearDown
@@ -218,10 +222,14 @@ class RecurrenceExceptionTest extends \EGroupware\Api\AppTest
 			'account_firstname' => 'Recur',
 			'account_lastname'  => 'Participant',
 		];
-		$command = new \admin_cmd_edit_user(false, $account);
-		$command->comment = 'Needed for unit test ' . $this->name();
-		$command->run();
-		$account_id = (int)$command->account;
+		// admin_cmd_edit_user requires the CURRENT session to be a real admin
+		$account_id = $this->asAdmin(function() use ($account)
+		{
+			$command = new \admin_cmd_edit_user(false, $account);
+			$command->comment = 'Needed for unit test ' . $this->name();
+			$command->run();
+			return (int)$command->account;
+		});
 		$this->assertGreaterThan(0, $account_id, 'Unable to create secondary user for test');
 		$this->account_ids[] = $account_id;
 		return $account_id;

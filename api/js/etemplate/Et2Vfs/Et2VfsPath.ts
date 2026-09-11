@@ -19,6 +19,7 @@ import {FileInfo} from "./Et2VfsSelectDialog";
 import {SlBreadcrumbItem} from "@shoelace-style/shoelace";
 import {HasSlotController} from "../Et2Widget/slot";
 import {until} from "lit/directives/until.js";
+import {et2_IDetachedDOM} from "../et2_core_interfaces";
 
 /**
  * @summary Display an editable path from the VFS
@@ -39,8 +40,23 @@ import {until} from "lit/directives/until.js";
  * @csspart suffix - The container that wraps the suffix slot.
  *
  */
-export class Et2VfsPath extends Et2InputWidget(LitElement)
+export class Et2VfsPath extends Et2InputWidget(LitElement) implements et2_IDetachedDOM
 {
+	/** Mime type used by the VFS backend for directories */
+	static readonly DIR_MIME_TYPE : string = 'httpd/unix-directory';
+
+	/**
+	 * Full VFS stat-array for this widget, if value was ever set to one via
+	 * set_value()/setValue() - null if only ever given a plain path string.  Legacy
+	 * et2_vfs's `value` was always the full stat-array (server-side shape, eg.
+	 * `is_dir`/`mime`/`path`/`name` - not the same shape as this file's `FileInfo`
+	 * type, which is Et2VfsSelectDialog's newer AJAX-search result); this keeps it
+	 * available for row-context consumers (eg. an `onclick` handler checking
+	 * `widget.fileInfo.is_dir`) without changing what `value` itself means here
+	 * (a plain path string throughout this class's own rendering).
+	 */
+	public fileInfo : any = null;
+
 	static get styles()
 	{
 		return [
@@ -61,6 +77,35 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 
 
 	get _edit() : HTMLInputElement { return this.shadowRoot.querySelector("input");}
+
+	/** Whether a deferred "change" dispatch is already scheduled - see _scheduleChangeEvent(). */
+	private _changeEventScheduled = false;
+
+	/**
+	 * Defer a "change" dispatch until after `value`'s render settles, coalescing
+	 * back-to-back calls into one event instead of one per call.
+	 *
+	 * A rapid multi-click (eg. two different breadcrumb segments before the first
+	 * click's updateComplete resolves) changes `value` more than once before either
+	 * dispatch fires. Each call read `value` fresh at dispatch time anyway, so once
+	 * `value` has changed twice, firing once still reports the current (last) value
+	 * correctly - firing once per call instead sends listeners (eg. filemanager's
+	 * path handler) two identical "change" events, each triggering its own
+	 * independent reload() of the same final path.
+	 */
+	private _scheduleChangeEvent(eventInit? : EventInit) : void
+	{
+		if(this._changeEventScheduled)
+		{
+			return;
+		}
+		this._changeEventScheduled = true;
+		this.updateComplete.then(() =>
+		{
+			this._changeEventScheduled = false;
+			this.dispatchEvent(new Event("change", eventInit));
+		});
+	}
 
 	constructor()
 	{
@@ -99,16 +144,47 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 
 	setValue(_value : string | FileInfo)
 	{
-		if(typeof _value != "string" && _value.path)
+		this.fileInfo = (_value && typeof _value === "object") ? _value : null;
+		if(typeof _value != "string" && _value?.path)
 		{
 			_value = _value.path;
 		}
-		this.value = <string>_value;
+		this.value = <string>(_value ?? "");
+	}
+
+	/**
+	 * Legacy-style alias for setValue() - some code (eg. row-content-array binding via
+	 * Et2Widget.transformAttributes()) looks for set_value() specifically.
+	 */
+	set_value(_value : string | FileInfo)
+	{
+		this.setValue(_value);
 	}
 
 	getValue()
 	{
 		return (this.readonly || this.disabled) ? null : (this.egw().encodePath(this._value || ''));
+	}
+
+	/*
+	 * et2_IDetachedDOM - nextmatch/datagrid row virtualization support, matching legacy et2_vfs
+	 */
+	getDetachedAttributes(_attrs : string[])
+	{
+		_attrs.push("value");
+	}
+
+	getDetachedNodes() : HTMLElement[]
+	{
+		return [this];
+	}
+
+	setDetachedAttributes(_nodes : HTMLElement[], _values : object)
+	{
+		if(typeof _values["value"] !== "undefined")
+		{
+			this.set_value(<string | FileInfo>_values["value"]);
+		}
 	}
 
 	public focus()
@@ -131,10 +207,7 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 
 		if(oldValue != this.value)
 		{
-			this.updateComplete.then(() =>
-			{
-				this.dispatchEvent(new Event("change"));
-			})
+			this._scheduleChangeEvent();
 		}
 	}
 
@@ -193,10 +266,7 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 				this.requestUpdate("value", oldValue);
 				if(oldValue != this.value)
 				{
-					this.updateComplete.then(() =>
-					{
-						this.dispatchEvent(new Event("change"));
-					});
+					this._scheduleChangeEvent();
 				}
 			// Fall through
 			case "Escape":
@@ -248,10 +318,7 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 				}
 				if(oldValue != this.value)
 				{
-					this.updateComplete.then(() =>
-					{
-						this.dispatchEvent(new Event("change"));
-					})
+					this._scheduleChangeEvent();
 				}
 			}
 			// Can still click on it when disabled I guess
@@ -262,6 +329,22 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 					cancelable: true,
 					detail: newPath.join("")
 				}));
+			}
+			// Read-only row display (eg. a nextmatch column) with no explicit onclick handler:
+			// default to opening the clicked path, same fallback as legacy et2_vfs.
+			if(this.readonly && !this.disabled && !this.onclick)
+			{
+				const isLastSegment = stopIndex === dirs.length;
+				let openPath = newPath.join("");
+				// No trailing slash on the file itself (only intermediate directories get one)
+				if(isLastSegment && openPath !== "/" && openPath.endsWith("/"))
+				{
+					openPath = openPath.replace(/\/*$/, '');
+				}
+				this.egw().open({
+					path: openPath,
+					type: isLastSegment ? (this.fileInfo?.mime ?? '') : Et2VfsPath.DIR_MIME_TYPE
+				}, "file");
 			}
 		}
 	}
@@ -332,7 +415,11 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 		const isEditable = !(this.disabled || this.readonly);
 		const editing = this.editing && isEditable;
 
-		let icon = this._getIcon(pathParts);
+		// A breadcrumb of a non-path gets a bogus filemanager icon and a click opening nothing,
+		// so render an empty value as nothing and a bare name (eg. a removed file) as text.
+		const plainText = !isEditable && !this.value.startsWith("/");
+
+		let icon = plainText ? "" : this._getIcon(pathParts);
 
 		return html`
             <div
@@ -372,11 +459,12 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
                                        @click=${(e) =>
                                        {
                                            this.setValue("/");
-                                           this.updateComplete.then(() => {this.dispatchEvent(new Event("change", {bubbles: true}))});
+                                           this._scheduleChangeEvent({bubbles: true});
                                        }}
                             ></et2-image>` : nothing}
                     </slot>
-                    ${editing ? html`
+                    ${plainText ? html`
+                        <span class="vfs-path__plain">${this.value}</span>` : editing ? html`
                         <input
                                 class="vfs-path__value-input"
                                 type="text"

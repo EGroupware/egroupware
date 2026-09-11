@@ -14,6 +14,7 @@
 
 use EGroupware\Api;
 use EGroupware\Api\Mail;
+use EGroupware\Api\Mail\BodyDecoding;
 
 /**
  * mail eSync plugin
@@ -101,7 +102,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		if (is_null(self::$profileID))
 		{
 			if ($this->debugLevel>1) error_log(__METHOD__.__LINE__.' self::ProfileID isNUll:'.array2string(self::$profileID));
-			self::$profileID =& Api\Cache::getSession('mail','activeSyncProfileID');
+			self::$profileID = Api\Cache::getSession('mail','activeSyncProfileID');
 			if ($this->debugLevel>1) error_log(__METHOD__.__LINE__.' ActiveProfileID (after reading Cache):'.array2string(self::$profileID));
 		}
 		if (isset($GLOBALS['egw_info']['user']['preferences']['activesync']['mail-ActiveSyncProfileID']))
@@ -115,6 +116,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			{
 				self::$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['activesync']['mail-ActiveSyncProfileID'];
 			}
+			self::persist_profile_id();
 		}
 		if ($this->debugLevel>1) error_log(__METHOD__.__LINE__.' Profile Selected (after reading Prefs):'.array2string(self::$profileID));
 
@@ -127,10 +129,19 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			catch(Exception $e) {
 				unset($e);
 				self::$profileID = Mail\Account::get_default_acc_id();
+				self::persist_profile_id();
 			}
 		}
 		if ($this->debugLevel>0) error_log(__METHOD__.'::'.__LINE__.' ProfileSelected:'.self::$profileID);
 		//$this->debugLevel=0;
+	}
+
+	/**
+	 * Persist self::$profileID (mutated in-place, no longer a live session reference) back to the session
+	 */
+	private static function persist_profile_id()
+	{
+		Api\Cache::setSession('mail', 'activeSyncProfileID', self::$profileID);
 	}
 
 	/**
@@ -280,12 +291,20 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			// todo: tell mail which account to use
 			//error_log(__METHOD__.__LINE__.' create object with ProfileID:'.array2string(self::$profileID));
 			$this->mail = Mail::getInstance(false,self::$profileID,true,false,true);
-			if (self::$profileID == 0 && isset($this->mail->icServer->ImapServerId) && !empty($this->mail->icServer->ImapServerId)) self::$profileID = $this->mail->icServer->ImapServerId;
+			if (self::$profileID == 0 && isset($this->mail->icServer->ImapServerId) && !empty($this->mail->icServer->ImapServerId))
+			{
+				self::$profileID = $this->mail->icServer->ImapServerId;
+				self::persist_profile_id();
+			}
 		}
 		else
 		{
 			//error_log(__METHOD__.__LINE__." connect with profileID: ".self::$profileID);
-			if (self::$profileID == 0 && isset($this->mail->icServer->ImapServerId) && !empty($this->mail->icServer->ImapServerId)) self::$profileID = $this->mail->icServer->ImapServerId;
+			if (self::$profileID == 0 && isset($this->mail->icServer->ImapServerId) && !empty($this->mail->icServer->ImapServerId))
+			{
+				self::$profileID = $this->mail->icServer->ImapServerId;
+				self::persist_profile_id();
+			}
 		}
 		$this->mail->openConnection(self::$profileID,false);
 
@@ -711,7 +730,10 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 					{
 						if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' Key:'.$key.'->'.array2string($attachment));
 						$attachmentNames .= $attachment['name']."\n";
-						$attachmentData	= $this->mail->getAttachment($uid, $attachment['partID'],0,false,false,$folder);
+						// $attachment['is_winmail'] (uid@partID@mimeId) is set for individual unpacked
+						// TNEF/winmail.dat children - without it getAttachment() can't tell which
+						// child to decode and returns the raw, still-packed winmail.dat bytes
+						$attachmentData	= $this->mail->getAttachment($uid, $attachment['partID'],$attachment['is_winmail'] ?? 0,false,false,$folder);
 						$x = $mailObject->AddStringAttachment($attachmentData['attachment'], $attachment['name'], $attachment['mimeType']);
 						ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' added part with number:'.$x);
 					}
@@ -962,7 +984,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 						if ($body != "" && (is_array($bodyStruct) && $bodyStruct[0]['mimeType']=='text/html')) {
 							// may be html
 							if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG, "MIME Body".' Type:html (fetched with html_only)');
-							$css = $this->mail->getStyles($bodyStruct);
+							$css = BodyDecoding::getStyles($bodyStruct);
 							$output->nativebodytype=2;
 						} else {
 							// plain text Message
@@ -1143,24 +1165,30 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 						unset($attachment);
 						continue;	// do NOT add attachment as attachment
 					}
+					// TNEF/winmail.dat sub-attachments all share the same (outer) MIME partID, so
+					// getMessageAttachments() gives each one a unique "is_winmail" composite key
+					// (uid@partID@mimeId) instead - use that to address the individual sub-part
+					// when present, so downloading one of several winmail.dat children doesn't
+					// just return the raw, still-packed winmail.dat bytes for all of them.
+					$attRef = $attach['is_winmail'] ?? $attach['partID'];
 					if (Request::GetProtocolVersion() >= 12.0) {
 						$attachment = new SyncBaseAttachment();
 						if (!isset($output->asattachments) || !is_array($output->asattachments))
 							$output->asattachments = array();
 						$attachment->estimatedDataSize = $attach['size'];
 						$attachment->method = 1;
-						$attachment->filereference = $folderid . ":" . $id . ":" . $attach['partID'];
+						$attachment->filereference = $folderid . ":" . $id . ":" . $attRef;
 					} else {
 						$attachment = new SyncAttachment();
 						if (!isset($output->attachments) || !is_array($output->attachments))
 							$output->attachments = array();
 						$attachment->attsize = $attach['size'];
 						$attachment->attmethod = 1;
-						$attachment->attname = $folderid . ":" . $id . ":" . $attach['partID'];//$key;
+						$attachment->attname = $folderid . ":" . $id . ":" . $attRef;//$key;
 					}
 
 					$attachment->displayname = $attach['name'];
-					//error_log(__METHOD__.__LINE__.'->'.$folderid . ":" . $id . ":" . $attach['partID']);
+					//error_log(__METHOD__.__LINE__.'->'.$folderid . ":" . $id . ":" . $attRef);
 
 					$attachment->attoid = "";//isset($part->headers['content-id']) ? trim($part->headers['content-id']) : "";
 					//$attachment->isinline=0; // if not inline, do not use isinline
@@ -1299,7 +1327,19 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		if (!isset($this->mail)) $this->mail = Mail::getInstance(false,self::$profileID,true,false,true);
 
 		$this->mail->reopen($folder);
-		$attachment = $this->mail->getAttachment($id,$part,0,false,true,$folder);
+		// a TNEF/winmail.dat sub-attachment: $part is the "is_winmail" composite key
+		// "uid@partID@mimeId" built in GetMessage(), not a plain MIME part id - getAttachment()
+		// needs the *outer* winmail.dat partID plus the full composite key to pick the right
+		// unpacked child (see its $_winmail_nr handling)
+		if (strpos($part, '@') !== false)
+		{
+			[, $winmailPartID] = explode('@', $part);
+			$attachment = $this->mail->getAttachment($id,$winmailPartID,$part,false,true,$folder);
+		}
+		else
+		{
+			$attachment = $this->mail->getAttachment($id,$part,0,false,true,$folder);
+		}
 		$SIOattachment = new SyncItemOperationsAttachment();
 		fseek($attachment['attachment'], 0, SEEK_SET);	// z-push requires stream seeked to start
 		$SIOattachment->data = $attachment['attachment'];
@@ -1886,12 +1926,6 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			return false;
 		}
 
-		// this may be a bit rude, it may be sufficient that GetMessageList does not list messages flagged as deleted
-		if ($this->mail->mailPreferences['deleteOptions'] == 'mark_as_deleted')
-		{
-			// ignore mark as deleted -> Expunge!
-			//$this->mail->icServer->expunge(); // do not expunge as GetMessageList does not List messages flagged as deleted
-		}
 		ZLog::Write(LOGLEVEL_DEBUG, "IMAP-DeleteMessage: $rv");
 
 		return $rv;

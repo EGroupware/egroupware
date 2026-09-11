@@ -150,6 +150,136 @@ abstract class CalDAVTest extends TestCase
 	}
 
 	/**
+	 * URL of an app's collection, e.g. "/<user>/addressbook/" or "/<user>/infolog/"
+	 *
+	 * Shared by CalDAV/CardDAV (native XML) and REST (JSON) tests alike.
+	 *
+	 * @param string $app eg. "addressbook", "infolog" or "calendar"
+	 * @param string $user account_lid of the collection owner
+	 * @return string
+	 */
+	protected function collectionUrl(string $app, string $user) : string
+	{
+		return '/'.$user.'/'.$app.'/';
+	}
+
+	/**
+	 * PUT an arbitrary resource (vCard/iCalendar) to a CalDAV/CardDAV path.
+	 *
+	 * Unlike REST, CalDAV/CardDAV clients choose the resource name themselves,
+	 * so no id needs to be extracted from the response.
+	 *
+	 * @param string $path eg. "/<user>/addressbook/<name>.vcf"
+	 * @param string $content_type eg. "text/vcard" or "text/calendar"
+	 * @param string $body raw vCard/iCalendar content
+	 * @param ?string $user account_lid to authenticate as, default organizer/EGW_USER
+	 * @param array $headers additional headers
+	 * @return ResponseInterface
+	 */
+	protected function putResource(string $path, string $content_type, string $body, ?string $user=null, array $headers=[]) : ResponseInterface
+	{
+		$user = $user ?: $this->organizerLid();
+		return $this->getClient($user)->put($this->url($path), [
+			RequestOptions::HEADERS => array_merge([
+				'Content-Type' => $content_type,
+			], $headers),
+			RequestOptions::BODY => $body,
+		]);
+	}
+
+	/**
+	 * Strip the "/groupdav.php" server-prefix from an href, leaving "/<user>/<app>/<name>".
+	 */
+	protected function hrefSuffix(string $href) : string
+	{
+		$marker = '/groupdav.php';
+		$pos = strpos($href, $marker);
+		return $pos !== false ? substr($href, $pos + strlen($marker)) : $href;
+	}
+
+	/**
+	 * DELETE a CalDAV/CardDAV resource.
+	 *
+	 * @param string $path eg. "/<user>/addressbook/<name>.vcf"
+	 * @param ?string $user account_lid to authenticate as, default organizer/EGW_USER
+	 * @return ResponseInterface
+	 */
+	protected function deleteResource(string $path, ?string $user=null) : ResponseInterface
+	{
+		$user = $user ?: $this->organizerLid();
+		return $this->getClient($user)->delete($this->url($path));
+	}
+
+	/**
+	 * Perform a native rfc6578 sync-collection REPORT (XML) request against a collection.
+	 *
+	 * @param string $collection eg. from collectionUrl()
+	 * @param ?string $sync_token ='' empty string for the initial/full sync
+	 * @param ?int $nresults =null limit number of results per chunk, null for no limit
+	 * @param ?string $user account_lid to authenticate as, default organizer/EGW_USER
+	 * @return array with keys "hrefs" (ordered list of "/<user>/<app>/<name>" paths, including deleted
+	 *  ones - they keep their place in the oldest-modified-first order), "deleted" (subset of "hrefs"
+	 *  reported without properties, i.e. status 404 - removed since the given sync-token), "sync-token"
+	 *  (string to resume from, or null) and "more-results" (bool)
+	 */
+	protected function reportSyncCollection(string $collection, ?string $sync_token='', ?int $nresults=null, ?string $user=null) : array
+	{
+		$user = $user ?: $this->organizerLid();
+		$limit = isset($nresults) ? "  <D:limit><D:nresults>$nresults</D:nresults></D:limit>\n" : '';
+		$body = '<?xml version="1.0" encoding="utf-8"?>'."\n".
+			'<D:sync-collection xmlns:D="DAV:">'."\n".
+			'  <D:sync-token>'.htmlspecialchars((string)$sync_token).'</D:sync-token>'."\n".
+			"  <D:sync-level>1</D:sync-level>\n".
+			$limit.
+			"  <D:prop>\n".
+			"    <D:getetag/>\n".
+			"    <D:getlastmodified/>\n".
+			"  </D:prop>\n".
+			"</D:sync-collection>\n";
+
+		$response = $this->getClient($user)->request('REPORT', $this->url($collection), [
+			RequestOptions::HEADERS => [
+				'Content-Type' => 'application/xml; charset=utf-8',
+				'Depth' => '1',
+			],
+			RequestOptions::BODY => $body,
+		]);
+		$this->assertHttpStatus(207, $response, 'sync-collection REPORT');
+
+		$xml = new \SimpleXMLElement((string)$response->getBody());
+		$xml->registerXPathNamespace('D', 'DAV:');
+
+		$hrefs = [];
+		$deleted = [];
+		$more_results = false;
+		foreach($xml->xpath('//D:response') as $node)
+		{
+			$dav = $node->children('DAV:');
+			// only set for entries without a propstat, i.e. the 507 more-results marker or a 404 deletion
+			$status = (string)$dav->status;
+			if (strpos($status, '507') !== false)
+			{
+				$more_results = true;
+				continue;	// marker response for the collection itself, not a real resource
+			}
+			$href = $this->hrefSuffix((string)$dav->href);
+			$hrefs[] = $href;
+			if (strpos($status, '404') !== false)
+			{
+				$deleted[] = $href;
+			}
+		}
+		$sync_token_nodes = $xml->xpath('//D:sync-token');
+
+		return [
+			'hrefs' => $hrefs,
+			'deleted' => $deleted,
+			'sync-token' => $sync_token_nodes ? (string)$sync_token_nodes[0] : null,
+			'more-results' => $more_results,
+		];
+	}
+
+	/**
 	 * Extract numeric cal_id from ETag header and track it for cleanup.
 	 */
 	protected function addCalendarID($response) : int
@@ -303,7 +433,7 @@ abstract class CalDAVTest extends TestCase
 	 */
 	protected static function createUsersACL(array &$users, $app = 'calendar')
 	{
-		foreach($users as $user => $data)
+		foreach($users as $user => &$data)
 		{
 			$data['id'] = self::createUser($user, $data);
 
@@ -312,6 +442,7 @@ abstract class CalDAVTest extends TestCase
 				self::addAcl('calendar', $data['id'], $grantee, $rights);
 			}
 		}
+		unset($data);
 	}
 
 	/**
@@ -406,10 +537,23 @@ abstract class CalDAVTest extends TestCase
 
 		if(self::$setup && self::$created_users)
 		{
+			// admin_cmd_delete_account requires the CURRENT in-process identity to be a real admin.
+			// This class never establishes a real login session (createUser() uses setup::add_account()
+			// directly, bypassing ACL entirely, and there's no LoggedInTest::switchUser() available
+			// here) - temporarily borrow the dedicated admin test account's identity for just this
+			// cleanup loop, then restore whatever was there before.
+			$saved_account_id = $GLOBALS['egw_info']['user']['account_id'] ?? null;
+			if ($GLOBALS['egw']->accounts ?? null)
+			{
+				$GLOBALS['egw_info']['user']['account_id'] = $GLOBALS['egw']->accounts->name2id($GLOBALS['EGW_ADMIN_USER']);
+			}
+
 			foreach(self::$created_users as $account_lid => $data)
 			{
 				if (!empty($data['id']))
 				{
+					self::logoutAccessLog((int)$data['id']);
+
 					try {
 						$command = new \admin_cmd_delete_account((int)$data['id'], null, true);
 						$command->comment = 'Removing in tearDownAfterClass for '.static::class;
@@ -421,6 +565,8 @@ abstract class CalDAVTest extends TestCase
 				}
 				unset(self::$created_users[$account_lid]);
 			}
+
+			$GLOBALS['egw_info']['user']['account_id'] = $saved_account_id;
 		}
 		self::$created_users = [];
 		self::resetSharedRuntimeState();
@@ -429,10 +575,41 @@ abstract class CalDAVTest extends TestCase
 	}
 
 	/**
+	 * Mark a test-created account's egw_access_log row(s) as logged out.
+	 *
+	 * getClient()/auth() authenticate via HTTP Basic Auth against groupdav.php, which Session::create()
+	 * only ever logs as a "pseudo session" (see Session::get_sessionid()) - never closed by the DAV
+	 * request itself, only by session-timeout GC. Left open, each createUser()'d account keeps counting
+	 * as a concurrent user (Stylite license check) even after we delete the account below; since
+	 * account_id is unique per test account, it's safe to close every open row for it here.
+	 */
+	private static function logoutAccessLog(int $account_id) : void
+	{
+		if(empty($GLOBALS['egw']) || empty($GLOBALS['egw']->db))
+		{
+			return;
+		}
+		$GLOBALS['egw']->db->update(Session::ACCESS_LOG_TABLE, ['lo' => time()],
+			['account_id' => $account_id, 'lo' => null], __LINE__, __FILE__);
+	}
+
+	/**
 	 * Reset process-wide API singletons/caches CalDAV helper paths can touch.
 	 */
 	private static function resetSharedRuntimeState() : void
 	{
+		// Reset Link runtime caches/object instances used by query/title/file access helpers
+		// BEFORE resetting the Accounts singleton below: Link::init_static(true) triggers hooks
+		// (eg. some CTI backends construct Api\Accounts::getInstance() eagerly), which must still
+		// see the current, properly-configured Accounts instance - not a freshly (default-config)
+		// re-instantiated one, which can otherwise try to contact a backend that isn't reachable
+		// in this context (eg. an LDAP/AD server).
+		// In some teardown contexts (eg. CI ordering), egwd db can already be gone.
+		if (!empty($GLOBALS['egw']) && !empty($GLOBALS['egw']->db))
+		{
+			\EGroupware\Api\Link::init_static(true);
+		}
+
 		// Reset Accounts singleton/caches to avoid cross-suite backend/capability leaks.
 		$accounts_instance = new \ReflectionProperty(\EGroupware\Api\Accounts::class, '_instance');
 		$accounts_instance->setAccessible(true);
@@ -441,14 +618,6 @@ abstract class CalDAVTest extends TestCase
 		$accounts_cache = new \ReflectionProperty(\EGroupware\Api\Accounts::class, 'cache');
 		$accounts_cache->setAccessible(true);
 		$accounts_cache->setValue(null, []);
-
-		// Reset Link runtime caches/object instances used by query/title/file access helpers.
-		// In some teardown contexts (eg. CI ordering), egwd db can already be gone.
-		// Link::init_static(true) triggers hooks that require a valid db.
-		if (!empty($GLOBALS['egw']) && !empty($GLOBALS['egw']->db))
-		{
-			\EGroupware\Api\Link::init_static(true);
-		}
 	}
 
 	/**
@@ -494,7 +663,7 @@ abstract class CalDAVTest extends TestCase
 			}
 			// api/src/loader.php can unset $GLOBALS['egw_domain'] for security.
 			// CalDAV test helpers still need DB connection details to create fixture users.
-			if (empty($GLOBALS['egw_domain'][$_REQUEST['domain']]['db_host']) &&
+			if (empty($GLOBALS['egw_domain']) &&
 				($header = @file_get_contents(__DIR__ . '/../../header.inc.php')))
 			{
 				$domain_pattern = "/\\\$GLOBALS\\['egw_domain'\\]\\['([^']+)'\\]\\s*=\\s*array\\((.*?)\\);/s";
@@ -517,6 +686,21 @@ abstract class CalDAVTest extends TestCase
 						}
 					}
 				}
+			}
+			// Resolve the requested domain (eg. phpunit.xml's literal "default") against
+			// whatever domains are actually configured, the same way
+			// LoggedInTest::load_egw() resolves EGW_DOMAIN via Api\Session::search_instance() -
+			// a domain literally named "default" need not exist (this repo's header.inc.php
+			// commonly only has real, named domains like "boulder.egroupware.org");
+			// search_instance() falls back to matching HTTP_HOST/SERVER_NAME or, failing that,
+			// the first configured domain, instead of a literal string match.
+			if (!empty($GLOBALS['egw_domain']) && empty($GLOBALS['egw_domain'][$_REQUEST['domain']]['db_host']))
+			{
+				$default_domain = $GLOBALS['egw_info']['server']['default_domain'] ?? null;
+				$_REQUEST['domain'] = $_REQUEST['ConfigDomain'] = Session::search_instance(
+					null, $_REQUEST['domain'], $default_domain,
+					array($_SERVER['HTTP_HOST'] ?? '', $_SERVER['SERVER_NAME'] ?? ''),
+					$GLOBALS['egw_domain']);
 			}
 			// Some setup / account code paths (eg. push token generation) require an install_id
 			// in egw_info['server'], which may not yet be populated in CLI test bootstrap.
@@ -547,6 +731,7 @@ abstract class CalDAVTest extends TestCase
 			'_REQUEST_ConfigDomain' => $_REQUEST['ConfigDomain'] ?? null,
 			'egw_info'              => $GLOBALS['egw_info'] ?? null,
 			'egw_setup'             => $GLOBALS['egw_setup'] ?? null,
+			'egw'                   => $GLOBALS['egw'] ?? null,
 		];
 	}
 
@@ -590,6 +775,23 @@ abstract class CalDAVTest extends TestCase
 		else
 		{
 			unset($GLOBALS['egw_setup']);
+		}
+		if(self::$setup_global_snapshot['egw'] !== null)
+		{
+			$GLOBALS['egw'] = self::$setup_global_snapshot['egw'];
+		}
+		else
+		{
+			// getSetup() bootstrapped its own $GLOBALS['egw'] (under 'setup'/noapi context) because
+			// none existed yet - discard it, so a subsequent LoggedInTest::load_egw() (eg. in a test
+			// class running right after, due to alphabetic test-file ordering) builds a properly
+			// flagged Egw instance instead of silently reusing this minimal one via its reuse-guard
+			// (empty($GLOBALS['egw']) check), which left ACL/rights loaded for the wrong context.
+			if(!empty($GLOBALS['egw']) && !empty($GLOBALS['egw']->db))
+			{
+				$GLOBALS['egw']->db->disconnect();
+			}
+			unset($GLOBALS['egw']);
 		}
 		self::$setup_global_snapshot = null;
 	}

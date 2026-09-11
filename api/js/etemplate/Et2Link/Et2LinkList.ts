@@ -10,7 +10,8 @@
  */
 
 
-import {css, html, nothing, TemplateResult} from "lit";
+import {html, nothing, TemplateResult} from "lit";
+import {property} from "lit/decorators/property.js";
 import {repeat} from "lit/directives/repeat.js";
 import {LinkInfo} from "./Et2Link";
 import {egw} from "../../jsapi/egw_global";
@@ -20,6 +21,7 @@ import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import {loadWebComponent} from "../Et2Widget/Et2Widget";
 import {Et2VfsSelectButton} from "../Et2Vfs/Et2VfsSelectButton";
 
+import styles from "./Et2LinkList.styles";
 /**
  * Display a list of entries in a comma separated list
  *
@@ -45,97 +47,19 @@ export class Et2LinkList extends Et2LinkString
 	{
 		return [
 			...super.styles,
-			css`
-				:host {
-					display: flex;
-					flex-direction: column;
-					column-gap: 10px;
-					overflow: hidden;
-				}
-
-				div {
-					display: flex;
-					gap: 10px;
-				}
-
-				div:hover {
-					background-color: var(--highlight-background-color);
-				}
-
-				div.zip_highlight {
-					animation-name: new_entry_pulse, new_entry_clear;
-					animation-duration: 5s;
-					animation-delay: 0s, 30s;
-					animation-fill-mode: forwards;
-				}
-
-				/* CSS for child elements */
-
-				et2-link::part(title):after {
-					/* Reset from Et2LinkString */
-					content: initial;
-				}
-
-				et2-link::part(icon) {
-					width: 1rem;
-					display: inline-block;
-				}
-
-				et2-link::part(remark) {
-					/* Reset from Et2LinkString */
-					display: initial;
-					/*edit windows link tabs highlight comments*/
-					margin-left:auto;
-					font-weight: bold;
-					font-style: italic;
-					color: var(--sl-color-gray-700)
-				}
-
-				et2-link {
-					display: block;
-					flex: 1 1 auto;
-				}
-
-				et2-link:hover {
-					text-decoration: none;
-				}
-
-				et2-link::part(base) {
-					display: flex;
-				}
-
-				.remark {
-					flex: 1 1 auto;
-					width: 20%;
-				}
-
-				div et2-image[part=delete-button] {
-					visibility: hidden;
-					width: 16px;
-					order: 5;
-					cursor: pointer;
-				}
-
-				div:hover et2-image[part=delete-button] {
-					visibility: initial;
-				}
-			`
+			styles
 		];
 	}
 
 
-	static get properties()
-	{
-		return {
-			...super.properties,
+	// JS code which is executed when the links change
+	@property({type: Function})
+	onchange : any;
 
-			// JS code which is executed when the links change
-			onchange: {type: Function},
-			// Does NOT allow user to enter data, just displays existing data
-			// Disables delete, etc.
-			readonly: {type: Boolean}
-		}
-	}
+	// Does NOT allow user to enter data, just displays existing data
+	// Disables delete, etc.
+	@property({type: Boolean})
+	readonly : boolean;
 
 	private context : egwMenu;
 

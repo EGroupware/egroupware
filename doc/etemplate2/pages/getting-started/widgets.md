@@ -48,7 +48,7 @@ Hidden widgets are not visible, but may be enabled via javascript.
 <table>
 <tr><td>Normal</td><td><et2-textbox value="Normal textbox" class="et2-label-fixed"></et2-textbox></td><td><et2-button label="Button"></et2-button></td></tr>
 <tr><td>Disabled</td><td><et2-textbox disabled value="Disabled textbox" class="et2-label-fixed"></et2-textbox></td><td><et2-button label="Button" disabled></et2-button></td></tr>
-<tr><td>Readonly</td><td><et2-textbox_ro value="Readonly textbox" class="et2-label-fixed"></et2-textbox_ro></td><td><et2-buttton disabled label="Button" readonly></et2-button></td></tr>
+<tr><td>Readonly</td><td><et2-textbox_ro value="Readonly textbox" class="et2-label-fixed"></et2-textbox_ro></td><td><et2-button disabled label="Button" readonly></et2-button></td></tr>
 <tr><td>Hidden</td><td><et2-textbox hidden>Hidden textbox</et2-textbox></td><td><et2-button label="Hidden" hidden></et2-button></td></tr>
 </table>
 ```

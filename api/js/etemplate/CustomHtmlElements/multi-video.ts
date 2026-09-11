@@ -391,11 +391,15 @@ class multi_video extends HTMLElement {
 
 	/**
 	 * Play video
+	 *
+	 * Always returns a Promise, matching HTMLMediaElement.play()'s contract - callers (e.g.
+	 * et2_video.ts's play_video()) chain .then() onto the result unconditionally, so a missing/not-yet-active
+	 * video node (nothing to play() on) must resolve rather than returning undefined.
 	 */
-	play()
+	play() : Promise<void>
 	{
 		this.__playing = true;
-		return this.__getActiveVideo()[0]?.node?.play();
+		return this.__getActiveVideo()[0]?.node?.play() ?? Promise.resolve();
 	}
 
 	/**

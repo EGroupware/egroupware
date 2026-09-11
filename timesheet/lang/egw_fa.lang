@@ -30,7 +30,6 @@ last year	timesheet	fa	سال گذشته
 leave it empty for a full week	timesheet	fa	برای یک هفته کامل خالی بگذارید
 leaves without saveing	timesheet	fa	ترک بدون ذخیره
 length<br>rows	timesheet	fa	طول <br> سطور
-links	timesheet	fa	پیوندها
 max length of the input [, length of the inputfield (optional)]	timesheet	fa	حداکثر اندازه ورودی [طول فیلد ورودی] (دلخواه)
 modified	timesheet	fa	تغییر یافته
 no details	timesheet	fa	بدون جزئیات

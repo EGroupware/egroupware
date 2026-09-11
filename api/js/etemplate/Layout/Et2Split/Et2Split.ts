@@ -13,6 +13,7 @@ import {SlSplitPanel} from "@shoelace-style/shoelace";
 import {et2_IDOMNode, et2_IResizeable} from "../../et2_core_interfaces";
 import {et2_DOMWidget} from "../../et2_core_DOMWidget";
 import {css, html, PropertyValues} from "lit";
+import {property} from "lit/decorators/property.js";
 import {colorsDefStyles} from "../../Styles/colorsDefStyles";
 
 export class Et2Split extends Et2Widget(SlSplitPanel)
@@ -40,29 +41,19 @@ export class Et2Split extends Et2Widget(SlSplitPanel)
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/**
-			 * The current position of the divider from the primary panel's edge as a percentage 0-100.
-			 * Defaults to 50% of the container's initial size
-			 */
-			position: Number,
-			/**
-			 * If no primary panel is designated, both panels will resize proportionally and docking is disabled
-			 * "start" | "end" | undefined
-			 */
-			primary: String,
+	/**
+	 * The current position of the divider from the primary panel's edge as a percentage 0-100.
+	 * Defaults to 50% of the container's initial size
+	 */
+	@property({type: Number})
+	position : number;
 
-			/**
-			 * Legacy orientation
-			 * "v" | "h"
-			 * @deprecated use vertical=true|false instead
-			 */
-			orientation: String
-		}
-	}
+	/**
+	 * If no primary panel is designated, both panels will resize proportionally and docking is disabled
+	 * "start" | "end" | undefined
+	 */
+	@property({type: String})
+	primary : string;
 
 	get slots()
 	{
@@ -189,6 +180,12 @@ export class Et2Split extends Et2Widget(SlSplitPanel)
 	 *
 	 * @param {string} orientation
 	 */
+	/**
+	 * Legacy orientation
+	 * "v" | "h"
+	 * @deprecated use vertical=true|false instead
+	 */
+	@property({type: String, noAccessor: true})
 	set orientation(orientation)
 	{
 		this.vertical = orientation == "h";

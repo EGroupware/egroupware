@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="calendar.import.ical_conditions" template="" lang="" group="0" version="16.1">
+	<et2-template  id="calendar.import.ical_conditions" template="" lang="" group="0" version="16.1">
 		<et2-vbox>
-			<template id="importexport.wizard_basic_import_csv.conditions" disabled="@no_conditions"/>
+			<et2-template  id="importexport.wizard_basic_import_csv.conditions" disabled="@no_conditions"></et2-template>
 			<et2-hbox>
 				<et2-description  value="Do not import conflicting events"></et2-description>
 				<et2-checkbox  id="skip_conflicts"></et2-checkbox>
@@ -17,10 +18,10 @@
 			<et2-number  label="How many days to be removed in the future (default 365)" id="remove_future" disabled="!@empty_before_import" precision="0"></et2-number>
 			<et2-select-cat  id="override_values[category][value]" label="Category" application="@application" emptyLabel="From file"></et2-select-cat>
 		</et2-vbox>
-		<styles>
+		<et2-styles>
 			#importexport-wizardbox_delete_title {
 				margin-top: 1em;
 			}
-		</styles>
-	</template>
+		</et2-styles>
+	</et2-template>
 </overlay>

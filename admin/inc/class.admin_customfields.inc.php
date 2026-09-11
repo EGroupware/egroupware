@@ -145,6 +145,14 @@ class admin_customfields
 	 */
 	public function index($content = array())
 	{
+		// same right as ajax_delete_type() - index() saves/deletes custom fields too (create_content_type(),
+		// delete_content_type(), update(), and the nm-triggered delete all run from in here unguarded otherwise)
+		if (!isset($GLOBALS['egw_info']['user']['apps']['admin']) ||
+			$GLOBALS['egw']->acl->checkAdminDeny('site_config_acce', 2))
+		{
+			throw new Api\Exception\NoPermission();
+		}
+
 		// determine appname
 		$this->appname = $this->appname ?: (!empty($_GET['appname']) ? $_GET['appname'] : (!empty($content['appname']) ? $content['appname'] : false));
 		if(!$this->appname) die(lang('Error! No appname found'));

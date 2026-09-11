@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="preferences.settings.tab1" template="" lang="" group="0" version="1.9.001">
+	<et2-template  id="preferences.settings.tab1" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%" class="prefTable egwGridView_grid">
 			<columns>
 				<column width="35%"/>
@@ -19,13 +20,13 @@
                                 class="prefValue"/>
 					</et2-box>
 					<et2-box  class="prefHelpColumn">
-						<html id="${row}[help]" class="prefHelp"/>
+						<et2-html  id="${row}[help]" class="prefHelp"></et2-html>
 					</et2-box>
 				</row>
 			</rows>
 		</grid>
-	</template>
-	<template id="preferences.settings" template="" lang="" group="0" version="1.9.002">
+	</et2-template>
+	<et2-template  id="preferences.settings" template="" lang="" group="0" version="1.9.002">
 		<et2-hbox  class="dialogHeader">
 			<et2-select  id="appname" onchange="1" class="prefApp" emptyLabel="Common preferences"></et2-select>
 			<et2-select  id="type" onchange="1" class="prefType"></et2-select>
@@ -35,7 +36,7 @@
 				<tab id="tab1" label="Settings"/>
 			</tabs>
 			<tabpanels>
-				<template id="preferences.settings.tab1" content="tab1"/>
+				<et2-template  id="preferences.settings.tab1" content="tab1"></et2-template>
 			</tabpanels>
 		</et2-tabbox>
 		<et2-hbox  class="dialogFooterToolbar">
@@ -43,5 +44,5 @@
 			<et2-button  label="Apply" id="button[apply]"></et2-button>
 			<et2-button  label="Cancel" id="button[cancel]" onclick="window.close();"></et2-button>
 		</et2-hbox>
-	</template>
+	</et2-template>
 </overlay>

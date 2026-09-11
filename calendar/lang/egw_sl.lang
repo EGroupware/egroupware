@@ -348,7 +348,6 @@ limit search for conflicts in recurrences to given number of recurrences	calenda
 limit search for conflicts in recurrences to given time in seconds (default 3)	calendar	sl	Omejite iskanje konfliktov pri ponovitvah v določenem času v sekundah (privzeto 3)
 link title for events to show	calendar	sl	Povežite naslov dogodkov, ki se prikazujejo
 link to view the event	calendar	sl	Povezava na ogled dogodka
-links	calendar	sl	Povezave
 links and attached files	calendar	sl	Povezave in priložene datoteke
 links to specified application.  example: {{links/infolog}}	calendar	sl	Povezave do določene aplikacije. Primer: {{links / infolog}}
 links, attachments	calendar	sl	Povezave, priponke

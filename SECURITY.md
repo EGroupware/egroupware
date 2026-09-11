@@ -3,7 +3,8 @@
 ## Supported Versions
 * next release / master
 * latest released version: **26.x**
-* old released version: 23.1 (major security fixes only!)
+  
+> Version 23.1 and prior no longer receive security fixes, please update to 26.x!
 
 Please report security issues via [GitHub](https://github.com/EGroupware/egroupware/security) or to <security@egroupware.org>.
 

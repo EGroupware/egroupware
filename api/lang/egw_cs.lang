@@ -806,6 +806,7 @@ linkapps	common	cs	Propojit s aplikací
 linked	common	cs	Propojeno
 linkentry	common	cs	Záznam propojení
 linklist	common	cs	Seznam propojení
+links	common	cs	Odkazy
 links and attached files	preferences	cs	Propojení a připojené soubory
 links to specified application.  example: {{links/addressbook}}	common	cs	Propojení na konkrétní aplikace. Příklad: {{links/addressbook}}
 linkstring	common	cs	Řetězec odkazu

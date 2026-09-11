@@ -60,11 +60,10 @@ class filemanager_hooks
 		if (is_array($location)) $location = $location['location'];
 
 		$file = array(
-			//'Site Configuration' => Egw::link('/index.php','menuaction=admin.admin_config.index&appname='.self::$appname.'&ajax=true'),
+			'Site Configuration'        => Egw::link('/index.php', 'menuaction=filemanager.filemanager_admin.config&ajax=true'),
 			'VFS mounts and versioning' => Egw::link('/index.php', 'menuaction=filemanager.filemanager_admin.index&ajax=true'),
 			'Check virtual filesystem'  => Egw::link('/index.php', 'menuaction=filemanager.filemanager_admin.fsck'),
 			'Custom fields'             => Egw::link('/index.php', 'menuaction=admin.admin_customfields.index&appname=' . self::$appname . '&ajax=true'),
-			'Quota'                     => Egw::link('/index.php', 'menuaction=filemanager.filemanager_admin.quota&ajax=true'),
 			'Jobs'                      => Egw::link('/index.php', 'menuaction=filemanager.\\EGroupware\Filemanager\\Jobs.index&ajax=true'),
 		);
 		if (!empty($GLOBALS['egw_info']['user']['apps']['stylite']))
@@ -368,7 +367,10 @@ class filemanager_hooks
 			}
 			if($stat['gid'])
 			{
-				$account_id += $GLOBALS['egw']->accounts->members('-' . $stat['gid'], true);
+				// NOT "+=": that's array UNION, which silently drops whichever group member
+				// happens to land on an index already used above (eg. index 0, if $stat['uid']
+				// was just pushed there), since members() returns a plain 0-indexed array too.
+				$account_id = array_unique(array_merge($account_id, $GLOBALS['egw']->accounts->members('-' . $stat['gid'], true) ?: []));
 			}
 		}
 		else

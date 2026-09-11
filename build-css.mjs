@@ -6,10 +6,8 @@
  * see GHSA-mh99-v99m-4gvg and related advisories).
  *
  * The file lists are NOT duplicated here: they are read straight out of
- * Gruntfile.js's cssmin config via a minimal grunt.initConfig() shim, since
- * Api\Framework\Bundle::getImportMap() (api/src/Framework/Bundle.php) still parses
- * Gruntfile.js directly for (unrelated, already legacy) bundle info, so the file is
- * kept around and stays the single source of truth for these file lists.
+ * Gruntfile.js's cssmin config via a minimal grunt.initConfig() shim, so that file
+ * stays the single source of truth for these file lists.
  *
  * Usage: node build-css.mjs (or: npm run css)
  */

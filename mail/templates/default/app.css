@@ -17,30 +17,50 @@
 .quoted5 {
   color: #bb6600;
 }
+tr.mail {
+  --mail-left-border-color: transparent;
+}
 tr.mail td:first-child {
-  border-left: 6px solid transparent;
+  border-left: 6px solid var(--mail-left-border-color) !important;
 }
-tr.mail.label1 td:first-child {
-  border-left-color: #ff0080 !important;
+tr.mail.label1 {
+  --mail-left-border-color: #ff0080;
 }
-tr.mail.label2 td:first-child {
-  border-left-color: #ff8000 !important;
+tr.mail.label2 {
+  --mail-left-border-color: #ff8000;
 }
-tr.mail.label3 td:first-child {
-  border-left-color: #008000 !important;
+tr.mail.label3 {
+  --mail-left-border-color: #008000;
 }
-tr.mail.label4 td:first-child {
-  border-left-color: #0000ff !important;
+tr.mail.label4 {
+  --mail-left-border-color: #0000ff;
 }
-tr.mail.label5 td:first-child {
-  border-left-color: #8000ff !important;
+tr.mail.label5 {
+  --mail-left-border-color: #8000ff;
 }
-tr.mail.flagged td:first-child {
-  border-left-color: #ff0000 !important;
+tr.mail.customFlag1 {
+  --flag-color: #ff0000;
+}
+tr.mail.customFlag2 {
+  --flag-color: #ff8000;
+}
+tr.mail.customFlag3 {
+  --flag-color: #008000;
+}
+tr.mail.customFlag4 {
+  --flag-color: #0000ff;
+}
+tr.mail.customFlag5 {
+  --flag-color: #8000ff;
+}
+tr.mail.deleted {
+  --mail-left-border-color: silver;
 }
 tr.mail.deleted td:first-child {
-  border-left-color: silver;
   text-decoration: line-through;
+}
+tr.mail #flaggedImage {
+  color: var(--flag-color, var(--sl-color-neutral-800));
 }
 /**
 	No styling on recent, sometimes recent & unseen are cleared seperately causing confusion when the row doesn't change
@@ -240,11 +260,6 @@ pre {
   position: relative;
   --size: 2.75em;
 }
-/*Keeps the scrollbar in the window in Firefox*/
-#mail-index table.egwGridView_outer {
-  -moz-margin-end: 10px;
-  margin-right: -10px;
-}
 .mail-index_quotabox {
   display: inline-block;
 }
@@ -296,18 +311,6 @@ pre {
 }
 .mail-index_QuotaRed > div {
   background-color: var(--sl-color-red-600, red) !important;
-}
-#mail-index #mail-index_nm .status_icons {
-  margin-right: 1em;
-}
-#mail-index #mail-index_nm .status_icons et2-image {
-  font-size: calc(1em + 2px);
-  height: calc(1em + 2px);
-}
-#mail-index #mail-index_nm et2-image.horizontal_smime {
-  display: block;
-  width: calc(1em + 2px);
-  font-size: calc(1em + 2px);
 }
 /*
  influence the tree display and scrolling behavior
@@ -442,7 +445,7 @@ div.mail-compose_fileselector {
   padding-left: 8px !important;
 }
 #mail-index_mailPreview_subject,
-#mail-display_mail_displaysubject {
+#mail-display_mailDisplayDetails_subject {
   margin-bottom: 0.5em;
   font-size: 1.2em;
 }
@@ -455,6 +458,10 @@ et2-details.details {
 }
 .mailPreviewHeaders et2-details::part(header) {
   padding: 0;
+}
+#mail-index_attachmentsBlock,
+#mail-display_attachmentsBlock {
+  width: 100%;
 }
 #mail-index_mailPreview .et2_email > span {
   display: inline;
@@ -470,7 +477,7 @@ et2-details.details {
   max-height: 75px;
 }
 .previewAttachmentArea .et2_button_icon,
-#mail-display_mail_displayattachments .et2_button_icon {
+#mail-display_attachmentsBlock .et2_button_icon {
   width: 16px;
   height: 16px;
 }
@@ -484,6 +491,12 @@ et2-details.details {
 }
 #mail-index_toolbar::part(buttons) {
   --upper-tint: none;
+}
+#mail-index_toolbar #mail-index_toolbar_setLabel::part(base) {
+  padding: 0;
+}
+#mail-index_toolbar #mail-index_toolbar_setLabel::part(trigger__base) {
+  padding: var(--sl-spacing-small);
 }
 #mail-index_previewAttachmentArea {
   background-color: #f0f0f0;
@@ -598,6 +611,7 @@ div.mailDisplayHeaders div.mail_extraEmails.visible {
 }
 .mailPreviewHeaders et2-lavatar {
   flex: 0 0 auto;
+  align-self: center;
 }
 div.mailPreviewHeaders div.mail_extraEmails {
   display: inline-block;
@@ -724,7 +738,7 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
     font-size: 10pt !important;
     font-family: arial;
   }
-  #mail-display_mail_displaysubject {
+  #mail-display_mailDisplayDetails_subject {
     font-weight: bold;
   }
   .mailDisplayHeaders {
@@ -798,8 +812,6 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
   }
 }
 /* MOBILE and tablets (Portrait & Landscape) View --------------*/
-/* tablets and smartphones (portrait) ----------- */
-/* Smartphones (landscape) ----------- */
 /* Mobile (landscape) Tablet----------- */
 #popupMainDiv .et2_container .mailComposeHeaderSection et2-hbox {
   border-bottom: 1px solid;
@@ -879,9 +891,33 @@ et2-image.smime_cert_unknownemail svg {
 .mailPreviewHeaders.smimeIcons et2-image {
   width: 24px;
 }
+.mailPreviewHeaders.smimeIcons et2-image[class*="bi-"] {
+  font-size: 24px;
+}
 .mailPreviewHeaders.smimeIcons {
   display: flex;
   justify-content: end;
+}
+et2-box.pgp_sig_verified {
+  border-top: 4px solid #1ab82c !important;
+}
+et2-image.pgp_sig_verified,
+et2-image.pgp_sig_verified svg {
+  color: #1ab82c !important;
+}
+et2-box.pgp_sig_invalid {
+  border-top: 4px solid #e90052 !important;
+}
+et2-image.pgp_sig_invalid,
+et2-image.pgp_sig_invalid svg {
+  color: #e90052 !important;
+}
+et2-box.pgp_sig_unknownkey {
+  border-top: 4px solid #a28cff !important;
+}
+et2-image.pgp_sig_unknownkey,
+et2-image.pgp_sig_unknownkey svg {
+  color: #a28cff !important;
 }
 #mail-compose #mail-compose_composeToolbar et2-button-toggle::part(control) {
   font-size: 20px;
@@ -914,9 +950,6 @@ et2-image.smime_cert_unknownemail svg {
 .et2_vbox.et2_box_widget.mailComposeBodySection .mailComposeHtmlContainer .tox.tox-tinymce {
   width: 100%;
 }
-div#mail-index_nm.splitter-pane {
-  min-height: 100px;
-}
 #mail-index_mailSplitter .splitter-bar-horizontal {
   background: white;
 }
@@ -928,28 +961,11 @@ div#mail-index_nm.splitter-pane {
   border-top: 1px solid silver;
   margin-bottom: 0;
 }
-#mail-index_nm .mail.row et2-url-email_ro {
-  width: fit-content;
-}
-#mail-index_nm .et2_label.et2_vfs {
-  text-align: center;
-}
-.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea tbody tr[class*="label"].row_category td:first-child > div,
-.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea tbody tr.flagged.row_category td:first-child > div {
-  margin-left: -1px;
-}
-.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea tbody tr.row_category td:first-child > div {
-  margin-left: 0px;
-}
-#mail-index_nm tbody tr et2-lavatar {
-  max-width: 3.7em;
-  min-width: 3.7em !important;
-}
 .previewWrapper .firstColumnTitle {
   max-width: 7em;
   justify-content: flex-end;
-  min-width: 7em;
-  color: darkgrey;
+  min-width: 5em;
+  color: var(--sl-color-neutral-700, darkgrey);
 }
 .mailPreviewHeaders et2-select-email::part(combobox) {
   border: none;
@@ -1007,10 +1023,6 @@ et2-vbox.addresses::part(base) {
 et2-vbox.addresses et2-hbox::part(base) {
   align-items: center;
 }
-.mailPreviewHeaders et2-lavatar {
-  margin-top: 3px;
-  position: absolute;
-}
 et2-searchbox#mail-index_nm_search {
   width: 100%;
   min-width: 5em;
@@ -1042,11 +1054,16 @@ table.et2_egw_action_ddHelper_row .innerContainer {
   gap: 1px;
 }
 /* hide by default hidden compose header-lines, to not show them briefly before hidden by app.js */
-tr.mailComposeJQueryCc,
-tr.mailComposeJQueryBcc,
-tr.mailComposeJQueryFolder,
-tr.mailComposeJQueryReplyto {
+tr.mailComposeCc,
+tr.mailComposeBcc,
+tr.mailComposeFolder,
+tr.mailComposeReplyto {
   display: none;
+}
+et2-menu-item#mark et2-menu-item#customFlag et2-image[slot='prefix'] {
+  background: linear-gradient(180deg, red, orange, yellow, green, cyan, blue, violet);
+  background-clip: text;
+  color: transparent;
 }
 /**
  * Kdots
@@ -1054,4 +1071,86 @@ tr.mailComposeJQueryReplyto {
 #mail #mail-index_nm\[foldertree\] {
   padding: var(--sl-spacing-medium) 0;
   flex-grow: 0;
+}
+/*
+ * mail.acl dialog: rotate the ACL right column headers 90° instead of showing a single,
+ * for-users-meaningless letter (ralf's UX request) - the full statustext tooltip still explains
+ * each right on hover. Deliberately writing-mode, NOT transform:rotate() alone - a plain rotate()
+ * only repaints the box, it never changes the box's own layout footprint, so a rotated wide/short
+ * text run keeps occupying its original short/wide flow slot while being PAINTED as tall/narrow -
+ * every following cell in the row still lays out as if the rotation never happened, which is
+ * exactly the first "completely off"/overlapping header. writing-mode:vertical-rl actually lays
+ * the text out top-to-bottom (a real tall/narrow box, correct in flow), and rotating that 180°
+ * flips the reading direction to the usual bottom-to-top column-header convention.
+ *
+ * Et2Description renders its `value` as a real LIGHT-DOM child (`span.description--content`,
+ * confirmed live via its outerHTML), slotted into the shadow template rather than interpolated
+ * directly into shadow-root markup - and CSS inheritance for slotted content resolves against the
+ * FLATTENED tree (the <slot>'s position inside the shadow root), not the original light-DOM
+ * ancestor chain. So an INHERITED property like writing-mode set on the host
+ * (<et2-description class="mailAclRotatedHeader">) never reaches that span - only genuinely
+ * non-inherited, per-element properties applied straight to the host (like the host's own
+ * display/transform) still affect its own rendered box. That's why targeting only the host left
+ * the text itself laid out horizontally (its default, un-inherited writing-mode) inside a now
+ * artificially narrow box, overflowing into neighbouring cells. Targeting the actual light-DOM
+ * span directly (a normal descendant selector, unaffected by slotting) fixes this for real.
+ *
+ * tag-qualified (et2-description.mailAclRotatedHeader, not just .mailAclRotatedHeader): this
+ * repo's grid widget copies a widget's `class` attribute onto its wrapping <td> too (confirmed
+ * live: td.className was "mailAclRotatedHeader" too) - an unqualified rule also matched that
+ * <td>, turning it from the browser's real `display:table-cell` into `display:inline-block` and
+ * making it shrink-to-fit its own content instead of participating in the table's shared column
+ * width at all, independently of every other cell - that's what actually caused every rotated
+ * header to pile up in the first rights column (each collapsed <td> only took as much space as
+ * its own rotated text needed, ignoring its <col>'s width). Scoping to the element tag keeps this
+ * rule off the <td>.
+ */
+et2-description.mailAclRotatedHeader {
+  display: inline-block;
+}
+et2-description.mailAclRotatedHeader .description--content {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+  display: inline-block;
+  /* the checkbox below isn't actually centered within its own <td> either: shoelace's checkbox
+	 * reserves room for a (here empty) label to the right of its "control" part, so the VISIBLE
+	 * checkbox square sits ~3.5px left of the <td>'s true center (measured live: base part center
+	 * 1167.4px, control/visible-square part center 1163.9px) - without this, centering the label
+	 * on the <td>'s true center (which is what justify-content:center on the host does) puts it
+	 * ~4px right of the visible checkbox (ralf's report). Shifts the centered content 3.5px left
+	 * to match the checkbox's actual visible position instead of its wider hit/label area. */
+  margin-right: 7px;
+}
+/* the header row's height is set by its tallest rotated label ("Delete messages") - without this,
+ * every shorter label centers within that height (the <td>'s default vertical-align), floating
+ * above the checkboxes below instead of anchoring to the row's bottom edge right above them
+ * (ralf's preference) - this is the ONE place targeting the <td> itself is exactly what's wanted.
+ * Applies to every header cell (Name/Common ACL/Recursively/Action too, not just the rotated
+ * ones), so the whole header row shares one baseline right above the checkboxes. */
+#mail-acl_grid tr.th > td {
+  vertical-align: bottom;
+}
+/* Et2Description's align="center" sets text-align:center on the host, but the host's own shadow
+ * layout is `display:flex; justify-content:flex-start` (see Et2Description's own :host styles) -
+ * flex positions children via justify-content, not text-align, so align="center" alone left
+ * "Recursively" flush against the cell's left edge instead of centered over its checkbox. */
+#mail-acl_grid et2-description[align="center"] {
+  justify-content: center;
+}
+/* breathing room between Name/Common ACL and the (otherwise tightly-packed, which is fine there)
+ * rights checkboxes - without it the account-select/common-ACL dropdowns visually run straight
+ * into the first rights column. */
+#mail-acl_grid tr > td:nth-child(1),
+#mail-acl_grid tr > td:nth-child(2) {
+  padding-right: 1em;
+}
+/* JMAP-nonexistent rights (Lookup, obsolete virtual Create/Delete, Expunge - see
+ * mail_acl::edit()'s $isJmap comment) - a CSS-only hide (not <column disabled="@...">, which
+ * removes the cell and breaks the shared <colgroup> alignment for every column after it) keeps
+ * every right in its normal RFC 4314 position for everyone, JMAP accounts included. Also matches
+ * onto the wrapping <td> (this repo's grid widget copies a widget's own `class` there too), which
+ * is exactly what's wanted here - the whole cell collapses, not just the widget inside it. */
+.mailAclHidden {
+  display: none;
 }

@@ -205,7 +205,10 @@ class Storage
 		$linked_id  = $left ? $row['link_id2'] : $row['link_id1'];
 		$app_id = $left ? $row['link_id1'] : $row['link_id2'];
 		list($app) = explode('-',$linked_app);
-		if ($only_app && $not_only == ($linked_app == $only_app) || !$GLOBALS['egw_info']['user']['apps'][$app])
+		// pseudo-apps like Api\Link::URL_APPNAME ('url') are never installed/real apps, so they'd
+		// otherwise always fail the "user has access to this app" check below and get dropped
+		if ($only_app && $not_only == ($linked_app == $only_app) ||
+			$linked_app !== 'url' && !$GLOBALS['egw_info']['user']['apps'][$app])
 		{
 			#echo "$linked_app == $only_app, ";var_dump($linked_app == $only_app);echo "	->dont return a link<br>";
 			self::$row_count--;

@@ -178,7 +178,11 @@ class Hooks
 	{
 		if (!isset(self::$locations)) self::read();
 
-		return count(self::$locations[$location]);
+		// self::$locations[$location] is simply unset for a location NO app has ever registered -
+		// count(null) is a TypeError under PHP 8, not just the old count(null)===0 warning (found
+		// live 2026-09-07 calling this for 'mail_compose_prepare', a location this specific
+		// instance has no registrant for at all)
+		return count(self::$locations[$location] ?? []);
 	}
 
 	/**

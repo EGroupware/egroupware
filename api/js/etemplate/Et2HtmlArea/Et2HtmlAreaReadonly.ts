@@ -8,61 +8,29 @@
  * @author Nathan Gray
  */
 
-import {css, html, LitElement, nothing} from "lit";
+import {html, LitElement, nothing} from "lit";
 import {unsafeHTML} from "lit/directives/unsafe-html.js";
 import {classMap} from "lit/directives/class-map.js";
 import {property} from "lit/decorators/property.js";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import type {et2_IDetachedDOM} from "../et2_core_interfaces";
 import type {HtmlAreaMode} from "./Et2HtmlAreaConfig";
+import {Et2MarkdownMixin} from "../Markdown/Et2MarkdownMixin";
 
+import styles from "./Et2HtmlAreaReadonly.styles";
 /**
  * Lightweight readonly HTML area used by readonly widget substitution.
  *
  * It intentionally avoids TinyMCE and textarea setup; rich-text values are
  * rendered as HTML, while `mode="ascii"` renders the value as literal text.
  */
-export class Et2HtmlAreaReadonly extends Et2InputWidget(LitElement) implements et2_IDetachedDOM
+export class Et2HtmlAreaReadonly extends Et2MarkdownMixin(Et2InputWidget(LitElement)) implements et2_IDetachedDOM
 {
 	static get styles()
 	{
 		return [
 			...super.styles,
-			css`
-				:host {
-					display: block;
-					width: 100%;
-					min-width: 0;
-				}
-
-				.form-control {
-					display: block;
-					min-height: 0;
-				}
-
-				.form-control-input,
-				.htmlarea__readonly {
-					display: block;
-					min-height: 0;
-					min-width: 0;
-				}
-
-				.htmlarea__readonly {
-					overflow-wrap: anywhere;
-				}
-
-				.htmlarea__readonly--ascii {
-					white-space: pre-wrap;
-				}
-
-				.htmlarea__readonly > :first-child {
-					margin-block-start: 0;
-				}
-
-				.htmlarea__readonly > :last-child {
-					margin-block-end: 0;
-				}
-			`
+			styles
 		];
 	}
 
@@ -85,7 +53,7 @@ export class Et2HtmlAreaReadonly extends Et2InputWidget(LitElement) implements e
 
 	getDetachedAttributes(attrs : string[]) : void
 	{
-		attrs.push("id", "label", "value", "class", "mode", "statustext");
+		attrs.push("id", "label", "value", "class", "mode", "markdown", "statustext");
 	}
 
 	getDetachedNodes() : HTMLElement[]
@@ -123,10 +91,13 @@ export class Et2HtmlAreaReadonly extends Et2InputWidget(LitElement) implements e
 							part="readonly-content"
 							class=${classMap({
 								"htmlarea__readonly": true,
-								"htmlarea__readonly--ascii": this._isAsciiMode
+								// markdown renders block elements, it must not be held in pre-wrap
+								"htmlarea__readonly--ascii": this._isAsciiMode && !this.markdown
 							})}
 					>
-						${this._isAsciiMode ? html`${value}` : unsafeHTML(value)}
+						${this._isAsciiMode
+							? (this.markdown ? this._markdownTemplate(value) : html`${value}`)
+							: unsafeHTML(value)}
 					</div>
 				</div>
                 ${helpTextTemplate}

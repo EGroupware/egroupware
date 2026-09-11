@@ -89,6 +89,8 @@ class infolog_ui
 		'add_sub' => 'InfoLog - New Subproject',
 		'sp'      => '- Subprojects from',
 	);
+	//Number of attachment lines to show in the infolog list before adding a scrollbar
+	const MAX_ATTACHMENT_LINES = 5;
 
 	/**
 	 * Constructor
@@ -226,6 +228,14 @@ class infolog_ui
 		{
 			$show_links = $this->prefs['show_links'];
 		}
+		// "only for details" is realized like the description: always fetch the data, but
+		// toggle its visibility client-side via the same CSS class, so switching the nextmatch's
+		// details filter on/off (which does NOT reload rows from the server) keeps working
+		$info['filelinks_class'] = $show_links == 'details' ? 'infoDes' : '';
+		if($show_links == 'details')
+		{
+			$show_links = 'all';
+		}
 		$only_app = '';
 		switch($show_links)
 		{
@@ -327,6 +337,44 @@ class infolog_ui
 		}
 		//error_log(__METHOD__."(col_filter=".array2string($query['col_filter']).") returning ".array2string($filter));
 		return $filter;
+	}
+
+	/**
+	 * Normalize a stored column-selection preference into a CSV string of visible column keys
+	 *
+	 * The preference named by `columnselection_pref` can hold three different shapes depending on
+	 * what last wrote it: a legacy CSV string of visible column keys (pre-Et2Nextmatch), a flat
+	 * array of visible column keys, or Et2Datagrid's structured preference - an array of
+	 * `{key, hidden, width, customFields}` per column, listing every column, not just visible ones.
+	 * Et2Nextmatch forwards our own dynamic `columnselection_pref` setting to its
+	 * `columnPreferenceName` property, so this is the same preference Et2Datagrid itself persists
+	 * column state under - it's not a separate legacy-only key.
+	 *
+	 * Returned as a CSV string (rather than an array) so callers can keep using substring checks
+	 * like `strpos($csv, 'info_used_time_info_planned_time')`, which also need to match longer
+	 * compound column keys such as `info_used_time_info_planned_time_info_replanned_time`.
+	 *
+	 * @param mixed $stored raw preference value
+	 * @return string CSV of visible column keys, or '' if nothing is stored
+	 */
+	protected static function columnselection_csv($stored)
+	{
+		if (empty($stored))
+		{
+			return '';
+		}
+		if (is_string($stored))
+		{
+			return $stored;
+		}
+		if (is_array($stored) && isset($stored[0]) && is_array($stored[0]))
+		{
+			$stored = array_column(array_filter($stored, static function($col)
+			{
+				return empty($col['hidden']);
+			}), 'key');
+		}
+		return implode(',', $stored);
 	}
 
 	/**
@@ -448,18 +496,20 @@ class infolog_ui
 			.($details ? '-details' : '');
 		//error_log(__METHOD__."(start=$query[start], num_rows=$query[num_rows]) query[col_filter][info_type]={$query['col_filter']['info_type']} --> query[template]=$query[template], columselection_pref=$columnselection_pref");
 
-		$columselection = $this->prefs[$columnselection_pref];
+		$columselection = self::columnselection_csv($this->prefs[$columnselection_pref]);
 
 		if (!$query['selectcols'] && $columselection)
 		{
-			$columselection = is_array($columselection) ? $columselection : explode(',',$columselection);
+			$columselection = explode(',',$columselection);
 		}
 		else
 		{
 			$columselection = $query['selectcols'] ? (is_array($query['selectcols']) ? $query['selectcols'] : explode(',',$query['selectcols'])) : array();
 		}
 		// do we need to query the cf's
-		$query['custom_fields'] = $this->bo->customfields && (!$columselection || in_array('customfields',$columselection));
+		$config = Api\Config::read('infolog');
+		$query['custom_fields'] = $this->bo->customfields && (!$columselection || in_array('customfields',$columselection) ||
+			!empty($config['index_load_cfs']));
 		// How about cf filters when customfield colum is off
 		$query['custom_fields'] = $query['custom_fields'] || (
 			count(array_filter(
@@ -472,11 +522,13 @@ class infolog_ui
 			);
 
 		$query['limit_modified_n_month'] = $this->bo->limit_modified_n_month;
+		$search = $query['search'];
 		if (!empty($query['search']))
 		{
-			$query['search'] = (!empty($query['search_type'])?$query['search_type'].':':'').$query['search'];
+			$query['search'] = (!empty($query['search_type']) ? $query['search_type'].':' : '').$query['search'];
 		}
 		$infos = $this->bo->search($query);
+		$query['search'] = $search;
 		// if limit modified optimization has been used, blur the wrong/not exact total
 		if (!empty($query['limit_modified_n_month']))
 		{
@@ -497,7 +549,7 @@ class infolog_ui
 			$query['default_cols'] = '!cat_id,info_datemodified,info_used_time_info_planned_time,info_used_time_info_planned_time_info_replanned_time,info_id';
 		}
 		// set old show_times pref, that get_info calculates the cumulated time of the timesheets (we only check used&planned to work for both time cols)
-		$this->prefs['show_times'] = strpos($this->prefs[$query['columnselection_pref']], 'info_used_time_info_planned_time') !== false;
+		$this->prefs['show_times'] = strpos(self::columnselection_csv($this->prefs[$columnselection_pref]), 'info_used_time_info_planned_time') !== false;
 
 		$reset_timesheet = false;
 		$config = Api\Config::read('infolog');
@@ -1120,10 +1172,10 @@ class infolog_ui
 		$values['nm']['columnselection_pref'] = 'nextmatch-infolog.index.rows' . ($values['nm']['filter2'] == 'all' ? '-details' : '');
 		if ($action == 'sp')
 		{
-			$pref = $values['nm']['columnselection_pref'];
+			$pref = self::columnselection_csv($this->prefs[$values['nm']['columnselection_pref']]);
 			foreach(array('info_used_time_info_planned_time_info_replanned_time','info_datemodified','info_owner_info_responsible','customfields') as $name)
 			{
-				$values['main']['no_'.$name] = strpos($this->prefs[$pref],$name) === false;
+				$values['main']['no_'.$name] = strpos($pref,$name) === false;
 			}
 			if (!$values['main']['no_customfields'])
 			{
@@ -1163,10 +1215,18 @@ class infolog_ui
 		// add scrollbar to long description, if user choose so in his prefs
 		if ($this->prefs['limit_des_lines'] > 0 || (string)$this->prefs['limit_des_lines'] == '')
 		{
-			$values['css'] .= '<style type="text/css">@media screen { .infoDes {  '.
-				' --descHeight:  ' .
-				(($this->prefs['limit_des_lines'] ? $this->prefs['limit_des_lines'] : 5) * 1.35).	// dono why em is not real lines
-				'em;}}</style>';
+			$desc_height = (int) $this->prefs['limit_des_lines'] ?: 5;
+			//set description and max row height css var on nm as a whole not just on one of its shodow components
+			//give 5 lh max for attachments. Induce scrollbar if there are more
+			// plus one for the title row
+			$values['css'] .= '<style type="text/css">@media screen { #infolog-index_nm, et2-nextmatch[id^="infolog-index"] {  ' .
+				' --descHeight:  ' . $desc_height . 'lh;
+				 --row-cell-max-height: ' . ($desc_height + self::MAX_ATTACHMENT_LINES + 1) . 'lh;' .
+				'}}</style>';
+		} elseif ($this->prefs['limit_des_lines'] == 0)
+		{
+			$values['css'] .= '<style type="text/css">@media screen { #infolog-index_nm, et2-nextmatch[id^="infolog-index"] {  ' .
+				' --descHeight:  fit-content; --row-cell-max-height: fit-content;}}</style>';
 		}
 
 		$sel_options = array(
@@ -1846,70 +1906,6 @@ class infolog_ui
 		if ($referer) $this->tmpl->location($referer);
 	}
 
-	/**
-	 * Deletes an InfoLog entry
-	 *
-	 * @param array|int $values info_id (default _GET[info_id])
-	 * @param string $_referer
-	 * @param string $called_by
-	 * @param boolean $skip_notification Do not send notification of deletion
-	 */
-	function delete($values=0,$_referer='',$called_by='',$skip_notification=False)
-	{
-		$info_id = (int) (is_array($values) ? $values['info_id'] : ($values ?: $_GET['info_id'] ?? null));
-		$referer = is_array($values) ? $values['referer'] : $_referer;
-
-		if (!is_array($values) && $info_id > 0 && !$this->bo->anzSubs($info_id))	// entries without subs get confirmed by javascript
-		{
-			$values = array('delete' => true);
-		}
-		//echo "<p>infolog_ui::delete(".print_r($values,true).",'$referer','$called_by') info_id=$info_id</p>\n";
-
-		if (is_array($values) || $info_id <= 0)
-		{
-			if (($values['delete'] || $values['delete_subs']) && $info_id > 0 && $this->bo->check_access($info_id,Acl::DELETE))
-			{
-				$deleted = $this->bo->delete($info_id,$values['delete_subs'],$values['info_id_parent'], $skip_notification);
-			}
-			if ($called_by)		// direct call from the same request
-			{
-				return $deleted ? lang('InfoLog entry deleted') : '';
-			}
-			if ($values['called_by'] == 'edit')	// we run in the edit popup => give control back to edit
-			{
-				$this->edit(array(
-					'info_id' => $info_id,
-					'button'  => array('deleted' => true),	// not delete!
-					'referer' => $referer,
-					'msg'     => $deleted ? lang('Infolog entry deleted') : '',
-				));
-			}
-			return $referer ? $this->tmpl->location($referer) : $this->index();
-		}
-		$readonlys = $values = array();
-		$values['main'][1] = $this->get_info($info_id,$readonlys['main']);
-
-		$this->tmpl->read('infolog.delete');
-
-		$values['nm'] = array(
-			'action'         => 'sp',
-			'action_id'      => $info_id,
-			'options-filter' => $this->filters,
-			'get_rows'       => 'infolog.infolog_ui.get_rows',
-			'no_filter2'     => True
-		);
-		$values['main']['no_actions'] = $values['nm']['no_actions'] = True;
-
-		$persist['info_id'] = $info_id;
-		$persist['referer'] = $referer;
-		$persist['info_id_parent'] = $values['main'][1]['info_id_parent'];
-		$persist['called_by'] = $called_by;
-
-		$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog').' - '.lang('Delete');
-		$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => 'ManualInfologDelete');
-
-		$this->tmpl->exec('infolog.infolog_ui.delete',$values,array(),$readonlys,$persist,$called_by == 'edit' ? 2 : 0);
-	}
 
 	/**
 	 * Edit/Create an InfoLog Entry
@@ -2070,23 +2066,7 @@ class infolog_ui
 						$record_count = $history->delete_field($info_id, 'De');
 					}
 				}
-				elseif ($button == 'delete' && $info_id > 0)
-				{
-					if (!$referer && $action) $referer = array(
-						'menuaction' => 'infolog.infolog_ui.index',
-						'action' => $action,
-						'action_id' => $action_id
-					);
-					if (!($content['msg'] = $this->delete($info_id,$referer,'edit'))) return;	// checks ACL first
-
-					Framework::refresh_opener($content['msg'],'infolog',$info_id,'delete');
-				}
-				// called again after delete confirmation dialog
-				elseif ($button == 'deleted'  && $content['msg'])
-				{
-					Framework::refresh_opener($content['msg'],'infolog',$info_id,'delete');
-				}
-				if ($button == 'save' || $button == 'cancel' || $button == 'delete' || $button == 'deleted')
+				if ($button == 'save' || $button == 'cancel')
 				{
 					if ($no_popup)
 					{

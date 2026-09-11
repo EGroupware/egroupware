@@ -74,7 +74,6 @@ is resource buyable?	resources	it	La risorsa è acquistabile?
 is the ressource bookable?	resources	it	La risorsa è prenotabile?
 is this resource bookable?	resources	it	Questa risorsa è prenotabile?
 is this resource buyable?	resources	it	Questa risorsa è acquistabile?
-links	resources	it	Collegamenti
 location	resources	it	Luogo
 location of resource	resources	it	Luogo della risorsa
 location:	resources	it	Localizzazione:

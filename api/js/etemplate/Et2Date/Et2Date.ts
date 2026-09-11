@@ -9,7 +9,8 @@
  */
 
 
-import {css, html, nothing, PropertyValueMap} from "lit";
+import {html, nothing, PropertyValueMap} from "lit";
+import {property} from "lit/decorators/property.js";
 import 'lit-flatpickr';
 import {dateStyles} from "./DateStyles";
 import type {Instance} from 'flatpickr/dist/types/instance';
@@ -23,6 +24,7 @@ import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import shoelace from "../Styles/shoelace";
 import {classMap} from "lit/directives/class-map.js";
 
+import styles from "./Et2Date.styles";
 // list of existing localizations from node_modules/flatpicker/dist/l10n directory:
 const l10n = [
 	'ar', 'at', 'az', 'be', 'bg', 'bn', 'bs', 'cat', 'cs', 'cy', 'da', 'de', 'eo', 'es', 'et', 'fa', 'fi', 'fo',
@@ -325,79 +327,40 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 			...(super.styles ? (Array.isArray(super.styles) ? super.styles : [super.styles]) : []),
 			shoelace,
 			dateStyles,
-			css`
-			  :host {
-				width: auto;
-			  }
-
-				/* Scroll buttons */
-				.form-control-input {
-					position: relative;
-					display: flex;
-
-					et2-textbox {
-						flex: 1 1 auto;
-						min-width: 14ex;
-					}
-				}
-
-				.form-control-input:hover .et2-date-time__scrollbuttons {
-				display: flex;
-			  }
-
-			  .et2-date-time__scrollbuttons {
-				display: none;
-				flex-direction: column;
-				width: calc(var(--sl-input-height-medium) / 2);
-				position: absolute;
-				right: 0px;
-				  margin-inline-end: 0px;
-			  }
-
-			  .et2-date-time__scrollbuttons > * {
-				font-size: var(--sl-font-size-2x-small);
-				height: calc(var(--sl-input-height-medium) / 2);
-			  }
-			.et2-date-time__scrollbuttons > *::part(base) {
-				padding: 3px;
-			}
-            `,
+			styles,
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/**
-			 * Display the calendar inline instead of revealed as needed
-			 */
-			inline: {type: Boolean},
-			/**
-			 * Placeholder text for input
-			 */
-			placeholder: {type: String},
+	/**
+	 * Display the calendar inline instead of revealed as needed
+	 */
+	@property({type: Boolean})
+	inline : boolean;
 
-			/**
-			 * Allow value that is not a multiple of minuteIncrement
-			 *
-			 * eg: 11:23 with default 5 minuteIncrement = 11:25
-			 * 16:47 with 30 minuteIncrement = 17:00
-			 * If false (default), it is impossible to have a time that is not a multiple of minuteIncrement.
-			 * Does not affect scroll, which always goes to nearest multiple.
-			 */
-			freeMinuteEntry: {type: Boolean},
+	/**
+	 * Placeholder text for input
+	 */
+	@property({type: String})
+	placeholder : string;
 
-			/**
-			 * The preferred placement of the calendar popup can be set with the placement attribute.  The default
-			 * is "auto".  Note that the actual position may vary to ensure the calendar remains in the viewport.
-			 * Valid placements are "top", "bottom" or "auto".
-			 */
-			placement: {type: String, noAccessor: true}
-		}
-	}
+	/**
+	 * Allow value that is not a multiple of minuteIncrement
+	 *
+	 * eg: 11:23 with default 5 minuteIncrement = 11:25
+	 * 16:47 with 30 minuteIncrement = 17:00
+	 * If false (default), it is impossible to have a time that is not a multiple of minuteIncrement.
+	 * Does not affect scroll, which always goes to nearest multiple.
+	 */
+	@property({type: Boolean})
+	freeMinuteEntry : boolean;
 
 	private _boundTooltipElements : HTMLElement[] = [];
+
+	// Currently running init(), init() is async and can be called multiple times
+	private _initPromise : Promise<void> = null;
+
+	// We destroyed Flatpickr in disconnectedCallback() and have to re-create it when we get re-connected
+	private _reinitOnConnect = false;
 
 	constructor()
 	{
@@ -418,10 +381,19 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 	{
 		super.connectedCallback();
 		this._updateValueOnChange = this._updateValueOnChange.bind(this);
+		this._handleCalendarChange = this._handleCalendarChange.bind(this);
 		this._handleShortcutButtonClick = this._handleShortcutButtonClick.bind(this);
 		// Most date widgets start hidden; defer Flatpickr construction until first interaction.
 		this.addEventListener("focusin", this.init, {once: true});
 		this.addEventListener("pointerdown", this.init, {once: true});
+
+		// If we were just moved in the DOM (eg. template loaded into a framework tab), disconnectedCallback()
+		// destroyed Flatpickr.  Re-create it, or the input keeps showing the raw value until the user clicks in.
+		if(this._reinitOnConnect)
+		{
+			this._reinitOnConnect = false;
+			this.updateComplete.then(() => this.init());
+		}
 	}
 
 	disconnectedCallback()
@@ -429,7 +401,9 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		super.disconnectedCallback();
 		this.removeEventListener("focusin", this.init);
 		this.removeEventListener("pointerdown", this.init);
-		this._inputNode?.removeEventListener('change', this._onChange);
+		// _updateValueOnChange & _handleInputChange were added in init(), the input survives inside the shadow root
+		// so they would pile up on every disconnect / reconnect cycle
+		this.findInputField()?.removeEventListener('change', this._updateValueOnChange);
 		delete this._inputElement?.flatpickr;
 		this.findInputField()?.removeEventListener("input", this._handleInputChange);
 
@@ -444,6 +418,7 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		{
 			delete this._inputNode?._flatpickr;
 			this._instance = undefined;
+			this._reinitOnConnect = true;
 		}
 	}
 
@@ -485,7 +460,35 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		{
 			return;
 		}
+		if(typeof this._instance !== "undefined")
+		{
+			return;
+		}
+		// Not (or no longer) in the document - starting Flatpickr now would leak its calendar into <body>, since
+		// disconnectedCallback() will not run again to destroy it.  Wait for the next connectedCallback() instead.
+		if(!this.isConnected)
+		{
+			this._reinitOnConnect = true;
+			return;
+		}
 
+		// init() is async, but called from updated() and user interaction, so it may already be running.  Starting a
+		// second Flatpickr would bind it to the first one's altInput and leave the first instance behind.
+		if(!this._initPromise)
+		{
+			this._initPromise = this._initFlatpickr().finally(() => {this._initPromise = null;});
+		}
+		return this._initPromise;
+	}
+
+	/**
+	 * Actually create Flatpickr, use init() to avoid starting this more than once
+	 *
+	 * @returns {Promise<void>}
+	 * @protected
+	 */
+	protected async _initFlatpickr()
+	{
 		// Wait for language to be loaded
 		await localizePromise;
 
@@ -510,6 +513,14 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 				{
 					this._inputNode.value = flatpickr.formatDate(<Date>this.defaultDate, this.getOptions().dateFormat);
 				}
+			}
+
+			// We may have been removed from the document while waiting (eg. framework tab closed while loading).
+			// Same leak as above - nothing would ever destroy the instance.
+			if(!this.isConnected)
+			{
+				this._reinitOnConnect = true;
+				return;
 			}
 
 			this.initializeComponent();
@@ -589,8 +600,9 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		}
 
 
-		// Listen for flatpickr change so we can update internal value, needed for validation
-		options.onChange = this._updateValueOnChange;
+		// Listen for flatpickr change so we can update internal value, needed for validation,
+		// and dispatch our own "change" event for onchange="" template bindings
+		options.onChange = this._handleCalendarChange;
 		options.onReady = this._onReady;
 
 		// Remove inert attribute so we can work in Et2Dialog
@@ -666,7 +678,25 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		if(!value || value == 0 || value == "0")
 		{
 			value = "";
-			this.clear();
+			// LitFlatpickr's clear() wrapper always calls flatpickr's own clear() with no
+			// arguments, which defaults triggerChangeEvent to true - unlike setDate() below,
+			// which this same setter calls with no triggerChange arg (defaults to false).
+			// Call the underlying instance directly with triggerChange=false to keep this
+			// setter's two branches symmetric: a *programmatic* value reset (eg.
+			// Et2Nextmatch re-applying a folder's saved filter state, or a filter reset to
+			// empty) must not re-fire "change" and echo straight back into whatever set this
+			// value in the first place - real accounts hit this as an infinite loop
+			// (Et2Filterbox -> Et2Nextmatch.applyFilters() -> ... -> this setter -> clear() ->
+			// "change" -> Et2Filterbox -> applyFilters() again, forever) whenever a filter's
+			// date field legitimately resolves to empty.
+			if(this._instance)
+			{
+				this._instance.clear(false);
+			}
+			else
+			{
+				this.clear();
+			}
 			if(typeof egwIsMobile == "function" && egwIsMobile() && this._inputNode)
 			{
 				this._inputNode.value = '';
@@ -704,6 +734,22 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		if(!this._instance)
 		{
 			this.defaultDate = formatDate;
+			// Flatpickr construction is deferred until first focus/pointerdown (see
+			// connectedCallback()), so there may be no live instance to hand this value to for
+			// a long time - or _initFlatpickr() may already be mid-flight and not yet at the
+			// point where it reads defaultDate. Write the input's raw text directly too, so the
+			// field displays what was actually set right away, rather than only once Flatpickr
+			// eventually initializes and happens to pick defaultDate up.
+			const writeInputText = () =>
+			{
+				// Bail if a live instance showed up in the meantime - setDate() below will
+				// already have taken care of it with the latest value, more reliably than us.
+				if(this._inputNode && !this._instance && this.defaultDate)
+				{
+					this._inputNode.value = flatpickr.formatDate(<Date>this.defaultDate, this.getOptions().dateFormat);
+				}
+			};
+			this._inputNode ? writeInputText() : this.updateComplete.then(writeInputText);
 		}
 		else
 		{
@@ -857,6 +903,27 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		this.modelValue = this.getValue();
 	}
 
+	/**
+	 * flatpickr's onChange callback - fires for every real value change (a calendar pick,
+	 * clear(), or a committed setDate() call from _handleInputChange), unlike _onReady's
+	 * one-off startup call straight into _updateValueOnChange. Dispatch our own "change"
+	 * here so onchange="" template bindings see calendar picks too, not just typed-and-parsed
+	 * input (which previously only fired "change" from within _handleInputChange itself).
+	 *
+	 * @param selectedDates
+	 * @param dateStr
+	 * @param instance
+	 */
+	_handleCalendarChange(selectedDates : Date[], dateStr : string, instance : Instance)
+	{
+		this._updateValueOnChange(selectedDates, dateStr, instance);
+
+		this.updateComplete.then(() =>
+		{
+			this.dispatchEvent(new Event("change", {bubbles: true}));
+		});
+	}
+
 	_onReady(selectedDates : Date[], dateStr : string, instance : Instance)
 	{
 		this._updateValueOnChange(selectedDates, dateStr, instance);
@@ -990,6 +1057,12 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		return this.__placement;
 	}
 
+	/**
+	 * The preferred placement of the calendar popup can be set with the placement attribute.  The default
+	 * is "auto".  Note that the actual position may vary to ensure the calendar remains in the viewport.
+	 * Valid placements are "top", "bottom" or "auto".
+	 */
+	@property({type: String, noAccessor: true})
 	set placement(new_placement : "top" | "bottom" | "auto")
 	{
 		if(this._instance)
@@ -1030,9 +1103,8 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 	/**
 	 * The interactive (form) element.
 	 * This is an et2-textbox, which causes some problems with flatpickr
-	 * @protected
 	 */
-	get _inputNode() : Et2Textbox | HTMLInputElement
+	protected get _inputNode() : Et2Textbox | HTMLInputElement
 	{
 		if(typeof egwIsMobile == "function" && egwIsMobile())
 		{
@@ -1047,7 +1119,7 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 	/**
 	 * The holder of value for flatpickr
 	 */
-	get _valueNode() : Et2Textbox
+	protected get _valueNode() : Et2Textbox
 	{
 		return this.shadowRoot?.querySelector('et2-textbox');
 	}

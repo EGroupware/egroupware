@@ -188,7 +188,7 @@ class importexport_definitions_bo {
 				importexport_helper_functions::account_id2name(
 					$export_data['definitions'][$definition->name]['allowed_users']
 				);
-			if($export_date['definitions'][$definition->name]['owner']) {
+			if($export_data['definitions'][$definition->name]['owner']) {
 				$export_data['definitions'][$definition->name]['owner'] =
 					importexport_helper_functions::account_id2name(
 						$export_data['definitions'][$definition->name]['owner']

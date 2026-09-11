@@ -68,7 +68,7 @@ class importexport_definition implements importexport_iface_egw_record {
 	 */
 	public function __construct( $_identifier='' ) {
 		$this->so_sql = new Api\Storage\Base(self::_appname ,self::_defintion_talbe);
-		$this->user = $GLOBALS['egw_info']['user']['user_id'];
+		$this->user = $GLOBALS['egw_info']['user']['account_id'];
 		$this->is_admin = $GLOBALS['egw_info']['user']['apps']['admin'] || $GLOBALS['egw_setup'] ? true : false;
 		// compability to string identifiers
 		if (!is_numeric($_identifier) && strlen($_identifier) > 3) $_identifier = $this->name2identifier($_identifier);
@@ -346,7 +346,7 @@ class importexport_definition implements importexport_iface_egw_record {
 	public function copy ( $_dst_identifier ) {
 		$dst_object = clone $this;
 		try {
-			$dst_object->set_owner($this->user);
+			$dst_object->owner = $this->user;
 			$dst_identifier = $dst_object->save($_dst_identifier);
 		}
 		catch(exception $Exception) {
@@ -365,7 +365,7 @@ class importexport_definition implements importexport_iface_egw_record {
 	 * @return string dst_identifier
 	 */
 	public function move ( $_dst_identifier ) {
-		if ($this->user != $this->get_owner() && !$this->is_admin) {
+		if ($this->user != $this->owner && !$this->is_admin) {
 			throw new Api\Exception('Error: User '. $this->user. 'does not have permissions to move definition '.$this->get_identifier());
 		}
 		$old_object = clone $this;
@@ -387,7 +387,7 @@ class importexport_definition implements importexport_iface_egw_record {
 	 *
 	 */
 	public function delete () {
-		if($this->user != $this->get_owner() && !$this->is_admin) {
+		if($this->user != $this->owner && !$this->is_admin) {
 			throw new Api\Exception('Error: User '. $this->user. 'does not have permissions to delete definition '.$this->get_identifier());
 		}
 		if(!$this->so_sql->delete()) {

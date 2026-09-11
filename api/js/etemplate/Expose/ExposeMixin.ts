@@ -12,6 +12,7 @@
 // Don't import this more than once
 import "../../../../node_modules/blueimp-gallery/js/blueimp-gallery.min";
 import {css, html, LitElement, render} from "lit";
+import {property} from "lit/decorators/property.js";
 import {et2_nextmatch} from "../et2_extension_nextmatch";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import {ET2_DATAVIEW_STEPSIZE} from "../et2_dataview_controller";
@@ -73,7 +74,7 @@ export interface MediaValue
 
 export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 {
-	return class extends superclass
+	class ExposeMixinClass extends superclass
 	{
 		static get styles()
 		{
@@ -84,20 +85,14 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 			];
 		}
 
-		static get properties()
-		{
-			return {
-				...super.properties,
-
-				/**
-				 * Function to extract an image list
-				 *
-				 * "Normally" we'll try to pull a list of images from the nextmatch or show just the current widget,
-				 * but if you know better you can provide a method to get the list.
-				 */
-				mediaContentFunction: {type: Function},
-			}
-		}
+		/**
+		 * Function to extract an image list
+		 *
+		 * "Normally" we'll try to pull a list of images from the nextmatch or show just the current widget,
+		 * but if you know better you can provide a method to get the list.
+		 */
+		@property({type: Function})
+		mediaContentFunction : any;
 
 		// @ts-ignore
 		private _gallery : blueimp.Gallery;
@@ -194,6 +189,15 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 
 		protected _processUrl(url)
 		{
+			// Already-absolute URLs (blob:, data:, or any other own URI scheme - eg. a client-side
+			// object URL, never server-relative) must never get the app base URL prepended - only
+			// checking against base_url itself (as below) misses every other absolute case, found
+			// live 2026-08-27 via a blob: object URL for attachment viewing becoming
+			// ".../egroupware/blob:https://..." once double-prefixed.
+			if(/^[a-z][a-z0-9+.-]*:/i.test(url))
+			{
+				return url;
+			}
 			let base_url = egw.webserverUrl.match(/^\/ig/) ? egw(window).window.location.origin + egw.webserverUrl + '/' : egw.webserverUrl + '/';
 			if(base_url && base_url != '/' && url.indexOf(base_url) != 0)
 			{
@@ -979,4 +983,6 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 			this.getInstanceManager().download(data.download_href ?? data.download_url ?? data.href);
 		}
 	}
+
+	return ExposeMixinClass as unknown as Constructor<ExposeMixinClass> & B;
 }

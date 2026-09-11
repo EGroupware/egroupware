@@ -277,7 +277,6 @@ if no acl records for user or any group the user is a member of	admin	no	Dersom 
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	no	Om LDAP används, vill du hantera attribut för hemktalog och programskal?
 imap admin password	admin	no	IMAP Administrasjonspassord
 imap admin user	admin	no	IMAP Administrasjonsbruker
-imap server	admin	no	IMAP Tjener
 imap server hostname or ip address	admin	no	Tjenernavn eller IP-adresse for IMAP tjener
 imap server logintyp	admin	no	IMAP Tjener påloggingstype
 imap server port	admin	no	IMAP Tjenerport

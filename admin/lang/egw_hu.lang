@@ -364,7 +364,6 @@ if using ldap, do you want to manage homedirectory and loginshell attributes?	ad
 if using ssl or tls, you must have the php openssl extension loaded.	admin	hu	SSL vagy TLS használatához a PHP openssl kiterjesztését telepíteni kell.
 imap admin password	admin	hu	IMAP adminisztrátor jelszava
 imap admin user	admin	hu	IMAP adminisztrátor felhasználóneve
-imap server	admin	hu	IMAP szerver
 imap server closed the connection.	admin	hu	Az IMAP szerver lezárta a kapcsolatot.
 imap server closed the connection. server responded: %s	admin	hu	Az IMAP szerver lezárta a kapcsolatot: %s
 imap server hostname or ip address	admin	hu	IMAP szerver hosztneve vagy IP címe

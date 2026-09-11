@@ -11,7 +11,7 @@
 /* Basic information about this app */
 $setup_info['api']['name']      = 'api';
 $setup_info['api']['title']     = 'EGroupware API';
-$setup_info['api']['version'] = '26.1';
+$setup_info['api']['version'] = '26.1.002';
 $setup_info['api']['versions']['current_header'] = '1.29';
 // maintenance release in sync with changelog in doc/rpm-build/debian.changes
 $setup_info['api']['versions']['maintenance_release'] = '26.9.20260907';
@@ -60,9 +60,9 @@ $setup_info['api']['hooks']['addaccount'] = array('EGroupware\\Api\\Vfs\\Hooks::
 $setup_info['api']['hooks']['deleteaccount'] = array('EGroupware\\Api\\Vfs\\Hooks::deleteAccount', 'EGroupware\\Api\\Mail\\Hooks::deleteaccount', 'EGroupware\\Api\\Accounts\\Import::hookEditAccount');
 $setup_info['api']['hooks']['editaccount'] = array('EGroupware\\Api\\Vfs\\Hooks::editAccount', 'EGroupware\\Api\\Mail\\Hooks::addaccount', 'EGroupware\\Api\\Accounts\\Import::hookEditAccount');
 $setup_info['api']['hooks']['editaccountcontact'] = 'EGroupware\\Api\\Accounts\\Import::hookEditAccount';
-$setup_info['api']['hooks']['addgroup'] = 'EGroupware\\Api\\Vfs\\Hooks::addGroup';
+$setup_info['api']['hooks']['addgroup'] = ['EGroupware\\Api\\Vfs\\Hooks::addGroup', 'EGroupware\\Api\\Mail\\Hooks::updategroup'];
 $setup_info['api']['hooks']['deletegroup'] = array('EGroupware\\Api\\Vfs\\Hooks::deleteGroup', 'EGroupware\\Api\\Mail\\Hooks::deletegroup');
-$setup_info['api']['hooks']['editgroup'] = 'EGroupware\\Api\\Vfs\\Hooks::editGroup';
+$setup_info['api']['hooks']['editgroup'] = ['EGroupware\\Api\\Vfs\\Hooks::editGroup', 'EGroupware\\Api\\Mail\\Hooks::updategroup'];
 $setup_info['api']['hooks']['changepassword'] = 'EGroupware\\Api\\Mail\\Hooks::changepassword';
 $setup_info['api']['hooks']['session_created'] = 'EGroupware\Api\Mail\Credentials::ssoPassword';
 
