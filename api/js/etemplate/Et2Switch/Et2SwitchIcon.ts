@@ -137,6 +137,16 @@ export class Et2SwitchIcon extends Et2InputWidget(LitElement)
                     @sl-change=${async(e) =>
                     {
                         e.stopPropagation();
+                        // The internal <sl-switch> flips its OWN checked state on click, but that
+                        // never flows back to this.checked/value on its own (the .checked=${live(...)}
+                        // binding above is one-way, property-to-DOM only) - without this, a click
+                        // visually toggles the switch but get_value()/set_value() (and hence every
+                        // form-submit/JS read of this widget's value) keep returning the PRE-click
+                        // value forever, and the next unrelated re-render silently snaps the switch
+                        // back to that stale value too. Found live 2026-09-11 via mail compose's
+                        // "save as infolog on send" toggle: unchecking it in the UI never actually
+                        // took effect - the message still got saved to InfoLog every time.
+                        this.value = e.target.checked;
                         await this.updateComplete;
                         this.dispatchEvent(new Event("change", {bubbles: true}));
                     }}

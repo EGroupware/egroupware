@@ -75,6 +75,27 @@ describe("Switch icon widget", () =>
 
 		expect(label).to.be.displayed;
 	});
+
+	/**
+	 * Regression test for a real bug found live 2026-09-11 (mail compose's "save as infolog on
+	 * send" toggle): clicking the internal <sl-switch> flips ITS OWN checked state, but that never
+	 * flowed back to this.checked/value - so get_value() kept returning the pre-click value forever,
+	 * even though the switch visually looked toggled. Only affects Et2SwitchIcon (and its
+	 * Et2ButtonToggle subclass), which WRAPS an internal <sl-switch> rather than extending it
+	 * directly like Et2Switch does.
+	 */
+	it("a real click on the internal switch updates get_value()", async() =>
+	{
+		element.value = false;
+		await element.updateComplete;
+		assert.isFalse(element.get_value());
+
+		const innerSwitch = element.shadowRoot.querySelector("sl-switch");
+		innerSwitch.click();
+		await element.updateComplete;
+
+		assert.isTrue(element.get_value(), "get_value() should reflect the click, not the stale pre-click value");
+	});
 });
 
 // Same boolean-value/own-text-label shape as Et2Switch - see its test file for why.
