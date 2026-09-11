@@ -114,7 +114,9 @@ class kdots_framework extends Api\Framework\Ajax
 			// Feature name => EGw hook name
 			$hooks = ['preferences' => 'settings', 'categories' => 'categories',
 					  'aclRights'   => 'acl_rights'];
-			array_walk($extra['navbar-apps'], function (&$item, $key) use (&$hooks)
+			// site-config can deny whole groups access to (personal) categories - admins are exempt
+			$deny_cats = $GLOBALS['egw']->acl->deniedByGroup('deny_cats');
+			array_walk($extra['navbar-apps'], function (&$item, $key) use (&$hooks, $deny_cats)
 			{
 				// Set missing icon
 				if(!$item['icon'])
@@ -124,6 +126,11 @@ class kdots_framework extends Api\Framework\Ajax
 				// Enable preferences etc. for app
 				foreach($hooks as $feature_name => $hookname)
 				{
+					if($feature_name === 'categories' && $deny_cats)
+					{
+						$item['features'][$feature_name] = false;
+						continue;
+					}
 					$item['features'][$feature_name] = Hooks::exists($hookname, $item['name']);
 					if($item['features'][$feature_name] && in_array($feature_name, ['categories']))
 					{

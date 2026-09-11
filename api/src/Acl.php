@@ -322,6 +322,30 @@ class Acl
 	}
 
 	/**
+	 * Check whether the current user is denied a feature via a site-config group-deny-list
+	 *
+	 * Several site-config settings let an admin restrict specific GROUPS from a feature that's
+	 * otherwise available to every user, eg. 'deny_prefs', 'deny_acl', 'deny_cats' (see
+	 * preferences/templates/default/config.xet) - unlike checkAdminDeny()'s admin-only deny-mask,
+	 * these apply to regular users. Admins are always exempt.
+	 *
+	 * @param string $config_name eg. 'deny_cats'
+	 * @return boolean true if the current user is a member of one of the configured groups
+	 */
+	function deniedByGroup($config_name)
+	{
+		if (isset($GLOBALS['egw_info']['user']['apps']['admin']) ||
+			empty($GLOBALS['egw_info']['server'][$config_name]))
+		{
+			return false;
+		}
+		return (bool)array_intersect(
+			$GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'], true),
+			(array)$GLOBALS['egw_info']['server'][$config_name]
+		);
+	}
+
+	/**
 	 * get specific rights for this->account_id for an app location
 	 *
 	 * @param string $location app location
