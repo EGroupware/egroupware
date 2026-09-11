@@ -974,26 +974,43 @@ class Json implements JsonModule
 				// check if we need a not yet included app.js object --> include it now and return a Promise
 				else if (i == 1 && parts[0] == 'app' && typeof (_context || self.#wnd).app.classes[parts[1]] === 'undefined')
 				{
-					// app.min.js is hashed at build time - hand egw_import() the bare logical
-					// path and let it resolve against window.egw_manifest itself (egw_files.ts),
-					// same as every other entry load; a miss there falls back to importing this
-					// literal path (today's Fallback, unchanged)
-					return (<any>self.#wnd).egw_import('/'+parts[1]+'/js/app.min.js')
-						.then(() => this.applyFunc(_func, args, _context || self.#wnd),
-							(err) =>
-							{
-								// console.error alone left whoever was waiting on this call silently stuck.
-								console.error("Failure loading /"+parts[1]+'/js/app.min.js' + " (" + err + ")\nAborting.");
-								// Skip a 2nd reload prompt (ticket #124112) if egw_import already put
-								// one up for this document - same reasoning as handleResponse()'s catch.
-								if (!(<any>self.#wnd).egw_import?.updateAvailableNotified)
+					// Only apps rollup actually built have a /$app/js/app.min.js entry in the
+					// manifest - some (eg. notifications, still on its own legacy <script> include
+					// via the after_navbar hook, never ported to app.ts) never have one and never
+					// will, no matter how recent the build is. egw_import()-ing one of those 404s
+					// every single time, unrelated to any rebuild, and used to nag with a "please
+					// reload" that reloading can never fix (ticket #124112) - most likely what was
+					// actually behind app.notifications.append() racing notificationajaxpopup.js's
+					// own <script> load on a fresh page. Only attempt the load - and only warn
+					// about a real, potentially-fixable rebuild mismatch - when the manifest
+					// actually knows about this app's entry.
+					if (typeof (<any>self.#wnd).egw_manifest?.['/'+parts[1]+'/js/app.min.js'] === 'undefined')
+					{
+						egw(self.#wnd).debug("log", "app."+parts[1]+" has no rollup entry, not attempting to load it");
+					}
+					else
+					{
+						// app.min.js is hashed at build time - hand egw_import() the bare logical
+						// path and let it resolve against window.egw_manifest itself (egw_files.ts),
+						// same as every other entry load; a miss there falls back to importing this
+						// literal path (today's Fallback, unchanged)
+						return (<any>self.#wnd).egw_import('/'+parts[1]+'/js/app.min.js')
+							.then(() => this.applyFunc(_func, args, _context || self.#wnd),
+								(err) =>
 								{
-									egw(self.#wnd).message(
-										egw(self.#wnd).lang('Please reload the EGroupware desktop (F5 / Cmd+r).'),
-										'error'
-									);
-								}
-							});
+									// console.error alone left whoever was waiting on this call silently stuck.
+									console.error("Failure loading /"+parts[1]+'/js/app.min.js' + " (" + err + ")\nAborting.");
+									// Skip a 2nd reload prompt (ticket #124112) if egw_import already put
+									// one up for this document - same reasoning as handleResponse()'s catch.
+									if (!(<any>self.#wnd).egw_import?.updateAvailableNotified)
+									{
+										egw(self.#wnd).message(
+											egw(self.#wnd).lang('Please reload the EGroupware desktop (F5 / Cmd+r).'),
+											'error'
+										);
+									}
+								});
+					}
 				}
 				// check if we need a not yet instantiated app.js object --> instantiate it now
 				else if (i == 1 && parts[0] == 'app' && typeof (_context || self.#wnd).app.classes[parts[1]] === 'function')
