@@ -482,6 +482,19 @@ try to from the client side. Ops-side fix (cache-busting or shorter/conditional 
 paths, or excluding `/chunks/` and the hashed `app.min.js`/`etemplate2.js` paths from blind
 TTL-based caching) is Ralf's to make; not tracked further here.
 
+One narrower piece *was* fixable client-side, and is fixed: Ralf confirmed the PHP-generated page
+itself is cached by default unless special measures are taken (which they aren't for regular pages),
+so `data-epoch`/`data-manifest` on a freshly-rendered page can already be stale on arrival - no
+amount of reloading fixes that on its own. But the 15-minute `build-epoch.json` poll meant to *detect*
+drift and prompt a reload was itself just as vulnerable: a plain `.json` GET with no cache-buster is
+exactly the shape nginx caches for days, so the poll could keep reading a stale epoch and never fire
+at all, silently defeating the one safety net this project has for a page that's stuck on an old,
+cached render. **Fixed** (`0c496e1c23`): every ajax_exec response now carries the server's current
+build epoch (`Json\Response::getJSON()`), and `egw_json.ts`'s `handleResponse()` checks it against
+`window.egw_buildEpoch` on every response - no extra request, and nothing cacheable in the loop, since
+ajax_exec responses are dynamic. The original poll stays as a fallback for a tab that never makes
+another ajax call, now with its own cache-buster query param added too, as cheap extra insurance.
+
 ### Repro attempt (2026-09-11, boulder.egroupware.org)
 
 Tried to reproduce the filemanager uncaught variant directly: opened addressbook in a tab, triggered a
@@ -504,11 +517,13 @@ mid-write, are more likely candidates than a plain pinning failure. Didn't chase
 Design implemented and live (steps 1-7 above). Fixed from ticket #124112 and its follow-up: the
 `egw_json.ts` misleading-log-target bug (item 1); the silent `app.classes.X`-missing failure mode for
 real top-level apps like filemanager, and the same shape independently found in `applyFunc()`'s
-instantiation branch (item 2 - **note: `CRM.ts`'s own `app.classes.crm` case is a separate mechanism,
-still NOT covered**, see item 2 above); the green+red message stacking (item 3); and - the one Ralf
-flagged as the actually-most-annoying symptom in practice - `applyFunc()` misusing the rebuild-reload
-messaging for `notifications`, which was never going to succeed no matter how many times you reload
-(item 4).
+instantiation branch, both the load path and the instantiation path (item 2 - **note: `CRM.ts`'s own
+`app.classes.crm` case is a separate mechanism, still NOT covered**, see item 2 above); the green+red
+message stacking (item 3); `applyFunc()` misusing the rebuild-reload messaging for `notifications`,
+which was never going to succeed no matter how many times you reload (item 4); and, root-caused only
+after deploying items 1-4 and finding the prompt came straight back - the update-detection poll itself
+being just as vulnerable to nginx's caching as the thing it was trying to detect (item 5, see the
+"Root-caused" section below).
 
 Two things still genuinely open, both needing more than a code read to resolve:
 
@@ -526,16 +541,18 @@ Two things still genuinely open, both needing more than a code read to resolve:
   `notificationajaxpopup.js` has run, or give `notifications` a real `app.ts` on the same manifest
   system as everything else) or leave as a quiet, harmless miss now that it no longer nags anyone.
 
-"Reload only helps briefly" (Ingo/Stefan's original wording) turned out to have at least two real,
-independent, non-application causes layered under it, both outside anything this project's design
-could reach: the item-4 `notifications` load-order race (fixed, was firing a misleading reload prompt
-on its own on every fresh page regardless of any rebuild), and - found only after Ralf redeployed and
-the reload prompt came straight back - **nginx serving 10-day-cached stale bytes for hashed static
-files whose URL happened not to change across a deploy** (see the root-cause writeup above). The
-latter is likely the dominant explanation for how persistent this felt on `pole` specifically: no
-amount of reloading, new tabs, or waiting minutes fixes a response an intermediate cache is going to
-keep serving for up to 10 days regardless. Nathan or whoever picks this back up should start with the
-three still-open items above; the nginx cache-busting fix itself is Ralf's/ops', not tracked here.
+"Reload only helps briefly" (Ingo/Stefan's original wording) turned out to have at least three real,
+independent causes layered under it: the item-4 `notifications` load-order race (fixed, was firing a
+misleading reload prompt on its own on every fresh page regardless of any rebuild); nginx serving
+10-day-cached stale bytes - both for hashed static files whose URL happened not to change across a
+deploy, and for the *entire dynamic page response* itself, including the embedded manifest/epoch
+(infra-side, Ralf's/ops' to fix, not tracked further here); and, compounding that second one, the
+client's own drift-detection poll (`build-epoch.json`) being just as cacheable as the page it was
+meant to catch going stale, silently defeating the one safety net that was supposed to notice (item 5,
+fixed). No amount of reloading, new tabs, or waiting minutes was ever going to fix a page an
+intermediate cache keeps serving for up to 10 days - but at least the detection mechanism itself no
+longer silently fails the same way once the underlying page-caching issue is addressed on the ops
+side. Nathan or whoever picks this back up should start with the three still-open items above.
 
 ## Commits
 
@@ -564,4 +581,9 @@ Chronological. `*` prefix on the subject means it went out in the user-facing ch
 | `fafc5c85e0` | 2026-09-11 | Claude | `Api: catch a failed app-object instantiation in applyFunc()` |
 | `ac6a12d837` | 2026-09-11 | Claude | `Doc: record the applyFunc() fix and the failed boulder repro attempt` (this doc) |
 | `a7828a5833` | 2026-09-11 | Claude | `Api: stop nagging "please reload" for apps rollup never built` |
-| *(pending)* | 2026-09-11 | Claude | `Doc: record item 4 (notifications reload nag) + correct the CRM.ts claim` (this doc, this update) |
+| `9be364582a` | 2026-09-11 | Claude | `Doc: record item 4 (notifications reload nag) + correct the CRM.ts claim` (this doc) |
+| `3b0ac6a42f` | 2026-09-11 | Claude | `Api: don't fall through to a thrown exception for a missing app object` |
+| *(items 1-4 deployed to pole.egroupware.org; live investigation of the recurring reload prompt follows)* | | | |
+| `b2fbe50947` | 2026-09-11 | Claude | `Doc: correct the pole "reload keeps failing" root cause to nginx caching` (this doc) |
+| `0c496e1c23` | 2026-09-11 | Claude | `Api: detect a stale build via every ajax response, not just a cacheable poll` |
+| *(pending)* | 2026-09-11 | Claude | `Doc: record the ajax-response-epoch fix` (this doc, this update) |
