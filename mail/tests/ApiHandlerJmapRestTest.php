@@ -90,6 +90,101 @@ class ApiHandlerJmapRestTest extends \PHPUnit\Framework\TestCase
 			'documents the known asymmetry - this is exactly why call sites must guard with isRealJmapSession() first');
 	}
 
+	// --- parseDoubleColonFolderPath() (the "::"-joined literal-path REST syntax) --------------
+
+	public function testParseDoubleColonFolderPathReturnsNullWhenNoDoubleColonIsPresent()
+	{
+		// a real id (either backend's) can never legitimately look like this - documents the
+		// "not this syntax, fall back to normal id handling" contract
+		$this->assertNull($this->invokeApiHandler('parseDoubleColonFolderPath', ['Mabc-123_xyz']));
+		$this->assertNull($this->invokeApiHandler('parseDoubleColonFolderPath', ['SU5CT1g']));
+	}
+
+	public function testParseDoubleColonFolderPathJoinsSegmentsWithASlash()
+	{
+		$this->assertSame('INBOX/Sent', $this->invokeApiHandler('parseDoubleColonFolderPath', ['INBOX::Sent']));
+		$this->assertSame('INBOX/Archive/2026', $this->invokeApiHandler('parseDoubleColonFolderPath', ['INBOX::Archive::2026']));
+	}
+
+	/**
+	 * IMAP's own INBOX case-insensitivity (RFC 3501 §5.1) applies only to that literal top-level
+	 * mailbox name - normalized to uppercase here to match this codebase's own canonical-path
+	 * convention (INBOX always spelled uppercase, see eg. Imap::hordeMailbox()'s equivalent check).
+	 */
+	public function testParseDoubleColonFolderPathNormalizesTheFirstSegmentsInboxCasing()
+	{
+		$this->assertSame('INBOX/Sent', $this->invokeApiHandler('parseDoubleColonFolderPath', ['inbox::Sent']));
+		$this->assertSame('INBOX/Sent', $this->invokeApiHandler('parseDoubleColonFolderPath', ['Inbox::Sent']));
+		$this->assertSame('INBOX/Sent', $this->invokeApiHandler('parseDoubleColonFolderPath', ['INBOX::Sent']));
+	}
+
+	/**
+	 * The special-casing is ONLY for the actual top-level Inbox - a sub-mailbox that merely
+	 * happens to be named "inbox" too (legal, if unusual, in real IMAP) is an ordinary folder
+	 * name, never normalized.
+	 */
+	public function testParseDoubleColonFolderPathDoesNotNormalizeANonFirstSegmentNamedInbox()
+	{
+		$this->assertSame('Archive/inbox', $this->invokeApiHandler('parseDoubleColonFolderPath', ['Archive::inbox']));
+	}
+
+	/**
+	 * A single, isolated colon INSIDE one segment (not touching the "::" join) round-trips
+	 * correctly - only a segment starting/ending with ':' right at the join is the genuinely
+	 * ambiguous, deliberately-unsupported edge case (see this method's own docblock).
+	 */
+	public function testParseDoubleColonFolderPathPreservesAnIsolatedColonWithinASegment()
+	{
+		$this->assertSame('INBOX/Foo:Bar', $this->invokeApiHandler('parseDoubleColonFolderPath', ['INBOX::Foo:Bar']));
+	}
+
+	// --- resolveFolderId() (getFolder()/listEmails()'s shared folder-id resolution) ------------
+
+	public function testResolveFolderIdPassesARealIdThroughUnchangedForARealJmapSession()
+	{
+		$session = new FakeRealJmapHttpSession();
+
+		$folderId = $this->invokeApiHandler('resolveFolderId', [$session, 'some-real-jmap-id']);
+
+		$this->assertSame('some-real-jmap-id', $folderId);
+	}
+
+	public function testResolveFolderIdDecodesTheUrlSafeIdForAShimSession()
+	{
+		$session = new FakeJmapSessionForFolderWalk();
+		$folderIdUrlSafe = $this->invokeApiHandler('urlSafeId', [base64_encode('INBOX/Sub')]);
+
+		$folderId = $this->invokeApiHandler('resolveFolderId', [$session, $folderIdUrlSafe]);
+
+		$this->assertSame(base64_encode('INBOX/Sub'), $folderId);
+	}
+
+	public function testResolveFolderIdResolvesADoubleColonPathViaGetMailboxId()
+	{
+		$session = new FakeJmapSessionWithMailboxIdLookup(['INBOX/Sent' => 'resolved-id-123']);
+
+		$folderId = $this->invokeApiHandler('resolveFolderId', [$session, 'INBOX::Sent']);
+
+		$this->assertSame('resolved-id-123', $folderId);
+		$this->assertSame(['INBOX/Sent'], $session->mailbox->getMailboxIdCalls);
+	}
+
+	public function testResolveFolderIdThrows404ForADoubleColonPathThatDoesNotResolve()
+	{
+		$session = new FakeJmapSessionWithMailboxIdLookup([]);
+
+		try
+		{
+			$this->invokeApiHandler('resolveFolderId', [$session, 'INBOX::Nonexistent']);
+			$this->fail('expected an Exception');
+		}
+		catch (\Exception $e)
+		{
+			$this->assertSame(404, $e->getCode());
+			$this->assertStringContainsString('INBOX/Nonexistent', $e->getMessage());
+		}
+	}
+
 	// --- mailboxIdForEmailGet() (getEmail()/getAttachment()'s shared $mailboxId computation) ----
 
 	/**
@@ -116,6 +211,20 @@ class ApiHandlerJmapRestTest extends \PHPUnit\Framework\TestCase
 		$mailboxId = $this->invokeApiHandler('mailboxIdForEmailGet', [$session, 'some-real-jmap-id']);
 
 		$this->assertNull($mailboxId, 'RFC 8620 §3.6.1: a real JMAP server may reject an argument its method does not define');
+	}
+
+	/**
+	 * .../emails/<emailId>?mailboxId=INBOX::Sent (or the equivalent for an attachment download) -
+	 * resolves the "::"-path via getMailboxId(), same as resolveFolderId() does for a folder-id
+	 * URL segment.
+	 */
+	public function testMailboxIdForEmailGetResolvesADoubleColonPathViaGetMailboxId()
+	{
+		$session = new FakeJmapSessionWithMailboxIdLookup(['INBOX/Sent' => 'resolved-id-123']);
+
+		$mailboxId = $this->invokeApiHandler('mailboxIdForEmailGet', [$session, 'INBOX::Sent']);
+
+		$this->assertSame('resolved-id-123', $mailboxId);
 	}
 
 	// --- jsonMailbox()/jsonEmail() re-keying --------------------------------------------------
@@ -239,6 +348,23 @@ class ApiHandlerJmapRestTest extends \PHPUnit\Framework\TestCase
 		{
 			$this->assertArrayNotHasKey('isSubscribed', $call);
 		}
+	}
+
+	/**
+	 * The new `path` field (this session's own consistency companion to the "::"-path REST
+	 * syntax) is computed for free during this existing recursive walk - each node's path is its
+	 * parent's path plus its own name, joined with '/', matching resolveFolderId()'s own
+	 * canonical-path shape (not the "::"-joined REST wire syntax, which is only ever an INPUT
+	 * form - see parseDoubleColonFolderPath()'s own docblock).
+	 */
+	public function testListAllFoldersThreadsAnAccumulatedPathThroughEveryLevel()
+	{
+		$session = new FakeJmapSessionForFolderWalk();
+
+		$folders = $this->invokeApiHandler('listAllFolders', [$session, true, null]);
+
+		$pathsById = array_combine(array_column($folders, 'id'), array_column($folders, 'path'));
+		$this->assertSame(['A' => 'A', 'A1' => 'A/A1', 'B' => 'B'], $pathsById);
 	}
 
 	// --- Api\Jmap\Type::query()/get() widened argument-building ---------------------------------
@@ -403,6 +529,36 @@ class FakeJmapBase extends JmapBase
 class FakeJmapMailboxTypeCapturingCalls extends JmapType
 {
 	const TYPE_NAME = 'Mailbox';
+}
+
+/**
+ * Fake Api\Jmap\Base + minimal Mailbox Type double for resolveFolderId()'s "::"-path tests above -
+ * getMailboxId() answers from a constructor-supplied path=>id lookup table (empty/missing => null,
+ * same contract as both real getMailboxId() implementations), recording every path it was asked
+ * about into $mailbox->getMailboxIdCalls.
+ */
+class FakeJmapSessionWithMailboxIdLookup extends JmapBase
+{
+	protected array $types = ['mailbox' => FakeJmapMailboxWithMailboxIdLookup::class];
+	public string $accountId = 'acc';
+
+	public function __construct(array $pathToId)
+	{
+		FakeJmapMailboxWithMailboxIdLookup::$pathToId = $pathToId;
+	}
+}
+
+class FakeJmapMailboxWithMailboxIdLookup extends JmapType
+{
+	const TYPE_NAME = 'Mailbox';
+	public static array $pathToId = [];
+	public array $getMailboxIdCalls = [];
+
+	public function getMailboxId(string $folder) : ?string
+	{
+		$this->getMailboxIdCalls[] = $folder;
+		return self::$pathToId[$folder] ?? null;
+	}
 }
 
 class FakeJmapEmailTypeCapturingCalls extends JmapType

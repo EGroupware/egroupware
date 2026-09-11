@@ -840,6 +840,80 @@ class ApiHandler extends Api\CalDAV\Handler
 	}
 
 	/**
+	 * A friendlier, human-readable ALTERNATIVE to the opaque encoded folder id, for the
+	 * `{folderId}` REST URL segment: a "::"-joined literal folder path (eg. "INBOX::Sent" for
+	 * INBOX/Sent), matching this codebase's own EGroupware-canonical "/"-joined path convention
+	 * but substituting "::" for "/" - "/" can't appear literally inside a single URL path segment
+	 * without percent-encoding it, which defeats the whole point of this being easy to type/read.
+	 *
+	 * Purely additive: the real, opaque JMAP id (or the shim's own url-safe-encoded id) keeps
+	 * working exactly as before and is still the only thing this doc's own "Response envelope"
+	 * section returns - "::" is just an alternative way for a caller to name the SAME resource on
+	 * the way in, resolved to the real id before anything else happens (resolveFolderId()/
+	 * mailboxIdForEmailGet() below).
+	 *
+	 * Detection is unambiguous and needs no new route/prefix: a real JMAP id (RFC 8620 §1.2's
+	 * url-safe base64 alphabet) and the shim's own urlSafeId()-encoded id can NEVER contain a
+	 * colon at all, so the mere PRESENCE of "::" anywhere in the segment already proves it isn't
+	 * a valid encoded id of either kind - it's always safe to treat it as this literal-path syntax
+	 * instead, no ambiguity with a real id ever possible.
+	 *
+	 * A single, isolated colon INSIDE one path segment (eg. "INBOX::Foo:Bar" for INBOX/Foo:Bar) is
+	 * preserved correctly - only a segment that itself starts or ends with ':' right at a "::"
+	 * join is genuinely ambiguous (two different real paths could produce the identical joined
+	 * string, eg. ["a:", "b"] and ["a", ":b"] both join to "a:::b") - not specially handled here,
+	 * an extremely rare edge case (documented, not fixed): such a folder isn't reachable through
+	 * this shorthand, only via its real encoded id.
+	 *
+	 * @param string $folderIdUrlSafe
+	 * @return string|null the canonical "/"-joined path (its first segment normalized to
+	 *  uppercase "INBOX" if it case-insensitively matches - IMAP's own INBOX special-casing,
+	 *  RFC 3501 §5.1, applies only to that literal top-level mailbox name, never to a
+	 *  sub-mailbox that merely happens to be named "inbox" too) - null if $folderIdUrlSafe
+	 *  doesn't contain "::" at all (not this syntax; caller falls back to the normal encoded-id
+	 *  handling)
+	 */
+	protected static function parseDoubleColonFolderPath(string $folderIdUrlSafe) : ?string
+	{
+		if (!str_contains($folderIdUrlSafe, '::'))
+		{
+			return null;
+		}
+		$segments = explode('::', $folderIdUrlSafe);
+		if (strcasecmp($segments[0], 'INBOX') === 0)
+		{
+			$segments[0] = 'INBOX';
+		}
+		return implode('/', $segments);
+	}
+
+	/**
+	 * Resolve $folderIdUrlSafe (either syntax - see parseDoubleColonFolderPath()'s own docblock)
+	 * into the real folder/mailbox id Type::get()/query() expect - used by getFolder()/
+	 * listEmails(), which (unlike getEmail()/getAttachment()) need the id itself, not just a
+	 * shim-only $mailboxId argument (see mailboxIdForEmailGet() below).
+	 *
+	 * @param Api\Jmap\Base $session
+	 * @param string $folderIdUrlSafe
+	 * @return string
+	 * @throws \Exception (404) a "::"-path was given but doesn't resolve to a real folder
+	 */
+	protected static function resolveFolderId(Api\Jmap\Base $session, string $folderIdUrlSafe) : string
+	{
+		if (($path = self::parseDoubleColonFolderPath($folderIdUrlSafe)) !== null)
+		{
+			$folderId = $session->mailbox->getMailboxId($path);
+			if ($folderId === null)
+			{
+				throw new \Exception("Folder '$path' not found", 404);
+			}
+			return $folderId;
+		}
+		// only the local JmapShim's own ids need decoding back - see fromUrlSafeId()'s docblock
+		return self::isRealJmapSession($session) ? $folderIdUrlSafe : self::fromUrlSafeId($folderIdUrlSafe);
+	}
+
+	/**
 	 * The $mailboxId argument to pass to Type::get() (see its own docblock) for a standalone
 	 * Email/get (getEmail()/getAttachment() - both have no preceding Email/query in the same
 	 * request, unlike listEmails()) - null for a real JMAP server (which would reject an argument
@@ -856,7 +930,15 @@ class ApiHandler extends Api\CalDAV\Handler
 	 */
 	protected static function mailboxIdForEmailGet(Api\Jmap\Base $session, string $folderIdUrlSafe) : ?string
 	{
-		return self::isRealJmapSession($session) ? null : self::fromUrlSafeId($folderIdUrlSafe);
+		if (self::isRealJmapSession($session))
+		{
+			return null;
+		}
+		if (($path = self::parseDoubleColonFolderPath($folderIdUrlSafe)) !== null)
+		{
+			return $session->mailbox->getMailboxId($path);
+		}
+		return self::fromUrlSafeId($folderIdUrlSafe);
 	}
 
 	/**
@@ -965,12 +1047,23 @@ class ApiHandler extends Api\CalDAV\Handler
 	 * @param bool $subscribedOnly
 	 * @param string[]|null $properties forwarded to Mailbox/get
 	 * @return array[] flat list of Mailbox objects (still with the session's own raw ids - not
-	 *  yet run through jsonMailbox())
+	 *  yet run through jsonMailbox()), each with a new REST-only `path` field (the
+	 *  "/"-joined canonical folder path, eg. "INBOX/Sent" - see parseDoubleColonFolderPath()'s own
+	 *  docblock for the URL syntax this is the display-side counterpart of) computed for free
+	 *  during this method's own top-down walk (each level already knows its own parent's path),
+	 *  no extra JMAP/IMAP round trip needed on either backend
 	 */
 	protected static function listAllFolders(Api\Jmap\Base $session, bool $subscribedOnly, ?array $properties) : array
 	{
+		// 'name' is needed internally to build each entry's own 'path' below - like 'id' (RFC 8620
+		// §5.1: always returned regardless of the requested properties), 'name'/'path' are treated
+		// as always-present structural companions too, not filtered by the caller's own
+		// ?properties=, matching how the shim's own Imap\Mailbox::get() already ignores the
+		// properties filter for Mailbox objects entirely
+		$fetchProperties = $properties === null ? null : array_unique(array_merge($properties, ['name']));
+
 		$folders = [];
-		$walk = function(?string $parentId) use (&$walk, &$folders, $session, $subscribedOnly, $properties)
+		$walk = function(?string $parentId, string $parentPath) use (&$walk, &$folders, $session, $subscribedOnly, $fetchProperties)
 		{
 			$filter = ['parentId' => $parentId];
 			if ($subscribedOnly)
@@ -982,13 +1075,15 @@ class ApiHandler extends Api\CalDAV\Handler
 			{
 				return;
 			}
-			foreach ($session->mailbox->get($ids, $properties)['list'] ?? [] as $mailbox)
+			foreach ($session->mailbox->get($ids, $fetchProperties)['list'] ?? [] as $mailbox)
 			{
+				$path = $parentPath === '' ? $mailbox['name'] : $parentPath.'/'.$mailbox['name'];
+				$mailbox['path'] = $path;
 				$folders[] = $mailbox;
-				$walk($mailbox['id']);
+				$walk($mailbox['id'], $path);
 			}
 		};
-		$walk(null);
+		$walk(null, '');
 		return $folders;
 	}
 
@@ -1027,7 +1122,8 @@ class ApiHandler extends Api\CalDAV\Handler
 	 *
 	 * @param int $user
 	 * @param int|null $ident_id
-	 * @param string $folderIdUrlSafe
+	 * @param string $folderIdUrlSafe the real encoded folder id, OR a "::"-joined literal path
+	 *  (eg. "INBOX::Sent") - see parseDoubleColonFolderPath()'s own docblock
 	 * @return string HTTP status - NOT true, see listFolders()'s own docblock for why
 	 * @throws \Exception (404) if not found
 	 */
@@ -1035,15 +1131,18 @@ class ApiHandler extends Api\CalDAV\Handler
 	{
 		$account = self::getMailAccount($user, $ident_id);
 		$session = $account->jmapSession();
-		// only the local JmapShim's own ids need decoding back - see fromUrlSafeId()'s docblock
-		$folderId = self::isRealJmapSession($session) ? $folderIdUrlSafe : self::fromUrlSafeId($folderIdUrlSafe);
+		$folderId = self::resolveFolderId($session, $folderIdUrlSafe);
 
 		$list = $session->mailbox->get([$folderId], self::queryProperties())['list'] ?? [];
 		if (!$list)
 		{
 			throw new \Exception("Folder '$folderIdUrlSafe' not found", 404);
 		}
-		echo json_encode(self::jsonMailbox($list[0]), self::JSON_RESPONSE_OPTIONS);
+		// see listAllFolders()'s own docblock for what this REST-only field is - a single-folder
+		// fetch has no cheap way to derive it from an already-known parent path (unlike the
+		// recursive listing there), so this is folderId2path()'s own one real lookup per call
+		$mailbox = $list[0] + ['path' => $session->mailbox->folderId2path($folderId)];
+		echo json_encode(self::jsonMailbox($mailbox), self::JSON_RESPONSE_OPTIONS);
 		return '200 Ok';
 	}
 
@@ -1052,15 +1151,15 @@ class ApiHandler extends Api\CalDAV\Handler
 	 *
 	 * @param int $user
 	 * @param int|null $ident_id
-	 * @param string $folderIdUrlSafe
+	 * @param string $folderIdUrlSafe the real encoded folder id, OR a "::"-joined literal path
+	 *  (eg. "INBOX::Sent") - see parseDoubleColonFolderPath()'s own docblock
 	 * @return string HTTP status - NOT true, see listFolders()'s own docblock for why
 	 */
 	protected static function listEmails(int $user, ?int $ident_id, string $folderIdUrlSafe) : string
 	{
 		$account = self::getMailAccount($user, $ident_id);
 		$session = $account->jmapSession();
-		// only the local JmapShim's own ids need decoding back - see fromUrlSafeId()'s docblock
-		$folderId = self::isRealJmapSession($session) ? $folderIdUrlSafe : self::fromUrlSafeId($folderIdUrlSafe);
+		$folderId = self::resolveFolderId($session, $folderIdUrlSafe);
 
 		$filter = ['inMailbox' => $folderId]+self::queryEmailFilter();
 		$position = max(0, (int)($_GET['position'] ?? 0));
@@ -1102,13 +1201,14 @@ class ApiHandler extends Api\CalDAV\Handler
 	 *
 	 * @param int $user
 	 * @param int|null $ident_id
-	 * @param string $folderIdUrlSafe the mailbox to read the email from. A real JMAP server
-	 *  identifies an Email by id alone, but the JmapShim has to FETCH it out of some IMAP
-	 *  mailbox: Api\Mail\Jmap\Imap::emailGet() otherwise relies on the context a preceding
-	 *  Email/query left behind, and this endpoint has no listing in front of it, so it must pass
-	 *  the mailbox explicitly or the shim throws (found live 2026-09-10 - see Api\Jmap\Type::
-	 *  get()'s own $mailboxId docblock). Only for shim sessions - RFC 8620 §3.6.1 lets a real
-	 *  JMAP server reject an argument Email/get does not define.
+	 * @param string $folderIdUrlSafe the mailbox to read the email from - the real encoded folder
+	 *  id, OR a "::"-joined literal path (eg. "INBOX::Sent", see parseDoubleColonFolderPath()'s
+	 *  own docblock). A real JMAP server identifies an Email by id alone, but the JmapShim has to
+	 *  FETCH it out of some IMAP mailbox: Api\Mail\Jmap\Imap::emailGet() otherwise relies on the
+	 *  context a preceding Email/query left behind, and this endpoint has no listing in front of
+	 *  it, so it must pass the mailbox explicitly or the shim throws (found live 2026-09-10 - see
+	 *  Api\Jmap\Type::get()'s own $mailboxId docblock). Only for shim sessions - RFC 8620 §3.6.1
+	 *  lets a real JMAP server reject an argument Email/get does not define.
 	 * @param string $emailId
 	 * @return string HTTP status - NOT true, see listFolders()'s own docblock for why
 	 * @throws \Exception (404) if not found

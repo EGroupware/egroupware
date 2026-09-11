@@ -1,6 +1,6 @@
 # Mail: JMAP-lite REST endpoints for folders + emails
 
-## Status: Phase 1 implemented + live-verified against a plain-IMAP/shim account (2026-09-09/10, 4 bugs found+fixed - see below); Stalwart/real-JMAP still unverified; Phase 2 started
+## Status: Phase 1 implemented + live-verified against a plain-IMAP/shim account (2026-09-09/10, 4 bugs found+fixed - see below); `"::"`-path folder addressing + `path` field added 2026-09-11 (unit-tested, not yet live-verified); Stalwart/real-JMAP still unverified; Phase 2 started
 
 **Live-verified (ralf, 2026-09-09)**: `GET /mail/folders` and `GET /mail/folders/<folderId>/emails`
 both confirmed returning correct data against a real running instance. `GET .../folders/<folderId>`,
@@ -367,6 +367,56 @@ invisible to real-JMAP/Stalwart; the client-side folder tree already knows about
 with a clean 400 guard in `emailQuery()`/`emailGet()`, plus a new `isSelectable` field on the
 `Mailbox` JSON object (derived from the real IMAP `\Noselect` LIST attribute, more general than a
 name-based check) so a REST client can filter these out proactively instead.
+
+## Human-readable folder paths (2026-09-11): `"::"`-joined literal path, `path` field
+
+Prompted by ralf trying the API by hand: opaque `folderId` values work but aren't guessable/typeable
+- you have to list folders first to get one. Added a second, purely additive way to address a folder,
+without any new route or URL syntax:
+
+- **Request side**: anywhere a `folderId` path segment is accepted (`GET .../folders/<folderId>`,
+  `GET .../folders/<folderId>/emails`, `GET .../folders/<folderId>/emails/<emailId>`, the attachment
+  endpoint), a literal `"::"`-joined path like `INBOX::Sent` or `INBOX::Archive::2026` is now also
+  accepted, resolved to the real folder id via `Mailbox/getMailboxId`-equivalent lookup
+  (`Api\Mail\Jmap\Mailbox::getMailboxId()`/`Imap\Mailbox::getMailboxId()`, both already existed with
+  matching signatures on the real-JMAP and shim backend, just never wired to this REST layer). This
+  is unambiguous with zero new syntax: a literal `:` can never appear in either backend's real `id`
+  (RFC 8620 §1.2's url-safe base64 alphabet for real JMAP; `urlSafeId()`'s own substitution alphabet
+  for the shim) - so `ApiHandler::parseDoubleColonFolderPath()` just checks for the substring `"::"`
+  and, if absent, falls straight through to the existing id-passthrough/`fromUrlSafeId()` logic
+  unchanged. **The real/opaque id always still works** - this is a second, optional input form, never
+  a replacement (ralf: "we should alternativly allow/keep the real JMAP Id of a folder, the other
+  syntax would just be our default for listing").
+  IMAP's own `INBOX` case-insensitivity (RFC 3501 §5.1) is respected for the first path segment only
+  (`inbox::Sent`/`Inbox::Sent`/`INBOX::Sent` all normalize to canonical `INBOX/Sent`) - a later segment
+  named "inbox" is an ordinary folder name, never normalized. A single, isolated colon inside one
+  segment round-trips fine (`INBOX::Foo:Bar` → `INBOX/Foo:Bar`); the one genuine, deliberately
+  unsupported edge case is a segment that starts/ends with `:` immediately adjacent to the `::` join
+  itself (an inherently unrecoverable collision - `["a:", "b"]` and `["a", ":b"]` both join to the
+  identical string `"a:::b"`), not worth adding escaping complexity for.
+- **Response side, for consistency**: folder objects now also carry a `path` field alongside `id`
+  (always present, like `id` itself - not subject to the `properties` filter, matching how the shim's
+  `Imap\Mailbox::get()` already ignores that filter for Mailbox objects entirely) - the same `/`-joined
+  canonical form accepted on the request side (with the join character deliberately `/`, not `::` -
+  `::` is a REST-layer *request* convenience, not the folder's own canonical shape). Computed for free
+  during `listAllFolders()`'s existing recursive walk (each level already has its parent's path in
+  scope - threaded through the walk closure, no extra round trip) for the folders-list endpoint;
+  `getFolder()` (a single fetch, no walk context) calls `Mailbox::folderId2path()`/
+  `Imap\Mailbox::folderId2path()` once per request instead (both already existed with matching
+  signatures too).
+- New helpers in `mail/src/ApiHandler.php`: `parseDoubleColonFolderPath()` (the `"::"` → `/`-joined-path
+  parse, with the `INBOX` normalization), `resolveFolderId()` (the single decision point `getFolder()`/
+  `listEmails()` both now call: real id passthrough / `fromUrlSafeId()` decode / `"::"`-path resolve),
+  and `mailboxIdForEmailGet()` widened to also recognize a `"::"`-path for the `getEmail()`/
+  `getAttachment()` `mailboxId` computation.
+- Tests: `mail/tests/ApiHandlerJmapRestTest.php` - `parseDoubleColonFolderPath()` (join, INBOX
+  normalization on the first segment only, isolated-colon round-trip, no-`::`-present passthrough),
+  `resolveFolderId()` (real id passthrough, shim decode, `"::"`-path resolve via a fake
+  `getMailboxId()`, 404 for an unresolvable path), `mailboxIdForEmailGet()`'s equivalent `"::"`-path
+  branch, and `listAllFolders()`'s new per-node `path` accumulation (against the existing 3-node fake
+  tree fixture: `A` → `"A"`, `A1` → `"A/A1"`, `B` → `"B"`). `getFolder()`'s own `path` attachment isn't
+  independently unit-tested (same as the rest of that method - needs a live session, see "Implementation"
+  above); covered by the underlying `folderId2path()` calls it delegates to.
 
 ## Related
 
