@@ -514,10 +514,15 @@ class JsonRequest
 					// Detached from the caller's promise chain - without this, a failed js_files
 					// load is an unhandled rejection and the tab is left blank.
 					this.egw.debug('error', 'Loading a js file from an ajax response failed:', e);
-					this.egw.message.call(this.egw,
-						this.egw.lang('Please reload the EGroupware desktop (F5 / Cmd+r).'),
-						'error'
-					);
+					// Skip a 2nd reload prompt (ticket #124112) if egw_import already put one up
+					// for this document - same reasoning as the handleResponse() catch above.
+					if (!this.egw.window.egw_import?.updateAvailableNotified)
+					{
+						this.egw.message.call(this.egw,
+							this.egw.lang('Please reload the EGroupware desktop (F5 / Cmd+r).'),
+							'error'
+						);
+					}
 				});
 				return;
 			}
@@ -602,10 +607,16 @@ class JsonRequest
 										this.egw.debug('error', 'Exception "' + (e.message || e) + '" while handling JSON response from ' +
 											this.url + ' [' + JSON.stringify(this.parameters) + '] type "' + res.type +
 											'", plugin', plugin, 'response', res, e.stack);
-										this.egw.message.call(this.egw,
-											this.egw.lang('Please reload the EGroupware desktop (F5 / Cmd+r).'),
-											'error'
-										);
+										// Skip a 2nd reload prompt (ticket #124112: green+red messages
+										// stacking) if egw_import already put one up for this document -
+										// this is the same stale-build mismatch it already covers.
+										if (!this.egw.window.egw_import?.updateAvailableNotified)
+										{
+											this.egw.message.call(this.egw,
+												this.egw.lang('Please reload the EGroupware desktop (F5 / Cmd+r).'),
+												'error'
+											);
+										}
 									});
 								}
 							} catch(e) {
@@ -973,10 +984,15 @@ class Json implements JsonModule
 							{
 								// console.error alone left whoever was waiting on this call silently stuck.
 								console.error("Failure loading /"+parts[1]+'/js/app.min.js' + " (" + err + ")\nAborting.");
-								egw(self.#wnd).message(
-									egw(self.#wnd).lang('Please reload the EGroupware desktop (F5 / Cmd+r).'),
-									'error'
-								);
+								// Skip a 2nd reload prompt (ticket #124112) if egw_import already put
+								// one up for this document - same reasoning as handleResponse()'s catch.
+								if (!(<any>self.#wnd).egw_import?.updateAvailableNotified)
+								{
+									egw(self.#wnd).message(
+										egw(self.#wnd).lang('Please reload the EGroupware desktop (F5 / Cmd+r).'),
+										'error'
+									);
+								}
 							});
 				}
 				// check if we need a not yet instantiated app.js object --> instantiate it now
