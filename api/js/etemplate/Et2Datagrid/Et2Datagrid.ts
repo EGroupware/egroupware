@@ -1247,7 +1247,14 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			return {value: rowId, rowValue: rowId, fallback: false};
 		}
 
-		let fallback = /\$row_cont|\$\{row\}\[|\{\$row\}\[/.test(normalized);
+		// An "@name"/"@@name" reference reads the content array, not the row - "@@name" the
+		// template root, which is how a row template tests a value belonging to the whole entry
+		// (eg. tracker's comment rows switching on the ticket's tr_edit_mode). This resolver only
+		// understands "$" row references, and would hand the expression on as a plain string: for
+		// a Boolean attribute both "@@x=y" and "!@@x=y" are then truthy, so both branches of a
+		// disabled=/hidden= pair take effect. Defer those to the array manager, which resolves
+		// them through parseBoolExpression().
+		let fallback = /\$row_cont|\$\{row\}\[|\{\$row\}\[|@/.test(normalized);
 		const resolved = normalized
 			.replace(/\$\[([^\]]+)\]/g, (_match, field) => String(this._getFieldValue(rowData, field) ?? ""))
 			.replace(/\$row\b/g, rowId)
