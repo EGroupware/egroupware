@@ -1,3 +1,17 @@
+'%1' copied to clipboard	common	de	'%1' in die Zwischenablage kopiert
+'%1' does not match the required pattern '%2'	common	de	'%1' hat nicht das erforderliche Format ('%2')
+'%1' has an invalid format	common	de	'%1' hat ein ungültiges Format!
+'%1' has an invalid format !!!	common	de	'%1' hat ein ungültiges Format!
+'%1' is not a valid app-name ('%2')!	common	de	'%1' ist kein gültiger Anwendungsname ('%2')!
+'%1' is not a valid date !!!	common	de	'%1' ist ein ungültiges Datum!
+'%1' is not a valid floatingpoint number !!!	common	de	'%1' ist keine gültige Gleitkommazahl!
+'%1' is not a valid integer !!!	common	de	'%1' ist keine gültige Ganzzahl!
+'%1' is not a valid json file!	common	de	'%1' ist keine gültigeJSON Datei
+'%1' is not a valid timezone!	common	de	'%1' ist keine gültige Zeitzone!
+'%1' is not allowed ('%2')!	common	de	'%1' ist NICHT erlaubt ('%2')!
+'%1' is not allowed%2)!	common	de	'%1' ist NICHT erlaubt '%2'!
+'%1' must not contain (back)slashes!	common	de	'%1' darf keine Schrägstriche enthalten!
+(session restored in %1 seconds)	common	de	Sitzung in %1 Sekunden wiederhergestellt.
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	de	%1 (%2 neue) Texte für die Anwendung '%3' und die Sprache '%4' geschrieben
 %1 active file(s) with same name as directory inactivated!	admin	de	%1 aktive Dateien mit dem selben Ordner wurden deaktiviert!
 %1 copied - the copy can now be edited	common	de	%1 kopiert - Diese Kopie kann nun bearbeitet werden.
@@ -23,20 +37,6 @@
 %s notranslation	common	de	%s nicht übersetzen
 %s onchange	common	de	%s onchange
 %s readonly	common	de	%s Schreibschutz
-'%1' copied to clipboard	common	de	'%1' in die Zwischenablage kopiert
-'%1' does not match the required pattern '%2'	common	de	'%1' hat nicht das erforderliche Format ('%2')
-'%1' has an invalid format	common	de	'%1' hat ein ungültiges Format!
-'%1' has an invalid format !!!	common	de	'%1' hat ein ungültiges Format!
-'%1' is not a valid app-name ('%2')!	common	de	'%1' ist kein gültiger Anwendungsname ('%2')!
-'%1' is not a valid date !!!	common	de	'%1' ist ein ungültiges Datum!
-'%1' is not a valid floatingpoint number !!!	common	de	'%1' ist keine gültige Gleitkommazahl!
-'%1' is not a valid integer !!!	common	de	'%1' ist keine gültige Ganzzahl!
-'%1' is not a valid json file!	common	de	'%1' ist keine gültigeJSON Datei
-'%1' is not a valid timezone!	common	de	'%1' ist keine gültige Zeitzone!
-'%1' is not allowed ('%2')!	common	de	'%1' ist NICHT erlaubt ('%2')!
-'%1' is not allowed%2)!	common	de	'%1' ist NICHT erlaubt '%2'!
-'%1' must not contain (back)slashes!	common	de	'%1' darf keine Schrägstriche enthalten!
-(session restored in %1 seconds)	common	de	Sitzung in %1 Sekunden wiederhergestellt.
 00 (disable)	admin	de	00 (deaktiviert)
 1 day	common	de	1 Tag
 1 hour	common	de	1 Stunde
@@ -236,8 +236,8 @@ cannot set this cat as its own parent!	common	de	Eine Kategorie kann nicht als I
 cant delete a single widget from a grid !!!	common	de	Kann kein einzelnes Widget aus einer Tabelle löschen!
 cant delete the only column of a grid !!!	common	de	Kann nicht die einzige Spalte einer Tabelle löschen!
 cant delete the only row in a grid !!!	common	de	Kann nicht die einzige Zeile einer Tabelle löschen!
-cant open %1, needs ziparchive	common	de	Kann %1 nicht öffnen, benötigt PHP ZIPArchive
 cant open '%1' for %2	common	de	Kann '%1' nicht zum %2 öffnen
+cant open %1, needs ziparchive	common	de	Kann %1 nicht öffnen, benötigt PHP ZIPArchive
 cape verde	common	de	KAP VERDE
 caption	common	de	Text
 categories	common	de	Kategorien
@@ -572,10 +572,10 @@ field must not be empty !!!	common	de	Das Feld darf nicht leer sein!
 fields	common	de	Felder
 fiji	common	de	FIJI
 file	common	de	Datei
+file '%1' not found!	common	de	Datei '%1' nicht gefunden!
 file %1 has no content in physical filesystem %2 --> failed to remove file!	admin	de	Datei %1 ist im Dateisystem nicht verfügbar %2 -> Löschen nicht möglich!
 file %1 has no content in physical filesystem %2 --> file removed!	admin	de	Datei %1 ist im Dateisystem nicht verfügbar %2 -> Dateieintrag gelöscht
 file %1 has no content in physical filesystem %2!	admin	de	Datei %1 ist im Dateisystem nicht vorhanden!
-file '%1' not found!	common	de	Datei '%1' nicht gefunden!
 file a file	common	de	Datei ablegen
 file contains more than one etemplate, last one is shown !!!	common	de	Datei enthält mehr als ein eTemplate, das letzte wird angezeigt!
 file information	common	de	Datei Information
@@ -788,8 +788,8 @@ label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][
 landscape	common	de	Querformat
 lang	common	de	Sprache
 language	common	de	Sprache
-language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	de	Kürzel der Sprache (zb. 'en' für Englisch) für sprachabhängige Templates ('' ließt die bevorzugte Sprache, benutze 'default' für das Standard Template '')
 language_direction_rtl	common	de	language_direction_rtl
+language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	de	Kürzel der Sprache (zb. 'en' für Englisch) für sprachabhängige Templates ('' ließt die bevorzugte Sprache, benutze 'default' für das Standard Template '')
 lao peoples democratic republic	common	de	LAOS, VOLKSREPUBLIK
 last	common	de	Letzte
 last modified	common	de	Letzte Änderung
@@ -1079,7 +1079,7 @@ play/pause	common	de	Wiedergabe/Pause
 please %1 by hand	common	de	Bitte %1 per Hand
 please enter a name	common	de	Bitte geben Sie einen Namen ein!
 please enter table-name first !!!	common	de	Bitte geben Sie zuerst einen Tabellennamen an!
-please reload the egroupware desktop (f5 / cmd+r).	common	de	Bitte laden Sie die EGroupware-Oberfläche neu (F5 / Strg + R).
+please reload the egroupware desktop (f5 / cmd+r).	common	de	Bitte laden Sie die EGroupware-Oberfläche neu (F5 / Cmd+R).
 please remember to use '%1' as username for local login's from now on!	common	de	Bitte daran denken ab sofort '%1' als Benutzernamen für lokale Anmeldungen zu benutzen!
 please run setup to become current	common	de	Bitte rufen Sie Setup auf um zu aktualisieren
 please select	common	de	Bitte wählen
@@ -1138,7 +1138,6 @@ regular	common	de	Normal
 reject	common	de	Zurückweisen
 remember me	common	de	An mich erinnern
 remember me for %1	common	de	An mich erinnern für %1
-remove	api	de	Entfernen
 remove	common	de	Entfernen
 remove row (can not be undone!!!)	common	de	Löscht eine Zeile (NICHT rückgängig zu machen)
 remove selected accounts	common	de	Ausgewählte Benutzer entfernen
@@ -1150,7 +1149,7 @@ rename	common	de	Umbenennen
 repeat password	common	de	Passwort wiederholen
 replace	common	de	Ersetzen
 replace with	common	de	Ersetzen durch
-request could not be processed, please reload your window (press f5 or cmd r)!	common	de	Anfrage konnte nicht verarbeitet werden, bitte laden Sie Ihr Fenster neu (F5 oder Strg+R drücken)!
+request could not be processed, please reload your window (press f5 or cmd r)!	common	de	Anfrage konnte nicht verarbeitet werden, bitte laden Sie Ihr Fenster neu (F5 oder Cmd+R drücken)!
 requested resource '%1' does not exist or has expired	common	de	Die angeforderte Ressource '%1' existiert nicht oder ist bereits abgelaufen
 requests and full responses to files directory	common	de	Anfragen und komplette Antworten in den Dateiordner
 requests and truncated responses to apache error-log	groupdav	de	Anfragen und gekürzte Antworten ins Apache error-log
@@ -1325,13 +1324,13 @@ show page generation time?	common	de	Erstellungszeit der Seite anzeigen
 show password	common	de	Zeige Passwort
 show these toolbar items helptext	common	de	Zeige diese Elemente in der Symbolleiste an, wenn sie passen. Die anderen sind über die  Liste [⋮] verfügbar.
 show values	common	de	Werte anzeigen
+show_more_apps	common	de	Mehr Applikationen anzeigen
 show/hide	common	de	Anzeigen/ausblenden Seitenleiste
 showing	common	de	zeigt
 showing %1	common	de	%1 Einträge
 showing %1 - %2 of %3	common	de	%1 - %2 von %3 Einträgen
 shows / allows you to enter values into the etemplate for testing	common	de	Zeigt den Inhalt / Werte an und erlaubt welche zum Testen des eTemplates einzugeben
 shows/displays etemplate for testing, does not save it before	common	de	Zeigt eTemplate zum Testen an, speichert es NICHT davor
-show_more_apps	common	de	Mehr Applikationen anzeigen
 sierra leone	common	de	SIERRA LEONE
 sign up	common	de	Registrieren
 simple	common	de	Einfach

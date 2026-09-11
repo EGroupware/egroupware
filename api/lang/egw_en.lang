@@ -1,3 +1,17 @@
+'%1' copied to clipboard	common	en	'%1' copied to clipboard
+'%1' does not match the required pattern '%2'	common	en	'%1' does not match the required pattern ('%2')
+'%1' has an invalid format	common	en	'%1' has an invalid format
+'%1' has an invalid format !!!	common	en	'%1' has an invalid format!
+'%1' is not a valid app-name ('%2')!	common	en	'%1' is NOT a valid app-name ('%2')!
+'%1' is not a valid date !!!	common	en	'%1' is not a valid date!
+'%1' is not a valid floatingpoint number !!!	common	en	'%1' is not a valid floating point number!
+'%1' is not a valid integer !!!	common	en	'%1' is not a valid integer!
+'%1' is not a valid json file!	common	en	'%1' is not a valid JSON file
+'%1' is not a valid timezone!	common	en	'%1' is not a valid timezone!
+'%1' is not allowed ('%2')!	common	en	'%1' is NOT allowed ('%2')!
+'%1' is not allowed%2)!	common	en	'%1' is NOT allowed (%2)!
+'%1' must not contain (back)slashes!	common	en	'%1' must not contain (back)slashes!
+(session restored in %1 seconds)	common	en	Session restored in %1 seconds.
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	en	%1 (%2 new) messages written for application '%3' and languages '%4'
 %1 active file(s) with same name as directory inactivated!	admin	en	%1 active file(s) with same name as folder inactivated!
 %1 copied - the copy can now be edited	common	en	%1 copied - the copy can now be edited.
@@ -23,20 +37,6 @@
 %s notranslation	common	en	%s NoTranslation
 %s onchange	common	en	%s onchange
 %s readonly	common	en	%s read-only
-'%1' copied to clipboard	common	en	'%1' copied to clipboard
-'%1' does not match the required pattern '%2'	common	en	'%1' does not match the required pattern ('%2')
-'%1' has an invalid format	common	en	'%1' has an invalid format
-'%1' has an invalid format !!!	common	en	'%1' has an invalid format!
-'%1' is not a valid app-name ('%2')!	common	en	'%1' is NOT a valid app-name ('%2')!
-'%1' is not a valid date !!!	common	en	'%1' is not a valid date!
-'%1' is not a valid floatingpoint number !!!	common	en	'%1' is not a valid floating point number!
-'%1' is not a valid integer !!!	common	en	'%1' is not a valid integer!
-'%1' is not a valid json file!	common	en	'%1' is not a valid JSON file
-'%1' is not a valid timezone!	common	en	'%1' is not a valid timezone!
-'%1' is not allowed ('%2')!	common	en	'%1' is NOT allowed ('%2')!
-'%1' is not allowed%2)!	common	en	'%1' is NOT allowed (%2)!
-'%1' must not contain (back)slashes!	common	en	'%1' must not contain (back)slashes!
-(session restored in %1 seconds)	common	en	Session restored in %1 seconds.
 00 (disable)	admin	en	00 (disable)
 1 day	common	en	1 day
 1 hour	common	en	1 hour
@@ -237,8 +237,8 @@ cannot set this cat as its own parent!	common	en	Can not set this category as it
 cant delete a single widget from a grid !!!	common	en	Can't delete a single widget from a grid!
 cant delete the only column of a grid !!!	common	en	Can't delete the only column of a grid!
 cant delete the only row in a grid !!!	common	en	Can't delete the only row in a grid!
-cant open %1, needs ziparchive	common	en	Can't open %1, needs PHP ZipArchive
 cant open '%1' for %2	common	en	Can't open '%1' for %2
+cant open %1, needs ziparchive	common	en	Can't open %1, needs PHP ZipArchive
 cape verde	common	en	CAPE VERDE
 caption	common	en	Caption
 categories	common	en	Categories
@@ -573,10 +573,10 @@ field must not be empty !!!	common	en	Field must not be empty!
 fields	common	en	Fields
 fiji	common	en	FIJI
 file	common	en	File
+file '%1' not found!	common	en	File '%1' not found!
 file %1 has no content in physical filesystem %2 --> failed to remove file!	admin	en	File %1 has no content in physical filesystem %2 --> failed to remove file!
 file %1 has no content in physical filesystem %2 --> file removed!	admin	en	File %1 has no content in physical filesystem %2 --> file removed!
 file %1 has no content in physical filesystem %2!	admin	en	File %1 has no content in physical filesystem %2!
-file '%1' not found!	common	en	File '%1' not found!
 file a file	common	en	File a file
 file contains more than one etemplate, last one is shown !!!	common	en	File contains more than one eTemplate, last one is shown!
 file information	common	en	File information
@@ -795,8 +795,8 @@ label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][
 landscape	common	en	Landscape
 lang	common	en	Lang
 language	common	en	Language
-language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	en	Language short (eg. 'en' for English) for language dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')
 language_direction_rtl	common	en	language_direction_rtl
+language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	en	Language short (eg. 'en' for English) for language dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')
 lao peoples democratic republic	common	en	LAO PEOPLES DEMOCRATIC REPUBLIC
 last	common	en	Last
 last modified	common	en	Last modified
@@ -1149,7 +1149,6 @@ regular	common	en	Regular
 reject	common	en	Reject
 remember me	common	en	Remember me
 remember me for %1	common	en	Remember me for %1
-remove	api	en	Remove
 remove	common	en	Remove
 remove row (can not be undone!!!)	common	en	Remove row
 remove selected accounts	common	en	Remove selected accounts
@@ -1336,13 +1335,13 @@ show page generation time?	common	en	Show page generation time
 show password	common	en	Show password
 show these toolbar items helptext	common	en	Show these items on the toolbar (if they fit).  The others are available in the list [⋮].
 show values	common	en	Show values
+show_more_apps	common	en	Show more apps
 show/hide	common	en	Show/hide sidebar
 showing	common	en	Showing
 showing %1	common	en	showing %1
 showing %1 - %2 of %3	common	en	showing %1 - %2 of %3
 shows / allows you to enter values into the etemplate for testing	common	en	Shows / allows to enter values into the eTemplate for testing
 shows/displays etemplate for testing, does not save it before	common	en	Shows / displays eTemplate for testing, does NOT save it
-show_more_apps	common	en	Show more apps
 sierra leone	common	en	SIERRA LEONE
 sign up	common	en	Sign up
 simple	common	en	Simple
