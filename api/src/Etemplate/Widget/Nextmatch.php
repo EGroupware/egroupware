@@ -588,12 +588,15 @@ class Nextmatch extends Etemplate\Widget
 			if (is_int($n) && $row)
 			{
 				if (!isset($row[$row_id])) unset($row_id);	// unset default row_id of 'id', if not used
-				if (empty($row[$row_modified])) unset($row_modified);
+				// null once the app has no row_modified, or the rows don't carry it - guarded
+				// rather than unset(), so the checks below don't read an undefined variable (and
+				// warn) once per row for every nextmatch without a modification column
+				if (!isset($row_modified) || empty($row[$row_modified])) $row_modified = null;
 
 				$id = $row_id ? $row[$row_id] : $n;
 				$result['order'][] = $id;
 
-				$modified = $row[$row_modified] ?? null;
+				$modified = isset($row_modified) ? $row[$row_modified] ?? null : null;
 				if (isset($modified) && !(is_int($modified) || is_string($modified) && is_numeric($modified)))
 				{
 					$modified = Api\DateTime::to(str_replace('Z', '', $modified), 'ts');
@@ -603,7 +606,10 @@ class Nextmatch extends Etemplate\Widget
 				//error_log("$id Known: " . (array_search($id, $knownUids) !== false ? 'Yes' : 'No') . ' Modified: ' . Api\DateTime::to($row[$row_modified]) . ' > ' . Api\DateTime::to($lastModified).'? ' . ($row[$row_modified] > $lastModified ? 'Yes' : 'No'));
 				if (!$row_id || !$knownUids || ($kUkey = array_search($id, $knownUids)) === false ||
 					!$lastModified || !isset($modified) || $modified > $lastModified ||
-					$queriedRange['refresh'] && $id == $queriedRange['refresh']
+					// An explicitly refreshed row always gets its data sent, even when the
+					// row_modified check above says it is unchanged. Et2NextmatchDataProvider
+					// sends refresh as an array, dataRefreshUID() as a single id, so accept both.
+					$queriedRange['refresh'] && in_array($id, (array)$queriedRange['refresh'])
 				)
 				{
 					$result['data'][$id] = $row;
