@@ -10,6 +10,7 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
 use EGroupware\Api\Framework;
 
 /**
@@ -28,6 +29,13 @@ class preferences_categories_ui extends admin_categories {
 	function __construct()
 	{
 		if (false) parent::__construct ();	// parent constructor explicitly not called!
+
+		// site-config 'deny_cats' can restrict whole groups from managing their own categories -
+		// admins are exempt (they don't use this class anyway, see admin_categories::__construct())
+		if ($GLOBALS['egw']->acl->deniedByGroup('deny_cats'))
+		{
+			throw new Api\Exception\NoPermission();
+		}
 
 		Framework::includeCSS('/admin/templates/default/app.css');
 
