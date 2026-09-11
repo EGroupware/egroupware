@@ -906,6 +906,18 @@ class Imap extends Jmap\Base
 			'role' => self::roleFor($imap, $mailboxName, $attributes),
 			'hasChildren' => in_array('\\haschildren', $attributes, true) ? true :
 				(in_array('\\hasnochildren', $attributes, true) ? false : true),
+			// RFC 8621's Mailbox object has no such property - real JMAP (Stalwart) has no
+			// namespace-root concept at all, so this only ever appears (as false) for the local
+			// IMAP shim's own synthetic "user"/"shared" namespace-root entries
+			// (namespaceRootsMissingFrom()) - found live 2026-09-10: a REST/JMAP-lite client has
+			// no other way to know one of the folders it just listed isn't a real, queryable
+			// mailbox (see emailQuery()'s/emailGet()'s own isBareNamespaceRoot() guard, which
+			// rejects trying anyway rather than relying on every caller checking this first).
+			// Derived from the real IMAP \Noselect LIST attribute (already fetched into
+			// $attributes above) rather than re-deriving "is this a namespace root" from the name
+			// again - more general (covers any other \Noselect mailbox a server might report, not
+			// just the two known namespace-root names) and free (no extra IMAP round trip).
+			'isSelectable' => !in_array('\\noselect', $attributes, true),
 			// classic mail_tree.inc.php's own "Set Acl capability for INBOX" - only ever checked
 			// there, since ACL editing is an account-level feature, not a per-folder one; a live
 			// IMAP connection to this account is already open by the time any of its mailboxes are
@@ -1259,6 +1271,31 @@ class Imap extends Jmap\Base
 	}
 
 	/**
+	 * Whether $path IS, exactly, the bare shared/other-users namespace root itself ("user" or
+	 * "shared", no sub-path) - deliberately narrower than isNamespaceRootPath() above, which also
+	 * matches every path UNDER that root (eg. "user/otherperson/INBOX", a perfectly normal,
+	 * selectable mailbox once shared). Only the bare root is a real IMAP server never actually
+	 * has "as a mailbox" - it's a synthetic navigation-only entry namespaceRootsMissingFrom()
+	 * deliberately injects into the folder listing (so a client can expand into other users'
+	 * shared mailboxes at all), matching the classic tree's own \Noselect-flagged rendering of it
+	 * (see folderTree.ts's isNamespaceRootName()/noSelect) - JMAP itself has no concept of this at
+	 * all (no multiple namespaces), so nothing about it is visible to a real-JMAP/Stalwart client.
+	 *
+	 * Found live 2026-09-10 (ralf, via a real REST client): a JMAP-lite REST caller that lists
+	 * folders and then blindly fetches "emails" from every listed folder id has no way to know
+	 * this one isn't real - the shim just forwarded the bare path straight to IMAP SELECT, and the
+	 * server understandably refused ("Could not open mailbox 'user'"), surfacing as a raw 500 with
+	 * an internal Horde stack trace instead of a clean, documented error.
+	 *
+	 * @param string $path
+	 * @return bool
+	 */
+	private static function isBareNamespaceRoot(string $path) : bool
+	{
+		return (bool)preg_match('#^(user|shared)$#i', $path);
+	}
+
+	/**
 	 * Get (and cache, per request/connection) one of $imap's namespace delimiters
 	 *
 	 * @param \Horde_Imap_Client_Socket $imap
@@ -1385,6 +1422,15 @@ class Imap extends Jmap\Base
 		if ($accountId === '0')
 		{
 			return self::demoEmailQuery($folder, $args, $context);
+		}
+		// found live 2026-09-10: the shared/other-users namespace root itself ("user"/"shared",
+		// see isBareNamespaceRoot()'s own docblock) is a real folder-tree entry (so a client can
+		// navigate INTO it), but never a real, selectable IMAP mailbox - querying it always fails
+		// server-side. Caught here, before ever reaching IMAP, so a REST client gets a clean 400
+		// instead of a raw Horde SELECT-failure stack trace.
+		if (self::isBareNamespaceRoot($folder))
+		{
+			throw new \Exception("Folder '$folder' is a shared-mailboxes namespace root, not a real mailbox - list its children instead", 400);
 		}
 
 		$imap = self::imapServer($accountId);
@@ -1669,7 +1715,13 @@ class Imap extends Jmap\Base
 		$imap = self::imapServer($accountId);
 		if (!empty($args['mailboxId']))
 		{
-			$mailbox = self::hordeMailbox($imap, self::folderPath((string)$args['mailboxId']));
+			$folder = self::folderPath((string)$args['mailboxId']);
+			// same namespace-root guard as emailQuery() - see isBareNamespaceRoot()'s own docblock
+			if (self::isBareNamespaceRoot($folder))
+			{
+				throw new \Exception("Folder '$folder' is a shared-mailboxes namespace root, not a real mailbox - list its children instead", 400);
+			}
+			$mailbox = self::hordeMailbox($imap, $folder);
 		}
 		else
 		{

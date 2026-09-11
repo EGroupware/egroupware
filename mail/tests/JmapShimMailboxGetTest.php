@@ -246,6 +246,64 @@ class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 		$this->assertTrue($this->invokePrivate('mailboxNode', [$imap, 'INBOX', []])['hasChildren']);
 	}
 
+	/**
+	 * Regression coverage for a real bug found live 2026-09-10 (ralf, via a real REST client
+	 * against a plain-IMAP account): the shared/other-users namespace-root pseudo-folder
+	 * ("user"/"shared", see namespaceRootsMissingFrom()) was listed like any other real mailbox,
+	 * with no signal that a REST/JMAP-lite client can't actually list emails in it (the client-side
+	 * folder tree already knows this - folderTree.ts's own noSelect flag - but that's derived
+	 * client-side from the folder NAME, never sent back over the wire at all). RFC 8621's Mailbox
+	 * object has no such property - real JMAP (Stalwart) has no namespace-root concept, so this
+	 * only appears (as false) for the local shim's own synthetic namespace-root entries.
+	 */
+	public function testMailboxNodeIsSelectableFalseForNoselectAttribute()
+	{
+		$imap = $this->mockImap();
+		$imap->method('status')->willReturn(['messages' => 0, 'unseen' => 0]);
+
+		$node = $this->invokePrivate('mailboxNode', [$imap, 'user', ['\\noselect']]);
+
+		$this->assertFalse($node['isSelectable']);
+	}
+
+	public function testMailboxNodeIsSelectableTrueWhenNoselectAttributeIsAbsent()
+	{
+		$imap = $this->mockImap();
+		$imap->method('status')->willReturn(['messages' => 3, 'unseen' => 1]);
+
+		$node = $this->invokePrivate('mailboxNode', [$imap, 'INBOX', ['\\subscribed']]);
+
+		$this->assertTrue($node['isSelectable']);
+	}
+
+	/**
+	 * isBareNamespaceRoot() is the guard emailQuery()/emailGet() use to reject trying to actually
+	 * open the "user"/"shared" pseudo-folder (see those methods' own doc comment) - deliberately
+	 * narrower than isNamespaceRootPath() (which also matches every path UNDER the root, eg.
+	 * "user/otherperson/INBOX", a perfectly normal real mailbox once shared).
+	 */
+	public function testIsBareNamespaceRootMatchesOnlyTheBareRootNames()
+	{
+		$this->assertTrue($this->invokePrivate('isBareNamespaceRoot', ['user']));
+		$this->assertTrue($this->invokePrivate('isBareNamespaceRoot', ['shared']));
+		// case-insensitive, matching isNamespaceRootPath()'s own convention
+		$this->assertTrue($this->invokePrivate('isBareNamespaceRoot', ['User']));
+		$this->assertTrue($this->invokePrivate('isBareNamespaceRoot', ['SHARED']));
+	}
+
+	public function testIsBareNamespaceRootDoesNotMatchARealSubfolderUnderTheNamespace()
+	{
+		$this->assertFalse($this->invokePrivate('isBareNamespaceRoot', ['user/otherperson/INBOX']));
+		$this->assertFalse($this->invokePrivate('isBareNamespaceRoot', ['shared/Public']));
+	}
+
+	public function testIsBareNamespaceRootDoesNotMatchAFolderThatMerelyStartsWithTheName()
+	{
+		$this->assertFalse($this->invokePrivate('isBareNamespaceRoot', ['usernotreal']));
+		$this->assertFalse($this->invokePrivate('isBareNamespaceRoot', ['INBOX']));
+		$this->assertFalse($this->invokePrivate('isBareNamespaceRoot', ['']));
+	}
+
 	public function testRoleForInbox()
 	{
 		$imap = $this->mockImap();
