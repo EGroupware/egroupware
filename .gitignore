@@ -89,3 +89,4 @@ timesheet/js/app.js
 /api/js/build-epoch.json
 /api/js/build-manifest.json
 /doc/phpunit.local.php
+/doc/phpunit-extra-apps.xml
