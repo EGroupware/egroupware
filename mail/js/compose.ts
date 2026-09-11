@@ -2498,12 +2498,23 @@ export class MailCompose
 	/**
 	 * Set the selected checkbox action
 	 *
+	 * Scoped to composeToolbar (not a bare this.et2.getWidgetById(), which searches the WHOLE
+	 * template): compose.xet has its own separate, hidden `<et2-checkbox id="to_infolog">` (and
+	 * to_tracker/to_calendar/disposition) preceding the toolbar, sharing the SAME id as the real,
+	 * visible toggle the toolbar creates for that action - an unscoped lookup resolves to that
+	 * hidden duplicate instead (found live 2026-09-11, alongside the Et2SwitchIcon click-persistence
+	 * bug this action's onExecute exists to react to - see that fix's own commit). Harmless in
+	 * practice today only because integrateSentMessage()/integrateSubmit() already read the real
+	 * toolbar widget's value directly rather than relying on this method's own side effect, but
+	 * scoped here too now so this method actually does what its docblock says.
+	 *
 	 * @param {type} _action selected toolbar action with checkbox
 	 * @returns {undefined}
 	 */
 	setToggle(_action)
 	{
-		const widget = this.et2?.getWidgetById(_action.id) || this.app?.et2?.getWidgetById(_action.id);
+		const toolbar = this.et2?.getWidgetById('composeToolbar') || this.app?.et2?.getWidgetById('composeToolbar');
+		const widget = toolbar?.getWidgetById(_action.id);
 		if (widget && _action?.checkbox)
 		{
 			widget.set_value(_action.checked?"on":"off");
