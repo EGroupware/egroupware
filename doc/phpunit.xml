@@ -22,9 +22,14 @@
              addressbook LIKE '%demo%' search that a same-prefixed second account also matches),
              causing spurious failures across calendar/infolog/projectmanager tests.
              sysop's password is generated fresh per install, so it can't be committed here -
-             override via shell: EGW_ADMIN_PASSWORD="..." vendor/bin/phpunit -c doc/phpunit.xml -->
+             supply it via a git-ignored doc/phpunit.local.php (see doc/phpunit_bootstrap.php), or
+             via shell: EGW_ADMIN_PASSWORD="..." vendor/bin/phpunit -c doc/phpunit.xml
+             EGW_ADMIN_PASSWORD is deliberately NOT declared as an <env> here: PHPUnit putenv()s an
+             <env> even with an empty value, so getenv()/$_ENV then report it as "provided, but
+             empty" - which silently shadows the doc/phpunit.local.php fallback. A real shell value
+             is unaffected either way, as PHPUnit does not override an already-set environment
+             variable unless the <env> carries force="true". -->
         <var name="EGW_ADMIN_USER" value="sysop" />
-        <env name="EGW_ADMIN_PASSWORD" value=""/>
     </php>
 	    <testsuites>
 	        <testsuite name="Api">
