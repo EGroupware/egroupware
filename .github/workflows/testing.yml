@@ -104,6 +104,26 @@ jobs:
           submodules: true
           path: sources
 
+      - name: Cache Composer downloads
+        uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache
+          key: composer-cache-${{ runner.os }}-${{ hashFiles('sources/composer.lock') }}
+          restore-keys: |
+            composer-cache-${{ runner.os }}-
+
+      - name: Install PHP dependencies in sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          COMPOSER_CACHE_DIR="${HOME}/.composer/cache"
+          docker run --rm --user "$(id -u):$(id -g)" \
+            -v "${COMPOSER_CACHE_DIR}":/tmp/composer-cache \
+            -v "${GITHUB_WORKSPACE}/sources":/app -w /app \
+            -e COMPOSER_CACHE_DIR=/tmp/composer-cache \
+            composer install --no-interaction --ignore-platform-reqs
+          php "${GITHUB_WORKSPACE}/sources/install-cli.php" --git-apps pull
+
       - name: Mint installation token for additional apps
         id: extra-apps-app-token
         if: inputs.extra-apps != '' && env.EXTRA_APPS_APP_ID != ''
@@ -137,6 +157,14 @@ jobs:
             dir="$(jq -r '.dir // (.repo | split("/") | last)' <<<"$app")"
             ref="$(jq -r '.ref // "master"' <<<"$app")"
             echo "::group::$repo@$ref -> $dir"
+            # A public app is normally provided by composer, pinned to composer.lock and
+            # extracted without a .git (composer's source clone is blocked on the runner). To
+            # test the app's own ref instead, that copy has to be replaced - which is why this
+            # runs after "Install PHP dependencies in sources" rather than before it.
+            if [ -d "$GITHUB_WORKSPACE/sources/$dir" ]; then
+              echo "replacing the composer-provided $dir"
+              rm -rf "$GITHUB_WORKSPACE/sources/$dir"
+            fi
             git clone --depth 1 --branch "$ref" \
               "https://${AUTH}github.com/${repo}.git" \
               "$GITHUB_WORKSPACE/sources/$dir"
@@ -165,26 +193,6 @@ jobs:
           fi
           echo "testing: $TEST_DIRS"
           echo "EGW_TEST_APP_DIRS=$TEST_DIRS" >> "$GITHUB_ENV"
-
-      - name: Cache Composer downloads
-        uses: actions/cache@v4
-        with:
-          path: ~/.composer/cache
-          key: composer-cache-${{ runner.os }}-${{ hashFiles('sources/composer.lock') }}
-          restore-keys: |
-            composer-cache-${{ runner.os }}-
-
-      - name: Install PHP dependencies in sources
-        shell: bash
-        run: |
-          set -euo pipefail
-          COMPOSER_CACHE_DIR="${HOME}/.composer/cache"
-          docker run --rm --user "$(id -u):$(id -g)" \
-            -v "${COMPOSER_CACHE_DIR}":/tmp/composer-cache \
-            -v "${GITHUB_WORKSPACE}/sources":/app -w /app \
-            -e COMPOSER_CACHE_DIR=/tmp/composer-cache \
-            composer install --no-interaction --ignore-platform-reqs
-          php "${GITHUB_WORKSPACE}/sources/install-cli.php" --git-apps pull
 
       - name: Install PHP dependencies of additional apps
         if: env.EGW_EXTRA_APP_DIRS != ''
@@ -623,6 +631,25 @@ jobs:
           submodules: true
           path: sources
 
+      - name: Cache Composer downloads
+        uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache
+          key: composer-cache-${{ runner.os }}-${{ hashFiles('sources/composer.lock') }}
+          restore-keys: |
+            composer-cache-${{ runner.os }}-
+
+      - name: Install PHP dependencies in sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          COMPOSER_CACHE_DIR="${HOME}/.composer/cache"
+          docker run --rm --user "$(id -u):$(id -g)" \
+            -v "${COMPOSER_CACHE_DIR}":/tmp/composer-cache \
+            -v "${GITHUB_WORKSPACE}/sources":/app -w /app \
+            -e COMPOSER_CACHE_DIR=/tmp/composer-cache \
+            composer install --no-interaction --ignore-platform-reqs
+
       - name: Mint installation token for additional apps
         id: extra-apps-app-token
         if: inputs.extra-apps != '' && env.EXTRA_APPS_APP_ID != ''
@@ -656,6 +683,14 @@ jobs:
             dir="$(jq -r '.dir // (.repo | split("/") | last)' <<<"$app")"
             ref="$(jq -r '.ref // "master"' <<<"$app")"
             echo "::group::$repo@$ref -> $dir"
+            # A public app is normally provided by composer, pinned to composer.lock and
+            # extracted without a .git (composer's source clone is blocked on the runner). To
+            # test the app's own ref instead, that copy has to be replaced - which is why this
+            # runs after "Install PHP dependencies in sources" rather than before it.
+            if [ -d "$GITHUB_WORKSPACE/sources/$dir" ]; then
+              echo "replacing the composer-provided $dir"
+              rm -rf "$GITHUB_WORKSPACE/sources/$dir"
+            fi
             git clone --depth 1 --branch "$ref" \
               "https://${AUTH}github.com/${repo}.git" \
               "$GITHUB_WORKSPACE/sources/$dir"
@@ -684,25 +719,6 @@ jobs:
           fi
           echo "testing: $TEST_DIRS"
           echo "EGW_TEST_APP_DIRS=$TEST_DIRS" >> "$GITHUB_ENV"
-
-      - name: Cache Composer downloads
-        uses: actions/cache@v4
-        with:
-          path: ~/.composer/cache
-          key: composer-cache-${{ runner.os }}-${{ hashFiles('sources/composer.lock') }}
-          restore-keys: |
-            composer-cache-${{ runner.os }}-
-
-      - name: Install PHP dependencies in sources
-        shell: bash
-        run: |
-          set -euo pipefail
-          COMPOSER_CACHE_DIR="${HOME}/.composer/cache"
-          docker run --rm --user "$(id -u):$(id -g)" \
-            -v "${COMPOSER_CACHE_DIR}":/tmp/composer-cache \
-            -v "${GITHUB_WORKSPACE}/sources":/app -w /app \
-            -e COMPOSER_CACHE_DIR=/tmp/composer-cache \
-            composer install --no-interaction --ignore-platform-reqs
 
       - name: Setup Node
         uses: actions/setup-node@v4
