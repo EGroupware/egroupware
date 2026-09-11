@@ -998,7 +998,28 @@ class Json implements JsonModule
 				// check if we need a not yet instantiated app.js object --> instantiate it now
 				else if (i == 1 && parts[0] == 'app' && typeof (_context || self.#wnd).app.classes[parts[1]] === 'function')
 				{
-					parent = parent[parts[1]] = new (_context || self.#wnd).app.classes[parts[1]](parts[1], self.#wnd);
+					try
+					{
+						parent = parent[parts[1]] = new (_context || self.#wnd).app.classes[parts[1]](parts[1], self.#wnd);
+					}
+					catch (err)
+					{
+						// Same failure class as the "not yet included" branch above (ticket
+						// #124112): a stale-chunk collision can leave app.classes[parts[1]] set
+						// to a class whose own dependencies never finished loading, so
+						// instantiating it throws here instead - previously uncaught, with no
+						// indication why, all the way up through whatever onclick/onchange
+						// handler called us.
+						console.error("Failed to instantiate app."+parts[1]+" ("+err+")");
+						if (!(<any>self.#wnd).egw_import?.updateAvailableNotified)
+						{
+							egw(self.#wnd).message(
+								egw(self.#wnd).lang('Please reload the EGroupware desktop (F5 / Cmd+r).'),
+								'error'
+							);
+						}
+						throw err;
+					}
 				}
 			}
 			if (typeof parent[func] == 'function')
