@@ -87,7 +87,7 @@
 					<et2-vbox>
 						<et2-description  value="Performance optimization for huge InfoLog tables" label="%s:"></et2-description>
 						<et2-description  value="Limit list to last N month, if ordering by last-modified and not searching."></et2-description>
-						<et2-description  value="Can not return an exact number of rows and therefore hides the count."></et2-description>
+						<et2-description  value="The count then covers that period only, older entries are not listed."></et2-description>
 					</et2-vbox>
 					<et2-select  id="limit_modified_n_month">
 						<option value="">{Disabled} ({Default})</option>

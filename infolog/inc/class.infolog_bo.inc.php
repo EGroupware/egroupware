@@ -158,6 +158,13 @@ class infolog_bo
 	 */
 	public $limit_modified_n_month;
 	/**
+	 * Number of month the last search() limited "last changed" to, null if it was not limited
+	 *
+	 * Not necessarily $limit_modified_n_month: search() doubles that window until it holds a
+	 * full page, and drops it entirely if even that does not suffice.
+	 */
+	public $limit_modified_applied;
+	/**
 	 * Ensure responsible user has (read-)access to primary contact or all contacts linked to the entry
 	 *
 	 * @var string|null "primary": primary contact only, "all": all linked contacts, default: do NOT ensure it
@@ -1555,10 +1562,6 @@ class infolog_bo
 	}
 
 	/**
-	 * Total returned, if search used limit modified optimization
-	 */
-	const LIMIT_MODIFIED_TOTAL = 9999;
-	/**
 	 * Set 2^N to automatic retry N times, if limit modified optimization did not return enough rows
 	 */
 	const LIMIT_MODIFIED_RETRY = 8;
@@ -1574,6 +1577,9 @@ class infolog_bo
 	 * @param $query[action] / $query[action_id] if only entries linked to a specified app/entry show be used
 	 * @param &$query[start], &$query[total] nextmatch-parameters will be used and set if query returns less entries
 	 * @param $query[col_filter] array with column-name - data pairs, data == '' means no filter (!)
+	 * @param &$query[limit_modified_n_month] limit "last changed" to the last N month, only honored when
+	 *	sorting by last changed and not searching; unset again if the window had to be dropped.
+	 *	$query[total] is then the total of the LIMITED list, $limit_modified_applied the window used.
 	 * @param boolean $no_acl =false true: ignore all acl
 	 * @return array with id's as key of the matching log-entries
 	 */
@@ -1620,6 +1626,7 @@ class infolog_bo
 		$q = $query;
 		unset($q['limit_modified_n_month']);
 		$acl_filter = $no_acl ? null : $this->aclFilter($query['filter']);
+		$this->limit_modified_applied = null;
 		for($n = 1; $n <= self::LIMIT_MODIFIED_RETRY; $n *= 2)
 		{
 			// apply modified limit only if requested AND we're sorting by modified AND NOT (searching, CRM-view, ...)
@@ -1633,13 +1640,12 @@ class infolog_bo
 			}
 			$ret = $this->searchInfolog($q, $no_acl, $acl_filter);
 			$this->total = $query['total'] = $q['total'];
-			if (!isset($q['col_filter'][99]) || is_array($ret) && count($ret) >= $query['num_rows'])
+			$this->limit_modified_applied = isset($q['col_filter'][99]) ? $n*$query['limit_modified_n_month'] : null;
+			// widen on the TOTAL of the limited query, not on the rows this request returned:
+			// every page of a list must get the same window, and the last page is always short
+			if (!isset($q['col_filter'][99]) || $q['total'] >= (int)($query['num_rows'] ?? 0))
 			{
-				if (isset($q['col_filter'][99]))
-				{
-					$this->total = $query['total'] = self::LIMIT_MODIFIED_TOTAL;
-				}
-				break;	// --> no modified limit, or got enough rows
+				break;	// --> no modified limit, or window holds at least a full page
 			}
 			// last retry without limit
 			if (2*$n === self::LIMIT_MODIFIED_RETRY)
@@ -1931,13 +1937,11 @@ class infolog_bo
 		$rs = $this->so->search(array(), $only_keys, $order_by, $extra_cols, '', false, 'AND', $start, $filter, $join);
 		$query['total'] = $this->so->total;
 
-		// check if start is behind total --> reset to 0 and retry once
-		if (isset($query['start']) && $query['start'] > $query['total'])
-		{
-			$query['start'] = $start[0] = 0;
-			$rs = $this->so->search(array(), $only_keys, $order_by, $extra_cols, '', false, 'AND', $start, $filter, $join);
-			$query['total'] = $this->so->total;
-		}
+		// A start past the end returns no rows.  This used to re-run the query at start 0 to put
+		// the old paging nextmatch back onto a valid page, but the corrected start reaches nobody
+		// (Nextmatch::call_get_rows() ignores 'start', search() queries a copy of $query) - so all
+		// that arrived was page 1's rows labelled as the requested range, which the client drops
+		// as duplicate ids, leaving permanent placeholder rows.  $query['total'] stays accurate.
 
 		if ($query['return-iterator'] ?? isset($query['cols']))
 		{

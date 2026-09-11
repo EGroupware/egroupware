@@ -34,6 +34,9 @@ class InfologApp extends EgwApp
 	protected push_grant_fields = ["info_owner","info_responsible"];
 	protected push_filter_fields = ["info_owner","info_responsible"]
 
+	// "last changed" window the index list is limited to, null if it is not limited - see setModifiedLimit()
+	protected _modified_limit : number | null = null;
+
 	/**
 	 * Constructor
 	 *
@@ -125,11 +128,8 @@ class InfologApp extends EgwApp
 						egw.applyFunc('app.stylite.decrypt_hover', [nm]);
 					});
 				}
-				// blur count, if limit modified optimization used
-				if(nm?.totalCount === 9999)
-				{
-					this.blurCount(true);
-				}
+				// get_rows() ran before this template existed - now there is a nextmatch for the notice
+				this._renderModifiedLimit();
 				break;
 			case 'infolog.edit.print':
 				if (this.et2.getArrayMgr('content').data.info_des.indexOf(this.begin_pgp_message) != -1)
@@ -898,13 +898,47 @@ class InfologApp extends EgwApp
 	}
 
 	/**
-	 * Blur NM count (used for limit modified optimization not returning (an exact) count
+	 * The list only covers entries changed within the last N month
 	 *
-	 * @param blur
+	 * Called from infolog_ui::get_rows() after every fetch: the "Limit rows ordered by last
+	 * modified" site configuration makes the server query - and count - only that window, so
+	 * older entries are silently absent from an otherwise plausible row count.
+	 *
+	 * @param months window the list is limited to, null/0 if it is not limited
 	 */
-	blurCount(blur : boolean)
+	setModifiedLimit(months : number | null)
 	{
-		document.querySelector('div#infolog-index_nm.et2_nextmatch .header_count')?.classList.toggle('blur_count', blur);
+		this._modified_limit = months && months > 0 ? months : null;
+		this._renderModifiedLimit();
+	}
+
+	/**
+	 * Show/hide the "older entries are not shown" notice in the nextmatch's footer slot
+	 *
+	 * Separate from setModifiedLimit() because the first get_rows() runs while the index template
+	 * is still being built, with no nextmatch to slot anything into - et2_ready() calls it again.
+	 */
+	protected _renderModifiedLimit()
+	{
+		const nm = <Et2Nextmatch>this.et2?.getWidgetById('nm');
+		if(!nm)
+		{
+			return;
+		}
+		let notice = nm.querySelector<HTMLElement>(':scope > .infolog_modified_limit');
+		if(!this._modified_limit)
+		{
+			notice?.remove();
+			return;
+		}
+		if(!notice)
+		{
+			notice = document.createElement('div');
+			notice.classList.add('infolog_modified_limit');
+			notice.slot = 'footer';
+			nm.appendChild(notice);
+		}
+		notice.textContent = this.egw.lang('Only entries changed in the last %1 months are shown', this._modified_limit);
 	}
 
 	/**

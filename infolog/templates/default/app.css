@@ -192,9 +192,12 @@ div#infolog-edit_infolog-edit-description iframe {
   min-width: auto;
   width: 40% !important;
 }
-.header_count.blur_count > span {
-  color: transparent;
-  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+/* "older entries are not shown" notice, slotted into the nextmatch footer by app.infolog */
+.infolog_modified_limit {
+  padding: 0.3em 0.6em;
+  text-align: center;
+  font-style: italic;
+  color: var(--sl-color-neutral-600);
 }
 span#infolog-index_\$\{row\}\[info_des\] {
   flex: unset;
