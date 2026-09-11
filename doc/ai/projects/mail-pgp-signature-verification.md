@@ -29,8 +29,9 @@ see their own phasing entries) - `Autocrypt-Gossip:` sending/receiving is now **
 (researched 2026-09-09 against Mailvelope's actual API source - not achievable, see its own entries
 under items 3/4) and item 6's mutual auto-encrypt preference is now **DONE** too (2026-09-09, see
 its own entry - built end-to-end, unit-tested, not yet live-clicked-through). The
-`pubkey_uploaded()` UI gap (item 1's own entry) is now **DONE** too (2026-09-11, see its own
-entry). With that, **every single item in this whole Phase 5 section is now DONE or explicitly
+`pubkey_uploaded()` UI gap (item 1's own entry) is now **DONE and live-verified end-to-end** too
+(2026-09-11, see its own entry - ralf's own real key/account, including both follow-on fixes it
+surfaced). With that, **every single item in this whole Phase 5 section is now DONE or explicitly
 DROPPED** - nothing left unbuilt. item 2's `prefer-encrypt` storage
 now HAS a real caller (item 4's wiring, when a header carries `prefer-encrypt=mutual`) AND a real
 reader (item 6). **Item 4's real-message wiring is now live-verified too** (2026-09-09,
@@ -1148,16 +1149,25 @@ text was confusing, not informative.)*
      limitation `AddressbookBoMultiKeyStorageTest.php`'s own docblock already documents for
      `set_keys()` itself (this method itself never calls `search()`, but `read()`/`save()` share
      the same untested-here territory), not something this fix caused.
-   - **Live-verified (2026-09-11)**: ralf's own real key (`Ralf_Becker_pub.asc`) uploaded
+   - **Live-verified end-to-end (2026-09-11), ralf's own real key and account**: uploaded
      successfully via the fixed flow (an initial `pubkeyUploadStart is not a function` error
      turned out to be a stale JS bundle, not a code bug - `app.min.js` only regenerates via
      `npm run build`/`build:watch`, which wasn't running yet); the etag-bump-on-upload bug above
-     was found during that same live pass and fixed same-session. **Still not clicked through**:
-     the actual
-     "does a second upload for a different address avoid clobbering the first" scenario itself
-     (ralf's plan: upload his own multi-UID key once with only one of its addresses on the
-     contact, then again after adding the second address, checking the resulting VFS JSON has
-     both).
+     was found during that same live pass and fixed same-session. The merge-not-clobber behaviour
+     itself was confirmed too: a second address (his own boulder.egroupware.org account's real
+     email) merged in as an ALIAS pointing at the already-stored `'*'` entry - the exact
+     "aliasing instead of clobbering" outcome `merge_keys_json()`'s own dedup is supposed to
+     produce, not a second copy or a lost first entry - confirmed correct (ralf: "I think that's
+     ok, as the primary email of the pgp key is a different one"). The file-format follow-up (JSON
+     first line + real importable PEM block below it) was also confirmed live, matching exactly
+     what `append_primary_key_pem()` was designed to produce (ralf: "now I get the expected 1st
+     line as JSON and then the armored key as a valid PEM file, good :)"). **The
+     original "Known follow-up" gap this whole item 1 entry started from
+     (`pubkey_uploaded()`/`Et2VfsUpload` clobbering other addresses on upload) is now fully closed
+     and live-verified**, along with both follow-on fixes it surfaced (the etag bug, the file
+     format). Not separately re-verified live: uploading two GENUINELY DIFFERENT keys (rather than
+     the same key matching two addresses, ralf's own real-world case) for one contact - lower
+     priority, the underlying merge/alias logic is identical either way and already covered above.
 3. Sending `Autocrypt:` (own key) - DONE (2026-09-09, see its own entry) - was indeed the simplest,
    most self-contained piece, no consent-dialog UI needed (never touches another contact's stored
    data). `Autocrypt-Gossip:` (the other half of item 3) is **DROPPED** (researched 2026-09-09 - not
@@ -1173,12 +1183,12 @@ text was confusing, not informative.)*
    real WRITER (`ajax_pgpAddKeyToContact` calls `set_autocrypt_attributes()` when a header carries
    `prefer-encrypt=mutual`) and a real READER (item 6's `get_autocrypt_prefer_encrypt()`).
 6. **Item 6 (mutual auto-encrypt preference) - DONE (2026-09-09), see its own entry.**
-7. **The `pubkey_uploaded()` UI gap (item 1's own entry) - DONE (2026-09-11).** With this, every
-   item in this whole Autocrypt integration is now either DONE or explicitly DROPPED - nothing
-   left unbuilt. Both this and item 6 still need a real live click-through before calling them
-   fully verified: item 6 needs two real contacts with `prefer-encrypt=mutual` already learned;
-   this one needs a contact with two addresses, each getting its own uploaded key, confirmed to
-   land in separate JSON slots without clobbering.
+7. **The `pubkey_uploaded()` UI gap (item 1's own entry) - DONE and live-verified end-to-end
+   (2026-09-11)**, including both follow-on fixes it surfaced (the etag-on-upload bug, the file
+   format change) - see item 1's own entry for the full confirmation (ralf's own real key and
+   account). With this, every item in this whole Autocrypt integration is now either DONE or
+   explicitly DROPPED - nothing left unbuilt. Item 6 still needs a real live click-through before
+   calling it fully verified: two real contacts with `prefer-encrypt=mutual` already learned.
 
 ## Explicitly out of scope for this project
 
