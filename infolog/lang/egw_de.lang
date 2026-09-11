@@ -72,7 +72,6 @@ billed	infolog	de	Abgerechnet
 both	infolog	de	Annahme+erledigt
 call	infolog	de	Anrufen
 can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	de	Kann dazu benutzt werden um weitere InfoLog-Typen im Kalender anzuzeigen oder zu begrenzen dass z.B. nur noch Aufgaben angezeigt werden.
-can not return an exact number of rows and therefore hides the count.	admin	de	Kann keine exakte Anzahl Zeilen liefern und verbirgt deswegen den Zähler.
 cancel	infolog	de	Abbruch
 cancelled	infolog	de	Abgesagt.
 categories	infolog	de	Kategorien
@@ -333,6 +332,7 @@ old fixed definition	infolog	de	Ältere Definition, deren Werte nicht angepasst 
 one day after	infolog	de	Am nächsten Tag
 one day in advance	infolog	de	Am Vortag
 ongoing	infolog	de	In Arbeit
+only entries changed in the last %1 months are shown	infolog	de	Es werden nur Einträge angezeigt, die in den letzten %1 Monaten geändert wurden
 only for details	infolog	de	Nur bei Details
 only if i get assigned or removed	infolog	de	Nur wenn ich zugewiesen oder entfernt werde
 only show them if there is a filter	infolog	de	Nur anzeigen wenn gefiltert wird
@@ -484,6 +484,7 @@ task	infolog	de	Aufgabe
 tasks of	infolog	de	Aufgaben von
 template	infolog	de	Vorlage
 test import (show importable records <u>only</u> in browser)	infolog	de	Test Import (zeige importierbare Datensätze <u>nur</u> im Browser)
+the count then covers that period only, older entries are not listed.	admin	de	Der Zähler umfasst dann nur diesen Zeitraum, ältere Einträge werden nicht aufgelistet.
 the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	de	Das Dokument kann Platzhalter wie {{%1}} enthalten, die mit den Daten ersetzt werden.
 the following document-types are supported:	infolog	de	Folgende Dateitypen werden unterstützt:
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	de	Der Name wird intern benutzt (<= 10 Zeichen). Wenn er geändert wird, werden existierende Daten unzugänglich.

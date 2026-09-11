@@ -72,7 +72,6 @@ billed	infolog	en	Billed
 both	infolog	en	Both
 call	infolog	en	Call
 can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	en	Can be used to show further InfoLog types in the calendar or limit it to show e.g. only tasks.
-can not return an exact number of rows and therefore hides the count.	admin	en	Can not return an exact number of rows and therefore hides the count.
 cancel	infolog	en	Cancel
 cancelled	infolog	en	Cancelled.
 categories	infolog	en	Categories
@@ -333,6 +332,7 @@ old fixed definition	infolog	en	Old fixed definition
 one day after	infolog	en	One day after
 one day in advance	infolog	en	One day in advance
 ongoing	infolog	en	Ongoing
+only entries changed in the last %1 months are shown	infolog	en	Only entries changed in the last %1 months are shown
 only for details	infolog	en	Only for details
 only if i get assigned or removed	infolog	en	Only if I get assigned or removed
 only show them if there is a filter	infolog	en	Only show them if there is a filter
@@ -484,6 +484,7 @@ task	infolog	en	ToDo
 tasks of	infolog	en	Tasks of
 template	infolog	en	Template
 test import (show importable records <u>only</u> in browser)	infolog	en	Test import. Show importable records <u>only</u> in browser.
+the count then covers that period only, older entries are not listed.	admin	en	The count then covers that period only, older entries are not listed.
 the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	en	The document can contain placeholder like {{%1}}, to be replaced with the data.
 the following document-types are supported:	infolog	en	The following document-types are supported:
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	en	The name used internally,<= 10 chars, changing it makes existing data unavailable.

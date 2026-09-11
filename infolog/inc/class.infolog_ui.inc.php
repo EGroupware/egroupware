@@ -529,10 +529,13 @@ class infolog_ui
 		}
 		$infos = $this->bo->search($query);
 		$query['search'] = $search;
-		// if limit modified optimization has been used, blur the wrong/not exact total
-		if (!empty($query['limit_modified_n_month']))
+		// tell the client which "last changed" window the list is limited to (null = not limited),
+		// on every fetch, as widening/dropping it is decided per query.  Only into a response that
+		// already exists: Json\Response::get() creates one and sends its headers, which would
+		// break get_rows() callers that are not answering an ajax request (eg. CSV export).
+		if (Api\Json\Response::isJSONResponse())
 		{
-			Api\Json\Response::get()->call('app.infolog.blurCount', $this->bo->total === infolog_bo::LIMIT_MODIFIED_TOTAL);
+			Api\Json\Response::get()->call('app.infolog.setModifiedLimit', $this->bo->limit_modified_applied);
 		}
 		$query['col_filter'] = $orginal_colfilter;
 		if (!is_array($infos))
