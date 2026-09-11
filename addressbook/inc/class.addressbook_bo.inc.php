@@ -914,17 +914,22 @@ class addressbook_bo extends Api\Contacts
 	 * contact's own open edit form shows, and sends whatever matched (possibly none).
 	 * detect_smime_address() (X.509 parsing, native to PHP), by contrast, needs no client help -
 	 * always called here regardless of whatever $addresses the client sent for that case (S/MIME
-	 * client-side sends none at all).
+	 * client-side sends none at all). An UNMATCHED key (no PGP UID matched anything the form
+	 * showed, or detect_smime_address() found nothing) falls back to the `'*'` "no specific
+	 * address known" slot instead - the same meaning as today's legacy/pre-this-feature storage.
 	 *
-	 * A matched address goes through set_pgp_keys()/set_smime_keys() (item 1/2's own
-	 * already-tested merge machinery, address-search based - same as
-	 * ajax_pgpAddKeyToContact()/ajax_set_pgp_keys() already use, no contact id needed there at
-	 * all). An UNMATCHED key (no PGP UID matched anything the form showed, or
-	 * detect_smime_address() found nothing) falls back to the `'*'` "no specific address known"
-	 * slot instead - the same meaning as today's legacy/pre-this-feature storage.
-	 * set_keys()'s own address-driven search can never reach that case (searching for the literal
-	 * string "*" as an email address matches no real contact), so it's handled directly against
-	 * $contactId via merge_key_for_contact_id() below instead.
+	 * Goes straight to merge_key_for_contact_id() below, always by contact id - NOT
+	 * set_pgp_keys()/set_smime_keys()'s own address-driven search (item 1/2's merge machinery, used
+	 * by ajax_pgpAddKeyToContact()/ajax_set_pgp_keys()): the id is already known here (the widget's
+	 * own id embeds it), so there is no need to search for the contact at all, and reusing that
+	 * path was ALSO the direct cause of a real live bug (found 2026-09-11, ralf: uploading a key
+	 * while the contact's own edit form stayed open made the form's NEXT regular save fail with
+	 * "the entry has been updated since you opened it for editing" - `set_keys()`/`Contacts::save()`
+	 * unconditionally bumps the row's `etag` counter column on every call, regardless of
+	 * `$touch_modified`, since `Storage::save()`'s own generic SQL write increments it directly
+	 * (`etag=etag+1`) - there is no `$touch_modified`-style flag for it at all). Fixed by not
+	 * calling `save()` on the contact from this upload flow in the first place (see
+	 * merge_key_for_contact_id()'s own docblock) - "leave that for the regular run" (ralf).
 	 *
 	 * @param int $contactId
 	 * @param bool $pgp true: PGP, false: S/MIME
@@ -947,72 +952,82 @@ class addressbook_bo extends Api\Contacts
 		{
 			$addresses = array_filter([self::detect_smime_address($armored)]);
 		}
-		if ($addresses)
+		if (!$addresses)
 		{
-			$keys = array_fill_keys(array_map('strtolower', $addresses), $armored);
-			$message = $pgp ? $this->set_pgp_keys($keys) : $this->set_smime_keys($keys);
+			$addresses = ['*'];
 		}
-		else
-		{
-			$message = $this->merge_key_for_contact_id((int)$contactId, $pgp, $armored);
-		}
-		$response->data(['message' => $message]);
+		$response->data($this->merge_key_for_contact_id((int)$contactId, $pgp, $armored, $addresses));
 	}
 
 	/**
-	 * Merge an uploaded key/cert into the `'*'` (no specific address known) slot of a SPECIFIC,
-	 * already-identified contact - the one case set_keys()'s own address-driven search can never
-	 * reach (see ajax_pubkey_upload()'s own docblock). Shares set_keys()'s own per-contact write
-	 * logic (key_storage_path()/write_key_file()/merge_keys_json(), all already covered by
-	 * AddressbookBoMultiKeyStorageTest.php) rather than duplicating it, just addressed by contact
-	 * id instead of discovered via search.
+	 * Merge an uploaded key/cert into a SPECIFIC, already-identified contact's key storage - one
+	 * or more addresses at once (a key with several User IDs, each matching a different one of the
+	 * contact's own addresses, merges under all of them in a single call - merge_keys_json()'s own
+	 * dedup/alias logic already handles identical key text safely, see
+	 * AddressbookBoMultiKeyStorageTest.php), or the `'*'` "no specific address known" fallback.
+	 * Addressed directly by contact id rather than set_keys()'s own address-driven search - see
+	 * ajax_pubkey_upload()'s own docblock for why (that search cannot reach `'*'` at all, and using
+	 * it for the matched-address case too was the direct cause of a real live etag bug).
+	 *
+	 * Deliberately does NOT call $this->save() on the contact at all for the (overwhelmingly
+	 * common) VFS-file-backed case - only write_key_file() actually persists the merged key, the
+	 * contact row itself is untouched, so this can run safely while the SAME contact's own
+	 * edit form stays open without invalidating its etag/making its next regular save fail. The
+	 * `files` bitmask (`FILES_BIT_PGP_PUBKEY`/`FILES_BIT_SMIME_PUBKEY`) is therefore NOT persisted
+	 * here either - the JS caller applies the returned `filesBit` to its own in-memory form content
+	 * instead, so it rides along with whatever the user's own NEXT regular save already does,
+	 * rather than this method causing a second, invisible one of its own.
+	 *
+	 * The non-VFS-file fallback (S/MIME on a non-SQL backend, stored directly in the `pubkey`
+	 * DB/LDAP/AD field - pubkey_use_file()) has no such option: there is no separate file to write
+	 * independently of the contact row, so save() (and its etag bump) is unavoidable there. A
+	 * narrower, pre-existing tradeoff for that one backend combination, not something this fix
+	 * introduces or claims to solve.
 	 *
 	 * @param int $contactId
 	 * @param bool $pgp true: PGP, false: S/MIME
 	 * @param string $armored
-	 * @return string message of the update operation result
+	 * @param string[] $addresses lowercased address(es) (or `['*']`) to store this key under
+	 * @return array{message: string, filesBit?: int} filesBit only present on success
 	 */
-	private function merge_key_for_contact_id(int $contactId, bool $pgp, string $armored) : string
+	private function merge_key_for_contact_id(int $contactId, bool $pgp, string $armored, array $addresses) : array
 	{
 		if (!($contact = $this->read($contactId)))
 		{
-			return lang('Contact not found');
+			return ['message' => lang('Contact not found')];
 		}
 		if (!$this->check_perms(Acl::EDIT, $contact))
 		{
-			return lang('Permission denied');
+			return ['message' => lang('Permission denied')];
 		}
-		$key_regexp = $pgp ? self::$pgp_key_regexp : Api\Mail\Smime::$certificate_regexp;
+		$keys = array_fill_keys($addresses, $armored);
+		$filesBit = $pgp ? self::FILES_BIT_PGP_PUBKEY : self::FILES_BIT_SMIME_PUBKEY;
 		$path = $this->key_storage_path($contact, $pgp);
 		if ($path)
 		{
-			$contact['files'] |= $pgp ? self::FILES_BIT_PGP_PUBKEY : self::FILES_BIT_SMIME_PUBKEY;
 			$existing = file_exists($path) ? file_get_contents($path) : '';
-			// remove evtl. existing legacy (non-JSON) pubkey from the CONTACT field too - file
-			// storage and the pubkey field are never both populated for the same key (mirrors
-			// set_keys()'s own equivalent step)
-			if (preg_match($key_regexp, $contact['pubkey'] ?? ''))
+			$newContent = self::merge_keys_json($existing, $keys, $pgp);
+			if (!$this->write_key_file($path, $newContent))
 			{
-				$contact['pubkey'] = preg_replace($key_regexp, '', $contact['pubkey']);
+				return ['message' => lang('Error writing key file')];
 			}
-			$newContent = self::merge_keys_json($existing, ['*' => $armored], $pgp);
+			return ['message' => lang('Key stored.'), 'filesBit' => $filesBit];
 		}
-		else
+		// no VFS file for this contact/backend - only option is the pubkey DB/LDAP/AD field
+		// itself, which needs save() to persist (see this method's own docblock)
+		$key_regexp = $pgp ? self::$pgp_key_regexp : Api\Mail\Smime::$certificate_regexp;
+		if (preg_match($key_regexp, $contact['pubkey'] ?? ''))
 		{
-			$existing = $contact['pubkey'] ?? '';
-			$newContent = self::merge_keys_json($existing, ['*' => $armored], $pgp);
-			$contact['pubkey'] = $newContent;
+			$contact['pubkey'] = preg_replace($key_regexp, '', $contact['pubkey']);
 		}
+		$contact['pubkey'] = self::merge_keys_json($contact['pubkey'] ?? '', $keys, $pgp);
+		$contact['files'] |= $filesBit;
 		$contact['photo_unchanged'] = true;	// otherwise photo will be lost, see set_keys()'s own comment
 		if (!$this->save($contact))
 		{
-			return lang('Error saving contact');
+			return ['message' => lang('Error saving contact')];
 		}
-		if ($path && !$this->write_key_file($path, $newContent))
-		{
-			return lang('Error writing key file');
-		}
-		return lang('Key stored.');
+		return ['message' => lang('Key stored.')];
 	}
 
 	/**

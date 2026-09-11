@@ -1082,27 +1082,53 @@ text was confusing, not informative.)*
      IDs at all (`decode_key_content()`'s own docblock). For S/MIME: no client parsing at all,
      sent as-is - `detect_smime_address()` already exists server-side (native X.509 via
      `openssl`).
-   - **Server**: new `addressbook_bo::ajax_pubkey_upload($contactId, $pgp, $armored, $addresses)`.
-     A matched address goes straight through `set_pgp_keys()`/`set_smime_keys()` (no new code -
-     same address-search-based merge `ajax_pgpAddKeyToContact()`/`ajax_set_pgp_keys()` already
-     use). An unmatched key (no PGP UID matched anything the form showed, or
-     `detect_smime_address()` found nothing) falls back to the `'*'` slot via new
-     `merge_key_for_contact_id()` - `set_keys()`'s own address-driven search can never reach `'*'`
-     (searching for the literal string `"*"` as an email address matches no real contact), so
-     that one case is handled directly against `$contactId` instead, reusing `set_keys()`'s own
-     per-contact write primitives (`key_storage_path()`/`write_key_file()`/`merge_keys_json()`)
-     rather than duplicating them.
+   - **Server**: new `addressbook_bo::ajax_pubkey_upload($contactId, $pgp, $armored, $addresses)` ->
+     `merge_key_for_contact_id()`, always addressed directly by `$contactId` (one or more matched
+     addresses at once, or `['*']` as the fallback when none matched) - NOT
+     `set_pgp_keys()`/`set_smime_keys()`'s own address-driven search (item 1/2's merge machinery,
+     still used by `ajax_pgpAddKeyToContact()`/`ajax_set_pgp_keys()`): the contact id is already
+     known here (the widget's own id embeds it), so no search is needed, and reusing that search
+     path for the matched-address case too was the direct cause of a second real bug, found
+     immediately after live-testing the first fix (2026-09-11, ralf): **uploading a key while the
+     same contact's own edit form stayed open made that form's NEXT regular save fail** with
+     "the entry has been updated since you opened it for editing" -
+     `set_keys()`/`Api\Contacts::save()` unconditionally bumps the row's `etag` COUNTER column on
+     every call (`Storage::save()`'s generic SQL write does `etag=etag+1` directly - there is no
+     `$touch_modified`-style flag for it, confirmed by reading `Storage\Base.php`, so passing
+     `$touch_modified=false` would NOT have fixed this, only ralf's own original instinct of not
+     calling `save()` at all does). Fixed by having `merge_key_for_contact_id()` skip `save()`
+     entirely for the (overwhelmingly common) VFS-file-backed case - only `write_key_file()`
+     persists the merged key, the contact ROW itself is untouched, so its etag never changes and
+     the still-open form's own next save is unaffected. The `files` bitmask
+     (`FILES_BIT_PGP_PUBKEY`/`FILES_BIT_SMIME_PUBKEY`) that would otherwise have been set on the
+     contact is instead returned to the client as `filesBit` and applied to the open form's own
+     in-memory content there (`pubkeyUploadStart()`'s success handler,
+     `addressbook/js/app.ts`) - "leave that for the regular run" (ralf) - so it rides along with
+     whatever the user's own next deliberate save already does, rather than this upload causing a
+     second, invisible one. The one narrower case that still calls `save()` (and so still bumps
+     etag): S/MIME on a non-SQL backend, stored directly in the `pubkey` DB/LDAP/AD field with no
+     separate VFS file to write independently - a pre-existing tradeoff for that one backend
+     combination, not something this fix claims to solve.
    - **Tested**: client-side address-matching logic
      (`addressbook/js/test/AddressbookPubkeyUploadMerge.test.ts`, 4 cases, real openpgp.js-parsed
      multi-UID fixture) and the server's early input-validation guard
      (`addressbook/tests/AddressbookBoPubkeyUploadTest.php`, 3 cases, via `Api\Json\Response::
      returnResult()` - both reads AND resets the singleton's state, no reflection needed between
      tests). **Not tested**: the actual merge path once a contact is found
-     (`merge_key_for_contact_id()`/`set_pgp_keys()`/`set_smime_keys()`) - same pre-existing
-     `$this->search()`-hang environment limitation `AddressbookBoMultiKeyStorageTest.php`'s own
-     docblock already documents for `set_keys()` itself, not something this fix caused. **Not yet
-     live-clicked-through** either - needs a real contact with two addresses, each getting its own
-     uploaded key, verified to land in separate JSON slots without clobbering.
+     (`merge_key_for_contact_id()`) - same pre-existing `$this->search()`-hang environment
+     limitation `AddressbookBoMultiKeyStorageTest.php`'s own docblock already documents for
+     `set_keys()` itself (this method itself never calls `search()`, but `read()`/`save()` share
+     the same untested-here territory), not something this fix caused.
+   - **Live-verified (2026-09-11)**: ralf's own real key (`Ralf_Becker_pub.asc`) uploaded
+     successfully via the fixed flow (an initial `pubkeyUploadStart is not a function` error
+     turned out to be a stale JS bundle, not a code bug - `app.min.js` only regenerates via
+     `npm run build`/`build:watch`, which wasn't running yet); the etag-bump-on-upload bug above
+     was found during that same live pass and fixed same-session. **Still not clicked through**:
+     the actual
+     "does a second upload for a different address avoid clobbering the first" scenario itself
+     (ralf's plan: upload his own multi-UID key once with only one of its addresses on the
+     contact, then again after adding the second address, checking the resulting VFS JSON has
+     both).
 3. Sending `Autocrypt:` (own key) - DONE (2026-09-09, see its own entry) - was indeed the simplest,
    most self-contained piece, no consent-dialog UI needed (never touches another contact's stored
    data). `Autocrypt-Gossip:` (the other half of item 3) is **DROPPED** (researched 2026-09-09 - not

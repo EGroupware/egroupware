@@ -1989,7 +1989,23 @@ class AddressbookApp extends EgwApp
 		}
 
 		this.egw.request('addressbook.addressbook_bo.ajax_pubkey_upload', [contactId, pgp, armored, addresses])
-			.then((result : any) => this.egw.message(result?.message || '', 'success'))
+			.then((result : any) =>
+			{
+				// merge_key_for_contact_id() (addressbook_bo, PHP) deliberately never calls
+				// save() on the contact for this (see its own docblock: this upload commonly runs
+				// while this SAME contact's edit form is still open, and save()'s unconditional
+				// etag bump would make that form's own NEXT regular save fail with "the entry has
+				// been updated since you opened it for editing" - found live 2026-09-11) - so the
+				// `files` bitmask it would otherwise have set is applied to this form's own
+				// in-memory content here instead, ready to ride along with whatever the user's own
+				// next regular save already does, rather than causing a second, invisible one.
+				if (typeof result?.filesBit === "number")
+				{
+					const content : any = this.et2.getArrayMgr('content').data;
+					content.files = (content.files || 0) | result.filesBit;
+				}
+				this.egw.message(result?.message || '', 'success');
+			})
 			.catch((err : any) => this.egw.message(err?.message || this.egw.lang('Upload failed'), 'error'));
 	}
 }
