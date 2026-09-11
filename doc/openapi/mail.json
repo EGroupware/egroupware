@@ -1039,7 +1039,7 @@
         "in": "path",
         "required": true,
         "schema": { "type": "string" },
-        "description": "Opaque folder id, as returned by GET /mail/folders. Never construct or parse this value - always echo one previously returned by this API."
+        "description": "Opaque folder id, as returned by GET /mail/folders - never construct or parse this value, always echo one previously returned by this API. Alternatively, a human-readable literal folder name/path is also accepted here: a single top-level folder directly (e.g. 'INBOX'), or a deeper one '::'-joined (e.g. 'INBOX::Sent' for INBOX/Sent, since a literal '/' can't appear inside one URL path segment) - resolved to the real folder internally. INBOX is matched case-insensitively as the first path segment only (RFC 3501 §5.1); any other segment is an ordinary, case-sensitive folder name. This is a purely additive alternative - the real id keeps working unchanged."
       },
       "emailId": {
         "name": "emailId",
@@ -1375,10 +1375,14 @@
       },
       "Mailbox": {
         "type": "object",
-        "description": "Proxied from the account's real JMAP session (Http for Stalwart, JmapShim for plain IMAP) - not a hand-picked field subset; additional properties beyond the ones listed here may be present or absent depending on backend and the `properties` query parameter. id/parentId are the session's own ids (real JMAP ids for Stalwart, base64(folder path) for the shim) - always treat as opaque. myRights/totalThreads/unreadThreads are only present for a Stalwart-backed (real JMAP) account; hasChildren/aclCapable are shim-only extras with no RFC 8621 counterpart.",
+        "description": "Proxied from the account's real JMAP session (Http for Stalwart, JmapShim for plain IMAP) - not a hand-picked field subset; additional properties beyond the ones listed here may be present or absent depending on backend and the `properties` query parameter. id/parentId are the session's own ids (real JMAP ids for Stalwart, base64(folder path) for the shim) - always treat as opaque. myRights/totalThreads/unreadThreads are only present for a Stalwart-backed (real JMAP) account; hasChildren/aclCapable/isSelectable are shim-only extras with no RFC 8621 counterpart. path/isSelectable are always present regardless of the `properties` query parameter, same as id.",
         "properties": {
           "id": { "type": "string", "description": "Opaque folder id" },
           "name": { "type": "string", "description": "Display name of just this folder (not the full path)" },
+          "path": {
+            "type": "string",
+            "description": "Human-readable, '/'-joined canonical folder path (e.g. 'INBOX/Sent') - the display-side counterpart of the '::'-joined literal-path folderId syntax also accepted by the folderId path parameter (e.g. 'INBOX::Sent'). Always present, not affected by the `properties` query parameter."
+          },
           "parentId": { "type": ["string", "null"], "description": "Id of the parent folder, or null for a top-level folder" },
           "role": {
             "type": ["string", "null"],
@@ -1389,7 +1393,11 @@
           "totalThreads": { "type": "integer", "description": "Stalwart/real-JMAP accounts only" },
           "unreadThreads": { "type": "integer", "description": "Stalwart/real-JMAP accounts only" },
           "myRights": { "type": "object", "description": "Stalwart/real-JMAP accounts only" },
-          "isSubscribed": { "type": "boolean" }
+          "isSubscribed": { "type": "boolean" },
+          "isSelectable": {
+            "type": "boolean",
+            "description": "false only for the shim's synthetic IMAP shared/other-users namespace-root pseudo-folder ('user'/'shared') - a real listing entry, but never a real, fetchable mailbox itself (derived from the real IMAP \\Noselect LIST attribute). Always true for a Stalwart/real-JMAP account, which has no namespace-root concept at all."
+          }
         },
         "additionalProperties": true
       },

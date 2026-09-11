@@ -667,18 +667,18 @@ class ApiHandler extends Api\CalDAV\Handler
 				case '/mail':
 					echo json_encode(iterator_to_array(Api\Mail\Account::identities([], true, 'name', $user)),
 						self::JSON_RESPONSE_OPTIONS);
-					return true;
+					return '200 Ok';
 
 				case preg_match('#^/mail/(\d+)$#', $path, $matches) === 1:
 					$account = self::getMailAccount($user, $matches[1] ?? null);
 					$account->getUserData();    // read user data too
 					echo json_encode(self::JsMailAccount($account), self::JSON_RESPONSE_OPTIONS);
-					return true;
+					return '200 Ok';
 
 				case preg_match('#^/mail(/(\d+))?/vacation$#', $path, $matches) === 1:
 					$account = self::getMailAccount($user, $matches[2] ?? null);
 					echo json_encode(self::returnVacation(self::getVacation($account->imapServer(), $user)), self::JSON_RESPONSE_OPTIONS);
-					return true;
+					return '200 Ok';
 
 				case preg_match('#^/mail/attachments/(([^/]+)--[^/.-]{6,})$#', $path, $matches) === 1:
 					if (!file_exists($tmp=$GLOBALS['egw_info']['server']['temp_dir'].'/attach--'.$matches[1]))
@@ -880,11 +880,58 @@ class ApiHandler extends Api\CalDAV\Handler
 			return null;
 		}
 		$segments = explode('::', $folderIdUrlSafe);
-		if (strcasecmp($segments[0], 'INBOX') === 0)
-		{
-			$segments[0] = 'INBOX';
-		}
+		$segments[0] = self::normalizeInboxCasing($segments[0]);
 		return implode('/', $segments);
+	}
+
+	/**
+	 * IMAP's own INBOX case-insensitivity (RFC 3501 §5.1) - normalizes to this codebase's own
+	 * canonical, always-uppercase "INBOX" spelling if $segment case-insensitively matches, otherwise
+	 * returns it unchanged. Shared by parseDoubleColonFolderPath() (first segment of a "::"-path)
+	 * and resolveBareFolderName() below (a bare, single-segment name has nothing else to normalize).
+	 *
+	 * @param string $segment
+	 * @return string
+	 */
+	protected static function normalizeInboxCasing(string $segment) : string
+	{
+		return strcasecmp($segment, 'INBOX') === 0 ? 'INBOX' : $segment;
+	}
+
+	/**
+	 * Last-resort fallback for getFolder()/listEmails(): a bare $folderIdUrlSafe (no "::" - single
+	 * segment, so there was nothing to join in the first place, eg. "INBOX" typed directly rather
+	 * than copied from a listing's own `id`) isn't syntactically distinguishable from a real/encoded
+	 * id up front - unlike the "::" syntax, which can never collide with an id (see
+	 * parseDoubleColonFolderPath()'s own docblock). So this is only ever tried on the FAILURE path,
+	 * once the caller's own fetch using resolveFolderId()'s id-decode result already came back empty
+	 * - a normal request that already passes back a real, previously-returned id never reaches this
+	 * (found live 2026-09-11: ralf hand-typed `GET .../folders/INBOX`, got a 404 - a single top-level
+	 * name has no "/" to justify requiring the "::" syntax at all).
+	 *
+	 * @param Api\Jmap\Base $session
+	 * @param string $folderIdUrlSafe
+	 * @return string|null null if this isn't a real folder name either - caller should 404
+	 */
+	protected static function resolveBareFolderName(Api\Jmap\Base $session, string $folderIdUrlSafe) : ?string
+	{
+		return $session->mailbox->getMailboxId(self::normalizeInboxCasing($folderIdUrlSafe));
+	}
+
+	/**
+	 * The inverse of parseDoubleColonFolderPath(): the canonical "/"-joined path (eg. "INBOX/Sent",
+	 * as already carried by every Mailbox object's own `path` field) turned into the same
+	 * "::"-joined REST URL form (eg. "INBOX::Sent") a caller could use to address this same folder.
+	 * Used for listFolders()'s own response-envelope resource-path keys, so a listing response is
+	 * consistently human-readable, not just each object's own `path` field (ralf, 2026-09-11: "if
+	 * the folder listing then you use the :: notation as it's attribute name, for consistency").
+	 *
+	 * @param string $path
+	 * @return string
+	 */
+	protected static function pathToDoubleColonFolderId(string $path) : string
+	{
+		return str_replace('/', '::', $path);
 	}
 
 	/**
@@ -1111,7 +1158,7 @@ class ApiHandler extends Api\CalDAV\Handler
 		foreach (self::listAllFolders($session, $subscribedOnly, self::queryProperties()) as $mailbox)
 		{
 			$mailbox = self::jsonMailbox($mailbox);
-			$responses[$prefix.$mailbox['id']] = $mailbox;
+			$responses[$prefix.self::pathToDoubleColonFolderId($mailbox['path'])] = $mailbox;
 		}
 		echo json_encode(['responses' => $responses], self::JSON_RESPONSE_OPTIONS);
 		return '200 Ok';
@@ -1122,8 +1169,10 @@ class ApiHandler extends Api\CalDAV\Handler
 	 *
 	 * @param int $user
 	 * @param int|null $ident_id
-	 * @param string $folderIdUrlSafe the real encoded folder id, OR a "::"-joined literal path
-	 *  (eg. "INBOX::Sent") - see parseDoubleColonFolderPath()'s own docblock
+	 * @param string $folderIdUrlSafe the real encoded folder id, a "::"-joined literal path (eg.
+	 *  "INBOX::Sent" - see parseDoubleColonFolderPath()'s own docblock), or a bare single-segment
+	 *  literal name (eg. "INBOX" - see resolveBareFolderName()'s own docblock for why this needs a
+	 *  failure-path retry rather than being detected up front like the "::" syntax)
 	 * @return string HTTP status - NOT true, see listFolders()'s own docblock for why
 	 * @throws \Exception (404) if not found
 	 */
@@ -1134,6 +1183,12 @@ class ApiHandler extends Api\CalDAV\Handler
 		$folderId = self::resolveFolderId($session, $folderIdUrlSafe);
 
 		$list = $session->mailbox->get([$folderId], self::queryProperties())['list'] ?? [];
+		// bare name fallback (eg. "INBOX", no "::") - see resolveBareFolderName()'s own docblock
+		if (!$list && self::parseDoubleColonFolderPath($folderIdUrlSafe) === null &&
+			($folderId = self::resolveBareFolderName($session, $folderIdUrlSafe)) !== null)
+		{
+			$list = $session->mailbox->get([$folderId], self::queryProperties())['list'] ?? [];
+		}
 		if (!$list)
 		{
 			throw new \Exception("Folder '$folderIdUrlSafe' not found", 404);
@@ -1151,8 +1206,9 @@ class ApiHandler extends Api\CalDAV\Handler
 	 *
 	 * @param int $user
 	 * @param int|null $ident_id
-	 * @param string $folderIdUrlSafe the real encoded folder id, OR a "::"-joined literal path
-	 *  (eg. "INBOX::Sent") - see parseDoubleColonFolderPath()'s own docblock
+	 * @param string $folderIdUrlSafe the real encoded folder id, a "::"-joined literal path (eg.
+	 *  "INBOX::Sent"), or a bare single-segment literal name (eg. "INBOX") - see getFolder()'s own
+	 *  docblock
 	 * @return string HTTP status - NOT true, see listFolders()'s own docblock for why
 	 */
 	protected static function listEmails(int $user, ?int $ident_id, string $folderIdUrlSafe) : string
@@ -1165,7 +1221,25 @@ class ApiHandler extends Api\CalDAV\Handler
 		$position = max(0, (int)($_GET['position'] ?? 0));
 		$limit = min(200, max(1, (int)($_GET['limit'] ?? 50)));
 
-		$query = $session->email->query($filter, self::queryEmailSort(), $position, $limit, true);
+		try
+		{
+			$query = $session->email->query($filter, self::queryEmailSort(), $position, $limit, true);
+		}
+		catch (\Throwable $e)
+		{
+			// bare name fallback (eg. "INBOX", no "::") - an invalid inMailbox id is rejected deep
+			// inside Email/query itself (a real JMAP server's own 400, or the shim's IMAP SELECT
+			// failure), not just an empty result - see resolveBareFolderName()'s own docblock. Only
+			// retried once; if this ALSO fails (or isn't applicable), the original error is the
+			// more meaningful one to surface, not this fallback attempt's own failure.
+			if (self::parseDoubleColonFolderPath($folderIdUrlSafe) !== null ||
+				($folderId = self::resolveBareFolderName($session, $folderIdUrlSafe)) === null)
+			{
+				throw $e;
+			}
+			$filter = ['inMailbox' => $folderId]+self::queryEmailFilter();
+			$query = $session->email->query($filter, self::queryEmailSort(), $position, $limit, true);
+		}
 		$ids = $query['ids'] ?? [];
 
 		$byId = [];
@@ -1220,7 +1294,23 @@ class ApiHandler extends Api\CalDAV\Handler
 		$mailboxId = self::mailboxIdForEmailGet($session, $folderIdUrlSafe);
 
 		$properties = self::queryProperties() ?? array_merge(self::DEFAULT_EMAIL_LIST_PROPERTIES, self::DEFAULT_EMAIL_BODY_PROPERTIES);
-		$list = $session->email->get([$emailId], $properties, true, $mailboxId)['list'] ?? [];
+		try
+		{
+			$list = $session->email->get([$emailId], $properties, true, $mailboxId)['list'] ?? [];
+		}
+		catch (\Throwable $e)
+		{
+			// bare name fallback (eg. "INBOX", no "::") - see resolveBareFolderName()'s own
+			// docblock and listEmails()'s identical pattern above; $mailboxId===null means this is
+			// a real JMAP session (isRealJmapSession() short-circuits mailboxIdForEmailGet() there),
+			// which never needed a mailboxId at all - nothing to retry
+			if ($mailboxId === null || self::parseDoubleColonFolderPath($folderIdUrlSafe) !== null ||
+				($mailboxId = self::resolveBareFolderName($session, $folderIdUrlSafe)) === null)
+			{
+				throw $e;
+			}
+			$list = $session->email->get([$emailId], $properties, true, $mailboxId)['list'] ?? [];
+		}
 		if (!$list)
 		{
 			throw new \Exception("Email '$emailId' not found", 404);
@@ -1266,7 +1356,20 @@ class ApiHandler extends Api\CalDAV\Handler
 			// catch below silently degrades every download to blobId/octet-stream (found live
 			// 2026-09-10 alongside the identical getEmail() gap)
 			$mailboxId = self::mailboxIdForEmailGet($session, $folderIdUrlSafe);
-			$email = $session->email->get([$emailId], ['attachments', 'blobId', 'subject'], false, $mailboxId)['list'][0] ?? null;
+			try
+			{
+				$email = $session->email->get([$emailId], ['attachments', 'blobId', 'subject'], false, $mailboxId)['list'][0] ?? null;
+			}
+			catch (\Throwable $e)
+			{
+				// bare name fallback (eg. "INBOX", no "::") - see getEmail()'s identical pattern
+				if ($mailboxId === null || self::parseDoubleColonFolderPath($folderIdUrlSafe) !== null ||
+					($mailboxId = self::resolveBareFolderName($session, $folderIdUrlSafe)) === null)
+				{
+					throw $e;
+				}
+				$email = $session->email->get([$emailId], ['attachments', 'blobId', 'subject'], false, $mailboxId)['list'][0] ?? null;
+			}
 			if (($email['blobId'] ?? null) === $blobId)
 			{
 				// the email's own top-level blobId (RFC 8621 §4.1.1) - the whole raw message, not
@@ -1393,15 +1496,24 @@ class ApiHandler extends Api\CalDAV\Handler
 	/**
 	 * Handle exception by returning an appropriate HTTP status and JSON content with an error message
 	 *
+	 * The exception's own code is only ever a real HTTP status for SOME exceptions (eg. plain
+	 * `\Exception($msg, 404)`, this file's own convention for REST-facing errors) - others use
+	 * non-HTTP internal codes (eg. `Api\Exception\NotFound`'s default of `2`). Both the JSON body's
+	 * `error` field and the actual returned HTTP status line must agree on the SAME, already-clamped
+	 * value - otherwise a client sees eg. HTTP 500 but `"error": 2` in the body, which doesn't match
+	 * any status this API actually sends.
+	 *
 	 * @param \Throwable $e
 	 * @return string
 	 */
 	protected function handleException(\Throwable $e) : string
 	{
 		_egw_log_exception($e);
+		$code = $e->getCode() ?: 500;
+		$httpCode = 400 <= $code && $code < 600 ? $code : 500;
 		header('Content-Type: application/json');
 		echo json_encode([
-				'error'   => $code = $e->getCode() ?: 500,
+				'error'   => $httpCode,
 				'message' => $e->getMessage(),
 				'details' => $e->details ?? null,
 				'script'  => $e->script ?? null,
@@ -1412,7 +1524,7 @@ class ApiHandler extends Api\CalDAV\Handler
 					return $trace;
 				}, $e->getTrace())
 			]), self::JSON_RESPONSE_OPTIONS);
-		return (400 <= $code && $code < 600 ? $code : 500).' '.$e->getMessage();
+		return $httpCode.' '.$e->getMessage();
 	}
 
 	/**

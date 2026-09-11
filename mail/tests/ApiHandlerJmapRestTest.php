@@ -36,6 +36,19 @@ class ApiHandlerJmapRestTest extends \PHPUnit\Framework\TestCase
 		return $reflection->invoke(null, ...$args);
 	}
 
+	/**
+	 * Same as invokeApiHandler(), but for an instance method (eg. handleException()) that
+	 * doesn't touch $this->app/$this->caldav - a bare, never-constructed instance is enough,
+	 * without needing a real Api\CalDAV object.
+	 */
+	private function invokeApiHandlerInstance(string $method, array $args)
+	{
+		$instance = (new \ReflectionClass(ApiHandler::class))->newInstanceWithoutConstructor();
+		$reflection = new \ReflectionMethod(ApiHandler::class, $method);
+		$reflection->setAccessible(true);
+		return $reflection->invoke($instance, ...$args);
+	}
+
 	protected function tearDown() : void
 	{
 		unset($_GET['properties'], $_GET['subscribedOnly'], $_GET['position'], $_GET['limit'],
@@ -136,6 +149,52 @@ class ApiHandlerJmapRestTest extends \PHPUnit\Framework\TestCase
 	public function testParseDoubleColonFolderPathPreservesAnIsolatedColonWithinASegment()
 	{
 		$this->assertSame('INBOX/Foo:Bar', $this->invokeApiHandler('parseDoubleColonFolderPath', ['INBOX::Foo:Bar']));
+	}
+
+	// --- pathToDoubleColonFolderId() (listFolders()'s own response-envelope resource-path key) ---
+
+	/**
+	 * The inverse of parseDoubleColonFolderPath() - used for listFolders()'s response-envelope
+	 * keys, so a listing is consistently human-readable (ralf, 2026-09-11: found the envelope key
+	 * still using the opaque id, "/mail/13/folders/SU5CT1g" instead of "/mail/13/folders/INBOX").
+	 */
+	public function testPathToDoubleColonFolderIdJoinsWithDoubleColon()
+	{
+		$this->assertSame('INBOX', $this->invokeApiHandler('pathToDoubleColonFolderId', ['INBOX']));
+		$this->assertSame('INBOX::Sent', $this->invokeApiHandler('pathToDoubleColonFolderId', ['INBOX/Sent']));
+		$this->assertSame('INBOX::Archive::2026', $this->invokeApiHandler('pathToDoubleColonFolderId', ['INBOX/Archive/2026']));
+	}
+
+	// --- normalizeInboxCasing() / resolveBareFolderName() (bare, single-segment name fallback) ---
+
+	public function testNormalizeInboxCasingUppercasesAnyInboxSpelling()
+	{
+		foreach (['inbox', 'Inbox', 'INBOX'] as $spelling)
+		{
+			$this->assertSame('INBOX', $this->invokeApiHandler('normalizeInboxCasing', [$spelling]));
+		}
+		$this->assertSame('Sent', $this->invokeApiHandler('normalizeInboxCasing', ['Sent']));
+	}
+
+	/**
+	 * Regression coverage for a real bug found live 2026-09-11: GET .../folders/INBOX (a bare,
+	 * single-segment name - no "::" needed, there's nothing to join) 404'd, because a bare segment
+	 * was only ever treated as a raw/encoded id, never as a literal folder name. resolveFolderName()
+	 * resolves it via getMailboxId(), same as the "::"-path case does internally.
+	 */
+	public function testResolveBareFolderNameResolvesViaGetMailboxIdWithInboxNormalization()
+	{
+		$session = new FakeJmapSessionWithMailboxIdLookup(['INBOX' => 'resolved-inbox-id']);
+
+		$this->assertSame('resolved-inbox-id', $this->invokeApiHandler('resolveBareFolderName', [$session, 'inbox']));
+		$this->assertSame(['INBOX'], $session->mailbox->getMailboxIdCalls);
+	}
+
+	public function testResolveBareFolderNameIsNullWhenNoSuchFolderExists()
+	{
+		$session = new FakeJmapSessionWithMailboxIdLookup([]);
+
+		$this->assertNull($this->invokeApiHandler('resolveBareFolderName', [$session, 'Nonexistent']));
 	}
 
 	// --- resolveFolderId() (getFolder()/listEmails()'s shared folder-id resolution) ------------
@@ -460,6 +519,50 @@ class ApiHandlerJmapRestTest extends \PHPUnit\Framework\TestCase
 		$email = JmapShim::emailFromFetch($imap, 'INBOX', '1', $data, false, false, false, false, false, false);
 
 		$this->assertSame([base64_encode('INBOX') => true], $email['mailboxIds']);
+	}
+
+	// --- handleException() ---------------------------------------------------------------------
+
+	/**
+	 * A plain \Exception($msg, 404) (this file's own convention for REST-facing errors, see eg.
+	 * getFolder()'s own "Folder not found" exception) - its code IS already a real HTTP status, so
+	 * the JSON body's `error` field and the returned status line must agree on that same value.
+	 */
+	public function testHandleExceptionUsesTheExceptionCodeWhenItIsAlreadyAValidHttpStatus()
+	{
+		ob_start();
+		$status = $this->invokeApiHandlerInstance('handleException', [new \Exception('Folder not found', 404)]);
+		$body = json_decode(ob_get_clean(), true);
+
+		$this->assertSame('404 Folder not found', $status);
+		$this->assertSame(404, $body['error']);
+	}
+
+	/**
+	 * Regression coverage: some exception classes (eg. Api\Exception\NotFound) use a non-HTTP
+	 * internal code (its own default is 2) rather than a real HTTP status - the JSON body's `error`
+	 * field must show the SAME clamped-to-500 value the actual HTTP status line uses, not the raw,
+	 * meaningless internal code (a client would otherwise see eg. HTTP 500 but `"error": 2`, which
+	 * doesn't correspond to any status this API ever actually sends).
+	 */
+	public function testHandleExceptionClampsANonHttpExceptionCodeToTheSameValueInBodyAndStatus()
+	{
+		ob_start();
+		$status = $this->invokeApiHandlerInstance('handleException', [new \Exception('Not found', 2)]);
+		$body = json_decode(ob_get_clean(), true);
+
+		$this->assertSame('500 Not found', $status);
+		$this->assertSame(500, $body['error']);
+	}
+
+	public function testHandleExceptionDefaultsToFiveHundredWhenNoCodeIsSet()
+	{
+		ob_start();
+		$status = $this->invokeApiHandlerInstance('handleException', [new \Exception('Something broke')]);
+		$body = json_decode(ob_get_clean(), true);
+
+		$this->assertSame('500 Something broke', $status);
+		$this->assertSame(500, $body['error']);
 	}
 }
 

@@ -367,6 +367,18 @@ maintaining its own fixed field allow-list. Consequences worth knowing:
   plain-IMAP account. Either way: **treat every `id`/`parentId`/`mailboxIds` key/`blobId` as fully
   opaque** - never construct, parse, or reuse one outside a request to this same account through this
   same API.
+- **A `<folderId>` path segment also accepts a human-readable literal folder name/path** instead of
+  the opaque id - a single top-level folder can be named directly (eg. `INBOX`, `Sent`); a deeper one
+  needs its segments joined with `"::"` (eg. `INBOX::Archive::2026` for `INBOX/Archive/2026`) since a
+  literal `"/"` can't appear inside one URL path segment. This is purely an additional, optional way to
+  name the same resource - the real `id` always keeps working unchanged, and every response's `id`
+  field is still the opaque id, never this shorthand. `INBOX` is matched case-insensitively, but **only
+  as the very first path segment** (RFC 3501 §5.1 - IMAP's own top-level-mailbox special case); any
+  other segment is an ordinary, case-sensitive folder name. Every `Mailbox` object also carries a `path`
+  field (the same `"/"`-joined canonical form, always present regardless of the `properties` query
+  parameter) so a client can see the human-readable name it could use next time, without needing to
+  already know the folder's own id - and the folders-list response envelope's own resource-path keys
+  use this same notation too (eg. `"/mail/folders/INBOX::Sent"`), for consistency.
 - **The two backends are not always field-identical**, because this API doesn't force them to be:
   - A Stalwart-backed `Mailbox` includes `myRights`, `totalThreads`, `unreadThreads`. A plain-IMAP
     (shim-backed) `Mailbox` currently does **not** include those three, but does include two
@@ -395,30 +407,46 @@ Content-Type: application/json
 
 {
   "responses": {
-    "/mail/folders/<folderId>": {
+    "/mail/folders/INBOX": {
       "id": "<folderId>",
       "name": "INBOX",
+      "path": "INBOX",
       "parentId": null,
       "role": "inbox",
       "totalEmails": 42,
       "unreadEmails": 3,
-      "isSubscribed": true
+      "isSubscribed": true,
+      "isSelectable": true
     },
-    "/mail/folders/<folderId2>": {
+    "/mail/folders/INBOX::Sent": {
       "id": "<folderId2>",
       "name": "Sent",
-      "parentId": null,
+      "path": "INBOX/Sent",
+      "parentId": "<folderId>",
       "role": "sent",
       "totalEmails": 137,
       "unreadEmails": 0,
-      "isSubscribed": true
+      "isSubscribed": true,
+      "isSelectable": true
     }
   }
 }
 ```
+
+> The response-envelope's own resource-path keys (`"/mail/folders/INBOX::Sent"`) use the same
+> human-readable `"::"`-path notation as the `path` field, not the opaque `id` - each object's own
+> `id`/`parentId` fields are still the real, opaque ids, unaffected.
+
+`isSelectable` is `false` only for the shim's synthetic IMAP shared/other-users namespace-root
+pseudo-folder (`user`/`shared`) - a real listing entry (so a client can navigate into it), but never a
+real, fetchable mailbox itself; fetching its emails returns a `400`. Always `true` on a Stalwart/real-JMAP
+account, which has no namespace-root concept at all.
 </details>
 
 #### **GET** `/mail[/<id>]/folders/<folderId>` get a single folder
+
+`<folderId>` also accepts the `"::"`-joined literal path syntax (eg. `INBOX::Sent`) - see the notes
+above.
 
 <details>
   <summary>Example: Querying a single folder by its id</summary>
@@ -432,16 +460,23 @@ Content-Type: application/json
 {
   "id": "<folderId>",
   "name": "INBOX",
+  "path": "INBOX",
   "parentId": null,
   "role": "inbox",
   "totalEmails": 42,
   "unreadEmails": 3,
-  "isSubscribed": true
+  "isSubscribed": true,
+  "isSelectable": true
 }
 ```
+
+Equivalently: `curl -i https://example.org/egroupware/groupdav.php/mail/folders/INBOX::Sent ...`
 </details>
 
 #### **GET** `/mail[/<id>]/folders/<folderId>/emails` list emails in a folder
+
+`<folderId>` also accepts the `"::"`-joined literal path syntax (eg. `INBOX::Sent`) - see the notes
+above.
 
 <details>
   <summary>Example: Listing the newest emails in a folder</summary>
@@ -488,6 +523,9 @@ Content-Type: application/json
 
 #### **GET** `/mail[/<id>]/folders/<folderId>/emails/<emailId>` get a single email
 
+`<folderId>` also accepts the `"::"`-joined literal path syntax (eg. `INBOX::Sent`) - see the notes
+above.
+
 <details>
   <summary>Example: Retrieving a single email with its body</summary>
 
@@ -531,6 +569,9 @@ Content-Type: application/json
 </details>
 
 #### **GET** `/mail[/<id>]/folders/<folderId>/emails/<emailId>/attachments/<blobId>` download attachment content, or the raw `.eml` message
+
+`<folderId>` also accepts the `"::"`-joined literal path syntax (eg. `INBOX::Sent`) - see the notes
+above.
 
 <details>
   <summary>Example: Downloading an attachment found in an email's `attachments[]` list</summary>

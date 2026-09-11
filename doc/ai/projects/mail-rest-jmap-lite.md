@@ -357,6 +357,14 @@ Reimplemented directly (all 6 overrides fixed, conflict resolved by hand) rather
 PR as-is - see `mail/tests/ApiHandlerJmapRestTest.php`'s new tests for the `$mailboxId`-forwarding
 coverage.
 
+Two more issues flagged during that same review, fixed alongside it: the identical
+`Content-Type: application/octet-stream` bug also affected the 3 non-JMAP-lite `GET` endpoints in
+this same file (`/mail`, `/mail/<id>`, `/mail(/<id>)/vacation` - all `return true`'d too); and
+`handleException()`'s JSON body reported the exception's raw, un-clamped code in its `error` field
+while the actual HTTP status line clamped an out-of-HTTP-range code (eg. `Api\Exception\NotFound`'s
+default `2`) to `500` - a client could see HTTP 500 but `"error": 2` in the body. Both now derive
+from the same single clamped value.
+
 Round 2 (ralf, curl against a live plain-IMAP account) found a fourth, separate bug in the same
 area: the IMAP shared/other-users namespace-root pseudo-folder ("user"/"shared" - a real folder
 entry, deliberately included so a client can navigate into others' shared mailboxes, but never a
@@ -417,6 +425,26 @@ without any new route or URL syntax:
   tree fixture: `A` → `"A"`, `A1` → `"A/A1"`, `B` → `"B"`). `getFolder()`'s own `path` attachment isn't
   independently unit-tested (same as the rest of that method - needs a live session, see "Implementation"
   above); covered by the underlying `folderId2path()` calls it delegates to.
+
+**Two gaps found live-testing this feature against real accounts (2026-09-11), fixed same-day:**
+- `listFolders()`'s own response-envelope resource-path keys (the map keys under `"responses"`) still
+  used the opaque `id` (eg. `"/mail/13/folders/SU5CT1g"`), not this new notation - inconsistent with
+  ralf's own original ask ("if the folder listing then you use the `::` notation as its attribute
+  name, for consistency"). New `pathToDoubleColonFolderId()` (the exact inverse of
+  `parseDoubleColonFolderPath()` - `str_replace('/', '::', $path)`) now builds these keys instead; each
+  object's own `id`/`parentId` fields are untouched, still the real opaque ids.
+- A **bare, single-segment name** (eg. `INBOX` - no `::` at all, since there's nothing to join) wasn't
+  recognized as this literal-path syntax either - only a multi-segment `"::"`-joined path was, so
+  `GET .../folders/INBOX` 404'd (found live, both on a plain-IMAP/shim account AND a real-JMAP/Stalwart
+  one - the latter as a raw `400` bubbling up from `Api\Jmap::httpApi()`, since the literal string
+  `"INBOX"` was sent straight through as if it were Stalwart's own opaque mailbox id). Unlike the
+  `"::"` syntax, a bare segment is NOT unambiguously detectable up front - a real/encoded id is just as
+  plausible a bare string. Fixed as a **failure-path-only retry**, so a normal request already passing
+  back a real id never pays for the extra lookup: `getFolder()` retries via the new
+  `resolveBareFolderName()` (which just calls `getMailboxId()` with the segment INBOX-normalized) only
+  when its first fetch comes back empty; `listEmails()`/`getEmail()`/`getAttachment()` do the same but
+  inside a `try`/`catch`, since an invalid mailbox reference is rejected with a thrown exception deep
+  inside `Email/query`/`Email/get` on both backends, not just an empty result.
 
 ## Related
 
