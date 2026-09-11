@@ -347,41 +347,55 @@ Filed by Ralf relaying reports from Ingo and Stefan against `pole.egroupware.org
    for the same reason as #1, `app.classes.crm` never gets set and `CRMView.view_ready()`
    (`CRM.ts:87-96`) logs `egw.debug("error", "CRMView object is missing")` and returns - console-only,
    no user-facing message, so it reads as an unrelated, permanent break rather than "reload will fix
-   this too". **Not fixed yet** - candidate: surface the same "please reload" message from this path
-   (and audit for other `app.classes.X` consumers with the same silent-failure shape - filemanager's
-   new "Cannot read properties of undefined (reading 'change_dir')" case below looks like the same
-   family).
+   this too". Ingo's later filemanager addition (below) turned out to be the same family via a
+   *different* app: filemanager's templates call `app.filemanager.change_dir(...)` from legacy inline
+   `onclick` handlers, and `app.filemanager` is set the same way `app.classes.crm` is (a module-eval
+   side effect an app's own chunk failing to load skips). **Fixed** - rather than patching `CRM.ts`
+   specifically, `etemplate2.load()`'s generic `app.classes[appname]` check (the one place *every*
+   app's instantiation goes through, `etemplate2.ts:722-725`) now shows the same "please reload"
+   message alongside its existing debug warning, covering CRM, filemanager, and any other app hit the
+   same way.
 
 3. **Green + red "reload" messages stacking, reload only helping briefly.** Green is
    `egw_import.notifyUpdateAvailable()` (type `'info'`, rendered green/"success" by
    `EgwFrameworkMessage.TYPE_MAP`); red is the `.catch()`-driven "Please reload the EGroupware
    desktop" messages, always type `'error'`. `EgwFramework.message()` dedupes by a hash of the exact
    message *text* (`kdots/js/EgwFramework.ts:955-972`), so two different strings both stay on screen
-   - not a bug, just a rough edge. **Not fixed yet** - candidate: have the error path check
-   `egw_import.updateAvailableNotified` and skip its own message when the green one already fired, or
-   vice versa. **"Reload only helps briefly" is not a multi-deploy window** - Ralf confirmed only one
-   JS rebuild landed on `pole.egroupware.org` that morning, before any of this was reported. A separate,
-   unrelated (and since-resolved) infrastructure problem was independently causing requests for all
-   sorts of files - not specifically JS/chunks - to 404 around the same time. A fresh reload *should*
-   be fully self-consistent per the per-document pin, so the recurring symptom Ingo/Stefan saw is more
-   likely that unrelated 404 incident than a residual pinning bug - the two problems overlapping in
-   time is probably what made this look worse/more persistent than a single stale-chunk race would.
+   - not a bug, just a rough edge. **Fixed**: each of the red-message call sites (the two in
+   `egw_json.ts` that are specifically about a build-staleness rejection, plus the new one in
+   `etemplate2.ts` from item 2 above) now checks `egw_import.updateAvailableNotified` first and skips
+   its own message if the green notice already covers this document - the debug log still always
+   fires either way, so nothing is lost for diagnosis. `handleError()`'s generic ajax-failure message
+   was deliberately left alone: it's not specific to a build-staleness rejection, so gating it on that
+   flag would hide a real, distinct failure. "Reload only helps briefly" turned out to be unrelated
+   to this project: Ralf confirmed only one JS rebuild landed on `pole.egroupware.org` that morning,
+   before any of this was reported - not a multi-deploy window. A separate, unrelated (and
+   since-resolved) infrastructure problem was independently causing requests for all sorts of files -
+   not specifically JS/chunks - to 404 around the same time. A fresh reload *should* be fully
+   self-consistent per the per-document pin, so the recurring symptom Ingo/Stefan saw is more likely
+   that unrelated 404 incident than a residual pinning bug - the two problems overlapping in time is
+   probably what made this look worse/more persistent than a single stale-chunk race would.
 
-Ingo's filemanager addition (uncaught rejection + a legacy inline-JS `change_dir` handler dereferencing
-`undefined`) reinforces that #2's "silent downstream failure, no reload prompt" shape isn't unique to
-CRM - not yet root-caused beyond that.
+Ingo's filemanager addition also included an *uncaught* variant of #1 (`reactive-element.js:6 Uncaught
+(in promise) TypeError...` with no `egw_debug.ts:387` frame, meaning it never reached the
+`88bf63dd2f` `.catch()` at all) plus the `change_dir` symptom item 2 above now covers. There is only
+one `new Et2Template(...)` call site in the codebase (`etemplate2.ts:746`, inside `load()`, reached
+only via `handle_load()`'s `.catch()`-wrapped promise chain), so on paper this rejection should
+always be caught the same way the addressbook one was - why this specific instance wasn't is **not
+yet root-caused**; needs a live repro (not safe to guess-fix). Possibly a browser console-timing quirk
+(rejection logged before the `.catch()` attaches) rather than a real gap, but unconfirmed.
 
 ## Status
 
-Design implemented and live (steps 1-7 above). Two residual issues from ticket #124112 fixed
-(the `egw_json.ts` misleading-log-target bug); two more identified but **not yet fixed** - the silent
-`app.classes.X`-missing failure mode (item 2, also implicated in the filemanager case) and the
-green+red message stacking (item 3). "Reload only helps briefly" turned out to be a red herring for
-this project: Ralf confirmed only one JS rebuild landed that morning, and an unrelated (now resolved)
-infrastructure issue was separately 404ing requests for all sorts of files at the same time - not a
-sign of a residual pinning gap. Still open: root-causing the filemanager "Illegal constructor" that
-bypassed the `88bf63dd2f` catch net entirely (uncaught, unlike the addressbook case). Nathan or
-whoever picks this back up should start there.
+Design implemented and live (steps 1-7 above). Three of ticket #124112's four findings fixed: the
+`egw_json.ts` misleading-log-target bug (item 1), the silent `app.classes.X`-missing failure mode
+(item 2, covers both the CRMView and filemanager cases), and the green+red message stacking (item 3).
+"Reload only helps briefly" turned out to be a red herring for this project: Ralf confirmed only one
+JS rebuild landed that morning, and an unrelated (now resolved) infrastructure issue was separately
+404ing requests for all sorts of files at the same time - not a sign of a residual pinning gap. Still
+open: root-causing the filemanager "Illegal constructor" that bypassed the `88bf63dd2f` catch net
+entirely (uncaught, unlike the addressbook case) - needs a cleaner live repro before it can be
+fixed rather than guessed at. Nathan or whoever picks this back up should start there.
 
 ## Commits
 
@@ -401,5 +415,8 @@ Chronological. `*` prefix on the subject means it went out in the user-facing ch
 | `b4a8c8507f` | 2026-09-09 | nathan | `Api: guard rollup -cw's build-epoch/build-manifest writes against stale rebuilds` |
 | `9f933543ea` | 2026-09-10 | nathan | `Api: fix hashed-entry 404s and blank popups` |
 | *(ticket #124112 filed 2026-09-11 09:08 UTC)* | | | |
-| *(pending)* | 2026-09-11 | Claude | `Api: fix misleading plugin/type in a stale JSON-response-handler log message` (the `var`→`const`/`let` fix in `egw_json.ts`, described above) |
-| *(pending)* | 2026-09-11 | Claude | `Doc: restore hashed-entries-build-pinning.md, document ticket #124112 follow-up` (this doc) |
+| `125468ea58` | 2026-09-11 | Claude | `Api: fix misleading plugin/type in a stale JSON-response-handler log message` |
+| `f2833b1a47` | 2026-09-11 | Claude | `Doc: restore hashed-entries-build-pinning.md, document ticket #124112 follow-up` (this doc, restored) |
+| `bdafdb7e89` | 2026-09-11 | Claude | `Api: tell the user to reload when an app's JS object never loaded` |
+| `1fda0de2c1` | 2026-09-11 | Claude | `Api: don't stack a 2nd "please reload" prompt when one is already up` |
+| *(pending)* | 2026-09-11 | Claude | `Doc: update hashed-entries-build-pinning.md for the item 2/3 fixes` (this doc, this update) |
