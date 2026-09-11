@@ -126,12 +126,36 @@ install already creates during setup, not a separate test-only account:
 ```
 
 `sysop`'s password is generated fresh per install (in Docker installs, written to
-`/var/lib/egroupware/egroupware-docker.install.log`), so it can't be committed to `phpunit.xml`.
+`/var/lib/egroupware/egroupware-docker-install.log`), so it can't be committed to `phpunit.xml`.
 It must be supplied via environment instead: `EGW_ADMIN_PASSWORD="..." vendor/bin/phpunit -c
 doc/phpunit.xml`. `doc/phpunit_bootstrap.php` normalizes `getenv('EGW_ADMIN_PASSWORD')`/`$_ENV` into
 `$GLOBALS['EGW_ADMIN_PASSWORD']`, so test code keeps reading it like any other `phpunit.xml` `<var>`.
 CI extracts `sysop`'s password from the install log (as `SYSOP_PASS`, already used elsewhere in the
 workflow to provision `EGW_TEST_USER`) and passes it straight through as `EGW_ADMIN_PASSWORD`.
+
+Locally, prefer a git-ignored `doc/phpunit.local.php` over an environment variable - an IDE
+regenerates a temporary run configuration on every run, so per-configuration environment variables
+do not survive:
+
+```php
+<?php
+return ['EGW_ADMIN_PASSWORD' => '...'];  // add any other per-install setting the same way
+```
+
+`doc/phpunit_bootstrap.php` reads it early, and only for names the real environment does not already
+provide - so it applies however the suite is started (IDE, CLI, `docker exec`), while CI's explicit
+environment still wins. Write it without the password passing through your shell history with:
+
+```bash
+printf "<?php\nreturn ['EGW_ADMIN_PASSWORD' => '%s'];\n" "$(docker exec egroupware awk \
+  '/EGroupware username: sysop/{f=1;next} f&&/password:/{sub(/^[^:]*:[[:space:]]*/,"");print;exit}' \
+  /var/lib/egroupware/egroupware-docker-install.log)" > doc/phpunit.local.php
+```
+
+Leaving it unset is not harmless: every admin test then logs in as `sysop` with an empty password,
+and once `num_unsuccessful_id` failures land inside `block_time` minutes the account blocks itself.
+Later tests fail with "blocked, too many attempts", and a blocked `setUpBeforeClass()` aborts its
+whole class, so tests silently stop running rather than failing individually.
 
 **A previous version of this used a dedicated `demoadmin` test account instead of `sysop`.** That
 collided with `demo` in several apps' generous name-matching lookups - eg.
