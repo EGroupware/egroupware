@@ -199,18 +199,19 @@ class RruleTest extends Api\AppTest
 
 	/**
 	 * MONTHLY_WDAY starting on the 2nd Tuesday of a month: ordinary (non-last) ordinal case.
-	 * Pass: monthly_byday_num becomes 2, series lands on the 2nd Tuesday of every month.
+	 * Pass: monthly_byday_num becomes the int 2, series lands on the 2nd Tuesday of every month.
 	 *
-	 * MINOR QUIRK: the non-last branch computes this via `1 + floor(...)`, which yields a float
-	 * (2.0) despite the property's docblock declaring `int` - unlike the `-1` (last-week) branch,
-	 * which assigns a literal int. Asserted here as the actual float, not "fixed" to int.
+	 * Regression test for a type quirk: the non-last branch used to compute this via
+	 * `1 + floor(...)` uncast, yielding a float (2.0) despite the property's docblock declaring
+	 * `int` (unlike the `-1` last-week branch, which always assigned a literal int). Fixed to
+	 * cast to int.
 	 */
 	public function testMonthlyWdaySecondWeekdayOfMonth() : void
 	{
 		$rrule = new \calendar_rrule($this->dt('2024-01-09 08:00:00'), \calendar_rrule::MONTHLY_WDAY, 1,
 			$this->dt('2024-06-01 00:00:00'));
 
-		self::assertSame(2.0, $rrule->monthly_byday_num);
+		self::assertSame(2, $rrule->monthly_byday_num);
 		self::assertSame([
 			'2024-01-09 08:00:00', '2024-02-13 08:00:00', '2024-03-12 08:00:00',
 			'2024-04-09 08:00:00', '2024-05-14 08:00:00',

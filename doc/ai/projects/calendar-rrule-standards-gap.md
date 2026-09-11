@@ -12,8 +12,12 @@ which is why iCal import/export already contain workarounds for it. This doc map
 the current implementation does (and doesn't) support, and points at the test harness that pins
 it down, so a later redesign has a concrete contract to check itself against.
 
-**Status: mapping + harness done (this doc + the 3 test files below). No behavior changes, no
-schema changes, no REST write support yet - those are future phases, not started.**
+**Status: mapping + harness done (this doc + the 3 test files below). 3 small, isolated bugs found
+along the way are fixed (JSCalendar byDay JSON shape, `monthly_byday_num` int/float,
+`count2date()` undefined var). The RRULE+RDATE crash + order-dependence bugs are mapped but
+deliberately NOT fixed yet - see "RRULE+RDATE investigation" below, blocked until after the `26`
+branch rebase. No schema changes, no REST write support yet - those are future phases, not
+started.**
 
 ## Architecture map
 
@@ -49,9 +53,33 @@ identically by:
 | 7 | `EXRULE` isn't recognized anywhere | whole class | not yet covered by a dedicated test (grep-confirmed absent) |
 | 8 | Only one RRULE per event is representable | schema (single `egw_cal_repeats` row) | implicit in all of the above |
 | 9 | REST/JSCalendar write path explicitly blocks recurrence: `JsCalendar::parseJsEvent()` throws for `recurrenceRules`/`recurrenceOverrides`/`excludedRecurrenceRules` | `api/src/CalDAV/JsCalendar.php` ~173-177 | `JsCalendarRecurrenceTest::testWritingRecurrenceRulesIsBlocked` |
-| 10 | JSCalendar's `byDay` is emitted as a **bare NDay object**, not a JSON array as RFC 8984 requires (`$rule['byDay'] = array_filter([...])`, no outer `[...]`) - so even the one day it does support isn't spec-shaped JSON | `api/src/CalDAV/JsCalendar.php` ~980-984 | `JsCalendarRecurrenceTest::testRecurrenceRulesReadShape` |
+| 10 | ~~JSCalendar's `byDay` was emitted as a **bare NDay object**, not a JSON array as RFC 8984 requires~~ - **FIXED**, see below | `api/src/CalDAV/JsCalendar.php` ~980-985 | `JsCalendarRecurrenceTest::testRecurrenceRulesReadShape` |
 
-## Concrete bugs found while building the harness (not fixed here - out of scope for this step)
+## Bugs found while building the harness - fixed (2026-09-11, independent of the RRULE+RDATE work below)
+
+These three were small, isolated, no schema/cross-file impact, so fixed immediately rather than
+deferred:
+
+- **JSCalendar `byDay` JSON shape**: was a bare NDay object (`$rule['byDay'] = array_filter([...])`),
+  now wrapped as a 1-element array (`$rule['byDay'] = [array_filter([...])]`) per RFC 8984's
+  `byDay: NDay[]`. `api/src/CalDAV/JsCalendar.php` ~980-985.
+- **`monthly_byday_num` int/float mismatch**: the non-"last week" branch computed it via
+  `1 + floor(...)` uncast, yielding a `float` (e.g. `2.0`) despite the docblock declaring `int`
+  (the `-1` last-week branch already assigned a literal int). Now cast to `(int)`.
+  `calendar/inc/class.calendar_rrule.inc.php` ~295.
+- **`count2date()` undefined `$backup`**: referenced `$backup` without initializing it when
+  `$this->current` was never set (fresh iterator, no `rewind()` yet) - produced an "undefined
+  variable" warning. Now initialized to `null` unconditionally.
+  `calendar/inc/class.calendar_rrule.inc.php` ~560.
+
+All three test files updated to assert the fixed behavior and re-verified green (30 tests, 117
+assertions), plus the sibling recurrence tests re-run with no regressions.
+
+## Bugs found while building the harness - NOT fixed yet (deliberately deferred)
+
+Ralf wants to rebase the `26` branch onto `master` shortly (as of 2026-09-11) and does not want any
+RRULE/RDATE-handling work started before that lands. These two require a real design decision (see
+"RRULE+RDATE investigation" below), so they stay open:
 
 - **Crash on import**: a VEVENT with both `RRULE` (carrying `UNTIL`) and `RDATE`, in that property
   order, throws an uncaught `TypeError: clone(): Argument #1 ($object) must be of type object, null
@@ -69,17 +97,54 @@ identically by:
   first in the source `.ics` text (RRULE-then-RDATE loses the whole rule down to just the one extra
   date; RDATE-then-RRULE keeps the rule and silently drops the extra date instead). See
   `IcalRruleRoundtripTest::testRruleAndRdateTogetherIsOrderDependent()`.
-- **Type quirk**: `calendar_rrule::$monthly_byday_num` is documented `int` but the non-"last week"
-  branch computes it via `1 + floor(...)`, yielding a `float` (e.g. `2.0`, not `2`). The `-1`
-  ("last week") branch assigns a literal int. See `RruleTest::testMonthlyWdaySecondWeekdayOfMonth`.
+
+## Left as a documented quirk, not a bug to fix
+
 - **Leap-day drift**: a `YEARLY` series starting on Feb 29 drifts to Mar 1 in every non-leap year
   and never re-aligns back to Feb 29 in the next leap year (plain PHP `DateTime::modify('+1
   year')` behavior, nothing in `calendar_rrule` corrects it). See
-  `RruleTest::testYearlyLeapDayStart`.
-- **Minor**: `calendar_rrule::count2date()` references `$backup` without initializing it when
-  `$this->current` was never set (fresh iterator, no `rewind()` yet) - produces an "undefined
-  variable" warning under strict PHP error reporting, harmless in the observed case since the
-  fallback branch is simply skipped.
+  `RruleTest::testYearlyLeapDayStart`. Ralf's call: no single "obviously correct" resolution (skip
+  non-leap years? clamp to Feb 28? re-align on the next leap year?) - revisit alongside the
+  schema/library work in Phase 2, not as a standalone bug fix.
+
+## RRULE+RDATE investigation (2026-09-11) - real fix, not started
+
+Ralf's idea: since RRULE and RDATE are additive in real iCal, why not store both - RRULE in
+`egw_cal_repeats` as today, RDATE-derived extra dates as additional `egw_cal_dates` rows? Traced
+the actual write/read paths to check feasibility:
+
+- `egw_cal_dates` is already the *real* backing store for RDATE-type events today - every row
+  becomes one `recur_rdates` entry on read-back (`calendar_so::get_events()`
+  `class.calendar_so.inc.php` ~486-507, and `search()` ~1316-1341). So "extra dates live in
+  `egw_cal_dates`" isn't new - it's already how plain-RDATE events work.
+- But `calendar_rrule`'s constructor only ever honors its `$rdates` parameter when the **entire**
+  type is `RDATE` (`class.calendar_rrule.inc.php` ~329) - for any RRULE type it's silently ignored.
+  `calendar_bo::insert_all_recurrences()` regenerates every future occurrence row purely from
+  `calendar_rrule::event2rrule()`'s rule expansion (`class.calendar_bo.inc.php` ~1205-1293) whenever
+  `calendar_so::save()`'s `$set_recurrences` trigger fires (recur_type/interval/data/start/tz_id
+  change, or recur_enddate/exception-count/rdates-count change - `class.calendar_so.inc.php`
+  ~1826-1830, `class.calendar_boupdate.inc.php` ~1841-1844). So making RRULE+RDATE genuinely
+  coexist needs the iterator itself to **merge two sequences** (rule-generated ∪ explicit extra
+  dates) in date order - a real algorithmic change to `calendar_rrule`, not just a read/write tweak.
+- `egw_cal_dates.recur_exception` (the column that would need a second bit to mark "this row is an
+  additive RDATE, not rule-derived") is declared `'type' => 'bool'` in the schema DSL
+  (`calendar/setup/tables_current.inc.php`). That maps to `TINYINT` on MySQL/MariaDB (fine, could
+  hold 2/3) but to a genuine `BOOLEAN` on PostgreSQL
+  (`vendor/egroupware/adodb-php/datadict/datadict-postgres.inc.php:134`), which can only hold
+  true/false. **Reusing a spare bit on `recur_exception` is not portable** - a real fix needs a
+  dedicated new column instead (still small/additive, not a big schema change, just not literally
+  zero-schema-change as first hoped).
+- Also confirmed: every `== MCAL_RECUR_*`/`calendar_rrule::TYPE` equality/`in_array` check across
+  the codebase (calendar_bo/so/boupdate/groupdav/ical/tracking/ui/uiforms/zpush,
+  `api/src/CalDAV/JsCalendar.php`, plus UI templates) would need to become bitmask-aware if
+  `recur_type` becomes a bitfield (low bits = rule type, a high bit = "has additive RDATEs",
+  replacing today's dedicated `RDATE=9` value) - full enumeration was in progress when this got
+  paused; re-run that inventory before implementing.
+
+**Not started. Do not begin schema/bitfield work, or any `recur_type`/`egw_cal_dates` change, until
+after the `26`→`master` rebase Ralf mentioned (targeted around 2026-09-11) - explicit instruction,
+not just a suggestion.** When resumed, re-derive the call-site inventory above (it was cut short)
+before writing code, and decide the exact new-column name/semantics with Ralf up front.
 
 ## Test harness (this step)
 

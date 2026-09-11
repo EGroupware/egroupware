@@ -977,11 +977,12 @@ class JsCalendar extends JsBase
 			}
 			if (!empty($rrule['BYDAY']))
 			{
-				$rule['byDay'] = array_filter([
+				// byDay is an NDay[] per RFC 8984, even though EGroupware only ever produces one
+				$rule['byDay'] = [array_filter([
 					self::AT_TYPE => self::TYPE_NDAY,
 					'day' => strtolower(substr($rrule['BYDAY'], $rriter->monthly_byday_num ? strlen((string)$rriter->monthly_byday_num) : 0)),
 					'nthOfPeriod' => $rriter->monthly_byday_num,
-				]);
+				])];
 			}
 			elseif (!empty($rrule['BYMONTHDAY']))
 			{

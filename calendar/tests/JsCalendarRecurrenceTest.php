@@ -86,15 +86,14 @@ class JsCalendarRecurrenceTest extends Api\AppTest
 	/**
 	 * Pass criteria:
 	 * - recurrenceRules has exactly ONE rule (only one RRULE per event is representable at all).
-	 * - frequency is 'monthly', byDay is {day:'tu', nthOfPeriod:2} - the DTSTART-derived
+	 * - frequency is 'monthly', byDay is [{day:'tu', nthOfPeriod:2}] - the DTSTART-derived
 	 *   ordinal+weekday, NOT an explicit, independently-settable value (KNOWN GAP, see
 	 *   RruleTest::testMonthlyWdaySecondWeekdayOfMonth() for the same limitation at the engine
 	 *   level).
-	 * - ADDITIONAL KNOWN GAP found here: per RFC 8984, RecurrenceRule's `byDay` must be a JSON
-	 *   *array* of NDay objects; JsCalendar.php ~980-984 assigns a single NDay object directly
-	 *   (`$rule['byDay'] = array_filter([...])`, no outer `[...]`) - so today's output isn't even
-	 *   spec-shaped JSON for the one day it does support, a real client parsing strict JSCalendar
-	 *   could reject it. Asserted here as an object, not a 1-element list.
+	 * - Regression test for a spec-shape bug fixed alongside this: per RFC 8984, RecurrenceRule's
+	 *   `byDay` must be a JSON *array* of NDay objects; JsCalendar.php used to assign a single NDay
+	 *   object directly (no outer `[...]`) - a real client parsing strict JSCalendar could have
+	 *   rejected it. Asserted here as a 1-element list.
 	 * - until is present (recur_enddate converted to JSCalendar's 'until').
 	 * - no byMonth/byWeekNo/bySetPosition/byHour/byMinute/bySecond keys are ever produced -
 	 *   confirms none of those RFC 8984/5545 by-x rule parts are supported.
@@ -112,9 +111,10 @@ class JsCalendarRecurrenceTest extends Api\AppTest
 		$this->assertSame('monthly', $rule['frequency']);
 		$this->assertArrayHasKey('until', $rule, 'Expected recur_enddate to surface as until');
 		$this->assertArrayHasKey('byDay', $rule);
-		$this->assertFalse(array_is_list($rule['byDay']), 'byDay is a bare NDay object, not a JSON array as RFC 8984 requires');
-		$this->assertSame('tu', $rule['byDay']['day']);
-		$this->assertEqualsWithDelta(2, $rule['byDay']['nthOfPeriod'], 0.0, 'Expected 2nd-Tuesday ordinal');
+		$this->assertTrue(array_is_list($rule['byDay']), 'byDay must be a JSON array of NDay objects per RFC 8984');
+		$this->assertCount(1, $rule['byDay'], 'Only one NDay entry is ever representable');
+		$this->assertSame('tu', $rule['byDay'][0]['day']);
+		$this->assertSame(2, $rule['byDay'][0]['nthOfPeriod'], 'Expected 2nd-Tuesday ordinal');
 
 		foreach (['byMonth', 'byWeekNo', 'bySetPosition', 'byYearDay', 'byHour', 'byMinute', 'bySecond'] as $unsupported)
 		{
