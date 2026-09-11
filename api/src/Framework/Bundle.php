@@ -69,35 +69,34 @@ class Bundle
 	}
 
 	/**
-	 * Current build's manifest, filtered to apps the current user may access, for stamping into
-	 * the page as data-manifest
+	 * Current build's manifest, for stamping into the page as data-manifest
 	 *
-	 * Rollup's manifest lists every built app, including ones merely present on disk but not
-	 * installed, or installed-but-not-permitted for this user - neither of which today's
-	 * data-include leaks. Filtering here follows the same precedent as Link::json_registry().
+	 * Used to filter this to apps the current user may access, following the same precedent as
+	 * Link::json_registry() - that filtering was removed (ticket #124112's underlying cause,
+	 * found 2026-09-11): `data-include` (Framework::get_script_links()/js_includes(), checking
+	 * the *full*, unfiltered manifest via resolveEntry()) and `data-manifest` (this method) were two
+	 * separately-computed lists, with nothing guaranteeing they agreed on which apps to include.
+	 * An app landing in data-include's client-side-resolved set without a matching data-manifest
+	 * entry made egw_import() (correctly, per its own design) fall back to that app's literal,
+	 * unhashed app.min.js path - which still exists on disk (rollup no longer writes it, so it's
+	 * frozen at whatever it last contained) and can reference a long-stale copy of shared chunks
+	 * like etemplate2, colliding with whatever a correctly hash-resolved app already registered -
+	 * the exact "Illegal constructor" this whole project exists to prevent. A special case for
+	 * "kdots" (the active template/framework, needed even though it's not a business-app
+	 * permission) papered over one instance of this; live testing then found apps with a real,
+	 * granted permission (kanban, rocketchat) hitting the exact same class of bug regardless.
 	 *
-	 * The active template/framework (eg. "kdots") is a rendering choice, not a business-app
-	 * permission, so it never appears in $GLOBALS['egw_info']['user']['apps'] - but its own JS
-	 * gets loaded unconditionally regardless (Framework::init_static() et al), same as "api".
-	 * Excluding it here (live-verified 2026-09-09) left its entry with no manifest hit, so it
-	 * fell back to a literal path that no longer exists once entries are hashed, 404ing and
-	 * leaving the custom element registry half-initialized - which then surfaced as unrelated
-	 * "Illegal constructor" crashes in whatever app happened to render next.
+	 * Unlike Link::json_registry(), the JS itself carries nothing confidential - there's no real
+	 * reason a user shouldn't be able to fetch another app's app.min.js if they know the hashed
+	 * URL. Given that, and that the filtering was actively causing this bug class rather than
+	 * protecting anything meaningful, an unfiltered manifest is simpler and safer than keeping
+	 * two independently-computed lists in sync.
 	 *
 	 * @return array logical path => hashed path
 	 */
 	public static function clientManifest()
 	{
-		$manifest = self::loadManifest();
-		if (!$manifest) return [];
-
-		$alwaysAllowed = ['api', $GLOBALS['egw_info']['server']['template_set'] ?? null];
-
-		return array_filter($manifest, static function($logical) use ($alwaysAllowed)
-		{
-			return !preg_match('#^/([^/]+)/#', $logical, $matches) || in_array($matches[1], $alwaysAllowed, true) ||
-				isset($GLOBALS['egw_info']['user']['apps'][$matches[1]]);
-		}, ARRAY_FILTER_USE_KEY);
+		return self::loadManifest() ?: [];
 	}
 
 	/**

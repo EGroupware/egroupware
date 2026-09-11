@@ -109,6 +109,16 @@ window.egw_import = (function()
 		}
 		// manifest keys and values are both EGW_SERVER_ROOT-relative, so either way this needs
 		// webserverUrl prepended to become fetchable
+		if (typeof manifest[logical] === 'undefined')
+		{
+			// A logical path with no manifest entry falls back to importing it literally - fine
+			// for a genuinely non-built file, but for anything that should have a hashed entry
+			// this is importing whatever's still sitting at that unhashed path (rollup no longer
+			// writes it once entries are hashed, so it's frozen at whatever it last contained,
+			// eg. a long-stale etemplate2 reference - ticket #124112). Log it either way, cheaply,
+			// so a mismatch like this is visible instead of silently loading stale content.
+			console.debug('egw_import(): no manifest entry for', logical, '- importing it literally');
+		}
 		const resolved = (window.egw_webserverUrl || '') + (manifest[logical] || logical);
 		if (typeof imported[logical] === 'undefined')
 		{

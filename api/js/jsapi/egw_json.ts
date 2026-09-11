@@ -861,7 +861,16 @@ class Json implements JsonModule
 		this.registerJSONPlugin(function(type, res, req) {
 			if (typeof res.data == 'string')
 			{
-				return Promise.all((<any>res.data).map((src) => import(src)))
+				// Framework::include_css_js_response() sends each src as its bare logical path
+				// (app.min.js is hashed at build time and no longer exists under that literal
+				// name) expecting egw_import() to resolve it against this document's manifest -
+				// a plain import() here bypassed that entirely and hit whatever's still sitting
+				// at the unhashed path, frozen since before hashing existed (ticket #124112:
+				// this is what was actually still loading a stale etemplate2 chunk on pole, not
+				// any cache or deploy race). egw_import() falls back to the literal path itself
+				// on a manifest miss, so this is a strict superset - no behavior change for a
+				// genuinely non-entry script.
+				return Promise.all((<any>res.data).map((src) => (<any>req.egw.window).egw_import(src)))
 					.then(() => req.onLoadFinish.call(req.sender));
 			}
 			throw 'Invalid parameters';
