@@ -200,10 +200,23 @@ jobs:
         run: |
           set -euo pipefail
           COMPOSER_CACHE_DIR="${HOME}/.composer/cache"
-          # Apps cloned from git are not composer packages, so their requirements are absent from
-          # the root composer.lock - they carry their own vendor/ dir, same as a manual install.
+          # Only for apps the root project does NOT already require: those carry their own
+          # vendor/ dir, same as a manual install, because their requirements are absent from the
+          # root composer.lock.
           for dir in $EGW_EXTRA_APP_DIRS; do
             [ -f "$GITHUB_WORKSPACE/sources/$dir/composer.json" ] || continue
+            # An app the root project requires already had its dependencies resolved into the root
+            # vendor/, and its composer.json is the package's own definition rather than a manifest
+            # to install from. Running composer there finds no lock, re-resolves everything from
+            # scratch, and can fail on constraints the root lock had long since settled. It would
+            # also leave an app-level vendor/, which api/src/autoload.php treats as a fallback
+            # source of classes.
+            pkg="$(jq -r '.name // empty' "$GITHUB_WORKSPACE/sources/$dir/composer.json")"
+            if [ -n "$pkg" ] && jq -e --arg p "$pkg" '.packages[] | select(.name == $p)' \
+                 "$GITHUB_WORKSPACE/sources/composer.lock" > /dev/null; then
+              echo "::notice::$dir is provided by the root composer.lock as $pkg, skipping"
+              continue
+            fi
             echo "::group::composer install in $dir"
             docker run --rm --user "$(id -u):$(id -g)" \
               -v "${COMPOSER_CACHE_DIR}":/tmp/composer-cache \
