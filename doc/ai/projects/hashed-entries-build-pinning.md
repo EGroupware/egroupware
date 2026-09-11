@@ -569,6 +569,17 @@ deployed and initial signs on `pole.egroupware.org` are good; get explicit confi
 before closing ticket #124112 itself. Nathan or whoever picks this back up should start with the two
 still-open items above.
 
+Two small follow-ups from item 5, found live on the `26` branch (`my.egroupware.org`) opening mail -
+**fixed** (`f08ec4ccf7`): `egw_import()`'s "no manifest entry" debug log (added for item 6) was firing
+for every `api/config.php`/`api/images.php`/`api/user.php` request - those are dynamic PHP endpoints,
+cache-busted via their own etag query param, never manifest-tracked at all, so an *expected*,
+permanent miss; scoped the log to `.js` paths only. And item 5's build-epoch check crashed
+`Avatar::ajax_image_check` with `Cannot read properties of null (reading 'egw_buildEpoch')` -
+`this.egw.window` can legitimately be `null` (eg. a popup whose window closed before its response
+arrived); now falls back to the global `window`, matching the `req.egw ? req.egw.window : window`
+pattern already used elsewhere in this file. Not reproduced on boulder/pole - may be a timing/popup
+race specific to circumstances on `26`, but the null-guard is correct regardless of why it triggers.
+
 ## Commits
 
 Chronological. `*` prefix on the subject means it went out in the user-facing changelog.
@@ -605,4 +616,6 @@ Chronological. `*` prefix on the subject means it went out in the user-facing ch
 | `ad9b270b85` | 2026-09-11 | Claude | `Api: fix root cause of ticket #124112's "Illegal constructor" - manifest filtering` |
 | `88ad23dba4` | 2026-09-11 | Claude | `Doc: record the manifest-filtering root cause and fix (item 6)` (this doc) |
 | *(deployed to pole.egroupware.org by Ralf, also deleting the stale bare app.min.js/etemplate2.js/egw.min.js files from the docroot - initial results look good, not yet confirmed against Ingo/Stefan's original reports)* | | | |
-| *(pending)* | 2026-09-11 | Claude | `Doc: record the pole.egroupware.org deploy confirmation` (this doc, this update) |
+| `d68fd27c57` | 2026-09-11 | Claude | `Doc: record the pole.egroupware.org deploy confirmation` (this doc) |
+| `f08ec4ccf7` | 2026-09-11 | Claude | `Api: fix two follow-ups from item 5's ajax-response-epoch check` |
+| *(pending)* | 2026-09-11 | Claude | `Doc: record the two item-5 follow-up fixes` (this doc, this update) |
