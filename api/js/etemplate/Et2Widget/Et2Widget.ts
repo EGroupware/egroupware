@@ -1898,8 +1898,17 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 					continue;
 
 				default:
+					if(typeof attrValue === "boolean")
+					{
+						// A boolean attribute applies by presence, so a resolved false has to
+						// remove it: setAttribute("hidden", false) writes the string "false" and
+						// still hides the widget, which silently breaks the common template
+						// pattern of a hidden="@expr" / hidden="!@expr" pair of widgets.
+						widget.toggleAttribute(attribute, attrValue);
+						break;
+					}
 					// Set as attribute (reflected in DOM)
-					widget.setAttribute(attribute, attrValue === true ? "" : attrValue);
+					widget.setAttribute(attribute, attrValue);
 					break;			}
 		}
 		else if(attribute === 'options')
