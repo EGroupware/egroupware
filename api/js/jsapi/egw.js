@@ -492,7 +492,11 @@ window.egw_import = (function()
 					window.clearInterval(build_check_interval);
 					return;
 				}
-				fetch(window.egw_webserverUrl+'/api/js/build-epoch.json', {cache: 'no-store'})
+				// {cache: 'no-store'} only bypasses the browser's own cache, not an intermediate
+				// proxy/nginx cache in front of the server - a plain .json response with no
+				// cache-buster can get served stale from there for days (ticket #124112), which
+				// silently defeats this whole poll. Date.now() guarantees a miss on every check.
+				fetch(window.egw_webserverUrl+'/api/js/build-epoch.json?'+Date.now(), {cache: 'no-store'})
 					.then(r => r.json())
 					.then(data =>
 					{

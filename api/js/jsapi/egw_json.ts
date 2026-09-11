@@ -468,6 +468,17 @@ class JsonRequest
 	{
 		if (data && typeof data.response != 'undefined')
 		{
+			// Every response carries the server's current build epoch (ticket #124112) - an
+			// intermediate cache can serve a stale response to a *dedicated* poll for this
+			// (build-epoch.json) indefinitely, but this response is dynamic and already
+			// flowing, so piggybacking here needs no extra request and has no URL to cache.
+			// Same 12h drift threshold as egw.js's periodic poll, which stays as a fallback
+			// for a tab that never makes another ajax call.
+			const buildEpoch = (<any>this.egw.window).egw_buildEpoch;
+			if (data.epoch && buildEpoch && data.epoch - buildEpoch > 12 * 3600000)
+			{
+				(<any>this.egw.window).egw_import?.notifyUpdateAvailable();
+			}
 			/* disabled for now
 			if (egw.preference('show_generation_time', 'common', false) == "1")
 			{
