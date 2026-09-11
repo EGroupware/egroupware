@@ -347,14 +347,20 @@ Filed by Ralf relaying reports from Ingo and Stefan against `pole.egroupware.org
    for the same reason as #1, `app.classes.crm` never gets set and `CRMView.view_ready()`
    (`CRM.ts:87-96`) logs `egw.debug("error", "CRMView object is missing")` and returns - console-only,
    no user-facing message, so it reads as an unrelated, permanent break rather than "reload will fix
-   this too". Ingo's later filemanager addition (below) turned out to be the same family via a
-   *different* app: filemanager's templates call `app.filemanager.change_dir(...)` from legacy inline
-   `onclick` handlers, and `app.filemanager` is set the same way `app.classes.crm` is (a module-eval
-   side effect an app's own chunk failing to load skips). **Fixed** - rather than patching `CRM.ts`
-   specifically, `etemplate2.load()`'s generic `app.classes[appname]` check (the one place *every*
-   app's instantiation goes through, `etemplate2.ts:722-725`) now shows the same "please reload"
-   message alongside its existing debug warning, covering CRM, filemanager, and any other app hit the
-   same way.
+   this too". Ingo's later filemanager addition (below) looked like the same family via a *different*
+   app: filemanager's templates call `app.filemanager.change_dir(...)` from legacy inline `onclick`
+   handlers, and `app.filemanager` is set through `etemplate2.load()`'s generic
+   `app.classes[appname]`/`app[appname]` instantiation (`etemplate2.ts:718-725`) the same way any real
+   top-level app's object is. **Partially fixed**: that generic path now shows the same "please
+   reload" message alongside its existing debug warning when `app.classes[appname]` never became a
+   function - covers filemanager and any other real top-level app hit the same way. **`CRM.ts`'s own
+   case is a separate mechanism and is NOT covered by that fix** - `app.classes.crm` is a
+   `CRM.ts`-specific pseudo-key, read directly by `CRMView.view_ready()`, never going through
+   `etemplate2.load()`'s appname-keyed branch at all (CRM's *owning* app, `addressbook`, has its own
+   real class and loads fine independently of whether `CRM.ts`'s own chunk succeeded). Still open:
+   give `CRMView.view_ready()`'s own "object is missing" branch the same user-facing message
+   `etemplate2.ts` got, rather than assuming the generic fix already reaches it (an earlier version of
+   this doc claimed it did - it doesn't).
 
 3. **Green + red "reload" messages stacking, reload only helping briefly.** Green is
    `egw_import.notifyUpdateAvailable()` (type `'info'`, rendered green/"success" by
@@ -393,6 +399,50 @@ next to the "not yet included" branch item 1's `.catch()` covers - but this one 
 at all. **Fixed**: wrapped in try/catch, same log+reload-message treatment as its neighbour, then
 re-thrown so callers relying on the original throw still see it.
 
+4. **The one Ralf flagged as the actually-worst symptom**: getting prompted to reload, reloading, and
+   being prompted again immediately, with no rebuild in between. Root-caused live against
+   `pole.egroupware.org` (see repro below): `notifications` was never ported to `app.ts` - it's still
+   loaded via its own legacy `<script type="module">` tag (`notifications/inc/hook_after_navbar.inc.php`,
+   sets `window.app.notifications` itself, `notifications/js/notificationajaxpopup.js:958`) rather than
+   rollup's manifest/entry system, so it has no `/notifications/js/app.min.js` and never will. The
+   server still periodically pushes `apply('app.notifications.append', ...)`
+   (`notifications_ajax.inc.php:231`, `notifications_popup.inc.php:137`) to show new-notification
+   popups, which goes through `applyFunc()` (`egw_json.ts`) like any other `app.$app.method()` call. If
+   that push arrives before `notificationajaxpopup.js`'s own `<script>` has finished (a load-order
+   race, unrelated to any rebuild - and likely to recur on every fresh page, not just after a real
+   deploy), `applyFunc()` fell into the "not yet included" branch and tried
+   `egw_import('/notifications/js/app.min.js')`, which 404s **every time, forever** - showing the same
+   "please reload" messaging as a real stale-build mismatch, except reloading can never fix it since
+   the file was never supposed to exist. Item 3's dedup guard only suppressed this when a *real*
+   mismatch had already fired the green notice first in the same document - on a fresh reload, before
+   that's happened, this fired on its own. **Fixed**: `applyFunc()`'s "not yet included" branch now
+   checks `window.egw_manifest['/'+parts[1]+'/js/app.min.js']` first - only attempts the `egw_import()`
+   load, and only shows a reload message on failure, when the manifest actually has an entry for that
+   app; otherwise it logs quietly and lets the caller's own "not a function" handling take over, same
+   as before rollup existed. The underlying `notificationajaxpopup.js` load-order race itself is a
+   separate, still-open follow-up (see Status) - this only stops it from misusing the rebuild-reload
+   messaging. Verified: typecheck clean, full `api/js/jsapi/test/*.test.ts` suite green.
+
+### Live repro of item 4 (2026-09-11, pole.egroupware.org)
+
+Ralf was mid-session on `pole.egroupware.org`'s CRM view, got the reload prompt, reloaded, and got
+prompted again immediately. Opened a fresh tab there (same server) to look: on that single fresh page
+load, both a genuine item-1-style mismatch fired (`type "et2_load"` in the log - confirming the
+`egw_json.ts` fix from item 1 is live and working, since it used to misreport `"css"`) *and*, moments
+later, the exact console line Ralf also saw directly:
+```
+Failed to load resource: the server responded with a status of 404 ()
+egw_action_common-48e3f71a.js:11177 Failure loading /notifications/js/app.min.js (TypeError: Failed to
+fetch dynamically imported module: ...) Aborting.
+    (anonymous) @ egw_json.ts:986
+```
+Confirmed via `window.egw_manifest['/notifications/js/app.min.js']` being `undefined` in that tab, and
+`notifications/js/` only containing the legacy `notificationajaxpopup.js` (no `app.ts`/`app.js`) - this
+is item 4 above, now fixed. The item-1 mismatch and the item-4 notifications race are independent of
+each other; both happened to fire on the same page load here, which is presumably part of why this
+looked so bad in practice - a real, rare, build-timing issue plus a mundane, load-order race that fires
+constantly, both dressed up in the same alarming "please reload" wording.
+
 ### Repro attempt (2026-09-11, boulder.egroupware.org)
 
 Tried to reproduce the filemanager uncaught variant directly: opened addressbook in a tab, triggered a
@@ -412,18 +462,36 @@ mid-write, are more likely candidates than a plain pinning failure. Didn't chase
 
 ## Status
 
-Design implemented and live (steps 1-7 above). All of ticket #124112's fixable findings are fixed: the
-`egw_json.ts` misleading-log-target bug (item 1), the silent `app.classes.X`-missing failure mode
-(item 2, covers both the CRMView and filemanager cases, plus the same shape independently found in
-`applyFunc()`), and the green+red message stacking (item 3). "Reload only helps briefly" turned out to
-be a red herring for this project: Ralf confirmed only one JS rebuild landed that morning, and an
-unrelated (now resolved) infrastructure issue was separately 404ing requests for all sorts of files at
-the same time - not a sign of a residual pinning gap. Still open, and the only thing left in this
-project with no fix or clear next step: root-causing the filemanager "Illegal constructor" that
-bypassed the `88bf63dd2f` catch net entirely (uncaught, unlike the addressbook case) - a direct repro
-of the straightforward trigger came back clean (see above), so it needs either a cleaner report from
-whoever hits it next (exact repro steps, timing relative to a deploy) or a popup-specific test. Nathan
-or whoever picks this back up should start there.
+Design implemented and live (steps 1-7 above). Fixed from ticket #124112 and its follow-up: the
+`egw_json.ts` misleading-log-target bug (item 1); the silent `app.classes.X`-missing failure mode for
+real top-level apps like filemanager, and the same shape independently found in `applyFunc()`'s
+instantiation branch (item 2 - **note: `CRM.ts`'s own `app.classes.crm` case is a separate mechanism,
+still NOT covered**, see item 2 above); the green+red message stacking (item 3); and - the one Ralf
+flagged as the actually-most-annoying symptom in practice - `applyFunc()` misusing the rebuild-reload
+messaging for `notifications`, which was never going to succeed no matter how many times you reload
+(item 4).
+
+Two things still genuinely open, both needing more than a code read to resolve:
+
+- **`CRM.ts`'s "CRMView object is missing"** has no user-facing message yet - unlike item 2's generic
+  path, nobody has added one to `CRMView.view_ready()` itself.
+- **The filemanager uncaught "Illegal constructor"** that bypassed the `88bf63dd2f` catch net entirely
+  (uncaught, unlike the addressbook case) - a direct repro of the straightforward trigger came back
+  clean (boulder.egroupware.org test above), so it needs either a cleaner report from whoever hits it
+  next (exact repro steps, timing relative to a deploy) or a popup-specific test.
+- **The `notificationajaxpopup.js` vs. server-push load-order race itself** (item 4's underlying
+  cause) is still there - item 4 only stopped it from showing a misleading reload prompt. Worth
+  deciding whether it's worth fixing properly (eg. queue pushed notifications until
+  `notificationajaxpopup.js` has run, or give `notifications` a real `app.ts` on the same manifest
+  system as everything else) or leave as a quiet, harmless miss now that it no longer nags anyone.
+
+"Reload only helps briefly" (Ingo/Stefan's original wording) turned out to be a red herring for *this*
+project specifically: Ralf confirmed only one JS rebuild landed that morning, and an unrelated (now
+resolved) infrastructure issue was separately 404ing requests for all sorts of files at the same time -
+not a sign of a residual pinning gap. In hindsight, item 4 (found later, from Ralf's own live report)
+is probably the real explanation for how persistent/repetitive this felt, at least on `pole` - it fires
+on every fresh page load regardless of any rebuild, which reads exactly like "reload doesn't help."
+Nathan or whoever picks this back up should start with the two still-open items above.
 
 ## Commits
 
@@ -450,4 +518,6 @@ Chronological. `*` prefix on the subject means it went out in the user-facing ch
 | `5f335c0a45` | 2026-09-11 | Claude | `Doc: update hashed-entries-build-pinning.md for the item 2/3 fixes` (this doc) |
 | `0b30502fe8` | 2026-09-11 | ralf | `Api: fix German translation of the "reload desktop" Cmd+R shortcut` |
 | `fafc5c85e0` | 2026-09-11 | Claude | `Api: catch a failed app-object instantiation in applyFunc()` |
-| *(pending)* | 2026-09-11 | Claude | `Doc: record the applyFunc() fix and the failed boulder repro attempt` (this doc, this update) |
+| `ac6a12d837` | 2026-09-11 | Claude | `Doc: record the applyFunc() fix and the failed boulder repro attempt` (this doc) |
+| `a7828a5833` | 2026-09-11 | Claude | `Api: stop nagging "please reload" for apps rollup never built` |
+| *(pending)* | 2026-09-11 | Claude | `Doc: record item 4 (notifications reload nag) + correct the CRM.ts claim` (this doc, this update) |
