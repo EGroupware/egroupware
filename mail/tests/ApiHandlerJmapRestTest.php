@@ -90,6 +90,34 @@ class ApiHandlerJmapRestTest extends \PHPUnit\Framework\TestCase
 			'documents the known asymmetry - this is exactly why call sites must guard with isRealJmapSession() first');
 	}
 
+	// --- mailboxIdForEmailGet() (getEmail()/getAttachment()'s shared $mailboxId computation) ----
+
+	/**
+	 * Same regression as testTypeGetForwardsMailboxIdOnlyWhenGiven() above, one level up: the
+	 * REST-facing helper that decides WHAT to pass as Type::get()'s new $mailboxId, for a shim
+	 * session - real JMAP never reaches this branch (isRealJmapSession() below).
+	 */
+	public function testMailboxIdForEmailGetDecodesTheFolderIdForAShimSession()
+	{
+		$session = new FakeJmapSessionForFolderWalk();
+		// isRealJmapSession() checks `instanceof Api\Mail\Jmap\Http` - FakeJmapSessionForFolderWalk
+		// extends the generic Base directly, so it correctly takes the "shim" branch here
+		$folderIdUrlSafe = $this->invokeApiHandler('urlSafeId', [base64_encode('INBOX/Sub')]);
+
+		$mailboxId = $this->invokeApiHandler('mailboxIdForEmailGet', [$session, $folderIdUrlSafe]);
+
+		$this->assertSame(base64_encode('INBOX/Sub'), $mailboxId);
+	}
+
+	public function testMailboxIdForEmailGetIsNullForARealJmapSessionEvenThoughTheIdLooksDecodable()
+	{
+		$session = new FakeRealJmapHttpSession();
+
+		$mailboxId = $this->invokeApiHandler('mailboxIdForEmailGet', [$session, 'some-real-jmap-id']);
+
+		$this->assertNull($mailboxId, 'RFC 8620 §3.6.1: a real JMAP server may reject an argument its method does not define');
+	}
+
 	// --- jsonMailbox()/jsonEmail() re-keying --------------------------------------------------
 
 	public function testJsonMailboxReEncodesIdAndParentIdOnly()
@@ -252,6 +280,25 @@ class ApiHandlerJmapRestTest extends \PHPUnit\Framework\TestCase
 		$this->assertArrayNotHasKey('fetchAllBodyValues', $session2->calls[0][1]);
 	}
 
+	/**
+	 * Regression coverage for a real bug found live 2026-09-10: GET .../emails/<emailId> was a
+	 * hard 500 ("Email/get without a preceding Email/query or a mailboxId..."), and attachment
+	 * downloads silently lost their real filename/type - both getEmail()/getAttachment() call
+	 * Email/get standalone (no listing first), so the shim has no other way to know which mailbox
+	 * to fetch from. Type::get() needed a new $mailboxId param to carry it - RFC 8620 §3.6.1 means
+	 * it must only ever be SENT for a shim session, never a real JMAP one.
+	 */
+	public function testTypeGetForwardsMailboxIdOnlyWhenGiven()
+	{
+		$session = new FakeJmapBase();
+		$session->email->get(['1'], ['subject'], false, base64_encode('INBOX/Sub'));
+		$this->assertSame(base64_encode('INBOX/Sub'), $session->calls[0][1]['mailboxId']);
+
+		$session2 = new FakeJmapBase();
+		$session2->email->get(['1'], ['subject']);
+		$this->assertArrayNotHasKey('mailboxId', $session2->calls[0][1]);
+	}
+
 	// --- Api\Mail\Jmap\Imap::emailFromFetch()'s new mailboxIds field ----------------------------
 
 	public function testEmailFromFetchPopulatesMailboxIdsForANonInboxFolder()
@@ -291,6 +338,17 @@ class ApiHandlerJmapRestTest extends \PHPUnit\Framework\TestCase
 }
 
 /**
+ * A minimal, never-actually-connected instance of the REAL Api\Mail\Jmap\Http class - only so
+ * isRealJmapSession()'s `instanceof Api\Mail\Jmap\Http` check sees a genuine match. Http's real
+ * constructor does a live HTTP bootstrap, so it's overridden to a no-op, same technique
+ * TransportSendTest.php's own fakeHttp() already established for this exact class.
+ */
+class FakeRealJmapHttpSession extends \EGroupware\Api\Mail\Jmap\Http
+{
+	public function __construct() {}
+}
+
+/**
  * Fake Api\Jmap\Base + minimal Mailbox Type double for testListAllFolders*() above - a tiny
  * in-memory 3-node tree (root: A, B; A: A1), recording every query() filter it was called with.
  */
@@ -319,7 +377,7 @@ class FakeJmapMailboxForFolderWalk extends JmapType
 		return ['ids' => $ids];
 	}
 
-	public function get(?array $ids=null, ?array $properties=null, bool $fetchAllBodyValues=false) : array
+	public function get(?array $ids=null, ?array $properties=null, bool $fetchAllBodyValues=false, ?string $mailboxId=null) : array
 	{
 		return ['list' => array_values(array_intersect_key(self::TREE, array_flip((array)$ids)))];
 	}

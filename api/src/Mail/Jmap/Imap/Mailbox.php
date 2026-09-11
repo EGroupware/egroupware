@@ -21,10 +21,13 @@ use EGroupware\Api\Mail\Jmap\Imap;
 class Mailbox extends Base
 {
 	/**
-	 * $properties/$fetchAllBodyValues are unused - mailboxGet() has no properties-filter or
-	 * body-value concept (Mailbox has no body).
+	 * $properties/$fetchAllBodyValues/$mailboxId are unused - mailboxGet() has no
+	 * properties-filter or body-value concept (Mailbox has no body), and a Mailbox is addressed
+	 * by its own id, so it never needs one to be told which mailbox it is in. $mailboxId is only
+	 * in the signature to stay compatible with Api\Jmap\Type::get() (see its own docblock for why
+	 * this must never be dropped from an override).
 	 */
-	public function get(?array $ids=null, ?array $properties=null, bool $fetchAllBodyValues=false) : array
+	public function get(?array $ids=null, ?array $properties=null, bool $fetchAllBodyValues=false, ?string $mailboxId=null) : array
 	{
 		/** @var Imap $jmap */
 		$jmap = $this->jmap;

@@ -840,6 +840,26 @@ class ApiHandler extends Api\CalDAV\Handler
 	}
 
 	/**
+	 * The $mailboxId argument to pass to Type::get() (see its own docblock) for a standalone
+	 * Email/get (getEmail()/getAttachment() - both have no preceding Email/query in the same
+	 * request, unlike listEmails()) - null for a real JMAP server (which would reject an argument
+	 * Email/get does not define, RFC 8620 §3.6.1), the folder id decoded back for the shim
+	 * (which needs it to know which mailbox to FETCH from at all).
+	 *
+	 * Shared by getEmail()/getAttachment() (found live 2026-09-10 in both at once - the exact same
+	 * gap, just discovered via two different symptoms: a hard 500, and attachment downloads
+	 * silently losing their filename/type).
+	 *
+	 * @param Api\Jmap\Base $session
+	 * @param string $folderIdUrlSafe
+	 * @return string|null
+	 */
+	protected static function mailboxIdForEmailGet(Api\Jmap\Base $session, string $folderIdUrlSafe) : ?string
+	{
+		return self::isRealJmapSession($session) ? null : self::fromUrlSafeId($folderIdUrlSafe);
+	}
+
+	/**
 	 * ?properties=a,b,c query param, forwarded verbatim to Mailbox/get or Email/get - null (not an
 	 * empty array) when absent, so the session's own "null = server default" behaviour applies.
 	 *
@@ -977,9 +997,15 @@ class ApiHandler extends Api\CalDAV\Handler
 	 *
 	 * @param int $user
 	 * @param int|null $ident_id
-	 * @return true
+	 * @return string HTTP status - NOT true: HTTP_WebDAV_Server only keeps the Content-Type
+	 *  this method's own caller already set (application/json, see get()'s own header() call)
+	 *  when the GET handler returns a status string; returning true makes it default the whole
+	 *  response body to application/octet-stream instead (found live 2026-09-10: a real REST
+	 *  client, n8n's own HTTP node, filed the JSON response as a binary file download and read no
+	 *  mail at all - see HTTP_WebDAV_Server::http_GET()/CalDAV.php's own "as not mimetype is set"
+	 *  precedent for the exact same idiom).
 	 */
-	protected static function listFolders(int $user, ?int $ident_id) : bool
+	protected static function listFolders(int $user, ?int $ident_id) : string
 	{
 		$account = self::getMailAccount($user, $ident_id);
 		$session = $account->jmapSession();
@@ -993,7 +1019,7 @@ class ApiHandler extends Api\CalDAV\Handler
 			$responses[$prefix.$mailbox['id']] = $mailbox;
 		}
 		echo json_encode(['responses' => $responses], self::JSON_RESPONSE_OPTIONS);
-		return true;
+		return '200 Ok';
 	}
 
 	/**
@@ -1002,10 +1028,10 @@ class ApiHandler extends Api\CalDAV\Handler
 	 * @param int $user
 	 * @param int|null $ident_id
 	 * @param string $folderIdUrlSafe
-	 * @return true
+	 * @return string HTTP status - NOT true, see listFolders()'s own docblock for why
 	 * @throws \Exception (404) if not found
 	 */
-	protected static function getFolder(int $user, ?int $ident_id, string $folderIdUrlSafe) : bool
+	protected static function getFolder(int $user, ?int $ident_id, string $folderIdUrlSafe) : string
 	{
 		$account = self::getMailAccount($user, $ident_id);
 		$session = $account->jmapSession();
@@ -1018,7 +1044,7 @@ class ApiHandler extends Api\CalDAV\Handler
 			throw new \Exception("Folder '$folderIdUrlSafe' not found", 404);
 		}
 		echo json_encode(self::jsonMailbox($list[0]), self::JSON_RESPONSE_OPTIONS);
-		return true;
+		return '200 Ok';
 	}
 
 	/**
@@ -1027,9 +1053,9 @@ class ApiHandler extends Api\CalDAV\Handler
 	 * @param int $user
 	 * @param int|null $ident_id
 	 * @param string $folderIdUrlSafe
-	 * @return true
+	 * @return string HTTP status - NOT true, see listFolders()'s own docblock for why
 	 */
-	protected static function listEmails(int $user, ?int $ident_id, string $folderIdUrlSafe) : bool
+	protected static function listEmails(int $user, ?int $ident_id, string $folderIdUrlSafe) : string
 	{
 		$account = self::getMailAccount($user, $ident_id);
 		$session = $account->jmapSession();
@@ -1068,7 +1094,7 @@ class ApiHandler extends Api\CalDAV\Handler
 			'position' => $query['position'] ?? $position,
 			'total' => $query['total'] ?? count($ids),
 		], self::JSON_RESPONSE_OPTIONS);
-		return true;
+		return '200 Ok';
 	}
 
 	/**
@@ -1076,26 +1102,31 @@ class ApiHandler extends Api\CalDAV\Handler
 	 *
 	 * @param int $user
 	 * @param int|null $ident_id
-	 * @param string $folderIdUrlSafe unused beyond routing/discoverability - Email/get only needs
-	 *  the emailId (see doc/ai/projects/mail-rest-jmap-lite.md's attachment-endpoint note, same
-	 *  reasoning)
+	 * @param string $folderIdUrlSafe the mailbox to read the email from. A real JMAP server
+	 *  identifies an Email by id alone, but the JmapShim has to FETCH it out of some IMAP
+	 *  mailbox: Api\Mail\Jmap\Imap::emailGet() otherwise relies on the context a preceding
+	 *  Email/query left behind, and this endpoint has no listing in front of it, so it must pass
+	 *  the mailbox explicitly or the shim throws (found live 2026-09-10 - see Api\Jmap\Type::
+	 *  get()'s own $mailboxId docblock). Only for shim sessions - RFC 8620 §3.6.1 lets a real
+	 *  JMAP server reject an argument Email/get does not define.
 	 * @param string $emailId
-	 * @return true
+	 * @return string HTTP status - NOT true, see listFolders()'s own docblock for why
 	 * @throws \Exception (404) if not found
 	 */
-	protected static function getEmail(int $user, ?int $ident_id, string $folderIdUrlSafe, string $emailId) : bool
+	protected static function getEmail(int $user, ?int $ident_id, string $folderIdUrlSafe, string $emailId) : string
 	{
 		$account = self::getMailAccount($user, $ident_id);
 		$session = $account->jmapSession();
+		$mailboxId = self::mailboxIdForEmailGet($session, $folderIdUrlSafe);
 
 		$properties = self::queryProperties() ?? array_merge(self::DEFAULT_EMAIL_LIST_PROPERTIES, self::DEFAULT_EMAIL_BODY_PROPERTIES);
-		$list = $session->email->get([$emailId], $properties, true)['list'] ?? [];
+		$list = $session->email->get([$emailId], $properties, true, $mailboxId)['list'] ?? [];
 		if (!$list)
 		{
 			throw new \Exception("Email '$emailId' not found", 404);
 		}
 		echo json_encode(self::jsonEmail($list[0]), self::JSON_RESPONSE_OPTIONS);
-		return true;
+		return '200 Ok';
 	}
 
 	/**
@@ -1112,13 +1143,14 @@ class ApiHandler extends Api\CalDAV\Handler
 	 *
 	 * @param int $user
 	 * @param int|null $ident_id
-	 * @param string $folderIdUrlSafe
+	 * @param string $folderIdUrlSafe the mailbox $emailId lives in - see getEmail()'s own
+	 *  docblock for why the shim needs this and a real JMAP server must never receive it
 	 * @param string $emailId
 	 * @param string $blobId
-	 * @return true
+	 * @return string HTTP status - NOT true, see listFolders()'s own docblock for why
 	 * @throws \Exception (404) if not found
 	 */
-	protected static function getAttachment(int $user, ?int $ident_id, string $folderIdUrlSafe, string $emailId, string $blobId) : bool
+	protected static function getAttachment(int $user, ?int $ident_id, string $folderIdUrlSafe, string $emailId, string $blobId) : string
 	{
 		$account = self::getMailAccount($user, $ident_id);
 		$bytes = Ui\AttachmentJmap::fetchBlobBytes((string)$account->acc_id, $blobId);
@@ -1129,7 +1161,12 @@ class ApiHandler extends Api\CalDAV\Handler
 		$name = $blobId;
 		$type = '';
 		try {
-			$email = $account->jmapSession()->email->get([$emailId], ['attachments', 'blobId', 'subject'])['list'][0] ?? null;
+			$session = $account->jmapSession();
+			// same mailbox-context requirement as getEmail() - without it the shim throws and the
+			// catch below silently degrades every download to blobId/octet-stream (found live
+			// 2026-09-10 alongside the identical getEmail() gap)
+			$mailboxId = self::mailboxIdForEmailGet($session, $folderIdUrlSafe);
+			$email = $session->email->get([$emailId], ['attachments', 'blobId', 'subject'], false, $mailboxId)['list'][0] ?? null;
 			if (($email['blobId'] ?? null) === $blobId)
 			{
 				// the email's own top-level blobId (RFC 8621 §4.1.1) - the whole raw message, not
@@ -1152,7 +1189,7 @@ class ApiHandler extends Api\CalDAV\Handler
 		}
 		Api\Header\Content::type($name, $type, strlen($bytes));
 		echo $bytes;
-		return true;
+		return '200 Ok';
 	}
 
 	const PASSWORD_DUMMY = '********';

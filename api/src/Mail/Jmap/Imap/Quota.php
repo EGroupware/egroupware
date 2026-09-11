@@ -21,7 +21,12 @@ use EGroupware\Api\Mail\Jmap\Imap;
  */
 class Quota extends Base
 {
-	public function get(?array $ids=null, ?array $properties=null) : array
+	/**
+	 * $fetchAllBodyValues/$mailboxId are unused - Quota has no body values and is never addressed
+	 * by mailbox, kept only for signature-compatibility with Api\Mail\Jmap\Quota::get()/
+	 * Api\Jmap\Type::get() (see the latter's own docblock for why this must never be dropped).
+	 */
+	public function get(?array $ids=null, ?array $properties=null, bool $fetchAllBodyValues=false, ?string $mailboxId=null) : array
 	{
 		/** @var Imap $jmap */
 		$jmap = $this->jmap;

@@ -38,9 +38,22 @@ abstract class Type
 	 *  every text/html body part's value in the response's bodyValues, not just ones explicitly
 	 *  referenced. Meaningless for any other type - never pass true except for Email, since a
 	 *  real JMAP server may reject an argument its method doesn't define.
+	 * @param string|null $mailboxId NON-standard, JmapShim-only: the mailbox the ids live in.
+	 *  Api\Mail\Jmap\Imap::emailGet() needs a mailbox to FETCH from and otherwise relies on the
+	 *  context a preceding Email/query left behind, so a standalone Email/get (one email by id,
+	 *  no listing first) has to say which mailbox itself. RFC 8620 §3.6.1 makes a real JMAP
+	 *  server reject arguments its method does not define, so callers must only pass this for
+	 *  shim-backed sessions - see Mail\ApiHandler::isRealJmapSession().
+	 *
+	 *  IMPORTANT for every override of this method: keep $mailboxId (and any future parameter
+	 *  added here) in the override's own signature even if unused - PHP raises a FATAL
+	 *  "Declaration must be compatible" error at class-load time otherwise, for EVERY class that
+	 *  overrides get(), the moment this base signature gains a parameter an override doesn't also
+	 *  declare (found live twice now: 2026-09-09 for $fetchAllBodyValues, see Identity::get()'s
+	 *  own docblock; 2026-09-10 for $mailboxId, this exact parameter, missed on first attempt).
 	 * @return array{list: array[], notFound?: string[]}
 	 */
-	public function get(?array $ids=null, ?array $properties=null, bool $fetchAllBodyValues=false) : array
+	public function get(?array $ids=null, ?array $properties=null, bool $fetchAllBodyValues=false, ?string $mailboxId=null) : array
 	{
 		return $this->jmap->call(static::TYPE_NAME.'/get', array_filter([
 			// RFC 8620 §5.1: every standard method call requires accountId - both concrete
@@ -49,6 +62,7 @@ abstract class Type
 			'ids' => $ids,
 			'properties' => $properties,
 			'fetchAllBodyValues' => $fetchAllBodyValues ?: null,
+			'mailboxId' => $mailboxId,
 		], static fn($v) => $v !== null));
 	}
 

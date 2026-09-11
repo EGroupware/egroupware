@@ -48,8 +48,11 @@ class Identity extends Type
 	 *  signature-compatibility with Type::get() (found live 2026-09-09: a PHP fatal
 	 *  "Declaration must be compatible" broke this class' autoload entirely - and with it every
 	 *  JMAP call needing an Identity, including sending - once Type::get() gained this param)
+	 * @param string|null $mailboxId ignored - same signature-compatibility reasoning as
+	 *  $fetchAllBodyValues above, for the same class of bug (found again live 2026-09-10, this
+	 *  time for $mailboxId - see Type::get()'s own docblock)
 	 */
-	public function get(?array $ids=null, ?array $properties=null, bool $fetchAllBodyValues=false) : array
+	public function get(?array $ids=null, ?array $properties=null, bool $fetchAllBodyValues=false, ?string $mailboxId=null) : array
 	{
 		return self::synthesize($this->jmap->acc_id ?? (int)$this->jmap->accountId, $ids);
 	}
