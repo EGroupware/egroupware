@@ -385,17 +385,45 @@ always be caught the same way the addressbook one was - why this specific instan
 yet root-caused**; needs a live repro (not safe to guess-fix). Possibly a browser console-timing quirk
 (rejection logged before the `.catch()` attaches) rather than a real gap, but unconfirmed.
 
+While auditing the same "load a missing app object" family, one more instance of the item-1/2 shape
+turned up independently of the ticket: `applyFunc()` (`api/js/jsapi/egw_json.ts`, backs
+`egw.apply()`/`egw.callFunc()`, which `et2_compileLegacyJS` routes every compiled `onclick`/`onchange`
+handler through) has its own "not yet instantiated" branch (`new app.classes[parts[1]](...)`) right
+next to the "not yet included" branch item 1's `.catch()` covers - but this one had no error handling
+at all. **Fixed**: wrapped in try/catch, same log+reload-message treatment as its neighbour, then
+re-thrown so callers relying on the original throw still see it.
+
+### Repro attempt (2026-09-11, boulder.egroupware.org)
+
+Tried to reproduce the filemanager uncaught variant directly: opened addressbook in a tab, triggered a
+real rebuild via the already-running `rollup -cw` watcher (touched `Et2Widget.ts` with a harmless
+marker, confirmed via `build-manifest.json` that `etemplate2`'s chunk hash and the build epoch both
+changed, then reverted the marker - clean, no diff left), then - without reloading the tab - opened
+Filemanager (not yet loaded this session) through the app switcher.
+
+**No crash.** `window.egw_manifest` in that tab still resolved `/filemanager/js/app.min.js` and
+`/api/js/etemplate/etemplate2.js` to their *original*, pre-rebuild hashes, the pinned build epoch was
+unchanged, `egw_import.updateAvailableNotified` stayed `false`, and `app.filemanager`/
+`app.classes.filemanager` were both correctly set. So the straightforward "open a not-yet-opened app
+in an already-pinned document, after a clean rebuild" case - the scenario this whole project targets -
+works as designed on current code. Whatever Ingo/Stefan actually hit needs a less direct trigger than
+this to reproduce - a popup/secondary-window path, or a request landing while the build is still
+mid-write, are more likely candidates than a plain pinning failure. Didn't chase further; see Status.
+
 ## Status
 
-Design implemented and live (steps 1-7 above). Three of ticket #124112's four findings fixed: the
+Design implemented and live (steps 1-7 above). All of ticket #124112's fixable findings are fixed: the
 `egw_json.ts` misleading-log-target bug (item 1), the silent `app.classes.X`-missing failure mode
-(item 2, covers both the CRMView and filemanager cases), and the green+red message stacking (item 3).
-"Reload only helps briefly" turned out to be a red herring for this project: Ralf confirmed only one
-JS rebuild landed that morning, and an unrelated (now resolved) infrastructure issue was separately
-404ing requests for all sorts of files at the same time - not a sign of a residual pinning gap. Still
-open: root-causing the filemanager "Illegal constructor" that bypassed the `88bf63dd2f` catch net
-entirely (uncaught, unlike the addressbook case) - needs a cleaner live repro before it can be
-fixed rather than guessed at. Nathan or whoever picks this back up should start there.
+(item 2, covers both the CRMView and filemanager cases, plus the same shape independently found in
+`applyFunc()`), and the green+red message stacking (item 3). "Reload only helps briefly" turned out to
+be a red herring for this project: Ralf confirmed only one JS rebuild landed that morning, and an
+unrelated (now resolved) infrastructure issue was separately 404ing requests for all sorts of files at
+the same time - not a sign of a residual pinning gap. Still open, and the only thing left in this
+project with no fix or clear next step: root-causing the filemanager "Illegal constructor" that
+bypassed the `88bf63dd2f` catch net entirely (uncaught, unlike the addressbook case) - a direct repro
+of the straightforward trigger came back clean (see above), so it needs either a cleaner report from
+whoever hits it next (exact repro steps, timing relative to a deploy) or a popup-specific test. Nathan
+or whoever picks this back up should start there.
 
 ## Commits
 
@@ -419,4 +447,7 @@ Chronological. `*` prefix on the subject means it went out in the user-facing ch
 | `f2833b1a47` | 2026-09-11 | Claude | `Doc: restore hashed-entries-build-pinning.md, document ticket #124112 follow-up` (this doc, restored) |
 | `bdafdb7e89` | 2026-09-11 | Claude | `Api: tell the user to reload when an app's JS object never loaded` |
 | `1fda0de2c1` | 2026-09-11 | Claude | `Api: don't stack a 2nd "please reload" prompt when one is already up` |
-| *(pending)* | 2026-09-11 | Claude | `Doc: update hashed-entries-build-pinning.md for the item 2/3 fixes` (this doc, this update) |
+| `5f335c0a45` | 2026-09-11 | Claude | `Doc: update hashed-entries-build-pinning.md for the item 2/3 fixes` (this doc) |
+| `0b30502fe8` | 2026-09-11 | ralf | `Api: fix German translation of the "reload desktop" Cmd+R shortcut` |
+| `fafc5c85e0` | 2026-09-11 | Claude | `Api: catch a failed app-object instantiation in applyFunc()` |
+| *(pending)* | 2026-09-11 | Claude | `Doc: record the applyFunc() fix and the failed boulder repro attempt` (this doc, this update) |
