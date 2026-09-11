@@ -79,12 +79,23 @@ class admin_categories
 	{
 		if (is_null(self::$acl_search))
 		{
-			self::$acl_search = !$GLOBALS['egw']->acl->checkAdminDeny('global_categorie', 2);
-			self::$acl_add    = !$GLOBALS['egw']->acl->checkAdminDeny('global_categorie', 4);
-			self::$acl_view   = !$GLOBALS['egw']->acl->checkAdminDeny('global_categorie', 8);
-			self::$acl_edit   = !$GLOBALS['egw']->acl->checkAdminDeny('global_categorie', 16);
-			self::$acl_delete = !$GLOBALS['egw']->acl->checkAdminDeny('global_categorie', 32);
-			self::$acl_add_sub= !$GLOBALS['egw']->acl->checkAdminDeny('global_categorie', 64);
+			// global_categorie deny-mask only ever restricts admins; it does not apply to regular
+			// users (eg. preferences_categories_ui, which intentionally skips our __construct() to
+			// let non-admins manage their own categories) - checkAdminDeny() throws for those
+			if (isset($GLOBALS['egw_info']['user']['apps']['admin']))
+			{
+				self::$acl_search = !$GLOBALS['egw']->acl->checkAdminDeny('global_categorie', 2);
+				self::$acl_add    = !$GLOBALS['egw']->acl->checkAdminDeny('global_categorie', 4);
+				self::$acl_view   = !$GLOBALS['egw']->acl->checkAdminDeny('global_categorie', 8);
+				self::$acl_edit   = !$GLOBALS['egw']->acl->checkAdminDeny('global_categorie', 16);
+				self::$acl_delete = !$GLOBALS['egw']->acl->checkAdminDeny('global_categorie', 32);
+				self::$acl_add_sub= !$GLOBALS['egw']->acl->checkAdminDeny('global_categorie', 64);
+			}
+			else
+			{
+				self::$acl_search = self::$acl_add = self::$acl_view =
+					self::$acl_edit = self::$acl_delete = self::$acl_add_sub = true;
+			}
 		}
 	}
 
