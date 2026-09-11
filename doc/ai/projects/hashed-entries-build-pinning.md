@@ -440,60 +440,70 @@ Confirmed via `window.egw_manifest['/notifications/js/app.min.js']` being `undef
 `notifications/js/` only containing the legacy `notificationajaxpopup.js` (no `app.ts`/`app.js`) - this
 is item 4 above, now fixed.
 
-### Root-caused: nginx caching hashed static assets without a cache-buster (2026-09-11)
+### Root-cause investigation (2026-09-11) - four hypotheses, three ruled out
 
 After deploying items 1-4 to `pole.egroupware.org`, Ralf reported the fix "did not help" - reload on
 the CRM view came back empty again, with the green notice, immediately. Live investigation (repeated
-across many reloads over ~13:29-13:41, including a brand-new tab with zero prior history) found
-something worse than a race: **every template loads *twice*, each time through a genuinely different
-`etemplate2` build**, back-to-back on one page:
+across many reloads over ~13:29-15:19, including several completely fresh tabs) found something worse
+than a race: **`addressbook.index` (and `status.index`, the default app) kept loading through a
+genuinely stale `etemplate2-84c78436.js`**, well after multiple later rebuilds had landed:
 ```
-Loading addressbook.index into #addressbook-index   (via etemplate2-84c78436.js  - stale)
-Loading addressbook.index into #addressbook-index   (via etemplate2-ea40ee56.js  - current)
-Exception "Illegal constructor" ...
+Exception "Illegal constructor" ... type "et2_load" ...
+    at new Et2Template (https://pole.egroupware.org/egroupware/chunks/etemplate2-84c78436.js:74073:7)
 ```
-Same for `status.index` (the default app), and reproduced identically on a completely fresh tab -
-ruling out browser/network-log artifacts from repeated testing in one tab.
+Three hypotheses were tried and ruled out in turn before the real cause was found - kept here because
+each is a real, generally-useful thing to check for this bug class, even though none was it this time:
 
-Two hypotheses were tried and ruled out with Ralf's help before landing on the real cause:
+1. **Non-atomic multi-node rsync** - ruled out: `jq`-ing `build-manifest.json` directly on all 5
+   Kubernetes nodes showed byte-identical content everywhere, and the build log showed one atomic
+   `rollup -c` run (`created . in 1m 5.3s`) covering every app in a single pass, not staggered
+   per-node writes.
+2. **Incremental/lazy build only regenerating touched entries** - ruled out once a genuinely fresh tab
+   (no prior requests at all) showed the *same* stale hash for the same apps; that ruled out per-tab
+   request history as the differentiator.
+3. **nginx caching hashed static assets without a cache-buster** - Ralf's own infrastructure knowledge
+   (nginx caches static-looking assets like `.json` for 10 days when a response has no cache-buster /
+   the request URL doesn't change) fit the symptoms well and *is* real, but turned out not to be this
+   bug: `curl -I` against the live page confirmed proper `Cache-Control: no-store, no-cache,
+   must-revalidate` / `Expires` / `Pragma: no-cache` headers reaching the client (PHP's session
+   cache-limiter default, per Ralf - only specific endpoints like `api/user.php` opt out of it) - so
+   the page itself was never being cached, and a `kdots-js-app.min-<hash>.js` fetched fresh with
+   `cache: 'no-store'` matched its build's current `etemplate2` hash exactly. One real, narrower gap
+   *was* found here and is fixed regardless (see below): the `build-epoch.json` poll meant to detect
+   drift was itself exactly the cacheable shape nginx's real policy targets, silently defeating that
+   one safety net. But it wasn't the cause of the addressbook crashes themselves.
+4. **The actual cause**, found via DevTools network-initiator inspection (Ralf): `kanban/js/app.min.js`,
+   `rocketchat/js/app.min.js` and `kdots/js/app.min.js` were being requested at their **bare, unhashed
+   path** (`/kdots/js/app.min.js`, not `/chunks/kdots-js-app.min-<hash>.js`), with `egw_import()`
+   itself as the initiator. `Bundle::clientManifest()` (what becomes `window.egw_manifest`/
+   `data-manifest`) filtered its output to the user's permitted apps - but `data-include` (what the
+   client bootstrap loop actually iterates and passes to `egw_import()`) is a *separately computed*
+   list, checked against the *full*, unfiltered manifest server-side. Nothing kept the two in sync. An
+   app present in `data-include` but missing from the filtered `data-manifest` made `egw_import()`
+   correctly, per its own design, fall back to that app's literal `app.min.js` path - which still
+   exists on disk (rollup only writes hashed `/chunks/` output now, so the literal path is frozen at
+   whatever it last contained, from before hashing existed) and references a long-stale `etemplate2`
+   copy, colliding with whatever a correctly hash-resolved app already registered. A special case for
+   `"kdots"` in the filter (added 2026-09-09, see the design section above) papered over one instance
+   of exactly this; live testing found real, permitted apps (`kanban`, `rocketchat`) hitting the same
+   bug regardless - the special case was a symptom being patched, not the actual bug being fixed.
 
-- **Non-atomic multi-node rsync** (first guess) - ruled out: `jq`-ing `build-manifest.json` directly on
-  all 5 Kubernetes nodes showed byte-identical content everywhere, and the build log showed one atomic
-  `rollup -c` run (`created . in 1m 5.3s`) covering every app in a single pass, not staggered per-node
-  writes.
-- **Incremental/lazy build only regenerating touched entries** (second guess, based on only 5 apps -
-  the ones actually opened during testing - showing the newer hash) - ruled out once a genuinely fresh
-  tab (no prior requests at all) showed the *same* stale hash for those same 5 apps; that ruled out
-  per-tab request history as the differentiator too.
+**Fixed** (`ad9b270b85`): `Bundle::clientManifest()` no longer filters at all. Unlike
+`Link::json_registry()` (whose filtering precedent it used to follow), the JS itself carries nothing
+confidential - there's no real reason a user shouldn't be able to fetch another app's `app.min.js` if
+they know the hashed URL - so removing the filter removes the whole bug class instead of trying to keep
+two independently-computed lists in sync. Also: `egw_import()` now logs (`console.debug`) whenever it
+falls back to importing a path with no manifest entry, so a mismatch like this is visible instead of
+silently loading stale content; and `egw_json.ts`'s registered `'js'` JSON-response plugin (found to be
+dead code in the current protocol, but a latent trap if that ever changes) now goes through
+`egw_import()` instead of a raw `import()`, matching every other manifest-resolved load path.
 
-**Actual cause (Ralf): nginx caches static assets like `.json` (and, going by this evidence, other
-extensionless-hash-named static files under `/chunks/` and the app dirs) for 10 days whenever a
-response has no cache-buster / the request URL doesn't change.** Rollup's content hashing correctly
-gives an entry a *new* filename whenever its own compiled bytes change - but an entry like `kdots`
-whose own source didn't change can still end up serving stale, cached bytes under its old,
-unchanged-looking URL if nginx cached that exact URL before the deploy and nothing tells it the
-underlying file was rewritten by rsync in the meantime. The per-document build-manifest pin this whole
-project relies on assumes one consistent server-side view of "the current build" once a document
-renders - true on a single-node dev box with no such cache in front of it (verified against
-boulder.egroupware.org above) - but an intermediate cache layer serving stale bytes for a URL that
-*looks* unchanged is a layer below anything a client-side pin can detect or correct. Not an application
-bug; nothing in this project's design or this ticket's fixes could have caught it, and nothing should
-try to from the client side. Ops-side fix (cache-busting or shorter/conditional caching for these
-paths, or excluding `/chunks/` and the hashed `app.min.js`/`etemplate2.js` paths from blind
-TTL-based caching) is Ralf's to make; not tracked further here.
-
-One narrower piece *was* fixable client-side, and is fixed: Ralf confirmed the PHP-generated page
-itself is cached by default unless special measures are taken (which they aren't for regular pages),
-so `data-epoch`/`data-manifest` on a freshly-rendered page can already be stale on arrival - no
-amount of reloading fixes that on its own. But the 15-minute `build-epoch.json` poll meant to *detect*
-drift and prompt a reload was itself just as vulnerable: a plain `.json` GET with no cache-buster is
-exactly the shape nginx caches for days, so the poll could keep reading a stale epoch and never fire
-at all, silently defeating the one safety net this project has for a page that's stuck on an old,
-cached render. **Fixed** (`0c496e1c23`): every ajax_exec response now carries the server's current
-build epoch (`Json\Response::getJSON()`), and `egw_json.ts`'s `handleResponse()` checks it against
-`window.egw_buildEpoch` on every response - no extra request, and nothing cacheable in the loop, since
-ajax_exec responses are dynamic. The original poll stays as a fallback for a tab that never makes
-another ajax call, now with its own cache-buster query param added too, as cheap extra insurance.
+The `build-epoch.json` poll gap from hypothesis 3 is fixed regardless, on its own merits (`0c496e1c23`):
+every ajax_exec response now carries the server's current build epoch (`Json\Response::getJSON()`), and
+`egw_json.ts`'s `handleResponse()` checks it against `window.egw_buildEpoch` on every response - no
+extra request, and nothing cacheable in the loop, since ajax_exec responses are dynamic. The original
+poll stays as a fallback for a tab that never makes another ajax call, now with its own cache-buster
+query param added too, as cheap extra insurance.
 
 ### Repro attempt (2026-09-11, boulder.egroupware.org)
 
@@ -520,39 +530,40 @@ real top-level apps like filemanager, and the same shape independently found in 
 instantiation branch, both the load path and the instantiation path (item 2 - **note: `CRM.ts`'s own
 `app.classes.crm` case is a separate mechanism, still NOT covered**, see item 2 above); the green+red
 message stacking (item 3); `applyFunc()` misusing the rebuild-reload messaging for `notifications`,
-which was never going to succeed no matter how many times you reload (item 4); and, root-caused only
-after deploying items 1-4 and finding the prompt came straight back - the update-detection poll itself
-being just as vulnerable to nginx's caching as the thing it was trying to detect (item 5, see the
-"Root-caused" section below).
+which was never going to succeed no matter how many times you reload (item 4); the update-detection
+poll itself being just as vulnerable to the (real, but ultimately unrelated) nginx static-asset caching
+as the thing it was trying to detect (item 5); and, item 6 and the actual root cause of the addressbook
+crashes reported throughout this whole ticket - `data-include` and `data-manifest` being two
+independently-computed, filtered-differently lists, which made `egw_import()` correctly-per-its-own-
+design fall back to a long-stale, unhashed `app.min.js` for any app present in one but not the other
+(`Bundle::clientManifest()`'s filtering removed entirely, `ad9b270b85`). Live-testing on
+`pole.egroupware.org` after this landed is still pending as of this write-up - see the note at the top
+of [Commits](#commits) once that's confirmed.
 
 Two things still genuinely open, both needing more than a code read to resolve:
 
 - **`CRM.ts`'s "CRMView object is missing"** has no user-facing message yet - unlike item 2's generic
   path, nobody has added one to `CRMView.view_ready()` itself.
 - **The filemanager uncaught "Illegal constructor"** that bypassed the `88bf63dd2f` catch net entirely
-  (uncaught, unlike the addressbook case) - a direct repro of the straightforward trigger came back
-  clean (boulder.egroupware.org test above), so it needs either a cleaner report from whoever hits it
-  next (exact repro steps, timing relative to a deploy) or a popup-specific test. Given the nginx
-  caching finding below, worth first checking it isn't just the same infra-layer cause wearing a
-  different hat.
-- **The `notificationajaxpopup.js` vs. server-push load-order race itself** (item 4's underlying
-  cause) is still there - item 4 only stopped it from showing a misleading reload prompt. Worth
-  deciding whether it's worth fixing properly (eg. queue pushed notifications until
-  `notificationajaxpopup.js` has run, or give `notifications` a real `app.ts` on the same manifest
-  system as everything else) or leave as a quiet, harmless miss now that it no longer nags anyone.
+  (uncaught, unlike the addressbook case) - never independently reproduced (the boulder.egroupware.org
+  attempt came back clean, and the real cause found afterward - item 6 - is a different failure shape
+  entirely, a manifest miss rather than a race). Worth retesting now that item 6 is fixed, since it may
+  simply have been another instance of the same bug.
 
-"Reload only helps briefly" (Ingo/Stefan's original wording) turned out to have at least three real,
-independent causes layered under it: the item-4 `notifications` load-order race (fixed, was firing a
-misleading reload prompt on its own on every fresh page regardless of any rebuild); nginx serving
-10-day-cached stale bytes - both for hashed static files whose URL happened not to change across a
-deploy, and for the *entire dynamic page response* itself, including the embedded manifest/epoch
-(infra-side, Ralf's/ops' to fix, not tracked further here); and, compounding that second one, the
-client's own drift-detection poll (`build-epoch.json`) being just as cacheable as the page it was
-meant to catch going stale, silently defeating the one safety net that was supposed to notice (item 5,
-fixed). No amount of reloading, new tabs, or waiting minutes was ever going to fix a page an
-intermediate cache keeps serving for up to 10 days - but at least the detection mechanism itself no
-longer silently fails the same way once the underlying page-caching issue is addressed on the ops
-side. Nathan or whoever picks this back up should start with the three still-open items above.
+Also worth deciding, not urgent: the `notificationajaxpopup.js` vs. server-push load-order race itself
+(item 4's underlying cause) is still there - item 4 only stopped it from showing a misleading reload
+prompt. Fix properly (eg. queue pushed notifications until `notificationajaxpopup.js` has run, or give
+`notifications` a real `app.ts` on the same manifest system as everything else) or leave as a quiet,
+harmless miss now that it no longer nags anyone.
+
+"Reload only helps briefly" (Ingo/Stefan's original wording), in the end, mostly traces to item 6: any
+document whose `data-include` happened to name an app missing from the (now-removed) filtered
+`data-manifest` would hit the stale-`app.min.js` collision on *every* load of that app, indefinitely -
+no amount of reloading fixes a bug that isn't actually about staleness at all. Items 4 and 5 were real,
+independent contributors layered on top (a load-order race and a cacheable detection poll,
+respectively), which is likely why this felt so persistent and hard to pin down in practice. Nathan or
+whoever picks this back up should start with the two still-open items above, and with confirming item
+6's fix against `pole.egroupware.org` if that hasn't happened yet.
 
 ## Commits
 
@@ -586,4 +597,7 @@ Chronological. `*` prefix on the subject means it went out in the user-facing ch
 | *(items 1-4 deployed to pole.egroupware.org; live investigation of the recurring reload prompt follows)* | | | |
 | `b2fbe50947` | 2026-09-11 | Claude | `Doc: correct the pole "reload keeps failing" root cause to nginx caching` (this doc) |
 | `0c496e1c23` | 2026-09-11 | Claude | `Api: detect a stale build via every ajax response, not just a cacheable poll` |
-| *(pending)* | 2026-09-11 | Claude | `Doc: record the ajax-response-epoch fix` (this doc, this update) |
+| `f57fe60242` | 2026-09-11 | Claude | `Doc: record the ajax-response-epoch fix` (this doc) |
+| `ad9b270b85` | 2026-09-11 | Claude | `Api: fix root cause of ticket #124112's "Illegal constructor" - manifest filtering` |
+| *(pending)* | 2026-09-11 | Claude | `Doc: record the manifest-filtering root cause and fix (item 6)` (this doc, this update) |
+| *(pending live verification against pole.egroupware.org as of this write-up)* | | | |
