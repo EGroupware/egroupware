@@ -188,8 +188,9 @@ similar scope.
   `getImportMap()` trio and why an import map is probably unnecessary, the way hashing would silently
   disable the existing `egw_import` dedup defence, the app-disclosure problem a verbatim manifest
   would create, and why the pin must NOT live in the session (it would survive a reload and make the
-  "reload at your convenience" prompt a lie). All design decisions settled; scoped but not started -
-  no code yet.
+  "reload at your convenience" prompt a lie). Implemented and live (`a77de36152` +co-commits); the doc
+  now also tracks ticket #124112's follow-up findings and a running commit list. Two residual bugs
+  from that ticket still open - see the doc's "Status" section.
 - `doc/ai/projects/app-ts-modernization.md` - per-app modernization pass over each app's
   `$app/js/app.ts`: legacy `et2_*` widget imports -> web-component imports (`import type` when the
   widget is only ever used as a TS type), `var` -> `const`/`let`, fixing the file's own TS errors, and
