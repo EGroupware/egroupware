@@ -536,9 +536,12 @@ as the thing it was trying to detect (item 5); and, item 6 and the actual root c
 crashes reported throughout this whole ticket - `data-include` and `data-manifest` being two
 independently-computed, filtered-differently lists, which made `egw_import()` correctly-per-its-own-
 design fall back to a long-stale, unhashed `app.min.js` for any app present in one but not the other
-(`Bundle::clientManifest()`'s filtering removed entirely, `ad9b270b85`). Live-testing on
-`pole.egroupware.org` after this landed is still pending as of this write-up - see the note at the top
-of [Commits](#commits) once that's confirmed.
+(`Bundle::clientManifest()`'s filtering removed entirely, `ad9b270b85`). **Deployed and looking good on
+`pole.egroupware.org`** (Ralf, 2026-09-11) - also deleted the stale bare `*/js/app.min.js` files (and
+the bare `etemplate2.js`/`egw.min.js`) from the docroot as part of that deploy: now that
+`clientManifest()` is unfiltered, nothing legitimate should ever fall back to them, so removing them
+turns any future occurrence of this bug class into a loud 404 instead of a silent stale-content
+collision. Not yet confirmed against Ingo/Stefan's original reports specifically - see below.
 
 Two things still genuinely open, both needing more than a code read to resolve:
 
@@ -561,9 +564,10 @@ document whose `data-include` happened to name an app missing from the (now-remo
 `data-manifest` would hit the stale-`app.min.js` collision on *every* load of that app, indefinitely -
 no amount of reloading fixes a bug that isn't actually about staleness at all. Items 4 and 5 were real,
 independent contributors layered on top (a load-order race and a cacheable detection poll,
-respectively), which is likely why this felt so persistent and hard to pin down in practice. Nathan or
-whoever picks this back up should start with the two still-open items above, and with confirming item
-6's fix against `pole.egroupware.org` if that hasn't happened yet.
+respectively), which is likely why this felt so persistent and hard to pin down in practice. Item 6 is
+deployed and initial signs on `pole.egroupware.org` are good; get explicit confirmation from Ingo/Stefan
+before closing ticket #124112 itself. Nathan or whoever picks this back up should start with the two
+still-open items above.
 
 ## Commits
 
@@ -599,5 +603,6 @@ Chronological. `*` prefix on the subject means it went out in the user-facing ch
 | `0c496e1c23` | 2026-09-11 | Claude | `Api: detect a stale build via every ajax response, not just a cacheable poll` |
 | `f57fe60242` | 2026-09-11 | Claude | `Doc: record the ajax-response-epoch fix` (this doc) |
 | `ad9b270b85` | 2026-09-11 | Claude | `Api: fix root cause of ticket #124112's "Illegal constructor" - manifest filtering` |
-| *(pending)* | 2026-09-11 | Claude | `Doc: record the manifest-filtering root cause and fix (item 6)` (this doc, this update) |
-| *(pending live verification against pole.egroupware.org as of this write-up)* | | | |
+| `88ad23dba4` | 2026-09-11 | Claude | `Doc: record the manifest-filtering root cause and fix (item 6)` (this doc) |
+| *(deployed to pole.egroupware.org by Ralf, also deleting the stale bare app.min.js/etemplate2.js/egw.min.js files from the docroot - initial results look good, not yet confirmed against Ingo/Stefan's original reports)* | | | |
+| *(pending)* | 2026-09-11 | Claude | `Doc: record the pole.egroupware.org deploy confirmation` (this doc, this update) |
