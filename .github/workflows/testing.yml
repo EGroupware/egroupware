@@ -500,6 +500,42 @@ jobs:
             echo "::warning::fixture app 'test' not installed, some tests will be skipped"
           fi
 
+          # Name a missing dependency as such. An extra app whose setup.inc.php depends on an app
+          # that is not installed otherwise fails somewhere inside its own tests, with nothing
+          # pointing at the cause. This can only report it: setup.inc.php names an app but not the
+          # repository to clone it from, so adding it to extra-apps is the caller's job.
+          #
+          # A warning rather than an error, deliberately. "depends" is not enforced at install time
+          # and apps over-declare it - an app can list another as a dependency of the product
+          # bundle while its code runs fine without it, guarding the optional integration. Failing
+          # here would break such a setup over a declaration that is known not to be load-bearing.
+          if [ -n "${EGW_EXTRA_APP_DIRS:-}" ]; then
+            $COMPOSE exec -T \
+              -e EGW_EXTRA_APP_DIRS="$EGW_EXTRA_APP_DIRS" \
+              -e EGW_INSTALLED_APPS="$INSTALLED" \
+              -w "$EGW_SRC_DIR" egroupware php -r '
+                $installed = preg_split("/\s+/", trim(getenv("EGW_INSTALLED_APPS")), -1, PREG_SPLIT_NO_EMPTY);
+                $missing = 0;
+                foreach (preg_split("/\s+/", trim(getenv("EGW_EXTRA_APP_DIRS")), -1, PREG_SPLIT_NO_EMPTY) as $app)
+                {
+                    $file = "$app/setup/setup.inc.php";
+                    if (!file_exists($file)) continue;
+                    $setup_info = [];
+                    include $file;
+                    foreach ($setup_info[$app]["depends"] ?? [] as $dep)
+                    {
+                        $name = $dep["appname"];
+                        if (!in_array($name, $installed, true))
+                        {
+                            fwrite(STDERR, "::warning::$app declares a dependency on $name, which is not installed - if its tests fail unexpectedly, add $name to the extra-apps input\n");
+                            $missing++;
+                        }
+                    }
+                }
+                if ($missing) fwrite(STDERR, "$missing declared dependency/ies not installed\n");
+              '
+          fi
+
       - name: Disable swoolepush for CI tests
         run: |
           set -euo pipefail
