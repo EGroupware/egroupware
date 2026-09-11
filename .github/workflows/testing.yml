@@ -6,8 +6,8 @@ on:
     branches:
       - master
   workflow_dispatch:
-  # Lets a private repo (eg. one in the EGroupwareGmbH org) run this exact same suite with its
-  # own apps checked out alongside the public ones, instead of maintaining a second copy of it.
+  # Lets a private repo run this exact same suite with its own apps checked out alongside the
+  # public ones, instead of maintaining a second copy of it.
   # Private sources must never be checked out by this repo's own triggers, so they arrive purely
   # through the "extra-apps" input - see the "Checkout additional apps" step below.
   workflow_call:
@@ -27,10 +27,19 @@ on:
       extra-apps:
         description: >-
           JSON array of additional app repositories to check out into the tree, eg.
-          [{"repo":"EGroupwareGmbH/epl","dir":"stylite","ref":"master"}].
-          "dir" defaults to the repository name, "ref" defaults to master.
+          [{"repo":"myorg/myrepo","dir":"myapp","ref":"master"}].
+          "dir" defaults to the repository name, and is only needed where the app's directory
+          differs from it. "ref" defaults to master.
           Their tests are picked up automatically: doc/phpunit.xml collects ../*/tests/ and
           web-test-runner.config.mjs builds a group per app from <app>/js/**/*.test.ts.
+        type: string
+        default: ''
+      test-apps:
+        description: >-
+          Space-separated subset of the extra-apps directories whose tests should run.
+          Defaults to every app in extra-apps. Only affects which tests run - every extra app is
+          still checked out and installed, which is what lets an app that another one depends on
+          be present without its suite being run.
         type: string
         default: ''
       test-scope:
@@ -43,7 +52,7 @@ on:
         default: 'all'
       extra-apps-owner:
         description: >-
-          Organisation owning the extra-apps repositories, eg. EGroupwareGmbH. Required when
+          Organisation owning the extra-apps repositories. Required when
           authenticating via a GitHub App: this workflow file lives in another org, so without
           it the App installation would be looked up against the wrong owner.
         type: string
@@ -81,6 +90,7 @@ jobs:
       SYSOP_USER: ""
       SYSOP_PASS: ""
       EGW_EXTRA_APP_DIRS: ""
+      EGW_TEST_APP_DIRS: ""
       # The secrets context is not available in a step's "if:", so route it through job env.
       EXTRA_APPS_APP_ID: ${{ secrets.extra-apps-app-id }}
 
@@ -108,6 +118,7 @@ jobs:
         if: inputs.extra-apps != ''
         env:
           EXTRA_APPS: ${{ inputs.extra-apps }}
+          TEST_APPS: ${{ inputs.test-apps }}
           GH_TOKEN: ${{ steps.extra-apps-app-token.outputs.token || secrets.extra-apps-token }}
         run: |
           set -euo pipefail
@@ -135,7 +146,25 @@ jobs:
             echo "::endgroup::"
             DIRS="$DIRS $dir"
           done < <(jq -c '.[]' <<<"$EXTRA_APPS")
-          echo "EGW_EXTRA_APP_DIRS=${DIRS# }" >> "$GITHUB_ENV"
+          DIRS="${DIRS# }"
+          echo "EGW_EXTRA_APP_DIRS=$DIRS" >> "$GITHUB_ENV"
+
+          # Which of those to actually test. Checking an app out and running its tests are
+          # separate concerns: an app that only needs to be present so another one installs has
+          # no reason to have its own suite run.
+          TEST_DIRS="${TEST_APPS:-}"
+          if [ -z "$TEST_DIRS" ]; then
+            TEST_DIRS="$DIRS"
+          else
+            for app in $TEST_DIRS; do
+              case " $DIRS " in
+                *" $app "*) ;;
+                *) echo "::error::test-apps names '$app', which is not in extra-apps"; exit 1;;
+              esac
+            done
+          fi
+          echo "testing: $TEST_DIRS"
+          echo "EGW_TEST_APP_DIRS=$TEST_DIRS" >> "$GITHUB_ENV"
 
       - name: Cache Composer downloads
         uses: actions/cache@v4
@@ -498,12 +527,12 @@ jobs:
           # a phpunit config resolve against the config's own directory, hence the "../" prefix.
           PHPUNIT_CONFIG=doc/phpunit.xml
           if [ "$TEST_SCOPE" = "extra-apps" ]; then
-            if [ -z "${EGW_EXTRA_APP_DIRS:-}" ]; then
+            if [ -z "${EGW_TEST_APP_DIRS:-}" ]; then
               echo "::error::test-scope is 'extra-apps' but no extra-apps were supplied"
               exit 1
             fi
             PHPUNIT_CONFIG=doc/phpunit-extra-apps.xml
-            $COMPOSE exec -T -e EGW_EXTRA_APP_DIRS="$EGW_EXTRA_APP_DIRS" \
+            $COMPOSE exec -T -e EGW_TEST_APP_DIRS="$EGW_TEST_APP_DIRS" \
               -w "$EGW_SRC_DIR" egroupware php -r '
                 $doc = new DOMDocument();
                 $doc->preserveWhiteSpace = false;
@@ -514,7 +543,7 @@ jobs:
                 $suite = $doc->createElement("testsuite");
                 $suite->setAttribute("name", "ExtraApps");
                 $found = 0;
-                foreach (preg_split("/\s+/", trim(getenv("EGW_EXTRA_APP_DIRS")), -1, PREG_SPLIT_NO_EMPTY) as $app)
+                foreach (preg_split("/\s+/", trim(getenv("EGW_TEST_APP_DIRS")), -1, PREG_SPLIT_NO_EMPTY) as $app)
                 {
                     if (!is_dir("$app/tests")) { fwrite(STDERR, "no tests/ in $app, skipped\n"); continue; }
                     $suite->appendChild($doc->createElement("directory", "../$app/tests/"));
@@ -577,6 +606,7 @@ jobs:
       SYSOP_USER: ""
       SYSOP_PASS: ""
       EGW_EXTRA_APP_DIRS: ""
+      EGW_TEST_APP_DIRS: ""
       # The secrets context is not available in a step's "if:", so route it through job env.
       EXTRA_APPS_APP_ID: ${{ secrets.extra-apps-app-id }}
     defaults:
@@ -607,6 +637,7 @@ jobs:
         if: inputs.extra-apps != ''
         env:
           EXTRA_APPS: ${{ inputs.extra-apps }}
+          TEST_APPS: ${{ inputs.test-apps }}
           GH_TOKEN: ${{ steps.extra-apps-app-token.outputs.token || secrets.extra-apps-token }}
         run: |
           set -euo pipefail
@@ -634,7 +665,25 @@ jobs:
             echo "::endgroup::"
             DIRS="$DIRS $dir"
           done < <(jq -c '.[]' <<<"$EXTRA_APPS")
-          echo "EGW_EXTRA_APP_DIRS=${DIRS# }" >> "$GITHUB_ENV"
+          DIRS="${DIRS# }"
+          echo "EGW_EXTRA_APP_DIRS=$DIRS" >> "$GITHUB_ENV"
+
+          # Which of those to actually test. Checking an app out and running its tests are
+          # separate concerns: an app that only needs to be present so another one installs has
+          # no reason to have its own suite run.
+          TEST_DIRS="${TEST_APPS:-}"
+          if [ -z "$TEST_DIRS" ]; then
+            TEST_DIRS="$DIRS"
+          else
+            for app in $TEST_DIRS; do
+              case " $DIRS " in
+                *" $app "*) ;;
+                *) echo "::error::test-apps names '$app', which is not in extra-apps"; exit 1;;
+              esac
+            done
+          fi
+          echo "testing: $TEST_DIRS"
+          echo "EGW_TEST_APP_DIRS=$TEST_DIRS" >> "$GITHUB_ENV"
 
       - name: Cache Composer downloads
         uses: actions/cache@v4
@@ -693,7 +742,7 @@ jobs:
           # otherwise discover. Group *names* must not be passed positionally - the config throws
           # on that - so select by path instead, which also works for an app with no group yet.
           GLOBS=()
-          for app in ${EGW_EXTRA_APP_DIRS:-}; do
+          for app in ${EGW_TEST_APP_DIRS:-}; do
             # bash has no globstar here, so probe with find rather than a ** glob
             if find "$app/js" -name '*.test.ts' -print -quit 2>/dev/null | grep -q .; then
               GLOBS+=("$app/js/**/*.test.ts")
