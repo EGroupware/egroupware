@@ -109,14 +109,17 @@ window.egw_import = (function()
 		}
 		// manifest keys and values are both EGW_SERVER_ROOT-relative, so either way this needs
 		// webserverUrl prepended to become fetchable
-		if (typeof manifest[logical] === 'undefined')
+		if (typeof manifest[logical] === 'undefined' && logical.endsWith('.js'))
 		{
 			// A logical path with no manifest entry falls back to importing it literally - fine
 			// for a genuinely non-built file, but for anything that should have a hashed entry
 			// this is importing whatever's still sitting at that unhashed path (rollup no longer
 			// writes it once entries are hashed, so it's frozen at whatever it last contained,
-			// eg. a long-stale etemplate2 reference - ticket #124112). Log it either way, cheaply,
-			// so a mismatch like this is visible instead of silently loading stale content.
+			// eg. a long-stale etemplate2 reference - ticket #124112). Log it, cheaply, so a
+			// mismatch like this is visible instead of silently loading stale content.
+			// Scoped to .js: api/config.php, api/images.php, api/user.php etc. are dynamic PHP
+			// endpoints cache-busted via their own etag query param, never manifest-tracked at
+			// all - logging their expected, permanent miss would just be noise.
 			console.debug('egw_import(): no manifest entry for', logical, '- importing it literally');
 		}
 		const resolved = (window.egw_webserverUrl || '') + (manifest[logical] || logical);
