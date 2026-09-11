@@ -1,6 +1,6 @@
 # Mail: JMAP-lite REST endpoints for folders + emails
 
-## Status: Phase 1 implemented + partially live-verified (2026-09-09); Phase 2 started
+## Status: Phase 1 implemented + live-verified against a plain-IMAP/shim account (2026-09-09/10, 4 bugs found+fixed - see below); Stalwart/real-JMAP still unverified; Phase 2 started
 
 **Live-verified (ralf, 2026-09-09)**: `GET /mail/folders` and `GET /mail/folders/<folderId>/emails`
 both confirmed returning correct data against a real running instance. `GET .../folders/<folderId>`,
@@ -322,15 +322,51 @@ batching, `/changes`, push.
   same `mockImap()`-style pattern `JmapShimMailboxGetTest.php` already uses).
 
 **Not done yet / explicitly deferred**:
-- Live REST-level verification against a running instance (the style `mail/tests/REST/
-  MailAccountPatchTest.php` already uses for the *existing* mail REST endpoints, real HTTP round-trip
-  via `RestBase`/Guzzle) - needs a live dev/docker instance with acc_id=1 (Stalwart) and acc_id=85/42
-  (Dovecot/shim) per [[mail-test-coverage]]'s own account notes; not run in this session.
+- Live REST-level verification against Stalwart specifically (only a plain-IMAP/shim account has
+  been live-verified so far, see below) - needs a live dev/docker instance with acc_id=1 per
+  [[mail-test-coverage]]'s own account notes.
   Specifically worth checking live: the `Mailbox/query filter:{parentId:null}` top-level semantics
   against real Stalwart (spec reading says it should match top-level mailboxes, per this doc's own
-  earlier caveat) and the `hasAttachment` filter's documented no-op on the shim.
-- Phase 2 items (raw `.eml` download, cross-folder search, shim `myRights`) - unchanged from the
-  original plan, still deferred.
+  earlier caveat) and the `hasAttachment`/`after` filters, both confirmed no-ops on the shim (see
+  below) - do they actually work against real Stalwart?
+- Phase 2 items (raw `.eml` download - now done, `093e9f619b` - cross-folder search, shim
+  `myRights`) - unchanged from the original plan otherwise, still deferred.
+
+**Live verification against a plain-IMAP/shim account (2026-09-10)**, done in two rounds:
+
+Round 1 (Idriss Jdid, PR #278, against a real GreenMail account) found three bugs, all in the shim
+path specifically (real JMAP/Stalwart remained unverified for these): `GET .../emails/<emailId>`
+was a hard 500 (`Email/get` needs a mailbox to fetch from and had no way to get one for this
+standalone, no-preceding-query endpoint); attachment downloads silently lost their real
+filename/content-type for the identical reason; all 5 endpoints answered
+`Content-Type: application/octet-stream` instead of `application/json` (`HTTP_WebDAV_Server`
+defaults the Content-Type whenever a GET handler `return true`s instead of a status string,
+overriding the `application/json` header `get()` already sent - same idiom `CalDAV.php:1478`
+already documents for its own `autoindex` handler). Also confirmed live: `filter[hasAttachment]`
+and `filter[after]` are both no-ops on the shim (return the whole mailbox regardless).
+
+The PR's own fix had two problems, found reviewing it (not by re-running it live): `Api\Jmap\
+Type::get()` gained a new `$mailboxId` param, but only 2 of its 6 overriding subclasses were
+updated to match - the other 4 (`Identity`, `Quota`, `Imap\Quota`, `Imap\Thread`) would fatal with
+"Declaration must be compatible" at class-load time, breaking basically all Identity/Quota
+handling app-wide (this exact bug already happened once before in this codebase, 2026-09-09, when
+`$fetchAllBodyValues` was added the same way - see `Identity::get()`'s own docblock); and the PR
+was forked before `093e9f619b` ("raw .eml download via the existing attachment endpoint"), which
+touched the exact same lines in `getAttachment()` it does - a real, confirmed merge conflict.
+Reimplemented directly (all 6 overrides fixed, conflict resolved by hand) rather than merging the
+PR as-is - see `mail/tests/ApiHandlerJmapRestTest.php`'s new tests for the `$mailboxId`-forwarding
+coverage.
+
+Round 2 (ralf, curl against a live plain-IMAP account) found a fourth, separate bug in the same
+area: the IMAP shared/other-users namespace-root pseudo-folder ("user"/"shared" - a real folder
+entry, deliberately included so a client can navigate into others' shared mailboxes, but never a
+selectable mailbox itself) crashed `GET .../emails` with a raw 500 - the shim just forwarded the
+bare path straight to IMAP `SELECT`. JMAP itself has no namespace concept at all, so this is
+invisible to real-JMAP/Stalwart; the client-side folder tree already knows about it
+(`folderTree.ts`'s `noSelect` flag, name-derived) but that was never exposed over the wire. Fixed
+with a clean 400 guard in `emailQuery()`/`emailGet()`, plus a new `isSelectable` field on the
+`Mailbox` JSON object (derived from the real IMAP `\Noselect` LIST attribute, more general than a
+name-based check) so a REST client can filter these out proactively instead.
 
 ## Related
 
