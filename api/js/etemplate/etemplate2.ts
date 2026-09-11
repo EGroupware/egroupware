@@ -722,6 +722,17 @@ export class etemplate2
 			else if(appname && typeof app[appname] !== "object")
 			{
 				egw.debug("warn", "Did not load '%s' JS object", appname);
+				// app.classes[appname] missing here almost always means that app's own JS chunk
+				// failed to load because of a mid-session rebuild (ticket #124112) - every
+				// legacy inline onclick="app.<appname>...." handler in that app's templates is
+				// about to throw a confusing "Cannot read properties of undefined" with no
+				// indication why, so tell the user up front instead of leaving them guessing.
+				// Skip a 2nd reload prompt if egw_import already put one up for this document
+				// (ticket #124112: green+red messages stacking).
+				if(!(<any>window).egw_import?.updateAvailableNotified)
+				{
+					egw(window).message(egw.lang('Please reload the EGroupware desktop (F5 / Cmd+r).'), 'error');
+				}
 			}
 			// If etemplate current app does not match app owning the template,
 			// initialize the current app too
