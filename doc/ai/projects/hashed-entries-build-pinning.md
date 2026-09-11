@@ -438,10 +438,49 @@ fetch dynamically imported module: ...) Aborting.
 ```
 Confirmed via `window.egw_manifest['/notifications/js/app.min.js']` being `undefined` in that tab, and
 `notifications/js/` only containing the legacy `notificationajaxpopup.js` (no `app.ts`/`app.js`) - this
-is item 4 above, now fixed. The item-1 mismatch and the item-4 notifications race are independent of
-each other; both happened to fire on the same page load here, which is presumably part of why this
-looked so bad in practice - a real, rare, build-timing issue plus a mundane, load-order race that fires
-constantly, both dressed up in the same alarming "please reload" wording.
+is item 4 above, now fixed.
+
+### Root-caused: nginx caching hashed static assets without a cache-buster (2026-09-11)
+
+After deploying items 1-4 to `pole.egroupware.org`, Ralf reported the fix "did not help" - reload on
+the CRM view came back empty again, with the green notice, immediately. Live investigation (repeated
+across many reloads over ~13:29-13:41, including a brand-new tab with zero prior history) found
+something worse than a race: **every template loads *twice*, each time through a genuinely different
+`etemplate2` build**, back-to-back on one page:
+```
+Loading addressbook.index into #addressbook-index   (via etemplate2-84c78436.js  - stale)
+Loading addressbook.index into #addressbook-index   (via etemplate2-ea40ee56.js  - current)
+Exception "Illegal constructor" ...
+```
+Same for `status.index` (the default app), and reproduced identically on a completely fresh tab -
+ruling out browser/network-log artifacts from repeated testing in one tab.
+
+Two hypotheses were tried and ruled out with Ralf's help before landing on the real cause:
+
+- **Non-atomic multi-node rsync** (first guess) - ruled out: `jq`-ing `build-manifest.json` directly on
+  all 5 Kubernetes nodes showed byte-identical content everywhere, and the build log showed one atomic
+  `rollup -c` run (`created . in 1m 5.3s`) covering every app in a single pass, not staggered per-node
+  writes.
+- **Incremental/lazy build only regenerating touched entries** (second guess, based on only 5 apps -
+  the ones actually opened during testing - showing the newer hash) - ruled out once a genuinely fresh
+  tab (no prior requests at all) showed the *same* stale hash for those same 5 apps; that ruled out
+  per-tab request history as the differentiator too.
+
+**Actual cause (Ralf): nginx caches static assets like `.json` (and, going by this evidence, other
+extensionless-hash-named static files under `/chunks/` and the app dirs) for 10 days whenever a
+response has no cache-buster / the request URL doesn't change.** Rollup's content hashing correctly
+gives an entry a *new* filename whenever its own compiled bytes change - but an entry like `kdots`
+whose own source didn't change can still end up serving stale, cached bytes under its old,
+unchanged-looking URL if nginx cached that exact URL before the deploy and nothing tells it the
+underlying file was rewritten by rsync in the meantime. The per-document build-manifest pin this whole
+project relies on assumes one consistent server-side view of "the current build" once a document
+renders - true on a single-node dev box with no such cache in front of it (verified against
+boulder.egroupware.org above) - but an intermediate cache layer serving stale bytes for a URL that
+*looks* unchanged is a layer below anything a client-side pin can detect or correct. Not an application
+bug; nothing in this project's design or this ticket's fixes could have caught it, and nothing should
+try to from the client side. Ops-side fix (cache-busting or shorter/conditional caching for these
+paths, or excluding `/chunks/` and the hashed `app.min.js`/`etemplate2.js` paths from blind
+TTL-based caching) is Ralf's to make; not tracked further here.
 
 ### Repro attempt (2026-09-11, boulder.egroupware.org)
 
@@ -478,20 +517,25 @@ Two things still genuinely open, both needing more than a code read to resolve:
 - **The filemanager uncaught "Illegal constructor"** that bypassed the `88bf63dd2f` catch net entirely
   (uncaught, unlike the addressbook case) - a direct repro of the straightforward trigger came back
   clean (boulder.egroupware.org test above), so it needs either a cleaner report from whoever hits it
-  next (exact repro steps, timing relative to a deploy) or a popup-specific test.
+  next (exact repro steps, timing relative to a deploy) or a popup-specific test. Given the nginx
+  caching finding below, worth first checking it isn't just the same infra-layer cause wearing a
+  different hat.
 - **The `notificationajaxpopup.js` vs. server-push load-order race itself** (item 4's underlying
   cause) is still there - item 4 only stopped it from showing a misleading reload prompt. Worth
   deciding whether it's worth fixing properly (eg. queue pushed notifications until
   `notificationajaxpopup.js` has run, or give `notifications` a real `app.ts` on the same manifest
   system as everything else) or leave as a quiet, harmless miss now that it no longer nags anyone.
 
-"Reload only helps briefly" (Ingo/Stefan's original wording) turned out to be a red herring for *this*
-project specifically: Ralf confirmed only one JS rebuild landed that morning, and an unrelated (now
-resolved) infrastructure issue was separately 404ing requests for all sorts of files at the same time -
-not a sign of a residual pinning gap. In hindsight, item 4 (found later, from Ralf's own live report)
-is probably the real explanation for how persistent/repetitive this felt, at least on `pole` - it fires
-on every fresh page load regardless of any rebuild, which reads exactly like "reload doesn't help."
-Nathan or whoever picks this back up should start with the two still-open items above.
+"Reload only helps briefly" (Ingo/Stefan's original wording) turned out to have at least two real,
+independent, non-application causes layered under it, both outside anything this project's design
+could reach: the item-4 `notifications` load-order race (fixed, was firing a misleading reload prompt
+on its own on every fresh page regardless of any rebuild), and - found only after Ralf redeployed and
+the reload prompt came straight back - **nginx serving 10-day-cached stale bytes for hashed static
+files whose URL happened not to change across a deploy** (see the root-cause writeup above). The
+latter is likely the dominant explanation for how persistent this felt on `pole` specifically: no
+amount of reloading, new tabs, or waiting minutes fixes a response an intermediate cache is going to
+keep serving for up to 10 days regardless. Nathan or whoever picks this back up should start with the
+three still-open items above; the nginx cache-busting fix itself is Ralf's/ops', not tracked here.
 
 ## Commits
 
