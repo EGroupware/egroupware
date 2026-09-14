@@ -522,6 +522,44 @@ works as designed on current code. Whatever Ingo/Stefan actually hit needs a les
 this to reproduce - a popup/secondary-window path, or a request landing while the build is still
 mid-write, are more likely candidates than a plain pinning failure. Didn't chase further; see Status.
 
+### Item 7: false-positive reload prompt from a non-app template name (2026-09-14)
+
+Reported by Ralf, relaying a customer's screenshot: opening the "Select columns" dialog on
+addressbook's list (`Et2Datagrid.openColumnSelection()`) immediately fired the red "please reload"
+message, and saving a column change re-fired it - with no actual rebuild involved. Also reported for
+InfoLog; expected in any app using the new `Et2Nextmatch`/`Et2Datagrid` column selector, since it's
+shared code.
+
+Live-reproduced on `boulder.egroupware.org` (clean session, no rebuild in progress) by opening
+addressbook's column-selector dialog and toggling a column: console showed
+`Loading %s into nm_column_selection #` followed immediately by `Did not load '%s' JS object
+nm_column_selection`, then the red message - unconditionally, every time.
+
+**Root cause**: `etemplate2.ts`'s `load()` derives `appname` via `_name.split('.')[0]`
+(`etemplate2.ts:644`). The column-selector dialog is loaded standalone by `Et2Dialog` (used by
+`Et2Datagrid.openColumnSelection()`) from `api/templates/default/nm_column_selection.xet`, whose bare
+template id (`nm_column_selection`, no `<app>.` prefix at all) becomes the entire `appname` - a name
+that was never going to have a corresponding `app.classes` entry, since it isn't a real installed app.
+Item 2's fix (`bdafdb7e89`) made the "`app[appname]` never became an object" branch unconditionally
+warn and show the reload message, on the assumption that this state only ever means a stale-build
+JS-chunk failure - true for a real app, but not for a dialog template like this one. This is the same
+false-positive shape item 4 already found and fixed in `applyFunc()` (`egw_json.ts`), just in the
+sibling `etemplate2.ts` code path that item 4's fix didn't touch.
+
+**Fixed**: applied the identical `window.egw_manifest['/'+appname+'/js/app.min.js']` check used by
+`applyFunc()` - only warn and show the reload message when the manifest actually has an entry for that
+app (ie. it's a real rollup-built app whose chunk should have loaded but didn't); otherwise log quietly
+at `"log"` level and move on, same as `applyFunc()`'s equivalent branch. Live-reverified on
+`boulder.egroupware.org` after rebuild: opening/saving the column selector on both addressbook and
+InfoLog no longer shows the message, column preferences save correctly. Not yet run through the full
+`api/js/jsapi`/`etemplate` test suites or typecheck as part of this fix - do that before considering
+this closed.
+
+The "storing a change freezes the tab, sometimes" part of the original report was not reproduced
+live and is not explained by this fix alone (this fix only removes a misleading message, it doesn't
+change any control flow that could hang) - worth a closer look if it recurs, ideally with the tab left
+open so console/network state can be inspected before reloading.
+
 ## Status
 
 Design implemented and live (steps 1-7 above). Fixed from ticket #124112 and its follow-up: the

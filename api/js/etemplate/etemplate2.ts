@@ -721,17 +721,31 @@ export class etemplate2
 			}
 			else if(appname && typeof app[appname] !== "object")
 			{
-				egw.debug("warn", "Did not load '%s' JS object", appname);
-				// app.classes[appname] missing here almost always means that app's own JS chunk
-				// failed to load because of a mid-session rebuild (ticket #124112) - every
-				// legacy inline onclick="app.<appname>...." handler in that app's templates is
-				// about to throw a confusing "Cannot read properties of undefined" with no
-				// indication why, so tell the user up front instead of leaving them guessing.
-				// Skip a 2nd reload prompt if egw_import already put one up for this document
-				// (ticket #124112: green+red messages stacking).
-				if(!(<any>window).egw_import?.updateAvailableNotified)
+				// Only apps rollup actually built have a /$appname/js/app.min.js entry in the
+				// manifest - a template loaded standalone (eg. et2_dialog's nm_column_selection.xet,
+				// whose bare id has no "<app>." prefix at all) derives an `appname` that was never
+				// going to own a JS object in the first place. Without this check, the warning/reload
+				// message below fired on every single "Select columns" dialog use in any app (found
+				// live 2026-09-14) - same false-positive class, and same fix, as applyFunc()'s
+				// equivalent check (egw_json.ts).
+				if(typeof (<any>window).egw_manifest?.['/' + appname + '/js/app.min.js'] === "undefined")
 				{
-					egw(window).message(egw.lang('Please reload the EGroupware desktop (F5 / Cmd+r).'), 'error');
+					egw.debug("log", "app." + appname + " has no rollup entry, not attempting to load it");
+				}
+				else
+				{
+					egw.debug("warn", "Did not load '%s' JS object", appname);
+					// app.classes[appname] missing here almost always means that app's own JS chunk
+					// failed to load because of a mid-session rebuild (ticket #124112) - every
+					// legacy inline onclick="app.<appname>...." handler in that app's templates is
+					// about to throw a confusing "Cannot read properties of undefined" with no
+					// indication why, so tell the user up front instead of leaving them guessing.
+					// Skip a 2nd reload prompt if egw_import already put one up for this document
+					// (ticket #124112: green+red messages stacking).
+					if(!(<any>window).egw_import?.updateAvailableNotified)
+					{
+						egw(window).message(egw.lang('Please reload the EGroupware desktop (F5 / Cmd+r).'), 'error');
+					}
 				}
 			}
 			// If etemplate current app does not match app owning the template,
