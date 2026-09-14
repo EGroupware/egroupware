@@ -394,6 +394,24 @@ class TimesheetBoTest extends \EGroupware\Api\AppTest
 	}
 
 	/**
+	 * A day far enough in the future that no other entry can be on it, pinned to the middle
+	 * of the day in the *user's* timezone.
+	 *
+	 * The time of day has to be fixed: the ajax_get_last_end() fixtures place their entry an
+	 * hour after this time and assert an end-time another hour later, so a date inheriting the
+	 * current clock time puts the entry on the following day whenever the test happens to run
+	 * late in the user's evening - get_last_end() then correctly finds nothing for the day
+	 * that was asked for, and the test fails purely on when it ran.
+	 */
+	private function futureDay(): EGroupware\Api\DateTime
+	{
+		$date = new EGroupware\Api\DateTime('+5 years');
+		$date->setTime(9, 0, 0);
+
+		return $date;
+	}
+
+	/**
 	 * Call ajax_get_last_end() and pull the "data" part back out of the (process-wide
 	 * singleton) JSON response.
 	 *
@@ -442,7 +460,7 @@ class TimesheetBoTest extends \EGroupware\Api\AppTest
 	{
 		$ui = new timesheet_ui();
 		$victim_owner = random_int(1000000000, 2000000000);
-		$date = new EGroupware\Api\DateTime('+5 years');
+		$date = $this->futureDay();
 
 		$this->createTestTimesheet($victim_owner, $date->format('ts') + 3600, 60);
 
@@ -458,7 +476,7 @@ class TimesheetBoTest extends \EGroupware\Api\AppTest
 	{
 		$ui = new timesheet_ui();
 		$account_id = $GLOBALS['egw_info']['user']['account_id'];
-		$date = new EGroupware\Api\DateTime('+5 years');
+		$date = $this->futureDay();
 		$start = $date->format('ts') + 3600;
 
 		$this->createTestTimesheet($account_id, $start, 60);
