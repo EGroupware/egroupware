@@ -4127,24 +4127,36 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			// virtualizer's own initial-load over-guess, so it must not wait on settling.
 			return;
 		}
+		this._queueChunkRequest(chunkStart);
+	}
+
+	/**
+	 * Queue the page starting at `chunkStart` unless it is already loaded, already
+	 * queued/in flight, or already known to be complete.
+	 *
+	 * @returns true if a request was actually queued
+	 */
+	private _queueChunkRequest(chunkStart : number) : boolean
+	{
 		if(!this._hasMissingRowsInChunk(chunkStart))
 		{
-			return;
+			return false;
 		}
 		const requestedCount = this.total !== null
 		                       ? Math.max(0, Math.min(this.pageSize, this.total - chunkStart))
 		                       : this.pageSize;
 		if(requestedCount <= 0)
 		{
-			return;
+			return false;
 		}
 		const requestKey = this._requestQueue.requestKey(chunkStart, requestedCount);
 		if(this._completedRequestKeys.has(requestKey) || this._requestQueue.isPendingOrQueued(requestKey))
 		{
-			return;
+			return false;
 		}
 		this._requestQueue.queueRequest(chunkStart, requestedCount, requestKey);
 		this._scheduleQueuedRequestProcessing();
+		return true;
 	}
 
 	/**
@@ -5700,6 +5712,107 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
+	 * Datastore row id for every row index, with `null` for indexes that are not
+	 * currently loaded.
+	 *
+	 * The grid keeps only ids in memory (row content lives in egw's UID cache), so this
+	 * is the index -> uid mapping a consumer needs to walk the result set in server order
+	 * rather than in the arbitrary order rows happen to have been materialized.
+	 */
+	getLoadedRowIds() : (string | null)[]
+	{
+		return this._rowsByIndex.map((row) => row?.id ?? null);
+	}
+
+	/**
+	 * Load every row in the inclusive index range `start`..`end`.
+	 *
+	 * Ordinary paging is driven by the virtualizer rendering a placeholder for a row the
+	 * user scrolled to.  This is for the opposite case: a consumer that needs rows the
+	 * user is *not* looking at - filemanager's image gallery pages through the whole
+	 * result set while the grid itself stays where it is.
+	 *
+	 * Resolves once the range is complete, or once fetching stops making progress
+	 * (fetch error, or nothing further arrives within the timeout), so a caller can
+	 * always await it exactly once instead of polling.
+	 */
+	async loadRowRange(start : number, end : number) : Promise<void>
+	{
+		if(!this.dataProvider || this.fetchFailed)
+		{
+			return;
+		}
+		const first = Math.max(0, Math.floor(start));
+		const last = Math.floor(this.total !== null ? Math.min(end, this.total - 1) : end);
+		if(last < first)
+		{
+			return;
+		}
+		const rangeLoaded = () =>
+		{
+			for(let index = first; index <= last; index++)
+			{
+				if(!this._rowsByIndex[index])
+				{
+					return false;
+				}
+			}
+			return true;
+		};
+		const deadline = Date.now() + Et2Datagrid._loadRowRangeTimeoutMs;
+		while(!rangeLoaded() && Date.now() < deadline)
+		{
+			let queued = false;
+			const firstChunk = Math.floor(first / this.pageSize) * this.pageSize;
+			for(let chunkStart = firstChunk; chunkStart <= last; chunkStart += this.pageSize)
+			{
+				queued = this._queueChunkRequest(chunkStart) || queued;
+			}
+			// pendingPlaceholderCount, not `loading`: a request queued moments ago (by us or
+			// by the virtualizer) is only dispatched after the queue's debounce, so `loading`
+			// is still false while it is very much still coming.
+			if(!queued && !this.loading && this._requestQueue.pendingPlaceholderCount === 0)
+			{
+				// Nothing left to ask for and nothing in flight: whatever is still missing
+				// is not coming (eg. the server returned a short page), so stop rather than
+				// spin until the deadline.
+				return;
+			}
+			if(!await this._whenFetchSettles(deadline))
+			{
+				return;
+			}
+		}
+	}
+
+	/** How long loadRowRange() waits for the rows it asked for before giving up. */
+	private static readonly _loadRowRangeTimeoutMs : number = 30000;
+
+	/**
+	 * Resolve on the next `et2-loading-done`, or false if fetching failed or `deadline`
+	 * passed first.
+	 */
+	private _whenFetchSettles(deadline : number) : Promise<boolean>
+	{
+		return new Promise<boolean>((resolve) =>
+		{
+			let timer = 0;
+			const finish = (settled : boolean) =>
+			{
+				window.clearTimeout(timer);
+				this.removeEventListener("et2-loading-done", onDone);
+				this.removeEventListener("et2-loading-error", onError);
+				resolve(settled);
+			};
+			const onDone = () => finish(true);
+			const onError = () => finish(false);
+			this.addEventListener("et2-loading-done", onDone);
+			this.addEventListener("et2-loading-error", onError);
+			timer = window.setTimeout(() => finish(false), Math.max(0, deadline - Date.now()));
+		});
+	}
+
+	/**
 	 * Trigger next page load when allowed by current state.
 	 */
 	loadMore()
@@ -5717,25 +5830,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return;
 		}
-		if(!this._hasMissingRowsInChunk(start))
-		{
-			return;
-		}
-		const requestedCount = this.total !== null
-		                       ? Math.max(0, Math.min(this.pageSize, this.total - start))
-		                       : this.pageSize;
-		if(requestedCount <= 0)
-		{
-			return;
-		}
-		const requestKey = this._requestQueue.requestKey(start, requestedCount);
-		if(this._completedRequestKeys.has(requestKey) || this._requestQueue.isPendingOrQueued(requestKey))
-		{
-			return;
-		}
-		this._requestQueue.queueRequest(start, requestedCount, requestKey);
-
-		this._scheduleQueuedRequestProcessing();
+		this._queueChunkRequest(start);
 	}
 
 	/**

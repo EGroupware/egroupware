@@ -13,10 +13,15 @@
 import "../../../../node_modules/blueimp-gallery/js/blueimp-gallery.min";
 import {css, html, LitElement, render} from "lit";
 import {property} from "lit/decorators/property.js";
-import {et2_nextmatch} from "../et2_extension_nextmatch";
+import type {Et2Nextmatch} from "../Et2Nextmatch/Et2Nextmatch";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
-import {ET2_DATAVIEW_STEPSIZE} from "../et2_dataview_controller";
 import {egw} from "../../jsapi/egw_global";
+
+// How many additional slides to page in when the user reaches the end of what is loaded.
+// Deliberately a local constant rather than the legacy dataview's ET2_DATAVIEW_STEPSIZE:
+// this is a gallery pagination step, and importing it pulled the whole legacy dataview
+// into every Expose consumer's module graph for one number.
+const GALLERY_PAGE_SIZE = 50;
 
 // Minimum data to qualify as an image and not cause errors
 const IMAGE_DEFAULT = {
@@ -99,6 +104,19 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 
 		// We store the wheel handler here so we can remove it properly
 		private _wheelHandler : (ev: WheelEvent) => void = null;
+
+		// The nextmatch the currently open gallery is syncing with.
+		// Opening the gallery applies a mime filter, which reloads the grid and can replace
+		// the very row this widget was rendered into - leaving this widget detached, with no
+		// DOM ancestors left to find the nextmatch through.  The legacy widget tree survived
+		// that; the composed DOM tree does not, so remember it for the life of the gallery.
+		private _gallery_nextmatch : Et2Nextmatch | null = null;
+
+		// Row count the currently open gallery was built from.
+		// Opening the gallery kicks off a reload of the nextmatch with a mime filter, and a
+		// reloading grid reports no total at all - expose_onopened() runs after that reload has
+		// started, so asking the nextmatch again there gets 0 instead of the real count.
+		private _gallery_total : number = 0;
 
 		private __mediaContentFunction : Function | null;
 
@@ -449,26 +467,38 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 		 * See if the current widget is in a nextmatch, as this allows us to display
 		 * thumbnails underneath
 		 *
+		 * Walking the composed DOM tree rather than the widget tree: rows are rendered inside
+		 * the nextmatch's shadow DOM and the widgets in them are hydrated without a widget-tree
+		 * parent, so getParent() stops short.  Going up through shadow hosts also gets out of
+		 * the exposable widget's own shadow root, which closest() cannot do.
+		 *
 		 * @param {et2_IExposable} widget
-		 * @returns {et2_nextmatch | null}
+		 * @returns {Et2Nextmatch | null}
 		 */
-		protected find_nextmatch(widget)
+		protected find_nextmatch(widget) : Et2Nextmatch | null
 		{
-			let current = widget;
-			let nextmatch = null;
+			let current : Node | null = <Node><unknown>widget;
+			let nextmatch : Et2Nextmatch | null = null;
 			while(nextmatch == null && current)
 			{
-				current = current.getParent();
-				if(current && typeof current != 'undefined' && current.instanceOf(et2_nextmatch))
+				if(current instanceof HTMLElement && current.localName == "et2-nextmatch")
 				{
-					nextmatch = current;
+					nextmatch = <Et2Nextmatch><unknown>current;
+					break;
 				}
+				current = current.parentNode ?? (<ShadowRoot>current).host ?? null;
 			}
-			// No nextmatch, or nextmatch not quite ready
+			if(nextmatch == null && this._gallery_nextmatch?.isConnected)
+			{
+				// We were detached (see _gallery_nextmatch), but the gallery is still open
+				// and still belongs to that nextmatch.
+				nextmatch = this._gallery_nextmatch;
+			}
+			// No nextmatch
 			// At the moment only filemanger nm would work
 			// as gallery, thus we disable other nestmatches
 			// to build up gallery but filemanager
-			if(nextmatch == null || nextmatch.controller == null || !nextmatch.dom_id.match(/filemanager/, 'ig'))
+			if(nextmatch == null || !nextmatch.dom_id?.match(/filemanager/i))
 			{
 				return null;
 			}
@@ -485,6 +515,8 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 			let options = this.expose_options;
 
 			let nm = this.find_nextmatch(this);
+			this._gallery_nextmatch = nm;
+			this._gallery_total = nm?.totalCount ?? 0;
 			if(typeof this.__mediaContentFunction == "function")
 			{
 				this.__mediaContentFunction(this);
@@ -492,14 +524,14 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 			else if(nm && !this._is_target_indepth(nm, event.target))
 			{
 				// Get the row that was clicked, find its index in the list
-				let current_entry = nm.controller.getRowByNode(event.target);
+				let current_entry = nm.getRowByNode(<Node>event.target);
 
 				// But before it goes, we'll pull everything we can
 				this.read_from_nextmatch(nm, mediaContent);
 				// find current_entry in array and set it's array-index
 				for(let i = 0; i < mediaContent.length; i++)
 				{
-					if('filemanager::' + mediaContent[i].path == current_entry.uid)
+					if('filemanager::' + mediaContent[i].path == current_entry?.id)
 					{
 						options.index = i;
 						break;
@@ -563,33 +595,31 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 		/**
 		 * Read images out of the data for the nextmatch
 		 *
-		 * @param {et2_nextmatch} nm
+		 * @param {Et2Nextmatch} nm
 		 * @param {Object[]} images
 		 * @param {number} start_at
 		 * @returns {undefined}
 		 */
-		protected read_from_nextmatch(nm, images, start_at?)
+		protected read_from_nextmatch(nm : Et2Nextmatch, images, start_at?)
 		{
 			if(!start_at)
 			{
 				start_at = 0;
 			}
 			let image_index = start_at;
-			let stop = Math.max.apply(null, Object.keys(nm.controller._indexMap));
+			// Row index -> datastore uid, with a hole for every row not (yet) loaded
+			const row_ids = nm.getLoadedRowIds();
+			let stop = row_ids.length - 1;
 
 			for(let i = start_at; i <= stop; i++)
 			{
-				if(!nm.controller._indexMap[i] || !nm.controller._indexMap[i].uid)
+				let uid = row_ids[i];
+				if(!uid)
 				{
 					// Returning instead of using IMAGE_DEFAULT means we stop as
 					// soon as a hole is found, instead of getting everything that is
 					// available.  The gallery can't fill in the holes.
 					images[image_index++] = IMAGE_DEFAULT;
-					continue;
-				}
-				let uid = nm.controller._indexMap[i].uid;
-				if(!uid)
-				{
 					continue;
 				}
 				let data = egw.dataGetUIDdata(uid);
@@ -744,28 +774,22 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 		/**
 		 * Check if clicked target from nm is in depth
 		 *
+		 * "In depth" means the row lives in an expanded child grid rather than in the
+		 * nextmatch's own top-level row list.  Those rows are a different result set, so the
+		 * gallery must not treat them as part of the list it pages through.
+		 *
 		 *  @param nm nextmatch widget
-		 *  @param target selected target dom node
+		 *  @param target selected target dom node, defaults to this widget
 		 *
 		 *  @return {boolean} returns false if target is not in depth otherwise True
 		 */
-		private _is_target_indepth(nm, target?)
+		private _is_target_indepth(nm : Et2Nextmatch, target? : Node)
 		{
-			let res = false;
-			if(nm)
+			if(!nm)
 			{
-				if(!target)
-				{
-					// @ts-ignore
-					let target = this.getDOMNode();
-				}
-				let entry = nm.controller.getRowByNode(target);
-				if(entry && entry.controller.getDepth() > 0)
-				{
-					res = true;
-				}
+				return false;
 			}
-			return res;
+			return (nm.getRowByNode(target ?? <Node><unknown>this)?.depth ?? 0) > 0;
 		}
 
 		protected expose_onclick(event : MouseEvent)
@@ -801,8 +825,10 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 			let self = this;
 			if(nm)
 			{
-				// Add scrolling to the indicator list
-				let total_count = nm.controller._grid.getTotalCount();
+				// Add scrolling to the indicator list.
+				// 0 means the grid is mid-reload and does not know its total right now (see
+				// _gallery_total), not that there is nothing to page through.
+				let total_count = nm.totalCount || this._gallery_total;
 				if(total_count >= this._gallery.num)
 				{
 					let $indicator = this._gallery.container.find('.indicator');
@@ -888,15 +914,15 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 			}
 		}
 
-		protected expose_onslideend(index, slide)
+		protected async expose_onslideend(index, slide)
 		{
 			// Check to see if we're in a nextmatch, do magic
 			let nm = this.find_nextmatch(this);
-			if(nm && !nm.update_in_progress)
+			if(nm && !nm.isLoading)
 			{
 				// Check to see if we're near the end, or maybe some pagination
 				// would be good.
-				let total_count = nm.controller._grid.getTotalCount();
+				let total_count = nm.totalCount;
 
 				// Already at the end, don't bother
 				if(index == total_count - 1 || index == 0)
@@ -917,12 +943,14 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 				}
 
 				if(!this._gallery.list[index + direction] || this._gallery.list[index + direction].loading ||
-					total_count > this._gallery.getNumber() && index + ET2_DATAVIEW_STEPSIZE > this._gallery.getNumber())
+					total_count > this._gallery.getNumber() && index + GALLERY_PAGE_SIZE > this._gallery.getNumber())
 				{
 					// This will get the next batch of rows
-					let start = Math.max(0, direction > 0 ? index : index - ET2_DATAVIEW_STEPSIZE);
-					let end = Math.min(total_count - 1, start + ET2_DATAVIEW_STEPSIZE);
-					nm.controller._gridCallback(start, end);
+					let start = Math.max(0, direction > 0 ? index : index - GALLERY_PAGE_SIZE);
+					let end = Math.min(total_count - 1, start + GALLERY_PAGE_SIZE);
+					// Unlike the legacy grid callback this actually waits for the rows, so what
+					// we read below is the fetched page and not just whatever was already cached.
+					await nm.loadRowRange(start, end);
 					let images = [];
 					this.read_from_nextmatch(nm, images, start);
 
@@ -981,7 +1009,11 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 			}
 		}
 
-		protected expose_onclosed() {}
+		protected expose_onclosed()
+		{
+			this._gallery_nextmatch = null;
+			this._gallery_total = 0;
+		}
 
 		protected handleDownload(e)
 		{

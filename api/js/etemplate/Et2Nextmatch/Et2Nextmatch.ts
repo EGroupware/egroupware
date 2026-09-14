@@ -1674,6 +1674,84 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	}
 
 	/**
+	 * True while rows are being fetched, so callers can avoid acting on row indexes
+	 * that are about to change.
+	 */
+	get isLoading() : boolean
+	{
+		return this._datagrid?.loading ?? false;
+	}
+
+	/**
+	 * Find the row containing a DOM node, eg. the target of a click on a widget inside a row.
+	 *
+	 * Rows live in the datagrid's shadow DOM and row widgets have shadow roots of their own,
+	 * so neither `closest()` nor `contains()` gets there from an event target on its own -
+	 * this walks the composed tree, through shadow hosts, up to this nextmatch.
+	 *
+	 * `depth` is 0 for a row of this nextmatch's own grid and counts up for each level of
+	 * expanded child grid the row sits in, so a caller can tell a top-level row from one in
+	 * an expanded branch.
+	 *
+	 * @param node DOM node inside the row
+	 * @return row's datastore id and depth, or null if the node is not inside one of our rows
+	 */
+	getRowByNode(node : Node | null) : { id : string, depth : number } | null
+	{
+		let current : Node | null = node;
+		let rowElement : HTMLElement | null = null;
+		let gridCount = 0;
+		while(current && current !== this)
+		{
+			if(current instanceof HTMLElement)
+			{
+				if(!rowElement)
+				{
+					if(current.hasAttribute("data-row-id"))
+					{
+						rowElement = current;
+					}
+				}
+				else if(current.localName === "et2-datagrid")
+				{
+					gridCount++;
+				}
+			}
+			current = current.parentNode ?? (<ShadowRoot>current).host ?? null;
+		}
+		if(current !== this || !rowElement)
+		{
+			return null;
+		}
+		return {
+			id: rowElement.getAttribute("data-row-id") || "",
+			// The row's own grid is one of the crossed grids, so it does not count as depth
+			depth: Math.max(0, gridCount - 1)
+		};
+	}
+
+	/**
+	 * Datastore row id for every row index, with `null` for indexes not currently loaded.
+	 *
+	 * Row content itself stays in egw's UID cache (`egw.dataGetUIDdata()`); this is the
+	 * index -> uid mapping needed to walk the result set in server order.
+	 */
+	getLoadedRowIds() : (string | null)[]
+	{
+		return this._datagrid?.getLoadedRowIds() ?? [];
+	}
+
+	/**
+	 * Load rows `start`..`end` (inclusive) without moving the grid, resolving once they
+	 * are available.  For consumers that page through the result set independently of
+	 * what the user has scrolled to, eg. filemanager's image gallery.
+	 */
+	async loadRowRange(start : number, end : number) : Promise<void>
+	{
+		await this._datagrid?.loadRowRange(start, end);
+	}
+
+	/**
 	 * et2_IInput implementation used by eTemplate submit value collection.
 	 */
 	getValue() : Record<string, any>
