@@ -245,9 +245,17 @@ function mailto(uri : string) : void
 	// classic-menuaction fallback - mailto: itself already parses to/cc/bcc entirely client-side
 	// above, so there was never anything server-side left for THIS entry point to depend on
 	// (doc/ai/projects/mail-compose-jmap-migration.md, Step 10's own "explicitly deferred" list).
+	//
+	// Resolved via egw.applyFunc() (the same dotted-path resolution every `onExecute:
+	// 'javaScript:app.x.y'` action string already uses), not a direct `window.app.mail?.` read -
+	// a caller whose current tab never happened to load/visit the mail app (eg. addressbook's
+	// own "Add to Bcc" context-menu action, a real 2026-09-14 user report: the action showed but
+	// silently did nothing) has `window.app.mail` undefined, so the optional-chaining call used
+	// to just no-op with no popup and no error. applyFunc() lazy-loads mail's own JS bundle (and
+	// instantiates MailApp) first if it isn't loaded yet, then calls composeMailto() for real.
 	egw.openWithinWindow ("mail", "setCompose", content, {'preset[mailto]':uri},
 		/\/mail\/compose\.php/, undefined,
-		() => (<any>window).app.mail?.composeMailto(content));
+		() => egw.applyFunc('app.mail.composeMailto', [content]));
 
 	for (var index in content)
 	{
