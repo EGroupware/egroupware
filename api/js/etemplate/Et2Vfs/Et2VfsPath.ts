@@ -16,6 +16,7 @@ import {state} from "lit/decorators/state.js";
 import {classMap} from "lit/directives/class-map.js";
 import {repeat} from "lit/directives/repeat.js";
 import {FileInfo} from "./Et2VfsSelectDialog";
+import {DIR_MIME_TYPE} from "./VfsMime";
 import {SlBreadcrumbItem} from "@shoelace-style/shoelace";
 import {HasSlotController} from "../Et2Widget/slot";
 import {until} from "lit/directives/until.js";
@@ -42,8 +43,6 @@ import {et2_IDetachedDOM} from "../et2_core_interfaces";
  */
 export class Et2VfsPath extends Et2InputWidget(LitElement) implements et2_IDetachedDOM
 {
-	/** Mime type used by the VFS backend for directories */
-	static readonly DIR_MIME_TYPE : string = 'httpd/unix-directory';
 
 	/**
 	 * Full VFS stat-array for this widget, if value was ever set to one via
@@ -343,7 +342,7 @@ export class Et2VfsPath extends Et2InputWidget(LitElement) implements et2_IDetac
 				}
 				this.egw().open({
 					path: openPath,
-					type: isLastSegment ? (this.fileInfo?.mime ?? '') : Et2VfsPath.DIR_MIME_TYPE
+					type: isLastSegment ? (this.fileInfo?.mime ?? '') : DIR_MIME_TYPE
 				}, "file");
 			}
 		}

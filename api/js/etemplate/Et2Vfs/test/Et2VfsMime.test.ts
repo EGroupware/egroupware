@@ -1,6 +1,7 @@
 import {assert, elementUpdated, fixture, html} from "@open-wc/testing";
 import * as sinon from "sinon";
 import "../Et2VfsMime";
+import {DIR_MIME_TYPE} from "../VfsMime";
 import {Et2VfsMime} from "../Et2VfsMime";
 
 // Ambient global `egw` (not `this.egw()`) is read at module-eval time (ExposeMixin.ts's
@@ -83,7 +84,7 @@ describe("Et2VfsMime", () =>
 	it("isExposable() always returns false for a directory (Vfs::DIR_MIME_TYPE), regardless of download_url", async() =>
 	{
 		const el = await element();
-		el.value = {mime: Et2VfsMime.DIR_MIME_TYPE, path: "/home/demo/subfolder", download_url: "/webdav.php/home/demo/subfolder"};
+		el.value = {mime: DIR_MIME_TYPE, path: "/home/demo/subfolder", download_url: "/webdav.php/home/demo/subfolder"};
 		await elementUpdated(el);
 
 		assert.isFalse(el.isExposable(), "a directory row must never be treated as exposable, even with a download_url set");

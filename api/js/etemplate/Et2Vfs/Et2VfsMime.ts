@@ -3,6 +3,7 @@ import {Et2ImageExpose} from "../Expose/Et2ImageExpose";
 import {css, html} from "lit";
 import {property} from "lit/decorators/property.js";
 import {customElement} from "lit/decorators/custom-element.js";
+import {DIR_MIME_TYPE} from "./VfsMime";
 
 @customElement('et2-vfs-mime')
 export class Et2VfsMime extends Et2ImageExpose
@@ -41,10 +42,6 @@ export class Et2VfsMime extends Et2ImageExpose
 	@property({type: Boolean, reflect: true})
 	symlink = false;
 
-	/**
-	 * Mime type of directories
-	 */
-	static readonly DIR_MIME_TYPE : string = 'httpd/unix-directory';
 	private __mime : string;
 	private __symlink : boolean;
 	private __download_url : string;
@@ -78,7 +75,7 @@ export class Et2VfsMime extends Et2ImageExpose
 	isExposable() : boolean
 	{
 		// do not try to expose directories, they are handled by the action system
-		if (this.exposeValue.mime === Et2VfsMime.DIR_MIME_TYPE || !this.value.download_url)
+		if (this.exposeValue.mime === DIR_MIME_TYPE || !this.value.download_url)
 		{
 			return false;
 		}
