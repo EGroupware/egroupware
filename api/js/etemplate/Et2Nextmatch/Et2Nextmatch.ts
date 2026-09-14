@@ -2758,7 +2758,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 			? "row-meta row-meta-category"
 			: "row-meta"
 		);
-		this._actionController.customizeRowElement(context.rowElement);
 	};
 
 	/**

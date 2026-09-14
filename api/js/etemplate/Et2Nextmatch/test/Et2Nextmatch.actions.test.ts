@@ -349,13 +349,15 @@ describe("Et2Nextmatch action setup", () =>
 	 * - Recycled datagrid rows do not leave action objects holding detached DOM nodes.
 	 *
 	 * Setup strategy:
-	 * - Create a row action object through the normal popup-target path.
-	 * - Detach that row and customize a later rendered row.
+	 * - Create a row action object through the normal popup-target path, for a row that is
+	 *   then detached and never selected again.
+	 * - Reconcile the selection, which is the single point where row action objects are
+	 *   created, so pruning them there keeps their number bounded.
 	 *
 	 * Pass criteria:
-	 * - The detached row action object is removed during row customization.
+	 * - The detached row action object is removed during that reconciliation.
 	 */
-	it("prunes detached row action objects while customizing rendered rows", () =>
+	it("prunes detached row action objects while reconciling the selection", () =>
 	{
 		const removeDetached = sinon.spy();
 		const controller : any = new Et2NextmatchActionController({
@@ -376,25 +378,106 @@ describe("Et2Nextmatch action setup", () =>
 			remove: removeDetached
 		}));
 
+		const rowsBody = document.createElement("div");
+		document.body.append(rowsBody);
+		controller.getRowsBodies = () => [rowsBody];
+
 		const row = document.createElement("div");
 		row.setAttribute("data-row-id", "row::detached");
-		document.body.append(row);
+		rowsBody.append(row);
 		controller.findEventRow = () => ({rowId: "row::detached", rowElement: row});
 		controller.triggerPopupForRow(new MouseEvent("contextmenu", {bubbles: true, composed: true, cancelable: true}));
 		row.remove();
 
 		const nextRow = document.createElement("div");
 		nextRow.setAttribute("data-row-id", "row::next");
-		document.body.append(nextRow);
+		rowsBody.append(nextRow);
 		try
 		{
-			controller.customizeRowElement(nextRow);
+			controller.handleSelectionChanged({selectedRowIds: ["row::next"], activeRowId: "row::next"});
 			assert.isTrue(removeDetached.calledOnce, "detached row action object should be removed");
 			assert.isFalse(controller.rowActionObjects.has("row::detached"), "detached action object should leave the map");
+			assert.isTrue(controller.rowActionObjects.has("row::next"), "the rendered selected row keeps its action object");
 		}
 		finally
 		{
-			nextRow.remove();
+			rowsBody.remove();
+		}
+	});
+
+	/**
+	 * Contract under test:
+	 * - A keyboard shortcut still acts on the selection after the datagrid re-stamped its
+	 *   rows (an in-place refresh, a push update, an autorefresh tick, a virtualization
+	 *   swap).  Every other path into an action - context menu, default action, drag -
+	 *   carries the live row element in its event and re-binds on the way through; a
+	 *   shortcut has no such element, so it can only use the action objects that already
+	 *   exist.  Those are bound to one physical row element and get pruned once that
+	 *   element leaves the document, which left the action framework seeing an empty
+	 *   selection while the grid still showed selected, highlighted rows - and the
+	 *   shortcut silently did nothing.
+	 *
+	 * Setup strategy:
+	 * - Materialize a row action object for a selected row through the popup-target path,
+	 *   then replace that row's DOM node with a fresh one carrying the same row id, the
+	 *   way a re-render does.
+	 *
+	 * Pass criteria:
+	 * - The shortcut executes, and the row action object is bound to the replacement node.
+	 */
+	it("re-materializes selection action objects for a shortcut after rows are re-stamped", () =>
+	{
+		const controller : any = new Et2NextmatchActionController({
+			id: "nm_actions_restamp",
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "addressbook"})
+		} as any);
+		controller.actionManager = {
+			children: [{
+				id: "delete",
+				shortcut: {keyCode: 46, shift: false, ctrl: false, alt: false}
+			}],
+			data: {},
+			getActionById: () => null,
+			addAction: () => controller.actionManager,
+			updateActions: () => {},
+			setDefaultExecute: () => {}
+		};
+		const execute = sinon.stub().returns(true);
+		controller.objectManager = Object.assign(makeFakeObjectManager(), {executeActionImplementation: execute});
+
+		const rowsBody = document.createElement("div");
+		document.body.append(rowsBody);
+		controller.getRowsBodies = () => [rowsBody];
+		Object.assign(controller.host, {getActiveRowId: () => "row::1", selectSingleRow: sinon.stub()});
+
+		const row = document.createElement("div");
+		row.setAttribute("data-row-id", "row::1");
+		rowsBody.append(row);
+		controller.findEventRow = () => ({rowId: "row::1", rowElement: row});
+		controller.triggerPopupForRow(new MouseEvent("contextmenu", {bubbles: true, composed: true, cancelable: true}));
+		controller.selectedRowIds = ["row::1"];
+		assert.isTrue(controller.rowActionObjects.has("row::1"), "row action object should exist before the re-render");
+
+		// What a re-render does: the row node in the document is a different element
+		// than the one the action object was bound to, even though the row id is the same.
+		row.remove();
+		const restampedRow = document.createElement("div");
+		restampedRow.setAttribute("data-row-id", "row::1");
+		rowsBody.append(restampedRow);
+
+		const deleteEvent = new KeyboardEvent("keydown", {key: "Delete"});
+		Object.defineProperty(deleteEvent, "keyCode", {value: 46});
+		try
+		{
+			assert.isTrue(controller.handleShortcut(deleteEvent), "shortcut should still run after rows were re-stamped");
+			assert.isTrue(execute.calledOnce, "shortcut should reach the action object manager");
+			assert.strictEqual(controller.rowActionObjects.get("row::1")?.iface?.getDOMNode?.(), restampedRow,
+				"row action object should be re-bound to the row element now in the document");
+		}
+		finally
+		{
+			rowsBody.remove();
 		}
 	});
 
