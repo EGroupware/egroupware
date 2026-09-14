@@ -774,8 +774,13 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 	_drawGrid( )
 	{
 
-		this.div.css('height', this.options.height)
-			.empty();
+		this.div.css('height', this.options.height);
+		// detach() instead of empty(): the children here (loader, gridHeader, scrolling and
+		// everything under it - day columns and their event widgets) are kept by their widgets
+		// and put back below.  empty() would run jQuery's cleanData() over all of them, silently
+		// dropping the jQuery event handlers they were created with - eg. the mouseenter that
+		// builds an event's tooltip on first hover - even though the same DOM nodes get re-used.
+		this.div.children().detach();
 		this.loader.prependTo(this.div).show();
 
 		// Draw in the horizontal - the times
