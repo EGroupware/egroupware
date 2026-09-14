@@ -508,7 +508,22 @@ class Imap extends Jmap\Base
 		}
 		$subscribedOnly = array_key_exists('isSubscribed', (array)($args['filter'] ?? [])) &&
 			(bool)$args['filter']['isSubscribed'];
-		return ['ids' => self::listChildIds($imap, $parentPath, $subscribedOnly)];
+		// RFC 8621 §2.3 MailboxFilterCondition: an EXPLICIT `parentId: null` means "only top-level
+		// mailboxes" (one level - $parentPath is already '' for that case, same as above), whereas
+		// OMITTING parentId from the filter entirely means no constraint on depth at all - every
+		// mailbox, at every level, matches. Both collapse to the identical $parentPath === '' above
+		// (empty() doesn't distinguish "key absent" from "key present but null/empty"), so this is
+		// the one extra check needed to tell them apart. Found live 2026-09-14 (ralf, relaying a
+		// real user's report): MailJmap.getAllMailboxes() (mail/js/jmap.ts, powering the compose
+		// "Folder" field's client-side autocomplete search, searchFolder()/buildMailboxPaths())
+		// sends exactly this "no parentId key at all" shape to genuinely mean "everything, flat" -
+		// without this, listChildIds() below always ran its one-level-only IMAP LIST pattern
+		// regardless, silently limiting that search to top-level folders only (Sent, Trash, ... but
+		// never anything nested under a subfolder), while a real JMAP server's own Mailbox/query
+		// already returns every mailbox correctly for the exact same client-side query shape per
+		// RFC 8621 - this is a shim-only gap, not something client-side code did wrong.
+		$recursive = !array_key_exists('parentId', (array)($args['filter'] ?? []));
+		return ['ids' => self::listChildIds($imap, $parentPath, $subscribedOnly, $recursive)];
 	}
 
 	/**
@@ -584,16 +599,22 @@ class Imap extends Jmap\Base
 	 * @param \Horde_Imap_Client_Socket $imap
 	 * @param string $parentPath canonical "/"-joined path, '' for the top level
 	 * @param bool $subscribedOnly see mailboxQuery()'s docblock
-	 * @return string[] base64-encoded canonical paths of every direct child
+	 * @param bool $recursive true: every mailbox at every level under $parentPath (mailboxQuery()'s
+	 *  "parentId omitted entirely" case) - false (default): exactly one level, never grandchildren
+	 *  (the lazy per-level tree's own "list this one node's direct children" case)
+	 * @return string[] base64-encoded canonical paths of every matching mailbox
 	 */
-	private static function listChildIds(\Horde_Imap_Client_Socket $imap, string $parentPath, bool $subscribedOnly = false) : array
+	private static function listChildIds(\Horde_Imap_Client_Socket $imap, string $parentPath, bool $subscribedOnly = false,
+		bool $recursive = false) : array
 	{
 		$parentMailbox = self::hordeMailbox($imap, $parentPath);
 		$delimiter = self::namespaceDelimiter($imap, 'personal');
 		// IMAP '%' matches any characters except the hierarchy delimiter - i.e. exactly one
 		// level, never grandchildren, and never the parent itself (which needs at least one
-		// more character after the delimiter to match)
-		$pattern = $parentPath === '' ? '%' : $parentMailbox.$delimiter.'%';
+		// more character after the delimiter to match). '*' is the same but ALSO matches the
+		// delimiter itself - every descendant at every depth, not just direct children.
+		$wildcard = $recursive ? '*' : '%';
+		$pattern = $parentPath === '' ? $wildcard : $parentMailbox.$delimiter.$wildcard;
 
 		$mailboxes = $subscribedOnly ?
 			$imap->listMailboxes($pattern, \Horde_Imap_Client::MBOX_SUBSCRIBED, ['children' => true]) : null;

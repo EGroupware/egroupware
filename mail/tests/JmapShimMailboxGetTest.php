@@ -505,6 +505,57 @@ class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 		$this->assertSame([], $result['ids']);
 	}
 
+	/**
+	 * Regression coverage for a real bug found live 2026-09-14 (ralf, relaying a real user's
+	 * report): the compose "Folder" field's client-side autocomplete search
+	 * (MailJmap.getAllMailboxes(), mail/js/jmap.ts) sends a Mailbox/query filter with NO parentId
+	 * key at all (RFC 8621: "no constraint on depth" - every mailbox at every level), but
+	 * mailboxQuery()'s own `!empty($args['filter']['parentId'])` check couldn't tell that apart
+	 * from an EXPLICIT `parentId: null` (the lazy tree's own "top level only" request,
+	 * MailJmap.getMailboxChildren()) - both collapsed to the same one-level-only listChildIds()
+	 * call, silently limiting the folder search to top-level mailboxes only (Sent/Trash/... but
+	 * never anything nested under a subfolder) - "Keine Vorschläge" (no suggestions) for any
+	 * search term matching only a nested folder.
+	 */
+	public function testMailboxQueryOmittedParentIdDoesNotChokeAndIsDistinctFromExplicitNull()
+	{
+		// accountId '0' returns early (no connection) either way - these only confirm mailboxQuery()
+		// doesn't choke on either filter shape; the actual one-level-vs-recursive wildcard choice is
+		// covered by the listChildIds() tests below (mailboxQuery() itself isn't mockable end-to-end
+		// without a live IMAP connection, same boundary the test above already accepts)
+		$this->assertSame([], JmapShim::mailboxQuery('0', ['filter' => []])['ids'], 'parentId omitted entirely');
+		$this->assertSame([], JmapShim::mailboxQuery('0', ['filter' => ['parentId' => null]])['ids'], 'parentId explicitly null');
+	}
+
+	/**
+	 * listChildIds()'s own recursive mode (mailboxQuery()'s "parentId omitted entirely" case) -
+	 * IMAP's '*' wildcard matches every mailbox at every depth in one LIST call, unlike '%' (used
+	 * for both the top-level and "under a specific parent" one-level-only cases above).
+	 */
+	public function testListChildIdsRecursiveUsesStarWildcardAtTopLevel()
+	{
+		$imap = $this->mockImap(['personal' => [['delimiter' => '.']]]);
+		$imap->expects($this->once())->method('listMailboxes')
+			->with('*', \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, ['children' => true])
+			->willReturn(['INBOX' => [], 'INBOX.Sub' => [], 'INBOX.Sub.SubSub' => []]);
+
+		$ids = $this->invokePrivate('listChildIds', [$imap, '', false, true]);
+
+		$this->assertSame([
+			base64_encode('INBOX'), base64_encode('INBOX/Sub'), base64_encode('INBOX/Sub/SubSub'),
+		], $ids);
+	}
+
+	public function testListChildIdsNonRecursiveStillUsesPercentWildcard()
+	{
+		$imap = $this->mockImap(['personal' => [['delimiter' => '.']]]);
+		$imap->expects($this->once())->method('listMailboxes')
+			->with('%', \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, ['children' => true])
+			->willReturn(['INBOX' => []]);
+
+		$this->invokePrivate('listChildIds', [$imap, '', false, false]);
+	}
+
 	public function testMailboxQueryNameGivenStaysPureEncodingNoImapCall()
 	{
 		// must not construct a real connection at all (accountId '999' would throw in
