@@ -985,10 +985,27 @@ export class Et2DatagridRowRenderer
 		{
 			return;
 		}
-		// Do not steal focus if the user intentionally moved to another interactive control.
-		const active = document.activeElement as HTMLElement | null;
-		const activeTag = active?.tagName?.toLowerCase?.() || "";
-		if(active && active !== document.body && active !== this.host && activeTag !== "egw-app")
+		// Focus sitting on the grid itself is this method's own fallback from an earlier
+		// mutation, never a deliberate move by the user, so it must not be treated as one:
+		// document.activeElement is then the outermost shadow host (the nextmatch), which
+		// the "left the grid" check below reads as another control and bails on for good -
+		// leaving the row permanently unfocused after a single mid-render focus loss.
+		const focusParkedOnGrid = !!shadowActive && shadowActive === this.host._gridTable;
+		if(!focusParkedOnGrid)
+		{
+			// Do not steal focus if the user intentionally moved to another interactive control.
+			const active = document.activeElement as HTMLElement | null;
+			const activeTag = active?.tagName?.toLowerCase?.() || "";
+			if(active && active !== document.body && active !== this.host && activeTag !== "egw-app")
+			{
+				return;
+			}
+		}
+		// Go straight back to the row when its replacement is already mounted. Parking on
+		// the grid first keeps keyboard navigation alive but visibly drops the row's focus
+		// ring, which is the whole flicker this avoids.
+		this.host._focusRowByIndex(this.host.activeRowIndex, 0, false);
+		if((this.host.shadowRoot?.activeElement as HTMLElement | null)?.matches?.("[data-row-index]"))
 		{
 			return;
 		}

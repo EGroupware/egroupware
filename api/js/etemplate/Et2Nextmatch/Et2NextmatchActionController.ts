@@ -341,6 +341,12 @@ export class Et2NextmatchActionController implements ReactiveController
 			return false;
 		}
 
+		// Unlike the context-menu, default-action and drag paths, a keyboard shortcut
+		// carries no row element to work from - it can only act on the action objects
+		// that already exist. Re-materialize them first, or a shortcut pressed after the
+		// rows were re-stamped acts on an empty selection and silently does nothing.
+		this.resyncSelectionActionObjects();
+
 		// executeActionImplementation() below runs against `this.objectManager`, which
 		// is flagged EGW_AO_FLAG_IS_CONTAINER - so its own forceSelection() gate never
 		// fires (that only applies when a leaf row object executes an action on itself,
@@ -379,6 +385,28 @@ export class Et2NextmatchActionController implements ReactiveController
 			return;
 		}
 		this.host.selectSingleRow?.(activeRowId);
+	}
+
+	/**
+	 * Rebuild the action objects for the current selection from the rows presently in the DOM.
+	 *
+	 * A row action object is bound to one physical row element, and the datagrid replaces
+	 * row elements outright whenever it re-renders (an in-place refresh after an action, a
+	 * push update, an autorefresh tick, a virtualization swap). cleanupDetachedRowActionObjects()
+	 * then drops every object whose element left the document, and nothing re-creates them
+	 * while the selection itself never changes - so the action framework ends up with an empty
+	 * selection even though the grid still shows selected, highlighted rows.
+	 */
+	private resyncSelectionActionObjects() : void
+	{
+		if(!this.allSelected && !this.selectedRowIds.length)
+		{
+			return;
+		}
+		this.materializeVisibleSelectedRows(
+			new Set(this.selectedRowIds),
+			String(this.host.getActiveRowId?.() || "")
+		);
 	}
 
 	/**
@@ -492,6 +520,12 @@ export class Et2NextmatchActionController implements ReactiveController
 	 */
 	private materializeVisibleSelectedRows(selectedSet : Set<string>, activeRowId : string)
 	{
+		// Prune and re-create in the same pass. Pruning on its own - which is what used to
+		// happen, once per row as the datagrid stamped it - leaves a window where an object
+		// for a still-selected row is already gone and nothing is going to bring it back,
+		// because a re-render changes no selection. Every path that creates row action
+		// objects reaches this method, so bounding their number here covers all of them.
+		this.cleanupDetachedRowActionObjects();
 		const rowsBodies = this.getRowsBodies();
 		if(!rowsBodies.length)
 		{
@@ -916,24 +950,6 @@ export class Et2NextmatchActionController implements ReactiveController
 			rowObject.updateActionLinks(this.getActionLinks());
 		}
 		this.cleanupDetachedRowActionObjects();
-	}
-
-	/**
-	 * Rebind an existing action object when a virtualized row element is recycled.
-	 */
-	customizeRowElement(rowElement : HTMLElement)
-	{
-		this.cleanupDetachedRowActionObjects();
-		if(!rowElement)
-		{
-			return;
-		}
-		const rowId = this.getActionRowId(rowElement);
-		if(!rowId || !this.rowActionObjects.has(rowId))
-		{
-			return;
-		}
-		this.ensureRowActionObject(rowId, rowElement);
 	}
 
 	/**
