@@ -100,6 +100,34 @@ describe("Et2Tree", () =>
 	});
 
 	/**
+	 * Regression test: value is declared as array-or-string, and a multiple tree does get handed a
+	 * non-array - an empty selection arrives as "" from set_value() when the server sends no
+	 * content for the widget.  handleSelectionChange() assumed an array unconditionally as soon as
+	 * `multiple` was set, so the first click threw "TypeError: this.value.push is not a function"
+	 * *before* dispatching anything.  The visible result was a tree that highlighted the row and
+	 * then did nothing at all - no change event, no filtering - which is exactly how the
+	 * projectmanager project picker in calendar's filter drawer failed.
+	 */
+	it("a multiple tree survives a click when its value is not an array", async() =>
+	{
+		const tree : any = await fixture(html`
+            <et2-tree multiple></et2-tree>`);
+		tree.select_options = [{id: "a", text: "A", item: [], child: false}];
+		await tree.updateComplete;
+
+		// what set_value("") leaves behind - the shape that used to blow up on the next click
+		tree.value = "";
+		await tree.updateComplete;
+
+		const node = tree.shadowRoot.querySelector("sl-tree-item");
+		assert.isOk(node, "the tree has to have rendered a node to click");
+
+		tree.handleSelectionChange({detail: {selection: [node]}, stopPropagation: () => {}});
+
+		assert.deepEqual(tree.value, ["a"], "the clicked node has to end up in the value");
+	});
+
+	/**
 	 * Regression test: a template's onchange="app.<app>.<method>" is wired up by Et2InputWidget,
 	 * which listens for a plain "change" event.  Et2Tree only ever emitted its own
 	 * "et2-selection-change", so onchange never ran - a tree could be clicked all day and its

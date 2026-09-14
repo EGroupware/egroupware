@@ -1249,6 +1249,14 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		// implemented unlinked multiple
 		if(this.multiple)
 		{
+			// value is declared as array-or-string and arrives from the server or a set_value()
+			// as whatever that gave us - an empty selection in particular can come in as "".
+			// Everything below (and getValue()) needs the multiple-value to be a list.
+			if(!Array.isArray(this.value))
+			{
+				this.value = this.value === "" || this.value === null || typeof this.value == "undefined" ?
+					[] : [this.value];
+			}
 			const idx = this.value.indexOf(ids[0]);
 			if(idx < 0)
 			{
