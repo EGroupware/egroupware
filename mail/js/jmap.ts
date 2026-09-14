@@ -5909,27 +5909,48 @@ export class MailJmap
 	}
 
 	/**
-	 * Inline images resolveInlineCidImages() (fetchForReply()'s quoted body) already turned into
-	 * real `blob:` URLs are only ever valid within the browser tab/session that created them -
-	 * meaningless once actually SENT to a recipient, or stored server-side in a draft's own
-	 * bodyValues (found live 2026-08-31, ralf: "sending has to re-wire and reference as
-	 * attachments" - the display-side fix alone wasn't the whole story). Re-uploads each one as a
-	 * real JMAP blob (same client.uploadBlob() primitive uploadAttachment() wraps, but working
-	 * directly off the already-resolved token/client here rather than re-resolving them from a
-	 * profileID) under a fresh Content-ID, and rewrites the body's `src="blob:..."` back to
-	 * `src="cid:..."` - draftEmailProperties() then nests these in a proper multipart/related
-	 * alongside the body, same MIME shape classic Mail::processURL2InlineImages() produces for its
-	 * own equivalent problem (there, resolving normal http(s) image URLs pasted/left in the body).
-	 * Only ever resolves a URL this same instance's inlineImageBlobs map actually has the Blob
-	 * for (see that field's own docblock for why - CSP blocks fetch()-ing a blob: URL back) - a
-	 * blob: URL from anywhere else (there shouldn't be one - nothing plausibly puts one in a mail
-	 * compose body other than this class itself) is left untouched rather than dropped/attempted.
+	 * Inline images left as a `src="..."` reference of some kind - never as a real MIME
+	 * `cid:`-referenced attachment - are meaningless once actually SENT to a recipient, or stored
+	 * server-side in a draft's own bodyValues (found live 2026-08-31, ralf: "sending has to
+	 * re-wire and reference as attachments" - the display-side fix alone wasn't the whole story).
+	 * Re-uploads each one as a real JMAP blob (same client.uploadBlob() primitive
+	 * uploadAttachment() wraps, but working directly off the already-resolved token/client here
+	 * rather than re-resolving them from a profileID) under a fresh Content-ID, and rewrites the
+	 * body's `src="..."` back to `src="cid:..."` - draftEmailProperties() then nests these in a
+	 * proper multipart/related alongside the body, same MIME shape classic
+	 * Mail::processURL2InlineImages() produces for its own equivalent problem (there, resolving
+	 * normal http(s) image URLs pasted/left in the body).
+	 *
+	 * Three distinct source shapes, one per real insertion path a user can hit during compose
+	 * (found live 2026-09-14, ralf: "when you insert an image into the mail - from Vfs / via
+	 * upload (ends also in vfs) / via Dnd - It need to be converted to an attachment with a cid...
+	 * We seem to have missed that" - this method only ever handled the FIRST of the three below):
+	 * - `blob:` - resolveInlineCidImages() (fetchForReply()'s quoted body) already turned a
+	 *   reply/forward's own pre-existing `cid:` images into these for display. Only ever resolves
+	 *   a URL this same instance's inlineImageBlobs map actually has the Blob for (see that
+	 *   field's own docblock for why - CSP blocks fetch()-ing a blob: URL back) - a blob: URL from
+	 *   anywhere else (there shouldn't be one) is left untouched rather than dropped/attempted.
+	 * - `.../webdav.php/...` - Et2HtmlArea's own `imageUpload="link_to"` (compose.xet) routes
+	 *   TinyMCE's native drag-and-drop/paste/upload image handling AND the explicit "insert from
+	 *   VFS" picker through the SAME server endpoint
+	 *   (EGroupware\Api\Etemplate\Widget\Vfs::ajax_htmlarea_upload()), which stores the file in
+	 *   VFS and hands TinyMCE back a `Api\Vfs::download_url()` (a `/webdav.php/<path>` URL) to use
+	 *   as `src` - fetched here the same way uploadVfsAttachment() fetches a known VFS path, just
+	 *   working from the already-resolved URL directly instead of reconstructing it.
+	 * - `data:image/...` - a base64-embedded image (that same server endpoint's own fallback for
+	 *   a non-eTemplate2 caller, or any other source that ends up leaving one in the body) -
+	 *   decoded directly into a Blob, no network fetch needed.
+	 *
+	 * All three are cached by their own url string in the SAME inlineImageUploads map - deliberately
+	 * NOT re-uploaded/re-fetched on every later send/autosave of this same compose session (the
+	 * live body keeps referencing the same original src unchanged; only a COPY built for the
+	 * outgoing payload gets rewritten to cid: here).
 	 */
 	private async resolveOutgoingInlineImages(token : JmapToken, client : JamClient, html : string) : Promise<{body : string, inlineImages : JmapInlineImage[]}>
 	{
-		const blobUrlRegex = /\bsrc\s*=\s*(["'])(blob:[^"']+)\1/gi;
+		const srcRegex = /\bsrc\s*=\s*(["'])(blob:[^"']+|data:image\/[^"']+|[^"']*\/webdav\.php\/[^"']+)\1/gi;
 		const urls = new Set<string>();
-		for (const match of html.matchAll(blobUrlRegex))
+		for (const match of html.matchAll(srcRegex))
 		{
 			urls.add(match[2]);
 		}
@@ -5953,25 +5974,38 @@ export class MailJmap
 				inlineImages.push(cached);
 				return;
 			}
-			const blob = this.inlineImageBlobs.get(url);
-			if (!blob)
-			{
-				return;
-			}
 			try
 			{
+				let blob : Blob;
+				let name : string | null = null;
+				if (url.startsWith('blob:'))
+				{
+					blob = this.inlineImageBlobs.get(url);
+					if (!blob) return;
+				}
+				else if (url.startsWith('data:'))
+				{
+					const response = await fetch(url);
+					blob = await response.blob();
+				}
+				else
+				{
+					// a webdav.php URL - same fetch uploadVfsAttachment() uses for a known VFS
+					// path, just working from the already-resolved URL directly
+					const response = await fetch(url, {credentials: 'same-origin'});
+					if (!response.ok) return;
+					blob = await response.blob();
+					const lastSegment = url.split(/[?#]/)[0].split('/').pop();
+					if (lastSegment) name = decodeURIComponent(lastSegment);
+				}
 				const type = blob.type || 'application/octet-stream';
-				const name = `inline-image-${++index}${extensionByType[type] ?? ''}`;
+				name ||= `inline-image-${++index}${extensionByType[type] ?? ''}`;
 				const response = await client.uploadBlob(token.accountId, blob);
 				const cid = `${crypto.randomUUID()}@${window.location.hostname}`;
 				const inlineImage : JmapInlineImage = {blobId: response.blobId, type, name, size: response.size ?? blob.size, cid};
 				this.inlineImageUploads.set(url, inlineImage);
 				cidByUrl.set(url, cid);
 				inlineImages.push(inlineImage);
-				// deliberately NOT deleted/revoked here - this rewrite only ever touches a COPY of
-				// the body for the outgoing payload, never the live editor widget itself (still
-				// showing "src=blob:..." unchanged), so the SAME blob: URL needs to keep resolving
-				// on every later send/autosave of this same compose session too, not just this one
 			}
 			catch (e)
 			{
@@ -5982,7 +6016,7 @@ export class MailJmap
 		{
 			return {body: html, inlineImages: []};
 		}
-		const body = html.replace(blobUrlRegex, (full, quote, url) =>
+		const body = html.replace(srcRegex, (full, quote, url) =>
 		{
 			const cid = cidByUrl.get(url);
 			return cid ? `src=${quote}cid:${cid}${quote}` : full;

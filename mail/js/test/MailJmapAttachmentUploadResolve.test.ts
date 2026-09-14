@@ -1,4 +1,5 @@
 import {assert} from "@open-wc/testing";
+import * as sinon from "sinon";
 import {JmapUserError, MailJmap} from "../jmap";
 import type {MailApp} from "../app";
 
@@ -429,5 +430,85 @@ describe("MailJmap.resolveOutgoingInlineImages()", () =>
 		assert.include(result.body, 'blob:http://x/bad', "the failed one keeps its original src");
 		assert.include(result.body, 'cid:', "the other image still resolves normally");
 		assert.equal(result.inlineImages.length, 1);
+	});
+
+	/**
+	 * Found live 2026-09-14 (ralf): "when you insert an image into the mail - from Vfs / via
+	 * upload (ends also in vfs) / via Dnd - It need to be converted to an attachment with a cid
+	 * ... We seem to have missed that". Et2HtmlArea's own imageUpload="link_to" (compose.xet)
+	 * routes ALL THREE of those insertion paths through the same server endpoint
+	 * (EGroupware\Api\Etemplate\Widget\Vfs::ajax_htmlarea_upload(), Api\Vfs::download_url()),
+	 * which hands TinyMCE a /webdav.php/<path> src - this method only ever resolved blob: src
+	 * before this fix, silently leaving every one of these three paths broken.
+	 */
+	afterEach(() =>
+	{
+		sinon.restore();
+	});
+
+	it("uploads an inline image referenced via a webdav.php VFS link (drag-and-drop/upload/VFS-picker), rewrites to cid:", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const client : any = primeUploadClient(jmap);
+		const token : any = {accountId : 'acc1'};
+		const imageBytes = new Blob(['img-bytes'], {type : 'image/png'});
+		sinon.stub(globalThis, 'fetch').callsFake(async(url : any) =>
+		{
+			assert.include(String(url), '/webdav.php/');
+			return {ok : true, blob : async() => imageBytes} as any;
+		});
+
+		const result = await (jmap as any).resolveOutgoingInlineImages(token, client,
+			'<img src="https://example.com/egroupware/webdav.php/mail/uploads/2026/09/photo.png">');
+
+		assert.notInclude(result.body, 'webdav.php');
+		assert.match(result.body, /src="cid:[^"]+"/);
+		assert.equal(result.inlineImages.length, 1);
+		assert.equal(result.inlineImages[0].name, 'photo.png', "the filename should come from the VFS path, not a generic inline-image-N name");
+	});
+
+	it("an unfetchable webdav.php link leaves its src unresolved, without throwing", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const client : any = primeUploadClient(jmap);
+		const token : any = {accountId : 'acc1'};
+		sinon.stub(globalThis, 'fetch').resolves({ok : false} as any);
+
+		const result = await (jmap as any).resolveOutgoingInlineImages(token, client,
+			'<img src="https://example.com/egroupware/webdav.php/mail/uploads/missing.png">');
+
+		assert.include(result.body, 'webdav.php');
+		assert.deepEqual(result.inlineImages, []);
+	});
+
+	it("uploads a base64 data: image, rewrites to cid:, deriving the type from the data URI itself", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const client : any = primeUploadClient(jmap);
+		const token : any = {accountId : 'acc1'};
+		// 1x1 transparent PNG
+		const dataUri = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=';
+
+		const result = await (jmap as any).resolveOutgoingInlineImages(token, client, `<img src="${dataUri}">`);
+
+		assert.notInclude(result.body, 'data:image');
+		assert.match(result.body, /src="cid:[^"]+"/);
+		assert.equal(result.inlineImages.length, 1);
+		assert.equal(result.inlineImages[0].type, 'image/png');
+	});
+
+	it("a webdav.php link already resolved once (autosave/re-send) is never re-fetched, same caching as blob:", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		let fetchCount = 0;
+		sinon.stub(globalThis, 'fetch').callsFake(async() => { fetchCount++; return {ok : true, blob : async() => new Blob(['x'], {type : 'image/png'})} as any; });
+		const client : any = primeUploadClient(jmap);
+		const token : any = {accountId : 'acc1'};
+		const url = 'https://example.com/egroupware/webdav.php/mail/uploads/photo.png';
+
+		await (jmap as any).resolveOutgoingInlineImages(token, client, `<img src="${url}">`);
+		await (jmap as any).resolveOutgoingInlineImages(token, client, `<img src="${url}">`);
+
+		assert.equal(fetchCount, 1, "the second resolve (eg. a later autosave) must reuse the cached upload, not re-fetch");
 	});
 });
