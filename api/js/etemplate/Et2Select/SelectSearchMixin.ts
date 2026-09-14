@@ -1102,7 +1102,9 @@ export const SelectSearchMixin = dedupeMixin(<T extends Constructor<LitElement &
 			{
 				const entry = normalised.results[i];
 				entry.class = ((entry.class || "") + " remote").trim();
-				entry.isMatch = true;
+				// An option group's own isMatch is not read by _optionTemplate() - its children are
+				// the ones actually rendered, so they need the flag too, or they render as no-match.
+				this._markMatch(entry);
 
 				const existing = this.select_options.find(o => o.value == entry.value);
 				if(existing)
@@ -1114,6 +1116,19 @@ export const SelectSearchMixin = dedupeMixin(<T extends Constructor<LitElement &
 			}
 
 			return <any>super.processRemoteResults(<any>normalised);
+		}
+
+		/**
+		 * Flag a result (and, if it is an option group, every child) as a match so it renders.
+		 */
+		private _markMatch(option : SelectOption)
+		{
+			option.isMatch = true;
+			const children = Array.isArray(option.value) ? option.value : option.children;
+			if(Array.isArray(children))
+			{
+				children.forEach(child => this._markMatch(child));
+			}
 		}
 
 		/**

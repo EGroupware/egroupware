@@ -17,6 +17,7 @@ import {Et2Textbox} from "../../Et2Textbox/Et2Textbox";
 import {
 	SearchableSelect,
 	egwStub,
+	findOption,
 	hasSearchUI,
 	searchFor,
 	searchKey,
@@ -298,6 +299,32 @@ describe("Legacy server response shapes", () =>
 
 		assert.includeMembers(visibleOptionValues(element), ["child_one", "child_two"],
 			"Grouped results were not flattened into selectable options");
+	});
+
+	/**
+	 * A remote result is flagged isMatch so subclasses that hide non-matches (eg. calendar's
+	 * CalendarOwner) still show it - Et2Select's own base rendering does not require the flag,
+	 * since it only hides an option when isMatch is explicitly false.  A group's children were not
+	 * getting the flag, only the group wrapper itself, so a stricter subclass hid every result.
+	 */
+	it("flags an option group's children as a match, not just the group itself", async() =>
+	{
+		window.egw.request = sinon.fake.returns(Promise.resolve([
+			{
+				value: [
+					{value: "child_one", label: "Child One"},
+					{value: "child_two", label: "Child Two"}
+				],
+				label: "A group"
+			}
+		]));
+
+		await searchFor(element, "child");
+
+		assert.isTrue(findOption(element, "child_one")?.classList.contains("match"),
+			"Group child was not flagged as a match");
+		assert.isTrue(findOption(element, "child_two")?.classList.contains("match"),
+			"Group child was not flagged as a match");
 	});
 
 	it("does not duplicate a remote result that is already a local option", async() =>

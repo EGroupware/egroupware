@@ -181,6 +181,29 @@ describe("normalizeLegacySearchResults() option groups", () =>
 
 		assert.deepEqual(out.results[0].children.map(c => c.value), ["kid"]);
 	});
+
+	/**
+	 * calendar_owner_etemplate_widget::ajax_search's actual response shape: an object (because
+	 * "total" spliced in among the numeric keys breaks the sequential-array assumption), whose
+	 * entries are groups with an array value.  cleanSelectOptions() used to stringify that array
+	 * via "" + value, turning the children into the literal string "[object Object],[object
+	 * Object],..." before fixOptionGroups() ever got a chance to see them.
+	 */
+	it("keeps a group's children when total is spliced in among object-keyed groups", () =>
+	{
+		const out = normalizeLegacySearchResults({
+			0: {label: "Accounts", value: [{value: "one", label: "One"}, {value: "two", label: "Two"}]},
+			1: {label: "Addressbook", value: [{value: "c1", label: "Contact One"}]},
+			total: 3
+		}, "test");
+
+		assert.lengthOf(out.results, 2, "Both groups should survive");
+		assert.deepEqual(out.results[0].children.map(c => c.value), ["one", "two"],
+			"Accounts group lost its children to string coercion");
+		assert.deepEqual(out.results[1].children.map(c => c.value), ["c1"],
+			"Addressbook group lost its children to string coercion");
+		assert.equal(out.total, 3);
+	});
 });
 
 describe("normalizeLegacySearchResults() warning", () =>
