@@ -458,7 +458,15 @@ class Mail
 				$account = Mail\Account::read($_acc_id, $called_for);
 				if ($account->is_imap())
 				{
-					return $_acc_id;
+					// Account::read() only ever does its own (int)$acc_id cast for the SQL lookup,
+					// so it tolerates (and finds a real account for) a garbage-suffixed id like
+					// "9::INBOX/some-folder" (a stale legacy-format ActiveProfileID preference,
+					// still handled elsewhere in restoreSessionData() below) - returning $_acc_id
+					// unchanged here would hand that same garbage back to callers as if it were a
+					// validated id, even though this method is documented (and by every caller
+					// assumed) to return a clean int. Found live 2026-09-14 (ralf): a customer's
+					// compose popup hung with acc_id=9::INBOX/006-IF-ORGA-LEITUNG in its url.
+					return (int)$_acc_id;
 				}
 				if (self::$debug) error_log(__METHOD__."($_acc_id) account NOT valid, no imap-host!");
 			}
