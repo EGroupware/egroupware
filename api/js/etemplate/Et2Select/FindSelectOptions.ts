@@ -242,7 +242,12 @@ export function cleanSelectOptions(options : SelectOption[] | string[] | object)
 			{
 				option = {label: key + ""};
 			}
-			option.value = "" + (option.value ?? key.trim());	// link_search prefixes keys with one space
+			// An option group's value is an array of children (fixOptionGroups() sorts those out
+			// afterwards) - do not stringify it, or the children are lost to Array.toString().
+			if(!Array.isArray(option.value))
+			{
+				option.value = "" + (option.value ?? key.trim());	// link_search prefixes keys with one space
+			}
 			fixed_options.push(option);
 		}
 	}
