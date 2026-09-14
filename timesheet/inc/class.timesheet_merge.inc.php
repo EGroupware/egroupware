@@ -60,7 +60,10 @@ class timesheet_merge extends Api\Storage\Merge
 		$this->parse_html_styles = Api\Storage\Customfields::use_html('timesheet');
 
 		$this->bo = new timesheet_bo();
-		$this->date_fields += timesheet_egw_record::$types['date-time'];
+		// ts_end is not a database column, it gets computed in timesheet_replacements() from
+		// ts_start + ts_duration - but it is a date-time like the stored ones and has to be
+		// registered here too, or {{ts_end/date}} and {{ts_end/time}} merge to nothing.
+		$this->date_fields = array_merge($this->date_fields, timesheet_egw_record::$types['date-time'], array('ts_end'));
 	}
 
 	/**
