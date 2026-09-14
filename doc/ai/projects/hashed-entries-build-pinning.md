@@ -522,6 +522,64 @@ works as designed on current code. Whatever Ingo/Stefan actually hit needs a les
 this to reproduce - a popup/secondary-window path, or a request landing while the build is still
 mid-write, are more likely candidates than a plain pinning failure. Didn't chase further; see Status.
 
+### Retest of the filemanager uncaught variant (2026-09-14, nathan.egroupware.org)
+
+Re-ran the repro now that item 6 (`ad9b270b85`) is in, per the Status note that it "may simply have
+been another instance of the same bug". **Still not reproduced** - across four scenarios, on an
+instance where the trap was deliberately left *armed*.
+
+Why this instance was a better test bed than pole: pole's deploy deleted the bare `*/js/app.min.js`
+files, so a fallback there becomes a loud 404 rather than a silent stale-content collision. Locally
+those 35 files still sit at their 2026-09-10 08:50 content while the chunks were rebuilt days later -
+ie. exactly the stale bare artifact the bug needs. Anything falling back would have collided silently,
+the same way it did for Ingo/Stefan.
+
+Scenarios, all in one document pinned to build epoch `1789407526875`:
+
+1. **Plain folder change** (the literal reported symptom) - clean.
+2. **Folder change after an epoch-only rebuild.** Worth noting for anyone repeating this: `rollup -c`
+   on unchanged sources reproduces byte-identical hashes (entries are content-addressed), so *only*
+   the epoch moves. That is not a drift condition - to get one you must actually change a source file
+   in the graph, as the boulder attempt did with its `Et2Widget.ts` marker.
+3. **Folder change after a real hash-changing rebuild** (every entry's hash different from the pinned
+   build's) - clean. No new-build chunk entered the document, no bare-path fallback, still exactly one
+   `etemplate2` copy resident.
+4. **Opening a not-yet-opened app** (calendar, hash also changed) in that same pinned document -
+   clean; `app.calendar`/`app.classes.calendar` both set, no second `etemplate2`.
+
+Item 6's fix confirmed working live, not just present in the source: `data-manifest` arrives unfiltered
+(37 entries), every one of `data-include`'s 5 entries resolves in it, and zero resources were fetched
+at a bare unhashed path.
+
+Item 5's ajax-epoch check also verified end-to-end rather than assumed: the server does send `epoch` on
+every ajax_exec response, and with drift of ~1.85h against the 12h threshold
+(`data.epoch - buildEpoch > 12 * 3600000`, `egw_json.ts`) the notice correctly stays silent. A tab that
+looks "un-notified" after a fresh rebuild is behaving as designed, not failing to detect.
+
+**The popup candidate is now ruled out, with a real finding attached.** The Status section named "a
+popup/secondary-window path" as the likeliest remaining trigger, and it does produce the collision
+*condition*: a popup opened from a document pinned to build N gets its own fresh page render and pins
+to build **N+1**, loading a different `etemplate2` chunk than its opener (`etemplate2-32cf92fa.js`
+against the opener's `etemplate2-e449de5a.js`). **The per-document build pin does not extend to
+popups.** It nonetheless does not crash, and the reason is the useful part: `customElements` and the
+`egw_import` module map are both *per-document* (`w.customElements !== window.customElements`,
+`w.egw_import !== window.egw_import`) - only the `egw` API object itself is shared with the opener
+(`w.egw === window.egw`, the realm rule). Two builds therefore coexist in opener+popup without ever
+contending for one custom-element registry. The popup rendered fully (19 widgets, 1 etemplate2
+instance) and survived a reload of the popup itself unchanged.
+
+So the mechanism that would make a popup crash this way does not exist, and this line of enquiry should
+be closed rather than retried. What remains unexplained is only *why Ingo's instance was uncaught*;
+nothing found since suggests a second code path, and every collision route now checked is either fixed
+(item 6) or structurally immune (popups). Worth leaving closed unless it recurs with a live tab to
+inspect.
+
+Unrelated bug found while double-clicking filemanager rows to navigate, reproducible 3/3 and **not
+fixed** (out of scope here, logged separately): `TypeError: data.data.mime.match is not a function` at
+`collaboraFilemanagerAPP.open`, via `triggerDefaultActionForRow` -> `applyFunc` -> collabora's
+`filemanager` integration. Folder navigation still completes, so it is silent to the user, but the
+row's default action throws every time on this instance.
+
 ### Item 7: false-positive reload prompt from a non-app template name (2026-09-14)
 
 Reported by Ralf, relaying a customer's screenshot: opening the "Select columns" dialog on
@@ -585,11 +643,15 @@ Two things still genuinely open, both needing more than a code read to resolve:
 
 - **`CRM.ts`'s "CRMView object is missing"** has no user-facing message yet - unlike item 2's generic
   path, nobody has added one to `CRMView.view_ready()` itself.
-- **The filemanager uncaught "Illegal constructor"** that bypassed the `88bf63dd2f` catch net entirely
-  (uncaught, unlike the addressbook case) - never independently reproduced (the boulder.egroupware.org
-  attempt came back clean, and the real cause found afterward - item 6 - is a different failure shape
-  entirely, a manifest miss rather than a race). Worth retesting now that item 6 is fixed, since it may
-  simply have been another instance of the same bug.
+- ~~**The filemanager uncaught "Illegal constructor"**~~ - **retested 2026-09-14 post-item-6, still not
+  reproduced; recommend closing.** Four scenarios on an instance with the stale bare `app.min.js` trap
+  deliberately left armed (unlike pole, where the deploy deleted those files) all came back clean, and
+  the "popup/secondary-window path" previously named as the likeliest remaining trigger is now ruled
+  out on mechanism, not just on a failed repro - see
+  [Retest of the filemanager uncaught variant](#retest-of-the-filemanager-uncaught-variant-2026-09-14-nathanegroupwareorg).
+  That retest did establish one thing worth keeping independently of this bug: **the per-document build
+  pin does not extend to popups** - a popup pins to the *current* build, not its opener's - which is
+  harmless only because `customElements` and `egw_import` are per-document.
 
 Also worth deciding, not urgent: the `notificationajaxpopup.js` vs. server-push load-order race itself
 (item 4's underlying cause) is still there - item 4 only stopped it from showing a misleading reload
