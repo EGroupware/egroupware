@@ -928,6 +928,15 @@ class AddressbookApp extends EgwApp
 
 	_fetchAllSelected(nm, callback)
 	{
+		// The legacy fetchAll() this replaced (cd326f99042, 2026-06-25) guarded against a null/
+		// undefined nextmatch (`if(!nextmatch || !nextmatch.controller) return false;`) - restored
+		// here since a caller can legitimately be handed one (addEmail()'s own `nm` param is
+		// `et2_nextmatch|null` by design, and EgwAction.execute()'s default `_target=null` means a
+		// plain, non-drop context-menu action always arrives that way).
+		if(!nm)
+		{
+			return false;
+		}
 		if(nm.getSelection().all)
 		{
 			nm.fetchAllIds()
@@ -1208,7 +1217,12 @@ class AddressbookApp extends EgwApp
 	addEmail(action, selected, nm?, which?, setCompose?)
 	{
 		// Check for all selected.
-		if (typeof(nm) === "undefined") nm = this.et2.getWidgetById('nm');
+		// EgwAction.execute(_senders, _target=null) always calls onExecute.exec(this, _senders,
+		// _target) - for a plain (non-drop) context-menu action like this one, _target is null,
+		// not undefined, so this must fall back for null too (real user report 2026-09-14,
+		// Claus Brinkmann: "Add to Bcc" showed in the menu but silently did nothing - nm stayed
+		// null and _fetchAllSelected(null, ...) threw reading null.getSelection()).
+		if (!nm) nm = this.et2.getWidgetById('nm');
 		if(this._fetchAllSelected(nm, (ids) => {
 			// fetchAllIds() returns just the ID, no prefix, so map it to match normal selected
 			this.addEmail(action, ids.map((num) => { return {id:'addressbook::'+num}; }), nm, which);
