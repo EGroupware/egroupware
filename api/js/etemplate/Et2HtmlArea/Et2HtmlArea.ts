@@ -341,13 +341,6 @@ export class Et2HtmlArea extends Et2MarkdownEditMixin(Et2InputWidget(LitElement)
 	private _resolveTinymce : ((editor : TinyMceEditor[]) => void) | null = null;
 	private _tinymceResolved = false;
 	private _valueFromEditor : string | undefined;
-
-	/**
-	 * True from a set_value() call that _syncValueToEditor() could not yet apply (no editor,
-	 * or its setContent() not ready) until TinyMCE's "init" handler retries it - see that
-	 * handler for why this must NOT default to true on every init.
-	 */
-	private _pendingEditorPush = false;
 	private _pendingBlurTimeout : number | null = null;
 	private _editorSetupHooks = new Map<string, TinyMceSetupHook>();
 	private _toolbarItems = new Set<string>();
@@ -422,7 +415,6 @@ export class Et2HtmlArea extends Et2MarkdownEditMixin(Et2InputWidget(LitElement)
 	set_value(value)
 	{
 		super.set_value(value ?? "");
-		this._pendingEditorPush = true;
 		this._syncValueToEditor();
 	}
 
@@ -1000,27 +992,7 @@ export class Et2HtmlArea extends Et2MarkdownEditMixin(Et2InputWidget(LitElement)
 		editor.on("init", () =>
 		{
 			this._ensureShadowDomStyles();
-			// TinyMCE seeds its own initial content from the raw <textarea> it renders
-			// (visibly, as a plain textarea) while its own async init is still in flight -
-			// a user can and does start typing into that textarea before init completes
-			// (reported live: "HTML checkbox is on, but no TinyMCE shows but a et2-textarea"),
-			// and that typing lands in the editor's own initial content, NOT in `this.value`
-			// (only editor.on("input"/"change", ...) below keeps `this.value` in sync, and
-			// those aren't wired until now). Only force our own (necessarily pre-typing)
-			// `this.value` into the editor here if a set_value() call is genuinely still
-			// waiting to be applied (eg. bootstrapReply()/signature insertion racing init) -
-			// otherwise trust whatever the editor already has and pull it into `this.value`
-			// instead, so early typing during that window survives instead of being silently
-			// discarded (root cause of intermittent mail body loss on slower-loading composes).
-			if(this._pendingEditorPush)
-			{
-				this._syncValueToEditor();
-				this._pendingEditorPush = false;
-			}
-			else
-			{
-				this._syncValueFromEditor(false);
-			}
+			this._syncValueToEditor();
 			this._applyDefaultFormatBlock(editor);
 			if(!this._tinymceResolved)
 			{
@@ -1160,7 +1132,6 @@ export class Et2HtmlArea extends Et2MarkdownEditMixin(Et2InputWidget(LitElement)
 			{
 				this._textareaElement.value = this.value ?? "";
 			}
-			this._pendingEditorPush = false;
 			return;
 		}
 		if(this._tinyMceEditor?.setContent)
@@ -1170,10 +1141,6 @@ export class Et2HtmlArea extends Et2MarkdownEditMixin(Et2InputWidget(LitElement)
 			{
 				this._tinyMceEditor.setContent(nextValue);
 			}
-			// Applied (or already matched) via the real TinyMCE API - nothing left for the
-			// "init" handler below to retry, even if TinyMCE wasn't fully Ready yet when we
-			// got here (setContent() queues correctly either way).
-			this._pendingEditorPush = false;
 		}
 		else if(this._editorElement)
 		{
