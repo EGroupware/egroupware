@@ -1,4 +1,5 @@
 import {assert} from "@open-wc/testing";
+import {virtualizerRef} from "@lit-labs/virtualizer/virtualize.js";
 import {html, LitElement, render} from "lit";
 import * as sinon from "sinon";
 import {Et2Datagrid} from "../Et2Datagrid";
@@ -821,6 +822,50 @@ describe("Et2Datagrid row rendering", () =>
 			assert.strictEqual(rows.style.height, "", "cancelling print must clear the print-only tbody height");
 			assert.strictEqual(el.shadowRoot!.querySelector<HTMLElement>(".dg-body")!.style.height, "", "cancelling print must clear the print-only body height");
 			assert.strictEqual(el.shadowRoot!.querySelector<HTMLElement>(".dg-body table")!.style.height, "", "cancelling print must clear the print-only table height");
+		}
+		finally
+		{
+			el.remove();
+		}
+	});
+
+	/**
+	 * Contract under test:
+	 * - The min-height sync is an upward-only floor. It must never shrink the tbody
+	 *   below the scroll extent the virtualizer itself published, or the scroll
+	 *   container's scrollHeight collapses to the realized rows and the scrollbar
+	 *   thumb jumps on every scroll step.
+	 *
+	 * Setup strategy:
+	 * - Render a long grid, then stand in for @lit-labs/virtualizer with a layout
+	 *   reporting a scroll extent far larger than the handful of realized rows.
+	 *   The real virtualizer publishes that extent as `min-height` on this element
+	 *   (not `style.height`), which is why the sync has to ask the layout for it.
+	 *
+	 * Pass criteria:
+	 * - The synced min-height is at least the virtualizer's scroll extent.
+	 */
+	it("keeps the virtualizer scroll extent when only some rows are realized", async() =>
+	{
+		const el = createDatagrid();
+		const normalRows = Array.from({length: 500}, (_value, index) => ({id: `row-${index}`, label: `Row ${index}`}));
+		el.setInitialRows(normalRows);
+		el.total = normalRows.length;
+		document.body.append(el);
+		try
+		{
+			await el.updateComplete;
+			const rows = el.shadowRoot!.querySelector("#rows") as HTMLElement;
+			(<any>rows)[virtualizerRef] = {_layout: {_scrollSize: 25000}};
+			rows.style.minHeight = "25000px";
+
+			el._syncRowsMinHeight();
+
+			assert.isAtLeast(
+				parseFloat(rows.style.minHeight),
+				25000,
+				"min-height sync must not shrink the tbody below the virtualizer's own scroll extent"
+			);
 		}
 		finally
 		{

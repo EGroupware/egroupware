@@ -1449,8 +1449,16 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return;
 		}
-		const explicitHeight = rowsBody.style.height || "";
-		const virtualizerHeight = /^\d+(\.\d+)?px$/.test(explicitHeight) ? parseFloat(explicitHeight) : 0;
+		// @lit-labs/virtualizer publishes its scroll extent by writing `min-height` on its
+		// host element - it only uses `height` when the host is itself the scroll port, which
+		// this tbody is not (.dg-body scrolls). Reading `style.height` therefore never found
+		// anything, so the rendered-row fallback below replaced the full virtual extent with
+		// the height of just the realized rows on every scroll step - collapsing .dg-body's
+		// scrollHeight to roughly scrollTop + viewport and making the scrollbar jump. Reading
+		// the layout's own scroll size instead keeps this method the upward-only floor its
+		// name promises. Undocumented internals, hence the guards.
+		const virtualizerScrollSize = (<any>this._virtualize)?._layout?._scrollSize;
+		const virtualizerHeight = Number.isFinite(virtualizerScrollSize) ? Math.max(0, virtualizerScrollSize) : 0;
 		const deterministicVirtualHeight = this._usesFixedVirtualizerRowHeight()
 		                                  ? this._fixedVirtualItemsHeight()
 		                                  : 0;
