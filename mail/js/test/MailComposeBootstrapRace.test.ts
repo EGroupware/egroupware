@@ -337,6 +337,65 @@ describe("MailCompose bootstrap race (bootstrapping flag)", () =>
 		});
 	});
 
+	describe("bootstrapCompose() syncs body-container visibility for a blank new compose", () =>
+	{
+		// bootstrapReply()/bootstrapComposeAsNew() already call syncMimeTypeContainers()
+		// themselves once they know their own source message's mimeType - bootstrapSignature()'s
+		// blank-new-compose path (no from=reply/composeasnew/... URL param) never did, relying on
+		// the body container's own one-shot server-side "disabled" default to already match
+		// whatever the mimeType widget itself defaults to. Found live 2026-09-14 investigating
+		// "sending to a distribution list via a Group loses the mail body": HTML checkbox showed
+		// checked, but the HTML container stayed disabled from that stale default while the
+		// PLAINTEXT container was the one actually visible - typing into the visible (plaintext)
+		// widget while every send/signature code path reads mail_htmltext instead (mimeType said
+		// true) loses the body deterministically, no timing race involved at all.
+		it("calls syncMimeTypeContainers() once bootstrapSignature()'s blank-compose path finishes", async() =>
+		{
+			const app = createFakeApp();
+			const jmap = new MailJmap(app);
+			(jmap as any).getIdentities = async() => [fakeIdentity()];
+			(app as any).jmap = jmap;
+			const compose = new MailCompose(app);
+			(compose as any).isJmapMode = true;
+			const et2 = createFakeEt2(compose, '1:0');
+			(compose as any).et2 = et2;
+			// Simulates the widget's own HTML-mode default already being in effect before
+			// bootstrap runs, same as the live report - nothing here ever calls
+			// mimeType.set_value() itself for a genuinely blank compose.
+			et2.getWidgetById('mimeType').set_value(true);
+
+			const syncCalls : boolean[] = [];
+			(compose as any).syncMimeTypeContainers = (toHtml : boolean) => syncCalls.push(toHtml);
+
+			await withUrl('?jmap=1', () => (compose as any).bootstrapCompose());
+
+			assert.deepEqual(syncCalls, [true],
+				"blank-compose bootstrap must sync the body containers to the mimeType widget's own value");
+		});
+
+		it("stays a no-op re-sync (same value) for a reply, which already calls it itself", async() =>
+		{
+			const context = fakeContext({mimeType: 'plain'});
+			const {compose, et2} = createComposeForReply(context, [fakeIdentity()]);
+
+			const syncCalls : boolean[] = [];
+			const original = (compose as any).syncMimeTypeContainers.bind(compose);
+			(compose as any).syncMimeTypeContainers = (toHtml : boolean) =>
+			{
+				syncCalls.push(toHtml);
+				return original(toHtml);
+			};
+
+			await withUrl('?jmap=1&from=reply&id=msg1', () => (compose as any).bootstrapCompose());
+
+			// bootstrapReply() itself calls it once (false, for the plain-text original), then
+			// bootstrapCompose()'s own trailing call re-confirms the same value - never toggles
+			// the container back.
+			assert.deepEqual(syncCalls, [false, false]);
+			assert.strictEqual(et2.getWidgetById('mimeType').get_value(), false);
+		});
+	});
+
 	describe("applySignatureForCurrentIdentity() vs. a user typing during its own async gap", () =>
 	{
 		// Distinct from the "last write wins" hazard below (two CONCURRENT calls racing each
