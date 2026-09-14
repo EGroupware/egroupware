@@ -10,6 +10,7 @@
 import {Et2Textbox} from "../Et2Textbox/Et2Textbox";
 import {Et2Description} from "../Et2Description/Et2Description";
 import {egw} from "../../jsapi/egw_global";
+import {VfsFileMixin} from "./VfsFileMixin";
 
 /**
  * @summary VFS file name, decoded from VFS path encoding.
@@ -18,75 +19,16 @@ import {egw} from "../../jsapi/egw_global";
  *
  * decodes the value on initially receiving it and encodes the value before submitting it
  * Client side always has a decoded value and server side always sends and receives an encoded value
+ *
+ * Reading the row-bound value and opening the file live in VfsFileMixin, shared with the read-only
+ * variant below.
  */
-export class Et2VfsName extends Et2Textbox
+export class Et2VfsName extends VfsFileMixin(Et2Textbox)
 {
-	private fileInfo : {path?: string; name?: string; mime?: string} | null = null;
-
 	constructor()
 	{
 		super();
 		this.validator = /^[^\/\\]+$/;
-		this.updateComplete.then((_v) =>
-		{
-			//decode value only once when receiving it initially
-			if(this.value) this.value = egw.decodePath(this.value);
-		});
-	}
-
-	/**
-	 * Row-bound values arrive as an object with `.path` (full path) and
-	 * `.name` (basename).  Extract and decode the basename so the Name
-	 * column shows `1`, `Generated`, etc. instead of the full path.
-	 *
-	 * @param _value Raw value, usually a row object `{path, name}`.
-	 */
-	set value(_value)
-	{
-		if(_value && typeof _value === 'object')
-		{
-			this.fileInfo = _value;
-			if(typeof _value.name === 'string' && _value.name.length)
-			{
-				_value = _value.name;
-			}
-			else if(typeof _value.path === 'string' && _value.path.length)
-			{
-				const segments = _value.path.split('/');
-				_value = segments[segments.length - 1] || _value.path;
-			}
-		}
-		else if(_value == null)
-		{
-			this.fileInfo = null;
-		}
-		super.value = _value;
-	}
-
-	get value()
-	{
-		return super.value;
-	}
-
-	/**
-	 * Open the row-bound VFS file using the standard file handler.
-	 */
-	open() : boolean
-	{
-		if(!this.fileInfo?.path)
-		{
-			return false;
-		}
-		// the server sends mime === false when it could not resolve the file at all, eg. a symlink
-		// pointing at a deleted target.  Opening it would just hand the browser a webdav url that
-		// 404s into a blank tab, so tell the user instead.
-		if(typeof this.fileInfo.mime !== "string")
-		{
-			this.egw().message(this.egw().lang("File '%1' not found!", this.fileInfo.name || this.fileInfo.path), "error");
-			return false;
-		}
-		this.egw().open({path: this.fileInfo.path, type: this.fileInfo.mime}, "file");
-		return false;
 	}
 
 	/**
@@ -109,70 +51,13 @@ customElements.define("et2-vfs-name", Et2VfsName);
 
 /**
  * @summary Read-only VFS file name.
+ *
+ * Everything it does comes from VfsFileMixin - the only difference to the editable widget is the
+ * Et2Description base.
  */
-export class Et2VfsNameReadonly extends Et2Description
+export class Et2VfsNameReadonly extends VfsFileMixin(Et2Description)
 {
-	private fileInfo : {path?: string; name?: string; mime?: string} | null = null;
-
-	constructor()
-	{
-		super();
-		this.updateComplete.then((v) =>
-		{
-			if(this.value) this.value = egw.decodePath(this.value);
-		});
-	}
-
-	/**
-	 * Row-bound values arrive as an object with `.path` (full path) and
-	 * `.name` (basename).  Extract and decode the basename.
-	 *
-	 * @param _value Raw value, usually a row object `{path, name}`.
-	 */
-	set value(_value)
-	{
-		if(_value && typeof _value === 'object')
-		{
-			this.fileInfo = _value;
-			if(typeof _value.name === 'string' && _value.name.length)
-			{
-				_value = _value.name;
-			}
-			else if(typeof _value.path === 'string' && _value.path.length)
-			{
-				const segments = _value.path.split('/');
-				_value = segments[segments.length - 1] || _value.path;
-			}
-		}
-		else if(_value == null)
-		{
-			this.fileInfo = null;
-		}
-		super.value = _value;
-	}
-
-	get value()
-	{
-		return super.value;
-	}
-
-	open() : boolean
-	{
-		if(!this.fileInfo?.path)
-		{
-			return false;
-		}
-		// the server sends mime === false when it could not resolve the file at all, eg. a symlink
-		// pointing at a deleted target.  Opening it would just hand the browser a webdav url that
-		// 404s into a blank tab, so tell the user instead.
-		if(typeof this.fileInfo.mime !== "string")
-		{
-			this.egw().message(this.egw().lang("File '%1' not found!", this.fileInfo.name || this.fileInfo.path), "error");
-			return false;
-		}
-		this.egw().open({path: this.fileInfo.path, type: this.fileInfo.mime}, "file");
-		return false;
-	}
 }
+
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-vfs-name_ro", Et2VfsNameReadonly);
