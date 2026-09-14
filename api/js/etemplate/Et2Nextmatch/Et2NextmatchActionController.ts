@@ -316,6 +316,23 @@ export class Et2NextmatchActionController implements ReactiveController
 	]);
 
 	/**
+	 * Whether the datagrid, not an action, owns this keypress.
+	 *
+	 * Matching on the key alone is not enough for A: the datagrid wants it only for its
+	 * own select-all, which is Ctrl/Cmd+A, while apps bind other combinations on the same
+	 * letter to real actions - Mail's "reply all" is Shift+Ctrl+A, and claiming it here
+	 * made that shortcut unreachable.
+	 */
+	private static isGridOwnedKey(event : KeyboardEvent) : boolean
+	{
+		if(event.key === "a" || event.key === "A")
+		{
+			return !((event.ctrlKey || event.metaKey) && (event.shiftKey || event.altKey));
+		}
+		return Et2NextmatchActionController.GRID_OWNED_KEYS.has(event.key);
+	}
+
+	/**
 	 * Execute an action shortcut originating in this nextmatch.
 	 *
 	 * This is called while the event is being captured by Et2Nextmatch.  The
@@ -336,7 +353,7 @@ export class Et2NextmatchActionController implements ReactiveController
 		// Calling forceActiveRowSelected() here for a grid-owned key would act on the *pre-move* active row, one step behind the row the datagrid is about to make active.
 		//for selection-toggle keys (Space,Ctrl+A) it would corrupt the pre-existing selection the datagrid's own handler still needs to read.
 		// Leave these keys to the datagrid entirely.
-		if(Et2NextmatchActionController.GRID_OWNED_KEYS.has(event.key))
+		if(Et2NextmatchActionController.isGridOwnedKey(event))
 		{
 			return false;
 		}
@@ -1600,9 +1617,18 @@ export class Et2NextmatchActionController implements ReactiveController
 
 	/**
 	 * Remove action objects whose rendered rows have left the DOM.
+	 *
+	 * A detached element does not always mean the row is gone: the datagrid replaces row
+	 * elements outright on every re-render, and the selection does not change when it
+	 * does. Dropping a still-selected row's object here would strand it - nothing
+	 * re-creates one until the selection next changes - and leave both keyboard shortcuts
+	 * and drag looking at an empty selection. Those rows are re-bound to the element that
+	 * replaced them instead, so the invariant holds for every caller rather than only the
+	 * ones that re-materialize afterwards.
 	 */
 	private cleanupDetachedRowActionObjects()
 	{
+		let renderedRowsById : Map<string, HTMLElement> | null = null;
 		for(const [rowId, rowObject] of this.rowActionObjects.entries())
 		{
 			if(rowId === Et2NextmatchActionController.PLACEHOLDER_ACTION_OBJECT_ID)
@@ -1615,6 +1641,25 @@ export class Et2NextmatchActionController implements ReactiveController
 			if(rowElement?.isConnected || isSelectedProxy)
 			{
 				continue;
+			}
+			if(this.allSelected || this.selectedRowIds.includes(rowId))
+			{
+				if(renderedRowsById === null)
+				{
+					renderedRowsById = this.buildRenderedRowIndex(this.getRowsBodies());
+				}
+				// Same element resolution materializeVisibleSelectedRows() uses: the row as it
+				// is rendered now, or - for an explicitly selected row that virtualization has
+				// scrolled out of the DOM - the detached proxy that stands in for it. Select-all
+				// is carried by its own flag and never materializes unrendered rows, so there is
+				// nothing to keep for a row that has no element under it.
+				const replacement = renderedRowsById.get(rowId) ||
+				                    (!this.allSelected ? this._selectionProxyRow(rowId) : null);
+				if(replacement)
+				{
+					this.ensureRowActionObject(rowId, replacement);
+					continue;
+				}
 			}
 			rowObject.remove?.();
 			this.rowActionObjects.delete(rowId);

@@ -145,6 +145,42 @@ describe("Et2Nextmatch keyboard actions", () =>
 
 	/**
 	 * Contract under test:
+	 * - Only the datagrid's actual select-all combination is claimed on the A key, so an
+	 *   action can still bind another combination on the same letter.
+	 *
+	 * Why it matters: the grid-owned check used to match on event.key alone, which made
+	 * Mail's Shift+Ctrl+A ("reply all") permanently unreachable - it was swallowed on the
+	 * way to the action, and the datagrid then treated it as a plain select-all.
+	 *
+	 * Setup strategy:
+	 * - Register an action on Shift+Ctrl+A and press both combinations.
+	 *
+	 * Pass criteria:
+	 * - Shift+Ctrl+A executes the action; plain Ctrl+A is still left to the datagrid.
+	 */
+	it("claims only Ctrl+A on the A key, leaving Shift+Ctrl+A to actions", () =>
+	{
+		const controller : any = new Et2NextmatchActionController({} as any);
+		const execute = sinon.stub().returns(true);
+		controller.actionManager = {
+			children: [{id: "reply_all", shortcut: {keyCode: 65, shift: true, ctrl: true, alt: false}}]
+		};
+		controller.objectManager = {executeActionImplementation: execute};
+		controller.host = {getActiveRowId: () => "row-2", selectSingleRow: sinon.stub()};
+		controller.selectedRowIds = ["row-2"];
+
+		assert.isTrue(controller.handleShortcut(keyEvent("A", 65, {shiftKey: true, ctrlKey: true})),
+			"Shift+Ctrl+A should reach its action");
+		assert.deepInclude(execute.firstCall.args[0].keyEvent, {keyCode: 65, shift: true, ctrl: true});
+
+		execute.resetHistory();
+		assert.isFalse(controller.handleShortcut(keyEvent("a", 65, {ctrlKey: true})),
+			"plain Ctrl+A is the datagrid's select-all and must stay with it");
+		assert.isFalse(execute.called, "Ctrl+A must not execute an action");
+	});
+
+	/**
+	 * Contract under test:
 	 * - Enter on a row opens that row's action popup, and only Enter does.
 	 *
 	 * Setup strategy:
