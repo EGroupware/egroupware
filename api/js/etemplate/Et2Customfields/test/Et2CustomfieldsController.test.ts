@@ -216,4 +216,26 @@ describe("Et2CustomfieldsController", () =>
 		assert.isTrue(changed, "merge should update missing fields");
 		assert.deepEqual(attrs.fields, {cf_text: true}, "source fields should be applied when target fields map is empty");
 	});
+
+	it("does not report changed when source fields/customfields are also empty", () =>
+	{
+		// A customfields column with zero defined fields legitimately has empty
+		// fields/customfields everywhere. Reporting "changed" here made
+		// CustomfieldsHeader's updated() -> _syncCustomfieldsFromModifications()
+		// re-assign brand-new empty-object literals forever, each one seen as a
+		// change by Lit's reference-equality dirty-checking - an infinite render
+		// loop that froze the whole tab (found live 2026-09-14).
+		const attrs : Record<string, any> = {
+			fields: {},
+			customfields: {}
+		};
+		const changed = mergeCustomfieldSettingsFromSources(
+			attrs,
+			{fields: {}},
+			{customfields: {}, fields: {}}
+		);
+		assert.isFalse(changed, "an empty source has nothing to hydrate");
+		assert.deepEqual(attrs.fields, {}, "fields should stay untouched");
+		assert.deepEqual(attrs.customfields, {}, "customfields should stay untouched");
+	});
 });

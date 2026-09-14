@@ -55,6 +55,14 @@ export function mergeCustomfieldSettingsFromSources(
 	const isEmptyObject = (value : any) => !!value && typeof value === "object" && !Object.keys(value).length;
 	const isMissingFields = (value : any) =>
 		typeof value === "undefined" || value === null || value === "" || isEmptyObject(value);
+	// An empty object/string source has nothing to hydrate - treating it as informative
+	// (the bare truthy checks this replaced did, since {} is truthy) made a customfields
+	// column with zero defined fields merge "changed" forever: each cycle re-assigned a
+	// brand-new empty-object literal, which Lit's reference-equality dirty-checking always
+	// sees as a change, re-triggering updated() -> this merge -> another new empty object,
+	// without end (found live 2026-09-14, froze the whole tab).
+	const hasContent = (value : any) =>
+		!!value && (typeof value !== "object" || Object.keys(value).length > 0);
 	const mergeMissing = (source : Record<string, any>) =>
 	{
 		if(!source || typeof source !== "object")
@@ -67,7 +75,7 @@ export function mergeCustomfieldSettingsFromSources(
 			{
 				const current = attrs.customfields;
 				const missing = !current || (typeof current === "object" && !Object.keys(current).length);
-				if(missing && source.customfields)
+				if(missing && hasContent(source.customfields))
 				{
 					attrs.customfields = source.customfields;
 					changed = true;
@@ -76,7 +84,7 @@ export function mergeCustomfieldSettingsFromSources(
 			}
 			if(key === "fields")
 			{
-				if(isMissingFields(attrs.fields) && source.fields)
+				if(isMissingFields(attrs.fields) && hasContent(source.fields))
 				{
 					attrs.fields = source.fields;
 					changed = true;
