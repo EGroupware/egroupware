@@ -22,6 +22,30 @@ class TimesheetMergeTest extends \EGroupware\Api\AppTest
 	/** @var int[] ts_ids created by the current test, cleaned up in tearDown */
 	private $ts_ids = array();
 
+	/** @var array common date/time preferences as found, restored in tearDown */
+	private $saved_prefs = array();
+
+	/**
+	 * The merged date-times pass through two independent format sources: importexport
+	 * formats them with the raw 'dateformat' / 'timeformat' preferences, while Merge parses
+	 * them back with Api\DateTime::$user_dateformat / $user_timeformat, which keep their
+	 * built-in defaults when the preference is empty.  On an install where those preferences
+	 * are not set (a fresh CI database, for one) the two disagree: importexport writes a
+	 * date-time with no date at all, and every expectation here drifts.  Pin both to the
+	 * same known format instead of trusting whatever the test user happens to have.
+	 */
+	protected function setUp(): void
+	{
+		$prefs =& $GLOBALS['egw_info']['user']['preferences']['common'];
+		$this->saved_prefs = array(
+			'dateformat' => $prefs['dateformat'] ?? null,
+			'timeformat' => $prefs['timeformat'] ?? null,
+		);
+		$prefs['dateformat'] = 'Y-m-d';
+		$prefs['timeformat'] = '24';
+		EGroupware\Api\DateTime::setUserPrefs(EGroupware\Api\DateTime::$user_timezone->getName(), 'Y-m-d', '24');
+	}
+
 	protected function tearDown(): void
 	{
 		foreach ($this->ts_ids as $ts_id)
@@ -30,6 +54,21 @@ class TimesheetMergeTest extends \EGroupware\Api\AppTest
 			$so->delete(array('ts_id' => $ts_id));
 		}
 		$this->ts_ids = array();
+
+		$prefs =& $GLOBALS['egw_info']['user']['preferences']['common'];
+		foreach ($this->saved_prefs as $name => $value)
+		{
+			if (isset($value))
+			{
+				$prefs[$name] = $value;
+			}
+			else
+			{
+				unset($prefs[$name]);
+			}
+		}
+		EGroupware\Api\DateTime::setUserPrefs(EGroupware\Api\DateTime::$user_timezone->getName(),
+			$this->saved_prefs['dateformat'] ?? '', $this->saved_prefs['timeformat'] ?? '');
 	}
 
 	/**
