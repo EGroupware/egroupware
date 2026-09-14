@@ -1484,6 +1484,23 @@ export class MailCompose
 		{
 			this.bootstrapping = false;
 		}
+		// Every path above may have left mimeType and "which body container is actually visible"
+		// out of sync - bootstrapReply()/bootstrapComposeAsNew() already call
+		// syncMimeTypeContainers() themselves once they know their own source message's mimeType,
+		// but bootstrapSignature()'s blank-new-compose case never did, relying entirely on the
+		// container's own one-shot server-side "disabled" default matching whatever mimeType
+		// widget default happened to apply - found live 2026-09-14 (ralf, reproducing the
+		// distribution-list body-loss report): HTML checkbox showed checked, but the HTML
+		// container stayed disabled from that stale default while the PLAINTEXT container was the
+		// one actually visible - ralf's own "no TinyMCE shows but a et2-textarea" observation was
+		// literally the plaintext et2-textarea being shown, not a TinyMCE init race. Typing into
+		// the visible (plaintext) widget while every send/signature code path reads mail_htmltext
+		// instead (mimeType said true) loses the body deterministically, no timing involved at
+		// all. Calling this here unconditionally, after every path above, guarantees the visible
+		// container always matches mimeType by the time bootstrap finishes - a no-op for the
+		// reply/forward/composeasnew paths that already call it themselves.
+		this.syncMimeTypeContainers(this.et2.getWidgetById('mimeType')?.get_value() !== false);
+
 		// doc/ai/projects/mail-compose-jmap-migration.md, Step 4 - the widget set_value() calls
 		// above (recipient/subject/body/signature) mark the form dirty exactly like a real user
 		// edit would, unlike the classic path's server-rendered initial content, which is the
