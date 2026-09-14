@@ -48,6 +48,13 @@ describe('MailApp.composeMessage() acc_id resolution', () =>
 
 	beforeEach(() =>
 	{
+		// openComposePopupUrl() (mail/js/app.ts) routes to the mobile inline-dialog path instead
+		// of a real popup when matchMedia('(max-width: 800px)') matches - true by default in this
+		// headless test browser's own viewport, which broke every test below (egw.link() never
+		// called at all) until stubbed false here to keep exercising the real-popup path these
+		// tests are actually about.
+		sinon.stub(window, 'matchMedia').returns({matches: false} as MediaQueryList);
+
 		egw = {
 			preference: () => '',
 			link: sinon.spy((path : string, params : any) => path + '?' + new URLSearchParams(params).toString()),
@@ -61,6 +68,11 @@ describe('MailApp.composeMessage() acc_id resolution', () =>
 
 		app = Object.create(MailAppClass.prototype);
 		Object.assign(app, {appname: 'mail', egw, isMainWindow: true});
+	});
+
+	afterEach(() =>
+	{
+		sinon.restore();
 	});
 
 	it('resolves the real profileID (not the literal "mail" app-name segment) for a single forward', () =>
@@ -126,8 +138,17 @@ describe('MailApp blank-compose accId sanitizes a legacy-format ActiveProfileID 
 		MailAppClass = (await import(APP_SOURCE)).MailApp;
 	});
 
+	afterEach(() =>
+	{
+		sinon.restore();
+	});
+
 	function setup(activeProfileID : string)
 	{
+		// See the matching comment in the describe block above - keeps these tests on the
+		// real-popup path regardless of this headless browser's own default (narrow) viewport.
+		sinon.stub(window, 'matchMedia').returns({matches: false} as MediaQueryList);
+
 		egw = {
 			preference: () => activeProfileID,
 			link: sinon.spy((path : string, params : any) => path + '?' + new URLSearchParams(params).toString()),
