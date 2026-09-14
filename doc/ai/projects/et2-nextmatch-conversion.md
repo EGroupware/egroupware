@@ -142,50 +142,78 @@ Portlet-specific things that do not come up when converting an app's own list:
 In progress. The checklist below is validated against five real conversions (see the reference
 sections for the evidence each item is based on). Expect it to grow as more apps convert.
 
-## Known gap: `ExposeMixin` doesn't recognize `Et2Nextmatch` at all
+## `ExposeMixin`'s gallery, and the row API it needed (fixed 2026-09-14)
 
 `api/js/etemplate/Expose/ExposeMixin.ts` - the gallery/lightbox mixin used by `Et2VfsMime.ts`
 (filemanager's file-thumbnail widget), `Et2Link.ts`, `Et2LinkList.ts`, `Et2ImageExpose.ts`, and
-`Et2DescriptionExpose.ts` - imports the **legacy** `et2_nextmatch` class from
-`et2_extension_nextmatch.ts` purely to find the containing grid so the gallery can sync navigation
-to it (`find_nextmatch()`, line ~443, checked from 5 call sites at lines 475, 788, 864, 882, 945).
-This needs two separate fixes, not one:
+`Et2DescriptionExpose.ts` - finds the containing grid so the gallery can sync navigation to it
+(`find_nextmatch()`). It only ever recognised the legacy `et2_nextmatch` widget, so the whole
+gallery-to-grid sync was dead code in filemanager - the one app the feature was written for - from
+the moment filemanager converted. Two separate things had to change, and doing only the first would
+have made it worse: detection returning a grid whose `controller` does not exist turns a silent
+no-op into a `TypeError`.
 
-1. **Detection is broken for `Et2Nextmatch`.** `find_nextmatch()`'s check is
-   `current.instanceOf(et2_nextmatch)`. `et2_nextmatch` (legacy) extends `et2_DOMWidget`;
-   `Et2Nextmatch` (`api/js/etemplate/Et2Nextmatch/Et2Nextmatch.ts:92`) extends `Et2Widget(LitElement)`
-   - two unrelated class hierarchies. `ClassWithInterfaces.instanceOf()`
-   (`et2_core_inheritance.ts`) falls through to `this instanceof et2_nextmatch` for anything that
-   isn't a string or the `Et2Widget` mixin itself, which is always `false` for a real `Et2Nextmatch`
-   instance. So `find_nextmatch()` can never find a modern grid - it always returns `null` for one,
-   same as if there were no containing grid at all.
-2. **Even with detection fixed, the code that runs once `nm` is found doesn't work either.** Every
-   consumer (`read_from_nextmatch()` at line 559, plus the call sites above) reaches into
-   `nm.controller` and legacy-only internals: `.controller.getRowByNode()`, `.controller._indexMap`
-   (already flagged with no public replacement in the
-   [legacy API replacement table](#reference-legacy-api-replacement-table) below),
-   `.controller._grid.getTotalCount()`, `.controller._gridCallback()`. `Et2Nextmatch` has none of
-   these - see that same table for the real replacements (`nm?.totalCount`, the
-   `hasRow`/`getLoadedRows` gap, etc.). Fixing `instanceOf()` alone would swap a silent
-   "gallery just doesn't sync to the grid" no-op for a hard `TypeError` on `nm.controller` being
-   `undefined`.
+**Detection now walks the composed DOM tree, not the widget tree.** `find_nextmatch()` used to climb
+`getParent()` and test `instanceOf(et2_nextmatch)`, which is always `false` for an `Et2Nextmatch`
+(the two widgets are unrelated class hierarchies). The widget tree is not usable here at all:
+`Et2RowProvider`/`Et2DatagridRowRenderer` hydrate row widgets without ever calling `setParent()`, so
+a row widget's `getParent()` is `null`. The walk now goes up `parentNode`, hopping to
+`(node as ShadowRoot).host` at each shadow boundary, until it reaches an `<et2-nextmatch>` - which is
+also the only way out of the row widget's own shadow root, something `closest()` cannot do.
 
-**This is not purely a future concern - it's live today.** `find_nextmatch()` already
-self-restricts to filemanager only (its own comment: "At the moment only filemanger nm would work
-as gallery, thus we disable other nestmatches ... but filemanager", enforced via a
-`nextmatch.dom_id.match(/filemanager/, 'ig')` check). Filemanager's main index and tile view are
-already converted to `Et2Nextmatch` (see the app list above). `dom_id` itself still resolves fine on
-`Et2Nextmatch` (`Et2Widget.ts:466` provides an equivalent getter), but because `instanceOf()` never
-even gets that far, gallery-to-grid sync for filemanager's own thumbnail gallery is presently dead
-code - the one app this feature was written for is the one app that broke it, simply by being
-converted.
+**A row widget gets detached while its gallery is open.** Opening the gallery applies a mime
+`col_filter` so the grid only holds media, and that reload can replace the very row the clicked
+widget was rendered into. The widget keeps working (the gallery is driven from it), but it is out of
+the DOM, so the walk above has nothing left to climb - and `expose_onclose()` would then never clear
+the mime filter, leaving filemanager stuck showing only images. The legacy widget tree survived
+detachment for free; the DOM does not, so the mixin remembers the nextmatch in
+`_gallery_nextmatch` for the life of the gallery and falls back to it (guarded on `isConnected`),
+clearing it in `expose_onclosed()`. **Confirmed live** on `nathan.egroupware.org`: without the
+fallback the filter stayed applied after closing the gallery.
 
-**Untangling this also pays off independently of fixing the feature**: `et2_extension_nextmatch.ts`
-is the ~4600-line legacy widget-registration file at the root of a real circular-import TDZ hazard
-(see the `et2_core_inheritance.ts`/`Et2Widget.ts` fix history) - it's only in `Et2Link`'s import
-graph at all because of this one `instanceOf()` check. Once `ExposeMixin.ts` no longer needs it,
-`Et2Link` and every other Expose consumer's dependency graph loses that edge entirely, not just the
-detection bug.
+**The filemanager-only restriction was deliberately left in place** (`find_nextmatch()`'s own
+comment: "At the moment only filemanger nm would work as gallery ... but filemanager", enforced via
+a `dom_id.match(/filemanager/i)` check - `dom_id` resolves on `Et2Nextmatch` too, `Et2Widget.ts`).
+Widening the feature to other apps is a product decision, not a side effect of fixing detection.
+
+**New public API on `Et2Nextmatch`/`Et2Datagrid`**, replacing the legacy internals the downstream
+code reached into (`nm.controller.*`). Each is the minimum needed for one of them:
+
+| Legacy internal | New API |
+|---|---|
+| `nm.controller.getRowByNode(node)` (+ `entry.controller.getDepth()`) | `nm.getRowByNode(node)` → `{id, depth}` or `null`. `depth` is 0 for a row of the nextmatch's own grid and counts up per level of expanded child grid, which is what the old `getDepth() > 0` check meant. |
+| `nm.controller._indexMap` | `nm.getLoadedRowIds()` / `Et2Datagrid.getLoadedRowIds()` → row ids by index, `null` for indexes not loaded. Row *content* still lives in egw's UID cache (`egw.dataGetUIDdata()`); this is only the index → uid mapping. |
+| `nm.controller._gridCallback(start, end)` | `nm.loadRowRange(start, end)` / `Et2Datagrid.loadRowRange()` - loads an index range the user has *not* scrolled to, without moving the grid, and resolves when the range is complete (or when fetching stops making progress). Unlike the legacy callback it is awaitable, so the caller reads rows that actually arrived instead of whatever happened to be cached. |
+| `nm.controller._grid.getTotalCount()` | `nm.totalCount` (already existed). |
+| `nm.update_in_progress` | `nm.isLoading`. |
+
+`Et2Datagrid._queueChunkRequest()` was extracted while doing this: `_requestChunkForRowIndex()`,
+`loadMore()` and the new `loadRowRange()` all queue a page the same way.
+
+**Side benefit, confirmed**: `ExposeMixin.ts` imported `et2_nextmatch` from
+`et2_extension_nextmatch.ts` purely for that one `instanceOf()` check, and `ET2_DATAVIEW_STEPSIZE`
+from `et2_dataview_controller.ts` for one number (now a local `GALLERY_PAGE_SIZE`). Both legacy
+imports are gone, so `Et2Link`, `Et2LinkList`, `Et2ImageExpose`, `Et2DescriptionExpose` and
+`Et2VfsMime` no longer reach the ~4600-line legacy widget-registration file at the root of the
+circular-import TDZ hazard (see the `et2_core_inheritance.ts`/`Et2Widget.ts` fix history) through
+this edge at all.
+
+**A reloading `Et2Datagrid` reports no total at all, and `nm.totalCount` then reads 0.** Legacy's
+`controller._grid.getTotalCount()` kept the previous count across a reload; `Et2Datagrid.total` is
+reset to `null` while a fetch is in flight. Opening the gallery starts exactly such a reload (the
+mime filter), and `expose_onopened()` runs after it has started - so its `total_count >= gallery.num`
+guard compared `0 >= 43` and the thumbnail strip never got its `paginating` class or wheel handler.
+The mixin now falls back to the count the gallery was built from (`_gallery_total`). Do not "fix"
+this in `totalCount` itself: 0-while-reloading is correct for consumers that must not act on a
+count that is about to change (`expose_onslideend()` relies on exactly that to stay inert
+mid-reload). Anything converted that compares a total against a snapshot taken earlier needs this
+same look. **Confirmed live**, and only with a genuinely focused browser tab - blueimp fires
+`onopened`/`onslideend` from `transitionend`, which never fires while the tab is hidden, so these
+callbacks look permanently dead under ordinary background browser automation.
+
+**Still rough**: `set_slide()`'s index bookkeeping drops the very last row of a paged-in range (its
+`num -= 1` at the end), so the final image of a large folder can be missing from the gallery. That
+is untouched legacy gallery code, not part of this fix.
 
 ## Known gap: `open_popup` actions whose popup markup isn't already an `<et2-dialog>`
 
@@ -571,7 +599,10 @@ Legacy `et2_nextmatch` widget API usage that has no direct equivalent and must b
 | `nm.controller._selectionMgr.resetSelection()` | `nm.clearSelection()`. |
 | `nm.options.onselect = null` (temporarily suppress auto-preview-on-select) | `nm.addEventListener("et2-selection-changed", e => e.preventDefault(), {capture: true, once: true})`. |
 | `et2_nextmatch.DELETE` constant | `Et2DatagridUpdateTypes.DELETE` from `Et2Datagrid.types`. |
-| `nm.controller._indexMap` (check whether a uid is currently loaded/rendered in *this* nextmatch instance, e.g. before deciding to `refresh()` it from a push notification) | **No public replacement exists.** Closest option: `(nm.shadowRoot?.querySelector("et2-datagrid") as Et2Datagrid)?.rows` — the live, kept-in-sync row list (`{id, data}[]`), reached the same way `Et2Nextmatch`'s own private `_datagrid` getter does. This walks past a `private`-in-TS-only boundary via a real DOM query, not a sanctioned API — flag it to the `Et2Nextmatch` maintainer as a gap (a public `hasRow(uid)`/`getLoadedRows()` would be cleaner) rather than treating it as fully idiomatic (Addressbook's `CRM.ts`). |
+| `nm.controller._indexMap` (which uids are currently loaded in *this* nextmatch instance, e.g. before deciding to `refresh()` one from a push notification) | `nm.getLoadedRowIds()` — row ids by index, `null` for indexes not loaded. Row *content* still comes from `egw.dataGetUIDdata(uid)`. Added with the `ExposeMixin` gallery fix above; Addressbook's `CRM.ts` still reaches into `_datagrid.rows` through a DOM query and should move to this. |
+| `nm.controller._gridCallback(start, end)` (force-load a range of rows the user has not scrolled to) | `await nm.loadRowRange(start, end)` — resolves once the range is loaded, or once fetching stops making progress. |
+| `nm.controller.getRowByNode(node)` / `entry.controller.getDepth()` | `nm.getRowByNode(node)` → `{id, depth}` or `null`; `depth` is 0 for a top-level row and counts up per level of expanded child grid. |
+| `nm.update_in_progress` | `nm.isLoading`. |
 | `this.nm.controller.getObjectManager()` | `egw_getObjectManager(appname).getObjectById(nm_index)` — grep the app for `.controller.` before considering it converted; every remaining hit is a crash waiting to happen. |
 | jQuery `.on('refresh', (_event, _widget, _row_id, _type) => ...)` | `Et2Nextmatch.refresh()` dispatches a plain DOM `CustomEvent` with **no extra arguments** — `_widget`/`_row_id`/`_type` are always `undefined` now. Close over an already-captured reference instead of reading widget/row from the event. |
 | Guessing at a renamed setting (e.g. `nm.settings.foldertree`) | Verify the replacement property actually exists on `Et2Nextmatch` (check `Et2Nextmatch.ts`) before using it. |
