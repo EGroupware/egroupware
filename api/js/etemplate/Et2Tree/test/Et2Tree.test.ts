@@ -1,5 +1,10 @@
 import {assert, fixture, html} from "@open-wc/testing";
 import "../Et2Tree";
+// Et2Tree only imports SlTreeItem as a type, so esbuild drops shoelace's side-effect registration
+// from this bundle and the <sl-tree> in its shadow root would never upgrade - register both here,
+// the way the rollup bundle ends up doing for a real page
+import "@shoelace-style/shoelace/dist/components/tree/tree.js";
+import "@shoelace-style/shoelace/dist/components/tree-item/tree-item.js";
 
 window.egw = {
 	ajaxUrl: (url) => url,
@@ -92,5 +97,31 @@ describe("Et2Tree", () =>
 		assert.isOk(tree.getNode("a"), "the real node must survive whatever update cycle follows");
 		assert.notOk(tree.getNode("id"), "must not fabricate a node from the wrapper's own 'id' key");
 		assert.notOk(tree.getNode("item"), "must not fabricate a node from the wrapper's own 'item' key");
+	});
+
+	/**
+	 * Regression test: a template's onchange="app.<app>.<method>" is wired up by Et2InputWidget,
+	 * which listens for a plain "change" event.  Et2Tree only ever emitted its own
+	 * "et2-selection-change", so onchange never ran - a tree could be clicked all day and its
+	 * handler was never called once.  Both calendar-integration project pickers (stylite's
+	 * projectmanager one and resources') are built entirely on that attribute.
+	 */
+	it("emits change so a template's onchange runs", async() =>
+	{
+		const tree : any = await fixture(html`
+            <et2-tree multiple></et2-tree>`);
+		tree.select_options = [{id: "a", text: "A", item: [], child: false}];
+		await tree.updateComplete;
+
+		let changes = 0;
+		tree.addEventListener("change", () => changes++);
+
+		const node = tree.shadowRoot.querySelector("sl-tree-item");
+		tree.handleSelectionChange({detail: {selection: [node]}, stopPropagation: () => {}});
+		await tree.updateComplete;
+		// the event is dispatched from updateComplete's own continuation, one turn later
+		await new Promise(resolve => setTimeout(resolve, 0));
+
+		assert.equal(changes, 1, "selecting a node has to fire exactly one change event");
 	});
 });
