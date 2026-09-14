@@ -862,6 +862,17 @@ class calendar_uiforms extends calendar_ui
 			}
 			if ($content['edit_single'])	// we edited a single event from a series
 			{
+				// Remember how the client identifies the recurrence we are about to detach, so we can
+				// remove it from the display below. The client keys an event by "<cal_id>:<recurrence>",
+				// where the recurrence is cal_recur_date (falling back to the start) as a timestamp -
+				// which is NOT the same as the clicked date for whole-day events. It has to be read
+				// before the update, as the recurrence no longer exists once the exception was created.
+				$detached_uid = null;
+				if (($detached = $this->bo->read($event['id'], (int)Api\DateTime::to($content['edit_single'], 'ts'), true)))
+				{
+					$detached_uid = 'calendar::'.$detached['id'].':'.
+						(int)Api\DateTime::to($detached['recur_date'] ?: $detached['start'], 'ts');
+				}
 				$event['reference'] = $event['id'];
 				$event['recurrence'] = $content['edit_single'];
 				unset($event['id']);
@@ -899,11 +910,11 @@ class calendar_uiforms extends calendar_ui
 						Link::link('calendar', $event['id'], $content['links']['to_id']);
 					}
 
-					if(Api\Json\Response::isJSONResponse())
+					if($detached_uid && Api\Json\Response::isJSONResponse())
 					{
 						// Sending null will trigger a removal of the original
 						// for that date
-						Api\Json\Response::get()->generic('data', array('uid' => 'calendar::'.$content['reference'].':'.$content['actual_date'], 'data' => null));
+						Api\Json\Response::get()->generic('data', array('uid' => $detached_uid, 'data' => null));
 					}
 
 					unset($recur_event);

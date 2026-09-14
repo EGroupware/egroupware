@@ -78,13 +78,13 @@ class ExceptionViaUIFormsTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 	/**
 	 * Build a recurring event suitable for exception editing tests.
 	 */
-	protected function createDailyRecurringEvent() : int
+	protected function createDailyRecurringEvent(bool $whole_day = false) : int
 	{
 		$start = new Api\DateTime('now', Api\DateTime::$server_timezone);
 		$start->modify('+1 day');
-		$start->setTime(9, 0, 0);
+		$start->setTime($whole_day ? 0 : 9, 0, 0);
 		$end = clone $start;
-		$end->modify('+1 hour');
+		$end->modify($whole_day ? '+1 day -1 second' : '+1 hour');
 		$recur_end = clone $start;
 		$recur_end->modify('+7 days');
 		$recur_end->setTime(0, 0, 0);
@@ -95,6 +95,8 @@ class ExceptionViaUIFormsTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 			'start' => $start,
 			'end' => $end,
 			'tzid' => 'UTC',
+			'whole_day' => $whole_day,
+			'non_blocking' => $whole_day,
 			'recur_type' => MCAL_RECUR_DAILY,
 			'recur_enddate' => $recur_end,
 			'participants' => [
@@ -603,5 +605,89 @@ class ExceptionViaUIFormsTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 		$exception2 = $this->bo->read($exception_ids[1]);
 		$this->assertArrayNotHasKey($user_b, $exception1['participants'], 'Added participant leaked into first detached exception');
 		$this->assertArrayNotHasKey($user_b, $exception2['participants'], 'Added participant leaked into second detached exception');
+	}
+
+	/**
+	 * Detaching a recurrence has to tell the client to drop the original occurrence.
+	 *
+	 * Behaviour under test: process_edit() answers a "save exception" submit with a JSON
+	 * "data" response carrying data=null for the occurrence that was just detached, which is
+	 * what makes the calendar views remove it without the user pressing reload.
+	 *
+	 * Setup: create a daily recurring event (timed and whole-day are both exercised, as
+	 * whole-day events are the case where cal_recur_date and the occurrence start differ),
+	 * open its second occurrence through edit() with $_GET[exception], move it and save.
+	 *
+	 * Pass criteria: exactly one removal (data === null) is sent, and its uid is
+	 * 'calendar::' . <row_id>, where row_id is taken from calendar_ui::to_client() - the
+	 * literal key the client stores that occurrence under. A uid that does not match is the
+	 * regression this covers: the display keeps showing the old recurrence next to the new
+	 * exception, so it looks like saving duplicated the event.
+	 *
+	 * Environment: timezone independent, both sides are derived from the same read().
+	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('wholeDayProvider')]
+	public function testDetachedRecurrenceIsRemovedFromClient(bool $whole_day)
+	{
+		$cal_id = $this->createDailyRecurringEvent($whole_day);
+		$starts = $this->recurrenceStarts($cal_id);
+		$this->assertGreaterThanOrEqual(2, count($starts), 'Expected at least two generated recurrences');
+		$clicked_ts = $starts[1];
+
+		// how the client knows the occurrence we are about to detach
+		$occurrence = $this->bo->read($cal_id, Api\DateTime::server2user($clicked_ts), true);
+		$this->assertIsArray($occurrence, 'Clicked occurrence could not be loaded');
+		(new \calendar_ui())->to_client($occurrence);
+		$expected_uid = 'calendar::' . $occurrence['row_id'];
+
+		[$exec_id, $payload] = $this->loadEditPayload($cal_id, $clicked_ts, true);
+		$payload['button'] = ['apply' => true];
+		$payload['non_blocking'] = true;
+		$payload['title'] = ($payload['title'] ?? '') . ' (detached)';
+		$payload['start'] = $payload['start'] instanceof Api\DateTime ?
+			clone $payload['start'] : new Api\DateTime($payload['start'], Api\DateTime::$user_timezone);
+		if($whole_day)
+		{
+			$payload['whole_day'] = true;
+			$payload['start']->modify('+3 days');
+			$payload['end'] = (clone $payload['start'])->modify('+1 day -1 second');
+			$payload['duration'] = '';
+		}
+		else
+		{
+			$payload['start']->modify('+2 hours');
+			$payload['end'] = '';
+			if(empty($payload['duration'])) $payload['duration'] = 3600;
+		}
+		$commands = $this->processEditPayload($exec_id, $payload);
+
+		// remember the new exception for tearDown
+		foreach((array)$this->bo->read(['cal_reference' => $cal_id], null, true) as $exception)
+		{
+			if($exception) $this->event_ids[] = (int)$exception['id'];
+		}
+
+		$removals = [];
+		foreach($commands as $command)
+		{
+			if(($command['type'] ?? null) === 'data' && array_key_exists('uid', (array)($command['data'] ?? [])) &&
+				$command['data']['data'] === null)
+			{
+				$removals[] = $command['data']['uid'];
+			}
+		}
+		$this->assertSame(
+			[$expected_uid],
+			$removals,
+			'Client was not told to remove the detached recurrence'
+			. ' whole_day=' . (int)$whole_day
+			. ' expected=' . $expected_uid
+			. ' actual=' . json_encode($removals)
+		);
+	}
+
+	public static function wholeDayProvider() : array
+	{
+		return ['timed' => [false], 'whole day' => [true]];
 	}
 }
