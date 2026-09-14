@@ -357,10 +357,9 @@ Filed by Ralf relaying reports from Ingo and Stefan against `pole.egroupware.org
    case is a separate mechanism and is NOT covered by that fix** - `app.classes.crm` is a
    `CRM.ts`-specific pseudo-key, read directly by `CRMView.view_ready()`, never going through
    `etemplate2.load()`'s appname-keyed branch at all (CRM's *owning* app, `addressbook`, has its own
-   real class and loads fine independently of whether `CRM.ts`'s own chunk succeeded). Still open:
-   give `CRMView.view_ready()`'s own "object is missing" branch the same user-facing message
-   `etemplate2.ts` got, rather than assuming the generic fix already reaches it (an earlier version of
-   this doc claimed it did - it doesn't).
+   real class and loads fine independently of whether `CRM.ts`'s own chunk succeeded). **Closed
+   2026-09-14 as not reachable** - no message was added, because the branch cannot be hit in normal
+   operation. See the Status entry below for the measurement.
 
 3. **Green + red "reload" messages stacking, reload only helping briefly.** Green is
    `egw_import.notifyUpdateAvailable()` (type `'info'`, rendered green/"success" by
@@ -639,10 +638,34 @@ the bare `etemplate2.js`/`egw.min.js`) from the docroot as part of that deploy: 
 turns any future occurrence of this bug class into a loud 404 instead of a silent stale-content
 collision. Not yet confirmed against Ingo/Stefan's original reports specifically - see below.
 
-Two things still genuinely open, both needing more than a code read to resolve:
+Both of the items that were open here are now closed, each after live investigation rather than a
+code read - kept with their reasoning, since both had a plausible-looking theory that measurement
+disproved:
 
-- **`CRM.ts`'s "CRMView object is missing"** has no user-facing message yet - unlike item 2's generic
-  path, nobody has added one to `CRMView.view_ready()` itself.
+- ~~**`CRM.ts`'s "CRMView object is missing"**~~ - **closed 2026-09-14: the branch is not reachable in
+  normal operation, so the planned user-facing message was not added.** Two fixes were written against
+  this entry and both were reverted after live measurement showed neither precondition ever occurs.
+  Recorded here so nobody re-derives them:
+
+  `etemplate2.load()` gives this case its own app object - `app = {classes: window.app.classes}` at
+  `etemplate2.ts:645-652`, whose comment names the infolog CRM view as the example - whenever the
+  template's app differs from currentapp. So every CRM view gets a *fresh private* `app_obj` carrying
+  only `classes`. Instrumenting `view_ready()` before opening any CRM view, then opening two of them in
+  one document, gives two calls with two distinct `app_obj` objects, `et2.app_obj.crm` `undefined` both
+  times, and `app.classes.crm` a function both times.
+
+  That kills both theories. `app.classes.crm` missing (the realm/popup idea - each document loads its
+  own copy of the chunk and sets its own registration, and a static import makes that module's
+  evaluation a precondition of `view_ready()` running at all), and `et2.app_obj.crm` already set (the
+  "second and later templates never get bound" idea - the private object is new every time, so the
+  already-exists path is dead code). The second was only ever observed by calling `view_ready()` twice
+  by hand on one `et2`, which is a state the app does not produce.
+
+  What remains true: the guard is unreachable dead code whose message would be misleading if it ever
+  did fire, and Stefan's original sighting is still unexplained - but it belongs to the stale-chunk
+  family item 6 fixed, not to a defect in this function. Leave it alone unless it is seen again in the
+  wild, with the tab kept open.
+
 - ~~**The filemanager uncaught "Illegal constructor"**~~ - **retested 2026-09-14 post-item-6, still not
   reproduced; recommend closing.** Four scenarios on an instance with the stale bare `app.min.js` trap
   deliberately left armed (unlike pole, where the deploy deleted those files) all came back clean, and
