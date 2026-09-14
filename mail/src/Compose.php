@@ -463,6 +463,36 @@ class Compose
 		Api\Json\Response::get()->data(compact('content', 'readonlys', 'sel_options', 'preserv'));
 	}
 
+	/**
+	 * Expand any addressbook distribution-list placeholder address (Et2Email's own to/cc/bcc
+	 * autocomplete stores a selected list as `"Name" <listId@lists.egroupware.org>` - see
+	 * get_lists()'s own docblock) into its real member email addresses, via the same
+	 * resolveEmailAddressList() (ComposeMessageBuilder trait) the classic send path's own
+	 * createMessage() already calls before building the outgoing MIME message
+	 * (ComposeMessageBuilder.php's own createMessage(), and Send.php's constructor).
+	 *
+	 * The JMAP-native send path (MailJmap.sendNewEmail(), mail/js/jmap.ts) never runs that classic
+	 * code at all - found live 2026-09-14 (ralf, relaying a real user's report the morning after
+	 * this feature's rollout): sending to a distribution list failed with "mail for
+	 * lists.egroupware.org loops back to myself", the placeholder address having been submitted to
+	 * the real MTA verbatim instead of expanded.
+	 * MailJmap.resolveDistributionLists() only calls this at all when a placeholder is actually
+	 * present in to/cc/bcc, so a normal send never pays for this extra round trip.
+	 *
+	 * @param array $addresses ['to' => string[], 'cc' => string[], 'bcc' => string[]] - each already
+	 *  split into individual address strings client-side (Et2Email's own comma-joined value)
+	 * @return void writes the same shape via Api\Json\Response, each list's placeholders expanded
+	 */
+	function ajax_resolveDistributionLists(array $addresses)
+	{
+		$resolved = [];
+		foreach (['to', 'cc', 'bcc'] as $field)
+		{
+			$resolved[$field] = self::resolveEmailAddressList((array)($addresses[$field] ?? []));
+		}
+		Api\Json\Response::get()->data($resolved);
+	}
+
 	function getAttachment()
 	{
 		// read attachment data from etemplate request, use tmpname only to identify it
