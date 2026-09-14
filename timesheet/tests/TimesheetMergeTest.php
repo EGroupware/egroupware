@@ -86,6 +86,34 @@ class TimesheetMergeTest extends \EGroupware\Api\AppTest
 	}
 
 	/**
+	 * Pass criteria: {{ts_end/date}} and {{ts_end/time}} merge to the date resp. time half of
+	 * {{ts_end}}, like every other date-time field's sub-placeholders do.
+	 *
+	 * Merge::replace() builds those two from Merge::$date_fields, which is a separate list from
+	 * the $types['date-time'] one timesheet_replacements() adds 'ts_end' to - so registering it
+	 * in only one of them leaves {{ts_end}} itself working while both sub-placeholders merge
+	 * to nothing.
+	 */
+	public function testTsEndDateAndTimeSubPlaceholders()
+	{
+		$start = strtotime('2026-01-15 09:00:00');
+		$duration = 90;    // minutes
+		$ts_id = $this->createTimesheet($start, $duration);
+		$end = $start + 60 * $duration;
+
+		$merge = new timesheet_merge();
+		$err = null;
+		$result = $merge->merge_string('[{{ts_end/date}}][{{ts_end/time}}]', array($ts_id), $err, 'text/plain');
+
+		$this->assertEmpty($err, 'Errors when merging');
+		$this->assertSame(
+			'['.date(EGroupware\Api\DateTime::$user_dateformat, $end).']'.
+			'['.date(EGroupware\Api\DateTime::$user_timeformat, $end).']',
+			$result
+		);
+	}
+
+	/**
 	 * Pass criteria: 'ts_end' is registered in the placeholder picker list, so users
 	 * composing a document actually see {{ts_end}} as an available option.
 	 */
