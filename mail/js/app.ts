@@ -225,6 +225,40 @@ export class MailApp extends EgwApp
 	}
 
 	/**
+	 * Safely reads whatever `read` fetches off window.opener - eg. window.opener.app.mail.jmap -
+	 * without ever throwing.
+	 *
+	 * window.opener can be a window on a DIFFERENT origin - this tab/popup was opened via a plain
+	 * link (or window.open()) from an unrelated site that didn't set rel="noopener" - and reading
+	 * almost any custom property off a cross-origin Window object throws a SecurityError, not just
+	 * returns undefined; only a small spec-allowlisted set (closed, location, postMessage, ...) is
+	 * exempt, which is why the `!window.opener.closed` check below itself never throws even though
+	 * the read() callback's own property access can. Found live 2026-09-14 (ralf, relaying a real
+	 * user's report): logging into the mail app crashed entirely with "Blocked a frame with
+	 * origin ... from accessing a cross-origin frame" right inside the MailApp constructor (via
+	 * this class's own `jmap` getter) - persisted across logout/login, since window.opener is a
+	 * property of the TAB itself, unrelated to the egroupware session. Every window.opener.app.*
+	 * (or .etemplate2.*) read in this file needs this same guard now, not just the one place
+	 * (renderPopupMessage()) that already had its own inline try/catch for the same reason.
+	 *
+	 * @param read callback that reads whatever's needed off window.opener - MUST do the actual
+	 *  property access itself (not just return a reference to window.opener), so a thrown
+	 *  SecurityError is caught here rather than at the caller
+	 * @return read()'s result, or undefined if window.opener is gone/closed/cross-origin
+	 */
+	private static safeOpener<T>(read : (opener : Window) => T) : T | undefined
+	{
+		try
+		{
+			return window.opener && !window.opener.closed ? read(window.opener) : undefined;
+		}
+		catch (e)
+		{
+			return undefined;
+		}
+	}
+
+	/**
 	 * Direct client-side JMAP access sub-object (gets automatically instanciated, if used)
 	 *
 	 * Uses a server's native JMAP endpoint or the local plain-IMAP shim.
@@ -239,7 +273,7 @@ export class MailApp extends EgwApp
 	 */
 	get jmap() : MailJmap
 	{
-		const openerJmap = window.opener && !window.opener.closed ? window.opener.app?.mail?.jmap : undefined;
+		const openerJmap = MailApp.safeOpener((opener) => (opener as any).app?.mail?.jmap);
 		if (openerJmap)
 		{
 			return openerJmap;
@@ -659,7 +693,7 @@ export class MailApp extends EgwApp
 				break;
 		}
 		this.customLabels = this.et2.getArrayMgr('content').getEntry('customLabels') ||
-			window.opener?.app?.mail?.customLabels || this.customLabels;
+			MailApp.safeOpener((opener) => (opener as any).app?.mail?.customLabels) || this.customLabels;
 		this.updateCustomLabelStylesheet();
 		// set image_proxy for resolveExternalImages
 		this.image_proxy = this.et2.getArrayMgr('content').getEntry('image_proxy') || 'https://';
@@ -671,7 +705,7 @@ export class MailApp extends EgwApp
 	getCustomLabels(): CustomLabels
 	{
 		return Object.keys(this.customLabels).length ? this.customLabels :
-			window.opener?.app?.mail?.customLabels || {};
+			MailApp.safeOpener((opener) => (opener as any).app?.mail?.customLabels) || {};
 	}
 
 	/**
@@ -1674,7 +1708,7 @@ export class MailApp extends EgwApp
 	 */
 	getComposeToolbarData(accId : string) : Promise<{ actions : object, sel_options : object, content : object }>
 	{
-		const openerMail : MailApp = window.opener && !window.opener.closed ? window.opener.app?.mail : undefined;
+		const openerMail : MailApp = MailApp.safeOpener((opener) => (opener as any).app?.mail);
 		if (openerMail && openerMail !== this)
 		{
 			return openerMail.getComposeToolbarData(accId);
@@ -3763,7 +3797,8 @@ export class MailApp extends EgwApp
 		let nm: Et2Nextmatch;
 		if (_isPopup && !this.isMainWindow)
 		{
-			nm = window.opener.etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index);
+			nm = MailApp.safeOpener((opener) =>
+				(opener as any).etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index));
 		}
 		else
 		{
@@ -4652,7 +4687,7 @@ export class MailApp extends EgwApp
 	 */
 	private nmOwner(): { app: MailApp, nm: Et2Nextmatch } | null
 	{
-		for (const app of [this, window.opener?.app?.mail as MailApp])
+		for (const app of [this, MailApp.safeOpener((opener) => (opener as any).app?.mail) as MailApp])
 		{
 			const nm = (app?.nm ?? app?.et2?.getWidgetById(app?.nm_index)) as Et2Nextmatch;
 			if (nm) return {app, nm};
@@ -5384,7 +5419,7 @@ export class MailApp extends EgwApp
 		// no opener (eg. opened directly, or the opener window was closed), or the opener's own
 		// mail list has nothing selected yet - fall back to the server's own default, which is
 		// already this widget's current value
-		const openerSelectedFolder = (window.opener as any)?.app?.mail?.getActiveFilters?.()?.selectedFolder;
+		const openerSelectedFolder = MailApp.safeOpener((opener) => (opener as any).app?.mail?.getActiveFilters?.()?.selectedFolder);
 		const targetValue = String(openerSelectedFolder || folderWidget.getValue() || '');
 		const [profileID, path] = targetValue.split('::', 2);
 		if(!profileID || !path) return;
@@ -7250,7 +7285,7 @@ export class MailApp extends EgwApp
 			return this.jmap.setMailboxSubscribed(profileID, path, subscribed);
 		})).then(() =>
 		{
-			window.opener?.app?.mail?.refreshFolderLevel?.(profileID, '');
+			MailApp.safeOpener((opener) => (opener as any).app?.mail?.refreshFolderLevel?.(profileID, ''));
 			_widget.id === 'button[save]' ? window.close() : this.et2.getInstanceManager().submit();
 		}).catch((e) =>
 		{
