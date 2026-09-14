@@ -308,6 +308,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 * _observeRowHeightStability().
 	 */
 	private _rowHeightResizeObserver : ResizeObserver | null = null;
+	/** Notices the grid scrolling into view so a stale zero-height virtualizer viewport can re-measure */
+	private _viewportEntryObserver : IntersectionObserver | null = null;
 	/**
 	 * True only after a real quiet period (no ResizeObserver-detected resize
 	 * for ROW_HEIGHT_STABLE_DEBOUNCE_MS) since the last one - a stricter,
@@ -867,6 +869,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	connectedCallback()
 	{
 		super.connectedCallback();
+		this._observeViewportEntry();
 		this._syncTemplateRowHeightHint();
 		this._syncTemplateHandlerListeners();
 		this.addEventListener("et2-embedded-height", this._handleEmbeddedHeightEvent as EventListener);
@@ -928,6 +931,51 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
+	 * Re-measure when the grid is scrolled into view inside somebody else's scroll container.
+	 *
+	 * The virtualizer sizes its viewport in `_updateView()` by intersecting the host's bounds with
+	 * the window and with the clipping ancestors it captured when it connected. A grid that is below
+	 * the fold at first render therefore measures a viewport of zero height and renders no rows -
+	 * correct, until it scrolls into view. To notice that it has, the virtualizer listens for
+	 * `scroll` on `window` and on those same clipping ancestors, and nothing else.
+	 *
+	 * That is the gap: a page that scrolls an inner element rather than the window - Home, whose
+	 * portlets are stacked inside `#home-index_home-index` - fires neither. The scroll container is
+	 * not a clipping ancestor of the grid (those stop at the datagrid's own `.dg-root`), so the
+	 * grid is never told it became visible, keeps the stale zero-height viewport, and stays blank
+	 * for as long as the page is open.
+	 *
+	 * An IntersectionObserver against the real viewport sees the element arrive however the page
+	 * scrolled, so one nudge on the way in is enough. It is deliberately skipped unless the cached
+	 * measurement really is stale, both to keep normal scrolling free and to avoid re-entering the
+	 * virtualizer's update cascade for no reason - same restraint as the embedded-grid integration
+	 * further down.
+	 */
+	private _observeViewportEntry() : void
+	{
+		if(this._viewportEntryObserver || typeof IntersectionObserver === "undefined")
+		{
+			return;
+		}
+		this._viewportEntryObserver = new IntersectionObserver(entries =>
+		{
+			if(!entries.some(entry => entry.isIntersecting))
+			{
+				return;
+			}
+			const virtualizer = this._virtualize as any;
+			if(this._printRows || !virtualizer?._connected ||
+				typeof virtualizer._hostElementSizeChanged !== "function" ||
+				(virtualizer._layout?._viewportSize?.height ?? 0) > 0)
+			{
+				return;
+			}
+			virtualizer._hostElementSizeChanged();
+		});
+		this._viewportEntryObserver.observe(this);
+	}
+
+	/**
 	 * Disconnect DOM listeners and queued async work when component is detached.
 	 */
 	disconnectedCallback()
@@ -951,6 +999,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this._embeddedChildGridResizeObserver = null;
 		this._rowHeightResizeObserver?.disconnect();
 		this._rowHeightResizeObserver = null;
+		this._viewportEntryObserver?.disconnect();
+		this._viewportEntryObserver = null;
 		if(this._rowHeightStableTimer !== null)
 		{
 			window.clearTimeout(this._rowHeightStableTimer);
