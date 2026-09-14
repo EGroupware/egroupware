@@ -342,8 +342,11 @@ class Compose
 				}
 			}
 		}
-		$content['is_html'] = ($content['mimeType'] == 'html' ? true : '');
-		$content['is_plain'] = ($content['mimeType'] == 'html' ? '' : true);
+		// $content['mimeType'] is a real boolean since setDefaults() above (see its own docblock) -
+		// a direct truthy check here, not a string comparison that only worked by relying on PHP's
+		// own bool<->string `==` coercion.
+		$content['is_html'] = $content['mimeType'] ? true : '';
+		$content['is_plain'] = $content['mimeType'] ? '' : true;
 		$content['priority'] = 3;
 		$content['filemode'] = $this->preventAttachFilemode ? Vfs\Sharing::READONLY : Vfs\Sharing::ATTACH;
 		$content['no_griddata'] = true;
@@ -1027,10 +1030,17 @@ class Compose
 			}
 			if (empty($content['mailidentity'])) $content['mailidentity'] = $default_identity;
 		}
-		if (!isset($content['mimeType']) || empty($content['mimeType']))
+		if (!isset($content['mimeType']) || $content['mimeType'] === '' || $content['mimeType'] === null)
 		{
-			$content['mimeType'] = 'html';
-			if (!empty($this->mailPreferences['composeOptions']) && $this->mailPreferences['composeOptions']=="text") $content['mimeType']  = 'plain';
+			// et2-checkbox id="mimeType" (compose.xet) has no selectedValue/unselectedValue of its
+			// own, so it only recognizes a real boolean here - a string 'html'/'plain' both fall
+			// through Et2Checkbox's own value setter to `this.checked = !!new_value`, which is TRUE
+			// for either non-empty string, always opening in HTML mode regardless of the
+			// composeOptions preference below (found live 2026-09-14, ralf: "the preference says
+			// plain-text not html, wired" - reply/forward are unaffected, they set this widget via
+			// their own client-side set_value(isHtml) with a real boolean already).
+			$content['mimeType'] = true;
+			if (!empty($this->mailPreferences['composeOptions']) && $this->mailPreferences['composeOptions']=="text") $content['mimeType'] = false;
 		}
 		return $content;
 
