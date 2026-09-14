@@ -1,0 +1,19 @@
+/**
+ * Calendar list rows
+ *
+ * Loaded into et2-datagrid's row shadow DOM via <et2-styles src="rows.css"> in the row
+ * template.  Rules here only reach row contents - the rest of the list view is styled by
+ * app.css as usual.
+ */
+.noWrap {
+  white-space: nowrap;
+}
+.listVbox {
+  width: 100%;
+}
+@media screen {
+  .listDescription {
+    max-height: var(--calendar-list-description-max-height, none);
+    overflow: auto;
+  }
+}

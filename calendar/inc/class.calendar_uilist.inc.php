@@ -189,11 +189,14 @@ class calendar_uilist extends calendar_ui
 		}
 
 		// add scrollbar to long describtion, if user choose so in his prefs
+		// The rows live in et2-datagrid's shadow DOM, which a <style> block on the page can not
+		// reach into, so this sets a custom property instead - those do inherit through the shadow
+		// boundary.  templates/*/rows.css applies it, and defaults to no limit when it is unset.
 		if ($this->prefs['limit_des_lines'] > 0 || (string)$this->prefs['limit_des_lines'] == '')
 		{
-			$content['css'] .= '<style type="text/css">@media screen { .listDescription {  max-height: '.
+			$content['css'] .= '<style type="text/css">:root { --calendar-list-description-max-height: '.
 				(($this->prefs['limit_des_lines'] ? $this->prefs['limit_des_lines'] : 5) * 1.35).	   // dono why em is not real lines
-				'em; overflow: auto; }}</style>';
+				'em; }</style>';
 		}
 
 		if($msg)

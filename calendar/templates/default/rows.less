@@ -1,0 +1,31 @@
+/**
+ * Calendar list rows
+ *
+ * Loaded into et2-datagrid's row shadow DOM via <et2-styles src="rows.css"> in the row
+ * template.  Rules here only reach row contents - the rest of the list view is styled by
+ * app.css as usual.
+ */
+
+// Shared with the mobile skin's own rows.less, which imports this file by reference.
+.no-wrap() {
+	white-space: nowrap;
+}
+
+.noWrap {
+	.no-wrap();
+}
+
+.listVbox {
+	width: 100%;
+}
+
+@media screen {
+	.listDescription {
+		// The description is limited to the user's "lines of description to show" preference.
+		// calendar_uilist::listview() sets this property on the document - custom properties
+		// inherit through the shadow boundary, a <style> block on the page can not reach in
+		// here - and leaves it unset for "show all".
+		max-height: var(--calendar-list-description-max-height, none);
+		overflow: auto;
+	}
+}

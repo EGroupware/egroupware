@@ -1349,10 +1349,6 @@ Hide subsequent headers in week view with non-consolidated owners
   bottom: 0px;
   right: 0px;
 }
-#calendar-list_undelete_popup,
-#calendar-list_delete_popup {
-  display: none;
-}
 .calendar_freetime_header {
   font-size: 120%;
   font-weight: bold;
@@ -1582,12 +1578,6 @@ et2-switch#calendar-toolbar_toolbar-weekend::part(label) {
   background-image: none !important;
   filter: none;
 }
-#calendar-list_nm .nextmatch_header .header_count {
-  margin-right: -4px;
-}
-#calendar-list_nm .nextmatch_header .search {
-  display: none;
-}
 #calendar-edit_calendar-edit-description::part(base) {
   display: flex;
   flex-direction: column;
@@ -1696,24 +1686,11 @@ egw-app {
     float: none;
     display: initial;
   }
-  span[id^="calendar-list_"][id$="title]"] {
-    font-size: 12pt;
-    white-space: nowrap;
-  }
   div.calDescRow {
     height: 30px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-  }
-  label[id^="calendar-list_"][id$="start]"] > time,
-  label[id^="calendar-list_"][id$="end]"] > time {
-    float: none;
-    color: #828282;
-  }
-  .calDates .dash {
-    text-align: center;
-    padding: 0px 5px 0 5px !important;
   }
   #calendar-list {
     margin-right: 0px;

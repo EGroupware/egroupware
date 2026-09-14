@@ -27,11 +27,12 @@
                     </rows>
                 </grid>
             </et2-box>
-            <et2-select  label="Documents" id="merge" class="et2-label-fixed" onchange="app.calendar.sidebox_merge" emptyLabel="Insert in document"></et2-select>
-            <et2-iframe  id="iframe" width="100%" height="100%"></et2-iframe>
-            <et2-styles>
-                #calendar-filter_calendar-filter iframe { display: none;}
-            </et2-styles>
+            <!-- Fallback target for calendar urls that are not one of the ajax views, see
+                 CalendarApp.linkHandler().  Starts disabled (same as admin.index's iframe) rather
+                 than hidden by CSS: the rule that used to do that, "#calendar-filter_calendar-filter
+                 iframe {display:none}", stopped matching when et2-iframe moved its <iframe> into a
+                 shadow root, leaving a large empty box sitting in the filter drawer. -->
+            <et2-iframe  id="iframe" width="100%" height="100%" disabled="true"></et2-iframe>
         </et2-filterbox>
     </et2-template>
 </overlay>

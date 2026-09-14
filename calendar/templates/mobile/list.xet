@@ -17,89 +17,44 @@
 	<et2-template  id="calendar.list.rows" template="" lang="" group="0" version="1.9.004">
 		<grid width="100%" >
 			<columns>
-				<column width="10"/>
-				<column width="95%" />
-				<column width="50"/>
+				<column width="100%" />
 			</columns>
 			<rows>
 				<row class="th">
-
+					<!-- The mobile skin hides the header row entirely (kdots mobile.less), but the
+					     row template still needs one to define its columns.  A plain header with an
+					     id of its own, deliberately not one of the real column names the desktop
+					     skin and $content[nm][default_cols] use - both skins share the row template
+					     name, and so the column preference that goes with it. -->
+					<et2-nextmatch-header  label="Event" id="mobile_event"></et2-nextmatch-header>
 				</row>
-				<row class="$row_cont[class]" valign="top">
-					<et2-description  class="cat_$row_cont[cat_id] mobile_cat_col"></et2-description>
+				<row class="$row_cont[category] $row_cont[class]" valign="top">
 					<et2-vbox  class="calendar_fullWidth">
-						<customfields-list id="$row" class="customfields" app="calendar" disabled="true"/>
+						<et2-customfields-list  id="$row" class="customfields" app="calendar" disabled="true"/>
 						<et2-hbox  class="calTitleRow">
-							<et2-description  id="${row}[title]" class="$row_cont[sub_class] et2_ellipsis" overflow="hidden" width="100%" noLang="1"></et2-description>
+							<et2-description  id="${row}[title]" class="calTitle et2_ellipsis" overflow="hidden" width="100%" noLang="1"></et2-description>
 						</et2-hbox>
 						<et2-hbox  class="calDates">
-							<et2-date-time-today  id="${row}[start]" readonly="true" options=",$cont[format]" class="noWrap"></et2-date-time-today>
+							<et2-date-time-today  id="${row}[start]" readonly="true" class="noWrap"></et2-date-time-today>
 							<et2-description  class="dash" value="-"></et2-description>
-							<et2-date-time-today  id="${row}[end]" readonly="true" options=",$cont[format]" class="noWrap"></et2-date-time-today>
+							<et2-date-time-today  id="${row}[end]" readonly="true" class="noWrap"></et2-date-time-today>
 						</et2-hbox>
 					</et2-vbox>
 				</row>
 			</rows>
 		</grid>
+		<et2-styles src="rows.css"></et2-styles>
 	</et2-template>
 	<et2-template  id="calendar.list" template="" lang="" group="0" version="1.9.003">
-        <nextmatch id="nm" template="calendar.list.rows" header_right="calendar.list.add" header_left="calendar.list.dates" filter_template=""/>
-		<grid width="100%" border="0" spacing="0" padding="0">
-			<columns>
-					<column width="70%"/>
-					<column/>
-			</columns>
-			<rows>
-				<row disabled="!@css">
-					<et2-html  id="css" span="all"></et2-html>
-				</row>
-				<row>
-					<et2-description  align="center" id="msg" span="all" class="message" noLang="1"></et2-description>
-				</row>
-				<row>
-					<et2-description  id="plus_button_container"></et2-description>
-				</row>
-				<row>
-					<et2-hbox>
-						<et2-box  class="action_popup prompt" id="delete_popup">
-							<et2-vbox>
-								<et2-description  value="Delete" class="promptheader"></et2-description>
-								<et2-description  value="This is a recurring event. Do you want to delete just this recurrence or the whole series?"></et2-description>
-								<et2-hbox>
-									<et2-button  label="Delete this recurrence" id="delete" onclick="nm_submit_popup(this); return false;"></et2-button>
-									<et2-button  label="Delete series" id="delete_series" onclick="nm_popup_action.id = 'delete_series'; nm_submit_popup(this); return false;"></et2-button>
-									<et2-button  label="Cancel" onclick="nm_hide_popup(this,'delete_popup');" noSubmit="true"></et2-button>
-								</et2-hbox>
-							</et2-vbox>
-						</et2-box>
-						<et2-box  class="action_popup prompt" id="undelete_popup">
-							<et2-vbox>
-								<et2-description  value="Un-delete" class="promptheader"></et2-description>
-								<et2-description  value="This is a recurring event. Do you want to Un-delete just this recurrence or the whole series?"></et2-description>
-								<et2-hbox>
-									<et2-button  label="Un-delete this recurrence" id="undelete" onclick="nm_submit_popup(this); return false;"></et2-button>
-									<et2-button  label="Un-delete series" id="undelete_series" onclick="nm_popup_action.id = 'undelete_series'; nm_submit_popup(this); return false;"></et2-button>
-									<et2-button  label="Cancel" onclick="nm_hide_popup(this,'undelete_popup');" noSubmit="true"></et2-button>
-								</et2-hbox>
-							</et2-vbox>
-						</et2-box>
-					</et2-hbox>
-					<et2-description></et2-description>
-				</row>
-			</rows>
-		</grid>
-		<et2-styles>
-			.noWrap { white-space: nowrap; }
-
-.image16 img {
-  height: 16px;
-}
-
-.listVbox {
-  width: 100%;
-}
-
-
-		</et2-styles>
+		<!-- All direct children, no wrapping <grid>: a grid is a real <table>, and a table cell
+		     can not constrain its child's height, so et2-datagrid would have no bounded box to
+		     scroll inside.  The legacy grid widget also can not adopt a web component at all. -->
+		<et2-html  id="css" disabled="!@css"></et2-html>
+		<et2-nextmatch  id="nm" template="calendar.list.rows" filter_template="">
+			<et2-template  id="calendar.list.dates" slot="header"></et2-template>
+			<et2-template  id="calendar.list.add" slot="header"></et2-template>
+		</et2-nextmatch>
+		<et2-description  align="center" id="msg" class="message" noLang="1"></et2-description>
+		<et2-description  id="plus_button_container"></et2-description>
 	</et2-template>
 </overlay>

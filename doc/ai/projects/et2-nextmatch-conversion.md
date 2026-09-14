@@ -9,10 +9,11 @@ generated component docs for
 [`et2-datagrid`](https://etemplate.egroupware.org/components/et2-datagrid/) — this document does not
 repeat that reference material.
 
-Apps converted so far: Addressbook, Infolog, Filemanager, Mail, Timesheet, Tracker, Home. Apps still on
-the legacy widget: Calendar, Admin, Importexport, Aiassistant, Preferences. Related in-flight/reference
-docs in the same directory as the widget source: `ColumnSelectionNotes.md`,
-`Et2DatagridDirectoryMigrationPlan.md`, `NestedExpansion.md`.
+Apps converted so far: Addressbook, Infolog, Filemanager, Mail, Timesheet, Tracker, Home, Calendar.
+Apps still on the legacy widget: Admin, Importexport, Aiassistant, Preferences. Non-core apps
+(Projectmanager, Resources, News_admin, Smallpart, Schulmanager, Stylite, Kanban, ...) have never been
+on this list at all and still need one. Related in-flight/reference docs in the same directory as the
+widget source: `ColumnSelectionNotes.md`, `Et2DatagridDirectoryMigrationPlan.md`, `NestedExpansion.md`.
 
 Home's conversion is the favourite portlet (`home/templates/default/favorite.xet` +
 `Et2PortletFavorite.ts`), and with it every app's favourite-portlet row template — see
@@ -85,6 +86,154 @@ to `app.ts`'s existing `checkNmFilterChanged()` — the generic handler that alr
 `col_filter` key change regardless of which physical control (toolbar or drawer) changed it, since both
 write through the same shared id and the same `et2-filter` event. No new wiring was needed; the sync
 bug was really just a missing case in code that already ran on every relevant change.
+
+## Calendar
+
+Calendar's conversion covers its only list view, `calendar.list` (desktop + mobile skin).
+`calendar/templates/default/list.rows.xet` (the Home favourite-portlet variant) came earlier, with
+Home's own conversion. Things specific to this app, most of which generalise:
+
+- **Take the `<et2-nextmatch>` out of any wrapping `<grid>` - it must be a direct child of the
+  index template.** Legacy `<nextmatch>` sat happily in a grid cell; `Et2Nextmatch` can not. A grid
+  is a real `<table>`, and a table cell does not constrain its child's height, so `Et2Datagrid` never
+  gets a bounded box to scroll inside: it grows to fit every row (456575px for 4565 rows here), the
+  page scrolls instead of the grid, and the virtualizer renders the whole result set as empty
+  placeholder rows. The legacy `grid` widget can not adopt a web component as a child either -
+  `Legacy widget grid[#] could not handle adding a child (ET2-NEXTMATCH)` in the console is the
+  same problem announcing itself. Every already-converted app has the nextmatch as a direct child
+  (`timesheet.index` is the clearest example); calendar's `calendar.list` and its mobile skin both
+  had to lose their wrapper grid, with the `css`/`msg`/`plus_button_container` widgets that shared it
+  becoming direct children carrying their own `disabled=` instead of relying on a `<row disabled=>`.
+  **Check for this before assuming a conversion is done: the symptom is a list that does not scroll,
+  which is easy to mistake for a styling problem.**
+- **The app already had a hand-written filterbox, so the filter drawer needed no work at all.**
+  `calendar/templates/default/filter.xet` is an `<et2-template slot="filter">` holding its own
+  `<et2-filterbox>`, exec'd as a separate etemplate by `calendar_ui`, and `app.ts`'s
+  `_setupFilterTemplate()` hands it the nextmatch once the list has loaded. `filter_template=""` on
+  the nextmatch tag suppresses the generated one. All of that predates the conversion and kept
+  working against `Et2Nextmatch` unchanged - `Et2Filterbox` handles either widget.
+- **`header_right`/`header_left` templates move into the nextmatch's own `header` slot**, as
+  `<et2-template id="<template.id>" slot="header"></et2-template>` children of `<et2-nextmatch>` -
+  the same mechanism `Et2PortletFavorite.applyHeaderTemplate()` uses, and the alternative to the
+  `slot="main-header"` route the reference section below describes. Note `<et2-template>` takes the
+  template name in **`id`**, not `template`, and `getWidgetById('<that id>')` then still finds it, so
+  existing app code that reaches for the header template by name keeps working (calendar's
+  `filter_change()` disables `calendar.list.dates` unless the date range is "custom").
+- **The delete/undelete `action_popup` boxes were dead markup and were deleted, not converted.**
+  Both `delete_popup` and `undelete_popup` (the "this recurrence or the whole series?" prompts) were
+  still in `list.xet`, styled hidden by `#calendar-list_delete_popup { display: none }` in `app.less`,
+  with buttons wired to the legacy `nm_submit_popup`/`nm_popup_action` globals - but nothing reaches
+  them any more: both the `delete` and `undelete` actions have had
+  `onExecute => javaScript:app.calendar.cal_delete` for a long time, and that runs
+  `et2_calendar_event.recur_prompt()` (a real dialog) plus an ajax call instead. Before converting an
+  app's action popups, check the action tree for an `onExecute` that has already replaced them.
+- **An `onExecute` handler that hands its action to the nextmatch has to be checked against the action
+  manager it actually came from.** Calendar has two: `ical()` and `cal_fix_app_id()`, both replacing
+  `nm_action(_action, ...)` with `nm.executeAction(id, {ids, all})`. `executeAction()` re-resolves the
+  action *by id* from the nextmatch's own manager, which matters because `calendar_uiviews` builds a
+  second action tree for the non-list views out of the same `calendar_uilist::get_actions()` array and
+  swaps some `onExecute`s. `ical()` only ever runs from the other views (so `_action` is a foreign
+  object, and re-resolving is exactly right); `cal_fix_app_id()` only ever runs from the list (so
+  `_action` *is* the nextmatch's own object, and the url it patches onto `_action.data` survives into
+  the execute). Get this backwards and a url rewrite silently goes nowhere.
+- **Setting the sort separately from the filter apply is the "rows fetched but never shown" bug.**
+  `filter_change()` used to call `nm.sortBy('cal_start', asc, false)` right after `update_state()` had
+  called `nm.applyFilters(state.state)`. Under `Et2Datagrid` that mutates `_filters` while the apply's
+  own fetch is in flight, changing the query signature, and the response is dropped as superseded with
+  no re-fetch (see the pitfall entry below). Fixed by folding `sort: {id, asc}` into the same object
+  passed to `applyFilters()`. **Any app whose filter-change handler also sorts needs this check.**
+- **`app.ts` code hung off a legacy setting round-trip can be dead already.** Calendar assigned
+  `nm.set_startdate`/`nm.set_enddate` to keep `state.first`/`state.last` in sync with what
+  `get_rows()` computed. Those setters are only ever called through `etemplate2`'s `assign` JSON
+  plugin (`widget['set_' + key](value)`), and **no PHP in the tree calls `Api\Json\Msg::assign()`** -
+  so they had been dead for as long as that was true. Removed rather than ported. Worth grepping for
+  `assign(` before porting any `set_<something>` the app defines on a widget rather than calls.
+- **The app-level autorefresh preference key was wrong, and converting surfaced it.**
+  `_set_autorefresh()` read `"nextmatch-" + nm.options.settings.columnselection_pref + "-autorefresh"`,
+  but calendar sets no `columnselection_pref`, so the key was literally
+  `nextmatch-undefined-autorefresh` and never matched what the column-selection dialog writes. Both
+  `Nextmatch.php` and `Et2NextmatchAutoRefresh` use `columnselection_pref ?? template`; app code that
+  reads the same preference must use the same fallback (`nm.settings.columnselection_pref ||
+  nm.template`). Calendar's own timer now only covers the non-list views - the listview's nextmatch
+  autorefreshes itself.
+  - This surfaced a gap in `Et2NextmatchAutoRefresh`, **fixed generically rather than per-app**:
+    legacy could stop the nextmatch's own poll while the listview sat hidden behind another calendar
+    view (`nm._set_autorefresh(0)`), but the controller only paused on the `<egw-app>` tab's
+    `hide`/`show` and on `document.visibilitychange` - neither of which fires when an app swaps
+    between two of its *own* views in one tab, or for a nextmatch in an inactive `<et2-tab-panel>` or
+    a collapsed section. `shouldRun` now also requires the host to actually be rendered
+    (`getClientRects().length` - not `offsetParent`, which is also `null` for a visible
+    `position: fixed` element), with a `ResizeObserver` on the host as the trigger, since that is the
+    one observer that reports a 0x0 box for a `display: none` element **without** also firing for a
+    grid merely scrolled out of the viewport, which should keep refreshing. The immediate
+    catch-up refresh a resume does is now gated on a timer having genuinely been armed before
+    (`hasRun`), so a grid that was simply not rendered yet at its first load does not stack an extra
+    full reload on top of the load it just did. Tests: `Et2NextmatchAutoRefresh.test.ts`.
+- **The sidebox "Documents" select was removed rather than repaired.** It had been dead in the list
+  view since `d24ca39d09`: `sidebox_merge()` looked up `'document_' + widget.getValue()`, one action
+  per document, which is how `Merge::document_action()` built them until that commit replaced the
+  nested per-document menus with the file-selection dialog. There has been exactly **one** merge
+  action with no children ever since, so the lookup returned `null` and the guard around it silently
+  did nothing. Repairing it also could not restore the old behaviour - `_getMergeDocument()` always
+  opens the dialog and has no pre-selection path, so the picked document could not be passed through
+  and the select would have become a bare trigger. Rows already carry the generic "Insert in
+  document" action, so the select, `sidebox_merge()`, and the `$sel_options['merge']` that fed it are
+  all gone. Note this does remove "merge the visible timespan" from the non-list views, where that
+  path did still work; the per-entry context-menu action is what remains.
+
+  Two things worth carrying to the next app. `Merge::document_action()`'s docblock still describes
+  the pre-2024 submenu-by-mime behaviour and its `$prefix`/`$default_doc` parameters are now unused,
+  so surrounding code reads as if per-document action ids still existed - check any merge call site
+  for that shape. And **don't reach into an `Et2Nextmatch`'s actions to run one.** The obvious port of
+  `nm.controller._actionManager.getActionById(id)` is to walk the global registry the way
+  `Et2NextmatchActionController.ensureActionManagers()` builds it (app manager -> a child named after
+  the etemplate's `uniqueId` -> a child named after the widget's `id`). It works, but it hands app
+  code a live, mutable `EgwAction` and silently returns `null` the day that nesting changes.
+  `Et2Nextmatch` deliberately exposes no accessor for its action manager, and adding one was
+  considered and **rejected** by the project owner - not wanting to make actions easier to mess with
+  is the point, not an oversight. `Et2Nextmatch.executeAction()` is not the alternative either: it
+  runs the framework's own default execute (`executeNextmatchAction()`, the `nm_action` switch) and
+  deliberately skips the action's `onExecute`, so it is the right replacement for a url/submit action
+  like `ical` and the wrong one for anything whose behaviour lives in a JS handler. Where an app
+  genuinely has to drive such an action, pass a plain action-shaped literal describing the work -
+  the shape `smallpartApp.mergeVideo()` uses - rather than fetching the real one.
+- **A CSS rule that hides something inside a web component stops working once that widget moves its
+  content into a shadow root.** `filter.xet` hid an `<et2-iframe>` - the fallback target
+  `CalendarApp.linkHandler()` uses for calendar urls that are not one of the ajax views - with
+  `#calendar-filter_calendar-filter iframe { display: none; }`. The real `<iframe>` now lives in
+  `Et2Iframe`'s shadow root, which that light-DOM descendant selector can never reach, so a large
+  empty box sat in the filter drawer. Fixed by giving the widget `disabled="true"` (what
+  `admin.index`'s identical iframe does) rather than styling it. Note the fallback itself is
+  separately broken and was left alone: `linkHandler()` looks the iframe up via
+  `this.sidebox_et2.getWidgetById('iframe')`, but it lives in `calendar.filter`, a different
+  etemplate, so the lookup returns null and the branch bails out.
+- **An app whose filters are never empty needs its own `getFilterInfo`, or the filter button stays lit
+  forever.** `EgwFrameworkApp._filterTemplate()` picks the icon by running the *filterbox's* value
+  through `filterInfo()`, which shows `filter-circle-fill` if any value survives a plain truthiness
+  check (`sort` and `search_type` are the only keys it drops). Calendar always has a date range
+  (`filter`, never blank - a list of events covers some span, and `update_state()` re-derives one
+  from the current dates whenever it is cleared) and a participation-status filter whose default
+  value is the literal string `"default"`. Both count as "set", so the icon was lit on a fresh load
+  and "Clear filters" could not turn it off. `EgwApp.getFilterInfo` exists for exactly this - it is
+  bound onto the framework app by `et2_ready()` - so calendar's (which already existed, adjusting the
+  tooltip) now drops `filter` unless it is `custom` and `status_filter` when it is `default` before
+  delegating. **Worth checking for any app with a control that has no empty state.**
+
+- **"Clear filters" returning an empty list is a measurement artifact, not a bug.** Checked twice
+  (2026-09-14): the row count dips to 0 only while the reload it triggers is in flight, and settles
+  back to the full count - polling for 14s after a clear shows it never even dips. Worth knowing
+  because `EgwFrameworkApp`'s clear does `filters.value = {}` then `applyFilters()`, and calendar's
+  `update_state()` re-derives `filter`/`status_filter` right afterwards, so a snapshot taken between
+  those two can show anything. Take a settled reading, not a single one.
+- **Two known-broken-but-unrelated things found while verifying, both left alone**:
+  `<et2-description value="#%s" id="${row}[id]">` renders `46`, not `#46` - `Et2Description.set_value()`
+  tests and substitutes into `_value` itself (`_value.replace(/%s/g, _value)`) where legacy
+  `et2_description` used `this.options.value` as the format string, so the "value is a format string
+  for the bound content" feature is simply gone on the web component, for every app. And
+  `CalendarApp._sortable()` throws (`Sortable: el must be an HTMLElement, not null`) on any
+  `update_state()` reached before `calendar.view` has loaded - e.g. navigating straight to
+  `calendar.calendar_uilist.listview` - which leaves `state_update_in_progress` stuck `true` and makes
+  every later state update a silent no-op. Neither is caused by, or fixed by, the conversion.
 
 ## The Home favourite portlet
 
@@ -197,19 +346,6 @@ imports are gone, so `Et2Link`, `Et2LinkList`, `Et2ImageExpose`, `Et2Description
 `Et2VfsMime` no longer reach the ~4600-line legacy widget-registration file at the root of the
 circular-import TDZ hazard (see the `et2_core_inheritance.ts`/`Et2Widget.ts` fix history) through
 this edge at all.
-
-**A reloading `Et2Datagrid` reports no total at all, and `nm.totalCount` then reads 0.** Legacy's
-`controller._grid.getTotalCount()` kept the previous count across a reload; `Et2Datagrid.total` is
-reset to `null` while a fetch is in flight. Opening the gallery starts exactly such a reload (the
-mime filter), and `expose_onopened()` runs after it has started - so its `total_count >= gallery.num`
-guard compared `0 >= 43` and the thumbnail strip never got its `paginating` class or wheel handler.
-The mixin now falls back to the count the gallery was built from (`_gallery_total`). Do not "fix"
-this in `totalCount` itself: 0-while-reloading is correct for consumers that must not act on a
-count that is about to change (`expose_onslideend()` relies on exactly that to stay inert
-mid-reload). Anything converted that compares a total against a snapshot taken earlier needs this
-same look. **Confirmed live**, and only with a genuinely focused browser tab - blueimp fires
-`onopened`/`onslideend` from `transitionend`, which never fires while the tab is hidden, so these
-callbacks look permanently dead under ordinary background browser automation.
 
 **Still rough**: `set_slide()`'s index bookkeeping drops the very last row of a paged-in range (its
 `num -= 1` at the end), so the final image of a large folder can be missing from the gallery. That
@@ -801,7 +937,8 @@ Where an app's filters actually come from under `Et2Nextmatch`, and the trap in 
   filter in the drawer from the mechanism above; both exist at once. Don't infer from "there's one in the
   toolbar" that the drawer has none — that misreading is what this section exists to prevent.
 - **To replace the generated filterbox entirely**, slot a template as `slot="filter"`. Calendar is the
-  only app currently doing this (`calendar/templates/default/filter.xet`). Filters can also be grouped
+  only app currently doing this (`calendar/templates/default/filter.xet`), and it did so before its own
+  conversion - so an app arriving with one of these needs no filter-drawer work at all. Filters can also be grouped
   under headings via `data="groupName:..."` on a nextmatch header. `Et2Filterbox.readNextmatchFilters()`
   — which collects the four filtering header tags client-side — is the other path, used when no
   filter-template is in play.

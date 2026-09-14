@@ -29,30 +29,30 @@
 			<rows>
 				<row class="th">
 					<et2-vbox>
-						<nextmatch-sortheader label="Start" id="cal_start"/>
-						<nextmatch-sortheader label="End" id="cal_end"/>
+						<et2-nextmatch-sortheader  label="Start" id="cal_start"/>
+						<et2-nextmatch-sortheader  label="End" id="cal_end"/>
 					</et2-vbox>
 					<et2-vbox>
-						<nextmatch-sortheader label="Title" id="cal_title"/>
-						<nextmatch-sortheader label="Description" id="cal_description"/>
+						<et2-nextmatch-sortheader  label="Title" id="cal_title"/>
+						<et2-nextmatch-sortheader  label="Description" id="cal_description"/>
 					</et2-vbox>
-					<nextmatch-sortheader label="Title" id="cal_title"/>
-					<nextmatch-sortheader label="Description" id="cal_description"/>
+					<et2-nextmatch-sortheader  label="Title" id="cal_title"/>
+					<et2-nextmatch-sortheader  label="Description" id="cal_description"/>
 					<et2-nextmatch-header  label="Recurrence" id="recure"></et2-nextmatch-header>
 					<et2-nextmatch-header  label="Category" id="cat_id"></et2-nextmatch-header>
 					<et2-vbox>
-						<nextmatch-sortheader label="Owner" id="cal_owner" readonly="true"/>
-						<nextmatch-sortheader label="Location" id="cal_location"/>
+						<et2-nextmatch-sortheader  label="Owner" id="cal_owner" readonly="true"/>
+						<et2-nextmatch-sortheader  label="Location" id="cal_location"/>
 					</et2-vbox>
-					<nextmatch-sortheader label="Owner" id="cal_owner" readonly="true"/>
-					<nextmatch-sortheader label="Location" id="cal_location"/>
+					<et2-nextmatch-sortheader  label="Owner" id="cal_owner" readonly="true"/>
+					<et2-nextmatch-sortheader  label="Location" id="cal_location"/>
 					<et2-nextmatch-header  label="Participants" id="participant" statustext="Use side menu to filter participants"></et2-nextmatch-header>
 					<et2-vbox>
-						<nextmatch-sortheader label="Created" id="cal_created" sortmode="DESC"/>
-						<et2-nextmatch-header  label="Creator" id="cal_creator" options="Creator"></et2-nextmatch-header>
+						<et2-nextmatch-sortheader  label="Created" id="cal_created" sortmode="DESC"/>
+						<et2-nextmatch-header  label="Creator" id="cal_creator"></et2-nextmatch-header>
 						<et2-description  value="Last changed"></et2-description>
 					</et2-vbox>
-					<nextmatch-customfields label="Custom fields" id="cfs" readonly="true"/>
+					<et2-nextmatch-header-customfields  label="Custom fields" id="cfs" app="calendar" readonly="true"/>
 				</row>
 				<row class="$row_cont[category] $row_cont[class]" valign="top">
 					<et2-vbox  id="start">
@@ -88,66 +88,21 @@
 						<et2-select-account  id="${row}[creator]" readonly="true"></et2-select-account>
 						<et2-date-time  id="${row}[modified]" readonly="true"></et2-date-time>
 					</et2-vbox>
-					<customfields-list id="$row"/>
+					<et2-customfields-list  id="$row" app="calendar"/>
 				</row>
 			</rows>
 		</grid>
+		<et2-styles src="rows.css"></et2-styles>
 	</et2-template>
 	<et2-template  id="calendar.list" template="" lang="" group="0" version="1.9.003">
-		<grid>
-			<columns>
-				<column/>
-				<column width="30%"/>
-			</columns>
-			<rows>
-				<row disabled="!@css">
-					<et2-description></et2-description>
-					<et2-html  id="css" span="all"></et2-html>
-				</row>
-				<row>
-                    <nextmatch id="nm" template="calendar.list.rows" header_right="calendar.list.dates" filter_template="" span="all"/>
-				</row>
-				<row>
-					<et2-hbox>
-						<et2-box  class="action_popup prompt" id="delete_popup">
-							<et2-vbox>
-								<et2-description  value="Delete" class="promptheader"></et2-description>
-								<et2-description  value="This is a recurring event. Do you want to delete just this recurrence or the whole series?"></et2-description>
-								<et2-hbox>
-									<et2-button  label="Delete this recurrence" id="delete" onclick="nm_submit_popup(this); return false;"></et2-button>
-									<et2-button  label="Delete series" id="delete_series" onclick="nm_popup_action.id = 'delete_series'; nm_submit_popup(this); return false;"></et2-button>
-									<et2-button  label="Cancel" onclick="nm_hide_popup(this,'delete_popup');" noSubmit="true"></et2-button>
-								</et2-hbox>
-							</et2-vbox>
-						</et2-box>
-						<et2-box  class="action_popup prompt" id="undelete_popup">
-							<et2-vbox>
-								<et2-description  value="Un-delete" class="promptheader"></et2-description>
-								<et2-description  value="This is a recurring event. Do you want to Un-delete just this recurrence or the whole series?"></et2-description>
-								<et2-hbox>
-									<et2-button  label="Un-delete this recurrence" id="undelete" onclick="nm_submit_popup(this); return false;"></et2-button>
-									<et2-button  label="Un-delete series" id="undelete_series" onclick="nm_popup_action.id = 'undelete_series'; nm_submit_popup(this); return false;"></et2-button>
-									<et2-button  label="Cancel" onclick="nm_hide_popup(this,'undelete_popup');" noSubmit="true"></et2-button>
-								</et2-hbox>
-							</et2-vbox>
-						</et2-box>
-					</et2-hbox>
-					<et2-description></et2-description>
-				</row>
-			</rows>
-		</grid>
-		<et2-styles>
-			.noWrap { white-space: nowrap; }
-
-.image16 img {
-  height: 16px;
-}
-
-.listVbox {
-  width: 100%;
-}
-
-
-		</et2-styles>
+		<!-- The nextmatch is a direct child, not wrapped in a <grid> as it used to be: a grid is a
+		     real <table>, and a table cell can not constrain its child's height, so et2-datagrid
+		     never got a bounded box to scroll inside and grew to fit every row instead.  The
+		     legacy grid widget also can not adopt a web component as a child at all
+		     ("Legacy widget grid[#] could not handle adding a child (ET2-NEXTMATCH)"). -->
+		<et2-html  id="css" disabled="!@css"></et2-html>
+		<et2-nextmatch  id="nm" template="calendar.list.rows" filter_template="">
+			<et2-template  id="calendar.list.dates" slot="header"></et2-template>
+		</et2-nextmatch>
 	</et2-template>
 </overlay>

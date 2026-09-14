@@ -1,0 +1,31 @@
+/**
+ * Calendar list rows - mobile skin
+ *
+ * Loaded into et2-datagrid's row shadow DOM via <et2-styles src="rows.css"> in the row
+ * template.  These used to live in app.less as `[id^="calendar-list_"]` selectors, which can
+ * not match any more: the row elements are inside the datagrid's shadow root, which has no
+ * #calendar-list ancestor in it.
+ */
+@import (reference) "../default/rows.less";
+
+@date-color: #828282;
+
+.noWrap {
+	.no-wrap();
+}
+
+.calTitleRow {
+	.calTitle {
+		.no-wrap();
+		font-size: 1.2em;
+	}
+}
+
+.calDates {
+	color: @date-color;
+
+	.dash {
+		text-align: center;
+		padding: 0 0.4em;
+	}
+}
