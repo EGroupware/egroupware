@@ -116,10 +116,28 @@
 
 	}
 
-	#mail-compose {
+	// #compose (not #mail-compose) is what MailApp.openComposeDialog()'s own inline Et2Dialog
+	// (mail/js/app.ts) actually gets: Et2Dialog._loadTemplate() derives its DOMContainer's id from
+	// the template's own FILE name ("compose.xet" -> "compose"), not from the dotted template name
+	// ("mail.compose" -> "mail-compose") bootstrapClientSideTemplate()'s domId uses for a real
+	// popup window - so this block's own flex/height fix (needed for TinyMCE to fill available
+	// height, not just size to its own content) never matched the dialog case at all until this
+	// selector included it too. Found live 2026-09-14, ralf: "TinyMCE is not full height".
+	#mail-compose, #compose {
 	  .cke_chrome {
 		border:none;
 		box-shadow: none;
+	  }
+	  // A real popup window's own <form id="mail-compose" class="et2_container"> gets this for
+	  // free from api/templates/default/etemplate2.css's own generic
+	  // `.et2_container > *:not([class]) { height: 100% }` rule - #compose (Et2Dialog's own
+	  // container, see this block's own docblock above) has no et2_container ancestor at all, so
+	  // et2-template's own HOST element (not just its shadow ::part(base) below) needs it
+	  // explicitly here too, or it silently falls back to sizing to its own content instead of
+	  // filling #compose's real height. Found live 2026-09-14, ralf: still not full height after
+	  // the ::part(base) fix alone - a real device test pinned this down precisely.
+	  & > et2-template {
+		height: 100%;
 	  }
 	  & > et2-template::part(base) {
 		display: flex;

@@ -533,9 +533,19 @@ et2-details.details {
 }
 .mailDisplayContainer {
   height: 100%;
+  position: relative;
   padding-top: 1em;
   border-top: 1px solid silver;
   margin-top: 1em;
+}
+.mailDisplayContainer iframe[src^="chrome-extension"],
+.mailDisplayContainer iframe[src^="about:blank?mvelo"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100% !important;
+  border: none;
 }
 .mailDisplayBody {
   height: 100%;
@@ -613,6 +623,7 @@ div.mailDisplayHeaders div.mail_extraEmails.visible {
 }
 .mailPreviewHeaders et2-lavatar {
   flex: 0 0 auto;
+  align-self: center;
 }
 div.mailPreviewHeaders div.mail_extraEmails {
   display: inline-block;
@@ -892,9 +903,37 @@ et2-image.smime_cert_unknownemail svg {
 .mailPreviewHeaders.smimeIcons et2-image {
   width: 24px;
 }
+.mailPreviewHeaders.smimeIcons et2-image[class*="bi-"] {
+  font-size: 24px;
+}
 .mailPreviewHeaders.smimeIcons {
   display: flex;
   justify-content: end;
+}
+/* PGP/MIME signature status (MailApp.setPgpSignatureFlags(), mail/js/app.ts) - a separate
+   trust mechanism from S/MIME, deliberately given its own classes/colors rather than reusing
+   the smime_cert_* ones above, even though the 3-state shape (verified/invalid/unknown-key)
+   and border/icon-color pattern is the same. */
+et2-box.pgp_sig_verified {
+  border-top: 4px solid #1ab82c !important;
+}
+et2-image.pgp_sig_verified,
+et2-image.pgp_sig_verified svg {
+  color: #1ab82c !important;
+}
+et2-box.pgp_sig_invalid {
+  border-top: 4px solid #e90052 !important;
+}
+et2-image.pgp_sig_invalid,
+et2-image.pgp_sig_invalid svg {
+  color: #e90052 !important;
+}
+et2-box.pgp_sig_unknownkey {
+  border-top: 4px solid #a28cff !important;
+}
+et2-image.pgp_sig_unknownkey,
+et2-image.pgp_sig_unknownkey svg {
+  color: #a28cff !important;
 }
 #mail-compose #mail-compose_composeToolbar et2-button-toggle::part(control) {
   font-size: 20px;
@@ -941,8 +980,8 @@ et2-image.smime_cert_unknownemail svg {
 .previewWrapper .firstColumnTitle {
   max-width: 7em;
   justify-content: flex-end;
-  min-width: 7em;
-  color: darkgrey;
+  min-width: 5em;
+  color: var(--sl-color-neutral-700, darkgrey);
 }
 .mailPreviewHeaders et2-select-email::part(combobox) {
   border: none;
@@ -999,14 +1038,6 @@ et2-vbox.addresses::part(base) {
 }
 et2-vbox.addresses et2-hbox::part(base) {
   align-items: center;
-}
-/* in flow, so its header reserves the avatar's height:
-   absolutely positioned it added no height at all,
-   and a mail showing just a single address row (a draft without recipient)
-   collapsed to less than the avatar, which then overlapped the message body */
-.mailPreviewHeaders et2-lavatar {
-  margin-top: 3px;
-  align-self: flex-start;
 }
 et2-searchbox#mail-index_nm_search {
   width: 100%;
@@ -1252,43 +1283,61 @@ et2-description.mailAclRotatedHeader .description--content {
     background-color: var(--sl-color-neutral-0, white);
     overflow-wrap: break-word;
   }
-  body #mail-compose .cke_chrome {
+  body #mail-compose .cke_chrome,
+  body #compose .cke_chrome {
     border: none;
     box-shadow: none;
   }
-  body #mail-compose > et2-template::part(base) {
+  body #mail-compose > et2-template,
+  body #compose > et2-template {
+    height: 100%;
+  }
+  body #mail-compose > et2-template::part(base),
+  body #compose > et2-template::part(base) {
     display: flex;
     flex-direction: column;
   }
   body #mail-compose .mailComposeBodySection,
-  body #mail-compose .mailComposeBodySection .mailComposeBody {
+  body #compose .mailComposeBodySection,
+  body #mail-compose .mailComposeBodySection .mailComposeBody,
+  body #compose .mailComposeBodySection .mailComposeBody {
     flex-grow: 1;
   }
-  body #mail-compose .mailComposeHeaderSection > table {
+  body #mail-compose .mailComposeHeaderSection > table,
+  body #compose .mailComposeHeaderSection > table {
     padding: 0;
   }
-  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders.subjectContainer td:first-child::after {
+  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders.subjectContainer td:first-child::after,
+  body #compose .mailComposeHeaderSection > table tr.mailComposeHeaders.subjectContainer td:first-child::after {
     content: '';
   }
-  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders .subjectContainer:first-child::after {
+  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders .subjectContainer:first-child::after,
+  body #compose .mailComposeHeaderSection > table tr.mailComposeHeaders .subjectContainer:first-child::after {
     content: ':';
   }
-  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders et2-dropdown et2-button:nth-child(n+2) {
+  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders et2-dropdown et2-button:nth-child(n+2),
+  body #compose .mailComposeHeaderSection > table tr.mailComposeHeaders et2-dropdown et2-button:nth-child(n+2) {
     padding: 0.5em 0;
   }
   body #mail-compose .mailComposeHeaderSection > table div.et2_taglist > *,
+  body #compose .mailComposeHeaderSection > table div.et2_taglist > *,
   body #mail-compose .mailComposeHeaderSection > table #mail-compose_subject,
-  body #mail-compose .mailComposeHeaderSection > table #mail-compose_mailaccount {
+  body #compose .mailComposeHeaderSection > table #mail-compose_subject,
+  body #mail-compose .mailComposeHeaderSection > table #mail-compose_mailaccount,
+  body #compose .mailComposeHeaderSection > table #mail-compose_mailaccount {
     border: none;
     box-shadow: none;
   }
-  body #mail-compose .mailComposeHeaderSection > table #mail-compose_subject:focus {
+  body #mail-compose .mailComposeHeaderSection > table #mail-compose_subject:focus,
+  body #compose .mailComposeHeaderSection > table #mail-compose_subject:focus {
     outline-color: transparent;
   }
-  body #mail-compose .tox-tinymce {
+  body #mail-compose .tox-tinymce,
+  body #compose .tox-tinymce {
     border: none;
   }
-  body #mail-compose .dialogHeadbar {
+  body #mail-compose .dialogHeadbar,
+  body #compose .dialogHeadbar {
     z-index: 2;
   }
   #mail-index table {

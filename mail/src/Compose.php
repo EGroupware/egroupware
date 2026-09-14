@@ -35,6 +35,7 @@ class Compose
 	var $public_functions = array
 	(
 		'getAttachment'		=> True,
+		'ajax_composeDialogBootstrap' => True,
 	);
 
 	/**
@@ -397,6 +398,33 @@ class Compose
 			'sel_options' => $sel_options,
 			'content' => $content,
 		));
+	}
+
+	/**
+	 * Client-side-bootstrap data for mobile's own inline compose dialog (MailApp.openComposeDialog(),
+	 * mail/js/app.ts) - the exact same {name, url, etemplate_exec_id} shape mail/compose.php's own
+	 * Etemplate::clientSideBootstrap() call already produces for a real popup window, just reachable
+	 * as a plain ajax menuaction instead of a full page navigation.
+	 *
+	 * Found live 2026-09-14 investigating "the (+) button doesn't open compose as a popup on
+	 * mobile, it opens inline in the page instead": mobile's own EgwFramework.openPopup() renders
+	 * certain popups as an inline Et2Dialog (kdots/js/EgwFramework.ts), which needs a real
+	 * app.class.method menuaction fetching server-rendered HTML via Api\Framework\Ajax::ajax_exec()
+	 * - but compose.php's own URL has carried no menuaction at all since mail_compose::compose()'s
+	 * classic postback handler was removed (doc/ai/projects/mail-compose-jmap-migration.md, Step
+	 * 10), and ajax_exec()'s own HTML-string contract would force falling back to the expensive
+	 * Api\Etemplate::exec() server-side parse this codebase has deliberately avoided elsewhere
+	 * (this same clientSideBootstrap() call, reused verbatim). Fixed instead by giving mobile its
+	 * own dedicated client-side path (MailApp.openComposeDialog()) that builds an <et2-dialog>
+	 * directly (same pattern EgwApp.viewEntry()/MailApp.mobileView() already use for the mobile
+	 * message view) and loads mail.compose into it via this lightweight endpoint - no IMAP/JMAP
+	 * touched here either, same "no server-side opening" philosophy as compose.php itself.
+	 *
+	 * @return void writes {name, url, etemplate_exec_id} via Api\Json\Response
+	 */
+	function ajax_composeDialogBootstrap()
+	{
+		Api\Json\Response::get()->data(Etemplate::clientSideBootstrap('mail.compose'));
 	}
 
 	/**

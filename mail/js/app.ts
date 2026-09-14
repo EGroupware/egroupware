@@ -1557,8 +1557,33 @@ export class MailApp extends EgwApp
 	 * factored out so the batch-forwardasattach branch above can call it too, as an `_open_new`
 	 * override for openWithinWindow()'s "nothing to reuse" case (see its own comment).
 	 */
-	private openComposePopupUrl(settings : { id : string, from : string, smime_type? : string, mode? : string, pgp_encrypted? : string }, accId : string)
+	private openComposePopupUrl(settings : { id : string, from : string, smime_type? : string, mode? : string, pgp_encrypted? : string }, accId : string) : Window | void
 	{
+		// Narrow-viewport half of the same condition EgwFramework.openPopup() (kdots/js/
+		// EgwFramework.ts) itself uses to decide "render this inline instead of a real popup
+		// window" - but compose.php's own URL has carried no menuaction= since
+		// mail_compose::compose()'s classic postback handler was removed (doc/ai/projects/
+		// mail-compose-jmap-migration.md, Step 10), so that mechanism never actually triggers for
+		// compose - found live 2026-09-14 investigating "the (+) button doesn't open compose as a
+		// popup on mobile, it opens inline in the page instead". Handled here directly instead:
+		// openComposeDialog() builds the SAME inline Et2Dialog EgwFramework.openPopup() would have
+		// (same pattern EgwApp.viewEntry()/mobileView() already use for the mobile message view),
+		// reusing the exact client-side JMAP bootstrap (MailCompose.setEtemplate() ->
+		// bootstrapCompose()) a real popup already uses - no Api\Etemplate::exec() server-side
+		// parse needed, same "no server-side opening" philosophy as compose.php itself.
+		//
+		// Deliberately checks matchMedia only, not the "open_popups_in: same_window" preference
+		// EgwFramework.openPopup() also honors - that preference is a desktop customization,
+		// unrelated to this bug, and reading it needs an async egw.preference() round-trip that
+		// would delay the window.open() a real popup needs below far enough to risk the popup
+		// blocker (found live: it also broke existing synchronous-call tests expecting
+		// egw.link()/egw.openPopup() to fire in the same tick). matchMedia() is synchronous.
+		if(window.matchMedia('(max-width: 800px)').matches)
+		{
+			void this.openComposeDialog(settings, accId);
+			return;
+		}
+
 		const compose_list = egw.getOpenWindows("mail", /^compose_/);
 		const window_name = 'compose_' + compose_list.length + '_'+ (settings.from || '') + '_' + settings.id;
 		const url = this.egw.link('/mail/compose.php', {
@@ -1570,6 +1595,72 @@ export class MailApp extends EgwApp
 			pgp_encrypted: settings.pgp_encrypted || '',
 		});
 		return egw.openPopup(url, 870, 'availHeight', window_name, 'mail');
+	}
+
+	/**
+	 * Inline-dialog equivalent of openComposePopupUrl()'s real popup window, for mobile/narrow
+	 * viewport (or the "open_popups_in: same_window" preference) - see openComposePopupUrl()'s own
+	 * comment for why this exists instead of relying on EgwFramework.openPopup()'s generic
+	 * menuaction-based inline-dialog mechanism.
+	 *
+	 * Builds an <et2-dialog> directly (same loadWebComponent() pattern EgwApp.viewEntry()/
+	 * mobileView() already use), loads mail.compose into it via the lightweight
+	 * ajax_composeDialogBootstrap() endpoint (compose.php's own Etemplate::clientSideBootstrap()
+	 * call, just reachable as a plain ajax request instead of a full page navigation), then wires
+	 * up the SAME MailCompose instance/bootstrap a real popup uses - MailCompose.setEtemplate()
+	 * triggers bootstrapCompose() itself, so reply/forward/signature population is identical
+	 * either way.
+	 *
+	 * et2_ready()'s own 'mail.compose' case (above) never fires for an Et2Dialog-loaded template
+	 * (Et2Dialog._loadTemplate() deliberately suppresses it, so a dialog can't clobber the host
+	 * page's own `this.et2`) - the handful of calls that case makes are replicated here directly
+	 * instead, same reasoning mobileView()'s own docblock already documents for 'mail.view'.
+	 */
+	private async openComposeDialog(settings : { id : string, from : string, smime_type? : string, mode? : string, pgp_encrypted? : string }, accId : string) : Promise<void>
+	{
+		const [bootstrap, {actions, sel_options, content}] = await Promise.all([
+			this.egw.request('mail.EGroupware\\Mail\\Compose.ajax_composeDialogBootstrap', []),
+			this.getComposeToolbarData(accId),
+		]);
+
+		// Same cloning reasoning bootstrapComposePopup() already documents - content/sel_options/
+		// actions are shared, cached objects getComposeToolbarData() reuses per account.
+		const contentCopy : any = {...content};
+		const selOptionsCopy : any = {...sel_options};
+		const actionsCopy : any = {...actions};
+
+		// Pre-construct MailCompose with the explicit bootstrap params BEFORE anything touches the
+		// `compose` getter - same reasoning bootstrapComposePopup() already documents.
+		(<any>window).app._compose = new MailCompose(this, {from: settings.from, sourceId: settings.id, mode: settings.mode});
+
+		const dialog = <Et2Dialog>loadWebComponent('et2-dialog', {
+			class: "mailComposeDialog egw-popup",
+			id: "popupMainDiv",
+			destroyonclose: true,
+			template: bootstrap.url,
+			value: {
+				content: contentCopy,
+				sel_options: selOptionsCopy,
+				modifications: {composeToolbar: {actions: actionsCopy}},
+				currentapp: 'mail',
+				etemplate_exec_id: bootstrap.etemplate_exec_id,
+			}
+		}, this.et2);
+		(framework?.activeApp ? framework.activeApp : document.body).append(dialog);
+
+		await dialog.updateComplete;
+		const et2 = dialog.eTemplate.widgetContainer;
+
+		(<any>window).app._compose.setEtemplate(et2);
+		const composeToolbar = et2.getWidgetById('composeToolbar');
+		if(composeToolbar?.getWidgetById('pgp')?.value ||
+			(et2.getArrayMgr('content').data as any)?.mail_plaintext?.includes(this.begin_pgp_message))
+		{
+			this.mailvelopeAvailable(this.mailvelopeCompose);
+		}
+		(<any>window).app._compose.fieldExpanderInit();
+		(<any>window).app._compose.checkSharingFilemode(undefined);
+		(<any>window).app._compose.subject2title();
 	}
 
 	/**
