@@ -1306,18 +1306,28 @@ export class filemanagerAPP extends EgwApp
 		if (!data?.data) return false;
 		let path = this.id2path(_senders[0].id);
 		this.et2 = this.et2 ? this.et2 : etemplate2.getById('filemanager-index').widgetContainer;
+		// the server sends mime === false when it could not resolve the file at all, eg. a symlink
+		// pointing at a deleted target: Vfs::mime_content_type() bails out on an unresolvable path.
+		// There is nothing to open - every branch below would either throw on the non-string mime
+		// or hand the browser a webdav url that 404s into a blank tab - so say so and stop.
+		if (typeof data.data.mime !== "string")
+		{
+			this.egw.message(this.egw.lang("File '%1' not found!", data.data.name || path), "error");
+			return false;
+		}
+		const mime : string = data.data.mime;
 		// try to get mime widget DOM node out of the row DOM
 		let mime_dom : HTMLElement = _senders[0].iface.getDOMNode().querySelector("et2-vfs-mime");
 		// egw.get_file_editor_prefered_mimes() needs the actual mime type - see note on the
 		// ambient-global "egw" import at the top of the file
-		let fe : any = egw.file_editor_prefered_mimes(data.data.mime);
+		let fe : any = egw.file_editor_prefered_mimes(mime);
 
 		// symlinks dont have mime 'http/unix-directory', but server marks all directories with class 'isDir'
-		if (data.data.mime == 'httpd/unix-directory' || data.data['class'] && data.data['class'].split(/ +/).indexOf('isDir') != -1)
+		if (mime == 'httpd/unix-directory' || data.data['class'] && data.data['class'].split(/ +/).indexOf('isDir') != -1)
 		{
 			this.change_dir(path,_action.parent.data.nextmatch || this.et2);
 		}
-		else if(data.data.mime.match(MIME_REGEX) && mime_dom)
+		else if(mime.match(MIME_REGEX) && mime_dom)
 		{
 			mime_dom.click();
 		}
@@ -1331,7 +1341,7 @@ export class filemanagerAPP extends EgwApp
 		}
 		else
 		{
-			egw.open({path: path, type: data.data.mime, download_url: data.data.download_url}, 'file','view',null,'_browser');
+			egw.open({path: path, type: mime, download_url: data.data.download_url}, 'file','view',null,'_browser');
 		}
 		return false;
 	}
