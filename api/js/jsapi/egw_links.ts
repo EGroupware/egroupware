@@ -323,12 +323,19 @@ class Links implements LinksModule
 	 * Only needs this instance's own #linkRegistry, no dynamic dispatch -
 	 * plain arrow field.
 	 *
-	 * @param _type
+	 * @param _type mime-type, anything but a string (eg. the false the server sends for a file it
+	 *	could not resolve) has no registered handler and gives null
 	 * @param _app_or_num default 1, return 1st, 2nd, n-th match, or match from application _app_or_num only
 	 * @return with values for keys 'menuaction', 'mime_id' (path) or 'mime_url' and options 'mime_popup' and other values to pass one
 	 */
 	get_mime_info = (_type : string, _app_or_num? : any) : any =>
 	{
+		// the wildcard test below calls _type.match(), which throws on a missing or non-string
+		// mime-type - there is nothing to look up in that case anyway
+		if (typeof _type !== 'string')
+		{
+			return null;
+		}
 		if (!_app_or_num) _app_or_num = 1;
 		let wildcard_mime : any;
 		for(const app of isNaN(_app_or_num) ? [_app_or_num] : Object.keys(this.#linkRegistry))

@@ -21,7 +21,7 @@ import {egw} from "../../jsapi/egw_global";
  */
 export class Et2VfsName extends Et2Textbox
 {
-	private fileInfo : {path?: string; mime?: string} | null = null;
+	private fileInfo : {path?: string; name?: string; mime?: string} | null = null;
 
 	constructor()
 	{
@@ -77,6 +77,14 @@ export class Et2VfsName extends Et2Textbox
 		{
 			return false;
 		}
+		// the server sends mime === false when it could not resolve the file at all, eg. a symlink
+		// pointing at a deleted target.  Opening it would just hand the browser a webdav url that
+		// 404s into a blank tab, so tell the user instead.
+		if(typeof this.fileInfo.mime !== "string")
+		{
+			this.egw().message(this.egw().lang("File '%1' not found!", this.fileInfo.name || this.fileInfo.path), "error");
+			return false;
+		}
 		this.egw().open({path: this.fileInfo.path, type: this.fileInfo.mime}, "file");
 		return false;
 	}
@@ -104,7 +112,7 @@ customElements.define("et2-vfs-name", Et2VfsName);
  */
 export class Et2VfsNameReadonly extends Et2Description
 {
-	private fileInfo : {path?: string; mime?: string} | null = null;
+	private fileInfo : {path?: string; name?: string; mime?: string} | null = null;
 
 	constructor()
 	{
@@ -152,6 +160,14 @@ export class Et2VfsNameReadonly extends Et2Description
 	{
 		if(!this.fileInfo?.path)
 		{
+			return false;
+		}
+		// the server sends mime === false when it could not resolve the file at all, eg. a symlink
+		// pointing at a deleted target.  Opening it would just hand the browser a webdav url that
+		// 404s into a blank tab, so tell the user instead.
+		if(typeof this.fileInfo.mime !== "string")
+		{
+			this.egw().message(this.egw().lang("File '%1' not found!", this.fileInfo.name || this.fileInfo.path), "error");
 			return false;
 		}
 		this.egw().open({path: this.fileInfo.path, type: this.fileInfo.mime}, "file");
