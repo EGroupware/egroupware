@@ -742,11 +742,33 @@ class admin_mail
 			// first check special-use attributes
 			if (($special_use = array_shift($common_names)))
 			{
-				foreach((array)$attributes[$special_use] as $mailbox)
+				// A server can (and real-world Dovecot/hosting-panel setups sometimes do) tag
+				// MORE THAN ONE mailbox with the same special-use attribute - previously, among
+				// several candidates, whichever had the textually shortest name won outright,
+				// with no regard for whether its own name even suggests this role at all. Found
+				// live 2026-09-14 (ralf): a real classic-IMAP account showed "Spam" pre-selected
+				// for the "Templates" folder role. When there IS more than one candidate, prefer
+				// one whose own name also matches this role's common name(s) (eg. "spam" for
+				// junk) over one that doesn't (eg. a folder actually named "Templates") - the
+				// normal, common single-candidate case (trusting the special-use flag outright,
+				// even for a folder named entirely in another language that doesn't match any
+				// common-name keyword at all, eg. "Gesendet" for \Sent) is unchanged: this only
+				// ever changes the outcome when there's a genuine multi-candidate ambiguity to
+				// resolve.
+				$candidates = (array)$attributes[$special_use];
+				$corroborated = null;
+				foreach($candidates as $mailbox)
 				{
-					if (empty($content[$name]) || is_string($mailbox) && strlen($mailbox) < strlen($content[$name]))
+					$delimiter = !empty($mailboxes[$mailbox]['delimiter']) ? $mailboxes[$mailbox]['delimiter'] : '.';
+					$name_parts = explode($delimiter, strtolower($mailbox));
+					$matches_name = (bool)array_intersect($name_parts, $common_names);
+
+					if (empty($content[$name]) ||
+						(count($candidates) > 1 && $matches_name && !$corroborated) ||
+						($matches_name === $corroborated && is_string($mailbox) && strlen($mailbox) < strlen($content[$name])))
 					{
 						$content[$name] = $mailbox;
+						$corroborated = $matches_name;
 					}
 				}
 			}

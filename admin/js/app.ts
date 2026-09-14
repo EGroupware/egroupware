@@ -1630,9 +1630,26 @@ export class AdminApp extends EgwApp
 		// jQuery's fadeToggle() animates the show/hide; there's no native one-liner for that
 		// without adding CSS transitions, so this drops the animation and just toggles display
 		// (not sure how to do this et2-isch, per the original comment here)
+		//
+		// The actual hiding comes from app.css's own `.emailadmin_manual { display: none; }` rule
+		// (a stylesheet class, not an inline style) - checking `el.style.display` (the INLINE
+		// style property) here was always reading an empty string, never 'none', so this toggle
+		// was a no-op forever: clicking "Manual entry" just kept re-setting inline display:none,
+		// which the class rule already implied, and never revealed anything. Found live
+		// 2026-09-14 (ralf): after the wizard's own auto-detection got stuck on a slow/failing
+		// connection, clicking "Manuelle Eingabe" as a workaround did nothing either.
+		//
+		// Fixed to read the actual (computed) visibility instead, and to reveal via 'revert' -
+		// the CSS keyword for "ignore my own author-stylesheet rules for this property on this
+		// element" - rather than an empty string, which would just fall back to the very same
+		// class rule that's hiding it. `revert` restores this row's own natural table-row layout
+		// (mailaccount.xet/mailwizard.*.xet only ever apply `.emailadmin_manual` to `<row>`s,
+		// bar one `<et2-button>` in the mobile template, which still becomes visible - just not
+		// necessarily with its usual layout - either way, a strict improvement over staying
+		// invisible forever).
 		document.querySelectorAll<HTMLElement>('.emailadmin_manual').forEach(el =>
 		{
-			el.style.display = el.style.display === 'none' ? '' : 'none';
+			el.style.display = getComputedStyle(el).display === 'none' ? 'revert' : 'none';
 		});
 		this.wizard_popup_resize(); // popup needs to be resized after toggling
 	}
