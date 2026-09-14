@@ -39,6 +39,11 @@ class home_favorite_portlet extends home_portlet
 	protected $nm_settings = array(
 		'lettersearch'	=> false,
 		'favorites'		=> false,	// Hide favorite control
+		// A portlet has no filter drawer of its own - it lives inside Home, whose drawer belongs to
+		// Home.  Without this the list would push its app's search/filter widgets into Home's drawer.
+		// Empty string, not false: the value reaches the client as a widget attribute, where a
+		// boolean false arrives as the *string* "false" and is therefore truthy.
+		'filter_template' => '',
 		'actions'		=> array(),
 		'placeholder_actions' => array()
 	);
@@ -116,6 +121,14 @@ class home_favorite_portlet extends home_portlet
 		$etemplate->read('home.favorite');
 
 		$etemplate->set_dom_id($id);
+
+		// Subclasses predating the base setting turn the filter drawer off with a boolean, which
+		// survives the trip to the client as the string "false" - truthy, so the drawer would be
+		// built after all.  Normalise here rather than making every app repeat the reasoning.
+		if(empty($this->nm_settings['filter_template']))
+		{
+			$this->nm_settings['filter_template'] = '';
+		}
 
 		$content = $this->context + array('nm' => $this->nm_settings);
 		$content['header_node'] = "home-index_{$id}_header";

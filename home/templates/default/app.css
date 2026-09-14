@@ -128,22 +128,14 @@ div.calendar_favorite_portlet.et2_portlet.ui-widget-content > div:last-of-type {
 	background-position: -10px 0 !important;
 }
 
-/* We can't just set display:none for the header as that changes the column spacing */
-[class*="favorite_portlet"].et2_portlet  .et2_nextmatch.header_hidden {
-	padding-top: 0px;
-}
-[class*="favorite_portlet"].et2_portlet  .et2_nextmatch.header_hidden .egwGridView_outer thead:first-of-type th,
-[class*="favorite_portlet"].et2_portlet  .et2_nextmatch.header_hidden .egwGridView_outer thead:first-of-type div.innerContainer,
-[class*="favorite_portlet"].et2_portlet  .et2_nextmatch.header_hidden .egwGridView_outer thead:first-of-type th.optcol span.selectcols {
-	height: 0px;
-	padding-top: 0px;
-	padding-bottom: 0px;
-	margin-top: 0px;
-	margin-bottom: 0px;
-	line-height: 0px;
-}
-[class*="favorite_portlet"].et2_portlet  .et2_nextmatch.header_hidden .egwGridView_outer thead:first-of-type th {
-	visibility:hidden;
+/* Collapsed state, toggled by the portlet's own chevron button.  Et2Nextmatch has no
+ * search/filter header bar of its own (those live in the app's filter drawer, which a
+ * portlet has no access to), so the only thing left to collapse is the datagrid's column
+ * header row - reachable from here because Et2Nextmatch re-exports the datagrid's "header"
+ * part alongside its own.
+ */
+[class*="favorite_portlet"].header_hidden et2-nextmatch::part(header) {
+	display: none;
 }
 
 /**

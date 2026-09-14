@@ -4,6 +4,8 @@ import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import type {SelectOption} from "../../api/js/etemplate/Et2Select/FindSelectOptions";
 import {Et2Favorites} from "../../api/js/etemplate/Et2Favorites/Et2Favorites";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
+import type {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatch";
+import {loadWebComponent} from "../../api/js/etemplate/Et2Widget/Et2Widget";
 import {css, html} from "lit";
 import {classMap} from "lit/directives/class-map.js";
 
@@ -108,8 +110,8 @@ export class Et2PortletFavorite extends Et2Portlet
 				}
 				if(state.state && state.state.selectcols)
 				{
-					// Make sure it's a real array, not an object, then set cols
-					this.nm.set_columns(jQuery.extend([], state.state.selectcols));
+					// A favorite's selectcols can come back as an object keyed by index, not an array
+					this.nm.setColumns(Object.values(state.state.selectcols));
 				}
 				this.nm.applyFilters(state.state || state.filter || {});
 			}
@@ -152,27 +154,48 @@ export class Et2PortletFavorite extends Et2Portlet
 		`;
 	}
 
-	protected get nm()
+	protected get nm() : Et2Nextmatch | false
 	{
-		return this.getWidgetById('nm') || etemplate2.getById(this.id) && etemplate2.getById(this.id).widgetContainer.getWidgetById('nm') || false;
+		return <Et2Nextmatch>this.getWidgetById('nm') || etemplate2.getById(this.id) && <Et2Nextmatch>etemplate2.getById(this.id).widgetContainer.getWidgetById('nm') || false;
 	}
 
-	public toggleHeader()
+	/**
+	 * Slot the app's own header widgets (Filemanager's up / home / path navigation) above the list.
+	 *
+	 * Et2Nextmatch has no header_left / header_right attributes - the legacy widget's header bar is
+	 * gone, and the filter drawer that replaced it belongs to the app shell, which a portlet sitting
+	 * on Home has no access to.  What it does have is a "header" slot rendered directly above the
+	 * grid, so an app that sends a header template still gets it, in the same place as before.
+	 *
+	 * The template name is deliberately read out of the portlet's content rather than the
+	 * nextmatch's settings: header_left is not in Et2Nextmatch's ALLOWED_SETTINGS, and shouldn't
+	 * be - no other app needs it.  Called by home's app.ts once the portlet's own etemplate is
+	 * ready, since that is the first point at which both the content and the nextmatch exist.
+	 */
+	public applyHeaderTemplate()
 	{
-		//widget.set_class(widget.class == 'opened' ? 'closed' : 'opened');
-		// We operate on the DOM here, nm should be unaware of our fiddling
-		let nm = this.nm
-		if(!nm)
+		const nm = this.nm;
+		if(!nm || nm.querySelector("[slot='header']"))
 		{
 			return;
 		}
+		const template = etemplate2.getById(this.id)?.widgetContainer.getArrayMgr("content")?.getEntry("nm[header_left]");
+		if(!template)
+		{
+			return;
+		}
+		loadWebComponent("et2-template", {id: template, slot: "header"}, nm);
+	}
 
-		// Hide header
-		nm.div.toggleClass('header_hidden');
-		nm.set_hide_header(nm.div.hasClass('header_hidden'));
-		nm.resize();
-
-		// Toggle class that changes everything
+	/**
+	 * Show or hide the list's column header row.
+	 *
+	 * Nothing is asked of the nextmatch here: the collapsed look is a "header_hidden" class on
+	 * the portlet plus a ::part() rule in app.css, so the grid keeps its column widths and does
+	 * not have to re-render or resize.
+	 */
+	public toggleHeader()
+	{
 		this.classList.toggle("header_hidden");
 		this.requestUpdate();
 	}

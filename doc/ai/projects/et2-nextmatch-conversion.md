@@ -9,19 +9,21 @@ generated component docs for
 [`et2-datagrid`](https://etemplate.egroupware.org/components/et2-datagrid/) — this document does not
 repeat that reference material.
 
-Apps converted so far: Addressbook, Infolog, Filemanager, Mail, Timesheet, Tracker. Apps still on the
-legacy widget: Calendar, Admin, Importexport, Aiassistant, Preferences, Home. Related in-flight/reference
+Apps converted so far: Addressbook, Infolog, Filemanager, Mail, Timesheet, Tracker, Home. Apps still on
+the legacy widget: Calendar, Admin, Importexport, Aiassistant, Preferences. Related in-flight/reference
 docs in the same directory as the widget source: `ColumnSelectionNotes.md`,
 `Et2DatagridDirectoryMigrationPlan.md`, `NestedExpansion.md`.
 
+Home's conversion is the favourite portlet (`home/templates/default/favorite.xet` +
+`Et2PortletFavorite.ts`), and with it every app's favourite-portlet row template — see
+[The Home favourite portlet](#the-home-favourite-portlet) below, which is where the other apps'
+portlet row templates are now covered.
+
 Addressbook's conversion covers every *reachable* list view the app itself owns: the main index
 (including its mobile skin), the org/duplicate grouped views, the CRM popup (`CRM.ts`), and the
-contact-picker popup. Two addressbook-owned templates were deliberately left on the legacy widget:
+contact-picker popup. `index.rows.xet`'s Home-favorite-portlet variant came later, with Home's own
+conversion. One addressbook-owned template is still deliberately on the legacy widget:
 
-- `index.rows.xet`'s Home-favorite-portlet variant — rendered through `home_favorite_portlet.inc.php`,
-  shared framework code used by ~9 other apps' portlets, so converting it is a separate, cross-app
-  change (see [Why template + app-JS must land together](#why-template--app-js-must-land-together)'s
-  shared-framework-code caution).
 - `display.xet` (the Sitemgr "display" module, `class.addressbook_display.inc.php`) — this is a CMS
   content-block view, only reachable when the `sitemgr` app is installed and a page/module is
   configured to embed it. On an instance without `sitemgr` installed there is no way to load or
@@ -32,22 +34,18 @@ contact-picker popup. Two addressbook-owned templates were deliberately left on 
 
 Filemanager's conversion covers the main index (desktop + mobile skin), the tile view, the background
 jobs list (`jobs.xet`), and the shares list (`shares.xet`). `home.rows.xet` (the Home favorite-portlet
-variant) is deliberately left on the legacy widget, same shared-framework-code reason as Addressbook's
-portlet view above.
+variant) came later, with Home's own conversion.
 
-Timesheet's conversion covers the main index (desktop + mobile skin) only. `index.rows.xet` (the
-Home-favorite-portlet variant, rendered through `timesheet_favorite_portlet.inc.php`) is deliberately
-left on the legacy widget, same shared-framework-code reason as Addressbook's and Filemanager's portlet
-views above — convert it together with a matching pass over other apps' favorite-portlet row
-templates, not as a one-off.
+Timesheet's conversion covers the main index (desktop + mobile skin). `index.rows.xet` (the
+Home-favorite-portlet variant, rendered through `timesheet_favorite_portlet.inc.php`) came later, with
+Home's own conversion.
 
 Tracker's conversion covers the main index (desktop + mobile skin), the admin Escalations list
 (`escalations.xet`), and the comments/replies list embedded in the edit popup (`edit.xet`'s
 `tracker.edit.comments`/`tracker.edit.comment_row`, id `replies` — desktop only, the mobile edit
 template renders comments as a static loop with no nextmatch at all). `index.rows.xet` (the
 Home-favorite-portlet variant, rendered through `tracker_favorite_portlet.inc.php`, same `tracker.index.rows`
-template id as the real index but a separate file) is deliberately left on the legacy widget, same
-shared-framework-code reason as the other apps' portlet views above. The comments nextmatch also uses
+template id as the real index but a separate file) came later, with Home's own conversion. The comments nextmatch also uses
 `lazy="true"` (see [Lazy loading a nextmatch that lives inside a tab](#lazy-loading-a-nextmatch-that-lives-inside-a-tab))
 so it doesn't fetch until the Comments tab is actually activated.
 
@@ -87,6 +85,57 @@ to `app.ts`'s existing `checkNmFilterChanged()` — the generic handler that alr
 `col_filter` key change regardless of which physical control (toolbar or drawer) changed it, since both
 write through the same shared id and the same `et2-filter` event. No new wiring was needed; the sync
 bug was really just a missing case in code that already ran on every relevant change.
+
+## The Home favourite portlet
+
+Home's "favourite" portlet renders another app's list inside a small tile, so converting it converts a
+piece of every app at once. It is one template (`home/templates/default/favorite.xet`), one widget class
+(`home/js/Et2PortletFavorite.ts`) and the nine row templates the portlet can be pointed at:
+`addressbook.index.rows`, `calendar.list.rows`, `filemanager.home.rows`, `infolog.home`,
+`news_admin.index.rows`, `projectmanager.list.rows`, `resources.show.rows`, `timesheet.index.rows`,
+`tracker.index.rows`.
+
+**Those nine live in standalone `.xet` files that duplicate the app's own row template, on purpose.**
+The portlet asks for the row template by name and nothing else on the Home page defines it, so
+`Et2Template` falls through its cache to `<app>/templates/<set>/<rest>.xet` and fetches the file. In the
+app itself the same template id is already in the cache, inlined in `index.xet`, so the standalone file
+is never fetched there — which is exactly why converting one of these files cannot break the app's own
+list view, and equally why the two copies have to be kept in sync by hand. Several had already drifted
+before the conversion.
+
+Portlet-specific things that do not come up when converting an app's own list:
+
+- **There is no header bar to hide.** The legacy portlet's chevron called `set_hide_header()`, which hid
+  the nextmatch's search/filter/favourite bar, and CSS additionally collapsed the column header row.
+  `Et2Nextmatch` has neither — its filters live in the app shell's filter drawer, which a portlet on
+  Home cannot reach. The chevron now only toggles a `header_hidden` class on the portlet, and
+  `home/templates/default/app.css` hides `et2-nextmatch::part(header)`; that one part covers both
+  Et2Nextmatch's own header slot and the datagrid's column header row, because Et2Nextmatch re-exports
+  the datagrid's `header` part under the same name.
+- **`header_left` has no property equivalent**, and Filemanager is the only app that sends one (its
+  up/home/path navigation). `Et2PortletFavorite.applyHeaderTemplate()` reads the template name straight
+  out of the portlet's content — it is not in `ALLOWED_SETTINGS`, and shouldn't be — and slots an
+  `<et2-template>` into the nextmatch's `header` slot. Home's `app.ts` calls it from `et2_ready()`, the
+  first point where both the content and the nextmatch exist.
+- **Turn the filter drawer off with `''`, not `false`.** `$content['nm']['filter_template'] = false`
+  reaches the client as the *string* `"false"`, which is truthy, so a filterbox gets built and appended
+  to whatever `<egw-app>` contains it — on Home that is Home's own drawer, filling it with eight other
+  apps' filters. `home_favorite_portlet` now sets `''` and normalises any subclass's `false` in
+  `exec()`. (Same shape as `Et2Template.getUrl()`'s existing `"null"` special case.)
+- **`row_modified` is a key into the row *content*, not a sort column.** A nextmatch with no `order` of
+  its own falls back to ordering by `row_modified`, which fails the whole query when the two namespaces
+  differ — Calendar's rows carry `modified` while the column is `cal_modified`. Two portlets were dead
+  because of this (`calendar_favorite_portlet`, and `resources_favorite_portlet`, which had
+  Timesheet's `ts_modified` copied into it); give the portlet an explicit `order`/`sort` rather than
+  bending `row_modified` into a column name it then can't do its real job with.
+- **Customfield widgets need an explicit `app=`.** `Customfields::beforeSendToClient()` falls back to
+  the current app, and a portlet is rendered under Home for part of its request. Both
+  `<et2-customfields-list>` and `<et2-nextmatch-header-customfields>` take the attribute.
+- **A nested autorepeating `<grid>` inside a row cell is inert.** `Et2RowProvider` builds a row by
+  cloning and hydrating individual widgets; it has no autorepeat, so the nested `<grid>`/`<columns>`/
+  `<rows>` tags are stamped into the DOM as unknown elements and render nothing, silently. Resources'
+  accessory sub-list was the one instance; it now needs either a repeating widget the row provider
+  understands or a flat server-provided field.
 
 ## Status
 
@@ -741,9 +790,10 @@ Where an app's filters actually come from under `Et2Nextmatch`, and the trap in 
   `nm.controller.*` breaks or crashes silently. Grep for `.controller.` across the app's JS as a
   conversion-completeness check.
 - **Generic `et2_ready()` code (not gated by a per-template `switch`) can still reach a legacy widget
-  instance** if the app has a template deliberately left unconverted, eg. a Home favorite-portlet
+  instance** if the app has a template left unconverted — historically the Home favorite-portlet
   variant (Filemanager: `scheduleChangeViewButtonUpdate()` crashed on `nm.updateComplete.then(...)` —
-  `updateComplete` is LitElement-only). Grepping for `typeof nm\.` isn't a complete check; any
+  `updateComplete` is LitElement-only; the portlet templates are converted now, but the guard it needed
+  is still in `filemanager.ts`). Grepping for `typeof nm\.` isn't a complete check; any
   assumed-modern-only property/method access on `nm` is a candidate.
 - **Don't guess at renamed settings.** A removed widget property doesn't always have an obviously-named
   replacement (e.g. `nm.settings.foldertree` doesn't exist; the correct property for the current

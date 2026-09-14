@@ -40,7 +40,7 @@ class resources_favorite_portlet extends home_favorite_portlet
 			// Use a reduced column set for home, user can change if needed
 			'default_cols' => 'image,name_short_description,useable_quantity',
 			'row_id'       => 'res_id',
-			'row_modified' => 'ts_modified',
+			'row_modified' => 'res_modified',
 
 			'no_cat'       => true,
 			'filter_label' => lang('Category'),

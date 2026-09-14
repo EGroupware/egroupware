@@ -1153,9 +1153,9 @@ export class filemanagerAPP extends EgwApp
 	private scheduleChangeViewButtonUpdate(nm? : Et2Nextmatch, fallbackView? : string)
 	{
 		nm = nm || this.nm || this.et2?.getWidgetById?.('nm');
-		// nm may still be the legacy et2_extension_nextmatch widget (eg. the Home favorite
-		// portlet's filemanager.home.rows), which has no updateComplete promise and no
-		// change-view button to update.
+		// Optional chaining, not a plain call: this also runs for the Home favorite portlet, which
+		// has no change-view button at all, and (before its own conversion) for a legacy
+		// et2_extension_nextmatch with no updateComplete promise.
 		nm?.updateComplete?.then(() => this.updateChangeViewButton(this.normalizeView(nm.view || fallbackView)));
 	}
 

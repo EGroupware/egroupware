@@ -15,25 +15,25 @@
             </columns>
 			<rows>
 				<row class="th">
-					<nextmatch-sortheader label="Image" id="image"/>
+					<et2-nextmatch-sortheader  label="Image" id="image"/>
 					<et2-vbox>
-						<nextmatch-sortheader label="Name" id="name"/>
-						<nextmatch-sortheader label="Short description" id="short_description"/>
+						<et2-nextmatch-sortheader  label="Name" id="name"/>
+						<et2-nextmatch-sortheader  label="Short description" id="short_description"/>
 					</et2-vbox>
 					<et2-vbox>
-						<nextmatch-sortheader statustext="How many of this resource are usable" label="Useable" id="useable"/>
-						<nextmatch-sortheader statustext="How many of this resource exists" label="Quantity" id="quantity"/>
+						<et2-nextmatch-sortheader  statustext="How many of this resource are usable" label="Useable" id="useable"/>
+						<et2-nextmatch-sortheader  statustext="How many of this resource exists" label="Quantity" id="quantity"/>
 					</et2-vbox>
 					<et2-vbox>
-						<nextmatch-sortheader label="Category" id="cat_id"/>
+						<et2-nextmatch-sortheader  label="Category" id="cat_id"/>
 						<et2-description  value="Administrator"></et2-description>
 					</et2-vbox>
 					<et2-vbox>
-						<nextmatch-sortheader label="Location" id="location"/>
+						<et2-nextmatch-sortheader  label="Location" id="location"/>
 						<et2-description  value="Storage information"></et2-description>
 					</et2-vbox>
 					<et2-nextmatch-header  label="Resource / Accessories"></et2-nextmatch-header>
-					<nextmatch-customfields id="customfields"/>
+					<et2-nextmatch-header-customfields  id="customfields" app="resources"/>
 				</row>
 				<row class="$row_cont[class]">
 					<et2-image  id="${row}[picture_thumb]" width="100%" height="auto" href="webdav.php/apps/resources/${row_cont[res_id]}/.picture.jpg" src="${row}[picture_thumb]" imageTooltip="true" extraLinkTarget="_blank" ></et2-image>
@@ -55,18 +55,14 @@
 					</et2-vbox>
 					<et2-vbox  noLang="1">
 						<et2-description  href="resources.resources_ui.edit&amp;res_id=$row_cont[accessory_of]" id="${row}[accessory_of_label]" extraLinkPopup="850x600" noLang="1"></et2-description>
-						<grid width="100%" id="${row}[accessories]">
-							<columns>
-								<column/>
-							</columns>
-							<rows>
-								<row>
-									<et2-description  href="resources.resources_ui.edit&amp;res_id=$row_cont[acc_id]" id="${row}[name]" extraLinkPopup="850x600" noLang="1"></et2-description>
-								</row>
-							</rows>
-						</grid>
+						<!-- The accessory sub-list used to be an autorepeating <grid> over ${row}[accessories].
+						     Et2Datagrid builds a row by cloning and hydrating individual widgets, so a nested
+						     grid is inert markup there - it renders nothing at all, silently. Restoring the
+						     sub-list needs either a repeating widget the row provider understands, or a
+						     server-provided flat field to bind a single widget to; until then this column
+						     shows only which resource an accessory belongs to. -->
 					</et2-vbox>
-					<customfields-list id="$row"/>
+					<et2-customfields-list  id="$row" app="resources"/>
 				</row>
 			</rows>
 		</grid>

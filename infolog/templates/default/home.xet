@@ -20,56 +20,43 @@
 					<et2-vbox>
 						<et2-nextmatch-header-filter  id="info_type" noLang="1" emptyLabel="Type"></et2-nextmatch-header-filter>
 						<et2-nextmatch-header-filter  align="center" id="info_status" class="selectboxFullWidth" emptyLabel="Status"></et2-nextmatch-header-filter>
-						<nextmatch-sortheader align="right" label="Completed" id="info_percent"/>
+						<et2-nextmatch-sortheader  align="right" label="Completed" id="info_percent"/>
 					</et2-vbox>
-					<grid width="100%" spacing="0" padding="0">
-						<columns>
-							<column/>
-							<column/>
-						</columns>
-						<rows>
-							<row>
-								<nextmatch-customfilter id="linked" options="link-entry"/>
-								<nextmatch-sortheader align="right" label="Priority" id="info_priority" options="DESC" class="noPrint"/>
-							</row>
-							<row>
-								<nextmatch-sortheader label="Subject" id="info_subject"/>
-								<nextmatch-sortheader align="right" label="Creation" id="info_id" options="DESC" class="noPrint"/>
-							</row>
-							<row>
-								<nextmatch-sortheader label="Description" id="info_des"/>
-								<nextmatch-sortheader align="right" label="last changed" id="info_datemodified" options="DESC" class="noPrint"/>
-							</row>
-						</rows>
-					</grid>
-					<nextmatch-customfields id="customfields"/>
+					<et2-box  class="infolog_subjectHeader">
+						<et2-nextmatch-header-entry  id="linked" ariaLabel="Linked"></et2-nextmatch-header-entry>
+						<et2-nextmatch-sortheader  label="Priority" id="info_priority" options="DESC" class="noPrint"/>
+						<et2-nextmatch-sortheader  label="Subject" id="info_subject"/>
+						<et2-nextmatch-sortheader  label="Creation" id="info_id" options="DESC" class="noPrint"/>
+						<et2-nextmatch-sortheader  label="Description" id="info_des"/>
+						<et2-nextmatch-sortheader  label="last changed" id="info_datemodified" options="DESC" class="noPrint"/>
+					</et2-box>
+					<et2-nextmatch-header-customfields  id="customfields" app="infolog"/>
 					<et2-nextmatch-header  label="Category" id="cat_id"></et2-nextmatch-header>
 					<et2-vbox>
-						<nextmatch-sortheader label="Startdate" id="info_startdate" sortmode="DESC"/>
-						<nextmatch-sortheader label="Enddate" id="info_enddate" sortmode="DESC"/>
-						<nextmatch-sortheader label="Date completed" id="info_datecompleted" sortmode="DESC"/>
+						<et2-nextmatch-sortheader  label="Startdate" id="info_startdate" sortmode="DESC"/>
+						<et2-nextmatch-sortheader  label="Enddate" id="info_enddate" sortmode="DESC"/>
+						<et2-nextmatch-sortheader  label="Date completed" id="info_datecompleted" sortmode="DESC"/>
 					</et2-vbox>
 					<et2-vbox>
-						<nextmatch-sortheader label="Times" id="info_used_time"/>
-						<nextmatch-sortheader label="planned" id="info_planned_time" class="infolog_planned"/>
+						<et2-nextmatch-sortheader  label="Times" id="info_used_time"/>
+						<et2-nextmatch-sortheader  label="planned" id="info_planned_time" class="infolog_planned"/>
 					</et2-vbox>
 					<et2-vbox>
-						<nextmatch-sortheader label="Times" id="info_used_time"/>
-						<nextmatch-sortheader label="planned" id="info_planned_time" class="infolog_planned"/>
-						<nextmatch-sortheader label="Re-planned" id="info_replanned_time" class="replanned"/>
+						<et2-nextmatch-sortheader  label="Times" id="info_used_time"/>
+						<et2-nextmatch-sortheader  label="planned" id="info_planned_time" class="infolog_planned"/>
+						<et2-nextmatch-sortheader  label="Re-planned" id="info_replanned_time" class="replanned"/>
 					</et2-vbox>
 					<et2-vbox>
 						<et2-nextmatch-header-account  statustext="Select to filter by owner" id="info_owner" class="infolog_user_filter" emptyLabel="Owner" accountType="both"></et2-nextmatch-header-account>
 						<et2-nextmatch-header-account  statustext="Select to filter by responsible" id="info_responsible" class="infolog_user_filter" emptyLabel="Responsible" accountType="both"></et2-nextmatch-header-account>
 					</et2-vbox>
-					<nextmatch-sortheader label="last changed" id="info_datemodified" options="DESC"/>
+					<et2-nextmatch-sortheader  label="last changed" id="info_datemodified" options="DESC"/>
 				</row>
 				<row class="$row_cont[info_cat] $row_cont[class]" valign="top">
-					<et2-hbox  align="center">
-						<et2-image  label="$row_cont[info_type]" src="${row}[info_type]" defaultSrc="infolog/navbar"></et2-image>
-						<et2-image  label="$row_cont[info_status_label]" id="edit_status[$row_cont[info_id]]" href="javascript:egw.open('$row_cont[info_id]','infolog');" src="$row_cont[info_status_label]" defaultSrc="status"></et2-image>
-						<et2-image  label="$row_cont[info_percent]" id="edit_percent[$row_cont[info_id]]" href="javascript:egw.open('$row_cont[info_id]','infolog');" src="$row_cont[info_percent]"></et2-image>
-						<progress label="$row_cont[info_percent]" id="${row}[info_percent2]" href="javascript:egw.open('$row_cont[info_id]','infolog');"/>
+					<et2-hbox  align="center" class="infolog_CompletedClmn et2_clickable" onclick="egw.open('$row_cont[info_id]','infolog');">
+						<et2-image  label="$row_cont[info_type]" src="$row_cont[info_icon]" defaultSrc="infolog/navbar"></et2-image>
+						<et2-image  label="$row_cont[info_status_label]" id="edit_status[$row_cont[info_id]]" src="infolog/$row_cont[info_status_label]" defaultSrc="status"></et2-image>
+						<progress title="$row_cont[info_percent]%" value="$row_cont[info_percent]" max="100"/>
 					</et2-hbox>
 					<et2-vbox  class="infolog_fullWidth">
 						<et2-hbox>
@@ -81,7 +68,7 @@
 						</et2-box>
 						<et2-link-string  id="${row}[filelinks]" class="$row_cont[filelinks_class]"></et2-link-string>
 					</et2-vbox>
-					<customfields-list id="$row" class="customfields"/>
+					<et2-customfields-list  id="$row" class="customfields" app="infolog"/>
 					<et2-select-cat  id="${row}[info_cat]" readonly="true"></et2-select-cat>
 					<et2-vbox>
 						<et2-date-time  id="${row}[info_startdate]" readonly="true" class="infolog_fixedHeight"></et2-date-time>
@@ -91,26 +78,26 @@
 					<et2-vbox>
 						<et2-hbox  readonly="true">
 							<et2-hbox  readonly="true">
-								<et2-date-duration  id="${row}[info_used_time]" readonly="true" dataFormat="@@duration_format" ></et2-date-duration>
-								<et2-date-duration  id="${row}[info_sum_timesheets]" readonly="true" class="timesheet" dataFormat="@@duration_format"></et2-date-duration>
+								<et2-date-duration  id="${row}[info_used_time]" readonly="true" selectUnit="true" displayFormat="@@duration_format" ></et2-date-duration>
+								<et2-date-duration  id="${row}[info_sum_timesheets]" readonly="true" class="timesheet" selectUnit="true" displayFormat="@@duration_format"></et2-date-duration>
 							</et2-hbox>
 							<et2-description></et2-description>
 						</et2-hbox>
-						<et2-date-duration  id="${row}[info_planned_time]" readonly="true" span="all" class="infolog_planned" dataFormat="@@duration_format"></et2-date-duration>
+						<et2-date-duration  id="${row}[info_planned_time]" readonly="true" span="all" class="infolog_planned" selectUnit="true" displayFormat="@@duration_format"></et2-date-duration>
 					</et2-vbox>
 					<et2-vbox>
 						<et2-hbox  id="r_used_time">
 							<et2-image  label="Times" src="timesheet"></et2-image>
-							<et2-date-duration  id="${row}[info_used_time]" readonly="true" dataFormat="@@duration_format" ></et2-date-duration>
-							<et2-date-duration  id="${row}[info_sum_timesheets]" readonly="true" class="timesheet" dataFormat="@@duration_format"></et2-date-duration>
+							<et2-date-duration  id="${row}[info_used_time]" readonly="true" selectUnit="true" displayFormat="@@duration_format" ></et2-date-duration>
+							<et2-date-duration  id="${row}[info_sum_timesheets]" readonly="true" class="timesheet" selectUnit="true" displayFormat="@@duration_format"></et2-date-duration>
 						</et2-hbox>
 						<et2-hbox  id="planified">
 							<et2-image  label="planned time" src="alarm"></et2-image>
-							<et2-date-duration  id="${row}[info_planned_time]" readonly="true" span="all" class="infolog_planned" dataFormat="@@duration_format"></et2-date-duration>
+							<et2-date-duration  id="${row}[info_planned_time]" readonly="true" span="all" class="infolog_planned" selectUnit="true" displayFormat="@@duration_format"></et2-date-duration>
 						</et2-hbox>
 						<et2-hbox  id="replanified">
 							<et2-image  label="Re-planned time" src="agt_reload.png"></et2-image>
-							<et2-date-duration  id="${row}[info_replanned_time]" readonly="true" span="all" class="replanned" dataFormat="@@duration_format"></et2-date-duration>
+							<et2-date-duration  id="${row}[info_replanned_time]" readonly="true" span="all" class="replanned" selectUnit="true" displayFormat="@@duration_format"></et2-date-duration>
 						</et2-hbox>
 					</et2-vbox>
 					<et2-vbox>
@@ -124,5 +111,6 @@
 				</row>
 			</rows>
 		</grid>
+		<et2-styles  src="rows.css"></et2-styles>
 	</et2-template>
 </overlay>
