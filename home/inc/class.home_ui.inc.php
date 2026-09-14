@@ -43,6 +43,16 @@ class home_ui
 		// CSS for Gridster grid layout
 		Framework::includeCSS('/vendor/npm-asset/gridster/dist/jquery.gridster.css');
 
+		// Ask for our own CSS explicitly, rather than relying on Framework::include_css_js_response()
+		// picking it up as "the current app's".  That runs once when the response is serialized and
+		// reads $GLOBALS['egw_info']['flags']['currentapp'] at that moment - which is whichever app
+		// the *last* favourite portlet switched to, because Etemplate::exec() ends the request from
+		// inside that portlet and never returns to restore it.  Without this, Home silently loses the
+		// stylesheet holding its portlet grid, so the portlets stop being positioned, and dragging or
+		// resizing one computes nonsense coordinates from a grid that isn't there.
+		Framework::includeCSS('home', 'app-'.$GLOBALS['egw_info']['user']['preferences']['common']['theme']) ||
+			Framework::includeCSS('home', 'app');
+
 		$template = new Etemplate('home.index');
 
 		// Get a list of portlets
