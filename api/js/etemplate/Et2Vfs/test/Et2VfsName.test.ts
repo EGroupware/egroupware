@@ -1,4 +1,5 @@
-import {assert, fixture, html} from "@open-wc/testing";
+import {assert, fixture} from "@open-wc/testing";
+import {html, unsafeStatic} from "lit/static-html.js";
 import * as sinon from "sinon";
 import "../Et2VfsName";
 
@@ -46,4 +47,29 @@ describe("Et2VfsName", () =>
 			type: "application/pdf"
 		}, "file"));
 	});
+
+	// the server sends mime === false when it could not resolve the file, eg. a symlink whose
+	// target was deleted.  Opening it would only produce a webdav url that 404s into a blank tab.
+	for(const tag of ["et2-vfs-name", "et2-vfs-name_ro"])
+	{
+		it(`reports instead of opening a file with no mime-type (${tag})`, async() =>
+		{
+			const element = await fixture<any>(html`<${unsafeStatic(tag)}></${unsafeStatic(tag)}>`);
+			const open = sinon.spy();
+			const message = sinon.spy();
+			element.egw = () => ({
+				open,
+				message,
+				lang: (value : string, placeholder : string) => value.replace("%1", placeholder),
+				decodePath: (path : string) => path,
+				tooltipUnbind: () => {}
+			});
+			element.value = {path: "/home/user/dangling.odt", name: "dangling.odt", mime: false};
+			await element.updateComplete;
+
+			assert.isFalse(element.open());
+			assert.isTrue(open.notCalled, "should not try to open a file the server could not resolve");
+			assert.isTrue(message.calledOnceWith("File 'dangling.odt' not found!", "error"));
+		});
+	}
 });
