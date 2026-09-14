@@ -1,4 +1,4 @@
-import {elementUpdated, fixture, html} from '@open-wc/testing';
+import {assert, elementUpdated, fixture, html} from '@open-wc/testing';
 import * as sinon from 'sinon';
 import {Et2VfsSelectDialog} from "../Et2VfsSelectDialog";
 
@@ -15,6 +15,8 @@ window.egw = {
 	jsonq: () => Promise.resolve({}),
 	lang: i => i + "*",
 	link: i => i,
+	link_app_list: () => ({}),
+	langRequireApp: () => {},
 	preference: i => "",
 	tooltipUnbind: () => {},
 	webserverUrl: "",
@@ -69,3 +71,43 @@ describe("Vfs Select Dialog widget basics", () =>
 	});
 });
  */
+
+// searchMatch() is a plain method - it can be exercised on a detached element, without the
+// fixture()/render() path the (commented out) suite above trips over.
+describe("Et2VfsSelectDialog.searchMatch()", () =>
+{
+	let dialog : any;
+
+	beforeEach(() =>
+	{
+		dialog = new Et2VfsSelectDialog();
+		dialog.egw = () => window.egw;
+	});
+
+	it("matches a file against an active mime filter", () =>
+	{
+		const option = {value: "/home/user/report.pdf", label: "report.pdf", mime: "application/pdf"};
+
+		assert.isTrue(dialog.searchMatch("report", {mime: "application/pdf"}, option));
+		assert.isFalse(dialog.searchMatch("report", {mime: "image/"}, option));
+	});
+
+	// the filemanager clipboard (Et2LinkPasteDialog) passes row data through verbatim, and the
+	// server sends mime === false for a file it could not resolve - it must not match, not throw
+	for(const [label, mime] of [["false", false], ["missing", undefined]])
+	{
+		it(`does not match a file whose mime-type is ${label}`, () =>
+		{
+			const option = {value: "/home/user/dangling.odt", label: "dangling.odt", mime};
+
+			assert.isFalse(dialog.searchMatch("dangling", {mime: "application/vnd.oasis.opendocument.text"}, option));
+		});
+	}
+
+	it("ignores the mime-type when no filter is set", () =>
+	{
+		const option = {value: "/home/user/dangling.odt", label: "dangling.odt", mime: false};
+
+		assert.isTrue(dialog.searchMatch("dangling", {}, option));
+	});
+});

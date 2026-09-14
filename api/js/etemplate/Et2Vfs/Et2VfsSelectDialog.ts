@@ -336,24 +336,27 @@ export class Et2VfsSelectDialog
 		return value;
 	}
 
-	protected localSearch<FileInfo>(search : string, searchOptions : object, localOptions : FileInfo[] = []) : Promise<FileInfo[]>
+	protected localSearch(search : string, searchOptions : object, localOptions : FileInfo[] = []) : Promise<FileInfo[]>
 	{
 		return super.localSearch(search, {...searchOptions, mime: this.mime}, localOptions);
 	}
 
-	public searchMatch<FileInfo>(search : string, searchOptions : Object, option : FileInfo) : boolean
+	public searchMatch(search : string, searchOptions : {mime? : string}, option : FileInfo) : boolean
 	{
 		let result = super.searchMatch(search, searchOptions, option);
 
-		// Add in local mime check
+		// Add in local mime check.  A file with no usable mime-type never matches a mime filter:
+		// options can come from the filemanager clipboard (Et2LinkPasteDialog), which carries the
+		// row data verbatim - and the server sends mime === false for a file it could not resolve.
 		if(result && searchOptions.mime)
 		{
-			result = result && option.mime.match(searchOptions.mime);
+			const mime = option.mime;
+			result = typeof mime === "string" && !!mime.match(searchOptions.mime);
 		}
 		return result;
 	}
 
-	remoteSearch<FileInfo>(search : string, options : object) : Promise<FileInfo[]>
+	remoteSearch(search : string, options : object) : Promise<FileInfo[]>
 	{
 		// Include a limit, even if options don't, to avoid massive lists breaking the UI
 		let sendOptions = {
@@ -365,7 +368,7 @@ export class Et2VfsSelectDialog
 		return super.remoteSearch(search, sendOptions);
 	}
 
-	processRemoteResults<FileInfo>(results) : FileInfo[]
+	processRemoteResults(results) : FileInfo[]
 	{
 		const result = super.processRemoteResults(results);
 		if(typeof results.path === "string")
@@ -909,8 +912,11 @@ customElements.define("et2-vfs-select-dialog", Et2VfsSelectDialog);
 
 export type FileInfo = SearchResult &
 {
-	mime : string,
+	// false when the server could not determine the type, eg. a symlink with a deleted target
+	mime : string | false,
 	isDir : boolean,
+	// Basename
+	name? : string,
 	// Full VFS path
 	path? : string,
 	// Direct download link
