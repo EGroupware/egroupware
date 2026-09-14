@@ -369,6 +369,108 @@ describe("Et2HtmlArea default rich text mode", () =>
 	});
 });
 
+/**
+ * TinyMCE renders its own raw <textarea> synchronously and only swaps in the real editor once
+ * its async init completes - a user can (and, reported live, does) type into that visible
+ * textarea before init finishes. tinymce-webcomponent seeds the editor's initial content from
+ * that same textarea, so early typing DOES reach the editor - the bug fixed here was Et2HtmlArea's
+ * own "init" handler then unconditionally overwriting that with its own (necessarily stale,
+ * pre-typing) `this.value`, silently discarding the user's input. Root cause of an intermittent
+ * mail-body-loss report on a slower-loading compose popup.
+ */
+function mockTinyMceEditor(initialContent : string)
+{
+	const handlers = new Map<string, () => void>();
+	let content = initialContent;
+	const editor : any = {
+		on: (event : string, handler : () => void) => handlers.set(event, handler),
+		getContent: () => content,
+		setContent: sinon.spy((value : string) =>
+		{
+			content = value;
+		}),
+		formatter: {apply: () => {}},
+		nodeChanged: () => {}
+	};
+	return {
+		editor,
+		fireInit: () => handlers.get("init")?.()
+	};
+}
+
+describe("Et2HtmlArea TinyMCE init race with early typing", () =>
+{
+	it("keeps content typed into the raw textarea before TinyMCE init, instead of overwriting it with the stale widget value", async() =>
+	{
+		const element = await fixture<Et2HtmlArea>(html`
+			<et2-htmlarea value="<p>Original</p>"></et2-htmlarea>
+		`);
+		// The real @tinymce/tinymce-webcomponent IS registered in this test environment (it's a
+		// real import, not a stub) and may have already started its own real, asynchronous init
+		// in the background by now - replace it with our own mock editor deterministically so
+		// this test isn't racing that unrelated, environment-timing-dependent activity. Also reset
+		// _pendingEditorPush: the initial value="..." attribute binding already went through
+		// set_value() once (setting it true) before we ever got here - under enough parallel test
+		// load, the real component's own background init can still be unresolved by this point, so
+		// that flag can genuinely still be true and must not leak into this test's own scenario.
+		(element as any)._tinyMceEditor = null;
+		(element as any)._pendingEditorPush = false;
+		// Editor's own seed (from the raw textarea) already reflects content typed during
+		// the async-init window, ahead of `this.value` which nothing has updated yet.
+		const {editor, fireInit} = mockTinyMceEditor("<p>Original</p><p>typed before init</p>");
+
+		(element as any)._handleTinyMceSetup(editor);
+		// Defensive re-assignment immediately before firing "init": the real tinymce-webcomponent
+		// registered in this test environment can finish its OWN unrelated real init in the
+		// background at any time and reassign `_tinyMceEditor` itself - pin it back to our mock
+		// right before the synchronous call below so nothing can interleave in between.
+		(element as any)._tinyMceEditor = editor;
+		fireInit();
+		await element.updateComplete;
+
+		assert.equal(
+			element.value,
+			"<p>Original</p><p>typed before init</p>",
+			"Content typed before init should be pulled into the widget value, not discarded"
+		);
+		assert.isFalse(
+			(editor.setContent as sinon.SinonSpy).called,
+			"The editor's own (newer) content should not be overwritten by the stale widget value"
+		);
+	});
+
+	it("still applies a set_value() that raced TinyMCE's own init", async() =>
+	{
+		const element = await fixture<Et2HtmlArea>(html`
+			<et2-htmlarea value="<p>Original</p>"></et2-htmlarea>
+		`);
+		// See the comment in the previous test: force a deterministic "no editor yet" state
+		// instead of racing whatever the real tinymce-webcomponent may already be doing.
+		(element as any)._tinyMceEditor = null;
+		const {editor, fireInit} = mockTinyMceEditor("<p>Original</p>");
+
+		// A programmatic update (eg. bootstrapReply()/signature insertion) racing init - no
+		// editor exists yet at all, so set_value() can't apply this immediately and it must
+		// be retried once init fires.
+		element.set_value("<p>Signature inserted</p>");
+		(element as any)._handleTinyMceSetup(editor);
+		// See the defensive re-assignment comment in the previous test.
+		(element as any)._tinyMceEditor = editor;
+		fireInit();
+		await element.updateComplete;
+
+		assert.equal(
+			element.value,
+			"<p>Signature inserted</p>",
+			"A set_value() still pending when init fires should still be applied"
+		);
+		assert.isTrue(
+			(editor.setContent as sinon.SinonSpy).calledWith("<p>Signature inserted</p>"),
+			"The pending value should be pushed into the editor via setContent()"
+		);
+	});
+});
+
 describe("Et2HtmlAreaReadonly", () =>
 {
 	it("registers et2-htmlarea_ro and renders rich text directly", async() =>

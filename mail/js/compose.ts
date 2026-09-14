@@ -2245,6 +2245,15 @@ export class MailCompose
 		const [profileID, identId] = String(mailaccountValue ?? '').split(':', 2);
 		if (!profileID) return;
 
+		// Captured up front, before any await, purely to detect later (at the write, below)
+		// whether the widget was touched by something else while we were busy - NOT necessarily
+		// the same as `pristineBody` itself (a reply/forward passes an already-quoted body that's
+		// intentionally different from whatever the still-blank widget holds at call time; an
+		// identity switch passes a signature-stripped derivative of it). See the write-time
+		// comment for why only an UNCHANGED-since-entry widget is safe to override with.
+		const widget : any = this.currentBodyWidget();
+		const baselineBody = String(widget?.get_value() ?? '');
+
 		let identities : any[];
 		try
 		{
@@ -2264,6 +2273,26 @@ export class MailCompose
 			insertPref === '1' ? 'top' : insertPref === 'no_belowaftersend' ? 'none' : 'below';
 		const disableRuler = !!this.egw.preference('disableRulerForSignatureSeparation', 'mail');
 
+		// The identity fetch above is a real network round-trip, and the body widget's own TinyMCE
+		// editor (awaited just below, same reason setBodyValue() awaits it - see its docblock) can
+		// still be loading too - a user composing a quick message (reported live: sending to a
+		// distribution list via a Group loses the body) has plenty of time to start typing during
+		// either wait. Only trust that typing over the caller's own `pristineBody` when the caller
+		// itself was just passing the widget's own (then-current) value through unchanged - eg.
+		// bootstrapSignature()'s blank-compose call - so a genuinely different pristineBody (a
+		// reply/forward's already-fetched quote, or an identity-switch's signature-stripped
+		// derivative) is never silently discarded here just because the widget looked "different"
+		// from it at call time by design.
+		if (widget?.tinymce) await widget.tinymce;
+		if (pristineBody === baselineBody)
+		{
+			const liveBody = String(widget?.get_value() ?? '');
+			if (liveBody !== baselineBody)
+			{
+				pristineBody = liveBody;
+			}
+		}
+
 		const result = MailJmap.composeBodyWithSignature(pristineBody, mimeType, identity, {placement, disableRuler, isReply});
 		// HTML mode locates the inserted block via MailJmap.SIGNATURE_MARKER_ID instead (DOM id,
 		// not a tracked substring) - see updateSignatureForIdentity()'s own docblock for why.
@@ -2274,7 +2303,7 @@ export class MailCompose
 				placement === 'top' ? result.slice(0, result.length - pristineBody.length) : '';
 		}
 
-		await this.setBodyValue(result);
+		widget?.set_value(result);
 	}
 
 	/**
