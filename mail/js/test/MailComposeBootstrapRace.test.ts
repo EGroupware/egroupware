@@ -337,22 +337,66 @@ describe("MailCompose bootstrap race (bootstrapping flag)", () =>
 		});
 	});
 
+	describe("applySignatureForCurrentIdentity() vs. a user typing during its own async gap", () =>
+	{
+		// Distinct from the "last write wins" hazard below (two CONCURRENT calls racing each
+		// other): here there's only ONE call, but it captures `pristineBody` before its own
+		// getIdentities() network round-trip (and, for a rich-text body, before awaiting the
+		// widget's own TinyMCE init - see Et2HtmlArea.ts's matching fix) - found live 2026-09-14
+		// investigating "sending to a distribution list via a Group loses the mail body": a user
+		// composing a quick message has plenty of time to start typing during either wait, and the
+		// pre-fix code would silently discard it, overwriting the body with just the signature.
+		it("inserts the signature after content typed while getIdentities() is still in flight, instead of discarding it", async() =>
+		{
+			const app = createFakeApp();
+			const jmap = new MailJmap(app);
+			let resolveIdentities : (identities : JmapIdentity[]) => void;
+			(jmap as any).getIdentities = async() => new Promise<JmapIdentity[]>(resolve =>
+			{
+				resolveIdentities = resolve;
+			});
+			(app as any).jmap = jmap;
+			const compose = new MailCompose(app);
+			const et2 = createFakeEt2(compose, '1:0');
+			(compose as any).et2 = et2;
+			et2.getWidgetById('mimeType').set_value(false);
+
+			const pending = (compose as any).applySignatureForCurrentIdentity('', false);
+			// The user starts typing while getIdentities() is still unresolved.
+			et2.getWidgetById('mail_plaintext').set_value('user typed message');
+			resolveIdentities([fakeIdentity({textSignature: 'Sig', htmlSignature: '<p>Sig</p>'})]);
+			await pending;
+
+			const expected = MailJmap.composeBodyWithSignature('user typed message', 'plain',
+				{textSignature: 'Sig', htmlSignature: '<p>Sig</p>'}, {placement: 'below', disableRuler: false, isReply: false});
+			assert.strictEqual(et2.getWidgetById('mail_plaintext').get_value(), expected,
+				"the signature should be appended to what the user typed, not overwrite it with a signature-only body");
+			assert.include(et2.getWidgetById('mail_plaintext').get_value(), 'user typed message');
+		});
+	});
+
 	describe("the underlying hazard (documents why the guard is needed)", () =>
 	{
-		it("applySignatureForCurrentIdentity() calls racing on the same widget: last write wins", async() =>
+		it("applySignatureForCurrentIdentity() calls racing on the same widget: still corrupts the body", async() =>
 		{
 			// Directly exercises the mechanism the guard now prevents from ever running concurrently
-			// during a bootstrap: two independent calls writing into the SAME body widget, the
-			// later-resolving one clobbering the earlier one - this is what selectIdentityForRecipients()'s
-			// un-awaited updateSignatureForIdentity() used to race against bootstrapReply()'s own call.
+			// during a bootstrap: two independent calls writing into the SAME body widget - this is
+			// what selectIdentityForRecipients()'s un-awaited updateSignatureForIdentity() used to
+			// race against bootstrapReply()'s own call. The 2026-09-14 live-typing fix (see
+			// applySignatureForCurrentIdentity()'s own docblock/comments) changed the exact SHAPE of
+			// the corruption - the first call's own baseline ('') matches its own `pristineBody`
+			// parameter, so it now treats the second call's already-written result as "the user
+			// typed this" and inserts a SECOND signature on top of it, rather than blindly
+			// overwriting it with an empty-pristine one - but two genuinely concurrent calls are
+			// still unsafe (now doubled content instead of silently lost content), which is exactly
+			// why the bootstrapping flag must keep preventing this from ever happening in practice.
 			const app = createFakeApp();
 			const jmap = new MailJmap(app);
 			let call = 0;
 			(jmap as any).getIdentities = async() =>
 			{
 				call++;
-				// first caller resolves LAST - simulates the pre-fix ordering that clobbered a
-				// correctly-quoted body with an empty-pristine, signature-only one
+				// first caller resolves LAST, after the second call has already written its own result
 				await new Promise((resolve) => setTimeout(resolve, call === 1 ? 20 : 0));
 				return [fakeIdentity({textSignature: 'Sig', htmlSignature: '<p>Sig</p>'})];
 			};
@@ -366,10 +410,13 @@ describe("MailCompose bootstrap race (bootstrapping flag)", () =>
 			await Promise.all([first, second]);
 
 			const et2 = (compose as any).et2;
-			const expectedFirstCallResult = MailJmap.composeBodyWithSignature('', 'plain',
-				{textSignature: 'Sig', htmlSignature: '<p>Sig</p>'}, {placement: 'below', disableRuler: false, isReply: false});
-			assert.strictEqual(et2.getWidgetById('mail_plaintext').get_value(), expectedFirstCallResult,
-				"the FIRST call's empty-pristine result won, even though it was issued first - proves 'last write wins' is real and order-sensitive, exactly the hazard the bootstrapping flag now prevents from ever occurring");
+			const identity = {textSignature: 'Sig', htmlSignature: '<p>Sig</p>'};
+			const expectedSecondCallResult = MailJmap.composeBodyWithSignature('quoted body', 'plain',
+				identity, {placement: 'below', disableRuler: false, isReply: true});
+			const expectedFinalResult = MailJmap.composeBodyWithSignature(expectedSecondCallResult, 'plain',
+				identity, {placement: 'below', disableRuler: false, isReply: false});
+			assert.strictEqual(et2.getWidgetById('mail_plaintext').get_value(), expectedFinalResult,
+				"two genuinely concurrent calls still corrupt the body (now a doubled signature instead of silently losing the quote) - proves concurrent calls remain unsafe, exactly the hazard the bootstrapping flag exists to prevent");
 		});
 	});
 });
