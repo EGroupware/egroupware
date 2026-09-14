@@ -2566,6 +2566,143 @@ describe("Et2Nextmatch action setup", () =>
 		assert.isFunction((rows as any).findActionTarget, "rows container should expose findActionTarget for drag/drop");
 	});
 
+	/**
+	 * Contract under test:
+	 * - Dragging a selected row still has that selection to drag after the datagrid
+	 *   re-stamped its rows.
+	 *
+	 * Why it matters: egwDragActionImplementation's dragstart resolves the dragged row
+	 * through findActionTarget() - which rebuilds from the live element and was never the
+	 * problem - but then collects what to drag from the object manager's selected
+	 * children.  When a re-render pruned those, the drag started with nothing selected and
+	 * silently did nothing; in Filemanager it aborted outright for lack of transfer data.
+	 * The other drag tests here all run against a DOM that never churns, so none of them
+	 * saw it.
+	 *
+	 * Setup strategy:
+	 * - Select a rendered row, then replace its element with a fresh one carrying the same
+	 *   row id, the way a re-render does, and resolve the drag target from the new element.
+	 *
+	 * Pass criteria:
+	 * - The drag target resolves to an action object bound to the row now in the document,
+	 *   and that object still reports the selection.
+	 */
+	it("keeps a selected row draggable after its row element is re-stamped", () =>
+	{
+		const controller : any = new Et2NextmatchActionController({
+			id: "nm_drag_restamp",
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "addressbook"})
+		} as any);
+		controller.actionManager = {children: [{id: "egw_link_drag", type: "drag"}]};
+		// What the drag implementation reaches for once dragstart has resolved its row.
+		// ensureRowActionObject() installs its own setSelected/getSelected on each object,
+		// so read selection back through those rather than recording it in the factory.
+		const selectedObjects = () => Array.from(controller.rowActionObjects.values()).filter((o : any) => o.getSelected?.());
+		controller.objectManager = makeFakeObjectManager((rowId : string) => makeFakeRowObject({
+			id: rowId,
+			getContainerRoot: () => ({getSelectedObjects: selectedObjects, setAllSelected: () => {}})
+		}));
+
+		const rowsBody = document.createElement("div");
+		document.body.append(rowsBody);
+		controller.getRowsBodies = () => [rowsBody];
+		controller.getRowsBody = () => rowsBody;
+
+		const row = document.createElement("tr");
+		row.setAttribute("data-row-id", "addressbook::7");
+		rowsBody.append(row);
+		controller.handleSelectionChanged({selectedRowIds: ["addressbook::7"], activeRowId: "addressbook::7"});
+		assert.lengthOf(selectedObjects(), 1, "the selected row should be draggable to begin with");
+
+		row.remove();
+		const restampedRow = document.createElement("tr");
+		restampedRow.setAttribute("data-row-id", "addressbook::7");
+		rowsBody.append(restampedRow);
+		// Prune through a caller that does not reconcile the selection afterwards - the
+		// shape of the original bug, where pruning ran on its own during rendering.
+		controller.syncDragDropRegistration();
+
+		try
+		{
+			const target = controller.findActionTarget({composedPath: () => [restampedRow]} as any);
+			assert.strictEqual(target.target, restampedRow, "the drag should resolve the row now in the document");
+			assert.strictEqual(target.action?.iface?.getDOMNode?.(), restampedRow,
+				"its action object should be bound to that element, not the replaced one");
+			assert.lengthOf(target.action.getContainerRoot().getSelectedObjects(), 1,
+				"dragstart must still find the selection to drag");
+		}
+		finally
+		{
+			rowsBody.remove();
+		}
+	});
+
+	/**
+	 * Contract under test:
+	 * - A selected row that virtualization has scrolled out of the DOM is still part of
+	 *   what an action or a drag carries.
+	 *
+	 * Why it matters: selecting rows, scrolling on, and then dragging or acting on the
+	 * selection is ordinary use, and the row that is no longer rendered has no element to
+	 * rebuild its action object from. materializeVisibleSelectedRows() covers this with a
+	 * detached proxy row, but pruning runs from the render path too, where nothing
+	 * re-creates one - so the off-screen rows could silently drop out of the selection the
+	 * action framework sees while the grid still counted them.
+	 *
+	 * Setup strategy:
+	 * - Select two rendered rows, remove one from the DOM the way the virtualizer does,
+	 *   then prune through a caller that does not reconcile the selection afterwards.
+	 *
+	 * Pass criteria:
+	 * - Both rows are still in the selection the drag would carry.
+	 */
+	it("keeps a selected row that scrolled out of the DOM in the action selection", () =>
+	{
+		const controller : any = new Et2NextmatchActionController({
+			id: "nm_offscreen_selection",
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "addressbook"})
+		} as any);
+		controller.actionManager = {children: [{id: "egw_link_drag", type: "drag"}]};
+		const selectedObjects = () => Array.from(controller.rowActionObjects.values()).filter((o : any) => o.getSelected?.());
+		controller.objectManager = makeFakeObjectManager((rowId : string) => makeFakeRowObject({
+			id: rowId,
+			getContainerRoot: () => ({getSelectedObjects: selectedObjects, setAllSelected: () => {}})
+		}));
+
+		const rowsBody = document.createElement("div");
+		document.body.append(rowsBody);
+		controller.getRowsBodies = () => [rowsBody];
+		controller.getRowsBody = () => rowsBody;
+
+		const onScreen = document.createElement("tr");
+		onScreen.setAttribute("data-row-id", "addressbook::1");
+		const offScreen = document.createElement("tr");
+		offScreen.setAttribute("data-row-id", "addressbook::2");
+		rowsBody.append(onScreen, offScreen);
+		controller.handleSelectionChanged({
+			selectedRowIds: ["addressbook::1", "addressbook::2"],
+			activeRowId: "addressbook::1"
+		});
+		assert.lengthOf(selectedObjects(), 2, "both selected rows should start out in the action selection");
+
+		// The virtualizer recycles the second row out of the DOM as it scrolls away.
+		offScreen.remove();
+		controller.syncDragDropRegistration();
+
+		try
+		{
+			const target = controller.findActionTarget({composedPath: () => [onScreen]} as any);
+			assert.lengthOf(target.action.getContainerRoot().getSelectedObjects(), 2,
+				"the row scrolled off screen must still be part of what the action carries");
+		}
+		finally
+		{
+			rowsBody.remove();
+		}
+	});
+
 	it("normalizes bare row ids through the data provider for drag/drop target resolution", () =>
 	{
 		const row = document.createElement("tr");
