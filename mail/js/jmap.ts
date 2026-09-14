@@ -5072,6 +5072,8 @@ export class MailJmap
 		{
 			const {token, client, identity, submissionIdentityId, draftsId, sentId} = await this.resolveComposeContext(profileID, true);
 
+			email = await this.resolveDistributionLists(email);
+
 			const bodyOverride = smimeType ?
 				await this.smimeEncryptBody(profileID, token, client, identity, email, smimeType, passphrase, passExpMinutes) :
 				pgpArmored ? await this.pgpEncryptBody(profileID, pgpArmored) : undefined;
@@ -5611,6 +5613,45 @@ export class MailJmap
 		return value
 			? (Array.isArray(value) ? value : value.split(',')).map((address) => address.trim()).filter(Boolean).map((address) => this.parseAddress(address))
 			: undefined;
+	}
+
+	/**
+	 * Matches an addressbook distribution-list placeholder address - Et2Email's own to/cc/bcc
+	 * autocomplete stores a selected list as `"Name" <listId@lists.egroupware.org>` (mail/src/
+	 * Compose.php's get_lists()), same shape resolveDistributionLists() below expands server-side.
+	 * Mirrors ComposeMessageBuilder::resolveEmailAddressList()'s own PHP regex exactly (mail/src/
+	 * ComposeMessageBuilder.php).
+	 */
+	private static readonly DISTRIBUTION_LIST_RE = /^-?\d+$|<-?\d+@lists\.egroupware\.org>\s*$/;
+
+	private static splitAddresses(value? : string | string[]) : string[]
+	{
+		return value ? (Array.isArray(value) ? value : value.split(',')).map((address) => address.trim()).filter(Boolean) : [];
+	}
+
+	/**
+	 * Expand any addressbook distribution-list placeholder address in to/cc/bcc into its real member
+	 * email addresses, via Compose::ajax_resolveDistributionLists() (server-side, the JMAP-native
+	 * send path's own equivalent of classic createMessage()'s resolveEmailAddressList() call, which
+	 * never runs at all for a JMAP-native send). Found live 2026-09-14 (ralf, relaying a real user's
+	 * report the morning after this feature's rollout): sending to a distribution list failed with
+	 * "mail for lists.egroupware.org loops back to myself" - the placeholder address was submitted
+	 * to the real MTA verbatim instead of being expanded. A no-op (no server round trip) unless a
+	 * placeholder is actually present - the overwhelmingly common case is a plain address, already
+	 * fully resolved client-side.
+	 */
+	private async resolveDistributionLists(email : JmapNewEmail) : Promise<JmapNewEmail>
+	{
+		const to = MailJmap.splitAddresses(email.to);
+		const cc = MailJmap.splitAddresses(email.cc);
+		const bcc = MailJmap.splitAddresses(email.bcc);
+		if (![...to, ...cc, ...bcc].some((address) => MailJmap.DISTRIBUTION_LIST_RE.test(address)))
+		{
+			return email;
+		}
+		const resolved : {to : string[], cc : string[], bcc : string[]} = await this.egw.request(
+			'mail.EGroupware\\Mail\\Compose.ajax_resolveDistributionLists', [{to, cc, bcc}]);
+		return {...email, to : resolved.to, cc : resolved.cc, bcc : resolved.bcc};
 	}
 
 	/** Shared Email property-set builder for a create (sendNewEmail()/saveDraft()) or update (saveDraft()) - everything except mailboxIds/keywords, which differ between the two. */
