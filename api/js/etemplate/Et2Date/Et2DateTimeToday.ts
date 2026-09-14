@@ -7,7 +7,7 @@
  * @author Nathan Gray
  */
 
-import {formatDate, formatTime, parseDateTime} from "./Et2Date";
+import {formatDate, formatDateTime, formatTime, parseDateTime} from "./Et2Date";
 import {Et2DateReadonly} from "./Et2DateReadonly";
 
 /**
@@ -29,11 +29,19 @@ export class Et2DateTimeToday extends Et2DateReadonly
 	 * Format date+time relative to "now"
 	 * If the date is today, we show just the time.  Otherwise, the date.
 	 *
+	 * Users can prefer to always see the full date and time instead, via the
+	 * "date_time_today" preference (see preferences/inc/class.preferences_hooks.inc.php).
+	 *
 	 * @param {Date} date
 	 * @returns {string}
 	 */
 	formatDateTime(date : Date, options = {dateFormat: "", timeFormat: ""}) : string
 	{
+		if(this.egw()?.preference("date_time_today") === "full")
+		{
+			return formatDateTime(date, options);
+		}
+
 		let display = "";
 		// Today - just the time
 		if(formatDate(date, {dateFormat: 'Y-m-d'}) == formatDate(new Date(), {dateFormat: 'Y-m-d'}))

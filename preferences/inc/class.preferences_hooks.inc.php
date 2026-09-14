@@ -407,6 +407,19 @@ class preferences_hooks
 				'admin'  => False,
 				'default'=> 24,
 			),
+			'date_time_today' => array(
+				'type'   => 'select',
+				'label'  => 'Shortened date/time display',
+				'name'   => 'date_time_today',
+				'values' => array(
+					'0'    => lang('Time for today, date otherwise'),
+					'full' => lang('Full date and time'),
+				),
+				'help'   => 'Do you always want to see full date and time, if there is less space, or just the time for today and the date otherwise?',
+				'xmlrpc' => True,
+				'admin'  => False,
+				'default'=> '0',
+			),
 			'number_format' => array(
 				'type'   => 'select',
 				'label'  => 'Number format',
