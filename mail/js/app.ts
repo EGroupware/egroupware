@@ -1541,8 +1541,14 @@ export class MailApp extends EgwApp
 		// ActiveProfileID, same as classic mail_compose's own constructor default - NOT from
 		// settings.id, which may be backfilled from the currently-selected/previewed message for
 		// unrelated reasons (see the backfill above) even when this action itself is 'compose'.
+		// ActiveProfileID can still hold a stale pre-JMAP `acc_id::folder` value on a long-running
+		// instance (nothing migrates an already-stored preference; api/src/Mail.php's own
+		// restoreSessionData() still has to tolerate that legacy combined format) - split it the
+		// same way refreshQuotaDisplay() already does for the identical reason, so acc_id in the
+		// compose.php url is always a bare account id (found live 2026-09-14, ralf: a customer's
+		// hung/unresponsive compose popup, url carried acc_id=9::INBOX/006-IF-ORGA-LEITUNG).
 		const accId = settings.from && settings.id ?
-			rowIdProfileID(settings.id) : (this.egw.preference('ActiveProfileID', 'mail') || '');
+			rowIdProfileID(settings.id) : (this.egw.preference('ActiveProfileID', 'mail') || '').toString().split('::')[0];
 		return this.openComposePopupUrl(settings, accId);
 	}
 
@@ -1633,7 +1639,9 @@ export class MailApp extends EgwApp
 		msg? : string,
 	}) : void
 	{
-		const accId = this.egw.preference('ActiveProfileID', 'mail') || '';
+		// See composeMessage()'s own comment on this same read - a stale legacy-format preference
+		// value must not reach compose.php's acc_id param unsplit.
+		const accId = (this.egw.preference('ActiveProfileID', 'mail') || '').toString().split('::')[0];
 		const window_name = 'compose_preset_' + Date.now();
 		const presetJson = JSON.stringify(preset);
 		if (egw.urlParamsTooLong({preset: presetJson}))
