@@ -2162,6 +2162,48 @@ describe("Et2Datagrid row rendering", () =>
 	});
 
 	/**
+	 * Contract: a row class placeholder naming an app's own field still produces
+	 * `row_category cat_#` when it resolves to nothing but category ids.  Tracker
+	 * colour-codes its rows through `enabled_color_code`, which holds the queue,
+	 * category or version id depending on configuration - all of them categories
+	 * of the app - so the class name alone cannot tell us it is a category.
+	 * Setup: apply `customizeRowRootAttributes` with tracker's row class.
+	 * Pass: the row gets `row_category` and `cat_<id>`, and the plain class token
+	 * beside it survives.
+	 */
+	it("resolves category classes from an app's own colour-code field", () =>
+	{
+		const rowRoot = document.createElement("tr");
+		rowRoot.setAttribute("class", "$enabled_color_code $class");
+		const row = {enabled_color_code: "42", class: "group_action"};
+
+		Et2RowProvider.customizeRowRootAttributes(rowRoot, row, (rowData, key) => rowData[key]);
+
+		assert.include(rowRoot.className, "row_category", "a numeric colour-code field should be recognized as a category");
+		assert.include(rowRoot.className, "cat_42", "the colour-code id should resolve into a category class");
+		assert.include(rowRoot.className, "group_action", "the non-category class should be kept");
+		assert.notInclude(rowRoot.className.split(/\s+/), "42", "raw id should not leak in as a bare class name");
+	});
+
+	/**
+	 * Contract: the numeric fallback only fires for a class that is category ids.
+	 * A class name that merely contains digits stays exactly as it is, so app
+	 * styling is not silently replaced by a category colour bar.
+	 * Setup: resolve a row class whose value mixes letters and digits.
+	 * Pass: the class is kept verbatim, with no category classes added.
+	 */
+	it("leaves a non-numeric class containing digits alone", () =>
+	{
+		const rowRoot = document.createElement("tr");
+		rowRoot.setAttribute("class", "$status_class");
+		const row = {status_class: "priority3"};
+
+		Et2RowProvider.customizeRowRootAttributes(rowRoot, row, (rowData, key) => rowData[key]);
+
+		assert.equal(rowRoot.className, "priority3");
+	});
+
+	/**
 	 * Contract: provider-backed datagrids keep row data in the provider, not in datagrid row indexes.
 	 * Setup: configure getRowData(), seed rows, and render one row from the internal index.
 	 * Pass: datagrid stores only the id while rendered cells resolve values through the provider.

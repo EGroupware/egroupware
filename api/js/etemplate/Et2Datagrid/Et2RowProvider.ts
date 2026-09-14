@@ -136,23 +136,41 @@ export class Et2RowProvider
 		const normalized = new Set<string>();
 		for(const token of classTokens)
 		{
-			if(this._isCategoryPlaceholder(token))
+			const isCategoryField = this._isCategoryPlaceholder(token);
+			const resolved = this.resolveSimpleRowPlaceholders(token, row, getFieldValue).trim();
+			// An app may colour-code its rows through a field of its own instead of the
+			// category: tracker fills `enabled_color_code` with the queue, category or
+			// version id, whichever the installation is configured to colour by.  All
+			// three are categories of the app, so any placeholder resolving to nothing
+			// but category ids is a category class, whatever the field is called.
+			const tokenCategoryIds = isCategoryField || this._isCategoryIdList(resolved)
+				? this._extractCategoryIds(resolved) : [];
+			if(isCategoryField || tokenCategoryIds.length)
 			{
-				const tokenCategoryIds = this._extractCategoryIds(this.resolveSimpleRowPlaceholders(token, row, getFieldValue));
-				for(const id of tokenCategoryIds.length ? tokenCategoryIds : categoryIds)
+				for(const id of tokenCategoryIds.length ? tokenCategoryIds : (isCategoryField ? categoryIds : []))
 				{
 					normalized.add("row_category");
 					normalized.add(`cat_${id}`);
 				}
 				continue;
 			}
-			const resolved = this.resolveSimpleRowPlaceholders(token, row, getFieldValue).trim();
 			if(resolved)
 			{
 				normalized.add(resolved);
 			}
 		}
 		return Array.from(normalized).join(" ");
+	}
+
+	/**
+	 * Does this resolved class token hold only category ids, and so name a category?
+	 *
+	 * A single id, or the comma-separated list a multi-category field produces.  Anything
+	 * else is an ordinary class name that happens to contain digits, and is left alone.
+	 */
+	private static _isCategoryIdList(resolved : string) : boolean
+	{
+		return !!resolved && resolved.split(",").every((part) => /^\s*\d+\s*$/.test(part));
 	}
 
 	private static _isCategoryPlaceholder(token : string) : boolean
