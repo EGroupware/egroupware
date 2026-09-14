@@ -991,6 +991,38 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 		// Sort events into minimally-overlapping columns
 		const columns = this._spread_events();
 
+		// The list layout has no columns - it is a plain list, where the DOM order is the order
+		// the events are shown in.  _spread_events() has just sorted our children, so walk them
+		// and move any that is not already sitting behind its predecessor.  Everything is where
+		// it belongs most of the time, so usually nothing moves at all, and what does move is the
+		// existing node - the event keeps the handlers it was built with, eg. the one that makes
+		// its tooltip.  Sorting the list used to be left to redrawing the entire grid, which ran
+		// once for every event positioned.
+		if(this.display_settings.granularity === 0)
+		{
+			let previous = null;
+			for(const child of <any[]>this._children)
+			{
+				if(previous)
+				{
+					if(child.div[0].previousElementSibling !== previous[0])
+					{
+						child.div.insertAfter(previous);
+					}
+				}
+				else if(this.event_wrapper[0].firstElementChild !== child.div[0])
+				{
+					child.div.prependTo(this.event_wrapper);
+				}
+				previous = child.div;
+
+				child.div.css({'top': '', 'height': '', 'left': '', 'right': ''});
+				// Strip out of view padding
+				child.body.css('padding-top', '');
+			}
+			return;
+		}
+
 		for(let c = 0; c < columns.length; c++)
 		{
 			// Calculate horizontal positioning
@@ -1008,27 +1040,6 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 				let top = 0;
 				let height = 0;
 				// Position the event
-				if(this.display_settings.granularity === 0)
-				{
-					if(this.all_day.has(columns[c][i].div).length)
-					{
-						columns[c][i].div.prependTo(this.event_wrapper);
-					}
-					else if(this.event_wrapper.has(columns[c][i].div).length == 0)
-					{
-						columns[c][i].div.appendTo(this.event_wrapper);
-					} else {
-						// Something's gone wrong, redraw the grid
-						this.getParent()._drawGrid();
-					}
-					columns[c][i].div.css('top', '');
-					columns[c][i].div.css('height', '');
-					columns[c][i].div.css('left', '');
-					columns[c][i].div.css('right', '');
-					// Strip out of view padding
-					columns[c][i].body.css('padding-top','');
-					continue;
-				}
 				if(columns[c][i].options.value.whole_day_on_top)
 				{
 					if(!this.all_day.has(columns[c][i].div).length)
