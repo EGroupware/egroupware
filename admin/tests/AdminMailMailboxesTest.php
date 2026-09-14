@@ -97,6 +97,73 @@ class AdminMailMailboxesTest extends \PHPUnit\Framework\TestCase
 	}
 
 	/**
+	 * Regression test for a real user report (2026-09-14, ralf, live-testing a real classic-
+	 * IMAP account): when TWO mailboxes both carry the same special-use attribute (a real
+	 * Dovecot/hosting-panel server can report this - not just a hypothetical), the shortest-
+	 * name-wins tie-break used to pick whichever came first/shortest with NO regard for
+	 * whether its own name even suggests this role - so a folder literally named "Templates"
+	 * could win the "\Junk" role outright over the real "Spam" folder, purely because
+	 * "Templates" is the textually shorter candidate. The one whose own name also corroborates
+	 * the role (here, "spam", inside "INBOX.Spam") must now win regardless of raw length or
+	 * IMAP LIST order - deliberately the LONGER of the two names here, so a test that still
+	 * passed under the old shortest-wins rule would be exposed as not exercising the fix at
+	 * all (a real mistake made and caught while writing this very test: an earlier version
+	 * used bare "Spam", which is already shorter than "Templates" and so passed under BOTH
+	 * the old and new logic without actually distinguishing them).
+	 */
+	public function testMailboxesPrefersNameCorroboratedSpecialUseCandidateOnAmbiguity()
+	{
+		$imap = $this->mockImap(array(
+			'INBOX' => array('attributes' => array(), 'delimiter' => '.'),
+			// shorter, but its name doesn't suggest junk/spam at all
+			'Templates' => array('attributes' => array('\\junk'), 'delimiter' => '.'),
+			// longer than "Templates", but its own "spam" path component corroborates the role
+			'INBOX.Spam' => array('attributes' => array('\\junk'), 'delimiter' => '.'),
+		));
+		$content = array();
+		admin_mail::mailboxes($imap, $content);
+
+		$this->assertSame('INBOX.Spam', $content['acc_folder_junk']);
+	}
+
+	/**
+	 * Same ambiguity as above, but with the name-corroborated candidate listed FIRST - the
+	 * fix must not depend on IMAP LIST order.
+	 */
+	public function testMailboxesPrefersNameCorroboratedSpecialUseCandidateRegardlessOfOrder()
+	{
+		$imap = $this->mockImap(array(
+			'INBOX' => array('attributes' => array(), 'delimiter' => '.'),
+			'INBOX.Spam' => array('attributes' => array('\\junk'), 'delimiter' => '.'),
+			'Templates' => array('attributes' => array('\\junk'), 'delimiter' => '.'),
+		));
+		$content = array();
+		admin_mail::mailboxes($imap, $content);
+
+		$this->assertSame('INBOX.Spam', $content['acc_folder_junk']);
+	}
+
+	/**
+	 * The single-candidate case (the overwhelmingly common one - most real accounts only ever
+	 * have ONE mailbox carrying a given special-use attribute) must stay completely
+	 * unaffected: a special-use-tagged folder is still trusted outright even when its name is
+	 * in a different language and matches none of the English common-name keywords at all -
+	 * eg. a German "Gesendet" folder for the \Sent role, exactly as this session's own
+	 * live-tested account (Dovecot/hosting-panel, German folder names) relies on.
+	 */
+	public function testMailboxesStillTrustsSoleSpecialUseCandidateEvenWithoutNameMatch()
+	{
+		$imap = $this->mockImap(array(
+			'INBOX' => array('attributes' => array(), 'delimiter' => '.'),
+			'Gesendet' => array('attributes' => array('\\sent'), 'delimiter' => '.'),
+		));
+		$content = array();
+		admin_mail::mailboxes($imap, $content);
+
+		$this->assertSame('Gesendet', $content['acc_folder_sent']);
+	}
+
+	/**
 	 * The return value is always ALL mailboxes as a name => name array, independent of
 	 * which special folders were successfully guessed - it's used as the select-box options
 	 * for every acc_folder_* field.
