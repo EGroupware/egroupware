@@ -266,8 +266,12 @@ class TimesheetApp extends EgwApp
 		{
 			// Et2DateTimeOnly.value expects something new Date() can parse - a bare "H:i"
 			// string is not, so wrap it to match the widget's own internal dateFormat
-			start_time.value = last_end ? '1970-01-01T' + last_end + ':00Z' : '';
-			// force empty end-time, unless continuing from last entry (mirrors edit())
+			// Keep the existing start on an empty day when there is no end time to use instead.
+			if (last_end || end_time?.value)
+			{
+				start_time.value = last_end ? '1970-01-01T' + last_end + ':00Z' : '';
+			}
+			// Continuing from a last entry uses its end as the new start.
 			if (last_end && end_time)
 			{
 				end_time.value = '';

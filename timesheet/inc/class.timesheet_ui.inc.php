@@ -78,11 +78,9 @@ class timesheet_ui extends timesheet_bo
 
 				$this->data = array(
 					'ts_start' => $last_end ? (clone $last_end)->setTime(0, 0, 0)->format() : $this->today,
-					// "start time is after last timesheet": continue from the last entry of the day, or start NOW if
-					// there is none yet - not "end time = now", which dates an entry made early in the morning
-					// (e.g. 9h booked at 02:10) to the previous day, the very thing this preference is meant to avoid
+					// With start-time defaults, use the current time if there is no previous entry today.
 					'start_time' => $last_end ? $last_end->format('H:i') : ($prefer_start ? Api\DateTime::to($this->now, 'H:i') : ''),
-					'end_time' => $last_end || $prefer_start ? '' : Api\DateTime::to($this->now, 'H:i'),
+					'end_time' => $prefer_start ? '' : Api\DateTime::to($this->now, 'H:i'),
 					'ts_owner' => $GLOBALS['egw_info']['user']['account_id'],
 					'cat_id' => (int)$_REQUEST['cat_id'],
 					'ts_status' => $GLOBALS['egw_info']['user']['preferences']['timesheet']['predefined_status'],
