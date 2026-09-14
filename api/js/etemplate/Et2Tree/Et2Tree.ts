@@ -1295,6 +1295,11 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 					ids: this.value
 				}
 			}))
+			// Et2InputWidget turns a "change" event into the widget's onchange attribute, and that
+			// is the only thing a template's onchange="app...." is ever bound to.  Without this a
+			// tree silently ignored its own onchange - which is how both calendar integration
+			// project pickers (stylite's and resources') ended up doing nothing at all when clicked.
+			this.dispatchEvent(new Event("change", {bubbles: true}));
 		})
 	}
 
