@@ -623,13 +623,24 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 			// Not ready yet
 			return;
 		}
-		isOverflowed = isOverflowed || (child.offsetWidth + child.offsetLeft - buttonDiv.offsetLeft) > buttonDiv.offsetWidth;
-		if(isOverflowed || this._preference[child.id])
+		// A child the user pinned to the menu takes up no room in the button row, and measuring
+		// it there is worse than pointless: it already sits inside the dropdown panel, so its
+		// offsetLeft is its position in *that* and the test below is true by construction.
+		// isOverflowed is sticky, so letting a pinned child answer it pushed every button
+		// ordered after it into the menu as well, however much room the row actually had.
+		if(this._preference[child.id])
 		{
-			this._isOverflowed = this._isOverflowed || isOverflowed;
+			child.slot = "list";
+			this._placeInputInGroup(child);
+			return isOverflowed;
+		}
+		isOverflowed = isOverflowed || (child.offsetWidth + child.offsetLeft - buttonDiv.offsetLeft) > buttonDiv.offsetWidth;
+		if(isOverflowed)
+		{
+			this._isOverflowed = true;
 			child.slot = "list";
 		}
-		else if(!this._preference[child.id])
+		else
 		{
 			child.slot = "";
 		}
