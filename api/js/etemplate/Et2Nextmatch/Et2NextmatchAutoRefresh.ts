@@ -15,10 +15,10 @@ import type {Et2Nextmatch} from "./Et2Nextmatch";
  * `seedColumnSelection()`/`applyColumnSelection()`.
  *
  * The timer pauses whenever this nextmatch isn't actually visible, checked live
- * rather than tracked as a toggled flag: its EGroupware app tab (if any) must be
- * the active one, and the browser tab/window itself must not be backgrounded.
- * Resuming does one immediate refresh, since the data may be stale, then resumes
- * the regular interval.
+ * rather than tracked as a toggled flag: it must be rendered, its EGroupware app
+ * tab (if any) must be the active one, and the browser tab/window itself must not
+ * be backgrounded. Resuming does one immediate refresh, since the data may be
+ * stale, then resumes the regular interval.
  */
 export class Et2NextmatchAutoRefresh implements ReactiveController
 {
@@ -33,6 +33,18 @@ export class Et2NextmatchAutoRefresh implements ReactiveController
 	private paused = false;
 
 	/**
+	 * Has a timer ever actually been armed for this instance?
+	 *
+	 * Gates the immediate refresh a resume does: that exists because rows can have
+	 * gone stale *while the timer was stopped*, which can only be true if it was
+	 * running in the first place. Without this, a grid that is simply not rendered
+	 * yet when it first loads (hidden app view, inactive tab panel) would fire one
+	 * unnecessary full reload the moment it becomes visible, on top of the reload
+	 * it just did.
+	 */
+	private hasRun = false;
+
+	/**
 	 * Nearest EGroupware app-tab ancestor. Used to pause autorefresh while this
 	 * nextmatch's tab is not the active one, the same signal the framework uses to
 	 * show/hide app tabs (`EgwFramework.showTab()` dispatches `hide`/`show` on the
@@ -41,6 +53,21 @@ export class Et2NextmatchAutoRefresh implements ReactiveController
 	 * pauses on the standard `visibilitychange` event below.
 	 */
 	private appTab : Element | null = null;
+
+	/**
+	 * Watches the host's own box, so autorefresh also pauses for a nextmatch hidden
+	 * by something other than an app-tab switch - an app that keeps several views of
+	 * its own in one tab and toggles `display` between them (calendar's
+	 * list/week/planner), an inactive `<et2-tab-panel>`, a collapsed section. None of
+	 * those fire `hide`/`show` or `visibilitychange`, so without this such a grid
+	 * polls the server forever while nobody can see it.
+	 *
+	 * A ResizeObserver is the right signal here rather than an IntersectionObserver:
+	 * it reports a 0x0 box when the element stops being rendered and a real one when
+	 * it comes back, and it does NOT fire for merely scrolling the grid out of the
+	 * viewport, which should keep refreshing.
+	 */
+	private resizeObserver : ResizeObserver | null = null;
 
 	constructor(host : Et2Nextmatch)
 	{
@@ -57,6 +84,11 @@ export class Et2NextmatchAutoRefresh implements ReactiveController
 		document.addEventListener("visibilitychange", this.syncVisibility);
 		this.appTab?.addEventListener("hide", this.syncVisibility);
 		this.appTab?.addEventListener("show", this.syncVisibility);
+		if(typeof ResizeObserver !== "undefined")
+		{
+			this.resizeObserver = new ResizeObserver(this.syncVisibility);
+			this.resizeObserver.observe(this.host);
+		}
 	}
 
 	/**
@@ -69,6 +101,8 @@ export class Et2NextmatchAutoRefresh implements ReactiveController
 		this.appTab?.removeEventListener("hide", this.syncVisibility);
 		this.appTab?.removeEventListener("show", this.syncVisibility);
 		this.appTab = null;
+		this.resizeObserver?.disconnect();
+		this.resizeObserver = null;
 	}
 
 	/**
@@ -109,8 +143,8 @@ export class Et2NextmatchAutoRefresh implements ReactiveController
 
 	/**
 	 * Whether autorefresh is allowed to run right now, ie. this nextmatch is
-	 * actually visible: its app tab (if any) is the active one, and the browser
-	 * tab/window itself is not in the background.
+	 * actually visible: it is being rendered, its app tab (if any) is the active
+	 * one, and the browser tab/window itself is not in the background.
 	 */
 	private get shouldRun() : boolean
 	{
@@ -118,7 +152,24 @@ export class Et2NextmatchAutoRefresh implements ReactiveController
 		{
 			return false;
 		}
+		if(!this.isRendered)
+		{
+			return false;
+		}
 		return !this.appTab || this.appTab.hasAttribute("active");
+	}
+
+	/**
+	 * Is the host actually being rendered?
+	 *
+	 * A rendered element always has at least one client rect; one hidden by
+	 * `display: none` (on itself or any ancestor), or not in the document at all,
+	 * never does. `offsetParent` is not usable for this - it is also `null` for a
+	 * perfectly visible `position: fixed` element.
+	 */
+	private get isRendered() : boolean
+	{
+		return typeof this.host.getClientRects !== "function" || this.host.getClientRects().length > 0;
 	}
 
 	/**
@@ -154,6 +205,7 @@ export class Et2NextmatchAutoRefresh implements ReactiveController
 			this.tick();
 		}
 		this.timer = window.setInterval(this.tick, interval * 1000);
+		this.hasRun = true;
 	}
 
 	private stop() : void
@@ -190,7 +242,7 @@ export class Et2NextmatchAutoRefresh implements ReactiveController
 		if(shouldRun && this.paused)
 		{
 			this.paused = false;
-			this.start(true);
+			this.start(this.hasRun);
 		}
 		else if(!shouldRun && !this.paused)
 		{
