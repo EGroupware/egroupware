@@ -344,11 +344,22 @@ export function buildFolderLevel(mailboxes : JmapMailboxNode[], profileID : stri
 	// buildRootFolderData()'s INBOX-children-preload optimization matches the exact same
 	// pattern and would have silently stopped working for Stalwart too).
 	const pathSegment = (mailbox : JmapMailboxNode) => mailbox.role === 'inbox' ? 'INBOX' : mailbox.name;
-	return (mailboxes || [])
+	const filtered = (mailboxes || [])
 		.filter((mailbox) => isNamespaceRootName(mailbox.name) ? isVisibleNamespaceRoot(mailbox) :
-			(!options.subscribedOnly || mailbox.isSubscribed))
-		.map((mailbox) => buildNode(mailbox, profileID, parentPath ? parentPath + '/' + pathSegment(mailbox) : pathSegment(mailbox), egw,
-			!!options.isTopLevel));
+			(!options.subscribedOnly || mailbox.isSubscribed));
+	// Found live 2026-09-14 (ralf, relaying a real user's report): autoloaded subfolders showed
+	// in the server's own arbitrary order, not alphabetical-with-special-folders-first. sortTopLevel()
+	// (see its own docblock - "not scoped to any particular depth") was extracted specifically so
+	// both this lazy per-level build AND the (since-removed, c0505f2dd5) eager whole-tree build would
+	// call it - but only the eager build ever actually did; this one never did, so the extraction
+	// silently orphaned it here from day one. No test caught it - BuildFolderLevel.test.ts has never
+	// asserted anything about sort order. Unconditional (not gated on "does this level contain a
+	// role-tagged mailbox", unlike the old eager build's own version of this call): sortTopLevel()
+	// already alphabetizes correctly even when NO sibling has a role (every mailbox gets the same
+	// priority bucket in that case, see its own comparator), so the gate was never actually needed.
+	sortTopLevel(filtered);
+	return filtered.map((mailbox) => buildNode(mailbox, profileID, parentPath ? parentPath + '/' + pathSegment(mailbox) : pathSegment(mailbox), egw,
+		!!options.isTopLevel));
 }
 
 /**

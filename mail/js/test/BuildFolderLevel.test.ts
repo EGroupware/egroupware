@@ -324,6 +324,47 @@ describe("buildFolderLevel()", () =>
 			assert.isUndefined(inbox.open, "must not auto-open - that's still isTopLevel-gated");
 		});
 	});
+
+	/**
+	 * Regression coverage for a real bug found live 2026-09-14 (ralf, relaying a real user's
+	 * report + screenshot): autoloaded subfolders showed in the server's own arbitrary order, not
+	 * alphabetical-with-special-folders-first. sortTopLevel() already existed and was designed to
+	 * work "not scoped to any particular depth", but got silently disconnected from
+	 * buildFolderLevel() during a later refactor (c0505f2dd5) that removed the only OTHER function
+	 * that called it - no test here ever asserted anything about order, so nothing caught the gap.
+	 */
+	describe("sort order", () =>
+	{
+		it("alphabetizes plain subfolders with no role at all", () =>
+		{
+			const nodes = build([
+				mailbox({name: "Zebra"}), mailbox({name: "apple"}), mailbox({name: "Mango"}),
+			]);
+
+			assert.deepEqual(nodes.map((n) => n.label), ["apple", "Mango", "Zebra"]);
+		});
+
+		it("puts special (role-tagged) folders first in a fixed order, everything else alphabetical after", () =>
+		{
+			const nodes = build([
+				mailbox({name: "Zebra"}), mailbox({name: "Trash", role: "trash"}),
+				mailbox({name: "apple"}), mailbox({name: "Sent", role: "sent"}),
+				mailbox({name: "INBOX", role: "inbox"}),
+			]);
+
+			assert.deepEqual(nodes.map((n) => n.label),
+				["translated(INBOX)", "translated(Sent)", "translated(Trash)", "apple", "Zebra"]);
+		});
+
+		it("always sorts the shared/other-users namespace root last, even alphabetically ahead of everything else", () =>
+		{
+			const nodes = build([
+				mailbox({name: "Zebra"}), mailbox({name: "user", hasChildren: true}), mailbox({name: "apple"}),
+			]);
+
+			assert.deepEqual(nodes.map((n) => n.label), ["apple", "Zebra", "user"]);
+		});
+	});
 });
 
 describe("buildFolderLevel() id construction", () =>
