@@ -205,4 +205,62 @@ describe("et2-toolbar", () =>
 		assert.notEqual(nativeShown.offsetParent, null, "native visible button is visible");
 	});
 
+	/**
+	 * A child pinned to the menu by preference lives inside the dropdown panel, so its
+	 * offsetLeft describes a position in *that*, not in the button row.  Measuring it against
+	 * the row's width says "overflowed" by construction, and because that verdict is sticky it
+	 * used to push every button ordered after it into the menu too - a calendar toolbar with
+	 * one early-sorted pinned entry lost Today, previous/next and every integration toggle,
+	 * with ~950px of empty row sitting there.
+	 */
+	describe("overflow calculation", () =>
+	{
+		async function toolbarWithButtonRow()
+		{
+			const el = await fixture<any>(html`
+                <et2-toolbar></et2-toolbar>`);
+			el.id = "overflowTest";
+			await el.updateComplete;
+			const buttonDiv = el.shadowRoot.querySelector(".toolbar-buttons");
+			assert.exists(buttonDiv, "test setup: toolbar should have rendered its button row");
+			return {el, buttonDiv};
+		}
+
+		/** A child whose geometry puts it well past the end of the button row */
+		function childAt(id : string, offsetLeft : number)
+		{
+			const child = document.createElement("et2-button");
+			child.id = id;
+			Object.defineProperty(child, "offsetWidth", {value: 181});
+			Object.defineProperty(child, "offsetLeft", {value: offsetLeft});
+			return child;
+		}
+
+		it("does not let a menu-pinned child report the row as overflowed", async() =>
+		{
+			const {el, buttonDiv} = await toolbarWithButtonRow();
+			el._preference = {pinned: true};
+
+			const pinned = childAt("pinned", buttonDiv.offsetWidth + 500);
+			const overflowed = el._organiseChild(pinned, false);
+
+			assert.isFalse(overflowed, "a pinned child must not report the row as overflowed");
+			assert.isFalse(el._isOverflowed, "...nor flag the toolbar itself as overflowed");
+			assert.equal(pinned.slot, "list", "a pinned child still belongs in the menu");
+		});
+
+		it("still overflows on a child that genuinely does not fit", async() =>
+		{
+			const {el, buttonDiv} = await toolbarWithButtonRow();
+			el._preference = {tooWide: false};
+
+			const tooWide = childAt("tooWide", buttonDiv.offsetWidth + 500);
+			const overflowed = el._organiseChild(tooWide, false);
+
+			assert.isTrue(overflowed, "a child past the end of the row is overflowed");
+			assert.isTrue(el._isOverflowed, "and the toolbar knows it has overflow");
+			assert.equal(tooWide.slot, "list", "an overflowed child goes into the menu");
+		});
+	});
+
 });
