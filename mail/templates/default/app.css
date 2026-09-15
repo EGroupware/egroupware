@@ -87,6 +87,11 @@ tr.unseen [id$="[date]"] {
 .status_img::before {
   vertical-align: initial;
 }
+.status_img svg.bi-forward {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+}
 tr.unseen .status_img.bi-circle-fill {
   color: var(--mail-color);
   display: block !important;
@@ -898,6 +903,10 @@ et2-image.smime_cert_unknownemail svg {
   display: flex;
   justify-content: end;
 }
+/* PGP/MIME signature status (MailApp.setPgpSignatureFlags(), mail/js/app.ts) - a separate
+   trust mechanism from S/MIME, deliberately given its own classes/colors rather than reusing
+   the smime_cert_* ones above, even though the 3-state shape (verified/invalid/unknown-key)
+   and border/icon-color pattern is the same. */
 et2-box.pgp_sig_verified {
   border-top: 4px solid #1ab82c !important;
 }
