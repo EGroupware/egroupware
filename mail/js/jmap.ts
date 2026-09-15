@@ -4201,9 +4201,16 @@ export class MailJmap
 		// setupViewAttachmentActions()'s own single-attachment "Download" (mail/js/app.ts) uses
 		// this exact same 'fileexport' icon key, which resolves (via egw.image()'s own bootstrap
 		// alias table) to bootstrap-icons' own floppy.svg - confirmed live 2026-09-15 (ralf: "we
-		// use the disk-icon for Download"); egw.image() already returns a webserverUrl-prefixed
-		// path on its own, not a relative one, so no extra prefixing needed here.
-		const downloadIconUrl = escaped(egw.image('fileexport') || '');
+		// use the disk-icon for Download"). egw.image()'s own return value is only DOMAIN-relative
+		// (eg. "/egroupware/node_modules/...", egw.webserverUrl itself being a bare path, not a
+		// full origin) - resolving fine for the app's own real pages, but NOT reliably inside a
+		// blob: document (confirmed live: the URL was correct, but the icon still failed to load,
+		// a classic broken-image box - see wrapPdfViewerWithDownload()'s own docblock for why
+		// contentUrl/download href don't have this problem: those are already full blob: URLs,
+		// never relative to begin with). Prefixed with location.origin here to make it a genuinely
+		// complete, unambiguous URL instead.
+		const rawIconUrl = egw.image('fileexport') || '';
+		const downloadIconUrl = escaped(rawIconUrl && !rawIconUrl.match(/^[a-z]+:/i) ? location.origin + rawIconUrl : rawIconUrl);
 		// #toolbar=0&navpanes=0 suppresses the browser's OWN native PDF viewer chrome entirely (a
 		// long-standing Chrome/PDFium URL-fragment convention, also honoured for blob: content) -
 		// without it, that native toolbar's OWN save/download icon is still visible right next to

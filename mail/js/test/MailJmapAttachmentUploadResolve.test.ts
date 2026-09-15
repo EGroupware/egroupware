@@ -401,6 +401,48 @@ describe("MailJmap.getAttachmentViewUrl() - PDF gets wrapped with a real downloa
 		assert.include(downloadLinkHtml.slice(0, downloadLinkHtml.indexOf('</a>')), '<img');
 	});
 
+	it("makes the icon URL absolute (location.origin-prefixed), not the domain-relative path egw.image() itself returns", async() =>
+	{
+		// ralf, 2026-09-15, live-tested: egw.image()'s own return value is only domain-relative
+		// (eg. "/egroupware/node_modules/.../floppy.svg" - egw.webserverUrl itself being a bare
+		// path, not a full origin) - the URL was confirmed correct (opening it directly in a new
+		// tab showed the icon fine), yet the <img> inside the wrapper still failed to load it: a
+		// blob: document's own base isn't a normal hierarchical/"special" URL scheme, so a
+		// domain-relative reference resolved INSIDE it doesn't reliably reconstruct the real
+		// https://host origin the way it would on a genuinely-served page.
+		const originalImage = (window as any).egw.image;
+		(window as any).egw.image = (_name : string) => "/egroupware/node_modules/bootstrap-icons/icons/floppy.svg";
+		try
+		{
+			const jmap = new MailJmap(createFakeApp());
+			const html = await fetchWrapperHtml(jmap);
+
+			assert.include(html, `<img src="${location.origin}/egroupware/node_modules/bootstrap-icons/icons/floppy.svg"`);
+		}
+		finally
+		{
+			(window as any).egw.image = originalImage;
+		}
+	});
+
+	it("leaves an already-absolute icon URL untouched (no double-prefixing)", async() =>
+	{
+		const originalImage = (window as any).egw.image;
+		(window as any).egw.image = (_name : string) => "https://cdn.example.com/floppy.svg";
+		try
+		{
+			const jmap = new MailJmap(createFakeApp());
+			const html = await fetchWrapperHtml(jmap);
+
+			assert.include(html, '<img src="https://cdn.example.com/floppy.svg"');
+			assert.notInclude(html, location.origin + "https://cdn.example.com/floppy.svg");
+		}
+		finally
+		{
+			(window as any).egw.image = originalImage;
+		}
+	});
+
 	it("suppresses the browser's own native PDF viewer toolbar, so our download link is the only one visible", async() =>
 	{
 		// ralf, 2026-09-15, right after confirming the CSP fix above actually worked live:
