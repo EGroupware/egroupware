@@ -183,6 +183,103 @@ TypeScript property. Document public methods that are intended for consumers. Pr
 details, internal bridge objects, or CSS classes should still be documented internally ,but are not used as part of the
 component API documentation.
 
+### Hand-written documentation and examples
+
+The docblock above generates the reference tables. Anything else - an overview of what the widget is
+for, and worked examples - goes in a markdown file named after the class, beside its source:
+
+```
+api/js/etemplate/Et2Textbox/Et2Textbox.md      -> documents Et2Textbox
+api/js/etemplate/Et2Textbox/Et2Number.md       -> documents Et2Number
+```
+
+The filename must match the class name exactly. A file is only ever attached to the one class it is
+named for, so a widget without its own file gets nothing - documenting four related widgets in one
+file leaves three of them empty.
+
+Its content is inserted after the generated overview and before the reference tables. The page
+already renders the widget name as its heading, so start at `##`.
+
+Do not open the file with `## Overview` if the class has a docblock description: the page generates
+an "Overview" heading for that description, and a second one produces two identical headings and a
+duplicate `#overview-1` anchor that every cross-link to the page can land on by mistake. Either name
+your first section for what it actually covers, or drop the docblock description and write the
+overview here - not both.
+
+Examples are ordinary fenced code blocks marked `:preview`, which renders the markup live above its
+own source:
+
+````markdown
+### Label
+
+Use the `label` attribute to give the input an accessible label.
+
+```html:preview
+<et2-textbox label="Name"></et2-textbox>
+```
+````
+
+Give each example a `###` heading naming the thing it demonstrates and one sentence of prose before
+it. Prefer several small examples over one that shows everything at once.
+
+**The first example is the bare widget.** Whatever it does with no attributes beyond a `label` is
+what a reader needs to see first; every attribute after that earns its own later example. It is
+tempting to open with the interesting case, and it reads well in isolation, but across a library it
+makes every widget look like it needs configuring before it does anything:
+
+````markdown
+### Basic
+
+A text field that only accepts numbers.
+
+```html:preview
+<et2-number label="Quantity"></et2-number>
+```
+
+### Spinners
+
+To add up / down arrow buttons to change the value, set `step`.
+````
+
+That ordering is also what makes the second example worth reading - the plain `et2-number` above
+genuinely has no spinner, so "set `step`" is news. Opening with `step="0.5"` gives the feature away
+as though it were the default, and the reader never learns which part was the attribute's doing.
+
+Where a widget is useless bare - `et2-merge-dialog` needs an `application` and a `path`,
+`et2-image-expose` needs both a thumbnail and a full image - the simplest example is the smallest one
+that works, not an artificially empty tag.
+
+A few rules that come from previews being real, rendered HTML:
+
+- Scripts inside a preview run against the live page, so address the widget by `id` with
+  `getElementById`. A bare `document.querySelector("et2-foo")` picks the first one on the page,
+  which is some other example's widget as soon as a second one is added.
+- A preview's script runs *before* its widgets have upgraded on a normal page load, so nothing on
+  the widget's own class exists yet. Setting a property is still fine - Lit replays properties set
+  before upgrade - and so is `addEventListener`, but anything that reaches into the widget
+  (`updateComplete`, a method, a getter) has to wait for it:
+
+  ```js
+  customElements.whenDefined("et2-foo").then(() => widget.updateComplete).then(() => { ... });
+  ```
+
+  Skipping that gives `Cannot read properties of undefined (reading 'then')` in the console and an
+  example that quietly does half of what it says.
+- `//` is not an HTML comment. Written between tags it renders as visible body text.
+- Never leave `debugger` in an example - it halts the reader's browser if their devtools are open.
+- If a widget cannot work without a server, do not ship a preview that silently does nothing. Use a
+  plain `html`/`js` block and say what it needs, as `Et2VfsSelectDialog.md` does.
+
+Check the result at `http://localhost:4000/components/<tag-name>/` with `npm run docs:serve`
+running. An example that renders an empty box is not finished.
+
+Markdown and source edits are picked up by the watcher. Edits to `eleventy.config.cjs` or anything
+in `doc/etemplate2/_utilities/` are not: the config runs its data-generating side effects once when
+the process starts, so a live server keeps serving pages built from the old data and the two drift
+apart. Restart the server after touching those, and kill it by process group - stopping only the
+`build.mjs` parent leaves its eleventy child watching the same output directory, and two watchers
+fighting over it is slow and produces half-built pages.
+
 ## Boolean Props
 
 Boolean props should always default to false, otherwise there’s no way for the user to unset them using only attributes.

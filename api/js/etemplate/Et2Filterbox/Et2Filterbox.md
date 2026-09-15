@@ -1,17 +1,14 @@
 ```html:preview
-<et2-filterbox clearable></et2-filterbox>
-<script>
-const filter = document.querySelector('et2-filterbox');
-debugger;
-filter.filters = [
-{label: "Type", type: "et2-date-range"},
-{label: "Search", type: "et2-searchbox"}
-];
-</script>
+<et2-filterbox id="filterbox-overview">
+    <et2-vbox>
+        <et2-date-range id="date" label="Date"></et2-date-range>
+        <et2-searchbox id="search" label="Search"></et2-searchbox>
+    </et2-vbox>
+</et2-filterbox>
 ```
 
-Filterbox shows a list of filters. Normally it pulls them from a nextmatch header & column filters but it's possible to
-provide a list or a custom template.
+Filterbox shows a list of filters. Normally it pulls them from a nextmatch header & column filters, but you can put your
+own filters inside it or point it at a custom template instead.
 
 ## KDots Framework
 
@@ -88,14 +85,18 @@ Use `autoapply` when you want each filter change to be handled separately instea
 
 ### Clearable
 
-Add the `clearable` attribute to add a clear button when at least one filter has content.
+Add the `clearable` attribute to get a clear button whenever at least one filter has a value. The priority filter below
+starts out set, so the button is there to begin with; clear both filters and it goes away again.
+
+A filter can only be emptied if it has an empty value to go back to, so give a select an `emptyLabel` - without one it
+falls back to its first option instead of clearing.
 
 ```html:preview
-<et2-filterbox clearable>
+<et2-filterbox id="filterbox-clearable" clearable>
 <et2-vbox>
-    Clearable
-    <et2-select-priority id="priority" label="Custom priority filter" class="et2-fixed-label"></et2-select-priority>
-    <et2-select-dow id="day" label="Day of week" class="et2-fixed-label"></et2-select-dow>
+    <et2-searchbox id="search" label="Search" class="et2-fixed-label"></et2-searchbox>
+    <et2-select-priority id="priority" label="Priority" emptyLabel="Any" value="3"
+                         class="et2-fixed-label"></et2-select-priority>
 </et2-vbox>
 </et2-filterbox>
 ```

@@ -35,8 +35,17 @@ export default {
 		"api/js/etemplate/**/Et2*.ts",
 		"api/js/etemplate/Et2Nextmatch/**/*.ts",
 		"api/js/etemplate/Et2Widget/SearchMixin.ts",
-		"api/js/etemplate/Et2Select/SearchMixin.ts",
+		"api/js/etemplate/Et2Widget/CachedQueueMixin.ts",
+		// Was listed as Et2Select/SearchMixin.ts, which does not exist - the file is
+		// SelectSearchMixin.ts. It declares search / searchUrl / allowFreeEntries / searchOptions,
+		// and Et2Select itself extends it, so that typo hid those four attributes from all 24
+		// select widgets' pages.
+		"api/js/etemplate/Et2Select/SelectSearchMixin.ts",
+		"api/js/etemplate/Et2Select/FreeEntryMixin.ts",
 		"api/js/etemplate/Et2Select/SelectAccountMixin.ts",
+		// Declares noSubmit / image among others; without it every button widget's page was
+		// missing the attributes that make a button do anything.
+		"api/js/etemplate/Et2Button/ButtonMixin.ts",
 		"api/js/etemplate/Layout/RowLimitedMixin.ts",
 		"api/js/etemplate/Expose/ExposeMixin.ts"
 	],

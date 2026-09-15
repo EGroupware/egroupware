@@ -10,7 +10,19 @@
 
 	{% set component = getComponent(component.tagName) %}
 
-  {# Determine the badge variant #}
+  {# Since / status badges are disabled, not removed. Every page claimed "Since 23.1" and showed
+     an empty grey status pill, because component.since and component.status are always empty.
+
+     Note the cause, because it is not simply "nobody tagged anything": 9 widget sources DO carry
+     an @since tag, but the analyzer never reads it - the block that copies @since / @status (and
+     @animation / @dependency / @title) off the class docblock is commented out in
+     doc/etemplate2/custom-elements-manifest.config.mjs, in the "shoelace-custom-tags" plugin.
+     @status is genuinely unused so far (0 sources).
+
+     So restoring these badges takes three steps, not one: re-enable that tag extraction in the
+     manifest config, tag the classes, then uncomment this block and the markup in the header
+     below. Uncommenting here alone puts the same wrong "23.1" back on all 133 pages. #}
+  {#
   {% if component.status == 'stable' %}
     {% set badgeVariant = 'primary' %}
   {% elseif component.status == 'experimental' %}
@@ -22,6 +34,7 @@
   {% else %}
     {% set badgeVariant = 'neutral' %}
   {% endif %}
+  #}
 
   {# Header #}
   <header class="component-header">
@@ -31,6 +44,8 @@
       <code>&lt;{{ component.tagName }}&gt; | {{ component.name }}</code>
     </div>
 
+    {# See the badge-variant block above for why these are commented out. #}
+    {#
     <div class="component-header__info">
       <sl-badge variant="neutral" pill>
         Since {{component.since or '23.1' }}
@@ -39,6 +54,7 @@
         {{ component.status }}
       </sl-badge>
     </div>
+    #}
   </header>
 
   <p class="component-summary">
@@ -204,8 +220,7 @@
     <table>
       <thead>
         <tr>
-          <th class="table-name" data-flavor="html">Name</th>
-          <th class="table-name" data-flavor="react">React Event</th>
+          <th class="table-name">Name</th>
           <th class="table-description">Description</th>
           <th class="table-event-detail">Event Detail</th>
         </tr>
@@ -213,12 +228,12 @@
       <tbody>
         {% for event in component.events %}
           <tr>
-            <td data-flavor="html"><code class="nowrap">{{ event.name }}</code></td>
+            <td><code class="nowrap">{{ event.name }}</code></td>
             <td>
               {% if event.description %}
                 {{ event.description | markdownInline | safe }}
-			  {% else %}
-			    EVENT NEEDS A DESCRIPTION
+              {% else %}
+                Missing description
               {% endif %}
 			</td>
             <td>

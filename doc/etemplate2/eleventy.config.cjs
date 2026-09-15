@@ -4,7 +4,7 @@ const path = require('path');
 const {execSync} = require('child_process');
 const lunr = require('lunr');
 const {capitalCase} = require('change-case');
-const {customElementsManifest, getAllComponents, getAllMixins, getShoelaceVersion} = require('./_utilities/cem.cjs');
+const {customElementsManifest, getAllComponents, getAllMixins, getAllControllers, getShoelaceVersion} = require('./_utilities/cem.cjs');
 const {buildTaxonomy, FEATURE_AREAS} = require('./_utilities/widget-taxonomy.cjs');
 const egwFlavoredMarkdown = require('./_utilities/markdown.cjs');
 const activeLinks = require('./_utilities/active-links.cjs');
@@ -30,6 +30,25 @@ function attachConsumedBy(components, mixins)
 {
 	mixins.forEach(mixin =>
 	{
+		// A controller is not in anyone's `mixins` array - it is instantiated, not mixed in - so
+		// the same "who uses this?" question has to be answered from the source. Without this a
+		// controller page can only say what the class does, never where it is actually used.
+		if (mixin.isController)
+		{
+			mixin.consumedBy = components.filter(c =>
+			{
+				const src = path.join('..', '..', c.path.replace(/\.js$/, '.ts'));
+				try
+				{
+					return new RegExp('new\\s+' + mixin.name + '\\s*\\(').test(fs.readFileSync(src, 'utf8'));
+				}
+				catch (e)
+				{
+					return false;
+				}
+			}).map(c => ({name: c.name, tagName: c.tagName}));
+			return;
+		}
 		mixin.consumedBy = components
 			.filter(c => (c.mixins || []).some(m => m.name === mixin.name))
 			.map(c => ({name: c.name, tagName: c.tagName}));
@@ -60,10 +79,149 @@ function attachTaxonomyMetadata(components, taxonomy)
 }
 
 let allComponents = getAllComponents();
-let allMixins = getAllMixins();
+let allMixins = getAllMixins().concat(getAllControllers()).sort((a, b) => a.name.localeCompare(b.name));
 attachConsumedBy(allComponents, allMixins);
 let widgetTaxonomy = buildTaxonomy(allComponents, allMixins);
 attachTaxonomyMetadata(allComponents, widgetTaxonomy);
+
+// Reports what is still undocumented, so a gap is visible at build time instead of only to a
+// reader who lands on a bare page. Summary on every build; DOCS_GAPS=1 lists the names.
+// Warn-only by design - this must never fail a build, it is a to-do list, not a gate.
+function reportDocumentationGaps(components, mixins)
+{
+	// What counts as "documented" is deliberately generous, because the alternative kept flagging
+	// finished work. A widget only instantiated by another widget (et2-nextmatch-columnselection)
+	// is properly documented by prose with no example at all; one that cannot work without a
+	// server is documented with a static code block on purpose. Both are done, not gaps.
+	//
+	// So: `undocumented` is the real to-do list - nothing written for it anywhere. The live/static
+	// split is reported alongside as a measure of how much of it a reader can actually try.
+	const hasLiveExample = c => !!(c.content && c.content.includes(':preview'));
+	const hasStaticExample = c => !!(c.content && /```/.test(c.content)) && !hasLiveExample(c);
+	const isUndocumented = c => !c.content && !c.summary && !c.description;
+	const undocumented = components.filter(isUndocumented);
+	const liveExamples = components.filter(hasLiveExample);
+	const staticExamples = components.filter(hasStaticExample);
+	// Everything documented that a reader still cannot try. This has to key off "has no example"
+	// rather than "has a .md", or a widget carrying only a class docblock lands in no list at all
+	// and the totals stop adding up: seven widgets sat in that blind spot, counted as documented
+	// by the headline and named nowhere underneath it.
+	const proseOnly = components.filter(c => !isUndocumented(c) && !hasLiveExample(c) && !hasStaticExample(c));
+	// A companion .md counts as documentation here exactly as it does for a widget - Et2Widget and
+	// Et2InputWidget are documented that way rather than in a class docblock.
+	const mixinsNoText = mixins.filter(m => !m.summary && !m.description && !m.content);
+	const undescribedEvents = [];
+	components.forEach(c => (c.events || []).forEach(e =>
+	{
+		if (!e.description) undescribedEvents.push(c.tagName + ' ' + e.name);
+	}));
+
+	// A markdown file is only ever read as `<ClassName>.md` beside that class's source. Getting
+	// the name wrong is silent: the file exists, reads like working documentation, and nothing
+	// renders it. Real example - Headers/CustomfieldsHeader.md was named after its *source file*
+	// rather than its class (Et2CustomfieldsHeader), so a full page of prose and examples went
+	// nowhere until it was renamed.
+	//
+	// So only look inside directories that actually define a documented class, and only complain
+	// about files that are not plainly something else (a README, a plan, working notes). Matching
+	// on an "Et2" prefix instead would have missed the very case above.
+	const NOT_WIDGET_DOC = /^(README|CHANGELOG)|_(PLAN|NOTES|STATUS)\.md$|(Notes|Plan|Status)\.md$|-(plan|status|notes)\.md$/i;
+	const classesByDir = new Map();
+	components.concat(mixins).forEach(c =>
+	{
+		const dir = path.dirname(path.join('..', '..', c.path));
+		if (!classesByDir.has(dir)) classesByDir.set(dir, new Set());
+		classesByDir.get(dir).add(c.name);
+	});
+	const orphanDocs = [];
+	classesByDir.forEach((names, dir) =>
+	{
+		let entries = [];
+		try { entries = fs.readdirSync(dir); }
+		catch (e) { return; }
+		entries.filter(f => f.endsWith('.md') && !NOT_WIDGET_DOC.test(f)).forEach(f =>
+		{
+			if (!names.has(f.slice(0, -3))) orphanDocs.push(path.join(dir, f));
+		});
+	});
+
+	// Lint the examples themselves for the mistakes that are invisible until someone opens the
+	// page. Each of these has actually shipped on this site: a `debugger` that halted the
+	// reader's browser, a `//` comment between tags rendering as body text, and a script reaching
+	// for `.updateComplete` before the widget had upgraded (which throws, leaving the example
+	// half-working with nothing to show for it).
+	const exampleProblems = [];
+	components.forEach(c =>
+	{
+		if (!c.content) return;
+		const previews = c.content.match(/```html:preview[\s\S]*?```/g) || [];
+		previews.forEach(block =>
+		{
+			const scripts = (block.match(/<script[\s\S]*?<\/script>/g) || []).join('\n');
+			const markup = block.replace(/<script[\s\S]*?<\/script>/g, '');
+			const flag = msg => exampleProblems.push(c.tagName + ': ' + msg);
+
+			if (/\bdebugger\b/.test(block)) flag('`debugger` in an example');
+			if (/^\s*\/\//m.test(markup)) flag('`//` comment in HTML - renders as visible text');
+			if (/\bTODO\b/.test(markup)) flag('TODO left in an example');
+			// Only a bare tag selector is the hazard: with several previews on a page it silently
+			// picks the first widget, which belongs to a different example. A unique class or id
+			// selector is fine and most existing examples already use one.
+			const tagSelector = /document\.querySelector\(\s*["'`]([a-zA-Z][\w-]*)["'`]\s*\)/g;
+			let m;
+			while ((m = tagSelector.exec(scripts)) !== null)
+			{
+				flag(`document.querySelector("${m[1]}") picks the first match on the page - use an id`);
+			}
+			if (/\.updateComplete/.test(scripts) && !/whenDefined/.test(scripts))
+			{
+				flag('.updateComplete without customElements.whenDefined() - throws before upgrade');
+			}
+		});
+	});
+
+	const total = components.length;
+	console.log(
+		`[docs] ${liveExamples.length + staticExamples.length}/${total} widgets have an example ` +
+		`(${liveExamples.length} live, ${staticExamples.length} static), ` +
+		`${total - undocumented.length}/${total} documented at all; ` +
+		`${undescribedEvents.length} undescribed events, ` +
+		// Same polarity as every other figure on this line - a count of what is *done*. It read
+		// "0/17 mixins undocumented" before, which is good news phrased as bad and was misread.
+		`${mixins.length - mixinsNoText.length}/${mixins.length} mixins and controllers documented` +
+		(orphanDocs.length ? `, ${orphanDocs.length} orphaned .md` : '') +
+		(exampleProblems.length ? `, ${exampleProblems.length} example problems` : '') +
+		(process.env.DOCS_GAPS ? '' : '  (DOCS_GAPS=1 for names)')
+	);
+
+	if (!process.env.DOCS_GAPS)
+	{
+		return;
+	}
+	const list = (label, names) =>
+	{
+		if (names.length) console.log(`[docs] ${label} (${names.length}):\n       ` + names.join('\n       '));
+	};
+	list('nothing written at all', undocumented.map(c => c.tagName));
+	list('documented, static example only', staticExamples.map(c => c.tagName));
+	list('documented, no example', proseOnly.map(c => c.tagName));
+	list('undocumented mixins and controllers', mixinsNoText.map(m => m.name));
+	list('events with no description', undescribedEvents);
+	list('orphaned .md files (named after no documented class)', orphanDocs);
+	list('problems in examples', exampleProblems);
+}
+
+reportDocumentationGaps(allComponents, allMixins);
+// Every entry entryUrl() has handed to a page this build, so eleventy.after can confirm the files
+// were actually copied. See the check itself for why they might not have been.
+// One read of the build manifest per config evaluation. Everything that needs to agree about which
+// hashed entry a page uses - the passthrough copy and entryUrl() - reads this, not the file, so a
+// rollup writing new hashes mid-build cannot make them disagree.
+let manifestSnapshot = {};
+try { manifestSnapshot = JSON.parse(fs.readFileSync('../../api/js/build-manifest.json', 'utf8')); }
+catch (e) { /* reported properly by entryUrl() when a page actually asks for an entry */ }
+
+const resolvedEntries = new Map();
 let hasBuiltSearchIndex = false;
 
 // Write component data to file, 11ty will pick it up and create pages - the name & location are important
@@ -71,12 +229,30 @@ if (!fs.existsSync("_data"))
 {
 	fs.mkdirSync("_data");
 }
-fs.writeFileSync("_data/components.json", JSON.stringify(allComponents));
-fs.writeFileSync("_data/mixins.json", JSON.stringify(allMixins));
-fs.writeFileSync("_data/widgetTaxonomy.json", JSON.stringify(widgetTaxonomy));
+// Only write when the content actually differs. This config is re-evaluated on every watch
+// cycle, and _data/ is a data directory: rewriting these three files makes eleventy consider
+// every page's data stale, so --incremental rebuilt all 155 pages (40-60s) for a one-line edit
+// to a single widget's markdown. Skipping an identical write lets a .md edit rebuild only the
+// page it belongs to. A real change still writes, and still correctly rebuilds everything.
+function writeIfChanged(path, contents)
+{
+	try
+	{
+		if (fs.readFileSync(path, 'utf8') === contents)
+		{
+			return;
+		}
+	}
+	catch (e) { /* missing or unreadable - fall through and write it */ }
+	fs.writeFileSync(path, contents);
+}
+
+writeIfChanged("_data/components.json", JSON.stringify(allComponents));
+writeIfChanged("_data/mixins.json", JSON.stringify(allMixins));
+writeIfChanged("_data/widgetTaxonomy.json", JSON.stringify(widgetTaxonomy));
 
 // Put it here too, since addPassthroughCopy() ignores it
-fs.copyFileSync("../dist/custom-elements.json", "assets/custom-elements.json");
+writeIfChanged("assets/custom-elements.json", fs.readFileSync("../dist/custom-elements.json", 'utf8'));
 
 module.exports = async function (eleventyConfig)
 {
@@ -115,6 +291,13 @@ module.exports = async function (eleventyConfig)
 	eleventyConfig.addPassthroughCopy({"../../api/templates/default/images/logo.svg": "assets/images/logo.svg"});
 	eleventyConfig.addPassthroughCopy({"../../api/templates/default/etemplate2.css": "assets/styles/etemplate2.css"});
 	eleventyConfig.addPassthroughCopy({"../../kdots/css/kdots.css": "assets/styles/kdots.css"});
+	// The date widgets' calendar popup is flatpickr's, and flatpickr's own stylesheet is what makes
+	// it visible and lays the day grid out.  The app gets it from the kdots theme, which inlines
+	// this same file (see kdots/css/themes/dark.less) - but the kdots stylesheet is deliberately
+	// not linked here because it breaks page scrolling, so serve flatpickr's directly.  Without it
+	// etemplate2.css's `body .flatpickr-calendar {display: none}` has nothing to override it, and
+	// every date widget's calendar is invisible on its own documentation page.
+	eleventyConfig.addPassthroughCopy({"../../node_modules/flatpickr/dist/themes/light.css": "assets/styles/flatpickr.css"});
 
 	// vendor requirements
 	eleventyConfig.addPassthroughCopy({
@@ -125,27 +308,32 @@ module.exports = async function (eleventyConfig)
 
 	// Etemplate2
 	eleventyConfig.addPassthroughCopy({"../../chunks": "assets/scripts/chunks"});
-	eleventyConfig.addPassthroughCopy({"../../api/js/etemplate/etemplate2.js": "assets/scripts/sub/dir/etemplate/etemplate2.js"});
-	// egw.min.js is the real bootstrap that normally runs *before* etemplate2.js on every
-	// EGroupware page (see Api\Framework::header()) - it seeds window.egw_webserverUrl from the
-	// egw_script_id tag's data-url attribute and pulls in the egw_debug/egw_links/egw_images/...
-	// modules that etemplate2.js's own bundle doesn't include. Without it, egw().webserverUrl
-	// stays null and egw().debug()/link_app_list()/getSessionItem() etc. don't exist - see
-	// default.njk's egw_script_id script tag.
-	eleventyConfig.addPassthroughCopy({"../../api/js/jsapi/egw.min.js": "assets/scripts/sub/dir/jsapi/egw.min.js"});
-	eleventyConfig.addPassthroughCopy({"../../api/js/jsapi/egw.min.js.map": "assets/scripts/sub/dir/jsapi/egw.min.js.map"});
-	// kdots/js/app.min.js's own top-level logic no-ops here (no <egw-framework> element exists),
-	// but importing it registers <egw-message> (kdots/js/EgwFrameworkMessage.ts, via a
-	// @customElement decorator side effect) as a real custom element. Without it,
-	// egw().message()'s no-framework fallback does `document.createElement("egw-message")` and
-	// gets a plain, undefined HTMLElement - `.updateComplete` is undefined on it, and awaiting
-	// that throws synchronously. That's fatal when it happens inside a widget's own constructor
-	// (eg. Et2Email calling egw().preference() for an app whose prefs need a - failing, no PHP
-	// backend here - ajax fetch): the constructor throws before Lit ever attaches a shadow root,
-	// so the widget silently never renders at all. Destination path is 2 levels deep to match
-	// this file's own relative `../../chunks/...` import.
-	eleventyConfig.addPassthroughCopy({"../../kdots/js/app.min.js": "assets/scripts/sub/kdots/app.min.js"});
-	eleventyConfig.addPassthroughCopy({"../../kdots/js/app.min.js.map": "assets/scripts/sub/kdots/app.min.js.map"});
+	// ...and, explicitly, the three entry chunks the pages actually name.
+	//
+	// Copying chunks/ wholesale is not enough on its own. A rollup running against this checkout
+	// can write new hashed entries *after* that directory has been walked, so the copy carries the
+	// old files while entryUrl() below resolves the manifest to the new ones - the page then names
+	// chunks that were never copied, every script 404s, and not one widget registers. The page
+	// still renders its prose, so it reads as "the examples are empty" rather than as a failure.
+	//
+	// Both sides now read one snapshot taken here (manifestSnapshot), so within a build the files
+	// copied and the files named cannot disagree. The eleventy.after check still reports a miss.
+	Object.entries(manifestSnapshot).forEach(([logical, hashed]) =>
+	{
+		if (!/^\/(api\/js\/(etemplate\/etemplate2|jsapi\/egw\.min)|kdots\/js\/app\.min)\.js$/.test(logical))
+		{
+			return;
+		}
+		const src = path.join('..', '..', hashed.replace(/^\//, ''));
+		if (fs.existsSync(src))
+		{
+			eleventyConfig.addPassthroughCopy({[src]: path.join('assets/scripts', hashed.replace(/^\//, ''))});
+		}
+	});
+	// The three script entries this site loads (etemplate2, egw.min, kdots app.min) are NOT copied
+	// from their unhashed api/js/... paths any more - see entryUrl() below for why. Rollup writes
+	// each one as a content-hashed chunk into chunks/, which the line above already copies
+	// wholesale, so they are served without any further passthrough of their own.
 	// Static skin/content CSS for the HtmlArea (TinyMCE) widget - resolved at runtime as
 	// `${egw().webserverUrl}/api/js/etemplate/Et2HtmlArea/skins/ui/...` (Et2HtmlArea.ts). The
 	// dynamic tinymce.php stylesheet and the image-upload ajax endpoint need a real PHP backend
@@ -167,6 +355,10 @@ module.exports = async function (eleventyConfig)
 	// copying the font files themselves, the glyphs never render (confirmed: sidebar category
 	// icons showed as broken/tofu characters until this was added).
 	eleventyConfig.addPassthroughCopy({"../../node_modules/bootstrap-icons/font/fonts": "assets/styles/fonts"});
+	// Et2SelectCountry pulls this in at runtime with includeCSS("api/templates/default/css/flags.css"),
+	// resolved against egw().webserverUrl - which is this site's asset root. It is the only thing the
+	// widget's flag icons come from, so without it every country renders with a blank flag.
+	eleventyConfig.addPassthroughCopy({"../../api/templates/default/css/flags.css": "assets/api/templates/default/css/flags.css"});
 	eleventyConfig.addPassthroughCopy({"../../api/js/etemplate/*/doc/*": "assets/components/"});
 	eleventyConfig.addPassthroughCopy({"../../node_modules/diff2html/bundles/css/diff2html.min.css": "assets/styles/diff2html.min.css"});
 
@@ -197,6 +389,43 @@ module.exports = async function (eleventyConfig)
 	eleventyConfig.addNunjucksGlobal('assetUrl', (value = '', absolute = false) =>
 	{
 		value = path.join(`/${assetsDir}`, value);
+		return absolute ? new URL(value, eleventyConfig.globalData.baseUrl).toString() : value;
+	});
+
+	// Resolves one of EGroupware's script entries (etemplate2, egw.min, an app's app.min) to the
+	// URL it is actually served at here.
+	//
+	// Rollup no longer writes an entry to its own source path: every entry is emitted as a
+	// content-hashed chunk under chunks/ (rollup.config.js `entryFileNames`), and the logical ->
+	// hashed mapping is recorded in api/js/build-manifest.json. The unhashed api/js/**/*.js files
+	// are pre-hashing leftovers - untracked, and no build rewrites them - so linking one serves a
+	// module whose own `../../../chunks/<old hash>.js` imports 404. Nothing throws and no request
+	// fails visibly; window.egw is simply never defined and not one <et2-*> element upgrades, so
+	// every code preview on the site renders as an empty box. Resolve through the manifest instead.
+	//
+	// Read fresh on each call rather than require()d, so an incremental rebuild's new hashes are
+	// picked up without restarting eleventy (the manifest is written via a same-directory temp
+	// file + rename, so a concurrent read never sees a half-written one).
+	//
+	// Manifest values are repo-root-absolute ("/chunks/x.js") and chunks/ is copied wholesale to
+	// assets/scripts/chunks, which is also where each entry's sibling chunk imports and its
+	// `../vendor/bower-asset/...` imports resolve from - so no per-entry passthrough is needed.
+	eleventyConfig.addNunjucksGlobal('entryUrl', (logicalPath, absolute = false) =>
+	{
+		const manifest = manifestSnapshot;
+		if (!Object.keys(manifest).length)
+		{
+			throw new Error('api/js/build-manifest.json is missing or empty - run "npm run build" in ' +
+				'the repository root first, or wait for the rollup watch this build started to finish ' +
+				'its first pass.');
+		}
+		if (!manifest[logicalPath])
+		{
+			throw new Error(`No build-manifest.json entry for "${logicalPath}" - it is stale or was ` +
+				`written by a build that did not include this entry. Re-run "npm run build".`);
+		}
+		const value = path.join(`/${assetsDir}`, 'scripts', manifest[logicalPath]);
+		resolvedEntries.set(logicalPath, value);
 		return absolute ? new URL(value, eleventyConfig.globalData.baseUrl).toString() : value;
 	});
 
@@ -395,6 +624,25 @@ module.exports = async function (eleventyConfig)
 	//
 	eleventyConfig.on('eleventy.after', () =>
 	{
+		// chunks/ is copied wholesale by a passthrough step, but entryUrl() resolves each entry
+		// against api/js/build-manifest.json at render time. A rollup running against this same
+		// checkout - the app's own `rollup -cw`, not necessarily this docs build - can rewrite the
+		// manifest with fresh hashes in between, so the HTML ends up naming chunks that this build
+		// never copied. Nothing errors: the scripts 404, window.egw is never defined, and every
+		// widget on every page silently fails to upgrade while the page still looks fine.
+		// Cheap to check, and it turns a baffling empty site into one line.
+		resolvedEntries.forEach((url, logicalPath) =>
+		{
+			const onDisk = path.join('..', 'dist', 'site', url.replace(/^\//, ''));
+			if (!fs.existsSync(onDisk))
+			{
+				console.warn(`[docs] MISSING ENTRY: ${logicalPath} resolved to ${url}, which was not ` +
+					`copied to the output. Every widget will silently fail to upgrade. A rebuild ` +
+					`usually re-runs the passthrough copy and fixes it.`);
+			}
+		});
+		resolvedEntries.clear();
+
 		console.log('[eleventy.after]');
 	});
 
@@ -414,6 +662,7 @@ module.exports = async function (eleventyConfig)
 	// source cem.cjs consumes); the previous second run into _data was never read.
 	//
 	eleventyConfig.addWatchTarget("../../api/js/etemplate/**/*.{ts,md}");
+	eleventyConfig.addWatchTarget("../../api/js/build-manifest.json");
 
 	eleventyConfig.on('eleventy.beforeWatch', (queue) =>
 	{
@@ -430,7 +679,10 @@ module.exports = async function (eleventyConfig)
 		// Re-read component markdown + manifest into components.json for the page render.
 		// Cheap, and also runs when only a .md doc changed so its content is refreshed.
 		allComponents = getAllComponents();
-		allMixins = getAllMixins();
+		// Must match the initial computation at the top of this file exactly. It used to call
+		// getAllMixins() alone, so every rebuild silently dropped the controllers that the startup
+		// run had included - the pages existed after a restart and disappeared on the next edit.
+		allMixins = getAllMixins().concat(getAllControllers()).sort((a, b) => a.name.localeCompare(b.name));
 		attachConsumedBy(allComponents, allMixins);
 		widgetTaxonomy = buildTaxonomy(allComponents, allMixins);
 		attachTaxonomyMetadata(allComponents, widgetTaxonomy);
@@ -438,9 +690,12 @@ module.exports = async function (eleventyConfig)
 		{
 			fs.mkdirSync("_data");
 		}
-		fs.writeFileSync("_data/components.json", JSON.stringify(allComponents));
-		fs.writeFileSync("_data/mixins.json", JSON.stringify(allMixins));
-		fs.writeFileSync("_data/widgetTaxonomy.json", JSON.stringify(widgetTaxonomy));
+		// writeIfChanged, not writeFileSync: these three files are 11ty data files, so rewriting
+		// them unconditionally marks every page's data stale and turns each rebuild into a full
+		// 155-page one (~50s) even when a single widget's markdown changed.
+		writeIfChanged("_data/components.json", JSON.stringify(allComponents));
+		writeIfChanged("_data/mixins.json", JSON.stringify(allMixins));
+		writeIfChanged("_data/widgetTaxonomy.json", JSON.stringify(widgetTaxonomy));
 	});
 
 	//

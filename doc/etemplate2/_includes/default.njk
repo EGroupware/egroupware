@@ -37,7 +37,15 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@{{ meta.shoelaceVersion }}/cdn/themes/dark.css" />
     <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@{{ meta.shoelaceVersion }}/cdn/shoelace-autoloader.js"></script>
 
-    {# EGroupware #}
+    {# EGroupware - each entry below is resolved through api/js/build-manifest.json by
+       entryUrl(), because rollup emits entries as content-hashed chunks rather than writing
+       them back to their source path. Linking the unhashed api/js/... path instead serves a
+       module whose chunk imports 404, which silently leaves every widget on the site
+       un-upgraded. Their load order still matters exactly as described below. #}
+    {# flatpickr's own stylesheet, which the date widgets' calendar popup needs to be visible at
+       all.  Must come before etemplate2.css, which only overrides it.  In the app this arrives
+       inlined in the kdots theme, but that stylesheet is not linked here - see below. #}
+    <link rel="stylesheet" href="{{ assetUrl('styles/flatpickr.css') }}" />
     <link rel="stylesheet" href="{{ assetUrl('styles/etemplate2.css') }}" />
     <!-- Breaks page scrolling <link rel="stylesheet" href="{{ assetUrl('styles/kdots.css') }}" /> -->
     {# etemplate2.js (and chunks it imports, e.g. cropper.min.js) expect a global jQuery -
@@ -47,7 +55,19 @@
        the "egw_script_id" id so egw.js's `document.getElementById('egw_script_id')` finds it and
        reads data-url as window.egw_webserverUrl, instead of leaving it null. It also pulls in
        the egw_debug/egw_links/egw_images/... modules that etemplate2.js alone doesn't bundle. #}
-    <script src="{{ assetUrl('scripts/sub/dir/jsapi/egw.min.js') }}" type="module" id="egw_script_id" data-url="{{ assetUrl('') }}"></script>
+    {# Docs-only. egw.js's bootstrap reloads the page to `?cd=popup` whenever `window.framework`
+       is undefined and the URL carries no `cd=` parameter (api/js/jsapi/egw.js, the
+       "if framework not found, but requested to check for it" block). On a real EGroupware page
+       that redirect is how a popup acquires a framework; here there is no framework and never
+       will be, so it only costs every page an immediate second load - and, worse, that reload
+       cancels any Turbo client-side visit in flight, which breaks every sidebar link on the site.
+       Claiming the slot up front skips the redirect. Every consumer of window.framework guards
+       with `typeof window.framework.<method> != 'undefined'` (etemplate2.ts) or optional
+       chaining, so an empty object behaves exactly like the absent framework it replaces.
+       Must be a classic, parser-blocking script: egw.min.js below is a module, so it is deferred
+       until after parsing and would otherwise run its check first. #}
+    <script>window.framework = window.framework || {};</script>
+    <script src="{{ entryUrl('/api/js/jsapi/egw.min.js') }}" type="module" id="egw_script_id" data-url="{{ assetUrl('') }}" data-app="addressbook"></script>
     {# Docs-only, runtime-patched - nothing in the actual app tree is touched. This site has no
        PHP backend, so every ajax call any widget example makes is expected to fail; without
        this, each failure pops a user-facing "request returned with an error" toast and logs
@@ -59,6 +79,66 @@
     <script type="module">
       Object.getPrototypeOf(window.egw().json('__docs_noop__', [])).handleError = () => {};
     </script>
+    {# Docs-only session fixture. Widgets read three client-side stores that a real EGroupware
+       page has already filled in from the server. Here nothing fills them, and the widget's own
+       fallback is to go and ask - so `egw().preference(name)` issues a *synchronous* XHR
+       (api/js/jsapi/egw_preferences.ts) that can only fail, on the main thread, during the
+       widget's constructor. Every widget deriving from Et2Select does this (SelectSearchMixin
+       reads `maxmatchs`), which is 24 of the documented widgets, so without this the select
+       pages each block on a doomed round-trip before rendering.
+
+       A constructor is too early for a preview's own <script> to help: on a Turbo navigation
+       the element is already upgraded by the time that script runs. It has to be seeded here,
+       before etemplate2.js evaluates and upgrades the static markup.
+
+       The values are a plausible minimum, not a copy of any real installation - enough for a
+       widget to render something honest in an example. #}
+    <script type="module">
+      const egw = window.egw();
+
+      // egw.app() gates link_app_list(), so an app missing here is silently dropped from every
+      // app selector even when it has a link-registry entry below.
+      egw.set_user({
+        account_id: 1,
+        account_lid: 'demo',
+        apps: {
+          addressbook: {name: 'addressbook', title: 'Addressbook', icon: 'addressbook/navbar'},
+          calendar:    {name: 'calendar',    title: 'Calendar',    icon: 'calendar/navbar'},
+          infolog:     {name: 'infolog',     title: 'InfoLog',     icon: 'infolog/navbar'},
+          filemanager: {name: 'filemanager', title: 'Filemanager', icon: 'filemanager/navbar'},
+          mail:        {name: 'mail',        title: 'Mail',        icon: 'mail/navbar'},
+          timesheet:   {name: 'timesheet',   title: 'Timesheet',   icon: 'timesheet/navbar'}
+        }
+      });
+
+      // "common" covers every bare egw().preference(name) call too - sanitizeApp() defaults an
+      // omitted app to "common".
+      egw.set_preferences({
+        maxmatchs: '15',
+        account_selection: 'selectbox',
+        dateformat: 'Y-m-d',
+        timeformat: '24',
+        lang: 'en',
+        select_multiple_close: 'close'
+      }, 'common');
+      egw.set_preferences({emailTag: 'full'}, 'mail');
+      // The "current app" is whatever data-app says on the egw script tag above. Without it
+      // egw.app_name() is null, and egw.preference(name, null) throws in sanitizeApp() - which
+      // only guards against `undefined` - taking down any widget that asks for a per-app
+      // preference during construction (Et2LinkAppSelect never gets a shadow root at all).
+      // Naming an app fixes the crash but then makes that lookup a real request, so seed it too.
+      egw.set_preferences({link_app: 'addressbook'}, 'addressbook');
+
+      // Only the keys anything actually reads: `name` and `icon` for the label and image, and
+      // `query`, whose mere presence is what link_app_list('query') filters on.
+      egw.set_link_registry({
+        addressbook: {name: 'Addressbook', icon: 'addressbook/navbar', query: 1, title: 1},
+        calendar:    {name: 'Calendar',    icon: 'calendar/navbar',    query: 1, title: 1},
+        infolog:     {name: 'InfoLog',     icon: 'infolog/navbar',     query: 1, title: 1},
+        filemanager: {name: 'Filemanager', icon: 'filemanager/navbar', query: 1, title: 1},
+        timesheet:   {name: 'Timesheet',   icon: 'timesheet/navbar',   query: 1, title: 1}
+      });
+    </script>
     {# Registers <egw-message> (see kdots/js/EgwFrameworkMessage.ts) - egw().message()'s
        no-framework fallback creates one directly and awaits its .updateComplete, which throws
        if the real element was never defined. That throw is fatal when it happens inside a
@@ -68,8 +148,8 @@
        synchronously upgrades every custom element already sitting in the static HTML - including
        a widget whose constructor calls egw().message() - as part of its own evaluation, which is
        too early for a script that's merely later in document order to have registered anything. #}
-    <script src="{{ assetUrl('scripts/sub/kdots/app.min.js') }}" type="module"></script>
-    <script src="{{ assetUrl('scripts/sub/dir/etemplate/etemplate2.js') }}" type="module"></script>
+    <script src="{{ entryUrl('/kdots/js/app.min.js') }}" type="module"></script>
+    <script src="{{ entryUrl('/api/js/etemplate/etemplate2.js') }}" type="module"></script>
     <link rel="stylesheet" href="{{assetUrl("styles/bootstrap-icons.min.css")}}" />
     <link rel="stylesheet" href="{{assetUrl("styles/diff2html.min.css")}}" />
 

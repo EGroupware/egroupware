@@ -1,11 +1,5 @@
 ```html:preview
-
-<et2-file 
-    multiple
-    image="cloud-upload" 
-    label="Select files to upload" 
-    helpText="Please check your files are complete before uploading"
-></et2-file>
+<et2-file label="Attachment"></et2-file>
 ```
 
 File allows the user to upload files to EGroupware. The uploaded files are processed on the server by the application

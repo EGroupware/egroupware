@@ -77,10 +77,17 @@ async function buildTheDocs(watch = false)
 		}
 
 		// To debug use this in terminal: DEBUG=Eleventy* npx @11ty/eleventy
+		// Raise the heap for eleventy. Every page is parsed into a JSDOM document by the
+		// html-transform pipeline, and the site is now large enough (130+ widget pages, most of
+		// them carrying live examples) that a full rebuild hits node's default old-space limit
+		// and dies with "Ineffective mark-compacts near heap limit". The watcher just disappears
+		// when that happens - no error in the page, the port simply stops answering - so it reads
+		// as a hang rather than a crash.
 		const child = spawn('npx', args, {
 			timeout: 120000,
 			stdio: watch ? 'inherit' : 'pipe',
-			cwd: 'doc/etemplate2'
+			cwd: 'doc/etemplate2',
+			env: {...process.env, NODE_OPTIONS: `${process.env.NODE_OPTIONS || ''} --max-old-space-size=4096`.trim()}
 		});
 
 		if (!watch)

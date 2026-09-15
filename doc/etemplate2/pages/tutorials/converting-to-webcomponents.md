@@ -26,7 +26,7 @@ Don't.
 
 Widgets should be considered closed boxes, and will regenerate their contents as needed. They will also
 malfunction if you try to alter their internal structure directly. Use their properties, methods and slots.
-[Styling](/styling) should normally be left to the template, but you can customize them using CSS variables and parts.
+[Styling](/getting-started/styling) should normally be left to the template, but you can customize them using CSS variables and parts.
 
 ### Is it ready?
 

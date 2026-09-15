@@ -26,6 +26,7 @@ type Constructor<T = LitElement> = new (...args : any[]) => T;
  * an instance of the widget calls queueCache() with the same parameters, the same response is returned immediately
  * with no server call.
  *
+ * ```ts
  * export class MyWidget extends CachedQueueMixin(...) {
  *     protected static searchUrl = "\\EGroupware\\Api\\Etemplate\\Widget\\MyWidget::ajax_check";
  *     constructor() {
@@ -40,19 +41,24 @@ type Constructor<T = LitElement> = new (...args : any[]) => T;
  *         });
  *     }
  * }
+ * ```
  *
- * searchUrl should expect an array of parameters, and return the result indexed by the JSON stringification of the parameters:
- * 	public function ajax_check(array $parameterList) : array
+ * searchUrl should expect an array of parameters, and return the result indexed by the JSON
+ * stringification of the parameters:
+ *
+ * ```php
+ * public function ajax_check(array $parameterList) : array
+ * {
+ * 	$result = [];
+ * 	foreach($parameterList as $parameters)
  * 	{
- * 		$result = [];
- * 		foreach($parameterList as $parameters)
- * 		{
- * 				...
- * 				$result[json_encode($parameters)] = doCheck($parameters) ?? false;
- * 		}
- *
- * 		Response::get()->data($result);
+ * 		...
+ * 		$result[json_encode($parameters)] = doCheck($parameters) ?? false;
  * 	}
+ *
+ * 	Response::get()->data($result);
+ * }
+ * ```
  *
  * @param {T} superClass
  * @returns {Constructor<CachedQueueMixinClass> & T}

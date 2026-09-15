@@ -26,7 +26,9 @@ If you just want to use existing widgets, you can put them in your .xet template
 ## Attributes
 
 Widget behaviour is customised by setting attributes. Different widgets will have different attributes, but some are
-fairly common across widgets.
+fairly common across widgets. [Usage](/getting-started/usage#properties) covers how an attribute becomes a widget
+property - name casing, type coercion, content expansion and translation - and each widget's own attributes are
+listed on its [component reference](/components/sandbox) page. The ones below are shared by nearly every widget.
 
 ### ID
 
@@ -36,6 +38,16 @@ fairly common across widgets.
 
 Disabled widgets are fully shown, but in a way that indicates the value cannot be changed. Use disabled to indicate that
 at some point a user may be able to change the value, but not right now. The widget may be enabled via javascript.
+
+:::warning
+That holds for **input** widgets only. `Et2Widget`'s base style is `:host([disabled]) {display: none}`, and only
+`Et2InputWidget` overrides it back to `display: initial`. So on anything that is not an input - a box, a groupbox,
+`et2-details`, a tab - `disabled` does not grey the widget out, it removes it from the page entirely, and is
+indistinguishable from `hidden` on screen.
+
+Use `hidden` when you mean "not visible", so the template says what it means. Be particularly careful with
+`et2-tab disabled`: it does not present an unavailable tab, it silently drops the tab.
+:::
 
 Readonly widgets are shown in a special way that displays a value, but is not interactive. Often we switch to a
 different component for faster performance, such as a simple

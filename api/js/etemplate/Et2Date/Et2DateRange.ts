@@ -9,10 +9,13 @@ import {formatDate, parseDate} from "./Et2Date";
 import {egw} from "../../jsapi/egw_global";
 
 /**
- * Display a time duration (eg: 3 days, 6 hours)
+ * @summary Choose a start and end date, either as two dates or as a named relative period
  *
- * If not specified, the time is in assumed to be minutes and will be displayed with a calculated unit
- * but this can be specified with the properties.
+ * The value is an object with `from` and `to`. With `relative` the user instead picks a named
+ * period such as "This month", and the widget resolves it to concrete dates on read.
+ *
+ * (The previous text here described Et2DateDuration - a different widget - and was what the
+ * generated documentation showed as this one's description.)
  */
 export class Et2DateRange extends Et2InputWidget(LitElement)
 {

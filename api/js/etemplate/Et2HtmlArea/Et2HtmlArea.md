@@ -1,22 +1,24 @@
 ## Examples
 
-### Toolbar Mode vs Preference
+### Basic
 
-The `mode` property controls whether the editor uses one of the built-in
-toolbar presets or the user's `rte_toolbar` preference.
-
-- `mode="simple"` uses the simple preset
-- `mode="extended"` uses the extended preset
-- `mode="advanced"` uses the advanced preset
-- `mode="ascii"` renders a plain textarea
-- empty `mode` uses the `rte_toolbar` preference
-
-If you want the editor to follow the user's selected toolbar features, leave
-`mode` empty.
+A rich text editor. With nothing set it uses the toolbar from the user's `rte_toolbar` preference,
+which is what most templates want - the user has already said how much toolbar they like.
 
 ```html:preview
-<et2-htmlarea label="Preference-driven toolbar"></et2-htmlarea>
+<et2-htmlarea label="Notes"></et2-htmlarea>
 ```
+
+### Toolbar mode
+
+`mode` overrides that preference with a fixed preset, for a field where the available formatting
+should not vary between users:
+
+- `mode="simple"` - the simple preset
+- `mode="extended"` - the extended preset
+- `mode="advanced"` - the advanced preset
+- `mode="ascii"` - a plain textarea, no editor at all
+- `mode` empty (the default) - the user's `rte_toolbar` preference
 
 If you need a fixed toolbar regardless of the user preference, set `mode`
 explicitly.

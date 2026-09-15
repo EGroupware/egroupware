@@ -3,6 +3,10 @@ pagination:
     data: components
     size: 1
     alias: component
-permalink: "components/{{component.tagName | slugify}}/"
+# The tag name IS the URL - no slugify. slugify() rewrites "_" to "-", which for the two
+# readonly variants (et2-link-entry_ro, et2-vfs-name_ro) produced a URL naming a custom element
+# that does not exist, and 404ed every link to them: the sidebar and component.njk's
+# Related/Belongs-to/inherited-from links all use the raw tagName, as they should.
+permalink: "components/{{component.tagName}}/"
 layout: component.njk
 ---

@@ -1,0 +1,71 @@
+## What it is for
+
+The widget that *creates* links. It is a row of four ways to attach something to the current entry:
+upload a local file, pick a file out of the VFS, paste files from the EGroupware file clipboard, or
+search for an existing entry and link that. The search half is an
+[`<et2-link-entry>`](/components/et2-link-entry/); the "Link" button beside it appears once
+something is selected.
+
+See [Choosing a link widget](/components/et2-link/#choosing-a-link-widget) for how it relates to the
+rest of the family.
+
+## The Links tab
+
+`<et2-link-to>` only creates links, it never shows them. The standard pairing is an
+`<et2-link-list>` with the **same `id`** directly below it, which shows what is there and lets the
+user remove it again:
+
+```html
+<et2-link-to id="link_to" span="all"></et2-link-to>
+<et2-link-list id="link_to" span="all"></et2-link-list>
+```
+
+:::warning
+Not live. Every path through this widget ends in a server request - `Link::ajax_link` to create the
+link, `Link::ajax_link_search` to find an entry, a directory listing to pick a VFS file - and this
+documentation site has no server to answer them. Everything below describes the behaviour against a
+running EGroupware.
+:::
+
+## Value
+
+The value names the entry that links are attached *to*, not the links themselves:
+
+```js
+{to_app: "infolog", to_id: "7"}
+```
+
+`to_id` being a plain ID means the entry exists, and links are created on the server the moment the
+user clicks "Link". If the entry has not been saved yet there is nothing to link to, so `to_id` is
+instead an object collecting the links; they are submitted with the form and created server-side
+once the entry gets its ID. The widget switches between the two on its own - a template does not
+have to care, as long as the server put the entry's app and ID in the content.
+
+## Limiting what can be linked
+
+`onlyApp` restricts the search to one application and hides the application selector.
+`applicationList` allows a comma separated set of them instead.
+
+```html
+<et2-link-to id="link_to" onlyApp="addressbook"></et2-link-to>
+<et2-link-to id="link_to" applicationList="addressbook,infolog"></et2-link-to>
+```
+
+## Knowing when a link was made
+
+After a successful link the widget clears itself and fires `et2-change`, whose `detail` is the array
+of links that were just created. That is how `<et2-link-list>` updates itself without asking the
+server again:
+
+```js
+this.et2.getWidgetById("link_to").addEventListener("et2-change", (e) =>
+{
+    console.log("linked", e.detail);
+});
+```
+
+It also fires the older `link.et2_link_to` event with the raw server result, which existing
+application code still listens for.
+
+In the other direction it listens for `et2-delete` from any `<et2-link-list>` in the same template,
+so that removing a link from a not-yet-saved entry also removes it from what will be submitted.

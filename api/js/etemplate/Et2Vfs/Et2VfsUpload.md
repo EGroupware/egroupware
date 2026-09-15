@@ -1,11 +1,5 @@
 ```html:preview
-
-<et2-vfs-upload
-    multiple
-    image="cloud-upload" 
-    label="Select files to upload" 
-    helpText="Please check your files are complete before uploading"
-></et2-vfs-upload>
+<et2-vfs-upload label="Attachment"></et2-vfs-upload>
 ```
 
 VFS Upload allows the user to upload files to a specified location in the VFS. It works much the same
