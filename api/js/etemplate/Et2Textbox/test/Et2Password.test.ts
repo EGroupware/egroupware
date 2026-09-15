@@ -5,6 +5,7 @@ import {assert, elementUpdated, fixture, html} from '@open-wc/testing';
 import {Et2Password} from "../Et2Password";
 import {inputBasicTests} from "../../Et2InputWidget/test/InputBasicTests";
 import * as sinon from "sinon";
+import {et2_arrayMgr} from "../../et2_core_arrayMgr";
 
 // Stub global egw for cssImage to find
 // @ts-ignore
@@ -53,16 +54,25 @@ describe("Password widget", () =>
 		assert.isNotNull(toggle.shadowRoot.querySelector(".input__password-toggle"), "password-toggle did not add a toggle button");
 	});
 
-	it('shows the toggle button for togglePassword', async() =>
+	it('shows the toggle button for the viewable attribute', async() =>
 	{
-		element.togglePassword = true;
-		await elementUpdated(element);
+		const viewable = await fixture<Et2Password>(html`
+            <et2-password viewable></et2-password>
+		`);
 
-		assert.isNotNull(element.shadowRoot.querySelector(".input__password-toggle"), "togglePassword did not add a toggle button");
-		assert.isTrue(element.passwordToggle, "togglePassword did not reach passwordToggle");
+		assert.isNotNull(viewable.shadowRoot.querySelector(".input__password-toggle"), "viewable did not add a toggle button");
 	});
 
-	it('maps the viewable & togglePassword template attributes onto passwordToggle', async() =>
+	it('viewable is a declared boolean property, so it reaches the schema & gets parsed', () =>
+	{
+		// @ts-ignore static Lit API
+		const options = Et2Password.getPropertyOptions("viewable");
+
+		assert.equal(options?.type, Boolean, "viewable is not declared as a boolean property");
+		assert.equal(options?.attribute, "viewable", "viewable is not bound to its own attribute");
+	});
+
+	it('maps the viewable & deprecated togglePassword template attributes', async() =>
 	{
 		for(const [attribute, expected] of [["viewable", true], ["togglePassword", true], ["viewable", false]])
 		{
@@ -72,13 +82,51 @@ describe("Password widget", () =>
 			password.transformAttributes({[<string>attribute]: expected});
 			await elementUpdated(password);
 
+			assert.equal(password.viewable, expected, attribute + "=" + expected + " did not reach viewable");
 			assert.equal(password.passwordToggle, expected, attribute + "=" + expected + " did not reach passwordToggle");
-			assert.equal(password.togglePassword, expected, attribute + "=" + expected + " did not reach togglePassword");
 			assert.equal(
 				password.shadowRoot.querySelector(".input__password-toggle") !== null, expected,
 				attribute + "=" + expected + " rendered the wrong thing"
 			);
 		}
+	});
+
+	it('resolves the string a template actually passes', async() =>
+	{
+		// a .xet gives transformAttributes() strings, not booleans, and they are only turned into
+		// booleans by the content arrayMgr a real template has
+		for(const [attribute, value, expected] of <[string, string, boolean][]>[
+			["viewable", "true", true],
+			["viewable", "false", false],
+			["togglePassword", "true", true],
+			["viewable", "@can_see", true]
+		])
+		{
+			const password = await fixture<Et2Password>(html`
+                <et2-password></et2-password>
+			`);
+			password.setArrayMgr("content", new et2_arrayMgr({can_see: true}));
+			password.transformAttributes({[attribute]: value});
+			await elementUpdated(password);
+
+			assert.equal(password.viewable, expected, attribute + '="' + value + '" did not resolve to ' + expected);
+			assert.equal(
+				password.shadowRoot.querySelector(".input__password-toggle") !== null, expected,
+				attribute + '="' + value + '" rendered the wrong thing'
+			);
+		}
+	});
+
+	it('ignores passwordToggle from a template, which the server would not honour', async() =>
+	{
+		element.transformAttributes({passwordToggle: true});
+		await elementUpdated(element);
+
+		assert.isFalse(element.viewable, "A template's passwordToggle was honoured");
+		assert.isNull(
+			element.shadowRoot.querySelector(".input__password-toggle"),
+			"Rendered a reveal button the server would have masked the password for"
+		);
 	});
 });
 

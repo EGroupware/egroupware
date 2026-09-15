@@ -3742,6 +3742,7 @@
     type CDATA #IMPLIED
     validator CDATA #IMPLIED
     value CDATA #IMPLIED
+    viewable CDATA #IMPLIED
     width CDATA #IMPLIED>
 
 <!ELEMENT et2-portlet EMPTY>

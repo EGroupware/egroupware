@@ -18497,6 +18497,18 @@
       <attribute name="value"/>
     </optional>
     <optional>
+      <attribute name="viewable">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="width"/>
     </optional>
   </define>
