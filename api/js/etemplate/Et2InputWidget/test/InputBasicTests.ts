@@ -290,7 +290,7 @@ export function inputBasicTests(before : Function, test_value : any, value_selec
 	// _labelTemplate()/_helpTextTemplate() (or an equivalent from whatever it subclasses directly,
 	// eg. Shoelace's SlInput) - see WidgetSlotTests.ts for why this checks the part= convention
 	// rather than just "is something visible". Checked separately since a widget can support one
-	// without the other (eg. Et2Switch's label is its own text content, not a separate part, but
+	// without the other (eg. Et2Checkbox's label is its own text content, not a separate part, but
 	// it does have a real help-text part).
 	const slots = (["label", "help-text"] as const).filter(slot => !skip.includes(slot));
 	if(slots.length)

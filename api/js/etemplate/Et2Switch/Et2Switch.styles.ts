@@ -7,6 +7,17 @@ export default css`
 	vertical-align: -webkit-baseline-middle;
 	}
 
+	/*
+	Our render() wraps Shoelace's form-control in one of our own so the label can go in front of
+	the switch.  Letting Shoelace's own form-control disappear into that flex row keeps label,
+	switch and help text in a single row, the way they are for every other input widget - which
+	is what .et2-label-fixed's help-text offset assumes.
+	*/
+
+	.form-control > .form-control {
+	display: contents;
+	}
+
 	.switch {
 	position: relative;
 	}
