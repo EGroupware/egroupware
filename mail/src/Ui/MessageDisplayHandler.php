@@ -125,11 +125,8 @@ class MessageDisplayHandler
 		$part		= $_GET['part'] ?? null;
 		$is_winmail = $_GET['is_winmail'] ?? 0;
 
-		if (!($this->ui->mail_bo->icServer instanceof Mail\Imap\Jmap))
-		{
-			$this->ui->mail_bo->reopen($mailbox);
-		}
-		$attachment = $this->ui->mail_bo->getAttachment($uid,$part,$is_winmail,false);
+		$attachment = $this->resolveAttachmentBytes($icServerID, $uid, $mailbox, $part, $is_winmail,
+			$_GET['blobId'] ?? null, $_GET['name'] ?? null, $_GET['type'] ?? null);
 		$this->ui->mail_bo->closeConnection();
 		if ($rememberServerID != $this->ui->mail_bo->profileID)
 		{
@@ -197,6 +194,72 @@ class MessageDisplayHandler
 		echo $attachment['attachment'];
 
 		exit();
+	}
+
+	/**
+	 * Resolve one attachment's raw bytes/metadata for download - JMAP-native fast path via
+	 * $blobId when available (same shape MailCompose.uploadAttachmentsViaJmap()'s own
+	 * downloadOneAsFile fast path in mail/js/app.ts already uses, set by
+	 * AttachmentJmap::createAttachmentBlock() into the popup/download URL), classic $uid/$part
+	 * IMAP fetch otherwise. Extracted out of getAttachment() so this decision is directly
+	 * testable - that method's own echo+exit() side effects make it untestable as a whole.
+	 *
+	 * Found live 2026-09-15 (tracker #124541, "Anhänge herunterladen aus der Ansicht übernimmt
+	 * nicht den korrekten Namen"): the classic $uid/$mailbox fetch assumes a real IMAP UID/mailbox
+	 * pair, which a JMAP row's opaque emailID/folderID never resolve to correctly - a real
+	 * Stalwart account's "open this attachment" link (this exact endpoint, unlike the
+	 * already-JMAP-aware direct-download action) fataled outright
+	 * (Mail::jmapResolveUid(): Argument #2 ($_folder) must be of type string, null given),
+	 * surfacing to some accounts/setups as a cryptic mailbox_uidX_partY fallback filename instead,
+	 * to others as a hard 500.
+	 *
+	 * Falls through to the classic fetch, unchanged, when there's no $blobId or the blob itself
+	 * is gone (best-effort, same as every other fetchBlobBytes() consumer).
+	 *
+	 * @param ?string $icServerID acc_id, for AttachmentJmap::fetchBlobBytes()'s own per-account blob resolution
+	 * @param ?string $uid classic IMAP uid - only used by the fallback path
+	 * @param ?string $mailbox classic IMAP folder - only used by the fallback path
+	 * @param ?string $part classic IMAP part id - only used by the fallback path
+	 * @param mixed $is_winmail
+	 * @param ?string $blobId JMAP blobId, when known (AttachmentJmap::createAttachmentBlock() sets it)
+	 * @param ?string $name real attachment filename, when known
+	 * @param ?string $type real attachment mime type, when known
+	 * @return array {attachment, name, filename, type, charset} shape Api\Mail::getAttachment() already returns
+	 */
+	protected function resolveAttachmentBytes(?string $icServerID, ?string $uid, ?string $mailbox, ?string $part,
+		$is_winmail, ?string $blobId, ?string $name, ?string $type) : array
+	{
+		if (!empty($blobId))
+		{
+			$bytes = AttachmentJmap::fetchBlobBytes((string)$icServerID, $blobId,
+				$name ?? 'attachment', $type ?? 'application/octet-stream');
+			if ($bytes !== null)
+			{
+				return [
+					'attachment' => $bytes,
+					'name'       => $name,
+					'filename'   => $name,
+					'type'       => $type ?? 'application/octet-stream',
+					'charset'    => 'utf-8',
+				];
+			}
+		}
+		return $this->classicAttachmentFetch($uid, $mailbox, $part, $is_winmail);
+	}
+
+	/**
+	 * The pre-existing classic $uid/$part IMAP fetch resolveAttachmentBytes() falls back to -
+	 * kept as its own method (rather than inlined) purely so a test double can stub it out,
+	 * isolating resolveAttachmentBytes()'s own blobId-vs-classic DECISION from this method's own
+	 * real IMAP dependency.
+	 */
+	protected function classicAttachmentFetch(?string $uid, ?string $mailbox, ?string $part, $is_winmail) : array
+	{
+		if (!($this->ui->mail_bo->icServer instanceof Mail\Imap\Jmap))
+		{
+			$this->ui->mail_bo->reopen($mailbox);
+		}
+		return $this->ui->mail_bo->getAttachment($uid,$part,$is_winmail,false);
 	}
 
 	/**
