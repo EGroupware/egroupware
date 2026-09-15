@@ -75,6 +75,11 @@ tr.unseen [id$="[date]"] {
   width: 1em;
   height: 1em;
 }
+.status_img svg.bi-forward {
+  display: inline-block !important;
+  width: 1em !important;
+  height: 1em !important;
+}
 tr.unseen .status_img.bi-circle-fill {
   color: var(--mail-color);
   display: block !important;
