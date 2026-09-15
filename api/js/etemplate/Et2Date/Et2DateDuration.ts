@@ -194,14 +194,6 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 	selectUnit = true;
 
 	/**
-	 * Percent allowed
-	 *
-	 * Allows to enter a percentage instead of numbers
-	 */
-	@property({type: Boolean})
-	percentAllowed = false;
-
-	/**
 	 * Hours per day
 	 *
 	 * Number of hours in a day, used for converting between hours and (working) days.
@@ -237,6 +229,9 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 
 	protected static time_formats = {d: "d", h: "h", m: "m", s: "s"};
 	protected _display = {value: "", unit: ""};
+
+	// The last value we were given, before _convert_to_display() rounded it for display
+	private _unroundedValue : string | number;
 
 	constructor()
 	{
@@ -297,6 +292,17 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 		{
 			return this.emptyNot0 ? '' : "0";
 		}
+
+		// Showing a value rounds it to what fits in the field: 960 minutes with hoursPerDay=6
+		// displays as "2.67 d", and converting that back would give 961.  While the field still
+		// shows exactly what we put in it, give back what we were given rather than re-deriving
+		// it from the rounded display.
+		if(typeof this._unroundedValue !== "undefined" && "" + val === "" + this._display.value &&
+			(this._formatNode?.value || this.displayFormat[0]) === (this._display.unit || this.displayFormat[0]))
+		{
+			return "" + this._unroundedValue;
+		}
+
 		value = parseFloat(val);
 
 		// Put value into minutes for further processing
@@ -333,6 +339,7 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 	set value(_value)
 	{
 		this._oldValue = {value: _value, unit: this.dataFormat};
+		this._unroundedValue = _value;
 		this._display = this._convert_to_display(this.emptyNot0 && ""+_value === "" ? '' : parseFloat(_value));
 		// Update values
 		(typeof this._display.value == "string" ? this._display.value.split(":") : [this._display.value])

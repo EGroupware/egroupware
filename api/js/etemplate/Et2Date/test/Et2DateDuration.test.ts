@@ -16,6 +16,14 @@ import "../../Et2Textbox/Et2Number";
 // Reference to component under test
 let element : Et2DateDuration;
 
+/**
+ * What the widget has decided to show, which is protected
+ */
+function displayed(widget : Et2DateDuration) : { value : any, unit : string }
+{
+	return (<any>widget)._display;
+}
+
 async function before()
 {
 	// Create an element to test with, and wait until it's ready
@@ -48,6 +56,53 @@ describe("Date duration widget", () =>
 		element.set_value("60");
 		await element.updateComplete;
 		assert.equal(element.get_value(), "60");
+	});
+
+	describe("values the display has to round", () =>
+	{
+		// The field shows at most 2 decimals, so a duration that isn't a round number of the
+		// displayed unit can only be shown approximately.  Reading it back has to give what was
+		// put in, not what the rounded display converts to.
+		it("keeps a value that does not divide evenly into days", async() =>
+		{
+			element.hoursPerDay = 6;
+			element.set_value("960");
+			await element.updateComplete;
+
+			assert.equal(displayed(element).value, 2.67, "Not displaying rounded days");
+			assert.equal(displayed(element).unit, "d", "Not displaying days");
+			assert.equal(element.get_value(), "960");
+		});
+
+		it("keeps a value that does not divide evenly into hours", async() =>
+		{
+			element.set_value("100");
+			await element.updateComplete;
+
+			assert.equal(displayed(element).value, 1.67, "Not displaying rounded hours");
+			assert.equal(displayed(element).unit, "h", "Not displaying hours");
+			assert.equal(element.get_value(), "100");
+		});
+
+		it("uses what the user typed once they change it", async() =>
+		{
+			element.hoursPerDay = 6;
+			element.set_value("960");
+			await element.updateComplete;
+
+			element._durationNode[0].value = "3";
+			assert.equal(element.get_value(), "1080", "Did not pick up the user's change");
+		});
+
+		it("uses what the user selected once they change the unit", async() =>
+		{
+			element.hoursPerDay = 6;
+			element.set_value("960");
+			await element.updateComplete;
+
+			element._formatNode.value = "h";
+			assert.equal(element.get_value(), "160", "Did not pick up the changed unit");
+		});
 	});
 });
 
