@@ -297,6 +297,28 @@ describe("MailJmap.getAttachmentViewUrl() / revokeAttachmentViewUrls()", () =>
 		}
 	});
 
+	it("names the created object URL's blob as a real File, so the browser's own PDF viewer offers the real name to save - tracker #124541", async() =>
+	{
+		// ralf, 2026-09-15: opening an attachment then saving from the browser's native PDF
+		// viewer (not our own "Download" action, which already worked - it sets an <a download>
+		// attribute explicitly) offered the blob: URL's own opaque UUID as the suggested
+		// filename instead - a plain Blob carries no name at all, only a File does.
+		const jmap = new MailJmap(createFakeApp());
+		primeToken(jmap, "1", {downloadBlob : async() => ({blob : async() => new Blob(["%PDF"], {type : "application/pdf"})})});
+		const capture = captureCreatedObjectUrlBlob();
+
+		try
+		{
+			await jmap.getAttachmentViewUrl("row1", "1", "blob1", "Invoice RE-2026-200.pdf", "application/pdf");
+			assert.instanceOf(capture.blob, File);
+			assert.equal((capture.blob as File).name, "Invoice RE-2026-200.pdf");
+		}
+		finally
+		{
+			capture.restore();
+		}
+	});
+
 	it("tracks every created url under its rowId, and revokeAttachmentViewUrls() clears them all", async() =>
 	{
 		const jmap = new MailJmap(createFakeApp());

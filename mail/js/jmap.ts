@@ -4149,7 +4149,7 @@ export class MailJmap
 				mimeType: mimeType || 'application/octet-stream',
 				fileName: filename || 'attachment',
 			});
-			const url = URL.createObjectURL(MailJmap.withKnownType(await response.blob(), mimeType));
+			const url = URL.createObjectURL(MailJmap.withKnownFilename(await response.blob(), mimeType, filename));
 			(this.attachmentViewUrls[rowId] ??= []).push(url);
 			return url;
 		}
@@ -5518,6 +5518,22 @@ export class MailJmap
 	private static withKnownType(blob : Blob, mimeType : string) : Blob
 	{
 		return (mimeType && blob.type !== mimeType) ? new Blob([blob], {type: mimeType}) : blob;
+	}
+
+	/**
+	 * Same MIME-type enforcement as withKnownType(), plus wrapping the result in a named File -
+	 * a plain Blob has no filename at all, so a blob: URL created from one (getAttachmentViewUrl()'s
+	 * "click to view" URL, opened directly in a new tab/the browser's native PDF viewer) offers
+	 * nothing but its own opaque UUID as the suggested name when the user saves from THAT window -
+	 * tracker #124541 ("open the attachment, then download from within that view gets a cryptic
+	 * name" - direct download already worked, since downloadAttachment() explicitly sets an
+	 * anchor's own `download` attribute instead of relying on the blob's name). A File is-a Blob,
+	 * so every other consumer of the returned value (img.src, <embed>/<iframe> src, fetch) keeps
+	 * working unchanged.
+	 */
+	private static withKnownFilename(blob : Blob, mimeType : string, filename : string) : Blob
+	{
+		return new File([blob], filename || 'attachment', {type: mimeType || blob.type});
 	}
 
 	/**
