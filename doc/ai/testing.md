@@ -70,7 +70,14 @@ cannot resolve, and the host's copy of the source tree is not guaranteed to be t
 uses. Running `vendor/bin/phpunit` natively on the host hangs instead of failing cleanly - always run it inside the
 already-installed, already-running app container instead:
 
-`docker exec egroupware bash -c "cd /var/www/egroupware && vendor/bin/phpunit -c doc/phpunit.xml path/to/YourTest.php"`
+`docker exec -u www-data egroupware bash -c "cd /var/www/egroupware && vendor/bin/phpunit -c doc/phpunit.xml path/to/YourTest.php"`
+
+**Do not drop the `-u www-data`.** `docker exec` defaults to uid 0, and anything the suite then writes to the
+VFS lands in the shared `files_dir` owned by root instead of by the webserver - including the
+`sqlfs/<nn>/<nn>/` hash directories, which are created once and then reused by every later file whose `fs_id`
+falls in that range. One root-owned hash-dir the webserver cannot write to breaks every subsequent upload on
+the whole instance, surfacing only as "Error copying uploaded file to VFS!" with nothing in the logs. The
+tests pass either way, so this stays invisible until someone tries to upload a file.
 
 (container name may differ per install - check `docker ps`). This works because that container already has a fully
 configured, installed EGroupware instance with a working DB connection; `doc/phpunit_bootstrap.php` just connects
@@ -92,7 +99,7 @@ default domain by reading `header.inc.php` directly (`grep "\$GLOBALS\['egw_doma
 entry is conventionally the default one), then pass it via the `EGW_POST_INSTALL` environment variable, which
 `post_install.php` parses as extra CLI args:
 
-`docker exec -e EGW_POST_INSTALL="--domain your.real.domain" egroupware bash -c "cd /var/www/egroupware && vendor/bin/phpunit -c doc/phpunit.xml path/to/YourTest.php"`
+`docker exec -u www-data -e EGW_POST_INSTALL="--domain your.real.domain" egroupware bash -c "cd /var/www/egroupware && vendor/bin/phpunit -c doc/phpunit.xml path/to/YourTest.php"`
 
 This is a per-dev-box environment detail (not committed anywhere), so it is worth asking the developer once and
 remembering it for the rest of the session rather than rediscovering it every time.
