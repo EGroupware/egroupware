@@ -54,10 +54,10 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 		];
 	}
 
-	/* Adds a clear button when the filters are not empty. */
+	/** Adds a clear button when at least one filter has a value. */
 	@property({type: Boolean}) clearable = false;
 
-	/* Apply changes immediately or wait for apply button */
+	/** Apply changes immediately instead of waiting for the apply button */
 	@property({type: Boolean}) autoapply = false;
 
 	/* Specify filters explicitly instead of reading them from a nextmatch */
@@ -127,6 +127,7 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 	{
 		super();
 		this.applyFilters = this.applyFilters.bind(this);
+		this.clearFilters = this.clearFilters.bind(this);
 		this.handleNextmatchFilter = this.handleNextmatchFilter.bind(this);
 		this.handleSlotChange = this.handleSlotChange.bind(this);
 	}
@@ -136,7 +137,6 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 		super.connectedCallback()
 		//intercept all keydown events from reaching the nextmatch
 		document.addEventListener("keydown", this.handleKeypress, {capture: true});
-		this.addEventListener("slotchange", this.handleSlotChange);
 		this._nextmatch?.getDOMNode()?.addEventListener("et2-filter",this.handleNextmatchFilter);
 	}
 
@@ -144,7 +144,6 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 	{
 		super.disconnectedCallback()
 		document.removeEventListener("keydown", this.handleKeypress, {capture: true});
-		this.removeEventListener("slotchange", this.handleSlotChange);
 		this._nextmatch?.getDOMNode()?.removeEventListener("et2-filter", this.handleNextmatchFilter);
 	}
 
@@ -198,17 +197,82 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 		}
 	}
 
-	public clearFilters()
+	/**
+	 * Empty every filter the user can set, then apply.
+	 *
+	 * Goes through _syncWidgetValues() so the widgets' resulting "change" events don't echo back
+	 * in as if the user had edited them - with autoapply that would push a half-cleared snapshot
+	 * at the nextmatch ahead of this one, once per widget.  The single applyFilters() below waits
+	 * for those set_value() calls to settle (see getUpdateComplete()) so it sends the cleared
+	 * state rather than the state we started from.
+	 */
+	public async clearFilters()
 	{
-		this.filters.forEach((filter) =>
+		const widgets = this._filterWidgets();
+		this._syncWidgetValues(() =>
 		{
-			filter.value = "";
-			if(filter.widget)
+			const pending : Promise<any>[] = [];
+			widgets.forEach((widget) =>
 			{
-				filter.widget.value = "";
-			}
+				widget.set_value("");
+				if(widget.updateComplete)
+				{
+					pending.push(widget.updateComplete);
+				}
+			});
+			return pending;
 		});
+		await this.updateComplete;
 		this.applyFilters();
+	}
+
+	/**
+	 * The widgets holding the filters the user can actually set.
+	 *
+	 * Our value accessors reach their widgets through the eTemplate instance manager, which only
+	 * exists when our content came from a template inside a loaded eTemplate.  The clear button
+	 * has to work for any slotted content - including a filterbox put together by hand out of
+	 * plain widgets, which has neither an instance manager nor a widget tree - so it asks the DOM
+	 * instead.  Everything we can hold is in our light DOM, since et2-template and the box widgets
+	 * render their children through a <slot>, so a descendant query reaches all of it.
+	 *
+	 * The hidden sort[id] / sort[asc] widgets that filter-template.php generates are left out:
+	 * they carry the nextmatch's sort order rather than a filter, so they must neither light up
+	 * the clear button nor be emptied by it - an empty sort[id] gets applied as a sort and wipes
+	 * out the ORDER BY.
+	 */
+	private _filterWidgets() : any[]
+	{
+		const notAFilter = ["sort[id]", "sort[asc]"];
+		return Array.from(this.querySelectorAll(":scope *")).filter((widget : any) =>
+			widget.id && !notAFilter.includes(widget.id) &&
+			typeof widget.set_value == "function" && typeof widget.get_value == "function"
+		);
+	}
+
+	/**
+	 * True if at least one filter holds something, so there is something to clear.
+	 *
+	 * "Nothing set" is not always falsy: a multi-select with no selection reports an empty array,
+	 * and an Et2LinkEntry that has been cleared still reports {app, id: ''} because it remembers
+	 * which app was last chosen.  Both have to read as empty here, or the clear button turns up on
+	 * a filterbox the user never touched.
+	 */
+	private _hasFilterContent() : boolean
+	{
+		return this._filterWidgets().some((widget) =>
+		{
+			const value = widget.get_value();
+			if(!value)
+			{
+				return false;
+			}
+			if(Array.isArray(value))
+			{
+				return value.length > 0;
+			}
+			return !(typeof value == "object" && "app" in value && "id" in value && !value.id);
+		});
 	}
 
 	public set value(newValue : object)
@@ -296,6 +360,8 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 		this._pendingWidgetUpdates.finally(() =>
 		{
 			this._syncingFromNextmatch = false;
+			// Values we pushed in count towards the clear button just like typed ones do
+			this.requestUpdate();
 		});
 	}
 
@@ -494,6 +560,10 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 
 	protected handleFilterChange(event : Event)
 	{
+		// Whether the clear button belongs there depends on what the filters hold, and nothing
+		// else asks us to re-render when the user edits one
+		this.requestUpdate();
+
 		if(this._syncingFromNextmatch)
 		{
 			return;
@@ -540,10 +610,31 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 		this.value = event.detail.activeFilters;
 	}
 
+	/**
+	 * Our slotted content changed - re-check what we're showing.
+	 *
+	 * Bound to the slot rather than to us: slotchange does not cross the shadow boundary
+	 * (composed: false), so a listener on the host never hears it.
+	 *
+	 * The second pass matters as much as the first.  This fires as soon as the nodes are assigned,
+	 * which for content written as markup is before those elements have upgraded - they have no
+	 * value yet, so the clear button's "is there anything to clear?" check has nothing to look at.
+	 */
 	private handleSlotChange(event)
 	{
-		// Slot content can be dynamic; trigger re-evaluation for value mapping.
 		this.requestUpdate();
+
+		// One tag at a time rather than one wait for all of them: a tag that is never registered
+		// (a typo, a widget missing from the bundle) leaves its whenDefined() pending forever, and
+		// waiting on the set as a whole would let that one silently cost us the re-check for every
+		// widget beside it that did load.
+		new Set(Array.from(this.querySelectorAll(":scope *"))
+			.map(element => element.localName)
+			.filter(tag => tag.includes("-"))
+		).forEach(tag => customElements.whenDefined(tag)
+			.then(() => Promise.all(this._filterWidgets().map((widget : any) => widget.updateComplete)))
+			.then(() => this.requestUpdate())
+		);
 	}
 
 	/**
@@ -675,7 +766,7 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 		const hasHelpTextSlot = this.hasSlotController.test('help-text');
 		const hasLabel = this.label ? true : !!hasLabelSlot;
 		const hasHelpText = this.helpText ? true : !!hasHelpTextSlot;
-		const hasClearButton = this.clearable && !this.disabled && Object.keys(this.value || {}).length > 0;
+		const hasClearButton = this.clearable && !this.disabled && this._hasFilterContent();
 
 		return html`
             <div
@@ -689,7 +780,7 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
                 <div part="filters" class="filterbox__filters"
                      @change=${this.handleFilterChange}
                 >
-                    <slot></slot>
+                    <slot @slotchange=${this.handleSlotChange}></slot>
                 </div>
                 <slot name="suffix" part="suffix" class="filterbox__suffix"></slot>
                 ${this._helpTextTemplate()}
