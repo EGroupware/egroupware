@@ -387,6 +387,22 @@ describe("MailJmap.getAttachmentViewUrl() - PDF gets wrapped with a real downloa
 		assert.include(html, 'download="Invoice RE-2026-200.pdf"');
 	});
 
+	it("suppresses the browser's own native PDF viewer toolbar, so our download link is the only one visible", async() =>
+	{
+		// ralf, 2026-09-15, right after confirming the CSP fix above actually worked live:
+		// "thought I doubt out uses will click on the correct Download link" - the native PDF
+		// viewer's OWN toolbar (with its own, still-wrong-filename save button) was still shown
+		// right next to ours, and looks like the more familiar option. #toolbar=0&navpanes=0 is
+		// the standard Chrome/PDFium URL-fragment convention for suppressing that native chrome
+		// entirely, also honoured for blob: content, leaving ours the only visible download
+		// affordance at all.
+		const jmap = new MailJmap(createFakeApp());
+		const html = await fetchWrapperHtml(jmap);
+
+		assert.include(html, "#toolbar=0");
+		assert.include(html, "navpanes=0");
+	});
+
 	it("does NOT wrap a non-PDF type - still returns the plain named-File content url directly", async() =>
 	{
 		const jmap = new MailJmap(createFakeApp());

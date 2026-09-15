@@ -4197,15 +4197,25 @@ export class MailJmap
 	{
 		const escaped = (s : string) => (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 		const safeName = escaped(filename || 'attachment');
+		// #toolbar=0&navpanes=0 suppresses the browser's OWN native PDF viewer chrome entirely (a
+		// long-standing Chrome/PDFium URL-fragment convention, also honoured for blob: content) -
+		// without it, that native toolbar's OWN save/download icon is still visible right next to
+		// ours and LOOKS like the more familiar option, so a user reaches for that one out of habit
+		// and gets the wrong (UUID) name right back - found live 2026-09-15 (ralf, after confirming
+		// the CSP fix worked): "thought I doubt out uses will click on the correct Download link".
+		// Hiding the native chrome leaves our own button the only visible affordance at all.
 		const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${safeName}</title>` +
 			`<style>html,body{margin:0;height:100%;font-family:sans-serif}` +
-			`.toolbar{display:flex;align-items:center;justify-content:flex-end;height:40px;` +
+			`.toolbar{display:flex;align-items:center;gap:10px;height:48px;` +
 			`background:#323639;padding:0 16px;box-sizing:border-box}` +
-			`.toolbar a{color:#fff;text-decoration:none;font-size:13px;display:flex;align-items:center;gap:6px}` +
-			`.toolbar a:hover{text-decoration:underline}` +
-			`embed{display:block;width:100%;height:calc(100% - 40px);border:0}</style></head>` +
-			`<body><div class="toolbar"><a href="${contentUrl}" download="${safeName}">&#8681; ${safeName}</a></div>` +
-			`<embed src="${contentUrl}" type="${escaped(mimeType)}"></body></html>`;
+			`.toolbar .name{color:#fff;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}` +
+			`.toolbar a{color:#fff;background:#0d6efd;text-decoration:none;font-size:13px;font-weight:600;` +
+			`display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:4px;flex-shrink:0}` +
+			`.toolbar a:hover{background:#0b5ed7}` +
+			`embed{display:block;width:100%;height:calc(100% - 48px);border:0}</style></head>` +
+			`<body><div class="toolbar"><span class="name">${safeName}</span>` +
+			`<a href="${contentUrl}" download="${safeName}">&#8681; ${escaped(egw.lang('download'))}</a></div>` +
+			`<embed src="${contentUrl}#toolbar=0&navpanes=0" type="${escaped(mimeType)}"></body></html>`;
 		return URL.createObjectURL(new Blob([html], {type: 'text/html'}));
 	}
 
