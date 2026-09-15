@@ -3599,10 +3599,14 @@ class Imap extends Jmap\Base
 	}
 
 	/**
+	 * Also used by AttachmentJmap::fetchBlobBytes() (mail/src/Ui/AttachmentJmap.php), which needs
+	 * the exact same "upload:<token>" resolution readUploadedBlob() already has for emailImport()'s
+	 * own callers - see that method's own fix docblock, 2026-09-15.
+	 *
 	 * @param string $token hex string only - never build this from unvalidated client input
 	 * @return string absolute path of the temp file backing an "upload:<token>" blobId
 	 */
-	private static function uploadPath(string $token) : string
+	public static function uploadPath(string $token) : string
 	{
 		if (!ctype_xdigit($token) || $token === '')
 		{
