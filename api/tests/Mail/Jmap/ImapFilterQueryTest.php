@@ -80,6 +80,44 @@ class ImapFilterQueryTest extends \PHPUnit\Framework\TestCase
 		$this->assertSame('KEYWORD CUSTOMLABEL', (string)$query, "Horde's own flag() uppercases keyword names");
 	}
 
+	/**
+	 * Regression test: filterToQuery() never called Horde_Imap_Client_Search_Query::charset(), so
+	 * Horde defaulted the query's charset to US-ASCII and picked the ASCII-only
+	 * Horde_Imap_Client_Data_Format_* classes for header/text search terms - throwing
+	 * Horde_Imap_Client_Data_Format_Exception("String contains non-ASCII characters.") for any
+	 * umlaut/non-ASCII search text (eg. a German "Kündigung" search), breaking mail search for
+	 * every plain-IMAP account (Api\Mail\Jmap\Imap is the JMAP-over-IMAP "shim" used for those -
+	 * the real JMAP-over-HTTP path for Stalwart, Api\Mail\Jmap\Http, sends plain JSON and was never
+	 * affected). Note this can NOT be caught via (string)$query like the other tests here do -
+	 * Horde_Imap_Client_Search_Query::__toString() itself catches any build() exception and
+	 * silently returns '', which is exactly how this bug went unnoticed by the existing suite.
+	 *
+	 * Fix mirrors Api\Mail::createIMAPFilter()'s existing pattern: set charset('UTF-8') on every
+	 * Horde_Imap_Client_Search_Query, including each recursive AND/OR/NOT sub-query filterToQuery()
+	 * builds - each is build()'d independently by the parent's _buildAndOr(), so the charset must
+	 * be set on every one of them, not just the outermost query object.
+	 */
+	public function testNonAsciiSearchTextDoesNotThrow()
+	{
+		$built = Imap::filterToQuery(['body' => 'Kündigung'])->build();
+
+		$this->assertSame('UTF-8', $built['charset']);
+	}
+
+	/**
+	 * The reported bug showed the error TWICE in the UI toast - reproduced here by a compound
+	 * filter (AND of two non-ASCII leaf conditions), where filterToQuery() recurses and each
+	 * recursive call created its own un-charset()'d sub-query, so both leaves independently threw.
+	 */
+	public function testNonAsciiSearchTextInCompoundFilterDoesNotThrow()
+	{
+		$filter = ['operator' => 'AND', 'conditions' => [['subject' => 'Kündigung'], ['from' => 'Müller']]];
+
+		$built = Imap::filterToQuery($filter)->build();
+
+		$this->assertSame('UTF-8', $built['charset']);
+	}
+
 	public function testAndCombinesConditionsWithoutExtraGrouping()
 	{
 		$filter = ['operator' => 'AND', 'conditions' => [['from' => 'a@x.com'], ['hasKeyword' => '$flagged']]];
