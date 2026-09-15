@@ -15,7 +15,7 @@ import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
 // needed or possible.
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {et2_widget} from "../../api/js/etemplate/et2_core_widget";
-import {formatJmapAddress, MailJmap} from "./jmap";
+import {formatJmapAddress, isPreferenceOn, MailJmap} from "./jmap";
 import type {JmapAttachment, JmapReplyContext} from "./jmap";
 
 export class MailCompose
@@ -2336,7 +2336,14 @@ export class MailCompose
 		const insertPref = this.egw.preference('insertSignatureAtTopOfMessage', 'mail');
 		const placement : 'top' | 'below' | 'none' =
 			insertPref === '1' ? 'top' : insertPref === 'no_belowaftersend' ? 'none' : 'below';
-		const disableRuler = !!this.egw.preference('disableRulerForSignatureSeparation', 'mail');
+		// isPreferenceOn(), not a plain `!!` - this select's default/"show the separator" value is
+		// the STRING "0" (mail_hooks.inc.php's own $no_yes default), which classic PHP's `!$value`
+		// correctly treats as falsy but a naive JS `!!value` does NOT (any non-empty string is
+		// truthy) - found live 2026-09-15 (ralf: "we currently are never adding a separator, even
+		// if the preference says so, which is the default"), same bug class isPreferenceOn()'s own
+		// docblock already documents for showAllFoldersInFolderPane/pgp_autocrypt_mutual, just never
+		// applied here.
+		const disableRuler = isPreferenceOn(this.egw.preference('disableRulerForSignatureSeparation', 'mail'));
 
 		// The identity fetch above is a real network round-trip, and the body widget's own TinyMCE
 		// editor (awaited just below, same reason setBodyValue() awaits it - see its docblock) can
