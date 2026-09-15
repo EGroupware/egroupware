@@ -124,7 +124,14 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 		{
 			super(...args);
 
-			// bind handler context to instance
+			// bind handler context to instance - needed because _galleryTemplate() below is
+			// rendered via the standalone lit `render()` into document.body (not this component's
+			// own shadow DOM) WITHOUT a `{host: this}` option (see Et2Diff.ts for the pattern that
+			// option enables), so Lit's own @click=${this.handleDownload} binding can't resolve the
+			// right `this` on its own - found live 2026-09-15 (ralf: "the download button... does
+			// NOT work at all"): clicking it threw `TypeError: this.getInstanceManager is not a
+			// function`, silently, with no visible error (an uncaught exception in an event
+			// listener) - handleDownload was the one handler this list forgot.
 			const handlers = [
 				"expose_onclick",
 				"expose_onopen",
@@ -133,7 +140,8 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 				"expose_onslideend",
 				"expose_onslidecomplete",
 				"expose_onclose",
-				"expose_onclosed"
+				"expose_onclosed",
+				"handleDownload"
 			];
 
 			for(let key of handlers)
