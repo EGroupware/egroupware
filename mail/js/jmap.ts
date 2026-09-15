@@ -4127,6 +4127,11 @@ export class MailJmap
 	 * uniformly for both backends. Object URLs are tracked per rowId and revoked the next time
 	 * this row is resolved (same convention as resolveInlineImages()'s objectUrls).
 	 *
+	 * PDF gets one extra step: wrapPdfViewerWithDownload() - see its own docblock for why a named
+	 * File isn't enough there (tracker #124541 follow-up, live-confirmed 2026-09-15: the browser's
+	 * own native PDF viewer, navigated straight to a blob: URL, uses that URL's own opaque UUID as
+	 * its save-button's suggested name regardless of the underlying File's .name).
+	 *
 	 * @param rowId row whose attachmentsBlock this belongs to, for object-URL lifecycle tracking
 	 * @param profileID
 	 * @param blobId as returned by mail_ui::jmapAttachmentsToLegacy() in the row's attachmentsBlock
@@ -4149,9 +4154,16 @@ export class MailJmap
 				mimeType: mimeType || 'application/octet-stream',
 				fileName: filename || 'attachment',
 			});
-			const url = URL.createObjectURL(MailJmap.withKnownFilename(await response.blob(), mimeType, filename));
-			(this.attachmentViewUrls[rowId] ??= []).push(url);
-			return url;
+			const contentUrl = URL.createObjectURL(MailJmap.withKnownFilename(await response.blob(), mimeType, filename));
+			const urls = (this.attachmentViewUrls[rowId] ??= []);
+			urls.push(contentUrl);
+			if ((mimeType || '').toLowerCase() === 'application/pdf')
+			{
+				const wrapperUrl = MailJmap.wrapPdfViewerWithDownload(contentUrl, filename, mimeType);
+				urls.push(wrapperUrl);
+				return wrapperUrl;
+			}
+			return contentUrl;
 		}
 		catch (e)
 		{
@@ -4159,6 +4171,42 @@ export class MailJmap
 			console.error('MailJmap.getAttachmentViewUrl(): failed', e);
 			throw new JmapUserError(describeJmapError(e) ?? this.egw.lang('Unable to connect to the mail server'));
 		}
+	}
+
+	/**
+	 * Wrap a PDF content blob: URL in a tiny same-origin HTML shell - an <embed> for viewing (the
+	 * exact same blob: URL, unchanged - viewing itself was never the problem) plus a real, visible
+	 * download link using the one mechanism actually proven reliable in this codebase
+	 * (downloadAttachment()'s own `<a download>` click) - never the browser's own native PDF
+	 * viewer's built-in save/download button, confirmed live 2026-09-15 (ralf, testing acc_id=42
+	 * against boulder.egroupware.org) to use the blob: URL's own opaque UUID as its suggested
+	 * filename regardless of the File's real .name - getAttachmentViewUrl()'s withKnownFilename()
+	 * wrapping alone was NOT sufficient for this case, tracker #124541's own follow-up after the
+	 * first fix (9404d7ef57 - the classic server-rendered popup path, unaffected by this at all)
+	 * didn't resolve it for JMAP-native/shim accounts.
+	 *
+	 * No CSP meta tag here deliberately - unlike assembleBodyHtml()'s message-body srcdoc (which
+	 * needs frame-src 'none' to stop a message's own content escaping into a full navigation),
+	 * this wrapper IS the whole page, entirely our own markup, with nothing to sandbox against.
+	 *
+	 * The wrapper blob: URL is only valid as long as the tab that created it (this one) stays
+	 * open - same pre-existing constraint every getAttachmentViewUrl() URL already has, not a new
+	 * one from this wrapping.
+	 */
+	private static wrapPdfViewerWithDownload(contentUrl : string, filename : string, mimeType : string) : string
+	{
+		const escaped = (s : string) => (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+		const safeName = escaped(filename || 'attachment');
+		const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${safeName}</title>` +
+			`<style>html,body{margin:0;height:100%;font-family:sans-serif}` +
+			`.toolbar{display:flex;align-items:center;justify-content:flex-end;height:40px;` +
+			`background:#323639;padding:0 16px;box-sizing:border-box}` +
+			`.toolbar a{color:#fff;text-decoration:none;font-size:13px;display:flex;align-items:center;gap:6px}` +
+			`.toolbar a:hover{text-decoration:underline}` +
+			`embed{display:block;width:100%;height:calc(100% - 40px);border:0}</style></head>` +
+			`<body><div class="toolbar"><a href="${contentUrl}" download="${safeName}">&#8681; ${safeName}</a></div>` +
+			`<embed src="${contentUrl}" type="${escaped(mimeType)}"></body></html>`;
+		return URL.createObjectURL(new Blob([html], {type: 'text/html'}));
 	}
 
 	/**
