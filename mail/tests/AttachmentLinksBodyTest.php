@@ -53,15 +53,33 @@ require_once realpath(__DIR__.'/../../api/tests/AppTest.php');
  * "upload:" branch readUploadedBlob() already has (JmapImap::uploadPath() widened to `public` so
  * both share it), checked first since it needs no server connection at all.
  *
- * Both bugs, and this fix, were live-verified against boulder.egroupware.org for BOTH backends
- * before this file was written: a real Stalwart JMAP account (acc_id=1) and the local shim
- * (acc_id=42, Dovecot-backed) - in both cases uploading a fresh attachment then requesting
+ * Bug 3 (covered by testExpirationIsConvertedFromIsoDatetimeToYmd and
+ * testExpirationDateSurvivesRealShareCreation): found live 2026-09-15 via ticket #124561 (a real
+ * user: sending a share link
+ * WITH an expiration date failed with a DB error - "Incorrect date value: '2026-09-16T00:00:00Z'
+ * for column ... share_expires" - and the outgoing mail was sent with the body only partially
+ * built). `Et2Date.get_value()` for the "expiration" field (mail/js/compose.ts) returns the
+ * widget's own raw ISO-8601 representation, NOT the "Y-m-d" the field's `dataFormat="Y-m-d"`
+ * attribute (mail/templates/default/compose.xet) implies - that attribute only shapes a CLASSIC
+ * form submission, applied server-side by `Etemplate\Widget\Date::set_value()`
+ * (api/src/Etemplate/Widget/Date.php) during normal POST processing. This JMAP-native ajax call
+ * bypasses that pipeline entirely, so the raw ISO string reached `stylite_sharing::create()` ->
+ * `Api\Vfs\Sharing::create()` unconverted and failed the `share_expires` (a `date`-typed column,
+ * see `setup/tables_current.inc.php`) INSERT. Fixed by reformatting `$params['expiration']` via
+ * `Api\DateTime::to($expiration, 'Y-m-d')` in `buildAttachmentLinksBody()` before it reaches
+ * `_getAttachmentLinks()`/`Sharing::create()`.
+ *
+ * Bugs 1 and 2, and their fixes, were live-verified against boulder.egroupware.org for BOTH
+ * backends before this file was written: a real Stalwart JMAP account (acc_id=1) and the local
+ * shim (acc_id=42, Dovecot-backed) - in both cases uploading a fresh attachment then requesting
  * filemode=link produced a working https://.../share.php/<token> link serving the exact uploaded
- * bytes. This file covers what's actually unit-testable in CI (no live IMAP/JMAP server available
+ * bytes. Bug 3 was found from the ticket report and reproduced/fixed here directly, not live.
+ * This file covers what's actually unit-testable in CI (no live IMAP/JMAP server available
  * there, see CreateAttachmentBlockTest's own docblock) - the response-transport bug (testAjax*),
  * the upload:-blob resolution bug (testFetchBlobBytesResolvesFreshlyUploaded*, including a REAL,
  * non-stubbed end-to-end share-link generation for it, since resolving an "upload:" blob needs no
- * live server connection at all), and buildAttachmentLinksBody()'s own mode-dispatch/body-splicing
+ * live server connection at all), the expiration-date conversion bug (testExpiration*), and
+ * buildAttachmentLinksBody()'s own mode-dispatch/body-splicing
  * logic for all 4 filemodes (via a stubbed _getAttachmentLinks(), isolating that logic from the
  * real Vfs\Sharing::create()'s DB/session-dependent behaviour, which is what the live verification
  * above already covers for LINK specifically).
@@ -237,6 +255,107 @@ class AttachmentLinksBodyTest extends Api\AppTest
 			'plain append fallback - the body has no fieldset/HTMLSIGBEGIN marker to splice into');
 	}
 
+	// --- Bug 3: a raw ET2 "expiration" must reach Sharing::create() as a real Api\DateTime -----
+
+	/**
+	 * The core regression test for Bug 3: Et2Date.get_value()'s own wire format - a WALL-CLOCK
+	 * value in the user's own timezone with a fake trailing "Z" (Api\DateTime::ET2, eg.
+	 * "2026-09-16T00:00:00Z") - is exactly what ticket #124561's DB error quoted verbatim
+	 * ("Incorrect date value: '2026-09-16T00:00:00Z' ...").
+	 *
+	 * Deliberately sets the user timezone to one that does NOT match this environment's default
+	 * (Europe/Berlin, confirmed live) or UTC: PHP's own \DateTime constructor honours an explicit
+	 * "Z" and forces the object into real UTC regardless of the timezone passed to it - so if the
+	 * fix failed to strip the fake "Z" first, the captured object's timezone would come back as
+	 * "UTC" here, not "America/Los_Angeles". That divergence would NOT be visible testing only in
+	 * this environment's own Europe/Berlin default (UTC and Berlin agree closely enough near
+	 * midnight not to obviously misbehave) - this is why the test picks a deliberately distant zone
+	 * rather than trusting the environment's own default.
+	 */
+	public function testExpirationZIsTreatedAsUserTimezoneNotRealUtc() : void
+	{
+		$originalTz = Api\DateTime::$user_timezone;
+		Api\DateTime::$user_timezone = new \DateTimeZone('America/Los_Angeles');
+		try
+		{
+			$compose = new AttachmentLinksBodyTestFixtureCompose(self::$fixtureAccId);
+
+			$this->callBuildAttachmentLinksBody($compose, $this->baseParams([
+				'filemode'    => Api\Vfs\Sharing::LINK,
+				'attachments' => [['vfsPath' => '/phpunit-fixture/a.txt', 'name' => 'a.txt', 'type' => 'text/plain', 'size' => 3]],
+				'expiration'  => '2026-09-16T00:00:00Z',
+			]));
+		}
+		finally
+		{
+			Api\DateTime::$user_timezone = $originalTz;
+		}
+
+		$this->assertCount(1, $compose->capturedGetAttachmentLinksArgs);
+		$expiration = $compose->capturedGetAttachmentLinksArgs[0]['expiration'];
+		$this->assertInstanceOf(Api\DateTime::class, $expiration,
+			'must be a real Api\\DateTime object, not a pre-formatted string - Db::quote()\'s own '.
+			'"date"-type handling (api/src/Db.php) does the DB-specific conversion/formatting');
+		$this->assertSame('America/Los_Angeles', $expiration->getTimezone()->getName(),
+			'the fake "Z" must be stripped before construction - left in place, PHP\'s own DateTime '.
+			'constructor honours it and silently forces real UTC instead of the user\'s timezone');
+		$this->assertSame('2026-09-16', $expiration->format('Y-m-d'),
+			'the calendar day the user picked must survive exactly, in their own timezone');
+	}
+
+	/**
+	 * A value already in "Y-m-d" (eg. a classic form submission, or a future non-datetime widget
+	 * shape) has no fake "Z" to strip and must still construct correctly.
+	 */
+	public function testExpirationAlreadyInYmdFormatConstructsCorrectly() : void
+	{
+		$compose = new AttachmentLinksBodyTestFixtureCompose(self::$fixtureAccId);
+
+		$this->callBuildAttachmentLinksBody($compose, $this->baseParams([
+			'filemode'    => Api\Vfs\Sharing::LINK,
+			'attachments' => [['vfsPath' => '/phpunit-fixture/a.txt', 'name' => 'a.txt', 'type' => 'text/plain', 'size' => 3]],
+			'expiration'  => '2026-09-16',
+		]));
+
+		$expiration = $compose->capturedGetAttachmentLinksArgs[0]['expiration'];
+		$this->assertInstanceOf(Api\DateTime::class, $expiration);
+		$this->assertSame('2026-09-16', $expiration->format('Y-m-d'));
+	}
+
+	/**
+	 * No expiration set (the common case - most share links have none) must stay null, not become
+	 * some accidental "today"/epoch default from constructing a DateTime from an empty string.
+	 */
+	public function testNoExpirationStaysNull() : void
+	{
+		$compose = new AttachmentLinksBodyTestFixtureCompose(self::$fixtureAccId);
+
+		$this->callBuildAttachmentLinksBody($compose, $this->baseParams([
+			'filemode'    => Api\Vfs\Sharing::LINK,
+			'attachments' => [['vfsPath' => '/phpunit-fixture/a.txt', 'name' => 'a.txt', 'type' => 'text/plain', 'size' => 3]],
+			'expiration'  => null,
+		]));
+
+		$this->assertNull($compose->capturedGetAttachmentLinksArgs[0]['expiration']);
+	}
+
+	/**
+	 * An unparseable "expiration" must not fatal - falls back to null (no expiration) rather than
+	 * propagating a DateTime construction exception.
+	 */
+	public function testUnparseableExpirationFallsBackToNull() : void
+	{
+		$compose = new AttachmentLinksBodyTestFixtureCompose(self::$fixtureAccId);
+
+		$this->callBuildAttachmentLinksBody($compose, $this->baseParams([
+			'filemode'    => Api\Vfs\Sharing::LINK,
+			'attachments' => [['vfsPath' => '/phpunit-fixture/a.txt', 'name' => 'a.txt', 'type' => 'text/plain', 'size' => 3]],
+			'expiration'  => 'not a date',
+		]));
+
+		$this->assertNull($compose->capturedGetAttachmentLinksArgs[0]['expiration']);
+	}
+
 	public function testFieldsetBlockIsReplacedInPlace() : void
 	{
 		$compose = new AttachmentLinksBodyTestFixtureCompose(self::$fixtureAccId);
@@ -396,6 +515,65 @@ class AttachmentLinksBodyTest extends Api\AppTest
 			$content = @file_get_contents($url);
 			$this->assertSame('phpunit real end-to-end attachment content', $content,
 				'the share link must actually serve the uploaded attachment\'s own content (fetched '.$url.')');
+		}
+	}
+
+	/**
+	 * Full, REAL (non-stubbed) end-to-end reproduction of ticket #124561: a raw ISO-8601
+	 * "expiration" (Et2Date.get_value()'s own shape) must survive an actual `Sharing::create()`
+	 * DB INSERT instead of failing with "Incorrect date value" - and the stored share_expires
+	 * must actually equal the date given (persisted as "Y-m-d", the date-typed column's format),
+	 * not just "not throw" (eg. failing silently to null would satisfy that alone).
+	 *
+	 * Relies on this environment's user and server timezone both being Europe/Berlin (confirmed
+	 * live) - the fix passes a real Api\DateTime through to Db::quote()'s own 'date'-type handling
+	 * (api/src/Db.php), which applies DateTime::user2server() before formatting. That is a genuine
+	 * wall-clock conversion, not just a reformat: for a user whose timezone sits far enough ahead
+	 * of the server's, a midnight-picked expiration can legitimately roll back to the PREVIOUS
+	 * calendar day once stored - same as the classic form-submission path would too if it were
+	 * changed to also go through user2server() (today it doesn't, for this field - see this class's
+	 * "Bug 3" docblock section). Not exercised here since it needs a non-matching timezone pair;
+	 * see testExpirationZIsTreatedAsUserTimezoneNotRealUtc() for the deliberately-mismatched-
+	 * timezone coverage (it only checks the "Z" is stripped/day preserved in the USER's own
+	 * timezone, not the subsequent user2server storage step).
+	 */
+	public function testExpirationDateSurvivesRealShareCreation() : void
+	{
+		$blobId = $this->writeUploadFixture('phpunit expiration-date attachment content');
+
+		$compose = $this->compose();
+		try
+		{
+			$result = $this->callBuildAttachmentLinksBody($compose, $this->baseParams([
+				'filemode'    => Api\Vfs\Sharing::LINK,
+				'body'        => '<p>real body</p>',
+				'attachments' => [['blobId' => $blobId, 'name' => 'phpunit-expiration.txt', 'type' => 'text/plain', 'size' => 45]],
+				// Et2Date.get_value()'s own raw shape - see the class docblock's "Bug 3" section
+				'expiration'  => '2026-09-16T00:00:00Z',
+			]));
+		}
+		catch(Api\Exception\AssertionFailed $e)
+		{
+			$this->markTestSkipped('VFS home not writable for the test user in this environment: '.$e->getMessage());
+		}
+
+		$this->assertMatchesRegularExpression('#share\.php/[A-Za-z0-9_-]+#', $result,
+			'share creation must succeed (and produce a real link), not fail the share_expires INSERT');
+
+		preg_match('#/share\.php/([A-Za-z0-9_-]+)#', $result, $m);
+		$token = $m[1];
+		try
+		{
+			$row = $GLOBALS['egw']->db->select(Api\Sharing::TABLE, 'share_expires',
+				['share_token' => $token], __LINE__, __FILE__, false, '', Api\Db::API_APPNAME)->fetch();
+
+			$this->assertNotNull($row, 'the share row must actually exist in the DB');
+			$this->assertSame('2026-09-16', substr((string)$row['share_expires'], 0, 10),
+				'the persisted share_expires must equal the requested expiration date');
+		}
+		finally
+		{
+			Api\Sharing::delete(['share_token' => $token]);
 		}
 	}
 }

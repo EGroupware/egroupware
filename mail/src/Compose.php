@@ -776,8 +776,40 @@ class Compose
 		$isHtml = !empty($params['isHtml']);
 		$recipients = array_unique(array_merge((array)($params['to'] ?? []), (array)($params['cc'] ?? []),
 			(array)($params['bcc'] ?? [])));
+		// Et2Date.get_value() (mail/js/compose.ts) returns the widget's own ET2 wire format
+		// (Api\DateTime::ET2, eg. "2026-09-16T00:00:00Z") - a WALL-CLOCK value in the user's own
+		// timezone with a fake trailing "Z" (Etemplate\Widget\Date::format_date()'s own comment:
+		// "postfix date-string with Z so javascript doesn't add/subtract anything"), NOT a real UTC
+		// instant. Passed unconverted, this reached stylite_sharing::create() -> Api\Vfs\Sharing::
+		// create() as a raw string and failed the share_expires INSERT with a DB error ("Incorrect
+		// date value") - reported live, ticket #124561. A classic form submission never hits this:
+		// Etemplate\Widget\Date::validate() (api/src/Etemplate/Widget/Date.php) already strips the
+		// trailing "Z" before constructing the DateTime, for exactly this reason - left in place, it
+		// is syntactically valid ISO-8601 UTC and PHP's own \DateTime constructor honours it,
+		// silently reinterpreting the wall-clock value as a real UTC instant instead of user-time
+		// (off by a day for any timezone far enough from UTC). Same fix here: strip the fake "Z",
+		// then hand Api\Db a real Api\DateTime object rather than a pre-formatted string - its own
+		// 'date'-type quoting (Db::quote()) already does the correct user2server timezone
+		// conversion and "Y-m-d" formatting for a DateTime instance, matching the classic path.
+		$expiration = $params['expiration'] ?? null;
+		if ($expiration)
+		{
+			if (substr($expiration, -1) === 'Z')
+			{
+				$expiration = substr($expiration, 0, -1);
+			}
+			try
+			{
+				$expiration = new Api\DateTime($expiration);
+			}
+			catch (\Exception $e)
+			{
+				unset($e);
+				$expiration = null;
+			}
+		}
 		$attachment_links = $this->_getAttachmentLinks($attachments, $filemode, $isHtml, $recipients,
-			$params['expiration'] ?? null, $params['password'] ?? null);
+			$expiration, $params['password'] ?? null);
 
 		if (empty($attachment_links))
 		{
