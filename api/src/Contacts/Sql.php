@@ -212,10 +212,12 @@ class Sql extends Api\Storage
 			$by_expr = $by == 'org_unit_count' ? "COUNT(DISTINCT CASE WHEN org_unit IS NULL THEN '' ELSE org_unit END)" :
 				"COUNT(DISTINCT CASE WHEN adr_one_locality IS NULL THEN '' ELSE adr_one_locality END)";
 			// $by is restricted to known-safe column names above, $sort to ASC/DESC --> fragments below are NOT
-			// client-controlled, but sanitizeOrderBy() can not validate GROUP BY/HAVING --> bypass it narrowly here
-			$this->sanitize_order_by = false;
+			// client-controlled, but sanitizeOrderBy() can not validate GROUP BY/HAVING --> bypass it narrowly here.
+			// Base::search() resets sanitize_order_by=true again right after each use, so it must be set again
+			// before EVERY single search() call below, not just once before the first one.
 			try
 			{
+				$this->sanitize_order_by = false;
 				parent::search($param['search'],array('org_name'),
 					"GROUP BY org_name HAVING $by_expr > 1 ORDER BY org_name $sort", array(
 					"NULL AS $by",
@@ -225,6 +227,7 @@ class Sql extends Api\Storage
 					"COUNT(DISTINCT CASE WHEN adr_one_locality IS NULL THEN '' ELSE adr_one_locality END) AS adr_one_locality_count",
 				),$wildcard,false,$op/*'OR'*/,'UNION',$filter,$join);
 				// org by location
+				$this->sanitize_order_by = false;
 				parent::search($param['search'],array('org_name'),
 					"GROUP BY org_name,$by ORDER BY org_name $sort,$by $sort", array(
 					"CASE WHEN $by IS NULL THEN '' ELSE $by END AS $by",
