@@ -26,6 +26,7 @@ import {MailCompose} from "./compose";
 import {formatJmapAddress, isPreferenceOn, JmapBodyResult, JmapMessageReference, JmapUserError, MailJmap} from "./jmap";
 import {renderAttachmentIndex} from "./attachmentIndex";
 import {attachmentSaveUrl, downloadAttachments} from "./attachmentDownload";
+import {openLinksInNewTab} from "./bodyLinks";
 import {buildErrorNode, buildFolderLevel, buildMailboxPaths, FolderTreeNode, isNamespaceRootName} from "./folderTree";
 // egw/egw_getFramework are ambient globals (declare global {} in egw_global.d.ts,
 // unconditionally included via tsconfig's "**/*.d.ts") - no import needed or possible.
@@ -3007,6 +3008,7 @@ export class MailApp extends EgwApp
 		{
 			const doc = iframe.contentWindow.document;
 			doc.documentElement.dataset.rowId = rowId;
+			openLinksInNewTab(doc);
 			// classic-fallback counterpart of loadMessageBody()'s own fast-path trigger below - the
 			// ONLY place left that calls this for the classic-navigation case, now that et2_ready()'s
 			// own template-lifetime listeners no longer do (see their own comments)
@@ -3059,6 +3061,7 @@ export class MailApp extends EgwApp
 			{
 				const doc = iframe.contentWindow.document;
 				doc.documentElement.dataset.rowId = rowId;
+				openLinksInNewTab(doc);
 				this.jmap.resolveInlineImages(doc, rowId, fast).catch((e) =>
 					console.error('MailApp.loadMessageBody(): resolveInlineImages failed', e));
 				// PGP/MIME (MailJmap.fetchBody()'s own PGP branch, jmap.ts) renders the raw armored
