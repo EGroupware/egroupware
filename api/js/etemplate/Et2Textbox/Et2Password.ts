@@ -54,24 +54,47 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
 		};
 	}
 	
+	/**
+	 * Show a button that switches the field to plain text.
+	 *
+	 * Alias for the inherited passwordToggle, which is the one render() reads.  eTemplate spells
+	 * this attribute `viewable`, but templates have also set `togglePassword` directly for a long
+	 * time - and the server checks both names to decide whether the password may be sent to the
+	 * client at all (\EGroupware\Api\Etemplate\Widget\Password::beforeSendToClient) - so all
+	 * three names have to keep working, and they all have to mean the same thing.
+	 */
+	get togglePassword() : boolean
+	{
+		return this.passwordToggle;
+	}
+
+	set togglePassword(toggle : boolean)
+	{
+		this.passwordToggle = toggle;
+	}
+
 	transformAttributes(attrs)
 	{
 		if(typeof attrs.suggest !== "undefined")
 		{
 			attrs.suggest = parseInt(attrs.suggest);
 		}
+		// This is the only place the type gets set, so a hand-written <et2-password> (one not built
+		// from a template, eg. in documentation) needs its own type="password" or it renders as a
+		// plain text input showing the value.  Every password field in the product comes from a
+		// template, so this is a documentation concern, not a product one.
 		attrs.type = 'password';
 
-		if(typeof attrs.viewable !== "undefined")
+		// Map both of our names onto the inherited property, which is what render() looks at.
+		// Going through the normal attribute handling also gets them boolean parsing, so a
+		// template's "false"/"0"/expression arrives as an actual boolean.
+		for(const alias of ['togglePassword', 'viewable'])
 		{
-			attrs['togglePassword'] = attrs.viewable;
-			delete attrs.viewable;
-		}
-		if(typeof attrs.togglePassword !== "undefined" && !attrs.togglePassword
-			|| typeof attrs.togglePassword == "string" && !this.getArrayMgr("content").parseBoolExpression(attrs.togglePassword))
-		{
-			// Unset togglePassword if its false.  It's from parent, and it doesn't handle string "false" = false
-			delete attrs.togglePassword;
+			if(typeof attrs[alias] !== "undefined")
+			{
+				attrs.passwordToggle = attrs[alias];
+				delete attrs[alias];
+			}
 		}
 
 		super.transformAttributes(attrs);
@@ -295,7 +318,7 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
                                 : ''
                         }
                         ${
-                                this.togglePassword && !this.disabled
+                                this.passwordToggle && !this.disabled
                                 ? html`
                                     <button
                                             part="password-toggle-button"
