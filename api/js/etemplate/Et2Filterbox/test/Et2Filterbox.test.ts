@@ -1,6 +1,11 @@
-import {assert} from "@open-wc/testing";
+import {assert, fixture} from "@open-wc/testing";
+import {html} from "lit/static-html.js";
 import {Et2Filterbox} from "../Et2Filterbox";
 import {widgetSlotTests} from "../../Et2Widget/test/WidgetSlotTests";
+import "../../Et2Textbox/Et2Textbox";
+import "../../Et2Textbox/Et2Searchbox";
+import "../../Et2Select/Select/Et2SelectPriority";
+import "../../Layout/Et2Box/Et2Box";
 
 /**
  * Contract under test:
@@ -155,6 +160,112 @@ describe("Et2Filterbox sort sync", () =>
 		assert.equal(seen["sort[id]"], "ts_id", "column-header sort should update the sort id widget");
 		assert.equal(seen["sort[asc]"], true, "column-header sort should update the sort direction widget");
 		element.remove();
+	});
+});
+
+/**
+ * Contract under test:
+ * - `clearable` shows a clear button when, and only when, at least one filter has something in
+ *   it, and the button empties those filters.
+ *
+ * Setup strategy:
+ * - Slot real input widgets in as markup, which is what a hand-written filterbox looks like
+ *   (see Et2Filterbox.md).  Deliberately no eTemplate around them: this content has no instance
+ *   manager and no widget tree, which is the case `value` cannot see and the clear button used to
+ *   fall through on, leaving the button permanently hidden.
+ *
+ * Pass criteria:
+ * - No button while every filter is empty, button once one has a value, gone again once cleared.
+ * - Clicking it actually empties the widgets.
+ * - The nextmatch's hidden sort widgets are neither counted as a filter nor wiped by a clear.
+ */
+describe("Et2Filterbox clear button", () =>
+{
+	const clearButton = (element : Et2Filterbox) : any =>
+		Array.from(element.shadowRoot.querySelectorAll("et2-button")).find((button : any) => button.label == "Clear");
+
+	it("stays hidden while every filter is empty", async() =>
+	{
+		const element : Et2Filterbox = await fixture(html`
+            <et2-filterbox clearable>
+                <et2-textbox id="search"></et2-textbox>
+            </et2-filterbox>`);
+		await element.updateComplete;
+
+		assert.isUndefined(clearButton(element), "nothing set, so there is nothing to clear");
+	});
+
+	it("appears for a filter that came in with a value", async() =>
+	{
+		const element : Et2Filterbox = await fixture(html`
+            <et2-filterbox clearable>
+                <et2-textbox id="search" value="hello"></et2-textbox>
+            </et2-filterbox>`);
+		await element.updateComplete;
+
+		assert.isDefined(clearButton(element), "a filter has a value, so it can be cleared");
+	});
+
+	it("empties the filters and goes away again when clicked", async() =>
+	{
+		const element : Et2Filterbox = await fixture(html`
+            <et2-filterbox clearable>
+                <et2-textbox id="search" value="hello"></et2-textbox>
+                <et2-textbox id="other" value="world"></et2-textbox>
+            </et2-filterbox>`);
+		await element.updateComplete;
+
+		clearButton(element).click();
+		await element.updateComplete;
+
+		assert.equal((<any>element.querySelector("#search")).get_value(), "", "clear should empty the filter");
+		assert.equal((<any>element.querySelector("#other")).get_value(), "", "clear should empty every filter");
+		assert.isUndefined(clearButton(element), "with nothing left set, the button should go away");
+	});
+
+	/**
+	 * The "Clearable" example in Et2Filterbox.md, exactly as a reader gets it.  A select needs an
+	 * emptyLabel to have an empty value to go back to (without one Et2Select falls back to its
+	 * first option instead of clearing), which is the part of that example most easily lost.
+	 */
+	it("behaves as the documented example says it does", async() =>
+	{
+		const element : Et2Filterbox = await fixture(html`
+            <et2-filterbox id="filterbox-clearable" clearable>
+                <et2-vbox>
+                    <et2-searchbox id="search" label="Search" class="et2-fixed-label"></et2-searchbox>
+                    <et2-select-priority id="priority" label="Priority" emptyLabel="Any" value="3"
+                                         class="et2-fixed-label"></et2-select-priority>
+                </et2-vbox>
+            </et2-filterbox>`);
+		await element.updateComplete;
+
+		assert.isDefined(clearButton(element), "the example starts with priority set, so it shows the button");
+
+		clearButton(element).click();
+		await element.updateComplete;
+
+		assert.equal((<any>element.querySelector("#priority")).get_value(), "",
+			"an emptyLabel gives the select an empty value to clear to");
+		assert.isUndefined(clearButton(element), "cleared, so the button goes away again");
+	});
+
+	it("leaves the nextmatch's sort out of it", async() =>
+	{
+		const element : Et2Filterbox = await fixture(html`
+            <et2-filterbox clearable>
+                <et2-textbox id="sort[id]" value="ts_start"></et2-textbox>
+                <et2-textbox id="search" value="hello"></et2-textbox>
+            </et2-filterbox>`);
+		await element.updateComplete;
+
+		clearButton(element).click();
+		await element.updateComplete;
+
+		assert.equal((<any>element.querySelector("#search")).get_value(), "", "clear should empty the filter");
+		assert.equal((<any>element.querySelector("[id='sort[id]']")).get_value(), "ts_start",
+			"sort order is not a filter - clearing must not wipe the ORDER BY");
+		assert.isUndefined(clearButton(element), "a sort on its own is not something to clear");
 	});
 });
 
