@@ -324,7 +324,10 @@ class IncludeMgr
 			// fix old /phpgwapi/js/ path by replacing it with /api/js/
 			substr($package, 0, 13) == '/phpgwapi/js/' && is_readable(EGW_SERVER_ROOT.parse_url($path = str_replace('/phpgwapi/js/', '/api/js/', $package), PHP_URL_PATH)) ||
 			$package && $package[0] == '/' && is_readable(EGW_SERVER_ROOT.($path = $package)) ||
-			$package == '.' && is_readable(EGW_SERVER_ROOT.($path="/$app/js/$file.js")) ||
+			// same hashed-entry fallback as above: includeJS('.', 'app.min', $app) (eg. an app
+			// pulling in ANOTHER app's app.min.js, like collabora into filemanager) hits this
+			// branch, not the $package[0] == '/' one, and was silently dropped the same way
+			$package == '.' && (Bundle::resolveEntry($path="/$app/js/$file.js") || is_readable(EGW_SERVER_ROOT.$path)) ||
 			is_readable(EGW_SERVER_ROOT.($path="/$app/js/$package/$file.js")) ||
 			// fix not found by using app='api'
 			$app != 'api' && is_readable(EGW_SERVER_ROOT.($path="/api/js/$package/$file.js")) ||
