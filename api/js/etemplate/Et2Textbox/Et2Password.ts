@@ -55,22 +55,40 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
 	}
 	
 	/**
-	 * Show a button that switches the field to plain text.
+	 * Add a button that switches the field to plain text, for a password the user is allowed to
+	 * read back.
 	 *
-	 * Alias for the inherited passwordToggle, which is the one render() reads.  eTemplate spells
-	 * this attribute `viewable`, but templates have also set `togglePassword` directly for a long
-	 * time - and the server checks both names to decide whether the password may be sent to the
-	 * client at all (\EGroupware\Api\Etemplate\Widget\Password::beforeSendToClient) - so all
-	 * three names have to keep working, and they all have to mean the same thing.
+	 * This is the name to use.  The server decides whether to send the password to the client at
+	 * all from the template's own attributes, and it looks for this one (see
+	 * \EGroupware\Api\Etemplate\Widget\Password::beforeSendToClient()) - a field the client
+	 * shows a reveal button for, but the server masked, reveals nothing but asterisks.  It is also
+	 * what every password customfield sets, defaulting to true.
+	 *
+	 * Implemented on top of SlInput's passwordToggle, which render() reads.
 	 */
-	get togglePassword() : boolean
+	@property({type: Boolean, attribute: "viewable"})
+	get viewable() : boolean
 	{
 		return this.passwordToggle;
 	}
 
+	set viewable(viewable : boolean)
+	{
+		this.passwordToggle = viewable;
+	}
+
+	/**
+	 * @deprecated use viewable, which means exactly this.  Kept because templates outside this
+	 * repository use it, and the server accepts it as well.
+	 */
+	get togglePassword() : boolean
+	{
+		return this.viewable;
+	}
+
 	set togglePassword(toggle : boolean)
 	{
-		this.passwordToggle = toggle;
+		this.viewable = toggle;
 	}
 
 	transformAttributes(attrs)
@@ -85,17 +103,15 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
 		// template, so this is a documentation concern, not a product one.
 		attrs.type = 'password';
 
-		// Map both of our names onto the inherited property, which is what render() looks at.
-		// Going through the normal attribute handling also gets them boolean parsing, so a
-		// template's "false"/"0"/expression arrives as an actual boolean.
-		for(const alias of ['togglePassword', 'viewable'])
+		if(typeof attrs.togglePassword !== "undefined")
 		{
-			if(typeof attrs[alias] !== "undefined")
-			{
-				attrs.passwordToggle = attrs[alias];
-				delete attrs[alias];
-			}
+			attrs.viewable = attrs.togglePassword;
+			delete attrs.togglePassword;
 		}
+		// Shoelace's own name for this.  It works in plain HTML, where Lit maps the attribute
+		// itself, but a template must not use it: the server does not know the name, so it would
+		// mask the password while we rendered a reveal button for it.
+		delete attrs.passwordToggle;
 
 		super.transformAttributes(attrs);
 	}

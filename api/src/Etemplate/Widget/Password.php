@@ -58,7 +58,11 @@ class Password extends Etemplate\Widget\Textbox
 			$preserv =& self::get_array(self::$request->preserv, $form_name, true);
 			$preserv = count_chars((string)$value, 3) == '*' ? $preserv : (string)$value;
 
-			// only send password (or hash) to client-side, if explicitly requested
+			// only send password (or hash) to client-side, if explicitly requested.  'viewable' is
+			// the documented name, 'togglePassword' a deprecated alias kept for templates outside
+			// this repository.  Shoelace's own passwordToggle/password-toggle is deliberately not
+			// accepted: the widget drops it from a template's attributes, so the two sides can
+			// never disagree about whether this password was exposed.
 			if(!empty($value) && (!array_key_exists('viewable', $this->attrs) ||
 					!in_array($this->attrs['viewable'], ['1', 'true', true], true))
 				&& (!array_key_exists('togglePassword', $this->attrs) ||
