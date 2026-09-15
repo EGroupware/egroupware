@@ -45,50 +45,62 @@ class Utils extends StreamWrapper
 		$stmt->bindColumn(4,$fs_content,PDO::PARAM_LOB);
 		$stmt->bindValue(':offset', $n, PDO::PARAM_INT);
 
-		while ($stmt->execute())	// && $stmt->rowCount() does not work for all dbs :(
+		// migrating is a CLI job typically run as root eg. via (docker exec) filemanager/cli.php, and everything we
+		// create here has to stay usable by the webserver, which runs as a different user: the requested modes only
+		// survive with an umask of 0, otherwise eg. the usual 0022 silently gives us a root-owned 0755 hash-tree with
+		// 0644 files in it - locking the webserver out of every migrated file of the instance at once
+		$umask_before = self::rootUmask();
+		try
 		{
-			$start = $n;
-			foreach($stmt as $row)
+			while ($stmt->execute())	// && $stmt->rowCount() does not work for all dbs :(
 			{
-				// hack to work around a current php bug (http://bugs.php.net/bug.php?id=40913)
-				// PDOStatement::bindColumn(,,PDO::PARAM_LOB) is not working for MySQL, content is returned as string :-(
-				if (is_string($fs_content))
+				$start = $n;
+				foreach($stmt as $row)
 				{
-					$content = fopen('php://temp', 'wb');
-					fwrite($content, $fs_content);
-					fseek($content, 0, SEEK_SET);
-					$fs_content = '';	// can NOT unset it, at least in PHP 7 it looses bind to column!
-				}
-				else
-				{
-					$content = $fs_content;
-				}
-				if (!is_resource($content))
-				{
-					throw new Api\Exception\AssertionFailed(__METHOD__."(): fs_id=$fs_id ($fs_name, $fs_size bytes) content is NO resource! ".array2string($content));
-				}
-				$filename = self::_fs_path($fs_id);
-				if (!file_exists($fs_dir=Vfs::dirname($filename)))
-				{
-					self::mkdir_recursive($fs_dir,0700,true);
-				}
-				if (!($dest = fopen($filename,'w')))
-				{
-					throw new Api\Exception\AssertionFailed(__METHOD__."(): fopen($filename,'w') failed!");
-				}
-				if (($bytes = stream_copy_to_stream($content,$dest)) != $fs_size)
-				{
-					throw new Api\Exception\AssertionFailed(__METHOD__."(): fs_id=$fs_id ($fs_name) $bytes bytes copied != size of $fs_size bytes!");
-				}
-				if ($debug) error_log("$fs_id: $fs_name: $bytes bytes copied to fs");
-				fclose($dest);
-				fclose($content); unset($content);
+					// hack to work around a current php bug (http://bugs.php.net/bug.php?id=40913)
+					// PDOStatement::bindColumn(,,PDO::PARAM_LOB) is not working for MySQL, content is returned as string :-(
+					if (is_string($fs_content))
+					{
+						$content = fopen('php://temp', 'wb');
+						fwrite($content, $fs_content);
+						fseek($content, 0, SEEK_SET);
+						$fs_content = '';	// can NOT unset it, at least in PHP 7 it looses bind to column!
+					}
+					else
+					{
+						$content = $fs_content;
+					}
+					if (!is_resource($content))
+					{
+						throw new Api\Exception\AssertionFailed(__METHOD__."(): fs_id=$fs_id ($fs_name, $fs_size bytes) content is NO resource! ".array2string($content));
+					}
+					$filename = self::_fs_path($fs_id);
+					if (!file_exists($fs_dir=Vfs::dirname($filename)))
+					{
+						self::mkdir_recursive($fs_dir,isset($umask_before) ? 0777 : 0700,true);
+					}
+					if (!($dest = fopen($filename,'w')))
+					{
+						throw new Api\Exception\AssertionFailed(__METHOD__."(): fopen($filename,'w') failed!");
+					}
+					if (($bytes = stream_copy_to_stream($content,$dest)) != $fs_size)
+					{
+						throw new Api\Exception\AssertionFailed(__METHOD__."(): fs_id=$fs_id ($fs_name) $bytes bytes copied != size of $fs_size bytes!");
+					}
+					if ($debug) error_log("$fs_id: $fs_name: $bytes bytes copied to fs");
+					fclose($dest);
+					fclose($content); unset($content);
 
-				++$n;
+					++$n;
+				}
+				if (!$n || $n == $start) break;	// just in case nothing is found, statement will execute just fine
+
+				$stmt->bindValue(':offset', $n, PDO::PARAM_INT);
 			}
-			if (!$n || $n == $start) break;	// just in case nothing is found, statement will execute just fine
-
-			$stmt->bindValue(':offset', $n, PDO::PARAM_INT);
+		}
+		finally
+		{
+			if (isset($umask_before)) umask($umask_before);
 		}
 		unset($row);	// not used, as we access bound variables
 		unset($stmt);
