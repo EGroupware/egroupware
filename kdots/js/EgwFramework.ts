@@ -740,6 +740,18 @@ export class EgwFramework extends LitElement
 			{
 				dialog.addEventListener("sl-request-close", (e) =>
 				{
+					// sl-request-close/sl-after-hide bubble (and are composed), so a nested
+					// Shoelace-based widget's OWN open/close lifecycle (eg. Et2Email's internal
+					// autocomplete dropdown, which fires these same event names as part of its
+					// normal setup) reaches this listener too - without this check, that bubbled
+					// event gets misread as "the dialog itself closed" and genuinely closes it,
+					// found live 2026-09-15 for a mobile "view entry, then tap edit" flow whose
+					// edit form happened to contain an et2-email field. Et2Dialog's own
+					// handleClose() (bound to 'sl-hide') already guards the same way.
+					if(e.target !== dialog)
+					{
+						return;
+					}
 					if(!e.defaultPrevented)
 					{
 						this.popups.close(dialog);
@@ -750,7 +762,14 @@ export class EgwFramework extends LitElement
 				// sl-request-close. sl-after-hide fires on every real close regardless of
 				// how it was triggered, so use it to guarantee the dialog is untracked -
 				// _garbage_collector() never reclaims Et2Dialog entries on its own.
-				dialog.addEventListener("sl-after-hide", () => this.popups.close(dialog));
+				dialog.addEventListener("sl-after-hide", (e) =>
+				{
+					if(e.target !== dialog)
+					{
+						return;
+					}
+					this.popups.close(dialog);
+				});
 			});
 
 			// Put the dialog in the correct app so it can inherit application styles & be removed if app closes
