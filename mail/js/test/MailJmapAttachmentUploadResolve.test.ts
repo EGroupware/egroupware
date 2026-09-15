@@ -297,21 +297,23 @@ describe("MailJmap.getAttachmentViewUrl() / revokeAttachmentViewUrls()", () =>
 		}
 	});
 
-	it("names the created object URL's blob as a real File, so the browser's own PDF viewer offers the real name to save - tracker #124541", async() =>
+	it("names the created object URL's blob as a real File (non-PDF types), so a browser save dialog offers the real name", async() =>
 	{
-		// ralf, 2026-09-15: opening an attachment then saving from the browser's native PDF
-		// viewer (not our own "Download" action, which already worked - it sets an <a download>
+		// ralf, 2026-09-15: opening an attachment then saving from the browser's native viewer
+		// (not our own "Download" action, which already worked - it sets an <a download>
 		// attribute explicitly) offered the blob: URL's own opaque UUID as the suggested
-		// filename instead - a plain Blob carries no name at all, only a File does.
+		// filename instead - a plain Blob carries no name at all, only a File does. PDF gets its
+		// own, separate wrapping (see the "PDF gets wrapped" describe block below) - a named File
+		// alone turned out NOT to be enough there.
 		const jmap = new MailJmap(createFakeApp());
-		primeToken(jmap, "1", {downloadBlob : async() => ({blob : async() => new Blob(["%PDF"], {type : "application/pdf"})})});
+		primeToken(jmap, "1", {downloadBlob : async() => ({blob : async() => new Blob(["\x89PNG"], {type : "image/png"})})});
 		const capture = captureCreatedObjectUrlBlob();
 
 		try
 		{
-			await jmap.getAttachmentViewUrl("row1", "1", "blob1", "Invoice RE-2026-200.pdf", "application/pdf");
+			await jmap.getAttachmentViewUrl("row1", "1", "blob1", "photo.png", "image/png");
 			assert.instanceOf(capture.blob, File);
-			assert.equal((capture.blob as File).name, "Invoice RE-2026-200.pdf");
+			assert.equal((capture.blob as File).name, "photo.png");
 		}
 		finally
 		{
@@ -353,6 +355,57 @@ describe("MailJmap.getAttachmentViewUrl() / revokeAttachmentViewUrls()", () =>
 			error = e;
 		}
 		assert.instanceOf(error, JmapUserError);
+	});
+});
+
+describe("MailJmap.getAttachmentViewUrl() - PDF gets wrapped with a real download link (tracker #124541 follow-up)", () =>
+{
+	// ralf, 2026-09-15: live-tested against boulder.egroupware.org (acc_id=42) after the plain
+	// named-File fix (above) shipped - opening a PDF attachment and saving from the browser's OWN
+	// native PDF viewer's save button still offered the blob: URL's own opaque UUID, confirming a
+	// named File alone is not enough there: the native viewer doesn't consult it for that action.
+	async function fetchWrapperHtml(jmap : MailJmap) : Promise<string>
+	{
+		primeToken(jmap, "1", {downloadBlob : async() => ({blob : async() => new Blob(["%PDF-1.4"], {type : "application/pdf"})})});
+		const wrapperUrl = await jmap.getAttachmentViewUrl("row1", "1", "blob1", "Invoice RE-2026-200.pdf", "application/pdf");
+		return await fetch(wrapperUrl).then(r => r.text());
+	}
+
+	it("returns a wrapper page (not the raw PDF blob directly) for application/pdf", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const html = await fetchWrapperHtml(jmap);
+
+		assert.include(html, "<embed", "must embed the actual PDF for viewing - that part already worked, only the save-name didn't");
+	});
+
+	it("wrapper's download link uses the real filename via a real <a download> - the one mechanism proven reliable in this codebase", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const html = await fetchWrapperHtml(jmap);
+
+		assert.include(html, 'download="Invoice RE-2026-200.pdf"');
+	});
+
+	it("does NOT wrap a non-PDF type - still returns the plain named-File content url directly", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		primeToken(jmap, "1", {downloadBlob : async() => ({blob : async() => new Blob(["hi"], {type : "text/plain"})})});
+
+		const url = await jmap.getAttachmentViewUrl("row1", "1", "blob1", "notes.txt", "text/plain");
+		const content = await fetch(url).then(r => r.text());
+
+		assert.equal(content, "hi", "a non-PDF type must not get wrapped in an HTML shell");
+	});
+
+	it("tracks both the content and wrapper urls under the rowId, so revokeAttachmentViewUrls() releases both", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		primeToken(jmap, "1", {downloadBlob : async() => ({blob : async() => new Blob(["%PDF-1.4"], {type : "application/pdf"})})});
+
+		await jmap.getAttachmentViewUrl("row1", "1", "blob1", "Invoice.pdf", "application/pdf");
+
+		assert.equal((jmap as any).attachmentViewUrls["row1"].length, 2);
 	});
 });
 
