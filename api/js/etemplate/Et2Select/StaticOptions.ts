@@ -365,13 +365,13 @@ export const StaticOptions = new class StaticOptionsType
 	hour(widget : Et2SelectWidgets, attrs) : SelectOption[]
 	{
 		var options = [];
-		var timeformat = widget.egw().preference('common', 'timeformat');
+		var timeformat = widget.egw().preference('timeformat', 'common');
 		for(var h = 0; h <= 23; ++h)
 		{
 			options.push({
 				value: "" + h,
 				label: timeformat == 12 ?
-					   ((12 ? h % 12 : 12) + ' ' + (h < 12 ? egw.lang('am') : egw.lang('pm'))) :
+					   ((h % 12 ? h % 12 : 12) + ' ' + (h < 12 ? egw.lang('am') : egw.lang('pm'))) :
 					   sprintf('%02d', h)
 			});
 		}
