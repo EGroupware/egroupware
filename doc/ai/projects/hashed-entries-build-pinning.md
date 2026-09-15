@@ -608,22 +608,46 @@ sibling `etemplate2.ts` code path that item 4's fix didn't touch.
 app (ie. it's a real rollup-built app whose chunk should have loaded but didn't); otherwise log quietly
 at `"log"` level and move on, same as `applyFunc()`'s equivalent branch. Live-reverified on
 `boulder.egroupware.org` after rebuild: opening/saving the column selector on both addressbook and
-InfoLog no longer shows the message, column preferences save correctly. Not yet run through the full
-`api/js/jsapi`/`etemplate` test suites or typecheck as part of this fix - do that before considering
-this closed.
+InfoLog no longer shows the message, column preferences save correctly. Test debt from this fix
+cleared 2026-09-15
+before closing the ticket: `api/js/jsapi/test/*.test.ts` is 499/499 green on both Firefox and
+Chromium, and `npm run typecheck` reports nothing at this fix's lines (`etemplate2.ts`'s 21 errors are
+all pre-existing typing debt - missing ambient globals, jQuery-era `Element` methods, legacy container
+typing - none in the changed region).
 
 The "storing a change freezes the tab, sometimes" part of the original report was not reproduced
 live and is not explained by this fix alone (this fix only removes a misleading message, it doesn't
 change any control flow that could hang) - worth a closer look if it recurs, ideally with the tab left
 open so console/network state can be inspected before reloading.
 
+### Item 8: a hook pulling in another app's hashed entry was silently dropped (2026-09-15)
+
+Found live by Ralf, after the pole deploy, via collabora's filemanager-integration hook: collabora's
+JS never reached the client, so `app.filemanager` was never upgraded to collabora's subclass and
+"New document" silently failed.
+
+`Framework\IncludeMgr::translate_params()`'s `$package == '.'` branch - the one
+`Framework::includeJS('.', 'app.min', $app)` hits, which is how a hook pulls in *another* app's JS -
+still did a literal `is_readable()` check on `<app>/js/app.min.js`. Once entries are content-hashed
+that file does not exist on disk any more; only the `chunks/` copy does. So the include was dropped
+with no error at all. `Etemplate.php` already had the equivalent `Bundle::resolveEntry()` fallback for
+a template's own `app.min.js`, and the `$package[0] == '/'` branch had been given it too - this one
+branch was simply missed.
+
+Worth noting for anyone auditing the rest: a stale pre-hashing `collabora/js/app.min.js` left on disk
+had been *masking* this, and it only reproduced once that file was moved aside. That is the same
+masking effect the pole deploy removed deliberately by deleting the bare entry files - which is
+presumably why this surfaced when it did. **Fixed** (`3c802d64af`), with a regression test at
+`api/tests/Framework/HashedEntryIncludeJSTest.php`.
+
 ## Status
 
 Design implemented and live (steps 1-7 above). Fixed from ticket #124112 and its follow-up: the
 `egw_json.ts` misleading-log-target bug (item 1); the silent `app.classes.X`-missing failure mode for
 real top-level apps like filemanager, and the same shape independently found in `applyFunc()`'s
-instantiation branch, both the load path and the instantiation path (item 2 - **note: `CRM.ts`'s own
-`app.classes.crm` case is a separate mechanism, still NOT covered**, see item 2 above); the green+red
+instantiation branch, both the load path and the instantiation path (item 2 - `CRM.ts`'s own
+`app.classes.crm` case was carried as a separate, uncovered mechanism for a while; closed 2026-09-14
+as not reachable, see below); the green+red
 message stacking (item 3); `applyFunc()` misusing the rebuild-reload messaging for `notifications`,
 which was never going to succeed no matter how many times you reload (item 4); the update-detection
 poll itself being just as vulnerable to the (real, but ultimately unrelated) nginx static-asset caching
@@ -631,12 +655,16 @@ as the thing it was trying to detect (item 5); and, item 6 and the actual root c
 crashes reported throughout this whole ticket - `data-include` and `data-manifest` being two
 independently-computed, filtered-differently lists, which made `egw_import()` correctly-per-its-own-
 design fall back to a long-stale, unhashed `app.min.js` for any app present in one but not the other
-(`Bundle::clientManifest()`'s filtering removed entirely, `ad9b270b85`). **Deployed and looking good on
-`pole.egroupware.org`** (Ralf, 2026-09-11) - also deleted the stale bare `*/js/app.min.js` files (and
+(`Bundle::clientManifest()`'s filtering removed entirely, `ad9b270b85`). **In production since
+2026-09-11** (Ralf, first on `pole.egroupware.org`) - also deleted the stale bare `*/js/app.min.js`
+files (and
 the bare `etemplate2.js`/`egw.min.js`) from the docroot as part of that deploy: now that
 `clientManifest()` is unfiltered, nothing legitimate should ever fall back to them, so removing them
 turns any future occurrence of this bug class into a loud 404 instead of a silent stale-content
-collision. Not yet confirmed against Ingo/Stefan's original reports specifically - see below.
+collision. **Ticket #124112 is resolved** - it lives in EGroupware's own tracker, not in git, and the
+fixes reached production well before this doc caught up with them.
+
+One further instance of the bug class surfaced after that deploy and is also fixed - item 8 below.
 
 Both of the items that were open here are now closed, each after live investigation rather than a
 code read - kept with their reasoning, since both had a plausible-looking theory that measurement
@@ -688,9 +716,15 @@ document whose `data-include` happened to name an app missing from the (now-remo
 no amount of reloading fixes a bug that isn't actually about staleness at all. Items 4 and 5 were real,
 independent contributors layered on top (a load-order race and a cacheable detection poll,
 respectively), which is likely why this felt so persistent and hard to pin down in practice. Item 6 is
-deployed and initial signs on `pole.egroupware.org` are good; get explicit confirmation from Ingo/Stefan
-before closing ticket #124112 itself. Nathan or whoever picks this back up should start with the two
-still-open items above.
+deployed, and the ticket is resolved - both of the items that were carried as open here were closed
+first, one as fixed and one as not reachable.
+
+**Project status: complete and in production** - it had been for some time before this doc said so;
+the entries below were written up after the fact. Steps 1-7 of [The work](#the-work) are live, the
+confirmed-dead `getImportMap()` trio is gone, and items 1-8 are all fixed or closed. The single thing
+left is the `notificationajaxpopup.js` load-order race noted just above, which is a pre-existing bug
+this project only ever stopped *mis-reporting* - it is not part of the hashing/pinning design, and it
+does not need this doc to stay open. Carry it separately if it is ever worth fixing.
 
 Two small follow-ups from item 5, found live on the `26` branch (`my.egroupware.org`) opening mail -
 **fixed** (`f08ec4ccf7`): `egw_import()`'s "no manifest entry" debug log (added for item 6) was firing
@@ -741,4 +775,9 @@ Chronological. `*` prefix on the subject means it went out in the user-facing ch
 | *(deployed to pole.egroupware.org by Ralf, also deleting the stale bare app.min.js/etemplate2.js/egw.min.js files from the docroot - initial results look good, not yet confirmed against Ingo/Stefan's original reports)* | | | |
 | `d68fd27c57` | 2026-09-11 | Claude | `Doc: record the pole.egroupware.org deploy confirmation` (this doc) |
 | `f08ec4ccf7` | 2026-09-11 | Claude | `Api: fix two follow-ups from item 5's ajax-response-epoch check` |
-| *(pending)* | 2026-09-11 | Claude | `Doc: record the two item-5 follow-up fixes` (this doc, this update) |
+| `bbe71f6603` | 2026-09-11 | Claude | `Doc: record the two item-5 follow-up fixes` (this doc) |
+| `ce133fecf5` | 2026-09-14 | Claude | `* Api: fix false "please reload" error from the column-selection dialog` (item 7) |
+| `7380b86376` | 2026-09-14 | Claude | `Doc: record the 2026-09-14 retest of the filemanager "Illegal constructor"` (this doc) |
+| `b6aaa8b31c` | 2026-09-14 | Claude | `Doc: close the CRM "object is missing" item as not reachable` (this doc) |
+| `3c802d64af` | 2026-09-15 | ralf | `Api: fix hooks pulling in another app's hashed JS entry being silently dropped` (item 8) |
+| *(all of the above in production; ticket #124112 resolved)* | | | |
