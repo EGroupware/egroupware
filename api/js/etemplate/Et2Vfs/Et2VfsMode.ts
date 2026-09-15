@@ -26,7 +26,16 @@ export class Et2VfsMode extends Et2Description
 		this.noLang = true;	// value is a numeric fs_mode, never a translatable phrase
 	}
 
-	/** File-type masks matching the S_IFMT bits. */
+	/** Mask selecting the file-type bits out of a mode, everything below it is permissions. */
+	static readonly S_IFMT = 0xF000;
+
+	/**
+	 * File-type masks, to be compared against the S_IFMT bits as a whole.
+	 *
+	 * Several of these share bits (block special 0x6000 contains character special 0x2000, for
+	 * example), so a plain `mode & mask` test matches the wrong type - mask with S_IFMT and compare
+	 * for equality instead, which also makes the result independent of the order declared here.
+	 */
 	static readonly types : Record<string, number> = {
 		'l': 0xA000, // link
 		's': 0xC000, // Socket
@@ -47,19 +56,20 @@ export class Et2VfsMode extends Et2Description
 	/**
 	 * Sticky / set-UID / set-GID overrides.
 	 *
-	 * Applied against the full mode after the base permission bits have
-	 * been shifted into the owner / group / world positions.
+	 * Each replaces the execute character of one permission triplet.  The positions are indices
+	 * into the 9 character permission string only - the leading file-type character is prepended
+	 * afterwards and must not be counted here.
 	 */
 	static readonly sticky : {mask : number, char : string, position : number}[] = [
-		{mask: 0x200, char: "T", position: 9}, // Sticky
-		{mask: 0x400, char: "S", position: 6}, // sGID
-		{mask: 0x800, char: "S", position: 3}  // SUID
+		{mask: 0x200, char: "T", position: 8}, // Sticky, replaces world execute
+		{mask: 0x400, char: "S", position: 5}, // sGID, replaces group execute
+		{mask: 0x800, char: "S", position: 2}  // SUID, replaces owner execute
 	];
 
 	/**
 	 * Convert a numeric mode into a `d---rwx---` style permission string.
 	 *
-	 * Ported from et2_vfsMode::text_mode() with identical sticky-bit handling.
+	 * Matches what `ls -l` prints, and the server-side EGroupware\Api\Vfs::int2mode() for the same mode.
 	 *
 	 * @param _value Numeric mode, or a row object that carries `.mode`.
 	 * @returns Permission string such as `d---rwx---`, or an empty string for unknown / empty values.
@@ -84,7 +94,7 @@ export class Et2VfsMode extends Et2Description
 		let type = '-';
 		for(const [flag, mask] of Object.entries(Et2VfsMode.types))
 		{
-			if((mode & mask) === mask)
+			if((mode & Et2VfsMode.S_IFMT) === mask)
 			{
 				type = flag;
 				break;
@@ -127,8 +137,8 @@ export class Et2VfsMode extends Et2Description
 		{
 			if(mode & entry.mask)
 			{
-				const current = text[entry.position];
-				text[entry.position] = entry.char;
+				// ls convention: lowercase if the execute bit this replaces is set too, uppercase if not
+				text[entry.position] = text[entry.position] === 'x' ? entry.char.toLowerCase() : entry.char;
 			}
 		}
 
