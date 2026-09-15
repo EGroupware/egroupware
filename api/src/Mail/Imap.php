@@ -492,7 +492,19 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 			//error_log(__METHOD__.__LINE__.'->'.$k);
 			if ($k!='user' && $k != '' && $k==$mailbox) return $box['mailbox']; //_debug_array(array($k => $client->status($k)));
 		}
-		return ($this->mailboxExist($mailbox)?$mailbox:false);
+		// DIAGNOSTIC-LOGGING (ticket #124401): no exact-name match found above - falling through to
+		// mailboxExist()'s own open-attempt probe, whose real failure reason is otherwise silently
+		// discarded (see that method's own DIAGNOSTIC-LOGGING comment). Log here too so a `false`
+		// return (mailbox genuinely not found/openable) is visible even without correlating both
+		// methods' log lines.
+		if (!($exists = $this->mailboxExist($mailbox)))
+		{
+			error_log(__METHOD__.' ('.__LINE__.') '.'no exact listMailboxes() match AND mailboxExist() '.
+				'is false for mailbox='.array2string($mailbox).' on ImapServerId='.array2string($this->ImapServerId ?? null).
+				' - returning false (caller may then pass this false straight into openMailbox(), '.
+				'which coerces it to an empty-string mailbox)');
+		}
+		return ($exists ? $mailbox : false);
 	}
 
 	/**
@@ -522,7 +534,16 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 		}
 		catch(\Exception $e)
 		{
-			//error_log(__METHOD__.__LINE__.' failed opening:'.$mailbox.':'.$e->getMessage().' Called by:'.function_backtrace());
+			// DIAGNOSTIC-LOGGING (ticket #124401): this openMailbox() probe's real exception used to
+			// be silently discarded here - the only trace of a real failure (auth, permissions, a
+			// genuinely non-existent folder, a transient server issue, ...) was this method quietly
+			// returning false, which callers like getMailbox() then also treat as "false", eventually
+			// reaching Api\Mail::moveMessages()'s cross-account branch as an opaque, generic
+			// "Could not open mailbox \"\"." (the SECOND, unrelated openMailbox(false) call that
+			// follows). Logging the real exception here is the only way to see what actually went
+			// wrong on the customer's own external IMAP server.
+			error_log(__METHOD__.' ('.__LINE__.') '.'openMailbox('.array2string($mailbox).') failed on '.
+				'ImapServerId='.array2string($this->ImapServerId ?? null).': '.get_class($e).': '.$e->getMessage());
 			unset($e);
 			$returnvalue=false;
 		}
