@@ -292,7 +292,28 @@ describe("Et2HtmlArea default rich text mode", () =>
 		assert.equal(window.egwEt2HtmlAreaConfigBridge[configKey].base_url, "/egroupware/node_modules/tinymce");
 		assert.equal(window.egwEt2HtmlAreaConfigBridge[configKey].language, "en");
 		assert.equal(window.egwEt2HtmlAreaConfigBridge[configKey].valid_children, "+body[style]");
+		assert.equal(window.egwEt2HtmlAreaConfigBridge[configKey].newline_behavior, "default",
+			"Enter should make a new paragraph and Shift+Enter a line break, unless rte_formatblock=customparagraph");
 		assert.isFunction(window.egwEt2HtmlAreaCallbackBridge[callbackKey].setup);
+	});
+
+	it("swaps Enter/Shift+Enter (newline_behavior: invert) when rte_formatblock=customparagraph", async() =>
+	{
+		// Legacy preference for users who compose entirely with line breaks, no <p> margin/
+		// spacing - found live 2026-09-15 (ralf, relaying a real report): pressing Enter made a
+		// new paragraph with wider spacing while Shift+Enter correctly made a line break, "should
+		// actually be the other way round". Regression from 1b0a40a1c8 dropping the
+		// _newlineBehavior getter during the TinyMCE 8 migration's own "cleanup" pass.
+		sinon.stub(window.egw, "preference").callsFake((name : string) =>
+			name === "rte_formatblock" ? "customparagraph" : "");
+
+		const element = await fixture<Et2HtmlArea>(html`
+			<et2-htmlarea value="<p>Hello</p>"></et2-htmlarea>
+		`);
+		const editor = element.shadowRoot.querySelector("tinymce-editor");
+		const configKey = (editor?.getAttribute("config") ?? "").split(".")[1];
+
+		assert.equal(window.egwEt2HtmlAreaConfigBridge[configKey].newline_behavior, "invert");
 	});
 
 	it("renders rich text directly when readonly", async() =>
@@ -366,6 +387,84 @@ describe("Et2HtmlArea default rich text mode", () =>
 		await element.updateComplete;
 
 		assert.isTrue(setContent.calledOnceWith("<p>External update</p>"), "External value updates should still sync into TinyMCE");
+	});
+});
+
+/**
+ * Found live 2026-09-15 (a real customer report, relayed by ralf): pasting copied text kept the
+ * source's own font-family/font-size instead of adopting the account's configured one. "Paste as
+ * text" already exists for users who want to discard ALL source formatting, but that also drops
+ * links/lists/bold - this customer explicitly wanted those kept, just not the foreign font.
+ */
+describe("Et2HtmlArea._stripPastedFont() - paste font/size normalization", () =>
+{
+	it("removes inline font-family/font-size from the pasted root element itself", async() =>
+	{
+		const element = await fixture<Et2HtmlArea>(html`<et2-htmlarea></et2-htmlarea>`);
+		const node = document.createElement("p");
+		node.style.fontFamily = "Comic Sans MS";
+		node.style.fontSize = "22px";
+		node.style.color = "red";
+		node.textContent = "pasted";
+
+		(element as any)._stripPastedFont(node);
+
+		assert.equal(node.style.fontFamily, "", "font-family should be stripped");
+		assert.equal(node.style.fontSize, "", "font-size should be stripped");
+		assert.equal(node.style.color, "red", "unrelated inline styles (eg. color) must survive");
+	});
+
+	it("removes inline font-family/font-size from every descendant, keeping other formatting/structure", async() =>
+	{
+		const element = await fixture<Et2HtmlArea>(html`<et2-htmlarea></et2-htmlarea>`);
+		const node = document.createElement("div");
+		node.innerHTML = '<p style="font-family: Arial; font-size: 14px;">Hello <b style="font-size: 18px;">bold</b> ' +
+			'<a href="https://example.org" style="font-family: Georgia;">link</a></p>' +
+			'<ul><li style="font-size: 12px;">item</li></ul>';
+
+		(element as any)._stripPastedFont(node);
+
+		node.querySelectorAll<HTMLElement>("[style]").forEach(el =>
+		{
+			assert.equal(el.style.fontFamily, "", `font-family should be stripped from <${el.tagName}>`);
+			assert.equal(el.style.fontSize, "", `font-size should be stripped from <${el.tagName}>`);
+		});
+		assert.exists(node.querySelector("b"), "bold formatting must survive");
+		assert.exists(node.querySelector("ul li"), "list structure must survive");
+		const link = node.querySelector("a");
+		assert.exists(link, "the link must survive");
+		assert.equal(link?.getAttribute("href"), "https://example.org", "the link's own href must be untouched");
+	});
+
+	it("strips legacy <font face size> attributes (old Outlook/Word paste content)", async() =>
+	{
+		const element = await fixture<Et2HtmlArea>(html`<et2-htmlarea></et2-htmlarea>`);
+		const node = document.createElement("div");
+		node.innerHTML = '<font face="Times New Roman" size="4" color="blue">pasted</font>';
+
+		(element as any)._stripPastedFont(node);
+
+		const font = node.querySelector("font");
+		assert.isFalse(font?.hasAttribute("face"), "face attribute should be stripped");
+		assert.isFalse(font?.hasAttribute("size"), "size attribute should be stripped");
+		assert.equal(font?.getAttribute("color"), "blue", "unrelated attributes (eg. color) must survive");
+	});
+
+	it("is wired into the TinyMCE config as paste_postprocess", async() =>
+	{
+		const element = await fixture<Et2HtmlArea>(html`<et2-htmlarea></et2-htmlarea>`);
+		const editor = element.shadowRoot.querySelector("tinymce-editor");
+		const configKey = (editor?.getAttribute("config") ?? "").split(".")[1];
+		const config = window.egwEt2HtmlAreaConfigBridge[configKey];
+
+		assert.isFunction(config.paste_postprocess);
+
+		const node = document.createElement("p");
+		node.style.fontFamily = "Comic Sans MS";
+		const spy = sinon.spy(element as any, "_stripPastedFont");
+		(config.paste_postprocess as any)({} , {node});
+
+		assert.isTrue(spy.calledOnceWith(node));
 	});
 });
 
