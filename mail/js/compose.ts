@@ -616,6 +616,9 @@ export class MailCompose
 			}
 			this.et2.setArrayMgr('content', content);
 			attachments.set_value({content:content.data.attachments});
+			// see _wireAttachmentDeleteHandlers()'s own docblock - set_value() above rebuilds
+			// every row from scratch, silently unwiring each delete button's own click handler
+			this._wireAttachmentDeleteHandlers();
 		}
 		this.addAttachmentPlaceholder();
 	}
@@ -2020,6 +2023,46 @@ export class MailCompose
 		this.et2.getWidgetById('attachmentsSummaryName')?.set_value(content.data.attachments[0].name);
 		const moreCount = content.data.attachments.length - 1;
 		this.et2.getWidgetById('attachmentsMoreText')?.set_value(moreCount > 0 ? '+' + moreCount : '');
+		this._wireAttachmentDeleteHandlers();
+	}
+
+	/**
+	 * attachmentsWidget.set_value({content: ...}) (mergeAttachmentEntries()/deleteAttachment()
+	 * above) rebuilds each attachment row from compose.xet's own row template
+	 * (`<et2-button-icon id="delete[$row_cont[tmp_name]]" ... onclick="app.mail.compose.
+	 * deleteAttachment">`) client-side, from raw data - found live 2026-09-15 (ralf, relaying a
+	 * real report): "wenn man Anhänge die schon hochgeladen sind ... wieder rauslöschen möchte
+	 * dreht sich nur das Rad" (deleting an already-uploaded attachment just spins forever), for
+	 * both a new compose's own upload AND a forwarded message's carried-over attachments - ie.
+	 * EVERY attachment row, since JMAP-mode compose only ever populates this grid via set_value(),
+	 * never a server-rendered initial page load. Root cause: a set_value()-rebuilt row's own
+	 * `onclick="..."` STRING attribute never gets resolved into a real bound function the way a
+	 * server-rendered (or otherwise template-parsed) row's does - the delete button's own
+	 * `.onclick` stayed unresolved (Et2Widget._handleClick()'s own `typeof this.onclick ==
+	 * 'function'` check fails, so it just returns true - a no-op, not a cancel).
+	 * ButtonMixin._handleClick() (api/js/etemplate/Et2Button/ButtonMixin.ts) treats that truthy
+	 * result as "nothing cancelled the click" and falls through to its own default action -
+	 * submitting the whole popup's form, which JMAP mode has nothing server-side left to handle,
+	 * hence the endless spinner.
+	 *
+	 * Fixed by explicitly assigning each delete button widget's `.onclick` property directly,
+	 * bypassing the broken string-attribute resolution entirely - ButtonMixin._handleClick()
+	 * already correctly short-circuits the form submit once `.onclick` is a real function
+	 * returning false, exactly like a normally-resolved one would. Called after every
+	 * attachmentsWidget.set_value() (both here and at the end of deleteAttachment() itself, so
+	 * remaining rows stay wired after one is removed).
+	 */
+	private _wireAttachmentDeleteHandlers() : void
+	{
+		const content = this.et2.getArrayMgr('content');
+		for(const attachment of (content.data.attachments || []))
+		{
+			const widget : any = this.et2.getWidgetById(`delete[${attachment.tmp_name}]`);
+			if(widget)
+			{
+				widget.onclick = (_event : Event, w : any) => this.deleteAttachment(w);
+			}
+		}
 	}
 
 	/**
@@ -2103,6 +2146,11 @@ export class MailCompose
 		this.et2.setArrayMgr('content', content);
 		const attachmentsWidget = this.et2.getWidgetById('attachments');
 		attachmentsWidget?.set_value({content: content.data.attachments});
+		// set_value() above rebuilds every remaining row from scratch (same reason
+		// _wireAttachmentDeleteHandlers()'s own docblock explains for mergeAttachmentEntries()) -
+		// their own delete buttons need re-wiring too, or the NEXT delete click on any of them
+		// would hit the exact same endless-spinner bug this method itself was called to fix.
+		this._wireAttachmentDeleteHandlers();
 		const detailsWidget : any = attachmentsWidget?.getParent();
 		if (content.data.attachments.length)
 		{
