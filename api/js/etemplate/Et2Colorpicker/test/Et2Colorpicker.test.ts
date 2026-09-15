@@ -46,6 +46,18 @@ describe("Colorpicker widget", () =>
 		assert.instanceOf(element, Et2Colorpicker);
 	});
 
+	it('inline has no clear button', async() =>
+	{
+		// SlColorPicker renders no trigger button when inline, and that is where our clear button
+		// goes - it has to render without complaining, just without a clear button
+		const inline = await fixture<Et2Colorpicker>(html`
+            <et2-colorpicker inline></et2-colorpicker>
+		`);
+
+		assert.isNull(inline.shadowRoot.querySelector("button[slot='trigger']"), "Inline rendered a trigger button");
+		assert.isNull(inline.shadowRoot.querySelector(".input__clear"), "Inline rendered a clear button");
+	});
+
 	it('clearing value', () =>
 	{
 		// set a value

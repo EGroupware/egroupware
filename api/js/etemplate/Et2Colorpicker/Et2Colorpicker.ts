@@ -42,11 +42,23 @@ export class Et2Colorpicker extends Et2InputWidget(SlColorPicker)
 	{
 		super.firstUpdated(_changedProperties);
 
-		// Add in clear button - parent has no accessible slots
-		render(this._clearButtonTemplate(), this._buttonNode);
+		// Add in clear button - parent has no accessible slots, so it goes into the trigger button.
+		// An inline picker has no trigger button, and nowhere equivalent to put one: it renders the
+		// colour grid itself, with no chrome of its own to hang a button off.  So an inline picker
+		// deliberately gets no clear button - if "no colour" is a valid answer there, the template
+		// has to offer it some other way.
+		if(this._buttonNode)
+		{
+			render(this._clearButtonTemplate(), this._buttonNode);
+		}
 	}
 
-	private get _buttonNode() : HTMLElement
+	/**
+	 * SlColorPicker's trigger button, which we render our clear button into.
+	 *
+	 * Null when inline, where SlColorPicker renders no trigger.
+	 */
+	private get _buttonNode() : HTMLElement | null
 	{
 		return this.shadowRoot.querySelector("button[slot='trigger']");
 	}
