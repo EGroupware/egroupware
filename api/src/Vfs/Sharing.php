@@ -448,6 +448,13 @@ class Sharing extends \EGroupware\Api\Sharing
 		{
 			if(parse_url($path, PHP_URL_SCHEME) !== 'vfs')
 			{
+				// A path starting with 2+ slashes (eg. a stray "//" built by concatenating an
+				// already-slash-terminated directory with a leading "/") is indistinguishable from a
+				// scheme-relative "//host/path" network URL to parse_url() - it then returns an empty
+				// PHP_URL_PATH, silently truncating $path down to the bare Vfs::PREFIX ("vfs://default"),
+				// which Vfs::stat() then rejects as "not an absolute path". The Vfs has no host/authority
+				// component, so collapse any such leading run of slashes to a single one first.
+				$path = preg_replace('#^/{2,}#', '/', $path);
 				$path = Vfs::PREFIX.Vfs::parse_url($path, PHP_URL_PATH);
 			}
 
