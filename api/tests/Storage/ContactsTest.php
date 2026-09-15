@@ -84,4 +84,77 @@ class ContactsTest extends LoggedInTest
 			"filter=>['account_id'=>null] must exclude demo's own account-linked contact ".
 			"(contact_id=$demo_contact_id), even though an unrelated account (sysop) is marked 'hidden'");
 	}
+
+	/**
+	 * Regression test: Contacts\Sql::organisations() with $param['org_view']=='org_name,adr_one_locality'
+	 * (or 'org_name,org_unit') issues TWO consecutive parent::search() calls with a server-generated
+	 * "GROUP BY ... ORDER BY ..." fragment, guarded by setting $this->sanitize_order_by=false once
+	 * before both calls. But Storage\Base::search() resets sanitize_order_by back to true again right
+	 * after consuming it on EACH call (by design, so a false set by one caller never leaks into an
+	 * unrelated later call) - so only the FIRST of the two calls was actually bypassing
+	 * sanitizeOrderBy(), and the second one hit its "contains untrusted GROUP BY/HAVING"
+	 * \InvalidArgumentException, breaking the addressbook's "Organisations by location"/"by
+	 * departments" grouped views entirely.
+	 *
+	 * Pass criteria: organisations() with org_view='org_name,adr_one_locality' must not throw and must
+	 * return an array (possibly empty).
+	 */
+	public function testOrganisationsGroupedByLocationDoesNotThrow()
+	{
+		$sql = new Contacts\Sql();
+		$rows = $sql->organisations(['org_view' => 'org_name,adr_one_locality', 'sort' => 'ASC',
+			'start' => 0, 'num_rows' => 10]);
+
+		$this->assertIsArray($rows === false ? [] : $rows,
+			"organisations() with org_view='org_name,adr_one_locality' threw or returned a non-array");
+	}
+
+	/**
+	 * Regression test that the earlier fix ("harden $by parameter", commit 23099b7d12) for
+	 * Contacts\Sql::organisations() is still effective: $param['org_view']'s part after the comma
+	 * (client-controlled, eg. via the addressbook nextmatch "grouped_view" state) is used unquoted to
+	 * build GROUP BY/ORDER BY SQL fragments, so it is restricted to a hard-coded whitelist
+	 * (['org_unit', 'adr_one_locality']) - anything else must be silently ignored (treated as no $by at
+	 * all), never reach the database. $param['sort'] is likewise restricted to exactly 'ASC'/'DESC'.
+	 *
+	 * This guards against the fix in this class for the sanitize_order_by bug (see
+	 * testOrganisationsGroupedByLocationDoesNotThrow() above) having reopened that hole - eg. by
+	 * bypassing sanitizeOrderBy() more broadly than the narrow, already-whitelisted $by/$sort fragments
+	 * it was meant for.
+	 *
+	 * Pass criteria: organisations() with an injection attempt in org_view/sort must not throw, and the
+	 * SQL it actually executes (captured via debug=1 and PHP's error_log) must contain none of the
+	 * injected fragments.
+	 */
+	public function testOrganisationsRejectsInjectedOrgViewAndSort()
+	{
+		$log_file = tempnam(sys_get_temp_dir(), 'sqllog');
+		$prev_error_log = ini_set('error_log', $log_file);
+
+		$sql = new Contacts\Sql();
+		$sql->debug = 1;
+		try
+		{
+			$rows = $sql->organisations([
+				'org_view' => "org_name,org_unit) UNION SELECT account_lid,account_pw,3,4,5 FROM egw_accounts -- ",
+				'sort' => "ASC; DROP TABLE egw_addressbook -- ",
+				'start' => 0, 'num_rows' => 10,
+			]);
+		}
+		finally
+		{
+			ini_set('error_log', $prev_error_log);
+		}
+		$this->assertIsArray($rows === false ? [] : $rows,
+			'organisations() with an injection attempt in org_view/sort threw instead of ignoring it');
+
+		$logged_sql = file_get_contents($log_file);
+		unlink($log_file);
+
+		foreach (['UNION', 'account_pw', 'DROP TABLE'] as $needle)
+		{
+			$this->assertStringNotContainsStringIgnoringCase($needle, $logged_sql,
+				"malicious org_view/sort content leaked into the executed SQL: $logged_sql");
+		}
+	}
 }
