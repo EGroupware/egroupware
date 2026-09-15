@@ -4197,6 +4197,13 @@ export class MailJmap
 	{
 		const escaped = (s : string) => (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 		const safeName = escaped(filename || 'attachment');
+		// same disk/floppy icon used everywhere else in the app for a download action -
+		// setupViewAttachmentActions()'s own single-attachment "Download" (mail/js/app.ts) uses
+		// this exact same 'fileexport' icon key, which resolves (via egw.image()'s own bootstrap
+		// alias table) to bootstrap-icons' own floppy.svg - confirmed live 2026-09-15 (ralf: "we
+		// use the disk-icon for Download"); egw.image() already returns a webserverUrl-prefixed
+		// path on its own, not a relative one, so no extra prefixing needed here.
+		const downloadIconUrl = escaped(egw.image('fileexport') || '');
 		// #toolbar=0&navpanes=0 suppresses the browser's OWN native PDF viewer chrome entirely (a
 		// long-standing Chrome/PDFium URL-fragment convention, also honoured for blob: content) -
 		// without it, that native toolbar's OWN save/download icon is still visible right next to
@@ -4209,12 +4216,13 @@ export class MailJmap
 			`.toolbar{display:flex;align-items:center;gap:10px;height:48px;` +
 			`background:#323639;padding:0 16px;box-sizing:border-box}` +
 			`.toolbar .name{color:#fff;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}` +
-			`.toolbar a{color:#fff;background:#0d6efd;text-decoration:none;font-size:13px;font-weight:600;` +
-			`display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:4px;flex-shrink:0}` +
-			`.toolbar a:hover{background:#0b5ed7}` +
+			`.toolbar a{color:#212529;background:#fff;text-decoration:none;font-size:13px;font-weight:600;` +
+			`display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:4px;flex-shrink:0}` +
+			`.toolbar a:hover{background:#e9ecef}` +
+			`.toolbar a img{width:16px;height:16px;display:block}` +
 			`embed{display:block;width:100%;height:calc(100% - 48px);border:0}</style></head>` +
 			`<body><div class="toolbar"><span class="name">${safeName}</span>` +
-			`<a href="${contentUrl}" download="${safeName}">&#8681; ${escaped(egw.lang('download'))}</a></div>` +
+			`<a href="${contentUrl}" download="${safeName}"><img src="${downloadIconUrl}" alt="">${escaped(egw.lang('download'))}</a></div>` +
 			`<embed src="${contentUrl}#toolbar=0&navpanes=0" type="${escaped(mimeType)}"></body></html>`;
 		return URL.createObjectURL(new Blob([html], {type: 'text/html'}));
 	}

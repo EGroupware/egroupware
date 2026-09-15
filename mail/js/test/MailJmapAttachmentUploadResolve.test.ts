@@ -387,6 +387,20 @@ describe("MailJmap.getAttachmentViewUrl() - PDF gets wrapped with a real downloa
 		assert.include(html, 'download="Invoice RE-2026-200.pdf"');
 	});
 
+	it("shows the same disk/floppy icon used elsewhere in the app for downloading, not just text", async() =>
+	{
+		// ralf, 2026-09-15: "we use the disk-icon for Download" - matches setupViewAttachmentActions()'s
+		// own single-attachment "Download" action (mail/js/app.ts), which uses this same 'fileexport'
+		// icon key. The URL itself isn't asserted here (egw.image()'s own image map isn't loaded
+		// in this test environment, so it resolves to null/empty) - only that the download link
+		// actually contains an <img>, not just the bare filename text.
+		const jmap = new MailJmap(createFakeApp());
+		const html = await fetchWrapperHtml(jmap);
+
+		const downloadLinkHtml = html.slice(html.indexOf('download="Invoice RE-2026-200.pdf"'));
+		assert.include(downloadLinkHtml.slice(0, downloadLinkHtml.indexOf('</a>')), '<img');
+	});
+
 	it("suppresses the browser's own native PDF viewer toolbar, so our download link is the only one visible", async() =>
 	{
 		// ralf, 2026-09-15, right after confirming the CSP fix above actually worked live:
