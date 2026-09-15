@@ -1532,6 +1532,13 @@ class Imap extends Jmap\Base
 	public static function filterToQuery(array $filter, bool $negate=false) : \Horde_Imap_Client_Search_Query
 	{
 		$query = new \Horde_Imap_Client_Search_Query();
+		// Without an explicit charset, Horde defaults header/text search terms to US-ASCII-only
+		// Data_Format classes and throws "String contains non-ASCII characters." on eg. umlauts
+		// (build() picks the format class from $this->_charset, see Horde_Imap_Client_Search_Query::
+		// build()'s $charset_get closure) - match Api\Mail::createIMAPFilter()'s existing pattern of
+		// setting UTF-8 on every query object, including recursive AND/OR sub-queries built below,
+		// since each is build()'d independently by the parent query's _buildAndOr().
+		$query->charset('UTF-8');
 
 		if (isset($filter['operator']))
 		{
