@@ -550,6 +550,22 @@ export class Et2HtmlArea extends Et2MarkdownEditMixin(Et2InputWidget(LitElement)
 		return normalizeFormatBlock(this.egw().preference("rte_formatblock", "common"));
 	}
 
+	/**
+	 * Legacy `rte_formatblock=customparagraph` used Enter for line breaks and Shift+Enter for
+	 * paragraphs (users composing entirely with line breaks, no <p> margin/spacing) - TinyMCE
+	 * models that as `newline_behavior: "invert"`. This getter existed for the TinyMCE 5->8
+	 * migration (43d0c91aed) but was dropped, apparently by accident, in a later "cleanup" pass
+	 * (1b0a40a1c8) - found live 2026-09-15 (ralf, relaying a real report): "wenn man ... Enter
+	 * drückt, dann entsteht ein neuer Absatz mit einem breiteren Abstand und wenn man Shift+Enter
+	 * drückt, dann springt es richtigerweise in die nächste Zeile -> sollte eigentlich umgekehrt
+	 * sein" (pressing Enter creates a new paragraph with wider spacing, Shift+Enter correctly
+	 * jumps to the next line - should actually be the other way round).
+	 */
+	protected get _newlineBehavior() : TinyMceConfig["newline_behavior"]
+	{
+		return this.egw().preference("rte_formatblock", "common") === "customparagraph" ? "invert" : "default";
+	}
+
 	protected get _toolbar() : string | false
 	{
 		return toolbarForMode(this._normalizedMode, this._requestedToolbarSetting, this.noToolbar, [...this._toolbarItems]);
@@ -813,6 +829,7 @@ export class Et2HtmlArea extends Et2MarkdownEditMixin(Et2InputWidget(LitElement)
 			block_formats: BLOCK_FORMATS,
 			// fix exiting a list with return get you to p, even if div (small paragraph) is selected
 			forced_root_block: this._defaultFormatBlock === 'div' ? 'div' : 'p',
+			newline_behavior: this._newlineBehavior,
 			content_style: editorContentStyle(api.preference.bind(api)),
 			convert_urls: false,
 			// setting p (and below also the preferred formatblock) to the user's font and -size preference
@@ -823,6 +840,7 @@ export class Et2HtmlArea extends Et2MarkdownEditMixin(Et2InputWidget(LitElement)
 			              `${api.webserverUrl}/api/js/tinymce/langs/${this._languageCode}.js`,
 			noneditable_class: "mceNonEditable",
 			paste_data_images: true,
+			paste_postprocess: (_editor, args) => this._stripPastedFont(args.node),
 			contextmenu: false,
 			image_advtab: true,
 			// TinyMCE's split UI mode hoists menus/popups out of scroll-clipped
@@ -836,6 +854,41 @@ export class Et2HtmlArea extends Et2MarkdownEditMixin(Et2InputWidget(LitElement)
 		};
 
 		return config;
+	}
+
+	/**
+	 * Strip a pasted element's own font-family/font-size (inline style, or legacy `<font
+	 * face=... size=...>`) so `content_style`'s own preference-driven body font takes over -
+	 * leaving every OTHER formatting (bold/italic, links, paragraphs, lists, alignment, color,
+	 * ...) untouched. Runs on the just-inserted fragment only (TinyMCE's own `paste_postprocess`
+	 * hook), never on content the user types/formats directly through the editor itself.
+	 *
+	 * Found live 2026-09-15 (a real customer report, relayed by ralf): "beim Einfügen von
+	 * kopierten Texten in den E-Mail-Editor übernimmt EGroupware nicht die für das E-Mail-Konto
+	 * voreingestellte Schriftart und Schriftgröße. Stattdessen bleibt die Formatierung des
+	 * kopierten Ausgangstextes erhalten" (pasting keeps the source's own font/size instead of
+	 * adopting the configured one) - TinyMCE's "Paste as text" already exists for users who want
+	 * to discard ALL source formatting, but that also drops links/lists/bold, which is why this
+	 * customer explicitly asked for a plain paste that keeps everything else.
+	 */
+	protected _stripPastedFont(node : HTMLElement) : void
+	{
+		const strip = (el : Element) : void =>
+		{
+			if(!(el instanceof HTMLElement))
+			{
+				return;
+			}
+			el.style.removeProperty("font-family");
+			el.style.removeProperty("font-size");
+			if(el.tagName === "FONT")
+			{
+				el.removeAttribute("face");
+				el.removeAttribute("size");
+			}
+		};
+		strip(node);
+		node.querySelectorAll("[style], font").forEach(strip);
 	}
 
 	/**
