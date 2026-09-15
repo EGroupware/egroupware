@@ -492,6 +492,9 @@ export class MailJmap
 	// selection - keyed by the base ("un"-stripped) action id used throughout mail/js/app.ts
 	private static readonly SYSTEM_FLAG_KEYWORDS : Record<string, string> = {read: '$seen', flagged: '$flagged'};
 	private static readonly QUERY_PAGE_SIZE = 500;
+	// see fetchForReply()'s own use of this - a nameless attachment part this tiny is boundary
+	// padding noise, never real content
+	private static readonly NAMELESS_ARTIFACT_MAX_SIZE = 16;
 	// RFC 8621 §4.1.3 header-property name for the MDN (read-receipt) prompt - matches
 	// JmapShim::MDN_HEADER_PROPERTY (mail/src/JmapShim.php), which echoes this same key back for
 	// local-shim accounts; a real JMAP server (Stalwart) does so natively per spec
@@ -3013,9 +3016,22 @@ export class MailJmap
 			// unless it's ALSO explicitly marked disposition=attachment - everything else server-set
 			// `attachments` lists (RFC 8621 §4.1.4, already excludes the primary text/html body) is
 			// a real attachment.
+			//
+			// A part with NO name AND only a couple bytes of content is never a real attachment -
+			// it's Apple Mail's own multipart-boundary padding artifact (a stray blank line dropped
+			// between pasted inline images), live-confirmed 2026-09-15 (ralf): a real message
+			// carried 2 such 2-byte text/plain parts, which showed up as blank, unlabeled rows in
+			// the forward compose's attachment list. A genuine attachment is never both nameless AND
+			// this tiny, so this can't false-positive on real content.
 			const attachments : JmapAttachment[] = (email.attachments || [])
 				.filter((a : any) => !(a.cid && /^image\//i.test(a.type || '')) || a.disposition === 'attachment')
-				.map((a : any) => ({blobId: a.blobId, name: a.name || '', type: a.type || 'application/octet-stream', size: a.size || 0}));
+				.filter((a : any) => a.name || (a.size || 0) >= MailJmap.NAMELESS_ARTIFACT_MAX_SIZE)
+				.map((a : any) => ({
+					blobId: a.blobId,
+					name: a.name || this.namelessAttachmentFallbackName(a),
+					type: a.type || 'application/octet-stream',
+					size: a.size || 0,
+				}));
 
 			// Autocrypt Level 1's own "skip peer-state-relevant processing entirely" rule for
 			// content this pure header-level parser can't itself judge as trustworthy: a
@@ -3054,6 +3070,32 @@ export class MailJmap
 			console.error('MailJmap.fetchForReply(): failed', e);
 			return null;
 		}
+	}
+
+	/**
+	 * A handful of common MIME (sub)type -> extension mappings, just for
+	 * namelessAttachmentFallbackName() below - NOT a general-purpose replacement for the server's
+	 * own authoritative Api\MimeMagic::mime2ext() (api/src/MimeMagic.php), which this client-side
+	 * fallback has no access to. Good enough for a cosmetic fallback label; an unlisted type just
+	 * gets no extension.
+	 */
+	private static readonly MIME_EXT_FALLBACK : Record<string, string> = {
+		'text/plain': 'txt', 'text/html': 'htm', 'application/pdf': 'pdf',
+		'image/jpeg': 'jpg', 'image/png': 'png', 'image/gif': 'gif', 'image/webp': 'webp',
+		'application/zip': 'zip', 'application/msword': 'doc',
+	};
+
+	/**
+	 * Same "Unbekannt_PartN[.ext]" convention AttachmentJmap::jmapAttachmentsToLegacy() already
+	 * uses for the message-VIEW path (mail/src/Ui/AttachmentJmap.php) - without this,
+	 * fetchForReply()'s own nameless-but-real attachments (rare: NAMELESS_ARTIFACT_MAX_SIZE already
+	 * drops the tiny boundary-padding kind) would show up as blank rows in the reply/forward
+	 * compose, inconsistent with how the same message's own display view labels them.
+	 */
+	private namelessAttachmentFallbackName(a : {partId? : string, type? : string}) : string
+	{
+		const ext = MailJmap.MIME_EXT_FALLBACK[(a.type || '').toLowerCase()];
+		return this.egw.lang('unknown') + '_Part' + (a.partId ?? '') + (ext ? '.' + ext : '');
 	}
 
 	/**
