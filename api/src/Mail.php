@@ -4737,7 +4737,13 @@ class Mail
 			{
 				$retUid = $source->copy($sourceFolder, $_foldername, array('ids'=>$uidsToMove,'move'=>$deleteAfterMove));
 			}
-			catch (exception $e)
+			// was catch(exception $e) - EGroupware\Api\Exception in this namespace (case-insensitive
+			// class-name resolution), which never actually caught a real IMAP failure: copy() throws
+			// the global-namespace Horde_Imap_Client_Exception, not an instance of THIS namespace's
+			// Exception class - so a genuine IMAP error (timeout, "connection closed unexpectedly", ...)
+			// propagated uncaught instead of the intended graceful error. Same root cause already
+			// documented+fixed elsewhere in this file, see getFolderObjects()'s own catch(\Throwable $e) comment.
+			catch (\Throwable $e)
 			{
 				error_log(__METHOD__.' ('.__LINE__.') '."Copying to Folder $_foldername failed! Error:".$e->getMessage());
 				throw new Exception("Copying to Folder $_foldername failed! Error:".$e->getMessage());
