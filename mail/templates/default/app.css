@@ -87,11 +87,6 @@ tr.unseen [id$="[date]"] {
 .status_img::before {
   vertical-align: initial;
 }
-.status_img svg.bi-forward {
-  display: inline-block;
-  width: 1em;
-  height: 1em;
-}
 tr.unseen .status_img.bi-circle-fill {
   color: var(--mail-color);
   display: block !important;

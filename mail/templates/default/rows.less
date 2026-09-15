@@ -82,6 +82,22 @@ tr.unseen [id$="[date]"] {
 	width: 1em;
 	height: 1em;
 }
+// bi-forward.svg is a local, hand-mirrored copy of bootstrap-icons' own "reply" (bootstrap has no
+// fitting "forward" icon - ralf, 2026-09-15) - unlike a real bootstrap-icons name (reply,
+// reply-all, paperclip, ...), which Et2Image.render() renders via a CSS-class/webfont-style
+// mechanism with uniform sizing built in, this local file is raw-inlined instead
+// (Et2Image.ts's own `url.match(/\/bi-.*\.svg/)` branch), landing in the DOM as a genuine <svg>
+// element - which computes to `display: inline` by default, same as plain text - width/height
+// have no effect on a display:inline, non-replaced box per the CSS box model, which is why it
+// rendered at an arbitrary ~6.5px intrinsic size instead of matching the other status icons'
+// uniform 1em box. Must live HERE (rows.less/rows.css), not app.less/app.css - the new
+// Et2Nextmatch renders rows into its own shadow-DOM context that only adopts THIS stylesheet,
+// confirmed live 2026-09-15 (ralf: "it needs to be in the rows css ... otherwise it's ignored").
+.status_img svg.bi-forward {
+	display: inline-block !important;
+	width: 1em !important;
+	height: 1em !important;
+}
 
 tr.unseen .status_img.bi-circle-fill {
 	color: var(--mail-color);
