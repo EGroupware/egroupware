@@ -4655,22 +4655,35 @@ class Mail
 		//error_log(__METHOD__.__LINE__."$_targetProfileID !== ".array2string($source->ImapServerId));
 		if (isset($_targetProfileID) && $_targetProfileID !== $source->ImapServerId)
 		{
-			$sourceFolder = $source->getMailbox($sourceFolder);
-			$source->openMailbox($sourceFolder);
-			$uidsToFetch = new Horde_Imap_Client_Ids();
-			$uidsToFetch->add($_messageUID);
-			$fquery = new Horde_Imap_Client_Fetch_Query();
-			$fquery->flags();
-			$fquery->headerText(array('peek'=>true));
-			$fquery->fullText(array('peek'=>true));
-			$fquery->imapDate();
-			$headersNew = $source->fetch($sourceFolder, $fquery, array(
-				'ids' => $uidsToFetch,
-			));
+			// DIAGNOSTIC-LOGGING (ticket #124401): this whole branch used to have NO try/catch at
+			// all - any real failure (eg. the target-folder-resolution issue tracked in this ticket)
+			// propagated as a raw, uncaught exception straight to the user instead of the graceful
+			// message the same-account branch below already gives (see that branch's own
+			// catch(\Throwable $e) comment for the identical, already-fixed sibling bug). Logging the
+			// source/target profile+folder context here too, since a bare exception message alone
+			// (eg. "Could not open mailbox \"\".") doesn't say which account/folder was involved.
+			error_log(__METHOD__.' ('.__LINE__.') '.'cross-account move/copy: sourceProfileID='.
+				array2string($_sourceProfileID).' sourceFolder='.array2string($sourceFolder).
+				' targetProfileID='.array2string($_targetProfileID).' targetFolder='.array2string($_foldername).
+				' deleteAfterMove='.array2string($deleteAfterMove));
+			try
+			{
+				$sourceFolder = $source->getMailbox($sourceFolder);
+				$source->openMailbox($sourceFolder);
+				$uidsToFetch = new Horde_Imap_Client_Ids();
+				$uidsToFetch->add($_messageUID);
+				$fquery = new Horde_Imap_Client_Fetch_Query();
+				$fquery->flags();
+				$fquery->headerText(array('peek'=>true));
+				$fquery->fullText(array('peek'=>true));
+				$fquery->imapDate();
+				$headersNew = $source->fetch($sourceFolder, $fquery, array(
+					'ids' => $uidsToFetch,
+				));
 
-			//error_log(__METHOD__.' ('.__LINE__.') '.' Sourceserver:'.$source->ImapServerId.' mailheaders:'.array2string($headersNew));
+				//error_log(__METHOD__.' ('.__LINE__.') '.' Sourceserver:'.$source->ImapServerId.' mailheaders:'.array2string($headersNew));
 
-			if (is_object($headersNew)) {
+				if (is_object($headersNew)) {
 				$c=0;
 				$retUid = new Horde_Imap_Client_Ids();
 				// we copy chunks of 5 to avoid too much memory and/or server stress
@@ -4729,6 +4742,12 @@ class Mail
 					$this->deleteMessages($_messageUID, $sourceFolder, $_forceDeleteMethod='remove_immediately');
 					$this->icServer = $remember;
 				}
+			}
+			}
+			catch (\Throwable $e)
+			{
+				error_log(__METHOD__.' ('.__LINE__.') '."Copying to Folder $_foldername failed! Error:".$e->getMessage());
+				throw new Exception("Copying to Folder $_foldername failed! Error:".$e->getMessage());
 			}
 		}
 		else
