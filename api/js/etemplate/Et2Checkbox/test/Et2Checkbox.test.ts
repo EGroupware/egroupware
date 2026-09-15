@@ -73,7 +73,7 @@ describe("Checkbox widget", () =>
 
 // Et2Checkbox's value is a boolean (or custom selected/unselected values) - "no value" is false,
 // not "". Its label is its own text content (the default slot, set via a direct-textContent
-// override of the normal label mechanism), not a form-control-label part - like Et2Switch.
+// override of the normal label mechanism), not a form-control-label part.
 inputBasicTests(before, true, "input", {
 	emptyValue: false,
 	checkEmptyDisplay: () => {},

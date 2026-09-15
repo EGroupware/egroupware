@@ -37,11 +37,29 @@ describe("Switch widget", () =>
 		assert.instanceOf(element, Et2Switch);
 	});
 
-	it('has a label', () =>
+	it('has a label', async() =>
 	{
 		element.set_label("Label set");
+		await element.updateComplete;
 
 		assert.equal(element.textContent.trim(), "Label set");
+	})
+
+	it("names the control for assistive technology", async() =>
+	{
+		element.set_label("Label set");
+		await element.updateComplete;
+
+		// The label is not inside the <label> Shoelace wraps around its <input>, so the input
+		// only gets an accessible name if we point it at the label ourselves.  Without that the
+		// switch has none at all, whatever label it was given.
+		const input = element.shadowRoot.querySelector("input");
+		const labelPart = element.shadowRoot.querySelector('[part~="form-control-label"]');
+
+		assert.exists(labelPart, "no form-control-label part rendered");
+		assert.equal(input.getAttribute("aria-labelledby"), labelPart.id,
+			"input is not pointed at the label part"
+		);
 	})
 
 	it("click happens", () =>
@@ -92,14 +110,40 @@ describe("Switch widget", () =>
 		expect(label).to.exist;
 		expect(label.textContent).to.equal("Off label");
 	});
+
+	it("keeps the label and toggleOn / toggleOff at the same time", async() =>
+	{
+		// Both live in the light DOM, and the toggle text used to be re-rendered in a way that
+		// threw the label's slotted span out with it
+		element.toggleOn = "On label";
+		element.toggleOff = "Off label";
+		await element.updateComplete;
+
+		assert.equal(element.querySelector(".label .on")?.textContent, "On label");
+		assert.equal(element.querySelector(".label .off")?.textContent, "Off label");
+		assert.equal(element.querySelector('[slot="label"]')?.textContent, "I'm a switch",
+			"label went missing when toggleOn / toggleOff were set"
+		);
+	});
+
+	it("marks the toggle text on / off with the value", async() =>
+	{
+		element.toggleOn = "On label";
+		element.value = true;
+		await element.updateComplete;
+
+		assert.isTrue(element.querySelector(".label").classList.contains("on"));
+
+		element.value = false;
+		await element.updateComplete;
+
+		assert.isFalse(element.querySelector(".label").classList.contains("on"));
+	});
 });
 
 // Et2Switch's value is a boolean (checked), not a string - "no value" is false, not "". There's
-// no plain-text display of the checked state to check either, it's a physical toggle. Its label
-// is its own text content (default slot), not a separate form-control-label part - like a
-// checkbox, not a text input.
+// no plain-text display of the checked state to check either, it's a physical toggle.
 inputBasicTests(before, true, "input", {
 	emptyValue: false,
-	checkEmptyDisplay: () => {},
-	skip: ["label"]
+	checkEmptyDisplay: () => {}
 });
