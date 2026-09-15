@@ -180,6 +180,21 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	}
 
 	/**
+	 * Clear the umask while running as root, so files/dirs we create get the mode we ask for
+	 *
+	 * Anything root creates here has to stay usable by the webserver, which runs as a different user: an umask of
+	 * eg. 0022 turns a requested 0777 hash-dir into a root-owned 0755 one and a 0666 file into a 0644 one, both of
+	 * which the webserver can only read, never write - and a single such hash-dir breaks EVERY later upload whose
+	 * fs_id hashes into it, with no error beyond fopen() failing.
+	 *
+	 * @return int|null previous umask to restore, or null if we are not root and nothing was changed
+	 */
+	protected static function rootUmask() : ?int
+	{
+		return function_exists('posix_getuid') && !posix_getuid() ? umask(0) : null;
+	}
+
+	/**
 	 * This method is called immediately after your stream object is created.
 	 *
 	 * @param string $url URL that was passed to fopen() and that this object is expected to retrieve
@@ -256,10 +271,19 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			// create the hash-dirs, if they not yet exist
 			elseif(!file_exists($fs_dir=Vfs::dirname(self::_fs_path($this->opened_fs_id))))
 			{
-				$umaskbefore = umask();
-				if (self::LOG_LEVEL > 1) error_log(__METHOD__." about to call mkdir for $fs_dir # Present UMASK:".decoct($umaskbefore)." called from:".function_backtrace());
-				// if running as root eg. via (docker exec) filemanager/cli.php do NOT create dirs not readable by webserver
-				self::mkdir_recursive($fs_dir,function_exists('posix_getuid') && !posix_getuid() ? 0777 : 0700,true);
+				if (self::LOG_LEVEL > 1) error_log(__METHOD__." about to call mkdir for $fs_dir # Present UMASK:".decoct(umask())." called from:".function_backtrace());
+				// if running as root eg. via (docker exec) filemanager/cli.php do NOT create dirs the webserver can not use:
+				// the requested 0777 only survives with an umask of 0, otherwise eg. the usual 0022 silently makes them
+				// root-owned 0755, which the webserver can traverse but never create the next hash-dir or file in
+				$umask_before = self::rootUmask();
+				try
+				{
+					self::mkdir_recursive($fs_dir,isset($umask_before) ? 0777 : 0700,true);
+				}
+				finally
+				{
+					if (isset($umask_before)) umask($umask_before);
+				}
 			}
 		}
 		// check if opened file is a directory
@@ -314,16 +338,20 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		{
 			if (self::LOG_LEVEL > 1) error_log(__METHOD__." fopen (may create a directory? mkdir) ($this->opened_fs_id,$mode,$options)");
 			// if creating a new file as root eg. via (docker exec) filemanager/cli.php do NOT create files unreadable by webserver
-			if (!empty($new_file) && function_exists('posix_getuid') && !posix_getuid())
+			$umask_before = !empty($new_file) ? self::rootUmask() : null;
+			try
 			{
-				umask(0666);
+				if (!($this->opened_stream = fopen(self::_fs_path($this->opened_fs_id),$mode)) && $new_file)
+				{
+					// delete db entry again, if we are not able to open a new(!) file
+					unset($stmt);
+					$stmt = self::$pdo->prepare('DELETE FROM '.self::TABLE.' WHERE fs_id=:fs_id');
+					$stmt->execute(array('fs_id' => $this->opened_fs_id));
+				}
 			}
-			if (!($this->opened_stream = fopen(self::_fs_path($this->opened_fs_id),$mode)) && $new_file)
+			finally
 			{
-				// delete db entry again, if we are not able to open a new(!) file
-				unset($stmt);
-				$stmt = self::$pdo->prepare('DELETE FROM '.self::TABLE.' WHERE fs_id=:fs_id');
-				$stmt->execute(array('fs_id' => $this->opened_fs_id));
+				if (isset($umask_before)) umask($umask_before);
 			}
 		}
 		if ($mode[0] == 'a')	// append modes: a, a+
