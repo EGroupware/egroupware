@@ -735,7 +735,14 @@ export const SelectSearchMixin = dedupeMixin(<T extends Constructor<LitElement &
 		
 		_keepSelectedRemote()
 		{
-			this.select.querySelectorAll("[aria-selected=true].remote").forEach((node) =>
+			// Not filtering to ".remote" here: which currently-selected option's data actually came
+			// from a search (and so needs saving before the next search wipes _searchResults) is
+			// already decided below, by matching against _searchResults itself - not by trusting the
+			// rendered node's own class, which can lag the option data (eg. CalendarOwner's
+			// _optionTemplate() can render a node before processResults()'s own dedup-by-value
+			// settles which SelectOption object "wins" and carries the "remote" class), silently
+			// losing an already-picked participant on the next search.
+			this.select.querySelectorAll("[aria-selected=true]").forEach((node) =>
 			{
 				const value = node.value.replaceAll("___", " ");
 				if(!node.selected || this._selected_remote.some(o => o.value == value))

@@ -19,10 +19,12 @@ import {
 	egwStub,
 	findOption,
 	hasSearchUI,
+	pickOption,
 	searchFor,
 	searchKey,
 	searchReady,
 	searchValue,
+	tagValues,
 	typeInSearch,
 	visibleOptionValues
 } from "./helpers";
@@ -484,5 +486,97 @@ describe("Missing options", () =>
 
 		// Note: comes back null rather than "", pinning current behaviour
 		assert.isNotOk(element.value, "Unresolvable value was kept");
+	});
+});
+
+describe("Multi-select across searches", () =>
+{
+	afterEach(() => { window.egw.request = egwStub.request; });
+
+	/**
+	 * Baseline: in the ordinary case (rendered <sl-option> node's own class matches its
+	 * SelectOption data), picking a remote result then searching again for someone else already
+	 * kept the first pick, with or without the fix below - this just pins that this harness's
+	 * happy path was never broken.
+	 */
+	it("keeps a picked remote result after a second, different search", async() =>
+	{
+		const request = sinon.stub();
+		request.onCall(0).returns(Promise.resolve([{value: "alice", label: "Alice"}]));
+		request.onCall(1).returns(Promise.resolve([{value: "bob", label: "Bob"}]));
+		window.egw.request = request;
+
+		const element = await makeSelect(`label="Participants" multiple="true" search="true" searchUrl="test"`, '');
+		await searchReady(element);
+
+		await searchFor(element, "alice");
+		await pickOption(element, "alice");
+		element.clearSearch();
+		await element.updateComplete;
+
+		await searchFor(element, "bob");
+		await pickOption(element, "bob");
+
+		assert.includeMembers(tagValues(element), ["alice", "bob"],
+			"First pick was lost when searching for and picking a second participant");
+	});
+
+	/**
+	 * Regression test for a bug reported from the calendar participants field
+	 * (et2-calendar-owner: multiple=true + searchUrl): picking a first remote search result, then
+	 * searching for and picking someone else, silently dropped the first pick - only the second
+	 * one survived.
+	 *
+	 * Root cause: _keepSelectedRemote() (SelectSearchMixin.ts) only carried an already-picked
+	 * option over into the next search (which resets _searchResults) if the rendered <sl-option>
+	 * DOM node still had a ".remote" CSS class. Live, in CalendarOwner that class was missing from
+	 * the node actually bound in the DOM at render time - confirmed by inspecting the live page:
+	 * the node's own `.option` data had no "remote" class even though the current SelectOption for
+	 * that value did, ie. the rendered node's data had desynced from processResults()'s own
+	 * dedup-by-value (SearchMixin.ts), which can keep an earlier, non-"remote"-tagged copy of a
+	 * SelectOption instead of the one _addRemoteResults() just tagged. This test reproduces that
+	 * exact desync directly - stripping the "remote" class from the search-result entry *before*
+	 * it is rendered and picked, matching what was observed live - rather than relying on hitting
+	 * the underlying dedup race's exact timing, which this harness's fast, synchronous request
+	 * stub does not reproduce on its own (confirmed: the "obvious" version of this test, picking
+	 * normally with no forced desync, passed even with the bug still in place).
+	 *
+	 * Fixed by dropping the ".remote" requirement: the existing by-value match inside
+	 * _keepSelectedRemote() already scopes it to search results correctly, without needing the
+	 * class as a second signal.
+	 *
+	 * Pass criteria: even with the desync forced, the first pick survives the second search.
+	 * Verified to fail (first pick lost, "Invalid option 'alice' removed" warning logged) against
+	 * the pre-fix ".remote"-filtered querySelectorAll.
+	 */
+	it("keeps a picked remote result whose rendered node has desynced from its 'remote' class", async() =>
+	{
+		const request = sinon.stub();
+		request.onCall(0).returns(Promise.resolve([{value: "alice", label: "Alice"}]));
+		request.onCall(1).returns(Promise.resolve([{value: "bob", label: "Bob"}]));
+		window.egw.request = request;
+
+		const element = await makeSelect(`label="Participants" multiple="true" search="true" searchUrl="test"`, '');
+		await searchReady(element);
+
+		await searchFor(element, "alice");
+
+		// Force the desync confirmed live: the SelectOption actually bound to the rendered node
+		// never got the "remote" class in the first place (eg. because processResults()'s dedup
+		// kept an earlier, untagged copy), before the user ever picks it.
+		const aliceEntry = (<any>element)._searchResults.find(o => o.value == "alice");
+		delete aliceEntry.class;
+		element.requestUpdate();
+		await element.updateComplete;
+
+		await pickOption(element, "alice");
+		element.clearSearch();
+		await element.updateComplete;
+
+		await searchFor(element, "bob");
+		await pickOption(element, "bob");
+
+		assert.includeMembers(tagValues(element), ["alice", "bob"],
+			"First pick was lost once its rendered node's 'remote' class desynced from its data");
 	});
 });
