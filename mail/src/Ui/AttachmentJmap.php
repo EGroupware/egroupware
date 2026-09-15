@@ -184,6 +184,15 @@ class AttachmentJmap
 							// for a Stalwart opaque-id row) resolution when the caller didn't need it
 							'mailbox' => base64_encode($mailbox ?? ''),
 							'smime_type' => $value['smime_type'],
+							// same JMAP-native fast path fetchBlobBytes() already gives mime_data/
+							// downloadOneAsFile above - without it, getAttachment() falls back to a
+							// classic $uid/$part IMAP fetch that fatals outright for a real JMAP
+							// account's opaque row (tracker #124541 - "open this attachment" produced
+							// either a hard error or a cryptic fallback filename, unlike direct
+							// download, which already had this fast path)
+							'blobId' => $value['blobId'] ?? null,
+							'name' => $attachmentHTML[$key]['filename'],
+							'type' => $value['mimeType'],
 						], $mode);
 						$windowName = 'displayAttachment_'.($uid ?? $rowID);
 						$reg = '800x600';
@@ -214,6 +223,10 @@ class AttachmentJmap
 							// forcing $mailbox's resolution
 							'mailbox' => base64_encode($mailbox ?? ''),
 							'smime_type' => $value['smime_type'],
+							// see the TEXT/VCARD case above's own comment - same JMAP-native fast path
+							'blobId' => $value['blobId'] ?? null,
+							'name' => $attachmentHTML[$key]['filename'],
+							'type' => $value['mimeType'],
 						];
 						$linkView = "window.location.href = '".Api\Egw::link('/index.php', $linkData)."';";
 						break;
