@@ -873,7 +873,13 @@ class mail_hooks
 		// its own blob: grant same as object-src above, for the identical reason.
 		Api\Header\ContentSecurityPolicy::add('frame-src', ['blob:']);
 
-		$sources = [];
+		// Safari/WebKit categorizes the <embed>'s own blob: fetch under connect-src, not
+		// object-src (found live 2026-09-15, ralf, Safari): "Refused to connect to blob:...
+		// because it does not appear in the connect-src directive" - added directly to the
+		// returned $sources below (this method's actual purpose), not via a separate add() call
+		// like object-src/frame-src above, since connect-src's own hook-hosting call already
+		// merges whatever this function returns.
+		$sources = ['blob:'];
 		foreach (Mail\Account::search(true, 'params') as $params)
 		{
 			if (($params['acc_imap_type'] ?? null) !== Mail\Imap\Stalwart::class ||
