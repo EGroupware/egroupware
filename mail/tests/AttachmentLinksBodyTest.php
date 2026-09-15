@@ -539,6 +539,14 @@ class AttachmentLinksBodyTest extends Api\AppTest
 	 */
 	public function testExpirationDateSurvivesRealShareCreation() : void
 	{
+		// an expiration date always routes through stylite_sharing::create() (ComposeMessageBuilder::
+		// _getAttachmentLinks()), an EPL-only class not present on a community-only checkout (eg. the
+		// public GitHub CI runner)
+		if (!class_exists('stylite_sharing'))
+		{
+			$this->markTestSkipped('stylite_sharing (EPL) not installed in this environment');
+		}
+
 		$blobId = $this->writeUploadFixture('phpunit expiration-date attachment content');
 
 		$compose = $this->compose();
