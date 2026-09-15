@@ -736,7 +736,30 @@ class Compose
 	 *  a JMAP-mode body never contains classic's own placeholder markup - kept for parity anyway) -
 	 *  unchanged if filemode is 'attach' or nothing could be resolved
 	 */
-	public function ajax_getAttachmentLinksBody(array $params) : string
+	/**
+	 * Ajax entry point - MailCompose.currentEmailFields() (mail/js/compose.ts) `await`s and uses
+	 * this call's return value directly (`body = await this.egw.request(...)`), so unlike a
+	 * fire-and-forget call (ajax_integrateSent() below), the result actually has to reach the
+	 * client. Found live 2026-09-15 (a real user: "Anhänge 'zum downloaden' funktionieren nicht
+	 * mehr" - a share-link attachment silently stopped working): every OTHER `ajax_` method in
+	 * this class sends its result via `Api\Json\Response::get()->data(...)`, but this one - alone
+	 * of the group - was still just doing a plain PHP `return $body;`. Json\Request::handleRequest()
+	 * invokes an ajax_ method via `call_user_func_array()` and discards whatever it returns; only
+	 * an explicit Response::data() call actually reaches the client. So this always resolved to
+	 * `undefined` in JS, `body` in currentEmailFields() became `undefined`, AND its very next line
+	 * unconditionally cleared `attachments = undefined` regardless - a "download link" send lost
+	 * both the real attachments AND the link, silently.
+	 */
+	public function ajax_getAttachmentLinksBody(array $params) : void
+	{
+		Api\Json\Response::get()->data($this->buildAttachmentLinksBody($params));
+	}
+
+	/**
+	 * Pure/testable half of ajax_getAttachmentLinksBody() above - see its own docblock for why the
+	 * ajax entry point is only ever a thin Response::data() wrapper around this.
+	 */
+	protected function buildAttachmentLinksBody(array $params) : string
 	{
 		$body = (string)($params['body'] ?? '');
 		$filemode = (string)($params['filemode'] ?? Vfs\Sharing::ATTACH);
