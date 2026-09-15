@@ -6137,6 +6137,7 @@ export class MailApp extends EgwApp
 		if (messages['all'])
 		{
 			return this.jmap.moveAllMatching(this.buildJmapQuery(messages), targetProfileID, targetFolderPath)
+				.then(() => this.showMoveOrCopyMessage('move', messages, targetFolderPath))
 				.catch((e) => this.handleJmapError(e, classicMove));
 		}
 		if (!Array.isArray(messages.msg) || !messages.msg.length)
@@ -6149,7 +6150,35 @@ export class MailApp extends EgwApp
 		{
 			const references = expandedIds.map((id : string) => this.jmap.messageReference(id));
 			return this.jmap.moveMessages(references, targetProfileID, targetFolderPath);
-		}).catch((e) => this.handleJmapError(e, classicMove));
+		}).then(() => this.showMoveOrCopyMessage('move', messages, targetFolderPath))
+			.catch((e) => this.handleJmapError(e, classicMove));
+	}
+
+	/**
+	 * Client-side equivalent of MessageActionHandler::copyMessages()'s own success message
+	 * ("Moved %1 message(s) from %2 to %3."/"Copied ..."), shown only after the fast JMAP move/copy
+	 * path (tryJmapMove()/tryJmapCopy()) itself actually succeeds - the classic server-side call
+	 * already shows its own equivalent, embedded in its response (Api\Json\Response::message()),
+	 * so this must never also fire for a classic-fallback resolution (would double it up). Reuses
+	 * the exact same mail/lang/egw_en.lang phrase keys the PHP side has always used, so nothing new
+	 * needs translating - found live 2026-09-15 (ralf: "beim Verschieben von E-Mails in andere
+	 * Ordner erscheint rechts unten nicht mehr der Hinweis wohin es verschoben wurde"): the fast
+	 * JMAP path resolves silently, skipping that server-generated message entirely for the now-common
+	 * case where it applies.
+	 *
+	 * @param kind 'move' or 'copy'
+	 * @param messages the same {msg, all, ...} shape callMove()/callCopy() already built
+	 * @param targetFolderPath destination folder path, as tryJmapMove()/tryJmapCopy() already
+	 *  extracted it from their own "profileID::folderPath" target string
+	 */
+	private showMoveOrCopyMessage(kind : 'move' | 'copy', messages : any, targetFolderPath : string) : void
+	{
+		const count = messages['all'] ? this.egw.lang('all') : (Array.isArray(messages.msg) ? messages.msg.length : 1);
+		const currentFolderValue : string = this.et2.getWidgetById('nm[foldertree]')?.getValue() || '';
+		const sepIndex = currentFolderValue.indexOf('::');
+		const sourceFolderPath = sepIndex > 0 ? currentFolderValue.substring(sepIndex + 2) : currentFolderValue;
+		const phraseKey = kind === 'move' ? 'moved %1 message(s) from %2 to %3' : 'copied %1 message(s) from %2 to %3';
+		this.egw.message(this.egw.lang(phraseKey, count, this.egw.lang(sourceFolderPath), this.egw.lang(targetFolderPath)), 'success');
 	}
 
 	/**
@@ -6297,6 +6326,7 @@ export class MailApp extends EgwApp
 		if (messages['all'])
 		{
 			return this.jmap.copyAllMatching(this.buildJmapQuery(messages), targetProfileID, targetFolderPath)
+				.then(() => this.showMoveOrCopyMessage('copy', messages, targetFolderPath))
 				.catch((e) => this.handleJmapError(e, classicCopy));
 		}
 		if (!Array.isArray(messages.msg) || !messages.msg.length)
@@ -6309,7 +6339,8 @@ export class MailApp extends EgwApp
 		{
 			const references = expandedIds.map((id : string) => this.jmap.messageReference(id));
 			return this.jmap.copyMessages(references, targetProfileID, targetFolderPath);
-		}).catch((e) => this.handleJmapError(e, classicCopy));
+		}).then(() => this.showMoveOrCopyMessage('copy', messages, targetFolderPath))
+			.catch((e) => this.handleJmapError(e, classicCopy));
 	}
 
 	/**
