@@ -354,6 +354,10 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 	@property({type: Boolean})
 	freeMinuteEntry : boolean;
 
+	// Backing storage for minDate / maxDate, which are accessors rather than plain properties
+	private __minDate : Date | "" = "";
+	private __maxDate : Date | "" = "";
+
 	private _boundTooltipElements : HTMLElement[] = [];
 
 	// Currently running init(), init() is async and can be called multiple times
@@ -860,10 +864,16 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		// If they typed a valid date/time, try to update flatpickr
 		if(parsedDate)
 		{
-			const formattedDate = flatpickr.formatDate(parsedDate, this.getOptions().altFormat)
-			if(value === formattedDate &&
+			// What the user sees (their dateformat preference) vs. what we store and submit.
+			// The et2-textbox holds the stored form: its value is what our own value getter
+			// reads back, so writing the displayed form here would give a typed-in date a
+			// different value than the same day picked from the calendar.  What the user typed
+			// stays visible either way - that is flatpickr's separate altInput, not this.
+			const displayDate = flatpickr.formatDate(parsedDate, this.getOptions().altFormat);
+			const storedDate = flatpickr.formatDate(parsedDate, this.getOptions().dateFormat);
+			if(value === displayDate &&
 				// Avoid infinite loop of setting the same value back triggering another change
-				this._instance.input.value !== flatpickr.formatDate(parsedDate, this.getOptions().dateFormat))
+				this._instance.input.value !== storedDate)
 			{
 				try
 				{
@@ -876,10 +886,10 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 					this._instance.setDate(value, true, this._instance.config.altFormat);
 				}
 			}
-			if(this._inputNode.value !== formattedDate)
+			if(this._inputNode.value !== storedDate)
 			{
 				// Update the et2-textbox so it has current value for any (required) validation
-				this._inputNode.value = formattedDate;
+				this._inputNode.value = storedDate;
 				// @ts-ignore
 				this._inputNode.validate && (<Et2Textbox>this._inputNode).validate();
 				this.updateComplete.then(() =>
@@ -991,26 +1001,64 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		this.minDate = min;
 	}
 
-	set minDate(min : string | Date)
+	get min() : Date | ""
 	{
-		if(this._instance)
-		{
-			if(min)
-			{
-				// Handle timezone offset, flatpickr uses local time
-				let date = new Date(min);
-				let formatDate = new Date(date.valueOf() + date.getTimezoneOffset() * 60 * 1000);
-				this._instance.set("minDate", formatDate)
-			}
-			else
-			{
-				this._instance.set("minDate", "")
-			}
-		}
+		return this.minDate;
 	}
 
 	/**
-	 * Set the minimum allowed date
+	 * Earliest date the user is allowed to choose
+	 *
+	 * The same thing as minDate, under the name templates use.  Flatpickr calls it minDate, the
+	 * server-side widget calls it min, and both names have to work.
+	 */
+	@property({attribute: "min", noAccessor: true})
+	set min(min : string | Date)
+	{
+		this.minDate = min;
+	}
+
+	get max() : Date | ""
+	{
+		return this.maxDate;
+	}
+
+	/**
+	 * Latest date the user is allowed to choose
+	 *
+	 * @see min
+	 */
+	@property({attribute: "max", noAccessor: true})
+	set max(max : string | Date)
+	{
+		this.maxDate = max;
+	}
+
+	/**
+	 * Earliest date the user is allowed to choose, or "" for no limit
+	 *
+	 * Anything new Date() understands is accepted; something it cannot parse is treated as no
+	 * limit rather than becoming an Invalid Date the calendar would choke on.
+	 *
+	 * The value has to be kept here rather than handed straight to Flatpickr: the calendar is not
+	 * created until the widget is first shown (see init()), which is long after a template has set
+	 * its limits, so getOptions() reads these back when it eventually does get built.
+	 */
+	get minDate() : Date | ""
+	{
+		return this.__minDate;
+	}
+
+	set minDate(min : string | Date)
+	{
+		const old = this.__minDate;
+		this.__minDate = this._calendarDate(min);
+		this._instance?.set("minDate", this.__minDate);
+		this.requestUpdate("minDate", old);
+	}
+
+	/**
+	 * Set the maximum allowed date
 	 * @param {string | Date} max
 	 */
 	set_max(max : string | Date)
@@ -1018,22 +1066,39 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		this.maxDate = max;
 	}
 
+	/**
+	 * Latest date the user is allowed to choose, or "" for no limit
+	 *
+	 * @see minDate
+	 */
+	get maxDate() : Date | ""
+	{
+		return this.__maxDate;
+	}
+
 	set maxDate(max : string | Date)
 	{
-		if(this._instance)
+		const old = this.__maxDate;
+		this.__maxDate = this._calendarDate(max);
+		this._instance?.set("maxDate", this.__maxDate);
+		this.requestUpdate("maxDate", old);
+	}
+
+	/**
+	 * Our dates are UTC, Flatpickr works in local time
+	 *
+	 * @param date
+	 * @returns {Date | ""} "" for anything that isn't a usable date
+	 * @protected
+	 */
+	protected _calendarDate(date : string | Date) : Date | ""
+	{
+		if(!date)
 		{
-			if(max)
-			{
-				// Handle timezone offset, flatpickr uses local time
-				let date = new Date(max);
-				let formatDate = new Date(date.valueOf() + date.getTimezoneOffset() * 60 * 1000);
-				this._instance.set("maxDate", formatDate)
-			}
-			else
-			{
-				this._instance.set("maxDate", "")
-			}
+			return "";
 		}
+		const parsed = new Date(date);
+		return isNaN(parsed.valueOf()) ? "" : new Date(parsed.valueOf() + parsed.getTimezoneOffset() * 60 * 1000);
 	}
 
 

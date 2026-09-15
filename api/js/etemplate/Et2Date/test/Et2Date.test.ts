@@ -6,6 +6,7 @@ import {Et2Date} from "../Et2Date";
 import * as sinon from 'sinon';
 import {inputBasicTests} from "../../Et2InputWidget/test/InputBasicTests";
 import {Et2Textbox} from "../../Et2Textbox/Et2Textbox";
+import flatpickr from "flatpickr";
 
 let element : Et2Date;
 let egw_stub;
@@ -96,6 +97,118 @@ describe("Date widget", () =>
 		await elementUpdated(element);
 
 		assert.isFalse(changeSpy.called);
+	});
+
+	describe("Value format", () =>
+	{
+		// A date has two string forms: what the user sees (their dateformat preference) and what
+		// we store and submit.  Whichever way the user entered it, value has to be the second one
+		// or the same day gives two different values depending on how it was entered.
+		it("gives the stored format for a value that was set", async() =>
+		{
+			element.set_value("2026-11-05T00:00:00Z");
+			await elementUpdated(element);
+
+			assert.equal(element.get_value(), "2026-11-05T00:00:00Z");
+		});
+
+		it("gives the stored format for a date the user typed", async() =>
+		{
+			await element.init();
+			await elementUpdated(element);
+
+			// The visible field is flatpickr's altInput, which shows the dateformat preference
+			const input = element.findInputField();
+			input.value = "2026-11-05";
+			input.dispatchEvent(new Event("input", {bubbles: true}));
+			await elementUpdated(element);
+
+			assert.equal(input.value, "2026-11-05", "Stopped showing what the user typed");
+			assert.equal(element.get_value(), "2026-11-05T00:00:00Z");
+		});
+	});
+
+	describe("Minimum and maximum date", () =>
+	{
+		// Flatpickr isn't built until the widget is first shown, which is long after a template
+		// has applied its attributes - so the limits have to survive until then.
+		it("remembers a limit set before the calendar exists", async() =>
+		{
+			element.minDate = "2026-03-01T00:00:00Z";
+			element.maxDate = "2026-03-31T00:00:00Z";
+
+			assert.instanceOf(element.minDate, Date, "minDate was not kept");
+			assert.instanceOf(element.maxDate, Date, "maxDate was not kept");
+
+			await element.init();
+			await elementUpdated(element);
+
+			assert.equal(flatpickr.formatDate(element._instance.config.minDate, "Y-m-d"), "2026-03-01");
+			assert.equal(flatpickr.formatDate(element._instance.config.maxDate, "Y-m-d"), "2026-03-31");
+		});
+
+		// The attributes have to be on the element from the start, the way a template applies
+		// them - setting them on an element that has already rendered once is the easy case
+		it("takes a limit from an attribute", async() =>
+		{
+			const limited = await fixture<Et2Date>(html`
+                <et2-date mindate="2026-03-01T00:00:00Z" maxdate="2026-03-31T00:00:00Z"></et2-date>`);
+			await elementUpdated(limited);
+			await limited.init();
+			await elementUpdated(limited);
+
+			assert.equal(flatpickr.formatDate(limited._instance.config.minDate, "Y-m-d"), "2026-03-01");
+			assert.equal(flatpickr.formatDate(limited._instance.config.maxDate, "Y-m-d"), "2026-03-31");
+		});
+
+		// min / max is what a template says, minDate / maxDate is what flatpickr calls it
+		it("takes a limit from the min and max attributes a template uses", async() =>
+		{
+			const limited = await fixture<Et2Date>(html`
+                <et2-date min="2026-03-01T00:00:00Z" max="2026-03-31T00:00:00Z"></et2-date>`);
+			await elementUpdated(limited);
+			await limited.init();
+			await elementUpdated(limited);
+
+			assert.equal(flatpickr.formatDate(limited._instance.config.minDate, "Y-m-d"), "2026-03-01");
+			assert.equal(flatpickr.formatDate(limited._instance.config.maxDate, "Y-m-d"), "2026-03-31");
+		});
+
+		it("passes a limit on to a calendar that already exists", async() =>
+		{
+			await element.init();
+			await elementUpdated(element);
+
+			element.set_min("2026-03-01T00:00:00Z");
+			element.set_max("2026-03-31T00:00:00Z");
+
+			assert.equal(flatpickr.formatDate(element._instance.config.minDate, "Y-m-d"), "2026-03-01");
+			assert.equal(flatpickr.formatDate(element._instance.config.maxDate, "Y-m-d"), "2026-03-31");
+		});
+
+		it("clears a limit", async() =>
+		{
+			element.minDate = "2026-03-01T00:00:00Z";
+			await element.init();
+			await elementUpdated(element);
+
+			element.set_min("");
+
+			assert.equal(element.minDate, "");
+			assert.notOk(element._instance.config.minDate);
+		});
+
+		it("ignores something that is not a date", async() =>
+		{
+			element.minDate = "Not a date";
+
+			assert.equal(element.minDate, "", "Kept an invalid date");
+
+			await element.init();
+			await elementUpdated(element);
+
+			assert.notOk(element._instance.config.minDate);
+		});
 	});
 
 	const tz_list = [
