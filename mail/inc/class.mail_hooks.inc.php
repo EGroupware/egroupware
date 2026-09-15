@@ -850,6 +850,29 @@ class mail_hooks
 	 */
 	public static function csp_connect_src()
 	{
+		// Piggybacking object-src: blob: onto this ALREADY-registered hook, rather than registering
+		// a new csp-object-src one - a new hook location needs an admin to re-register hooks
+		// (Admin > Configuration/Hooks) before it does anything at all on an EXISTING install,
+		// which this fix can't assume happened (ralf, 2026-09-15). Needed for
+		// MailJmap.wrapPdfViewerWithDownload()'s (mail/js/jmap.ts) <embed> to load its own blob:
+		// content at all - that wrapper page is itself a blob: document (opened when clicking to
+		// view a PDF attachment on a JMAP-native/shim account), which INHERITS the CSP of
+		// whichever real page navigated to it; object-src is otherwise never set at all anywhere,
+		// falling back to the global default-src 'none' and blocking the embed outright. Found
+		// live 2026-09-15 (ralf): "Loading plugin data from 'blob:...' violates ... default-src
+		// 'none' ... object-src was not explicitly set". CSP is only actually enforced from the
+		// very FIRST top-level page load of a session - mail's own later menuaction calls run via
+		// AJAX template-fetches, far too late to affect an already-loaded document's enforced
+		// policy - which is why this needs to be a hook (guaranteed to run on that first load) at
+		// all, the same reason this connect-src grant already was one.
+		Api\Header\ContentSecurityPolicy::add('object-src', ['blob:']);
+		// Et2Description.wrapLink()'s <a target="..."> for this same attachment link apparently
+		// doesn't always end up a genuine new top-level tab (found live 2026-09-15, ralf: the very
+		// next CSP violation was frame-src, not a second object-src one) - whatever the exact
+		// widget/template wiring, the wrapper page can end up navigated as a FRAME too, which needs
+		// its own blob: grant same as object-src above, for the identical reason.
+		Api\Header\ContentSecurityPolicy::add('frame-src', ['blob:']);
+
 		$sources = [];
 		foreach (Mail\Account::search(true, 'params') as $params)
 		{
