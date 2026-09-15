@@ -514,6 +514,12 @@ jobs:
               -e EGW_EXTRA_APP_DIRS="$EGW_EXTRA_APP_DIRS" \
               -e EGW_INSTALLED_APPS="$INSTALLED" \
               -w "$EGW_SRC_DIR" egroupware php -r '
+                // A setup.inc.php is not a plain data file: it may call into classes of the app it
+                // describes while building $setup_info. Register the EGroupware autoloader so
+                // those resolve, and still catch whatever a not-yet-installed app throws - this
+                // check only emits warnings, so it must never be the thing that fails the job.
+                // NB: no apostrophes below, the whole script is a single-quoted shell string.
+                require "api/src/autoload.php";
                 $installed = preg_split("/\s+/", trim(getenv("EGW_INSTALLED_APPS")), -1, PREG_SPLIT_NO_EMPTY);
                 $missing = 0;
                 foreach (preg_split("/\s+/", trim(getenv("EGW_EXTRA_APP_DIRS")), -1, PREG_SPLIT_NO_EMPTY) as $app)
@@ -521,7 +527,13 @@ jobs:
                     $file = "$app/setup/setup.inc.php";
                     if (!file_exists($file)) continue;
                     $setup_info = [];
-                    include $file;
+                    try {
+                        include $file;
+                    }
+                    catch (\Throwable $e) {
+                        fwrite(STDERR, "::warning::could not read $file to check its dependencies: ".$e->getMessage()."\n");
+                        continue;
+                    }
                     foreach ($setup_info[$app]["depends"] ?? [] as $dep)
                     {
                         $name = $dep["appname"];
