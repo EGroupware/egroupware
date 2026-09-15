@@ -216,30 +216,43 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 		}
 		else if(this.fromElement && this.toElement)
 		{
-			if(typeof new_value == "string")
-			{
-				// Relative -> absolute
-				new_value = Et2DateRange.relativeToAbsolute(new_value);
+			// Relative -> absolute
+			const range : { from : string | Date, to : string | Date } = typeof new_value == "string" ?
+				Et2DateRange.relativeToAbsolute(new_value) : new_value;
 
-			}
 			if(this.fromElement._instance?.config?.mode == "range")
 			{
-				this.fromElement._instance.setDate([new_value?.from, new_value?.to], true);
+				this.fromElement._instance.setDate([range?.from, range?.to], true);
 			}
 			else
 			{
-				this.fromElement.value = typeof new_value?.from == "string" ? new_value.from : (new_value?.from?.toJSON() || "");
-				this.toElement.value = typeof new_value?.to == "string" ? new_value.to : (new_value?.to?.toJSON() || "");
+				this.fromElement.value = typeof range?.from == "string" ? range.from : (range?.from?.toJSON() || "");
+				this.toElement.value = typeof range?.to == "string" ? range.to : (range?.to?.toJSON() || "");
 			}
 		}
 	}
 
-	public get absoluteValue() : { to : string, from : string }
+	public get absoluteValue() : { to : string | Date, from : string | Date }
 	{
-		return this.relative ? Et2DateRange.relativeToAbsolute(this.value) : this.value;
+		return this.relative ? Et2DateRange.relativeToAbsolute(<string>this.value) : <{
+			to : string,
+			from : string
+		}>this.value;
 	}
 
-	static relativeToAbsolute(date)
+	/**
+	 * Resolve a relative range name ("Last month") into the two dates it covers
+	 *
+	 * Each entry's from() is handed a copy of the reference day, and its to() is handed a copy of
+	 * the from date that was just computed - the end of a range is expressed as an offset from its
+	 * own start ("six days later", "the end of that month"), never from today.  Both get their own
+	 * copy because the functions mutate what they are given.
+	 *
+	 * @param date Name of the range, eg. "This week".  Unknown names give an empty range.
+	 * @param today Day to calculate from, defaults to the current date.  Only needed for testing.
+	 * @returns {{from: Date|string, to: Date|string}} Both empty strings if the name is unknown
+	 */
+	static relativeToAbsolute(date : string, today? : Date) : { from : Date | string, to : Date | string }
 	{
 		let absolute = {from: '', to: ''};
 		if(!date)
@@ -247,19 +260,23 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 			return absolute;
 		}
 		let relative = Et2DateRange.relative_dates.find(e => e.value.toLowerCase() == date.toLowerCase());
-		let tempDate = new Date();
-		let today = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(), 0, -tempDate.getTimezoneOffset(), 0);
-
-		Object.keys(absolute).forEach(k =>
+		if(!relative)
 		{
-			let value = today.toJSON();
-			if(relative && typeof relative[k] == "function")
-			{
-				absolute[k] = relative[k](new Date(value));
-			}
-		});
+			return absolute;
+		}
+		let reference = today;
+		if(!reference)
+		{
+			// Midnight today, but as UTC - the range functions all work in UTC
+			let tempDate = new Date();
+			reference = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(), 0, -tempDate.getTimezoneOffset(), 0);
+		}
 
-		return absolute;
+		const from = relative.from(new Date(reference));
+		return {
+			from: from,
+			to: typeof relative.to == "function" ? relative.to(new Date(from)) : new Date(from)
+		};
 	}
 
 	// Class Constants
@@ -279,7 +296,7 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 				date.setUTCDate(date.getUTCDate() - 1);
 				return date;
 			},
-			to: ''
+			to(date) {return date;}
 		},
 		{
 			label: egw.lang ? egw.lang("This week") : "This week",
@@ -323,8 +340,9 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 			value: 'Last month',
 			from(date)
 			{
-				date.setUTCMonth(date.getUTCMonth() - 1);
+				// Day first: changing the month of eg. the 31st overflows into the next one
 				date.setUTCDate(1);
+				date.setUTCMonth(date.getUTCMonth() - 1);
 				return date;
 			},
 			to(date)
@@ -339,8 +357,9 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 			value: 'Last 3 months',
 			from(date)
 			{
-				date.setUTCMonth(date.getUTCMonth() - 2);
+				// Day first: changing the month of eg. the 31st overflows into the next one
 				date.setUTCDate(1);
+				date.setUTCMonth(date.getUTCMonth() - 2);
 				return date;
 			},
 			to(date)
@@ -354,8 +373,8 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 			label: egw.lang ? egw.lang("This year") : "This year",
 			value: 'This year',
 			from(d) {
-				d.setUTCMonth(0);
 				d.setUTCDate(1);
+				d.setUTCMonth(0);
 				return d;
 			},
 			to(d) {
@@ -368,15 +387,15 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 			label: egw.lang ? egw.lang("Last year") : "Last year",
 			value: 'Last year',
 			from(d) {
-				d.setUTCMonth(0);
 				d.setUTCDate(1);
-				d.setUTCYear(d.getUTCYear() - 1);
+				d.setUTCMonth(0);
+				d.setUTCFullYear(d.getUTCFullYear() - 1);
 				return d;
 			},
+			// d is the from date, which is already in last year
 			to(d) {
 				d.setUTCMonth(11);
 				d.setUTCDate(31);
-				d.setUTCYear(d.getUTCYear() - 1);
 				return d;
 			}
 		}
