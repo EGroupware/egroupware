@@ -16,6 +16,13 @@ ARG TARGETPLATFORM
 # keeping build-arg in environment for entrypoint.sh
 ENV VERSION=$VERSION
 ENV PHP_VERSION=$PHP_VERSION
+# on 32-bit arches (arm/v7) V8's auto-sized default heap is far below what's actually
+# available on the (64-bit) build host / device, and OOMs bundling our larger JS
+# dependencies (eg. openpgp.js); raise it explicitly instead of relying on V8's default
+# sizing. Set as ENV (not just exported in the RUN below) so it also applies to
+# entrypoint.sh's runtime rebuild for extra apps, and to images built FROM this one
+# (eg. stylite/docker/Dockerfile) that run their own npm run build.
+ENV NODE_OPTIONS="--max-old-space-size=3072"
 
 RUN set -e \
     && apt-get update \
@@ -103,10 +110,6 @@ RUN set -e \
     fi \
 	&& npm config set fetch-retries 5 \
 	&& mkdir chunks  \
-	# on 32-bit arches (arm/v7) V8's auto-sized default heap is far below what's
-	# actually available on the (64-bit) build host, and OOMs on our larger bundles
-	# (eg. openpgp.js); raise it explicitly instead of relying on V8's default sizing
-	&& export NODE_OPTIONS="--max-old-space-size=3072" \
 	&& npm install \
 	# npm install fails "silent" on network timeouts, retry until it works
 	&& until npm run build; do sleep 5; npm install; done \
