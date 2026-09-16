@@ -33,6 +33,7 @@ deletes this field	timesheet	en	Deletes this field
 determines the order the fields are displayed	timesheet	en	Determines the order the fields are displayed
 directory with documents to insert entries	timesheet	en	Directory with documents to insert entries
 disable timers	timesheet	en	Disable timers
+do not warn again	timesheet	en	Do not warn again
 do you want to associate it with the selected %1 entry?	common	en	Do you want to associate it with the selected %1 entry?
 do you want to start your working time?	common	en	Do you want to start your working time?
 do you want to stop your working time?	common	en	Do you want to stop your working time?
@@ -145,6 +146,7 @@ select multiple timeshhets for a further action	timesheet	en	Select multiple tim
 select the predefined status, when creating a new timesheet	preferences	en	Select the predefined status, when creating a new entry.
 set to	timesheet	en	Set to
 show a quantity sum (eg. to sum up negative overtime)	admin	en	Show a quantity sum e.g. to sum up negative overtime
+show a warning, when a timesheet overlaps with an other one of the same user	timesheet	en	Show a warning, when a timesheet overlaps with an other one of the same user
 skip record	timesheet	en	Skip record
 start	timesheet	en	Start
 start time is after last timesheet	timesheet	en	Start time is after last timesheet
@@ -160,6 +162,7 @@ stop	common	en	Stop
 stop- or pause-time can not be before the start-time %1!	common	en	Stop- or pause-time can not be before the start-time %1!
 sum	timesheet	en	Sum
 sum %1:	timesheet	en	Sum %1:
+switch off the warning about overlapping timesheets, you can re-enable it in your preferences	timesheet	en	Switch off the warning about overlapping timesheets, you can re-enable it in your preferences
 tag to mark positions for address labels	timesheet	en	Tag to mark positions for address labels
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	timesheet	en	The document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).
 the following document-types are supported:	timesheet	en	The following document-types are supported:
@@ -191,6 +194,7 @@ use field from csv if possible	timesheet	en	Use field from CSV if possible
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	en	Use this tag for address labels. Put the content, you want to repeat, between two tags.
 values for selectbox	timesheet	en	Values for select box
 view this entry	timesheet	en	View this entry
+warn about overlapping timesheets	timesheet	en	Warn about overlapping timesheets
 week	timesheet	en	Week
 what should be done with unknown values?	timesheet	en	What should be done with unknown values?
 when adding a new timesheet: prefill the endtime with the current time, or continue the starttime from the endtime of your last timesheet	timesheet	en	When adding a new timesheet: prefill the end time with the current time, or set the start time from the end of your last timesheet.

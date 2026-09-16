@@ -133,6 +133,7 @@
 			</grid>
 			<et2-button  slot="footer" label="Ignore conflict" image="check" noSubmit="true" id="ignoreConflict" onclick="app.timesheet.ignoreConflict(event, widget);"></et2-button>
 			<et2-button  slot="footer" label="Re-edit timesheet" image="edit" noSubmit="true" onclick="widget.closest('et2-dialog').close();"></et2-button>
+			<et2-checkbox  slot="footer" align="right" id="no_conflict_warning" label="Do not warn again" statustext="Switch off the warning about overlapping timesheets, you can re-enable it in your preferences" onchange="egw.set_preference('timesheet', 'conflict_warning', widget.get_value() ? '0' : '1');"></et2-checkbox>
 		</et2-dialog>
 		<et2-hidden  id="ignore_conflicts"></et2-hidden>
 		<et2-hidden  id="conflict_button"></et2-hidden>

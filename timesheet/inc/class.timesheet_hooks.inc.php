@@ -178,6 +178,15 @@ class timesheet_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 			],
+			'conflict_warning' => [
+				'type'    => 'check',
+				'label'   => 'Warn about overlapping timesheets',
+				'name'    => 'conflict_warning',
+				'help'    => 'Show a warning, when a timesheet overlaps with an other one of the same user',
+				'xmlrpc'  => True,
+				'admin'   => False,
+				'default' => '1',	// Yes
+			],
 		];
 		if (is_null(self::$timesheet_bo)) self::$timesheet_bo = new timesheet_bo();
 		if (self::$timesheet_bo->status_labels)
