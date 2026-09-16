@@ -632,10 +632,7 @@ class InfologApp extends EgwApp
 		const nm = action.getManager().data.nextmatch || false;
 		if(nm)
 		{
-			this.add_with_extras(nm,action.id,
-				nm.getArrayMgr('content').getEntry('action'),
-				nm.getArrayMgr('content').getEntry('action_id')
-			);
+			this.add_with_extras(nm, action.id);
 		}
 	}
 
@@ -646,16 +643,21 @@ class InfologApp extends EgwApp
 	 *
 	 * @param {et2_widget} widget Originating/calling widget
 	 * @param _type string Type of infolog entry
-	 * @param _action string Special action for new infolog entry
-	 * @param _action_id string ID for special action
 	 */
-	add_with_extras(widget,_type, _action, _action_id)
+	add_with_extras(widget, _type?)
 	{
 		// We use widget.getRoot() instead of this.et2 for the case when the
 		// addressbook tab is viewing a contact + infolog list, there's 2 infolog
 		// etemplates
 		const nm = widget.getRoot().getWidgetById('nm');
 		const nm_value = nm.getValue() || {};
+
+		// What the list is showing InfoLogs for (eg. a contact, when it is that contact's InfoLog
+		// tab) is taken from the list itself, so a new entry gets linked to it.  The calling widget
+		// can not be relied on for it: in the toolbar it sits in its own namespace and only sees
+		// the toolbar's content.
+		let _action = nm.getArrayMgr('content').getEntry('action');
+		const _action_id = nm.getArrayMgr('content').getEntry('action_id');
 
 		// It's important that all these keys are here, they override the link
 		// registry.
