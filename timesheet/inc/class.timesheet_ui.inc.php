@@ -187,7 +187,7 @@ class timesheet_ui extends timesheet_bo
 			$referer = $content['referer'];
 			$content['ts_project_blur'] = $content['pm_id'] ? Link::title('projectmanager', $content['pm_id']) : '';
 			$this->data = $content;
-			foreach(array('button','view','referer','tabs','start_time','ignore_conflicts','conflict_button') as $key)
+			foreach(array('button','view','referer','tabs','start_time','ignore_conflicts','conflict_button','no_conflict_warning') as $key)
 			{
 				unset($this->data[$key]);
 			}
@@ -245,7 +245,9 @@ class timesheet_ui extends timesheet_bo
 
 					// conflicts() works in Api\DateTime objects and expects the start in server
 					// time, while $this->data holds user-time until save() converts it
-					if (empty($content['ignore_conflicts']) && !empty($this->data['ts_start']) &&
+					// the warning is on unless the user switched it off (preference or dialog checkbox)
+					if (($GLOBALS['egw_info']['user']['preferences']['timesheet']['conflict_warning'] ?? '1') != '0' &&
+						empty($content['ignore_conflicts']) && !empty($this->data['ts_start']) &&
 						($ts_conflicts = $this->conflicts(array(
 							'ts_start' => (new Api\DateTime($this->data['ts_start']))->setServer(),
 						) + $this->data)))
