@@ -1337,7 +1337,7 @@ protected stopEdit(abort = false)
                     class=${classMap({
                         "form-control--has-label": this.label !== ""
                     })}
-                    exportparts="form-control, form-control-label, prefix, tags, display-input, expand-icon, combobox, combobox:base, listbox, option, icon"
+                    exportparts="form-control, form-control-label, form-control-input, form-control-help-text, prefix, tags, display-input, expand-icon, combobox, combobox:base, listbox, option, icon"
                     label=${this.label || nothing}
                     placeholder=${placeholder}
                     aria-label=${this.ariaLabel || nothing}
