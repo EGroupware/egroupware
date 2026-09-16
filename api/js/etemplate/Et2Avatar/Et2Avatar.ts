@@ -37,6 +37,11 @@ import styles from "./Et2Avatar.styles";
 export class Et2Avatar extends CachedQueueMixin(Et2Widget(SlAvatar)) implements et2_IDetachedDOM
 {
 	private _contactId;
+	/**
+	 * The avatar.php URL we looked up ourselves for the current contactId, as opposed to an image
+	 * handed to us from outside.  Only ours may be thrown away when the contact changes.
+	 */
+	private _fetchedImage : string;
 	private _delBtn: HTMLElement;
 	private _editBtn : HTMLElement;
 
@@ -84,6 +89,10 @@ export class Et2Avatar extends CachedQueueMixin(Et2Widget(SlAvatar)) implements 
 	size;
 
 	// Cached Queue Mixin
+	// Pinned, as the mixin otherwise defaults it to the name of whichever subclass happens to be
+	// constructed first.  Et2LAvatar asks the same endpoint with the same parameters, so it has to
+	// share this cache (and request queue) instead of getting one of its own.
+	protected static widgetCacheKey = "Et2Avatar";
 	protected static searchUrl = "EGroupware\\Api\\Etemplate\\Widget\\Avatar::ajax_image_check";
 
 	constructor()
@@ -161,6 +170,16 @@ export class Et2Avatar extends CachedQueueMixin(Et2Widget(SlAvatar)) implements 
 		let oldContactId = this._contactId;
 		this._contactId = _contactId;
 
+		// An image we looked up belongs to the contact we looked it up for.  These widgets get
+		// recycled onto a different contact (eg. the tags of a multiple et2-select-account, or
+		// nextmatch rows), and keeping the old URL would show the previous contact's photo under
+		// the new contact's name.  An image set from outside is not ours to discard.
+		if(_contactId !== oldContactId && this.image && this.image === this._fetchedImage)
+		{
+			this._fetchedImage = undefined;
+			this.image = "";
+		}
+
 		if(!_contactId || this.image)
 		{
 			this.requestUpdate("contactId", oldContactId);
@@ -206,6 +225,11 @@ export class Et2Avatar extends CachedQueueMixin(Et2Widget(SlAvatar)) implements 
 				 */
 				this.cachedQueue([`${id}:${parsedId}`]).then((hasImage) =>
 				{
+					// contactId may have moved on while we were waiting - that answer is not ours
+					if(this._contactId !== _contactId)
+					{
+						return;
+					}
 					if(!hasImage)
 					{
 						this.image = null;
@@ -213,7 +237,7 @@ export class Et2Avatar extends CachedQueueMixin(Et2Widget(SlAvatar)) implements 
 					}
 
 					params[id] = parsedId;
-					this.image = this.egw().link('/api/avatar.php', params);
+					this.image = this._fetchedImage = this.egw().link('/api/avatar.php', params);
 				});
 			}
 			this.requestUpdate("contactId");
