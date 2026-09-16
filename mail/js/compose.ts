@@ -15,8 +15,8 @@ import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
 // needed or possible.
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {et2_widget} from "../../api/js/etemplate/et2_core_widget";
-import {formatJmapAddress, isPreferenceOn, MailJmap} from "./jmap";
 import type {JmapAttachment, JmapReplyContext} from "./jmap";
+import {formatJmapAddress, isPreferenceOn, MailJmap} from "./jmap";
 
 export class MailCompose
 {
@@ -1106,21 +1106,25 @@ export class MailCompose
 		// (2026-09-01) is handled inside trySendViaJmap() itself, not a bail condition anymore.
 		if (this.isJmapMode)
 		{
-			// trySendViaJmap() never goes through ETemplate's own submit() (no form postback at
-			// all), so its "please wait" spinner never fired here - found live 2026-09-01
-			// (ralf: "before the rework of compose, on submission we had a spinner... this is no
-			// longer the case"). Same 'et2_submit_spinner' id/message ETemplate's own submit()
-			// uses, so a fall-through to the classic postback below just keeps it showing.
-			this.egw.loading_prompt('et2_submit_spinner', true, this.egw.lang('Please wait while sending your mail'));
-			wait.then(() => this.trySendViaJmap()).then((sent) =>
-			{
-				if (sent)
+			// Wait for integration & pending
+			wait.then(() => {
+					// trySendViaJmap() never goes through ETemplate's own submit() (no form postback at
+					// all), so its "please wait" spinner never fired here - found live 2026-09-01
+					// (ralf: "before the rework of compose, on submission we had a spinner... this is no
+					// longer the case"). Same 'et2_submit_spinner' id/message ETemplate's own submit()
+					// uses, so a fall-through to the classic postback below just keeps it showing.
+					this.egw.loading_prompt('et2_submit_spinner', true, this.egw.lang('Please wait while sending your mail'));
+				})
+				.then(() => this.trySendViaJmap())
+				.then((sent) =>
 				{
-					this.egw.loading_prompt('et2_submit_spinner', false);
-					return;
-				}
-				this.et2.getInstanceManager().submit(null, 'Please wait while sending your mail');
-			});
+					if (sent)
+					{
+						this.egw.loading_prompt('et2_submit_spinner', false);
+						return;
+					}
+					this.et2.getInstanceManager().submit(null, 'Please wait while sending your mail');
+				});
 			return;
 		}
 
