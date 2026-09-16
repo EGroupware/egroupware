@@ -4307,10 +4307,18 @@ export class CalendarApp extends EgwApp
 					this.state.keywords = nm.activeFilters.search;
 				}
 
+				// Only mirror the list's date range into the state while the list is the
+				// view being shown.  These fire from an etemplate "assign" in an ajax
+				// response, which can land after the user has already switched to a grid
+				// view - overwriting that view's own (narrower) first/last.  _update_events()
+				// then drops every newly added event falling outside the list's range, so it
+				// does not show up until the next reload.
 				nm.set_startdate = (date) => {
+					if(this.state.view !== 'listview') return;
 					this.state.first = this.date.toString(new Date(date));
 				};
 				nm.set_enddate = (date) => {
+					if(this.state.view !== 'listview') return;
 					this.state.last = this.date.toString(new Date(date));
 				};
 			}
