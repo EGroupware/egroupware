@@ -1958,6 +1958,10 @@ export class MailCompose
 			...(content.data.attachments || []),
 			...entries,
 		];
+		// checkSharingFilemode() skips everything while this is set - the server sets it for a
+		// compose that opened without attachments, and no postback ever clears it here, so a
+		// "Send files as" pick was ignored and the files still went out as attachments
+		content.data.no_griddata = false;
 		this.et2.setArrayMgr('content', content);
 		this.warnAttachmentSizeLimit(content.data.attachments);
 		content.data.attachmentsBlockTitle = content.data.attachments.length + ' ' + this.egw.lang('Attachments');
@@ -2143,6 +2147,7 @@ export class MailCompose
 		if (!tmpName) return true;
 		const content = this.et2.getArrayMgr('content');
 		content.data.attachments = (content.data.attachments || []).filter((a : any) => a.tmp_name !== tmpName);
+		content.data.no_griddata = !content.data.attachments.length;
 		this.et2.setArrayMgr('content', content);
 		const attachmentsWidget = this.et2.getWidgetById('attachments');
 		attachmentsWidget?.set_value({content: content.data.attachments});

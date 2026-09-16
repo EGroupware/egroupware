@@ -187,6 +187,41 @@ describe("MailCompose attachment delete buttons stay clickable after set_value()
 		assert.deepEqual(et2.getArrayMgr('content').data.attachments, []);
 	});
 
+	it("a filemode pick after a client-side attach counts as explicit, even though the compose opened without attachments", () =>
+	{
+		// found live 2026-09-16 on production: the server sets no_griddata for a compose opened
+		// without attachments, checkSharingFilemode() returns right away while it is set, so a
+		// real "Download link" pick never set explicitShareModeChosen and the files went out as
+		// plain attachments
+		const {compose, et2} = createCompose();
+		(compose as any).isJmapMode = true;
+		(compose as any).warnAttachmentSizeLimit = () => {};
+		et2.getArrayMgr('content').data.no_griddata = true;
+		(compose as any).mergeAttachmentEntries([{tmp_name : 'tmp-1', name : 'a.txt', size : 10}]);
+		assert.isFalse(et2.getArrayMgr('content').getEntry('no_griddata'));
+
+		sinon.stub(Et2Dialog, "alert").resolves([0, {}] as any);
+		const filemodeWidget = {
+			value : 'link', select_options : [],
+			get_value() { return this.value; }, set_value(v : any) { this.value = v; },
+		};
+		const readonlyStub = {set_readonly() {}, set_suggest() {}};
+		const originalGetWidgetById = et2.getWidgetById;
+		(et2 as any).getWidgetById = (id : string) =>
+		{
+			if(id === 'filemode') return filemodeWidget;
+			if(id === 'expiration' || id === 'password') return readonlyStub;
+			return originalGetWidgetById(id);
+		};
+		(compose as any).app = {egw : {...egw, app : () => false}};
+
+		(compose as any).checkSharingFilemode({}, filemodeWidget);
+		assert.isTrue((compose as any).explicitShareModeChosen, "a real pick must be remembered for currentEmailFields()");
+
+		assert.isFalse(clickDeleteButton(et2, 'tmp-1'));
+		assert.isTrue(et2.getArrayMgr('content').getEntry('no_griddata'), "removing the last attachment restores the empty state");
+	});
+
 	it("documents the ORIGINAL bug: an unresolved onclick lets the click fall through instead of cancelling it", () =>
 	{
 		// No _wireAttachmentDeleteHandlers() call at all here - just the raw set_value() rebuild,
