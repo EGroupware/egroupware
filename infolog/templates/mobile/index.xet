@@ -40,7 +40,7 @@
 		<et2-date  id="enddate" label="End" class="et2-label-fixed" onchange="widget.getParent().getWidgetById('startdate').set_max(widget.getValue());return true;"></et2-date>
 	</et2-template>
 	<et2-template  id="infolog.index" template="" lang="" group="0" version="1.9.005">
-		<et2-button-icon  class="plus_button" statustext="Add a new ToDo" id="add[task]" onclick="app.infolog.add_with_extras(widget,'task','$cont[action]','$cont[action_id]');" image="plus-lg"></et2-button-icon>
+		<et2-button-icon  class="plus_button" statustext="Add a new ToDo" id="add[task]" onclick="app.infolog.add_with_extras(widget,'task');" image="plus-lg"></et2-button-icon>
 		<et2-nextmatch  id="nm" template="infolog.index.rows"></et2-nextmatch>
 	</et2-template>
 </overlay>

@@ -4,7 +4,7 @@
 <overlay>
     <et2-template  id="infolog.index.header" template="" lang="" group="0" version="1.9.001">
         <et2-toolbar  id="toolbar">
-            <et2-button-icon  statustext="Add" id="add" image="add" slot="prefix" onclick="app.infolog.add_with_extras(widget,'','$cont[action]','$cont[action_id]');"></et2-button-icon>
+            <et2-button-icon  statustext="Add" id="add" image="add" slot="prefix" onclick="app.infolog.add_with_extras(widget,'');"></et2-button-icon>
             <et2-template  template="api.search-button" slot="prefix"></et2-template>
             <et2-select  id="info_type" ariaLabel="Type" emptyLabel="Type" onchange="app.infolog.changeNmFilter"/>
             <et2-select  id="info_status" ariaLabel="Status" emptyLabel="Status" onchange="app.infolog.changeNmFilter"/>
