@@ -861,6 +861,18 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		{
 			// Invalid date string
 		}
+		// What the user sees (their dateformat preference) vs. what we store and submit.
+		// The et2-textbox holds the stored form: its value is what our own value getter reads
+		// back, so writing the displayed form there would give a typed-in date a different value
+		// than the same day picked from the calendar.  What the user typed stays visible either
+		// way - that is flatpickr's separate altInput, not this.
+		//
+		// Format through the instance rather than flatpickr's static formatDate: the static one
+		// always uses the default (English) l10n, while the text we are comparing against was
+		// written into altInput by the instance.  Formats carrying a localized name (eg. "K" for
+		// AM/PM in a 12-hour timeformat) would otherwise never match what is on screen.
+		const displayDate = parsedDate ? this._instance.formatDate(parsedDate, this.getOptions().altFormat) : null;
+
 		// If they typed a complete date/time, try to update flatpickr.
 		// "Complete" means the text round-trips through the display format: flatpickr parses
 		// every prefix of a date ("0" gives 30/04/2025 with "d/m/Y H:i"), so committing
@@ -870,16 +882,9 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		// and typing a date is impossible.  Anything shorter stays a plain "input"; flatpickr
 		// itself commits on blur and Enter, so a date typed in another form (eg. "1/9/2026")
 		// is still picked up when the field is left.
-		const formattedDate = parsedDate ? flatpickr.formatDate(parsedDate, this.getOptions().altFormat) : null;
-		if(formattedDate === value)
+		if(displayDate === value)
 		{
-			// What the user sees (their dateformat preference) vs. what we store and submit.
-			// The et2-textbox holds the stored form: its value is what our own value getter
-			// reads back, so writing the displayed form here would give a typed-in date a
-			// different value than the same day picked from the calendar.  What the user typed
-			// stays visible either way - that is flatpickr's separate altInput, not this.
-			// The displayed form is formattedDate above, which the condition has already compared.
-			const storedDate = flatpickr.formatDate(parsedDate, this.getOptions().dateFormat);
+			const storedDate = this._instance.formatDate(parsedDate, this.getOptions().dateFormat);
 			if(// Avoid infinite loop of setting the same value back triggering another change
 				this._instance.input.value !== storedDate)
 			{

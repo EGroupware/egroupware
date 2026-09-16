@@ -154,6 +154,36 @@ describe("Date widget", () =>
 			assert.isTrue(changeSpy.called, "the complete date was not committed");
 			assert.equal(element.get_value(), "2027-01-15T00:00:00Z");
 		});
+
+		// Not committing a half-typed date means anything that does not round-trip through the
+		// display format is left alone while the user types - including a complete date written
+		// in another form ("2027-1-5" for "Y-m-d").  Those are picked up by flatpickr's own blur
+		// handler, so this is the safety net the test above leans on.
+		it("commits an unpadded date the user typed when the field is left", async() =>
+		{
+			element.set_value("2026-11-05T00:00:00Z");
+			await element.init();
+			await elementUpdated(element);
+			const changeSpy = sinon.spy();
+			element.addEventListener("change", changeSpy);
+
+			const input = element.findInputField();
+			input.focus();
+			input.value = "2027-1-5";
+			input.dispatchEvent(new Event("input", {bubbles: true}));
+			await elementUpdated(element);
+
+			// Does not match "2027-01-05", so nothing is committed yet
+			assert.isFalse(changeSpy.called, "committed while still typing");
+			assert.equal(element.get_value(), "2026-11-05T00:00:00Z", "changed the value while typing");
+
+			input.blur();
+			await elementUpdated(element);
+			await element.updateComplete;
+
+			assert.equal(element.get_value(), "2027-01-05T00:00:00Z", "the typed date was lost on blur");
+			assert.isTrue(changeSpy.called, "no change event when the field was left");
+		});
 	});
 
 	describe("Minimum and maximum date", () =>
