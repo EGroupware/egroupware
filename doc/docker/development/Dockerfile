@@ -4,7 +4,7 @@
 ##
 ################################################################################
 ARG ARCH=
-FROM ${ARCH}node:26-bookworm-slim
+FROM ${ARCH}ubuntu:26.04
 LABEL maintainer="rb@egroupware.org"
 
 ARG VERSION=dev-master
@@ -17,10 +17,15 @@ ENV PHP_VERSION=$PHP_VERSION
 RUN set -e \
     && apt-get update \
 	&& apt-get install -y apt-transport-https software-properties-common curl \
-    && curl -o /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg \
-    && echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list \
-	&& apt-get update \
-	&& bash -c "apt-get install -y php$PHP_VERSION-{cli,mysql,gd,xsl,bz2,tidy,zip,bcmath,mbstring,ldap,curl,fpm,pgsql,gmp}" \
+    && curl -sSLo /tmp/debsuryorg-archive-keyring.deb https://packages.sury.org/debsuryorg-archive-keyring.deb \
+    && dpkg -i /tmp/debsuryorg-archive-keyring.deb \
+    && sh -c 'echo "deb [signed-by=/usr/share/keyrings/debsuryorg-archive-keyring.gpg] https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list' \
+ 	# install nodejs 26.x (Shoelace requires >= 14.17, Ubuntu 22.04 only has 12.x) \
+    && mkdir -p /etc/apt/keyrings \
+    && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
+    && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_26.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list \
+    && apt-get update \
+    && bash -c "apt-get install -y nodejs php$PHP_VERSION-{cli,mysql,gd,xsl,bz2,tidy,zip,bcmath,mbstring,ldap,curl,fpm,pgsql,gmp,redis}" \
     # PHP 8.5 no longer has a separate OPCache extension
     && apt-get install -y php$PHP_VERSION-opcache || true \
     && apt-get install -y php$PHP_VERSION-apcu || true \
@@ -56,7 +61,7 @@ RUN set -e \
 	# send logs to stderr to be viewed by docker logs
 	&& ln -s /dev/stderr /var/log/php$PHP_VERSION-fpm.log \
 	# install tools to build EGroupware
-	&& apt-get install -y rsync zip curl sudo cron patch \
+	&& apt-get install -y git rsync zip curl sudo cron patch \
 	&& bash -c \
 'EXPECTED_SIGNATURE=$(curl https://composer.github.io/installer.sig); \
 curl https://getcomposer.org/installer > composer-setup.php; \

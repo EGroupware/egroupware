@@ -2,7 +2,7 @@
 
 REPO=egroupware
 IMAGE=development
-BASE=node:20-bookworm-slim
+BASE=ubuntu:26.04
 RECOMMENDED_PHP_VERSION=8.5
 PLATFORMS=linux/amd64,linux/arm64/v8
 
