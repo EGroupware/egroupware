@@ -154,7 +154,7 @@ export class EgwFramework extends LitElement
 	{
 		super();
 
-		this._tabApps = JSON.parse(egw.getSessionItem('api', 'fw_tab_apps') || null) || {};
+		// _tabApps is restored from the session in restoreTabApps(), which has to wait for egw
 
 		this.print = this.print.bind(this);
 		this.message = this.message.bind(this);
@@ -242,8 +242,6 @@ export class EgwFramework extends LitElement
 					this.loadApp(app.name);
 				}
 			});
-			// Load additional tabs
-			Object.values(this._tabApps).filter(app => app.active).forEach(app => this.loadApp(app.name));
 		}
 
 		// Init timer
@@ -253,6 +251,9 @@ export class EgwFramework extends LitElement
 		this.getEgwComplete().then(async() =>
 		{
 			// EGW is loaded now, but framework is not guaranteed to be rendered yet
+
+			// Restore & load the additional tabs of this session, needs the user egw only has now
+			this.restoreTabApps();
 
 			// Register the "message" plugin
 			this.egw.registerJSONPlugin((type, res, req) =>
@@ -1423,6 +1424,53 @@ export class EgwFramework extends LitElement
 	private _setTabAppsSession()
 	{
 		egw.setSessionItem('api', 'fw_tab_apps', JSON.stringify(this._tabApps));
+	}
+
+	/**
+	 * Restore the entry-tabs stored for this session and load the active ones
+	 *
+	 * Unlike applicationList these never went through the server's run-rights filter, they are
+	 * whatever the client wrote to the session storage - which outlives a logout and login in
+	 * the same browser tab. So everything the current user has no run-rights for is dropped
+	 * here, otherwise loadApp() would happily open a previous user's tab: it falls back to
+	 * _tabApps for apps it can not find in applicationList.
+	 *
+	 * Must not run before egw is loaded, there is no user to check against before that.
+	 *
+	 * @private
+	 */
+	private restoreTabApps()
+	{
+		const stored = JSON.parse(egw.getSessionItem('api', 'fw_tab_apps') || null) || {};
+		const apps = this.egw.user('apps') || {};
+
+		const allowed = {};
+		Object.keys(stored).forEach(tabName =>
+		{
+			// tab names are "<appname>-<base64 of the entry id>", internalName is the actual app
+			const appname = stored[tabName].internalName || tabName.split('-')[0];
+			// own properties only: the stored names come from the browser, and "constructor", "toString"
+			// or "__proto__" would otherwise pass as an app of every user
+			if(Object.prototype.hasOwnProperty.call(apps, appname))
+			{
+				allowed[tabName] = stored[tabName];
+			}
+		});
+		// keep anything opened in the meantime, restoring must not lose a tab opened while we waited
+		this._tabApps = {...allowed, ...this._tabApps};
+
+		// Write back right away, so what we refused can not come back on the next load
+		if(Object.keys(allowed).length !== Object.keys(stored).length)
+		{
+			this._setTabAppsSession();
+		}
+
+		// Do NOT load tabs on mobile
+		if(!this.getRootNode()?.querySelector('html')?.classList.contains('mobile'))
+		{
+			Object.values(this._tabApps).filter(app => app.active).forEach(app => this.loadApp(app.name));
+		}
+		this.requestUpdate("applicationList");
 	}
 
 	/**

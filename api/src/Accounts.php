@@ -567,6 +567,8 @@ class Accounts
 	 * - 'account_id','account_lid','person_id','account_status','memberships'
 	 * - 'account_firstname','account_lastname','account_email','account_fullname','account_phone'
 	 *
+	 * For the current user 'apps' (run-rights) and 'domain' (the instance he is logged into) are added.
+	 *
 	 * @param int|string $id
 	 * @return string|boolean json or false if not found
 	 */
@@ -584,6 +586,9 @@ class Accounts
 		// for current user, add the apps available to him
 		if ($id == $GLOBALS['egw_info']['user']['account_id'])
 		{
+			// instance the user is logged into, clientside storage is namespaced by user AND instance,
+			// as account_id's of different instances (domains) on the same host collide otherwise
+			$account['domain'] = $GLOBALS['egw_info']['user']['domain'] ?? '';
 			foreach((array)$GLOBALS['egw_info']['user']['apps'] as $app => $data)
 			{
 				unset($data['table_defs']);	// no need for that on the client

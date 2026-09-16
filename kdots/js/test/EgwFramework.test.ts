@@ -212,6 +212,50 @@ describe('EgwFramework', () =>
 		);
 	});
 
+	describe('restoreTabApps()', () =>
+	{
+		const tab = (name, internalName) => ({name, internalName, active: false});
+
+		it('drops stored entry-tabs of apps the user has no run-rights for, and writes the pruned list back', async() =>
+		{
+			await element.getEgwComplete();
+			const stored = {
+				'addressbook-MTI=': tab('addressbook-MTI=', 'addressbook'),
+				'admin-MTI=': tab('admin-MTI=', 'admin'),
+				'constructor-MTI=': tab('constructor-MTI=', 'constructor'),
+				'toString-MTI=': tab('toString-MTI=', undefined),
+			};
+			// "__proto__" can only get in through JSON.parse(), an object literal would set the prototype
+			const json = JSON.stringify(stored).replace(/^\{/, '{"__proto__":{"name":"__proto__","internalName":"__proto__"},');
+			// the global egw is shared by every test, put back what this one replaces
+			const replaced = {getSessionItem: sinon.stub().returns(json), setSessionItem: sinon.stub(),
+				user: sinon.stub().callsFake(field => field === 'apps' ? {addressbook: {}} : undefined)};
+			const originals = {window: {}, bound: {}};
+			for(const key of Object.keys(replaced))
+			{
+				originals.window[key] = egwStub[key];
+				originals.bound[key] = egw[key];
+			}
+			Object.assign(egwStub, replaced);
+			Object.assign(egw, replaced);
+			(element as any)._tabApps = {};
+			try
+			{
+				(element as any).restoreTabApps();
+			}
+			finally
+			{
+				Object.assign(egwStub, originals.window);
+				Object.assign(egw, originals.bound);
+			}
+			const setSessionItem = replaced.setSessionItem;
+
+			assert.deepEqual(Object.keys((element as any)._tabApps), ['addressbook-MTI=']);
+			assert.isTrue(setSessionItem.calledOnce, "the refused tabs were not written back");
+			assert.deepEqual(Object.keys(JSON.parse(setSessionItem.firstCall.args[2])), ['addressbook-MTI=']);
+		});
+	});
+
 	describe('openPopup() in same-window mode', () =>
 	{
 		// The "open popups in the same window" preference and a narrow (mobile) viewport share one
