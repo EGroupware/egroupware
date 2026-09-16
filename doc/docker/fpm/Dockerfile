@@ -8,7 +8,7 @@ FROM ${ARCH}ubuntu:24.04
 LABEL maintainer="rb@egroupware.org"
 
 ARG VERSION=dev-master
-ARG PHP_VERSION=8.4
+ARG PHP_VERSION=8.5
 # Set environment variable for non-interactive install
 ARG DEBIAN_FRONTEND=noninteractive
 ARG TARGETPLATFORM
