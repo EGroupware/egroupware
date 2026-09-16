@@ -171,12 +171,76 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 		return true;
 	}
 
+	/** Widgets we generated from actions, as opposed to what the template put inside us */
+	private _actionWidgets : any[] = [];
+
+	/** Set while the widgets we generated still have the value their action gave them */
+	private _actionWidgetsNeedReset = false;
+
 	/**
 	 * Always return false as a toolbar is never dirty
 	 */
 	isDirty()
 	{
 		return false;
+	}
+
+	/**
+	 * Take the current state of everything we generated from an action as its starting point
+	 *
+	 * Our own isDirty() says a toolbar is never dirty, but that only answers for the toolbar:
+	 * etemplate2.isDirty() walks the whole widget tree and finds the widgets we generated on
+	 * their own.  Their value is which action is currently picked, which the user never saves,
+	 * so handleAction() resets us after running one - and us means them.
+	 *
+	 * Widgets the template author put inside the toolbar are ordinary form input that happens to
+	 * sit in a toolbar, so they are left alone to track their own dirty state.
+	 */
+	resetDirty()
+	{
+		super.resetDirty();
+
+		this._actionWidgets.forEach(widget => widget.resetDirty?.());
+	}
+
+	/**
+	 * Wait for the widgets we generated from actions too, and start them off clean
+	 *
+	 * They update on their own schedule, so without waiting for them here our updateComplete
+	 * resolves while they are still mid-render.  The reset is what keeps a freshly built toolbar
+	 * from looking edited: a generated widget gets its value from its action - a dropdown-button's
+	 * defaultPreference, a checkbox action's checked state - after the template was loaded, and so
+	 * after etemplate2.load() reset everyone's dirty state.  Without it, closing a popup that has a
+	 * toolbar wrongly warns about unsaved changes.
+	 */
+	async getUpdateComplete() : Promise<boolean>
+	{
+		const result = await super.getUpdateComplete();
+
+		await Promise.all(this._actionWidgets.map(widget => widget.updateComplete));
+
+		if(this._actionWidgetsNeedReset)
+		{
+			this._actionWidgetsNeedReset = false;
+			this.resetDirty();
+		}
+
+		return result;
+	}
+
+	/**
+	 * Remember a widget we generated from an action
+	 *
+	 * Needed to tell them apart from whatever the template put inside us: they are not all marked
+	 * in the DOM (a dropdown-button gets no data-action-id), and only ours are ours to reset.
+	 *
+	 * @param widget widget created for an action
+	 */
+	protected _trackActionWidget<T>(widget : T) : T
+	{
+		this._actionWidgets.push(widget);
+
+		return widget;
 	}
 
 	/**
@@ -209,6 +273,8 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 	{
 		// Clean up anything from actions that's there already - do not remove everything
 		this.querySelectorAll(":scope > [data-action-id], :scope > [data-group]").forEach(n => n.remove());
+		this._actionWidgets = [];
+		this._actionWidgetsNeedReset = true;
 
 		let last_group_id;
 		let last_group;
@@ -371,6 +437,7 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 			}, this);
 
 			dropdown.select_options = Object.values(children);
+			this._trackActionWidget(dropdown);
 
 			dropdown.onclick = function(selected, dropdown)
 			{
@@ -432,6 +499,8 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 		{
 			widget.classList.add('toolbar--hasCaption');
 		}
+
+		this._trackActionWidget(widget);
 
 		widget.dataset.actionId = action.id;
 		const index = Object.keys(this._preference).indexOf(action.id);
