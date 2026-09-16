@@ -67,6 +67,16 @@ export const CachedQueueMixin = <T extends Constructor<typeof Et2Widget & {
 		protected static widgetCacheKey : string = "";
 		protected static searchUrl : string = "";
 
+		/**
+		 * How long (ms) a cached answer stays good before we ask the server again.
+		 *
+		 * sessionStorage outlives a lot more than the tab - browsers restore it on session restore
+		 * (re-open closed tab, "continue where you left off", crash recovery).  Expiring entries is
+		 * what lets a change made on the server - an avatar uploaded or deleted, an ACL granted -
+		 * reach every open tab and every user without anyone having to know this cache exists.
+		 */
+		protected static cacheTTL : number = 7 * 24 * 60 * 60 * 1000;    // 1 week
+
 		private static _queues : Map<string, CachedQueueData[]> = new Map();
 		private static _queue_timeouts : Map<string, ReturnType<typeof setTimeout>> = new Map();
 		private static _queue_timeout_delay : number = 100;
@@ -169,22 +179,60 @@ export const CachedQueueMixin = <T extends Constructor<typeof Et2Widget & {
 			return JSON.stringify(parameters);
 		}
 
-		// Get cached data
+		/**
+		 * Get cached data, or undefined if we have nothing currently valid for this cacheKey
+		 *
+		 * Anything unusable is dropped and reported as a miss, so it gets asked again and rewritten.
+		 */
 		private getFromCache(cacheKey : string) : any
 		{
 			const storageKey = this.getCacheStorageKey(cacheKey);
 			const cached = this.egw().getSessionItem(storageKey, cacheKey);
-			return cached ? JSON.parse(cached) : undefined;
+			if(!cached)
+			{
+				return undefined;
+			}
+
+			let entry;
+			try
+			{
+				entry = JSON.parse(cached);
+			}
+			catch(e)
+			{
+				this.egw().removeSessionItem(storageKey, cacheKey);
+				return undefined;
+			}
+
+			// Only a {value, expires} wrapper can be judged for freshness, so nothing else is trusted.
+			// Means a cached value may not itself be an object with a numeric `expires`, or it would
+			// be mistaken for the wrapper.
+			if(entry === null || typeof entry !== "object" || typeof entry.expires !== "number")
+			{
+				this.egw().removeSessionItem(storageKey, cacheKey);
+				return undefined;
+			}
+
+			if(entry.expires <= Date.now())
+			{
+				this.egw().removeSessionItem(storageKey, cacheKey);
+				return undefined;
+			}
+
+			return entry.value;
 		}
 
-		// Set cached data
+		// Set cached data, stamped with when it stops being trusted
 		private setToCache(cacheKey : string, data : any) : void
 		{
 			const storageKey = this.getCacheStorageKey(cacheKey);
 
 			// Here is where we actually hold on to the data.
 			// If we want to change how long / where the data is held, this (& get...) is the place to change
-			this.egw().setSessionItem(storageKey, cacheKey, JSON.stringify(data));
+			this.egw().setSessionItem(storageKey, cacheKey, JSON.stringify({
+				value: data,
+				expires: Date.now() + this.staticThis.cacheTTL
+			}));
 		}
 
 		/**
