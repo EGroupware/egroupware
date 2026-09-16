@@ -1,5 +1,10 @@
 import {assert, fixture, html, nextFrame, oneEvent} from "@open-wc/testing";
 import {Et2Toolbar} from "../Et2Toolbar";
+// Toolbar creates these from actions, they need to be registered for the dirty state tests
+import "../../Et2Button/Et2ButtonToggle";
+import "../../Et2DropdownButton/Et2DropdownButton";
+import "../../Et2Select/Et2Select";
+import {et2_IInput} from "../../et2_core_interfaces";
 import * as sinon from "sinon";
 import {waitForEvent} from "../../Et2Widget/event";
 
@@ -203,6 +208,135 @@ describe("et2-toolbar", () =>
 
 		assert.exists(nativeShown);
 		assert.notEqual(nativeShown.offsetParent, null, "native visible button is visible");
+	});
+
+	/**
+	 * A toolbar generates its widgets from actions, which happens after the template was loaded -
+	 * and so after etemplate2.load() reset everyone's dirty state.  Any value they get then (a
+	 * dropdown-button's defaultPreference, a checkbox action's checked state) looks exactly like a
+	 * user edit to isDirty(), and because etemplate2.isDirty() walks the whole widget tree it finds
+	 * them regardless of the toolbar's own "never dirty" answer.  Symptom when this breaks: closing
+	 * a popup that has a toolbar (mail's display window) warns about unsaved changes.
+	 */
+	describe("dirty state", () =>
+	{
+		async function toolbarWithActions()
+		{
+			const el = await fixture<any>(html`
+                <et2-toolbar></et2-toolbar>`);
+			el.id = "dirtyTest";
+			el.actions = {
+				save: {id: "save", caption: "Save"},
+				toggle: {id: "toggle", caption: "Toggle", checkbox: true, checked: true},
+				flag: {
+					id: "flag", caption: "Flag", groupChildren: true, children: [
+						{id: "flagged", caption: "Flagged"},
+						{id: "unflagged", caption: "Unflagged"}
+					]
+				}
+			};
+			await el.updateComplete;
+			return el;
+		}
+
+		/**
+		 * Everything the toolbar made out of an action - not all of it is marked in the DOM
+		 * (a dropdown-button gets no data-action-id), so ask the toolbar
+		 */
+		function generatedWidgets(el)
+		{
+			const generated = el._actionWidgets;
+			assert.isNotEmpty(generated, "test setup: toolbar should have generated widgets");
+			assert.include(generated.map(w => w.id), "flag", "test setup: dropdown-button should be tracked too");
+			return generated;
+		}
+
+		/** Give every generated widget a value, as an action would */
+		async function changeValues(generated)
+		{
+			for(const widget of generated)
+			{
+				widget.value = widget.tagName.toLowerCase() == "et2-dropdown-button" ? "unflagged" : true;
+				await widget.updateComplete;
+			}
+		}
+
+		it("starts generated widgets off clean", async() =>
+		{
+			const el = await toolbarWithActions();
+
+			generatedWidgets(el).forEach(widget =>
+				assert.isFalse(widget.isDirty(), widget.id + " should not be dirty before it is touched")
+			);
+		});
+
+		/**
+		 * handleAction() resets the toolbar after running an action, so picking another entry from
+		 * a toolbar dropdown does not count as unsaved content.  That reset has to reach the
+		 * widgets we generated - the toolbar's own isDirty() is hardcoded false, so resetting only
+		 * itself does nothing.
+		 */
+		it("resets generated widgets along with itself", async() =>
+		{
+			const el = await toolbarWithActions();
+
+			const generated = generatedWidgets(el);
+			await changeValues(generated);
+			assert.isTrue(Array.from(generated).some((w : any) => w.isDirty()), "test setup: changing a value makes a widget dirty");
+
+			el.resetDirty();
+
+			generated.forEach(widget =>
+				assert.isFalse(widget.isDirty(), widget.id + " should be clean again after resetDirty()")
+			);
+		});
+
+		/**
+		 * A toolbar is also a plain layout container: widgets the template author put inside it are
+		 * normal form input that happens to sit in a toolbar, not something we generated, so they
+		 * keep tracking their own dirty state - including across the toolbar's own resetDirty().
+		 */
+		it("leaves widgets it did not generate alone", async() =>
+		{
+			const el = await fixture<any>(html`
+                <et2-toolbar>
+                    <et2-select id="native-select"></et2-select>
+                </et2-toolbar>`);
+			el.id = "dirtyNativeTest";
+			el.actions = {save: {id: "save", caption: "Save"}};
+			await el.updateComplete;
+
+			const select = el.querySelector("#native-select");
+			select.select_options = [{value: "a", label: "A"}, {value: "b", label: "B"}];
+			select.resetDirty();
+			assert.isFalse(select.isDirty(), "test setup: untouched select is not dirty");
+
+			select.value = "b";
+			await select.updateComplete;
+			assert.isTrue(select.isDirty(), "a select in a toolbar still tracks its own dirty state");
+
+			el.resetDirty();
+
+			assert.isTrue(select.isDirty(), "...and the toolbar's reset does not clear it");
+		});
+
+		/**
+		 * Clean must not mean not submitted: etemplate2.getValues() collects every et2_IInput's
+		 * getValue() and never looks at isDirty(), so a generated widget still contributes its
+		 * value either way.
+		 */
+		it("still returns a value for generated widgets", async() =>
+		{
+			const el = await toolbarWithActions();
+
+			const dropdown = el.querySelector("et2-dropdown-button#flag");
+			dropdown.value = "unflagged";
+			await dropdown.updateComplete;
+			el.resetDirty();
+
+			assert.equal(dropdown.getValue(), "unflagged", "generated widget still has its value");
+			assert.isTrue(dropdown.instanceOf(et2_IInput), "...and still counts as input for getValues()");
+		});
 	});
 
 	/**
