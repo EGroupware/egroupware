@@ -103,6 +103,10 @@ RUN set -e \
     fi \
 	&& npm config set fetch-retries 5 \
 	&& mkdir chunks  \
+	# on 32-bit arches (arm/v7) V8's auto-sized default heap is far below what's
+	# actually available on the (64-bit) build host, and OOMs on our larger bundles
+	# (eg. openpgp.js); raise it explicitly instead of relying on V8's default sizing
+	&& export NODE_OPTIONS="--max-old-space-size=3072" \
 	&& npm install \
 	# npm install fails "silent" on network timeouts, retry until it works
 	&& until npm run build; do sleep 5; npm install; done \
