@@ -36,14 +36,29 @@ use EGroupware\Api\Etemplate\Widget as BaseWidget;
  */
 class LinkValidateFileTraversalTest extends LoggedInTest
 {
+	/**
+	 * @var \ReflectionProperty
+	 */
+	protected $requestProperty;
+	protected $origRequest;
+
 	protected function setUp() : void
 	{
 		parent::setUp();
 		// Widget::validate()/is_readonly() dereference the protected static Widget::$request -
 		// see FileValidateTraversalTest.php for why a minimal Request stub is sufficient here.
-		$reflection = new \ReflectionProperty(BaseWidget::class, 'request');
-		$reflection->setAccessible(true);
-		$reflection->setValue(null, (new \ReflectionClass(Request::class))->newInstanceWithoutConstructor());
+		// MUST be restored in tearDown() - leaving this stub in place corrupted an unrelated later
+		// test badly enough to crash the whole PHPUnit process in CI.
+		$this->requestProperty = new \ReflectionProperty(BaseWidget::class, 'request');
+		$this->requestProperty->setAccessible(true);
+		$this->origRequest = $this->requestProperty->getValue();
+		$this->requestProperty->setValue(null, (new \ReflectionClass(Request::class))->newInstanceWithoutConstructor());
+	}
+
+	protected function tearDown() : void
+	{
+		$this->requestProperty->setValue(null, $this->origRequest);
+		parent::tearDown();
 	}
 
 	public function testTraversalKeyIsConfinedToTempDirBasename()
