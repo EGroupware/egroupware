@@ -29,13 +29,20 @@ https://example.egroupware.org/egroupware/groupdav.php/{user}/tracker/
 | Method | URL | Description |
 |--------|-----|-------------|
 | `GET` | `.../tracker/` | List all accessible tickets (up to 500) |
-| `GET` | `.../tracker/{id}` | Fetch a single ticket |
+| `GET` | `.../tracker/{id}` | Fetch a single ticket (includes all replies) |
 | `POST` | `.../tracker/` | Create a new ticket |
 | `PATCH` | `.../tracker/{id}` | Partial update (only supplied fields) |
 | `PUT` | `.../tracker/{id}` | Full replace |
 | `DELETE` | `.../tracker/{id}` | Delete a ticket |
+| `GET` | `.../tracker/{id}/replies/` | List all replies on a ticket |
+| `GET` | `.../tracker/{id}/replies/{reply_id}` | Fetch a single reply |
+| `POST` | `.../tracker/{id}/replies/` | Add a reply to a ticket |
+| `PUT` | `.../tracker/{id}/replies/{reply_id}` | Replace a reply |
+| `PATCH` | `.../tracker/{id}/replies/{reply_id}` | Partially update a reply |
+| `DELETE` | `.../tracker/{id}/replies/{reply_id}` | Delete a reply |
 
-> **Replies/comments** and **filter parameters** are not yet exposed through this REST API.
+> **Filter parameters** are not yet exposed through this REST API (the `GET .../tracker/` list
+> always returns everything the user can see, up to 500 tickets).
 > Attachments are accessible via the standard Links/Attachments facility described in
 > [Links-and-attachments.md](Links-and-attachments.md).
 
@@ -52,7 +59,7 @@ This is the canonical shape returned by GET and accepted by POST / PUT / PATCH.
   "uid":        "42",
   "title":      "Login page crashes on mobile",
   "description": "Steps to reproduce: ...",
-  "status":     "open",
+  "status":     "Open",
   "priority":   5,
   "private":    false,
   "created":    "2026-05-25T10:00:00+00:00",
@@ -70,12 +77,12 @@ This is the canonical shape returned by GET and accepted by POST / PUT / PATCH.
 | `uid` | string | No | Stable identifier — the caldav_name if the ticket was created via REST, otherwise the numeric ID as a string. |
 | `title` | string | Yes | **Required on POST/PUT.** One-line summary. |
 | `description` | string | Yes | Full description. Omitted from the response when empty. |
-| `status` | string | Yes | Lowercase status string. See [Status Values](#6-status-values). |
+| `status` | string | Yes | Capitalized status label. See [Status Values](#6-status-values). |
 | `priority` | integer (1–9) | Yes | See [Priority Values](#7-priority-values). |
 | `private` | boolean | Yes | `true` = visible only to creator and admins. |
 | `created` | ISO 8601 datetime | No | Auto-set on creation. Omitted when not available. |
 | `modified` | ISO 8601 datetime | No | Auto-set on every save. Omitted when not available. |
-| `closed` | ISO 8601 datetime | No | Auto-set when status → `closed`. Omitted when not set. |
+| `closed` | ISO 8601 datetime | No | Auto-set when status → `"Closed"`. Omitted when not set. |
 
 ---
 
@@ -99,7 +106,7 @@ The collection is limited to 500 tickets and no filter parameters are supported.
       "id":       2,
       "uid":      "2",
       "title":    "Fix login crash",
-      "status":   "open",
+      "status":   "Open",
       "priority": 5,
       "private":  false,
       "created":  "2026-05-20T15:55:24+00:00",
@@ -120,6 +127,10 @@ Accept: application/json
 ```
 
 Returns the full ticket object directly (not wrapped in `responses`).
+The response always includes a `replies` object whose keys are reply IDs (as strings) - see
+[§14 Replies Sub-Resource](#14-replies-sub-resource). If a ticket has no replies, the `replies`
+key is absent. Restricted replies (`"restricted": true`) are only included when the authenticated
+user is an admin, technician, or assignee of the queue.
 
 **Response `200 OK`:**
 
@@ -130,11 +141,21 @@ Returns the full ticket object directly (not wrapped in `responses`).
   "uid":         "42",
   "title":       "Login page crashes on mobile",
   "description": "Steps to reproduce:\n1. Open mobile browser\n2. Navigate to /login\n3. Crash",
-  "status":      "open",
+  "status":      "Open",
   "priority":    5,
   "private":     false,
   "created":     "2026-05-25T10:00:00+00:00",
-  "modified":    "2026-05-25T11:30:00+00:00"
+  "modified":    "2026-05-25T11:30:00+00:00",
+  "replies": {
+    "101": {
+      "@type":      "Reply",
+      "id":         101,
+      "message":    "Reproduced on Chrome/Android. Assigning to mobile team.",
+      "creator":    "admin",
+      "created":    "2026-05-25T12:00:00+00:00",
+      "restricted": false
+    }
+  }
 }
 ```
 
@@ -151,14 +172,14 @@ Content-Type: application/json; charset=utf-8
 
 ## 6. Status Values
 
-Status strings are **lowercase** in the API.
+Status strings are **capitalized** in the API (the queue's own status label, title-cased for the stock statuses).
 
 | String value | Internal code | Description |
 |---|---|---|
-| `"open"` | `-100` | Active, unresolved ticket |
-| `"closed"` | `-101` | Resolved/completed ticket |
-| `"deleted"` | `-102` | Soft-deleted (not shown in normal lists) |
-| `"pending"` | `-103` | Waiting for external input |
+| `"Open"` | `-100` | Active, unresolved ticket |
+| `"Closed"` | `-101` | Resolved/completed ticket |
+| `"Deleted"` | `-102` | Soft-deleted (not shown in normal lists) |
+| `"Pending"` | `-103` | Waiting for external input |
 
 ---
 
@@ -202,7 +223,7 @@ Accept: application/json
 {
   "title":       "Login page crashes on mobile",
   "description": "Steps to reproduce:\n1. Open mobile browser\n2. Navigate to /login\n3. Crash",
-  "status":      "open",
+  "status":      "Open",
   "priority":    7,
   "private":     false
 }
@@ -233,7 +254,7 @@ Only the fields present in the request body are updated. All other fields retain
 ```json
 {
   "title":    "Updated title",
-  "status":   "closed",
+  "status":   "Closed",
   "priority": 3
 }
 ```
@@ -261,7 +282,7 @@ Replaces the ticket with the supplied body. Fields not included in the body are 
 {
   "title":       "Replaced title",
   "description": "Full replacement description",
-  "status":      "open",
+  "status":      "Open",
   "priority":    5
 }
 ```
@@ -314,7 +335,7 @@ curl -sk \
   -d '{
     "title":    "Button not working in Firefox",
     "priority": 7,
-    "status":   "open"
+    "status":   "Open"
   }' -i | grep -E "HTTP|Location"
 ```
 
@@ -335,7 +356,7 @@ curl -sk \
   "https://example.egroupware.org/egroupware/groupdav.php/admin/tracker/42" \
   -X PATCH \
   -H "Content-Type: application/json" \
-  -d '{"status": "closed", "title": "Fixed: Button not working in Firefox"}' \
+  -d '{"status": "Closed", "title": "Fixed: Button not working in Firefox"}' \
   -w "HTTP %{http_code}\n"
 ```
 
@@ -369,7 +390,7 @@ curl -sk -u "$AUTH" "$BASE/$ID" -H "Accept: application/json" | python3 -m json.
 # Update
 curl -sk -u "$AUTH" "$BASE/$ID" -X PATCH \
   -H "Content-Type: application/json" \
-  -d '{"status":"closed"}' -w "PATCH: HTTP %{http_code}\n"
+  -d '{"status":"Closed"}' -w "PATCH: HTTP %{http_code}\n"
 
 # Delete
 curl -sk -u "$AUTH" "$BASE/$ID" -X DELETE -w "DELETE: HTTP %{http_code}\n"
@@ -377,7 +398,155 @@ curl -sk -u "$AUTH" "$BASE/$ID" -X DELETE -w "DELETE: HTTP %{http_code}\n"
 
 ---
 
-## 13. Attachments
+## 13. Replies Sub-Resource
+
+Each ticket can have one or more **replies** (comments / notes). Replies appear as a child
+collection at `/tracker/{id}/replies/`, and are also included inline on every single-ticket GET
+(see [§5](#5-get--single-ticket)).
+
+### Reply JSON Object
+
+```json
+{
+  "@type":      "Reply",
+  "id":         101,
+  "message":    "Can you provide more details?",
+  "creator":    "admin",
+  "created":    "2026-05-26T09:00:00+00:00",
+  "restricted": false
+}
+```
+
+| Field | Type | Writable | Description |
+|-------|------|----------|-------------|
+| `@type` | `"Reply"` | No | Always `"Reply"`. |
+| `id` | integer | No | Reply ID. Auto-assigned on POST. |
+| `message` | string | Yes | **Required on POST/PUT.** The reply text. |
+| `creator` | string | No | Auto-set to the authenticated user on creation. |
+| `created` | ISO 8601 datetime | No | Auto-set on creation. |
+| `restricted` | boolean | Yes | `true` = visible only to admins, technicians, and assignees. Default `false`. |
+
+### ACL rules
+
+| Operation | Who can perform it |
+|-----------|---------------------|
+| GET (read) | Anyone who can read the ticket (same as ticket read ACL) |
+| POST (create) | Anyone who can read the ticket |
+| PUT/PATCH (update) | The reply's **creator** OR queue admin/technician |
+| DELETE | The reply's **creator** OR queue admin/technician |
+
+### List replies
+
+```
+GET /egroupware/groupdav.php/{user}/tracker/{id}/replies/
+Accept: application/json
+```
+
+Returns a JSON object whose keys are reply IDs (as strings):
+
+```json
+{
+  "101": { "@type": "Reply", "id": 101, "message": "First reply", "creator": "admin", "created": "2026-05-26T09:00:00+00:00", "restricted": false },
+  "102": { "@type": "Reply", "id": 102, "message": "Staff-only note", "creator": "techuser", "created": "2026-05-26T10:00:00+00:00", "restricted": true }
+}
+```
+
+### Fetch a single reply
+
+```
+GET /egroupware/groupdav.php/{user}/tracker/{id}/replies/{reply_id}
+Accept: application/json
+```
+
+Returns the single Reply object, or `404 Not found` if it doesn't exist or isn't visible to the
+authenticated user.
+
+### Create a reply (POST)
+
+```
+POST /egroupware/groupdav.php/{user}/tracker/{id}/replies/
+Content-Type: application/json
+```
+
+```json
+{ "message": "I can reproduce this. Working on a fix." }
+```
+
+Or with a restricted (staff-only) note:
+
+```json
+{ "message": "Internal: do NOT close yet - waiting for customer confirmation.", "restricted": true }
+```
+
+**Response `201 Created`:**
+
+```
+Location: /egroupware/groupdav.php/admin/tracker/42/replies/101
+```
+
+No body is returned. The new reply ID is in the `Location` header.
+
+### Update a reply (PUT / PATCH)
+
+```
+PUT   /egroupware/groupdav.php/{user}/tracker/{id}/replies/{reply_id}
+PATCH /egroupware/groupdav.php/{user}/tracker/{id}/replies/{reply_id}
+Content-Type: application/json
+```
+
+PUT replaces the reply fully (`message` required); PATCH applies only the supplied fields:
+
+```json
+{ "message": "Updated reply text." }
+```
+
+```json
+{ "restricted": true }
+```
+
+**Response `204 No Content`** - no body.
+
+### Delete a reply
+
+```
+DELETE /egroupware/groupdav.php/{user}/tracker/{id}/replies/{reply_id}
+```
+
+**Response `204 No Content`** - reply deleted.
+
+### curl examples - replies
+
+```bash
+BASE="https://example.egroupware.org/egroupware/groupdav.php/admin/tracker"
+AUTH="admin:YOUR_APP_PASSWORD"
+TICKET_ID=42
+
+# List all visible replies
+curl -sk -u "$AUTH" "$BASE/$TICKET_ID/replies/" -H "Accept: application/json" | python3 -m json.tool
+
+# Add a public reply
+LOC=$(curl -si -u "$AUTH" "$BASE/$TICKET_ID/replies/" -X POST \
+  -H "Content-Type: application/json" \
+  -d '{"message":"Working on a fix now."}' \
+  | grep -i "^location:" | tr -d '\r\n')
+REPLY_ID=$(echo "$LOC" | sed 's|.*/replies/||' | tr -d '/ \r\n')
+echo "Created reply ID=$REPLY_ID"
+
+# Fetch that reply
+curl -sk -u "$AUTH" "$BASE/$TICKET_ID/replies/$REPLY_ID" -H "Accept: application/json"
+
+# Edit the reply text (PATCH)
+curl -sk -u "$AUTH" "$BASE/$TICKET_ID/replies/$REPLY_ID" -X PATCH \
+  -H "Content-Type: application/json" \
+  -d '{"message":"Fixed in commit abc123."}' -w "PATCH: HTTP %{http_code}\n"
+
+# Delete the reply
+curl -sk -u "$AUTH" "$BASE/$TICKET_ID/replies/$REPLY_ID" -X DELETE -w "DELETE: HTTP %{http_code}\n"
+```
+
+---
+
+## 14. Attachments
 
 Ticket attachments are accessible through EGroupware's **Links and Attachments** facility.
 See [Links-and-attachments.md](Links-and-attachments.md) for the complete reference.
