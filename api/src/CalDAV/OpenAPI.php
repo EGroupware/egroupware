@@ -89,77 +89,91 @@ class OpenAPI
 			],
 		];
 
-		$operationIds = [];
-		foreach(scandir($base_dir = EGW_SERVER_ROOT.'/doc/openapi') as $file)
+		// Scanning the directory and json_decode()-ing every app's OpenAPI file is real disk I/O,
+		// and the file CONTENTS are identical for every user/request - cache that part instance-
+		// wide (shared by all users). Only the per-user app-visibility filter below, plus the
+		// operationId dedup/filter and $inline_parameters resolution, stay per-call - all cheap,
+		// in-memory operations on the already-decoded data, so correctness per user/call is kept.
+		$all_app_json = Api\Cache::getInstance(__CLASS__, 'scan', static function()
 		{
-			if (str_ends_with($file, ".json"))
+			$all = [];
+			foreach(scandir($base_dir = EGW_SERVER_ROOT.'/doc/openapi') as $file)
 			{
-				// if we're authenticated only show API's of apps the user has access too or are independent of an app like "links.json"
-				if (isset($GLOBALS['egw_info']['apps'][$app=basename($file, '.json')]) &&
-					isset($GLOBALS['egw_info']['user']['apps']) && !isset($GLOBALS['egw_info']['user']['apps'][$app]))
+				if (str_ends_with($file, ".json"))
 				{
-					continue;
+					$all[basename($file, '.json')] = json_decode(file_get_contents($base_dir.'/'.$file), true);
 				}
-				$app_json = json_decode(file_get_contents($base_dir.'/'.$file), true);
+			}
+			return $all;
+		}, [], 86400);
 
-				foreach($app_json['paths'] as $path => &$methods)
+		$operationIds = [];
+		foreach($all_app_json as $app => $app_json)
+		{
+			// if we're authenticated only show API's of apps the user has access too or are independent of an app like "links.json"
+			if (isset($GLOBALS['egw_info']['apps'][$app]) &&
+				isset($GLOBALS['egw_info']['user']['apps']) && !isset($GLOBALS['egw_info']['user']['apps'][$app]))
+			{
+				continue;
+			}
+
+			foreach($app_json['paths'] as $path => &$methods)
+			{
+				foreach($methods as $method => &$data)
 				{
-					foreach($methods as $method => &$data)
+					// OpenAPI 3.x Path Item Object fields that are NOT operations and therefore
+					// never carry an operationId - eg. a "parameters" array shared by every
+					// operation on that path (real, valid usage - doc/openapi/smallpart.json).
+					// An allow-list of actual HTTP methods, rather than trying to enumerate
+					// every non-operation field, so this stays correct if OpenAPI ever adds
+					// another Path Item field this class doesn't already know about.
+					if (!in_array(strtolower((string)$method), self::HTTP_METHODS, true))
 					{
-						// OpenAPI 3.x Path Item Object fields that are NOT operations and therefore
-						// never carry an operationId - eg. a "parameters" array shared by every
-						// operation on that path (real, valid usage - doc/openapi/smallpart.json).
-						// An allow-list of actual HTTP methods, rather than trying to enumerate
-						// every non-operation field, so this stays correct if OpenAPI ever adds
-						// another Path Item field this class doesn't already know about.
-						if (!in_array(strtolower((string)$method), self::HTTP_METHODS, true))
+						continue;
+					}
+					if (empty($data['operationId']) || isset($operationIds[$data['operationId']]))
+					{
+						throw new \Exception("$method $path requires an unique operationId".
+							(isset($operationIds[$data['operationId']]) ? "('$data[operationId]' already used by ".$operationIds[$data['operationId']].')' : '').'!');
+					}
+					$operationIds[$data['operationId']] = $method.' '.$path;
+					// do we need to filter out this operationId
+					if (in_array($data['operationId'], $operationIdFilter) === $deny)
+					{
+						unset($methods[$method]);
+						continue;
+					}
+					if ($inline_parameters)
+					{
+						foreach ($data['parameters'] as &$parameter)
 						{
-							continue;
-						}
-						if (empty($data['operationId']) || isset($operationIds[$data['operationId']]))
-						{
-							throw new \Exception("$method $path requires an unique operationId".
-								(isset($operationIds[$data['operationId']]) ? "('$data[operationId]' already used by ".$operationIds[$data['operationId']].')' : '').'!');
-						}
-						$operationIds[$data['operationId']] = $method.' '.$path;
-						// do we need to filter out this operationId
-						if (in_array($data['operationId'], $operationIdFilter) === $deny)
-						{
-							unset($methods[$method]);
-							continue;
-						}
-						if ($inline_parameters)
-						{
-							foreach ($data['parameters'] as &$parameter)
+							if (isset($parameter['$ref']) && str_starts_with($parameter['$ref'], '#/components/parameters/'))
 							{
-								if (isset($parameter['$ref']) && str_starts_with($parameter['$ref'], '#/components/parameters/'))
+								if (!isset($app_json['components']['parameters'][$name = explode('/', $parameter['$ref'])[3] ?? '']))
 								{
-									if (!isset($app_json['components']['parameters'][$name = explode('/', $parameter['$ref'])[3] ?? '']))
-									{
-										throw new \Exception("$method $path: Parameter reference {$parameter['$ref']} not found!");
-									}
-									$parameter = $app_json['components']['parameters'][$name];
+									throw new \Exception("$method $path: Parameter reference {$parameter['$ref']} not found!");
 								}
+								$parameter = $app_json['components']['parameters'][$name];
 							}
 						}
 					}
-					if (!$methods)
-					{
-						unset($app_json['paths'][$path]);
-					}
 				}
-				if ($inline_parameters)
+				if (!$methods)
 				{
-					unset($app_json['parameters']);
+					unset($app_json['paths'][$path]);
 				}
-				// check if app's $operationIds have not been completely filtered out
-				if ($app_json['paths'])
-				{
-					$json['paths'] += $app_json['paths'] ?? [];
-					$json['components']['parameters'] += $app_json['components']['parameters'] ?? [];
-					$json['components']['schemas'] += $app_json['components']['schemas'] ?? [];
-					$json['components']['responses'] += $app_json['components']['responses'] ?? [];
-				}
+			}
+			if ($inline_parameters)
+			{
+				unset($app_json['parameters']);
+			}
+			// check if app's $operationIds have not been completely filtered out
+			if ($app_json['paths'])
+			{
+				$json['paths'] += $app_json['paths'] ?? [];
+				$json['components']['parameters'] += $app_json['components']['parameters'] ?? [];
+				$json['components']['schemas'] += $app_json['components']['schemas'] ?? [];
+				$json['components']['responses'] += $app_json['components']['responses'] ?? [];
 			}
 		}
 		return $json;
