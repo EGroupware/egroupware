@@ -12,7 +12,7 @@ import {customElement} from "lit/decorators/custom-element.js";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {LitElement, nothing} from "lit";
 import {html} from "lit/static-html.js";
-import {et2_INextmatchHeader, et2_nextmatch} from "../et2_extension_nextmatch";
+import type {NextmatchInterface} from "../Et2Nextmatch/NextmatchInterfaces";
 import {Et2Favorites} from "../Et2Favorites/Et2Favorites";
 import {classMap} from "lit/directives/class-map.js";
 import {HasSlotController} from "../Et2Widget/slot";
@@ -21,6 +21,21 @@ import {Et2Template} from "../Et2Template/Et2Template";
 import {et2_arrayMgr} from "../et2_core_arrayMgr";
 import {et2_IInput} from "../et2_core_interfaces";
 import {Et2Widget, loadWebComponent} from "../Et2Widget/Et2Widget";
+
+/**
+ * Members only the legacy `et2_nextmatch` widget has.
+ *
+ * A filterbox drives both nextmatches, so it can not simply require these - it checks for them
+ * at runtime.  Naming them rather than falling back to `any` keeps each remaining legacy-only
+ * reach greppable; all of them go when the legacy widget does.
+ */
+type LegacyNextmatchInternals = {
+	/** Header bar widget, whose `header_div` holds the filter controls built from the template. */
+	header? : { header_div? : any, [key : string] : any },
+
+	/** Resolves once the legacy widget has loaded its row template - the webComponent has updateComplete instead. */
+	template_promise? : Promise<any>
+};
 
 /**
  * @summary A list of filters ( from a nextmatch )
@@ -80,7 +95,7 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 	 * string-id lookup, which does and is left on willUpdate()'s existing, already-working timing.
 	 */
 	@property({type: String})
-	set nextmatch(value : string | et2_nextmatch)
+	set nextmatch(value : string | NextmatchInterface)
 	{
 		const oldValue = this._nextmatchValue;
 		if(value === oldValue)
@@ -95,19 +110,19 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 		}
 	}
 
-	get nextmatch() : string | et2_nextmatch
+	get nextmatch() : string | NextmatchInterface
 	{
 		return this._nextmatchValue;
 	}
 
-	private _nextmatchValue : string | et2_nextmatch = null;
+	private _nextmatchValue : string | NextmatchInterface = null;
 
 	/* When copying from a nextmatch, we can leave, delete or replace column headers with text in place of the original widgets */
 	@property({type: String})
 	originalWidgets : "none" | "delete" | "hide" | "replace" = "none";
 
 	protected hasSlotController = new HasSlotController(this, "label", "help-text", "prefix", "suffix");
-	protected _nextmatch : et2_nextmatch = null;
+	protected _nextmatch : NextmatchInterface & LegacyNextmatchInternals = null;
 	protected _groups : {
 		[nextmatch_id : string] : { [name : string] : { filters : Filter[], order : number, dataId? : string } }
 	} = {};
@@ -366,6 +381,19 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 	}
 
 	/**
+	 * The nextmatch's own DOM node - where the filterbox's CSS classes and its "et2-filter"
+	 * listener go, and what the column-header filters are queried out of.
+	 *
+	 * Kept as one helper because the answer differs per nextmatch: the legacy widget builds a
+	 * div and hands it over, while the webComponent is its own node.  Anything that turned out
+	 * not to be a widget at all falls through as itself, which is still the right element.
+	 */
+	protected _nextmatchNode() : HTMLElement
+	{
+		return <HTMLElement>(typeof this._nextmatch?.getDOMNode === "function" ? this._nextmatch.getDOMNode() : this._nextmatch);
+	}
+
+	/**
 	 * Find our nextmatch widget
 	 *
 	 * @protected
@@ -396,9 +424,10 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 		// Found a nextmatch and there's no custom filter - autogenerate filters
 		if(this._nextmatch)
 		{
-			const nextmatchNode = typeof this._nextmatch.getDOMNode === "function" ? this._nextmatch.getDOMNode() : this._nextmatch;
-			// Don't bind now, nextmatch probably isn't loaded yet
-			// @ts-ignore template_promise is private, but et2_nextmatch doesn't have updateComplete()
+			const nextmatchNode = this._nextmatchNode();
+			// Don't bind now, nextmatch probably isn't loaded yet.  template_promise is the legacy
+			// widget's "row template loaded" signal; the webComponent has none and resolves at once,
+			// readNextmatchFilters() waits on its updateComplete instead.
 			(this._nextmatch.template_promise ?? Promise.resolve()).then(() => this.readNextmatchFilters());
 
 			nextmatchNode?.addEventListener?.("et2-filter", this.handleNextmatchFilter);
@@ -408,7 +437,7 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 
 	public async readNextmatchFilters()
 	{
-		const nextmatchNode = typeof this._nextmatch?.getDOMNode === "function" ? this._nextmatch.getDOMNode() : this._nextmatch;
+		const nextmatchNode = this._nextmatchNode();
 
 		// Wait for nextmatch widgets to finish or we'll miss settings
 		const waitForWebComponents = [];
@@ -432,9 +461,10 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 		}
 		await Promise.all(waitForWebComponents);
 
+		// Legacy widget only - the webComponent has no separate header bar widget, its header
+		// filters are found by the column-header query below instead.
 		if(this._nextmatch?.header?.header_div?.[0])
 		{
-			// @ts-ignore header is private
 			this._nextmatch.header.header_div[0]
 				.querySelectorAll(".et2-input-widget")
 				.forEach((widget : HTMLElement) =>
@@ -485,7 +515,13 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 				case "none":
 					break;
 				case "replace":
-					if(!noReplaceClasses.includes(widget.localName) && widget.implements(et2_INextmatchHeader))
+					// Passed as a literal rather than importing et2_extension_nextmatch's const of the
+					// same name: implements() takes a string, and that import is the one thing that
+					// would drag the whole legacy nextmatch module in wherever a filterbox loads.
+					// The registry entry it looks up is registered by that module, which etemplate2
+					// always loads - so this is only ever true for a legacy header anyway, and it
+					// goes when the legacy widget does.
+					if(!noReplaceClasses.includes(widget.localName) && widget.implements("et2_INextmatchHeader"))
 					{
 						const replacement = document.createElement("span");
 						replacement.innerHTML = widget.label || widget.ariaLabel || widget.placeholder || widget.emptyLabel;

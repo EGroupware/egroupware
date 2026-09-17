@@ -291,6 +291,79 @@ Portlet-specific things that do not come up when converting an app's own list:
 In progress. The checklist below is validated against five real conversions (see the reference
 sections for the evidence each item is based on). Expect it to grow as more apps convert.
 
+## Legacy-only interfaces: `et2_INextmatchHeader` / `et2_INextmatchSortable`
+
+Both interfaces stay in `et2_extension_nextmatch.ts` and **are deleted along with it** - they are
+the legacy widget's contracts with its headers, and `Et2Nextmatch` drives neither. Verified, not
+assumed:
+
+- `Et2Nextmatch.ts` never mentions either interface, and never calls `implements()` or
+  `iterateOver()` at all. It finds its sort headers by tag name
+  (`querySelectorAll("et2-nextmatch-sortheader")`) and duck-types `setSortmode()`.
+- `setNextmatch()` has exactly one caller in the whole tree, in `et2_extension_nextmatch.ts`
+  itself. Every `setNextmatch()` implementation on an `Et2Nextmatch/Headers/*` widget, and the
+  `nextmatch` field each keeps, exists only so that header still works inside a legacy
+  `<nextmatch>`.
+- `et2_INextmatchSortable` has no consumer outside the legacy widget whatsoever.
+
+**They were deliberately not moved to a neutral module**, because moving them buys nothing. Seven
+of the eight `api/js` files that import them use them only in an `implements` clause, and the
+project's Babel pipeline (`@babel/preset-typescript`) erases an import that survives only in type
+positions - those files emit no import statement at all, so they never depended on the legacy
+module at runtime. (The same is true in reverse: `et2_extension_nextmatch.ts`'s own
+`import {Et2Filterbox}` is a type annotation plus a type *assertion*, so it is erased too.)
+
+The one exception was `Et2Filterbox`, whose `originalWidgets="replace"` branch used the `const` as
+a **value** - and that single import was enough to pull the entire ~4600-line legacy module in
+wherever a filterbox loads. Since `implements()` takes a plain string (see
+`et2_core_inheritance.ts`), that is now written as `widget.implements("et2_INextmatchHeader")` with
+no import, which is the whole of the real decoupling here. The registry entry it looks up is
+registered by `et2_extension_nextmatch.ts`, which `etemplate2.ts` always loads.
+
+**When the legacy widget is deleted**, delete with it: both interfaces and their
+`et2_implements_registry` entries; the `implements et2_INextmatchHeader` /
+`implements et2_INextmatchSortable` clauses and `setNextmatch()` implementations on
+`Headers/Header.ts`, `Headers/FilterMixin.ts`, `Headers/FilterHeader.ts`,
+`Headers/AccountFilterHeader.ts`, `Headers/EntryHeader.ts`, `Headers/SortableHeader.ts` and
+`Et2Favorites.ts`; `Et2Filterbox`'s `implements("et2_INextmatchHeader")` check (note that the
+`"replace"` case then falls through to `"delete"`, which is the intended end state - the widgets
+it finds by tag name are header widgets by construction, so the check only ever did real work for
+widgets scraped out of the legacy header bar); and `Et2Filterbox`'s local
+`LegacyNextmatchInternals` type with the `header` / `template_promise` guards that use it.
+
+What does **not** go is `Et2Nextmatch/NextmatchInterfaces.ts` - see below.
+
+## `NextmatchInterface`: what the widgets around a nextmatch may rely on
+
+`api/js/etemplate/Et2Nextmatch/NextmatchInterfaces.ts` holds `NextmatchInterface` and
+`NextmatchActiveFilters`, the shape a header, filter or favourite widget sees. Both
+`et2_nextmatch` and `Et2Nextmatch` declare `implements NextmatchInterface`, so anything added to
+it has to exist on both.
+
+This replaced `et2_nextmatch` type annotations in `Headers/Header.ts`, `Headers/FilterMixin.ts`,
+`Et2Favorites.ts` and `Et2Filterbox.ts`. Those annotations were not merely a needless import -
+they were **wrong**: `Et2Filterbox` genuinely drives both widgets, duck-typing `getDOMNode()`,
+`getChildren()` and `updateComplete`, and carried six `@ts-ignore`s papering over the mismatch.
+Three of those are now gone, along with two real pre-existing errors (`activeFilters.sort` did not
+exist on the legacy `ActiveFilters` type, which this replaced).
+
+**Re-export it with `export type`, not a plain `export`.** `NextmatchInterface` and
+`NextmatchActiveFilters` are types, so Babel strips them and the compiled module has no runtime
+export of either name; `et2_extension_nextmatch.ts` re-exporting them as values fails the rollup
+build with *"'NextmatchInterface' is not exported by ... NextmatchInterfaces.ts"*. `npm run
+typecheck` does **not** catch this - tsc is happy, because in TypeScript's view the names do exist.
+Only a real `npx rollup -c` finds it, which is worth remembering for any future type-only module.
+
+Two things to know if you extend it:
+
+- `NextmatchActiveFilters` is a **type alias, not an interface**, on purpose. Only aliases get
+  TypeScript's implicit index signature, and without it the two implementations - one typed with
+  named filter keys, one returning a plain `Record<string, any>` - cannot both satisfy it without
+  a cast.
+- `options` is on the interface but marked `@deprecated`. Both widgets have it (the webComponent
+  via `Et2Widget`'s compatibility getter, which rebuilds it on every access and logs a
+  deprecation trace), and a couple of callers still index it by name. Prefer real properties.
+
 ## `ExposeMixin`'s gallery, and the row API it needed (fixed 2026-09-14)
 
 `api/js/etemplate/Expose/ExposeMixin.ts` - the gallery/lightbox mixin used by `Et2VfsMime.ts`

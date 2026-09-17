@@ -1,4 +1,5 @@
 import {html, LitElement, PropertyValues} from "lit";
+import type {NextmatchInterface} from "./NextmatchInterfaces";
 import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
@@ -89,7 +90,7 @@ type Et2NextmatchPrintState = {
  * @cssproperty [--meta-column-width=max(var(--sl-spacing-large), 6px)] - Width of leading metadata indicator/expander column.
  */
 @customElement("et2-nextmatch")
-export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
+export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, NextmatchInterface
 {
 	/**
 	 * Compose Nextmatch host styles from shared Et2Widget styles and local layout styles.

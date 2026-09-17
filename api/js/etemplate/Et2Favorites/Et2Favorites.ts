@@ -13,7 +13,8 @@ import {Et2DropdownButton} from "../Et2DropdownButton/Et2DropdownButton";
 import {html, PropertyValues, TemplateResult} from "lit";
 import {property} from "lit/decorators/property.js";
 import {SelectOption} from "../Et2Select/FindSelectOptions";
-import {et2_INextmatchHeader, et2_nextmatch} from "../et2_extension_nextmatch";
+import {et2_INextmatchHeader} from "../et2_extension_nextmatch";
+import type {NextmatchInterface} from "../Et2Nextmatch/NextmatchInterfaces";
 import {Et2Image} from "../Et2Image/Et2Image";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import {SlMenuItem} from "@shoelace-style/shoelace";
@@ -75,7 +76,7 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 
 	private favSortedList : any = [];
 	private _preferred : string;
-	private _nextmatch : et2_nextmatch;
+	private _nextmatch : NextmatchInterface;
 
 	constructor()
 	{
@@ -363,9 +364,9 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 	 * Set the nextmatch to filter
 	 * From et2_INextmatchHeader interface
 	 *
-	 * @param {et2_nextmatch} nextmatch
+	 * @param {NextmatchInterface} nextmatch
 	 */
-	setNextmatch(nextmatch)
+	setNextmatch(nextmatch : NextmatchInterface)
 	{
 		this._nextmatch = nextmatch;
 

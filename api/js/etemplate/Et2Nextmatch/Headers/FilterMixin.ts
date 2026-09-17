@@ -1,5 +1,6 @@
 import {egw} from "../../../jsapi/egw_global";
-import {et2_INextmatchHeader, et2_nextmatch} from "../../et2_extension_nextmatch";
+import {et2_INextmatchHeader} from "../../et2_extension_nextmatch";
+import type {NextmatchInterface} from "../NextmatchInterfaces";
 import {LitElement, PropertyValues} from "lit";
 import {ET2_NEXTMATCH_FILTER_EVENT, Et2NextmatchFilterEventDetail} from "./events";
 
@@ -14,7 +15,7 @@ type Constructor<T = LitElement> = new (...args : any[]) => T;
  */
 export const FilterMixin = <T extends Constructor>(superclass : T) => class extends superclass implements et2_INextmatchHeader
 {
-	private nextmatch : et2_nextmatch;
+	private nextmatch : NextmatchInterface;
 
 	willUpdate(changedProperties : PropertyValues)
 	{
@@ -85,9 +86,9 @@ export const FilterMixin = <T extends Constructor>(superclass : T) => class exte
 	 * Set nextmatch is the function which has to be implemented for the
 	 * et2_INextmatchHeader interface.
 	 *
-	 * @param {et2_nextmatch} _nextmatch
+	 * @param {NextmatchInterface} _nextmatch
 	 */
-	setNextmatch(_nextmatch : et2_nextmatch)
+	setNextmatch(_nextmatch : NextmatchInterface)
 	{
 		this.nextmatch = _nextmatch;
 
