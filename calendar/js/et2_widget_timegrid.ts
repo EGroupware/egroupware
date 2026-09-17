@@ -10,9 +10,8 @@
 
 import {et2_createWidget, et2_register_widget, WidgetConfig} from "../../api/js/etemplate/et2_core_widget";
 import {ClassWithAttributes} from "../../api/js/etemplate/et2_core_inheritance";
-import {et2_calendar_view} from "./et2_widget_view";
+import {CALENDAR_INVALIDATE_TIMEOUT, et2_calendar_view} from "./et2_widget_view";
 import {et2_action_object_impl} from "../../api/js/etemplate/et2_core_DOMWidget";
-import {et2_dataview_grid} from "../../api/js/etemplate/et2_dataview_view_grid";
 import {et2_calendar_daycol} from "./et2_widget_daycol";
 import {egw} from "../../api/js/jsapi/egw_global";
 import {et2_no_init} from "../../api/js/etemplate/et2_core_common";
@@ -646,7 +645,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 
 			// Hide loader
 			window.setTimeout(jQuery.proxy(function() {this.loader.hide();},this.widget),200);
-		},{widget:this,"trigger":trigger}),et2_dataview_grid.ET2_GRID_INVALIDATE_TIMEOUT);
+		},{widget:this,"trigger":trigger}),CALENDAR_INVALIDATE_TIMEOUT);
 	}
 
 	detachFromDOM( )

@@ -10,7 +10,7 @@
 
 import {et2_createWidget, et2_register_widget, WidgetConfig} from "../../api/js/etemplate/et2_core_widget";
 import {ClassWithAttributes} from "../../api/js/etemplate/et2_core_inheritance";
-import {et2_calendar_view} from "./et2_widget_view";
+import {CALENDAR_INVALIDATE_TIMEOUT, et2_calendar_view} from "./et2_widget_view";
 import {et2_action_object_impl} from "../../api/js/etemplate/et2_core_DOMWidget";
 import {et2_calendar_event} from "./et2_widget_event";
 import {et2_calendar_planner_row} from "./et2_widget_planner_row";
@@ -26,7 +26,6 @@ import {et2_compileLegacyJS} from "../../api/js/etemplate/et2_core_legacyJSFunct
 import {et2_no_init} from "../../api/js/etemplate/et2_core_common";
 import {CalendarApp} from "./app";
 import {sprintf} from "../../api/js/egw_action/egw_action_common";
-import {et2_dataview_grid} from "../../api/js/etemplate/et2_dataview_view_grid";
 import {formatDate, formatTime} from "../../api/js/etemplate/Et2Date/Et2Date";
 import interact from "@interactjs/interactjs/index";
 import type {InteractEvent} from "@interactjs/core/InteractEvent";
@@ -910,7 +909,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 
 		this.widget._updateNow();
 			window.setTimeout(jQuery.proxy(function() {if(this.loader) this.loader.hide();},this.widget),500);
-		},{widget:this,"trigger":trigger}),et2_dataview_grid.ET2_GRID_INVALIDATE_TIMEOUT);
+		},{widget:this,"trigger":trigger}),CALENDAR_INVALIDATE_TIMEOUT);
 	}
 
 	detachFromDOM()

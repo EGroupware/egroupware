@@ -15,6 +15,13 @@ import {et2_calendar_event} from "./et2_widget_event";
 import {formatDate} from "../../api/js/etemplate/Et2Date/Et2Date";
 
 /**
+ * Milliseconds to wait after a view is invalidated (resized, date changed, owners changed, …)
+ * before actually redrawing it.  Several invalidations usually arrive in a burst - eg. a window
+ * resize fires continuously - and this collapses them into a single redraw.
+ */
+export const CALENDAR_INVALIDATE_TIMEOUT = 50;
+
+/**
  * Parent class for the various calendar views to reduce copied code
  *
  *
