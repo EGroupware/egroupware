@@ -278,11 +278,18 @@ class InfologApp extends EgwApp
 				case 'duedate':
 					dates.set_disabled(false);
 
+					// Only for a filter the user actually picked (see checkNmFilterChanged() below),
+					// never the one-off sync EgwApp.et2_ready() fires to seed the toolbar on load -
+					// that would pop the date-picker open on every single page load.
 					// Focusing an empty date field can make it silently pick today and fire its own
 					// change, overwriting dates a favorite just applied - only focus if nm really has none.
-					if (!nm.activeFilters.col_filter?.startdate)
+					// infolog.index.dates declares plain "startdate"/"enddate" and infolog_bo reads
+					// them off the top of the query (not out of col_filter), so both the widget id
+					// and the filter live there - going through col_filter[...] silently matched
+					// nothing and this never focused at all.
+					if (ev && !nm.activeFilters.startdate)
 					{
-						nm.updateComplete.then(() => dates.getWidgetById('col_filter[startdate]')?.focus());
+						nm.updateComplete.then(() => dates.getWidgetById('startdate').focus());
 					}
 					break;
 				default:
@@ -924,10 +931,11 @@ class InfologApp extends EgwApp
 	 * @param app_toolbar
 	 * @param id
 	 * @param value
+	 * @param _ev
 	 */
-	checkNmFilterChanged(app_toolbar, id : string, value : string)
+	checkNmFilterChanged(app_toolbar, id : string, value : string, _ev? : Event)
 	{
-		super.checkNmFilterChanged(app_toolbar, id, value);
+		super.checkNmFilterChanged(app_toolbar, id, value, _ev);
 
 		if (id === 'filter2')
 		{
@@ -945,7 +953,10 @@ class InfologApp extends EgwApp
 		}
 		else if (id === 'filter')
 		{
-			this.filter_change(null, this.et2.getWidgetById(id));
+			// pass the event on only for a real et2-filter (those always carry oldFilters), so
+			// filter_change() can tell a user picking the filter from the one-off sync
+			// EgwApp.et2_ready() fires to seed the toolbar on load
+			this.filter_change((<CustomEvent>_ev)?.detail?.oldFilters ? _ev : null, this.et2.getWidgetById(id));
 		}
 	}
 }

@@ -121,9 +121,13 @@ class TimesheetApp extends EgwApp
 			if (!filter.value) nm.applyFilters({startdate: null, enddate: null}, {reload: false});
 			if (filter.value === "custom")
 			{
+				// Only for a filter the user actually picked (ev), never the load-time toolbar sync:
+				// activeFilters never carries startdate on a fresh load, so the check below passes
+				// even when a range IS restored and we would pop the date-picker open on every
+				// single load made with the custom filter active.
 				// Focusing an empty date field can make it silently pick today and fire its own
 				// change, overwriting dates a favorite just applied - only focus if nm really has none.
-				if (!nm.activeFilters.startdate)
+				if (ev && !nm.activeFilters.startdate)
 				{
 					nm.updateComplete.then(() => dates.getWidgetById('startdate').focus());
 				}
@@ -470,7 +474,10 @@ class TimesheetApp extends EgwApp
 			const filterWidget = this.et2.getWidgetById('filter');
 			if(filterWidget)
 			{
-				this.filter_change(null, <Et2Select>filterWidget);
+				// hand filter_change() the event only for a real et2-filter (those always carry
+				// oldFilters), so it can tell a user picking "custom" from EgwApp.et2_ready()'s
+				// load-time toolbar sync - the date widgets still get enabled/disabled either way
+				this.filter_change(detail?.oldFilters ? _ev : null, <Et2Select>filterWidget);
 			}
 		}
 	}
