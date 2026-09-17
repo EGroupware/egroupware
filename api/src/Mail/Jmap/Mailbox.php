@@ -133,4 +133,63 @@ class Mailbox extends Type
 		}
 		return $folderPaths[$folderId] ?? null;
 	}
+
+	/**
+	 * List every mailbox in this account as flat "path => translated label" pairs, eg.
+	 * "INBOX/Trash" => "INBOX/Papierkorb" - one batched Mailbox/query (no filter, everything)
+	 * + Mailbox/get call, mirroring mail/js/folderTree.ts's buildMailboxPaths() (same role ->
+	 * lang() key map, same path-joining), for server-side folder search/enumeration where
+	 * client-side JMAP isn't an option (mail_acl.inc.php - see Imap\Jmap::listMailboxPaths(),
+	 * the thin per-account wrapper around this that real callers use).
+	 *
+	 * @param ?string $accountId defaults to the session's own accountId
+	 * @return array path => translated label
+	 */
+	public function listAllPaths(?string $accountId=null) : array
+	{
+		static $roleLabelKeys = [
+			'inbox' => 'INBOX', 'trash' => 'Trash', 'sent' => 'Sent', 'drafts' => 'Drafts',
+			'junk' => 'Junk', 'templates' => 'Templates', 'outbox' => 'Outbox', 'archive' => 'Archive',
+		];
+		$accountId = $accountId ?: $this->jmap->accountId;
+		$response = $this->jmap->jmapCall([
+			['Mailbox/query', ['accountId' => $accountId], '0'],
+			['Mailbox/get', [
+				'accountId' => $accountId,
+				'#ids' => ['name' => 'Mailbox/query', 'path' => '/ids', 'resultOf' => '0'],
+			], '1'],
+		]);
+		$mailboxes = $response['methodResponses'][1][1]['list'] ?? [];
+		$byId = [];
+		foreach ($mailboxes as $mailbox)
+		{
+			$byId[$mailbox['id']] = $mailbox;
+		}
+
+		$resolved = [];
+		$resolve = function(array $mailbox) use (&$resolve, &$resolved, $byId, $roleLabelKeys)
+		{
+			if (isset($resolved[$mailbox['id']]))
+			{
+				return $resolved[$mailbox['id']];
+			}
+			$parent = !empty($mailbox['parentId']) ? ($byId[$mailbox['parentId']] ?? null) : null;
+			$parentResolved = $parent ? $resolve($parent) : null;
+			$pathSegment = ($mailbox['role'] ?? null) === 'inbox' ? 'INBOX' : $mailbox['name'];
+			$roleLabelKey = !empty($mailbox['role']) ? ($roleLabelKeys[$mailbox['role']] ?? null) : null;
+			$labelSegment = $roleLabelKey ? lang($roleLabelKey) : $mailbox['name'];
+			$result = [
+				'path'  => $parentResolved ? $parentResolved['path'].'/'.$pathSegment : $pathSegment,
+				'label' => $parentResolved ? $parentResolved['label'].'/'.$labelSegment : $labelSegment,
+			];
+			return $resolved[$mailbox['id']] = $result;
+		};
+		$paths = [];
+		foreach ($mailboxes as $mailbox)
+		{
+			$r = $resolve($mailbox);
+			$paths[$r['path']] = $r['label'];
+		}
+		return $paths;
+	}
 }

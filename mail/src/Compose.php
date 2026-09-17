@@ -1165,13 +1165,27 @@ class Compose
 			//error_log(__METHOD__.__LINE__.':'.$this->mail_bo->icServer->ImapServerId);
 			$this->mail_bo->openConnection($this->mail_bo->icServer->ImapServerId);
 			//error_log(__METHOD__.__LINE__.array2string($_searchString).'<->'.$searchString);
-			$folderObjects = $this->mail_bo->getFolderObjects(true,false,true,$useCacheIfPossible);
-			if (count($folderObjects)<=1) {
-				$useCacheIfPossible = false;
+			// getFolderObjects() ultimately relies on Horde_Imap_Client_Socket::list(Subscribed)
+			// Mailboxes() - a real raw-IMAP call, unreachable for a JMAP-only account like Stalwart
+			// (see project_jmap_imap_fallthrough_cleanup) - use the JMAP-native listing instead
+			if ($this->mail_bo->icServer instanceof Mail\Imap\Jmap)
+			{
+				$folderObjects = [];
+				foreach ($this->mail_bo->icServer->listMailboxPaths() as $path => $label)
+				{
+					$folderObjects[$path] = (object)['displayName' => $label];
+				}
 			}
 			else
 			{
-				$useCacheIfPossible = true;
+				$folderObjects = $this->mail_bo->getFolderObjects(true,false,true,$useCacheIfPossible);
+				if (count($folderObjects)<=1) {
+					$useCacheIfPossible = false;
+				}
+				else
+				{
+					$useCacheIfPossible = true;
+				}
 			}
 			$searchString = Api\Translation::convert($_searchString, Mail::$displayCharset,'UTF7-IMAP');
 			foreach ($folderObjects as $k =>$fA)

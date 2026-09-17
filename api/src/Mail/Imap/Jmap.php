@@ -17,6 +17,7 @@ use EGroupware\Api\Mail;
 use EGroupware\SwoolePush\Tokens;
 use EGroupware\Api\Mail\Jmap\Imap as JmapImap;
 use EGroupware\Api\Mail\Jmap\Http as JmapHttp;
+use EGroupware\Api\Mail\Jmap\Mailbox as JmapMailbox;
 
 /**
  * Manages connection to Jmap e.g. Stalwart mail-server
@@ -658,6 +659,28 @@ class Jmap extends Mail\Imap
 			}
 		}
 		return $acls;
+	}
+
+	/**
+	 * List every mailbox in this account as flat "path => translated label" pairs, eg.
+	 * "INBOX/Trash" => "INBOX/Papierkorb" - JMAP-native (one batched Mailbox/query + Mailbox/get
+	 * call via Mail\Jmap\Mailbox::listAllPaths(), independently unit-tested there against a fake
+	 * JMAP session), for server-side folder search/enumeration on an account with no real IMAP
+	 * connection behind it (a plain Horde_Imap_Client_Socket listMailboxes()/
+	 * listSubscribedMailboxes() call - what getFolderObjects() and getSubfolders() both ultimately
+	 * rely on - throws for this class, see project_jmap_imap_fallthrough_cleanup).
+	 *
+	 * Used by mail_acl.inc.php's folder search (ticket #124351/#124711 follow-up) - that class must
+	 * never hand real IMAP/JMAP credentials to client-side JS (it can run in an admin-impersonation
+	 * context, see doc/ai/projects/mail-folder-tree-jmap.md's "hard constraint"), so this stays a
+	 * server-side JMAP HTTP call via the already-server-side $this->jmapClient(), not a reuse of
+	 * the client-side MailJmap.getAllMailboxes()/buildMailboxPaths() this mirrors.
+	 *
+	 * @return array path => translated label
+	 */
+	public function listMailboxPaths() : array
+	{
+		return (new JmapMailbox($this->jmapClient()))->listAllPaths();
 	}
 
 	/**

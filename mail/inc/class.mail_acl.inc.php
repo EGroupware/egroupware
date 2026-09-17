@@ -141,7 +141,7 @@ class mail_acl
 		}
 		if (!$this->imap->isAdminConnection)
 		{
-			$tmpl->setElementAttribute('mailbox', 'searchOptions', array('mailaccount' => $acc_id));
+			$tmpl->setElementAttribute('mailbox', 'searchOptions', array('mailaccount' => $acc_id, 'noPrefixId' => true));
 		}
 		else
 		{
