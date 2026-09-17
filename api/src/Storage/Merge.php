@@ -1109,12 +1109,13 @@ abstract class Merge
 		if($mimetype == 'text/plain' && $ids && count($ids) > 1)
 		{
 			// textdocuments are simple, they do not hold start and end, but they may have content before and after the $$pagerepeat$$ tag
-			// header and footer should not hold any $$ tags; if we find $$ tags with the header, we assume it is the pagerepeatcontent
-			$nohead = false;
-			if(stripos($contentstart, '$$') !== false)
-			{
-				$nohead = true;
-			}
+			// Without a $$pagerepeat$$ tag the whole document is the content to repeat. With one, what
+			// is in front of it is a header written out once for all entries, so it can only hold
+			// placeholders not depending on the entry (current date, time and user), which are replaced
+			// further down. Any other placeholder there means the tag marks the end of the content to
+			// repeat, not the start.
+			$nohead = $contentrepeat ? $this->has_entry_placeholder($contentstart) :
+				stripos($contentstart, '$$') !== false;
 			if($nohead)
 			{
 				$contentend = $contentrepeat;
@@ -1174,6 +1175,14 @@ abstract class Merge
 
 		if($contentrepeat)
 		{
+			// Everything outside the $$pagerepeat$$ block - the letterhead and closing of a serial
+			// letter - is written out once, while the block itself is merged once per entry. There is
+			// no single entry to merge the header and footer with, but the current date, time and user
+			// do not depend on one: without replacing them here they would stay in the document as
+			// typed, as that is exactly where a letterhead uses them.
+			$contentstart = $this->merge_without_entry($contentstart, $mimetype, $mso_application_progid, $charset);
+			$contentend = $this->merge_without_entry($contentend, $mimetype, $mso_application_progid, $charset);
+
 			$content_stream = fopen('php://temp', 'r+');
 			fwrite($content_stream, $contentstart);
 			$joiner = '';
@@ -1242,14 +1251,7 @@ abstract class Merge
 				error_log(__METHOD__ . "() $n: $id " . Api\Vfs::hsize(memory_get_usage(true)));
 			}
 			// some general replacements: current user, date and time
-			if(strpos($content, '$$user/') !== false && ($user = $GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'], 'person_id')))
-			{
-				$replacements += $this->contact_replacements($user, 'user', false, $content);
-				$replacements['$$user/primary_group$$'] = $GLOBALS['egw']->accounts->id2name($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'], 'account_primary_group'));
-			}
-			$replacements['$$date$$'] = Api\DateTime::to('now', true);
-			$replacements['$$datetime$$'] = Api\DateTime::to('now');
-			$replacements['$$time$$'] = Api\DateTime::to('now', false);
+			$replacements += $this->entry_independent_replacements($content);
 
 			$app = $this->get_app();
 			$replacements += $this->share_placeholder($app, $id, '', $content);
@@ -1371,6 +1373,87 @@ abstract class Merge
 		}
 
 		return $content;
+	}
+
+	/**
+	 * Does the given content hold a placeholder that can only be replaced with a concrete entry?
+	 *
+	 * $$date$$, $$datetime$$, $$time$$ and $$user/...$$ are the current date, time and user, which
+	 * are the same for every entry of a merge. Every other placeholder needs an entry to merge with.
+	 *
+	 * @param string $content
+	 * @return boolean
+	 */
+	private function has_entry_placeholder($content)
+	{
+		// splitting on the markers gives the placeholder names at every odd index, which is more
+		// reliable than matching them: a pattern for one placeholder also matches the gap between two
+		$parts = explode('$$', (string)$content);
+		for($n = 1; $n < count($parts); $n += 2)
+		{
+			if(!preg_match('/^(date|datetime|time|user\/.*)$/', $parts[$n]))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Replacements not depending on the entry to merge: current date, time and user
+	 *
+	 * @param string $content content to merge, only queried for which replacements are needed
+	 * @return array placeholder => replacement pairs
+	 */
+	private function entry_independent_replacements(&$content)
+	{
+		$replacements = [];
+		if(strpos($content, '$$user/') !== false &&
+			($user = $GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'], 'person_id')))
+		{
+			$replacements += $this->contact_replacements($user, 'user', false, $content);
+			$replacements['$$user/primary_group$$'] = $GLOBALS['egw']->accounts->id2name($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'], 'account_primary_group'));
+		}
+		$replacements['$$date$$'] = Api\DateTime::to('now', true);
+		$replacements['$$datetime$$'] = Api\DateTime::to('now');
+		$replacements['$$time$$'] = Api\DateTime::to('now', false);
+
+		return $replacements;
+	}
+
+	/**
+	 * Merge the part of a document that is not repeated per entry: header and footer of a serial letter
+	 *
+	 * Only the replacements not depending on an entry (current date, time and user) can be used here,
+	 * any other placeholder is left as it is, as the content is written out once for all merged
+	 * entries. Placeholders are NOT removed for that reason: unlike inside the repeated block, one
+	 * left over is a mistake in the template the user needs to see.
+	 *
+	 * @param string $content header or footer of the document
+	 * @param string $mimetype mimetype of the complete document
+	 * @param string $mso_application_progid ='' MS Office 2003: 'Excel.Sheet' or 'Word.Document'
+	 * @param string $charset =null charset to override default set by mimetype or export charset
+	 * @return string
+	 */
+	private function merge_without_entry($content, $mimetype, $mso_application_progid = '', $charset = null)
+	{
+		if(empty($content) || strpos($content, '$$') === false)
+		{
+			return $content;
+		}
+		$replacements = $this->entry_independent_replacements($content);
+
+		if($this->is_xml)
+		{
+			// escape the replacements, so they can not break the xml of the document
+			$replacements = preg_replace('/&(?![a-zA-Z]+;|#\d+;|#x[0-9a-fA-F]+;)/', '&amp;', $replacements);
+			$replacements = str_replace(
+				array('&amp;amp;', '<', '>', "\r"),
+				array('&amp;', '&lt;', '&gt;', ''),
+				$replacements
+			);
+		}
+		return $this->replace($content, $replacements, $mimetype, $mso_application_progid, $charset);
 	}
 
 	/**
