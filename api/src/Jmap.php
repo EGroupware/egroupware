@@ -614,4 +614,39 @@ class Jmap extends Jmap\Base
 				return parent::__get($name);
 		}
 	}
+
+	/**
+	 * Base::__isset() only knows about $this->types (the lazy per-type accessor mechanism, eg.
+	 * $session->mailbox) - completely unrelated to the read-only properties __get() above exposes.
+	 * Without this override, `$jmap->accountCapabilities ?? []` (or any isset()/?? check on these
+	 * properties) silently evaluated as "not set" via the inherited Base::__isset() and returned
+	 * the fallback WITHOUT ever calling __get() - even right after bootstrap() had genuinely set
+	 * the real property. Confirmed live (ticket #124351 follow-up): Mail\Imap\Jmap::
+	 * mailShareSupported()'s `$this->jmapClient()->accountCapabilities ?? []` always saw "not set"
+	 * this way, even immediately after a bootstrap() call that had just populated it with data
+	 * that genuinely included mail:share - misdetecting real Stalwart accounts as not supporting
+	 * mail sharing and falling through to a doomed classic-IMAP ACL attempt.
+	 *
+	 * isset($this->$name), not a blind `return true`: these are typed properties with no default,
+	 * genuinely unset before bootstrap() runs - isset() on an uninitialized typed property
+	 * correctly returns false without throwing (unlike a direct read), so this stays accurate for
+	 * that case too.
+	 *
+	 * @param string $name
+	 * @return bool
+	 */
+	public function __isset(string $name) : bool
+	{
+		switch ($name)
+		{
+			case 'accountId':
+			case 'accountCapabilities':
+			case 'capabilities':
+			case 'downloadUrl':
+			case 'uploadUrl':
+				return isset($this->$name);
+			default:
+				return parent::__isset($name);
+		}
+	}
 }
