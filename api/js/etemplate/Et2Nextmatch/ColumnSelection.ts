@@ -6,15 +6,29 @@ import {property} from "lit/decorators/property.js";
 import {classMap} from "lit/directives/class-map.js";
 import {repeat} from "lit/directives/repeat.js";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
-import {et2_nextmatch_customfields} from "../et2_extension_nextmatch";
 import shoelace from "../Styles/shoelace";
-import {et2_dataview_column} from "../et2_dataview_model_columns";
+import {Et2DatagridColumnVisibility} from "../Et2Datagrid/Et2DatagridColumnState";
 import {et2_customfields_list} from "../et2_extension_customfields";
 import Sortable from "sortablejs/modular/sortable.complete.esm";
 import {SlMenuItem} from "@shoelace-style/shoelace";
 import {Et2Select} from "../Et2Select/Et2Select";
 
 import styles from "./ColumnSelection.styles";
+
+/**
+ * The part of a customfields column's widget this dialog reads: the field
+ * definitions to offer, and which of them are currently shown.
+ *
+ * Structural rather than a class reference, because the dialog is fed by two
+ * nextmatch implementations at once - see Et2ColumnSelection._isCustomfieldsColumn().
+ */
+interface CustomfieldsColumnWidget
+{
+	customfields? : Record<string, { name : string; label : string }>;
+	fields? : Record<string, boolean>;
+	getCustomfieldSelectionItems? : () => unknown;
+}
+
 export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 {
 	static get styles()
@@ -110,10 +124,13 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 	protected rowTemplate(column) : TemplateResult
 	{
 		const isCustom = this._isCustomfieldsColumn(column);
-		const alwaysOn = [et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS, et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT].indexOf(column.visibility) !== -1;
+		// Loose == against the visibility constants on purpose: the legacy nextmatch
+		// sends them as-is, Et2Nextmatch sends a plain boolean for the only two states
+		// it has (shown / hidden), and `true == VISIBLE` is what bridges the two.
+		const alwaysOn = [Et2DatagridColumnVisibility.ALWAYS, Et2DatagridColumnVisibility.ALWAYS_NOSELECT].indexOf(column.visibility) !== -1;
 
 		// Don't show disabled columns
-		if(column.visibility == et2_dataview_column.ET2_COL_VISIBILITY_DISABLED)
+		if(column.visibility == Et2DatagridColumnVisibility.DISABLED)
 		{
 			return html``;
 		}
@@ -122,7 +139,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
                     exportparts="label,prefix"
                     value="${String(column.id).split(" ").join("___")}"
                     type="checkbox"
-                    ?checked=${alwaysOn || column.visibility == et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE}
+                    ?checked=${alwaysOn || column.visibility == Et2DatagridColumnVisibility.VISIBLE}
                     ?disabled=${alwaysOn}
                     title="${column.title}"
                     class="${classMap({
@@ -137,12 +154,43 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
             ${isCustom ? this.customFieldsTemplate(column) : ''}`;
 	}
 
+	/**
+	 * Is this column the one holding the entry's custom fields?
+	 *
+	 * Such a column is a single column to the grid, but gets listed here as one
+	 * entry per custom field so they can be shown/hidden individually.
+	 *
+	 * The widget test is deliberately duck-typed instead of an `instanceOf()`
+	 * against one class: this dialog serves both nextmatch implementations, and
+	 * they do not agree on what sits in a column.  Et2Nextmatch flags the column
+	 * itself (`isCustomfields`/`customFields`, filled in from a header web
+	 * component answering `getCustomfieldSelectionItems()`), while the legacy
+	 * nextmatch passes its widget straight through, and which class that is is
+	 * itself in flux while the customfields widget is being rewritten as a web
+	 * component.  What both spellings do have is a `customfields` map of field
+	 * definitions, so recognise that instead of a class.
+	 */
 	private _isCustomfieldsColumn(column) : boolean
 	{
 		return column.isCustomfields === true ||
 			(column.customFields || []).length > 0 ||
-			column.widget?.instanceOf?.(et2_nextmatch_customfields) ||
-			false;
+			this._customfieldsWidget(column) !== null;
+	}
+
+	/**
+	 * column.widget, if it looks like a widget describing a set of custom fields.
+	 */
+	private _customfieldsWidget(column) : CustomfieldsColumnWidget | null
+	{
+		const widget = <CustomfieldsColumnWidget>column?.widget;
+		if(!widget)
+		{
+			return null;
+		}
+		const describesCustomfields = typeof widget.getCustomfieldSelectionItems === "function" ||
+			(typeof widget.customfields === "object" && widget.customfields !== null);
+
+		return describesCustomfields ? widget : null;
 	}
 
 	private _customfieldItems(column) : Array<{ id : string; caption : string; visibility : boolean | number }>
@@ -155,10 +203,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 				visibility: field.visibility
 			}));
 		}
-		let widget = column.widget as et2_nextmatch_customfields & {
-			customfields : Record<string, { name : string; label : string }>;
-			fields : Record<string, boolean>;
-		};
+		const widget = this._customfieldsWidget(column);
 		if(jQuery.isEmptyObject(widget?.customfields || {}))
 		{
 			return [];
@@ -166,7 +211,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 		return Object.values(widget.customfields).map((field) => ({
 			id: et2_customfields_list.PREFIX + field.name,
 			caption: field.label,
-			visibility: widget.fields?.[field.name] ? et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE : false
+			visibility: widget.fields?.[field.name] ? Et2DatagridColumnVisibility.VISIBLE : false
 		}));
 	}
 
@@ -197,7 +242,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
                             value="${String(field.id).split(" ").join("___")}"
                             data-parent-column="${String(column.id).split(" ").join("___")}"
                             type="checkbox"
-                            ?checked=${field.visibility == et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE}
+                            ?checked=${field.visibility == Et2DatagridColumnVisibility.VISIBLE}
                             title="${field.caption}"
                             class="select_row">
                         ${field.caption}
