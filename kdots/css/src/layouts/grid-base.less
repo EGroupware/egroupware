@@ -1,0 +1,133 @@
+/* Common grid base */
+
+/* Common rules for column layout, may be extended with
+ *  .layout-grid-base(~'[layout="layout-name"]');
+ */
+.layout-grid-base(@host-selector) {
+
+  /* Used when the grid layout has to collapse down to one column */
+  ._grid-one-column(@selector) {
+
+	@{selector} *.et2-label-fixed {
+	  &::part(form-control) {
+		flex-wrap: wrap;
+	  }
+	}
+
+	@{selector} *::part(form-control-label) {
+	  width: 100%;
+	  flex-basis: 100%;
+	  margin-right: 0;
+	}
+
+	@{selector} *::part(form-control-input) {
+	  flex-basis: 100%;
+	}
+
+	@{selector} *::part(form-control-help-text) {
+	  left: 0;
+	}
+
+	/* When titles break, we want to align widgets at the bottom of the hbox */
+	@{selector} et2-hbox::part(base) {
+	  align-items: flex-end;
+	}
+  }
+
+  ._grid-collapse(@selector) {
+	@{selector}::part(base),
+	@{selector} > [part~="base"] {
+	  grid-template-columns: 1fr;
+	}
+
+	._grid-one-column(@selector);
+  }
+
+  /* Both selectors name the same element, for the two kinds of host this mixin serves.
+   * A shadow-DOM host (et2-template) exposes its wrapper through ::part(base).  A light-DOM
+   * host - et2-customfields and friends render into light DOM so eTemplate can find the child
+   * widgets they generate - has no shadow boundary for ::part() to cross, so there `part` is
+   * just an ordinary attribute on an ordinary child, matched as one.
+   */
+  @{host-selector}::part(base),
+  @{host-selector} > [part~="base"] {
+	position: relative;
+	display: grid;
+	/* Auto-collapse to one column once a column would get too narrow */
+	grid-template-columns: repeat(auto-fit, minmax(var(--column-min-width, 26rem), 1fr));
+	grid-auto-rows: min-content;
+	align-content: start;
+	row-gap: var(--sl-spacing-small);
+	column-gap: var(--sl-spacing-large, 1rem);
+
+	height: 100%;
+	min-height: 0;
+  }
+  @{host-selector} {
+	/* Do not allow fixed width labels to wrap normally - the one-column rules below
+	 * override this once the container is too narrow to keep label and input side by side.
+	 * Keep this selector no more specific than _grid-one-column's matching rule, or that
+	 * override silently loses and the label never wraps.  et2-box/et2-hbox child variants
+	 * are deliberately absent: .et2-label-fixed already matches them, so they would only
+	 * add specificity.
+	 */
+	*.et2-label-fixed {
+	  &::part(form-control) {
+		flex-wrap: nowrap;
+	  }
+	}
+  }
+
+  /* One-column mode: keep label/input stacking consistent for all widgets */
+  @container (max-width: calc(var(--column-min-width, 26rem) * 2 + var(--sl-spacing-large, 1rem))) {
+	._grid-collapse(@host-selector);
+  }
+
+  /* Responsive fallback: collapse to 1 column on small screens */
+  /* var() is not fully supported yet, so this is the fallback */
+  @container (max-width: 600px) {
+	._grid-collapse(@host-selector);
+  }
+  /* var() is not fully supported yet */
+  @container (max-width: var(--collapse-width, 600px)) {
+	._grid-collapse(@host-selector);
+  }
+
+  @{host-selector} {
+
+	height: 100%;
+	container-type: inline-size;
+	overflow-y: auto;
+	overflow-x: hidden;
+
+	/* ---------- FULL-WIDTH ROWS ---------- */
+
+	[full], [span="all"],
+	et2-tabbox {
+	  grid-column: 1 / -1;
+	}
+
+	/* ---------- REST-WIDTH ROWS ---------- */
+
+	[span="end"], [span="*"] {
+	  grid-column-end: -1;
+	}
+
+	/* ---------- DEFAULT COLUMN FLOW ---------- */
+
+	* {
+	  min-height: 0;
+	}
+
+	/* ---------- VERTICAL GROW ---------- */
+
+	[grow],
+	et2-tabbox {
+	  align-self: stretch;
+	}
+
+	/* ---------- WIDGET CHANGES ---------- */
+	/* Grow row sizing is set by Et2LayoutController strategy to target the actual grow row */
+  }
+
+}

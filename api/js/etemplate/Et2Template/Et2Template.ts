@@ -18,6 +18,7 @@ import {IegwAppLocal} from "../../jsapi/egw_global";
 import {until} from "lit/directives/until.js";
 import {classMap} from "lit/directives/class-map.js";
 import {SelectOption} from "../Et2Select/FindSelectOptions";
+import {Et2LayoutController, Et2LayoutHost, Et2LayoutName} from "../Layout/Et2LayoutController/Et2LayoutController";
 
 // @ts-ignore
 /**
@@ -32,14 +33,15 @@ import {SelectOption} from "../Et2Select/FindSelectOptions";
  * @csspart loader - Displayed while the template contents are being loaded
  */
 @customElement("et2-template")
-export class Et2Template extends Et2Widget(LitElement)
+export class Et2Template extends Et2Widget(LitElement) implements Et2LayoutHost
 {
 	static get styles()
 	{
 		return [
 			shoelace,
 			super.styles,
-			styles
+			styles,
+			Et2LayoutController.styles,
 		];
 	}
 
@@ -64,7 +66,17 @@ export class Et2Template extends Et2Widget(LitElement)
 	content : string;
 
 	@property({type: Function})
-	onload : Function;
+	onload : any;
+
+	/**
+	 * Opt in to a layout for this template's children, eg. layout="2-column".
+	 *
+	 * Deliberately has no default.  The property reflects, and the layout CSS keys off the
+	 * attribute, so giving this a default would hand that layout to every template in every
+	 * app.  Without the attribute a template lays out exactly as it did before layouts existed.
+	 */
+	@property({reflect: true})
+	layout : Et2LayoutName;
 
 	/**
 	 * Cache of known templates
@@ -80,6 +92,9 @@ export class Et2Template extends Et2Widget(LitElement)
 
 	// Internal flag to indicate loading is in progress, since we can't monitor a promise
 	private __isLoading = false;
+
+	// Handles layout
+	private _layout = new Et2LayoutController(<Et2LayoutHost><unknown>this);
 
 
 	constructor(egw? : IegwAppLocal)
@@ -814,7 +829,10 @@ export class Et2Template extends Et2Widget(LitElement)
 		{
 			classes["template--app-" + this.app] = true;
 		}
-		if(this.layout != "none")
+		// Only when the template asked for a layout - otherwise this would emit a useless
+		// "layout-undefined" class.  The layouts themselves are driven by the reflected layout
+		// attribute, not by these classes.
+		if(this.layout)
 		{
 			classes["layout-" + this.layout] = true;
 			classes["template--layout-" + this.layout] = true;
