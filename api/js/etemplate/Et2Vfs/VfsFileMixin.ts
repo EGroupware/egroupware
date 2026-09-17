@@ -9,6 +9,7 @@
 
 import {LitElement} from "lit";
 import {egw} from "../../jsapi/egw_global";
+import {DIR_MIME_TYPE} from "./VfsMime";
 
 /**
  * The part of a VFS row this mixin cares about.
@@ -22,6 +23,7 @@ export interface VfsFileInfo
 	path? : string;
 	name? : string;
 	mime? : string | boolean;
+	is_dir? : boolean | number;
 }
 
 export declare class VfsFileInterface
@@ -123,7 +125,13 @@ export const VfsFileMixin = <T extends Constructor<VfsFileBase>>(superclass : T)
 				this.egw().message(this.egw().lang("File '%1' not found!", this.fileInfo.name || this.fileInfo.path), "error");
 				return false;
 			}
-			this.egw().open({path: this.fileInfo.path, type: this.fileInfo.mime}, "file");
+			// not every directory reports Vfs::DIR_MIME_TYPE: a symlink to one keeps its target's mime,
+			// and EPL's links stream-wrapper gives the /apps/<app>/... directories "egw/<app>".  The
+			// link-registry only has filemanager registered for DIR_MIME_TYPE, so without this the
+			// directory finds no handler and falls back to its WebDAV url, opening the listing in a new
+			// browser tab instead of in filemanager.  The server flags every one of them with is_dir.
+			const mime = this.fileInfo.is_dir ? DIR_MIME_TYPE : this.fileInfo.mime;
+			this.egw().open({path: this.fileInfo.path, type: mime}, "file");
 			return false;
 		}
 	}
