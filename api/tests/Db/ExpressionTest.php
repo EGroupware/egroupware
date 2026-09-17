@@ -287,6 +287,24 @@ class ExpressionTest extends TestCase
 		$this->assertStringContainsString('t_title', $fragment);
 	}
 
+	/**
+	 * Regression coverage for GHSA-x32h-3hh2-jx3x Finding 1: the "table.column" escape hatch above
+	 * used to be recognized by a non-anchored check (effectively just "does the key contain a dot,
+	 * and does the last segment resolve to a known column"), so a key like
+	 * "1=1 OR 1=1 OR egw_test.t_id" was accepted and its attacker-controlled PREFIX concatenated
+	 * verbatim into the generated SQL as an unescaped boolean expression, with only the trailing
+	 * "egw_test.t_id" needed to satisfy the "looks like a real column" check. The fix (commit
+	 * 8371dc9c32) anchors the match to the whole key
+	 * (`/^([a-z0-9_]+)\.([a-z0-9_]+)$/i`), so anything before/after the "table.column" shape now
+	 * falls through to the unrecognized-column guard instead.
+	 */
+	public function testColumnDataImplodeRejectsPrefixSmuggledBeforeQualifiedColumn()
+	{
+		$this->expectException(Api\Db\Exception\InvalidSql::class);
+
+		self::$db->column_data_implode(',', ['1=1 OR 1=1 OR egw_test.t_id' => 1], True, False, self::$table_def);
+	}
+
 	// -------------------------------------------------------------------
 	// expression() - calling convention
 	// -------------------------------------------------------------------
