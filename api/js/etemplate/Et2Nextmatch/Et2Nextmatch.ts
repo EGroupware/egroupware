@@ -973,24 +973,34 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		// rather than downstream, since every other consumer of `rows` also assumes a real array.
 		if(attrs.rows && typeof attrs.rows === "object" && !Array.isArray(attrs.rows))
 		{
-			// Some apps' get_rows callbacks (eg. timesheet's get_rrows()) mix UI metadata
-			// flags into the same $rows array as real per-record data - string-keyed
-			// scalars like 'ownerClass'/'pm_integration' alongside numeric-keyed row
-			// objects - for the legacy row template to consume. A scalar surviving this
-			// normalization would be treated as a real preloaded row further down,
-			// corrupting the datagrid with fake blank rows, so only keep actual records.
-			// The same scalars are how a refresh sends header totals (eg. timesheet's
-			// quantity/price sums) via processAdditionalData() - stash them so firstUpdated()
-			// can apply them the same way once the initial rows are set up, instead of just
-			// dropping them here. Only worth stashing before firstUpdated() has run: that's
-			// the only place _initialAdditionalData is ever read, and it clears the field
-			// once applied - collecting more here after that would just leak, unread.
+			// Some apps' get_rows callbacks mix UI metadata into the same $rows array as real
+			// per-record data, for the legacy row template to consume - string-keyed scalars
+			// (timesheet's 'ownerClass'/'pm_integration') but also string-keyed arrays and
+			// objects (addressbook's 'customfields'). Only integer-keyed entries are records:
+			// that is exactly how the server itself tells the two apart when answering a
+			// refresh (`is_int($n)` in Etemplate\Widget\Nextmatch::ajax_get_rows()), and how
+			// Et2NextmatchDataProvider.processAdditionalData() picks the metadata back out of
+			// a refresh response. Splitting on the key rather than on the value's type matters:
+			// a string-keyed array kept as a "row" has no row_id field, so it ends up in the
+			// datagrid under its own array index as a blank, unselectable row - and if a real
+			// record happens to carry that same id, the real one is then silently dropped as a
+			// duplicate and leaves an unfillable placeholder row (reported live 2026-09-17 in
+			// addressbook, whose get_rows always sends 'customfields').
+			//
+			// The metadata is how a refresh sends eg. header totals (timesheet's quantity/price
+			// sums) via processAdditionalData() - stash it so firstUpdated() can apply it the
+			// same way once the initial rows are set up, instead of just dropping it here. Only
+			// worth stashing before firstUpdated() has run: that's the only place
+			// _initialAdditionalData is ever read, and it clears the field once applied -
+			// collecting more here after that would just leak, unread.
+			const rowEntries = Object.entries(attrs.rows as Record<string, any>);
+			const isRecordKey = (key : string) => /^\d+$/.test(key);
 			if(!this.hasUpdated)
 			{
 				const additionalData : Record<string, any> = {};
-				for(const [key, value] of Object.entries(attrs.rows as Record<string, any>))
+				for(const [key, value] of rowEntries)
 				{
-					if(!value || typeof value !== "object")
+					if(!isRecordKey(key))
 					{
 						additionalData[key] = value;
 					}
@@ -1000,7 +1010,9 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 					this._initialAdditionalData = {...(this._initialAdditionalData || {}), ...additionalData};
 				}
 			}
-			attrs.rows = Object.values(attrs.rows).filter((row) => row && typeof row === "object");
+			attrs.rows = rowEntries
+				.filter(([key, row]) => isRecordKey(key) && row && typeof row === "object")
+				.map(([, row]) => row);
 		}
 		super.transformAttributes(attrs);
 	}
