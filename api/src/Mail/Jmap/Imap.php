@@ -608,7 +608,14 @@ class Imap extends Jmap\Base
 		bool $recursive = false) : array
 	{
 		$parentMailbox = self::hordeMailbox($imap, $parentPath);
-		$delimiter = self::namespaceDelimiter($imap, 'personal');
+		// A mailbox under the shared/other-users namespace root can use a DIFFERENT delimiter than
+		// the personal one (same reasoning as hordeMailbox()'s/canonicalPath()'s own
+		// isNamespaceRootPath()/namespacePrefix() branches - found live 2026-09-04, ralf: "Renaming
+		// mail subfolder under user doesn't work..." - fixed there by 96d3d0e353, but missed here:
+		// unconditionally using 'personal' left the wildcard pattern below built against the wrong
+		// delimiter for any $parentPath under "user"/"shared" on a server where the two actually
+		// differ, silently returning zero matches for that whole level).
+		$delimiter = self::namespaceDelimiter($imap, self::isNamespaceRootPath($parentPath) ? 'others' : 'personal');
 		// IMAP '%' matches any characters except the hierarchy delimiter - i.e. exactly one
 		// level, never grandchildren, and never the parent itself (which needs at least one
 		// more character after the delimiter to match). '*' is the same but ALSO matches the
@@ -668,7 +675,8 @@ class Imap extends Jmap\Base
 	 * @param string $parentMailbox real IMAP name of the parent level being listed, '' for the
 	 *  top level (matches listChildIds()'s own $parentMailbox)
 	 * @param string $parentPath canonical "/"-joined parent path, '' for the top level
-	 * @param string $delimiter this connection's personal-namespace hierarchy delimiter
+	 * @param string $delimiter $parentPath's OWN hierarchy delimiter (listChildIds()'s already-
+	 *  namespace-aware $delimiter - NOT necessarily every candidate's own, see below)
 	 * @return array additional {mailboxName: info} entries for any missing structural passthrough
 	 */
 	private static function unsubscribedPassthroughsMissingFrom(\Horde_Imap_Client_Socket $imap, array $mailboxes,
@@ -676,6 +684,8 @@ class Imap extends Jmap\Base
 	{
 		$onePattern = ($parentPath === '' ? '' : $parentMailbox.$delimiter).'%';
 		$allChildren = $imap->listMailboxes($onePattern, \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, ['children' => true]);
+		$othersPrefix = self::namespacePrefix($imap, 'others');
+		$othersDelimiter = self::namespaceDelimiter($imap, 'others');
 
 		$missing = [];
 		foreach ($allChildren as $mailboxName => $info)
@@ -684,13 +694,22 @@ class Imap extends Jmap\Base
 			{
 				continue;
 			}
+			// A candidate found at THIS level can itself be the entry point into the shared/other-
+			// users namespace (eg. $parentPath === '' and $mailboxName === 'user') even though
+			// $delimiter above is $parentPath's own (here: 'personal') - its OWN children can use a
+			// DIFFERENT delimiter (same canonicalPath()/hordeMailbox() reasoning, see
+			// listChildIds()'s own comment on $delimiter) - checked directly against the raw name,
+			// same technique canonicalPath() uses, since this candidate hasn't been translated to
+			// a canonical path yet.
+			$childDelimiter = $othersPrefix !== '' && stripos($mailboxName, $othersPrefix) === 0 ?
+				$othersDelimiter : $delimiter;
 			// MBOX_SUBSCRIBED (not MBOX_ALL_SUBSCRIBED), and '*' (any depth, not just one level -
 			// the original namespace-root-only version used '%' here, which would have missed a
 			// grandchild-or-deeper subscription just as this whole gap does) - "granted" must
 			// mean "granted AND subscribed", or an always-visible passthrough would be a dead end
 			// whenever something is shared but the user hasn't subscribed to any of it yet -
 			// still findable via the subscription dialog, which never calls with subscribedOnly.
-			$hasSubscribedDescendant = $imap->listMailboxes($mailboxName.$delimiter.'*', \Horde_Imap_Client::MBOX_SUBSCRIBED, []);
+			$hasSubscribedDescendant = $imap->listMailboxes($mailboxName.$childDelimiter.'*', \Horde_Imap_Client::MBOX_SUBSCRIBED, []);
 			if (empty($hasSubscribedDescendant))
 			{
 				continue;
