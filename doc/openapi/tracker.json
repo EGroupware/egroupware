@@ -68,7 +68,7 @@
         "tags": ["Tracker"],
         "operationId": "createTicket",
         "summary": "Create a new ticket for the current user",
-        "description": "Creates a new tracker ticket. Only 'summary' is required. The ticket is created in the first queue the user has access to unless 'tracker' (queue ID) is specified.",
+        "description": "Creates a new tracker ticket. Only 'title' is required. The ticket is created in the first queue the user has access to unless 'tracker' (queue ID) is specified.",
         "parameters": [
           {
             "name": "Content-Type",
@@ -256,7 +256,7 @@
         "tags": ["Tracker"],
         "operationId": "replaceTicket",
         "summary": "Replace a ticket",
-        "description": "Replaces all writable attributes of a ticket. 'summary' is required. Read-only fields (id, created, creator, modifier, modified, closed) are silently ignored. Fields the user lacks permission to change (e.g. completion for non-assignees) are also silently skipped.",
+        "description": "Replaces all writable attributes of a ticket. 'title' is required. Read-only fields (id, created, creator, modifier, modified, closed) are silently ignored. Fields the user lacks permission to change (e.g. completion for non-assignees) are also silently skipped.",
         "parameters": [
           { "$ref": "#/components/parameters/id" },
           {
@@ -321,7 +321,7 @@
                 "additionalProperties": true,
                 "description": "Partial ticket object — only the fields to update",
                 "properties": {
-                  "summary":    { "type": "string" },
+                  "title":      { "type": "string" },
                   "status":     { "type": "string", "enum": ["Open", "Closed", "Pending", "Deleted"] },
                   "priority":   { "type": "integer", "minimum": 1, "maximum": 9 },
                   "completion": { "type": "integer", "minimum": 0, "maximum": 100 },
@@ -561,7 +561,7 @@
     "schemas": {
       "Ticket": {
         "type": "object",
-        "required": ["summary"],
+        "required": ["title"],
         "properties": {
           "@type": {
             "type": "string",
@@ -574,7 +574,7 @@
             "description": "Unique ticket ID. Auto-assigned on creation.",
             "readOnly": true
           },
-          "summary": {
+          "title": {
             "type": "string",
             "description": "One-line title of the ticket. Required on POST and PUT."
           },
@@ -692,7 +692,7 @@
         "example": {
           "@type": "Ticket",
           "id": 42,
-          "summary": "Login page crashes on mobile",
+          "title": "Login page crashes on mobile",
           "description": "Steps to reproduce:\n1. Open mobile browser\n2. Navigate to /login\n3. App crashes",
           "tracker": 8,
           "status": "Open",
@@ -830,7 +830,7 @@
               "/admin/tracker/2": {
                 "@type": "Ticket",
                 "id": 2,
-                "summary": "Fix login crash",
+                "title": "Fix login crash",
                 "status": "Open",
                 "priority": 5,
                 "creator": "admin",
