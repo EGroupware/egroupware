@@ -664,6 +664,107 @@ class MergeTest extends LoggedInTest
 	}
 
 	/**
+	 * Content before the first and after the last $$pagerepeat$$ tag is written out once, so it can
+	 * not be merged with one of several entries - but $$date$$, $$datetime$$ and $$time$$ do not
+	 * depend on an entry and have to be replaced there too, instead of staying in as typed.
+	 */
+	public function testDatePlaceholdersReplacedOutsidePagerepeat()
+	{
+		$errors = [];
+		$this->merge->setReplacementsForId(1, ['$$name$$' => 'Alice']);
+		$this->merge->setReplacementsForId(2, ['$$name$$' => 'Bob']);
+		$target = "Printed \$\$date\$\$\n\$\$pagerepeat\$\$Name: \$\$name\$\$\$\$pagerepeat\$\$at \$\$time\$\$";
+		$date = Api\DateTime::to('now', true);
+
+		$result = $this->merge->merge_string($target, [1, 2], $errors, "text/plain");
+
+		$this->assertEmpty($errors, "Errors when merging");
+		$this->assertStringContainsString("Printed $date", $result, '$$date$$ not replaced in the header');
+		$this->assertStringNotContainsString('$$time$$', $result, '$$time$$ not replaced in the footer');
+		$this->assertStringContainsString("Name: Alice\r\nName: Bob", $result, 'Repeated content changed');
+	}
+
+	/**
+	 * Same for a single entry: it is only the $$pagerepeat$$ tag that splits header and footer off
+	 * the content to merge, not the number of entries.
+	 */
+	public function testDatePlaceholderReplacedOutsidePagerepeatForSingleId()
+	{
+		$errors = [];
+		$this->merge->setReplacements(['$$name$$' => 'Alice']);
+		$target = "Printed \$\$date\$\$\n\$\$pagerepeat\$\$Name: \$\$name\$\$\$\$pagerepeat\$\$at \$\$time\$\$";
+		$date = Api\DateTime::to('now', true);
+
+		$result = $this->merge->merge_string($target, [1], $errors, "text/plain");
+
+		$this->assertEmpty($errors, "Errors when merging");
+		$this->assertStringContainsString("Printed $date", $result, '$$date$$ not replaced in the header');
+		$this->assertStringNotContainsString('$$time$$', $result, '$$time$$ not replaced in the footer');
+		$this->assertStringContainsString('Name: Alice', $result, 'Repeated content changed');
+	}
+
+	/**
+	 * The same for an XML document (ODF here): the replacement has to run through Merge::replace(),
+	 * which takes care of the encoding, not a plain string replace.
+	 */
+	public function testDatePlaceholderReplacedOutsidePagerepeatForOdf()
+	{
+		$errors = [];
+		$this->merge->setReplacementsForId(1, ['$$name$$' => 'Alice']);
+		$this->merge->setReplacementsForId(2, ['$$name$$' => 'Bob']);
+		$target = '<office:document-content><office:body><text:p>Printed $$date$$</text:p>' .
+			'$$pagerepeat$$<text:p>$$name$$</text:p>$$pagerepeat$$' .
+			'<text:p>at $$time$$</text:p></office:body></office:document-content>';
+		$date = Api\DateTime::to('now', true);
+
+		$result = $this->merge->merge_string($target, [1, 2], $errors,
+											 'application/vnd.oasis.opendocument.text');
+
+		$this->assertEmpty($errors, "Errors when merging");
+		$this->assertStringContainsString("<text:p>Printed $date</text:p>", $result, '$$date$$ not replaced in the header');
+		$this->assertStringNotContainsString('$$time$$', $result, '$$time$$ not replaced in the footer');
+		$this->assertStringContainsString('<text:p>Alice</text:p><text:p>Bob</text:p>', $result, 'Repeated content changed');
+	}
+
+	/**
+	 * Replacing the entry-independent placeholders of the header must not stop text/plain from
+	 * detecting a template where everything in front of the tag IS the content to repeat: any
+	 * placeholder of the entry there still means there is no header (see
+	 * testPagerepeatRepeatsContentPerIdForTextPlain() for the same auto-detection).
+	 */
+	public function testEntryPlaceholderInHeaderStillCountsAsContentToRepeat()
+	{
+		$errors = [];
+		$this->merge->setReplacementsForId(1, ['$$name$$' => 'Alice']);
+		$this->merge->setReplacementsForId(2, ['$$name$$' => 'Bob']);
+
+		$result = $this->merge->merge_string("Name: \$\$name\$\$\$\$pagerepeat\$\$", [1, 2], $errors, "text/plain");
+
+		$this->assertEmpty($errors, "Errors when merging");
+		$this->assertEquals("Name: Alice\r\nName: Bob", $result);
+	}
+
+	/**
+	 * $$user/...$$ is the current user, which is the same for every merged entry, so it has to be
+	 * replaced outside the $$pagerepeat$$ block too - a letterhead is exactly where it gets used.
+	 */
+	public function testUserPlaceholderReplacedOutsidePagerepeat()
+	{
+		if(!($user = $GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'], 'person_id')))
+		{
+			$this->markTestSkipped('Logged in user has no contact');
+		}
+		$errors = [];
+		$this->merge->setReplacements(['$$name$$' => 'Alice']);
+		$target = "From: \$\$user/n_fn\$\$\n\$\$pagerepeat\$\$Name: \$\$name\$\$";
+		$result = $this->merge->merge_string($target, [1], $errors, "text/plain");
+
+		$this->assertEmpty($errors, "Errors when merging");
+		$this->assertStringNotContainsString('$$user/n_fn$$', $result, '$$user/n_fn$$ not replaced in the header');
+		$this->assertMatchesRegularExpression('/^From: .+$/m', $result, 'Name of the current user missing in the header');
+	}
+
+	/**
 	 * NOT reproducible for text/plain, documented as a deliberate finding rather than forced:
 	 * the "for more than one contact in a document use the tag pagerepeat!" error
 	 * (Merge.php's `if(count($ids) > 1 && !$contentrepeat)` guard) is effectively UNREACHABLE
