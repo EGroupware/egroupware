@@ -16,6 +16,7 @@ namespace EGroupware\Api\Mail;
 use EGroupware\Api;
 
 use EGroupware\SwoolePush\Tokens;
+use EGroupware\Api\Mail\Jmap\Imap as JmapImap;
 use Horde_Imap_Client;
 use Horde_Imap_Client_Socket;
 use Horde_Imap_Client_Cache_Backend_Cache;
@@ -561,6 +562,111 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 			}
 		}
 		return $returnvalue;
+	}
+
+	/**
+	 * Translate an EGroupware-canonical "/"-joined folder path to this connection's real IMAP
+	 * mailbox name (JMAP-CANONICAL-PATH-FIX, see doc/ai memory project_mail_canonical_path_delimiter_fix):
+	 * every folder id / row-id folder-segment handed to the client (Mail\Jmap\Imap::canonicalPath(),
+	 * used for both real-JMAP and classic/shim-backed accounts alike) always uses "/" regardless of
+	 * this account's real IMAP hierarchy delimiter (which can be "." or something else entirely -
+	 * confirmed live via ticket #124401, a customer whose external IMAP server uses "."). Existing
+	 * callers throughout Api\Mail/mail_ui pass such a canonical path straight into a raw IMAP call
+	 * (openMailbox() etc.) with no translation, which fails outright for any non-"/"-delimited
+	 * server. Translating here, once, at the connection-object level, fixes every current and
+	 * future caller transparently, without touching any of them.
+	 *
+	 * Idempotent/safe to call on an already-real name: Jmap\Imap::hordeMailbox()'s own
+	 * str_replace('/', $delimiter, $path) is a no-op whenever $delimiter is '/' or $path contains no
+	 * '/' at all - so this never needs to distinguish "already real" from "still canonical" callers.
+	 *
+	 * @param mixed $mailbox string, array of strings, or anything else (Horde_Imap_Client_Mailbox
+	 *  object, null, '*' wildcard, ...) - non-strings and empty strings pass through unchanged
+	 * @return mixed same shape as $mailbox
+	 */
+	private function realMailboxName($mailbox)
+	{
+		if (is_array($mailbox))
+		{
+			return array_map([$this, 'realMailboxName'], $mailbox);
+		}
+		if (!is_string($mailbox) || $mailbox === '')
+		{
+			return $mailbox;
+		}
+		return JmapImap::hordeMailbox($this, $mailbox);
+	}
+
+	/** @inheritdoc JMAP-CANONICAL-PATH-FIX, see realMailboxName() */
+	public function openMailbox($mailbox, $mode = Horde_Imap_Client::OPEN_AUTO)
+	{
+		return parent::openMailbox($this->realMailboxName($mailbox), $mode);
+	}
+
+	/** @inheritdoc JMAP-CANONICAL-PATH-FIX, see realMailboxName() */
+	public function listMailboxes($pattern, $mode = Horde_Imap_Client::MBOX_ALL, array $options = array())
+	{
+		return parent::listMailboxes($this->realMailboxName($pattern), $mode, $options);
+	}
+
+	/** @inheritdoc JMAP-CANONICAL-PATH-FIX, see realMailboxName() */
+	public function fetch($mailbox, $query, array $options = array())
+	{
+		return parent::fetch($this->realMailboxName($mailbox), $query, $options);
+	}
+
+	/** @inheritdoc JMAP-CANONICAL-PATH-FIX, see realMailboxName() */
+	public function append($mailbox, $data, array $options = array())
+	{
+		return parent::append($this->realMailboxName($mailbox), $data, $options);
+	}
+
+	/** @inheritdoc JMAP-CANONICAL-PATH-FIX, see realMailboxName() */
+	public function copy($source, $dest, array $options = array())
+	{
+		return parent::copy($this->realMailboxName($source), $this->realMailboxName($dest), $options);
+	}
+
+	/** @inheritdoc JMAP-CANONICAL-PATH-FIX, see realMailboxName() */
+	public function expunge($mailbox, array $options = array())
+	{
+		return parent::expunge($this->realMailboxName($mailbox), $options);
+	}
+
+	/** @inheritdoc JMAP-CANONICAL-PATH-FIX, see realMailboxName() */
+	public function status($mailbox, $flags = Horde_Imap_Client::STATUS_ALL, array $opts = array())
+	{
+		return parent::status($this->realMailboxName($mailbox), $flags, $opts);
+	}
+
+	/** @inheritdoc JMAP-CANONICAL-PATH-FIX, see realMailboxName() */
+	public function store($mailbox, array $options = array())
+	{
+		return parent::store($this->realMailboxName($mailbox), $options);
+	}
+
+	/** @inheritdoc JMAP-CANONICAL-PATH-FIX, see realMailboxName() */
+	public function deleteMailbox($mailbox)
+	{
+		return parent::deleteMailbox($this->realMailboxName($mailbox));
+	}
+
+	/** @inheritdoc JMAP-CANONICAL-PATH-FIX, see realMailboxName() */
+	public function createMailbox($mailbox, array $opts = array())
+	{
+		return parent::createMailbox($this->realMailboxName($mailbox), $opts);
+	}
+
+	/** @inheritdoc JMAP-CANONICAL-PATH-FIX, see realMailboxName() */
+	public function renameMailbox($old, $new)
+	{
+		return parent::renameMailbox($this->realMailboxName($old), $this->realMailboxName($new));
+	}
+
+	/** @inheritdoc JMAP-CANONICAL-PATH-FIX, see realMailboxName() */
+	public function search($mailbox, $query = null, array $options = array())
+	{
+		return parent::search($this->realMailboxName($mailbox), $query, $options);
 	}
 
 	/**
