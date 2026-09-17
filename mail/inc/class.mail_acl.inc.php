@@ -271,7 +271,7 @@ class mail_acl
 			}
 		}
 		$readonlys = $sel_options = array();
-		$sel_options['mailbox'] = [['value' => $mailbox, 'label' => $mailbox]];
+		$sel_options['mailbox'] = [['value' => $mailbox, 'label' => $this->translateMailboxLabel($mailbox)]];
 		$sel_options['acl'] = $this->aclRightsAbbrvs;
 
 		//Make the account owner's fields all readonly as owner has all rights and should not be able to change them
@@ -723,10 +723,63 @@ class mail_acl
 		try
 		{
 			return $this->imap->getACL($mailbox);
-		} catch (Exception $e) {
+		}
+		// a JMAP-native call (Mail\Imap\Jmap::getACL(), for a mail:share-capable account) can
+		// throw something that is NOT a plain \Exception (eg. Api\Exception\Http, or a raw
+		// \TypeError/\Error from a malformed response) - catching only \Exception let such a
+		// failure escape uncaught, crashing the whole request instead of showing an error message
+		// in the dialog (see project_jmap_imap_fallthrough_cleanup for the same class of bug
+		// elsewhere in this codebase)
+		catch (\Throwable $e) {
 			error_log(__METHOD__. "Could not get ACL rights from folder " . $mailbox . "." .$e->getMessage());
 			return false;
 		}
+	}
+
+	/**
+	 * Translate a mailbox path to its display label, eg. "INBOX/Trash" => "INBOX/Papierkorb" -
+	 * used for the "mailbox" select widget's OWN currently-selected value, which (unlike its
+	 * search-as-you-type suggestions, already translated via Compose::ajax_searchFolder()/
+	 * Imap\Jmap::listMailboxPaths()) previously just showed the raw untranslated path.
+	 *
+	 * @param string $mailbox
+	 * @return string
+	 */
+	protected function translateMailboxLabel($mailbox)
+	{
+		if (empty($mailbox))
+		{
+			return $mailbox;
+		}
+		if ($this->imap instanceof Mail\Imap\Jmap && $this->imap->mailShareSupported())
+		{
+			$paths = $this->imap->listMailboxPaths();
+			return $paths[$mailbox] ?? $mailbox;
+		}
+		// classic/shim IMAP: acc_folder_* hold the account's own configured full path for each
+		// special-use folder (eg. "INBOX/Trash" or "INBOX.Trash") - same fields
+		// Api\Mail::getSpecialUseFolders() reads, without needing a full Api\Mail bo instance
+		static $specialUse = null;
+		if (is_null($specialUse))
+		{
+			$specialUse = array_filter([
+				$this->imap->acc_folder_trash    ?? null => 'Trash',
+				$this->imap->acc_folder_draft    ?? null => 'Drafts',
+				$this->imap->acc_folder_sent     ?? null => 'Sent',
+				$this->imap->acc_folder_template ?? null => 'Templates',
+				$this->imap->acc_folder_junk     ?? null => 'Junk',
+				$this->imap->acc_folder_archive  ?? null => 'Archive',
+			], static fn($key) => !empty($key), ARRAY_FILTER_USE_KEY);
+		}
+		if (isset($specialUse[$mailbox]))
+		{
+			return lang($specialUse[$mailbox]);
+		}
+		if (strtoupper($mailbox) === 'INBOX')
+		{
+			return lang('INBOX');
+		}
+		return $mailbox;
 	}
 
 	/**
