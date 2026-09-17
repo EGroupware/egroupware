@@ -1828,4 +1828,17 @@ class Base
 	{
 		return $this->sanitize_order_by;
 	}
+
+	/**
+	 * Let an outside caller bypass sanitizeOrderBy() for its next search()/get_rows() call
+	 *
+	 * Necessary for a caller passing a fixed, server-constructed GROUP BY/HAVING fragment (never
+	 * client input), which sanitizeOrderBy() can not validate and therefore always rejects.
+	 * search() resets the flag right after using it, so this has to be called again before EVERY
+	 * single such call, not just once before the first one.
+	 */
+	public function disableSanitizeOrderBy()
+	{
+		$this->sanitize_order_by = false;
+	}
 }

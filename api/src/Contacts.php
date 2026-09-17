@@ -3095,9 +3095,15 @@ class Contacts extends Contacts\Storage
 
 	/**
 	 * Setting (protected) $this->sanitize_order_by to false
+	 *
+	 * Only the SQL backend sanitizes an order-by at all - Contacts\Ldap (and Ads extending it) builds
+	 * no SQL and has no such method, so calling this for an LDAP/ADS addressbook is a no-op, not a fatal.
 	 */
 	public function disableSanitizeOrderBy()
 	{
-		$this->somain->disableSanitizeOrderBy();
+		if (method_exists($this->somain, 'disableSanitizeOrderBy'))
+		{
+			$this->somain->disableSanitizeOrderBy();
+		}
 	}
 }
