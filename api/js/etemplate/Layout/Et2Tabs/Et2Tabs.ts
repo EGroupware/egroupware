@@ -669,7 +669,12 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 	{
 		if(_height && this.tabHeight != 'auto')
 		{
-			this.tabHeight = parseInt(this.tabHeight) + parseInt(_height);
+			// _height is the spare space of the whole dialog, so once the panel is as small as it
+			// goes and the dialog still does not fit, every resize subtracts that same shortfall
+			// again.  Without a floor the height runs away negative, which the browser discards -
+			// the panel falls back to its content height and needs one resize per pixel to climb
+			// back.  50px is the same "too small to be a real height" mark _sizeTabs() uses.
+			this.tabHeight = Math.max(50, parseInt(this.tabHeight) + parseInt(_height)) + "";
 		}
 	}
 }
