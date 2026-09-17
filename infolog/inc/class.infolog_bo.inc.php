@@ -1932,7 +1932,7 @@ class infolog_bo
 		$filter[0] = '('.$filtermethod.' '.$pid.' '.($search_fragment ?? '').')'.($link_extra ?? '');
 
 		$only_keys = isset($query['cols']) ? $query['cols'] : false;
-		$start = array((int)($query['start']??0), isset($query['start']) ? (int)$query['num_rows'] : -1);
+		$start = array((int)($query['start']??0), isset($query['num_rows']) ? (int)$query['num_rows'] : -1);
 
 		$rs = $this->so->search(array(), $only_keys, $order_by, $extra_cols, '', false, 'AND', $start, $filter, $join);
 		$query['total'] = $this->so->total;
