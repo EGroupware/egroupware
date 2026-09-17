@@ -7,7 +7,8 @@ window.egw = {
 	user: () => ({apps: {aiassistant: true}}),
 	lang: (label : string) => label,
 	preference: () => "en",
-	request: async() => ({success: true, result: ""})
+	request: async() => ({success: true, result: ""}),
+	prompts: () => []
 } as any;
 
 describe("Et2AI widget basics", () =>
@@ -70,6 +71,39 @@ describe("Et2AI widget basics", () =>
 
 		assert.isNull(el.activePrompt);
 		assert.equal((el as any).ai.status, "idle");
+	});
+
+	/**
+	 * No prompts at all (AI unconfigured/disabled - the server never sends any, see api/user.php)
+	 * must hide the whole UI, not show a trigger button with an empty/broken menu behind it - found
+	 * live 2026-09-17 (ralf, boulder.egroupware.org, ticket #124681 follow-up): a per-instance
+	 * server-side "disable" modification never reached a widget mounted from a referenced
+	 * sub-template (eg. mail's preview pane), so the icon stayed visible there regardless of
+	 * whether AI was actually configured. Replaced with deriving uiDisabled purely from whether
+	 * there's anything to show - a state that can't exist wrong regardless of template nesting,
+	 * since prompts are delivered globally (egw.set_prompts(), same channel as egw.set_user()).
+	 */
+	it("hides the UI when there are no prompts to show", async() =>
+	{
+		const el = await createEl();
+		el.prompts = [];
+		sinon.stub(el, "getInstanceManager").returns({app: "test"} as any);
+
+		const attrs : any = {};
+		el.transformAttributes(attrs);
+
+		assert.isTrue(attrs.uiDisabled);
+	});
+
+	it("does not disable the UI when prompts are available", async() =>
+	{
+		const el = await createEl();
+		el.prompts = [{id: "prompt-1", label: "Prompt 1"}];
+
+		const attrs : any = {};
+		el.transformAttributes(attrs);
+
+		assert.notOk(attrs.uiDisabled);
 	});
 });
 

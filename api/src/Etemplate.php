@@ -110,16 +110,6 @@ class Etemplate extends Etemplate\Widget\Template
 		self::$request->output_mode = 2;	// popup
 		self::$request->template = $etpl->as_array();
 
-		// AI tools: a real exec() walks the whole widget tree, running every HtmlArea/Textbox's
-		// own beforeSendToClient(), which wraps its content in <et2-ai> and calls THAT widget's
-		// beforeSendToClient() - the one that actually disables the AI UI client-side (via a
-		// global '~ai~' modification, Etemplate\Widget\Ai::GLOBAL_VALS) when AI tools aren't
-		// configured/enabled for this user. None of that tree walk happens here (that's the whole
-		// point, see this method's own docblock above) - found live 2026-09-17: a client-side-only
-		// compose popup always showed AI tools regardless of Ai::enabled(). Replicate just that one
-		// cheap, GLOBAL-level check directly instead of the full walk.
-		(new Etemplate\Widget\Ai('<et2-ai/>'))->beforeSendToClient('');
-
 		return array(
 			'name' => $etpl->name,
 			'url' => self::rel2url($etpl->rel_path),

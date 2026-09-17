@@ -140,22 +140,16 @@ class HtmlArea extends Etemplate\Widget
 
 
 	/**
-	 * Disable Ai Widget own UI, if no model is defined
+	 * Set up what we know on the server side.
 	 *
 	 * @param string $cname
 	 */
 	public function beforeSendToClient($cname)
 	{
-		$form_name = self::form_name($cname, $this->id);
-
 		if (($this->attrs['mode'] ?? '') !== 'ascii')
 		{
 			Api\Framework::includeJS('/node_modules/tinymce/tinymce.min.js');
 		}
-
-		// Blindly turn on AI tools without regard to parent node
-		$ai = new Ai('<et2-ai/>');
-		$ai->beforeSendToClient($cname);
 	}
 
 	/**
