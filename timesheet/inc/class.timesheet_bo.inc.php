@@ -504,6 +504,12 @@ class timesheet_bo extends Api\Storage
 		// postgres can't round from double precission, only from numeric ;-)
 		$total_sql = $this->db->Type != 'pgsql' ? "round(ts_quantity*ts_unitprice,2)" : "round(cast(ts_quantity*ts_unitprice AS numeric),2)";
 
+		// a caller can opt out of sanitizeOrderBy() via disableSanitizeOrderBy(), to pass a fixed,
+		// server-generated GROUP BY (eg. EPL's /apps/timesheet vfs-listing) which sanitizeOrderBy() can
+		// not validate. Remember that here: the summary/ids helper searches below run through
+		// Storage\Base::search() too, which resets the flag again before we get to the real query.
+		$bypass_sanitize = !$this->sanitize_order_by;
+
 		if (!is_array($extra_cols))
 		{
 			$extra_cols = $extra_cols ? explode(',',$extra_cols) : array();
@@ -662,6 +668,7 @@ class timesheet_bo extends Api\Storage
 			$union_order[] = 'ts_start '.$sort;
 			return parent::search('','',implode(',',$union_order),'','',false,'',$start);
 		}
+		if ($bypass_sanitize) $this->sanitize_order_by = false;
 		return parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
 	}
 
