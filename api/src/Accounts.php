@@ -900,6 +900,12 @@ class Accounts
 		}
 		if (!$id) return false;
 
+		if (strtolower((string)$this->id2name($id)) === 'default')
+		{
+			error_log('TEMP-DIAG delete() targeting Default (id='.$id.') backtrace='.
+				str_replace("\n", ' <- ', (new \Exception())->getTraceAsString()));
+		}
+
 		if ($this->get_type($id) == 'u')
 		{
 			$invalidate = $this->memberships($id, true);
@@ -990,15 +996,7 @@ class Accounts
 			return $name_list[$cache_key][$name];
 		}
 
-		$result = $name_list[$cache_key][$name] = $this->backend->name2id($name,$which,$account_type);
-		static $already_logged = false;
-		if (!$result && !$already_logged && strtolower((string)$name) === 'default')
-		{
-			$already_logged = true;
-			error_log('TEMP-DIAG-FIRST-MISS name2id(Default) which='.$which.' account_type='.$account_type.
-				' backtrace='.str_replace("\n", ' <- ', (new \Exception())->getTraceAsString()));
-		}
-		return $result;
+		return $name_list[$cache_key][$name] = $this->backend->name2id($name,$which,$account_type);
 	}
 
 	/**
