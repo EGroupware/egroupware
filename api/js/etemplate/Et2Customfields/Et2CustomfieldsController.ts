@@ -9,10 +9,20 @@ export interface Et2CustomfieldDefinition
 	values? : Record<string, any>;
 }
 
+/**
+ * One customfield as offered to nextmatch column selection.
+ *
+ * Despite having a `label`, this is not a SelectOption and should not grow into one: there is
+ * no `value` to submit and no nested options, only which customfield a column entry stands for
+ * and whether it is currently shown.
+ */
 export interface Et2CustomfieldSelectionItem
 {
+	/** Canonical unprefixed customfield name, ie. `name` from `#name`. */
 	name : string;
+	/** Customfield label as configured in admin, for the column chooser entry. */
 	label : string;
+	/** Whether the customfield is currently shown. */
 	visible : boolean;
 }
 
@@ -187,15 +197,10 @@ export class Et2CustomfieldsController
 		this.visibility = next;
 	}
 
-	isAllowedFilterField(field : Et2CustomfieldDefinition, apps : Record<string, any>) : boolean
-	{
-		const type = String(field?.type || "");
-		return type.startsWith("select") || (
-			type !== "filemanager" &&
-			typeof apps[type] !== "undefined"
-		);
-	}
-
+	/**
+	 * Accepts the two shapes templates and preferences actually deliver: a `"one,two"` string
+	 * from a template attribute, or a map keyed by unprefixed name from column preferences.
+	 */
 	private _normalizeExplicitFields(fields : Record<string, boolean> | string | null | undefined) : Record<string, boolean>
 	{
 		if(!fields)
@@ -219,6 +224,14 @@ export class Et2CustomfieldsController
 		return result;
 	}
 
+	/**
+	 * Key every customfield by its canonical name, whatever shape it arrived in.
+	 *
+	 * PHP hands customfields over as an object map, but an array or a list of
+	 * `Object.entries()` pairs both survive the trip too, and the outer key is not always the
+	 * field's own `name` - so the key it came under is remembered as an alias, letting a
+	 * template or preference that used the old key still resolve.
+	 */
 	private _normalizeCustomfields(customfields : Record<string, Et2CustomfieldDefinition> | Et2CustomfieldDefinition[]) : Record<string, Et2CustomfieldDefinition>
 	{
 		const normalized : Record<string, Et2CustomfieldDefinition> = {};
@@ -263,6 +276,9 @@ export class Et2CustomfieldsController
 		return normalized;
 	}
 
+	/**
+	 * `exclude` is authored as a comma-separated list of unprefixed names.
+	 */
 	private _normalizeExclude(exclude : string | null | undefined) : Set<string>
 	{
 		return new Set(
@@ -274,6 +290,9 @@ export class Et2CustomfieldsController
 		);
 	}
 
+	/**
+	 * Resolve whichever key a caller used back to the canonical field name.
+	 */
 	private _lookupAlias(name : string) : string
 	{
 		const key = String(name || "").trim();
@@ -284,11 +303,22 @@ export class Et2CustomfieldsController
 		return this.fieldAliases.get(key) || key;
 	}
 
+	/**
+	 * A customfield's own `name` wins over the key it was delivered under, since that key can
+	 * be a plain array index.
+	 */
 	private _canonicalFieldName(fallback : string, field : Et2CustomfieldDefinition) : string
 	{
 		return String(field?.name || "").trim() || String(fallback || "").trim();
 	}
 
+	/**
+	 * Resolve `type_filter`, including the legacy `"previous"` value.
+	 *
+	 * Templates put several customfields widgets on one edit dialog and let the later ones say
+	 * `type_filter="previous"` rather than repeat the list, so each resolved filter is kept as
+	 * the next widget's fallback.
+	 */
 	private _normalizeTypeFilter(typeFilter : string | string[] | "previous" | null) : string[] | null
 	{
 		let resolved : string | string[] | null = typeFilter;
@@ -310,6 +340,12 @@ export class Et2CustomfieldsController
 		return null;
 	}
 
+	/**
+	 * Whether a customfield is private to particular accounts.
+	 *
+	 * The flag reaches us from PHP as a list of accounts, a string, a boolean or an empty
+	 * value, and only "there is something in it" matters here.
+	 */
 	private _hasPrivateFlag(field : Et2CustomfieldDefinition) : boolean
 	{
 		const privateValue = field?.private as any;
@@ -339,6 +375,11 @@ export class Et2CustomfieldsController
 		return fieldTypes.some((type) => this.typeFilter!.includes(type));
 	}
 
+	/**
+	 * Apply the `cf-default`, `cf-default-private` and `cf-default-non-private` tab rules:
+	 * a tab named that way takes the customfields no other tab claimed, optionally narrowed to
+	 * just the private or just the non-private ones.
+	 */
 	private _resolveDefaultTabVisibility(field : Et2CustomfieldDefinition, current : boolean) : boolean
 	{
 		const isPrivate = this._hasPrivateFlag(field);
@@ -403,7 +444,10 @@ export class Et2CustomfieldsController
 			const field = this.customfields[fieldName] || {};
 			let visible = baseFields[fieldName] === true;
 
-			if(this.typeFilter?.length && baseFields[fieldName] !== true)
+			// A type filter narrows whatever else asked for the field.  The server sends every
+			// customfield as selected and leaves the filtering to us, so a customfield restricted
+			// to other entry types must not show here even though it was selected.
+			if(this.typeFilter?.length && (!this._matchesTypeFilter(field) || baseFields[fieldName] !== true))
 			{
 				visibility[fieldName] = false;
 				continue;

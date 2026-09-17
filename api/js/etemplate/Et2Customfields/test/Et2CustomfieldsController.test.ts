@@ -14,7 +14,6 @@ import {legacyVisibility, sampleCustomfields} from "./legacyVisibilityHelper";
  *
  * Pass criteria:
  * - Controller visible-map equals legacy baseline maps for each scenario.
- * - `isAllowedFilterField()` allows select/app fields and blocks filemanager.
  *
  * Environment note:
  * - These tests intentionally target deterministic controller behavior only.
@@ -86,14 +85,30 @@ describe("Et2CustomfieldsController", () =>
 		assert.deepEqual(itemMap, controller.getVisibleMap(), "selection items should mirror visibility state");
 	});
 
-	it("applies legacy filter field type allowance rules", () =>
+	/**
+	 * Contract: a type filter narrows whatever else selected the field.  The server sends every
+	 * customfield as selected and leaves the filtering to us, so a field restricted to other entry
+	 * types must stay hidden even though it arrived as selected.
+	 * Setup: select every field explicitly, with a type filter that only one of them matches.
+	 * Pass: only the matching field and the ones with no type restriction are visible.
+	 */
+	it("applies the type filter even when every field was selected", () =>
 	{
 		const controller = new Et2CustomfieldsController({
-			customfields: sampleCustomfields
+			customfields: {
+				cf_task: {name: "cf_task", label: "Task", type: "text", type2: ["task"]},
+				cf_other: {name: "cf_other", label: "Other", type: "text", type2: ["Dienstreise"]},
+				cf_any: {name: "cf_any", label: "Any", type: "text", type2: []}
+			},
+			// what the server sends: everything selected
+			fields: {cf_task: true, cf_other: true, cf_any: true},
+			typeFilter: "task"
 		});
-		assert.isTrue(controller.isAllowedFilterField(sampleCustomfields.cf_project, {project: true}), "app-backed fields should be allowed as filters");
-		assert.isTrue(controller.isAllowedFilterField({type: "select"}, {}), "select fields should be allowed as filters");
-		assert.isFalse(controller.isAllowedFilterField(sampleCustomfields.cf_file, {filemanager: true}), "filemanager should not be allowed as a filter");
+		assert.deepEqual(
+			controller.getVisibleFieldNames(),
+			["cf_task", "cf_any"],
+			"a customfield restricted to other entry types should not show"
+		);
 	});
 
 	it("applies tab limits to default visibility", () =>

@@ -13,7 +13,11 @@
 use EGroupware\Api;
 
 // add et2- prefix to following widgets/tags (box/hbox/vbox/vfs-select)
-const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box)|vfs-select)(/?|\s[^>]*)>#m';
+// customfields sits inside the (/?) group, not beside it, so a paired tag has its closing
+// </customfields> rewritten too - matched on its own it would leave the opening converted and the
+// closing behind.  "customfields-types" is a different widget and must not be caught, which the
+// alternation's explicit -list/-filters takes care of.
+const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box|customfields(?:-list|-filters)?)|vfs-select)(/?|\s[^>]*)>#m';
 const ADD_ET2_PREFIX_LAST_GROUP = 4;
 
 // add et2- prefix to this (larger) set of widgets

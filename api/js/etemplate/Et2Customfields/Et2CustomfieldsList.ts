@@ -1,13 +1,10 @@
-import {CUSTOMFIELD_PREFIX, Et2CustomfieldsBase} from "./Et2CustomfieldsBase";
+import {CUSTOMFIELD_PREFIX, Et2CustomfieldsBase, lightDomStylesTemplate} from "./Et2CustomfieldsBase";
 import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
 import {html} from "lit";
 import {html as staticHtml, unsafeStatic} from "lit/static-html.js";
 import {repeat} from "lit/directives/repeat.js";
 import {ref} from "lit/directives/ref.js";
-import "../Et2Description/Et2Description";
-import "../Et2Link/Et2Link";
-import "../Et2Select/SelectTypes";
 import {applyCustomfieldWidgetMapping, mapCustomfieldToWidget} from "./Et2CustomfieldWidgetMapper";
 
 import styles from "./Et2CustomfieldsList.styles";
@@ -28,17 +25,10 @@ export class Et2CustomfieldsList extends Et2CustomfieldsBase
 	@property({type: Boolean, attribute: "no-label", reflect: true})
 	noLabel : boolean = false;
 
-	static get styles()
-	{
-		return [
-			...super.styles,
-			styles
-		];
-	}
-
 	/**
-	 * Field widgets are intentionally rendered into light DOM so legacy widget
-	 * lookup, validation, and event paths can see the generated child widgets.
+	 * Field widgets are intentionally rendered into light DOM so legacy widget lookup,
+	 * validation, and event paths can see the generated child widgets.  That also means Lit
+	 * never adopts `static styles`, so our CSS is rendered as a <style> of our own.
 	 */
 	protected createRenderRoot()
 	{
@@ -82,57 +72,11 @@ export class Et2CustomfieldsList extends Et2CustomfieldsBase
 		`;
 	}
 
-	private _lightDomStylesTemplate()
-	{
-		return html`
-			<style>
-				et2-customfields-list {
-					display: block;
-				}
-
-				et2-customfields-list .customfields-list {
-					display: flex;
-					flex-direction: column;
-					gap: var(--sl-spacing-2x-small, 0.25rem);
-				}
-
-				et2-customfields-list .customfields-list__field {
-					display: flex;
-					align-items: center;
-					min-width: 0;
-				}
-
-				et2-customfields-list .customfields-list__field[hidden] {
-					display: none;
-				}
-
-				et2-customfields-list .customfields-list__field > * {
-					min-width: 0;
-				}
-
-				et2-customfields-list[no-label] .customfields-list__field {
-					align-items: stretch;
-					width: 100%;
-				}
-
-				et2-customfields-list[no-label] .customfields-list__field > * {
-					flex: 1 1 auto;
-					width: 100%;
-					max-width: 100%;
-				}
-
-				et2-customfields-list[no-label] et2-link::part(remark) {
-					display: none;
-				}
-			</style>
-		`;
-	}
-
 	render()
 	{
 		const fields = this.getVisibleFieldNames();
 		return html`
-			${this._lightDomStylesTemplate()}
+			${lightDomStylesTemplate(styles)}
 			<div class="customfields-list" part="base">
 				${repeat(fields, (fieldName) => fieldName, (fieldName) =>
 				{

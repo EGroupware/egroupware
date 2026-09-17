@@ -134,6 +134,7 @@ import "./Et2Vfs/Et2VfsSize.ts";
 import "./Et2Vfs/Et2VfsUpload";
 import "./Validators/EgwValidationFeedback";
 import "./Et2Textbox/Et2Password";
+import "./Et2Textbox/Et2PasswordReadonly";
 import './Et2Textbox/Et2Searchbox';
 import "./Et2Tree/Et2Tree";
 import "./Et2Tree/Et2TreeDropdown";

@@ -82,6 +82,15 @@ class Customfields extends Transformer
 	{
 		$this->attrs['prefix'] = self::$prefix;
 		parent::__construct($xml);
+
+		// <et2-customfields field="Mitgliedsart"/> places that one field.  Showing and validating a
+		// single field already works off an id naming it, eg. "#Mitgliedsart", which is how a
+		// template has always had to ask - so build that id here and the rest applies unchanged.
+		// In the constructor because rendering and validating are separate instances.
+		if (empty($this->id) && !empty($this->attrs['field']))
+		{
+			$this->id = $this->attrs['prefix'].$this->attrs['field'];
+		}
 	}
 
 	/**

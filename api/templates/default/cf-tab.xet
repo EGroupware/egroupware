@@ -3,6 +3,6 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<et2-template  id="api.cf-tab" template="" lang="" group="0" version="23.1">
-		<customfields tab="panel" type_filter="@cfTypeFilter" exclude="@cfExclude"/>
+		<et2-customfields layout="2-column" tab="panel" type_filter="@cfTypeFilter" exclude="@cfExclude"/>
 	</et2-template>
 </overlay>

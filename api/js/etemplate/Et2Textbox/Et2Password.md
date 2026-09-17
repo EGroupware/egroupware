@@ -13,6 +13,21 @@ themselves. Read from a template, the widget sets it for you and you never write
 <et2-password type="password" label="Password" value="correct horse battery staple"></et2-password>
 ```
 
+### When it is only being shown
+
+A readonly password is `et2-password_ro`, which templates get automatically the way every other
+`_ro` widget is chosen - readonly in a template, and every customfield of type `passwd` outside an
+edit dialog.
+
+It says whether a password is set and nothing else: anything stored shows as `***`, nothing stored
+shows nothing. It is deliberately not this widget with its input disabled, because that one is given
+the stored password so it can offer to reveal it - which is worth doing in a dialog somebody opened,
+and not worth doing once per row of a list.
+
+```html:preview
+<et2-password_ro label="Stored password" value="correct horse battery staple"></et2-password_ro>
+```
+
 ### Letting the user look
 
 `viewable` adds an eye button that switches the field to plain text, for a password the user is

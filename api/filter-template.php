@@ -199,7 +199,7 @@ EOF;
 				{
 					case 'header-customfields':
 					case 'customfields':
-						$widget = 'customfields-filters';
+						$widget = 'et2-customfields-filters';
 						$attrs['label'] = '';
 						$attrs['id'] = 'col_filter';
 						// No field filter - override what's set for nm
@@ -230,7 +230,7 @@ EOF;
 						$widget = 'et2-select';
 						break;
 				}
-				if (!str_starts_with($widget, 'et2-') && $widget !== 'customfields-filters')
+				if (!str_starts_with($widget, 'et2-'))
 				{
 					$widget = 'et2-'.$widget;
 				}

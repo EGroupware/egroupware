@@ -110,7 +110,7 @@
 					<et2-description  value="custom fields" span="all"></et2-description>
 				</row>
 				<row>
-					<customfields span="all" readonly="true"/>
+					<et2-customfields span="all" readonly="true"></et2-customfields>
 				</row>
 				<row>
 					<et2-template  id="calendar.print.participants" span="all"></et2-template>
