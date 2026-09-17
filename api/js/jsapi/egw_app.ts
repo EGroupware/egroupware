@@ -322,7 +322,10 @@ export abstract class EgwApp
 			// update values in toolbar
 			window.setTimeout(() =>
 			{
-				this.nmFilterChange({detail: { activeFilters: this.nm.activeFilters}});
+				// target: the "0 rows -> open the filter drawer" rule in nmFilterChange() reads
+				// _ev.target, so without it that rule never applies on load - only oldFilters stays
+				// deliberately absent, that is what marks this as a sync rather than a user change
+				this.nmFilterChange({target: this.nm.getDOMNode(), detail: { activeFilters: this.nm.activeFilters}});
 			});
 		}
 
@@ -343,7 +346,9 @@ export abstract class EgwApp
 			app_toolbar = app_toolbar?.querySelector("et2-template");
 		}
 		const activeFilters = _ev.detail?.activeFilters;
-		const oldFilters = _ev.detail?.oldFilters || {};
+		// a real et2-filter event always carries oldFilters, the load-time sync in et2_ready() does not
+		const oldFilters = _ev.detail?.oldFilters;
+		const isUserChange = !!oldFilters;
 		if (app_toolbar && activeFilters)
 		{
 			for(const attr in Object.assign({}, activeFilters, oldFilters))
@@ -351,30 +356,42 @@ export abstract class EgwApp
 				switch (attr)
 				{
 					case 'col_filter':
-						for(const attr in Object.assign({}, activeFilters.col_filter || {}, oldFilters.col_filter || {}))
+						for(const attr in Object.assign({}, activeFilters.col_filter || {}, oldFilters?.col_filter || {}))
 						{
-							this.checkNmFilterChanged(app_toolbar, attr, activeFilters.col_filter[attr] ?? '');
+							this.checkNmFilterChanged(app_toolbar, attr, activeFilters.col_filter[attr] ?? '', _ev);
 						}
 						break;
 					case 'filter':
 					case 'filter2':
 					case 'cat_id':
 					case 'search':
-						this.checkNmFilterChanged(app_toolbar, attr, activeFilters[attr] ?? '');
+						this.checkNmFilterChanged(app_toolbar, attr, activeFilters[attr] ?? '', _ev);
 						break;
 				}
 			}
 		}
 
 		// If there are filters set and we get 0 rows, open the filter drawer
-		const nm = _ev.target ?? null;
+		const nm : any = _ev.target ?? null;
 		const emptyFilter = (v : any) => typeof v == "object" && v ? Object.values(v).filter(emptyFilter).length : v;
 		if(Object.values(activeFilters).filter(emptyFilter).length !== 0)
 		{
 			const filterDrawer = nm?.closest('egw-app')?.filtersDrawer;
 			if(nm && filterDrawer && !filterDrawer.open)
 			{
-				nm.addEventListener('et2-search-result', (e : CustomEvent) => { filterDrawer.open = e.detail.total == 0;}, {once: true});
+				// On load the rows are usually fetched before et2_ready() gets to run the sync, so
+				// et2-search-result has already been and gone and waiting for the next one never
+				// fires - take the count nm already has instead.  Only for a real filter change is
+				// nm.total still the count from BEFORE it, so there we do have to wait.
+				const total = parseInt(nm.total ?? '');
+				if(!isUserChange && !isNaN(total))
+				{
+					filterDrawer.open = total === 0;
+				}
+				else
+				{
+					nm.addEventListener('et2-search-result', (e : CustomEvent) => { filterDrawer.open = e.detail.total == 0;}, {once: true});
+				}
 			}
 		}
 	}
@@ -385,8 +402,13 @@ export abstract class EgwApp
 	 * @param app_toolbar
 	 * @param id
 	 * @param value
+	 * @param _ev the et2-filter event behind this sync, if any.  Overrides that run user-facing
+	 *  side effects (opening the filter drawer, focusing a date field) must check
+	 *  _ev?.detail?.oldFilters first: a real et2-filter always carries it, while the one-off sync
+	 *  et2_ready() fires to seed the toolbar on load does not - without that check those side
+	 *  effects replay on every single page load.
 	 */
-	checkNmFilterChanged(app_toolbar, id : string, value : string)
+	checkNmFilterChanged(app_toolbar, id : string, value : string, _ev? : Event)
 	{
 		let widget = app_toolbar.getWidgetById(id);
 		if(widget && widget.value != value)

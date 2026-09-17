@@ -175,7 +175,7 @@ EOF;
 				$xet .= <<<EOF
 		<$widget id="$id" label="$label"$extra_attrs class="et2-label-fixed"></$widget>
 EOF;
-				if ($id === 'filter' && preg_match('/<(et2-)?template id="'.preg_quote("$app.$name.dates", '/').'"/', $overlay))
+				if ($id === 'filter' && preg_match('/<(et2-)?template\s+id="'.preg_quote("$app.$name.dates", '/').'"/', $overlay))
 				{
 					$xet .= <<<EOF
 		<et2-template id="$app.$name.dates"></et2-template>
