@@ -621,7 +621,9 @@ class Compose
 			}
 		}
 		//error_log(__METHOD__.__LINE__.'->'.array2string($attachment));
-		$size = 0;
+		// see MessageDisplayHandler::getAttachment() for why this must be the real length, not 0
+		// (ticket #124711)
+		$size = strlen($attachment['attachment']);
 		Api\Header\Content::safe($attachment['attachment'], $attachment['name'], $attachment['type'], $size, true, $_GET['mode'] == "save");
 		echo $attachment['attachment'];
 

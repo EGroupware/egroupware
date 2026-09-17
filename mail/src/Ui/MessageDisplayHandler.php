@@ -189,7 +189,12 @@ class MessageDisplayHandler
 			}
 		}
 		$filename = ($attachment['name']?$attachment['name']:($attachment['filename']?$attachment['filename']:$mailbox.'_uid'.$uid.'_part'.$part));
-		$size = 0;
+		// a real Content-Length is required for inline playback/preview (eg. an <audio> element
+		// needs it to report duration) - without it the response falls back to chunked transfer
+		// encoding, which browsers' native media players often can't determine duration from
+		// (ticket #124711: WAV voicemail attachments showing "0 seconds" and refusing to play,
+		// while downloading and playing locally worked fine since the full file was on disk either way)
+		$size = strlen($attachment['attachment']);
 		Api\Header\Content::safe($attachment['attachment'], $filename, $attachment['type'], $size, True, $_GET['mode'] == "save");
 		echo $attachment['attachment'];
 
