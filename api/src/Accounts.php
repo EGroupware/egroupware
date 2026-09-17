@@ -980,13 +980,17 @@ class Accounts
 
 		self::setup_cache();
 		$name_list = &self::$cache['name_list'];
+		// $account_type is a filter, not just part of $which/$name - caching it under the same key
+		// regardless of $account_type let one type-filtered miss (eg. a group looked up as user-only)
+		// poison the cache for every other type of lookup of the same $name for the rest of the process
+		$cache_key = $which.($account_type ?? '');
 
-		if (isset($name_list[$which][$name]))
+		if (isset($name_list[$cache_key][$name]))
 		{
-			return $name_list[$which][$name];
+			return $name_list[$cache_key][$name];
 		}
 
-		return $name_list[$which][$name] = $this->backend->name2id($name,$which,$account_type);
+		return $name_list[$cache_key][$name] = $this->backend->name2id($name,$which,$account_type);
 	}
 
 	/**
