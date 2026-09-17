@@ -97,7 +97,7 @@ class AdminAccountDeleteAclTest extends CommandBase
 <?php
 require_once '{{EGW_SERVER_ROOT}}/doc/phpunit_bootstrap.php';
 require_once '{{EGW_SERVER_ROOT}}/api/tests/LoggedInTest.php';
-EGroupware\Api\LoggedInTest::load_egw($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
+EGroupware\Api\LoggedInTest::load_egw({{EGW_USER}}, {{EGW_PASSWORD}});
 
 $account_id = $GLOBALS['egw']->accounts->name2id('admin_account_delete_acl_test');
 admin_account::delete([
@@ -105,7 +105,16 @@ admin_account::delete([
 	'delete' => 1,
 ]);
 PHP;
-		$script = str_replace('{{EGW_SERVER_ROOT}}', EGW_SERVER_ROOT, $script);
+		// pass the PARENT process's already-resolved, already-proven-good credentials literally,
+		// rather than letting the subprocess re-derive them from its own environment - whatever
+		// doc/phpunit_bootstrap.php falls back to there (env vars/defaults) is not guaranteed to
+		// match what THIS LoggedInTest suite actually authenticated with (caught in CI: the
+		// subprocess got "bad login or password" while the parent process's login worked fine)
+		$script = str_replace(
+			['{{EGW_SERVER_ROOT}}', '{{EGW_USER}}', '{{EGW_PASSWORD}}'],
+			[EGW_SERVER_ROOT, var_export($GLOBALS['EGW_USER'], true), var_export($GLOBALS['EGW_PASSWORD'], true)],
+			$script
+		);
 		$scriptFile = tempnam(sys_get_temp_dir(), 'egw_admin_account_delete_script_');
 		file_put_contents($scriptFile, $script);
 

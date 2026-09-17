@@ -49,6 +49,13 @@ class SharingPathTraversalTest extends LoggedInTest
 		$resultFile = tempnam(sys_get_temp_dir(), 'egw_sharing_traversal_');
 		@unlink($resultFile);
 		$serverRoot = EGW_SERVER_ROOT;
+		// pass the PARENT process's already-resolved, already-proven-good credentials literally,
+		// rather than letting the subprocess re-derive them from its own environment - whatever
+		// doc/phpunit_bootstrap.php falls back to there (env vars/defaults) is not guaranteed to
+		// match what THIS LoggedInTest suite actually authenticated with (caught in CI: the
+		// subprocess got "bad login or password" while the parent process's login worked fine)
+		$user = var_export($GLOBALS['EGW_USER'], true);
+		$password = var_export($GLOBALS['EGW_PASSWORD'], true);
 
 		$script = <<<PHP
 <?php
@@ -62,7 +69,7 @@ function http_response_code(\$code = null)
 
 require_once '$serverRoot/doc/phpunit_bootstrap.php';
 require_once '$serverRoot/api/tests/LoggedInTest.php';
-\\EGroupware\\Api\\LoggedInTest::load_egw(\$GLOBALS['EGW_USER'], \$GLOBALS['EGW_PASSWORD']);
+\\EGroupware\\Api\\LoggedInTest::load_egw($user, $password);
 
 \$_SERVER['REQUEST_URI'] = '/egroupware/share.php/sometoken/../../../etc/passwd';
 \$instance = (new \\ReflectionClass(Sharing::class))->newInstanceWithoutConstructor();
