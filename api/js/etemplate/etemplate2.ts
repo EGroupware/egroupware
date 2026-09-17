@@ -294,19 +294,21 @@ export class etemplate2
 				{
 					const appHeader = jQuery('#divAppboxHeader');
 
-					//Calculate the excess height
-					let frameworkHeight = 0;
-					switch(window.framework?.constructor?.name ?? "")
+					// Calculate the excess height: the space the dialog may use, less what it
+					// wants.  A popup's container is pinned to the window and scrolls inside
+					// itself, so its own height is no use here and its scrollHeight - which can
+					// never be less than that height - reads as exactly full whether the content
+					// needs 300px or 1000px.  Measuring what it would take unpinned gives a number
+					// that is right in both directions, so one resize settles the dialog instead
+					// of creeping a few pixels per event and never quite getting there.
+					let naturalHeight = 0;
+					excess_height = 0;
+					if(egw(window).is_popup())
 					{
-						case 'EgwFramework':
-							// KDots doesn't need extra
-							break;
-						//break;
-						default:
-							frameworkHeight = 11;
-							break;
+						naturalHeight = self._naturalHeight();
+						excess_height = self._DOMContainer.clientHeight - naturalHeight;
 					}
-					excess_height = egw(window).is_popup() ? jQuery(window).height() - jQuery(self._DOMContainer).height() - appHeader.outerHeight() + frameworkHeight : 0;
+
 					// Recalculate excess height if the appheader is shown
 					if(appHeader.length > 0 && appHeader.is(':visible'))
 					{
@@ -315,7 +317,7 @@ export class etemplate2
 
 					// Do not resize if the template height is bigger than screen available height
 					// For templates which have sub templates and they are bigger than screenHeight
-					if(screen.availHeight < jQuery(self._DOMContainer).height())
+					if(screen.availHeight < naturalHeight)
 					{
 						excess_height = 0;
 					}
@@ -346,6 +348,35 @@ export class etemplate2
 			}, this, et2_IResizeable);
 		}
 	};
+
+	/**
+	 * How tall the template would be if it were free to size to its content
+	 *
+	 * In a popup the container is pinned to the window height and scrolls inside itself, which
+	 * hides both how much room is left over and how far the content overflows.  Briefly letting
+	 * it size to its content gives the real number; the reading is taken and the pin put back
+	 * before anything is painted, so nothing flickers.
+	 *
+	 * @return {number} height in pixels the content wants
+	 */
+	private _naturalHeight() : number
+	{
+		const container = this._DOMContainer;
+		const height = container.style.height;
+		const priority = container.style.getPropertyPriority("height");
+
+		container.style.setProperty("height", "auto", "important");
+		const natural = container.scrollHeight;
+		if(height)
+		{
+			container.style.setProperty("height", height, priority);
+		}
+		else
+		{
+			container.style.removeProperty("height");
+		}
+		return natural;
+	}
 
 	/**
 	 * Clears the current instance.
