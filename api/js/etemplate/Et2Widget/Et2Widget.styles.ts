@@ -55,7 +55,14 @@ export default css`
 	/* Use .et2-label-fixed class to give fixed label size */
 
 	:host(.et2-label-fixed) {
-		&::part(form-control-label), & > *::part(form-control-label), .form-control-label {
+		/*
+		 * :where() around the in-shadow selector so all three branches weigh the same as the
+		 * ::part() ones.  Without it, a widget whose own label element is matched by that branch
+		 * gets a heavier rule than the one-column collapse a layout writes as ::part(), so on a
+		 * narrow screen its label keeps the fixed column while every other widget's goes full
+		 * width - the class has to mean the same thing for all of them.
+		 */
+		&::part(form-control-label), & > *::part(form-control-label), :where(.form-control-label) {
 
 			width: initial;
 			width: var(--label-width, 8em);
