@@ -154,7 +154,7 @@ class HtmlArea extends Etemplate\Widget
 		}
 
 		// Blindly turn on AI tools without regard to parent node
-		$ai = new Ai('<et2-ai>');
+		$ai = new Ai('<et2-ai/>');
 		$ai->beforeSendToClient($cname);
 	}
 
