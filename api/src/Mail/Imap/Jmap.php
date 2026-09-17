@@ -615,8 +615,9 @@ class Jmap extends Mail\Imap
 
 	/**
 	 * JMAP-native getACL() - Mailbox myRights/shareWith instead of IMAP GETACL, for accounts
-	 * whose session advertises mail:share. Falls back to the classic IMAP implementation
-	 * (inherited from Horde_Imap_Client_Base) otherwise.
+	 * whose session advertises mail:share. Returns false (no ACL info available) otherwise -
+	 * NOT a fall back to the classic IMAP implementation: Stalwart is JMAP-only, with no real
+	 * IMAP connection ever behind it, so that fallback could only ever hang/timeout.
 	 *
 	 * Unlike classic IMAP GETACL, shareWith never contains the mailbox owner's own entry (JMAP
 	 * has no concept of an explicit owner ACL row) - mail_acl.inc.php's owner-readonly handling
@@ -631,7 +632,13 @@ class Jmap extends Mail\Imap
 	{
 		if (!$this->mailShareSupported())
 		{
-			return parent::getACL($mailbox);
+			// Stalwart is JMAP-only - there is no real IMAP connection to fall back to, ever
+			// (unlike JmapShim, which wraps an actual IMAP server). parent::getACL() would
+			// raw-socket-connect to a JMAP(S)-only endpoint via openMailbox(), unguarded on this
+			// class (see project_jmap_imap_fallthrough_cleanup) - found live (ticket #124351
+			// follow-up): this hung the ACL dialog for ~20s before finally failing with Horde's
+			// generic "Error when communicating with the mail server", instead of failing fast.
+			return false;
 		}
 		$client = $this->jmapClient();
 		if (!($mailboxId = $client->getMailboxId((string)$mailbox)))
@@ -662,8 +669,9 @@ class Jmap extends Mail\Imap
 
 	/**
 	 * JMAP-native setACL() - patches Mailbox shareWith[principalId] instead of IMAP SETACL, for
-	 * accounts whose session advertises mail:share. Falls back to the classic IMAP
-	 * implementation otherwise.
+	 * accounts whose session advertises mail:share. Throws otherwise - NOT a fall back to the
+	 * classic IMAP implementation: Stalwart is JMAP-only, with no real IMAP connection ever
+	 * behind it, so that fallback could only ever hang/timeout.
 	 *
 	 * @param mixed $mailbox a mailbox, string (UTF-8)
 	 * @param string $identifier the identifier to alter - an email address (UTF-8), resolved to
@@ -675,8 +683,9 @@ class Jmap extends Mail\Imap
 	{
 		if (!$this->mailShareSupported())
 		{
-			parent::setACL($mailbox, $identifier, $options);
-			return;
+			// see getACL()'s own comment - Stalwart has no real IMAP to fall back to, ever
+			throw new \Horde_Imap_Client_Exception(
+				'This account does not support mail sharing (mail:share capability not advertised)');
 		}
 		if (empty($options['rights']))
 		{
@@ -715,8 +724,9 @@ class Jmap extends Mail\Imap
 
 	/**
 	 * JMAP-native deleteACL() - clears Mailbox shareWith[principalId] instead of IMAP DELETEACL,
-	 * for accounts whose session advertises mail:share. Falls back to the classic IMAP
-	 * implementation otherwise.
+	 * for accounts whose session advertises mail:share. Throws otherwise - NOT a fall back to
+	 * the classic IMAP implementation: Stalwart is JMAP-only, with no real IMAP connection ever
+	 * behind it, so that fallback could only ever hang/timeout.
 	 *
 	 * @param mixed $mailbox a mailbox, string (UTF-8)
 	 * @param string $identifier the identifier to delete - an email address (UTF-8), resolved
@@ -727,8 +737,9 @@ class Jmap extends Mail\Imap
 	{
 		if (!$this->mailShareSupported())
 		{
-			parent::deleteACL($mailbox, $identifier);
-			return;
+			// see getACL()'s own comment - Stalwart has no real IMAP to fall back to, ever
+			throw new \Horde_Imap_Client_Exception(
+				'This account does not support mail sharing (mail:share capability not advertised)');
 		}
 		$client = $this->jmapClient();
 		if (!($mailboxId = $client->getMailboxId((string)$mailbox)))

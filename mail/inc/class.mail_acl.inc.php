@@ -564,7 +564,9 @@ class mail_acl
 				$this->imap->deleteACL($sbFolders, $identifier);
 				$success++;
 			}
-			catch (Exception $e)
+			// see getACL()'s own comment - a JMAP call can throw something that isn't a plain
+			// \Exception subclass
+			catch (\Throwable $e)
 			{
 				$errors[] = $sbFolders.': '.$e->getMessage();
 				error_log(__METHOD__. "Could not delete ACL rights of folder " . $sbFolders . " for account ". $identifier ."." .$e->getMessage());
@@ -667,7 +669,9 @@ class mail_acl
 				$this->imap->setACL($sbFolders,$identifier,$options);
 				$success++;
 			}
-			catch (Exception $e)
+			// see getACL()'s own comment - a JMAP call can throw something that isn't a plain
+			// \Exception subclass
+			catch (\Throwable $e)
 			{
 				$errors[] = $sbFolders.': '.$e->getMessage();
 				error_log(__METHOD__. "Could not set ACL rights on folder " . $sbFolders . " for account ". $identifier . "." .$e->getMessage());
