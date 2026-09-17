@@ -1146,22 +1146,19 @@ describe("Et2Nextmatch header event handling", () =>
 		}
 	});
 
-	it("persists the legacy CSV-format column preference itself, independent of columnPreferenceName", () =>
+	it("persists the legacy CSV-format column preference for an app that has no key of its own", () =>
 	{
 		// Et2Datagrid has no concept of the legacy Nextmatch CSV format - it only ever persists
 		// its own structured {key,hidden,...} preference. Et2Nextmatch owns writing the
 		// `nextmatch-<rowTemplateId>` CSV compatibility preference some apps' PHP still reads
-		// directly, always keyed by row-template id and never by columnPreferenceName (which can
-		// be a different, dynamic, app-chosen key - e.g. infolog's columnselection_pref).
+		// directly (calendar, filemanager, bookmarks, projectmanager, addressbook), keyed by
+		// row-template id.
 		const el = new Et2Nextmatch();
 		const setPreference = sinon.stub();
-		const egwStubWithSetPreference = {...egwStub, app_name: () => "infolog", set_preference: setPreference};
+		const egwStubWithSetPreference = {...egwStub, app_name: () => "bookmarks", set_preference: setPreference};
 		sinon.stub(el, "egw" as any).returns(egwStubWithSetPreference);
-		(el as any)._templateData = {rowTemplateId: "infolog.index.rows"};
+		(el as any)._templateData = {rowTemplateId: "bookmarks.list.rows"};
 
-		// columnPreferenceName deliberately does NOT match the row-template id here, to prove
-		// the legacy write ignores it entirely.
-		el.columnPreferenceName = "nextmatch-infolog.index.rows-details";
 		const columns = [
 			{key: "a", title: "A", hidden: false},
 			{key: "b", title: "B", hidden: true}
@@ -1170,9 +1167,36 @@ describe("Et2Nextmatch header event handling", () =>
 
 		assert.isTrue(setPreference.calledOnce, "should persist the legacy CSV preference");
 		const [app, key, value] = setPreference.firstCall.args;
-		assert.equal(app, "infolog");
-		assert.equal(key, "nextmatch-infolog.index.rows", "legacy key must be row-template-derived, not columnPreferenceName");
+		assert.equal(app, "bookmarks");
+		assert.equal(key, "nextmatch-bookmarks.list.rows", "legacy key must be row-template-derived");
 		assert.equal(value, "a", "only the visible column key should be included");
+	});
+
+	it("skips the legacy CSV write for an app that keeps column state under its own key", () =>
+	{
+		// An app that sets columnPreferenceName has taken its column state elsewhere, so the
+		// row-template-keyed CSV is no longer a copy of anything - it just lands on top of
+		// whatever that app keeps under the plain key. Infolog's index does this both ways: its
+		// columnselection_pref IS `nextmatch-infolog.index.rows`, and its details filter switches
+		// the property to that same name plus `-details`, which would otherwise write the CSV
+		// over the structured preference the other mode saved.
+		const el = new Et2Nextmatch();
+		const setPreference = sinon.stub();
+		const egwStubWithSetPreference = {...egwStub, app_name: () => "infolog", set_preference: setPreference};
+		sinon.stub(el, "egw" as any).returns(egwStubWithSetPreference);
+		(el as any)._templateData = {rowTemplateId: "infolog.index.rows"};
+		const columns = [
+			{key: "a", title: "A", hidden: false},
+			{key: "b", title: "B", hidden: true}
+		] as any;
+
+		for(const preferenceName of ["nextmatch-infolog.index.rows", "nextmatch-infolog.index.rows-details"])
+		{
+			el.columnPreferenceName = preferenceName;
+			(el as any)._persistLegacyColumnSelection(columns);
+			assert.isTrue(setPreference.notCalled,
+				`must not write the legacy CSV while columnPreferenceName is ${preferenceName}`);
+		}
 	});
 
 	it("moves explicit settings col_filter into active filters", () =>
