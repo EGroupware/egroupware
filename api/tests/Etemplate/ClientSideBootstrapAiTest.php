@@ -106,4 +106,43 @@ class ClientSideBootstrapAiTest extends WidgetBaseTest
 			else unset($apps['aitools']);
 		}
 	}
+
+	/**
+	 * End-to-end (real Ai::enabled() computation, no cache-seeding): with neither the main AI
+	 * provider nor DeepL configured, the icon must be fully hidden (uiDisabled), not shown with an
+	 * empty/broken menu. Requested by ralf 2026-09-17 as the other half of the DeepL-only scenario
+	 * above - both must be verified, not just the "DeepL still works" case.
+	 */
+	public function testUiDisabledWhenNeitherProviderNorDeeplConfigured()
+	{
+		$apps =& $GLOBALS['egw_info']['user']['apps'];
+		$had_aitools = array_key_exists('aitools', $apps);
+		$apps_backup = $apps['aitools'] ?? null;
+		$apps['aitools'] = true;
+
+		$config_backup = Api\Config::read(\EGroupware\AiTools\Bo::APP);
+		foreach (['ai_model', 'ai_api_url', 'ai_api_key', 'ai_custom_model', 'deepl_api_key', 'deepl_api_url'] as $key)
+		{
+			Api\Config::save_value($key, null, \EGroupware\AiTools\Bo::APP);
+		}
+		Api\Cache::unsetInstance('aitools', 'configured');
+
+		try
+		{
+			Etemplate::clientSideBootstrap('mail.compose');
+
+			$this->assertTrue(Widget::setElementAttribute(Ai::GLOBAL_VALS, 'uiDisabled'),
+				'Neither provider configured must fully hide the AI UI, not show an icon with nothing behind it');
+		}
+		finally
+		{
+			foreach ($config_backup as $key => $val)
+			{
+				Api\Config::save_value($key, $val, \EGroupware\AiTools\Bo::APP);
+			}
+			Api\Cache::unsetInstance('aitools', 'configured');
+			if ($had_aitools) $apps['aitools'] = $apps_backup;
+			else unset($apps['aitools']);
+		}
+	}
 }
