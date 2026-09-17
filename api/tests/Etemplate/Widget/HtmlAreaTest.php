@@ -105,4 +105,34 @@ class HtmlAreaTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 		$this->assertStringNotContainsString('<script', $result['html_widget']);
 		$this->assertStringContainsString('Hi', $result['html_widget']);
 	}
+
+	/**
+	 * beforeSendToClient() unconditionally instantiates an Ai widget from a literal XML string
+	 * (`new Ai('<et2-ai/>')`) to "blindly turn on AI tools without regard to parent node" - that
+	 * string is parsed as a standalone XML fragment (Widget::__construct(), via XMLReader), so it
+	 * must be well-formed on its own. A prior version used the bare, unclosed `'<et2-ai>'` (no
+	 * self-close, no closing tag), which XMLReader rejects as "Premature end of data in tag et2-ai
+	 * line 1" - throwing every time ANY HtmlArea widget's beforeSendToClient() actually runs (found
+	 * live 2026-09-17: an addressbook custom field of type "HTML area" crashed the whole nextmatch
+	 * with exactly this error). The other 4 tests in this file already exercise this path
+	 * incidentally via mockedRoundTrip() and would fail on the broken string too - this test names
+	 * the actual bug directly instead of relying on that as a side effect.
+	 */
+	public function testBeforeSendToClientDoesNotThrow()
+	{
+		$etemplate = new Etemplate();
+		$etemplate->read(static::TEST_TEMPLATE, 'test');
+
+		$content = array(
+			'html_widget'    => '',
+			'ascii_widget'   => '',
+			'dynamic_widget' => '',
+			'edit_mode'      => 'html'
+		);
+		// mockedRoundTrip() itself would throw (uncaught) if beforeSendToClient() throws - no
+		// assertion needed beyond "this completes at all", matching the real symptom (a hard
+		// server error page, not a wrong value).
+		$this->mockedRoundTrip($etemplate, $content, array(), array());
+		$this->addToAssertionCount(1);
+	}
 }
