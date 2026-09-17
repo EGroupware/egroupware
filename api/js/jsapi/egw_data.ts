@@ -1050,8 +1050,23 @@ class DataStorage implements DataStorageModule
 			}
 			else if (_execId && _widgetId)
 			{
-				// Get the first 50 bytes of the exex id
-				var hash = _execId.substring(0, 50);
+				// Rows live in the cache under "<prefix>::<id>", where prefix is the
+				// nextmatch's dataStorePrefix - which defaults to the application name, but
+				// is deliberately something else wherever one app shows more than one kind of
+				// list (filemanager's shares, admin's categories/custom fields, ...). The
+				// queued fetch below sends the bare ids and has to store the answer back under
+				// this same prefix, so split it off here and keep it.
+				var parts = _uid.split("::");
+				var prefix = parts.shift();
+				var bareUid = parts.join("::");
+
+				// One queue per (etemplate, widget, prefix). The deferred fetch below is a
+				// request to ONE nextmatch's get_rows(), so it can only answer for uids
+				// belonging to that widget and that prefix. Several nextmatches share a single
+				// etemplate_exec_id, so keying on the exec id alone let whichever of them
+				// registered first pull the others' uids into its own request - fetched under
+				// its widget id, against its own get_rows(), which knows nothing about them.
+				var hash = _execId.substring(0, 50) + "::" + _widgetId + "::" + prefix;
 
 				// Create a new queue if it does not exist yet
 				if (typeof self.#queue[hash] === "undefined")
@@ -1068,6 +1083,21 @@ class DataStorage implements DataStorageModule
 					// so it may already be gone. See egw_set_timeout() in egw.js
 					const timerWnd : any = (egwInstance && egwInstance.window) || window;
 					const fetchQueued = function () {
+						// A purpose-built context, NOT the _context this listener was registered
+						// with. dataFetch() uses its context as scratch space - it writes the
+						// refreshed uids onto _context.refresh and a copy of the filters onto
+						// _context.filters - while what gets registered here is routinely a live
+						// object: the Et2Nextmatch/et2_nextmatch element itself, or a calendar
+						// day column/event widget. Handing one over replaced the widget's own
+						// refresh() method with an array of uids, after which every later
+						// egw.refresh() or push update aimed at that nextmatch died with
+						// "nm.refresh is not a function".
+						// The prefix has to be passed explicitly for the same reason it was kept
+						// above: with no prefix in the context dataFetch() falls back to the egw
+						// instance's application name, so for any nextmatch whose dataStorePrefix
+						// differs from its app the recovered rows were stored under a uid nobody
+						// was listening for - the row never arrived and its page never resolved,
+						// leaving the grid on placeholder rows.
 						// Fetch the data - failure is already reported via the default error
 						// message/logging, nothing more to do here.
 						egwInstance.dataFetch(_execId, {
@@ -1076,7 +1106,7 @@ class DataStorage implements DataStorageModule
 								"only_data": true,
 								"refresh": self.#queue[hash].uids
 							},
-							[], _widgetId, null, _context, null).catch(() => {});
+							[], _widgetId, null, {prefix: prefix}, null).catch(() => {});
 
 						// Delete the queue entry
 						delete self.#queue[hash];
@@ -1085,12 +1115,10 @@ class DataStorage implements DataStorageModule
 						? timerWnd.egw_set_timeout(fetchQueued, 100) : timerWnd.setTimeout(fetchQueued, 100);
 				}
 
-				// Push the uid onto the queue, removing the prefix
-				var parts = _uid.split("::");
-				parts.shift();
-				if (self.#queue[hash].uids.indexOf(parts.join("::")) === -1)
+				// Push the uid onto the queue, without its prefix (the request sends bare ids)
+				if (self.#queue[hash].uids.indexOf(bareUid) === -1)
 				{
-					self.#queue[hash].uids.push(parts.join('::'));
+					self.#queue[hash].uids.push(bareUid);
 				}
 			}
 			else

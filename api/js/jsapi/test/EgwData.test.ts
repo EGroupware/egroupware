@@ -131,7 +131,7 @@ describe('egw_data.js (data / data_storage)', () =>
 			assert.isTrue(debugSpy.calledWith('log'));
 		});
 
-		describe('batched refresh queue (execId + widgetId, uid not yet known)', () =>
+		describe('batched refresh queue (execId + widgetId + prefix, uid not yet known)', () =>
 		{
 			function wait(ms : number) : Promise<void>
 			{
@@ -145,31 +145,130 @@ describe('egw_data.js (data / data_storage)', () =>
 			// would make a test see the "already known" branch instead of the
 			// queue branch under test.
 
-			it('KNOWN BUG: the queued refresh crashes (silently, inside a setTimeout) when _context is null', async() =>
+			it('runs even when the listener was registered with a null context', async() =>
 			{
-				// The timer callback forwards whatever _context the ORIGINAL
-				// dataRegisterUID call was given straight into dataFetch(),
-				// which unconditionally dereferences `_context.lastModification`
-				// with no null check (unlike parseServerResponse elsewhere in
-				// this same file, which does check `_context != null` first).
-				// `null` is a completely ordinary, common _context value - see
-				// the "batches multiple..." test below, which passes `{}`
-				// specifically to avoid tripping this.
+				// Behaviour: the queued fetch builds its own context, so whatever the
+				// listener was registered with is irrelevant to it.
+				// This used to forward _context straight into dataFetch(), which
+				// dereferences `_context.lastModification` with no null check - so a
+				// null context (an entirely ordinary value) threw inside the timer and
+				// the row was never fetched at all. Pass criteria: the request goes out
+				// and the listener gets its data.
+				const cb = sinon.stub();
 				const instance = env.egw('appA');
-				instance.dataRegisterUID('appA::qbug', sinon.stub(), null, 'exec1', 'widget1');
+				instance.dataRegisterUID('appA::qnull', cb, null, 'exec1', 'widget1');
 
 				await wait(150);
 
-				assert.equal(env.jsonCalls.length, 0, 'dataFetch() threw before ever reaching egw.json()');
+				assert.equal(env.jsonCalls.length, 1, 'the queued refresh must reach egw.json()');
+				env.jsonCalls[0].respond({order: ['qnull'], data: {'qnull': {v: 'recovered'}}, total: 1, lastModification: 1});
+
+				assert.isTrue(cb.calledOnceWith({v: 'recovered'}, 'appA::qnull'));
 			});
 
-			it('batches multiple dataRegisterUID calls sharing an execId into one dataFetch "refresh" request after ~100ms', async() =>
+			it('does not write to the object the listener was registered with', async() =>
+			{
+				// Behaviour under test: dataFetch() treats its context as scratch space
+				// (it assigns _context.refresh / _context.filters). The object registered
+				// here is routinely a live widget - Et2Nextmatch and et2_nextmatch both
+				// register themselves - and both declare a refresh() METHOD, so an own
+				// "refresh" property shadows it for good and every later egw.refresh() /
+				// push against that nextmatch dies with "nm.refresh is not a function".
+				// Setup: a class with refresh() on its prototype, exactly like those two.
+				// Pass criteria: refresh() is still callable afterwards, and the object
+				// gained no own properties at all.
+				class FakeNextmatch
+				{
+					refresh() { return 'still the method'; }
+				}
+				const nm : any = new FakeNextmatch();
+				const instance = env.egw('appA');
+
+				instance.dataRegisterUID('appA::qnomutate', sinon.stub(), nm, 'exec1', 'widget1');
+
+				await wait(150);
+				assert.equal(env.jsonCalls.length, 1, 'the queued refresh must still have been sent');
+				env.jsonCalls[0].respond({order: ['qnomutate'], data: {'qnomutate': {v: 1}}, total: 1, lastModification: 1});
+
+				assert.isFunction(nm.refresh, 'refresh() must not be shadowed by an own property');
+				assert.equal(nm.refresh(), 'still the method');
+				assert.deepEqual(Object.keys(nm), [], 'no own property may be added to the registered object');
+			});
+
+			it('stores the recovered row under the uid\'s own prefix, not the egw instance\'s app name', async() =>
+			{
+				// Behaviour under test: a nextmatch\'s dataStorePrefix does not have to match
+				// its application (filemanager\'s share list uses "egw_shares", admin\'s
+				// category list "categories", ...). The queued fetch sends bare ids, so it
+				// has to tell dataFetch() which prefix to put back on - otherwise dataFetch()
+				// falls back to the egw instance\'s app name.
+				// Setup: register an "egw_shares::..." uid through the filemanager instance.
+				// Pass criteria: the listener is called and the row is cached under
+				// egw_shares::, not filemanager::. Getting this wrong is silent - the
+				// listener simply never fires, so the grid\'s page promise never resolves
+				// and its rows stay placeholders.
+				const cb = sinon.stub();
+				const instance = env.egw('filemanager');
+
+				instance.dataRegisterUID('egw_shares::qshare', cb, {}, 'exec1', 'widget1');
+
+				await wait(150);
+				assert.equal(env.jsonCalls.length, 1);
+				assert.deepEqual(env.jsonCalls[0].parameters[1].refresh, ['qshare'], 'bare id, prefix stripped');
+
+				env.jsonCalls[0].respond({order: ['qshare'], data: {'qshare': {v: 'share'}}, total: 1, lastModification: 1});
+
+				assert.isTrue(cb.calledOnceWith({v: 'share'}, 'egw_shares::qshare'), 'the listener must be called');
+				assert.isTrue(env.egw().dataHasUID('egw_shares::qshare'));
+				assert.isFalse(env.egw().dataHasUID('filemanager::qshare'), 'must not be cached under the app name');
+			});
+
+			it('queues separately per widget, even when the widgets share an execId', async() =>
+			{
+				// Behaviour under test: the request goes to ONE nextmatch\'s get_rows(), but
+				// several nextmatches share a single etemplate_exec_id. Batching them together
+				// sent one widget\'s uids under the other widget\'s id, to a get_rows() that
+				// knows nothing about them.
+				// Pass criteria: two requests, each carrying only its own widget\'s uid.
+				const instance = env.egw('appA');
+				instance.dataRegisterUID('appA::qwa', sinon.stub(), {}, 'exec1', 'widget1');
+				instance.dataRegisterUID('appA::qwb', sinon.stub(), {}, 'exec1', 'widget2');
+
+				await wait(150);
+
+				assert.equal(env.jsonCalls.length, 2, 'one request per widget');
+				const byWidget = Object.fromEntries(env.jsonCalls.map(c => [c.parameters[3], c.parameters[1].refresh]));
+				assert.deepEqual(byWidget, {widget1: ['qwa'], widget2: ['qwb']});
+			});
+
+			it('queues separately per prefix, even for the same execId and widget', async() =>
+			{
+				// Behaviour under test: one request can only carry one prefix, since the
+				// prefix is what the answer gets stored back under. Two prefixes therefore
+				// have to be two requests.
+				// Pass criteria: two requests, and each uid ends up under its own prefix.
+				const cbA = sinon.stub();
+				const cbB = sinon.stub();
+				const instance = env.egw('appA');
+				instance.dataRegisterUID('appA::qpa', cbA, {}, 'exec1', 'widget1');
+				instance.dataRegisterUID('otherprefix::qpb', cbB, {}, 'exec1', 'widget1');
+
+				await wait(150);
+
+				assert.equal(env.jsonCalls.length, 2, 'one request per prefix');
+				env.jsonCalls[0].respond({order: ['qpa'], data: {'qpa': {v: 'a'}}, total: 1, lastModification: 1});
+				env.jsonCalls[1].respond({order: ['qpb'], data: {'qpb': {v: 'b'}}, total: 1, lastModification: 1});
+
+				assert.isTrue(cbA.calledOnceWith({v: 'a'}, 'appA::qpa'));
+				assert.isTrue(cbB.calledOnceWith({v: 'b'}, 'otherprefix::qpb'));
+			});
+
+			it('batches multiple dataRegisterUID calls sharing execId, widget and prefix into one dataFetch "refresh" request after ~100ms', async() =>
 			{
 				const cb1 = sinon.stub();
 				const cb2 = sinon.stub();
 				const instance = env.egw('appA');
 
-				// {} rather than null - see the KNOWN BUG test above
 				instance.dataRegisterUID('appA::q1', cb1, {}, 'exec1', 'widget1');
 				instance.dataRegisterUID('appA::q2', cb2, {}, 'exec1', 'widget1');
 
