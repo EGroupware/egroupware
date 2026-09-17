@@ -108,8 +108,8 @@ function clearAuthenticationCache(page)
 	}
 }
 </script>
-<meta http-equiv="refresh" content="1;url=<?php echo $redirectTarget ?>">
+<meta http-equiv="refresh" content="1;url=<?php echo htmlspecialchars($redirectTarget, ENT_QUOTES) ?>">
 </head>
 <body onload="clearAuthenticationCache()">
-<a href="<?php echo $redirectTarget ?>">Logout in progress...</a>
+<a href="<?php echo htmlspecialchars($redirectTarget, ENT_QUOTES) ?>">Logout in progress...</a>
 </body>

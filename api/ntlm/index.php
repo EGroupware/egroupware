@@ -35,7 +35,11 @@ function check_domain($url)
 	$parts = parse_url($url);
 	$host = $parts['host'].($parts['port'] ? ':'.$parts['port'] : '');
 
-	return $url[0] == '/' || in_array($host, $whitelisted);
+	// a same-origin relative path must start with a single "/" (NOT "//", which browsers
+	// treat as scheme-relative to a different host) and contain no characters that could
+	// break out of an HTML attribute if this value is ever reflected
+	return ($url[0] === '/' && ($url[1] ?? '') !== '/' && !preg_match('/["\'<>]/', $url)) ||
+		in_array($host, $whitelisted);
 }
 
 /**
