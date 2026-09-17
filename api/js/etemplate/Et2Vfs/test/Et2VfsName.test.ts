@@ -71,5 +71,25 @@ describe("Et2VfsName", () =>
 			assert.isTrue(open.notCalled, "should not try to open a file the server could not resolve");
 			assert.isTrue(message.calledOnceWith("File 'dangling.odt' not found!", "error"));
 		});
+
+		// a directory has to reach egw.open() as Vfs::DIR_MIME_TYPE, the only mime the link-registry
+		// has filemanager registered for - otherwise it finds no handler and falls back to the WebDAV
+		// url, opening the listing in a new browser tab instead of in filemanager.  Not every directory
+		// reports that mime itself: a symlink to one keeps its target's, and EPL's links stream-wrapper
+		// gives /apps/<app>/... "egw/<app>".  What they all have is the server's is_dir flag.
+		it(`opens a directory whose mime is not DIR_MIME_TYPE in filemanager (${tag})`, async() =>
+		{
+			const element = await fixture<any>(html`<${unsafeStatic(tag)}></${unsafeStatic(tag)}>`);
+			const open = sinon.spy();
+			element.egw = () => ({open, lang: (value : string) => value, decodePath: (path : string) => path, tooltipUnbind: () => {}});
+			element.value = {path: "/apps/addressbook", name: "addressbook", mime: "egw/addressbook", is_dir: 1};
+			await element.updateComplete;
+
+			assert.isFalse(element.open());
+			assert.isTrue(open.calledOnceWith({
+				path: "/apps/addressbook",
+				type: "httpd/unix-directory"
+			}, "file"));
+		});
 	}
 });
