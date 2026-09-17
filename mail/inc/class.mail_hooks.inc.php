@@ -21,6 +21,32 @@ use EGroupware\Mail\Ui;
  */
 class mail_hooks
 {
+	var $public_functions = array
+	(
+		'compose' => True,
+	);
+
+	/**
+	 * Menuaction target for mail's link-registry 'add'/'edit' entries (search_link() below) - a
+	 * generic egw.open(id,'mail','add'/'edit') caller (eg. the "+" quick-add dropdown,
+	 * api/js/jsapi/egw_links.ts's link_quick_add()) still needs a plain classic menuaction it can
+	 * build an index.php?menuaction=... URL for, which mail/compose.php itself deliberately isn't
+	 * (a bare, non-menuaction popup-bootstrap page - see its own docblock). index.php's own
+	 * menuaction dispatch (unlike json.php's Api\Json\Request, which special-cases a bare
+	 * 'Class::method' string to skip instantiation for a real static method) only ever understands
+	 * the classic 'app.class.method' form and always instantiates the class first regardless -
+	 * so this lives on mail_hooks (no constructor at all, unlike EGroupware\Mail\Compose, whose
+	 * __construct() would run initMailAccount() - exactly the server-side IMAP/JMAP connection
+	 * compose.php's own "no IMAP/JMAP opening server-side" design goal avoids) rather than being
+	 * static on Compose itself. Just redirects to compose.php with the same $_GET it was called
+	 * with (from/id/acc_id/mode/smime_type/pgp_encrypted/preset/mailto), which already knows how
+	 * to read every one of them itself.
+	 */
+	static function compose()
+	{
+		Egw::redirect_link('/mail/compose.php', $_GET);
+	}
+
 	/**
 	 * Hook to add context menu entries to user list
 	 *
@@ -89,12 +115,19 @@ class mail_hooks
 			'view_id'    => 'id',
 			'view_popup' => '870xavailHeight',
 			'view_list'	=>	'mail.EGroupware\\Mail\\Ui.index',
-			// no 'add'/'edit' menuaction any more - mail_compose::compose() (the classic
-			// full-page postback they used to point at) is gone, and nothing resolves them
-			// generically (EgwApp._mergeEmail(), the last real reader, now calls
-			// mail.EGroupware\Mail\Merge.ajax_mergeSingle() directly instead). *_popup sizes stay -
-			// _mergeEmail() still reads 'edit_popup' for its own popup dimensions.
+			// mail_compose::compose() (the classic full-page postback these used to point at) is
+			// gone - mail_hooks::compose() (see its own docblock) is a thin redirect to
+			// mail/compose.php's own client-side bootstrap instead, restoring 'add'/'edit' for any
+			// generic egw.open(id,'mail','add'/'edit') caller (eg. the "+" quick-add dropdown,
+			// api/js/jsapi/egw_links.ts's link_quick_add()) - every mail-specific caller still
+			// goes straight through its own _open_new override, unaffected.
+			'add'        => array(
+				'menuaction' => 'mail.mail_hooks.compose',
+			),
 			'add_popup'  => '900xavailHeight',
+			'edit'        => array(
+				'menuaction' => 'mail.mail_hooks.compose',
+			),
 			'edit_id'    => 'id',
 			'edit_popup'  => '900xavailHeight',
 			// register mail as handler for .eml files
