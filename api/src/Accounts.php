@@ -990,7 +990,15 @@ class Accounts
 			return $name_list[$cache_key][$name];
 		}
 
-		return $name_list[$cache_key][$name] = $this->backend->name2id($name,$which,$account_type);
+		$result = $name_list[$cache_key][$name] = $this->backend->name2id($name,$which,$account_type);
+		static $already_logged = false;
+		if (!$result && !$already_logged && strtolower((string)$name) === 'default')
+		{
+			$already_logged = true;
+			error_log('TEMP-DIAG-FIRST-MISS name2id(Default) which='.$which.' account_type='.$account_type.
+				' backtrace='.str_replace("\n", ' <- ', (new \Exception())->getTraceAsString()));
+		}
+		return $result;
 	}
 
 	/**
