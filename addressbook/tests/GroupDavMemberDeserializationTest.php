@@ -63,6 +63,12 @@ class GroupDavMemberDeserializationTest extends LoggedInTest
 			$GLOBALS['egw']->accounts->delete($this->list_id);
 			$this->list_id = null;
 		}
+		// Api\CalDAV::__construct() (instantiated below for addressbook_groupdav) unconditionally
+		// calls set_exception_handler() and never restores it - harmless in a real request (the
+		// process ends), but PHPUnit's risky-test detector correctly flags a test that leaves this
+		// global state changed for whatever runs after it in the same process. One
+		// restore_exception_handler() call undoes exactly that one push (PHP keeps a LIFO stack).
+		restore_exception_handler();
 		parent::tearDown();
 	}
 
