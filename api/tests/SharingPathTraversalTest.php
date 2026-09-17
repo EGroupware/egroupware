@@ -9,26 +9,7 @@
 
 namespace EGroupware\Api;
 
-use PHPUnit\Framework\Attributes\RunInSeparateProcess;
-use PHPUnit\Framework\TestCase;
-
-/**
- * Namespace-scoped shim for the global http_response_code(): Sharing::ServeRequest() lives in
- * namespace EGroupware\Api and calls the bare (unqualified) http_response_code(...) - PHP
- * resolves that against the CURRENT namespace first, falling back to the global function only if
- * none is declared here. Declaring one in this file (loaded fresh in the isolated child process
- * spawned for the test below, before ServeRequest() ever runs) lets us observe the exact response
- * code synchronously, before the real `exit;` two lines later in the fixed code terminates the
- * process - no reliance on shutdown functions, which do not run to completion in this PHPUnit
- * version's process-isolation child (confirmed empirically; not investigated further since this
- * technique sidesteps the problem entirely).
- */
-function http_response_code($code = null)
-{
-	file_put_contents(SharingPathTraversalTest::RESPONSE_CODE_FILE, (string)$code);
-
-	return \http_response_code($code);
-}
+require_once __DIR__.'/LoggedInTest.php';
 
 /**
  * Regression coverage for GHSA-5f5x-v83g-7f45 (share.php/<token>/../<path> scope escape), the
@@ -37,38 +18,71 @@ function http_response_code($code = null)
  * share-token validation, ever runs.
  *
  * ServeRequest() itself calls `exit;` right after the 400 - fatal to whatever PHP process runs
- * it. The test that triggers it is wrapped in #[RunInSeparateProcess] purely to contain that
- * blast radius to one isolated child (which PHPUnit will report as "ended unexpectedly" - that
- * error status is expected and harmless, not a false negative: the actual pass/fail signal comes
- * from the FOLLOW-UP test reading the file the shim above wrote, which survives the child's death
- * since it's a real file on disk, not in-process state).
+ * it. Running it in-process (even under PHPUnit's own #[RunInSeparateProcess]) is not viable:
+ * that isolation mechanism reports the test as "ended unexpectedly" whenever the child calls
+ * exit() before handing its serialized result back, which CI (correctly) treats as a failed
+ * build - an "expected" error is still an error. Registered shutdown functions were tried as a
+ * way to capture evidence before that exit and don't reliably run to completion in PHPUnit 12's
+ * isolated child in this environment either (confirmed empirically).
+ *
+ * So this spawns a genuinely independent PHP CLI subprocess itself (proc_open, not PHPUnit's
+ * isolation), bootstrapped the same way any real request is (doc/phpunit_bootstrap.php +
+ * LoggedInTest::load_egw()) - a real, unrelated OS process, so its exit() cannot affect the
+ * PHPUnit process running this test at all, and this test method itself never errors: it makes
+ * ordinary assertions about the subprocess's outcome and returns normally, like any other test.
+ *
+ * The subprocess declares a namespace-scoped shim for the global http_response_code():
+ * ServeRequest() lives in namespace EGroupware\Api and calls the bare (unqualified)
+ * http_response_code(...) - PHP resolves that against the CURRENT namespace first, falling back
+ * to the global function only if none is declared there. The shim records the code to a file
+ * synchronously, before the real `exit;` two lines later terminates the subprocess.
  *
  * Constructed via ReflectionClass::newInstanceWithoutConstructor() rather than a real share
  * session (Sharing::create_session()) - the traversal check is the literal first statement in
  * ServeRequest(), before $this->share (or anything else on the instance) is ever touched, so no
  * real share fixture is needed to reach it.
  */
-class SharingPathTraversalTest extends TestCase
+class SharingPathTraversalTest extends LoggedInTest
 {
-	const RESPONSE_CODE_FILE = '/tmp/egw_sharing_path_traversal_test_response_code';
-
-	#[RunInSeparateProcess]
-	public function testServeRequestBailsOnTraversalInRequestUri()
+	public function testServeRequestBailsWith400OnTraversalInRequestUri()
 	{
-		@unlink(self::RESPONSE_CODE_FILE);
-		$_SERVER['REQUEST_URI'] = '/egroupware/share.php/sometoken/../../../etc/passwd';
+		$resultFile = tempnam(sys_get_temp_dir(), 'egw_sharing_traversal_');
+		@unlink($resultFile);
 
-		$instance = (new \ReflectionClass(Sharing::class))->newInstanceWithoutConstructor();
-		$instance->ServeRequest();
-	}
+		$script = <<<PHP
+<?php
+namespace EGroupware\\Api;
 
-	public function testServeRequestBailedWith400()
-	{
-		$this->assertFileExists(self::RESPONSE_CODE_FILE,
-			'ServeRequest() must call http_response_code() before exiting on a traversal attempt '.
-			'- if this file is missing, the traversal check never ran at all');
-		$this->assertSame('400', file_get_contents(self::RESPONSE_CODE_FILE));
+function http_response_code(\$code = null)
+{
+	file_put_contents('$resultFile', (string)\$code);
+	return \\http_response_code(\$code);
+}
 
-		@unlink(self::RESPONSE_CODE_FILE);
+require_once '/var/www/egroupware/doc/phpunit_bootstrap.php';
+require_once '/var/www/egroupware/api/tests/LoggedInTest.php';
+\\EGroupware\\Api\\LoggedInTest::load_egw(\$GLOBALS['EGW_USER'], \$GLOBALS['EGW_PASSWORD']);
+
+\$_SERVER['REQUEST_URI'] = '/egroupware/share.php/sometoken/../../../etc/passwd';
+\$instance = (new \\ReflectionClass(Sharing::class))->newInstanceWithoutConstructor();
+\$instance->ServeRequest();
+PHP;
+		$scriptFile = tempnam(sys_get_temp_dir(), 'egw_sharing_traversal_script_');
+		file_put_contents($scriptFile, $script);
+
+		$process = proc_open([PHP_BINARY, '-f', $scriptFile], [1 => ['pipe', 'w'], 2 => ['pipe', 'w']], $pipes);
+		$this->assertIsResource($process, 'failed to spawn the subprocess');
+		fclose($pipes[1]);
+		$stderr = stream_get_contents($pipes[2]);
+		fclose($pipes[2]);
+		proc_close($process);
+		@unlink($scriptFile);
+
+		$this->assertFileExists($resultFile,
+			'ServeRequest() must call http_response_code() before exiting on a traversal attempt - '.
+			"if this file is missing, the traversal check never ran at all. subprocess stderr: $stderr");
+		$this->assertSame('400', file_get_contents($resultFile));
+
+		@unlink($resultFile);
 	}
 }

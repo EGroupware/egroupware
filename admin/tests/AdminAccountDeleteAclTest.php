@@ -11,34 +11,50 @@
 // test base providing common stuff
 require_once __DIR__.'/CommandBase.php';
 
-use EGroupware\Api;
-use PHPUnit\Framework\Attributes\RunInSeparateProcess;
-
 /**
- * Regression coverage for the sink half of GHSA-q2j3-83cg-vg83 (Framework\Ajax::ajax_exec
- * cross-app dispatch), fixed in the same commit (c311428a28) as the dispatcher-wiring covered by
- * api/tests/Framework/AjaxExecSecurityTest.php.
+ * Regression coverage for the PoC scenario of the sink half of GHSA-q2j3-83cg-vg83
+ * (Framework\Ajax::ajax_exec cross-app dispatch): a non-admin caller must not be able to delete
+ * an arbitrary account via admin_account::delete().
  *
- * admin_account::delete() itself had a fail-open admin-membership check: only
- * `$GLOBALS['egw']->acl->check('account_access',32,'admin')`, with no
- * `empty($GLOBALS['egw_info']['user']['apps']['admin'])` guard in front of it - a non-admin has
- * no admin ACL rows at all, so that check alone returns falsy ("not denied") for them, same
- * fail-open shape as the admin_passwordreset/GHSA-76q5 family. A non-admin who reached this
- * method (eg. via the ajax_exec cross-app dispatch bug that same commit also fixed) could delete
- * ANY account.
+ * commit c311428a28 (the dispatcher-wiring half is covered by
+ * api/tests/Framework/AjaxExecSecurityTest.php) also added a fail-closed admin-membership check
+ * to admin_account::delete() itself, which previously relied only on
+ * `$GLOBALS['egw']->acl->check('account_access',32,'admin')` - falsy ("not denied") for a
+ * non-admin with no admin ACL rows at all, same fail-open shape as the admin_passwordreset/
+ * GHSA-76q5 family.
+ *
+ * IMPORTANT finding from building this test: that check turns out to be REDUNDANT with a deeper,
+ * independent layer - admin_cmd_delete_account::exec() (reached via _deferred_delete() further
+ * down the same method) calls admin_cmd::_check_admin(), which was separately hardened this same
+ * session (commit 19bb2b0ea6, the `&&`->`||` fix). Reverting ONLY admin_account::delete()'s own
+ * check does NOT let a non-admin actually delete an account - _check_admin() still blocks it.
+ * Reverting BOTH together does let the deletion through (verified: the target account was
+ * genuinely deleted). So this test validates the AGGREGATE PoC-scenario property ("can a
+ * non-admin delete an account this way at all"), not specifically admin_account::delete()'s own
+ * check in isolation - a regression confined to just that one check, with _check_admin() staying
+ * fixed, would NOT be caught here. Defense in depth is a good thing to have; it just means this
+ * particular test can't be pinned to one line the way most others in this project are.
  *
  * admin_account::delete()'s denial path calls Framework::window_close(), which unconditionally
- * exit()s - fatal to whatever process runs it, and a class-method call (unlike a bare function)
- * can't be intercepted via a namespace shim the way api/tests/SharingPathTraversalTest.php
- * handles its own exit()-adjacent check. Rather than trying to survive past the exit() in-process
- * (PHPUnit's own process-isolation child does not run registered shutdown functions to completion
- * in this environment - confirmed empirically, not investigated further), this test checks the
- * DURABLE, EXTERNAL side effect instead: does the target account still exist in the database
- * afterward? The trigger test's "ended unexpectedly" error status is expected and harmless; the
- * actual pass/fail signal comes from the separate, normal follow-up test, and both tests re-derive
- * the target account_id fresh from the database by account_lid rather than relying on any
- * in-memory state, since the isolated test runs in a genuinely separate PHP process that does not
- * share this class's static properties with the one setUpBeforeClass() ran in.
+ * exit()s - fatal to whatever process runs it. PHPUnit's own #[RunInSeparateProcess] isolation
+ * reports a test as "ended unexpectedly" whenever the isolated child calls exit() before handing
+ * back its serialized result, which CI (correctly) treats as a failed build - an "expected" error
+ * is still an error there. Registered shutdown functions were tried as a way to capture evidence
+ * before that exit and don't reliably run to completion in PHPUnit 12's isolated child in this
+ * environment either (confirmed empirically). A first version of this test used
+ * #[RunInSeparateProcess] and appeared to demonstrate the vulnerability when only
+ * admin_account.inc.php was reverted - that was almost certainly a false positive from that
+ * attribute's default global-state-export leaking the parent test's transient admin identity
+ * (from setUpBeforeClass()'s asAdminStatic() closure) into the isolated child, not a real
+ * demonstration of a non-admin succeeding.
+ *
+ * So this spawns a genuinely independent PHP CLI subprocess itself (proc_open, not PHPUnit's
+ * isolation), logged in FRESH as the ordinary, non-admin phpunit test user via
+ * LoggedInTest::load_egw() - a real, unrelated OS process with no shared state, so its exit()
+ * cannot affect the PHPUnit process running this test at all, and this test method itself never
+ * errors: it makes an ordinary assertion about the DURABLE, EXTERNAL side effect the subprocess
+ * left behind - does the target account still exist in the database afterward? - and returns
+ * normally, like any other test.
  */
 class AdminAccountDeleteAclTest extends CommandBase
 {
@@ -75,21 +91,32 @@ class AdminAccountDeleteAclTest extends CommandBase
 		parent::tearDownAfterClass();
 	}
 
-	#[RunInSeparateProcess]
-	public function testDeleteAsNonAdminTriggersDenial()
+	public function testDeleteAsNonAdminIsDeniedAndAccountSurvives()
 	{
-		$account_id = $GLOBALS['egw']->accounts->name2id(self::ACCOUNT_LID);
+		$script = <<<'PHP'
+<?php
+require_once '/var/www/egroupware/doc/phpunit_bootstrap.php';
+require_once '/var/www/egroupware/api/tests/LoggedInTest.php';
+EGroupware\Api\LoggedInTest::load_egw($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
 
-		admin_account::delete([
-			'account_id' => [$account_id],
-			'delete' => 1,
-		]);
-	}
+$account_id = $GLOBALS['egw']->accounts->name2id('admin_account_delete_acl_test');
+admin_account::delete([
+	'account_id' => [$account_id],
+	'delete' => 1,
+]);
+PHP;
+		$scriptFile = tempnam(sys_get_temp_dir(), 'egw_admin_account_delete_script_');
+		file_put_contents($scriptFile, $script);
 
-	public function testAccountSurvivedNonAdminDeleteAttempt()
-	{
+		$process = proc_open([PHP_BINARY, '-f', $scriptFile], [1 => ['pipe', 'w'], 2 => ['pipe', 'w']], $pipes);
+		$this->assertIsResource($process, 'failed to spawn the subprocess');
+		fclose($pipes[1]);
+		fclose($pipes[2]);
+		proc_close($process);
+		@unlink($scriptFile);
+
 		$this->assertNotFalse($GLOBALS['egw']->accounts->name2id(self::ACCOUNT_LID),
-			'admin_account::delete() must deny a non-admin caller BEFORE reaching _deferred_delete() - '.
+			'admin_account::delete() must deny a non-admin caller - '.
 			'if this fails, the target account was actually deleted by a non-admin session');
 	}
 }
