@@ -34,6 +34,20 @@ describe("et2-iframe", () =>
 		assert.instanceOf(el.__getIframeNode(), HTMLIFrameElement);
 	});
 
+	// Regression test for ticket #124351: without an explicit reset, the real <iframe>
+	// falls back to the browser's own UA-stylesheet default border ("2px inset"), a
+	// thick 3D-look border/emboss around any content shown this way (eg. Mail's message
+	// body, in both the preview pane and the display popup - both just render an
+	// <et2-iframe>).
+	it("has no border on the real <iframe> (no default browser 3D-inset look)", async() =>
+	{
+		const el = await fixture<Et2Iframe>(html`
+            <et2-iframe></et2-iframe>`);
+		const style = getComputedStyle(el.__getIframeNode());
+
+		assert.equal(style.borderStyle, "none");
+	});
+
 	it("set_src() loads the URL into the real <iframe>", async() =>
 	{
 		const el = await fixture<Et2Iframe>(html`
