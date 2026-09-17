@@ -45,11 +45,20 @@ foreach($GLOBALS['egw_info']['user']['preferences'] /*['addressbook', 'notificat
 	}
 }
 $user = $GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['account_id']);
-// add prompts if user has run-rights for AiTools
+// Add prompts if user has run-rights for AiTools AND AI is actually enabled/configured (main
+// provider or DeepL) - Bo::availablePrompts() decides that, returning [] if not. Et2Ai.ts derives
+// its "show the icon" state purely from whether this list is non-empty, no separate
+// enabled/disabled signal: an unconfigured/disabled AI never sends any prompts at all, so "icon
+// shown with nothing usable behind it" can't happen by construction, regardless of which
+// app/widget/how-nested the et2-ai instance is (see ticket #124681 follow-up - a per-widget-
+// instance server-side "disable" modification never reached widgets mounted from a referenced
+// sub-template, eg. mail's preview pane, since those never run any server-side widget lifecycle
+// code at all - this list, delivered the same way egw.set_user()/set_preferences() already are,
+// reaches every widget regardless of template nesting)
 if (!empty($GLOBALS['egw_info']['user']['apps']['aitools']) && class_exists('\\EGroupware\\AiTools\\Prompts'))
 {
 	try {
-		$prompts = (new AiTools\Bo())->get_predefined_prompts(false);
+		$prompts = (new AiTools\Bo())->availablePrompts();
 	}
 	catch (\Throwable $e) {
 		// ignore not configured / installed

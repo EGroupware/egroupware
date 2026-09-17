@@ -168,19 +168,21 @@ export class Et2Ai extends Et2MarkdownMixin(Et2Widget(LitElement))
 	 */
 	transformAttributes(attrs)
 	{
-		// Check for global settings
-		const global_data = this.getArrayMgr("modifications").getRoot().getEntry("~ai~", true);
-		if(global_data)
-		{
-			// Specific attributes override global
-			Object.assign(attrs, global_data, attrs);
-		}
-
 		// Add all prompts (for this app) available to the user
 		if(this.prompts.length == 0)
 		{
 			this.prompts = this.egw().prompts(this.getInstanceManager().app);
 		}
+
+		// No prompts at all (AI provider unconfigured/disabled - server never sends any, see
+		// api/user.php) means there's nothing this widget can actually do - hide it entirely,
+		// rather than showing a trigger button with an empty/broken menu behind it. Prompts are
+		// delivered the same way as eg. egw.set_user()/set_preferences(), so this reaches every
+		// et2-ai instance regardless of which template it's mounted from - unlike a per-instance
+		// server-side modification, which never reaches a widget mounted from a referenced
+		// sub-template (eg. mail's preview pane never runs any server-side widget lifecycle code
+		// for its own content at all, found live 2026-09-17, ticket #124681 follow-up).
+		attrs.uiDisabled = attrs.uiDisabled || this.prompts.length == 0;
 
 		super.transformAttributes(attrs);
 	}

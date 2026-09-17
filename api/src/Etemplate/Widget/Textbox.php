@@ -75,23 +75,6 @@ class Textbox extends Etemplate\Widget
 	}
 
 	/**
-	 * Set up what we know on the server side.
-	 *
-	 * @param string $cname
-	 * @param ?array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
-	 */
-	public function beforeSendToClient($cname, ?array $expand=null)
-	{
-		// assume et2-textarea will be wrapped by preprocessor in et2-ai, if noAiTools is not set to something truish
-		$noAiTools = $this->attrs['noAiTools'] ?? 'false';
-		if ($this->attrs['type'] === 'et2-textarea' && !($noAiTools && $noAiTools !== 'false'))
-		{
-			$ai = new Ai("<et2-ai><et2-textarea id=\"$this->id\"/></et2-ai>");
-			$ai->beforeSendToClient($cname);
-		}
-	}
-
-	/**
 	 * Validate input
 	 *
 	 * Following attributes get checked:
