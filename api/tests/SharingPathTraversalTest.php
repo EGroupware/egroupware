@@ -48,6 +48,7 @@ class SharingPathTraversalTest extends LoggedInTest
 	{
 		$resultFile = tempnam(sys_get_temp_dir(), 'egw_sharing_traversal_');
 		@unlink($resultFile);
+		$serverRoot = EGW_SERVER_ROOT;
 
 		$script = <<<PHP
 <?php
@@ -59,8 +60,8 @@ function http_response_code(\$code = null)
 	return \\http_response_code(\$code);
 }
 
-require_once '/var/www/egroupware/doc/phpunit_bootstrap.php';
-require_once '/var/www/egroupware/api/tests/LoggedInTest.php';
+require_once '$serverRoot/doc/phpunit_bootstrap.php';
+require_once '$serverRoot/api/tests/LoggedInTest.php';
 \\EGroupware\\Api\\LoggedInTest::load_egw(\$GLOBALS['EGW_USER'], \$GLOBALS['EGW_PASSWORD']);
 
 \$_SERVER['REQUEST_URI'] = '/egroupware/share.php/sometoken/../../../etc/passwd';

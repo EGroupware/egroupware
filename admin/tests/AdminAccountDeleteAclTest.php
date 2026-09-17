@@ -95,8 +95,8 @@ class AdminAccountDeleteAclTest extends CommandBase
 	{
 		$script = <<<'PHP'
 <?php
-require_once '/var/www/egroupware/doc/phpunit_bootstrap.php';
-require_once '/var/www/egroupware/api/tests/LoggedInTest.php';
+require_once '{{EGW_SERVER_ROOT}}/doc/phpunit_bootstrap.php';
+require_once '{{EGW_SERVER_ROOT}}/api/tests/LoggedInTest.php';
 EGroupware\Api\LoggedInTest::load_egw($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
 
 $account_id = $GLOBALS['egw']->accounts->name2id('admin_account_delete_acl_test');
@@ -105,6 +105,7 @@ admin_account::delete([
 	'delete' => 1,
 ]);
 PHP;
+		$script = str_replace('{{EGW_SERVER_ROOT}}', EGW_SERVER_ROOT, $script);
 		$scriptFile = tempnam(sys_get_temp_dir(), 'egw_admin_account_delete_script_');
 		file_put_contents($scriptFile, $script);
 
