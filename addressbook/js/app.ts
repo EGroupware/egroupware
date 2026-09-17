@@ -926,6 +926,12 @@ class AddressbookApp extends EgwApp
 		document.body.appendChild(dialog);
 	}
 
+	/**
+	 * True while a _fetchAllSelected() callback is running, so the "all rows are selected"
+	 * test below can't fire a second time for the same selection - see there.
+	 */
+	private _fetchingAllSelected = false;
+
 	_fetchAllSelected(nm, callback)
 	{
 		// The legacy fetchAll() this replaced (cd326f99042, 2026-06-25) guarded against a null/
@@ -937,11 +943,34 @@ class AddressbookApp extends EgwApp
 		{
 			return false;
 		}
+		// Several callers (addEmail(), adb_mail_vcard()) resolve "all selected" by calling
+		// themselves again with the fetched ids as their `selected` argument. Fetching the ids
+		// does not - and must not - clear the nextmatch's own "all rows selected" flag, so that
+		// second call would ask for them all over again, forever: an endless "Loading, please
+		// wait" dialog and one identical ajax_get_rows(start=0) request every few hundred ms
+		// until the tab is reloaded (reported live 2026-09-17 for "Email -> Add to To" on a
+		// distribution list). Treat re-entry from our own callback as "already resolved" and
+		// hand control back to the caller, which then proceeds with the ids it was given.
+		if(this._fetchingAllSelected)
+		{
+			return false;
+		}
 		if(nm.getSelection().all)
 		{
+			this._fetchingAllSelected = true;
 			nm.fetchAllIds()
-				.then((ids) => callback.call(this, ids))
-				.catch(() => {});
+				.then((ids) =>
+				{
+					try
+					{
+						callback.call(this, ids);
+					}
+					finally
+					{
+						this._fetchingAllSelected = false;
+					}
+				})
+				.catch(() => { this._fetchingAllSelected = false; });
 			return true;
 		}
 		return false;
@@ -1225,7 +1254,11 @@ class AddressbookApp extends EgwApp
 		if (!nm) nm = this.et2.getWidgetById('nm');
 		if(this._fetchAllSelected(nm, (ids) => {
 			// fetchAllIds() returns just the ID, no prefix, so map it to match normal selected
-			this.addEmail(action, ids.map((num) => { return {id:'addressbook::'+num}; }), nm, which);
+			// setCompose has to be passed on too: without it a "select all" from the
+			// "Select contacts to add to mail" dialog (addEmailToCompose(), which supplies
+			// app.mail.setCompose) would silently fall through to opening a brand-new
+			// compose window via mailto:, instead of filling the one it was opened from.
+			this.addEmail(action, ids.map((num) => { return {id:'addressbook::'+num}; }), nm, which, setCompose);
 		}))
 		{
 			// Need more IDs, will use the above callback when they're ready.
