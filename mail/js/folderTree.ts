@@ -324,14 +324,30 @@ export function buildFolderLevel(mailboxes : JmapMailboxNode[], profileID : stri
 	// confusing a dead end as a missing one though (ralf's report), so this is its OWN check,
 	// never just "not filtered" - gated on hasChildren !== false unconditionally (an empty root
 	// must never show, even with subscribedOnly off - eg. the "show all folders" preference or the
-	// subscription dialog's own explicit override, see subscriptionLoad()), and additionally
-	// on hasSubscribedChildren when subscribedOnly is on: a root that only has UNSUBSCRIBED shared
-	// mailboxes under it is just as much a dead end in the main index (nothing will render if it's
-	// expanded, since the same subscribedOnly filter applies one level down) - it's still findable
-	// via the subscription dialog, which always passes subscribedOnly:false.
+	// subscription dialog's own explicit override, see subscriptionLoad()), and additionally on
+	// hasSubscribedChildren !== false when subscribedOnly is on. undefined is deliberately treated
+	// as "trust it" here (unchanged from before) - the shim only ever OMITS this field entirely for
+	// an already-non-empty namespace root it already verified server-side (see
+	// unsubscribedPassthroughsMissingFrom()'s own docblock), and real JMAP has no namespace-root
+	// concept at all, so this branch never even applies there.
 	const isVisibleNamespaceRoot = (mailbox : JmapMailboxNode) =>
 		isNamespaceRootName(mailbox.name) && mailbox.hasChildren !== false &&
 		(!options.subscribedOnly || mailbox.hasSubscribedChildren !== false);
+	// IMAP lets an accessible folder be a child of one this user can't see/subscribe to at all -
+	// not just the namespace root above (the ORIGINAL, narrower version of this same idea), but at
+	// ANY depth and ANY name: eg. a specific other user's own folder is itself usually not
+	// individually subscribable unless something under it is explicitly granted (ticket #124701 /
+	// a colleague's report: no subfolders showed under "user" unless the Inbox itself was also
+	// subscribed - one level higher than this exact same gap). Such a folder still needs to show,
+	// purely as a structural passthrough, whenever something further beneath it is findable in
+	// "subscribed only" mode - server-computed (Api\Mail\Jmap\Imap::mailboxNode()'s
+	// hasSubscribedChildren, mirroring unsubscribedPassthroughsMissingFrom()'s own check exactly),
+	// but unlike the namespace-root case above, this requires hasSubscribedChildren === true
+	// explicitly, not just "not false" - undefined here means "no extra info was computed" (every
+	// ordinary unsubscribed mailbox, and every real-JMAP/Stalwart one), which must still fall
+	// through to the strict isSubscribed check below, not be waved through by default.
+	const isVisiblePassthrough = (mailbox : JmapMailboxNode) =>
+		mailbox.hasChildren !== false && mailbox.hasSubscribedChildren === true;
 	// mail/js/app.ts has ~10 call sites that hardcode `profileID + '::INBOX'` (canonical uppercase,
 	// matching the IMAP protocol's own case-insensitive special mailbox name) to find/select/
 	// default to the account's own INBOX node - JmapShim's local shim already canonicalizes to
@@ -346,7 +362,7 @@ export function buildFolderLevel(mailboxes : JmapMailboxNode[], profileID : stri
 	const pathSegment = (mailbox : JmapMailboxNode) => mailbox.role === 'inbox' ? 'INBOX' : mailbox.name;
 	const filtered = (mailboxes || [])
 		.filter((mailbox) => isNamespaceRootName(mailbox.name) ? isVisibleNamespaceRoot(mailbox) :
-			(!options.subscribedOnly || mailbox.isSubscribed));
+			(!options.subscribedOnly || mailbox.isSubscribed || isVisiblePassthrough(mailbox)));
 	// Found live 2026-09-14 (ralf, relaying a real user's report): autoloaded subfolders showed
 	// in the server's own arbitrary order, not alphabetical-with-special-folders-first. sortTopLevel()
 	// (see its own docblock - "not scoped to any particular depth") was extracted specifically so

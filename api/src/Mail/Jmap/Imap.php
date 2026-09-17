@@ -626,9 +626,9 @@ class Imap extends Jmap\Base
 		{
 			$mailboxes = $imap->listMailboxes($pattern, \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, ['children' => true]);
 		}
-		elseif ($subscribedOnly && $parentPath === '')
+		elseif ($subscribedOnly && !$recursive)
 		{
-			$mailboxes += self::namespaceRootsMissingFrom($imap, $mailboxes);
+			$mailboxes += self::unsubscribedPassthroughsMissingFrom($imap, $mailboxes, $parentMailbox, $parentPath, $delimiter);
 		}
 
 		$ids = [];
@@ -640,54 +640,62 @@ class Imap extends Jmap\Base
 	}
 
 	/**
-	 * Namespace roots ("user"/"shared" style Other-Users/Shared containers) are structural
-	 * navigation doorways, not individually-subscribable mailboxes in the normal IMAP sense -
-	 * classic mail_tree.inc.php's own namespace handling (setOutStructure()) always shows them
-	 * regardless of subscription state. filter.isSubscribed's strict MBOX_SUBSCRIBED mode would
-	 * otherwise hide the only way into "Other Users"/"Shared Folders" entirely, since the
-	 * namespace root itself is essentially never individually \Subscribed.
+	 * IMAP lets an accessible folder be a child of an INACCESSIBLE (to us) one - not just the
+	 * classic "user"/"shared" Other-Users/Shared namespace root this used to special-case
+	 * (namespaceRootsMissingFrom(), narrowly matched by literal name, one level only), but at
+	 * ANY depth: a specific other user's own folder (eg. "user/otherperson") is itself usually
+	 * NOT independently visible/subscribable at all unless something under it is explicitly
+	 * granted - ticket #124701 / a colleague's report ("Munser": no subfolders showed under
+	 * 'user' unless the Inbox itself was also subscribed) is this same gap one level deeper.
 	 *
-	 * Matches by the conventional literal names ("user"/"shared", same as jmap.ts's own
-	 * sortTopLevel()'s isNamespaceRoot check) rather than $imap->getNameSpaceArray()'s reported
-	 * NAMESPACE-extension prefixes: a real account hit exactly this gap - IMAP NAMESPACE either
-	 * wasn't advertised or wasn't reported as an "others" entry for that server, even though
-	 * "user" was a perfectly real, browsable mailbox with real accessible children underneath it.
-	 *
-	 * Only included when the namespace actually has at least one accessible child (some other
-	 * user's folder shared with this one via IMAP ACL) - classic suppresses an empty namespace
-	 * root the same way, since an always-visible-but-empty "user"/"shared" entry is a confusing
-	 * dead end for the (much more common) case of a user with nothing granted to them at all.
+	 * Live-verified against a real Dovecot account (2026-09-17, acc_id=85 sysop@bb-trunk vs. a
+	 * 2nd real user "ralf" sharing only INBOX and INBOX/SubFolder/SubSubFolder, deliberately NOT
+	 * INBOX/SubFolder itself): a one-level `LIST "user/ralf/%"` correctly returns "SubFolder" as
+	 * a \Noselect+\HasChildren placeholder (Dovecot already does the right thing once you query
+	 * exactly the right parent) - but our own lazy, one-level-at-a-time tree walk never gets
+	 * there in "subscribed only" mode, because "ralf" itself is never individually \Subscribed
+	 * (nothing about IT specifically is ever subscribed, only things under it) and so silently
+	 * never appears in "user"'s own one-level MBOX_SUBSCRIBED listing - even AFTER subscribing
+	 * to SubSubFolder itself, confirmed live. A fully recursive `LIST "" "*"` from the true root
+	 * DOES find it regardless (a single flat wildcard match doesn't care about intermediate
+	 * subscription state) - which is exactly why this is scoped to the non-recursive (lazy
+	 * per-level) case only; mailboxQuery()'s "flat search" mode (no parentId at all) is
+	 * unaffected and doesn't call this.
 	 *
 	 * @param \Horde_Imap_Client_Socket $imap
-	 * @param array $mailboxes already-found top-level mailboxes, keyed by real IMAP name
-	 * @return array additional {mailboxName: info} entries for any missing, non-empty namespace root
+	 * @param array $mailboxes already-found MBOX_SUBSCRIBED mailboxes at this level, keyed by
+	 *  real IMAP name
+	 * @param string $parentMailbox real IMAP name of the parent level being listed, '' for the
+	 *  top level (matches listChildIds()'s own $parentMailbox)
+	 * @param string $parentPath canonical "/"-joined parent path, '' for the top level
+	 * @param string $delimiter this connection's personal-namespace hierarchy delimiter
+	 * @return array additional {mailboxName: info} entries for any missing structural passthrough
 	 */
-	private static function namespaceRootsMissingFrom(\Horde_Imap_Client_Socket $imap, array $mailboxes) : array
+	private static function unsubscribedPassthroughsMissingFrom(\Horde_Imap_Client_Socket $imap, array $mailboxes,
+		string $parentMailbox, string $parentPath, string $delimiter) : array
 	{
+		$onePattern = ($parentPath === '' ? '' : $parentMailbox.$delimiter).'%';
+		$allChildren = $imap->listMailboxes($onePattern, \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, ['children' => true]);
+
 		$missing = [];
-		$delimiter = self::namespaceDelimiter($imap, 'others');
-		foreach (['user', 'shared'] as $name)
+		foreach ($allChildren as $mailboxName => $info)
 		{
-			if (isset($mailboxes[$name]))
+			if (isset($mailboxes[$mailboxName]))
 			{
 				continue;
 			}
-			// MBOX_SUBSCRIBED (not MBOX_ALL_SUBSCRIBED - see this class's own listMailboxes() docs a
-			// few lines up) - this whole function only ever runs for a subscribedOnly request (see
-			// listChildIds()'s calling `elseif`), so "granted" here must mean "granted AND
-			// subscribed", or an always-visible root would be a dead end whenever something is
-			// shared with this user but they haven't subscribed to any of it yet (ralf's report) -
-			// still findable via the subscription dialog, which never calls with subscribedOnly true.
-			$hasGrantedChildren = $imap->listMailboxes($name.$delimiter.'%', \Horde_Imap_Client::MBOX_SUBSCRIBED, []);
-			if (empty($hasGrantedChildren))
+			// MBOX_SUBSCRIBED (not MBOX_ALL_SUBSCRIBED), and '*' (any depth, not just one level -
+			// the original namespace-root-only version used '%' here, which would have missed a
+			// grandchild-or-deeper subscription just as this whole gap does) - "granted" must
+			// mean "granted AND subscribed", or an always-visible passthrough would be a dead end
+			// whenever something is shared but the user hasn't subscribed to any of it yet -
+			// still findable via the subscription dialog, which never calls with subscribedOnly.
+			$hasSubscribedDescendant = $imap->listMailboxes($mailboxName.$delimiter.'*', \Horde_Imap_Client::MBOX_SUBSCRIBED, []);
+			if (empty($hasSubscribedDescendant))
 			{
 				continue;
 			}
-			$info = $imap->listMailboxes($name, \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, ['children' => true]);
-			if (!empty($info))
-			{
-				$missing += $info;
-			}
+			$missing[$mailboxName] = $info;
 		}
 		return $missing;
 	}
@@ -916,21 +924,43 @@ class Imap extends Jmap\Base
 		$counts['messages'] = (int)($status['messages'] ?? 0);
 		$counts['unseen'] = (int)($status['unseen'] ?? 0);
 
+		$isSubscribed = in_array('\\subscribed', $attributes, true);
+		$hasChildren = in_array('\\haschildren', $attributes, true) ? true :
+			(in_array('\\hasnochildren', $attributes, true) ? false : true);
+
+		// folderTree.ts's buildFolderLevel() re-applies its own subscribedOnly filter client-side
+		// (it has to - it's shared with real JMAP/Stalwart accounts, which have no equivalent of
+		// unsubscribedPassthroughsMissingFrom() at all) - without this, that filter would silently
+		// undo unsubscribedPassthroughsMissingFrom()'s whole point for the local shim: it used to
+		// only ever trust an unsubscribed-but-included node named "user"/"shared" (the ORIGINAL,
+		// narrower fix), so any OTHER passthrough entry unsubscribedPassthroughsMissingFrom() now
+		// also includes (eg. ticket #124701's "otherperson" one level deeper) would still get
+		// filtered right back out client-side, right after the server correctly decided to include
+		// it. Only computed when it's actually needed (already-subscribed or definitely-childless
+		// nodes never reach this) - mirrors unsubscribedPassthroughsMissingFrom()'s own check
+		// exactly, so the two independently agree on what counts as "worth showing".
+		$hasSubscribedChildren = null;
+		if (!$isSubscribed && $hasChildren !== false)
+		{
+			$delimiter = self::namespaceDelimiter($imap, self::isNamespaceRootPath($path) ? 'others' : 'personal');
+			$hasSubscribedChildren = !empty($imap->listMailboxes($mailboxName.$delimiter.'*', \Horde_Imap_Client::MBOX_SUBSCRIBED, []));
+		}
+
 		return [
 			'id' => base64_encode($path),
 			'name' => $path === 'INBOX' ? 'INBOX' : $leafName,
 			'parentId' => $parentPath !== '' ? base64_encode($parentPath) : null,
 			'sortOrder' => 0,
-			'isSubscribed' => in_array('\\subscribed', $attributes, true),
+			'isSubscribed' => $isSubscribed,
 			'totalEmails' => $counts['messages'],
 			'unreadEmails' => $counts['unseen'],
 			'role' => self::roleFor($imap, $mailboxName, $attributes),
-			'hasChildren' => in_array('\\haschildren', $attributes, true) ? true :
-				(in_array('\\hasnochildren', $attributes, true) ? false : true),
+			'hasChildren' => $hasChildren,
+			...($hasSubscribedChildren !== null ? ['hasSubscribedChildren' => $hasSubscribedChildren] : []),
 			// RFC 8621's Mailbox object has no such property - real JMAP (Stalwart) has no
 			// namespace-root concept at all, so this only ever appears (as false) for the local
 			// IMAP shim's own synthetic "user"/"shared" namespace-root entries
-			// (namespaceRootsMissingFrom()) - found live 2026-09-10: a REST/JMAP-lite client has
+			// (unsubscribedPassthroughsMissingFrom()) - found live 2026-09-10: a REST/JMAP-lite client has
 			// no other way to know one of the folders it just listed isn't a real, queryable
 			// mailbox (see emailQuery()'s/emailGet()'s own isBareNamespaceRoot() guard, which
 			// rejects trying anyway rather than relying on every caller checking this first).
@@ -1271,8 +1301,8 @@ class Imap extends Jmap\Base
 		}
 		// A path under the shared/other-users namespace root ("user/..."/"shared/...", see
 		// isNamespaceRootPath()) lives in that namespace, not "personal" - its delimiter can differ
-		// (same reasoning as the $calledFor branch above, and namespaceRootsMissingFrom()'s own use
-		// of the "others" delimiter for both root names).
+		// (same reasoning as the $calledFor branch above, and unsubscribedPassthroughsMissingFrom()'s
+		// own use of the "others" delimiter for both root names).
 		$delimiter = self::namespaceDelimiter($imap, self::isNamespaceRootPath($path) ? 'others' : 'personal');
 
 		return $delimiter === '/' ? $path : str_replace('/', $delimiter, $path);
@@ -1296,7 +1326,7 @@ class Imap extends Jmap\Base
 	 * "shared", no sub-path) - deliberately narrower than isNamespaceRootPath() above, which also
 	 * matches every path UNDER that root (eg. "user/otherperson/INBOX", a perfectly normal,
 	 * selectable mailbox once shared). Only the bare root is a real IMAP server never actually
-	 * has "as a mailbox" - it's a synthetic navigation-only entry namespaceRootsMissingFrom()
+	 * has "as a mailbox" - it's a synthetic navigation-only entry unsubscribedPassthroughsMissingFrom()
 	 * deliberately injects into the folder listing (so a client can expand into other users'
 	 * shared mailboxes at all), matching the classic tree's own \Noselect-flagged rendering of it
 	 * (see folderTree.ts's isNamespaceRootName()/noSelect) - JMAP itself has no concept of this at
