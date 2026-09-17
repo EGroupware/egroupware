@@ -133,6 +133,27 @@ class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 	}
 
 	/**
+	 * A mailbox under the shared/other-users namespace root can use a DIFFERENT delimiter than the
+	 * personal one (RFC 2342 NAMESPACE explicitly allows this per-namespace) - found live
+	 * 2026-09-04 (ralf: "Renaming mail subfolder under user doesn't work...", fixed for
+	 * hordeMailbox()/canonicalPath() by 96d3d0e353) and missed here: listChildIds() used to
+	 * unconditionally use the 'personal' delimiter for its own pattern, even when $parentPath is
+	 * itself under "user"/"shared" - silently building a pattern with the WRONG delimiter (and
+	 * therefore matching nothing) on any server where the two actually differ.
+	 */
+	public function testListChildIdsUnderNamespaceRootUsesOthersDelimiter()
+	{
+		$imap = $this->mockImap(['personal' => [['delimiter' => '.']], 'others' => [['delimiter' => '/', 'name' => 'user']]]);
+		$imap->expects($this->once())->method('listMailboxes')
+			->with('user/%', \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, ['children' => true])
+			->willReturn(['user/bb' => []]);
+
+		$ids = $this->invokePrivate('listChildIds', [$imap, 'user']);
+
+		$this->assertSame([base64_encode('user/bb')], $ids);
+	}
+
+	/**
 	 * The whole point of lazy per-level loading: fetching details for a small explicit set of
 	 * ids must look every one of them up in ONE batched LIST(+STATUS) call, exact (non-wildcard)
 	 * names, never a '*' full-account scan (that would defeat the point for accounts with
