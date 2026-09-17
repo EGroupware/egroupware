@@ -39,8 +39,14 @@ class Ai extends Etemplate\Widget
 			Api\Translation::add_app(self::PROVIDER_APP);
 			if($enabled == 2)
 			{
-				// Only translations, no general prompts
-				self::setElementAttribute($this->id ?: self::GLOBAL_VALS, 'prompts', ["#translate"]);
+				// Only translations, no general prompts - "#translate" is not a real prompt id/object
+				// (never referenced anywhere client-side), leaving the client with a single broken,
+				// blank menu-item: icon showing but no usable menu behind it (ticket #124681 follow-up,
+				// reported live 2026-09-17 after disabling the main AI provider while DeepL stayed
+				// configured). Use the real translate-only prompt list instead, same shape/method the
+				// fully-enabled branch's own translate submenu already uses (Bo::get_predefined_prompts()).
+				self::setElementAttribute($this->id ?: self::GLOBAL_VALS, 'prompts',
+					array_values((new AiTools\Bo())->get_predefined_prompts(false, true)));
 			}
 		}
 		else
