@@ -268,6 +268,59 @@ class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 	}
 
 	/**
+	 * Sets the private, per-connection $lastQuerySubscribedOnly flag mailboxQuery() itself would
+	 * have set (see its own comment) - lets a test simulate "this mailboxNode() call is answering
+	 * the Mailbox/get half of a subscribedOnly Mailbox/query+get batch" without needing a real
+	 * account connection to go through mailboxQuery()'s own public entry point.
+	 */
+	private function setLastQuerySubscribedOnly(Imap $imap, bool $subscribedOnly) : void
+	{
+		$ref = new \ReflectionProperty(JmapShim::class, 'lastQuerySubscribedOnly');
+		$ref->setAccessible(true);
+		$value = $ref->getValue();
+		$value[spl_object_id($imap)] = $subscribedOnly;
+		$ref->setValue(null, $value);
+	}
+
+	/**
+	 * hasSubscribedChildren is only ever consulted client-side (folderTree.ts's buildFolderLevel())
+	 * when subscribedOnly is true - computing it otherwise would be a wasted extra IMAP round trip
+	 * per unsubscribed-with-children mailbox for a value nothing looks at. Only worth computing (and
+	 * only correct to compute) when the immediately-preceding Mailbox/query in the same batched
+	 * request (MailJmap.getMailboxChildren()'s own result-reference) was itself subscribedOnly.
+	 */
+	public function testMailboxNodeComputesHasSubscribedChildrenWhenLastQueryWasSubscribedOnly()
+	{
+		$imap = $this->mockImap(['personal' => [['delimiter' => '.']]]);
+		$imap->method('status')->willReturn(['messages' => 0, 'unseen' => 0]);
+		$this->setLastQuerySubscribedOnly($imap, true);
+		$imap->expects($this->once())->method('listMailboxes')
+			->with('INBOX.otheruser.*', \Horde_Imap_Client::MBOX_SUBSCRIBED, [])
+			->willReturn(['INBOX.otheruser.Sub' => []]);
+
+		$node = $this->invokePrivate('mailboxNode', [$imap, 'INBOX.otheruser', ['\\haschildren']]);
+
+		$this->assertTrue($node['hasSubscribedChildren']);
+	}
+
+	/**
+	 * The actual performance fix: without a preceding subscribedOnly Mailbox/query on this same
+	 * connection (eg. "show all folders" mode, or any other Mailbox/get caller), hasSubscribedChildren
+	 * must be omitted entirely, and - critically - the extra IMAP round trip to compute it must
+	 * never happen at all (assertNever below).
+	 */
+	public function testMailboxNodeOmitsHasSubscribedChildrenWithoutSubscribedOnlyQuery()
+	{
+		$imap = $this->mockImap(['personal' => [['delimiter' => '.']]]);
+		$imap->method('status')->willReturn(['messages' => 0, 'unseen' => 0]);
+		$imap->expects($this->never())->method('listMailboxes');
+
+		$node = $this->invokePrivate('mailboxNode', [$imap, 'INBOX.otheruser', ['\\haschildren']]);
+
+		$this->assertArrayNotHasKey('hasSubscribedChildren', $node);
+	}
+
+	/**
 	 * Regression coverage for a real bug found live 2026-09-10 (ralf, via a real REST client
 	 * against a plain-IMAP account): the shared/other-users namespace-root pseudo-folder
 	 * ("user"/"shared", see namespaceRootsMissingFrom()) was listed like any other real mailbox,

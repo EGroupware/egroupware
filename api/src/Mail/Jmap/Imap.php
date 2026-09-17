@@ -523,8 +523,22 @@ class Imap extends Jmap\Base
 		// already returns every mailbox correctly for the exact same client-side query shape per
 		// RFC 8621 - this is a shim-only gap, not something client-side code did wrong.
 		$recursive = !array_key_exists('parentId', (array)($args['filter'] ?? []));
+		// Remembered per-connection so mailboxNode() (called from the immediately-following
+		// Mailbox/get in the same batched request - MailJmap.getMailboxChildren()'s own
+		// result-reference, mail/js/jmap.ts) knows whether it's worth computing
+		// hasSubscribedChildren at all - that field only ever matters to folderTree.ts's own
+		// filter when subscribedOnly is true; computing it in "show all folders" mode would be a
+		// wasted extra IMAP round trip per unsubscribed-with-children mailbox for a field the
+		// client would never even look at.
+		self::$lastQuerySubscribedOnly[spl_object_id($imap)] = $subscribedOnly;
 		return ['ids' => self::listChildIds($imap, $parentPath, $subscribedOnly, $recursive)];
 	}
+
+	/**
+	 * @var array<int,bool> mailboxQuery()'s own subscribedOnly, keyed by spl_object_id($imap) -
+	 * see mailboxQuery()'s own comment on its one write site, and mailboxNode()'s read of it.
+	 */
+	private static array $lastQuerySubscribedOnly = [];
 
 	/**
 	 * Quota/get (RFC 9425) for the local plain-IMAP shim - wraps the same classic IMAP QUOTA
@@ -955,11 +969,16 @@ class Imap extends Jmap\Base
 		// narrower fix), so any OTHER passthrough entry unsubscribedPassthroughsMissingFrom() now
 		// also includes (eg. ticket #124701's "otherperson" one level deeper) would still get
 		// filtered right back out client-side, right after the server correctly decided to include
-		// it. Only computed when it's actually needed (already-subscribed or definitely-childless
-		// nodes never reach this) - mirrors unsubscribedPassthroughsMissingFrom()'s own check
-		// exactly, so the two independently agree on what counts as "worth showing".
+		// it. Gated on $lastQuerySubscribedOnly (set by the immediately-preceding Mailbox/query in
+		// the same batched request, see mailboxQuery()'s own comment on it) as well as
+		// !$isSubscribed/$hasChildren!==false - that field is only ever consulted client-side when
+		// subscribedOnly is actually true, so computing it in "show all folders" mode (or for any
+		// OTHER Mailbox/get caller that never went through a subscribedOnly query at all) would be
+		// a wasted extra IMAP round trip per unsubscribed-with-children mailbox, for a value the
+		// client would never even look at (found while reviewing this fix's own performance with
+		// ralf, 2026-09-17).
 		$hasSubscribedChildren = null;
-		if (!$isSubscribed && $hasChildren !== false)
+		if (!$isSubscribed && $hasChildren !== false && (self::$lastQuerySubscribedOnly[spl_object_id($imap)] ?? false))
 		{
 			$delimiter = self::namespaceDelimiter($imap, self::isNamespaceRootPath($path) ? 'others' : 'personal');
 			$hasSubscribedChildren = !empty($imap->listMailboxes($mailboxName.$delimiter.'*', \Horde_Imap_Client::MBOX_SUBSCRIBED, []));
