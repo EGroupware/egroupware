@@ -84,7 +84,12 @@ class Ai extends Etemplate\Widget
 			}
 			catch (\Exception $e) {
 				try {
-					return AiTools\Bo::deeplTargetLanguages() ? 2 : 0;
+					// deeplTargetLanguages() only checks its OWN $config param, never reads the
+					// real one itself - called bare (no args, like eg. Hooks::configValidate()'s
+					// own call does NOT do), $config stays null, empty($config['deepl_api_key'])
+					// is unconditionally true, and it always returns [] regardless of the real,
+					// saved DeepL config. That silently kept this branch from ever reaching 2.
+					return AiTools\Bo::deeplTargetLanguages(Api\Config::read(AiTools\Bo::APP)) ? 2 : 0;
 				}
 				catch (\Exception $e) {}
 			}
