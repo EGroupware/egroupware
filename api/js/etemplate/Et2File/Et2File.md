@@ -7,11 +7,17 @@ after the form is
 submitted. As files are selected, they will be shown in a list with [FileItem](../et2-file-item)
 
 :::tip
-There are two widgets for uploading files, [File](../et2-file) and [VfsUpload](../et2-vfs-upload).
+Three widgets can upload a file: [File](../et2-file), [VfsUpload](../et2-vfs-upload)
+and [LinkTo](../et2-link-to).
 
-Use `File` when you don't know where in the VFS the file will be stored or don't intend to store it.
-
-Use `VfsUpload` otherwise.
+- [File](../et2-file) if the files are not going into the VFS at all, or you don't know yet where they go. They arrive
+  as temporary files in the submitted content (`name`, `type`, `tmp_name`, `size`, like `$_FILES`) and your application
+  decides what to do with them.
+- [LinkTo](../et2-link-to) if the files belong to the current entry. It puts them into the entry's own attachment
+  directory without being told a path, and holds uploads for a not yet saved entry until it has an ID.
+- [VfsUpload](../et2-vfs-upload) if you can name the destination. It needs a target path, or the already saved entry
+  the files belong to - see [Where the files go](../et2-vfs-upload/#where-the-files-go) for what happens when it
+  can't resolve one.
 :::
 
 ## Examples

@@ -9,6 +9,14 @@ something is selected.
 See [Choosing a link widget](/components/et2-link/#choosing-a-link-widget) for how it relates to the
 rest of the family.
 
+It is also the upload widget that does not have to be told where files go. Whatever is uploaded
+here becomes an attachment of the current entry (`/apps/<app>/<id>/`), and if that entry has no ID
+yet the uploads are kept in the widget's value until it gets one. Prefer it over
+[`<et2-vfs-upload>`](/components/et2-vfs-upload/), which needs a destination path and silently
+drops files into a temporary directory without one, whenever you cannot name a VFS path or the
+entry is not saved yet. Use [`<et2-file>`](/components/et2-file/) only when the files are not
+going into the VFS at all.
+
 ## The Links tab
 
 `<et2-link-to>` only creates links, it never shows them. The standard pairing is an
@@ -36,10 +44,18 @@ The value names the entry that links are attached *to*, not the links themselves
 ```
 
 `to_id` being a plain ID means the entry exists, and links are created on the server the moment the
-user clicks "Link". If the entry has not been saved yet there is nothing to link to, so `to_id` is
-instead an object collecting the links; they are submitted with the form and created server-side
-once the entry gets its ID. The widget switches between the two on its own - a template does not
-have to care, as long as the server put the entry's app and ID in the content.
+user clicks "Link" - an uploaded file is attached to the entry right then. If the entry has not
+been saved yet there is nothing to link to, so `to_id` is instead an object collecting the links
+(uploaded files included, as temporary files). They are submitted with the form, and the
+application turns them into real links and attachments once it has saved the entry and knows its
+ID:
+
+```php
+Api\Link::link('myapp', $new_id, $content['link_to']['to_id']);
+```
+
+The widget switches between the two on its own - a template does not have to care, as long as the
+server put the entry's app and ID in the content.
 
 ## Limiting what can be linked
 
