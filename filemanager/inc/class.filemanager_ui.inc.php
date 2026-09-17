@@ -981,14 +981,23 @@ class filemanager_ui
 	 * timestamps, which use server-time wallclock digits misencoded as a Unix timestamp), into
 	 * an Api\DateTime object in the user's timezone
 	 *
-	 * @param int $vfs_time real Unix timestamp, eg. from Vfs stat() / url_stat()
+	 * file() runs this unconditionally on $content['mtime']/['ctime'] every time it (re-)renders,
+	 * including on a postback that does NOT close the dialog (eg. the "Apply" button, or a
+	 * Stylite versioning "Revert to" action) - by then $content['mtime']/['ctime'] already hold
+	 * the value from the PREVIOUS conversion (eg. "2023-05-09 16:21:24", round-tripped through the
+	 * date widget), not a fresh raw timestamp. Only prefix '@' for an actual Unix timestamp (a
+	 * plain int, as Vfs stat()/url_stat() return); anything else Api\DateTime's own constructor
+	 * already parses correctly, without the prefix causing a "Double timezone specification" error.
+	 *
+	 * @param int|string $vfs_time real Unix timestamp, eg. from Vfs stat() / url_stat(), or an
+	 * 	already-converted value from a previous call (see above)
 	 * @return Api\DateTime|int|null
 	 */
 	protected static function vfs_time2user($vfs_time)
 	{
 		if (empty($vfs_time)) return $vfs_time;
 
-		$time = new Api\DateTime('@'.$vfs_time);
+		$time = new Api\DateTime(is_int($vfs_time) ? '@'.$vfs_time : $vfs_time);
 		$time->setUser();
 		return $time;
 	}
