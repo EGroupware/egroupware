@@ -182,30 +182,41 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
 	}
 
 	/**
+	 * Anything the user types is theirs, not the ciphertext the server handed us.
+	 *
+	 * Without this the field would still consider itself encrypted, so revealing a password just
+	 * typed (or one we suggested and the user then edited) would demand the login password and
+	 * then ask the server to decrypt something it never issued - which it refuses.
+	 */
+	handleInput()
+	{
+		this.encrypted = false;
+
+		super.handleInput();
+	}
+
+	/**
 	 * If the password is viewable, toggle the visibility.
 	 * If the password is still encrypted, we'll ask for the user's password then have the server decrypt it.
 	 */
 	handlePasswordToggle()
 	{
-		super.handlePasswordToggle();
-
-		this.visible = !this.visible;	// can't access private isPasswordVisible
-
-		if(!this.visible || !this.encrypted || !this.value)
+		// Hiding, or a value we may show anyway: nothing to authenticate for
+		if(this.visible || !this.encrypted || !this.value || this.plaintext)
 		{
-			this.type = this.visible ? 'text' : 'password';
+			this._setVisible(!this.visible);
 			return;
 		}
 
-		if (this.plaintext) return;	// no need to query user-password, if the password is plaintext
-
-		// Need username & password to decrypt
-		Et2Dialog.show_prompt(
+		// Need username & password to decrypt.  The field stays masked until the server answers:
+		// unmasking first would put the value on screen behind the still-open dialog, and for a
+		// password the user typed or we suggested in this session that value IS the password.
+		const prompt = Et2Dialog.show_prompt(
 			(button, user_password) =>
 			{
 				if(button == Et2Dialog.CANCEL_BUTTON)
 				{
-					return this.handlePasswordToggle();
+					return;
 				}
 				this.egw().request(
 					"EGroupware\\Api\\Etemplate\\Widget\\Password::ajax_decrypt",
@@ -215,7 +226,7 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
 					{
 						this.encrypted = false;
 						this.value = decrypted;
-						this.type = 'text';
+						this._setVisible(true);
 					}
 					else
 					{
@@ -230,6 +241,38 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
 			this.egw().lang("Enter your password"),
 			this.egw().lang("Authenticate")
 		);
+
+		// prompt.xet asks for a plain textbox, which every other caller wants, so the login
+		// password the user is about to type would be on screen in clear.  Nothing about the
+		// prompt is configurable, so we change the input once the dialog's template is there.
+		prompt.getUpdateComplete().then(() =>
+		{
+			const value = prompt.eTemplate?.widgetContainer?.getWidgetById("value");
+			if(value)
+			{
+				value.type = "password";
+			}
+		});
+	}
+
+	/**
+	 * Mask or unmask the field.
+	 *
+	 * SlInput keeps the visibility its render() reads in a state of its own and only ever flips it,
+	 * so this has to be called exactly once per real change - and never before we know the user is
+	 * allowed to see the value.
+	 *
+	 * @param visible
+	 */
+	private _setVisible(visible : boolean)
+	{
+		if(visible == this.visible)
+		{
+			return;
+		}
+		super.handlePasswordToggle();
+		this.visible = visible;
+		this.type = visible ? 'text' : 'password';
 	}
 
 	render()
@@ -340,11 +383,11 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
                                             part="password-toggle-button"
                                             class="input__password-toggle"
                                             type="button"
-                                            aria-label=${this.localize.term(this.isPasswordVisible ? 'hidePassword' : 'showPassword')}
+                                            aria-label=${this.localize.term(this.passwordVisible ? 'hidePassword' : 'showPassword')}
                                             @click=${this.handlePasswordToggle}
                                             tabindex="-1"
                                     >
-                                        ${this.isPasswordVisible
+                                        ${this.passwordVisible
                                           ? html`
                                                     <slot name="show-password-icon">
                                                         <sl-icon name="eye-slash" library="system"></sl-icon>
