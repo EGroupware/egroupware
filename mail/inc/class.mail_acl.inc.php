@@ -215,6 +215,7 @@ class mail_acl
 			// own numbering (1, or one past the last real ACL row if there were any).
 			$content['grid'][$n] = array(
 				'acc_id'=>'',
+				'acl' => 'lrs',
 				'acl_l' => true,
 				'acl_r' => true,
 				'acl_s' => true);
