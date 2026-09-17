@@ -771,10 +771,15 @@ class Link extends Link\Storage
 				$app2 = $link['link_app2'];
 				$id2 = $link['link_id2'];
 			}
+			// $app2 can be the negated filter "!file", meaning "unlink everything but the file-attachments".
+			// That is a filter, not the other end of a link: it must neither reach the storage layer nor be
+			// history-logged as an appname, or we write bogus rows with appname "!file" and record_id 0.
+			$app2_is_filter = $app2 === '!'.self::VFS_APPNAME;
+
 			// only history-log and notify, if there were any links deleted
-			if (($deleted = Link\Storage::unlink($link_id,$app,$id,$owner,$app2 != '!'.self::VFS_APPNAME ? $app2 : '',$id2,$hold_for_purge)))
+			if (($deleted = Link\Storage::unlink($link_id,$app,$id,$owner,$app2_is_filter ? '' : $app2,$id2,$hold_for_purge)))
 			{
-				if ($app && $app2)
+				if ($app && $app2 && !$app2_is_filter)
 				{
 					Storage\History::static_add($app,$id,$GLOBALS['egw_info']['user']['account_id'],'~link~','',$app2.':'.$id2);
 					Storage\History::static_add($app2,$id2,$GLOBALS['egw_info']['user']['account_id'],'~link~','',$app.':'.$id);
