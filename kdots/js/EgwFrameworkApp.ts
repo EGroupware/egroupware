@@ -13,7 +13,7 @@ import {repeat} from "lit/directives/repeat.js";
 import {until} from "lit/directives/until.js";
 import {Favorite} from "../../api/js/etemplate/Et2Favorites/Favorite";
 import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
-import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
+import type {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import type {Et2Filterbox} from "../../api/js/etemplate/Et2Filterbox/Et2Filterbox";
 import {waitForEvent} from "../../api/js/etemplate/Et2Widget/event";
 import {egw_getAppObjectManager} from "../../api/js/egw_action/egw_action";
@@ -1014,7 +1014,10 @@ export class EgwFrameworkApp extends LitElement
 	 */
 	protected handleShow(event)
 	{
-		if(event.detail instanceof et2_nextmatch)
+		// Checked by capability rather than class: the only thing that currently fires et2-show is
+		// the legacy nextmatch (which passes itself as detail), but this also picks up any future
+		// nextmatch-alike, and it keeps the legacy class out of this shell's runtime dependencies.
+		if(typeof event.detail?.controller?.getTotalCount == "function")
 		{
 			this.rowCount = event.detail.controller.getTotalCount();
 		}
