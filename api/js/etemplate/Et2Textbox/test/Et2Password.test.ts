@@ -6,6 +6,7 @@ import {Et2Password} from "../Et2Password";
 import {inputBasicTests} from "../../Et2InputWidget/test/InputBasicTests";
 import * as sinon from "sinon";
 import {et2_arrayMgr} from "../../et2_core_arrayMgr";
+import {Et2Dialog} from "../../Et2Dialog/Et2Dialog";
 
 // Stub global egw for cssImage to find
 // @ts-ignore
@@ -115,6 +116,81 @@ describe("Password widget", () =>
 				attribute + '="' + value + '" rendered the wrong thing'
 			);
 		}
+	});
+
+	describe("revealing a password the server sent encrypted", () =>
+	{
+		let prompt : sinon.SinonStub;
+		let promptInput : { type : string };
+
+		beforeEach(async() =>
+		{
+			// enough of the dialog for the widget to reach the prompt's input widget
+			promptInput = {type: "text"};
+			prompt = sinon.stub(Et2Dialog, "show_prompt").returns(<any>{
+				getUpdateComplete: () => Promise.resolve(),
+				eTemplate: {widgetContainer: {getWidgetById: () => promptInput}}
+			});
+
+			// what transformAttributes() gives every password built from a template
+			element.type = "password";
+			element.viewable = true;
+			element.plaintext = false;
+			element.value = "ciphertext==";
+			await elementUpdated(element);
+		});
+
+		afterEach(() => prompt.restore());
+
+		it('stays masked while the user has not authenticated yet', async() =>
+		{
+			element.shadowRoot.querySelector<HTMLButtonElement>(".input__password-toggle").click();
+			await elementUpdated(element);
+
+			assert.isTrue(prompt.called, "Did not ask the user to authenticate");
+			assert.equal(
+				element.shadowRoot.querySelector("input").type, "password",
+				"Unmasked the stored value without waiting for the user to authenticate"
+			);
+		});
+
+		it('stays masked when the user cancels', async() =>
+		{
+			element.shadowRoot.querySelector<HTMLButtonElement>(".input__password-toggle").click();
+			await elementUpdated(element);
+
+			// what Et2Dialog would hand the callback for the Cancel button
+			prompt.firstCall.args[0](Et2Dialog.CANCEL_BUTTON, "");
+			await elementUpdated(element);
+
+			assert.equal(element.shadowRoot.querySelector("input").type, "password", "Unmasked a cancelled reveal");
+		});
+
+		it('asks for the login password in a password field', async() =>
+		{
+			element.shadowRoot.querySelector<HTMLButtonElement>(".input__password-toggle").click();
+			await elementUpdated(element);
+			await Promise.resolve();
+
+			assert.equal(promptInput.type, "password", "Login password would have been typed in clear");
+		});
+
+		it('asks for nothing to show what the user typed', async() =>
+		{
+			const input = element.shadowRoot.querySelector("input");
+			input.value = "a good password";
+			input.dispatchEvent(new Event("input"));
+			await elementUpdated(element);
+
+			element.shadowRoot.querySelector<HTMLButtonElement>(".input__password-toggle").click();
+			await elementUpdated(element);
+
+			assert.isFalse(prompt.called, "Asked the user to authenticate to see their own typing");
+			assert.equal(
+				element.shadowRoot.querySelector("input").type, "text",
+				"Did not show the password the user just typed"
+			);
+		});
 	});
 
 	it('ignores passwordToggle from a template, which the server would not honour', async() =>
