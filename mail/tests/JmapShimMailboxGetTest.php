@@ -388,9 +388,10 @@ class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 	 */
 	public function testListChildIdsSubscribedOnlyUsesSubscribedMode()
 	{
-		// top-level + subscribedOnly also probes for a namespace root (see
-		// namespaceRootsMissingFrom()) - irrelevant to what this test checks, so it just returns
-		// empty for those and asserts only the main call's args/result
+		// top-level + subscribedOnly also probes for any unsubscribed-but-accessible passthrough
+		// entry (see unsubscribedPassthroughsMissingFrom()) - irrelevant to what this test checks,
+		// so the ALL_SUBSCRIBED probe just reports the same single mailbox already found, leaving
+		// nothing missing to add.
 		$imap = $this->mockImap(['personal' => [['delimiter' => '.']], 'others' => [['delimiter' => '/']]]);
 		$imap->method('listMailboxes')->willReturnCallback(function($pattern, $mode, $opts)
 		{
@@ -398,8 +399,9 @@ class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 			{
 				return ['INBOX' => []];
 			}
-			$this->assertContains($pattern, ['user/%', 'shared/%']);
-			return [];
+			$this->assertSame('%', $pattern);
+			$this->assertSame(\Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, $mode);
+			return ['INBOX' => []];
 		});
 
 		$ids = $this->invokePrivate('listChildIds', [$imap, '', true]);
@@ -433,9 +435,9 @@ class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 	/**
 	 * A namespace root with zero accessible children (nothing granted to this user via IMAP ACL,
 	 * by far the more common case) must stay suppressed, exactly like classic - an
-	 * always-visible-but-empty "user"/"shared" entry is a confusing dead end most users would
-	 * never understand. Both "user" and "shared" are always checked (matched by literal name, see
-	 * namespaceRootsMissingFrom()'s own docblock), regardless of what getNameSpaceArray() reports.
+	 * always-visible-but-empty "user" entry is a confusing dead end most users would never
+	 * understand. "user" is a perfectly real mailbox at this level (returned by the ALL_SUBSCRIBED
+	 * probe), it's just never itself \Subscribed and has nothing subscribed beneath it either.
 	 */
 	public function testListChildIdsSuppressesNamespaceRootWithNoGrantedChildren()
 	{
@@ -444,12 +446,14 @@ class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 		{
 			if ($mode === \Horde_Imap_Client::MBOX_SUBSCRIBED)
 			{
-				return $pattern === '%' ? ['INBOX' => []] : [];
+				if ($pattern === '%') return ['INBOX' => []];
+				// nothing granted (AND subscribed) anywhere under "user", at any depth
+				$this->assertSame('user/*', $pattern);
+				return [];
 			}
-			// nothing granted under either namespace - the exact-name lookups must never even be
-			// reached in this case
-			$this->assertContains($pattern, ['user/%', 'shared/%']);
-			return [];
+			$this->assertSame('%', $pattern);
+			$this->assertSame(\Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, $mode);
+			return ['INBOX' => [], 'user' => []];
 		});
 
 		$ids = $this->invokePrivate('listChildIds', [$imap, '', true]);
@@ -458,17 +462,15 @@ class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 	}
 
 	/**
-	 * The real regression this whole method exists for: a server that doesn't report "user" as a
-	 * formal IMAP NAMESPACE-extension entry at all (getNameSpaceArray() only has 'personal') must
-	 * still show it once it has real accessible AND SUBSCRIBED children - matched by its
-	 * conventional literal name, not by relying on the server correctly advertising it as a
-	 * namespace. namespaceRootsMissingFrom()'s own "granted children" check uses MBOX_SUBSCRIBED
-	 * (not MBOX_ALL_SUBSCRIBED) - it only ever runs for a subscribedOnly request in the first
-	 * place, so "granted" here must mean "granted AND subscribed" (ralf's report: an unsubscribed
-	 * share showing an always-empty root in the main index is exactly the dead end this avoids) -
+	 * The regression this method was originally introduced for (narrower, name-matched version):
+	 * a "user"/"shared" namespace root that's itself never individually \Subscribed must still
+	 * show up once it has a real, accessible, SUBSCRIBED descendant somewhere beneath it -
+	 * "granted" here must mean "granted AND subscribed" (ralf's report: an unsubscribed share
+	 * showing an always-empty root in the main index is exactly the dead end this avoids), or it's
+	 * still findable via the subscription dialog, which never calls with subscribedOnly true.
 	 * "user/birgit" below is this test's stand-in for a real, subscribed shared mailbox.
 	 */
-	public function testListChildIdsFindsNamespaceRootByNameEvenWhenNotReportedAsANamespace()
+	public function testListChildIdsIncludesUnsubscribedNamespaceRootWithSubscribedDescendant()
 	{
 		$imap = $this->mockImap(['personal' => [['delimiter' => '/']], 'others' => [['delimiter' => '/']]]);
 		$imap->method('listMailboxes')->willReturnCallback(function($pattern, $mode, $opts)
@@ -476,24 +478,55 @@ class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 			if ($mode === \Horde_Imap_Client::MBOX_SUBSCRIBED)
 			{
 				if ($pattern === '%') return ['INBOX' => []];
-				if ($pattern === 'user/%') return ['user/birgit' => []];
-				return [];
-			}
-			if ($pattern === 'user/%')
-			{
+				$this->assertSame('user/*', $pattern);
 				return ['user/birgit' => []];
 			}
-			if ($pattern === 'shared/%')
-			{
-				return [];
-			}
-			$this->assertSame('user', $pattern);
-			return ['user' => []];
+			$this->assertSame('%', $pattern);
+			$this->assertSame(\Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, $mode);
+			return ['INBOX' => [], 'user' => []];
 		});
 
 		$ids = $this->invokePrivate('listChildIds', [$imap, '', true]);
 
 		$this->assertSame([base64_encode('INBOX'), base64_encode('user')], $ids);
+	}
+
+	/**
+	 * The real generalization this fix is about (ticket #124701 / a colleague's "Munser" report):
+	 * not just the bare "user"/"shared" namespace root (the original, narrower fix above), but ANY
+	 * folder at ANY depth whose own name is never individually \Subscribed can still need to
+	 * appear in its own parent's subscribed listing, purely because something further beneath it
+	 * is. Live-verified against a real Dovecot account (2026-09-17, acc_id=85 sysop@bb-trunk vs. a
+	 * 2nd real user sharing only INBOX and INBOX/SubFolder/SubSubFolder, deliberately NOT
+	 * INBOX/SubFolder itself): "otherperson" (standing in for that 2nd user's own top folder under
+	 * "user") was never itself subscribed - only "SubSubFolder", two levels further down (with an
+	 * unsubscribed, \Noselect "SubFolder" placeholder in between) - and without this fix,
+	 * "otherperson" never appeared while browsing "user" in "subscribed only" mode, at any point,
+	 * even right after subscribing to SubSubFolder itself.
+	 */
+	public function testListChildIdsIncludesArbitraryUnsubscribedPassthroughAtAnyDepth()
+	{
+		$imap = $this->mockImap(['personal' => [['delimiter' => '/']], 'others' => [['delimiter' => '/']]]);
+		$imap->method('listMailboxes')->willReturnCallback(function($pattern, $mode, $opts)
+		{
+			if ($mode === \Horde_Imap_Client::MBOX_SUBSCRIBED)
+			{
+				if ($pattern === 'user/%')
+				{
+					// "otherperson" itself is never individually subscribed - only "bb" is
+					return ['user/bb' => []];
+				}
+				$this->assertSame('user/otherperson/*', $pattern);
+				return ['user/otherperson/SubFolder/SubSubFolder' => []];
+			}
+			$this->assertSame('user/%', $pattern);
+			$this->assertSame(\Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, $mode);
+			return ['user/bb' => [], 'user/otherperson' => []];
+		});
+
+		$ids = $this->invokePrivate('listChildIds', [$imap, 'user', true]);
+
+		$this->assertSame([base64_encode('user/bb'), base64_encode('user/otherperson')], $ids);
 	}
 
 	public function testMailboxQueryPassesIsSubscribedFilterThroughToListChildIds()

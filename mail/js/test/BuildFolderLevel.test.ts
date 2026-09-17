@@ -112,6 +112,41 @@ describe("buildFolderLevel()", () =>
 		assert.deepEqual(nodes.map((n) => n.label), ["translated(INBOX)"]);
 	});
 
+	/**
+	 * Generalization of the namespace-root exemption above (ticket #124701 / a colleague's
+	 * "Munser" report): ANY unsubscribed mailbox, not just "user"/"shared" by name, must still
+	 * show if the server explicitly says something further beneath it is findable in
+	 * "subscribed only" mode (Api\Mail\Jmap\Imap::mailboxNode()'s hasSubscribedChildren) - eg. a
+	 * specific other user's own folder under "user", itself never individually subscribed, with
+	 * only a deeply-nested descendant actually subscribed.
+	 */
+	it("keeps an arbitrary unsubscribed mailbox when the server says it has subscribed children", () =>
+	{
+		const nodes = build([
+			mailbox({name: "INBOX", role: "inbox", isSubscribed: true}),
+			mailbox({name: "otherperson", isSubscribed: false, hasSubscribedChildren: true}),
+		], {subscribedOnly: true});
+
+		assert.deepEqual(nodes.map((n) => n.label), ["translated(INBOX)", "otherperson"]);
+	});
+
+	/**
+	 * hasSubscribedChildren undefined (never computed - real JMAP/Stalwart, or an ordinary
+	 * mailbox the shim never needed to check) must NOT be treated as an automatic pass for a
+	 * regular (non-namespace-root) mailbox - unlike the namespace-root case, where undefined is
+	 * deliberately trusted. Otherwise every real-JMAP mailbox with an unknown hasChildren hint
+	 * would bypass subscribedOnly filtering entirely.
+	 */
+	it("still filters out an arbitrary unsubscribed mailbox when hasSubscribedChildren is unset", () =>
+	{
+		const nodes = build([
+			mailbox({name: "INBOX", role: "inbox", isSubscribed: true}),
+			mailbox({name: "otherperson", isSubscribed: false}),
+		], {subscribedOnly: true});
+
+		assert.deepEqual(nodes.map((n) => n.label), ["translated(INBOX)"]);
+	});
+
 	it("marks hasChildren=true when the mailbox's own hasChildren is true", () =>
 	{
 		const [node] = build([mailbox({hasChildren: true})]);
