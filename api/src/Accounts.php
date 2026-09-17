@@ -900,12 +900,6 @@ class Accounts
 		}
 		if (!$id) return false;
 
-		if (strtolower((string)$this->id2name($id)) === 'default')
-		{
-			error_log('TEMP-DIAG delete() targeting Default (id='.$id.') backtrace='.
-				str_replace("\n", ' <- ', (new \Exception())->getTraceAsString()));
-		}
-
 		if ($this->get_type($id) == 'u')
 		{
 			$invalidate = $this->memberships($id, true);

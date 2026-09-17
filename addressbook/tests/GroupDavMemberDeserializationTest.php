@@ -47,20 +47,24 @@ class GroupDavMemberDeserializationTest extends LoggedInTest
 	protected $list_id;
 
 	/**
-	 * Deletes only whatever id add_list() just handed back for the group THIS test itself
-	 * created seconds earlier - safe by construction regardless of which numeric id that turns
-	 * out to be. Noisy error_log() output during this delete (Stylite VFS versioning failing to
-	 * clean up ".attic"/".versions" entries with "permission denied") was confirmed, while
-	 * developing this test, to be about pre-existing orphaned VFS files from whatever
-	 * unrelated, already-deleted account this id happened to be recycled from - not something
-	 * this test's own (freshly-created, attachment-free) group could itself have caused, and
-	 * every one of those cleanup attempts failed (nothing was actually removed).
+	 * addressbook_groupdav::save_group() returns an egw_addressbook_lists.list_id (a distribution
+	 * list, Api\Contacts::delete_list()) - a completely separate id namespace/table from
+	 * Api\Accounts' account_id, despite CardDAV group vCards mapping to it. An earlier version of
+	 * this cleanup wrongly called $GLOBALS['egw']->accounts->delete($this->list_id), treating that
+	 * list_id as an account_id: harmless on a dev instance with plenty of pre-existing accounts
+	 * (whatever unrelated, already-deleted account that low id happened to be recycled from), but
+	 * on a near-empty fresh install both id sequences start at 1 - this test's own first-ever
+	 * distribution list (list_id=1) collided with and DELETED THE REAL 'Default' ACCOUNTS GROUP,
+	 * breaking every later test in the same CI run that relies on it existing. A "permission
+	 * denied" VFS error logged during that wrong delete() was mistakenly investigated and
+	 * dismissed as unrelated pre-existing cruft during this test's original development - it was
+	 * actually this bug already manifesting.
 	 */
 	protected function tearDown() : void
 	{
 		if ($this->list_id)
 		{
-			$GLOBALS['egw']->accounts->delete($this->list_id);
+			(new Api\Contacts())->delete_list($this->list_id);
 			$this->list_id = null;
 		}
 		// Api\CalDAV::__construct() (instantiated below for addressbook_groupdav) unconditionally
