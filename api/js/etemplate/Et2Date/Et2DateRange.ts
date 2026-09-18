@@ -72,10 +72,38 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 
 	_handleChange(event)
 	{
+		this._constrainToRange();
 		this.updateComplete.then(() =>
 		{
 			this.dispatchEvent(new Event("change", {bubbles: true}));
 		});
+	}
+
+	/**
+	 * Keep the two halves a range: the end cannot be before the start.
+	 *
+	 * Each half is an independent et2-date, so without this the picker happily accepts a `to`
+	 * earlier than its `from` - which is not a range, and downstream produces a query that can
+	 * never match anything.  Constraining the pickers says so while choosing, rather than silently
+	 * returning no results afterwards.
+	 *
+	 * Only applies to an absolute range; a relative one ("this week") is a single select.
+	 */
+	protected _constrainToRange()
+	{
+		if(this.relative)
+		{
+			return;
+		}
+		const from = <any>this.fromElement;
+		const to = <any>this.toElement;
+		if(!from || !to)
+		{
+			return;
+		}
+		// "" clears the constraint, which is what flatpickr expects for "no limit"
+		to.minDate = from.value || "";
+		from.maxDate = to.value || "";
 	}
 
 	render()
@@ -232,6 +260,11 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 				this.fromElement.value = typeof range?.from == "string" ? range.from : (range?.from?.toJSON() || "");
 				this.toElement.value = typeof range?.to == "string" ? range.to : (range?.to?.toJSON() || "");
 			}
+			// Here rather than in updated(): a value set programmatically (restoring a favourite,
+			// seeding a filter from the server) never goes through the pickers' change event, and
+			// updated() runs before the pickers actually hold the value - so constraining there
+			// reads two empty pickers and does nothing.
+			this._constrainToRange();
 		}
 	}
 
