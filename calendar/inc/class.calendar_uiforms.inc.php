@@ -3381,8 +3381,20 @@ class calendar_uiforms extends calendar_ui
 		);
 
 
-		// Get participants for only this one, if it's recurring.  The date is on the end of the value.
-		if($content['recur_type'] || $content['recurrence'])
+		// Get participants for only this one, if we are looking at a single occurrence.  The
+		// recurrence is on the end of the value.
+		//
+		// Deliberately not `$content['recur_type'] || ...`: a series master has no single
+		// occurrence to scope to and its $content['recurrence'] is empty, which built
+		// "LIKE '%~|~'" and matched nothing - hiding every participant change from the series'
+		// history. That went unnoticed for years because Api\Storage\History::get_rows() ignored
+		// this key entirely; it only became visible once the et2-historylog conversion made the
+		// filter work.
+		//
+		// KNOWN GAP, left for later: a participant value ending "~|~0" means "applies to the whole
+		// series", so a single-occurrence view still hides series-wide participant changes instead
+		// of showing them alongside that occurrence's own.
+		if(!empty($content['recurrence']))
 		{
 			$content['history']['filter'] = array(
 				'(history_status NOT LIKE \'participants%\' OR (history_status LIKE \'participants%\' AND (

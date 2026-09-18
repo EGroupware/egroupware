@@ -41,6 +41,50 @@ export class Et2Diff extends Et2InputWidget(LitElement)
 	}
 
 	/**
+	 * True while the diff is taller than the height it is capped to, so part of it is hidden.
+	 *
+	 * Reflected as an attribute rather than held as a reactive property: it is worked out in
+	 * updated(), and a reactive property set there would schedule a second render every time the
+	 * value changes.  Read it, do not set it.
+	 */
+	get overflowing() : boolean
+	{
+		return this.hasAttribute("overflowing");
+	}
+
+	/**
+	 * Watches for the width changing, which re-wraps the diff and can change whether it fits.
+	 * Height changes cannot be watched directly - the element is capped, so it stops growing.
+	 */
+	private _resizeObserver : ResizeObserver = new ResizeObserver(() => this._checkOverflow());
+
+	connectedCallback()
+	{
+		super.connectedCallback();
+		this._resizeObserver.observe(this);
+	}
+
+	disconnectedCallback()
+	{
+		super.disconnectedCallback();
+		this._resizeObserver.disconnect();
+	}
+
+	/**
+	 * Note whether any of the diff is cut off.
+	 *
+	 * The pop-out is only worth offering when there is something to pop out to, so the hover
+	 * button and the click that opens the dialog both turn on this.
+	 */
+	private _checkOverflow()
+	{
+		const content = this.shadowRoot?.querySelector(".form-control-input");
+		// > 1 rather than > 0: sub-pixel layout rounding leaves a fraction of a pixel behind on a
+		// diff that actually fits, which would show the button on every row.
+		this.toggleAttribute("overflowing", !!content && content.scrollHeight - content.clientHeight > 1);
+	}
+
+	/**
 	 * Always return false as a et2-diff is never dirty
 	 */
 	isDirty()
@@ -61,6 +105,7 @@ export class Et2Diff extends Et2InputWidget(LitElement)
 			// Put diff into lightDOM so styles can leak, since we can't import the library CSS into the component
 			render(html`${unsafeHTML(Diff2Html.html(this.value ?? "", this.diff_options))}`, this, {host: this});
 		}
+		this._checkOverflow();
 	}
 
 	set value(value : string)
@@ -81,6 +126,11 @@ export class Et2Diff extends Et2InputWidget(LitElement)
 
 	_handleClick(e)
 	{
+		if(!this.overflowing)
+		{
+			// All of it is already on screen - there is nothing the dialog would add
+			return;
+		}
 		const oldValue = this.getAttribute("open")
 		this.toggleAttribute("open");
 		this.requestUpdate("open", oldValue);

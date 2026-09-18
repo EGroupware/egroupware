@@ -308,6 +308,207 @@ class NextmatchTest extends Etemplate\WidgetBaseTest
 	}
 
 	/**
+	 * Apps are expected to put 'app' in the history log's content, and every in-tree one does, but
+	 * nothing enforces it.  History::get_rows() scopes every query by appname, so a missing one
+	 * would silently return an empty history rather than failing visibly - fall back to the
+	 * current app, as History's own constructor does.
+	 *
+	 * The test template's content sets app=api, so this drops it to prove the fallback.
+	 */
+	public function testHistoryValidateFallsBackToCurrentAppWithoutAppInContent()
+	{
+		$record_id = 'phpunit-'.bin2hex(random_bytes(8));
+		$exec_id = $this->historyRequest('history_custom', $record_id, __CLASS__.'::mock_get_rows');
+
+		// Drop 'app' from the stored request content, as an app that never set it would leave it
+		$stored = Etemplate\Request::read($exec_id, false);
+		$content = $stored->content;
+		unset($content['history_custom']['app']);
+		$stored->content = $content;
+		unset($stored);
+
+		$previous_app = $GLOBALS['egw_info']['flags']['currentapp'] ?? null;
+		$GLOBALS['egw_info']['flags']['currentapp'] = 'infolog';
+		self::$mock_get_rows_params = null;
+		try
+		{
+			Nextmatch::ajax_get_rows($exec_id, array('start' => 0, 'num_rows' => 10), array(
+				'record_id' => $record_id,
+				'appname'   => 'addressbook',   // the client's value must still be ignored
+			), 'history_custom');
+		}
+		finally
+		{
+			$GLOBALS['egw_info']['flags']['currentapp'] = $previous_app;
+		}
+
+		$query = self::$mock_get_rows_params;
+		$this->assertNotNull($query, 'get_rows callback did not run');
+		$this->assertNotSame('addressbook', $query['appname'] ?? null,
+			"the client's appname must never be honoured, even when the content has none");
+		$this->assertNotSame('', (string)($query['appname'] ?? ''),
+			'an empty appname would make get_rows() return an empty history with no indication why');
+	}
+
+	// --- HistoryLog::validate() filter allow-list ---
+
+	/**
+	 * The history log's validate() is what sanitizes client filters for ajax_get_rows(), which
+	 * then *replaces* the client's filters with whatever comes back.  Only allow-listed keys may
+	 * survive: anything else would be handed to History::get_rows() as part of its query, where a
+	 * stray key becomes a WHERE clause (and 'order'/'sort' would reach an ORDER BY).
+	 */
+	public function testHistoryValidateDropsNonAllowlistedFilters()
+	{
+		$record_id = 'phpunit-'.bin2hex(random_bytes(8));
+		$exec_id = $this->historyRequest('history_custom', $record_id, __CLASS__.'::mock_get_rows');
+		self::$mock_get_rows_params = null;
+
+		Nextmatch::ajax_get_rows($exec_id, array('start' => 0, 'num_rows' => 10), array(
+			'record_id' => $record_id,
+			'appname'   => 'api',
+			// calendar sets a raw SQL fragment under this key server-side; a client must never be
+			// able to supply one
+			'filter'    => "1=1 OR history_status LIKE '%'",
+			'order'     => 'history_owner',
+			'sort'      => 'ASC',
+			'csv_export'=> 'children',
+			'row_id'    => 'id',
+		), 'history_custom');
+
+		$query = self::$mock_get_rows_params;
+		$this->assertNotNull($query, 'get_rows callback did not run');
+		$this->assertArrayNotHasKey('filter', $query,
+			"a client-supplied raw SQL 'filter' must never reach get_rows()");
+		$this->assertArrayNotHasKey('csv_export', $query,
+			'an un-allow-listed filter key must be dropped');
+		// 'order'/'sort' are set unconditionally by ajax_get_rows() itself from $value['sort'],
+		// so assert the client's values specifically did not survive
+		$this->assertNotSame('history_owner', $query['order'] ?? null,
+			"a client-supplied 'order' must not reach get_rows() - the history sort is fixed");
+	}
+
+	/**
+	 * `filter` is a raw SQL fragment, and since the history log now *honours* it (calendar uses it
+	 * to scope participant changes to one recurrence) the allow-list is the only thing standing
+	 * between a client and arbitrary SQL in the WHERE clause.
+	 *
+	 * This is the companion to testGetRowsAppliesServerSideFilterFragment in HistoryTest: that one
+	 * proves a server-set fragment works, this one proves a client-set one never arrives.
+	 */
+	public function testHistoryValidateNeverAcceptsAClientSqlFilter()
+	{
+		$record_id = 'phpunit-'.bin2hex(random_bytes(8));
+		$exec_id = $this->historyRequest('history_custom', $record_id, __CLASS__.'::mock_get_rows');
+		self::$mock_get_rows_params = null;
+
+		Nextmatch::ajax_get_rows($exec_id, array('start' => 0, 'num_rows' => 10), array(
+			'record_id' => $record_id,
+			'appname'   => 'api',
+			'filter'    => array("1=1 OR history_appname LIKE '%'"),
+		), 'history_custom');
+
+		$query = self::$mock_get_rows_params;
+		$this->assertNotNull($query, 'get_rows callback did not run');
+		$this->assertArrayNotHasKey('filter', $query,
+			'a client-supplied SQL fragment must never reach get_rows() - it is trusted input, '.
+			'settable only from the app\'s own server-side content');
+	}
+
+	/**
+	 * The allow-listed filters must actually get through, or filtering would silently do nothing.
+	 */
+	public function testHistoryValidateKeepsAllowedFilters()
+	{
+		$record_id = 'phpunit-'.bin2hex(random_bytes(8));
+		$exec_id = $this->historyRequest('history_custom', $record_id, __CLASS__.'::mock_get_rows');
+		self::$mock_get_rows_params = null;
+
+		Nextmatch::ajax_get_rows($exec_id, array('start' => 0, 'num_rows' => 10), array(
+			'record_id'  => $record_id,
+			'appname'    => 'api',
+			'search'     => 'needle',
+			'col_filter' => array(
+				'status'         => array('E', '~file~'),
+				'owner'          => 5,
+				'user_ts'        => array('from' => '2020-01-01', 'to' => '2020-12-31'),
+				'not_a_column'   => 'dropped',
+			),
+		), 'history_custom');
+
+		$query = self::$mock_get_rows_params;
+		$this->assertNotNull($query, 'get_rows callback did not run');
+		$this->assertSame('needle', $query['search'] ?? null, 'search must survive validate()');
+		$this->assertSame(array('E', '~file~'), $query['col_filter']['status'] ?? null,
+			'col_filter[status] must survive validate()');
+		$this->assertSame(5, $query['col_filter']['owner'] ?? null,
+			'col_filter[owner] must survive validate()');
+		$this->assertSame(array('from' => '2020-01-01', 'to' => '2020-12-31'), $query['col_filter']['user_ts'] ?? null,
+			'col_filter[user_ts] must survive validate()');
+		$this->assertArrayNotHasKey('not_a_column', $query['col_filter'],
+			'an un-allow-listed col_filter column must be dropped');
+	}
+
+	/**
+	 * Which record's history is returned is the server's decision, not the client's.
+	 *
+	 * History::get_rows() does no permission check, so honouring a client-supplied
+	 * record_id/appname would let anyone read any entry's history in any app.  The client still
+	 * sends them (that is what marks a row request), but the values must be overwritten from the
+	 * server's own content.
+	 */
+	public function testHistoryValidateIgnoresClientSuppliedRecord()
+	{
+		$record_id = 'phpunit-'.bin2hex(random_bytes(8));
+		$exec_id = $this->historyRequest('history_custom', $record_id, __CLASS__.'::mock_get_rows');
+		self::$mock_get_rows_params = null;
+
+		Nextmatch::ajax_get_rows($exec_id, array('start' => 0, 'num_rows' => 10), array(
+			'record_id' => 'somebody-elses-entry',
+			'appname'   => 'addressbook',
+		), 'history_custom');
+
+		$query = self::$mock_get_rows_params;
+		$this->assertNotNull($query, 'get_rows callback did not run');
+		$this->assertSame($record_id, $query['record_id'] ?? null,
+			"get_rows() must receive the server's record_id, not the client's");
+		$this->assertSame('api', $query['appname'] ?? null,
+			"get_rows() must receive the server's appname, not the client's");
+	}
+
+	/**
+	 * The history log is a display widget and returns no value, so validate() must contribute
+	 * nothing to a real form submit - not even an empty/null entry.
+	 *
+	 * Called the way Etemplate's submit walk calls it (no filter keys at all), rather than
+	 * through ajax_get_rows().
+	 */
+	public function testHistoryValidateWritesNothingOnSubmit()
+	{
+		$record_id = 'phpunit-'.bin2hex(random_bytes(8));
+		$this->historyRequest('history', $record_id, Api\Storage\History::class.'::get_rows');
+
+		$template = Etemplate\Widget\Template::instance(self::TEST_TEMPLATE, 'test');
+		$this->assertNotFalse($template, 'could not re-read the test template');
+		$widget = $template->getElementById('history', 'historylog')
+			?? $template->getElementById('history', 'et2-historylog');
+		$this->assertNotNull($widget, 'could not find the historylog widget in the test template');
+
+		// What a submit looks like for a widget that is not an input: nothing under its id
+		$validated = array();
+		$widget->validate('', array('cont' => array()), array(), $validated);
+		$this->assertSame(array(), $validated,
+			'a form submit must not produce any validated content for the history log');
+
+		// Even if something stray arrives under its id, only allow-listed keys may come out -
+		// and a value with none of them must still produce nothing
+		$validated = array();
+		$widget->validate('', array('cont' => array()), array('history' => array('id' => 5, 'app' => 'infolog')), $validated);
+		$this->assertSame(array(), $validated,
+			'content without any allow-listed filter key must still produce nothing');
+	}
+
+	/**
 	 * Callback supplied as untrusted client input.  No test may dispatch here.
 	 */
 	public static function client_get_rows(&$query, &$rows, &$readonlys)

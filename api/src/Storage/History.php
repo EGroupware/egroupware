@@ -304,6 +304,171 @@ class History
 	}
 
 	/**
+	 * Status value the attachment rows carry, and therefore the value a "changed field" filter
+	 * uses to include or exclude them.
+	 *
+	 * Attachments do not live in the history table at all - they are UNIONed in from the VFS (see
+	 * get_rows()), so none of the history columns a filter names exist on them.  Rather than
+	 * inventing a separate "show attachments" switch, the filter reuses the status value the rows
+	 * already carry, which is also the one the history-log widget already offers as an option.
+	 */
+	const FILE_STATUS = '~file~';
+
+	/**
+	 * Column filters get_rows() knows how to answer, mapped to their history-table column.
+	 *
+	 * Deliberately an allow-list: a filter key that is not in here is dropped rather than passed
+	 * to the DB, so an unexpected key can never become a WHERE clause.  'user_ts' is the
+	 * user-time timestamp the client sees and filters on; it maps to the server-time column.
+	 */
+	protected static $col_filters = array(
+		'status'   => 'history_status',
+		'owner'    => 'history_owner',
+		'user_ts'  => 'history_timestamp',
+	);
+
+	/**
+	 * Translate client column-filters into a WHERE array for the history table
+	 *
+	 * @param array $col_filter filter values keyed by client column name
+	 * @param string $appname app whose custom-fields are allowed as filter keys
+	 * @return array WHERE fragments/values suitable for Api\Db::select()
+	 */
+	protected static function columnFilters(array $col_filter, $appname) : array
+	{
+		$filter = array();
+		$cfs = $appname ? Customfields::get($appname) : array();
+		foreach($col_filter as $column => $value)
+		{
+			// Ignore numeric keys: they would be raw SQL fragments, which must never come from a
+			// filter (the only trusted SQL fragments are the ones this method builds itself).
+			if(is_int($column) || $value === '' || $value === null || $value === array())
+			{
+				continue;
+			}
+			// A custom-field filter names the field directly, eg. '#mycf'.  Accept only fields
+			// that currently exist for this app, so this cannot be used to probe arbitrary values.
+			if($column[0] === '#')
+			{
+				if(!isset($cfs[substr($column, 1)]))
+				{
+					continue;
+				}
+				$filter['history_status'] = $column;
+				continue;
+			}
+			if(!isset(self::$col_filters[$column]))
+			{
+				continue;
+			}
+			$db_col = self::$col_filters[$column];
+			// A date filter arrives as the from/to pair Et2DateRange produces.  The column is
+			// server-time, the value is user-time, so it has to be converted rather than compared
+			// as-is - a user 2h ahead of the server would otherwise lose 2h of their own history.
+			if($column === 'user_ts')
+			{
+				foreach(self::dateRangeFilter($db_col, $value) as $fragment)
+				{
+					$filter[] = $fragment;
+				}
+				continue;
+			}
+			$filter[$db_col] = $value;
+		}
+		return $filter;
+	}
+
+	/**
+	 * Build the WHERE fragments for a from/to date filter on a server-time timestamp column
+	 *
+	 * @param string $db_col server-time column to compare
+	 * @param array|string $value ['from' => ..., 'to' => ...], or a single date
+	 * @return string[] SQL fragments
+	 */
+	protected static function dateRangeFilter($db_col, $value) : array
+	{
+		$fragments = array();
+		$range = is_array($value) ? $value : array('from' => $value, 'to' => $value);
+		foreach(array('from' => '>=', 'to' => '<=') as $key => $op)
+		{
+			if(empty($range[$key]))
+			{
+				continue;
+			}
+			$date = new Api\DateTime($range[$key]);
+			// The picker is day-granular, so a range always means whole days: start of the 'from'
+			// day, end of the 'to' day.  Et2DateRange sends W3C strings with a midnight time
+			// ("2026-09-16T00:00:00Z"), so keying this off "does the value carry a time?" - as an
+			// earlier version did - never fired, and `to` stayed at midnight: the user's last
+			// chosen day was excluded entirely, and a same-day range matched nothing at all.
+			$date->setTime(...($key === 'to' ? [23, 59, 59] : [0, 0, 0]));
+			$fragments[] = $db_col . ' ' . $op . ' ' .
+				$GLOBALS['egw']->db->quote($GLOBALS['egw']->db->to_timestamp($date->format('ts')));
+		}
+		return $fragments;
+	}
+
+	/**
+	 * Build the WHERE fragment for a free-text search over the stored values
+	 *
+	 * Cheap despite the LIKE: every history query is already scoped to one record of one app, so
+	 * this never scans more than a single entry's history rows.
+	 *
+	 * @param string|null $search
+	 * @return string|null SQL fragment, or null if there is nothing to search for
+	 */
+	protected static function searchFilter($search) : ?string
+	{
+		if(!is_string($search) || ($search = trim($search)) === '')
+		{
+			return null;
+		}
+		$db = $GLOBALS['egw']->db;
+		// Escape the LIKE wildcards themselves, or searching for eg. "50%" would match everything
+		$like = $db->quote('%' . strtr($search, array('\\' => '\\\\', '%' => '\\%', '_' => '\\_')) . '%');
+		$op = $db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE] ?: 'LIKE';
+		return '(history_new_value ' . $op . ' ' . $like . ' OR history_old_value ' . $op . ' ' . $like . ')';
+	}
+
+	/**
+	 * Should the attachment (VFS) rows be part of this query?
+	 *
+	 * @param array $col_filter client column-filters
+	 * @param string|null $search free-text search, if any
+	 * @return bool
+	 */
+	protected static function wantsFiles(array $col_filter, $search) : bool
+	{
+		// Nothing a VFS row can be matched against
+		if(is_string($search) && trim($search) !== '')
+		{
+			return false;
+		}
+		foreach($col_filter as $column => $value)
+		{
+			if(is_int($column) || $value === '' || $value === null || $value === array())
+			{
+				continue;
+			}
+			if($column === 'status')
+			{
+				// Explicitly asked for (or alongside) attachments
+				if(!in_array(self::FILE_STATUS, (array)$value))
+				{
+					return false;
+				}
+				continue;
+			}
+			// Any other active filter names a history column attachments do not have
+			if(isset(self::$col_filters[$column]) || $column[0] === '#')
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
 	 * Get a slice of history records
 	 *
 	 * Similar to search(), except this one can take a start and a number of records
@@ -316,17 +481,44 @@ class History
 		$rows = array();
 		$filter['history_appname'] = $query['appname'];
 		$filter['history_record_id'] = $query['record_id'];
-		if(is_array($query['colfilter']))
+		// 'col_filter' is what eTemplate speaks everywhere, and every caller arrives through
+		// Nextmatch::ajax_get_rows().  This method used to read 'colfilter' (no underscore)
+		// instead - a key added in 2010 that nothing in EGroupware has ever written, so the
+		// filtering it implemented was unreachable for its entire life; it is gone rather than
+		// kept as an alias, so there is one spelling to get right.
+		$col_filter = (array)($query['col_filter'] ?? []);
+		// Only ever apply filters the history table can actually answer.  Anything else would end
+		// up as a bogus WHERE column and fatal - the keys are constrained again (and earlier) by
+		// Etemplate\Widget\HistoryLog::validate(), this is the last line of defence.
+		$filter += self::columnFilters($col_filter, $query['appname']);
+		if(($search = self::searchFilter($query['search'] ?? null)))
 		{
-			foreach($query['colfilter'] as $column => $value)
+			$filter[] = $search;
+		}
+		// Raw SQL an app added server-side, eg. calendar scoping participant changes to the one
+		// recurrence being viewed (calendar_uiforms::setup_history()).  This is TRUSTED input and
+		// must stay that way: it reaches us only from $content[<widget id>]['filter'], which the
+		// app itself wrote, never from the request - Etemplate\Widget\HistoryLog::validate()
+		// deliberately keeps 'filter' out of its allow-list so a client cannot supply one, and
+		// Nextmatch::ajax_get_rows() merges the client's filters *over* the content without ever
+		// introducing this key.  It only joins the history leg's WHERE, so the attachments leg
+		// (whose columns it does not name) is unaffected.
+		foreach((array)($query['filter'] ?? []) as $fragment)
+		{
+			if (is_string($fragment) && trim($fragment) !== '')
 			{
-				$filter[$column] = $value;
+				$filter[] = $fragment;
 			}
 		}
 
-		// filter out private (or no longer defined) custom fields
+		// filter out private (or no longer defined) custom fields.
+		// $cfs is read again in the row loop far below, which is only reachable with rows - and
+		// today an empty appname returns none - but it must not depend on that: initialise it here
+		// rather than only inside the branch that happens to guarantee it.
+		$cfs = array();
 		if($filter['history_appname'])
 		{
+			$to_or = array();
 			$to_or[] = "history_status NOT LIKE '#%'";
 			// explicitly allow "##" used to store iCal/vCard X-attributes
 			if(in_array($filter['history_appname'], array('calendar', 'infolog', 'addressbook')))
@@ -359,8 +551,17 @@ class History
 							'where' => $filter,
 						));
 
-		// Add in files, if possible
-		if($GLOBALS['egw_info']['user']['apps']['filemanager'] &&
+		// Add in files, if possible.
+		//
+		// Attachments are UNIONed in from the VFS, so none of the history columns a filter names
+		// exist on them and no filter can be applied to this leg.  Instead the leg is included or
+		// dropped as a whole, keyed on the status value the rows carry (self::FILE_STATUS):
+		// no status filter means "everything", a status filter listing '~file~' keeps attachments,
+		// and one that does not list it excludes them - which is what "show me only status
+		// changes" has to mean.  A search or date filter cannot be answered for them either, so
+		// they are dropped for those too.
+		if(self::wantsFiles($col_filter, $query['search'] ?? null) &&
+			$GLOBALS['egw_info']['user']['apps']['filemanager'] &&
 			($sqlfs_sw = new Api\Vfs\Sqlfs\StreamWrapper()) &&
 			($file = $sqlfs_sw->url_stat("/apps/{$query['appname']}/{$query['record_id']}", STREAM_URL_STAT_LINK)))
 		{

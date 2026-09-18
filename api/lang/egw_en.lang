@@ -587,6 +587,7 @@ files	common	en	Files
 files without content in physical filesystem will be removed.	admin	en	Files without content in physical filesystem will be removed.
 fileupload	common	en	File upload
 filter	common	en	Filter
+filters	common	en	Filters
 finland	common	en	FINLAND
 first	common	en	First
 first name	common	en	First name

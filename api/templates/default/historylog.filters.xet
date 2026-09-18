@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id$ -->
+<overlay>
+	<!--
+		Filters, shown in the history log's own drawer.
+
+		The ids are the filter keys the server accepts - see
+		Etemplate\Widget\HistoryLog::$allowed_filters / $allowed_col_filters, which drop anything
+		else.  `col_filter[status]` deliberately reuses the status column's own option list, so
+		"~file~" (attachments) and "~link~" are filterable without inventing new values for them.
+	-->
+	<template id="api.historylog.filters" template="" lang="" group="0" version="">
+		<et2-vbox>
+			<et2-searchbox id="search" label="Search" class="et2-label-fixed"></et2-searchbox>
+			<et2-select id="col_filter[status]" label="Changed" multiple="true" emptyLabel="All"
+						class="et2-label-fixed"></et2-select>
+			<et2-select-account id="col_filter[owner]" label="User" emptyLabel="All" accountType="both"
+								class="et2-label-fixed"></et2-select-account>
+			<et2-date-range id="col_filter[user_ts]" label="Date" class="et2-label-fixed"></et2-date-range>
+		</et2-vbox>
+	</template>
+</overlay>

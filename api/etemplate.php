@@ -17,7 +17,7 @@ const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box)|vfs-select)(/?|\s[^>]*)>#m';
 const ADD_ET2_PREFIX_LAST_GROUP = 4;
 
 // add et2- prefix to this (larger) set of widgets
-const ADD_ET2_PREFIX_LEGACY_REGEXP = '#<((/?)(template|tabbox|description|searchbox|textbox|hidden|toolbar|label|avatar|lavatar|image|appicon|colorpicker|checkbox|file|iframe|url(-email|-phone|-fax)?|vfs-mime|vfs-uid|vfs-gid|vfs-select|vfs-name|vfs-upload|vfs-mode|link|link-[a-z]+|favorites|html|htmlarea|styles))(/?|\s[^>]*)>#m';
+const ADD_ET2_PREFIX_LEGACY_REGEXP = '#<((/?)(template|tabbox|description|searchbox|textbox|hidden|historylog|toolbar|label|avatar|lavatar|image|appicon|colorpicker|checkbox|file|iframe|url(-email|-phone|-fax)?|vfs-mime|vfs-uid|vfs-gid|vfs-select|vfs-name|vfs-upload|vfs-mode|link|link-[a-z]+|favorites|html|htmlarea|styles))(/?|\s[^>]*)>#m';
 const ADD_ET2_PREFIX_LEGACY_LAST_GROUP = 5;
 
 // switch evtl. set output-compression off, as we can't calculate a Content-Length header with transparent compression
@@ -149,6 +149,11 @@ function send_template()
 				'checkbox'                => 'selected_value,unselected_value,ro_true,ro_false',
 				'radio'                   => 'set_value,ro_true,ro_false',
 				'customfields'            => 'type_filter,private,fields',
+				// calendar's edit.xet uses <historylog options="history_status"/>.  Named here so
+				// the attribute arrives as status_id= rather than as a raw options= the web
+				// component would ignore; the legacy widget declares status_id as an attribute
+				// too, so this is equally correct for either tag.
+				'historylog'              => 'status_id',
 				'date'                    => 'data_format,ignore',
 				// Legacy option "mode" was never implemented in et2
 				'description'             => 'bold-italic,link,activate_links,label_for,link_target,link_popup_size,link_title',

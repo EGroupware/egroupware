@@ -156,6 +156,7 @@ import './legacy-shims/et2_widget_diff';
 import './legacy-shims/et2_widget_html';
 import './legacy-shims/et2_widget_taglist';
 import './et2_widget_historylog';
+import './Et2Historylog/Et2Historylog';
 import './et2_widget_hrule';
 import './legacy-shims/et2_widget_file';
 import './et2_widget_placeholder';

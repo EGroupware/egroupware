@@ -586,6 +586,7 @@ files	common	de	Dateien
 files without content in physical filesystem will be removed.	admin	de	Dateien ohne Inhalt in dem Dateisystem werden gelöscht.
 fileupload	common	de	DateiUpload
 filter	common	de	Filter
+filters	common	de	Filter
 finland	common	de	FINNLAND
 first	common	de	Zuerst
 first name	common	de	Vorname

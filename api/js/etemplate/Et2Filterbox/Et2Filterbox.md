@@ -21,8 +21,8 @@ directly. The framework will create a filterbox with our desired attributes.
     <template id="myapp.index.filter">
         <et2-vbox>
             My custom filters
-            <et2-select-priority id="priority" label="Custom priority filter" class="et2-fixed-label"></et2-select-priority>
-            <et2-select-dow id="day" label="Day of week" class="et2-fixed-label"></et2-select-dow>
+            <et2-select-priority id="priority" label="Custom priority filter" class="et2-label-fixed"></et2-select-priority>
+            <et2-select-dow id="day" label="Day of week" class="et2-label-fixed"></et2-select-dow>
         </et2-vbox>
     </template>
     <template id="myapp.index">
@@ -63,8 +63,8 @@ You can put in custom content instead of providing a list or reading a nextmatch
 <et2-filterbox>
 <et2-vbox>
     My custom filters
-    <et2-select-priority id="priority" label="Custom priority filter" class="et2-fixed-label"></et2-select-priority>
-    <et2-select-dow id="day" label="Day of week" class="et2-fixed-label"></et2-select-dow>
+    <et2-select-priority id="priority" label="Custom priority filter" class="et2-label-fixed"></et2-select-priority>
+    <et2-select-dow id="day" label="Day of week" class="et2-label-fixed"></et2-select-dow>
 </et2-vbox>
 </et2-filterbox>
 ```
@@ -77,8 +77,8 @@ Use `autoapply` when you want each filter change to be handled separately instea
 <et2-filterbox autoapply>
 <et2-vbox>
     Autoapply
-    <et2-select-priority id="priority" label="Custom priority filter" class="et2-fixed-label"></et2-select-priority>
-    <et2-select-dow id="day" label="Day of week" class="et2-fixed-label"></et2-select-dow>
+    <et2-select-priority id="priority" label="Custom priority filter" class="et2-label-fixed"></et2-select-priority>
+    <et2-select-dow id="day" label="Day of week" class="et2-label-fixed"></et2-select-dow>
 </et2-vbox>
 </et2-filterbox>
 ```
@@ -94,9 +94,9 @@ falls back to its first option instead of clearing.
 ```html:preview
 <et2-filterbox id="filterbox-clearable" clearable>
 <et2-vbox>
-    <et2-searchbox id="search" label="Search" class="et2-fixed-label"></et2-searchbox>
+    <et2-searchbox id="search" label="Search" class="et2-label-fixed"></et2-searchbox>
     <et2-select-priority id="priority" label="Priority" emptyLabel="Any" value="3"
-                         class="et2-fixed-label"></et2-select-priority>
+                         class="et2-label-fixed"></et2-select-priority>
 </et2-vbox>
 </et2-filterbox>
 ```

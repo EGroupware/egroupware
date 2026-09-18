@@ -126,6 +126,17 @@ similar scope.
   (`<et2-nextmatch>`). Covers the template-rename checklist, the legacy-widget-API-to-`Et2Nextmatch`
   replacement table for app JS/TS, lifecycle timing pitfalls, and the `columnselection_pref` ->
   `columnPreferenceName` audit/fix for apps already converted.
+- `doc/ai/projects/et2-historylog-conversion.md` - replacing the legacy `historylog` widget
+  (`<historylog>`) with an `et2-historylog` web component built on `Et2Datagrid`, plus the filtering
+  the legacy widget never had. DONE - the legacy widget is deleted. Covers why composition beats subclassing
+  `Et2Nextmatch`, the per-row polymorphic value cell (the one thing `Et2Datagrid`'s fixed row
+  template does not do natively), the deliberately narrow scope (sort locked, no selection, no
+  actions, no values returned), the filter drawer echoing `Et2AppBox`, the zero-template-edit
+  migration via `api/etemplate.php`'s `ADD_ET2_PREFIX_LEGACY_REGEXP` and why the server-side tag
+  still needs dual registration, and four pre-existing `History::get_rows()` gaps found while
+  reading (dead `colfilter`, ignored `search`, calendar's apparently-dead `filter` SQL fragment, and
+  the pass-through `validate()` that must be allowlisted before any of it is honoured), plus what a
+  diff needs that a virtualized shadow-DOM row takes away from it.
 - `doc/ai/projects/mail-bo-decoupling.md` - breaking `Api\Mail`/`mail_ui` apart into smaller,
   independently-testable components, to fix the "large heavily-coupled legacy class with no test
   coverage" problem shared by those two and `MailApp` (client-side). Phase 1 (4 low-risk `Api\Mail`

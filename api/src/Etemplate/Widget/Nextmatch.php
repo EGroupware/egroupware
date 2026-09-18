@@ -495,8 +495,22 @@ class Nextmatch extends Etemplate\Widget
 		if (($template = Template::instance(self::$request->template['name'], self::$request->template['template_set'],
 			self::$request->template['version'], self::$request->template['load_via'])))
 		{
-			$template = $template->getElementById($form_name, strpos($form_name, 'history') === 0 ? 'historylog' : 'et2-nextmatch') ??
-				$template->getElementById($form_name, strpos($form_name, 'history') === 0 ? 'historylog' : 'nextmatch');
+			// Try every type that can legitimately back a row request, rather than guessing the
+			// type from the widget id.  The previous heuristic ("id starts with 'history'") meant
+			// a history log had to be called 'history' to work at all, and it had no way to know
+			// about the et2-historylog web component: api/etemplate.php rewrites <historylog> to
+			// <et2-historylog> only in the copy served to the client, while Template::read()
+			// parses the raw file here - so either tag can be what this sees, depending on
+			// whether that template was hand-converted.
+			$widget = null;
+			foreach(['et2-nextmatch', 'nextmatch', 'et2-historylog', 'historylog'] as $type)
+			{
+				if (($widget = $template->getElementById($form_name, $type)))
+				{
+					break;
+				}
+			}
+			$template = $widget;
 		}
 		else
 		{
@@ -509,7 +523,10 @@ class Nextmatch extends Etemplate\Widget
 			);
 			$valid_filters = array();
 			$template->run('validate', array('', $expand, $expand['cont'], &$valid_filters), false);	// $respect_disabled=false: as client may disable things, here we validate everything and leave it to the get_rows to interpret
-			$filters = $valid_filters[$form_name];
+			// ?? []: a widget whose validate() is an allow-list (eg. HistoryLog) deliberately
+			// writes nothing when the client sent no permitted filter, rather than writing an
+			// empty/null entry - so the key is not guaranteed to exist.
+			$filters = $valid_filters[$form_name] ?? [];
 		}
 		elseif (isset(self::$raw_form_names[$form_name]))
 		{
