@@ -1194,6 +1194,25 @@ class Vfs extends Vfs\Base
 	}
 
 	/**
+	 * Sanitize a client-supplied name that is meant to be a single path SEGMENT (a filename or one
+	 * directory level), never a path itself - eg. an uploaded file's claimed name from $_FILES, or
+	 * a CGI-style protocol's own "destination name" field.
+	 *
+	 * Strips any directory components (path-traversal protection: "../../etc/passwd" or "a/b.txt"
+	 * become "passwd" resp. "b.txt") and control characters.
+	 *
+	 * @param string $name
+	 * @return string|null null if nothing safe/usable is left
+	 */
+	static function sanitize_leaf_name($name)
+	{
+		$name = self::basename(str_replace('\\', '/', (string)$name));
+		$name = preg_replace('/[\x00-\x1F\x7F]/', '', trim($name));
+
+		return ($name === '' || $name === '.' || $name === '..') ? null : $name;
+	}
+
+	/**
 	 * Utf-8 save version of parse_url
 	 *
 	 * Does caching withing request, to not have to parse urls over and over again.
