@@ -1607,7 +1607,7 @@ class CalDAV extends HTTP_WebDAV_Server
 			if (method_exists($handler, 'post'))
 			{
 				// read the content in a string, if a stream is given
-				if (isset($options['stream']) && !self::isFileUpload())
+				if (isset($options['stream']) && !$this->isFileUpload())
 				{
 					$options['content'] = '';
 					while(!feof($options['stream']))
@@ -2411,40 +2411,30 @@ class CalDAV extends HTTP_WebDAV_Server
 		return $ok;
 	}
 
-	protected static $request_starttime;
-	/**
-	 * Log level from user prefs: $GLOBALS['egw_info']['user']['preferences']['groupdav']['debug_level'])
-	 * - 'f' files directory
-	 * - 'r' to error-log, but only shortend requests
-	 *
-	 * @var string
-	 */
-	protected static $log_level;
-
 	/**
 	 * Serve WebDAV HTTP request
 	 *
-	 * Reimplemented to add logging
+	 * Reimplemented to unconditionally start output-buffering, to fix problems with huge multiget
+	 * reports from TB110 AB - request/response logging itself is generic now, @see
+	 * HTTP_WebDAV_Server::ServeRequest()/logApp()/log_request().
 	 *
      * @param  $prefix =null prefix filesystem path with given path, e.g. "/webdav" for owncloud 4.5 remote.php
 	 */
 	function ServeRequest($prefix=null)
 	{
-		if ((self::$log_level=$GLOBALS['egw_info']['user']['preferences']['groupdav']['debug_level']) === 'r' ||
-			self::$log_level === 'f' || $this->debug)
-		{
-			self::$request_starttime = microtime(true);
-			// do NOT log non-text attachments
-			$this->store_request = $_SERVER['REQUEST_METHOD'] != 'POST' ||
-				!self::isFileUpload() ||
-				substr($_SERVER['CONTENT_TYPE'], 0, 5) == 'text/' ||
-				str_starts_with($_SERVER['CONTENT_TYPE'], 'application/json');
-		}
-		// unconditionally start output-buffering to fix problems with huge multiget reports from TB110 AB
 		ob_start();
 		parent::ServeRequest($prefix);
+	}
 
-		if (self::$request_starttime) $this->log_request();
+	/**
+	 * groupdav's "debug_level"/"show-log" preference and files_dir/groupdav/ enable request/response
+	 * logging, @see HTTP_WebDAV_Server::logApp()
+	 *
+	 * @return string
+	 */
+	protected function logApp()
+	{
+		return 'groupdav';
 	}
 
 	/**
@@ -2455,108 +2445,11 @@ class CalDAV extends HTTP_WebDAV_Server
 	 *
 	 * @return bool
 	 */
-	protected static function isFileUpload()
+	protected function isFileUpload()
 	{
 		return (isset($_GET['action']) && in_array($_GET['action'], array('attachment-add', 'attachment-update'))) ||
 			strpos($_SERVER['REQUEST_URI'], '/mail/attachments/') ||
 			strpos($_SERVER['REQUEST_URI'], '/links/') && $_SERVER['REQUEST_METHOD'] === 'POST' && $_SERVER['CONTENT_TYPE'] !== 'application/json';
-	}
-
-	/**
-	 * Sanitizing filename to gard against path traversal and / e.g. in UserAgent string
-	 *
-	 * @param string $filename
-	 * @return string
-	 */
-	public static function sanitize_filename($filename)
-	{
-		// stripping only "../" in one non-recursive pass would NOT be enough on its own (a crafted
-		// value can reconstruct "../" from the remainder, see the CalDAV log-viewer traversal fix) -
-		// remove every separator outright instead, since none is ever legitimate in a filename here
-		$filename = str_replace(array('/', '\\'), '!', $filename);
-
-		// neutralize a value that is empty or all dots, in case it's ever used as a path segment
-		// bounded by '/' on both sides rather than suffixed (see the account_lid caller below)
-		return $filename === '' || rtrim($filename, '.') === '' ? '!'.$filename : $filename;
-	}
-
-	/**
-	 * Log the request
-	 *
-	 * @param string $extra ='' extra text to add below request-log, e.g. exception thrown
-	 */
-	protected function log_request($extra='')
-	{
-		if (self::$request_starttime)
-		{
-			if (self::$log_level === 'f')
-			{
-				$msg_file = $GLOBALS['egw_info']['server']['files_dir'];
-				$msg_file .= '/groupdav';
-				$msg_file .= '/'.self::sanitize_filename($GLOBALS['egw_info']['user']['account_lid']).'/';
-				if (!file_exists($msg_file) && !mkdir($msg_file, 0700, true) && !is_dir($msg_file))
-				{
-					error_log(__METHOD__."() Could NOT create directory '$msg_file'!");
-					return;
-				}
-				// stop CalDAVTester from creating one log per test-step
-				if (substr($_SERVER['HTTP_USER_AGENT'], 0, 14) == 'scripts/tests/')
-				{
-					$msg_file .= 'CalDAVTester.log';
-				}
-				else
-				{
-					$msg_file .= self::sanitize_filename($_SERVER['HTTP_USER_AGENT']).'.log';
-				}
-				$content = '*** '.$_SERVER['REMOTE_ADDR'].' '.date('c')."\n";
-			}
-			$content .= $_SERVER['REQUEST_METHOD'].' '.$_SERVER['REQUEST_URI'].' HTTP/1.1'."\n";
-			// reconstruct headers
-			foreach($_SERVER as $name => $value)
-			{
-				list($type,$name) = explode('_',$name,2)+[null,null];
-				if ($type == 'HTTP' || $type == 'CONTENT')
-				{
-					$content .= str_replace(' ','-',ucwords(strtolower(($type=='HTTP'?'':$type.' ').str_replace('_',' ',$name)))).
-						': '.($name=='AUTHORIZATION'?'Basic ***************':$value)."\n";
-				}
-			}
-			$content .= "\n";
-			if ($this->request)
-			{
-				$content .= $this->request."\n";
-			}
-			$content .= 'HTTP/1.1 '.$this->_http_status."\n";
-			$content .= 'Date: '.str_replace('+0000', 'GMT', gmdate('r'))."\n";
-			$content .= 'Server: '.$_SERVER['SERVER_SOFTWARE']."\n";
-			foreach(headers_list() as $line)
-			{
-				$content .= $line."\n";
-			}
-			if (($c = ob_get_flush())) $content .= "\n";
-			if (self::$log_level !== 'f' && strlen($c) > 1536) $c = substr($c,0,1536)."\n*** LOG TRUNKATED\n";
-			$content .= $c;
-			if ($extra) $content .= $extra;
-			if ($this->to_log) $content .= "\n### ".implode("\n### ", $this->to_log)."\n";
-			$content .= $this->_http_status[0] == '4' && substr($this->_http_status,0,3) != '412' ||
-				$this->_http_status[0] == '5' ? '###' : '***';	// mark failed requests with ###, instead of ***
-			$content .= sprintf(' %s --> "%s" took %5.3f s',$_SERVER['REQUEST_METHOD'].($_SERVER['REQUEST_METHOD']=='REPORT'?' '.$this->propfind_options['root']['name']:'').' '.$_SERVER['PATH_INFO'],$this->_http_status,microtime(true)-self::$request_starttime)."\n\n";
-
-			if ($msg_file && ($f = fopen($msg_file,'a')))
-			{
-				flock($f,LOCK_EX);
-				fwrite($f,$content);
-				flock($f,LOCK_UN);
-				fclose($f);
-			}
-			else
-			{
-				foreach(explode("\n",$content) as $line)
-				{
-					error_log($line);
-				}
-			}
-		}
 	}
 
 	/**
@@ -2618,25 +2511,6 @@ class CalDAV extends HTTP_WebDAV_Server
 			}
 			$xml->endElement();
 		}
-	}
-
-	/**
-	 * Content of log() calls, to be appended to request_log
-	 *
-	 * @var array
-	 */
-	private $to_log = array();
-
-	/**
-	 * Log unconditional to own request- and PHP error-log
-	 *
-	 * @param string $str
-	 */
-	public function log($str)
-	{
-		$this->to_log[] = $str;
-
-		error_log($str);
 	}
 
 	/**

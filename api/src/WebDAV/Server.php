@@ -109,6 +109,45 @@ class HTTP_WebDAV_Server
     var $crrnd = false;
 
     /**
+     * Enable verbose debug logging of this server's own operation (NOT the request/response
+     * logging feature below, @see logApp()) - subclasses like Vfs\WebDAV set this from a
+     * site-config, CalDAV never sets it (always false / relies on request/response logging instead).
+     *
+     * @var boolean
+     */
+    var $debug = false;
+
+    /**
+     * Start of the currently processing request, once request/response logging (@see logApp())
+     * determined logging is enabled for it - null otherwise.
+     *
+     * @var float|null
+     */
+    protected static $request_starttime;
+
+    /**
+     * "debug_level" preference value ('0'|'r'|'f') for the currently processing request,
+     * @see logApp()/log_request()
+     *
+     * @var string|null
+     */
+    protected static $log_level;
+
+    /**
+     * Extra lines appended to the request/response log by log()/logDetail()
+     *
+     * @var string[]
+     */
+    private $to_log = array();
+
+    /**
+     * Whether ServeRequest() started an output buffer to capture the response body for log_request()
+     *
+     * @var boolean
+     */
+    private $log_response_started = false;
+
+    /**
 
 
     /**
@@ -192,8 +231,190 @@ class HTTP_WebDAV_Server
     // }}}
 
     // {{{ ServeRequest()
+
     /**
-     * Serve WebDAV HTTP request
+     * App-name whose "debug_level"/"show-log" preference and files_dir subdirectory this server's
+     * request/response logging (@see log_request()) uses.
+     *
+     * A subclass opts into request/response logging by overriding this to return an app-name that
+     * has those two preferences registered (@see \EGroupware\Api\WebDAV\Hooks::logSettings() for the
+     * reference implementation to add them to an app's own settings() hook) - null (the default)
+     * disables logging entirely, matching every subclass's behaviour before this existed.
+     *
+     * @return string|null
+     */
+    protected function logApp()
+    {
+        return null;
+    }
+
+    /**
+     * Whether to buffer/capture the response body for the request/response log.
+     *
+     * Buffering the whole response in memory is fine for small XML/text responses (CalDAV/CardDAV),
+     * but would be dangerous for a large file GET (WebDAV) - override to return false for methods
+     * whose response can be arbitrarily large.
+     *
+     * @return boolean
+     */
+    protected function logResponseBody()
+    {
+        return true;
+    }
+
+    /**
+     * Whether the CURRENT request is a possibly large, binary file upload, whose body should never
+     * be captured into the request log (@see $store_request) regardless of the log level.
+     *
+     * @return boolean
+     */
+    protected function isFileUpload()
+    {
+        return false;
+    }
+
+    /**
+     * Log unconditional to own request/response log (if active, @see log_request()) AND PHP error_log
+     *
+     * @param string $str
+     */
+    public function log($str)
+    {
+        $this->to_log[] = $str;
+
+        error_log($str);
+    }
+
+    /**
+     * Add a line to the request/response log, WITHOUT also sending it to PHP's error_log
+     *
+     * Use for informational details that are only interesting together with the rest of a logged
+     * request (e.g. per-file upload metadata) - unlike log(), this stays silent when logging is off.
+     *
+     * @param string $str
+     */
+    protected function logDetail($str)
+    {
+        $this->to_log[] = $str;
+    }
+
+    /**
+     * Sanitizing filename to guard against path traversal and / e.g. in UserAgent string
+     *
+     * @param string $filename
+     * @return string
+     */
+    public static function sanitize_filename($filename)
+    {
+        // stripping only "../" in one non-recursive pass would NOT be enough on its own (a crafted
+        // value can reconstruct "../" from the remainder) - remove every separator outright instead,
+        // since none is ever legitimate in a filename here
+        $filename = str_replace(array('/', '\\'), '!', (string)$filename);
+
+        // neutralize a value that is empty or all dots, in case it's ever used as a path segment
+        // bounded by '/' on both sides rather than suffixed (see the account_lid caller below)
+        return $filename === '' || rtrim($filename, '.') === '' ? '!'.$filename : $filename;
+    }
+
+    /**
+     * Log the request/response, if enabled via logApp()'s app's "debug_level" preference
+     *
+     * @param string $extra ='' extra text to add below request-log, e.g. exception thrown
+     */
+    protected function log_request($extra='')
+    {
+        if (!self::$request_starttime)
+        {
+            return;
+        }
+        $msg_file = null;
+        $content = '';
+        if (self::$log_level === 'f')
+        {
+            $msg_file = $GLOBALS['egw_info']['server']['files_dir'];
+            $msg_file .= '/'.$this->logApp();
+            $msg_file .= '/'.self::sanitize_filename($GLOBALS['egw_info']['user']['account_lid']).'/';
+            if (!file_exists($msg_file) && !mkdir($msg_file, 0700, true) && !is_dir($msg_file))
+            {
+                error_log(__METHOD__."() Could NOT create directory '$msg_file'!");
+                return;
+            }
+            // stop CalDAVTester from creating one log per test-step
+            $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+            if (substr($user_agent, 0, 14) == 'scripts/tests/')
+            {
+                $msg_file .= 'CalDAVTester.log';
+            }
+            else
+            {
+                // some clients (eg. scanners) send no User-Agent at all - sanitize_filename('')
+                // would otherwise produce a barely-distinguishable, easy to overlook filename
+                $msg_file .= self::sanitize_filename($user_agent !== '' ? $user_agent : 'no-user-agent').'.log';
+            }
+            $content = '*** '.$_SERVER['REMOTE_ADDR'].' '.date('c')."\n";
+        }
+        $content .= $_SERVER['REQUEST_METHOD'].' '.$_SERVER['REQUEST_URI'].' HTTP/1.1'."\n";
+        // reconstruct headers
+        // some SAPIs (eg. nginx+php-fpm) expose Content-Type/-Length BOTH as the canonical CGI
+        // vars (CONTENT_TYPE/_LENGTH) AND as HTTP_CONTENT_TYPE/_LENGTH - only log each once
+        $logged_headers = array();
+        foreach($_SERVER as $orig_name => $value)
+        {
+            list($type,$name) = explode('_',$orig_name,2)+[null,null];
+            if ($type == 'HTTP' || $type == 'CONTENT')
+            {
+                $header = str_replace(' ','-',ucwords(strtolower(($type=='HTTP'?'':$type.' ').str_replace('_',' ',$name))));
+                if (isset($logged_headers[$header])) continue;
+                $logged_headers[$header] = true;
+
+                $content .= $header.': '.($name=='AUTHORIZATION'?'Basic ***************':$value)."\n";
+            }
+        }
+        $content .= "\n";
+        if ($this->request)
+        {
+            $content .= $this->request."\n";
+        }
+        $content .= 'HTTP/1.1 '.$this->_http_status."\n";
+        $content .= 'Date: '.str_replace('+0000', 'GMT', gmdate('r'))."\n";
+        $content .= 'Server: '.$_SERVER['SERVER_SOFTWARE']."\n";
+        foreach(headers_list() as $line)
+        {
+            $content .= $line."\n";
+        }
+        $c = '';
+        if ($this->log_response_started && ($c = ob_get_flush()))
+        {
+            $content .= "\n";
+        }
+        if (self::$log_level !== 'f' && strlen($c) > 1536) $c = substr($c,0,1536)."\n*** LOG TRUNKATED\n";
+        $content .= $c;
+        if ($extra) $content .= $extra;
+        if ($this->to_log) $content .= "\n### ".implode("\n### ", $this->to_log)."\n";
+        $content .= $this->_http_status[0] == '4' && substr($this->_http_status,0,3) != '412' ||
+            $this->_http_status[0] == '5' ? '###' : '***';	// mark failed requests with ###, instead of ***
+        $content .= sprintf(' %s --> "%s" took %5.3f s',$_SERVER['REQUEST_METHOD'].
+            ($_SERVER['REQUEST_METHOD']=='REPORT' && !empty($this->propfind_options['root']['name']) ? ' '.$this->propfind_options['root']['name'] : '').
+            ' '.$_SERVER['PATH_INFO'],$this->_http_status,microtime(true)-self::$request_starttime)."\n\n";
+
+        if ($msg_file && ($f = fopen($msg_file,'a')))
+        {
+            flock($f,LOCK_EX);
+            fwrite($f,$content);
+            flock($f,LOCK_UN);
+            fclose($f);
+        }
+        else
+        {
+            foreach(explode("\n",$content) as $line)
+            {
+                error_log($line);
+            }
+        }
+    }
+
+    /**
+     * Serve WebDAV HTTP request, adding optional request/response logging (@see logApp())
      *
      * dispatch WebDAV HTTP request to the apropriate method handler
      *
@@ -201,6 +422,38 @@ class HTTP_WebDAV_Server
      * @return void
      */
     function ServeRequest($prefix=null)
+    {
+        $log_app = $this->logApp();
+        if ($log_app !== null && (
+            (self::$log_level = $GLOBALS['egw_info']['user']['preferences'][$log_app]['debug_level'] ?? null) === 'r' ||
+            self::$log_level === 'f' || $this->debug))
+        {
+            self::$request_starttime = microtime(true);
+            $this->store_request = $_SERVER['REQUEST_METHOD'] != 'POST' ||
+                !$this->isFileUpload() ||
+                substr($_SERVER['CONTENT_TYPE'] ?? '', 0, 5) == 'text/' ||
+                str_starts_with($_SERVER['CONTENT_TYPE'] ?? '', 'application/json');
+
+            if ($this->logResponseBody())
+            {
+                ob_start();
+                $this->log_response_started = true;
+            }
+        }
+
+        $this->_dispatchRequest($prefix);
+
+        if (self::$request_starttime) $this->log_request();
+    }
+
+    /**
+     * Actual WebDAV HTTP request dispatch, split out of ServeRequest() so the latter can wrap it
+     * with optional request/response logging without every subclass having to repeat that wrapper.
+     *
+     * @param  $prefix =null prefix filesystem path with given path, eg. "/webdav" for owncloud 4.5 remote.php
+     * @return void
+     */
+    protected function _dispatchRequest($prefix=null)
     {
         // prevent warning in litmus check 'delete_fragment'
         if (strstr($this->_SERVER["REQUEST_URI"], '#')) {

@@ -256,3 +256,5 @@ you will be redirected to your home directory.	filemanager	hu	A saját mappádho
 you will be redirected to your start folder.	filemanager	hu	A kezdőmappádhoz lépek.
 your home dir did not exist, egroupware created a new one.	filemanager	hu	Megjegyzés: Az Ön Home könyvtára nem létezett, ezért létrehoztam. Nincs további teendője.
 your home directory	filemanager	hu	A saját mappád
+enables logging of webdav traffic to diagnose problems with devices (e.g. scanners).	filemanager	hu	Enables logging of WebDAV traffic to diagnose problems with devices (e.g. scanners).
+webdav logging	filemanager	hu	WebDAV logging

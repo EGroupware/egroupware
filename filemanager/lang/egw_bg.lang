@@ -337,3 +337,5 @@ you will be redirected to your home directory.	filemanager	bg	Ще бъдете 
 you will be redirected to your start folder.	filemanager	bg	Ще бъдете пренасочени към Стартовата си директория.
 your home dir did not exist, egroupware created a new one.	filemanager	bg	Вашата домашна директория не съществуваше и беше създадена автоматично от ЕGroupWare.
 your home directory	filemanager	bg	Домашната Ви дирекотрия
+enables logging of webdav traffic to diagnose problems with devices (e.g. scanners).	filemanager	bg	Enables logging of WebDAV traffic to diagnose problems with devices (e.g. scanners).
+webdav logging	filemanager	bg	WebDAV logging

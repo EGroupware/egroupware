@@ -167,3 +167,5 @@ username for webdav and smb, use $user for name of logged in user	filemanager	id
 vfs mounts and versioning	common	id	Pemasangan dan pembuatan versi VFS
 webdavs: mount egroupware or *cloud shares	filemanager	id	WebDAV: pasang EGroupware atau *share Cloud
 you need to become root, to enable or disable versioning on a directory!	filemanager	id	Anda perlu menjadi superuser, untuk mengaktifkan atau menonaktifkan versi pada folder!
+enables logging of webdav traffic to diagnose problems with devices (e.g. scanners).	filemanager	id	Enables logging of WebDAV traffic to diagnose problems with devices (e.g. scanners).
+webdav logging	filemanager	id	WebDAV logging

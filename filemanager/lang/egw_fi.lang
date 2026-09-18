@@ -299,3 +299,5 @@ you will be redirected to your home directory.	filemanager	fi	Jälleenohjautuu k
 you will be redirected to your start folder.	filemanager	fi	Jälleenohjautuu aloituskansioon.
 your home dir did not exist, egroupware created a new one.	filemanager	fi	Kotihakemistoa ei löytynyt, järjestelmä loi uuden.
 your home directory	filemanager	fi	Kotihakemisto
+enables logging of webdav traffic to diagnose problems with devices (e.g. scanners).	filemanager	fi	Enables logging of WebDAV traffic to diagnose problems with devices (e.g. scanners).
+webdav logging	filemanager	fi	WebDAV logging

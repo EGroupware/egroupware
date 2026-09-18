@@ -346,3 +346,5 @@ you will be redirected to your home directory.	filemanager	ja	ホーム・ディ
 you will be redirected to your start folder.	filemanager	ja	開始フォルダに移動します。
 your home dir did not exist, egroupware created a new one.	filemanager	ja	ホーム・ディレクトリが存在しなかったため、EGroupwareが作成しました。
 your home directory	filemanager	ja	ホーム・ディレクトリ
+enables logging of webdav traffic to diagnose problems with devices (e.g. scanners).	filemanager	ja	Enables logging of WebDAV traffic to diagnose problems with devices (e.g. scanners).
+webdav logging	filemanager	ja	WebDAV logging

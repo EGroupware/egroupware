@@ -5,3 +5,5 @@ enable	filemanager	vi	Cho phép
 link	filemanager	vi	Liên k&#7871;t
 location	filemanager	vi	V&#7883; trí
 modified	filemanager	vi	&#272;ã hi&#7879;u ch&#7881;nh
+enables logging of webdav traffic to diagnose problems with devices (e.g. scanners).	filemanager	vi	Enables logging of WebDAV traffic to diagnose problems with devices (e.g. scanners).
+webdav logging	filemanager	vi	WebDAV logging

@@ -172,3 +172,5 @@ webdavs: mount egroupware or *cloud shares	filemanager	lv	WebDAV: pievienojiet E
 you do not have access to %1	filemanager	lv	Tev nav pieeja %1
 you need to become root, to enable or disable versioning on a directory!	filemanager	lv	Lai iespējotu vai atspējotu versiju pārvaldību mapē, jums ir jākļūst par superlietotāju!
 your home dir did not exist, egroupware created a new one.	filemanager	lv	Tava Mājas direktorija neeksistēja, EGroupware izveidoja jaunu!
+enables logging of webdav traffic to diagnose problems with devices (e.g. scanners).	filemanager	lv	Enables logging of WebDAV traffic to diagnose problems with devices (e.g. scanners).
+webdav logging	filemanager	lv	WebDAV logging

@@ -73,6 +73,42 @@ class WebDAV extends HTTP_WebDAV_Server_Filesystem
 	}
 
 	/**
+	 * filemanager's "debug_level"/"show-log" preference and files_dir/filemanager/ enable
+	 * request/response logging, @see HTTP_WebDAV_Server::logApp()
+	 *
+	 * @return string
+	 */
+	protected function logApp()
+	{
+		return 'filemanager';
+	}
+
+	/**
+	 * Never buffer a GET/HEAD response for logging - unlike CalDAV/CardDAV's small XML/text
+	 * responses, a WebDAV GET can be an arbitrarily large file download, which we do not want to
+	 * hold in memory just to (mostly) truncate it away again for the log.
+	 *
+	 * @return boolean
+	 */
+	protected function logResponseBody()
+	{
+		return !in_array($_SERVER['REQUEST_METHOD'], array('GET', 'HEAD'));
+	}
+
+	/**
+	 * Every PUT and multipart/form-data POST carries a real (possibly large, binary) file body,
+	 * which must never be captured into the request log, @see HTTP_WebDAV_Server::isFileUpload()
+	 *
+	 * @return boolean
+	 */
+	protected function isFileUpload()
+	{
+		return $_SERVER['REQUEST_METHOD'] === 'PUT' ||
+			($_SERVER['REQUEST_METHOD'] === 'POST' &&
+				!strncasecmp($_SERVER['CONTENT_TYPE'] ?? '', 'multipart/form-data', 19));
+	}
+
+	/**
 	* DELETE method handler
 	*
 	* @param  array  general parameter passing array
@@ -128,9 +164,19 @@ class WebDAV extends HTTP_WebDAV_Server_Filesystem
 	 */
 	function POST(&$options)
 	{
-		$files = array_values(array_filter(self::_flatten_files($options['files'] ?? []), static function($file)
+		$all_files = self::_flatten_files($options['files'] ?? []);
+		foreach ($all_files as $file)
 		{
-			// ignore left-empty file-inputs, they carry no file at all
+			// logged whenever request/response logging is enabled (see logApp()), regardless of
+			// whether we go on to actually process this entry - eg. useful to diagnose a scanner
+			// or other device sending an unexpected field-name or a non-zero PHP upload error
+			$this->logDetail(sprintf('upload: field=%s filename=%s size=%d error=%d',
+				$file['field'], $file['name'], $file['size'], $file['error']));
+		}
+
+		// ignore left-empty file-inputs, they carry no file at all
+		$files = array_values(array_filter($all_files, static function($file)
+		{
 			return $file['error'] !== UPLOAD_ERR_NO_FILE;
 		}));
 
@@ -288,10 +334,11 @@ class WebDAV extends HTTP_WebDAV_Server_Filesystem
 	}
 
 	/**
-	 * Flatten $_FILES into a plain list of ['name'=>, 'tmp_name'=>, 'size'=>, 'error'=>] entries
+	 * Flatten $_FILES into a plain list of ['field'=>, 'name'=>, 'tmp_name'=>, 'size'=>, 'error'=>] entries
 	 *
 	 * Handles both a single <input type="file" name="x"> and an array one, eg.
-	 * <input type="file" name="files[]" multiple>.
+	 * <input type="file" name="files[]" multiple>. "field" is the original $_FILES key (form
+	 * input name), kept only for diagnostic logging - it does not affect how an entry is processed.
 	 *
 	 * @param array $files $_FILES (or equivalent)
 	 * @return array
@@ -299,7 +346,7 @@ class WebDAV extends HTTP_WebDAV_Server_Filesystem
 	private static function _flatten_files(array $files)
 	{
 		$flat = array();
-		foreach ($files as $file)
+		foreach ($files as $field => $file)
 		{
 			if (!isset($file['name'])) continue;
 
@@ -308,6 +355,7 @@ class WebDAV extends HTTP_WebDAV_Server_Filesystem
 				foreach (array_keys($file['name']) as $idx)
 				{
 					$flat[] = array(
+						'field'    => $field,
 						'name'     => $file['name'][$idx],
 						'tmp_name' => $file['tmp_name'][$idx],
 						'size'     => $file['size'][$idx],
@@ -318,6 +366,7 @@ class WebDAV extends HTTP_WebDAV_Server_Filesystem
 			else
 			{
 				$flat[] = array(
+					'field'    => $field,
 					'name'     => $file['name'],
 					'tmp_name' => $file['tmp_name'],
 					'size'     => $file['size'],

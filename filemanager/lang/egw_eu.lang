@@ -72,3 +72,5 @@ upload files	filemanager	eu	Kargatu fitxategiak
 used space	filemanager	eu	Erabilitako lekua
 you do not have access to %1	filemanager	eu	%1 ra sartzeko baimenik ez duzu
 your home dir did not exist, egroupware created a new one.	filemanager	eu	Zure Hasierako Direktorioa ez zen existitzen, eta EGroupwarek berri bat sortu du.
+enables logging of webdav traffic to diagnose problems with devices (e.g. scanners).	filemanager	eu	Enables logging of WebDAV traffic to diagnose problems with devices (e.g. scanners).
+webdav logging	filemanager	eu	WebDAV logging

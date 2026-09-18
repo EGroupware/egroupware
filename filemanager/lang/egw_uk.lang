@@ -125,3 +125,5 @@ username for webdav and smb, use $user for name of logged in user	filemanager	uk
 vfs mounts and versioning	common	uk	Монтування VFS та керування версіями
 webdavs: mount egroupware or *cloud shares	filemanager	uk	WebDAV: змонтувати ресурси EGroupware або *Cloud
 you need to become root, to enable or disable versioning on a directory!	filemanager	uk	Вам потрібно стати суперкористувачем, щоб увімкнути або вимкнути версіонування папки!
+enables logging of webdav traffic to diagnose problems with devices (e.g. scanners).	filemanager	uk	Enables logging of WebDAV traffic to diagnose problems with devices (e.g. scanners).
+webdav logging	filemanager	uk	WebDAV logging

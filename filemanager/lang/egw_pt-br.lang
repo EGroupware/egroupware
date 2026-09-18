@@ -293,3 +293,5 @@ you will be redirected to your home directory.	filemanager	pt-br	Você será red
 you will be redirected to your start folder.	filemanager	pt-br	Você será redirecionado a sua Pasta Inicial
 your home dir did not exist, egroupware created a new one.	filemanager	pt-br	Seu diretório Home não existe, EGroupware criou um novo.
 your home directory	filemanager	pt-br	Se diretório home
+enables logging of webdav traffic to diagnose problems with devices (e.g. scanners).	filemanager	pt-br	Enables logging of WebDAV traffic to diagnose problems with devices (e.g. scanners).
+webdav logging	filemanager	pt-br	WebDAV logging

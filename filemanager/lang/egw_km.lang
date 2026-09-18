@@ -337,3 +337,5 @@ you will be redirected to your home directory.	filemanager	km	អ្នកនឹ
 you will be redirected to your start folder.	filemanager	km	អ្នកនឹងត្រូវបានបញ្ជូនបន្តទៅកាន់ថតចាប់ផ្តើមរបស់អ្នក។
 your home dir did not exist, egroupware created a new one.	filemanager	km	Home Dir របស់អ្នកមិនមានទេ EGroupware បានបង្កើតថ្មីមួយ។
 your home directory	filemanager	km	ថតផ្ទះ
+enables logging of webdav traffic to diagnose problems with devices (e.g. scanners).	filemanager	km	Enables logging of WebDAV traffic to diagnose problems with devices (e.g. scanners).
+webdav logging	filemanager	km	WebDAV logging
