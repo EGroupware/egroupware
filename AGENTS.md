@@ -234,6 +234,20 @@ similar scope.
   as RFC 8984 requires). Mapping + test harness (`calendar/tests/RruleTest.php`,
   `IcalRruleRoundtripTest.php`, `JsCalendarRecurrenceTest.php`) done; schema redesign and REST
   write support are future phases, not started.
+- `doc/ai/projects/smallpart-lti-library-update.md` - updated smallpart's `celtic/lti` LTI Tool
+  Provider library from `4.10.3` to `5.4.6`, which replaced several constants with enums and added
+  strict type hints to overridden methods (see the library's own Updating wiki page). Covers the
+  regression test harness built first (`smallpart/tests/LTI/` - `Config`/`DataConnector`/`Tool`/
+  `Session`, built against real (non-mocked) `ceLTIc\LTI\Platform`/`UserResult` objects) - it caught
+  every fatal error the version bump caused (enum constants, 9 methods needing added type hints
+  across `DataConnector`/`Tool`) with no new tests needed - plus the non-obvious composer mechanics
+  (an `egroupware/*` app's local `composer.json` edit is invisible to composer's resolver until
+  pushed, since these are resolved as git-VCS packages tracking the remote branch tip) and several
+  gotchas found while writing it (a fragile `$_POST` dependency in `DataConnector::loadPlatform()`'s
+  LTI 1.0 path, a dead-code bug in `Config::readByOauthKey()`, the 28-char issuer truncation in
+  `savePlatform()`). DONE: library bumped, all 33 harness tests + the unrelated `BoTest.php` green.
+  Still open: the real HTTP/OIDC/OAuth1-signed entry point and a live-LMS verification pass, neither
+  attempted (see the doc's "Status"/"Not covered" sections).
 
 ## Security and data handling
 
