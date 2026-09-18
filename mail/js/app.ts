@@ -475,7 +475,20 @@ export class MailApp extends EgwApp
 						const path_parts = parts[1].split('/');
 						const do_open = (folder) => {
 							this.tree_wdg.openItem(folder).then(() => {
-								if (path_parts.length > 1)
+								// off-by-one (found live 2026-09-18, ralf: "if the current folder is
+								// somewhere in the 2nd level of the hierarchy... that leaves the
+								// parent AND the current folder marked. Only the current folder
+								// should be marked"): `path_parts` here has already had the CURRENT
+								// `folder`'s own last segment shifted off by the caller (either the
+								// initial call below, or this same closure's own previous
+								// iteration) - so "more segments remain" is `.length > 0`, not `> 1`.
+								// The old `> 1` stopped one level early for any 2+-level folder,
+								// reSelectItem()-ing the PARENT instead of continuing to the real
+								// target - which reSelectItem() (unlike Shoelace's own single-select
+								// handling) never deselects, so the parent stayed marked forever
+								// alongside whichever node the tree's own value-binding separately,
+								// correctly, marked as the real target.
+								if (path_parts.length > 0)
 								{
 									do_open(folder + '/' + path_parts.shift());
 								}
