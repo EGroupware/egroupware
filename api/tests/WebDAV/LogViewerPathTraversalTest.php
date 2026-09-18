@@ -103,10 +103,17 @@ class LogViewerPathTraversalTest extends LoggedInTest
 		$_GET['filename'] = 'filemanager/'.$GLOBALS['egw_info']['user']['account_lid'].
 			'/phpunit-traversal-test.log';
 
-		// logViewer()'s final step (Framework::render()) manipulates output buffering itself,
-		// assuming it's called within a full request - restore the buffer depth afterwards so
-		// that's not mistaken by PHPUnit for a test-side buffering bug
+		// logViewer()'s final step (Framework::render()) echoes a full HTML page directly - our
+		// OWN ob_start() (not just measuring the level) is what actually stops that reaching real,
+		// unbuffered stdout. Letting it escape unbuffered here would permanently mark PHP's
+		// headers_sent() true for the REST of this PHPUnit process (verified: a single unbuffered
+		// echo does this even under an later ob_start()) - which silently breaks every later
+		// header()-based HTTP status (eg. CalDAV::runRequest()'s http_status()) for any other
+		// in-process test that runs afterwards, however unrelated. This is exactly what broke
+		// infolog's CalDAVImportTest in CI: doc/phpunit.xml's "Api" testsuite (this file) runs
+		// before the "Apps" testsuite (infolog's), so the poisoning carried forward silently.
 		$ob_level = ob_get_level();
+		ob_start();
 		try
 		{
 			WebDAV\Hooks::logViewer('filemanager');
