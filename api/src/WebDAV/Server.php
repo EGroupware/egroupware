@@ -443,6 +443,21 @@ class HTTP_WebDAV_Server
 
         $this->_dispatchRequest($prefix);
 
+        // TEMP DIAGNOSTIC for a CI-only, non-reproducible-locally failure: infolog's
+        // CalDAVImportTest (in-process CalDAV::runRequest() simulation) gets "status 0" back,
+        // meaning _dispatchRequest() returned without ever setting an HTTP status - narrow,
+        // only fires on that exact anomaly, remove once root-caused.
+        if (!http_response_code())
+        {
+            error_log(sprintf(
+                'CI_DIAG ServeRequest no-status: class=%s method=%s uri=%s path=%s logApp=%s '.
+                'debug_level=%s ob_level=%d status_prop=%s',
+                get_class($this), $_SERVER['REQUEST_METHOD'] ?? '?', $_SERVER['REQUEST_URI'] ?? '?',
+                $this->path ?? '?', var_export($log_app, true), var_export(self::$log_level, true),
+                ob_get_level(), var_export($this->_http_status ?? null, true)
+            ));
+        }
+
         if (self::$request_starttime) $this->log_request();
     }
 
