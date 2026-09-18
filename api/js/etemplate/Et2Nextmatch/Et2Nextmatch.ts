@@ -1206,9 +1206,8 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 	/**
 	 * Resolve immediately unless `lazy` is set and this nextmatch is sitting inside an
 	 * inactive `<et2-tab-panel>` - in that case, wait for the enclosing `<et2-tabbox>`'s
-	 * `sl-tab-show` for this panel before resolving. Mirrors the legacy pattern in
-	 * et2_widget_historylog.ts's doLoadingFinished(), adapted for a web component ancestor
-	 * instead of the legacy get_tab_info() API.
+	 * `sl-tab-show` for this panel before resolving.  Deferring like this is what keeps an
+	 * unopened tab free: a nextmatch on a tab nobody looks at never asks the server for rows.
 	 */
 	private async _whenLazyVisible() : Promise<void>
 	{
