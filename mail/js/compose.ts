@@ -1738,7 +1738,18 @@ export class MailCompose
 		// against their CURRENT values.
 		this.fieldExpanderInit();
 
-		const isHtml = context.mimeType === 'html';
+		// mail's own "Reply message type" preference (replyOptions, mail/inc/class.mail_hooks.inc.php)
+		// - 'none' (default) "use source as displayed" (this method's own long-standing behaviour,
+		// kept as the fallback), 'html'/'text' unconditionally FORCE that mimeType regardless of the
+		// original message's own format. Never consulted at all by this JMAP-native bootstrap before
+		// (found live 2026-09-18, ticket #124821: "wenn man auf reine Textmails antwortet wird trotz
+		// Einstellung beim Antworten/Weiterleiten 'HTML erzwingen', nicht der HTML Editor sondern der
+		// normale Texteditor angezeigt" - replying to a plain-text mail always opened the plain-text
+		// editor even with "force html" set) - the classic, now-removed mail_compose::compose() read
+		// this same preference for both reply AND forward (its own help text: "start reply messages
+		// with mime type plain/text or html or try to use the displayed format").
+		const replyOptions = this.egw.preference('replyOptions', 'mail');
+		const isHtml = replyOptions === 'html' ? true : replyOptions === 'text' ? false : context.mimeType === 'html';
 		this.et2.getWidgetById('mimeType')?.set_value(isHtml);
 		this.syncMimeTypeContainers(isHtml);
 		const quoted = this.app.jmap.quoteOriginalMessage(context);
