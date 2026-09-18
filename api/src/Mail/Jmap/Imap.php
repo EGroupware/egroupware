@@ -4165,10 +4165,17 @@ class Imap extends Jmap\Base
 					'ids' => new \Horde_Imap_Client_Ids([(int)$uid]),
 				]);
 				if (connection_aborted()) exit;
-				if (($partData = $partResults[(int)$uid] ?? null))
+				if (($partData = $partResults[(int)$uid] ?? null) && ($part = $structure->getPart($bodyId)))
 				{
 					/** @var \Horde_Imap_Client_Data_Fetch $partData */
-					return self::cleanPreview((string)$partData->getBodyPart($bodyId));
+					// same transfer-decode + charset-convert recipe as fetchBodyValue() (see
+					// decodePartJsonSafe()'s own docblock) - this preview snippet is raw IMAP bytes
+					// just like a full body fetch, and was found live (2026-09-18, alongside the
+					// fetchBodyValue()/structureToHtml() fix) to have the identical undeclared-
+					// charset crash risk, just for the message-LIST "Sneak preview" column instead
+					$part->setContents((string)$partData->getBodyPart($bodyId),
+						['encoding' => $partData->getBodyPartDecode($bodyId)]);
+					return self::cleanPreview(self::decodePartJsonSafe($part));
 				}
 			}
 			catch (\Throwable $e)
@@ -4176,7 +4183,20 @@ class Imap extends Jmap\Base
 				// fall through to the (possibly noisy) top-level body text below
 			}
 		}
-		return self::cleanPreview((string)$data->getBodyText(0));
+		// Horde_Imap_Client_Fetch_Query::bodyText() (unlike bodyPart() above) has no 'decode' option
+		// at all - $data->getBodyText(0) is still transfer-ENCODED (base64/quoted-printable) exactly
+		// as sent on the wire, for a genuinely singlepart message. $structure IS that one part in
+		// that case, so setContents() below decodes it using $structure's own already-parsed
+		// Content-Transfer-Encoding (its 'encoding' option's default, per Horde_Mime_Part::
+		// setContents()'s own docblock) - same idea as the multipart branch above, just without an
+		// explicit override, then the same charset-conversion safety net.
+		$raw = (string)$data->getBodyText(0);
+		if ($structure)
+		{
+			$structure->setContents($raw);
+			return self::cleanPreview(self::decodePartJsonSafe($structure));
+		}
+		return self::cleanPreview($raw);
 	}
 
 	/**
