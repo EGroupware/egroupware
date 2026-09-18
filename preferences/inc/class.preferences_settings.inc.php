@@ -507,6 +507,23 @@ class preferences_settings
 				case 'input':
 					$setting['type'] = 'et2-textbox';
 					break;
+				case 'int':
+				case 'float':
+				case 'integer':
+					// "int"/"float"/"integer" used to have their own matching widget class, long
+					// since deleted with no successor ever registered under those names - a
+					// preference of any of these types rendered as a literal "int"/"float"/
+					// "integer" placeholder box instead of a real input (found live 2026-09-18,
+					// ralf: CalDAV/CardDAV's "How many days to sync in the past/future" prefs -
+					// calendar_groupdav::get_settings()'s own "integer" type). Shared with
+					// Etemplate\Widget\Transformer's own identical customfield-type fix rather than
+					// duplicated here.
+					[$setting['type'], $extra] = Etemplate\Widget\Transformer::mapLegacyType($old_type);
+					foreach ($extra as $attr => $val)
+					{
+						$tpl->setElementAttribute($tab . '[' . $setting['name'] . ']', $attr, $val);
+					}
+					break;
 				case 'check':
 					$setting['type'] = 'et2-select';
 					$setting['values'] = array('1' => lang('yes'), '0' => lang('no'));
