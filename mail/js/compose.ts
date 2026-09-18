@@ -1448,6 +1448,7 @@ export class MailCompose
 	{
 		if (!this.isJmapMode) return;
 		this.bootstrapping = true;
+		let focusBody = false;
 		try
 		{
 			// explicitBootstrap (a clientSidePopup() compose) takes precedence over the classic
@@ -1476,6 +1477,11 @@ export class MailCompose
 				if (sourceId)
 				{
 					await this.bootstrapReply(sourceId, from);
+					// a real reply already has "to" filled in from the original sender - unlike
+					// "forward" (from's other case here), which leaves "to" genuinely empty for the
+					// user to pick a recipient, so the template's own default autofocus on "to"
+					// stays correct for that one case.
+					focusBody = from !== 'forward';
 				}
 				else
 				{
@@ -1507,6 +1513,20 @@ export class MailCompose
 		// container always matches mimeType by the time bootstrap finishes - a no-op for the
 		// reply/forward/composeasnew paths that already call it themselves.
 		this.syncMimeTypeContainers(this.et2.getWidgetById('mimeType')?.get_value() !== false);
+
+		// compose.xet's own "to" field is the only widget with autofocus="true" - correct for a
+		// genuinely blank compose, but a real reply's own "to" is already filled in from the
+		// original sender, so the user almost always wants to start typing their reply immediately
+		// instead (found live 2026-09-18, ticket #124821: "reply to incoming mail: the cursor starts
+		// in the 'to' line, instead of at the start of the content of the mail"). Deliberately NOT
+		// applied to "forward" (leaves "to" genuinely empty - see focusBody's own assignment above),
+		// composeasnew, or composefromdraft (reopening a draft/sent message, not "replying" to
+		// someone - ralf: "that is for replies, not new compose"). Runs after
+		// syncMimeTypeContainers() above so it focuses whichever body container is actually visible.
+		if (focusBody)
+		{
+			await this.currentBodyWidget()?.focus?.();
+		}
 
 		// doc/ai/projects/mail-compose-jmap-migration.md, Step 4 - the widget set_value() calls
 		// above (recipient/subject/body/signature) mark the form dirty exactly like a real user
