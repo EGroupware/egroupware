@@ -818,7 +818,19 @@ class Imap extends Jmap\Base
 			// directly on the magic property would never even call __get() and always report
 			// "not set", silently defeating this whole fallback
 			$folderName = $imap->$property;
-			if (!empty($folderName) && strcasecmp($folderName, $mailboxName) === 0)
+			// Exact match, not strcasecmp() - IMAP mailbox names are case-SENSITIVE, "INBOX"
+			// itself (handled separately above) is the only exception (RFC 3501 §5.1). Found live
+			// 2026-09-17 (ticket #124761, ralf+Birgit): a real Dovecot account had BOTH
+			// "INBOX/Drafts" and "INBOX/drafts" as genuinely separate real folders (confirmed via
+			// doveadm mailbox list - same class of server-side corruption as ticket #124701's
+			// duplicate-INBOX case) - the case-insensitive compare tagged BOTH with
+			// role:'drafts', and every .find(m => m.role === 'drafts') consumer downstream
+			// (MailJmap.resolveComposeContext()/saveDraft(), mail/js/app.ts's own special-folder
+			// lookups) then picked whichever one the IMAP server happened to list first - drafts
+			// got silently saved into the wrong-case folder, invisible everywhere (even "show all
+			// folders"), since only ONE folder per role ever gets promoted to its pinned
+			// top-level tree position.
+			if (!empty($folderName) && $folderName === $mailboxName)
 			{
 				return $role;
 			}

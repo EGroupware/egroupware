@@ -417,6 +417,31 @@ class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 	}
 
 	/**
+	 * Found live 2026-09-17 (ticket #124761, ralf+Birgit): a real Dovecot account had BOTH
+	 * "INBOX/Drafts" and "INBOX/drafts" as genuinely separate real folders (doveadm mailbox list -
+	 * same class of server-side corruption as ticket #124701's duplicate-INBOX case). IMAP mailbox
+	 * names are case-SENSITIVE (only "INBOX" itself isn't, RFC 3501 §5.1) - the fallback match must
+	 * require an EXACT name match against the account's configured acc_folder_draft, not
+	 * strcasecmp(), or a differently-cased real folder gets wrongly tagged with the same role too.
+	 * Downstream .find(m => m.role === 'drafts') consumers (MailJmap.resolveComposeContext() etc.)
+	 * then non-deterministically pick whichever same-role folder the IMAP server lists first -
+	 * drafts got silently saved into the wrong-case folder, invisible everywhere.
+	 */
+	public function testRoleForRequiresExactCaseNotJustCaseInsensitiveMatch()
+	{
+		$imap = $this->getMockBuilder(Imap::class)
+			->disableOriginalConstructor()
+			->onlyMethods(['__get'])
+			->getMock();
+		$imap->method('__get')->willReturnCallback(static fn($name) => [
+			'acc_folder_draft' => 'INBOX/Drafts',
+		][$name] ?? null);
+
+		$this->assertSame('drafts', JmapShim::roleFor($imap, 'INBOX/Drafts', []));
+		$this->assertNull(JmapShim::roleFor($imap, 'INBOX/drafts', []));
+	}
+
+	/**
 	 * Templates/Outbox have neither an IMAP SPECIAL-USE attribute nor a JMAP role at all (RFC 8621
 	 * doesn't define either) - classic mail_tree.inc.php's own $definedFolders identifies them
 	 * purely via the account's own acc_folder_template/acc_folder_outbox config, same mechanism
