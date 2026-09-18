@@ -553,16 +553,13 @@ class kdots_framework extends Api\Framework\Ajax
 	/**
 	 * Prepare notification signal (blinking bell)
 	 *
-	 * TODO: THis is copied from pixelegg, and is not accessible
-	 *
+	 * Badge show/hide/blink is handled by EgwFramework.ts::topmenu_info_notify()
+	 * and notifications/js/notificationajaxpopup.js, no extra JS include needed.
 	 *
 	 * @return string
 	 */
 	protected static function _get_notification_bell()
 	{
-		// This should all be handled by notification app
-		$path = "../../notifications/js/Et2NotificationBell.js";
-		self::includeJS($path . '?' . filemtime(EGW_SERVER_ROOT . $path));
 		$src = Api\Image::find('api', 'bell-fill');
 		return '<div id="topmenu_info_notifications"><et2-image statustext="' . lang('notifications') . '" src="' . $src . '"></et2-image><sl-badge pill variant="danger" style="display: none;"></sl-badge></div>';
 	}
