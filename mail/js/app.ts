@@ -4478,7 +4478,33 @@ export class MailApp extends EgwApp
 		if(nm)
 		{
 			this.lockTree();
-			nm.applyFilters({'selectedFolder': _folder});
+			// Et2Nextmatch.applyFilters({selectedFolder: _folder}) is a no-op whenever _folder is
+			// already the active one (its own "changed" diff sees nothing to do, and returns
+			// without refreshing at all) - clicking the SAME already-selected folder again is a
+			// deliberate "manual refresh" gesture users rely on, though, so force applyFilters()'s
+			// own no-args "hard reload" form (see its own isHardReload handling) instead of the
+			// normal filter-diff call in that one case (found live 2026-09-18, ralf: "clicking on
+			// the current folder in the tree no longer refreshes the view (as it did before)").
+			//
+			// Compared against nm's own activeFilters.selectedFolder (the exact value applyFilters()
+			// itself diffs against), NOT the tree widget's own `_previous` click param - found live
+			// 2026-09-18 (ralf: still not reloading after the first attempt) that `_previous` is
+			// unreliable for exactly this case: it comes from Et2Tree's `_previousOption`, which is
+			// only ever updated inside its own `sl-selection-change` listener - and Shoelace's
+			// SlTree.selectItem() only emits that event when the selection SET actually changes
+			// (`nextSelection` differs from `previousSelection`). Re-clicking an already-selected
+			// single-select leaf changes nothing, so that event never fires, `_previousOption` stays
+			// whatever it was from the LAST genuine selection change (the folder visited BEFORE the
+			// current one, not the current one itself), and `_folder === _previous` was false even
+			// though the user really did re-click the active folder.
+			if (_folder === nm.activeFilters?.selectedFolder)
+			{
+				nm.applyFilters();
+			}
+			else
+			{
+				nm.applyFilters({'selectedFolder': _folder});
+			}
 		}
 
 		// Remember this as the last-used folder for this profile, so mail reopens here next time
