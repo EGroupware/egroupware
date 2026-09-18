@@ -2663,7 +2663,17 @@ export class MailCompose
 		}
 		this.jmapDraftEmailId = result.emailId;
 		const content = this.et2.getArrayMgr('content');
-		const rowId = `${this.egw.user('account_id')}::${this.currentProfileID()}::${result.mailboxId}::${result.emailId}`;
+		// currentProfileID() returns the "From" dropdown's raw "profileID:identityID" value (the
+		// mailaccount widget's own compound value) - a row id needs just the plain profileID, same
+		// as every other caller that reads this same widget value already extracts via
+		// `.split(':', 2)[0]` (resolveComposeContext()'s own accId, MailApp's own accId at
+		// app.ts:5474/8451, ...). Found live 2026-09-19 (ralf: "printing from compose gives...
+		// Profile change failed! (100)"): embedding the compound value directly here made
+		// Mail::splitRowID() return the whole "<profileID>:<identityID>" string as 'profileID',
+		// which Ui::changeProfile() then couldn't match against the plain-integer profileID its own
+		// sanity check compares against.
+		const accountID = this.currentProfileID().split(':', 2)[0];
+		const rowId = `${this.egw.user('account_id')}::${accountID}::${result.mailboxId}::${result.emailId}`;
 		content.data.lastDrafted = rowId;
 		this.et2.setArrayMgr('content', content);
 		(this.et2.getWidgetById('lastDrafted') as any)?.set_value(rowId);
