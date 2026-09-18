@@ -53,8 +53,11 @@ class timesheet_hooks
 				'menuaction' => TIMESHEET_APP.'.timesheet_ui.edit',
 			),
 			'view_id' => 'ts_id',
-			'view_popup'  => '630x480',
-			'edit_popup'  => '630x480',
+			// edit.xet lays its fields out as a responsive grid that needs room for two
+			// columns (see its --column-min-width) plus a margin over the 600px width at
+			// which any such grid stacks labels above their fields.
+			'view_popup'  => '700x620',
+			'edit_popup'  => '700x620',
 			'list' => array(
 				'menuaction' => 'timesheet.timesheet_ui.index',
 				'ajax' => 'true'
@@ -64,7 +67,7 @@ class timesheet_hooks
 			),
 			'add_app'    => 'link_app',
 			'add_id'     => 'link_id',
-			'add_popup'  => '630x480',
+			'add_popup'  => '700x620',
 			'file_access'=> TIMESHEET_APP.'.timesheet_bo.file_access',
 			'file_access_user' => true,	// file_access supports 4th parameter $user
 			'notify'     => TIMESHEET_APP.'.timesheet_bo.notify',

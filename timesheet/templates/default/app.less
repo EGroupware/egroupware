@@ -3,44 +3,54 @@
  *
  * @version: $Id$
  */
+
 /* Allow project list selection in nm header to be large */
 #timesheet-index #timesheet-index_pm_id .ui-autocomplete.ui-menu {
-  max-height: 80%;
+	max-height: 80%;
 }
+
 table.egwGridView_grid tbody td[align=right] {
-  padding-top: 0px;
+	padding-top: 0px;
 }
+
 /* Let category & total columns line up vertically with the 2-element headers (Duration, Total, etc) */
 #timesheet-index .innerContainer > span {
-  margin-bottom: 5px;
-  display: inline-block;
+	margin-bottom: 5px;
+	display: inline-block;
 }
+
+#timesheet-edit.et2_container {
+}
+
 /* The edit dialog's responsive grid defaults to 26rem-wide columns - far more than these
  * fields need, and wide enough that the popup would have to open ~200px wider than it does
  * just to fit two of them side by side.  At 20em both columns fit the registered popup size
  * (timesheet_hooks::search_link()), and the grid still drops to a single column when the
  * window really is narrow. */
 #timesheet-edit.et2_container et2-template[layout="edit"] {
-  --column-min-width: 20em;
+	--column-min-width: 20em;
 }
+
 /* Match the split Save button's box to the surrounding Edit/Apply/Cancel buttons */
 #timesheet-edit_save_split {
-  max-width: 125px;
-  min-width: fit-content;
+	max-width: 125px;
+	min-width: fit-content;
 }
+
 /* add # sign behind the ts_id */
-#timesheet-edit_ts_id:before {
-  content: "#";
-}
+#timesheet-edit_ts_id:before { content:"#"}
+
 /* make the modifier inline*/
-.timesheet_modifier label {
-  display: inline-block;
-  float: right;
+.timesheet_modifier label
+{
+	display: inline-block;
+	float: right;
 }
-.timesheet_modifier ul {
-  display: inline-block;
-  float: left;
+
+.timesheet_modifier ul
+{
+	display: inline-block;
+	float: left;
 }
-label[id^='timesheet-index_'][id$='ts_start]'] time {
-  padding-left: 5px;
-}
+
+label[id^='timesheet-index_'][id$='ts_start]'] time {padding-left:5px;}
