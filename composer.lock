@@ -2618,12 +2618,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/smallpart.git",
-                "reference": "2aaf65d97a538f4cd4e7778882782346bd6fb673"
+                "reference": "800fd7987a2001638116f48e6122a8cf2f8bc7a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/smallpart/zipball/2aaf65d97a538f4cd4e7778882782346bd6fb673",
-                "reference": "2aaf65d97a538f4cd4e7778882782346bd6fb673",
+                "url": "https://api.github.com/repos/EGroupware/smallpart/zipball/800fd7987a2001638116f48e6122a8cf2f8bc7a9",
+                "reference": "800fd7987a2001638116f48e6122a8cf2f8bc7a9",
                 "shasum": ""
             },
             "require": {
@@ -2659,7 +2659,7 @@
             "support": {
                 "source": "https://github.com/EGroupware/smallpart/tree/master"
             },
-            "time": "2026-09-18T13:04:26+00:00"
+            "time": "2026-09-18T17:01:35+00:00"
         },
         {
             "name": "egroupware/smtp",
