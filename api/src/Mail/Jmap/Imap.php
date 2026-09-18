@@ -3581,20 +3581,61 @@ class Imap extends Jmap\Base
 
 		$part = $structure->getPart($partId);
 		$part->setContents($raw, ['encoding' => $encoding]);
-		// default to utf-8, not us-ascii which Horde chooses (same convention already established
-		// in Api\Mail's own Horde_Mime_Part::$defaultCharset override, api/src/Mail.php) - our own
-		// outgoing plain-text bodies are always utf-8, and a genuinely us-ascii message decodes
-		// identically either way (us-ascii is a strict subset of utf-8), so this can only help:
-		// found live 2026-09-03 (ralf: a shim-account plain-text reply with umlauts previewed as
-		// mojibake - Thunderbird displayed the very same message correctly, since it also assumes
-		// utf-8 rather than us-ascii for an undeclared charset)
-		$charset = $part->getContentTypeParameter('charset') ?: 'utf-8';
 
 		return [
-			'value' => Api\Translation::convert($part->getContents(), $charset, 'utf-8'),
+			'value' => self::decodePartJsonSafe($part),
 			'isEncodingProblem' => false,
 			'isTruncated' => false,
 		];
+	}
+
+	/**
+	 * A part's content, decoded to utf-8 and GUARANTEED json_encode()-safe - honours an
+	 * explicitly declared Content-Type charset parameter, otherwise assumes utf-8 (still correct
+	 * far more often than not: our own outgoing plain-text bodies are always utf-8, and a
+	 * genuinely us-ascii message decodes identically either way, us-ascii being a strict subset
+	 * of utf-8 - found live 2026-09-03, ralf: a shim-account plain-text reply with umlauts
+	 * previewed as mojibake without this, since Horde itself otherwise defaults to us-ascii).
+	 *
+	 * That assumption breaks down hard when the content genuinely ISN'T valid utf-8 at all -
+	 * found live 2026-09-18 (ralf, forwarding a real auto-generated German invoice mail, "BSAS
+	 * Mailservice" - failed outright client-side with "Laden der ursprünglichen Nachricht(en)
+	 * fehlgeschlagen" / "Unexpected end of JSON input"). Its text/html part had no charset param
+	 * and was raw 8-bit (Windows-1252) German text (umlauts) - treating that as utf-8 left
+	 * genuinely invalid utf-8 bytes in the decoded value, and json_encode() then fails OUTRIGHT
+	 * for the ENTIRE containing response (not just this one field), not something a per-field
+	 * try/catch could ever guard against.
+	 *
+	 * A one-off "guess a better charset" fix (eg. detect_encoding()'s own candidate list, or a
+	 * bare mb_check_encoding() test) still only ever guesses - genuinely unrecognizable content
+	 * (ralf: "probably also won't help for other non-utf-8 charsets") could still slip through
+	 * as syntactically-valid-but-wrong text, or in principle still fail outright. Reused instead:
+	 * Api\Translation::convert_jsonsafe(), the SAME already-established, already-tested
+	 * mechanism the classic (non-JMAP) path already relies on for this exact concern (eg. Api\
+	 * Mail::fetchHeaderPreview()'s own BODYPREVIEW building) - it converts using the given/
+	 * detected charset, then explicitly VERIFIES the result via json_encode() and, only if THAT
+	 * still fails, self-corrects (mb_convert_encoding('UTF-8','UTF-8') to drop invalid
+	 * sequences, then iconv(...//IGNORE), then utf8_encode() as the final, always-succeeds
+	 * fallback) - a real belt-and-suspenders guarantee, not just a better initial guess.
+	 *
+	 * Blindly passing 'utf-8' as convert_jsonsafe()'s own $from whenever nothing is declared -
+	 * relying ONLY on its post-hoc correction - is not enough by itself: live-verified against
+	 * the actual real message above, that path prevents the json_encode() crash but silently
+	 * replaces every umlaut with '?' ("f?r" instead of "für") - convert("...", 'utf-8') is a
+	 * no-op on already-invalid bytes, so convert_jsonsafe()'s own mb_convert_encoding('UTF-8',
+	 * 'UTF-8') correction has nothing left to recover the ORIGINAL windows-1252 characters from,
+	 * only to replace them. detect_encoding() has to run FIRST to hand convert_jsonsafe() the
+	 * right starting charset - its own verify+correct step then stays a genuine safety net for
+	 * whatever detect_encoding() itself still gets wrong, instead of being the only line of
+	 * defence.
+	 *
+	 * @param \Horde_Mime_Part $part
+	 * @return string
+	 */
+	private static function decodePartJsonSafe(\Horde_Mime_Part $part) : string
+	{
+		$charset = $part->getContentTypeParameter('charset') ?: Api\Translation::detect_encoding($part->getContents(), 'utf-8');
+		return Api\Translation::convert_jsonsafe($part->getContents(), $charset);
 	}
 
 	/**
@@ -3970,9 +4011,8 @@ class Imap extends Jmap\Base
 			return '';
 		}
 		$part = $structure->getPart($partId);
-		// default to utf-8, not us-ascii - see fetchBodyValue()'s identical fix/docblock above
-		$charset = $part->getContentTypeParameter('charset') ?: 'utf-8';
-		$raw = Api\Translation::convert($part->getContents(), $charset, 'utf-8');
+		// see decodePartJsonSafe()'s own docblock - same undeclared-charset concern applies here
+		$raw = self::decodePartJsonSafe($part);
 
 		if ($useHtml && $partId === $htmlId)
 		{
