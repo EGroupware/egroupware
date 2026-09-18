@@ -182,6 +182,13 @@ class WebDAV extends HTTP_WebDAV_Server_Filesystem
 
 		if (!$files)
 		{
+			// $_FILES came back completely empty - most commonly because PHP itself silently
+			// dropped the WHOLE request body (post_max_size exceeded, or too many parts for
+			// max_file_uploads) before our code ever saw it, which never shows up anywhere else
+			// in the log (that happens at the SAPI level, before this script even starts) - log
+			// the telling details explicitly so a "everything above looks fine" 400 is diagnosable
+			// without another round-trip.
+			$this->logDetail($this->_no_files_diagnostic());
 			return '400 Bad Request';
 		}
 
@@ -194,7 +201,10 @@ class WebDAV extends HTTP_WebDAV_Server_Filesystem
 
 		if (count($files) !== 1)
 		{
-			return '400 Bad Request';	// replacing/creating a single file requires exactly one upload
+			// replacing/creating a single file requires exactly one upload
+			$this->logDetail(sprintf('rejecting POST: target "%s" is a file, exactly one uploaded '.
+				'file is required, got %d', $options['path'], count($files)));
+			return '400 Bad Request';
 		}
 		return $this->_post_replace_file($options['path'], $fspath, $files[0]);
 	}
@@ -220,10 +230,14 @@ class WebDAV extends HTTP_WebDAV_Server_Filesystem
 		{
 			if ($file['error'] !== UPLOAD_ERR_OK)
 			{
+				$this->logDetail(sprintf('rejecting upload "%s": PHP upload error %d (%s)',
+					$file['name'], $file['error'], self::_upload_error_message($file['error'])));
 				return '400 Bad Request';
 			}
 			if (!($name = self::_safe_upload_filename($file['name'])))
 			{
+				$this->logDetail(sprintf('rejecting upload: client filename "%s" sanitized to nothing usable',
+					$file['name']));
 				return '400 Bad Request';
 			}
 			$target_path   = Vfs::concat($dir_path, $name);
@@ -265,6 +279,8 @@ class WebDAV extends HTTP_WebDAV_Server_Filesystem
 	{
 		if ($file['error'] !== UPLOAD_ERR_OK)
 		{
+			$this->logDetail(sprintf('rejecting upload "%s": PHP upload error %d (%s)',
+				$file['name'], $file['error'], self::_upload_error_message($file['error'])));
 			return '400 Bad Request';
 		}
 
@@ -392,6 +408,87 @@ class WebDAV extends HTTP_WebDAV_Server_Filesystem
 		$name = preg_replace('/[\x00-\x1F\x7F]/', '', trim($name));
 
 		return ($name === '' || $name === '.' || $name === '..') ? null : $name;
+	}
+
+	/**
+	 * Explain why $_FILES came back empty for what looked like a multipart/form-data upload
+	 *
+	 * The most common cause never shows up anywhere else: PHP enforces post_max_size/
+	 * max_file_uploads BEFORE the script even runs, silently emptying $_POST/$_FILES with no
+	 * exception, no error in our own request log - just a message in the *general* PHP/webserver
+	 * error log this per-user WebDAV log never sees. Surface the relevant numbers directly instead.
+	 *
+	 * @return string
+	 */
+	private function _no_files_diagnostic()
+	{
+		$content_length = (int)($_SERVER['CONTENT_LENGTH'] ?? 0);
+		$post_max = self::_ini_bytes('post_max_size');
+		$upload_max = self::_ini_bytes('upload_max_filesize');
+
+		$msg = sprintf('no files in request: Content-Length=%d post_max_size=%s (%d bytes) '.
+			'upload_max_filesize=%s (%d bytes) max_file_uploads=%s',
+			$content_length, ini_get('post_max_size'), $post_max,
+			ini_get('upload_max_filesize'), $upload_max, ini_get('max_file_uploads'));
+
+		if ($post_max && $content_length > $post_max)
+		{
+			$msg .= ' *** Content-Length EXCEEDS post_max_size: PHP drops the whole request body '.
+				'before EGroupware ever sees it - raise post_max_size (and upload_max_filesize) ***';
+		}
+		if (!empty($_POST))
+		{
+			$msg .= "\nfields received as \$_POST instead of \$_FILES (likely missing a filename on ".
+				'the client side): '.implode(', ', array_map(static function($name, $value)
+				{
+					return $name.' ('.strlen((string)$value).' bytes)';
+				}, array_keys($_POST), $_POST));
+		}
+		return $msg;
+	}
+
+	/**
+	 * Parse a php.ini shorthand byte value (eg. "8M", "1G") into plain bytes
+	 *
+	 * @param string $ini_setting
+	 * @return int 0 if unlimited/unset
+	 */
+	private static function _ini_bytes($ini_setting)
+	{
+		$value = trim((string)ini_get($ini_setting));
+		if ($value === '' || $value === '-1' || $value === '0')
+		{
+			return 0;
+		}
+		$unit = strtolower(substr($value, -1));
+		$number = (int)$value;
+		switch ($unit)
+		{
+			case 'g': $number *= 1024;   // fall through
+			case 'm': $number *= 1024;   // fall through
+			case 'k': $number *= 1024;   // fall through
+		}
+		return $number;
+	}
+
+	/**
+	 * Human-readable text for a PHP UPLOAD_ERR_* constant
+	 *
+	 * @param int $code one of the UPLOAD_ERR_* constants
+	 * @return string
+	 */
+	private static function _upload_error_message($code)
+	{
+		static $messages = array(
+			UPLOAD_ERR_INI_SIZE   => 'exceeds upload_max_filesize',
+			UPLOAD_ERR_FORM_SIZE  => 'exceeds the form-specified MAX_FILE_SIZE',
+			UPLOAD_ERR_PARTIAL    => 'only partially uploaded (connection interrupted?)',
+			UPLOAD_ERR_NO_FILE    => 'no file was uploaded',
+			UPLOAD_ERR_NO_TMP_DIR => 'server has no temporary folder for uploads',
+			UPLOAD_ERR_CANT_WRITE => 'server failed to write the uploaded file to disk',
+			UPLOAD_ERR_EXTENSION  => 'a PHP extension stopped the upload',
+		);
+		return $messages[$code] ?? 'unknown error';
 	}
 
     /**

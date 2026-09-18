@@ -76,4 +76,32 @@ class LoggingTest extends WebDAVTest
 		// the raw multipart body must NOT be captured, only its metadata (see isFileUpload())
 		$this->assertStringNotContainsString('PDFDATA', $content);
 	}
+
+	/**
+	 * A multipart part with a "name" but no "filename" attribute is NOT a file upload as far as
+	 * PHP is concerned - it lands in $_POST, not $_FILES (a common real-world scanner/client
+	 * mistake). POST() must reject it with 400, and the log must say exactly why - naming the
+	 * $_POST field(s) it actually received - rather than leaving a bare 400 with no clue, which is
+	 * what a customer-reported "everything I can see looks fine but I get 400" ticket looks like.
+	 */
+	public function testMissingFilenameLandsInPostAndLogsWhy() : void
+	{
+		$response = $this->getClient(self::$user)->post($this->url($this->homeCollection(self::$user)), [
+			RequestOptions::MULTIPART => [
+				// no 'filename' => Guzzle omits filename="..." from Content-Disposition, so PHP
+				// treats this as a plain $_POST field instead of a $_FILES upload
+				['name' => 'file', 'contents' => 'PDFDATA'],
+			],
+			RequestOptions::HEADERS => ['User-Agent' => 'scanner-no-filename-test'],
+		]);
+		$this->assertHttpStatus(400, $response);
+
+		$log_file = self::$log_dir.'/scanner-no-filename-test.log';
+		$this->assertFileExists($log_file, 'scanner-no-filename-test.log was not created');
+
+		$content = file_get_contents($log_file);
+		$this->assertStringContainsString('no files in request', $content);
+		$this->assertStringContainsString('fields received as $_POST instead of $_FILES', $content);
+		$this->assertStringContainsString('file (7 bytes)', $content);
+	}
 }
