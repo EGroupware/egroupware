@@ -109,34 +109,57 @@ header('Content-Type: application/json; charset=utf-8');
 if ($_SERVER['REQUEST_METHOD'] !== 'POST' && isset($_GET['methodCalls']))
 {
 	$etag = '"'.sha1($_SERVER['QUERY_STRING']).'"';
-	// same helper api/categories.php uses - a plain header('Cache-Control: ...') only sets that one
-	// header, but browsers also expect a matching Expires header (this session was already started
-	// with the 'private_no_expire' limiter, from the 'nocachecontrol' flag above, so this call's
-	// $expire/$private mismatch against that is what makes it actually send the headers - see
-	// Session::cache_control()'s "session already started" branch)
-	Session::cache_control(864000, true);
-	header('ETag: '.$etag);
+	// Cache-Control/ETag are deliberately sent ONLY once we know the response is genuinely valid
+	// (below, right before echo'ing a confirmed-good $content) - NOT unconditionally up front like
+	// this used to. A client can only ever present an If-None-Match matching THIS etag if it
+	// already received a previously cached SUCCESSFUL response for the exact same query string, so
+	// answering 304 straight away here (before redoing any IMAP work) stays safe even though the
+	// headers below aren't sent yet at this point.
 	if (trim($_SERVER['HTTP_IF_NONE_MATCH'] ?? '') === $etag)
 	{
+		// same helper api/categories.php uses - a plain header('Cache-Control: ...') only sets that
+		// one header, but browsers also expect a matching Expires header (this session was already
+		// started with the 'private_no_expire' limiter, from the 'nocachecontrol' flag above, so
+		// this call's $expire/$private mismatch against that is what makes it actually send the
+		// headers - see Session::cache_control()'s "session already started" branch)
+		Session::cache_control(864000, true);
+		header('ETag: '.$etag);
 		http_response_code(304);
 		exit;
 	}
 	ob_start();
 	try
 	{
-		echo json_encode([
+		// JSON_THROW_ON_ERROR (same as this file's POST-branch json_decode() already uses) - a
+		// bare json_encode() failing (eg. a stray invalid-utf8 byte anywhere in the tree) returns
+		// `false` rather than throwing, which fell straight through the catch below entirely before
+		// 2026-09-18: silently echo'ing an empty body while STILL sending a 10-day Cache-Control+
+		// ETag as if it had succeeded. The browser then cached that empty response under this exact
+		// query string for the next 10 days, permanently masking even an already-fixed server-side
+		// bug behind a stale, unrecoverable empty result - found live (ralf): forwarding a real
+		// message kept failing with "Unexpected end of JSON input" long after the actual root cause
+		// (Api\Mail\Jmap\Imap::fetchBodyValue(), see its own docblock) was already fixed and
+		// deployed, purely because the browser never asked the server again.
+		$content = json_encode([
 			'methodResponses' => JmapImap::dispatch((array)$_GET['methodCalls']),
 			'sessionState' => '0',
-		], JSON_UNESCAPED_SLASHES);
+		], JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES);
 	}
 	catch (\Throwable $e)
 	{
+		ob_end_clean();
+		// deliberately NO Cache-Control/ETag here - never let an error response get stuck in the
+		// browser's HTTP cache, see the docblock above
 		http_response_code(500);
 		echo json_encode(['type' => 'serverFail', 'description' => $e->getMessage()], JSON_UNESCAPED_SLASHES);
+		exit;
 	}
-	// browsers won't cache a response with no Content-Length (chunked) - buffer it ourselves so we
-	// can send an exact length, instead of relying on zlib.output_compression staying off everywhere
-	$content = ob_get_clean();
+	// discard the (empty, since $content was built without echo'ing) buffer - kept only so a stray
+	// direct-output warning/notice during dispatch() above would have shown up if we'd echoed it
+	ob_end_clean();
+
+	Session::cache_control(864000, true);
+	header('ETag: '.$etag);
 
 	// we run our own gzip compression, to set a correct Content-Length of the encoded content
 	if (in_array('gzip', explode(',', $_SERVER['HTTP_ACCEPT_ENCODING'] ?? '')) && function_exists('gzencode'))
@@ -158,11 +181,11 @@ try
 		echo json_encode([
 			'methodResponses' => JmapImap::dispatch((array)($request['methodCalls'] ?? [])),
 			'sessionState' => '0',
-		], JSON_UNESCAPED_SLASHES);
+		], JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES);
 	}
 	else
 	{
-		echo json_encode(JmapImap::session(), JSON_UNESCAPED_SLASHES);
+		echo json_encode(JmapImap::session(), JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES);
 	}
 }
 catch (\Throwable $e)
