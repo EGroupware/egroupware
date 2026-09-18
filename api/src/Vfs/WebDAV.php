@@ -396,18 +396,13 @@ class WebDAV extends HTTP_WebDAV_Server_Filesystem
 	/**
 	 * Sanitize a client-supplied upload filename
 	 *
-	 * Strips any directory components (path-traversal protection, eg. "../../etc/passwd" or
-	 * "a/b.txt" become "passwd" resp. "b.txt") and control characters.
-	 *
 	 * @param string $name
 	 * @return string|null null if nothing safe/usable is left
+	 * @see Vfs::sanitize_leaf_name()
 	 */
 	private static function _safe_upload_filename($name)
 	{
-		$name = Vfs::basename(str_replace('\\', '/', (string)$name));
-		$name = preg_replace('/[\x00-\x1F\x7F]/', '', trim($name));
-
-		return ($name === '' || $name === '.' || $name === '..') ? null : $name;
+		return Vfs::sanitize_leaf_name($name);
 	}
 
 	/**
