@@ -1,3 +1,14 @@
+egroupware-docker (26.9.20260918) hardy; urgency=low
+
+  * 2. Pre-release for the upcommit rebase/final release expected next week
+  * Mail: many bugfixes, please test with your mail-server BEFORE the automatic update with the final release!
+  * All apps: a date/time field in a filter can be typed in again
+  * Et2Date: compare typed dates against the localized display format
+  * Preferences: fix "integer"-type settings rendering as a literal placeholder box
+  * Timesheet: preference to switch off the scheduling-conflict warning
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 18 Sep 2026 12:28:08 +0200
+
 egroupware-docker (26.9.20260916) hardy; urgency=low
 
   * pre-release for the rebased 26.9 release expected next week
