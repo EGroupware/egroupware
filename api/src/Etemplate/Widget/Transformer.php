@@ -280,6 +280,11 @@ abstract class Transformer extends Etemplate\Widget
 	 * switch; et2-textbox is a real, registered custom element unlike et2-int/-float, so this variant
 	 * renders a valid-looking but wrong single-line widget instead of an obviously broken one).
 	 *
+	 * "integer" (found live 2026-09-18, ralf, via preferences_settings.inc.php's own separate
+	 * legacy-type switch: CalDAV/CardDAV's "How many days to sync in the past/future" preferences
+	 * - calendar_groupdav::get_settings() - use this spelling, not "int"; same underlying gap,
+	 * different app-chosen name for it) is treated as a plain alias for "int" here.
+	 *
 	 * @param string $type
 	 * @param array $attrs attrs the caller has resolved so far, eg. 'rows' - only read here, never
 	 *  written to directly (the caller merges in the extra attrs this method returns instead)
@@ -292,6 +297,7 @@ abstract class Transformer extends Etemplate\Widget
 		switch ($type)
 		{
 			case 'int':
+			case 'integer':
 				return ['et2-number', ['precision' => 0]];
 			case 'float':
 				return ['et2-number', []];
