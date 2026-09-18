@@ -22,6 +22,15 @@ class filemanager_hooks
 	static $appname = 'filemanager';
 
 	/**
+	 * Methods allowed to call via menuaction
+	 *
+	 * @var array
+	 */
+	public $public_functions = array(
+		'log' => true,
+	);
+
+	/**
 	 * Data for Filemanagers sidebox menu
 	 *
 	 * @param array $args
@@ -84,9 +93,10 @@ class filemanager_hooks
 	/**
 	 * Settings for preferences
 	 *
+	 * @param array $hook_data
 	 * @return array with settings
 	 */
-	static function settings()
+	static function settings($hook_data=[])
 	{
 		$yes_no = array(
 			'no'  => lang('No'),
@@ -223,7 +233,24 @@ class filemanager_hooks
 				)
 			);
 		}
+
+		$settings += Api\WebDAV\Hooks::logSettings('filemanager',
+			lang('Enables logging of WebDAV traffic to diagnose problems with devices (e.g. scanners).'),
+			'filemanager.filemanager_hooks.log',
+			$hook_data['account_id'] ?? $GLOBALS['egw_info']['user']['account_id'],
+			lang('WebDAV logging'));
+
 		return $settings;
+	}
+
+	/**
+	 * Open log window for WebDAV request/response log specified in GET parameter filename
+	 *
+	 * @throws Api\Exception\WrongParameter
+	 */
+	public static function log()
+	{
+		Api\WebDAV\Hooks::logViewer('filemanager');
 	}
 
 	/**

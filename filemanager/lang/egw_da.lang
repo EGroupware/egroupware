@@ -169,3 +169,5 @@ webdavs: mount egroupware or *cloud shares	filemanager	da	WebDAV: Monter EGroupw
 you do not have access to %1	filemanager	da	Du har ikke adgang til %1
 you need to become root, to enable or disable versioning on a directory!	filemanager	da	Du skal være superuser for at aktivere eller deaktivere versionering af en mappe!
 your home dir did not exist, egroupware created a new one.	filemanager	da	Dit hjemme bibliotek fandtes ikke, EGroupware har oprette en ny til dig.
+enables logging of webdav traffic to diagnose problems with devices (e.g. scanners).	filemanager	da	Enables logging of WebDAV traffic to diagnose problems with devices (e.g. scanners).
+webdav logging	filemanager	da	WebDAV logging

@@ -130,3 +130,5 @@ vfs mounts and versioning	common	tr	VFS bağlama ve sürüm oluşturma
 webdavs: mount egroupware or *cloud shares	filemanager	tr	WebDAV: EGroupware veya *Cloud paylaşımlarını bağlama
 you do not have access to %1	filemanager	tr	%1'e erişiminiz yok
 you need to become root, to enable or disable versioning on a directory!	filemanager	tr	Bir klasörde sürüm oluşturmayı etkinleştirmek veya devre dışı bırakmak için süper kullanıcı olmanız gerekir!
+enables logging of webdav traffic to diagnose problems with devices (e.g. scanners).	filemanager	tr	Enables logging of WebDAV traffic to diagnose problems with devices (e.g. scanners).
+webdav logging	filemanager	tr	WebDAV logging

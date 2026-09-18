@@ -115,6 +115,7 @@ edit settings	filemanager	en	Edit settings
 edit share	filemanager	en	Edit share
 enable	filemanager	en	Enable
 enable versioning for given mountpoint	filemanager	en	Enable versioning for given mountpoint
+enables logging of webdav traffic to diagnose problems with devices (e.g. scanners).	filemanager	en	Enables logging of WebDAV traffic to diagnose problems with devices (e.g. scanners).
 enter a file size, e.g. 100k, 200m or 2g	filemanager	en	Enter a file size, e.g. 100K, 200M or 2G
 enter setup user and password	filemanager	en	Enter setup user and password
 enter setup user and password to get root rights	filemanager	en	Enter setup user and password to get root rights
@@ -342,6 +343,7 @@ versioning requires egroupware epl	filemanager	en	Versioning requires EGroupware
 vfs mounts and versioning	common	en	VFS mounts and versioning
 view link	filemanager	en	View link
 webdav link copied into clipboard	filemanager	en	WebDAV link copied into clipboard
+webdav logging	filemanager	en	WebDAV logging
 webdavs: mount egroupware or *cloud shares	filemanager	en	WebDAV: mount EGroupware or *Cloud shares
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	en	Who should be allowed to finally delete deleted files or old versions of a file:
 writable share link	filemanager	en	Writable Share link

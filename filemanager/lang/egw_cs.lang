@@ -353,3 +353,5 @@ you will be redirected to your home directory.	filemanager	cs	Budete přesměrov
 you will be redirected to your start folder.	filemanager	cs	Budete přesměrována do Vaší počáteční složky.
 your home dir did not exist, egroupware created a new one.	filemanager	cs	Váš domovský adresář neexistoval, EGroupware vytvořil nový.
 your home directory	filemanager	cs	Váš domovský adresář
+enables logging of webdav traffic to diagnose problems with devices (e.g. scanners).	filemanager	cs	Enables logging of WebDAV traffic to diagnose problems with devices (e.g. scanners).
+webdav logging	filemanager	cs	WebDAV logging

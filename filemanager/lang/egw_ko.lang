@@ -110,3 +110,5 @@ username for webdav and smb, use $user for name of logged in user	filemanager	ko
 vfs mounts and versioning	common	ko	VFS 마운트 및 버전 관리
 webdavs: mount egroupware or *cloud shares	filemanager	ko	WebDAV: EGroupware 또는 *Cloud 공유 마운트
 you need to become root, to enable or disable versioning on a directory!	filemanager	ko	폴더의 버전 관리 기능을 활성화 또는 비활성화하려면 슈퍼유저 권한이 필요합니다!
+enables logging of webdav traffic to diagnose problems with devices (e.g. scanners).	filemanager	ko	Enables logging of WebDAV traffic to diagnose problems with devices (e.g. scanners).
+webdav logging	filemanager	ko	WebDAV logging

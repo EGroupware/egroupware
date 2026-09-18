@@ -498,7 +498,7 @@ emails	common	en	Emails
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	en	Embedded CSS styles, e.g. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)
 empty file	common	en	Empty file
 enable javascript onchange submit	common	en	Enable JavaScript onchange submit
-enable logging	groupdav	en	Enable logging
+enable logging	common	en	Enable logging
 enabled	common	en	Enabled
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	en	Enables logging of CalDAV/CardDAV traffic to diagnose problems with devices.
 end date	common	en	End date
@@ -1163,7 +1163,7 @@ replace with	common	en	Replace with
 request could not be processed, please reload your window (press f5 or cmd r)!	common	en	Request could not be processed, please reload your window (press F5 or Cmd+R)!
 requested resource '%1' does not exist or has expired	common	en	Requested resource '%1' does not exist or has expired
 requests and full responses to files directory	common	en	Requests and full responses to files directory
-requests and truncated responses to apache error-log	groupdav	en	Requests and truncated responses to Apache error-log
+requests and truncated responses to apache error-log	common	en	Requests and truncated responses to Apache error-log
 required	common	en	Required
 required directory "%1" created.	admin	en	Required folder "%1" created.
 required directory "%1" has wrong mode %2 instead of %3!	admin	en	Required folder "%1" has wrong mode %2 instead of %3!
@@ -1328,7 +1328,7 @@ show (no save)	common	en	Show (no save)
 show all	common	en	Show all
 show all / cancel filter	common	en	Show all / cancel filter
 show all categorys	common	en	Show all categories
-show log of following device	groupdav	en	Show log of following device
+show log of following device	common	en	Show log of following device
 show page generation time	common	en	Show page generation time
 show page generation time on the bottom of the page?	common	en	Show page generation time on the bottom of the page.
 show page generation time?	common	en	Show page generation time
@@ -1599,7 +1599,7 @@ you need to be an egroupware administrator to access this functionality!	common	
 you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	en	You need to install Mailvelope plugin available for Chrome and Firefox from www.mailvelope.com or by clicking on install button.
 you need to select a file first!	common	en	Select a file first!
 you need to select some entries first!	common	en	You need to select some entries first!
-you need to set enable logging to "%1" to create/update a log.	groupdav	en	You need to set enable logging to "%1" to create/update a log.
+you need to set enable logging to "%1" to create/update a log.	common	en	You need to set enable logging to "%1" to create/update a log.
 you tried to automatically size a flex column, which always takes the rest of the space	common	en	You tried to automatically size a flex column, which always takes the rest of the space.
 you will not be able to send or receive encrypted mails before completing that step!	common	en	You will NOT be able to send or receive encrypted mails before completing that step!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	en	You have no permission to access application %1!

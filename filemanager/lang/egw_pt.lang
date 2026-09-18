@@ -197,3 +197,5 @@ you are not allowed to finally delete older versions and deleted files!	filemana
 you do not have access to %1	filemanager	pt	Não tem acesso a %1
 you need to become root, to enable or disable versioning on a directory!	filemanager	pt	Tem de se tornar superutilizador para ativar ou desativar o controlo de versões numa pasta!
 your home dir did not exist, egroupware created a new one.	filemanager	pt	A sua directoria principal não existe. O EGroupware criou uma nova.
+enables logging of webdav traffic to diagnose problems with devices (e.g. scanners).	filemanager	pt	Enables logging of WebDAV traffic to diagnose problems with devices (e.g. scanners).
+webdav logging	filemanager	pt	WebDAV logging

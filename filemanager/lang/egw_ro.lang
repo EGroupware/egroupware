@@ -115,3 +115,5 @@ username for webdav and smb, use $user for name of logged in user	filemanager	ro
 vfs mounts and versioning	common	ro	Montarea și versionarea VFS
 webdavs: mount egroupware or *cloud shares	filemanager	ro	WebDAV: montarea partajelor EGroupware sau *Cloud
 you need to become root, to enable or disable versioning on a directory!	filemanager	ro	Trebuie să deveniți superutilizator pentru a activa sau dezactiva versiunile unui folder!
+enables logging of webdav traffic to diagnose problems with devices (e.g. scanners).	filemanager	ro	Enables logging of WebDAV traffic to diagnose problems with devices (e.g. scanners).
+webdav logging	filemanager	ro	WebDAV logging

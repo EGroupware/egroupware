@@ -76,3 +76,5 @@ upload files	filemanager	fa	ارسال پرونده ها
 used space	filemanager	fa	فضای استفاده شده
 you do not have access to %1	filemanager	fa	شما حق دسترسی به %1 را ندارید
 your home dir did not exist, egroupware created a new one.	filemanager	fa	پوشه خانه شما وجود ندارد - گروه افزار برایتان ایجاد کرد
+enables logging of webdav traffic to diagnose problems with devices (e.g. scanners).	filemanager	fa	Enables logging of WebDAV traffic to diagnose problems with devices (e.g. scanners).
+webdav logging	filemanager	fa	WebDAV logging

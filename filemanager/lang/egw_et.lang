@@ -120,3 +120,5 @@ username for webdav and smb, use $user for name of logged in user	filemanager	et
 vfs mounts and versioning	common	et	VFS-ühendused ja versioonimine
 webdavs: mount egroupware or *cloud shares	filemanager	et	WebDAV: EGroupware või *Cloudi jagamiste ühendamine
 you need to become root, to enable or disable versioning on a directory!	filemanager	et	Te peate saama superkasutajaks, et lubada või keelata versioonide haldamine kaustas!
+enables logging of webdav traffic to diagnose problems with devices (e.g. scanners).	filemanager	et	Enables logging of WebDAV traffic to diagnose problems with devices (e.g. scanners).
+webdav logging	filemanager	et	WebDAV logging

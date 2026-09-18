@@ -353,3 +353,5 @@ you will be redirected to your home directory.	filemanager	es-es	Se le va a redi
 you will be redirected to your start folder.	filemanager	es-es	Se le va a redirigir a su directorio de inicio
 your home dir did not exist, egroupware created a new one.	filemanager	es-es	Su directorio de inicio no existía. EGroupWare ha creado uno nuevo.
 your home directory	filemanager	es-es	Su directorio de inicio
+enables logging of webdav traffic to diagnose problems with devices (e.g. scanners).	filemanager	es-es	Enables logging of WebDAV traffic to diagnose problems with devices (e.g. scanners).
+webdav logging	filemanager	es-es	WebDAV logging

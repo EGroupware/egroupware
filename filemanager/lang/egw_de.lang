@@ -114,6 +114,7 @@ edit settings	filemanager	de	Eigenschaften bearbeiten
 edit share	filemanager	de	Freigabe bearbeiten
 enable	filemanager	de	Einschalten
 enable versioning for given mountpoint	filemanager	de	Versionierung für angegebenen Mountpoint einschalten
+enables logging of webdav traffic to diagnose problems with devices (e.g. scanners).	filemanager	de	Schaltet das Loggen des WebDAV Daten-Verkehrs zur Diagnose von Problemen mit Geräten (z.B. Scannern) ein.
 enter a file size, e.g. 100k, 200m or 2g	filemanager	de	Geben Sie eine Quota Größe ein, z.B. 100K, 200M oder 2G
 enter setup user and password	filemanager	de	Superuser Benutzer und Passwort eingeben
 enter setup user and password to get root rights	filemanager	de	Superuser Benutzer und Passwort eingeben um Superuser-Rechte zu erhalten
@@ -340,6 +341,7 @@ versioning requires egroupware epl	filemanager	de	Versionierung benötigt EGroup
 vfs mounts and versioning	common	de	VFS einhängen und versionieren
 view link	filemanager	de	Zeige Link
 webdav link copied into clipboard	filemanager	de	WebDAV-Link in die Zwischenablage kopiert
+webdav logging	filemanager	de	WebDAV-Protokollierung
 webdavs: mount egroupware or *cloud shares	filemanager	de	WebDAV: Mounten von EGroupware oder anderen *Cloud-Freigaben
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	de	Wer soll gelöschte Dateien oder ältere Versionen endgültig löschen dürfen:
 writable share link	filemanager	de	Beschreibbare Freigabe-Link

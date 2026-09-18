@@ -171,3 +171,5 @@ you will be redirected to your home directory.	filemanager	lo	ທ່ານກໍ
 you will be redirected to your start folder.	filemanager	lo	ທ່ານກຳລັງຖືກປ່ຽນເສັ້ນທາງໄປທີ່ໂຟລເດີເລີ້ມຕົ້ນຂອງທ່ານ
 your home dir did not exist, egroupware created a new one.	filemanager	lo	ໄດເລັກເທີລີີຫຼັກຂອງທ່ານຍັງບໍ່ມີ  EGroupware ຈະສ້າງໄດເລັກເທີລີຂຶ້ນໃໝ່
 your home directory	filemanager	lo	ໄດເລັກເທີລີຫຼັກຂອງທ່ານ
+enables logging of webdav traffic to diagnose problems with devices (e.g. scanners).	filemanager	lo	Enables logging of WebDAV traffic to diagnose problems with devices (e.g. scanners).
+webdav logging	filemanager	lo	WebDAV logging

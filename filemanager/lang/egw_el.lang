@@ -203,3 +203,5 @@ webdavs: mount egroupware or *cloud shares	filemanager	el	WebDAV: προσάρτ
 you do not have access to %1	filemanager	el	Δεν έχετε πρόσβαση στο %1
 you need to become root, to enable or disable versioning on a directory!	filemanager	el	Πρέπει να γίνετε superuser για να ενεργοποιήσετε ή να απενεργοποιήσετε την έκδοση ενός φακέλου!
 your home dir did not exist, egroupware created a new one.	filemanager	el	Ο Αρχικός Κατ δεν υπήρχε, το EGroupware δημιούργησε ένα νέο.
+enables logging of webdav traffic to diagnose problems with devices (e.g. scanners).	filemanager	el	Enables logging of WebDAV traffic to diagnose problems with devices (e.g. scanners).
+webdav logging	filemanager	el	WebDAV logging

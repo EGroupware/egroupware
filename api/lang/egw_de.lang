@@ -497,7 +497,7 @@ emails	common	de	E-Mails
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	de	Eingebettete CSS Stile, zb. '.red { background: red; }' (man beachte den '.' vor der CSS class) oder '@import url(...)' (Angaben gelten für die gesamte Seite!)
 empty file	common	de	Datei leeren
 enable javascript onchange submit	common	de	JavaScript absenden bei Änderung (onChange) aktivieren
-enable logging	groupdav	de	Logging einschalten
+enable logging	common	de	Logging einschalten
 enabled	common	de	Verfügbar
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	de	Schaltet das Loggen des CalDAV/CardDAV Daten-Verkehrs zur Diagnose von Problemen mit Geräten ein.
 end date	common	de	Enddatum
@@ -1152,7 +1152,7 @@ replace with	common	de	Ersetzen durch
 request could not be processed, please reload your window (press f5 or cmd r)!	common	de	Anfrage konnte nicht verarbeitet werden, bitte laden Sie Ihr Fenster neu (F5 oder Cmd+R drücken)!
 requested resource '%1' does not exist or has expired	common	de	Die angeforderte Ressource '%1' existiert nicht oder ist bereits abgelaufen
 requests and full responses to files directory	common	de	Anfragen und komplette Antworten in den Dateiordner
-requests and truncated responses to apache error-log	groupdav	de	Anfragen und gekürzte Antworten ins Apache error-log
+requests and truncated responses to apache error-log	common	de	Anfragen und gekürzte Antworten ins Apache error-log
 required	common	de	Benötigt
 required directory "%1" created.	admin	de	Benötigten Ordner "%1" angelegt.
 required directory "%1" has wrong mode %2 instead of %3!	admin	de	Benötigter Ordner "%1" hat falsche Zugriffsrechte %2 statt %3!
@@ -1317,7 +1317,7 @@ show (no save)	common	de	Anzeigen (nicht speichern)
 show all	common	de	Alle anzeigen
 show all / cancel filter	common	de	Alle anzeigen / Filter aufheben
 show all categorys	common	de	Alle Kategorien anzeigen
-show log of following device	groupdav	de	Zeige Log des folgenden Geräts
+show log of following device	common	de	Zeige Log des folgenden Geräts
 show page generation time	common	de	Zeit zum Erstellen der Seite anzeigen
 show page generation time on the bottom of the page?	common	de	Zeit zum Erstellen der Seite in der Fußzeile anzeigen.
 show page generation time?	common	de	Erstellungszeit der Seite anzeigen
@@ -1586,7 +1586,7 @@ you need to be an egroupware administrator to access this functionality!	common	
 you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	de	Bitte installieren Sie das Mailvelope-Plugin, erhältlich für Firefox und Chrome, von www.mailvelope.com oder klicken Sie auf den Button "Installieren".
 you need to select a file first!	common	de	Sie müssen zuerst eine Datei auswählen!
 you need to select some entries first!	common	de	Sie müssen zuerst einige Datensätze auswählen!
-you need to set enable logging to "%1" to create/update a log.	groupdav	de	Sie müssen Logging einschalten auf "%1" setzen damit ein Log angelegt/aktualisiert wird.
+you need to set enable logging to "%1" to create/update a log.	common	de	Sie müssen Logging einschalten auf "%1" setzen damit ein Log angelegt/aktualisiert wird.
 you tried to automatically size a flex column, which always takes the rest of the space	common	de	Sie versuchen die Breite einer flexiblen Spalte zu ändern, diese nimmt immer den Rest des verfügbaren Platzes ein.
 you will not be able to send or receive encrypted mails before completing that step!	common	de	Sie werden KEINE verschlüsselten Mail senden oder empfangen können, bevor Sie nicht diesen Schritt beendet haben!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	de	Sie haben versucht auf die EGroupware-Anwendung %1 zuzugreifen, auf die Sie keine Rechte haben!
