@@ -259,22 +259,27 @@ similar scope.
   `savePlatform()`). DONE: library bumped, all 33 harness tests + the unrelated `BoTest.php` green.
   Still open: the real HTTP/OIDC/OAuth1-signed entry point and a live-LMS verification pass, neither
   attempted (see the doc's "Status"/"Not covered" sections).
-- `doc/ai/projects/pdf-player-pdfjs-update.md` - planned update of
+- `doc/ai/projects/pdf-player-pdfjs-update.md` - updated
   `api/js/etemplate/CustomHtmlElements/pdf-player.ts` (used by smallpart/ViDoTeach to page through a
   PDF like a video) from the abandoned `@bundled-es-modules/pdfjs-dist@2.5.207-rc1` wrapper to
-  Mozilla's real `pdfjs-dist` (now native ESM, `v6.x`, confirmed zero `eval()` usage vs. the old
-  wrapper's guarded-but-still-present one). Same "test harness first" approach as the celtic/lti
-  update. Test harness DONE (`api/js/etemplate/CustomHtmlElements/test/pdf-player.test.ts`, 7 tests
-  against real, unmocked pdf.js) and green; found+fixed a real dead-code bug in `pdf-player.ts`'s
+  Mozilla's real `pdfjs-dist`, pinned `~5.4.624` (native ESM, zero `eval()`) - **not** the newest
+  `6.3.289`: that version (and `5.5.207`+) crashes every render with
+  `TypeError: ...getOrInsertComputed is not a function`, a JS `Map` method not yet implemented by
+  *any* shipping browser (checked directly against Playwright's bundled Chromium 141/Firefox 142) -
+  found immediately by the test harness built first (same "test harness before the bump" approach
+  as the celtic/lti update), which is exactly why that harness existed. Also required adding
+  `"skipLibCheck": true` to the repo's `tsconfig.json` (pdfjs-dist's own `.d.ts` files need
+  TypeScript 5.7+ lib definitions; this repo pins TS `^4.9.5` repo-wide - `skipLibCheck` only skips
+  checking `.d.ts` files, not this repo's own source). Fixed a real dead-code bug in `pdf-player.ts`'s
   own `src` property getter/setter along the way (infinite recursion / TypeError, never reached in
-  production since `et2_video.ts` only ever uses the `src` attribute). Also documents (not fixed)
-  a pre-existing render-cancellation gap that can throw pdf.js's own "Cannot use the same canvas"
-  error on fast repeated page turns, and several pdf.js-2.5.207-specific test-environment quirks
-  (worker/`disableWorker` interaction, fake-timer-vs-internal-scheduling ordering). The actual
-  library version bump itself has NOT been started - covers a small effort estimate for optionally
-  also modernizing `pdf-player.ts` into this repo's Lit/`Et2Widget` web-component conventions
-  (which it currently does not follow at all, same as its sibling `multi-video.ts`), separate from
-  and not required for the pdfjs-dist bump.
+  production since `et2_video.ts` only ever uses the `src` attribute). DONE: all 7 harness tests +
+  the full `api` jstest group (2502 tests) green on both browsers; the one thing NOT done is a
+  live/manual check of a real ViDoTeach course's PDF in a real browser session. Also documents (not
+  fixed) a pre-existing render-cancellation gap that can throw pdf.js's own "Cannot use the same
+  canvas" error on fast repeated page turns, and a small/larger effort estimate for optionally also
+  modernizing `pdf-player.ts` into this repo's Lit/`Et2Widget` web-component conventions (which it
+  does not follow at all, same as its sibling `multi-video.ts`) - separate from and not required for
+  the pdfjs-dist bump, not attempted.
 
 ## Security and data handling
 
