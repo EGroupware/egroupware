@@ -15,7 +15,49 @@ import * as pdfjs from "pdfjs-dist";
 	This web component allows to display and play pdf file like a video player widget/element. Its attributes and
 	methodes are mostley identical as video html. No controls attribute supported yet.
 */
-pdfjs.GlobalWorkerOptions.workerSrc = 'node_modules/pdfjs-dist/build/pdf.worker.mjs';
+
+/**
+ * pdf.js only ships its worker as a native ES module (pdf.worker.mjs) - no classic-script build
+ * exists any more (checked: even the "legacy" build variant is .mjs-only). Module workers (and
+ * pdf.js's own "fake worker" fallback, which dynamically import()s the same URL on the main
+ * thread) both require the server to serve it with a JavaScript-family Content-Type - many web
+ * servers' default mime.types have no `.mjs` mapping and serve it as application/octet-stream
+ * instead, which every browser correctly refuses to execute as a module
+ * ("Failed to fetch dynamically imported module"/"Failed to resolve module specifier").
+ *
+ * Since EGroupware ships to many self-hosted installs whose web server config we don't control,
+ * fixing this per-server (nginx/Apache mime-type config) isn't a viable general fix - confirmed
+ * live against boulder.egroupware.org 2026-09-19. Instead, fetch the worker's source as plain text
+ * (fetch() doesn't care about Content-Type) and hand the browser an explicitly-typed Blob URL,
+ * which carries its own declared type and is trusted regardless of what the server said. Safe
+ * because pdf.worker.mjs is a single self-contained bundle with no external imports of its own
+ * (verified) - nothing else needs to resolve relative to it.
+ *
+ * Cached at module scope (not per pdf-player instance) since GlobalWorkerOptions.workerSrc is
+ * itself a single global pdf.js setting, and re-fetching/re-blobbing the ~2MB worker for every
+ * <pdf-player> would be wasteful.
+ */
+let workerBlobUrl : Promise<string> = null;
+
+function ensureWorkerSrc() : Promise<string>
+{
+	if (!workerBlobUrl)
+	{
+		// egw.webserverUrl is this codebase's standard way to build an app-root-relative absolute
+		// URL regardless of where EGroupware is installed (see egw_images.ts/egw_files.ts/
+		// egw_app.ts for the same pattern) - fetch() needs a real URL, not a bare/page-relative path.
+		const url = egw.webserverUrl+'/node_modules/pdfjs-dist/build/pdf.worker.mjs';
+		workerBlobUrl = fetch(url)
+			.then(response => response.text())
+			.then(source => URL.createObjectURL(new Blob([source], {type: 'text/javascript'})))
+			.then(blobUrl =>
+			{
+				pdfjs.GlobalWorkerOptions.workerSrc = blobUrl;
+				return blobUrl;
+			});
+	}
+	return workerBlobUrl;
+}
 
 /**
  *
@@ -161,8 +203,13 @@ class pdf_player extends HTMLElement {
 		this._canvas?.remove();
 		this._canvas = document.createElement('canvas');
 		this._wrapper.appendChild(this._canvas);
-		let longTask = pdfjs.getDocument(_value);
-		longTask.promise.then((pdf) => {
+		// ensureWorkerSrc() resolves once (cached across every pdf-player instance/load) - see its
+		// own docblock for why this can't just be a synchronous GlobalWorkerOptions assignment.
+		ensureWorkerSrc().then(() =>
+		{
+			let longTask = pdfjs.getDocument(_value);
+			return longTask.promise;
+		}).then((pdf) => {
 
 			this.__pdfViewState.pdf = pdf;
 			this._duration = this.__pdfViewState.pdf.numPages;

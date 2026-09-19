@@ -1,21 +1,20 @@
 import {assert, fixture, html, oneEvent} from "@open-wc/testing";
 import * as sinon from "sinon";
-import * as pdfjs from "pdfjs-dist";
 import "../pdf-player";
 
-// pdf-player.ts sets GlobalWorkerOptions.workerSrc to a path relative to the current page
-// ('node_modules/...', no leading slash) - resolves fine from a page served at the app root, but
-// this test file's own page lives several directories deep, so that relative path 404s the real
-// worker. Override it with the same file made root-relative (matches other test config in this
-// repo for other node_modules assets). pdfjs-dist v6 removed the `disableWorker` getDocument()
-// option entirely - every load in this file now goes through a real Worker running the real
-// pdf.worker.mjs, same as production.
-pdfjs.GlobalWorkerOptions.workerSrc = "/node_modules/pdfjs-dist/build/pdf.worker.mjs";
-
-// Stub global egw - pdf-player.ts calls bare egw.message() on a load error
+// Stub global egw - pdf-player.ts's ensureWorkerSrc() reads egw.webserverUrl to fetch() the real
+// pdf.worker.mjs and re-serve it to pdf.js as an explicitly-typed Blob URL (see pdf-player.ts's
+// docblock for why: many web servers don't map .mjs to a JS content-type, which breaks both the
+// real Worker and pdf.js's "fake worker" dynamic import() fallback - this sidesteps that
+// entirely, so it doesn't matter what content-type this test server happens to serve .mjs as
+// either). An empty webserverUrl resolves the fetch to plain root-relative '/node_modules/...',
+// which this test server serves correctly. pdfjs-dist v6 removed the `disableWorker`
+// getDocument() option entirely, so every load in this file goes through a REAL Worker running
+// the real pdf.worker.mjs, same as production.
 // @ts-ignore
 const egw = {
-	message: () => {}
+	message: () => {},
+	webserverUrl: ""
 };
 window.egw = function() {return egw};
 Object.assign(window.egw, egw);
