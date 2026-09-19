@@ -217,14 +217,21 @@ class pdf_player extends HTMLElement {
 	/****************************** ATTRIBUTES **************************************/
 
 	/**
+	 * currently set src, as passed to set src() - not reflected to the 'src' attribute
+	 * @private
+	 */
+	private _src : any = null;
+
+	/**
 	 * set src
 	 * @param _value
 	 */
 	set src(_value)
 	{
-		this._wrapper.children.forEach(_ch=>{
+		Array.from(this._wrapper.children).forEach(_ch=>{
 			_ch.remove();
 		});
+		this._src = _value;
 		this.__buildPDFView(_value);
 	}
 
@@ -234,7 +241,7 @@ class pdf_player extends HTMLElement {
 	 */
 	get src ()
 	{
-		return this.src;
+		return this._src;
 	}
 
 	/**
