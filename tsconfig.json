@@ -12,7 +12,8 @@
         "removeComments": false,
         "moduleResolution": "node",
         "noImplicitAny": false,
-        "sourceMap": true
+        "sourceMap": true,
+        "skipLibCheck": true
     },
     "include" : [
         "**/js/**/*.ts",

@@ -1,18 +1,16 @@
 import {assert, fixture, html, oneEvent} from "@open-wc/testing";
 import * as sinon from "sinon";
-import pdfjs from "@bundled-es-modules/pdfjs-dist/build/pdf";
+import * as pdfjs from "pdfjs-dist";
 import "../pdf-player";
 
 // pdf-player.ts sets GlobalWorkerOptions.workerSrc to a path relative to the current page
 // ('node_modules/...', no leading slash) - resolves fine from a page served at the app root, but
 // this test file's own page lives several directories deep, so that relative path 404s the real
-// worker, and pdf.js then hangs waiting for it rather than failing fast. Override it with the same
-// file made root-relative (matches other test config in this repo for other node_modules assets),
-// AND pass `disableWorker: true` on every getDocument() call below (so parsing/rendering runs on
-// the main thread - a real, supported pdf.js mode, not a mock): disableWorker alone still isn't
-// enough for a document that fails to parse at all, which hits an internal check for a configured
-// workerSrc before it gets far enough to skip actually using one.
-pdfjs.GlobalWorkerOptions.workerSrc = "/node_modules/@bundled-es-modules/pdfjs-dist/build/pdf.worker.js";
+// worker. Override it with the same file made root-relative (matches other test config in this
+// repo for other node_modules assets). pdfjs-dist v6 removed the `disableWorker` getDocument()
+// option entirely - every load in this file now goes through a real Worker running the real
+// pdf.worker.mjs, same as production.
+pdfjs.GlobalWorkerOptions.workerSrc = "/node_modules/pdfjs-dist/build/pdf.worker.mjs";
 
 // Stub global egw - pdf-player.ts calls bare egw.message() on a load error
 // @ts-ignore
@@ -64,7 +62,7 @@ describe("pdf-player", () =>
 		const el : any = await fixture(html`
             <pdf-player></pdf-player>`);
 		const loaded = oneEvent(el, "loadedmetadata");
-		el.src = {data: minimalPdf(pageCount), disableWorker: true};
+		el.src = {data: minimalPdf(pageCount)};
 		await loaded;
 		// 'loadedmetadata' fires right after page 1's render() promise resolves, but pdf.js does
 		// not release the canvas's internal render lock until a tick later - calling nextPage()
@@ -94,7 +92,7 @@ describe("pdf-player", () =>
 	it("the src property getter/setter round-trip works (previously dead/broken code)", async() =>
 	{
 		const el = await loadedPlayer(2);
-		const newSrc = {data: minimalPdf(1), disableWorker: true};
+		const newSrc = {data: minimalPdf(1)};
 
 		assert.doesNotThrow(() => el.src = newSrc, "setter must not throw (was: HTMLCollection has no forEach)");
 		assert.strictEqual(el.src, newSrc, "getter must return what was set, not recurse into itself");
@@ -142,9 +140,10 @@ describe("pdf-player", () =>
 
 	it("play() advances through pages on an interval, then pauses itself at the end", async() =>
 	{
-		// pdf.js's disableWorker mode schedules its main-thread "fake worker" message loop via
-		// real setTimeout() internally - fake timers must not go in until AFTER loading finishes,
-		// or that internal scheduling freezes and loadedPlayer() never resolves.
+		// Fake timers go in only AFTER loading finishes, not before - loadedPlayer() awaits a real
+		// Worker's postMessage round-trip, and there is no reason to risk fake timers interfering
+		// with that (a real worker thread has its own event loop, unaffected by the main thread's
+		// timers, but there is nothing to gain by testing that assumption here).
 		const el = await loadedPlayer(2);
 		const clock = sinon.useFakeTimers();
 		try
@@ -219,7 +218,7 @@ describe("pdf-player", () =>
 		const el : any = await fixture(html`
             <pdf-player></pdf-player>`);
 
-		el.src = {data: new Uint8Array([1, 2, 3, 4]), disableWorker: true};
+		el.src = {data: new Uint8Array([1, 2, 3, 4])};
 		await new Promise<void>((resolve, reject) =>
 		{
 			const deadline = Date.now() + 4000;

@@ -9,13 +9,13 @@
  * @copyright EGroupware GmbH
  */
 
-import pdfjs from "@bundled-es-modules/pdfjs-dist/build/pdf";
+import * as pdfjs from "pdfjs-dist";
 
 /*
 	This web component allows to display and play pdf file like a video player widget/element. Its attributes and
 	methodes are mostley identical as video html. No controls attribute supported yet.
 */
-pdfjs.GlobalWorkerOptions.workerSrc = 'node_modules/@bundled-es-modules/pdfjs-dist/build/pdf.worker.js';
+pdfjs.GlobalWorkerOptions.workerSrc = 'node_modules/pdfjs-dist/build/pdf.worker.mjs';
 
 /**
  *
@@ -165,7 +165,7 @@ class pdf_player extends HTMLElement {
 		longTask.promise.then((pdf) => {
 
 			this.__pdfViewState.pdf = pdf;
-			this._duration = this.__pdfViewState.pdf._pdfInfo.numPages;
+			this._duration = this.__pdfViewState.pdf.numPages;
 
 			// initiate the pdf file viewer for the first time after loading
 			this.__render(1).then(_ =>{
