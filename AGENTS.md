@@ -272,11 +272,21 @@ similar scope.
   TypeScript 5.7+ lib definitions; this repo pins TS `^4.9.5` repo-wide - `skipLibCheck` only skips
   checking `.d.ts` files, not this repo's own source). Fixed a real dead-code bug in `pdf-player.ts`'s
   own `src` property getter/setter along the way (infinite recursion / TypeError, never reached in
-  production since `et2_video.ts` only ever uses the `src` attribute). DONE: all 7 harness tests +
-  the full `api` jstest group (2502 tests) green on both browsers; the one thing NOT done is a
-  live/manual check of a real ViDoTeach course's PDF in a real browser session. Also documents (not
-  fixed) a pre-existing render-cancellation gap that can throw pdf.js's own "Cannot use the same
-  canvas" error on fast repeated page turns, and a small/larger effort estimate for optionally also
+  production since `et2_video.ts` only ever uses the `src` attribute). All 7 harness tests + the
+  full `api` jstest group (2502 tests) green on both browsers - but the harness did NOT catch a
+  real live bug: a red error toast on boulder.egroupware.org right after deploy
+  ("Setting up fake worker failed"), root-caused to (1) `workerSrc` being a bare/page-relative path
+  instead of an `egw.webserverUrl`-based absolute one, and (2) many web servers (confirmed:
+  boulder's nginx) not mapping `.mjs` to a JS content-type, which no server-config fix is viable
+  for across self-hosted installs we don't control. Fixed deployment-agnostically by having
+  `pdf-player.ts` `fetch()` the worker as text and re-serve it to pdf.js as an explicitly-typed
+  `Blob` URL (`ensureWorkerSrc()`), plus adding `blob:` to smallpart's own CSP `script-src`
+  (`smallpart/src/Hooks.php`'s `csp_frame_src` hook) since executing a Blob as a module falls back
+  to `script-src` when no `worker-src` is set. Verified live with nginx's `.mjs` bug deliberately
+  left in its broken state, to prove the fix carries no server-config dependency. See the doc's
+  "Live bug found post-deployment" section for the full trace. Also documents (not fixed) a
+  pre-existing render-cancellation gap that can throw pdf.js's own "Cannot use the same canvas"
+  error on fast repeated page turns, and a small/larger effort estimate for optionally also
   modernizing `pdf-player.ts` into this repo's Lit/`Et2Widget` web-component conventions (which it
   does not follow at all, same as its sibling `multi-video.ts`) - separate from and not required for
   the pdfjs-dist bump, not attempted.

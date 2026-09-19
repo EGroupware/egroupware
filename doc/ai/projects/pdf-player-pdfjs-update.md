@@ -166,11 +166,61 @@ that still crashes on real render is impossible to miss with it in place).
   anything else in the app group.
 * `npx tsc --noEmit -p .`: zero new errors from this change; only the one pre-existing, unrelated
   `pdf-player.ts` error remains.
-* **Not done**: no live/manual check of an actual ViDoTeach course's PDF material in a real browser
-  session. The jstest suite exercises real pdf.js end-to-end (real parsing, real `<canvas>`
-  rendering) against a synthetic fixture PDF, which is why this bump was safe to make with fairly
-  high confidence without it - but a live check against a real PDF, through the real `et2_video`
-  widget, in a real course, is still the strongest possible confirmation and hasn't been done.
+* **Not done** (at the time, later done - see below): no live/manual check of an actual ViDoTeach
+  course's PDF material in a real browser session. The jstest suite exercises real pdf.js
+  end-to-end (real parsing, real `<canvas>` rendering) against a synthetic fixture PDF, which is
+  why this bump was safe to make with fairly high confidence without it - but a live check against
+  a real PDF, through the real `et2_video` widget, in a real course, is a genuinely different check
+  (different network/CSP/install-path environment than the jstest dev server), and turned out to
+  catch a real, harness-invisible bug - see below.
+
+## Live bug found post-deployment: worker MIME-type + CSP (fixed 2026-09-19)
+
+The jstest harness gave high confidence, but **did not catch a real, live-breaking bug** - a good
+lesson on the harness's actual coverage boundary. Ralf reported a red error toast against
+`boulder.egroupware.org` right after this bump went out:
+
+```
+Setting up fake worker failed: "Failed to resolve module specifier 'node_modules/pdfjs-dist/build/pdf.worker.mjs'".
+```
+
+Root-caused live (browser DevTools via claude-in-chrome, `curl`, direct `fetch()`/`import()` probes
+from the page's own console - see chat history for the full trace):
+
+1. **`workerSrc` was a bare/page-relative path.** `pdf-player.ts` set it to
+   `'node_modules/pdfjs-dist/build/pdf.worker.mjs'` at *module import time* - resolves against
+   whatever page happens to load it (eg. `.../home/index.php`, not the app's install root), and a
+   bare string isn't even valid syntax for pdf.js's "fake worker" fallback, which does
+   `import(this.workerSrc)` directly (a dynamic import specifier must start with `/`, `./`, `../`,
+   or be a full URL). Fixed narrowly by switching to `egw.webserverUrl` (this codebase's standard
+   app-root-relative-URL helper, see `egw_images.ts`/`egw_files.ts`/`egw_app.ts`) - but that alone
+   uncovered a second, deeper problem:
+2. **Many web servers don't map `.mjs` to a JS content-type.** Confirmed live: boulder's nginx
+   served `pdf.worker.mjs` as `application/octet-stream` (with `nosniff`), which every browser
+   correctly refuses to execute as a module/worker. An nginx config fix was drafted and verified
+   live, but **reverted** (Ralf's call) - EGroupware ships to many self-hosted installs whose web
+   server config isn't ours to fix, so a server-config dependency isn't a viable general fix for a
+   shipped product, only for this one box.
+3. **The real, deployment-agnostic fix**: `pdf-player.ts` now `fetch()`s the worker's source as
+   plain text (a plain `fetch()` doesn't care what `Content-Type` the server declared) and re-serves
+   it to pdf.js as a `Blob` URL with an explicitly-correct type (`URL.createObjectURL(new
+   Blob([source], {type: 'text/javascript'}))`) - see the `ensureWorkerSrc()`/`workerBlobUrl`
+   docblock in `pdf-player.ts` for the full reasoning. Safe because `pdf.worker.mjs` is a single
+   self-contained bundle with zero external imports (verified) - nothing else needs to resolve
+   relative to it. Cached at module scope (one fetch+blob for the whole page's lifetime, not per
+   `<pdf-player>` instance).
+4. **Even the Blob URL then hit a CSP wall**: `import()`/module-`Worker` execution is governed by
+   CSP's `script-src` (there is no separate `worker-src` directive set, so it falls back to
+   `script-src`), and `blob:` was missing there - even though `connect-src`/`frame-src`/`object-src`
+   already allowed it (a plain `fetch()` of the same blob URL worked fine; only *executing* it as a
+   module didn't). Fixed in `smallpart/src/Hooks.php`'s `csp_frame_src` hook (where smallpart
+   already adds its own CSP sources for `font-src`/`media-src`/YouTube `script-src`) by adding
+   `Api\Header\ContentSecurityPolicy::add('script-src', 'blob:')`.
+
+**Verified end-to-end against a real ViDoTeach course's PDF material on boulder.egroupware.org**,
+including confirming the fix works with **no server-side change at all** - re-broke nginx's `.mjs`
+content-type deliberately after the code+CSP fix and the PDF still rendered correctly, proving the
+fix doesn't secretly depend on the (reverted) nginx change.
 
 ## Also researched: is pdf-player a "web component"?
 
