@@ -493,8 +493,14 @@ window.egw_import = (function()
 			// ignore SecurityError exception if opener is different security context / cross-origin
 		}
 
-		// Poll for a newer build and show one dismissible notice once meaningfully stale (main window only)
-		if (!popup && window.egw_buildEpoch)
+		// Poll for a newer build and show one dismissible notice once meaningfully stale (main window
+		// only) - skipped entirely on the login page itself (found live 2026-09-19, ralf: "can we
+		// avoid the hash bases update warning on the login page, as every login is basically always
+		// a reload anyway, and the login page does not use much JS"): a stale-build notice there is
+		// pure noise - submitting the login form is itself a full page navigation that picks up
+		// whatever the current build is regardless, so there's nothing this warning could usefully
+		// prompt the user to do that isn't already about to happen.
+		if (!popup && window.egw_buildEpoch && window.egw_appName !== 'login')
 		{
 			let build_check_interval = window.setInterval(function ()
 			{

@@ -480,7 +480,10 @@ class JsonRequest
 			// matching the req.egw ? req.egw.window : window pattern used elsewhere in this file.
 			const epochWindow = <any>(this.egw.window || window);
 			const buildEpoch = epochWindow.egw_buildEpoch;
-			if (data.epoch && buildEpoch && data.epoch - buildEpoch > 12 * 3600000)
+			// Skipped on the login page - see egw.js's own periodic poll for why (same guard,
+			// same reasoning): a stale-build notice there is pointless noise, since submitting the
+			// login form is itself a full page navigation that picks up the current build anyway.
+			if (data.epoch && buildEpoch && data.epoch - buildEpoch > 12 * 3600000 && epochWindow.egw_appName !== 'login')
 			{
 				epochWindow.egw_import?.notifyUpdateAvailable();
 			}
