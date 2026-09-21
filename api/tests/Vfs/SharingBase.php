@@ -34,6 +34,37 @@ class SharingBase extends LoggedInTest
 	const LOG_LEVEL = 0;
 
 	/**
+	 * Environment variable saying that nothing is expected to answer the share link.
+	 *
+	 * These tests fetch the share over real HTTP, because that is the only way to check the
+	 * thing that actually matters: that someone we sent a link to gets the files.  Where no
+	 * webserver is running at all - a bare checkout, a container with nothing on the port in
+	 * EGW_URL - that is an environment problem and skipping is honest.  Set this there.
+	 *
+	 * Everywhere else a share request that goes unanswered, redirects away, comes back empty
+	 * or comes back as the wrong page IS the bug these tests exist to catch, and is reported
+	 * as a failure.  Inferring "no webserver" from those symptoms instead, as this class used
+	 * to, meant a broken share reported as "skipped" and the suite still exited 0.
+	 */
+	const NO_WEBSERVER_ENV = 'EGW_TEST_NO_WEBSERVER';
+
+	/**
+	 * Nothing answered the share request at all (no HTTP status).
+	 *
+	 * Skipped only where the caller has declared there is no webserver, otherwise a failure.
+	 *
+	 * @param string $message
+	 */
+	protected function noWebserverResponse(string $message) : void
+	{
+		if((string)getenv(self::NO_WEBSERVER_ENV) !== '')
+		{
+			$this->markTestSkipped($message);
+		}
+		$this->fail($message . "\nIf this environment has no webserver, set " . self::NO_WEBSERVER_ENV . "=1 to skip instead.");
+	}
+
+	/**
 	 * Keep track of shares to remove after
 	 */
 	protected $shares = Array();
@@ -103,10 +134,18 @@ class SharingBase extends LoggedInTest
 			error_log(implode("\n",$this->shares));
 		}
 
-		// Remove any added files (as root to limit versioning issues)
-		if(in_array('/',$this->files))
+		// Remove any added files (as root to limit versioning issues).
+		// Strict comparison: loose in_array('/') also matches a bare true, which any
+		// "Vfs::touch($p) ?: $p" in a test quietly puts here, so a working test reported
+		// "Tried to remove root".  Non-strings are rejected on their own terms instead,
+		// since passing one on to Vfs::is_dir() is no better.
+		if(in_array('/', $this->files, true))
 		{
 			$this->fail('Tried to remove root');
+		}
+		foreach($this->files as $file)
+		{
+			$this->assertIsString($file, 'Non-path ' . gettype($file) . ' in the cleanup list - a test pushed a return value instead of a path');
 		}
 		foreach($this->files as $file)
 		{
@@ -603,7 +642,7 @@ class SharingBase extends LoggedInTest
 	 * @param type $link
 	 * @param type $share
 	 */
-	public function checkDirectoryLink($link, $share)
+	public function checkDirectoryLink($link, $share, $expect_rows = true)
 	{
 		// Set up curl
 		$curl = curl_init($link);
@@ -618,14 +657,22 @@ class SharingBase extends LoggedInTest
 		}
 		curl_setopt($curl, CURLOPT_COOKIE, $cookie);
 		$html = curl_exec($curl);
+		$http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+		$curl_errno = curl_errno($curl);
+		$curl_error = curl_error($curl);
+		$effective_url = (string)curl_getinfo($curl, CURLINFO_EFFECTIVE_URL);
 		curl_close($curl);
 
 		if(!$html)
 		{
-			// No response - could mean something is terribly wrong, or it could
-			// mean we're running on Travis with no webserver to answer the
-			// request
-			return;
+			// This used to return quietly, which passed the test: the whole web-facing half of
+			// the check disappeared without a word in the report while the VFS-level checks in
+			// checkDirectory() carried on and went green.
+			if($http_code === 0)
+			{
+				$this->noWebserverResponse("No webserver response for share link '$link' (curl errno $curl_errno: $curl_error)");
+			}
+			$this->fail("Share link '$link' returned no content (HTTP $http_code, effective URL '$effective_url')");
 		}
 
 		// Parse & check for nextmatch
@@ -650,6 +697,18 @@ class SharingBase extends LoggedInTest
 		// as a sub-directory
 		$expected_path = '/' . Vfs::basename(trim($share['share_path'], '/'));
 		$this->assertEquals($expected_path, $data->data->content->nm->path, "Share was not mounted at $expected_path");
+
+		// The recipient has to actually see the files.  Nothing here checked that, so a share
+		// that rendered the filemanager UI over an empty list - the most common way this breaks
+		// for a client - passed.  Every caller shares a directory with files in it; a test that
+		// deliberately shares an empty directory should pass $expect_rows = false.
+		if($expect_rows)
+		{
+			$this->assertNotEmpty(
+				(array)($data->data->content->nm->rows ?? []),
+				"Share link '$link' rendered the filemanager but listed no files"
+			);
+		}
 
 		unset($data->data->content->nm->actions);
 		//var_dump($data->data->content->nm);
@@ -703,12 +762,9 @@ class SharingBase extends LoggedInTest
 
 		if($http_code === 0)
 		{
-			$this->markTestSkipped("No webserver response for share link '$link' (curl errno $curl_errno: $curl_error)");
+			$this->noWebserverResponse("No webserver response for share link '$link' (curl errno $curl_errno: $curl_error)");
 		}
-		if($http_code >= 300 && $http_code < 400)
-		{
-			$this->markTestSkipped("Share link '$link' ended in HTTP $http_code at '$effective_url' (redirect/auth flow differs in this environment)");
-		}
+		$this->assertLessThan(300, $http_code, "Share link '$link' ended in HTTP $http_code at '$effective_url' - a recipient following this link does not reach the file");
 		$this->assertEquals(200, $http_code, "Did not find the file, got HTTP status $http_code at '$effective_url'");
 		$this->assertStringContainsString($mimetype, $content_type, 'Wrong file type');
 
@@ -774,14 +830,12 @@ class SharingBase extends LoggedInTest
 
 		if(!$html)
 		{
-			// No response - could mean something is terribly wrong, or it could
-			// mean we're running on Travis with no webserver to answer the
-			// request
 			if($http_code === 0)
 			{
-				$this->markTestSkipped("No webserver response for share link '$link' (curl errno $curl_errno: $curl_error)");
+				$this->noWebserverResponse("No webserver response for share link '$link' (curl errno $curl_errno: $curl_error)");
 			}
-			$this->markTestSkipped("Share link '$link' returned no content (HTTP $http_code, effective URL '$effective_url')");
+			// An empty body with a real HTTP status is the blank-page the recipient sees
+			$this->fail("Share link '$link' returned no content (HTTP $http_code, effective URL '$effective_url')");
 		}
 
 		// Parse & check for nextmatch
@@ -797,18 +851,16 @@ class SharingBase extends LoggedInTest
 				echo "Got this instead:\n".($form?$form:$html)."\n\n";
 			}
 		}
-		if(!$form)
-		{
-			$this->markTestSkipped("Share link '$link' did not return expected template (HTTP $http_code, effective URL '$effective_url')");
-		}
-		$this->assertNotNull($form, "Didn't find template in response");
+		$this->assertNotNull($form, "Share link '$link' did not return the expected template (HTTP $http_code, effective URL '$effective_url')");
 		$data = json_decode($form->getAttribute('data-etemplate'), true);
 
-		$rows = $data['data']['content']['nm']['rows'];
-		if(count($rows) == 0)
-		{
-			// NM did not send initial rows
-		}
+		// Not asserted non-empty here: a caller sharing an empty directory legitimately gets no
+		// rows, and the callers that know which files to expect check them via checkNextmatch().
+		// The structure itself must be there though - without it every such check silently
+		// compares against nothing.
+		$this->assertArrayHasKey('nm', $data['data']['content'] ?? [], "Share response carried no nextmatch at all (HTTP $http_code, '$effective_url')");
+		$this->assertIsArray($data['data']['content']['nm']['rows'] ?? null, "Share response's nextmatch had no rows array (HTTP $http_code, '$effective_url')");
+
 		return $form;
 	}
 

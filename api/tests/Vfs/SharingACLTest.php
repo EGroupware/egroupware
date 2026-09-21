@@ -358,14 +358,11 @@ class SharingACLTest extends SharingBase
 		Vfs::init_static();
 		Vfs\StreamWrapper::init_static();
 
-		// Use cookies for the current (different) user session so the share is
-		// opened with keep_session, exactly like a real logged-in sharee.
-		$data = array();
-		$form = $this->getShare($link, $data, true);
-		$this->assertNotNull($form, "Could not read the share link '$link'");
-
-		// The single file is served via WebDAV (ServeRequest), not the filemanager UI,
-		// so check the actual download delivers the real content, not an empty body.
+		// The single file is served via WebDAV (ServeRequest), not the filemanager UI, so
+		// check the actual download delivers the real content, not an empty body.  Asking
+		// getShare() for a filemanager template here contradicted that: it parses the
+		// nextmatch out of the response, and a raw file has none.  That mismatch was hidden
+		// while an unserved share counted as "skipped" - with the file served, it failed.
 		$this->checkSharedFile($link, $mimetype, $share, $content);
 	}
 }
