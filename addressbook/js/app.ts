@@ -1198,8 +1198,10 @@ class AddressbookApp extends EgwApp
 		// url - a jmapVfsPath marker attachment, resolved (real upload, or a zero-byte-moved
 		// reference for the shim) at send time, same mechanism MailCompose.vfsUpload() already uses
 		// for an already-open popup.
+		// egw.applyFunc() not a direct `window.app.mail?.` read - see filemanager.ts's open_mail()
+		// own comment (same silent-no-op bug class, Tracker #124911).
 		egw.openWithinWindow("mail", "setCompose", content, link, /\/mail\/compose\.php/,
-			undefined, () => (<any>window).app.mail?.composeWithPreset({files}));
+			undefined, () => egw.applyFunc('app.mail.composeWithPreset', [{files}]));
 
 		for (const index in content)
 		{

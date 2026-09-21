@@ -83,6 +83,17 @@ describe('AddressbookApp.adb_mail_vcard()', () =>
 			// row data in this test, so the code falls back to a generic name - not what's under
 			// test here (the 'files' shape assertions below don't check names).
 			dataGetUIDdata: () => undefined,
+			// mimics the real dotted-path resolution egw_json.ts's applyFunc() does (minus the
+			// lazy app-bundle load) - adb_mail_vcard()'s "nothing to reuse" open goes through this,
+			// not a direct `window.app.mail?.` read, since Tracker #124911 (see app.ts's own
+			// comment at the call site).
+			applyFunc: (func : string, args : any[]) =>
+			{
+				const parts = func.split('.');
+				let obj : any = window;
+				for(let i = 0; i < parts.length - 1; i++) obj = obj[parts[i]];
+				return obj[parts[parts.length - 1]](...args);
+			},
 		};
 		// app.ts calls the bare global `egw`, not this.egw, inside adb_mail_vcard()
 		(<any>window).egw = egw;

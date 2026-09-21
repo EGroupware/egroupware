@@ -1709,7 +1709,11 @@ export class CalendarApp extends EgwApp
 	async composeMeetingMail(event : object, added : boolean, asrequest = false) : Promise<void>
 	{
 		const preset = await this.egw.request('calendar.calendar_uiforms.ajax_custom_mail', [event, added, asrequest]);
-		(<any>window).app.mail?.composeWithPreset(preset);
+		// egw.applyFunc() not a direct `window.app.mail?.` read - a window/popup that never loaded
+		// mail's own JS has `window.app.mail` undefined, so the optional-chaining call would
+		// silently no-op (same bug class as filemanager.ts's open_mail(), Tracker #124911).
+		// applyFunc() lazy-loads mail's bundle first if needed.
+		this.egw.applyFunc('app.mail.composeWithPreset', [preset]);
 	}
 
 	/**
