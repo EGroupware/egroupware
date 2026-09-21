@@ -727,6 +727,30 @@ describe("Et2Customfields webcomponents", () =>
 		);
 	});
 
+	it("offers a tabbed customfield as a filter, since a filter box has no tabs", async() =>
+	{
+		const element = await fixture<Et2CustomfieldsBase>(html`
+			<et2-customfields-filters></et2-customfields-filters>
+		`);
+		element.customfields = {
+			cf_select: {label: "Select", type: "select", values: {open: "Open"}, tab: null},
+			cf_on_a_tab: {label: "On a tab", type: "select", values: {yes: "Yes"}, tab: "Files"}
+		};
+		await element.updateComplete;
+
+		// Which entries a filter selects has nothing to do with which tab of the edit dialog
+		// shows the field, so a tab must not keep a customfield out of the filter box
+		assert.deepEqual(
+			element.getVisibleFieldNames(),
+			["cf_select", "cf_on_a_tab"],
+			"a customfield on a tab is still worth filtering on"
+		);
+		assert.isOk(
+			element.querySelector("[data-field='cf_on_a_tab'] > et2-select"),
+			"and it has to actually render its filter control"
+		);
+	});
+
 	it("renders customfields filters as selectboxes and skips non-filter fields", async() =>
 	{
 		const element = await fixture<Et2CustomfieldsBase>(html`

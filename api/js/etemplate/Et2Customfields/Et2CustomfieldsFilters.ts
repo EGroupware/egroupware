@@ -33,6 +33,16 @@ export class Et2CustomfieldsFilters extends Et2CustomfieldsBase
 		return this;
 	}
 
+	/**
+	 * A filter box has no tabs, so a customfield's tab must not decide whether it can be
+	 * filtered on.  Which entries a filter selects has nothing to do with which tab of the edit
+	 * dialog shows the field.
+	 */
+	protected get honoursTabs() : boolean
+	{
+		return false;
+	}
+
 	private _fieldValue(fieldName : string)
 	{
 		return this.value?.[CUSTOMFIELD_PREFIX + fieldName] ?? this.value?.[fieldName] ?? "";
