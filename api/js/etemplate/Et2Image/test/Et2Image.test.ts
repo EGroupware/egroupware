@@ -160,6 +160,28 @@ describe("Et2Image", () =>
 			assert.equal(img(element)?.getAttribute("loading"), "lazy", "images should stay lazy");
 		});
 
+		it("comes back after being hidden and given the same src again", async() =>
+		{
+			// A widget that blanks its image while it is busy - et2-vfs-select does this for the
+			// length of its request - and then restores it.  The src it restores is the one it
+			// already had, so anything that hid the img by writing to it directly rather than by
+			// re-rendering leaves lit with that url still committed: the restore looks like a
+			// no-op, the write is skipped, and the image never returns.
+			const element = await image('src="navbar"');
+			assert.equal(img(element)?.getAttribute("src"), IMAGES.navbar, "starts out showing the image");
+
+			element.src = "";
+			await element.updateComplete;
+			assert.isNull(img(element), "no valid image means no img at all, not an empty one");
+
+			element.src = "navbar";
+			await element.updateComplete;
+			assert.equal(
+				img(element)?.getAttribute("src"), IMAGES.navbar,
+				"the same src as before still has to render, or the image is lost for good"
+			);
+		});
+
 		it("renders a Bootstrap icon as a CSS class, not an img", async() =>
 		{
 			const element = await image('src="printer"');
