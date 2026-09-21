@@ -43,6 +43,21 @@ et2-template[layout="2-column"] {
 }
 ```
 
+## Popups inside a layout
+
+`2-column` and `edit` make their host a container query container so the grid can decide for
+itself when to collapse.  `et2-customfields` does the same regardless of its layout.  That
+breaks any hoisted Shoelace popup opened inside them: Floating UI reads a `container-type`
+ancestor as the containing block for the popup's `position: fixed`, no browser does (checked on
+Chrome 152 and Firefox 142), and the dropdown ends up `scrollTop - containerTop` away from its
+field and clamped to the height of the panel it sits in.
+
+`Et2TopLayerPopupController`, created alongside `Et2LayoutController`, moves those popups into
+the top layer while they are open, where both agree the coordinates are viewport coordinates.
+Nothing has to be done per widget, and the container itself is untouched - giving it real
+containment (`contain: layout`) would fix the dropdowns and break everything else that escapes
+a scrolling panel with `position: fixed`, including the rich text editor's menus.
+
 ## Grow rows
 
 For `stack`, `2-column`, and `edit`, row heights are managed by the layout to distribute extra vertical space.

@@ -1,5 +1,6 @@
 import {CSSResult, ReactiveController, ReactiveControllerHost} from "lit";
 import {Et2LayoutName, getLayoutStrategy} from "./Et2LayoutStrategies";
+import {Et2TopLayerPopupController} from "./Et2TopLayerPopupController";
 
 // Re-exported so a widget adding layout support only has to import from here: it needs
 // Et2LayoutHost and Et2LayoutController anyway, and the `layout` property it declares to
@@ -32,9 +33,17 @@ export class Et2LayoutController implements ReactiveController
 	static readonly styles : CSSResult[] = [];//Object.values(LAYOUT_CSS);
 	private activeStrategy? : Et2LayoutStrategy;
 
+	/*
+	 * A layout that collapses its own columns declares itself a container query container, which
+	 * misplaces every hoisted popup opened inside it.  The controller is created here rather than
+	 * by each host widget because the layout is what introduces the container in the first place.
+	 */
+	private topLayerPopups : Et2TopLayerPopupController;
+
 	constructor(private host : Et2LayoutHost)
 	{
 		(host as ReactiveControllerHost).addController(this);
+		this.topLayerPopups = new Et2TopLayerPopupController(host);
 	}
 
 	hostConnected()
