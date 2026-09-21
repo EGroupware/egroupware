@@ -203,8 +203,13 @@ export class Et2DatagridColumnState
 			header?.getAttribute?.("label") ||
 			header?.getAttribute?.("emptyLabel") ||
 			header?.getAttribute?.("title") ||
-			header?.textContent ||
+			// column.title comes from Et2RowProvider, which knows how to read a header cell
+			// wrapping several widgets and takes their labels.  textContent has to stay behind it:
+			// a header cell can also hold a widget showing data - a column total, say - and that
+			// value is what textContent returns once the data arrives, so a column called "Status"
+			// would be listed here as "6.7%".
 			column.title ||
+			header?.textContent ||
 			column.key ||
 			""
 		).trim();

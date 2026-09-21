@@ -172,6 +172,32 @@ describe("Et2DatagridColumnState", () =>
 
 	/**
 	 * Contract under test:
+	 * - A header cell holding several widgets is named by the column title, not by whatever
+	 *   text the cell happens to be showing.
+	 *
+	 * Setup strategy:
+	 * - Provide a header with no label of its own whose textContent is a rendered value, the
+	 *   shape a header cell has when it carries a column total beside its sort header.
+	 *
+	 * Pass criteria:
+	 * - Caption is the column title, not the rendered total.
+	 */
+	it("prefers the column title over text rendered inside the header", () =>
+	{
+		const state = new Et2DatagridColumnState();
+		const header = {
+			textContent: "6.7%",
+			cloneNode: () => null
+		};
+		const items = state.toSelectionItems([
+			{key: "pe_completion", title: "Status", header: header as any}
+		]);
+
+		assert.equal(items[0].caption, "Status", "chooser caption should not be the total shown in the header");
+	});
+
+	/**
+	 * Contract under test:
 	 * - Column selection metadata includes nested customfields from header providers.
 	 *
 	 * Setup strategy:
