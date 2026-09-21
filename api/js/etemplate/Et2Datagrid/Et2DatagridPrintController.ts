@@ -197,8 +197,20 @@ export class Et2DatagridPrintController
 			return;
 		}
 		const tbody = this.host.shadowRoot?.querySelector<HTMLTableSectionElement>(".dg-body #rows");
-		const height = tbody?.scrollHeight || 0;
-		if(!height)
+		if(!tbody)
+		{
+			return;
+		}
+		// Measure to the last row rather than taking scrollHeight, which counts the big
+		// padding-bottom the print stylesheet puts here as somewhere for the final row to
+		// overflow into.  Pinning that in as real height declares a block roughly a page
+		// taller than its rows, which is then fragmented as if it had that much content.
+		const rows = tbody.querySelectorAll<HTMLTableRowElement>(":scope > tr");
+		const lastRow = rows[rows.length - 1];
+		const height = lastRow
+					   ? Math.ceil(lastRow.getBoundingClientRect().bottom - tbody.getBoundingClientRect().top)
+					   : tbody.scrollHeight;
+		if(height <= 0)
 		{
 			return;
 		}
