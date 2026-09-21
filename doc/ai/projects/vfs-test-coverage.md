@@ -642,3 +642,35 @@ without being bugs (the `vfs_pre-write` permission-check inconsistency, the `chm
 asymmetry, the two-node symlink cycle safety confirmation, the `LinksParent` monkey-patch
 architecture). All work is committed locally in both this repo and the separate `stylite/` (EPL)
 repo, per the shared-checkout convention of never auto-pushing.
+
+## Addendum (2026-09-21): `S3\StreamWrapper::rmdir()` "dir is not empty" bug, found via a live
+customer report (xerox-scan.php's scan-to-folder bridge, unrelated project), FIXED (not just
+documented, unlike Phase 6's other findings - ralf asked for a fix this time):
+
+`Vfs::unlink()`/every "delete" on `S3\StreamWrapper` (and its `Versioning` subclass) is a SOFT
+delete - `fs_active=0`, row kept for later housekeeping purge, exactly as Phase 6 already
+documented. `S3\StreamWrapper` never overrode `rmdir()`, so it inherited
+`Sqlfs\StreamWrapper::rmdir()`'s `SELECT COUNT(*) FROM egw_sqlfs WHERE fs_dir=?` "is this directory
+empty" check unchanged - that counts EVERY row regardless of `fs_active`, so a directory that ever
+held a file which was later deleted could never be removed, permanently ("dir is not empty!"),
+even once genuinely logically empty. `Versioning\StreamWrapper::rmdir()` (which DOES override it)
+already had the correct fix for this - `fs_active=1`-filtered `COUNT(*)`, and (when that count is 0)
+marks the directory itself `fs_active=0` too rather than physically deleting its row, consistent
+with the soft-delete model - used as the reference implementation.
+
+**Fix**: new `S3\StreamWrapper::rmdir()` override (`stylite/src/Vfs/S3/StreamWrapper.php`), mirroring
+`Versioning\StreamWrapper::rmdir()`'s logic (filtered `COUNT(*)`, soft-delete the directory row) but
+WITHOUT `Versioning`'s "already-inactive directory -> permanent delete" branch (not needed - S3's own
+`unlink()` has no such two-step attic/final-delete concept for files either) and without
+`FLAG_TO_DELETE`/`installHousekeepingJob()` (confirmed `s3ToDelete()`'s housekeeping query is scoped
+to `SQL_IS_FILE` rows only - it would never purge a directory row even if flagged, so setting the
+flag on a directory would be a no-op). Falls back to `parent::rmdir()` when no S3 storages are
+configured, matching `unlink()`'s existing fallback convention.
+
+**Test**: `stylite/tests/Vfs/S3StreamWrapperTest.php` +2 tests -
+`testRmdirSucceedsWhenOnlyDeletedFilesRemain` (create dir, add + delete a file inside it, `rmdir()`
+must now succeed) and `testRmdirStillFailsWithAnActiveFileInside` (sanity counterpart: a directory
+with a real, active file must still be rejected) - both green, plus the existing 4 `S3StreamWrapperTest`
+tests re-confirmed passing, plus a full local run of `VersioningStreamWrapperTest`/
+`S3directStreamWrapperTest`/`MergeStreamWrapperTest` together (21 tests) showing no new failures
+beyond the same pre-existing `/home/demo` mount issue documented throughout this project.
