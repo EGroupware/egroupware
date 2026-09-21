@@ -91,8 +91,6 @@ class AnonymousSharingTest extends SharingBase
 	 */
 	public function testTwoShares()
 	{
-		$this->markTestSkipped('Skipping for now, more work needed');
-		return;
 		// This may fail if your egw file location is different between command line and nginx
 
 		// TEST SETUP
@@ -106,8 +104,13 @@ class AnonymousSharingTest extends SharingBase
 		// Add some files so we can tell the shares apart
 		$FIRST_CONTENT = "This is the first share\n";
 		$SECOND_CONTENT = "This is the second share\n";
-		$this->files[] = Vfs::touch($dir1 . '/share1.txt') ?: $dir1 . '/share1.txt';
-		$this->files[] = Vfs::touch($dir2 . '/share2.txt') ?: $dir2 . '/share2.txt';
+		// Vfs::touch() returns true, not the path, so "touch() ?: $path" put a bare true in the
+		// cleanup list - which tearDown's loose in_array('/') then matched, failing every run
+		// with "Tried to remove root".  $dir1/$dir2 already end in '/'.
+		$this->files[] = $share1_file = $dir1 . 'share1.txt';
+		$this->files[] = $share2_file = $dir2 . 'share2.txt';
+		$this->assertTrue(Vfs::touch($share1_file), "Could not create '$share1_file'");
+		$this->assertTrue(Vfs::touch($share2_file), "Could not create '$share2_file'");
 		$dir_1_files = $this->addFiles($dir1, $FIRST_CONTENT);
 		$dir_2_files = $this->addFiles($dir2, $SECOND_CONTENT);
 		$this->files = array_merge($this->files, $dir_1_files);
