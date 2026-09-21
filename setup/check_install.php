@@ -468,39 +468,47 @@ function function_check($name,$args)
 	return $available;
 }
 
+/**
+ * Convert a numerical mode to a symbolic mode-string
+ *
+ * Duplicates EGroupware\Api\Vfs::int2mode(), because check_install.php has to report on the
+ * installation's file permissions even when the API itself can not be loaded.
+ *
+ * The file-type is decided by masking with S_IFMT (0xF000) and comparing for equality, because
+ * the type values overlap: a plain "$mode & 0x2000" test also matches block special (0x6000) and
+ * links (0xA000), which used to report both of those - and sockets (0xC000) - as the wrong type.
+ *
+ * @param int $in_Perms
+ * @return string
+ */
 function verbosePerms( $in_Perms )
 {
-	if($in_Perms & 0x1000)     // FIFO pipe
+	switch($in_Perms & 0xF000)
 	{
-		$sP = 'p';
-	}
-	elseif($in_Perms & 0x2000) // Character special
-	{
-		$sP = 'c';
-	}
-	elseif($in_Perms & 0x4000) // Directory
-	{
-		$sP = 'd';
-	}
-	elseif($in_Perms & 0x6000) // Block special
-	{
-		$sP = 'b';
-	}
-	elseif($in_Perms & 0x8000) // Regular
-	{
-		$sP = '-';
-	}
-	elseif($in_Perms & 0xA000) // Symbolic Link
-	{
-		$sP = 'l';
-	}
-	elseif($in_Perms & 0xC000) // Socket
-	{
-		$sP = 's';
-	}
-	else                         // UNKNOWN
-	{
-		$sP = 'u';
+		case 0x1000:	// FIFO pipe
+			$sP = 'p';
+			break;
+		case 0x2000:	// Character special
+			$sP = 'c';
+			break;
+		case 0x4000:	// Directory
+			$sP = 'd';
+			break;
+		case 0x6000:	// Block special
+			$sP = 'b';
+			break;
+		case 0x8000:	// Regular
+			$sP = '-';
+			break;
+		case 0xA000:	// Symbolic Link
+			$sP = 'l';
+			break;
+		case 0xC000:	// Socket
+			$sP = 's';
+			break;
+		default:	// UNKNOWN
+			$sP = 'u';
+			break;
 	}
 
 	// owner

@@ -45,6 +45,14 @@ class Base
 	 * mode-bits, which have to be set for links
 	 */
 	const MODE_LINK = 0120000;
+	/**
+	 * Mask selecting the file-type bits of a mode, everything below it are permission bits.
+	 *
+	 * The file-type values share bits with each other (block special 0060000 contains character
+	 * special 0020000, and links 0120000 contain both), so a plain "$mode & $type" test matches the
+	 * wrong type. Mask with S_IFMT and compare for equality instead.
+	 */
+	const S_IFMT = 0170000;
 
 	/**
 	 * How much should be logged to the apache error-log

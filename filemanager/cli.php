@@ -878,42 +878,44 @@ function _ln($src, $base, $stat)
 /**
  * Convert a numerical mode to a symbolic mode-string
  *
+ * Duplicates EGroupware\Api\Vfs::int2mode(), as a fallback for the plain-filesystem commands
+ * which run without loading the EGroupware API at all (see the class_exists() calls above).
+ *
+ * The file-type is decided by masking with S_IFMT (0xF000) and comparing for equality, because
+ * the type values overlap: a plain "$mode & 0x2000" test also matches block special (0x6000) and
+ * links (0xA000), which used to report block devices as character devices.
+ *
  * @param int $mode
  * @return string
  */
 function int2mode( $mode )
 {
-	if(($mode & 0xA000) == 0xA000) // Symbolic Link
+	switch($mode & 0xF000)
 	{
-		$sP = 'l';
-	}
-	elseif(($mode & 0xC000) == 0xC000) // Socket
-	{
-		$sP = 's';
-	}
-	elseif($mode & 0x1000)     // FIFO pipe
-	{
-		$sP = 'p';
-	}
-	elseif($mode & 0x2000) // Character special
-	{
-		$sP = 'c';
-	}
-	elseif($mode & 0x4000) // Directory
-	{
-		$sP = 'd';
-	}
-	elseif($mode & 0x6000) // Block special
-	{
-		$sP = 'b';
-	}
-	elseif($mode & 0x8000) // Regular
-	{
-		$sP = '-';
-	}
-	else                         // UNKNOWN
-	{
-		$sP = 'u';
+		case 0xA000:	// Symbolic Link
+			$sP = 'l';
+			break;
+		case 0xC000:	// Socket
+			$sP = 's';
+			break;
+		case 0x1000:	// FIFO pipe
+			$sP = 'p';
+			break;
+		case 0x2000:	// Character special
+			$sP = 'c';
+			break;
+		case 0x4000:	// Directory
+			$sP = 'd';
+			break;
+		case 0x6000:	// Block special
+			$sP = 'b';
+			break;
+		case 0x8000:	// Regular
+			$sP = '-';
+			break;
+		default:	// UNKNOWN
+			$sP = 'u';
+			break;
 	}
 
 	// owner

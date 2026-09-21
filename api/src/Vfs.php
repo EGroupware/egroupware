@@ -1023,42 +1023,41 @@ class Vfs extends Vfs\Base
 	/**
 	 * Convert a numerical mode to a symbolic mode-string
 	 *
+	 * The file-type is decided by masking with S_IFMT and comparing for equality, because the
+	 * type values overlap: a plain "$mode & 0x2000" test also matches block special (0x6000) and
+	 * links (0xA000), which used to report block devices as character devices.
+	 *
 	 * @param int $mode
 	 * @return string
 	 */
 	static function int2mode( $mode )
 	{
-		if(($mode & self::MODE_LINK) == self::MODE_LINK) // Symbolic Link
+		switch($mode & self::S_IFMT)
 		{
-			$sP = 'l';
-		}
-		elseif(($mode & 0xC000) == 0xC000) // Socket
-		{
-			$sP = 's';
-		}
-		elseif($mode & 0x1000)     // FIFO pipe
-		{
-			$sP = 'p';
-		}
-		elseif($mode & 0x2000) // Character special
-		{
-			$sP = 'c';
-		}
-		elseif($mode & 0x4000) // Directory
-		{
-			$sP = 'd';
-		}
-		elseif($mode & 0x6000) // Block special
-		{
-			$sP = 'b';
-		}
-		elseif($mode & 0x8000) // Regular
-		{
-			$sP = '-';
-		}
-		else                         // UNKNOWN
-		{
-			$sP = 'u';
+			case self::MODE_LINK:	// Symbolic Link
+				$sP = 'l';
+				break;
+			case 0xC000:	// Socket
+				$sP = 's';
+				break;
+			case 0x1000:	// FIFO pipe
+				$sP = 'p';
+				break;
+			case 0x2000:	// Character special
+				$sP = 'c';
+				break;
+			case 0x4000:	// Directory
+				$sP = 'd';
+				break;
+			case 0x6000:	// Block special
+				$sP = 'b';
+				break;
+			case 0x8000:	// Regular
+				$sP = '-';
+				break;
+			default:	// UNKNOWN
+				$sP = 'u';
+				break;
 		}
 
 		// owner
