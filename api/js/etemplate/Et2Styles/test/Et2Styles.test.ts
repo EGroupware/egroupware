@@ -1,6 +1,7 @@
 import {assert, fixture, html} from "@open-wc/testing";
 import * as sinon from "sinon";
 import {Et2Styles, resolveEt2StylesSrc} from "../Et2Styles";
+import {assertNoElement} from "../../test/assertDom";
 
 describe('Et2Styles Component', () =>
 {
@@ -91,7 +92,7 @@ describe('Et2Styles Component', () =>
 		element.remove();
 
 		// The <style> must be gone from the head after disconnect
-		assert.isNull(document.head.querySelector("style"), "style node should be removed from head on disconnect");
+		assertNoElement(document.head.querySelector("style"), "style node should be removed from head on disconnect");
 	});
 
 	it('removes the injected link node from the head when disconnected', async() =>
@@ -103,7 +104,7 @@ describe('Et2Styles Component', () =>
 
 		element.remove();
 
-		assert.isNull(document.head.querySelector(`link[rel='stylesheet'][href='${css}']`), "link should be removed from head on disconnect");
+		assertNoElement(document.head.querySelector(`link[rel='stylesheet'][href='${css}']`), "link should be removed from head on disconnect");
 	});
 
 	it('does not leave orphaned nodes when reconnected', async() =>
@@ -115,7 +116,7 @@ describe('Et2Styles Component', () =>
 
 		// Simulate normal DOM removal and re-addition
 		element.remove();
-		assert.isNull(document.head.querySelector("style"), "style node removed on disconnect");
+		assertNoElement(document.head.querySelector("style"), "style node removed on disconnect");
 		document.body.appendChild(element);
 		await element.updateComplete;
 
@@ -175,7 +176,7 @@ describe('Et2Styles Component', () =>
 
 		element.src = "";
 		await element.updateComplete;
-		assert.isNull(document.head.querySelector(`link[rel='stylesheet'][href='${css}']`), "link should be removed when src is cleared");
+		assertNoElement(document.head.querySelector(`link[rel='stylesheet'][href='${css}']`), "link should be removed when src is cleared");
 	});
 
 });

@@ -1,5 +1,6 @@
 import {assert} from "@open-wc/testing";
 import {renderAttachmentIndex} from "../attachmentIndex";
+import {assertNoElement} from "../../../api/js/etemplate/test/assertDom";
 
 /**
  * Test renderAttachmentIndex() - the "auto-index" that shows attachments directly in the body
@@ -33,7 +34,7 @@ describe("renderAttachmentIndex()", () =>
 		const doc = emptyBodyDocument();
 		renderAttachmentIndex(doc, [], egw);
 
-		assert.isNull(doc.body.querySelector(".mail_attachmentIndex"));
+		assertNoElement(doc.body.querySelector(".mail_attachmentIndex"));
 	});
 
 	it("does nothing when the body is not actually empty", () =>
@@ -43,7 +44,7 @@ describe("renderAttachmentIndex()", () =>
 			{filename: "photo.jpg", type: "image/jpeg", mime_url: "https://example.com/photo.jpg"},
 		], egw);
 
-		assert.isNull(doc.body.querySelector(".mail_attachmentIndex"),
+		assertNoElement(doc.body.querySelector(".mail_attachmentIndex"),
 			"a non-empty body must never get the auto-index appended");
 	});
 
@@ -66,7 +67,7 @@ describe("renderAttachmentIndex()", () =>
 			{filename: "photo.jpg", type: "image/jpeg", mime_url: "https://example.com/photo.jpg"},
 		], egw);
 
-		assert.isNull(doc.body.querySelector(".mail_attachmentIndexHeader"),
+		assertNoElement(doc.body.querySelector(".mail_attachmentIndexHeader"),
 			"a single attachment needs no '---- filename ----' divider");
 		const img = doc.body.querySelector(".mail_attachmentIndexItem img") as HTMLImageElement;
 		assert.isNotNull(img);
@@ -110,7 +111,7 @@ describe("renderAttachmentIndex()", () =>
 			{filename: "report.docx", type: "application/msword", mime_url: "https://example.com/report.docx"},
 		], egw);
 
-		assert.isNull(doc.body.querySelector("img[loading='lazy']"),
+		assertNoElement(doc.body.querySelector("img[loading='lazy']"),
 			"a non-image/pdf attachment must not be rendered as an inline <img>/<iframe>");
 		const link = doc.body.querySelector(".mail_attachmentIndexIcon") as HTMLAnchorElement;
 		assert.isNotNull(link);

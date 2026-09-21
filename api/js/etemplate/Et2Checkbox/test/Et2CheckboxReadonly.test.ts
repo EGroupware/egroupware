@@ -5,6 +5,7 @@ import {assert, fixture, html} from '@open-wc/testing';
 import {Et2CheckboxReadonly} from "../Et2CheckboxReadonly";
 import * as sinon from "sinon";
 import {inputBasicTests} from "../../Et2InputWidget/test/InputBasicTests";
+import {assertNoElement} from "../../test/assertDom";
 
 // Reference to component under test
 let element : Et2CheckboxReadonly;
@@ -46,7 +47,7 @@ describe("Checkbox readonly widget", () =>
 	{
 		element.set_value("");
 		await element.updateComplete;
-		assert.notExists(element.shadowRoot.querySelector("sl-icon"));
+		assertNoElement(element.shadowRoot.querySelector("sl-icon"));
 	});
 
 	it("only counts a matching selectedValue as checked", async() =>
@@ -55,7 +56,7 @@ describe("Checkbox readonly widget", () =>
 
 		element.set_value("no");
 		await element.updateComplete;
-		assert.notExists(element.shadowRoot.querySelector("sl-icon"), "Non-matching value should not show as checked");
+		assertNoElement(element.shadowRoot.querySelector("sl-icon"), "Non-matching value should not show as checked");
 
 		element.set_value("yes");
 		await element.updateComplete;
@@ -69,7 +70,7 @@ describe("Checkbox readonly widget", () =>
 
 		element.set_value("1");
 		await element.updateComplete;
-		assert.notExists(element.shadowRoot.querySelector("sl-icon"));
+		assertNoElement(element.shadowRoot.querySelector("sl-icon"));
 		assert.include(element.shadowRoot.querySelector(".checkbox__control").textContent, "Yes");
 
 		element.set_value("");

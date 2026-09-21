@@ -6,6 +6,7 @@ import "../../Et2Textbox/Et2Textbox";
 import "../../Et2Textbox/Et2Searchbox";
 import "../../Et2Select/Select/Et2SelectPriority";
 import "../../Layout/Et2Box/Et2Box";
+import {assertNoElement} from "../../test/assertDom";
 
 /**
  * Contract under test:
@@ -46,7 +47,7 @@ describe("Et2Filterbox setFilterTemplate", () =>
 		element.setFilterTemplate(fastTemplate);
 		await wait(50);
 
-		assert.isNull(element.querySelector("#slow-template"), "stale template should not be attached");
+		assertNoElement(element.querySelector("#slow-template"), "stale template should not be attached");
 		assert.isNotNull(element.querySelector("#fast-template"), "latest template should be attached");
 		element.remove();
 	});
@@ -67,7 +68,7 @@ describe("Et2Filterbox setFilterTemplate", () =>
 
 		element.setFilterTemplate(null);
 		await wait(5);
-		assert.isNull(element.querySelector("#active-template"), "template should be removed when cleared");
+		assertNoElement(element.querySelector("#active-template"), "template should be removed when cleared");
 		element.remove();
 	});
 });
@@ -192,7 +193,7 @@ describe("Et2Filterbox clear button", () =>
             </et2-filterbox>`);
 		await element.updateComplete;
 
-		assert.isUndefined(clearButton(element), "nothing set, so there is nothing to clear");
+		assertNoElement(clearButton(element), "nothing set, so there is nothing to clear");
 	});
 
 	it("appears for a filter that came in with a value", async() =>
@@ -220,7 +221,7 @@ describe("Et2Filterbox clear button", () =>
 
 		assert.equal((<any>element.querySelector("#search")).get_value(), "", "clear should empty the filter");
 		assert.equal((<any>element.querySelector("#other")).get_value(), "", "clear should empty every filter");
-		assert.isUndefined(clearButton(element), "with nothing left set, the button should go away");
+		assertNoElement(clearButton(element), "with nothing left set, the button should go away");
 	});
 
 	/**
@@ -247,7 +248,7 @@ describe("Et2Filterbox clear button", () =>
 
 		assert.equal((<any>element.querySelector("#priority")).get_value(), "",
 			"an emptyLabel gives the select an empty value to clear to");
-		assert.isUndefined(clearButton(element), "cleared, so the button goes away again");
+		assertNoElement(clearButton(element), "cleared, so the button goes away again");
 	});
 
 	it("leaves the nextmatch's sort out of it", async() =>
@@ -265,7 +266,7 @@ describe("Et2Filterbox clear button", () =>
 		assert.equal((<any>element.querySelector("#search")).get_value(), "", "clear should empty the filter");
 		assert.equal((<any>element.querySelector("[id='sort[id]']")).get_value(), "ts_start",
 			"sort order is not a filter - clearing must not wipe the ORDER BY");
-		assert.isUndefined(clearButton(element), "a sort on its own is not something to clear");
+		assertNoElement(clearButton(element), "a sort on its own is not something to clear");
 	});
 });
 

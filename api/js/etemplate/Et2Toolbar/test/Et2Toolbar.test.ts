@@ -7,6 +7,7 @@ import "../../Et2Select/Et2Select";
 import {et2_IInput} from "../../et2_core_interfaces";
 import * as sinon from "sinon";
 import {waitForEvent} from "../../Et2Widget/event";
+import {assertNoElement} from "../../test/assertDom";
 
 // Stub global egw
 // @ts-ignore
@@ -149,7 +150,7 @@ describe("et2-toolbar", () =>
 
 		// Not currently showing
 		let listButton = el.shadowRoot.querySelector('sl-dropdown');
-		assert.notExists(listButton, "Unexpected dropdown");
+		assertNoElement(listButton, "Unexpected dropdown");
 
 		el._isAdmin = true;
 		el.requestUpdate();

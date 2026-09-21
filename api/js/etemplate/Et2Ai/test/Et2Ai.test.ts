@@ -1,6 +1,7 @@
 import {assert, fixture, html} from "@open-wc/testing";
 import * as sinon from "sinon";
 import {Et2Ai} from "../Et2Ai";
+import {assertNoElement} from "../../test/assertDom";
 
 window.egw = {
 	ajaxUrl: () => "",
@@ -40,9 +41,9 @@ describe("Et2AI widget basics", () =>
 
 		const slot = el.shadowRoot!.querySelector("slot:not([name])");
 		assert.exists(slot);
-		assert.notExists(el.shadowRoot!.querySelector("sl-dropdown"));
-		assert.notExists(el.shadowRoot!.querySelector("sl-card"));
-		assert.notExists(el.shadowRoot!.querySelector("sl-alert"));
+		assertNoElement(el.shadowRoot!.querySelector("sl-dropdown"));
+		assertNoElement(el.shadowRoot!.querySelector("sl-card"));
+		assertNoElement(el.shadowRoot!.querySelector("sl-alert"));
 	});
 
 	it("selecting a prompt triggers AI run", async() =>

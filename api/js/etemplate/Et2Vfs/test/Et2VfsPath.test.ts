@@ -3,6 +3,7 @@ import * as sinon from 'sinon';
 import {Et2VfsPath} from "../Et2VfsPath";
 import {sendKeys} from "@web/test-runner-commands";
 import {inputBasicTests} from "../../Et2InputWidget/test/InputBasicTests";
+import {assertNoElement} from "../../test/assertDom";
 
 /**
  * Test file for Etemplate webComponent VfsPath
@@ -159,7 +160,7 @@ describe("Read-only display of a value that is not a path", () =>
 		await elementUpdated(element);
 
 		assert.exists(element.shadowRoot.querySelector("sl-breadcrumb"), "No breadcrumb for a path");
-		assert.notExists(element.shadowRoot.querySelector(".vfs-path__plain"), "Path rendered as plain text");
+		assertNoElement(element.shadowRoot.querySelector(".vfs-path__plain"), "Path rendered as plain text");
 	});
 
 	it("renders a bare name as plain text, with no icon", async() =>
@@ -171,8 +172,8 @@ describe("Read-only display of a value that is not a path", () =>
 		const plain = element.shadowRoot.querySelector(".vfs-path__plain");
 		assert.exists(plain, "Bare name not rendered as plain text");
 		assert.equal(plain.textContent.trim(), "attachment.pdf");
-		assert.notExists(element.shadowRoot.querySelector("sl-breadcrumb"), "Bare name rendered as a breadcrumb");
-		assert.notExists(element.shadowRoot.querySelector("et2-image"), "Bare name got a filemanager icon");
+		assertNoElement(element.shadowRoot.querySelector("sl-breadcrumb"), "Bare name rendered as a breadcrumb");
+		assertNoElement(element.shadowRoot.querySelector("et2-image"), "Bare name got a filemanager icon");
 	});
 
 	it("renders nothing for an empty value", async() =>
@@ -181,8 +182,8 @@ describe("Read-only display of a value that is not a path", () =>
 		await elementUpdated(element);
 
 		assert.equal(element.shadowRoot.querySelector(".vfs-path__plain").textContent.trim(), "");
-		assert.notExists(element.shadowRoot.querySelector("sl-breadcrumb"), "Empty value rendered as a breadcrumb");
-		assert.notExists(element.shadowRoot.querySelector("et2-image"), "Empty value got a filemanager icon");
+		assertNoElement(element.shadowRoot.querySelector("sl-breadcrumb"), "Empty value rendered as a breadcrumb");
+		assertNoElement(element.shadowRoot.querySelector("et2-image"), "Empty value got a filemanager icon");
 	});
 
 	it("survives a null value", async() =>

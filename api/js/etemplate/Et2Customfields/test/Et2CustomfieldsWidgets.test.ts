@@ -1,5 +1,6 @@
 import {assert, fixture, html} from "@open-wc/testing";
 import type {Et2CustomfieldsBase} from "../Et2CustomfieldsBase";
+import {assertNoElement} from "../../test/assertDom";
 
 let openedLink : string | null = null;
 const egwStub = {
@@ -109,7 +110,7 @@ describe("Et2Customfields webcomponents", () =>
 
 		const firstWidget = element.querySelector("[data-field='cf_text'] > *") as HTMLElement | null;
 		await (firstWidget as any)?.updateComplete;
-		assert.isNull(element.shadowRoot, "customfields list should render into light DOM");
+		assertNoElement(element.shadowRoot, "customfields list should render into light DOM");
 		assert.isNotNull(firstWidget, "customfields list should create field widgets in its light DOM");
 		assert.equal(firstWidget?.localName, "et2-textbox_ro", "list text customfields should use readonly textboxes");
 		assert.include(firstWidget?.textContent || "", "First row", "field widget should display the current row value");
@@ -183,7 +184,7 @@ describe("Et2Customfields webcomponents", () =>
 			"Homepage",
 			"a URL in a list should be shown by name rather than by address"
 		);
-		assert.notOk(normal.querySelector("label"), "the list itself should not render labels");
+		assertNoElement(normal.querySelector("label"), "the list itself should not render labels");
 
 		const rowStyle = await fixture<Et2CustomfieldsBase & {noLabel : boolean}>(html`
 			<et2-customfields-list no-label></et2-customfields-list>
@@ -650,7 +651,7 @@ describe("Et2Customfields webcomponents", () =>
 		await widget?.updateComplete;
 
 		assert.equal(widget?.label, "Project code", "the generated widget should carry the field label");
-		assert.notOk(element.querySelector("label"), "no inert sibling <label> should be rendered");
+		assertNoElement(element.querySelector("label"), "no inert sibling <label> should be rendered");
 	});
 
 	it("wires readonly URL customfield widgets to their default action", async() =>
@@ -721,7 +722,7 @@ describe("Et2Customfields webcomponents", () =>
 			[],
 			"row values must not create customfield definitions; missing metadata is a setup problem"
 		);
-		assert.isNull(
+		assertNoElement(
 			element.querySelector("[data-field='cf_text']"),
 			"customfields list should remain empty until customfield metadata is supplied"
 		);
@@ -781,8 +782,8 @@ describe("Et2Customfields webcomponents", () =>
 		assert.equal(select?.localName, "et2-select", "select customfield filters should render as selectboxes");
 		assert.equal(select?.emptyLabel, "all", "filter selectbox should use the legacy empty label");
 		assert.isTrue(select?.multiple, "filter selectbox should be multiple");
-		assert.isNull(element.querySelector("[data-field='cf_text']"), "text customfields should not render as filters");
-		assert.isNull(element.querySelector("[data-field='cf_file']"), "filemanager customfields should not render as filters");
+		assertNoElement(element.querySelector("[data-field='cf_text']"), "text customfields should not render as filters");
+		assertNoElement(element.querySelector("[data-field='cf_file']"), "filemanager customfields should not render as filters");
 	});
 
 	it("supports type_filter previous across widget instances", async() =>

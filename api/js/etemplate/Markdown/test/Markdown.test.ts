@@ -18,6 +18,7 @@
  */
 import {assert, elementUpdated, fixture, html} from '@open-wc/testing';
 import {markdown, markdownToHtml, SUPPORTED_TAGS} from "../MarkdownDirective";
+import {assertNoElement} from "../../test/assertDom";
 
 /**
  * Re-parse rendered output into an inert document for structural assertions
@@ -58,7 +59,7 @@ describe("markdownToHtml() - hostile input", () =>
 
 	it("drops data: links", () =>
 	{
-		assert.isNull(parse("[x](data:text/html;base64,PHNjcmlwdD48L3NjcmlwdD4=)")
+		assertNoElement(parse("[x](data:text/html;base64,PHNjcmlwdD48L3NjcmlwdD4=)")
 			.querySelector('[href^="data:"]'), "A data: href survived");
 	});
 
@@ -66,7 +67,7 @@ describe("markdownToHtml() - hostile input", () =>
 	{
 		// markdown-it permits data:image/(gif|png|jpeg|webp) in validateLink, so the DOMPurify
 		// allow-list is the layer that has to catch this - it proves layer 2 is active
-		assert.isNull(parse("[x](data:image/png;base64,iVBORw0KGgo=)")
+		assertNoElement(parse("[x](data:image/png;base64,iVBORw0KGgo=)")
 			.querySelector('[href^="data:"]'), "A data:image href survived");
 	});
 

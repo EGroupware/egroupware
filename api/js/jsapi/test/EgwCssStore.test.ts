@@ -7,6 +7,7 @@
  */
 import {assert} from "@open-wc/testing";
 import {createEgwCssStoreEnv, EgwCssStoreEnv} from "./EgwCssStoreHarness";
+import {assertNoElement} from "../../etemplate/test/assertDom";
 
 describe('egw_css.js (css) / egw_store.js (store)', () =>
 {
@@ -44,7 +45,7 @@ describe('egw_css.js (css) / egw_store.js (store)', () =>
 
 		it('adds a new rule, creating a <style> element in the head', () =>
 		{
-			assert.isNull(env.window.document.querySelector('style'));
+			assertNoElement(env.window.document.querySelector('style'));
 
 			env.egw('someapp', env.window).css('.foo', 'color: red;');
 

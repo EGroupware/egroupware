@@ -6,6 +6,7 @@ import {adoptDiffStyles, diffStyleSheet} from "../Et2Historylog.diff.styles";
 
 import "../../Et2Diff/Et2Diff";
 import "../../Et2Dialog/Et2Dialog";
+import {assertNoElement} from "../../test/assertDom";
 
 /**
  * Contract under test: a diff inside the history log, which is a hostile place for one.
@@ -241,7 +242,7 @@ describe("Et2Historylog diff", () =>
 		log.showDiff("");
 		await log.updateComplete;
 
-		assert.isNull(log.shadowRoot!.querySelector("et2-dialog"), "an empty diff must not open a dialog");
+		assertNoElement(log.shadowRoot!.querySelector("et2-dialog"), "an empty diff must not open a dialog");
 	});
 
 	/**
@@ -258,6 +259,6 @@ describe("Et2Historylog diff", () =>
 		log.shadowRoot!.querySelector("et2-dialog")!.dispatchEvent(new Event("close", {bubbles: true}));
 		await log.updateComplete;
 
-		assert.isNull(log.shadowRoot!.querySelector("et2-dialog"), "closing must take the dialog away");
+		assertNoElement(log.shadowRoot!.querySelector("et2-dialog"), "closing must take the dialog away");
 	});
 });

@@ -1,6 +1,7 @@
 import {assert} from "@open-wc/testing";
 import {render} from "lit";
 import {Et2Datagrid} from "../Et2Datagrid";
+import {assertNoElement} from "../../test/assertDom";
 
 const egw = {
 	debug: () => {},
@@ -111,7 +112,7 @@ describe("Et2Datagrid row selection", () =>
 
 		const laterRow = renderVirtualRow(grid, 60, body);
 		assert.equal(laterRow?.getAttribute("data-row-id"), "row-60", "later virtual row should replace the earlier rendered row");
-		assert.isNull(body.querySelector("[data-row-id='row-10']"), "selected row should no longer be rendered after virtualizer recycling");
+		assertNoElement(body.querySelector("[data-row-id='row-10']"), "selected row should no longer be rendered after virtualizer recycling");
 		assert.sameMembers(Array.from((grid as any).selectedRowIds), ["row-10"], "selection must outlive the rendered row element");
 		table.remove();
 	});

@@ -16,6 +16,7 @@
 import {assert} from "@open-wc/testing";
 import * as sinon from "sinon";
 import {createEgwMessageEnv, EgwMessageEnv} from "./EgwMessageHarness";
+import {assertNoElement} from "../../etemplate/test/assertDom";
 
 describe('egw_message.js (message)', () =>
 {
@@ -159,7 +160,7 @@ describe('egw_message.js (message)', () =>
 			env.egw().loading_prompt('test-id', true, 'Loading...');
 			env.egw().loading_prompt('test-id', false);
 
-			assert.isNull(env.window.document.getElementById('egw-loadin-prompt_test-id'));
+			assertNoElement(env.window.document.getElementById('egw-loadin-prompt_test-id'));
 		});
 	});
 
@@ -184,7 +185,7 @@ describe('egw_message.js (message)', () =>
 			const result = env.egw().message('');
 
 			assert.isUndefined(result);
-			assert.isNull(env.window.document.querySelector('egw-message'));
+			assertNoElement(env.window.document.querySelector('egw-message'));
 		});
 
 		it('creates a fallback <egw-message> element with the given message/type when there is no framework', async() =>

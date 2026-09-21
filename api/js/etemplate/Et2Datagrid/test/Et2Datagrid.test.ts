@@ -13,6 +13,7 @@ import "../../Et2Url/Et2UrlEmailReadonly";
 import {Et2UrlPhone} from "../../Et2Url/Et2UrlPhone";
 import "../../Et2Url/Et2UrlPhoneReadonly.ts";
 import {Et2Widget} from "../../Et2Widget/Et2Widget";
+import {assertNoElement} from "../../test/assertDom";
 
 const egw = {
 	debug: () => {},
@@ -390,8 +391,8 @@ describe("Et2Datagrid row rendering", () =>
 		assert.isNotNull(state, "empty state should keep the dg-state context-menu anchor");
 		assert.isNotNull(emptyRow, "default no-results fallback should render row-like markup");
 		assert.equal(emptyCell?.textContent?.trim(), "Nothing here yet", "empty row should show configured placeholder text");
-		assert.isNull(state?.querySelector("sl-alert"), "default no-results fallback should not render a Shoelace alert");
-		assert.isNull(state?.querySelector(".dg-empty-action-menu"), "empty action menu button should be hidden by default");
+		assertNoElement(state?.querySelector("sl-alert"), "default no-results fallback should not render a Shoelace alert");
+		assertNoElement(state?.querySelector(".dg-empty-action-menu"), "empty action menu button should be hidden by default");
 
 		el.remove();
 	});
@@ -534,7 +535,7 @@ describe("Et2Datagrid row rendering", () =>
 		const state = el.shadowRoot!.querySelector(".dg-state.dg-state--empty") as HTMLElement | null;
 
 		assert.isNotNull(state?.querySelector(".template-no-results"), "template noResults content should render");
-		assert.isNull(state?.querySelector("slot[name='noResults']"), "live noResults slot should not be used when a template is provided");
+		assertNoElement(state?.querySelector("slot[name='noResults']"), "live noResults slot should not be used when a template is provided");
 
 		el.remove();
 	});
@@ -1204,7 +1205,7 @@ describe("Et2Datagrid row rendering", () =>
 
 		const layout = (el as any)._virtualize?._layout;
 		assert.isBelow(layout._last, (el as any)._virtualRowCount(), "virtualizer's realized range should not extend past the real (shrunk) row count");
-		assert.isNull(
+		assertNoElement(
 			el.shadowRoot?.querySelector("[data-et2dg-placeholder]"),
 			"no unresolved loading-placeholder row should remain once the final total is known"
 		);
@@ -1471,7 +1472,7 @@ describe("Et2Datagrid row rendering", () =>
 		const prepared = await (provider as any)._prepareRowTemplate(rowTemplate, el.columns as any);
 		const simple = prepared?.template.content.querySelector(".name-line") as HTMLElement | null;
 		assert.equal(simple?.localName, "span", "simple descriptions should compile to native text");
-		assert.isNull(
+		assertNoElement(
 			prepared?.template.content.querySelector("span[data-et2nm-id]"),
 			"native text should not need row attribute upgrade bookkeeping"
 		);
@@ -1556,7 +1557,7 @@ describe("Et2Datagrid row rendering", () =>
 			1,
 			"container should contain only the prepared lightweight child"
 		);
-		assert.isNull(
+		assertNoElement(
 			container?.querySelector("et2-description"),
 			"source description child should not also be loaded by the container widget"
 		);
@@ -1622,7 +1623,7 @@ describe("Et2Datagrid row rendering", () =>
 		const templateData = await (provider as any)._fromTemplateRoot(templateRoot);
 
 		assert.lengthOf(templateData?.rowStylesheets || [], 1, "template-local et2-styles should be returned as stylesheets");
-		assert.isNull(
+		assertNoElement(
 			templateData?.rowTemplate.content.querySelector("et2-styles"),
 			"row-local et2-styles tags should not remain in the prepared row template"
 		);
@@ -1706,7 +1707,7 @@ describe("Et2Datagrid row rendering", () =>
 		const email = prepared?.template.content.querySelector("et2-url-email_ro") as HTMLElement | null;
 
 		assert.isNotNull(email, "email URL widgets should use the readonly custom element in rows");
-		assert.isNull(
+		assertNoElement(
 			prepared?.template.content.querySelector("et2-url-email"),
 			"editable email URL widgets should not be kept for readonly rows"
 		);
@@ -2033,7 +2034,7 @@ describe("Et2Datagrid row rendering", () =>
 				row.data,
 				"row customfields should reuse the complete row object"
 			);
-			assert.isNotOk(
+			assertNoElement(
 				list!.shadowRoot?.querySelector("[data-field='cf_hidden']"),
 				"hidden customfield should not be rendered even when the row has a value"
 			);
@@ -4786,7 +4787,7 @@ describe("Et2Datagrid virtual height stability", () =>
 			const rendered = scratchBody.querySelector("[data-row-id='row-160']") as HTMLElement | null;
 			assert.isNotNull(rendered, "second deep render should output row 160");
 			assert.equal(rendered!.getAttribute("data-row-index"), "160", "second deep render should keep the absolute row index");
-			assert.isNull(scratchBody.querySelector("[data-row-id='placeholder:160']"), "second deep render should no longer output a placeholder");
+			assertNoElement(scratchBody.querySelector("[data-row-id='placeholder:160']"), "second deep render should no longer output a placeholder");
 
 			scratchTable.remove();
 			host.remove();

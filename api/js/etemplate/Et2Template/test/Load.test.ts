@@ -2,6 +2,7 @@ import {assert, elementUpdated, fixture, html, nextFrame, oneEvent} from "@open-
 import * as sinon from "sinon";
 import {Et2Template} from "../Et2Template";
 import {Et2Description} from "../../Et2Description/Et2Description";
+import {assertNoElement} from "../../test/assertDom";
 
 /**
  * Test file for Template webComponent
@@ -71,7 +72,7 @@ describe("Template widget basics", () =>
 	});
 	it("starts empty", () =>
 	{
-		assert.notExists(element.querySelectorAll("*"), "Not-loaded template has content.  It should be empty.");
+		assertNoElement(element.querySelectorAll("*"), "Not-loaded template has content.  It should be empty.");
 	});
 });
 describe("Loading", () =>
@@ -183,7 +184,7 @@ describe("Loading", () =>
 		// Wait for load, check the loader is gone
 		await oneEvent(element, "load");
 		loader = element.shadowRoot.querySelector(".template--loading");
-		assert.isNull(loader, "Loader still there after load");
+		assertNoElement(loader, "Loader still there after load");
 	});
 
 	it("actually creates children", async() =>

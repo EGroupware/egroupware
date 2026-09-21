@@ -5,6 +5,7 @@ import {assert, fixture, html} from '@open-wc/testing';
 import {Et2Colorpicker} from "../Et2Colorpicker";
 import * as sinon from 'sinon';
 import {inputBasicTests} from "../../Et2InputWidget/test/InputBasicTests";
+import {assertNoElement} from "../../test/assertDom";
 
 // Reference to component under test
 let element : Et2Colorpicker;
@@ -54,8 +55,8 @@ describe("Colorpicker widget", () =>
             <et2-colorpicker inline></et2-colorpicker>
 		`);
 
-		assert.isNull(inline.shadowRoot.querySelector("button[slot='trigger']"), "Inline rendered a trigger button");
-		assert.isNull(inline.shadowRoot.querySelector(".input__clear"), "Inline rendered a clear button");
+		assertNoElement(inline.shadowRoot.querySelector("button[slot='trigger']"), "Inline rendered a trigger button");
+		assertNoElement(inline.shadowRoot.querySelector(".input__clear"), "Inline rendered a clear button");
 	});
 
 	it('clearing value', () =>

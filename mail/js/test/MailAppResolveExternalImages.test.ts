@@ -3,6 +3,7 @@ import {assert} from "@open-wc/testing";
 import "./MailAppImportStub";
 import "../../../api/js/etemplate/Et2Widget/Et2Widget";
 import {MailApp} from "../app";
+import {assertNoElement} from "../../../api/js/etemplate/test/assertDom";
 
 /**
  * Coverage for MailApp.resolveExternalImages() - doc/ai/projects/mail-test-coverage.md's
@@ -72,7 +73,7 @@ describe("MailApp.resolveExternalImages()", () =>
 
 		app.resolveExternalImages(node);
 
-		assert.isNull(banner(node));
+		assertNoElement(banner(node));
 	});
 
 	it("shows the unblock banner for a blocked image under the default 'ask for permission' preference", () =>
@@ -104,7 +105,7 @@ describe("MailApp.resolveExternalImages()", () =>
 
 		app.resolveExternalImages(node);
 
-		assert.isNull(banner(node), "a 'Never' preference must not offer any way to unblock");
+		assertNoElement(banner(node), "a 'Never' preference must not offer any way to unblock");
 	});
 
 	it("shows images directly (no banner at all) when show=true is passed, even under a 'Never' preference", () =>
@@ -115,7 +116,7 @@ describe("MailApp.resolveExternalImages()", () =>
 
 		app.resolveExternalImages(node, true);
 
-		assert.isNull(banner(node), "show=true resolves images directly, without ever creating a banner");
+		assertNoElement(banner(node), "show=true resolves images directly, without ever creating a banner");
 		assert.equal(node.querySelector('img')!.getAttribute('src'), 'https://example.org/photo.png');
 	});
 
@@ -127,7 +128,7 @@ describe("MailApp.resolveExternalImages()", () =>
 
 		app.resolveExternalImages(node);
 
-		assert.isNull(banner(node));
+		assertNoElement(banner(node));
 		assert.equal(node.querySelector('img')!.getAttribute('src'), 'https://example.org/photo.png');
 	});
 
@@ -172,7 +173,7 @@ describe("MailApp.resolveExternalImages()", () =>
 		showButton!.click();
 
 		assert.equal(node.querySelector('img')!.getAttribute('src'), 'https://example.org/photo.png');
-		assert.isNull(banner(node), "the banner must be removed after clicking Show");
+		assertNoElement(banner(node), "the banner must be removed after clicking Show");
 		assert.deepEqual(prefs.allowExternalDomains, {}, "a one-time Show must not persist the domain");
 	});
 
@@ -187,7 +188,7 @@ describe("MailApp.resolveExternalImages()", () =>
 		allowButton!.click();
 
 		assert.equal(node.querySelector('img')!.getAttribute('src'), 'https://example.org/photo.png');
-		assert.isNull(banner(node));
+		assertNoElement(banner(node));
 		assert.deepEqual(Object.values(prefs.allowExternalDomains), ['example.org']);
 	});
 
@@ -199,7 +200,7 @@ describe("MailApp.resolveExternalImages()", () =>
 
 		(node.querySelector('.closeBtn') as HTMLElement).click();
 
-		assert.isNull(banner(node));
+		assertNoElement(banner(node));
 		assert.notEqual(node.querySelector('img')!.getAttribute('src'), 'https://example.org/photo.png',
 			"closing the banner must leave the image blocked");
 	});

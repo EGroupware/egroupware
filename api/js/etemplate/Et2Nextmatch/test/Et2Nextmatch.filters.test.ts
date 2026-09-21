@@ -6,6 +6,7 @@ import type {Et2Datagrid} from "../../Et2Datagrid/Et2Datagrid";
 import {ET2_NEXTMATCH_FILTER_EVENT, ET2_NEXTMATCH_SORT_EVENT, Et2NextmatchSortEventDetail} from "../Headers/events";
 import {et2_IInput, et2_implements_registry} from "../../et2_core_interfaces";
 import * as sinon from "sinon";
+import {assertNoElement} from "../../test/assertDom";
 
 /**
  * Contract under test:
@@ -743,7 +744,7 @@ describe("Et2Nextmatch header event handling", () =>
 		await el.updateComplete;
 
 		const letterSearch = el.shadowRoot?.querySelector(".nextmatch_lettersearch");
-		assert.isNull(letterSearch, "lettersearch should not render by default");
+		assertNoElement(letterSearch, "lettersearch should not render by default");
 		el.remove();
 	});
 
@@ -826,7 +827,7 @@ describe("Et2Nextmatch header event handling", () =>
 		await el.updateComplete;
 
 		assert.isFalse(el.activeFilters.searchletter, "hiding lettersearch should clear the active search letter");
-		assert.isNull(el.shadowRoot?.querySelector(".nextmatch_lettersearch"), "hidden lettersearch should not render");
+		assertNoElement(el.shadowRoot?.querySelector(".nextmatch_lettersearch"), "hidden lettersearch should not render");
 		el.remove();
 	});
 
@@ -1493,7 +1494,7 @@ describe("Et2Nextmatch expandable child grid wiring", () =>
 		assert.isFalse(childGrid.hasAttribute("auto-height"), "child grid should not use simple auto-height for large child result sets");
 		assert.isFalse(childGrid.noColumnPersistence, "child grid should rely on hidden headers for preference suppression");
 		assert.isFalse(childGrid.noColumnResize, "child grid should rely on hidden headers for resize suppression");
-		assert.isNull(
+		assertNoElement(
 			childGrid.shadowRoot?.querySelector(".dg-col-resize-handle"),
 			"child grid should not expose independent column resizing when its header is hidden"
 		);

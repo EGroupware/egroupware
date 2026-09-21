@@ -2,6 +2,7 @@ import {assert, elementUpdated, expect, fixture, html, oneEvent} from '@open-wc/
 import {sendKeys} from "@web/test-runner-commands";
 import * as sinon from 'sinon';
 import {Et2Dialog} from "../Et2Dialog";
+import {assertNoElement} from "../../test/assertDom";
 
 /**
  * Test file for Etemplate webComponent Et2Dialog
@@ -163,7 +164,7 @@ describe("Properties", async() =>
 		assert.isNotNull(document.querySelector("et2-dialog"));
 		await element.hide();
 
-		assert.isNull(document.querySelector("et2-dialog"));
+		assertNoElement(document.querySelector("et2-dialog"));
 	});
 	it("destroyOnClose = false", async() =>
 	{

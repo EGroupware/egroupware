@@ -70,6 +70,7 @@ window.egw = callableEgw;
 import "../Et2Image";
 import {Et2Image} from "../Et2Image";
 import {et2_arrayMgr} from "../../et2_core_arrayMgr";
+import {assertNoElement} from "../../test/assertDom";
 
 async function image(attributes = "")
 {
@@ -95,7 +96,7 @@ describe("Et2Image", () =>
 	{
 		const element = await image('src="navbar"');
 
-		assert.isNull(element.shadowRoot, "Et2Image must not have a shadow root");
+		assertNoElement(element.shadowRoot, "Et2Image must not have a shadow root");
 		assert.exists(img(element), "the img should be a normal child element");
 	});
 
@@ -172,7 +173,7 @@ describe("Et2Image", () =>
 
 			element.src = "";
 			await element.updateComplete;
-			assert.isNull(img(element), "no valid image means no img at all, not an empty one");
+			assertNoElement(img(element), "no valid image means no img at all, not an empty one");
 
 			element.src = "navbar";
 			await element.updateComplete;
@@ -187,14 +188,14 @@ describe("Et2Image", () =>
 			const element = await image('src="printer"');
 
 			assert.deepEqual(biClasses(element), ["bi-printer"], "a Bootstrap icon becomes a bi-* class");
-			assert.isNull(img(element), "a CSS icon must not also emit an img");
+			assertNoElement(img(element), "a CSS icon must not also emit an img");
 		});
 
 		it("renders nothing when the src cannot be resolved", async() =>
 		{
 			const element = await image('src="some/unknown/name"');
 
-			assert.isNull(img(element), "an unresolvable src should render no img");
+			assertNoElement(img(element), "an unresolvable src should render no img");
 			assert.isEmpty(biClasses(element), "and no icon class either");
 		});
 
