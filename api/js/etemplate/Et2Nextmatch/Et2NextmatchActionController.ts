@@ -1429,8 +1429,15 @@ export class Et2NextmatchActionController implements ReactiveController
 		const params = spec.split("-");
 		let egwOpenId = providerIds[0] || "";
 		const type = params.shift();
+		// An empty app is not a broken action: "edit-" means "take the app from the id", which is
+		// what an action on rows from several apps uses (ProjectManager's element list, whose ids
+		// are "<app>:<app_id>:<pe_id>").  egw.open() splits an "<app>:<id>" id itself when it is
+		// given no app, so pass it through - requiring one here made every such action a silent
+		// no-op, where the legacy nm_action() had no guard at all.  An id with no app in it is the
+		// one combination that still cannot name anything to open; an empty id on its own can
+		// (eg. "add-timesheet" opens a blank entry), so it is only rejected together with the app.
 		const app = params.shift();
-		if(!type || !app)
+		if(!type || !app && egwOpenId.indexOf(":") < 0)
 		{
 			return;
 		}
