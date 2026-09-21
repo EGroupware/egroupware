@@ -71,8 +71,13 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 		let url = this.parse_href(_src) || this.parse_href(this.defaultSrc);
 		if(!url)
 		{
-			// Hide if no valid image
-			if (this._img) this._img.src = '';
+			// Hide if no valid image - by re-rendering, which returns an empty template for this
+			// case and takes the img out.  Blanking the img's src here instead would mutate the DOM
+			// behind lit's back: lit-html would keep the old url as the committed value of its src
+			// binding, and skip the write when that same url is set again.  An image turned off
+			// while a widget is busy and then turned back on - eg. et2-vfs-select while its request
+			// is in flight - would never come back.
+			this.requestUpdate();
 			return;
 		}
 		const bootstrap = url.match(/\/node_modules\/bootstrap-icons\/icons\/([^.]+)\.svg/);
