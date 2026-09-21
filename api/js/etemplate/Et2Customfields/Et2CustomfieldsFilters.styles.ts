@@ -9,10 +9,15 @@ export default css`
 		display: block;
 	}
 
+	/*
+	 * A filterbox sets --gap-width and spaces every filter it generates itself by it, so take that
+	 * where there is one - otherwise the customfields sit visibly tighter than the filters above
+	 * and below them.  Nothing else defines it, so anywhere else we keep our own close spacing.
+	 */
 	et2-customfields-filters .customfields-filters {
 		display: flex;
 		flex-direction: column;
-		gap: var(--sl-spacing-2x-small, 0.25rem);
+		gap: var(--gap-width, var(--sl-spacing-2x-small, 0.25rem));
 	}
 
 	et2-customfields-filters .customfields-filters__field {

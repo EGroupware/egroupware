@@ -439,6 +439,16 @@ describe("Et2CustomfieldWidgetMapper", () =>
 				?.attrs.class ?? "",
 			"et2-label-fixed"
 		);
+
+		// a filterbox gives every filter it generates itself the same class, and the one on our own
+		// tag can not reach these - they are two elements further down, in our light DOM
+		assert.include(
+			mapCustomfieldToWidget("cf_sel", {type: "select", label: "Project code", values: {a: "A"}}, "", {
+				context: "filters"
+			})?.attrs.class ?? "",
+			"et2-label-fixed",
+			"a customfield filter should line up with the filters around it"
+		);
 	});
 
 	it("normalizes options and falls back for unsupported types", () =>

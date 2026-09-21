@@ -65,11 +65,13 @@ export function mapCustomfieldToWidget(
 	{
 		attrs.onchange = options.onchange;
 	}
-	if(context === "field")
+	if(context === "field" || context === "filters")
 	{
 		// Line the labels up into a column, the way the table this replaced did.  et2-label-fixed is
 		// the shared way to ask for that - it gives form-control-label a width of --label-width -
 		// so a customfield ends up looking like every other labelled control on the dialog.
+		// Filters need it just as much: a filterbox writes it on every filter it generates itself,
+		// and the class on our own tag can not reach these - they sit two elements further down.
 		attrs.class = [attrs.class, "et2-label-fixed"].filter(Boolean).join(" ");
 	}
 	if(typeof field?.needed !== "undefined")
