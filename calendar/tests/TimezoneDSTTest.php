@@ -296,4 +296,45 @@ class TimezoneDSTTest extends \EGroupware\Api\AppTest
             $i++;
         }
     }
+
+    /**
+     * Regression test for aff28a06672/a5c4a368f82 ("Use [some] DateTime objects [...],
+     * should fix saving recurrences could drift across daylight savings time" /
+     * "Use DateTime objects instead of integer timestamps"): verify saving a recurring
+     * whole-day event does not drift when server_timezone and user timezone are two
+     * DIFFERENT non-UTC zones with their own, independent DST transition dates
+     * (America/New_York DST starts 2020-03-08, Europe/Berlin DST starts 2020-03-29 -
+     * the range below only crosses the server's transition, not the user's).
+     *
+     * Pass criteria:
+     * - Recurrence rows are generated and sorted.
+     * - Each recurrence date equals start date + n days (date-only invariant), i.e.
+     *   no day is skipped or duplicated across the server-side DST transition.
+     */
+    public function testNYServerBerlinUserWholeDayAcrossServerDSTKeepsDate()
+    {
+        $this->setTimezones('Europe/Berlin', 'America/New_York');
+
+        $start = '2020-03-06';
+        $event = $this->createRecurringEvent($start, 0, 'Europe/Berlin', '2020-03-11', true);
+        $id = $this->bo->save($event);
+        $this->assertGreaterThan(0, $id);
+        $this->event_ids[] = $id;
+
+        $so = new \calendar_so();
+        $recs = $so->get_recurrences($id);
+        unset($recs[0]);
+        $this->assertNotEmpty($recs);
+
+        ksort($recs);
+        $i = 0;
+        foreach ($recs as $recur_start => $participant)
+        {
+            $expected = new Api\DateTime($start, Api\DateTime::$server_timezone);
+            $expected->add($i.' days');
+            $actual = new Api\DateTime($recur_start, Api\DateTime::$server_timezone);
+            $this->assertEquals($expected->format('Ymd'), $actual->format('Ymd'));
+            $i++;
+        }
+    }
 }

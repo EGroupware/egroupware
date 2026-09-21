@@ -90,8 +90,13 @@ class calendar_holidays
 		$years = array();
 		foreach($holidays as $event)
 		{
-			$start = new Api\DateTime($event['start']);
-			$end = new Api\DateTime($event['end']);
+			// Holidays are floating (civil) dates, not server_timezone/local-time instants:
+			// keep $event['start']/'end' in the timezone the iCal parser already put them in
+			// (server_timezone), instead of letting Api\DateTime re-interpret them in the
+			// current user's timezone, which can shift the Ymd by a day and make a
+			// single-day holiday span two days (https://help.egroupware.org/t/80027).
+			$start = new Api\DateTime($event['start'], $event['start'] instanceof \DateTimeInterface ? $event['start']->getTimezone() : null);
+			$end = new Api\DateTime($event['end'], $event['end'] instanceof \DateTimeInterface ? $event['end']->getTimezone() : null);
 			if ($start->format('Y') > $end_year) continue;
 			if ($end->format('Y') < $year && !$event['recur_type']) continue;
 
