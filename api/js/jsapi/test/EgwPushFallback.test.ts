@@ -86,6 +86,30 @@ describe('egw_push_fallback.ts', () =>
 		assert.include(env.fetchCalls[0].url, MENUACTION);
 	});
 
+	it('does not run at all on a popup/content page - regression: Admin > Test Push loads swoolepush/test.php in its own iframe, and (a first, wrong attempt at this guard aside) that page has its own real, inherited egw indistinguishable from the top window\'s by object identity; without a guard it ALSO started a PushFallback, racing the top window\'s own long-poll to consume the same session\'s queued push-test message and making the test falsely report failure', async() =>
+	{
+		const script = env.window.document.createElement('script');
+		script.id = 'egw_script_id';
+		script.setAttribute('data-push-longpolling-fallback', '1');
+		env.window.document.body.appendChild(script);
+
+		await loadPushFallback(env);
+
+		assert.equal(env.fetchCalls.length, 0);
+	});
+
+	it('still runs on a real top-level framework page (data-push-longpolling-fallback absent or empty, matching Ajax::header()\'s own $extra[\'push-longpolling-fallback\'] = !$do_framework)', async() =>
+	{
+		const script = env.window.document.createElement('script');
+		script.id = 'egw_script_id';
+		script.setAttribute('data-push-longpolling-fallback', '');
+		env.window.document.body.appendChild(script);
+
+		await loadPushFallback(env);
+
+		assert.equal(env.fetchCalls.length, 1);
+	});
+
 	it('does not poll at all once push is already available by the time it loads', async() =>
 	{
 		openRealPush(env);

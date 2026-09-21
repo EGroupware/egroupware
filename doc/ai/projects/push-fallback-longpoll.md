@@ -895,3 +895,586 @@ effect requires `Api\Hooks::read(true)` (normally triggered by
 Admin > Applications, or automatically after the existing 3600s instance-cache TTL expires) -
 worth remembering as a manual step after any change that adds a
 `$setup_info[...]['hooks']` entry to `setup.inc.php`, not just this one.
+
+## Live regression: two parallel long-polls, Admin > Test Push falsely reports failure (found + fixed)
+
+Found live by Ralf (2026-09-21), after confirming the `framework_header`
+fix above got the bell working: **Admin > Test Push** reported "Push
+server is NOT working" even with a real, correctly-behaving fallback -
+and dev-tools' network tab showed **two** independent, long-running
+`ajax_poll()` requests at once (confirmed not an SSE issue - both
+resolved empty after 20s, `AJAX_POLL_MAX_WAIT_SECONDS`, the plain
+long-poll's own cap, not SSE's 120s one).
+
+**Root cause**: `egw_push_fallback.ts` is in the always-loaded core
+bundle, and (unlike the real websocket connection) had no guard against
+running once *per frame*, not once *per browser tab*. `Admin > Test
+Push` loads `swoolepush/test.php` inside its own content `<iframe>`
+within the admin app. Without a guard, that iframe's own copy of
+`egw_push_fallback.ts` ALSO constructed its own `PushFallback`, so two
+independent long-polls ended up racing to consume the SAME session's
+`notifications_push` queue (`notifications_push::get()`'s `already_send`
+tracking is per-session, not per-window/per-frame). Whichever one
+happened to poll first "won" and consumed the test push in a JS context
+with no `app.admin.pushTestMessage` to call, so the real `app.admin`
+instance in the top window never saw it and its own `pushTestStart()`
+timeout fired instead - a false negative entirely unrelated to whether
+the actual push server works.
+
+**First fix attempt (WRONG, corrected below)**: mirrored what looked
+like the real websocket connection's own guard (`egw.js`'s
+`openWebSocket()` call site: `if (egw === window.top.egw && ...)`) -
+comparing `egw`'s object identity against `window.top.egw`, on the
+(wrong) assumption that `swoolepush/test.php`'s iframe constructs its
+own, separate `egw` object. Ralf reported live that this did NOT fix
+anything - a 2nd or even 3rd `ajax_poll()` request still showed up
+starting Test Push - and suggested reusing whatever mechanism already
+keeps the real websocket to a single connection, rather than
+re-implementing a similar-looking check. Live-testing that suggestion
+(injecting a real popup-style (`cd=no`) content iframe next to a genuine
+top-level page and inspecting both from the browser console) proved the
+assumption behind the first attempt outright false:
+`iframe.contentWindow.egw === window.egw` was **true** - `egw.js`'s own
+bootstrap (`api/js/jsapi/egw.js`, the "check if egw object was injected"
+block) successfully finds and *inherits* `window.top.egw` for an
+ordinary content iframe just as reliably as it does for the real top
+page, so comparing object identity client-side cannot actually tell them
+apart - the comparison in `egw.js:702` is trivially true in both cases.
+
+**What actually keeps the real websocket to one connection**: it isn't
+that comparison at all - it's server-side. `swoolepush/src/Hooks.php`'s
+`framework_header()` hook only ever adds `websocket-url` (etc.) to
+`$extra` `if ($data['popup'] === false && ...)` - and `Api\Framework\Ajax::header()`
+calls every `framework_header` hook with `'popup' => !$do_framework`
+(`$do_framework = isset($_GET['cd']) && $_GET['cd'] === 'yes'`). A
+popup/content page (`swoolepush/test.php` included - it never sets
+`cd=yes` itself) simply never receives `data-websocket-url` on its own
+`egw_script_id` bootstrap tag at all, so `egw.js`'s `if (egw ===
+window.top.egw && egw_script.getAttribute('data-websocket-url'))` check
+never gets past its *second* clause there, regardless of the first.
+
+**Actual fix**: reuse that exact server-side signal, generically, instead
+of re-deriving a client-side proxy for it. `Api\Framework\Ajax::header()`
+now also unconditionally sets `$extra['popup'] = !$do_framework;` (right
+where `$do_framework` itself is computed) - which, via the exact same
+`data-$name` mechanism `_get_js()` already uses for every other `$extra`
+entry, becomes a plain `data-popup="1"` (or `data-popup=""` on a real
+top-level page) attribute on the `id="egw_script_id"` bootstrap script
+tag, readable by *anything* client-side, not just swoolepush.
+`PushFallback`'s constructor now just checks
+`document.getElementById('egw_script_id')?.getAttribute('data-popup')`
+and returns immediately if it's truthy - no object-identity comparison
+of any kind.
+
+Regression test: `api/js/jsapi/test/EgwPushFallback.test.ts` (now 14, was
+12) - two tests, setting `data-popup="1"` (must not poll) and
+`data-popup=""` (must still poll) on a synthetic `#egw_script_id`
+element. Full `api` jstest group re-run clean (2523/2523, both browsers,
+0 failed).
+
+**Live verification**: this time verified end-to-end live, since the
+first, wrong fix had already shown a "looks right, passes its own tests"
+fix can still be wrong in production. Reproducing the exact
+`swoolepush/test.php` scenario still needs real EGroupware-administrator
+rights the session's "admin" test account lacked, but the underlying
+mechanism was verified directly: injected a real `cd=no` (popup-style)
+content iframe next to a live top-level page, confirmed
+`iframe.contentWindow.document.getElementById('egw_script_id')
+.getAttribute('data-popup') === "1"` (and, again, that its `egw` really
+is the exact same object as the top page's `window.egw` - confirming why
+the first attempt could never have worked), and confirmed via dev-tools
+network tab that only the top page's own single, continuous long-poll
+was ever in flight throughout - no second request appeared once the
+popup iframe loaded.
+
+**Worth remembering**: don't assume a security- or connection-scoping
+check that "looks like" an established pattern actually IS that pattern
+without tracing what really enforces it - `egw === window.top.egw` reads
+like the guard, but in this codebase it's almost always true (inheritance
+succeeds far more often than not) and the REAL enforcement was a
+server-side data-gating decision one layer down (same *category* of
+lesson as the `framework_header`-vs-`after_navbar` hook-timing bug
+earlier in this project: two things that look interchangeable, only one
+of which is actually load-bearing). When a fix "should" work per code
+reading but a live report says otherwise, prefer live-tracing the actual
+mechanism over patching the same assumption harder.
+
+This class of "runs once per frame instead of once per browser
+tab/window" bug is easy to introduce for anything living in the
+always-loaded core bundle that isn't explicitly guarded - check any
+*future* addition to `egw_modules.js` for the same kind of guard (now
+`data-push-longpolling-fallback`, not egw identity), not just
+push-related ones (this is now the *third* class of "core bundle forgot
+a guard some other part of the framework already solved" bug found in
+this project, after the login-page guard and the CSP/hook-
+timing one - worth treating as a checklist item for anything new added to
+that bundle).
+
+(See "Naming collision: `data-popup` was already a different, pre-existing
+attribute" further below for a second issue found in this same fix,
+before it shipped.)
+
+## Live bug found via DevTools "pause on exceptions": unhandled BodyStreamBuffer rejection on SSE ack-timeout (found + fixed)
+
+Found by Ralf reloading a page with Chrome DevTools open and "pause on
+uncaught exceptions" enabled: the debugger immediately broke inside
+`#trySse()`, showing `Paused on promise rejection: AbortError:
+BodyStreamBuffer was aborted`.
+
+**Root cause**: `#trySse()`'s `ackTimer` callback called
+`controller.abort()` unconditionally once `SSE_ACK_TIMEOUT_MS` elapsed -
+correct while still waiting on the initial `fetch()` call itself, but
+once the response turned out to be a real SSE stream and the code was
+already inside `await reader.read()` waiting for the first (ack) chunk,
+aborting the *controller* directly while a body read is in flight is a
+documented Chromium `fetch()`/`ReadableStream`/`AbortController`
+interaction: it produces **two** separate rejections - the one our own
+`try/catch` around `reader.read()` already correctly handles, and a
+second, internal one tied to the `Response` body's own buffering
+machinery (`BodyStreamBuffer`) that application code has no reference to
+and can never attach a `.catch()` to. Harmless in the sense that our own
+fallback logic still worked correctly either way, but a genuine unhandled
+promise rejection on every single ack-timeout in any real browser -
+noisy for anyone debugging with "pause on exceptions" on, and would
+equally trip any future global `unhandledrejection` error-reporting hook.
+
+**Fix**: track the active stream `reader` in a variable the `ackTimer`
+closure can see, and once it exists, call `reader.cancel()` instead of
+`controller.abort()` - the spec-compliant way to stop consuming a
+stream. `reader.cancel()` settles any pending `read()` with `{done:
+true}` (not a rejection) and properly propagates the cancellation to the
+network layer on its own, without touching the internal body-buffer path
+that triggers the Chromium quirk. Before a reader exists (still waiting
+on `fetch()` itself, or a response that turned out not to be a stream at
+all), aborting the controller directly remains correct and is still what
+happens.
+
+The existing jstest harness's fake SSE stream reader (`EgwJsonHarness.ts`'s
+`createFakeSseStream()`) had no `cancel()` method at all - added one,
+matching real `ReadableStreamDefaultReader.cancel()` semantics (settle
+any pending `read()` with `{done: true}`, mark the stream ended for
+future reads), since the existing "falls back to plain long-polling if
+nothing arrives within SSE_ACK_TIMEOUT_MS" test exercises exactly this
+code path and would otherwise have started calling a method the mock
+didn't implement.
+
+Verified: TypeScript typecheck clean for both touched files;
+`EgwPushFallback.test.ts` re-run clean (13/13, both browsers); full `api`
+jstest group re-run clean (2523/2523, both browsers, 0 failed).
+
+**Worth remembering**: `AbortController.abort()` is not a safe universal
+cancellation mechanism once a `fetch()` response's body is actively being
+read via a `ReadableStreamDefaultReader` - prefer `reader.cancel()` for
+that specific case, reserving `controller.abort()` for cancelling the
+request before (or without ever) reading its body. This is exactly the
+kind of thing DevTools' "pause on exceptions" catches that jstest's
+fake-DOM harness never would have (the fake reader had no way to exhibit
+a real-browser-internal double-rejection quirk it doesn't itself
+implement) - worth reaching for that setting when debugging anything
+using `fetch()` + streams + abort together, not just this one.
+
+## Naming collision: `data-popup` was already a different, pre-existing attribute (found + fixed)
+
+Caught by Ralf reading the diff, before the fix above even shipped:
+naming the new `$extra` key/attribute `'popup'`/`data-popup` collided
+with a *different*, pre-existing one. `Api\Framework\Extra::popup($link,
+$target, $popup)` (a public API app code calls to say "open this as a
+popup window" for a non-JSON request) already writes
+`self::$extra['popup']` - a JSON-encoded array of `egw.open_link()`
+arguments - which `egw.js` (a pre-existing, unrelated block around line
+389) already reads back via `data-popup` and calls
+`egw.open_link.apply(egw, args)`. `Framework.php`'s `_get_js()` merges
+`$extra + self::$extra`, so both consumers would collide on the exact
+same key: mine (a caller-supplied `$extra` key) always won on write
+(PHP's `+` keeps the left operand's key), silently discarding any real,
+pending `Extra::popup()` call; and where `egw.js` did read `data-popup`
+expecting a JSON array, my boolean broke it outright: `data-popup="1"` →
+`JSON.parse("1") || []` → the number `1`, not an array → `egw.open_link
+.apply(egw, 1)` → `TypeError: CreateListFromArrayLike called on
+non-object`. Confirmed live via a DevTools screenshot showing exactly
+that pause-on-exception, inside `egw.js` itself.
+
+**Fix**: renamed the whole thing to `push-longpolling-fallback` /
+`data-push-longpolling-fallback` (Ralf's suggestion) across `Ajax.php`,
+`egw_push_fallback.ts`, and the two `EgwPushFallback.test.ts` tests that
+set the attribute - no functional change beyond the name. Re-verified
+clean: `php -l`, TS typecheck, `EgwPushFallback.test.ts` (14/14 both
+browsers), full `api` jstest group (2524/2524, both browsers).
+
+**Worth remembering**: `Api\Framework\Extra`'s `self::$extra` array (and
+the `$extra` array `_get_js()`/`Ajax::header()` pass around) is a single,
+shared, stringly-keyed namespace every app and core mechanism reaches
+into to get a `data-*` attribute onto the `egw_script_id` bootstrap tag -
+grep `self::\$extra\[`/`\$extra\[` across `api/src/Framework*` (existing
+keys as of this writing: `refresh-opener`, `message`, `popup`,
+`window-close`, `window-focus`, an app-prefixed `$app-$name` form, plus
+whatever individual `framework_header` hooks like swoolepush's own add)
+before picking any new key name there - not just for this one collision.
+
+## Live CI failure: `FrameworkHeaderHookTest` assumed the test account has the notifications app granted (found + fixed)
+
+Found by Ralf via a GitHub Actions run
+(`.github/workflows/testing.yml`, job `testing`):
+`FrameworkHeaderHookTest::testFrameworkHeaderHookRegistersTheAppBundleBeforeGetScriptLinksIsResolved`
+failed - `Failed asserting that an array is not empty` - even though the
+exact same test passed locally.
+
+**Root cause**: `notifications/inc/hook_framework_header.inc.php`'s own
+guard is `if (!($args['popup'] ?? false) &&
+$GLOBALS['egw_info']['user']['apps']['notifications']) { ... }` - it only
+calls `includeJS()` if the CURRENT session's user actually has the
+notifications app granted. The test never controlled this precondition
+itself, just relied on whatever `LoggedInTest`'s configured account
+happens to have - true for this repo's long-lived local dev/test
+accounts (which have accumulated broad app grants over time), but not
+guaranteed for a fresh CI install's default test account, which apparently
+does not have notifications granted. On CI, the hook's guard silently
+skipped `includeJS()`, so `get_script_links()` stayed empty and the
+assertion failed - a real gap in the test's own precondition control, not
+a bug in the hook or the fix it's testing.
+
+**Fix**: `FrameworkHeaderHookTest` now has its own `setUp()`/`tearDown()`
+that force `$GLOBALS['egw_info']['user']['apps']['notifications'] = 1;`
+for the duration of the test class and restore whatever was there before
+- deterministic regardless of which account `LoggedInTest` happens to log
+in as. Verified locally: all 3 tests still pass, plus the full
+`notifications` PHPUnit dir + `NotificationCheckPollingTest` +
+`PushPollTest` (13 tests, 36 assertions) clean.
+
+**Worth remembering**: a `LoggedInTest`-based test that depends on the
+CURRENT user having a *specific* app granted (not just being logged in at
+all) needs to either force that precondition itself (this fix) or
+explicitly skip when it's absent (`NotificationCheckPollingTest`'s own
+pattern, appropriate when the precondition is data the test can't
+reasonably fabricate, like a real mail account) - never assume a
+long-lived local dev account's accumulated grants match a fresh CI
+install's default account.
+
+## Admin > Test Push kept reporting failure - unrelated to this project's own code (found + fixed)
+
+After every fix above shipped, Ralf reported **Admin > Test Push** still
+always failed, and asked whether it needed a longer timeout. It did not -
+the actual cause was entirely pre-existing, unrelated to any of this
+project's own code: `SwoolePush\Backend`'s own exponential backoff
+(`MAX_FAILED_ATTEMPTS=3`, doubling `MIN_BACKOFF_TIME=60`s up to
+`MAX_BACKOFF_TIME=3600`s) had climbed to its 1-hour cap from all this
+session's own automated live-testing against the deliberately-stopped
+swoole daemon. Once capped, `new Backend()` throws **in its constructor**
+- before `addGeneric()`'s own fallback-to-`notifications_push` logic ever
+runs - and `swoolepush/test.php`'s own `try/catch` around `new
+Backend())->addGeneric(...)` just prints the error and moves on, so the
+test message never gets queued via *any* transport, regardless of
+whether the fallback mechanism itself works correctly underneath.
+
+**First attempt at resetting it: also wrong, same category of mistake as
+this project's other "looked right, wasn't" fixes.** Reset the counter
+via a PHPUnit CLI diagnostic test (`Backend::failedAttempts(-1000)`) -
+appeared to work (`failedAttempts=0` printed back). Ralf reported it made
+no difference at all, "neither reload, nor the Reset button". Root cause:
+`Api\Cache::$default_provider` (`api/src/Cache.php` ~line 1100) is
+`EGroupware\Api\Cache\Files` under the CLI SAPI and `...\Apcu` under the
+web SAPI - a PHPUnit CLI process writes to a completely different,
+file-based cache than the one PHP-FPM/the browser's own requests read
+from. Confirmed empirically: even forcing `apc.enable_cli=1` for a CLI
+invocation doesn't help - a value written by one CLI process isn't
+visible to a second CLI process either, so CLI can't reach the real,
+FPM-shared APCu segment under any flag in this environment.
+
+**Actual fix**: reached the real cache through an actual web request
+instead. A tiny, temporary script (`temp_reset_backoff.php`, deleted
+immediately after use) bootstrapped `header.inc.php` with just enough
+flags to get a valid session (no `EGroupware-Administrator` check, unlike
+`swoolepush/test.php` itself - this only needed *a* logged-in session,
+not admin rights) and called the exact same
+`Backend::failedAttempts(-100000)`/`backoffTime(false)` reset
+`swoolepush/test.php`'s own "Reset" button performs. Loaded once via
+browser automation logged in as the container's own "admin" test account
+(which lacks real administrator rights, but that was never the
+requirement for this): confirmed `before: failedAttempts=4
+backoffTime=3600` (matching Ralf's own pasted output exactly) →
+`after: failedAttempts=0 backoffTime=60`.
+
+Ralf then pointed out the properly-supported way to do this same class of
+thing: **Admin > Clear cache and register hooks** - EGroupware's own
+built-in cache-clearing admin action (the same one `setup/applications.php`
+calls `Api\Hooks::read(true)` from, relevant to the earlier
+`framework_header` hook-registration fix too). Worth reaching for that
+first, before any ad-hoc script, whenever a live install's cached/derived
+state (hooks, backoff counters, or anything else `Api\Cache`-backed) is
+suspected of being stale.
+
+**Worth remembering**: `Api\Cache`'s INSTANCE-level provider silently
+differs by SAPI in this codebase (`Files` under CLI, `Apcu` under the
+web) - a PHPUnit CLI test can read/write/"successfully reset" a
+completely different cache than the one a live browser session actually
+observes, with no error or warning that anything is wrong. Any live-state
+fix verified only via PHPUnit CLI needs a *real* web-request check before
+being trusted - the same lesson as this project's "jstest can't enforce
+CSP" and "PHPUnit CLI hooks cache" findings, one more instance of "the
+CLI environment and the live one are not the same environment" surfacing
+in a new place.
+
+**Still failing after the reset - the real, final fix**: Ralf reported
+Test Push kept failing even after the reset above, and pushed back on the
+premise: *"I thought I understood you that Admin > Test push is supposed
+to work also with the push fallback via sse/long-polling"* - correctly.
+Tracing further: `swoolepush/test.php` sends its actual test message via
+`(new Backend())->addGeneric(Push::SESSION, 'apply', [...])` - directly
+instantiating `SwoolePush\Backend`, bypassing the generic
+`Api\Json\Push` facade entirely. Real EGroupware notifications never hit
+this problem because they go through `Push::checkSetBackend()`
+(`api/src/Json/Push.php:124`), which tries each registered backend class
+in turn inside its OWN `try/catch`, falling through to
+`notifications_push` (our fallback) the moment `new SwoolePush\Backend()`
+throws - exactly the exhausted-backoff scenario above. `test.php`'s
+direct instantiation skips that fallthrough entirely, and given the
+daemon is deliberately stopped, every single Test Push page load adds
+~2-3 more failed attempts of its own (`online()` + `addGeneric()`, each
+constructing their own `Backend`), so the backoff re-exhausts itself
+within a click or two of any reset regardless - the diagnostic was
+structurally unable to ever demonstrate the fallback while shaped this
+way.
+
+**Fix**: `swoolepush/test.php` now sends the actual test message via
+`(new Push(Push::SESSION))->apply('app.admin.pushTestMessage', [...])` -
+the same generic facade every real notification already uses - instead
+of `(new Backend())->addGeneric(...)`. The `(new Backend())->online()`
+diagnostic line stays as its own, separately-caught call (still useful,
+real information about the actual Swoole backend specifically), but no
+longer gates whether the test message itself gets sent. Verified with a
+PHPUnit test that first drives `Backend::failedAttempts()` past the
+threshold (reproducing the exact exhausted state from Ralf's own pasted
+output) and then confirms `(new Push(Push::SESSION))->apply(...)` throws
+nothing and correctly queues into `notifications_push` (`maxId`
+increments) regardless - full `notifications`/`mail`/`api` push-related
+PHPUnit suites re-run clean (13 tests, 36 assertions) alongside it.
+
+**Open question, not yet decided**: Ralf noted this generic-facade
+approach means `swoolepush/test.php` is no longer really swoolepush-
+specific - it's now testing the whole push delivery chain (any
+registered backend + fallback), which arguably belongs under `admin` (or
+core) rather than living in one specific backend's own app directory,
+especially if a second real push backend ever exists alongside
+swoolepush.
+
+## New admin diagnostic page: `admin/push_test.php` (done)
+
+Following Ralf's direction ("we need a way for the admin to test if push
+is working and which variant, that makes most sense in admin, not one of
+the backends... obviously we can list a backend specific status"), added
+`admin/push_test.php` and pointed the Admin menu's "Test Push" link at it
+(`admin_hooks.inc.php`), replacing the old `Egw::link('/swoolepush/test.php')`
+entry. `swoolepush/test.php` itself is untouched otherwise and stays
+available standalone (it documents its own CLI invocation).
+
+**What it shows**, matching Ralf's own spec (a-d):
+- **(a/b)** `Push::onlyFallback()` - is push working at all, and via which
+  transport (real backend vs our SSE/long-poll fallback).
+- **(c)** Per-backend diagnostics for every class registered via the
+  `push-backends` hook (today just `swoolepush`) - `failedAttempts()`,
+  `backoffTime()`, a Reset form once exhausted (mirrors
+  `swoolepush/test.php`'s own), and that backend's own `online()` - so an
+  admin expecting a real push container can see it specifically isn't
+  reachable, not just that "something" is using the fallback. Generalizes
+  automatically to a second real backend if one is ever registered,
+  without needing a new hook of our own.
+- **(d)** `Push->online()=...` (any transport) - see the heartbeat fix
+  below for why this needed a separate fix to be accurate.
+- The actual round-trip send uses `(new Push(Push::SESSION))->apply(...)`
+  - the same generic-facade fix from the section above - so this page
+  correctly demonstrates the fallback delivering, not just the real
+  backend's own status.
+- Widened `pushTestStart()`'s own client-side wait from 2000ms to 5000ms
+  (both here and in `swoolepush/test.php`, for consistency) - see the
+  "still failing" section above for why 2s was too tight on a cold start.
+
+**Heartbeat gap fixed alongside it** (Ralf's question (d): "does
+`Push->online()` work for sse/long-polling too, is it implemented there
+also?" - it did not): `notifications_push::online()` only ever considers
+a session "online" via `notification_heartbeat`
+(`api/src/Session.php`'s `update_notification_heartbeat()`), previously
+only refreshed when `currentapp == 'notifications'` - the OLDER,
+notifications-app-specific polling loop. A session connected purely
+through the newer, generic `Api\Json\Push::ajax_poll()` fallback (which
+resolves `currentapp` to `'api'`, and works for every logged-in user
+regardless of whether they have the notifications app at all) was never
+counted, silently undercounting who's actually online whenever the
+fallback - not a real backend - is what's carrying push. Fixed by
+widening `Session.php`'s existing `elseif` to also match
+`$_GET['menuaction'] === 'EGroupware\\Api\\Json\\Push::ajax_poll'`.
+`heartbeat_limit()`'s ~70s recency window comfortably covers the gap
+between one `ajax_poll()` call ending and the next reissuing, so
+refreshing it once per call (once per `verify()`, ie. once per
+`ajax_poll()` invocation) is enough. No dedicated new test added (the
+existing `currentapp == 'notifications'` branch this mirrors also has no
+test coverage of its own); relies on the full `notifications`/`mail`/`api`
+push-related PHPUnit suites (13 tests, 36 assertions) for regression
+coverage instead.
+
+**New lang phrases** (`admin/lang/egw_en.lang` + `egw_de.lang`, both
+updated): `push`, `using a real, native push server`, `using the
+fallback (sse / regular long-poll json requests)`, `failed attempts`,
+`current backoff`, `reset to`, `online`, `currently online, any
+transport` - `reset`/`retry` already existed in `api`'s `common`
+category and were reused as-is.
+
+**Not live-verified by Claude**: the container's own "admin" test
+account used for browser-automation checks throughout this session lacks
+real EGroupware-administrator/`admin`-app rights (confirmed again here:
+`Api\Egw::check_app_rights()`, called automatically from
+`header.inc.php`'s own bootstrap for `currentapp='admin'`, throws
+`Exception\NoPermission\Admin()` before the page's own code ever runs) -
+the exact same limitation already hit testing `swoolepush/test.php`
+earlier in this project. Verified instead: PHP syntax (`php -l`), a full
+manual code trace of every branch, and that this touches nothing the
+`notifications`/`mail`/`api` push-related PHPUnit suites don't already
+cover (13/13 clean).
+
+**Two bugs found live once Ralf actually tried it** (exactly the kind of
+thing the missing live access above couldn't catch):
+
+1. `Class "EGroupware\Api\Framework" not found` at `push_test.php:48`.
+   Self-inflicted: an earlier edit removing the redundant admin-rights
+   check (see above - `check_app_rights()` already covers it) accidentally
+   deleted the `require_once __DIR__.'/../header.inc.php';` line right
+   above it in the same replace, so composer's autoloader never got
+   registered at all. Restored the line. (Confirmed along the way that
+   `Api\Framework::set_extra()` itself is legitimate - `Framework extends
+   Framework\Extra`, which defines it - the class-not-found error was
+   entirely about the missing bootstrap, not this call.)
+2. The page loaded, then got "directly overwritten by the accounts list"
+   - both via the Admin menu link and a fresh, standalone browser tab.
+   Root cause: `Egw::link('/admin/push_test.php')` (no query string at
+   all) means `Ajax::header()`'s own `check-framework` computation
+   (`!isset($_GET['cd']) || $_GET['cd'] !== 'no'`, both true here) sends
+   `data-check-framework="1"` to the client; `egw.js`'s own bootstrap,
+   finding no `window.framework` to inherit (no top/opener with one) and
+   no `cd=` anywhere in the URL, appends `?cd=yes` and reloads - which
+   re-renders as a full framework page and replaces the diagnostic
+   content, landing on the framework's own default view (the accounts
+   list). Fixed by adding `cd=no` to the link
+   (`Egw::link('/admin/push_test.php', 'cd=no')`) - matches
+   `Ajax.php`'s own `check-framework` condition exactly (`$_GET['cd'] !==
+   'no'` becomes false), so the redirect's own trigger condition is never
+   true in the first place, both server- and client-side. Only fixed for
+   the new Admin-menu-linked path; `swoolepush/test.php` itself likely has
+   the identical latent bug for a bare direct/bookmarked URL (no link
+   currently points to it to add `cd=no` to) - not fixed, since it's no
+   longer the primary way to reach this feature and nobody hit it there
+   before either.
+
+Both verified via `php -l` only (still no live account access) - needs a
+final live click-through to confirm no third issue is hiding behind
+these two.
+
+**Third, final root cause found (Ralf's own live testing did the actual
+diagnosis here)**: with the two bugs above fixed, the page still got
+"directly overwritten by the accounts list" - both via the sidebox link
+and a fresh standalone tab, with a brief flash of the real content first.
+Ralf's own hypothesis, confirmed by reading the code: `admin/js/app.ts`'s
+`et2_ready()` (the `'admin.index'` case, run once when the real, top-level
+admin app first loads its own accounts-list view) installs a **permanent**
+`load` event listener directly on the DOM iframe node it manages:
+
+```js
+this._adminIframeLoadHandler = () => {
+    if (iframeNode.contentDocument?.location.href.match(/(\/admin\/|\/admin\/index.php|menuaction=admin.admin_ui.index)/))
+    {
+        iframeNode.contentDocument.location.href = 'about:blank'; // stops redirect from admin/index.php
+        this.load(); // load own top-level index aka user-list
+    }
+};
+iframeNode.addEventListener('load', this._adminIframeLoadHandler);
+```
+
+This is a deliberate, existing safeguard against a real bug (the admin
+content iframe somehow loading `admin/index.php`/`menuaction=admin.
+admin_ui.index` again, recursively) - but its regex is a broad substring
+match on `/admin/` anywhere in the URL, not specifically the entry point
+it's actually guarding against. Since this listener is attached to the
+iframe DOM node itself (not scoped to any one `set_src()` call), it fires
+on **every subsequent load into that same iframe**, for the rest of that
+admin tab's lifetime - including `admin/push_test.php`, whose URL
+innocently contains `/admin/` purely because of its own directory. The
+"brief flash" was genuine: the page loaded, the `load` event fired, and
+this handler immediately blanked the iframe and called `this.load()` with
+no argument - which re-enables and reloads the default accounts-list
+`nextmatch` widget. `swoolepush/test.php`'s own URL never contained
+`/admin/` at all, which is why it was never affected by this, confirmed
+directly by Ralf reverting to it temporarily and finding it worked fine
+even via the sidebox.
+
+**Fix**: moved the page out from under `/admin/` entirely rather than
+touch this shared, deliberate safeguard - `admin/push_test.php` →
+`api/push_test.php` (same relative depth to the repo root, no other path
+changes needed; `currentapp` stays `'admin'`, so the same
+`check_app_rights()`-enforced permission requirement is unchanged).
+Updated the Admin menu link (`admin_hooks.inc.php`) accordingly, keeping
+`cd=no`. A `javascript:egw.openPopup(...)` alternative (matching
+`phpInfo`'s own pattern, which also avoids this since it's a real popup
+window, never loaded into the admin iframe at all) was tried and reverted
+- confirmed via a dedicated investigation that `egw.js` only ever inherits
+`window.egw`/`window.framework` from `window.opener` for a genuine popup,
+never `window.app`, which would have silently broken `pushTestStart()`/
+`pushTestMessage()`'s own `window.top.app.admin` targeting instead -
+right problem, wrong fix, would have traded one live bug for a
+harder-to-notice one.
+
+**Worth remembering**: a permanently-attached DOM event listener that
+pattern-matches on a URL substring (here, `/\/admin\//`) to guard against
+one specific, narrow scenario can silently swallow any *unrelated* page
+that happens to share that same directory - the fix for the false
+positive here was moving the affected page elsewhere, not narrowing the
+regex in shared, established code that exists for a real reason and could
+have its own subtle dependencies. When investigating "content loads then
+gets replaced" symptoms in this admin iframe specifically, checking
+`admin/js/app.ts`'s own iframe `load` listener should be an early step,
+not a last resort.
+
+## Polish pass on `api/push_test.php`'s own output (found live 2026-09-21)
+
+With the page finally reachable and working end-to-end, Ralf reported
+three cosmetic issues from a screenshot of the rendered output:
+
+1. The `Push: <using the fallback (SSE / regular long-poll JSON
+   requests)>` line was rendered in red (`$failure_start`) whenever
+   `Push::onlyFallback()===true`. Ralf: "should be in green as well, as
+   it means push service itself is working" - `onlyFallback()` is a
+   *description* of which transport is active, not a failure signal; the
+   line now always uses `$success_start` regardless of which branch is
+   taken. Only a genuine exception from the final round-trip send (the
+   facade finding *no* usable backend at all) still uses
+   `$failure_start`.
+2. The per-backend `online()` exception message (eg. `SwoolePush\Backend`
+   reporting it's in backoff / unreachable) was also red. That's expected
+   and normal once the fallback is correctly covering for it - not an
+   alarm, since the overall test above it is already green. Added a third
+   `$info_start = "<span style='color: gray'>"` (and `''` in the CLI
+   branch) used only for this one message.
+3. Separately, in the **swoolepush** repo (`swoolepush/src/Backend.php`,
+   not this repo - gitignored, own git history), the backoff exception
+   text was missing a space: `"...push/pushafter 4 failed attempts!"`.
+   Fixed by moving the leading space into the conditional string itself
+   (`" after $n failed attempts!"` instead of appending a space to
+   `$this->url`), so the other branch (just `"!"`, no `$n` available)
+   doesn't gain an awkward trailing space instead.
+
+All three are purely cosmetic (string content / CSS color), verified with
+`php -l` only - no test changes needed. The swoolepush fix lives in a
+sibling git repo with its own unrelated uncommitted changes from another
+session (`src/Session.php`) that must not be touched or bundled into this
+commit.
+
+Ralf then asked whether `swoolepush/test.php` itself (left in place
+standalone/CLI-usable, per the earlier decision) needed anything given
+`api/push_test.php` is now the primary entry point. Checked the whole
+`swoolepush` repo for stale references (README, hooks, menu registration)
+- none found beyond `test.php` itself, which had the exact same
+"fallback shown as failure" bug (`check_push()`'s `$only_fallback ?
+$failure_start : $success_start`) just fixed above, plus a doc-comment
+still naming the old `admin/push_test.php` path. Fixed both the same way.
+Left `SwoolePush\Backend->online()`'s own red-on-exception alone here
+(unlike the gray fix in `api/push_test.php`) - this page's whole purpose
+is diagnosing the swoolepush backend specifically, so swoolepush being
+unreachable is genuinely the primary thing this page tests for, not an
+incidental detail the way it is on the generic multi-backend admin page.

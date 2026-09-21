@@ -110,6 +110,22 @@ function createFakeSseStream(signal? : AbortSignal) : {response : any, stream : 
 					if(ended) return Promise.resolve({value: undefined, done: true});
 					if(signal?.aborted) return Promise.reject(new DOMException('The operation was aborted.', 'AbortError'));
 					return new Promise((resolve, reject) => { waitingResolve = resolve; waitingReject = reject; });
+				},
+				// egw_push_fallback.ts's ack-timeout prefers cancelling the reader (once one
+				// exists) over aborting the underlying AbortController directly, to avoid a real
+				// browser's "BodyStreamBuffer was aborted" internal rejection - per spec, cancel()
+				// settles any pending read() with {done: true}, not a rejection, same as a normal
+				// stream close.
+				cancel() : Promise<void>
+				{
+					ended = true;
+					if(waitingResolve)
+					{
+						const resolve = waitingResolve;
+						waitingResolve = waitingReject = null;
+						resolve({value: undefined, done: true});
+					}
+					return Promise.resolve();
 				}
 			})
 		}

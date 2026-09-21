@@ -258,7 +258,9 @@ creates a new field	admin	de	Erstellt ein neues Feld
 crontab only (recomended)	admin	de	Nur Crontab (empfohlen)
 current certificate	admin	de	Aktuelles Zertifikat
 current default	admin	de	Aktuelle Vorgabe
+current backoff	admin	de	aktuelle Wartezeit
 current hash	admin	de	Aktueller Schlüssel:
+currently online, any transport	admin	de	aktuell online, jede Übertragungsart
 currently:	admin	de	Aktuell:
 custom 1	admin	de	Benutzerdefiniert 1
 custom 2	admin	de	Benutzerdefiniert 2
@@ -450,6 +452,7 @@ exports groups into a csv file.	admin	de	Benutzergruppen in eine CSV-Datei expor
 exports permission settings into a csv file.	admin	de	Exportiere Zugriffsrechte in eine CSV-Datei.
 exports users into a csv file.	admin	de	Benutzer in eine CSV-Datei exportieren.
 failed	admin	de	fehlgeschlagen
+failed attempts	admin	de	fehlgeschlagene Versuche
 failed to change password for account "%1"!	admin	de	Fehler beim Ändern des Passwortes für Benutzer "%1"!
 failed to change password.	admin	de	Ändern des Passwortes nicht möglich.
 failed to delete account!	admin	de	Fehler beim Löschen des Mail-Kontos!
@@ -692,6 +695,7 @@ one day	admin	de	Ein Tag
 one hour	admin	de	Eine Stunde
 one month	admin	de	Ein Monat
 one week	admin	de	Eine Woche
+online	admin	de	online
 only below displayed information is directly submitted to %s.	admin	de	Nur die unterhalb angezeigte Information wird direkt zu %s übertragen.
 openapi configuration	admin	de	OpenAPI Konfiguration
 operating system	admin	de	Betriebssystem
@@ -752,6 +756,7 @@ profile is active	admin	de	Profil ist aktiv
 profile list	admin	de	Profilliste
 profile name	admin	de	Profilname
 protocol (encryption)	admin	de	Protokoll (Verschlüsselung)
+push	admin	de	Push
 push server is not working	admin	de	Push-Server funktioniert NICHT
 push server is working	admin	de	Push-Server funktioniert
 qmaildotmode	admin	de	qmaildotmode
@@ -777,6 +782,7 @@ required pear class mail/mimedecode.php not found.	admin	de	Die benötigte PEAR-
 required to embed egroupware via iframe eg. for lti	admin	de	Notwendig um EGroupware per iFrame einzubetten z.B. für LTI
 requires 'openid / oauth2 server' app.	admin	de	Benötigt die 'Open ID / OAuth2 Server' Anwendung.
 reset filter	admin	de	Filter zurücksetzen
+reset to	admin	de	zurückgesetzt auf
 retention period for history-log (in years)	admin	de	Aufbewahrungsfrist für Historie (in Jahren)
 revoke	admin	de	Widerrufen
 revoke this token	admin	de	Dieses Token widerrufen
@@ -987,7 +993,9 @@ users can define their own emailaccounts	admin	de	Anwender können ihre eigenen 
 users can define their own identities	admin	de	Anwender können ihre eigenen Identitäten definieren
 users can define their own signatures	admin	de	Anwender können ihre eigenen Signaturen definieren
 users choice	admin	de	Benutzerauswahl
+using a real, native push server	admin	de	verwendet einen echten, nativen Push-Server
 using data from mozilla ispdb for provider %1	admin	de	Benutze Mozilla ISPDB für Provider %1
+using the fallback (sse / regular long-poll json requests)	admin	de	verwendet den Fallback (SSE / reguläre Long-Poll JSON-Anfragen)
 using fallback via regular json requests	admin	de	Verwendung von Fallback über reguläre JSON-Anfragen
 using imap:%1, smtp:%2, oauth:%3:	admin	de	Benutze IMAP: %1, SMTP: %2, OAuth: %3:
 using native swoole push	admin	de	Verwendung von nativem Swoole Push

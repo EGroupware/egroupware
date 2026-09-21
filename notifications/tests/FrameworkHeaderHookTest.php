@@ -26,6 +26,36 @@ use EGroupware\Api\LoggedInTest;
  */
 class FrameworkHeaderHookTest extends LoggedInTest
 {
+	private $originalNotificationsGrant;
+
+	protected function setUp() : void
+	{
+		parent::setUp();
+
+		// hook_framework_header.inc.php's own guard requires the CURRENT user to have the
+		// notifications app granted - true for this repo's usual dev/test accounts, but not
+		// guaranteed for whatever account a fresh CI install's LoggedInTest ends up using (found
+		// live in CI: the hook silently skipped includeJS(), failing
+		// testFrameworkHeaderHookRegistersTheAppBundleBeforeGetScriptLinksIsResolved further down -
+		// "Failed asserting that an array is not empty"). Force it on for the duration of this
+		// test class instead of depending on ambient account state, and restore it after.
+		$this->originalNotificationsGrant = $GLOBALS['egw_info']['user']['apps']['notifications'] ?? null;
+		$GLOBALS['egw_info']['user']['apps']['notifications'] = 1;
+	}
+
+	protected function tearDown() : void
+	{
+		if (isset($this->originalNotificationsGrant))
+		{
+			$GLOBALS['egw_info']['user']['apps']['notifications'] = $this->originalNotificationsGrant;
+		}
+		else
+		{
+			unset($GLOBALS['egw_info']['user']['apps']['notifications']);
+		}
+		parent::tearDown();
+	}
+
 	public function testNotificationsRegistersAFrameworkHeaderHook()
 	{
 		Api\Hooks::read(true);

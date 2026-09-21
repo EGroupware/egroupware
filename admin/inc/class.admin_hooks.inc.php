@@ -116,10 +116,21 @@ class admin_hooks
 			{
 				$file['phpInfo'] = "javascript:egw.openPopup('" . Egw::link('/admin/phpinfo.php', '', false) . "',960,600,'phpinfoWindow')";
 			}
-			if (file_exists(EGW_SERVER_ROOT . '/swoolepush/test.php'))
-			{
-				$file['Test Push'] = Egw::link('/swoolepush/test.php');
-			}
+			// generic push-connectivity diagnostic (real backend + our own SSE/long-poll
+			// fallback) - works regardless of whether a real backend like swoolepush is even
+			// installed, unlike the old swoolepush-specific link this replaces (still available
+			// standalone at /swoolepush/test.php for CLI use, see doc/ai/projects/
+			// push-fallback-longpoll.md). Deliberately lives at /api/push_test.php, NOT under
+			// /admin/: admin/js/app.ts's own et2_ready() installs a permanent 'load' listener on
+			// its content iframe that blanks ANY url matching /\/admin\// and reloads the
+			// default accounts list (a real, deliberate safeguard against admin/index.php
+			// recursively reloading itself) - this page's own directory alone was enough to
+			// trigger it, with no way to opt out from here, found live 2026-09-21 as "gets
+			// directly overwritten by the accounts list". cd=no (not cd=popup - that still fails
+			// Ajax.php's own check-framework condition, `$_GET['cd'] !== 'no'`, and would
+			// reintroduce egw.js's "check-framework" redirect-and-reload from earlier today)
+			// avoids that separate, now-fixed issue.
+			$file['Test Push'] = Egw::link('/api/push_test.php', 'cd=no');
 			$file['Admin queue and history'] = Egw::link('/index.php', 'menuaction=admin.admin_cmds.index&ajax=true');
 			$file['Remote administration instances'] = Egw::link('/index.php', 'menuaction=admin.admin_cmds.remotes&ajax=true');
 			$file['Custom translation'] = Egw::link('/index.php', 'menuaction=admin.admin_customtranslation.index');

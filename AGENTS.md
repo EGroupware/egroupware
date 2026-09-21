@@ -292,100 +292,12 @@ similar scope.
   the pdfjs-dist bump, not attempted.
 - `doc/ai/projects/push-fallback-longpoll.md` - giving the swoole-less push
   fallback (shared hosting / tarball-in-docroot installs with no `swoolepush`
-  daemon) a low-latency, PHP-FPM-friendly delivery path and real client-side
-  auto-detection, instead of the old static server-config flag. Covers the
-  full existing architecture (`Api\Json\Push`/`PushBackend`, the
-  already-generic SQL fallback in `notifications_push`, `swoolepush`'s
-  self-healing backoff, every `Push::onlyFallback()` consumer) and a 7-phase
-  plan. **Phases 1-4 and 6 are DONE** (see the doc's Status section for full
-  per-phase detail, incl. several real bugs found+fixed along the way - a
-  latent message-loss race in `egw_json.ts`'s app-not-yet-instantiated
-  fallback, a `handleResponse()` double-callback-invocation edge case, and
-  (Phase 6) a client-side self-abort feedback loop plus a reused-callback
-  bug that both only surfaced while writing tests for the new SSE path):
-  1. `notifications/js/notificationajaxpopup.js` ported to a real, tested,
-     plain-DOM/TS `notifications/js/app.ts`.
-  2. Unified client-side push-availability signal - `egw.pushAvailable()`/
-     `egw.onPushAvailabilityChange()` in `egw_json.ts`'s "json" module.
-  3. Generic bounded long-poll fallback driver -
-     `Api\Json\Push::ajax_poll()` (server, no app permission needed) +
-     `api/js/jsapi/egw_push_fallback.ts` (client, always-loaded core).
-  4. Concurrency safety valve - one atomic `Api\Cache` counter shared by
-     every transport, default budget 20, admin-configurable.
-  6. SSE, auto-detected via a single request racing an "ack" chunk against
-     a short client-side timeout, with automatic fallback to Phase 3's
-     long-poll - sharing Phase 4's budget rather than a separate one
-     (Ralf's call: "how many held connections" is the right metric
-     regardless of transport).
-  Phase 5 (the importexport progress-bar fix) not started. **Phase 7 done**
-  - retired `notifications_ajax::$isPushServer`/`data.isPushServer` (the
-  client has driven its poll/stop decision purely off
-  `egw.pushAvailable()` since Phase 1, nothing read the server flag any
-  more); `Api\Json\Push::onlyFallback()` itself is untouched, still used by
-  its other, unrelated callers. Separately (not
-  one of the 7 phases): `NotificationsApp` now also keeps a slow
-  (`mail_hooks::needsNotificationCheckPolling()`-gated, 180s) keep-alive
-  poll running even while push is fully available, since neither Dovecot's
-  nor JMAP's mail-server push currently triggers the actual "new mail"
-  notification (`check_notify`/`notification_check_mailbox()`) - only
-  polling does. Found+fixed a real pre-existing bug along the way in
-  `Api\Mail\Notifications::read()`'s array-`$account_id` cache-hit path.
-  Wiring JMAP's push into building that notification itself (letting JMAP
-  accounts skip the keep-alive poll too) is logged as a deferred follow-up,
-  not built - Ralf: JMAP mail servers are rare enough to deprioritize.
-  **Live regression found+fixed**: `egw_push_fallback.ts` lives in the
-  always-loaded core bundle (unlike `notifications/js/app.ts`, which is
-  only ever emitted for a logged-in user), so it also ran on the
-  unauthenticated login page - `ajax_poll()` there hit `json.php`'s
-  `login_redirect()` path, which `apply()`s `framework.callOnLogout`
-  (throws - no framework loaded there) and redirects back to `login.php`,
-  reloading the page and repeating forever. Fixed with the same
-  `window.egw_appName === 'login'` guard `egw.js`'s build-epoch poll
-  already uses for the identical reason - worth checking for in any future
-  addition to `egw_modules.js`, not just this one.
-  **Second live regression found+fixed**: `hook_after_navbar.inc.php`'s own
-  fix for loading `notifications/js/app.ts` (it has no owning template/tab)
-  emitted a literal inline `<script type="module">window.egw_import(...)
-  </script>` - blocked outright by CSP's `script-src` (no
-  `'unsafe-inline'`/nonce/hash for arbitrary inline content). Fixed by
-  switching to `Api\Framework::includeJS('/notifications/js/app.min.js')`,
-  the same mechanism every other app uses for its own bundle (e.g.
-  `calendar_owner_etemplate_widget.inc.php`, `mail/compose.php`) - it
-  produces an *external* `<script src="...">` tag via
-  `Framework::get_script_links()`, satisfying `script-src 'self'` with no
-  inline content at all. The `data-poll-interval`/`data-mail-check-interval`/
-  `data-langRequire` values `app.ts` reads via
-  `getElementById('notifications_script_id')` moved onto a separate,
-  non-executing `<div>` with that same id, since `includeJS()` has no way to
-  attach custom attributes to the tag it emits. **Worth remembering**:
-  jstest's fake-DOM harness doesn't enforce CSP at all, so this class of bug
-  only surfaces live against the real site - any code emitting its own
-  `<script>` tag server-side needs a live check, not just a green test
-  suite.
-  **Third live regression found+fixed**: the CSP fix above was correct
-  about *how* to include the script, but called `includeJS()` from the
-  wrong hook - `Api\Framework\Ajax::header()` resolves
-  `get_script_links()` into the page (`_get_header()`, line 267) BEFORE
-  the `after_navbar` hook even fires (line 282), so the registration in
-  `hook_after_navbar.inc.php` was always one step too late for a real
-  page: `app.ts` never loaded at all, so the bell showed no count and
-  clicking it did nothing. Fixed by moving the `includeJS()` call into a
-  new, earlier `framework_header` hook
-  (`notifications/inc/hook_framework_header.inc.php`, registered in
-  `notifications/setup/setup.inc.php`) - the same hook location
-  `swoolepush` already uses for its own early bootstrap injection.
-  `hook_after_navbar.inc.php` keeps only the DOM-placement-dependent part
-  (the config-carrying `<div id="notifications_script_id">` + `#egwpopup`
-  markup) - that part was never the problem. New regression test:
-  `notifications/tests/FrameworkHeaderHookTest.php` (3 tests, asserts the
-  hook is registered, that invoking it in the same order `Ajax::header()`
-  does makes `get_script_links()` actually contain the bundle, and that a
-  popup-window call correctly skips it). **Worth remembering**: this
-  codebase has (at least) two framework-hook timings that look
-  interchangeable but aren't - `framework_header` fires *before*
-  `Framework::_get_js()`/`get_script_links()` is consulted, `after_navbar`
-  fires *after* - only `framework_header` (or equivalently early) can be
-  used to register a script that must reach a real, non-AJAX page.
+  daemon) a low-latency, PHP-FPM-friendly delivery path (bounded long-poll +
+  SSE) and real client-side auto-detection, instead of the old static
+  server-config flag. Phases 1-4, 6 and 7 done (Phase 5, the importexport
+  progress-bar fix, not started); several live regressions found and fixed
+  post-rollout. See the doc for full architecture, phase-by-phase detail, and
+  the regression write-ups.
 
 ## Security and data handling
 

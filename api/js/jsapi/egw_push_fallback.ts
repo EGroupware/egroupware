@@ -90,6 +90,32 @@ class PushFallback
 		// so there's nothing a push-fallback connection could usefully do here regardless.
 		if((<any>window).egw_appName === 'login') return;
 
+		// Only the real, top-level framework page (never a popup/content page, eg. a mail compose
+		// window or swoolepush/test.php's own iframe) should run a fallback connection at all -
+		// reuses the EXACT same signal that already, server-side, keeps the real websocket
+		// connection to a single instance: Api\Framework\Ajax::header()'s $do_framework, exposed
+		// here as data-push-longpolling-fallback on the egw.js bootstrap script tag
+		// (id="egw_script_id") - swoolepush's own framework_header() hook
+		// (Hooks::framework_header()) already receives the identical 'popup' => !$do_framework
+		// flag and, on that basis, simply never embeds websocket bootstrap data into a popup
+		// page's own script tag at all - egw.js's `egw === window.top.egw` check that then gates
+		// openWebSocket() is NOT what actually prevents a second connection (a popup's egw.js run
+		// typically successfully INHERITS window.top.egw - the exact same object, not a separate
+		// one - so that check trivially passes there too); it's that the bootstrap data simply
+		// was never sent to begin with. NOT read as data-popup: that attribute already means
+		// something else entirely (a JSON-encoded egw.open_link() args array, written by
+		// Api\Framework\Extra::popup() - found live: an earlier version of this exact guard used
+		// that same name server-side and clobbered it, throwing on any page that also called
+		// Extra::popup()).
+		//
+		// A first attempt at this guard (found live 2026-09-21 debugging Admin > Test Push
+		// reporting a false failure, two parallel long-polls visible in dev tools) tried to
+		// reproduce that same egw-object-identity check client-side - wrong, per the above: since
+		// egw.js's inheritance succeeds for an ordinary content iframe just as often as it does
+		// for the real top page, comparing object identity client-side cannot actually distinguish
+		// them; only the server-side gate that decided whether to embed bootstrap data at all can.
+		if(document.getElementById('egw_script_id')?.getAttribute('data-push-longpolling-fallback')) return;
+
 		(<any>window).egw_ready.then(() =>
 		{
 			if(!egw.pushAvailable())
@@ -230,7 +256,35 @@ class PushFallback
 
 		const controller = new AbortController();
 		this.#sseAbort = controller;
-		const ackTimer = window.setTimeout(() => controller.abort(), PushFallback.SSE_ACK_TIMEOUT_MS);
+		// Set once the stream-reading phase below starts. The ack-timeout callback prefers
+		// cancelling THIS (once it exists) over aborting the controller directly - see the
+		// callback's own comment for why.
+		let reader : ReadableStreamDefaultReader<Uint8Array> = null;
+		const ackTimer = window.setTimeout(() =>
+		{
+			if(reader)
+			{
+				// reader.cancel() while reader.read() is in flight is the spec-compliant way to
+				// stop consuming a stream - it settles that pending read() with {done: true}
+				// rather than rejecting it, and properly propagates the cancellation down to the
+				// network layer on its own. Found live (2026-09-21, DevTools "pause on
+				// exceptions" during a page reload): calling controller.abort() directly here
+				// instead, while a read() on this same fetch's body was in flight, produced a
+				// SECOND, chromium-internal "AbortError: BodyStreamBuffer was aborted" promise
+				// rejection - not the one our own try/catch around reader.read() below sees and
+				// already handles, but a separate one tied to fetch()'s internal body-buffering
+				// that application code has no reference to and can never attach a .catch() to.
+				// A documented fetch()+ReadableStream+AbortController interaction, not a bug in
+				// our own error handling - reader.cancel() avoids it entirely.
+				reader.cancel().catch(() => undefined);
+			}
+			else
+			{
+				// no reader yet - still waiting on fetch() itself (or its response turned out not
+				// to be a stream at all), so aborting the controller is correct and the only option
+				controller.abort();
+			}
+		}, PushFallback.SSE_ACK_TIMEOUT_MS);
 		const jsonRequest = egw.json(PushFallback.MENUACTION, [], this.#once((_data) => this.#handlePollResponse(_data)));
 
 		let response : Response;
@@ -287,7 +341,7 @@ class PushFallback
 		// arrives *while already streaming*, where it would start a redundant plain long-poll
 		// alongside the perfectly good SSE stream. Found while testing this exact scenario.
 		const streamRequest = egw.json(PushFallback.MENUACTION, [], null);
-		const reader = response.body.getReader();
+		reader = response.body.getReader();
 		const decoder = new TextDecoder();
 		let buffer = '';
 		let ackReceived = false;
