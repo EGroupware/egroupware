@@ -10,6 +10,7 @@
 require_once __DIR__.'/../../api/tests/LoggedInTest.php';
 
 use EGroupware\Api;
+use EGroupware\Api\Framework\Bundle;
 use EGroupware\Api\LoggedInTest;
 
 /**
@@ -27,6 +28,36 @@ use EGroupware\Api\LoggedInTest;
 class FrameworkHeaderHookTest extends LoggedInTest
 {
 	private $originalNotificationsGrant;
+	private static $manifestBackup;
+
+	public static function setUpBeforeClass() : void
+	{
+		parent::setUpBeforeClass();
+
+		// api/js/build-manifest.json (Bundle::resolveEntry()'s source) is a gitignored build
+		// artifact - the CI phpunit job never runs a JS build, so on a fresh checkout there is no
+		// entry for notifications/js/app.min.js there, and no literal file either (also
+		// gitignored). Faking a manifest entry, same pattern as
+		// api/tests/Framework/HashedEntryIncludeJSTest.php, makes this test prove the include
+		// actually gets queued rather than depending on whether this particular checkout happens
+		// to have a real build lying around. Found live in CI 2026-09-21: passed on this repo's
+		// own long-lived dev checkout (a real build existed from earlier browser testing the same
+		// day), failed on a fresh CI checkout with the exact same "array not empty" assertion the
+		// account-grant fix below (setUp()) was for - that fix was real but not sufficient alone.
+		Bundle::loadManifest();
+		self::$manifestBackup = (new \ReflectionProperty(Bundle::class, 'manifest'))->getValue();
+
+		$manifest = is_array(self::$manifestBackup) ? self::$manifestBackup : [];
+		$manifest['/notifications/js/app.min.js'] = '/chunks/notifications-js-app.min-deadbeef.js';
+		(new \ReflectionProperty(Bundle::class, 'manifest'))->setValue(null, $manifest);
+	}
+
+	public static function tearDownAfterClass() : void
+	{
+		(new \ReflectionProperty(Bundle::class, 'manifest'))->setValue(null, self::$manifestBackup);
+
+		parent::tearDownAfterClass();
+	}
 
 	protected function setUp() : void
 	{
