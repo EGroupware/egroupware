@@ -332,9 +332,13 @@ describe("Et2CustomfieldWidgetMapper", () =>
 		assert.deepInclude(both[1].attrs, {
 			id: "#cf_file_vfs_select",
 			path: "~",
-			methodId: both[0].attrs.path,
 			buttonLabel: "Link"
 		});
+		assert.notProperty(
+			both[1].attrs, "methodId",
+			"the path to link into only exists on the upload element, so it cannot be set here - " +
+			"Et2Customfields reads it off the upload when it places the button"
+		);
 		assert.notProperty(both[1].attrs, "value", "the button carries no value of its own");
 
 		// a field that says it does not want the button

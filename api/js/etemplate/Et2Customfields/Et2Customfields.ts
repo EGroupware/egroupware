@@ -313,11 +313,25 @@ export class Et2Customfields extends Et2CustomfieldsBase implements Et2LayoutHos
 	 * empty and submits nothing.  The link lists elsewhere on the dialog are refreshed too, since
 	 * linking the file is what the button just did.
 	 *
+	 * The button also needs the upload's `app:id:filename` path as the target to link into.  That
+	 * path never passes through the generated attributes: the server sends it as an element
+	 * attribute keyed by the upload's own id, so it only exists once the upload element has been
+	 * given its attributes.  Reading it off the upload here is why this runs per placed button
+	 * rather than in the mapping - without it the button asks the server to link into nothing, and
+	 * the file ends up in a temporary directory that the entry never picks up.
+	 *
 	 * @param {string} fieldName Unprefixed customfield name.
 	 * @param {Element} button The generated et2-vfs-select.
 	 */
 	private _wireVfsSelect(fieldName : string, button : Element)
 	{
+		// Outside the wired-once guard: a re-render can hand the field a new upload, and a button
+		// still pointing at the old one's path would link into the wrong place.
+		const path = (<any>this.widgets[fieldName])?.path;
+		if(path)
+		{
+			(<any>button).methodId = path;
+		}
 		if(this._valued.has(button) && (<any>button)._customfieldsWired)
 		{
 			return;

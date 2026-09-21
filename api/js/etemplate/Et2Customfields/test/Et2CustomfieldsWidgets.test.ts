@@ -456,6 +456,20 @@ describe("Et2Customfields webcomponents", () =>
 			"Attachment",
 			"the caption names the field, since the upload cannot show its own label here"
 		);
+		// The button links into the upload's own directory, which it can only learn from the upload:
+		// the server sends that path as an element attribute of the upload, so there is nothing for
+		// the generated attributes to carry.  Without this the server is asked to link into nothing
+		// and puts the file in a temp directory the entry never picks up.
+		const button = element.querySelector("[data-field='cf_file'] > et2-vfs-select");
+		assert.isNotOk(button.methodId, "nothing to link into until the upload has a path");
+		upload.path = "infolog:123:cf_file";
+		element.requestUpdate();
+		await element.updateComplete;
+		assert.equal(
+			button.methodId, "infolog:123:cf_file",
+			"the button has to be told where to link the file, or it is sent without a target"
+		);
+
 		assert.deepEqual(
 			Object.keys(element.getValue()),
 			["#cf_file"],

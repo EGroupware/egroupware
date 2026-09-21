@@ -591,7 +591,10 @@ function vfsSelectMapping(upload : Et2CustomfieldWidgetMapping) : Et2Customfield
 			// "~" is the user's own home, where the dialog opens
 			path: "~",
 			method: "EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_existing",
-			methodId: upload.attrs.path,
+			// No methodId here: the target to link into is the upload's `app:id:filename` path,
+			// which the server delivers as an element attribute of the upload rather than through
+			// these attributes, so there is nothing to read at mapping time.  Et2Customfields sets
+			// it in _wireVfsSelect(), once the upload element exists.
 			buttonLabel: "Link",
 			class: "et2_vfs_btn",
 			statustext: "select file(s) from vfs",
