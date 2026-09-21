@@ -49,49 +49,6 @@ class SharingBase extends LoggedInTest
 	const NO_WEBSERVER_ENV = 'EGW_TEST_NO_WEBSERVER';
 
 	/**
-	 * host[:port] to build share links against.
-	 *
-	 * EGW_URL wins, the way every other test that needs a webserver resolves it (WebDAVTest,
-	 * CalDAVTest, LogoutRedirectXssTest).  This used to consult EGW_URL only when the
-	 * webserver_url config was *empty* - but that config is normally a bare path ("/egroupware"),
-	 * which is non-empty and carries no host, so the fallback never ran and every share link was
-	 * pinned to localhost:80.  Where something happens to listen there it silently worked; in CI
-	 * nothing does, and the resulting connection failure was reported as a skipped test.
-	 *
-	 * @return string
-	 */
-	protected static function webserverHost() : string
-	{
-		foreach([
-			getenv('EGW_URL') ?: ($_ENV['EGW_URL'] ?? null) ?: ($GLOBALS['EGW_URL'] ?? null),
-			$GLOBALS['egw_info']['server']['webserver_url'] ?? null,
-		] as $url)
-		{
-			if(empty($url) || empty($parts = parse_url($url)) || empty($parts['host']))
-			{
-				continue;
-			}
-			return $parts['host'].(!empty($parts['port']) ? ':'.$parts['port'] : '');
-		}
-		return 'localhost';
-	}
-
-	/**
-	 * Hand our session over before asking the webserver to use it.
-	 *
-	 * The keep-session paths send this process's own session cookie.  PHP locks a session file
-	 * exclusively, so while we still hold it open the webserver blocks in session_start() until
-	 * the request times out - fatal against a single-threaded `php -S`, which is what CI runs.
-	 */
-	protected function releaseSessionForWebserver() : void
-	{
-		if(isset($GLOBALS['egw']->session) && session_status() === PHP_SESSION_ACTIVE)
-		{
-			$GLOBALS['egw']->session->commit_session();
-		}
-	}
-
-	/**
 	 * Nothing answered the share request at all (no HTTP status).
 	 *
 	 * Skipped only where the caller has declared there is no webserver, otherwise a failure.
@@ -603,7 +560,21 @@ class SharingBase extends LoggedInTest
 			echo __METHOD__ . "('$path',$mode)\n";
 		}
 		// Setup - create path and share
-		$_SERVER['HTTP_HOST'] = static::webserverHost();
+		$host = 'localhost';
+		$webserver_url = $GLOBALS['egw_info']['server']['webserver_url'] ?? null;
+		if (empty($webserver_url))
+		{
+			$webserver_url = getenv('EGW_URL') ?: ($_ENV['EGW_URL'] ?? null) ?: ($GLOBALS['EGW_URL'] ?? null);
+		}
+		if (!empty($webserver_url))
+		{
+			$parts = parse_url($webserver_url);
+			if (!empty($parts['host']))
+			{
+				$host = $parts['host'].(!empty($parts['port']) ? ':'.$parts['port'] : '');
+			}
+		}
+		$_SERVER['HTTP_HOST'] = $host;
 		$share = $this->createShare($path, $mode, $extra);
 		$link = Vfs\Sharing::share2link($share);
 
@@ -685,7 +656,6 @@ class SharingBase extends LoggedInTest
 			$cookie .= ';'.Api\Session::EGW_SESSION_NAME."={$session_id}";
 		}
 		curl_setopt($curl, CURLOPT_COOKIE, $cookie);
-		$this->releaseSessionForWebserver();
 		$html = curl_exec($curl);
 		$http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 		$curl_errno = curl_errno($curl);
@@ -768,7 +738,6 @@ class SharingBase extends LoggedInTest
 			$cookie .= ';'.Api\Session::EGW_SESSION_NAME.'='.$session_id;
 		}
 		curl_setopt($curl, CURLOPT_COOKIE, $cookie);
-		$this->releaseSessionForWebserver();
 		curl_exec($curl);
 		$http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 		$content_type = (string)curl_getinfo($curl, CURLINFO_CONTENT_TYPE);
@@ -849,7 +818,6 @@ class SharingBase extends LoggedInTest
 			$cookies['kp3'] = $GLOBALS['egw']->session->kp3;
 		}
 		$this->addCookies($curl, $cookies);
-		$this->releaseSessionForWebserver();
 		$html = curl_exec($curl);
 		$http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 		$effective_url = (string)curl_getinfo($curl, CURLINFO_EFFECTIVE_URL);
