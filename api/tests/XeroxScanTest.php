@@ -148,14 +148,116 @@ class XeroxScanTest extends WebDAVTest
 		$this->assertHttpStatus(400, $response);
 	}
 
-	public function testDeleteFileNotImplemented() : void
+	public function testGetFileOfMissingFileReturns404() : void
+	{
+		$response = $this->xeroxPost([
+			['name' => 'theOperation', 'contents' => 'GetFile'],
+			['name' => 'destDir', 'contents' => ''],
+			['name' => 'destName', 'contents' => 'no-such-file.dat'],
+		]);
+		$this->assertHttpStatus(404, $response);
+	}
+
+	public function testGetFileOfExistingFileReturnsContent() : void
+	{
+		$this->xeroxPost([
+			['name' => 'theOperation', 'contents' => 'PutFile'],
+			['name' => 'destDir', 'contents' => ''],
+			['name' => 'destName', 'contents' => 'getme.pdf'],
+			['name' => 'sendfile', 'contents' => 'content to fetch back'],
+		]);
+
+		$response = $this->xeroxPost([
+			['name' => 'theOperation', 'contents' => 'GetFile'],
+			['name' => 'destDir', 'contents' => ''],
+			['name' => 'destName', 'contents' => 'getme.pdf'],
+		]);
+		$this->assertHttpStatus(200, $response);
+		$this->assertSame('content to fetch back', (string)$response->getBody());
+	}
+
+	public function testDeleteFileRemovesIt() : void
+	{
+		$this->xeroxPost([
+			['name' => 'theOperation', 'contents' => 'PutFile'],
+			['name' => 'destDir', 'contents' => ''],
+			['name' => 'destName', 'contents' => 'deleteme.pdf'],
+			['name' => 'sendfile', 'contents' => 'to be deleted'],
+		]);
+
+		$response = $this->xeroxPost([
+			['name' => 'theOperation', 'contents' => 'DeleteFile'],
+			['name' => 'destDir', 'contents' => ''],
+			['name' => 'destName', 'contents' => 'deleteme.pdf'],
+		]);
+		$this->assertHttpStatus(200, $response);
+
+		$response = $this->xeroxPost([
+			['name' => 'theOperation', 'contents' => 'GetFile'],
+			['name' => 'destDir', 'contents' => ''],
+			['name' => 'destName', 'contents' => 'deleteme.pdf'],
+		]);
+		$this->assertHttpStatus(404, $response, 'file must actually be gone after DeleteFile');
+	}
+
+	public function testDeleteFileOfMissingFileReturns404() : void
 	{
 		$response = $this->xeroxPost([
 			['name' => 'theOperation', 'contents' => 'DeleteFile'],
 			['name' => 'destDir', 'contents' => ''],
-			['name' => 'destName', 'contents' => 'scan1.pdf'],
+			['name' => 'destName', 'contents' => 'no-such-file.dat'],
 		]);
-		$this->assertHttpStatus(501, $response);
+		$this->assertHttpStatus(404, $response);
+	}
+
+	public function testRemoveDirRemovesEmptyDir() : void
+	{
+		$this->xeroxPost([
+			['name' => 'theOperation', 'contents' => 'MakeDir'],
+			['name' => 'destDir', 'contents' => 'emptydir'],
+		]);
+
+		$response = $this->xeroxPost([
+			['name' => 'theOperation', 'contents' => 'RemoveDir'],
+			['name' => 'destDir', 'contents' => 'emptydir'],
+		]);
+		$this->assertHttpStatus(200, $response);
+
+		$response = $this->xeroxPost([
+			['name' => 'theOperation', 'contents' => 'ListDir'],
+			['name' => 'destDir', 'contents' => 'emptydir'],
+		]);
+		$this->assertHttpStatus(404, $response, 'directory must actually be gone after RemoveDir');
+	}
+
+	/**
+	 * Matches a real device's observed lifecycle: MakeDir a "<job>.LCK" directory, then PutFile a
+	 * "<job>.LCK/LOCKINFO.DAT" destName - the LOCKINFO.DAT file must land INSIDE that directory,
+	 * not be flattened into destDir directly (destName can be a multi-segment relative path, not
+	 * just a leaf filename).
+	 */
+	public function testPutFileWithSubdirectoryDestNameLandsInsideIt() : void
+	{
+		$this->xeroxPost([
+			['name' => 'theOperation', 'contents' => 'MakeDir'],
+			['name' => 'destDir', 'contents' => 'job.LCK'],
+		]);
+
+		$response = $this->xeroxPost([
+			['name' => 'theOperation', 'contents' => 'PutFile'],
+			['name' => 'destDir', 'contents' => ''],
+			['name' => 'destName', 'contents' => 'job.LCK/LOCKINFO.DAT'],
+			['name' => 'sendfile', 'contents' => 'lock info'],
+		]);
+		$this->assertHttpStatus(200, $response);
+
+		$response = $this->xeroxPost([
+			['name' => 'theOperation', 'contents' => 'GetFile'],
+			['name' => 'destDir', 'contents' => 'job.LCK'],
+			['name' => 'destName', 'contents' => 'LOCKINFO.DAT'],
+		]);
+		$this->assertHttpStatus(200, $response, 'LOCKINFO.DAT must be inside job.LCK/, not flattened into destDir');
+		$this->assertSame('lock info', (string)$response->getBody());
 	}
 
 	/**

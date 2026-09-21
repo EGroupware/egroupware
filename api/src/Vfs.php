@@ -1213,6 +1213,28 @@ class Vfs extends Vfs\Base
 	}
 
 	/**
+	 * Sanitize a client-supplied name that MAY itself be a relative path of several segments (eg.
+	 * a CGI-style protocol's "destination name" field that can include a subdirectory the caller
+	 * already created separately, unlike sanitize_leaf_name()'s single-segment case).
+	 *
+	 * Only strips control characters and a leading '/' (must stay relative) - internal '/'
+	 * separators are kept. This does NOT by itself prevent the result from resolving outside a
+	 * given base directory once combined via concat() (eg. "../../etc/passwd") - same as an
+	 * already-authenticated WebDAV request, that is bounded by the current user's normal Vfs ACL
+	 * checks on every actual read/write, not by path confinement.
+	 *
+	 * @param string $path
+	 * @return string|null null if nothing safe/usable is left
+	 */
+	static function sanitize_relative_path($path)
+	{
+		$path = str_replace('\\', '/', (string)$path);
+		$path = ltrim(preg_replace('/[\x00-\x1F\x7F]/', '', trim($path)), '/');
+
+		return ($path === '' || $path === '.' || $path === '..') ? null : $path;
+	}
+
+	/**
 	 * Utf-8 save version of parse_url
 	 *
 	 * Does caching withing request, to not have to parse urls over and over again.
