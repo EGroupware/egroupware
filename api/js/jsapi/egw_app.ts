@@ -1384,7 +1384,9 @@ export abstract class EgwApp
 						this.egw.message(result.msg, 'error');
 						return;
 					}
-					(<any>window).app.mail?.composeMessage({id: 'composefromdraft'}, [{id: result.id}]);
+					// egw.applyFunc() not a direct `window.app.mail?.` read - see filemanager.ts's
+					// open_mail() own comment (same silent-no-op bug class, Tracker #124911).
+					this.egw.applyFunc('app.mail.composeMessage', [{id: 'composefromdraft'}, [{id: result.id}]]);
 				})
 				.catch((e : any) => this.egw.message(e?.message || e, 'error'));
 		}

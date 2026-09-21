@@ -25,15 +25,18 @@ const APP_SOURCE = '/calendar/js/app.ts';
  * computes the whole preset server-side - recipients, subject, body, the event's own .ics text),
  * then hand its result, unmodified, to MailApp.composeWithPreset().
  *
- * Setup: composeMeetingMail() only ever touches `this.egw` (for the ajax round-trip) and
- * `window.app.mail`, so the app object is a bare Object.create(CalendarApp.prototype) - no EgwApp
- * constructor, which would want a real framework, sidebox and etemplate.
+ * Setup: composeMeetingMail() only ever touches `this.egw` (for the ajax round-trip and, since
+ * Tracker #124911, the dotted-path egw.applyFunc('app.mail.composeWithPreset', ...) dispatch - see
+ * that method's own comment for why a direct `window.app.mail?.` read isn't used any more: a
+ * window/popup that never loaded mail's own JS would silently no-op instead of opening a compose),
+ * so the app object is a bare Object.create(CalendarApp.prototype) - no EgwApp constructor, which
+ * would want a real framework, sidebox and etemplate.
  */
 describe('CalendarApp.composeMeetingMail()', () =>
 {
 	let app : CalendarApp;
 	let egw : any;
-	let composeWithPresetSpy : sinon.SinonSpy;
+	let applyFuncSpy : sinon.SinonSpy;
 	let CalendarAppClass : typeof CalendarApp;
 
 	before(async function()
@@ -45,19 +48,13 @@ describe('CalendarApp.composeMeetingMail()', () =>
 
 	beforeEach(() =>
 	{
-		composeWithPresetSpy = sinon.spy();
-		(<any>window).app.mail = {composeWithPreset: composeWithPresetSpy};
+		applyFuncSpy = sinon.spy();
 
 		app = Object.create(CalendarAppClass.prototype);
 		Object.assign(app, {appname: 'calendar'});
 	});
 
-	afterEach(() =>
-	{
-		delete (<any>window).app.mail;
-	});
-
-	it('hands ajax_custom_mail()\'s own preset, unmodified, to MailApp.composeWithPreset()', async() =>
+	it('hands ajax_custom_mail()\'s own preset, unmodified, to MailApp.composeWithPreset() via egw.applyFunc()', async() =>
 	{
 		const preset = {
 			subject: 'Team meeting',
@@ -66,19 +63,19 @@ describe('CalendarApp.composeMeetingMail()', () =>
 			bcc: ['A A <a@example.com>'],
 			attachmentContents: [{name: 'event.ics', type: 'text/calendar', content: 'BEGIN:VCALENDAR...'}],
 		};
-		egw = {request: sinon.stub().resolves(preset)};
+		egw = {request: sinon.stub().resolves(preset), applyFunc: applyFuncSpy};
 		app.egw = egw;
 
 		const event = {id: 42, title: 'Team meeting'};
 		await app.composeMeetingMail(event, false, false);
 
 		assert.isTrue(egw.request.calledOnceWith('calendar.calendar_uiforms.ajax_custom_mail', [event, false, false]));
-		assert.isTrue(composeWithPresetSpy.calledOnceWith(preset));
+		assert.isTrue(applyFuncSpy.calledOnceWith('app.mail.composeWithPreset', [preset]));
 	});
 
 	it('passes the added/asrequest flags through for a meeting request on a brand-new (unsaved) event', async() =>
 	{
-		egw = {request: sinon.stub().resolves({})};
+		egw = {request: sinon.stub().resolves({}), applyFunc: applyFuncSpy};
 		app.egw = egw;
 
 		// no id yet - this also has to work for a not-yet-saved event's own "sendrequest" action

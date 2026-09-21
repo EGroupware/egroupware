@@ -554,10 +554,19 @@ export class filemanagerAPP extends EgwApp
 		// classic menuaction url - a jmapVfsPath marker attachment, resolved (real upload, or a
 		// zero-byte-moved reference for the shim) at send time, same mechanism
 		// MailCompose.vfsUpload() already uses for an already-open popup.
+		//
+		// Resolved via egw.applyFunc() (same dotted-path resolver egw_open.ts's mailto() already
+		// uses, cf. 219284f985), not a direct `window.app.mail?.` read - a caller whose window
+		// never loaded mail's own JS has `window.app.mail` undefined, so the optional-chaining
+		// call silently no-ops with no popup and no error. Real report, Tracker #124911: the
+		// Collabora editor's "Send document by e-mail" button (collabora/js/app.ts
+		// on_save_as_mail() -> this.mail() -> here) opens in its own window.open() window that
+		// never loads mail's JS, so this always hit the no-op path. applyFunc() lazy-loads mail's
+		// bundle first if needed, then calls composeWithPreset() for real.
 		return egw.openWithinWindow("mail", "setCompose", content, params, /\/mail\/compose\.php/, true,
-			() => (<any>window).app.mail?.composeWithPreset({
+			() => egw.applyFunc('app.mail.composeWithPreset', [{
 				files, filemode: params['preset[filemode]'], mimeType: 'html',
-			}));
+			}]));
 	}
 
 	/**
@@ -636,8 +645,11 @@ export class filemanagerAPP extends EgwApp
 		// works unchanged. The "nothing to reuse" case opens via
 		// MailApp.composeWithPreset({body, mimeType}) instead of a classic menuaction url - a
 		// plain content.body append, no attachment/JMAP-blob complexity at all for this one.
+		//
+		// egw.applyFunc() not a direct `window.app.mail?.` read - see open_mail()'s own comment
+		// above (same silent-no-op bug class, Tracker #124911).
 		return egw.openWithinWindow("mail", "setCompose", content, params, /\/mail\/compose\.php/,
-			undefined, () => (<any>window).app.mail?.composeWithPreset({body: '<br />'+linkHtml, mimeType: 'html'}));
+			undefined, () => egw.applyFunc('app.mail.composeWithPreset', [{body: '<br />'+linkHtml, mimeType: 'html'}]));
 	}
 
 	/**

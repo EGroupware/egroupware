@@ -32,9 +32,12 @@ const APP_SOURCE = '/mail/js/app.ts';
  * "reopen a draft" MailApp.composeMessage() already does for any other draft - no classic postback
  * render at all.
  *
- * Setup: _mergeEmail() only ever touches `this.egw` and the global `window.app.mail`, so the app
- * object is a bare Object.create(MailApp.prototype) - no EgwApp constructor, which would want a
- * real framework, sidebox and etemplate (same pattern ComposeMessageAccId.test.ts already uses).
+ * Setup: _mergeEmail() only ever touches `this.egw` (for the ajax round-trip and, since Tracker
+ * #124911, the dotted-path egw.applyFunc('app.mail.composeMessage', ...) dispatch - see that call
+ * site's own comment for why a direct `window.app.mail?.` read isn't used any more) and the global
+ * `window.app.mail`, so the app object is a bare Object.create(MailApp.prototype) - no EgwApp
+ * constructor, which would want a real framework, sidebox and etemplate (same pattern
+ * ComposeMessageAccId.test.ts already uses).
  */
 describe('EgwApp._mergeEmail() single recipient', () =>
 {
@@ -56,6 +59,16 @@ describe('EgwApp._mergeEmail() single recipient', () =>
 			lang: (msg : string, ...args : any[]) => msg.replace('%1', args[0]),
 			request: sinon.stub(),
 			message: sinon.spy(),
+			// mimics the real dotted-path resolution egw_json.ts's applyFunc() does (minus the
+			// lazy app-bundle load) - _mergeEmail() dispatches through this, not a direct
+			// `window.app.mail?.` read, since Tracker #124911.
+			applyFunc: (func : string, args : any[]) =>
+			{
+				const parts = func.split('.');
+				let obj : any = window;
+				for(let i = 0; i < parts.length - 1; i++) obj = obj[parts[i]];
+				return obj[parts[parts.length - 1]](...args);
+			},
 		};
 		(<any>window).egw = egw;
 
