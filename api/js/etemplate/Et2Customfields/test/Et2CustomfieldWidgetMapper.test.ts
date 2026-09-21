@@ -359,6 +359,34 @@ describe("Et2CustomfieldWidgetMapper", () =>
 		);
 	});
 
+	it("keeps a filemanager customfield labelled and compact where it is only being shown", () =>
+	{
+		// A print or view template is nothing but readonly fields, so this one has to be labelled
+		// the same way all of them are: the upload puts its own label inside its button, and a
+		// readonly upload has no button, so the label has to come off the widget for
+		// Et2Customfields to put it in the label column instead.
+		const readonly = mapCustomfieldToWidgets("cf_file", {type: "filemanager", label: "Attachment"}, "", {
+			context: "field",
+			readonly: true
+		});
+		assert.lengthOf(readonly, 1, "there is nothing to link into a field nobody can change");
+		assert.equal(readonly[0].tagName, "et2-vfs-upload");
+		assert.notProperty(readonly[0].attrs, "label", "the label belongs in the label column, not in a hidden button");
+		assert.deepInclude(readonly[0].attrs, {
+			readonly: true,
+			display: "small",
+			inline: true
+		}, "a shown file is one compact line, not a thumbnail row");
+
+		// Et2File gives itself these two, but only in loadFromXML(), which a customfield's widget
+		// never goes through - so losing them here means losing them entirely
+		assert.deepInclude(
+			mapCustomfieldToWidgets("cf_file", {type: "filemanager", label: "Attachment"}, "", {context: "field"})[0].attrs,
+			{display: "small", inline: true},
+			"an editable one is laid out the same way"
+		);
+	});
+
 	it("never puts the editable password widget where the field is only being shown", () =>
 	{
 		const stored = "caps3UfNJHx6imfMRKXD2A==nXIvE/hPqD2hFdB5uRVGsg==";

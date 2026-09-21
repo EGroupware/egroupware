@@ -67,6 +67,30 @@ describe("Et2Customfields webcomponents", () =>
 	});
 
 	/**
+	 * Contract: a list shows a customfield that belongs to a tab.  A nextmatch row renders
+	 * outside any tab, so there is no tab for such a field to match - and matching it there
+	 * hid every tabbed customfield from every row, with nothing said about why.
+	 * Setup: render a list holding one untabbed and one tabbed customfield.
+	 * Pass: both are visible.
+	 */
+	it("shows a tabbed customfield in a list, which has no tabs", async() =>
+	{
+		const element = await fixture<Et2CustomfieldsBase>(html`
+			<et2-customfields-list></et2-customfields-list>
+		`);
+		element.customfields = {
+			cf_here: {label: "Here", type: "text", tab: null},
+			cf_on_a_tab: {label: "On a tab", type: "text", tab: "Files"}
+		};
+		await element.updateComplete;
+		assert.deepEqual(
+			element.getVisibleFieldNames(),
+			["cf_here", "cf_on_a_tab"],
+			"a customfield assigned to a tab still has a value worth showing in a row"
+		);
+	});
+
+	/**
 	 * Contract: the full list widget renders child field widgets in light DOM and
 	 * keeps child widget instances stable when only row values change.
 	 * Setup: render one visible text customfield, then replace value.
@@ -412,8 +436,20 @@ describe("Et2Customfields webcomponents", () =>
 		const rendered = [...element.querySelectorAll("[data-field='cf_file'] > *")].map((w : any) => w.localName);
 		assert.deepEqual(
 			rendered,
-			["et2-label", "et2-vfs-upload", "et2-vfs-select"],
-			"a filemanager customfield needs its name, the upload and the button to link an existing file"
+			["et2-label", "et2-vfs-upload", "et2-vfs-select", "div"],
+			"a filemanager customfield needs its name, the upload, the button to link an existing file, and somewhere to list the files"
+		);
+		// The upload lists its files directly after its own button unless told otherwise, which
+		// would put a file it holds between the two buttons.  The container has to come after both.
+		const upload = element.querySelector("[data-field='cf_file'] > et2-vfs-upload");
+		const fileList = element.querySelector("[data-field='cf_file'] > div.customfields__file-list");
+		assert.isOk(fileList, "the upload is pointed at a container, so one has to be there");
+		assert.equal(upload.fileListTarget, ".customfields__file-list", "and the upload has to be pointed at it");
+		assert.equal(
+			fileList.compareDocumentPosition(element.querySelector("[data-field='cf_file'] > et2-vfs-select"))
+			& Node.DOCUMENT_POSITION_PRECEDING,
+			Node.DOCUMENT_POSITION_PRECEDING,
+			"the files are listed after both buttons, not between them"
 		);
 		assert.equal(
 			element.querySelector("[data-field='cf_file'] > et2-label")?.value,
@@ -424,6 +460,37 @@ describe("Et2Customfields webcomponents", () =>
 			Object.keys(element.getValue()),
 			["#cf_file"],
 			"only the field's own value is submitted - the button has no customfield name"
+		);
+	});
+
+	/**
+	 * Contract: a readonly filemanager customfield is still named.  A print or view template is
+	 * nothing but readonly fields, and every other type shows its label there, so this one has to
+	 * as well - but a readonly upload has no button, and the button is where an upload keeps its
+	 * own label, so the caption has to supply it here exactly as it does for noUpload.
+	 * Setup: render a filemanager customfield in a readonly container.
+	 * Pass: the caption is there and names the field, and the button to link a file is not.
+	 */
+	it("names a filemanager customfield that is only being shown", async() =>
+	{
+		await import("../../Et2Vfs/Et2VfsUpload");
+		await import("../../Et2Vfs/Et2VfsSelectButton");
+		const element = await fixture<any>(html`
+			<et2-customfields readonly></et2-customfields>
+		`);
+		element.customfields = {cf_file: {label: "Attachment", type: "filemanager"}};
+		element.fields = {cf_file: true};
+		await element.updateComplete;
+
+		assert.deepEqual(
+			[...element.querySelectorAll("[data-field='cf_file'] > *")].map((w : any) => w.localName),
+			["et2-label", "et2-vfs-upload"],
+			"the name has to come from the caption, and there is nothing to link into"
+		);
+		assert.equal(
+			element.querySelector("[data-field='cf_file'] > et2-label")?.value,
+			"Attachment",
+			"a shown file with no name beside it does not say which field it is"
 		);
 	});
 

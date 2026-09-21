@@ -35,6 +35,12 @@ export class Et2CustomfieldsList extends Et2CustomfieldsBase
 		return this;
 	}
 
+	/** A list has no tabs, so a customfield's tab must not decide whether it shows in one. */
+	protected get honoursTabs() : boolean
+	{
+		return false;
+	}
+
 	/**
 	 * Read values by the supported row/content key first, with unprefixed lookup
 	 * retained for non-row list contexts that assign value directly.

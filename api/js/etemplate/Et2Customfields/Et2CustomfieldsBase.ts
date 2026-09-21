@@ -300,6 +300,19 @@ export class Et2CustomfieldsBase extends Et2Widget(LitElement)
 		return rendered?.innerText ?? tabbox?.tabData?.find(tab => tab.id === name)?.label ?? null;
 	}
 
+	/**
+	 * Whether a customfield assigned to a tab may only show in that tab.
+	 *
+	 * True where we render a dialog's fields, which is the only place tabs exist.  A subclass
+	 * that renders somewhere without them - a list, a row, a column header - says so by
+	 * returning false, otherwise every tab's customfields would be invisible there: they would
+	 * be looking for a tab to match and never find one.
+	 */
+	protected get honoursTabs() : boolean
+	{
+		return true;
+	}
+
 	protected _recomputeVisibility()
 	{
 		const {tab, defaultTabMatch} = this._resolvedTab();
@@ -309,7 +322,8 @@ export class Et2CustomfieldsBase extends Et2Widget(LitElement)
 			exclude: this.exclude,
 			typeFilter: this.typeFilter,
 			tab,
-			defaultTabMatch
+			defaultTabMatch,
+			honourTabs: this.honoursTabs
 		});
 	}
 

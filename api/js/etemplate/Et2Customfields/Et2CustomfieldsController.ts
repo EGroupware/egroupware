@@ -42,6 +42,14 @@ export interface Et2CustomfieldsControllerOptions
 	typeFilter? : string | string[] | "previous" | null;
 	tab? : string | null;
 	defaultTabMatch? : "" | "-private" | "-non-private" | null;
+	/**
+	 * Whether a customfield's own `tab` says where it may show, default true.
+	 *
+	 * A customfield assigned to a tab belongs to that tab and nowhere else, which is what a
+	 * dialog needs.  A list, a row or a nextmatch column header has no tabs to belong to, so
+	 * matching `tab` there would mean no tab's customfield could ever appear in one.
+	 */
+	honourTabs? : boolean;
 }
 
 /**
@@ -128,6 +136,7 @@ export class Et2CustomfieldsController
 	private readonly fieldAliases : Map<string, string> = new Map();
 	private readonly tab : string | null;
 	private readonly defaultTabMatch : "" | "-private" | "-non-private" | null;
+	private readonly honourTabs : boolean;
 	private readonly exclude : Set<string>;
 	private readonly typeFilter : string[] | null;
 	/**
@@ -150,6 +159,7 @@ export class Et2CustomfieldsController
 		this.customfields = this._normalizeCustomfields(options.customfields || {});
 		this.tab = typeof options.tab === "string" && options.tab.length ? options.tab : null;
 		this.defaultTabMatch = options.defaultTabMatch ?? null;
+		this.honourTabs = options.honourTabs !== false;
 		this.exclude = this._normalizeExclude(options.exclude);
 		this.typeFilter = this._normalizeTypeFilter(options.typeFilter ?? null);
 		this.explicitFields = this._normalizeExplicitFields(options.fields);
@@ -426,6 +436,10 @@ export class Et2CustomfieldsController
 				{
 					visible = false;
 				}
+				else if(!this.honourTabs)
+				{
+					// Nothing here belongs to a tab, so a field's own tab says nothing about it
+				}
 				else if(field.tab)
 				{
 					visible = field.tab === this.tab;
@@ -455,6 +469,10 @@ export class Et2CustomfieldsController
 			if(this.exclude.has(fieldName))
 			{
 				visible = false;
+			}
+			else if(!this.honourTabs)
+			{
+				// Nothing here belongs to a tab, so a field's own tab says nothing about it
 			}
 			else if(this.defaultTabMatch !== null ? !!field.tab : (!!this.tab && field.tab !== this.tab))
 			{

@@ -125,4 +125,16 @@ export default css`
 	et2-customfields et2-vfs-upload.noUpload::part(button) {
 		display: none;
 	}
+
+	/* Where an upload told to use a fileListTarget lists its files: after both of the field's
+	   buttons instead of between them, taking whatever width is left so a filename has room */
+	et2-customfields .customfields__file-list {
+		flex: 1 1 auto;
+		min-width: 0;
+	}
+
+	/* That upload is then only its button, so it must not still claim the width its list needed */
+	et2-customfields .customfields__field:has(> .customfields__file-list) > et2-vfs-upload {
+		flex: 0 0 auto;
+	}
 `;

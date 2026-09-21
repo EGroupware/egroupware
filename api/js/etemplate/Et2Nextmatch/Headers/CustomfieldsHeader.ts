@@ -198,7 +198,11 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 			customfields: this.customfields || {},
 			fields: this.fields || {},
 			exclude: this.exclude,
-			typeFilter: this.typeFilter
+			typeFilter: this.typeFilter,
+			// A column header has no tabs.  Without this every customfield assigned to one would
+			// resolve as not visible, which also takes it out of the column-selection dialog this
+			// header supplies - so it could not even be switched back on.
+			honourTabs: false
 		});
 	}
 

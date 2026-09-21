@@ -26,6 +26,13 @@ export interface Et2CustomfieldWidgetMapping
 	attrs : Record<string, any>;
 }
 
+/**
+ * Container an editable filemanager customfield lists its files in.
+ *
+ * Shared so the widget that renders it and the mapping that points at it cannot drift apart.
+ */
+export const CUSTOMFIELD_FILE_LIST_CLASS = "customfields__file-list";
+
 export function mapCustomfieldToWidget(
 	fieldName : string,
 	field : Et2CustomfieldDefinition & Record<string, any>,
@@ -463,24 +470,37 @@ function mapFilemanagerField(
 			attrs[name] = values[name];
 		}
 	}
+	// A compact one-line entry rather than a tall thumbnail row, which is what the legacy widget
+	// gave this upload whether or not it was readonly.  Et2File sets the same two itself, but only
+	// in loadFromXML(), which never runs for a customfield: its widgets are built from these
+	// attributes rather than from a template node.
+	Object.assign(attrs, {
+		display: "small",
+		inline: true
+	});
+	// The upload renders its label inside its own button, which leaves the field's name in a
+	// different place from every other customfield's - and gone entirely whenever that button is
+	// not there, which is both what noUpload does and what readonly does.  Et2Customfields puts it
+	// in the label column beside the controls instead.
+	delete attrs.label;
 	if(editable)
 	{
 		// The legacy widget built this upload by hand; these are the attributes it gave it.
 		Object.assign(attrs, {
-			display: "small",
-			inline: true,
 			required: attrs.required ?? attrs.needed,
 			helptext: "fileupload"
 		});
 		delete attrs.needed;
-		// The upload renders its label inside its own button, which leaves the field's name in a
-		// different place from every other customfield's - and gone entirely when noUpload hides
-		// that button.  Et2Customfields puts it in the label column beside the controls instead.
-		delete attrs.label;
 		// `values.noUpload` hides the upload button, `values.noVfsSelect` the "link existing file"
 		// one - both are read off the widget as classes, the way the legacy widget set them.
 		attrs.class = [attrs.class, "et2_file", values.noUpload ? "noUpload" : "", values.noVfsSelect ? "noVfsSelect" : ""]
 			.filter(Boolean).join(" ");
+		// An upload lists its files between its own button and whatever comes next, which here is
+		// the button for linking a file already in the VFS - so a field holding a file put that
+		// file between the two buttons.  Et2Customfields renders a container after both and this
+		// moves the list into it.  Only where that container exists: a readonly field has no
+		// second button to be separated from, and a list row renders no container at all.
+		attrs.fileListTarget = "." + CUSTOMFIELD_FILE_LIST_CLASS;
 	}
 	return finalizeMapping("vfs-upload", attrs);
 }

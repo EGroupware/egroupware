@@ -214,16 +214,38 @@ export class Et2File extends Et2InputWidget(LitElement)
 	firstUpdated(changedProperties : PropertyValueMap<any>)
 	{
 		super.firstUpdated(changedProperties)
-		this.resumable = this.createResumable();
+		this._createResumableUnlessReadonly();
 	}
 
 	updated(changedProperties : PropertyValueMap<any>)
 	{
 		super.updated(changedProperties);
+		// Only when readonly actually changed, so that a widget which starts readonly and is later
+		// made editable still gets its Resumable, without re-attempting on every other render
+		if(changedProperties.has("readonly"))
+		{
+			this._createResumableUnlessReadonly();
+		}
 		if(this.fileListTarget && this.list)
 		{
 			render(this.fileListTemplate(), this.list);
 		}
+	}
+
+	/**
+	 * Give the widget what it uploads with, unless it is readonly and does not upload.
+	 *
+	 * Withholding it is also what keeps drag-and-drop off a readonly widget: createResumable()
+	 * wires dropTarget up unconditionally and has no readonly check of its own, which leaves
+	 * resumableFileAdded()'s guard as the only thing refusing a dropped file.
+	 */
+	protected _createResumableUnlessReadonly()
+	{
+		if(this.readonly || this.resumable)
+		{
+			return;
+		}
+		this.resumable = this.createResumable();
 	}
 
 	loadFromXML(node : Node)

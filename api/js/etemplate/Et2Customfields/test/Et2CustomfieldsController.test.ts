@@ -125,6 +125,43 @@ describe("Et2CustomfieldsController", () =>
 		}, "tab-specific customfields should be hidden when their tab does not match");
 	});
 
+	it("ignores a customfield's tab where there are no tabs", () =>
+	{
+		// A list, a row and a nextmatch column header all render outside any tab, so they have no
+		// tab for a customfield to match.  Honouring `tab` there hides every customfield assigned
+		// to one - and in the column header that also drops it from the column-selection dialog,
+		// so it cannot be switched back on either.
+		assert.deepEqual(
+			new Et2CustomfieldsController({
+				customfields: sampleCustomfields,
+				honourTabs: false
+			}).getVisibleMap(),
+			{cf_text: true, cf_project: true, cf_private: true, cf_file: true},
+			"a customfield on a tab still belongs in a list"
+		);
+
+		// The same with an explicit selection, which is the shape a saved column preference has
+		assert.deepEqual(
+			new Et2CustomfieldsController({
+				customfields: sampleCustomfields,
+				fields: {cf_project: true},
+				honourTabs: false
+			}).getVisibleFieldNames(),
+			["cf_project"],
+			"selecting a tab's customfield in a list has to be enough to show it"
+		);
+
+		// ... and a dialog, which does have tabs, is unaffected
+		assert.deepEqual(
+			new Et2CustomfieldsController({
+				customfields: sampleCustomfields,
+				tab: "missing"
+			}).getVisibleFieldNames(),
+			["cf_text", "cf_private", "cf_file"],
+			"a tab still shows only its own customfields"
+		);
+	});
+
 	it("normalizes array-shaped customfields by field name for chooser labels", () =>
 	{
 		const controller = new Et2CustomfieldsController({

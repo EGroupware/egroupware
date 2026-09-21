@@ -7,7 +7,7 @@ import {html as staticHtml, unsafeStatic} from "lit/static-html.js";
 import {repeat} from "lit/directives/repeat.js";
 import {ref} from "lit/directives/ref.js";
 import type {Et2CustomfieldWidgetMapping} from "./Et2CustomfieldWidgetMapper";
-import {applyCustomfieldWidgetMapping, mapCustomfieldToWidgets} from "./Et2CustomfieldWidgetMapper";
+import {applyCustomfieldWidgetMapping, CUSTOMFIELD_FILE_LIST_CLASS, mapCustomfieldToWidgets} from "./Et2CustomfieldWidgetMapper";
 
 import styles from "./Et2Customfields.styles";
 
@@ -379,9 +379,11 @@ export class Et2Customfields extends Et2CustomfieldsBase implements Et2LayoutHos
 	 * A caption for a filemanager field, which cannot show its own.
 	 *
 	 * An upload renders its label inside its own button: in a row of customfields that puts the
-	 * field's name somewhere different from all the others, and a field set to noUpload has that
-	 * button hidden, so it showed a lone folder icon with nothing saying which field it was.  The
-	 * legacy layout never had either problem - it kept every label in its own table cell.
+	 * field's name somewhere different from all the others, and whenever that button is not shown
+	 * the name goes with it, leaving the field with nothing saying which one it is.  Both noUpload
+	 * and readonly hide the button, so both need this - a readonly field is the worse of the two,
+	 * since a print or view template is all readonly fields and every other one is labelled.  The
+	 * legacy layout never had the problem - it kept every label in its own table cell.
 	 *
 	 * Rendered here rather than as another generated widget so it stays out of the values we report
 	 * and never takes the place of the one holding the field's value.
@@ -392,12 +394,35 @@ export class Et2Customfields extends Et2CustomfieldsBase implements Et2LayoutHos
 	 */
 	private _captionFor(fieldName : string, field : Record<string, any>, mappings : Et2CustomfieldWidgetMapping[])
 	{
-		if(!mappings.some((mapping) => mapping.tagName === "et2-vfs-upload" && !mapping.attrs.readonly))
+		if(!mappings.some((mapping) => mapping.tagName === "et2-vfs-upload"))
 		{
 			return nothing;
 		}
 		return html`
             <et2-label class="customfields__caption et2-label-fixed" .value=${field.label || fieldName}></et2-label>`;
+	}
+
+	/**
+	 * Where a filemanager customfield lists the files it holds.
+	 *
+	 * An upload puts its file list directly after its own button, which in a customfield leaves
+	 * it sitting between that button and the one for linking a file already in the VFS.  The
+	 * upload's `fileListTarget` renders the list in here instead, after both buttons, so the two
+	 * stay together and the files follow them.
+	 *
+	 * Only for an upload that asked for it: a readonly field has no second button to be separated
+	 * from and keeps its list where it is.
+	 *
+	 * @param {Et2CustomfieldWidgetMapping[]} mappings Widgets this field renders as.
+	 */
+	private _fileListFor(mappings : Et2CustomfieldWidgetMapping[])
+	{
+		if(!mappings.some((mapping) => mapping.attrs.fileListTarget))
+		{
+			return nothing;
+		}
+		return html`
+            <div class=${CUSTOMFIELD_FILE_LIST_CLASS}></div>`;
 	}
 
 	/**
@@ -435,6 +460,7 @@ export class Et2Customfields extends Et2CustomfieldsBase implements Et2LayoutHos
                              span=${this._spansFullWidth(mappings) ? "all" : nothing}>
                             ${this._captionFor(fieldName, field, mappings)}
                             ${mappings.map((mapping, index) => this._fieldWidgetTemplate(fieldName, mapping, index))}
+                            ${this._fileListFor(mappings)}
                         </div>
                     `;
                 })}
