@@ -70,11 +70,14 @@ class XeroxScan
 				case 'PutFile':
 					$status = $this->putFile($base_path);
 					break;
-				case 'RemoveDir':
+				case 'GetFile':
+					$status = $this->getFile($base_path);
+					break;
 				case 'DeleteFile':
-					// not needed for a scan-to-folder workflow; avoid guessing at a destructive
-					// operation's exact contract without a real device to verify against
-					$status = '501 Not Implemented';
+					$status = $this->deleteFile($base_path);
+					break;
+				case 'RemoveDir':
+					$status = $this->removeDir($base_path);
 					break;
 				default:
 					$status = '400 Bad Request';
@@ -161,16 +164,15 @@ class XeroxScan
 	 */
 	protected function putFile($base_path)
 	{
-		$dir = Vfs::concat($base_path, $_POST['destDir'] ?? '');
-		if (!($name = Vfs::sanitize_leaf_name($_POST['destName'] ?? '')))
+		if (!($target = $this->destPath($base_path)))
 		{
 			return '400 Bad Request';
 		}
-		if (!Vfs::is_dir($dir) || !Vfs::is_writable($dir))
+		$parent = Vfs::dirname($target);
+		if (!$parent || !Vfs::is_dir($parent) || !Vfs::is_writable($parent))
 		{
 			return '403 Forbidden';
 		}
-		$target = Vfs::concat($dir, $name);
 		if (Vfs::is_dir($target))
 		{
 			return '403 Forbidden';	// can not overwrite a directory with a file
@@ -227,6 +229,100 @@ class XeroxScan
 		fclose($dst);
 
 		return $ok ? '200 OK' : '500 Internal Server Error';
+	}
+
+	/**
+	 * "GetFile": reply with a file's content if it exists - live devices use this to check for a
+	 * stale lock-file (destName like "<job>.LCK/LOCKINFO.DAT") before MakeDir/PutFile-ing into it
+	 *
+	 * @param string $base_path
+	 * @return string HTTP status
+	 */
+	protected function getFile($base_path)
+	{
+		if (!($target = $this->destPath($base_path)))
+		{
+			return '400 Bad Request';
+		}
+		if (!Vfs::file_exists($target) || Vfs::is_dir($target))
+		{
+			return '404 Not Found';
+		}
+		if (!Vfs::is_readable($target))
+		{
+			return '403 Forbidden';
+		}
+		header('Content-Type: application/octet-stream');
+		readfile(Vfs::PREFIX.$target);
+		return '200 OK';
+	}
+
+	/**
+	 * "DeleteFile": remove destDir/destName - live devices use this to clean up their own lock
+	 * file after a successful PutFile
+	 *
+	 * @param string $base_path
+	 * @return string HTTP status
+	 */
+	protected function deleteFile($base_path)
+	{
+		if (!($target = $this->destPath($base_path)))
+		{
+			return '400 Bad Request';
+		}
+		if (!Vfs::file_exists($target))
+		{
+			return '404 Not Found';
+		}
+		if (Vfs::is_dir($target))
+		{
+			return '403 Forbidden';	// DeleteFile must not remove a directory
+		}
+		if (!Vfs::is_writable($target))
+		{
+			return '403 Forbidden';
+		}
+		return Vfs::unlink($target) ? '200 OK' : '500 Internal Server Error';
+	}
+
+	/**
+	 * "RemoveDir": remove destDir, only if it is empty (never recursive)
+	 *
+	 * @param string $base_path
+	 * @return string HTTP status
+	 */
+	protected function removeDir($base_path)
+	{
+		$target = Vfs::concat($base_path, $_POST['destDir'] ?? '');
+
+		if (!Vfs::is_dir($target))
+		{
+			return '404 Not Found';
+		}
+		if (!Vfs::is_writable($target))
+		{
+			return '403 Forbidden';
+		}
+		return Vfs::rmdir($target) ? '200 OK' : '409 Conflict';	// eg. not empty
+	}
+
+	/**
+	 * Resolve destDir/destName into an absolute Vfs path
+	 *
+	 * destName may itself be a relative path of several segments (eg. "SOMEDIR.LCK/LOCKINFO.DAT"),
+	 * not just a leaf filename - devices use this to write into a directory they MakeDir'd
+	 * separately, @see Vfs::sanitize_relative_path()
+	 *
+	 * @param string $base_path
+	 * @return string|null null if destName is missing/unusable
+	 */
+	protected function destPath($base_path)
+	{
+		if (!($name = Vfs::sanitize_relative_path($_POST['destName'] ?? '')))
+		{
+			return null;
+		}
+		return Vfs::concat(Vfs::concat($base_path, $_POST['destDir'] ?? ''), $name);
 	}
 
 	/**
