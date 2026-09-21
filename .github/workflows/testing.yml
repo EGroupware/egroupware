@@ -649,8 +649,22 @@ jobs:
               php vendor/bin/phpunit --configuration "$PHPUNIT_CONFIG"
               rc=$?
               set -e
-              echo "=== php built-in server log (last 300 lines) ==="
-              tail -n 300 /tmp/egw-phpunit-http.log || true
+              # Drop the push endpoint and the per-connection Accepted/Closing pairs before
+              # tailing: notification polling alone produces thousands of lines, so the last 300
+              # were reliably all push traffic and whatever error actually failed a test had long
+              # scrolled off - which is the only place a server-side error lands, since EGW logs
+              # via error_log and the built-in server sends that here.
+              # A 5xx is the one thing worth reading here, and it is rarely near the end - the
+              # suite keeps running for thousands of requests afterwards.  Show each one with the
+              # lines before it, which is where the error text lands: the request line is only
+              # written once the response is finished, the error_log output as it happens.
+              echo "=== php built-in server log: 5xx with preceding context ==="
+              grep -E -B 40 "\[5[0-9][0-9]\]: " /tmp/egw-phpunit-http.log \
+                | grep -vE "(POST /egroupware/push|:[0-9]+ (Accepted|Closing)$)" \
+                | tail -n 400 || true
+              echo "=== php built-in server log (last 300 lines, push polling filtered) ==="
+              grep -vE "(POST /egroupware/push|:[0-9]+ (Accepted|Closing)$)" /tmp/egw-phpunit-http.log \
+                | tail -n 300 || true
               exit $rc
             '
       - name: Tear down
