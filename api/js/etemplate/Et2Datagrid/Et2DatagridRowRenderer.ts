@@ -210,20 +210,24 @@ export class Et2DatagridRowRenderer
 	private markRowElement(rowElement : HTMLElement, row : Et2DatagridRow, rowIndex : number)
 	{
 		const dataStoreRowId = this.host._dataStoreRowIdFor(row.id ?? rowIndex);
-		rowElement.classList.toggle("dg-row-active", row.id == this.host.activeRowId);
-		// Set alongside aria-selected below, not just left for the next deferred _syncRowAccessibilityState() pass:
-		// otherwise a row rebuilt by a render-version bump (eg. Et2Datagrid.refresh() applying an in-place update)mounts without its highlight for 1 frame, and visibly flashes it back in once that pass catches up.
-		rowElement.classList.toggle("dg-row-selected", this.host.allSelected || this.host.selectedRowIds.has(row.id));
+		// Deliberately NOT stamping any selection/active state (dg-row-selected, dg-row-active,
+		// aria-selected, tabindex) here - only the row's identity, which does not change as the
+		// user clicks around.  buildRowElement() produces the string Et2Datagrid hands to
+		// unsafeHTML(), and unsafeHTML replaces the whole row node whenever that string changes.
+		// Baking selection into it made the first render after *any* selection change rebuild
+		// every affected row from the bare template - unhydrated, so all its widgets (links,
+		// dates, account pickers) blanked until the upgrade pass caught up.  "Select all" changed
+		// it on every visible row at once, which is why it flickered the whole list and, with the
+		// row heights changing under it, jumped the virtualizer's scroll position; the active row
+		// did the same to itself, two rows at a time, on every click and arrow key.  All of it is
+		// applied to the mounted node by syncRowAccessibilityState() instead - see
+		// initRowUpgradeObserver(), which runs it in the same microtask the row is mounted in, so
+		// a row rebuilt for some other reason (eg. a render-version bump from
+		// Et2Datagrid.refresh()) still never paints without its highlight.
 		rowElement.setAttribute("role", "row");
 		rowElement.setAttribute("data-row-id", dataStoreRowId);
 		rowElement.setAttribute("data-row-index", String(rowIndex));
 		rowElement.setAttribute("aria-rowindex", String(rowIndex + 1));
-		rowElement.setAttribute("aria-selected", this.host.selectedRowIds.has(row.id) ? "true" : "false");
-		if(this.host.allSelected && !this.host.selectedRowIds.has(row.id))
-		{
-			rowElement.setAttribute("aria-selected", "true");
-		}
-		rowElement.tabIndex = rowIndex === this.host.activeRowIndex ? 0 : -1;
 	}
 
 	/**
@@ -945,6 +949,9 @@ export class Et2DatagridRowRenderer
 		}
 		this._rowUpgradeObserver = new MutationObserver(() =>
 		{
+			// Before upgrading: a mutation observer runs as a microtask, so a row node that was
+			// just (re)mounted gets its selection/active classes back before the browser paints.
+			this.host._syncRowAccessibilityState();
 			this.upgradeRenderedRows();
 			this.guardFocusAfterVirtualMutation();
 		});
@@ -960,6 +967,7 @@ export class Et2DatagridRowRenderer
 				{
 					return;
 				}
+				this.host._syncRowAccessibilityState();
 				this.upgradeRenderedRows();
 				this.guardFocusAfterVirtualMutation();
 			});

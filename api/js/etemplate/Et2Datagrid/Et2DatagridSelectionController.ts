@@ -462,7 +462,10 @@ export class Et2DatagridSelectionController
 			rowElement.setAttribute("aria-rowindex", String(Math.max(0, absoluteIndex) + 1));
 			rowElement.tabIndex = absoluteIndex === this.activeRowIndex ? 0 : -1;
 			rowElement.classList.toggle("dg-row-selected", this.allSelected || this.selectedRowIds.has(rowId));
-			rowElement.classList.toggle("dg-row-active", rowId === this.activeRowId);
+			// String(): `rowId` comes off the attribute, so it is always a string, while a grid
+			// whose provider hands out numeric ids keeps `activeRowId` a number - `===` would
+			// then never match and the active row would lose its highlight entirely.
+			rowElement.classList.toggle("dg-row-active", !!this.activeRowId && rowId === String(this.activeRowId));
 
 			const cells = Array.from(rowElement.children) as HTMLElement[];
 			cells.forEach((cell, cellIndex) =>

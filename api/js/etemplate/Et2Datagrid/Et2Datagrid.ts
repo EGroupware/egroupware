@@ -5367,7 +5367,14 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}
 	}
 
-	private _syncRowAccessibilityState()
+	/**
+	 * Re-stamp selection/active/accessibility state onto the rows currently in the DOM.
+	 *
+	 * Not private: the row renderer's mutation observer calls this the moment a row node is
+	 * (re)mounted, which is the only point where a freshly stamped row and the current
+	 * selection can be reconciled without waiting a frame.
+	 */
+	_syncRowAccessibilityState()
 	{
 		this._selection.syncRowAccessibilityState();
 	}

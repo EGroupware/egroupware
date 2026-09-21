@@ -43,9 +43,22 @@ function createDatagrid(rows : any[]) : Et2Datagrid
 	return grid;
 }
 
+/**
+ * Render one virtual row into `container` the way a mounted row reaches the DOM.
+ *
+ * _renderVirtualRow() deliberately builds a *selection-agnostic* row: baking the selection
+ * into the HTML string it hands to unsafeHTML() made every affected row node get thrown away
+ * and rebuilt (unhydrated) on the first render after any selection change - visible as the
+ * whole list flickering on select-all.  The grid stamps selection onto the mounted node
+ * instead, from the row renderer's mutation observer.  This container is not the grid's own
+ * rows body, so point the grid at it and run that same pass here; without it the assertions
+ * below would be testing the row *template* rather than the row the user sees.
+ */
 function renderVirtualRow(grid : Et2Datagrid, rowIndex : number, container : HTMLElement) : HTMLElement | null
 {
+	Object.defineProperty(grid, "_rowsBody", {configurable: true, get: () => container});
 	render((grid as any)._renderVirtualRow(rowIndex), container);
+	(grid as any)._syncRowAccessibilityState();
 	return container.querySelector("[data-row-id]") as HTMLElement | null;
 }
 
@@ -408,6 +421,54 @@ describe("Et2Datagrid row selection", () =>
 		assert.sameMembers(Array.from((grid as any).selectedRowIds), ["row-0", "row-1"],
 			"the browser's trailing click for the same gesture must not replace the selection");
 
+		table.remove();
+	});
+
+	/**
+	 * Contract: changing the selection must not change the row markup the grid renders.
+	 *
+	 * _renderVirtualRow() commits `unsafeHTML(_buildRowElement(...).outerHTML)`.  unsafeHTML
+	 * tears down and rebuilds the row's DOM whenever that string changes, and a rebuilt row
+	 * comes back unhydrated (`.loading`, widgets not upgraded yet) - so any selection state
+	 * baked into it makes every affected row blank and re-hydrate.  With "select all" that is
+	 * the entire visible list at once, which also changes the row heights under the
+	 * virtualizer and jumps the scroll position.
+	 *
+	 * Setup: build one row's markup, then select every row and make that row the active one,
+	 * rebuilding its markup after each change.
+	 *
+	 * Pass: every build produces identical markup, while the state itself is live - the mounted
+	 * row, stamped by _syncRowAccessibilityState(), carries both aria-selected and dg-row-active.
+	 */
+	it("builds identical row markup before and after selection and active-row changes", () =>
+	{
+		const rows = Array.from({length: 5}, (_value, index) => ({id: `row-${index}`, label: `Row ${index}`}));
+		const grid = createDatagrid(rows);
+		grid.selectionMode = "multiple";
+		grid.setInitialRows(rows);
+		grid.total = rows.length;
+
+		const baselineHtml = (grid as any)._buildRowElement((grid as any)._rowsByIndex[1], 1).outerHTML;
+
+		grid.selectAllRows();
+		assert.equal((grid as any)._buildRowElement((grid as any)._rowsByIndex[1], 1).outerHTML, baselineHtml,
+			"select-all must not change the row markup, or unsafeHTML rebuilds every visible row");
+
+		(grid as any)._moveActiveRow(1, false);
+		assert.equal((grid as any).activeRowId, "row-1", "the row should now be the active one");
+		assert.equal((grid as any)._buildRowElement((grid as any)._rowsByIndex[1], 1).outerHTML, baselineHtml,
+			"becoming the active row must not change the row markup either");
+
+		const table = document.createElement("table");
+		const body = document.createElement("tbody");
+		table.append(body);
+		document.body.append(table);
+		const mounted = renderVirtualRow(grid, 1, body);
+		assert.equal(mounted?.getAttribute("aria-selected"), "true",
+			"the mounted row must still show the selection the markup no longer carries");
+		assert.isTrue(mounted?.classList.contains("dg-row-active"),
+			"the mounted row must still show the active state the markup no longer carries");
+		assert.equal(mounted?.tabIndex, 0, "the active row must still be the grid's tab stop");
 		table.remove();
 	});
 });
