@@ -32,13 +32,137 @@ export interface FakeFetchCall
 	init : any;
 	resolve(json : any) : void;
 	resolveNotOk(status : number, body? : any) : void;
+	/**
+	 * Resolves this fetch as a text/event-stream response (egw_push_fallback.ts's SSE probe,
+	 * Phase 6) and returns a controller to feed it bytes over time, the way a real stream would -
+	 * unlike resolve()/resolveNotOk(), the body isn't known/fixed at call time.
+	 */
+	resolveStream() : FakeSseStream;
 	reject(err : any) : void;
+}
+
+/**
+ * Feeds a fake text/event-stream response's body incrementally, as a real one would - each
+ * push() call is one more chunk a ReadableStream reader's .read() yields; end() makes the next
+ * (or a pending) .read() resolve {done: true}, same as the stream actually closing.
+ */
+export interface FakeSseStream
+{
+	push(_text : string) : void;
+	end() : void;
+}
+
+function createFakeSseStream(signal? : AbortSignal) : {response : any, stream : FakeSseStream}
+{
+	const encoder = new TextEncoder();
+	const queue : {value? : Uint8Array, done : boolean}[] = [];
+	let waitingResolve : ((_result : any) => void) | null = null;
+	let waitingReject : ((_err : any) => void) | null = null;
+	let ended = false;
+
+	function deliver(item : {value? : Uint8Array, done : boolean})
+	{
+		if(waitingResolve)
+		{
+			const resolve = waitingResolve;
+			waitingResolve = waitingReject = null;
+			resolve(item);
+		}
+		else
+		{
+			queue.push(item);
+		}
+	}
+
+	// A real fetch()'s body reader rejects a pending (or future) .read() once the request's
+	// AbortController fires - egw_push_fallback.ts's ack-timeout relies on exactly that to break
+	// out of its read loop when nothing ever arrives, so the fake needs to do the same.
+	signal?.addEventListener('abort', () =>
+	{
+		if(waitingReject)
+		{
+			const reject = waitingReject;
+			waitingResolve = waitingReject = null;
+			reject(new DOMException('The operation was aborted.', 'AbortError'));
+		}
+	});
+
+	const stream : FakeSseStream = {
+		push(text : string)
+		{
+			deliver({value: encoder.encode(text), done: false});
+		},
+		end()
+		{
+			ended = true;
+			deliver({value: undefined, done: true});
+		}
+	};
+
+	const response = {
+		ok: true, status: 200,
+		headers: {get: (h : string) => h.toLowerCase() === 'content-type' ? 'text/event-stream' : null},
+		body: {
+			getReader: () => ({
+				read() : Promise<any>
+				{
+					if(queue.length > 0) return Promise.resolve(queue.shift());
+					if(ended) return Promise.resolve({value: undefined, done: true});
+					if(signal?.aborted) return Promise.reject(new DOMException('The operation was aborted.', 'AbortError'));
+					return new Promise((resolve, reject) => { waitingResolve = resolve; waitingReject = reject; });
+				}
+			})
+		}
+	};
+
+	return {response, stream};
+}
+
+/**
+ * Stands in for a real WebSocket - openWebSocket() (egw_json.ts) only ever touches .send()/
+ * .close() and the four on*() handlers, so that's all this implements. Tests drive it by calling
+ * onopen/onmessage/onerror/onclose directly (as if the browser had), NOT by making close()
+ * actually schedule an async onclose itself - keeps tests synchronous and in full control of
+ * exactly which transition happens when.
+ */
+export class FakeWebSocket
+{
+	static readonly CONNECTING = 0;
+	static readonly OPEN = 1;
+	static readonly CLOSING = 2;
+	static readonly CLOSED = 3;
+
+	readyState = FakeWebSocket.CONNECTING;
+	onopen : any;
+	onmessage : any;
+	onerror : any;
+	onclose : any;
+	/** every .send() payload, in order */
+	sent : string[] = [];
+	/** true once .close() has been called - egw_json.ts never inspects this, it's for assertions */
+	closeCalled = false;
+
+	constructor(public url : string)
+	{
+	}
+
+	send(data : string)
+	{
+		this.sent.push(data);
+	}
+
+	close()
+	{
+		this.closeCalled = true;
+	}
 }
 
 export interface EgwJsonEnv extends EgwCoreEnv
 {
 	/** every window.fetch() call made by json_request.sendRequest(), in order */
 	fetchCalls : FakeFetchCall[];
+	/** every `new WebSocket(...)` openWebSocket() created, in order (incl. reconnect attempts) */
+	webSockets : FakeWebSocket[];
 	stubs : {
 		message : sinon.SinonStub;
 		includeCSS : sinon.SinonStub;
@@ -50,6 +174,15 @@ export async function createEgwJsonEnv(prefs : object = {}) : Promise<EgwJsonEnv
 	const base = await createEgwCoreEnv(Object.assign({webserverUrl: 'https://example.test'}, prefs));
 	const env = base as EgwJsonEnv;
 	env.fetchCalls = [];
+	env.webSockets = [];
+	(env.window as any).WebSocket = class extends FakeWebSocket
+	{
+		constructor(url : string)
+		{
+			super(url);
+			env.webSockets.push(this);
+		}
+	};
 
 	await loadScript(env.window.document, '/vendor/bower-asset/jquery/dist/jquery.min.js');
 
@@ -91,6 +224,12 @@ export async function createEgwJsonEnv(prefs : object = {}) : Promise<EgwJsonEnv
 						json: () => Promise.resolve(body)
 					});
 				},
+				resolveStream() : FakeSseStream
+				{
+					const {response, stream} = createFakeSseStream(init?.signal);
+					resolve(response);
+					return stream;
+				},
 				reject
 			});
 		});
@@ -109,7 +248,7 @@ export async function createEgwJsonEnv(prefs : object = {}) : Promise<EgwJsonEnv
 	return env;
 }
 
-function loadScript(doc : Document, src : string, type? : string) : Promise<void>
+export function loadScript(doc : Document, src : string, type? : string) : Promise<void>
 {
 	return new Promise((resolve, reject) =>
 	{

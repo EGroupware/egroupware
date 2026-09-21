@@ -60,6 +60,7 @@ mail account to use for notifications	admin	en	Mail account to use for notificat
 mail backend	admin	en	Mail backend
 mark all as read	notifications	en	Mark all as read
 mark as read	notifications	en	Mark as read
+maximum concurrent long-polls	notifications	en	Maximum concurrent long-polls
 message from	notifications	en	Message from
 minutes	notifications	en	Minutes
 more info	notifications	en	More info
@@ -68,6 +69,7 @@ notification	common	en	Notification
 notifier	notifications	en	Notifier
 notify me by	notifications	en	Notify me by
 notify private email address	notifications	en	Notify private email address
+once this many browsers are already waiting, further ones get an instant check instead	notifications	en	Once this many browsers are already waiting, further ones get an instant check instead
 only used if no push server available!	admin	en	Only used if no push server available!
 open notified entry	notifications	en	Open notified entry
 optimize e-mails for external mail client	notifications	en	Optimize emails for external email client

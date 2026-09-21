@@ -85,6 +85,22 @@ class Notifications
 			elseif (empty($row['account_id']) && !is_array($account_id) && is_array($rows[$account_id]))
 			{
 				$account_specific = $account_id;
+			} // same fixup as immediately above, for THIS method's own default call shape (a
+			// cache-hit with $account_id passed as an array of candidate ids, eg. [0,
+			// $my_account_id] - here $rows is {account_id => folders[]}, not row-shaped, so the
+			// scalar-only check above never matches: a per-user override just write()-en into
+			// the SAME request's cache, sitting right next to an empty account_id=0 default, was
+			// silently ignored in favour of that default - found via
+			// mail/tests/NotificationCheckPollingTest.php
+			elseif (empty($row['account_id']) && is_array($account_id))
+			{
+				foreach($account_id as $candidate)
+				{
+					if (!empty($candidate) && is_array($rows[$candidate] ?? null))
+					{
+						$account_specific = $candidate;
+					}
+				}
 			}
 		}
 		$folders = self::$cache[$acc_id][$account_specific] ?? [];

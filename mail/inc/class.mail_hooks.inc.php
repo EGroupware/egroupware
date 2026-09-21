@@ -814,6 +814,35 @@ class mail_hooks
 	}
 
 	/**
+	 * Does the current user have at least one mail account with notify_folders configured?
+	 *
+	 * Cheap: config-only (Mail\Notifications::read(), cached), no IMAP connection - unlike
+	 * notification_check_mailbox() itself, which this only decides whether to keep triggering.
+	 *
+	 * Used by notifications/inc/hook_after_navbar.inc.php to tell the client
+	 * (notifications/js/app.ts) whether it needs to keep polling
+	 * notifications.notifications_ajax.get_notifications() (which runs the check_notify hook,
+	 * ie. notification_check_mailbox() above) even once a real push connection already handles
+	 * general delivery - see doc/ai/projects/push-fallback-longpoll.md's "Mail notification-check
+	 * polling" follow-up note for why push availability is deliberately NOT considered here:
+	 * neither Dovecot's nor JMAP's mail-server push currently triggers this notify_folders check
+	 * itself, only polling does, regardless of push.
+	 *
+	 * @return bool
+	 */
+	public static function needsNotificationCheckPolling()
+	{
+		foreach(Mail\Account::search(true, true) as $acc_id => $identity_name)
+		{
+			if (!empty(Mail\Notifications::read($acc_id)['notify_folders']))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * Check if current user has access to a specific feature
 	 *
 	 * Example: if (!mail_hooks::access("managerfolders")) return;

@@ -16,8 +16,48 @@ export interface JsonModule
 {
 	/**
 	 * Check if there is a *working* connection to a push server
+	 *
+	 * This is the debounced/hysteresis-smoothed state onPushAvailabilityChange() also reports -
+	 * a single dropped ping does not flip this to false, only a sustained outage does (see
+	 * PUSH_UNAVAILABLE_GRACE_MS in egw_json.ts). Never becomes true at all if no push server is
+	 * even configured (openWebSocket() never gets called in that case).
 	 */
 	pushAvailable() : boolean;
+
+	/**
+	 * Subscribe to push-availability transitions (see pushAvailable()'s docs for what "available"
+	 * means here) - fires once per actual transition, not on every reconnect attempt/blip.
+	 *
+	 * Consumers that need to react continuously (eg. starting/stopping a fallback poller) should
+	 * use this instead of polling pushAvailable() themselves; consumers that just need a one-off
+	 * answer at a specific moment (eg. before an optimistic UI update) can keep using
+	 * pushAvailable() directly.
+	 *
+	 * @param _callback (available: boolean) => void
+	 * @return unsubscribe function
+	 */
+	onPushAvailabilityChange(_callback : (_available : boolean) => void) : () => void;
+
+	/**
+	 * Report that some OTHER live push-style connection this module knows nothing about (eg.
+	 * egw_push_fallback.ts's SSE transport, Phase 6) just connected/reconnected - feeds the exact
+	 * same pushAvailable()/onPushAvailabilityChange() state openWebSocket() itself drives, since
+	 * to every other consumer a working SSE stream is indistinguishable from the websocket. See
+	 * this method's implementation in egw_json.ts for the full reasoning.
+	 */
+	notePushConnected(_wnd? : Window) : void;
+
+	/**
+	 * Report that such a connection errored/closed uncleanly but a reconnect is already
+	 * scheduled - starts the same debounce grace period notePushConnected()'s docs describe.
+	 */
+	notePushDisconnected(_wnd? : Window) : void;
+
+	/**
+	 * Report that such a connection closed cleanly (nothing will reconnect it on its own) -
+	 * unavailable immediately, no grace period.
+	 */
+	notePushStopped(_wnd? : Window) : void;
 
 	/** The constructor of the egw_json_request class.
 	 *
@@ -114,6 +154,19 @@ const MIN_RECONNECT_TIME = 1000;
 const MAX_RECONNECT_TIME = 300000;
 const CHECK_INTERVAL = 30000;	// 30 sec
 const MAX_PING_RESPONSE_TIME = 1000;
+/**
+ * Bound on the *initial* connection attempt (new WebSocket(url) never reaching onopen/onerror/
+ * onclose at all, eg. a proxy that accepts the TCP connection but never completes - or refuses -
+ * the WS upgrade) - forces it into the normal onclose/backoff/retry path instead of leaving
+ * pushAvailable()/onPushAvailabilityChange() with no signal at all while it hangs.
+ */
+const CONNECT_TIMEOUT_MS = 8000;
+/**
+ * How long a lost connection must stay down before onPushAvailabilityChange()/pushAvailable()
+ * report it as unavailable - long enough that a single dropped ping (reconnects within
+ * MIN_RECONNECT_TIME=1s) doesn't flap a consumer's fallback-poller on and straight back off again.
+ */
+const PUSH_UNAVAILABLE_GRACE_MS = 10000;
 
 /**
  * A single JSON request/response object, as returned by Json.json()/.request().
@@ -226,6 +279,7 @@ class JsonRequest
 			{
 				console.log("Server did not respond to ping in "+MAX_PING_RESPONSE_TIME+" seconds --> try reconnecting");
 				check_timer = null;
+				this.#json.notePushDisconnected(wnd);
 				this.websocket.onclose = () =>
 				{
 					this.websocket = null;
@@ -235,19 +289,35 @@ class JsonRequest
 			}, MAX_PING_RESPONSE_TIME);
 		};
 
+		// Bounds the *initial* connection attempt: new WebSocket(url) alone never times out on its
+		// own (a proxy that accepts the TCP connection but never completes, or never refuses, the
+		// WS upgrade can leave it in CONNECTING state indefinitely) - forcing a close() here drives
+		// it through the normal onclose()/backoff/retry path below instead of leaving
+		// pushAvailable()/onPushAvailabilityChange() with no signal at all while it hangs.
+		let connect_timer : any = this.#setTimeoutOn(wnd, () =>
+		{
+			connect_timer = null;
+			console.log("Connection attempt did not complete within "+CONNECT_TIMEOUT_MS+"ms --> treating as failed");
+			this.#json.notePushDisconnected(wnd);
+			try { this.websocket.close(); } catch(_e) { /* ignore, already gone */ }
+		}, CONNECT_TIMEOUT_MS);
+
 		this.websocket = this.#json.websocket = new wnd.WebSocket(url);
 		this.websocket.onopen = (e) =>
 		{
+			if(connect_timer) { wnd.clearTimeout(connect_timer); connect_timer = null; }
 			check_timer = this.#setTimeoutOn(wnd, check, CHECK_INTERVAL);
 			this.websocket.send(JSON.stringify({
 				subscribe: tokens,
 				account_id: parseInt(<any>account_id)
 			}));
+			this.#json.notePushConnected(wnd);
 		};
 
 		this.websocket.onmessage = (event) =>
 		{
 			this.#json.reconnectTime = MIN_RECONNECT_TIME;
+			this.#json.notePushConnected(wnd);
 			console.log(event);
 			if (check_timer) wnd.clearTimeout(check_timer);
 			check_timer = this.#setTimeoutOn(wnd, check, CHECK_INTERVAL);
@@ -262,6 +332,7 @@ class JsonRequest
 		this.websocket.onerror = (error) =>
 		{
 			this.#json.reconnectTime = Math.min(this.#json.reconnectTime * 2, MAX_RECONNECT_TIME);
+			this.#json.notePushDisconnected(wnd);
 
 			console.log(error);
 			(error||this.handleError({}, error));
@@ -269,14 +340,18 @@ class JsonRequest
 
 		this.websocket.onclose = (event) =>
 		{
+			if(connect_timer) { wnd.clearTimeout(connect_timer); connect_timer = null; }
+
 			if (event.wasClean)
 			{
 				this.#json.reconnectTime = MIN_RECONNECT_TIME;
+				this.#json.notePushStopped(wnd);
 				console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
 			}
 			else
 			{
 				this.#json.reconnectTime = Math.min(this.#json.reconnectTime * 2, MAX_RECONNECT_TIME);
+				this.#json.notePushDisconnected(wnd);
 
 				// e.g. server process killed or network down
 				// event.code is usually 1006 in this case
@@ -687,6 +762,15 @@ class Json implements JsonModule
 	#websocket : any = null;
 	#reconnectTime = MIN_RECONNECT_TIME;
 
+	/**
+	 * Debounced push-availability state and its subscribers - see pushAvailable()'s docs.
+	 * #unavailableTimer is the pending "declare it unavailable" grace timer (null: not counting
+	 * down, either because we're connected or because we already declared it unavailable).
+	 */
+	#pushAvailable = false;
+	#pushListeners = new Set<(_available : boolean) => void>();
+	#unavailableTimer : any = null;
+
 	get wnd() : Window { return this.#wnd; }
 	get plugins() { return this.#plugins; }
 	get globalPlugins() { return this.#globalPlugins; }
@@ -694,6 +778,90 @@ class Json implements JsonModule
 	set websocket(ws : any) { this.#websocket = ws; }
 	get reconnectTime() { return this.#reconnectTime; }
 	set reconnectTime(t : number) { this.#reconnectTime = t; }
+
+	/**
+	 * A live push-style connection is open and has exchanged at least one message (or just
+	 * opened) - cancels any pending "declare unavailable" grace timer and, if we weren't already
+	 * available, notifies subscribers.
+	 *
+	 * Public (part of JsonModule, called as egw.notePushConnected()) as well as internal -
+	 * openWebSocket() isn't the only thing that can establish a live connection this way any
+	 * more: egw_push_fallback.ts's SSE transport (Phase 6) reports its own ack/disconnect through
+	 * these exact same three methods, since a working SSE stream is, to every other consumer,
+	 * indistinguishable from the websocket - both mean "real-time delivery is working right now".
+	 * SSE has no need for notePushDisconnected()'s grace period (it manages its own
+	 * reconnect/backoff separately), so it only ever calls this one and notePushStopped().
+	 *
+	 * @param _wnd defaults to this Json instance's own window - callers outside egw_json.ts have
+	 *  no reason to (and, being a different module, couldn't cheaply) pass a different one
+	 */
+	notePushConnected = (_wnd? : Window) : void =>
+	{
+		_wnd ||= this.#wnd;
+		if(this.#unavailableTimer)
+		{
+			_wnd.clearTimeout(this.#unavailableTimer);
+			this.#unavailableTimer = null;
+		}
+		this.#setPushAvailable(true);
+	}
+
+	/**
+	 * The connection errored, or closed uncleanly and a reconnect is already scheduled - starts
+	 * (if not already running) the grace timer, so a single blip that reconnects quickly never
+	 * flips pushAvailable()/onPushAvailabilityChange() at all. See notePushConnected()'s docs.
+	 */
+	notePushDisconnected = (_wnd? : Window) : void =>
+	{
+		_wnd ||= this.#wnd;
+		if(this.#unavailableTimer || !this.#pushAvailable) return;	// already counting down, or already unavailable
+
+		this.#unavailableTimer = _wnd.setTimeout(() =>
+		{
+			this.#unavailableTimer = null;
+			this.#setPushAvailable(false);
+		}, PUSH_UNAVAILABLE_GRACE_MS);
+	}
+
+	/**
+	 * The connection closed cleanly (no reconnect will be attempted by whatever reported this) -
+	 * unavailable immediately, no grace period, since nothing is going to bring it back on its
+	 * own. See notePushConnected()'s docs.
+	 */
+	notePushStopped = (_wnd? : Window) : void =>
+	{
+		_wnd ||= this.#wnd;
+		if(this.#unavailableTimer)
+		{
+			_wnd.clearTimeout(this.#unavailableTimer);
+			this.#unavailableTimer = null;
+		}
+		this.#setPushAvailable(false);
+	}
+
+	#setPushAvailable(_available : boolean)
+	{
+		if(this.#pushAvailable === _available) return;
+
+		this.#pushAvailable = _available;
+		this.#pushListeners.forEach((_callback) =>
+		{
+			try
+			{
+				_callback(_available);
+			}
+			catch(_e)
+			{
+				console.error("onPushAvailabilityChange() listener threw", _e);
+			}
+		});
+	}
+
+	onPushAvailabilityChange = (_callback : (_available : boolean) => void) : (() => void) =>
+	{
+		this.#pushListeners.add(_callback);
+		return () => this.#pushListeners.delete(_callback);
+	}
 
 	constructor(_wnd : Window)
 	{
@@ -909,11 +1077,12 @@ class Json implements JsonModule
 	}
 
 	/**
-	 * Check if there is a *working* connection to a push server
+	 * Check if there is a *working* connection to a push server - see the JsonModule interface
+	 * docs (egw_json.ts) for exactly what "available" means here.
 	 */
 	pushAvailable = () : boolean =>
 	{
-		return this.#websocket !== null && this.#websocket.readyState == this.#websocket.OPEN && this.#reconnectTime === MIN_RECONNECT_TIME;
+		return this.#pushAvailable;
 	}
 
 	/**
@@ -1006,24 +1175,23 @@ class Json implements JsonModule
 				else if (i == 1 && parts[0] == 'app' && typeof (_context || self.#wnd).app.classes[parts[1]] === 'undefined')
 				{
 					// Only apps rollup actually built have a /$app/js/app.min.js entry in the
-					// manifest - some (eg. notifications, still on its own legacy <script> include
-					// via the after_navbar hook, never ported to app.ts) never have one and never
-					// will, no matter how recent the build is. egw_import()-ing one of those 404s
-					// every single time, unrelated to any rebuild, and used to nag with a "please
-					// reload" that reloading can never fix (ticket #124112) - most likely what was
-					// actually behind app.notifications.append() racing notificationajaxpopup.js's
-					// own <script> load on a fresh page. Only attempt the load - and only warn
-					// about a real, potentially-fixable rebuild mismatch - when the manifest
-					// actually knows about this app's entry.
+					// manifest - an app with no app.ts (or one whose build failed) never has one and
+					// never will, no matter how recent the build is. egw_import()-ing one of those
+					// 404s every single time, unrelated to any rebuild, and used to nag with a
+					// "please reload" that reloading can never fix (ticket #124112). Only attempt
+					// the load - and only warn about a real, potentially-fixable rebuild mismatch -
+					// when the manifest actually knows about this app's entry.
 					if (typeof (<any>self.#wnd).egw_manifest?.['/'+parts[1]+'/js/app.min.js'] === 'undefined')
 					{
 						// Return (not fall through to the "not a function" throw at the bottom of
 						// this method) - most likely a load-order race against that app's own
-						// <script> include (eg. notificationajaxpopup.js), not an error worth an
-						// "Exception ... while handling JSON response" log entry every time it
-						// happens. Silently dropping this particular call is the accepted, quieter
-						// floor for now; a real fix (retry once the app object shows up, instead of
-						// giving up) is a separate, follow-up problem.
+						// bootstrap, not an error worth an "Exception ... while handling JSON
+						// response" log entry every time it happens (eg. notifications/js/app.ts,
+						// which has no owning template/tab to naturally sequence this - see
+						// notifications/inc/hook_after_navbar.inc.php). Silently dropping this
+						// particular call is the accepted, quieter floor for now; a real fix (retry
+						// once the app object shows up, instead of giving up) is a separate,
+						// follow-up problem.
 						egw(self.#wnd).debug("log", "app."+parts[1]+" has no rollup entry, not attempting to load it");
 						return;
 					}

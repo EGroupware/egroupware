@@ -554,7 +554,9 @@ class kdots_framework extends Api\Framework\Ajax
 	 * Prepare notification signal (blinking bell)
 	 *
 	 * Badge show/hide/blink is handled by EgwFramework.ts::topmenu_info_notify()
-	 * and notifications/js/notificationajaxpopup.js, no extra JS include needed.
+	 * and notifications/js/app.ts (registered via notifications/inc/hook_framework_header.inc.php's
+	 * Api\Framework::includeJS() call, not a template/tab like every other app.ts), no extra JS
+	 * include needed here.
 	 *
 	 * @return string
 	 */

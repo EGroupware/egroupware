@@ -66,13 +66,6 @@ class notifications_ajax
 	private $response;
 
 	/**
-	 * Do we have a real push server, or only a fallback
-	 *
-	 * @var bool
-	 */
-	private $isPushServer;
-
-	/**
 	 * constructor
 	 *
 	 */
@@ -82,11 +75,6 @@ class notifications_ajax
 		$this->recipient = (object)$GLOBALS['egw_info']['user'];
 
 		$this->db = $GLOBALS['egw']->db;
-
-		$this->isPushServer = Api\Cache::getInstance('notifications', 'isPushServer', function ()
-		{
-			return !Api\Json\Push::onlyFallback();
-		}, [], 900);
 	}
 
 	/**
@@ -112,7 +100,6 @@ class notifications_ajax
 		{
 			$this->response->jquery('#currentusers', 'text', array((string)$GLOBALS['egw']->session->session_count()));
 		}
-		if  ($this->isPushServer) $this->response->data(['isPushServer' => true]);
 		$this->get_egwpopup($browserNotify);
 	}
 
