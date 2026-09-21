@@ -190,6 +190,13 @@ class PathHelpersTest extends TestCase
 			'regular file rw-r--r--' => [0100644, '-rw-r--r--'],
 			'directory rwxr-xr-x' => [0040755, 'drwxr-xr-x'],
 			'symlink rwxrwxrwx' => [Vfs::MODE_LINK | 0777, 'lrwxrwxrwx'],
+			// the file-type bits overlap, so each type needs its own case: block special (0060000)
+			// contains character special (0020000), and a link (0120000) contains both
+			'fifo pipe' => [0010644, 'prw-r--r--'],
+			'character device' => [0020644, 'crw-r--r--'],
+			'block device' => [0060644, 'brw-r--r--'],
+			'socket' => [0140644, 'srw-r--r--'],
+			'no type bits is unknown' => [0000644, 'urw-r--r--'],
 			'setuid owner' => [0104755, '-rwsr-xr-x'],
 			'setuid bit without exec shows S' => [0104655, '-rwSr-xr-x'],
 			'sticky bit on world-executable dir' => [0041777, 'drwxrwxrwt'],
