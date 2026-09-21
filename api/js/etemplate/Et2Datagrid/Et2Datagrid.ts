@@ -640,6 +640,28 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _scrollListenerBody : HTMLElement | null = null;
 	private _bodyScrollVersion : number = 0;
 	private _lastBodyScrollAt : number = 0;
+	/** True while the body is scrolled to its own end - see _keepBottomPinned(). */
+	private _bodyPinnedToEnd : boolean = false;
+	/**
+	 * Result size when the scroll landed at the end, so a list that gains *rows* does not
+	 * drag the reader along. Deliberately `total` and not the virtual row count, which
+	 * also counts placeholders still being fetched and therefore moves throughout a
+	 * normal load - live-observed releasing the pin seconds after it was set.
+	 */
+	private _bodyPinnedToEndRowCount : number | null = -1;
+	/** Scroll range when the scroll landed at the end - see _noteBottomPin(). */
+	private _bodyPinnedToEndScrollHeight : number = -1;
+	/** Set when a new query starts; consumed once its first rows have rendered - see _resetVirtualizerRowMetrics(). */
+	private _rowMetricsResetPending : boolean = false;
+	/** Notices the reserved row extent growing under a user parked at the bottom. */
+	private _bottomPinResizeObserver : ResizeObserver | null = null;
+	private _bottomPinObservedBody : HTMLElement | null = null;
+	/**
+	 * How close to the end still counts as "at the end". Both scrollTop and the
+	 * reserved extent are fractional, and a browser's own clamp lands a hair short of
+	 * the arithmetic maximum often enough that an exact comparison never matches.
+	 */
+	private static readonly BOTTOM_PIN_EPSILON_PX = 2;
 	private _deferredEmbeddedRemeasureTimer : number | null = null;
 	private _deferredEmbeddedRemeasureChildGrids : Set<Et2Datagrid> = new Set();
 	private _completedRequestKeys : Set<string> = new Set();
@@ -861,6 +883,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			this._bodyScrollVersion++;
 			this._lastBodyScrollAt = performance.now();
+			this._noteBottomPin();
 			this._maybePrefetchOnScroll();
 			this._scheduleEmbeddedChildScrollSync(this._body);
 		};
@@ -999,6 +1022,12 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this._embeddedChildGridResizeObserver = null;
 		this._rowHeightResizeObserver?.disconnect();
 		this._rowHeightResizeObserver = null;
+		this._bottomPinResizeObserver?.disconnect();
+		this._bottomPinResizeObserver = null;
+		this._bottomPinObservedBody = null;
+		this._bodyPinnedToEnd = false;
+		this._bodyPinnedToEndRowCount = -1;
+		this._bodyPinnedToEndScrollHeight = -1;
 		this._viewportEntryObserver?.disconnect();
 		this._viewportEntryObserver = null;
 		if(this._rowHeightStableTimer !== null)
@@ -1364,6 +1393,14 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			this._postRenderStructureSyncNeeded = false;
 		}
 		this._syncDomEventTargets();
+		if(this._rowMetricsResetPending && changedProperties.has("rows") && this.rows.length > 0)
+		{
+			// The new query's rows are on screen now, so every measurement from here on
+			// describes them. An empty `rows` is just _clearRows() itself passing through
+			// and is not yet the replacement, hence the length check.
+			this._rowMetricsResetPending = false;
+			this._resetVirtualizerRowMetrics();
+		}
 		if(changedProperties.has("rows") || changedProperties.has("expansionConfig"))
 		{
 			this._scheduleEmbeddedChildGridObserverSync();
@@ -1562,6 +1599,138 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				layout.reflowIfNeeded();
 			}
 		});
+	}
+
+	/**
+	 * Remember whether this scroll came to rest at the very end of the list.
+	 *
+	 * Only a real scroll sets this. A list that fits its own viewport is trivially
+	 * "at the end" with nothing to scroll, which says nothing about intent, so a
+	 * zero-length scroll range never counts.
+	 */
+	private _noteBottomPin()
+	{
+		const body = this._body;
+		if(!body)
+		{
+			this._bodyPinnedToEnd = false;
+			this._bodyPinnedToEndRowCount = -1;
+			this._bodyPinnedToEndScrollHeight = -1;
+			return;
+		}
+		if(this._bodyPinnedToEnd && body.scrollHeight !== this._bodyPinnedToEndScrollHeight)
+		{
+			// The scroll range itself changed. A scroll event that arrives with it is the
+			// range moving under the reader - the browser clamping, or the virtualizer
+			// correcting the difference between where it guessed the rows were and where
+			// they really are - not the reader choosing to leave the bottom. Reading it as
+			// a choice is what kept the pin from surviving the very correction it exists
+			// to undo. Keep the pin and re-assert it against the new range instead.
+			this._bodyPinnedToEndScrollHeight = body.scrollHeight;
+			this._keepBottomPinned();
+			return;
+		}
+		const max = body.scrollHeight - body.clientHeight;
+		this._bodyPinnedToEnd = max > 0 && body.scrollTop >= max - Et2Datagrid.BOTTOM_PIN_EPSILON_PX;
+		this._bodyPinnedToEndRowCount = this._bodyPinnedToEnd ? this.total : -1;
+		this._bodyPinnedToEndScrollHeight = this._bodyPinnedToEnd ? body.scrollHeight : -1;
+	}
+
+	/**
+	 * Hold the bottom of the list still for someone who has scrolled to it.
+	 *
+	 * The reserved extent is the row count times the average height of the rows
+	 * measured so far, so it keeps changing while rows are still being measured.
+	 * When it grows, the browser leaves scrollTop where it was - which is no longer
+	 * the end - so the list silently gains room below the reader and the next render
+	 * shifts content under them: the reported "the view jumps and several more
+	 * entries appear". Scrolling to the end is an unambiguous statement that the last
+	 * row belongs at the bottom, whatever the rows turn out to measure, so put it
+	 * back there.
+	 *
+	 * Deliberately limited to an unchanged result size: rows arriving from a push or an
+	 * autorefresh also lengthen the list, and dragging someone to the end of content
+	 * they have not seen is not what reaching the bottom asked for.
+	 */
+	private _keepBottomPinned()
+	{
+		const body = this._body;
+		if(!this._bodyPinnedToEnd || !body || this._printRows)
+		{
+			return;
+		}
+		if(this.total !== this._bodyPinnedToEndRowCount)
+		{
+			this._bodyPinnedToEnd = false;
+			return;
+		}
+		const max = body.scrollHeight - body.clientHeight;
+		this._bodyPinnedToEndScrollHeight = body.scrollHeight;
+		if(max > 0 && body.scrollTop < max - Et2Datagrid.BOTTOM_PIN_EPSILON_PX)
+		{
+			// Assigning scrollTop fires "scroll", so _noteBottomPin() re-runs and finds
+			// the body at the end again - the flag stays true and this does not re-fire
+			// for the same growth.
+			body.scrollTop = max;
+		}
+	}
+
+	/**
+	 * Watch the reserved row extent so _keepBottomPinned() sees it grow.
+	 *
+	 * The extent reaches the DOM as a min-height on the row body, written both by the
+	 * virtualizer itself and by _syncRowsMinHeight(). Observing the element covers
+	 * both rather than trying to hook every writer.
+	 */
+	private _observeBottomPin()
+	{
+		const rowsBody = this._rowsBody as HTMLElement | null;
+		if(!rowsBody || this.embeddedVirtualized || this._bottomPinObservedBody === rowsBody)
+		{
+			return;
+		}
+		if(!this._bottomPinResizeObserver)
+		{
+			this._bottomPinResizeObserver = new ResizeObserver(() => this._keepBottomPinned());
+		}
+		else
+		{
+			this._bottomPinResizeObserver.disconnect();
+		}
+		this._bottomPinResizeObserver.observe(rowsBody);
+		this._bottomPinObservedBody = rowsBody;
+	}
+
+	/**
+	 * Drop the virtualizer's per-row height measurements.
+	 *
+	 * FlowLayout caches measured row heights by *index*, and discards them only when
+	 * the viewport width changes. A new query reuses those same indices for entirely
+	 * different rows, so without this the scroll extent for the new result is derived
+	 * from the previous result's row heights - live-observed reserving 96px for 258px
+	 * of real content right after a 259-row result was filtered down to 2, with 78
+	 * measurements from the old query still in the cache.
+	 *
+	 * Called once the replacement rows have rendered rather than when the query starts
+	 * - see _clearRows(), which only arms it.
+	 *
+	 * Only the size cache is dropped: `_physicalItems` holds stale positions too, but
+	 * the virtualizer rebuilds those from the new range on its next pass.
+	 */
+	private _resetVirtualizerRowMetrics()
+	{
+		// Undocumented `@lit-labs/virtualizer` internals, hence the feature checks -
+		// the same guarded reach as _scheduleVirtualizerLayoutSync().
+		const layout = (<any>this._virtualize)?._layout;
+		if(typeof layout?._metricsCache?.clear !== "function")
+		{
+			return;
+		}
+		layout._metricsCache.clear();
+		if(typeof layout._scheduleReflow === "function")
+		{
+			layout._scheduleReflow();
+		}
 	}
 
 	/**
@@ -3421,6 +3590,16 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this._deferredEmbeddedRemeasureChildGrids.clear();
 		this._requestQueue.clear();
 		this._clearRowUpgradeQueue();
+		// Deliberately only armed here, not done here: the previous query's rows stay in
+		// the DOM until its replacement arrives, and the virtualizer goes on measuring
+		// them the whole time - live-observed refilling a cache cleared at this point
+		// with 100 entries for a result that turned out to hold 2 rows.
+		this._rowMetricsResetPending = true;
+		// A new result set has its own end; whatever the reader had reached in the old
+		// one says nothing about where they want to be in this one.
+		this._bodyPinnedToEnd = false;
+		this._bodyPinnedToEndRowCount = -1;
+		this._bodyPinnedToEndScrollHeight = -1;
 		// Safety net for _requestChunkForRowIndex()'s deferral: some paths never
 		// drive a real row through _updateMeasuredAverageRowHeight() (a hidden grid,
 		// zero matching rows, a data provider that skips the normal upgrade-queue
@@ -3953,6 +4132,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			}
 		}
 		this._initRowUpgradeObserver();
+		this._observeBottomPin();
 		this._syncEmbeddedChildGridObservers();
 	}
 
