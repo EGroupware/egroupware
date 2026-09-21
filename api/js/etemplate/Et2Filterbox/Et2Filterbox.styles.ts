@@ -7,6 +7,13 @@ export default css`
 		--label-width: min(20rem, 30%);
 	}
 
+	/* An app with several nextmatches marks the inactive ones' filterboxes hidden, which is also
+	   how EgwFrameworkApp.filters picks the current one.  Without this the UA's own [hidden] rule
+	   loses to the display above and they all stay visible in the drawer. */
+	:host([hidden]) {
+		display: none;
+	}
+
 	.filterbox {
 	}
 
