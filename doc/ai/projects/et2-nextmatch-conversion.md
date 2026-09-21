@@ -9,9 +9,9 @@ generated component docs for
 [`et2-datagrid`](https://etemplate.egroupware.org/components/et2-datagrid/) — this document does not
 repeat that reference material.
 
-Apps converted so far: Addressbook, Infolog, Filemanager, Mail, Timesheet, Tracker, Home, Calendar.
-Apps still on the legacy widget: Admin, Importexport, Aiassistant, Preferences. Non-core apps
-(Projectmanager, Resources, News_admin, Smallpart, Schulmanager, Stylite, Kanban, ...) have never been
+Apps converted so far: Addressbook, Infolog, Filemanager, Mail, Timesheet, Tracker, Home, Calendar,
+ProjectManager. Apps still on the legacy widget: Admin, Importexport, Aiassistant, Preferences.
+Non-core apps (Resources, News_admin, Smallpart, Schulmanager, Stylite, Kanban, ...) have never been
 on this list at all and still need one. Related in-flight/reference docs in the same directory as the
 widget source: `ColumnSelectionNotes.md`, `Et2DatagridDirectoryMigrationPlan.md`, `NestedExpansion.md`.
 
@@ -86,6 +86,106 @@ to `app.ts`'s existing `checkNmFilterChanged()` — the generic handler that alr
 `col_filter` key change regardless of which physical control (toolbar or drawer) changed it, since both
 write through the same shared id and the same `et2-filter` event. No new wiring was needed; the sync
 bug was really just a missing case in code that already ran on every relevant change.
+
+## ProjectManager
+
+ProjectManager's conversion covers all three of its list views - the project list
+(`projectmanager.list`), the element list (`projectmanager.elements.list`) and the pricelist
+(`projectmanager.pricelist.list`) - in both the default and mobile skins.
+`templates/default/list.rows.xet` (the Home favourite-portlet variant) came earlier, with Home's own
+conversion. It is the first app converted that shows **several nextmatches on one page**, which is
+where most of what follows comes from.
+
+- **An app that keeps more than one nextmatch alive has to mark the inactive ones' filterboxes
+  `hidden`, and nothing does that for it.** ProjectManager loads all four of its views at once and
+  swaps which one is displayed, so three `Et2Nextmatch`es exist side by side. Each builds its own
+  `<et2-filterbox>` and appends it to the nearest ancestor offering a `filter` slot
+  (`_ensureFilterbox()`), which for all three is the same `<egw-app>` - and the drawer's body is a
+  bare `<slot name="filter">`, so all three showed at once, stacked, with nothing saying which
+  belonged to the list on screen.
+
+  The app-side hook for "which nextmatch is current" already exists and ProjectManager already had
+  it: `EgwFrameworkApp.getNextmatch` is a `@property({type: Function})` an app overrides, and Admin
+  overrides it the same way (`admin/js/app.ts`, keyed off its tree selection). **That hook is not
+  enough**, because it only feeds the drawer's label/icon, the column-selection button and the
+  `filters` getter - not what is *in* the drawer. Admin never hit this at all: `admin.index` is
+  still on the legacy `<nextmatch>`, which keeps its filters in its own header bar and never puts
+  an `<et2-filterbox>` in the app's filter slot.
+
+  **Use the `hidden` attribute, not CSS.** `EgwFrameworkApp.filters` is
+  `querySelector("et2-filterbox:not([hidden],[disabled])")` - that selector *is* the contract for an
+  app with several filterboxes, and it is also what the "Clear filters" button, the filter-set icon
+  and `getFilterInfo()` read. Hiding the inactive boxes with `style.display` instead satisfies the
+  eye and not the getter: verified live that the project list was on screen while `filters` resolved
+  to the element list's box, so all three of those read the wrong filterbox. Note the filterbox
+  needed `:host([hidden]) { display: none }` added (`Et2Filterbox.styles.ts`) before the attribute
+  did anything visually - its existing author-origin `:host { display: block }` beats the UA's own
+  `[hidden]` rule.
+
+  **Re-run the sync when a filterbox appears, not only on the view switch.** A nextmatch does not
+  create its filterbox until its filter template arrives, which is after the switch that should have
+  hidden it - so a one-shot pass leaves any view that was never displayed unhidden. ProjectManager
+  uses a `MutationObserver` on the `<egw-app>` node for this.
+
+  **The drawer's row count goes stale across a view switch too.**
+  `EgwFrameworkApp.handleSearchResults()` correctly only takes a count from the current nextmatch,
+  but switching views produces no new search result - the list being shown already has its rows - so
+  the heading keeps counting the view you came from ("Filters: 3 entries" over a 5-row project
+  list). The app has to set `<egw-app>.rowCount` from the now-current nextmatch's `totalCount`
+  itself.
+
+- **A legacy widget the server rewrites via a `type` modification renders nothing inside a row, and
+  registering the tag client-side is the fix.** ProjectManager's `<projectmanager-select-erole>` has
+  no client-side implementation at all: `projectmanager_etemplate_widget` (an
+  `Etemplate\Widget\Transformer`) maps its type to `et2-select`, which reaches the browser as a
+  `type` entry in the modifications array. Both `et2_core_widget`'s `createElementFromNode()` and
+  `Et2Widget.loadFromXML()` honour that entry *before* looking for a custom element, so outside a
+  row it has always resolved to `et2-select` - but `Et2RowProvider._cloneElement()` builds a row by
+  cloning elements **by tag name** and never consults modifications, so in a row the untouched tag
+  reached `document.createElement()` as an unknown element: in the DOM, inert, rendering nothing,
+  with no console warning. Registering the tag as a real custom element
+  (`projectmanager/js/ProjectmanagerSelectErole.ts`, extending `Et2Select`) fixes the row case and
+  changes nothing elsewhere, because the type modification still wins outside rows. Register a
+  `<tag>_ro` variant alongside it - `_cloneElement()` swaps any row widget for one when it exists,
+  and that is what a read-only row cell actually gets. **Grep an app's row templates for tags with
+  no `customElements.define()` before considering it converted**; this failure mode is completely
+  silent.
+
+- **`<progress>`: the trailing `%` depends on the field.** Per the `<progress>` entry in the rename
+  patterns below, the value binding goes in `value=`/`title=`. ProjectManager needed
+  `title="$row_cont[pm_completion]%"` for the project list but `title="$row_cont[pe_completion]"`
+  for the element list - `pm_completion` arrives as `"7"` and `pe_completion` as `"7%"`. Check the
+  real row data rather than copying the sibling template; `value=` is unaffected either way, since
+  the HTML float parser stops at the `%`.
+
+- **`add_existing` was a real `action_popup` and was converted, not deleted.** Unlike the
+  `link_popup` case below, `projectmanager_elements_ui::action()`'s `'add_existing'` links the
+  *picked* entry to the project the list is showing, ignoring the selected rows entirely - the
+  generic "Link" action does the opposite (links the selected rows to a picked target), so it is not
+  a replacement. Converted to a real `<et2-dialog>` with an `<et2-box id="add_existing_popup">`
+  inside it for the namespace and the buttons in the `footer` slot, exactly as Tracker's
+  `admin_popup`. The app's own `app.less` had `#projectmanager-elements-list_add_existing_popup
+  {display:none}` left over from the box version, which silently collapsed the new dialog's body to
+  zero height - **grep the app's CSS for the popup's id when converting one of these.**
+
+- **Three framework bugs this app's first review found, all of them things another conversion will
+  hit too.** (1) An `egw_open` action whose spec names no app - `'egw_open' => 'edit-'`, meaning
+  "take the app from the id", which is what a list holding rows from several apps uses - was a
+  silent no-op: `Et2NextmatchActionController.executeEgwOpenAction()` bailed on `if(!type || !app)`,
+  where the legacy `nm_action()` had no guard and `egw.open()` documents an empty app as supported
+  (it splits an `"<app>:<id>"` id itself). (2) The column-selection dialog listed a column by
+  `header.textContent`, preferred over `column.title` - fine until a header cell also holds a
+  widget showing data, at which point a column called "Status" is offered as "6.7%", because the
+  cell's rendered text is the column total sitting next to the sort header. (3)
+  `Et2DatagridPrintController.syncPrintFlowHeight()` pinned the printed row block to
+  `tbody.scrollHeight`, which counts the deliberate 250mm `padding-bottom` the print stylesheet adds
+  as somewhere for the last row to overflow into - declaring 4 rows that occupy 212px as a 1157px
+  block, roughly a page taller than they are, to be fragmented as though it had that much content.
+
+- **The mobile elements and pricelist templates had the nextmatch inside a `<grid>`**, the blocker
+  described in Calendar's section below. Both lifted to direct children of the index template,
+  following Addressbook's converted mobile skin, which keeps its own trailing `legacy_actions` grid
+  as a sibling.
 
 ## Calendar
 
@@ -557,6 +657,10 @@ these in order, in one commit, then expect follow-up fixups.
    [Template rename patterns](#reference-template-rename-patterns): tag renames, header markup
    restructuring, row-value binding syntax fixes, `et2-styles` for row CSS. Check off each pattern
    that applies to this app's templates; don't assume a pattern doesn't apply without checking.
+   Then check every tag left in the row template against `customElements` - `Et2RowProvider`
+   clones row cells **by tag name**, so an app-specific tag with no client-side registration
+   renders nothing at all, silently (ProjectManager's `<projectmanager-select-erole>`; see its
+   section above for why a server-side type transformation does not save you here).
 
 2. **Rewrite `app.ts`/`app.js` in the same commit.** Grep the app's JS for each of these and replace
    per [Legacy API replacement table](#reference-legacy-api-replacement-table):
