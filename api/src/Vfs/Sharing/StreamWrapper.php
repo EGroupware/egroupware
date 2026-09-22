@@ -66,13 +66,26 @@ class StreamWrapper extends Vfs\StreamWrapper
 		{
 			throw new Api\Exception\NotFound('Share owner not found', 404);
 		}
-		$share_root = 'vfs://'.$account_lid.'@default'.Vfs::parse_url($share['share_path'], PHP_URL_PATH);
+		// Normalised once, so both halves of the containment check below compare like with like:
+		// Vfs::concat() strips a trailing slash from its base, and validate_path() keeps whatever
+		// trailing slash the share was created with, so for such a share the share's OWN root came
+		// back from concat() one character shorter than $share_root and was rejected as an escape.
+		$share_root = rtrim('vfs://'.$account_lid.'@default'.Vfs::parse_url($share['share_path'], PHP_URL_PATH), '/');
 		$url = Vfs::concat($share_root, $rel_path);
 
 		// $rel_path can come from a client-supplied sharing:// path (StreamWrapper::replace()) -
 		// Vfs::concat() only normalizes "/../" segments, it never checks containment, so a
-		// traversal-laden $rel_path must not be allowed to resolve outside the share's own root
-		if ($url !== $share_root && strpos($url, rtrim($share_root, '/').'/') !== 0)
+		// traversal-laden $rel_path must not be allowed to resolve outside the share's own root.
+		// The trailing slash on the prefix is what keeps a sibling like "/home/u/share2" from
+		// passing as being inside "/home/u/share".
+		//
+		// The second test is for what concat() leaves behind: it only collapses "/../", so a path
+		// ENDING in "/.." keeps it literally, and "<share_root>/.." passes the prefix test above
+		// while naming the parent.  Anything below the root still carrying a ".." segment was not
+		// fully resolved and is refused rather than handed on to be resolved by someone else.
+		// A segment that merely begins with dots ("..hidden", "a..b") is untouched by this.
+		if ($url !== $share_root && strpos($url, $share_root.'/') !== 0 ||
+			preg_match('#(^|/)\.\.(/|$)#', substr($url, strlen($share_root))))
 		{
 			throw new Api\Exception\NotFound('Path escapes share root', 404);
 		}
