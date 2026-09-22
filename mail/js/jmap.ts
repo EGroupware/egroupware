@@ -25,7 +25,7 @@ import {JamWebSocketClient} from "./jmap-jam-websocket";
 import type {StateChange} from "./jmap-jam-websocket";
 import DOMPurify from "../../api/js/etemplate/Et2Image/dompurify-shim";
 import {isNamespaceRootName, sortTopLevel} from "./folderTree";
-import {formatDateTime} from "../../api/js/etemplate/Et2Date/Et2Date";
+import {formatDate, formatDateTime} from "../../api/js/etemplate/Et2Date/Et2Date";
 import {convert as htmlToText} from "html-to-text";
 
 interface JmapToken
@@ -545,6 +545,22 @@ export class MailJmap
 	// every one of those.
 	private quotaCache : Record<string, { data : Record<string, any>, expires : number }> = {};
 	private static readonly QUOTA_CACHE_TTL = 2 * 60 * 60 * 1000;
+	// doc/ai/projects/mail-large-mailbox-cutoff.md - Stalwart's Meilisearch backend truncates any
+	// single query whose matched+sorted set exceeds ~100,000 documents ("Search results were
+	// truncated... total=100000"), which silently closes the listing WebSocket instead of ever
+	// returning rows (found live against ralf's own 105K-message INBOX; a smaller folder - Sent -
+	// in the same account listed fine). LARGE_MAILBOX_THRESHOLD leaves headroom under that ceiling
+	// for mail that arrives between two getListingCutoffDate() discoveries. Below the threshold,
+	// every folder behaves exactly as before - no configuration, this only ever engages for the
+	// rare outsized mailbox (INBOX, in practice).
+	private static readonly LARGE_MAILBOX_THRESHOLD = 80000;
+	private static readonly CUTOFF_CACHE_TTL = 24 * 60 * 60 * 1000;
+	// keyed by JMAP mailboxId - cutoff is null once a mailbox is confirmed small enough to need none
+	private listingCutoffCache : Record<string, { cutoff : string | null, expires : number }> = {};
+	// selectedFolder ("profileID::folder/path") values the cutoff notice has already been shown
+	// for this page load - shapeFetchResult() is called on every fetch (scroll/sort/page, not just
+	// the first), but the notice should only ever toast once per folder per session
+	private cutoffNoticeShown : Set<string> = new Set();
 
 	// sessionStorage key prefix for popupCheckCert()'s debounce (one popup per account per 5min,
 	// survives a page reload within the same tab/session) - mirrors the classic
@@ -684,7 +700,7 @@ export class MailJmap
 	 *
 	 * @return null if this account has no usable JMAP access-token (server unreachable, MFA, ...)
 	 */
-	async getRows(query : JmapGetRowsQuery) : Promise<{ rows : any[], total : number } | null>
+	async getRows(query : JmapGetRowsQuery) : Promise<{ rows : any[], total : number, cutoffDate? : string } | null>
 	{
 		const [profileID, folder] = (query.selectedFolder || '').split('::', 2);
 		if (!profileID || !folder)
@@ -733,12 +749,28 @@ export class MailJmap
 			return this.getThreadedRows(client, token, profileID, mailboxId, query, start, limit, fetchPreview);
 		}
 
+		// Large-mailbox listing cutoff (see getListingCutoffDate()'s own docblock) - only for the
+		// plain, un-dated folder listing: an explicit startdate/enddate already narrows the matched
+		// set (whatever the user picked takes precedence, never silently overridden), a text search
+		// already narrows it too, "all folders" has its own no-inMailbox semantics entirely, and the
+		// truncation ceiling this works around is a Stalwart/Meilisearch-specific limit - never
+		// reachable via the local IMAP shim (token.isLocal).
+		let effectiveQuery = query;
+		if (!token.isLocal && !searchAllFolders && !query.startdate && !query.enddate && !(query.search || '').trim())
+		{
+			const cutoff = await this.getListingCutoffDate(client, token.accountId, mailboxId);
+			if (cutoff)
+			{
+				effectiveQuery = {...query, startdate: cutoff};
+			}
+		}
+
 		const [[{ids, emails}], role] = await Promise.all([
 			client.requestMany((t) =>
 			{
 				const ids = t.Email.query({
 					accountId: token.accountId,
-					filter: this.buildFilter(query, mailboxId),
+					filter: this.buildFilter(effectiveQuery, mailboxId),
 					sort: this.buildSort(query),
 					position: start,
 					limit,
@@ -804,6 +836,11 @@ export class MailJmap
 		return {
 			rows,
 			total: ids.total ?? emailList.length,
+			// see getListingCutoffDate() - only set when this fetch was silently narrowed to avoid
+			// the truncation ceiling, so the UI can disclose it (doc/ai/projects/
+			// mail-large-mailbox-cutoff.md's "show all" affordance is a separate, not-yet-wired
+			// follow-up; this field is already threaded through shapeFetchResult() for it)
+			...(effectiveQuery !== query ? {cutoffDate: effectiveQuery.startdate} : {}),
 		};
 	}
 
@@ -1995,7 +2032,7 @@ export class MailJmap
 	 * Turn a getRows()/getThreadMemberRows() result into the shape egw.dataFetch() expects, shared
 	 * by fetchRows()'s normal-list and thread-expand (`_queriedRange.parent_id`) branches.
 	 */
-	private shapeFetchResult(result : { rows : any[], total : number } | null, selectedFolder : string) : any
+	private shapeFetchResult(result : { rows : any[], total : number, cutoffDate? : string } | null, selectedFolder : string) : any
 	{
 		if (!result)
 		{
@@ -2011,12 +2048,25 @@ export class MailJmap
 		const data : Record<string, any> = {};
 		result.rows.forEach((row) => data[row.row_id] = row);
 
+		if (result.cutoffDate && !this.cutoffNoticeShown.has(selectedFolder))
+		{
+			// once per folder per session, not once per fetch (see cutoffNoticeShown's docblock) -
+			// still a plain toast, not yet the persistent "show all" banner (see getRows()'s
+			// cutoffDate docblock)
+			this.cutoffNoticeShown.add(selectedFolder);
+			this.egw.message(this.egw.lang('This mailbox is large - only showing messages since %1 for now',
+				formatDate(new Date(result.cutoffDate))), 'info');
+		}
+
 		return {
 			order: result.rows.map((row) => row.row_id),
 			data,
 			total: result.total,
 			lastModification: Math.floor(Date.now() / 1000),
 			readonlys: {},
+			// see getListingCutoffDate() - undefined unless this fetch was silently narrowed; not
+			// yet consumed by app.ts (no "showing since X, view all" banner wired up yet)
+			...(result.cutoffDate ? {cutoffDate: result.cutoffDate} : {}),
 		};
 	}
 
@@ -4580,6 +4630,96 @@ export class MailJmap
 			console.error('MailJmap.mailboxId(): failed', e);
 			throw new JmapUserError(describeJmapError(e) ?? this.egw.lang('Unable to connect to the mail server'));
 		}
+	}
+
+	/**
+	 * Auto-discover a `startdate` cutoff for a mailbox large enough to risk the ~100,000-document
+	 * per-query truncation ceiling (see LARGE_MAILBOX_THRESHOLD's docblock) - no admin/user
+	 * configuration, just a `Mailbox/get totalEmails` peek plus (only past the threshold) a handful
+	 * of cheap bounded `Email/query` counts, run once per mailbox per CUTOFF_CACHE_TTL.
+	 *
+	 * Returns null if no cutoff is needed (the overwhelming majority of folders/accounts), or an
+	 * ISO date string (`toUTCDate()`-compatible) otherwise.
+	 */
+	private async getListingCutoffDate(client : JamClient, accountId : string, mailboxId : string) : Promise<string | null>
+	{
+		const cached = this.listingCutoffCache[mailboxId];
+		if (cached && cached.expires > Date.now())
+		{
+			return cached.cutoff;
+		}
+		const remember = (cutoff : string | null) : string | null =>
+		{
+			this.listingCutoffCache[mailboxId] = {cutoff, expires: Date.now() + MailJmap.CUTOFF_CACHE_TTL};
+			return cutoff;
+		};
+
+		const [{mailbox}] = await client.requestMany((t) => ({
+			mailbox: t.Mailbox.get({accountId, ids: [mailboxId], properties: ['totalEmails', 'name']}),
+		}));
+		const info = mailbox.list?.[0];
+		const totalEmails = info?.totalEmails ?? 0;
+		if (totalEmails <= MailJmap.LARGE_MAILBOX_THRESHOLD)
+		{
+			return remember(null);
+		}
+
+		// Logarithmically-spaced candidate windows (days), narrowest to widest - probed in a
+		// SINGLE batched JMAP request (same $ref-free multi-call batching the ids/emails pair
+		// above already relies on), not one round trip per candidate: an earlier sequential
+		// exponential+binary-search version took enough dependent round trips in a row to itself
+		// trip the UI's "this is taking too long, continue?" dialog on first discovery.
+		//
+		// Deliberately capped at 10 years, NOT widened further to actually reach
+		// LARGE_MAILBOX_THRESHOLD for every account (found live 2026-09-22 against ralf's own
+		// 105K-message INBOX, accountId 'ca'): a widest-candidate experiment out to 50 years
+		// reliably hung, and isolating individual probes showed WHY - a candidate wide enough to
+		// approach the mailbox's real total (here: 15 years back already covered 84K of 105K
+		// messages) is exactly the same near-unbounded-query territory the truncation ceiling
+		// bites on, and this Meilisearch instance is flaky/slow under that load (the identical
+		// 14-candidate batch took 3.6s one run, >15s hung the next). Worse, once one candidate's
+		// count exceeds target every wider one will too, so probing further out is pure wasted
+		// risk - it can never change the chosen cutoff. 10 years covers the crossing point for
+		// this account (66,723 of 105,296 messages - short of the full 80K headroom, but safely
+		// bounded); an account whose crossing point falls beyond 10 years just gets a more
+		// conservative cutoff than the theoretical maximum, which is the right tradeoff here -
+		// reliable discovery over a perfectly tight one.
+		const CANDIDATE_DAYS = [7, 14, 30, 60, 90, 180, 365, 730, 1095, 1460, 2190, 2920, 3650];
+		const target = MailJmap.LARGE_MAILBOX_THRESHOLD;
+
+		const [probes] = await client.requestMany((t) =>
+		{
+			const calls : Record<string, any> = {};
+			CANDIDATE_DAYS.forEach((daysAgo, i) =>
+			{
+				const since = this.toUTCDate(new Date(Date.now() - daysAgo * 86400000).toISOString().slice(0, 10));
+				calls['d' + i] = t.Email.query({
+					accountId,
+					filter: {operator: 'AND', conditions: [{inMailbox: mailboxId}, {after: since}]},
+					limit: 1,
+					calculateTotal: true,
+				});
+			});
+			return calls;
+		});
+
+		// pick the WIDEST window that still stays at/under target - maximises how much history
+		// stays visible while keeping the matched set safely under the ceiling. Counts only grow
+		// with a wider window, so the first one over target ends the search.
+		let chosenDays = CANDIDATE_DAYS[0];
+		for (let i = 0; i < CANDIDATE_DAYS.length; i++)
+		{
+			if ((probes['d' + i]?.total ?? 0) > target)
+			{
+				break;
+			}
+			chosenDays = CANDIDATE_DAYS[i];
+		}
+
+		const cutoff = this.toUTCDate(new Date(Date.now() - chosenDays * 86400000).toISOString().slice(0, 10));
+		console.info(`MailJmap.getListingCutoffDate(): '${info?.name ?? mailboxId}' has ${totalEmails} messages, ` +
+			`limiting the default listing to since ${cutoff.slice(0, 10)}`);
+		return remember(cutoff);
 	}
 
 	/**
