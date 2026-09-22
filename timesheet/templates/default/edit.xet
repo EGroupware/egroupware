@@ -114,7 +114,7 @@
 		<et2-hidden  id="ignore_conflicts"></et2-hidden>
 		<et2-hidden  id="conflict_button"></et2-hidden>
 	</et2-template>
-    <et2-template id="timesheet.edit" layout="edit" class="et2-label-fixed">
+    <et2-template id="timesheet.edit" layout="edit">
         <et2-template  id="timesheet.edit.conflicts"></et2-template>
         <et2-hbox exportparts="base" class="dialogHeader">
             <et2-textbox label="Title" id="ts_title" maxlength="255" class="et2_required et2-label-fixed" tabindex="1" span="4" placeholder="@ts_title_blur"></et2-textbox>
