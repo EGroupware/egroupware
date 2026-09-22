@@ -2355,7 +2355,17 @@ export class MailCompose
 		// actually recognizes what that function would produce, not the raw preference value.
 		const startTag = normalizeFormatBlock(this.egw.preference('rte_formatblock', 'common')) === 'div' ? 'DIV' : 'P';
 		let pristine = current;
-		let hasLeadingBlock = false;
+		// The already-present leading block must be EXTRACTED out of pristine (not just detected)
+		// and re-prepended onto the final result afterward, rather than left folded inside `body` -
+		// found live 2026-09-22 (Ingo, placement 'top'/"signature above quoted text" specifically):
+		// composeBodyWithSignature()'s 'top' branch builds `start + signatureBlock + body`, so a
+		// leading block still sitting INSIDE `body` (with `start` suppressed via isReply:false) ends
+		// up placed AFTER the newly-inserted signature block instead of before it - the user's own
+		// typed text in that line appeared to "disappear" (really: shoved down past the signature,
+		// easy to miss). 'below' placement never showed this (body always precedes the signature
+		// there regardless), which is why the earlier fix's simpler suppress-only approach looked
+		// correct when only tested against 'below'/'none'.
+		let leadingBlockHtml : string | null = null;
 		if (isHtml)
 		{
 			const doc = new DOMParser().parseFromString(current, 'text/html');
@@ -2363,10 +2373,14 @@ export class MailCompose
 			if (marker)
 			{
 				marker.remove();
-				pristine = doc.body.innerHTML;
 			}
 			const first = doc.body.firstElementChild;
-			hasLeadingBlock = !!first && first.tagName === startTag;
+			if (first && first.tagName === startTag)
+			{
+				leadingBlockHtml = first.outerHTML;
+				first.remove();
+			}
+			pristine = doc.body.innerHTML;
 		}
 		else if (this.insertedSignatureBlock)
 		{
@@ -2381,9 +2395,8 @@ export class MailCompose
 			// else: can't confidently locate the previously-inserted signature (the user edited
 			// around/inside it) - leave the current value as pristine rather than guessing; this
 			// skips re-insertion once instead of risking a corrupted/duplicated signature
-			hasLeadingBlock = pristine.startsWith('\r\n');
 		}
-		await this.applySignatureForCurrentIdentity(pristine, this.isReplyCompose && !hasLeadingBlock);
+		await this.applySignatureForCurrentIdentity(pristine, this.isReplyCompose && !leadingBlockHtml, leadingBlockHtml);
 	}
 
 	/**
@@ -2401,8 +2414,14 @@ export class MailCompose
 	 *  this a reply/forward": updateSignatureForIdentity() passes `false` here even for a genuine
 	 *  reply once it detects the correct-type leading block is already there (see its own docblock)
 	 *  - composeBodyWithSignature() only ever consults this flag to decide on that one insertion.
+	 * @param leadingBlockHtml an existing leading block's own HTML (extracted, not regenerated) to
+	 *  re-prepend onto the final result verbatim - set by updateSignatureForIdentity() alongside
+	 *  isReply:false above; NOT the same as letting composeBodyWithSignature() add a fresh one via
+	 *  isReply:true, since that would place it in the WRONG position for 'top' placement (that
+	 *  function builds `start + signatureBlock + body` - a pre-existing block folded into `body`
+	 *  with `start` suppressed would land AFTER the signature instead of before it)
 	 */
-	private async applySignatureForCurrentIdentity(pristineBody : string, isReply : boolean = false) : Promise<void>
+	private async applySignatureForCurrentIdentity(pristineBody : string, isReply : boolean = false, leadingBlockHtml : string | null = null) : Promise<void>
 	{
 		const mailaccountValue = this.et2.getWidgetById('mailaccount')?.get_value();
 		const [profileID, identId] = String(mailaccountValue ?? '').split(':', 2);
@@ -2468,7 +2487,7 @@ export class MailCompose
 			}
 		}
 
-		const result = MailJmap.composeBodyWithSignature(pristineBody, mimeType, identity, {placement, disableRuler, isReply, formatBlock});
+		let result = MailJmap.composeBodyWithSignature(pristineBody, mimeType, identity, {placement, disableRuler, isReply, formatBlock});
 		// HTML mode locates the inserted block via MailJmap.SIGNATURE_MARKER_ID instead (DOM id,
 		// not a tracked substring) - see updateSignatureForIdentity()'s own docblock for why.
 		if (mimeType === 'plain')
@@ -2476,6 +2495,14 @@ export class MailCompose
 			this.signaturePlacement = placement;
 			this.insertedSignatureBlock = placement === 'below' ? result.slice(pristineBody.length) :
 				placement === 'top' ? result.slice(0, result.length - pristineBody.length) : '';
+		}
+		// re-prepend the caller's own extracted leading block verbatim (see this param's own
+		// docblock) - correct for every placement: 'below'/'none' put the (stripped) body first
+		// regardless, and 'top' only omits its own fresh `start` BECAUSE this is here to take its
+		// place at the very front instead.
+		if (leadingBlockHtml)
+		{
+			result = leadingBlockHtml + result;
 		}
 
 		widget?.set_value(result);
