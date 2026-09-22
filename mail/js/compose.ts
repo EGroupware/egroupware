@@ -46,7 +46,7 @@ export class MailCompose
 	 * those (composefromdraft is the only one that still ever sets it, unconditionally since the
 	 * "jmapCompose" testing toggle was removed - ralf: "it was only a temporary means for testing").
 	 */
-	private readonly explicitBootstrap : { from : string, sourceId : string, mode : string } | null;
+	private readonly explicitBootstrap : { from : string, sourceId : string, mode : string, part? : string } | null;
 
 	private readonly isJmapMode : boolean;
 
@@ -250,7 +250,7 @@ export class MailCompose
 		return this.app.egw;
 	}
 
-	constructor(mail : MailApp, explicitBootstrap? : { from : string, sourceId : string, mode : string })
+	constructor(mail : MailApp, explicitBootstrap? : { from : string, sourceId : string, mode : string, part? : string })
 	{
 		this.app = mail;
 		this.explicitBootstrap = explicitBootstrap || null;
@@ -1460,6 +1460,13 @@ export class MailCompose
 				'reply' | 'reply_attachments' | 'reply_all' | 'forward' | 'composeasnew' | 'composefromdraft' | null;
 			const id = this.explicitBootstrap ? this.explicitBootstrap.sourceId : params.get('id');
 			const mode = this.explicitBootstrap ? this.explicitBootstrap.mode : params.get('mode');
+			// Only ever set for a reply/forward started from mail_ui::displayMessage()'s "view an
+			// attached message" popup (that popup's own `mail_id`/`part` GET params, threaded
+			// through MailApp.composeMessage() -> either compose.php's own `part` query param, or
+			// explicitBootstrap's own `part` field for the mobile/narrow-viewport inline-dialog path
+			// - see MailApp.openComposeDialog()). See importAttachedMessageToDrafts() below for why
+			// this exists at all (ticket #124821).
+			const part = this.explicitBootstrap ? (this.explicitBootstrap.part || null) : params.get('part');
 			if (from === 'forward' && mode === 'forwardasattach')
 			{
 				await this.bootstrapForwardAsAttachment((id || '').split(',').filter(Boolean));
@@ -1474,7 +1481,28 @@ export class MailCompose
 			}
 			else if (from === 'reply' || from === 'reply_attachments' || from === 'reply_all' || from === 'forward')
 			{
-				const sourceId = id;
+				let sourceId = id;
+				if (sourceId && part)
+				{
+					// Materialize the attached message as a real Drafts entry first, then reply to
+					// THAT instead of the outer/carrying message - see importAttachedMessageToDrafts()'s
+					// own docblock (ticket #124821: replying from this popup silently replied to the
+					// wrong, outer message). Deliberately done here, inside the already-open compose
+					// popup/window, rather than before composeMessage() opened it - window.open()
+					// must stay synchronous with the user's click to avoid the browser's popup blocker
+					// (see MailApp.openComposePopupUrl()'s own comment on that same constraint), so
+					// there was never an opportunity to await this any earlier.
+					try
+					{
+						sourceId = await this.app.jmap.importAttachedMessageToDrafts(sourceId, part);
+					}
+					catch (e)
+					{
+						console.error('MailCompose.bootstrapCompose(): failed to import the attached message into Drafts, replying to the containing message instead', e);
+						// sourceId stays as the outer/containing message - same behaviour as before
+						// this feature existed, never worth blocking compose on
+					}
+				}
 				if (sourceId)
 				{
 					await this.bootstrapReply(sourceId, from);

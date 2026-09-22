@@ -665,3 +665,74 @@ describe("MailCompose bootstrapSignature() - 'Default identity for compose' pref
 		assert.include(et2.widgets.mail_htmltext.get_value(), 'Default Sig');
 	});
 });
+
+/**
+ * Ticket #124821 (2026-09-22, a real customer): replying from mail_ui::displayMessage()'s "view an
+ * attached message" popup silently replied to the OUTER/carrying message instead of the attached
+ * one - MailApp.composeMessage()'s own backfill only ever read content.mail_id, never content.part.
+ * Fixed by threading that popup's `part` through to compose.php's own `part` URL param, which
+ * bootstrapCompose() now uses to import the attached message into Drafts first (see
+ * MailJmap.importAttachedMessageToDrafts()) and reply to THAT instead - see its own docblock.
+ */
+describe("MailCompose bootstrapCompose() - 'part' param (reply to an attached message)", () =>
+{
+	it("imports the attached message into Drafts and replies to the NEW row id, not the containing message", async() =>
+	{
+		const context = fakeContext({mimeType: 'plain'});
+		const {compose, et2} = createComposeForReply(context, [fakeIdentity()]);
+		const jmap = (compose as any).app.jmap;
+		let importCalledWith : any = null;
+		jmap.importAttachedMessageToDrafts = async(rowId : string, partID : string) =>
+		{
+			importCalledWith = {rowId, partID};
+			return 'mail::5::1::drafts-id::new-draft-email-id';
+		};
+		const bootstrapReplyCalledWith : string[] = [];
+		const originalBootstrapReply = (compose as any).bootstrapReply.bind(compose);
+		(compose as any).bootstrapReply = async(sourceId : string, from : string) =>
+		{
+			bootstrapReplyCalledWith.push(sourceId);
+			return originalBootstrapReply(sourceId, from);
+		};
+
+		await withUrl('?jmap=1&from=reply&id=msg1&part=2', () => (compose as any).bootstrapCompose());
+
+		assert.deepEqual(importCalledWith, {rowId: 'msg1', partID: '2'});
+		assert.deepEqual(bootstrapReplyCalledWith, ['mail::5::1::drafts-id::new-draft-email-id'],
+			"must reply to the newly-imported Drafts message, not the containing message ('msg1')");
+		assert.strictEqual(et2.widgets.mimeType.get_value(), false);
+	});
+
+	it("falls back to replying to the containing message when the import fails", async() =>
+	{
+		const context = fakeContext({mimeType: 'plain'});
+		const {compose, et2} = createComposeForReply(context, [fakeIdentity()]);
+		const jmap = (compose as any).app.jmap;
+		jmap.importAttachedMessageToDrafts = async() => { throw new Error('boom'); };
+		const bootstrapReplyCalledWith : string[] = [];
+		const originalBootstrapReply = (compose as any).bootstrapReply.bind(compose);
+		(compose as any).bootstrapReply = async(sourceId : string, from : string) =>
+		{
+			bootstrapReplyCalledWith.push(sourceId);
+			return originalBootstrapReply(sourceId, from);
+		};
+
+		await withUrl('?jmap=1&from=reply&id=msg1&part=2', () => (compose as any).bootstrapCompose());
+
+		assert.deepEqual(bootstrapReplyCalledWith, ['msg1'],
+			"a failed import must never block the reply - falls back to the containing message, same as before this feature existed");
+	});
+
+	it("never calls importAttachedMessageToDrafts() when no 'part' param is present (the everyday reply)", async() =>
+	{
+		const context = fakeContext({mimeType: 'plain'});
+		const {compose} = createComposeForReply(context, [fakeIdentity()]);
+		const jmap = (compose as any).app.jmap;
+		let called = false;
+		jmap.importAttachedMessageToDrafts = async() => { called = true; return ''; };
+
+		await withUrl('?jmap=1&from=reply&id=msg1', () => (compose as any).bootstrapCompose());
+
+		assert.isFalse(called);
+	});
+});
