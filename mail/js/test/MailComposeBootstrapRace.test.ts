@@ -601,3 +601,67 @@ describe("MailCompose updateSignatureForIdentity() - repeated switches stay idem
 		}
 	});
 });
+
+/**
+ * Ticket #124821 (2026-09-22, a real customer): "die Einstellung dass immer die persönliche
+ * Signatur genommen werden soll wird nicht berücksichtigt" (the "always use my personal
+ * signature" setting isn't respected). selectIdentityForRecipients() already applies
+ * insertSignatureAtTopOfMessage's sibling preference, mail/defaultIdentity, for reply/forward
+ * (tracker #124251's own fix) - but a genuinely NEW, blank compose never consulted it at all until
+ * this fix, unlike the classic, now-deleted mail_compose.inc.php's get_preferred_identity(), which
+ * ran for every compose() call unconditionally.
+ */
+describe("MailCompose bootstrapSignature() - 'Default identity for compose' preference (mail/defaultIdentity)", () =>
+{
+	it("switches to the personal identity for a brand-new compose when the preference is 'personal'", async() =>
+	{
+		const identityDefault = fakeIdentity({id: '0', htmlSignature: '<p>Default Sig</p>'});
+		const identityPersonal = fakeIdentity({id: '1', htmlSignature: '<p>Personal Sig</p>'});
+		const app = createFakeApp();
+		const jmap = new MailJmap(app);
+		(jmap as any).getIdentities = async() => [identityDefault, identityPersonal];
+		(app as any).jmap = jmap;
+		const compose = new MailCompose(app);
+		(compose as any).isJmapMode = true;
+		// server pre-selected the account's own lowest-id ("default") identity, same as a normal
+		// blank-compose page render without this preference set
+		const et2 = createFakeEt2(compose, '1:0');
+		(compose as any).et2 = et2;
+
+		const originalPreference = egw.preference;
+		egw.preference = (key : string, app? : string) =>
+			key === 'defaultIdentity' ? 'personal' : originalPreference(key, app);
+		try
+		{
+			await (compose as any).bootstrapSignature();
+
+			assert.equal(et2.widgets.mailaccount.get_value(), '1:1',
+				"mailaccount should be switched to the personal (second) identity");
+			assert.include(et2.widgets.mail_htmltext.get_value(), 'Personal Sig');
+			assert.notInclude(et2.widgets.mail_htmltext.get_value(), 'Default Sig');
+		}
+		finally
+		{
+			egw.preference = originalPreference;
+		}
+	});
+
+	it("leaves the server-preselected identity alone when the preference is 'last-used'/unset (the everyday case)", async() =>
+	{
+		const identityDefault = fakeIdentity({id: '0', htmlSignature: '<p>Default Sig</p>'});
+		const identityPersonal = fakeIdentity({id: '1', htmlSignature: '<p>Personal Sig</p>'});
+		const app = createFakeApp();
+		const jmap = new MailJmap(app);
+		(jmap as any).getIdentities = async() => [identityDefault, identityPersonal];
+		(app as any).jmap = jmap;
+		const compose = new MailCompose(app);
+		(compose as any).isJmapMode = true;
+		const et2 = createFakeEt2(compose, '1:0');
+		(compose as any).et2 = et2;
+
+		await (compose as any).bootstrapSignature();
+
+		assert.equal(et2.widgets.mailaccount.get_value(), '1:0', "mailaccount must stay untouched");
+		assert.include(et2.widgets.mail_htmltext.get_value(), 'Default Sig');
+	});
+});
