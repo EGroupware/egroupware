@@ -849,12 +849,29 @@ class SharingBase extends LoggedInTest
 			$cookies['kp3'] = $GLOBALS['egw']->session->kp3;
 		}
 		$this->addCookies($curl, $cookies);
+
+		// Keep the response headers: when this fails the body is usually empty, and the headers
+		// are then the only thing that says why - EGroupware reports a refused share through
+		// them (X-WebDAV-Status, or the exception message as a basic-auth realm), and they are
+		// in hand here whether or not anything reached the server log.
+		$response_headers = [];
+		curl_setopt($curl, CURLOPT_HEADERFUNCTION, function($ch, $header) use (&$response_headers)
+		{
+			if(trim($header) !== '')
+			{
+				$response_headers[] = trim($header);
+			}
+			return strlen($header);
+		});
+
 		$this->releaseSessionForWebserver();
 		$html = curl_exec($curl);
 		$http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 		$effective_url = (string)curl_getinfo($curl, CURLINFO_EFFECTIVE_URL);
 		$curl_errno = curl_errno($curl);
 		$curl_error = curl_error($curl);
+		curl_setopt($curl, CURLOPT_HEADERFUNCTION, null);
+		$header_dump = $response_headers ? "\nResponse headers:\n  " . implode("\n  ", $response_headers) : '';
 		if($_curl == null)
 		{
 			curl_close($curl);
@@ -867,7 +884,7 @@ class SharingBase extends LoggedInTest
 				$this->noWebserverResponse("No webserver response for share link '$link' (curl errno $curl_errno: $curl_error)");
 			}
 			// An empty body with a real HTTP status is the blank-page the recipient sees
-			$this->fail("Share link '$link' returned no content (HTTP $http_code, effective URL '$effective_url')");
+			$this->fail("Share link '$link' returned no content (HTTP $http_code, effective URL '$effective_url')" . $header_dump);
 		}
 
 		// Parse & check for nextmatch
@@ -883,7 +900,8 @@ class SharingBase extends LoggedInTest
 				echo "Got this instead:\n".($form?$form:$html)."\n\n";
 			}
 		}
-		$this->assertNotNull($form, "Share link '$link' did not return the expected template (HTTP $http_code, effective URL '$effective_url')");
+		$this->assertNotNull($form, "Share link '$link' did not return the expected template (HTTP $http_code, effective URL '$effective_url')"
+			. $header_dump . "\nFirst 500 bytes of the body:\n" . substr($html, 0, 500));
 		$data = json_decode($form->getAttribute('data-etemplate'), true);
 
 		// Not asserted non-empty here: a caller sharing an empty directory legitimately gets no
