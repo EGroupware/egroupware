@@ -50,6 +50,14 @@ on:
           only need their own apps exercised inside a complete install.
         type: string
         default: 'all'
+      test-also:
+        description: >-
+          Extra test paths, relative to the EGroupware root, to run alongside an "extra-apps"
+          scope - space separated, files or directories. For an app whose own tests declare
+          DependsOnClass on tests outside it: PHPUnit skips a test whose dependency was never
+          run, so without naming them here those tests quietly pass as skipped.
+        type: string
+        default: ''
       with-collabora:
         description: >-
           Start the Collabora backend, so a share of an editable file opens in the editor.
@@ -99,6 +107,7 @@ jobs:
       SYSOP_PASS: ""
       EGW_EXTRA_APP_DIRS: ""
       EGW_TEST_APP_DIRS: ""
+      EGW_TEST_ALSO: "${{ inputs.test-also }}"
       # The secrets context is not available in a step's "if:", so route it through job env.
       EXTRA_APPS_APP_ID: ${{ secrets.extra-apps-app-id }}
 
@@ -620,6 +629,7 @@ jobs:
             fi
             PHPUNIT_CONFIG=doc/phpunit-extra-apps.xml
             $COMPOSE exec -T -e EGW_TEST_APP_DIRS="$EGW_TEST_APP_DIRS" \
+              -e EGW_TEST_ALSO="${EGW_TEST_ALSO:-}" \
               -w "$EGW_SRC_DIR" egroupware php -r '
                 $doc = new DOMDocument();
                 $doc->preserveWhiteSpace = false;
@@ -637,6 +647,14 @@ jobs:
                     $found++;
                 }
                 if (!$found) { fwrite(STDERR, "none of the extra apps has a tests/ directory\n"); exit(3); }
+                // Tests that an extra app declares DependsOnClass on: PHPUnit skips a test whose
+                // dependency never ran, so these must be in the same suite to be of any use
+                foreach (preg_split("/\s+/", trim((string)getenv("EGW_TEST_ALSO")), -1, PREG_SPLIT_NO_EMPTY) as $also)
+                {
+                    if (!file_exists($also)) { fwrite(STDERR, "test-also path $also does not exist\n"); exit(4); }
+                    $suite->appendChild($doc->createElement(is_dir($also) ? "directory" : "file", "../$also"));
+                    fwrite(STDERR, "also running $also\n");
+                }
                 $suites->appendChild($suite);
                 $doc->save("doc/phpunit-extra-apps.xml");
                 fwrite(STDERR, "generated doc/phpunit-extra-apps.xml with $found app(s)\n");
