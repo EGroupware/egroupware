@@ -239,6 +239,12 @@
     <optional>
       <attribute name="span"/>
     </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
+    </optional>
   </define>
   <define name="et2-template">
     <element name="et2-template">
@@ -249,6 +255,15 @@
     </element>
   </define>
   <define name="attlist.et2-template" combine="interleave">
+    <optional>
+      <attribute name="layout">
+        <choice>
+          <value>stack</value>
+          <value>2-column</value>
+          <value>edit</value>
+        </choice>
+      </attribute>
+    </optional>
     <optional>
       <attribute name="template"/>
     </optional>
@@ -331,6 +346,12 @@
       <attribute name="span"/>
     </optional>
     <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
+    </optional>
+    <optional>
       <attribute name="type"/>
     </optional>
     <optional>
@@ -380,6 +401,12 @@
     <optional>
       <attribute name="span"/>
     </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
+    </optional>
   </define>
   <define name="column">
     <element name="column">
@@ -418,6 +445,12 @@
     <optional>
       <attribute name="span"/>
     </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
+    </optional>
   </define>
   <define name="rows">
     <element name="rows">
@@ -445,6 +478,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
   </define>
   <define name="row">
@@ -485,6 +524,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
   </define>
   <define name="attlist.grid" combine="interleave">
@@ -580,6 +625,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="type"/>
@@ -687,6 +738,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="type"/>
@@ -820,6 +877,12 @@
       <attribute name="span"/>
     </optional>
     <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
+    </optional>
+    <optional>
       <attribute name="type"/>
     </optional>
     <optional>
@@ -946,6 +1009,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="type"/>
@@ -1076,6 +1145,12 @@
       <attribute name="span"/>
     </optional>
     <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
+    </optional>
+    <optional>
       <attribute name="type"/>
     </optional>
     <optional>
@@ -1202,6 +1277,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="type"/>
@@ -1332,6 +1413,12 @@
       <attribute name="span"/>
     </optional>
     <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
+    </optional>
+    <optional>
       <attribute name="type"/>
     </optional>
     <optional>
@@ -1458,6 +1545,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="type"/>
@@ -1588,6 +1681,12 @@
       <attribute name="span"/>
     </optional>
     <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
+    </optional>
+    <optional>
       <attribute name="type"/>
     </optional>
     <optional>
@@ -1633,6 +1732,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
   </define>
   <define name="radio">
@@ -1775,6 +1880,12 @@
       <attribute name="span"/>
     </optional>
     <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
+    </optional>
+    <optional>
       <attribute name="type"/>
     </optional>
     <optional>
@@ -1901,6 +2012,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="type"/>
@@ -2041,6 +2158,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="type"/>
@@ -2192,6 +2315,12 @@
       <attribute name="span"/>
     </optional>
     <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
+    </optional>
+    <optional>
       <attribute name="type"/>
     </optional>
     <optional>
@@ -2237,6 +2366,12 @@
     <optional>
       <attribute name="span"/>
     </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
+    </optional>
   </define>
   <define name="tab">
     <element name="tab">
@@ -2269,6 +2404,12 @@
     <optional>
       <attribute name="span"/>
     </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
+    </optional>
   </define>
   <define name="tabpanels">
     <element name="tabpanels">
@@ -2299,6 +2440,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
   </define>
   <define name="attlist.tabbox" combine="interleave">
@@ -2391,6 +2538,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="type"/>
@@ -2512,6 +2665,12 @@
       <attribute name="span"/>
     </optional>
     <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
+    </optional>
+    <optional>
       <attribute name="type"/>
     </optional>
     <optional>
@@ -2614,6 +2773,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="type"/>
@@ -2733,6 +2898,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="type"/>
@@ -2897,6 +3068,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="type"/>
@@ -3072,6 +3249,12 @@
       <attribute name="span"/>
     </optional>
     <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
+    </optional>
+    <optional>
       <attribute name="type"/>
     </optional>
     <optional>
@@ -3198,6 +3381,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="type"/>
@@ -3361,6 +3550,12 @@
       <attribute name="span"/>
     </optional>
     <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
+    </optional>
+    <optional>
       <attribute name="type"/>
     </optional>
     <optional>
@@ -3397,6 +3592,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="type"/>
@@ -3533,6 +3734,12 @@
       <attribute name="span"/>
     </optional>
     <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
+    </optional>
+    <optional>
       <attribute name="type"/>
     </optional>
     <optional>
@@ -3573,6 +3780,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -3620,6 +3833,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -3682,6 +3901,12 @@
       <attribute name="span"/>
     </optional>
     <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
+    </optional>
+    <optional>
       <attribute name="template"/>
     </optional>
     <optional>
@@ -3715,6 +3940,12 @@
       <attribute name="span"/>
     </optional>
     <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
+    </optional>
+    <optional>
       <attribute name="width"/>
     </optional>
     <optional>
@@ -3746,6 +3977,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="width"/>
@@ -3981,8 +4218,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -4129,8 +4383,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -4302,8 +4573,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -4475,8 +4763,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="src"/>
@@ -4659,8 +4964,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -4793,8 +5115,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -4954,8 +5293,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -5110,8 +5466,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -5429,8 +5802,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -5631,8 +6021,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -5859,8 +6266,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="src"/>
@@ -6005,8 +6429,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustextHtml">
@@ -6324,8 +6765,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -6534,8 +6992,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -6674,8 +7149,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -6856,8 +7348,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -7077,8 +7586,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -7323,8 +7849,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -7511,8 +8054,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -7681,8 +8241,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -7725,6 +8302,9 @@
     </element>
   </define>
   <define name="attlist.et2-customfields" combine="interleave">
+    <optional>
+      <attribute name="layout"/>
+    </optional>
     <optional>
       <attribute name="accesskey"/>
     </optional>
@@ -7830,8 +8410,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -7973,8 +8570,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -8119,8 +8733,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -8271,8 +8902,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -8555,8 +9203,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -8752,8 +9417,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -8976,8 +9658,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -9155,8 +9854,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -9352,8 +10068,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -9549,8 +10282,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -9749,8 +10499,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -9862,8 +10629,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustextHtml">
@@ -10047,8 +10831,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -10247,8 +11048,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -10425,8 +11243,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -10666,8 +11501,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -10860,8 +11712,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -11032,8 +11901,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -11258,8 +12144,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -11503,8 +12406,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -11703,8 +12623,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -11903,8 +12840,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -12103,8 +13057,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -12264,8 +13235,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -12512,8 +13500,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -12694,8 +13699,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -12944,8 +13966,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -13146,8 +14185,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -13324,8 +14380,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -13499,8 +14572,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -13660,8 +14750,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -13800,8 +14907,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -14093,8 +15217,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -14294,8 +15435,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="src"/>
@@ -14455,8 +15613,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="src"/>
@@ -14619,8 +15794,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="src"/>
@@ -14809,8 +16001,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -14997,8 +16206,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -15152,8 +16378,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -15325,8 +16568,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -15590,8 +16850,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -15787,8 +17064,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -15957,8 +17251,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -16184,8 +17495,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -16437,8 +17765,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -16604,8 +17949,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -16786,8 +18148,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -16971,8 +18350,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -17132,8 +18528,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -17283,8 +18696,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -17462,8 +18892,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -17602,8 +19049,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -17739,8 +19203,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -18072,8 +19553,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="spellcheck">
@@ -18442,8 +19940,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="spellcheck">
@@ -18630,8 +20145,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -18984,8 +20516,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="spellcheck">
@@ -19257,8 +20806,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -19504,8 +21070,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -19754,8 +21337,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -20006,8 +21606,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -20253,8 +21870,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -20500,8 +22134,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -20781,8 +22432,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -21025,8 +22693,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -21272,8 +22957,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -21519,8 +23221,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -21766,8 +23485,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -22013,8 +23749,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -22260,8 +24013,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -22521,8 +24291,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -22783,8 +24570,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -23033,8 +24837,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -23283,8 +25104,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -23541,8 +25379,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -23788,8 +25643,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -24035,8 +25907,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -24294,8 +26183,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -24437,8 +26343,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -24591,8 +26514,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -24737,8 +26677,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="src"/>
@@ -24934,8 +26891,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -25119,8 +27093,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -25370,8 +27361,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -25558,8 +27566,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -25845,8 +27870,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="spellcheck">
@@ -26190,8 +28232,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="spellcheck">
@@ -26399,8 +28458,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -26604,8 +28680,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -26816,8 +28909,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -27076,8 +29186,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -27413,8 +29540,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="spellcheck">
@@ -27780,8 +29924,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="spellcheck">
@@ -28132,8 +30293,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="spellcheck">
@@ -28484,8 +30662,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="spellcheck">
@@ -28659,8 +30854,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -28757,8 +30969,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustextHtml">
@@ -28918,8 +31147,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="src"/>
@@ -29124,8 +31370,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -29449,8 +31712,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="spellcheck">
@@ -29645,8 +31925,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -29851,8 +32148,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -30084,8 +32398,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -30227,8 +32558,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -30364,8 +32712,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -30462,8 +32827,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustextHtml">
@@ -30715,8 +33097,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -30861,8 +33260,25 @@
           <value>1</value>
           <value>5</value>
           <value>4</value>
+          <value>end</value>
+          <value>*</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="full">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+          <data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="token">
+            <param name="pattern">!?[@$].*</param>
+          </data>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -30922,6 +33338,12 @@
     <optional>
       <attribute name="span"/>
     </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
+    </optional>
   </define>
   <define name="calendar-planner">
     <element name="calendar-planner">
@@ -30953,6 +33375,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
   </define>
   <define name="calendar-timegrid">
@@ -30986,6 +33414,12 @@
     <optional>
       <attribute name="span"/>
     </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
+    </optional>
   </define>
   <define name="calendar-daycol">
     <element name="calendar-daycol">
@@ -31011,6 +33445,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
   </define>
   <define name="calendar-planner_row">
@@ -31038,6 +33478,12 @@
     <optional>
       <attribute name="span"/>
     </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
+    </optional>
   </define>
   <define name="et2-calendar-owner">
     <element name="et2-calendar-owner">
@@ -31054,6 +33500,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="label"/>
@@ -31108,6 +33560,12 @@
     <optional>
       <attribute name="span"/>
     </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
+    </optional>
   </define>
   <define name="infolog-fields">
     <element name="infolog-fields">
@@ -31124,6 +33582,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -31181,6 +33645,12 @@
     <optional>
       <attribute name="span"/>
     </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
+    </optional>
   </define>
   <define name="kanban-card">
     <element name="kanban-card">
@@ -31216,6 +33686,12 @@
     <optional>
       <attribute name="span"/>
     </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
+    </optional>
   </define>
   <define name="projectmanager-gantt">
     <element name="projectmanager-gantt">
@@ -31232,6 +33708,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="autoload"/>
@@ -31267,6 +33749,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="statustext"/>
@@ -31336,6 +33824,12 @@
     <optional>
       <attribute name="span"/>
     </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
+    </optional>
   </define>
   <define name="projectmanager-select-erole">
     <element name="projectmanager-select-erole">
@@ -31352,6 +33846,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
     <optional>
       <attribute name="no_lang"/>
@@ -31439,6 +33939,12 @@
     <optional>
       <attribute name="span"/>
     </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
+    </optional>
   </define>
   <define name="smallpart-cl-measurement-L">
     <element name="smallpart-cl-measurement-L">
@@ -31479,6 +33985,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
   </define>
   <define name="smallpart-comment-timespan">
@@ -31524,6 +34036,12 @@
     <optional>
       <attribute name="span"/>
     </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
+    </optional>
   </define>
   <define name="smallpart-comment">
     <element name="smallpart-comment">
@@ -31549,6 +34067,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
   </define>
   <define name="smallpart-flag-time">
@@ -31584,6 +34108,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
   </define>
   <define name="smallpart-lf-button">
@@ -31623,6 +34153,12 @@
     <optional>
       <attribute name="span"/>
     </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
+    </optional>
   </define>
   <define name="smallpart-livefeedback-report">
     <element name="smallpart-livefeedback-report">
@@ -31657,6 +34193,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
   </define>
   <define name="smallpart-media-recorder">
@@ -31698,6 +34240,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
   </define>
   <define name="smallpart-videobar">
@@ -31748,6 +34296,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
   </define>
   <define name="smallpart-videooverlay">
@@ -31823,6 +34377,12 @@
     <optional>
       <attribute name="span"/>
     </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
+    </optional>
   </define>
   <define name="widget">
     <element name="widget">
@@ -31870,6 +34430,12 @@
     <optional>
       <attribute name="span"/>
     </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
+    </optional>
   </define>
   <define name="vfs-size">
     <element name="vfs-size">
@@ -31908,6 +34474,12 @@
     <optional>
       <attribute name="span"/>
     </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
+    </optional>
   </define>
   <define name="vfs-name_ro">
     <element name="vfs-name_ro">
@@ -31933,6 +34505,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
   </define>
   <define name="et2-select-account_ro">
@@ -32003,6 +34581,12 @@
     <optional>
       <attribute name="span"/>
     </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
+    </optional>
   </define>
   <define name="filter">
     <element name="filter">
@@ -32031,6 +34615,12 @@
     </optional>
     <optional>
       <attribute name="span"/>
+    </optional>
+    <optional>
+      <attribute name="full"/>
+    </optional>
+    <optional>
+      <attribute name="grow"/>
     </optional>
   </define>
 </grammar>

@@ -703,6 +703,43 @@ module.exports = async function (eleventyConfig)
 	});
 
 	//
+	// The layout rules out of kdots.css, on their own.
+	//
+	// The whole kdots stylesheet is deliberately not linked (see default.njk - it breaks page
+	// scrolling), but without the layout rules a `layout="2-column"` example is just a stack of
+	// widgets: the attribute is the entire API and all of its behaviour is CSS.  Every rule the
+	// layouts contribute is scoped to a `[layout=...]` attribute that nothing else on this site
+	// has, so pulling just those out is safe in a way linking the whole theme is not.
+	//
+	// Extracted here rather than compiled from kdots/css/src/layouts/*.less because that would
+	// mean a less compiler in this build; kdots.css is committed and is already copied next door.
+	eleventyConfig.on('eleventy.after', () =>
+	{
+		const source = fs.readFileSync(path.resolve('../../kdots/css/kdots.css'), 'utf8');
+		const kept = [];
+		let depth = 0, start = 0;
+		for (let i = 0; i < source.length; i++)
+		{
+			if (source[i] === '{' && depth++ === 0) continue;
+			if (source[i] !== '}' || --depth > 0) continue;
+			// One complete top-level rule or at-rule, from wherever the last one ended
+			const block = source.slice(start, i + 1);
+			start = i + 1;
+			if (block.includes('[layout=')) kept.push(block.trim());
+		}
+		const out = path.join('..', 'dist', 'site', 'assets', 'styles', 'layouts.css');
+		fs.mkdirSync(path.dirname(out), {recursive: true});
+		fs.writeFileSync(out,
+			'/* Extracted from kdots/css/kdots.css by eleventy.config.cjs - do not edit */\n' +
+			kept.join('\n\n') + '\n', 'utf8');
+		if (!kept.length)
+		{
+			console.warn('[docs] no [layout=] rules found in kdots.css - every layout example will ' +
+				'render as a plain stack of widgets');
+		}
+	});
+
+	//
 	// Send a signal to stdout that let's the build know we've reached this point
 	//
 	eleventyConfig.on('eleventy.after', () =>

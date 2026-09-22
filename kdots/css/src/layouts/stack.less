@@ -6,14 +6,21 @@
 	min-height: 0;
   }
 
-  /* Default: children do NOT grow */
+  /* Default: children keep their own height and do not grow.
+   * Not `:scope > *`: this compiles into kdots.css, a document stylesheet, where :scope is
+   * :root - so the rule matched nothing and non-growing children silently kept the flex
+   * defaults (shrinkable, min-height: auto) instead.  Stays less specific than the opt-in
+   * rule below, which has to win.
+   */
 
-  :scope > * {
+  & > * {
 	flex: 0 0 auto;
 	min-height: 0;
   }
 
-  /* Opt-in growth */
+  /* Opt-in growth.  Et2LayoutController overrides flex-grow inline when grow= names a factor,
+   * which CSS cannot read out of the attribute.
+   */
 
   [grow], et2-tabbox {
 	flex: 1 1 auto;

@@ -60,7 +60,17 @@ $overwrites = [
 			'height' => 'string',
 			'slot' => 'string', // would be nice, if we could list parent slots ...
             'style' => 'string',
-			'span' => "'all' | '2' | '3' | '4'",    // eT2 grid span
+			// eT2 grid span: a column count in a legacy <grid>, plus the layout keywords
+			// (Et2LayoutController) - 'all' for the full width of the line, 'end'/'*' to stretch
+			// from wherever the layout placed the widget to the end of its line
+			// NB: a DTD enumeration can only hold Nmtokens, so '*' cannot survive step 6's
+			// conversion - etemplate2.0.dtd declares span as plain CDATA
+			'span' => "'all' | '2' | '3' | '4' | 'end' | '*'",
+			// layout attributes, see Et2LayoutController: 'full' is the attribute form of
+			// span="all", 'grow' takes the leftover vertical space (optionally a share of it,
+			// grow="2"), so it is NOT a boolean
+			'full' => 'boolean',
+			'grow' => 'string',
 			// Widget.php::$bool_attr_default - real, generic server-side attributes every
 			// widget class inherits, not just widgets whose own TS component happens to reflect
 			// them (readonly via is_readonly(), the rest via set_attrs()'s XML-bool casting)
@@ -583,8 +593,12 @@ $app_specific_widgets = [
 	'calendar-timegrid' => ['id', 'onchange', 'onevent_change'],
 	'calendar-daycol' => ['id'],
 	'calendar-planner_row' => ['id'],
-	'et2-calendar-owner' => ['id', 'class', 'span', 'label', 'placeholder', 'emptyLabel', 'helpText',
-		'multiple', 'allowFreeEntries', 'autocompleteUrl', 'onchange', 'tabindex'],
+	// full/grow are listed by hand here: this is the only et2-* prefixed entry in this array that
+	// takes span, and being et2-* it is skipped by both the '*' overwrite (it has no
+	// components.json entry) and the legacy global-attrs pass below
+	'et2-calendar-owner' => ['id', 'class', 'span', 'full', 'grow', 'label', 'placeholder',
+		'emptyLabel', 'helpText', 'multiple', 'allowFreeEntries', 'autocompleteUrl', 'onchange',
+		'tabindex'],
 	'contact-fields' => ['id'],
 	'infolog-fields' => ['id', 'label', 'span', 'statustext'],
 	'kanban-board' => ['id', 'name', 'color', 'columns', 'column_actions', 'swimlanes'],
@@ -723,12 +737,12 @@ foreach ($xpath->query('//x:choice') as $choice)
 }
 
 // legacy (non et2-*) widgets never go through attributes()/overwriteAttributes(), so they never
-// get the '*' global attrs (id/width/height/slot/style/span) every et2-* component automatically
-// receives - add whichever of those a legacy widget's attlist doesn't already declare. Covers
-// every legacy attlist.*, not just top-level Widgets choice members, since structural
+// get the '*' global attrs (id/width/height/slot/style/span/full/grow) every et2-* component
+// automatically receives - add whichever of those a legacy widget's attlist doesn't already
+// declare. Covers every legacy attlist.*, not just top-level Widgets choice members, since structural
 // sub-elements like row/tab (children of grid/tabs, never Widgets members themselves) need this
 // just as much.
-$globalAttrs = ['id', 'width', 'height', 'slot', 'style', 'span'];
+$globalAttrs = ['id', 'width', 'height', 'slot', 'style', 'span', 'full', 'grow'];
 // et2-template is a special case: despite its et2- prefixed name, it's the renamed legacy
 // <template> definition (see above) and never goes through attributes()/overwriteAttributes()
 // either - explicitly included alongside the true legacy widgets
@@ -765,6 +779,23 @@ foreach ($xpath->query('//x:attribute[@name="span"]/x:choice/x:value[text()="4"]
 	foreach (['1', '5'] as $extra)
 	{
 		$value->parentNode->insertBefore($dom->createElementNS('http://relaxng.org/ns/structure/1.0', 'value', $extra), $value);
+	}
+}
+
+// et2-template's own `layout` (Et2LayoutController) is lost with the rest of Et2Template's
+// auto-generated definition, which is skipped above in favour of the renamed legacy <template>
+// one - add it back here, on the host widgets only: layout belongs to the container, and every
+// other legacy attlist would just gain an attribute that does nothing.
+foreach ($xpath->query('//x:define[@name="attlist.et2-template"]') as $attlistDefine)
+{
+	if ($xpath->query('.//x:attribute[@name="layout"]', $attlistDefine)->length) continue;
+	$optional = $attlistDefine->appendChild($dom->createElementNS('http://relaxng.org/ns/structure/1.0', 'optional'));
+	$attribute = $optional->appendChild($dom->createElementNS('http://relaxng.org/ns/structure/1.0', 'attribute'));
+	$attribute->setAttribute('name', 'layout');
+	$choice = $attribute->appendChild($dom->createElementNS('http://relaxng.org/ns/structure/1.0', 'choice'));
+	foreach (['stack', '2-column', 'edit'] as $layout)
+	{
+		$choice->appendChild($dom->createElementNS('http://relaxng.org/ns/structure/1.0', 'value', $layout));
 	}
 }
 

@@ -755,8 +755,15 @@ body egw-app,
 }
 /*** END APPLICATION ***/
 [layout="stack"] {
-  /* Default: children do NOT grow */
-  /* Opt-in growth */
+  /* Default: children keep their own height and do not grow.
+   * Not `:scope > *`: this compiles into kdots.css, a document stylesheet, where :scope is
+   * :root - so the rule matched nothing and non-growing children silently kept the flex
+   * defaults (shrinkable, min-height: auto) instead.  Stays less specific than the opt-in
+   * rule below, which has to win.
+   */
+  /* Opt-in growth.  Et2LayoutController overrides flex-grow inline when grow= names a factor,
+   * which CSS cannot read out of the attribute.
+   */
 }
 [layout="stack"]::part(base) {
   position: relative;
@@ -764,7 +771,7 @@ body egw-app,
   flex-direction: column;
   min-height: 0;
 }
-[layout="stack"] :scope > * {
+[layout="stack"] > * {
   flex: 0 0 auto;
   min-height: 0;
 }
@@ -894,6 +901,12 @@ body egw-app,
   overflow-x: hidden;
   /* ---------- FULL-WIDTH ROWS ---------- */
   /* ---------- REST-WIDTH ROWS ---------- */
+  /* span="end" / span="*" stretch from their own column to the end of the line, which CSS
+	 * cannot express: `grid-column-end: -1` on an auto-placed item is a span of one ending at
+	 * the last line, so it would jump into the last column instead of filling the rest of its
+	 * line.  Et2LayoutController measures the column it landed in and writes the real
+	 * `grid-column` inline.
+	 */
   /* ---------- DEFAULT COLUMN FLOW ---------- */
   /* ---------- VERTICAL GROW ---------- */
   /* ---------- WIDGET CHANGES ---------- */
@@ -904,34 +917,12 @@ body egw-app,
 [layout="2-column"] et2-tabbox {
   grid-column: 1 / -1;
 }
-[layout="2-column"] [span="end"],
-[layout="2-column"] [span="*"] {
-  grid-column-end: -1;
-}
 [layout="2-column"] * {
   min-height: 0;
 }
 [layout="2-column"] [grow],
 [layout="2-column"] et2-tabbox {
   align-self: stretch;
-}
-/* This is mostly example / placeholder to see what we can do */
-[layout="absolute"] {
-  position: relative;
-  /*
-   * Example semantic hooks:
-   * <et2-widget x="10" y="20">
-   * Controller may later translate these to CSS vars.
-   */
-}
-[layout="absolute"] ::slotted(*) {
-  position: absolute;
-}
-[layout="absolute"] ::slotted([x]) {
-  left: attr(x px);
-}
-[layout="absolute"] ::slotted([y]) {
-  top: attr(y px);
 }
 /* Base container */
 /* Used when the grid layout has to collapse down to one column */
@@ -1049,6 +1040,12 @@ body egw-app,
   overflow-x: hidden;
   /* ---------- FULL-WIDTH ROWS ---------- */
   /* ---------- REST-WIDTH ROWS ---------- */
+  /* span="end" / span="*" stretch from their own column to the end of the line, which CSS
+	 * cannot express: `grid-column-end: -1` on an auto-placed item is a span of one ending at
+	 * the last line, so it would jump into the last column instead of filling the rest of its
+	 * line.  Et2LayoutController measures the column it landed in and writes the real
+	 * `grid-column` inline.
+	 */
   /* ---------- DEFAULT COLUMN FLOW ---------- */
   /* ---------- VERTICAL GROW ---------- */
   /* ---------- WIDGET CHANGES ---------- */
@@ -1058,10 +1055,6 @@ body egw-app,
 [layout="edit"] [span="all"],
 [layout="edit"] et2-tabbox {
   grid-column: 1 / -1;
-}
-[layout="edit"] [span="end"],
-[layout="edit"] [span="*"] {
-  grid-column-end: -1;
 }
 [layout="edit"] * {
   min-height: 0;

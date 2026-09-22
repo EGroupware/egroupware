@@ -100,3 +100,23 @@ client/default/view.xet:
 Result:
 
 ![Content example](/assets/components/template_example_content.png)
+## Layout
+
+A template can arrange its children for you instead of leaving that to a `<grid>`.  Set `layout` and the widgets
+inside become a responsive column grid or a stack, re-flowing as the popup or panel changes size:
+
+```xml
+
+<et2-template id="myapp.edit" layout="edit">
+    <et2-textbox id="name" label="Name"></et2-textbox>
+    <et2-select id="status" label="Status"></et2-select>
+    <et2-date id="due" label="Due"></et2-date>
+</et2-template>
+```
+
+The widgets go directly inside the template - a wrapping grid or box would leave the layout with a single child to
+arrange.  `layout` has no default, so a template that does not set it lays out exactly as it always has.
+
+See [Layout Controller](/mixins/et2layoutcontroller) for the available layouts (`stack`, `2-column`, `edit`), the
+`span` and `grow` attributes, and the CSS variables that control when the columns collapse, or
+[Layout](/getting-started/layout) for the other ways to arrange widgets in a template.

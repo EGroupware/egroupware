@@ -108,10 +108,12 @@
 	}
 
 	/* ---------- REST-WIDTH ROWS ---------- */
-
-	[span="end"], [span="*"] {
-	  grid-column-end: -1;
-	}
+	/* span="end" / span="*" stretch from their own column to the end of the line, which CSS
+	 * cannot express: `grid-column-end: -1` on an auto-placed item is a span of one ending at
+	 * the last line, so it would jump into the last column instead of filling the rest of its
+	 * line.  Et2LayoutController measures the column it landed in and writes the real
+	 * `grid-column` inline.
+	 */
 
 	/* ---------- DEFAULT COLUMN FLOW ---------- */
 
