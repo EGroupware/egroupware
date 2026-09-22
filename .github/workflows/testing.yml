@@ -50,6 +50,14 @@ on:
           only need their own apps exercised inside a complete install.
         type: string
         default: 'all'
+      with-collabora:
+        description: >-
+          Start the Collabora backend, so a share of an editable file opens in the editor.
+          EGroupware's own runs leave this off: with no backend the share serves the file itself,
+          which is the right answer and what the tests then require. Collabora's own CI turns it
+          on and requires the editor instead.
+        type: boolean
+        default: false
       extra-apps-owner:
         description: >-
           Organisation owning the extra-apps repositories. Required when
@@ -562,6 +570,16 @@ jobs:
             \EGroupware\Api\Cache::unsetInstance(\EGroupware\Api\Hooks::class, "locations");
           '
 
+      - name: Start Collabora backend
+        if: ${{ inputs.with-collabora }}
+        run: |
+          set -euo pipefail
+          COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
+          # docker-compose.ci.yml parks this service at replicas: 0 for everyone else
+          $COMPOSE up -d --scale collabora-key=1 collabora-key
+
       - name: Run PHPUnit
         timeout-minutes: 30
         env:
@@ -634,6 +652,7 @@ jobs:
             -e EGW_CONFIG_USER="$EGW_CONFIG_USER" \
             -e EGW_CONFIG_PASSWD="$EGW_CONFIG_PASSWD" \
             -e EGW_ADMIN_PASSWORD="$SYSOP_PASS" \
+            -e EGW_TEST_COLLABORA="${{ inputs.with-collabora && '1' || '' }}" \
             -w "$EGW_SRC_DIR" egroupware \
             bash -lc '
               set -euo pipefail
