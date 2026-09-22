@@ -831,7 +831,7 @@ class SharingBase extends LoggedInTest
 	 * @param $data Data passed to the etemplate
 	 * @param $keep_session = true Keep the current session, or access with new session as anonymous
 	 */
-	public function getShare($link, &$data, $keep_session = true, &$_curl = null)
+	public function getShare($link, &$data, $keep_session = true, &$_curl = null, $expect_nextmatch = true)
 	{
 		// Set up curl
 		if($_curl == null)
@@ -915,9 +915,13 @@ class SharingBase extends LoggedInTest
 		// Not asserted non-empty here: a caller sharing an empty directory legitimately gets no
 		// rows, and the callers that know which files to expect check them via checkNextmatch().
 		// The structure itself must be there though - without it every such check silently
-		// compares against nothing.
-		$this->assertArrayHasKey('nm', $data['data']['content'] ?? [], "Share response carried no nextmatch at all (HTTP $http_code, '$effective_url')");
-		$this->assertIsArray($data['data']['content']['nm']['rows'] ?? null, "Share response's nextmatch had no rows array (HTTP $http_code, '$effective_url')");
+		// compares against nothing.  Not every share response is a listing: a share opened by a
+		// logged-in user answers the mount dialog instead, so that caller passes false.
+		if($expect_nextmatch)
+		{
+			$this->assertArrayHasKey('nm', $data['data']['content'] ?? [], "Share response carried no nextmatch at all (HTTP $http_code, '$effective_url')");
+			$this->assertIsArray($data['data']['content']['nm']['rows'] ?? null, "Share response's nextmatch had no rows array (HTTP $http_code, '$effective_url')");
+		}
 
 		return $form;
 	}
