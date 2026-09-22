@@ -2315,7 +2315,40 @@ export class MailCompose
 	private async bootstrapSignature() : Promise<void>
 	{
 		if (!this.isJmapMode) return;
+		await this.applyPreferredIdentityForNewCompose();
 		await this.applySignatureForCurrentIdentity(String(this.currentBodyWidget()?.get_value() ?? ''));
+	}
+
+	/**
+	 * "Default identity for compose" preference (mail/defaultIdentity) for a genuinely new, blank
+	 * compose - selectIdentityForRecipients() already applies this same preference for reply/
+	 * forward (tracker #124251's own fix), but a brand-new compose window never consulted it at
+	 * all, unlike the classic, now-deleted mail_compose.inc.php's get_preferred_identity(), which
+	 * ran for EVERY compose() call unconditionally - found live via ticket #124821 (2026-09-22):
+	 * "die Einstellung dass immer die persönliche Signatur genommen werden soll wird nicht
+	 * berücksichtigt" (the "always use my personal signature" setting isn't respected). Leaves the
+	 * server's own pre-selected identity (mail_compose.inc.php's LastSignatureIDUsed) untouched for
+	 * 'last-used'/unset (the everyday case, see preferredIdentityFromPreference()'s own docblock).
+	 */
+	private async applyPreferredIdentityForNewCompose() : Promise<void>
+	{
+		const mailaccountValue = this.et2.getWidgetById('mailaccount')?.get_value();
+		const [profileID] = String(mailaccountValue ?? '').split(':', 2);
+		if (!profileID) return;
+		let identities : any[];
+		try
+		{
+			identities = await this.app.jmap.getIdentities(profileID);
+		}
+		catch (e)
+		{
+			return;
+		}
+		const preferred = this.preferredIdentityFromPreference(identities);
+		if (preferred)
+		{
+			this.et2.getWidgetById('mailaccount')?.set_value(`${profileID}:${preferred.id}`);
+		}
 	}
 
 	/**
@@ -2450,6 +2483,12 @@ export class MailCompose
 		if (!identity) return;
 
 		const mimeType : 'html' | 'plain' = this.et2.getWidgetById('mimeType')?.get_value() !== false ? 'html' : 'plain';
+		// strip the signature's own stale, baked-in font-size/family before insertion - see
+		// MailJmap.stripInlineFont()'s own docblock (ticket #124821) for why. Plain-text mode has
+		// no HTML/inline styles at all, nothing to strip there.
+		const signature = mimeType === 'html' && identity.htmlSignature
+			? {...identity, htmlSignature: MailJmap.stripInlineFont(identity.htmlSignature)}
+			: identity;
 		const insertPref = this.egw.preference('insertSignatureAtTopOfMessage', 'mail');
 		const placement : 'top' | 'below' | 'none' =
 			insertPref === '1' ? 'top' : insertPref === 'no_belowaftersend' ? 'none' : 'below';
@@ -2487,7 +2526,7 @@ export class MailCompose
 			}
 		}
 
-		let result = MailJmap.composeBodyWithSignature(pristineBody, mimeType, identity, {placement, disableRuler, isReply, formatBlock});
+		let result = MailJmap.composeBodyWithSignature(pristineBody, mimeType, signature, {placement, disableRuler, isReply, formatBlock});
 		// HTML mode locates the inserted block via MailJmap.SIGNATURE_MARKER_ID instead (DOM id,
 		// not a tracked substring) - see updateSignatureForIdentity()'s own docblock for why.
 		if (mimeType === 'plain')
