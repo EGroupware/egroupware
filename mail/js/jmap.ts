@@ -634,11 +634,19 @@ export class MailJmap
 	 * same tab via sessionStorage instead of the PHP session) - and opened under a fixed
 	 * per-account window name, so a whole burst of failures for the same account (eg. every
 	 * failing row-fetch retry) can never spawn more than one popup: a second egw.open_link() call
-	 * with the same name just refocuses the existing window rather than opening a new one.
+	 * with the same name just refocuses the existing window rather than opening a new one. Shared
+	 * across every $type for a given account - an SMTP-send failure and an incoming-fetch failure
+	 * for the same account within the same 5min window only ever pop one wizard, not two.
 	 *
 	 * @param profileID
+	 * @param type which connection actually failed (see admin_mail::checkCertDiagnosis()'s own
+	 *  docblock) - 'imap'/'jmap' are functionally identical server-side (both read the account's
+	 *  acc_imap_ fields), kept distinct purely so the wizard's diagnosis message can say which
+	 *  kind of connection this was, instead of a generic "incoming" label; 'smtp' and 'sieve' read
+	 *  their own separate acc_smtp_ / acc_sieve_ fields entirely. Defaults to 'imap' for the one
+	 *  caller (ensureToken()) that fails before any token - and so any isLocal - is ever known.
 	 */
-	private popupCheckCert(profileID : string) : void
+	private popupCheckCert(profileID : string, type : 'imap' | 'jmap' | 'smtp' | 'sieve' = 'imap') : void
 	{
 		const key = MailJmap.CHECK_CERT_POPUP_KEY_PREFIX + profileID;
 		const last = Number(sessionStorage.getItem(key) || 0);
@@ -647,14 +655,18 @@ export class MailJmap
 			return;
 		}
 		sessionStorage.setItem(key, String(Date.now()));
-		// server resolves imap vs jmap itself from the account's own acc_imap_type/protocol (see
-		// admin_mail::checkCertDiagnosis()) - always 'imap' here, this path never covers SMTP
 		const url = this.egw.link('/index.php', {
 			menuaction: 'mail.mail_wizard.edit',
 			acc_id: profileID,
-			checkCert: 'imap',
+			checkCert: type,
 		});
 		this.egw.open_link(url, 'editMailAccount' + profileID, '600x480', undefined, true);
+	}
+
+	/** imap/jmap type for popupCheckCert() from the last known token for $profileID - see its own @param type docblock. Falls back to 'imap' if no token was ever obtained yet. */
+	private checkCertTypeFor(profileID : string) : 'imap' | 'jmap'
+	{
+		return this.tokens[profileID]?.isLocal === false ? 'jmap' : 'imap';
 	}
 
 	destroy()
@@ -1340,7 +1352,7 @@ export class MailJmap
 				throw new JmapUserError(message);
 			}
 			console.error('MailJmap.getMailboxChildren(): failed, caller shows an error leaf', e);
-			this.popupCheckCert(profileID);
+			this.popupCheckCert(profileID, this.checkCertTypeFor(profileID));
 			return null;
 		}
 	}
@@ -1395,7 +1407,7 @@ export class MailJmap
 				throw new JmapUserError(message);
 			}
 			console.error('MailJmap.getAllMailboxes(): failed, caller shows an empty result', e);
-			this.popupCheckCert(profileID);
+			this.popupCheckCert(profileID, this.checkCertTypeFor(profileID));
 			return null;
 		}
 	}
@@ -1530,7 +1542,7 @@ export class MailJmap
 				throw new JmapUserError(message);
 			}
 			console.error('MailJmap.getRootFolders(): failed, caller shows an error leaf', e);
-			this.popupCheckCert(profileID);
+			this.popupCheckCert(profileID, this.checkCertTypeFor(profileID));
 			return null;
 		}
 	}
@@ -2016,7 +2028,7 @@ export class MailJmap
 		{
 			// a genuine "couldn't even talk to the server" failure, not a real JMAP/business
 			// error with its own actionable message - see popupCheckCert()'s docblock
-			this.popupCheckCert(profileID);
+			this.popupCheckCert(profileID, this.checkCertTypeFor(profileID));
 		}
 		this.egw.message(message || this.egw.lang('Connection could not be established, use the wizard to check why!'), 'error');
 		console.error('MailJmap.fetchRows(): failed, resolving as an empty result', e);
@@ -4454,6 +4466,8 @@ export class MailJmap
 						delete this.tokens[profileID];
 						delete this.clients[profileID];
 						this.ineligibleUntil[profileID] = Date.now() + MailJmap.INELIGIBLE_RECHECK_INTERVAL;
+						// bootstrap itself just failed - no token, so no known isLocal yet either;
+						// default 'imap' (see popupCheckCert()'s own @param type docblock)
 						this.popupCheckCert(profileID);
 						return null;
 					}
@@ -5245,6 +5259,14 @@ export class MailJmap
 		{
 			if (e instanceof JmapUserError) throw e;
 			const message = describeJmapError(e);
+			if (!message)
+			{
+				// a genuine "couldn't even talk to the server" failure, not a real JMAP/business
+				// error with its own actionable message - unlike every other popupCheckCert()
+				// call site, this one genuinely is the outgoing (submission/SMTP) connection, not
+				// incoming - see popupCheckCert()'s own @param type docblock
+				this.popupCheckCert(profileID, 'smtp');
+			}
 			console.error('MailJmap.sendNewEmail(): failed', e);
 			throw new JmapUserError(message ?? this.egw.lang('Account not reachable'));
 		}
