@@ -552,4 +552,52 @@ describe("MailCompose updateSignatureForIdentity() - repeated switches stay idem
 		assert.include(final, 'Sig B', "the newly-selected identity's signature must be inserted");
 		assert.notInclude(final, 'Sig A', "the old identity's signature should be gone");
 	});
+
+	/**
+	 * Found live 2026-09-22 (Ingo, via a real customer "Henze"): with insertSignatureAtTopOfMessage
+	 * ('1' - "Signatur über dem zitierten Text anzeigen") AND the separator NOT hidden, switching
+	 * identity in a reply made the leading line - including anything the user had already typed
+	 * into it - appear to vanish. Root cause: composeBodyWithSignature()'s 'top' branch builds
+	 * `start + signatureBlock + body` - the earlier idempotency fix above suppressed `start` (via
+	 * isReply:false) but left the pre-existing leading block folded INSIDE `body`, which 'top'
+	 * places AFTER the signature block, not before it - so the typed text/blank line ends up
+	 * sandwiched between the OLD... no, the NEW signature and the quoted text, easy to miss/looks
+	 * gone. Fixed by extracting the leading block's own HTML and re-prepending it to the final
+	 * result, restoring its original "topmost, before the signature" position.
+	 */
+	it("keeps the leading block ABOVE the (new) signature after an identity switch when placement is 'top'", async() =>
+	{
+		const identityA = fakeIdentity({id: '0', htmlSignature: '<p>Sig A</p>'});
+		const identityB = fakeIdentity({id: '1', htmlSignature: '<p>Sig B</p>'});
+		const context = fakeContext({mimeType: 'html', body: '<p>the original body</p>'});
+		const {compose, et2} = createComposeForReply(context, [identityA, identityB], '1:0');
+
+		const originalPreference = egw.preference;
+		egw.preference = (key : string, app? : string) =>
+			key === 'insertSignatureAtTopOfMessage' ? '1' : originalPreference(key, app);
+		try
+		{
+			await (compose as any).bootstrapReply('msg1', 'reply');
+
+			const afterBootstrap = et2.widgets.mail_htmltext.get_value();
+			assert.isBelow(afterBootstrap.indexOf('<p><br'), afterBootstrap.indexOf('Sig A'),
+				"bootstrap itself must place the leading blank line above the signature for 'top'");
+
+			const withTyping = afterBootstrap.replace(/<p><br\s*\/?><\/p>/i, '<p>Hello there</p>');
+			et2.widgets.mail_htmltext.set_value(withTyping);
+
+			et2.widgets.mailaccount._value = '1:1';
+			await (compose as any).updateSignatureForIdentity();
+
+			const final = et2.widgets.mail_htmltext.get_value();
+			assert.include(final, 'Hello there', "the user's own typed text must survive the switch");
+			assert.include(final, 'Sig B', "the newly-selected identity's signature must be inserted");
+			assert.isBelow(final.indexOf('Hello there'), final.indexOf('Sig B'),
+				"the typed leading line must stay ABOVE the signature, not get pushed below/after it");
+		}
+		finally
+		{
+			egw.preference = originalPreference;
+		}
+	});
 });
