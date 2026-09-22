@@ -88,7 +88,13 @@ class SharingBackendTest extends SharingBase
 	 */
 	public function testFilesystemReadonly()
 	{
-		$this->markTestSkipped('Skipping for now, more work needed');
+		// A share of a filesystem mount 404s when fetched: the WebDAV layer answers
+		// "Content-disposition: inline; filename=\"\"" - it resolved the share to nothing and
+		// served it as a nameless file rather than the filemanager UI.  The share session
+		// remounts the share at its own root, and this share's VFS path only maps to the
+		// filesystem backend through an fstab entry that session does not have; a share of
+		// sqlfs needs no such mapping, which is why every other backend here passes.
+		$this->markTestSkipped('Share of a filesystem mount 404s - the share session cannot resolve the mount');
 		return;
 
 		// Don't add to files list or it deletes the folder from filesystem
@@ -110,7 +116,13 @@ class SharingBackendTest extends SharingBase
 	 */
 	public function testFilesystemWritable()
 	{
-		$this->markTestSkipped('Skipping for now, more work needed');
+		// A share of a filesystem mount 404s when fetched: the WebDAV layer answers
+		// "Content-disposition: inline; filename=\"\"" - it resolved the share to nothing and
+		// served it as a nameless file rather than the filemanager UI.  The share session
+		// remounts the share at its own root, and this share's VFS path only maps to the
+		// filesystem backend through an fstab entry that session does not have; a share of
+		// sqlfs needs no such mapping, which is why every other backend here passes.
+		$this->markTestSkipped('Share of a filesystem mount 404s - the share session cannot resolve the mount');
 		return;
 
 		// Don't add to files list or it deletes the folder from filesystem

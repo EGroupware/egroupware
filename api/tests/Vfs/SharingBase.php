@@ -15,6 +15,7 @@
 namespace EGroupware\Api\Vfs;
 
 require_once __DIR__ . '/../LoggedInTest.php';
+require_once __DIR__ . '/FilesystemFixtureTrait.php';
 
 use EGroupware\Api;
 use EGroupware\Api\LoggedInTest as LoggedInTest;
@@ -24,6 +25,8 @@ use EGroupware\Stylite\Vfs\Versioning;
 
 class SharingBase extends LoggedInTest
 {
+	use FilesystemFixtureTrait;
+
 	/**
 	 * How much should be logged to the console (stdout)
 	 *
@@ -226,6 +229,8 @@ class SharingBase extends LoggedInTest
 
 
 		Vfs::$is_root = $backup;
+
+		$this->removeFilesystemFixtureCopies();
 	}
 
 
@@ -422,11 +427,8 @@ class SharingBase extends LoggedInTest
 
 		$backup = Vfs::$is_root;
 		Vfs::$is_root = true;
-		$fs_path = realpath(__DIR__ . '/../fixtures/Vfs/filesystem_mount');
-		if(!file_exists($fs_path))
-		{
-			$this->fail("Missing filesystem test directory 'api/tests/fixtures/Vfs/filesystem_mount'");
-		}
+		// a copy, never the tracked fixture itself - see FilesystemFixtureTrait
+		$fs_path = $this->filesystemFixtureCopy();
 		$url = Filesystem\StreamWrapper::SCHEME.'://default'. $fs_path.
 			'?user=' . $GLOBALS['egw_info']['user']['account_id'] . '&group=Default&mode=770';
 		$this->assertTrue(Vfs::mount($url,$path), "Unable to mount $url to $path");
@@ -693,6 +695,17 @@ class SharingBase extends LoggedInTest
 			$cookie .= ';'.Api\Session::EGW_SESSION_NAME."={$session_id}";
 		}
 		curl_setopt($curl, CURLOPT_COOKIE, $cookie);
+
+		// Keep the headers: when this fails the body is empty, and they are the only thing saying
+		// whether EGroupware refused the share - it reports that through X-WebDAV-Status - or the
+		// request died before answering at all
+		$response_headers = [];
+		curl_setopt($curl, CURLOPT_HEADERFUNCTION, function($ch, $header) use (&$response_headers)
+		{
+			if(trim($header) !== '') $response_headers[] = trim($header);
+			return strlen($header);
+		});
+
 		$this->releaseSessionForWebserver();
 		$html = curl_exec($curl);
 		$http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
@@ -700,6 +713,7 @@ class SharingBase extends LoggedInTest
 		$curl_error = curl_error($curl);
 		$effective_url = (string)curl_getinfo($curl, CURLINFO_EFFECTIVE_URL);
 		curl_close($curl);
+		$header_dump = $response_headers ? "\nResponse headers:\n  " . implode("\n  ", $response_headers) : '';
 
 		if(!$html)
 		{
@@ -710,7 +724,7 @@ class SharingBase extends LoggedInTest
 			{
 				$this->noWebserverResponse("No webserver response for share link '$link' (curl errno $curl_errno: $curl_error)");
 			}
-			$this->fail("Share link '$link' returned no content (HTTP $http_code, effective URL '$effective_url')");
+			$this->fail("Share link '$link' returned no content (HTTP $http_code, effective URL '$effective_url')" . $header_dump);
 		}
 
 		// Parse & check for nextmatch
