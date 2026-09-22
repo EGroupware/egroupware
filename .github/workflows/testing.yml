@@ -594,7 +594,9 @@ jobs:
           # compose "command" never runs as written: the image entrypoint takes it as its own
           # arguments and answers "Unknown option specified: c", so the entrypoint is bypassed
           # here, and run (not up) waits for the copy before collabora-key looks for it.
-          $COMPOSE run --rm --no-deps --entrypoint /bin/bash collabora-init \
+          # as root: the image runs as the cool user, which cannot write the bind-mounted
+          # config directory the runner owns - and the chown below needs it anyway
+          $COMPOSE run --rm --no-deps --user root --entrypoint /bin/bash collabora-init \
             -c 'test -f /tmp/coolwsd/coolwsd.xml || (cp -p /etc/coolwsd/* /tmp/coolwsd/ && cd /tmp/coolwsd && ln -sf coolwsd.xml loolwsd.xml && chown -R 33:33 /tmp/coolwsd)'
           $COMPOSE up -d --scale collabora-key=1 collabora-key
 
