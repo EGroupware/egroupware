@@ -3825,6 +3825,18 @@ class Imap extends Jmap\Base
 		$raw = (string)$data->getBodyPart($partId);
 		$encoding = $data->getBodyPartDecode($partId);
 		$part = $data->getStructure()->getPart($partId);
+		if (!$part)
+		{
+			// $partId no longer resolves against the message's current structure (eg. a stale
+			// download link for a partId that only ever existed transiently, or one the message no
+			// longer has) - every caller already treats a null return here as "not found" (download()
+			// answers 404, resolveTnef() throws a proper "part not found" exception, AttachmentJmap's
+			// two callers both already null-check), so this was always meant to be a graceful miss,
+			// not a crash - found live 2026-09-22 via a real customer's PHP fatal error log entry:
+			// "Call to a member function setContents() on null", same root-cause shape as preview()'s
+			// own getPart() miss (fixed earlier this session).
+			return null;
+		}
 		$part->setContents($raw, ['encoding' => $encoding]);
 		return $part->getContents();
 	}
