@@ -117,6 +117,12 @@ Api\Framework::set_extra('mail', 'start', array(
 		(string)($_REQUEST['pgp_encrypted'] ?? ''),
 		$bootstrap,
 		$preset,
+		// the attached message/rfc822 sub-part's own id, ONLY ever set when this popup was opened
+		// via mail_ui::displayMessage()'s "view an attached message" popup's own Reply button
+		// (MailApp.composeMessage()'s own `content.part` backfill, mail/js/app.ts) - see
+		// MailJmap.importAttachedMessageToDrafts()'s own docblock (ticket #124821) for why
+		// bootstrapComposePopup() needs this at all.
+		(string)($_REQUEST['part'] ?? ''),
 	),
 ));
 

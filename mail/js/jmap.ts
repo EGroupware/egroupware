@@ -2954,6 +2954,83 @@ export class MailJmap
 	}
 
 	/**
+	 * Import a message/rfc822 sub-part (eg. a forwarded-as-attachment original email, viewed via
+	 * fetchBodyFromMessagePart() above) into the account's own Drafts folder as a genuine, real
+	 * top-level message, and return its new row id - so replying to it can reuse the completely
+	 * normal, unmodified, already-well-formatted reply path (fetchForReply()/quoteOriginalMessage())
+	 * from there on, instead of teaching every layer of the row-id/reply-addressing scheme about a
+	 * nested sub-part directly.
+	 *
+	 * Ticket #124821 (2026-09-22, a real customer via Ingo): replying from the "view an attached
+	 * message" popup silently replied to the OUTER/carrying message instead (composeMessage()'s own
+	 * backfill only ever read content.mail_id, never content.part - mail/js/app.ts) - through the
+	 * normal well-formatted path, but quoting the WRONG message, which is why the customer's own
+	 * "no formatting" complaint was really "wrong message, whose own already-unformatted body just
+	 * LOOKED unformatted once quoted". Fixed one layer up instead (ralf's own suggestion): rather
+	 * than threading a sub-part id through composeMessage() -> compose.php -> messageReference()'s
+	 * row-id scheme (which hard-requires exactly 4 "::"-joined segments, see its own docblock, with
+	 * no spare slot for one), physically materialize the attached message as a real Drafts entry
+	 * first - Email/import (RFC 8621 §4.8) already accepts an EXISTING message's own self-describing
+	 * blobId verbatim (readUploadedBlob()'s "mailboxB64:uid:partId" branch, api/src/Mail/Jmap/
+	 * Imap.php), no upload round-trip needed - then everything downstream is a perfectly ordinary
+	 * reply to a perfectly ordinary message.
+	 *
+	 * Called from MailCompose.bootstrapCompose() - AFTER the compose popup/window has already been
+	 * opened (a real window.open(), which must stay synchronous with the user's click to avoid the
+	 * browser's popup blocker - composeMessage()'s own openComposePopupUrl() comment explains this
+	 * same constraint) - never before, unlike a "resolve then open" approach would need.
+	 *
+	 * @param rowId the CONTAINING message's own row id (mail::acc_id::profileID::mailboxId::emailId)
+	 * @param partID the attached message/rfc822 sub-part's id within it (mail_ui::displayMessage()'s
+	 *  own `part` GET param, threaded through compose.php's `part` query param - see
+	 *  bootstrapCompose()'s own docblock)
+	 * @return the newly-imported Drafts message's own row id, ready to pass straight into
+	 *  bootstrapReply()
+	 * @throws Error if the attachment/Drafts folder can't be resolved or the import itself fails -
+	 *  callers fall back to the original (containing-message) rowId on any failure, same
+	 *  never-worth-blocking-compose-on philosophy as applySignatureForCurrentIdentity()
+	 */
+	async importAttachedMessageToDrafts(rowId : string, partID : string) : Promise<string>
+	{
+		const ref = this.messageReference(rowId);
+		const token = await this.ensureToken(ref.profileID);
+		if (!token)
+		{
+			throw new Error('No JMAP session for this account');
+		}
+		const client = this.clients[ref.profileID];
+
+		// same attachments lookup fetchBodyFromMessagePart() uses to locate the sub-part's own
+		// self-describing blobId
+		const args : any = {accountId: token.accountId, ids: [ref.emailId], properties: ['attachments']};
+		if (token.isLocal)
+		{
+			args.mailboxId = ref.mailboxId;
+		}
+		const emails = token.isLocal ?
+			await this.emailGetViaCacheableGet(client, args) :
+			(await client.requestMany((t) => ({emails: t.Email.get(args) as any})))[0].emails;
+		const email = (emails.list || [])[0];
+		const attachment = (email?.attachments || []).find((a : any) => String(a.partId) === String(partID));
+		if (!attachment?.blobId)
+		{
+			throw new Error('Attached message not found');
+		}
+
+		const [{mailboxes}] = await client.requestMany((t) => ({
+			mailboxes: t.Mailbox.get({accountId: token.accountId}) as any,
+		}));
+		const draftsId = mailboxes.list?.find((m : any) => m.role === 'drafts')?.id;
+		if (!draftsId)
+		{
+			throw new Error('Could not find the Drafts folder');
+		}
+
+		const newEmailId = await this.importWholeMessageDraft(token, client, draftsId, attachment.blobId);
+		return `mail::${this.egw.user('account_id')}::${ref.profileID}::${draftsId}::${newEmailId}`;
+	}
+
+	/**
 	 * Fetch a message's raw attachment metadata (RFC 8621 EmailBodyPart shape: partId/type/name/
 	 * size/cid/disposition/blobId) directly via JMAP, client-side - the exact Email/get round trip
 	 * mail_ui::ajax_fetchAttachments()'s own AttachmentJmap::resolveAttachmentsJmap() used to make

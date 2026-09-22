@@ -1436,12 +1436,25 @@ export class MailApp extends EgwApp
 		// keyboard shortcut while previewing a message) must NOT run for that case - found live
 		// 2026-09-08 (ralf): it was leaking the currently-focused message's own id (and, via
 		// settings.smime_type below, its S/MIME status) into an otherwise-blank compose.php url.
+		// Only ever non-empty when composeMessage() is invoked from mail_ui::displayMessage()'s
+		// "view an attached message" popup (that popup's own `content.part` - the attached
+		// message/rfc822 sub-part's id WITHIN the containing message identified by `mail_id` just
+		// below) - threaded through to compose.php's own `part` query param so
+		// MailCompose.bootstrapCompose() can import that specific attached message into Drafts and
+		// reply to IT, instead of (as before this fix) silently replying to the outer/containing
+		// message - ticket #124821 (2026-09-22, a real customer): "beim Antworten auf die E-Mail im
+		// Anhang wird der zitierte Text völlig ohne Formatierung geschrieben" (replying to the
+		// email IN THE ATTACHMENT quoted with no formatting at all) - it was quoting the WRONG,
+		// outer message all along, whose own body already embeds the original's headers as raw
+		// unformatted text (a bounce/NDM-style auto-notification), not a formatting bug per se.
+		let part = '';
 		if ((typeof _elems == 'undefined' || _elems.length==0) && _action && _action.id)
 		{
 			if (this.et2 && this.et2.getArrayMgr("content").getEntry('mail_id'))
 			{
 				_elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
+				part = this.et2.getArrayMgr("content").getEntry('part') || '';
 			}
 			if ((typeof _elems == 'undefined' || _elems.length==0) && this.isMainWindow)
 			{
@@ -1453,7 +1466,7 @@ export class MailApp extends EgwApp
 			}
 		}
 		// Extra info passed to egw.open()
-		const settings: { id: string; from: string; smime_type?: string; mode?: string; pgp_encrypted?: string } = {
+		const settings: { id: string; from: string; smime_type?: string; mode?: string; pgp_encrypted?: string; part?: string } = {
 			// 'Source' Mail UID
 			id: '',
 			// How to pull data from the Mail IDs for the compose
@@ -1462,6 +1475,7 @@ export class MailApp extends EgwApp
 
 		// We only handle one for everything but forward
 		settings.id = ((typeof _elems == 'undefined'|| _elems.length == 0)?'':_elems[0].id);
+		if (part) settings.part = part;
 		const content = egw.dataGetUIDdata(settings.id);
 		if (content) settings.smime_type = content.data['smime'];
 		// PGP has no server-known row field to mirror smime_type above with (100% client-side
@@ -1571,7 +1585,7 @@ export class MailApp extends EgwApp
 	 * factored out so the batch-forwardasattach branch above can call it too, as an `_open_new`
 	 * override for openWithinWindow()'s "nothing to reuse" case (see its own comment).
 	 */
-	private openComposePopupUrl(settings : { id : string, from : string, smime_type? : string, mode? : string, pgp_encrypted? : string }, accId : string) : Window | void
+	private openComposePopupUrl(settings : { id : string, from : string, smime_type? : string, mode? : string, pgp_encrypted? : string, part? : string }, accId : string) : Window | void
 	{
 		// Narrow-viewport half of the same condition EgwFramework.openPopup() (kdots/js/
 		// EgwFramework.ts) itself uses to decide "render this inline instead of a real popup
@@ -1607,6 +1621,7 @@ export class MailApp extends EgwApp
 			mode: settings.mode || '',
 			smime_type: settings.smime_type || '',
 			pgp_encrypted: settings.pgp_encrypted || '',
+			part: settings.part || '',
 		});
 		return egw.openPopup(url, 870, 'availHeight', window_name, 'mail');
 	}
@@ -1630,7 +1645,7 @@ export class MailApp extends EgwApp
 	 * page's own `this.et2`) - the handful of calls that case makes are replicated here directly
 	 * instead, same reasoning mobileView()'s own docblock already documents for 'mail.view'.
 	 */
-	private async openComposeDialog(settings : { id : string, from : string, smime_type? : string, mode? : string, pgp_encrypted? : string }, accId : string) : Promise<void>
+	private async openComposeDialog(settings : { id : string, from : string, smime_type? : string, mode? : string, pgp_encrypted? : string, part? : string }, accId : string) : Promise<void>
 	{
 		const [bootstrap, {actions, sel_options, content}] = await Promise.all([
 			this.egw.request('mail.EGroupware\\Mail\\Compose.ajax_composeDialogBootstrap', []),
@@ -1645,7 +1660,7 @@ export class MailApp extends EgwApp
 
 		// Pre-construct MailCompose with the explicit bootstrap params BEFORE anything touches the
 		// `compose` getter - same reasoning bootstrapComposePopup() already documents.
-		(<any>window).app._compose = new MailCompose(this, {from: settings.from, sourceId: settings.id, mode: settings.mode});
+		(<any>window).app._compose = new MailCompose(this, {from: settings.from, sourceId: settings.id, mode: settings.mode, part: settings.part});
 
 		const dialog = <Et2Dialog>loadWebComponent('et2-dialog', {
 			class: "mailComposeDialog egw-popup",
@@ -1910,7 +1925,11 @@ export class MailApp extends EgwApp
 			filemode? : string, body? : string, bodyMimeType? : 'plain' | 'html', mimeType? : string,
 			attachmentContents? : { name : string, type : string, content : string }[],
 			msg? : string,
-		}) : Promise<void>
+		},
+		// the attached message/rfc822 sub-part's own id (mail_ui::displayMessage()'s own `part` GET
+		// param, threaded through compose.php's own bootstrap args) - see
+		// MailJmap.importAttachedMessageToDrafts()'s own docblock (ticket #124821) for why
+		part? : string) : Promise<void>
 	{
 		const {name, url, etemplate_exec_id} = bootstrap;
 
@@ -2044,7 +2063,7 @@ export class MailApp extends EgwApp
 		// touches the `compose` getter - that getter lazily builds a plain, URL-parsing instance if
 		// none exists yet, which is the right thing for a classic postback but wrong here (this
 		// popup's own document was never loaded from a real URL at all).
-		(<any>window).app._compose = new MailCompose(this, {from, sourceId, mode});
+		(<any>window).app._compose = new MailCompose(this, {from, sourceId, mode, part});
 
 		await this.bootstrapClientSideTemplate(name, {
 			content: contentCopy,
