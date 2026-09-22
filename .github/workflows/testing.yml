@@ -589,7 +589,10 @@ jobs:
           # docker-compose.ci.yml parks both at replicas: 0 for everyone else.  collabora-init
           # populates the config volume collabora-key then reads; without it coolwsd comes up
           # with nothing to serve and /hosting/discovery never answers.
-          $COMPOSE up -d --scale collabora-init=1 collabora-init
+          # run, not up: collabora-init is a one-shot that copies the default config into the
+          # volume and exits, and "up -d" only launches it - collabora-key then started first and
+          # died on "File not found: /etc/coolwsd/coolwsd.xml" every time.
+          $COMPOSE run --rm --no-deps collabora-init
           $COMPOSE up -d --scale collabora-key=1 collabora-key
 
           # EGroupware reaches Collabora through nginx, which proxies /hosting and /browser to
