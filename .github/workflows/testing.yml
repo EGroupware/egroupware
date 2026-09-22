@@ -586,7 +586,10 @@ jobs:
           COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
-          # docker-compose.ci.yml parks this service at replicas: 0 for everyone else
+          # docker-compose.ci.yml parks both at replicas: 0 for everyone else.  collabora-init
+          # populates the config volume collabora-key then reads; without it coolwsd comes up
+          # with nothing to serve and /hosting/discovery never answers.
+          $COMPOSE up -d --scale collabora-init=1 collabora-init
           $COMPOSE up -d --scale collabora-key=1 collabora-key
 
           # EGroupware reaches Collabora through nginx, which proxies /hosting and /browser to
@@ -604,13 +607,16 @@ jobs:
 
           # Collabora takes a while to answer; without this the first discover() fails and its
           # result is what the tests then see
-          for i in $(seq 1 30); do
+          for i in $(seq 1 90); do
             if $COMPOSE exec -T egroupware php -r 'exit(@file_get_contents("http://nginx/hosting/discovery") === false ? 1 : 0);'; then
               echo "Collabora discovery answered after ${i}s"
               break
             fi
             sleep 2
           done
+          # if it never came up, its own log is the only thing that says why
+          $COMPOSE exec -T egroupware php -r 'exit(@file_get_contents("http://nginx/hosting/discovery") === false ? 1 : 0);' \
+            || $COMPOSE logs --tail 60 collabora-key collabora-init || true
           $COMPOSE exec -T egroupware php -r '
             $d = @file_get_contents("http://nginx/hosting/discovery");
             if ($d === false) { fwrite(STDERR, "::error::Collabora discovery never answered\n"); exit(1); }
