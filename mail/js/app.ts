@@ -2687,8 +2687,34 @@ export class MailApp extends EgwApp
 	 * view, not a blob render) and the vCard/iCalendar branches (server-side import with real side
 	 * effects - creates a contact/event) keep using the classic server URL.
 	 *
+	 * Only worth it for a type the browser actually renders inline on plain navigation - the exact
+	 * same enumerated "viewable" bucket AttachmentJmap::createAttachmentBlock()'s own switch
+	 * already groups together server-side (IMAGE/JPEG|PNG|GIF|BMP, APPLICATION/PDF, TEXT/PLAIN|
+	 * HTML|DIRECTORY), as opposed to its generic `default:` download-only case - deliberately an
+	 * enumerated whitelist, not a `text/*`/`image/*` wildcard guess: a first attempt at this fix
+	 * used `!type.startsWith('application/')` as the cutoff, which wrongly still let eg.
+	 * `text/csv` through - many browsers treat CSV as a download-triggering type, not an inline
+	 * view, same failure mode as Excel (found live 2026-09-22, tracker #124932 follow-up, a
+	 * second attachment in the SAME account still got a blob-UUID filename after the first fix).
+	 * Anything not in this exact list has no legitimate "view" to begin with -
+	 * Et2Description._handleClick() falls through to a plain egw.open_link(href) navigation for
+	 * those, and navigating a bare blob: URL directly (no <a download> involved) lets the browser
+	 * fall back to the blob's own opaque UUID as the save filename, regardless of the underlying
+	 * File's real .name - same bug class as tracker #124541 (fixed for PDF only, via jmap.ts's
+	 * getAttachmentViewUrl()/wrapPdfViewerWithDownload()). Leaving everything else on the classic
+	 * mail_ui::getAttachment() URL keeps it correct - Api\Header\Content::safe()
+	 * (MessageDisplayHandler.php) sets a real Content-Disposition header with the actual filename
+	 * via a normal HTTP response, sidestepping the whole blob:-URL-filename problem entirely
+	 * instead of trying to work around it client-side.
+	 *
 	 * @return true if any row's mime_url was replaced (caller should re-render)
 	 */
+	private static readonly VIEWABLE_TYPES = new Set([
+		'application/pdf',
+		'text/plain', 'text/html', 'text/directory',
+		'image/jpeg', 'image/png', 'image/gif', 'image/bmp',
+	]);
+
 	private async resolveAttachmentViewUrls(rowId : string, attachmentsBlock : any[]) : Promise<boolean>
 	{
 		const excluded = ['message/rfc822', 'text/vcard', 'text/x-vcard', 'text/calendar', 'text/x-vcalendar'];
@@ -2701,7 +2727,11 @@ export class MailApp extends EgwApp
 		{
 			return false;
 		}
-		const eligible = attachmentsBlock.filter((item) => item.blobId && !excluded.includes((item.type || '').toLowerCase()));
+		const eligible = attachmentsBlock.filter((item) =>
+		{
+			const type = (item.type || '').toLowerCase();
+			return item.blobId && !excluded.includes(type) && MailApp.VIEWABLE_TYPES.has(type);
+		});
 		if (!eligible.length)
 		{
 			return false;

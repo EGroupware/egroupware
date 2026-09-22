@@ -116,6 +116,43 @@ describe("MailApp.resolveAttachmentViewUrls()", () =>
 		assert.deepEqual(revoked, [ROW_ID]);
 	});
 
+	it("leaves other application/* types (eg. Excel) on the classic server mime_url, even with a blobId", async() =>
+	{
+		// Tracker #124932 (real customer, acc_id=42): clicking an .xlsx attachment's name
+		// downloaded it as a random blob-UUID filename instead of its real name - same bug class
+		// as tracker #124541, which was fixed for PDF only. Leaving these on the classic
+		// mail_ui::getAttachment() URL (Api\Header\Content::safe() sets a real
+		// Content-Disposition header there) sidesteps the blob:-URL-filename problem entirely.
+		const {app, requested} = createMailApp();
+		const items = [
+			{blobId: 'b1', filename: 'Report.xlsx', type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},
+			{blobId: 'b2', filename: 'archive.zip', type: 'application/zip'},
+			{blobId: 'b3', filename: 'doc.pdf', type: 'application/pdf'},
+		];
+
+		const result = await invoke(app, ROW_ID, items);
+
+		assert.isTrue(result, "the PDF alone is still eligible, so overall result is true");
+		assert.isUndefined(items[0].mime_url, "xlsx must not get a client-side blob mime_url");
+		assert.isUndefined(items[1].mime_url, "zip must not get a client-side blob mime_url");
+		assert.equal(items[2].mime_url, 'blob:b3', "pdf still resolves client-side");
+		assert.deepEqual(requested.map(r => r.blobId), ['b3']);
+	});
+
+	it("leaves text/csv on the classic server mime_url too - many browsers download it rather than view it inline", async() =>
+	{
+		// Follow-up found live 2026-09-22: a first attempt at this fix used
+		// `!type.startsWith('application/')`, which wrongly still routed text/csv through the
+		// client-side blob: URL (a second real attachment, same account, still got a blob-UUID
+		// filename after the first fix). Now an enumerated whitelist instead of a wildcard.
+		const {app, requested} = createMailApp();
+
+		const result = await invoke(app, ROW_ID, [{blobId: 'b1', filename: 'delivery.csv', type: 'text/csv'}]);
+
+		assert.isFalse(result);
+		assert.isEmpty(requested);
+	});
+
 	it("resolves each eligible attachment and writes its own mime_url in place", async() =>
 	{
 		const {app, requested} = createMailApp();
