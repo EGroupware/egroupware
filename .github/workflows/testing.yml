@@ -597,12 +597,9 @@ jobs:
           # as root: the image runs as the cool user, which cannot write the bind-mounted
           # config directory the runner owns - and the chown below needs it anyway
           $COMPOSE run --rm --no-deps --user root --entrypoint /bin/bash collabora-init \
-            -c 'test -f /tmp/coolwsd/coolwsd.xml || (cp -p /etc/coolwsd/* /tmp/coolwsd/ && cd /tmp/coolwsd && ln -sf coolwsd.xml loolwsd.xml && chown -R 33:33 /tmp/coolwsd)'
-          # nginx proxies to collabora-key over plain HTTP, but the stock config has SSL on, so
-          # 9980 speaks TLS and the proxy cannot reach it - discovery then never answers.  A
-          # long-lived install has this turned off behind nginx already; a fresh copy does not.
-          COOLWSD_XML="$GITHUB_WORKSPACE/sources/data/default/loolwsd/coolwsd.xml"
-          sudo python3 -c "import xml.etree.ElementTree as ET; t=ET.parse('$COOLWSD_XML'); s=t.getroot().find('ssl'); s.find('enable').text='false'; s.find('termination').text='true'; t.write('$COOLWSD_XML'); print('coolwsd ssl disabled, termination on')"
+            -c 'test -f /tmp/coolwsd/coolwsd.xml || (cp -p /etc/coolwsd/* /tmp/coolwsd/ && cd /tmp/coolwsd && ln -sf coolwsd.xml loolwsd.xml && chown -R 33:33 /tmp/coolwsd);
+                sed -i "/<ssl /,\\#</ssl>#s#>true</enable>#>false</enable>#" /tmp/coolwsd/coolwsd.xml;
+                grep -m1 -A2 "<ssl " /tmp/coolwsd/coolwsd.xml'
           $COMPOSE up -d --scale collabora-key=1 collabora-key
 
           # EGroupware reaches Collabora through nginx, which proxies /hosting and /browser to
