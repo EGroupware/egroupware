@@ -131,6 +131,17 @@ class SharingACLTest extends SharingBase
 	 */
 	public function testShareKeepSession()
 	{
+		// This test hands its own session to the webserver so the share is opened as a known
+		// user.  Session::verify() rejects a session whose stored IP is empty when the instance
+		// has sessions_checkip on, and a session created from the command line has no IP, so
+		// there the server can only ever fall back to an anonymous one and the share is served
+		// as if nobody was logged in.  That is a property of the install, decided before the
+		// request is made - not something inferred from how the response came back.
+		if(!empty($GLOBALS['egw_info']['server']['sessions_checkip']))
+		{
+			$this->markTestSkipped('Instance has sessions_checkip enabled: a session created on the command line has no IP and can never be verified by the webserver');
+		}
+
 		$dir = '';
 		$link = $this->setupShare($dir);
 
