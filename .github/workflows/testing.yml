@@ -589,6 +589,34 @@ jobs:
           # docker-compose.ci.yml parks this service at replicas: 0 for everyone else
           $COMPOSE up -d --scale collabora-key=1 collabora-key
 
+          # EGroupware reaches Collabora through nginx, which proxies /hosting and /browser to
+          # collabora-key:9980 over plain HTTP - so no certificate to verify, unlike talking to
+          # the container directly. Nothing sets this during a CI install, and without it
+          # Bo::get_server() is empty, discover() throws "Collabora is not configured!" and the
+          # share is served as the file instead of opening in the editor.
+          $COMPOSE exec -T db mariadb -u root -p"$EGW_DB_ROOT_PW" -D "egroupware" -e \
+            "REPLACE INTO egw_config (config_app, config_name, config_value)
+             VALUES ('collabora', 'server', 'http://nginx');"
+          $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php -r '
+            require "api/src/loader/common.php";
+            \EGroupware\Api\Cache::unsetInstance(\EGroupware\Api\Config::class, "configs");
+          '
+
+          # Collabora takes a while to answer; without this the first discover() fails and its
+          # result is what the tests then see
+          for i in $(seq 1 30); do
+            if $COMPOSE exec -T egroupware php -r 'exit(@file_get_contents("http://nginx/hosting/discovery") === false ? 1 : 0);'; then
+              echo "Collabora discovery answered after ${i}s"
+              break
+            fi
+            sleep 2
+          done
+          $COMPOSE exec -T egroupware php -r '
+            $d = @file_get_contents("http://nginx/hosting/discovery");
+            if ($d === false) { fwrite(STDERR, "::error::Collabora discovery never answered\n"); exit(1); }
+            fwrite(STDERR, "discovery returned ".strlen($d)." bytes\n");
+          '
+
       - name: Run PHPUnit
         timeout-minutes: 30
         env:
