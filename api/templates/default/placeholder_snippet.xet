@@ -15,29 +15,41 @@
             </et2-hbox>
         </et2-vbox>
         <et2-styles>
+            /**
+             * The dialog gets a fixed size when it opens, so the preview needs its space reserved
+             * up front: it starts empty and is only filled once an entry is picked, and without a
+             * share of the height the merged address would land outside the dialog where it can't
+             * be seen.
+             */
             #placeholder_snippet {
             min-width: 500px;
-            min-height: 300px;
+            min-height: 25em;
+            display: flex;
             }
-            #_outer_box > #_selects {
-            flex: 1 1 50%;
+            #placeholder_snippet > et2-template {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
             }
-            #_outer_box > label.et2_label {
-            flex: 0 1 auto;
+            #placeholder_snippet #outer_box {
+            flex: 1 1 auto;
             }
-            #_outer_box .preview {
-            flex: 1 1 50%;
+            #placeholder_snippet #selects {
+            flex: 1 1 60%;
+            min-height: 8em;
+            }
+            #placeholder_snippet #placeholder_list {
+            flex: 1 1 auto;
+            min-height: 0;
+            }
+            #placeholder_snippet .preview {
+            flex: 1 1 40%;
+            min-height: 6em;
+            overflow: auto;
             font-size: larger;
             }
-            select#_app {
+            #placeholder_snippet #app {
             flex-grow: 0;
-            }
-            .preview .et2_button {
-            flex: 0 1 24px;
-            height: 24px;
-            border: none;
-            border-radius: 0px;
-            background-color: transparent;
             }
         </et2-styles>
     </et2-template>

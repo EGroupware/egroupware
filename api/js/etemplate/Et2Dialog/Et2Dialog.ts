@@ -95,6 +95,31 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 	protected readonly hasSlotController = new HasSlotController(this, '[default]', 'label');
 
 	/**
+	 * The dialog got its explicit start size already, see _setInitialSize()
+	 * @internal
+	 */
+	protected _sizeIsSet : boolean = false;
+
+	/**
+	 * The last Enter keydown that reached the dialog, checked by its keyup, see handleKeyUp()
+	 * @internal
+	 */
+	protected _enterKeyDown : KeyboardEvent | null = null;
+
+	/**
+	 * Iframes we told to ignore the pointer for the duration of a move/resize, with the inline
+	 * pointer-events value they had before, see _shieldInteraction()
+	 * @internal
+	 */
+	protected _shieldedIframes : { iframe : HTMLIFrameElement, previous : string }[] = [];
+
+	/**
+	 * The document's inline user-select from before a move/resize, see _shieldInteraction()
+	 * @internal
+	 */
+	protected _shieldedUserSelect : string | null = null;
+
+	/**
 	 * The ID of the button that was clicked.  Always one of the button constants,
 	 * unless custom buttons were used
 	 *
@@ -274,6 +299,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		this._onButtonClick = this._onButtonClick.bind(this);
 		this._onMoveResize = this._onMoveResize.bind(this);
 		this.handleKeyUp = this.handleKeyUp.bind(this);
+		this._noteEnterKeyDown = this._noteEnterKeyDown.bind(this);
 		this._adoptTemplateButtons = this._adoptTemplateButtons.bind(this);
 
 		// Don't leave it undefined, it's easier to deal with if it's just already resolved.
@@ -292,6 +318,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 	{
 		super.connectedCallback();
 
+		this.addEventListener("keydown", this._noteEnterKeyDown);
 		this.addEventListener("keyup", this.handleKeyUp);
 
 		// Prevent close if they click the overlay when the dialog is modal
@@ -319,6 +346,8 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 	disconnectedCallback()
 	{
 		super.disconnectedCallback();
+		this._shieldInteraction(false);
+		this.removeEventListener("keydown", this._noteEnterKeyDown);
 		this.removeEventListener("keyup", this.handleKeyUp);
 		this.removeEventListener("sl-hide", this.handleClose);
 		this.removeEventListener("sl-after-show", this.handleOpen);
@@ -361,6 +390,19 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		this.removeEventListener("keydown", this.handleKeyDown);
 	}
 
+	/**
+	 * Keep the keydown half of an Enter around so its keyup can ask what became of it, see handleKeyUp()
+	 *
+	 * @param event
+	 */
+	_noteEnterKeyDown(event : KeyboardEvent)
+	{
+		if(event.key === 'Enter')
+		{
+			this._enterKeyDown = event;
+		}
+	}
+
 	handleKeyUp(event : KeyboardEvent)
 	{
 		// Ignore keypresses from some elements that might normally see Enter
@@ -368,9 +410,24 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		{
 			return;
 		}
+		if(event.key !== 'Enter')
+		{
+			return;
+		}
+
+		// Only act on an Enter that nothing else wanted.  A widget that deals with Enter itself
+		// either stops the keydown before it reaches us (a select's search field, a searchbox) or
+		// cancels it further along (Shoelace picks the highlighted option from a listener on the
+		// document).  Either way keyup is a separate event it cannot stop, it arrives here looking
+		// exactly like the user pressing Enter on the dialog, and acting on it fires the default
+		// button - so searching for a contact or picking one from the list closes the dialog.
+		// Checking the keydown at keyup time catches both: by now we know whether it was cancelled.
+		const keydown = this._enterKeyDown;
+		this._enterKeyDown = null;
+		const from_dialog = keydown && !keydown.defaultPrevented;
 
 		// Trigger the "primary" or first button
-		if(this.open && event.key === 'Enter')
+		if(this.open && from_dialog)
 		{
 			let button = this.querySelectorAll("[varient='primary']");
 			if(button.length == 0)
@@ -438,7 +495,11 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		this.dispatchEvent(new Event('open', {bubbles: true}));
 
 		Promise.all([this._template_promise, this.updateComplete])
-			.then(() => this._setupMoveResize());
+			.then(() =>
+			{
+				this._setInitialSize();
+				this._setupMoveResize();
+			});
 	}
 
 	handleClose(ev : PointerEvent)
@@ -456,6 +517,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		this.removeOpenListeners();
 		this._completeResolver([this._button_id, this.value]);
 
+		this._shieldInteraction(false);
 		interact(this.panel).unset();
 
 		this.dispatchEvent(new Event('close', {bubbles: true}));
@@ -912,14 +974,6 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 				button.noSubmit = true;
 			});
 		}
-		// Start with width & height set explicitly
-		// It avoids some sizing problems in children, like tabbox with tabsize=auto
-		this.updateComplete.then(() =>
-		{
-			const style = getComputedStyle(this.shadowRoot.querySelector(".dialog__panel"));
-			(<HTMLElement>this.shadowRoot.querySelector(".dialog__panel")).style.width = style.width;
-			(<HTMLElement>this.shadowRoot.querySelector(".dialog__panel")).style.height = style.height;
-		});
 		return template_buttons;
 	}
 
@@ -971,6 +1025,80 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		return this.querySelector('.dialog_content');
 	}
 
+	/**
+	 * Give the dialog an explicit pixel size, once, when it opens.
+	 *
+	 * Children that size themselves against the dialog (eg. a tabbox with tabsize=auto) need a
+	 * definite size to work from, so we freeze whatever the content came out to.  The measurement
+	 * is taken with any size we set before removed again: measuring a panel that already carries
+	 * an inline width/height would just write back an earlier - possibly premature - value, and
+	 * the dialog would keep a size its content never fit into.  Only the first call does anything,
+	 * so a re-render (or the user resizing) does not reset the dialog to its content's size.
+	 */
+	_setInitialSize()
+	{
+		const panel = <HTMLElement>this.shadowRoot?.querySelector(".dialog__panel");
+		if(!panel || this._sizeIsSet)
+		{
+			return;
+		}
+		this._sizeIsSet = true;
+
+		panel.style.width = "";
+		panel.style.height = "";
+		const style = getComputedStyle(panel);
+		panel.style.width = style.width;
+		panel.style.height = style.height;
+	}
+
+	/**
+	 * Keep the page out of the way while the user drags or resizes the dialog.
+	 *
+	 * Pointer events over an <code>&lt;iframe&gt;</code> go to the iframe's document, not ours, so as soon as the
+	 * pointer leaves the dialog and crosses one - eg. the Collabora editor, which fills the whole
+	 * window - we stop getting pointermove and never get the pointerup.  The drag then appears to
+	 * do nothing and leaves the interaction hanging.  Ignoring the pointer on every iframe for the
+	 * duration of the interaction keeps all of the events in our own document.
+	 *
+	 * Suppressing text selection goes with it: now that the pointer sweeps over real content
+	 * instead of an iframe, dragging the dialog would otherwise select whatever it passes over.
+	 *
+	 * @param _shield true while an interaction is running, false to put everything back
+	 */
+	_shieldInteraction(_shield : boolean)
+	{
+		const root = this.ownerDocument?.documentElement;
+		if(_shield)
+		{
+			if(this._shieldedIframes.length || this._shieldedUserSelect !== null)
+			{
+				return;
+			}
+			this._shieldedIframes = Array.from(this.ownerDocument.querySelectorAll("iframe"))
+				.map((iframe : HTMLIFrameElement) =>
+				{
+					const previous = iframe.style.pointerEvents;
+					iframe.style.pointerEvents = "none";
+					return {iframe: iframe, previous: previous};
+				});
+			if(root)
+			{
+				this._shieldedUserSelect = root.style.userSelect;
+				root.style.userSelect = "none";
+			}
+		}
+		else
+		{
+			this._shieldedIframes.forEach(({iframe, previous}) => iframe.style.pointerEvents = previous);
+			this._shieldedIframes = [];
+			if(root && this._shieldedUserSelect !== null)
+			{
+				root.style.userSelect = this._shieldedUserSelect;
+			}
+			this._shieldedUserSelect = null;
+		}
+	}
+
 	_setupMoveResize()
 	{
 		// Quick calculation of min size - dialog is made up of header, content & buttons
@@ -984,7 +1112,9 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 			.resizable({
 				edges: {bottom: true, right: true},
 				listeners: {
-					move: this._onMoveResize
+					start: () => this._shieldInteraction(true),
+					move: this._onMoveResize,
+					end: () => this._shieldInteraction(false)
 				},
 				modifiers: [
 					// keep the edges inside the parent
@@ -1003,7 +1133,9 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 				allowFrom: ".dialog__header",
 				ignoreFrom: ".dialog__close",
 				listeners: {
-					move: this._onMoveResize
+					start: () => this._shieldInteraction(true),
+					move: this._onMoveResize,
+					end: () => this._shieldInteraction(false)
 				},
 				modifiers: (this.isModal ? [] : [
 					interact.modifiers.restrict({

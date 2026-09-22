@@ -526,6 +526,8 @@ error creating %1 %2 directory	common	en	Error creating %1 %2 folder!
 error deleting %1 %2 directory	common	en	Error deleting %1 %2 folder!
 error deleting %1!	common	en	Error deleting %1!
 error enabling push	common	en	Error enabling push
+error loading placeholders	common	en	Error loading placeholders
+error merging placeholder	common	en	Error merging placeholder
 error renaming %1 %2 directory	common	en	Error renaming %1 %2 folder!
 error uploading file!	filemanager	en	Error uploading file!
 error while creating directory.	common	en	Error while creating directory.
@@ -963,6 +965,7 @@ niue	common	en	NIUE
 no	common	en	No
 no - cancel	common	en	No - Cancel
 no column to swap with !!!	common	en	No column to swap with!
+no data for the selected entry	common	en	No data for the selected entry
 no default set	common	en	No default set
 no email address found for %1	common	en	No email address found for %1
 no entries found, try again ...	common	en	No entries found, try again ...
@@ -972,6 +975,7 @@ no filters	common	en	No filters
 no history for this record	common	en	No history for this record
 no key for recipient:	common	en	No key for recipient:
 no matches found	common	en	No matches found.
+no placeholders found	common	en	No placeholders found
 no response from server: your data is probably not saved	common	en	No response from server: your data is probably NOT saved.
 no results match	common	en	No results match
 no rights to export more than %1 entries!	common	en	No rights to export more than %1 entries!

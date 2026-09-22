@@ -62,6 +62,23 @@ export class et2_placeholder_select extends et2_inputWidget
 		this.supportedWidgetClasses = [];
 	}
 
+	/**
+	 * The placeholders this widget offers.
+	 *
+	 * Read through the actual class instead of et2_placeholder_select, so a subclass that brings
+	 * its own fixed list (and therefore needs no server request at all) is not made to use - or
+	 * overwrite - the full list the base class asks the server for.
+	 */
+	protected get placeholders() : Object | null
+	{
+		return (<typeof et2_placeholder_select>this.constructor).placeholders;
+	}
+
+	protected set placeholders(_placeholders : Object | null)
+	{
+		(<typeof et2_placeholder_select>this.constructor).placeholders = _placeholders;
+	}
+
 	_content(_content, _callback)
 	{
 		let self = this;
@@ -71,30 +88,49 @@ export class et2_placeholder_select extends et2_inputWidget
 		}
 
 		var callback = _callback || this._buildDialog;
-		if(et2_placeholder_select.placeholders === null)
+		if(this.placeholders !== null)
 		{
-			this.egw().loading_prompt('placeholder_select', true, '', 'body');
-			this.egw().json(
-				this.LIST_URL,
-				[],
-				function(_content)
+			this._buildDialog(this.placeholders);
+			return;
+		}
+
+		this.egw().loading_prompt('placeholder_select', true, '', 'body');
+
+		// Clear the (body wide, blocking) loading prompt on every way out of the request, or the
+		// user is left staring at an overlay with no dialog and no idea that anything went wrong.
+		const failed = (_message) =>
+		{
+			this.egw().loading_prompt('placeholder_select', false);
+			this.egw().message(_message, 'error');
+		};
+
+		this.egw().json(
+			this.LIST_URL,
+			[],
+			function(_content)
+			{
+				if(typeof _content === 'object' && _content !== null && _content.message)
 				{
-					if(typeof _content === 'object' && _content.message)
-					{
-						// Something went wrong
-						this.egw().message(_content.message, 'error');
-						return;
-					}
-					this.egw().loading_prompt('placeholder_select', false);
-					et2_placeholder_select.placeholders = _content;
-					callback.apply(self, arguments);
-				}.bind(this)
-			).sendRequest(true);
-		}
-		else
+					// Something went wrong
+					failed(_content.message);
+					return;
+				}
+				if(!_content || typeof _content !== 'object' || Object.keys(_content).length === 0)
+				{
+					// Nothing to show - building the dialog with this would just throw
+					failed(this.egw().lang('No placeholders found'));
+					return;
+				}
+				this.egw().loading_prompt('placeholder_select', false);
+				this.placeholders = _content;
+				callback.apply(self, arguments);
+			}.bind(this)
+		).sendRequest(true, 'POST', (_err) =>
 		{
-			this._buildDialog(et2_placeholder_select.placeholders);
-		}
+			// Request itself failed (network, server error, ...), the success callback never runs
+			console.error("Could not load placeholders", _err);
+			failed(this.egw().lang('Error loading placeholders'));
+		});
 	}
 
 	/**
@@ -148,14 +184,11 @@ export class et2_placeholder_select extends et2_inputWidget
 		data.content.app = data.sel_options.app[0].value;
 		data.content.group = data.sel_options.group[0]?.value;
 		data.content.entry = {app: data.content.app};
-		data.modifications.entry.application_list = Object.keys(_data);
-		// Remove non-app placeholders (user & general)
+		// Remove non-app placeholders (user & general).  Filter instead of splice(indexOf(...)):
+		// indexOf() returns -1 for an app that is not in the list and splice(-1, 1) would then
+		// throw away the last real application instead.
 		let non_apps = ['user', 'general'];
-		for(let i = 0; i < non_apps.length; i++)
-		{
-			let index = data.modifications.entry.application_list.indexOf(non_apps[i]);
-			data.modifications.entry.application_list.splice(index, 1);
-		}
+		data.modifications.entry.application_list = Object.keys(_data).filter(app => non_apps.indexOf(app) < 0);
 
 		// callback for dialog
 		this.submit_callback = function(submit_button_id, submit_value)
@@ -277,26 +310,58 @@ export class et2_placeholder_select extends et2_inputWidget
 
 		if(placeholder_list.get_value() && entry.get_value())
 		{
-			// Show the selected placeholder replaced with value from the selected entry
-			this.egw().json(
-				'EGroupware\\Api\\Etemplate\\Widget\\Placeholder::ajax_fill_placeholders',
-				[placeholder_list.get_value(), entry.get_value()],
-				function(_content)
-				{
-					if(!_content)
-					{
-						_content = '';
-					}
-					preview_content.set_value(_content);
-					preview_content.getDOMNode().parentNode.style.visibility = _content.trim() ? null : 'hidden';
-				}.bind(this)
-			).sendRequest(true);
+			this._fill_preview(placeholder_list.get_value(), entry.get_value(), preview_content);
 		}
 		else
 		{
 			// No value, hide the row
 			preview_content.getDOMNode().parentNode.style.visibility = 'hidden';
 		}
+	}
+
+	/**
+	 * Ask the server to merge the placeholder with the selected entry and show the result.
+	 *
+	 * The preview is the only thing that tells the user what they are about to insert, so it
+	 * always says something: the merged text, or why there is none.  Silently leaving it empty
+	 * (or hidden) is indistinguishable from the dialog being broken.
+	 *
+	 * @param _placeholder placeholder text to merge, eg. "{{n_fn}}"
+	 * @param _entry entry to merge with, either the id or {app: ..., id: ...}
+	 * @param _preview widget showing the merged result
+	 * @param _onContent optional, called with the merged content ('' if there was none) for
+	 *	subclasses that insert the merged text rather than the placeholder
+	 */
+	protected _fill_preview(_placeholder : string, _entry : any, _preview : Et2Description, _onContent? : (_content : string) => void)
+	{
+		const show = (_content) =>
+		{
+			_preview.set_value(_content);
+			// Always visible - an empty preview with a reason in it is feedback, a hidden one is not
+			_preview.getDOMNode().parentNode.style.visibility = null;
+		};
+
+		this.egw().json(
+			'EGroupware\\Api\\Etemplate\\Widget\\Placeholder::ajax_fill_placeholders',
+			[_placeholder, _entry],
+			function(_content)
+			{
+				const merged = _content && ('' + _content).trim() ? _content : '';
+				if(_onContent)
+				{
+					_onContent(merged);
+				}
+				show(merged || this.egw().lang('No data for the selected entry'));
+			}.bind(this)
+		).sendRequest(true, 'POST', (_err) =>
+		{
+			console.error("Could not merge placeholder", _placeholder, _entry, _err);
+			if(_onContent)
+			{
+				_onContent('');
+			}
+			show(this.egw().lang('Error merging placeholder'));
+		});
 	}
 
 	/**
@@ -307,22 +372,27 @@ export class et2_placeholder_select extends et2_inputWidget
 	_get_group_options(appname : string)
 	{
 		let options = [];
-		Object.keys(et2_placeholder_select.placeholders[appname]).map((key) =>
+		let placeholders = this.placeholders ? this.placeholders[appname] : null;
+		if(!placeholders)
+		{
+			return options;
+		}
+		Object.keys(placeholders).map((key) =>
 		{
 			// @ts-ignore
-			if(Object.keys(et2_placeholder_select.placeholders[appname][key]).filter((key) => isNaN(key)).length > 0)
+			if(Object.keys(placeholders[key]).filter((key) => isNaN(key)).length > 0)
 			{
 				// Handle groups of groups
-				if(typeof et2_placeholder_select.placeholders[appname][key].label !== "undefined")
+				if(typeof placeholders[key].label !== "undefined")
 				{
-					options.push({label:key, value: et2_placeholder_select.placeholders[appname][key]});
+					options.push({label:key, value: placeholders[key]});
 				}
 				else
 				{
 					let a = {label: key, value:[]};
-					for(let sub of Object.keys(et2_placeholder_select.placeholders[appname][key]))
+					for(let sub of Object.keys(placeholders[key]))
 					{
-						if(!et2_placeholder_select.placeholders[appname][key][sub])
+						if(!placeholders[key][sub])
 						{
 							continue;
 						}
@@ -354,8 +424,8 @@ export class et2_placeholder_select extends et2_inputWidget
 	 */
 	_get_placeholders(appname : string, group : string)
 	{
-		let _group = group.split('-', 2);
-		let ph = et2_placeholder_select.placeholders[appname];
+		let _group = (group || "").split('-', 2);
+		let ph = this.placeholders ? this.placeholders[appname] : undefined;
 		for(let i = 0; typeof ph !== "undefined" && i < _group.length; i++)
 		{
 			ph = ph[_group[i]];
@@ -410,7 +480,6 @@ export class et2_placeholder_snippet_select extends et2_placeholder_select
 	dialog : Et2Dialog;
 	protected value : any;
 
-	protected LIST_URL = 'EGroupware\\Api\\Etemplate\\Widget\\Placeholder::ajax_get_placeholders';
 	protected TEMPLATE = '/api/templates/default/placeholder_snippet.xet?1';
 
 	/**
@@ -440,7 +509,20 @@ export class et2_placeholder_snippet_select extends et2_placeholder_select
 		let preview = <Et2Description><unknown>this.dialog.eTemplate.widgetContainer.getDOMWidgetById("preview_content");
 		let entry = <Et2LinkEntry><unknown>this.dialog.eTemplate.widgetContainer.getDOMWidgetById("entry");
 
-		placeholder_list.set_select_options(this._get_placeholders("addressbook", "addresses"));
+		const options = this._get_placeholders("addressbook", "addresses");
+		placeholder_list.set_select_options(options);
+
+		// Start on the first address format, the way the merge placeholder dialog does.  Picking the
+		// contact first is the natural order, and with nothing selected here that shows no preview
+		// at all - which reads as the dialog not working rather than as a missing choice.
+		if(options.length)
+		{
+			placeholder_list.updateComplete.then(() =>
+			{
+				placeholder_list.set_value(options[0].value);
+				this._on_placeholder_select();
+			});
+		}
 
 		// Further setup / styling that can't be done in etemplate
 		app.setAttribute("readonly", true);
@@ -468,29 +550,17 @@ export class et2_placeholder_snippet_select extends et2_placeholder_select
 		let entry = <Et2LinkEntry><unknown>this.dialog.eTemplate.widgetContainer.getDOMWidgetById("entry");
 		let placeholder_list = <Et2Select><unknown>this.dialog.eTemplate.widgetContainer.getDOMWidgetById("placeholder_list");
 		let preview_content = <Et2Description><unknown>this.dialog.eTemplate.widgetContainer.getDOMWidgetById("preview_content");
-		let placeholder = "";
-		if(app && app.value)
-		{
-			placeholder = Object.keys(et2_placeholder_snippet_select.placeholders[<string>app.value]["addresses"])[<string>placeholder_list.value];
-		}
+		// The snippets are keyed by application, and only addressbook has any.  Fall back to it
+		// rather than indexing with whatever the (readonly) app selectbox happens to hold, which
+		// would throw and leave the dialog looking like it just does not work.
+		const snippets = this._get_snippets(<string>app?.value);
+		const placeholder = snippets ? Object.keys(snippets)[<string>placeholder_list.value] : "";
 
+		this.set_value("");
 		if(placeholder && entry.get_value())
 		{
-			// Show the selected placeholder replaced with value from the selected entry
-			this.egw().json(
-				'EGroupware\\Api\\Etemplate\\Widget\\Placeholder::ajax_fill_placeholders',
-				[placeholder, {app: "addressbook", id: entry.get_value()}],
-				function(_content)
-				{
-					if(!_content)
-					{
-						_content = '';
-					}
-					this.set_value(_content);
-					preview_content.set_value(_content);
-					preview_content.getDOMNode().parentNode.style.visibility = _content.trim() ? null : 'hidden';
-				}.bind(this)
-			).sendRequest(true);
+			this._fill_preview(placeholder, {app: "addressbook", id: entry.get_value()}, preview_content,
+				(_content) => this.set_value(_content));
 		}
 		else
 		{
@@ -504,6 +574,21 @@ export class et2_placeholder_snippet_select extends et2_placeholder_select
 	}
 
 	/**
+	 * The address snippets for the given application
+	 *
+	 * Only addressbook has any, and the application selectbox is readonly, so anything else falls
+	 * back to addressbook rather than leaving the dialog with nothing to offer.
+	 *
+	 * @param appname
+	 * @returns the snippets keyed by placeholder text, or null if there are none at all
+	 */
+	protected _get_snippets(appname : string) : Object | null
+	{
+		return this.placeholders?.[appname]?.["addresses"] ??
+		       this.placeholders?.["addressbook"]?.["addresses"] ?? null;
+	}
+
+	/**
 	 * Get the list of placeholder groups under the selected application
 	 * @param appname
 	 * @returns {value:string, label:string}[]
@@ -511,7 +596,7 @@ export class et2_placeholder_snippet_select extends et2_placeholder_select
 	_get_group_options(appname : string)
 	{
 		let options = [];
-		Object.keys(et2_placeholder_select.placeholders[appname]).map((key) =>
+		Object.keys(this.placeholders?.[appname] ?? {}).map((key) =>
 		{
 			options.push(
 				{
@@ -532,12 +617,17 @@ export class et2_placeholder_snippet_select extends et2_placeholder_select
 	_get_placeholders(appname : string, group : string)
 	{
 		let options = [];
-		Object.keys(et2_placeholder_snippet_select.placeholders[appname][group]).map((key, index) =>
+		const snippets = this.placeholders?.[appname]?.[group];
+		if(!snippets)
+		{
+			return options;
+		}
+		Object.keys(snippets).map((key, index) =>
 		{
 			options.push(
 				{
 					value: index,
-					label: this.egw().lang(et2_placeholder_snippet_select.placeholders[appname][group][key])
+					label: this.egw().lang(snippets[key])
 				});
 		});
 		return options;
