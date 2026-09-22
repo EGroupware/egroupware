@@ -11,7 +11,12 @@
 			<rows>
 				<row>
 					<et2-description  value="Category"></et2-description>
-					<et2-select-cat  id="cat_id[value]" application="$cont[application]" emptyLabel="From file"></et2-select-cat>
+					<!-- "@@" reads the root content: the grid's id opens an "override_values"
+					     namespace, but the application of the definition being edited only exists
+					     one level up. A namespace-relative reference resolves to '', and the
+					     selector then falls back to the current app (importexport), offering
+					     nothing but the super-global categories. -->
+					<et2-select-cat  id="cat_id[value]" application="@@application" emptyLabel="From file"></et2-select-cat>
 				</row>
 				<row>
 					<et2-description></et2-description>
