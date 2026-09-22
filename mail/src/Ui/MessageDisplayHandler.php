@@ -653,8 +653,8 @@ class MessageDisplayHandler
 			if ($type === 'smime')
 			{
 				$result = $isStalwart ?
-					$icServer->resolveSmimeJmap($idParts['emailID'], $bodyStructure['type'], (string)$from, $htmlOptions, $passphrase) :
-					JmapImap::resolveSmime((string)$profileID, base64_encode($mailbox), $uid, $bodyStructure['type'], (string)$from, $htmlOptions, $passphrase);
+					$icServer->resolveSmimeJmap($idParts['emailID'], $bodyStructure['type'], (string)$from, $htmlOptions, $passphrase, $rowId) :
+					JmapImap::resolveSmime((string)$profileID, base64_encode($mailbox), $uid, $bodyStructure['type'], (string)$from, $htmlOptions, $passphrase, $rowId);
 				// only cache on CONFIRMED success (resolveSmime()/resolveSmimeJmap() would have
 				// thrown PassphraseMissing above otherwise) - same "never cache before it's proved
 				// ok" principle as the send-side smimeEncryptEmailProperties(). The 'smime_pass_exp'
@@ -668,7 +668,11 @@ class MessageDisplayHandler
 					Api\Cache::setSession('mail', 'smime_passphrase', $passphrase, max(1, $passExpMinutes) * 60);
 					Mail\Smime::resyncAddressbookCert((int)$profileID, $passphrase);
 				}
-				return ['type' => 'smime', 'body' => $result['body'], 'smime' => $result['smime']];
+				// attachments: see JmapImap::smimeAttachments()'s own docblock (ticket #124661,
+				// 2026-09-22) - the decrypted structure's real attachments, previously discarded
+				// entirely after building just the HTML body.
+				return ['type' => 'smime', 'body' => $result['body'], 'smime' => $result['smime'],
+					'attachments' => $result['attachments'] ?? []];
 			}
 			// 'tnef'
 			$body = $isStalwart ?

@@ -2385,7 +2385,8 @@ export class MailApp extends EgwApp
 				this.loadMessageBody(bodyIframe, rowId, (doc) =>
 				{
 					this.resolveExternalImages(doc);
-				}, undefined, content.part || undefined);
+				}, undefined, content.part || undefined, undefined, undefined,
+				(attachments) => this.resolveSmimeAttachmentsBlock(details, rowId, attachments));
 			}
 		}
 	}
@@ -2946,7 +2947,14 @@ export class MailApp extends EgwApp
 							this.resolveExternalImages(doc);
 							renderAttachmentIndex(doc, data.attachmentsBlock, this.egw);
 						},
-						controller.signal);
+						controller.signal, undefined, undefined, undefined,
+						(attachments) =>
+						{
+							if (rowId === this.currentlyFocussed)
+							{
+								this.resolveSmimeAttachmentsBlock(this.et2.getWidgetById('mailPreview'), rowId, attachments);
+							}
+						});
 				},
 				Math.min(this.inFlightRequests * 200, 300)
 			));
@@ -3087,8 +3095,56 @@ export class MailApp extends EgwApp
 		}));
 	}
 
+	/**
+	 * Push the JMAP-native S/MIME fast path's own already-decrypted attachments
+	 * (loadMessageBody()'s fast.attachments - MailJmap.fetchBody()'s own resolveSmimeJmap()/
+	 * resolveSmime() result, JmapImap::smimeAttachments(), ticket #124661) into the visible
+	 * attachmentsBlock. Reuses AttachmentJmap::resolveAttachmentsJmap()'s existing "pre-fetched
+	 * metadata" fast path (ajax_fetchAttachments()'s own $_attachments param - the SAME one
+	 * resolveJmapAttachmentsBlock() already uses for the ordinary, non-S/MIME case) to build real
+	 * download tokens/blobIds without a second Email/get round trip - only createAttachmentBlock()'s
+	 * Link::set_data() tokens genuinely need this one PHP round trip.
+	 *
+	 * Deliberately calls renderMessageInto() directly instead of going through preview() (unlike
+	 * the older/mobile-only setSmimeAttachments(), which still does) - preview()'s own "same row
+	 * already loaded" guard silently swallows this update whenever the iframe's 'load' event has
+	 * already fired by the time this resolves, which is the common case (found live 2026-09-22,
+	 * ralf: "the 2 attachments are now resolved, but not displayed on client-side ... neither in
+	 * preview nor in displayMessage popup").
+	 *
+	 * Also flips the row's own list-view paperclip icon on (MailJmap.email2row()'s
+	 * isSmimeWrapperOnly() guard deliberately suppresses it at list-fetch time - decrypting every
+	 * row just to know whether its S/MIME wrapper contains a real attachment is far too expensive
+	 * to do for a whole list, see that method's own docblock) - via patchRow()'s same "update
+	 * cache, mark optimistic, refresh in place" mechanism used for read/flagged icon changes,
+	 * rather than a full row re-fetch (ralf, 2026-09-22: "Can we add the attachment icon to the
+	 * row, AFTER it was displayed in preview").
+	 *
+	 * @param template the mailPreview (preview pane) or mailDisplayDetails (popup) grid widget
+	 * @param rowId
+	 * @param jmapAttachments RFC 8621 EmailBodyPart[], MailJmap.fetchBody()'s own smime attachments
+	 */
+	private resolveSmimeAttachmentsBlock(template : any, rowId : string, jmapAttachments : any[]) : void
+	{
+		this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_fetchAttachments', [rowId, jmapAttachments]).then((_data) =>
+		{
+			if (!_data || !Array.isArray(_data.attachmentsBlock) || !_data.attachmentsBlock.length)
+			{
+				return;
+			}
+			const data = egw.dataGetUIDdata(rowId)?.data ?? {};
+			data.attachmentsBlock = _data.attachmentsBlock;
+			data.attachment_icon = 'attach';
+			data.attachments = 'attach';
+			egw.dataStoreUID(rowId, data);
+			this.renderMessageInto(template, rowId, data);
+			this.patchRow(rowId);
+		}).catch((e) => console.error('MailApp.resolveSmimeAttachmentsBlock(): failed', e));
+	}
+
 	private loadMessageBody(iframeWidget: any, rowId: string, onLoad: (doc: Document) => void, signal?: AbortSignal,
-		partID?: string, passphrase?: string, passExpMinutes?: number): void
+		partID?: string, passphrase?: string, passExpMinutes?: number,
+		onSmimeAttachments?: (attachments: any[]) => void): void
 	{
 		//we now fire the request so increase inFlight request by one
 		this.inFlightRequests += 1;
@@ -3119,6 +3175,12 @@ export class MailApp extends EgwApp
 			// path for S/MIME/TNEF) - smimeClearFlags() already ran for any other message via the
 			// normal pre-load reset, same as the classic per-page-load path's own setSmimeFlags().
 			if (fast.smime) this.setSmimeFlags(fast.smime);
+			// see resolveSmimeAttachmentsBlock()'s own docblock for why this is NOT routed through
+			// preview()/setSmimeAttachments() (found live 2026-09-22, ticket #124661)
+			if (fast.smime && onSmimeAttachments && Array.isArray(fast.attachments) && fast.attachments.length)
+			{
+				onSmimeAttachments(fast.attachments);
+			}
 			iframe.addEventListener('load', () =>
 			{
 				const doc = iframe.contentWindow.document;
@@ -3160,7 +3222,8 @@ export class MailApp extends EgwApp
 			if (e?.constructor?.name === 'JmapSmimePassphraseError')
 			{
 				this.smimeViewPassDialog(e.message, (enteredPassphrase, enteredExpMinutes) =>
-					this.loadMessageBody(iframeWidget, rowId, onLoad, signal, partID, enteredPassphrase, enteredExpMinutes));
+					this.loadMessageBody(iframeWidget, rowId, onLoad, signal, partID, enteredPassphrase, enteredExpMinutes,
+						onSmimeAttachments));
 				return;
 			}
 			console.error('MailApp.loadMessageBody(): fetch failed, falling back to the server-rendered body', e);
