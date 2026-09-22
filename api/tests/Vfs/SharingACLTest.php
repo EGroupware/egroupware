@@ -151,11 +151,19 @@ class SharingACLTest extends SharingBase
 
 		//$pre_files = Vfs::find('/', $vfs_options);
 
+		// A share opened by a logged-in user does NOT give the filemanager listing an anonymous
+		// visitor gets: Sharing\Ui::share_received() offers to mount the share into the user's
+		// own VFS, so this answers filemanager.file_share_received.  This test asked for a
+		// nextmatch and got away with it only because it never reached a webserver.
 		$data = array();
-		$form = $this->getShare($link, $data, true);
+		$curl = null;
+		$form = $this->getShare($link, $data, true, $curl, false);
 		$this->assertNotNull($form, "Could not read the share link '$link'");
-		$rows = array_values($data['data']['content']['nm']['rows']);
+		$this->assertEquals('filemanager.file_share_received', $data['name'],
+			"A logged-in user following the share link did not get the mount dialog");
 
+		// Nothing is mounted until that dialog is submitted, so the share must not have given
+		// this user anything yet - which is what the rest of this test checks.
 		$post_mount_vfs = Vfs::mount();
 		//$post_files = Vfs::find('/', $vfs_options);
 
@@ -167,17 +175,23 @@ class SharingACLTest extends SharingBase
 				"Could access the not-readable file '$this->no_access' after accessing the share."
 		);
 
-		// Check we can't find the non-shared file in results
-		$result = array_filter($rows, function($v) {
-			return $v['name'] == $this->no_access;
-		});
-		$this->assertEmpty($result, "Found the file we shouldn't have access to ({$this->no_access})");
+		// The dialog names the share it is offering, and only that share - the share we made,
+		// not the file we deliberately left out of it
+		$this->assertEquals($this->share_token($link), $data['data']['content']['share_token'] ?? null,
+			"The mount dialog was for a different share");
+		$this->assertStringNotContainsString(Vfs::basename($this->no_access), $data['data']['content']['share_path'] ?? '',
+			"The mount dialog offered the file we should not have access to ({$this->no_access})");
+	}
 
-		// Check that we can find the shared file(s) in the form / nm list
-		// Don't test the no-access one (done above), and no good way to get the sub-dir file either,
-		// since nm only has top-level files and we can't switch the filter
-		$this->checkNextmatch($dir, array_diff($this->files, [$this->no_access, $dir."sub_dir/subdir_test_file.txt"]), $rows);
-
+	/**
+	 * Token out of a share link
+	 *
+	 * @param string $link
+	 * @return string
+	 */
+	protected function share_token(string $link) : string
+	{
+		return substr($link, strrpos($link, '/') + 1);
 	}
 
 
