@@ -654,6 +654,13 @@ jobs:
               # were reliably all push traffic and whatever error actually failed a test had long
               # scrolled off - which is the only place a server-side error lands, since EGW logs
               # via error_log and the built-in server sends that here.
+              # Fatals first, wherever they are: display_errors is off in the container and
+              # error_log is unset, so PHP sends these to stderr and they land here - but a
+              # request that dies never gets its "[500]:" line written, so neither a tail nor a
+              # search anchored on the status code will find them.
+              echo "=== php built-in server log: fatal errors ==="
+              grep -nE "Fatal error|Uncaught|Segmentation|Allowed memory size|Parse error|core dumped" \
+                /tmp/egw-phpunit-http.log | tail -n 60 || true
               # A 5xx is the one thing worth reading here, and it is rarely near the end - the
               # suite keeps running for thousands of requests afterwards.  Show each one with the
               # lines before it, which is where the error text lands: the request line is only
