@@ -17,6 +17,7 @@ import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {et2_widget} from "../../api/js/etemplate/et2_core_widget";
 import type {JmapAttachment, JmapReplyContext} from "./jmap";
 import {formatJmapAddress, isPreferenceOn, MailJmap} from "./jmap";
+import {normalizeFormatBlock} from "../../api/js/etemplate/Et2HtmlArea/Et2HtmlAreaConfig";
 
 export class MailCompose
 {
@@ -2339,7 +2340,22 @@ export class MailCompose
 		const current = String(widget?.get_value() ?? '');
 		const isHtml = this.et2.getWidgetById('mimeType')?.get_value() !== false;
 
+		// composeBodyWithSignature() unconditionally (re-)adds its own leading blank line for a
+		// reply/forward - so if one of the CORRECT type (matching the current rte_formatblock
+		// preference) is already sitting at the very front, don't ask it to add another: leave that
+		// line exactly as it is, empty or not - a user may already have started typing into it -
+		// and only fall through to the normal "add one" behaviour when it's genuinely missing or
+		// the wrong tag (eg. a leftover <p> from before a formatBlock preference change). Found live
+		// 2026-09-22 (ralf): switching the signature repeatedly kept adding one more blank line in
+		// front of the reply each time, since the OLD unconditional-add-every-time behaviour never
+		// accounted for one already being there.
+		// same collapse composeBodyWithSignature() itself applies (only 'div', from the "Small
+		// Paragraph" preference, is special-cased - every other rte_formatblock value, eg. a
+		// heading, still gets a plain leading <p>) - matching it here too so this tag-match check
+		// actually recognizes what that function would produce, not the raw preference value.
+		const startTag = normalizeFormatBlock(this.egw.preference('rte_formatblock', 'common')) === 'div' ? 'DIV' : 'P';
 		let pristine = current;
+		let hasLeadingBlock = false;
 		if (isHtml)
 		{
 			const doc = new DOMParser().parseFromString(current, 'text/html');
@@ -2349,8 +2365,8 @@ export class MailCompose
 				marker.remove();
 				pristine = doc.body.innerHTML;
 			}
-			// else: no marker found (nothing auto-inserted yet, or the user deleted/edited around
-			// it) - leave the current value as pristine rather than guessing at a removal
+			const first = doc.body.firstElementChild;
+			hasLeadingBlock = !!first && first.tagName === startTag;
 		}
 		else if (this.insertedSignatureBlock)
 		{
@@ -2365,8 +2381,9 @@ export class MailCompose
 			// else: can't confidently locate the previously-inserted signature (the user edited
 			// around/inside it) - leave the current value as pristine rather than guessing; this
 			// skips re-insertion once instead of risking a corrupted/duplicated signature
+			hasLeadingBlock = pristine.startsWith('\r\n');
 		}
-		await this.applySignatureForCurrentIdentity(pristine, this.isReplyCompose);
+		await this.applySignatureForCurrentIdentity(pristine, this.isReplyCompose && !hasLeadingBlock);
 	}
 
 	/**
@@ -2379,8 +2396,11 @@ export class MailCompose
 	 *
 	 * @param pristineBody body WITHOUT any signature - for a reply this is the already-quoted
 	 *  (attribution + blockquote) body, not empty
-	 * @param isReply passed straight through to composeBodyWithSignature() - never add an empty
-	 *  leading line above an already-non-empty (quoted) body
+	 * @param isReply passed straight through to composeBodyWithSignature() as its own `isReply` -
+	 *  despite the name, really means "should a leading blank line be added", not literally "is
+	 *  this a reply/forward": updateSignatureForIdentity() passes `false` here even for a genuine
+	 *  reply once it detects the correct-type leading block is already there (see its own docblock)
+	 *  - composeBodyWithSignature() only ever consults this flag to decide on that one insertion.
 	 */
 	private async applySignatureForCurrentIdentity(pristineBody : string, isReply : boolean = false) : Promise<void>
 	{
@@ -2422,6 +2442,11 @@ export class MailCompose
 		// docblock already documents for showAllFoldersInFolderPane/pgp_autocrypt_mutual, just never
 		// applied here.
 		const disableRuler = isPreferenceOn(this.egw.preference('disableRulerForSignatureSeparation', 'mail'));
+		// the "start" blank leading line composeBodyWithSignature() inserts must use the SAME
+		// block tag the editor itself is configured to generate (Et2HtmlArea's own
+		// forced_root_block, from this same preference) - see composeBodyWithSignature()'s
+		// options.formatBlock docblock for why a mismatched tag is worth avoiding.
+		const formatBlock = normalizeFormatBlock(this.egw.preference('rte_formatblock', 'common'));
 
 		// The identity fetch above is a real network round-trip, and the body widget's own TinyMCE
 		// editor (awaited just below, same reason setBodyValue() awaits it - see its docblock) can
@@ -2443,7 +2468,7 @@ export class MailCompose
 			}
 		}
 
-		const result = MailJmap.composeBodyWithSignature(pristineBody, mimeType, identity, {placement, disableRuler, isReply});
+		const result = MailJmap.composeBodyWithSignature(pristineBody, mimeType, identity, {placement, disableRuler, isReply, formatBlock});
 		// HTML mode locates the inserted block via MailJmap.SIGNATURE_MARKER_ID instead (DOM id,
 		// not a tracked substring) - see updateSignatureForIdentity()'s own docblock for why.
 		if (mimeType === 'plain')

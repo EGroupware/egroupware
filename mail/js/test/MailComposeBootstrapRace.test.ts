@@ -479,3 +479,77 @@ describe("MailCompose bootstrap race (bootstrapping flag)", () =>
 		});
 	});
 });
+
+/**
+ * Regression coverage for a bug found live 2026-09-22 (ralf, while live-testing the
+ * 'no_belowaftersend' reply fix above): switching the "From"/identity dropdown repeatedly kept
+ * adding ANOTHER leading blank line in front of the reply each time, instead of leaving the one
+ * already there alone. Root cause: composeBodyWithSignature() unconditionally (re-)adds its own
+ * leading blank line for a reply/forward, and updateSignatureForIdentity()'s pristine-body
+ * derivation only ever stripped the signature MARKER div (which that leading line deliberately
+ * lives outside of, see its own 2026-09-04 history) - so a previous switch's own insertion kept
+ * getting treated as part of "the pristine body" and another one got added on top. Fixed by having
+ * updateSignatureForIdentity() detect a correct-type leading block already being there and, in
+ * that case only, ask applySignatureForCurrentIdentity() not to add a second one - explicitly
+ * NOT by stripping/replacing it, so a user's own typing into that line survives too (ralf: "we
+ * probably only need to add that empty-line-block if nothing is there, or at least not the correct
+ * type ... independent if it's empty or someone already started typing something into it").
+ */
+describe("MailCompose updateSignatureForIdentity() - repeated switches stay idempotent", () =>
+{
+	/** Counts leading-blank-block insertions (<p><br></p> / <div><br></div>, any self-closing style) - the one thing composeBodyWithSignature() ever prefixes a reply body with. */
+	function countLeadingBlankBlocks(html : string) : number
+	{
+		return (html.match(/<(?:p|div)><br\s*\/?>/gi) || []).length;
+	}
+
+	it("does not accumulate an extra leading blank line across 5 identity switches (HTML mode reply)", async() =>
+	{
+		const identityA = fakeIdentity({id: '0', htmlSignature: '<p>Sig A</p>'});
+		const identityB = fakeIdentity({id: '1', htmlSignature: '<p>Sig B</p>'});
+		const context = fakeContext({mimeType: 'html', body: '<p>the original body</p>'});
+		const {compose, et2} = createComposeForReply(context, [identityA, identityB], '1:0');
+
+		await (compose as any).bootstrapReply('msg1', 'reply');
+
+		const afterBootstrap = et2.widgets.mail_htmltext.get_value();
+		assert.equal(countLeadingBlankBlocks(afterBootstrap), 1,
+			"bootstrap itself should insert exactly one leading blank line");
+
+		// simulate repeatedly changing the "From" dropdown - directly mutating the widget's value
+		// (not set_value()) so this test controls exactly when updateSignatureForIdentity() runs,
+		// rather than also racing its wired onchange (a separate, already-covered concern above)
+		for (let i = 0; i < 5; i++)
+		{
+			et2.widgets.mailaccount._value = i % 2 === 0 ? '1:1' : '1:0';
+			await (compose as any).updateSignatureForIdentity();
+		}
+
+		const final = et2.widgets.mail_htmltext.get_value();
+		assert.equal(countLeadingBlankBlocks(final), 1,
+			`expected exactly one leading blank block after 5 identity switches, got: ${final}`);
+		assert.include(final, 'the original body', "the quoted body must survive every switch");
+	});
+
+	it("preserves text the user typed into the leading blank line across a later identity switch", async() =>
+	{
+		const identityA = fakeIdentity({id: '0', htmlSignature: '<p>Sig A</p>'});
+		const identityB = fakeIdentity({id: '1', htmlSignature: '<p>Sig B</p>'});
+		const context = fakeContext({mimeType: 'html', body: '<p>the original body</p>'});
+		const {compose, et2} = createComposeForReply(context, [identityA, identityB], '1:0');
+
+		await (compose as any).bootstrapReply('msg1', 'reply');
+
+		const withTyping = et2.widgets.mail_htmltext.get_value()
+			.replace(/<p><br\s*\/?><\/p>/i, '<p>Hello there</p>');
+		et2.widgets.mail_htmltext.set_value(withTyping);
+
+		et2.widgets.mailaccount._value = '1:1';
+		await (compose as any).updateSignatureForIdentity();
+
+		const final = et2.widgets.mail_htmltext.get_value();
+		assert.include(final, 'Hello there', "the user's own typed text in the leading line must survive an identity switch");
+		assert.include(final, 'Sig B', "the newly-selected identity's signature must be inserted");
+		assert.notInclude(final, 'Sig A', "the old identity's signature should be gone");
+	});
+});

@@ -5673,25 +5673,44 @@ export class MailJmap
 	 *  the signature is empty (matches the classic default - no separator with nothing to separate)
 	 * @param options.isReply true for reply/forward (never adds an empty leading line above an
 	 *  existing quoted body) - false (default) for new-message compose
+	 * @param options.formatBlock the "start" blank leading line's own tag must match the editor's
+	 *  own forced_root_block (Et2HtmlArea's `rte_formatblock` preference, normalizeFormatBlock()) -
+	 *  'div' for the legacy "Small Paragraph" preference value, 'p' (default) otherwise. Inserting a
+	 *  mismatched block type here is foreign structure the editor never generates itself, which is
+	 *  exactly the kind of thing TinyMCE's own DOM re-serialization is free to merge/collapse away
+	 *  differently than a same-typed empty block on focus - ralf, 2026-09-22, generalizing the
+	 *  'no_belowaftersend' fix into the enumerated preference matrix. Plain-text mode is unaffected
+	 *  (no tags at all).
 	 */
 	static composeBodyWithSignature(
 		body : string,
 		mimeType : 'html' | 'plain',
 		signature : Pick<JmapIdentity, 'htmlSignature' | 'textSignature'>,
-		options : {placement : 'top' | 'below' | 'none', disableRuler? : boolean, isReply? : boolean}
+		options : {placement : 'top' | 'below' | 'none', disableRuler? : boolean, isReply? : boolean, formatBlock? : string}
 	) : string
 	{
+		const startTag = options.formatBlock === 'div' ? 'div' : 'p';
+		const startLine = mimeType === 'html' ? `<${startTag}><br/></${startTag}>\n` : '\r\n';
 		const sigSource = mimeType === 'html' ? signature.htmlSignature : signature.textSignature;
 		if (options.placement === 'none' || !sigSource)
 		{
-			return body;
+			// no signature block is inserted here (either deferred to send-time,
+			// insertSignatureAtTopOfMessage's 'no_belowaftersend' - see ComposeMessageBuilder.php's
+			// own appending right before the MIME message is built - or none configured at all) -
+			// but a reply/forward still needs its own "somewhere to click and type" blank leading
+			// line above the quoted body regardless, same as every other branch below already gives
+			// it. That's an independent concern from whether/when a signature gets added, previously
+			// conflated by this early return - found live 2026-09-22 (Ingo, reproduced in Chrome):
+			// replying with 'no_belowaftersend' set left the quoted text glued to the very top of
+			// the editor with nowhere to type before it.
+			return options.isReply ? startLine + body : body;
 		}
 		const disableRuler = !!options.disableRuler;
 
 		let start : string, before : string, inbetween : string;
 		if (mimeType === 'html')
 		{
-			start = '<p><br/></p>\n';
+			start = startLine;
 			before = disableRuler ? '' : '<hr class="ruler" style="border:1px dotted silver; width:100%;">';
 			inbetween = '';
 		}
