@@ -443,14 +443,19 @@ class Jmap extends Mail\Imap
 	 * @param string $fromAddress
 	 * @param string $htmlOptions
 	 * @param string $passphrase
-	 * @return array{body: string, smime: ?array} sanitized HTML body, plus the decrypt/verify
-	 *  metadata (Mail\Smime::resolveMessage()'s 'X-EGroupware-Smime' convention) for the caller to
-	 *  push to the client (app.mail.setSmimeFlags) - never sent to the client itself
+	 * @param string $rowId this message's own row id - only needed to build
+	 *  JmapImap::smimeAttachments()'s own blobIds (see its docblock for why), never touched for
+	 *  anything else here
+	 * @return array{body: string, smime: ?array, attachments: array} sanitized HTML body, the
+	 *  decrypt/verify metadata (Mail\Smime::resolveMessage()'s 'X-EGroupware-Smime' convention) for
+	 *  the caller to push to the client (app.mail.setSmimeFlags) - never sent to the client itself -
+	 *  and the DECRYPTED message's own real attachments (see JmapImap::smimeAttachments()'s own
+	 *  docblock for why these were missing entirely before 2026-09-22, ticket #124661)
 	 * @throws Mail\Smime\PassphraseMissing
 	 * @throws Api\Exception
 	 */
 	public function resolveSmimeJmap(string $emailId, string $topLevelType, string $fromAddress,
-		string $htmlOptions='', string $passphrase='') : array
+		string $htmlOptions='', string $passphrase='', string $rowId='') : array
 	{
 		$client = $this->jmapClient();
 		$email = $client->emailGet($emailId, ['blobId']);
@@ -459,6 +464,7 @@ class Jmap extends Mail\Imap
 		return [
 			'body' => JmapImap::structureToHtml($structure, $htmlOptions),
 			'smime' => $structure->getMetadata('X-EGroupware-Smime'),
+			'attachments' => JmapImap::smimeAttachments($structure, $rowId, $topLevelType, $fromAddress),
 		];
 	}
 

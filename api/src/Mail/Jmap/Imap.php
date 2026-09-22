@@ -3663,6 +3663,10 @@ class Imap extends Jmap\Base
 		{
 			$bytes = self::readUploadedBlob($accountId, $blobId);
 		}
+		elseif (str_starts_with($blobId, 'smime:'))
+		{
+			$bytes = self::smimeAttachmentBytes($blobId);
+		}
 		else
 		{
 			[$mailboxB64, $uid, $partId] = array_pad(explode(':', $blobId, 3), 3, null);
@@ -4091,14 +4095,18 @@ class Imap extends Jmap\Base
 	 * @param string $fromAddress
 	 * @param string $htmlOptions
 	 * @param string $passphrase
-	 * @return array{body: string, smime: ?array} sanitized HTML body, plus the decrypt/verify
-	 *  metadata (Api\Mail\Smime::resolveMessage()'s 'X-EGroupware-Smime' convention) for the
-	 *  caller to push to the client (app.mail.setSmimeFlags) - never sent to the client itself
+	 * @param string $rowId this message's own row id - only needed to build smimeAttachments()'s
+	 *  own blobIds (see its docblock for why), never touched for anything else here
+	 * @return array{body: string, smime: ?array, attachments: array} sanitized HTML body, the
+	 *  decrypt/verify metadata (Api\Mail\Smime::resolveMessage()'s 'X-EGroupware-Smime' convention)
+	 *  for the caller to push to the client (app.mail.setSmimeFlags) - never sent to the client
+	 *  itself - and the DECRYPTED message's own real attachments (see smimeAttachments()'s own
+	 *  docblock for why these were missing entirely before 2026-09-22, ticket #124661)
 	 * @throws Api\Mail\Smime\PassphraseMissing
 	 * @throws \Exception message/mailbox not found
 	 */
 	public static function resolveSmime(string $accountId, string $mailboxId, string $uid, string $topLevelType,
-		string $fromAddress, string $htmlOptions='', string $passphrase='') : array
+		string $fromAddress, string $htmlOptions='', string $passphrase='', string $rowId='') : array
 	{
 		$imap = self::imapServer($accountId);
 		$mailbox = self::hordeMailbox($imap, self::folderPath($mailboxId));
@@ -4111,7 +4119,138 @@ class Imap extends Jmap\Base
 		return [
 			'body' => self::structureToHtml($structure, $htmlOptions),
 			'smime' => $structure->getMetadata('X-EGroupware-Smime'),
+			'attachments' => self::smimeAttachments($structure, $rowId, $topLevelType, $fromAddress),
 		];
+	}
+
+	/**
+	 * Flat RFC 8621 EmailBodyPart[] attachment list for an ALREADY-DECRYPTED, in-memory S/MIME
+	 * message structure - same part-selection logic as emailBodyFields()'s own $attachments loop
+	 * (skip multipart containers and whichever part findBody() picked as the text/html body), but
+	 * blobId uses a dedicated 'smime:' scheme instead of the normal mailbox/uid one bodyPartToJmap()
+	 * builds, since a decrypted CMS EnvelopedData structure only ever exists in memory for the
+	 * duration of one resolveMessage() call - there is no separate, independently-addressable IMAP/
+	 * JMAP part to point a normal blobId at. Every piece needed to re-decrypt this exact message
+	 * again from scratch ($rowId/$topLevelType/$fromAddress, each urlsafe-base64-encoded to keep
+	 * the ':'-joined scheme unambiguous) is embedded directly in the blobId itself, so download()'s
+	 * own 'smime:' branch never needs a second Email/get round trip just to re-derive them - see its
+	 * own docblock.
+	 *
+	 * Found live via ticket #124661 (2026-09-22, a real customer, "Testmail s/mime encrypted with
+	 * attachment(s)"): S/MIME encryption (CMS EnvelopedData) wraps the ENTIRE original MIME
+	 * structure - body AND every attachment together - into one opaque application/pkcs7-mime
+	 * blob; resolveSmime()/resolveSmimeJmap() already decrypt that back into a real, structured
+	 * Horde_Mime_Part (needed to render the body at all), but used to discard it immediately after
+	 * building the HTML body string, never surfacing its own real attachments back to the caller -
+	 * MailJmap.fetchBody() (mail/js/jmap.ts) fell back to the UNDECRYPTED top-level email's own
+	 * `attachments` property instead, which for an encrypted message is just that one opaque
+	 * pkcs7-mime blob (confirmed live: exactly what came back before this fix).
+	 *
+	 * @param \Horde_Mime_Part $structure the DECRYPTED message (Api\Mail\Smime::resolveMessage()'s
+	 *  own return value)
+	 * @param string $rowId this message's own row id (mail::acc_id::profileID::mailboxId::emailId,
+	 *  or the Stalwart-opaque-emailId equivalent) - Api\Mail::splitRowID() re-resolves it, same as
+	 *  resolveSpecialCaseBody() itself. Callers with no rowId in scope may pass '' - the resulting
+	 *  blobId would never resolve to anything real, but the attachment METADATA (name/type/size) is
+	 *  still correct and worth showing even where downloading isn't wired up yet.
+	 * @param string $topLevelType see Api\Mail\Smime::resolveMessage()
+	 * @param string $fromAddress
+	 * @return array RFC 8621 EmailBodyPart[] shape, same as a normal message's own 'attachments'
+	 */
+	public static function smimeAttachments(\Horde_Mime_Part $structure, string $rowId, string $topLevelType, string $fromAddress) : array
+	{
+		$textId = $structure->findBody('plain');
+		$htmlId = $structure->findBody('html');
+		$blobIdPrefix = 'smime:'.self::urlsafeB64Encode($rowId).':'.self::urlsafeB64Encode($topLevelType).
+			':'.self::urlsafeB64Encode($fromAddress).':';
+
+		$attachments = [];
+		foreach ($structure->partIterator() as $part)
+		{
+			/** @var \Horde_Mime_Part $part */
+			$id = $part->getMimeId();
+			if ($part->getPrimaryType() === 'multipart' || $id === $textId || $id === $htmlId)
+			{
+				continue;
+			}
+			$contentId = $part->getContentId();
+			$attachments[] = [
+				'partId' => $id,
+				'blobId' => $blobIdPrefix.$id,
+				'size' => $part->getBytes(),
+				'name' => $part->getName() ?: null,
+				'type' => strtolower((string)$part->getType()),
+				'charset' => $part->getContentTypeParameter('charset') ?: null,
+				'disposition' => $part->getDisposition() ?: null,
+				'cid' => $contentId ? trim($contentId, '<>') : null,
+			];
+		}
+		return $attachments;
+	}
+
+	/**
+	 * Re-decrypt an S/MIME message and return ONE attachment's raw decrypted bytes, for download()'s
+	 * 'smime:' blobId branch - the counterpart to smimeAttachments()' blobId scheme
+	 * ("smime:<b64 rowId>:<b64 topLevelType>:<b64 fromAddress>:<partId>"), see its own docblock for
+	 * why every piece needed is embedded in the blobId itself rather than re-derived via a second
+	 * Email/get. Dispatches to Stalwart's own JMAP blob download or the shim's raw IMAP fetch, same
+	 * as resolveSmime()/resolveSmimeJmap() do for the body - deliberately NOT calling either of
+	 * those (they render+sanitize HTML, which this has no use for).
+	 *
+	 * @param string $blobId
+	 * @return ?string null if the blobId is malformed, the message/part is no longer found, or
+	 *  decryption fails (eg. the session-cached passphrase expired since the body was shown) -
+	 *  download() already treats a null return as a plain 404, same as every other scheme
+	 */
+	private static function smimeAttachmentBytes(string $blobId) : ?string
+	{
+		$segments = explode(':', substr($blobId, strlen('smime:')), 4);
+		if (count($segments) !== 4)
+		{
+			return null;
+		}
+		[$rowIdB64, $topLevelTypeB64, $fromB64, $partId] = $segments;
+		$rowId = self::urlsafeB64Decode($rowIdB64);
+		$topLevelType = self::urlsafeB64Decode($topLevelTypeB64);
+		$fromAddress = self::urlsafeB64Decode($fromB64);
+
+		$idParts = Api\Mail::splitRowID($rowId);
+		if (!$idParts['profileID'])
+		{
+			return null;
+		}
+		$icServer = self::imapServer((string)$idParts['profileID']);
+		if (!$icServer)
+		{
+			return null;
+		}
+		if ($icServer instanceof Api\Mail\Imap\Jmap)
+		{
+			$client = $icServer->jmapClient();
+			$email = $idParts['emailID'] ? $client->emailGet((string)$idParts['emailID'], ['blobId']) : null;
+			$raw = $email ? $client->downloadBlob($email['blobId'], 'message.eml', 'message/rfc822') : null;
+		}
+		else
+		{
+			$mailbox = $idParts['folder'];
+			$uid = $idParts['msgUID'];
+			$raw = ($mailbox && $uid) ? self::fetchRawMessage($icServer, $mailbox, $uid) : null;
+		}
+		if ($raw === null)
+		{
+			return null;
+		}
+		$passphrase = (string)(Api\Cache::getSession('mail', 'smime_passphrase') ?? '');
+		try
+		{
+			$structure = Api\Mail\Smime::resolveMessage((int)$idParts['profileID'], $raw, $topLevelType, $passphrase, $fromAddress);
+		}
+		catch (\Throwable $e)
+		{
+			return null;
+		}
+		$part = $structure->getPart($partId);
+		return $part ? $part->getContents() : null;
 	}
 
 	/**

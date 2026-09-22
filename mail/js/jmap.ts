@@ -2850,7 +2850,13 @@ export class MailJmap
 				return {
 					special: false,
 					html: this.wrapDocument(resolved.body),
-					attachments: email.attachments || [],
+					// resolved.attachments (the DECRYPTED message's own real ones, ticket #124661,
+					// 2026-09-22) when present - email.attachments (the UNDECRYPTED top-level
+					// email's own attachments, just the one opaque application/pkcs7-mime blob for
+					// an encrypted message) only as a fallback for the TNEF case, which doesn't set
+					// resolved.attachments at all (a TNEF/winmail.dat message has no separate real
+					// "outer" attachments to begin with - the whole point of unwrapping it).
+					attachments: resolved.attachments ?? (email.attachments || []),
 					profileID: ref.profileID,
 					accountId: token.accountId,
 					isLocal: token.isLocal,
@@ -4205,10 +4211,34 @@ export class MailJmap
 	}
 
 	/**
+	 * Direct GET against our own mail/jmap.php?download endpoint (JmapImap::download()), bypassing
+	 * client.downloadBlob() entirely - for an 'smime:' blobId (JmapImap::smimeAttachments()'s
+	 * scheme, ticket #124661), downloadBlob() would resolve against THIS session's own advertised
+	 * downloadUrl template. For a real Stalwart account that points at STALWART's own blob
+	 * endpoint, which has no notion of our custom scheme and would 404 - the smime: blobId is only
+	 * ever meaningful to our own PHP (it re-decrypts the message itself, see
+	 * JmapImap::smimeAttachmentBytes()). A shim-backed account's downloadUrl already points here
+	 * too, so this is also just a harmless direct route for that backend.
+	 */
+	private fetchSmimeBlob(profileID : string, blobId : string, mimeType : string, filename : string) : Promise<Response>
+	{
+		const url = this.egw.webserverUrl + '/mail/jmap.php?' + new URLSearchParams({
+			download: '1',
+			accountId: profileID,
+			blobId,
+			type: mimeType || 'application/octet-stream',
+			name: filename || 'attachment',
+		}).toString();
+		return window.fetch(url, {credentials: 'same-origin'});
+	}
+
+	/**
 	 * Download one attachment via JMAP Blob download and trigger a browser save - same
 	 * client.downloadBlob() + Blob mechanism resolveInlineImages() already uses to display cid:
 	 * images, uniformly for both backends (Stalwart's own blobId; the local shim's self-describing
 	 * one, resolved by JmapShim's download() endpoint) - no mail_ui::getAttachment() IMAP fetch.
+	 * An 'smime:' blobId is the one exception, routed via fetchSmimeBlob() instead - see its own
+	 * docblock.
 	 *
 	 * @param profileID
 	 * @param blobId as returned by mail_ui::jmapAttachmentsToLegacy() in the row's attachmentsBlock
@@ -4222,17 +4252,31 @@ export class MailJmap
 		let url : string;
 		try
 		{
-			const token = await this.ensureToken(profileID);
-			if (!token)
+			let response : Response;
+			if (blobId.startsWith('smime:'))
 			{
-				throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
+				response = await this.fetchSmimeBlob(profileID, blobId, mimeType, filename);
+				// a real fetch() Response, unlike client.downloadBlob()'s own return value below -
+				// that one already throws on failure internally, this doesn't
+				if (!response.ok)
+				{
+					throw new Error('HTTP '+response.status+' '+response.statusText);
+				}
 			}
-			const response = await this.clients[profileID].downloadBlob({
-				accountId: token.accountId,
-				blobId,
-				mimeType: mimeType || 'application/octet-stream',
-				fileName: filename || 'attachment',
-			});
+			else
+			{
+				const token = await this.ensureToken(profileID);
+				if (!token)
+				{
+					throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
+				}
+				response = await this.clients[profileID].downloadBlob({
+					accountId: token.accountId,
+					blobId,
+					mimeType: mimeType || 'application/octet-stream',
+					fileName: filename || 'attachment',
+				});
+			}
 			url = URL.createObjectURL(MailJmap.withKnownType(await response.blob(), mimeType));
 		}
 		catch (e)
@@ -4282,17 +4326,31 @@ export class MailJmap
 	{
 		try
 		{
-			const token = await this.ensureToken(profileID);
-			if (!token)
+			let response : Response;
+			if (blobId.startsWith('smime:'))
 			{
-				throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
+				// a real fetch() Response, unlike client.downloadBlob()'s own return value below -
+				// see downloadAttachment()'s fetchSmimeBlob() docblock
+				response = await this.fetchSmimeBlob(profileID, blobId, mimeType, filename);
+				if (!response.ok)
+				{
+					throw new Error('HTTP '+response.status+' '+response.statusText);
+				}
 			}
-			const response = await this.clients[profileID].downloadBlob({
-				accountId: token.accountId,
-				blobId,
-				mimeType: mimeType || 'application/octet-stream',
-				fileName: filename || 'attachment',
-			});
+			else
+			{
+				const token = await this.ensureToken(profileID);
+				if (!token)
+				{
+					throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
+				}
+				response = await this.clients[profileID].downloadBlob({
+					accountId: token.accountId,
+					blobId,
+					mimeType: mimeType || 'application/octet-stream',
+					fileName: filename || 'attachment',
+				});
+			}
 			const contentUrl = URL.createObjectURL(MailJmap.withKnownFilename(await response.blob(), mimeType, filename));
 			const urls = (this.attachmentViewUrls[rowId] ??= []);
 			urls.push(contentUrl);
