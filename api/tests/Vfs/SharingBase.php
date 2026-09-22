@@ -545,6 +545,12 @@ class SharingBase extends LoggedInTest
 	 */
 	public function createShare($path, $mode, $extra = array())
 	{
+		// Every test turns its share into a link, and share2link() resolves the host through
+		// Http::host(true), which prefers a configured hostname over HTTP_HOST - so on any
+		// install that has one the link points at that install instead of the webserver the
+		// test was told to use, and the test quietly checks the wrong server.
+		$_SERVER['HTTP_HOST'] = $GLOBALS['egw_info']['server']['hostname'] = static::webserverHost();
+
 		// Make sure the path is there
 		if(!Vfs::is_readable($path))
 		{
@@ -602,8 +608,10 @@ class SharingBase extends LoggedInTest
 		{
 			echo __METHOD__ . "('$path',$mode)\n";
 		}
-		// Setup - create path and share
-		$_SERVER['HTTP_HOST'] = static::webserverHost();
+		// Setup - create path and share.  createShare() points the host at the test webserver
+		// too, but a subclass may override it (SharingACLTest does, for hidden-upload shares),
+		// so the link built below gets the same treatment either way.
+		$_SERVER['HTTP_HOST'] = $GLOBALS['egw_info']['server']['hostname'] = static::webserverHost();
 		$share = $this->createShare($path, $mode, $extra);
 		$link = Vfs\Sharing::share2link($share);
 
