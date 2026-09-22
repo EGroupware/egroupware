@@ -525,6 +525,8 @@ error creating %1 %2 directory	common	de	Fehler beim Erstellen des Ordners %1 %2
 error deleting %1 %2 directory	common	de	Fehler beim Löschen des Ordners %1 %2!
 error deleting %1!	common	de	Fehler beim Löschen von %1!
 error enabling push	common	de	Fehler beim Aktivieren von Push!
+error loading placeholders	common	de	Fehler beim Laden der Platzhalter
+error merging placeholder	common	de	Fehler beim Einsetzen des Platzhalters
 error renaming %1 %2 directory	common	de	Fehler beim Umbenennen des Ordners %1 %2!
 error uploading file!	filemanager	de	Fehler beim Hochladen der Datei!
 error while creating directory.	common	de	Fehler beim Erstellen des Ordners.
@@ -954,6 +956,7 @@ niue	common	de	NIUE
 no	common	de	Nein
 no - cancel	common	de	Nicht Löschen - Abbruch
 no column to swap with !!!	common	de	Keine Spalte um damit zu tauschen!
+no data for the selected entry	common	de	Keine Daten für den ausgewählten Eintrag
 no default set	common	de	Keine Vorgabe gesetzt
 no email address found for %1	common	de	Keine E-Mail-Adresse gefunden für %1
 no entries found, try again ...	common	de	Keine Einträge gefunden, nochmal versuchen ...
@@ -963,6 +966,7 @@ no filters	common	de	Keine Filter
 no history for this record	common	de	Keine Historie für diesen Datensatz
 no key for recipient:	common	de	Keinen Schlüssel für Empfänger:
 no matches found	common	de	Keine Treffer gefunden.
+no placeholders found	common	de	Keine Platzhalter gefunden
 no response from server: your data is probably not saved	common	de	Keine Antwort vom Server: Ihre Daten sind vermutlich NICHT gespeichert.
 no results match	common	de	Kein Fund für
 no rights to export more than %1 entries!	common	de	Sie haben keine Rechte mehr als %1 Einträge zu exportieren!

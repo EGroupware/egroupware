@@ -25,7 +25,7 @@ class Placeholder extends Etemplate\Widget
 
 	public $public_functions = array(
 		'ajax_get_placeholders' => true,
-		'ajax_fill_placeholder' => true
+		'ajax_fill_placeholders' => true
 	);
 
 	/**
@@ -85,7 +85,7 @@ class Placeholder extends Etemplate\Widget
 					$list = $merge->get_common_placeholder_list();
 					break;
 				default:
-					if(get_class($merge) === 'EGroupware\Api\Contacts\Merge' && $appname !== 'addressbook' || $placeholders[$appname])
+					if(get_class($merge) === 'EGroupware\Api\Contacts\Merge' && $appname !== 'addressbook' || !empty($placeholders[$appname]))
 					{
 						// Looks like app doesn't support merging
 						continue 2;
@@ -118,11 +118,29 @@ class Placeholder extends Etemplate\Widget
 		$response->data($placeholders);
 	}
 
+	/**
+	 * Replace the placeholders in $content with the values of the given entry
+	 *
+	 * The result is only ever shown as a preview, so a failure must not be silent: the client has
+	 * nothing but this string to tell the user with, and an empty answer looks exactly like a
+	 * broken dialog.  Anything that stops us from merging is reported as a message instead.
+	 *
+	 * @param string $content placeholders to replace, eg. "{{n_fn}}"
+	 * @param array $entry app & id of the entry to merge with
+	 */
 	public function ajax_fill_placeholders($content, $entry)
 	{
+		$response = Api\Json\Response::get();
+
+		if(empty($entry['app']) || empty($entry['id']) && $entry['app'] !== 'user')
+		{
+			// Nothing to merge with - the client asked before the user picked an entry
+			$response->data('');
+			return;
+		}
+
 		$merge = Api\Storage\Merge::get_app_class($entry['app']);
 		$err = "";
-
 		switch($entry['app'])
 		{
 			case 'user':
@@ -131,7 +149,12 @@ class Placeholder extends Etemplate\Widget
 			default:
 				$merged = $merge->merge_string($content, [$entry['id']], $err, 'text/plain', null, 'utf-8');
 		}
-		$response = Api\Json\Response::get();
+		if($merged === false || $merged === null)
+		{
+			// merge_string() reports why it gave up in $err, which is otherwise thrown away
+			$response->message($err ?: lang('Error merging placeholder'), 'error');
+			$merged = '';
+		}
 		$response->data($merged);
 	}
 
