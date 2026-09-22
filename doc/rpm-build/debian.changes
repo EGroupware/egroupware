@@ -1,3 +1,20 @@
+egroupware-docker (26.9.20260922) hardy; urgency=low
+
+  * 3rd pre-release for final rebased release
+  * Api: don't show the "new build available" notice on the login page
+  * Filemanager, Calendar, Addressbook, Collabora: fix mail-compose buttons silently doing nothing
+  * Filemanager: add xerox-scan.php bridge for Xerox scanner HTTP filing
+  * Filemanager/WebDAV: added logging like CalDAV/CardDAV enabled via user-preferenes
+  * Mail: fix "Save as Draft and Print" throwing "Profile change failed!"
+  * Mail: fix reply/forward ignoring the "force HTML/plain" preference
+  * Mail: fix reply cursor starting in the To field instead of the body
+  * Mail: fix clicking the current folder no longer refreshing the view
+  * Mail: fix folder tree marking both a folder and its parent as current
+  * Mail: fix Excel/CSV attachments downloading with a random UUID filename
+  * Mail: attachments of s/Mime encrypted messages were not shown
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 22 Sep 2026 20:16:25 +0200
+
 egroupware-docker (26.9.20260918) hardy; urgency=low
 
   * 2. Pre-release for the upcommit rebase/final release expected next week
