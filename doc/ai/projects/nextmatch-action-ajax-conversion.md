@@ -1026,6 +1026,13 @@ why a contact could not be removed from a list you were not already filtered to.
 `remove_from_list_<id>` action id names the list; the bare id keeps the filter2 fallback so
 nothing unconverted changes.
 
+When the list is already filtered to a distribution list, that list is **prefilled** in the
+picker - for Remove it used to be the only list the action could work on at all, so this is the
+common case and it saves two clicks. Only ever a value that is really on offer: the filter tree
+also carries container and group entries (`lists`, groups-as-lists) which are not editable
+lists, and `filter2` can hold several values when used with tags. The empty option stays
+regardless, or a filter that prefills nothing would leave the first list selected.
+
 The options are fetched when the dialog opens (`ajax_distribution_lists()`) instead of
 travelling with every `get_rows()` response - the point of replacing a per-list sub-menu is not
 to send the lists at all. Menu action links for an addressbook row are now **246**, down from

@@ -64,6 +64,14 @@ export class DistributionListAction
 			return;
 		}
 
+		// If the list is already filtered to a distribution list, that is almost certainly the one
+		// being acted on - for Remove it used to be the ONLY list the action could work on at all.
+		// Prefilling it takes two clicks out of the common case. Only ever a value that is really
+		// on offer: the filter tree also carries group and container entries which are not lists
+		// the user may edit, and filter2 can hold several values when it is used with tags.
+		const filtered = [].concat(nm?.value?.filter2 ?? []).map(v => String(v)).filter(Boolean);
+		const preselect = filtered.find(v => options.some(o => String(o.value) === v)) || "";
+
 		const ADD = "add", REMOVE = "remove";
 		const dialog = new Et2Dialog(egw);
 		dialog.transformAttributes({
@@ -78,7 +86,7 @@ export class DistributionListAction
 				content: {
 					summary: senders.length > 1 || all ?
 							 egw.lang("%1 selected entries", all ? "" : senders.length).trim() : "",
-					selected: ""
+					selected: preselect
 				},
 				sel_options: {selected: options}
 			},
@@ -90,10 +98,11 @@ export class DistributionListAction
 		const select : any = (<any>dialog)._template_widget?.widgetContainer?.getWidgetById("selected");
 		if(select)
 		{
-			// nothing preselected: without an empty option et2-select falls back to the first,
-			// and OK-without-choosing would act on whichever list sorted first
+			// an empty option is still needed even when prefilling: without one et2-select falls
+			// back to the FIRST list whenever there is nothing to prefill, and OK-without-choosing
+			// would then act on whichever list happened to sort first
 			select.emptyLabel = egw.lang("Select one");
-			select.value = "";
+			select.value = preselect;
 		}
 
 		const [rawButton, content] = await dialog.getComplete();
