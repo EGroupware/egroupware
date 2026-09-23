@@ -13,7 +13,7 @@ Two related problems with nextmatch context-menu actions, found together:
    response. Some of these are conceptually unbounded, others merely grow with the
    installation until one day they are too long - and nothing notices when that happens.
 
-Status: **phases 0-5 done**, phase 6 partly (infolog). Phase 7 remains.
+Status: **phases 0-6 done**. Phase 7 is empty - every app it listed turned out to be on the legacy widget.
 
 ---
 
@@ -730,8 +730,8 @@ in this project - handled by Proposal D like any other oversized submenu. `share
 | 3 | **DONE.** Proposal D (generic overflow dialog) + Proposal E (the `…` affordance) | Independent of 1-2 and of each app. E ships with D because D removes the chevron those entries have today. E's menu half reaches legacy apps too |
 | 4 | **DONE.** Proposal A - `Nextmatch::category_action()` picker dialog, both cardinality shapes, 5 call sites moved | Biggest single reduction |
 | 5 | **DONE.** Proposal B - distribution-list dialog | Addressbook-specific. `move_to`/`shared_with` need no bespoke dialog - Proposal D covers them |
-| 6 | The `open_popup` bucket - **infolog done**, the rest each need their own work (see below) | Needs the dialog to return values without a template submit - a different job |
-| 7 | The remaining reachable apps: importexport, esyncpro, smallpart (`questions`), news_admin (`index`), stylite (`placetel`), mail's `copyto` | Low traffic, mechanical |
+| 6 | **DONE.** The `open_popup` bucket: infolog (4 popups) and tracker (`assigned`, `group`, `admin`) | Needs the dialog to return values without a template submit |
+| 7 | **EMPTY.** Every app listed here - importexport, esyncpro, smallpart, news_admin, stylite - is on the legacy `<nextmatch>` widget and therefore blocked, see section 6. Only mail's `copyto` is reachable, and that is a container whose folder children load after the menu opens | - |
 | - | admin, records, invoices, kanban, bookmarks, aitools, aiassistant, developer, stylite `calls`, webauthn, openid, phpbrain, schulmanager, smallpart `courses` | **Blocked on `et2-nextmatch-conversion.md`** - not scheduled here |
 
 Phase 0 lands in `api` alone and gates everything after it. Phase 3 (Proposal D) is otherwise
@@ -785,7 +785,16 @@ uses `<et2-nextmatch>`**. `EgwAction.appendToTree()` and `EgwMenuShoelace.itemTe
 shared, so Proposal E and the menu half of Proposal D do reach legacy apps; the `ajax_action`
 conversion and Proposal D's `select_children` dispatch do not.
 
-**Reachable now** - list template already `<et2-nextmatch>`:
+**How to tell** - and a trap that cost a wrong conversion. Do **not** grep a template for the
+first `<nextmatch` / `<et2-nextmatch` it contains: the header widgets
+(`et2-nextmatch-header-filter`, `et2-nextmatch-header-account`, `nextmatch-sortheader`) usually
+appear *above* the list widget itself, so a first-match grep answers with whichever prefix that
+header happens to use. Match the list tag with a following delimiter instead:
+
+	grep -cE "<nextmatch[ />]"      # legacy list
+	grep -cE "<et2-nextmatch[ />]"  # converted list
+
+**Reachable now** - list template really is `<et2-nextmatch>`:
 
 | App | What is waiting |
 | --- | --- |
@@ -793,34 +802,25 @@ conversion and Proposal D's `select_children` dispatch do not.
 | tracker | 83 |
 | infolog | 76 |
 | calendar | 7 |
-| projectmanager (projects + elements + pricelist) | `cat/cat_*` (33), `sync_all`, `delete` x3, `undelete` |
-| filemanager (`filemanager_ui`, `shares.xet`, `jobs.xet`) | `unlock`, `delete` x2 |
+| projectmanager (projects + elements + pricelist) | `cat/*`, `delete` x3, `undelete` |
+| filemanager (`index.xet`, `shares.xet`, `jobs.xet`) | `unlock`, `delete` x2 |
+| timesheet | already converted |
 | mail | `copyto` only |
-| importexport (`definition_index.xet`) | `copy`, `createexport`, `delete` |
-| esyncpro | `policy/policy_*`, `wipe`, `delete` |
-| smallpart (`questions.xet`) | `exempt`, `readd`, `delete` |
-| news_admin (`index.xet`) | `update`, `delete` |
-| stylite (`placetel.sipUsers.xet`) | `delete` |
 
 **Blocked on the Et2Nextmatch conversion** - list template still `<nextmatch>`:
 
-| App | Template | What is waiting |
-| --- | --- | --- |
-| admin | `customfields.xet`, `accesslog.xet`, `tokens.xet`, `categories.index.xet`, `acl.xet`, `index.xet`, `cmds.xet`, `remotes.xet` (10 legacy templates in all) | `delete` x2, `activate`, `revoke`, plus `admin/src/Groups.php` |
-| records | `index.xet`, `admin.fields.xet` | `status/status_*` (6), `delete` x2 |
-| smallpart | `courses.xet` | `copy_course`, `copy_no_participants` |
-| invoices | `index.xet` | `delete` (the `downloadZIP-*` stay `postSubmit`) |
-| kanban | `list.xet` | `copy` |
-| bookmarks | `list.xet` | `delete` |
-| aitools | `prompts.xet` | `delete` |
-| aiassistant | `list.xet` | `separator`, `delete` |
-| developer | `translations.index.xet` | `import`, `current`, `all`, `move_to_api`, `delete` |
-| stylite | `calls.xet` | `reimport`, `delete`, `undelete` |
-| news_admin | `cats.xet` | (source-read) |
-| webauthn | `tokens.xet` | `delete` |
-| openid | `access_tokens.xet` | `delete` x2 |
-| phpbrain | `maintain_articles.xet`, `maintain_questions.xet` | `publish`/`delete` x2 |
-| schulmanager | 14 legacy templates, 0 converted | `delete` |
+admin (10 templates), **records**, **importexport**, **esyncpro**, **news_admin** (both),
+**invoices**, **kanban**, **bookmarks**, **aitools**, **aiassistant**, **developer**,
+**stylite** (`calls`, `placetel.sipUsers`), webauthn, openid, phpbrain, schulmanager,
+resources, policy, smallpart, rag, preferences.
+
+An earlier version of this table put importexport, esyncpro, news_admin, smallpart's
+`questions` and stylite's `placetel` in the reachable column, on the strength of that
+first-match grep. Only one of them was ever acted on - **records**' Status action was converted
+to the category picker in Proposal A and had to be reverted**: the legacy `nm_action()` has no
+`categories` case, so an unknown value matches nothing in its switch and the menu entry would
+have silently done nothing at all. Worth remembering that this failure mode is *silent* - a
+converted action on a legacy list is a dead menu entry, not an error.
 
 That is most of the old phase 5-6 long tail, and it now sits behind a different project. Worth
 feeding back into `et2-nextmatch-conversion.md`: **admin is the highest-value conversion
@@ -951,8 +951,9 @@ picker), while `true`/`false` returns a single leaf action carrying
 its own options - that is where the payload saving comes from.
 
 Converted: **addressbook** (multiple - its *two* sub-menus, "Add category" and "Delete category",
-collapse into one action), **infolog**, **timesheet**, **projectmanager_ui** and **records**
-(all single). `projectmanager_elements_ui` deliberately left on the sub-menu: its
+collapse into one action), **infolog**, **timesheet** and **projectmanager_ui** (all single).
+**records was converted and reverted** - it is still on the legacy `<nextmatch>` widget, where
+an unknown `nm_action` matches nothing and the action silently does nothing. `projectmanager_elements_ui` deliberately left on the sub-menu: its
 `ajax_action()` has a different signature (`$data` where the others take `$all_selected`), so it
 needs its own endpoint work first; Proposal D collapses it meanwhile.
 
@@ -1034,18 +1035,22 @@ hitting Add sends `responsible_add_5,7` for the real row id with the checkbox va
 template is **not** rebuilt. `NextmatchAjaxActionTest` covers the composite ids server-side,
 including the empty value that clears a date.
 
-**The rest are not the same job, and each needs its own decision:**
+**tracker is converted too**, through its own `submit_popup()` (its popups are already real
+`<et2-dialog>`s - someone had modernised the form but it still submitted the whole template).
+Its server takes *two* shapes, and no change was needed for either:
 
-* **tracker** (`group`, `admin`) already has its own `submit_popup()` and real `<et2-dialog>`
-  popups - someone modernised the *form* but it still does a whole-template submit. Convertible
-  the same way, but its server builds the composite in `process()` rather than accepting one, so
-  it needs checking first.
-* **importexport** (`change/owner`, `change/allowed`) reads `$content['owner_popup']['owner']`
-  and friends and sets `$content['owner']` separately - there is no composite id to build, so
-  this one *does* need a server change.
-* **resources** (`delete`, `restore`) keeps its popups in `show.xet` in a different shape again.
-* **news_admin** (`change/reader`), **admin** categories and **schulmanager** are on the legacy
-  `<nextmatch>` widget, so they are blocked by decision 3 regardless.
+* `assigned` and `group` want the same composite id. The verb has to be a single token -
+  `action()` does `list(,$settings) = explode('_', $settings)` and takes only the second
+  element, so a verb containing an underscore would be read as the value. `assigned` is the
+  only one whose verb means anything (ok/add/delete, from the button's own id); `group` throws
+  it away, so it gets a plain `set`.
+* "Multiple changes" hands over the popup's whole field set as an **array**, which `action()`
+  applies field by field (`is_array($action) && $action['update']`). Verified live: it sends
+  `{update: true, tr_completion: "50", ...}` and the empty fields are dropped server-side.
+
+**The rest are all blocked**, not merely harder: importexport, news_admin, resources, admin
+categories and schulmanager are every one of them still on the legacy `<nextmatch>` widget -
+see the corrected reachability table in section 6.
 
 ### Proposal B - as built
 
