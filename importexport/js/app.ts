@@ -112,17 +112,23 @@ class ImportExportApp extends EgwApp
 		const preview = (<any>widget.getRoot().getWidgetById('preview_box')).getDOMNode();
 		// TD gets the class too
 		if(preview.parentElement) preview.parentElement.style.display = '';
-		const content = preview.querySelector('.content');
-		if(content)
-		{
-			content.replaceChildren();
-			content.insertAdjacentHTML('beforeend', '<div class="loading" style="width:100%;height:100%"></div>');
-		}
+		// Set the widget's value via its own API (set_value()), not by touching its DOM children
+		// directly - Et2Html renders into the light DOM via Lit, and mutating those children with
+		// replaceChildren()/insertAdjacentHTML() corrupts Lit's internal bookkeeping for that
+		// instance, causing a "Cannot read properties of null (reading 'insertBefore')" crash the
+		// next time the widget's value is set the normal way (eg. by the server response below).
+		const contentWidget = widget.getRoot().getWidgetById('preview-box');
+		if(contentWidget) contentWidget.set_value('<div class="loading" style="width:100%;height:100%"></div>');
 
 		// jQuery's animated .show(100, callback) has no simple native equivalent (a CSS-transition
 		// based rewrite is out of scope for this pass) - show immediately and run the callback right
-		// away instead of after the 100ms animation
-		preview.style.display = '';
+		// away instead of after the 100ms animation.
+		// Note: an empty string here only clears an inline override - it does NOT make the element
+		// visible if something else (a stylesheet rule, or simply the element never having an
+		// explicit display before) leaves it computing to "none" - jQuery's .show() used to paper
+		// over that by computing and setting a real display value. preview_box is an et2-vbox
+		// (flex layout), so set that explicitly instead of relying on the cascade.
+		preview.style.display = 'flex';
 		widget.clicked = true;
 		widget.getInstanceManager().submit(false, true);
 		widget.clicked = false;
@@ -137,12 +143,13 @@ class ImportExportApp extends EgwApp
 			return true;
 		}
 
-		// Show preview
+		// Show preview - see export_preview() above for why this is 'flex', not ''
 		const preview = (<any>widget.getRoot().getWidgetById('preview_box')).getDOMNode();
 		// TD gets the class too
-		preview.style.display = '';
-		const content = preview.querySelector('.content');
-		if(content) content.textContent = this.egw.lang("Please wait...");
+		preview.style.display = 'flex';
+		// See export_preview() above for why this goes through set_value() and not the DOM directly
+		const contentWidget = widget.getRoot().getWidgetById('preview');
+		if(contentWidget) contentWidget.set_value(this.egw.lang("Please wait..."));
 		preview.classList.remove("hideme");
 		preview.classList.add('loading');
 		// jQuery's animated .show(100, callback) dropped, see export_preview() above
