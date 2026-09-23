@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
+<overlay>
+    <et2-template id="action_select" template="" lang="" group="0" version="26.1">
+        <et2-vbox>
+            <et2-description id="summary" class="et2-label-fixed"/>
+            <et2-select id="selected" search="true"/>
+            <et2-vbox id="modifiers"/>
+        </et2-vbox>
+    </et2-template>
+</overlay>

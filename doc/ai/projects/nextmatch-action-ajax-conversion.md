@@ -13,7 +13,7 @@ Two related problems with nextmatch context-menu actions, found together:
    response. Some of these are conceptually unbounded, others merely grow with the
    installation until one day they are too long - and nothing notices when that happens.
 
-Status: **phases 0-2 done** (see section 5). Phase 3 (Proposals D + E) next.
+Status: **phases 0-3 done** (Proposals D and E included). Phase 4 (Proposal A) next.
 
 ---
 
@@ -727,7 +727,7 @@ in this project - handled by Proposal D like any other oversized submenu. `share
 | 0 | **DONE.** `EgwApp.ajax_action()` + the `data.menuaction` convention; `api/tests/Etemplate/Widget/NextmatchActionSubmitTest.php` (baselined); the console warning when an action resolves to `nm_action: "submit"` unasked | Everything else depends on this `api` version; stops the pattern silently coming back |
 | 1 | **DONE.** addressbook (`lists/*`, `merge`, `merge_duplicates`, `move_to/*`, `shared_with/*`, `change_type/*`, `undelete`, `delete`) and infolog (`close`, `close_all`, `change/{type,status,completion}/*`, `undelete`) | The two reported cases. Core repo |
 | 2 | **DONE.** tracker (the biggest single list), calendar, filemanager x3, projectmanager x2 | Highest-traffic remainder. Cross-repo: tracker and projectmanager are separate |
-| 3 | **Proposal D** - generic overflow dialog (`egw_actions()` threshold + `appendToTree()` skip + `select_children` case + one shared `.xet` + the 4-level `data['selectDialog']` override + `SelectChildrenAction.open()` as a reusable helper), **plus Proposal E** - the `…` affordance in `EgwMenuShoelace.itemTemplate()` | Independent of 1-2 and of each app. E ships with D because D removes the chevron those entries have today. E's menu half reaches legacy apps too |
+| 3 | **DONE.** Proposal D (generic overflow dialog) + Proposal E (the `…` affordance) | Independent of 1-2 and of each app. E ships with D because D removes the chevron those entries have today. E's menu half reaches legacy apps too |
 | 4 | **Proposal A** - `Nextmatch::category_action()` picker dialog (both cardinality shapes), then move the reachable call sites | Biggest single reduction |
 | 5 | **Proposal B** - distribution-list dialog | Addressbook-specific, needs the phase 1 endpoint. `move_to`/`shared_with` need no bespoke dialog - Proposal D covers them |
 | 6 | The `open_popup` bucket | Needs the dialog to return values without a template submit - a different job |
@@ -911,6 +911,66 @@ Two traps worth recording:
   `projectmanager_pricelist_bo`, not the UI class that dispatches `$content['nm']['action']`, so
   the submit re-renders and deletes nothing. Making it work is new functionality, not a
   transport change. It stays in the test baseline with that note.
+
+### Proposal D - as built
+
+`Nextmatch::DEFAULT_MAX_MENU_SELECT = 15` and `selectChildrenIfTooLong()`, called from
+`egw_actions()` right after a container has recursed into its children; `appendToTree()` skips
+the child recursion for `nm_action === 'select_children'`; `executeSelectChildrenAction()` in the
+controller; `SelectChildrenAction` + `api/templates/default/action_select.xet`.
+
+Verified live in addressbook: `to_list` (37 lists) and `cat_add`/`cat_del` (18 each) switch to
+the dialog, `move_to` (8) and `shared_with` (6) keep their sub-menu. The over-threshold container
+really does render as a **leaf** in the menu tree, and picking an option executes the real child
+action (`to_list_3`) with the original senders - which is the whole point: no behaviour is
+reimplemented.
+
+Four things worth knowing:
+
+* **Do not overwrite a declared `nm_action`.** The first version applied the length heuristic
+  unconditionally, which would have clobbered eg. tracker's `admin` or infolog's `startdate`
+  (both `open_popup`) if they ever grew past the threshold. Caught by its own test, now guarded -
+  and the guard has to check both `data['nm_action']` and the top-level `nm_action`, since a
+  hand-written one stays at the top level.
+* **Checkbox children do not count towards the length**, and travel into the dialog as real
+  checkboxes. They are modifiers, not options.
+* **`emptyLabel` from the `.xet` attribute did not take effect**, so it is set programmatically
+  after `updateComplete`. Without it `et2-select` preselects the first option, which would make
+  OK-without-choosing act on whatever sorted first - a genuinely dangerous default for
+  "Move to addressbook".
+* `enabled: javaScript:...` children are re-evaluated for the current selection when the dialog
+  opens, so it does not offer options a menu would have hidden.
+
+### Proposal D - the bug that only a real context menu showed
+
+The first version guarded the child recursion at the *bottom* of `appendToTree()`, and a
+synthetic test over the action manager said it worked. It did not: the real menu still drew the
+full sub-menu.
+
+`EgwPopupActionImplementation._getMenuStructure()` builds the tree from the object's *links*,
+and those contain **every** action - 418 of them on an addressbook row, children included. So
+each child is handed to `appendToTree()` in its own right and attaches **itself** to its
+parent's node on the way up; the downward guard it never reached was irrelevant. The check has
+to walk ancestors on the way up instead, which is what it now does.
+
+Worth remembering generally: a menu-structure change cannot be verified by reconstructing the
+tree yourself. Open the context menu.
+
+### Proposal E - as built
+
+`EgwMenuShoelace.promptSuffix()`, appended to the caption in `itemTemplate()` and derived from
+the action's resolved `nm_action` (`select_children`, `open_popup`), with `promptsForInput` as
+the opt-in for an action that opens its dialog from its own `onExecute`.
+
+Verified live in addressbook: exactly `cat_add`, `cat_del` and `to_list` carry the `…`, and **no
+item has both a chevron and an ellipsis**. `merge`, `open`, `delete` and the container entries
+correctly have none.
+
+Cleanup done with it: the hand-written ellipsis is gone from mail's five folder-tree captions,
+invoices' `From template`, and addressbook's two `distribution_lists()` tree labels. In the lang
+files the three duplicate dotted keys were dropped and the three ellipsis-only ones renamed to
+their dotless form, carrying their translations over - checked afterwards that all seven
+stripped captions still resolve in both `en` and `de`.
 
 ### A live bug found on the way: the `msg-only-push-refresh` sentinel
 

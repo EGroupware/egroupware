@@ -215,8 +215,7 @@ draft folder	mail	de	Entwurfs-Ordner
 drafts	mail	de	Entwürfe
 drafts folder	mail	de	Ordner für Entwürfe
 edit account	mail	de	Konto Einstellungen
-edit account ...	mail	de	Konto bearbeiten ...
-edit folder acl ...	mail	de	Zugriffsrechte bearbeiten ...
+edit folder acl	mail	de	Zugriffsrechte bearbeiten
 edit vacation settings	mail	de	Abwesenheitsnotiz bearbeiten
 effective only if server supports acl at all	admin	de	Wird nur angewendet, wenn Ihr Server diese Methode unterstützt
 email address	mail	de	E-Mail Adresse
@@ -296,7 +295,6 @@ folder %1 %2 failed!	mail	de	Ordner %1 %2 fehlgeschlagen!
 folder %1 has been created successfully, although the subscription failed because of %2	mail	de	Ordner %1 wurde erfolgreich angelegt, obwohl das Abonnieren fehlgeschlagen ist, weil: %2
 folder %1 is moving to folder %2	mail	de	Ordner %1 wird in den Ordner %2 verschoben
 folder management	mail	de	Ordner-Verwaltung
-folder management ...	mail	de	Ordner-Verwaltung ...
 folder settings	mail	de	Ordner-Einstellungen
 force html	mail	de	Erzwinge HTML
 force plain text	mail	de	Erzwinge Text
@@ -649,7 +647,7 @@ set / remove flags	mail	de	Markierung
 set / remove labels	mail	de	Schlagworte setzen / entfernen
 set flags	mail	de	E-Mail markieren als
 set it as default:	mail	de	Als Vorgabe speichern
-set predefined values for compose...	mail	de	Vordefinierte Werte für das Verfassen ...
+set predefined values for compose	mail	de	Vordefinierte Werte für das Verfassen
 should new messages show up on the home page	mail	de	Wie sollen Nachrichten auf der Startseite angezeigt werden
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	de	Soll die Signatur nach (Standard) oder vor dem zitierten Text eingefügt werden und diese bearbeitbar sein.
 show	mail	de	Anzeigen
@@ -696,7 +694,6 @@ step 3: sieve - server side mail filtering	mail	de	3. Schritt: Serverseitige E-M
 step 4: smtp - outgoing mail	mail	de	4. Schritt: Postausgang (SMTP) einrichten
 store to folder	mail	de	Importordner
 subscribe folder	mail	de	Abonnieren
-subscribe folder ...	mail	de	Ordner abonnieren ...
 subscribe to folder %1	mail	de	Ordner %1 abonieren
 subscription folders	mail	de	Ordner abonnieren
 subscription successfully saved.	mail	de	Das Abonnieren der Ordner wurde erfolgreich gespeichert.

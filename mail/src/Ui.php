@@ -1015,7 +1015,7 @@ class Ui
 				'toolbarDefault' => false
 			),
 			'subscribe' => array(
-				'caption' => 'Subscribe folder ...',
+				'caption' => 'Subscribe folder',
 				//'icon' => 'configure',
 				'enabled'	=> 'javaScript:app.mail.checkFolderNoSelect',
 				'onExecute' => 'javaScript:app.mail.editSubscribe',
@@ -1028,7 +1028,7 @@ class Ui
 				'group'		=> $group,
 			),
 			'foldermanagement' => array(
-				'caption' => 'Folder Management ...',
+				'caption' => 'Folder Management',
 				'icon' => 'folder_management',
 				'enabled'	=> 'javaScript:app.mail.checkFolderNoSelect',
 				'onExecute' => 'javaScript:app.mail.folderManagement',
@@ -1050,18 +1050,18 @@ class Ui
 				'enabled'	=> 'javaScript:app.mail.sieveEnabled',
 			),
 			'editAccount' => array(
-				'caption' => 'Edit account ...',
+				'caption' => 'Edit account',
 				'icon' => 'configure',
 				'onExecute' => 'javaScript:app.mail.editAccount',
 			),
 			'editAcl'	=> array(
-				'caption' => 'Edit folder ACL ...',
+				'caption' => 'Edit folder ACL',
 				'icon'	=> 'lock',
 				'enabled'	=> 'javaScript:app.mail.aclEnabled',
 				'onExecute' => 'javaScript:app.mail.editAcl',
 			),
 			'predefined-addresses' => array(
-				'caption' => 'Set predefined values for compose...',
+				'caption' => 'Set predefined values for compose',
 				'onExecute' => 'javaScript:app.mail.setPredefinedAddresses',
 				'icon' => 'edit',
 			)

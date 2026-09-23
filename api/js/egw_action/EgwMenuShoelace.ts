@@ -310,6 +310,46 @@ export class EgwMenuShoelace extends LitElement
 		popup.active = !popup.active;
 	}
 
+	/**
+	 * Actions whose behaviour is "ask the user something first, then act"
+	 *
+	 * Kept to behaviours that collect OPTIONS for the action you picked. Deliberately excluded:
+	 * - 'popup'/'location'/'egw_open', which open a window rather than gathering anything;
+	 * - a plain `confirm`, because "are you sure?" is not input - every desktop HIG is explicit
+	 *   that a confirmation alone gets no ellipsis, and marking those too would water the
+	 *   indicator down to "something will happen", which is no information at all.
+	 */
+	private static readonly PROMPTS_FOR_INPUT = ["select_children", "open_popup"];
+
+	/**
+	 * A trailing ellipsis for an action that opens a dialog to collect options.
+	 *
+	 * Shoelace draws the sub-menu chevron itself, from the presence of slot="submenu", so the
+	 * menu otherwise distinguishes only "has a sub-menu" from "does something immediately". An
+	 * over-long sub-menu offered as a picker (nm_action="select_children") has no chevron any
+	 * more, and would otherwise tell the user LESS than it did as a sub-menu.
+	 *
+	 * Derived from the action's resolved behaviour rather than declared per action, so it cannot
+	 * drift from what the action actually does and no app has to remember it. `promptsForInput`
+	 * is the opt-in for an action that opens its options dialog from its own onExecute, where
+	 * there is no nm_action to read.
+	 *
+	 * NOT put in the caption: EGroupware does that in a few places today (eg. mail's
+	 * 'Folder Management ...') and it makes the ellipsis translatable content - the lang files
+	 * ended up with both "folder management" and "folder management ..." as separate keys, since
+	 * translated differently.
+	 */
+	private static promptSuffix(item) : string
+	{
+		const action = item?.data;
+		if(action?.promptsForInput)
+		{
+			return "\u2026";
+		}
+		const nm_action = action?.data?.nm_action ?? action?.nm_action;
+		return EgwMenuShoelace.PROMPTS_FOR_INPUT.includes(nm_action) ? "\u2026" : "";
+	}
+
 	private itemTemplate(item : egwMenuItem)
 	{
 		if(item.caption == "-")
@@ -383,7 +423,7 @@ export class EgwMenuShoelace extends LitElement
                 ${item.iconUrl ? html`
                     <et2-image slot="prefix" src="${item.iconUrl}"
                                style=${item.iconColor ? "color: " + item.iconColor : nothing}></et2-image>` : nothing}
-				<span style=${captionStyle||nothing}>${item.caption}</span>
+				<span style=${captionStyle||nothing}>${item.caption}${EgwMenuShoelace.promptSuffix(item)}</span>
                 ${item.shortcutCaption ? html`<span slot="suffix" class="keyboard_shortcut">
 					${item.shortcutCaption}
 				</span>` : nothing}

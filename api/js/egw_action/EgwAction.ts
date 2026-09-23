@@ -616,6 +616,21 @@ export class EgwAction {
             _addChildren = true;
         }
 
+        // A container marked nm_action="select_children" (Nextmatch::selectChildrenIfTooLong())
+        // has too many children to be usable as a sub-menu, and is offered as a picker dialog
+        // instead. Its descendants stay in the action manager and stay executable - they are
+        // just not drawn, so the menu shows one plain entry rather than a sub-menu.
+        //
+        // This has to be checked on the way UP, not only when recursing down: every action is in
+        // the object's links (all 418 of them in an addressbook row), so each child is handed to
+        // appendToTree() in its own right and attaches ITSELF to its parent's node below.
+        // Guarding only the downward recursion left the sub-menu fully populated.
+        for (let ancestor = this.parent; ancestor; ancestor = ancestor.parent) {
+            if (ancestor.data?.nm_action === "select_children") {
+                return {"action": this, "children": []};   // detached: never reaches the menu
+            }
+        }
+
         // Preset some variables
         const root: Tree = _tree.root;
         let parentNode: TreeElem = null;
@@ -661,7 +676,13 @@ export class EgwAction {
             }
         }
 
-        if (_addChildren) {
+        // A container marked nm_action="select_children" (Nextmatch::selectChildrenIfTooLong())
+        // has too many children to be usable as a sub-menu, and is offered as a picker dialog
+        // instead. Its children stay in the action manager and stay executable - they are just
+        // not drawn, so the menu shows one plain entry rather than a sub-menu. This is the only
+        // thing that decides whether a sub-menu appears at all: action_links only ever holds
+        // first-level ids, so children reach the menu solely through this recursion.
+        if (_addChildren && this.data?.nm_action !== "select_children") {
             for (const child of this.children) {
                 child.appendToTree(_tree, true);
             }

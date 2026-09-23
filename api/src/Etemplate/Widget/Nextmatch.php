@@ -1244,6 +1244,8 @@ class Nextmatch extends Etemplate\Widget
 				// Allow default actions to keep their onExecute
 				if (!empty($action['default'])) unset($inherit_keys['onExecute']);
 				$action = array_diff_key($action, $inherit_keys);
+
+				self::selectChildrenIfTooLong($action);
 			}
 
 			// link or popup action
@@ -1289,6 +1291,70 @@ class Nextmatch extends Etemplate\Widget
 		}
 		//echo "egw_actions="; _debug_array($egw_actions);
 		return $egw_actions;
+	}
+
+	/**
+	 * How many children a sub-menu may have before it is offered as a dialog instead
+	 *
+	 * Deliberately NOT DEFAULT_MAX_MENU_LENGTH: that is a pagination threshold (past it,
+	 * egw_actions() folds the rest into a "More" sub-menu), which turns a long menu into a deep
+	 * one. This is a usability threshold - roughly a screenful, past which a searchable picker
+	 * beats any menu.
+	 */
+	const DEFAULT_MAX_MENU_SELECT = 15;
+
+	/**
+	 * Offer an over-long sub-menu as a selection dialog instead of a sub-menu
+	 *
+	 * A menu entry per row of user data - one per category, distribution list, addressbook,
+	 * tracker queue or kanban board - is fine while there are a handful and unusable once there
+	 * are hundreds, and nothing notices when an installation crosses over. Past the threshold the
+	 * container is marked `nm_action = select_children`, which makes EgwAction.appendToTree()
+	 * render it as a plain leaf (its children stay in the action manager, they are just not
+	 * drawn) and Et2NextmatchActionController open a picker over them. Choosing one executes that
+	 * very child action, so each keeps its own onExecute/nm_action/confirm/enabled - the dialog
+	 * cannot diverge from what the sub-menu did.
+	 *
+	 * An app can override all of it through `data`, NOT through `onExecute`: for a container with
+	 * children, egw_actions() inherits onExecute down to the children and strips it off the
+	 * parent (see the caller), so setting it here does the opposite of taking over.
+	 *
+	 *	'data' => ['maxMenuLength' => 40]     // this menu is fine up to 40
+	 *	'data' => ['maxMenuLength' => 0]      // always use the dialog
+	 *	'data' => ['maxMenuLength' => false]  // never collapse, keep the sub-menu at any size
+	 *	'data' => ['selectDialog' => ['widget' => 'et2-select-cat', 'multiple' => true,
+	 *	                              'title' => '...', 'okLabel' => '...',
+	 *	                              'template' => '/myapp/templates/default/my_picker.xet',
+	 *	                              'onExecute' => 'javaScript:app.myapp.pickThing']]
+	 *
+	 * @param array& $action a container action, already recursed into
+	 */
+	protected static function selectChildrenIfTooLong(array &$action)
+	{
+		// never override a declared behaviour with a heuristic. A hand-written nm_action stays at
+		// the action's own top level (egw_actions() only writes into data[] for the cases it
+		// derives itself), so both places have to be checked.
+		if (isset($action['data']['nm_action']) || isset($action['nm_action']))
+		{
+			return;
+		}
+		$max = $action['data']['maxMenuLength'] ?? self::DEFAULT_MAX_MENU_SELECT;
+		if ($max === false || $max === null)
+		{
+			return;		// explicitly opted out
+		}
+		// only the children that are actually drawn as menu entries count towards the length:
+		// a checkbox is a modifier, and it travels into the dialog alongside the picker
+		$n = 0;
+		foreach($action['children'] as $child)
+		{
+			if (is_array($child) && !empty($child['checkbox'])) continue;
+			$n++;
+		}
+		if ($n > (int)$max)
+		{
+			$action['data']['nm_action'] = 'select_children';
+		}
 	}
 
 	/**

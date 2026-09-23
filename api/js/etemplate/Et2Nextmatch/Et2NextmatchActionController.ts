@@ -1282,6 +1282,10 @@ export class Et2NextmatchActionController implements ReactiveController
 				this.executeEgwOpenAction(action, ids.providerIds, actionTarget);
 				break;
 
+			case "select_children":
+				this.executeSelectChildrenAction(action, senders);
+				break;
+
 			case "open_popup":
 				if(this.openActionPopup(action, ids.rawIds))
 				{
@@ -1292,6 +1296,34 @@ export class Et2NextmatchActionController implements ReactiveController
 				this.executeSubmitAction(action, ids, senders);
 				break;
 		}
+	}
+
+	/**
+	 * Offer an over-long sub-menu's children as a picker dialog instead of a sub-menu.
+	 *
+	 * Set by Nextmatch::selectChildrenIfTooLong() past DEFAULT_MAX_MENU_SELECT children, and
+	 * overridable per action through data['maxMenuLength'] / data['selectDialog'].
+	 *
+	 * Dynamic import, not static: this module is loaded early enough that pulling the whole
+	 * Et2Dialog widget graph in at its top level risks the et2_core_widget circular-import TDZ
+	 * bug (see EgwPopupActionImplementation._addLinkAction(), which defers for the same reason).
+	 * It also keeps the dialog code out of the bundle for anyone who never opens one.
+	 */
+	private executeSelectChildrenAction(action : EgwAction, senders : EgwActionObject[])
+	{
+		const options = action.data?.selectDialog || {};
+		// level 4 of the override ladder: the app supplies its own handler and gets the
+		// collapsed container, children and all. Not expressible as onExecute, which
+		// egw_actions() would inherit down to the children and strip off the parent.
+		if(options.onExecute)
+		{
+			this.host.egw().applyFunc(String(options.onExecute).replace(/^javaScript:/, ""), [action, senders]);
+			return;
+		}
+		import("./SelectChildrenAction").then(({SelectChildrenAction}) =>
+		{
+			SelectChildrenAction.open(this.host.egw(), action, senders, options);
+		});
 	}
 
 	/**

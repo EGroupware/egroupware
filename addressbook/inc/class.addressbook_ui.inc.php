@@ -462,14 +462,14 @@ class addressbook_ui extends addressbook_bo
 
 			$lists[] = [
 				Etemplate\Widget\Tree::ID => 'add',
-				Etemplate\Widget\Tree::LABEL => lang('Add a new list').'...',
+				Etemplate\Widget\Tree::LABEL => lang('Add a new list'),
 				Etemplate\Widget\Tree::IMAGE_LEAF => Api\Image::find('api', 'add'),
 			];
 		}
 		else
 		{
 			$lists = $this->get_lists(Acl::READ, ['' => lang('No distribution list')], false);
-			$lists['add'] = lang('Add a new list').'...';
+			$lists['add'] = lang('Add a new list');
 		}
 		return $lists;
 	}
