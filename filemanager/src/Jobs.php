@@ -183,6 +183,32 @@ class Jobs
 	}
 
 	/**
+	 * Run an action via AJAX instead of submitting the whole eTemplate
+	 *
+	 * Keeps the list standing - its scroll position, selection and row state - instead of
+	 * rebuilding it just to drop a row.
+	 *
+	 * @param string $action
+	 * @param string[] $selected
+	 * @param bool $all_selected
+	 */
+	public function ajax_action($action, $selected, $all_selected = false)
+	{
+		try {
+			$msg = $this->action($action, (array)$selected, (bool)$all_selected);
+			$type = 'success';
+		}
+		catch (\Exception $ex) {
+			$msg = $ex->getMessage();
+			$type = 'error';
+		}
+		Api\Json\Response::get()->call('egw.refresh', $msg, self::APP,
+			$all_selected ? null : ($selected[0] ?? null),
+			$all_selected || count((array)$selected) > 1 ? null : 'delete',
+			self::APP, null, null, $type);
+	}
+
+	/**
 	 * Run an action
 	 *
 	 * @param string $action
@@ -233,6 +259,8 @@ class Jobs
 				'caption' => 'Delete',
 				'confirm' => 'Are you sure?',
 				'group' => $group=5,
+				'onExecute' => 'javaScript:app.filemanager.ajax_action',
+				'data' => ['menuaction' => self::APP.'.'.self::class.'.ajax_action'],
 			],
 		];
 	}

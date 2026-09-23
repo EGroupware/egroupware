@@ -66,9 +66,6 @@ class NextmatchActionSubmitTest extends LoggedInTest
 			'import',
 			'move_to_api'
 		],
-		'EGroupware\\Filemanager\\Jobs' => [
-			'delete'
-		],
 		'EGroupware\\Invoices\\Ui' => [
 			'delete'
 		],
@@ -107,16 +104,6 @@ class NextmatchActionSubmitTest extends LoggedInTest
 		'bookmarks_ui' => [
 			'delete'
 		],
-		'calendar_uilist' => [
-			'status/*',
-			'timesheet/*'
-		],
-		'filemanager_shares' => [
-			'delete'
-		],
-		'filemanager_ui' => [
-			'unlock'
-		],
 		'importexport_definitions_ui' => [
 			'copy',
 			'createexport',
@@ -133,34 +120,27 @@ class NextmatchActionSubmitTest extends LoggedInTest
 			'delete',
 			'update'
 		],
+		// cat/* is Proposal A's job (phase 4); 'erole' only exists when the enable_eroles config
+		// is on, and is a container (not a leaf) when it is - it is here because this instance has
+		// the config off
 		'projectmanager_elements_ui' => [
 			'cat/*',
-			'delete',
-			'erole',
-			'sync_all'
+			'erole'
 		],
+		// FOUND, NOT FIXED: this 'delete' has no server-side handler at all -
+		// projectmanager_pricelist_ui extends projectmanager_pricelist_bo, not the UI class that
+		// dispatches $content['nm']['action'], so the submit re-renders and deletes nothing.
+		// Making it work is new functionality, not a transport change.
 		'projectmanager_pricelist_ui' => [
 			'delete'
-		],
-		'projectmanager_ui' => [
-			'delete',
-			'undelete'
 		],
 		'records_ui' => [
 			'delete',
 			'status/*'
 		],
+		// change/cat/* is Proposal A's job (phase 4)
 		'tracker_ui' => [
-			'change/*',
-			'change/cat/*',
-			'change/completion/*',
-			'change/priority/*',
-			'change/resolution/*',
-			'change/status/*',
-			'change/tracker/*',
-			'change/version/*',
-			'close',
-			'close_#_#'
+			'change/cat/*'
 		],
 	];
 

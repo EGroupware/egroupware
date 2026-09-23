@@ -185,7 +185,10 @@ class filemanager_ui
 				'enableClass'     => 'locked',
 				'group'           => $group,
 				'allowOnMultiple' => true,
-				'hideOnDisabled'  => true
+				'hideOnDisabled'  => true,
+				// same server-side action() case as 'delete', so the same handler - a submit
+				// here rebuilt the whole list just to drop a lock icon
+				'onExecute'       => 'javaScript:app.filemanager.action',
 			),
 			'saveas'    => array(
 				'caption'         => lang('Save as'),

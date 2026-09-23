@@ -153,6 +153,8 @@ class filemanager_shares extends filemanager_ui
 				'caption' => lang('Delete'),
 				'group' => ++$group,
 				'confirm' => lang('Delete these shares?'),
+				'onExecute' => 'javaScript:app.filemanager.ajax_action',
+				'data' => ['menuaction' => 'filemanager.filemanager_shares.ajax_delete'],
 			),
 		);
 		return $actions;
@@ -164,6 +166,45 @@ class filemanager_shares extends filemanager_ui
 	 * @param ?array $content=null
 	 * @param string $msg=''
 	 */
+	/**
+	 * Delete shares via AJAX instead of submitting the whole eTemplate
+	 *
+	 * Keeps the list standing - its scroll position, selection and row state - instead of
+	 * rebuilding it just to drop the deleted rows.
+	 *
+	 * Deliberately NOT called ajax_action(): this class extends filemanager_ui, whose
+	 * ajax_action() is a static VFS-operation endpoint with an entirely different signature -
+	 * redeclaring it here is a fatal ("cannot make static method non static") and overriding it
+	 * would shadow the inherited VFS one.
+	 *
+	 * @param string $action only 'delete' is supported
+	 * @param string[] $selected share_id's
+	 * @param bool $all_selected delete every share matching the current filters
+	 */
+	public function ajax_delete($action, $selected, $all_selected = false)
+	{
+		if ($action !== 'delete')
+		{
+			throw new Api\Exception\WrongParameter("Unknown action '$action'!");
+		}
+		// same ownership restriction as the submit path: a non-admin may only delete their own
+		$where = [];
+		if (empty($GLOBALS['egw_info']['user']['apps']['admin']))
+		{
+			$where['share_owner'] = $GLOBALS['egw_info']['user']['account_id'];
+		}
+		if (!$all_selected)
+		{
+			$where['share_id'] = $selected;
+		}
+		$msg = lang('%1 shares deleted.', Sharing::delete($where));
+
+		Api\Json\Response::get()->call('egw.refresh', $msg, 'filemanager',
+			$all_selected ? null : ($selected[0] ?? null),
+			$all_selected || count((array)$selected) > 1 ? null : 'delete',
+			'filemanager', null, null, 'success');
+	}
+
 	public function index(?array $content=null, $msg = null)
 	{
 		if (!is_array($content))

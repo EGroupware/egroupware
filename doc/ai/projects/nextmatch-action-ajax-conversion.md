@@ -13,7 +13,7 @@ Two related problems with nextmatch context-menu actions, found together:
    response. Some of these are conceptually unbounded, others merely grow with the
    installation until one day they are too long - and nothing notices when that happens.
 
-Status: **phases 0-1 done** (see section 5). Phase 2 next.
+Status: **phases 0-2 done** (see section 5). Phase 3 (Proposals D + E) next.
 
 ---
 
@@ -726,7 +726,7 @@ in this project - handled by Proposal D like any other oversized submenu. `share
 | --- | --- | --- |
 | 0 | **DONE.** `EgwApp.ajax_action()` + the `data.menuaction` convention; `api/tests/Etemplate/Widget/NextmatchActionSubmitTest.php` (baselined); the console warning when an action resolves to `nm_action: "submit"` unasked | Everything else depends on this `api` version; stops the pattern silently coming back |
 | 1 | **DONE.** addressbook (`lists/*`, `merge`, `merge_duplicates`, `move_to/*`, `shared_with/*`, `change_type/*`, `undelete`, `delete`) and infolog (`close`, `close_all`, `change/{type,status,completion}/*`, `undelete`) | The two reported cases. Core repo |
-| 2 | **tracker** (83 - the biggest single list), calendar, filemanager, projectmanager x3 | Highest-traffic remainder. Cross-repo: tracker and projectmanager are separate |
+| 2 | **DONE.** tracker (the biggest single list), calendar, filemanager x3, projectmanager x2 | Highest-traffic remainder. Cross-repo: tracker and projectmanager are separate |
 | 3 | **Proposal D** - generic overflow dialog (`egw_actions()` threshold + `appendToTree()` skip + `select_children` case + one shared `.xet` + the 4-level `data['selectDialog']` override + `SelectChildrenAction.open()` as a reusable helper), **plus Proposal E** - the `…` affordance in `EgwMenuShoelace.itemTemplate()` | Independent of 1-2 and of each app. E ships with D because D removes the chevron those entries have today. E's menu half reaches legacy apps too |
 | 4 | **Proposal A** - `Nextmatch::category_action()` picker dialog (both cardinality shapes), then move the reachable call sites | Biggest single reduction |
 | 5 | **Proposal B** - distribution-list dialog | Addressbook-specific, needs the phase 1 endpoint. `move_to`/`shared_with` need no bespoke dialog - Proposal D covers them |
@@ -882,6 +882,36 @@ Not converted, with reasons: `view_org`/`view_duplicates` switch the list to a d
 template rather than acting on the selection - they are not `action()` operations and a redraw
 is defensible; `cat/*` is Proposal A's job; `export/*` and `kanban` belong to other apps.
 
+### Phase 2 - as built
+
+* **tracker** had no `ajax_action()` at all - added one wrapping its existing `action()`. Wired
+  `close`, `close_100_<resolution>`, `change/seen`, `change/unseen` and the five generated
+  sub-containers (`tracker`, `version`, `priority`, `status`, `resolution`, `completion`).
+  Again not on `change` itself, which holds the `open_popup` children `assigned` and `group`.
+* **calendar** had an `ajax_action()` that only sent `Response::message()` - it refreshed
+  nothing, so a converted action would not have updated a row. Now calls `egw.refresh()`.
+  Its 4th parameter had to accept both shapes: `EgwApp.ajax_action()` sends the checkbox array,
+  while the older recur-prompt path in `calendar/js/app.ts` sends a plain bool for
+  "Do not notify". Both verified live.
+* **filemanager**: `unlock` goes through the existing `app.filemanager.action` ->
+  `filemanager_ui::action()`, the same route `delete` already used. `filemanager_shares` and
+  `Filemanager\Jobs` had no ajax endpoint and got one each.
+* **projectmanager**: `delete`/`undelete` reuse `app.projectmanager.change_status`, already
+  wired to its `ajax_action()`. `projectmanager_elements_ui`'s `delete`/`sync_all` needed two
+  new cases in its static `ajax_action()`.
+
+Two traps worth recording:
+
+* **`filemanager_shares extends filemanager_ui`, whose `ajax_action()` is `static`** - adding a
+  non-static `ajax_action()` there is an instant PHP fatal ("cannot make static method non
+  static"), and making it static would shadow the inherited VFS endpoint, which has a totally
+  different signature. Named `ajax_delete()` instead, with the menuaction given explicitly via
+  `data['menuaction']`.
+* **`projectmanager_pricelist_ui`'s `delete` is dead** and was left that way: the class extends
+  `projectmanager_pricelist_bo`, not the UI class that dispatches `$content['nm']['action']`, so
+  the submit re-renders and deletes nothing. Making it work is new functionality, not a
+  transport change. It stays in the test baseline with that note.
+
 ### A live bug found on the way: the `msg-only-push-refresh` sentinel
 
 `egw.refresh()`'s 2nd argument doubles as a "message only, push will deliver the rest"
@@ -899,8 +929,10 @@ sees the result message at all; it is not just console noise.
 
 Confirmed live against infolog's `delete` action, which predates this work. Fixed here for
 addressbook and infolog by keeping the sentinel in the 2nd argument only and always passing the
-real app name as the 5th. **Still present in timesheet, calendar and projectmanager** (x2) -
-spun off as its own task rather than widening this commit.
+real app name as the 5th. Grepping the tree for the sentinel afterwards showed the spun-off task's scope was too wide:
+calendar's `ajax_action()` never called `egw.refresh()` at all, and both projectmanager ones
+already pass `null` as `_targetapp`. **Only timesheet** was still affected, and a parallel
+session has since fixed and live-verified it.
 
 ### Found, not fixed: `close` and `close_all` are the same thing
 
