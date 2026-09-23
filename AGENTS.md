@@ -298,6 +298,53 @@ similar scope.
   progress-bar fix, not started); several live regressions found and fixed
   post-rollout. See the doc for full architecture, phase-by-phase detail, and
   the regression write-ups.
+- `doc/ai/projects/nextmatch-action-ajax-conversion.md` - moving nextmatch context-menu
+  actions off the full eTemplate submit they silently fall through to (no `onExecute`/`url`/
+  `egw_open` -> `nm_action: "submit"` -> `index()` re-runs -> a brand new nextmatch, losing
+  scroll, selection and row state), and replacing the actions that render one sub-menu entry
+  per row of user data (categories, distribution lists, addressbooks, share targets) with
+  `LinkAction`-style picker dialogs. Covers the confirmed mechanism plus the live
+  before/after measurement, a full per-app inventory (addressbook 180 of 421 actions submit,
+  infolog 76 of 337), the false positives a naive scan produces, the download actions that
+  must stay `postSubmit`, the `onExecute`-inheritance lever that converts a whole dynamic
+  submenu in one line, the submenu-vs-dialog rule, the per-app category cardinality table
+  (multiple vs single is declared ONLY as `multiple="true"` on each app's edit-template
+  `et2-select-cat`, is invisible to `get_actions()`, and already drives divergent server-side
+  handlers - so the picker needs two button shapes and an explicit call-site parameter), and
+  a generic overflow dialog that turns ANY submenu past a size threshold into a searchable
+  picker automatically (it dispatches the real child action, so it is orthogonal to the
+  submit->ajax work and helps apps nobody converts; three shared-code changes -
+  `egw_actions()` writing `data['nm_action']='select_children'`, `EgwAction.appendToTree()`
+  skipping the child recursion so the container renders as a leaf, and a new controller case;
+  app overrides go under `data['selectDialog']`, NOT `onExecute`, because `egw_actions()`
+  inherits a container's `onExecute` down to its children and strips it off the parent),
+  a `…` menu affordance for "this opens a dialog to collect options" (derived from the resolved
+  `nm_action` in `EgwMenuShoelace.itemTemplate()`, NOT baked into the caption - doing that in
+  `mail/src/Ui.php` is why `folder management`/`subscribe folder`/`edit account` each exist as
+  two lang keys with drifted German translations; decided 2026-09-23 that window-openers get no
+  ellipsis even when defensible, so every hardcoded one in a menu caption goes), and the sharp edges
+  (session-cached query dependencies, `select_all`, `delete_list` clearing
+  `filter2`, two pre-existing bugs in
+  `addressbook_ui::ajax_action()`). The inventory is measured three ways (live browser action-
+  manager dump, a PHP harness running each app's real `get_actions()` through the real
+  `Nextmatch::egw_actions()`, and a source scan for apps with no `get_actions()`) because a
+  source scan alone gives false positives and negatives; `select_all`/`egw_paste` and a
+  separate `nm_action => 'open_popup'` bucket are called out as NOT part of it. The shared
+  `ajax_action()` handler belongs on `EgwApp`, which already has `appname`/`egw`/`nm`, with the
+  per-app menuaction read from `data.menuaction` (as `long_task` already does) since the
+  `<app>.<app>_ui.ajax_action` convention does not hold for namespaced classes. Design/plan
+  only, no code written. Decided 2026-09-23: master only (no 26 backport), scope is every app in
+  the `EGroupware`/`EGroupwareGmbH` orgs, feature branch per repo, and the legacy `nm_action()`
+  dispatcher (`et2_extension_nextmatch_actions.js`, same submit default, 61 `.xet` templates
+  still on it incl. all of admin) is deliberately NOT touched - so an app is only reachable once
+  its list template uses `<et2-nextmatch>`, and section 6 splits every app into reachable-now vs
+  blocked-on-`et2-nextmatch-conversion.md` (admin being the highest-value conversion target for
+  unblocking this). The work spans 21 git repos; tracker, the biggest single list, is a separate
+  one. Phase 0 rebuilds the inventory harness as a baselined regression test. The share-dialog ticket
+  (EGW-CE #43584) is out of scope and only mentioned as such: it covers `share/*` (anonymous
+  share links, already all ajax), NOT addressbook's `shared_with/*` (an ACL grant, which IS in
+  scope, does submit, and is handled by the generic overflow dialog like any other oversized
+  submenu).
 
 ## Security and data handling
 
