@@ -661,6 +661,18 @@ jobs:
           $COMPOSE exec -T egroupware \
             sed -i "s#/usr/share/egroupware#$EGW_SRC_DIR#g" /var/lib/egroupware/header.inc.php
 
+          # Share the *tree* cache between PHPUnit and the test webserver.  Every process reads the
+          # key for its instance cache out of the tree cache on each request (Api\Cache::keys), so
+          # Api\Cache::generate_instance_key() is how one process tells the others to drop theirs -
+          # which is what a test needs after it creates a Vfs mount, since mounts are persisted
+          # through Api\Config and the webserver would otherwise serve a cached vfs_fstab for its
+          # whole life.  Unset, cache_provider_tree defaults to the instance provider, and those are
+          # NOT shared: PHPUnit runs under SAPI "cli" and gets the file cache, the built-in server
+          # runs under "cli-server" and gets APCu.  Only the tree level is shared here; the instance
+          # caches stay separate, so the webserver still reads accounts and config for itself.
+          $COMPOSE exec -T egroupware sh -c 'grep -q cache_provider_tree /var/lib/egroupware/header.inc.php || { printf "%s\n" "\$GLOBALS[\"egw_info\"][\"server\"][\"cache_provider_tree\"] = array(\"EGroupware\\\\Api\\\\Cache\\\\Files\");" > /tmp/tree-cache.inc && sed -i "/mcrypt_iv/r /tmp/tree-cache.inc" /var/lib/egroupware/header.inc.php; }'
+          $COMPOSE exec -T egroupware grep -n cache_provider_tree /var/lib/egroupware/header.inc.php
+
           # Narrow the run to the extra apps by generating a config with a single testsuite,
           # rather than by passing paths: phpunit takes only one positional path, and the <php>
           # vars plus the bootstrap in doc/phpunit.xml have to be preserved either way. Paths in

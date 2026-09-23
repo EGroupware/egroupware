@@ -438,6 +438,27 @@ class SharingBase extends LoggedInTest
 		Vfs::clearstatcache();
 		Vfs::init_static();
 		Vfs\StreamWrapper::init_static();
+		$this->invalidateWebserverCache();
+	}
+
+	/**
+	 * Tell the webserver to drop its instance cache, so it sees a mount we just made
+	 *
+	 * Vfs::mount() persists the mount through Api\Config, which caches it in the instance cache.
+	 * The webserver serving a share of that mount has its own instance cache and no reason to ever
+	 * re-read the configuration, so without this it resolves the share against a vfs_fstab from
+	 * whenever it first looked - which, for a mount created during the test run, does not contain
+	 * the mount at all, and the share 404s.
+	 *
+	 * Every process reads the key naming its instance cache out of the *tree* cache on each
+	 * request, so generating a new one is how one process invalidates every other's.  That only
+	 * carries across processes when they share a tree cache: cache_provider_tree defaults to the
+	 * instance provider, and a CLI process (file cache) and a webserver (APCu) do not share that.
+	 * Where it is not shared this is simply a no-op for the webserver.
+	 */
+	protected function invalidateWebserverCache() : void
+	{
+		Api\Cache::generate_instance_key();
 	}
 
 	/**
