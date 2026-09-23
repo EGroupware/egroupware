@@ -4191,6 +4191,15 @@ export class MailJmap
 	}
 
 	/**
+	 * A fresh, unguessable CSP nonce value (base64, 16 random bytes) - see wrapDocument()'s own
+	 * docblock for why this exists alongside 'self'.
+	 */
+	private static randomNonce() : string
+	{
+		return btoa(String.fromCharCode(...crypto.getRandomValues(new Uint8Array(16))));
+	}
+
+	/**
 	 * Wrap already-sanitized body HTML into a self-contained document for the body iframe's
 	 * `srcdoc` - shared by assembleBodyHtml() (normal mail) and fetchBody()'s PGP path.
 	 *
@@ -4216,21 +4225,27 @@ export class MailJmap
 	 */
 	private wrapDocument(body : string, forMailvelope : boolean = false) : string
 	{
-		// same directive set the current server-rendered response sets via HTTP header
-		// (mail_ui::get_load_email_data(), class.mail_ui.inc.php:2993-3000: script-src 'self' to
-		// load preview.js below, img-src additionally allows blob: for Stalwart inline-image
-		// downloads, see resolveInlineImages(), alongside the data: URIs cid images already used)
-		// explicit 'self' (not just omitting frame-src) - an absent frame-src with no default-src
-		// fallback in this standalone <meta> tag would mean UNRESTRICTED, not merely "back to the
-		// page default"
+		// script-src used to be plain 'self', matching the classic server-rendered response's own
+		// HTTP *header* CSP (mail_ui::get_load_email_data(), class.mail_ui.inc.php:2993-3000) -
+		// but this document is a `srcdoc` iframe (no real URL of its own, "about:srcdoc") with its
+		// CSP delivered via a <meta> tag INSIDE that same markup, not an HTTP header on a real
+		// same-origin response; found live 2026-09-23 via a real customer (Firefox, "every mail
+		// opened in preview"): Firefox failed to resolve 'self' against the srcdoc's inherited
+		// parent origin in this meta-tag-CSP context, outright blocking preview.js
+		// (mailto:/internal-EGroupware-link activation) on EVERY single message. A nonce is origin-
+		// resolution-independent (a pure string match between this directive and the script tag's
+		// own `nonce` attribute below), so it can't be affected by this kind of ambiguity in any
+		// browser - kept alongside 'self' rather than replacing it, since 'self' still correctly
+		// covers whichever browsers DID resolve it right.
+		const nonce = MailJmap.randomNonce();
 		const csp = "frame-src " + (forMailvelope ? "'self'" : "'none'") + "; " +
-			"connect-src 'none'; manifest-src 'none'; script-src 'self'; " +
+			"connect-src 'none'; manifest-src 'none'; script-src 'self' 'nonce-"+nonce+"'; " +
 			"img-src http: blob: data:; media-src https: http: data:";
 
 		return `<!DOCTYPE html><html><head><meta charset="utf-8">` +
 			`<meta http-equiv="Content-Security-Policy" content="${csp}">` +
 			`<link rel="stylesheet" href="${this.egw.link('/mail/templates/default/preview.css')}">` +
-			`<script defer src="${this.egw.link('/mail/js/preview.js')}"></script>` +
+			`<script defer nonce="${nonce}" src="${this.egw.link('/mail/js/preview.js')}"></script>` +
 			`</head><body><div class="mailDisplayBody"><table width="100%" style="table-layout:fixed">` +
 			`<tr><td class="td_display">${body}</td></tr></table></div></body></html>`;
 	}
