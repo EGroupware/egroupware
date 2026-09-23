@@ -1438,8 +1438,17 @@ export abstract class EgwApp
 		// (eg. a placeholder action on an empty list) has neither - fall back to our own nm.
 		const nm = _action?.parent?.data?.nextmatch || _action?.data?.nextmatch || this.nm;
 		const ids = _senders.map(sender => (sender?.id || "").split("::").pop()).filter(Boolean);
-		const menuaction = _action?.data?.menuaction ||
-			this.appname + "." + this.appname + "_ui.ajax_action";
+		// Declared on a container it has to reach every child, the same way onExecute does:
+		// $inherit_attrs does not carry 'data', so a child of calendar's "Change your status"
+		// arrives with no menuaction of its own and fell back to the convention - which for
+		// calendar is a class that does not exist ("calendar.calendar_ui.ajax_action is not a
+		// valid menuaction", 400, action silently lost).
+		let menuaction = null;
+		for(let a = <any>_action; a && !menuaction; a = a.parent)
+		{
+			menuaction = a?.data?.menuaction;
+		}
+		menuaction = menuaction || this.appname + "." + this.appname + "_ui.ajax_action";
 
 		const checkboxes = {};
 		for(const checkbox of (_action.getManager?.()?.getActionsByAttr?.("checkbox", true) || []))
@@ -1485,7 +1494,12 @@ export abstract class EgwApp
 		const [, action, verb] = match;
 
 		const popup = <any>document.querySelector("[id$='" + action + "_popup']");
-		const widget = <any>this.et2?.getWidgetById(action);
+		// Look inside the popup first: a popup's input is free to carry the same id as a filter
+		// in the list header, and several do - infolog's Start/Due date popups hold <et2-date-time
+		// id="startdate"> while the filter area holds <et2-date id="startdate">.  Asking the
+		// template found the filter, which is empty, so "set the start date" cleared it instead.
+		const popupWidget = <any>this.et2?.getWidgetById(action + "_popup");
+		const widget = <any>(popupWidget?.getWidgetById?.(action) ?? this.et2?.getWidgetById(action));
 		const value = EgwApp._actionPopupValue(widget?.get_value ? widget.get_value() : widget?.value);
 
 		const nm = <Et2Nextmatch>this.et2?.getWidgetById("nm") ?? this.nm;

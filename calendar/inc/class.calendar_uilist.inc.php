@@ -1021,6 +1021,9 @@ class calendar_uilist extends calendar_ui
 			'children' => $status,
 			'group' => ++$group,
 			'onExecute' => 'javaScript:app.calendar.ajax_action',
+			// calendar's list endpoint is on calendar_uilist, not the "<app>.<app>_ui.ajax_action"
+			// EgwApp.ajax_action() falls back to - without this the request 400s
+			'data' => ['menuaction' => 'calendar.calendar_uilist.ajax_action'],
 		);
 		++$group;	// integration with other apps: infolog, calendar, filemanager
 
@@ -1137,6 +1140,7 @@ class calendar_uilist extends calendar_ui
 				'allowOnMultiple' => 'only',
 				'hideOnDisabled' => true,	// show only one timesheet action in context menu
 				'onExecute' => 'javaScript:app.calendar.ajax_action',
+				'data' => ['menuaction' => 'calendar.calendar_uilist.ajax_action'],
 			);
 			// if specific timer is NOT disabled, allow to book further time on existing sheets
 			$config = Api\Config::read('timesheet');
