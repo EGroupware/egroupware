@@ -1591,9 +1591,20 @@ class infolog_ui
 
 		// "select all" means every entry matching the CURRENT filters, so action() has to re-run
 		// get_rows() with them - it is handed the query get_rows() itself cached, the same one
-		// index() restores on a submit. Passing an empty query here (as this did before) made
-		// get_rows() fall back to no filter at all, ie. every InfoLog the user can see.
-		$query = $all_selected ? (array)Api\Cache::getSession('infolog', $this->called_by.'session_data') : [];
+		// index() restores on a submit. Passing an empty query here made get_rows() fall back to
+		// no filter at all, ie. EVERY InfoLog the user can see - so with no cached query to say
+		// what "all" meant, refuse rather than guess. Found by its own test.
+		$query = [];
+		if ($all_selected)
+		{
+			$query = (array)Api\Cache::getSession('infolog', $this->called_by.'session_data');
+			if (empty($query['get_rows']) && empty($query['col_filter']) && empty($query['filter']))
+			{
+				Api\Json\Response::get()->call('egw.message',
+					lang('Could not determine the current selection, please try again.'), 'error');
+				return;
+			}
+		}
 
 		if($this->action($action, $selected, $all_selected, $success, $failed, $action_msg, $query, $msg,
 			!empty($checkboxes['no_notifications'])))

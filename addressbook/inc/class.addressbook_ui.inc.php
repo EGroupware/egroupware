@@ -1369,6 +1369,16 @@ class addressbook_ui extends addressbook_bo
 		// an arbitrary session key
 		if (!in_array($session_name, ['index', 'select'], true)) $session_name = 'index';
 
+		// "select all" makes action() re-run get_rows() with the query get_rows() itself cached.
+		// With no cached query that falls through to no filter at all - ie. EVERY contact the
+		// user can see - so refuse rather than guess what "all" meant.
+		if ($all_selected && !is_array(Api\Cache::getSession('addressbook', $session_name)))
+		{
+			Api\Json\Response::get()->call('egw.message',
+				lang('Could not determine the current selection, please try again.'), 'error');
+			return;
+		}
+
 		// $checkboxes is action()'s 9th argument, NOT the 4th. This used to be declared as
 		// `$skip_notification = false` and passed straight through, which silently landed a bool
 		// in the $checkboxes slot - harmless only because no ajax-converted action read it yet.

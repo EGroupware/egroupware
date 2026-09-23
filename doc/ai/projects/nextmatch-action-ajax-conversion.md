@@ -978,7 +978,7 @@ Also fixed a phase-2 oversight it exposed: **tracker's `change/cat` is not a `ca
 at all** - its children come from `get_tracker_labels('cat')`, ie. tracker's own labels - so it
 was never Proposal A's to convert and simply needed the same ajax handler as its siblings.
 
-### The testing hole a bogus id leaves
+### The testing hole a bogus id leaves, and the second bug it hid
 
 `cat_set` went out with a PHP 8 fatal: it called `$this->save(array('cat_id' => $ids) + $contact)`,
 and `save()` takes `&$contact` by reference, which cannot be an inline expression. Reported from
@@ -991,10 +991,22 @@ false, the `&&` short-circuits, and **the handler body never runs at all**. That
 the request routing, the action id, the payload and the refresh. It proves *nothing* about what
 the action does.
 
-The fix for the testing gap is `addressbook/tests/CategoryActionTest.php`: it creates its own
-contact, runs `action()` for `cat_set`/`cat_add`/`cat_del`, and reads the resulting `cat_id`
-back. Reverting the one-line fix makes 3 of its cases fail with the exact reported error, which
-is the check that it is worth anything.
+The fix for the testing gap is two test files that call the real endpoints with a real row:
+`addressbook/tests/CategoryActionTest.php` (the category verbs) and
+`api/tests/Etemplate/Widget/NextmatchAjaxActionTest.php` (the `ajax_action()` endpoints
+themselves - argument order, the checkbox array, select-all, and the `egw.refresh` response).
+Reverting the one-line `cat_set` fix makes 3 of the former's cases fail with the exact reported
+error, which is the check that they are worth anything.
+
+**Writing them immediately found a second, worse bug - in the select-all "fix" itself.** The new
+`$query = $all_selected ? Api\Cache::getSession(...) : []` still handed `action()` an empty
+query whenever nothing was cached, and `action()` then sets `num_rows = -1` and re-runs
+`get_rows()` on it - unfiltered. So "select all" with no cached query would have closed, deleted
+or re-categorised **every entry the user can see**, which is exactly the bug the change claimed
+to fix. All three endpoints (`infolog`, `addressbook`, `calendar`) plus tracker's new one now
+refuse and say so instead of guessing. In addressbook the same hole is reachable from the
+*submit* path too and predates this work; the guard sits in `ajax_action()`, so the submit path
+is unchanged.
 
 Its teardown also has to call `Contacts::delete()` **twice**: the first call only marks
 `tid = 'D'` (the "deleted" bin), so a single call would leave every fixture visible in the

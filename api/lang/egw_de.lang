@@ -341,6 +341,7 @@ copy to clipboard	common	de	In die Zwischenablage kopieren
 costa rica	common	de	COSTA RICA
 cote d ivoire	common	de	COTE D IVOIRE
 could not contact server. operation timed out!	common	de	Konnte Server nicht kontaktieren. Zeitüberschreitung!
+could not determine the current selection, please try again.	common	de	Die aktuelle Auswahl konnte nicht ermittelt werden, bitte erneut versuchen.
 could not link: %1	common	de	Konnte nicht verknüpfen: %1
 could not unlink: %1	common	de	Konnte nicht lösen: %1
 create	common	de	Erstellen

@@ -601,6 +601,16 @@ class calendar_uilist extends calendar_ui
 		// recur-prompt path in calendar/js/app.ts sends a plain bool for "Do not notify"
 		$skip_notification = is_array($checkboxes) ? !empty($checkboxes['no_notifications']) : (bool)$checkboxes;
 
+		// "select all" makes action() re-run get_rows() with the query get_rows() itself cached.
+		// With no cached query that falls through to no filter at all - ie. EVERY event the user
+		// can see - so refuse rather than guess what "all" meant.
+		if ($all_selected && !is_array(Api\Cache::getSession('calendar', $session_name)))
+		{
+			Api\Json\Response::get()->call('egw.message',
+				lang('Could not determine the current selection, please try again.'), 'error');
+			return;
+		}
+
 		if($this->action($action, $selected, $all_selected, $success, $failed, $action_msg, $session_name, $msg, $skip_notification))
 		{
 			$msg = lang('%1 event(s) %2',$success,$action_msg);
