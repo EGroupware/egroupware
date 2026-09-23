@@ -15,6 +15,7 @@
 namespace EGroupware\Api\Vfs;
 
 require_once __DIR__ . '/../LoggedInTest.php';
+require_once __DIR__ . '/FilesystemFixtureTrait.php';
 
 use EGroupware\Api;
 use EGroupware\Api\LoggedInTest as LoggedInTest;
@@ -24,6 +25,8 @@ use EGroupware\Stylite\Vfs\Versioning;
 
 class SharingBase extends LoggedInTest
 {
+	use FilesystemFixtureTrait;
+
 	/**
 	 * How much should be logged to the console (stdout)
 	 *
@@ -226,6 +229,8 @@ class SharingBase extends LoggedInTest
 
 
 		Vfs::$is_root = $backup;
+
+		$this->removeFilesystemFixtureCopies();
 	}
 
 
@@ -422,11 +427,8 @@ class SharingBase extends LoggedInTest
 
 		$backup = Vfs::$is_root;
 		Vfs::$is_root = true;
-		$fs_path = realpath(__DIR__ . '/../fixtures/Vfs/filesystem_mount');
-		if(!file_exists($fs_path))
-		{
-			$this->fail("Missing filesystem test directory 'api/tests/fixtures/Vfs/filesystem_mount'");
-		}
+		// a copy, never the tracked fixture itself - see FilesystemFixtureTrait
+		$fs_path = $this->filesystemFixtureCopy();
 		$url = Filesystem\StreamWrapper::SCHEME.'://default'. $fs_path.
 			'?user=' . $GLOBALS['egw_info']['user']['account_id'] . '&group=Default&mode=770';
 		$this->assertTrue(Vfs::mount($url,$path), "Unable to mount $url to $path");
@@ -436,6 +438,27 @@ class SharingBase extends LoggedInTest
 		Vfs::clearstatcache();
 		Vfs::init_static();
 		Vfs\StreamWrapper::init_static();
+		$this->invalidateWebserverCache();
+	}
+
+	/**
+	 * Tell the webserver to drop its instance cache, so it sees a mount we just made
+	 *
+	 * Vfs::mount() persists the mount through Api\Config, which caches it in the instance cache.
+	 * The webserver serving a share of that mount has its own instance cache and no reason to ever
+	 * re-read the configuration, so without this it resolves the share against a vfs_fstab from
+	 * whenever it first looked - which, for a mount created during the test run, does not contain
+	 * the mount at all, and the share 404s.
+	 *
+	 * Every process reads the key naming its instance cache out of the *tree* cache on each
+	 * request, so generating a new one is how one process invalidates every other's.  That only
+	 * carries across processes when they share a tree cache: cache_provider_tree defaults to the
+	 * instance provider, and a CLI process (file cache) and a webserver (APCu) do not share that.
+	 * Where it is not shared this is simply a no-op for the webserver.
+	 */
+	protected function invalidateWebserverCache() : void
+	{
+		Api\Cache::generate_instance_key();
 	}
 
 	/**
@@ -673,6 +696,30 @@ class SharingBase extends LoggedInTest
 	}
 
 	/**
+	 * Extra explanation for a share link that answered with no content
+	 *
+	 * A 404 from the WebDAV layer means the share session did not resolve the share's path.  When
+	 * the share is of a mount the test itself created, that is most often the webserver answering
+	 * from a cached configuration rather than anything wrong with the share: Vfs mounts are
+	 * persisted through Api\Config, which caches in APCu for a webserver but in files for the CLI,
+	 * so the two only agree if they share an instance cache.
+	 *
+	 * @param int $http_code
+	 * @param string[] $response_headers
+	 * @return string appended to the failure message, empty if it does not apply
+	 */
+	protected function noContentHint(int $http_code, array $response_headers) : string
+	{
+		if($http_code !== 404 || !preg_grep('/^X-WebDAV-Status: 404/i', $response_headers))
+		{
+			return '';
+		}
+		return "\nThe WebDAV layer answered 404, so the share session did not resolve the path." .
+			"\nIf the share is of a mount this test created, check the webserver is not serving a" .
+			"\ncached vfs_fstab - it needs to share an instance cache with the test process.";
+	}
+
+	/**
 	 * Test to make sure that a directory link leads to a limited filemanager
 	 * interface (not a file or 404).
 	 *
@@ -693,6 +740,17 @@ class SharingBase extends LoggedInTest
 			$cookie .= ';'.Api\Session::EGW_SESSION_NAME."={$session_id}";
 		}
 		curl_setopt($curl, CURLOPT_COOKIE, $cookie);
+
+		// Keep the headers: when this fails the body is empty, and they are the only thing saying
+		// whether EGroupware refused the share - it reports that through X-WebDAV-Status - or the
+		// request died before answering at all
+		$response_headers = [];
+		curl_setopt($curl, CURLOPT_HEADERFUNCTION, function($ch, $header) use (&$response_headers)
+		{
+			if(trim($header) !== '') $response_headers[] = trim($header);
+			return strlen($header);
+		});
+
 		$this->releaseSessionForWebserver();
 		$html = curl_exec($curl);
 		$http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
@@ -700,6 +758,7 @@ class SharingBase extends LoggedInTest
 		$curl_error = curl_error($curl);
 		$effective_url = (string)curl_getinfo($curl, CURLINFO_EFFECTIVE_URL);
 		curl_close($curl);
+		$header_dump = $response_headers ? "\nResponse headers:\n  " . implode("\n  ", $response_headers) : '';
 
 		if(!$html)
 		{
@@ -710,7 +769,8 @@ class SharingBase extends LoggedInTest
 			{
 				$this->noWebserverResponse("No webserver response for share link '$link' (curl errno $curl_errno: $curl_error)");
 			}
-			$this->fail("Share link '$link' returned no content (HTTP $http_code, effective URL '$effective_url')");
+			$this->fail("Share link '$link' returned no content (HTTP $http_code, effective URL '$effective_url')" .
+				$header_dump . $this->noContentHint($http_code, $response_headers));
 		}
 
 		// Parse & check for nextmatch
@@ -892,7 +952,8 @@ class SharingBase extends LoggedInTest
 				$this->noWebserverResponse("No webserver response for share link '$link' (curl errno $curl_errno: $curl_error)");
 			}
 			// An empty body with a real HTTP status is the blank-page the recipient sees
-			$this->fail("Share link '$link' returned no content (HTTP $http_code, effective URL '$effective_url')" . $header_dump);
+			$this->fail("Share link '$link' returned no content (HTTP $http_code, effective URL '$effective_url')" .
+				$header_dump . $this->noContentHint($http_code, $response_headers));
 		}
 
 		// Parse & check for nextmatch

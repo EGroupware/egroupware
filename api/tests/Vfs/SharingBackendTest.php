@@ -88,9 +88,6 @@ class SharingBackendTest extends SharingBase
 	 */
 	public function testFilesystemReadonly()
 	{
-		$this->markTestSkipped('Skipping for now, more work needed');
-		return;
-
 		// Don't add to files list or it deletes the folder from filesystem
 		$dir = Vfs::get_home_dir() . '/filesystem_share/';
 
@@ -101,8 +98,10 @@ class SharingBackendTest extends SharingBase
 		$mounted = $this->checkDirectory($dir, Sharing::READONLY);
 
 		// Test folder in filesystem already has this file in it
-		// It should be picked up normally, but an explicit check can't hurt
-		$this->checkOneFile('/filesystem_test.txt', Sharing::READONLY);
+		// It should be picked up normally, but an explicit check can't hurt.
+		// checkDirectory() returns where the share got mounted - an anonymous share is never
+		// mounted at the root, so the file is under that, not at '/'
+		$this->checkOneFile($mounted . '/filesystem_test.txt', Sharing::READONLY);
 	}
 
 	/**
@@ -110,9 +109,6 @@ class SharingBackendTest extends SharingBase
 	 */
 	public function testFilesystemWritable()
 	{
-		$this->markTestSkipped('Skipping for now, more work needed');
-		return;
-
 		// Don't add to files list or it deletes the folder from filesystem
 		$dir = Vfs::get_home_dir() . '/filesystem_share/';
 
@@ -123,8 +119,10 @@ class SharingBackendTest extends SharingBase
 		$mounted = $this->checkDirectory($dir, Sharing::WRITABLE);
 
 		// Test folder in filesystem already has this file in it
-		// It should be picked up normally, but an explicit check can't hurt
-		$this->checkOneFile('/filesystem_test.txt', Sharing::WRITABLE);
+		// It should be picked up normally, but an explicit check can't hurt.
+		// checkDirectory() returns where the share got mounted - an anonymous share is never
+		// mounted at the root, so the file is under that, not at '/'
+		$this->checkOneFile($mounted . '/filesystem_test.txt', Sharing::WRITABLE);
 	}
 
 	/**

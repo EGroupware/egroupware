@@ -661,6 +661,25 @@ jobs:
           $COMPOSE exec -T egroupware \
             sed -i "s#/usr/share/egroupware#$EGW_SRC_DIR#g" /var/lib/egroupware/header.inc.php
 
+          # Share the *tree* cache between PHPUnit and the test webserver.  Every process reads the
+          # key for its instance cache out of the tree cache on each request (Api\Cache::keys), so
+          # Api\Cache::generate_instance_key() is how one process tells the others to drop theirs -
+          # which is what a test needs after it creates a Vfs mount, since mounts are persisted
+          # through Api\Config and the webserver would otherwise serve a cached vfs_fstab for its
+          # whole life.  Unset, cache_provider_tree defaults to the instance provider, and those are
+          # NOT shared: PHPUnit runs under SAPI "cli" and gets the file cache, the built-in server
+          # runs under "cli-server" and gets APCu.  Only the tree level is shared here; the instance
+          # caches stay separate, so the webserver still reads accounts and config for itself.
+          # Both paths: the processes include the one in the document root, which is normally a
+          # symlink to the one under /var/lib - but if it is a separate file, patching only the
+          # latter silently does nothing and the setting reads back as NULL.
+          # Anchor on page_start_time, the first executable statement after the mcrypt block:
+          # header.inc.php.template comments that whole block out, so an insert anchored on
+          # mcrypt_iv lands INSIDE the comment - present to grep, never executed by PHP.
+          $COMPOSE exec -T -e HDR="$EGW_SRC_DIR/header.inc.php" egroupware sh -c 'printf "%s\n" "\$GLOBALS[\"egw_info\"][\"server\"][\"cache_provider_tree\"] = array(\"EGroupware\\\\Api\\\\Cache\\\\Files\");" > /tmp/tree-cache.inc; for f in /var/lib/egroupware/header.inc.php "$HDR"; do [ -e "$f" ] || continue; grep -q cache_provider_tree "$f" || sed -i --follow-symlinks "/page_start_time/r /tmp/tree-cache.inc" "$f"; done'
+          echo "== header.inc.php in the document root =="
+          $COMPOSE exec -T -e HDR="$EGW_SRC_DIR/header.inc.php" egroupware sh -c 'ls -la "$HDR"; grep -c cache_provider_tree "$HDR" /var/lib/egroupware/header.inc.php'
+
           # Narrow the run to the extra apps by generating a config with a single testsuite,
           # rather than by passing paths: phpunit takes only one positional path, and the <php>
           # vars plus the bootstrap in doc/phpunit.xml have to be preserved either way. Paths in
@@ -726,6 +745,7 @@ jobs:
                 php -r '\''$fp=@fsockopen("127.0.0.1",8081,$errno,$errstr,0.2); if($fp){fclose($fp); exit(0);} exit(1);'\'' && break
                 sleep 1
               done
+
               set +e
               php vendor/bin/phpunit --configuration "$PHPUNIT_CONFIG"
               rc=$?
