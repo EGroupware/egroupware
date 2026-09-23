@@ -588,25 +588,15 @@ class addressbook_ui extends addressbook_bo
 
 		++$group;	// other AB related stuff group: lists, AB's, categories
 		// categories submenu
-		$actions['cat'] = array(
-			'caption' => 'Categories',
-			'group' => $group,
-			'children' => array(
-				'cat_add' => Etemplate\Widget\Nextmatch::category_action(
-					'addressbook',$group,'Add category', 'cat_add_',
-					true, 0,Etemplate\Widget\Nextmatch::DEFAULT_MAX_MENU_LENGTH,false
-				)+array(
-					'icon' => 'foldertree_nolines_plus',
-					'disableClass' => 'rowNoEdit',
-				),
-				'cat_del' => Etemplate\Widget\Nextmatch::category_action(
-					'addressbook',$group,'Delete category', 'cat_del_',
-					true, 0,Etemplate\Widget\Nextmatch::DEFAULT_MAX_MENU_LENGTH,false
-				)+array(
-					'icon' => 'foldertree_nolines_minus',
-					'disableClass' => 'rowNoEdit',
-				),
-			),
+		$actions['cat'] = Etemplate\Widget\Nextmatch::category_action(
+			'addressbook', $group, 'Categories', 'cat_',
+			true, 0, Etemplate\Widget\Nextmatch::DEFAULT_MAX_MENU_LENGTH,
+			// a contact holds SEVERAL categories (cat_id is a comma-separated list, and the edit
+			// template's et2-select-cat is multiple="true"), so one dialog offering
+			// Add/Remove/Replace replaces both per-category sub-menus
+			true
+		)+array(
+			'disableClass' => 'rowNoEdit',
 		);
 		if (!$GLOBALS['egw_info']['user']['apps']['preferences']) unset($actions['cats']['children']['cat_edit']);
 		// Submenu for all distributionlist stuff
@@ -1459,6 +1449,11 @@ class addressbook_ui extends addressbook_bo
 			$document = substr($action,9);
 			$action = 'document';
 		}
+		elseif(substr($action,0,8) === 'cat_set_')	// cat_set_12,34 - replace the whole list
+		{
+			$cat_ids = array_filter(array_map('intval', explode(',', substr($action, 8))));
+			$action = 'cat_set';
+		}
 		elseif(substr($action,0,4) == 'cat_')	// cat_add_123 or cat_del_456
 		{
 			$cat_id = (int)substr($action, 8);
@@ -1547,6 +1542,18 @@ class addressbook_ui extends addressbook_bo
 		{
 			switch($action)
 			{
+				case 'cat_set':
+					// Replace the whole list in ONE write. Deliberately not a cat_del of
+					// everything followed by a cat_add: that would save each contact twice and
+					// log two history entries for what the user did once.
+					if (($Ok = !!($contact = $this->read($id)) && $this->check_perms(Acl::EDIT,$contact)))
+					{
+						$action_msg = lang('categories set');
+						$ids = $cat_ids ? implode(',', $cat_ids) : null;
+						$Ok = $ids === $contact['cat_id'] || (bool)$this->save(array('cat_id' => $ids) + $contact);
+					}
+					break;
+
 				case 'cat_add':
 				case 'cat_del':
 					if (($Ok = !!($contact = $this->read($id)) && $this->check_perms(Acl::EDIT,$contact)))

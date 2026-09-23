@@ -1286,6 +1286,14 @@ export class Et2NextmatchActionController implements ReactiveController
 				this.executeSelectChildrenAction(action, senders);
 				break;
 
+			case "categories":
+				// dynamic import for the same reason as select_children below
+				import("./CategoryAction").then(({CategoryAction}) =>
+				{
+					CategoryAction.open(this.host.egw(), action, senders);
+				});
+				break;
+
 			case "open_popup":
 				if(this.openActionPopup(action, ids.rawIds))
 				{

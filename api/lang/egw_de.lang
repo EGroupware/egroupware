@@ -242,6 +242,7 @@ cape verde	common	de	KAP VERDE
 caption	common	de	Text
 categories	common	de	Kategorien
 categories for	common	de	Kategorien für
+categories set	common	de	Kategorien gesetzt
 category	common	de	Kategorie
 category %1 has been added !	common	de	Kategorie %1 wurde hinzugefügt!
 category %1 has been updated !	common	de	Kategorie %1 wurde überarbeitet!
@@ -1299,6 +1300,7 @@ server error	common	de	Serverfehler
 server is unwilling to perform.	common	de	Server ist zur Ausführung nicht bereit.
 server name	common	de	Server Name
 session has been killed	common	de	Session wurde beendet
+set	common	de	Setzen
 set as default	common	de	Als Vorgabe setzen
 set these columns as the default	common	de	Spaltenauswahl als Vorgabe setzen
 set user as only responsible user, but keeping groups	groupdav	de	Setze Benutzer als einzigen verantwortlichen Benutzer, Gruppen werden nicht geändert

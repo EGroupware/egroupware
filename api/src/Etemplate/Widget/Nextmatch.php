@@ -1372,8 +1372,39 @@ class Nextmatch extends Etemplate\Widget
 	 * @return array like self::egw_actions
 	 */
 	public static function category_action($app, $group=0, $caption='Change category',
-		$prefix='cat_', $globals=true, $parent_id=0, $max_cats_flat=self::DEFAULT_MAX_MENU_LENGTH)
+		$prefix='cat_', $globals=true, $parent_id=0, $max_cats_flat=self::DEFAULT_MAX_MENU_LENGTH,
+		$multiple=null)
 	{
+		// $multiple opts in to the picker dialog and says which shape it takes. Leaving it null
+		// keeps the historic sub-menu (one entry per category), which for a long category list
+		// selectChildrenIfTooLong() will collapse into the generic picker anyway - just without
+		// the verbs below.
+		if (isset($multiple))
+		{
+			return array(
+				'caption' => $caption,
+				'group' => $group,
+				'icon' => 'category',
+				'data' => array(
+					'nm_action' => 'categories',
+					'categories' => array(
+						'application' => $app,
+						// An entry holds several categories in some apps and exactly one in
+						// others, which changes both the picker and the verbs it can offer. There
+						// is no central registry of which is which - the only place it is declared
+						// today is multiple="true" on the app's edit-template et2-select-cat,
+						// which is invisible from here - so the call site has to say.
+						'multiple' => (bool)$multiple,
+						'globals' => (bool)$globals,
+						'parentCat' => $parent_id ?: null,
+						// action ids the dialog builds, matching what the sub-menu used to send:
+						// multiple -> <prefix>add_<id> / <prefix>del_<id> / <prefix>set_<csv>,
+						// single   -> <prefix><id>, and <prefix> alone to clear it
+						'prefix' => $prefix,
+					),
+				),
+			);
+		}
 		$cat = new Api\Categories(null,$app);
 		$cats = $cat->return_sorted_array($start=0, false, '', 'ASC', 'cat_name', $globals, $parent_id, true);
 

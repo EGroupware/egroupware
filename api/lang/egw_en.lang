@@ -243,6 +243,7 @@ cape verde	common	en	CAPE VERDE
 caption	common	en	Caption
 categories	common	en	Categories
 categories for	common	en	Categories for
+categories set	common	en	Categories set
 category	common	en	Category
 category %1 has been added !	common	en	Category %1 has been added!
 category %1 has been updated !	common	en	Category %1 has been updated!
@@ -1310,6 +1311,7 @@ server error	common	en	Server error
 server is unwilling to perform.	common	en	Server is unwilling to perform.
 server name	common	en	Server name
 session has been killed	common	en	Session has been killed.
+set	common	en	Set
 set as default	common	en	Set as default
 set these columns as the default	common	en	Set these columns as the default
 set user as only responsible user, but keeping groups	groupdav	en	Set user as only responsible user, but keeping groups

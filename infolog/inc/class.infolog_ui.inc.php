@@ -1401,8 +1401,11 @@ class infolog_ui
 						'onExecute' => 'javaScript:app.infolog.ajax_action',
 						'icon' => 'completed',
 					),
+					// info_cat holds exactly ONE category (action() assigns it), so the dialog
+					// offers Set/Remove rather than Add/Remove/Replace
 					'cat' =>  Etemplate\Widget\Nextmatch::category_action(
-						'infolog',$group,'Change category','cat_'
+						'infolog',$group,'Change category','cat_',
+						true, 0, Etemplate\Widget\Nextmatch::DEFAULT_MAX_MENU_LENGTH, false
 					),
 					'startdate' => array(
 						'caption' => 'Start date',

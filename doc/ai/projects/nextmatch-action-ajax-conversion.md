@@ -13,7 +13,7 @@ Two related problems with nextmatch context-menu actions, found together:
    response. Some of these are conceptually unbounded, others merely grow with the
    installation until one day they are too long - and nothing notices when that happens.
 
-Status: **phases 0-3 done** (Proposals D and E included). Phase 4 (Proposal A) next.
+Status: **phases 0-4 done** (Proposals A, D and E included). Phase 5 (Proposal B) next.
 
 ---
 
@@ -728,7 +728,7 @@ in this project - handled by Proposal D like any other oversized submenu. `share
 | 1 | **DONE.** addressbook (`lists/*`, `merge`, `merge_duplicates`, `move_to/*`, `shared_with/*`, `change_type/*`, `undelete`, `delete`) and infolog (`close`, `close_all`, `change/{type,status,completion}/*`, `undelete`) | The two reported cases. Core repo |
 | 2 | **DONE.** tracker (the biggest single list), calendar, filemanager x3, projectmanager x2 | Highest-traffic remainder. Cross-repo: tracker and projectmanager are separate |
 | 3 | **DONE.** Proposal D (generic overflow dialog) + Proposal E (the `…` affordance) | Independent of 1-2 and of each app. E ships with D because D removes the chevron those entries have today. E's menu half reaches legacy apps too |
-| 4 | **Proposal A** - `Nextmatch::category_action()` picker dialog (both cardinality shapes), then move the reachable call sites | Biggest single reduction |
+| 4 | **DONE.** Proposal A - `Nextmatch::category_action()` picker dialog, both cardinality shapes, 5 call sites moved | Biggest single reduction |
 | 5 | **Proposal B** - distribution-list dialog | Addressbook-specific, needs the phase 1 endpoint. `move_to`/`shared_with` need no bespoke dialog - Proposal D covers them |
 | 6 | The `open_popup` bucket | Needs the dialog to return values without a template submit - a different job |
 | 7 | The remaining reachable apps: importexport, esyncpro, smallpart (`questions`), news_admin (`index`), stylite (`placetel`), mail's `copyto` | Low traffic, mechanical |
@@ -940,6 +940,43 @@ Four things worth knowing:
   "Move to addressbook".
 * `enabled: javaScript:...` children are re-evaluated for the current selection when the dialog
   opens, so it does not offer options a menu would have hidden.
+
+### Proposal A - as built
+
+`category_action()` takes an 8th parameter `$multiple`: leaving it null keeps the historic
+sub-menu (so an unconverted caller still works, and a long list still gets Proposal D's generic
+picker), while `true`/`false` returns a single leaf action carrying
+`data['nm_action'] = 'categories'` plus the settings the dialog needs. `CategoryAction` +
+`api/templates/default/category_action.xet` do the rest, using `et2-select-cat`, which fetches
+its own options - that is where the payload saving comes from.
+
+Converted: **addressbook** (multiple - its *two* sub-menus, "Add category" and "Delete category",
+collapse into one action), **infolog**, **timesheet**, **projectmanager_ui** and **records**
+(all single). `projectmanager_elements_ui` deliberately left on the sub-menu: its
+`ajax_action()` has a different signature (`$data` where the others take `$all_selected`), so it
+needs its own endpoint work first; Proposal D collapses it meanwhile.
+
+Verified live: addressbook shows one `Categories…` leaf with **Add / Remove / Replace** over a
+`multiple` picker; infolog shows **Set / Remove** over a single one, and picking a category
+sends `cat_2282` while Remove sends the bare `cat_` - the action ids the existing per-app
+`action()` handlers already understand. Menu action links for an addressbook row dropped from
+**418 to 284**.
+
+Three things worth knowing:
+
+* **Replace needed a real server handler** (`cat_set_<csv>` in addressbook). Deliberately not a
+  `cat_del` of everything followed by a `cat_add`: that writes each contact twice and logs two
+  history entries for one user action.
+* **"Remove" on a single-category app is new only in being reachable.** The handlers already did
+  the right thing for an empty value - infolog even has a `lang('removed category')` branch -
+  but `category_action()` never emitted a "None" entry, so nothing could reach it.
+* **Two apps had to lose an `onExecute`.** timesheet copied status' handler onto `cat`, and
+  `projectmanager_ui` used `change_status`; either would have run *instead of* opening the
+  dialog, since a leaf action's own `onExecute` pre-empts the controller's default executor.
+
+Also fixed a phase-2 oversight it exposed: **tracker's `change/cat` is not a `category_action()`
+at all** - its children come from `get_tracker_labels('cat')`, ie. tracker's own labels - so it
+was never Proposal A's to convert and simply needed the same ajax handler as its siblings.
 
 ### Proposal D - the bug that only a real context menu showed
 

@@ -1228,8 +1228,10 @@ class timesheet_ui extends timesheet_bo
 				'icon' => 'copy',
 				'group' => $group,
 			),
+			// cat_id holds exactly ONE category (action() assigns it), so Set/Remove
 			'cat' => Etemplate\Widget\Nextmatch::category_action(
-				'timesheet',++$group,'Change category','cat_'
+				'timesheet',++$group,'Change category','cat_',
+				true, 0, Etemplate\Widget\Nextmatch::DEFAULT_MAX_MENU_LENGTH, false
 			),
 			'status' => array(
 				'icon' => 'apply',
@@ -1242,7 +1244,9 @@ class timesheet_ui extends timesheet_bo
 			),
 		);
 		// Change category via AJAX
-		$actions['cat']['onExecute'] = $actions['status']['onExecute'];
+		// NOT $actions['cat']['onExecute'] = ... any more: the category action is now a
+		// picker dialog (nm_action=categories) which dispatches to ajax_action itself, and an
+		// onExecute here would run instead of opening it
 
 		// Other Api\Applications
 		$group++;
