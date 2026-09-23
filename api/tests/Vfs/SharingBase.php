@@ -458,13 +458,7 @@ class SharingBase extends LoggedInTest
 	 */
 	protected function invalidateWebserverCache() : void
 	{
-		// TEMPORARY: prove which provider carries the signal, and that the key really changes
-		$before = Api\Cache::keys(Api\Cache::INSTANCE)[0];
-		$key = Api\Cache::generate_instance_key();
-		error_log(sprintf("CACHEPROBE tree=%s instance=%s temp_dir=%s\n  before=%s\n  after =%s\n  reread=%s",
-			Api\Cache::getProvider(Api\Cache::TREE), Api\Cache::getProvider(Api\Cache::INSTANCE),
-			var_export($GLOBALS['egw_info']['server']['temp_dir'] ?? null, true),
-			$before, $key, Api\Cache::keys(Api\Cache::INSTANCE)[0]));
+		Api\Cache::generate_instance_key();
 	}
 
 	/**

@@ -745,34 +745,9 @@ jobs:
                 php -r '\''$fp=@fsockopen("127.0.0.1",8081,$errno,$errstr,0.2); if($fp){fclose($fp); exit(0);} exit(1);'\'' && break
                 sleep 1
               done
-              # TEMPORARY cache diagnostic: the shared tree cache is what lets the test process
-              # invalidate the instance cache of the webserver, so show what each side resolves.
-              # Nothing here may fail the job - it is diagnostics, not a check.
-              set +e
-              echo "=== cache probe: where are we ==="
-              pwd; ls -la .github/ 2>&1 | head -8
-              if [ -f .github/ci-cache-probe.php ]; then
-                cp .github/ci-cache-probe.php "$PWD/_ci-cache-probe.php"
-                echo "=== cache probe: test runner (CLI) ==="
-                php "$PWD/_ci-cache-probe.php" 2>&1 | head -6
-                echo "=== cache probe: webserver ==="
-                curl -s http://127.0.0.1:8081/_ci-cache-probe.php 2>&1 | head -6
-                echo "=== cache probe: after a CLI bump ==="
-                php "$PWD/_ci-cache-probe.php" --bump 2>&1 | tail -1
-                curl -s http://127.0.0.1:8081/_ci-cache-probe.php 2>&1 | grep "instance key"
-                rm -f "$PWD/_ci-cache-probe.php"
-              else
-                echo "probe file not present in the checkout"
-              fi
-              set -e
 
               set +e
-              # TEMPORARY --log-events-text: PHPUnit 12.5.23 dies with "Call to undefined method
-              # BeforeFirstTestMethodFailed::test()" when a setUpBeforeClass() fails, and takes the
-              # whole failure list with it - the end-of-run summary, which is also where --testdox
-              # prints, never happens.  The event log is written as the run goes, so it survives.
-              # Remove once the failure is understood.
-              php vendor/bin/phpunit --configuration "$PHPUNIT_CONFIG" --log-events-text /tmp/phpunit-events.txt
+              php vendor/bin/phpunit --configuration "$PHPUNIT_CONFIG"
               rc=$?
               set -e
               # Drop the push endpoint and the per-connection Accepted/Closing pairs before
@@ -784,9 +759,6 @@ jobs:
               # error_log is unset, so PHP sends these to stderr and they land here - but a
               # request that dies never gets its "[500]:" line written, so neither a tail nor a
               # search anchored on the status code will find them.
-              echo "=== phpunit events: failures and errors ==="
-              grep -iE "(Test|Test Suite|Before First Test Method|After Last Test Method).*(Failed|Errored)" \
-                /tmp/phpunit-events.txt | head -n 100 || true
               echo "=== php built-in server log: fatal errors ==="
               grep -nE "Fatal error|Uncaught|Segmentation|Allowed memory size|Parse error|core dumped" \
                 /tmp/egw-phpunit-http.log | tail -n 60 || true
