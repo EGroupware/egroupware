@@ -897,8 +897,8 @@ is defensible; `cat/*` is Proposal A's job; `export/*` and `kanban` belong to ot
   `filemanager_ui::action()`, the same route `delete` already used. `filemanager_shares` and
   `Filemanager\Jobs` had no ajax endpoint and got one each.
 * **projectmanager**: `delete`/`undelete` reuse `app.projectmanager.change_status`, already
-  wired to its `ajax_action()`. `projectmanager_elements_ui`'s `delete`/`sync_all` needed two
-  new cases in its static `ajax_action()`.
+  wired to its `ajax_action()`. `projectmanager_elements_ui`'s `delete`/`sync_all` were
+  converted and then **reverted** - see "Building fixtures" below.
 
 Two traps worth recording:
 
@@ -1011,6 +1011,49 @@ is unchanged.
 Its teardown also has to call `Contacts::delete()` **twice**: the first call only marks
 `tid = 'D'` (the "deleted" bin), so a single call would leave every fixture visible in the
 address book. One test asserts the fixture is really gone, so that cannot rot silently.
+
+### Building fixtures for the endpoints that had never run
+
+Four new endpoints had been written and shipped without ever executing against a real row.
+Giving each one a fixture found something in three of them.
+
+**`tracker_ui::ajax_action()`** (`tracker/tests/AjaxActionTest.php`, 5 tests) - fine. Creates a
+ticket in the first configured queue, closes it, checks completion, and pins that `_targetapp`
+is a real app name.
+
+**`filemanager_shares::ajax_delete()` and `Filemanager\Jobs::ajax_action()`**
+(`filemanager/tests/AjaxActionTest.php`, 4 tests) - both fine. The jobs list lives in the
+filemanager *config* rather than a table, so the test snapshots the whole `jobs` value and puts
+it back, or a failed assertion would leave a stray job in a real user's list.
+
+**`projectmanager_elements_ui::ajax_action()`'s `delete`/`sync_all` - REVERTED to submit.** Two
+independent blockers, both found by trying to test it:
+
+* `projectmanager_bo::check_acl()` opens with `if (!$pm_id) return $required != Acl::DELETE;`
+  ("new entry, everything allowed"). The endpoint has no project to construct the UI with - it
+  receives untrusted `pe_id`s - so delegating to `action('delete')`, which guards itself with
+  `$this->project->check_acl(Acl::ADD)`, makes that check **pass unconditionally**. The submit
+  path never had the problem because `index()` always has a project loaded. Confirmed directly:
+  `check_acl(ADD, '')` returns `true`.
+* Checking each element against its *own* project instead needs to find the element from a
+  `pe_id` alone, and `(pm_id, pe_id)` is the composite key - `pe_id` is an `egw_links` link_id.
+  A `search(['pe_id' => ...])` for it returned nothing, so that version would have deleted
+  nothing at all.
+
+Building the fixture also ran into a pre-existing breakage worth recording: linking an entry to
+a project does **not** create the element row under PHPUnit, because
+`Link::run_notifies()` -> `projectmanager_elements_bo::notify()` throws
+"Call to a member function get_table_definitions() on null". So the normal creation path cannot
+be used in a test as things stand.
+
+Left on submit rather than shipping either an ACL bypass or an action that silently does
+nothing. `sync_all` is worse still - it acts on a whole *project*, which an ajax request has no
+trustworthy way to name.
+
+**A third by-reference trap**, after `save()` and this: `infolog_bo::write()` also takes
+`&$values_in`, so it cannot be handed an inline array either. Three of these in one codebase is
+a pattern, not an accident - check the signature before calling any `save()`/`write()` with a
+literal.
 
 ### Proposal D - the bug that only a real context menu showed
 

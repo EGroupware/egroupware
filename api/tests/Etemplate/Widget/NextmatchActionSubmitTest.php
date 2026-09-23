@@ -114,12 +114,18 @@ class NextmatchActionSubmitTest extends LoggedInTest
 			'delete',
 			'update'
 		],
-		// cat/* is Proposal A's job (phase 4); 'erole' only exists when the enable_eroles config
-		// is on, and is a container (not a leaf) when it is - it is here because this instance has
-		// the config off
+		// 'erole' only exists when the enable_eroles config is on, and is a container (not a leaf)
+		// when it is - it is here because this instance has the config off.
+		// delete/sync_all were converted and then REVERTED: projectmanager_bo::check_acl() returns
+		// true for everything but DELETE when no project is loaded, so an ajax endpoint (which has
+		// no project, only untrusted pe_ids) skips the permission check entirely - and a
+		// per-element check cannot identify the element from pe_id alone, since (pm_id, pe_id) is
+		// the composite key. Left on submit rather than shipping either hole.
 		'projectmanager_elements_ui' => [
 			'cat/*',
-			'erole'
+			'delete',
+			'erole',
+			'sync_all'
 		],
 		// FOUND, NOT FIXED: this 'delete' has no server-side handler at all -
 		// projectmanager_pricelist_ui extends projectmanager_pricelist_bo, not the UI class that
