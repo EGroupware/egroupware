@@ -738,6 +738,18 @@ jobs:
                 php -r '\''$fp=@fsockopen("127.0.0.1",8081,$errno,$errstr,0.2); if($fp){fclose($fp); exit(0);} exit(1);'\'' && break
                 sleep 1
               done
+              # TEMPORARY cache diagnostic: the shared tree cache is what lets the test process
+              # invalidate the webserver's instance cache, so show what each side resolves.
+              cp .github/ci-cache-probe.php "$PWD/_ci-cache-probe.php"
+              echo "=== cache probe: test runner (CLI) ==="
+              php "$PWD/_ci-cache-probe.php"
+              echo "=== cache probe: webserver ==="
+              curl -s http://127.0.0.1:8081/_ci-cache-probe.php
+              echo "=== cache probe: after a CLI bump ==="
+              php "$PWD/_ci-cache-probe.php" --bump | tail -1
+              curl -s http://127.0.0.1:8081/_ci-cache-probe.php | grep "instance key"
+              rm -f "$PWD/_ci-cache-probe.php"
+
               set +e
               # TEMPORARY --log-events-text: PHPUnit 12.5.23 dies with "Call to undefined method
               # BeforeFirstTestMethodFailed::test()" when a setUpBeforeClass() fails, and takes the
