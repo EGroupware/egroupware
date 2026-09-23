@@ -31,7 +31,7 @@
                 </row>
                 <row>
                     <et2-description></et2-description>
-                    <et2-button  label="Ok" tabindex="6" id="button[ok]" class="button_ok" onclick="jQuery('table.editname').css('display','none'); jQuery('#'+form::name('org_name')).focus(); return false;" image="check"></et2-button>
+                    <et2-button  label="Ok" tabindex="6" id="button[ok]" class="button_ok" onclick="document.querySelectorAll('table.editname').forEach(el => el.style.display='none'); document.getElementById(form::name('org_name')).focus(); return false;" image="check"></et2-button>
                 </row>
             </rows>
         </grid>
