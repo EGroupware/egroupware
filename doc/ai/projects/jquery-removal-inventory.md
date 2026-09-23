@@ -77,8 +77,10 @@ no inline style at all. Changed to `preview.style.display = 'flex'` (explicit, m
 jQuery's old `.show()` used to compute automatically). Both fixes live-verified end-to-end
 (addressbook CSV export preview loads and closes correctly, zero console errors). **Confirmed
 present in the `26` branch too** (`Et2Html.ts` and `importexport/js/app.ts` are byte-identical
-between `master` and `26` before this fix) — 26 releases 2026-09-24, so this needs an explicit
-decision on backporting.
+between `master` and `26` before this fix) — 26 releases 2026-09-24. Cherry-picked to 26
+(a4d9da1eac, via `/Users/ralf/egw-26-checkout`) and pushed 2026-09-23 — the
+`doc/ai/projects/jquery-removal-inventory.md` half of the original master commit was dropped from
+the pick (that file doesn't exist on 26, it's master-only project tracking).
 
 | App | Repo | Files | What |
 |---|---|---|---|
