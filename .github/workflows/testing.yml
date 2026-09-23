@@ -740,15 +740,24 @@ jobs:
               done
               # TEMPORARY cache diagnostic: the shared tree cache is what lets the test process
               # invalidate the webserver's instance cache, so show what each side resolves.
-              cp .github/ci-cache-probe.php "$PWD/_ci-cache-probe.php"
-              echo "=== cache probe: test runner (CLI) ==="
-              php "$PWD/_ci-cache-probe.php"
-              echo "=== cache probe: webserver ==="
-              curl -s http://127.0.0.1:8081/_ci-cache-probe.php
-              echo "=== cache probe: after a CLI bump ==="
-              php "$PWD/_ci-cache-probe.php" --bump | tail -1
-              curl -s http://127.0.0.1:8081/_ci-cache-probe.php | grep "instance key"
-              rm -f "$PWD/_ci-cache-probe.php"
+              # Nothing here may fail the job - it is diagnostics, not a check.
+              set +e
+              echo "=== cache probe: where are we ==="
+              pwd; ls -la .github/ 2>&1 | head -8
+              if [ -f .github/ci-cache-probe.php ]; then
+                cp .github/ci-cache-probe.php "$PWD/_ci-cache-probe.php"
+                echo "=== cache probe: test runner (CLI) ==="
+                php "$PWD/_ci-cache-probe.php" 2>&1 | head -6
+                echo "=== cache probe: webserver ==="
+                curl -s http://127.0.0.1:8081/_ci-cache-probe.php 2>&1 | head -6
+                echo "=== cache probe: after a CLI bump ==="
+                php "$PWD/_ci-cache-probe.php" --bump 2>&1 | tail -1
+                curl -s http://127.0.0.1:8081/_ci-cache-probe.php 2>&1 | grep "instance key"
+                rm -f "$PWD/_ci-cache-probe.php"
+              else
+                echo "probe file not present in the checkout"
+              fi
+              set -e
 
               set +e
               # TEMPORARY --log-events-text: PHPUnit 12.5.23 dies with "Call to undefined method
