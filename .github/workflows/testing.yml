@@ -733,7 +733,12 @@ jobs:
                 sleep 1
               done
               set +e
-              php vendor/bin/phpunit --configuration "$PHPUNIT_CONFIG"
+              # TEMPORARY --log-events-text: PHPUnit 12.5.23 dies with "Call to undefined method
+              # BeforeFirstTestMethodFailed::test()" when a setUpBeforeClass() fails, and takes the
+              # whole failure list with it - the end-of-run summary, which is also where --testdox
+              # prints, never happens.  The event log is written as the run goes, so it survives.
+              # Remove once the failure is understood.
+              php vendor/bin/phpunit --configuration "$PHPUNIT_CONFIG" --log-events-text /tmp/phpunit-events.txt
               rc=$?
               set -e
               # Drop the push endpoint and the per-connection Accepted/Closing pairs before
@@ -745,6 +750,9 @@ jobs:
               # error_log is unset, so PHP sends these to stderr and they land here - but a
               # request that dies never gets its "[500]:" line written, so neither a tail nor a
               # search anchored on the status code will find them.
+              echo "=== phpunit events: failures and errors ==="
+              grep -iE "(Test|Test Suite|Before First Test Method|After Last Test Method).*(Failed|Errored)" \
+                /tmp/phpunit-events.txt | head -n 100 || true
               echo "=== php built-in server log: fatal errors ==="
               grep -nE "Fatal error|Uncaught|Segmentation|Allowed memory size|Parse error|core dumped" \
                 /tmp/egw-phpunit-http.log | tail -n 60 || true
