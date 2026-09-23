@@ -750,6 +750,54 @@ converted action, in a real browser:
 3. Assert the nextmatch widget instance is **the same object** afterwards, the scroll offset
    is unchanged, and the filters/search are unchanged.
 
+### Verification run (2026-09-23)
+
+Every converted action driven through the real context menu on disposable fixtures, one app at a
+time, with the nextmatch instance tagged beforehand so "same object afterwards" is checked rather
+than assumed. All of them passed that check, kept their filters and search, and updated only the
+rows they touched (confirmed against the database each time - no action reached a row outside the
+filter).
+
+| App | Driven |
+| --- | --- |
+| addressbook | Categories dialog (Add multi / Replace / Remove), distribution-list dialog (Add, Remove, filter pre-fill), Move to address book (with and without "Copy instead of move"), Share into addressbook + Unshare, Type, Delete, Delete selected distribution list, Select all |
+| infolog | Close, Status, Change category (Set + the bare "Remove"), Delegation, Start date, Due date, Links, Delete, Select all |
+| tracker | Completed, Category (Proposal D dialog), Assigned to, Multiple changes, Close, Select all |
+| timesheet | Change category, Modify status, Delete, Select all |
+| calendar | Change your status (set and set back) |
+
+"Select all" was scoped by a search matching only the fixtures in every case, and the result
+message named exactly that many entries - eg. 2 of 261 contacts, with the database confirming no
+other row was modified.
+
+Three bugs only this run could have found:
+
+1. **`csv_export` stuck in the stored nextmatch value** (`Nextmatch::ajax_get_rows()`). It is a
+   per-request instruction to `get_rows()` - "do not cache this query in the session" - set for a
+   single-row refresh, but the change-detection loop at the end of the method wrote every changed
+   key back into the persisted request content. One refresh armed it and every later query then
+   claimed to be one, so `get_rows()` stopped caching the query for the rest of the session.
+   Nothing looked wrong: the list kept returning the right rows. But everything that reads that
+   cache - a "select all" expansion, addressbook's `delete_list` - silently used whichever filters
+   were in force when the page was opened. Since ajax context-menu actions refresh exactly one
+   row, the conversion is what arms it: the first action on a list poisoned every action after it.
+   Symptom that led there: "Delete selected distribution list" answering *"You need to select a
+   distribution list"* with one plainly selected. Covered by
+   `NextmatchTest::testCsvExportFlagDoesNotSurviveIntoTheNextQuery()`.
+2. **Popup inputs resolved against the whole template** (`EgwApp.submit_action_popup()`). A popup's
+   input is free to carry the same id as a filter in the list header, and infolog's do: the
+   Start/Due date popups hold `<et2-date-time id="startdate">` while the filter area holds
+   `<et2-date id="startdate">`. `this.et2.getWidgetById()` found the filter, which is empty, so
+   "set the start date" **cleared** it. Now looked up inside `<action>_popup` first.
+3. **Calendar's endpoint is not on `<app>_ui`** - it lives on `calendar_uilist`, and the actions
+   never declared a `menuaction`, so every one of them answered *"calendar.calendar_ui.ajax_action
+   is not a valid menuaction"* (400) and did nothing. `EgwApp.ajax_action()` now walks up the
+   action's ancestors for the menuaction, the way `onExecute` is inherited, so a container declares
+   it once for its whole submenu. Covered by `calendar/tests/AjaxActionTest.php`.
+
+Not driven in the browser: filemanager's Shares and Jobs lists, which are covered end to end by
+`filemanager/tests/AjaxActionTest.php` (it creates and deletes a real share and a real job).
+
 The action manager can be walked at runtime to list what still resolves to submit:
 leaf actions with `type === "popup"`, no `data.url`, no `data.egw_open`,
 `data.nm_action === undefined`, and whose `onExecute.functionToPerform` is the controller's
