@@ -614,23 +614,24 @@ class addressbook_ui extends addressbook_bo
 		if (($add_lists = $this->get_lists(Acl::EDIT)))	// do we have distribution lists?, and are we allowed to edit them
 		{
 			$actions['lists']['children'] += array(
+				// One dialog replacing a sub-menu with an entry per list PLUS a separate
+				// "Remove from distribution list". That removal carried no list id: the server
+				// fell back to $query['filter2'], ie. whichever list the filter dropdown happened
+				// to show - which is why it had to be disabled unless one was selected, and why
+				// you could not remove a contact from a list you were not filtered to. The dialog
+				// names the list, so it means what it says.
 				'to_list' => array(
-					'caption' => 'Add to distribution list',
-					'children' => $add_lists,
-					'prefix' => 'to_list_',
-					'onExecute' => 'javaScript:app.addressbook.ajax_action',
+					'caption' => 'Add to or remove from list',
 					'icon' => 'foldertree_nolines_plus',
-					'enabled' => ($add_lists?true:false), // if there are editable lists, allow to add a contact to one of them,
-					//'disableClass' => 'rowNoEdit',	  // wether you are allowed to edit the contact or not, as you alter a list, not the contact
-				),
-				'remove_from_list' => array(
-					'caption' => 'Remove from distribution list',
-					'confirm' => 'Remove selected contacts from distribution list',
-					'onExecute' => 'javaScript:app.addressbook.ajax_action',
-					'icon' => 'foldertree_nolines_minus',
-					'enabled' => 'javaScript:app.addressbook.nm_compare_field',
-					'fieldId' => 'exec[nm][filter2]',
-					'fieldValue' => '!',	// enable if list != ''
+					'data' => array(
+						'nm_action' => 'distribution_lists',
+						'distributionLists' => array(
+							// fetched when the dialog opens, not shipped with every get_rows()
+							'optionsMenuaction' => 'addressbook.addressbook_ui.ajax_distribution_lists',
+							'addPrefix' => 'to_list_',
+							'removePrefix' => 'remove_from_list_',
+						),
+					),
 				),
 				'rename_list' => array(
 					'caption' => 'Rename selected distribution list',
@@ -652,7 +653,6 @@ class addressbook_ui extends addressbook_bo
 			);
 			if(is_subclass_of('etemplate', 'etemplate_new'))
 			{
-				$actions['lists']['children']['remove_from_list']['fieldId'] = 'filter2';
 				$actions['lists']['children']['rename_list']['fieldId'] = 'filter2';
 				$actions['lists']['children']['delete_list']['fieldId'] = 'filter2';
 			}
@@ -1299,6 +1299,27 @@ class addressbook_ui extends addressbook_bo
 		Api\Json\Response::get()->data($new_id == $list_id ? "true" : $new_id);
 	}
 
+	/**
+	 * The distribution lists the user may add to / remove from, for the list dialog
+	 *
+	 * Fetched when the dialog opens rather than shipped with every get_rows() response: as a
+	 * sub-menu this was one action per list, which on an installation with a few hundred lists is
+	 * both unusable and a large part of the actions payload.
+	 *
+	 * @param bool $editable_only true for the add/remove dialog (Acl::EDIT), false for a filter
+	 */
+	public function ajax_distribution_lists($editable_only = true)
+	{
+		$lists = $this->get_lists($editable_only ? Acl::EDIT : Acl::READ);
+
+		$options = [];
+		foreach((array)$lists as $list_id => $label)
+		{
+			$options[] = ['value' => (string)$list_id, 'label' => $label];
+		}
+		Api\Json\Response::get()->data($options);
+	}
+
 	function ajax_get_list_owner($list_id)
 	{
 		$owner = $this->getOwner(null);
@@ -1422,6 +1443,7 @@ class addressbook_ui extends addressbook_bo
 		//echo "<p>uicontacts::action('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n";
 		$success = $failed = 0;
 		$error_msg = null;
+		$from_list = null;
 		if ($use_all || in_array($action,array('remove_from_list','delete_list','unshare')))
 		{
 			// get the whole selection
@@ -1443,6 +1465,13 @@ class addressbook_ui extends addressbook_bo
 		if (substr($action,0,8) == 'move_to_')
 		{
 			$action = (int)substr($action,8).(substr($action,-1) == 'p' ? 'p' : '');
+		}
+		elseif (substr($action,0,17) === 'remove_from_list_')
+		{
+			// the dialog names the list explicitly; the old sub-menu action had no id and fell
+			// back to whatever filter2 happened to be (see the handler below)
+			$from_list = (int)substr($action, 17);
+			$action = 'remove_from_list';
 		}
 		elseif (substr($action,0,8) == 'to_list_')
 		{
@@ -1664,14 +1693,18 @@ class addressbook_ui extends addressbook_bo
 
 				case 'remove_from_list':
 					$action_msg = lang('removed from distribution list');
-					if (!$query['filter2'])
+					// remove_from_list_<id> names the list; the bare remove_from_list (the old
+					// sub-menu entry) silently used whichever list the filter2 dropdown happened
+					// to be showing, which is why it had to be disabled unless one was selected
+					$list = $from_list ?: ($query['filter2'] ?? null);
+					if (!$list)
 					{
 						$msg = lang('You need to select a distribution list');
 						return false;
 					}
 					else
 					{
-						$Ok = $this->remove_from_list($id,$query['filter2']) !== false;
+						$Ok = $this->remove_from_list($id, $list) !== false;
 					}
 					break;
 

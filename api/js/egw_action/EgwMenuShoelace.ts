@@ -319,7 +319,9 @@ export class EgwMenuShoelace extends LitElement
 	 *   that a confirmation alone gets no ellipsis, and marking those too would water the
 	 *   indicator down to "something will happen", which is no information at all.
 	 */
-	private static readonly PROMPTS_FOR_INPUT = ["select_children", "categories", "open_popup"];
+	private static readonly PROMPTS_FOR_INPUT = [
+		"select_children", "categories", "distribution_lists", "open_popup",
+	];
 
 	/**
 	 * A trailing ellipsis for an action that opens a dialog to collect options.

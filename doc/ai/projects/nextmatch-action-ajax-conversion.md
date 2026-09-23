@@ -13,7 +13,7 @@ Two related problems with nextmatch context-menu actions, found together:
    response. Some of these are conceptually unbounded, others merely grow with the
    installation until one day they are too long - and nothing notices when that happens.
 
-Status: **phases 0-4 done** (Proposals A, D and E included). Phase 5 (Proposal B) next.
+Status: **phases 0-5 done** (Proposals A, B, D and E included). Phases 6-7 remain.
 
 ---
 
@@ -729,7 +729,7 @@ in this project - handled by Proposal D like any other oversized submenu. `share
 | 2 | **DONE.** tracker (the biggest single list), calendar, filemanager x3, projectmanager x2 | Highest-traffic remainder. Cross-repo: tracker and projectmanager are separate |
 | 3 | **DONE.** Proposal D (generic overflow dialog) + Proposal E (the `…` affordance) | Independent of 1-2 and of each app. E ships with D because D removes the chevron those entries have today. E's menu half reaches legacy apps too |
 | 4 | **DONE.** Proposal A - `Nextmatch::category_action()` picker dialog, both cardinality shapes, 5 call sites moved | Biggest single reduction |
-| 5 | **Proposal B** - distribution-list dialog | Addressbook-specific, needs the phase 1 endpoint. `move_to`/`shared_with` need no bespoke dialog - Proposal D covers them |
+| 5 | **DONE.** Proposal B - distribution-list dialog | Addressbook-specific. `move_to`/`shared_with` need no bespoke dialog - Proposal D covers them |
 | 6 | The `open_popup` bucket | Needs the dialog to return values without a template submit - a different job |
 | 7 | The remaining reachable apps: importexport, esyncpro, smallpart (`questions`), news_admin (`index`), stylite (`placetel`), mail's `copyto` | Low traffic, mechanical |
 | - | admin, records, invoices, kanban, bookmarks, aitools, aiassistant, developer, stylite `calls`, webauthn, openid, phpbrain, schulmanager, smallpart `courses` | **Blocked on `et2-nextmatch-conversion.md`** - not scheduled here |
@@ -1011,6 +1011,33 @@ is unchanged.
 Its teardown also has to call `Contacts::delete()` **twice**: the first call only marks
 `tid = 'D'` (the "deleted" bin), so a single call would leave every fixture visible in the
 address book. One test asserts the fixture is really gone, so that cannot rot silently.
+
+### Proposal B - as built
+
+One `Add to or remove from list...` entry replaces a 37-entry sub-menu *and* the separate
+"Remove from distribution list". `DistributionListAction` +
+`api/templates/default/distribution_list_action.xet`, dispatched by
+`nm_action = 'distribution_lists'`.
+
+**It fixes a real usability hole, not just the menu.** The old removal carried no list id at
+all: `action()` fell back to `$query['filter2']`, ie. whichever list the filter dropdown happened
+to be showing. That is why the entry had to be disabled unless a list was selected there, and
+why a contact could not be removed from a list you were not already filtered to. A new
+`remove_from_list_<id>` action id names the list; the bare id keeps the filter2 fallback so
+nothing unconverted changes.
+
+The options are fetched when the dialog opens (`ajax_distribution_lists()`) instead of
+travelling with every `get_rows()` response - the point of replacing a per-list sub-menu is not
+to send the lists at all. Menu action links for an addressbook row are now **246**, down from
+418 before this work and 284 after Proposal A.
+
+`rename_list` and `delete_list` stay separate menu entries: they act on the *filter*, not on the
+selection, so they are a different operation and already ajax.
+
+Covered by `addressbook/tests/DistributionListActionTest.php` (5 tests), including the one that
+matters - removing with an explicitly EMPTY cached query, which is what proves the id comes from
+the action and not from the filter - plus the bare-id fallback and the refuse-when-nothing-named
+case.
 
 ### Building fixtures for the endpoints that had never run
 
