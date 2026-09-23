@@ -24,8 +24,21 @@ namespace EGroupware\Api\Vfs;
  *  - and made a share of that mount depend on the webserver being able to read a path it has no
  *    business having rights to.
  *
- * A copy in the temp directory is owned by whoever is running, world-writable, and thrown away
- * afterwards, so none of the above applies.
+ * The copy is world-writable, owned by whoever is running, and thrown away afterwards, so none of
+ * the above applies.
+ *
+ * It lives under the EGroupware installation root rather than in the system temp directory,
+ * because a share of the mount is fetched over HTTP and the webserver has to be able to read the
+ * very same absolute path: the two are not always the same machine or the same container, and
+ * then /tmp is not shared - the test creates the directory, the webserver stats a path that does
+ * not exist for it, and the share 404s.  The installation root is the one directory the webserver
+ * is guaranteed to see, since it is what it serves.
+ *
+ * The name is deliberately stable rather than per-process.  Vfs::mount() persists the mount to
+ * egw_config, and a webserver that has already cached its configuration keeps resolving the
+ * mount to whatever path it cached; a stable name still points at a directory that exists.
+ * Two suites running against one instance already collide on the mount point itself, so this
+ * adds no new restriction.
  */
 trait FilesystemFixtureTrait
 {
@@ -35,6 +48,11 @@ trait FilesystemFixtureTrait
 	 * @var string[]
 	 */
 	protected $fs_fixture_copies = [];
+
+	/**
+	 * Where the copies go, relative to the EGroupware installation root - gitignored
+	 */
+	const FIXTURE_COPY_DIR = '.vfs-test-mounts';
 
 	/**
 	 * A writable copy of the filesystem fixture
@@ -49,7 +67,13 @@ trait FilesystemFixtureTrait
 			$this->fail("Missing filesystem test directory 'api/tests/fixtures/Vfs/filesystem_mount'");
 		}
 
-		$copy = sys_get_temp_dir() . '/egw_fs_mount_' . getmypid() . '_' . count($this->fs_fixture_copies);
+		$copy = realpath(__DIR__ . '/../../..') . '/' . self::FIXTURE_COPY_DIR . '/mount_' .
+			count($this->fs_fixture_copies);
+		if(!is_dir($parent = dirname($copy)) && !mkdir($parent, 0777, true) && !is_dir($parent))
+		{
+			$this->fail("Could not create the filesystem fixture copy directory '$parent'");
+		}
+		@chmod($parent, 0777);
 		self::removeDirectory($copy);
 		if(!mkdir($copy, 0777, true))
 		{

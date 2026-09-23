@@ -88,15 +88,6 @@ class SharingBackendTest extends SharingBase
 	 */
 	public function testFilesystemReadonly()
 	{
-		// A share of a filesystem mount 404s when fetched: the WebDAV layer answers
-		// "Content-disposition: inline; filename=\"\"" - it resolved the share to nothing and
-		// served it as a nameless file rather than the filemanager UI.  The share session
-		// remounts the share at its own root, and this share's VFS path only maps to the
-		// filesystem backend through an fstab entry that session does not have; a share of
-		// sqlfs needs no such mapping, which is why every other backend here passes.
-		$this->markTestSkipped('Share of a filesystem mount 404s - the share session cannot resolve the mount');
-		return;
-
 		// Don't add to files list or it deletes the folder from filesystem
 		$dir = Vfs::get_home_dir() . '/filesystem_share/';
 
@@ -107,8 +98,10 @@ class SharingBackendTest extends SharingBase
 		$mounted = $this->checkDirectory($dir, Sharing::READONLY);
 
 		// Test folder in filesystem already has this file in it
-		// It should be picked up normally, but an explicit check can't hurt
-		$this->checkOneFile('/filesystem_test.txt', Sharing::READONLY);
+		// It should be picked up normally, but an explicit check can't hurt.
+		// checkDirectory() returns where the share got mounted - an anonymous share is never
+		// mounted at the root, so the file is under that, not at '/'
+		$this->checkOneFile($mounted . '/filesystem_test.txt', Sharing::READONLY);
 	}
 
 	/**
@@ -116,15 +109,6 @@ class SharingBackendTest extends SharingBase
 	 */
 	public function testFilesystemWritable()
 	{
-		// A share of a filesystem mount 404s when fetched: the WebDAV layer answers
-		// "Content-disposition: inline; filename=\"\"" - it resolved the share to nothing and
-		// served it as a nameless file rather than the filemanager UI.  The share session
-		// remounts the share at its own root, and this share's VFS path only maps to the
-		// filesystem backend through an fstab entry that session does not have; a share of
-		// sqlfs needs no such mapping, which is why every other backend here passes.
-		$this->markTestSkipped('Share of a filesystem mount 404s - the share session cannot resolve the mount');
-		return;
-
 		// Don't add to files list or it deletes the folder from filesystem
 		$dir = Vfs::get_home_dir() . '/filesystem_share/';
 
@@ -135,8 +119,10 @@ class SharingBackendTest extends SharingBase
 		$mounted = $this->checkDirectory($dir, Sharing::WRITABLE);
 
 		// Test folder in filesystem already has this file in it
-		// It should be picked up normally, but an explicit check can't hurt
-		$this->checkOneFile('/filesystem_test.txt', Sharing::WRITABLE);
+		// It should be picked up normally, but an explicit check can't hurt.
+		// checkDirectory() returns where the share got mounted - an anonymous share is never
+		// mounted at the root, so the file is under that, not at '/'
+		$this->checkOneFile($mounted . '/filesystem_test.txt', Sharing::WRITABLE);
 	}
 
 	/**

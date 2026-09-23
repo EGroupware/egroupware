@@ -718,7 +718,13 @@ jobs:
             -w "$EGW_SRC_DIR" egroupware \
             bash -lc '
               set -euo pipefail
-              php -S 127.0.0.1:8081 -t "$PWD" "$PWD/.github/ci-router.php" > /tmp/egw-phpunit-http.log 2>&1 &
+              # apc.enabled=0: the built-in server runs under the "cli-server" SAPI, which has APCu
+              # on even though apc.enable_cli is 0, while PHPUnit (SAPI "cli") uses the file cache.
+              # They would then not share an instance cache, and a Vfs mount a test creates - which
+              # is persisted through Api\Config, and so through that cache - would be invisible to
+              # the server serving the share of it.  Turning APCu off here drops the server back to
+              # the same file cache PHPUnit uses.
+              php -d apc.enabled=0 -S 127.0.0.1:8081 -t "$PWD" "$PWD/.github/ci-router.php" > /tmp/egw-phpunit-http.log 2>&1 &
               server_pid=$!
               trap "kill $server_pid 2>/dev/null || true" EXIT
 

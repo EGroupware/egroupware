@@ -675,6 +675,30 @@ class SharingBase extends LoggedInTest
 	}
 
 	/**
+	 * Extra explanation for a share link that answered with no content
+	 *
+	 * A 404 from the WebDAV layer means the share session did not resolve the share's path.  When
+	 * the share is of a mount the test itself created, that is most often the webserver answering
+	 * from a cached configuration rather than anything wrong with the share: Vfs mounts are
+	 * persisted through Api\Config, which caches in APCu for a webserver but in files for the CLI,
+	 * so the two only agree if they share an instance cache.
+	 *
+	 * @param int $http_code
+	 * @param string[] $response_headers
+	 * @return string appended to the failure message, empty if it does not apply
+	 */
+	protected function noContentHint(int $http_code, array $response_headers) : string
+	{
+		if($http_code !== 404 || !preg_grep('/^X-WebDAV-Status: 404/i', $response_headers))
+		{
+			return '';
+		}
+		return "\nThe WebDAV layer answered 404, so the share session did not resolve the path." .
+			"\nIf the share is of a mount this test created, check the webserver is not serving a" .
+			"\ncached vfs_fstab - it needs to share an instance cache with the test process.";
+	}
+
+	/**
 	 * Test to make sure that a directory link leads to a limited filemanager
 	 * interface (not a file or 404).
 	 *
@@ -724,7 +748,8 @@ class SharingBase extends LoggedInTest
 			{
 				$this->noWebserverResponse("No webserver response for share link '$link' (curl errno $curl_errno: $curl_error)");
 			}
-			$this->fail("Share link '$link' returned no content (HTTP $http_code, effective URL '$effective_url')" . $header_dump);
+			$this->fail("Share link '$link' returned no content (HTTP $http_code, effective URL '$effective_url')" .
+				$header_dump . $this->noContentHint($http_code, $response_headers));
 		}
 
 		// Parse & check for nextmatch
@@ -906,7 +931,8 @@ class SharingBase extends LoggedInTest
 				$this->noWebserverResponse("No webserver response for share link '$link' (curl errno $curl_errno: $curl_error)");
 			}
 			// An empty body with a real HTTP status is the blank-page the recipient sees
-			$this->fail("Share link '$link' returned no content (HTTP $http_code, effective URL '$effective_url')" . $header_dump);
+			$this->fail("Share link '$link' returned no content (HTTP $http_code, effective URL '$effective_url')" .
+				$header_dump . $this->noContentHint($http_code, $response_headers));
 		}
 
 		// Parse & check for nextmatch
