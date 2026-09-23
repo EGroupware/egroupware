@@ -13,7 +13,7 @@ Two related problems with nextmatch context-menu actions, found together:
    response. Some of these are conceptually unbounded, others merely grow with the
    installation until one day they are too long - and nothing notices when that happens.
 
-Status: **phase 0 done** (see section 5). Phases 1+ not started.
+Status: **phases 0-1 done** (see section 5). Phase 2 next.
 
 ---
 
@@ -725,7 +725,7 @@ in this project - handled by Proposal D like any other oversized submenu. `share
 | Phase | Scope | Rationale |
 | --- | --- | --- |
 | 0 | **DONE.** `EgwApp.ajax_action()` + the `data.menuaction` convention; `api/tests/Etemplate/Widget/NextmatchActionSubmitTest.php` (baselined); the console warning when an action resolves to `nm_action: "submit"` unasked | Everything else depends on this `api` version; stops the pattern silently coming back |
-| 1 | **addressbook** (`lists/*`, `merge*`, `move_to`, `change_type`, `undelete`, `view_org`, `view_duplicates`) and **infolog** (`close`, `close_all`, `change/{type,status,completion}/*`, `undelete`) | The two reported cases. Core repo |
+| 1 | **DONE.** addressbook (`lists/*`, `merge`, `merge_duplicates`, `move_to/*`, `shared_with/*`, `change_type/*`, `undelete`, `delete`) and infolog (`close`, `close_all`, `change/{type,status,completion}/*`, `undelete`) | The two reported cases. Core repo |
 | 2 | **tracker** (83 - the biggest single list), calendar, filemanager, projectmanager x3 | Highest-traffic remainder. Cross-repo: tracker and projectmanager are separate |
 | 3 | **Proposal D** - generic overflow dialog (`egw_actions()` threshold + `appendToTree()` skip + `select_children` case + one shared `.xet` + the 4-level `data['selectDialog']` override + `SelectChildrenAction.open()` as a reusable helper), **plus Proposal E** - the `…` affordance in `EgwMenuShoelace.itemTemplate()` | Independent of 1-2 and of each app. E ships with D because D removes the chevron those entries have today. E's menu half reaches legacy apps too |
 | 4 | **Proposal A** - `Nextmatch::category_action()` picker dialog (both cardinality shapes), then move the reachable call sites | Biggest single reduction |
@@ -839,6 +839,77 @@ Phase 2 is cross-repo from the start, because **tracker - the single biggest lis
 actions - is a separate repo**. Any shared-API change (phases 0, 3) lands in `api` first and
 every per-app commit depends on that version, so the `api` change should go in on its own and
 be verified before the per-app sweep starts.
+
+### Phase 1 - as built
+
+Both apps' actions now carry `'onExecute' => 'javaScript:app.<app>.ajax_action'`. Setting it on
+a *container* (`to_list`, `move_to`, `shared_with`, `change_type`, and infolog's
+`change/type|status|completion`) converts every generated child in one line, exactly as the
+inheritance lever promises.
+
+Deliberately not set on infolog's `change` container itself: it also holds the
+`nm_action => 'open_popup'` children (`startdate`, `enddate`, `responsible`, `link`), and an
+inherited `onExecute` runs *instead of* the default executor, so their popups would never open.
+Set it on the individual sub-containers instead.
+
+Four things this turned up:
+
+* **`EgwApp.ajax_action()` had to grow a checkbox guard.** `egw_actions()` applies inherited
+  attributes with `$action += $default_attrs` to *every* child, checkbox children included - so
+  `move_to`'s "Copy instead of move" and `shared_with`'s "Share writable" inherited the handler
+  and would have fired a real action on being ticked. The method now returns early for
+  `_action.checkbox`, the same guard `executeNextmatchAction()` opens with.
+* **Checkbox values had to be sent.** A submit passes them; the first version of
+  `ajax_action()` did not, which would have silently broken "Copy instead of move",
+  "Share writable" and infolog's "Do not notify". They now travel as a 4th argument, collected
+  the same way the controller collects them.
+* **Two pre-existing bugs in `addressbook_ui::ajax_action()`**, both fixed: its 4th parameter
+  was declared `$skip_notification` and passed straight into `action()`'s `$checkboxes` slot
+  (harmless only while no converted action read it - `move_to_*` and `shared_with_*` both do),
+  and its messages said "event(s)", copy-pasted from calendar. It also only sent
+  `Response::message()`, not `egw.refresh()`, so a converted action would not have updated any
+  row.
+* **`select_all` was broken in infolog's `ajax_action()`** - it passed `[]` as the query, so
+  `action()`'s `get_rows()` ran with no filters at all, ie. every InfoLog the user can see. It
+  now passes the query `get_rows()` cached in the session, the same one `index()` restores on a
+  submit.
+
+`app.addressbook.action` was deleted: its only case was `delete`, its 4th argument
+(`no_notifications`) referenced an action addressbook does not have, and the inherited
+`ajax_action` does the job.
+
+Not converted, with reasons: `view_org`/`view_duplicates` switch the list to a different rows
+template rather than acting on the selection - they are not `action()` operations and a redraw
+is defensible; `cat/*` is Proposal A's job; `export/*` and `kanban` belong to other apps.
+
+### A live bug found on the way: the `msg-only-push-refresh` sentinel
+
+`egw.refresh()`'s 2nd argument doubles as a "message only, push will deliver the rest"
+sentinel, but several apps pass that same value as its 5th argument (`_targetapp`) too:
+
+```php
+$app = Api\Json\Push::onlyFallback() || $all_selected ? 'infolog' : 'msg-only-push-refresh';
+Api\Json\Response::get()->call('egw.refresh', $msg, $app, $id, $type, $app, null, null, $msg_type);
+```
+
+`refresh()` resolves `_targetapp` at `egw_message.ts:392` - *before* `this.message()` on 394 and
+before the msg-only early-return on 397 - and kdots' `egw_appWindow()` does
+`this.loadApp(appname).iframe`, which throws for a name that is not an app. So the user never
+sees the result message at all; it is not just console noise.
+
+Confirmed live against infolog's `delete` action, which predates this work. Fixed here for
+addressbook and infolog by keeping the sentinel in the 2nd argument only and always passing the
+real app name as the 5th. **Still present in timesheet, calendar and projectmanager** (x2) -
+spun off as its own task rather than widening this commit.
+
+### Found, not fixed: `close` and `close_all` are the same thing
+
+`infolog_ui::action()` does `list($action, $settings) = explode('_', $_action, 2)`, so
+`close_all` arrives as action `close` with settings `all` - and `case 'close'` ignores
+`$settings`, calling `$this->close($id, '', false, ...)`. That third argument is `$closesingle`,
+and `false` means *also close the sub-entries*. So plain "Close" closes subs too, and the two
+actions are indistinguishable. Pre-existing, unrelated to transport, and changing it would
+change behaviour users may rely on - left alone deliberately.
 
 ### Phase 0's regression test - as built
 

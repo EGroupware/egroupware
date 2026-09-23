@@ -628,6 +628,7 @@ class addressbook_ui extends addressbook_bo
 					'caption' => 'Add to distribution list',
 					'children' => $add_lists,
 					'prefix' => 'to_list_',
+					'onExecute' => 'javaScript:app.addressbook.ajax_action',
 					'icon' => 'foldertree_nolines_plus',
 					'enabled' => ($add_lists?true:false), // if there are editable lists, allow to add a contact to one of them,
 					//'disableClass' => 'rowNoEdit',	  // wether you are allowed to edit the contact or not, as you alter a list, not the contact
@@ -635,6 +636,7 @@ class addressbook_ui extends addressbook_bo
 				'remove_from_list' => array(
 					'caption' => 'Remove from distribution list',
 					'confirm' => 'Remove selected contacts from distribution list',
+					'onExecute' => 'javaScript:app.addressbook.ajax_action',
 					'icon' => 'foldertree_nolines_minus',
 					'enabled' => 'javaScript:app.addressbook.nm_compare_field',
 					'fieldId' => 'exec[nm][filter2]',
@@ -651,6 +653,7 @@ class addressbook_ui extends addressbook_bo
 				'delete_list' => array(
 					'caption' => 'Delete selected distribution list!',
 					'confirm' => 'Delete selected distribution list!',
+					'onExecute' => 'javaScript:app.addressbook.ajax_action',
 					'icon' => 'delete',
 					'enabled' => 'javaScript:app.addressbook.nm_compare_field',
 					'fieldId' => 'exec[nm][filter2]',
@@ -688,6 +691,7 @@ class addressbook_ui extends addressbook_bo
 				'caption' => 'Move to addressbook',
 				'children' => $move2addressbooks,
 				'prefix' => 'move_to_',
+				'onExecute' => 'javaScript:app.addressbook.ajax_action',
 				'group' => $group,
 				'disableClass' => 'rowNoDelete',
 				'hideOnMobile' => true
@@ -729,11 +733,13 @@ class addressbook_ui extends addressbook_bo
 				],
 				'prefix' => 'shared_with_',
 				'group' => $group,
-				'hideOnMobile' => true
+				'hideOnMobile' => true,
+				'onExecute' => 'javaScript:app.addressbook.ajax_action',
 			];
 		}
 		$actions['change_type'] = $this->change_type_actions($group);
 		$actions['merge'] = array(
+			'onExecute' => 'javaScript:app.addressbook.ajax_action',
 			'caption' => 'Merge contacts',
 			'confirm' => 'Merge into first or account, deletes all other!',
 			'hint' => 'Merge into first or account, deletes all other!',
@@ -744,6 +750,7 @@ class addressbook_ui extends addressbook_bo
 		);
 		// Duplicates view
 		$actions['merge_duplicates'] = array(
+			'onExecute' => 'javaScript:app.addressbook.ajax_action',
 			'caption'	=> 'Merge duplicates',
 			'group'		=> $group,
 			'allowOnMultiple'	=> true,
@@ -977,7 +984,7 @@ class addressbook_ui extends addressbook_bo
 				'confirm_multiple' => 'Delete these entries',
 				'group' => $group,
 				'disableClass' => 'rowNoDelete',
-				'onExecute' => 'javaScript:app.addressbook.action',
+				'onExecute' => 'javaScript:app.addressbook.ajax_action',
 			);
 		}
 		if ($this->grants[0] & Acl::DELETE)
@@ -996,6 +1003,7 @@ class addressbook_ui extends addressbook_bo
 		if($tid_filter == 'D')
 		{
 			$actions['undelete'] = array(
+				'onExecute' => 'javaScript:app.addressbook.ajax_action',
 				'caption' => 'Un-delete',
 				'icon' => 'revert',
 				'group' => $group,
@@ -1044,6 +1052,7 @@ class addressbook_ui extends addressbook_bo
 			'caption' => 'Type',
 			'children' => $types,
 			'prefix' => 'to_type_',
+			'onExecute' => 'javaScript:app.addressbook.ajax_action',
 			'group' => $group,
 			'disableClass' => 'rowNoEdit',
 			'hideOnDisabled' => true,
@@ -1347,29 +1356,52 @@ class addressbook_ui extends addressbook_bo
 	}
 
 	/**
-	 * Apply an action to multiple events, but called via AJAX instead of submit
+	 * Apply an action to multiple contacts, but called via AJAX instead of submit
+	 *
+	 * Unlike a submit this leaves the list standing, so it keeps its scroll position, selection
+	 * and row state - egw.refresh() below updates only the rows that changed.
 	 *
 	 * @param string $action
 	 * @param string[] $selected
-	 * @param bool $all_selected All entries are selected, not just what's in $selected
-	 * @param bool $skip_notification
+	 * @param bool $all_selected All contacts matching the current filters are selected, not just $selected
+	 * @param array $checkboxes values of the checkbox actions in the same menu: move_to_copy
+	 *	("Copy instead of move") and writable ("Share writable")
+	 * @param string $session_name which list this came from, 'index' or 'select' - action() reads the
+	 *	query get_rows() cached under it for filter2/filter, see below
 	 */
-	public function ajax_action($action, $selected, $all_selected, $skip_notification = false)
+	public function ajax_action($action, $selected, $all_selected, array $checkboxes = [], $session_name = 'index')
 	{
 		$success = 0;
 		$failed = 0;
 		$action_msg = '';
-		$session_name = 'index';
+		$error_msg = null;
+		// Only the two lists that have a nextmatch, so a crafted request cannot point action() at
+		// an arbitrary session key
+		if (!in_array($session_name, ['index', 'select'], true)) $session_name = 'index';
 
-		if($this->action($action, $selected, $all_selected, $success, $failed, $action_msg, $session_name, $msg, $skip_notification))
+		// $checkboxes is action()'s 9th argument, NOT the 4th. This used to be declared as
+		// `$skip_notification = false` and passed straight through, which silently landed a bool
+		// in the $checkboxes slot - harmless only because no ajax-converted action read it yet.
+		// move_to_* (move_to_copy) and shared_with_* (writable) both do.
+		if($this->action($action, $selected, $all_selected, $success, $failed, $action_msg,
+			$session_name, $msg, $checkboxes, $error_msg))
 		{
-			$msg = lang('%1 event(s) %2',$success,$action_msg);
+			$msg = lang('%1 contact(s) %2', $success, $action_msg);
 		}
 		elseif(is_null($msg))
 		{
-			$msg .= lang('%1 event(s) %2, %3 failed because of insufficient rights !!!',$success,$action_msg,$failed);
+			$msg = empty($error_msg) ?
+				lang('%1 contact(s) %2, %3 failed because of insufficent rights !!!', $success, $action_msg, $failed) :
+				lang('%1 contact(s) %2, %3 failed because of %4 !!!', $success, $action_msg, $failed, $error_msg);
 		}
-		Api\Json\Response::get()->message($msg);
+		// egw.refresh()'s 2nd argument doubles as the "message only, push will do the rest"
+		// sentinel, but its 5th (_targetapp) must always be a real app: egw_appWindow() is
+		// called on it BEFORE the msg-only early-return, and resolving 'msg-only-push-refresh'
+		// throws in the kdots framework - which aborts refresh() before it ever shows $msg.
+		$push_app = Api\Json\Push::onlyFallback() || $all_selected ? 'addressbook' : 'msg-only-push-refresh';
+		Api\Json\Response::get()->call('egw.refresh', $msg, $push_app, $selected[0] ?? null,
+			$all_selected || count($selected) > 1 ? null : ($action === 'delete' ? 'delete' : 'update'),
+			'addressbook', null, null, $failed ? 'error' : 'success');
 	}
 
 	/**

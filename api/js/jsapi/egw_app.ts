@@ -1414,11 +1414,25 @@ export abstract class EgwApp
 	 *
 	 *	'data' => ['menuaction' => 'EGroupware\\Invoices\\Ui::ajax_action'],
 	 *
+	 * The checkbox actions in the same menu are sent along as a 4th argument, the same way a
+	 * submit passes them: several actions are modified by one ("Do not notify", "Copy instead of
+	 * move", "Share writable"), and they would otherwise be silently dropped by the conversion -
+	 * a checkbox that no longer does anything is worse than one that is not offered.
+	 *
 	 * @param _action action that was executed; _action.id is passed to the server as the action
 	 * @param _senders selected rows, ids in the "<app>::<id>" uid format
 	 */
 	ajax_action(_action : EgwAction, _senders : EgwActionObject[] = [])
 	{
+		// Setting this on a container makes Nextmatch::egw_actions() push it onto EVERY child
+		// (`$action += $default_attrs`), checkbox children included - eg. move_to's "Copy instead
+		// of move" and shared_with's "Share writable". Ticking one of those must only record the
+		// value for the next real action, never run one. Et2NextmatchActionController's own
+		// executeNextmatchAction() opens with the same guard.
+		if((<any>_action).checkbox)
+		{
+			return;
+		}
 		// The controller sets data.nextmatch on the action it executes, but a child reached
 		// through a submenu carries it on its parent, and an action fired outside a row context
 		// (eg. a placeholder action on an empty list) has neither - fall back to our own nm.
@@ -1427,10 +1441,17 @@ export abstract class EgwApp
 		const menuaction = _action?.data?.menuaction ||
 			this.appname + "." + this.appname + "_ui.ajax_action";
 
+		const checkboxes = {};
+		for(const checkbox of (_action.getManager?.()?.getActionsByAttr?.("checkbox", true) || []))
+		{
+			checkboxes[checkbox.id] = (<any>checkbox).checked || false;
+		}
+
 		return this.egw.request(menuaction, [
 			_action.id,
 			ids,
-			(<Et2Nextmatch>nm)?.getSelection?.().all === true
+			(<Et2Nextmatch>nm)?.getSelection?.().all === true,
+			checkboxes
 		]);
 	}
 

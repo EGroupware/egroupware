@@ -618,32 +618,6 @@ class AddressbookApp extends EgwApp
 	}
 
 	/**
-	* Actions via ajax
-	*
-	* @param {egwAction} _action
-	* @param {egwActionObject[]} _selected
-	*/
-	action(_action : egwAction, _selected : egwActionObject[])
-	{
-		const all = _action.parent.data.nextmatch?.getSelection().all;
-		// "checked" is set dynamically at runtime (via updateAction()), not part of EgwAction's declared shape
-		const no_notifications = (<any>_action.parent.getActionById("no_notifications"))?.checked || false;
-		const ids = [];
-		// Loop so we get just the app's ID
-		for(let i = 0; i < _selected.length; i++)
-		{
-			const id = _selected[i].id;
-			ids.push(id.split("::").pop());
-		}
-		switch(_action.id)
-		{
-			case 'delete':
-				egw.request("addressbook.addressbook_ui.ajax_action",[_action.id, ids, all, no_notifications]);
-				break;
-		}
-	}
-
-	/**
 	 * [More...] in phones clicked: copy allways shown phone numbers to phone popup
 	 *
 	 * @param {Event} _event

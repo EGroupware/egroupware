@@ -87,16 +87,14 @@ class NextmatchActionSubmitTest extends LoggedInTest
 		'EGroupware\\Stylite\\Calls' => [
 			'delete'
 		],
+		// cat/* is Proposal A's job (phase 4). view_org/view_duplicates switch the list to a
+		// different rows template rather than acting on the selection, so they are not action()
+		// operations at all and stay a redraw - see the doc. export/kanban belong to other apps.
 		'addressbook_ui' => [
 			'cat/cat_add/*',
 			'cat/cat_del/*',
-			'change_type/*',
 			'export/*',
 			'kanban',
-			'merge',
-			'merge_duplicates',
-			'move_to/*',
-			'shared_with/*',
 			'view_duplicates',
 			'view_org'
 		],
@@ -124,13 +122,9 @@ class NextmatchActionSubmitTest extends LoggedInTest
 			'createexport',
 			'delete'
 		],
+		// change/cat/* is Proposal A's job (phase 4), not phase 1's
 		'infolog_ui' => [
-			'change/cat/*',
-			'change/completion/*',
-			'change/status/*',
-			'change/type/*',
-			'close',
-			'close_all'
+			'change/cat/*'
 		],
 		'news_admin_gui' => [
 			'delete'
