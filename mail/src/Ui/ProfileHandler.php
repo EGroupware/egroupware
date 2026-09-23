@@ -131,7 +131,15 @@ class ProfileHandler
 				// doc/ai/projects/mail-jmap-jam-websocket.md for the full design.
 				if (!($bootstrap['enableWsPush'] = Api\Json\Push::onlyFallback()))
 				{
-					self::enablePush($imapServer, $resolvedID);
+					// this account's OWN mail-server push capability (NOT to be confused with
+					// enableWsPush/Api\Json\Push::onlyFallback() above, which is about whether
+					// EGroupware itself has a working push-server) - told to the client so
+					// MailJmap.syncAutorefresh() can disable the row list's periodic polling
+					// timer whenever real push already covers it (ticket: "Ständiger reload vom
+					// Posteingang", 2026-09-23 - this mechanism existed in the classic
+					// server-rendered nextmatch, mail_ui::get_rows(), and was dropped when that
+					// method was removed during the full client-side JMAP migration)
+					$bootstrap['pushAvailable'] = self::enablePush($imapServer, $resolvedID);
 				}
 			}
 			$response->data($bootstrap);
@@ -191,19 +199,24 @@ class ProfileHandler
 	 *
 	 * @param Api\Mail\Imap $imapServer already-resolved server object (jmapBootstrap() has one)
 	 * @param int|string $icServerID profile / server ID
+	 * @return bool whether this account's mail server actually supports push (whether or not
+	 *  registering it below then succeeds) - jmapBootstrap() forwards this to the client
 	 */
-	private static function enablePush($imapServer, $icServerID) : void
+	private static function enablePush($imapServer, $icServerID) : bool
 	{
 		try
 		{
-			if ($imapServer instanceof Api\Mail\Imap\PushIface && $imapServer->pushAvailable())
+			$available = $imapServer instanceof Api\Mail\Imap\PushIface && $imapServer->pushAvailable();
+			if ($available)
 			{
 				$imapServer->enablePush(null, $icServerID.Ui::$delimiter.'INBOX');
 			}
+			return $available;
 		}
 		catch (\Exception $e)
 		{
 			_egw_log_exception($e);
+			return false;
 		}
 	}
 

@@ -41,6 +41,12 @@ interface JmapToken
 	// directly, server-side), since there's nothing working to lose: no regression risk even if a
 	// given browser's WebSocket also doesn't connect.
 	enableWsPush : boolean;
+	// true if THIS account's own mail server supports push (ProfileHandler::jmapBootstrap(), via
+	// Api\Mail\Imap\PushIface::pushAvailable()) - only meaningful/set when enableWsPush is false
+	// (the classic server-relayed subscription path); see syncAutorefresh()'s own docblock for
+	// why this is NOT the same thing as egw.pushAvailable() (EGroupware's own general push
+	// infrastructure, an installation-wide concern unrelated to any one mail account).
+	pushAvailable : boolean;
 	// see ProfileHandler::THREADING_ENABLED's docblock (doc/ai/projects/mail-threaded-view.md,
 	// Phase 1) - false for every account until that work ships; also currently doubles as the
 	// "this account's backend doesn't support thread grouping yet" gate (Phase 1 is real-JMAP
@@ -2008,6 +2014,7 @@ export class MailJmap
 			return MailJmap.emptyRowsResult();
 		}
 		this.enablePushOnce(selectedFolder);
+		this.syncAutorefresh(selectedFolder);
 		const data : Record<string, any> = {};
 		result.rows.forEach((row) => data[row.row_id] = row);
 
@@ -2064,6 +2071,52 @@ export class MailJmap
 			console.error('MailJmap.enablePushOnce(): client-side WS push setup failed', e);
 			delete this.pushEnabled[profileID];
 		});
+	}
+
+	/**
+	 * Keep the row list's Et2Nextmatch autorefresh timer in sync with whether $selectedFolder's
+	 * OWN mail server supports push - NOT to be confused with egw.pushAvailable() (whether
+	 * EGroupware itself has a working push-server/fallback at the installation level, a
+	 * completely different, general-framework concern). Deliberately re-evaluated on every single
+	 * row fetch (same granularity the classic, now-removed mail_ui::get_rows() used, see git
+	 * history/doc/ai memory) rather than once at bootstrap - the ONE Et2Nextmatch instance is
+	 * shared across every account the user switches between, some of which may support push and
+	 * some not.
+	 *
+	 * A mail server "supports push" here via either of the two distinct transports
+	 * ProfileHandler::jmapBootstrap() already establishes per account: the classic server-relayed
+	 * JMAP/IMAP push subscription (token.pushAvailable, set from
+	 * Api\Mail\Imap\PushIface::pushAvailable() - for plain IMAP that's the admin-configured
+	 * "imap_hosts_with_push" allowlist, since there's no way to detect IMAP push support
+	 * otherwise), or this account's own client-side WS connection directly to a real JMAP server
+	 * (token.enableWsPush, only reached at all when the *installation* has no working push-server,
+	 * Api\Json\Push::onlyFallback()). token.enableWsPush is deliberately trusted only for a real
+	 * JMAP/Stalwart account (!token.isLocal) - it is set installation-wide, independent of any one
+	 * account's own server, but a plain IMAP/local-shim account's JMAP session never advertises a
+	 * websocket capability at all (see the client constructor's transformWebSocketUrl() docblock),
+	 * so the connection this would rely on never actually opens for one; trusting it there would
+	 * wrongly disable autorefresh even for an IMAP server that was never on the admin's allowlist.
+	 * jmapBootstrap() itself never even computes token.pushAvailable when enableWsPush is true, so
+	 * this can't double-count either way.
+	 *
+	 * Found live 2026-09-23 via a real customer forum report (help.egroupware.org, "26.9.20260922
+	 * Ständiger reload vom Posteingang" - many users hit high CPU/constant visible reloads): this
+	 * whole mechanism existed in the classic server-rendered nextmatch (commits 9a005ab7c0/
+	 * 6bd87cafb5, 2020) but was silently dropped when mail_ui::get_rows() was removed during the
+	 * full client-side JMAP migration - confirmed by a dangling, now-orphaned docblock comment
+	 * that used to sit directly above the deleted method, still present in app.ts's checkET2().
+	 */
+	private syncAutorefresh(selectedFolder : string) : void
+	{
+		const profileID = selectedFolder.split('::', 1)[0];
+		const token = this.tokens[profileID];
+		const disable = !!(token && ((token.enableWsPush && !token.isLocal) || token.pushAvailable));
+		const nm : any = this.app.et2?.getWidgetById(this.app.nm_index);
+		if (!nm || nm.settings?.disable_autorefresh === disable)
+		{
+			return;
+		}
+		nm.settings.disable_autorefresh = disable;
 	}
 
 	/**
@@ -4674,6 +4727,7 @@ export class MailJmap
 						templatesFolder: data.templatesFolder,
 						outboxFolder: data.outboxFolder,
 						enableWsPush: !!data.enableWsPush,
+						pushAvailable: !!data.pushAvailable,
 						hasComposePrepareHook: !!data.hasComposePrepareHook,
 					};
 					if (Object.keys(token.customLabels).length)
