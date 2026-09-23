@@ -1393,6 +1393,48 @@ export abstract class EgwApp
 	}
 
 	/**
+	 * Run a nextmatch action over ajax, instead of submitting the whole eTemplate.
+	 *
+	 * A nextmatch action that declares no onExecute, url or egw_open falls through to
+	 * nm_action = "submit" (Et2NextmatchActionController), which posts the template back to the
+	 * server and re-renders it from scratch: a brand new nextmatch, so scroll position,
+	 * selection and row state are all lost. Wiring the action up with
+	 * 'onExecute' => 'javaScript:app.<app>.ajax_action' instead sends just the action id and the
+	 * selected ids, and the server answers with egw.refresh(), which updates the affected rows
+	 * in place and leaves the rest of the list alone.
+	 *
+	 * Setting this on a *container* action converts its whole submenu in one line, because
+	 * Nextmatch::egw_actions() inherits onExecute down to every child - including children built
+	 * at runtime from a variable, which is where most of the volume is.
+	 *
+	 * The server method is read from the action's data, falling back to the
+	 * "<app>.<app>_ui.ajax_action" convention. It has to be declared for apps that do not match
+	 * that convention (namespaced classes like EGroupware\Invoices\Ui, or a second list class
+	 * like projectmanager_elements_ui):
+	 *
+	 *	'data' => ['menuaction' => 'EGroupware\\Invoices\\Ui::ajax_action'],
+	 *
+	 * @param _action action that was executed; _action.id is passed to the server as the action
+	 * @param _senders selected rows, ids in the "<app>::<id>" uid format
+	 */
+	ajax_action(_action : EgwAction, _senders : EgwActionObject[] = [])
+	{
+		// The controller sets data.nextmatch on the action it executes, but a child reached
+		// through a submenu carries it on its parent, and an action fired outside a row context
+		// (eg. a placeholder action on an empty list) has neither - fall back to our own nm.
+		const nm = _action?.parent?.data?.nextmatch || _action?.data?.nextmatch || this.nm;
+		const ids = _senders.map(sender => (sender?.id || "").split("::").pop()).filter(Boolean);
+		const menuaction = _action?.data?.menuaction ||
+			this.appname + "." + this.appname + "_ui.ajax_action";
+
+		return this.egw.request(menuaction, [
+			_action.id,
+			ids,
+			(<Et2Nextmatch>nm)?.getSelection?.().all === true
+		]);
+	}
+
+	/**
 	 * Initializes actions and handlers on sidebox (delete)
 	 *
 	 * @param {jQuery} sidebox jQuery of DOM node

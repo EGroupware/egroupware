@@ -1238,6 +1238,19 @@ export class Et2NextmatchActionController implements ReactiveController
 		action.data.nextmatch = this.host;
 		if(typeof action.data.nm_action === "undefined" && (action as any).type === "popup")
 		{
+			// An action that declares no onExecute, url, egw_open or nm_action lands here, and
+			// "submit" posts the whole template back and re-renders it - a brand new nextmatch,
+			// losing scroll position, selection and row state.  That is almost never what the
+			// action author intended, and nothing in the action definition says it will happen,
+			// so say so.  Silence it by declaring the behaviour: an app handler
+			// ('onExecute' => 'javaScript:app.<app>.ajax_action'), or an explicit
+			// 'nm_action' => 'submit' for the few that really do want a full redraw.
+			et2_warnOnce(this.host, "nm-action-submit-fallthrough:" + action.id,
+				`Action '${action.id}' falls through to nm_action="submit", which rebuilds the ` +
+				"whole template and loses the list's scroll position and selection. Give it an " +
+				"onExecute (see EgwApp.ajax_action) or declare nm_action explicitly.",
+				action
+			);
 			action.data.nm_action = "submit";
 		}
 

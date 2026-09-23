@@ -13,7 +13,7 @@ Two related problems with nextmatch context-menu actions, found together:
    response. Some of these are conceptually unbounded, others merely grow with the
    installation until one day they are too long - and nothing notices when that happens.
 
-Status: **design/plan only, no code written.**
+Status: **phase 0 done** (see section 5). Phases 1+ not started.
 
 ---
 
@@ -724,7 +724,7 @@ in this project - handled by Proposal D like any other oversized submenu. `share
 
 | Phase | Scope | Rationale |
 | --- | --- | --- |
-| 0 | `EgwApp.ajax_action()` + the `data.menuaction` convention; the baseline regression test; the dev-mode warning when an action resolves to `nm_action: "submit"` unasked. Lands in `api` on its own | Everything else depends on this `api` version; stops the pattern silently coming back |
+| 0 | **DONE.** `EgwApp.ajax_action()` + the `data.menuaction` convention; `api/tests/Etemplate/Widget/NextmatchActionSubmitTest.php` (baselined); the console warning when an action resolves to `nm_action: "submit"` unasked | Everything else depends on this `api` version; stops the pattern silently coming back |
 | 1 | **addressbook** (`lists/*`, `merge*`, `move_to`, `change_type`, `undelete`, `view_org`, `view_duplicates`) and **infolog** (`close`, `close_all`, `change/{type,status,completion}/*`, `undelete`) | The two reported cases. Core repo |
 | 2 | **tracker** (83 - the biggest single list), calendar, filemanager, projectmanager x3 | Highest-traffic remainder. Cross-repo: tracker and projectmanager are separate |
 | 3 | **Proposal D** - generic overflow dialog (`egw_actions()` threshold + `appendToTree()` skip + `select_children` case + one shared `.xet` + the 4-level `data['selectDialog']` override + `SelectChildrenAction.open()` as a reusable helper), **plus Proposal E** - the `…` affordance in `EgwMenuShoelace.itemTemplate()` | Independent of 1-2 and of each app. E ships with D because D removes the chevron those entries have today. E's menu half reaches legacy apps too |
@@ -840,7 +840,39 @@ actions - is a separate repo**. Any shared-API change (phases 0, 3) lands in `ap
 every per-app commit depends on that version, so the `api` change should go in on its own and
 be verified before the per-app sweep starts.
 
-### Phase 0's regression test
+### Phase 0's regression test - as built
+
+`api/tests/Etemplate/Widget/NextmatchActionSubmitTest.php`. 41 target classes; 40 reachable,
+the one exception recorded in its `UNREACHABLE` const (`EGroupware\Mail\Ui::get_actions()`
+reads `$this->mail_bo->getArchiveFolder()`, which needs a live IMAP/JMAP profile - mail is
+covered by the live browser check instead, where it has exactly one fall-through).
+
+Three things the throw-away version got wrong, all fixed here and worth not re-learning:
+
+* **`newInstanceWithoutConstructor()` silently skipped the 7 apps that matter most** -
+  addressbook, infolog, calendar, tracker, projectmanager, news_admin, mail - because their
+  `get_actions()` reads members the constructor sets. The test now really constructs them
+  (checked side-effect free: they build a bo/Etemplate and read config/prefs; `calendar_ui`'s
+  `manage_states()` only *reads* saved states). Mail is the only one left, and it is asserted.
+* **Admin-only lists depend on who runs the test.** `admin_categories` and `esyncpro_ui` throw
+  `NoPermission\Admin` for a non-admin user, so that exception is caught and skipped rather
+  than recorded - otherwise the baseline would not be portable between instances.
+* **Action paths carry instance data.** `cat/cat_add/cat_add_sub_2255/...` embeds category ids
+  and a tree depth that vary per install. `collapse()` reduces every nested path to its parent
+  family, truncating at the first digit-bearing segment.
+
+The remaining environment sensitivity is handled by only hard-failing in **one** direction:
+a *new* fall-through fails the test; a baseline entry that does **not** appear only prints a
+notice (with `EGW_TEST_VERBOSE`). Addressbook's `lists/*` actions, for instance, only exist
+`if (($add_lists = $this->get_lists(Acl::EDIT)))` - a user with no editable distribution lists
+never builds them, and that must not be a failure.
+
+Verified it actually catches a regression by adding a bare `['caption' => ...]` action to
+timesheet (a currently-clean app) and confirming the test named it, then reverting.
+
+---
+
+The original notes on why this harness is the right guard:
 
 The throw-away harness that produced section 2 (call every app's real `get_actions()`, run it
 through the real `Nextmatch::egw_actions()`, classify each resolved leaf) is the right
