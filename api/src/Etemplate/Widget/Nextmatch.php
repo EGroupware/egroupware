@@ -476,6 +476,13 @@ class Nextmatch extends Etemplate\Widget
 		{
 			$value = ($value) ? array($value) : array();
 		}
+		// csv_export is a per-request instruction to get_rows ("do not store this query in the
+		// session"), not part of the widget's value.  It used to be written back into the stored
+		// request content below, where it stuck for the rest of the session: after the first
+		// single-row refresh every later query claimed to be one, so get_rows() stopped caching
+		// the query - and everything that reads that cache (a "select all" expansion, addressbook's
+		// delete_list) silently used whatever filters were in force when the page was opened.
+		unset($value['csv_export']);
 
 		// filter out numerical indexes, which are treated as SQL fragments and are not necessary to process filters/select-boxes
 		if (!empty($filters['col_filter']))
@@ -720,7 +727,8 @@ class Nextmatch extends Etemplate\Widget
 		foreach(array_keys($value_in ?? []) + array_keys($value ?? []) as $key)
 		{
 			// These keys are ignored
-			if(in_array($key, array('col_filter','start','num_rows','total','order','sort')))
+			// csv_export: set per request above, never stored - see unset() at the top
+			if(in_array($key, array('col_filter','start','num_rows','total','order','sort','csv_export')))
 			{
 				continue;
 			}

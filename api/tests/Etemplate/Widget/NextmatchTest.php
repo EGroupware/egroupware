@@ -204,6 +204,45 @@ class NextmatchTest extends Etemplate\WidgetBaseTest
 	}
 
 	/**
+	 * csv_export is not a value, it is a per-request instruction to get_rows(): "do not store this
+	 * query in the session".  ajax_get_rows() sets it for a single-row refresh, and its own
+	 * change-detection loop then wrote every changed key back into the stored request content - so
+	 * the flag survived into every later query, which all then claimed to be refreshes.
+	 *
+	 * The damage is invisible in the list itself: get_rows() keeps returning the right rows, it
+	 * just stops caching the query.  Everything that reads that cache afterwards - a "select all"
+	 * expansion, addressbook's delete_list - silently used whichever filters were in force when
+	 * the page was opened.  Since it takes one single-row refresh to arm, and ajax context-menu
+	 * actions refresh exactly one row, the first action on a list poisoned every action after it.
+	 */
+	public function testCsvExportFlagDoesNotSurviveIntoTheNextQuery()
+	{
+		$exec_id = $this->templateRequest(array('sub_nm' => array(
+			'get_rows' => __CLASS__.'::mock_get_rows',
+			'row_id'   => 'id',
+			'num_rows' => 0,
+		)));
+
+		// a single-row refresh, as an ajax context-menu action triggers
+		self::$mock_get_rows_params = null;
+		Nextmatch::ajax_get_rows($exec_id, array('start' => 0, 'num_rows' => 10, 'refresh' => '1'),
+			array(), 'sub_nm');
+		$this->assertSame('refresh', self::$mock_get_rows_params['csv_export'] ?? null,
+			'a single-row refresh should still tell get_rows not to store the query');
+
+		// ...and now an ordinary paged query, which must be storable again
+		$this->ajax_response->initResponseArray();
+		self::$mock_get_rows_params = null;
+		Nextmatch::ajax_get_rows($exec_id, array('start' => 0, 'num_rows' => 10), array(), 'sub_nm');
+		$this->assertArrayNotHasKey('csv_export', (array)self::$mock_get_rows_params,
+			'the refresh flag must not be carried over into the next query');
+
+		$stored = Etemplate\Request::read($exec_id, false);
+		$this->assertArrayNotHasKey('csv_export', (array)($stored->content['sub_nm'] ?? array()),
+			'csv_export must never be written into the stored request content');
+	}
+
+	/**
 	 * Render the test template to create the server-side request cache used by
 	 * ajax_get_rows() (see templateRequest()).  Returning an exec id proves the
 	 * history widget resolved.
