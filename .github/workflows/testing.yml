@@ -670,8 +670,12 @@ jobs:
           # NOT shared: PHPUnit runs under SAPI "cli" and gets the file cache, the built-in server
           # runs under "cli-server" and gets APCu.  Only the tree level is shared here; the instance
           # caches stay separate, so the webserver still reads accounts and config for itself.
-          $COMPOSE exec -T egroupware sh -c 'grep -q cache_provider_tree /var/lib/egroupware/header.inc.php || { printf "%s\n" "\$GLOBALS[\"egw_info\"][\"server\"][\"cache_provider_tree\"] = array(\"EGroupware\\\\Api\\\\Cache\\\\Files\");" > /tmp/tree-cache.inc && sed -i "/mcrypt_iv/r /tmp/tree-cache.inc" /var/lib/egroupware/header.inc.php; }'
-          $COMPOSE exec -T egroupware grep -n cache_provider_tree /var/lib/egroupware/header.inc.php
+          # Both paths: the processes include the one in the document root, which is normally a
+          # symlink to the one under /var/lib - but if it is a separate file, patching only the
+          # latter silently does nothing and the setting reads back as NULL.
+          $COMPOSE exec -T -e HDR="$EGW_SRC_DIR/header.inc.php" egroupware sh -c 'printf "%s\n" "\$GLOBALS[\"egw_info\"][\"server\"][\"cache_provider_tree\"] = array(\"EGroupware\\\\Api\\\\Cache\\\\Files\");" > /tmp/tree-cache.inc; for f in /var/lib/egroupware/header.inc.php "$HDR"; do [ -e "$f" ] || continue; grep -q cache_provider_tree "$f" || sed -i --follow-symlinks "/mcrypt_iv/r /tmp/tree-cache.inc" "$f"; done'
+          echo "== header.inc.php in the document root =="
+          $COMPOSE exec -T -e HDR="$EGW_SRC_DIR/header.inc.php" egroupware sh -c 'ls -la "$HDR"; grep -c cache_provider_tree "$HDR" /var/lib/egroupware/header.inc.php'
 
           # Narrow the run to the extra apps by generating a config with a single testsuite,
           # rather than by passing paths: phpunit takes only one positional path, and the <php>
