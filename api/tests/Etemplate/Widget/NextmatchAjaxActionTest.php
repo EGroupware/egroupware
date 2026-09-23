@@ -233,6 +233,67 @@ class NextmatchAjaxActionTest extends LoggedInTest
 	}
 
 	/**
+	 * The open_popup actions (Delegation, Start date, Due date, Links) show a small form and used
+	 * to submit the WHOLE eTemplate just so the server could read it. They now build the same
+	 * composite action id index() built out of the submitted popup values - <action>_<verb>_<value>
+	 * - and send that to ajax_action(). These pin that the server really does understand it, since
+	 * the whole conversion rests on that and needed no server change.
+	 */
+	public function testPopupActionCompositeIdSetsResponsible()
+	{
+		$this->makeInfolog();
+		$me = $GLOBALS['egw_info']['user']['account_id'];
+
+		$ui = new \infolog_ui();
+		$ui->ajax_action('responsible_ok_' . $me, [$this->info_id], false, []);
+
+		$this->assertEquals([$me], array_values((array)$this->infolog->read($this->info_id)['info_responsible']),
+			'responsible_ok_<ids> must set the responsible users');
+	}
+
+	public function testPopupActionCompositeIdAddsAndRemovesResponsible()
+	{
+		$this->makeInfolog();
+		$me = $GLOBALS['egw_info']['user']['account_id'];
+		$ui = new \infolog_ui();
+
+		$ui->ajax_action('responsible_add_' . $me, [$this->info_id], false, []);
+		$this->assertContains((string)$me, array_map('strval',
+			(array)$this->infolog->read($this->info_id)['info_responsible']));
+
+		$ui->ajax_action('responsible_delete_' . $me, [$this->info_id], false, []);
+		$this->assertNotContains((string)$me, array_map('strval',
+			(array)$this->infolog->read($this->info_id)['info_responsible']));
+	}
+
+	public function testPopupActionCompositeIdSetsStartdate()
+	{
+		$this->makeInfolog();
+		$when = mktime(12, 0, 0, 6, 15, 2027);
+
+		$ui = new \infolog_ui();
+		$ui->ajax_action('startdate_ok_' . $when, [$this->info_id], false, []);
+
+		$this->assertEquals($when, $this->infolog->read($this->info_id)['info_startdate'],
+			'startdate_ok_<ts> must set the start date');
+	}
+
+	/**
+	 * ...and the empty value the popup sends when its field was cleared must clear the date,
+	 * rather than being read as a date of 0.
+	 */
+	public function testPopupActionCompositeIdClearsStartdate()
+	{
+		$this->makeInfolog(['info_startdate' => mktime(12, 0, 0, 6, 15, 2027)]);
+		$this->assertNotEmpty($this->infolog->read($this->info_id)['info_startdate']);
+
+		$ui = new \infolog_ui();
+		$ui->ajax_action('startdate_ok_', [$this->info_id], false, []);
+
+		$this->assertEmpty($this->infolog->read($this->info_id)['info_startdate']);
+	}
+
+	/**
 	 * infolog's ajax_action() used to pass an empty query to action(), so "select all" re-ran
 	 * get_rows() with NO filters - ie. every InfoLog the user can see, not the filtered selection.
 	 * It now passes the query get_rows() cached in the session. With no cached query at all the

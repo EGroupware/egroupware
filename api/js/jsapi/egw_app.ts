@@ -1456,6 +1456,88 @@ export abstract class EgwApp
 	}
 
 	/**
+	 * Apply a nextmatch action whose options were collected in an action popup, over ajax.
+	 *
+	 * The `nm_action => 'open_popup'` actions show a small form (Delegation, Start date, Links,
+	 * ...) and then had its OK button submit the WHOLE eTemplate, just so the server could read
+	 * the few values in it - rebuilding the list and losing its scroll position and selection for
+	 * a change to one field.
+	 *
+	 * No server change is needed to stop that: `action()` already parses these as one composite
+	 * id, `<action>_<verb>_<value>` (eg. `responsible_add_5,7`, `startdate_ok_1764547200`), which
+	 * is exactly what index() builds out of the submitted popup values. This builds the same id
+	 * and sends it to the app's ajax_action() instead.
+	 *
+	 * Wire a popup's buttons up with `onclick="app.<app>.submit_action_popup(this)"` in place of
+	 * `nm_submit_popup(this)`. The button id gives both halves: `<action>_action[<verb>]`.
+	 *
+	 * @param button the clicked button, id "<action>_action[<verb>]"
+	 */
+	submit_action_popup(button)
+	{
+		const id = (button?.id || "").replace(/^.*?_(?=[^_]*_action\[)/, "");
+		const match = /^(.*)_action\[(.*)\]$/.exec(id) || /^(.*)_action\[(.*)\]$/.exec(button?.id || "");
+		if(!match)
+		{
+			this.egw.debug("warn", "submit_action_popup() called from a button that is not <action>_action[<verb>]", button);
+			return;
+		}
+		const [, action, verb] = match;
+
+		const popup = <any>document.querySelector("[id$='" + action + "_popup']");
+		const widget = <any>this.et2?.getWidgetById(action);
+		const value = EgwApp._actionPopupValue(widget?.get_value ? widget.get_value() : widget?.value);
+
+		const nm = <Et2Nextmatch>this.et2?.getWidgetById("nm") ?? this.nm;
+		// the controller puts the ids it opened the popup for on the popup element itself
+		const ids = [].concat(popup?.selectedIds ?? nm?.getSelection?.().ids ?? [])
+			.map(uid => String(uid).split("::").pop()).filter(Boolean);
+
+		// hide the popup whichever shape it is - a real <et2-dialog>, or the legacy
+		// class="action_popup" box that nm_open_popup() upgrades at runtime
+		if(typeof popup?.hide === "function")
+		{
+			popup.hide();
+		}
+		else if(popup)
+		{
+			popup.style.display = "none";
+		}
+		(<any>window).nm_hide_popup?.(button, null);
+
+		const checkboxes = {};
+		const manager = nm?.["_actionController"]?.actionManager;
+		for(const checkbox of (manager?.getActionsByAttr?.("checkbox", true) || []))
+		{
+			checkboxes[checkbox.id] = (<any>checkbox).checked || false;
+		}
+
+		return this.egw.request(this.appname + "." + this.appname + "_ui.ajax_action", [
+			action + "_" + verb + "_" + value,
+			ids,
+			nm?.getSelection?.().all === true,
+			checkboxes
+		]);
+	}
+
+	/**
+	 * Flatten an action popup's value the same way index() did when it arrived as $content.
+	 */
+	private static _actionPopupValue(value) : string
+	{
+		if(value === null || typeof value === "undefined")
+		{
+			return "";
+		}
+		// et2-link-entry gives {app, id}, which action() splits on ':'
+		if(typeof value === "object" && !Array.isArray(value) && value.app)
+		{
+			return value.id ? value.app + ":" + value.id : "";
+		}
+		return [].concat(value).join(",");
+	}
+
+	/**
 	 * Initializes actions and handlers on sidebox (delete)
 	 *
 	 * @param {jQuery} sidebox jQuery of DOM node

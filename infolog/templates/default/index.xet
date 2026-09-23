@@ -153,9 +153,9 @@
                                     <et2-select-account  id="responsible" rows="5" multiple="1" placeholder="Delegation" accountType="both"></et2-select-account>
                                 </et2-vbox>
                                 <et2-hbox>
-                                    <et2-button  label="Ok" id="responsible_action[ok]" onclick="nm_submit_popup(this); return false;" image="check"></et2-button>
-                                    <et2-button  label="Add" id="responsible_action[add]" onclick="nm_submit_popup(this); return false;"></et2-button>
-                                    <et2-button  label="Delete" id="responsible_action[delete]" onclick="nm_submit_popup(this); return false;"></et2-button>
+                                    <et2-button  label="Ok" id="responsible_action[ok]" onclick="app.infolog.submit_action_popup(this); return false;" image="check"></et2-button>
+                                    <et2-button  label="Add" id="responsible_action[add]" onclick="app.infolog.submit_action_popup(this); return false;"></et2-button>
+                                    <et2-button  label="Delete" id="responsible_action[delete]" onclick="app.infolog.submit_action_popup(this); return false;"></et2-button>
                                     <et2-button  label="Cancel" id="responsible_cancel" onclick="nm_hide_popup(this,'responsible_popup');" image="cancelled"></et2-button>
                                 </et2-hbox>
                             </et2-vbox>
@@ -176,8 +176,8 @@
                                 <et2-description  value="Add / Remove link" class="promptheader"></et2-description>
                                 <et2-link-entry  id="link" class="action_popup-content"></et2-link-entry>
                                 <et2-hbox>
-                                    <et2-button  label="Add" id="link_action[add]" onclick="nm_submit_popup(this); return false;"></et2-button>
-                                    <et2-button  label="Delete" id="link_action[delete]" onclick="nm_submit_popup(this); return false;"></et2-button>
+                                    <et2-button  label="Add" id="link_action[add]" onclick="app.infolog.submit_action_popup(this); return false;"></et2-button>
+                                    <et2-button  label="Delete" id="link_action[delete]" onclick="app.infolog.submit_action_popup(this); return false;"></et2-button>
                                     <et2-button  label="Cancel" id="link_cancel" onclick="nm_hide_popup(this,'link_popup');" image="cancelled"></et2-button>
                                 </et2-hbox>
                             </et2-vbox>
@@ -188,7 +188,7 @@
                                 <et2-description  id="startdate_action[title]"></et2-description>
                                 <et2-date-time  id="startdate" class="action_popup-content"></et2-date-time>
                                 <et2-hbox>
-                                    <et2-button  label="Ok" id="startdate_action[ok]" onclick="nm_submit_popup(this); return false;" image="check"></et2-button>
+                                    <et2-button  label="Ok" id="startdate_action[ok]" onclick="app.infolog.submit_action_popup(this); return false;" image="check"></et2-button>
                                     <et2-button  label="Cancel" id="startdate_cancel" onclick="nm_hide_popup(this,'link_popup');" image="cancelled"></et2-button>
                                 </et2-hbox>
                             </et2-vbox>
@@ -199,7 +199,7 @@
                                 <et2-description  id="enddate_action[title]"></et2-description>
                                 <et2-date-time  id="enddate" class="action_popup-content"></et2-date-time>
                                 <et2-hbox>
-                                    <et2-button  label="Ok" id="enddate_action[ok]" onclick="nm_submit_popup(this); return false;" image="check"></et2-button>
+                                    <et2-button  label="Ok" id="enddate_action[ok]" onclick="app.infolog.submit_action_popup(this); return false;" image="check"></et2-button>
                                     <et2-button  label="Cancel" id="enddate_cancel" onclick="nm_hide_popup(this,'link_popup');" image="cancelled"></et2-button>
                                 </et2-hbox>
                             </et2-vbox>

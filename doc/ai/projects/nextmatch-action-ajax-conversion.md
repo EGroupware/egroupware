@@ -13,7 +13,7 @@ Two related problems with nextmatch context-menu actions, found together:
    response. Some of these are conceptually unbounded, others merely grow with the
    installation until one day they are too long - and nothing notices when that happens.
 
-Status: **phases 0-5 done** (Proposals A, B, D and E included). Phases 6-7 remain.
+Status: **phases 0-5 done**, phase 6 partly (infolog). Phase 7 remains.
 
 ---
 
@@ -730,7 +730,7 @@ in this project - handled by Proposal D like any other oversized submenu. `share
 | 3 | **DONE.** Proposal D (generic overflow dialog) + Proposal E (the `…` affordance) | Independent of 1-2 and of each app. E ships with D because D removes the chevron those entries have today. E's menu half reaches legacy apps too |
 | 4 | **DONE.** Proposal A - `Nextmatch::category_action()` picker dialog, both cardinality shapes, 5 call sites moved | Biggest single reduction |
 | 5 | **DONE.** Proposal B - distribution-list dialog | Addressbook-specific. `move_to`/`shared_with` need no bespoke dialog - Proposal D covers them |
-| 6 | The `open_popup` bucket | Needs the dialog to return values without a template submit - a different job |
+| 6 | The `open_popup` bucket - **infolog done**, the rest each need their own work (see below) | Needs the dialog to return values without a template submit - a different job |
 | 7 | The remaining reachable apps: importexport, esyncpro, smallpart (`questions`), news_admin (`index`), stylite (`placetel`), mail's `copyto` | Low traffic, mechanical |
 | - | admin, records, invoices, kanban, bookmarks, aitools, aiassistant, developer, stylite `calls`, webauthn, openid, phpbrain, schulmanager, smallpart `courses` | **Blocked on `et2-nextmatch-conversion.md`** - not scheduled here |
 
@@ -1011,6 +1011,41 @@ is unchanged.
 Its teardown also has to call `Contacts::delete()` **twice**: the first call only marks
 `tid = 'D'` (the "deleted" bin), so a single call would leave every fixture visible in the
 address book. One test asserts the fixture is really gone, so that cannot rot silently.
+
+### Phase 6 - the open_popup bucket, and why it is not one job
+
+These actions show a small form (Delegation, Start date, Links, ...) and then submitted the
+**whole** eTemplate just so the server could read the few values in it.
+
+**No server change was needed.** `action()` already parses these as one composite id,
+`<action>_<verb>_<value>` (eg. `responsible_add_5,7`, `startdate_ok_1764547200`) - which is
+exactly what `index()` assembles out of the submitted popup values. `EgwApp.submit_action_popup()`
+builds the same id from the popup's own widgets and sends it to `ajax_action()`. A popup converts
+by pointing its buttons at it instead of `nm_submit_popup()`:
+
+	onclick="app.<app>.submit_action_popup(this)"
+
+The button id carries both halves (`<action>_action[<verb>]`), and the ids come from
+`.selectedIds`, which `openActionPopup()` already puts on the popup element.
+
+**infolog is converted** - all four popups (`responsible`, `startdate`, `enddate`, `link`), 7
+buttons. Verified live through the real context menu: picking Delegation, choosing users and
+hitting Add sends `responsible_add_5,7` for the real row id with the checkbox values, and the
+template is **not** rebuilt. `NextmatchAjaxActionTest` covers the composite ids server-side,
+including the empty value that clears a date.
+
+**The rest are not the same job, and each needs its own decision:**
+
+* **tracker** (`group`, `admin`) already has its own `submit_popup()` and real `<et2-dialog>`
+  popups - someone modernised the *form* but it still does a whole-template submit. Convertible
+  the same way, but its server builds the composite in `process()` rather than accepting one, so
+  it needs checking first.
+* **importexport** (`change/owner`, `change/allowed`) reads `$content['owner_popup']['owner']`
+  and friends and sets `$content['owner']` separately - there is no composite id to build, so
+  this one *does* need a server change.
+* **resources** (`delete`, `restore`) keeps its popups in `show.xet` in a different shape again.
+* **news_admin** (`change/reader`), **admin** categories and **schulmanager** are on the legacy
+  `<nextmatch>` widget, so they are blocked by decision 3 regardless.
 
 ### Proposal B - as built
 
