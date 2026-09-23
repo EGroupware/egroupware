@@ -4008,6 +4008,7 @@ export class MailJmap
 				ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto|tel|cid|data):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i,
 			});
 			body = MailJmap.deferCidImages(body);
+			body = this.deferExternalImages(body);
 		}
 		else
 		{
@@ -4028,6 +4029,60 @@ export class MailJmap
 		{
 			img.setAttribute('data-cid', img.getAttribute('src').substring(4));
 			img.removeAttribute('src');
+		});
+		return doc.body.innerHTML;
+	}
+
+	/**
+	 * Mirror of Api\Html\HtmLawed's server-side "block external images for privacy, and always
+	 * route a plain http: image through the image_proxy safety net" logic - lost when this
+	 * message's HTML body rendering moved from server-rendered (HtmLawed::purify(), still used
+	 * by the classic fallback body and by structureToHtml()'s S/MIME/TNEF path) to this
+	 * client-side DOMPurify path, which has no equivalent step at all. Found live 2026-09-23 via
+	 * a real customer's forum report (a newsletter's own http:// logo silently failing to load
+	 * under Firefox, with no "show images"/proxy fallback ever offered).
+	 *
+	 * Every non-cid/non-data/non-same-origin `<img src>` is deferred into the exact same
+	 * `alt="... [blocked external image:<url>]"` + placeholder-icon convention
+	 * MailApp.resolveExternalImages() already expects and already handles unchanged - its own
+	 * domain-allowlist/preference prompt UI, and the image_proxy http-\>https/proxy rewrite on
+	 * "show" - UNLESS the 'allowExternalIMGs' preference is 'Always' (1) AND this isn't a plain
+	 * http: url, exactly mirroring HtmLawed's own condition: a plain http: image is deferred
+	 * regardless of that preference, so it only ever reaches the browser already rewritten
+	 * through image_proxy, never as a raw http: request.
+	 */
+	private deferExternalImages(html : string) : string
+	{
+		const doc = new DOMParser().parseFromString(html, 'text/html');
+		const allowIMGs = Number(this.egw.preference('allowExternalIMGs', 'mail') ?? 2);
+		const allowedDomains : string[] = Object.values(this.egw.preference('allowExternalDomains', 'mail') || {});
+		const webserverUrl = this.egw.webserverUrl || '';
+
+		doc.querySelectorAll('img[src]').forEach((img : HTMLImageElement) =>
+		{
+			const src = img.getAttribute('src');
+			if (!src || src.startsWith('cid:') || src.startsWith('data:') ||
+				(webserverUrl && src.startsWith(webserverUrl)))
+			{
+				return;
+			}
+			const isHttp = src.startsWith('http:');
+			const domain = src.replace(/^https?:\/\//i, '').split('/')[0];
+			// mirrors HtmLawed's `($allowIMGs != 1 && !in_array($domain, $domains)) || $isHttp`
+			// blocking condition (negated/De Morgan'd into a "nothing to defer" skip check): never
+			// skip for a plain http: url, regardless of preference/allowlist - it always goes
+			// through the defer+image_proxy-rewrite path below.
+			if (!isHttp && (allowIMGs === 1 || allowedDomains.indexOf(domain) !== -1))
+			{
+				return;
+			}
+			const alt = (img.getAttribute('alt') || '')+' [blocked external image:'+src+']';
+			img.setAttribute('alt', alt);
+			if (!img.hasAttribute('title'))
+			{
+				img.setAttribute('title', alt);
+			}
+			img.setAttribute('src', this.egw.image('no-image-shown', 'mail'));
 		});
 		return doc.body.innerHTML;
 	}
