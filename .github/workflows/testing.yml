@@ -739,7 +739,7 @@ jobs:
                 sleep 1
               done
               # TEMPORARY cache diagnostic: the shared tree cache is what lets the test process
-              # invalidate the webserver's instance cache, so show what each side resolves.
+              # invalidate the instance cache of the webserver, so show what each side resolves.
               # Nothing here may fail the job - it is diagnostics, not a check.
               set +e
               echo "=== cache probe: where are we ==="
