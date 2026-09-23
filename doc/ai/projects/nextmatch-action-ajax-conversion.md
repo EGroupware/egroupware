@@ -966,7 +966,7 @@ Three things worth knowing:
 
 * **Replace needed a real server handler** (`cat_set_<csv>` in addressbook). Deliberately not a
   `cat_del` of everything followed by a `cat_add`: that writes each contact twice and logs two
-  history entries for one user action.
+  history entries for one user action. It **shipped broken** - see below.
 * **"Remove" on a single-category app is new only in being reachable.** The handlers already did
   the right thing for an empty value - infolog even has a `lang('removed category')` branch -
   but `category_action()` never emitted a "None" entry, so nothing could reach it.
@@ -977,6 +977,28 @@ Three things worth knowing:
 Also fixed a phase-2 oversight it exposed: **tracker's `change/cat` is not a `category_action()`
 at all** - its children come from `get_tracker_labels('cat')`, ie. tracker's own labels - so it
 was never Proposal A's to convert and simply needed the same ajax handler as its siblings.
+
+### The testing hole a bogus id leaves
+
+`cat_set` went out with a PHP 8 fatal: it called `$this->save(array('cat_id' => $ids) + $contact)`,
+and `save()` takes `&$contact` by reference, which cannot be an inline expression. Reported from
+the browser within minutes.
+
+It passed every check here because of *how* the action was exercised. To avoid writing to real
+data, actions were driven with a deliberately non-existent row id - and every one of these
+handlers opens with `if (($Ok = !!($contact = $this->read($id)) && ...))`, so `read()` returns
+false, the `&&` short-circuits, and **the handler body never runs at all**. That technique proves
+the request routing, the action id, the payload and the refresh. It proves *nothing* about what
+the action does.
+
+The fix for the testing gap is `addressbook/tests/CategoryActionTest.php`: it creates its own
+contact, runs `action()` for `cat_set`/`cat_add`/`cat_del`, and reads the resulting `cat_id`
+back. Reverting the one-line fix makes 3 of its cases fail with the exact reported error, which
+is the check that it is worth anything.
+
+Its teardown also has to call `Contacts::delete()` **twice**: the first call only marks
+`tid = 'D'` (the "deleted" bin), so a single call would leave every fixture visible in the
+address book. One test asserts the fixture is really gone, so that cannot rot silently.
 
 ### Proposal D - the bug that only a real context menu showed
 

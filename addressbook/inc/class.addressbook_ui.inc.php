@@ -1550,7 +1550,14 @@ class addressbook_ui extends addressbook_bo
 					{
 						$action_msg = lang('categories set');
 						$ids = $cat_ids ? implode(',', $cat_ids) : null;
-						$Ok = $ids === $contact['cat_id'] || (bool)$this->save(array('cat_id' => $ids) + $contact);
+						// save() takes &$contact by reference, so it has to be handed a variable -
+						// an inline array expression is a fatal in PHP 8. Same shape as cat_add/
+						// cat_del below.
+						if ($ids !== $contact['cat_id'])
+						{
+							$contact['cat_id'] = $ids;
+							$Ok = $this->save($contact);
+						}
 					}
 					break;
 
