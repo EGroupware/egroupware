@@ -240,7 +240,7 @@
 							<et2-button  label="Apply" id="button[apply]" image="apply"></et2-button>
 							<et2-button  label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" noSubmit="true"></et2-button>
 						</et2-hbox>
-						<et2-button  align="right" statustext="Enter setup user and password to get root rights" label="Superuser" id="sudouser" onclick="jQuery('.superuser').css('display','inline'); document.getElementById(form::name('sudo[user]')).focus();" image="lock" noSubmit="true"></et2-button>
+						<et2-button  align="right" statustext="Enter setup user and password to get root rights" label="Superuser" id="sudouser" onclick="document.querySelectorAll('.superuser').forEach(el => el.style.display='inline'); document.getElementById(form::name('sudo[user]')).focus();" image="lock" noSubmit="true"></et2-button>
 					</et2-hbox>
 				</row>
                 <row>
@@ -263,7 +263,7 @@
                                     <et2-description></et2-description>
                                     <et2-hbox>
                                         <et2-button  label="Submit" id="button[setup]" image="check"></et2-button>
-                                        <et2-button  label="Cancel" onclick="jQuery('.superuser').hide();" noSubmit="true" image="cancel"></et2-button>
+                                        <et2-button  label="Cancel" onclick="document.querySelectorAll('.superuser').forEach(el => el.style.display='none');" noSubmit="true" image="cancel"></et2-button>
                                     </et2-hbox>
 
                                 </row>
