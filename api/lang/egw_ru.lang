@@ -343,6 +343,7 @@ ctrl	common	ru	Ctrl
 cuba	common	ru	Куба
 currency	common	ru	Валюта
 current	common	ru	Текущий
+current user	common	ru	Текущий пользователь
 current users	common	ru	Текущие пользователи
 custom	common	ru	пользовательский
 custom fields	common	ru	пользовательские поля
@@ -1342,6 +1343,8 @@ upload	common	ru	Опубликовать
 upload directory does not exist, or is not writeable by webserver	common	ru	Каталог выгрузки не существует, или Веб-сервер не имеет прав для записи
 upload requires the directory to be writable by the webserver!	common	ru	для выгрузки необходимо, чтобы веб-сервер имел права на запись для каталога!
 url	common	ru	Ссылка (URL)
+url of current record	common	ru	URL-адрес текущей записи
+urls of any entries linked to the current record, excluding attached files	common	ru	URL-адреса всех записей, связанных с текущей записью, за исключением вложенных файлов
 uruguay	common	ru	Уругвай
 use button to search for	common	ru	используйте Кнопку для поиска
 use button to search for address	common	ru	используйте Кнопку для поиска Адреса

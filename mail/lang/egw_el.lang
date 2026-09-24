@@ -1,6 +1,3 @@
-(leave empty for no quota)	mail	el	(Αφήστε κενό για μην οριστεί όριο)
-(no subject)	mail	el	(χωρίς θέμα)
-(not connected)	mail	el	(χωρίς σύνδεση)
 %1 attachments	mail	el	%1 συννημένα
 %1 for all users	mail	el	%1 για όλους τους χρήστες
 %1 has been added to blacklisted email addresses	mail	el	%1 προστέθηκε στη μαύρη λίστα (blacklist) των διευθύνσεων ηλεκτρονικού ταχυδρομείου
@@ -10,7 +7,11 @@
 %1 is not writable by you!	mail	el	%1 δεν μπορεί να εγγραφεί από εσάς!
 %1 mails selected	mail	el	%1 μηνύματα έχουν επιλεγεί
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	el	Το %1 απαιτεί επέκταση Sieve %2, ίσως δοκιμάσετε %1 ή μεγαλύτερο αριθμό ημερών.
+(leave empty for no quota)	mail	el	(Αφήστε κενό για μην οριστεί όριο)
+(no subject)	mail	el	(χωρίς θέμα)
+(not connected)	mail	el	(χωρίς σύνδεση)
 account editable by user	mail	el	ο λογαριασμός είναι επεξεργάσιμος από τον χρήστη
+account not reachable	mail	el	Ο λογαριασμός δεν είναι προσβάσιμος.
 acl rights retrieve failed, seems there are no rights set!	mail	el	Η λήψη των δικαιωμάτων ACL απέτυχε, φαίνεται πως δεν έχουν οριστεί δικαιώματα!
 acl rights retrieved successfully	mail	el	Οι ορισμοί δικαιώματων (ACL) ελήφθησαν επιτυχώς
 activating by date requires a start- and end-date!	mail	el	Η ενεργοποίηση με βάση την ημερομηνία απαιτεί ημερομηνία έναρξης και λήξης!
@@ -84,6 +85,7 @@ can not open imap connection	mail	el	Δεν είναι δυνατή η σύνδ�
 can not resolve the winmail.dat attachment!	mail	el	Αδυναμία λήψης του συνημμένου τύπου winmail.dat!
 canceled deletion due to user interaction	mail	el	Ακυρώθηκε η διαγραφή λόγω παρέμβασης του χρήστη
 certificate details	mail	el	Λεπτομέρειες πιστοποιητικού
+certificate imported.	mail	el	Το πιστοποιητικό εισήχθη.
 certificate in text	mail	el	Πιστοποιητικό σε κείμενο
 certificate info for email %1	mail	el	Πληροφορίες πιστοποιητικού για το μήνυμα %1
 certificate issued by	mail	el	Πιστοποιητικό που εκδόθηκε από
@@ -121,11 +123,13 @@ copy to	mail	el	Αντιγραφή στο
 could not append message:	mail	el	Δεν μπόρεσα να προσθέσω το μήνυμα:
 could not save the acl because some names are empty	mail	el	Τα δικαιώματα ACL δεν μπόρεσαν να αποθηκευθούν γιατί κάποια όνοματα είναι κενά
 create new account	mail	el	Δημιουργία νέου λογαριασμού
+create self-signed certificate	mail	el	Δημιουργία αυτο-υπογεγραμμένου πιστοποιητικού
 cross account forward attachment is not allowed!	mail	el	Δεν επιτρέπεται η εμπροσθοβαρής σύνδεση διασταυρούμενων λογαριασμών!
 current folder	mail	el	Τρέχον φάκελος
 current subject	mail	el	Τρέχον θέμα
 currently:	mail	el	Αυτή τη στιγμή:
 deactive	mail	el	Απενεργοποίηση
+default signature	mail	el	Προεπιλεγμένη υπογραφή
 default sorting order	mail	el	Προεπιλεγμένη σειρά ταξινόμησης
 default toolbar actions shown in mail's html editor	mail	el	Ενεργοποίηση λειτουργιών στη γραμμή εργαλείων του επεξεργαστή HTML κατά τη σύνταξη ενός email
 default value for remembering s/mime passphrase in minutes	mail	el	Προεπιλεγμένη τιμή σε λεπτά για την απομνημόνευση του κωδικού S/MIME
@@ -137,7 +141,7 @@ delete folder %1 ?	mail	el	ΔΙΑΓΡΑΦΗ φακέλου %1;
 delete selected folders	mail	el	Διαγραφή επιλεγμένων φακέλων
 delete this acl	mail	el	Διαγραφή αυτού του δικαιώματος
 deleted	mail	el	διεγράφη
-deleted %1 messages in %2	mail	el	Διαγράφηκαν %1 μηνύματα σε %2.
+deleted %1 messages in %2	mail	el	Διαγράφηκαν %1 μηνύματα στο %2.
 deleted!	mail	el	διεγράφη!
 deleting %1 folders in progress ...	mail	el	Διαγραφή %1 φακέλων σε εξέλιξη ...
 deleting folders	mail	el	Διαδικασία διαγραφής φακέλων
@@ -235,10 +239,10 @@ files	mail	el	Αρχεία
 flag / unflag	mail	el	Σήμανση / αποσήμανση
 flag or unflag a mail	mail	el	Σήμανση ή αποσήμανση ενός μηνύματος
 flagged	mail	el	με σήμανση
-flagged / unflagged	mail	el	Με σήμανση / Χωρίς σήμανση
 flagged %1 messages as %2 in %3	mail	el	Τέθηκε η σήμανση "%2" σε %1 μήνυμα(τα) στο %3.
 flagged %1 messages as flagged in %2	mail	el	Σημάνθηκαν %1 μήνυμα(τα) στο %2
 flagged %1 messages as unflagged in %2	mail	el	Αφαιρέθηκε ή σημάνση από %1 μήνυμα(τα) στο %2
+flagged / unflagged	mail	el	Με σήμανση / Χωρίς σήμανση
 folder	mail	el	Φάκελος
 folder %1 %2 failed because of %3!	mail	el	Αποτυχία φακέλου %1 %2 εξαιτίας %3!
 folder %1 %2 failed!	mail	el	Αποτυχία φακέλου %1 %2!
@@ -298,6 +302,7 @@ imap - incoming mail	mail	el	IMAP - εισερχόμενα μηνύματα
 imap administration	mail	el	IMAP διαχείριση
 imap server	mail	el	IMAP Server
 imap timeout	mail	el	Χρόνος λήξης προσθάθειας (timeout) IMAP
+import ca-signed certificate for this key	mail	el	Εισαγωγή πιστοποιητικού υπογεγραμμένου από CA για αυτό το κλειδί
 import message	mail	el	εισαγωγή μηνύματος
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	el	Η εισαγωγή του μηνύματος %1 απέτυχε. Δεν ήταν δυνατή η αποθήκευση του μηνύματος στο φάκελο %2 λόγω: %3
 import of message %1 failed. destination folder %2 does not exist.	mail	el	Η εισαγωγή του μηνύματος %1 απέτυχε. Ο φάκελος προορισμού %2 δεν υπάρχει.
@@ -318,6 +323,7 @@ junk folder	mail	el	Φάκελος Junk
 keep a copy	mail	el	Διατήρηση αντιγράφου
 keep a copy of the message in your inbox	mail	el	κρατήστε ένα αντίγραφο του μηνύματος στα εισερχόμενα
 kilobytes	mail	el	kilobytes
+last used signature	mail	el	Τελευταία υπογραφή που χρησιμοποιήθηκε
 later	mail	el	Αργότερα
 learning as ham (not spam) failed because of %1	mail	el	Η εκμάθηση ως ham (όχι spam) απέτυχε λόγω %1
 learning as spam failed because of %1	mail	el	Η εκμάθηση ως spam απέτυχε λόγω %1
@@ -385,6 +391,7 @@ no folders	mail	el	δεν υπάρχουν φάκελοι
 no message body supplied	mail	el	δεν δόθηκε κορμός μηνύματος
 no plain text part found	mail	el	δεν βρέθηκε μέρος αποκρυπτογραφημένου κειμένου
 no recipient address given!	mail	el	Δεν έχει οριστεί διεύθυνση ηλεκτρονικού ταχυδρομείου για τον παραλήπτη!
+no s/mime private key stored for this account.	mail	el	Δεν έχει αποθηκευτεί ιδιωτικό κλειδί S/MIME για αυτόν τον λογαριασμό.
 no send folder set in preferences	mail	el	Δεν έχει οριστεί φάκελος απεσταλμένων στις ρυθμίσεις
 no signature	mail	el	χωρίς υπογραφή
 no sneak preview in list	mail	el	Χωρίς προεπισκόπηση στη λίστα
@@ -416,6 +423,7 @@ original message	mail	el	Αρχικό μήνυμα
 outbox	mail	el	Εξερχόμενα
 password protect	mail	el	προστασία με συνθηματικό
 permission denied	mail	el	Άδεια απορρίπτεται
+personal signature	mail	el	Προσωπική υπογραφή
 please configure access to an existing individual imap account.	mail	el	Παρακαλούμε ρυθμίστε την πρόσβαση σε έναν υπάρχοντα μεμονωμένο λογαριασμό IMAP.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	el	Παρακαλούμε ρυθμίστε το πιστοποιητικό S/MIME στην καρτέλα Κρυπτογράφηση που βρίσκεται στο παράθυρο διαλόγου Επεξεργασία λογαριασμού.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	el	Παρακαλούμε επικοινωνήστε με τον διαχειριστή σας για να επιβεβαιώσετε αν ο διακομιστής σας υποστηρίζει κανόνες φίλτρων σε επίπεδο διακομιστή και πώς να τους ενεργοποιήσετε στο EGroupware για τον ενεργό λογαριασμό σας (%1) με ID: %2.
@@ -450,6 +458,7 @@ reason!	mail	el	Αιτιολογία!
 receive notification	mail	el	Λήψη ειδοποίησης
 refresh time in minutes	mail	el	Ανανέωση ώρας σε λεπτά
 reject with	mail	el	απόρριψη με
+reloaded account %1	mail	el	Επαναφόρτωση του λογαριασμού %1.
 reloaded folder %1	mail	el	Επαναφορτωμένος φάκελος %1
 remember the password for	mail	el	Θυμηθείτε τον κωδικό πρόσβασης για
 remove all	mail	el	Αφαίρεση όλων
@@ -524,7 +533,9 @@ select multiple	mail	el	Επιλογή πολλαπλών
 select or insert email address	mail	el	Επιλογή ή εισαγωγή διεύθυνσης ηλεκτρονικού ταχυδρομείου
 selected	mail	el	επιλεγμένο
 selected date range (with quicksearch)	mail	el	Επιλεγμένο διάστημα ημερομηνιών (με γρήγορη αναζήτηση)
+self-signed certificate created.	mail	el	Δημιουργήθηκε αυτο-υπογεγραμμένο πιστοποιητικό.
 send a reject message:	mail	el	Αποστολή ενός μηνύματος απόρριψης:
+send attachments greater than given size as download link instead (in mb)	mail	el	Αποστολή συνημμένων μεγαλύτερων από το καθορισμένο μέγεθος (σε MB) ως σύνδεσμος λήψης
 send files as	mail	el	Αποστολή αρχείου ως
 send message and move to send folder (if configured)	mail	el	Αποστολή μηνύματος και μετακίνηση στο φάκελο αποστολής (εάν έχει ρυθμιστεί)
 send message pgp encrypted: requires keys from all recipients!	mail	el	Αποστολή μηνύματος με κρυπτογράφηση PGP: απαιτεί κλειδιά από όλους τους παραλήπτες!
@@ -595,8 +606,10 @@ the %1 's acl removed from the %2	mail	el	Το ACL του %1 αφαιρέθηκ�
 the %1 's acl, including its subfolders, removed from the %2	mail	el	Η ACL του %1, συμπεριλαμβανομένων των υποφακέλων του, αφαιρέθηκε από τον %2.
 the imap server need to meet certain requirements and be configured for it:	mail	el	Ο διακομιστής IMAP πρέπει να πληροί ορισμένες απαιτήσεις ΚΑΙ να έχει ρυθμιστεί γι' αυτό:
 the rule with priority %1 successfully saved!	mail	el	Ο κανόνας με προτεραιότητα %1 αποθηκεύτηκε επιτυχώς!
+the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	el	Το συνολικό μέγεθος των συνημμένων υπερβαίνει το όριο των %1 MB. Έγινε μετατροπή σε σύνδεσμο λήψης.
 then	mail	el	ΜΕΤΑ
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	el	Δεν έχει απομείνει χώρος για την αποθήκευση του σεναρίου Sieve, παρακαλούμε ελέγξτε την επιλογή sieve_maxscriptsize στη ρύθμιση παραμέτρων του διακομιστή αλληλογραφίας σας.
+this action affects every message in the selected thread(s) - %1 messages in total. continue?	mail	el	Αυτή η ενέργεια επηρεάζει όλα τα μηνύματα στα επιλεγμένα νήματα — %1 μηνύματα συνολικά. Θέλετε να συνεχίσετε;
 this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	el	Αυτό το μήνυμα περιέχει εξωτερικές εικόνες που εξυπηρετούνται μέσω μη ασφαλούς πρωτοκόλλου HTTP. Λάβετε υπόψη ότι η προβολή ή η άδειά τους μπορεί να θέσει σε κίνδυνο την ασφάλειά σας!
 this message is smime encrypted and password protected.	mail	el	Αυτό το μήνυμα είναι κρυπτογραφημένο με S/MIME και προστατεύεται με κωδικό πρόσβασης.
 timeout on connections to your imap server	mail	el	Χρονικό όριο στις συνδέσεις με τον διακομιστή IMAP
@@ -613,6 +626,7 @@ unsubscribe from folder %1	mail	el	Τερματισμός συνδρομής φ�
 upload files...	mail	el	Eπιφόρτωση αρχείων ...
 use default timeout (20 seconds)	mail	el	χρήση προεπιλεγμένου χρόνου λήξης (20 δευτερόλεπτα)
 use username+password from current user	mail	el	Να χρησιμοποιείται το όνομα και ο κωδικός του τρέχοντος χρήστη
+vacation messages with start and end date require an admin account to be set!	mail	el	Για τα μηνύματα απουσίας με ημερομηνία έναρξης και λήξης απαιτείται η ρύθμιση ενός λογαριασμού διαχειριστή!
 vacation notice	mail	el	ειδοποίηση διακοπών
 vacation notice is active	mail	el	Η ειδοποίηση διακοπών είναι ενεργή
 vacation notice sucessfully updated.	mail	el	Η ανανέωση της ειδοποίηση διακοπών ήταν επιτυχείς.
@@ -627,6 +641,7 @@ what to do when you delete a message	mail	el	Τι να συμβαίνει ότα
 what to do when you send a message	mail	el	Τι να συμβαίνει όταν στέλνετε ένα μήνυμα.
 when deleting messages	mail	el	όταν γίνεται διαγραφή μηνυμάτων
 when sending messages	mail	el	όταν στέλνονται μηνύματα
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	el	Με ποια ταυτότητα ηλεκτρονικού ταχυδρομείου (υπογραφή) θέλετε να ξεκινήσετε; Για την προσωπική υπογραφή χρησιμοποιούμε πάντα την πρώτη προσωπική υπογραφή
 which method to use when forwarding a message	mail	el	Ποια μέθοδο να χρησιμοποιείται κατά την προώθηση μηνυμάτων
 whole message	mail	el	ολόκληρο μήνυμα
 with message:	mail	el	Με μήνυμα:

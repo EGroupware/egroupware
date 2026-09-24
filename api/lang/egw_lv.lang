@@ -261,6 +261,7 @@ css-styles	common	lv	CSS veidi
 cuba	common	lv	KUBA
 currency	common	lv	Valūta
 current	common	lv	Pašreizējais
+current user	common	lv	Pašreizējais lietotājs
 current users	common	lv	Pašreizējie lietotāji
 custom	common	lv	Mainīt
 custom fields	common	lv	Mainīti lauki
@@ -999,6 +1000,7 @@ time	common	lv	Laiks
 time zone	common	lv	Laika zona
 time zone offset	common	lv	Laika zonas nobīde
 title	common	lv	Nosaukums
+titles of any entries linked to the current record, excluding attached files	preferences	lv	Jebkuru ierakstu nosaukumi, kas saistīti ar pašreizējo ierakstu, izņemot pievienotos failus
 to	common	lv	Kam
 to correct this error for the future you will need to properly set the	common	lv	Lai izlabotu šo kļudu, Jums ir nepieciešms pareizi uzstādit
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	lv	Lai atspējotu: [Piemēram: '!@data' atslēdz, ja datu saturs ir tukšs
@@ -1045,6 +1047,8 @@ update from version '%s' to	common	lv	Atjaunināt no versijas "%s"uz
 updating your account with new data from your identity provider failed!	common	lv	Konta atjaunināšana ar jauniem datiem no jūsu identitātes nodrošinātāja neizdevās!
 upload	common	lv	Ielādēt
 url	common	lv	URL
+url of current record	common	lv	Pašreizējā ieraksta URL
+urls of any entries linked to the current record, excluding attached files	common	lv	Jebkuru ierakstu URL, kas saistīti ar pašreizējo ierakstu, izņemot pievienotos failus
 uruguay	common	lv	URUGVAJA
 use button to search for	common	lv	Izmantot Pogu lai meklētu
 use button to search for address	common	lv	Izmantot Pogu lai meklētu Adresi

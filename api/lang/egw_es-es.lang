@@ -358,6 +358,7 @@ ctrl	common	es-es	Ctrl
 cuba	common	es-es	CUBA
 currency	common	es-es	Cambio
 current	common	es-es	Actual
+current user	common	es-es	Usuario actual
 current users	common	es-es	Usuarios actuales
 custom	common	es-es	Personalizado
 custom fields	common	es-es	Campos personalizados

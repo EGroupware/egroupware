@@ -97,6 +97,7 @@ created	common	tr	Oluşturuldu
 created by	common	tr	Oluþturan
 created by %1	common	tr	%1 tarafından oluşturuldu
 creator	preferences	tr	Yaratıcı
+current user	common	tr	Mevcut kullanıcı
 dark mode	common	tr	Karanlık mod
 date + time	common	tr	Tarih + Saat
 date+time	common	tr	Tarih+Saat
@@ -157,6 +158,7 @@ home email	common	tr	Ev E-mail
 how many days to sync in the future (default %1)	groupdav	tr	Gelecekte kaç gün senkronize edilecek (varsayılan %1)
 how many days to sync in the past (default %1)	groupdav	tr	Geçmişte kaç gün senkronize edilecek (varsayılan %1)
 how many rows to print	common	tr	Kaç satır yazdırılacağı
+html link to the current record	common	tr	Mevcut kayda yönlendiren HTML bağlantısı
 html links to any entries linked to the current record, excluding attached files	common	tr	Ekli dosyalar hariç olmak üzere, geçerli kayda bağlı tüm girişlere HTML bağlantıları
 if you use "2-factor-authentication", please enter the code here.	common	tr	2 Faktörlü Kimlik Doğrulama kullanıyorsanız, lütfen kodu buraya girin.
 images	common	tr	Görüntüler
@@ -256,11 +258,14 @@ template	common	tr	Şablon
 templates	common	tr	Şablonlar
 this will reset toolbar preferences for all users and set them to configured default prefs.	common	tr	Bu, tüm kullanıcılar için araç çubuğu tercihlerini sıfırlar ve yapılandırılmış varsayılan tercihleri ayarlar.
 title	common	tr	Baþlýk
+titles of any entries linked to the current record, excluding attached files	preferences	tr	Ekli dosyalar hariç, mevcut kayda bağlı tüm girişlerin başlıkları
 today	common	tr	Bugün
 toolbar settings	common	tr	Araç çubuğu ayarları
 top	common	tr	Maks
 update	common	tr	Güncelle
 url	common	tr	URL
+url of current record	common	tr	Mevcut kaydın URL'si
+urls of any entries linked to the current record, excluding attached files	common	tr	Ekli dosyalar hariç, mevcut kayda bağlı tüm girişlerin URL'leri
 user accounts	common	tr	Kullanýcý hesaplarý
 user groups	common	tr	Kullanýcý gruplarý
 users choice	common	tr	Kullanýcý Seçimleri

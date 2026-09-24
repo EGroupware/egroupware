@@ -275,6 +275,7 @@ css-styles	common	no	CSS Stiler
 cuba	common	no	CUBA
 currency	common	no	Myntenhet
 current	common	no	Nåværende
+current user	common	no	Nåværende bruker
 current users	common	no	Nåværende brukere
 custom	common	no	Egendefinert
 custom fields	common	no	Egendefinerte felt
@@ -991,6 +992,7 @@ time	common	no	Tid
 time zone	common	no	Tidssone
 time zone offset	common	no	Tidsforskjell
 title	common	no	Tittel
+titles of any entries linked to the current record, excluding attached files	preferences	no	Titler på alle oppføringer som er knyttet til den nåværende posten, unntatt vedlagte filer
 to	common	no	Til
 to correct this error for the future you will need to properly set the	common	no	For å unngå denne feilen i framtiden må du sette
 to start the db-tools	common	no	Starte DB-verktøyene
@@ -1028,6 +1030,8 @@ update a single entry by passing the fields.	common	no	Oppdater ett enkelt innsl
 update from version '%s' to	common	no	Oppdater fra versjon '%s' til
 upload	common	no	Last opp
 url	common	no	URL
+url of current record	common	no	URL til den nåværende posten
+urls of any entries linked to the current record, excluding attached files	common	no	URL-er til alle oppføringer som er knyttet til den nåværende posten, unntatt vedlagte filer
 uruguay	common	no	URUGUAY
 use button to search for	common	no	Trykk for å søke etter
 use button to search for address	common	no	Trykk for å søke etter adresser

@@ -288,6 +288,7 @@ css-styles	common	id	Gaya-CSS
 cuba	common	id	KUBA
 currency	common	id	Matauang
 current	common	id	Current
+current user	common	id	Pengguna saat ini
 current users	common	id	Pengguna saat ini
 custom	common	id	Kustom
 custom fields	common	id	Bidang khusus
@@ -506,6 +507,7 @@ how many days to sync in the future (default %1)	groupdav	id	Berapa hari yang ak
 how many days to sync in the past (default %1)	groupdav	id	Berapa hari yang akan disinkronkan di masa lalu (default %1)
 how many rows to print	common	id	Berapa banyak baris yang akan dicetak
 html	common	id	HTML
+html link to the current record	common	id	Tautan HTML ke catatan saat ini
 html links to any entries linked to the current record, excluding attached files	common	id	Tautan HTML ke entri apa pun yang ditautkan ke rekaman saat ini, tidak termasuk berkas yang dilampirkan
 hungary	common	id	HONGARIA
 iceland	common	id	ISLANDIA
@@ -996,6 +998,7 @@ time	common	id	Time
 time zone	common	id	Zonawaktu
 time zone offset	common	id	Offset zonawaktu
 title	common	id	Judul
+titles of any entries linked to the current record, excluding attached files	preferences	id	Judul entri apa pun yang tertaut ke catatan saat ini, tidak termasuk berkas terlampir
 to	common	id	Kepada
 to start the db-tools	common	id	Untuk memulai alat bantu DB
 to start the etemplate editor	common	id	Untuk memulai editor eTemplate
@@ -1031,6 +1034,8 @@ unlink	common	id	Batalkan tautan
 update	common	id	Perbarui
 upload	common	id	Unggah
 url	common	id	URL
+url of current record	common	id	URL catatan saat ini
+urls of any entries linked to the current record, excluding attached files	common	id	URL entri apa pun yang tertaut ke catatan saat ini, tidak termasuk berkas terlampir
 uruguay	common	id	URUGUAY
 user	common	id	Pengguna
 user accounts	common	id	Akun pengguna

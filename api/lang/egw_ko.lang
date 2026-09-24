@@ -128,6 +128,7 @@ copy to clipboard	common	ko	클립보드에 복사
 create	common	ko	작성
 created by	common	ko	작성자
 current	common	ko	현재
+current user	common	ko	현재 사용자
 current users	common	ko	현재 사용자
 custom	common	ko	사용자정의
 custom fields	common	ko	사용자정의 필드
@@ -243,6 +244,7 @@ home email	common	ko	자택 E-mail
 home screen	common	ko	기본 화면
 hours	common	ko	시간
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	ko	최상위 페이지의 네비게이션 바에서 몇개의 아이콘이 보이길 원하나요. 여분의 아이콘은 가장 네비게이션바의 가장 오른쪽 아이콘의 풀다운 메뉴안으로 들어갑니다.
+html link to the current record	common	ko	현재 레코드로 연결되는 HTML 링크
 html links to any entries linked to the current record, excluding attached files	common	ko	첨부 파일을 제외한 현재 레코드에 연결된 모든 항목에 대한 HTML 링크입니다.
 if you use "2-factor-authentication", please enter the code here.	common	ko	“2단계 인증”을 사용 중이라면, 여기에 코드를 입력해 주세요.
 image url	common	ko	그림 URL
@@ -498,6 +500,7 @@ thursday	common	ko	목요일
 time	common	ko	시간
 time zone offset	common	ko	시간대 변경
 title	common	ko	제목
+titles of any entries linked to the current record, excluding attached files	preferences	ko	첨부 파일을 제외한, 현재 레코드와 연결된 모든 항목의 제목
 to correct this error for the future you will need to properly set the	common	ko	이 오류를 수정하기 위해서는 다음 설정을 하여야 합니다 :
 to go back to the msg list, click <a href= %1 >here</a>	common	ko	메세지 목록으로 돌아가기 위해서는 <a href="%1">여기</a>를 클릭해주세요
 today	common	ko	오늘
@@ -513,6 +516,8 @@ update	common	ko	갱신
 update a single entry by passing the fields.	common	ko	필드값으로 단일 엔트리 갱신
 upload	common	ko	업로드
 upload directory does not exist, or is not writeable by webserver	common	ko	업로드 디렉토리가 존재하지 않거나, 웹서버의 쓰기권한이 없습니다.
+url of current record	common	ko	현재 레코드의 URL
+urls of any entries linked to the current record, excluding attached files	common	ko	첨부 파일을 제외한, 현재 레코드와 연결된 모든 항목의 URL
 user	common	ko	사용자
 user accounts	common	ko	사용자 계정
 user groups	common	ko	사용자 그룹

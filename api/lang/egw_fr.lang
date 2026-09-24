@@ -358,6 +358,7 @@ ctrl	common	fr	Ctrl
 cuba	common	fr	CUBA
 currency	common	fr	Devise
 current	common	fr	Courant
+current user	common	fr	Utilisateur actuel
 current users	common	fr	Utilisateurs connectés
 custom	common	fr	Personnalisé
 custom fields	common	fr	Champs personnalisés
@@ -1352,7 +1353,6 @@ start time	common	fr	Heure de début
 start with	common	fr	commence par
 starting up...	common	fr	Démarrage ...
 status	common	fr	Etat
-still working	common	fr	Toujours en cours
 store your public key in addressbook?	common	fr	Stocker votre clé publique dans le carnet d'adresses ?
 stretched	common	fr	étiré
 strikethrough	common	fr	Caractère barré
@@ -1410,7 +1410,6 @@ they will be sub-folders in users home (%1 attribute).	common	fr	Il y aura des s
 this feature is only available in epl version.	common	fr	Cette fonctionnalité est disponible dans la version EGroupware EPL.
 this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	fr	C'est votre propre partage. Pour le tester, utilisez une fenêtre anonyme / privée.\n%1
 this name has been used already	common	fr	Ce nom est déjà utilisé !
-this request is taking longer than expected. keep waiting?	common	fr	Cette requête prend plus de temps que prévu. Voulez-vous continuer à attendre ?
 this text gets displayed if the input-field is empty and has no focus (blur)	common	fr	ce texte s'affiche si le champ de saisie est vide et n'a pas le focus (flou)
 this will reset toolbar preferences for all users and set them to configured default prefs.	common	fr	Ceci va mettre à zéro les préférences de barre d'outil de tous les utilisateurs vers les préférences par défaut.
 thursday	common	fr	Jeudi

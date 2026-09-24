@@ -324,6 +324,7 @@ css-styles	common	pt	Estilos CSS
 cuba	common	pt	Cuba
 currency	common	pt	Moeda
 current	common	pt	Actual
+current user	common	pt	Utilizador atual
 current users	common	pt	Utilizadores actuais
 custom	common	pt	Personalizar
 custom fields	common	pt	Campos personalizados
@@ -1204,6 +1205,7 @@ time	common	pt	Hora
 time zone	common	pt	Fuso horário
 time zone offset	common	pt	Faixa de fuso horário
 title	common	pt	Título
+titles of any entries linked to the current record, excluding attached files	preferences	pt	Títulos de quaisquer entradas associadas ao registo atual, excluindo ficheiros anexados
 to	common	pt	Para
 to correct this error for the future you will need to properly set the	common	pt	Para corrigir este erro futuramente, irá precisar de definir correctamente o
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	pt	Para desactivar: [! = não]<valor>[=<verificação>] ex: '!@data' desactiva se o conteúdo dos dados estiver vazio
@@ -1253,6 +1255,8 @@ upload	common	pt	Enviar
 upload directory does not exist, or is not writeable by webserver	common	pt	A directoria de envio não existe, ou não é editável pelo servidor Web.
 upload file(s) from filemanager...	common	pt	Carregar arquivo (s) a partir de Filemanager ...
 url	common	pt	URL
+url of current record	common	pt	URL do registo atual
+urls of any entries linked to the current record, excluding attached files	common	pt	URLs de quaisquer entradas associadas ao registo atual, excluindo ficheiros anexados
 uruguay	common	pt	Uruguai
 use button to search for	common	pt	Utilizar Botão para pesquisar por
 use button to search for address	common	pt	Utilizar Botão para pesquisar por Endereço

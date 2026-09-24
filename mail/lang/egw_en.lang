@@ -1,8 +1,3 @@
-...	mail	en	...
-(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	en	(*) Please consider, forward to multiple addresses will not work if number of addresses exceeds the Limit. For most mail servers the limit is 4 by default, please contact your mail server administrator for further info.
-(leave empty for no quota)	mail	en	(Leave empty for no quota)
-(no subject)	mail	en	(no subject)
-(not connected)	mail	en	(not connected)
 %1 attachments	mail	en	%1 attachments
 %1 attachments downloaded	mail	en	%1 attachments downloaded
 %1 for all users	mail	en	%1 for all users
@@ -13,6 +8,10 @@
 %1 is not writable by you!	mail	en	%1 is NOT writable by you!
 %1 mails selected	mail	en	%1 emails selected
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	en	%1 requires Sieve extension %2, maybe try %1 or higher number of days.
+(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	en	(*) Please consider, forward to multiple addresses will not work if number of addresses exceeds the Limit. For most mail servers the limit is 4 by default, please contact your mail server administrator for further info.
+(leave empty for no quota)	mail	en	(Leave empty for no quota)
+(no subject)	mail	en	(no subject)
+(not connected)	mail	en	(not connected)
 account	mail	en	Account
 account editable by user	mail	en	Account editable by user
 account not reachable	mail	en	Account not reachable
@@ -171,7 +170,7 @@ delete messages (set or clear \deleted flag via store, set \deleted flag during 
 delete selected folders	mail	en	Delete selected folders
 delete this acl	mail	en	Delete this ACL
 deleted	mail	en	deleted
-deleted %1 messages in %2	mail	en	Deleted %1 messages in %2.
+deleted %1 messages in %2	mail	en	Deleted %1 message(s) in %2.
 deleted!	mail	en	deleted!
 deleting %1 folders in progress ...	mail	en	Deleting %1 folders in progress ...
 deleting folders	mail	en	Deleting folders
@@ -291,10 +290,10 @@ filter by flag	mail	en	Filter by flag
 flag / unflag	mail	en	Flag / Unflag
 flag or unflag a mail	mail	en	Flag or unflag a email
 flagged	mail	en	Flagged
-flagged / unflagged	mail	en	Flagged / Unflagged
 flagged %1 messages as %2 in %3	mail	en	Flagged %1 message(s) as "%2" in %3.
 flagged %1 messages as flagged in %2	mail	en	Flagged %1 message(s) as flagged in %2.
 flagged %1 messages as unflagged in %2	mail	en	Flagged %1 message(s) as unflagged in %2.
+flagged / unflagged	mail	en	Flagged / Unflagged
 folder	mail	en	Folder
 folder '%1' not found	mail	en	Folder '%1' not found
 folder %1 %2 failed because of %3!	mail	en	Folder %1 %2 failed because of %3!
@@ -733,7 +732,7 @@ the rule with priority %1 successfully saved!	mail	en	The rule with priority %1 
 the s/mime certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.	mail	en	The S/MIME certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.
 the s/mime certificate stored in the address book for %1 is not valid - check for duplicate/broken address book entries for this address.	mail	en	The S/MIME certificate stored in the address book for %1 is not valid - check for duplicate/broken address book entries for this address.
 the total size of the attachments exceeds the limit of %1 mb	mail	en	The total size of the attachments exceeds the limit of %1 MB
-the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	en	The total size of the attachments exceeds the limit of %1 MB. Switched to download link
+the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	en	The total size of the attachments exceeds the limit of %1 MB. Switched to download link.
 then	mail	en	THEN
 there is no imap server configured.	mail	en	There is no IMAP server configured.
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	en	There is no space left to store Sieve script, please check sieve_maxscriptsize option on your mailserver's config.
@@ -787,8 +786,8 @@ when deleting messages	mail	en	When deleting messages
 when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	en	When displaying messages in a popup, re-use the same popup for all or open a new popup for each message
 when saving messages as item of a different app	mail	en	When saving messages as item of a different EGroupware app.
 when sending messages	mail	en	When sending messages
-which folders - in general - should not be automatically created, if not existing	mail	en	which folders - in general - should NOT be automatically created, if not existing
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	en	which folders (additional to the Sent Folder) should be displayed using the Sent Folder view schema
+which folders - in general - should not be automatically created, if not existing	mail	en	which folders - in general - should NOT be automatically created, if not existing
 which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	en	Which mail identity (signature) do you want to start with. For personal signature we always use the first personal signature.
 which method to use when forwarding a message	mail	en	Which method to use when forwarding a message
 whitelisted mails are not marked as spam	mail	en	Whitelisted emails are not marked as spam
@@ -797,8 +796,8 @@ with message:	mail	en	With message:
 wizard	mail	en	Wizard
 writable sharing requires epl version!	mail	en	Writable sharing requires EPL version!
 write	mail	en	write
-write (set or clear flags other than \seen and \deleted via store, also set them during append/copy)	mail	en	Write (set or clear flags other than \SEEN and \DELETED via STORE, also set them during APPEND/COPY)
 write & delete	mail	en	write & delete
+write (set or clear flags other than \seen and \deleted via store, also set them during append/copy)	mail	en	Write (set or clear flags other than \SEEN and \DELETED via STORE, also set them during APPEND/COPY)
 wrote	mail	en	wrote
 yes, offer copy option	mail	en	Yes, offer copy option
 you can select what info to be displayed on email tag	mail	en	You can select what info to be displayed on email tag.

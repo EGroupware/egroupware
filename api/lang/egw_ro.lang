@@ -78,6 +78,7 @@ create link	common	ro	Creați o legătură
 created	common	ro	Creat
 created by	common	ro	Creat de
 created by %1	common	ro	Creat de %1
+current user	common	ro	Utilizatorul curent
 dark mode	common	ro	Mod întunecat
 date + time	common	ro	Data + Ora
 date+time	common	ro	Data+Ora
@@ -121,6 +122,7 @@ hold [%1] key to select text eg. to copy it	common	ro	Ține apăsată tasta [%1]
 how many days to sync in the future (default %1)	groupdav	ro	Câte zile să se sincronizeze în viitor (implicit %1)
 how many days to sync in the past (default %1)	groupdav	ro	Câte zile de sincronizare în trecut (implicit %1)
 how many rows to print	common	ro	Câte rânduri să se tipărească
+html link to the current record	common	ro	Link HTML către înregistrarea curentă
 html links to any entries linked to the current record, excluding attached files	common	ro	Legături HTML către orice intrări legate de înregistrarea curentă, cu excepția fișierelor atașate
 if you use "2-factor-authentication", please enter the code here.	common	ro	Dacă utilizați "Autentificare cu 2 factori", introduceți codul aici.
 images	common	ro	Imagini
@@ -198,7 +200,10 @@ spreadsheets	common	ro	Foi de calcul
 template	common	ro	Șablon
 templates	common	ro	Șabloane
 this will reset toolbar preferences for all users and set them to configured default prefs.	common	ro	Aceasta va reseta preferințele barei de instrumente pentru toți utilizatorii și le va seta la preferințele implicite configurate.
+titles of any entries linked to the current record, excluding attached files	preferences	ro	Titlurile tuturor înregistrărilor asociate cu înregistrarea curentă, cu excepția fișierelor atașate
 toolbar settings	common	ro	Setări bara de instrumente
+url of current record	common	ro	URL-ul înregistrării curente
+urls of any entries linked to the current record, excluding attached files	common	ro	URL-urile tuturor înregistrărilor asociate cu înregistrarea curentă, cu excepția fișierelor atașate
 videos	common	ro	Videoclipuri
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	ro	Atunci când îmbinați intrările în documente, acestea vor fi stocate aici. Dacă nu este furnizat niciun dosar, acestea vor fi stocate în directorul dvs. personal (%1)
 you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	ro	Trebuie să instalați pluginul Mailvelope disponibil pentru Chrome și Firefox de la www.mailvelope.com sau făcând clic pe butonul de instalare.

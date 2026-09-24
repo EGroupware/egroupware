@@ -349,6 +349,7 @@ ctrl	common	ja	Ctrl
 cuba	common	ja	キューバ
 currency	common	ja	通貨
 current	common	ja	現在
+current user	common	ja	現在のユーザー
 current users	common	ja	現在のユーザ
 custom	common	ja	カスタム
 custom fields	common	ja	カスタム項目
@@ -1434,6 +1435,8 @@ upload new photo	common	ja	新しい写真をアップロード
 upload requires the directory to be writable by the webserver!	common	ja	Upload requires the directory to be writable by the web server!
 uppercase letters	common	ja	大文字
 url	common	ja	URL
+url of current record	common	ja	現在のレコードのURL
+urls of any entries linked to the current record, excluding attached files	common	ja	添付ファイルを除き、現在のレコードにリンクされているすべてのエントリのURL
 uruguay	common	ja	ウルグアイ
 use button to search for	common	ja	検索ボタン
 use button to search for address	common	ja	アドレス検索ボタン

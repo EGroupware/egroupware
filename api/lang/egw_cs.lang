@@ -352,6 +352,7 @@ ctrl	common	cs	Ctrl
 cuba	common	cs	KUBA
 currency	common	cs	Měna
 current	common	cs	Aktuální
+current user	common	cs	Aktuální uživatel
 current users	common	cs	Aktuální uživatelé
 custom	common	cs	Uživatelsky definované
 custom fields	common	cs	Uživatelsky definované položky
