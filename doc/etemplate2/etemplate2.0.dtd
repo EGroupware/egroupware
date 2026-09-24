@@ -3064,6 +3064,8 @@
     ariaLabel CDATA #IMPLIED
     autocomplete CDATA #IMPLIED
     autofocus CDATA #IMPLIED
+    can-attach-file CDATA #IMPLIED
+    canAttachFile CDATA #IMPLIED
     class CDATA #IMPLIED
     data CDATA #IMPLIED
     disabled CDATA #IMPLIED
@@ -5362,6 +5364,8 @@
     autocomplete CDATA #IMPLIED
     autocorrect CDATA #IMPLIED
     autofocus CDATA #IMPLIED
+    can-attach-file CDATA #IMPLIED
+    canAttachFile CDATA #IMPLIED
     class CDATA #IMPLIED
     data CDATA #IMPLIED
     disabled CDATA #IMPLIED
@@ -5373,6 +5377,8 @@
     helpText CDATA #IMPLIED
     hidden CDATA #IMPLIED
     id CDATA #IMPLIED
+    image-upload CDATA #IMPLIED
+    imageUpload CDATA #IMPLIED
     inputmode (none|text|decimal|numeric|tel|search|email|url) #IMPLIED
     label CDATA #IMPLIED
     markdown CDATA #IMPLIED

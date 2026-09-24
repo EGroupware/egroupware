@@ -113,4 +113,9 @@ export default css`
 		align-self: stretch;
 		background-color: var(--sl-panel-border-color);
 	}
+
+	/* the file input is only there to open the chooser - the button is what is seen */
+	input.markdown-popup__file {
+		display: none;
+	}
 `;

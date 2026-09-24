@@ -75,6 +75,18 @@ class Textbox extends Etemplate\Widget
 	}
 
 	/**
+	 * Set up what we know on the server side.
+	 *
+	 * @param string $cname
+	 * @param ?array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
+	 */
+	public function beforeSendToClient($cname, ?array $expand=null)
+	{
+		// may the markdown editor offer to attach a file to this entry yet?
+		Vfs::set_can_attach_file($this, $cname, $expand);
+	}
+
+	/**
 	 * Validate input
 	 *
 	 * Following attributes get checked:

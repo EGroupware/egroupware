@@ -289,8 +289,10 @@ class Vfs extends File
 		elseif (isset($template))
 		{
 			$data = self::$request->content[$widget_id];
-			$path = self::store_file($path = (!is_array($data) && $data[0] == '/' ? $data :
-				self::get_vfs_path($data['to_app'].':'.$data['to_id'])).'/', $file);
+			// rtrim, as get_vfs_path() already returns a directory with its trailing slash -
+			// appending a second one gave "/apps/tracker/4//" and a download URL to match
+			$path = self::store_file($path = rtrim(!is_array($data) && $data[0] == '/' ? $data :
+				self::get_vfs_path($data['to_app'].':'.$data['to_id']), '/').'/', $file);
 
 			// store temp. vfs-path like links to be able to move it to the correct location after entry is stored
 			if (is_array($data) && (empty($data['to_id']) || is_array($data['to_id'])))
@@ -502,6 +504,60 @@ class Vfs extends File
 	}
 
 	/**
+	 * Tell a markdown-enabled widget whether it may offer to attach a file
+	 *
+	 * The markdown editor attaches through ajax_htmlarea_upload(), the endpoint TinyMCE already
+	 * posts a dragged-in image to, which reads its target from the named widget's *server-side*
+	 * content - normally "link_to", ie. {to_app, to_id}.  Only the server can see whether that
+	 * names a saved entry, so only the server can answer this.
+	 *
+	 * An entry with no id yet is deliberately refused for now: the upload would park in the
+	 * user's temp directory and be filed away on save, leaving the URL written into the text
+	 * pointing at nothing.  ajax_htmlarea_upload() does handle that case (it links the temp file
+	 * so the save moves it), but nothing rewrites the markdown afterwards - a later step.
+	 *
+	 * @param Etemplate\Widget $widget widget to check and, if it may, enable
+	 * @param string $cname current namespace
+	 * @param ?array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
+	 */
+	public static function set_can_attach_file(Etemplate\Widget $widget, $cname, ?array $expand=null)
+	{
+		// markdown may be bound to content, so expand before believing it
+		$markdown = self::expand_name($widget->attrs['markdown'] ?? '', $expand['c'] ?? null,
+			$expand['row'] ?? null, $expand['c_'] ?? null, $expand['row_'] ?? null,
+			$expand['cont'] ?? self::$request->content ?? array());
+
+		if (empty($markdown) || $markdown === 'false') return;
+
+		if (self::can_attach_file($widget->attrs['imageUpload'] ?? null))
+		{
+			self::setElementAttribute(self::form_name($cname, $widget->id, $expand), 'canAttachFile', true);
+		}
+	}
+
+	/**
+	 * Does the given content key name an entry a file can be attached to right now?
+	 *
+	 * @param ?string $widget_id content key, default "link_to" as et2-link-to uses
+	 * @param ?array $content default the current request's
+	 * @return boolean
+	 */
+	public static function can_attach_file($widget_id=null, ?array $content=null)
+	{
+		$content ??= self::$request->content ?? array();
+		$data = $content[$widget_id ?: 'link_to'] ?? null;
+
+		// a literal path names a fixed directory, so there is nothing to wait for
+		if (is_string($data) && $data !== '' && $data[0] === '/')
+		{
+			return true;
+		}
+		// {to_app, to_id} - an unsaved entry has no id, or an array of links accumulated for it
+		return is_array($data) && !empty($data['to_app']) &&
+			!empty($data['to_id']) && !is_array($data['to_id']);
+	}
+
+	/**
 	 * Change an ID like app:id:relative/path to an actual VFS location
 	 */
 	public static function get_vfs_path($path)
@@ -530,7 +586,19 @@ class Vfs extends File
 			}
 			$path = Api\Link::vfs_path($app,$id,'',true);
 		}
-		if (!empty($relpath)) $path .= '/'.$relpath;
+		if (!empty($relpath))
+		{
+			$path .= '/'.$relpath;
+		}
+		else
+		{
+			// "app:id:" with no relative path means the entry's directory, NOT a file named after
+			// the entry.  store_file() decides that by the trailing slash: without one it treats
+			// the path as the target file name, so an upload to "tracker:4:" used to land as
+			// /apps/tracker/4.png - beside the entry directory rather than in it, and not an
+			// attachment at all.  Same for a new entry, where it became <tempdir>.png.
+			$path .= '/';
+		}
 		return $path;
 	}
 

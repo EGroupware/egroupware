@@ -122,15 +122,18 @@ $overwrites = [
 		'.attrs' => [
 			'markdown' => 'boolean',
 			'markdownMode' => "'edit' | 'split' | 'view'",
+			'imageUpload' => 'string',
+			'canAttachFile' => 'boolean',
 		],
 	],
 	'Et2HtmlArea' => [
 		'.attrs' => [
 			'markdown' => 'boolean',
 			'markdownMode' => "'edit' | 'split' | 'view'",
+			'imageUpload' => 'string',
+			'canAttachFile' => 'boolean',
 			// same "not resolved via mixin" gap as markdown/markdownMode above
 			'applyDefaultFont' => 'boolean',
-			'imageUpload' => 'string',
 			'noMenubar' => 'boolean',
 			'noStatusbar' => 'boolean',
 			'noToolbar' => 'boolean',

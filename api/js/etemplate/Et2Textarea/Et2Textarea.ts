@@ -34,6 +34,16 @@ export class Et2Textarea extends Et2MarkdownEditMixin(Et2InputWidget(SlTextarea)
 	@property({type: Function})
 	onkeypress : any;
 
+	/**
+	 * Whose content names the entry an attached file belongs to, eg. "link_to".
+	 *
+	 * Same attribute and same meaning as on et2-htmlarea, where TinyMCE uses it for dragged-in
+	 * images - a plain textarea has no TinyMCE, but with `markdown` it has the same file button
+	 * and the same question to answer.  Defaulted to "link_to" by Et2MarkdownEditMixin.
+	 */
+	@property({type: String, attribute: "image-upload"})
+	imageUpload = "";
+
 	constructor()
 	{
 		super();

@@ -15,9 +15,12 @@ import {Et2MarkdownMixin} from "./Et2MarkdownMixin";
 import editStyles from "./Et2MarkdownEditMixin.styles";
 import {
 	applyCommand,
+	insertLink,
 	minimalEdit,
 	offsetOfLine,
 	sourceOffsetForRendered,
+	type CommandResult,
+	type LinkTarget,
 	type MarkdownCommand
 } from "./MarkdownCommands";
 import {selectionVirtualElement, textareaSelectionRect} from "./textareaSelectionRect";
@@ -100,6 +103,26 @@ const LIST_COMMANDS : { command : MarkdownCommand, icon : string, label : string
 const SHORTCUTS : { [key : string] : MarkdownCommand } = {b: "bold", i: "italic", k: "link"};
 
 /**
+ * The content key an attachment's target entry is read from, when the host names no other.
+ *
+ * "link_to" is what et2-link-to binds to and what every app with a Links tab already fills with
+ * {to_app, to_id} - so a markdown field attaches to the same entry the Links tab links to,
+ * without the template having to say so.
+ */
+const MARKDOWN_UPLOAD_WIDGET = "link_to";
+
+/**
+ * Should this file render inline, rather than as a link to download?
+ *
+ * Only raster images - an SVG is a document that happens to draw, and the sanitizer strips it
+ * out of the preview anyway, so offering it as `![...]` would just produce a broken image.
+ */
+function isInlineImage(mime: string): boolean
+{
+	return /^image\/(png|jpeg|gif|webp|bmp|avif)$/.test(mime ?? "");
+}
+
+/**
  * Adds a markdown *editing* surface to a widget that edits its value in a plain textarea.
  *
  * Composes Et2MarkdownMixin rather than extending it: that mixin is display-only and is already
@@ -142,8 +165,35 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
 		@property({type: String, reflect: true, attribute: "markdown-mode"})
 		markdownMode : MarkdownMode = "view";
 
+		/**
+		 * May a file be attached from the format popup?
+		 *
+		 * Set by the server, which is the only side that can see whether the entry this field
+		 * belongs to has been saved yet: an upload for an entry with no id parks in the user's
+		 * temp directory until the save files it away, and a link written to it in the meantime
+		 * would dangle.  Handling that case is a later step - for now the button is simply not
+		 * offered.
+		 */
+		@property({type: Boolean, attribute: "can-attach-file"})
+		canAttachFile = false;
+
 		/** is the on-selection format popup showing? */
 		@state() protected _markdownPopupOpen = false;
+
+		/** is an upload running?  Only to show it, the button stays usable */
+		@state() protected _markdownUploads = 0;
+
+		/**
+		 * Where the caret was when each pending upload started.
+		 *
+		 * An upload is asynchronous and the textarea's selection is long gone by the time it
+		 * finishes.  The button also stays usable meanwhile: a second file can be picked while
+		 * the first is still uploading, so one snapshot is not enough - the second click would
+		 * otherwise send the first file's link to the wrong place.
+		 *
+		 * Each pending upload therefore keeps its own, under a token minted when it starts.
+		 */
+		private _markdownFileSelections = new Map<object, { start: number, end: number }>();
 
 		/** did the template pin the mode, or may the preference decide? */
 		private _markdownModeFromTemplate = false;
@@ -177,7 +227,11 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
 			// @ts-ignore not every superclass defines firstUpdated
 			super.firstUpdated?.(changedProperties);
 
-			if(this.markdown && !this._markdownModeFromTemplate)
+			if(!this.markdown)
+			{
+				return;
+			}
+			if(!this._markdownModeFromTemplate)
 			{
 				const preference = this._host.egw()?.preference(VIEW_PREFERENCE, "common");
 				if(VIEW_MODES.some(view => view.mode === preference))
@@ -185,6 +239,28 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
 					this.markdownMode = <MarkdownMode>preference;
 				}
 			}
+			// Attaching wants the same target TinyMCE's image upload wants, so it uses the same
+			// attribute - and defaults it, rather than reading past it, so a host that does have
+			// imageUpload (Et2HtmlArea) ends up agreeing with us about where a file goes.
+			// Set here, not in a field initializer: a subclass's own `imageUpload = ""` would run
+			// after ours and quietly win.
+			if(!(<any>this).imageUpload)
+			{
+				(<any>this).imageUpload = MARKDOWN_UPLOAD_WIDGET;
+			}
+		}
+
+		/**
+		 * Whose content the upload endpoint should read the target entry from.
+		 *
+		 * The host's own `imageUpload` - the attribute TinyMCE already uses for exactly this, so
+		 * a field that accepts dragged-in images in html mode accepts attached ones in markdown
+		 * without being configured twice.  firstUpdated() defaults it to "link_to", the content
+		 * key every app with a Links tab already fills with {to_app, to_id}.
+		 */
+		protected get _markdownUploadWidgetId() : string
+		{
+			return (<any>this).imageUpload || MARKDOWN_UPLOAD_WIDGET;
 		}
 
 		/**
@@ -237,7 +313,24 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
 				return;
 			}
 
-			const result = applyCommand(node.value, node.selectionStart, node.selectionEnd, command);
+			this._writeMarkdownSource(applyCommand(node.value, node.selectionStart, node.selectionEnd,
+				command));
+		}
+
+		/**
+		 * Write a command's result back into the source.
+		 *
+		 * Shared by the format commands and the file buttons - the undo-preserving dance below is
+		 * subtle enough that a second copy of it would drift.
+		 */
+		protected _writeMarkdownSource(result: CommandResult)
+		{
+			const node = this._markdownSourceNode;
+			if(!node)
+			{
+				return;
+			}
+
 			const edit = minimalEdit(node.value, result.value);
 
 			node.focus();
@@ -268,6 +361,196 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
 			this.dispatchEvent(new Event("change", {bubbles: true, composed: true}));
 
 			this._markdownUpdatePopup();
+		}
+
+		/**
+		 * Remember where to insert, before a dialog or a file picker takes the focus away.
+		 *
+		 * The bar already preventDefault()s mousedown to keep the textarea's selection alive, so
+		 * the range is still readable here - but it will not be by the time an upload comes back,
+		 * which is why it is taken now rather than read live in the completion handler.
+		 */
+		protected _handleMarkdownFileStart = () : object =>
+		{
+			const node = this._markdownSourceNode;
+			// a token rather than the button: the button is reusable immediately, so it cannot
+			// identify one upload among several running at once
+			const pending = {};
+			if(node)
+			{
+				this._markdownFileSelections.set(pending,
+					{start: node.selectionStart, end: node.selectionEnd});
+			}
+			return pending;
+		};
+
+		/**
+		 * The selection a pending upload started from, taken out of the map as it is used
+		 */
+		private _takeMarkdownFileSelection(key) : { start: number, end: number }
+		{
+			const where = key ? this._markdownFileSelections.get(key) : null;
+			if(key)
+			{
+				this._markdownFileSelections.delete(key);
+			}
+			return where ?? null;
+		}
+
+		/**
+		 * Attach the chosen files to the entry, and link them in the source.
+		 *
+		 * The upload goes through Vfs::ajax_htmlarea_upload() - the same endpoint TinyMCE posts a
+		 * dragged-in image to, and the reason `imageUpload` exists.  That endpoint resolves the
+		 * target from the *server's* copy of the named widget's content ("link_to" being
+		 * {to_app, to_id}), stores the file under the entry - /apps/$app/$id/, which is what makes
+		 * it an attachment - and answers with the URL to reach it by.  So there is nothing to
+		 * configure here beyond which content key to read, and no second call to link the file:
+		 * writing it into the entry's own directory IS the link.
+		 */
+		protected async _handleMarkdownFilesChosen(files: FileList | File[], pending: object)
+		{
+			const chosen = Array.from(files ?? []);
+			if(!chosen.length)
+			{
+				this._takeMarkdownFileSelection(pending);
+				return;
+			}
+			this._markdownUploads++;
+			try
+			{
+				// sequentially: each insert shifts the offsets the next one is measured against,
+				// and the server answers one file per request anyway
+				for(const file of chosen)
+				{
+					const uploaded = await this._uploadMarkdownFile(file);
+					if(uploaded?.url)
+					{
+						this._insertMarkdownLink({
+							name: uploaded.name ?? file.name,
+							url: uploaded.url,
+							image: isInlineImage(file.type)
+						}, this._markdownFileSelections.get(pending));
+					}
+				}
+			}
+			finally
+			{
+				this._takeMarkdownFileSelection(pending);
+				this._markdownUploads--;
+			}
+		}
+
+		/**
+		 * POST one file the way TinyMCE does, and read the URL back.
+		 *
+		 * Not egw().request(): this endpoint takes multipart form-data and switches EGroupware's
+		 * own JSON response handling off (Json\Request::isJSONRequest(false)), answering with a
+		 * bare {location} - TinyMCE's images_upload_handler contract.
+		 */
+		protected async _uploadMarkdownFile(file: File): Promise<{ url: string, name?: string }>
+		{
+			const egw = this._host.egw();
+			const body = new FormData();
+			body.append("file", file, file.name);
+
+			const url = egw.ajaxUrl("EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_htmlarea_upload")
+				+ "&type=htmlarea"
+				+ "&request_id=" + encodeURIComponent((<any>this).getInstanceManager?.()?.etemplate_exec_id ?? "")
+				+ "&widget_id=" + encodeURIComponent(this._markdownUploadWidgetId);
+
+			let answer: any = null;
+			try
+			{
+				answer = await (await fetch(url, {method: "POST", body, credentials: "same-origin"})).json();
+			}
+			catch(e)
+			{
+				egw.message(egw.lang("Error uploading file"), "error");
+				return null;
+			}
+			// This endpoint answers TinyMCE, which only ever displays what it gets back, so it
+			// reports failure by putting the message in the very field the URL would go in - and
+			// falls back to a whole data: URL when it has nowhere to store the file.  Neither
+			// belongs in an entry's text, and the only thing telling them apart is that a real
+			// answer went through Framework::link() and so is a path or an absolute URL.
+			const location = answer?.location;
+			if(!location || !/^(\/|https?:)/.test(location))
+			{
+				egw.message(location || egw.lang("Error uploading file"), "error");
+				return null;
+			}
+			return {url: location, name: file.name};
+		}
+
+		/**
+		 * Write the markdown for an attached file at the caret its interaction started from.
+		 *
+		 * @param where the snapshot taken when the user clicked, or null if it was lost
+		 */
+		protected _insertMarkdownLink(link: LinkTarget, where: { start: number, end: number } = null)
+		{
+			const node = this._markdownSourceNode;
+			if(!node)
+			{
+				return;
+			}
+
+			// losing the snapshot should not lose the file - append rather than overwrite
+			where = where ?? {start: node.value.length, end: node.value.length};
+
+			const result = insertLink(node.value, where.start, where.end, link);
+			this._shiftMarkdownFileSelections(where, result.value.length - node.value.length, result.start);
+
+			this._writeMarkdownSource(result);
+			this._markdownLinksChanged();
+		}
+
+		/**
+		 * Keep the still-pending attachments pointing where they were meant to.
+		 *
+		 * Two uploads from the same caret is the ordinary case - click, pick, click, pick - and
+		 * whichever finishes first moves the text out from under the other one's snapshot.  So
+		 * everything after this insert moves with it, and the second file lands after the first
+		 * rather than in front of it.
+		 *
+		 * @param where the range this insert replaced
+		 * @param delta how much longer the source got
+		 * @param caret where the caret ended up, just after the insert
+		 */
+		private _shiftMarkdownFileSelections(where: { start: number, end: number }, delta: number,
+											 caret: number)
+		{
+			for(const [key, pending] of this._markdownFileSelections)
+			{
+				if(pending.start >= where.end)
+				{
+					this._markdownFileSelections.set(key,
+						{start: pending.start + delta, end: pending.end + delta});
+				}
+				else if(pending.end > where.start)
+				{
+					// it pointed into the text that was just replaced, so there is nothing left
+					// to point at - put it after the insert rather than inside it
+					this._markdownFileSelections.set(key, {start: caret, end: caret});
+				}
+			}
+		}
+
+		/**
+		 * Tell the entry that its attachments changed.
+		 *
+		 * There is no generic "links changed" event in the API - tracker's comment_add_vfs()
+		 * sweeps the link lists by hand instead - so this does both: refresh what is on screen
+		 * now, and dispatch an event so an app can react without patching this mixin.
+		 */
+		protected _markdownLinksChanged()
+		{
+			this.dispatchEvent(new CustomEvent("et2-link-changed", {bubbles: true, composed: true}));
+
+			const container = (<any>this).getInstanceManager?.()?.widgetContainer;
+			container?.querySelectorAll?.("et2-link-list")
+				.forEach((list: any) => list.get_links?.());
 		}
 
 		/**
@@ -429,6 +712,54 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
 		}
 
 		/**
+		 * Attach a file to the entry, and link it here.
+		 *
+		 * A plain file input rather than et2-vfs-upload: the upload endpoint takes one multipart
+		 * POST and answers with the URL, so there is nothing for a widget to manage - no queue,
+		 * no file list, no per-file UI to keep out of the way inside a popup.
+		 *
+		 * mousedown does the snapshotting, before the file chooser takes the focus away, and the
+		 * token it returns is what the completion handler finds its caret under.
+		 */
+		protected _markdownFileButtonsTemplate()
+		{
+			if(!this.canAttachFile)
+			{
+				return nothing;
+			}
+
+			let pending: object = null;
+
+			return html`
+                <div class="markdown-popup__separator"></div>
+                <et2-button-icon
+                        noSubmit
+                        class="markdown-popup__attach"
+                        image=${this._markdownUploads ? "loading" : "paperclip"}
+                        statustext=${this._host.egw().lang("Attach a file")}
+                        label=${this._host.egw().lang("Attach a file")}
+                        @mousedown=${() => {pending = this._handleMarkdownFileStart();}}
+                        @click=${(event: MouseEvent) =>
+                        {
+                            (<HTMLElement>event.currentTarget).parentElement
+                                .querySelector<HTMLInputElement>(".markdown-popup__file").click();
+                        }}
+                ></et2-button-icon>
+                <input
+                        type="file" multiple hidden
+                        class="markdown-popup__file"
+                        @change=${(event: Event) =>
+                        {
+                            const input = <HTMLInputElement>event.target;
+                            const chosen = input.files;
+                            // let the same file be picked twice in a row
+                            this._handleMarkdownFilesChosen(chosen, pending).then(() => input.value = "");
+                            pending = null;
+                        }}
+                />`;
+		}
+
+		/**
 		 * The format popup, anchored over the selection.
 		 */
 		protected _markdownFormatPopupTemplate()
@@ -473,6 +804,7 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
 						${INLINE_COMMANDS.map(button)}
                         <div class="markdown-popup__separator"></div>
 						${LIST_COMMANDS.map(button)}
+						${this._markdownFileButtonsTemplate()}
                     </div>
                 </sl-popup>`;
 		}
