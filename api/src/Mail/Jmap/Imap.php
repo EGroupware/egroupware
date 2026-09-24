@@ -914,10 +914,40 @@ class Imap extends Jmap\Base
 			$mailboxNames[] = $mailboxName;
 			$idByName[$mailboxName] = (string)$id;
 		}
-		$infos = $mailboxNames ? $imap->listMailboxes($mailboxNames, \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, [
+		$listOptions = [
 			'attributes' => true, 'special_use' => true, 'children' => true,
 			'status' => \Horde_Imap_Client::STATUS_MESSAGES | \Horde_Imap_Client::STATUS_UNSEEN,
-		]) : [];
+		];
+		try
+		{
+			$infos = $mailboxNames ? $imap->listMailboxes($mailboxNames, \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, $listOptions) : [];
+		}
+		catch (\Throwable $e)
+		{
+			// One stale/nonexistent mailbox name (eg. a special folder renamed/deleted directly on
+			// the IMAP server, bypassing EGroupware entirely - ticket #125081, 2026-09-24) poisons
+			// Horde's own batched LIST-STATUS call for the WHOLE requested set, since
+			// Horde_Imap_Client_Socket::_listMailboxes() re-throws unconditionally for anything but
+			// one unrelated Archiveopteryx quirk - aborting this ENTIRE tree level instead of just
+			// the one stale entry (the customer's own report: "logging into the mail server
+			// directly shows all folders fine" - the account's real folders were never the
+			// problem). Fall back to resolving each mailbox individually - back to the slower,
+			// pre-batching N round trips, but only in this rare failure case, and a single
+			// still-missing name now only drops that ONE id into $notFound below instead of taking
+			// the whole level down.
+			$infos = [];
+			foreach ($mailboxNames as $mailboxName)
+			{
+				try
+				{
+					$infos += $imap->listMailboxes([$mailboxName], \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, $listOptions);
+				}
+				catch (\Throwable $e2)
+				{
+					// leave it out of $infos - the loop below already treats that as notFound
+				}
+			}
+		}
 
 		$list = [];
 		$notFound = [];
