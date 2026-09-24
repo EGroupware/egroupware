@@ -274,7 +274,7 @@ export const CachedQueueMixin = <T extends Constructor<typeof Et2Widget & {
 			if(uniqueParams.length !== queue.length)
 			{
 				// Should not be here, figure out how we got a duplicate in the queue
-				debugger;
+				console.warn("Duplicate request in the queue", queue);
 			}
 
 			// Send the request

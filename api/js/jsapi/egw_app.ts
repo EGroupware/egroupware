@@ -1231,7 +1231,7 @@ export abstract class EgwApp
 				// One entry, email template selected - we can open that in the compose window
 				if(email)
 				{
-					debugger;
+					// Nothing to do here, ajax_merge_multiple() opened compose & sent its own response
 				}
 				else
 				{
