@@ -98,6 +98,7 @@ require_once realpath(__DIR__.'/../../api/tests/AppTest.php');
 | `egw-repo` | `EGroupware/egroupware` | Which EGroupware repository to test against. |
 | `egw-ref` | `master` | Branch, tag or sha of it. |
 | `extra-apps-owner` | none | Organisation owning the `extra-apps` repositories, for GitHub App authentication. |
+| `test-also` | none | Extra test paths (files or directories, relative to the EGroupware root) to run alongside a `test-scope: extra-apps` run — not restricted to `extra-apps` entries, see "Being the only place another app's tests can run" below. |
 
 Secrets: `extra-apps-token`, or `extra-apps-app-id` plus `extra-apps-private-key`.
 
@@ -139,6 +140,32 @@ repository, so there is no way to work out where to clone it from. It is also no
 install time — `setup-cli.php --update <app>` installs a named app without checking its
 dependencies — so whether you really need another app present is a question about what your code
 does, not about what that declaration says.
+
+## Being the only place another app's tests can run
+
+A public/GPL app (already `require`d by `egroupware/egroupware`, so it is always installed) may
+carry tests that exercise interoperation with *your* app specifically — but if your app is
+optional or not public (an EPL/commercial add-on, say), those tests can never run as part of that
+other app's own coverage: the main EGroupware repo's own CI has no way to check out a
+non-public app, and a `test-scope: extra-apps` run of that other app's own repository (if it even
+has one) only runs its own `tests/`, not yours. Your app being present is the one precondition
+those tests need, and your CI is the one place that precondition is ever met — nobody else's CI
+run can provide it.
+
+Name the other app's test directory via `test-also`, so that coverage actually executes somewhere,
+instead of silently never running at all:
+
+```yaml
+      test-apps: myapp
+      test-scope: extra-apps
+      test-also: otherapp/tests
+```
+
+`test-also` paths do not need to appear in `extra-apps` — `otherapp` here is already installed
+because it's a required app, exactly like the `api`/`infolog`/`projectmanager` case above; naming
+it only changes which tests *run*, not what gets checked out. Point at the whole `tests/`
+directory rather than one file where practical, so a later test added there for the same reason
+is picked up automatically without a further change on your side.
 
 ## Running it regularly
 
