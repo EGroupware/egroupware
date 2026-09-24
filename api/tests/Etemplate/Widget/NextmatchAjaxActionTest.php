@@ -92,6 +92,22 @@ class NextmatchAjaxActionTest extends LoggedInTest
 		return null;
 	}
 
+	/**
+	 * A real eTemplate request id, the way the browser sends one along.
+	 *
+	 * These endpoints refuse without it: json.php has no CSRF token of its own, so the exec id is
+	 * what says the caller had one of our pages open (Nextmatch::validateExecId()).  Writing to
+	 * the request is what persists it - a brand-new one with nothing set is never saved.
+	 */
+	protected function execId() : string
+	{
+		$request = \EGroupware\Api\Etemplate\Request::read();
+		$id = $request->id();
+		$request->content = ['nm' => []];
+		unset($request);
+		return $id;
+	}
+
 	protected function makeContact(array $extra = []) : int
 	{
 		$contact = ['n_family' => 'AjaxActionTest', 'n_given' => 'Temporary',
@@ -117,7 +133,7 @@ class NextmatchAjaxActionTest extends LoggedInTest
 		$this->makeContact(['owner' => $personal]);
 
 		$ui = new \addressbook_ui();
-		$ui->ajax_action('move_to_' . $personal, [$this->contact_id], false, ['move_to_copy' => true]);
+		$ui->ajax_action($this->execId(), 'move_to_' . $personal, [$this->contact_id], false, ['move_to_copy' => true]);
 
 		$this->assertNotEmpty($this->contacts->read($this->contact_id),
 			'with "Copy instead of move" ticked the original contact must still exist');
@@ -135,7 +151,7 @@ class NextmatchAjaxActionTest extends LoggedInTest
 		$this->makeContact(['owner' => $personal]);
 
 		$ui = new \addressbook_ui();
-		$ui->ajax_action('move_to_' . $personal, [$this->contact_id], false, []);
+		$ui->ajax_action($this->execId(), 'move_to_' . $personal, [$this->contact_id], false, []);
 
 		$parms = $this->refreshCall();
 		$this->assertNotNull($parms);
@@ -151,7 +167,7 @@ class NextmatchAjaxActionTest extends LoggedInTest
 		$this->makeContact(['cat_id' => '1']);
 
 		$ui = new \addressbook_ui();
-		$ui->ajax_action('cat_add_9', [$this->contact_id], false, []);
+		$ui->ajax_action($this->execId(), 'cat_add_9', [$this->contact_id], false, []);
 
 		$this->assertSame('1,9', $this->contacts->read($this->contact_id)['cat_id']);
 	}
@@ -165,7 +181,7 @@ class NextmatchAjaxActionTest extends LoggedInTest
 		$this->assertSame('ongoing', $this->infolog->read($this->info_id)['info_status']);
 
 		$ui = new \infolog_ui();
-		$ui->ajax_action('close', [$this->info_id], false, []);
+		$ui->ajax_action($this->execId(), 'close', [$this->info_id], false, []);
 
 		$info = $this->infolog->read($this->info_id);
 		$this->assertSame('done', $info['info_status'], 'close must set the status to done');
@@ -178,7 +194,7 @@ class NextmatchAjaxActionTest extends LoggedInTest
 		$this->makeInfolog();
 
 		$ui = new \infolog_ui();
-		$ui->ajax_action('status_billed', [$this->info_id], false, []);
+		$ui->ajax_action($this->execId(), 'status_billed', [$this->info_id], false, []);
 
 		$this->assertSame('billed', $this->infolog->read($this->info_id)['info_status']);
 	}
@@ -194,7 +210,7 @@ class NextmatchAjaxActionTest extends LoggedInTest
 		$this->assertEquals(1, $this->infolog->read($this->info_id)['info_cat']);
 
 		$ui = new \infolog_ui();
-		$ui->ajax_action('cat_', [$this->info_id], false, []);
+		$ui->ajax_action($this->execId(), 'cat_', [$this->info_id], false, []);
 
 		$this->assertEmpty($this->infolog->read($this->info_id)['info_cat'],
 			'the bare cat_ prefix must clear the category');
@@ -211,10 +227,37 @@ class NextmatchAjaxActionTest extends LoggedInTest
 		Api\Cache::unsetSession('addressbook', 'index');
 
 		$ui = new \addressbook_ui();
-		$ui->ajax_action('cat_add_9', [], true, []);
+		$ui->ajax_action($this->execId(), 'cat_add_9', [], true, []);
 
 		$this->assertSame('1', $this->contacts->read($this->contact_id)['cat_id'],
 			'select-all with no cached query must NOT fall back to acting on everything');
+	}
+
+	/**
+	 * json.php authenticates by session cookie and checks app rights and the ajax_* naming rule -
+	 * it has no CSRF token, and the eTemplate exec id is what fills that gap for an action the
+	 * context menu now sends directly instead of submitting. Without a live one the endpoint has
+	 * to do nothing at all, or every converted action is reachable by anything that can make the
+	 * browser send its cookie.
+	 */
+	public function testAnActionWithoutALiveExecIdDoesNothing()
+	{
+		$this->makeContact(['cat_id' => '1']);
+		$ui = new \addressbook_ui();
+
+		$ui->ajax_action('', 'cat_add_9', [$this->contact_id], false, []);
+		$this->assertSame('1', $this->contacts->read($this->contact_id)['cat_id'],
+			'an action with no exec id at all must not be carried out');
+
+		$ui->ajax_action('addressbook_nobody_'.base64_encode(random_bytes(32)), 'cat_add_9',
+			[$this->contact_id], false, []);
+		$this->assertSame('1', $this->contacts->read($this->contact_id)['cat_id'],
+			'a made-up exec id must not be carried out either');
+
+		// ...and the same call with a real one still works, so the guard is not just refusing
+		// everything
+		$ui->ajax_action($this->execId(), 'cat_add_9', [$this->contact_id], false, []);
+		$this->assertSame('1,9', $this->contacts->read($this->contact_id)['cat_id']);
 	}
 
 	/**
@@ -226,7 +269,7 @@ class NextmatchAjaxActionTest extends LoggedInTest
 		Api\Cache::unsetSession('addressbook', 'index');
 
 		$ui = new \addressbook_ui();
-		$ui->ajax_action('cat_add_9', [], true, [], '../../evil');
+		$ui->ajax_action($this->execId(), 'cat_add_9', [], true, [], '../../evil');
 
 		// falls back to 'index', which has no cached query, so the guard above stops it
 		$this->assertSame('1', $this->contacts->read($this->contact_id)['cat_id']);
@@ -245,7 +288,7 @@ class NextmatchAjaxActionTest extends LoggedInTest
 		$me = $GLOBALS['egw_info']['user']['account_id'];
 
 		$ui = new \infolog_ui();
-		$ui->ajax_action('responsible_ok_' . $me, [$this->info_id], false, []);
+		$ui->ajax_action($this->execId(), 'responsible_ok_' . $me, [$this->info_id], false, []);
 
 		$this->assertEquals([$me], array_values((array)$this->infolog->read($this->info_id)['info_responsible']),
 			'responsible_ok_<ids> must set the responsible users');
@@ -257,11 +300,11 @@ class NextmatchAjaxActionTest extends LoggedInTest
 		$me = $GLOBALS['egw_info']['user']['account_id'];
 		$ui = new \infolog_ui();
 
-		$ui->ajax_action('responsible_add_' . $me, [$this->info_id], false, []);
+		$ui->ajax_action($this->execId(), 'responsible_add_' . $me, [$this->info_id], false, []);
 		$this->assertContains((string)$me, array_map('strval',
 			(array)$this->infolog->read($this->info_id)['info_responsible']));
 
-		$ui->ajax_action('responsible_delete_' . $me, [$this->info_id], false, []);
+		$ui->ajax_action($this->execId(), 'responsible_delete_' . $me, [$this->info_id], false, []);
 		$this->assertNotContains((string)$me, array_map('strval',
 			(array)$this->infolog->read($this->info_id)['info_responsible']));
 	}
@@ -272,7 +315,7 @@ class NextmatchAjaxActionTest extends LoggedInTest
 		$when = mktime(12, 0, 0, 6, 15, 2027);
 
 		$ui = new \infolog_ui();
-		$ui->ajax_action('startdate_ok_' . $when, [$this->info_id], false, []);
+		$ui->ajax_action($this->execId(), 'startdate_ok_' . $when, [$this->info_id], false, []);
 
 		$this->assertEquals($when, $this->infolog->read($this->info_id)['info_startdate'],
 			'startdate_ok_<ts> must set the start date');
@@ -288,7 +331,7 @@ class NextmatchAjaxActionTest extends LoggedInTest
 		$this->assertNotEmpty($this->infolog->read($this->info_id)['info_startdate']);
 
 		$ui = new \infolog_ui();
-		$ui->ajax_action('startdate_ok_', [$this->info_id], false, []);
+		$ui->ajax_action($this->execId(), 'startdate_ok_', [$this->info_id], false, []);
 
 		$this->assertEmpty($this->infolog->read($this->info_id)['info_startdate']);
 	}
@@ -305,7 +348,7 @@ class NextmatchAjaxActionTest extends LoggedInTest
 		Api\Cache::unsetSession('infolog', 'session_data');
 
 		$ui = new \infolog_ui();
-		$ui->ajax_action('close', [], true, []);
+		$ui->ajax_action($this->execId(), 'close', [], true, []);
 
 		$this->assertSame('ongoing', $this->infolog->read($this->info_id)['info_status'],
 			'select-all with no cached query must NOT fall back to acting on everything');

@@ -1583,8 +1583,14 @@ class infolog_ui
 	 * @param bool $all_selected All entries matching the current filters are selected, not just $selected
 	 * @param array $checkboxes values of the checkbox actions in the same menu, eg. no_notifications
 	 */
-	public function ajax_action($action, $selected, $all_selected, array $checkboxes = [])
+	public function ajax_action($exec_id, $action, $selected, $all_selected, array $checkboxes = [])
 	{
+		// The context menu calls this directly, so the eTemplate's exec id is the only thing
+		// saying the caller had one of our pages open - see Nextmatch::validateExecId()
+		if (!Api\Etemplate\Widget\Nextmatch::validateExecId($exec_id))
+		{
+			return;
+		}
 		$success = 0;
 		$failed = 0;
 		$action_msg = '';

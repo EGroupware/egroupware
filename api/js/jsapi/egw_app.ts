@@ -1457,6 +1457,7 @@ export abstract class EgwApp
 		}
 
 		return this.egw.request(menuaction, [
+			EgwApp._execId(nm, this.et2),
 			_action.id,
 			ids,
 			(<Et2Nextmatch>nm)?.getSelection?.().all === true,
@@ -1527,11 +1528,29 @@ export abstract class EgwApp
 		}
 
 		return this.egw.request(this.appname + "." + this.appname + "_ui.ajax_action", [
+			EgwApp._execId(nm, this.et2),
 			action + "_" + verb + "_" + value,
 			ids,
 			nm?.getSelection?.().all === true,
 			checkboxes
 		]);
+	}
+
+	/**
+	 * The eTemplate exec id to send along with a converted context-menu action.
+	 *
+	 * An eTemplate submit carries this by itself; an ajax action has to pass it explicitly, and
+	 * the server refuses without it - json.php has no CSRF token of its own, so this unguessable
+	 * id is what says the caller had one of our pages open.  See
+	 * Api\Etemplate\Widget\Nextmatch::validateExecId().
+	 *
+	 * Taken from the nextmatch when there is one (it is the widget the action belongs to) and from
+	 * the app's own template otherwise, eg. a placeholder action fired on an empty list.
+	 */
+	protected static _execId(nm : any, et2 : any) : string
+	{
+		return nm?.getInstanceManager?.()?.etemplate_exec_id ??
+			et2?.getInstanceManager?.()?.etemplate_exec_id ?? "";
 	}
 
 	/**

@@ -192,8 +192,14 @@ class Jobs
 	 * @param string[] $selected
 	 * @param bool $all_selected
 	 */
-	public function ajax_action($action, $selected, $all_selected = false)
+	public function ajax_action($exec_id, $action, $selected, $all_selected = false)
 	{
+		// The context menu calls this directly, so the eTemplate's exec id is the only thing
+		// saying the caller had one of our pages open - see Nextmatch::validateExecId()
+		if (!Api\Etemplate\Widget\Nextmatch::validateExecId($exec_id))
+		{
+			return;
+		}
 		try {
 			$msg = $this->action($action, (array)$selected, (bool)$all_selected);
 			$type = 'success';

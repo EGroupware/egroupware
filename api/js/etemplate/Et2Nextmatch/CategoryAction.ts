@@ -117,12 +117,14 @@ export class CategoryAction
 		const ids = senders.map(sender => (sender?.id || "").split("::").pop()).filter(Boolean);
 		const menuaction = action.data?.menuaction ||
 			settings.application + "." + settings.application + "_ui.ajax_action";
+		// the endpoint refuses without it, see Nextmatch::validateExecId()
+		const execId = (<any>nm)?.getInstanceManager?.()?.etemplate_exec_id ?? "";
 
 		for(const actionId of CategoryAction._actionIds(settings, button, picked))
 		{
 			// one request per picked category, because that is the granularity the existing
 			// per-app action() handlers work at - no server change needed to get this far
-			await egw.request(menuaction, [actionId, ids, all, {}]);
+			await egw.request(menuaction, [execId, actionId, ids, all, {}]);
 		}
 	}
 

@@ -181,8 +181,14 @@ class filemanager_shares extends filemanager_ui
 	 * @param string[] $selected share_id's
 	 * @param bool $all_selected delete every share matching the current filters
 	 */
-	public function ajax_delete($action, $selected, $all_selected = false)
+	public function ajax_delete($exec_id, $action, $selected, $all_selected = false)
 	{
+		// The context menu calls this directly, so the eTemplate's exec id is the only thing
+		// saying the caller had one of our pages open - see Nextmatch::validateExecId()
+		if (!Api\Etemplate\Widget\Nextmatch::validateExecId($exec_id))
+		{
+			return;
+		}
 		if ($action !== 'delete')
 		{
 			throw new Api\Exception\WrongParameter("Unknown action '$action'!");

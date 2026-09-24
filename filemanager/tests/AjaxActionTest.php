@@ -69,6 +69,19 @@ class AjaxActionTest extends LoggedInTest
 		}
 	}
 
+	/**
+	 * A real eTemplate request id, the way the browser sends one along - the endpoints refuse
+	 * without it, see Nextmatch::validateExecId().  Writing to the request is what persists it.
+	 */
+	protected function execId() : string
+	{
+		$request = \EGroupware\Api\Etemplate\Request::read();
+		$id = $request->id();
+		$request->content = ['nm' => []];
+		unset($request);
+		return $id;
+	}
+
 	protected function refreshCall() : ?array
 	{
 		$response = Api\Json\Response::get();
@@ -104,7 +117,7 @@ class AjaxActionTest extends LoggedInTest
 		$this->assertNotEmpty($this->readShare($this->share_id), 'share was not created');
 
 		$ui = new \filemanager_shares();
-		$ui->ajax_delete('delete', [$this->share_id], false);
+		$ui->ajax_delete($this->execId(), 'delete', [$this->share_id], false);
 
 		$this->assertEmpty($this->readShare($this->share_id), 'the share must be gone');
 		$this->assertNotNull($this->refreshCall(),
@@ -118,7 +131,7 @@ class AjaxActionTest extends LoggedInTest
 	public function testSharesRejectsAnUnknownAction()
 	{
 		$this->expectException(\EGroupware\Api\Exception\WrongParameter::class);
-		(new \filemanager_shares())->ajax_delete('something_else', [1], false);
+		(new \filemanager_shares())->ajax_delete($this->execId(), 'something_else', [1], false);
 	}
 
 	protected function readShare($share_id)
@@ -145,7 +158,7 @@ class AjaxActionTest extends LoggedInTest
 		$this->assertArrayHasKey($this->job_id, Api\Config::read('filemanager')['jobs'],
 			'could not create the test job');
 
-		(new Jobs())->ajax_action('delete', [$this->job_id], false);
+		(new Jobs())->ajax_action($this->execId(), 'delete', [$this->job_id], false);
 
 		$this->assertArrayNotHasKey($this->job_id, Api\Config::read('filemanager')['jobs'] ?? [],
 			'the job must be gone');
@@ -159,7 +172,7 @@ class AjaxActionTest extends LoggedInTest
 	public function testJobsUnknownActionIsReportedNotThrown()
 	{
 		$this->job_id = null;
-		(new Jobs())->ajax_action('not_an_action', ['whatever'], false);
+		(new Jobs())->ajax_action($this->execId(), 'not_an_action', ['whatever'], false);
 
 		$parms = $this->refreshCall();
 		$this->assertNotNull($parms, 'even a failure has to answer the client');

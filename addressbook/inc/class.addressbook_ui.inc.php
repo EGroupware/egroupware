@@ -1380,8 +1380,14 @@ class addressbook_ui extends addressbook_bo
 	 * @param string $session_name which list this came from, 'index' or 'select' - action() reads the
 	 *	query get_rows() cached under it for filter2/filter, see below
 	 */
-	public function ajax_action($action, $selected, $all_selected, array $checkboxes = [], $session_name = 'index')
+	public function ajax_action($exec_id, $action, $selected, $all_selected, array $checkboxes = [], $session_name = 'index')
 	{
+		// The context menu calls this directly, so the eTemplate's exec id is the only thing
+		// saying the caller had one of our pages open - see Nextmatch::validateExecId()
+		if (!Api\Etemplate\Widget\Nextmatch::validateExecId($exec_id))
+		{
+			return;
+		}
 		$success = 0;
 		$failed = 0;
 		$action_msg = '';

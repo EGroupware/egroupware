@@ -2351,6 +2351,8 @@ export class CalendarApp extends EgwApp
 	cal_delete(_action, _senders)
 	{
 		let all = _action.parent.data.nextmatch?.getSelection().all;
+		// the endpoint refuses without it, see Nextmatch::validateExecId()
+		let exec_id = _action.parent.data.nextmatch?.getInstanceManager()?.etemplate_exec_id ?? "";
 		let no_notifications = _action.parent.getActionById("no_notifications")?.checked;
 		let matches = false;
 		let ids = [];
@@ -2377,11 +2379,11 @@ export class CalendarApp extends EgwApp
 				case 'single':
 				case 'exception':
 					// Just this one, handle in the normal way but over AJAX
-					this.egw.request("calendar.calendar_uilist.ajax_action",[_action.id, ids, all, no_notifications]);
+					this.egw.request("calendar.calendar_uilist.ajax_action",[exec_id, _action.id, ids, all, no_notifications]);
 					break;
 				case 'series':
 					// No recurrences, handle in the normal way but over AJAX
-					this.egw.request("calendar.calendar_uilist.ajax_action",["delete_series", ids, all, no_notifications]);
+					this.egw.request("calendar.calendar_uilist.ajax_action",[exec_id, "delete_series", ids, all, no_notifications]);
 					break;
 				case 'cancel':
 				default:

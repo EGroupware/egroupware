@@ -117,8 +117,10 @@ export class DistributionListAction
 
 		const ids = senders.map(sender => (sender?.id || "").split("::").pop()).filter(Boolean);
 		const menuaction = action.data?.menuaction || "addressbook.addressbook_ui.ajax_action";
+		// the endpoint refuses without it, see Nextmatch::validateExecId()
+		const execId = (<any>nm)?.getInstanceManager?.()?.etemplate_exec_id ?? "";
 		const prefix = button === ADD ? settings.addPrefix : settings.removePrefix;
 
-		return egw.request(menuaction, [prefix + list, ids, all, {}]);
+		return egw.request(menuaction, [execId, prefix + list, ids, all, {}]);
 	}
 }

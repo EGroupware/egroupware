@@ -70,6 +70,22 @@ class AjaxActionTest extends LoggedInTest
 		return null;
 	}
 
+	/**
+	 * A real eTemplate request id, the way the browser sends one along.
+	 *
+	 * These endpoints refuse without it: json.php has no CSRF token of its own, so the exec id is
+	 * what says the caller had one of our pages open (Nextmatch::validateExecId()).  Writing to
+	 * the request is what persists it - a brand-new one with nothing set is never saved.
+	 */
+	protected function execId() : string
+	{
+		$request = \EGroupware\Api\Etemplate\Request::read();
+		$id = $request->id();
+		$request->content = ['nm' => []];
+		unset($request);
+		return $id;
+	}
+
 	protected function makeEvent() : int
 	{
 		$me = $GLOBALS['egw_info']['user']['account_id'];
@@ -99,7 +115,7 @@ class AjaxActionTest extends LoggedInTest
 		$this->makeEvent();
 		$this->assertSame('A', $this->myStatus());
 
-		(new \calendar_uilist())->ajax_action('status-T', [$this->event_id], false, []);
+		(new \calendar_uilist())->ajax_action($this->execId(), 'status-T', [$this->event_id], false, []);
 
 		$this->assertSame('T', $this->myStatus(), 'status-T must set the status to tentative');
 		$this->assertNotNull($this->refreshCall(),
@@ -115,7 +131,7 @@ class AjaxActionTest extends LoggedInTest
 	{
 		$this->makeEvent();
 
-		(new \calendar_uilist())->ajax_action('status-R', [$this->event_id], false, []);
+		(new \calendar_uilist())->ajax_action($this->execId(), 'status-R', [$this->event_id], false, []);
 
 		$parms = $this->refreshCall();
 		$this->assertNotNull($parms);
@@ -131,7 +147,7 @@ class AjaxActionTest extends LoggedInTest
 		$this->makeEvent();
 		Api\Cache::unsetSession('calendar', 'calendar_list');
 
-		(new \calendar_uilist())->ajax_action('status-T', [], true, []);
+		(new \calendar_uilist())->ajax_action($this->execId(), 'status-T', [], true, []);
 
 		$this->assertSame('A', $this->myStatus(),
 			'select-all with no cached query must NOT fall back to acting on everything');

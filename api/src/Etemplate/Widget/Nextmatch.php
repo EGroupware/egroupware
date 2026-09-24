@@ -1655,6 +1655,39 @@ class Nextmatch extends Etemplate\Widget
 	 * @param array $prefs preference-name => value pairs to save
 	 * @param string $action 'default'|'reset'|'force'
 	 */
+	/**
+	 * Does this ajax request come from a live eTemplate, or could anything have sent it?
+	 *
+	 * An eTemplate submit carries an etemplate_exec_id; a context-menu action converted to ajax
+	 * does not get one for free, and json.php has no CSRF token of its own - it authenticates by
+	 * session cookie, checks the app's run rights and that the method is named ajax_*, and that is
+	 * all.  So for a converted action the unguessable id is what has to be passed along and checked
+	 * here, or the endpoint is reachable by anything that can make the browser send its cookie.
+	 *
+	 * The id is <app>_<account_lid>_<base64 of 32 random bytes> (Request::request_id()), stored
+	 * server-side and only ever handed to the page that owns it.  Reading it is enough on its own:
+	 * WHICH template it belongs to is not checked, because it does not decide anything - the
+	 * menuaction already pins the class, json.php has already required the app, and every handler
+	 * re-derives its authority from the entry id it was given.  What this adds is that the caller
+	 * had to have a page of ours open.
+	 *
+	 * Reading does not consume the request: remove_if_not_modified is off by default, so the id
+	 * stays valid for the page that is still using it.
+	 *
+	 * @param string|null $exec_id as sent by the client
+	 * @return bool false and an error message to the user if it is missing or no longer known
+	 */
+	public static function validateExecId($exec_id) : bool
+	{
+		if (!empty($exec_id) && Etemplate\Request::read($exec_id, false))
+		{
+			return true;
+		}
+		Api\Json\Response::get()->call('egw.message',
+			lang('Your session has expired, please reload the page.'), 'error');
+		return false;
+	}
+
 	public static function ajax_set_admin_default($exec_id, $form_name, array $prefs, $action)
 	{
 		if (empty($GLOBALS['egw_info']['user']['apps']['admin']) || empty($prefs) ||
