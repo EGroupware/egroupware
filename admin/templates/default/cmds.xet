@@ -21,7 +21,7 @@
 			<rows>
 				<row class="th">
 					<et2-nextmatch-header  label="Title" id="title"></et2-nextmatch-header>
-					<et2-nextmatch-header-custom  id="app" emptyLabel="All applications" widgetType=""></et2-nextmatch-header-custom>
+					<et2-nextmatch-header-custom  id="app" emptyLabel="All applications" widgetType="select-app"></et2-nextmatch-header-custom>
 					<et2-nextmatch-header-account  id="account" emptyLabel="All accounts"></et2-nextmatch-header-account>
 					<et2-nextmatch-header-filter  id="type" emptyLabel="Type"></et2-nextmatch-header-filter>
 					<et2-nextmatch-header-account  id="requested" emptyLabel="Requested"></et2-nextmatch-header-account>
