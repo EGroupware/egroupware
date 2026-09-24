@@ -2889,18 +2889,25 @@ class HTTP_WebDAV_Server
      * Check a single URI condition parsed from an if-header
      *
      * Delegates to $this->checkLock($path) for a state-token (lock-token) condition and
-     * $this->currentEtag($path) for an ETag condition - both already exist per-subclass
-     * (checkLock() for every HTTP_WebDAV_Server_Filesystem descendant; currentEtag() where
-     * implemented, @see EGroupware\Api\Vfs\WebDAV::currentEtag()). A subclass that implements
-     * neither gets the same "resource can't be resolved" treatment as an unresolvable URI - the
-     * condition is never satisfied, rather than always satisfied as before.
+     * $this->currentEtag($path) for an ETag condition.
+     *
+     * checkLock() exists on every HTTP_WebDAV_Server_Filesystem/CalDAV descendant already (it
+     * predates this method, used for LOCK/UNLOCK and the separate _check_lock_status() write
+     * gate) - a lock-token condition is checked for real everywhere.
+     *
+     * currentEtag() only exists where a subclass actually implements it (@see
+     * EGroupware\Api\Vfs\WebDAV::currentEtag()). CalDAV/CardDAV don't: they have their own,
+     * unrelated RFC7232 If-Match/If-None-Match mechanism (@see CalDAV\Handler::get_etag()), so an
+     * ETag condition here against a CalDAV/CardDAV resource is treated as not-applicable/always
+     * satisfied - the same no-op behaviour this method had before it did any real checking, for
+     * the one condition type that subclass genuinely has no way to evaluate.
      *
      * Simplifications versus the full RFC 4918 §10.4 semantics, deliberate and documented rather
      * than silently approximated:
      * - weak (W/) and strong ETag comparison are not distinguished - both compare the ETag value
      *   for exact equality, since this codebase's ETags carry no separate notion of "weak".
-     * - a condition (negated or not) whose resource cannot be resolved/determined at all is
-     *   always treated as NOT met, rather than trying to replicate the RFC's more intricate
+     * - a lock-token condition (negated or not) whose resource cannot be resolved/determined at
+     *   all is always treated as NOT met, rather than trying to replicate the RFC's more intricate
      *   missing-resource/Not-condition interactions.
      *
      * @param string $uri URI to check (never empty - _check_if_header_conditions() already
@@ -2933,8 +2940,17 @@ class HTTP_WebDAV_Server
         } elseif (preg_match("/^\[(W\/)?'(.*)'\]\$/", $condition, $m)) {
             // ETag condition, eg. "['some-etag']" or "[W/'some-etag']" - both compared the same
             // way, see this method's docblock
+            if (!method_exists($this, "currentEtag")) {
+                // this subclass (eg. CalDAV/CardDAV) has no ETag-condition support here and
+                // relies on its own separate RFC7232 If-Match/If-None-Match handling instead
+                // (@see CalDAV\Handler::get_etag()) - treat as not-applicable, returning true
+                // unconditionally (ignoring $not, same as this method's own pre-Phase-1 stub did
+                // for every condition) rather than failing closed or letting "Not" flip a
+                // not-applicable condition to false
+                return true;
+            }
             $etag = '"'.$m[2].'"';
-            $current = method_exists($this, "currentEtag") ? $this->currentEtag($path) : null;
+            $current = $this->currentEtag($path);
             $met = $current !== null && $current === $etag;
         } else {
             // unrecognized condition shape - fail closed rather than guess
