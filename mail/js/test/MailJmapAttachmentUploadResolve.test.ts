@@ -170,6 +170,53 @@ describe("MailJmap.downloadBlobUrl() - the SVG+xml mime-type-enforcement fix", (
 		}
 		assert.instanceOf(error, JmapUserError);
 	});
+
+	/**
+	 * Ticket #125092 (2026-09-24): compose's own "view a just-uploaded attachment" path
+	 * (compose.ts's displayJmapBlobAttachment()) calls this method directly, never
+	 * getAttachmentViewUrl() - it had never received the tracker #124541 fix at all, so a
+	 * freshly-uploaded PDF opened with the browser's own native viewer chrome and the blob:
+	 * URL's opaque UUID as filename, unlike the same PDF once the message was actually sent.
+	 */
+	it("names the created object URL's blob as a real File, so a browser save dialog offers the real name", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		primeToken(jmap, "1", {downloadBlob : async() => ({blob : async() => new Blob(["hi"], {type : "text/plain"})})});
+		const capture = captureCreatedObjectUrlBlob();
+
+		try
+		{
+			await jmap.downloadBlobUrl("1", "blob1", "note.txt", "text/plain");
+			assert.instanceOf(capture.blob, File);
+			assert.equal((capture.blob as File).name, "note.txt");
+		}
+		finally
+		{
+			capture.restore();
+		}
+	});
+
+	it("wraps a PDF in the same download-link viewer wrapper getAttachmentViewUrl() uses, not a raw blob: URL", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		primeToken(jmap, "1", {downloadBlob : async() => ({blob : async() => new Blob(["%PDF-1.4"], {type : "application/pdf"})})});
+
+		const wrapperUrl = await jmap.downloadBlobUrl("1", "blob1", "Invoice RE-2026-200.pdf", "application/pdf");
+		const html = await fetch(wrapperUrl).then(r => r.text());
+
+		assert.include(html, "<embed", "must still embed the actual PDF for viewing");
+		assert.include(html, 'download="Invoice RE-2026-200.pdf"', "must offer the real filename, not the blob: URL's own opaque UUID");
+	});
+
+	it("does NOT wrap a non-PDF type - still returns the plain named-File content url directly", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		primeToken(jmap, "1", {downloadBlob : async() => ({blob : async() => new Blob(["hi"], {type : "text/plain"})})});
+
+		const url = await jmap.downloadBlobUrl("1", "blob1", "note.txt", "text/plain");
+
+		assert.match(url, /^blob:/);
+	});
 });
 
 describe("MailJmap.reuploadAttachmentForAccount()", () =>
