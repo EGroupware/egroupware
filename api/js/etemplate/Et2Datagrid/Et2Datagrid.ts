@@ -318,6 +318,12 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _rowHeightStableSinceReload : boolean = false;
 	private _rowHeightStableTimer : number | null = null;
+	/**
+	 * True while _requestChunkForRowIndex() has actually turned a request away over
+	 * _rowHeightStableSinceReload. Only then does the debounce below owe anyone a re-render -
+	 * see _markRowHeightUnstable().
+	 */
+	private _chunkDeferredForRowHeight : boolean = false;
 	/** Debounce window for _rowHeightStableSinceReload - see _markRowHeightUnstable(). */
 	private static readonly ROW_HEIGHT_STABLE_DEBOUNCE_MS = 150;
 	/**
@@ -3057,7 +3063,22 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			this._rowHeightStableTimer = null;
 			this._rowHeightStableSinceReload = true;
 			this._updateMeasuredAverageRowHeight();
-			this.requestUpdate();
+			// Re-render only if this debounce actually blocked a chunk request, which
+			// _requestChunkForRowIndex() relies on being retried once the guess is
+			// corrected. Doing it unconditionally re-rendered the rows every time,
+			// _observeRowHeightStability() re-observed them, and observe() delivers an
+			// immediate callback per newly observed element (per spec) - which lands back
+			// in _markRowHeightUnstable() through the ResizeObserver and re-arms this
+			// debounce. Nothing in that path compared the new measurement against the old,
+			// so a settled grid re-rendered every ROW_HEIGHT_STABLE_DEBOUNCE_MS forever
+			// with no user input: seen live as a saturated core on an idle tab, pinned by
+			// Et2Datagrid.idleSettle.test.ts. _updateMeasuredAverageRowHeight() still asks
+			// for its own update whenever the measurement genuinely changed anything.
+			if(this._chunkDeferredForRowHeight)
+			{
+				this._chunkDeferredForRowHeight = false;
+				this.requestUpdate();
+			}
 		}, Et2Datagrid.ROW_HEIGHT_STABLE_DEBOUNCE_MS);
 	}
 
@@ -3686,6 +3707,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this._embeddedRowHeightSettled = false;
 		this._hasMeasuredRowHeightSinceReload = false;
 		this._rowHeightStableSinceReload = false;
+		// A deferral recorded for the old result set says nothing about the new one.
+		this._chunkDeferredForRowHeight = false;
 		this._rowHeightResizeObserver?.disconnect();
 		if(this._rowHeightStableTimer !== null)
 		{
@@ -4416,6 +4439,10 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			// Also skip it once the user has genuinely scrolled (_bodyScrollVersion > 0):
 			// that's a real request for a real row the user is asking to see, not the
 			// virtualizer's own initial-load over-guess, so it must not wait on settling.
+			//
+			// Remember that a request was actually turned away: _markRowHeightUnstable()'s
+			// debounce owes a re-render only to a caller it blocked, not on every expiry.
+			this._chunkDeferredForRowHeight = true;
 			return;
 		}
 		this._queueChunkRequest(chunkStart);
