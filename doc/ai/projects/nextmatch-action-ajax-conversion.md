@@ -294,6 +294,39 @@ scope are `default`, but it is worth knowing before wondering why one did not in
 
 ---
 
+### What the exec_id used to be doing
+
+An eTemplate submit carries an `etemplate_exec_id`; `ajax_action()` does not, and two of the
+things that id was quietly providing have to be replaced by hand.
+
+1. **Content validation.** `process_exec()` drops any `$content` key with no widget declared in
+   the template (AGENTS.md, "in an Etemplate ... read-only from the client").  Every converted
+   action whose payload is an id is unaffected - an id is one scalar, and the handlers parse it.
+   The exception is tracker's **"Multiple changes"**, whose payload is a whole field map: its
+   `action()` writes every key of that map onto the ticket before `save()`, so on the submit path
+   the popup's declared widgets were the bound and on the ajax path there was none.  A crafted
+   request could set any `egw_tracker` column (`tr_creator`, `tr_private`) on every ticket the
+   caller may save.  Fixed by bounding it server-side against
+   `tracker_ui::MULTI_CHANGE_FIELDS`, with `testMultipleChangesIgnoresFieldsThePopupDoesNotOffer()`
+   pinning it (red without the filter: `tr_creator` went 6 -> 1).  **Any future action that sends
+   a map rather than an id needs its own allowlist.**
+2. **An unguessable token.** `json.php` authenticates by session cookie and checks app run-rights
+   and the `ajax_*` naming rule, but has no CSRF token of its own; the exec_id was effectively
+   filling that role for submits.  What stands in for it now is the session cookie's SameSite
+   attribute, and `cookie_samesite_attribute` is unset on this instance, so it falls to the
+   browser default (`Lax`).  That is a browser default, not an application control - worth an
+   explicit `Lax`/`Strict` in setup, and worth noting it applies to every `ajax_*` endpoint in
+   the product, not just these.
+
+What the endpoints do NOT rely on the client for, checked case by case: addressbook re-derives
+ACL per id and per target (`move_to_*` rejects a target the caller has no `Acl::EDIT` grant on;
+`shared_with_*` gates `shared_writable` on `check_perms(Acl::EDIT)`, so a forged `writable`
+checkbox cannot grant more than the caller has), infolog/calendar/tracker/timesheet all read the
+entry server-side and act only on named fields, `$session_name` is allow-listed to the two lists
+that have a nextmatch, and "select all" refuses rather than falling back to an unfiltered query.
+
+---
+
 ## 4. The many-sub-actions problem, and picker dialogs
 
 ### The rule
@@ -929,6 +962,23 @@ Four things this turned up:
 Not converted, with reasons: `view_org`/`view_duplicates` switch the list to a different rows
 template rather than acting on the selection - they are not `action()` operations and a redraw
 is defensible; `cat/*` is Proposal A's job; `export/*` and `kanban` belong to other apps.
+
+`projectmanager_elements_ui`'s **`erole` is a genuine gap, and bigger than the baseline shows.**
+The baseline records it as one bare leaf, which is an artifact of how the harness runs: children
+are built from `get_free_eroles()`, which returns nothing unless the eroles bo carries a `pm_id`,
+and the harness has no project in scope.  With a project it is a container - on this instance
+`enable_eroles` is on, six global roles exist and none are used by the project's elements, so a
+real element list offers six `erole_<role_id>` children, each with only `caption`/`group`/
+`enabled` and therefore each falling through to submit.  **The baseline cannot see them**, so it
+will not notice if more appear; anything measured through a project-scoped list has the same
+blind spot.
+
+Unlike `delete`/`sync_all` it is not blocked on the missing project context: its handler already
+re-reads the element by its composite key and re-derives the allowed roles from *that element's*
+own project (`new projectmanager_eroles_bo($element['pm_id'], $element['pe_id'])`), explicitly
+refusing to treat what the menu offered as authority.  Whether `save()`'s `check_acl()` behaves
+without a loaded project has NOT been checked, so "convertible" is a read of the handler, not a
+verified claim.
 
 ### Phase 2 - as built
 
