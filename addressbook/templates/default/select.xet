@@ -35,11 +35,11 @@
 					<et2-nextmatch-header  label="Photo" id="photo"></et2-nextmatch-header>
 					<et2-vbox>
 						<et2-nextmatch-header  label="Business address" id="business"></et2-nextmatch-header>
-						<et2-nextmatch-header-custom  id="adr_one_countrycode" class="countrySelect" widgetType="" emptyLabel="Country"></et2-nextmatch-header-custom>
+						<et2-nextmatch-header-custom  id="adr_one_countrycode" class="countrySelect" widgetType="select-country" emptyLabel="Country"></et2-nextmatch-header-custom>
 					</et2-vbox>
 					<et2-vbox>
 						<et2-nextmatch-header  label="Home address" id="home"></et2-nextmatch-header>
-						<et2-nextmatch-header-custom  id="adr_two_countrycode" class="countrySelect" widgetType="" emptyLabel="Country"></et2-nextmatch-header-custom>
+						<et2-nextmatch-header-custom  id="adr_two_countrycode" class="countrySelect" widgetType="select-country" emptyLabel="Country"></et2-nextmatch-header-custom>
 					</et2-vbox>
 					<et2-vbox>
 						<et2-nextmatch-header  label="Business email" id="email"></et2-nextmatch-header>

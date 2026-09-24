@@ -60,12 +60,12 @@
                     <et2-nextmatch-header  label="Birthday" id="bday"></et2-nextmatch-header>
                     <et2-vbox>
                         <et2-nextmatch-header  label="Business address" id="business"></et2-nextmatch-header>
-                        <et2-nextmatch-header-custom  id="adr_one_countrycode" class="countrySelect" statustext="{Business address} {country}" widgetType="" emptyLabel="Country"></et2-nextmatch-header-custom>
+                        <et2-nextmatch-header-custom  id="adr_one_countrycode" class="countrySelect" statustext="{Business address} {country}" widgetType="select-country" emptyLabel="Country"></et2-nextmatch-header-custom>
                         <et2-nextmatch-sortheader  label="zip code" id="adr_one_postalcode" statustext="{Business address} {zip code}"/>
                     </et2-vbox>
                     <et2-vbox>
                         <et2-nextmatch-header  label="Home address" id="home"></et2-nextmatch-header>
-                        <et2-nextmatch-header-custom  id="adr_two_countrycode" class="countrySelect" statustext="{Home address} {country}" widgetType="" emptyLabel="Country"></et2-nextmatch-header-custom>
+                        <et2-nextmatch-header-custom  id="adr_two_countrycode" class="countrySelect" statustext="{Home address} {country}" widgetType="select-country" emptyLabel="Country"></et2-nextmatch-header-custom>
                         <et2-nextmatch-sortheader  label="zip code" id="adr_two_postalcode" statustext="{Home address} {zip code}"/>
                     </et2-vbox>
                     <et2-vbox>
