@@ -105,3 +105,8 @@
   background: none;
   white-space: inherit;
 }
+/* An attached photo is whatever size the camera made it - it must not blow the field open */
+.et2_markdown img {
+  max-width: 100%;
+  height: auto;
+}
