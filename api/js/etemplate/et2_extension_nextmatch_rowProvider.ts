@@ -196,7 +196,7 @@ export class et2_nextmatch_rowProvider
 					}
 					catch(e)
 					{
-						debugger;
+						console.warn("Error getting node for ", entry, e);
 						continue;
 					}
 				}
