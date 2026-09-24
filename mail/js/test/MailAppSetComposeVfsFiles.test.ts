@@ -71,8 +71,8 @@ describe('MailApp.setCompose() with VFS files', () =>
 	it('merges the files client-side in JMAP mode, never through the classic postback', () =>
 	{
 		const result = app.setCompose(composeWindow, {data: {files: {
-			file: ['vfs://default/home/asig/certs/pw_atza_cert.odt'],
-			name: ['pw_atza_cert.odt'],
+			file: ['vfs://default/home/demo/certs/certificate.odt'],
+			name: ['certificate.odt'],
 			type: ['application/vnd.oasis.opendocument.text'],
 			filemode: 'attach',
 		}}});
@@ -80,8 +80,8 @@ describe('MailApp.setCompose() with VFS files', () =>
 		assert.isTrue(result);
 		assert.isTrue(compose.applyPresetFiles.calledOnce);
 		assert.deepEqual(compose.applyPresetFiles.firstCall.args[0], [{
-			path: 'vfs://default/home/asig/certs/pw_atza_cert.odt',
-			name: 'pw_atza_cert.odt',
+			path: 'vfs://default/home/demo/certs/certificate.odt',
+			name: 'certificate.odt',
 			type: 'application/vnd.oasis.opendocument.text',
 		}]);
 		// the hang: submit() had nothing to talk to
@@ -94,7 +94,7 @@ describe('MailApp.setCompose() with VFS files', () =>
 		const showDialog = sinon.stub(Et2Dialog, 'show_dialog');
 		try
 		{
-			const result = app.setCompose(composeWindow, {data: {files: {file: ['vfs://default/home/asig/a.pdf'], filemode: 'link'}}});
+			const result = app.setCompose(composeWindow, {data: {files: {file: ['vfs://default/home/demo/a.pdf'], filemode: 'link'}}});
 
 			assert.isTrue(result);
 			assert.isTrue(showDialog.calledOnce, 'the yes/no question');
@@ -121,7 +121,7 @@ describe('MailApp.setCompose() with VFS files', () =>
 		const showDialog = sinon.stub(Et2Dialog, 'show_dialog');
 		try
 		{
-			app.setCompose(composeWindow, {data: {files: {file: ['vfs://default/home/asig/a.pdf'], filemode: 'attach'}}});
+			app.setCompose(composeWindow, {data: {files: {file: ['vfs://default/home/demo/a.pdf'], filemode: 'attach'}}});
 
 			assert.isFalse(showDialog.called);
 			assert.isFalse(compose.applyPresetFilemode.called);
@@ -135,11 +135,11 @@ describe('MailApp.setCompose() with VFS files', () =>
 
 	it('falls back to the basename and a generic mime when a caller sends only paths', () =>
 	{
-		app.setCompose(composeWindow, {data: {files: {file: ['vfs://default/apps/addressbook/12/.entry', 'vfs://default/home/asig/a.pdf']}}});
+		app.setCompose(composeWindow, {data: {files: {file: ['vfs://default/apps/addressbook/12/.entry', 'vfs://default/home/demo/a.pdf']}}});
 
 		assert.deepEqual(compose.applyPresetFiles.firstCall.args[0], [
 			{path: 'vfs://default/apps/addressbook/12/.entry', name: '.entry', type: 'application/octet-stream'},
-			{path: 'vfs://default/home/asig/a.pdf', name: 'a.pdf', type: 'application/octet-stream'},
+			{path: 'vfs://default/home/demo/a.pdf', name: 'a.pdf', type: 'application/octet-stream'},
 		]);
 	});
 
@@ -147,7 +147,7 @@ describe('MailApp.setCompose() with VFS files', () =>
 	{
 		compose.isJmapModeActive = false;
 
-		app.setCompose(composeWindow, {data: {files: {file: ['vfs://default/home/asig/a.pdf'], filemode: 'attach'}}});
+		app.setCompose(composeWindow, {data: {files: {file: ['vfs://default/home/demo/a.pdf'], filemode: 'attach'}}});
 
 		assert.isFalse(compose.applyPresetFiles.called);
 		assert.isTrue(appendix.set_value.calledOnce);
