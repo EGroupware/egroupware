@@ -1,5 +1,6 @@
 import {assert, fixture} from "@open-wc/testing";
 import {Et2LAvatar} from "../Et2LAvatar";
+import {rowRenderableTests} from "../../Et2Widget/test/RowRenderableTests";
 
 /**
  * Contract: the HTML a datagrid row serializes to must not change while the row's data
@@ -177,4 +178,13 @@ describe("Et2Avatar row-string stability", () =>
 		assert.equal(rebuilt.outerHTML, settled,
 			"a row rebuilt from its own HTML serializes differently - each rebuild feeds another");
 	});
+});
+
+// The shared baseline every row-renderable widget should meet, on top of the avatar-specific
+// checks above.  requireResolved is passed because this widget resolves its image over the
+// network: without it, "the HTML did not change" would also be satisfied by an avatar that
+// silently stopped resolving anything at all.
+rowRenderableTests(() => makeAvatar(ACCOUNT), {
+	settleMs: 300,
+	requireResolved: (el : any) => !!el.image
 });

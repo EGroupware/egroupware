@@ -183,6 +183,22 @@ export default {
 			timeout: '3000',
 		},
 	},
+	// concurrency: 1 is load-bearing, not a leftover - do not raise it to speed CI up.
+	//
+	// Headless itself is fine: measured in this runner, a headless tab reports visibilityState
+	// "visible" with document.hasFocus() true, and ResizeObserver and requestAnimationFrame both
+	// firing normally.  What breaks is a BACKGROUNDED tab, which is what running several pages at
+	// once produces - rAF pauses and ResizeObserver stops delivering.
+	//
+	// Two consequences, both silent:
+	//  - Et2Nextmatch/Et2Datagrid measure row height and the virtualizer range from those APIs, so
+	//    a backgrounded tab makes them do nothing rather than something wrong.  Any test asserting
+	//    an ABSENCE of work (Et2Datagrid.idleSettle.test.ts: "an idle grid performs 0 update
+	//    cycles") would then pass while the defect is fully present.  Checking that rows rendered
+	//    does NOT catch it - with both APIs stubbed out, 24 rows still render.
+	//  - The rAF-polling helpers in Et2Datagrid.test.ts hang to the mocha timeout instead, which
+	//    looks exactly like a product regression (see the note there - it cost two debugging
+	//    sessions).
 	browsers: [
 		playwrightLauncher({product: 'firefox', concurrency: 1}),
 		playwrightLauncher({product: 'chromium', concurrency: 1}),
