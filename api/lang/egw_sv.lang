@@ -315,6 +315,7 @@ ctrl	common	sv	Ctrl
 cuba	common	sv	KUBA
 currency	common	sv	Valuta
 current	common	sv	Aktuell
+current user	common	sv	Aktuell användare
 current users	common	sv	Aktuella användare
 custom	common	sv	Anpassa
 custom fields	common	sv	Anpassade fält
@@ -1181,6 +1182,7 @@ time	common	sv	Tid
 time zone	common	sv	Tidzon
 time zone offset	common	sv	Tidsförskjutning
 title	common	sv	Rubrik
+titles of any entries linked to the current record, excluding attached files	preferences	sv	Titlar på alla poster som är länkade till den aktuella posten, exklusive bifogade filer
 to	common	sv	Till
 to correct this error for the future you will need to properly set the	common	sv	För att undvika problemet framöver måste du sätta
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	sv	För att inaktivera: [! = not]<value>[=<check>] ex: '!@data' inaktiverar on innehåll saknas
@@ -1225,6 +1227,8 @@ upload directory does not exist, or is not writeable by webserver	common	sv	Uppl
 upload file(s) from filemanager...	common	sv	Ladda upp fil(er) från filhanteraren ...
 upload new photo	common	sv	Ladda upp nytt foto
 url	common	sv	URL
+url of current record	common	sv	URL till den aktuella posten
+urls of any entries linked to the current record, excluding attached files	common	sv	URL:er till alla poster som är länkade till den aktuella posten, exklusive bifogade filer
 uruguay	common	sv	URUGUAI
 use button to search for	common	sv	Använd knappen för att söka
 use button to search for address	common	sv	Använd knappen för att söka adresser

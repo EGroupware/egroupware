@@ -1336,9 +1336,13 @@ class timesheet_ui extends timesheet_bo
 		{
 			$msg = lang('%1 timesheets(s) %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
 		}
-		$app = Api\Json\Push::onlyFallback() || $all_selected ? 'timesheet' : 'msg-only-push-refresh';
-		Api\Json\Response::get()->call('egw.refresh', $msg, $app, $selected[0], $all_selected || count($selected) > 1 ? null :
-			($action === 'delete' ? 'delete' : 'update'), $app, null, null, $failed ? 'error' : 'success');
+		// egw.refresh()'s 2nd argument doubles as the "message only, push will do the rest"
+		// sentinel, but its 5th (_targetapp) must always be a real app: egw_appWindow() is
+		// called on it BEFORE the msg-only early-return, and resolving 'msg-only-push-refresh'
+		// throws in the kdots framework - which aborts refresh() before it ever shows $msg.
+		$push_app = Api\Json\Push::onlyFallback() || $all_selected ? 'timesheet' : 'msg-only-push-refresh';
+		Api\Json\Response::get()->call('egw.refresh', $msg, $push_app, $selected[0], $all_selected || count($selected) > 1 ? null :
+			($action === 'delete' ? 'delete' : 'update'), 'timesheet', null, null, $failed ? 'error' : 'success');
 	}
 
 	/**

@@ -55,7 +55,7 @@ last week	timesheet	pt	Última semana
 last year	timesheet	pt	Último ano
 leave it empty for a full week	timesheet	pt	Deixar vário para uma semana interira
 leaves without saveing	timesheet	pt	Continua sem guardar
-length<br>rows	timesheet	pt	Altura<br>Linhas
+length<br>rows	timesheet	pt	Altura\nLinhas
 link title	timesheet	pt	Título da ligação
 links and attached files	timesheet	pt	Links e arquivos anexados
 list of files linked to the current record	timesheet	pt	Lista de arquivos vinculados ao registro atual
@@ -89,6 +89,7 @@ select a project	timesheet	pt	Seleccione um projecto
 select the predefined status, when creating a new timesheet	preferences	pt	Selecionar o estado predefinido, ao criar uma nova entrada.
 start	timesheet	pt	Início
 start & stop timer	common	pt	Iniciar e parar o temporizador
+start time is after last timesheet	timesheet	pt	A hora de início é posterior à da última ficha de ponto
 start timer	common	pt	Temporizador de arranque
 start-time can not be before last stop- or pause-time %1!	common	pt	A hora de início não pode ser anterior à última hora de paragem ou pausa %1!
 stop- or pause-time can not be before the start-time %1!	common	pt	A hora de paragem ou pausa não pode ser anterior à hora de início %1!
@@ -100,14 +101,17 @@ the text displayed to the user	timesheet	pt	o texto apresentado ao utilizador
 this month	timesheet	pt	Este mês
 this week	timesheet	pt	Esta semana
 this year	timesheet	pt	Este ano
+time default for new timesheet entries	timesheet	pt	Valor predefinido para as novas entradas na ficha de ponto
 timer already running or paused	common	pt	O temporizador já está a funcionar ou em pausa
 timesheet	common	pt	Folha de tempo
 unitprice	timesheet	pt	Preço por unidade
+use current time as end time	timesheet	pt	Utilizar a hora atual como hora de fim
 use field from csv if possible	timesheet	pt	Utilizar o campo do CSV, se possível
 values for selectbox	timesheet	pt	Valores para a caixa de selecção
 view this entry	timesheet	pt	Ver este registo
 week	timesheet	pt	Semana
 what should be done with unknown values?	timesheet	pt	O que deve ser feito com os valores desconhecidos?
+when adding a new timesheet: prefill the endtime with the current time, or continue the starttime from the endtime of your last timesheet	timesheet	pt	Ao adicionar uma nova ficha de ponto: preencha previamente a hora de fim com a hora atual ou defina a hora de início a partir da hora de fim da sua última ficha de ponto
 will be created when saving ...	common	pt	Serão criados ao guardar ...
 working time	common	pt	Tempo de trabalho
 working time and timer	timesheet	pt	Tempo de trabalho e temporizador

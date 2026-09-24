@@ -1,12 +1,13 @@
-(leave empty for no quota)	mail	nl	(laat leeg indien geen quota)
-(no subject)	mail	nl	(geen onderwerp)
-(not connected)	mail	nl	(niet verbonden)
 %1 attachments	mail	nl	%1 bijlagen
 %1 for all users	mail	nl	%1 voor alle gebruikers
 %1 is not writable by you!	mail	nl	%1 is NIET door uw te bewerken
 %1 mails selected	mail	nl	%1 bericht(en) geselcteerd
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	nl	%1 vereist Sieve-extensie %2, probeer misschien %1 of een hoger aantal dagen.
+(leave empty for no quota)	mail	nl	(laat leeg indien geen quota)
+(no subject)	mail	nl	(geen onderwerp)
+(not connected)	mail	nl	(niet verbonden)
 account editable by user	mail	nl	Account door gebruiker te wijzigen
+account not reachable	mail	nl	Account niet bereikbaar.
 acl rights retrieve failed, seems there are no rights set!	mail	nl	ACL rechten ophalen mislukt, lijkt er op of er geen rechten zijn toegekend!
 acl rights retrieved successfully	mail	nl	ACL rechten succesvol opgehaald
 activating by date requires a start- and end-date!	mail	nl	Activering op datum vereist een begin- EN einddatum!
@@ -75,6 +76,7 @@ can not open imap connection	mail	nl	Kan IMAP verbinding niet openen
 can not resolve the winmail.dat attachment!	mail	nl	Kan de bijlage winmail.dat niet oplossen!
 canceled deletion due to user interaction	mail	nl	Verwijdering geannuleerd door interactie van gebruiker
 certificate details	mail	nl	Details certificaat
+certificate imported.	mail	nl	Certificaat geïmporteerd.
 certificate in text	mail	nl	Certificaat in tekst
 certificate info for email %1	mail	nl	Certificaatinfo voor e-mail %1
 certificate issued by	mail	nl	Certificaat uitgegeven door
@@ -112,11 +114,13 @@ copy to	mail	nl	Kopieer naar
 could not append message:	mail	nl	Kon niet aan bericht toevoegen:
 could not save the acl because some names are empty	mail	nl	Kon de ACL niet opslaan omdat sommige namen leeg zijn
 create new account	mail	nl	Maak een nieuwe gebruiker aan
+create self-signed certificate	mail	nl	Zelfondertekend certificaat aanmaken
 cross account forward attachment is not allowed!	mail	nl	Cross account forward attachment is niet toegestaan!
 current folder	mail	nl	huidige map
 current subject	mail	nl	Huidig onderwerp
 currently:	mail	nl	Momenteel:
 deactive	mail	nl	Niet actief
+default signature	mail	nl	Standaardhandtekening
 default sorting order	mail	nl	Standaard volgorde
 default toolbar actions shown in mail's html editor	mail	nl	Functies ingeschakeld in de HTML editor werkbalk bij het samenstellen van een e-mail
 default value for remembering s/mime passphrase in minutes	mail	nl	Standaardwaarde voor onthouden S/MIME wachtwoord in minuten
@@ -128,7 +132,7 @@ delete folder %1 ?	mail	nl	VERWIJDER Map %1?
 delete selected folders	mail	nl	Geselecteerde mappen verwijderen
 delete this acl	mail	nl	Deze ACL verwijderen
 deleted	mail	nl	verwijdert
-deleted %1 messages in %2	mail	nl	Verwijder %1 bericht(en) in %2
+deleted %1 messages in %2	mail	nl	%1 bericht(en) verwijderd in %2.
 deleted!	mail	nl	verwijdert!
 deleting %1 folders in progress ...	mail	nl	%1 mappen in uitvoering verwijderen ...
 deleting folders	mail	nl	Mappen verwijderen
@@ -225,10 +229,10 @@ files	mail	nl	Bestanden
 flag / unflag	mail	nl	Markeer / Geen markering op
 flag or unflag a mail	mail	nl	Markeer een bericht
 flagged	mail	nl	gemarkeerd
-flagged / unflagged	mail	nl	Gemarkeerd / Niet gemarkeerd
 flagged %1 messages as %2 in %3	mail	nl	Gemarkeerd %1 berichten als "%2" in %3.
 flagged %1 messages as flagged in %2	mail	nl	Gemarkeerd %1 berichten als gemarkeerd in %2
 flagged %1 messages as unflagged in %2	mail	nl	Gemarkeerd %1 berichten als niet gemarkeerd in %2
+flagged / unflagged	mail	nl	Gemarkeerd / Niet gemarkeerd
 folder	mail	nl	Map
 folder %1 %2 failed because of %3!	mail	nl	Map %1 %2 mislukt vanwege %3!
 folder %1 %2 failed!	mail	nl	Map %1 %2 mislukt
@@ -287,6 +291,7 @@ imap - incoming mail	mail	nl	IMAP - inkomende berichten
 imap administration	mail	nl	IMAP administratie
 imap server	mail	nl	IMAP server
 imap timeout	mail	nl	IMAP timeout
+import ca-signed certificate for this key	mail	nl	CA-ondertekend certificaat voor deze sleutel importeren
 import message	mail	nl	Importeer bericht
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	nl	Importeren van bericht %1 mislukt. Kon het bericht niet opslaan in map %2 vanwege reden: %3
 import of message %1 failed. destination folder %2 does not exist.	mail	nl	Importeren van bericht %1 mislukt. Opgegeven map %2 bestaat niet.
@@ -307,6 +312,7 @@ junk folder	mail	nl	Junk map
 keep a copy	mail	nl	Een kopie bewaren
 keep a copy of the message in your inbox	mail	nl	Bewaar een kopie van het bericht in uw inbox
 kilobytes	mail	nl	kilobytes
+last used signature	mail	nl	Laatst gebruikte handtekening
 later	mail	nl	Later
 learning as ham (not spam) failed because of %1	mail	nl	Leren als ham (geen spam) mislukt vanwege %1
 learning as spam failed because of %1	mail	nl	Leren als spam mislukt vanwege %1
@@ -350,6 +356,7 @@ move to	mail	nl	Verplaats naar
 move to archive	mail	nl	Verplaatsen naar archiefmap
 move to trash	mail	nl	Verplaatsen naar prullenmand
 moved %1 message(s) from %2 to %3	mail	nl	Verplaatst %1 bericht(en) van %2 naar %3.
+moving folders from one mailaccount to another is not supported	mail	nl	Het verplaatsen van mappen van het ene e-mailaccount naar het andere wordt niet ondersteund.
 name and domain	mail	nl	Naam en domein
 name and email	mail	nl	Naam en e-mail
 name of account	mail	nl	Naam van
@@ -372,6 +379,7 @@ no folders	mail	nl	geen folders
 no message body supplied	mail	nl	Geen hoofdtekst in dit bericht
 no plain text part found	mail	nl	Geen platte tekst onderdeel gevonden
 no recipient address given!	mail	nl	Geen ontvanger adres opgegeven!
+no s/mime private key stored for this account.	mail	nl	Er is geen S/MIME-privésleutel opgeslagen voor dit account.
 no send folder set in preferences	mail	nl	Geen map Verzonden in voorkeuren
 no signature	mail	nl	geen ondertekening
 no sneak preview in list	mail	nl	Geen voorbeeld van een bericht
@@ -407,6 +415,7 @@ organization | real name email	mail	nl	Organisatie | Echte naam [Email]
 original message	mail	nl	Origineel bericht
 outbox	mail	nl	Postvak UIT
 permission denied	mail	nl	Toestemming geweigerd
+personal signature	mail	nl	Persoonlijke handtekening
 please configure access to an existing individual imap account.	mail	nl	Configureer alstublieft toegang tot een bestaand IMAP account
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	nl	Configureer uw S/MIME-certificaat op het tabblad Encryptie in het dialoogvenster Account bewerken.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	nl	Neem contact op met uw administrateur om na te gaan of uw server filter op regels wordt ondersteund, en hoe u deze in EGroupware moet activeren voor uw actieve account (%1) met ID: %2.
@@ -447,6 +456,7 @@ refresh time in minutes	mail	nl	Ververstijd in minuten
 refused to delete folder inbox	mail	nl	Het verwiijderen van INBOX is geweigerd
 refused to delete folder with subfolders	mail	nl	Mappen met submappen mogen niet worden verwijdert
 reject with	mail	nl	weiger met
+reloaded account %1	mail	nl	Account %1 opnieuw geladen.
 reloaded folder %1	mail	nl	Map %1 opnieuw geladen
 remember the password for	mail	nl	Onthoud het wachtwoord voor
 remove all	mail	nl	Alles verwijderen
@@ -515,7 +525,9 @@ select mail addresses from addressbook	mail	nl	Selecteer e-mailadres(sen) uit ad
 select or insert email address	mail	nl	Selecteer of voeg e-mailadres in
 selected	mail	nl	Geselecteerd
 selected date range (with quicksearch)	mail	nl	Geselecteerd datumbereik (met snelzoeken)
+self-signed certificate created.	mail	nl	Zelfondertekend certificaat aangemaakt.
 send a reject message:	mail	nl	Stuur een bericht met afwijzing:
+send attachments greater than given size as download link instead (in mb)	mail	nl	Bijlagen die groter zijn dan de opgegeven grootte (in MB) in plaats daarvan als downloadlink verzenden
 send message and move to send folder (if configured)	mail	nl	Stuur berichten en verplaats deze naar de map verzonden (als dit is geconfigureerd)
 send message pgp encrypted: requires keys from all recipients!	mail	nl	Bericht PGP-versleuteld verzenden: sleutels van alle ontvangers vereist!
 send only a vacation notice, do not store message in inbox	mail	nl	Stuur alleen een vakantiebericht, sla het bericht NIET op in INBOX
@@ -591,9 +603,11 @@ the imap server need to meet certain requirements and be configured for it:	mail
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	nl	De persoon die het bericht heeft verstuurd heeft gevraagd om een reactie om te laten zien dat u het bericht heeft gelezen. Wilt u een leesbevestiging versturen?
 the mimeparser can not parse this message.	mail	nl	De mimeparsers kan dit bericht niet lezen.
 the rule with priority %1 successfully saved!	mail	nl	De regel met prioriteit %1 is succesvol bewaard!
+the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	nl	De totale grootte van de bijlagen overschrijdt de limiet van %1 MB. Er is overgeschakeld naar een downloadlink.
 then	mail	nl	DAN
 there is no imap server configured.	mail	nl	Er is geen IMAP server geconfigureerd.
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	nl	Er is geen ruimte meer om het sieve script op te slaan, controleer de sieve_maxscriptsize optie in de configuratie van je mailserver.
+this action affects every message in the selected thread(s) - %1 messages in total. continue?	mail	nl	Deze actie heeft gevolgen voor alle berichten in de geselecteerde discussiethreads – in totaal %1 berichten. Doorgaan?
 this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	nl	Deze mail bevat externe afbeeldingen geserveerd via een onveilig HTTP-protocol. Het tonen of toestaan hiervan kan je beveiliging in gevaar brengen!
 this message is smime encrypted and password protected.	mail	nl	Dit bericht is S/MIME gecodeerd en beveiligd met een wachtwoord.
 timeout on connections to your imap server	mail	nl	Timeout op connecties met de IMAP server
@@ -636,8 +650,9 @@ when deleting messages	mail	nl	Wanneer berichten worden verwijdert
 when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	nl	Wanneer een bericht in een popup wordt getoond. gebruik dan dezelfde popup voor alle open berichten en voor elk bericht
 when saving messages as item of a different app	mail	nl	Als berichten bewaard worden als item van een andere applicatie
 when sending messages	mail	nl	Wanneer berichten worden verzonden
-which folders - in general - should not be automatically created, if not existing	mail	nl	Welke mappen - Algemeen - moeten niet automatisch aangemaakt worden als ze niet bestaan
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	nl	Welke mappen (behalve de Verzenden map) moeten getoond worden bij gebruik van het schema van de verzend mappen
+which folders - in general - should not be automatically created, if not existing	mail	nl	Welke mappen - Algemeen - moeten niet automatisch aangemaakt worden als ze niet bestaan
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	nl	Met welke e-mailidentiteit (handtekening) wilt u beginnen? Voor de persoonlijke handtekening gebruiken we altijd de eerste persoonlijke handtekening
 which method to use when forwarding a message	mail	nl	Welke methode gebruiken wanneer een berciht wordt doorgestuurd
 with message:	mail	nl	Met bericht:
 writable sharing requires epl version!	mail	nl	Schrijfbaar delen vereist EPL versie!

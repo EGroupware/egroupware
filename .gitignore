@@ -100,3 +100,4 @@ timesheet/js/app.js
 /doc/etemplate2/assets/custom-elements.json
 # PHP session files from the doc docker stack
 /doc/docker/sessions/
+/.vfs-test-mounts/

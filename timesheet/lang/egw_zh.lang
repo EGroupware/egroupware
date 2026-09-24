@@ -52,7 +52,7 @@ last week	timesheet	zh	上星期
 last year	timesheet	zh	去年
 leave it empty for a full week	timesheet	zh	留空表示整个星期
 leaves without saveing	timesheet	zh	不保存
-length<br>rows	timesheet	zh	字段长度<br>字段行数
+length<br>rows	timesheet	zh	字段长度\n字段行数
 link title	timesheet	zh	链接标题
 make timesheets readable by infolog delegation	timesheet	zh	使工时表可被InfoLog代表读取
 max length of the input [, length of the inputfield (optional)]	timesheet	zh	输入的最大长度 [, 输入字段的长度 (可选)]
@@ -89,6 +89,7 @@ select the predefined status, when creating a new timesheet	preferences	zh	创�
 show a quantity sum (eg. to sum up negative overtime)	admin	zh	显示数量合计(如：合计超时加班的费用)
 start	timesheet	zh	开始
 start & stop timer	common	zh	开始和停止计时器
+start time is after last timesheet	timesheet	zh	开始时间应晚于上一份工时表
 start timer	common	zh	开始计时器
 start-time can not be before last stop- or pause-time %1!	common	zh	开始时间不能早于上次停止或暂停时间 %1！
 starttime	timesheet	zh	开始时间
@@ -101,15 +102,18 @@ this month	timesheet	zh	这个月
 this week	timesheet	zh	这星期
 this year	timesheet	zh	今年
 ticket modified by %1 at %2	timesheet	zh	传票由%1在%2修改
+time default for new timesheet entries	timesheet	zh	新建工时表条目的默认时间设置
 timer already running or paused	common	zh	计时器已运行或暂停
 timesheet	common	zh	时间表
 timesheet csv export	timesheet	zh	时间表 CSV 格式导出
 unitprice	timesheet	zh	单价
+use current time as end time	timesheet	zh	将当前时间设为结束时间
 use field from csv if possible	timesheet	zh	尽可能使用 CSV 中的字段
 values for selectbox	timesheet	zh	选单数值数据
 view this entry	timesheet	zh	查看该条目
 week	timesheet	zh	星期
 what should be done with unknown values?	timesheet	zh	如何处理未知值？
+when adding a new timesheet: prefill the endtime with the current time, or continue the starttime from the endtime of your last timesheet	timesheet	zh	添加新工时表时：将结束时间预设为当前时间，或根据上一份工时表的结束时间设置开始时间
 will be created when saving ...	common	zh	将在保存时创建...
 working time	common	zh	工作时间
 working time and timer	timesheet	zh	工作时间和计时器

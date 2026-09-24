@@ -352,6 +352,7 @@ ctrl	common	nl	Ctrl
 cuba	common	nl	CUBA
 currency	common	nl	Munteenheid
 current	common	nl	Huidig
+current user	common	nl	Huidige gebruiker
 current users	common	nl	Huidig aantal gebruikers
 custom	common	nl	Aangepast
 custom fields	common	nl	Aangepaste velden

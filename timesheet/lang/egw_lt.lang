@@ -22,14 +22,18 @@ recorded	timesheet	lt	Įrašyta
 restore this entry	timesheet	lt	Atkurti šį įrašą
 select the predefined status, when creating a new timesheet	preferences	lt	Kurdami naują įrašą pasirinkite iš anksto nustatytą būseną.
 start & stop timer	common	lt	Paleidimo ir sustabdymo laikmatis
+start time is after last timesheet	timesheet	lt	Pradžios laikas yra vėlesnis už paskutinės darbo laiko ataskaitos pabaigos laiką
 start timer	common	lt	Paleisti laikmatį
 start-time can not be before last stop- or pause-time %1!	common	lt	Pradžios laikas negali būti ankstesnis už paskutinį sustabdymo arba pauzės laiką %1!
 stop- or pause-time can not be before the start-time %1!	common	lt	Sustabdymo arba pauzės laikas negali būti ankstesnis už pradžios laiką %1!
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	lt	Viduje naudojamas pavadinimas, <= 20 simbolių, pakeitus jį esami duomenys taps neprieinami
+time default for new timesheet entries	timesheet	lt	Numatytasis laikas naujiems darbo laiko ataskaitos įrašams
 timer	common	lt	Laikmatis
 timer already running or paused	common	lt	Laikmatis jau paleistas arba sustabdytas
+use current time as end time	timesheet	lt	Naudoti dabartinį laiką kaip pabaigos laiką
 use field from csv if possible	timesheet	lt	Jei įmanoma, naudokite lauką iš CSV
 what should be done with unknown values?	timesheet	lt	Ką daryti su nežinomomis reikšmėmis?
+when adding a new timesheet: prefill the endtime with the current time, or continue the starttime from the endtime of your last timesheet	timesheet	lt	Pridėdami naują darbo laiko ataskaitą: pabaigos laiko laukelį užpildykite dabartiniu laiku arba nustatykite pradžios laiką pagal paskutinės darbo laiko ataskaitos pabaigos laiką
 will be created when saving ...	common	lt	Bus sukurta išsaugant ...
 working time	common	lt	Darbo laikas
 working time and timer	timesheet	lt	Darbo laikas ir laikmatis

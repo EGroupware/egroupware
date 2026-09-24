@@ -58,12 +58,29 @@ correctly. **Lesson for any future jQuery→native swap in this codebase: always
 `querySelectorAll(...).forEach(...)`, never a bare `querySelector(...)`, unless the target is
 looked up by a unique `id` or is provably a template's sole top-level element.**
 
-**Pre-existing bug found, NOT caused by this work:** clicking "Vorschau" (preview) in
-importexport's export dialog throws `TypeError: Cannot read properties of null (reading
-'insertBefore')` inside `Et2Html.update`/lit-html internals (`etemplate2-*.js`), reproducing on a
-completely fresh dialog before touching any edited file — traced to the already-modernized
-`importexport/js/app.ts`'s `export_preview()`/lit-html rendering pipeline, unrelated to any Tier 2
-`.xet` edit. Not fixed (out of scope for this pass) — worth a separate investigation.
+**Pre-existing bug found AND fixed (2026-09-23), NOT caused by this work:** clicking "Vorschau"
+(preview) in importexport's export/import dialogs threw `TypeError: Cannot read properties of null
+(reading 'insertBefore')` inside `Et2Html.update`/lit-html internals, reproducing on a completely
+fresh dialog. Root cause: `importexport/js/app.ts`'s `export_preview()`/`import_preview()` (part of
+the earlier jQuery-removal pass on that file, unrelated to Tier 2) grabbed the preview panel's
+`<et2-html id="preview-box" class="content">` via `preview.querySelector('.content')` — which
+matches the `et2-html` itself, since its class is `content` — and mutated its children directly
+with `replaceChildren()`/`insertAdjacentHTML()`/`textContent =`. `Et2Html` renders into the *light*
+DOM via Lit (`createRenderRoot()` returns `this`), so that raw mutation corrupts Lit's internal
+child-part bookkeeping; the crash hits the *next* time that widget's `.value` is set the proper way
+(which the server response always does, via `setElementAttribute('preview-box', 'value', ...)`).
+Fixed by setting the widget's `.value` through its own `set_value()` API instead of touching its
+DOM. A second, related bug surfaced once the crash was gone: `preview.style.display = ''` (meant to
+reveal the container) doesn't actually work — clearing an inline override doesn't help when nothing
+else makes the element visible, and `preview_box` (an `et2-vbox`) computed to `display: none` with
+no inline style at all. Changed to `preview.style.display = 'flex'` (explicit, matching what
+jQuery's old `.show()` used to compute automatically). Both fixes live-verified end-to-end
+(addressbook CSV export preview loads and closes correctly, zero console errors). **Confirmed
+present in the `26` branch too** (`Et2Html.ts` and `importexport/js/app.ts` are byte-identical
+between `master` and `26` before this fix) — 26 releases 2026-09-24. Cherry-picked to 26
+(a4d9da1eac, via `/Users/ralf/egw-26-checkout`) and pushed 2026-09-23 — the
+`doc/ai/projects/jquery-removal-inventory.md` half of the original master commit was dropped from
+the pick (that file doesn't exist on 26, it's master-only project tracking).
 
 | App | Repo | Files | What |
 |---|---|---|---|

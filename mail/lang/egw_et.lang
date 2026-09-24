@@ -1,9 +1,11 @@
-(leave empty for no quota)	mail	et	(jäta tühjaks, kui kvooti ei ole)
 %1 attachments	mail	et	%1 manused
 %1 for all users	mail	et	%1 kõigile kasutajatele
 %1 is not writable by you!	mail	et	%1 ei ole sinu poolt kirjutatav!
 %1 mails selected	mail	et	%1 valitud e-kirjad
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	et	%1 nõuab sõela laiendust %2, võib-olla proovige %1 või suuremat arvu päevi.
+(leave empty for no quota)	mail	et	(jäta tühjaks, kui kvooti ei ole)
+account editable by user	mail	et	Kasutaja saab kontot muuta
+account not reachable	mail	et	Kontole ei ole juurdepääsu.
 acl rights retrieve failed, seems there are no rights set!	mail	et	ACL-i õiguste päring ebaõnnestus, tundub, et õigusi ei ole määratud!
 activating by date requires a start- and end-date!	mail	et	Aktiveerimine kuupäeva järgi nõuab algus- JA lõpukuupäeva!
 add all my aliases	mail	et	Lisa kõik minu varjunimed
@@ -28,6 +30,7 @@ always allow external sources from %1	mail	et	Luba alati väliseid allikaid %1
 always respond / auto-responder	mail	et	Alati vastata / automaatne vastus
 always show html emails	mail	et	Alati näita HTML emaile
 always show notifiction	mail	et	Näita alati teavitust
+an error happend while trying to remove acl rights from the account %1!	mail	et	Kontolt %1 ACL-õiguste eemaldamisel tekkis viga!
 answered	mail	et	Vastatud
 any status	mail	et	kõik staatused
 archive folder	mail	et	Arhiivikaust
@@ -38,6 +41,7 @@ attach vcard	mail	et	Kinnita vCard
 attachment	mail	et	Attachment
 attachment has been saved successfully.	mail	et	Lisa on edukalt salvestatud.
 attachments, ...	mail	et	manused, ...
+available personal email-accounts/profiles	mail	et	saadaval olevad isiklikud e-posti kontod/profiilid
 be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	et	Olge teadlik, et kui lisate kõik valitud failid %1 režiimi, muudab see ka kõik olemasolevad manused nimekirjas samuti %2 režiimi. \n \n Kas soovite jätkata?
 be aware that all attachments will be sent as %1!	mail	et	Olge teadlik, et kõik manused saadetakse kui %1!
 by date	mail	et	Kuupäeva järgi
@@ -45,6 +49,7 @@ by default 'http://' is just replaced with 'https://'. feel free to configure 'h
 caching of flags	mail	et	Lipude vahemälu
 can not resolve the winmail.dat attachment!	mail	et	Ei saa lahendada winmail.dat manustust!
 certificate details	mail	et	Sertifikaadi üksikasjad
+certificate imported.	mail	et	Sertifikaat on imporditud.
 certificate in text	mail	et	Sertifikaadi tekst
 certificate info for email %1	mail	et	Sertifikaadi info e-posti %1 jaoks
 certificate issued by	mail	et	Sertifikaadi on välja andnud
@@ -64,7 +69,9 @@ convert mail to item and attach its attachments to this item (standard)	mail	et	
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	et	Teisenda e-kiri elemendiks, lisa selle manuseid ja lisa manusena toorsõnum (.eml)
 convert only mail to item (ignore possible attachments)	mail	et	Konverteerida ainult e-kiri elemendiks (ignoreerida võimalikke manuseid)
 copied %1 message(s) from %2 to %3	mail	et	Kopeeritud %1 sõnum(id) %2-st %3-sse.
+create new account	mail	et	Loo uus konto
 cross account forward attachment is not allowed!	mail	et	Det er ikke tilladt at foretage en fremadrettet vedhæftning på tværs af konti!
+default signature	mail	et	Vaikimisi allkiri
 default sorting order	mail	et	Vaikimisi sorteerimise järjekord
 default toolbar actions shown in mail's html editor	mail	et	Funktioner aktiveret i HTML-redigeringens værktøjslinje, når du udarbejder en e-mail
 default value for remembering s/mime passphrase in minutes	mail	et	Standardværdi for hukommelse af S/MIME-passphrase i minutter
@@ -73,6 +80,7 @@ defines what to show as identity label on mail folder header	common	et	Määrab,
 delete folder	mail	et	Kustuta kaust
 delete selected folders	mail	et	Valitud kaustade kustutamine
 deleted	mail	et	kustutatud
+deleted %1 messages in %2	mail	et	Kustutas %1 sõnumit %2-st.
 disable	mail	et	Keela
 disable caching of flags	mail	et	Deaktiver caching af flag
 discard	mail	et	unusta
@@ -82,6 +90,7 @@ display only when no plain text is available	mail	et	Näita ainult kui plain tek
 displaying html messages is disabled	mail	et	HTML kirjade näitamine on välja lülitatud
 do you really want to delete folder %1 ?	mail	et	Kas te tõesti tahate kustutada kausta %1?
 do you really want to delete this rule	mail	et	Kas te tõesti soovite seda reeglit KUSTUTA?
+do you really want to remove all rights from this account?	mail	et	Kas soovid tõesti eemaldada kõik õigused sellelt kontolt?
 do you really want to toggle flag %1 for all messages in the current view?	mail	et	Kas te tõesti tahate lülitada lipukese %1 kõigi praeguses vaates olevate sõnumite jaoks?
 do you really want to toggle label %1 for all messages in the current view?	mail	et	Kas te tõesti tahate lülitada märgistuse %1 kõigi sõnumite jaoks praeguses vaates?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	et	Kas soovite, et enne valitud sõnumite lisamist uuele e-kirjale küsitaks kinnitust?
@@ -92,6 +101,7 @@ don't use sent	mail	et	Ära kasuta Sent
 don't use trash	mail	et	Ära kasuta Trash
 draft	mail	et	Eelnõu
 edit account	mail	et	Muuda kontot
+edit account ...	mail	et	Muuda kontot ...
 email address	mail	et	E-posti aadress
 email notification update failed! you need to set an email address!	mail	et	E-posti teavitamise ajakohastamine ebaõnnestus! Te peate määrama e-posti aadressi!
 emailaddress	admin	et	E-posti aadress
@@ -139,6 +149,7 @@ if mail header	mail	et	kui e-posti pealkiri
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	et	Kui soovite näha e-kirja eelvaadet, kui klõpsate ainsa klõpsuga teemale, siis lubage see.
 imap	mail	et	IMAP
 imap server	mail	et	IMAP Server
+import ca-signed certificate for this key	mail	et	Impordi selle võtme jaoks CA-allkirjastatud sertifikaat
 import of message %1 failed. destination folder not set.	mail	et	Sõnumi %1 importimine ebaõnnestus. Sihtkaust ei ole määratud.
 import of message %1 failed. no contacts to merge and send to specified.	mail	et	Sõnumi %1 importimine ebaõnnestus. Pole määratud ühtegi ühendatavat ja saadetavat kontakti.
 importance	mail	et	tähtsus
@@ -155,6 +166,7 @@ junk folder	mail	et	Junkkaust
 keep a copy	mail	et	Säilitada koopia
 keep a copy of the message in your inbox	mail	et	Hoidke sõnumi koopia oma postkastis
 kilobytes	mail	et	kilobaidid
+last used signature	mail	et	Viimati kasutatud allkiri
 later	mail	et	Hiljem
 learning as ham (not spam) failed because of %1	mail	et	Learning as ham (mitte rämpsposti) ebaõnnestus, sest %1
 learning as spam failed because of %1	mail	et	Õppimine rämpspostina ebaõnnestus, sest %1
@@ -185,6 +197,7 @@ move selected to	mail	et	Liigutage valitud aadressile
 move to	mail	et	Liiguta aadressile
 move to trash	mail	et	Liiguta trash-i
 moved %1 message(s) from %2 to %3	mail	et	Kolimisin %1 sõnumi(d) %2-st %3-sse.
+moving folders from one mailaccount to another is not supported	mail	et	Kausta ühest e-posti kontost teise teisaldamine ei ole toetatud.
 name and domain	mail	et	Nimi ja domeen
 name and email	mail	et	Nimi ja e-posti aadress
 name of account	mail	et	Konto nimi
@@ -199,6 +212,7 @@ new message type	mail	et	Uue sõnumi tüüp
 new subject	mail	et	Uus teema
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	et	Ei ole esitatud aadressi TO/CC/BCC ja ei ole esitatud kausta, kuhu sõnum salvestada.
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	et	Kaustade sihtkoht puudub, samuti ei ole ette nähtud kausta sõnumi salvestamiseks või muud meedet posti salvestamiseks (salvestada InfoLogi/Ticketsüsteemi), kuid see on vajalik.
+no s/mime private key stored for this account.	mail	et	Selle konto jaoks pole salvestatud ühtegi S/MIME privaatvõtit.
 no signature	mail	et	pole signatuuri
 no sneak preview in list	mail	et	Sõnumi eelvaade puudub
 non	mail	et	Mitte
@@ -215,6 +229,8 @@ organization | real name email	mail	et	Organisatsioon | Tegelik nimi [E-post]
 original message	mail	et	Algne sõnum
 outbox	mail	et	Väljaminev postkast
 permission denied	mail	et	Õigused puuduvad
+personal signature	mail	et	Isiklik allkiri
+please configure access to an existing individual imap account.	mail	et	Palun seadista juurdepääs olemasolevale individuaalsele IMAP-kontolele.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	et	Palun konfigureerige oma S/MIME-sertifikaat vahekaardil Encryption, mis asub dialoogis Muuda kontot.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	et	Palun võtke ühendust oma administraatoriga, et kontrollida, kas teie server toetab serveripoolseid filterreegleid ja kuidas neid EGroupware'is lubada teie aktiivse konto (%1) jaoks ID:%2.
 please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	et	Palun võtke ühendust oma administraatoriga, et kontrollida, kas teie server toetab serveripoolseid puhkussõnumeid ja kuidas neid EGroupware'is lubada teie aktiivse konto (%1) jaoks ID:%2.
@@ -234,6 +250,7 @@ real name	mail	et	Tegelik nimi
 real name email	mail	et	Tegelik nimi [E-post]
 real name organization email	mail	et	Tegelik nimi Organisatsioon [E-post]
 refresh time in minutes	mail	et	Värkendamise aeg minutites
+reloaded account %1	mail	et	Konto %1 laaditi uuesti.
 reloaded folder %1	mail	et	Uuesti laaditud kaust %1
 remember the password for	mail	et	Jäta meelde parool
 remove all	mail	et	Eemalda Kõik
@@ -266,6 +283,7 @@ select an item to read	mail	et	Valige kirje lugemiseks
 select mail addresses from addressbook	mail	et	Valige e-posti aadress(id) aadressiraamatust
 select or insert email address	mail	et	Valige või sisestage e-posti aadress
 selected date range (with quicksearch)	mail	et	Valitud kuupäevavahemik (kiirotsinguga)
+send attachments greater than given size as download link instead (in mb)	mail	et	Saada antud suurusest suuremad manused allalaadimislingina (MB-des)
 send message and move to send folder (if configured)	mail	et	Sõnumi saatmine ja liigutamine saatekausta (kui see on konfigureeritud)
 send message pgp encrypted: requires keys from all recipients!	mail	et	Sõnumi saatmine PGP-krüpteeritult: nõuab kõigi vastuvõtjate võtmeid!
 server supports special-use folders	mail	et	Server toetab erikasutuskaustu
@@ -300,7 +318,9 @@ the %1 's acl removed from the %2	mail	et	%1-i ACL eemaldati %2-st.
 the %1 's acl, including its subfolders, removed from the %2	mail	et	%1-i ACL, sealhulgas selle alamkaustad, eemaldatud %2-st.
 the imap server need to meet certain requirements and be configured for it:	mail	et	IMAP-server peab vastama teatavatele nõuetele JA olema selleks konfigureeritud:
 the rule with priority %1 successfully saved!	mail	et	Reegel prioriteediga %1 edukalt salvestatud!
+the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	et	Manuste kogumaht ületab piirmäära %1 MB. Vahetati allalaadimislingiks.
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	et	Sieve skripti salvestamiseks ei ole enam ruumi, palun kontrollige sieve_maxscriptsize valikut oma mailserveri seadistuses.
+this action affects every message in the selected thread(s) - %1 messages in total. continue?	mail	et	See tegevus mõjutab kõiki valitud vestlusketi(de) sõnumeid – kokku %1 sõnumit. Jätkata?
 this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	et	See post sisaldab väliseid pilte, mida edastatakse ebaturvalise HTTP-protokolli kaudu. Olge teadlik, et nende näitamine või lubamine võib ohustada teie turvalisust!
 this message is smime encrypted and password protected.	mail	et	See sõnum on S/MIME-krüpteeritud ja parooliga kaitstud.
 timeout on connections to your imap server	mail	et	IMAP-serveriga ühenduse aegumistähtaeg
@@ -310,11 +330,14 @@ trash	mail	et	Prügikasti
 trash folder	mail	et	Prügikasti kaust
 unconditional	mail	et	Alati
 unread	mail	et	lugematta
+vacation messages with start and end date require an admin account to be set!	mail	et	Puhkuseteadete algus- ja lõppkuupäeva seadistamiseks on vaja administraatori kontot!
 validate addresses on submit:	mail	et	Kinnitage aadressid esitamisel:
 view header lines	mail	et	Vaata pealkirja ridu
 what to do when you delete a message	mail	et	Mida teha sõnumi kustutamise korral.
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	et	Millise e-posti identiteediga (allkirjaga) soovid alustada? Isikliku allkirja puhul kasutame alati esimest isiklikku allkirja
 write	mail	et	Kirjuta
 write & delete	mail	et	kirjutamine ja kustutamine
+yes, offer copy option	mail	et	Jah, paku kopeerimisvõimalust
 you can select what info to be displayed on email tag	mail	et	Saate valida, millist teavet kuvatakse e-posti sildil.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	et	Saate kasutada $$start$$ ülaltoodud alguskuupäeva ja $$end$$$ lõppkuupäeva jaoks.
 you may add this certificate into your contact, if you trust this signature.	mail	et	Te võite lisada selle sertifikaadi oma kontakti, kui te usaldate seda allkirja.

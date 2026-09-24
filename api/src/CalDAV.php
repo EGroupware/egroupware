@@ -2534,6 +2534,13 @@ class CalDAV extends HTTP_WebDAV_Server
 			{
 				$status = '422 Unprocessable Entity';
 			}
+			// only trust an exception's own code as the HTTP status if it's actually a real 4xx one -
+			// most Api\Exception (sub)classes use their code for unrelated, non-HTTP purposes (eg.
+			// NoPermission's default 100, NoPermission\App's 101), so anything else falls back to 500
+			elseif (($code = $e->getCode()) >= 400 && $code < 500)
+			{
+				$status = $code.' Client Error';
+			}
 			else
 			{
 				$status = '500 Internal Server Error';
@@ -2662,15 +2669,27 @@ class CalDAV extends HTTP_WebDAV_Server
 			[$key, $value] = preg_split('/:\s*/', $header, 2);
 			$response_headers[$key] = $value;
 		}
-		if (preg_match('#^application/([a-z]+\+)?json($|;)#', $response_headers['Content-Type']))
+		if (preg_match('#^application/([a-z]+\+)?json($|;)#', $response_headers['Content-Type'] ?? ''))
 		{
 			$response = json_decode($response, true);
+		}
+		// headers_list() is always empty under the CLI SAPI (header() calls are silently dropped
+		// there) - the only caller of this method (OpenAPI::toolCall()) always requests JSON, so a
+		// background/CLI-invoked caller (async triggers, cron, tests) would otherwise be silently
+		// left with the raw JSON string instead of the decoded array every array-key check here
+		// (and OpenAPI::toolCall()'s own status/message handling) relies on
+		elseif (PHP_SAPI === 'cli' && is_array($decoded = json_decode((string)$response, true)))
+		{
+			$response = $decoded;
 		}
 
 		$_SERVER = $backup_server;
 		$_GET = $backup_get;
 		$_REQUEST = $backup_request;
 
-		return isset($e) ? 500 : http_response_code();
+		// exception_handler() above already set the real status via http_response_code()/header() -
+		// trust it instead of always reporting 500 for any caught exception regardless of its actual
+		// status (eg. a 400 for bad REST parameters, or a 401 from the CalDAV auth challenge)
+		return http_response_code();
 	}
 }

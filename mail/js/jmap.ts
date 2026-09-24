@@ -41,6 +41,12 @@ interface JmapToken
 	// directly, server-side), since there's nothing working to lose: no regression risk even if a
 	// given browser's WebSocket also doesn't connect.
 	enableWsPush : boolean;
+	// true if THIS account's own mail server supports push (ProfileHandler::jmapBootstrap(), via
+	// Api\Mail\Imap\PushIface::pushAvailable()) - only meaningful/set when enableWsPush is false
+	// (the classic server-relayed subscription path); see syncAutorefresh()'s own docblock for
+	// why this is NOT the same thing as egw.pushAvailable() (EGroupware's own general push
+	// infrastructure, an installation-wide concern unrelated to any one mail account).
+	pushAvailable : boolean;
 	// see ProfileHandler::THREADING_ENABLED's docblock (doc/ai/projects/mail-threaded-view.md,
 	// Phase 1) - false for every account until that work ships; also currently doubles as the
 	// "this account's backend doesn't support thread grouping yet" gate (Phase 1 is real-JMAP
@@ -2045,6 +2051,7 @@ export class MailJmap
 			return MailJmap.emptyRowsResult();
 		}
 		this.enablePushOnce(selectedFolder);
+		this.syncAutorefresh(selectedFolder);
 		const data : Record<string, any> = {};
 		result.rows.forEach((row) => data[row.row_id] = row);
 
@@ -2114,6 +2121,52 @@ export class MailJmap
 			console.error('MailJmap.enablePushOnce(): client-side WS push setup failed', e);
 			delete this.pushEnabled[profileID];
 		});
+	}
+
+	/**
+	 * Keep the row list's Et2Nextmatch autorefresh timer in sync with whether $selectedFolder's
+	 * OWN mail server supports push - NOT to be confused with egw.pushAvailable() (whether
+	 * EGroupware itself has a working push-server/fallback at the installation level, a
+	 * completely different, general-framework concern). Deliberately re-evaluated on every single
+	 * row fetch (same granularity the classic, now-removed mail_ui::get_rows() used, see git
+	 * history/doc/ai memory) rather than once at bootstrap - the ONE Et2Nextmatch instance is
+	 * shared across every account the user switches between, some of which may support push and
+	 * some not.
+	 *
+	 * A mail server "supports push" here via either of the two distinct transports
+	 * ProfileHandler::jmapBootstrap() already establishes per account: the classic server-relayed
+	 * JMAP/IMAP push subscription (token.pushAvailable, set from
+	 * Api\Mail\Imap\PushIface::pushAvailable() - for plain IMAP that's the admin-configured
+	 * "imap_hosts_with_push" allowlist, since there's no way to detect IMAP push support
+	 * otherwise), or this account's own client-side WS connection directly to a real JMAP server
+	 * (token.enableWsPush, only reached at all when the *installation* has no working push-server,
+	 * Api\Json\Push::onlyFallback()). token.enableWsPush is deliberately trusted only for a real
+	 * JMAP/Stalwart account (!token.isLocal) - it is set installation-wide, independent of any one
+	 * account's own server, but a plain IMAP/local-shim account's JMAP session never advertises a
+	 * websocket capability at all (see the client constructor's transformWebSocketUrl() docblock),
+	 * so the connection this would rely on never actually opens for one; trusting it there would
+	 * wrongly disable autorefresh even for an IMAP server that was never on the admin's allowlist.
+	 * jmapBootstrap() itself never even computes token.pushAvailable when enableWsPush is true, so
+	 * this can't double-count either way.
+	 *
+	 * Found live 2026-09-23 via a real customer forum report (help.egroupware.org, "26.9.20260922
+	 * Ständiger reload vom Posteingang" - many users hit high CPU/constant visible reloads): this
+	 * whole mechanism existed in the classic server-rendered nextmatch (commits 9a005ab7c0/
+	 * 6bd87cafb5, 2020) but was silently dropped when mail_ui::get_rows() was removed during the
+	 * full client-side JMAP migration - confirmed by a dangling, now-orphaned docblock comment
+	 * that used to sit directly above the deleted method, still present in app.ts's checkET2().
+	 */
+	private syncAutorefresh(selectedFolder : string) : void
+	{
+		const profileID = selectedFolder.split('::', 1)[0];
+		const token = this.tokens[profileID];
+		const disable = !!(token && ((token.enableWsPush && !token.isLocal) || token.pushAvailable));
+		const nm : any = this.app.et2?.getWidgetById(this.app.nm_index);
+		if (!nm || nm.settings?.disable_autorefresh === disable)
+		{
+			return;
+		}
+		nm.settings.disable_autorefresh = disable;
 	}
 
 	/**
@@ -4058,6 +4111,7 @@ export class MailJmap
 				ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto|tel|cid|data):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i,
 			});
 			body = MailJmap.deferCidImages(body);
+			body = this.deferExternalImages(body);
 		}
 		else
 		{
@@ -4080,6 +4134,69 @@ export class MailJmap
 			img.removeAttribute('src');
 		});
 		return doc.body.innerHTML;
+	}
+
+	/**
+	 * Mirror of Api\Html\HtmLawed's server-side "block external images for privacy, and always
+	 * route a plain http: image through the image_proxy safety net" logic - lost when this
+	 * message's HTML body rendering moved from server-rendered (HtmLawed::purify(), still used
+	 * by the classic fallback body and by structureToHtml()'s S/MIME/TNEF path) to this
+	 * client-side DOMPurify path, which has no equivalent step at all. Found live 2026-09-23 via
+	 * a real customer's forum report (a newsletter's own http:// logo silently failing to load
+	 * under Firefox, with no "show images"/proxy fallback ever offered).
+	 *
+	 * Every non-cid/non-data/non-same-origin `<img src>` is deferred into the exact same
+	 * `alt="... [blocked external image:<url>]"` + placeholder-icon convention
+	 * MailApp.resolveExternalImages() already expects and already handles unchanged - its own
+	 * domain-allowlist/preference prompt UI, and the image_proxy http-\>https/proxy rewrite on
+	 * "show" - UNLESS the 'allowExternalIMGs' preference is 'Always' (1) AND this isn't a plain
+	 * http: url, exactly mirroring HtmLawed's own condition: a plain http: image is deferred
+	 * regardless of that preference, so it only ever reaches the browser already rewritten
+	 * through image_proxy, never as a raw http: request.
+	 */
+	private deferExternalImages(html : string) : string
+	{
+		const doc = new DOMParser().parseFromString(html, 'text/html');
+		const allowIMGs = Number(this.egw.preference('allowExternalIMGs', 'mail') ?? 2);
+		const allowedDomains : string[] = Object.values(this.egw.preference('allowExternalDomains', 'mail') || {});
+		const webserverUrl = this.egw.webserverUrl || '';
+
+		doc.querySelectorAll('img[src]').forEach((img : HTMLImageElement) =>
+		{
+			const src = img.getAttribute('src');
+			if (!src || src.startsWith('cid:') || src.startsWith('data:') ||
+				(webserverUrl && src.startsWith(webserverUrl)))
+			{
+				return;
+			}
+			const isHttp = src.startsWith('http:');
+			const domain = src.replace(/^https?:\/\//i, '').split('/')[0];
+			// mirrors HtmLawed's `($allowIMGs != 1 && !in_array($domain, $domains)) || $isHttp`
+			// blocking condition (negated/De Morgan'd into a "nothing to defer" skip check): never
+			// skip for a plain http: url, regardless of preference/allowlist - it always goes
+			// through the defer+image_proxy-rewrite path below.
+			if (!isHttp && (allowIMGs === 1 || allowedDomains.indexOf(domain) !== -1))
+			{
+				return;
+			}
+			const alt = (img.getAttribute('alt') || '')+' [blocked external image:'+src+']';
+			img.setAttribute('alt', alt);
+			if (!img.hasAttribute('title'))
+			{
+				img.setAttribute('title', alt);
+			}
+			img.setAttribute('src', this.egw.image('no-image-shown', 'mail'));
+		});
+		return doc.body.innerHTML;
+	}
+
+	/**
+	 * A fresh, unguessable CSP nonce value (base64, 16 random bytes) - see wrapDocument()'s own
+	 * docblock for why this exists alongside 'self'.
+	 */
+	private static randomNonce() : string
+	{
+		return btoa(String.fromCharCode(...crypto.getRandomValues(new Uint8Array(16))));
 	}
 
 	/**
@@ -4108,21 +4225,27 @@ export class MailJmap
 	 */
 	private wrapDocument(body : string, forMailvelope : boolean = false) : string
 	{
-		// same directive set the current server-rendered response sets via HTTP header
-		// (mail_ui::get_load_email_data(), class.mail_ui.inc.php:2993-3000: script-src 'self' to
-		// load preview.js below, img-src additionally allows blob: for Stalwart inline-image
-		// downloads, see resolveInlineImages(), alongside the data: URIs cid images already used)
-		// explicit 'self' (not just omitting frame-src) - an absent frame-src with no default-src
-		// fallback in this standalone <meta> tag would mean UNRESTRICTED, not merely "back to the
-		// page default"
+		// script-src used to be plain 'self', matching the classic server-rendered response's own
+		// HTTP *header* CSP (mail_ui::get_load_email_data(), class.mail_ui.inc.php:2993-3000) -
+		// but this document is a `srcdoc` iframe (no real URL of its own, "about:srcdoc") with its
+		// CSP delivered via a <meta> tag INSIDE that same markup, not an HTTP header on a real
+		// same-origin response; found live 2026-09-23 via a real customer (Firefox, "every mail
+		// opened in preview"): Firefox failed to resolve 'self' against the srcdoc's inherited
+		// parent origin in this meta-tag-CSP context, outright blocking preview.js
+		// (mailto:/internal-EGroupware-link activation) on EVERY single message. A nonce is origin-
+		// resolution-independent (a pure string match between this directive and the script tag's
+		// own `nonce` attribute below), so it can't be affected by this kind of ambiguity in any
+		// browser - kept alongside 'self' rather than replacing it, since 'self' still correctly
+		// covers whichever browsers DID resolve it right.
+		const nonce = MailJmap.randomNonce();
 		const csp = "frame-src " + (forMailvelope ? "'self'" : "'none'") + "; " +
-			"connect-src 'none'; manifest-src 'none'; script-src 'self'; " +
+			"connect-src 'none'; manifest-src 'none'; script-src 'self' 'nonce-"+nonce+"'; " +
 			"img-src http: blob: data:; media-src https: http: data:";
 
 		return `<!DOCTYPE html><html><head><meta charset="utf-8">` +
 			`<meta http-equiv="Content-Security-Policy" content="${csp}">` +
 			`<link rel="stylesheet" href="${this.egw.link('/mail/templates/default/preview.css')}">` +
-			`<script defer src="${this.egw.link('/mail/js/preview.js')}"></script>` +
+			`<script defer nonce="${nonce}" src="${this.egw.link('/mail/js/preview.js')}"></script>` +
 			`</head><body><div class="mailDisplayBody"><table width="100%" style="table-layout:fixed">` +
 			`<tr><td class="td_display">${body}</td></tr></table></div></body></html>`;
 	}
@@ -4669,6 +4792,7 @@ export class MailJmap
 						templatesFolder: data.templatesFolder,
 						outboxFolder: data.outboxFolder,
 						enableWsPush: !!data.enableWsPush,
+						pushAvailable: !!data.pushAvailable,
 						hasComposePrepareHook: !!data.hasComposePrepareHook,
 					};
 					if (Object.keys(token.customLabels).length)
@@ -6326,6 +6450,14 @@ export class MailJmap
 	 * JMAP-native equivalent (same jmap-jam downloadBlob() the inline-cid-image resolution already
 	 * uses). Caller decides how to display it (compose.ts opens it in a sized egw.openPopup(), same
 	 * convention as the classic branches) - never revoked, matches the popup's own lifetime.
+	 *
+	 * Applies the exact same withKnownFilename()/wrapPdfViewerWithDownload() treatment
+	 * getAttachmentViewUrl() already uses for a RECEIVED message's own attachments - found live via
+	 * ticket #125092 (2026-09-24, ik@egroupware.org): clicking a freshly-uploaded PDF while still
+	 * composing showed the browser's own native PDF viewer chrome (download icons and all) against
+	 * the blob: URL's own opaque UUID as filename, a visibly different/worse experience than
+	 * clicking a PDF in an already-sent message - this method had never been given the tracker
+	 * #124541 fix at all, only getAttachmentViewUrl() had.
 	 */
 	async downloadBlobUrl(profileID : string, blobId : string, name : string, type : string) : Promise<string>
 	{
@@ -6337,7 +6469,12 @@ export class MailJmap
 			mimeType: type || 'application/octet-stream',
 			fileName: name,
 		});
-		return URL.createObjectURL(MailJmap.withKnownType(await response.blob(), type));
+		const contentUrl = URL.createObjectURL(MailJmap.withKnownFilename(await response.blob(), type, name));
+		if ((type || '').toLowerCase() === 'application/pdf')
+		{
+			return MailJmap.wrapPdfViewerWithDownload(contentUrl, name, type);
+		}
+		return contentUrl;
 	}
 
 	/**

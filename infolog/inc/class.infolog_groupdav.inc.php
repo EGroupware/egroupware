@@ -313,18 +313,21 @@ class infolog_groupdav extends Api\CalDAV\Handler
 			if ($matches[2]) $sort = trim($matches[2]);
 			unset($filter['order']);
 		}
-		// handle "linked" filter
-		if (isset($filter['linked']))
+		// handle "linked" filter - an empty value means "not applicable" (eg. an AI/LLM tool-call
+		// that can't cleanly omit an unused optional property) and is silently ignored, not an error
+		if (isset($filter['linked']) && $filter['linked'] !== '')
 		{
-			if (!preg_match('/^([a-z_]+):(\d+)$/i', $filter['linked'], $matches) ||
-				!isset($GLOBALS['egw_info']['user']['apps'][$matches[1]]) ||
-				(int)$matches[2] <= 0)
+			// the ID half can be an arbitrary string, not just numeric - eg. mail's linked entries
+			// use a colon-separated composite id like "<account>:<profile>:<folder>:<uid>", see
+			// Mail\Ui::generateRowID()
+			if (!preg_match('/^([a-z_]+):(.+)$/i', $filter['linked'], $matches) ||
+				!isset($GLOBALS['egw_info']['user']['apps'][$matches[1]]))
 			{
-				throw new Api\Exception("Invalid linked-filter '$filter[linked]', should be '<app-name>:<nummeric-ID>'!", 400);
+				throw new Api\Exception("Invalid linked-filter '$filter[linked]', should be '<app-name>:<app-id>'!", 400);
 			}
 			$filter['info_id'] = Api\Link::get_links($matches[1], $matches[2], 'infolog');
-			unset($filter['linked']);
 		}
+		unset($filter['linked']);
 		$sync_token = 0;
 
 		$query = array(

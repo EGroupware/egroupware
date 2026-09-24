@@ -80,7 +80,7 @@ last week	timesheet	ru	Прошлая неделя
 last year	timesheet	ru	Прошлый год
 leave it empty for a full week	timesheet	ru	Оставьте незаполненным для всей недели
 leaves without saveing	timesheet	ru	Оставить без сохранения
-length<br>rows	timesheet	ru	Длина<br>Ряды
+length<br>rows	timesheet	ru	Длина\nРяды
 link title	timesheet	ru	Название ссылки
 links and attached files	timesheet	ru	Ссылки и прикреплённые файлы
 links to specified application.  example: {{links/infolog}}	timesheet	ru	Ссылки на указанное приложение. Пример: {{links/infolog}}
@@ -134,6 +134,7 @@ show a quantity sum (eg. to sum up negative overtime)	admin	ru	Показыва�
 skip record	timesheet	ru	Пропустить запись
 start	timesheet	ru	Старт
 start & stop timer	common	ru	Запуск и остановка таймера
+start time is after last timesheet	timesheet	ru	Время начала наступает после окончания предыдущего табеля
 start timer	common	ru	Запуск таймера
 start-time can not be before last stop- or pause-time %1!	common	ru	Время старта не может быть раньше последнего времени остановки или паузы %1!
 starttime	timesheet	ru	Время начала
@@ -152,6 +153,7 @@ this month	timesheet	ru	Этот месяц
 this week	timesheet	ru	Эта неделя
 this year	timesheet	ru	Этот год
 ticket modified by %1 at %2	timesheet	ru	Запрос Трекера изменен %1 в %2
+time default for new timesheet entries	timesheet	ru	Значение времени по умолчанию для новых записей в табеле
 timer already running or paused	common	ru	Таймер уже запущен или поставлен на паузу
 timesheet	common	ru	Табель
 timesheet csv export	timesheet	ru	Экспорт Табеля в CVS
@@ -164,12 +166,14 @@ timesheet-%1 deleted.	timesheet	ru	Запись Табеля - %1 удалена
 titles of any entries linked to the current record, excluding attached files	timesheet	ru	Заголовки записей, ссылающихся на текущую, исключая прикреплённые файлы
 unable to convert "%1" to account id.  using plugin setting (%2) for %3.	timesheet	ru	Невозможно преобразовать "%1" в ID учетной записи. Используйте установленный планин (%2) для %3.
 unitprice	timesheet	ru	Цена за ед.
+use current time as end time	timesheet	ru	Использовать текущее время в качестве времени окончания
 use field from csv if possible	timesheet	ru	Используйте поле из CSV, если это возможно
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	ru	Используйте этот тэг для адресных меток. Поместите содержимое, которое нужно повторить, между двумя тэгами.
 values for selectbox	timesheet	ru	Значения для выбранного ящика
 view this entry	timesheet	ru	Показать запись
 week	timesheet	ru	Неделя
 what should be done with unknown values?	timesheet	ru	Что делать с неизвестными значениями?
+when adding a new timesheet: prefill the endtime with the current time, or continue the starttime from the endtime of your last timesheet	timesheet	ru	При добавлении нового табеля: введите текущее время в поле «Время окончания» или установите время начала, исходя из времени окончания предыдущего табеля
 working time	common	ru	Рабочее время
 working time and timer	timesheet	ru	Рабочее время и таймер
 working time from %1	timesheet	ru	Рабочее время от %1

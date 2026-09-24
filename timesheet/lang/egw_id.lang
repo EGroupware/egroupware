@@ -62,7 +62,7 @@ last week	timesheet	id	Minggu lalu
 last year	timesheet	id	Tahun lalu
 leave it empty for a full week	timesheet	id	Biarkan kosong bila seminggu penuh
 leaves without saveing	timesheet	id	tinggalkan tanpa menyimpan
-length<br>rows	timesheet	id	Length<br>Rows
+length<br>rows	timesheet	id	Length\nRows
 link title	timesheet	id	Judul tautan
 make timesheets readable by infolog delegation	timesheet	id	Jadikan lembar waktu dapat dibaca oleh delegasi InfoLog
 mode	timesheet	id	Mode
@@ -104,6 +104,7 @@ select multiple timeshhets for a further action	timesheet	id	Pilih beberapa lemb
 select the predefined status, when creating a new timesheet	preferences	id	Pilih status yang telah ditentukan sebelumnya, saat membuat entri baru.
 start	timesheet	id	Mulai
 start & stop timer	common	id	Mulai & hentikan pengatur waktu
+start time is after last timesheet	timesheet	id	Waktu mulai berada setelah lembar waktu terakhir
 start timer	common	id	Mulai pengatur waktu
 start-time can not be before last stop- or pause-time %1!	common	id	Waktu mulai tidak boleh sebelum waktu berhenti atau jeda terakhir %1!
 starttime	timesheet	id	Waktu memulai
@@ -117,6 +118,7 @@ this month	timesheet	id	Bulan ini
 this week	timesheet	id	Minggu ini
 this year	timesheet	id	Tahun ini
 ticket modified by %1 at %2	timesheet	id	Tiket diubah oleh %1 pada %2
+time default for new timesheet entries	timesheet	id	Pengaturan waktu default untuk entri lembar waktu baru
 timer	common	id	Timer
 timer already running or paused	common	id	Pengatur waktu sudah berjalan atau dijeda
 timesheet	common	id	Lembaran Waktu
@@ -129,10 +131,12 @@ timesheet status-%1 '%2' added.	timesheet	id	Status-%1 LembarWaktu '%2' ditambah
 timesheet-%1 '%2' updated.	timesheet	id	LembarWaktu-%1 '%2' diperbarui.
 timesheet-%1 deleted.	timesheet	id	LembarWaktu-%1 dihapus.
 unitprice	timesheet	id	Satuan harga
+use current time as end time	timesheet	id	Gunakan waktu saat ini sebagai waktu akhir
 use field from csv if possible	timesheet	id	Gunakan bidang dari CSV jika memungkinkan
 view this entry	timesheet	id	Tampilkan entri ini
 week	timesheet	id	Minggu
 what should be done with unknown values?	timesheet	id	Apa yang harus dilakukan dengan nilai yang tidak diketahui?
+when adding a new timesheet: prefill the endtime with the current time, or continue the starttime from the endtime of your last timesheet	timesheet	id	Saat menambahkan lembar waktu baru: isi waktu akhir secara otomatis dengan waktu saat ini, atau atur waktu mulai berdasarkan waktu akhir dari lembar waktu terakhir Anda
 will be created when saving ...	common	id	Akan dibuat saat menyimpan ...
 working time	common	id	Waktu kerja
 working time and timer	timesheet	id	Waktu kerja dan pengatur waktu

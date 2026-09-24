@@ -126,6 +126,7 @@ created by %1	common	lt	Sukūrė %1
 croatia	common	lt	KROATIJA
 cuba	common	lt	KUBA
 currency	common	lt	Valiuta
+current user	common	lt	Pašreizējais lietotājs
 cyprus	common	lt	KIPRAS
 czech republic	common	lt	ČEKIJA
 dark mode	common	lt	Tamsus režimas
@@ -209,6 +210,7 @@ hold [%1] key to select text eg. to copy it	common	lt	Laikykite nuspaudę klavi�
 how many days to sync in the future (default %1)	groupdav	lt	Kiek dienų sinchronizuoti ateityje (numatytoji %1)
 how many days to sync in the past (default %1)	groupdav	lt	Kiek dienų sinchronizuoti praeityje (numatytoji %1)
 how many rows to print	common	lt	Kiek eilučių spausdinti
+html link to the current record	common	lt	HTML saite uz pašreizējo ierakstu
 html links to any entries linked to the current record, excluding attached files	common	lt	HTML nuorodos į bet kokius su dabartiniu įrašu susietus įrašus, išskyrus pridėtus failus
 hungary	common	lt	VENGRIJA
 iceland	common	lt	ISLANDIJA
@@ -356,10 +358,13 @@ spreadsheets	common	lt	Skaičiuoklės
 template	common	lt	Šablonas
 templates	common	lt	Šablonai
 this will reset toolbar preferences for all users and set them to configured default prefs.	common	lt	Tai iš naujo nustatys įrankių juostos parinktis visiems vartotojams ir nustatys jas pagal konfigūruotas numatytąsias parinktis.
+titles of any entries linked to the current record, excluding attached files	preferences	lt	Jebkuru ierakstu nosaukumi, kas saistīti ar pašreizējo ierakstu, izņemot pievienotos failus
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	lt	To disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty
 too many rows selected.<br />select all, or less than %1 rows	common	lt	Too many rows selected.\nSelect all, or less than %1 rows
 toolbar settings	common	lt	Įrankių juostos nustatymai
 total: %1 successful: %2 failed: %3 skipped: %4	common	lt	Total: %1 Successful: %2 Failed: %3 Skipped: %4
+url of current record	common	lt	Pašreizējā ieraksta URL
+urls of any entries linked to the current record, excluding attached files	common	lt	Jebkuru ierakstu URL, kas saistīti ar pašreizējo ierakstu, izņemot pievienotos failus
 videos	common	lt	Vaizdo įrašai
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	lt	Sujungus įrašus į dokumentus, jie bus saugomi čia. Jei aplankas nenurodytas, jie bus saugomi jūsų namų kataloge (%1)
 yemen	common	lt	JEMENAS

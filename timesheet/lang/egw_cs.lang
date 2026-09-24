@@ -64,7 +64,7 @@ last week	timesheet	cs	Minulý týden
 last year	timesheet	cs	Minulý rok
 leave it empty for a full week	timesheet	cs	Ponechte prázdné pro celý týden
 leaves without saveing	timesheet	cs	ukoční bez uložení
-length<br>rows	timesheet	cs	Délka<br>Řádky
+length<br>rows	timesheet	cs	Délka\nŘádky
 link title	timesheet	cs	Název odkazu
 make timesheets readable by infolog delegation	timesheet	cs	Zpřístupněte časové rozvrhy delegátům InfoLog
 max length of the input [, length of the inputfield (optional)]	timesheet	cs	Maximální délka vstupu [, délka vstupního pole (volitelná)]
@@ -109,6 +109,7 @@ select the predefined status, when creating a new timesheet	preferences	cs	Při 
 show a quantity sum (eg. to sum up negative overtime)	admin	cs	Zobrazit součet množství (např. pro sečtení záporného přesčasu)
 start	timesheet	cs	Začátek
 start & stop timer	common	cs	Spuštění a zastavení časovače
+start time is after last timesheet	timesheet	cs	Čas zahájení je po datu posledního výkazu práce
 start timer	common	cs	Spuštění časovače
 start-time can not be before last stop- or pause-time %1!	common	cs	Čas spuštění nesmí být před posledním časem zastavení nebo pauzy %1!
 starttime	timesheet	cs	Počáteční čas
@@ -125,6 +126,7 @@ this month	timesheet	cs	Tento měsíc
 this week	timesheet	cs	Tento týden
 this year	timesheet	cs	Tento rok
 ticket modified by %1 at %2	timesheet	cs	Ohlášení změnil(a) %1 v %2
+time default for new timesheet entries	timesheet	cs	Výchozí nastavení času pro nové záznamy ve výkazu práce
 timer	common	cs	Časovač
 timer already running or paused	common	cs	Časovač již běží nebo je pozastavený
 timesheet	common	cs	Pracovní výkaz
@@ -137,12 +139,14 @@ timesheet status-%1 '%2' added.	timesheet	cs	Pracovní výkaz stav-%1 '%2' byl p
 timesheet-%1 '%2' updated.	timesheet	cs	Pracovní výkaz-%1 '%2' byl zaktualizován.
 timesheet-%1 deleted.	timesheet	cs	Pracovní výkaz-%1 byl smazán.
 unitprice	timesheet	cs	Jednotková cena
+use current time as end time	timesheet	cs	Použít aktuální čas jako čas ukončení
 use field from csv if possible	timesheet	cs	Použijte pole z CSV, pokud je to možné
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	cs	Použijte tuto značku pro adresní štítky. Obsah, který chcete opakovat, vložte mezi dvě značky.
 values for selectbox	timesheet	cs	Hodnoty pro rozbalovací nabídku
 view this entry	timesheet	cs	Zobrazit tento záznam
 week	timesheet	cs	Týden
 what should be done with unknown values?	timesheet	cs	Co je třeba udělat s neznámými hodnotami?
+when adding a new timesheet: prefill the endtime with the current time, or continue the starttime from the endtime of your last timesheet	timesheet	cs	Při přidávání nového výkazu práce: předvyplňte čas ukončení aktuálním časem nebo nastavte čas zahájení podle času ukončení posledního výkazu práce
 will be created when saving ...	common	cs	Vytvoří se při ukládání ...
 working time	common	cs	Pracovní čas
 working time and timer	timesheet	cs	Pracovní doba a časovač

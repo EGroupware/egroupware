@@ -233,6 +233,7 @@ croatia	common	bg	Хърватска
 cuba	common	bg	Куба
 currency	common	bg	Валута
 current	common	bg	Текущ
+current user	common	bg	Текущ потребител
 current users	common	bg	Включени потребители
 custom	common	bg	по избор
 custom fields	common	bg	Полета по избор
@@ -420,6 +421,7 @@ how many days to sync in the past (default %1)	groupdav	bg	Колко дни д�
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	bg	Колко икони да се покажат в лентата за навигация (горе на страницата)? Останалите икони се показват чрез падащо меню, активирано чрез иконата в крайната дясна част на лентата.
 how many rows to print	common	bg	Колко реда да се отпечатат
 html	common	bg	HTML
+html link to the current record	common	bg	HTML връзка към текущия запис
 html links to any entries linked to the current record, excluding attached files	common	bg	HTML връзки към всички записи, свързани с текущия запис, с изключение на прикачени файлове
 hungary	common	bg	Унгария
 iceland	common	bg	Исландия
@@ -854,6 +856,7 @@ time	common	bg	Време
 time zone	common	bg	Часови пояс
 time zone offset	common	bg	Отместване на часовия пояс
 title	common	bg	Заглавие
+titles of any entries linked to the current record, excluding attached files	preferences	bg	Заглавията на всички записи, свързани с текущия запис, с изключение на прикачените файлове
 to	common	bg	До
 to correct this error for the future you will need to properly set the	common	bg	За да отстраните тази грешка е необходимо правилно да настроите
 to go back to the msg list, click <a href= %1 >here</a>	common	bg	За връщане към списъка със съобщения, натиснете <a href="%1">тук</a>
@@ -897,6 +900,8 @@ upload	common	bg	Качване
 upload directory does not exist, or is not writeable by webserver	common	bg	Директорията за Upload не съществува или не е позволен запис за WEB сървъра.
 upload requires the directory to be writable by the webserver!	common	bg	За Upload е необходим достъп за запис от WEB сървъра!
 url	common	bg	WEB адр.
+url of current record	common	bg	URL адресът на текущия запис
+urls of any entries linked to the current record, excluding attached files	common	bg	URL адресите на всички записи, свързани с текущия запис, с изключение на прикачените файлове
 uruguay	common	bg	Уругвай
 use button to search for	common	bg	Използвайте бутона за търсене на
 use button to search for address	common	bg	Използвайте бутона за търсене на адрес

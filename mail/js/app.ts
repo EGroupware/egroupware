@@ -347,11 +347,6 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * Dynamic disable NM autorefresh on get_rows response depending on push support of imap-server
-	 *
-	 * @param {bool} _disable
-	 */
-	/**
 	 * check and try to reinitialize et2 of module
 	 */
 	checkET2()

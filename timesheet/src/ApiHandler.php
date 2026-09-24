@@ -311,11 +311,16 @@ class ApiHandler extends Api\CalDAV\Handler
 					$cols['ts_status'] = count($value) <= 1 ? array_pop($value) : $value;
 					break;
 				case 'linked':
-					if (!preg_match('/^([a-z_]+):(\d+)$/i', $filter['linked'], $matches) ||
-						!isset($GLOBALS['egw_info']['user']['apps'][$matches[1]]) ||
-						(int)$matches[2] <= 0)
+					// an empty value means "not applicable" (eg. an AI/LLM tool-call that can't
+					// cleanly omit an unused optional property) and is silently ignored, not an error
+					if ($value === '') break;
+					// the ID half can be an arbitrary string, not just numeric - eg. mail's linked
+					// entries use a colon-separated composite id like
+					// "<account>:<profile>:<folder>:<uid>", see Mail\Ui::generateRowID()
+					if (!preg_match('/^([a-z_]+):(.+)$/i', $value, $matches) ||
+						!isset($GLOBALS['egw_info']['user']['apps'][$matches[1]]))
 					{
-						throw new Api\Exception("Invalid linked-filter '$value', should be '<app-name>:<nummeric-ID>'!", 400);
+						throw new Api\Exception("Invalid linked-filter '$value', should be '<app-name>:<app-id>'!", 400);
 					}
 					$cols['ts_id'] = Api\Link::get_links($matches[1], $matches[2], 'timesheet');
 					if (!$cols['ts_id']) $cols['ts_id'] = [0];  // to return nothing and not all timesheets

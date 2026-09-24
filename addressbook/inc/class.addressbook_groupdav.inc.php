@@ -285,18 +285,21 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		if (array_key_exists('tid', $filter) && !isset($filter['tid']) && !in_array('tid', $cols)) $cols[] = 'tid';
 		$search = $filter['search'] ?? [];
 		unset($filter['search']);
-		// handle "linked" filter
-		if (isset($filter['linked']))
+		// handle "linked" filter - an empty value means "not applicable" (eg. an AI/LLM tool-call
+		// that can't cleanly omit an unused optional property) and is silently ignored, not an error
+		if (isset($filter['linked']) && $filter['linked'] !== '')
 		{
-			if (!preg_match('/^([a-z_]+):(\d+)$/i', $filter['linked'], $matches) ||
-				!isset($GLOBALS['egw_info']['user']['apps'][$matches[1]]) ||
-				(int)$matches[2] <= 0)
+			// the ID half can be an arbitrary string, not just numeric - eg. mail's linked entries
+			// use a colon-separated composite id like "<account>:<profile>:<folder>:<uid>", see
+			// Mail\Ui::generateRowID()
+			if (!preg_match('/^([a-z_]+):(.+)$/i', $filter['linked'], $matches) ||
+				!isset($GLOBALS['egw_info']['user']['apps'][$matches[1]]))
 			{
-				throw new Api\Exception("Invalid linked-filter '$filter[linked]', should be '<app-name>:<nummeric-ID>'!", 400);
+				throw new Api\Exception("Invalid linked-filter '$filter[linked]', should be '<app-name>:<app-id>'!", 400);
 			}
 			$filter['contact_id'] = Api\Link::get_links($matches[1], $matches[2], 'addressbook');
-			unset($filter['linked']);
 		}
+		unset($filter['linked']);
 		for($chunk=0; ($contacts =& $this->bo->search($search, $cols, $order, '', '', False, 'AND',
 			[$chunk*self::CHUNK_SIZE, self::CHUNK_SIZE], $filter)); ++$chunk)
 		{

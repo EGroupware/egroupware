@@ -114,6 +114,7 @@ select the predefined status, when creating a new timesheet	preferences	nl	Selec
 show a quantity sum (eg. to sum up negative overtime)	admin	nl	Toont een optelling van hoeveelheid (bijvoorbeeld om negatieve overtijd op te tellen)
 start	timesheet	nl	Start
 start & stop timer	common	nl	Timer starten & stoppen
+start time is after last timesheet	timesheet	nl	De starttijd ligt na die van de laatste urenstaat
 start timer	common	nl	Start timer
 start-time can not be before last stop- or pause-time %1!	common	nl	Starttijd kan niet voor de laatste stop- of pauzetijd %1 liggen!
 starttime	timesheet	nl	Aanvangstijd
@@ -129,6 +130,7 @@ this month	timesheet	nl	Deze maand
 this week	timesheet	nl	Deze week
 this year	timesheet	nl	Dit jaar
 ticket modified by %1 at %2	timesheet	nl	Melding gewijzigd door %1 op %2
+time default for new timesheet entries	timesheet	nl	Standaardtijd voor nieuwe urenstaatvermeldingen
 timer	common	nl	Timer
 timer already running or paused	common	nl	Timer loopt al of is gepauzeerd
 timesheet	common	nl	Urenregistratie
@@ -138,12 +140,14 @@ timesheet id	timesheet	nl	Timesheet ID
 timesheet list	timesheet	nl	Timesheet lijst
 titles of any entries linked to the current record, excluding attached files	timesheet	nl	Namen van alle invoer gelinked aan huidig record, behalve de bijgesloten bestanden
 unitprice	timesheet	nl	Eenheidstarief
+use current time as end time	timesheet	nl	Gebruik de huidige tijd als eindtijd
 use field from csv if possible	timesheet	nl	Gebruik veld uit CSV indien mogelijk
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	nl	Gebruik deze tag voor adres labels.Plaats de inhoud welke je wilt herhalen tussen twee tags.
 values for selectbox	timesheet	nl	Waarden voor selectbox
 view this entry	timesheet	nl	Dit item weergeven
 week	timesheet	nl	Week
 what should be done with unknown values?	timesheet	nl	Wat moet er gebeuren met onbekende waarden?
+when adding a new timesheet: prefill the endtime with the current time, or continue the starttime from the endtime of your last timesheet	timesheet	nl	Bij het toevoegen van een nieuwe urenstaat: vul de eindtijd automatisch in met de huidige tijd, of stel de starttijd in op het einde van je laatste urenstaat
 will be created when saving ...	common	nl	Worden aangemaakt bij het opslaan ...
 working time	common	nl	Werktijd
 working time and timer	timesheet	nl	Werktijd en timer

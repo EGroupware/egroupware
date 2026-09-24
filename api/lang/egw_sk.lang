@@ -357,6 +357,7 @@ ctrl	common	sk	Ctrl
 cuba	common	sk	KUBA
 currency	common	sk	Mena
 current	common	sk	Aktuálne
+current user	common	sk	Aktuálny používateľ
 current users	common	sk	Prihlásených používateľov
 custom	common	sk	Vlastné
 custom fields	common	sk	Vlastné polia

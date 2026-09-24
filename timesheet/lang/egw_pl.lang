@@ -61,7 +61,7 @@ last week	timesheet	pl	Ostatni tydzień
 last year	timesheet	pl	Ostatni rok
 leave it empty for a full week	timesheet	pl	Pozostaw pusty na cały tydzień
 leaves without saveing	timesheet	pl	Pozostaw bez zmian
-length<br>rows	timesheet	pl	Długość<br>linie
+length<br>rows	timesheet	pl	Długość\nlinie
 link title	timesheet	pl	Tytuł linku
 make timesheets readable by infolog delegation	timesheet	pl	Udostępnij arkusze czasu pracy delegatom InfoLog
 max length of the input [, length of the inputfield (optional)]	timesheet	pl	maksymalna długość danych [,długość pola (opcjonalnie)]
@@ -107,6 +107,7 @@ select the predefined status, when creating a new timesheet	preferences	pl	Podcz
 show a quantity sum (eg. to sum up negative overtime)	admin	pl	Pokaż sumę ilości (np. aby podsumować negatywne nadgodziny)
 start	timesheet	pl	Początek
 start & stop timer	common	pl	Start i stop timera
+start time is after last timesheet	timesheet	pl	Czas rozpoczęcia przypada po zakończeniu ostatniej karty ewidencji czasu pracy
 start timer	common	pl	Start timera
 start-time can not be before last stop- or pause-time %1!	common	pl	Czas rozpoczęcia nie może być wcześniejszy niż czas ostatniego zatrzymania lub pauzy %1!
 starttime	timesheet	pl	Czas rozpoczęcia
@@ -123,6 +124,7 @@ this month	timesheet	pl	Bieżący miesiąc
 this week	timesheet	pl	Bieżący tydzień
 this year	timesheet	pl	Bieżący rok
 ticket modified by %1 at %2	timesheet	pl	Ticket zmodyfikowany przez %1, %2
+time default for new timesheet entries	timesheet	pl	Domyślne ustawienia czasu dla nowych wpisów w karcie ewidencji czasu pracy
 timer	common	pl	Timer
 timer already running or paused	common	pl	Timer jest już uruchomiony lub wstrzymany
 timesheet	common	pl	Czas Pracy
@@ -132,12 +134,14 @@ timesheet status-%1 '%2' added.	timesheet	pl	Status arkusza - %1, '%2' dodano
 timesheet-%1 '%2' updated.	timesheet	pl	Arkusz - %1 '%2' zaktualizowany.
 timesheet-%1 deleted.	timesheet	pl	Arkusz - %1 usunięty.
 unitprice	timesheet	pl	Cena jednostkowa
+use current time as end time	timesheet	pl	Użyj aktualnej godziny jako godziny zakończenia
 use field from csv if possible	timesheet	pl	Użyj pola z CSV, jeśli to możliwe
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	pl	Użyj tego znacznika dla etykiet adresu. Wstaw zawartość którą chcesz powtórzyć pomiędzy dwa znaczniki.
 values for selectbox	timesheet	pl	Wartości selectboxa
 view this entry	timesheet	pl	Pokaż ten wpis
 week	timesheet	pl	Tydzień
 what should be done with unknown values?	timesheet	pl	Co należy zrobić z nieznanymi wartościami?
+when adding a new timesheet: prefill the endtime with the current time, or continue the starttime from the endtime of your last timesheet	timesheet	pl	Podczas dodawania nowej karty ewidencji czasu pracy: wpisz automatycznie aktualną godzinę jako godzinę zakończenia lub ustaw godzinę rozpoczęcia na podstawie godziny zakończenia ostatniej karty ewidencji czasu pracy
 will be created when saving ...	common	pl	Zostaną utworzone podczas zapisywania ...
 working time	common	pl	Czas pracy
 working time and timer	timesheet	pl	Czas pracy i timer

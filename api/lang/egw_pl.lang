@@ -351,6 +351,7 @@ ctrl	common	pl	Ctrl
 cuba	common	pl	KUBA
 currency	common	pl	Waluta
 current	common	pl	Bieżący
+current user	common	pl	Bieżący użytkownik
 current users	common	pl	Bieżący użytkownicy
 custom	common	pl	Niestandardowy
 custom fields	common	pl	Pola niestandardowe

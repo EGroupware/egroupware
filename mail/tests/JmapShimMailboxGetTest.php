@@ -187,6 +187,64 @@ class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 		$this->assertSame(1, $result['list'][0]['unreadEmails']);
 	}
 
+	/**
+	 * Ticket #125081 (2026-09-24, a real customer): one stale/nonexistent mailbox name in the
+	 * batch (eg. a special folder renamed/deleted directly on the IMAP server, bypassing
+	 * EGroupware) made Horde's own batched LIST-STATUS call throw for the WHOLE requested set
+	 * (Horde_Imap_Client_Socket::_listMailboxes() re-throws unconditionally, matching
+	 * Horde_Imap_Client_Translation::r("The object could not be deleted because it does not
+	 * exist.") - RFC 5530's generic NONEXISTENT response code, worded for "deleted" regardless of
+	 * which actual command triggered it) - which used to abort the ENTIRE tree level, not just
+	 * the one stale entry, exactly matching the customer's own report ("the folder display for
+	 * the account isn't shown at all... logging into the mail server directly shows all folders
+	 * fine").
+	 */
+	public function testMailboxGetInternalFallsBackToPerMailboxWhenBatchedListThrows()
+	{
+		$imap = $this->mockImap(['personal' => [['delimiter' => '.']]]);
+		$imap->method('listMailboxes')->willReturnCallback(function($pattern, $mode, $opts)
+		{
+			if (is_array($pattern) && count($pattern) > 1)
+			{
+				throw new \Horde_Imap_Client_Exception(
+					'NO [NONEXISTENT] The object could not be deleted because it does not exist.');
+			}
+			$name = $pattern[0];
+			if ($name === 'INBOX.Gone')
+			{
+				throw new \Horde_Imap_Client_Exception(
+					'NO [NONEXISTENT] The object could not be deleted because it does not exist.');
+			}
+			return [$name => ['attributes' => ['\\subscribed'], 'status' => ['messages' => 1, 'unseen' => 0]]];
+		});
+
+		$result = $this->invokePrivate('mailboxGetInternal', [
+			$imap, [base64_encode('INBOX'), base64_encode('INBOX/Sent'), base64_encode('INBOX/Gone')], null,
+		]);
+
+		$this->assertCount(2, $result['list'], 'the two still-real mailboxes must still be returned');
+		$this->assertSame([base64_encode('INBOX/Gone')], $result['notFound'],
+			'only the genuinely-stale one is reported missing, not the whole level');
+	}
+
+	/**
+	 * Extreme edge of the same fallback: even every single per-mailbox call failing must degrade
+	 * to an all-notFound result, not crash - eg. a connection that dies mid-fallback.
+	 */
+	public function testMailboxGetInternalFallbackAllFailingReportsAllAsNotFound()
+	{
+		$imap = $this->mockImap(['personal' => [['delimiter' => '.']]]);
+		$imap->method('listMailboxes')->willThrowException(
+			new \Horde_Imap_Client_Exception('NO [NONEXISTENT] The object could not be deleted because it does not exist.'));
+
+		$result = $this->invokePrivate('mailboxGetInternal', [
+			$imap, [base64_encode('INBOX'), base64_encode('INBOX/Sent')], null,
+		]);
+
+		$this->assertSame([], $result['list']);
+		$this->assertSame([base64_encode('INBOX'), base64_encode('INBOX/Sent')], $result['notFound']);
+	}
+
 	public function testMailboxGetInternalReportsNotFound()
 	{
 		$imap = $this->mockImap();

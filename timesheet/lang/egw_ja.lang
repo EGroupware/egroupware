@@ -80,7 +80,7 @@ last week	timesheet	ja	先週
 last year	timesheet	ja	去年
 leave it empty for a full week	timesheet	ja	空にすると週7日間全部
 leaves without saveing	timesheet	ja	保存せずに終了
-length<br>rows	timesheet	ja	長さ<br>行
+length<br>rows	timesheet	ja	長さ\n行
 link title	timesheet	ja	リンクタイトル
 links and attached files	timesheet	ja	リンクと添付ファイル
 links to specified application.  example: {{links/infolog}}	timesheet	ja	指定されたアプリケーションへのリンク。  例: {{links/infolog}}
@@ -135,6 +135,7 @@ show a quantity sum (eg. to sum up negative overtime)	admin	ja	合計を表示
 skip record	timesheet	ja	レコードを読み飛ばす
 start	timesheet	ja	開始日
 start & stop timer	common	ja	タイマーの開始と停止
+start time is after last timesheet	timesheet	ja	開始時刻は前回のタイムシート終了時刻より後になる
 start timer	common	ja	タイマー開始
 start-time can not be before last stop- or pause-time %1!	common	ja	開始時刻を最後の停止時刻または一時停止時刻 %1 より前にすることはできません！
 starttime	timesheet	ja	開始時刻
@@ -153,6 +154,7 @@ this month	timesheet	ja	今月
 this week	timesheet	ja	今週
 this year	timesheet	ja	今年
 ticket modified by %1 at %2	timesheet	ja	%1が%2にチケットを変更しました。
+time default for new timesheet entries	timesheet	ja	新しいタイムシートエントリの時間のデフォルト設定
 timer	common	ja	タイマー
 timer already running or paused	common	ja	タイマは既に実行中または一時停止中です。
 timesheet	common	ja	タイムシート
@@ -167,12 +169,14 @@ timesheet-%1 deleted.	timesheet	ja	タイムシート-%1 を削除しました�
 titles of any entries linked to the current record, excluding attached files	timesheet	ja	このレコードにリンクする項目のタイトル（添付ファイルを除く）
 unable to convert "%1" to account id.  using plugin setting (%2) for %3.	timesheet	ja	%1 をアカウントIDに変換できません。%3にプラグイン設定(%2)を適用しました。
 unitprice	timesheet	ja	単価
+use current time as end time	timesheet	ja	終了時刻として現在の時刻を使用する
 use field from csv if possible	timesheet	ja	可能ならCSVのフィールドを使う
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	ja	アドレスラベル向けタグ。任意のコンテンツをこのタグで囲んで使用します。
 values for selectbox	timesheet	ja	セレクトボックスで表示する値
 view this entry	timesheet	ja	項目を表示
 week	timesheet	ja	週
 what should be done with unknown values?	timesheet	ja	不明な値はどうすればよいですか？
+when adding a new timesheet: prefill the endtime with the current time, or continue the starttime from the endtime of your last timesheet	timesheet	ja	新しいタイムシートを追加する際：終了時刻に現在の時刻を事前入力するか、前回のタイムシートの終了時刻を基に開始時刻を設定してください
 will be created when saving ...	common	ja	保存時に作成される
 working time	common	ja	作業時間
 working time and timer	timesheet	ja	作業時間とタイマー

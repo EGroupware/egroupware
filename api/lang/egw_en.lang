@@ -364,6 +364,7 @@ ctrl	common	en	Ctrl
 cuba	common	en	CUBA
 currency	common	en	Currency
 current	common	en	Current
+current user	common	en	Current user
 current users	common	en	Current users
 custom	common	en	Custom
 custom fields	common	en	Custom fields

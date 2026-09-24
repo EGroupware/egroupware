@@ -253,7 +253,12 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 
 			if(this.fromElement._instance?.config?.mode == "range")
 			{
-				this.fromElement._instance.setDate([range?.from, range?.to], true);
+				// triggerChange=false: this is a programmatic set (see comment below), same
+				// reasoning as Et2Date's own value setter - firing flatpickr's change event here
+				// would echo straight back into whatever called this setter (Et2Filterbox ->
+				// Et2Nextmatch.applyFilters() -> ... -> here again), the same infinite-loop shape
+				// already fixed for Et2Date.clear().
+				this.fromElement._instance.setDate([range?.from, range?.to], false);
 			}
 			else
 			{
