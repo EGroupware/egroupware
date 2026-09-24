@@ -14,6 +14,9 @@ export type CachedQueueData = {
 	parameters : any;
 	cacheKey : string; // Stringified parameters for matching
 	resolve : (value : any) => void;
+	// The promise resolve() settles.  A later request for the same cacheKey, while this one is
+	// still in flight, waits on this rather than queueing a second server request.
+	promise? : Promise<any>;
 }
 
 type Constructor<T = LitElement> = new (...args : any[]) => T;
@@ -131,24 +134,32 @@ export const CachedQueueMixin = <T extends Constructor<typeof Et2Widget & {
 				});
 				if(pending)
 				{
-					return new Promise(pending.resolve);
+					// Wait on the in-flight request's own promise, so this caller gets exactly the
+					// answer the server sends for that key.  NOT `new Promise(pending.resolve)`:
+					// the Promise constructor runs its executor immediately, so that resolved the
+					// *first* caller's promise with this caller's resolve function - a truthy value
+					// regardless of what the server later answered - and left this caller's own
+					// promise unsettled forever.
+					return pending.promise;
 				}
 			}
 
 			// Add to the queue and fire when ready
-			return new Promise((resolve) =>
+			let queued : CachedQueueData;
+			const queuedPromise = new Promise((resolve) =>
 			{
 				// Add to the queue
 				if(!CachedQueueMixinClass._queues.has(this.staticThis.widgetCacheKey))
 				{
 					CachedQueueMixinClass._queues.set(this.staticThis.widgetCacheKey, []);
 				}
-				CachedQueueMixinClass._queues.get(this.staticThis.widgetCacheKey).push({
+				queued = {
 					owner: this,
 					parameters: parameters,
 					cacheKey: this.getCacheKey(parameters),
 					resolve: resolve
-				});
+				};
+				CachedQueueMixinClass._queues.get(this.staticThis.widgetCacheKey).push(queued);
 
 				// Start the queue if it's not already running
 				if(!CachedQueueMixinClass._queue_timeouts[this.staticThis.widgetCacheKey])
@@ -164,6 +175,9 @@ export const CachedQueueMixin = <T extends Constructor<typeof Et2Widget & {
 					}, CachedQueueMixinClass._queue_timeout_max);
 				}
 			});
+			// The executor above ran synchronously, so the queue entry exists by now.
+			queued.promise = queuedPromise;
+			return queuedPromise;
 		}
 
 		// Helper method to access static members
