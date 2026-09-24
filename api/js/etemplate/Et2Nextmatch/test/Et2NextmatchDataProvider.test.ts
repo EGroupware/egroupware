@@ -346,21 +346,21 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 		});
 
 		const rows = [
-			{path: "/home/nathan/Generated", name: "Generated"},
-			{path: "/home/nathan/Invoice.odt", name: "Invoice.odt"}
+			{path: "~/Generated", name: "Generated"},
+			{path: "~/Invoice.odt", name: "Invoice.odt"}
 		];
 		const provider = new Et2NextmatchDataProvider(host);
 		provider.storeRows(rows);
 
 		assert.sameMembers(
 			Object.keys(stored),
-			["filemanager::/home/nathan/Generated", "filemanager::/home/nathan/Invoice.odt"],
+			["filemanager::~/Generated", "filemanager::~/Invoice.odt"],
 			"stored UIDs should be discoverable by egw.dataKnownUIDs('filemanager')"
 		);
-		assert.equal(stored["filemanager::/home/nathan/Generated"], rows[0]);
+		assert.equal(stored["filemanager::~/Generated"], rows[0]);
 		assert.sameMembers(
 			registered,
-			["filemanager::/home/nathan/Generated", "filemanager::/home/nathan/Invoice.odt"],
+			["filemanager::~/Generated", "filemanager::~/Invoice.odt"],
 			"preloaded rows should stay registered so the UID store does not expire them while virtualized"
 		);
 		provider.clearInitialRowRegistrations();
@@ -391,7 +391,7 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 				{
 					callback({
 						rows: {},
-						order: ["/home/nathan/Generated", "/home/nathan/Invoice.odt"],
+						order: ["~/Generated", "~/Invoice.odt"],
 						total: 2
 					});
 				},
@@ -411,15 +411,15 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 
 		assert.deepEqual(
 			page.rows.map((row) => row.id),
-			["filemanager::/home/nathan/Generated", "filemanager::/home/nathan/Invoice.odt"],
+			["filemanager::~/Generated", "filemanager::~/Invoice.odt"],
 			"fetched row ids should use normalized filemanager paths"
 		);
 		assert.sameMembers(
 			Object.keys(stored),
-			["filemanager::/home/nathan/Generated", "filemanager::/home/nathan/Invoice.odt"],
+			["filemanager::~/Generated", "filemanager::~/Invoice.odt"],
 			"fetched row data should be stored in the egw UID cache"
 		);
-		assert.isTrue(stored["filemanager::/home/nathan/Generated"].skipCallback, "callback recursion should be avoided");
+		assert.isTrue(stored["filemanager::~/Generated"].skipCallback, "callback recursion should be avoided");
 	});
 
 	/**

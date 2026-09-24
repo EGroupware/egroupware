@@ -331,6 +331,13 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 * produce one at all.
 	 */
 	private static readonly ROW_HEIGHT_STABLE_FALLBACK_MS = 2000;
+	/**
+	 * Marks a virtualizer instance whose layout pass we already wrapped, so repeated
+	 * renders don't stack wrappers on top of each other - see
+	 * _guardVirtualizerLayoutWhileHidden(). A symbol rather than a property name: it
+	 * lives on somebody else's object, where a plain name could collide with theirs.
+	 */
+	private static readonly HIDDEN_LAYOUT_GUARD = Symbol("et2-hidden-layout-guard");
 	/** Incremented on every _clearRows() - guards that flag's bounded fallback timer below. */
 	private _rowsClearEpoch : number = 0;
 	_sparseVirtualizerLayoutActive : boolean = false;
@@ -999,6 +1006,96 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
+	 * Stop the virtualizer throwing its rendered rows away while nobody is looking at the grid.
+	 *
+	 * An EGroupware application tab that is not the active one is `display: none`, and so are an
+	 * inactive tab panel, an app view that has been switched away from, and a collapsed section -
+	 * everything inside them has no box at all. The virtualizer re-measures its host against the
+	 * window on every layout pass, so a grid in one of those computes a zero-height viewport,
+	 * concludes that not a single row is visible any more, and removes them all from the DOM.
+	 * That measurement is not wrong, just meaningless - nobody can see the grid - but the cost
+	 * arrives later: coming back re-measures a real viewport and rebuilds the entire visible
+	 * range from scratch, re-running the row-upgrade queue over every row, only to end up
+	 * showing exactly what was already there. Measured live on addressbook (62 rows, ~12 columns):
+	 * 144 nodes torn down on the way out, 4974 re-added in 21 batches over 3.4s on the way back,
+	 * without a single row being re-fetched from the server.
+	 *
+	 * So skip the layout pass outright while the host has no box, instead of letting it act on
+	 * numbers that describe nothing but "not rendered". An element hidden by `display: none` (its
+	 * own or any ancestor's), or not in the document, has no client rects; one that is merely
+	 * zero-height, scrolled out of view, clipped, or `visibility: hidden` still has one - so this
+	 * catches only the genuinely unrendered case and leaves every real measurement alone.
+	 * Becoming visible again resizes the host from nothing back to its real size, which the
+	 * virtualizer's own ResizeObserver reports, so the skipped pass happens then - and with the
+	 * range never collapsed, it finds nothing to rebuild.
+	 *
+	 * Patching the instance is deliberate. The collapse happens inside the virtualizer's own
+	 * scheduling with no hook to opt out of, and every way into a layout pass (host resize,
+	 * scroll, items changed) is equally pointless while hidden, so guarding the one method they
+	 * all funnel through covers them together. Idempotent via a marker on the instance, and
+	 * re-applied from updated() because a later render can hand us a new virtualizer.
+	 *
+	 * Row measurement is guarded alongside it, for the same reason and against a subtler failure:
+	 * the virtualizer watches its rendered rows with a second ResizeObserver, which reports every
+	 * one of them shrinking to zero on the way out. Those measurements are held and handed to the
+	 * layout on its *next* pass - which, with the layout pass itself skipped while hidden, is the
+	 * first one after the grid comes back. The layout then believes half its rows are 0px tall,
+	 * renders a range several times too large for a frame, and only settles once they re-measure:
+	 * live-observed as 34 of 66 cached row heights going to zero (average 80px -> 37px) and the
+	 * range jumping 32..65 -> 5..113 -> 32..64, ~4800 nodes of churn. A row that is not being
+	 * rendered has no height worth recording, so don't record one.
+	 *
+	 * It has to be the measuring step that is guarded, not the observer callback that leads to
+	 * it: that callback is bound once when the virtualizer constructs its ResizeObserver, so the
+	 * observer keeps calling the original no matter what the instance property says afterwards.
+	 * Skipping the measurement leaves the rows marked as still needing one, and the size read is
+	 * taken live when that finally happens, so nothing is lost by deferring it to the way back in.
+	 */
+	private _guardVirtualizerLayoutWhileHidden() : void
+	{
+		const virtualizer = this._virtualize as any;
+		if(!virtualizer || virtualizer[Et2Datagrid.HIDDEN_LAYOUT_GUARD] ||
+			typeof virtualizer._updateLayout !== "function")
+		{
+			return;
+		}
+		virtualizer[Et2Datagrid.HIDDEN_LAYOUT_GUARD] = true;
+		const notRendered = function(this : any) : boolean
+		{
+			const host = this._hostElement;
+			return !!host && typeof host.getClientRects === "function" && host.getClientRects().length === 0;
+		};
+		for(const method of ["_updateLayout", "_measureChildren"])
+		{
+			if(typeof virtualizer[method] !== "function")
+			{
+				continue;
+			}
+			const original = virtualizer[method];
+			virtualizer[method] = function(...args : any[])
+			{
+				if(notRendered.call(this))
+				{
+					return;
+				}
+				return original.apply(this, args);
+			};
+		}
+	}
+
+	/**
+	 * Is this grid actually being rendered right now?
+	 *
+	 * A rendered element always has at least one client rect; one hidden by `display: none` (on
+	 * itself or any ancestor), or not in the document at all, never does. `offsetParent` is not
+	 * usable for this - it is also null for a perfectly visible `position: fixed` element.
+	 */
+	private _isRendered() : boolean
+	{
+		return typeof this.getClientRects !== "function" || this.getClientRects().length > 0;
+	}
+
+	/**
 	 * Disconnect DOM listeners and queued async work when component is detached.
 	 */
 	disconnectedCallback()
@@ -1377,6 +1474,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	{
 		super.updated(changedProperties);
 		this._reconnectStuckVirtualizer();
+		this._guardVirtualizerLayoutWhileHidden();
 
 		// Include new row stylesheet(s)
 		if(changedProperties.has("rowStylesheets"))
@@ -2893,6 +2991,19 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				window.clearTimeout(this._rowHeightStableTimer);
 				this._rowHeightStableTimer = null;
 			}
+			return;
+		}
+		if(!this._isRendered())
+		{
+			// Nothing about a grid that isn't being rendered can be measured, so re-arming
+			// here would only ask the browser to tell us again that its rows are 0px tall.
+			// It would also spin: re-observing delivers one callback per row immediately,
+			// which marks the height unstable, which re-renders, which lands back here -
+			// a cycle that only ends when a real measurement settles it, and none can
+			// arrive while hidden. Leave the existing observation in place instead: the
+			// rows are still there (see _guardVirtualizerLayoutWhileHidden()), so growing
+			// back to their real height on the way in is itself the resize that restarts
+			// this.
 			return;
 		}
 		const measurable = this._measurableRenderedRows();

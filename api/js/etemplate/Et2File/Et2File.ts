@@ -424,7 +424,6 @@ export class Et2File extends Et2InputWidget(LitElement)
 				// Something failed in the network.  We may want to catch this and give a nice error, but need
 				// the context to properly handle it
 				console.warn(arguments);
-				debugger;
 			});
 		}, 100);
 	}
@@ -624,7 +623,6 @@ export class Et2File extends Et2InputWidget(LitElement)
 		{
 			function done(event : CustomEvent)
 			{
-				debugger;
 				if(event.target === this && event.detail.uniqueIdentifier == fileInfo.uniqueIdentifier)
 				{
 					this.removeEventListener("et2-add", done);

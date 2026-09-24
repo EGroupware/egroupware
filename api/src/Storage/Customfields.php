@@ -271,7 +271,6 @@ class Customfields implements \IteratorAggregate
 				}
 				break;
 		}
-		restore_error_handler();
 		return $value;
 	}
 
