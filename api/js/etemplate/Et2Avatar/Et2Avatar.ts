@@ -75,7 +75,21 @@ export class Et2Avatar extends CachedQueueMixin(Et2Widget(SlAvatar)) implements 
 	 */
 	@property({type: Boolean}) editable = false;
 
-	@property({type: String, reflect: true})
+	/**
+	 * Deliberately NOT reflected.
+	 *
+	 * For a contactId we resolve the URL asynchronously (cachedQueue() in the contactId
+	 * setter, since only the server knows whether a contact has a photo), so it lands after
+	 * this widget has already rendered once.  Reflecting it wrote that late answer back into
+	 * the host's attributes - and Et2Datagrid renders a row by handing rowElement.outerHTML
+	 * to lit's unsafeHTML(), which replaces the whole row node whenever that string differs
+	 * from last time.  So every avatar that resolved an image tore its entire row down and
+	 * rebuilt it, re-running every widget constructor in it, purely because one attribute
+	 * appeared after the fact.  Nothing reads the attribute (no :host([image]) rule, here or
+	 * in Shoelace's own avatar styles), and attribute -> property still works for templates
+	 * that set image="..." - only the property -> attribute direction is dropped.
+	 */
+	@property({type: String})
 	image = "";
 
 	@property({type: Boolean})
