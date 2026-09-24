@@ -2764,11 +2764,14 @@ class HTTP_WebDAV_Server
                     break;
 
                 case "ETAG_WEAK":
-                    $list[] = $not."[W/'$token[1]']>";
+                    // was "...']>" - a stray trailing ">" left over from the URI case above,
+                    // which uses "<...>" not "[...]" - harmless while nothing ever parsed this
+                    // string back apart, but _check_uri_condition() below now does
+                    $list[] = $not."[W/'$token[1]']";
                     break;
 
                 case "ETAG_STRONG":
-                    $list[] = $not."['$token[1]']>";
+                    $list[] = $not."['$token[1]']";
                     break;
 
                 default:
@@ -2836,28 +2839,109 @@ class HTTP_WebDAV_Server
     }
 
     /**
+     * Resolve an If-header resource-tag (Coded-URL) to a path relative to $this->base, the same
+     * shape as $this->path / _copymove()'s $options["dest"].
+     *
+     * Deliberately its own copy of _copymove()'s HTTP_DESTINATION resolution rather than a shared
+     * helper both call - keeps this change scoped to the If-header condition check it is for,
+     * without touching the already-reviewed COPY/MOVE destination path.
+     *
+     * @param string $uri absolute or path-only URI, as produced by _if_header_parser()
+     * @return string|false path relative to $this->base, or false if $uri does not name a
+     *  resource on this same host/script - a genuinely different server, unparseable, or (like
+     *  Sharing::ServeRequest()'s REQUEST_URI/Destination guard) contains a ".." segment. A
+     *  condition whose resource can't be resolved this way is never satisfied, see
+     *  _check_uri_condition() - this only ever gates a read (an ETag/lock-token comparison), but
+     *  the same "never let a client-supplied URI resolve outside our own root" principle applies.
+     */
+    function _resolve_if_header_uri($uri)
+    {
+        $http_header_host = preg_replace("/:80$/", "", $this->_SERVER["HTTP_HOST"]);
+
+        if (($url = parse_url($uri)) === false || !isset($url["path"])) {
+            return false;
+        }
+        $path = strtr(self::_urldecode($url["path"]), array(
+            '%' => '%25',
+            '#' => '%23',
+            '?' => '%3F',
+        ));
+
+        if (isset($url["host"])) {
+            $http_host = $url["host"];
+            if (isset($url["port"]) && $url["port"] != 80) {
+                $http_host .= ":".$url["port"];
+            }
+        } else {
+            // only a path was given, assume it refers to this same host
+            $http_host = $http_header_host;
+        }
+
+        if ($http_host !== $http_header_host ||
+            strncmp($this->_SERVER["SCRIPT_NAME"], $path, strlen($this->_SERVER["SCRIPT_NAME"])) !== 0 ||
+            strpos($path, "..") !== false) {
+            return false;
+        }
+        return substr($path, strlen($this->_SERVER["SCRIPT_NAME"]));
+    }
+
+    /**
      * Check a single URI condition parsed from an if-header
      *
-     * Check a single URI condition parsed from an if-header
+     * Delegates to $this->checkLock($path) for a state-token (lock-token) condition and
+     * $this->currentEtag($path) for an ETag condition - both already exist per-subclass
+     * (checkLock() for every HTTP_WebDAV_Server_Filesystem descendant; currentEtag() where
+     * implemented, @see EGroupware\Api\Vfs\WebDAV::currentEtag()). A subclass that implements
+     * neither gets the same "resource can't be resolved" treatment as an unresolvable URI - the
+     * condition is never satisfied, rather than always satisfied as before.
      *
-     * @abstract
-     * @param string $uri URI to check
-     * @param string $condition Condition to check for this URI
+     * Simplifications versus the full RFC 4918 §10.4 semantics, deliberate and documented rather
+     * than silently approximated:
+     * - weak (W/) and strong ETag comparison are not distinguished - both compare the ETag value
+     *   for exact equality, since this codebase's ETags carry no separate notion of "weak".
+     * - a condition (negated or not) whose resource cannot be resolved/determined at all is
+     *   always treated as NOT met, rather than trying to replicate the RFC's more intricate
+     *   missing-resource/Not-condition interactions.
+     *
+     * @param string $uri URI to check (never empty - _check_if_header_conditions() already
+     *  defaults an omitted Tagged-list resource to $this->uri before calling this)
+     * @param string $condition Condition to check for this URI, as produced by
+     *  _if_header_parser(): "<token>", "['etag']" or "[W/'etag']", optionally "!"-prefixed
      * @returns bool Condition check result
      */
     function _check_uri_condition($uri, $condition)
     {
-		unset($uri);	// not used, but required by function signature
-        // not really implemented here,
-        // implementations must override
-
-        // a lock token can never be from the DAV: scheme
-        // litmus uses DAV:no-lock in some tests
+        // a lock token can never be from the DAV: scheme - litmus uses DAV:no-lock in some tests
         if (!strncmp("<DAV:", $condition, 5)) {
             return false;
         }
 
-        return true;
+        $not = $condition[0] === "!";
+        if ($not) {
+            $condition = substr($condition, 1);
+        }
+
+        if (($path = $this->_resolve_if_header_uri($uri)) === false) {
+            return false;
+        }
+
+        if ($condition[0] === "<") {
+            // state-token (lock-token) condition, eg. "<opaquelocktoken:...>"
+            $token = substr($condition, 1, -1);
+            $lock = method_exists($this, "checkLock") ? $this->checkLock($path) : false;
+            $met = is_array($lock) && isset($lock["token"]) && $lock["token"] === $token;
+        } elseif (preg_match("/^\[(W\/)?'(.*)'\]\$/", $condition, $m)) {
+            // ETag condition, eg. "['some-etag']" or "[W/'some-etag']" - both compared the same
+            // way, see this method's docblock
+            $etag = '"'.$m[2].'"';
+            $current = method_exists($this, "currentEtag") ? $this->currentEtag($path) : null;
+            $met = $current !== null && $current === $etag;
+        } else {
+            // unrecognized condition shape - fail closed rather than guess
+            $met = false;
+        }
+
+        return $not ? !$met : $met;
     }
 
 

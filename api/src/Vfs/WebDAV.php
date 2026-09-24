@@ -700,9 +700,9 @@ class WebDAV extends HTTP_WebDAV_Server_Filesystem
 			$info['props'][] = self::mkprop	('getcontentlength', filesize($fspath));
 		}
 		// generate etag from inode (sqlfs: fs_id), modification time and size
-		if (($stat = stat($fspath)))
+		if (($stat = stat($fspath)) && ($etag = $this->currentEtag($path, $stat)))
 		{
-			$info['props'][] = self::mkprop('getetag', '"'.$stat['ino'].':'.$stat['mtime'].':'.$stat['size'].'"');
+			$info['props'][] = self::mkprop('getetag', $etag);
 		}
 		// make stat available to PROPFIND, to not query it again
 		$info['stat'] = $stat ? array_slice($stat, 13) : $stat;
@@ -1007,6 +1007,28 @@ class WebDAV extends HTTP_WebDAV_Server_Filesystem
 	function checkLock($path)
 	{
 		return Vfs::checkLock($path);
+	}
+
+	/**
+	 * Get the current ETag of a resource, for If-header condition checks (@see _check_uri_condition())
+	 *
+	 * Same computation as the "getetag" PROPFIND property in fileinfo() below - kept as one place
+	 * so the two can never drift apart. fileinfo() already has its own stat() result (which it
+	 * also needs for other properties), so it can pass that in to avoid a second filesystem call.
+	 *
+	 * @param string $path resource path (relative to $this->base, same shape as $this->path)
+	 * @param array|false $stat =null pre-fetched stat($this->base.$path), if the caller already
+	 *  has one; null (default) has this method stat() the path itself
+	 * @return string|null current ETag incl. surrounding quotes, or null if the resource does
+	 *  not exist / has no filesystem stat available
+	 */
+	function currentEtag($path, $stat=null)
+	{
+		if (!isset($stat))
+		{
+			$stat = stat($this->base . $path);
+		}
+		return $stat ? '"'.$stat['ino'].':'.$stat['mtime'].':'.$stat['size'].'"' : null;
 	}
 
 	/**
