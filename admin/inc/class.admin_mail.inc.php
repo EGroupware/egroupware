@@ -1534,7 +1534,7 @@ class admin_mail
 					Framework::window_close($e->getMessage().' ('.get_class($e).': '.$e->getCode().')');
 				}
 				// client just hit a real connection failure and opened this popup to find out why
-				// (mail/js/app.ts's popupCheckCert()) - diagnose it now, while a human is actually
+				// (mail/js/jmap.ts's popupCheckCert()) - diagnose it now, while a human is actually
 				// watching, not proactively before every ordinary connection
 				if (empty($msg) && !empty($_GET['checkCert']) &&
 					in_array($_GET['checkCert'], ['imap', 'jmap', 'smtp', 'sieve'], true) && (int)$content['acc_id'] > 0)
@@ -1543,6 +1543,20 @@ class admin_mail
 					if ($diagnosis['problem'] !== 'none')
 					{
 						$msg = $diagnosis['message'];
+						$msg_type = 'error';
+					}
+					elseif (!empty($_GET['checkCertError']))
+					{
+						// this fresh, on-demand diagnosis (its own separate, short-timeout probe)
+						// found nothing currently wrong - most commonly because verification is
+						// already disabled for a known mismatch (see Mail\Account::
+						// diagnoseConnection()'s $verifyDisabled docblock) - but the client only
+						// ever opens this popup because a REAL request just failed, so leaving the
+						// user with no explanation at all would be worse than a clean bill of
+						// health; show what actually failed instead (popupCheckCert()'s own
+						// originalError param, mail/js/jmap.ts)
+						$msg = lang('The connection just failed with: %1',
+							str_replace(["\r", "\n"], ' ', (string)$_GET['checkCertError']));
 						$msg_type = 'error';
 					}
 				}
@@ -2740,35 +2754,42 @@ class admin_mail
 	{
 		if ($type === 'smtp')
 		{
+			$ssl_field = 'acc_smtp_ssl';
 			$host = (string)$content['acc_smtp_host'];
 			$port = (int)$content['acc_smtp_port'];
-			$secure = Mail\Account::ssl2secure((int)$content['acc_smtp_ssl']);
+			$secure = Mail\Account::ssl2secure((int)$content[$ssl_field]);
 			$starttls_command = "STARTTLS\r\n";
 		}
 		elseif ($type === 'sieve')
 		{
+			$ssl_field = 'acc_sieve_ssl';
 			$host = (string)$content['acc_sieve_host'];
 			$port = (int)$content['acc_sieve_port'];
-			$secure = Mail\Account::ssl2secure((int)$content['acc_sieve_ssl']);
+			$secure = Mail\Account::ssl2secure((int)$content[$ssl_field]);
 			$starttls_command = "STARTTLS\r\n";
 		}
 		else
 		{
+			$ssl_field = 'acc_imap_ssl';
 			$host = (string)$content['acc_imap_host'];
 			$port = (int)$content['acc_imap_port'];
 			// ssl2secure() has no JMAP_HTTP/JMAP_HTTPS case (those never reach Horde) - resolve
 			// them explicitly here instead of extending it just for this diagnostic
-			if ((((int)$content['acc_imap_ssl']) & Mail\Account::PROTOCOL_MASK) === Mail\Account::JMAP_HTTPS)
+			if ((((int)$content[$ssl_field]) & Mail\Account::PROTOCOL_MASK) === Mail\Account::JMAP_HTTPS)
 			{
 				$secure = 'tlsv1';
 			}
 			else
 			{
-				$secure = Mail\Account::ssl2secure((int)$content['acc_imap_ssl']);
+				$secure = Mail\Account::ssl2secure((int)$content[$ssl_field]);
 			}
 			$starttls_command = "a1 STARTTLS\r\n";
 		}
-		return Mail\Account::diagnoseConnection($host, $port, $secure, $starttls_command);
+		// already accepted a certificate mismatch for this connection before - see
+		// Mail\Account::diagnoseConnection()'s own $verifyDisabled docblock for why that must not
+		// be re-diagnosed as "the" problem for a later, possibly unrelated failure
+		$verifyDisabled = ((int)$content[$ssl_field] & Mail\Account::VERIFY_MASK) === Mail\Account::VERIFY_DISABLED;
+		return Mail\Account::diagnoseConnection($host, $port, $secure, $starttls_command, $verifyDisabled);
 	}
 
 	/**
