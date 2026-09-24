@@ -1,13 +1,14 @@
-(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	pt-br	(*) Leve em consideração que o encaminhamento para vários endereços não funcionará se o número de endereços exceder o limite. Na maioria dos servidores de e-mail, o limite é 4 por padrão. Entre em contato com o administrador do servidor de e-mail para obter mais informações.
-(leave empty for no quota)	mail	pt-br	(Deixe em branco para nenhuma quota)
-(no subject)	mail	pt-br	(sem assunto)
-(not connected)	mail	pt-br	(não conectado)
 %1 attachments	mail	pt-br	%1 anexos
 %1 for all users	mail	pt-br	%1 para todos os usuários
 %1 is not writable by you!	mail	pt-br	% 1 não é gravável por você!
 %1 mails selected	mail	pt-br	% 1 e-mails selecionados
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	pt-br	%1 requer a extensão Sieve %2, talvez seja necessário tentar %1 ou um número maior de dias.
+(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	pt-br	(*) Leve em consideração que o encaminhamento para vários endereços não funcionará se o número de endereços exceder o limite. Na maioria dos servidores de e-mail, o limite é 4 por padrão. Entre em contato com o administrador do servidor de e-mail para obter mais informações.
+(leave empty for no quota)	mail	pt-br	(Deixe em branco para nenhuma quota)
+(no subject)	mail	pt-br	(sem assunto)
+(not connected)	mail	pt-br	(não conectado)
 account editable by user	mail	pt-br	conta editável pelo usuário
+account not reachable	mail	pt-br	Não foi possível acessar a conta.
 acl rights retrieve failed, seems there are no rights set!	mail	pt-br	A recuperação de direitos de ACL falhou, parece que não há direitos definidos!
 acl rights retrieved successfully	mail	pt-br	Direitos ACL retrieved com sucesso
 activating by date requires a start- and end-date!	mail	pt-br	Ativação por data requer uma data inicial e final!
@@ -39,6 +40,7 @@ always allow external sources from %1	mail	pt-br	Sempre permitir fontes externas
 always respond / auto-responder	mail	pt-br	Sempre responder / resposta automática
 always show html emails	mail	pt-br	Sempre mostar mensagens em HMTL
 always show notifiction	mail	pt-br	Mostrar sempre notificação
+an error happend while trying to remove acl rights from the account %1!	mail	pt-br	Ocorreu um erro ao tentar remover os direitos de ACL da conta %1!
 answered	mail	pt-br	Respondeu
 any of	mail	pt-br	qualquer
 any status	mail	pt-br	qualquer status
@@ -65,6 +67,7 @@ caching of flags	mail	pt-br	Armazenamento em cache de sinalizadores
 can not open imap connection	mail	pt-br	Não é possível abrir conexão IMAP
 can not resolve the winmail.dat attachment!	mail	pt-br	Não é possível resolver o anexo winmail.dat!
 certificate details	mail	pt-br	Detalhes do certificado
+certificate imported.	mail	pt-br	Certificado importado.
 certificate in text	mail	pt-br	Certificado em texto
 certificate info for email %1	mail	pt-br	Informações do certificado para o e-mail %1
 certificate issued by	mail	pt-br	Certificado emitido por
@@ -100,11 +103,13 @@ copied %1 message(s) from %2 to %3	mail	pt-br	Copiados %1 mensagem(s) de %2 a 3%
 copy to	mail	pt-br	Copiar para
 could not append message:	mail	pt-br	Não foi possível anexar Mensagem:
 create new account	mail	pt-br	Criar nova conta
+create self-signed certificate	mail	pt-br	Criar certificado autoassinado
 cross account forward attachment is not allowed!	mail	pt-br	Não é permitido o envio de contas cruzadas!
 current folder	mail	pt-br	pasta atual
 current subject	mail	pt-br	Assunto atual
 currently:	mail	pt-br	Atualmente:
 deactive	mail	pt-br	Desativado
+default signature	mail	pt-br	Assinatura padrão
 default sorting order	mail	pt-br	Ordem padrão de classificação
 default toolbar actions shown in mail's html editor	mail	pt-br	Funções habilitadas na barra de ferramentas do editor HTML ao compor um e-mail
 default value for remembering s/mime passphrase in minutes	mail	pt-br	Valor padrão para lembrar a senha S/MIME em minutos
@@ -115,7 +120,7 @@ delete folder	mail	pt-br	Excluir pasta
 delete folder %1 ?	mail	pt-br	Apagar pasta %1?
 delete selected folders	mail	pt-br	Excluir pastas selecionadas
 deleted	mail	pt-br	removido
-deleted %1 messages in %2	mail	pt-br	apagado %1 mensagens em 2%.
+deleted %1 messages in %2	mail	pt-br	Excluí %1 mensagem(ns) em %2.
 deleted!	mail	pt-br	apagado!
 deleting folders	mail	pt-br	Exclusão de pastas
 deny certain groups access to following features	mail	pt-br	Negar o acesso a certos grupos as seguintes características
@@ -242,6 +247,7 @@ if message size	mail	pt-br	Se tamanho da mensagem
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	pt-br	Se quiser ver uma visualização prévia de um e-mail clicando uma vez no assunto, ative essa opção.
 imap	mail	pt-br	IMAP
 imap server	mail	pt-br	Servidor IMAP
+import ca-signed certificate for this key	mail	pt-br	Importar certificado assinado por CA para esta chave
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	pt-br	A importação da mensagem %1 falhou. Não foi possível salvar a mensagem na pasta %2 devido a: %3
 import of message %1 failed. destination folder %2 does not exist.	mail	pt-br	Falha na importação da mensagem %1. A pasta de destino %2 não existe.
 import of message %1 failed. destination folder not set.	mail	pt-br	Falha na importação da mensagem %1. Pasta de destino não definida.
@@ -261,6 +267,7 @@ junk folder	mail	pt-br	Pasta de lixo
 keep a copy	mail	pt-br	Manter uma cópia
 keep a copy of the message in your inbox	mail	pt-br	Manter uma cópia da mensagem em sua caixa de entrada
 kilobytes	mail	pt-br	Kbytes
+last used signature	mail	pt-br	Assinatura usada pela última vez
 later	mail	pt-br	Depois
 learning as ham (not spam) failed because of %1	mail	pt-br	O aprendizado como ham (não spam) falhou por causa de %1
 learning as spam failed because of %1	mail	pt-br	O aprendizado como spam falhou por causa de %1
@@ -293,6 +300,7 @@ move selected to	mail	pt-br	Mover selecionados para
 move to	mail	pt-br	Mover selecionados para
 move to trash	mail	pt-br	Mover para a lixeira
 moved %1 message(s) from %2 to %3	mail	pt-br	Movida a(s) mensagem(ns) %1 de %2 para %3.
+moving folders from one mailaccount to another is not supported	mail	pt-br	A transferência de pastas de uma conta de e-mail para outra não é suportada.
 name and domain	mail	pt-br	Nome e domínio
 name and email	mail	pt-br	Nome e e-mail
 name of account	mail	pt-br	Nome da conta
@@ -310,6 +318,7 @@ no address to/cc/bcc supplied, and no folder to save message to provided.	mail	p
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	pt-br	Nenhum destino de pasta fornecido, e nenhuma pasta para salvar a mensagem ou outra medida para armazenar o correio (salvar no InfoLog/Ticketsystem) fornecida, mas necessária.
 no plain text part found	mail	pt-br	Nehuma parte em texto puro encontrada
 no recipient address given!	mail	pt-br	Nenhum endereço informado!
+no s/mime private key stored for this account.	mail	pt-br	Não há chave privada S/MIME armazenada para esta conta.
 no signature	mail	pt-br	sem assinatura
 no sneak preview in list	mail	pt-br	Sem visualização da mensagem
 no subject given!	mail	pt-br	Nenhum assunto informado!
@@ -333,6 +342,7 @@ organization | real name email	mail	pt-br	Organização | Nome real [E-mail]
 original message	mail	pt-br	Mensagem original
 outbox	mail	pt-br	Caixa de saída
 permission denied	mail	pt-br	Permissão negada
+personal signature	mail	pt-br	Assinatura pessoal
 please configure access to an existing individual imap account.	mail	pt-br	Configure o acesso a uma conta IMAP individual existente.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	pt-br	Configure seu certificado S/MIME na guia Encryption (Criptografia) localizada na caixa de diálogo Edit Account (Editar conta).
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	pt-br	Entre em contato com o administrador para validar se o servidor suporta regras de filtragem no servidor e como ativá-las no EGroupware para sua conta ativa (%1) com ID: %2.
@@ -402,6 +412,8 @@ select file(s) from vfs	mail	pt-br	Selecione o(s) arquivo(s) no Gerenciador de A
 select mail addresses from addressbook	mail	pt-br	Selecione o(s) endereço(s) de e-mail do catálogo de endereços
 select or insert email address	mail	pt-br	Selecione ou insira um endereço de e-mail
 selected date range (with quicksearch)	mail	pt-br	Intervalo de datas selecionado (com pesquisa rápida)
+self-signed certificate created.	mail	pt-br	Certificado autoassinado criado.
+send attachments greater than given size as download link instead (in mb)	mail	pt-br	Enviar anexos maiores que o tamanho especificado como link para download (em MB)
 send message and move to send folder (if configured)	mail	pt-br	Enviar mensagem e mover para a pasta de envio (se configurado)
 send message pgp encrypted: requires keys from all recipients!	mail	pt-br	Enviar mensagem criptografada por PGP: requer chaves de todos os destinatários!
 sent	mail	pt-br	Enviado
@@ -449,9 +461,11 @@ the imap server need to meet certain requirements and be configured for it:	mail
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	pt-br	O remetente da mensagem solicitou uma resposta para indicar que você a leu. Gostaria de enviá-la?
 the mimeparser can not parse this message.	mail	pt-br	O analisador mime não pôde processar esta mensagem.
 the rule with priority %1 successfully saved!	mail	pt-br	A regra com prioridade %1 foi salva com sucesso!
+the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	pt-br	O tamanho total dos anexos excede o limite de %1 MB. Foi gerado um link para download.
 then	mail	pt-br	ENTÃO
 there is no imap server configured.	mail	pt-br	Não há nenhum servidor IMAP configurado.
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	pt-br	Não há mais espaço para armazenar o script do Sieve. Verifique a opção sieve_maxscriptsize na configuração do seu servidor de e-mail.
+this action affects every message in the selected thread(s) - %1 messages in total. continue?	mail	pt-br	Essa ação afeta todas as mensagens nas conversas selecionadas — %1 mensagens no total. Deseja continuar?
 this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	pt-br	Esse e-mail contém imagens externas servidas por meio de um protocolo HTTP inseguro. Lembre-se de que exibi-las ou permiti-las pode comprometer sua segurança!
 this message is smime encrypted and password protected.	mail	pt-br	Esta mensagem é criptografada por S/MIME e protegida por senha.
 timeout on connections to your imap server	mail	pt-br	Tempo limite nas conexões com o servidor IMAP
@@ -462,6 +476,7 @@ trash folder	mail	pt-br	Pasta Lixeira
 unconditional	mail	pt-br	Sempre
 unflagged	mail	pt-br	Uessinalizado
 unread	mail	pt-br	Não lido
+vacation messages with start and end date require an admin account to be set!	mail	pt-br	As mensagens de férias com data de início e término exigem que seja configurada uma conta de administrador!
 vacation notice	mail	pt-br	Notícia de ausência
 vacation notice is active	mail	pt-br	Notícia de ausência está ativa
 vacation start-date must be before the end-date!	mail	pt-br	Data inicial de ausência deve ser ANTERIOR à data final!
@@ -469,9 +484,11 @@ validate addresses on submit:	mail	pt-br	Valide os endereços ao enviá-los:
 view header lines	mail	pt-br	Exibir linhas de cabeçalho
 what to do when you delete a message	mail	pt-br	O que fazer quando você exclui uma mensagem.
 when deleting messages	mail	pt-br	Ao remover mensagens
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	pt-br	Com qual identidade de e-mail (assinatura) você deseja começar? Para a assinatura pessoal, sempre usamos a primeira assinatura pessoal
 write	mail	pt-br	Gravar
 write & delete	mail	pt-br	escrever e excluir
 wrote	mail	pt-br	escreveu
+yes, offer copy option	mail	pt-br	Sim, oferecer opção de copiar
 you can select what info to be displayed on email tag	mail	pt-br	Você pode selecionar as informações a serem exibidas na tag de e-mail.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	pt-br	Você pode usar $$start$$ para a data de início acima e $$end$$ para a data de término.
 you may add this certificate into your contact, if you trust this signature.	mail	pt-br	Você pode adicionar esse certificado ao seu contato, se confiar nessa assinatura.

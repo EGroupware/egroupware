@@ -172,6 +172,7 @@ croatia	common	uk	ХОРВАТІЯ
 cuba	common	uk	КУБА
 currency	common	uk	Валюта
 current	common	uk	Поточний
+current user	common	uk	Поточний користувач
 current users	common	uk	Поточні (діючі) користувачі
 custom	common	uk	Власне
 custom fields	common	uk	Власні поля
@@ -315,6 +316,7 @@ how many days to sync in the past (default %1)	groupdav	uk	Скільки дні
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	uk	Скільки ікон показувати в навігаційній панелі. Додаткові ікони будуть в випадаючому меню в правій частині панелі.
 how many rows to print	common	uk	Скільки рядків друкувати
 html	common	uk	HTML
+html link to the current record	common	uk	HTML-посилання на поточний запис
 html links to any entries linked to the current record, excluding attached files	common	uk	HTML-посилання на будь-які записи, пов'язані з поточним записом, за винятком прикріплених файлів
 hungary	common	uk	УГОРЩИНА
 id	common	uk	Id
@@ -615,6 +617,7 @@ time	common	uk	Час
 time zone	common	uk	Часовий пояс
 time zone offset	common	uk	Зміщення часового поясу
 title	common	uk	Назва
+titles of any entries linked to the current record, excluding attached files	preferences	uk	Назви всіх записів, пов’язаних із поточним записом, за винятком вкладених файлів
 to	common	uk	To
 to correct this error for the future you will need to properly set the	common	uk	Для виправлення цієї помилки в майбутньому необхідно вірно встановити
 to go back to the msg list, click <a href= %1 >here</a>	common	uk	Для повернення до переліку повідомлень натисніть <a href="%1">тут</a>
@@ -639,6 +642,8 @@ unlink	common	uk	Викинути
 update	common	uk	Поновити
 update a single entry by passing the fields.	common	uk	Змінити один запис шляхом заповнення полів.
 url	common	uk	URL
+url of current record	common	uk	URL-адреса поточного запису
+urls of any entries linked to the current record, excluding attached files	common	uk	URL-адреси всіх записів, пов’язаних із поточним записом, за винятком вкладених файлів
 uruguay	common	uk	УРУГВАЙ
 use button to search for	common	uk	Використовуйте Кнопку для пошуку в
 use button to search for address	common	uk	Використовуйте Кнопку для пошуку в Адресах

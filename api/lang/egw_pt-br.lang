@@ -350,6 +350,7 @@ ctrl	common	pt-br	Ctrl
 cuba	common	pt-br	CUBA
 currency	common	pt-br	Moeda
 current	common	pt-br	Atualizado
+current user	common	pt-br	Usuário atual
 current users	common	pt-br	Usuários ativos
 custom	common	pt-br	Personalizado
 custom fields	common	pt-br	Campos personalizados
@@ -1350,6 +1351,7 @@ time	common	pt-br	Tempo
 time zone	common	pt-br	Fuso horário
 time zone offset	common	pt-br	Faixa de fuso horário
 title	common	pt-br	Título
+titles of any entries linked to the current record, excluding attached files	preferences	pt-br	Títulos de quaisquer entradas vinculadas ao registro atual, excluindo arquivos anexados
 to	common	pt-br	Para
 to correct this error for the future you will need to properly set the	common	pt-br	Para corrigir este erro no futuro você deve ajustar as propriedades
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	pt-br	Para desabilitar: [! = não]<valor>[=<check>]. Exemplo: '!data' desabilita se o conteúdo de 'data' estiver vazio

@@ -352,6 +352,7 @@ ctrl	common	sl	Ctrl
 cuba	common	sl	KUBA
 currency	common	sl	Valuta
 current	common	sl	Trenutno
+current user	common	sl	Trenutni uporabnik
 current users	common	sl	Trenutni uporabniki
 custom	common	sl	Po meri
 custom fields	common	sl	Polja po meri

@@ -241,6 +241,7 @@ ctrl	common	da	Ctrl
 cuba	common	da	Cuba
 currency	common	da	Valutaenhed
 current	common	da	Nuværende
+current user	common	da	Aktuel bruger
 current users	common	da	Nuværende antal brugere
 custom	common	da	Valgfri
 custom fields	common	da	Valgfri Felter
@@ -432,6 +433,7 @@ how many days to sync in the past (default %1)	groupdav	da	Hvor mange dage til s
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	da	Hvor mange ikoner skal der vises i navigations bjælken (øverst på siden). Evt. overskydende ikoner vil være tilgængelig i en slags pulldown menu, ved at trykke på ikonet helt til højre i navigations bjælken.
 how many rows to print	common	da	Hvor mange rækker skal udskrives
 html	common	da	HTML
+html link to the current record	common	da	HTML-link til den aktuelle post
 html links to any entries linked to the current record, excluding attached files	common	da	HTML-links til alle poster, der er knyttet til den aktuelle post, undtagen vedhæftede filer
 hungary	common	da	Ungarn
 iceland	common	da	Island
@@ -858,6 +860,7 @@ time	common	da	Tid
 time zone	common	da	Tidszone
 time zone offset	common	da	Tidszone forskel
 title	common	da	Titel
+titles of any entries linked to the current record, excluding attached files	preferences	da	Titler på alle poster, der er knyttet til den aktuelle post, bortset fra vedhæftede filer
 to	common	da	Til
 to correct this error for the future you will need to properly set the	common	da	For at rette denne fejl for fremtiden skal Du korrekt opsætte
 to go back to the msg list, click <a href= %1 >here</a>	common	da	For at gå tilbage til beskedlisten, klik <a href="%1">her</a>
@@ -893,6 +896,8 @@ update a single entry by passing the fields.	common	da	Opdater et enkelt element
 updating your account with new data from your identity provider failed!	common	da	Opdatering af din konto med nye data fra din identitetsudbyder mislykkedes!
 upload	common	da	Upload
 url	common	da	URL
+url of current record	common	da	URL til den aktuelle post
+urls of any entries linked to the current record, excluding attached files	common	da	URL'er til alle poster, der er knyttet til den aktuelle post, bortset fra vedhæftede filer
 uruguay	common	da	Uruguay
 use button to search for	common	da	Brug knappen for at søge efter
 use button to search for address	common	da	Brug knappen for at søge efter adresser

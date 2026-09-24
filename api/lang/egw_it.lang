@@ -353,6 +353,7 @@ ctrl	common	it	Ctrl
 cuba	common	it	CUBA
 currency	common	it	Valuta
 current	common	it	Attuale
+current user	common	it	Utente corrente
 current users	common	it	Sessioni attive
 custom	common	it	Personalizzato
 custom fields	common	it	Campi personalizzati

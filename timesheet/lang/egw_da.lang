@@ -35,7 +35,7 @@ id	timesheet	da	ID
 imports entries into the timesheet from a csv file.	timesheet	da	Importerer poster til Time Sheet fra en CSV-fil
 last modified	timesheet	da	Sidst opdateret
 leaves without saveing	timesheet	da	forlad uden at gemme
-length<br>rows	timesheet	da	Længde<br>række
+length<br>rows	timesheet	da	Længde\nrække
 link title	timesheet	da	Link-titel
 make timesheets readable by infolog delegation	timesheet	da	Направете таблиците за отчитане на работното време четими чрез делегиране на InfoLog
 max length of the input [, length of the inputfield (optional)]	timesheet	da	maks længde af inputtet [længde af input feltet (valg frit)]
@@ -59,21 +59,25 @@ saves the changes made and leaves	timesheet	da	gem ændringerne og afslut
 select the predefined status, when creating a new timesheet	preferences	da	Vælg den foruddefinerede status, når du opretter en ny post.
 start	timesheet	da	Start
 start & stop timer	common	da	Start og stop timer
+start time is after last timesheet	timesheet	da	Starttidspunktet ligger efter den sidste tidsregistrering
 start timer	common	da	Start timer
 start-time can not be before last stop- or pause-time %1!	common	da	Starttidspunktet kan ikke være før sidste stop- eller pausetidspunkt %1!
 stop- or pause-time can not be before the start-time %1!	common	da	Stop- eller pausetidspunktet kan ikke være før starttidspunktet %1!
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	da	Navn brugt internt (<= 20 tegn), ændring gør eksisterende data utilgængelige
 the text displayed to the user	timesheet	da	teksten som vises til brugeren
+time default for new timesheet entries	timesheet	da	Standardindstilling for tid i nye tidsregistreringer
 timer	common	da	Timer
 timer already running or paused	common	da	Timer kører allerede eller er sat på pause
 timesheet csv export	timesheet	da	Timesheet CSV-eksport
 timesheet csv import	timesheet	da	Import af CSV-fil fra Timesheet
 timesheet id	timesheet	da	Timesheet ID
 timesheet list	timesheet	da	Liste over timesedler
+use current time as end time	timesheet	da	Brug det aktuelle tidspunkt som sluttidspunkt
 use field from csv if possible	timesheet	da	Brug felt fra CSV, hvis det er muligt
 values for selectbox	timesheet	da	Værdier for selectboks
 week	timesheet	da	Uge
 what should be done with unknown values?	timesheet	da	Hvad skal der gøres med ukendte værdier?
+when adding a new timesheet: prefill the endtime with the current time, or continue the starttime from the endtime of your last timesheet	timesheet	da	Når du opretter en ny tidsregistrering: Udfyld sluttidspunktet med det aktuelle tidspunkt, eller angiv starttidspunktet ud fra slutningen af din sidste tidsregistrering
 will be created when saving ...	common	da	Vil blive oprettet, når du gemmer ...
 working time	common	da	Arbejdstid
 working time and timer	timesheet	da	Arbejdstid og timer

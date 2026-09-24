@@ -1,10 +1,10 @@
-(leave empty for no quota)	mail	zh	(留空表示没有配额)
-(no subject)	mail	zh	(无主题)
 %1 attachments	mail	zh	%1 附件
 %1 for all users	mail	zh	所有用户 %1
 %1 is not writable by you!	mail	zh	您不能写入 %1！
 %1 mails selected	mail	zh	选择了 %1 封电子邮件
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	zh	%1 需要 Sieve 扩展名 %2，也许可以尝试 %1 或更高的天数。
+(leave empty for no quota)	mail	zh	(留空表示没有配额)
+(no subject)	mail	zh	(无主题)
 acl rights retrieve failed, seems there are no rights set!	mail	zh	ACL 权限检索失败，似乎未设置任何权限！
 activating by date requires a start- and end-date!	mail	zh	以日期激活需要一个开始和结束日期！
 add all my aliases	mail	zh	添加我所有的别名
@@ -21,6 +21,7 @@ all my email addresses	mail	zh	我所有的电子邮件地址
 all of	mail	zh	所有的
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	zh	所有子文件夹也将被删除，所有受影响文件夹中的所有信息都将丢失
 allow images from external sources in html emails	mail	zh	在HTML邮件中允许外部图片来源
+allow users to create further identities	mail	zh	允许用户创建更多身份
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	zh	允许用户读取、写入和创建文件夹和邮件，向其发送邮件，向其添加邮件和删除邮件
 always respond / auto-responder	mail	zh	始终回复/自动回复
 always show html emails	mail	zh	总是显示HTML邮件
@@ -32,6 +33,7 @@ archive folder	mail	zh	归档文件夹
 are you sure you want to delete all selected folders?	mail	zh	您确定要删除所有选定的文件夹吗？
 attach files	mail	zh	附加文件
 attach users vcard at compose to every new mail	mail	zh	在撰写每封新邮件时附加用户的 vCard
+attach vcard	mail	zh	附加 vCard
 attachment has been saved successfully.	mail	zh	附件已成功保存。
 attachments	mail	zh	附件
 attachments, ...	mail	zh	附件，...
@@ -42,6 +44,7 @@ by default 'http://' is just replaced with 'https://'. feel free to configure 'h
 caching of flags	mail	zh	标记缓存
 can not resolve the winmail.dat attachment!	mail	zh	无法解析 winmail.dat 附件！
 certificate details	mail	zh	证书详细信息
+certificate imported.	mail	zh	证书已导入。
 certificate in text	mail	zh	证书文本
 certificate info for email %1	mail	zh	电子邮件 %1 的证书信息
 certificate issued by	mail	zh	颁发证书的机构
@@ -63,7 +66,10 @@ convert mail to item, attach its attachments and add raw message (message/rfc822
 convert only mail to item (ignore possible attachments)	mail	zh	仅将电子邮件转换为项目（忽略可能的附件）
 copied %1 message(s) from %2 to %3	mail	zh	将 %1 条信息从 %2 复制到 %3。
 copy to	mail	zh	复制到
+create self-signed certificate	mail	zh	创建自签名证书
 cross account forward attachment is not allowed!	mail	zh	不允许跨账户转发附件!
+default identity for compose	mail	zh	撰写邮件时的默认身份
+default signature	mail	zh	默认签名
 default sorting order	mail	zh	默认排序
 default toolbar actions shown in mail's html editor	mail	zh	写邮件时在HTML编辑器工具栏中启用的功能
 default value for remembering s/mime passphrase in minutes	mail	zh	记忆S/MIME口令的默认值为分钟
@@ -72,6 +78,7 @@ defines what to show as identity label on mail folder header	common	zh	定义在
 delete folder	mail	zh	删除邮件夹
 delete selected folders	mail	zh	删除选定文件夹
 deleted	mail	zh	已删除
+deleted %1 messages in %2	mail	zh	在 %2 中删除了 %1 条消息。
 disable	mail	zh	禁用
 disable caching of flags	mail	zh	禁用标志的缓存
 discard	mail	zh	取消
@@ -90,7 +97,10 @@ does not match regexp	mail	zh	不符合条件
 don't use draft folder	mail	zh	不使用草稿夹
 don't use sent	mail	zh	不使用发件箱
 don't use trash	mail	zh	不使用回收站
+draft	mail	zh	草稿
 draft folder	mail	zh	草稿夹
+drafts	mail	zh	草稿
+drafts folder	mail	zh	草稿文件夹
 edit account	mail	zh	编辑账户
 edit vacation settings	mail	zh	编辑假期设置
 email address	mail	zh	邮件地址
@@ -102,6 +112,7 @@ empty trash	mail	zh	清空回收站
 enable	mail	zh	启用
 enabled	mail	zh	已启用
 encrypt your message with smime certificate	mail	zh	使用 S/MIME 证书加密邮件
+error: could not save message as draft	mail	zh	错误：无法将消息保存为草稿
 event details follow	mail	zh	事件细节
 every %1. day	mail	zh	每 %1.
 everyone	mail	zh	所有人
@@ -136,12 +147,14 @@ header	mail	zh	标题
 header lines	mail	zh	邮件头
 hide from	mail	zh	隐藏来自
 high priority	mail	zh	高优先级
+how should the available information on identities be displayed	admin	zh	应如何显示身份的相关信息
 html	mail	zh	HTML
 ident name	mail	zh	标识名称
 ident name email	mail	zh	身份名称 [电子邮件］
 ident name organization email	mail	zh	身份名称 组织 [电子邮件］
 identity	mail	zh	身份
 identity label	mail	zh	身份标签
+identity+signature	mail	zh	身份+签名
 if	mail	zh	如果
 if different from email address	mail	zh	如果与电子邮件地址不同
 if mail header	mail	zh	如果邮件头
@@ -149,6 +162,7 @@ if message size	mail	zh	如果邮件大小
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	zh	如果你想单击邮件主题查看邮件预览，请启用此功能。
 imap	mail	zh	IMAP
 imap server	mail	zh	IMAP 服务器
+import ca-signed certificate for this key	mail	zh	为此密钥导入由证书颁发机构（CA）签名的证书
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	zh	导入邮件 %1 失败。由于以下原因，无法将邮件保存到 %2 文件夹： %3
 import of message %1 failed. destination folder %2 does not exist.	mail	zh	导入邮件 %1 失败。目标文件夹 %2 不存在。
 import of message %1 failed. destination folder not set.	mail	zh	导入信息 %1 失败。未设置目标文件夹。
@@ -168,6 +182,7 @@ junk folder	mail	zh	垃圾邮件文件夹
 keep a copy	mail	zh	保留副本
 keep a copy of the message in your inbox	mail	zh	在收件箱保留一个邮件副本
 kilobytes	mail	zh	kb
+last used signature	mail	zh	上次使用的签名
 later	mail	zh	晚一点
 learning as ham (not spam) failed because of %1	mail	zh	由于 %1 的原因，作为火腿肠（非垃圾邮件）学习失败
 learning as spam failed because of %1	mail	zh	学习垃圾邮件失败，因为 %1
@@ -196,6 +211,7 @@ matches regexp	mail	zh	符合规则
 message learned as spam and moved to spam folder	mail	zh	邮件被识别为垃圾邮件并移至垃圾邮件文件夹
 modify subject	mail	zh	修改主题
 modify subject of this message	mail	zh	修改此信息的主题
+move selected mails to archive	mail	zh	将选中的邮件移至归档
 move selected to	mail	zh	将选定邮件移至
 move to	mail	zh	将选定邮件移至
 move to trash	mail	zh	移动至回收站
@@ -236,6 +252,7 @@ organization | real name email	mail	zh	组织机构 | 真实姓名 [电子邮件
 original message	mail	zh	原始信息
 outbox	mail	zh	发件箱
 permission denied	mail	zh	没有权限
+personal signature	mail	zh	个人签名
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	zh	请在 "编辑帐户 "对话框的 "加密 "选项卡中配置您的 S/MIME 证书。
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	zh	请联系您的管理员，确认您的服务器是否支持服务器端过滤规则，以及如何在 EGroupware 中为 ID:%2 的活动帐户 (%1) 启用这些规则。
 please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	zh	请联系您的管理员，确认服务器是否支持服务器端休假信息，以及如何在 EGroupware 中为 ID:%2 的活动帐户 (%1) 启用这些信息。
@@ -283,6 +300,7 @@ required to disable if you use dovecot with private seen flags on shared or user
 save all	mail	zh	保存所有
 save all attachments to filemanager	mail	zh	保存所有附件到文件管理器
 save as draft	mail	zh	存为草稿
+save as draft and print	mail	zh	另存为草稿并打印
 save as infolog	mail	zh	存为记事本
 save as infolog on send	mail	zh	发送时保存为 InfoLog
 save message to disk	mail	zh	保存邮件到磁盘
@@ -297,7 +315,10 @@ select an existing entry in order to append mail content to it	mail	zh	选择一
 select an item to read	mail	zh	选择一个项目阅读
 select mail addresses from addressbook	mail	zh	从地址簿中选择电子邮件地址
 select or insert email address	mail	zh	选择或插入电子邮件地址
+selected	mail	zh	已选中。
 selected date range (with quicksearch)	mail	zh	选定日期范围（使用快速搜索）
+self-signed certificate created.	mail	zh	已创建自签名证书。
+send attachments greater than given size as download link instead (in mb)	mail	zh	将大于指定大小的附件（以 MB 为单位）作为下载链接发送
 send message and move to send folder (if configured)	mail	zh	发送信息并移至发送文件夹（如果已配置）
 send message pgp encrypted: requires keys from all recipients!	mail	zh	发送 PGP 加密邮件：需要所有收件人提供密钥！
 sent folder	mail	zh	发件夹
@@ -333,8 +354,10 @@ the %1 's acl, including its subfolders, removed from the %2	mail	zh	从 %2 中�
 the imap server need to meet certain requirements and be configured for it:	mail	zh	IMAP 服务器需要满足某些要求并为此进行配置：
 the mimeparser can not parse this message.	mail	zh	MIME 解析器不能解析这个邮件。
 the rule with priority %1 successfully saved!	mail	zh	优先级为 %1 的规则已成功保存！
+the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	zh	附件总大小超过 %1 MB 的限制。已切换为下载链接。
 then	mail	zh	然后
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	zh	没有剩余空间存储筛子脚本，请检查邮件服务器配置中的 sieve_maxscriptsize 选项。
+this action affects every message in the selected thread(s) - %1 messages in total. continue?	mail	zh	此操作将影响所选对话串中的每封邮件——共计 %1 封邮件。继续吗？
 this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	zh	此邮件包含通过不安全 HTTP 协议提供的外部图片。请注意，显示或允许这些图片可能会危及您的安全！
 this message is smime encrypted and password protected.	mail	zh	此邮件经过 S/MIME 加密并受密码保护。
 timeout on connections to your imap server	mail	zh	IMAP 服务器连接超时
@@ -349,12 +372,15 @@ vacation notice	mail	zh	假期通知
 vacation notice is active	mail	zh	假期通知已激活
 vacation start-date must be before the end-date!	mail	zh	假期开始日期必须是在结束日期之前！
 validate addresses on submit:	mail	zh	提交时验证地址
+validate selected addresses on submit:	mail	zh	提交时验证选中地址：
 view header lines	mail	zh	查看邮件头
 what to do when you delete a message	mail	zh	删除信息时的操作。
 when deleting messages	mail	zh	当删除邮件时
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	zh	您希望从哪个邮件身份（签名）开始？\n对于“个人签名”，我们始终使用第一个个人签名。
 write	mail	zh	写入
 write & delete	mail	zh	写入和删除
 wrote	mail	zh	写信
+yes, offer copy option	mail	zh	是，提供复制选项
 you can select what info to be displayed on email tag	mail	zh	您可以选择要在电子邮件标签上显示的信息。
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	zh	您可以使用 $$start$$ 表示上述开始日期，使用 $$end$$ 表示结束日期。
 you may add this certificate into your contact, if you trust this signature.	mail	zh	如果您信任此签名，可以将此证书添加到联系人中。

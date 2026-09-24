@@ -352,6 +352,7 @@ ctrl	common	fi	Ctrl
 cuba	common	fi	KUUBA
 currency	common	fi	Valuutta
 current	common	fi	Nykyinen
+current user	common	fi	Nykyinen käyttäjä
 current users	common	fi	Nykyiset käyttäjät
 custom	common	fi	Valinnan mukaan
 custom fields	common	fi	Lisäkentät
@@ -1391,6 +1392,8 @@ upload file(s) from filemanager...	common	fi	Lataa tiedosto(t) tiedostonhallinna
 upload new photo	common	fi	Lataa uusi kuva
 upload requires the directory to be writable by the webserver!	common	fi	Lataaminen edellyttää hakemistolta kirjoitusoikeuksia!
 url	common	fi	URL
+url of current record	common	fi	Nykyisen tietueen URL-osoite
+urls of any entries linked to the current record, excluding attached files	common	fi	Nykyiseen tietueeseen linkitettyjen merkintöjen URL-osoitteet, liitetiedostoja lukuun ottamatta
 uruguay	common	fi	URUGUAY
 use button to search for	common	fi	Käytä painiketta etsiäksesi
 use button to search for address	common	fi	Käytä painiketta etsiäksesi osoitteita

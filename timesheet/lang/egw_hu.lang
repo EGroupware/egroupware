@@ -56,7 +56,7 @@ last week	timesheet	hu	Korábbi hét
 last year	timesheet	hu	Korábbi év
 leave it empty for a full week	timesheet	hu	Teljes héthez hagyja üresen
 leaves without saveing	timesheet	hu	kilépés mentés nélkül
-length<br>rows	timesheet	hu	Sorok<br>Hossza
+length<br>rows	timesheet	hu	Sorok\nHossza
 link title	timesheet	hu	Link címe
 make timesheets readable by infolog delegation	timesheet	hu	A munkaidő-nyilvántartások olvashatóvá tétele az InfoLog delegáció által
 max length of the input [, length of the inputfield (optional)]	timesheet	hu	a beviteli mező maximális hossza (opcionális)
@@ -92,6 +92,7 @@ select the predefined status, when creating a new timesheet	preferences	hu	Ви�
 show a quantity sum (eg. to sum up negative overtime)	admin	hu	Jelenítse meg a mennyiségi összesítést (pl. hogy összesítse a negatív túlmunkát is)
 start	timesheet	hu	Kezdés
 start & stop timer	common	hu	Az időzítő indítása és leállítása
+start time is after last timesheet	timesheet	hu	A kezdési időpont az utolsó munkaidő-nyilvántartás után van
 start timer	common	hu	Időzítő indítása
 start-time can not be before last stop- or pause-time %1!	common	hu	A kezdési idő nem lehet az utolsó megállási vagy szünetelési idő %1 előtt!
 starttime	timesheet	hu	Kezdési idő
@@ -103,6 +104,7 @@ the text displayed to the user	timesheet	hu	a szöveg megjelenítve a felhaszná
 this month	timesheet	hu	Folyó hónap
 this week	timesheet	hu	Folyó hét
 this year	timesheet	hu	Folyó év
+time default for new timesheet entries	timesheet	hu	Alapértelmezett idő beállítások az új munkaidő-nyilvántartási bejegyzésekhez
 timer	common	hu	Időzítő
 timer already running or paused	common	hu	Az időzítő már fut vagy szünetel
 timesheet	common	hu	Regiszter
@@ -111,11 +113,13 @@ timesheet csv import	timesheet	hu	Időalap CSV importálása
 timesheet id	timesheet	hu	Időlap azonosítója
 timesheet list	timesheet	hu	Időlap lista
 unitprice	timesheet	hu	Egységár
+use current time as end time	timesheet	hu	Az aktuális időt használd befejezési időpontként
 use field from csv if possible	timesheet	hu	Ha lehetséges, használja a CSV mezőt
 values for selectbox	timesheet	hu	Éktékek a kiválasztódoboznak
 view this entry	timesheet	hu	Bejegyzés megtekintése
 week	timesheet	hu	hét
 what should be done with unknown values?	timesheet	hu	Mi a teendő az ismeretlen értékekkel?
+when adding a new timesheet: prefill the endtime with the current time, or continue the starttime from the endtime of your last timesheet	timesheet	hu	Új munkaidő-nyilvántartás hozzáadásakor: a befejezési időpontot töltsd ki előre az aktuális idővel, vagy a kezdési időpontot az utolsó munkaidő-nyilvántartás befejezési időpontjából állítsd be
 will be created when saving ...	common	hu	A mentéskor létrejön ...
 working time	common	hu	Munkaidő
 working time and timer	timesheet	hu	Munkaidő és időzítő

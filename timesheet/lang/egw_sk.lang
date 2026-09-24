@@ -82,7 +82,7 @@ last week	timesheet	sk	Posledný týždeň
 last year	timesheet	sk	Posledný rok
 leave it empty for a full week	timesheet	sk	Ponechajte prázdne ak chcete plný týždeň
 leaves without saveing	timesheet	sk	uzavrieť bez uloženia zmien
-length<br>rows	timesheet	sk	Dĺžka<br>Riadkov
+length<br>rows	timesheet	sk	Dĺžka\nRiadkov
 link title	timesheet	sk	Názov prepojenia
 links and attached files	timesheet	sk	Odkazy a priložené súbory
 links to specified application.  example: {{links/infolog}}	timesheet	sk	Odkazy na vybranú aplikáciu. Príklad: {{links/infolog}}
@@ -137,6 +137,7 @@ show a quantity sum (eg. to sum up negative overtime)	admin	sk	Zobraziť kvantit
 skip record	timesheet	sk	Preskočiť záznam
 start	timesheet	sk	Začiatok
 start & stop timer	common	sk	Spustiť / zastaviť časovač
+start time is after last timesheet	timesheet	sk	Čas začiatku je po čase ukončenia posledného výkazu práce
 start timer	common	sk	Spustiť časovač
 start-time can not be before last stop- or pause-time %1!	common	sk	Čas začiatku nemôže byť pred posledným časom konca alebo pozastavenia %1 !
 starttime	timesheet	sk	Čas začiatku
@@ -157,6 +158,7 @@ this month	timesheet	sk	Tento mesiac
 this week	timesheet	sk	Tento týždeň
 this year	timesheet	sk	Tento rok
 ticket modified by %1 at %2	timesheet	sk	Záležitosť zmenil %1 ku %2
+time default for new timesheet entries	timesheet	sk	Predvolený čas pre nové záznamy vo výkaze práce
 timer	common	sk	Časovač
 timer already running or paused	common	sk	Časovač už beží alebo je pozastavený
 timesheet	common	sk	Harmonogram
@@ -172,12 +174,14 @@ titles of any entries linked to the current record, excluding attached files	tim
 unable to convert "%1" to account id.  using plugin setting (%2) for %3.	timesheet	sk	Nepodarilo sa konvertovať "%1" na ID účtu. Používam nastavenie zásuvného modulu (%2) pre %3.
 undelete	timesheet	sk	Obnoviť
 unitprice	timesheet	sk	Jednotková cena
+use current time as end time	timesheet	sk	Použiť aktuálny čas ako čas ukončenia
 use field from csv if possible	timesheet	sk	Použiť pole z CSV ak je možné
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	sk	Túto značku použite pre štítky s adresami. Obsah, ktorý chcete opakovať, vložte medzi značky.
 values for selectbox	timesheet	sk	Hodnoty pre výberové tlačidlo
 view this entry	timesheet	sk	Zobraziť položku
 week	timesheet	sk	Týždeň
 what should be done with unknown values?	timesheet	sk	Čo urobiť s neznámymi hodnotami?
+when adding a new timesheet: prefill the endtime with the current time, or continue the starttime from the endtime of your last timesheet	timesheet	sk	Pri pridávaní nového výkazu práce: predvyplňte čas ukončenia aktuálnym časom alebo nastavte čas začiatku na základe času ukončenia vášho posledného výkazu práce
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/ralf)	timesheet	sk	Keď zlučujete položky do dokumentov, uložia sa sem. Ak neuvediete priečinok, uložia sa do Vášho domovského priečinku (/home/meno)
 will be created when saving ...	common	sk	Vytvorí sa pri ukladaní...
 working time	common	sk	Pracovný čas

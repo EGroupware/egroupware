@@ -242,6 +242,7 @@ css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'ro
 cuba	common	el	ΚΟΥΒΑ
 currency	common	el	Νόμισμα
 current	common	el	Τρέχων
+current user	common	el	Τρέχων χρήστης
 current users	common	el	Τρέχοντες Χρήστες
 custom	common	el	Προσαρμογή
 custom fields	common	el	Προσαρμοσμένα πεδία
@@ -915,6 +916,7 @@ time	common	el	Ωρα
 time zone	common	el	Χρονική Ζώνη
 time zone offset	common	el	Μετακίνηση χρονικής ζώνης
 title	common	el	Τίτλος
+titles of any entries linked to the current record, excluding attached files	preferences	el	Τίτλοι των εγγραφών που συνδέονται με την τρέχουσα εγγραφή, εξαιρουμένων των συνημμένων αρχείων
 to	common	el	Προς:
 to correct this error for the future you will need to properly set the	common	el	Για να διορθωθεί αυτό το λάθος πρέπει να ορίσετε το
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	el	To disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty
@@ -961,6 +963,7 @@ upload directory does not exist, or is not writeable by webserver	common	el	Ο �
 upload requires the directory to be writable by the webserver!	common	el	Η φόρτωση απαιτεί ο κατάλογος να είναι εγγράψιμος από τον webserver!
 url	common	el	URL
 url of current record	common	el	URL της τρέχουσας εγγραφής
+urls of any entries linked to the current record, excluding attached files	common	el	Διευθύνσεις URL των εγγραφών που συνδέονται με την τρέχουσα εγγραφή, εξαιρουμένων των συνημμένων αρχείων
 uruguay	common	el	ΟΥΡΟΥΓΟΥΑΗ
 use button to search for	common	el	χρησιμοποιήστε το κουμπί για αναζήτηση
 use button to search for address	common	el	χρησιμοποιήστε το κουμπί για αναζήτηση διευθύνσεων

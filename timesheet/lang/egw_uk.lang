@@ -27,7 +27,7 @@ how to display linked timesheets	timesheet	uk	Як відобразити пов
 id	timesheet	uk	Id
 last modified	timesheet	uk	Востаннє змінено
 leaves without saveing	timesheet	uk	вийти без збереження
-length<br>rows	timesheet	uk	Довжина<br>Рядки
+length<br>rows	timesheet	uk	Довжина\nРядки
 link title	timesheet	uk	Назва посилання
 list of files linked to the current record	timesheet	uk	Список файлів, пов'язаних з поточним записом
 make timesheets readable by infolog delegation	timesheet	uk	Зробіть табелі обліку робочого часу доступними для читання делегату InfoLog
@@ -47,6 +47,7 @@ restore this entry	timesheet	uk	Відновити цей запис
 saves the changes made and leaves	timesheet	uk	зберігає зроблені зміни та виходить
 select the predefined status, when creating a new timesheet	preferences	uk	Виберіть попередньо визначений статус при створенні нового запису.
 start & stop timer	common	uk	Таймер запуску та зупинки
+start time is after last timesheet	timesheet	uk	Час початку — після закінчення попереднього табеля
 start timer	common	uk	Таймер запуску
 start-time can not be before last stop- or pause-time %1!	common	uk	Час запуску не може бути раніше часу останньої зупинки або паузи %1!
 stop- or pause-time can not be before the start-time %1!	common	uk	Час зупинки або паузи не може бути раніше часу запуску %1!
@@ -55,12 +56,15 @@ the text displayed to the user	timesheet	uk	текст, що показують�
 this month	timesheet	uk	Поточний місяць
 this week	timesheet	uk	Поточний тиждень
 this year	timesheet	uk	Поточний рік
+time default for new timesheet entries	timesheet	uk	Час за замовчуванням для нових записів у табелі
 timer already running or paused	common	uk	Таймер вже запущено або призупинено
+use current time as end time	timesheet	uk	Використовувати поточний час як час закінчення
 use field from csv if possible	timesheet	uk	Використовуйте поле з CSV, якщо можливо
 values for selectbox	timesheet	uk	Значення для selectbox
 view this entry	timesheet	uk	Переглянути цей запис
 week	timesheet	uk	Тиждень
 what should be done with unknown values?	timesheet	uk	Що робити з невідомими значеннями?
+when adding a new timesheet: prefill the endtime with the current time, or continue the starttime from the endtime of your last timesheet	timesheet	uk	Під час додавання нового табеля: вкажіть час закінчення як поточний час або встановіть час початку, виходячи з часу закінчення попереднього табеля
 will be created when saving ...	common	uk	Буде створено при збереженні ...
 working time	common	uk	Робочий час
 working time and timer	timesheet	uk	Час роботи та таймер

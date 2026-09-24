@@ -65,7 +65,7 @@ last week	timesheet	pt-br	Última semana
 last year	timesheet	pt-br	Último ano
 leave it empty for a full week	timesheet	pt-br	Deixar vazio para uma semana inteira
 leaves without saveing	timesheet	pt-br	sair sem salvar
-length<br>rows	timesheet	pt-br	Tamanho<br>Linhas
+length<br>rows	timesheet	pt-br	Tamanho\nLinhas
 link title	timesheet	pt-br	Título do link
 links and attached files	timesheet	pt-br	Links e arquivos anexados
 list of files linked to the current record	timesheet	pt-br	Lista de arquivos vinculados ao registro atual
@@ -107,6 +107,7 @@ select the predefined status, when creating a new timesheet	preferences	pt-br	Se
 show a quantity sum (eg. to sum up negative overtime)	admin	pt-br	Exibir uma soma de quantidade (exemplo: para somar tempo extra negativo)
 start	timesheet	pt-br	Início
 start & stop timer	common	pt-br	Iniciar e parar o cronômetro
+start time is after last timesheet	timesheet	pt-br	A hora de início é posterior à última folha de ponto
 start timer	common	pt-br	Iniciar cronômetro
 start-time can not be before last stop- or pause-time %1!	common	pt-br	O horário de início não pode ser anterior ao último horário de parada ou pausa %1!
 starttime	timesheet	pt-br	Horário inicial
@@ -121,6 +122,7 @@ this month	timesheet	pt-br	Este mês
 this week	timesheet	pt-br	Esta semana
 this year	timesheet	pt-br	Este ano
 ticket modified by %1 at %2	timesheet	pt-br	Ticket modificado por %1 em %2
+time default for new timesheet entries	timesheet	pt-br	Padrão de horário para novos registros na folha de ponto
 timer	common	pt-br	Temporizador
 timer already running or paused	common	pt-br	O timer já está em execução ou pausado
 timesheet	common	pt-br	Planilha de Tempo
@@ -129,11 +131,13 @@ timesheet csv import	timesheet	pt-br	Importação de Timesheet CSV
 timesheet id	timesheet	pt-br	ID da planilha de horas
 timesheet list	timesheet	pt-br	Lista de planilhas de horas
 unitprice	timesheet	pt-br	Unidade de preço
+use current time as end time	timesheet	pt-br	Usar a hora atual como hora de término
 use field from csv if possible	timesheet	pt-br	Use o campo do CSV, se possível
 values for selectbox	timesheet	pt-br	Valores para a caixa de seleção
 view this entry	timesheet	pt-br	Exibir este registro
 week	timesheet	pt-br	Semana
 what should be done with unknown values?	timesheet	pt-br	O que deve ser feito com os valores desconhecidos?
+when adding a new timesheet: prefill the endtime with the current time, or continue the starttime from the endtime of your last timesheet	timesheet	pt-br	Ao adicionar uma nova folha de ponto: preencher automaticamente a hora de término com a hora atual ou definir a hora de início a partir do término da sua última folha de ponto
 will be created when saving ...	common	pt-br	Serão criados ao salvar ...
 working time	common	pt-br	Tempo de trabalho
 working time and timer	timesheet	pt-br	Hora de trabalho e cronômetro

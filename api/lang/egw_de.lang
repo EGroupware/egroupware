@@ -361,6 +361,7 @@ ctrl	common	de	Strg
 cuba	common	de	KUBA
 currency	common	de	Währung
 current	common	de	Derzeit
+current user	common	de	Aktueller Benutzer
 current users	common	de	Aktive Benutzersitzungen
 custom	common	de	Benutzerdefiniert
 custom fields	common	de	Benutzerdefinierte Felder

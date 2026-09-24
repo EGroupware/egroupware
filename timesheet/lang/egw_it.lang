@@ -80,7 +80,7 @@ last week	timesheet	it	Settimana scorsa
 last year	timesheet	it	L'anno scorso
 leave it empty for a full week	timesheet	it	Lascia vuoto per una settimana completa
 leaves without saveing	timesheet	it	esce senza salvare
-length<br>rows	timesheet	it	Lunghezza<br>Righe
+length<br>rows	timesheet	it	Lunghezza\nRighe
 link title	timesheet	it	Titolo collegamento
 links and attached files	timesheet	it	Collegamenti e file allegati
 links to specified application.  example: {{links/infolog}}	timesheet	it	Collegamenti alla applicazione specificata. Esempio: {{links/infolog}}
@@ -135,6 +135,7 @@ show a quantity sum (eg. to sum up negative overtime)	admin	it	Mostra una somma 
 skip record	timesheet	it	Salta voce
 start	timesheet	it	Inizio
 start & stop timer	common	it	Timer di avvio e di arresto
+start time is after last timesheet	timesheet	it	L'ora di inizio è successiva a quella dell'ultimo foglio presenze
 start timer	common	it	Timer di avvio
 start-time can not be before last stop- or pause-time %1!	common	it	Il tempo di avvio non può essere precedente all'ultimo tempo di arresto o di pausa %1!
 starttime	timesheet	it	OraInizio
@@ -154,6 +155,7 @@ this month	timesheet	it	Questo mese
 this week	timesheet	it	Questa settimana
 this year	timesheet	it	Questo anno
 ticket modified by %1 at %2	timesheet	it	Ticket modificato da %1 al %2
+time default for new timesheet entries	timesheet	it	Impostazione predefinita dell'ora per le nuove voci del foglio presenze
 timer	common	it	Timer
 timer already running or paused	common	it	Timer già in funzione o in pausa
 timesheet	common	it	Foglio Ore
@@ -168,12 +170,14 @@ timesheet-%1 deleted.	timesheet	it	Stato %1 eliminato
 titles of any entries linked to the current record, excluding attached files	timesheet	it	I titoli delle voci collegate a questa, allegati esclusi
 unable to convert "%1" to account id.  using plugin setting (%2) for %3.	timesheet	it	Impossibile convertire "%1" a ID account. Impostazione plugin (%2) per %3 in uso.
 unitprice	timesheet	it	Prezzo unitario
+use current time as end time	timesheet	it	Utilizzare l'ora corrente come ora di fine
 use field from csv if possible	timesheet	it	Utilizzare il campo da CSV, se possibile
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	it	Usa questo tag per le etichette di indirizzo. Posiziona il contenuto da ripetere, tra due tag.
 values for selectbox	timesheet	it	Valori per la selectbox
 view this entry	timesheet	it	Vedi questa voce
 week	timesheet	it	Settimana
 what should be done with unknown values?	timesheet	it	Cosa si deve fare con i valori sconosciuti?
+when adding a new timesheet: prefill the endtime with the current time, or continue the starttime from the endtime of your last timesheet	timesheet	it	Quando si aggiunge un nuovo foglio presenze: inserire automaticamente l'ora di fine con l'ora corrente, oppure impostare l'ora di inizio in base alla fine dell'ultimo foglio presenze
 will be created when saving ...	common	it	Verrà creato al momento del salvataggio ...
 working time	common	it	Orario di lavoro
 working time and timer	timesheet	it	Orario di lavoro e timer

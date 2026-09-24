@@ -302,6 +302,7 @@ css-styles	common	zh	CSS-风格
 cuba	common	zh	古巴
 currency	common	zh	货币
 current	common	zh	当前
+current user	common	zh	当前用户
 current users	common	zh	当前用户
 custom	common	zh	自定义
 custom fields	common	zh	自定义字段
@@ -571,6 +572,7 @@ how many entries should the list show	common	zh	列表将要显示多少个条�
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	zh	将在导航栏(页面顶部)显示多少个图标。其它图标会放入一个下拉菜单中，通过点击导航栏最右侧的下拉图标可显示下拉菜单及其中的这些图标。
 how many rows to print	common	zh	Колко реда да се отпечатат
 html	common	zh	HTML
+html link to the current record	common	zh	指向当前记录的 HTML 链接
 html links to any entries linked to the current record, excluding attached files	common	zh	指向与当前记录链接的任何条目的 HTML 链接，不包括附加文件
 hungary	common	zh	匈牙利
 iceland	common	zh	冰岛
@@ -1156,6 +1158,7 @@ time	common	zh	时间
 time zone	common	zh	时区
 time zone offset	common	zh	时差
 title	common	zh	标题
+titles of any entries linked to the current record, excluding attached files	preferences	zh	与当前记录相关的所有条目的标题（不包括附件）
 to	common	zh	到
 to correct this error for the future you will need to properly set the	common	zh	为今后更正该错误，您需要适当地设置
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	zh	禁用：[! = not]<value>[=<check>]，例如：'!@data' 如果数据内容为空则禁用
@@ -1204,6 +1207,8 @@ upload	common	zh	上传
 upload directory does not exist, or is not writeable by webserver	common	zh	上传目录不存在，或不可写
 upload requires the directory to be writable by the webserver!	common	zh	上传目录必须为可写！
 url	common	zh	网址
+url of current record	common	zh	当前记录的 URL
+urls of any entries linked to the current record, excluding attached files	common	zh	与当前记录相关的所有条目的 URL（不包括附件）
 uruguay	common	zh	乌拉圭
 use button to search for	common	zh	使用按钮查找
 use button to search for address	common	zh	使用按钮查找地址

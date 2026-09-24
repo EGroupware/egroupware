@@ -1,6 +1,6 @@
---> enter new name	admin	en	--> enter new name
 %1 timesheets(s) %2	timesheet	en	%1 timesheets(s) %2
 %1 timesheets(s) %2, %3 failed because of insufficent rights !!!	timesheet	en	%1 timesheets(s) %2, %3 failed because of insufficient rights!
+--> enter new name	admin	en	--> enter new name
 2 month ago	timesheet	en	2 month ago
 2 years ago	timesheet	en	2 years ago
 3 years ago	timesheet	en	3 years ago
@@ -149,8 +149,8 @@ show a quantity sum (eg. to sum up negative overtime)	admin	en	Show a quantity s
 show a warning, when a timesheet overlaps with an other one of the same user	timesheet	en	Show a warning, when a timesheet overlaps with an other one of the same user
 skip record	timesheet	en	Skip record
 start	timesheet	en	Start
-start time is after last timesheet	timesheet	en	Start time is after last timesheet
 start & stop timer	common	en	Start & stop timer
+start time is after last timesheet	timesheet	en	Start time is after last timesheet
 start timer	common	en	Start timer
 start-time can not be before last stop- or pause-time %1!	common	en	Start-time can not be before last stop- or pause-time %1!
 starttime	timesheet	en	Start time

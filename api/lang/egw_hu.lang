@@ -247,6 +247,7 @@ croatia	common	hu	Horvátország
 cuba	common	hu	Kuba
 currency	common	hu	Pénznem
 current	common	hu	Aktuális
+current user	common	hu	Aktuális felhasználó
 current users	common	hu	Aktuális felhasználók
 custom	common	hu	Egyedi
 custom fields	common	hu	Egyedi mezők
@@ -903,6 +904,7 @@ time	common	hu	Idő
 time zone	common	hu	Időzóna
 time zone offset	common	hu	Időzóna offszet
 title	common	hu	Cím
+titles of any entries linked to the current record, excluding attached files	preferences	hu	Az aktuális rekordhoz kapcsolódó bejegyzések címei, a csatolt fájlok kivételével
 to	common	hu	Címzett
 to correct this error for the future you will need to properly set the	common	hu	A hiba kijavításához helyesen kell beállítani a
 to go back to the msg list, click <a href= %1 >here</a>	common	hu	Az üzenet listához való visszatéréshez kattintson <a href="%1">ide</a>
@@ -938,6 +940,8 @@ upload	common	hu	Feltölt
 upload directory does not exist, or is not writeable by webserver	common	hu	A feltöltési könyvtár nem létezik, vagy a webszerver nem rendelkezik írási jogosultsággal.
 upload requires the directory to be writable by the webserver!	common	hu	A feltöltés működéséhez a webszervernek írási jogosultságot kell adni a könyvtárhoz!
 url	common	hu	URL
+url of current record	common	hu	Az aktuális rekord URL-je
+urls of any entries linked to the current record, excluding attached files	common	hu	Az aktuális rekordhoz kapcsolódó bejegyzések URL-jei, a csatolt fájlok kivételével
 uruguay	common	hu	Uruguay
 use button to search for	common	hu	Használja a gombot a kereséshez
 use button to search for address	common	hu	Használja a gombot címkereséshez
