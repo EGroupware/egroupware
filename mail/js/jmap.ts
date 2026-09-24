@@ -5793,53 +5793,6 @@ export class MailJmap
 	static readonly SIGNATURE_MARKER_ID = 'mail-compose-signature';
 
 	/**
-	 * Strip an identity signature's own inline font-family/font-size (and legacy `<font face/size>`
-	 * attributes) before it's inserted into a compose body - same reasoning and exact pattern as
-	 * Et2HtmlArea's own `_stripPastedFont()` (api/js/etemplate/Et2HtmlArea/Et2HtmlArea.ts), just
-	 * applied to an HTML string here instead of a live pasted DOM node.
-	 *
-	 * Found live via ticket #124821 (2026-09-22, a real customer via Ingo): "die Schriftgröße wird
-	 * nicht immer wie eingestellt verwendet, in der Einstellung ist 10, verwendet wird 12" (the
-	 * font size isn't always as configured - set to 10, but 12 is used). Root cause: a signature is
-	 * edited through the SAME Et2HtmlArea widget (admin's mail-account identity editor), whose
-	 * getValue() bakes an INLINE font-size/font-family onto every otherwise-unstyled element at
-	 * SAVE time (`_applyDefaultFontToContent()`) - using whatever `rte_font_size`/`rte_font_family`
-	 * was in effect for whoever last edited the signature there, not the compose-time preference of
-	 * whoever it later gets inserted for. An inline style always wins by CSS specificity over the
-	 * compose editor's own preference-driven default (`content_style`'s `body,p,div{font-size:...}`
-	 * rule), so the signature kept rendering (and SENDING) at its own stale baked-in size regardless
-	 * of the current user's correctly-configured preference.
-	 *
-	 * Stripping it here does more than fix the WYSIWYG display: Et2HtmlArea's OWN send-time baking
-	 * (`_applyDefaultFontToContent()`, run again on the WHOLE compose body via getValue(true) right
-	 * before the message is actually sent) skips any element that ALREADY has an inline font-size -
-	 * exactly the signature's stale one. Removing it here means that same send-time step then
-	 * correctly bakes in the CURRENT, correct preference onto the signature's own paragraphs too,
-	 * instead of leaving them alone.
-	 *
-	 * @param html signature HTML (identity.htmlSignature) - safe to call on an empty string
-	 * @return the same HTML with every inline font-family/font-size removed
-	 */
-	static stripInlineFont(html : string) : string
-	{
-		if (!html) return html;
-		const doc = new DOMParser().parseFromString(html, 'text/html');
-		const strip = (el : Element) : void =>
-		{
-			if (!(el instanceof HTMLElement)) return;
-			el.style.removeProperty('font-family');
-			el.style.removeProperty('font-size');
-			if (el.tagName === 'FONT')
-			{
-				el.removeAttribute('face');
-				el.removeAttribute('size');
-			}
-		};
-		doc.body.querySelectorAll('[style], font').forEach(strip);
-		return doc.body.innerHTML;
-	}
-
-	/**
 	 * Combine a compose body with an identity's signature, honouring the classic
 	 * insertSignatureAtTopOfMessage/disableRulerForSignatureSeparation prefs
 	 * (mail_compose.inc.php:1246-1297, ported 1:1 for the placement math) - pure string

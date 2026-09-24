@@ -2511,12 +2511,6 @@ export class MailCompose
 		if (!identity) return;
 
 		const mimeType : 'html' | 'plain' = this.et2.getWidgetById('mimeType')?.get_value() !== false ? 'html' : 'plain';
-		// strip the signature's own stale, baked-in font-size/family before insertion - see
-		// MailJmap.stripInlineFont()'s own docblock (ticket #124821) for why. Plain-text mode has
-		// no HTML/inline styles at all, nothing to strip there.
-		const signature = mimeType === 'html' && identity.htmlSignature
-			? {...identity, htmlSignature: MailJmap.stripInlineFont(identity.htmlSignature)}
-			: identity;
 		const insertPref = this.egw.preference('insertSignatureAtTopOfMessage', 'mail');
 		const placement : 'top' | 'below' | 'none' =
 			insertPref === '1' ? 'top' : insertPref === 'no_belowaftersend' ? 'none' : 'below';
@@ -2554,7 +2548,7 @@ export class MailCompose
 			}
 		}
 
-		let result = MailJmap.composeBodyWithSignature(pristineBody, mimeType, signature, {placement, disableRuler, isReply, formatBlock});
+		let result = MailJmap.composeBodyWithSignature(pristineBody, mimeType, identity, {placement, disableRuler, isReply, formatBlock});
 		// HTML mode locates the inserted block via MailJmap.SIGNATURE_MARKER_ID instead (DOM id,
 		// not a tracked substring) - see updateSignatureForIdentity()'s own docblock for why.
 		if (mimeType === 'plain')
