@@ -165,7 +165,19 @@ class ProfileHandler
 			// accountId in the query string lets JmapShim::session() report this specific
 			// account's "primaryAccounts"/"accounts" - session() itself is otherwise a shared,
 			// generic endpoint with no other way to know which account is asking
-			'sessionUrl' => Api\Framework::getUrl(Api\Framework::link('/mail/jmap.php')).'?accountId='.urlencode($accountId),
+			//
+			// deliberately a bare path, NOT Api\Framework::getUrl()'s absolute form - jmap-jam's
+			// own loadSession() just does fetch(sessionUrl, ...), which resolves a relative URL
+			// against the current document just fine, and a relative URL can never mismatch the
+			// page's own connect-src 'self' CSP the way an absolute one can if Http::host()'s
+			// Setup-configured hostname doesn't exactly match whatever host the browser actually
+			// used to reach this page (found live: a real customer's local-shim accounts all
+			// failed with a browser-level NetworkError, CSP silently blocking
+			// "https://<setup-hostname>/.../mail/jmap.php" against a page whose own origin used a
+			// different host) - this endpoint is only ever fetched by the same page that's
+			// already loaded, never used externally, so there is no reason to ever need an
+			// absolute URL here in the first place.
+			'sessionUrl' => Api\Framework::link('/mail/jmap.php').'?accountId='.urlencode($accountId),
 			'accountId' => $accountId,
 			// NOT the session id: auth is via the session cookie (mail/jmap.php is a
 			// same-origin endpoint), this only fills jmap-jam's required bearerToken field
