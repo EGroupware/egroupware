@@ -21,44 +21,27 @@ class Http
 	 * Get host considering X-Forwarded-Host and Host header
 	 *
 	 * Host is determined in the following order / priority:
-	 * 1. $_SERVER['HTTP_X_FORWARDED_HOST'] (X-Forwarded-Host HTTP header)
-	 * 2. $_SERVER['HTTP_HOST'] (Host HTTP header)
-	 * 3. $GLOBALS['egw_info']['server']['hostname'] (EGroupware Setup) - only reached when there is
-	 *    no live request to derive a host from at all (eg. a CLI/cron job building a URL for a
-	 *    notification email, which has no $_SERVER['HTTP_HOST'] to begin with)
-	 * 4. 'localhost' as a last-resort fallback
+	 * 1. $GLOBALS['egw_info']['server']['hostname'] !== 'localhost' (EGroupware Setup)
+	 * 2. $_SERVER['HTTP_X_FORWARDED_HOST'] (X-Forwarded-Host HTTP header)
+	 * 3. $_SERVER['HTTP_HOST'] (Host HTTP header)
 	 *
-	 * A live request's own host ALWAYS wins over the Setup-configured hostname now, not just when
-	 * $use_setup_hostname is false - that Setup value is unreliable enough in practice (almost
-	 * always literally "localhost", and otherwise frequently stale on an install reachable via
-	 * more than one hostname/reverse-proxy path) that preferring it over the browser's own actual
-	 * request broke callers who need an externally-usable URL guaranteed to match the CURRENT
-	 * page's own origin (Http::fullUrl(), the only $use_setup_hostname=true caller) - found live:
-	 * a real customer's local-shim mail accounts all failed with a browser-level NetworkError, the
-	 * browser's own connect-src 'self' CSP silently blocking a same-origin JMAP endpoint built
-	 * with this preference, because the page's actual origin didn't match the Setup hostname.
-	 *
-	 * @param boolean $use_setup_hostname =false true: fall back to the Setup hostname config if
-	 *  (and only if) there is no live request to derive a host from at all
+	 * @param boolean $use_setup_hostname =false true: hostame config from setup has highest precedence, default not
 	 * @return string
 	 */
 	static function host($use_setup_hostname=false)
 	{
-		if (isset($_SERVER['HTTP_X_FORWARDED_HOST']))
-		{
-			list($host) = explode(',', $_SERVER['HTTP_X_FORWARDED_HOST']);
-		}
-		elseif (isset($_SERVER['HTTP_HOST']))
-		{
-			$host = $_SERVER['HTTP_HOST'];
-		}
-		elseif ($use_setup_hostname && !empty($GLOBALS['egw_info']['server']['hostname']))
+		if ($use_setup_hostname && !empty($GLOBALS['egw_info']['server']['hostname']) &&
+			$GLOBALS['egw_info']['server']['hostname'] !== 'localhost')
 		{
 			$host = $GLOBALS['egw_info']['server']['hostname'];
 		}
+		elseif (isset($_SERVER['HTTP_X_FORWARDED_HOST']))
+		{
+			list($host) = explode(',', $_SERVER['HTTP_X_FORWARDED_HOST']);
+		}
 		else
 		{
-			$host = 'localhost';
+			$host = $_SERVER['HTTP_HOST'];
 		}
 		return $host;
 	}
