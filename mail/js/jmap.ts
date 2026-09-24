@@ -6310,6 +6310,14 @@ export class MailJmap
 	 * JMAP-native equivalent (same jmap-jam downloadBlob() the inline-cid-image resolution already
 	 * uses). Caller decides how to display it (compose.ts opens it in a sized egw.openPopup(), same
 	 * convention as the classic branches) - never revoked, matches the popup's own lifetime.
+	 *
+	 * Applies the exact same withKnownFilename()/wrapPdfViewerWithDownload() treatment
+	 * getAttachmentViewUrl() already uses for a RECEIVED message's own attachments - found live via
+	 * ticket #125092 (2026-09-24, ik@egroupware.org): clicking a freshly-uploaded PDF while still
+	 * composing showed the browser's own native PDF viewer chrome (download icons and all) against
+	 * the blob: URL's own opaque UUID as filename, a visibly different/worse experience than
+	 * clicking a PDF in an already-sent message - this method had never been given the tracker
+	 * #124541 fix at all, only getAttachmentViewUrl() had.
 	 */
 	async downloadBlobUrl(profileID : string, blobId : string, name : string, type : string) : Promise<string>
 	{
@@ -6321,7 +6329,12 @@ export class MailJmap
 			mimeType: type || 'application/octet-stream',
 			fileName: name,
 		});
-		return URL.createObjectURL(MailJmap.withKnownType(await response.blob(), type));
+		const contentUrl = URL.createObjectURL(MailJmap.withKnownFilename(await response.blob(), type, name));
+		if ((type || '').toLowerCase() === 'application/pdf')
+		{
+			return MailJmap.wrapPdfViewerWithDownload(contentUrl, name, type);
+		}
+		return contentUrl;
 	}
 
 	/**
