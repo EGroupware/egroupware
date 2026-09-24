@@ -29,7 +29,7 @@ use EGroupware\Api\Vfs;
  * actually used, and would catch a mismatch between the two (like the stray trailing ">" bug on
  * the ETag branches this same change fixed).
  *
- * Two groups of tests:
+ * Three groups of tests:
  * - StubbedWebDAV-based: checkLock()/currentEtag() overridden with known, controlled return
  *   values, so the parsing/comparison/negation logic is tested deterministically without needing
  *   any real VFS I/O.
@@ -39,6 +39,16 @@ use EGroupware\Api\Vfs;
  *   started refusing new file creates (confirmed via a raw file_put_contents()/Vfs::touch()
  *   probe returning false with a StreamWrapper "file does not exist or can not be created"
  *   error) - a pre-existing environment issue, not something these tests can work around.
+ * - StubbedNoEtagWebDAV-based ("Phase 2"): a resource type shaped like CalDAV/CardDAV -
+ *   checkLock() exists, currentEtag() does not - confirming lock-token conditions are checked
+ *   for real there too, and that the absence of currentEtag() support degrades to "not
+ *   applicable, always satisfied" (this method's original, pre-Phase-1 behaviour for every
+ *   condition) rather than failing closed. Without this, Phase 1 alone would have been a silent
+ *   regression for CalDAV/CardDAV: _check_uri_condition() lives in the shared base class, so an
+ *   RFC4918 "If:" header ETag condition against a calendar/addressbook resource would go from
+ *   always-satisfied (the old stub) to always-failing (currentEtag() simply doesn't exist there),
+ *   even though those apps were never meant to gain ETag-condition support - they already have
+ *   their own, separate RFC7232 If-Match/If-None-Match mechanism for that.
  */
 class IfHeaderConditionTest extends LoggedInTest
 {
@@ -56,7 +66,7 @@ class IfHeaderConditionTest extends LoggedInTest
 		return $webdav;
 	}
 
-	protected function checkIf(WebDAV $webdav, string $ifHeader) : bool
+	protected function checkIf(\HTTP_WebDAV_Server $webdav, string $ifHeader) : bool
 	{
 		$webdav->_SERVER['HTTP_IF'] = $ifHeader;
 		return $webdav->_check_if_header_conditions();
@@ -276,6 +286,58 @@ class IfHeaderConditionTest extends LoggedInTest
 		$this->assertTrue($this->checkIf($webdav, '(<'.$token.'>)'),
 			'a condition asserting the real resource\'s actual current lock token must be satisfied');
 	}
+
+	// ------------------------------------------------------------------
+	// CalDAV/CardDAV-shaped resource: checkLock() exists (inherited by every
+	// HTTP_WebDAV_Server_Filesystem/CalDAV descendant), currentEtag() does not (those apps use
+	// their own, separate RFC7232 If-Match/If-None-Match mechanism instead, @see
+	// CalDAV\Handler::get_etag()) - see StubbedNoEtagWebDAV below.
+	// ------------------------------------------------------------------
+
+	protected function makeNoEtagStub($lock) : StubbedNoEtagWebDAV
+	{
+		$webdav = new StubbedNoEtagWebDAV($lock);
+		$webdav->_SERVER = [
+			'HTTP_HOST' => 'example.org',
+			'SCRIPT_NAME' => '/egroupware/groupdav.php',
+			'REQUEST_URI' => '/egroupware/groupdav.php/testfile.ics',
+		] + $_SERVER;
+		$webdav->uri = 'http://example.org/egroupware/groupdav.php/testfile.ics';
+		return $webdav;
+	}
+
+	public function testLockTokenConditionWorksWithoutCurrentEtagSupport()
+	{
+		$webdav = $this->makeNoEtagStub(['token' => 'opaquelocktoken:12345678-1234-1234-1234-123456789012']);
+		$this->assertTrue($this->checkIf($webdav, '(<opaquelocktoken:12345678-1234-1234-1234-123456789012>)'),
+			'a lock-token condition must be checked for real via checkLock(), even on a resource '.
+			'type (like CalDAV/CardDAV) that has no currentEtag() support at all');
+	}
+
+	public function testWrongLockTokenConditionFailsWithoutCurrentEtagSupport()
+	{
+		$webdav = $this->makeNoEtagStub(['token' => 'opaquelocktoken:12345678-1234-1234-1234-123456789012']);
+		$this->assertFalse($this->checkIf($webdav, '(<opaquelocktoken:87654321-4321-4321-4321-210987654321>)'),
+			'a wrong lock-token condition must still fail on a resource type with no currentEtag() support');
+	}
+
+	public function testEtagConditionIsTreatedAsSatisfiedWithoutCurrentEtagSupport()
+	{
+		$webdav = $this->makeNoEtagStub(false);
+		$this->assertTrue($this->checkIf($webdav, '(["whatever-etag"])'),
+			'an ETag condition against a resource type with no currentEtag() support (eg. '.
+			'CalDAV/CardDAV, which check ETags via their own separate If-Match/If-None-Match '.
+			'mechanism instead) must be treated as not-applicable/satisfied, not fail closed - '.
+			'this is the Phase 1 -> Phase 2 regression this test guards against');
+	}
+
+	public function testNegatedEtagConditionIsAlsoTreatedAsSatisfiedWithoutCurrentEtagSupport()
+	{
+		$webdav = $this->makeNoEtagStub(false);
+		$this->assertTrue($this->checkIf($webdav, '(Not ["whatever-etag"])'),
+			'negating a not-applicable ETag condition must still leave it satisfied, not flip it '.
+			'to failing - "not applicable" is not the same as "met", so negation must not turn it false');
+	}
 }
 
 /**
@@ -302,5 +364,28 @@ class StubbedWebDAV extends WebDAV
 	function currentEtag($path, $stat=null)
 	{
 		return $this->etag;
+	}
+}
+
+/**
+ * Test double shaped like CalDAV/CardDAV: implements checkLock() (every HTTP_WebDAV_Server
+ * descendant that supports locking does) but deliberately does NOT implement currentEtag() -
+ * those apps check ETags via their own, separate RFC7232 If-Match/If-None-Match mechanism
+ * instead (@see CalDAV\Handler::get_etag()), never via the RFC4918 "If:" header's ETag
+ * conditions. Extends the bare base class rather than Vfs\WebDAV, so currentEtag() really is
+ * absent (method_exists() false), not just overridden to return null.
+ */
+class StubbedNoEtagWebDAV extends \HTTP_WebDAV_Server
+{
+	private $lock;
+
+	public function __construct($lock)
+	{
+		$this->lock = $lock;
+	}
+
+	function checkLock($path)
+	{
+		return $this->lock;
 	}
 }
