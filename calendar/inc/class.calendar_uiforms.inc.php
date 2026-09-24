@@ -3037,6 +3037,9 @@ class calendar_uiforms extends calendar_ui
 		$busy[] = array(	// add end-of-search-date as event, to cope with empty search and get freetime til that date
 			'start'	=> $end,
 			'end'	=> $end,
+			// give it an accepted status for all wanted participants, so the non-rejected-participant
+			// check below does not filter it out too (it's not a real event, just a search boundary)
+			'participants' => array_fill_keys($participants, 'A'),
 		);
 		$ft_start = $start;
 		$freetime = array();
