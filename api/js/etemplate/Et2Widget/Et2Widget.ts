@@ -1665,7 +1665,6 @@ export function loadWebComponent(_nodeName : string, _template_node : Element|{[
 		widget_class = window.customElements.get(_nodeName);
 		if(!widget_class)
 		{
-			debugger;
 			throw Error("Unknown or unregistered WebComponent '" + _nodeName + "', could not find class.  Also checked for " + tries.join(','));
 		}
 	}

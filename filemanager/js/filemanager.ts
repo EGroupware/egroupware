@@ -1602,7 +1602,14 @@ export class filemanagerAPP extends EgwApp
 		let data = egw.dataGetUIDdata(row_uid);
 		files = files || (<DragEvent>window.event).dataTransfer.files;
 
-		const path = typeof data != 'undefined' && data.data.mime == "httpd/unix-directory" ? data.data.path : this.get_path();
+		// Target the folder that owns the dropped-on row, not the one the breadcrumb
+		// shows: an expanded folder lists its children inline, so a file dropped on one
+		// of them belongs in that folder.  The two agree for a top-level row, which is
+		// why taking the current folder went unnoticed until rows could be expanded.
+		// Only a drop that hit no row at all falls back to the current folder.
+		const rowPath = typeof data != 'undefined' ? data.data.path : null;
+		const path = !rowPath ? this.get_path() :
+					 data.data.mime == "httpd/unix-directory" ? rowPath : this.dirname(rowPath);
 		const widget = <Et2VfsUpload>this.et2.getWidgetById('upload');
 		const oldPath = widget.path;
 

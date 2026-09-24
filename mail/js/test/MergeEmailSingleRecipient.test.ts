@@ -90,10 +90,10 @@ describe('EgwApp._mergeEmail() single recipient', () =>
 	{
 		egw.request.resolves({id: 'mail::5::1::RHJhZnRz::abc123'});
 
-		await mergeSingle(46, '/home/ralf/Serienbrief.eml', 'EGroupware\\Api\\Contacts\\Merge');
+		await mergeSingle(46, '~/Serienbrief.eml', 'EGroupware\\Api\\Contacts\\Merge');
 
 		assert.isTrue(egw.request.calledOnceWith('mail.EGroupware\\Mail\\Merge.ajax_mergeSingle',
-			[46, '/home/ralf/Serienbrief.eml', 'EGroupware\\Api\\Contacts\\Merge']));
+			[46, '~/Serienbrief.eml', 'EGroupware\\Api\\Contacts\\Merge']));
 		assert.isTrue(composeMessage.calledOnceWith(
 			{id: 'composefromdraft'}, [{id: 'mail::5::1::RHJhZnRz::abc123'}]));
 		assert.isFalse(egw.message.called);
@@ -103,7 +103,7 @@ describe('EgwApp._mergeEmail() single recipient', () =>
 	{
 		egw.request.resolves({msg: "Document 'x' does not exist or is not readable for you!"});
 
-		await mergeSingle(46, '/home/ralf/missing.eml', '');
+		await mergeSingle(46, '~/missing.eml', '');
 
 		assert.isTrue(egw.message.calledOnceWith("Document 'x' does not exist or is not readable for you!", 'error'));
 		assert.isFalse(composeMessage.called);
@@ -113,7 +113,7 @@ describe('EgwApp._mergeEmail() single recipient', () =>
 	{
 		egw.request.rejects(new Error('network error'));
 
-		await mergeSingle(46, '/home/ralf/Serienbrief.eml', '');
+		await mergeSingle(46, '~/Serienbrief.eml', '');
 
 		assert.isTrue(egw.message.calledOnceWith('network error', 'error'));
 		assert.isFalse(composeMessage.called);

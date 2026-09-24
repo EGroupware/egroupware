@@ -3398,13 +3398,24 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 	};
 
 	/**
-	 * Keep the legacy Nextmatch CSV-format column-visibility preference
-	 * (`nextmatch-<rowTemplateId>`) up to date for apps whose PHP still reads it
-	 * directly, independent of whatever key Datagrid's own structured preference is
-	 * stored under (`columnPreferenceName`, which apps can point at a different,
-	 * dynamic key - see the `columnselection_pref` setting above). This is legacy
-	 * Nextmatch-specific compatibility behaviour, so it lives here rather than in
-	 * the generic `Et2Datagrid`.
+	 * Write the legacy Nextmatch CSV-format column-visibility preference
+	 * (`nextmatch-<rowTemplateId>`) for apps whose PHP still reads that key directly.
+	 * This is legacy Nextmatch-specific compatibility behaviour, so it lives here
+	 * rather than in the generic `Et2Datagrid`.
+	 *
+	 * Only for those apps, though: an app that sets `columnPreferenceName` at all (via
+	 * the `columnselection_pref` setting above, or by assigning the property, as
+	 * infolog's index does when its details filter switches between
+	 * `nextmatch-infolog.index.rows` and the same name plus `-details`) has taken its
+	 * column state somewhere of its own, and this row-template-keyed CSV is then not
+	 * ours to write. Writing it anyway lands on whatever that app keeps under the plain
+	 * row-template key - for infolog, the structured `{key, hidden, width, customFields}`
+	 * preference Datagrid itself saves there, or the state its other mode saved - and
+	 * the CSV cannot express everything that holds, so per-column widths and which
+	 * individual custom fields are shown would silently disappear a page load later.
+	 * Every app whose PHP still reads this CSV (calendar, filemanager, bookmarks,
+	 * projectmanager, addressbook) leaves `columnPreferenceName` alone, so they all
+	 * keep getting it; an app that wants both has to read the structured shape instead.
 	 *
 	 * `egw().set_preference()` is a no-op when the value hasn't changed, so calling
 	 * this on every columns-changed event (including the initial load) is harmless.
@@ -3421,6 +3432,12 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 		const app = String(this.getInstanceManager()?.app || this.egw()?.app_name?.() || "").trim();
 		if(!rowTemplateId || !app)
 		{
+			return;
+		}
+		if(String(this.columnPreferenceName || "").trim())
+		{
+			// The app keeps its column state under its own key - the row-template-keyed
+			// preference is not ours to write, and doing so overwrites what lives there
 			return;
 		}
 		this.egw()?.set_preference?.(app, `nextmatch-${rowTemplateId}`, legacyColumnSelectionCsv(columns));
