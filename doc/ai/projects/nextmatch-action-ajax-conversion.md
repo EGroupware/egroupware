@@ -312,11 +312,23 @@ things that id was quietly providing have to be replaced by hand.
    a map rather than an id needs its own allowlist.**
 2. **An unguessable token.** `json.php` authenticates by session cookie and checks app run-rights
    and the `ajax_*` naming rule, but has no CSRF token of its own; the exec_id was effectively
-   filling that role for submits.  What stands in for it now is the session cookie's SameSite
-   attribute, and `cookie_samesite_attribute` is unset on this instance, so it falls to the
-   browser default (`Lax`).  That is a browser default, not an application control - worth an
-   explicit `Lax`/`Strict` in setup, and worth noting it applies to every `ajax_*` endpoint in
-   the product, not just these.
+   filling that role for submits.  **The id is simply passed along and checked**, the way
+   `Nextmatch::ajax_get_rows()`, `Nextmatch::ajax_set_admin_default()` and `Link::ajax_delete()`
+   already do - `EgwApp.ajax_action()`/`submit_action_popup()`, the two picker dialogs, calendar's
+   recur prompt and tracker's popup all send
+   `getInstanceManager().etemplate_exec_id`, and every endpoint opens with
+   `Nextmatch::validateExecId()`, which refuses when it is missing or no longer known.
+   `Request::read()` does not consume it (`remove_if_not_modified` is off by default), so the page
+   that owns it keeps working.  WHICH template the id belongs to is deliberately not checked: the
+   menuaction already pins the class, `json.php` has already required the app, and every handler
+   re-derives its authority from the entry id.  What it adds is that the caller had to have a page
+   of ours open.  Pinned by
+   `NextmatchAjaxActionTest::testAnActionWithoutALiveExecIdDoesNothing()`.
+
+   Separately and unchanged by this work: `cookie_samesite_attribute` is unset on this instance, so
+   the session cookie falls back to the browser's `Lax` default.  That is a browser default rather
+   than an application control, and it applies to every `ajax_*` endpoint in the product - worth
+   setting explicitly in setup, but it is not this project's to fix.
 
 What the endpoints do NOT rely on the client for, checked case by case: addressbook re-derives
 ACL per id and per target (`move_to_*` rejects a target the caller has no `Acl::EDIT` grant on;
