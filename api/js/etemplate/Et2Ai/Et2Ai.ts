@@ -614,6 +614,32 @@ export class Et2Ai extends Et2MarkdownMixin(Et2Widget(LitElement))
 	}
 
 	/**
+	 * Resolve the real `<iframe>` DOM node for a slotted target, whether it's a legacy raw
+	 * `<iframe>` or an `<et2-iframe>` (Et2Iframe.ts) webcomponent wrapping one in its shadow root.
+	 *
+	 * `el instanceof HTMLIFrameElement` alone is NOT enough: for `<et2-iframe>` (eg. mail's preview
+	 * pane body), the slotted element is the `<et2-iframe>` HOST, never the real iframe itself -
+	 * that check silently failed for every `<et2-ai>` wrapping one, extracting an empty string
+	 * instead of the mail body (see api/js/etemplate/Et2Iframe/Et2Iframe.ts's own `.iframe` getter
+	 * docblock, and mail/js/app.ts, which already unwraps every one of its iframe widgets this way).
+	 *
+	 * @return {HTMLIFrameElement | null}
+	 * @protected
+	 */
+	protected _resolveIframeNode(el : any) : HTMLIFrameElement | null
+	{
+		if(el instanceof HTMLIFrameElement)
+		{
+			return el;
+		}
+		if(el?.iframe instanceof HTMLIFrameElement)
+		{
+			return el.iframe;
+		}
+		return null;
+	}
+
+	/**
 	 * Figure out the value to give for the purpose of prompting
 	 *
 	 * @return {string}
@@ -628,11 +654,12 @@ export class Et2Ai extends Et2MarkdownMixin(Et2Widget(LitElement))
 		}
 
 		// Iframe
-		if(el instanceof HTMLIFrameElement)
+		const iframeNode = this._resolveIframeNode(el);
+		if(iframeNode)
 		{
 			try
 			{
-				const doc = el.contentDocument;
+				const doc = iframeNode.contentDocument;
 				if(doc)
 				{
 					return doc.body.innerHTML;
@@ -697,11 +724,12 @@ export class Et2Ai extends Et2MarkdownMixin(Et2Widget(LitElement))
 		}
 
 		// Iframe (htmlarea, rich text, etc)
-		if(el instanceof HTMLIFrameElement)
+		const iframeNode = this._resolveIframeNode(el);
+		if(iframeNode)
 		{
 			try
 			{
-				const doc = el.contentDocument;
+				const doc = iframeNode.contentDocument;
 				const sel = doc?.getSelection();
 				if(sel && sel.rangeCount > 0)
 				{
@@ -761,8 +789,10 @@ export class Et2Ai extends Et2MarkdownMixin(Et2Widget(LitElement))
 			return false;
 		}
 
-		// Iframes are always read-only for us
-		if(target instanceof HTMLIFrameElement)
+		// Iframes are always read-only for us - Et2Iframe defines set_value(), so without
+		// unwrapping it here too, the "value API" check below would wrongly allow writing back
+		// into an <et2-iframe>-wrapped target (eg. mail's read-only preview pane)
+		if(this._resolveIframeNode(target))
 		{
 			return false;
 		}
