@@ -254,7 +254,12 @@ class OpenAPI
 							'success' => $success,
 							'message' => $success ? "Successful called '$operationId'".(isset($location) ? ": new entry at location $location created" : '').
 								': '.json_encode($response) :
-								"Failed calling '$operationId'".(isset($response['error']) ? ": {$response['error']}" : '').'!',
+								// prefer the human-readable exception_handler() 'message' (eg. "Invalid
+								// linked-filter '...', should be '<app-name>:<numeric-ID>'!") over the
+								// bare numeric 'error' code, so the caller (incl. an LLM) actually learns
+								// what to fix
+								"Failed calling '$operationId'".(isset($response['message']) ? ": {$response['message']}" :
+									(isset($response['error']) ? ": {$response['error']}" : '')).'!',
 							'response' => $response,
 						];
 					}
