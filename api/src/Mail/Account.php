@@ -513,9 +513,20 @@ class Account implements \ArrayAccess
 	 * @param int $port
 	 * @param string|false $secure Horde "secure" mode, see probeCertVerification()
 	 * @param string $starttls_command see probeCertVerification()
+	 * @param bool $verifyDisabled true if the account already has VERIFY_DISABLED set for this
+	 *  connection - ie. a user already saw and accepted a certificate mismatch here before. A
+	 *  mismatch is then no longer new/actionable information: the real (lenient) connection
+	 *  already used by every other caller neither checks nor cares about it, so re-reporting
+	 *  'certificate' here would just misattribute a LATER, unrelated failure (a slow server, a
+	 *  wrong password, a network blip) back to "the certificate is still the problem" - something
+	 *  the user already dismissed and cannot act on again. Skips straight to 'none' once the
+	 *  lenient TLS handshake below (step 2) itself succeeds, without ever running the strict
+	 *  probe - a real, still-unresolved reachability problem is unaffected either way, since
+	 *  that's caught earlier (steps 1/2) regardless of this flag.
 	 * @return array ['problem' => 'none'|'connection'|'certificate', 'message' => string|null]
 	 */
-	public static function diagnoseConnection(string $host, int $port, $secure, string $starttls_command='') : array
+	public static function diagnoseConnection(string $host, int $port, $secure, string $starttls_command='',
+		bool $verifyDisabled=false) : array
 	{
 		if (!$host || !$port)
 		{
@@ -559,6 +570,15 @@ class Account implements \ArrayAccess
 			$cn = $parsed['subject']['CN'] ?? $parsed['extensions']['subjectAltName'] ?? null;
 		}
 		fclose($stream);
+
+		// the account already accepted a certificate mismatch here before (see $verifyDisabled's
+		// own docblock) - the lenient handshake just above already proves the connection itself
+		// works, which is all that actually matters now, so stop here rather than re-running (and
+		// re-reporting) the strict check this account deliberately opted out of
+		if ($verifyDisabled)
+		{
+			return ['problem' => 'none', 'message' => null];
+		}
 
 		// step 3: the actual strict check, on a FRESH connection - a stream can't be safely
 		// downgraded/re-upgraded after crypto was already enabled once above

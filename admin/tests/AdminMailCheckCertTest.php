@@ -19,10 +19,10 @@ use EGroupware\Api\Mail;
  * AdminMailPureLogicTest.php uses for its side-effect-free helpers - lang() alone isn't
  * available without it.
  *
- * Deliberately NOT testing the "certificate mismatch" branch here: that needs a real (or
- * locally-hosted) TLS server presenting a mismatched certificate, which isn't available in
- * this environment - covered instead by the live verification noted in
- * doc/ai/projects/mail-wizard-jmap-oauth.md.
+ * The "certificate mismatch" branch itself (testDiagnoseConnectionReportsCertificateMismatch*
+ * below) needs a real, locally-hosted TLS server presenting a mismatched certificate - built here
+ * with a forked child process (openssl-generated self-signed cert, pcntl_fork() for the listener)
+ * rather than a long-running daemon, matching this environment's constraints.
  */
 class AdminMailCheckCertTest extends Api\LoggedInTest
 {
@@ -31,6 +31,51 @@ class AdminMailCheckCertTest extends Api\LoggedInTest
 		$ref = new ReflectionMethod($class, $method);
 		$ref->setAccessible(true);
 		return $ref->invokeArgs(null, $args);
+	}
+
+	/**
+	 * Starts a one-shot self-signed-cert TLS listener (CN deliberately NOT matching 127.0.0.1,
+	 * mimicking a real mismatched-certificate server, eg. the reported "cert issued for
+	 * Arens_IMAP, not for 10.28.1.6" case) in a forked child, and returns the port it's listening
+	 * on. Implicit TLS (matching a real "IMAP (TLS/SSL)" account, $secure='tlsv1', no STARTTLS
+	 * text) - the child accept()s a plain TCP connection and immediately negotiates TLS on it
+	 * server-side, matching diagnoseConnection()'s/probeCertVerification()'s own client-side
+	 * timing for that mode, then exits - no cleanup needed beyond pcntl_waitpid() in the caller.
+	 *
+	 * @return array{0: int, 1: int} [port, child pid]
+	 */
+	private function startMismatchedCertServer() : array
+	{
+		$dir = sys_get_temp_dir();
+		$key = $dir.'/admin_mail_check_cert_test_key.pem';
+		$cert = $dir.'/admin_mail_check_cert_test_cert.pem';
+		exec('openssl req -x509 -newkey rsa:2048 -keyout '.escapeshellarg($key).
+			' -out '.escapeshellarg($cert).' -days 1 -nodes -subj "/CN=not-127.0.0.1.invalid" 2>/dev/null');
+
+		$server = stream_socket_server('tcp://127.0.0.1:0', $errno, $errstr,
+			STREAM_SERVER_BIND | STREAM_SERVER_LISTEN);
+		self::assertNotFalse($server, "server fail: $errstr");
+		$name = stream_socket_get_name($server, false);
+		$port = (int)substr($name, strrpos($name, ':') + 1);
+
+		$pid = pcntl_fork();
+		if ($pid === 0)
+		{
+			// diagnoseConnection() opens up to 3 separate connections against this same server
+			// (lenient capture, strict probe, and again for the $verifyDisabled=true test) - serve
+			// each in turn until the parent is done, rather than exiting after just one
+			for ($i = 0; $i < 3; $i++)
+			{
+				$conn = @stream_socket_accept($server, 10);
+				if (!$conn) break;
+				stream_context_set_option($conn, 'ssl', 'local_cert', $cert);
+				stream_context_set_option($conn, 'ssl', 'local_pk', $key);
+				@stream_socket_enable_crypto($conn, true, STREAM_CRYPTO_METHOD_TLS_SERVER);
+				fclose($conn);
+			}
+			exit(0);
+		}
+		return [$port, $pid];
 	}
 
 	public function testDiagnoseConnectionReportsNoHostPortConfigured()
@@ -178,5 +223,74 @@ class AdminMailCheckCertTest extends Api\LoggedInTest
 		self::assertSame(4, $calls,
 			'Expected exactly 4 call sites (autoconfig()/tryJmap()/sieve()/smtp()) - '.
 			'if this changed, make sure every connection-trial loop still consults pauseForCertReview()');
+	}
+
+	/**
+	 * Baseline: against a real, locally-hosted server presenting a certificate for a different
+	 * name than the one connected to, diagnoseConnection() must report 'certificate' - proves the
+	 * fake server helper itself actually reproduces a genuine mismatch, so the $verifyDisabled=true
+	 * test right below is checking a real behavior change, not a fake server that never triggers
+	 * the branch in the first place.
+	 */
+	public function testDiagnoseConnectionReportsCertificateMismatch()
+	{
+		[$port, $pid] = $this->startMismatchedCertServer();
+		try {
+			$result = Mail\Account::diagnoseConnection('127.0.0.1', $port, 'tlsv1');
+
+			self::assertSame('certificate', $result['problem']);
+			self::assertStringContainsString('127.0.0.1', $result['message']);
+		}
+		finally {
+			pcntl_waitpid($pid, $status);
+		}
+	}
+
+	/**
+	 * The actual fix (see Mail\Account::diagnoseConnection()'s own $verifyDisabled docblock): an
+	 * account that already has VERIFY_DISABLED set for this exact mismatch must NOT have it
+	 * re-reported as 'certificate' - the user already saw and accepted that risk, so from here on
+	 * a successful lenient connection is reported as 'none', leaving any LATER, unrelated failure
+	 * free to be diagnosed on its own merits instead of being misattributed back to "it's still
+	 * the certificate" (the live bug report this fix addresses: a customer checked "disable
+	 * certificate validation", saved, and kept seeing the exact same certificate-mismatch wizard
+	 * popup on every later connection hiccup, looking as if the checkbox simply did nothing).
+	 */
+	public function testDiagnoseConnectionSkipsCertificateReportWhenVerifyDisabled()
+	{
+		[$port, $pid] = $this->startMismatchedCertServer();
+		try {
+			$result = Mail\Account::diagnoseConnection('127.0.0.1', $port, 'tlsv1', '', true);
+
+			self::assertSame('none', $result['problem']);
+			self::assertNull($result['message']);
+		}
+		finally {
+			pcntl_waitpid($pid, $status);
+		}
+	}
+
+	/**
+	 * checkCertDiagnosis() must derive $verifyDisabled from the account's OWN already-saved
+	 * acc_imap_ssl value (VERIFY_DISABLED bit), not default to always-strict - proven end-to-end
+	 * through the real 'imap' branch, the same one admin_mail::edit()'s checkCert GET-param
+	 * handling actually calls.
+	 */
+	public function testCheckCertDiagnosisReadsVerifyDisabledFromAccountSsl()
+	{
+		[$port, $pid] = $this->startMismatchedCertServer();
+		try {
+			$content = [
+				'acc_imap_host' => '127.0.0.1',
+				'acc_imap_port' => $port,
+				'acc_imap_ssl' => Mail\Account::SSL_TLS | Mail\Account::VERIFY_DISABLED,
+			];
+			$result = $this->callPrivateStatic(admin_mail::class, 'checkCertDiagnosis', [$content, 'imap']);
+
+			self::assertSame('none', $result['problem']);
+		}
+		finally {
+			pcntl_waitpid($pid, $status);
+		}
 	}
 }
