@@ -1,13 +1,14 @@
-(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	pt	(*) Tenha em atenção que o reencaminhamento para vários endereços não funcionará se o número de endereços exceder o limite. Na maioria dos servidores de correio eletrónico, o limite é 4 por predefinição. Contacte o administrador do seu servidor de correio eletrónico para obter mais informações.
-(leave empty for no quota)	mail	pt	(Deixe em branco para nenhuma quota)
-(no subject)	mail	pt	(sem assunto)
-(not connected)	mail	pt	(Não conectado)
 %1 attachments	mail	pt	%1 anexos
 %1 for all users	mail	pt	%1 para todos os utilizadores
 %1 is not writable by you!	mail	pt	%1 não é gravável por você!
 %1 mails selected	mail	pt	%1 e-mails selecionados
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	pt	%1 requer a extensão Sieve %2, talvez seja necessário tentar %1 ou um número de dias superior.
+(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	pt	(*) Tenha em atenção que o reencaminhamento para vários endereços não funcionará se o número de endereços exceder o limite. Na maioria dos servidores de correio eletrónico, o limite é 4 por predefinição. Contacte o administrador do seu servidor de correio eletrónico para obter mais informações.
+(leave empty for no quota)	mail	pt	(Deixe em branco para nenhuma quota)
+(no subject)	mail	pt	(sem assunto)
+(not connected)	mail	pt	(Não conectado)
 account editable by user	mail	pt	onta editável pelo usuário
+account not reachable	mail	pt	Conta inacessível.
 acl rights retrieve failed, seems there are no rights set!	mail	pt	A recuperação de direitos ACL falhou, parece que não existem direitos definidos!
 acl rights retrieved successfully	mail	pt	Direitos ACL retrieved com sucesso
 activating by date requires a start- and end-date!	mail	pt	Ativação por data requer um começo e final-date!
@@ -40,6 +41,7 @@ always allow external sources from %1	mail	pt	Permitir sempre fontes externas a 
 always respond / auto-responder	mail	pt	Responder sempre / resposta automática
 always show html emails	mail	pt	Exibir sempre mensagens HTML
 always show notifiction	mail	pt	Mostrar sempre notificação
+an error happend while trying to remove acl rights from the account %1!	mail	pt	Ocorreu um erro ao tentar remover os direitos ACL da conta %1!
 answered	mail	pt	Respondeu
 any of	mail	pt	algum de
 any status	mail	pt	qualquer estado
@@ -64,6 +66,7 @@ caching of flags	mail	pt	Armazenamento em cache de bandeiras
 can not open imap connection	mail	pt	Não é possível abrir conexão IMAP
 can not resolve the winmail.dat attachment!	mail	pt	Não é possível resolver o anexo winmail.dat!
 certificate details	mail	pt	Detalhes do certificado
+certificate imported.	mail	pt	Certificado importado.
 certificate in text	mail	pt	Certificado em texto
 certificate info for email %1	mail	pt	Informação de certificado para o correio eletrónico %1
 certificate issued by	mail	pt	Certificado emitido por
@@ -96,10 +99,13 @@ copied %1 message(s) from %2 to %3	mail	pt	Copiados %1 mensagem(ns) de %2 a 3%.
 copy to	mail	pt	Copiar para
 could not append message:	mail	pt	Não foi possível anexar Mensagem:
 create new account	mail	pt	Criar nova conta
+create self-signed certificate	mail	pt	Criar certificado autoassinado
 cross account forward attachment is not allowed!	mail	pt	Não é permitido o envio de anexos de contas cruzadas!
 current subject	mail	pt	Assunto actual
 currently:	mail	pt	Atualmente:
 deactive	mail	pt	Desativado
+default identity for compose	mail	pt	Identidade predefinida para redigir mensagens
+default signature	mail	pt	Assinatura predefinida
 default sorting order	mail	pt	Ordenar por (por omissão)
 default toolbar actions shown in mail's html editor	mail	pt	Funções activadas na barra de ferramentas do editor HTML ao compor um e-mail
 default value for remembering s/mime passphrase in minutes	mail	pt	Valor por defeito para recordar a frase-chave S/MIME em minutos
@@ -111,7 +117,7 @@ delete folder %1 ?	mail	pt	Apagar pasta %1?
 delete selected folders	mail	pt	Eliminar pastas seleccionadas
 delete this acl	mail	pt	Eliminar esta ACL
 deleted	mail	pt	eliminado/a
-deleted %1 messages in %2	mail	pt	Apagado %1 mensagens em 2%.
+deleted %1 messages in %2	mail	pt	Foram eliminadas %1 mensagem(ns) em %2.
 deleted!	mail	pt	apagado!
 deleting %1 folders in progress ...	mail	pt	Eliminação de %1 pastas em curso ...
 deleting folders	mail	pt	Eliminar pastas
@@ -204,10 +210,10 @@ files	mail	pt	Arquivos
 flag / unflag	mail	pt	Marcar / Retirar marcação
 flag or unflag a mail	mail	pt	Bandeira ou Unflag um e-mail
 flagged	mail	pt	marcado
-flagged / unflagged	mail	pt	Sinalizadas / unflagged
 flagged %1 messages as %2 in %3	mail	pt	Sinalizado %1 "%2" mensagens como em 3%.
 flagged %1 messages as flagged in %2	mail	pt	Sinalizado %1 mensagens, como assinalado no %2
 flagged %1 messages as unflagged in %2	mail	pt	Sinalizado %1 mensagens como unflagged em 2%
+flagged / unflagged	mail	pt	Sinalizadas / unflagged
 folder	mail	pt	Pasta
 folder %1 %2 failed because of %3!	mail	pt	Falha ao anular a subscrição da pasta %1!
 folder %1 %2 failed!	mail	pt	Pasta %1 %2 falhou!
@@ -240,6 +246,7 @@ high priority	mail	pt	Alta prioridade
 home page folders	mail	pt	pastas home page
 hostname or ip	mail	pt	Nome do host ou IP
 how often to check with the server for new mail	mail	pt	Quantas vezes a verificar com o servidor para novas mensagens
+how should the available information on identities be displayed	admin	pt	Como devem ser apresentadas as informações disponíveis sobre as identidades
 how to forward messages	mail	pt	Como encaminhar mensagens
 html	mail	pt	HTML
 html mode	mail	pt	Modo HTML
@@ -265,6 +272,7 @@ imap - incoming mail	mail	pt	IMAP - de entrada de correio
 imap administration	mail	pt	Administração IMAP
 imap server	mail	pt	Servidor IMAP
 imap timeout	mail	pt	IMAP tempo limite
+import ca-signed certificate for this key	mail	pt	Importar certificado assinado por uma CA para esta chave
 import message	mail	pt	Mensagem de importação
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	pt	A importação da mensagem %1 falhou. Não foi possível guardar a mensagem na pasta %2 devido a: %3
 import of message %1 failed. destination folder %2 does not exist.	mail	pt	A importação da mensagem %1 falhou. A pasta de destino %2 não existe.
@@ -285,6 +293,7 @@ junk folder	mail	pt	Pasta de Lixo
 keep a copy	mail	pt	Manter uma cópia
 keep a copy of the message in your inbox	mail	pt	Mantenha uma cópia da mensagem em sua caixa de entrada
 kilobytes	mail	pt	kilobytes
+last used signature	mail	pt	Última assinatura utilizada
 later	mail	pt	Lais tarde
 learning as ham (not spam) failed because of %1	mail	pt	A aprendizagem como correio não solicitado (não spam) falhou devido a %1
 learning as spam failed because of %1	mail	pt	A aprendizagem como spam falhou devido a %1
@@ -320,6 +329,7 @@ message send successfully.	mail	pt	Mensagem enviar com êxito.
 modify subject	mail	pt	Modificar o assunto
 modify subject of this message	mail	pt	Modificar o assunto desta mensagem
 move folder	mail	pt	Mover pasta
+move selected mails to archive	mail	pt	Mover e-mails selecionados para arquivo
 move selected to	mail	pt	Mover mensagens seleccionadas para
 move to	mail	pt	Mover-se para
 move to trash	mail	pt	Mover para o lixo
@@ -347,6 +357,7 @@ no folders	mail	pt	Não há pastas
 no message body supplied	mail	pt	Nenhum corpo da mensagem fornecido
 no plain text part found	mail	pt	Nenhuma parte de texto simples encontrado
 no recipient address given!	mail	pt	No endereço do destinatário dado!
+no s/mime private key stored for this account.	mail	pt	Não existe nenhuma chave privada S/MIME guardada para esta conta.
 no send folder set in preferences	mail	pt	Sem envio de pasta definido nas preferências
 no signature	mail	pt	sem assinatura
 no sneak preview in list	mail	pt	Sem pré-visualização da mensagem
@@ -375,6 +386,7 @@ organization | real name email	mail	pt	Organização | Nome real [Email]
 original message	mail	pt	Mensagem original
 outbox	mail	pt	Caixa de saída
 permission denied	mail	pt	Permissão negada
+personal signature	mail	pt	Assinatura pessoal
 please configure access to an existing individual imap account.	mail	pt	Configure o acesso a uma conta IMAP individual existente.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	pt	Configure o seu certificado S/MIME no separador Encriptação localizado na caixa de diálogo Editar conta.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	pt	Contacte o seu administrador para verificar se o seu servidor suporta regras de filtragem do lado do servidor e como activá-las no EGroupware para a sua conta ativa (%1) com ID: %2.
@@ -480,9 +492,11 @@ select file to import into folder	mail	pt	Selecione o arquivo para importar para
 select file(s) from vfs	mail	pt	Selecione o arquivo (s) a partir de VFS
 select mail addresses from addressbook	mail	pt	Selecione o(s) endereço(s) de correio eletrónico do livro de endereços
 select or insert email address	mail	pt	Seleccionar ou inserir endereço de e-mail
-selected	mail	pt	selecionado
+selected	mail	pt	selecionado.
 selected date range (with quicksearch)	mail	pt	Intervalo de datas selecionado (com pesquisa rápida)
+self-signed certificate created.	mail	pt	Certificado autoassinado criado.
 send a reject message:	mail	pt	Enviar uma mensagem de rejeitar:
+send attachments greater than given size as download link instead (in mb)	mail	pt	Enviar anexos com tamanho superior ao indicado (em MB) como link de download
 send message and move to send folder (if configured)	mail	pt	Enviar mensagem e mover para a pasta de envio (se configurado)
 send message pgp encrypted: requires keys from all recipients!	mail	pt	Enviar mensagem encriptada por PGP: requer chaves de todos os destinatários!
 send only a vacation notice, do not store message in inbox	mail	pt	Enviar apenas um aviso de férias, NÃO guardar a mensagem na Caixa de entrada
@@ -553,9 +567,11 @@ the imap server need to meet certain requirements and be configured for it:	mail
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	pt	O remetente da mensagem solicitou uma resposta para indicar que leu esta mensagem. Deseja enviar um recibo?
 the mimeparser can not parse this message.	mail	pt	O mimeparser não pode analisar estas mensagem.
 the rule with priority %1 successfully saved!	mail	pt	A regra com prioridade 1% salvo com sucesso!
+the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	pt	O tamanho total dos anexos excede o limite de %1 MB. Foi ativado o link para download.
 then	mail	pt	então
 there is no imap server configured.	mail	pt	Não há IMAP servidor configurado.
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	pt	Não há espaço para armazenar o script Sieve, verifique a opção sieve_maxscriptsize na configuração do seu servidor de correio eletrónico.
+this action affects every message in the selected thread(s) - %1 messages in total. continue?	mail	pt	Esta ação afeta todas as mensagens na(s) conversa(s) selecionada(s) — %1 mensagens no total. Deseja continuar?
 this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	pt	Este correio contém imagens externas servidas através de um protocolo HTTP inseguro. Tenha em atenção que mostrá-las ou permiti-las pode comprometer a sua segurança!
 this message is smime encrypted and password protected.	mail	pt	Esta mensagem está encriptada com S/MIME e protegida por palavra-passe.
 timeout on connections to your imap server	mail	pt	Timeout em ligações para o seu servidor IMAP
@@ -574,6 +590,7 @@ unsubscribe folder	mail	pt	Pasta Subscrição
 use default timeout (20 seconds)	mail	pt	usar tempo limite padrão (20 segundos)
 use source as displayed, if applicable	mail	pt	Usar fonte como apresentado, se for o caso
 use username+password from current user	mail	pt	Use nome de usuário + senha do usuário atual
+vacation messages with start and end date require an admin account to be set!	mail	pt	As mensagens de férias com data de início e fim requerem que seja definida uma conta de administrador!
 vacation notice	mail	pt	Aviso de ausência
 vacation notice is active	mail	pt	Aviso de Férias está ativo
 vacation notice sucessfully updated.	mail	pt	Aviso de Férias com sucesso atualizado.
@@ -592,6 +609,7 @@ what to do when you send a message	mail	pt	O que fazer quando você envia uma me
 when deleting messages	mail	pt	Ao eliminar mensagens
 when saving messages as item of a different app	mail	pt	Ao salvar mensagens como um item de um aplicativo diferente
 when sending messages	mail	pt	Ao enviar mensagens
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	pt	Com que identidade de e-mail (assinatura) pretende começar?\nNo caso da «Assinatura pessoal», utilizamos sempre a primeira assinatura pessoal.
 which method to use when forwarding a message	mail	pt	Qual o método a ser usado ao encaminhar uma mensagem
 with message:	mail	pt	Com a mensagem:
 write	mail	pt	escrever

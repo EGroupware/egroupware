@@ -35,7 +35,7 @@ id	timesheet	el	Id
 imports entries into the timesheet from a csv file.	timesheet	el	Εισάγει εγγραφές στο φύλλο χρόνου από αρχείο CSV
 last modified	timesheet	el	Τελευταία τροποποίηση
 leaves without saveing	timesheet	el	αποχώρηση χωρίς αποθήκευση
-length<br>rows	timesheet	el	Μήκος<br>Γραμμές
+length<br>rows	timesheet	el	Μήκος\nΓραμμές
 link title	timesheet	el	Τίτλος συνδέσμου
 make timesheets readable by infolog delegation	timesheet	el	Κάντε τα φύλλα χρόνου αναγνώσιμα από την αντιπροσωπεία InfoLog
 max length of the input [, length of the inputfield (optional)]	timesheet	el	μέγιστο μήκος για την εισαγωγή, [μήκος του πεδίου εισαγωγής (κατ'επιλογήν)]
@@ -61,10 +61,12 @@ select a price	timesheet	el	Επιλέξτε μια τιμή
 select a project	timesheet	el	Επιλέξτε ένα έργο
 select the predefined status, when creating a new timesheet	preferences	el	Επιλέξτε την προκαθορισμένη κατάσταση, όταν δημιουργείτε μια νέα καταχώρηση.
 start	timesheet	el	Έναρξη
+start time is after last timesheet	timesheet	el	Η ώρα έναρξης είναι μετά το τελευταίο φύλλο χρόνου
 start-time can not be before last stop- or pause-time %1!	common	el	Ο χρόνος έναρξης δεν μπορεί να είναι πριν από τον τελευταίο χρόνο διακοπής ή παύσης %1!
 stop- or pause-time can not be before the start-time %1!	common	el	Ο χρόνος διακοπής ή παύσης δεν μπορεί να είναι πριν από τον χρόνο έναρξης %1!
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	el	Tο όνομα χρησιμοποιείται εσωτερικά (<=20 χαρακτ), ενδεχόμενη αλλαγή του προκαλεί μη διαθεσιμότητα των δεδομένων
 the text displayed to the user	timesheet	el	το κείμενο που προβάλεται στον χρήστη
+time default for new timesheet entries	timesheet	el	Προεπιλεγμένη ώρα για νέες καταχωρήσεις στο φύλλο χρόνου
 timer	common	el	Χρονόμετρο
 timer already running or paused	common	el	Ο χρονοδιακόπτης εκτελείται ήδη ή έχει τεθεί σε παύση
 timesheet	common	el	Λίστα φύλλων χρόνου
@@ -72,10 +74,12 @@ timesheet csv export	timesheet	el	Εξαγωγή φύλλου εργασίας C
 timesheet csv import	timesheet	el	Εισαγωγή φύλλου εργασίας CSV
 timesheet id	timesheet	el	Αναγνωριστικό Φύλλου Χρόνου
 timesheet list	timesheet	el	Λίστα φύλλων χρόνου
+use current time as end time	timesheet	el	Χρησιμοποιήστε την τρέχουσα ώρα ως ώρα λήξης
 use field from csv if possible	timesheet	el	Χρήση πεδίου από CSV εάν είναι δυνατόν
 values for selectbox	timesheet	el	Αξίες του επιλεγμένου κουτιού
 week	timesheet	el	Εβδομάδα
 what should be done with unknown values?	timesheet	el	Τι πρέπει να γίνει με άγνωστες τιμές;
+when adding a new timesheet: prefill the endtime with the current time, or continue the starttime from the endtime of your last timesheet	timesheet	el	Κατά την προσθήκη ενός νέου φύλλου χρόνου: συμπληρώστε αυτόματα την ώρα λήξης με την τρέχουσα ώρα ή ορίστε την ώρα έναρξης με βάση τη λήξη του τελευταίου φύλλου χρόνου σας
 will be created when saving ...	common	el	Θα δημιουργηθεί κατά την αποθήκευση ...
 yes, only admins can purge deleted items	admin	el	Ναι, μόνο ο διαχειριστής μπορεί να καθαρίσει τα αντικείμενα που έχουν διαγραφεί
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	el	Το ηλεκτρονικό σας αρχείο ΔΕΝ είναι ενημερωμένο (%1 vs. %2), παρακαλώ τρέξτε %3setup%4  για να ενημερώσετε το ηλεκτρονικό σας αρχείο.

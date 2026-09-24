@@ -1,13 +1,14 @@
-(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	cs	(*) Pamatujte, že přeposlání na více adres nemusí fungovat správně, pokud počet adres přesáhne stanovený limit. Většina poštovních serverů má tento limit stanoven na 4 - požádejte správce svého poštovního serveru o další informace.
-(leave empty for no quota)	mail	cs	(ponechte prázdné, pokud nechcete omezovat velikost)
-(no subject)	mail	cs	(žádný předmět)
-(not connected)	mail	cs	(nepřipojeno)
 %1 attachments	mail	cs	%1 příloh
 %1 for all users	mail	cs	%1 pro všechny uživatele
 %1 is not writable by you!	mail	cs	Pro %1 nemáte oprávnění k zápisu!
 %1 mails selected	mail	cs	%1 e-mailů vybráno
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	cs	%1 vyžaduje rozšíření Sieve %2, možná zkuste %1 nebo vyšší počet dní.
+(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	cs	(*) Pamatujte, že přeposlání na více adres nemusí fungovat správně, pokud počet adres přesáhne stanovený limit. Většina poštovních serverů má tento limit stanoven na 4 - požádejte správce svého poštovního serveru o další informace.
+(leave empty for no quota)	mail	cs	(ponechte prázdné, pokud nechcete omezovat velikost)
+(no subject)	mail	cs	(žádný předmět)
+(not connected)	mail	cs	(nepřipojeno)
 account editable by user	mail	cs	Účet může být upraven uživatelem
+account not reachable	mail	cs	Účet není dostupný.
 acl rights retrieve failed, seems there are no rights set!	mail	cs	Získání ACL práv selhalo, zdá se, že práva nejsou nastavena!
 acl rights retrieved successfully	mail	cs	ACL práva byla získána úspěšně
 activating by date requires a start- and end-date!	mail	cs	Aktivace datumem vyžaduje nastavení počátečního A koncového data!
@@ -76,6 +77,7 @@ can not open imap connection	mail	cs	Není možné otevřít spojení se servere
 can not resolve the winmail.dat attachment!	mail	cs	Nelze vyřešit přílohu winmail.dat!
 canceled deletion due to user interaction	mail	cs	Mazání bylo přerušeno uživatelem
 certificate details	mail	cs	Podrobnosti o certifikátu
+certificate imported.	mail	cs	Certifikát byl importován.
 certificate in text	mail	cs	Certifikát v textu
 certificate info for email %1	mail	cs	Informace o certifikátu pro e-mail %1
 certificate issued by	mail	cs	Certifikát vydal
@@ -113,11 +115,13 @@ copy to	mail	cs	Kopírovat do
 could not append message:	mail	cs	Není možné připojit zprávu:
 could not save the acl because some names are empty	mail	cs	Není možné uložit ACL, protože některá ze jmen jsou prázdná
 create new account	mail	cs	Přidat účet
+create self-signed certificate	mail	cs	Vytvořit certifikát s vlastním podpisem
 cross account forward attachment is not allowed!	mail	cs	Připojení křížového účtu není povoleno!
 current folder	mail	cs	Aktuální složka
 current subject	mail	cs	Aktuální téma
 currently:	mail	cs	Aktuálně:
 deactive	mail	cs	Deaktivovat
+default signature	mail	cs	Výchozí podpis
 default sorting order	mail	cs	Výchozí třídění
 default toolbar actions shown in mail's html editor	mail	cs	Funkce povolené na panelu nástrojů editoru HTML při vytváření e-mailu
 default value for remembering s/mime passphrase in minutes	mail	cs	Výchozí hodnota pro zapamatování přístupové fráze S/MIME v minutách
@@ -129,7 +133,7 @@ delete folder %1 ?	mail	cs	Smazat složku %1?
 delete selected folders	mail	cs	Odstranění vybraných složek
 delete this acl	mail	cs	Smazat tyto ACL
 deleted	mail	cs	smazáno
-deleted %1 messages in %2	mail	cs	Bylo smazáno %1 zpráv v %2.
+deleted %1 messages in %2	mail	cs	V %2 bylo smazáno %1 zprávy.
 deleted!	mail	cs	Smazáno!
 deleting %1 folders in progress ...	mail	cs	Probíhá mazání složky %1 ...
 deleting folders	mail	cs	Smazání složek
@@ -232,10 +236,10 @@ files	mail	cs	Soubory
 flag / unflag	mail	cs	Označení / Odznačení
 flag or unflag a mail	mail	cs	Označení nebo neoznačení zprávy
 flagged	mail	cs	Označeno
-flagged / unflagged	mail	cs	Označeno / Odznačeno
 flagged %1 messages as %2 in %3	mail	cs	Označeno %1 zpráv jako "%2" ve složce %3.
 flagged %1 messages as flagged in %2	mail	cs	Označeno %1 zpráv ve složce %2.
 flagged %1 messages as unflagged in %2	mail	cs	Odznačeno %1 zpráv ve složce %2.
+flagged / unflagged	mail	cs	Označeno / Odznačeno
 folder	mail	cs	Složka
 folder %1 %2 failed because of %3!	mail	cs	Složka %1 %2 selhala kvůli %3!
 folder %1 %2 failed!	mail	cs	Složka %1 %2 selhalo!
@@ -298,6 +302,7 @@ imap - incoming mail	mail	cs	IMAP - Příchozí e-mail
 imap administration	mail	cs	Správa IMAP
 imap server	mail	cs	IMAP Server
 imap timeout	mail	cs	IMAP - vypšel časový limit
+import ca-signed certificate for this key	mail	cs	Importovat certifikát podepsaný certifikační autoritou pro tento klíč
 import message	mail	cs	Importovat zprávu
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	cs	Import zprávy %1 nebyl úspěšný. Není možné uložit zprávu do složky %2 z důvodu: %3
 import of message %1 failed. destination folder %2 does not exist.	mail	cs	Import zprávy %1 nebyl úspěšný. Cílová složka %2 neexistuje.
@@ -318,6 +323,7 @@ junk folder	mail	cs	Složka nevyžádané pošty
 keep a copy	mail	cs	Ponechte si kopii
 keep a copy of the message in your inbox	mail	cs	Zachovat kopii zprávy ve vaší schránce
 kilobytes	mail	cs	kilobytů
+last used signature	mail	cs	Naposledy použitý podpis
 later	mail	cs	Později
 learning as ham (not spam) failed because of %1	mail	cs	Učení jako šunka (ne spam) se nezdařilo z důvodu %1
 learning as spam failed because of %1	mail	cs	Učení jako spam selhalo kvůli %1
@@ -388,6 +394,7 @@ no folders	mail	cs	žádné složky
 no message body supplied	mail	cs	Tělo zprávy není podporováno
 no plain text part found	mail	cs	Nebyla nalezena část ve formě prostého textu
 no recipient address given!	mail	cs	Nebyla zadána adresa příjemce!
+no s/mime private key stored for this account.	mail	cs	Pro tento účet není uložen žádný soukromý klíč S/MIME.
 no send folder set in preferences	mail	cs	V parametrech nastavení není definována složka pro odeslanou poštu
 no signature	mail	cs	bez podpisu
 no sneak preview in list	mail	cs	V seznamu zpráv nezobrazovat náhledy
@@ -424,6 +431,7 @@ original message	mail	cs	Původní zpráva
 outbox	mail	cs	Odeslaná pošta
 password protect	mail	cs	Chráněno heslem
 permission denied	mail	cs	Přístup zamítnut
+personal signature	mail	cs	Osobní podpis
 please configure access to an existing individual imap account.	mail	cs	Nakonfigurujte prosím přístup ke stávajícímu osobnímu IMAP účtu.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	cs	Nakonfigurujte prosím svůj certifikát S/MIME na kartě Šifrování v dialogovém okně Upravit účet.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	cs	Kontaktujte správce svého e-mailového serveru pro ověření, zda váš server podporuje pravidla a jak je v EGroupware pro váš účet %1 s identifikací %2 povolit.
@@ -540,7 +548,9 @@ select multiple	mail	cs	Vyberte více
 select or insert email address	mail	cs	Vyberte nebo vložte e-mailovou adresu
 selected	mail	cs	Vybráno
 selected date range (with quicksearch)	mail	cs	Zvolený rozsah datumu (pro rychlé hledání)
+self-signed certificate created.	mail	cs	Certifikát s vlastním podpisem byl vytvořen.
 send a reject message:	mail	cs	Odeslat odmítnutí:
+send attachments greater than given size as download link instead (in mb)	mail	cs	Přílohy větší než zadaná velikost (v MB) odesílat místo toho jako odkaz ke stažení
 send files as	mail	cs	Odeslat soubor jako
 send message and move to send folder (if configured)	mail	cs	Odeslat zprávu a uložit ji do složky pro odeslanou poštu (je-li nastavená)
 send message pgp encrypted: requires keys from all recipients!	mail	cs	Odeslat zprávu šifrovanou PGP: vyžaduje klíče od všech příjemců!
@@ -624,9 +634,11 @@ the imap server need to meet certain requirements and be configured for it:	mail
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	cs	Odesílatel požaduje zaslání potvrzení o přečtení zprávy. Přejete si potvrzení odeslat?
 the mimeparser can not parse this message.	mail	cs	MIMEparser nemůže zpracovat tuto zprávu.
 the rule with priority %1 successfully saved!	mail	cs	Pravidlo s prioritou %1 bylo úspěšně uloženo!
+the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	cs	Celková velikost příloh překračuje limit %1 MB. Bylo přepnuto na odkaz ke stažení.
 then	mail	cs	POTOM
 there is no imap server configured.	mail	cs	Není nakonfigurován žádný IMAP server.
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	cs	Na uložení skriptu Sieve nezbylo místo, zkontrolujte prosím volbu sieve_maxscriptsize v konfiguraci vašeho poštovního serveru.
+this action affects every message in the selected thread(s) - %1 messages in total. continue?	mail	cs	Tato akce se týká všech zpráv ve vybraných vláknech – celkem %1 zpráv. Chcete pokračovat?
 this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	cs	Tento mail obsahuje externí obrázky doručované přes nezabezpečený protokol HTTP. Upozorňujeme, že jejich zobrazení nebo povolení může ohrozit bezpečnost!
 this message is smime encrypted and password protected.	mail	cs	Tato zpráva je šifrována pomocí S/MIME a chráněna heslem.
 timeout on connections to your imap server	mail	cs	Vypršel časový limit při pokusu o připojení k vašemu IMAP serveru
@@ -672,8 +684,9 @@ when deleting messages	mail	cs	Při mazání zpráv
 when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	cs	Pokud se zprávy zobrazují ve vyskakovacích oknech, použít při zobrazení další zprávy stejné, nebo nové vyskakovací okno
 when saving messages as item of a different app	mail	cs	při uložení zprávy jako záznamu do jiné aplikace.
 when sending messages	mail	cs	Při odeslání zprávy
-which folders - in general - should not be automatically created, if not existing	mail	cs	Které složky by neměly být automaticky vytvářeny pokud neexistují
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	cs	Které složky (kromě složky Odeslané) by měly být zobrazeny za použití schématu pro zobrazení složky Odeslané
+which folders - in general - should not be automatically created, if not existing	mail	cs	Které složky by neměly být automaticky vytvářeny pokud neexistují
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	cs	S kterou e-mailovou identitou (podpisem) chcete začít. Jako osobní podpis se vždy použije první osobní podpis
 which method to use when forwarding a message	mail	cs	Jakým způsobem přeposlat zprávu
 whole message	mail	cs	Všechny zprávy
 with message:	mail	cs	Se zprávou:

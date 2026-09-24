@@ -80,7 +80,7 @@ last week	timesheet	sl	Prejšnji teden
 last year	timesheet	sl	Lansko leto
 leave it empty for a full week	timesheet	sl	Pustite prazen cel teden
 leaves without saveing	timesheet	sl	Zapre brez shranjevanja
-length<br>rows	timesheet	sl	Dolžina<br>Vrstic
+length<br>rows	timesheet	sl	Dolžina\nVrstic
 link title	timesheet	sl	Naslov povezave
 links and attached files	timesheet	sl	Povezave in priložene datoteke
 links to specified application.  example: {{links/infolog}}	timesheet	sl	Povezave do določene aplikacije. Primer: {{links / infolog}}
@@ -135,6 +135,7 @@ show a quantity sum (eg. to sum up negative overtime)	admin	sl	Prikaži količin
 skip record	timesheet	sl	Preskoči zapis
 start	timesheet	sl	Začetek
 start & stop timer	common	sl	Začetni in končni čas
+start time is after last timesheet	timesheet	sl	Čas začetka je po datumu zadnjega delovnega lista
 start timer	common	sl	Začetek časovnika
 start-time can not be before last stop- or pause-time %1!	common	sl	Začetni čas ne sme biti pred zadnjim časom ustavitve ali prekinitve %1!
 starttime	timesheet	sl	Začetni čas
@@ -153,6 +154,7 @@ this month	timesheet	sl	Ta mesec
 this week	timesheet	sl	Ta teden
 this year	timesheet	sl	To leto
 ticket modified by %1 at %2	timesheet	sl	Vstopnica, spremenjena z %1 na %2
+time default for new timesheet entries	timesheet	sl	Privzeta vrednost časa za nove vnose v delovnem listu
 timer already running or paused	common	sl	Časomer že teče ali je ustavljen
 timesheet	common	sl	Časovni list
 timesheet csv export	timesheet	sl	Časovni list CSV izvoza
@@ -166,12 +168,14 @@ timesheet-%1 deleted.	timesheet	sl	Časovno obdobje - %1 je izbrisano.
 titles of any entries linked to the current record, excluding attached files	timesheet	sl	Naslovi vseh vnosov, povezanih s trenutnim zapisom, brez priloženih datotek
 unable to convert "%1" to account id.  using plugin setting (%2) for %3.	timesheet	sl	Ni mogoče pretvoriti "%1" v ID računa. Uporaba nastavitve vtičnika (%2) za %3.
 unitprice	timesheet	sl	Cena na enoto
+use current time as end time	timesheet	sl	Uporabi trenutni čas kot čas konca
 use field from csv if possible	timesheet	sl	Če je mogoče, uporabite polje iz CSV
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	sl	Uporabi to značko za naslov nalepk. Stik, ki ga želite ponoviti, dajte med dve znački.
 values for selectbox	timesheet	sl	Vrednosti za izbirno polje
 view this entry	timesheet	sl	Poglej ta vnos
 week	timesheet	sl	Teden
 what should be done with unknown values?	timesheet	sl	Kaj je treba storiti z neznanimi vrednostmi?
+when adding a new timesheet: prefill the endtime with the current time, or continue the starttime from the endtime of your last timesheet	timesheet	sl	Pri dodajanju novega delovnega lista: v polje za čas konca vnesite trenutni čas ali pa čas začetka nastavite glede na čas konca zadnjega delovnega lista
 will be created when saving ...	common	sl	Ustvari se ob shranjevanju ...
 working time	common	sl	Delovni čas
 working time and timer	timesheet	sl	Delovni čas in časovnik

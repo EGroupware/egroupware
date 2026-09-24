@@ -24,7 +24,6 @@ displaying html messages is disabled	mail	zh-tw	顯示 html 信件的功能停�
 does not contain	mail	zh-tw	不包含
 does not match	mail	zh-tw	不符合
 does not match regexp	mail	zh-tw	不符合條件
-don't use draft folder	mail	zh-tw	不使用草稿夾
 don't use sent	mail	zh-tw	不使用寄件備份
 don't use trash	mail	zh-tw	不使用垃圾桶
 draft folder	mail	zh-tw	草稿夾

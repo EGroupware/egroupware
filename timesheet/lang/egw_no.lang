@@ -44,7 +44,7 @@ last week	timesheet	no	Siste uke
 last year	timesheet	no	Siste år
 leave it empty for a full week	timesheet	no	La stå tom for en full uke
 leaves without saveing	timesheet	no	avslutt uten å lagre
-length<br>rows	timesheet	no	Lengde<br>Kolonner
+length<br>rows	timesheet	no	Lengde\nKolonner
 link title	timesheet	no	Koblingstittel
 make timesheets readable by infolog delegation	timesheet	no	Gjør tidsrapporter lesbare ved hjelp av InfoLog-delegering
 max length of the input [, length of the inputfield (optional)]	timesheet	no	maks. lengde på innslag [,feltlengde (valgfri)]
@@ -75,6 +75,7 @@ select a project	timesheet	no	Velg et prosjekt
 select the predefined status, when creating a new timesheet	preferences	no	Velg den forhåndsdefinerte statusen når du oppretter en ny oppføring.
 start	timesheet	no	Start
 start & stop timer	common	no	Start- og stopptimer
+start time is after last timesheet	timesheet	no	Starttidspunktet ligger etter forrige tidsrapport
 start timer	common	no	Start tidtaker
 start-time can not be before last stop- or pause-time %1!	common	no	Start-tidspunktet kan ikke være før siste stopp- eller pausetidspunkt %1!
 stop- or pause-time can not be before the start-time %1!	common	no	Stopp- eller pausetid kan ikke være før starttidspunktet %1!
@@ -83,15 +84,18 @@ the text displayed to the user	timesheet	no	teksten som vises til bruker
 this month	timesheet	no	Denne måneden
 this week	timesheet	no	Denne uken
 this year	timesheet	no	Dette året
+time default for new timesheet entries	timesheet	no	Standardinnstilling for tid i nye tidsrapportoppføringer
 timer	common	no	Timer
 timer already running or paused	common	no	Timeren kjører allerede eller er satt på pause
 timesheet	common	no	Timeregistrering
 unitprice	timesheet	no	Enhetspris
+use current time as end time	timesheet	no	Bruk gjeldende klokkeslett som sluttidspunkt
 use field from csv if possible	timesheet	no	Bruk felt fra CSV hvis mulig
 values for selectbox	timesheet	no	Verdier for valgboksene
 view this entry	timesheet	no	Vis denne forekomsten
 week	timesheet	no	Uke
 what should be done with unknown values?	timesheet	no	Hva skal gjøres med ukjente verdier?
+when adding a new timesheet: prefill the endtime with the current time, or continue the starttime from the endtime of your last timesheet	timesheet	no	Når du legger til en ny tidsrapport: Fyll inn sluttidspunktet med gjeldende klokkeslett, eller angi starttidspunktet ut fra sluttidspunktet på forrige tidsrapport
 will be created when saving ...	common	no	Blir opprettet når du lagrer ...
 working time	common	no	Arbeidstid
 working time and timer	timesheet	no	Arbeidstid og tidtaker

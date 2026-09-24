@@ -223,6 +223,7 @@ croatia	common	et	HORVAATIA
 cuba	common	et	KUUBA
 currency	common	et	Valuuta
 current	common	et	Käesolev
+current user	common	et	Praegune kasutaja
 current users	common	et	Aktiivseid kasutajaid
 custom fields	common	et	Kohandatud väljad
 cut	common	et	Lõika
@@ -401,6 +402,7 @@ how many days to sync in the future (default %1)	groupdav	et	Mitu päeva tulevik
 how many days to sync in the past (default %1)	groupdav	et	Mitu päeva sünkroonida minevikus (vaikimisi %1)
 how many rows to print	common	et	Mitu rida printida
 html	common	et	HTML
+html link to the current record	common	et	HTML-link praegusele kirjele
 html links to any entries linked to the current record, excluding attached files	common	et	HTML-linkid kõikidele kirjetele, mis on seotud praeguse kirjega, välja arvatud lisatud failid
 hungary	common	et	UNGARI
 iceland	common	et	ISLAND
@@ -710,6 +712,7 @@ time	common	et	Aeg
 time zone	common	et	Ajavöönd
 time zone offset	common	et	Ajavööndi nihe
 title	common	et	Pealkiri
+titles of any entries linked to the current record, excluding attached files	preferences	et	Praeguse kirje külge seotud kõikide kirjetite pealkirjad, välja arvatud manused
 to start the db-tools	common	et	DB tööriistade käivitamine
 to start the etemplate editor	common	et	eTemplate redaktori käivitamine
 to start the search	common	et	Otsingu käivitamine
@@ -742,6 +745,7 @@ upload file(s) from filemanager...	common	et	Faili(de) üleslaadimine failihaldu
 upload new photo	common	et	Uue foto üleslaadimine
 url	common	et	URL
 url of current record	common	et	Praeguse kirje URL aadress
+urls of any entries linked to the current record, excluding attached files	common	et	Praeguse kirje külge seotud kõikide kirjetite URL-id, välja arvatud manused
 uruguay	common	et	URUGUAI
 user	common	et	Kasutaja
 user accounts	common	et	Kasutaja kontod
