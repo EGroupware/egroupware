@@ -524,9 +524,14 @@ class Sharing
 	final public function ServeRequest()
 	{
 		// check for path traversal and abort with 400 Bad Request
-		if (strpos(urldecode($_SERVER['REQUEST_URI']), '..') !== false)
+		// WebDAV COPY/MOVE name their target in the separate Destination header, not the request
+		// URI - it must be checked the same way, or ".." there resolves through Vfs::concat()
+		// (which normalizes "/../" but never checks containment) straight past the share root
+		if (strpos(urldecode($_SERVER['REQUEST_URI']), '..') !== false ||
+			isset($_SERVER['HTTP_DESTINATION']) && strpos(urldecode($_SERVER['HTTP_DESTINATION']), '..') !== false)
 		{
-			error_log(__METHOD__.'() stopped path traversal attempt using REQUEST_URI: '.$_SERVER['REQUEST_URI']);
+			error_log(__METHOD__.'() stopped path traversal attempt using REQUEST_URI: '.$_SERVER['REQUEST_URI'].
+				(isset($_SERVER['HTTP_DESTINATION']) ? ' or Destination: '.$_SERVER['HTTP_DESTINATION'] : ''));
 			http_response_code(400);
 			exit;
 		}
