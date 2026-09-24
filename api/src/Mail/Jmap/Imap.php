@@ -123,7 +123,12 @@ class Imap extends Jmap\Base
 	 */
 	public static function session() : array
 	{
-		$url = Api\Framework::getUrl(Api\Framework::link('/mail/jmap.php'));
+		// bare path, NOT Api\Framework::getUrl()'s absolute form - see
+		// ProfileHandler::localBootstrap()'s own sessionUrl comment for why: every URL below is
+		// only ever fetched by the same page that's already loaded, so a relative one (guaranteed
+		// same-origin, immune to Http::host()'s Setup-hostname-vs-actual-request mismatch) is
+		// strictly correct here, not just a workaround.
+		$url = Api\Framework::link('/mail/jmap.php');
 
 		// accountId comes from ProfileHandler::localBootstrap()'s sessionUrl (mail/src/Ui/ProfileHandler.php) - session()
 		// has no other way to know which account a given JamClient instance belongs to, since it's
