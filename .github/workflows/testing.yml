@@ -255,7 +255,18 @@ jobs:
           COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
-          $COMPOSE up -d --force-recreate db egroupware nginx
+          # Pull only the three images this job starts.  nginx depends_on push, collabora-key
+          # and rocketchat, and those on collabora-init and mongo, so a plain
+          # "up db egroupware nginx" fetches eight images to run three: docker-compose.ci.yml
+          # parks the other five at replicas: 0, which keeps them from running but not from being
+          # fetched.  Measured at 66s of a 5m41s job, all of it before the first container started.
+          #
+          # "pull" does not follow depends_on unless asked (--include-deps), and --no-deps stops
+          # "up" from putting them back.  --pull never is what makes that stick: without it "up"
+          # would fetch again for itself.  Images stay current regardless - the pull above runs on
+          # every job, it is only the redundant second fetch that is suppressed.
+          $COMPOSE pull db egroupware nginx
+          $COMPOSE up -d --force-recreate --no-deps --pull never db egroupware nginx
 
       - name: Wait for install
         run: |
