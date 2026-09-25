@@ -1,3 +1,21 @@
+egroupware-docker (26.9.20260925) hardy; urgency=low
+
+  * 4th pre-release of master rebase, final release expected beginning of the week
+  * Addressbook: country column-filter showed no country names
+  * Api: fix high CPU use and sluggish typing while a list is open
+  * Api: stop an application-tab switch rebuilding every nextmatch row
+  * AiTools: translate/select-text/apply always empty for mail body / et2-iframe widget
+  * Calendar: fix freetime search returning no results
+  * Filemanager: a file dropped on an expanded folder's child went to the wrong folder
+  * Mail: local-shim accounts' own JMAP endpoint URL could mismatch the page's connect-src 'self' CSP and get silently blocked by the browser
+  * Mail: checkCert wizard no longer re-diagnoses a certificate mismatch the user already accepted, and shows the original error when its own probe finds nothing wrong
+  * Mail: preview.js failed CSP in Firefox, blocking mailto:/internal-link activation for every message
+  * ImportExport: export/import preview crashed and never actually appeared
+  * ProjectManager: convert the project, element and price lists to Et2Nextmatch
+  * Timesheet: nextmatch actions showed no result message
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 25 Sep 2026 05:37:55 +0200
+
 egroupware-docker (26.9.20260922) hardy; urgency=low
 
   * 3rd pre-release for final rebased release
