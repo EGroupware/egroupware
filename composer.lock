@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7425495fbe3008cb8a204ed3efc92707",
+    "content-hash": "c0a48867b5723f7307a5140f51c22c68",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -1168,7 +1168,7 @@
         },
         {
             "name": "egroupware/activesync",
-            "version": "26.9.202609251",
+            "version": "26.9.20260925.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/activesync.git",
@@ -1272,7 +1272,7 @@
         },
         {
             "name": "egroupware/aitools",
-            "version": "26.9.202609251",
+            "version": "26.9.20260925.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/aitools.git",
@@ -1308,7 +1308,7 @@
         },
         {
             "name": "egroupware/bookmarks",
-            "version": "26.9.202609251",
+            "version": "26.9.20260925.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/bookmarks.git",
@@ -1340,7 +1340,7 @@
         },
         {
             "name": "egroupware/collabora",
-            "version": "26.9.202609251",
+            "version": "26.9.20260925.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/collabora.git",
@@ -2251,7 +2251,7 @@
         },
         {
             "name": "egroupware/news_admin",
-            "version": "26.9.202609251",
+            "version": "26.9.20260925.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/news_admin.git",
@@ -2339,7 +2339,7 @@
         },
         {
             "name": "egroupware/openid",
-            "version": "26.9.202609251",
+            "version": "26.9.20260925.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/openid.git",
@@ -2387,7 +2387,7 @@
         },
         {
             "name": "egroupware/projectmanager",
-            "version": "26.9.202609251",
+            "version": "26.9.20260925.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/projectmanager.git",
@@ -2430,7 +2430,7 @@
         },
         {
             "name": "egroupware/rag",
-            "version": "26.9.202609251",
+            "version": "26.9.20260925.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/rag.git",
@@ -2458,7 +2458,7 @@
         },
         {
             "name": "egroupware/registration",
-            "version": "26.9.202609251",
+            "version": "26.9.20260925.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/registration.git",
@@ -2507,7 +2507,7 @@
         },
         {
             "name": "egroupware/rocketchat",
-            "version": "26.9.202609251",
+            "version": "26.9.20260925.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/rocketchat.git",
@@ -2604,7 +2604,7 @@
         },
         {
             "name": "egroupware/smallpart",
-            "version": "26.9.202609251",
+            "version": "26.9.20260925.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/smallpart.git",
@@ -2757,7 +2757,7 @@
         },
         {
             "name": "egroupware/status",
-            "version": "26.9.202609251",
+            "version": "26.9.20260925.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/status.git",
@@ -2964,7 +2964,7 @@
         },
         {
             "name": "egroupware/swoolepush",
-            "version": "26.9.202609251",
+            "version": "26.9.20260925.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/swoolepush.git",
@@ -3125,7 +3125,7 @@
         },
         {
             "name": "egroupware/tracker",
-            "version": "26.9.202609251",
+            "version": "26.9.20260925.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/tracker.git",
@@ -3335,7 +3335,7 @@
         },
         {
             "name": "egroupware/webauthn",
-            "version": "26.9.202609251",
+            "version": "26.9.20260925.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/webauthn.git",
