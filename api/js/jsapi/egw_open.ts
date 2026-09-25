@@ -230,6 +230,26 @@ function mailto(uri : string) : void
 		}
 	}
 
+	// subject/body - RFC 6068 query params, percent-encoded (unlike to/cc/bcc above, real-world
+	// mailto: hrefs almost always need this for these two: found live, ticket #125211 - "clicking
+	// a mailto link ... opens an edit window, but ... additional info like subject etc. isn't
+	// inserted": match['subject']/match['body'] were parsed above (the same loop that fills
+	// match['cc']/match['bcc']) but never actually made it into `content` at all, so nothing past
+	// this point - composeMailto()/MailApp.setCompose() - ever saw them, regardless of whether a
+	// popup already existed to reuse or a fresh one had to be opened. body is always plain text
+	// per RFC 6068 (never HTML), matching compose.php's own OS-level mailto handler
+	// (mail/compose.php's `$_GET['mailto']` branch) for the exact same reason.
+	const decodeMailtoParam = (value : string) : string =>
+	{
+		try { return decodeURIComponent(value); } catch(e) { return value; }
+	};
+	if (match['subject'] !== undefined) content.subject = decodeMailtoParam(match['subject']);
+	if (match['body'] !== undefined)
+	{
+		content.body = decodeMailtoParam(match['body']);
+		content.bodyMimeType = 'plain';
+	}
+
 	// Encode html entities in the URI, otherwise server XSS protection won't
 	// allow it to pass, because it may get mistaken for some forbidden tags,
 	// e.g., "Mathias <mathias@example.com>" the first part of email "<mathias"
@@ -257,7 +277,9 @@ function mailto(uri : string) : void
 		/\/mail\/compose\.php/, undefined,
 		() => egw.applyFunc('app.mail.composeMailto', [content]));
 
-	for (var index in content)
+	// to/cc/bcc only - address-count notification, not subject/body (both plain strings too,
+	// `.length` would just report their character count as a bogus "email(s) added" message)
+	for (const index of ['to', 'cc', 'bcc'])
 	{
 		if (content[index].length > 0)
 		{

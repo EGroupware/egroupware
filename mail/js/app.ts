@@ -2252,6 +2252,27 @@ export class MailApp extends EgwApp
 					}
 				}
 
+				// bodyMimeType is metadata for the 'body' field below, not a widget of its own -
+				// mailto()'s own content shape (api/js/jsapi/egw_open.ts, ticket #125211) carries it
+				// alongside body exactly like MailApp.composeWithPreset()'s preset does
+				if (field == 'bodyMimeType') continue;
+
+				// mail_htmltext, not 'body' - MailCompose's actual widget id for the message body
+				// (compose.php's own bootstrap args use the same 'body' preset key, but resolve it
+				// through applyPresetBody() instead of a generic widget lookup - this reuse path has
+				// no equivalent, so needs the real widget id directly). Found live, ticket #125211:
+				// a mailto: link's ?body= silently threw here (no widget literally called "body"),
+				// caught below, logged, and dropped - same root cause as subject/to already being
+				// silently dropped entirely before mailto() forwarded them at all.
+				if (field == 'body')
+				{
+					const bodyWidget = compose_et2[0].widgetContainer.getWidgetById('mail_htmltext');
+					const isHtml = content['bodyMimeType'] !== 'plain';
+					const addition = isHtml ? content[field] : MailJmap.escapeHtml(content[field]).replace(/\n/g, '<br/>');
+					bodyWidget.set_value(addition + (bodyWidget.getValue() || ''));
+					continue;
+				}
+
 				const widget = compose_et2[0].widgetContainer.getWidgetById(field);
 
 				// Merge array values, replace strings
