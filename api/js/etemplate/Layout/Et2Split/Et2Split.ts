@@ -143,8 +143,10 @@ export class Et2Split extends Et2Widget(SlSplitPanel)
 	 */
 	isDocked()
 	{
-		// Docked if we have a primary set, and we're all the way to one side
-		return (this.primary == "start" && this.position == 100) || (this.primary == "end" && this.position == 0);
+		// Docked if we have a primary set, and we're all the way to one side.
+		// position is a float recalculated from pixel sizes, so it rarely lands exactly on 0 or 100 - and
+		// older versions could store a value outside 0-100, which an exact test would never match.
+		return (this.primary == "start" && this.position >= 100) || (this.primary == "end" && this.position <= 0);
 	}
 
 	/**
@@ -164,7 +166,8 @@ export class Et2Split extends Et2Widget(SlSplitPanel)
 			dock = !this.isDocked();
 		}
 
-		let undocked = (typeof this._undock_position == "undefined" || [0, 100].indexOf(this._undock_position) != -1) ? 50 : this._undock_position;
+		let undocked = (typeof this._undock_position == "undefined" || this._undock_position <= 0 || this._undock_position >= 100) ?
+					   50 : this._undock_position;
 		this.position = dock ? (this.primary == 'start' ? 100 : 0) : undocked;
 	}
 
@@ -214,7 +217,9 @@ export class Et2Split extends Et2Widget(SlSplitPanel)
 		{
 			// Doesn't matter if it's left or top or what, we just want the number
 			this.position = parseInt(Object.values(pref)[0]);
-			if(typeof this.position != "number" || isNaN(this.position))
+			// Fall back to the default for anything unusable, including values outside 0-100 left behind by
+			// older versions.  An out of range position parks one panel off screen with no way to get it back.
+			if(typeof this.position != "number" || isNaN(this.position) || this.position < 0 || this.position > 100)
 			{
 				this.position = 50;
 			}
@@ -234,9 +239,18 @@ export class Et2Split extends Et2Widget(SlSplitPanel)
 			return;
 		}
 
-		// Store current position in preferences
-		let size = this.vertical ? {sizeTop: Math.round(this.position)} : {sizeLeft: Math.round(this.position)};
-		this.egw().set_preference(this.egw().getAppName(), Et2Split.PREF_PREFIX + this.id, size);
+		// Docked is a temporary view state, not a size the user chose.  Storing it would overwrite their
+		// preference with 0 or 100 and leave us nothing to undock back to.
+		if(!this.isDocked())
+		{
+			// Keep the stored value inside 0-100.  Whenever the panel gets smaller, position is recalculated
+			// from a cached pixel size with no limit applied, which can push it past 100.
+			const position = Math.min(100, Math.max(0, Math.round(this.position)));
+
+			// Store current position in preferences
+			let size = this.vertical ? {sizeTop: position} : {sizeLeft: position};
+			this.egw().set_preference(this.egw().getAppName(), Et2Split.PREF_PREFIX + this.id, size);
+		}
 
 		// make sure mouse up is handled when the mouse position has crossed the min/max points. The mouseup event does not
 		// get called naturally in those situations.
@@ -296,8 +310,8 @@ export class Et2Split extends Et2Widget(SlSplitPanel)
 	 */
 	_handleResize(e, timeout = 100)
 	{
-		// Update where we would undock to
-		if(this.position != 0 && this.position != 100)
+		// Update where we would undock to, skipping docked & out of range positions
+		if(this.position > 0 && this.position < 100)
 		{
 			this._undock_position = this.position;
 		}
