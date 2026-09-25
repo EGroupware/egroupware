@@ -2898,20 +2898,22 @@ export class MailJmap
 				return {special: true};
 			}
 			this.pgpEncryptedCache[rowId] = !!this.findPgpPart(email.bodyStructure);
-			if (this.isSpecialCase(email.bodyStructure))
+			if (this.isSpecialCase(email.bodyStructure) || this.isBareAttachmentBody(email.bodyStructure))
 			{
-				// S/MIME/TNEF: decrypt/decode is 100% server-side either way (private key material,
-				// binary-format decoding) - mail.EGroupware\\Mail\\Ui.ajax_resolveSpecialCaseBody() is the lean
-				// JSON counterpart of the classic full-page iframe fallback (MessageDisplayHandler::
-				// tryJmapNativeSpecialCase()), reusing the exact same resolveSmime()/resolveTnef()
-				// primitives. Returns null for anything it can't handle (meeting invites/text-calendar
-				// - unrelated to S/MIME/TNEF and never routed here server-side either, JMAP
-				// unreachable, ...), in which case this falls back to the classic iframe load exactly
-				// as before. A still-needed passphrase throws JmapSmimePassphraseError instead (2026-
-				// 09-01 follow-up: the classic fallback pays the exact "20s timeout, empty response"
-				// raw-IMAP-EMAILID-search cost this whole path exists to avoid for a Stalwart row, so
-				// it's not actually usable as a passphrase-prompt fallback) - caller shows its own
-				// dialog and retries with the passphrase, same as the send-side flow.
+				// S/MIME/TNEF/bare: rendering is 100% server-side either way (private key material,
+				// binary-format decoding, or just structureToHtml()'s own bare-content data: URI
+				// embed for the "bare" case) - mail.EGroupware\\Mail\\Ui.ajax_resolveSpecialCaseBody()
+				// is the lean JSON counterpart of the classic full-page iframe fallback
+				// (MessageDisplayHandler::tryJmapNativeSpecialCase()), reusing the exact same
+				// resolveSmime()/resolveTnef()/resolveBare() primitives. Returns null for anything it
+				// can't handle (meeting invites/text-calendar - unrelated to S/MIME/TNEF/bare and
+				// never routed here server-side either, JMAP unreachable, ...), in which case this
+				// falls back to the classic iframe load exactly as before. A still-needed passphrase
+				// throws JmapSmimePassphraseError instead (2026-09-01 follow-up: the classic fallback
+				// pays the exact "20s timeout, empty response" raw-IMAP-EMAILID-search cost this whole
+				// path exists to avoid for a Stalwart row, so it's not actually usable as a
+				// passphrase-prompt fallback) - caller shows its own dialog and retries with the
+				// passphrase, same as the send-side flow.
 				const resolved = await this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_resolveSpecialCaseBody',
 					[rowId, htmlOptions || '', passphrase || '', passExpMinutes ?? null]);
 				if (resolved?.needsPassphrase)
@@ -3515,6 +3517,27 @@ export class MailJmap
 			return true;
 		}
 		return (part.subParts || []).some((sub : any) => this.isSpecialCase(sub));
+	}
+
+	/**
+	 * A message whose ENTIRE content is one bare application/pdf or image part - no multipart
+	 * wrapper, no separate text/plain or text/html body anywhere (ticket #125171: SAP NetWeaver
+	 * sends the order PDF as a bare top-level "Content-Type: application/pdf", nothing else).
+	 * findBody() can't find a body here since there genuinely isn't one, so
+	 * emailBodyFields()/assembleBodyHtml() would otherwise show a literally blank message even
+	 * though `attachments` correctly lists the PDF/image.
+	 *
+	 * Deliberately top-level-only, UNLIKE isSpecialCase()'s recursive subParts walk - that walk's
+	 * false positives are harmless (specialCaseType() re-checks narrowly server-side and simply
+	 * returns null, falling back to the normal path), but doing the same here would send an extra
+	 * round trip for every single ordinary message with a pdf/image ATTACHMENT next to a proper
+	 * body (an extremely common shape), not just the rare bare-message case this actually targets.
+	 */
+	private isBareAttachmentBody(part : any) : boolean
+	{
+		if (!part || part.subParts) return false;
+		const type = (part.type || '').toLowerCase();
+		return type === 'application/pdf' || type.startsWith('image/');
 	}
 
 	/**
@@ -4272,9 +4295,16 @@ export class MailJmap
 		// browser - kept alongside 'self' rather than replacing it, since 'self' still correctly
 		// covers whichever browsers DID resolve it right.
 		const nonce = MailJmap.randomNonce();
-		const csp = "frame-src " + (forMailvelope ? "'self'" : "'none'") + "; " +
+		// frame-src/object-src both need 'blob:' (not just 'none'/'self') for the bare-PDF case
+		// (resolveBarePdfEmbed()) - Chrome's built-in PDF viewer, loading an <embed>'s blob: URL,
+		// hits both directives (found live via the exact console violations: "Framing 'blob:...'
+		// violates ... frame-src 'none'" AND a separate object-src check) - safe to allow broadly
+		// for this document specifically: a blob: URL is only ever creatable by THIS SAME script
+		// (URL.createObjectURL()), a message body's own HTML can never itself supply one, so this
+		// adds no attacker-reachable capability.
+		const csp = "frame-src " + (forMailvelope ? "'self'" : "blob:") + "; " +
 			"connect-src 'none'; manifest-src 'none'; script-src 'self' 'nonce-"+nonce+"'; " +
-			"img-src http: blob: data:; media-src https: http: data:";
+			"img-src http: blob: data:; media-src https: http: data:; object-src blob:";
 
 		return `<!DOCTYPE html><html><head><meta charset="utf-8">` +
 			`<meta http-equiv="Content-Security-Policy" content="${csp}">` +
@@ -4310,6 +4340,55 @@ export class MailJmap
 	 * URLs are revoked again the next time this row's body is (re-)rendered.
 	 */
 	private objectUrls : Record<string, string[]> = {};
+
+	/**
+	 * Resolve a bare PDF's base64 payload (Jmap\Imap::structureToHtml()'s "whole message is one
+	 * PDF, no separate body" branch, ticket #125171) into a real blob: URL - Chrome's built-in PDF
+	 * viewer flatly refuses to render a PDF from a data: URI at all (confirmed live: neither
+	 * <embed> nor <iframe> with a data:application/pdf;base64,... src shows anything but a blank/
+	 * broken-plugin area, no CSP/iframe-nesting involved), so the server emits a data-* attribute
+	 * instead of a data: URI src for this one case (unlike the image case, or inlineCidImages()'s
+	 * own data: URI use for a cid: image - both unaffected by this PDF-viewer-specific quirk).
+	 *
+	 * Deliberately called from HERE (the outer page, alongside resolveInlineImages() on the exact
+	 * same iframe) rather than relying on preview.js's own top-level code to do it from INSIDE that
+	 * srcdoc iframe - found live (ralf): preview.js's script tag is present and its own fetched
+	 * content is up to date, yet none of its top-level code (not even the pre-existing click
+	 * listener) actually runs in this specific srcdoc context, for reasons not fully understood.
+	 * This outer-page call site is already proven reliable against the same iframe either way.
+	 *
+	 * Uses `doc.defaultView.URL.createObjectURL()` - the IFRAME's OWN Blob URL registry, not this
+	 * outer page's - found live (ralf, exact console output): "Loading plugin data from ''"
+	 * followed by "Framing 'blob:...' violates ... frame-src 'none'". Chrome partitions the Blob
+	 * URL store per document/frame - a blob: URL created via this outer page's own global `URL`
+	 * resolves to nothing at all once assigned inside the (same-origin, but distinct) srcdoc
+	 * iframe, which is a DIFFERENT failure from the frame-src block also present in that same
+	 * message (see wrapDocument()'s own CSP, which now allows `blob:` there specifically for this).
+	 */
+	resolveBarePdfEmbed(doc : Document) : void
+	{
+		doc.querySelectorAll('embed[data-bare-pdf-base64]').forEach((embed) =>
+		{
+			const base64 = embed.getAttribute('data-bare-pdf-base64');
+			embed.removeAttribute('data-bare-pdf-base64');
+			try
+			{
+				const binary = atob(base64);
+				const bytes = new Uint8Array(binary.length);
+				for (let i = 0; i < binary.length; i++)
+				{
+					bytes[i] = binary.charCodeAt(i);
+				}
+				const iframeURL = (doc.defaultView as any)?.URL || URL;
+				(embed as HTMLElement).setAttribute('src',
+					iframeURL.createObjectURL(new Blob([bytes], {type: 'application/pdf'})));
+			}
+			catch (e)
+			{
+				console.error('MailJmap.resolveBarePdfEmbed(): failed', e);
+			}
+		});
+	}
 
 	async resolveInlineImages(doc : Document, rowId : string, result : Extract<JmapBodyResult, { special : false }>) : Promise<void>
 	{

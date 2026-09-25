@@ -5277,7 +5277,11 @@ class Mail
 		if ($output_no_body && ($_structure->getType() === 'application/pdf' || $_structure->getPrimaryType() === 'image'))
 		{
 			header('Content-Type: '.$_structure->getType());
-			echo $this->getAttachment($_uid, $_partID ?? '1', 0, true, $_folder)->getContents();
+			// see BodyDecoding::decodeIfStillBase64()'s own docblock (ticket #125171 follow-up) -
+			// a sender that declares Content-Type but omits Content-Transfer-Encoding entirely,
+			// while still sending base64 TEXT as the body, would otherwise stream that literal
+			// text to the browser instead of the real PDF/image bytes
+			echo Mail\BodyDecoding::decodeIfStillBase64($this->getAttachment($_uid, $_partID ?? '1', 0, true, $_folder)->getContents());
 			exit();
 		}
 
