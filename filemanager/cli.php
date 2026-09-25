@@ -16,7 +16,7 @@
 use EGroupware\Api;
 use EGroupware\Api\Vfs;
 
-chdir(dirname(__FILE__));	// to enable our relative pathes to work
+chdir(__DIR__);	// to enable our relative pathes to work
 
 error_reporting(error_reporting() & ~E_NOTICE & ~E_DEPRECATED);
 
@@ -185,7 +185,7 @@ while(!is_null($option = array_shift($args)))
 			break;
 	}
 }
-if ($user && $passwd)
+if (!empty($user) && !empty($passwd))
 {
 	load_egw($user, $passwd, $domain);
 }
@@ -700,8 +700,8 @@ function do_stat($url,$long=false,$numeric=false,$full_path=false,$inode=false)
 function hsize($size)
 {
 	if ($size < 1024) return $size;
-	if ($size < 1024*1024) return sprintf('%3.1lfk',(float)$size/1024);
-	return sprintf('%3.1lfM',(float)$size/(1024*1024));
+	if ($size < 1024*1024) return sprintf('%3.1fk',(float)$size/1024);
+	return sprintf('%3.1fM',(float)$size/(1024*1024));
 }
 
 
