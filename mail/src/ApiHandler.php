@@ -558,6 +558,30 @@ class ApiHandler extends Api\CalDAV\Handler
 	 * @return array
 	 * @throws \Exception
 	 */
+	/**
+	 * Mime-type for a REST-uploaded attachment's local server temp file
+	 *
+	 * NOT Api\Vfs::mime_content_type() - that one's very first step,
+	 * Vfs::resolve_url_symlinks(), returns null for an ordinary path outside the VFS root
+	 * (a temp_dir path always is), so it always short-circuits straight to `return false` -
+	 * found live (a REST-composed attachment's "click to view" never worked, unlike one attached
+	 * through the UI: the type Et2HtmlArea's own image-preview branches on was simply missing).
+	 * PHP's own mime_content_type() (real, content-sniffing detection) works directly on a plain
+	 * local path with no such prerequisite; MimeMagic::filename2mime() (extension-based) is the
+	 * same fallback Vfs::mime_content_type() itself uses, applied to the ORIGINAL uploaded name
+	 * rather than the temp path (which never has a recognisable extension - the random suffix
+	 * tempnam() appends comes after it).
+	 *
+	 * @param string $path local server temp file path
+	 * @param string $originalName the name the client uploaded it under
+	 * @return string
+	 */
+	protected static function localFileMimeType(string $path, string $originalName) : string
+	{
+		return (function_exists('mime_content_type') ? mime_content_type($path) : null) ?:
+			Api\MimeMagic::filename2mime($originalName);
+	}
+
 	protected static function prepareAttachments(array $attachments, ?string $attachmentType=null, ?string $expiration=null, ?string $password=null, bool $compose=true)
 	{
 		$ret = [];
@@ -579,7 +603,7 @@ class ApiHandler extends Api\CalDAV\Handler
 					// to open a compose window never showed up in it)
 					$ret['attachmentContents'][] = [
 						'name' => $matches[2],
-						'type' => Api\Vfs::mime_content_type($path),
+						'type' => self::localFileMimeType($path, $matches[2]),
 						'content' => base64_encode(file_get_contents($path)),
 					];
 				}
@@ -587,7 +611,7 @@ class ApiHandler extends Api\CalDAV\Handler
 				{
 					$ret['attachments'][] = [
 						'name' => $matches[2],
-						'type' => Api\Vfs::mime_content_type($path),
+						'type' => self::localFileMimeType($path, $matches[2]),
 						'file' => $path,
 						'size' => filesize($path),
 					];
