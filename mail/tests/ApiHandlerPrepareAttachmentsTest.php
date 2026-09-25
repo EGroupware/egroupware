@@ -83,6 +83,31 @@ class ApiHandlerPrepareAttachmentsTest extends Api\LoggedInTest
 		}
 	}
 
+	/**
+	 * Regression coverage for a live follow-up report: "clicking on the attachment ... does NOT
+	 * work, while it works when ... attaching an image [through the UI]" - Api\Vfs::
+	 * mime_content_type()'s very first step (resolve_url_symlinks()) returns null for an ordinary
+	 * path outside the VFS root (a temp_dir path always is), so it always short-circuited
+	 * straight to `false` - the attachment reached the compose window fine (the tests above), but
+	 * with no usable type at all, breaking whatever client-side code (an image preview) branches
+	 * on it.
+	 */
+	public function testComposeModeDetectsARealMimeTypeNotVfsFalse()
+	{
+		[$tokens, $paths] = $this->makeAttachmentTokens(['note.txt' => "plain text content\n"]);
+		try
+		{
+			$result = $this->invokeApiHandler('prepareAttachments', [$tokens, null, null, null, true]);
+
+			$this->assertNotFalse($result['attachmentContents'][0]['type']);
+			$this->assertSame('text/plain', $result['attachmentContents'][0]['type']);
+		}
+		finally
+		{
+			array_map('unlink', $paths);
+		}
+	}
+
 	public function testSendModeWithOneTokenProducesAttachmentsArray()
 	{
 		$content = 'plain send content';
