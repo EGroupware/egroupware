@@ -2448,6 +2448,18 @@ class Ui
 	}
 
 	/**
+	 * Envelope (From/To/Cc/Bcc/Subject/Date) of a message/rfc822 sub-part - see
+	 * MessageDisplayHandler::fetchMessagePartEnvelope()'s own docblock.
+	 *
+	 * @param string $_messageID the CONTAINING message's own row id
+	 * @param string $_partID the attached message/rfc822 sub-part's mime id
+	 */
+	function ajax_fetchMessagePartEnvelope($_messageID, $_partID)
+	{
+		Api\Json\Response::get()->data($this->messageDisplayHandler()->fetchMessagePartEnvelope($_messageID, $_partID));
+	}
+
+	/**
 	 * ajax_setFolderStatus - its called via json, so the function must start with ajax (or the class-name must contain ajax)
 	 * gets the counters and sets the text of a treenode if needed (unread Messages found)
 	 * @param array $_folder folders to refresh its unseen message counters

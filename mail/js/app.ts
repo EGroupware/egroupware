@@ -2386,6 +2386,41 @@ export class MailApp extends EgwApp
 			{
 				this.renderPopupMessage(details, rowId);
 			}
+			// content.part means this popup is showing a message/rfc822 SUB-part (a forward-as-
+			// attachment's own carried message) - renderPopupMessage() above always shows the
+			// CONTAINING message's own From/To/Subject (it has no concept of a sub-part, see its own
+			// docblock), which is wrong for a real forwarded message (found live 2026-09-25, ralf: a
+			// forwarded GitHub notification's popup showed HIS OWN From/To instead of GitHub's).
+			// Overrides just the header/address fields once the attached message's own envelope is
+			// known, on top of whatever renderPopupMessage() already rendered (attachments, uid,
+			// caching, ... all stay the CONTAINING message's own - only the visible header is wrong).
+			// Local-shim accounts only - see fetchMessagePartEnvelope()'s own docblock for why.
+			if (rowId && details && content.part)
+			{
+				this.jmap.isLocalAccount(this.jmap.messageReference(rowId).profileID).then((isLocal) =>
+				{
+					if (!isLocal) return;
+					return this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_fetchMessagePartEnvelope', [rowId, content.part]);
+				}).then((envelope : any) =>
+				{
+					if (!envelope) return;
+					const current = egw.dataGetUIDdata(rowId)?.data ?? {};
+					details.set_value({content: {
+						...current,
+						subject: envelope.subject,
+						date: envelope.date,
+						// fromaddress/toaddress (not just the "additional..." widgets) also drive the
+						// avatar's contactId and the "To" row's disabled="!@toaddress" expression
+						// (mail/templates/default/display.xet) - keep both in sync.
+						fromaddress: envelope.from,
+						toaddress: envelope.to,
+						additionalfromaddress: envelope.from,
+						additionaltoaddress: envelope.to,
+						ccaddress: envelope.cc,
+						bccaddress: envelope.bcc,
+					}});
+				}).catch((e) => console.error('MailApp.display(): fetchMessagePartEnvelope failed', e));
+			}
 
 			// Body: same JMAP-native fast path the main preview pane already has
 			// (loadMessageBody(), falling back to the classic server-rendered iframe src for
