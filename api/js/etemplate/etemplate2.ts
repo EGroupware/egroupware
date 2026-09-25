@@ -842,8 +842,22 @@ export class etemplate2
 						// Trigger the "resize" event
 						this.resize();
 
-						// Automatically set focus to first visible input for popups
-						if(this._widgetContainer.egw().is_popup() && jQuery('[autofocus]', this._DOMContainer).focus().length == 0)
+						// Automatically set focus to first visible input for popups - is_popup()
+						// alone is not reliable enough here: found live (ticket #124961) that a
+						// meeting-request e-mail's calendar.calendar_uiforms::meeting() render,
+						// loaded into an ordinary nested <iframe> inside the mail preview pane
+						// (never a real, detached window), still reports is_popup() === true - its
+						// own window.opener ends up set even though it's plainly NOT its own
+						// window.top. A genuine popup always IS its own top-level browsing context,
+						// so requiring that too excludes any such nested/embedded case regardless of
+						// why its is_popup() misfires, without touching real popups at all. Without
+						// this, the comment field's auto-focus stole keyboard focus from the mail
+						// list, breaking arrow-key navigation between messages the moment a
+						// meeting-request preview loaded.
+						const ownWindow = this._DOMContainer.ownerDocument.defaultView;
+						const explicitAutofocus : HTMLElement = this._DOMContainer.querySelector('[autofocus]');
+						explicitAutofocus?.focus();
+						if(ownWindow === ownWindow.top && this._widgetContainer.egw().is_popup() && !explicitAutofocus)
 						{
 							this.focusOnFirstInput();
 						}
