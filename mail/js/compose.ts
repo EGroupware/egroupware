@@ -2675,7 +2675,16 @@ export class MailCompose
 	{
 		const isHtml = this.et2.getWidgetById('mimeType')?.get_value() !== false;
 		const hasAttachments = Object.keys(this.et2.getArrayMgr('content').getEntry('attachments') || {}).length > 0;
-		let body = this.et2.getWidgetById(isHtml ? 'mail_htmltext' : 'mail_plaintext')?.get_value();
+		// getValue(true), not the legacy get_value() (which always calls plain getValue(), no
+		// args) - ticket #125241: Et2HtmlArea's own applyDefaultFont only inlines the user's
+		// preferred font/size into the markup when its OWN getValue() sees submit_value===true
+		// (its own docblock: "easier to do here before submit than to do it server-side"). The
+		// classic postback path always passed that (etemplate2.ts's getValues(): "true: let widget
+		// know getValue()/submit is calling it") on every form submit; this JMAP-native compose
+		// never had an equivalent postback at all, so the font/size never got inlined for a real
+		// send - found live (ralf, relaying a real customer's report): a message's font/size in
+		// the Sent folder didn't match what was shown while composing it.
+		let body = this.et2.getWidgetById(isHtml ? 'mail_htmltext' : 'mail_plaintext')?.getValue(true);
 		// only for the actual outgoing message, not a saved draft - the widget itself keeps the
 		// marker (unwrapping here only affects this local copy), so a draft reopened later can
 		// still locate it for a clean identity-switch signature swap (updateSignatureForIdentity()).
