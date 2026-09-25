@@ -1,6 +1,6 @@
 import {assert} from "@open-wc/testing";
 import * as sinon from "sinon";
-import {MailJmap} from "../jmap";
+import {JmapUserError, MailJmap} from "../jmap";
 import type {MailApp} from "../app";
 
 /**
@@ -84,5 +84,35 @@ describe('MailJmap.resolveDistributionLists()', () =>
 		assert.equal(result.body, 'Body');
 		assert.isTrue(result.isHtml);
 		assert.deepEqual(result.attachments, [{name : 'a.pdf'}]);
+	});
+
+	/**
+	 * Ticket #125201: a server-side failure resolving the list(s) (PHP exception, ACL failure, ...)
+	 * never reaches here as a rejection - egw.request() swallows it into its own separate "A
+	 * request to the EGroupware server returned with an error" message and resolves with undefined
+	 * (Json.handleError(), api/js/jsapi/egw_json.ts). Without an explicit check, `resolved.to`
+	 * would throw a generic, unrecognisable TypeError instead of this clear JmapUserError - and
+	 * sendNewEmail()'s catch (describeJmapError() only understands JMAP-shaped {type, description}
+	 * errors) would mislabel that TypeError as the totally unrelated "Account not reachable".
+	 */
+	it('throws a clear JmapUserError, not a cryptic TypeError, when the server request fails', async() =>
+	{
+		request = sinon.spy(async() => undefined);
+		const egw = {request, lang : (s : string) => s};
+		jmap = new MailJmap({egw} as unknown as MailApp);
+		const email = {to : '"Some List" <5@lists.egroupware.org>', subject : 's', body : 'b'};
+
+		let error : any;
+		try
+		{
+			await (jmap as any).resolveDistributionLists(email);
+		}
+		catch (e)
+		{
+			error = e;
+		}
+
+		assert.instanceOf(error, JmapUserError);
+		assert.equal(error.message, 'Failed to resolve distribution list(s)');
 	});
 });
