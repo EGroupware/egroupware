@@ -6335,6 +6335,18 @@ export class MailJmap
 		}
 		const resolved : {to : string[], cc : string[], bcc : string[]} = await this.egw.request(
 			'mail.EGroupware\\Mail\\Compose.ajax_resolveDistributionLists', [{to, cc, bcc}]);
+		if (!resolved)
+		{
+			// egw.request() never rejects on a server-side error (PHP exception, ACL failure, ...)
+			// - it just pops its own "A request to the EGroupware server returned with an error"
+			// message and resolves with undefined (Json.handleError(), api/js/jsapi/egw_json.ts).
+			// Without this check, `resolved.to` below throws a generic TypeError that
+			// sendNewEmail()'s catch can't tell apart from a real "account unreachable"
+			// (describeJmapError() only recognises JMAP-shaped {type, description} errors) - a
+			// failed distribution-list expansion silently became a completely misleading "Account
+			// not reachable", with no hint the actual problem is list-specific (ticket #125201).
+			throw new JmapUserError(this.egw.lang('Failed to resolve distribution list(s)'));
+		}
 		return {...email, to : resolved.to, cc : resolved.cc, bcc : resolved.bcc};
 	}
 

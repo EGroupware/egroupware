@@ -550,13 +550,13 @@ trait ComposeMessageBuilder
 	 */
 	static function resolveEmailAddressList($_emailAddressList)
 	{
-		static $contacts_obs = null;
+		static $contacts_obj = null;
 		$addrFromList=array();
 		foreach((array)$_emailAddressList as $ak => $address)
 		{
 			if(is_numeric($address) && $address > 0 || preg_match('/ <(-?\d+)@lists.egroupware.org>$/', $address, $matches))
 			{
-				if(!isset($contacts_obs))
+				if(!isset($contacts_obj))
 				{
 					$contacts_obj = new Api\Contacts();
 				}
