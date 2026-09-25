@@ -142,7 +142,30 @@ class ApiHandler extends Api\CalDAV\Handler
 						throw new \Exception("User '$account_lid' (#$user) is NOT online", 404);
 					}
 					$push = new Api\Json\Push($user);
-					$push->call('egw.open', '', 'mail', 'add', $params+['preset' => $preset], '_blank', 'mail');
+					if ($params)
+					{
+						// replyEml above set reply_id/from - MailApp.composeWithPreset() only ever
+						// opens a genuinely new compose (from/id hardcoded empty, no reply_id/from
+						// support at all), so this narrower combination still goes through the
+						// generic popup mechanism, same as before
+						$push->call('egw.open', '', 'mail', 'add', $params+['preset' => $preset], '_blank', 'mail');
+					}
+					else
+					{
+						// MailApp.composeWithPreset() is the client-side function actually built
+						// to carry a preset correctly - JSON-encodes it up front and transparently
+						// falls back to POST (composeWithPresetPost()) when that's too long for a
+						// GET url, exactly the case an attachmentContents/files-bearing preset can
+						// hit. The generic egw.open() used above doesn't do either: it
+						// bracket-flattens $preset's own nested arrays-of-objects straight into
+						// the query string ("preset[attachmentContents][]=[object Object]" - an
+						// implicit JS toString() on the object - found live), and even a plain
+						// scalar preset never actually worked through it either way, attachments
+						// or not - compose.php's own $_REQUEST['preset'] is only ever read as ONE
+						// json_decode()d string (composeWithPreset()'s own convention), never as
+						// bracket-nested params.
+						$push->call('app.mail.composeWithPreset', $preset);
+					}
 					echo json_encode([
 						'status' => 200,
 						'message' => 'Request to open compose window sent',
