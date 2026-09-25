@@ -129,16 +129,47 @@ jobs:
           restore-keys: |
             composer-cache-${{ runner.os }}-
 
+      # vendor/ is not the whole of "composer install": composer/installers puts the 15
+      # egroupware-app packages (tracker, projectmanager, smallpart, collabora, ...) into
+      # top-level directories instead.  Caching vendor/ on its own would restore an
+      # installed.json claiming those apps are present, composer would not reinstall the
+      # missing directories, and both suites would quietly run fewer tests - so the whole
+      # result is cached as one archive, with the app list read out of composer.lock rather
+      # than written down here where it would drift.
+      #
+      # The key is composer.lock's hash and there are deliberately no restore-keys: a near
+      # miss must not serve a tree built from a different lock file.  It is either exactly
+      # this lock's install, or a fresh one.  Skipped for an extra-apps run, whose "Checkout
+      # additional apps" step replaces composer's copy of an app with a git clone - that tree
+      # must never be packed up and handed to a later run.
+      - name: Cache composer install
+        id: composer-install-cache
+        if: inputs.test-scope != 'extra-apps'
+        uses: actions/cache@v4
+        with:
+          path: ~/composer-install.tar
+          key: composer-install-${{ runner.os }}-${{ hashFiles('sources/composer.lock') }}
+
       - name: Install PHP dependencies in sources
         shell: bash
         run: |
           set -euo pipefail
-          COMPOSER_CACHE_DIR="${HOME}/.composer/cache"
-          docker run --rm --user "$(id -u):$(id -g)" \
-            -v "${COMPOSER_CACHE_DIR}":/tmp/composer-cache \
-            -v "${GITHUB_WORKSPACE}/sources":/app -w /app \
-            -e COMPOSER_CACHE_DIR=/tmp/composer-cache \
-            composer install --no-interaction --ignore-platform-reqs
+          if [ "${{ steps.composer-install-cache.outputs.cache-hit }}" = "true" ]; then
+            tar -xf "${HOME}/composer-install.tar" -C "${GITHUB_WORKSPACE}/sources"
+          else
+            COMPOSER_CACHE_DIR="${HOME}/.composer/cache"
+            docker run --rm --user "$(id -u):$(id -g)" \
+              -v "${COMPOSER_CACHE_DIR}":/tmp/composer-cache \
+              -v "${GITHUB_WORKSPACE}/sources":/app -w /app \
+              -e COMPOSER_CACHE_DIR=/tmp/composer-cache \
+              composer install --no-interaction --ignore-platform-reqs
+            # Pack vendor plus every directory composer installed an app into, so a restore
+            # reproduces this tree exactly.  tar fails loudly if one is missing, rather than
+            # caching an incomplete install.
+            APPS=$(jq -r '.packages[] | select(.type=="egroupware-app") | .name | split("/")[1]' \
+              "${GITHUB_WORKSPACE}/sources/composer.lock")
+            tar -cf "${HOME}/composer-install.tar" -C "${GITHUB_WORKSPACE}/sources" vendor $APPS
+          fi
           php "${GITHUB_WORKSPACE}/sources/install-cli.php" --git-apps pull
 
       - name: Mint installation token for additional apps
@@ -847,16 +878,47 @@ jobs:
           restore-keys: |
             composer-cache-${{ runner.os }}-
 
+      # vendor/ is not the whole of "composer install": composer/installers puts the 15
+      # egroupware-app packages (tracker, projectmanager, smallpart, collabora, ...) into
+      # top-level directories instead.  Caching vendor/ on its own would restore an
+      # installed.json claiming those apps are present, composer would not reinstall the
+      # missing directories, and both suites would quietly run fewer tests - so the whole
+      # result is cached as one archive, with the app list read out of composer.lock rather
+      # than written down here where it would drift.
+      #
+      # The key is composer.lock's hash and there are deliberately no restore-keys: a near
+      # miss must not serve a tree built from a different lock file.  It is either exactly
+      # this lock's install, or a fresh one.  Skipped for an extra-apps run, whose "Checkout
+      # additional apps" step replaces composer's copy of an app with a git clone - that tree
+      # must never be packed up and handed to a later run.
+      - name: Cache composer install
+        id: composer-install-cache
+        if: inputs.test-scope != 'extra-apps'
+        uses: actions/cache@v4
+        with:
+          path: ~/composer-install.tar
+          key: composer-install-${{ runner.os }}-${{ hashFiles('sources/composer.lock') }}
+
       - name: Install PHP dependencies in sources
         shell: bash
         run: |
           set -euo pipefail
-          COMPOSER_CACHE_DIR="${HOME}/.composer/cache"
-          docker run --rm --user "$(id -u):$(id -g)" \
-            -v "${COMPOSER_CACHE_DIR}":/tmp/composer-cache \
-            -v "${GITHUB_WORKSPACE}/sources":/app -w /app \
-            -e COMPOSER_CACHE_DIR=/tmp/composer-cache \
-            composer install --no-interaction --ignore-platform-reqs
+          if [ "${{ steps.composer-install-cache.outputs.cache-hit }}" = "true" ]; then
+            tar -xf "${HOME}/composer-install.tar" -C "${GITHUB_WORKSPACE}/sources"
+          else
+            COMPOSER_CACHE_DIR="${HOME}/.composer/cache"
+            docker run --rm --user "$(id -u):$(id -g)" \
+              -v "${COMPOSER_CACHE_DIR}":/tmp/composer-cache \
+              -v "${GITHUB_WORKSPACE}/sources":/app -w /app \
+              -e COMPOSER_CACHE_DIR=/tmp/composer-cache \
+              composer install --no-interaction --ignore-platform-reqs
+            # Pack vendor plus every directory composer installed an app into, so a restore
+            # reproduces this tree exactly.  tar fails loudly if one is missing, rather than
+            # caching an incomplete install.
+            APPS=$(jq -r '.packages[] | select(.type=="egroupware-app") | .name | split("/")[1]' \
+              "${GITHUB_WORKSPACE}/sources/composer.lock")
+            tar -cf "${HOME}/composer-install.tar" -C "${GITHUB_WORKSPACE}/sources" vendor $APPS
+          fi
 
       - name: Mint installation token for additional apps
         id: extra-apps-app-token
@@ -942,7 +1004,18 @@ jobs:
       - name: Install Playwright system dependencies
         run: npx playwright install-deps ${{ matrix.browser }}
 
+      # package-lock.json is what pins the Playwright version, so a bump changes the key and
+      # downloads the matching browser.  No restore-keys, for the same reason as above: a
+      # near miss would hand this job a browser from a different Playwright version.
+      - name: Cache Playwright ${{ matrix.browser }}
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ matrix.browser }}-${{ hashFiles('sources/package-lock.json') }}
+
       - name: Install Playwright ${{ matrix.browser }}
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         timeout-minutes: 10
         env:
           DEBUG: pw:install
