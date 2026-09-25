@@ -926,4 +926,80 @@ class MessageDisplayHandler
 		$bodyResponse = $this->get_load_email_data($messageID,$_partID,$folder,$_htmloptions, $_POST['smime_passphrase'] ?? null, $uidA['emailID'] ?? null);
 		echo $bodyResponse;
 	}
+
+	/**
+	 * Envelope (From/To/Cc/Bcc/Subject/Date) of a message/rfc822 SUB-PART - the "view an attached
+	 * message" popup's own header/address row (mail/js/app.ts's display()) otherwise always shows
+	 * the CONTAINING message's own envelope (mail_ui::displayMessage() only ever populates
+	 * content.mail_id from the outer row - see its own docblock), which is wrong for a real
+	 * forward-as-attachment: found live 2026-09-25 (ralf), a forwarded GitHub notification's popup
+	 * showed HIS OWN From/To instead of GitHub's.
+	 *
+	 * Local-shim accounts only (mail/js/jmap.ts's MailApp.display() gates this the same way its own
+	 * body-fetch fallback does) - Api\Mail::getMessageHeader() with a $_partID falls through to a
+	 * real IMAP HEADER.FIELDS fetch for a JMAP-native (Stalwart) row too, at the same "real IMAP UID
+	 * needed" cost fetchBodyFromMessagePart()'s own raw-dump shortcut exists specifically to avoid
+	 * there - not worth paying just for the header when a local-shim row already has a real UID for
+	 * free.
+	 *
+	 * @param string $_messageID the CONTAINING message's own row id
+	 * @param string $_partID the attached message/rfc822 sub-part's mime id
+	 * @return array|null {subject, from, to, cc, bcc: string; date: int|null} - null if unresolvable
+	 */
+	public function fetchMessagePartEnvelope($_messageID, $_partID)
+	{
+		if (empty($_messageID) || empty($_partID))
+		{
+			return null;
+		}
+		$uidA = Mail::splitRowID($_messageID);
+		$icServerID = $uidA['profileID'];
+		$rememberServerID = $this->ui->mail_bo->profileID;
+		if ($icServerID && $icServerID != $rememberServerID)
+		{
+			$this->ui->changeProfile($icServerID);
+		}
+		$uid = $uidA['msgUID'];
+		$folder = $uidA['folder'];
+		if (empty($uid))
+		{
+			if ($rememberServerID != $this->ui->mail_bo->profileID)
+			{
+				$this->ui->changeProfile($rememberServerID);
+			}
+			return null;
+		}
+		try
+		{
+			$header = $this->ui->mail_bo->getMessageHeader($uid, $_partID, true, false, $folder);
+		}
+		catch (\Throwable $e)
+		{
+			$header = null;
+		}
+		if ($rememberServerID != $this->ui->mail_bo->profileID)
+		{
+			$this->ui->changeProfile($rememberServerID);
+		}
+		if (empty($header))
+		{
+			return null;
+		}
+		$field = static function($name) use ($header)
+		{
+			$value = $header[$name] ?? '';
+			// a folded/repeated header can survive as an array (getMessageHeader()'s own SUBJECT
+			// special-case comment) - last one wins, same convention it already uses
+			return is_array($value) ? end($value) : $value;
+		};
+		$date = $field('DATE');
+		return [
+			'subject' => $field('SUBJECT'),
+			'from' => $field('FROM'),
+			'to' => $field('TO'),
+			'cc' => $field('CC'),
+			'bcc' => $field('BCC'),
+			'date' => $date !== '' ? strtotime($date) ?: null : null,
+		];
+	}
 }
