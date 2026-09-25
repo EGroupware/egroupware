@@ -3535,13 +3535,35 @@ class Imap extends Jmap\Base
 		$htmlId = $structure->findBody('html');
 
 		$attachments = [];
+		// a message/rfc822 attachment (eg. forward-as-attachment) is ONE opaque attachment - its
+		// own internal structure (headers/body/sub-parts, walked by partIterator() below same as
+		// everything else) must not ALSO be listed as separate top-level attachments of the
+		// CONTAINING message. Found live 2026-09-25 (ralf): a forwarded GitHub notification's
+		// popup listed its own text/plain and text/html alternative parts as "Unknown_Part2.1.txt"/
+		// "Unknown_Part2.2.htm" alongside the real .eml attachment. Mirrors Mail::
+		// getMessageAttachments()'s own classic $skipParts handling for the exact same case.
+		$skipParts = [];
 		foreach ($structure->partIterator() as $part)
 		{
 			/** @var \Horde_Mime_Part $part */
 			$id = $part->getMimeId();
+			if (isset($skipParts[$id]))
+			{
+				continue;
+			}
 			if ($part->getPrimaryType() === 'multipart' || $id === $textId || $id === $htmlId)
 			{
 				continue;
+			}
+			if ($part->getPrimaryType() === 'message')
+			{
+				foreach ($part->contentTypeMap() as $subId => $subType)
+				{
+					if ($subId !== $id)
+					{
+						$skipParts[$subId] = true;
+					}
+				}
 			}
 			$attachments[] = self::bodyPartToJmap($part, $mailbox, $uid);
 		}
