@@ -5,7 +5,10 @@ const growRowRaf = new WeakMap<HTMLElement, number>();
 // Per-host observers: what the layout watches to know it has to look again
 const growRowObservers = new WeakMap<HTMLElement, { resize : ResizeObserver, children : MutationObserver }>();
 // Automatic grow tags (grow attribute not needed)
-const GROW_TAG_SELECTOR = "et2-tabbox";
+// A tabbox and a list are the two widgets that are never the thing a layout should leave space
+// around: whatever sits beside them is a header or a footer, and they want the rest.  Saying
+// grow= on every one of them would only be noise, so the tag is enough on its own.
+const GROW_TAG_SELECTOR = "et2-tabbox, et2-nextmatch";
 const GROW_SELECTOR = `[grow], ${GROW_TAG_SELECTOR}`;
 // Children that stretch from wherever the grid put them to the end of their line
 const SPAN_END_SELECTOR = `[span="end"], [span="*"]`;
@@ -358,7 +361,7 @@ function cleanupGrowRowObserver(host: HTMLElement): void
  * Stack layout: vertical flex.
  * - Most children: normal height
  * - "grow" children: take remaining height
- * - <et2-tabbox>: always grows
+ * - <et2-tabbox> & <et2-nextmatch>: always grow
  */
 export const stackLayoutStrategy : Et2LayoutStrategy = {
 	apply(host, children)
@@ -377,7 +380,7 @@ export const stackLayoutStrategy : Et2LayoutStrategy = {
 /**
  * 2-column layout
  * - CSS handles the grid
- * - JS ensures <et2-tabbox> & [grow] grows
+ * - JS ensures <et2-tabbox>, <et2-nextmatch> & [grow] grows
  */
 export const twoColumnLayoutStrategy : Et2LayoutStrategy = {
 	apply(host, children)

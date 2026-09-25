@@ -763,6 +763,10 @@ body egw-app,
    */
   /* Opt-in growth.  Et2LayoutController overrides flex-grow inline when grow= names a factor,
    * which CSS cannot read out of the attribute.
+   *
+   * A tabbox and a nextmatch grow without asking - they are never what a stack should leave space
+   * around, so needing grow= on every one of them would only be noise.  Keep this list the same as
+   * GROW_TAG_SELECTOR in Et2LayoutStrategies.ts, which decides the same thing for the grid layouts.
    */
 }
 [layout="stack"]::part(base) {
@@ -776,7 +780,8 @@ body egw-app,
   min-height: 0;
 }
 [layout="stack"] [grow],
-[layout="stack"] et2-tabbox {
+[layout="stack"] et2-tabbox,
+[layout="stack"] et2-nextmatch {
   flex: 1 1 auto;
   min-height: 0;
 }
@@ -900,6 +905,10 @@ body egw-app,
   overflow-y: auto;
   overflow-x: hidden;
   /* ---------- FULL-WIDTH ROWS ---------- */
+  /* A tabbox and a nextmatch take every column without being asked, the same way they take the
+	 * leftover height below: half a dialog is not a useful width for either of them, so saying
+	 * span="all" on every one would only be noise.
+	 */
   /* ---------- REST-WIDTH ROWS ---------- */
   /* span="end" / span="*" stretch from their own column to the end of the line, which CSS
 	 * cannot express: `grid-column-end: -1` on an auto-placed item is a span of one ending at
@@ -909,19 +918,25 @@ body egw-app,
 	 */
   /* ---------- DEFAULT COLUMN FLOW ---------- */
   /* ---------- VERTICAL GROW ---------- */
+  /* Keep the automatic tags here the same as GROW_TAG_SELECTOR in Et2LayoutStrategies.ts: that
+	 * is what gives their row a 1fr track, and without the stretch the item would sit at its own
+	 * height inside the track it was just given.
+	 */
   /* ---------- WIDGET CHANGES ---------- */
   /* Grow row sizing is set by Et2LayoutController strategy to target the actual grow row */
 }
 [layout="2-column"] [full],
 [layout="2-column"] [span="all"],
-[layout="2-column"] et2-tabbox {
+[layout="2-column"] et2-tabbox,
+[layout="2-column"] et2-nextmatch {
   grid-column: 1 / -1;
 }
 [layout="2-column"] * {
   min-height: 0;
 }
 [layout="2-column"] [grow],
-[layout="2-column"] et2-tabbox {
+[layout="2-column"] et2-tabbox,
+[layout="2-column"] et2-nextmatch {
   align-self: stretch;
 }
 /* Base container */
@@ -1039,6 +1054,10 @@ body egw-app,
   overflow-y: auto;
   overflow-x: hidden;
   /* ---------- FULL-WIDTH ROWS ---------- */
+  /* A tabbox and a nextmatch take every column without being asked, the same way they take the
+	 * leftover height below: half a dialog is not a useful width for either of them, so saying
+	 * span="all" on every one would only be noise.
+	 */
   /* ---------- REST-WIDTH ROWS ---------- */
   /* span="end" / span="*" stretch from their own column to the end of the line, which CSS
 	 * cannot express: `grid-column-end: -1` on an auto-placed item is a span of one ending at
@@ -1048,19 +1067,25 @@ body egw-app,
 	 */
   /* ---------- DEFAULT COLUMN FLOW ---------- */
   /* ---------- VERTICAL GROW ---------- */
+  /* Keep the automatic tags here the same as GROW_TAG_SELECTOR in Et2LayoutStrategies.ts: that
+	 * is what gives their row a 1fr track, and without the stretch the item would sit at its own
+	 * height inside the track it was just given.
+	 */
   /* ---------- WIDGET CHANGES ---------- */
   /* Grow row sizing is set by Et2LayoutController strategy to target the actual grow row */
 }
 [layout="edit"] [full],
 [layout="edit"] [span="all"],
-[layout="edit"] et2-tabbox {
+[layout="edit"] et2-tabbox,
+[layout="edit"] et2-nextmatch {
   grid-column: 1 / -1;
 }
 [layout="edit"] * {
   min-height: 0;
 }
 [layout="edit"] [grow],
-[layout="edit"] et2-tabbox {
+[layout="edit"] et2-tabbox,
+[layout="edit"] et2-nextmatch {
   align-self: stretch;
 }
 [layout="edit"] {

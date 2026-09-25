@@ -20,9 +20,13 @@
 
   /* Opt-in growth.  Et2LayoutController overrides flex-grow inline when grow= names a factor,
    * which CSS cannot read out of the attribute.
+   *
+   * A tabbox and a nextmatch grow without asking - they are never what a stack should leave space
+   * around, so needing grow= on every one of them would only be noise.  Keep this list the same as
+   * GROW_TAG_SELECTOR in Et2LayoutStrategies.ts, which decides the same thing for the grid layouts.
    */
 
-  [grow], et2-tabbox {
+  [grow], et2-tabbox, et2-nextmatch {
 	flex: 1 1 auto;
 	min-height: 0;
   }

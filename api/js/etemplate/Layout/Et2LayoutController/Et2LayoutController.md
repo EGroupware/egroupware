@@ -125,6 +125,7 @@ wide popup and one column in a narrow sidebar without knowing anything about eit
 - Anything whose class contains `header` or `footer` (`dialogHeader`, `dialogFooter`, `editHeader`, ...) is
   automatically full width, so the title bar and the button row stretch across both columns.
 - `<et2-tabbox>` is full width and at least `20em` tall, so the tabs are not squeezed into half a dialog.
+- `<et2-nextmatch>` is full width too, for the same reason.
 - `<et2-appicon>` does not stretch.
 
 ```xml
@@ -209,7 +210,8 @@ take, `Note` started a line of its own and took all of it.
 boolean attribute does - which is also what lets you write `full="@is_wide"`.  A bare `full=""` is
 false, not "present".
 
-`<et2-tabbox>` is always full width in these layouts - you do not have to say `span="all"` on it.
+`<et2-tabbox>` and `<et2-nextmatch>` are always full width in these layouts - you do not have to say `span="all"` on
+either of them.  Half a dialog is not a useful width for a tab panel or a list.
 
 :::tip
 `span` only means something to `2-column` and `edit`.  `stack` gives every child the full width anyway.
@@ -229,8 +231,8 @@ By default every widget is as tall as it needs to be, and any space left at the 
 </et2-template>
 ```
 
-`<et2-tabbox>` grows on its own - it is the usual "everything else is a header, the tabs get the rest" case, and
-needing an attribute for it every time would just be noise.
+`<et2-tabbox>` and `<et2-nextmatch>` grow on their own - they are the usual "everything else is a header, the list
+gets the rest" case, and needing an attribute for them every time would just be noise.
 
 ### Sharing the space between several widgets
 
@@ -416,8 +418,8 @@ For a grid base (`2-column`, `edit`) it:
    the ones after it onto a different line, which would invalidate every measurement below.  Children are handled in
    document order and measured one at a time for the same reason.
 2. Measures the `top` of every visible child and groups them into lines (1px tolerance)
-3. Finds which line each `[grow]` / `<et2-tabbox>` child landed on, and reads its computed `min-height` / `max-height`
-   and grow factor
+3. Finds which line each `[grow]` / `<et2-tabbox>` / `<et2-nextmatch>` child landed on, and reads its computed
+   `min-height` / `max-height` and grow factor
 4. Writes a `grid-template-rows` track list onto `::part(base)`: `min-content` for lines with nothing growing,
    `minmax(<min>, <factor>fr)` for the ones that do
 5. Sets `align-content: stretch` so those tracks actually take the extra space
