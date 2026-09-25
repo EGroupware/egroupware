@@ -43,8 +43,11 @@ import {Et2Datagrid} from "../Et2Datagrid";
  * normally.  What would break this test is a BACKGROUNDED tab, where rAF pauses and the observer
  * stops: the grid then does no work for the same reason a fixed grid does none, and this test
  * would pass while the bug is present (verified by stubbing both APIs - 24 rows still render, so
- * the rows>0 check above does not catch it).  That is what web-test-runner.config.mjs's
- * concurrency: 1 protects; see the comment on the launchers before raising it.
+ * the rows>0 check above does not catch it).  Nothing in this runner backgrounds a page, at any
+ * concurrency - Playwright headless pages are offscreen targets, not tabs, and stay visible and
+ * rAF-driven several at a time.  What web-test-runner.config.mjs's concurrency: 1 does buy this
+ * test is freedom from CPU contention: measured at concurrency 2 on a 4-core box, the "locked"
+ * control arm below stops being quiet.  See the comment on the launchers there.
  */
 
 const egw = {

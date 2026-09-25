@@ -12,6 +12,8 @@
  * - every group:   `npm run jstest`
  * - one app:       `npm run jstest -- --group api`
  * - one file/glob: `npm run jstest -- api/js/etemplate/MyWidget/test/MyWidget.test.ts`
+ * - one browser:   `JSTEST_BROWSERS=chromium npm run jstest`
+ * - one shard:     `JSTEST_SHARD=1/2 npm run jstest`   (every 2nd test file; CI uses this)
  *
  * Note the `--group`: a bare app name (`npm run jstest -- api`) is NOT a group selector, it is a
  * path, and the runner would glob the whole api/ directory.  See the comment on cliFiles below.
@@ -25,9 +27,9 @@ import {playwrightLauncher} from '@web/test-runner-playwright';
 import {esbuildPlugin} from '@web/dev-server-esbuild';
 import {legacyWidgetShimDevServerPlugin} from './api/js/etemplate/webtest-legacy-widget-shim.mjs';
 
-// True if a *.test.ts file exists anywhere under dir (recursing into subdirectories),
-// so an app is discovered regardless of how deep its test files are nested.
-function hasTestFile(dir)
+// Every *.test.ts under dir, recursing into subdirectories, so an app is discovered - and a
+// shard filled - regardless of how deep its test files are nested.
+function collectTestFiles(dir)
 {
 	let entries;
 	try
@@ -36,11 +38,11 @@ function hasTestFile(dir)
 	}
 	catch(e)
 	{
-		return false;
+		return [];
 	}
-	return entries.some(entry => entry.isDirectory() ?
-		hasTestFile(`${dir}/${entry.name}`) :
-		entry.name.endsWith('.test.ts'));
+	return entries.flatMap(entry => entry.isDirectory() ?
+		collectTestFiles(`${dir}/${entry.name}`) :
+		entry.name.endsWith('.test.ts') ? [`${dir}/${entry.name}`] : []);
 }
 
 // Add any app with a *.test.ts file somewhere under js/
@@ -48,7 +50,7 @@ const appJS = fs.readdirSync('.')
 	.filter(
 		dir => fs.existsSync(`${dir}/js`) &&
 			fs.statSync(`${dir}/js`).isDirectory() &&
-			hasTestFile(`${dir}/js`),
+			collectTestFiles(`${dir}/js`).length > 0,
 	)
 
 const testGroups = appJS.map(app => ({
@@ -57,6 +59,53 @@ const testGroups = appJS.map(app => ({
 }));
 const groupFiles = Object.fromEntries(testGroups.map(({name, files}) => [name, files]));
 groupFiles.default = groupFiles.api;
+
+// Which browsers to run, as a comma separated list.  CI gives each one its own job so they run on
+// separate runners instead of sharing one (.github/workflows/testing.yml), and a quick local pass
+// in a single browser is often enough:  JSTEST_BROWSERS=chromium npm run jstest
+//
+// @web/test-runner's own --browsers flag is no use here: it only works together with --playwright,
+// which throws as soon as the config defines browsers itself - which this one has to, for the
+// per-launcher options further down.
+const PLAYWRIGHT_PRODUCTS = ['chromium', 'firefox', 'webkit'];
+const browserNames = (process.env.JSTEST_BROWSERS || 'firefox,chromium')
+	.split(',')
+	.map(name => name.trim().toLowerCase())
+	.filter(Boolean);
+for(const name of browserNames)
+{
+	if(!PLAYWRIGHT_PRODUCTS.includes(name))
+	{
+		throw new Error(`JSTEST_BROWSERS: "${name}" is not a Playwright product.\n` +
+			`Available: ${PLAYWRIGHT_PRODUCTS.join(', ')}`);
+	}
+}
+
+// JSTEST_SHARD=<n>/<total> runs only this shard's share of the test files, so CI can spread the
+// suite over several runners.  The list comes from the same walk the groups are built from, so
+// there is no second copy to keep in sync with this config.  The split is by FILE because a file
+// is one browser page, and the page - not the test in it - is what the suite's time goes on: only
+// ~105s of a ~334s run is test code (see the launcher comment below).
+//
+// Ignored for a run with explicit files/globs: those are already a narrower selection, and a glob
+// cannot be split this way without expanding it first.
+function shardFiles(spec)
+{
+	const [index, total] = String(spec).split('/').map(part => Number(part.trim()));
+	if(!Number.isInteger(index) || !Number.isInteger(total) || total < 1 || index < 1 || index > total)
+	{
+		throw new Error(`JSTEST_SHARD must be "<n>/<total>" with 1 <= n <= total - got "${spec}"`);
+	}
+	// Sorted, so every shard of the same run numbers the files identically and each file is picked
+	// up by exactly one of them.
+	const all = appJS.flatMap(app => collectTestFiles(`${app}/js`)).sort();
+	const files = all.filter((file, i) => i % total === index - 1);
+	if(!files.length)
+	{
+		throw new Error(`JSTEST_SHARD=${spec} selects none of the ${all.length} test files`);
+	}
+	return files;
+}
 
 // Flags that consume the following argument as their value, so we do not mistake that value
 // for a file to test.  Taken from @web/test-runner's own option list (dist/config/readCliArgs.js).
@@ -85,6 +134,16 @@ for(let i = 2; i < process.argv.length; i++)
 	}
 	if(arg.startsWith('-'))
 	{
+		// A shard is a flat file list and is exported as `files`, so there are no groups left for
+		// --group to find - it would fail with "Could not find any group named x" instead of
+		// saying what actually went wrong.
+		if((arg === '--group' || arg.startsWith('--group=')) && process.env.JSTEST_SHARD)
+		{
+			throw new Error(
+				`JSTEST_SHARD=${process.env.JSTEST_SHARD} cannot be combined with --group: a shard ` +
+				`is a list of files, --group selects whole apps.  Use one or the other.`
+			);
+		}
 		// "--group api" consumes the next argument; "--group=api" does not
 		if(!arg.includes('=') && VALUE_FLAGS.has(arg))
 		{
@@ -183,33 +242,58 @@ export default {
 			timeout: '3000',
 		},
 	},
-	// concurrency: 1 is load-bearing, not a leftover - do not raise it to speed CI up.
+	// concurrency: 1 is a deliberate, measured choice - but not for the reason given here before.
 	//
-	// Headless itself is fine: measured in this runner, a headless tab reports visibilityState
-	// "visible" with document.hasFocus() true, and ResizeObserver and requestAnimationFrame both
-	// firing normally.  What breaks is a BACKGROUNDED tab, which is what running several pages at
-	// once produces - rAF pauses and ResizeObserver stops delivering.
+	// Running several pages at once does NOT background them.  Playwright headless pages are
+	// separate offscreen targets, not tabs competing for one foreground slot: measured with 8
+	// running at once, in both products, every page reports visibilityState "visible" with
+	// document.hasFocus() true, requestAnimationFrame at a full 60fps, ResizeObserver delivering
+	// and no setTimeout clamping.  A backgrounded tab WOULD be a real problem here - tests that
+	// assert an ABSENCE of work (Et2Datagrid.idleSettle.test.ts: "an idle grid performs 0 update
+	// cycles") would pass while the defect is fully present, and checking that rows rendered does
+	// not catch it (with both APIs stubbed out, 24 rows still render) - it just is not what this
+	// setting is protecting against.
 	//
-	// Two consequences, both silent:
-	//  - Et2Nextmatch/Et2Datagrid measure row height and the virtualizer range from those APIs, so
-	//    a backgrounded tab makes them do nothing rather than something wrong.  Any test asserting
-	//    an ABSENCE of work (Et2Datagrid.idleSettle.test.ts: "an idle grid performs 0 update
-	//    cycles") would then pass while the defect is fully present.  Checking that rows rendered
-	//    does NOT catch it - with both APIs stubbed out, 24 rows still render.
-	//  - The rAF-polling helpers in Et2Datagrid.test.ts hang to the mocha timeout instead, which
-	//    looks exactly like a product regression (see the note there - it cost two debugging
-	//    sessions).
-	browsers: [
-		playwrightLauncher({product: 'firefox', concurrency: 1}),
-		playwrightLauncher({product: 'chromium', concurrency: 1}),
-		// Dependant on specific versions of shared libraries (libicuuc.so.66, latest is .67)
-		//playwrightLauncher({ product: 'webkit' }),
-	],
+	// What raising it actually buys is CPU contention, for very little time.  Full runs of this
+	// suite (244 files, 3578 tests, both products), 2026-09-25:
+	//
+	//   cores  concurrency   wall    result
+	//    12        1         334s    green
+	//    12        2         326s    green
+	//    12        4         286s    10 failed
+	//     4        1         338s    green         <- what a GitHub runner has
+	//     4        2         319s    13 failed
+	//
+	// 12 cores and 4 cores take the same wall clock at concurrency 1, with 60-80% of the CPU idle
+	// throughout: the suite is not CPU-bound.  Only ~105s of that ~334s is test code - the rest is
+	// per-session page startup and module import (~1.2s per file per browser), which overlaps
+	// poorly.  So there is no 2x sitting here, while the tests contention does break are the
+	// real-timer ones: the addressbook nextmatch files blow their 15s timeout,
+	// Et2LazyLoadController misses its IntersectionObserver callback, and idleSettle's own
+	// "locked" control arm stops being quiet.  Push it further and the rAF-polling helpers in
+	// Et2Datagrid.test.ts hang to the mocha timeout, which looks exactly like a product regression
+	// (see the note there - it cost two debugging sessions).
+	//
+	// To make the suite faster, give it more machines rather than more pages per machine:
+	// JSTEST_BROWSERS and JSTEST_SHARD above split it across runners that do not share a CPU, and
+	// each of those pieces is still a concurrency-1 run.  Measured on 4 cores: firefox alone 285s
+	// and chromium alone 157s (vs 338s for the two together), and half the files in firefox 145s /
+	// 152s - near enough linear.
+	//
+	// Also measured and rejected: http2: true + protocol: 'https:', to multiplex the module
+	// requests - 478s, 41% slower.  TLS on localhost costs more than multiplexing saves.
+	//
+	// webkit is left out: it depends on specific versions of shared libraries (libicuuc.so.66,
+	// latest is .67).  JSTEST_BROWSERS=webkit will still try, if that ever gets sorted out.
+	browsers: browserNames.map(product => playwrightLauncher({product, concurrency: 1})),
 	// Either an explicit set of files, or the groups - never both: parseConfig() hands a top-level
 	// `files` to any group that lacks one and then drops it, so exporting `groups` alongside an
 	// explicit glob silently runs every group instead of the glob.  --group works because its
-	// value is not collected as a positional above, leaving cliFiles empty.
-	...(cliFiles.length ? {files: cliFiles} : {groups: testGroups}),
+	// value is not collected as a positional above, leaving cliFiles empty.  A shard is a plain
+	// list of files, so it goes in the same slot.
+	...(cliFiles.length ? {files: cliFiles} :
+		process.env.JSTEST_SHARD ? {files: shardFiles(process.env.JSTEST_SHARD)} :
+			{groups: testGroups}),
 
 	plugins: [
 		// must run before esbuildPlugin, so it can synthesize the legacy et2_widget_*.ts

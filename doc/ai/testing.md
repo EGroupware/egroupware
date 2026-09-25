@@ -240,6 +240,15 @@ Run the relevant web component tests with the project’s npm script when availa
 * every group: `npm run jstest`
 * one app: `npm run jstest -- --group api`
 * one file or glob: `npm run jstest -- api/js/etemplate/MyWidget/test/MyWidget.test.ts`
+* one browser: `JSTEST_BROWSERS=chromium npm run jstest` (default is `firefox,chromium`)
+* one shard: `JSTEST_SHARD=1/2 npm run jstest` - every 2nd test file, ignored when explicit
+  files/globs are given
+
+CI runs one job per browser per shard, because the suite's time is per test *file* (each is its own
+browser page) rather than per test: only ~105s of a ~334s full run is test code. Splitting across
+runners therefore works, while raising `web-test-runner`'s own `concurrency` does not - it just
+starves the real-timer tests. The measurements are in the launcher comment in
+`web-test-runner.config.mjs`; read it before changing either.
 
 Note the `--group`. A **bare app name is not a group selector** - `@web/test-runner` declares its own
 `files` option as the CLI's default (positional) option and merges CLI args over the config file, so
