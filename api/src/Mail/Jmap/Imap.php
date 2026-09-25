@@ -123,12 +123,20 @@ class Imap extends Jmap\Base
 	 */
 	public static function session() : array
 	{
-		// bare path, NOT Api\Framework::getUrl()'s absolute form - see
-		// ProfileHandler::localBootstrap()'s own sessionUrl comment for why: every URL below is
-		// only ever fetched by the same page that's already loaded, so a relative one (guaranteed
-		// same-origin, immune to Http::host()'s Setup-hostname-vs-actual-request mismatch) is
-		// strictly correct here, not just a workaround.
-		$url = Api\Framework::link('/mail/jmap.php');
+		// Must be ABSOLUTE (a bare relative path was tried and reverted the same day, see git
+		// history right above this line): jmap-jam's uploadBlob()/downloadBlob() run their own
+		// uploadUrl/downloadUrl through expandURITemplate() (node_modules/jmap-jam/src/helpers.ts),
+		// which does `return new URL(expanded)` - a relative string throws "Invalid URL" there,
+		// surfacing client-side as "Failed to upload attachment X" for every local-shim account.
+		//
+		// getUrl()'s default $use_setup_hostname=false is exactly what's needed here: an absolute
+		// URL built from the CURRENT REQUEST's own host (Header\Http::host()'s default, no
+		// preference for a possibly stale/mismatched Setup-configured hostname), so it satisfies
+		// new URL() AND can never mismatch the page's own connect-src 'self' CSP the way the old
+		// $use_setup_hostname=true default did (found live: a real customer's local-shim accounts
+		// all failed with a browser-level NetworkError, CSP silently blocking a same-origin JMAP
+		// endpoint built with a mismatched host).
+		$url = Api\Framework::getUrl(Api\Framework::link('/mail/jmap.php'));
 
 		// accountId comes from ProfileHandler::localBootstrap()'s sessionUrl (mail/src/Ui/ProfileHandler.php) - session()
 		// has no other way to know which account a given JamClient instance belongs to, since it's

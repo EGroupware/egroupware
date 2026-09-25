@@ -196,10 +196,14 @@ abstract class Framework extends Framework\Extra
 	 * Get a full / externally usable URL from an EGroupware link
 	 *
 	 * @param string $link
+	 * @param boolean $use_setup_hostname =false passed straight through to Header\Http::fullUrl()/
+	 *  ::host() - default false (prefer the current request's own host over a possibly stale/
+	 *  mismatched Setup-configured hostname) is what almost every caller wants; pass true only for
+	 *  a call with no live request to derive a host from at all (a CLI/cron job).
 	 */
-	static function getUrl($link)
+	static function getUrl($link, $use_setup_hostname=false)
 	{
-		return Header\Http::fullUrl($link);
+		return Header\Http::fullUrl($link, $use_setup_hostname);
 	}
 
 	/**
