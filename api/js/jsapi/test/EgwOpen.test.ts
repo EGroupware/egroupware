@@ -221,6 +221,42 @@ describe('egw_open.js (open)', () =>
 			assert.include(extra['preset[mailto]'], '&gt;');
 			assert.notInclude(extra['preset[mailto]'], '<mathias@example.com>');
 		});
+
+		/**
+		 * Regression coverage (ticket #125211, "clicking a mailto link ... opens an edit window,
+		 * but ... additional info like subject etc. isn't inserted"): match['subject']/
+		 * match['body'] were parsed by the very same loop that fills match['cc']/match['bcc'], but
+		 * never actually forwarded into `content` at all - unlike to/cc/bcc above, these ARE
+		 * percent-decoded here, real-world (especially externally-authored, the exact case this
+		 * ticket is about) mailto: links always percent-encode them per RFC 6068, and - unlike to/
+		 * cc/bcc - nothing EGw-internal already relied on a literal, unencoded convention for these
+		 * two specifically (they were simply dropped entirely before this fix, not used at all).
+		 */
+		it('parses and percent-decodes subject/body, tagging body as plain text', () =>
+		{
+			const instance = env.egw();
+			const openWithinWindowStub = sinon.stub(instance, 'openWithinWindow');
+
+			instance.open_link('mailto:one@example.com?subject=Hello%20There&body=Test%20body%20text');
+
+			const content = openWithinWindowStub.firstCall.args[2];
+			assert.equal(content.subject, 'Hello There');
+			assert.equal(content.body, 'Test body text');
+			assert.equal(content.bodyMimeType, 'plain');
+		});
+
+		it('omits subject/body/bodyMimeType entirely when the mailto: uri has neither', () =>
+		{
+			const instance = env.egw();
+			const openWithinWindowStub = sinon.stub(instance, 'openWithinWindow');
+
+			instance.open_link('mailto:one@example.com');
+
+			const content = openWithinWindowStub.firstCall.args[2];
+			assert.notProperty(content, 'subject');
+			assert.notProperty(content, 'body');
+			assert.notProperty(content, 'bodyMimeType');
+		});
 	});
 
 	describe('open()', () =>

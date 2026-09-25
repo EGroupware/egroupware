@@ -1572,7 +1572,9 @@ class calendar_uiforms extends calendar_ui
 			'attachmentContents' => array(array(
 				'name'    => 'event.ics',
 				'type'    => 'text/calendar'.($asrequest?'; method=REQUEST':''),
-				'content' => $ics,
+				// base64 - MailCompose::applyPresetAttachmentContent() also needs to safely carry
+				// arbitrary binary for mail's own REST API now, not just this always-text ICS
+				'content' => base64_encode($ics),
 			)),
 		);
 		$preset[$asrequest?'to': 'bcc'] = $to;

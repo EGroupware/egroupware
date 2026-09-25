@@ -275,6 +275,7 @@ failed to move folder %1	mail	en	Failed to move folder %1
 failed to move messages	mail	en	Failed to move messages
 failed to rename %1 ! reason: %2	mail	en	Failed to rename %1! Reason: %2
 failed to rename folder %1	mail	en	Failed to rename folder %1
+failed to resolve distribution list(s)	mail	en	Failed to resolve distribution list(s)
 failed to subscribe folder %1!	mail	en	Failed to subscribe folder %1!
 failed to subscribe/unsubscribe folder %1	mail	en	Failed to subscribe/unsubscribe folder %1
 failed to unsubscribe folder %1!	mail	en	Failed to unsubscribe folder %1!

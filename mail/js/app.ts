@@ -2252,6 +2252,27 @@ export class MailApp extends EgwApp
 					}
 				}
 
+				// bodyMimeType is metadata for the 'body' field below, not a widget of its own -
+				// mailto()'s own content shape (api/js/jsapi/egw_open.ts, ticket #125211) carries it
+				// alongside body exactly like MailApp.composeWithPreset()'s preset does
+				if (field == 'bodyMimeType') continue;
+
+				// mail_htmltext, not 'body' - MailCompose's actual widget id for the message body
+				// (compose.php's own bootstrap args use the same 'body' preset key, but resolve it
+				// through applyPresetBody() instead of a generic widget lookup - this reuse path has
+				// no equivalent, so needs the real widget id directly). Found live, ticket #125211:
+				// a mailto: link's ?body= silently threw here (no widget literally called "body"),
+				// caught below, logged, and dropped - same root cause as subject/to already being
+				// silently dropped entirely before mailto() forwarded them at all.
+				if (field == 'body')
+				{
+					const bodyWidget = compose_et2[0].widgetContainer.getWidgetById('mail_htmltext');
+					const isHtml = content['bodyMimeType'] !== 'plain';
+					const addition = isHtml ? content[field] : MailJmap.escapeHtml(content[field]).replace(/\n/g, '<br/>');
+					bodyWidget.set_value(addition + (bodyWidget.getValue() || ''));
+					continue;
+				}
+
 				const widget = compose_et2[0].widgetContainer.getWidgetById(field);
 
 				// Merge array values, replace strings
@@ -2424,7 +2445,19 @@ export class MailApp extends EgwApp
 			// persist in the session - api.queue's handler closes/commits the session up front
 			// (to avoid blocking other concurrent queued requests), silently discarding that
 			// write. egw.request() sends a normal, immediate, non-queued request instead.
-			this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_fetchMessageDetails', [rowId]).then((_data) =>
+			const request = this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_fetchMessageDetails', [rowId]);
+			// This popup can be closed by the user before this request ever resolves (found live,
+			// ralf: closing a JMAP-native/Stalwart popup right after opening it - its round trip is
+			// slow enough to still be in flight) - left running, the browser just kills the
+			// connection out from under it once the window is actually gone, which surfaces as a
+			// raw "TypeError: Failed to fetch" (egw_json.ts's own onError only recognizes a REAL
+			// AbortError, from calling this request's own .abort(), as "ignore this, don't show the
+			// toast" - an unrelated connection teardown doesn't match that check at all). Aborting
+			// explicitly here instead turns it into that same recognized, silently-ignored
+			// AbortError - the response was never going to be used by a now-closed popup anyway.
+			const abortOnPagehide = () => request.abort?.();
+			window.addEventListener('pagehide', abortOnPagehide, {once: true});
+			request.then((_data) =>
 			{
 				if (_data)
 				{
@@ -2437,6 +2470,9 @@ export class MailApp extends EgwApp
 				// Previously unhandled - a rejection here (eg. a session/network hiccup) left
 				// the popup's headers silently blank with no error shown at all.
 				console.error('renderPopupMessage(): ajax_fetchMessageDetails failed', e);
+			}).finally(() =>
+			{
+				window.removeEventListener('pagehide', abortOnPagehide);
 			});
 		}
 	}
@@ -3183,6 +3219,9 @@ export class MailApp extends EgwApp
 				openLinksInNewTab(doc);
 				this.jmap.resolveInlineImages(doc, rowId, fast).catch((e) =>
 					console.error('MailApp.loadMessageBody(): resolveInlineImages failed', e));
+				// see MailJmap.resolveBarePdfEmbed()'s own docblock for why this runs from here
+				// (the outer page) rather than relying on preview.js's own script tag inside doc
+				this.jmap.resolveBarePdfEmbed(doc);
 				// PGP/MIME (MailJmap.fetchBody()'s own PGP branch, jmap.ts) renders the raw armored
 				// text into this SAME `td.td_display > pre` shape specifically so mailvelopeDisplay()
 				// can find and decrypt it - et2_ready()'s own `iframe.addEventListener('load', ...)`

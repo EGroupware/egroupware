@@ -525,8 +525,15 @@ export class MailCompose
 	 * jmapBlobId-tagged shape a reply's own carried-forward attachments already use, not
 	 * applyPresetFiles()'s deferred jmapVfsPath marker.
 	 *
-	 * @param files {name, type, content}[] - content is the raw attachment text (ICS is always
-	 *  7-bit-safe-or-UTF-8 text per RFC 5545, never binary, so no base64 round trip needed)
+	 * Also used by mail's own REST API (ApiHandler::prepareAttachments()) for an attachment
+	 * uploaded via POST /mail/attachments/ and then referenced to open a compose window - that one
+	 * lives in a local server temp file, equally "nothing server-side left to reference" from this
+	 * popup's own separate window, and can be arbitrary binary (found live: attachments uploaded
+	 * then referenced this way never showed up in the opened compose window - applyPresetFiles()'s
+	 * VFS-path shape doesn't fit either, the file was never in VFS to begin with).
+	 *
+	 * @param files {name, type, content}[] - content is base64-encoded (unlike the ICS case alone,
+	 *  a REST-uploaded attachment can be arbitrary binary, so this must round-trip safely for both)
 	 */
 	public async applyPresetAttachmentContent(files : { name : string, type : string, content : string }[]) : Promise<void>
 	{
@@ -534,7 +541,8 @@ export class MailCompose
 		const profileID = this.currentProfileID();
 		const uploaded = await Promise.all(files.map((f) =>
 		{
-			const blob = new Blob([f.content], {type: f.type});
+			const bytes = Uint8Array.from(atob(f.content), c => c.charCodeAt(0));
+			const blob = new Blob([bytes], {type: f.type});
 			return this.app.jmap.uploadAttachment(profileID, blob, f.name, f.type);
 		}));
 		this.carryForwardAttachments(uploaded, profileID);
@@ -2511,12 +2519,6 @@ export class MailCompose
 		if (!identity) return;
 
 		const mimeType : 'html' | 'plain' = this.et2.getWidgetById('mimeType')?.get_value() !== false ? 'html' : 'plain';
-		// strip the signature's own stale, baked-in font-size/family before insertion - see
-		// MailJmap.stripInlineFont()'s own docblock (ticket #124821) for why. Plain-text mode has
-		// no HTML/inline styles at all, nothing to strip there.
-		const signature = mimeType === 'html' && identity.htmlSignature
-			? {...identity, htmlSignature: MailJmap.stripInlineFont(identity.htmlSignature)}
-			: identity;
 		const insertPref = this.egw.preference('insertSignatureAtTopOfMessage', 'mail');
 		const placement : 'top' | 'below' | 'none' =
 			insertPref === '1' ? 'top' : insertPref === 'no_belowaftersend' ? 'none' : 'below';
@@ -2554,7 +2556,7 @@ export class MailCompose
 			}
 		}
 
-		let result = MailJmap.composeBodyWithSignature(pristineBody, mimeType, signature, {placement, disableRuler, isReply, formatBlock});
+		let result = MailJmap.composeBodyWithSignature(pristineBody, mimeType, identity, {placement, disableRuler, isReply, formatBlock});
 		// HTML mode locates the inserted block via MailJmap.SIGNATURE_MARKER_ID instead (DOM id,
 		// not a tracked substring) - see updateSignatureForIdentity()'s own docblock for why.
 		if (mimeType === 'plain')

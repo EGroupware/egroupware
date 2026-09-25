@@ -20,9 +20,9 @@ use EGroupware\Api\Mail;
  * available without it.
  *
  * The "certificate mismatch" branch itself (testDiagnoseConnectionReportsCertificateMismatch*
- * below) needs a real, locally-hosted TLS server presenting a mismatched certificate - built here
- * with a forked child process (openssl-generated self-signed cert, pcntl_fork() for the listener)
- * rather than a long-running daemon, matching this environment's constraints.
+ * below) needs a real, locally-hosted TLS server presenting a mismatched certificate - started
+ * here as its own short-lived PHP process (openssl-generated self-signed cert), one per test and
+ * terminated again in that test's finally, rather than a long-running daemon.
  */
 class AdminMailCheckCertTest extends Api\LoggedInTest
 {
@@ -34,48 +34,132 @@ class AdminMailCheckCertTest extends Api\LoggedInTest
 	}
 
 	/**
-	 * Starts a one-shot self-signed-cert TLS listener (CN deliberately NOT matching 127.0.0.1,
-	 * mimicking a real mismatched-certificate server, eg. the reported "cert issued for
-	 * Arens_IMAP, not for 10.28.1.6" case) in a forked child, and returns the port it's listening
-	 * on. Implicit TLS (matching a real "IMAP (TLS/SSL)" account, $secure='tlsv1', no STARTTLS
-	 * text) - the child accept()s a plain TCP connection and immediately negotiates TLS on it
-	 * server-side, matching diagnoseConnection()'s/probeCertVerification()'s own client-side
-	 * timing for that mode, then exits - no cleanup needed beyond pcntl_waitpid() in the caller.
+	 * Per-class temp dir holding the generated certificate/key and the listener script. Randomised
+	 * per run so two PHPUnit processes sharing a host cannot clobber each other's fixtures.
+	 */
+	private static $fixture_dir;
+
+	/**
+	 * Creates, once per class, the fixture dir, the listener script and a self-signed certificate
+	 * whose CN deliberately does NOT match 127.0.0.1 - mimicking a real mismatched-certificate
+	 * server, eg. the reported "cert issued for Arens_IMAP, not for 10.28.1.6" case.
 	 *
-	 * @return array{0: int, 1: int} [port, child pid]
+	 * @return array{0: string, 1: string, 2: string} [cert, key, listener script] paths
+	 */
+	private static function certFixtures() : array
+	{
+		if (!isset(self::$fixture_dir))
+		{
+			self::$fixture_dir = sys_get_temp_dir().'/AdminMailCheckCertTest-'.bin2hex(random_bytes(4));
+			mkdir(self::$fixture_dir);
+			file_put_contents(self::$fixture_dir.'/listener.php', self::listenerSource());
+			exec('openssl req -x509 -newkey rsa:2048 -keyout '.escapeshellarg(self::$fixture_dir.'/key.pem').
+				' -out '.escapeshellarg(self::$fixture_dir.'/cert.pem').
+				' -days 1 -nodes -subj "/CN=not-127.0.0.1.invalid" 2>/dev/null');
+			self::assertFileExists(self::$fixture_dir.'/cert.pem', 'openssl did not generate a test certificate');
+		}
+		return [self::$fixture_dir.'/cert.pem', self::$fixture_dir.'/key.pem', self::$fixture_dir.'/listener.php'];
+	}
+
+	/**
+	 * Source of the listener, which runs as its own PHP process: it binds an ephemeral loopback
+	 * port and prints it on stdout, which tells the caller both which port to connect to and that
+	 * the socket is already accepting - no polling needed.
+	 *
+	 * It then serves implicit TLS: accept() a plain TCP connection and immediately negotiate TLS
+	 * server-side, matching a real "IMAP (TLS/SSL)" account ($secure='tlsv1', no STARTTLS text)
+	 * and therefore diagnoseConnection()'s/probeCertVerification()'s own client-side timing for
+	 * that mode. It keeps serving until the caller terminates it, so a single listener covers
+	 * however many probes one diagnoseConnection() call makes; the accept() timeout exists only so
+	 * a listener orphaned by a crashed caller eventually exits by itself.
+	 */
+	private static function listenerSource() : string
+	{
+		return <<<'LISTENER'
+<?php
+[, $cert, $key] = $argv;
+$server = stream_socket_server('tcp://127.0.0.1:0', $errno, $errstr, STREAM_SERVER_BIND | STREAM_SERVER_LISTEN);
+if (!$server)
+{
+	fwrite(STDERR, "bind failed: $errstr\n");
+	exit(1);
+}
+$name = stream_socket_get_name($server, false);
+fwrite(STDOUT, substr($name, strrpos($name, ':') + 1)."\n");
+while (($conn = @stream_socket_accept($server, 30)))
+{
+	stream_context_set_option($conn, 'ssl', 'local_cert', $cert);
+	stream_context_set_option($conn, 'ssl', 'local_pk', $key);
+	@stream_socket_enable_crypto($conn, true, STREAM_CRYPTO_METHOD_TLS_SERVER);
+	fclose($conn);
+}
+
+LISTENER;
+	}
+
+	/**
+	 * Starts the mismatched-certificate listener as its OWN process, the way this suite's other
+	 * helper processes are started (AdminAccountDeleteAclTest, RestClientTraitTest).
+	 *
+	 * Deliberately NOT pcntl_fork(): a forked child inherits this process's already-open MySQL
+	 * connection, and running its shutdown sends COM_QUIT over that shared socket - which ends the
+	 * session the PARENT is still using. Api\Db\Pdo::$pdo is a process-wide static that nothing
+	 * resets, and Sqlfs\StreamWrapper never reconnects, so every VFS access for the rest of the
+	 * PHPUnit run then dies with "MySQL server has gone away".
+	 *
+	 * Returns once the child has reported its port, ie. once it is accepting connections.
+	 *
+	 * @return array{0: int, 1: array} [port, server handle for stopMismatchedCertServer()]
 	 */
 	private function startMismatchedCertServer() : array
 	{
-		$dir = sys_get_temp_dir();
-		$key = $dir.'/admin_mail_check_cert_test_key.pem';
-		$cert = $dir.'/admin_mail_check_cert_test_cert.pem';
-		exec('openssl req -x509 -newkey rsa:2048 -keyout '.escapeshellarg($key).
-			' -out '.escapeshellarg($cert).' -days 1 -nodes -subj "/CN=not-127.0.0.1.invalid" 2>/dev/null');
+		[$cert, $key, $script] = self::certFixtures();
 
-		$server = stream_socket_server('tcp://127.0.0.1:0', $errno, $errstr,
-			STREAM_SERVER_BIND | STREAM_SERVER_LISTEN);
-		self::assertNotFalse($server, "server fail: $errstr");
-		$name = stream_socket_get_name($server, false);
-		$port = (int)substr($name, strrpos($name, ':') + 1);
+		$process = proc_open([PHP_BINARY, '-f', $script, '--', $cert, $key],
+			[1 => ['pipe', 'w'], 2 => ['pipe', 'w']], $pipes);
+		self::assertIsResource($process, 'failed to start the TLS test listener');
+		$server = ['process' => $process, 'pipes' => $pipes];
 
-		$pid = pcntl_fork();
-		if ($pid === 0)
+		stream_set_timeout($pipes[1], 10);
+		$port = (int)fgets($pipes[1]);
+		if (!$port)
 		{
-			// diagnoseConnection() opens up to 3 separate connections against this same server
-			// (lenient capture, strict probe, and again for the $verifyDisabled=true test) - serve
-			// each in turn until the parent is done, rather than exiting after just one
-			for ($i = 0; $i < 3; $i++)
-			{
-				$conn = @stream_socket_accept($server, 10);
-				if (!$conn) break;
-				stream_context_set_option($conn, 'ssl', 'local_cert', $cert);
-				stream_context_set_option($conn, 'ssl', 'local_pk', $key);
-				@stream_socket_enable_crypto($conn, true, STREAM_CRYPTO_METHOD_TLS_SERVER);
-				fclose($conn);
-			}
-			exit(0);
+			$err = stream_get_contents($pipes[2]);
+			self::stopMismatchedCertServer($server);
+			self::fail('TLS test listener did not report a port'.($err ? ": $err" : ''));
 		}
-		return [$port, $pid];
+		return [$port, $server];
+	}
+
+	/**
+	 * Terminates a listener started by startMismatchedCertServer(). Safe to call twice.
+	 */
+	private static function stopMismatchedCertServer(array $server) : void
+	{
+		foreach ($server['pipes'] as $pipe)
+		{
+			if (is_resource($pipe)) fclose($pipe);
+		}
+		if (is_resource($server['process']))
+		{
+			proc_terminate($server['process']);
+			proc_close($server['process']);
+		}
+	}
+
+	/**
+	 * Remove the generated certificate/key and listener script - the parent also ends the session
+	 * every test class gets, so our own cleanup has to happen before it.
+	 */
+	public static function tearDownAfterClass() : void
+	{
+		if (isset(self::$fixture_dir))
+		{
+			array_map('unlink', glob(self::$fixture_dir.'/*'));
+			rmdir(self::$fixture_dir);
+			self::$fixture_dir = null;
+		}
+		parent::tearDownAfterClass();
 	}
 
 	public function testDiagnoseConnectionReportsNoHostPortConfigured()
@@ -234,7 +318,7 @@ class AdminMailCheckCertTest extends Api\LoggedInTest
 	 */
 	public function testDiagnoseConnectionReportsCertificateMismatch()
 	{
-		[$port, $pid] = $this->startMismatchedCertServer();
+		[$port, $server] = $this->startMismatchedCertServer();
 		try {
 			$result = Mail\Account::diagnoseConnection('127.0.0.1', $port, 'tlsv1');
 
@@ -242,7 +326,7 @@ class AdminMailCheckCertTest extends Api\LoggedInTest
 			self::assertStringContainsString('127.0.0.1', $result['message']);
 		}
 		finally {
-			pcntl_waitpid($pid, $status);
+			self::stopMismatchedCertServer($server);
 		}
 	}
 
@@ -258,7 +342,7 @@ class AdminMailCheckCertTest extends Api\LoggedInTest
 	 */
 	public function testDiagnoseConnectionSkipsCertificateReportWhenVerifyDisabled()
 	{
-		[$port, $pid] = $this->startMismatchedCertServer();
+		[$port, $server] = $this->startMismatchedCertServer();
 		try {
 			$result = Mail\Account::diagnoseConnection('127.0.0.1', $port, 'tlsv1', '', true);
 
@@ -266,7 +350,7 @@ class AdminMailCheckCertTest extends Api\LoggedInTest
 			self::assertNull($result['message']);
 		}
 		finally {
-			pcntl_waitpid($pid, $status);
+			self::stopMismatchedCertServer($server);
 		}
 	}
 
@@ -278,7 +362,7 @@ class AdminMailCheckCertTest extends Api\LoggedInTest
 	 */
 	public function testCheckCertDiagnosisReadsVerifyDisabledFromAccountSsl()
 	{
-		[$port, $pid] = $this->startMismatchedCertServer();
+		[$port, $server] = $this->startMismatchedCertServer();
 		try {
 			$content = [
 				'acc_imap_host' => '127.0.0.1',
@@ -290,7 +374,7 @@ class AdminMailCheckCertTest extends Api\LoggedInTest
 			self::assertSame('none', $result['problem']);
 		}
 		finally {
-			pcntl_waitpid($pid, $status);
+			self::stopMismatchedCertServer($server);
 		}
 	}
 }

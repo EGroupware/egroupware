@@ -63,6 +63,11 @@ export class Et2LAvatar extends Et2Avatar
 	fname = "";
 
 	/**
+	 * Tooltip we generated from fname/lname, so we can remove it again if the names are cleared
+	 */
+	private _nameStatustext = "";
+
+	/**
 	 * Handle changes that have to happen based on changes to properties
 	 *
 	 */
@@ -96,8 +101,14 @@ export class Et2LAvatar extends Et2Avatar
 							this.lname + ", " + this.fname;
 				if(label != this.statustext && !egwIsMobile())
 				{
-					this.statustext = label.trim();
+					this.statustext = this._nameStatustext = label.trim();
 				}
+			}
+			else if(this._nameStatustext && this.statustext === this._nameStatustext)
+			{
+				// Names were cleared (eg. a row template's "$row_cont[lavatar][fname]" placeholder was
+				// hydrated to "" for a sender with only an email address), so drop the tooltip built from them
+				this.statustext = this._nameStatustext = "";
 			}
 		}
 	}

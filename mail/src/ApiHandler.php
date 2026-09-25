@@ -142,7 +142,30 @@ class ApiHandler extends Api\CalDAV\Handler
 						throw new \Exception("User '$account_lid' (#$user) is NOT online", 404);
 					}
 					$push = new Api\Json\Push($user);
-					$push->call('egw.open', '', 'mail', 'add', $params+['preset' => $preset], '_blank', 'mail');
+					if ($params)
+					{
+						// replyEml above set reply_id/from - MailApp.composeWithPreset() only ever
+						// opens a genuinely new compose (from/id hardcoded empty, no reply_id/from
+						// support at all), so this narrower combination still goes through the
+						// generic popup mechanism, same as before
+						$push->call('egw.open', '', 'mail', 'add', $params+['preset' => $preset], '_blank', 'mail');
+					}
+					else
+					{
+						// MailApp.composeWithPreset() is the client-side function actually built
+						// to carry a preset correctly - JSON-encodes it up front and transparently
+						// falls back to POST (composeWithPresetPost()) when that's too long for a
+						// GET url, exactly the case an attachmentContents/files-bearing preset can
+						// hit. The generic egw.open() used above doesn't do either: it
+						// bracket-flattens $preset's own nested arrays-of-objects straight into
+						// the query string ("preset[attachmentContents][]=[object Object]" - an
+						// implicit JS toString() on the object - found live), and even a plain
+						// scalar preset never actually worked through it either way, attachments
+						// or not - compose.php's own $_REQUEST['preset'] is only ever read as ONE
+						// json_decode()d string (composeWithPreset()'s own convention), never as
+						// bracket-nested params.
+						$push->call('app.mail.composeWithPreset', $preset);
+					}
 					echo json_encode([
 						'status' => 200,
 						'message' => 'Request to open compose window sent',
@@ -535,6 +558,30 @@ class ApiHandler extends Api\CalDAV\Handler
 	 * @return array
 	 * @throws \Exception
 	 */
+	/**
+	 * Mime-type for a REST-uploaded attachment's local server temp file
+	 *
+	 * NOT Api\Vfs::mime_content_type() - that one's very first step,
+	 * Vfs::resolve_url_symlinks(), returns null for an ordinary path outside the VFS root
+	 * (a temp_dir path always is), so it always short-circuits straight to `return false` -
+	 * found live (a REST-composed attachment's "click to view" never worked, unlike one attached
+	 * through the UI: the type Et2HtmlArea's own image-preview branches on was simply missing).
+	 * PHP's own mime_content_type() (real, content-sniffing detection) works directly on a plain
+	 * local path with no such prerequisite; MimeMagic::filename2mime() (extension-based) is the
+	 * same fallback Vfs::mime_content_type() itself uses, applied to the ORIGINAL uploaded name
+	 * rather than the temp path (which never has a recognisable extension - the random suffix
+	 * tempnam() appends comes after it).
+	 *
+	 * @param string $path local server temp file path
+	 * @param string $originalName the name the client uploaded it under
+	 * @return string
+	 */
+	protected static function localFileMimeType(string $path, string $originalName) : string
+	{
+		return (function_exists('mime_content_type') ? mime_content_type($path) : null) ?:
+			Api\MimeMagic::filename2mime($originalName);
+	}
+
 	protected static function prepareAttachments(array $attachments, ?string $attachmentType=null, ?string $expiration=null, ?string $password=null, bool $compose=true)
 	{
 		$ret = [];
@@ -548,14 +595,23 @@ class ApiHandler extends Api\CalDAV\Handler
 				}
 				if ($compose)
 				{
-					$ret['file'][] = $path;
-					$ret['name'][] = $matches[2];
+					// MailCompose::applyPresetAttachmentContent()'s shape (base64, see there for
+					// why) - a REST-uploaded attachment lives in a local server temp file, nothing
+					// server-side left to reference by the time the compose popup actually opens
+					// (bootstrapComposePopup() never reads the classic file[]/name[] pair this used
+					// to send - silently dropped, found live: attachments uploaded then referenced
+					// to open a compose window never showed up in it)
+					$ret['attachmentContents'][] = [
+						'name' => $matches[2],
+						'type' => self::localFileMimeType($path, $matches[2]),
+						'content' => base64_encode(file_get_contents($path)),
+					];
 				}
 				else
 				{
 					$ret['attachments'][] = [
 						'name' => $matches[2],
-						'type' => Api\Vfs::mime_content_type($path),
+						'type' => self::localFileMimeType($path, $matches[2]),
 						'file' => $path,
 						'size' => filesize($path),
 					];
@@ -569,8 +625,14 @@ class ApiHandler extends Api\CalDAV\Handler
 				}
 				if ($compose)
 				{
-					$ret['file'][] = Api\Vfs::PREFIX.$attachment;
-					$ret['name'][] = Api\Vfs::basename($attachment);
+					// MailCompose::applyPresetFiles()'s shape - a bare VFS path, NOT the
+					// Vfs::PREFIX-ed url the classic file[]/name[] pair used to send (also silently
+					// dropped, same reason as the REST-token branch above)
+					$ret['files'][] = [
+						'path' => $attachment,
+						'name' => Api\Vfs::basename($attachment),
+						'type' => Api\Vfs::mime_content_type($attachment),
+					];
 				}
 				else
 				{

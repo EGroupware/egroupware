@@ -270,6 +270,7 @@ failed to move folder %1	mail	de	Verschieben des Ordners %1 fehlgeschlagen
 failed to move messages	mail	de	Verschieben der Nachrichten fehlgeschlagen
 failed to rename %1 ! reason: %2	mail	de	Umbenennen zu %1 fehlgeschlagen! Grund: %2
 failed to rename folder %1	mail	de	Umbenennen des Ordners %1 fehlgeschlagen
+failed to resolve distribution list(s)	mail	de	Verteilerliste(n) konnten nicht aufgelöst werden
 failed to subscribe folder %1!	mail	de	Fehler beim Abonnieren des Folders %1!
 failed to subscribe/unsubscribe folder %1	mail	de	Abonnieren/Abbestellen des Ordners %1 fehlgeschlagen
 failed to unsubscribe folder %1!	mail	de	Fehler beim Abbestellen des Folders %1!
