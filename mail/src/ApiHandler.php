@@ -548,8 +548,17 @@ class ApiHandler extends Api\CalDAV\Handler
 				}
 				if ($compose)
 				{
-					$ret['file'][] = $path;
-					$ret['name'][] = $matches[2];
+					// MailCompose::applyPresetAttachmentContent()'s shape (base64, see there for
+					// why) - a REST-uploaded attachment lives in a local server temp file, nothing
+					// server-side left to reference by the time the compose popup actually opens
+					// (bootstrapComposePopup() never reads the classic file[]/name[] pair this used
+					// to send - silently dropped, found live: attachments uploaded then referenced
+					// to open a compose window never showed up in it)
+					$ret['attachmentContents'][] = [
+						'name' => $matches[2],
+						'type' => Api\Vfs::mime_content_type($path),
+						'content' => base64_encode(file_get_contents($path)),
+					];
 				}
 				else
 				{
@@ -569,8 +578,14 @@ class ApiHandler extends Api\CalDAV\Handler
 				}
 				if ($compose)
 				{
-					$ret['file'][] = Api\Vfs::PREFIX.$attachment;
-					$ret['name'][] = Api\Vfs::basename($attachment);
+					// MailCompose::applyPresetFiles()'s shape - a bare VFS path, NOT the
+					// Vfs::PREFIX-ed url the classic file[]/name[] pair used to send (also silently
+					// dropped, same reason as the REST-token branch above)
+					$ret['files'][] = [
+						'path' => $attachment,
+						'name' => Api\Vfs::basename($attachment),
+						'type' => Api\Vfs::mime_content_type($attachment),
+					];
 				}
 				else
 				{
