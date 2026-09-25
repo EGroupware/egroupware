@@ -92,4 +92,90 @@ class StructureToHtmlTest extends \PHPUnit\Framework\TestCase
 
 		$this->assertStringContainsString('Grüßen', $html);
 	}
+
+	/**
+	 * Ticket #125171: a message whose ENTIRE content is a single application/pdf part - no
+	 * multipart/mixed wrapper, no separate text/plain or text/html body anywhere at all (found
+	 * live: SAP NetWeaver sends purchase-order emails with a bare top-level
+	 * "Content-Type: application/pdf", nothing else). findBody('plain')/findBody('html') both
+	 * return null for this structure, so this used to fall straight through to the generic
+	 * "no body at all" branch and render a completely blank body - classic
+	 * Api\Mail::getMessageBody() already special-cases exactly this (streaming the PDF/image
+	 * directly as the response instead), this mirrors that for the JMAP-native path.
+	 *
+	 * Deliberately checks for a data-bare-pdf-base64 attribute, NOT a data: URI src - Chrome's
+	 * built-in PDF viewer refuses to render a PDF from a data: URI at all (confirmed live: neither
+	 * <embed> nor <iframe> renders anything but a blank/broken-plugin area for one, no CSP/
+	 * iframe-nesting involved), only a real blob: URL does - preview.js (mail/js/preview.js)
+	 * converts this attribute into one client-side after the page loads, since only client-side
+	 * code can construct a blob: URL at all.
+	 */
+	public function testBarePdfMessageEmbedsItselfAsTheBody()
+	{
+		$pdfBytes = "%PDF-1.4 fake but stable bytes for the test";
+		$part = new \Horde_Mime_Part();
+		$part->setType('application/pdf');
+		$part->setName('Bestellung 4500195131.pdf');
+		$part->setContents($pdfBytes);
+
+		$html = JmapShim::structureToHtml($part);
+
+		$this->assertStringContainsString('data-bare-pdf-base64="'.base64_encode($pdfBytes).'"', $html);
+		$this->assertStringContainsString('<embed ', $html);
+		$this->assertStringNotContainsString('src="data:application/pdf', $html,
+			'a data: URI src would never render in Chrome for a PDF embed - must stay a data-* attribute for preview.js to resolve into a blob: URL instead');
+	}
+
+	/** Same as the bare-PDF case, for a message whose entire content is a single image instead. */
+	public function testBareImageMessageEmbedsItselfAsTheBody()
+	{
+		$pngBytes = "\x89PNG\x0d\x0a\x1a\x0a fake but stable bytes for the test";
+		$part = new \Horde_Mime_Part();
+		$part->setType('image/png');
+		$part->setContents($pngBytes);
+
+		$html = JmapShim::structureToHtml($part);
+
+		$this->assertStringContainsString('data:image/png;base64,'.base64_encode($pngBytes), $html);
+		$this->assertStringContainsString('<img ', $html);
+	}
+
+	/**
+	 * A bare, bodyless message that is neither a PDF nor an image (eg. some other attachment
+	 * type with no MIME wrapper) must still fall back to an empty body, not error out or embed
+	 * something nonsensical - matches classic getMessageBody()'s own "application" primary-type
+	 * branch, which also just returns an empty body for this case.
+	 */
+	public function testBareNonPdfNonImageMessageStillReturnsEmptyBody()
+	{
+		$part = new \Horde_Mime_Part();
+		$part->setType('application/octet-stream');
+		$part->setContents('irrelevant binary content');
+
+		$this->assertSame('', JmapShim::structureToHtml($part));
+	}
+
+	/**
+	 * Ticket #125171 follow-up, found live: a bare PDF message can ALSO be missing its
+	 * Content-Transfer-Encoding header entirely, while its body is nonetheless still literal
+	 * base64 TEXT (the sender's own mail system encoded the binary but never declared it) -
+	 * Horde_Mime_Part then has no encoding to reverse, so getContents() returns that base64 text
+	 * as-is. Without BodyDecoding::decodeIfStillBase64() this would embed the base64 TEXT
+	 * double-encoded (garbage, not a valid PDF) instead of the real bytes.
+	 */
+	public function testBarePdfWithoutContentTransferEncodingStillDecodesCorrectly()
+	{
+		$pdfBytes = "%PDF-1.4 fake but stable bytes for the test";
+		$raw = "MIME-Version: 1.0\r\n".
+			"Content-Type: application/pdf\r\n".
+			// deliberately NO Content-Transfer-Encoding header
+			"\r\n".
+			chunk_split(base64_encode($pdfBytes));
+		$part = \Horde_Mime_Part::parseMessage($raw);
+
+		$html = JmapShim::structureToHtml($part);
+
+		$this->assertStringContainsString('data-bare-pdf-base64="'.base64_encode($pdfBytes).'"', $html);
+		$this->assertStringContainsString('<embed ', $html);
+	}
 }

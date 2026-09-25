@@ -206,6 +206,75 @@ class BodyDecoding
 	}
 
 	/**
+	 * Recover a part's real bytes when its Content-Transfer-Encoding was never declared at all, but
+	 * the content is still literally base64 TEXT - found live (ticket #125171 follow-up): a bare
+	 * whole-message PDF/image with a "Content-Type: application/pdf" header and NO
+	 * Content-Transfer-Encoding header whatsoever, whose body is nonetheless the base64-encoded PDF
+	 * (the sender's own mail system encoded the binary but forgot to declare it). With no encoding
+	 * declared, Horde_Mime_Part treats the content as literal 7bit passthrough and never reverses
+	 * it - every caller that just trusts getContents() (classic Api\Mail::getMessageBody()'s own
+	 * "message is just a pdf" echo, and Jmap\Imap::structureToHtml()'s identical bare-content
+	 * branch) would otherwise embed/stream the base64 TEXT itself as if it were the real binary.
+	 *
+	 * Deliberately has no per-format magic-byte table (checking for "%PDF-"/PNG/JPEG signatures
+	 * specifically) - genuine binary content (a real PDF or image, of any size worth looking at) is
+	 * virtually certain to contain at least one byte outside the base64 alphabet, so "the ENTIRE
+	 * content, once whitespace is stripped, matches the base64 charset with valid padding" is
+	 * already a safe, strong, format-independent signal on its own that this is undecoded base64
+	 * text, not real bytes - and is what actually let this same fix cover an image just as well as
+	 * a PDF without needing separate detection logic per type.
+	 *
+	 * A PDF/image can be large (tens of MB) and this is only ever reached for the "whole message IS
+	 * the attachment" case, which already holds a base64-inflated copy of the whole thing in memory
+	 * for the data: URI embed - so this deliberately checks only a small prefix first (genuine
+	 * binary content fails that cheaply, almost always within the first few hundred bytes) before
+	 * ever running a regex/copy over the FULL content, to avoid adding a second full-size
+	 * scan-and-copy on top of that existing memory cost for the overwhelmingly common (real binary,
+	 * not this malformed shape) case.
+	 *
+	 * @param string $bytes getContents()'s own (possibly still-encoded) output
+	 * @return string the decoded bytes if this shape was detected, else $bytes unchanged
+	 */
+	public static function decodeIfStillBase64(string $bytes) : string
+	{
+		if ($bytes === '')
+		{
+			return $bytes;
+		}
+		$sample = preg_replace('/\s+/', '', substr($bytes, 0, 256));
+		if ($sample !== '' && !preg_match('/^[A-Za-z0-9+\/=]*$/', $sample))
+		{
+			return $bytes;
+		}
+		// for short content, $sample (already computed above) covers the ENTIRE string - a cheap,
+		// precise padding-length check here guards a short garbage/non-base64 fragment from
+		// decoding to meaningless bytes instead of correctly staying unchanged, same as the full
+		// strlen($trimmed) % 4 check this method used to always do - just skipped for anything
+		// long enough that computing it would mean an extra full-string pass of its own.
+		if (strlen($bytes) <= 256 && strlen($sample) % 4 !== 0)
+		{
+			return $bytes;
+		}
+		// only reached for content that at least LOOKS like it could be base64 text (a rare case
+		// in practice) - decode via a php://temp-backed stream + the 'convert.base64-decode'
+		// filter (STREAM_FILTER_WRITE - applying it on both read AND write, this filter's default,
+		// would decode twice and produce garbage) rather than a second full-string preg_replace()+
+		// base64_decode() pair: the filter tolerates the MIME line-wrap whitespace itself (no
+		// separate strip pass needed first), and php://temp only holds its content in RAM up to
+		// ~2MB before spilling to a temp file - keeping a large malformed attachment (tens of MB of
+		// base64 TEXT) from ever needing multiple full-size copies in memory at once on top of
+		// $bytes itself (ralf, live: "we must be careful not to exceed PHP memory_limit, as PDFs
+		// can be quite big").
+		$stream = fopen('php://temp', 'r+');
+		stream_filter_append($stream, 'convert.base64-decode', STREAM_FILTER_WRITE);
+		fwrite($stream, $bytes);
+		rewind($stream);
+		$decoded = stream_get_contents($stream);
+		fclose($stream);
+		return $decoded !== '' ? $decoded : $bytes;
+	}
+
+	/**
 	 * Wordwrap that avoids breaking lines containing links (or optionally a given prefix)
 	 *
 	 * @param string $str

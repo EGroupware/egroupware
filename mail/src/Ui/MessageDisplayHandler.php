@@ -526,6 +526,12 @@ class MessageDisplayHandler
 					$push->call('app.mail.setSmimeFlags', $smime);
 				}
 			}
+			else if ($type === 'bare')
+			{
+				$body = $isStalwart ?
+					$icServer->resolveBareJmap($emailID, $htmlOptions) :
+					JmapImap::resolveBare((string)$this->ui->mail_bo->profileID, base64_encode($mailbox), $uid, $htmlOptions);
+			}
 			else	// 'tnef'
 			{
 				$body = $isStalwart ?
@@ -595,7 +601,7 @@ class MessageDisplayHandler
 	 *  'smime_pass_exp' preference (found live 2026-09-01, ralf: never actually reached the
 	 *  server in time to matter - egw.set_preference()'s own jsonq() send can still be in flight
 	 *  when the very next request already needs the value)
-	 * @return ?array {type: 'smime'|'tnef', body: string, smime: ?array} or null if not a
+	 * @return ?array {type: 'smime'|'tnef'|'bare', body: string, smime: ?array} or null if not a
 	 *  resolvable special case (JMAP unreachable, TNEF decode failed, ...)
 	 * @throws Mail\Smime\PassphraseMissing no cached/given passphrase was enough to decrypt
 	 */
@@ -673,6 +679,13 @@ class MessageDisplayHandler
 				// entirely after building just the HTML body.
 				return ['type' => 'smime', 'body' => $result['body'], 'smime' => $result['smime'],
 					'attachments' => $result['attachments'] ?? []];
+			}
+			if ($type === 'bare')
+			{
+				$body = $isStalwart ?
+					$icServer->resolveBareJmap($idParts['emailID'], $htmlOptions) :
+					JmapImap::resolveBare((string)$profileID, base64_encode($mailbox), $uid, $htmlOptions);
+				return ['type' => 'bare', 'body' => $body, 'smime' => null];
 			}
 			// 'tnef'
 			$body = $isStalwart ?

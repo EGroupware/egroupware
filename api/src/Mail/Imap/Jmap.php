@@ -499,6 +499,25 @@ class Jmap extends Mail\Imap
 	}
 
 	/**
+	 * JMAP-native "bare" resolution for Stalwart - counterpart of JmapImap::resolveBare() (see
+	 * specialCaseType()'s own docblock for the shape this handles: a message whose ENTIRE content
+	 * is one bare application/pdf or image part, ticket #125171). No decrypt/decode step needed -
+	 * downloads the whole raw message (same as resolveSmimeJmap() above) and hands it to
+	 * structureToHtml(), which already renders this exact shape.
+	 *
+	 * @param string $emailId JMAP Email id
+	 * @param string $htmlOptions
+	 * @return string sanitized HTML body
+	 */
+	public function resolveBareJmap(string $emailId, string $htmlOptions='') : string
+	{
+		$client = $this->jmapClient();
+		$email = $client->emailGet($emailId, ['blobId']);
+		$raw = $client->downloadBlob($email['blobId'], 'message.eml', 'message/rfc822');
+		return JmapImap::structureToHtml(\Horde_Mime_Part::parseMessage($raw), $htmlOptions);
+	}
+
+	/**
 	 * MailboxRights (RFC 8621 §2 "myRights", writable per-principal via the mail:share
 	 * extension's "shareWith") mapped to RFC 4314 IMAP ACL letters, so the existing ACL UI
 	 * (mail_acl.inc.php/acl.xet) keeps working unchanged against JMAP-native (Stalwart)

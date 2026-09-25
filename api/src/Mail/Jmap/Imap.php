@@ -3950,12 +3950,28 @@ class Imap extends Jmap\Base
 	 *
 	 * @param array $bodyStructure RFC 8621 EmailBodyPart shape (bodyPartToJmap()/Email/get), or a
 	 *  plain {type: string, ...} - only the top-level "type" is inspected
-	 * @return string|null 'smime', 'tnef', or null (not a special case, fall through to the
-	 *  classic path - meeting invites and anything else)
+	 * @return string|null 'smime', 'tnef', 'bare', or null (not a special case, fall through to
+	 *  the classic path - meeting invites and anything else)
 	 */
 	public static function specialCaseType(array $bodyStructure) : ?string
 	{
 		$type = strtolower($bodyStructure['type'] ?? '');
+		// a message whose ENTIRE content is one bare application/pdf or image part - no
+		// multipart wrapper, no separate text/plain or text/html body anywhere (ticket #125171:
+		// SAP NetWeaver sends the order PDF as a bare top-level "Content-Type: application/pdf",
+		// nothing else). Deliberately keyed off "no subParts" (only ever set for a multipart
+		// bodyStructure, see bodyPartToJmap()) rather than just the type alone - a NORMAL message
+		// with a pdf/image ATTACHMENT nested inside a proper multipart/mixed body must never
+		// match here (its own top-level type is multipart/mixed, not pdf/image, so this is
+		// already safe either way, but the explicit check documents the intent). structureToHtml()
+		// already renders this exact shape (its own "$partId === null" branch) - resolveBare()/
+		// resolveBareJmap() below just feed it the raw message the same way resolveSmime()/
+		// resolveSmimeJmap() do.
+		if (empty($bodyStructure['subParts']) &&
+			($type === 'application/pdf' || str_starts_with($type, 'image/')))
+		{
+			return 'bare';
+		}
 		if ($type === 'multipart/signed')
 		{
 			// RFC 1847's multipart/signed wrapper is shared by RFC 3156 PGP/MIME's own detached
@@ -4067,6 +4083,39 @@ class Imap extends Jmap\Base
 
 		if ($partId === null)
 		{
+			// no text/plain or text/html part anywhere in the structure at all - eg. a message
+			// whose ENTIRE content is a single PDF or image, no multipart/mixed wrapper, no
+			// separate body (found live, ticket #125171: SAP NetWeaver sends the order PDF as a
+			// bare top-level "Content-Type: application/pdf", nothing else). Classic
+			// Api\Mail::getMessageBody() already handles this by streaming the attachment
+			// directly as the whole HTTP response (a browser renders a PDF/image natively when
+			// served with the right Content-Type) - this JMAP-native path returns an HTML string
+			// embedded into a srcdoc iframe instead (MailJmap.wrapDocument(), mail/js/jmap.ts), so
+			// it can't do a raw response the same way.
+			//
+			// A PDF specifically can NOT just be a data: URI here, unlike the image case below (or
+			// inlineCidImages()'s own data: URI use for a referenced image) - found live (ralf):
+			// Chrome's built-in PDF viewer flatly refuses to render a PDF from a data: URI at all,
+			// for either <embed> or <iframe>, confirmed via a minimal reproduction with no CSP/
+			// iframe-nesting involved (a plain top-level page, <embed src="data:application/pdf;
+			// base64,...">, shows only a blank/broken-plugin area) - only a blob: URL actually
+			// renders. A blob: URL can only be constructed client-side (URL.createObjectURL()), so
+			// this instead emits the base64 payload as a data-* attribute for preview.js (already
+			// loaded on both this srcdoc iframe and the classic full-page fallback - see
+			// MailJmap.wrapDocument()'s own docblock - so no separate wiring needed per context) to
+			// convert into a real blob: URL once the page loads.
+			if ($structure->getType() === 'application/pdf')
+			{
+				$bytes = Api\Mail\BodyDecoding::decodeIfStillBase64($structure->getContents());
+				return '<embed type="application/pdf" data-bare-pdf-base64="'.base64_encode($bytes)
+					.'" style="width:100%;height:100vh;border:0">';
+			}
+			if ($structure->getPrimaryType() === 'image')
+			{
+				$bytes = Api\Mail\BodyDecoding::decodeIfStillBase64($structure->getContents());
+				return '<img src="data:'.$structure->getType().';base64,'.base64_encode($bytes)
+					.'" style="max-width:100%">';
+			}
 			return '';
 		}
 		$part = $structure->getPart($partId);
@@ -4164,6 +4213,33 @@ class Imap extends Jmap\Base
 			'smime' => $structure->getMetadata('X-EGroupware-Smime'),
 			'attachments' => self::smimeAttachments($structure, $rowId, $topLevelType, $fromAddress),
 		];
+	}
+
+	/**
+	 * JMAP-native "bare" resolution for the local shim - a message whose ENTIRE content is one
+	 * application/pdf or image part, no multipart wrapper, no separate body (ticket #125171, see
+	 * specialCaseType()'s own docblock). No decrypt/decode step needed, unlike resolveSmime()/
+	 * resolveTnef() - just re-parses the raw message (structureGet()'s own live IMAP-fetched
+	 * $structure has no populated contents yet, only BODYSTRUCTURE metadata) and hands it to
+	 * structureToHtml(), which already renders this exact shape.
+	 *
+	 * @param string $accountId
+	 * @param string $mailboxId JMAP Mailbox id (base64 folder path)
+	 * @param string $uid
+	 * @param string $htmlOptions
+	 * @return string sanitized HTML body
+	 * @throws \Exception message/mailbox not found
+	 */
+	public static function resolveBare(string $accountId, string $mailboxId, string $uid, string $htmlOptions='') : string
+	{
+		$imap = self::imapServer($accountId);
+		$mailbox = self::hordeMailbox($imap, self::folderPath($mailboxId));
+		$raw = self::fetchRawMessage($imap, $mailbox, $uid);
+		if ($raw === null)
+		{
+			throw new \Exception("Message '$uid' not found in '$mailbox'!");
+		}
+		return self::structureToHtml(\Horde_Mime_Part::parseMessage($raw), $htmlOptions);
 	}
 
 	/**
