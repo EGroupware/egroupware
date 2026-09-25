@@ -180,9 +180,15 @@ export function htmlAreaFormats(preference : PreferenceGetter = egw.preference.b
 			remove: "all",
 			styles
 		},
+		// ticket #125241: missing `styles` here (unlike "p" above) meant selecting "Small
+		// Paragraph" (BLOCK_FORMATS' own div=p alias) from the toolbar never applied the user's
+		// preferred font/size live in the editor, unlike a plain paragraph - _applyDefaultFontToContent()
+		// would still inline it retroactively on submit (its own selector already includes "div"),
+		// but only once that runs at all (see compose.ts's own getValue(true) fix, same ticket).
 		div: {
 			block: "div",
-			remove: "all"
+			remove: "all",
+			styles
 		}
 	};
 }

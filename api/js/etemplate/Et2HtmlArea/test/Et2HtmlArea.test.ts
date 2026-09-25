@@ -96,16 +96,20 @@ describe("Et2HtmlArea TinyMCE preferences", () =>
 		assert.notProperty(
 			formats,
 			"customparagraph",
-			"Small paragraph should use TinyMCE's native div block, not sticky classes or inline styles"
+			"Small paragraph should use TinyMCE's native div block, not a sticky custom class"
 		);
-		assert.deepEqual(
-			formats.div,
-			{
-				block: "div",
-				remove: "all"
-			},
-			"Small paragraph div format should not add inline styles or classes"
-		);
+		assert.deepInclude(formats.div, {
+			block: "div",
+			remove: "all"
+		}, "Small paragraph format should keep TinyMCE block replacement behavior");
+		// ticket #125241: a "Small Paragraph" (div) used to never get the user's preferred font/
+		// size applied live in the editor at all, unlike a plain paragraph - inconsistent both
+		// while composing and (until compose.ts's own getValue(true) fix, same ticket) in the
+		// actually sent message.
+		assert.deepEqual(formats.div.styles, {
+			"font-family": "arial, helvetica, sans-serif",
+			"font-size": "11pt"
+		}, "Small paragraph format should use the same font preferences as a plain paragraph");
 		assert.include(BLOCK_FORMATS, "Small Paragraph=div");
 	});
 
