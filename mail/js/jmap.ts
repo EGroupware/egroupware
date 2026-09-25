@@ -3012,16 +3012,26 @@ export class MailJmap
 				console.warn('MailJmap.fetchBodyFromMessagePart(): no token, falling back', {rowId, partID});
 				return {special: true};
 			}
-			const args : any = {accountId: token.accountId, ids: [ref.emailId], properties: ['attachments']};
+			// Found live 2026-09-25 (ralf, a real forward-as-attachment .eml, not the bounce/NDM
+			// stub this whole method was originally written for): raw-dumping the sub-part's bytes
+			// as plain text (below) shows the nested message's own RFC 5322 SOURCE - headers, MIME
+			// boundaries, encoded body - instead of a rendered body, which is wrong for anything
+			// with a real HTML/text body of its own. The classic fallback already recurses properly
+			// into a message/rfc822 part's own structure to find ITS text/html body (Api\Mail::
+			// getMessageBody()'s 'message'/'rfc822' case) - this whole raw-dump shortcut only exists
+			// because that classic path needs a real IMAP UID, which for a JMAP-native (Stalwart)
+			// row can cost a slow raw IMAP EMAILID search (see this method's own docblock). A local-
+			// shim row (token.isLocal) already IS a real IMAP UID - classic costs nothing extra here,
+			// so skip the raw-dump shortcut entirely and let the classic parser render it properly.
 			if (token.isLocal)
 			{
-				args.mailboxId = ref.mailboxId;
+				return {special: true};
 			}
-			const emails = token.isLocal ?
-				await this.emailGetViaCacheableGet(this.clients[ref.profileID], args) :
-				(await this.clients[ref.profileID].requestMany((t) => ({
-					emails: t.Email.get(args) as any,
-				})))[0].emails;
+			// only a real (non-local) JMAP account reaches here now - see the isLocal guard above
+			const args : any = {accountId: token.accountId, ids: [ref.emailId], properties: ['attachments']};
+			const [{emails}] = await this.clients[ref.profileID].requestMany((t) => ({
+				emails: t.Email.get(args) as any,
+			}));
 			const email = (emails.list || [])[0];
 			const attachment = (email?.attachments || []).find((a : any) => String(a.partId) === String(partID));
 			if (!attachment?.blobId)
@@ -3032,6 +3042,13 @@ export class MailJmap
 				return {special: true};
 			}
 			const text = await this.downloadPartText(ref.profileID, token, attachment);
+			if (!text || !text.trim())
+			{
+				console.warn('MailJmap.fetchBodyFromMessagePart(): downloaded part was empty, falling back', {
+					rowId, partID, attachment,
+				});
+				return {special: true};
+			}
 			return {
 				special: false,
 				html: this.wrapDocument(MailJmap.textToHtml(text)),
