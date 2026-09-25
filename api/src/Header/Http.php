@@ -72,12 +72,17 @@ class Http
 	 * Code is only used, if $link is only a path (starts with slash)
 	 *
 	 * @param string $link
+	 * @param boolean $use_setup_hostname =false passed straight through to host() - default false
+	 *  (prefer the current request's own host) matches what almost every caller actually wants; a
+	 *  caller that genuinely has no live request to derive a host from at all (a CLI/cron job
+	 *  building eg. a notification-email link) should pass true to fall back to the Setup-
+	 *  configured hostname in that case.
 	 */
-	static function fullUrl($link)
+	static function fullUrl($link, $use_setup_hostname=false)
 	{
 		if ($link[0] === '/')
 		{
-			$link = self::schema().'://'.self::host(true).$link;
+			$link = self::schema().'://'.self::host($use_setup_hostname).$link;
 		}
 		return $link;
 	}
