@@ -47,31 +47,16 @@ if(isset($_GET['hasupdates']) && $_GET['hasupdates'] == 'yes')
 	This is the menuaction driver for the multi-layered design
 */
 $invalid_data = false;
-if(isset($_GET['menuaction']) && preg_match('/^[A-Za-z0-9_]+\.[A-Za-z0-9_\\\\]+\.[A-Za-z0-9_]+$/',$_GET['menuaction']))
+if(isset($_GET['menuaction']) && !preg_match('/^[A-Za-z0-9_]+\.[A-Za-z0-9_\\\\]+\.[A-Za-z0-9_]+$/', $_GET['menuaction']))
 {
-	list($app,$class,$method) = explode('.',$_GET['menuaction']);
+	http_response_code(400);
+	exit;
+}
+// no menuaction at all, eg. a bare /index.php: default to 'api' with no class - there's nothing to
+// dispatch, the actual app gets resolved further down from the user's preferences, once
+// header.inc.php gave us those
+list($app, $class, $method) = explode('.', $_GET['menuaction'] ?? 'api..');
 
-	// check if autoloadable class belongs to given app
-	if (substr($class, 0, 11) == 'EGroupware\\')
-	{
-		list(,$app_from_class) = explode('\\', strtolower($class));
-	}
-	elseif(strpos($class, '_') !== false)
-	{
-		list($app_from_class) = explode('_', $class);
-	}
-	if(!$app || !$class || !$method || isset($app_from_class) &&
-		isset($GLOBALS['egw_info']['apps'][$app_from_class]) && $app_from_class != $app)
-	{
-		$invalid_data = True;
-	}
-}
-else
-{
-	$app = 'api';
-	$invalid_data = True;
-}
-//error_log(__METHOD__."$app,$class,$method");
 if($app == 'phpgwapi')
 {
 	$app = 'api';
@@ -86,6 +71,16 @@ $GLOBALS['egw_info'] = array(
 	)
 );
 include('./header.inc.php');
+
+// $app only drove which rights get checked above, it need not be the app $class actually belongs
+// to - that decoupling is the bug this closes. Verify it now with the same purely string-based
+// check json.php/ajax_exec already apply; left uncaught, the exception handler header.inc.php just
+// installed renders it as a generic error page, same as any NoPermission thrown below. Nothing to
+// verify without a menuaction - $class is empty, so nothing gets dispatched below either.
+if (isset($_GET['menuaction']))
+{
+	Api\Json\Request::checkMenuAction($_GET['menuaction']);
+}
 
 // user changed timezone
 if (isset($_GET['tz']))
@@ -113,14 +108,19 @@ if($app == 'api' && !$class && !$api_requested && !($_GET['cd'] === 'yes' && !Ap
 	{
 		$GLOBALS['egw_info']['user']['preferences']['common']['default_app'] = $GLOBALS['egw_info']['server']['force_default_app'];
 	}
-	if($GLOBALS['egw_info']['user']['preferences']['common']['default_app'] && !$hasupdates)
+	$default_app = $GLOBALS['egw_info']['user']['preferences']['common']['default_app'];
+	// default_app is a stored preference (or the site's forced default) - the user's rights can have
+	// changed since it was set, so it must still be checked, same as any other app we dispatch to
+	if($default_app && !$hasupdates && isset($GLOBALS['egw_info']['user']['apps'][$default_app]))
 	{
-		Egw::redirect(Framework::index($GLOBALS['egw_info']['user']['preferences']['common']['default_app']),$GLOBALS['egw_info']['user']['preferences']['common']['default_app']);
+		Egw::redirect(Framework::index($default_app),$default_app);
 	}
-	else
+	// 'home' is not guaranteed to be available to every user either
+	elseif (isset($GLOBALS['egw_info']['user']['apps']['home']))
 	{
 		Egw::redirect_link('/home/index.php?cd=yes');
 	}
+	// else fall through to the plain shell below, which needs no app-specific rights
 }
 
 if ($_GET['cd'] == 'yes' || empty($class))
@@ -169,7 +169,10 @@ else
 			error_log(__FILE__.": invalid menuaction '$_GET[menuaction]', not in public_functions!");
 		}
 
-		$GLOBALS['egw']->redirect_link('/home/index.php');
+		// 'home' is not guaranteed to be available to every user; '/index.php?cd=yes' (the plain
+		// shell) always is
+		$GLOBALS['egw']->redirect_link(isset($GLOBALS['egw_info']['user']['apps']['home']) ?
+			'/home/index.php' : '/index.php?cd=yes');
 	}
 
 	if(!isset($GLOBALS['egw_info']['nofooter']))
