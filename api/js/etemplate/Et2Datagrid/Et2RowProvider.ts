@@ -242,7 +242,14 @@ export class Et2RowProvider
 		this._cancelActiveTemplate();
 		try
 		{
-			tpl = <Et2Template><unknown>loadWebComponent("et2-template", {id: templateName}, this.host as any);
+			// autoLoad off: we only want this element as a handle for reading the template XML below.
+			// Left on, setting the id makes Et2Template build the row template's entire widget tree,
+			// which we would immediately destroy in the finally - and a row template's <grid> is a
+			// legacy widget, so every webComponent in it warns on the way in.
+			tpl = <Et2Template><unknown>loadWebComponent("et2-template", {
+				autoLoad: false,
+				id: templateName
+			}, this.host as any);
 			this._activeTemplate = tpl;
 			let xml : Element | null = null;
 			// We prefer to read it directly ourselves

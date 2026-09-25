@@ -67,6 +67,16 @@ export class Et2Template extends Et2Widget(LitElement)
 	onload : Function;
 
 	/**
+	 * Load the template automatically when it is connected or when template / id / url / content
+	 * is set.  Turn it off if you only want the element as a handle for reading the template's
+	 * XML, not its widgets - building a full widget tree just to throw it away is expensive, and
+	 * any webComponent inside a legacy <grid> warns while it is built.  Calling load() yourself
+	 * still works, this only suppresses the automatic calls.
+	 */
+	@property({type: Boolean})
+	autoLoad = true;
+
+	/**
 	 * Cache of known templates
 	 * @type {{[name : string] : Element}}
 	 */
@@ -106,7 +116,7 @@ export class Et2Template extends Et2Widget(LitElement)
 		this.addEventListener("load", this.handleLoad);
 
 		// If we can, start loading immediately but don't re-load if we already have contents (probably a DOM move)
-		if(this.childElementCount == 0 && (this.template || this.id || this.url))
+		if(this.autoLoad && this.childElementCount == 0 && (this.template || this.id || this.url))
 		{
 			this.load();
 		}
@@ -136,7 +146,7 @@ export class Et2Template extends Et2Widget(LitElement)
 
 		// Load if template (template, id or URL) or content index changed
 		// (as long as we're not currently already loading, to prevent loops if load changes an attribute)
-		if(!this.__isLoading && ["template", "id", "url", "content"].filter(v => changedProperties.has(v)).length > 0)
+		if(this.autoLoad && !this.__isLoading && ["template", "id", "url", "content"].filter(v => changedProperties.has(v)).length > 0)
 		{
 			this.load();
 		}
