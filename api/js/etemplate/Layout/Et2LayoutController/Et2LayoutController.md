@@ -23,7 +23,11 @@ Layout is opt-in and there is no default: a template without a `layout` attribut
 You can convert one dialog without touching any of the others.
 
 `layout`, and the `span`, `grow` and `full` attributes below, are all declared in `etemplate2.0.dtd` /
-`etemplate2.0.rng`, so a validating editor accepts them in a `.xet` file.
+`etemplate2.0.rng`, so a validating editor accepts them in a `.xet` file.  They are also declared as
+reflecting properties on `Et2Widget`, which is what actually puts them on the element: the layout CSS
+matches `[grow]` / `[span="all"]` / `[full]`, and `transformAttributes()` only writes an attribute for
+a property the widget declares as reflecting - anything else it sets as a plain JS property, where no
+selector can see it.
 
 ### Which layout do I want?
 
@@ -173,7 +177,7 @@ In `2-column` and `edit`, a widget takes one column by default.  `span` changes 
 
 | Attribute                            | Effect                                                                     |
 |--------------------------------------|----------------------------------------------------------------------------|
-| `span="all"` (or a `full` attribute) | Full width - the widget takes every column, wherever it is.                |
+| `span="all"` (or `full="true"`)      | Full width - the widget takes every column, wherever it is.                |
 | `span="end"` / `span="*"`            | Stretch from the column the widget landed in to the end of its line.       |
 
 `span="all"` means the same thing it did in a legacy `<grid>`, so it usually survives a conversion unchanged.
@@ -200,6 +204,10 @@ In `2-column` and `edit`, a widget takes one column by default.  `span` changes 
 Both of the last two say `span="end"` and they come out different widths, because `end` is relative
 to where the widget was placed: `Private` was put in the second column and had one column left to
 take, `Note` started a line of its own and took all of it.
+
+`full` needs a real value, because it resolves through the array manager the way every other
+boolean attribute does - which is also what lets you write `full="@is_wide"`.  A bare `full=""` is
+false, not "present".
 
 `<et2-tabbox>` is always full width in these layouts - you do not have to say `span="all"` on it.
 
