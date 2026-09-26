@@ -131,6 +131,17 @@ export class Et2Ai extends Et2MarkdownMixin(Et2Widget(LitElement))
 	@property({type: Function})
 	resolveTarget = (action? : AiAction, prompt? : AiPrompt) => this._findApplyTarget(action);
 
+	/**
+	 * Record the content belongs to, for {{placeholders}} in the prompt text (filled server-side by the
+	 * app's merge class, same placeholders as document merge). Default: the app of the template and the
+	 * id found in its content, see _getRecord()
+	 */
+	@property({type: String, attribute: "record-app"})
+	recordApp : string = "";
+
+	@property({type: String, attribute: "record-id"})
+	recordId : string = "";
+
 	/* Disable the AI assistant UI, including the trigger button */
 	@property({type: Boolean, reflect: true})
 	uiDisabled : boolean = false;
@@ -286,6 +297,17 @@ export class Et2Ai extends Et2MarkdownMixin(Et2Widget(LitElement))
 	{
 		const originalValue = this.getContent();
 		this.ai.isHTML = this._isHtmlContent(originalValue);
+
+		// the record for the prompt's {{placeholders}}, the server checks the user may read it
+		const record = this._getRecord();
+		if(record)
+		{
+			this.ai.options.record = record;
+		}
+		else
+		{
+			delete this.ai.options.record;
+		}
 
 		this.dispatchEvent(new CustomEvent("et2-ai-start", {
 			detail: {
@@ -637,6 +659,33 @@ export class Et2Ai extends Et2MarkdownMixin(Et2Widget(LitElement))
 			return el.iframe;
 		}
 		return null;
+	}
+
+	/**
+	 * App and id of the record the content belongs to
+	 *
+	 * The id is looked up in the template's content: the app's registered edit_id, the link-to widget's
+	 * to_id (present in most edit dialogs), then plain "id". A new, not yet saved entry has none.
+	 *
+	 * @return {app : string, id : string} | null
+	 */
+	protected _getRecord() : { app : string, id : string } | null
+	{
+		const app = this.recordApp || this.getInstanceManager()?.app;
+		if(!app)
+		{
+			return null;
+		}
+		let id = this.recordId;
+		if(!id)
+		{
+			const content = this.getInstanceManager()?.widgetContainer?.getArrayMgr("content")?.data ?? {};
+			const editId = this.egw().link_get_registry(app, "edit_id");
+			id = (typeof editId === "string" && content[editId]) ||
+				(content.link_to?.to_app === app && typeof content.link_to.to_id !== "object" && content.link_to.to_id) ||
+				content.id || "";
+		}
+		return id && typeof id !== "object" ? {app, id: String(id)} : null;
 	}
 
 	/**
