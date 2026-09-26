@@ -664,8 +664,14 @@ export class Et2Ai extends Et2MarkdownMixin(Et2Widget(LitElement))
 	/**
 	 * App and id of the record the content belongs to
 	 *
-	 * The id is looked up in the template's content: the app's registered edit_id, the link-to widget's
-	 * to_id (present in most edit dialogs), then plain "id". A new, not yet saved entry has none.
+	 * Looked up, first found wins:
+	 * - the record-id attribute
+	 * - the content of the widget's namespace, then of the template: the app's registered edit_id, the
+	 *   link-to widget's to_id (present in most edit dialogs), then "id"
+	 * - a widget with that name in the same namespace, eg. "preview_grid[id]" of a list's preview, whose
+	 *   values are set client-side on selecting a row
+	 * - the one selected row of a list in the same template ("app::id")
+	 * A new, not yet saved entry has none.
 	 *
 	 * @return {app : string, id : string} | null
 	 */
@@ -676,16 +682,57 @@ export class Et2Ai extends Et2MarkdownMixin(Et2Widget(LitElement))
 		{
 			return null;
 		}
-		let id = this.recordId;
-		if(!id)
+		const valid = (id) => (typeof id === "string" || typeof id === "number") && String(id) !== "" && String(id) !== "0";
+		const record = (id) => ({app, id: String(id)});
+		if(this.recordId)
 		{
-			const content = this.getInstanceManager()?.widgetContainer?.getArrayMgr("content")?.data ?? {};
-			const editId = this.egw().link_get_registry(app, "edit_id");
-			id = (typeof editId === "string" && content[editId]) ||
-				(content.link_to?.to_app === app && typeof content.link_to.to_id !== "object" && content.link_to.to_id) ||
-				content.id || "";
+			return record(this.recordId);
 		}
-		return id && typeof id !== "object" ? {app, id: String(id)} : null;
+		const editId = this.egw().link_get_registry(app, "edit_id");
+		const names = [...(typeof editId === "string" && editId ? [editId] : []), "id"];
+		const fromContent = (content) =>
+		{
+			for(const name of names)
+			{
+				if(valid(content?.[name]))
+				{
+					return content[name];
+				}
+			}
+			return content?.link_to?.to_app === app && valid(content.link_to.to_id) ? content.link_to.to_id : null;
+		};
+		// content of our namespace (nested template), then of the whole template
+		const mgr = this.getArrayMgr("content");
+		let id = fromContent(mgr?.data) ??
+			fromContent(this.getInstanceManager()?.widgetContainer?.getArrayMgr("content")?.data);
+		if(valid(id))
+		{
+			return record(id);
+		}
+		// a widget holding the id in our namespace
+		const path : string[] = mgr?.getPath?.() ?? [];
+		const root = this.getInstanceManager()?.widgetContainer;
+		for(const name of names)
+		{
+			const widgetId = path.length ? path[0] + path.slice(1).map(p => "[" + p + "]").join("") + "[" + name + "]" : name;
+			const widget = <any>root?.getWidgetById(widgetId);
+			id = widget ? (typeof widget.getValue === "function" ? widget.getValue() : widget.value) : null;
+			if(valid(id))
+			{
+				return record(id);
+			}
+		}
+		// the one selected row of a list in the same template, eg. a preview filled client-side
+		let selected = null;
+		root?.iterateOver((nm) =>
+		{
+			const ids = typeof nm.getSelection === "function" ? nm.getSelection()?.ids : null;
+			if(!selected && Array.isArray(ids) && ids.length === 1 && String(ids[0]).startsWith(app + "::"))
+			{
+				selected = String(ids[0]).substring(app.length + 2);
+			}
+		}, this);
+		return valid(selected) ? record(selected) : null;
 	}
 
 	/**
