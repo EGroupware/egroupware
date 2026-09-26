@@ -56,14 +56,17 @@ This is the canonical shape returned by GET and accepted by POST / PUT / PATCH.
 {
   "@type":      "Ticket",
   "id":         42,
-  "uid":        "42",
   "title":      "Login page crashes on mobile",
   "description": "Steps to reproduce: ...",
+  "tracker":    8,
   "status":     "Open",
   "priority":   5,
-  "private":    false,
+  "privacy":    "public",
+  "category":   "Bug",
+  "resolution": null,
+  "creator":    "demo@example.org",
   "created":    "2026-05-25T10:00:00+00:00",
-  "modified":   "2026-05-25T11:30:00+00:00",
+  "updated":    "2026-05-25T11:30:00+00:00",
   "closed":     null
 }
 ```
@@ -74,14 +77,19 @@ This is the canonical shape returned by GET and accepted by POST / PUT / PATCH.
 |-------|------|----------|-------------|
 | `@type` | `"Ticket"` | No | Always `"Ticket"`. Ignored on write. |
 | `id` | integer | No | Ticket ID. Auto-assigned on POST. |
-| `uid` | string | No | Stable identifier — the caldav_name if the ticket was created via REST, otherwise the numeric ID as a string. |
 | `title` | string | Yes | **Required on POST/PUT.** One-line summary. |
 | `description` | string | Yes | Full description. Omitted from the response when empty. |
+| `tracker` | integer | Yes | The queue the ticket belongs to, and what makes a queue-specific `category`/`version`/`status`/`resolution` label valid. Defaults to the caller's first accessible queue. |
 | `status` | string | Yes | Capitalized status label. See [Status Values](#6-status-values). |
 | `priority` | integer (1–9) | Yes | See [Priority Values](#7-priority-values). |
-| `private` | boolean | Yes | `true` = visible only to creator and admins. |
-| `created` | ISO 8601 datetime | No | Auto-set on creation. Omitted when not available. |
-| `modified` | ISO 8601 datetime | No | Auto-set on every save. Omitted when not available. |
+| `privacy` | `"public"` \| `"private"` | Yes | `"private"` = visible only to creator, assignees and tracker admins. |
+| `category` | string | Yes | Admin-managed label, scoped to the ticket's `tracker`. Omitted when not set. |
+| `resolution` | string | Yes | Admin-managed label, scoped to the ticket's `tracker`. Omitted when not set. |
+| `creator` | string | No | Account email of whoever created the ticket. |
+| `participants` | object | Yes | JSCalendar-style map keyed by account id / e-mail — creator has role `owner`, assignees `attendee`. |
+| `group` | string | Yes | Account email of the responsible group. Omitted when not set. |
+| `created` | ISO 8601 datetime | No | Auto-set on creation. |
+| `updated` | ISO 8601 datetime | No | Auto-set on every save. Omitted until the ticket is first modified. |
 | `closed` | ISO 8601 datetime | No | Auto-set when status → `"Closed"`. Omitted when not set. |
 
 ---
@@ -104,13 +112,12 @@ The collection is limited to 500 tickets and no filter parameters are supported.
     "/admin/tracker/2": {
       "@type":    "Ticket",
       "id":       2,
-      "uid":      "2",
       "title":    "Fix login crash",
       "status":   "Open",
       "priority": 5,
-      "private":  false,
+      "privacy":  "public",
       "created":  "2026-05-20T15:55:24+00:00",
-      "modified": "2026-05-20T16:15:18+00:00"
+      "updated":  "2026-05-20T16:15:18+00:00"
     },
     "/admin/tracker/3": { "..." : "..." }
   }
@@ -138,14 +145,13 @@ user is an admin, technician, or assignee of the queue.
 {
   "@type":       "Ticket",
   "id":          42,
-  "uid":         "42",
   "title":       "Login page crashes on mobile",
   "description": "Steps to reproduce:\n1. Open mobile browser\n2. Navigate to /login\n3. Crash",
   "status":      "Open",
   "priority":    5,
-  "private":     false,
+  "privacy":     "public",
   "created":     "2026-05-25T10:00:00+00:00",
-  "modified":    "2026-05-25T11:30:00+00:00",
+  "updated":     "2026-05-25T11:30:00+00:00",
   "replies": {
     "101": {
       "@type":      "Reply",
@@ -225,7 +231,7 @@ Accept: application/json
   "description": "Steps to reproduce:\n1. Open mobile browser\n2. Navigate to /login\n3. Crash",
   "status":      "Open",
   "priority":    7,
-  "private":     false
+  "privacy":     "public"
 }
 ```
 
@@ -262,8 +268,14 @@ Only the fields present in the request body are updated. All other fields retain
 **Response `204 No Content`** — no body.
 
 **Behaviour notes:**
-- Only `title`, `description`, `status`, `priority`, and `private` are accepted.
-- Fields the authenticated user cannot modify (based on their role in the queue) are **silently skipped**.
+- `title`, `tracker`, `status`, `priority`, `privacy`, `category`, `version` and `resolution` are
+  accepted, subject to the per-field rights below.
+- **`description` is not.** Its stock field ACL is `TRACKER_ITEM_NEW`
+  (`tracker_bo::$field_acl['tr_description']`), i.e. it is writable only while the ticket is being
+  created — a `PATCH` still answers `204` and leaves the description unchanged, for admins too.
+  Add a [reply](#12-replies) instead of trying to append to it.
+- Fields the authenticated user cannot modify (based on their role in the queue) are **silently
+  skipped** — the response is `204` either way, so read the ticket back if it matters.
 
 ---
 
