@@ -256,7 +256,7 @@
         "tags": ["Tracker"],
         "operationId": "replaceTicket",
         "summary": "Replace a ticket",
-        "description": "Replaces all writable attributes of a ticket. 'title' is required. Read-only fields (id, created, creator, modifier, modified, closed) are silently ignored. Fields the user lacks permission to change (e.g. completion for non-assignees) are also silently skipped.",
+        "description": "Replaces all writable attributes of a ticket. 'title' is required. Read-only fields (id, created, creator, modifier, updated, closed) are silently ignored. Fields the user lacks permission to change (e.g. percentComplete for non-assignees) are also silently skipped.",
         "parameters": [
           { "$ref": "#/components/parameters/id" },
           {
@@ -324,13 +324,10 @@
                   "title":      { "type": "string" },
                   "status":     { "type": "string", "enum": ["Open", "Closed", "Pending", "Deleted"] },
                   "priority":   { "type": "integer", "minimum": 1, "maximum": 9 },
-                  "completion": { "type": "integer", "minimum": 0, "maximum": 100 },
-                  "dueDate":    { "type": "string", "format": "date-time" },
-                  "assigned":   {
-                    "type": "array",
-                    "items": { "$ref": "#/components/schemas/AssignedUser" }
-                  },
-                  "private":    { "type": "boolean" }
+                  "percentComplete": { "type": "integer", "minimum": 0, "maximum": 100 },
+                  "due":        { "type": "string", "format": "date-time" },
+                  "participants": { "$ref": "#/components/schemas/TicketParticipants" },
+                  "privacy":    { "type": "string", "enum": ["public", "private"] }
                 }
               }
             }
@@ -599,19 +596,19 @@
             "description": "Priority from 1 (lowest) to 9 (highest). Stock labels: 1=lowest, 5=medium, 9=highest.",
             "default": 5
           },
-          "completion": {
+          "percentComplete": {
             "type": "integer",
             "minimum": 0,
             "maximum": 100,
             "description": "Percentage complete (0–100). Requires assignee or admin role to modify.",
             "default": 0
           },
-          "startDate": {
+          "start": {
             "type": "string",
             "format": "date-time",
             "description": "Start date in UTC ISO 8601 format, e.g. '2026-05-25T00:00:00Z'."
           },
-          "dueDate": {
+          "due": {
             "type": "string",
             "format": "date-time",
             "description": "Due date in UTC ISO 8601 format."
@@ -622,10 +619,11 @@
             "description": "Timestamp when the ticket was closed. Auto-set when status changes to Closed.",
             "readOnly": true
           },
-          "private": {
-            "type": "boolean",
-            "description": "When true the ticket is visible only to the creator and admins.",
-            "default": false
+          "privacy": {
+            "type": "string",
+            "enum": ["public", "private"],
+            "description": "'private' = visible only to the creator, assignees and admins.",
+            "default": "public"
           },
           "category": {
             "type": "string",
@@ -634,6 +632,10 @@
           "version": {
             "type": "string",
             "description": "Version category name or ID (e.g. '1.0', 'v2.5')."
+          },
+          "resolution": {
+            "type": "string",
+            "description": "Resolution name or ID (queue specific, e.g. 'fixed', 'wontfix')."
           },
           "creator": {
             "type": "string",
@@ -646,7 +648,7 @@
             "description": "Creation timestamp in UTC. Auto-set on POST.",
             "readOnly": true
           },
-          "modified": {
+          "updated": {
             "type": "string",
             "format": "date-time",
             "description": "Last modification timestamp in UTC. Auto-updated on every save.",
@@ -657,15 +659,7 @@
             "description": "Username of the last modifier. Auto-set on every save.",
             "readOnly": true
           },
-          "assigned": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/AssignedUser" },
-            "description": "List of users assigned to this ticket."
-          },
-          "cc": {
-            "type": "string",
-            "description": "Comma-separated email addresses to CC on ticket notifications."
-          },
+          "participants": { "$ref": "#/components/schemas/TicketParticipants" },
           "group": {
             "type": "string",
             "description": "Responsible group name. Requires technician or admin role to change."
@@ -697,16 +691,17 @@
           "tracker": 8,
           "status": "Open",
           "priority": 7,
-          "completion": 0,
-          "dueDate": "2026-06-01T00:00:00Z",
-          "private": false,
+          "percentComplete": 0,
+          "due": "2026-06-01T00:00:00Z",
+          "privacy": "public",
           "creator": "admin",
           "created": "2026-05-25T10:00:00Z",
-          "modified": "2026-05-25T11:30:00Z",
+          "updated": "2026-05-25T11:30:00Z",
           "modifier": "admin",
-          "assigned": [
-            { "uid": "urn:ietf:params:scim:schemas:core:2.0:User:john" }
-          ],
+          "participants": {
+            "5": { "@type": "Participant", "name": "Admin", "email": "admin@example.org", "kind": "individual", "roles": { "owner": true } },
+            "12": { "@type": "Participant", "name": "John Doe", "email": "john@example.org", "kind": "individual", "roles": { "attendee": true } }
+          },
           "group": "Admins",
           "replies": {
             "101": {
@@ -802,6 +797,28 @@
           "restricted": true
         }
       },
+      "TicketParticipants": {
+        "type": "object",
+        "description": "JSCalendar-style participants keyed by account ID (or any key for new ones). role 'owner' = creator, 'attendee' = assigned user (identify by 'email' or account 'name'), 'informational' = CC email address. On write, the list replaces assignees and CC.",
+        "additionalProperties": {
+          "type": "object",
+          "properties": {
+            "@type": { "type": "string", "enum": ["Participant"] },
+            "name":  { "type": "string" },
+            "email": { "type": "string", "format": "email" },
+            "kind":  { "type": "string", "enum": ["individual", "group"] },
+            "roles": {
+              "type": "object",
+              "properties": {
+                "owner":         { "type": "boolean" },
+                "attendee":      { "type": "boolean" },
+                "informational": { "type": "boolean" }
+              }
+            }
+          }
+        },
+        "example": { "x": { "email": "john@example.org", "roles": { "attendee": true } } }
+      },
       "AssignedUser": {
         "type": "object",
         "required": ["uid"],
@@ -836,7 +853,7 @@
                 "creator": "admin",
                 "created": "2026-05-20T15:55:24Z",
                 "etag": "2:1779293718",
-                "private": false
+                "privacy": "public"
               }
             }
           },
