@@ -46,8 +46,8 @@
 			<rows>
 				<row class="th">
 					<et2-nextmatch-header-filter  emptyLabel="Type" id="cf_type2"></et2-nextmatch-header-filter>
-					<nextmatch-sortheader label="Name" id="cf_name"/>
-					<nextmatch-sortheader label="Label" id="cf_label"/>
+					<et2-nextmatch-sortheader  label="Name" id="cf_name"/>
+					<et2-nextmatch-sortheader  label="Label" id="cf_label"/>
 					<et2-nextmatch-header-filter  emptyLabel="Type of field" id="cf_type"></et2-nextmatch-header-filter>
 					<et2-nextmatch-header  label="Required" id="cf_needed"></et2-nextmatch-header>
 					<et2-nextmatch-header  label="Private" id="cf_private"></et2-nextmatch-header>
@@ -57,9 +57,9 @@
 						<et2-nextmatch-header  label="Length" id="cf_len"></et2-nextmatch-header>
 						<et2-nextmatch-header  label="Rows" id="cf_rows"></et2-nextmatch-header>
 					</et2-vbox>
-					<nextmatch-sortheader label="Order" id="cf_order"/>
+					<et2-nextmatch-sortheader  label="Order" id="cf_order"/>
 					<et2-nextmatch-header-filter  emptyLabel="Tab" id="cf_tab"></et2-nextmatch-header-filter>
-					<nextmatch-sortheader label="Last modified" id="cf_modified"/>
+					<et2-nextmatch-sortheader  label="Last modified" id="cf_modified"/>
 				</row>
 				<row class="row" valign="top">
                     <et2-select  id="${row}[cf_type2]" multiple="true" readonly="true" placeholder="All" noLang="1"></et2-select>
@@ -68,8 +68,12 @@
                         <et2-description  id="${row}[cf_label]" noLang="1"></et2-description>
                         <et2-description  id="${row}[cf_label]"></et2-description>
                     </et2-vbox>
-                    <customfields-types statustext="Type of customfield" id="${row}[cf_type]" readonly="true"
-                                        app="$cont[appname]"/>
+                    <!-- Was <customfields-types>, whose server-side transformation to a select only
+                         applies outside a nextmatch row: Et2RowProvider clones row cells by tag name and
+                         never consults modifications, so the unregistered tag rendered nothing at all.
+                         admin_customfields::index() already puts the same options in $sel_options['cf_type'],
+                         so a plain readonly select needs no widget registration. -->
+                    <et2-select  statustext="Type of customfield" id="${row}[cf_type]" readonly="true" noLang="1"></et2-select>
                     <et2-checkbox  id="${row}[cf_needed]" readonly="true" selectedValue="1" unselectedValue="0"></et2-checkbox>
 					<et2-select-account  id="${row}[cf_private]" readonly="true" accountType="both"></et2-select-account>
 					<et2-select-account  id="${row}[cf_readonly]" readonly="true" accountType="both"></et2-select-account>
@@ -87,13 +91,14 @@
                 </row>
 			</rows>
 		</grid>
+		<et2-styles src="rows.css"></et2-styles>
 	</et2-template>
 	<et2-template  id="admin.customfields.header" template="" lang="" group="0" version="1.9.001">
 		<et2-button  label="Add" id="add" onclick="egw.open_link('admin.admin_customfields.edit&amp;appname='+widget.getArrayMgr('content').getRoot().getEntry('nm[appname]')+'&amp;use_private='+widget.getArrayMgr('content').getRoot().getEntry('use_private'),false,'600x600');" noSubmit="true"></et2-button>
 	</et2-template>
-	<et2-template  id="admin.customfields" template="" lang="" group="0" version="1.9.001">
+	<et2-template  id="admin.customfields" template="" lang="" group="0" version="1.9.001" layout="stack">
 		<et2-template  template="admin.customfields.header" slot="main-header"></et2-template>
 		<et2-template  id="@type_template"></et2-template>
-		<nextmatch id="nm" template="admin.customfields.fields"/>
+		<et2-nextmatch  id="nm" template="admin.customfields.fields" grow="1"></et2-nextmatch>
 	</et2-template>
 </overlay>

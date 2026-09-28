@@ -1,0 +1,70 @@
+/**
+ * EGroupware - Row styles for admin's nextmatch lists
+ *
+ * Loaded into each datagrid row's shadow root via <et2-styles src="rows.css"> in the row
+ * templates.  A shadow root is its own node tree, so the "#admin-index .foo" style selectors
+ * these rules replaced (in app.css) could never match a row element - they are kept here
+ * unscoped instead, which the shadow root already isolates for us.
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package admin
+ * @link http://www.egroupware.org
+ */
+
+/* Accounts / groups list: greyed-out status text for a disabled or expired account */
+.adminAccountInactive .adminStatus {
+	color: red;
+}
+
+/* Long email addresses must not push the column wider than its share */
+.adminOverflowEllipsis {
+	width: 100%;
+	white-space: nowrap;
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+/* Group list: a group with many members must not make its row arbitrarily tall */
+.adminGroupMembers {
+	overflow: auto;
+	max-height: 7em;
+}
+
+/* Access log: the full user-agent string goes in the tooltip, the cell shows what fits */
+.admin_userAgent {
+	display: block;
+	white-space: nowrap;
+	width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+/* ACL list: the app icon is a row marker, not a full-size image.  et2-appicon keeps its <img> in
+   the light DOM, so the class lands on the host and the <img> has to be reached through it. */
+.admin_aclApp,
+.admin_aclApp img {
+	width: 1.3em;
+}
+
+/* Custom fields list: a select with many options must not make its row arbitrarily tall */
+.values {
+	display: inline-block;
+	max-height: 13em;
+	overflow: auto;
+}
+
+/* Categories list: top-level categories are bold, sub-categories are indented by level_spacer */
+.level0 {
+	font-weight: bold;
+}
+
+.level_spacer {
+	flex: 0 0 auto;
+}
+
+/* Admin command list: a failed command shows its error in red */
+.redItalic {
+	color: red;
+	font-style: italic;
+}

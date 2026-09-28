@@ -16,38 +16,9 @@ div#divAppbox {
 	padding: 0;
 }
 
-/** Group list */
-@media screen {
-	#admin-index_groups div.innerContainer {
-		overflow: auto;
-		max-height: 7em;
-	}
-}
-
-tr.adminAccountInactive .adminStatus {
-	color: red;
-}
-
-.adminOverflowEllipsis {
-	width: 100%;
-	white-space: nowrap;
-	display: block;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
-img.admin_aclApp {
-	width: 16px;
-}
-
-td.admin_userAgent { max-width: 200px; }
-td.admin_userAgent span {
-  display: block;
-  white-space: nowrap;
-  width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+/* Row styles for the account / group / access-log / ACL lists live in rows.css: their rows are
+   rendered inside et2-datagrid's shadow root, which neither "#admin-index_groups ..." nor the
+   legacy "tr"/"td" element selectors these replaced can reach. */
 #admin-account-delete .dialogHeader label.et2_label {
 	font-size: 120%;
 }
@@ -67,11 +38,7 @@ td.admin_userAgent span {
 /**
  * Custom fields list
  */
-#admin-customfields_nm .values {
-	display: inline-block;
-	max-height: 13em;
-	overflow: auto;
-}
+/* .values is a row cell - see rows.css */
 /* Set a max height for all app type options */
 #admin-customfields_admin-customfields-types + table {
 	max-height: 300px;
@@ -172,8 +139,29 @@ span#admin-mailaccount_acc_id {
     margin-top: 1ex;
 }
 
+/*
+ * ACL popup
+ *
+ * layout="stack" lays the template's children out inside whatever height the template has, and in
+ * a popup window nothing gives it one - #admin-acl is a plain block inside popupMainDiv.  So the
+ * popup has to size its own etemplate container before the stack has anything to distribute.
+ */
 #admin-acl {
     width: 99%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#admin-acl > et2-template {
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+#admin-acl .admin_aclHeader {
+    align-items: center;
+    gap: 0.5em;
+    padding-bottom: 0.3em;
 }
 
 #admin-categories-edit_owner {overflow-y: auto;}

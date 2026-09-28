@@ -13,9 +13,8 @@ import type {PushData} from '../../api/js/jsapi/egw_app';
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import type {egwAction, egwActionObject} from '../../api/js/egw_action/egw_action';
-// et2_nextmatch is a real, distinct legacy widget implementation, passed as a runtime
-// instanceof-filter value to iterateOver() below - see doc/ai/projects/app-ts-modernization.md.
-import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
+import type {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatch";
+import type {Et2DatagridUpdateType} from "../../api/js/etemplate/Et2Datagrid/Et2Datagrid.types";
 import type {Et2SelectAccount} from "../../api/js/etemplate/Et2Select/Select/Et2SelectAccount";
 import type {EgwAction} from "../../api/js/egw_action/EgwAction";
 import type {EgwActionObject} from "../../api/js/egw_action/EgwActionObject";
@@ -60,13 +59,13 @@ export class AdminApp extends EgwApp
 	 */
 	acl_dialog : any = null;
 	tree : any = null;
-	accounts : et2_nextmatch = null;
-	groups : any;
+	accounts : Et2Nextmatch = null;
+	groups : Et2Nextmatch = null;
 
 	/**
 	 * 2nd NM, not accounts or groups which use this.nm or this.groups
 	 */
-	nm2 : et2_nextmatch = null;
+	nm2 : Et2Nextmatch = null;
 
 	/**
 	 * Client-side-only tracking of "an S/MIME key now exists" after
@@ -85,6 +84,16 @@ export class AdminApp extends EgwApp
 	 * native equivalent of jQuery's off('load.admin').bind('load.admin', ...) namespacing.
 	 */
 	private _adminIframeLoadHandler : () => void = () => {};
+
+	/**
+	 * Watches <egw-app> for the filterboxes our nextmatches append to it - see _watchFilterboxes()
+	 */
+	private _filterboxObserver : MutationObserver = null;
+
+	/**
+	 * Has the group list been shown since admin.index was (re)loaded? - see group_list()
+	 */
+	private _groupsShown : boolean = false;
 
 	/**
 	 * Constructor
@@ -108,6 +117,10 @@ export class AdminApp extends EgwApp
 		this.tree?.remove && this.tree.remove();
 		this.tree = null;
 		this.accounts = null;
+		this.groups = null;
+
+		this._filterboxObserver?.disconnect();
+		this._filterboxObserver = null;
 
 		this.nm2?.getDOMNode()?.removeEventListener('et2-filter', this.nmFilterChange);
 
@@ -145,6 +158,8 @@ export class AdminApp extends EgwApp
 				this.groups.set_disabled(true);
 				this.ajax_target = this.et2.getWidgetById('ajax_target');
 				this.tree = this.et2.getWidgetById('tree');
+				this._groupsShown = false;
+				this._watchFilterboxes();
 				// iframe is a fresh DOM node every time this case runs, but keep the
 				// removeEventListener-before-addEventListener pattern (native equivalent
 				// of jQuery's off()+bind()) in case the widget/node is ever reused.
@@ -207,7 +222,10 @@ export class AdminApp extends EgwApp
 		const header = _et2.widgetContainer.getWidgetById(_name + '.header');
 		if(header && header.slot === 'main-header')
 		{
-			const nm = _et2.widgetContainer.getWidgetById('nm');
+			// Most of these lists call their nextmatch "nm", but not all (admin.tokens uses
+			// "token"), so fall back to whichever one the template actually has.
+			const nm = <Et2Nextmatch>(_et2.widgetContainer.getWidgetById('nm') ??
+				_et2.DOMContainer?.querySelector('et2-nextmatch'));
 			if (nm && nm !== this.nm && nm !== this.nm2)
 			{
 				this.nm2?.getDOMNode()?.removeEventListener('et2-filter', this.nmFilterChange);
@@ -223,6 +241,7 @@ export class AdminApp extends EgwApp
 			}
 			header.closest('egw-app')?.append(header);
 			this.showAppToolbar(_name + '.header');
+			this._syncFilterboxes();
 		}
 	}
 
@@ -309,21 +328,17 @@ export class AdminApp extends EgwApp
 		this.groups.set_disabled(true);
 		this.ajax_target.set_disabled(!ajax);
 
-		// admin.index still uses the legacy <nextmatch> tag (not <et2-nextmatch>), so this.nm
-		// here is genuinely et2_nextmatch at runtime, not the Et2Nextmatch web component - same
-		// situation as tracker/js/app.ts (see doc/ai/projects/app-ts-modernization.md).
-		const nm = <et2_nextmatch>this.nm;
+		const nm = <Et2Nextmatch>this.nm;
 		// disable app-toolbar, if not accounts or groups (!_url) for now
 		this.showAppToolbar(!nm.disabled ? 'admin.index.header' : '');
 
 		if(!nm.disabled)
 		{
-			// If nm was just re-enabled, resize it _after_ ajax_target gets hidden
-			this.ajax_target.updateComplete.then(() => nm.resize())
-
 			// If user list is shown, show the toolbar
 			this.showAppToolbar('admin.index.header');
 		}
+		// Only the filters of whichever list is now visible belong in the drawer
+		this._syncFilterboxes();
 	}
 
 	/**
@@ -377,7 +392,7 @@ export class AdminApp extends EgwApp
 					const et2s = etemplate2.getByApplication('admin');
 					for(let i = 0; i < et2s.length; i++)
 					{
-						const nm = <et2_nextmatch>et2s[i].widgetContainer.getWidgetById('nm');
+						const nm = <Et2Nextmatch>et2s[i].widgetContainer.getWidgetById('nm');
 						if(nm)
 						{
 							nm.refresh(undefined, undefined);
@@ -459,11 +474,11 @@ export class AdminApp extends EgwApp
 
 		if(this.appname.indexOf(pushData.app) != -1 && pushData.id > 0)
 		{
-			this.nm.refresh(pushData.id, pushData.type);
+			this.nm.refresh(String(pushData.id), <Et2DatagridUpdateType>pushData.type);
 		}
 		else if(pushData.app == this.appname && pushData.id < 0)
 		{
-			this.groups.refresh(pushData.id, pushData.type);
+			this.groups.refresh(String(pushData.id), <Et2DatagridUpdateType>pushData.type);
 			if(this.tree)
 			{
 				this.tree.refreshItem('/groups');
@@ -471,11 +486,11 @@ export class AdminApp extends EgwApp
 		}
 		else if(pushData.app == "api-cats" && etemplate2.getByTemplate(cat_template).length == 1)
 		{
-			(<et2_nextmatch>etemplate2.getByTemplate(cat_template)[0].widgetContainer.getWidgetById("nm")).refresh(pushData.id, pushData.type);
+			(<Et2Nextmatch>etemplate2.getByTemplate(cat_template)[0].widgetContainer.getWidgetById("nm")).refresh(String(pushData.id), <Et2DatagridUpdateType>pushData.type);
 		}
 		else if(pushData.app == "api-cf" && etemplate2.getByTemplate(cf_template).length == 1)
 		{
-			(<et2_nextmatch>etemplate2.getByTemplate(cf_template)[0].widgetContainer.getWidgetById("nm")).refresh(pushData.id, pushData.type);
+			(<Et2Nextmatch>etemplate2.getByTemplate(cf_template)[0].widgetContainer.getWidgetById("nm")).refresh(String(pushData.id), <Et2DatagridUpdateType>pushData.type);
 		}
 	}
 
@@ -622,19 +637,15 @@ export class AdminApp extends EgwApp
 				{
 					return null;
 				}
-				// Find a nextmatch in ajax_target
-				let nm = null;
-				// _context (3rd iterateOver arg below) is always the same object an arrow
-				// function's lexical `this` would resolve to here, so the explicit binding is
-				// just belt-and-braces - safe to convert (see tracker/js/app.ts precedent).
-				this.ajax_target?.querySelector('et2-template')?.iterateOver((_widget) =>
-				{
-					if(!_widget.disabled)
-					{
-						nm = _widget;
-					}
-				}, this, et2_nextmatch);
-				return nm;
+				// Find a nextmatch in ajax_target.  A plain DOM query replaces the iterateOver()
+				// this used to do: that walked the widget tree filtering on the legacy
+				// et2_nextmatch class, which an <et2-nextmatch> is not an instance of (the two
+				// are unrelated class hierarchies).  The tag name is what identifies it now, and
+				// the id is deliberately not part of the query - admin.tokens calls its own
+				// nextmatch "token", not "nm".
+				return <Et2Nextmatch>Array.from(
+					this.ajax_target?.getDOMNode()?.querySelectorAll('et2-nextmatch') ?? []
+				).find((_nm : Et2Nextmatch) => !_nm.disabled) ?? null;
 		}
 	}
 
@@ -646,15 +657,95 @@ export class AdminApp extends EgwApp
 		this.nm.set_disabled(true);
 		this.groups.set_disabled(false);
 		this.showAppToolbar('admin.index.group.header')
-		// Tell the now-visible nextmatch to fetch its rows: it is rendered with num_rows=0 and
-		// only loads data once it is told it became visible.  Its listeners sit on the app node
-		// (etemplate2's DOMContainer.parentNode), one level above this.et2.parentNode (which is
-		// the DOMContainer itself), so the event has to bubble to reach them - the jQuery
-		// .trigger() this replaced simulated bubbling, a plain native Event does not.
-		// The ".et2_nextmatch" suffix those listeners use is a jQuery-only namespace for
-		// filtering its own trigger()/off(), not part of the native event type, so a native
-		// 'show' event does reach them.
-		this.et2.parentNode.dispatchEvent(new Event('show', {bubbles: true}));
+		// Re-fetch the group list now that it is on screen, but only from the second visit on.
+		//
+		// The legacy widget was told to load by a bubbling 'show' event it listened for via
+		// jQuery; Et2Nextmatch has no such listener - its own `lazy` property only defers for an
+		// inactive <et2-tab-panel>, which this is not.  admin_ui::index() still sends this
+		// nextmatch num_rows=0, but that no longer keeps it idle either: with no rows AND no
+		// total, Et2Nextmatch.firstUpdated() falls through to its client-fetch branch, so the
+		// list fetches itself once on page load whether or not anyone opens it.
+		//
+		// That first fetch is queued behind the accounts list and can still be pending seconds
+		// later (isLoading is false the whole time - it has not started, so there is nothing to
+		// wait on).  Asking for a refresh before it lands leaves the grid permanently empty:
+		// refresh() -> applyFilters() -> Et2Datagrid.reload() clears total and the rows, and the
+		// original fetch's response is then dropped as superseded with nothing left to re-fetch.
+		// Reproduced deliberately (switch to Groups immediately after load: total 0, 0 rows, no
+		// recovery after 18s of polling).  So leave the first visit to that initial fetch, which
+		// is as fresh as a refresh would be, and only re-fetch on later visits.
+		if(this._groupsShown)
+		{
+			this.groups.refresh(undefined);
+		}
+		this._groupsShown = true;
+		// The group list's filters are the ones that belong in the drawer now
+		this._syncFilterboxes();
+	}
+
+	/**
+	 * Show only the current list's filters in the app's filter drawer
+	 *
+	 * admin.index holds two nextmatches at once (accounts and groups) and swaps which one is
+	 * displayed, and a third can be loaded into ajax_target on top of them.  Each builds its own
+	 * <et2-filterbox> and appends it to the nearest ancestor offering a "filter" slot - the same
+	 * <egw-app> for all of them - so the drawer would otherwise stack every list's filters.  The
+	 * legacy widget kept its filters in its own header bar, so this could not happen before.
+	 *
+	 * Mark the inactive ones `hidden` rather than hiding them with CSS: EgwFrameworkApp.filters is
+	 * `querySelector("et2-filterbox:not([hidden],[disabled])")`, so that attribute is also how the
+	 * app shell picks which filterbox its "Clear filters" button, its filter-set icon and
+	 * getFilterInfo() read.  Merely hiding them leaves all of those pointed at whichever filterbox
+	 * happens to come first in the DOM.
+	 */
+	private _syncFilterboxes()
+	{
+		const appNode : any = document.querySelector('egw-app#admin');
+		const current = this.getNextmatch();
+		appNode?.querySelectorAll('et2-filterbox').forEach((filterbox : any) =>
+		{
+			const nm = filterbox.nextmatch;
+			if(nm?.localName === 'et2-nextmatch')
+			{
+				filterbox.hidden = current ? nm !== current : nm.disabled;
+			}
+		});
+		// The drawer's heading counts rows, and the shell only updates that from a search result
+		// belonging to whichever nextmatch is current (EgwFrameworkApp.handleSearchResults()).
+		// Switching lists produces no such result - the list we just showed already has its rows -
+		// so without this the heading keeps counting the list we came from.
+		if(appNode && current)
+		{
+			appNode.rowCount = (<Et2Nextmatch>current).totalCount ?? "";
+		}
+	}
+
+	/**
+	 * Re-run _syncFilterboxes() as filterboxes appear
+	 *
+	 * A nextmatch does not create its filterbox until its filter template arrives, which is after
+	 * the switch that should have hidden it - so a one-shot sync would miss any list that was
+	 * never displayed.
+	 */
+	private _watchFilterboxes()
+	{
+		const appNode = document.querySelector('egw-app#admin');
+		if(!appNode || this._filterboxObserver)
+		{
+			return;
+		}
+		this._filterboxObserver = new MutationObserver((records) =>
+		{
+			if(records.some(r => Array.from(r.addedNodes)
+				.some((n : any) => n.localName === 'et2-filterbox')))
+			{
+				this._syncFilterboxes();
+			}
+		});
+		this._filterboxObserver.observe(appNode, {childList: true});
+		// Both nextmatches may well have built their filterboxes before et2_ready() got here - the
+		// observer only sees what is added from now on, so do one pass over what is already there.
+		this._syncFilterboxes();
 	}
 
 	/**
@@ -957,24 +1048,31 @@ export class AdminApp extends EgwApp
 		};
 
 		// Some defaults
-		if(et2 && et2.getWidgetById('nm'))
+		const list_nm = <Et2Nextmatch>et2?.getWidgetById('nm');
+		if(list_nm)
 		{
 			// This is which checkboxes are available for each app
-			acl_rights = et2.getWidgetById('nm').getArrayMgr('content').getEntry('acl_rights') ||
+			acl_rights = list_nm.getArrayMgr('content').getEntry('acl_rights') ||
 				await this.egw.request(className + '::ajax_get_rights', [content.acl_account]);
 
+			// Read the filter values off the nextmatch rather than looking the two controls up
+			// by id.  Where they live now depends on the context - acl.xet puts them in the
+			// nextmatch's own header slot, but on a page where Et2Nextmatch generates its
+			// <et2-filterbox> instead, that box is appended outside the template's DOM container
+			// and getWidgetById() can not reach it.  The applied values are the same either way.
+			const filters = list_nm.activeFilters;
 			if(!content.acl_appname)
 			{
 				// Pre-set appname to currently selected
-				content.acl_appname = et2.getWidgetById('filter2').getValue() || "";
+				content.acl_appname = filters.filter2 || "";
 			}
 			if(!content.acl_account)
 			{
-				content.acl_account = et2.getWidgetById('nm').getArrayMgr('content').getEntry('account_id');
+				content.acl_account = list_nm.getArrayMgr('content').getEntry('account_id');
 			}
 			if(!content.acl_location)
 			{
-				content.acl_location = et2.getWidgetById('filter').getValue() == 'run' ? 'run' : null;
+				content.acl_location = filters.filter == 'run' ? 'run' : null;
 			}
 			// If no admin rights, change UI to not allow adding access to apps
 			if(content.acl_location == 'run' && !egw.user('apps')['admin'])
@@ -1210,16 +1308,50 @@ export class AdminApp extends EgwApp
 	}
 
 	/**
-	 * Load the new application's lang files when the app filter is changed
+	 * Apply the ACL popup's own filter/filter2 selects to its nextmatch
+	 *
+	 * The ACL list is a popup, and a nextmatch in a popup gets no generated filterbox at all
+	 * (Nextmatch::beforeSendToClient() returns early for output_mode 2), so acl.xet carries these
+	 * two controls itself - see the comment on its admin.acl.header template.  EgwApp's generic
+	 * changeNmFilter() is not usable here: it resolves the nextmatch through the <egw-app> shell,
+	 * which a popup window does not have.  The control is a DOM child of the nextmatch, so asking
+	 * it for its own ancestor works in both a popup and the main window.
+	 *
+	 * @param _event
+	 * @param _widget the filter select that changed
 	 */
-	acl_app_change(event, nm)
+	aclFilterChange(_event : Event, _widget)
 	{
-		let appname = nm.getWidgetById('filter2').getValue() || '';
+		const nm = <Et2Nextmatch>_widget?.closest('et2-nextmatch');
+		if(!nm || !_widget.id)
+		{
+			return;
+		}
+		nm.applyFilters({[_widget.id]: _widget.value});
+		if(_widget.id === 'filter2')
+		{
+			// keep doing what $content['nm']['filter2_onchange'] used to ask for
+			this.acl_app_change(_event, _widget);
+		}
+	}
+
+	/**
+	 * Load the new application's lang files when the app filter is changed
+	 *
+	 * Wired up server-side as $content['nm']['filter2_onchange'] (admin_acl::index()).  The
+	 * generated filterbox (api/filter-template.php) passes that straight through as the filter2
+	 * select's own onchange, so the widget handed to us is that select - where the legacy
+	 * nextmatch header bar used to compile the same string with the nextmatch as its context.
+	 * Handle both: a select knows its own value, a nextmatch has to be asked for the control.
+	 */
+	acl_app_change(_event, _widget)
+	{
+		const appname = (_widget?.localName === 'et2-nextmatch' ?
+			_widget.getWidgetById('filter2')?.getValue() : _widget?.value) || '';
 		if(appname)
 		{
 			let app_egw = egw(appname);
 			app_egw.langRequireApp(window, appname);
-//			nm.getRoot().setApiInstance(app_egw);
 		}
 	}
 
@@ -2166,6 +2298,50 @@ export class AdminApp extends EgwApp
 			policy_preview.set_disabled(true);
 			cmds_preview.set_value({content:[data.data]});
 		}
+	}
+
+	/**
+	 * Submit a nextmatch multi-select action from its popup dialog
+	 *
+	 * Replaces the legacy nm_submit_popup() + window.nm_popup_action/nm_popup_ids globals.  The
+	 * category list's "Change owner" popup is a real <et2-dialog> now, so
+	 * Et2NextmatchActionController.openActionPopup() takes the "already a dialog" fast path (sets
+	 * .selectedIds, calls .show()) and none of nm_open_popup()'s runtime button-wrapping - which is
+	 * what used to set those globals - happens any more.
+	 *
+	 * ButtonMixin._handleClick() has already set the clicked button's own `clicked = true` before
+	 * this onclick runs, so the button's own id (eg. "owner_popup[owner_action][add]") lands in the
+	 * submitted content - that is what tells the server which button was pressed, see
+	 * admin_categories::index()'s `key($content[$action . '_action'] ?? [])`.  executeAction()
+	 * triggers the normal whole-template submit, with the nextmatch payload (action id, selected,
+	 * select_all, checkboxes) merged in by Et2Nextmatch's own value getter.  Returning false stops
+	 * the button from also running its own default (would-be second) submit.
+	 *
+	 * @param _event
+	 * @param _widget the button that was clicked
+	 * @param _action_id the nm action id this popup was opened for ("owner") - the same for every
+	 *  button inside one popup, matching the legacy nm_popup_action's behaviour; the button's own
+	 *  id/value is what varies.
+	 */
+	submit_popup(_event : Event, _widget, _action_id : string) : boolean
+	{
+		const dialog = <Et2Dialog>_widget.closest('et2-dialog');
+
+		const nm = <Et2Nextmatch>_widget.getInstanceManager()?.widgetContainer?.getWidgetById('nm');
+		if(!nm)
+		{
+			return false;
+		}
+		// Prefer the live selection - it still carries "select all", which the dialog's own
+		// .selectedIds (a plain array of ids set by openActionPopup()) does not.
+		const selection = nm.getSelection();
+		if(!selection.all && (<any>dialog)?.selectedIds?.length)
+		{
+			selection.ids = (<any>dialog).selectedIds;
+		}
+		nm.executeAction(_action_id, selection, {nmAction: "submit"});
+		dialog?.close();
+		return false;
 	}
 
 	/*******************************************************************************************************************

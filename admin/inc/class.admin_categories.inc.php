@@ -649,6 +649,10 @@ class admin_categories
 		if($appname == Categories::GLOBAL_APPNAME) {
 			$sel_options['app'] = array(''=>'');
 			$readonlys['nm']['rows']['app'] = true;
+			// readonlys do not reach the generated filter-template, so the "Application" column
+			// filter would be offered with the empty option list set just above.  The row
+			// template's header reads this flag via disabled="@no_app_filter".
+			$content['nm']['no_app_filter'] = true;
 		}
 
 		$tmpl = new Etemplate('admin.categories.index');

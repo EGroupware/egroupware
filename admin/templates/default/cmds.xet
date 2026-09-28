@@ -26,16 +26,16 @@
 					<et2-nextmatch-header-filter  id="type" emptyLabel="Type"></et2-nextmatch-header-filter>
 					<et2-nextmatch-header-account  id="requested" emptyLabel="Requested"></et2-nextmatch-header-account>
 					<et2-nextmatch-header  label="Comment" id="comment"></et2-nextmatch-header>
-					<nextmatch-sortheader label="Scheduled" id="cmd_scheduled"/>
+					<et2-nextmatch-sortheader  label="Scheduled" id="cmd_scheduled"/>
 					<et2-nextmatch-header-filter  id="periodic" emptyLabel="Periodic"></et2-nextmatch-header-filter>
 					<et2-nextmatch-header-filter  id="remote_id" emptyLabel="Remote"></et2-nextmatch-header-filter>
 					<et2-vbox>
-						<nextmatch-sortheader label="Created" id="cmd_created"/>
+						<et2-nextmatch-sortheader  label="Created" id="cmd_created"/>
 						<et2-nextmatch-header-account  id="creator" emptyLabel="Creator"></et2-nextmatch-header-account>
 					</et2-vbox>
 					<et2-nextmatch-header-filter  id="status" emptyLabel="Status"></et2-nextmatch-header-filter>
 					<et2-vbox>
-						<nextmatch-sortheader label="Modified" id="cmd_modified"/>
+						<et2-nextmatch-sortheader  label="Modified" id="cmd_modified"/>
 						<et2-nextmatch-header-account  id="modifier" emptyLabel="Modifier"></et2-nextmatch-header-account>
 					</et2-vbox>
 				</row>
@@ -65,10 +65,11 @@
 				</row>
 			</rows>
 		</grid>
+		<et2-styles src="rows.css"></et2-styles>
 	</et2-template>
 	<et2-template  id="admin.cmds.splitter" template="" lang="" height="100%" group="0" version="19.01">
 		<et2-split  orientation="h" height="100%" id="splitter" vertical="true" primary="start">
-			<nextmatch options="admin.cmds.rows" id="nm" onselect="app.admin.cmds_onselect"/>
+			<et2-nextmatch  id="nm" template="admin.cmds.rows" onselect="app.admin.cmds_onselect"></et2-nextmatch>
 			<et2-template  id="admin.cmds.preview"></et2-template>
 		</et2-split>
 	</et2-template>

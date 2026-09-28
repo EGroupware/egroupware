@@ -16,7 +16,7 @@
 					<et2-description  class="cat_$row_cont[cat_id] mobile_cat_col"></et2-description>
 					<et2-vbox>
 						<et2-hbox  cellpadding="0" cellspacing="0" >
-							<et2-html  id="${row}[level_spacer]"></et2-html>
+							<et2-html  id="${row}[level_spacer]" class="level_spacer"></et2-html>
 							<et2-description  id="${row}[name]" class="$row_cont[class]"></et2-description>
 
 						</et2-hbox>
@@ -34,7 +34,7 @@
 
 					</et2-vbox>
 					<et2-vbox>
-						<et2-image  align="center" label="{$row_cont[data][icon]}" src="${row}[icon_url]"></et2-image>
+						<et2-image  align="center" label="{$row_cont[data][icon]}" src="$row_cont[icon_url]"></et2-image>
 						<et2-checkbox  align="center" id="${row}[access]" readonly="true" disabled="@no_access" selectedValue="private" unselectedValue="public"></et2-checkbox>
 						<et2-date-time  id="${row}[last_mod]" readonly="true"></et2-date-time>
 						<et2-description  align="center" id="${row}[subs]"></et2-description>
@@ -42,55 +42,34 @@
 				</row>
 			</rows>
 		</grid>
+		<et2-styles src="rows.css"></et2-styles>
 	</et2-template>
 	<et2-template  id="admin.categories.index.add" template="" lang="" group="0" version="1.9.001">
-		<et2-button  lable="Add" id="add" onclick="window.open('$cont[add_link]','_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;" noSubmit="true"></et2-button>
+		<et2-button  label="Add" id="add" onclick="egw.open_link(widget.getRoot().getArrayMgr('content').getEntry('add_link'),'_blank','600x380'); return false;" noSubmit="true"></et2-button>
 	</et2-template>
 	<et2-template  id="admin.categories.index" template="" lang="" group="0" version="1.9.001">
-		<nextmatch id="nm" options="admin.categories.index.rows" span="all" header_left="admin.categories.index.add"/>
-		<et2-box  class="action_popup prompt" id="owner_popup">
-			<et2-vbox>
-				<et2-description  value="Change owner" class="promptheader"></et2-description>
-				<et2-description  value="Select owner"></et2-description>
-				<et2-select  id="owner" rows="4" class="action_popup-content" multiple="1" noLang="1"></et2-select>
-				<et2-hbox>
-					<et2-button  label="Add" id="owner_action[add]" onclick="nm_submit_popup(this); return false;"></et2-button>
-					<et2-button  label="Delete" id="owner_action[delete]" onclick="nm_submit_popup(this); return false;"></et2-button>
-					<et2-button  disabled="true" label="OK" onclick="nm_submit_popup(this); return false;"></et2-button>
-					<et2-button  label="Cancel" onclick="nm_hide_popup(this,'owner_popup');" noSubmit="true"></et2-button>
-				</et2-hbox>
-			</et2-vbox>
-		</et2-box>
+		<!-- The Add button that used to be the nextmatch's header_left template goes in its own header
+		     slot - et2-nextmatch has no header_left property. -->
+		<et2-nextmatch  id="nm" template="admin.categories.index.rows">
+			<et2-template  id="admin.categories.index.add" slot="header"></et2-template>
+		</et2-nextmatch>
+		<!-- See the desktop categories.index.xet for why this is a real <et2-dialog> now -->
+		<et2-dialog  id="owner_popup_dialog" title="Change owner" open="false" buttons="" destroyOnClose="false">
+			<et2-box  id="owner_popup">
+				<et2-vbox>
+					<et2-description  value="Select owner"></et2-description>
+					<et2-select  id="owner" rows="4" class="action_popup-content" multiple="1" noLang="1"></et2-select>
+				</et2-vbox>
+			</et2-box>
+			<et2-button  slot="footer" variant="primary" label="Add" id="owner_popup[owner_action][add]" onclick="return app.admin.submit_popup(ev, widget, 'owner');"></et2-button>
+			<et2-button  slot="footer" label="Delete" id="owner_popup[owner_action][delete]" onclick="return app.admin.submit_popup(ev, widget, 'owner');"></et2-button>
+			<et2-button  slot="footer" label="Cancel" id="owner_action_cancel" noSubmit="true" onclick="widget.closest('et2-dialog').hide(); return false;"></et2-button>
+		</et2-dialog>
 		<et2-styles>
-			.level0 { font-weight: bold; }
-
-.action_popup {
-	position: fixed;
-	top: 200px;
-	left: 450px;
-	width: 76ex;
-	z-index: 20000;
-	display: none;
-	border-collapse:collapse;
-	border-spacing:0px
-}
-.action_popup-content {
-	display:block;
-	padding:2ex;
-	color:#666666;
-	margin: -2px -1px 0px -2px;
-}
-.action_popup &gt; table {
-	width: 100%
-}
-.action_popup .promptheader {
-	padding: 1ex;
-	width: 100%
-}
-
-.action_select {
-	width: 100%
-}
+			.action_popup-content {
+				display: block;
+				padding: 2ex;
+			}
 		</et2-styles>
 	</et2-template>
 </overlay>
