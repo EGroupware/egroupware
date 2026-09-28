@@ -405,8 +405,10 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 
 	handleKeyUp(event : KeyboardEvent)
 	{
-		// Ignore keypresses from some elements that might normally see Enter
-		if(["textarea"].includes(event.target.localName))
+		// Ignore keypresses from some elements that might normally see Enter.  event.target is retargeted to
+		// the shadow host (et2-textarea, et2-textbox), so look at the composed path for the real element.
+		// Shift+Enter is a line break, never "press the default button".
+		if(event.shiftKey || event.composedPath().some((node : any) => node.localName === "textarea" || node.isContentEditable))
 		{
 			return;
 		}
