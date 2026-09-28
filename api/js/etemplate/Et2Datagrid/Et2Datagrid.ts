@@ -344,6 +344,12 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 * lives on somebody else's object, where a plain name could collide with theirs.
 	 */
 	private static readonly HIDDEN_LAYOUT_GUARD = Symbol("et2-hidden-layout-guard");
+	/**
+	 * Marks a rows element, and each virtualizer instance on it, that
+	 * _guardSupersededVirtualizerNotifications() has already wrapped. A symbol for the
+	 * same reason as HIDDEN_LAYOUT_GUARD.
+	 */
+	private static readonly SUPERSEDED_NOTIFY_GUARD = Symbol("et2-superseded-notify-guard");
 	/** Incremented on every _clearRows() - guards that flag's bounded fallback timer below. */
 	private _rowsClearEpoch : number = 0;
 	_sparseVirtualizerLayoutActive : boolean = false;
@@ -1090,6 +1096,79 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
+	 * Stop a virtualizer that has already been replaced from changing which rows are shown.
+	 *
+	 * The virtualize() directive cannot change an existing virtualizer's layout type, so a layout
+	 * swap (a fixed-row-height grid moving from the bootstrap FlowLayout to
+	 * Et2DatagridSparseFlowLayout, see _scheduleSparseVirtualizerLayoutActivation()) builds a new
+	 * virtualizer. Its compatibility check is async, so two renders landing before it resolves both
+	 * see the old instance and both build a replacement, the second disconnecting the first. The
+	 * first has already queued a DOM update, and @lit-labs/virtualizer runs it anyway: detached,
+	 * it computes an empty range and announces it on the same rows element the live virtualizer
+	 * uses. The directive renders the last range it heard, so the grid goes empty, permanently -
+	 * the live virtualizer never re-announces a range it believes is unchanged. Happens whenever
+	 * the machine is busy enough for the two renders to overlap.
+	 *
+	 * The directive only listens for these events; it cannot tell which virtualizer sent one. The
+	 * virtualizer can: the one the rows element currently points at (virtualizerRef) is live, any
+	 * other has been replaced. So each instance's range and visibility announcements are dropped
+	 * once it is no longer the rows element's current one. That is deliberately "replaced", not
+	 * "disconnected": a disconnected but still current virtualizer is the stuck state
+	 * _reconnectStuckVirtualizer() wakes back up, and its announcements must keep working.
+	 *
+	 * Wrapping has to happen as each instance is created, not from updated(): the short-lived one
+	 * is built and replaced within a single render and never becomes current at a point this grid
+	 * could look. Every virtualizer assigns itself to virtualizerRef on its rows element in its
+	 * constructor, so an accessor there sees each one. Installed once per rows element (a view
+	 * switch renders a new one), wrapping whatever instance is already on it.
+	 */
+	private _guardSupersededVirtualizerNotifications() : void
+	{
+		const rows = this._rowsBody as any;
+		const guard = Et2Datagrid.SUPERSEDED_NOTIFY_GUARD;
+		if(!rows || rows[guard])
+		{
+			return;
+		}
+		rows[guard] = true;
+		const wrap = (virtualizer : any) =>
+		{
+			if(!virtualizer || virtualizer[guard])
+			{
+				return;
+			}
+			virtualizer[guard] = true;
+			for(const method of ["_notifyRange", "_notifyVisibility"])
+			{
+				const original = virtualizer[method];
+				if(typeof original !== "function")
+				{
+					continue;
+				}
+				virtualizer[method] = function(...args : any[])
+				{
+					if(rows[virtualizerRef] !== this)
+					{
+						return;
+					}
+					return original.apply(this, args);
+				};
+			}
+		};
+		let current = rows[virtualizerRef];
+		wrap(current);
+		Object.defineProperty(rows, virtualizerRef, {
+			configurable: true,
+			get: () => current,
+			set: (virtualizer) =>
+			{
+				current = virtualizer;
+				wrap(virtualizer);
+			}
+		});
+	}
+
+	/**
 	 * Is this grid actually being rendered right now?
 	 *
 	 * A rendered element always has at least one client rect; one hidden by `display: none` (on
@@ -1481,6 +1560,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		super.updated(changedProperties);
 		this._reconnectStuckVirtualizer();
 		this._guardVirtualizerLayoutWhileHidden();
+		this._guardSupersededVirtualizerNotifications();
 
 		// Include new row stylesheet(s)
 		if(changedProperties.has("rowStylesheets"))
