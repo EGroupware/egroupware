@@ -142,101 +142,38 @@
                 <row class="hideme" disabled="!@css">
                     <et2-html  id="css" span="all"></et2-html>
                 </row>
-                <row>
-                    <et2-hbox>
-                        <et2-box  id="responsible_popup" class="action_popup prompt">
-                            <et2-vbox>
-                                <et2-description  value="Change responsible" class="promptheader"></et2-description>
-                                <et2-vbox  class="action_popup-content">
-                                    <et2-description  id="responsible_action[title]"></et2-description>
-                                    <et2-description  value="Select users or groups"></et2-description>
-                                    <et2-select-account  id="responsible" rows="5" multiple="1" placeholder="Delegation" accountType="both"></et2-select-account>
-                                </et2-vbox>
-                                <et2-hbox>
-                                    <et2-button  label="Ok" id="responsible_action[ok]" onclick="nm_submit_popup(this); return false;" image="check"></et2-button>
-                                    <et2-button  label="Add" id="responsible_action[add]" onclick="nm_submit_popup(this); return false;"></et2-button>
-                                    <et2-button  label="Delete" id="responsible_action[delete]" onclick="nm_submit_popup(this); return false;"></et2-button>
-                                    <et2-button  label="Cancel" id="responsible_cancel" onclick="nm_hide_popup(this,'responsible_popup');" image="cancelled"></et2-button>
-                                </et2-hbox>
-                            </et2-vbox>
-                        </et2-box>
-                        <et2-box  id="delete_popup" class="action_popup prompt">
-                            <et2-vbox>
-                                <et2-description  value="Delete" class="promptheader"></et2-description>
-                                <et2-description  value="Delete selected entries?" id="delete_prompt"></et2-description>
-                                <et2-hbox>
-                                    <et2-button  label="Yes - Delete" id="delete" onclick="app.infolog.actionCallback('delete'); return false;" image="check"></et2-button>
-                                    <et2-button  label="Yes - Delete including sub-entries" id="delete_sub" onclick="app.infolog.actionCallback('delete_sub'); return false;" image="check"></et2-button>
-                                    <et2-button  label="No - Cancel" id="delete_cancel" onclick="nm_hide_popup(this,'delete_popup');" image="cancelled"></et2-button>
-                                </et2-hbox>
-                            </et2-vbox>
-                        </et2-box>
-                        <et2-box  id="link_popup" class="action_popup prompt">
-                            <et2-vbox>
-                                <et2-description  value="Add / Remove link" class="promptheader"></et2-description>
-                                <et2-link-entry  id="link" class="action_popup-content"></et2-link-entry>
-                                <et2-hbox>
-                                    <et2-button  label="Add" id="link_action[add]" onclick="nm_submit_popup(this); return false;"></et2-button>
-                                    <et2-button  label="Delete" id="link_action[delete]" onclick="nm_submit_popup(this); return false;"></et2-button>
-                                    <et2-button  label="Cancel" id="link_cancel" onclick="nm_hide_popup(this,'link_popup');" image="cancelled"></et2-button>
-                                </et2-hbox>
-                            </et2-vbox>
-                        </et2-box>
-                        <et2-box  id="startdate_popup" class="action_popup prompt">
-                            <et2-vbox>
-                                <et2-description  value="Start date" class="promptheader"></et2-description>
-                                <et2-description  id="startdate_action[title]"></et2-description>
-                                <et2-date-time  id="startdate" class="action_popup-content"></et2-date-time>
-                                <et2-hbox>
-                                    <et2-button  label="Ok" id="startdate_action[ok]" onclick="nm_submit_popup(this); return false;" image="check"></et2-button>
-                                    <et2-button  label="Cancel" id="startdate_cancel" onclick="nm_hide_popup(this,'link_popup');" image="cancelled"></et2-button>
-                                </et2-hbox>
-                            </et2-vbox>
-                        </et2-box>
-                        <et2-box  id="enddate_popup" class="action_popup prompt">
-                            <et2-vbox>
-                                <et2-description  value="Due date" class="promptheader"></et2-description>
-                                <et2-description  id="enddate_action[title]"></et2-description>
-                                <et2-date-time  id="enddate" class="action_popup-content"></et2-date-time>
-                                <et2-hbox>
-                                    <et2-button  label="Ok" id="enddate_action[ok]" onclick="nm_submit_popup(this); return false;" image="check"></et2-button>
-                                    <et2-button  label="Cancel" id="enddate_cancel" onclick="nm_hide_popup(this,'link_popup');" image="cancelled"></et2-button>
-                                </et2-hbox>
-                            </et2-vbox>
-                        </et2-box>
-                    </et2-hbox>
-                </row>
             </rows>
         </grid>
+        <et2-dialog  id="responsible_popup" title="Change responsible" open="false" buttons="" destroyOnClose="false">
+            <et2-vbox>
+                <et2-description  id="responsible_action[title]"></et2-description>
+                <et2-description  value="Select users or groups"></et2-description>
+                <et2-select-account  id="responsible" rows="5" multiple="1" placeholder="Delegation" accountType="both"></et2-select-account>
+            </et2-vbox>
+            <et2-button  slot="footer" variant="primary" label="Ok" id="responsible_action[ok]" image="check" onclick="return app.infolog.submit_popup(ev, widget, 'responsible');"></et2-button>
+            <et2-button  slot="footer" label="Add" id="responsible_action[add]" onclick="return app.infolog.submit_popup(ev, widget, 'responsible');"></et2-button>
+            <et2-button  slot="footer" label="Delete" id="responsible_action[delete]" onclick="return app.infolog.submit_popup(ev, widget, 'responsible');"></et2-button>
+            <et2-button  slot="footer" label="Cancel" id="responsible_cancel" image="cancelled" noSubmit="true" onclick="widget.closest('et2-dialog').hide(); return false;"></et2-button>
+        </et2-dialog>
+        <et2-dialog  id="delete_popup" title="Delete" open="false" buttons="" destroyOnClose="false">
+            <et2-description  value="Delete selected entries?" id="delete_prompt"></et2-description>
+            <et2-button  slot="footer" variant="primary" label="Yes - Delete" id="delete" image="check" noSubmit="true" onclick="app.infolog.actionCallback('delete'); widget.closest('et2-dialog').hide(); return false;"></et2-button>
+            <et2-button  slot="footer" label="Yes - Delete including sub-entries" id="delete_sub" image="check" noSubmit="true" onclick="app.infolog.actionCallback('delete_sub'); widget.closest('et2-dialog').hide(); return false;"></et2-button>
+            <et2-button  slot="footer" label="No - Cancel" id="delete_cancel" image="cancelled" noSubmit="true" onclick="widget.closest('et2-dialog').hide(); return false;"></et2-button>
+        </et2-dialog>
+        <et2-dialog  id="startdate_popup" title="Start date" open="false" buttons="" destroyOnClose="false">
+            <et2-description  id="startdate_action[title]"></et2-description>
+            <et2-date-time  id="startdate"></et2-date-time>
+            <et2-button  slot="footer" variant="primary" label="Ok" id="startdate_action[ok]" image="check" onclick="return app.infolog.submit_popup(ev, widget, 'startdate');"></et2-button>
+            <et2-button  slot="footer" label="Cancel" id="startdate_cancel" image="cancelled" noSubmit="true" onclick="widget.closest('et2-dialog').hide(); return false;"></et2-button>
+        </et2-dialog>
+        <et2-dialog  id="enddate_popup" title="Due date" open="false" buttons="" destroyOnClose="false">
+            <et2-description  id="enddate_action[title]"></et2-description>
+            <et2-date-time  id="enddate"></et2-date-time>
+            <et2-button  slot="footer" variant="primary" label="Ok" id="enddate_action[ok]" image="check" onclick="return app.infolog.submit_popup(ev, widget, 'enddate');"></et2-button>
+            <et2-button  slot="footer" label="Cancel" id="enddate_cancel" image="cancelled" noSubmit="true" onclick="widget.closest('et2-dialog').hide(); return false;"></et2-button>
+        </et2-dialog>
         <et2-styles>
-            /**
-            * Add / remove link or category popup used for actions on multiple entries
-            */
-
-            .action_popup[id] {
-            position: fixed;
-            top: 200px;
-            left: 450px;
-            width: 76ex;
-            z-index: 20000;
-            display: none;
-            border-collapse:collapse;
-            border-spacing:0px
-            }
-            .action_popup-content {
-            display:block;
-            padding:2ex;
-            color:#666666;
-            margin: -2px -1px 0px -2px;
-            }
-            .action_popup &gt; table {
-            width: 100%
-            }
-            .action_popup .promptheader {
-            padding: 1ex;
-            width: 100%
-            }
-
             .action_select {
             width: 100%
             }
