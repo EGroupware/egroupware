@@ -918,6 +918,22 @@ export class Et2HtmlArea extends Et2MarkdownEditMixin(Et2InputWidget(LitElement)
 	}
 
 	/**
+	 * VFS directory uploads go to, if `imageUpload` names a content value holding a plain VFS path.
+	 *
+	 * The server reads that value from the request's root content, so look it up in the root too.
+	 * A link_to-style value (entry not yet saved) has no directory to browse, so it gives "".
+	 */
+	protected _getImageUploadPath() : string
+	{
+		if(!this.imageUpload || this.imageUpload[0] === "/" || this.imageUpload.startsWith("http"))
+		{
+			return "";
+		}
+		const value = this.getArrayMgr("content")?.getRoot().getEntry(this.imageUpload);
+		return typeof value === "string" && value[0] === "/" ? value : "";
+	}
+
+	/**
 	 * Route TinyMCE's file picker through a custom override when provided, or
 	 * through the default EGroupware VFS picker otherwise.
 	 */
@@ -957,6 +973,8 @@ export class Et2HtmlArea extends Et2MarkdownEditMixin(Et2InputWidget(LitElement)
 			       isMedia ? this.egw().lang("Select media") :
 			       this.egw().lang("Select file"),
 			mime: isImage ? "image/" : isMedia ? /^(audio|video)\//i : "",
+			// start where uploads go, so a file uploaded in the picker does not land in the last used directory
+			...(this._getImageUploadPath() ? {path: this._getImageUploadPath()} : {}),
 			open: true
 		}, this) as unknown as Et2VfsSelectDialog;
 
