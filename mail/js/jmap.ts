@@ -6190,11 +6190,18 @@ export class MailJmap
 	 * "strip the original message's own trailing signature from the quote" heuristic (RFC 3676
 	 * §4.3) - both nice-to-haves, not load-bearing for a first working version.
 	 *
-	 * @param context fetchForReply()'s result - context.mimeType decides whether the reply is
-	 *  HTML or plain: a reply adopts the ORIGINAL message's mimeType, same as the classic
-	 *  implementation - not the user's own new-compose mimeType preference
+	 * @param context fetchForReply()'s result - context.body/context.mimeType are the ORIGINAL
+	 *  message's own shape, unrelated to the target compose's actual mode (see targetIsHtml)
+	 * @param targetIsHtml the mode the COMPOSE is actually going to be in - normally the same as
+	 *  the original message's own mimeType (`context.mimeType === 'html'`, the default), but the
+	 *  two can now disagree: MailCompose.bootstrapReply()'s own `replyOptions` preference
+	 *  ("force html"/"force text") can pick a DIFFERENT mode than the original message actually
+	 *  has (ticket #125251 - a plain-text original, force-html preference: the quoted body came
+	 *  back as raw plain-text with literal newlines, which an HTML/TinyMCE editor collapses into
+	 *  one run-on paragraph exactly like any other whitespace - "Zeilenumbrüche gehen verloren").
+	 *  Converts context.body to whichever shape targetIsHtml actually needs, in EITHER direction.
 	 */
-	quoteOriginalMessage(context : JmapReplyContext) : string
+	quoteOriginalMessage(context : JmapReplyContext, targetIsHtml : boolean = context.mimeType === 'html') : string
 	{
 		const formatList = (addresses : JmapEmailAddress[]) => addresses.map(formatJmapAddress).join(', ');
 		// context.date is jmapUtcToUserTz()'s intermediate shape (already timezone-shifted, but
@@ -6210,21 +6217,28 @@ export class MailJmap
 			['date', context.date ? formatDateTime(new Date(context.date)) : ''],
 		];
 
-		if (context.mimeType === 'html')
+		if (targetIsHtml)
 		{
 			const lines = attributionLines
 				.filter(([, value]) => value)
 				.map(([label, value]) => `${MailJmap.escapeHtml(this.egw.lang(label))}: ${MailJmap.escapeHtml(value)}`)
 				.join('<br>');
+			// same escape+<br> conversion applyPresetBody() already uses for the same "plain
+			// content going into an HTML editor" problem - a no-op when the original already IS html
+			const quotedBody = context.mimeType === 'html' ? context.body :
+				this.egw.htmlspecialchars(context.body).replace(/\r\n|\r|\n/g, '<br>\n');
 			return `<fieldset class="originalMessage"><legend>${MailJmap.escapeHtml(this.egw.lang('original message'))}</legend>${lines}</fieldset>` +
-				`<blockquote type="cite">${context.body}</blockquote><br>`;
+				`<blockquote type="cite">${quotedBody}</blockquote><br>`;
 		}
 
 		const attribution = attributionLines
 			.filter(([, value]) => value)
 			.map(([label, value]) => `${this.egw.lang(label)}: ${value}`)
 			.join('\r\n');
-		const quotedLines = context.body.split('\n').map((line) => '> ' + line.replace(/\r$/, '')).join('\r\n');
+		// mirror image of the html branch above: the original's own HTML tags would otherwise show
+		// up literally as text once dropped into a plain-text editor - a no-op when already plain
+		const plainBody = context.mimeType === 'html' ? MailJmap.htmlToPlainText(context.body) : context.body;
+		const quotedLines = plainBody.split('\n').map((line) => '> ' + line.replace(/\r$/, '')).join('\r\n');
 		return attribution + '\r\n\r\n' + quotedLines;
 	}
 
