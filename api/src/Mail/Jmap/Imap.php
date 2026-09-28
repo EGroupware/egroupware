@@ -3035,6 +3035,40 @@ class Imap extends Jmap\Base
 	 * something this codebase's own client ever sends, so isn't supported here - fails with
 	 * invalidProperties instead of guessing a fallback mailbox.
 	 */
+	/**
+	 * Client-facing (and, via $e->details, server-log-facing) description for a failed
+	 * EmailSubmission/set create - ticket #125201 (a real customer, "Mailbox unavailable"
+	 * stalling a large-distribution-list send).
+	 *
+	 * Horde_Smtp_Exception (Postfix's own SMTP transport, used by the shim's send - see
+	 * buildMailerFromEmailProperties()/$mailer->send(), emailSubmissionSet() above) replaces the
+	 * SERVER's own specific response text with a generic one keyed purely off the numeric SMTP
+	 * code (eg. ANY 450 becomes the same bare "Mailbox unavailable.", regardless of Postfix's real
+	 * reason) - getMessage() only ever returns that generic text, but the real, specific response
+	 * Postfix actually sent survives on the exception's own raw_msg property, unused anywhere in
+	 * this codebase until now. Preferred here (both for the client-facing description, and for the
+	 * server log via $e->details, which _egw_log_exception() also logs when set) - either one
+	 * alone previously showed nothing more useful than "Mailbox unavailable.".
+	 */
+	private static function describeSendException(\Throwable $e) : string
+	{
+		$description = $e->getMessage();
+		// NOT empty($e->raw_msg)/isset($e->raw_msg): Horde_Exception exposes raw_msg only via
+		// __get(), with no matching __isset() - empty()/isset() special-case a magic property to
+		// call __isset() first and treat it as "not set" (without ever calling __get() at all) when
+		// that's missing, regardless of what direct access would actually return. Found live
+		// writing this fix's own test: empty($e->raw_msg) was unconditionally true even though
+		// $e->raw_msg itself printed the real string right below it.
+		$rawMsg = $e instanceof \Horde_Smtp_Exception ? $e->raw_msg : null;
+		if ($rawMsg)
+		{
+			$description = $rawMsg;
+			$e->details = $rawMsg;
+		}
+		_egw_log_exception($e);
+		return $description;
+	}
+
 	public static function emailSubmissionSet(string $accountId, array $args) : array
 	{
 		$created = [];
@@ -3205,7 +3239,13 @@ class Imap extends Jmap\Base
 			}
 			catch (\Throwable $e)
 			{
-				$notCreated[$creationId] = ['type' => 'serverFail', 'description' => $e->getMessage()];
+				// ticket #125201 follow-up (a real customer, "Mailbox unavailable" stalling a
+				// large-distribution-list send): local to this method, never reaches dispatch()'s
+				// own catch (Imap::dispatch()'s own _egw_log_exception() fix does NOT cover this
+				// site) - logged here too, so a genuine mail-submission failure isn't silently
+				// invisible server-side either. See describeSendException()'s own docblock for why
+				// Horde_Smtp_Exception needs special handling.
+				$notCreated[$creationId] = ['type' => 'serverFail', 'description' => self::describeSendException($e)];
 			}
 		}
 
