@@ -712,7 +712,21 @@ export class EgwFramework extends LitElement
 		// without one - a webdav file view, a share link, an external url - needs a real window,
 		// narrow viewport or not: the split below would otherwise pass the whole url through as the
 		// "menuaction" and request nonsense.
-		if((pref == "same_window" || window.matchMedia('(max-width: 800px)').matches) && _url.includes("menuaction="))
+		//
+		// `!window.opener` (ticket #124351, mail's own identical fix in openComposePopupUrl() -
+		// mail/js/app.ts) - openDialog()'s <et2-dialog> is built via loadWebComponent() directly in
+		// THIS window's own already-open document, unlike a real popup (a fresh page navigation,
+		// its own fresh document/JS realm). Live-reproduced (ralf, 2026-09-28): a window that is
+		// itself already a popup (window.opener set) is often narrower than 800px on its own -
+		// opening a further popup FROM there hit this same branch and threw "NotAllowedError:
+		// Sharing constructed stylesheets in multiple documents is not allowed" building every
+		// nested Lit component, because a browser's constructed CSSStyleSheet is bound to whichever
+		// document originally built it - the dialog never actually renders, nothing visible
+		// happens. A second, already-open popup can always safely open a THIRD real window instead
+		// (a fresh navigation sidesteps this entirely) - so this narrow-viewport/same-window inline-
+		// dialog convenience only applies to the true top-level app window, never to a window that
+		// is itself already a popup.
+		if((pref == "same_window" || window.matchMedia('(max-width: 800px)').matches) && !window.opener && _url.includes("menuaction="))
 		{
 			// openDialog doesn't take a full URL, just the menuaction part
 			const dialogURL = _url.split("menuaction=").pop();
