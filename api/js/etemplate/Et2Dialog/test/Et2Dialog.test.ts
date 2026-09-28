@@ -3,6 +3,8 @@ import {sendKeys} from "@web/test-runner-commands";
 import * as sinon from 'sinon';
 import {Et2Dialog} from "../Et2Dialog";
 import {assertNoElement} from "../../test/assertDom";
+import "../../Et2Textarea/Et2Textarea";
+import "../../Et2Textbox/Et2Textbox";
 
 /**
  * Test file for Etemplate webComponent Et2Dialog
@@ -226,5 +228,81 @@ describe("Properties", async() =>
 			event = await closeListener;
 			return requestCloseListener;
 		});
+	});
+});
+describe("Enter key", () =>
+{
+	// Enter on its own in a single line field presses the dialog's default button, but Enter from a
+	// multi-line field is a line break, and so is Shift+Enter from anywhere.  The dialog only sees the
+	// key events after they are retargeted to the shadow host (et2-textarea, et2-textbox), so these use
+	// real keyboard input into the fields' inner elements rather than synthetic events on the host.
+	let dialog : Et2Dialog;
+	let clicked : sinon.SinonSpy;
+
+	beforeEach(async() =>
+	{
+		// Buttons have to be there from the start, see "resolves getComplete() with a custom string button_id"
+		// @ts-ignore
+		dialog = await fixture<Et2Dialog>(html`
+			<et2-dialog title="Enter key" .buttons=${Et2Dialog.BUTTONS_OK_CANCEL} .destroyOnClose=${false}>
+			</et2-dialog>
+		`);
+		sinon.stub(dialog, "egw").returns(window.egw);
+		await elementUpdated(dialog);
+
+		const content = dialog.querySelector(".dialog_content");
+		// Where a loaded template would put its fields
+		content.insertAdjacentHTML("beforeend", "<et2-textarea></et2-textarea><et2-textbox></et2-textbox>");
+		// Shoelace focuses the dialog panel one animation frame after opening; wait for that, or it takes the
+		// focus away from the field again before the keys are sent
+		const initialFocus = oneEvent(dialog, "sl-initial-focus");
+		await dialog.show();
+		await initialFocus;
+		await elementUpdated(dialog.querySelector("et2-textarea"));
+		await elementUpdated(dialog.querySelector("et2-textbox"));
+
+		const button = dialog.querySelector("et2-button[slot='footer']");
+		assert.isNotNull(button, "Dialog must have a footer button");
+		clicked = sinon.spy();
+		button.addEventListener("click", clicked);
+	});
+
+	async function press(selector : string, key : string)
+	{
+		const field = <HTMLElement>dialog.querySelector(selector);
+		field.focus();
+		// The keys have to come from inside the field, not from wherever the focus happened to be
+		const keyup = oneEvent(field, "keyup");
+		await sendKeys({press: key});
+		await keyup;
+		// Let any click the keyup triggered run
+		await new Promise(resolve => setTimeout(resolve, 50));
+	}
+
+	it("Shift+Enter in a textarea does not press the default button", async() =>
+	{
+		await press("et2-textarea", "Shift+Enter");
+		assert.isFalse(clicked.called, "Default button was pressed");
+		assert.isTrue(dialog.open, "Dialog closed");
+	});
+
+	it("Shift+Enter in a textbox does not press the default button", async() =>
+	{
+		await press("et2-textbox", "Shift+Enter");
+		assert.isFalse(clicked.called, "Default button was pressed");
+		assert.isTrue(dialog.open, "Dialog closed");
+	});
+
+	it("Enter in a textarea does not press the default button", async() =>
+	{
+		await press("et2-textarea", "Enter");
+		assert.isFalse(clicked.called, "Default button was pressed");
+		assert.isTrue(dialog.open, "Dialog closed");
+	});
+
+	it("Enter in a textbox presses the default button", async() =>
+	{
+		await press("et2-textbox", "Enter");
+		assert.isTrue(clicked.calledOnce, "Default button was not pressed");
 	});
 });
