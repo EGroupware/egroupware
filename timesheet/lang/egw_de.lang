@@ -168,6 +168,7 @@ the document can contain placeholder like {{%3}}, to be replaced with the data (
 the following document-types are supported:	timesheet	de	Die folgenden Dokumenttypen werden unterstützt:
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	de	Dieser Name wird nur intern benutzt (<= 20 Zeichen), Änderungen führen dazu, das bestehende Daten nicht mehr angezeigt werden können.
 the text displayed to the user	timesheet	de	Der Text wird dem Benutzer angezeigt
+there is a conflicting timesheet (%1, %2), but your customized template does not allow to ignore it.	timesheet	de	Es gibt einen überschneidenden Stundenzettel (%1, %2), Ihre angepasste Vorlage erlaubt es aber nicht, dies zu ignorieren.
 this month	timesheet	de	Diesen Monat
 this timesheet overlaps with the following existing entries:	timesheet	de	Dieser Stundenzettel überschneidet sich mit folgenden bestehenden Einträgen:
 this week	timesheet	de	Diese Woche
