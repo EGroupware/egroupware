@@ -12,7 +12,6 @@ import {EgwApp} from '../../api/js/jsapi/egw_app';
 import type {PushData} from '../../api/js/jsapi/egw_app';
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {CRMView} from "../../addressbook/js/CRM";
-import {nm_open_popup} from "../../api/js/etemplate/et2_extension_nextmatch_actions.js";
 import {EgwFrameworkApp} from "../../kdots/js/EgwFrameworkApp";
 import type {Et2ButtonToggle} from "../../api/js/etemplate/Et2Button/Et2ButtonToggle";
 import type {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
@@ -375,7 +374,7 @@ class InfologApp extends EgwApp
 			}
 			child_button.disabled = !children;
 		}
-		nm_open_popup(_action, _senders);
+		this._open_action_popup(_action, _senders);
 	}
 
 	/**
@@ -385,7 +384,7 @@ class InfologApp extends EgwApp
 	 * infolog.infolog_ui.ajax_action server action as the list's row-level Delete
 	 * action (confirm_delete()), instead of rendering a separate server-side
 	 * confirmation template - there's no nextmatch/selection here to drive
-	 * confirm_delete()/nm_open_popup() directly.
+	 * confirm_delete() directly.
 	 *
 	 * @param info_id
 	 * @param has_subs whether this entry has sub-entries, enabling "delete including sub-entries"
@@ -878,7 +877,59 @@ class InfologApp extends EgwApp
 			}
 		}
 
-		nm_open_popup(_action, _selected);
+		this._open_action_popup(_action, _selected);
+	}
+
+	/**
+	 * Show the index nextmatch's <et2-dialog> for an open_popup action, after its onExecute
+	 * handler (confirm_delete() / change_responsible()) has pre-populated the fields.
+	 *
+	 * Finding and showing the dialog is Et2NextmatchActionController's job (the "open_popup"
+	 * case of executeAction()), which also stores the selected ids on the dialog.
+	 *
+	 * @param {egwAction} _action
+	 * @param {egwActionObject[]} _selected
+	 */
+	private _open_action_popup(_action, _selected)
+	{
+		const nm = <Et2Nextmatch>(_action.data?.nextmatch || _action.parent?.data?.nextmatch || _selected[0]?.manager?.data?.nextmatch);
+		nm?.executeAction(_action.id, {ids: _selected.map(s => s.id), all: nm.getSelection().all}, {nmAction: "open_popup"});
+	}
+
+	/**
+	 * Submit one of the index nextmatch action popups (responsible / startdate / enddate).
+	 *
+	 * The popups are real <et2-dialog>s, so nothing sets the legacy nm_popup_action globals
+	 * nm_submit_popup() needs. ButtonMixin._handleClick() has already set the clicked button's
+	 * `clicked = true` before this onclick runs, so its id (eg. "responsible_action[add]") lands
+	 * in the submitted content - that's what tells infolog_ui::index() which button was pressed,
+	 * via `key($popup[$multi_action . '_action'])`. executeAction() then triggers the normal
+	 * whole-template submit with the nextmatch payload (action id, selected, select_all,
+	 * checkboxes) merged into Et2Nextmatch's value. Returning false stops the button from also
+	 * running its own (second) submit.
+	 *
+	 * @param _event
+	 * @param _widget the button that was clicked
+	 * @param _action_id the nm action id the popup was opened for, the same for every button in one popup
+	 */
+	submit_popup(_event : Event, _widget, _action_id : string) : boolean
+	{
+		const dialog = _widget.closest('et2-dialog');
+		const nm = <Et2Nextmatch>_widget.getInstanceManager()?.widgetContainer?.getWidgetById('nm');
+		if(!nm)
+		{
+			return false;
+		}
+		// Prefer the live selection - it still carries "select all", which the dialog's own
+		// .selectedIds (a plain array of ids set by openActionPopup()) does not.
+		const selection = nm.getSelection();
+		if(!selection.all && dialog?.selectedIds?.length)
+		{
+			selection.ids = dialog.selectedIds;
+		}
+		nm.executeAction(_action_id, selection, {nmAction: "submit"});
+		dialog?.hide();
+		return false;
 	}
 
 	/**
