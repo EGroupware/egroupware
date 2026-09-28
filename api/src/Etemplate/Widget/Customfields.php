@@ -569,8 +569,14 @@ class Customfields extends Transformer
 					}
 				}
 
-				$widget->validate($form_name != self::GLOBAL_ID ? $form_name : $cname, $expand, $content, $validated);
 				$field_name = $this->id[0] == self::$prefix && $customfields[substr($this->id, strlen($this->attrs['prefix']))] ? $this->id : self::form_name($form_name != self::GLOBAL_ID ? $form_name : $cname, $field);
+				// a template can hold several customfields widgets with the same id, eg. one per tab, which
+				// all submit the same values: validate each field once, or its error is reported once per widget
+				if(!is_null(self::get_array($validated, $field_name)))
+				{
+					continue;
+				}
+				$widget->validate($form_name != self::GLOBAL_ID ? $form_name : $cname, $expand, $content, $validated);
 				$valid =& self::get_array($validated, $field_name, true);
 
 				// Arrays are not valid, but leave filemanager alone, we'll catch it

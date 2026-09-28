@@ -732,6 +732,36 @@ describe("Et2Customfields webcomponents", () =>
 	});
 
 	/**
+	 * Contract: a generated field can be found by its id, and is validated before submit.
+	 * The server reports a customfield's validation error under the field's id, and eTemplate
+	 * only validates widgets in its tree - which the generated fields are not.
+	 * Setup: render an empty required text customfield.
+	 * Pass: getWidgetById() finds the field widget, submit() resolves false, and resolves true
+	 * once the field has a value.
+	 */
+	it("finds and validates its generated fields", async() =>
+	{
+		const element = await fixture<Et2CustomfieldsBase>(html`
+			<et2-customfields></et2-customfields>
+		`);
+		element.customfields = {cf_text: {label: "Text", type: "text", needed: true}};
+		element.fields = {cf_text: true};
+		element.value = {"#cf_text": ""};
+		await element.updateComplete;
+		const field = <any>element.querySelector("[data-field='cf_text'] et2-textbox");
+		await field?.updateComplete;
+
+		// compare, rather than assert on the DOM nodes: chai hangs formatting a node for a failure
+		assert.isTrue((<any>element).getWidgetById("#cf_text") === field, "the field widget should be found by its id");
+		assert.isTrue((<any>element).getWidgetById("#cf_missing") === null, "an unknown field should not be found");
+		assert.isFalse(await (<any>element).submit({}), "an empty required field should stop the submit");
+
+		field.value = "filled";
+		await field.updateComplete;
+		assert.isTrue(await (<any>element).submit({}), "a filled required field should let the submit through");
+	});
+
+	/**
 	 * Contract: customfield metadata controls the field list; row values alone do not.
 	 * Setup: assign only a row value and no customfield definitions.
 	 * Pass: no visible field names or field DOM nodes are created.

@@ -208,6 +208,42 @@ export class Et2Customfields extends Et2CustomfieldsBase implements Et2LayoutHos
 	}
 
 	/**
+	 * et2_ISubmitListener: validate the generated fields before the form is submitted.
+	 *
+	 * The eTemplate only asks widgets in its tree, which our field widgets are not, so without
+	 * this eg. an empty required customfield went to the server and came back as an error, instead
+	 * of being shown right away.  Resolving false makes eTemplate open our tab.
+	 *
+	 * @param _values The values about to be submitted.
+	 */
+	async submit(_values) : Promise<boolean>
+	{
+		const results = await Promise.all(Object.values(this.widgets)
+			.filter((widget) => typeof widget?.submit === "function" && widget.readonly !== true)
+			.map((widget) => widget.submit(_values)));
+		return results.every((ok) => ok !== false);
+	}
+
+	/**
+	 * Find a widget by id, including the field widgets we generated.
+	 *
+	 * The server reports a customfield's validation error under the field's own id, eg. "#date",
+	 * and the error is shown by looking that id up in the widget tree.  Our field widgets are not
+	 * in the tree, so without this the lookup finds nothing, the error only reaches the console
+	 * and the user is left with a form that silently does not save.
+	 */
+	getWidgetById(_id)
+	{
+		const found = super.getWidgetById(_id);
+		if(found || typeof _id !== "string" || !_id.startsWith(this.prefix))
+		{
+			return found;
+		}
+		const widget = this.widgets[_id.substring(this.prefix.length)];
+		return widget?.id === _id ? widget : null;
+	}
+
+	/**
 	 * The value to give a field's widget.
 	 *
 	 * Customfields::validate() turns an empty field into false, because the storage backend needs
