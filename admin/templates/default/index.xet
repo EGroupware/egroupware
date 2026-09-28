@@ -103,11 +103,12 @@
         <et2-tree  slot="left" autoloading="admin_ui::ajax_tree" id="tree" onclick="app.admin.run" parentId="admin_tree_target" stdImages="bullet"></et2-tree>
 		<et2-nextmatch  id="nm" template="admin.index.rows"></et2-nextmatch>
 		<et2-template  template="admin.index.group.header" slot="main-header" hidden="true"></et2-template>
-		<!-- The group list is only fetched once the user actually asks for it (tree > Groups),
-		     which is why admin_ui::index() sends it num_rows=0.  app.ts' group_list() calls
-		     refresh() when it un-hides this, so it starts out genuinely empty rather than
-		     spending an ajax_get_rows on every admin page load. -->
-		<et2-nextmatch  id="groups" template="admin.index.group" disabled="true"></et2-nextmatch>
+		<!-- The group list is only fetched once the user actually asks for it (tree > Groups):
+		     admin_ui::index() sends it num_rows=0 so the page carries no rows, and lazy="true"
+		     holds the client's own fetch back until this stops being hidden - without that it
+		     would spend an ajax_get_rows on every admin page load regardless.  app.ts'
+		     group_list() re-fetches on later visits only; the first one IS that initial fetch. -->
+		<et2-nextmatch  id="groups" template="admin.index.group" disabled="true" lazy="true"></et2-nextmatch>
 		<et2-iframe  frameborder="1" height="100%" id="iframe" scrolling="auto" width="100%" disabled="true"></et2-iframe>
 		<et2-box  id="ajax_target" disabled="true"></et2-box>
 	</et2-template>

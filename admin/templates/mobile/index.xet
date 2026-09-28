@@ -71,7 +71,7 @@
 		<et2-button-icon  class="plus_button" id="add" onclick="app.admin.account({id:&quot;add&quot;})" noSubmit="true" image="plus-lg"></et2-button-icon>
 		<et2-nextmatch  id="nm" template="admin.index.rows"></et2-nextmatch>
 		<!-- Only fetched once the user asks for it (tree > Groups) - see the desktop index.xet -->
-		<et2-nextmatch  id="groups" template="admin.index.group" disabled="true"></et2-nextmatch>
+		<et2-nextmatch  id="groups" template="admin.index.group" disabled="true" lazy="true"></et2-nextmatch>
 		<et2-iframe  frameborder="1" height="100%" id="iframe" scrolling="auto" width="100%" disabled="true"></et2-iframe>
 		<et2-box  id="ajax_target" height="99%" disabled="true"></et2-box>
 	</et2-template>

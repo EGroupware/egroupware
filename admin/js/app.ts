@@ -660,20 +660,12 @@ export class AdminApp extends EgwApp
 		// Re-fetch the group list now that it is on screen, but only from the second visit on.
 		//
 		// The legacy widget was told to load by a bubbling 'show' event it listened for via
-		// jQuery; Et2Nextmatch has no such listener - its own `lazy` property only defers for an
-		// inactive <et2-tab-panel>, which this is not.  admin_ui::index() still sends this
-		// nextmatch num_rows=0, but that no longer keeps it idle either: with no rows AND no
-		// total, Et2Nextmatch.firstUpdated() falls through to its client-fetch branch, so the
-		// list fetches itself once on page load whether or not anyone opens it.
-		//
-		// That first fetch is queued behind the accounts list and can still be pending seconds
-		// later (isLoading is false the whole time - it has not started, so there is nothing to
-		// wait on).  Asking for a refresh before it lands leaves the grid permanently empty:
-		// refresh() -> applyFilters() -> Et2Datagrid.reload() clears total and the rows, and the
-		// original fetch's response is then dropped as superseded with nothing left to re-fetch.
-		// Reproduced deliberately (switch to Groups immediately after load: total 0, 0 rows, no
-		// recovery after 18s of polling).  So leave the first visit to that initial fetch, which
-		// is as fresh as a refresh would be, and only re-fetch on later visits.
+		// jQuery, and re-queried on every later one.  Et2Nextmatch has no such listener; what it
+		// has is lazy="true" (index.xet), which holds its initial fetch until it is actually
+		// displayed.  Together with the num_rows=0 admin_ui::index() sends for this nextmatch,
+		// that means a group list nobody opens is never fetched at all - and that the first
+		// visit here IS the initial fetch.  Refreshing on top of it would just be a second
+		// identical request; only later visits need one, to pick up changes made since.
 		if(this._groupsShown)
 		{
 			this.groups.refresh(undefined);

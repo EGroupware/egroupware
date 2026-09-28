@@ -26,6 +26,7 @@ import {Et2Template} from "../Et2Template/Et2Template";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import {Et2NextmatchActionController} from "./Et2NextmatchActionController";
 import {Et2NextmatchAutoRefresh} from "./Et2NextmatchAutoRefresh";
+import {Et2LazyLoadController} from "../Et2Widget/Et2LazyLoadController";
 import {Et2VfsUpload} from "../Et2Vfs/Et2VfsUpload";
 import {
 	applyLegacyNextmatchColumnPreferences,
@@ -290,11 +291,17 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 	private _lettersearchVisible : boolean = true;
 
 	/**
-	 * Defer the initial row fetch until this nextmatch's tab panel (an ancestor
-	 * `<et2-tab-panel>`) is actually shown, instead of loading immediately on connect.
+	 * Defer the initial row fetch until this nextmatch is actually being displayed,
+	 * instead of loading immediately on connect.  "Displayed" means nothing up the tree
+	 * hides it - an inactive `<et2-tab-panel>` (which is `display: none`), an app view
+	 * toggled off, a widget still carrying `disabled`/`hidden` - so an app that ships an
+	 * empty list and shows it on demand never asks the server for rows nobody looks at.
+	 *
 	 * Only affects the client-side `reload()` fallback in firstUpdated() - template/column
 	 * parsing and any server-preloaded rows/total are unaffected, so headers still render.
-	 * Has no effect when there's no ancestor tab panel, or it's already the active one.
+	 * That means an app using this must also stop its own server side from shipping rows
+	 * (`'num_rows' => 0`), or the preloaded-rows branch runs and there is nothing left to
+	 * defer.  Has no effect on a nextmatch that is displayed straight away.
 	 */
 	@property({type: Boolean})
 	lazy : boolean = false;
@@ -518,6 +525,13 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 	 * rationale (interval source, why a tick is a full reload, visibility pausing).
 	 */
 	private _autoRefresh : Et2NextmatchAutoRefresh;
+
+	/**
+	 * Tells us when this nextmatch is actually being displayed, for `lazy` - see
+	 * `_whenLazyVisible()`.  Constructed unconditionally (it is one IntersectionObserver
+	 * either way), since `lazy` can be set after construction.
+	 */
+	private _lazyVisible : Et2LazyLoadController;
 
 	/**
 	 * Row element currently highlighted as a native file drop target, so we can
@@ -791,6 +805,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 		this._dataProvider = new Et2NextmatchDataProvider(this as any);
 		this._actionController = new Et2NextmatchActionController(this as any);
 		this._autoRefresh = new Et2NextmatchAutoRefresh(this);
+		this._lazyVisible = new Et2LazyLoadController(this);
 	}
 
 	/**
@@ -1204,10 +1219,18 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 	}
 
 	/**
-	 * Resolve immediately unless `lazy` is set and this nextmatch is sitting inside an
-	 * inactive `<et2-tab-panel>` - in that case, wait for the enclosing `<et2-tabbox>`'s
-	 * `sl-tab-show` for this panel before resolving.  Deferring like this is what keeps an
-	 * unopened tab free: a nextmatch on a tab nobody looks at never asks the server for rows.
+	 * Resolve immediately unless `lazy` is set and this nextmatch is not currently being
+	 * displayed - in that case, resolve once it is.  Deferring like this is what keeps an
+	 * unopened list free: a nextmatch nobody has looked at never asks the server for rows.
+	 *
+	 * The "is it displayed" question is `Et2LazyLoadController`'s, not ours: it answers it
+	 * from the element itself (`checkVisibility()`), which covers `display: none` anywhere
+	 * up the tree without this widget having to know what put it there.  An inactive
+	 * `<et2-tab-panel>` is exactly that case (Shoelace gives it `display: none` unless
+	 * `[active]`), so a tab panel needs no special handling here - an earlier version
+	 * listened for the enclosing `<et2-tabbox>`'s `sl-tab-show` and so covered only tabs.
+	 * Being scrolled out of view deliberately does NOT count as hidden, same as it doesn't
+	 * for `Et2NextmatchAutoRefresh`: that is a viewport question, not a rendering one.
 	 */
 	private async _whenLazyVisible() : Promise<void>
 	{
@@ -1215,30 +1238,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 		{
 			return;
 		}
-		const panel = this.closest("et2-tab-panel");
-		const panelName = panel?.getAttribute("name");
-		if(!panel || !panelName || panel.hasAttribute("active"))
-		{
-			return;
-		}
-		const group = panel.closest("et2-tabbox");
-		if(!group)
-		{
-			return;
-		}
-		return new Promise<void>(resolve =>
-		{
-			const handler = (e : CustomEvent) =>
-			{
-				if(e.detail?.name !== panelName)
-				{
-					return;
-				}
-				group.removeEventListener("sl-tab-show", handler);
-				resolve();
-			};
-			group.addEventListener("sl-tab-show", handler);
-		});
+		return this._lazyVisible.whenReady;
 	}
 
 	/**

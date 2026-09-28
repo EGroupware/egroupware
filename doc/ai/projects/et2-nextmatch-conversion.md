@@ -472,30 +472,29 @@ by their own URLs, and the first whose nextmatch pages are loaded *into* another
   property instead, which `*[hidden] { display:none }` honours but which can never out-specify a
   class that is still on the element - so the group list would never have become visible again.
   Replaced with `disabled="true"` in the template. **Grep a converted template for `class="hide"`.**
-- **`num_rows => 0` no longer defers anything client-side.** Legacy let an app ship a nextmatch with
-  no rows and load it on demand, driven by a bubbling `show` event the widget listened for (admin's
-  `group_list()` dispatched exactly that). `Et2Nextmatch` has no such listener, and `lazy` only
-  defers for an inactive `<et2-tab-panel>`. Worse, `Nextmatch.php` sets `$value['total'] = null`
-  when `num_rows` is 0, and `firstUpdated()` treats "no rows and no numeric total" as "fetch now" -
-  so the list is fetched once on page load regardless. `group_list()` now calls
-  `groups.refresh(undefined)` when the tree switches to Groups, which restores the legacy
-  refresh-on-show behaviour, but the redundant load-time fetch **remains** (one extra
-  `ajax_get_rows` per admin page load). Suppressing it needs a framework-side way to defer a
-  nextmatch that is merely hidden - the natural shape being to widen `_whenLazyVisible()` from
-  "inactive tab panel" to "not rendered", reusing the `getClientRects().length` + `ResizeObserver`
-  test `Et2NextmatchAutoRefresh.shouldRun` already uses. Not done here.
-  - **Refreshing on show has to skip the first show, or the list is permanently empty.** That
-    load-time fetch is queued behind the page's other nextmatch and can still be pending seconds
-    later - and `isLoading` is `false` that whole time, because it has not *started*, so there is
-    nothing to await. A `refresh()` arriving first wins the race destructively:
-    `applyFilters()` -> `Et2Datagrid.reload()` clears `total` and the rows, then the original
-    fetch's response is dropped as superseded and nothing re-fetches. Reproduced deliberately
-    (switch to Groups the instant the widgets exist: `total` 0, 0 rows, no recovery after 18s of
-    polling); it is reachable by a user clicking "User groups" in the first seconds after the page
-    loads. Fixed app-side with a `_groupsShown` flag: the first visit rides the initial fetch,
-    which is exactly as fresh as a refresh would be, and only later visits re-fetch. **Any app
-    adding a refresh-when-shown to a converted list needs this check** - "is a fetch in flight" is
-    not the question, "has one ever completed" is.
+- **`num_rows => 0` defers nothing on its own - say `lazy="true"` as well.** Legacy let an app ship
+  a nextmatch with no rows and load it on demand, driven by a bubbling `show` event the widget
+  listened for (admin's `group_list()` dispatched exactly that). `Et2Nextmatch` has no such
+  listener, and `Nextmatch.php` sets `$value['total'] = null` when `num_rows` is 0, which
+  `firstUpdated()` reads as "no data was sent yet" - so the list was fetched once on page load
+  whether or not anyone opened it. `lazy` now covers this: it defers the client fetch until the
+  nextmatch is actually being displayed, not just until an ancestor `<et2-tab-panel>` becomes
+  active (`Et2Nextmatch._whenLazyVisible()` asks `Et2LazyLoadController`, whose `checkVisibility()`
+  covers `display: none` anywhere up the tree - which is what an inactive tab panel, a
+  `disabled`/`hidden` widget and an app's own toggled-off view all are). Admin's `groups`
+  nextmatch carries `lazy="true"` in `index.xet` for exactly this; verified live 2026-09-28 -
+  `groups.totalCount` stays 0 with no row request until "User groups" is picked, then loads 19.
+  - **Refreshing on show still has to skip the first show.** Not to dodge a race any more - with
+    `lazy` there is no load-time fetch to race - but because the first show now *is* the initial
+    fetch, so a `refresh()` on top of it is a second identical request. Admin keeps its
+    `_groupsShown` flag for that. It was originally there for something worse, worth knowing if
+    you add a refresh-when-shown to a list that is **not** lazy: that load-time fetch is queued
+    behind the page's other nextmatch and can still be pending seconds later, with `isLoading`
+    `false` the whole time because it has not *started*, so there is nothing to await. A
+    `refresh()` arriving first wins destructively - `applyFilters()` -> `Et2Datagrid.reload()`
+    clears `total` and the rows, then the original fetch's response is dropped as superseded and
+    nothing re-fetches. **"Is a fetch in flight" is not the question, "has one ever completed"
+    is.**
 - **`<customfields-types>` renders nothing in a row, and it did not need a new web component.**
   Same silent failure as ProjectManager's `<projectmanager-select-erole>`: `Customfields.php` maps
   the type to `select` server-side, which `Et2RowProvider`'s clone-by-tag-name step never consults.
@@ -1238,23 +1237,36 @@ Fix: a new `lazy` boolean property on `Et2Nextmatch` (`Et2Nextmatch.ts`, alongsi
 When set, `firstUpdated()` calls a new private `_whenLazyVisible()` before the client-fetch
 `_datagrid?.reload()` call (only that branch - template/column parsing and the server-preloaded-rows
 branch are untouched, so headers still render immediately even though row data is deferred).
-`_whenLazyVisible()` no-ops unless the nextmatch is inside an inactive `<et2-tab-panel>` (checked via
-`closest("et2-tab-panel")` + the panel's own reflected `active` attribute), in which case it returns a
-promise that resolves on the enclosing `<et2-tabbox>`'s `sl-tab-show` event once `event.detail.name`
-matches the panel's `name`. This mirrors an existing precedent in the codebase for the identical
-problem - `et2_widget_historylog.ts`'s `doLoadingFinished()` uses the same `sl-tab-show`/panel-name-match
-technique to lazily load a History tab's content, just against the legacy `get_tab_info()` API instead
-of a web-component ancestor.
+`_whenLazyVisible()` no-ops unless the nextmatch is not currently being displayed, in which case it
+returns `Et2LazyLoadController`'s `whenReady` - the controller `Et2LinkString` already uses to hold a
+per-row request until the row is worth loading. It answers "is it displayed" from the element itself
+(`checkVisibility()`, triggered by an `IntersectionObserver`), so it covers `display: none` anywhere
+up the tree without the widget knowing what put it there: an inactive `<et2-tab-panel>` (Shoelace
+gives it `display: none` unless `[active]`), a `disabled`/`hidden` widget, an app toggling between
+its own views. Being scrolled out of view deliberately does not count as hidden, the same call
+`Et2NextmatchAutoRefresh` makes. An earlier version listened for the enclosing `<et2-tabbox>`'s
+`sl-tab-show` instead and so covered only tabs - the technique the legacy nextmatch
+(`et2_extension_nextmatch.ts`) still uses, and which `Et2Historylog` had inherited from the legacy
+history log it replaced. `Et2Historylog` has its own `lazy` (defaulting to **true**) and its own
+copy of `_whenLazyVisible()`, since it is not an `Et2Nextmatch` subclass; it was widened the same
+way in the same change, so a history log hidden by anything other than a tab panel now defers too -
+and for it that covers the row template as well as the entries.
 
-**`num_rows => 0` on its own defers nothing.** Under the legacy widget an app could ship a
-nextmatch with no rows and load it on demand by dispatching a bubbling `show` event at it (Admin's
-`group_list()` did exactly that, for the group list behind its tree). `Et2Nextmatch` has no such
-listener, and `Nextmatch.php` sets `total` to `null` when `num_rows` is 0 — which `firstUpdated()`
-reads as "no data was sent yet", so it fetches immediately anyway. An app converting one of these
-gets a load-time fetch it did not ask for; re-fetching on show has to be done explicitly from app
-code (`nm.refresh(undefined)`). Making `lazy` cover a merely-hidden nextmatch (widening
-`_whenLazyVisible()` to the `getClientRects().length` + `ResizeObserver` test
-`Et2NextmatchAutoRefresh.shouldRun` already uses) is the obvious fix and has not been done.
+One consequence worth knowing when testing: `IntersectionObserver` callbacks are delivered with the
+browser's rendering steps, which a backgrounded browser tab does not run - so a lazy nextmatch shown
+while its browser tab is in the background waits for that tab to be foregrounded. Harmless in use
+(nobody is looking, and autorefresh pauses on the same condition by design), but it makes an
+automated repro on a `document.hidden` tab look stuck; see the note on forcing a frame with a
+screenshot in `doc/ai/testing.md`.
+
+**`num_rows => 0` on its own defers nothing — pair it with `lazy="true"`.** Under the legacy widget
+an app could ship a nextmatch with no rows and load it on demand by dispatching a bubbling `show`
+event at it (Admin's `group_list()` did exactly that, for the group list behind its tree).
+`Et2Nextmatch` has no such listener, and `Nextmatch.php` sets `total` to `null` when `num_rows` is
+0 — which `firstUpdated()` reads as "no data was sent yet", so without `lazy` it fetches
+immediately anyway. `lazy` is not tab-specific: it defers until the nextmatch is actually being
+displayed, so it covers a list hidden by `disabled`/`hidden` or by an app toggling its own views,
+not just one on an unopened tab.
 
 Usage: add `lazy="true"` to the `<et2-nextmatch>` tag. If the app also ships rows/`total` with the
 initial page load (skip this if it doesn't, e.g. via a settings key like Tracker's own
