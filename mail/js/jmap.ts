@@ -27,6 +27,7 @@ import DOMPurify from "../../api/js/etemplate/Et2Image/dompurify-shim";
 import {isNamespaceRootName, sortTopLevel} from "./folderTree";
 import {formatDate, formatDateTime} from "../../api/js/etemplate/Et2Date/Et2Date";
 import {convert as htmlToText} from "html-to-text";
+import {defaultFontCssRule} from "../../api/js/etemplate/Et2HtmlArea/Et2HtmlAreaConfig";
 
 interface JmapToken
 {
@@ -4326,8 +4327,9 @@ export class MailJmap
 		return `<!DOCTYPE html><html><head><meta charset="utf-8">` +
 			`<meta http-equiv="Content-Security-Policy" content="${csp}">` +
 			`<link rel="stylesheet" href="${this.egw.link('/mail/templates/default/preview.css')}">` +
+			`<style>${defaultFontCssRule()}</style>` +
 			`<script defer nonce="${nonce}" src="${this.egw.link('/mail/js/preview.js')}"></script>` +
-			`</head><body><div class="mailDisplayBody"><table width="100%" style="table-layout:fixed">` +
+			`</head><body><div class="mailDisplayBody mailDefaultFont"><table width="100%" style="table-layout:fixed">` +
 			`<tr><td class="td_display">${body}</td></tr></table></div></body></html>`;
 	}
 
@@ -6311,8 +6313,13 @@ export class MailJmap
 
 	private addressesToJmap(value? : string | string[])
 	{
+		// ticket #125201: filter(Boolean) must run BEFORE .map(trim) - a falsy (null/undefined)
+		// entry (found live: a distribution-list member with no email address at all, resolved
+		// server-side into a bare null - see ComposeMessageBuilder::resolveEmailAddressList())
+		// crashed here with "Cannot read properties of null (reading 'trim')" when filter ran
+		// only afterwards, surfacing to the user as a generic "Account not reachable".
 		return value
-			? (Array.isArray(value) ? value : value.split(',')).map((address) => address.trim()).filter(Boolean).map((address) => this.parseAddress(address))
+			? (Array.isArray(value) ? value : value.split(',')).filter(Boolean).map((address) => address.trim()).filter(Boolean).map((address) => this.parseAddress(address))
 			: undefined;
 	}
 

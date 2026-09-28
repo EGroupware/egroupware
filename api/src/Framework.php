@@ -984,11 +984,48 @@ abstract class Framework extends Framework\Extra
 		$css .= "
 	:root, :host, body, input {
 		font-size: {$textsize}px;
-		font-family: egroupware, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 
+		font-family: egroupware, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
 			Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 	}
 \n";
 		return $css;
+	}
+
+	/**
+	 * CSS rule applying the user's rte_font/rte_font_size/rte_font_unit "common" preferences (the
+	 * same ones forcing a font on OUTGOING html mail, Et2HtmlAreaConfig.ts's paragraphStyles()) to
+	 * a class, for content that does NOT already specify its own font - e.g. a received mail body
+	 * shown in the preview/display popup, which lives in its own iframe/srcdoc and so can't just
+	 * inherit page-level CSS. Deliberately plain (non-!important) properties on the class itself:
+	 * any inline style or more specific rule already present in that content still wins via
+	 * ordinary CSS cascade/inheritance, so this only ever supplies a default, never overrides.
+	 *
+	 * Preferences are unvalidated user input (no name/value allow-list exists), and this text is
+	 * embedded directly into a `<style>` block, so both values are stripped to a safe character
+	 * set before use.
+	 *
+	 * Also targets a `pre` inside the class (plain-text mail's own wrapping element,
+	 * AttachmentHandler::getdisplayableBody()/jmap.ts's textToHtml()): the browser's UA stylesheet
+	 * sets `pre{font-family:monospace}` directly ON that element, which otherwise wins over our
+	 * class's value even though it only reaches `pre` via inheritance from an ancestor - a rule
+	 * matching an element directly always beats an inherited value, regardless of specificity.
+	 *
+	 * @param string $class CSS class name the rule is defined for; caller applies it manually to
+	 *  whichever element wraps the content (eg. `<body class="...">` or a container div)
+	 * @return string eg. ".mailDefaultFont,.mailDefaultFont pre{font-family:arial, helvetica, sans-serif;font-size:10pt;}"
+	 */
+	public static function defaultFontCss($class='mailDefaultFont')
+	{
+		$prefs = $GLOBALS['egw_info']['user']['preferences']['common'] ?? [];
+		// no quotes allowed: an unbalanced one (found live, ralf's own 'rte_font' pref: `terminal,
+		// "monaco`, missing its closing quote) would otherwise swallow the rest of the CSS text -
+		// an unquoted multi-word name (eg. "Segoe UI") is still valid CSS as a sequence of idents
+		$font_family = preg_replace('/[^a-zA-Z0-9 ,._-]/', '', $prefs['rte_font'] ?? '') ?: 'arial, helvetica, sans-serif';
+		$font_size = preg_replace('/[^0-9a-zA-Z%.]/', '',
+			($prefs['rte_font_size'] ?? '10').($prefs['rte_font_unit'] ?? 'pt')) ?: '10pt';
+		$class = preg_replace('/[^a-zA-Z0-9_-]/', '', $class);
+
+		return '.'.$class.',.'.$class.' pre{font-family:'.$font_family.';font-size:'.$font_size.';}';
 	}
 
 	/**
