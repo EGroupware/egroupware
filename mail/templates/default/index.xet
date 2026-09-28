@@ -144,6 +144,7 @@
                         <et2-hbox  class="status_icons">
                             <et2-image  src="$row_cont[status_icon]" class="status_img $row_cont[class]"></et2-image>
                             <et2-image  src="$row_cont[smime]" inline="true" class="bi"></et2-image>
+                            <et2-image  src="$row_cont[pgp]" inline="true" class="bi"></et2-image>
                             <et2-image  src="$row_cont[attachment_icon]"></et2-image>
                             <et2-image  src="$row_cont[flagged_icon]" id="flaggedImage"></et2-image>
                         </et2-hbox>
@@ -210,7 +211,10 @@
                     <et2-url-email  id="${row}[toaddress]" readonly="true" emailDisplay="preference"></et2-url-email>
                     <et2-url-email  id="${row}[fromaddress]" readonly="true" emailDisplay="preference"></et2-url-email>
                     <et2-vfs-size  align="right" id="${row}[size]" noLang="1" readonly="true"></et2-vfs-size>
-                    <et2-image  align="center" src="$row_cont[smime]" inline="true" class="horizontal_smime"></et2-image>
+                    <et2-hbox>
+                        <et2-image  align="center" src="$row_cont[smime]" inline="true" class="horizontal_smime"></et2-image>
+                        <et2-image  align="center" src="$row_cont[pgp]" inline="true" class="horizontal_smime"></et2-image>
+                    </et2-hbox>
                 </row>
             </rows>
         </grid>
