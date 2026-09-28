@@ -7521,6 +7521,45 @@ export class MailJmap
 	}
 
 	/**
+	 * S/MIME row-list icon (ticket #125281 - regressed away entirely during the JMAP migration,
+	 * mail_ui::header2gridelements()'s `$data['smime'] = ... Smime::TYPE_SIGN : Smime::TYPE_ENCRYPT`
+	 * had no equivalent in email2row() at all). Same top-level Content-Type header already fetched
+	 * for every list row (CONTENT_TYPE_HEADER_PROPERTY) - no extra per-row cost, matching the
+	 * classic code's own cheap Content-Type-only check (never resolveSmimeSignedAttachments()'s
+	 * heavier per-part distinction - that's only needed to decide the attachment-paperclip icon,
+	 * not this one). Returns a smime.xet/mail.index.rows.*.xet image name, or '' for a plain
+	 * message - see Api\Mail\Smime::TYPE_SIGN/TYPE_ENCRYPT for the matching icon-name constants.
+	 */
+	private static smimeRowIcon(contentTypeHeader : string) : string
+	{
+		if (MailJmap.isSignedContentType(contentTypeHeader)) return 'smime_sign';
+		const type = (contentTypeHeader || '').split(';')[0].trim().toLowerCase();
+		return (type === 'application/pkcs7-mime' || type === 'application/x-pkcs7-mime') ? 'smime_encrypt' : '';
+	}
+
+	/**
+	 * Same idea as smimeRowIcon(), for PGP/MIME (RFC 3156) - ticket #125281 ("probably want the
+	 * same for PGP"). Deliberately detection-only, a pure Content-Type check exactly like
+	 * smimeRowIcon() - NOT the existing verifyPgpSignature()/findPgpPart() machinery (jmap.ts's own
+	 * PGP feature), which walks the full bodyStructure and actually verifies a signature; either
+	 * would cost a per-row fetch this list view can't afford (bodyStructure isn't part of the
+	 * list-fetch properties at all, unlike the header used here). Inline (non-MIME) PGP - a bare
+	 * "-----BEGIN PGP MESSAGE-----" in the body text, no distinct top-level Content-Type - is NOT
+	 * detectable this way and stays undetected in the list (would need the full body).
+	 *
+	 * No dedicated PGP icon asset exists (unlike S/MIME's smime_sign.svg/smime_encrypt.svg) - reuses
+	 * the same generic icon the preview pane's own PGP indicator already uses (index.xet's
+	 * `pgp_signature` image, src="envelope-at-fill").
+	 */
+	private static pgpRowIcon(contentTypeHeader : string) : string
+	{
+		const type = (contentTypeHeader || '').split(';')[0].trim().toLowerCase();
+		if (type !== 'multipart/signed' && type !== 'multipart/encrypted') return '';
+		return /protocol\s*=\s*"?application\/pgp-(signature|encrypted)"?/i.test(contentTypeHeader || '') ?
+			'envelope-at-fill' : '';
+	}
+
+	/**
 	 * @param showRecipient true for a Sent/Drafts/Templates mailbox - mail_ui::header2gridelements()'s
 	 *  old convention (lost during the JMAP migration, found live 2026-09-02, ralf: "In Sent folder
 	 *  we used to show the recipient's address, not the sender"): the unified `address` field (the
@@ -7587,6 +7626,10 @@ export class MailJmap
 			// the individual image values below instead of a legacy html widget.
 			attachments: hasAttachment ? 'attach' : '',
 			attachment_icon: hasAttachment ? 'attach' : '',
+			// ticket #125281: row-list security icons - see smimeRowIcon()/pgpRowIcon()'s own
+			// docblocks for why each is a cheap Content-Type-only check, no extra per-row fetch
+			smime: MailJmap.smimeRowIcon(email[MailJmap.CONTENT_TYPE_HEADER_PROPERTY]),
+			pgp: MailJmap.pgpRowIcon(email[MailJmap.CONTENT_TYPE_HEADER_PROPERTY]),
 			flagged_icon: hasFlagged ? 'unread_flagged_small' : '',
 			// no attachment-list preview block for Phase 1 (see class docblock) - but app.ts's
 			// preview() unconditionally reads data.attachmentsBlock[0], so this must at
