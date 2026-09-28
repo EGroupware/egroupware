@@ -83,6 +83,7 @@ This is the canonical shape returned by GET and accepted by POST / PUT / PATCH.
 | `created` | ISO 8601 datetime | No | Auto-set on creation. Omitted when not available. |
 | `modified` | ISO 8601 datetime | No | Auto-set on every save. Omitted when not available. |
 | `closed` | ISO 8601 datetime | No | Auto-set when status → `"Closed"`. Omitted when not set. |
+| `notify` | boolean | Write-only | `false` suppresses notifications (incl. external "cc" addresses) for this save. Only assignees, technicians and admins of the queue may set it — silently ignored otherwise, same as any other field the caller can't modify. Not persisted, so never present in a response. Defaults to `true` (notify) when omitted. |
 
 ---
 
@@ -425,6 +426,7 @@ collection at `/tracker/{id}/replies/`, and are also included inline on every si
 | `creator` | string | No | Auto-set to the authenticated user on creation. |
 | `created` | ISO 8601 datetime | No | Auto-set on creation. |
 | `restricted` | boolean | Yes | `true` = visible only to admins, technicians, and assignees. Default `false`. |
+| `notify` | boolean | Write-only | `false` suppresses notifications (incl. external "cc" addresses) for this reply. Only assignees, technicians and admins of the queue may set it — silently ignored otherwise, same as any other field the caller can't modify. Not persisted, so never present in a response. Defaults to `true` (notify) when omitted. |
 
 ### ACL rules
 
@@ -476,6 +478,12 @@ Or with a restricted (staff-only) note:
 
 ```json
 { "message": "Internal: do NOT close yet - waiting for customer confirmation.", "restricted": true }
+```
+
+Or suppressing notifications (requires assignee/technician/admin rights on the queue):
+
+```json
+{ "message": "Bulk-imported note, no need to notify anyone.", "notify": false }
 ```
 
 **Response `201 Created`:**
