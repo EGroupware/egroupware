@@ -10,7 +10,7 @@ generated component docs for
 repeat that reference material.
 
 Apps converted so far: Addressbook, Infolog, Filemanager, Mail, Timesheet, Tracker, Home, Calendar,
-ProjectManager. Apps still on the legacy widget: Admin, Importexport, Aiassistant, Preferences.
+ProjectManager, Admin. Apps still on the legacy widget: Importexport, Aiassistant, Preferences.
 Non-core apps (Resources, News_admin, Smallpart, Schulmanager, Stylite, Kanban, ...) have never been
 on this list at all and still need one. Related in-flight/reference docs in the same directory as the
 widget source: `ColumnSelectionNotes.md`, `Et2DatagridDirectoryMigrationPlan.md`, `NestedExpansion.md`.
@@ -386,9 +386,191 @@ Portlet-specific things that do not come up when converting an app's own list:
   accessory sub-list was the one instance; it now needs either a repeating widget the row provider
   understands or a flat server-provided field.
 
+## Admin
+
+Admin's conversion covers all nine nextmatches the app owns, across ten template files: the main
+index's **two** lists (`admin.index.rows` accounts + `admin.index.group` groups, desktop + mobile
+skin), the access log, the ACL popup, the categories list (desktop + mobile), the admin
+command/queue list, the custom-fields list, the remote-instances list, and the application-passwords
+(tokens) list. It is the first app converted whose lists are reached by an in-app tree rather than
+by their own URLs, and the first whose nextmatch pages are loaded *into* another page
+(`admin.index`'s `ajax_target`) on top of two already-live nextmatches.
+
+- **A nextmatch rendered in a popup gets no filterbox at all, and nothing says so.**
+  `Nextmatch::beforeSendToClient()` returns early for `Api\Etemplate::$request->output_mode === 2`
+  ("only for NM running in the main content area, not in a popup"), before the block that computes
+  `filterTemplate` *and* before the block that sets `no_search`/`no_filter`/`no_filter2`/`no_cat`.
+  Under the legacy widget that was the correct division of labour - the widget drew its own header
+  bar with search/filter/filter2 in it. `Et2Nextmatch` draws no header bar, so a converted popup
+  list silently loses every filter it had. Admin's ACL popup is the clear case: its `filter`
+  ("access to X's data by others" / "X's access to other data" / "X's run rights") is the whole
+  point of the screen, and `filter2` narrows it to one app. Fixed app-side by putting both selects
+  in the nextmatch's own `header` slot (`admin.acl.header`, alongside the Add button) rather than
+  by touching `Nextmatch.php`. Two reasons that placement specifically:
+  - Children of `<et2-nextmatch>` are in its namespace, so `<et2-select id="filter">` reads
+    `$content['nm']['filter']` - exactly where `admin_acl::index()` already puts the current value.
+  - `Et2NextmatchDataProvider`'s `sel_options` handling looks its targets up with
+    `nm.getWidgetById(id)`, so options that arrive with each *row fetch* still reach them.
+    `admin_acl::get_rows()` rebuilds `$rows['sel_options']['filter2']` on every fetch (the app list
+    differs between "run rights" and the other two filters) - verified live: switching `filter` to
+    `run` swapped filter2's 12 entries for the full 46-app list in the same round trip.
+
+  The generic `EgwApp.changeNmFilter()` is **not** usable for such a control: it resolves the
+  nextmatch via `_widget.closest('egw-app')?.nextmatch`, and a popup window has no `<egw-app>` shell
+  at all. `app.admin.aclFilterChange()` asks the control for its own `closest('et2-nextmatch')`
+  instead, which works in both a popup and the main window.
+- **Any converted list that shares its page with another widget needs `layout="stack"`.**
+  `Et2Datagrid` claims whatever height it is offered, so a template holding an `<et2-nextmatch>`
+  plus anything else pushes that neighbour off the page and the app shell (or the popup window)
+  answers with a second, outer scrollbar. Admin had four: the access log's percentage line, the
+  custom-fields content-type selector, the remotes edit form, and the ACL popup's Close button.
+  `layout="stack"` on the template is the house answer (`Et2LayoutController`) and is exactly the
+  right one - it lays the direct children out as a flex column so the grid shrinks to fit.
+  - **`grow="1"` does not survive `.xet` parsing, so `layout="stack"` alone is not enough today.**
+    The layout's CSS marks the growing child with `[layout="stack"] [grow]`, but
+    `transformAttributes()` (`Et2Widget.ts`) only calls `setAttribute()` for an attribute the
+    widget already has or declares as a **reflecting** property - everything else is assigned as a
+    plain JS property. No widget declares `grow`, so a `.xet`'s `grow="1"` lands on the element as
+    `widget.grow = "1"` and never reaches the DOM, where the selector needs it. (`layout=` itself
+    works because `Et2Template.layout` is `@property({reflect: true})`.) Verified live: with
+    `layout="stack"` applied from the template the nextmatch still computed to `flex: 0 0 auto`,
+    and setting the attribute by hand fixed it. Admin therefore keeps the documented `grow="1"` in
+    its templates (valid per `etemplate2.0.dtd`, and load-bearing the day this is fixed) plus one
+    `et2-template[layout="stack"] > et2-nextmatch { flex: 1 1 auto; min-height: 0 }` rule in its
+    own `app.css`. The real fix is upstream and is one of: declare `grow`/`span`/`full` as
+    reflecting properties on `Et2Widget`, or add `et2-nextmatch` to `GROW_TAG_SELECTOR` in
+    `Et2LayoutStrategies.ts` next to `et2-tabbox`, which grows without an attribute for the same
+    reason. Neither was done here.
+  - **A popup needs its container sized as well.** `layout="stack"` distributes whatever height the
+    template has, and in a popup window nothing gives it one - `#admin-acl` is a plain block inside
+    `popupMainDiv`. That still takes a few lines of app CSS on the etemplate container itself.
+  - Worth knowing if you ever do reach for the CSS directly: **`et2-template` slots its children
+    into a `<div part="base">` in its own shadow root**, so that div, not the `et2-template`
+    element, is the flex container its children are items of - `display:flex` on the element only
+    makes the `<slot>` a flex item. And its `id` *property* is the plain template name while the
+    rendered `id` *attribute* is `<etemplate dom id>_<template-name>`, so `[id="admin.accesslog"]`
+    silently matches nothing.
+- **`getWidgetById('nm')` is not a safe way to find an app's nextmatch.** `admin.tokens` calls its
+  own nextmatch `token`. Both `AdminApp.enableAppToolbar()` (toolbar/filter-sync bookkeeping) and
+  `AdminApp.getNextmatch()` (the `EgwFrameworkApp.getNextmatch` hook) now fall back to / use a plain
+  `querySelectorAll('et2-nextmatch')` DOM query. That also replaces `getNextmatch()`'s old
+  `iterateOver(..., et2_nextmatch)` walk, which filtered on the legacy class an `<et2-nextmatch>` is
+  not an instance of.
+- **Two nextmatches on one page need the ProjectManager filterbox sync, and one-shot is not
+  enough _either way_.** `admin.index` keeps the accounts and groups lists alive together and swaps
+  `disabled`, so both append an `<et2-filterbox>` to the same `<egw-app>`. Admin uses the same
+  `hidden`-attribute sync and `MutationObserver` ProjectManager introduced - but ProjectManager's
+  version relies on the observer alone, and on `admin.index` **both filterboxes already existed by
+  the time `et2_ready()` ran**, so nothing was ever hidden (confirmed live: two stacked filter
+  sections). `_watchFilterboxes()` therefore also does one immediate pass over what is already
+  there. Admin's sync keys off `getNextmatch()` (tree-driven) rather than `nm.disabled` alone, since
+  a list loaded into `ajax_target` has to win over both index lists.
+- **`class="hide"` on a widget and `set_disabled()` are not interchangeable any more.** The groups
+  nextmatch carried `class="hide"` plus a `set_disabled(true)` from `et2_ready()`. Legacy's
+  `set_disabled(false)` went through jQuery `.toggle()`, which writes an inline `display`, beating
+  `.hide { display: none }` from `etemplate2.css`. `Et2Widget.set_disabled()` sets the `hidden`
+  property instead, which `*[hidden] { display:none }` honours but which can never out-specify a
+  class that is still on the element - so the group list would never have become visible again.
+  Replaced with `disabled="true"` in the template. **Grep a converted template for `class="hide"`.**
+- **`num_rows => 0` no longer defers anything client-side.** Legacy let an app ship a nextmatch with
+  no rows and load it on demand, driven by a bubbling `show` event the widget listened for (admin's
+  `group_list()` dispatched exactly that). `Et2Nextmatch` has no such listener, and `lazy` only
+  defers for an inactive `<et2-tab-panel>`. Worse, `Nextmatch.php` sets `$value['total'] = null`
+  when `num_rows` is 0, and `firstUpdated()` treats "no rows and no numeric total" as "fetch now" -
+  so the list is fetched once on page load regardless. `group_list()` now calls
+  `groups.refresh(undefined)` when the tree switches to Groups, which restores the legacy
+  refresh-on-show behaviour, but the redundant load-time fetch **remains** (one extra
+  `ajax_get_rows` per admin page load). Suppressing it needs a framework-side way to defer a
+  nextmatch that is merely hidden - the natural shape being to widen `_whenLazyVisible()` from
+  "inactive tab panel" to "not rendered", reusing the `getClientRects().length` + `ResizeObserver`
+  test `Et2NextmatchAutoRefresh.shouldRun` already uses. Not done here.
+  - **Refreshing on show has to skip the first show, or the list is permanently empty.** That
+    load-time fetch is queued behind the page's other nextmatch and can still be pending seconds
+    later - and `isLoading` is `false` that whole time, because it has not *started*, so there is
+    nothing to await. A `refresh()` arriving first wins the race destructively:
+    `applyFilters()` -> `Et2Datagrid.reload()` clears `total` and the rows, then the original
+    fetch's response is dropped as superseded and nothing re-fetches. Reproduced deliberately
+    (switch to Groups the instant the widgets exist: `total` 0, 0 rows, no recovery after 18s of
+    polling); it is reachable by a user clicking "User groups" in the first seconds after the page
+    loads. Fixed app-side with a `_groupsShown` flag: the first visit rides the initial fetch,
+    which is exactly as fresh as a refresh would be, and only later visits re-fetch. **Any app
+    adding a refresh-when-shown to a converted list needs this check** - "is a fetch in flight" is
+    not the question, "has one ever completed" is.
+- **`<customfields-types>` renders nothing in a row, and it did not need a new web component.**
+  Same silent failure as ProjectManager's `<projectmanager-select-erole>`: `Customfields.php` maps
+  the type to `select` server-side, which `Et2RowProvider`'s clone-by-tag-name step never consults.
+  But unlike ProjectManager's case, the options were already available without the widget -
+  `admin_customfields::index()` puts the identical list in `$sel_options['cf_type']` for its own
+  filter header - so the row cell became a plain `<et2-select readonly="true">` and no tag
+  registration was needed. **Check whether the app already publishes the options before writing a
+  custom element for one of these.**
+- **A footer widget must stay a *sibling* of the nextmatch, not move into its `footer` slot.**
+  `admin.accesslog`'s "Percent of users that logged out" was first moved into `slot="footer"` while
+  taking the nextmatch out of its wrapper box - and went blank, because `Et2Nextmatch` opens a
+  namespace, so the widget started looking for `$content['nm']['percent']` where
+  `admin_accesslog::index()` sets `$content['percent']`. The `header`/`footer` slots are for content
+  that genuinely belongs to the nextmatch's own namespace (Admin's other uses - the ACL and remotes
+  header templates - do, and `admin_cmds::remotes()` even reads its Add button back as
+  `$content['nm']['add']`, because legacy's `header_left` was inside that namespace too).
+- **Row `class="$field"` direct bindings do not work on `<row>` here.** The rename-patterns section
+  offers `<row class="$class $cat_id">` as the modern form of `<row class="$row_cont[class]">`.
+  Converting admin's row templates that way produced *"Error compiling PHP $status_class --> using
+  it literally (Variable $status_class is not defined)"* on every load and no class on the row;
+  reverting to the `$row_cont[...]` form fixed it. Prefer `$row_cont[field]` for `<row class=>`.
+- **The id-scoped row CSS trap, three times over.** `app.css` had `#admin-index_groups
+  div.innerContainer`, and - the legacy-table variant of the same problem - `tr.adminAccountInactive
+  .adminStatus`, `td.admin_userAgent span` and `#admin-customfields_nm .values`. The mobile skin's
+  entire `#admin-index table.egwGridView_outer tbody { ... }` block was keyed off *generated widget
+  ids* (`span[id^="admin-index"][id$='account_lid]']`), which do not survive into a datagrid row
+  either. All of it moved to new `admin/templates/{default,mobile}/rows.css` files, re-keyed on
+  classes added to the row widgets (`adminLoginId`, `adminLastname`, `adminGroupMembers`), and
+  loaded with `<et2-styles src="rows.css">` per row template. Note `et2-appicon`/`et2-image` keep
+  their `<img>` in the **light** DOM, so a class on the host needs `.cls, .cls img { ... }`.
+- **The categories "Change owner" `action_popup` was converted, not deleted** (it is not a
+  `link_popup`-style duplicate of a generic action). Same shape as Tracker's: a real
+  `<et2-dialog id="owner_popup_dialog">` wrapping `<et2-box id="owner_popup">` for the namespace,
+  buttons in the `footer` slot with full-path ids (`owner_popup[owner_action][add]`) and a new
+  `app.admin.submit_popup()` modelled on Tracker's. Verified live that it takes
+  `openActionPopup()`'s already-a-dialog fast path (no `legacy-action-popup` deprecation warning),
+  that `filter2`-style dynamic `sel_options` reach the owner select, and that Cancel closes without
+  submitting. The disabled, id-less "OK" button in the old markup was dead and was dropped.
+
+**Mobile verified** (2026-09-25, real device emulation - Android UA + 360x740 + touch, then a
+reload so the server actually picks the mobile template set; `egwIsMobile()` confirmed `true` before
+believing anything). Accounts list, the group-list switch, and the categories list all render from
+`templates/mobile/`, with `templates/mobile/rows.css` confirmed present in each datagrid's row
+shadow root and every rule it carries computing through: `.adminLoginId` 700, `.adminLastname::after`
+`","`, `.adminCol2`/`.adminStatus` right-aligned. The categories Add button lands in the nextmatch's
+`header` slot and the Change-owner `<et2-dialog>` opens on `openActionPopup()`'s already-a-dialog
+fast path with its 20 owner options and all three footer button ids intact.
+
+Two things about *how* to test this, both of which produced convincing-looking wrong answers first:
+
+- **Reach a sub-page the way the tree does, not by its own URL.** Navigating straight to
+  `menuaction=admin.admin_categories.index` on mobile makes the framework load it *into*
+  `admin.index`, so three nextmatches end up on the page with `ajax_target` still disabled - the
+  categories grid sits below the viewport with no height and the virtualizer renders 0 rows. That
+  reads exactly like a broken conversion and is not. Going through `app.admin.load(url)` (what a
+  tree click does) gives the real result: grid in view, 33 rows, and only its own filterbox visible
+  of the three.
+- **A synthetic `app.admin.run('/groups', tree)` is not a tree click.** A real click sets the
+  tree's `value` *before* the handler runs, and `getNextmatch()` switches on exactly that value - so
+  calling `run()` alone leaves the accounts list "current" and `_syncFilterboxes()` correctly hides
+  the wrong box. Set `tree.value` first, or click for real.
+
+**Push-driven refresh was not exercised**, since triggering it means writing accounts/groups on a
+real instance.
+
+**Found while converting, pre-existing, not fixed:** the application-passwords list
+(`admin.EGroupware\Admin\Token.index`) renders an **empty** page - `etemplate2` reports the
+`admin.tokens` template as loaded but its root `<et2-template>` stays childless and no error is
+logged anywhere. Confirmed by A/B: it reproduces identically with the unmodified, pre-conversion
+`tokens.xet` checked back out, so the conversion neither caused nor fixes it. The converted template
+could therefore not be verified in a browser at all.
+
 ## Status
 
-In progress. The checklist below is validated against five real conversions (see the reference
+In progress. The checklist below is validated against ten real conversions (see the reference
 sections for the evidence each item is based on). Expect it to grow as more apps convert.
 
 ## Legacy-only interfaces: `et2_INextmatchHeader` / `et2_INextmatchSortable`
@@ -826,9 +1008,19 @@ Mechanical renames seen in every conversion:
 - Nested `<grid>`/`<columns>`/`<rows>` inside a `<nextmatch-header>` cell (multi-line sortable headers)
   does not carry over — replace with `<et2-vbox>`/`<et2-hbox>` wrapping
   `<et2-nextmatch-sortheader>` elements (Addressbook, Infolog).
-- Row `class` binding: `<row class="$row_cont[class] $row_cont[cat_id]">` can be simplified to the
-  direct-binding form `<row class="$class $cat_id">` — both syntaxes work, but new/edited rows should
-  use direct bindings (see `Et2Nextmatch.md` § Row value bindings).
+- Row `class` binding: **use `<row class="$row_cont[class] $row_cont[cat_id]">`, not the
+  direct-binding form `<row class="$class $cat_id">`.** The direct form is right for widgets *inside*
+  the row, but on the `<row>` element itself it is evaluated as a PHP expression and fails — Admin's
+  converted index logged *"Error compiling PHP $status_class --> using it literally (Variable
+  $status_class is not defined)"* on every load and put no class on the row at all, silently
+  (an unstyled row looks like a styling problem, not a binding one). The bare-placeholder
+  category-colour mechanism further down is the one exception, and it takes `$cat_id`-style names
+  because `Et2RowProvider` matches them by name, not because the expression resolves.
+- **`class="hide"` on a widget no longer survives `set_disabled(false)`.** Legacy's `set_disabled()`
+  went through jQuery `.toggle()`, which writes an inline `display` that beats `.hide { display:none }`
+  from `etemplate2.css`; `Et2Widget.set_disabled()` sets the `hidden` property instead, which can
+  never out-specify a class still on the element. A widget hidden by both (Admin's groups nextmatch)
+  becomes permanently invisible — replace the class with `disabled="true"`.
 - Row-value binding syntax matters per-widget: `${row}[fieldname]` doesn't always work where the
   direct-binding form `$row_cont[fieldname]` does (Infolog) — if a bound value renders wrong or blank
   after confirming the field name is correct, try the direct-binding form before assuming the data
@@ -858,6 +1050,13 @@ Mechanical renames seen in every conversion:
   implement the same "select the next/previous row after this one is removed" behavior in `app.ts` via
   the `et2-rows-deleted` event instead (see the replacement table below). `no_dynheight="true"` was
   also dropped without replacement in the one conversion that had it.
+- **`<et2-nextmatch>`'s `header`/`footer` slots are inside its namespace.** Moving a widget into one
+  of them (eg. while lifting the nextmatch out of a wrapper box) re-scopes it: `<et2-number id="percent">`
+  starts reading `$content['nm']['percent']` instead of `$content['percent']` and renders blank, with
+  no error (Admin's access log). That is right for a header template the app already treats as part of
+  the nextmatch — legacy's `header_left` was in that namespace too, which is why
+  `admin_cmds::remotes()` reads its Add button back as `$content['nm']['add']` — and wrong for
+  anything the controller sets at top level, which stays a plain sibling of the `<et2-nextmatch>` tag.
 - **`header_right="some.template.id"` (a template shown to the right of the header row) has no
   `Et2Nextmatch` property equivalent** — `Et2Nextmatch` doesn't expose a `headerRight`/`header_right`
   attribute at all. If there's room for it, replace it with the pre-existing, widget-independent
@@ -1047,6 +1246,16 @@ problem - `et2_widget_historylog.ts`'s `doLoadingFinished()` uses the same `sl-t
 technique to lazily load a History tab's content, just against the legacy `get_tab_info()` API instead
 of a web-component ancestor.
 
+**`num_rows => 0` on its own defers nothing.** Under the legacy widget an app could ship a
+nextmatch with no rows and load it on demand by dispatching a bubbling `show` event at it (Admin's
+`group_list()` did exactly that, for the group list behind its tree). `Et2Nextmatch` has no such
+listener, and `Nextmatch.php` sets `total` to `null` when `num_rows` is 0 — which `firstUpdated()`
+reads as "no data was sent yet", so it fetches immediately anyway. An app converting one of these
+gets a load-time fetch it did not ask for; re-fetching on show has to be done explicitly from app
+code (`nm.refresh(undefined)`). Making `lazy` cover a merely-hidden nextmatch (widening
+`_whenLazyVisible()` to the `getClientRects().length` + `ResizeObserver` test
+`Et2NextmatchAutoRefresh.shouldRun` already uses) is the obvious fix and has not been done.
+
 Usage: add `lazy="true"` to the `<et2-nextmatch>` tag. If the app also ships rows/`total` with the
 initial page load (skip this if it doesn't, e.g. via a settings key like Tracker's own
 `get_comment_rows`'s `num_rows`), set that to `0` (or otherwise suppress the server-side prefetch) too
@@ -1113,6 +1322,14 @@ Where an app's filters actually come from under `Et2Nextmatch`, and the trap in 
   and Timesheet each put an `et2-select-cat` in their `slot="main-header"` toolbar *and* get a category
   filter in the drawer from the mechanism above; both exist at once. Don't infer from "there's one in the
   toolbar" that the drawer has none — that misreading is what this section exists to prevent.
+- **A nextmatch in a popup gets no filterbox at all.** `Nextmatch::beforeSendToClient()` returns
+  early for `Api\Etemplate::$request->output_mode === 2`, before both the `filterTemplate` computation
+  and the `no_search`/`no_filter`/`no_filter2`/`no_cat` suppression — correct while the legacy widget
+  drew its own header bar, silently filter-less once converted. Put the controls the popup needs in
+  the nextmatch's own `header` slot (they land in its namespace, so they read `$content['nm'][...]`,
+  and `nm.getWidgetById()` finds them, which is how per-fetch `sel_options` still reach them). Note
+  `EgwApp.changeNmFilter()` can not drive them: it resolves the nextmatch through `<egw-app>`, which
+  a popup window has none of. See [Admin](#admin) for the worked example.
 - **To replace the generated filterbox entirely**, slot a template as `slot="filter"`. Calendar is the
   only app currently doing this (`calendar/templates/default/filter.xet`), and it did so before its own
   conversion - so an app arriving with one of these needs no filter-drawer work at all. Filters can also be grouped
@@ -1181,6 +1398,13 @@ Where an app's filters actually come from under `Et2Nextmatch`, and the trap in 
   Prefer this over a hand-rolled column with an inline `style="background-color: ..."` (which is also
   easy to get wrong — the framework's custom property is hyphenated, `--cat-<id>-color`, not
   underscored).
+- **A converted list that shares its page with another widget wants `layout="stack"` on its
+  template.** `Et2Datagrid` takes the full height it is offered and pushes its neighbour off the
+  page, which shows up as a second, outer scrollbar (or a footer toolbar that looks simply missing).
+  `layout="stack"` lays the template's direct children out as a flex column so the grid shrinks to
+  fit — but note `grow="1"`, the attribute that marks which child takes the leftover space, does
+  **not** reach the DOM from a `.xet` today, so the growing child still needs one CSS rule; see
+  [Admin](#admin) for the detail and for the two upstream fixes that would remove it.
 - **Direct `_filters` mutation while a fetch is in flight can make `Et2Datagrid` silently discard that
   fetch's response.** `Et2Datagrid._fetchPage()` captures `dataProvider.getQuerySignature()` (a
   serialization of the live `_filters` object) at dispatch time and compares it again once the response
