@@ -4808,6 +4808,9 @@ export class MailApp extends EgwApp
 			}
 			else
 			{
+				// Another folder's rows: the previous folder's active row must not survive the reload,
+				// or its frame reappears on an unselected mail when you come back to that folder
+				nm.clearActiveRow();
 				nm.applyFilters({'selectedFolder': _folder});
 			}
 		}

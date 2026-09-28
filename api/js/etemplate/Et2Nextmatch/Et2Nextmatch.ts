@@ -1544,6 +1544,20 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		this._datagrid?.clearSelection();
 	}
 
+	/**
+	 * Forget the keyboard/pointer active row (the one drawn with a focus frame).
+	 *
+	 * A reload keeps the active row by id, which is right when the same query is refetched. When
+	 * the caller switches to a different data set (eg. mail changing folder), call this right
+	 * before applyFilters(), so the old id does not come back as a frame on a row that is not
+	 * selected. The datagrid picks a new active row once the new rows arrive.
+	 */
+	clearActiveRow()
+	{
+		this._childGrids().forEach((grid) => grid.clearActiveRow());
+		this._datagrid?.clearActiveRow();
+	}
+
 	selectAllRows()
 	{
 		this._datagrid?.selectAllRows();
