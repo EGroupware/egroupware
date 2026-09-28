@@ -67,6 +67,47 @@ class timesheet_merge extends Api\Storage\Merge
 	}
 
 	/**
+	 * Merge the selected IDs into the given document
+	 *
+	 * With sums shown, the list contains day/week/month/year sum rows (ts_id "sum-day-...", etc.),
+	 * which are selectable. A selection containing them would merge each one as an empty entry,
+	 * so drop them before merging. Select all is not affected, as get_all_ids()
+	 * already skips them.
+	 *
+	 * @inheritDoc
+	 */
+	public static function merge_entries(array $ids = null, Api\Storage\Merge &$document_merge = null, $options = [], bool $return = null)
+	{
+		if(is_null($ids))
+		{
+			$ids = is_string($_REQUEST['id']) && strpos($_REQUEST['id'], '[') === FALSE ?
+				explode(',', $_REQUEST['id']) : json_decode($_REQUEST['id'], true);
+		}
+		return parent::merge_entries(static::remove_sum_rows($ids), $document_merge, $options, $return);
+	}
+
+	/**
+	 * Merge one or more entries into one or more documents, without the sum rows
+	 *
+	 * @inheritDoc
+	 */
+	public static function ajax_merge_multiple(array $ids = [], $documents = [], $options = [])
+	{
+		return parent::ajax_merge_multiple(static::remove_sum_rows($ids), $documents, $options);
+	}
+
+	/**
+	 * Remove the ids of the sum rows ("sum-day-...", "sum-week-...", etc.), only real timesheets have a numeric id
+	 *
+	 * @param array|null $ids
+	 * @return array
+	 */
+	protected static function remove_sum_rows($ids)
+	{
+		return array_values(array_filter((array)$ids, 'is_numeric'));
+	}
+
+	/**
 	 * Get replacements
 	 *
 	 * @param int $id id of entry
