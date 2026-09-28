@@ -705,6 +705,33 @@ describe("Et2Customfields webcomponents", () =>
 	});
 
 	/**
+	 * Contract: false as a field's value means empty.  The server sends it for an empty field
+	 * when a submit only re-renders the form, eg. Addressbook's address book change.
+	 * Setup: render an editable date customfield with the value false.
+	 * Pass: the date widget is empty, not the invalid date "false" parses to, which failed
+	 * validation on the next save.
+	 */
+	it("treats false as an empty field value", async() =>
+	{
+		await import("../../Et2Date/Et2Date");
+		const {et2_arrayMgr} = await import("../../et2_core_arrayMgr");
+		const element = await fixture<Et2CustomfieldsBase>(html`
+			<et2-customfields></et2-customfields>
+		`);
+		// the generated widget only stringifies its value when it has content to expand it against
+		(<any>element).setArrayMgr("content", new et2_arrayMgr({}));
+		element.customfields = {cf_date: {label: "Date", type: "date"}};
+		element.fields = {cf_date: true};
+		element.value = {"#cf_date": false};
+		await element.updateComplete;
+		const date = <any>element.querySelector("[data-field='cf_date'] et2-date");
+		await date?.updateComplete;
+
+		assert.exists(date, "date customfield should render an et2-date");
+		assert.equal(date.value, "", "false should leave the date empty");
+	});
+
+	/**
 	 * Contract: customfield metadata controls the field list; row values alone do not.
 	 * Setup: assign only a row value and no customfield definitions.
 	 * Pass: no visible field names or field DOM nodes are created.

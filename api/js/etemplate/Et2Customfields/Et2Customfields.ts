@@ -207,9 +207,19 @@ export class Et2Customfields extends Et2CustomfieldsBase implements Et2LayoutHos
 		return valid;
 	}
 
+	/**
+	 * The value to give a field's widget.
+	 *
+	 * Customfields::validate() turns an empty field into false, because the storage backend needs
+	 * that to clear it.  Content that goes back to the client without being saved, eg. after a
+	 * submit that only re-renders the form, still holds that false.  Handed to a widget as an
+	 * attribute it becomes the string "false", which a date field reads as an invalid date that
+	 * then fails validation on the next save, so treat it as empty.
+	 */
 	private _fieldValue(fieldName : string)
 	{
-		return this.value?.[this.prefix + fieldName] ?? this.value?.[fieldName] ?? "";
+		const value = this.value?.[this.prefix + fieldName] ?? this.value?.[fieldName];
+		return value === false || value === null || typeof value === "undefined" ? "" : value;
 	}
 
 	private _fieldWidgetMappings(fieldName : string, field : Record<string, any>, value : any, onlyField : boolean) : Et2CustomfieldWidgetMapping[]
