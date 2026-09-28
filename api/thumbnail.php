@@ -238,6 +238,17 @@ function gen_dstfile($src, $maxsize, $height=null, $width=null, $minsize=null)
  */
 function get_scaled_image_size($w, $h, $maxw, $maxh, $minw=0, $minh=0)
 {
+	// A degenerate source image (found live, ticket #125341: an ODT's own embedded thumbnail)
+	// can report a zero width or height - every branch below divides by one of them, which PHP 8
+	// throws a DivisionByZeroError for (gd_image_thumbnail()'s own try/catch already prevents this
+	// from crashing the request, but only after Division by zero got logged as if it were a real
+	// bug). This is really just another "can't produce a sensible thumbnail" case, same as the
+	// $wout < 1 || $hout < 1 one below - handled the same way, a plain false return, not an
+	// exception.
+	if ($w <= 0 || $h <= 0)
+	{
+		return false;
+	}
 	//Scale will contain the factor by which the image has to be scaled down
 	$scale = 1.0;
 
