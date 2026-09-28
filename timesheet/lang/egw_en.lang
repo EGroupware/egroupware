@@ -168,6 +168,7 @@ the document can contain placeholder like {{%3}}, to be replaced with the data (
 the following document-types are supported:	timesheet	en	The following document-types are supported:
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	en	The name used internally, <= 20 chars, changing it makes existing data unavailable
 the text displayed to the user	timesheet	en	Text displayed to the user
+there is a conflicting timesheet (%1, %2), but your customized template does not allow to ignore it.	timesheet	en	There is a conflicting timesheet (%1, %2), but your customized template does not allow to ignore it.
 this month	timesheet	en	This month
 this timesheet overlaps with the following existing entries:	timesheet	en	This timesheet overlaps with the following existing entries:
 this week	timesheet	en	This week

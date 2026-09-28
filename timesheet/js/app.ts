@@ -12,6 +12,7 @@ import {EgwApp} from '../../api/js/jsapi/egw_app';
 import {Et2DateTimeReadonly} from "../../api/js/etemplate/Et2Date/Et2DateTimeReadonly";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {Et2DateTime} from "../../api/js/etemplate/Et2Date/Et2DateTime";
+import {formatDateTime} from "../../api/js/etemplate/Et2Date/Et2Date";
 import type {Et2Date} from "../../api/js/etemplate/Et2Date/Et2Date";
 import type {et2_grid} from "../../api/js/etemplate/et2_widget_grid";
 import type {Et2ButtonToggle} from "../../api/js/etemplate/Et2Button/Et2ButtonToggle";
@@ -62,6 +63,39 @@ class TimesheetApp extends EgwApp
 				this.filter2_change(null, detailsToggle);
 			}
 		}
+		else if (name == 'timesheet.edit')
+		{
+			this.checkConflictDialogSupported();
+		}
+	}
+
+	/**
+	 * The server always sends has_conflicts/conflicts data when a save hits a scheduling
+	 * conflict, regardless of the client's template - but an older or site-customized
+	 * edit.xet (eg. a VFS-mounted override predating this feature) may not have the
+	 * interactive conflict dialog to show it with, in which case the save stays silently
+	 * blocked with no visible feedback and no way to proceed. Warn instead, naming the
+	 * first conflicting entry so the message is still actionable.
+	 */
+	private checkConflictDialogSupported()
+	{
+		const content = this.et2.getArrayMgr('content');
+		if (!content?.getEntry('has_conflicts') || this.et2.getWidgetById('ignoreConflict'))
+		{
+			return;
+		}
+		// legacy <grid> auto-repeat reserves index 0 for the header row (see
+		// timesheet_ui::edit()'s own comment), so the first real conflict is at index 1 -
+		// always present here, has_conflicts is only ever set alongside a non-empty conflicts array
+		const first = content.getEntry('conflicts')[1];
+		// ts_start is a true Unix timestamp, but formatDate()/formatTime() read local wall-clock
+		// values off the Date's *UTC* getters (matching how eg. Et2Date's own value parsing works) -
+		// shift by the browser's offset so those UTC getters return the intended local time
+		const start = new Date(first.ts_start * 1000);
+		const localStart = new Date(start.valueOf() - start.getTimezoneOffset() * 60000);
+		this.egw.message(this.egw.lang('There is a conflicting timesheet (%1, %2), but your customized template does not allow to ignore it.',
+			first.ts_title, formatDateTime(localStart)),
+			'warning');
 	}
 
 	/**
