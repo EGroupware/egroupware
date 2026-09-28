@@ -66,4 +66,29 @@ describe("Button widget", () =>
 		assert.equal(image.length, 1);
 		assert.equal(image[0].src, element.egw().image("check"));
 	})
+
+	/**
+	 * Contract: a submit button only reports itself clicked for the submit it started.
+	 * Setup: click a button whose instance manager's submit() records the button's value, then
+	 * leave the button in place as a server-rejected submit does.
+	 * Pass: the value was true during the submit and is null afterwards, so a later submit (eg. an
+	 * onchange one that skips validation) does not carry the button along.
+	 */
+	it("does not stay clicked after it submitted", () =>
+	{
+		let valueDuringSubmit = null;
+		sinon.stub(element, "getInstanceManager").returns({
+			submit: () =>
+			{
+				valueDuringSubmit = element.getValue();
+				return true;
+			},
+			skip_close_prompt: () => {}
+		});
+
+		element.dispatchEvent(new MouseEvent("click"));
+
+		assert.isTrue(valueDuringSubmit, "the button is clicked while its submit collects the values");
+		assert.isNull(element.getValue(), "the button is no longer clicked once its submit is sent");
+	})
 });
