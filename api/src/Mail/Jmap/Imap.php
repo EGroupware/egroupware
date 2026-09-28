@@ -367,6 +367,17 @@ class Imap extends Jmap\Base
 			}
 			catch (\Throwable $e)
 			{
+				// ticket #125161: a "serverFail" JMAP method-error is normal JMAP protocol shape,
+				// not treated as a PHP-level exception anywhere above this - so unlike every
+				// app-level exception boundary (Api\Json\Request, json.php, egw_exception_handler),
+				// NOTHING logged this at all, even though its raw, untranslated $e->getMessage()
+				// (eg. a Horde_Imap_Client_Exception's own RFC 5530 NONEXISTENT response text, worded
+				// "could not be deleted" regardless of which underlying IMAP command actually failed)
+				// still reaches the client verbatim via `description`. A real customer's forwards were
+				// consistently failing this way with nothing in the error log to explain why - logged
+				// here now, so the NEXT occurrence shows exactly which method/underlying exception it
+				// actually was.
+				_egw_log_exception($e);
 				$responses[] = ['error', ['type' => 'serverFail', 'description' => $e->getMessage()], $callId];
 			}
 		}
