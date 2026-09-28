@@ -498,7 +498,15 @@ class Send
 					$mail_bo->deleteMessages($lastDrafted['uid'],$lastDrafted['folder'],'remove_immediately');
 				}
 			}
-			catch (Api\Exception $e)
+			// Api\Exception is EGroupware's own hierarchy - a Horde_Imap_Client_Exception (eg. the
+			// IMAP server's generic RFC 5530 NONEXISTENT response, worded "could not be deleted"
+			// regardless of which command actually triggered it - found live, ticket #125161: a
+			// forward's own draft was already gone, deleted by an earlier autosave) extends
+			// Horde_Exception_Wrapped/Horde_Exception/\Exception instead, so it was NEVER caught
+			// here despite this exact "message may be deleted already" scenario being the whole
+			// point of this try/catch - it propagated all the way to the client as a raw,
+			// untranslated error instead of being silently ignored as intended.
+			catch (\Exception $e)
 			{
 				//error_log(__METHOD__.__LINE__." ". str_replace('"',"'",$e->getMessage()));
 				unset($e);
@@ -525,7 +533,10 @@ class Send
 						$mail_bo->deleteMessages(array($this->sessionData['uid']),$this->sessionData['messageFolder'], 'remove_immediately');
 					}
 				}
-				catch (Api\Exception $e)
+				// see the sibling catch above (lastDrafted cleanup) for why this must be \Exception,
+				// not Api\Exception - same "message may be deleted already" scenario, same
+				// Horde_Imap_Client_Exception mismatch (ticket #125161).
+				catch (\Exception $e)
 				{
 					//error_log(__METHOD__.__LINE__." ". str_replace('"',"'",$e->getMessage()));
 					unset($e);
@@ -540,7 +551,10 @@ class Send
 						//error_log(__METHOD__.__LINE__.':'.array2string($this->sessionData['forwardedUID']).' F:'.$this->sessionData['sourceFolder']);
 						$mail_bo->flagMessages("forwarded", $this->sessionData['forwardedUID'],$this->sessionData['sourceFolder']);
 					}
-					catch (Api\Exception $e)
+					// same Horde_Imap_Client_Exception mismatch as the two catches above (ticket
+					// #125161) - a forwarded message's source can just as easily have been moved/
+					// deleted server-side (a filter, the user, ...) by send time.
+					catch (\Exception $e)
 					{
 						//error_log(__METHOD__.__LINE__." ". str_replace('"',"'",$e->getMessage()));
 						unset($e);
