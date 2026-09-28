@@ -12,7 +12,9 @@ repeat that reference material.
 Apps converted so far: Addressbook, Infolog, Filemanager, Mail, Timesheet, Tracker, Home, Calendar,
 ProjectManager, Admin. Apps still on the legacy widget: Importexport, Aiassistant, Preferences.
 Non-core apps (Resources, News_admin, Smallpart, Schulmanager, Stylite, Kanban, ...) have never been
-on this list at all and still need one. Related in-flight/reference docs in the same directory as the
+on this list at all and still need one. All of these, and every customer template, now *run* on
+`Et2Nextmatch` anyway through the [automatic fallback](#automatic-fallback-for-unconverted-templates)
+— that is not a conversion, they still need one. Related in-flight/reference docs in the same directory as the
 widget source: `ColumnSelectionNotes.md`, `Et2DatagridDirectoryMigrationPlan.md`, `NestedExpansion.md`.
 
 Home's conversion is the favourite portlet (`home/templates/default/favorite.xet` +
@@ -816,6 +818,30 @@ converted to a `<et2-dialog>`:
 - Infolog's `index.xet` still has the identical `link_popup` pattern (`link_popup`/`link_action[add]`/
   `link_action[delete]`, `infolog_ui.inc.php`'s `case 'link':`) and has not been checked against this
   yet — worth doing whenever Infolog's own conversion is revisited, independent of anything here.
+
+## Automatic fallback for unconverted templates
+
+`convertNextmatch()` in `api/etemplate.php` rewrites every `<nextmatch>` to `<et2-nextmatch>` in the
+copy of the template sent to the client, so an app nobody converted — ours or a customer's — still
+shows its list and data. It is a stopgap, not a conversion: an app running on it still needs this
+checklist.
+
+- **How to tell:** the `.xet` source still says `<nextmatch>`, but the page has an `et2-nextmatch`.
+  The server keeps parsing the raw file, so server-side it is still the legacy widget.
+- **What it converts:** the mechanical template patterns only — `options=` → `template=`,
+  `header_left`/`header_right` → slots, `class="th"` on the header row, sortheader/customfields header
+  renames, `$field` row classes, leftover `options=` on row widgets, and a grid nested in a header or
+  row cell → `et2-vbox`/`et2-hbox` (row/column `disabled=` kept, column alignment lost).
+- **Opting out:** `<nextmatch legacy="true">` keeps the legacy widget for that nextmatch and its row
+  template — for an app whose JS breaks on the new widget and can't be converted yet.
+- **Known gaps:** app JS using the legacy API (`.controller`, `nm_action`, `.options.settings`, …) can
+  fail on first use; `fetchAll()` is the exception, it hands over to `fetchAllIds()`. A repeating grid
+  (`<grid id="${row}[…]">`, one row per array entry) can't be converted and its cell stays empty; the
+  console shows `Et2RowProvider: <grid …> in a row template is not supported` (Resources' accessories
+  column).
+- **As a starting point for a real conversion:** `php api/etemplate.php -i <app>/templates/default/<name>.xet`
+  now includes this rewrite. It also reformats the file (attribute spacing collapses, `>` becomes
+  `&gt;`), so review the diff.
 
 ## Conversion checklist
 

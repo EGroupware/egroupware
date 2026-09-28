@@ -446,6 +446,15 @@ export class Et2RowProvider
 		}
 		rowNode = rowNode ?? headerNode?.nextElementSibling ?? tplRoot;
 
+		// A <grid> in a header or row cell is a legacy widget the row clones can not render, so its cell stays
+		// empty with no other sign of why.  api/etemplate.php converts the static ones, not a repeating one.
+		for(const grid of [headerNode, rowNode !== tplRoot ? rowNode : null]
+			.flatMap((node) => node ? Array.from(node.querySelectorAll("grid")) : []))
+		{
+			this.host.egw?.()?.debug("warn", "Et2RowProvider: <grid" + (grid.id ? ' id="' + grid.id + '"' : "") +
+				"> in a row template is not supported, its cell stays empty. " + templateUrl);
+		}
+
 		// Use the original header node structure without flattening
 		// This preserves wrappers like et2-vbox, et2-hbox, etc.
 		const columnDefs = headerNode ?

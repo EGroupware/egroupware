@@ -128,7 +128,9 @@ lives in `doc/ai/projects/` - check there directly for anything not shown here.
   longer defers the initial fetch, `class="hide"` no longer survives `set_disabled(false)`, a `<row
   class="$field">` direct binding fails where `$row_cont[field]` works, and a list sharing its page
   with another widget needs `layout="stack"` - whose `grow="1"` companion does not survive `.xet`
-  parsing, because `transformAttributes()` only reflects attributes a widget declares.
+  parsing, because `transformAttributes()` only reflects attributes a widget declares. Unconverted
+  templates now fall back to `Et2Nextmatch` automatically (`api/etemplate.php`, opt out with
+  `legacy="true"`) - a stopgap, not a conversion.
 - `doc/ai/projects/knowledgebase-app.md` - design of a brand-new `knowledgebase` app to supersede
   the deprecated `phpbrain` (Knowledge Base) and `wiki` apps, built on `Api\Storage`/
   `Api\Storage\Tracking`/`Api\Categories`/`Api\Acl` rather than either legacy app's bespoke
