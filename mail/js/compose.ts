@@ -1789,7 +1789,7 @@ export class MailCompose
 		const isHtml = replyOptions === 'html' ? true : replyOptions === 'text' ? false : context.mimeType === 'html';
 		this.et2.getWidgetById('mimeType')?.set_value(isHtml);
 		this.syncMimeTypeContainers(isHtml);
-		const quoted = this.app.jmap.quoteOriginalMessage(context);
+		const quoted = this.app.jmap.quoteOriginalMessage(context, isHtml);
 		await this.applySignatureForCurrentIdentity(quoted, this.isReplyCompose);
 
 		if ((mode === 'reply_attachments' || isForward) && context.attachments.length)
