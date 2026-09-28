@@ -253,7 +253,9 @@ export default css`
 			background: var(--sl-color-primary-200, #d4dfe8);
 		}
 
-		tbody > [data-row-id].dg-row-active {
+		/* Active (keyboard) row on a selected row. An unselected active row is only framed while
+		   the grid has focus, see :host(:focus-within) below. */
+		tbody > [data-row-id].dg-row-active[aria-selected="true"] {
 			box-shadow: inset 0 0 0 2px var(--sl-color-primary-600, #2869db);
 		}
 
@@ -480,7 +482,14 @@ export default css`
 		background: var(--highlight-background-color, var(--sl-color-primary-100, #eef5ff));
 	}
 
-	.dg-tile-grid > [data-row-id].dg-row-active {
+	/*
+	 * The active row is where keyboard navigation continues from. Framing it while the focus is
+	 * elsewhere (eg. after a folder or filter change, where the grid makes the first row active)
+	 * marks an unselected row that nothing acts on - so without focus only a selected row shows it.
+	 */
+	.dg-tile-grid > [data-row-id].dg-row-active[aria-selected="true"],
+	:host(:focus-within) .dg-body tbody > [data-row-id].dg-row-active,
+	:host(:focus-within) .dg-tile-grid > [data-row-id].dg-row-active {
 		box-shadow: inset 0 0 0 2px var(--sl-color-primary-600, #2869db);
 	}
 
