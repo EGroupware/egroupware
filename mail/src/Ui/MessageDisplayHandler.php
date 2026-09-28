@@ -849,7 +849,8 @@ class MessageDisplayHandler
 	public static function get_email_header($additionalStyle='')
 	{
 		// egw_info[flags][css] already include <style> tags
-		$GLOBALS['egw_info']['flags']['css'] = preg_replace('|</?style[^>]*>|i', '', $additionalStyle);
+		$GLOBALS['egw_info']['flags']['css'] = preg_replace('|</?style[^>]*>|i', '', $additionalStyle).
+			Framework::defaultFontCss();
 		$GLOBALS['egw_info']['flags']['nofooter']=true;
 		$GLOBALS['egw_info']['flags']['nonavbar']=true;
 		// do NOT include any default CSS
@@ -864,7 +865,7 @@ class MessageDisplayHandler
 
 	public function showBody(&$body, $print=true, $fullPageTags=true)
 	{
-		$BeginBody = '<div class="mailDisplayBody">
+		$BeginBody = '<div class="mailDisplayBody mailDefaultFont">
 <table width="100%" style="table-layout:fixed"><tr><td class="td_display">';
 
 		$EndBody = '</td></tr></table></div>';
