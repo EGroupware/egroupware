@@ -1372,6 +1372,17 @@ export class MailApp extends EgwApp
 		const h:any = egw().open(_id, 'mail', 'view', command + '=' + _id.replace(/=/g, "_") + '&mode=' + _mode);
 		const setTitle = async(w) =>
 		{
+			// egw().open() resolves to an <et2-dialog> ELEMENT rather than a real Window when the
+			// popup opened "inline" (EgwFramework.openPopup()'s own narrow-viewport/"open_popups_in:
+			// same_window" branch) - found live 2026-09-28 (ralf, ticket #124351): egw(w) then
+			// crashed constructing its per-window Files module (`w.document.querySelectorAll()` on
+			// an Element, which has no `.document` at all) - an uncaught promise rejection that also
+			// meant the title below silently never got set (a dialog has no window title of its own
+			// anyway, so simply skipping is correct, not just crash-safe).
+			if (!(w instanceof Window))
+			{
+				return;
+			}
 			await egw(w).ready;
 			w.document.title = subject;
 		}
@@ -1601,7 +1612,23 @@ export class MailApp extends EgwApp
 		// would delay the window.open() a real popup needs below far enough to risk the popup
 		// blocker (found live: it also broke existing synchronous-call tests expecting
 		// egw.link()/egw.openPopup() to fire in the same tick). matchMedia() is synchronous.
-		if(window.matchMedia('(max-width: 800px)').matches)
+		//
+		// `!window.opener` (ticket #124351, a real customer: "clicking reply/forward in a message
+		// popup does nothing") - openComposeDialog() builds its <et2-dialog> via loadWebComponent()
+		// DIRECTLY IN THIS WINDOW's own already-open document, unlike a real compose popup (a fresh
+		// page navigation, its own fresh document/JS realm). Live-reproduced (ralf, 2026-09-28): a
+		// message opened in its own popup window (window.opener set) is very often narrower than
+		// 800px itself - forwarding FROM there hit this same matchMedia branch and threw
+		// "NotAllowedError: Sharing constructed stylesheets in multiple documents is not allowed"
+		// building every nested Lit component (Et2Dialog/Et2Template/SlIconButton), because a
+		// browser's constructed CSSStyleSheet is bound to whichever document originally built it -
+		// EGroupware's popup bootstrap reuses opener-window state for exactly this kind of already-
+		// open secondary window, so the dialog never actually renders: nothing visible happens,
+		// silently. A second, already-open popup can always safely open a THIRD real window instead
+		// (a fresh navigation sidesteps this entirely, same as an ordinary compose popup already
+		// does) - so this narrow-viewport inline-dialog convenience only applies to the true
+		// top-level app window, never to a window that is itself already a popup.
+		if(window.matchMedia('(max-width: 800px)').matches && !window.opener)
 		{
 			void this.openComposeDialog(settings, accId);
 			return;
