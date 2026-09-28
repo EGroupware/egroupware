@@ -1,3 +1,25 @@
+egroupware-docker (26.9.20260928) hardy; urgency=low
+
+  * SECURITY: this release fixes multiple high and critical level security vulnerabilities, everyone is strongly adviced to update to it!
+  * InfoLog: context-menu popups (start/due date, delegation) failed with "Cannot read properties of undefined (reading 'action_var')"
+  * Mail: replying/forwarding from an already-open message popup silently did nothing
+  * Mail: replying/forwarding a plain-text message under "force HTML" lost all line breaks
+  * Mail: restore the row-list S/MIME icon, add the same detection-only icon for PGP
+  * Mail: received mail (preview + display popup) now defaults to the user's compose font/size
+  * Mail: a message's font/size in the Sent folder didn't match what was shown while composing
+  * Mail: forwarding a message could show a raw "object could not be deleted" error
+  * Mail: a forwarded-as-attachment .eml's own internal parts were also listed as separate attachments
+  * Mail: opening a forwarded-as-attachment .eml showed its raw MIME source, not its body
+  * Mail: a failed distribution-list resolution on send was mislabeled "Account not reachable"
+  * Mail: a bare PDF/image message (no separate body at all) showed completely blank
+  * Mail: a mailto: link's subject/body never reached the compose window
+  * Mail: REST-uploaded attachments never appeared in a compose window opened via REST
+  * NewsAdmin: fix checkPublicIP() is not a function / forgotten commit
+  * Timesheet: warn (instead of silently blocking) when a scheduling conflict can't be shown
+  * Timesheet: "Insert in document" merged selected sum rows as blank rows
+
+ -- Ralf Becker <rb@egroupware.org>  Mon, 28 Sep 2026 19:17:19 +0200
+
 egroupware-docker (26.9.20260925) hardy; urgency=low
 
   * 4th pre-release of master rebase, final release expected beginning of the week
