@@ -5603,13 +5603,28 @@ export class MailApp extends EgwApp
 		}
 		//alert('header('+_elems[0].id+')');
 		const rowId = _elems[0].id;
+		// set only when this action is invoked on the CURRENTLY DISPLAYED message (a toolbar
+		// button in the "view" popup, not a list row right-click - a list row is always a real
+		// top-level message, never a message/rfc822 sub-part) - ticket #125561 follow-up: "view
+		// header" for a forwarded message's own carried message showed the CONTAINING message's
+		// own header instead (found live 2026-09-29, ralf: "viewing the source or header from
+		// the eml shows the forwarded message"). The JMAP fast path below (fetchRawHeader()) has
+		// no concept of a sub-part at all - only the classic path (displayHeader(), its own
+		// Api\Mail::getMessageRawHeader() already fixed for exactly this) does, via `&part=`.
+		const partID = this.et2.getArrayMgr("content").getEntry('part') || undefined;
 		const classicHeaderPopup = () =>
 		{
 			let url = this.egw.webserverUrl+'/index.php?';
 			url += 'menuaction=mail.EGroupware\\Mail\\Ui.displayHeader';	// todo compose for Draft folder
 			url += '&id='+rowId;
+			if (partID) url += '&part='+partID;
 			this.displayHeaderLines(url);
 		};
+		if (partID)
+		{
+			classicHeaderPopup();
+			return;
+		}
 		this.jmap.fetchRawHeader(rowId).then(async(text : string) =>
 		{
 			// egw.openPopup() (kdots framework) returns a Promise resolving to the actual
@@ -5653,14 +5668,22 @@ export class MailApp extends EgwApp
 		}
 		//alert('mailSource('+_elems[0].id+')');
 		const rowId = _elems[0].id;
+		// see header()'s own comment for why - same gap, same fix (ticket #125561 follow-up)
+		const partID = this.et2.getArrayMgr("content").getEntry('part') || undefined;
 		const classicSourcePopup = () =>
 		{
 			let url = this.egw.webserverUrl+'/index.php?';
 			url += 'menuaction=mail.EGroupware\\Mail\\Ui.saveMessage';	// todo compose for Draft folder
 			url += '&id='+rowId;
 			url += '&location=display';
+			if (partID) url += '&part='+partID;
 			this.displayHeaderLines(url);
 		};
+		if (partID)
+		{
+			classicSourcePopup();
+			return;
+		}
 		this.jmap.fetchRawSource(rowId).then(async(text : string) =>
 		{
 			// egw.openPopup() (kdots framework) returns a Promise resolving to the actual
