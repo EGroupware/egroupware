@@ -519,21 +519,22 @@ export class MailCompose
 	/**
 	 * Apply a client-side-only compose bootstrap's own preset attachment CONTENT (calendar's own
 	 * meeting-invite .ics - doc/ai/projects/mail-compose-jmap-migration.md, Step 10) - unlike
-	 * applyPresetFiles()'s bare VFS-path reference, there is nothing server-side left to reference
-	 * here (the .ics is generated fresh per compose, never staged anywhere), so this uploads it as
-	 * a real JMAP blob immediately and merges it via carryForwardAttachments() - the same
-	 * jmapBlobId-tagged shape a reply's own carried-forward attachments already use, not
+	 * applyPresetFiles()'s bare VFS-path reference, there is genuinely nothing server-side left to
+	 * reference here (the .ics is generated fresh per compose, never staged anywhere), so this
+	 * uploads it as a real JMAP blob immediately and merges it via carryForwardAttachments() - the
+	 * same jmapBlobId-tagged shape a reply's own carried-forward attachments already use, not
 	 * applyPresetFiles()'s deferred jmapVfsPath marker.
 	 *
-	 * Also used by mail's own REST API (ApiHandler::prepareAttachments()) for an attachment
-	 * uploaded via POST /mail/attachments/ and then referenced to open a compose window - that one
-	 * lives in a local server temp file, equally "nothing server-side left to reference" from this
-	 * popup's own separate window, and can be arbitrary binary (found live: attachments uploaded
-	 * then referenced this way never showed up in the opened compose window - applyPresetFiles()'s
-	 * VFS-path shape doesn't fit either, the file was never in VFS to begin with).
+	 * NOT used any more by mail's own REST API (ApiHandler::prepareAttachments()) for a
+	 * REST-uploaded attachment - that one DOES have something to reference (its local server temp
+	 * file, addressable via GET /mail/attachments/<token>), so it uses applyPresetAttachmentUrls()
+	 * instead (below): a real-world attachment inlined here as base64 made the preset - which
+	 * travels a server push and then a browser form-POST back to compose.php - large enough to
+	 * risk silent truncation somewhere along that path (found live, tickets #125601/#125621, a
+	 * customer's 128KB PDF attachment).
 	 *
-	 * @param files {name, type, content}[] - content is base64-encoded (unlike the ICS case alone,
-	 *  a REST-uploaded attachment can be arbitrary binary, so this must round-trip safely for both)
+	 * @param files {name, type, content}[] - content is base64-encoded, since this needs to round-
+	 *  trip arbitrary binary safely (calendar's .ics is text, but this function doesn't assume that)
 	 */
 	public async applyPresetAttachmentContent(files : { name : string, type : string, content : string }[]) : Promise<void>
 	{
@@ -544,6 +545,43 @@ export class MailCompose
 			const bytes = Uint8Array.from(atob(f.content), c => c.charCodeAt(0));
 			const blob = new Blob([bytes], {type: f.type});
 			return this.app.jmap.uploadAttachment(profileID, blob, f.name, f.type);
+		}));
+		this.carryForwardAttachments(uploaded, profileID);
+	}
+
+	/**
+	 * Apply a client-side-only compose bootstrap's own preset attachment REFERENCE (mail's own
+	 * REST API - ApiHandler::prepareAttachments()'s $compose=true branch, tickets #125601/#125621):
+	 * an attachment uploaded via POST /mail/attachments/ and then referenced to open a compose
+	 * window. Unlike applyPresetAttachmentContent()'s calendar-.ics case, this one's bytes DO still
+	 * exist server-side (ApiHandler::get()'s own GET /mail/attachments/<token> branch serves them
+	 * back), so the preset only needs to carry the (small) url/name/type/size - this fetches the
+	 * bytes itself and uploads them as a real JMAP blob, same as applyPresetAttachmentContent()
+	 * and a user's own drag-and-drop attach both already do, merging via carryForwardAttachments().
+	 *
+	 * Same-origin fetch() rides the popup's own session cookie, no separate auth needed - this
+	 * function only ever runs inside an already-authenticated compose popup.
+	 *
+	 * @param refs {name, type, url, size}[] - url is a fully-qualified, fetchable URL built by
+	 *  prepareAttachments() (Api\Framework::getUrl(Api\Framework::link('/groupdav.php'.$attachment)))
+	 *  from the token ApiHandler::storeAttachment() returned - NOT that bare token path itself
+	 *  (eg. "/mail/attachments/report.pdf--abc123..."), which is only a server-side matching
+	 *  pattern and doesn't route through the REST dispatch at all when fetched directly (found
+	 *  live 2026-09-29: landed on the site root instead of groupdav.php, returning unrelated content)
+	 */
+	public async applyPresetAttachmentUrls(refs : { name : string, type : string, url : string, size : number }[]) : Promise<void>
+	{
+		if (!refs.length) return;
+		const profileID = this.currentProfileID();
+		const uploaded = await Promise.all(refs.map(async(r) =>
+		{
+			const response = await fetch(r.url, {credentials: 'same-origin'});
+			if (!response.ok)
+			{
+				throw new Error(`Fetching attachment '${r.name}' (${r.url}) failed: ${response.status} ${response.statusText}`);
+			}
+			const blob = await response.blob();
+			return this.app.jmap.uploadAttachment(profileID, blob, r.name, r.type);
 		}));
 		this.carryForwardAttachments(uploaded, profileID);
 	}

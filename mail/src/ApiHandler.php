@@ -595,16 +595,30 @@ class ApiHandler extends Api\CalDAV\Handler
 				}
 				if ($compose)
 				{
-					// MailCompose::applyPresetAttachmentContent()'s shape (base64, see there for
-					// why) - a REST-uploaded attachment lives in a local server temp file, nothing
-					// server-side left to reference by the time the compose popup actually opens
-					// (bootstrapComposePopup() never reads the classic file[]/name[] pair this used
-					// to send - silently dropped, found live: attachments uploaded then referenced
-					// to open a compose window never showed up in it)
-					$ret['attachmentContents'][] = [
+					// MailCompose::applyPresetAttachmentUrls()'s shape - a REST-uploaded attachment
+					// lives in a local server temp file, but (unlike calendar's own freshly-generated
+					// .ics, which really has nothing to reference) it's NOT unreachable by the time the
+					// compose popup opens: ApiHandler::get()'s own '/mail/attachments/<token>' branch
+					// already serves it back. So a lightweight reference is enough here - the popup
+					// fetches it itself and uploads it as a real JMAP blob, the same pipeline a user's
+					// own drag-and-drop attach already uses - rather than inlining the full content as
+					// base64 into the preset (a previous fix's approach, reverted: for a real-world
+					// attachment this made the preset - which travels push-to-browser and then a
+					// browser form-POST back to compose.php - large enough to risk truncation, found
+					// live via a customer's 128KB PDF attachment)
+					//
+					// $attachment itself ("/mail/attachments/<token>") is only a PATTERN this method
+					// matches server-side against the temp-file scheme - not a URL. The popup's own
+					// fetch() needs a real, fully-qualified one to route through groupdav.php's
+					// dispatch at all (found live 2026-09-29: a bare root-relative fetch() landed on
+					// whatever's mounted at the site root's own "/mail/..." instead, getting back
+					// unrelated short content) - same helper storeAttachment()'s own Location header
+					// above already uses for the identical "/mail/attachments/<token>" shape.
+					$ret['attachmentUrls'][] = [
 						'name' => $matches[2],
 						'type' => self::localFileMimeType($path, $matches[2]),
-						'content' => base64_encode(file_get_contents($path)),
+						'url' => Api\Framework::getUrl(Api\Framework::link('/groupdav.php'.$attachment)),
+						'size' => filesize($path),
 					];
 				}
 				else

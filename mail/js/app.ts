@@ -1783,14 +1783,15 @@ export class MailApp extends EgwApp
 	 * egw.openWithinWindow()'s own urlParamsTooLong() check already uses for the classic path.
 	 *
 	 * @param preset {to?, cc?, bcc?, subject?, files?, filemode?, body?, bodyMimeType?, mimeType?,
-	 *  attachmentContents?, msg?} - see bootstrapComposePopup()'s own preset docblock for the full
-	 *  shape/semantics of each field
+	 *  attachmentContents?, attachmentUrls?, msg?} - see bootstrapComposePopup()'s own preset
+	 *  docblock for the full shape/semantics of each field
 	 */
 	composeWithPreset(preset : {
 		to? : any, cc? : any, bcc? : any, subject? : string,
 		files? : { path : string, name : string, type : string }[],
 		filemode? : string, body? : string, bodyMimeType? : 'plain' | 'html', mimeType? : string,
 		attachmentContents? : { name : string, type : string, content : string }[],
+		attachmentUrls? : { name : string, type : string, url : string, size : number }[],
 		msg? : string,
 	}) : void
 	{
@@ -1926,9 +1927,9 @@ export class MailApp extends EgwApp
 	 *  that was only ever a workaround to get an exec_id before compose.php existed to compute one
 	 *  upfront (ralf, 2026-09-07: "that's the workaround we used ..., so there's no need for it now")
 	 * @param preset {to?, cc?, bcc?, subject?, files?, filemode?, body?, bodyMimeType?, mimeType?,
-	 *  attachmentContents?, msg?} - MailApp.composeWithPreset()'s own param, round-tripped through
-	 *  compose.php's own $_REQUEST['preset'], appended onto whatever getComposeToolbarData()'s
-	 *  content already has, or {} for every other caller.
+	 *  attachmentContents?, attachmentUrls?, msg?} - MailApp.composeWithPreset()'s own param,
+	 *  round-tripped through compose.php's own $_REQUEST['preset'], appended onto whatever
+	 *  getComposeToolbarData()'s content already has, or {} for every other caller.
 	 *  - `subject` overwrites (a blank compose never has one already, unlike to/cc/bcc's append).
 	 *  - `files` are VFS paths (addressbook vCard-attach, filemanager "mail selected files") -
 	 *    {path, name, type} each, turned into a bare `jmapVfsPath` marker attachment entry (same
@@ -1936,11 +1937,22 @@ export class MailApp extends EgwApp
 	 *    picker, minus any actual upload - MailJmap.uploadVfsAttachment()/the shim's own
 	 *    zero-byte-moved reference resolve it at send time, see uploadAttachmentsViaJmap()'s own
 	 *    docblock).
-	 *  - `attachmentContents` are already-known bytes with nothing server-side left to reference
-	 *    (calendar's own meeting-invite .ics, generated fresh per compose, never staged anywhere) -
-	 *    {name, type, content} each, uploaded as a real JMAP blob immediately (MailCompose.
-	 *    applyPresetAttachmentContent()), same jmapBlobId-tagged shape carryForwardAttachments()
-	 *    already uses for a reply's own carried-forward attachments.
+	 *  - `attachmentContents` are already-known bytes with genuinely nothing server-side left to
+	 *    reference (calendar's own meeting-invite .ics, generated fresh per compose, never staged
+	 *    anywhere) - {name, type, content} each (content base64-encoded), uploaded as a real JMAP
+	 *    blob immediately (MailCompose.applyPresetAttachmentContent()), same jmapBlobId-tagged
+	 *    shape carryForwardAttachments() already uses for a reply's own carried-forward
+	 *    attachments.
+	 *  - `attachmentUrls` are mail's own REST API's attachments (ApiHandler::prepareAttachments()'s
+	 *    $compose=true branch, tickets #125601/#125621) - unlike the .ics case, a REST-uploaded
+	 *    attachment DOES still have something server-side to reference (its temp file, served back
+	 *    via GET /mail/attachments/<token>), so this carries a lightweight {name, type, url, size}
+	 *    reference instead of inlining content - MailCompose.applyPresetAttachmentUrls() fetches it
+	 *    itself and uploads it as a real JMAP blob the same way, merging via the same
+	 *    carryForwardAttachments() call. (A prior version of this fix inlined REST attachments as
+	 *    base64 into `attachmentContents` too - reverted, a real-world attachment made the preset,
+	 *    which travels a server push and then a browser form-POST back to compose.php, large enough
+	 *    to risk silent truncation somewhere along that path.)
 	 *  - `body`/`bodyMimeType` - preset body text/its own type ('plain'|'html', default 'html') -
 	 *    MailCompose.applyPresetBody() converts plain to html itself if the compose is actually in
 	 *    html mode, mirroring classic mergePresetBody(). `mimeType` (no `body` prefix) is a
@@ -1959,6 +1971,7 @@ export class MailApp extends EgwApp
 			files? : { path : string, name : string, type : string }[],
 			filemode? : string, body? : string, bodyMimeType? : 'plain' | 'html', mimeType? : string,
 			attachmentContents? : { name : string, type : string, content : string }[],
+			attachmentUrls? : { name : string, type : string, url : string, size : number }[],
 			msg? : string,
 		},
 		// the attached message/rfc822 sub-part's own id (mail_ui::displayMessage()'s own `part` GET
@@ -2109,12 +2122,13 @@ export class MailApp extends EgwApp
 			etemplate_exec_id
 		}, url);
 
-		// preset.files/attachmentContents/body - see the comments where each is read above for why
-		// these have to run AFTER the template has loaded (MailCompose.applyPresetFiles()/
-		// applyPresetAttachmentContent()/applyPresetBody()'s own docblocks) rather than as part of
-		// the content bootstrapClientSideTemplate() was just given. Awaiting bootstrapPromise first
-		// so this runs after bootstrapSignature() has already inserted the signature, not racing
-		// with it. attachmentContents (a real upload) before body, so a share-link-style body
+		// preset.files/attachmentContents/attachmentUrls/body - see the comments where each is read
+		// above for why these have to run AFTER the template has loaded (MailCompose.
+		// applyPresetFiles()/applyPresetAttachmentContent()/applyPresetAttachmentUrls()/
+		// applyPresetBody()'s own docblocks) rather than as part of the content
+		// bootstrapClientSideTemplate() was just given. Awaiting bootstrapPromise first so this
+		// runs after bootstrapSignature() has already inserted the signature, not racing with it.
+		// attachmentContents/attachmentUrls (a real upload) before body, so a share-link-style body
 		// insertion (none of today's callers combine the two, but nothing stops a future one)
 		// wouldn't ever reference an attachment that hasn't finished uploading yet.
 		//
@@ -2144,6 +2158,10 @@ export class MailApp extends EgwApp
 		if (preset?.attachmentContents?.length)
 		{
 			await (<any>window).app._compose.applyPresetAttachmentContent(preset.attachmentContents);
+		}
+		if (preset?.attachmentUrls?.length)
+		{
+			await (<any>window).app._compose.applyPresetAttachmentUrls(preset.attachmentUrls);
 		}
 		if (preset?.body)
 		{
