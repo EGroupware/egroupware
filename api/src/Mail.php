@@ -4655,6 +4655,25 @@ class Mail
 		//error_log(__METHOD__.__LINE__."$_targetProfileID !== ".array2string($source->ImapServerId));
 		if (isset($_targetProfileID) && $_targetProfileID !== $source->ImapServerId)
 		{
+			$target = Mail\Account::read($_targetProfileID)->imapServer();
+			// forum/live report 2026-09-29 (ralf, copying an NDN from the real-JMAP/Stalwart test
+			// account into a plain-IMAP one): a real-JMAP account (eg. Stalwart, whose
+			// acc_imap_port is its JMAP(S) endpoint) has no real raw IMAP socket for the FETCH/
+			// APPEND below to use at all - fetch/append via that account's own JMAP HTTP session
+			// instead, for whichever side needs it. Deliberately kept server-side rather than
+			// having the CLIENT download+reupload the message bytes (an earlier draft of this fix,
+			// reverted): ralf, "copying/moving a possibly huge number of mails is probably the
+			// only thing where doing that on the host is quicker (at least not slower) than doing
+			// it on the client" - unlike same-account JMAP operations, a cross-account transfer's
+			// bytes have to move host-to-host either way, and routing them through the browser
+			// would only add a second hop, not remove one. $_messageUID==='all' (rare - the
+			// client's own moveAllMatching()/copyAllMatching() always resolve a real id list
+			// before calling this) still falls through to the classic branch below unchanged.
+			if (($source instanceof Mail\Imap\Jmap || $target instanceof Mail\Imap\Jmap) && $_messageUID !== 'all')
+			{
+				return $this->jmapCrossAccountTransfer($source, $target, $sourceFolder, $_foldername,
+					$_messageUID, $deleteAfterMove, $returnUIDs);
+			}
 			// DIAGNOSTIC-LOGGING (ticket #124401): this whole branch used to have NO try/catch at
 			// all - any real failure (eg. the target-folder-resolution issue tracked in this ticket)
 			// propagated as a raw, uncaught exception straight to the user instead of the graceful
@@ -4771,6 +4790,124 @@ class Mail
 
 		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($retUid));
 		return ($returnUIDs ? $retUid : true);
+	}
+
+	/**
+	 * JMAP-aware cross-account move/copy - moveMessages()'s own cross-account branch delegates
+	 * here whenever either side is a real-JMAP account (see its own comment for why this stays
+	 * server-side instead of routing message bytes through the client). Mirrors that branch's
+	 * architecture exactly (fetch everything from the source, then append/import into the
+	 * target, delete from the source afterward if requested), just fetching/appending via JMAP
+	 * instead of a raw IMAP socket for whichever side needs it - a plain-IMAP leg still goes
+	 * through the same real IMAP FETCH/APPEND as before.
+	 *
+	 * @param Mail\Imap $source already-resolved source imapServer()
+	 * @param Mail\Imap $target already-resolved target imapServer()
+	 * @param string $sourceFolder real IMAP folder path (only used for the plain-IMAP leg - a
+	 *  real-JMAP leg needs no folder to FETCH, an Email.id is already globally unique)
+	 * @param string $targetFolder real IMAP folder path / JMAP folder-path (each leg resolves it
+	 *  its own way)
+	 * @param mixed $ids explicit message id(s) - a real IMAP UID for a plain-IMAP source, or a
+	 *  JMAP Email.id for a real-JMAP source (jmapMessageIds()'s own docblock: a JMAP-native
+	 *  account's own "UID" already IS the opaque JMAP id, no separate resolution needed)
+	 * @param bool $deleteAfterMove
+	 * @param bool $returnUIDs
+	 * @return bool|string[] new id(s) if $returnUIDs, else true
+	 * @throws Exception on any failure
+	 */
+	private function jmapCrossAccountTransfer($source, $target, string $sourceFolder, string $targetFolder,
+		$ids, bool $deleteAfterMove, bool $returnUIDs)
+	{
+		$ids = is_array($ids) || is_object($ids) ? array_values((array)$ids) : [$ids];
+		try
+		{
+			$newIds = [];
+			foreach ($ids as $id)
+			{
+				if ($source instanceof Mail\Imap\Jmap)
+				{
+					$sourceJmap = $source->jmapClient();
+					$email = $sourceJmap->emailGet((string)$id, ['blobId', 'keywords', 'receivedAt'], false);
+					$raw = $sourceJmap->downloadBlob($email['blobId'], 'message.eml', 'message/rfc822');
+					$keywords = (array)($email['keywords'] ?? []);
+					$receivedAt = $email['receivedAt'] ?? null;
+				}
+				else
+				{
+					$sourceMailbox = $source->getMailbox($sourceFolder);
+					$source->openMailbox($sourceMailbox);
+					$fquery = new Horde_Imap_Client_Fetch_Query();
+					$fquery->flags();
+					$fquery->fullText(['peek' => true]);
+					$fquery->imapDate();
+					$fetched = $source->fetch($sourceMailbox, $fquery, ['ids' => new Horde_Imap_Client_Ids([$id])]);
+					$headerObject = current($fetched);
+					if (!$headerObject)
+					{
+						throw new Exception("Message '$id' not found in '$sourceFolder'");
+					}
+					$raw = $headerObject->getFullMsg();
+					$keywords = Mail\Jmap\Imap::flagsToKeywords($headerObject->getFlags());
+					$receivedAt = Mail\Jmap\Imap::imapDate($headerObject->getImapDate());
+				}
+
+				if ($target instanceof Mail\Imap\Jmap)
+				{
+					$targetJmap = $target->jmapClient();
+					$blobId = $targetJmap->uploadBlob($raw, 'message/rfc822');
+					$newIds[] = $targetJmap->emailImport($blobId, $targetFolder, $keywords, $receivedAt);
+				}
+				else
+				{
+					$targetMailbox = $target->getMailbox($targetFolder);
+					$target->openMailbox($targetMailbox);
+					$data = ['data' => $raw, 'flags' => $this->jmapFlagsFromKeywords($keywords)];
+					if ($receivedAt)
+					{
+						$data['internaldate'] = new Horde_Imap_Client_DateTime($receivedAt);
+					}
+					$ret = $target->append($targetMailbox, [$data]);
+					$newUid = is_object($ret) && isset($ret->ids) ? (string)current($ret->ids) : null;
+					if ($newUid === null)
+					{
+						// see Api\Mail\Jmap\Imap::appendRawMessage()'s own identical fallback and
+						// docblock - a real Horde_Imap_Client_Ids object's __get('ids') without a
+						// matching __isset() means the check above never actually succeeds in
+						// practice, for any real server response
+						$sorted = $target->search($targetMailbox, new Horde_Imap_Client_Search_Query(), [
+							'sort' => [Horde_Imap_Client::SORT_REVERSE, Horde_Imap_Client::SORT_ARRIVAL],
+						]);
+						$newUid = (string)(array_values($sorted['match']->ids ?? [])[0] ?? '');
+					}
+					$newIds[] = $newUid;
+				}
+				// same pacing as the classic branch above - some servers can't handle the load of
+				// back-to-back appends
+				time_nanosleep(0, 500000);
+			}
+			if ($deleteAfterMove)
+			{
+				if ($source instanceof Mail\Imap\Jmap)
+				{
+					$source->jmapClient()->emailDestroy($ids);
+				}
+				else
+				{
+					$remember = $this->icServer;
+					$this->icServer = $source;
+					$this->deleteMessages($ids, $sourceFolder, $_forceDeleteMethod='remove_immediately');
+					$this->icServer = $remember;
+				}
+			}
+			return $returnUIDs ? $newIds : true;
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+			$wrapped = new Exception("Copying to Folder $targetFolder failed! Error:".$e->getMessage());
+			_egw_log_exception($wrapped);
+			throw $wrapped;
+		}
 	}
 
 	/**

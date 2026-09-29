@@ -3,6 +3,7 @@ import {assert} from "@open-wc/testing";
 import "./MailAppImportStub";
 import "../../../api/js/etemplate/Et2Widget/Et2Widget";
 import {MailApp} from "../app";
+import {JmapUnsupportedOperationError} from "../jmap";
 
 /**
  * Coverage for tryJmapMove()/tryJmapCopy()'s success-message side effect (showMoveOrCopyMessage())
@@ -116,6 +117,55 @@ describe("MailApp move/copy success message (tracker: missing hint after moving 
 		assert.equal(result, 'classic result');
 		assert.equal(messages.length, 0,
 			"showMoveOrCopyMessage() must not fire for a classic-fallback resolution - that response already carries its own message");
+	});
+
+	/**
+	 * Live report 2026-09-29 (ralf, copying an NDN from the real-JMAP/Stalwart test account into
+	 * a plain-IMAP one, working as designed via the classic fallback): "only open is to NOT
+	 * console.log the caught exception, as it will be reported back as error" - a cross-account
+	 * copy/move ALWAYS takes this fallback (MailJmap.copyMessages()/moveMessages() throw
+	 * JmapUnsupportedOperationError for it by design, see that class's own docblock), so logging
+	 * it via console.error() on every single occurrence misreports completely normal, by-design
+	 * behaviour as a broken JMAP path.
+	 */
+	it("does NOT console.error() a JmapUnsupportedOperationError (eg. cross-account) - that's the expected fallback signal, not a real failure", async() =>
+	{
+		const {app} = createMailApp('42::INBOX');
+		stubJmap(app, {moveMessages : () => Promise.reject(new JmapUnsupportedOperationError('cross-account move not supported'))});
+		const originalConsoleError = console.error;
+		const calls : any[][] = [];
+		console.error = (...args : any[]) => void calls.push(args);
+
+		try
+		{
+			await tryJmapMove(app, '2::Archive', {msg : [ROW_ID], all : false}, () => Promise.resolve('classic result'));
+		}
+		finally
+		{
+			console.error = originalConsoleError;
+		}
+
+		assert.equal(calls.length, 0);
+	});
+
+	it("still console.error()s a genuine JMAP failure (not JmapUnsupportedOperationError)", async() =>
+	{
+		const {app} = createMailApp('42::INBOX');
+		stubJmap(app, {moveMessages : () => Promise.reject(new Error('network hiccup'))});
+		const originalConsoleError = console.error;
+		const calls : any[][] = [];
+		console.error = (...args : any[]) => void calls.push(args);
+
+		try
+		{
+			await tryJmapMove(app, '42::Archive', {msg : [ROW_ID], all : false}, () => Promise.resolve('classic result'));
+		}
+		finally
+		{
+			console.error = originalConsoleError;
+		}
+
+		assert.equal(calls.length, 1, "a genuine, unexpected failure must still be logged");
 	});
 
 	it("passes the current folder (from nm[foldertree]) as the source, and the move target as the destination", async() =>

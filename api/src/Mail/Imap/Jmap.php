@@ -1271,7 +1271,17 @@ class Jmap extends Mail\Imap
 			$realUid = $this->emailId2uid($uid, '', $folder, $realFolder);
 			return [
 				'folder' => $realFolder,
-				'msgUID' => $realUid !== null ? (string)$realUid : null,
+				// live report 2026-09-29 (ralf, copying an NDN from the real-JMAP/Stalwart test
+				// account): a genuine JMAP-only account (eg. Stalwart) has no real IMAP EMAILID
+				// search capability at all, so emailId2uid() always returns null here - every
+				// caller reading 'msgUID' (MessageActionHandler::copyMessages()/flagMessages()/
+				// deleteMessages()/sendMDN()/saveMessage(), each passing it straight into an
+				// Api\Mail method with its own jmapXxx() fast path expecting a real JMAP id) used
+				// to silently receive null/'' instead - fall back to the JMAP Email.id itself
+				// (already known, no search needed) rather than leaving callers with nothing
+				// usable; a caller that genuinely needs a real numeric IMAP UID for a JMAP-only
+				// account has no way to get one regardless, same as before this fallback existed.
+				'msgUID' => $realUid !== null ? (string)$realUid : $uid,
 			];
 		});
 	}
