@@ -4012,7 +4012,32 @@ class Imap extends Jmap\Base
 		}
 		$mimeHeaders = $data->getMimeHeader($partId, \Horde_Imap_Client_Data_Fetch::HEADER_PARSE);
 		$cte = $mimeHeaders ? $mimeHeaders['content-transfer-encoding'] : null;
-		$part->setContents($raw, ['encoding' => $cte ? $cte->value : '7bit']);
+		$encoding = $cte ? $cte->value : '7bit';
+		// A real delivery round trip (SMTP send -> external relay -> re-delivery into our own
+		// INBOX) can strip the Content-Transfer-Encoding header itself, not just refuse to act
+		// on it - found live 2026-09-29 (ticket #125561's own follow-up): the SENT copy (verified
+		// right after sending, never relayed) correctly had "Content-Transfer-Encoding: base64"
+		// on this exact part, but the delivered INBOX copy of the very same message had NO such
+		// header at all - some hop along the path evidently treats it as invalid (correctly, per
+		// RFC 2046 [5.2.1]) and removes it rather than leaving it for the recipient to see. When
+		// that happens there is no header left to trust at all, from ANY IMAP-level
+		// introspection (this one, Horde's own BINARY-decode negotiation, or Dovecot's own
+		// BODYSTRUCTURE) - only the bytes themselves are still real evidence. A message/rfc822
+		// part's body is never legitimately base64 UNLESS Rfc822AttachmentPart put it there (see
+		// its own docblock) - real MIME text (headers, boundaries) never happens to consist
+		// entirely of the base64 alphabet, so this is a safe, narrow heuristic, not a general
+		// "guess the encoding" mechanism.
+		if ($encoding === '7bit' && $part->getType() === 'message/rfc822' && $raw !== ''
+			&& preg_match('/^[A-Za-z0-9+\/=\s]+$/', $raw)
+			&& ($decoded = base64_decode($raw, true)) !== false
+			&& preg_match('/^[!-9;-~]+:[ \t].*?\r?\n\r?\n/s', $decoded))
+		{
+			// already decoded ourselves above - 'binary' is a pure pass-through label here (never
+			// re-decode $decoded, unlike passing 'base64' would)
+			$encoding = 'binary';
+			$raw = $decoded;
+		}
+		$part->setContents($raw, ['encoding' => $encoding]);
 		return $part->getContents();
 	}
 
