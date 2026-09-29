@@ -5406,8 +5406,35 @@ class Mail
 		if (!empty($_partID))
 		{
 			$_structure->contentTypeMap();
-			$_structure = $_structure->getPart($_partID);
-			//_debug_array($_structure->getMimeId()); exit;
+			// resolvePart() (ticket #125561 follow-up) - a plain, non-compound $_partID behaves
+			// identically to the old bare getPart($_partID) call this replaces (that's exactly
+			// what resolvePart() itself does for that case); the difference only matters once
+			// $_structure turns out to be a message/rfc822 part - see the re-parse below, and
+			// resolvePart()'s own docblock for why Dovecot's own BODYSTRUCTURE for such a part's
+			// nested content can't be trusted (found live 2026-09-29: a forwarded message's own
+			// "view" popup showed a completely empty body instead of the carried message's real
+			// one - case 'message'/'rfc822' below recursed into Dovecot's degenerate single-empty-
+			// leaf structure for it).
+			$_structure = $this->resolvePart($_uid, $_folder, $_structure, $_partID);
+			if (!is_object($_structure))
+			{
+				return array(
+					array(
+						'error'		=> 1,
+						'body'		=> 'Error: Could not fetch structure on mail:'.$_uid." as $_htmlOptions". 'for Mailprofile'.$this->icServer->ImapServerId.' User:'.$GLOBALS['egw_info']['user']['account_lid'],
+						'mimeType'	=> 'text/plain',
+						'charSet'	=> self::$displayCharset,
+					)
+				);
+			}
+			if ($_structure->getPrimaryType() === 'message')
+			{
+				$reparsed = $this->reparseMessagePart($_uid, $_folder, $_partID);
+				if ($reparsed)
+				{
+					$_structure = $reparsed;
+				}
+			}
 		}
 
 		// if message is just a pdf, return it to browser to display
@@ -5923,6 +5950,27 @@ class Mail
 		$_uid = $this->jmapResolveUid($_uid, $_folder);
 		//error_log(__METHOD__.' ('.__LINE__.') '." Try Using Cache for raw Header $_uid, $_partID in Folder $_folder");
 
+		// Ticket #125561 follow-up: "view source"/"view header" for a forwarded message/rfc822
+		// sub-part showed the CONTAINING message's own raw header instead of the carried
+		// message's own - same Dovecot limitation getMessageHeader()/getMessageAttachments()
+		// already had to work around (see resolvePart()'s/reparseMessagePart()'s own docblocks),
+		// found live 2026-09-29. Not cached (below) - a rarer path than the plain, no-partID case
+		// this cache mainly exists for.
+		if ((string)$_partID !== '')
+		{
+			$outerStructure = $this->getStructure($_uid, null, $_folder, true);
+			$target = $outerStructure ? $this->resolvePart($_uid, $_folder, $outerStructure, (string)$_partID) : null;
+			if ($target && $target->getPrimaryType() === 'message')
+			{
+				$rawText = $this->fetchDecodedNestedMessageText($_uid, $_folder, (string)$_partID);
+				$headerEnd = $rawText !== null ? strpos($rawText, "\r\n\r\n") : false;
+				if ($rawText !== null)
+				{
+					return $headerEnd !== false ? substr($rawText, 0, $headerEnd) : $rawText;
+				}
+			}
+		}
+
 		if (!isset($rawHeaders)||!is_array($rawHeaders)) $rawHeaders = Cache::getCache(Cache::INSTANCE,'email','rawHeadersCache'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),60*60*1);
 		if (isset($rawHeaders[$this->icServer->ImapServerId][(string)$_folder][$_uid][(empty($_partID)?'NIL':$_partID)]))
 		{
@@ -5987,6 +6035,30 @@ class Mail
 		$body = null;
 		if (empty($_folder)) $_folder = $this->sessionData['mailbox']?? $this->icServer->getCurrentMailbox();
 		$_uid = $this->jmapResolveUid($_uid, $_folder);
+
+		// Ticket #125561 follow-up: "view source" (MessageActionHandler::saveMessage()) for a
+		// forwarded message/rfc822 sub-part showed the CONTAINING message's own raw bytes
+		// instead of the carried message's own - same Dovecot limitation getMessageHeader()/
+		// getMessageAttachments() already had to work around (see resolvePart()'s/
+		// reparseMessagePart()'s own docblocks), found live 2026-09-29.
+		if ((string)$_partID !== '')
+		{
+			$outerStructure = $this->getStructure($_uid, null, $_folder, true);
+			$target = $outerStructure ? $this->resolvePart($_uid, $_folder, $outerStructure, (string)$_partID) : null;
+			if ($target && $target->getPrimaryType() === 'message')
+			{
+				$rawText = $this->fetchDecodedNestedMessageText($_uid, $_folder, (string)$_partID);
+				if ($rawText !== null)
+				{
+					if (!$_stream)
+					{
+						$rawBody[$this->icServer->ImapServerId][(string)$_folder][$_uid][(string)$_partID] = $rawText;
+					}
+					return $rawText;
+				}
+			}
+		}
+
 		$_uid = !(is_object($_uid) || is_array($_uid)) ? (array)$_uid : $_uid;
 
 		if (!$_stream && isset($rawBody[$this->icServer->ImapServerId][(string)$_folder][$_uid[0]][(empty($_partID)?'NIL':$_partID)]))
