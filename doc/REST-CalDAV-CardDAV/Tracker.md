@@ -84,6 +84,7 @@ This is the canonical shape returned by GET and accepted by POST / PUT / PATCH.
 | `priority` | integer (1–9) | Yes | See [Priority Values](#7-priority-values). |
 | `privacy` | `"public"` \| `"private"` | Yes | `"private"` = visible only to creator, assignees and tracker admins. |
 | `category` | string | Yes | Admin-managed label, scoped to the ticket's `tracker`. Omitted when not set. |
+| `version` | string | Yes | Admin-managed label, scoped to the ticket's `tracker`. Omitted when not set. |
 | `resolution` | string | Yes | Admin-managed label, scoped to the ticket's `tracker`. Omitted when not set. |
 | `creator` | string | No | Account email of whoever created the ticket. |
 | `participants` | object | Yes | JSCalendar-style map keyed by account id / e-mail — creator has role `owner`, assignees `attendee`. |
@@ -91,6 +92,7 @@ This is the canonical shape returned by GET and accepted by POST / PUT / PATCH.
 | `created` | ISO 8601 datetime | No | Auto-set on creation. |
 | `updated` | ISO 8601 datetime | No | Auto-set on every save. Omitted until the ticket is first modified. |
 | `closed` | ISO 8601 datetime | No | Auto-set when status → `"Closed"`. Omitted when not set. |
+| `etag` | string | No | `"{id}:{updated timestamp}"`. Present in the body once the ticket has been modified at least once (also sent as the `ETag` header); omitted for a never-modified ticket. |
 | `notify` | boolean | Write-only | `false` suppresses notifications (incl. external "cc" addresses) for this save. Only assignees, technicians and admins of the queue may set it — silently ignored otherwise, same as any other field the caller can't modify. Not persisted, so never present in a response. Defaults to `true` (notify) when omitted. |
 
 ---
