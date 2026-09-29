@@ -577,6 +577,17 @@ export class MailJmap
 	private static readonly CHECK_CERT_POPUP_KEY_PREFIX = 'mail_checkCert_popup_';
 	private static readonly CHECK_CERT_POPUP_DEBOUNCE_MS = 5 * 60 * 1000;
 
+	// help.egroupware.org "Rückmeldung zu 26.9.20260928" (Jürgen): a genuine "couldn't even talk
+	// to the server" failure right after this tab regained visibility (eg. switching back from
+	// another window) is very likely just the browser resuming a connection it throttled/
+	// suspended while backgrounded, not a real account problem - handleFetchRowsError() uses this
+	// to stay quiet for that case instead of popping up the account wizard (which then even gets
+	// blocked by the browser's own popup blocker on top, adding a second, more confusing message)
+	// for what the very next background poll cycle (Et2NextmatchAutoRefresh) will most likely
+	// resolve on its own anyway.
+	private static readonly VISIBILITY_RESUME_GRACE_MS = 5000;
+	private recentlyResumedVisibilityAt = 0;
+
 	private static readonly CSP_RELOAD_KEY = 'mail_jmap_csp_reload';
 	private static cspListenerInstalled = false;
 	// the most-recently-constructed instance - the securitypolicyviolation listener below is
@@ -600,6 +611,14 @@ export class MailJmap
 			window.addEventListener('securitypolicyviolation',
 				(e : SecurityPolicyViolationEvent) => MailJmap.current?.onCspViolation(e));
 		}
+		// see VISIBILITY_RESUME_GRACE_MS's own docblock
+		document.addEventListener('visibilitychange', () =>
+		{
+			if (!document.hidden)
+			{
+				this.recentlyResumedVisibilityAt = Date.now();
+			}
+		});
 	}
 
 	/**
@@ -2086,6 +2105,13 @@ export class MailJmap
 		const message = e instanceof JmapUserError ? e.message : describeJmapError(e);
 		if (!message)
 		{
+			// see VISIBILITY_RESUME_GRACE_MS's own docblock - stay quiet, the next autorefresh
+			// poll (or a user action) will just retry
+			if (Date.now() - this.recentlyResumedVisibilityAt < MailJmap.VISIBILITY_RESUME_GRACE_MS)
+			{
+				console.warn('MailJmap.fetchRows(): failed shortly after this tab regained visibility - treating as a transient resume hiccup, not opening the account wizard', e);
+				return MailJmap.emptyRowsResult();
+			}
 			// a genuine "couldn't even talk to the server" failure, not a real JMAP/business
 			// error with its own actionable message - see popupCheckCert()'s docblock
 			this.popupCheckCert(profileID, this.checkCertTypeFor(profileID), e);
