@@ -1103,7 +1103,17 @@ class Compose
 				$sigPref = $GLOBALS['egw_info']['user']['preferences']['mail']['LastSignatureIDUsed'];
 				if (!empty($sigPref[$this->mail_bo->profileID]) && $sigPref[$this->mail_bo->profileID]>0)
 				{
-					$content['mailidentity'] = $sigPref[$this->mail_bo->profileID];
+					// validate the identity still belongs to the current user, in case the pref
+					// is stale (eg. identity got deleted or reassigned to a different account)
+					try
+					{
+						Mail\Account::read_identity($sigPref[$this->mail_bo->profileID]);
+						$content['mailidentity'] = $sigPref[$this->mail_bo->profileID];
+					}
+					catch (Api\Exception\NotFound $e)
+					{
+						unset($e);
+					}
 				}
 			}
 			// if we have no preference search for first identity with non-empty signature
