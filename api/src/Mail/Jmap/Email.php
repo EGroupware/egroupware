@@ -81,10 +81,14 @@ class Email extends Type
 	 * @param string $blobId from Http::uploadBlob()
 	 * @param string $folder folder-path e.g. "INBOX/Drafts" (resolved to a Mailbox id internally)
 	 * @param array $keywords JMAP keyword => true, e.g. ['$seen' => true]
+	 * @param ?string $receivedAt RFC 8621 UTCDate - Api\Mail's own cross-account move/copy
+	 *  (jmapCrossAccountTransfer()) passes the ORIGINAL message's own receivedAt through here, so
+	 *  the imported copy keeps its real arrival date instead of getting "now" (RFC 8621 §4.8's own
+	 *  default when omitted)
 	 * @return string new Email.id
 	 * @throws Api\Exception
 	 */
-	public function emailImport(string $blobId, string $folder, array $keywords=[]) : string
+	public function emailImport(string $blobId, string $folder, array $keywords=[], ?string $receivedAt=null) : string
 	{
 		$mailboxId = $this->jmap->mailbox->getMailboxId($folder);
 		if (!$mailboxId)
@@ -98,6 +102,7 @@ class Email extends Type
 					'blobId' => $blobId,
 					'mailboxIds' => [$mailboxId => true],
 					'keywords' => $keywords ?: new \stdClass(),
+					...($receivedAt ? ['receivedAt' => $receivedAt] : []),
 				],
 			],
 		]);

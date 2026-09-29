@@ -378,6 +378,18 @@ export class JmapUnsupportedBackendError extends JmapUserError {}
 export class JmapSmimePassphraseError extends JmapUserError {}
 
 /**
+ * Thrown by a JMAP-native method to signal "this operation is out of scope for the JMAP path by
+ * design here, silently fall back to the classic endpoint instead" - eg. every cross-account
+ * copy/move (moveMessages()/copyMessages()/moveAllMatching()/copyAllMatching()). Deliberately does
+ * NOT extend JmapUserError: unlike a real failure (shown to the user, or the classic fallback
+ * skipped entirely since JMAP already gave a definitive answer), this is an expected, everyday
+ * control-flow signal - MailApp.handleJmapError() (mail/js/app.ts) must not console.error() it,
+ * that would misreport by-design behaviour as a broken JMAP path (ralf, live report 2026-09-29:
+ * "only open is to NOT console.log the caught exception, as it will be reported back as error").
+ */
+export class JmapUnsupportedOperationError extends Error {}
+
+/**
  * Format one JMAP-shaped error object ({type, description?}) as a human string, or null if it
  * doesn't actually look like a JMAP/HTTP error object (eg. a plain fetch-failure Error/TypeError -
  * jmap-jam's own signal for "couldn't even talk to the server", left as the existing silent-
@@ -5528,7 +5540,7 @@ export class MailJmap
 	{
 		if (!references.length || references.some(ref => ref.profileID !== targetProfileID))
 		{
-			throw new Error('MailJmap.moveMessages(): cross-account move not supported');
+			throw new JmapUnsupportedOperationError('MailJmap.moveMessages(): cross-account move not supported');
 		}
 		const token = await this.ensureToken(targetProfileID);
 		if (!token)
@@ -5556,7 +5568,7 @@ export class MailJmap
 	{
 		if (!references.length || references.some(ref => ref.profileID !== targetProfileID))
 		{
-			throw new Error('MailJmap.copyMessages(): cross-account copy not supported');
+			throw new JmapUnsupportedOperationError('MailJmap.copyMessages(): cross-account copy not supported');
 		}
 		const token = await this.ensureToken(targetProfileID);
 		if (!token)
@@ -6998,7 +7010,7 @@ export class MailJmap
 		const [profileID, folder] = (query.selectedFolder || '').split('::', 2);
 		if (profileID !== targetProfileID)
 		{
-			throw new Error('MailJmap.moveAllMatching(): cross-account move not supported');
+			throw new JmapUnsupportedOperationError('MailJmap.moveAllMatching(): cross-account move not supported');
 		}
 		const token = await this.ensureToken(profileID);
 		if (!token)
@@ -7022,7 +7034,7 @@ export class MailJmap
 		const [profileID, folder] = (query.selectedFolder || '').split('::', 2);
 		if (profileID !== targetProfileID)
 		{
-			throw new Error('MailJmap.copyAllMatching(): cross-account copy not supported');
+			throw new JmapUnsupportedOperationError('MailJmap.copyAllMatching(): cross-account copy not supported');
 		}
 		const token = await this.ensureToken(profileID);
 		if (!token)

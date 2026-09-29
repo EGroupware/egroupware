@@ -3345,6 +3345,17 @@ class Imap extends Jmap\Base
 	 * of disposition), both of which the classic per-row flag always treated as "has an
 	 * attachment".
 	 *
+	 * Live report 2026-09-29 (ralf, copying an NDN bounce from the real-JMAP/Stalwart test account
+	 * into a plain-IMAP one): the copy's own .eml (message/rfc822) part - and its sibling
+	 * message/delivery-status part - never showed up as an attachment at all when viewed via the
+	 * shim, unlike the original viewed via Stalwart. Root cause: a genuine NDN's own sub-parts
+	 * typically carry NO Content-Disposition header at all (empty, not 'attachment') - missing
+	 * here, this method always returned false for them, so app.ts's own "only bother resolving the
+	 * full attachmentsBlock when the row already flagged hasAttachment" optimization
+	 * (renderMessageInto()) never even tried, even though emailBodyFields()'s own 'attachments'
+	 * list (built once a message IS actually opened) already correctly includes such a part via
+	 * this exact same "no disposition + not multipart/text" default - added here too, to match.
+	 *
 	 * @param \Horde_Mime_Part $structure
 	 * @return bool
 	 */
@@ -3358,7 +3369,8 @@ class Imap extends Jmap\Base
 			if ($partDisposition === 'attachment' ||
 				($partDisposition === 'inline' && $partPrimaryType === 'image' && $part->getType() === 'image/tiff') ||
 				($partDisposition === 'inline' && $partPrimaryType === 'image' && !$part->getContentId()) ||
-				($partDisposition === 'inline' && $partPrimaryType !== 'image' && $partPrimaryType !== 'multipart' && $partPrimaryType !== 'text'))
+				($partDisposition === 'inline' && $partPrimaryType !== 'image' && $partPrimaryType !== 'multipart' && $partPrimaryType !== 'text') ||
+				(empty($partDisposition) && $partPrimaryType !== 'multipart' && $partPrimaryType !== 'text'))
 			{
 				return true;
 			}

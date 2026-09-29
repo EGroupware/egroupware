@@ -4318,7 +4318,13 @@ export class MailApp extends EgwApp
 		{
 			throw e;
 		}
-		console.error('MailApp: JMAP action failed, falling back to classic', e);
+		// JmapUnsupportedOperationError (eg. every cross-account copy/move) is an expected,
+		// by-design fallback signal, not a real failure - see its own docblock (jmap.ts) for why
+		// this must stay quiet instead of console.error()ing what's actually normal behaviour
+		if (e?.constructor?.name !== 'JmapUnsupportedOperationError')
+		{
+			console.error('MailApp: JMAP action failed, falling back to classic', e);
+		}
 		return fallback();
 	}
 

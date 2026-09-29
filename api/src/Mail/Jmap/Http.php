@@ -120,9 +120,9 @@ class Http extends Jmap
 	}
 
 	/** @see Email::emailImport() */
-	public function emailImport(string $blobId, string $folder, array $keywords=[]) : string
+	public function emailImport(string $blobId, string $folder, array $keywords=[], ?string $receivedAt=null) : string
 	{
-		return $this->email->emailImport($blobId, $folder, $keywords);
+		return $this->email->emailImport($blobId, $folder, $keywords, $receivedAt);
 	}
 
 	/** @see Email::emailDestroy() */

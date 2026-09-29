@@ -83,4 +83,44 @@ class HasAttachmentTest extends \PHPUnit\Framework\TestCase
 		$structure = self::withImagePart('image/tiff', 'inline', 'image1@egroupware');
 		$this->assertTrue(JmapShim::structureHasAttachment($structure));
 	}
+
+	/**
+	 * Live report 2026-09-29 (ralf, copying an NDN bounce from the real-JMAP/Stalwart test account
+	 * into a plain-IMAP one): a genuine bounce/NDN's own message/delivery-status and message/
+	 * rfc822 sub-parts typically carry NO Content-Disposition header at all - unlike the classic
+	 * per-row heuristic and emailBodyFields()'s own 'attachments' list (both of which already
+	 * default an empty disposition to "attachment" for anything not multipart/text),
+	 * structureHasAttachment() had no such catch-all, so the row-level hasAttachment flag came
+	 * back false even though the message genuinely had a real, listed attachment once opened -
+	 * silently skipping app.ts's own "only resolve the full attachmentsBlock when hasAttachment"
+	 * optimization.
+	 */
+	protected static function ndnStructure() : \Horde_Mime_Part
+	{
+		$explanation = new \Horde_Mime_Part();
+		$explanation->setType('text/plain');
+		$explanation->setContents('Your message could not be delivered...');
+
+		$deliveryStatus = new \Horde_Mime_Part();
+		$deliveryStatus->setType('message/delivery-status');
+		$deliveryStatus->setContents("Action: failed\r\n");
+
+		$originalMessage = new \Horde_Mime_Part();
+		$originalMessage->setType('message/rfc822');
+		$originalMessage->setContents("Subject: test\r\n\r\nBody\r\n");
+
+		$report = new \Horde_Mime_Part();
+		$report->setType('multipart/report');
+		$report->addPart($explanation);
+		$report->addPart($deliveryStatus);
+		$report->addPart($originalMessage);
+
+		return $report;
+	}
+
+	public function testNdnWithNoExplicitDispositionOnItsSubPartsIsAnAttachment()
+	{
+		$this->assertTrue(JmapShim::structureHasAttachment(self::ndnStructure()),
+			"a bounce's own message/delivery-status and message/rfc822 sub-parts must count as an attachment even with no Content-Disposition header at all");
+	}
 }
