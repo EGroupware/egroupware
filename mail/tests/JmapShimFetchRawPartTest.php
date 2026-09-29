@@ -19,12 +19,16 @@ use EGroupware\Api\Mail\Jmap\Imap as JmapShim;
 
 class JmapShimFetchRawPartTest extends \PHPUnit\Framework\TestCase
 {
-	private function stubImap(\Horde_Mime_Part $structure, string $partId, string $rawBytes, string $decode) : \Horde_Imap_Client_Socket
+	private function stubImap(\Horde_Mime_Part $structure, string $partId, string $rawBytes, string $decode, ?string $mimeHeaderText = null) : \Horde_Imap_Client_Socket
 	{
 		$imap = $this->createStub(\Horde_Imap_Client_Socket::class);
 		$fetchFixture = new \Horde_Imap_Client_Data_Fetch();
 		$fetchFixture->setStructure($structure);
 		$fetchFixture->setBodyPart($partId, $rawBytes, $decode);
+		if ($mimeHeaderText !== null)
+		{
+			$fetchFixture->setMimeHeader($partId, $mimeHeaderText);
+		}
 		$imap->method('fetch')->willReturn([1 => $fetchFixture]);
 		return $imap;
 	}
@@ -64,5 +68,32 @@ class JmapShimFetchRawPartTest extends \PHPUnit\Framework\TestCase
 		$imap->method('fetch')->willReturn([]);
 
 		$this->assertNull(JmapShim::fetchRawPart($imap, 'INBOX', '1', '1'));
+	}
+
+	/**
+	 * Ticket #125561: a message/rfc822 attachment, re-fetched by emailSubmissionSet()'s own
+	 * "rebuild the mailer from the just-saved draft" flow, arrived at the actual send still
+	 * base64-encoded - never decoded. Root cause: Horde_Imap_Client_Socket's own BINARY-fetch
+	 * fallback ("Dovecot bug ... try again with non-decoded body") - Dovecot correctly refuses to
+	 * server-side-decode a message/rfc822 part declaring base64 (RFC 2046 [5.2.1] permits only
+	 * 7bit/8bit/binary there), so Horde retries WITHOUT decoding and labels the STILL-ENCODED raw
+	 * bytes it gets back with the exact same generic '8bit' a genuinely successful decode would
+	 * also report - this fixture reproduces exactly that shape (real base64 text as the "raw"
+	 * body, decode label '8bit', but the part's own MIME header truthfully says base64).
+	 * fetchRawPart() must trust that header over the misleading decode label.
+	 */
+	public function testDecodesBase64ContentEvenWhenTheServersDecodeNegotiationMislabelsIt8bit()
+	{
+		$structure = new \Horde_Mime_Part();
+		$structure->setType('message/rfc822');
+		$structure->setMimeId('2');
+
+		$originalMessageBytes = "Subject: test\r\n\r\nBody with a real embedded NUL: \0 and high bytes: \xC8\xC8.\r\n";
+		$stillEncodedRaw = base64_encode($originalMessageBytes);
+
+		$imap = $this->stubImap($structure, '2', $stillEncodedRaw, '8bit',
+			"Content-Type: message/rfc822\r\nContent-Transfer-Encoding: base64\r\n\r\n");
+
+		$this->assertSame($originalMessageBytes, JmapShim::fetchRawPart($imap, 'INBOX', '1', '2'));
 	}
 }

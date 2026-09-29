@@ -3962,6 +3962,20 @@ class Imap extends Jmap\Base
 	 * server-side JMAP-native S/MIME/TNEF resolvers (Imap\Jmap for Stalwart, this class for the
 	 * local shim - see plan) fetching a part in-process, no HTTP round trip needed.
 	 *
+	 * Deliberately does NOT ask the server to decode the part (no 'decode' fetch option) - ticket
+	 * #125561 (a message/rfc822 attachment, re-fetched by emailSubmissionSet()'s own "rebuild the
+	 * mailer from the just-saved draft" flow, arrived at the actual send still base64-encoded,
+	 * never decoded): root-caused to Horde_Imap_Client_Socket's own BINARY-fetch fallback (see its
+	 * "Dovecot bug ... try again with non-decoded body" comment) - when the server can't/won't
+	 * server-side-decode a part (Dovecot correctly refuses for message/rfc822 declaring base64,
+	 * since RFC 2046 [5.2.1] permits only 7bit/8bit/binary there), Horde silently retries WITHOUT
+	 * decoding and labels the STILL-ENCODED raw bytes it got back with the exact same generic
+	 * '8bit' it uses for a genuinely successful decode - the two cases are indistinguishable from
+	 * the returned $data->getBodyPartDecode() value alone. Fetching the part's own MIME header
+	 * (its literal declared Content-Transfer-Encoding, always reliable - unlike Horde's post-hoc
+	 * label) and decoding client-side ourselves sidesteps the whole negotiation, for every part
+	 * type, not just message/rfc822.
+	 *
 	 * @param \Horde_Imap_Client_Socket $imap
 	 * @param string $mailbox
 	 * @param string $uid
@@ -3972,7 +3986,8 @@ class Imap extends Jmap\Base
 	{
 		$query = new \Horde_Imap_Client_Fetch_Query();
 		$query->structure();
-		$query->bodyPart($partId, ['decode' => true, 'peek' => true]);
+		$query->bodyPart($partId, ['peek' => true]);
+		$query->mimeHeader($partId, ['peek' => true]);
 		$results = $imap->fetch($mailbox, $query, [
 			'ids' => new \Horde_Imap_Client_Ids([(int)$uid]),
 		]);
@@ -3981,9 +3996,7 @@ class Imap extends Jmap\Base
 		{
 			return null;
 		}
-		// same transfer-decode recipe as fetchBodyValue()
 		$raw = (string)$data->getBodyPart($partId);
-		$encoding = $data->getBodyPartDecode($partId);
 		$part = $data->getStructure()->getPart($partId);
 		if (!$part)
 		{
@@ -3997,7 +4010,9 @@ class Imap extends Jmap\Base
 			// own getPart() miss (fixed earlier this session).
 			return null;
 		}
-		$part->setContents($raw, ['encoding' => $encoding]);
+		$mimeHeaders = $data->getMimeHeader($partId, \Horde_Imap_Client_Data_Fetch::HEADER_PARSE);
+		$cte = $mimeHeaders ? $mimeHeaders['content-transfer-encoding'] : null;
+		$part->setContents($raw, ['encoding' => $cte ? $cte->value : '7bit']);
 		return $part->getContents();
 	}
 
@@ -4808,9 +4823,65 @@ class Imap extends Jmap\Base
  * list once actually delivered. This re-adds JUST that one header, reusing the exact same header
  * object setDisposition()/setDispositionParameter() already populated (never rebuilt from
  * scratch) - used ONLY for message/rfc822 attachments, via Imap::addAttachmentPart().
+ *
+ * Ticket #125561 (a real customer, forwarding a message with inline/attached images as a
+ * message/rfc822 attachment): the CARRIED message's own raw bytes are embedded byte-for-byte
+ * (setContents() in addAttachmentPart() above) - when the original had ANY part using
+ * Content-Transfer-Encoding: binary or 8bit (a real image attachment commonly does, since Horde
+ * itself defaults new attachments to 'binary', see DEFAULT_ENCODING), those raw non-7bit-clean
+ * bytes end up inside THIS wrapper part with NO Content-Transfer-Encoding header at all - RFC
+ * 2045 [6.1]'s default when the header is omitted is '7bit', a claim the actual bytes flatly
+ * contradict. A strictly-conformant downstream MUA/relay re-serializing or re-validating the
+ * message is then entitled to treat it as 7bit text and strip/mangle any byte >= 0x80 or NUL -
+ * exactly the "images corrupted, 0x00 bytes missing" the reporter found. addMimeHeaders()'s early
+ * return for message/* skips computing this entirely.
+ *
+ * First fix attempt (kept declaring 8bit/binary, RFC 2046 [5.2.1]'s own allowed labels for a
+ * message/rfc822 body, and left the bytes untouched - matching how every OTHER part type's
+ * Content-Transfer-Encoding already works) turned out insufficient: live-verified 2026-09-29
+ * against a real customer .eml AND the user's own reproduction that even with the correct header
+ * now present, the embedded image's bytes themselves arrived corrupted - every NUL byte replaced
+ * by the overlong-UTF8 encoding of U+0000 (\xc0\x80), the textbook signature of something along
+ * the delivery path "fixing up" what it assumed was mis-encoded text. That declared encoding is
+ * what triggers BINARYMIME/8BITMIME (RFC 3030 BDAT/CHUNKING) transport in the first place - not
+ * reliable through every relay/milter apparently in this environment's path. Declaring base64
+ * instead sidesteps the whole problem: the wire bytes are guaranteed plain 7bit ASCII, so no
+ * relay ever has a reason to "fix" anything, and no 8BITMIME/BINARYMIME extension is needed at
+ * all - exactly how every normal (non-message) attachment is already sent. This IS a deliberate
+ * RFC 2046 [5.2.1] violation ("no encoding other than 7bit, 8bit, or binary is permitted for the
+ * body of a message/rfc822 entity") - accepted pragmatically since a decoder only needs to
+ * base64-decode before parsing the carried message, exactly as for any other encoded part, and
+ * real-world mail software tolerates this widely in practice.
+ *
+ * Unlike 7bit/8bit/binary, base64 actually transforms the bytes - and Horde_Mime_Part::toString()
+ * has its own hard-coded "$ptype == 'message'" branch that emits $this->_contents verbatim,
+ * bypassing _transferEncode() (and therefore whatever Content-Transfer-Encoding gets declared)
+ * entirely, for every message/* part regardless of subclass. So the encoding has to happen here,
+ * up front in setContents() itself, storing the already-encoded bytes as this part's own
+ * "contents" - there's no later hook where Horde would do it for us.
  */
 class Rfc822AttachmentPart extends \Horde_Mime_Part
 {
+	/**
+	 * @var bool true once setContents() had to base64-encode non-7bit-clean content - see this
+	 *  class's own docblock for why that can't be left to Horde's normal per-type encoding step
+	 */
+	private bool $rfc822Base64Encoded = false;
+
+	public function setContents($contents, $options = array())
+	{
+		parent::setContents($contents, $options);
+
+		$this->rfc822Base64Encoded = false;
+		if (!empty($this->_contents) && $this->_scanStream($this->_contents) !== false)
+		{
+			$encoded = $this->_transferEncode($this->_contents, 'base64');
+			fclose($this->_contents);
+			$this->_contents = $encoded;
+			$this->rfc822Base64Encoded = true;
+		}
+	}
+
 	public function addMimeHeaders($options = array())
 	{
 		$headers = parent::addMimeHeaders($options);
@@ -4818,6 +4889,10 @@ class Rfc822AttachmentPart extends \Horde_Mime_Part
 		if (!$cd->isDefault())
 		{
 			$headers->addHeaderOb($cd);
+		}
+		if ($this->rfc822Base64Encoded)
+		{
+			$headers->addHeaderOb(new \Horde_Mime_Headers_ContentTransferEncoding(null, 'base64'));
 		}
 		return $headers;
 	}
