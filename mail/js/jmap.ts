@@ -412,6 +412,24 @@ export function describeSetError(setErrors : Record<string, any> | undefined) : 
 }
 
 /**
+ * Ticket #125201: Api\Mail\Jmap\Imap::emailSubmissionSet()'s own shim-only "failedRecipients"
+ * extension (address => reason, EmailSubmission/set's created.sub1 - see that PHP code's own
+ * docblock) - present, non-empty, only when Api\Mailer::send() itself already recovered from a
+ * PARTIAL SMTP rejection (some, not all, recipients bounced) by retrying without them. The
+ * message DID go out to everyone else; this builds the one user-facing sentence that's the only
+ * place that fact ever reaches the user, since send() itself no longer throws for this case at
+ * all. Returns null (no message to show) for an absent/empty map - always the case for a real
+ * Stalwart account, whose own native EmailSubmission/set response never carries this extension.
+ */
+export function describeFailedRecipientsWarning(egw : { lang(key : string, ...args : any[]) : string },
+	failedRecipients : Record<string, string> | undefined) : string | null
+{
+	if (!failedRecipients || !Object.keys(failedRecipients).length) return null;
+	const list = Object.entries(failedRecipients).map(([address, reason]) => `${address} (${reason})`).join(', ');
+	return egw.lang('The mail was sent successfully to all recipients, except the following: %1', list);
+}
+
+/**
  * egw.preference() for a checkbox-style preference returns the server's raw stored value, often
  * the literal string "0" for "off" - PHP's own !$value treats that as falsy, but a non-empty JS
  * string is ALWAYS truthy (only "", 0, null, undefined, NaN, false are falsy), so plain `!value`
@@ -5625,6 +5643,9 @@ export class MailJmap
 			{
 				throw new JmapUserError(describeSetError(submission.notCreated) ?? this.egw.lang('Failed to send message'));
 			}
+			// ticket #125201 - see describeFailedRecipientsWarning()'s own docblock
+			const warning = describeFailedRecipientsWarning(this.egw, (submission.created.sub1 as any).failedRecipients);
+			if (warning) this.egw.message(warning, 'warning');
 			if (existingDraftEmailId)
 			{
 				try

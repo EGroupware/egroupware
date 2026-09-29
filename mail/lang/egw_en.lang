@@ -734,6 +734,7 @@ the s/mime certificate stored in the address book for %1 does not match your acc
 the s/mime certificate stored in the address book for %1 is not valid - check for duplicate/broken address book entries for this address.	mail	en	The S/MIME certificate stored in the address book for %1 is not valid - check for duplicate/broken address book entries for this address.
 the total size of the attachments exceeds the limit of %1 mb	mail	en	The total size of the attachments exceeds the limit of %1 MB
 the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	en	The total size of the attachments exceeds the limit of %1 MB. Switched to download link.
+the mail was sent successfully to all recipients, except the following: %1	mail	en	The mail was sent successfully to all recipients, except the following: %1
 then	mail	en	THEN
 there is no imap server configured.	mail	en	There is no IMAP server configured.
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	en	There is no space left to store Sieve script, please check sieve_maxscriptsize option on your mailserver's config.

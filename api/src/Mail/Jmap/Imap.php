@@ -3053,13 +3053,32 @@ class Imap extends Jmap\Base
 	private static function describeSendException(\Throwable $e) : string
 	{
 		$description = $e->getMessage();
-		// NOT empty($e->raw_msg)/isset($e->raw_msg): Horde_Exception exposes raw_msg only via
-		// __get(), with no matching __isset() - empty()/isset() special-case a magic property to
-		// call __isset() first and treat it as "not set" (without ever calling __get() at all) when
-		// that's missing, regardless of what direct access would actually return. Found live
-		// writing this fix's own test: empty($e->raw_msg) was unconditionally true even though
-		// $e->raw_msg itself printed the real string right below it.
-		$rawMsg = $e instanceof \Horde_Smtp_Exception ? $e->raw_msg : null;
+		// $e->details FIRST, not just a direct Horde_Smtp_Exception check: the exception actually
+		// reaching here is near-always a WRAPPED one (Horde_Mime_Part::send()'s own
+		// Horde_Mime_Exception(new Horde_Mail_Exception($smtpException))) - Horde_Exception_Wrapped
+		// (both Horde_Mail_Exception and Horde_Mime_Exception extend it) copies the wrapped
+		// exception's OWN ->details forward into itself at construction time, so this works
+		// regardless of how many layers of wrapping actually happened; a bare Horde_Smtp_Exception
+		// (never wrapped at all) would have no ->details of its own, hence the raw_msg fallback.
+		//
+		// NOT empty($e->raw_msg)/isset($e->raw_msg) for THAT fallback: Horde_Exception exposes
+		// raw_msg only via __get(), with no matching __isset() - empty()/isset() special-case a
+		// magic property to call __isset() first and treat it as "not set" (without ever calling
+		// __get() at all) when that's missing, regardless of what direct access would actually
+		// return. Found live writing this fix's own test: empty($e->raw_msg) was unconditionally
+		// true even though $e->raw_msg itself printed the real string right below it.
+		// instanceof \Horde_Exception guards BOTH property reads below - a plain \Exception/\Error
+		// (this is a general catch(\Throwable), not Horde-specific) has neither ->details nor
+		// ->raw_msg declared at all, and PHP 8.2+ warns on accessing an undeclared property.
+		$rawMsg = null;
+		if ($e instanceof \Horde_Exception && $e->details)
+		{
+			$rawMsg = $e->details;
+		}
+		elseif ($e instanceof \Horde_Smtp_Exception)
+		{
+			$rawMsg = $e->raw_msg;
+		}
 		if ($rawMsg)
 		{
 			$description = $rawMsg;
@@ -3235,7 +3254,16 @@ class Imap extends Jmap\Base
 					// for its own EmailSubmission/set at all (real passthrough, see class docblock),
 					// so this key is simply absent from its response - MailJmap.sendNewEmail() falls
 					// back to the (safe-for-Stalwart) fetchRawSource(rowId) path when it's missing.
-					'blobId' => $rawBlobId];
+					'blobId' => $rawBlobId,
+					// ticket #125201 - another shim-only extension: Api\Mailer::send()'s own
+					// $failedRecipients (address => reason), non-empty only when send() itself
+					// already recovered from a partial rejection (some, not all, recipients bounced
+					// at SMTP time) by retrying without them - see that property's own docblock.
+					// The message DID go out successfully to everyone else; this just lets
+					// MailJmap.sendNewEmail() tell the user which addresses did NOT get it, instead
+					// of the send silently "succeeding" with no indication some recipients never
+					// received anything at all.
+					'failedRecipients' => (object)$mailer->failedRecipients];
 			}
 			catch (\Throwable $e)
 			{
