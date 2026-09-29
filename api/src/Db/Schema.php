@@ -275,9 +275,15 @@ class Schema
 					}
 				}
 			}
-			if (!($retVal = $this->CreateIndex($sTableName,$mFields,false,$options,$name)))
-			{
-				return $retVal;
+			// a failed (non-unique) index does not make EGroupware unusable, so only log it and continue
+			try {
+				if (!($idxRet = $this->CreateIndex($sTableName,$mFields,false,$options,$name)) || $idxRet < 2)
+				{
+					error_log(__METHOD__."('$sTableName') failed to create index '$name' on ".implode(',', (array)$mFields));
+				}
+			}
+			catch (\mysqli_sql_exception|Api\Db\Exception $e) {
+				error_log(__METHOD__."('$sTableName') failed to create index '$name': ".$e->getMessage());
 			}
 		}
 		// preserve last value of an old sequence
@@ -590,7 +596,7 @@ class Schema
 	{
 		if (is_array($aColumnNames))
 		{
-			$indexes = $this->dict->MetaIndexes($sTableName);
+			$indexes = $this->meta('MetaIndexes', $sTableName);
 
 			if ($indexes === False)
 			{
@@ -634,7 +640,7 @@ class Schema
 		{
 			case 'pgsql':
 				// identify the sequence name, ADOdb uses a different name or it might be renamed
-				$columns = $this->dict->MetaColumns($sTableName);
+				$columns = $this->meta('MetaColumns', $sTableName);
 				$seq_name = 'seq_'.$sTableName;
 				$matches = null;
 				if (preg_match("/nextval\('([^']+)'::(text|regclass)\)/",$columns[strtoupper($sColumnName)]->default_value,$matches))
@@ -1276,7 +1282,7 @@ class Schema
 		$this->dict->blobSize = $this->max_varchar_length;
 
 		if (!method_exists($this->dict,'MetaColumns') ||
-			!($columns = $this->dict->MetaColumns($sTableName)))
+			!($columns = $this->meta('MetaColumns', $sTableName)))
 		{
 			return False;
 		}
@@ -1431,7 +1437,7 @@ class Schema
 
 		// not all DB's (odbc) return the primary keys via MetaColumns
 		if (!count($definition['pk']) && method_exists($this->dict,'MetaPrimaryKeys') &&
-			is_array($primary = $this->dict->MetaPrimaryKeys($sTableName)) && count($primary))
+			is_array($primary = $this->meta('MetaPrimaryKeys', $sTableName)) && count($primary))
 		{
 			if($this->capabilities['name_case'] == 'upper')
 			{
@@ -1451,6 +1457,28 @@ class Schema
 	}
 
 	/**
+	 * Call one of ADOdb's dictionary Meta* methods, returning false instead of throwing, if the table does not exist
+	 *
+	 * Db enables mysqli exceptions, but ADOdb's Meta* methods expect a failing query to return false,
+	 * eg. when creating a table failed (like egw_rag on a MySQL/MariaDB without VECTOR support),
+	 * this must not abort the whole install, but only give a warning like before.
+	 *
+	 * @param string $method eg. 'MetaIndexes', 'MetaColumns', 'MetaPrimaryKeys'
+	 * @param string $sTableName
+	 * @return mixed result of the ADOdb method or false on error
+	 */
+	protected function meta(string $method, string $sTableName)
+	{
+		try {
+			return $this->dict->$method($sTableName);
+		}
+		catch (\mysqli_sql_exception $e) {
+			error_log(__METHOD__."('$method', '$sTableName') ".$e->getMessage());
+			return false;
+		}
+	}
+
+	/**
 	 * Query indexes (not primary index) from database
 	 *
 	 * @param string $sTableName
@@ -1460,7 +1488,7 @@ class Schema
 	public function GetIndexes($sTableName, array &$definition=array())
 	{
 		if (method_exists($this->dict,'MetaIndexes') &&
-			is_array($indexes = $this->dict->MetaIndexes($sTableName)) && count($indexes))
+			is_array($indexes = $this->meta('MetaIndexes', $sTableName)) && count($indexes))
 		{
 			foreach($indexes as $index)
 			{
