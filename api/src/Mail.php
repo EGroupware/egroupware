@@ -5791,6 +5791,52 @@ class Mail
 		//error_log(__METHOD__.' ('.__LINE__.') '.':'.$_uid.', '.$_partID.', '.$decode.', '.$preserveUnSeen.', '.$_folder);
 		if (empty($_folder)) $_folder = $this->sessionData['mailbox'] ?? $this->icServer->getCurrentMailbox();
 		$_uid = $this->jmapResolveUid($_uid, $_folder);
+
+		// Ticket #125561 follow-up: a real IMAP HEADER fetch for a message/rfc822 sub-part (eg.
+		// "view an attached message" needing its OWN From/To/Subject) hits the exact same Dovecot
+		// limitation getMessageAttachments() already had to work around (see resolvePart()'s/
+		// reparseMessagePart()'s own docblocks) - Dovecot can't parse INTO a base64-wrapped
+		// message/rfc822 part at all (illegal for that content-type per RFC 2046 [5.2.1]), so a
+		// section-spec addressing ITS OWN header (".HEADER") comes back empty, not just its
+		// BODYSTRUCTURE - found live 2026-09-29 (a real forwarded message's "view" popup showed
+		// blank From/To/Subject instead of falling back to anything at all). Re-parsing this
+		// part's own true, decoded bytes ourselves (exactly like getMessageAttachments() already
+		// does) sidesteps this the same way, for any message/rfc822 partID - not just a broken
+		// one, since it's strictly more reliable than the classic per-part IMAP fetch regardless.
+		if ((string)$_partID !== '')
+		{
+			$outerStructure = $this->getStructure($_uid, null, $_folder, true);
+			$target = $outerStructure ? $this->resolvePart($_uid, $_folder, $outerStructure, (string)$_partID) : null;
+			if ($target && $target->getPrimaryType() === 'message')
+			{
+				$rawText = $this->fetchDecodedNestedMessageText($_uid, $_folder, (string)$_partID);
+				$headerEnd = $rawText !== null ? strpos($rawText, "\r\n\r\n") : false;
+				$headerText = $headerEnd !== false ? substr($rawText, 0, $headerEnd) : $rawText;
+				if ($headerText !== null)
+				{
+					$headers = Horde_Mime_Headers::parseHeaders($headerText);
+					if ($decode === 'object')
+					{
+						$headers->setUserAgent('EGroupware API '.$GLOBALS['egw_info']['server']['versions']['phpgwapi']);
+						return $headers;
+					}
+					$retValue = array_change_key_case($headers->toArray(), CASE_UPPER);
+					if (isset($retValue['SUBJECT']) && is_array($retValue['SUBJECT']))
+					{
+						$retValue['SUBJECT'] = $retValue['SUBJECT'][count($retValue['SUBJECT'])-1];
+					}
+					if ($decode)
+					{
+						foreach ($retValue as $key => $rvV)
+						{
+							$retValue[$key] = Mail\AddressList::decode_header($rvV, in_array($key, array('FROM', 'TO', 'CC', 'BCC', 'SENDER', 'REPLY-TO')));
+						}
+					}
+					return $retValue;
+				}
+			}
+		}
+
 		$uidsToFetch = new Horde_Imap_Client_Ids();
 		if (!(is_object($_uid) || is_array($_uid))) $_uid = (array)$_uid;
 		$uidsToFetch->add($_uid);
@@ -6054,6 +6100,101 @@ class Mail
 	}
 
 	/**
+	 * Resolve a partID (plain, or compound - see reparseMessagePart()'s own docblock for why a
+	 * compound one can exist at all) against $_outerStructure to the Horde_Mime_Part it
+	 * addresses - re-parsing across any message/rfc822 boundary a compound partID crosses,
+	 * instead of the plain array-access `$_outerStructure->getPart($_partID)` a bare (non-
+	 * compound) partID would still get, unchanged from before.
+	 *
+	 * @param string $_uid
+	 * @param string $_folder
+	 * @param Horde_Mime_Part $_outerStructure the OUTER (real, IMAP-derived) message's own
+	 *  structure - as returned by getStructure($_uid, null, $_folder, ...)
+	 * @param string $_partID
+	 * @return ?Horde_Mime_Part null if any segment fails to resolve
+	 */
+	private function resolvePart($_uid, $_folder, Horde_Mime_Part $_outerStructure, string $_partID) : ?Horde_Mime_Part
+	{
+		$lastColon = strrpos($_partID, ':');
+		if ($lastColon === false)
+		{
+			return $_outerStructure->getPart($_partID);
+		}
+		$reparsed = $this->reparseMessagePart($_uid, $_folder, substr($_partID, 0, $lastColon));
+		return $reparsed ? $reparsed->getPart(substr($_partID, $lastColon + 1)) : null;
+	}
+
+	/**
+	 * Re-parse a message/rfc822 part's own carried message from its true, decoded bytes, instead
+	 * of trusting the IMAP server's BODYSTRUCTURE for its nested content.
+	 *
+	 * Ticket #125561's own follow-up (a forwarded message with images, viewed via the "view"
+	 * popup, showed no attachments of its own - just the same containing eml again, forever):
+	 * Rfc822AttachmentPart (api/src/Mail/Jmap/Imap.php) declares Content-Transfer-Encoding:
+	 * base64 for a forward-as-attachment's carried message (see its own docblock - RFC 2046
+	 * [5.2.1] only permits 7bit/8bit/binary there; base64 was needed to sidestep a real-world
+	 * delivery-path corruption bug that DID use one of those, found live the same day). Dovecot
+	 * correctly refuses to decode that (illegal for that content-type) when building its own
+	 * BODYSTRUCTURE for the embedded message, so the nested structure it reports for such a part
+	 * collapses to a single degenerate, empty text/plain leaf instead of the real one - found
+	 * live 2026-09-29 (a real image attachment inside the carried message vanished entirely, only
+	 * Dovecot's own placeholder leaf was left to list).
+	 *
+	 * Horde_Mime_Part::parseMessage()'s own internal recursion for a message/rfc822 sub-part
+	 * (its "case 'message':" branch) has the exact same blind spot for the opposite reason: it
+	 * recurses using the raw, still-encoded $body text directly, not the part's own (correctly
+	 * decoded, via setContents() already having applied its declared encoding) getContents() -
+	 * so simply calling parseMessage() on an already-fetched outer structure doesn't help either.
+	 * The only way to get the real nested structure is to fetch this part's own true decoded
+	 * bytes ourselves (Imap::fetchRawPart() already does exactly that, for exactly this reason -
+	 * see its own docblock) and hand THOSE to a fresh, top-level parseMessage() call - never
+	 * relying on either's own automatic one-level-at-a-time recursion to do it for us.
+	 *
+	 * A compound $_wrapperPartID (colon-separated, eg. "2:1.2") addresses a message/rfc822
+	 * wrapper living inside a PREVIOUSLY re-parsed one (a forward-as-attachment of a forward-as-
+	 * attachment, arbitrarily deep) - its own raw bytes are already fully in memory at that point
+	 * (this same method already re-parsed the outer one, and Horde_Mime_Part::setContents()
+	 * during that parse already decoded this inner wrapper's own content correctly, exactly the
+	 * same way it did for the outermost one against real IMAP-fetched bytes) - so no further IMAP
+	 * round trip is needed, just resolvePart() + getContents() on the already-in-memory part.
+	 *
+	 * @param string $_uid
+	 * @param string $_folder
+	 * @param string $_wrapperPartID plain or compound - the message/rfc822 part whose OWN carried
+	 *  message should be re-parsed
+	 * @return ?Horde_Mime_Part null if the raw bytes couldn't be fetched/resolved at all
+	 */
+	private function reparseMessagePart($_uid, $_folder, string $_wrapperPartID) : ?Horde_Mime_Part
+	{
+		$raw = $this->fetchDecodedNestedMessageText($_uid, $_folder, $_wrapperPartID);
+		return $raw !== null ? Horde_Mime_Part::parseMessage($raw, ['forcemime' => true]) : null;
+	}
+
+	/**
+	 * Fetch a message/rfc822 wrapper part's own true, decoded raw bytes (headers + body of the
+	 * message it carries) - the shared primitive reparseMessagePart() (full re-parse, for
+	 * attachment listing) and getMessageHeader() (just the header block, for the "view" popup's
+	 * envelope) both build on. See reparseMessagePart()'s own docblock for the full story on why
+	 * this can't just be a normal IMAP fetch.
+	 *
+	 * @param string $_uid
+	 * @param string $_folder
+	 * @param string $_wrapperPartID plain or compound
+	 * @return ?string null if the raw bytes couldn't be fetched/resolved at all
+	 */
+	private function fetchDecodedNestedMessageText($_uid, $_folder, string $_wrapperPartID) : ?string
+	{
+		$lastColon = strrpos($_wrapperPartID, ':');
+		if ($lastColon === false)
+		{
+			return Mail\Jmap\Imap::fetchRawPart($this->icServer, $_folder, $_uid, $_wrapperPartID);
+		}
+		$outerStructure = $this->getStructure($_uid, null, $_folder, true);
+		$wrapper = $outerStructure ? $this->resolvePart($_uid, $_folder, $outerStructure, $_wrapperPartID) : null;
+		return $wrapper ? $wrapper->getContents() : null;
+	}
+
+	/**
 	 * Parse the structure for attachments
 	 *
 	 * Returns not the attachments itself, but an array of information about the attachment
@@ -6083,7 +6224,26 @@ class Mail
 			//error_log(__METHOD__.' ('.__LINE__.') '.':'.print_r($_structure->contentTypeMap(),true));
 		}
 		if (!$_structure || !$_structure->contentTypeMap()) return array();
-		if (!empty($_partID)) $_structure = $_structure->getPart($_partID);
+		$attachmentPartIdPrefix = '';
+		if (!empty($_partID))
+		{
+			$_structure = $this->resolvePart($_uid, $_folder, $_structure, $_partID);
+			if (!$_structure) return array();
+			if ($_structure->getPrimaryType() === 'message')
+			{
+				$reparsed = $this->reparseMessagePart($_uid, $_folder, $_partID);
+				if ($reparsed)
+				{
+					$_structure = $reparsed;
+					// a compound partID prefix (ticket #125561) for every attachment found from
+					// here on - see resolvePart()'s own docblock for why: Dovecot has no
+					// visibility into this re-parsed tree at all, so a LATER view/download of one
+					// of ITS OWN entries needs the wrapper's own real, IMAP-visible id alongside
+					// the local (relative to this re-parsed root) one, to be resolvable again
+					$attachmentPartIdPrefix = $_partID.':';
+				}
+			}
+		}
 		$skipParts = array();
 		$tnefParts = array();
 		$skip = 0;
@@ -6108,8 +6268,11 @@ class Mail
 			$partDisposition = $part->getDisposition();
 			$partPrimaryType = $part->getPrimaryType();
 			// we only want to retrieve the attachments of the current mail, not those of possible
-			// attached mails
-			if ($mime_type=='message/rfc822' && $_partID!=$mime_id)
+			// attached mails - compares against $_structure's own (possibly re-parsed, see
+			// resolvePart()'s docblock) root id, not the raw $_partID, so this self-reference
+			// guard still works correctly once $_structure is a locally re-parsed tree, whose own
+			// mime ids are no longer relative to $_partID at all
+			if ($mime_type=='message/rfc822' && $_structure->getMimeId()!=$mime_id)
 			{
 				//error_log(__METHOD__.' ('.__LINE__.') '.' Uid:'.$uid.'->'.$mime_id.':'.array2string($part->contentTypeMap()));
 				foreach($part->contentTypeMap() as $sub_id => $sub_type) {if ($sub_id != $mime_id) $skipParts[$sub_id] = $sub_type;}
@@ -6132,14 +6295,15 @@ class Mail
 				($fetchEmbeddedImages && ($partDisposition == 'inline' || empty($partDisposition)) && $partPrimaryType == 'image') ||
 				($fetchTextCalendar && $partPrimaryType == 'text' && $part->getSubType() == 'calendar'))
 			{
-				// if type is message/rfc822 and _partID is given, and MimeID equals partID
-				// we attempt to fetch "ourselves"
-				if ($_partID==$part->getMimeId() && $part->getPrimaryType()=='message') continue;
+				// if type is message/rfc822 and _partID is given, and MimeID equals the
+				// (possibly re-parsed, see above) structure's own root, we attempt to fetch
+				// "ourselves"
+				if ($_structure->getMimeId()==$part->getMimeId() && $part->getPrimaryType()=='message') continue;
 				$attachment = $part->getAllDispositionParameters();
 				$attachment['disposition'] = $part->getDisposition();
 				$attachment['mimeType'] = $mime_type;
 				$attachment['uid'] = $_uid;
-				$attachment['partID'] = $mime_id;
+				$attachment['partID'] = $attachmentPartIdPrefix.$mime_id;
 				if (empty($attachment['name']))
 				{
 					$attachment['name'] = self::attachmentName($part);
@@ -6352,6 +6516,41 @@ class Mail
 		//error_log(__METHOD__.__LINE__."Uid:$_uid, PartId:$_partID, WinMailNr:$_winmail_nr, ReturnPart:$_returnPart, Stream:$_stream, Folder:$_folder".function_backtrace());
 		if (!isset($_folder)) $_folder = $this->sessionData['mailbox'] ?? $this->icServer->getCurrentMailbox();
 		$_uid = $this->jmapResolveUid($_uid, $_folder);
+
+		// Ticket #125561 follow-up: a compound partID (colon-separated, eg. "2:1.2") addresses a
+		// part living inside a base64-wrapped message/rfc822 attachment - see resolvePart()'s/
+		// reparseMessagePart()'s own docblocks for why Dovecot can't resolve into it via a normal
+		// IMAP BODY[] fetch at all (a colon isn't even valid IMAP section-spec syntax).
+		// getMessageAttachments() is what manufactures a compound partID in the first place (only
+		// ever for an entry it found this same way), so this mirrors its own resolution exactly,
+		// rather than ever reaching the normal per-part IMAP fetch below.
+		if (str_contains($_partID, ':'))
+		{
+			$outerStructure = $this->getStructure($_uid, null, $_folder, true);
+			$part = $outerStructure ? $this->resolvePart($_uid, $_folder, $outerStructure, $_partID) : null;
+			if (!$part)
+			{
+				throw new Exception\WrongParameter("Error: Could not fetch attachment for Uid=".array2string($_uid).", PartId=$_partID, WinMailNr=$_winmail_nr, folder=$_folder");
+			}
+			if ($_returnPart)
+			{
+				return $part;
+			}
+			$filename = self::attachmentName($part);
+			$attachmentData = array(
+				'type' => $part->getType(),
+				'charset' => $part->getContentTypeParameter('charset'),
+				'filename' => $filename,
+				'attachment' => $part->getContents(array(
+					'stream' => $_stream && !($filename == 'winmail.dat' && $_winmail_nr)
+				)),
+			);
+			if (strtolower($attachmentData['type']) == 'application/octet-stream')
+			{
+				$attachmentData['type'] = MimeMagic::filename2mime($attachmentData['filename']);
+			}
+			return $attachmentData;
+		}
 
 		$uidsToFetch = new Horde_Imap_Client_Ids();
 		if (!(is_object($_uid) || is_array($_uid))) $_uid = (array)$_uid;

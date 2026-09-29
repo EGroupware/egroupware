@@ -106,6 +106,19 @@ export class MailApp extends EgwApp
 
 	// Aborts the in-flight fetchBody() request when a newer selection supersedes it.
 	previewFetchAbort : AbortController = null;
+
+	// display()'s "view" popup for a message/rfc822 sub-part fires TWO independent async
+	// updates to the same mailDisplayDetails widget - the envelope override (From/To/Subject/
+	// Date, see display()'s own docblock) and renderMessageInto()'s own partID-scoped
+	// attachmentsBlock fetch. Each used to build its OWN merged content snapshot from whatever
+	// stale row data was available at ITS OWN call time and set_value() it wholesale - whichever
+	// one resolved LAST silently reverted the other's already-applied fields (found live
+	// 2026-09-29, ticket #125561's own follow-up: attachments showed correctly, but From/To/
+	// Subject reverted back to the CONTAINING message's own). Both now read-merge-write this one
+	// shared reference instead, so whichever resolves second builds on top of the first's
+	// result rather than overwriting it. A popup window has its own MailApp instance (a separate
+	// page), so this never needs to be keyed by rowId.
+	private _popupMergedContent : any = null;
 	/**
 	 *
 	 */
@@ -2390,6 +2403,10 @@ export class MailApp extends EgwApp
 	 */
 	display()
 	{
+		// reset for _popupMergedContent's own read-merge-write race guard (see its docblock) -
+		// a fresh display() call means a fresh message, never a leftover merge base from
+		// whatever this popup last showed
+		this._popupMergedContent = null;
 		const dataElem : {data : any} = {data:{FROM:"",SENDER:"",TO:"",CC:"",BCC:""}};
 		const content = this.et2.getArrayMgr('content').data;
 
@@ -2411,7 +2428,7 @@ export class MailApp extends EgwApp
 			const details = this.et2.getWidgetById('mailDisplayDetails');
 			if (rowId && details)
 			{
-				this.renderPopupMessage(details, rowId);
+				this.renderPopupMessage(details, rowId, content.part || undefined);
 			}
 			// content.part means this popup is showing a message/rfc822 SUB-part (a forward-as-
 			// attachment's own carried message) - renderPopupMessage() above always shows the
@@ -2419,8 +2436,10 @@ export class MailApp extends EgwApp
 			// docblock), which is wrong for a real forwarded message (found live 2026-09-25, ralf: a
 			// forwarded GitHub notification's popup showed HIS OWN From/To instead of GitHub's).
 			// Overrides just the header/address fields once the attached message's own envelope is
-			// known, on top of whatever renderPopupMessage() already rendered (attachments, uid,
-			// caching, ... all stay the CONTAINING message's own - only the visible header is wrong).
+			// known, on top of whatever renderPopupMessage() already rendered (attachments now come
+			// from the sub-part too, see renderMessageInto()'s own partID handling - only the header
+			// fields still need this separate override, since renderPopupMessage() has no envelope
+			// concept of its own).
 			// Local-shim accounts only - see fetchMessagePartEnvelope()'s own docblock for why.
 			if (rowId && details && content.part)
 			{
@@ -2431,8 +2450,11 @@ export class MailApp extends EgwApp
 				}).then((envelope : any) =>
 				{
 					if (!envelope) return;
-					const current = egw.dataGetUIDdata(rowId)?.data ?? {};
-					details.set_value({content: {
+					// read-merge-write this._popupMergedContent, not a fresh snapshot - see its own
+					// docblock for why (races against renderMessageInto()'s own partID-scoped
+					// attachmentsBlock update for this same widget)
+					const current = this._popupMergedContent ?? egw.dataGetUIDdata(rowId)?.data ?? {};
+					this._popupMergedContent = {
 						...current,
 						subject: envelope.subject,
 						date: envelope.date,
@@ -2445,7 +2467,8 @@ export class MailApp extends EgwApp
 						additionaltoaddress: envelope.to,
 						ccaddress: envelope.cc,
 						bccaddress: envelope.bcc,
-					}});
+					};
+					details.set_value({content: this._popupMergedContent});
 				}).catch((e) => console.error('MailApp.display(): fetchMessagePartEnvelope failed', e));
 			}
 
@@ -2481,8 +2504,11 @@ export class MailApp extends EgwApp
 	 *
 	 * @param template the mailDisplayDetails grid widget
 	 * @param rowId
+	 * @param partID mail_ui::displayMessage()'s own `part` GET param (content.part), threaded
+	 *  through to renderMessageInto() - see its own docblock for why a sub-part view needs its
+	 *  OWN, separately-fetched attachmentsBlock
 	 */
-	renderPopupMessage(template, rowId : string)
+	renderPopupMessage(template, rowId : string, partID? : string)
 	{
 		let openerData : any;
 		try
@@ -2497,7 +2523,7 @@ export class MailApp extends EgwApp
 
 		if (openerData && Object.keys(openerData).length)
 		{
-			const data = this.renderMessageInto(template, rowId, openerData);
+			const data = this.renderMessageInto(template, rowId, openerData, partID);
 			this.registerForDrag(rowId, data.attachmentsBlock);
 		}
 		else
@@ -2524,7 +2550,7 @@ export class MailApp extends EgwApp
 				if (_data)
 				{
 					egw.dataStoreUID(_data.uid ?? rowId, _data);
-					const data = this.renderMessageInto(template, rowId, _data);
+					const data = this.renderMessageInto(template, rowId, _data, partID);
 					this.registerForDrag(rowId, data.attachmentsBlock);
 				}
 			}).catch((e) =>
@@ -2623,17 +2649,54 @@ export class MailApp extends EgwApp
 	 * @param rowId
 	 * @param data optional pre-resolved row data (e.g. from window.opener's cache); defaults to
 	 *  this window's own egw.dataGetUIDdata(rowId).data
+	 * @param partID mail_ui::displayMessage()'s own `part` GET param - set only for the "view"
+	 *  popup showing a message/rfc822 SUB-part (a forward-as-attachment's own carried message),
+	 *  never for the ordinary preview pane. `data` (from the row cache) is the CONTAINING
+	 *  message's own - its attachmentsBlock is already resolved (typically just the carried
+	 *  message itself), so the on-demand fetches below never fire, and the popup showed the
+	 *  containing message's own attachment (the very .eml being viewed) instead of the carried
+	 *  message's real attachments - clicking it just reopened the same view again (found live,
+	 *  ticket #125561's own follow-up: "I can open the forwarded eml, but it does not show the
+	 *  original attachment, but the eml again"). Fetched fresh, scoped to partID, every time -
+	 *  never written back to egw.dataStoreUID()/mutated onto the shared `data` object, since that
+	 *  cache entry is keyed by the CONTAINING message's own uid and is shared with the message
+	 *  list/preview pane for THAT message - overwriting it with the sub-part's own attachments
+	 *  would corrupt every other view of the containing message too.
 	 * @return the row data object (attachmentsBlock may still be updating asynchronously)
 	 */
-	renderMessageInto(template, rowId : string, data? : any) : any
+	renderMessageInto(template, rowId : string, data? : any, partID? : string) : any
 	{
 		const sel_options = {};
 		const attachmentsBlock = this.et2.getWidgetById('attachmentsBlock');
 		data = data ?? egw.dataGetUIDdata(rowId).data ?? {};
 		data.emailTag = egw.preference('emailTag', 'mail') ?? 'onlyname';
 
+		if (partID)
+		{
+			if (attachmentsBlock) attachmentsBlock.getDOMNode().classList.add('loading');
+			// Not this.egw.jsonq() - same Link::set_data() session-persistence reason as the
+			// other on-demand attachment fetches in this method.
+			this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_fetchAttachments', [rowId, null, partID]).then(async(_data) =>
+			{
+				if (attachmentsBlock) attachmentsBlock.getDOMNode().classList.remove('loading');
+				if (!_data || !Array.isArray(_data.attachmentsBlock))
+				{
+					return;
+				}
+				const partSelOptions = {};
+				// read-merge-write this._popupMergedContent, not a fresh clone of `data` - see its
+				// own docblock for why (races against display()'s own envelope override for this
+				// same widget); still never egw.dataStoreUID()'d, for the reason stated above
+				const current = this._popupMergedContent ?? data;
+				const partData = {...current, attachmentsBlock: _data.attachmentsBlock};
+				this.setupViewAttachmentActions(partData, partSelOptions);
+				await this.resolveAttachmentViewUrls(rowId, partData.attachmentsBlock);
+				this._popupMergedContent = partData;
+				if (!egwIsMobile() && template) template.set_value({content: partData, sel_options: partSelOptions});
+			});
+		}
 		// Try to resolve winmail.data attachment
-		if (data && data.attachmentsBlock && data.attachmentsBlock[0]
+		else if (data && data.attachmentsBlock && data.attachmentsBlock[0]
 				&& data.attachmentsBlock[0].winmailFlag
 				&& (data.attachmentsBlock[0].mimetype =='application/ms-tnef' ||
 				data.attachmentsBlock[0].filename == "winmail.dat"))
@@ -2730,7 +2793,10 @@ export class MailApp extends EgwApp
 			});
 		}
 
-		if (data.attachmentsBlock)
+		// partID: skip resolving/rendering the CONTAINING message's own attachmentsBlock entirely -
+		// the async fetch above already renders the sub-part's own once it resolves; doing this too
+		// would just flash the wrong (containing message's) attachments first.
+		if (!partID && data.attachmentsBlock)
 		{
 			this.setupViewAttachmentActions(data, sel_options);
 			this.resolveAttachmentViewUrls(rowId, data.attachmentsBlock).then((changed) =>
@@ -2743,7 +2809,14 @@ export class MailApp extends EgwApp
 			});
 		}
 
-		if (!egwIsMobile() && template) template.set_value({content:data, sel_options:sel_options});
+		if (partID)
+		{
+			// seed this._popupMergedContent - see its own docblock. Nothing has resolved yet at
+			// this point (this whole method is still running synchronously), so this is always
+			// the first of the two racing updates to run.
+			this._popupMergedContent = {...data, attachmentsBlock: []};
+		}
+		if (!egwIsMobile() && template) template.set_value({content: partID ? this._popupMergedContent : data, sel_options:sel_options});
 
 		return data;
 	}

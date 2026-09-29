@@ -2517,14 +2517,20 @@ class Ui
 	 * (mail/js/app.ts) only ever passes the NON-TNEF attachments here, having already routed any
 	 * TNEF/winmail.dat entry to ajax_resolveWinmail() above instead - see its own docblock.
 	 *
+	 * $_partID (ticket #125561 follow-up): the "view" popup's own message/rfc822 sub-part
+	 * (renderMessageInto()'s own partID param) - resolveAttachmentsJmap() explicitly doesn't
+	 * implement this (see its own docblock), so this always falls through to
+	 * resolveAttachmentsBlock(), which does (Api\Mail::getMessageAttachments($uid, $partID)).
+	 *
 	 * @param string $_rowid row id from nm
 	 * @param ?array $_attachments
+	 * @param ?string $_partID
 	 * @return void
 	 */
-	function ajax_fetchAttachments($_rowid, $_attachments=null)
+	function ajax_fetchAttachments($_rowid, $_attachments=null, $_partID=null)
 	{
 		Api\Json\Response::get()->data([
-			'attachmentsBlock' => AttachmentJmap::resolveAttachmentsJmap($_rowid, null, false, $_attachments) ?? $this->attachmentHandler()->resolveAttachmentsBlock($_rowid),
+			'attachmentsBlock' => AttachmentJmap::resolveAttachmentsJmap($_rowid, $_partID, false, $_attachments) ?? $this->attachmentHandler()->resolveAttachmentsBlock($_rowid, $_partID),
 		]);
 	}
 
