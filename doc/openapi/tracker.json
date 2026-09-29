@@ -819,17 +819,6 @@
         },
         "example": { "x": { "email": "john@example.org", "roles": { "attendee": true } } }
       },
-      "AssignedUser": {
-        "type": "object",
-        "required": ["uid"],
-        "properties": {
-          "uid": {
-            "type": "string",
-            "description": "SCIM user URN in the format 'urn:ietf:params:scim:schemas:core:2.0:User:{username}'",
-            "example": "urn:ietf:params:scim:schemas:core:2.0:User:john"
-          }
-        }
-      },
       "TicketCollection": {
         "type": "object",
         "description": "Collection of tickets returned by list endpoints.",
