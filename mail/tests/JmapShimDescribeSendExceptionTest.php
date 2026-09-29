@@ -92,4 +92,31 @@ class JmapShimDescribeSendExceptionTest extends \PHPUnit\Framework\TestCase
 		$this->assertStringContainsString('450 4.2.1 <someone@example.org>: over quota', $logged,
 			'the raw, specific server response must reach the log, not just the generic message');
 	}
+
+	/**
+	 * The exception ACTUALLY reaching emailSubmissionSet()'s catch (see ticket #125201's own real
+	 * error log) is never a bare Horde_Smtp_Exception - Horde_Mime_Part::send() wraps it into
+	 * Horde_Mail_Exception, then Horde_Mime_Exception. Both wrappers extend Horde_Exception_Wrapped,
+	 * which copies ->details forward from whatever it wraps at construction time - found live: the
+	 * server error log already showed the specific reason (via that automatic copying +
+	 * _egw_log_exception()'s own ->details check) even before this fix, but describeSendException()
+	 * itself still only ever checked `instanceof Horde_Smtp_Exception` directly, which a
+	 * Horde_Mime_Exception never satisfies - so the CLIENT-facing description stayed the generic
+	 * "Mailbox unavailable." regardless. This is what actually reproduces (and fixes) that gap.
+	 */
+	public function testUnwrapsDetailsThroughHordeMimeExceptionAndHordeMailException()
+	{
+		$smtp = $this->hordeSmtpException(450, '<info@khami-fitness.de>: Recipient address rejected: Domain not found');
+		// Horde_Smtp::_getResponse()'s own convention (api/thumbnail.php's own sibling finding,
+		// ticket #125201) - sets this directly, not through any wrapping mechanism
+		$smtp->details = '<info@khami-fitness.de>: Recipient address rejected: Domain not found';
+		$mime = new \Horde_Mime_Exception(new \Horde_Mail_Exception($smtp));
+
+		$this->assertSame('Mailbox unavailable.', $mime->getMessage(),
+			'confirms the fixture really is the generic-message wrapper the real bug hit');
+
+		$description = $this->describeSendException($mime);
+
+		$this->assertSame('<info@khami-fitness.de>: Recipient address rejected: Domain not found', $description);
+	}
 }

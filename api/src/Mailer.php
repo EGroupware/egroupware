@@ -42,6 +42,23 @@ class Mailer extends Horde_Mime_Mail
 	protected $account;
 
 	/**
+	 * Recipients a successful send() still could NOT deliver to, address => reason - ticket
+	 * #125201 (a real customer, a distribution-list send aborting entirely for everyone because
+	 * of one dead domain in a 300-address list). send()'s own catch retries once, excluding
+	 * whichever recipients the SMTP server itself rejected (Horde_Smtp_Exception_Recipients,
+	 * see its own docblock) - if that retry succeeds, send() returns normally (no exception) and
+	 * this is populated instead, so the caller can still tell the user which addresses did NOT
+	 * get the message, same information a classic MTA-level bounce email used to carry, just
+	 * surfaced immediately instead of arriving later as a separate email.
+	 *
+	 * Reset at the start of every send() call - always check this AFTER a successful send(), not
+	 * merely non-empty from a previous call.
+	 *
+	 * @var array
+	 */
+	public $failedRecipients = array();
+
+	/**
 	 * Header / recipients set via Add(Address|Cc|Bcc|Replyto)
 	 *
 	 * @var Horde_Mail_Rfc822_List
@@ -536,9 +553,73 @@ class Mailer extends Horde_Mime_Mail
 	 * @throws Exception\NotFound for no smtp account available
 	 * @throws Horde_Mime_Exception
 	 */
+
+	/**
+	 * The FULL effective envelope recipient list _send() would actually use - $this->_recipients
+	 * plus the To/Cc header addresses plus Bcc, deduplicated - WITHOUT sending anything. Mirrors
+	 * _send()'s own recipient-building block exactly (kept in sync manually, that one can't just
+	 * call this - it needs the intermediate $recipients variable itself, not a fresh clone).
+	 *
+	 * Used by send()'s own retry guard to tell "some recipients rejected, some still good" apart
+	 * from "every recipient was rejected" - retrying in the latter case would only replace an
+	 * already-detailed rejection with a likely much less clear "no recipients at all" failure.
+	 */
+	private function effectiveRecipients() : \Horde_Mail_Rfc822_List
+	{
+		$recipients = clone $this->_recipients;
+		foreach (array('to', 'cc') as $header)
+		{
+			if ($h = $this->_headers[$header])
+			{
+				$recipients->add($h->getAddressList());
+			}
+		}
+		if (!empty($this->_bcc))
+		{
+			$recipients->add($this->_bcc);
+		}
+		$recipients->unique();
+		return $recipients;
+	}
+
+	/**
+	 * Walk an exception's own getPrevious() chain looking for a Horde_Smtp_Exception_Recipients -
+	 * see send()'s own docblock for why: Horde_Mime_Part::send()/Horde_Mail_Transport_Smtphorde
+	 * wrap it (Horde_Mail_Exception, then Horde_Mime_Exception) before it ever reaches here.
+	 */
+	private static function findRecipientsException(\Throwable $e) : ?\Horde_Smtp_Exception_Recipients
+	{
+		for ($current = $e; $current; $current = $current->getPrevious())
+		{
+			if ($current instanceof \Horde_Smtp_Exception_Recipients)
+			{
+				return $current;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * A Horde_Smtp_Exception_Recipients' own reason text (Horde_Smtp's own $details, the SMTP
+	 * server's raw response) usually already names the FIRST rejected address itself (eg.
+	 * "<info@khami-fitness.de>: Recipient address rejected: Domain not found") - stripped here,
+	 * since send() pairs this SAME reason with EVERY address in ->recipients, not just that first
+	 * one. Horde's own library never retains a distinct reason per address beyond the first (see
+	 * its RCPT-TO loop, Horde_Smtp::sendMessage()) - reusing this one (admittedly sometimes
+	 * imprecise for a 2nd/3rd address) reason for all of them is the best available without
+	 * patching that library.
+	 */
+	private static function describeRecipientsRejection(\Horde_Smtp_Exception_Recipients $e) : string
+	{
+		$reason = $e->details ?: $e->getMessage();
+		return preg_replace('/^<[^>]*>:\s*/', '', $reason);
+	}
+
 	function send($transport=null, $resend=true, $flowed=null, array $opts = array())
 	{
 		unset($resend);	// parameter is not used, but required by function signature
+
+		$this->failedRecipients = array();
 
 		if (!($message_id = $this->getHeader('Message-ID')) &&
 			class_exists('Horde_Mime_Headers_MessageId'))	// since 2.5.0
@@ -624,6 +705,62 @@ class Mailer extends Horde_Mime_Mail
 			$this->_send($transport ? $transport : $this->account->smtpTransport(), true, $flowed, $opts);	// true: keep Message-ID
 		}
 		catch (\Exception $e) {
+			// ticket #125201: a distribution-list send used to abort entirely (nobody got the
+			// message at all) just because ONE recipient's domain doesn't exist / mailbox is
+			// unavailable - Horde_Smtp's own RCPT-TO handling deliberately collects EVERY
+			// rejected recipient into ONE Horde_Smtp_Exception_Recipients (possibly wrapped
+			// further by the time it reaches here, eg. Horde_Mail_Exception then
+			// Horde_Mime_Exception - findRecipientsException() walks the whole getPrevious()
+			// chain), then refuses to even attempt DATA for anyone at all (that library's own
+			// code comment: "Can't pipeline DATA since we want to throw an exception if ANY of
+			// the recipients are bad").
+			//
+			// Retried once here, excluding exactly those recipients from the SMTP ENVELOPE only
+			// (never the To/Cc header text itself - see _send()'s own $excludeRecipients
+			// docblock). If that retry succeeds, this is a normal send with some addresses
+			// undeliverable (reported via $this->failedRecipients for the caller to tell the
+			// user), not a hard failure - matches what a classic MTA-level bounce used to do
+			// (deliver to everyone else, bounce back only the bad address) instead of blocking
+			// an entire distribution list on one bad address. If the retry ALSO throws (eg.
+			// every single recipient was rejected, nothing left to send to at all), that second,
+			// real failure propagates normally below - $e2 replaces $e, $failedRecipients is
+			// cleared again, exactly as if this whole recovery attempt had never happened.
+			if (($rejected = self::findRecipientsException($e)) && $rejected->recipients)
+			{
+				$reason = self::describeRecipientsRejection($rejected);
+				foreach ($rejected->recipients as $address)
+				{
+					$this->failedRecipients[$address] = $reason;
+				}
+				// Skip the retry entirely when it would leave NOTHING to send to (eg. a single-
+				// recipient send whose one-and-only recipient is the rejected one) - there is
+				// nothing to recover here, and attempting it anyway risks masking the ORIGINAL,
+				// already-detailed rejection (see describeSendException(), Mail/Jmap/Imap.php)
+				// behind a second, likely much less clear "no recipients" failure instead. Falls
+				// straight through to the existing hook+rethrow below with the ORIGINAL exception.
+				$remaining = $this->effectiveRecipients();
+				$remaining->remove(array_keys($this->failedRecipients));
+				if (count($remaining))
+				{
+					try
+					{
+						$this->_send($transport ? $transport : $this->account->smtpTransport(), true, $flowed, $opts,
+							array_keys($this->failedRecipients));
+						unset($e);	// retry succeeded - no longer a failure
+					}
+					catch (\Exception $e2)
+					{
+						$this->failedRecipients = array();
+						$e = $e2;
+					}
+				}
+				else
+				{
+					$this->failedRecipients = array();
+				}
+			}
+		}
+		if (isset($e)) {
 			// in case of errors/exceptions call hook again with previous returned mail_id and error-message to log
 			Hooks::process(array(
 				'location' => 'send_mail',
@@ -717,7 +854,7 @@ class Mailer extends Horde_Mime_Mail
      *
      * @throws Horde_Mime_Exception
      */
-    public function _send($mailer, $resend = false, $flowed = true, array $opts = array())
+    public function _send($mailer, $resend = false, $flowed = true, array $opts = array(), array $excludeRecipients = array())
     {
 		/* Add mandatory headers if missing. */
 	    self::checkSetRequiredHeaders($this->_headers);
@@ -773,6 +910,16 @@ class Mailer extends Horde_Mime_Mail
 		}
 		if (!empty($this->_bcc)) {
 			$recipients->add($this->_bcc);
+		}
+
+		// ticket #125201: a retry after send()'s own catch stripped a rejected recipient - this
+		// removes them from the actual SMTP ENVELOPE only, deliberately NOT from $this->_recipients/
+		// the To/Cc HEADER text itself (still shows every originally-intended recipient, same
+		// convention a classic MTA-level bounce always had: the recipient headers reflect who the
+		// message was addressed to, delivery success/failure is a separate envelope-level concern).
+		if ($excludeRecipients)
+		{
+			$recipients->remove($excludeRecipients);
 		}
 
 		/* Trick Horde_Mime_Part into re-generating the message headers. */

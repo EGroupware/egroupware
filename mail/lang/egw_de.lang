@@ -722,6 +722,7 @@ the s/mime certificate stored in the address book for %1 does not match your acc
 the s/mime certificate stored in the address book for %1 is not valid - check for duplicate/broken address book entries for this address.	mail	de	Das im Adressbuch für %1 gespeicherte S/MIME-Zertifikat ist ungültig - bitte auf doppelte oder fehlerhafte Adressbucheinträge für diese Adresse prüfen.
 the total size of the attachments exceeds the limit of %1 mb	mail	de	Die Größe der Anhänge überschreitet %1 MB
 the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	de	Die Größe der Anhänge überschreitet %1 MB. Es wurde auf "Link zum Herunterladen" umgestellt.
+the mail was sent successfully to all recipients, except the following: %1	mail	de	Die E-Mail wurde erfolgreich an alle Empfänger gesendet, außer an folgende: %1
 then	mail	de	dann
 there is no imap server configured.	mail	de	Es ist kein IMAP-Server konfiguriert.
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	de	Es ist kein Platz mehr vorhanden, um das Sieve Skript zu speichern, bitte Sie Ihren Administrator die Option sieve_maxscriptsize in der Konfiguration Ihres Mailservers zu prüfen.
