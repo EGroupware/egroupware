@@ -181,13 +181,6 @@ export class Et2HtmlArea extends Et2MarkdownEditMixin(Et2InputWidget(LitElement)
 	width = "";
 
 	/**
-	 * URL to upload dragged or pasted images, or the id of a link_to-style
-	 * widget whose VFS path should receive the upload.
-	 */
-	@property({type: String, attribute: "image-upload"})
-	imageUpload = "";
-
-	/**
 	 * Callback function to get called when file picker is clicked.
 	 */
 	@property({type: Function, attribute: false})

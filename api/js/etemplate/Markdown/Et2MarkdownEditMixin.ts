@@ -200,6 +200,23 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
 		markdownMode : MarkdownMode = "view";
 
 		/**
+		 * Where an uploaded image goes: the id of a link_to-style widget whose entry should
+		 * receive it, or a URL to post to.
+		 *
+		 * Lives here rather than on each host because both of them need exactly the same answer -
+		 * et2-htmlarea for the images TinyMCE uploads on drag/paste, and any markdown field for
+		 * the ones pasted, dropped or attached through the format popup.  Two declarations meant
+		 * two places to keep in step, and a markdown textarea that had none at all until one was
+		 * added for it.
+		 *
+		 * Empty by default, NOT "link_to": et2-htmlarea reads this in html mode too, where an
+		 * empty value selects TinyMCE's plain upload endpoint.  firstUpdated() fills in the
+		 * default, and only once markdown is actually on.
+		 */
+		@property({type: String, attribute: "image-upload"})
+		imageUpload = "";
+
+		/**
 		 * May a file be attached from the format popup?
 		 *
 		 * Set by the server, which is the only side that can see whether the entry this field
@@ -273,28 +290,28 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
 					this.markdownMode = <MarkdownMode>preference;
 				}
 			}
-			// Attaching wants the same target TinyMCE's image upload wants, so it uses the same
-			// attribute - and defaults it, rather than reading past it, so a host that does have
-			// imageUpload (Et2HtmlArea) ends up agreeing with us about where a file goes.
-			// Set here, not in a field initializer: a subclass's own `imageUpload = ""` would run
-			// after ours and quietly win.
-			if(!(<any>this).imageUpload)
+			// Default it here rather than in the field initializer above: that initializer also
+			// runs for an et2-htmlarea in html mode, where an empty imageUpload is meaningful
+			// (it picks TinyMCE's plain upload endpoint) and "link_to" would change where every
+			// dragged-in image goes.  Only a markdown field wants the default, and only if the
+			// template did not already say.
+			if(!this.imageUpload)
 			{
-				(<any>this).imageUpload = MARKDOWN_UPLOAD_WIDGET;
+				this.imageUpload = MARKDOWN_UPLOAD_WIDGET;
 			}
 		}
 
 		/**
 		 * Whose content the upload endpoint should read the target entry from.
 		 *
-		 * The host's own `imageUpload` - the attribute TinyMCE already uses for exactly this, so
-		 * a field that accepts dragged-in images in html mode accepts attached ones in markdown
-		 * without being configured twice.  firstUpdated() defaults it to "link_to", the content
-		 * key every app with a Links tab already fills with {to_app, to_id}.
+		 * `imageUpload` - the same attribute TinyMCE uses for exactly this, so a field that accepts
+		 * dragged-in images in html mode accepts pasted ones in markdown without being configured
+		 * twice.  firstUpdated() defaults it to "link_to", the content key every app with a Links
+		 * tab already fills with {to_app, to_id}.
 		 */
 		protected get _markdownUploadWidgetId() : string
 		{
-			return (<any>this).imageUpload || MARKDOWN_UPLOAD_WIDGET;
+			return this.imageUpload || MARKDOWN_UPLOAD_WIDGET;
 		}
 
 		/**
