@@ -123,6 +123,40 @@ function isInlineImage(mime: string): boolean
 }
 
 /**
+ * Every browser hands a pasted screenshot over as "image.png", every single time.
+ *
+ * The store overwrites a file of the same name, so pasting a second screenshot into the same entry
+ * would replace the first one on disk and leave both links pointing at the survivor.  Only a name
+ * the browser clearly invented is replaced - a file copied out of a file manager keeps its own.
+ */
+function namePastedImage(file : File) : File
+{
+	if(file.name && !/^image\.[a-z0-9]+$/i.test(file.name))
+	{
+		return file;
+	}
+	// from the name if it had one, else from the mime type - "image/svg+xml" would otherwise
+	// become a file called ".svg+xml"
+	const extension = (file.name?.split(".").pop() || file.type.split("/").pop() || "png")
+		.toLowerCase().replace(/[^a-z0-9]/g, "") || "png";
+	const stamp = new Date().toISOString().replace(/[-:T]/g, "").slice(0, 14);
+	return new File([file], `image-${stamp}-${Math.random().toString(36).slice(2, 6)}.${extension}`,
+		{type: file.type});
+}
+
+/**
+ * The files carried by a paste or a drop.
+ *
+ * @param data clipboardData or dataTransfer
+ * @param imagesOnly paste is restricted to images - see _handleMarkdownPaste()
+ */
+function transferredFiles(data : DataTransfer, imagesOnly : boolean) : File[]
+{
+	const files = Array.from(data?.files ?? []);
+	return imagesOnly ? files.filter(file => /^image\//.test(file.type)).map(namePastedImage) : files;
+}
+
+/**
  * Adds a markdown *editing* surface to a widget that edits its value in a plain textarea.
  *
  * Composes Et2MarkdownMixin rather than extending it: that mixin is display-only and is already
@@ -554,6 +588,102 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
 		}
 
 		/**
+		 * Paste an image straight into the text.
+		 *
+		 * This is the gesture that matters: screenshot, Ctrl+V, done - and the one the html editor
+		 * has had all along (Et2HtmlArea gives TinyMCE paste_data_images and the same upload URL),
+		 * so markdown mode was the odd one out.
+		 *
+		 * Images only.  A paste carries whatever is on the clipboard and most pastes are text; a
+		 * copied PDF has to go through the attach button, where the user asked for it explicitly.
+		 */
+		protected _handleMarkdownPaste = (event : ClipboardEvent) =>
+		{
+			if(!this._canUploadMarkdownFiles())
+			{
+				return;
+			}
+			const files = transferredFiles(event.clipboardData, true);
+			if(!files.length)
+			{
+				return;
+			}
+			// only now, or a plain text paste would lose its text
+			event.preventDefault();
+			this._handleMarkdownFilesChosen(files, this._handleMarkdownFileStart());
+		};
+
+		/**
+		 * Let a file dropped on the source through, so the browser fires "drop" at all.
+		 */
+		protected _handleMarkdownDragOver = (event : DragEvent) =>
+		{
+			if(!this._canUploadMarkdownFiles() || !event.dataTransfer?.types?.includes("Files"))
+			{
+				return;
+			}
+			event.preventDefault();
+			event.dataTransfer.dropEffect = "copy";
+		};
+
+		/**
+		 * Drop a file into the text, at the point it was dropped on.
+		 *
+		 * Any file, not just images - a drop is as deliberate as picking one through the button,
+		 * and a non-image just becomes a link instead of an embed.
+		 */
+		protected _handleMarkdownDrop = (event : DragEvent) =>
+		{
+			if(!this._canUploadMarkdownFiles())
+			{
+				return;
+			}
+			const files = transferredFiles(event.dataTransfer, false);
+			if(!files.length)
+			{
+				return;
+			}
+			event.preventDefault();
+			// et2-file listens for drops on a container around us (dropTarget), and would upload
+			// the same file a second time as an attachment of its own
+			event.stopPropagation();
+
+			const node = this._markdownSourceNode;
+			const offset = this._markdownDropOffset(event);
+			if(node && offset !== null)
+			{
+				node.focus();
+				node.setSelectionRange(offset, offset);
+			}
+			this._handleMarkdownFilesChosen(files, this._handleMarkdownFileStart());
+		};
+
+		/**
+		 * Where in the source a drop landed, or null if the browser will not say.
+		 */
+		protected _markdownDropOffset(event : DragEvent) : number | null
+		{
+			const node = this._markdownSourceNode;
+			const caret = (<any>document).caretPositionFromPoint?.(event.clientX, event.clientY,
+				{shadowRoots: [this.shadowRoot]});
+			// the textarea renders its text in an internal node, so the offset is already the one
+			// we want - but only if the drop actually landed in our own source
+			return node && caret?.offsetNode && node.contains(caret.offsetNode) ? caret.offset : null;
+		}
+
+		/**
+		 * May a pasted or dropped file be uploaded right now?
+		 *
+		 * Same gate as the attach button: without a target the upload endpoint has nowhere to put
+		 * the file and answers with a whole data: URL, which does not belong in an entry's text.
+		 */
+		protected _canUploadMarkdownFiles() : boolean
+		{
+			return this.markdown && this.canAttachFile && this.markdownMode !== "view"
+				&& !(<any>this).readonly && !(<any>this).disabled;
+		}
+
+		/**
 		 * Show the popup while there is a selection in the source, hide it otherwise.
 		 */
 		protected _markdownUpdatePopup()
@@ -833,14 +963,24 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
 			// preview that removed it would throw on the next update.
 			const hideSource = this.markdownMode === "view";
 
+			// paste/drop live on the source pane rather than the shell, so a drop on the preview
+			// is not silently treated as a drop into the text behind it
 			const panes = this.markdownMode === "split"
 				? html`
                     <et2-split>
-                        <div slot="start" class="markdown-shell__source">${source}</div>
+                        <div slot="start" class="markdown-shell__source"
+                             @paste=${this._handleMarkdownPaste}
+                             @dragover=${this._handleMarkdownDragOver}
+                             @drop=${this._handleMarkdownDrop}
+                        >${source}</div>
                         <div slot="end">${preview}</div>
                     </et2-split>`
 				: html`
-                    <div class="markdown-shell__source" ?hidden=${hideSource}>${source}</div>
+                    <div class="markdown-shell__source" ?hidden=${hideSource}
+                         @paste=${this._handleMarkdownPaste}
+                         @dragover=${this._handleMarkdownDragOver}
+                         @drop=${this._handleMarkdownDrop}
+                    >${source}</div>
 					${hideSource ? preview : nothing}`;
 
 			return html`
