@@ -736,7 +736,8 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
 		};
 
 		/**
-		 * Clicking the preview puts the caret back into the source where it was clicked.
+		 * Clicking the preview puts the caret back into the source where it was clicked,
+		 * or after the last word when the click landed on no text.
 		 *
 		 * In preview it switches to edit first; in split the editor is already visible, so it only
 		 * moves the caret.  That switch deliberately does NOT write the view preference - the user
@@ -751,15 +752,16 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
 				return;
 			}
 
+			const value = this._host.value ?? "";
 			const block = target.closest("[data-source-line]");
 			const line = parseInt(block?.getAttribute("data-source-line") ?? "", 10);
-			if(isNaN(line))
-			{
-				return;
-			}
 
-			const value = this._host.value ?? "";
-			const offset = this._markdownCaretOffset(event, <HTMLElement>block, line, value);
+			// A click that hit no block at all - the empty space under the text, or the whole
+			// pane when there is no text yet - still means "let me edit this", so it lands after
+			// the last word rather than doing nothing.  An empty field renders no blocks, so
+			// without this there was no way into the editor by clicking at all.
+			const offset = isNaN(line) ? value.length :
+						   this._markdownCaretOffset(event, <HTMLElement>block, line, value);
 
 			if(this.markdownMode === "view")
 			{

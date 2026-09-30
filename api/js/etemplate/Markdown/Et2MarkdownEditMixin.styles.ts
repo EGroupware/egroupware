@@ -52,9 +52,14 @@ export default css`
 
 	/* the preview scrolls on its own, so a long document cannot stretch the field */
 	.markdown-shell__preview {
-		/* it is the way back into the editor,*/
-                        height: 100%;
-                        box-sizing: border-box;
+		/* It is the way back into the editor - a click anywhere on it puts the caret in the
+		   source - so it has to BE somewhere.  height:100% is what does that: a visible field
+		   always has a height from somewhere.  min-height only covers the case where it does
+		   not (an empty preview has no content to hold it open), and costs nothing when it
+		   does. */
+		height: 100%;
+		min-height: var(--sl-input-height-medium, 2.5rem);
+		box-sizing: border-box;
 		cursor: text;
 		overflow: auto;
 		padding: var(--sl-spacing-x-small);
