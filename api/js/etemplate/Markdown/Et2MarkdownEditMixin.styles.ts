@@ -9,7 +9,7 @@
 import {css} from "lit";
 
 /**
- * The editor's own chrome - the view switcher, the split layout and the format popup.
+ * The editor's own chrome - the field controls, the split layout and the format popup.
  *
  * Styling for the *rendered* markdown is a separate concern and lives in markdown.less, which
  * reaches shadow DOM through Markdown.styles.ts and the light DOM through widgets.less.
@@ -68,22 +68,31 @@ export default css`
 		border-radius: var(--sl-input-border-radius-medium);
 	}
 
-	/* the view switcher sits over the top-right corner of the editor, next to
-	   the AI button in the top-right - including staying out of the way until
-	   you go looking for it (Et2Ai.styles.ts does the same with visibility) */
-	.markdown-view {
-		visibility: hidden;
-		position: absolute;
-		top: var(--sl-spacing-3x-small);
-		right: var(--sl-spacing-medium);
-		z-index: 1;
+	/* Positions the field controls - see _fieldControlsTemplate() */
+	:host {
+		position: relative;
 	}
 
-	/* focus-within is ours, not the AI button's: hover alone would put the
-	   switcher out of reach of the keyboard entirely.  [open] keeps the panel
-	   usable once the pointer has moved off the trigger onto the panel. */
-	.markdown-shell:hover .markdown-view,
-	.markdown-shell:focus-within .markdown-view,
+	/* One strip over the top-right corner of the field holds every control that lives there -
+	   our view switcher and whatever is slotted in, eg. et2-ai's button - so they line up
+	   with each other instead of each guessing where the other one is.  Each control keeps its
+	   own size; only the placement is shared.
+	   It stays out of the way until you go looking for it.  focus-within as well as hover, or
+	   the controls would be out of reach of the keyboard entirely. */
+	.field-controls {
+		visibility: hidden;
+		position: absolute;
+		top: var(--sl-spacing-2x-small);
+		right: var(--sl-spacing-2x-small);
+		z-index: 1;
+		display: flex;
+		align-items: center;
+		gap: var(--sl-spacing-3x-small);
+	}
+
+	/* [open] keeps the panel usable once the pointer has moved off the trigger onto the panel */
+	:host(:hover) .field-controls,
+	:host(:focus-within) .field-controls,
 	.markdown-view[open] {
 		visibility: visible;
 	}

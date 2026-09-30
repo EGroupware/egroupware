@@ -159,12 +159,18 @@ function transferredFiles(data : DataTransfer, imagesOnly : boolean) : File[]
 /**
  * Adds a markdown *editing* surface to a widget that edits its value in a plain textarea.
  *
- * Composes Et2MarkdownMixin rather than extending it: that mixin is display-only and is already
- * on Et2Description and Et2Ai, where a view mode and a format popup would mean nothing.
+ * Composes Et2MarkdownMixin rather than extending it: that mixin is display-only
  *
- * The host keeps rendering its own editor; this mixin wraps it.  When `markdown` is false the
- * mixin contributes nothing at all - the host is expected to return its untouched template - so
- * turning the feature off restores today's behaviour exactly.
+ * The host keeps rendering its own editor; this mixin wraps it.
+ * When `markdown` is false the shell is left out - the host is expected to return its untouched template -
+
+ * The field controls are the exception: the host renders them whether markdown is on or not, so
+ * whatever is slotted into them (eg. et2-ai's button) has one place to go on every such field.
+ *
+ * @slot field-controls - Controls shown over the top-right corner of the field, next to the view
+ *     switcher.  Et2Ai puts its button here.
+ *
+ * @csspart field-controls - The strip over the top-right corner holding the controls.
  *
  * @example
  * export class Et2Example extends Et2MarkdownEditMixin(Et2InputWidget(LitElement))
@@ -172,7 +178,8 @@ function transferredFiles(data : DataTransfer, imagesOnly : boolean) : File[]
  *     render()
  *     {
  *         const source = html`<textarea .value=${this.value}></textarea>`;
- *         return this.markdown ? this._markdownShellTemplate(source) : source;
+ *         return html`${this.markdown ? this._markdownShellTemplate(source) : source}
+ *             ${this._fieldControlsTemplate()}`;
  *     }
  * }
  */
@@ -827,7 +834,33 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
 		};
 
 		/**
-		 * The compact view switcher, pinned over the top-left corner.
+		 * Tells Et2Ai (or anything else wanting a corner of the field) that there is a
+		 * field-controls slot to put its control into, rather than overlaying its own.
+		 */
+		get hasFieldControls() : boolean
+		{
+			return true;
+		}
+
+		/**
+		 * The strip over the top-right corner of the field: the view switcher, and the
+		 * field-controls slot to its right.
+		 *
+		 * Hosts render this whether markdown is on or not - see the class docblock.
+		 *
+		 * @param markdownView show the view switcher, ie. the markdown shell is rendered too
+		 */
+		protected _fieldControlsTemplate(markdownView : boolean = this.markdown)
+		{
+			return html`
+                <div class="field-controls" part="field-controls">
+					${markdownView ? this._markdownToggleTemplate() : nothing}
+                    <slot name="field-controls"></slot>
+                </div>`;
+		}
+
+		/**
+		 * The compact view switcher, one of the field controls.
 		 */
 		protected _markdownToggleTemplate()
 		{
@@ -959,7 +992,10 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
 		}
 
 		/**
-		 * Wrap the host's own editor in the view switcher, the preview pane and the popup.
+		 * Wrap the host's own editor in the preview pane and the popup.
+		 *
+		 * The view switcher is not part of it: it lives in the field controls, which the host
+		 * renders beside this - see _fieldControlsTemplate().
 		 *
 		 * Only mounts et2-split in "split" - a splitter that is not visible is not worth its
 		 * resize listeners.  It deliberately gets no id, so it never writes a splitter-size
@@ -1011,7 +1047,6 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
                         @keydown=${this._handleMarkdownKeyDown}
                         @focusout=${this._handleMarkdownFocusOut}
                 >
-					${this._markdownToggleTemplate()}
                     <div class="markdown-shell__panes">${panes}</div>
 					${this._markdownFormatPopupTemplate()}
                 </div>`;

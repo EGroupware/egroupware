@@ -1,8 +1,8 @@
-import {html, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
+import {adoptStyles, html, LitElement, nothing, PropertyValues, render, TemplateResult} from "lit";
 import {state} from "lit/decorators/state.js";
 import {customElement, property} from "lit/decorators.js";
 import {AiAssistantController, AiStatus} from "./AiAssistantController";
-import styles from "./Et2Ai.styles";
+import styles, {triggerStyles} from "./Et2Ai.styles";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import type {Et2HtmlArea} from "../Et2HtmlArea/Et2HtmlArea";
 import {unsafeHTML} from "lit/directives/unsafe-html.js";
@@ -84,6 +84,8 @@ const AI_TOOLS_ICON_SVG = `<svg version="1.1" x="0px" y="0px" width="24px" heigh
  * @csspart dropdown - The Shoelace dropdown containing prompts.
  * @csspart menu - The menu inside the dropdown.
  * @csspart menu-item - Individual prompt items in the menu.
+ *     dropdown, menu and menu-item are not reachable when the dropdown has moved into the
+ *     target's field controls (et2-textarea, et2-htmlarea in ascii mode).
  * @csspart error - The sl-alert shown on failure.
  *
  * @cssproperty --max-result-height - Automatically calculated based on the slotted element's height to ensure the result card fits.
@@ -95,7 +97,8 @@ export class Et2Ai extends Et2MarkdownMixin(Et2Widget(LitElement))
 	{
 		return [
 			super.styles,
-			styles
+			styles,
+			triggerStyles
 		];
 	}
 
@@ -157,6 +160,8 @@ export class Et2Ai extends Et2MarkdownMixin(Et2Widget(LitElement))
 	private targetResizeObserver : ResizeObserver;
 	/* HTMLArea needs special handling */
 	private _htmlAreaTarget : Et2HtmlArea;
+	/* Holds our dropdown inside the target's field controls, if it has any */
+	private _fieldControl : HTMLElement;
 
 	/* For faking progress bar */
 	private _progressTimer : number | null = null;
@@ -218,6 +223,10 @@ export class Et2Ai extends Et2MarkdownMixin(Et2Widget(LitElement))
 	protected updated(changedProperties : PropertyValues)
 	{
 		super.updated(changedProperties);
+		if(this._fieldControl)
+		{
+			render(this._dropdownTemplate(), this._fieldControl.shadowRoot, {host: this});
+		}
 		const status = this.ai?.status;
 		if(status && status !== this._lastAiStatus)
 		{
@@ -366,6 +375,7 @@ export class Et2Ai extends Et2MarkdownMixin(Et2Widget(LitElement))
 		{
 			return;
 		}
+		this._adoptFieldControls(target);
 		if(this._htmlAreaTarget)
 		{
 			target = await this._htmlAreaTarget.tinymce?.then((e) =>
@@ -588,6 +598,40 @@ export class Et2Ai extends Et2MarkdownMixin(Et2Widget(LitElement))
 				}
 			});
 		});
+	}
+
+	/**
+	 * Put our dropdown into the target's field controls, if it has some, instead of overlaying
+	 * our own corner of it.
+	 *
+	 * The target lays its controls out in one strip (eg. next to the markdown view switcher), so
+	 * they line up instead of each guessing where the other one is.  The same idea as the
+	 * TinyMCE toolbar item in _adoptHTMLAreaTarget(), which wins when both apply.
+	 *
+	 * The dropdown cannot be slotted across shadow roots, so it gets a light-DOM container of its
+	 * own in the target, with a shadow root so our styles still reach it.  updated() renders into
+	 * it, so it keeps up with prompts etc. like the rest of us.
+	 */
+	protected _adoptFieldControls(target : HTMLElement)
+	{
+		if(this.uiDisabled || this._htmlAreaTarget || !(<any>target).hasFieldControls ||
+			// a custom trigger is our light DOM, it cannot follow us into the target
+			this.querySelector(":scope > [slot='trigger']"))
+		{
+			return;
+		}
+		if(!this._fieldControl)
+		{
+			this._fieldControl = document.createElement("div");
+			this._fieldControl.slot = "field-controls";
+			this._fieldControl.attachShadow({mode: "open"});
+			adoptStyles(this._fieldControl.shadowRoot, [triggerStyles]);
+		}
+		if(this._fieldControl.parentElement !== target)
+		{
+			target.append(this._fieldControl);
+		}
+		this.requestUpdate();
 	}
 
 	protected _promptToTinyMenu(prompt : AiPrompt)
@@ -1158,17 +1202,25 @@ export class Et2Ai extends Et2MarkdownMixin(Et2Widget(LitElement))
             >
                 ${this._renderStatus()}
                 <slot></slot>
-                <div class="et2-ai-dropdown">
-                    <sl-dropdown part="dropdown" placement="bottom-end" hoist no-flip>
-                        <slot name="trigger" slot="trigger">
-                            <et2-button-icon slot="trigger" name="aitools/navbar" noSubmit></et2-button-icon>
-                        </slot>
-                        <sl-menu @sl-select=${this.handlePromptSelect} part="menu">
-                            ${this.prompts.map(this._promptTemplate)}
-                        </sl-menu>
-                    </sl-dropdown>
-                </div>
+				${this._fieldControl ? nothing : html`
+                    <div class="et2-ai-dropdown">${this._dropdownTemplate()}</div>`}
             </div>
 		`;
+	}
+
+	/**
+	 * The prompt dropdown - rendered in our own corner, or into the target's field controls
+	 */
+	protected _dropdownTemplate() : TemplateResult
+	{
+		return html`
+            <sl-dropdown part="dropdown" placement="bottom-end" hoist no-flip>
+                <slot name="trigger" slot="trigger">
+                    <et2-button-icon slot="trigger" class="et2-ai-trigger" name="aitools/navbar" noSubmit></et2-button-icon>
+                </slot>
+                <sl-menu @sl-select=${this.handlePromptSelect} part="menu">
+                    ${this.prompts.map(this._promptTemplate)}
+                </sl-menu>
+            </sl-dropdown>`;
 	}
 }

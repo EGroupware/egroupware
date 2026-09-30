@@ -843,7 +843,6 @@ body egw-app,
   [layout="2-column"] *::part(form-control-help-text) {
     left: 0;
   }
-  /* When titles break, we want to align widgets at the bottom of the hbox */
   [layout="2-column"] et2-hbox::part(base) {
     align-items: flex-end;
   }
@@ -869,7 +868,6 @@ body egw-app,
   [layout="2-column"] *::part(form-control-help-text) {
     left: 0;
   }
-  /* When titles break, we want to align widgets at the bottom of the hbox */
   [layout="2-column"] et2-hbox::part(base) {
     align-items: flex-end;
   }
@@ -894,7 +892,6 @@ body egw-app,
   [layout="2-column"] *::part(form-control-help-text) {
     left: 0;
   }
-  /* When titles break, we want to align widgets at the bottom of the hbox */
   [layout="2-column"] et2-hbox::part(base) {
     align-items: flex-end;
   }
@@ -992,7 +989,6 @@ body egw-app,
   [layout="edit"] *::part(form-control-help-text) {
     left: 0;
   }
-  /* When titles break, we want to align widgets at the bottom of the hbox */
   [layout="edit"] et2-hbox::part(base) {
     align-items: flex-end;
   }
@@ -1018,7 +1014,6 @@ body egw-app,
   [layout="edit"] *::part(form-control-help-text) {
     left: 0;
   }
-  /* When titles break, we want to align widgets at the bottom of the hbox */
   [layout="edit"] et2-hbox::part(base) {
     align-items: flex-end;
   }
@@ -1043,7 +1038,6 @@ body egw-app,
   [layout="edit"] *::part(form-control-help-text) {
     left: 0;
   }
-  /* When titles break, we want to align widgets at the bottom of the hbox */
   [layout="edit"] et2-hbox::part(base) {
     align-items: flex-end;
   }
@@ -1720,6 +1714,11 @@ et2-toolbar[slot="main-header"]::part(list),
   border-radius: 0;
   background: none;
   white-space: inherit;
+}
+/* An attached photo is whatever size the camera made it - it must not blow the field open */
+.et2_markdown img {
+  max-width: 100%;
+  height: auto;
 }
 /* Et2Dialog.long_task(): per-item outcome log entries */
 .long_task .message {

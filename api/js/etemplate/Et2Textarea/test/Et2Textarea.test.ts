@@ -3,7 +3,8 @@
  *
  * Contract under test: the markdown editor is strictly opt-in.  With markdown off, et2-textarea
  * must render exactly what Shoelace renders today - no shell, no view switcher, no preview - so
- * that the ~hundreds of existing textareas in the suite are untouched.  With markdown on, the
+ * that the ~hundreds of existing textareas in the suite are untouched.  The only addition is the
+ * (empty, out-of-flow) field-controls strip, which et2-ai puts its button into.  With markdown on, the
  * shell appears and the view switcher drives which panes are shown.
  *
  * Setup: real widgets in a fixture, with a minimal egw() stub for lang() and the preference
@@ -50,6 +51,19 @@ describe("et2-textarea without markdown", () =>
 		assert.isTrue(!!el.shadowRoot.querySelector("textarea"), "still a plain textarea");
 	});
 
+	it("still renders the field controls, for et2-ai to slot into", async() =>
+	{
+		const el: Et2Textarea = await fixture(html`
+            <et2-textarea></et2-textarea>`);
+		await elementUpdated(el);
+
+		const controls = el.shadowRoot.querySelector(".field-controls");
+		assert.isTrue(!!controls, "field controls");
+		assert.isTrue(!!controls.querySelector("slot[name='field-controls']"), "slot for other controls");
+		assert.isTrue(el.hasFieldControls, "advertised to et2-ai");
+		assert.equal(getComputedStyle(controls).position, "absolute", "out of the flow");
+	});
+
 	it("defaults markdown off", async() =>
 	{
 		const el: Et2Textarea = await fixture(html`
@@ -75,6 +89,16 @@ describe("et2-textarea with markdown", () =>
 		assert.isTrue(!!el.shadowRoot.querySelector(".markdown-shell"), "shell");
 		assert.isTrue(!!el.shadowRoot.querySelector(".markdown-view"), "view switcher");
 		assert.isTrue(!!el.shadowRoot.querySelector("textarea"), "source still in the DOM");
+	});
+
+	it("puts the view switcher into the field controls, left of the slot", async() =>
+	{
+		const el = await markdownTextarea();
+		const controls = el.shadowRoot.querySelector(".field-controls");
+
+		assert.equal(el.shadowRoot.querySelector(".markdown-view").parentElement, controls);
+		assert.equal(controls.lastElementChild.getAttribute("name"), "field-controls",
+			"slotted controls (eg. et2-ai) go to the right, in the corner");
 	});
 
 	it("keeps the view switcher out of the way until hovered or focused", async() =>

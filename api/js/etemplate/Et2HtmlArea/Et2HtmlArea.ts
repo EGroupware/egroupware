@@ -120,6 +120,8 @@ type TinyMceSetupHook = (editor : TinyMceEditor) => void;
  *
  * @slot label - The editor's label. Alternatively, use the `label` attribute.
  * @slot help-text - Text that describes how to use the editor. Alternatively, use the `statustext` attribute.
+ * @slot field-controls - Controls shown over the top-right corner of the field (et2-ai's button,
+ *     in ascii mode - in TinyMCE mode it goes into the toolbar instead).
  *
  * @event input - Emitted when user input changes the editor value.
  * @event change - Emitted when the user commits an editor value change.
@@ -130,7 +132,9 @@ type TinyMceSetupHook = (editor : TinyMceEditor) => void;
  * @csspart form-control-input - The editor wrapper.
  * @csspart readonly-content - The readonly value container when `readonly` is set.
  * @csspart markdown-shell - Wraps source and preview, only when `markdown` is on in ascii mode.
- * @csspart markdown-view - The edit / split / preview switcher.
+ * @csspart markdown-view - The edit / split / preview switcher, one of the field controls.
+ * @csspart field-controls - The strip over the top-right corner holding the view switcher and
+ *     anything slotted into field-controls.  Rendered in every mode.
  * @csspart markdown-preview - The rendered markdown pane.
  * @csspart markdown-popup - The format popup shown over a selection.
  */
@@ -1318,6 +1322,7 @@ export class Et2HtmlArea extends Et2MarkdownEditMixin(Et2InputWidget(LitElement)
                 </div>
                 ${helpTextTemplate}
             </div>
+			${this._fieldControlsTemplate(this.markdown && this._isAsciiMode && !this.readonly)}
 		`;
 	}
 }
