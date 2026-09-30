@@ -5753,7 +5753,7 @@ export class MailJmap
 		smimeType : string, passphrase? : string,
 		passExpMinutes? : number) : Promise<{type : string, blobId : string} | {whole : true, blobId : string}>
 	{
-		const {body, inlineImages} = await this.resolveOutgoingInlineImages(token, client, email.body ?? '');
+		const {body, inlineImages} = await this.resolveOutgoingInlineImages(token, client, email.body ?? '', !!email.isHtml);
 		const emailProperties = this.draftEmailProperties(identity, {...email, body}, inlineImages);
 		const result : any = await this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_smimeEncryptEmailProperties',
 			[profileID, emailProperties, smimeType, passphrase || '', passExpMinutes ?? null]);
@@ -6612,12 +6612,60 @@ export class MailJmap
 	 * live body keeps referencing the same original src unchanged; only a COPY built for the
 	 * outgoing payload gets rewritten to cid: here).
 	 */
-	private async resolveOutgoingInlineImages(token : JmapToken, client : JamClient, html : string) : Promise<{body : string, inlineImages : JmapInlineImage[]}>
+	/**
+	 * Find the [start,end) offsets of every quoted-content '<blockquote>...</blockquote>' region
+	 * in an html mail body - nesting-aware, so a quote-of-a-quote counts as ONE range, and an
+	 * interleaved/bottom-posted reply's several SIBLING blockquotes (answering inside the
+	 * citation, eg. "> How are you?\nI'm fine\n> rest of citation") each get their OWN range, never
+	 * lumped together with the genuinely new reply text in between them.
+	 */
+	private findQuoteRanges(html : string) : Array<[number, number]>
 	{
+		const ranges : Array<[number, number]> = [];
+		const tagRegex = /<blockquote\b[^>]*>|<\/blockquote>/gi;
+		let depth = 0, start = -1, match : RegExpExecArray | null;
+		while ((match = tagRegex.exec(html)) !== null)
+		{
+			if (!match[0].toLowerCase().startsWith('</blockquote'))
+			{
+				if (depth++ === 0) start = match.index;
+			}
+			else if (depth > 0 && --depth === 0)
+			{
+				ranges.push([start, match.index + match[0].length]);
+			}
+		}
+		return ranges;
+	}
+
+	private async resolveOutgoingInlineImages(token : JmapToken, client : JamClient, html : string, isHtml : boolean) : Promise<{body : string, inlineImages : JmapInlineImage[]}>
+	{
+		// a plain-text body is never HTML, however much a `src="...webdav.php..."`-shaped substring
+		// it happens to literally contain looks like one (eg. copy-pasted HTML source, or an
+		// attacker deliberately including that exact text in a plain-text message they know will
+		// get quoted verbatim into a plain-text reply, '>' prefixed but otherwise untouched, see
+		// quoteOriginalMessage()'s plain-plain branch) - this function has no business running on
+		// it at all, same as classic ComposeMessageBuilder::createMessage()'s switch($mimeType)
+		// only ever calling Mail::processURL2InlineImages() from its 'html' case.
+		if (!isHtml)
+		{
+			return {body: html, inlineImages: []};
+		}
 		const srcRegex = /\bsrc\s*=\s*(["'])(blob:[^"']+|data:image\/[^"']+|[^"']*\/webdav\.php\/[^"']+)\1/gi;
+		// a '/webdav.php' src found inside quoted/cited content (quoteOriginalMessage()'s own
+		// <blockquote type="cite"> wrapper) must NEVER be auto-embedded here - it can be
+		// attacker-supplied content from the message being replied to/forwarded, not something the
+		// CURRENT compose session itself inserted (a VFS-picked image, upload, or the identity
+		// signature). blob:/data: urls are exempt - those are the ORIGINAL message's own
+		// already-resolved inline images, not a fresh fetch of an arbitrary path.
+		const quoteRanges = this.findQuoteRanges(html);
+		const isWebdavUrl = (url : string) => !url.startsWith('blob:') && !url.startsWith('data:');
+		const isQuoted = (offset : number) => quoteRanges.some(([s, e]) => offset >= s && offset < e);
+
 		const urls = new Set<string>();
 		for (const match of html.matchAll(srcRegex))
 		{
+			if (isWebdavUrl(match[2]) && isQuoted(match.index ?? -1)) continue;
 			urls.add(match[2]);
 		}
 		if (!urls.size)
@@ -6682,8 +6730,9 @@ export class MailJmap
 		{
 			return {body: html, inlineImages: []};
 		}
-		const body = html.replace(srcRegex, (full, quote, url) =>
+		const body = html.replace(srcRegex, (full, quote, url, offset) =>
 		{
+			if (isWebdavUrl(url) && isQuoted(offset)) return full;
 			const cid = cidByUrl.get(url);
 			return cid ? `src=${quote}cid:${cid}${quote}` : full;
 		});
@@ -6801,7 +6850,7 @@ export class MailJmap
 	{
 		const {body, inlineImages} = bodyOverride ?
 			{body: email.body ?? '', inlineImages: [] as JmapInlineImage[]} :
-			await this.resolveOutgoingInlineImages(token, client, email.body ?? '');
+			await this.resolveOutgoingInlineImages(token, client, email.body ?? '', !!email.isHtml);
 		const properties : any = this.draftEmailProperties(identity, {...email, body}, inlineImages, autocryptHeader);
 		if (bodyOverride)
 		{

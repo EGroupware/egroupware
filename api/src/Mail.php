@@ -7483,6 +7483,39 @@ class Mail
 	}
 
 	/**
+	 * Find the [start,end) byte ranges of every quoted-content '<blockquote>...</blockquote>'
+	 * region in an html mail body - nesting-aware, so a quote-of-a-quote counts as ONE range, and
+	 * an interleaved/bottom-posted reply's several SIBLING blockquotes (answering inside the
+	 * citation, eg. "> How are you?\nI'm fine\n> rest of citation") each get their OWN range, never
+	 * lumped together with the genuinely new reply text in between them.
+	 *
+	 * @param string $html
+	 * @return array[] each a [start, end] pair of byte offsets into $html
+	 */
+	private static function findQuoteRanges(string $html): array
+	{
+		$ranges = [];
+		if (!preg_match_all('#<blockquote\b[^>]*>|</blockquote>#i', $html, $tags, PREG_OFFSET_CAPTURE))
+		{
+			return $ranges;
+		}
+		$depth = 0;
+		$start = null;
+		foreach ($tags[0] as [$tag, $offset])
+		{
+			if (stripos($tag, '/blockquote') === false)
+			{
+				if ($depth++ === 0) $start = $offset;
+			}
+			elseif ($depth > 0 && --$depth === 0)
+			{
+				$ranges[] = [$start, $offset + strlen($tag)];
+			}
+		}
+		return $ranges;
+	}
+
+	/**
 	 * Parses a html text for images, and adds them as inline attachment
 	 *
 	 * Images can be data-urls, own VFS webdav.php urls or absolute path.
@@ -7499,10 +7532,32 @@ class Mail
 		$images = null;
 		$attachments = null;
 
-		if (preg_match_all("/(src|background)=\"(.*)\"/Ui", $_html2parse, $images) && isset($images[2]))
+		if (preg_match_all("/(src|background)=\"(.*)\"/Ui", $_html2parse, $images, PREG_OFFSET_CAPTURE) && isset($images[2]))
 		{
-			foreach($images[2] as $i => $url)
+			// only a same-origin '/webdav.php' url may be shortcut to a direct vfs:// read below -
+			// resolved once here, identical for every url in this loop
+			$own_host = strtolower((string)parse_url(Framework::getUrl('/'), PHP_URL_HOST));
+
+			// a '/webdav.php' url inside quoted/cited reply or forward content (the client's own
+			// MailJmap.quoteOriginalMessage() <blockquote type="cite"> wrapper, the single quoting
+			// mechanism for both classic and JMAP-mode compose) must NEVER be shortcut to vfs:// -
+			// it can be attacker-supplied content from the message being replied to/forwarded, not
+			// something the CURRENT compose session itself inserted (a VFS-picked image, upload,
+			// or the identity signature). blob:/data: urls are exempt from this below - those are
+			// the ORIGINAL message's own already-resolved inline images, not a fresh path lookup.
+			$quote_ranges = self::findQuoteRanges($_html2parse);
+
+			foreach($images[2] as $i => [$url, $offset])
 			{
+				$in_quote = false;
+				foreach ($quote_ranges as [$quote_start, $quote_end])
+				{
+					if ($offset >= $quote_start && $offset < $quote_end)
+					{
+						$in_quote = true;
+						break;
+					}
+				}
 				//$isData = false;
 				$basedir = $data = '';
 				$needTempFile = true;
@@ -7556,10 +7611,13 @@ class Mail
 						{
 							$basedir = Framework::getUrl('/');
 						}
-						// use vfs instead of url containing webdav.php
-						// ToDo: we should test if the webdav url is of our own scope, as we cannot handle foreign
-						// webdav.php urls as vfs
-						if (!$data && str_contains($myUrl, '/webdav.php')) // we have a webdav link, so we build a vfs/sqlfs link of it.
+						// use vfs instead of url containing webdav.php, but only for a same-origin
+						// url - a foreign host's "/webdav.php" must NOT be read from our own vfs;
+						// no host at all means a root-relative url, which is same-origin by construction
+						$url_host = parse_url($myUrl, PHP_URL_HOST);
+						$same_origin = $url_host === null || (strcasecmp($url_host, $own_host) === 0 &&
+							in_array(strtolower(parse_url($myUrl, PHP_URL_SCHEME) ?? ''), ['http', 'https'], true));
+						if (!$data && $same_origin && !$in_quote && str_contains($myUrl, '/webdav.php')) // we have a webdav link, so we build a vfs/sqlfs link of it.
 						{
 							Vfs::load_wrapper('vfs');
 							list(,$myUrl) = explode('/webdav.php',$myUrl,2);
@@ -7606,7 +7664,7 @@ class Mail
 						if ($_mailObject->AddEmbeddedImage($attachmentData['file'], substr($cid, 4), urldecode($attachmentData['file']), $attachmentData['type']) !== null)
 						{
 							//$_html2parse = preg_replace("/".$images[1][$i]."=\"".preg_quote($url, '/')."\"/Ui", $images[1][$i]."=\"".$cid."\"", $_html2parse);
-							$_html2parse = str_replace($images[0][$i], $images[1][$i].'="'.$cid.'"', $_html2parse);
+							$_html2parse = str_replace($images[0][$i][0], $images[1][$i][0].'="'.$cid.'"', $_html2parse);
 						}
 					}
 				}

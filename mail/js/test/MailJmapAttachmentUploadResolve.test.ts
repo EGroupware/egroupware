@@ -541,7 +541,7 @@ describe("MailJmap.resolveOutgoingInlineImages()", () =>
 		const client : any = primeUploadClient(jmap);
 		const token : any = {accountId : 'acc1'};
 
-		const result = await (jmap as any).resolveOutgoingInlineImages(token, client, '<p>Hello</p>');
+		const result = await (jmap as any).resolveOutgoingInlineImages(token, client, '<p>Hello</p>', true);
 
 		assert.equal(result.body, '<p>Hello</p>');
 		assert.deepEqual(result.inlineImages, []);
@@ -554,7 +554,7 @@ describe("MailJmap.resolveOutgoingInlineImages()", () =>
 		const client : any = primeUploadClient(jmap);
 		const token : any = {accountId : 'acc1'};
 
-		const result = await (jmap as any).resolveOutgoingInlineImages(token, client, '<img src="blob:http://x/1">');
+		const result = await (jmap as any).resolveOutgoingInlineImages(token, client, '<img src="blob:http://x/1">', true);
 
 		assert.notInclude(result.body, 'blob:http://x/1');
 		assert.match(result.body, /src="cid:[^"]+"/);
@@ -569,7 +569,7 @@ describe("MailJmap.resolveOutgoingInlineImages()", () =>
 		const client : any = primeUploadClient(jmap);
 		const token : any = {accountId : 'acc1'};
 
-		const result = await (jmap as any).resolveOutgoingInlineImages(token, client, '<img src="blob:http://x/unknown">');
+		const result = await (jmap as any).resolveOutgoingInlineImages(token, client, '<img src="blob:http://x/unknown">', true);
 
 		assert.equal(result.body, '<img src="blob:http://x/unknown">');
 		assert.deepEqual(result.inlineImages, []);
@@ -584,7 +584,7 @@ describe("MailJmap.resolveOutgoingInlineImages()", () =>
 		const client : any = {uploadBlob : async() => { uploadCount++; return {blobId : 'should-not-be-used'}; }};
 		const token : any = {accountId : 'acc1'};
 
-		const result = await (jmap as any).resolveOutgoingInlineImages(token, client, '<img src="blob:http://x/1">');
+		const result = await (jmap as any).resolveOutgoingInlineImages(token, client, '<img src="blob:http://x/1">', true);
 
 		assert.equal(uploadCount, 0, "an already-cached upload must never be re-uploaded");
 		assert.include(result.body, 'cid:cached-cid@host');
@@ -599,7 +599,7 @@ describe("MailJmap.resolveOutgoingInlineImages()", () =>
 		const token : any = {accountId : 'acc1'};
 
 		await (jmap as any).resolveOutgoingInlineImages(token, client,
-			'<img src="blob:http://x/1"><img src="blob:http://x/1">');
+			'<img src="blob:http://x/1"><img src="blob:http://x/1">', true);
 
 		assert.equal(uploadCount, 1);
 	});
@@ -619,7 +619,7 @@ describe("MailJmap.resolveOutgoingInlineImages()", () =>
 		const token : any = {accountId : 'acc1'};
 
 		const result = await (jmap as any).resolveOutgoingInlineImages(token, client,
-			'<img src="blob:http://x/bad"><img src="blob:http://x/good">');
+			'<img src="blob:http://x/bad"><img src="blob:http://x/good">', true);
 
 		assert.include(result.body, 'blob:http://x/bad', "the failed one keeps its original src");
 		assert.include(result.body, 'cid:', "the other image still resolves normally");
@@ -653,7 +653,7 @@ describe("MailJmap.resolveOutgoingInlineImages()", () =>
 		});
 
 		const result = await (jmap as any).resolveOutgoingInlineImages(token, client,
-			'<img src="https://example.com/egroupware/webdav.php/mail/uploads/2026/09/photo.png">');
+			'<img src="https://example.com/egroupware/webdav.php/mail/uploads/2026/09/photo.png">', true);
 
 		assert.notInclude(result.body, 'webdav.php');
 		assert.match(result.body, /src="cid:[^"]+"/);
@@ -669,10 +669,69 @@ describe("MailJmap.resolveOutgoingInlineImages()", () =>
 		sinon.stub(globalThis, 'fetch').resolves({ok : false} as any);
 
 		const result = await (jmap as any).resolveOutgoingInlineImages(token, client,
-			'<img src="https://example.com/egroupware/webdav.php/mail/uploads/missing.png">');
+			'<img src="https://example.com/egroupware/webdav.php/mail/uploads/missing.png">', true);
 
 		assert.include(result.body, 'webdav.php');
 		assert.deepEqual(result.inlineImages, []);
+	});
+
+	it("GHSA-j936-xcgg-f6vj follow-up: never fetches/embeds a webdav.php src inside quoteOriginalMessage()'s <blockquote type=\"cite\"> - it may be attacker-supplied content carried over from the message being replied to/forwarded", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const client : any = primeUploadClient(jmap);
+		const token : any = {accountId : 'acc1'};
+		const fetchStub = sinon.stub(globalThis, 'fetch');
+
+		const result = await (jmap as any).resolveOutgoingInlineImages(token, client,
+			'<p>my reply</p><blockquote type="cite"><img src="https://example.com/egroupware/webdav.php/home/victim/secret.xlsx"></blockquote>', true);
+
+		assert.isTrue(fetchStub.notCalled, "a quoted webdav.php src must never even be fetched");
+		assert.include(result.body, 'webdav.php', "the quoted src must be left completely untouched");
+		assert.deepEqual(result.inlineImages, []);
+	});
+
+	it("still resolves a webdav.php src OUTSIDE the quoted <blockquote> (the user's own signature/inserted image), even when a quote follows it", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const client : any = primeUploadClient(jmap);
+		const token : any = {accountId : 'acc1'};
+		const imageBytes = new Blob(['img-bytes'], {type : 'image/png'});
+		sinon.stub(globalThis, 'fetch').callsFake(async(url : any) =>
+		{
+			assert.include(String(url), 'signature.png', "only the non-quoted signature image should ever be fetched");
+			return {ok : true, blob : async() => imageBytes} as any;
+		});
+
+		const result = await (jmap as any).resolveOutgoingInlineImages(token, client,
+			'<p>my reply</p><img src="https://example.com/egroupware/webdav.php/home/me/signature.png">' +
+			'<blockquote type="cite"><img src="https://example.com/egroupware/webdav.php/home/victim/secret.xlsx"></blockquote>', true);
+
+		assert.match(result.body, /src="cid:[^"]+"/, "the signature image should still be converted");
+		assert.include(result.body, 'webdav.php/home/victim/secret.xlsx', "the quoted image must stay untouched");
+		assert.equal(result.inlineImages.length, 1);
+	});
+
+	it("an interleaved/bottom-posted reply (answering INSIDE the citation) still resolves a new image between two sibling quote blocks, while both citation images stay untouched", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const client : any = primeUploadClient(jmap);
+		const token : any = {accountId : 'acc1'};
+		const imageBytes = new Blob(['img-bytes'], {type : 'image/png'});
+		sinon.stub(globalThis, 'fetch').callsFake(async(url : any) =>
+		{
+			assert.include(String(url), 'inline-new.png', "only the genuinely new, non-quoted image should ever be fetched");
+			return {ok : true, blob : async() => imageBytes} as any;
+		});
+
+		const result = await (jmap as any).resolveOutgoingInlineImages(token, client,
+			'<blockquote type="cite">Citation... <img src="https://example.com/egroupware/webdav.php/home/victim/quoted1.png"> How are you?</blockquote>' +
+			'<p>Im fine thanks :) <img src="https://example.com/egroupware/webdav.php/home/me/inline-new.png"></p>' +
+			'<blockquote type="cite">Rest of the citation <img src="https://example.com/egroupware/webdav.php/home/victim/quoted2.png"> ...</blockquote>', true);
+
+		assert.include(result.body, 'webdav.php/home/victim/quoted1.png', "the first citation's image must stay untouched");
+		assert.include(result.body, 'webdav.php/home/victim/quoted2.png', "the second citation's image must stay untouched");
+		assert.match(result.body, /src="cid:[^"]+"/, "the interleaved reply's own image should still be converted");
+		assert.equal(result.inlineImages.length, 1);
 	});
 
 	it("uploads a base64 data: image, rewrites to cid:, deriving the type from the data URI itself", async() =>
@@ -683,7 +742,7 @@ describe("MailJmap.resolveOutgoingInlineImages()", () =>
 		// 1x1 transparent PNG
 		const dataUri = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=';
 
-		const result = await (jmap as any).resolveOutgoingInlineImages(token, client, `<img src="${dataUri}">`);
+		const result = await (jmap as any).resolveOutgoingInlineImages(token, client, `<img src="${dataUri}">`, true);
 
 		assert.notInclude(result.body, 'data:image');
 		assert.match(result.body, /src="cid:[^"]+"/);
@@ -700,9 +759,27 @@ describe("MailJmap.resolveOutgoingInlineImages()", () =>
 		const token : any = {accountId : 'acc1'};
 		const url = 'https://example.com/egroupware/webdav.php/mail/uploads/photo.png';
 
-		await (jmap as any).resolveOutgoingInlineImages(token, client, `<img src="${url}">`);
-		await (jmap as any).resolveOutgoingInlineImages(token, client, `<img src="${url}">`);
+		await (jmap as any).resolveOutgoingInlineImages(token, client, `<img src="${url}">`, true);
+		await (jmap as any).resolveOutgoingInlineImages(token, client, `<img src="${url}">`, true);
 
 		assert.equal(fetchCount, 1, "the second resolve (eg. a later autosave) must reuse the cached upload, not re-fetch");
+	});
+
+	it("GHSA-j936-xcgg-f6vj follow-up: a plain-text compose (isHtml=false) never fetches ANY src, even one that's literally webdav.php-shaped text carried in verbatim from a quoted plain-text original", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const client : any = primeUploadClient(jmap);
+		const token : any = {accountId : 'acc1'};
+		const fetchStub = sinon.stub(globalThis, 'fetch');
+		// quoteOriginalMessage()'s plain-plain branch quotes the ORIGINAL plain-text body verbatim,
+		// '>' prefixed - if that original literally contained this exact text (attacker-crafted,
+		// not real markup), it must stay inert in a plain-text reply/draft
+		const body = '> <img src="https://example.com/egroupware/webdav.php/home/victim/secret.xlsx">';
+
+		const result = await (jmap as any).resolveOutgoingInlineImages(token, client, body, false);
+
+		assert.isTrue(fetchStub.notCalled, "plain-text mode must never even attempt a fetch");
+		assert.equal(result.body, body, "the body must be returned completely unchanged");
+		assert.deepEqual(result.inlineImages, []);
 	});
 });
