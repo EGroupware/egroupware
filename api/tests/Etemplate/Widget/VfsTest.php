@@ -119,6 +119,45 @@ class VfsTest extends \EGroupware\Api\LoggedInTest
 	}
 
 	/**
+	 * The whole point of allowing an upload before the first save: the temp URL in the text has to
+	 * be rewritten to where the save actually put the file.
+	 */
+	public function testRewritesATempUrlToTheEntryDirectory()
+	{
+		$temp = Vfs::get_temp_dir('tracker', 'abc').'/shot.png';
+		$links = [['app' => 'file', 'id' => ['name' => 'shot.png', 'tmp_name' => \EGroupware\Api\Vfs::PREFIX.$temp]]];
+
+		$text = "before ![shot](/egw/webdav.php$temp) after";
+		$this->assertTrue(Vfs::fix_html_dragins('tracker', 42, $links, $text));
+		$this->assertEquals('before ![shot](/egw/webdav.php/apps/tracker/42/shot.png) after', $text);
+	}
+
+	/**
+	 * Vfs::download_url() percent-encodes ' ', '+' and '"', so the text holds "my%20shot.png" while
+	 * the link's tmp_name holds "my shot.png".  Matching only the raw path left exactly those files
+	 * dangling after the save - in the html editor too, not just markdown.
+	 */
+	public function testRewritesATempUrlWhoseNameWasPercentEncoded()
+	{
+		$temp = Vfs::get_temp_dir('tracker', 'abc').'/my shot.png';
+		$links = [['app' => 'file', 'id' => ['name' => 'my shot.png', 'tmp_name' => \EGroupware\Api\Vfs::PREFIX.$temp]]];
+
+		$text = '<img src="/egw/webdav.php'.str_replace(' ', '%20', $temp).'">';
+		$this->assertTrue(Vfs::fix_html_dragins('tracker', 42, $links, $text));
+		$this->assertEquals('<img src="/egw/webdav.php/apps/tracker/42/my%20shot.png">', $text);
+	}
+
+	/**
+	 * Nothing pending means nothing to rewrite - and no claim that the text needs storing again
+	 */
+	public function testLeavesTextWithoutPendingUploadsAlone()
+	{
+		$text = 'see ![shot](/egw/webdav.php/apps/tracker/42/shot.png)';
+		$this->assertFalse(Vfs::fix_html_dragins('tracker', 42, [], $text));
+		$this->assertEquals('see ![shot](/egw/webdav.php/apps/tracker/42/shot.png)', $text);
+	}
+
+	/**
 	 * ajax_htmlarea_upload() appends its own trailing slash (its other branch is a literal path
 	 * from content, which has none), so the result must not grow a second one
 	 */

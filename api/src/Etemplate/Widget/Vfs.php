@@ -344,12 +344,32 @@ class Vfs extends File
 	}
 
 	/**
-	 * Fix source/url of dragged in images in html
+	 * The characters Vfs::download_url() percent-encodes when it turns a path into a URL.
+	 *
+	 * Kept here rather than re-derived, so fix_html_dragins() below can recognise a path in the
+	 * form it was actually written into the text.
+	 *
+	 * @var array
+	 */
+	protected static $download_url_encode = ['+' => '%2B', ' ' => '%20', '"' => '%22'];
+
+	/**
+	 * Fix source/url of dragged in images in html - and of images pasted into a markdown field
+	 *
+	 * An upload for an entry that had no id yet parks in the user's temp directory, and the save
+	 * files it away under /apps/$app/$id/.  The URL written into the text at upload time still
+	 * points at the temp directory, so it has to be rewritten to follow the file.
+	 *
+	 * This is a plain strtr() over the text, so it does not care whether that text is html with
+	 * <img src="..."> or markdown with ![](...) - both spell the URL the same way.  The parameter
+	 * is still called $html for the callers that have always passed html.
+	 *
+	 * Call it AFTER Link::link() has filed the pending links away: it removes the temp directories.
 	 *
 	 * @param string $app
 	 * @param int|string $id
-	 * @param array $links
-	 * @param string& $html
+	 * @param array $links the pending links, ie. $content['link_to']['to_id']
+	 * @param string& $html html or markdown source, rewritten in place
 	 * @return boolean true if something was fixed and $html needs to be stored
 	 */
 	static function fix_html_dragins($app, $id, array $links, &$html)
@@ -360,8 +380,18 @@ class Vfs extends File
 			$matches = null;
 			if (is_array($link) && !empty($link['id']['tmp_name']) && preg_match('|^'.preg_quote(Api\Vfs::PREFIX,'|').'('.preg_quote(self::get_temp_dir($app, ''), '|').'[^/]+)/|', $link['id']['tmp_name'], $matches))
 			{
-				$replace[substr($link['id']['tmp_name'], strlen(Api\Vfs::PREFIX))] =
-					Api\Link::vfs_path($app, $id, Api\Vfs::basename($link['id']['tmp_name']), true);
+				$from = substr($link['id']['tmp_name'], strlen(Api\Vfs::PREFIX));
+				$to = Api\Link::vfs_path($app, $id, Api\Vfs::basename($link['id']['tmp_name']), true);
+				$replace[$from] = $to;
+
+				// The text does not hold the bare VFS path, it holds what Vfs::download_url() made
+				// of it - and that percent-encodes three characters.  So a file with a space in its
+				// name is "..../my%20shot.png" in the text and the raw path above never matches it,
+				// leaving that one image dangling after the save.  Match both spellings.
+				if (($from_url = strtr($from, self::$download_url_encode)) !== $from)
+				{
+					$replace[$from_url] = strtr($to, self::$download_url_encode);
+				}
 
 				if (!in_array($matches[1], $remove_dir)) $remove_dir[] = $matches[1];
 			}
