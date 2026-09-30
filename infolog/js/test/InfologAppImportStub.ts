@@ -26,12 +26,15 @@
  * - `egw.registerJSONPlugin`: called at etemplate2.ts module scope.
  * - `egw.user`: read at module scope somewhere in the et2 import chain (calendar's view widget
  *   does it for an attribute default); harmless to provide everywhere.
+ * - `egw_getFramework`: egw_global.js copies it off window when first imported, so it can not be
+ *   provided any later.  EgwApp.et2_ready() calls it, which only InfologPrint.test.ts gets to.
  */
 const globals : any = window;
 
 globals.app = globals.app || {classes: {}};
 globals.app.classes = globals.app.classes || {};
 globals.framework = globals.framework || {setSidebox: () => {}};
+globals.egw_getFramework = globals.egw_getFramework || (() => undefined);
 
 if(!globals.jQuery)
 {
