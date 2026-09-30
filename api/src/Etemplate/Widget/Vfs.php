@@ -541,10 +541,12 @@ class Vfs extends File
 	 * content - normally "link_to", ie. {to_app, to_id}.  Only the server can see whether that
 	 * names a saved entry, so only the server can answer this.
 	 *
-	 * An entry with no id yet is deliberately refused for now: the upload would park in the
-	 * user's temp directory and be filed away on save, leaving the URL written into the text
-	 * pointing at nothing.  ajax_htmlarea_upload() does handle that case (it links the temp file
-	 * so the save moves it), but nothing rewrites the markdown afterwards - a later step.
+	 * An entry with no id yet is allowed: ajax_htmlarea_upload() parks the upload in the user's
+	 * temp directory and links it so the save files it away, and fix_html_dragins() then rewrites
+	 * the URL in the text to follow it - exactly what already happens to an image dragged into the
+	 * html editor of a new entry.  That last step is the app's to make (tracker does it in
+	 * tracker_ui::edit()); an app that skips it leaves the first save's URLs dangling, in markdown
+	 * the same way it already would in html.
 	 *
 	 * @param Etemplate\Widget $widget widget to check and, if it may, enable
 	 * @param string $cname current namespace
@@ -582,9 +584,10 @@ class Vfs extends File
 		{
 			return true;
 		}
-		// {to_app, to_id} - an unsaved entry has no id, or an array of links accumulated for it
-		return is_array($data) && !empty($data['to_app']) &&
-			!empty($data['to_id']) && !is_array($data['to_id']);
+		// {to_app, to_id}.  to_id is empty for an entry that has not been saved yet, and an array
+		// of the links accumulated for it once something has been attached - both are fine, see the
+		// method docblock: the upload parks in a temp directory and the save files it away.
+		return is_array($data) && !empty($data['to_app']);
 	}
 
 	/**

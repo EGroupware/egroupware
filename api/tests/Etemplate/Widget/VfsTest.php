@@ -44,15 +44,18 @@ class VfsTest extends \EGroupware\Api\LoggedInTest
 	}
 
 	/**
-	 * An unsaved entry has no id at all, or an array of links accumulated until it is saved
+	 * An unsaved entry has no id at all, or an array of links accumulated until it is saved.
+	 *
+	 * Both are allowed: the upload parks in the user's temp directory, the save files it away, and
+	 * fix_html_dragins() rewrites the URL in the text to follow it.
 	 */
-	public function testRefusesAnUnsavedEntry()
+	public function testAllowsAnUnsavedEntry()
 	{
-		$this->assertFalse(Vfs::can_attach_file('link_to',
+		$this->assertTrue(Vfs::can_attach_file('link_to',
 			['link_to' => ['to_app' => 'tracker', 'to_id' => null]]));
-		$this->assertFalse(Vfs::can_attach_file('link_to',
+		$this->assertTrue(Vfs::can_attach_file('link_to',
 			['link_to' => ['to_app' => 'tracker', 'to_id' => '']]));
-		$this->assertFalse(Vfs::can_attach_file('link_to',
+		$this->assertTrue(Vfs::can_attach_file('link_to',
 			['link_to' => ['to_app' => 'tracker', 'to_id' => ['file' => ['name' => 'pending.png']]]]));
 	}
 
