@@ -587,7 +587,10 @@ class InfologApp extends EgwApp
 	infolog_print_preview_onload()
 	{
 		const node = document.getElementById('infolog-edit-print');
-		node?.addEventListener('load', () => {
+		const onLoad = (event : Event) => {
+			// Sub-templates' load events bubble up here too, each would open another print dialog
+			if (event.target !== node) return;
+			node.removeEventListener('load', onLoad);
 			let isLoadingCompleted = true;
 			const onSubtreeModified = () => {
 				isLoadingCompleted = false;
@@ -604,16 +607,21 @@ class InfologApp extends EgwApp
 					this.infolog_print_preview();
 				}
 			}, 100);
-		});
+		};
+		node?.addEventListener('load', onLoad);
 	}
 
 	/**
 	 * Trigger print() function to print the current window
+	 *
+	 * The print popup has no other use, so it closes once the print dialog is done (printed or canceled).
 	 */
 	infolog_print_preview()
 	{
 		this.egw.message(this.egw.lang('Printing...'));
-		this.egw.window.print();
+		const wnd = this.egw.window;
+		wnd.addEventListener('afterprint', () => egw(wnd).close(), {once: true});
+		wnd.print();
 	}
 
 	/**

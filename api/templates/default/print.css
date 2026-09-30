@@ -16,6 +16,12 @@
 	margin:0px;
 	padding:0px;
 }
+/* popups are a viewport-high scroll container on screen: let them grow over all pages instead */
+#popupMainDiv {
+	height: auto;
+	max-height: none;
+	overflow: visible;
+}
 
 #tdAppbox,#divAppboxHeader,#divSubContainer,#divAppbox {
 	border: none;
