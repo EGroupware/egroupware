@@ -384,8 +384,8 @@ class Vfs extends File
 				$to = Api\Link::vfs_path($app, $id, Api\Vfs::basename($link['id']['tmp_name']), true);
 				$replace[$from] = $to;
 
-				// The text does not hold the bare VFS path, it holds what Vfs::download_url() made
-				// of it - and that percent-encodes three characters.  So a file with a space in its
+				// The text does not hold the bare VFS path, it holds what Vfs::download_url() made of it
+				// - and that percent-encodes three characters.  So a file with a space in its
 				// name is "..../my%20shot.png" in the text and the raw path above never matches it,
 				// leaving that one image dangling after the save.  Match both spellings.
 				if (($from_url = strtr($from, self::$download_url_encode)) !== $from)
@@ -559,6 +559,17 @@ class Vfs extends File
 			$expand['row'] ?? null, $expand['c_'] ?? null, $expand['row_'] ?? null,
 			$expand['cont'] ?? self::$request->content ?? array());
 
+		// The user's Markdown preference overrules the template in both directions, the same way
+		// Et2MarkdownMixin applies it client-side; anything but a real choice leaves the
+		// template's answer standing - "use default" stores the literal string "default", so an
+		// untouched preference reads back as "", null or "default" depending on how it got there.
+		// Without this a field that is markdown only because of the preference would get the
+		// editor but no way to attach anything to it.
+		$preference = $GLOBALS['egw_info']['user']['preferences']['common']['markdown'] ?? '';
+		if ($preference === 'on' || $preference === 'off')
+		{
+			$markdown = $preference === 'on';
+		}
 		if (empty($markdown) || $markdown === 'false') return;
 
 		if (self::can_attach_file($widget->attrs['imageUpload'] ?? null))
