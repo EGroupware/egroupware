@@ -629,7 +629,6 @@ egw-app {
   */
   /** Clean nextmatch headers **/
   /* Hide nextmatch header, it's in the framework now */
-  /** filter drawer styling**/
 }
 egw-app div[id$='index'] {
   overflow: auto;
@@ -741,12 +740,6 @@ egw-app .et2_nextmatch .nextmatch_header.nm_header_hide {
 }
 egw-app .et2_nextmatch .nextmatch_header.nm_header_hide + div > table > thead {
   display: none !important;
-}
-egw-app *[slot="filter"] et2-details:has(> .et2_customfield_list:only-child > tbody:empty) {
-  display: none;
-}
-egw-app *[slot="filter"] et2-details:has(> .et2_customfield_list:only-child:empty) {
-  display: none;
 }
 /* non-default application colors, are set server-side by Api\Framework::app_colors() in a style-tag in the header */
 body egw-app,

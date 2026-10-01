@@ -822,78 +822,15 @@ et2-dialog et2-button {
 
 
 
-/**
- * Custom field list
- */
-.et2_customfield_list {
-    width: 100%;
-}
-/*make table inside the grid also obey the max-height of the parent even on bigger font-sizes*/
-th table.et2_grid.et2_customfield_list{
-    display: block;
-    max-height: 6.5em;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-/*number in custom field list should be left aligned instead of usual right alignment*/
-.et2_customfield_list et2-number_ro span{
-    text-align: start;
-}
-
-.et2_customfield_list tr td:first-child {
-    width: 12%; /* this is somehow equivalent to 100px we usually have in the first column */
-}
 *[slot="filter"] et2-details#col_filters::part(content){
     display: flex;
     flex-direction: column;
     gap: var(--gap-width);
 }
-*[slot="filter"] .et2_customfield_list.et2-label-fixed tr td:first-child{
-    padding: 0;
-}
-*[slot="filter"] .et2_customfield_list.et2-label-fixed tr td:first-child et2-label{
-    width: 11.5em;
-}
-*[slot="filter"] .et2_customfield_list.et2-label-fixed tr td:last-child *
-{
-    width: 100% !important;
-}
-
-.et2_customfield_list tr td:nth-child(2) > *:not(.et2_checkbox):not(.et2_file):not(.et2_vfs_btn):not(.et2_button):not(.et2_radiobox),
-.et2_customfield_list tr td:nth-child(2) > * > input:not(.et2_checkbox):not(.et2_radiobox):not(.et2_button):not(.et2_vfs_btn) {
-    width: calc(100% - 20px);
-}
-
-/* Set a specific height for auto-sizing elements like et2-htmlarea.  TD will still autosize. */
-.et2_customfield_list tr td:nth-child(2) {
-	height: 1px;
-}
-/* Hide the upload button if desired, we still use the widget to show the selected file */
-.et2_customfield_list tr et2-vfs-upload.noUpload::part(button) {
-	display: none;
-}
-
-.et2_customfield_list input, .et2_customfield_list textarea {
-    max-width: 100ex;
-}
 
 td.et2_customfield_header et2-label {
     font-size: 120%;
     font-weight: bold;
-}
-
-/* Custom field list inside nextmatch rows gets an icon for each row */
-.et2_nextmatch .egwGridView_grid .et2_customfield_list > tbody > tr > td > *:before {
-        font-family: bootstrap-icons !important;
-        content: "\f431";
-
-    /*    background-image: url('../../../node_modules/bootstrap-icons/icons/info-circle.svg');
-        background-repeat: no-repeat;
-        background-size: 1em;*/
-}
-
-.et2_nextmatch .egwGridView_grid .et2_customfield_list > tbody > tr > td:first-child {
-    padding-left: 1.2em;
 }
 
 /*stops a tags inside next match extends to their parents width,
