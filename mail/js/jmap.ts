@@ -6386,12 +6386,19 @@ export class MailJmap
 	 * them. Read-modify-write against whatever is already cached (egw.preference() already returns
 	 * a shallow copy, see its own docblock) so every OTHER account's own entry survives untouched -
 	 * only this call's own accId key is ever replaced.
+	 *
+	 * Also invalidates MailApp.getComposeToolbarData()'s own per-account cache (ticket #125092,
+	 * Ingo/Birgit via ralf, follow-up found live: without this, the NEXT compose for this same
+	 * account - same main-window lifetime - kept reusing the stale identity pre-selection that
+	 * cache had baked in from BEFORE this send, until a full page reload started a fresh cache) -
+	 * see that method's own docblock.
 	 */
 	private rememberLastUsedIdentity(accId : string, identId : string) : void
 	{
 		const current = this.egw.preference('LastSignatureIDUsed', 'mail') ?? {};
 		const updated = {...current, [accId] : identId};
 		this.egw.set_preference('mail', 'LastSignatureIDUsed', updated);
+		this.app.invalidateComposeToolbarData(accId);
 	}
 
 	/**

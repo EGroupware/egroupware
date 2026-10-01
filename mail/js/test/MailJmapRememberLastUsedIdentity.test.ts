@@ -18,9 +18,11 @@ import type {MailApp} from "../app";
  * updating one account's entry must never disturb any other account's own, already-stored value.
  */
 
-function createFakeApp(initialPreference : any) : {app : MailApp, setPreferenceCalls : {app : string, name : string, val : any}[]}
+function createFakeApp(initialPreference : any) :
+	{app : MailApp, setPreferenceCalls : {app : string, name : string, val : any}[], invalidateCalls : string[]}
 {
 	const setPreferenceCalls : {app : string, name : string, val : any}[] = [];
+	const invalidateCalls : string[] = [];
 	let stored = initialPreference;
 	const egw = {
 		preference : (name : string, appName? : string) =>
@@ -31,8 +33,11 @@ function createFakeApp(initialPreference : any) : {app : MailApp, setPreferenceC
 			if (name === 'LastSignatureIDUsed') stored = val;
 		},
 	};
-	const app = {egw} as unknown as MailApp;
-	return {app, setPreferenceCalls};
+	const app = {
+		egw,
+		invalidateComposeToolbarData : (accId : string) => { invalidateCalls.push(accId); },
+	} as unknown as MailApp;
+	return {app, setPreferenceCalls, invalidateCalls};
 }
 
 describe("MailJmap.rememberLastUsedIdentity()", () =>
@@ -102,5 +107,30 @@ describe("MailJmap.rememberLastUsedIdentity()", () =>
 		(jmap as any).rememberLastUsedIdentity('1', '15');
 
 		assert.deepEqual(setPreferenceCalls[0].val, {'1' : '15'});
+	});
+
+	it("invalidates MailApp.getComposeToolbarData()'s cache for THIS account, so the next compose for it re-fetches the just-updated identity", () =>
+	{
+		// Ingo/Birgit live follow-up: "ohne Neuladen wird wieder die genommen von der ich zuvor
+		// gewechselt war" - getComposeToolbarData()'s own per-accId cache (mail/js/app.ts) must be
+		// dropped for the account that was just sent from, so a later compose for the SAME account
+		// (same main-window lifetime, no reload) doesn't keep reusing the now-stale pre-selection
+		const {app, invalidateCalls} = createFakeApp(null);
+		const jmap = new MailJmap(app);
+
+		(jmap as any).rememberLastUsedIdentity('42', '999');
+
+		assert.deepEqual(invalidateCalls, ['42'], "must invalidate exactly the account that was just sent from");
+	});
+
+	it("invalidates the CORRECT account's cache, not some other one, across two sequential sends", () =>
+	{
+		const {app, invalidateCalls} = createFakeApp(null);
+		const jmap = new MailJmap(app);
+
+		(jmap as any).rememberLastUsedIdentity('1', '15');
+		(jmap as any).rememberLastUsedIdentity('42', '999');
+
+		assert.deepEqual(invalidateCalls, ['1', '42']);
 	});
 });
