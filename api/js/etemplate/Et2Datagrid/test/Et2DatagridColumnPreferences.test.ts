@@ -90,6 +90,52 @@ describe("Et2Datagrid column preferences", () =>
 		}
 	});
 
+	it("ignores saved column state for a template without header cells", () =>
+	{
+		// positional keys from before the template lost its first column: col0 was 10 wide, col1 100
+		const storedPreference = [
+			{key: "col0", width: "10", hidden: false},
+			{key: "col1", width: "100", hidden: false}
+		];
+		const originalPreference = egw.preference;
+		const preference = (key : string) => key === "nextmatch-projectmanager.elements.list.rows-prefs" ? storedPreference : null;
+		egw.preference = preference;
+		(window.egw as any).preference = preference;
+		preferenceCalls = [];
+		try
+		{
+			const el = createDatagrid();
+			const host = document.createElement("et2-nextmatch");
+			host.attachShadow({mode: "open"}).appendChild(el);
+			const columns = [
+				{key: "col0", title: "", width: "100", header: document.createElement("et2-description") as any},
+				{key: "col1", title: "", width: "90%", header: document.createElement("et2-description") as any}
+			];
+			el.templateData = {
+				columns,
+				noHeader: true,
+				rowTemplateId: "projectmanager.elements.list.rows",
+				rowTemplate: null,
+				rowTemplateXml: null,
+				rowTemplateAttrMap: {},
+				loaderTemplate: null
+			} as any;
+			el.columns = columns as any;
+
+			(el as any)._loadColumnPreferencesIfNeeded();
+			(el as any)._persistColumnPreferences?.();
+
+			assert.deepEqual(el.columns.map((column) => column.width), ["100", "90%"],
+				"the template's widths are used, not the stored positional ones");
+			assert.isEmpty(preferenceCalls, "no column state is saved for it either");
+		}
+		finally
+		{
+			egw.preference = originalPreference;
+			(window.egw as any).preference = originalPreference;
+		}
+	});
+
 	it("uses source column order to align row cells after preference reordering", () =>
 	{
 		const el = createDatagrid();

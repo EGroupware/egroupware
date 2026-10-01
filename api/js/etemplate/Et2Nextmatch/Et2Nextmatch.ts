@@ -2881,7 +2881,8 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 	) : Et2DatagridColumn[]
 	{
 		const rowTemplateId = String(templateData?.rowTemplateId || "").trim();
-		if(!rowTemplateId || !columns.length)
+		// without header cells there is no column state to migrate, see Et2DatagridTemplateData.noHeader
+		if(!rowTemplateId || !columns.length || templateData?.noHeader)
 		{
 			return columns;
 		}
@@ -3552,7 +3553,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 	 */
 	private _persistLegacyColumnSelection(columns : Et2DatagridColumn[])
 	{
-		if(this._datagrid?.noColumnPersistence || this._datagrid?.noVisibleHeader)
+		if(this._datagrid?.noColumnPersistence || this._datagrid?.noVisibleHeader || this._templateData?.noHeader)
 		{
 			return;
 		}
