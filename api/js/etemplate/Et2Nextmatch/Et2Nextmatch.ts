@@ -85,7 +85,7 @@ type Et2NextmatchPrintState = {
  * @csspart subgrid - Expanded child `et2-datagrid` rendered for expandable rows.
  * @csspart footer - Wrapper for bottom slot content rendered below the grid.
  * @cssproperty [--row-height=3em] - Forwarded to internal datagrid row-height estimate.
- * @cssproperty [--row-cell-max-height=10em] - Forwarded to internal datagrid row cell max height.
+ * @cssproperty [--row-cell-max-height=none] - Forwarded to internal datagrid row cell max height.
  * @cssproperty [--meta-column-width=max(var(--sl-spacing-large), 6px)] - Width of leading metadata indicator/expander column.
  */
 @customElement("et2-nextmatch")

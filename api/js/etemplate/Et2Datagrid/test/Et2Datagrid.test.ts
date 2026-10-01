@@ -3407,7 +3407,7 @@ describe("Et2Datagrid virtual height stability", () =>
 		);
 		assert.include(
 			cssText,
-			"max-height: var(--row-cell-max-height, 10em);",
+			"max-height: var(--row-cell-max-height, none);",
 			"cells should retain the generic fallback when no owning nextmatch provides a limit"
 		);
 		assert.include(

@@ -221,7 +221,7 @@ class Et2DatagridSparseFlowLayout extends FlowLayout
  * @csspart column-selection - Column selection action container in the header.
  *
  * @cssproperty [--row-height=44px] - Estimated row height used for spacer rendering.
- * @cssproperty [--row-cell-max-height=10em] - Maximum height for individual row cells before vertical scrolling.
+ * @cssproperty [--row-cell-max-height=none] - Maximum height for individual row cells; taller content is clipped. Unlimited by default.
  * @cssproperty [--meta-column-width=0px] - Width of leading metadata column; expandable grids calculate a width large enough for the expander when it is not supplied.
  * @cssproperty [--row-expander-size=var(--sl-spacing-large)] - Width and height of the row expand/collapse button.
  * @cssproperty [--row-expander-icon-size=0.5em] - Size of the default CSS triangle expander icon.

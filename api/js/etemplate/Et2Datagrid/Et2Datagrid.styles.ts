@@ -273,10 +273,26 @@ export default css`
 			box-sizing: border-box;
 			padding: 0px var(--sl-spacing-x-small);
 			min-width: 0;
-			max-height: var(--row-cell-max-height, 10em);
+			max-height: var(--row-cell-max-height, none);
 			overflow-x: hidden;
-			overflow-y: auto;
+			/* Only bites when an app sets --row-cell-max-height: clip, no per-cell scrollbar */
+			overflow-y: hidden;
 			text-overflow: ellipsis;
+		}
+
+		/* A customfields list can be long, so let it scroll instead of hiding fields */
+		tbody td:has(> et2-customfields-list) {
+			overflow-y: auto;
+		}
+
+		/* Fade out the bottom of a clipped cell. The cell's own scroll timeline is only active while its
+		   content overflows, so cells that fit are left alone. */
+		@supports (animation-timeline: scroll(self)) {
+			tbody td:not([data-dg-meta-cell="1"], :has(> et2-customfields-list)),
+			tbody th {
+				animation: dg-cell-clip-fade linear both;
+				animation-timeline: scroll(self block);
+			}
 		}
 
 		tbody td[data-dg-meta-cell="1"] {
@@ -414,6 +430,15 @@ export default css`
 		to {
 			opacity: 1;
 			transform: translateY(0);
+		}
+	}
+
+	@keyframes dg-cell-clip-fade {
+		from {
+			mask-image: linear-gradient(to bottom, #000 calc(100% - 1.5em), transparent);
+		}
+		to {
+			mask-image: none;
 		}
 	}
 
