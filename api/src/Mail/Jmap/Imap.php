@@ -3193,16 +3193,6 @@ class Imap extends Jmap\Base
 					continue;
 				}
 
-				// TEMP-125161 (ralf, remove once we have one real trace): "valid RCPT command
-				// must precede DATA" reported sending as a function mailbox - checking whether
-				// the re-fetched draft itself already has empty to/cc/bcc at this point.
-				error_log('TEMP-125161 fetched draft recipients: accountId='.$accountId.
-					' emailId='.$emailId.' sourceFolder='.$sourceFolder.
-					' from='.json_encode($email['from'] ?? null).
-					' to='.json_encode($email['to'] ?? null).
-					' cc='.json_encode($email['cc'] ?? null).
-					' bcc='.json_encode($email['bcc'] ?? null));
-
 				// Ticket #125161 follow-up (Noje, live: warning box shown but mail still sent with
 				// a blank subject) - defense-in-depth, independent of whatever client-side mechanism
 				// is letting a MailCompose.hasNoSubject()/hasNoRecipientsAtAll() check through (see
@@ -3232,11 +3222,6 @@ class Imap extends Jmap\Base
 
 				$mailer = self::buildMailerFromEmailProperties($accountId, (array)$email);
 
-				// TEMP-125161: and whether the Mailer built from it actually ended up with any
-				// envelope recipients at all before send() is even attempted.
-				error_log('TEMP-125161 mailer recipients: to='.json_encode($mailer->getAddresses('to', true)).
-					' cc='.json_encode($mailer->getAddresses('cc', true)).
-					' bcc='.json_encode($mailer->getAddresses('bcc', true)));
 				// a genuinely-signed draft (see smimeEncryptEmailProperties()'s own TYPE_SIGN
 				// docblock - the Email/import path used to create such a draft in the first place)
 				// must be sent/stored with its EXACT stored body bytes, never rebuilt from
