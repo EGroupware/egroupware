@@ -166,6 +166,7 @@ armenia	common	de	ARMENIEN
 aruba	common	de	ARUBA
 as default	common	de	Als Vorgabe
 attach	common	de	Anhängen
+attach a file	common	de	Datei anhängen
 attach file	common	de	Datei anhängen
 attachment	common	de	Anhang
 attention: action will be applied to all rows, not only visible ones!	api	de	\nAchtung: Die Aktion wird auf alle Zeilen angewendet, nicht nur auf die sichtbaren!
@@ -219,6 +220,7 @@ browser %1 %2 is not recommended. you may experience issues and not working feat
 brunei darussalam	common	de	BRUNEI DARUSSALAM
 bulgaria	common	de	BULGARIEN
 bulgarian	common	de	Bulgarisch
+bullet list	common	de	Aufzählung
 bullist	common	de	Aufzählung
 burkina faso	common	de	BURKINA FASO
 burundi	common	de	BURUNDI
@@ -529,6 +531,7 @@ error enabling push	common	de	Fehler beim Aktivieren von Push!
 error loading placeholders	common	de	Fehler beim Laden der Platzhalter
 error merging placeholder	common	de	Fehler beim Einsetzen des Platzhalters
 error renaming %1 %2 directory	common	de	Fehler beim Umbenennen des Ordners %1 %2!
+error uploading file	common	de	Fehler beim Hochladen der Datei
 error uploading file!	filemanager	de	Fehler beim Hochladen der Datei!
 error while creating directory.	common	de	Fehler beim Erstellen des Ordners.
 error: template not found !!!	common	de	Fehler: eTemplate nicht gefunden!
@@ -668,6 +671,12 @@ guyana	common	de	GUYANA
 h	common	de	h
 haiti	common	de	HAITI
 hbox	common	de	HBox
+heading 1	common	de	Überschrift 1
+heading 2	common	de	Überschrift 2
+heading 3	common	de	Überschrift 3
+heading 4	common	de	Überschrift 4
+heading 5	common	de	Überschrift 5
+heading 6	common	de	Überschrift 6
 heard island and mcdonald islands	common	de	HEARD UND MCDONALD INSELN
 height	common	de	Höhe
 height of row (in % or pixel)	common	de	Höhe der Zeile (in % oder Pixel)
@@ -868,6 +877,7 @@ maldives	common	de	MALEDIVEN
 mali	common	de	MALI
 malta	common	de	MALTA
 march	common	de	März
+markdown view: %1	common	de	Markdown-Ansicht: %1
 marshall islands	common	de	MARSHALLINSELN
 martinique	common	de	MARTINIQUE
 mauritania	common	de	MAURITANIEN
@@ -1004,6 +1014,7 @@ november	common	de	November
 now	common	de	Jetzt
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	common	de	Anzahl der Spalten die ein Feld überspannt oder 'all' für die übrigen Spalten, CSS class Name (für das TD-tag)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	common	de	Anzahl Zeilen/Spalten der V/HBox, Innenabstand (Cellpadding), Zellenabstand (Cellspacing)
+numbered list	common	de	Nummerierte Liste
 numbers	common	de	Nummern
 numlist	common	de	Nummerierte Liste
 october	common	de	Oktober
@@ -1109,6 +1120,7 @@ preference	common	de	Einstellung
 preferences	common	de	Einstellungen
 preferences for the %1 template set	preferences	de	Einstellungen für das %1 Template
 prev	common	de	Vorheriger
+preview	common	de	Vorschau
 preview with entry	common	de	Vorschau aus Eintrag
 previous	common	de	Vorherige
 previous page	common	de	Vorherige Seite
@@ -1128,6 +1140,7 @@ public	common	de	Öffentlich
 puerto rico	common	de	PUERTO RICO
 qatar	common	de	QATAR
 quick add	common	de	Schnelles Hinzufügen
+quote	common	de	Zitat
 radiobutton	common	de	Radioknopf
 read	common	de	Lesen
 read a single entry by passing the id and fieldlist.	common	de	Liste einen einzelnen Eintrag durch Übergabe seiner ID und Feldliste.
@@ -1357,6 +1370,7 @@ spain	common	de	SPANIEN
 span	common	de	Überspannt
 span, class	common	de	Span, Class
 special characters	common	de	Sonderzeichen
+split view	common	de	Geteilte Ansicht
 spreadsheets	common	de	Tabellenkalkulationen
 sri lanka	common	de	SRI LANKA
 stack	common	de	Stapel
@@ -1406,6 +1420,7 @@ tabs	common	de	Karteikarten
 taiwan	common	de	TAIWAN/TAIPEI
 tajikistan	common	de	TAJIKISTAN
 tanzania, united republic of	common	de	TANZANIA, VEREINIGTE REPUBLIK
+task list	common	de	Aufgabenliste
 template	common	de	Vorlage
 template deleted	common	de	Template gelöscht.
 template saved	common	de	Template gespeichert.

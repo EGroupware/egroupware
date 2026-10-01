@@ -555,7 +555,7 @@ class preferences_hooks
 					'split'   => lang('Editor and preview'),
 					'view'    => lang('Preview only'),
 				),
-				'help'   => 'Which view markdown-enabled text fields open in. Switching the view in a field updates this.',
+				'help'   => 'Which view markdown-enabled text fields open in by default',
 				'xmlrpc' => True,
 				'admin'  => False,
 				'default' => 'view',

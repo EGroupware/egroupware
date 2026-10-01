@@ -59,7 +59,7 @@ interface HasEgwAndValue
 export type MarkdownMode = "edit" | "split" | "view";
 
 /**
- * Remembers the last view the user chose, across fields and sessions.
+ * Which view a markdown field opens in.  Read only - set in the preferences app
  */
 const VIEW_PREFERENCE = "markdown_view";
 
@@ -199,9 +199,9 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
 		/**
 		 * Which pane(s) to show.  No effect unless `markdown` is enabled.
 		 *
-		 * Seeded from the user's last choice, unless the template says otherwise.  Defaults to
+		 * Seeded from the user's preference, unless the template says otherwise. Defaults to
 		 * "view": a field opens showing the formatted text, and clicking it puts the caret where
-		 * you clicked, so reading costs nothing and editing costs one click.
+		 * you clicked after changing to "edit"
 		 */
 		@property({type: String, reflect: true, attribute: "markdown-mode"})
 		markdownMode : MarkdownMode = "view";
@@ -351,13 +351,12 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
 		}
 
 		/**
-		 * Switch view and remember it.
+		 * Switch this field's view.
 		 */
 		protected _setMarkdownMode(mode : MarkdownMode)
 		{
 			this.markdownMode = mode;
 			this._markdownPopupOpen = false;
-			this._host.egw()?.set_preference("common", VIEW_PREFERENCE, mode);
 		}
 
 		/**
@@ -747,8 +746,8 @@ export const Et2MarkdownEditMixin = dedupeMixin(<T extends Constructor<LitElemen
 		 * or after the last word when the click landed on no text.
 		 *
 		 * In preview it switches to edit first; in split the editor is already visible, so it only
-		 * moves the caret.  That switch deliberately does NOT write the view preference - the user
-		 * asked to edit this one field, not to change what every field opens as.
+		 * moves the caret.  Either way the switch is local to this field, like every other view
+		 * change - see _setMarkdownMode().
 		 */
 		protected _handleMarkdownPreviewClick = (event : MouseEvent) =>
 		{

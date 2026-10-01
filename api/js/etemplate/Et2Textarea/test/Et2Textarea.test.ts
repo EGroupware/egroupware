@@ -255,7 +255,12 @@ describe("et2-textarea markdown view preference", () =>
 		assert.equal(el.markdownMode, "view");
 	});
 
-	it("remembers the view the user picks", async() =>
+	/**
+	 * The switcher used to write the preference, so a preference of "Preview only" lasted until
+	 * the next time anyone touched any switcher anywhere - including a split opened for ten
+	 * seconds to look at something.
+	 */
+	it("does not touch the preference when the user picks a view", async() =>
 	{
 		const el: Et2Textarea = await fixture(html`
             <et2-textarea markdown></et2-textarea>`);
@@ -264,8 +269,8 @@ describe("et2-textarea markdown view preference", () =>
 		(<any>el)._setMarkdownMode("split");
 		await elementUpdated(el);
 
-		assert.equal(el.markdownMode, "split");
-		assert.deepEqual(written, [{app: "common", name: "markdown_view", value: "split"}]);
+		assert.equal(el.markdownMode, "split", "the field follows");
+		assert.deepEqual(written, [], "what every field OPENS as is not a per-field decision");
 	});
 });
 
