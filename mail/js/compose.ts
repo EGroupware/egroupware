@@ -2394,12 +2394,20 @@ export class MailCompose
 			return null;
 		}
 		const sorted = [...identities].sort((a, b) => parseInt(a.id) - parseInt(b.id));
-		const standard = identities.find((i) => i.isStandard) ?? sorted[0];
+		const standard = sorted.find((i) => i.isStandard) ?? sorted[0];
 		if (pref === 'default')
 		{
 			return standard;
 		}
-		const personal = identities.find((i) => i.isPersonal);
+		// Birgit, ticket #125092: "bei 'personal' ... wird die letzte persönliche angezogen und
+		// nicht die Erste" - picking from the plain `identities` array used whatever order the
+		// server happened to return them in (Account::identities()'s own ORDER BY account_id,
+		// ident_realname, ident_org, ident_email - NOT ident_id), so a user with several personal
+		// identities got an arbitrary one, not their first/lowest-id one. The classic, now-deleted
+		// get_preferred_identity()'s own 'personal' always meant "lowest ident_id among the
+		// matching ones" - `sorted` (already lowest-id-first) is what must be searched here, same
+		// as the isStandard fallback above.
+		const personal = sorted.find((i) => i.isPersonal);
 		return personal ?? standard;
 	}
 
