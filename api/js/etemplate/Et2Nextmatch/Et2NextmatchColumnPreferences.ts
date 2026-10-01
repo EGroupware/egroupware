@@ -49,17 +49,25 @@ export function applyLegacyNextmatchColumnPreferences(
 
 /**
  * Convert resolved columns into Datagrid's structured preference shape.
+ *
+ * Only a width the user's legacy size preference holds is kept.  Every other column's width is the
+ * template's default of the day, and storing that would make it override the template for good, so
+ * a later change of a column's width in the template, or a column added or removed before it, would
+ * never reach this user.
+ *
+ * @param storedSizes the legacy `nextmatch-<row_ID>-size` preference, as read
  */
-export function datagridColumnPreferenceValue(columns : Et2NextmatchResolvedColumn[]) : Array<{
+export function datagridColumnPreferenceValue(columns : Et2NextmatchResolvedColumn[], storedSizes? : any) : Array<{
 	key : string;
 	width?: string;
 	hidden : boolean;
 	customFields?: string[];
 }>
 {
+	const widthMap = normalizeLegacyColumnWidthMap(storedSizes);
 	return (columns || []).map((column) => ({
 		key: String(column.key),
-		width: typeof column.width === "string" ? column.width : undefined,
+		width: typeof column.width === "string" && typeof widthMap[String(column.key)] !== "undefined" ? column.width : undefined,
 		hidden: !!column.hidden,
 		customFields: column.customFields?.length ? column.customFields : undefined
 	}));
