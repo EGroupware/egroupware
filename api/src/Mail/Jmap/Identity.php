@@ -88,6 +88,14 @@ class Identity extends Type
 	 */
 	public static function synthesize(int $acc_id, ?array $ids=null) : array
 	{
+		// the account's REAL standard identity - Account::$ident_id, the egw_ea_accounts.ident_id
+		// column (admin-settable, Account::IDENTITY_JOIN) - not always the same as "ident_id ==
+		// acc_id" (only true as long as nobody ever created another identity for this account;
+		// ralf, ticket #125092, correcting an earlier assumption in preferredIdentityFromPreference()'s
+		// own docblock that this always held). Account::read() is a singleton/cached call -
+		// practically free here, the account was almost always already read earlier in the same
+		// dispatch (eg. imapServer()).
+		$standardIdentId = (string)Account::read($acc_id)->ident_id;
 		$list = [];
 		foreach (Account::identities($acc_id, true, 'params') as $row)
 		{
@@ -95,7 +103,7 @@ class Identity extends Type
 			{
 				continue;
 			}
-			$list[] = self::identityObject($row);
+			$list[] = self::identityObject($row, $standardIdentId);
 		}
 		return [
 			'accountId' => (string)$acc_id,
@@ -115,10 +123,18 @@ class Identity extends Type
 	 * than via `Api\Mail`/mail_bo (ralf, 2026-08-27: avoid mail_bo, use Mail\Account directly).
 	 *
 	 * @param array $row
+	 * @param string $standardIdentId synthesize()'s own Account::$ident_id lookup - identifies
+	 *  THIS account's real standard identity, see that method's own docblock
 	 * @return array
 	 */
-	private static function identityObject(array $row) : array
+	private static function identityObject(array $row, string $standardIdentId) : array
 	{
+		// egw_ea_identities.account_id: 0 = general, usable by any user of this mail account
+		// (includes the standard identity); a real account_id = personal, that ONE user's own
+		// additional identity (ticket #125092, ralf: a "personal" identity is identified by this
+		// column, NOT simply "any identity other than the standard one" - a previous version of
+		// this fix conflated the two).
+		$isPersonal = (int)($row['account_id'] ?? 0) === (int)$GLOBALS['egw_info']['user']['account_id'];
 		$htmlSignature = '';
 		$textSignature = '';
 		if (!empty($row['ident_signature']))
@@ -141,6 +157,8 @@ class Identity extends Type
 			'email' => $row['ident_email'] ?? '',
 			'replyTo' => null,
 			'bcc' => null,
+			'isStandard' => (string)$row['ident_id'] === $standardIdentId,
+			'isPersonal' => $isPersonal,
 			'textSignature' => $textSignature,
 			'htmlSignature' => $htmlSignature,
 			'mayDelete' => false,

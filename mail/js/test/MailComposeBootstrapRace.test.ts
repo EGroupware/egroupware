@@ -113,6 +113,8 @@ function fakeIdentity(overrides : Partial<JmapIdentity> = {}) : JmapIdentity
 		textSignature: '',
 		htmlSignature: '',
 		mayDelete: false,
+		isStandard: false,
+		isPersonal: false,
 		...overrides,
 	};
 }
@@ -615,17 +617,21 @@ describe("MailCompose bootstrapSignature() - 'Default identity for compose' pref
 {
 	it("switches to the personal identity for a brand-new compose when the preference is 'personal'", async() =>
 	{
-		const identityDefault = fakeIdentity({id: '0', htmlSignature: '<p>Default Sig</p>'});
-		const identityPersonal = fakeIdentity({id: '1', htmlSignature: '<p>Personal Sig</p>'});
+		// the account's own STANDARD identity is whichever one is flagged isStandard (Api\Mail\
+		// Jmap\Identity::synthesize()'s own egw_ea_accounts.ident_id lookup - see
+		// preferredIdentityFromPreference()'s own docblock, ticket #125092) - deliberately NOT
+		// the lower id here, to prove the fix doesn't depend on id ordering at all.
+		const identityDefault = fakeIdentity({id: '5', htmlSignature: '<p>Default Sig</p>', isStandard: true});
+		const identityPersonal = fakeIdentity({id: '1', htmlSignature: '<p>Personal Sig</p>', isPersonal: true});
 		const app = createFakeApp();
 		const jmap = new MailJmap(app);
 		(jmap as any).getIdentities = async() => [identityDefault, identityPersonal];
 		(app as any).jmap = jmap;
 		const compose = new MailCompose(app);
 		(compose as any).isJmapMode = true;
-		// server pre-selected the account's own lowest-id ("default") identity, same as a normal
-		// blank-compose page render without this preference set
-		const et2 = createFakeEt2(compose, '1:0');
+		// server pre-selected the account's own standard identity, same as a normal blank-compose
+		// page render without this preference set
+		const et2 = createFakeEt2(compose, '1:5');
 		(compose as any).et2 = et2;
 
 		const originalPreference = egw.preference;
@@ -636,7 +642,7 @@ describe("MailCompose bootstrapSignature() - 'Default identity for compose' pref
 			await (compose as any).bootstrapSignature();
 
 			assert.equal(et2.widgets.mailaccount.get_value(), '1:1',
-				"mailaccount should be switched to the personal (second) identity");
+				"mailaccount should be switched to the personal (ADDITIONAL) identity");
 			assert.include(et2.widgets.mail_htmltext.get_value(), 'Personal Sig');
 			assert.notInclude(et2.widgets.mail_htmltext.get_value(), 'Default Sig');
 		}
@@ -648,20 +654,20 @@ describe("MailCompose bootstrapSignature() - 'Default identity for compose' pref
 
 	it("leaves the server-preselected identity alone when the preference is 'last-used'/unset (the everyday case)", async() =>
 	{
-		const identityDefault = fakeIdentity({id: '0', htmlSignature: '<p>Default Sig</p>'});
-		const identityPersonal = fakeIdentity({id: '1', htmlSignature: '<p>Personal Sig</p>'});
+		const identityDefault = fakeIdentity({id: '5', htmlSignature: '<p>Default Sig</p>', isStandard: true});
+		const identityPersonal = fakeIdentity({id: '1', htmlSignature: '<p>Personal Sig</p>', isPersonal: true});
 		const app = createFakeApp();
 		const jmap = new MailJmap(app);
 		(jmap as any).getIdentities = async() => [identityDefault, identityPersonal];
 		(app as any).jmap = jmap;
 		const compose = new MailCompose(app);
 		(compose as any).isJmapMode = true;
-		const et2 = createFakeEt2(compose, '1:0');
+		const et2 = createFakeEt2(compose, '1:5');
 		(compose as any).et2 = et2;
 
 		await (compose as any).bootstrapSignature();
 
-		assert.equal(et2.widgets.mailaccount.get_value(), '1:0', "mailaccount must stay untouched");
+		assert.equal(et2.widgets.mailaccount.get_value(), '1:5', "mailaccount must stay untouched");
 		assert.include(et2.widgets.mail_htmltext.get_value(), 'Default Sig');
 	});
 });

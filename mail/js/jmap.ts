@@ -193,6 +193,26 @@ export interface JmapIdentity
 	textSignature : string;
 	htmlSignature : string;
 	mayDelete : boolean;
+	/**
+	 * EGroupware's own extension (RFC 8621 has no such concept) - ticket #125092: the account's
+	 * real standard identity is whichever ident_id its own `egw_ea_accounts.ident_id` column
+	 * points to (Mail\Account's own `$ident_id` property, admin-settable, see Account::
+	 * IDENTITY_JOIN) - the same as this account's acc_id only as long as nobody ever created
+	 * another identity for it, not always. Api\Mail\Jmap\Identity::synthesize() sets this from
+	 * that real column, never from id===acc_id (a previous version of this fix assumed that
+	 * equivalence always held, which isn't always the case).
+	 */
+	isStandard : boolean;
+	/**
+	 * EGroupware's own extension (RFC 8621 has no such concept) - ticket #125092: true for an
+	 * identity that's genuinely personal to the CURRENT user (`egw_ea_identities.account_id`
+	 * equals their own account_id), false for a general identity usable by any user of this mail
+	 * account (`account_id=0`, "0=all users of give mail account" per the table's own schema
+	 * comment - includes the standard identity, which is general by definition). NOT simply "any
+	 * identity other than the standard one" - a previous version of this fix conflated "personal"
+	 * with "additional", which a general/shared additional identity would also wrongly match.
+	 */
+	isPersonal : boolean;
 }
 
 /** RFC 8621 EmailAddress shape (from/to/cc/replyTo properties) */
@@ -5681,6 +5701,16 @@ export class MailJmap
 			{
 				throw new JmapUserError(describeSetError(submission.notCreated) ?? this.egw.lang('Failed to send message'));
 			}
+			// ticket #125092 (Ingo/Birgit Becker): the classic, now-deleted
+			// mail_compose::compose()'s own LastSignatureIDUsed write-back (0fcea2103a) never got
+			// reimplemented for this client-side JMAP send - "use last used signature" (the
+			// mail/defaultIdentity preference's default/unset value) silently never remembered
+			// anything, always falling through to whatever compose.ts's own server-rendered
+			// initial selection happened to be. this.identity.id (not submissionIdentityId,
+			// Stalwart's own OPAQUE identity id - meaningless as a stored "last used" value) is
+			// the real, numeric ident_id actually used for THIS send, same value a reply/forward's
+			// own recipient-matching or a later compose would need to recognize again.
+			this.rememberLastUsedIdentity(profileID.split(':', 2)[0], identity.id);
 			// ticket #125201 - see describeFailedRecipientsWarning()'s own docblock
 			const warning = describeFailedRecipientsWarning(this.egw, (submission.created.sub1 as any).failedRecipients);
 			if (warning) this.egw.message(warning, 'warning');
@@ -6228,6 +6258,23 @@ export class MailJmap
 			submissionIdentityId = submissionIdentity.id;
 		}
 		return {token, client, identity, submissionIdentityId, draftsId, sentId};
+	}
+
+	/**
+	 * Ticket #125092: update the `mail/LastSignatureIDUsed` preference's OWN entry for this one
+	 * account after a successful send - sendNewEmail()'s only caller of this. That preference is
+	 * an object keyed by acc_id (classic mail_compose.inc.php's own shape, `$sigPref[$profileID]`
+	 * - see Compose::setDefaults()), never a single scalar: a user with several mail accounts has
+	 * one independently-remembered "last used identity" per account, not one shared across all of
+	 * them. Read-modify-write against whatever is already cached (egw.preference() already returns
+	 * a shallow copy, see its own docblock) so every OTHER account's own entry survives untouched -
+	 * only this call's own accId key is ever replaced.
+	 */
+	private rememberLastUsedIdentity(accId : string, identId : string) : void
+	{
+		const current = this.egw.preference('LastSignatureIDUsed', 'mail') ?? {};
+		const updated = {...current, [accId] : identId};
+		this.egw.set_preference('mail', 'LastSignatureIDUsed', updated);
 	}
 
 	/**

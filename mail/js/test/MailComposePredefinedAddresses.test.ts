@@ -76,7 +76,7 @@ function fakeIdentity(overrides : Partial<JmapIdentity> = {}) : JmapIdentity
 {
 	return {
 		id : '1', name : 'Me', email : 'me@example.com', replyTo : null, bcc : null,
-		textSignature : '', htmlSignature : '', mayDelete : false,
+		textSignature : '', htmlSignature : '', mayDelete : false, isStandard : false, isPersonal : false,
 		...overrides,
 	};
 }
