@@ -3203,6 +3203,33 @@ class Imap extends Jmap\Base
 					' cc='.json_encode($email['cc'] ?? null).
 					' bcc='.json_encode($email['bcc'] ?? null));
 
+				// Ticket #125161 follow-up (Noje, live: warning box shown but mail still sent with
+				// a blank subject) - defense-in-depth, independent of whatever client-side mechanism
+				// is letting a MailCompose.hasNoSubject()/hasNoRecipientsAtAll() check through (see
+				// those methods' own docblocks in mail/js/compose.ts) - this is the ONE place every
+				// shim submission passes through regardless of how it got here, so it's the only
+				// place a check can't be bypassed (a real Stalwart account never reaches this class
+				// at all for its own EmailSubmission/set - see the 'blobId' comment further below -
+				// so this only ever protects shim/classic-IMAP accounts, exactly Noje's own). Mirrors
+				// the classic, deleted mail_compose::send()'s own hard block (git show 3bca66cf01) for
+				// the same two cases. Recipients already get a de-facto backstop from the SMTP server
+				// itself refusing DATA with zero accepted RCPT TO's (the "valid RCPT command must
+				// precede DATA" error that started this ticket) - but an empty Subject header is
+				// perfectly valid SMTP, so nothing would ever catch that case server-side without an
+				// explicit check like this one.
+				if (self::hasNoRecipientsAtAll($email))
+				{
+					$notCreated[$creationId] = ['type' => 'invalidProperties', 'properties' => ['to'],
+						'description' => lang('No recipient address given!')];
+					continue;
+				}
+				if (self::hasNoSubject($email))
+				{
+					$notCreated[$creationId] = ['type' => 'invalidProperties', 'properties' => ['subject'],
+						'description' => lang('No subject supplied')];
+					continue;
+				}
+
 				$mailer = self::buildMailerFromEmailProperties($accountId, (array)$email);
 
 				// TEMP-125161: and whether the Mailer built from it actually ended up with any
@@ -3323,6 +3350,27 @@ class Imap extends Jmap\Base
 			'created' => (object)$created,
 			'notCreated' => (object)$notCreated,
 		];
+	}
+
+	/**
+	 * emailSubmissionSet()'s own no-recipients guard, extracted purely so it's directly unit-
+	 * testable (same reasoning as its JS mirror, MailCompose.hasNoRecipientsAtAll()) - a JMAP
+	 * Email object's 'to'/'cc'/'bcc' properties are each either absent or a list of
+	 * {name, email} objects (never a raw string, unlike the client-side widget values that other
+	 * method has to deal with).
+	 */
+	private static function hasNoRecipientsAtAll(array $email) : bool
+	{
+		$hasAny = static fn(array $addresses) : bool => (bool)array_filter($addresses, static fn($a) => !empty($a['email']));
+		return !$hasAny((array)($email['to'] ?? []))
+			&& !$hasAny((array)($email['cc'] ?? []))
+			&& !$hasAny((array)($email['bcc'] ?? []));
+	}
+
+	/** emailSubmissionSet()'s own no-subject guard - see hasNoRecipientsAtAll()'s own docblock. */
+	private static function hasNoSubject(array $email) : bool
+	{
+		return trim((string)($email['subject'] ?? '')) === '';
 	}
 
 	/**
