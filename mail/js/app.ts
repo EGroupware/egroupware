@@ -26,7 +26,7 @@ import {MailCompose} from "./compose";
 import {formatJmapAddress, isPreferenceOn, JmapBodyResult, JmapMessageReference, JmapUserError, MailJmap} from "./jmap";
 import {renderAttachmentIndex} from "./attachmentIndex";
 import {attachmentSaveUrl, downloadAttachments} from "./attachmentDownload";
-import {openLinksInNewTab} from "./bodyLinks";
+import {activateBodyLinks, openLinksInNewTab} from "./bodyLinks";
 import {buildErrorNode, buildFolderLevel, buildMailboxPaths, FolderTreeNode, isNamespaceRootName} from "./folderTree";
 // egw/egw_getFramework are ambient globals (declare global {} in egw_global.d.ts,
 // unconditionally included via tsconfig's "**/*.d.ts") - no import needed or possible.
@@ -3370,6 +3370,8 @@ export class MailApp extends EgwApp
 				const doc = iframe.contentWindow.document;
 				doc.documentElement.dataset.rowId = rowId;
 				openLinksInNewTab(doc);
+				// srcdoc body runs no script of its own (MailJmap.wrapDocument()), unlike the classic one with preview.js
+				activateBodyLinks(doc, this.egw);
 				this.jmap.resolveInlineImages(doc, rowId, fast).catch((e) =>
 					console.error('MailApp.loadMessageBody(): resolveInlineImages failed', e));
 				// see MailJmap.resolveBarePdfEmbed()'s own docblock for why this runs from here
