@@ -288,6 +288,14 @@ Without `vendor` the failure is loud but misleading: ~336 tests fail with
 `Failed to load /vendor/bower-asset/jquery/dist/jquery.min.js`, which looks like a code regression
 rather than a missing directory.
 
+The `node_modules` symlink only works when the worktree's branch has the same `package.json` as the
+main checkout. A worktree of a release branch such as `26` needs its own install instead:
+`npm ci --ignore-scripts` (a few seconds). Otherwise anything the branches pin differently fails to
+resolve. For example, 26 still imports `@bundled-es-modules/pdfjs-dist`, which master replaced with
+`pdfjs-dist`, so every app's tests die with `Failed to fetch dynamically imported module: .../app.ts`
+while the api suites still pass. The missing package is named only in the test runner's own output
+(`Error while transforming ...: Could not resolve import`), not in the browser error.
+
 Both symlinks then show up as untracked, because `.gitignore` lists them with a trailing slash
 (`/node_modules/`) which matches a directory but not a symlink. Add them to `info/exclude` - note
 that git reads this from the **common** git dir, not the per-worktree one, so it goes in
