@@ -584,12 +584,12 @@ after every (re)load:
   `class.infolog_ui.inc.php:1162`) ends up with a doubled `nextmatch-nextmatch-...` key - that
   matches what `Nextmatch.php` itself computes for the same app, so it's consistent, if odd; it's
   moot for Infolog anyway since `disable_autorefresh` is set. Also note the fallback uses the
-  *widget's* `template` (set once from server attrs), not `columnPreferenceName` or any
-  per-view-mode row-template id - Mail's row template varies per view (`mail.index.rows.vertical`)
-  while its shipped default preference name does not (`nextmatch-mail.index.rows-autorefresh`,
-  `mail/setup/default_records.inc.php:32`), so that default currently never matches and is
-  effectively dead; fixing Mail's shipped key (or making the lookup view-independent) is an
-  open follow-up, not blocking since Mail also uses push as its primary mechanism.
+  *widget's* `template` (set once from server attrs), not `columnPreferenceName`. An app whose
+  row template varies per view, but which wants one interval for all of them, sets the
+  `autorefreshPreference` attribute: it replaces `preferenceBase` for the autorefresh key only, so
+  column preferences stay per template. Mail's `index.xet` does this (`mail.index.rows`, for its
+  `mail.index.rows.vertical`/`.horizontal` templates), which is also the name its shipped default
+  (`mail/setup/default_records.inc.php`) has always used.
 - **Opt-out**: `disable_autorefresh` was added to `ALLOWED_SETTINGS` - Infolog/Timesheet/Invoices'
   existing `disable_autorefresh => true // we have push` now actually takes effect.
 - **What a tick does**: `refresh(undefined)` - a full reload, same as the toolbar refresh action,

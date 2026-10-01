@@ -192,3 +192,43 @@ describe("Et2NextmatchAutoRefresh visibility gating", () =>
 		}
 	});
 });
+
+describe("Et2NextmatchAutoRefresh preference key", () =>
+{
+	// Setting a real row template would load an .xet over the network, so stand in for the
+	// template-derived base directly.
+	const withTemplateBase = (controller : any, base : string) =>
+		Object.defineProperty(controller, "preferenceBase", {get: () => base, configurable: true});
+
+	it("keys the interval off the row template by default", async() =>
+	{
+		const {controller, cleanup} = await createNextmatch(30);
+		try
+		{
+			withTemplateBase(controller, "mail.index.rows.vertical");
+			assert.equal(controller.preferenceKey, "nextmatch-mail.index.rows.vertical-autorefresh");
+		}
+		finally
+		{
+			cleanup();
+		}
+	});
+
+	it("uses the autorefreshPreference attribute, so templates sharing it share one interval", async() =>
+	{
+		const {el, controller, cleanup} = await createNextmatch(30);
+		try
+		{
+			el.setAttribute("autorefreshPreference", "mail.index.rows");
+			for(const template of ["mail.index.rows.vertical", "mail.index.rows.horizontal"])
+			{
+				withTemplateBase(controller, template);
+				assert.equal(controller.preferenceKey, "nextmatch-mail.index.rows-autorefresh", template);
+			}
+		}
+		finally
+		{
+			cleanup();
+		}
+	});
+});
