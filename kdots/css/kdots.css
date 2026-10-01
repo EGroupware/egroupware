@@ -836,6 +836,7 @@ body egw-app,
   [layout="2-column"] *::part(form-control-help-text) {
     left: 0;
   }
+  /* When titles break, we want to align widgets at the bottom of the hbox */
   [layout="2-column"] et2-hbox::part(base) {
     align-items: flex-end;
   }
@@ -861,6 +862,7 @@ body egw-app,
   [layout="2-column"] *::part(form-control-help-text) {
     left: 0;
   }
+  /* When titles break, we want to align widgets at the bottom of the hbox */
   [layout="2-column"] et2-hbox::part(base) {
     align-items: flex-end;
   }
@@ -885,6 +887,7 @@ body egw-app,
   [layout="2-column"] *::part(form-control-help-text) {
     left: 0;
   }
+  /* When titles break, we want to align widgets at the bottom of the hbox */
   [layout="2-column"] et2-hbox::part(base) {
     align-items: flex-end;
   }
@@ -982,6 +985,7 @@ body egw-app,
   [layout="edit"] *::part(form-control-help-text) {
     left: 0;
   }
+  /* When titles break, we want to align widgets at the bottom of the hbox */
   [layout="edit"] et2-hbox::part(base) {
     align-items: flex-end;
   }
@@ -1007,6 +1011,7 @@ body egw-app,
   [layout="edit"] *::part(form-control-help-text) {
     left: 0;
   }
+  /* When titles break, we want to align widgets at the bottom of the hbox */
   [layout="edit"] et2-hbox::part(base) {
     align-items: flex-end;
   }
@@ -1031,6 +1036,7 @@ body egw-app,
   [layout="edit"] *::part(form-control-help-text) {
     left: 0;
   }
+  /* When titles break, we want to align widgets at the bottom of the hbox */
   [layout="edit"] et2-hbox::part(base) {
     align-items: flex-end;
   }
