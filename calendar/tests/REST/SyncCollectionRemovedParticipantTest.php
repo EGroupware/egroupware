@@ -21,6 +21,7 @@ namespace EGroupware\calendar\REST;
 require_once __DIR__.'/../../../api/tests/RestBase.php';
 
 use EGroupware\Api\RestBase;
+use PHPUnit\Framework\Attributes\Depends;
 
 class SyncCollectionRemovedParticipantTest extends RestBase
 {
@@ -30,6 +31,11 @@ class SyncCollectionRemovedParticipantTest extends RestBase
 	 * @var string
 	 */
 	protected static $owner, $participant;
+
+	/**
+	 * cal_id of the event, and the removed participant's sync-token from before the removal
+	 */
+	protected static $id, $participant_token;
 
 	public static function setUpBeforeClass() : void
 	{
@@ -98,6 +104,9 @@ class SyncCollectionRemovedParticipantTest extends RestBase
 
 		// sync-token of the state with the participant
 		sleep(1);	// modification-time / sync-token has only 1sec granularity
+		self::$id = $id;
+		self::$participant_token = $this->syncCollection($this->collectionUrl('calendar', self::$participant), '', null, self::$participant)['sync-token'] ?? '';
+		$this->assertNotEmpty(self::$participant_token, 'No sync-token for participant returned');
 		$token = $this->syncCollection($this->collection(), '', null, self::$owner)['sync-token'] ?? '';
 		$this->assertNotEmpty($token, 'No sync-token returned');
 		sleep(1);
@@ -123,5 +132,26 @@ class SyncCollectionRemovedParticipantTest extends RestBase
 		{
 			$this->assertNotEmpty($participant['participationStatus'] ?? null, "participant $key without participationStatus");
 		}
+	}
+
+	/**
+	 * The removed participant's own calendar must still learn about the removal.
+	 *
+	 * The deleted participant is kept in the DB (cal_status 'X') exactly for this, only the JSON output of the
+	 * REPORT filters it out of the participants list.
+	 *
+	 * Pass criteria:
+	 * - the sync-collection REPORT of the removed participant's calendar, resumed from before the removal,
+	 *   returns the event path without any properties (= "no longer in this calendar").
+	 */
+	#[Depends('testRemovedParticipantNotInSyncCollection')]
+	public function testRemovedParticipantStillGetsRemovalInOwnCalendar()
+	{
+		$result = $this->syncCollection($this->collectionUrl('calendar', self::$participant), self::$participant_token, null, self::$participant);
+		$path = '/'.self::$participant.'/calendar/'.self::$id;
+		$this->assertArrayHasKey($path, $result['responses'] ?? [],
+			'removal missing in the removed participant\'s own sync-collection REPORT');
+		$this->assertArrayNotHasKey('title', (array)$result['responses'][$path],
+			'removed event must be reported without properties: '.json_encode($result['responses'][$path]));
 	}
 }
