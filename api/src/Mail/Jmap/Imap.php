@@ -910,11 +910,34 @@ class Imap extends Jmap\Base
 			// without it, an account with hundreds of folders (the exact case this whole-account
 			// mode exists for, see the subscribe-management popup) would need hundreds of
 			// separate STATUS round-trips just to render the popup.
-			$list = [];
-			foreach ($imap->listMailboxes('*', \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, [
+			$listOptions = [
 				'attributes' => true, 'special_use' => true, 'children' => true,
 				'status' => \Horde_Imap_Client::STATUS_MESSAGES | \Horde_Imap_Client::STATUS_UNSEEN,
-			]) as $mailboxName => $info)
+			];
+			try
+			{
+				$infos = $imap->listMailboxes('*', \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, $listOptions);
+			}
+			catch (\Throwable $e)
+			{
+				// Ticket #125161 (2026-10-01): the same "one broken mailbox poisons Horde's whole
+				// batched LIST-STATUS call" issue #125081 already fixed for the explicit-ids
+				// branch below, but for a full-account '*' scan there's no finite set of names to
+				// retry individually - a real customer's own Dovecot threw "Mailbox doesn't
+				// exist" computing STATUS for one genuinely-subscribed folder (a server-side
+				// consistency issue, not anything EGroupware itself did), aborting EVERY
+				// full-account scan - and therefore anything that triggers one (confirmed live:
+				// this broke SENDING mail, via whatever post-send folder-tree refresh calls this
+				// with ids:null). Retry the scan once more without 'status' - mailboxNode()
+				// already fetches status per-mailbox itself when none was pre-supplied, with its
+				// own matching graceful-failure handling (leaves zero counts rather than
+				// throwing) - so one still-broken folder's STATUS only costs that one folder its
+				// counts instead of taking the whole list down again.
+				unset($listOptions['status']);
+				$infos = $imap->listMailboxes('*', \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, $listOptions);
+			}
+			$list = [];
+			foreach ($infos as $mailboxName => $info)
 			{
 				$list[] = self::mailboxNode($imap, $mailboxName, (array)($info['attributes'] ?? []), $info['status'] ?? null);
 			}

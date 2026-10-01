@@ -275,6 +275,54 @@ class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 		$this->assertCount(2, $result['list']);
 	}
 
+	/**
+	 * Ticket #125161 (2026-10-01, a real customer): the exact same "one broken mailbox poisons
+	 * Horde's whole batched LIST-STATUS call" issue #125081 already fixed for the explicit-ids
+	 * branch above, but for a full-account '*' scan - a real customer's own Dovecot threw "The
+	 * object could not be deleted because it does not exist." computing STATUS for one
+	 * genuinely-subscribed folder, which used to abort the ENTIRE ids:null scan (and therefore
+	 * anything that triggers one - confirmed live: this broke SENDING mail, via a post-send
+	 * folder-tree refresh). Retrying the same '*' scan without 'status' must still return every
+	 * mailbox the server lists, falling back to mailboxNode()'s own per-mailbox status() call for
+	 * each one's counts.
+	 */
+	public function testMailboxGetInternalIdsNullFallsBackWithoutStatusWhenBatchedListThrows()
+	{
+		$imap = $this->mockImap();
+		$imap->method('listMailboxes')->willReturnCallback(function($pattern, $mode, $opts)
+		{
+			if (isset($opts['status']))
+			{
+				throw new \Horde_Imap_Client_Exception(
+					'NO [NONEXISTENT] The object could not be deleted because it does not exist.');
+			}
+			return [
+				'INBOX' => ['attributes' => ['\\subscribed']],
+				'INBOX.Gone' => ['attributes' => ['\\subscribed']],
+			];
+		});
+		$imap->method('status')->willReturnCallback(function($mailbox)
+		{
+			if ($mailbox === 'INBOX.Gone')
+			{
+				throw new \Horde_Imap_Client_Exception(
+					'NO [NONEXISTENT] The object could not be deleted because it does not exist.');
+			}
+			return ['messages' => 3, 'unseen' => 1];
+		});
+
+		$result = $this->invokePrivate('mailboxGetInternal', [$imap, null, null]);
+
+		$this->assertCount(2, $result['list'],
+			"both mailboxes must still be listed - the still-broken one's STATUS failing on its ".
+			"own (mailboxNode()'s own per-mailbox fallback) must only cost IT its counts, not take ".
+			"the whole scan down again");
+		$this->assertSame(3, $result['list'][0]['totalEmails']);
+		$this->assertSame(1, $result['list'][0]['unreadEmails']);
+		$this->assertSame(0, $result['list'][1]['totalEmails'],
+			"the genuinely-broken mailbox gets zero-default counts, not a thrown exception");
+	}
+
 	public function testMailboxNodeShapeAndSubscribed()
 	{
 		$imap = $this->mockImap(['personal' => [['delimiter' => '.']]]);
