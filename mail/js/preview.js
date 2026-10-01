@@ -71,8 +71,9 @@ document.body.addEventListener('click', function (event)
 			return false;
 		}
 		// open links with own origin and "index.php?" as popup (not e.g. share.php or *dav.php)
-		else if ((link.href[0] === '/' || link.href.match(new RegExp('^' + location.protocol + '//' + location.host + '/'))) &&
-			link.href.match(/\/index.php\?/))
+		// compare against window.origin, not location: the body is rendered into a srcdoc iframe,
+		// whose location is "about:srcdoc" (empty host), while its origin is inherited from the parent
+		else if (URL.canParse(link.href) && new URL(link.href).origin === window.origin && link.href.match(/\/index.php\?/))
 		{
 			// First check link registry and just use that if we match
 			const params = (new URL(link.href)).searchParams;
@@ -80,7 +81,8 @@ document.body.addEventListener('click', function (event)
 			{
 				const menuaction = params.get("menuaction") || "";
 				const app = menuaction.split(".")[0] ?? "";
-				const registry = egw.link_get_registry(app) ?? {};
+				// the srcdoc iframe has no egw object of its own
+				const registry = top.egw.link_get_registry(app) ?? {};
 				for (const key in registry)
 				{
 					const value = registry[key];
