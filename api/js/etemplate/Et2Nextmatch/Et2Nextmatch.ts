@@ -21,6 +21,7 @@ import {type Et2DatagridColumnSelectionItem, Et2DatagridColumnState} from "../Et
 import {Et2RowProvider} from "../Et2Datagrid/Et2RowProvider";
 import {Et2NextmatchDataProvider} from "./Et2NextmatchDataProvider";
 import {EgwAction} from "../../egw_action/EgwAction";
+import type {EgwActionObject} from "../../egw_action/EgwActionObject";
 import {Et2Filterbox} from "../Et2Filterbox/Et2Filterbox";
 import {Et2Template} from "../Et2Template/Et2Template";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
@@ -1325,9 +1326,36 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 	 */
 	async fetchAllIds(pageSize : number = 200, maxRows : number = Number.POSITIVE_INFINITY) : Promise<string[]>
 	{
+		// An action handler run by executeWithCompleteSelection() gets the ids collected for it,
+		// instead of fetching them all over again
+		if(this._collectedProviderIds && maxRows === Number.POSITIVE_INFINITY)
+		{
+			return [...this._collectedProviderIds];
+		}
+		return this.fetchIdRange(0, maxRows, pageSize);
+	}
+
+	/**
+	 * Fetch the provider ids of `count` rows from row `start` on, behind a cancelable wait dialog.
+	 *
+	 * Rows the grid has fetched already are taken from it; only the gaps between them are
+	 * requested, one page at a time. If there are no gaps, there is no request and no dialog.
+	 *
+	 * Rejects with an AbortError if the user cancels; no further page is requested then.
+	 */
+	async fetchIdRange(start : number, count : number = Number.POSITIVE_INFINITY, pageSize : number = 200) : Promise<string[]>
+	{
+		const allLoaded = this._loadedProviderIds(start, count);
+		if(allLoaded)
+		{
+			return allLoaded;
+		}
+		// Rows not loaded are holes in this sparse array - always index it, never every()/map() it
+		const loaded = this._datagrid?.getLoadedRowIds?.() || [];
+		const total = this._datagrid?.total;
+		let end = typeof total === "number" && total >= 0 ? Math.min(total, start + count) : start + count;
 		const ids : string[] = [];
-		let start = 0;
-		let total : number | null = null;
+		let offset = start;
 		let cancelled = false;
 		const dialog = Et2Dialog.show_dialog(
 			() =>
@@ -1349,13 +1377,28 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 		);
 		try
 		{
-			do
+			while(offset < end)
 			{
+				// take what the grid has already
+				while(offset < end && loaded[offset])
+				{
+					ids.push(this._dataProvider.toProviderRowId(loaded[offset++]));
+				}
+				if(offset >= end)
+				{
+					break;
+				}
+				// request the gap up to the next loaded row, at most a page of it
+				let gapEnd = offset;
+				while(gapEnd < end && gapEnd - offset < pageSize && !loaded[gapEnd])
+				{
+					gapEnd++;
+				}
 				if(cancelled)
 				{
 					throw new DOMException("Canceled", "AbortError");
 				}
-				const page = await this._dataProvider.fetchPage(start, Math.min(pageSize, maxRows - ids.length));
+				const page = await this._dataProvider.fetchPage(offset, gapEnd - offset);
 				if(cancelled)
 				{
 					throw new DOMException("Canceled", "AbortError");
@@ -1368,10 +1411,12 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 					break;
 				}
 				ids.push(...page.rows.map((row) => this._dataProvider.toProviderRowId(row.id)));
-				total = typeof page.total === "number" ? page.total : ids.length;
-				start += pageSize;
+				if(typeof page.total === "number")
+				{
+					end = Math.min(page.total, start + count);
+				}
+				offset += page.rows.length;
 			}
-			while(ids.length < total && ids.length < maxRows);
 			return Array.from(new Set(ids));
 		}
 		finally
@@ -1380,7 +1425,109 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 		}
 	}
 
+	/**
+	 * Provider ids of `count` rows from row `start` on, if the grid has fetched them all
+	 * already, otherwise null.
+	 */
+	private _loadedProviderIds(start : number, count : number) : string[] | null
+	{
+		const total = this._datagrid?.total;
+		if(typeof total !== "number" || total < 0)
+		{
+			return null;
+		}
+		const end = Math.min(total, start + count);
+		// Index loop, not every()/map(): rows not loaded are holes in this array, which those skip
+		const loaded = this._datagrid.getLoadedRowIds?.() || [];
+		const ids : string[] = [];
+		for(let index = start; index < end; index++)
+		{
+			if(!loaded[index])
+			{
+				return null;
+			}
+			ids.push(this._dataProvider.toProviderRowId(loaded[index]));
+		}
+		return ids;
+	}
 
+	/** Provider row ids collected for the action handler running right now, see executeWithCompleteSelection() */
+	private _collectedProviderIds : string[] | null = null;
+
+	/**
+	 * True if the action senders are not the complete selection: "select all" is active, a
+	 * shift range holds rows that were not fetched, or the senders are a stale part of the
+	 * selection - a context menu keeps the senders from when it was opened, and rows arriving
+	 * later in a shift range join the selection after that.
+	 */
+	selectionIncomplete(senders? : { id : string }[]) : boolean
+	{
+		const selection = this.getSelection();
+		if(this._datagrid?.pendingSelectionRange || selection.all)
+		{
+			return true;
+		}
+		if(!senders || senders.length >= selection.ids.length)
+		{
+			return false;
+		}
+		const selected = new Set(selection.ids);
+		return senders.every((sender) => selected.has(sender?.id));
+	}
+
+	/**
+	 * Run an action handler with every selected row as its senders.
+	 *
+	 * The grid only renders the rows in view, so the senders an action is triggered with are
+	 * the rendered rows only. With "select all" or a shift range over rows that were never
+	 * fetched, handlers working from their senders silently left out all the other rows.
+	 * This fetches the missing ids first (fetchIdRange()), so no handler has to care.
+	 *
+	 * While ids have to be fetched, the user gets fetchIdRange()'s "Loading, please wait" dialog
+	 * telling them why the action does not happen yet. Resolves without calling `run` if they
+	 * cancel it.
+	 */
+	async executeWithCompleteSelection(run : (senders : EgwActionObject[]) => any) : Promise<void>
+	{
+		let providerIds : string[] | null = null;
+		try
+		{
+			const range = this._datagrid?.pendingSelectionRange;
+			if(range)
+			{
+				// take over from the grid's prefetch: fetchIdRange() picks up the rows it already got
+				this._datagrid.stopSelectionPrefetch();
+				const rangeIds = await this.fetchIdRange(range.start, range.end - range.start + 1);
+				this._datagrid.completePendingSelectionRange(rangeIds.map((id) => this._dataProvider.normalizeRowId(id, true)));
+			}
+			if(this.getSelection().all)
+			{
+				// no request and no dialog if every row is fetched already
+				providerIds = await this.fetchAllIds();
+			}
+		}
+		catch(e)
+		{
+			if((e as DOMException)?.name === "AbortError")
+			{
+				return;
+			}
+			throw e;
+		}
+		const rowIds = providerIds ?
+					   providerIds.map((id) => this._dataProvider.normalizeRowId(id, true)) :
+					   this.getSelection().ids;
+		const senders = this._actionController.actionObjectsForRows(rowIds);
+		this._collectedProviderIds = providerIds;
+		try
+		{
+			run(senders);
+		}
+		finally
+		{
+			this._collectedProviderIds = null;
+		}
+	}
 
 	/**
 	 * Prepare the current nextmatch for browser printing.
