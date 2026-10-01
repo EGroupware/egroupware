@@ -247,4 +247,26 @@ describe("MailCompose.selectIdentityForRecipients() - defaultIdentity preference
 		assert.strictEqual(et2Two.widgets.mailaccount.get_value(), '2:99',
 			"account 2's own flagged standard identity (id 99, deliberately NOT the lowest id) - not account 1's");
 	});
+
+	it("'personal' with SEVERAL personal identities picks the lowest ident_id, not whichever the server happened to list first", async() =>
+	{
+		// Birgit, ticket #125092 live report: "bei 'personal' ... wird die letzte persönliche
+		// angezogen und nicht die Erste - ich habe ... meine erste persönliche hat die ident_id
+		// 96, verwendet wird aber '411', das ist die letzte, die definiert wurde" - identities
+		// deliberately listed in an order that does NOT match ascending ident_id (Account::
+		// identities()' own ORDER BY is account_id/ident_realname/ident_org/ident_email, never
+		// ident_id), to prove the fix sorts rather than trusting array order.
+		const severalPersonalIdentities = [
+			fakeIdentity({id : '10', email : 'standard@example.org', name : 'Shared mailbox standard', isStandard : true}),
+			fakeIdentity({id : '411', email : 'newest@example.org', name : 'Most recently created personal', isPersonal : true}),
+			fakeIdentity({id : '96', email : 'oldest@example.org', name : 'First-created personal', isPersonal : true}),
+		];
+		const context = fakeContext({to : [{email : 'nobody-matches@example.com'}]});
+		const {compose, et2} = createComposeForReply(createEgw('personal'), context, severalPersonalIdentities, '1:10');
+
+		await (compose as any).selectIdentityForRecipients(context);
+
+		assert.strictEqual(et2.widgets.mailaccount.get_value(), '1:96',
+			"must pick the lowest ident_id (96, the first one ever created) among the personal-flagged identities, not 411");
+	});
 });
