@@ -828,11 +828,6 @@ et2-dialog et2-button {
     gap: var(--gap-width);
 }
 
-td.et2_customfield_header et2-label {
-    font-size: 120%;
-    font-weight: bold;
-}
-
 /*stops a tags inside next match extends to their parents width,
 which caused click on free space infront of a tag stops nm row selection*/
 .et2_nextmatch .egwGridView_grid tr td div.et2_vbox a {
