@@ -10,99 +10,67 @@
 				<column width="150px"/>
 				<column width="150px"/>
 				<column width="150px"/>
-				<column width="10px"/>
 			</columns>
 			<rows>
 				<row class="th">
 					<et2-nextmatch-header-filter  id="type" class="lr_padding" emptyLabel="importexport"></et2-nextmatch-header-filter>
-					<nextmatch-sortheader label="Name" id="name" class="lr_padding"/>
+					<et2-nextmatch-sortheader  label="Name" id="name" class="lr_padding"></et2-nextmatch-sortheader>
 					<et2-nextmatch-header-filter  id="application" class="lr_padding" emptyLabel="Application"></et2-nextmatch-header-filter>
-					<et2-nextmatch-header-account  align="center" id="allowed_users" class="lr_padding" emptyLabel="Allowed users" accountType="groups"></et2-nextmatch-header-account>
+					<et2-nextmatch-header-account  id="allowed_users" class="lr_padding" emptyLabel="Allowed users" accountType="groups"></et2-nextmatch-header-account>
 					<et2-nextmatch-header-account  id="owner" emptyLabel="Owner"></et2-nextmatch-header-account>
 				</row>
 				<row class="row $row_cont[class]">
-                    <et2-image  src="$row_cont[type]" onclick="app.importexport.open_definition" class="lr_padding button" noLang="1"></et2-image>
-                    <et2-description  id="${row}[name]" class="lr_padding" noLang="1"></et2-description>
-                    <et2-description  id="${row}[application]" class="lr_padding"></et2-description>
-                    <et2-select-account  id="${row}[allowed_users]" readonly="true" rows="5" class="lr_padding" multiple="1" placeholder="Private" noLang="1"></et2-select-account>
-                    <et2-select-account  id="${row}[owner]" readonly="true"></et2-select-account>
-                </row>
+					<et2-image  src="$row_cont[type]" onclick="app.importexport.open_definition" class="lr_padding button" noLang="1"></et2-image>
+					<et2-description  id="${row}[name]" class="lr_padding" noLang="1"></et2-description>
+					<et2-description  id="${row}[application]" class="lr_padding"></et2-description>
+					<et2-select-account  id="${row}[allowed_users]" readonly="true" rows="5" class="lr_padding" multiple="1" placeholder="Private" noLang="1"></et2-select-account>
+					<et2-select-account  id="${row}[owner]" readonly="true"></et2-select-account>
+				</row>
 			</rows>
 		</grid>
-		<et2-styles>
-			.redItalic { color:red; font-style:italic;}			td.lr_padding { padding-left: 5px; padding-right: 5px; }
-
-.button {
-  cursor: pointer;
-}
-		</et2-styles>
+		<et2-styles src="rows.css"></et2-styles>
 	</et2-template>
-	<et2-template  id="importexport.definition_index.add" template="" lang="" group="0" version="1.9.002">
-		<et2-button  statustext="Add a new definition" label="Add" id="add" onclick="egw(window).open_link('importexport.importexport_definitions_ui.edit','_blank','500x500'); return false;" noSubmit="true"></et2-button>
+	<et2-template  id="importexport.definition_index.header" template="" lang="" group="0" version="1.9.002">
+		<et2-button-icon  statustext="Add a new definition" image="add" id="add" onclick="egw(window).open_link('importexport.importexport_definitions_ui.edit','_blank','500x500'); return false;" noSubmit="true"></et2-button-icon>
 	</et2-template>
 	<et2-template  id="importexport.definition_index" template="" lang="" group="0" version="1.9.002">
-		<nextmatch id="nm" template="importexport.definition_index.row" header_left="importexport.definition_index.add"/>
-		<et2-box  id="owner_popup" class="action_popup prompt">
-			<et2-description  value="Change owner" class="promptheader"></et2-description>
-			<et2-vbox  class="action_popup-content">
-				<et2-description  value="Select owner"></et2-description>
-				<et2-select-account  id="owner" emptyLabel="None" accountType="accounts"></et2-select-account>
-			</et2-vbox>
-			<et2-hbox>
-				<et2-button  id="save_owner" label="Save" onclick="nm_submit_popup(this); return false;" image="save"></et2-button>
-				<et2-button  id="cancel_owner" label="Cancel" onclick="nm_hide_popup(this,'owner_popup');" image="cancel" noSubmit="true"></et2-button>
-			</et2-hbox>
-		</et2-box>
-		<et2-box  id="allowed_popup" class="action_popup prompt">
-			<et2-description  value="Change allowed users" class="promptheader"></et2-description>
-			<et2-vbox  class="action_popup-content">
-				<et2-description  value="Select groups"></et2-description>
-				<et2-checkbox  label="%s Just me" id="allowed_private"></et2-checkbox>
-				<et2-checkbox  label="%s All users" id="all_users"></et2-checkbox>
-				<et2-select-account  id="allowed" rows="5" multiple="1" accountType="groups"></et2-select-account>
-			</et2-vbox>
-			<et2-hbox>
-				<et2-button  id="save_allowed" label="Save" onclick="nm_submit_popup(this); return false;" image="save"></et2-button>
-				<et2-button  id="cancel_allowed" label="Cancel" onclick="nm_hide_popup(this,'allowed_popup');" image="cancel" noSubmit="true"></et2-button>
-			</et2-hbox>
-		</et2-box>
+		<!-- Admin moves the header into its app header, see app.importexport.et2_ready() -->
+		<et2-template  template="importexport.definition_index.header" slot="main-header"></et2-template>
+		<et2-nextmatch  id="nm" template="importexport.definition_index.row"></et2-nextmatch>
+		<!-- The "Change" mass actions.  These used to be <et2-box class="action_popup prompt"> boxes,
+		     upgraded into dialogs at runtime by the legacy nm_open_popup(), whose buttons relied on
+		     the window.nm_popup_action/nm_popup_ids globals it set.  As real <et2-dialog>s none of
+		     that runs, so the buttons submit through app.importexport.submit_popup() instead.  The
+		     inner <et2-box id="..._popup"> keeps the namespace importexport_definitions_ui::index()
+		     reads: $content['owner_popup']['owner'] and $content['allowed_popup'][...]. -->
+		<et2-dialog  id="owner_popup_dialog" class="action_popup_dialog" title="Change owner" open="false" buttons="" destroyOnClose="false">
+			<et2-box  id="owner_popup">
+				<et2-vbox  class="action_popup-content">
+					<et2-description  value="Select owner"></et2-description>
+					<et2-select-account  id="owner" emptyLabel="None" accountType="accounts"></et2-select-account>
+				</et2-vbox>
+			</et2-box>
+			<et2-button  slot="footer" variant="primary" id="save_owner" label="Save" image="save" onclick="return app.importexport.submit_popup(ev, widget, 'owner');"></et2-button>
+			<et2-button  slot="footer" id="cancel_owner" label="Cancel" image="cancel" noSubmit="true" onclick="widget.closest('et2-dialog').hide(); return false;"></et2-button>
+		</et2-dialog>
+		<et2-dialog  id="allowed_popup_dialog" class="action_popup_dialog" title="Change allowed users" open="false" buttons="" destroyOnClose="false">
+			<et2-box  id="allowed_popup">
+				<et2-vbox  class="action_popup-content">
+					<et2-description  value="Select groups"></et2-description>
+					<et2-select-account  id="allowed" rows="5" multiple="1" accountType="groups" onchange="app.importexport.allowed_users_change"></et2-select-account>
+				</et2-vbox>
+			</et2-box>
+			<et2-button  slot="footer" variant="primary" id="save_allowed" label="Save" image="save" onclick="return app.importexport.submit_popup(ev, widget, 'allowed');"></et2-button>
+			<et2-button  slot="footer" id="cancel_allowed" label="Cancel" image="cancel" noSubmit="true" onclick="widget.closest('et2-dialog').hide(); return false;"></et2-button>
+		</et2-dialog>
 		<et2-styles>
-			td.lr_padding { padding-left: 5px; padding-right: 5px; }
-
-.button {
-  cursor: pointer;
-}
-/**
- * Add / remove link or category popup used for actions on multiple entries
- */
-
-.action_popup {
-	position: fixed;
-	top: 200px;
-	left: 450px;
-	width: 76ex;
-	z-index: 20000;
-	display: none;
-	border-collapse:collapse;
-	border-spacing:0px
-}
-.action_popup-content {
-	display:block;
-	padding:2ex;
-	color:#666666;
-	margin: -2px -1px 0px -2px;
-}
-.action_popup &gt; table {
-	width: 100%
-}
-.action_popup .promptheader {
-	padding: 1ex;
-	width: 100%
-}
-
-.action_select {
-	width: 100%
-}
+			.action_popup_dialog::part(panel) {
+				width: 40em;
+			}
+			.action_popup-content {
+				display: block;
+				padding: 2ex;
+			}
 		</et2-styles>
 	</et2-template>
 </overlay>

@@ -112,6 +112,10 @@ these in order, in one commit, then expect follow-up fixups.
    - a UI element that looks to be missing right after SPA-navigating into the app (as opposed to a
      full page load) may just be a stale-view artifact, not a regression — confirm on a fresh reload
      before reporting it
+   - the app header looks like the other apps': an Add button is a plain + icon,
+     `<et2-button-icon image="add" statustext="...">` with no label, in the app header
+     (`main-header`), not a labelled `<et2-button>` left over from a `header_left` template - see
+     [Layout and template structure](#layout-and-template-structure) for lists shown inside Admin
    - toolbar controls that mirror an `nm` filter (a details/no-details toggle, a view-mode select,
      etc.) show the *correct, persisted* state on a fresh page load, not just after the first click —
      set a non-default filter value, reload, and confirm the control's displayed state already matches
@@ -169,14 +173,16 @@ checklist.
 | Calendar | converted, verified | `calendar.list` (desktop + mobile) |
 | ProjectManager | converted, verified | project list, element list, pricelist (desktop + mobile) |
 | Admin | converted, verified | all nine lists, incl. push refresh |
+| Importexport | converted, verified | the definition list (shown inside Admin or Preferences), incl. its "Change" owner / allowed users dialogs |
 
-Still on the legacy widget: Importexport, Aiassistant, Preferences, and the non-core apps (Resources,
-News_admin, Smallpart, Stylite, Kanban, ...). They, and every customer template, *run* on
+Still on the legacy widget: Preferences, and the non-core apps (Resources, Aiassistant, News_admin,
+Smallpart, Stylite, Kanban, ...). Phpbrain (deprecated, to be replaced by the knowledgebase app) and
+Schulmanager (unused) are deliberately left out. They, and every customer template, *run* on
 `Et2Nextmatch` through the [automatic fallback](#automatic-fallback-for-unconverted-templates), but
 that is not a conversion. Related in-flight/reference docs in the same directory as the widget
 source: `ColumnSelectionNotes.md`, `Et2DatagridDirectoryMigrationPlan.md`, `NestedExpansion.md`.
 
-The checklist is based on these ten conversions; expect it to grow as more apps convert.
+The checklist is based on these eleven conversions; expect it to grow as more apps convert.
 
 ## Lessons learned
 
@@ -206,6 +212,13 @@ repeating it.
 - **Legacy `header_left`/`header_right` templates move into a slot** of the nextmatch:
   `<et2-template id="<template id>" slot="header">` (the name goes in `id`, not `template`, and
   `getWidgetById()` still finds it by that name) (Calendar), or `main-header`, see the rename patterns.
+- **A list another app shows inside Admin gets its Add button into Admin's header** the way
+  Admin's own lists do: a `<template id>.header` template with `slot="main-header"`, plus
+  `app.admin.enableAppToolbar(et2, name)` from the app's `et2_ready()`, which moves it into the
+  `<egw-app>` and hides it again when Admin shows something else (openid, aitools, Filemanager's
+  jobs). If the same list can also be shown elsewhere (Importexport's in Preferences, for users
+  without admin rights), nothing moves the header there, so put it into the nextmatch's `header`
+  slot instead. Either way, make it a + icon (`<et2-button-icon image="add">`), not a labelled button.
 - **Keep a footer widget a sibling of the nextmatch, not in its `footer` slot**, unless its value
   lives in the nextmatch's namespace: children of `<et2-nextmatch>` read `$content['nm'][...]`
   (Admin's access-log percentage went blank).
@@ -300,11 +313,20 @@ the box version collapses the new dialog's body to nothing. Check the mobile ski
 **State of the converted apps (2026-10-01):** no legacy box popups and no `nm_submit_popup`/
 `nm_hide_popup`/`nm_open_popup` calls are left in their list templates. Every `open_popup` action has a
 real dialog on desktop: InfoLog `startdate`/`enddate`/`responsible`, Tracker `admin`/`assigned`/`group`,
-ProjectManager `add_existing` (desktop and mobile), Admin categories `owner` (desktop and mobile). On
+ProjectManager `add_existing` (desktop and mobile), Admin categories `owner` (desktop and mobile),
+Importexport `owner`/`allowed`. On
 mobile, InfoLog's and Tracker's "Change" submenus are `hideOnMobile`, so their dialogs are not needed
 there, and Tracker's top-level "Multiple changes" (`admin`) is `hideOnMobile` as well, since the mobile list
 has no `admin_popup_dialog`.
 
+- **Size a dialog with `::part(panel)` CSS, not `width=`.** In a `.xet`, `width=` on any web component
+  becomes the host's inline CSS `width` (`loadWebComponent()`), so it never reaches `Et2Dialog.width`.
+  `et2-dialog.<class>::part(panel) { width: 40em }` in the template's `<et2-styles>` works
+  (Importexport).
+- **A multiple select's value comes in option order, not in click order.** `sl-select` builds it from
+  its selected options. App code that treats the last value as the one just picked, eg. to keep
+  "Just me"/"All users" exclusive of groups, has to compare with the previous value instead
+  (Importexport's `allowed_users_change()`).
 - **Check whether a popup is still reachable before converting it.** Calendar's `delete_popup`/
   `undelete_popup` boxes had long been replaced by `onExecute` handlers (`app.calendar.cal_delete`, a
   real dialog plus an ajax call) and were deleted, not converted.
@@ -424,7 +446,9 @@ Checklist step 6 has the full list. In addition:
 
 - **Reach a sub-page the way the app's UI does** (Admin: through the tree, `app.admin.load(url)`), not
   by its own URL. A synthetic `app.admin.run()` is not a click either: it doesn't set the tree value
-  that `getNextmatch()` reads.
+  that `getNextmatch()` reads. `app.admin.load(url)` without `ajax=true` in the url loads the page
+  into Admin's iframe, where a nextmatch finds no `<egw-app>` and appends its filterbox to the
+  iframe's `<body>`, out of reach. The tree's own links carry `ajax=true` (Importexport).
 - **Take a settled reading.** Right after "Clear filters" the row count can read 0 while the reload
   is in flight (Calendar).
 
