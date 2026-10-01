@@ -3400,7 +3400,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _isColumnPersistenceDisabled() : boolean
 	{
-		return this.noColumnPersistence || this.noVisibleHeader;
+		return this.noColumnPersistence || this.noVisibleHeader || !!this.templateData?.noHeader;
 	}
 
 	/**

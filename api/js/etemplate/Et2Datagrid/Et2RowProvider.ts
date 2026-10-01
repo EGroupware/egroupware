@@ -480,6 +480,7 @@ export class Et2RowProvider
 			view,
 			tileLayout: view === "tile" ? this._tileLayoutFromRowNode(rowNode) : undefined,
 			columns,
+			noHeader: columns.length > 0 && !this._headerCellNodes(headerNode).length,
 			rowTemplateId: tplRoot.getAttribute("id") || tplRoot.id || normalizedRowNode?.id || undefined,
 			rowTemplate: prepared?.template ?? null,
 			rowTemplateXml: prepared?.xml ?? null,
@@ -539,12 +540,7 @@ export class Et2RowProvider
 	 */
 	private _extractColumnsFromHeaderNode(headerNode : Element, minColumnCount : number = 0) : Et2DatagridColumn[]
 	{
-		const nodes = this._headerColumnSourceNodes(headerNode)
-			.filter((node) =>
-			{
-				const tag = node.tagName.toLowerCase();
-				return tag !== "columns" && tag !== "column";
-			});
+		const nodes = this._headerCellNodes(headerNode);
 		const columns : Et2DatagridColumn[] = [];
 		nodes.forEach((node, index) =>
 		{
@@ -572,6 +568,19 @@ export class Et2RowProvider
 			}
 		}
 		return columns;
+	}
+
+	/**
+	 * The header row's actual header cells, without the <columns>/<column> width metadata
+	 */
+	private _headerCellNodes(headerNode : Element | null) : Element[]
+	{
+		return headerNode ? this._headerColumnSourceNodes(headerNode)
+			.filter((node) =>
+			{
+				const tag = node.tagName.toLowerCase();
+				return tag !== "columns" && tag !== "column";
+			}) : [];
 	}
 
 	/**
