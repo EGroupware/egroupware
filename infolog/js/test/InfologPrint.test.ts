@@ -246,8 +246,17 @@ describe("InfoLog print view", () =>
 			{
 				const style = document.createElement("style");
 				style.textContent = css;
+				// Firefox applies none of an inline sheet's rules while one of its @imports (kdots.css
+				// has some) is still loading, which on a busy CI runner it still is when the tests
+				// measure.  The rules apply once the imports are done, whether they loaded or failed.
+				const applied = new Promise(resolve =>
+				{
+					style.addEventListener("load", resolve, {once: true});
+					style.addEventListener("error", resolve, {once: true});
+				});
 				document.head.append(style);
 				styles.push(style);
+				await applied;
 			}
 		});
 
