@@ -9,7 +9,7 @@
  * @copyright Nathan Gray 2011
  */
 
-import {et2_createWidget, et2_register_widget, et2_registry, WidgetConfig} from "./et2_core_widget";
+import {et2_createWidget, et2_registry, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_valueWidget} from "./et2_core_valueWidget";
 import {et2_readonlysArrayMgr} from "./et2_core_arrayMgr";
@@ -26,6 +26,10 @@ import {Et2Tabs} from "./Layout/Et2Tabs/Et2Tabs";
  * - customfields: input for (by default all) custom-fields
  * - customfields-list: traditional header for custom-fields in NM showing sort- and filter-headers
  * - customfields-filters: new widget only showing filters / select-boxes
+ *
+ * No longer registered for any of those tags: api/etemplate.php rewrites them to the
+ * et2-customfields web components before a template reaches the client.  It is only kept as the
+ * base class of the legacy nextmatch's et2_nextmatch_customfields, and goes when that does.
  */
 export class et2_customfields_list extends et2_valueWidget implements et2_IDetachedDOM, et2_IInput
 {
@@ -1167,4 +1171,3 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 		}
 	}
 }
-et2_register_widget(et2_customfields_list, ["customfields", "customfields-list", "customfields-filters"]);
