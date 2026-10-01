@@ -1863,6 +1863,8 @@ export class MailCompose
 		}
 		this.isReplyCompose = false;
 		this.replyThreadingHeaders = null;
+		// before the signature insertion below, which reads the selected identity
+		await this.applyPreferredIdentityForNewCompose();
 
 		// cc/bcc unconditional (even when empty) - found live 2026-09-08 (see bootstrapReply()'s
 		// own identical fix): an `if (context.cc.length)` guard here left whatever was already
@@ -1960,6 +1962,7 @@ export class MailCompose
 		this.isReplyCompose = true;
 		const subject = '[FWD] ' + messages[0].subject;
 		this.et2.getWidgetById('subject')?.set_value(subject);
+		await this.applyPreferredIdentityForNewCompose();
 
 		// no quoted body - still apply the normal new-message signature (classic getForwardData()
 		// never suppresses it for this mode either, $suppressSigOnTop stays false)
@@ -2434,7 +2437,10 @@ export class MailCompose
 	 * all, unlike the classic, now-deleted mail_compose.inc.php's get_preferred_identity(), which
 	 * ran for EVERY compose() call unconditionally - found live via ticket #124821 (2026-09-22):
 	 * "die Einstellung dass immer die persönliche Signatur genommen werden soll wird nicht
-	 * berücksichtigt" (the "always use my personal signature" setting isn't respected). Leaves the
+	 * berücksichtigt" (the "always use my personal signature" setting isn't respected).
+	 * Also used by bootstrapComposeAsNew() (compose as new, reopened drafts)
+	 * and bootstrapForwardAsAttachment(),
+	 * which have no recipients to match either. Leaves the
 	 * server's own pre-selected identity (mail_compose.inc.php's LastSignatureIDUsed) untouched for
 	 * 'last-used'/unset (the everyday case, see preferredIdentityFromPreference()'s own docblock).
 	 */
