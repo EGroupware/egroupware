@@ -4292,22 +4292,13 @@ export class MailJmap
 	}
 
 	/**
-	 * A fresh, unguessable CSP nonce value (base64, 16 random bytes) - see wrapDocument()'s own
-	 * docblock for why this exists alongside 'self'.
-	 */
-	private static randomNonce() : string
-	{
-		return btoa(String.fromCharCode(...crypto.getRandomValues(new Uint8Array(16))));
-	}
-
-	/**
 	 * Wrap already-sanitized body HTML into a self-contained document for the body iframe's
 	 * `srcdoc` - shared by assembleBodyHtml() (normal mail) and fetchBody()'s PGP path.
 	 *
-	 * Loads the same `preview.js` (mailto/internal-EGroupware-link activation) the server-rendered
-	 * body already uses, unmodified - a `srcdoc` iframe without a `sandbox` attribute is same-
-	 * origin with the parent, exactly like the server-rendered one, so this needs no separate
-	 * reimplementation of that logic. `<meta>`/`<base>` are explicitly forbidden from the sanitized
+	 * Runs no script at all (script-src 'none'): unlike the server-rendered body, which loads
+	 * preview.js, mailto/internal-EGroupware-link activation is attached from the outer page by
+	 * bodyLinks.ts's activateBodyLinks() (MailApp's iframe 'load' listener), just like
+	 * resolveInlineImages() and resolveBarePdfEmbed(). `<meta>`/`<base>` are explicitly forbidden from the sanitized
 	 * body content itself (assembleBodyHtml()'s DOMPurify config), so a malicious/buggy message
 	 * can't smuggle in a competing CSP, a `<meta http-equiv="refresh">`, or hijack relative URLs.
 	 *
@@ -4326,19 +4317,6 @@ export class MailJmap
 	 */
 	private wrapDocument(body : string, forMailvelope : boolean = false) : string
 	{
-		// script-src used to be plain 'self', matching the classic server-rendered response's own
-		// HTTP *header* CSP (mail_ui::get_load_email_data(), class.mail_ui.inc.php:2993-3000) -
-		// but this document is a `srcdoc` iframe (no real URL of its own, "about:srcdoc") with its
-		// CSP delivered via a <meta> tag INSIDE that same markup, not an HTTP header on a real
-		// same-origin response; found live 2026-09-23 via a real customer (Firefox, "every mail
-		// opened in preview"): Firefox failed to resolve 'self' against the srcdoc's inherited
-		// parent origin in this meta-tag-CSP context, outright blocking preview.js
-		// (mailto:/internal-EGroupware-link activation) on EVERY single message. A nonce is origin-
-		// resolution-independent (a pure string match between this directive and the script tag's
-		// own `nonce` attribute below), so it can't be affected by this kind of ambiguity in any
-		// browser - kept alongside 'self' rather than replacing it, since 'self' still correctly
-		// covers whichever browsers DID resolve it right.
-		const nonce = MailJmap.randomNonce();
 		// frame-src/object-src both need 'blob:' (not just 'none'/'self') for the bare-PDF case
 		// (resolveBarePdfEmbed()) - Chrome's built-in PDF viewer, loading an <embed>'s blob: URL,
 		// hits both directives (found live via the exact console violations: "Framing 'blob:...'
@@ -4347,14 +4325,13 @@ export class MailJmap
 		// (URL.createObjectURL()), a message body's own HTML can never itself supply one, so this
 		// adds no attacker-reachable capability.
 		const csp = "frame-src " + (forMailvelope ? "'self'" : "blob:") + "; " +
-			"connect-src 'none'; manifest-src 'none'; script-src 'self' 'nonce-"+nonce+"'; " +
+			"connect-src 'none'; manifest-src 'none'; script-src 'none'; " +
 			"img-src http: blob: data:; media-src https: http: data:; object-src blob:";
 
 		return `<!DOCTYPE html><html><head><meta charset="utf-8">` +
 			`<meta http-equiv="Content-Security-Policy" content="${csp}">` +
 			`<link rel="stylesheet" href="${this.egw.link('/mail/templates/default/preview.css')}">` +
 			`<style>${defaultFontCssRule()}</style>` +
-			`<script defer nonce="${nonce}" src="${this.egw.link('/mail/js/preview.js')}"></script>` +
 			`</head><body><div class="mailDisplayBody mailDefaultFont"><table width="100%" style="table-layout:fixed">` +
 			`<tr><td class="td_display">${body}</td></tr></table></div></body></html>`;
 	}

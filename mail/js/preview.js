@@ -15,9 +15,9 @@
  * <embed> nor <iframe> with a data:application/pdf;base64,... src shows anything but a blank/
  * broken-plugin area, no CSP/iframe-nesting involved), so the server can't just embed a data: URI
  * directly the way it does for an image (a data: URI works fine for <img>, unrelated to this PDF-
- * viewer-specific restriction). preview.js is already loaded unmodified on both this srcdoc iframe
- * and the classic full-page fallback (MailJmap.wrapDocument()'s own docblock), so this needs no
- * separate wiring per context - it just runs once, here, whichever page loaded it.
+ * viewer-specific restriction). preview.js is only loaded by the classic server-rendered body;
+ * the srcdoc body of the JMAP path runs no script and gets this from
+ * MailJmap.resolveBarePdfEmbed() instead.
  *
  * Runs on DOMContentLoaded explicitly rather than trusting this <script defer>'s own top-level
  * execution timing - found live (ralf): the embed's data-bare-pdf-base64 attribute was still
@@ -71,8 +71,6 @@ document.body.addEventListener('click', function (event)
 			return false;
 		}
 		// open links with own origin and "index.php?" as popup (not e.g. share.php or *dav.php)
-		// compare against window.origin, not location: the body is rendered into a srcdoc iframe,
-		// whose location is "about:srcdoc" (empty host), while its origin is inherited from the parent
 		else if (URL.canParse(link.href) && new URL(link.href).origin === window.origin && link.href.match(/\/index.php\?/))
 		{
 			// First check link registry and just use that if we match
@@ -81,7 +79,6 @@ document.body.addEventListener('click', function (event)
 			{
 				const menuaction = params.get("menuaction") || "";
 				const app = menuaction.split(".")[0] ?? "";
-				// the srcdoc iframe has no egw object of its own
 				const registry = top.egw.link_get_registry(app) ?? {};
 				for (const key in registry)
 				{
