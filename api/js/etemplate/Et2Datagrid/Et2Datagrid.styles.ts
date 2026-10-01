@@ -286,12 +286,15 @@ export default css`
 		}
 
 		/* Fade out the bottom of a clipped cell. The cell's own scroll timeline is only active while its
-		   content overflows, so cells that fit are left alone. */
+		   content overflows, so cells that fit are left alone. Only when an app sets a limit: without
+		   one a few pixels of overflow (eg. a child's padding) would fade out the cell's last line. */
 		@supports (animation-timeline: scroll(self)) {
-			tbody td:not([data-dg-meta-cell="1"], :has(> et2-customfields-list)),
-			tbody th {
-				animation: dg-cell-clip-fade linear both;
-				animation-timeline: scroll(self block);
+			@container style(--row-cell-max-height) {
+				tbody td:not([data-dg-meta-cell="1"], :has(> et2-customfields-list)),
+				tbody th {
+					animation: dg-cell-clip-fade linear both;
+					animation-timeline: scroll(self block);
+				}
 			}
 		}
 
