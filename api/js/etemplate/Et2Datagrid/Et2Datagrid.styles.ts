@@ -307,6 +307,14 @@ export default css`
 
 	}
 
+	/* Plain row descriptions are rendered as a bare span instead of et2-description.
+	   Keep newlines the way the widget does (it sets white-space: pre-wrap).  :where()
+	   keeps the specificity at zero so an app's own class rule (eg. a single-line
+	   ellipsis) still wins. */
+	:where(span[data-et2-description]) {
+		white-space: pre-wrap;
+	}
+
 	:host([fixed-row-height]) .dg-body tbody > tr[data-row-id]:not(.dg-row-expanded) {
 		height: var(--row-height, 44px);
 		min-height: var(--row-height, 44px);

@@ -1471,6 +1471,10 @@ describe("Et2Datagrid row rendering", () =>
 		const prepared = await (provider as any)._prepareRowTemplate(rowTemplate, el.columns as any);
 		const simple = prepared?.template.content.querySelector(".name-line") as HTMLElement | null;
 		assert.equal(simple?.localName, "span", "simple descriptions should compile to native text");
+		assert.isTrue(
+			simple?.hasAttribute("data-et2-description"),
+			"native text should be marked so the datagrid styles keep its newlines"
+		);
 		assert.isNull(
 			prepared?.template.content.querySelector("span[data-et2nm-id]"),
 			"native text should not need row attribute upgrade bookkeeping"
