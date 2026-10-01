@@ -4636,8 +4636,14 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return 1;
 		}
+		// Pending pages reserve slots through their extent. Adding their count to
+		// `_rowsByIndex.length` counts a page still pending below that length twice (the
+		// tail page landed first after a jump to the end), showing placeholders past the
+		// end. Top-level grids only: an embedded child's parent reservation currently
+		// relies on the height change when that over-count drops away, and does not
+		// arrive without it.
 		const materializedCount = Math.max(
-			this._rowsByIndex.length + this._requestQueue.pendingPlaceholderCount,
+			this._rowsByIndex.length + (this.embeddedVirtualized ? this._requestQueue.pendingPlaceholderCount : 0),
 			this.rows.length,
 			this._requestQueue.pendingPlaceholderExtent
 		);
