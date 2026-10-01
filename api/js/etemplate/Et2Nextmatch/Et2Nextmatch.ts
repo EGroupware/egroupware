@@ -2923,7 +2923,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 		}
 
 		const nextColumns = applyLegacyNextmatchColumnPreferences(columns, storedVisibility, storedSizes);
-		this._seedDatagridColumnPreferencesFromLegacy(rowTemplateId, app, nextColumns);
+		this._seedDatagridColumnPreferencesFromLegacy(rowTemplateId, app, nextColumns, storedSizes);
 
 		return nextColumns.map((column) =>
 		{
@@ -2942,11 +2942,15 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 	 *
 	 * This is only a migration seed. Once the datagrid has stored its own
 	 * preference, for example after a column resize, that newer preference wins.
+	 *
+	 * @param storedSizes the legacy size preference: only the widths it holds are stored, see
+	 * 	datagridColumnPreferenceValue()
 	 */
 	private _seedDatagridColumnPreferencesFromLegacy(
 		rowTemplateId : string,
 		app : string,
-		columns : Et2NextmatchResolvedColumn[]
+		columns : Et2NextmatchResolvedColumn[],
+		storedSizes? : any
 	)
 	{
 		const key = String(this.columnPreferenceName || "").trim() || `nextmatch-${rowTemplateId}-prefs`;
@@ -2961,7 +2965,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 		{
 			return;
 		}
-		const value = datagridColumnPreferenceValue(columns);
+		const value = datagridColumnPreferenceValue(columns, storedSizes);
 		try
 		{
 			this.egw().set_preference(app, key, value);

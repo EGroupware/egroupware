@@ -94,6 +94,27 @@ describe("Et2Nextmatch column preferences", () =>
 		);
 	});
 
+	it("stores only the widths the legacy size preference holds, not the template's defaults", () =>
+	{
+		const columns = [
+			{key: "name", title: "Name", width: "120px"},
+			{key: "email", title: "Email", width: "30%"}
+		];
+		const storedSizes = {name: "220px"};
+		const nextColumns = applyLegacyNextmatchColumnPreferences(columns, "name,email", storedSizes);
+
+		assert.deepEqual(
+			datagridColumnPreferenceValue(nextColumns, storedSizes).map((entry) => [entry.key, entry.width]),
+			[["name", "220px"], ["email", undefined]],
+			"the user's legacy width is kept, the template's default width is not frozen into the preference"
+		);
+		assert.deepEqual(
+			datagridColumnPreferenceValue(nextColumns).map((entry) => entry.width),
+			[undefined, undefined],
+			"without a legacy size preference no width is stored at all"
+		);
+	});
+
 	it("applies legacy Nextmatch order, widths, fuzzy columns, and customfields", () =>
 	{
 		const customfieldsHeader = {};
