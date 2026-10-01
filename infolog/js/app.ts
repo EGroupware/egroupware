@@ -1038,7 +1038,7 @@ class InfologApp extends EgwApp
 			}
 			// if it's a real change, we also need to call this.filter2_change, with the already changed value!
 			const filter2 = this.et2.getWidgetById(id);
-			if (filter2 && filter2.value != value)
+			if (filter2 && filter2.value != (<CustomEvent>_ev)?.detail?.oldFilters?.filter2)
 			{
 				filter2.value = value;
 				this.filter2_change(null, filter2);
