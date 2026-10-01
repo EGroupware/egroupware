@@ -291,6 +291,14 @@ export class etemplate2
 			this.resize_timeout = setTimeout(function()
 			{
 				self.resize_timeout = false;
+
+				// A fullscreen video or gallery has the whole screen - fitting the dialog to that
+				// viewport only grows it, to shrink it back again on exit, which fires a resize too
+				const fullscreen = document.fullscreenElement;
+				if(fullscreen && !self._DOMContainer.contains(fullscreen))
+				{
+					return;
+				}
 				if(self._widgetContainer)
 				{
 					const appHeader = jQuery('#divAppboxHeader');
@@ -302,25 +310,19 @@ export class etemplate2
 					// needs 300px or 1000px.  Measuring what it would take unpinned gives a number
 					// that is right in both directions, so one resize settles the dialog instead
 					// of creeping a few pixels per event and never quite getting there.
-					let naturalHeight = 0;
+					// No floor is needed for content taller than the screen: the space the window
+					// offers is then less than what the content wants, so the excess can only shrink
+					// the dialog, and each resizeable widget keeps its own minimum.
 					excess_height = 0;
 					if(egw(window).is_popup())
 					{
-						naturalHeight = self._naturalHeight();
-						excess_height = self._DOMContainer.clientHeight - naturalHeight;
+						excess_height = self._DOMContainer.clientHeight - self._naturalHeight();
 					}
 
 					// Recalculate excess height if the appheader is shown
 					if(appHeader.length > 0 && appHeader.is(':visible'))
 					{
 						excess_height -= appHeader.outerHeight() - 9;
-					}
-
-					// Do not resize if the template height is bigger than screen available height
-					// For templates which have sub templates and they are bigger than screenHeight
-					if(screen.availHeight < naturalHeight)
-					{
-						excess_height = 0;
 					}
 
 					// If we're visible, call the "resize" event of all functions which implement the
