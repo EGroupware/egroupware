@@ -2830,6 +2830,19 @@ abstract class Merge
 		{
 			$export_limit = self::getExportLimit();
 		}
+		// menuaction app has to be the app the merge class belongs to, not currentapp, as Json\Request::checkMenuAction()
+		// rejects e.g. "addressbook.infolog_merge.merge_entries" from InfoLog embedded in Addressbook's CRM view.
+		// Api classes are allowed for every app, so they keep currentapp.
+		$class = get_called_class();
+		if (str_starts_with($class, 'EGroupware\\'))
+		{
+			$class_app = strtolower(explode('\\', $class)[1]);
+			$menuaction_app = $class_app === 'api' ? $GLOBALS['egw_info']['flags']['currentapp'] : $class_app;
+		}
+		else
+		{
+			$menuaction_app = preg_replace('/_merge$/', '', $class);
+		}
 		return array(
 			'icon'           => 'file-earmark-arrow-down',
 			'caption'        => $caption,
@@ -2840,7 +2853,7 @@ abstract class Merge
 			// do not show 'Insert in document', if no documents defined or no export allowed
 			'group'          => $group,
 			'merge_data' => array(
-				'menuaction' => $GLOBALS['egw_info']['flags']['currentapp'] . '.' . get_called_class() . '.merge_entries',
+				'menuaction' => $menuaction_app . '.' . $class . '.merge_entries',
 				'merge'     => get_called_class(),
 				'directory' => $dirs[0] ?? ""
 			)
