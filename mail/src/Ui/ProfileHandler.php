@@ -97,13 +97,19 @@ class ProfileHandler
 					|| $imapServer->hasCapability('THREAD=REFERENCES')
 					|| $imapServer->hasCapability('THREAD=REFS'));
 				$bootstrap['customLabels'] = CustomLabels::getCustomLabels();
-				// account config only (no IMAP round-trip, no full special-use autodetection like
-				// Mail::getTrashFolder()/getJunkFolder() do) - good enough for
-				// MailJmap.deleteMessages()'s move-to-trash resolution and the "empty trash"/
-				// "empty junk" fast paths; a reasonable simplification for accounts that don't
-				// override the conventional "Trash"/"Junk" names without configuring
-				// acc_folder_trash/acc_folder_junk
-				$bootstrap['trashFolder'] = $imapServer->acc_folder_trash ?: 'Trash';
+				// account config only (no IMAP round-trip) when acc_folder_trash IS configured -
+				// good enough for MailJmap.deleteMessages()'s move-to-trash resolution and the
+				// "empty trash" fast path. ONLY when it's NOT configured (found live, help forum
+				// "26.9.20260928, Mail werden nicht gelöscht": a bare "Trash" guess here broke an
+				// account using Dovecot's own personal-namespace-prefix convention, eg.
+				// "INBOX/Trash" - admin_mail's own wizard auto-populates acc_folder_trash from a
+				// real detection at account-SETUP time, so this only ever hits a pre-existing/
+				// legacy account never run back through it) does this pay for
+				// Mail::getTrashFolder()'s own full special-use/namespace-prefix-aware detection
+				// (and possible folder auto-creation, same as the classic UI already did) -
+				// everyone else keeps the original, cheap, no-round-trip path unchanged.
+				$bootstrap['trashFolder'] = $imapServer->acc_folder_trash ?:
+					($local ? self::resolveUnconfiguredTrashFolder((int)$resolvedID) : 'Trash');
 				$bootstrap['junkFolder'] = $imapServer->acc_folder_junk ?: null;
 				// Templates/Outbox have neither an IMAP SPECIAL-USE attribute nor a JMAP role at
 				// all (RFC 8621 defines neither) - unlike trash/junk above, there's no
@@ -148,6 +154,36 @@ class ProfileHandler
 		{
 			_egw_log_exception($e);
 			$response->data(null);
+		}
+	}
+
+	/**
+	 * jmapBootstrap()'s own fallback for a LOCAL (non-Stalwart) account whose acc_folder_trash
+	 * isn't configured at all - Mail::getTrashFolder()'s real special-use/personal-namespace-
+	 * prefix-aware detection (same logic the classic, non-JMAP UI already relied on for this exact
+	 * case), not just a bare "Trash" guess. Only ever reached for the rare unconfigured case -
+	 * see jmapBootstrap()'s own call site for why this doesn't cost anything for a properly
+	 * configured account.
+	 *
+	 * Never throws - jmapBootstrap() is a critical path (no mail folder tree without it); a
+	 * hiccup in this one-off detection (or even the extra IMAP round-trip/possible folder
+	 * auto-create itself) must degrade to the same bare-name guess this used to always return,
+	 * not break the whole bootstrap.
+	 *
+	 * @param int $profileID already-resolved, valid profile id (jmapBootstrap()'s own $resolvedID)
+	 * @return string real Trash folder name/path, or the bare "Trash" fallback on any failure
+	 */
+	private static function resolveUnconfiguredTrashFolder(int $profileID) : string
+	{
+		try
+		{
+			return Mail::getInstance(true, $profileID, false)->getTrashFolder() ?: 'Trash';
+		}
+		catch (\Throwable $e)
+		{
+			error_log(__METHOD__.'() failed to detect the real Trash folder for profile '.
+				$profileID.': '.$e->getMessage());
+			return 'Trash';
 		}
 	}
 
