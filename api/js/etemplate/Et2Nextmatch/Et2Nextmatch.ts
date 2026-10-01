@@ -241,6 +241,15 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 	columnPreferenceName : string = "";
 
 	/**
+	 * Optional name for the autorefresh interval preference (`nextmatch-<name>-autorefresh`),
+	 * default the row template's. For a nextmatch that switches row templates, and with
+	 * them its column preference, but should keep one interval - Mail's vertical and
+	 * horizontal layouts.
+	 */
+	@property({type: String})
+	autorefreshPreference : string = "";
+
+	/**
 	 * App that owns this nextmatch's rows - used for sort/refresh/lettersearch preference
 	 * persistence, row-stylesheet loading and legacy action-manager registration (see
 	 * `_getAppName()`). Set this explicitly when a nextmatch is embedded in another app's

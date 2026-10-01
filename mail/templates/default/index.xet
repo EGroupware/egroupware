@@ -156,7 +156,7 @@
     </et2-template>
     <et2-template  id="mail.index.splitter" height="100%" template="" lang="" group="0" version="1.9.001">
         <et2-split  id="mailSplitter" style="--min: 30%;--max:min(70%,calc(100% - 30em));" vertical="false">
-            <et2-nextmatch  id="nm" onselect="app.mail.preview" template="mail.index.rows.vertical" noDynheight="true"></et2-nextmatch>
+            <et2-nextmatch  id="nm" onselect="app.mail.preview" template="mail.index.rows.vertical" autorefreshPreference="mail.index.rows" noDynheight="true"></et2-nextmatch>
             <et2-template  id="mail.index.preview"></et2-template>
         </et2-split>
     </et2-template>
@@ -221,7 +221,7 @@
         <et2-styles  src="rows.css"></et2-styles>
     </et2-template>
     <et2-template  id="mail.index.nosplitter" template="" lang="" group="0" version="1.9.001">
-        <et2-nextmatch  id="nm" onselect="app.mail.preview" template="mail.index.rows.horizontal" noDynheight="true"></et2-nextmatch>
+        <et2-nextmatch  id="nm" onselect="app.mail.preview" template="mail.index.rows.horizontal" autorefreshPreference="mail.index.rows" noDynheight="true"></et2-nextmatch>
     </et2-template>
     <et2-template  id="mail.index.header" template="" lang="" group="0" version="1.9.001">
         <et2-button  id="button[mailcreate]" onclick="app.mail.composeMessage(false);" label="Compose" image="add" noSubmit="true"></et2-button>
