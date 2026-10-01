@@ -356,25 +356,33 @@ class InfologApp extends EgwApp
 	 */
 	confirm_delete(_action, _senders)
 	{
-		let children = false;
 		const child_button = document.body.querySelector<HTMLButtonElement>('#delete_sub') || document.body.querySelector<HTMLButtonElement>('[id*="delete_sub"]');
 		this._action_all = _action.parent.data.nextmatch?.getSelection().all;
-		this._action_ids = [];
+		this._action_ids = _senders.map(sender => sender.id.split("::").pop());
 		if(child_button)
 		{
-			for(let i = 0; i < _senders.length; i++)
-			{
-				this._action_ids.push(_senders[i].id.split("::").pop());
-
-				if(_senders[i].iface.getDOMNode().classList.contains("infolog_rowHasSubs"))
-				{
-					children = true;
-					break;
-				}
-			}
-			child_button.disabled = !children;
+			child_button.disabled = !_senders.some(sender => this._row_has_subs(sender));
 		}
 		this._open_action_popup(_action, _senders);
+	}
+
+	/**
+	 * Check if the row of an action sender has sub-entries
+	 *
+	 * Senders include selected rows the grid never rendered, whose DOM node is a detached
+	 * placeholder without the row's classes, so the row data's sub-entry count is checked
+	 * first, and the infolog_rowHasSubs row class only if there is no row data.
+	 *
+	 * @param {egwActionObject} _sender
+	 */
+	private _row_has_subs(_sender) : boolean
+	{
+		const data = this.egw.dataGetUIDdata(_sender.id)?.data ?? _sender.data;
+		if(data && typeof data.info_anz_subs !== "undefined")
+		{
+			return parseInt(data.info_anz_subs) > 0;
+		}
+		return !!_sender.iface?.getDOMNode()?.classList?.contains("infolog_rowHasSubs");
 	}
 
 	/**
