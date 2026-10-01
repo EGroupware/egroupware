@@ -1167,6 +1167,9 @@ export class Et2RowProvider
 		}
 
 		const element = document.createElement("span");
+		// Marks the stand-in so the datagrid styles can give it the widget's own text handling
+		// (newlines preserved), which a bare span does not have.
+		element.setAttribute("data-et2-description", "");
 		const className = source.getAttribute("class");
 		if(className)
 		{
