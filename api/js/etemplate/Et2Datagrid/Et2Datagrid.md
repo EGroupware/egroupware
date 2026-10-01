@@ -482,9 +482,8 @@ inside the row template definition; it does not need to be inside the `<row>` el
 `src="row.css"` resolves relative to the `.xet` file containing the row template. Inline CSS inside
 `et2-styles` is also supported.
 
-If the row template contains `et2-styles`, `et2-nextmatch` does not load the application's
-`templates/default/app.css` into the datagrid row shadow DOM. If no row-local `et2-styles` is present,
-`app.css` is still loaded as the compatibility fallback.
+`et2-nextmatch` never loads the application's `app.css` into the datagrid row shadow DOM. Row
+styles come only from the row template's `et2-styles`.
 
 ### Static Widget Style
 

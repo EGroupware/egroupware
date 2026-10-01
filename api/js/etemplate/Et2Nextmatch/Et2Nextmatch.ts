@@ -3,7 +3,6 @@ import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
 import {Et2Widget, loadWebComponent} from "../Et2Widget/Et2Widget";
-import {loadStylesheet} from "../Et2Widget/cssTools";
 import {Et2Datagrid, type Et2DatagridRowsSnapshot} from "../Et2Datagrid/Et2Datagrid";
 import {
 	Et2DatagridColumn,
@@ -423,8 +422,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	 */
 	@state()
 	private _templateLoading : boolean = true;
-
-	private _appRowStylesheet : CSSStyleSheet | null = null;
 
 	@state()
 	private _rowStylesheets : CSSStyleSheet[] = [rowStyles.styleSheet!];
@@ -1209,7 +1206,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 			this._dataProvider.processAdditionalData(this._initialAdditionalData);
 			this._initialAdditionalData = null;
 		}
-		await this._updateRowStylesheets();
 	}
 
 	/**
@@ -1286,8 +1282,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 			{
 				this._applyTemplateFromSlots();
 			}
-			// Load new row CSS
-			void this._updateRowStylesheets();
 		}
 		if(changedProperties.has("filterTemplate"))
 		{
@@ -2672,7 +2666,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		{
 			if(!this.template && this._hasAddedTemplateSlotNode(records))
 			{
-				this._applyTemplateFromSlots().then(() => this._updateRowStylesheets());
+				this._applyTemplateFromSlots();
 			}
 		});
 		this._slotObserver.observe(this, {
@@ -3025,39 +3019,12 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		);
 	};
 
-	/**
-	 * Template-set (theme) this nextmatch's own containing template was loaded from, eg. "mobile" or
-	 * "default" - so the app.css fallback in `_updateRowStylesheets()` loads the same skin's stylesheet
-	 * instead of always the default skin's.
-	 */
-	private _appRowStylesheetTemplateSet() : string
-	{
-		const url = (this.closest("et2-template") as any)?.getUrl?.() ?? "";
-		const match = url.match(/\/templates\/([^\/]+)\//);
-		return match ? match[1] : "default";
-	}
-
-	private async _updateRowStylesheets()
-	{
-		const appName = this._getAppName();
-		const templateSet = this._appRowStylesheetTemplateSet();
-		this._appRowStylesheet = await loadStylesheet(this.egw().link(`/${appName}/templates/${templateSet}/app.css`));
-		// Fall back to the default skin's app.css if this app has no skin-specific one (eg. no
-		// dedicated templates/mobile/app.css)
-		if(!this._appRowStylesheet && templateSet !== "default")
-		{
-			this._appRowStylesheet = await loadStylesheet(this.egw().link(`/${appName}/templates/default/app.css`));
-		}
-		await this.updateComplete;
-		this._syncDatagridRowStylesheets();
-	}
-
 	private _syncDatagridRowStylesheets()
 	{
 		const templateRowStylesheets = this._templateData?.rowStylesheets || [];
 		this._rowStylesheets = [
 			rowStyles.styleSheet!,
-			...(templateRowStylesheets.length ? templateRowStylesheets : (this._appRowStylesheet ? [this._appRowStylesheet] : [])),
+			...templateRowStylesheets,
 			...this._additionalRowStylesheets
 		];
 		const datagrid = this._datagrid;

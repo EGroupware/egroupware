@@ -151,9 +151,8 @@ extracts those styles and adopts them into the datagrid row shadow DOM.
 The `et2-styles` element can be anywhere inside the row template definition, not only inside `<row>`.
 Bare filenames such as `row.css` resolve relative to the `.xet` file containing the template.
 
-When row-template-local styles are present, the current application's `templates/default/app.css` is
-not loaded into the datagrid row shadow DOM. If the row template does not contain `et2-styles`,
-`app.css` is still loaded as a compatibility fallback.
+The application's `app.css` is never loaded into the datagrid row shadow DOM, with or without
+`et2-styles`. A row template without `et2-styles` gets only the framework row styles.
 
 Row-template-local stylesheets have these advantages:
 
@@ -192,8 +191,7 @@ Because the rows are managed by `et2-datagrid` inside its shadow DOM, you cannot
 * `et2-nextmatch::part(exported-part) { ... }` can style explicitly exported parts.
 
 For framework-level row styles, add to `Et2Nextmatch.row.styles.ts`. For app-specific row styles, use the app's
-row-template `et2-styles`. `templates/default/app.css` remains the fallback for row templates that have
-not been migrated.
+row-template `et2-styles`. `app.css` does not reach rows.
 
 For application rules generated at runtime, create a constructable stylesheet and add it through the nextmatch:
 

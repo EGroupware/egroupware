@@ -10,6 +10,7 @@
 	the column width="100%" to take the whole width
 	-->
     <et2-template  id="filemanager.tile" template="" lang="" group="0" version="26.1">
+		<et2-styles  src="tile.css"></et2-styles>
 		<grid width="100%">
 			<columns>
 				<column width="100%"/>
