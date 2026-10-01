@@ -130,6 +130,14 @@ export class Et2CustomfieldsBase extends Et2Widget(LitElement)
 	}
 
 	/**
+	 * Prefix the field values are keyed with in the content, `#name` for every application.
+	 */
+	protected get valuePrefix() : string
+	{
+		return CUSTOMFIELD_PREFIX;
+	}
+
+	/**
 	 * Resolve row-scoped #customfield values for legacy widgets using array managers.
 	 */
 	protected _rowCustomfieldValues() : Record<string, any> | null
@@ -146,7 +154,7 @@ export class Et2CustomfieldsBase extends Et2Widget(LitElement)
 			const customfields = this.customfields || {};
 			for(const key of Object.keys(customfields))
 			{
-				value[CUSTOMFIELD_PREFIX + key] = this._customfieldValueFromRecord(rowValue, key) ?? "";
+				value[this.valuePrefix + key] = this._customfieldValueFromRecord(rowValue, key) ?? "";
 			}
 		}
 		else
@@ -154,7 +162,7 @@ export class Et2CustomfieldsBase extends Et2Widget(LitElement)
 			const customfields = this.customfields || {};
 			for(const key of Object.keys(customfields))
 			{
-				const prefixedKey = CUSTOMFIELD_PREFIX + key;
+				const prefixedKey = this.valuePrefix + key;
 				value[prefixedKey] = this._customfieldValueFromContent(contentMgr, key);
 			}
 		}
@@ -163,7 +171,7 @@ export class Et2CustomfieldsBase extends Et2Widget(LitElement)
 
 	private _customfieldValueFromContent(contentMgr : any, fieldName : string)
 	{
-		const prefixedKey = CUSTOMFIELD_PREFIX + fieldName;
+		const prefixedKey = this.valuePrefix + fieldName;
 		const direct = contentMgr.getEntry?.(prefixedKey);
 		if(typeof direct !== "undefined" && direct !== null)
 		{
@@ -194,7 +202,7 @@ export class Et2CustomfieldsBase extends Et2Widget(LitElement)
 		{
 			return undefined;
 		}
-		const prefixedKey = CUSTOMFIELD_PREFIX + fieldName;
+		const prefixedKey = this.valuePrefix + fieldName;
 		if(Object.prototype.hasOwnProperty.call(record, prefixedKey))
 		{
 			return record[prefixedKey];

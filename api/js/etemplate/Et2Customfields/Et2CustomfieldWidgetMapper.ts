@@ -97,16 +97,18 @@ export function mapCustomfieldToWidget(
 
 	const sourceType = String(field?.type || "text").replace(/_/g, "-");
 	const isAppBacked = typeof apps[sourceType] !== "undefined";
+	// A field typed link-entry links to the app only_app names, or to any app when it names none
+	const isLinkEntry = sourceType === "link-entry";
 	let widgetType = sourceType;
 
-	if(isAppBacked)
+	if(isAppBacked || isLinkEntry)
 	{
 		if(sourceType === "filemanager")
 		{
 			return mapFilemanagerField(fieldName, field, attrs, context === "field" && !attrs.readonly);
 		}
 		const app = typeof field.only_app === "undefined"
-			? sourceType
+			? (isLinkEntry ? "" : sourceType)
 			: (field.onlyApp ?? field.only_app);
 		attrs.value = normalizeLinkValue(app, value);
 		if(attrs.readonly && context !== "filters")

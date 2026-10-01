@@ -241,6 +241,17 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 			this._disconnectedValue = new_value;
 			return;
 		}
+		if(!this.hasUpdated)
+		{
+			// Our pickers only exist once we have rendered, eg. et2-customfields gives a field its
+			// value right after placing it.  Without them the value would be lost, or a relative one
+			// would fail on the missing select.
+			this.updateComplete.then(() =>
+			{
+				this.value = new_value;
+			});
+			return;
+		}
 		if(this.relative)
 		{
 			this.relativeElement.value = new_value;

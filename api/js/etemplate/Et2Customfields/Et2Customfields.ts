@@ -60,6 +60,12 @@ export class Et2Customfields extends Et2CustomfieldsBase implements Et2LayoutHos
 	@property({type: String})
 	prefix : string = CUSTOMFIELD_PREFIX;
 
+	/** The values are keyed the way we submit them, so importexport's filter finds its own again. */
+	protected get valuePrefix() : string
+	{
+		return this.prefix ?? CUSTOMFIELD_PREFIX;
+	}
+
 	/**
 	 * Show the customfields as text rather than as inputs.
 	 *
@@ -268,6 +274,20 @@ export class Et2Customfields extends Et2CustomfieldsBase implements Et2LayoutHos
 			// Our own label names the field only when it is the only one we show
 			label: onlyField && this.label ? this.label : undefined
 		});
+		// Attributes the server set for one field, under our id - eg. importexport's filter makes its
+		// selects multiple and gives its date ranges an empty label.  The legacy widget's fields were
+		// widget-tree children and found these themselves; ours are not, so hand them over here.
+		const fieldModifications = this.id ? this.getArrayMgr("modifications")?.getEntry(this.id)?.[this.prefix + fieldName] : null;
+		if(mappings[0] && fieldModifications && typeof fieldModifications === "object")
+		{
+			for(const [name, value] of Object.entries(fieldModifications))
+			{
+				if(value !== null && typeof value !== "undefined")
+				{
+					mappings[0].attrs[name] = value;
+				}
+			}
+		}
 		// The file dialog opens in whichever mode the upload beside it accepts
 		const upload = mappings[0];
 		const select = mappings.find((m) => m.tagName === "et2-vfs-select");
