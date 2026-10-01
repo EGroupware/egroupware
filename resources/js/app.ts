@@ -9,6 +9,7 @@
  */
 
 import {EgwApp} from "../../api/js/jsapi/egw_app";
+import type {EgwFrameworkApp, FilterInfo} from "../../kdots/js/EgwFrameworkApp";
 import {fetchAll} from "../../api/js/etemplate/et2_extension_nextmatch_actions.js";
 import type {CalendarApp} from "../../calendar/js/app";
 // egw is an ambient global (declare global {} in egw_global.d.ts, unconditionally included
@@ -26,6 +27,23 @@ class resourcesApp extends EgwApp
 	constructor()
 	{
 		super('resources');
+	}
+
+	/**
+	 * Resources (filter2 = -1) is what the list shows by default, it is not a filter
+	 *
+	 * @param filterValues
+	 * @param fwApp
+	 */
+	getFilterInfo(filterValues : { [id : string] : any }, fwApp : EgwFrameworkApp) : FilterInfo
+	{
+		const values = {...(filterValues ?? {})};
+		values.col_filter = {...(values.col_filter ?? {})};
+		if(values.filter2 == -1)
+		{
+			delete values.filter2;
+		}
+		return fwApp.filterInfo(values);
 	}
 
 	/**

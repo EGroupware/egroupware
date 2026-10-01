@@ -846,16 +846,24 @@ export class CalendarApp extends EgwApp
 
 	getFilterInfo(filterValues)
 	{
-		// A calendar list always covers some date range and always has a participation-status
-		// filter, so neither value is ever empty and the generic "anything truthy means filters
-		// are set" rule would light the filter icon permanently, with nothing the user could
-		// clear to turn it off.  Only a custom date range is a filter someone actually set -
-		// week/month/today/all is just the span the current view covers - and "default" is the
-		// status filter's own default.
-		const values = {...filterValues};
-		if(values.filter !== 'custom')
+		// Only count what the filters drawer offers and the user can clear there.  The list view
+		// gets the whole calendar state (owner, view, sortby, weekend, ...) as its filters, and
+		// the participants come from the calendars chosen in the side menu.  A calendar list
+		// always covers some date range - switching from week or month to the list carries that
+		// span over as a custom range - so the date range is never a filter either, and "default"
+		// is the status filter's own default.
+		const values : { [id : string] : any } = {};
+		for(const key of ['search', 'cat_id', 'status_filter'])
 		{
-			delete values.filter;
+			values[key] = filterValues?.[key];
+		}
+		// Integration pickers (eg. projectmanager's) next to their template descriptions and settings
+		for(const [app, data] of Object.entries(filterValues?.integration ?? {}))
+		{
+			if(isNaN(<any>app) && data && typeof data == "object")
+			{
+				values[app] = Object.values(data).filter(v => Array.isArray(v));
+			}
 		}
 		if(values.status_filter === 'default')
 		{
