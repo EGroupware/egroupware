@@ -1,6 +1,8 @@
 import {assert} from "@open-wc/testing";
 import {render} from "lit";
 import {Et2Datagrid} from "../Et2Datagrid";
+import {Et2DatagridSelectionController} from "../Et2DatagridSelectionController";
+import * as sinon from "sinon";
 
 const egw = {
 	debug: () => {},
@@ -231,6 +233,253 @@ describe("Et2Datagrid row selection", () =>
 		assert.equal(laterGroupRow?.getAttribute("data-row-id"), "row-60", "second fetch group should load the requested row");
 		assert.equal(laterGroupRow?.getAttribute("aria-selected"), "true", "later fetched row should render as selected after select-all");
 		table.remove();
+	});
+
+	/**
+	 * Shift range setup shared by the tests below: a 100-row result with only rows 0-9 and
+	 * 90-99 loaded - what the user gets clicking the first row, jumping to the end and
+	 * shift+clicking the last - and a data provider able to serve the gap.
+	 */
+	const gappedGrids : Et2Datagrid[] = [];
+	afterEach(() =>
+	{
+		// no prefetch timer may outlive its test
+		gappedGrids.splice(0).forEach((grid) => grid.stopSelectionPrefetch());
+	});
+
+	function createGappedGrid()
+	{
+		const rows = Array.from({length: 100}, (_value, index) => ({id: `row-${index}`, label: `Row ${index}`}));
+		const grid = createDatagrid(rows);
+		gappedGrids.push(grid);
+		const fetchPage = sinon.spy((grid.dataProvider as any), "fetchPage");
+		grid.pageSize = 10;
+		grid.setInitialRows(rows.slice(0, 10));
+		grid.total = rows.length;
+		for(let index = 90; index < 100; index++)
+		{
+			(grid as any)._rowsByIndex[index] = {id: rows[index].id, data: rows[index]};
+		}
+		const selections : string[][] = [];
+		grid.addEventListener("et2-selection-changed", (event : Event) =>
+			selections.push((event as CustomEvent).detail.selectedRowIds));
+		const shiftSelectAll = () =>
+		{
+			(grid as any)._updateSelectionFromPointer("row-0", 0, new MouseEvent("click"));
+			(grid as any)._updateSelectionFromPointer("row-99", 99, new MouseEvent("click", {shiftKey: true}));
+		};
+		return {rows, grid, fetchPage, selections, shiftSelectAll};
+	}
+
+	/**
+	 * Contract: a shift range over rows that were never fetched selects the loaded rows right
+	 * away and reports the rest as pending - without fetching anything, so the click stays
+	 * instant. Whatever acts on the selection fetches the missing ids (Et2Nextmatch).
+	 *
+	 * Pass: 20 rows selected, pendingSelectionRange covers the whole range, no page requested.
+	 */
+	it("selects the loaded rows of a shift range and reports the rest as pending, fetching nothing", async() =>
+	{
+		const {grid, fetchPage, shiftSelectAll} = createGappedGrid();
+
+		shiftSelectAll();
+		await new Promise(resolve => setTimeout(resolve, 50));
+
+		assert.lengthOf(Array.from((grid as any).selectedRowIds), 20, "loaded rows of the range are selected right away");
+		assert.deepEqual(grid.pendingSelectionRange, {start: 0, end: 99}, "the range must report it is incomplete");
+		assert.isFalse(fetchPage.called, "a shift+click must not fetch anything");
+	});
+
+	/**
+	 * Contract: rows of a pending shift range join the selection as they arrive (eg. the user
+	 * scrolls into the gap), and the range stops being pending once all its rows are there.
+	 */
+	it("adds rows arriving inside a pending shift range to the selection", async() =>
+	{
+		const {rows, grid, selections, shiftSelectAll} = createGappedGrid();
+		shiftSelectAll();
+
+		await grid.loadRowRange(10, 89);
+		await new Promise(resolve => setTimeout(resolve, 0));
+
+		assert.sameMembers(Array.from((grid as any).selectedRowIds), rows.map((row) => row.id),
+			"rows fetched inside the range must be selected");
+		assert.isNull(grid.pendingSelectionRange, "nothing pending once every row is there");
+		assert.lengthOf(selections[selections.length - 1], 100, "the grown selection must be announced");
+	});
+
+	/**
+	 * Contract: ids fetched for a pending range by the nextmatch complete it at once.
+	 */
+	it("completes a pending shift range with ids fetched for it", () =>
+	{
+		const {rows, grid, selections, shiftSelectAll} = createGappedGrid();
+		shiftSelectAll();
+
+		grid.completePendingSelectionRange(rows.slice(10, 90).map((row) => row.id));
+
+		assert.lengthOf(Array.from((grid as any).selectedRowIds), 100);
+		assert.isNull(grid.pendingSelectionRange);
+		assert.lengthOf(selections[selections.length - 1], 100, "the completed selection must be announced");
+	});
+
+	/**
+	 * Contract: a new selection replaces a pending range - rows arriving for the old range
+	 * must not be added to it.
+	 */
+	it("drops a pending shift range when the user selects something else", async() =>
+	{
+		const {grid, shiftSelectAll} = createGappedGrid();
+		shiftSelectAll();
+		(grid as any)._updateSelectionFromPointer("row-5", 5, new MouseEvent("click"));
+
+		assert.isNull(grid.pendingSelectionRange, "the new selection is complete");
+		await grid.loadRowRange(10, 89);
+		await new Promise(resolve => setTimeout(resolve, 0));
+
+		assert.sameMembers(Array.from((grid as any).selectedRowIds), ["row-5"], "the later selection must win");
+	});
+
+	describe("prefetching a pending shift range", () =>
+	{
+		const {PREFETCH_DELAY_MS, PREFETCH_MAX_ROWS} = Et2DatagridSelectionController;
+		beforeEach(() => Et2DatagridSelectionController.PREFETCH_DELAY_MS = 10);
+		afterEach(() =>
+		{
+			Et2DatagridSelectionController.PREFETCH_DELAY_MS = PREFETCH_DELAY_MS;
+			Et2DatagridSelectionController.PREFETCH_MAX_ROWS = PREFETCH_MAX_ROWS;
+		});
+
+		/** Wait for `condition`, failing after `timeout` ms */
+		async function waitFor(condition : () => boolean, timeout = 3000)
+		{
+			for(const end = Date.now() + timeout; !condition(); )
+			{
+				assert.isBelow(Date.now(), end, "timed out waiting");
+				await new Promise(resolve => setTimeout(resolve, 10));
+			}
+		}
+
+		/** Record every page request and how many were on their way at once */
+		function trackRequests(grid : Et2Datagrid)
+		{
+			const provider = grid.dataProvider as any;
+			const original = provider.fetchPage.bind(provider);
+			const stats = {starts: [] as number[], inFlight: 0, maxInFlight: 0};
+			provider.fetchPage = async(start : number, count : number) =>
+			{
+				stats.starts.push(start);
+				stats.maxInFlight = Math.max(stats.maxInFlight, ++stats.inFlight);
+				try
+				{
+					await new Promise(resolve => setTimeout(resolve, 5));
+					return await original(start, count);
+				}
+				finally
+				{
+					stats.inFlight--;
+				}
+			};
+			return stats;
+		}
+
+		/**
+		 * Contract: shortly after the shift+click the missing rows are fetched in the background,
+		 * one page at a time - never more than one request on its way - and join the selection.
+		 */
+		it("fetches the missing rows one page at a time after a short pause", async() =>
+		{
+			const {rows, grid, shiftSelectAll} = createGappedGrid();
+			const stats = trackRequests(grid);
+
+			shiftSelectAll();
+			assert.deepEqual(stats.starts, [], "nothing fetched right at the click");
+			await waitFor(() => grid.pendingSelectionRange === null);
+
+			assert.deepEqual(stats.starts, [10, 20, 30, 40, 50, 60, 70, 80], "each missing page once, in order");
+			assert.equal(stats.maxInFlight, 1, "low profile: one request at a time");
+			assert.sameMembers(Array.from((grid as any).selectedRowIds), rows.map((row) => row.id), "fetched rows join the selection");
+		});
+
+		/**
+		 * Contract: changing the selection during the pause means nothing is fetched at all.
+		 */
+		it("fetches nothing when the selection changes during the pause", async() =>
+		{
+			Et2DatagridSelectionController.PREFETCH_DELAY_MS = 50;
+			const {grid, shiftSelectAll} = createGappedGrid();
+			const stats = trackRequests(grid);
+
+			shiftSelectAll();
+			(grid as any)._updateSelectionFromPointer("row-5", 5, new MouseEvent("click"));
+			await new Promise(resolve => setTimeout(resolve, 150));
+
+			assert.deepEqual(stats.starts, [], "an abandoned range must cost no request");
+		});
+
+		/**
+		 * Contract: the prefetch stops after PREFETCH_MAX_ROWS rows; the rest is left for an action.
+		 */
+		it("stops after the maximum number of rows", async() =>
+		{
+			Et2DatagridSelectionController.PREFETCH_MAX_ROWS = 20;
+			const {grid, shiftSelectAll} = createGappedGrid();
+			const stats = trackRequests(grid);
+
+			shiftSelectAll();
+			await waitFor(() => stats.starts.length >= 2 && stats.inFlight === 0);
+			await new Promise(resolve => setTimeout(resolve, 100));
+
+			assert.deepEqual(stats.starts, [10, 20], "only the first 20 missing rows");
+			assert.deepEqual(grid.pendingSelectionRange, {start: 0, end: 99}, "the rest is still pending");
+		});
+
+		/**
+		 * Contract: stopSelectionPrefetch() - what an action calls before fetching the rest
+		 * itself - stops the prefetch before its next page.
+		 */
+		it("stops before the next page when told to", async() =>
+		{
+			const {grid, shiftSelectAll} = createGappedGrid();
+			const stats = trackRequests(grid);
+
+			// stop while the first page is on its way
+			const provider = grid.dataProvider as any;
+			const fetchPage = provider.fetchPage;
+			provider.fetchPage = (start : number, count : number) =>
+			{
+				grid.stopSelectionPrefetch();
+				return fetchPage(start, count);
+			};
+
+			shiftSelectAll();
+			await waitFor(() => stats.starts.length === 1 && stats.inFlight === 0);
+			await new Promise(resolve => setTimeout(resolve, 150));
+
+			assert.deepEqual(stats.starts, [10], "the page on its way is the only one");
+		});
+	});
+
+	/**
+	 * Contract: a shift range over rows that are all loaded is complete right away - nothing
+	 * fetched, nothing pending - so an action on it runs immediately, without a wait dialog.
+	 */
+	it("completes a shift range over loaded rows right away", async() =>
+	{
+		const rows = Array.from({length: 100}, (_value, index) => ({id: `row-${index}`, label: `Row ${index}`}));
+		const grid = createDatagrid(rows);
+		const fetchPage = sinon.spy((grid.dataProvider as any), "fetchPage");
+		grid.pageSize = 10;
+		grid.setInitialRows(rows);
+		grid.total = rows.length;
+
+		(grid as any)._updateSelectionFromPointer("row-0", 0, new MouseEvent("click"));
+		(grid as any)._updateSelectionFromPointer("row-99", 99, new MouseEvent("click", {shiftKey: true}));
+		await new Promise(resolve => setTimeout(resolve, 50));
+
+		assert.lengthOf(Array.from((grid as any).selectedRowIds), 100, "every row selected synchronously");
+		assert.isNull(grid.pendingSelectionRange, "nothing pending");
+		assert.isFalse(fetchPage.called, "no row fetched again");
 	});
 
 	/**

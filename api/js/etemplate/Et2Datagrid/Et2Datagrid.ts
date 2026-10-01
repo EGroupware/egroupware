@@ -1185,6 +1185,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	disconnectedCallback()
 	{
+		this._selection.stopPrefetch();
 		this._syncTemplateHandlerListeners(new Set());
 		this.removeEventListener("et2-embedded-height", this._handleEmbeddedHeightEvent as EventListener);
 		this._rowRenderer.dispose();
@@ -3698,6 +3699,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				this._rowsByIndex[index] = this.dataProvider?.getRowData ? {id: row.id} : row;
 			}
 			this.rows = this._rowsByIndex.filter(Boolean) as Et2DatagridRow[];
+			this._selection.addFetchedRows(start, (response.rows || []).length);
 		}
 		catch(e)
 		{
@@ -6194,6 +6196,32 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				return;
 			}
 		}
+	}
+
+	/**
+	 * Shift range of the current selection that still holds rows not fetched yet, or null.
+	 *
+	 * Those rows have no id until fetched, so anything acting on the selection has to fetch
+	 * them first and hand them to completePendingSelectionRange(), or it only gets part of it.
+	 */
+	get pendingSelectionRange() : { start : number, end : number } | null
+	{
+		return this._selection.pendingRange;
+	}
+
+	/** Add the ids fetched for pendingSelectionRange to the selection */
+	completePendingSelectionRange(ids : string[])
+	{
+		this._selection.completePendingRange(ids);
+	}
+
+	/**
+	 * Stop prefetching the rows of pendingSelectionRange (started shortly after the shift+click),
+	 * eg. when an action fetches the rest itself and would otherwise request the same pages.
+	 */
+	stopSelectionPrefetch()
+	{
+		this._selection.stopPrefetch();
 	}
 
 	/** How long loadRowRange() waits for the rows it asked for before giving up. */
