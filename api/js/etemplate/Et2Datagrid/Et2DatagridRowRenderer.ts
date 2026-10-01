@@ -590,12 +590,13 @@ export class Et2DatagridRowRenderer
 	/**
 	 * Resolve placeholder expressions on the row root element only.
 	 */
-	private populateRowRootAttributes(rowRoot : HTMLElement, row : any)
+	private populateRowRootAttributes(rowRoot: HTMLElement, row: any, attributeNames?: string[])
 	{
 		Et2RowProvider.customizeRowRootAttributes(
 			rowRoot,
 			row,
-			(rowData, key) => this.host._getFieldValue(rowData, key)
+			(rowData, key) => this.host._getFieldValue(rowData, key),
+			attributeNames
 		);
 	}
 
@@ -841,7 +842,9 @@ export class Et2DatagridRowRenderer
 		{
 			rowRoot.setAttribute(attr, value);
 		});
-		this.populateRowRootAttributes(rowRoot, rowData);
+		// Only the template's own attributes: the mounted row already carries its
+		// data-row-id, and resolving that again strips eg. "{x}" from a file name
+		this.populateRowRootAttributes(rowRoot, rowData, Object.keys(stored));
 	}
 
 	/**
