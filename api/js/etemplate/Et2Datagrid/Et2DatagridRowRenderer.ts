@@ -34,6 +34,11 @@ export class Et2DatagridRowRenderer
 	 */
 	private _rowUpgradeQueued : Set<HTMLElement> = new Set();
 	/**
+	 * The classes a row-bound class= last applied to each row widget, so applying the row
+	 * again with changed data can take them off - see replaceRowClass()
+	 */
+	private _appliedRowClasses : WeakMap<Element, string[]> = new WeakMap();
+	/**
 	 * Read position in `_rowUpgradeQueue`. Draining with shift() re-indexed the whole
 	 * array per row - again fine for a viewport, quadratic for a large print run - so the
 	 * queue is consumed by advancing this instead, and compacted once the dead prefix
@@ -662,6 +667,7 @@ export class Et2DatagridRowRenderer
 						// Customfields use id="$row" for their row object, but any
 						// other row-bound attribute follows normal row hydration.
 						const customfieldAttributes : Record<string, any> = {};
+						const customfieldLiterals = new Set<string>();
 						for(const [attribute, value] of Object.entries(stored || {}))
 						{
 							if(attribute === "id")
@@ -677,7 +683,9 @@ export class Et2DatagridRowRenderer
 								? this.host._directBooleanRowValue(value, rowData, rowId)
 								: undefined;
 							customfieldAttributes[attribute] = typeof booleanValue === "undefined" ? resolved.value : booleanValue;
+							this.collectRowLiteral(customfieldLiterals, resolved, customfieldAttributes[attribute]);
 						}
+						this.replaceRowClass(element, stored?.class, customfieldAttributes.class);
 						if(element.setArrayMgrs)
 						{
 							element.setArrayMgrs(mgrs);
@@ -690,7 +698,7 @@ export class Et2DatagridRowRenderer
 						{
 							if(typeof element.transformAttributes === "function")
 							{
-								element.transformAttributes(customfieldAttributes);
+								this.transformRowAttributes(element, customfieldAttributes, mgr, customfieldLiterals);
 							}
 							else
 							{
@@ -717,6 +725,7 @@ export class Et2DatagridRowRenderer
 						element.setArrayMgr("content", mgr);
 					}
 					const attributes : Record<string, any> = {};
+					const literals = new Set<string>();
 					let hasDirectValue = false;
 					let directValue : any;
 					for(const [attribute, value] of Object.entries(stored || {}))
@@ -730,12 +739,14 @@ export class Et2DatagridRowRenderer
 							? this.host._directBooleanRowValue(value, rowData, rowId)
 							: undefined;
 						attributes[attribute] = typeof booleanValue === "undefined" ? resolved.value : booleanValue;
+						this.collectRowLiteral(literals, resolved, attributes[attribute]);
 						if(attribute === "value" && resolved.rowValue !== undefined)
 						{
 							hasDirectValue = true;
 							directValue = resolved.rowValue;
 						}
 					}
+					this.replaceRowClass(element, stored?.class, attributes.class);
 					// Row-bound ids conventionally mean "the value at this row key".
 					// VFS row renderers use $row for the complete row object.
 					const idBinding = stored?.id ? this.host._resolveRowExpression(stored.id, rowData, rowId) : null;
@@ -777,13 +788,22 @@ export class Et2DatagridRowRenderer
 					}
 					if(typeof element.transformAttributes === "function")
 					{
-						if(!Object.keys(attributes).length)
+						// A value taken straight from row data is data, not template markup:
+						// don't let transformAttributes() run it through expandName(), which
+						// compiles any "$" in it (eg. an email body) as a PHP expression.
+						// It is set below with set_value() / .value instead.  transformAttributes()
+						// still runs: widgets hook it, eg. et2-url-email_ro adds its click handler.
+						if(hasDirectValue)
+						{
+							delete attributes.value;
+						}
+						if(!Object.keys(attributes).length && !hasDirectValue)
 						{
 							continue;
 						}
 						else
 						{
-							element.transformAttributes(attributes);
+							this.transformRowAttributes(element, attributes, mgr, literals);
 							if(hasDirectValue)
 							{
 								if(typeof element.set_value === "function")
@@ -801,7 +821,7 @@ export class Et2DatagridRowRenderer
 					{
 						Object.entries(attributes).forEach(([attr, value]) =>
 						{
-							element.setAttribute(attr, mgr.expandName(String(value)));
+							element.setAttribute(attr, literals.has(String(value)) ? String(value) : mgr.expandName(String(value)));
 						});
 					}
 				}
@@ -826,6 +846,68 @@ export class Et2DatagridRowRenderer
 		}
 		rowRoot.classList.remove("loading");
 		return true;
+	}
+
+	/**
+	 * Make a row-bound class replace the classes it set before, instead of adding to them.
+	 *
+	 * transformAttributes() adds a class to the ones the element already has.  A row widget
+	 * starts with its template's class, placeholders included, eg. "$seen_class et2_link", and
+	 * the same row is applied again when its data changes, eg. a ticket marked read: both its
+	 * placeholders and the previous row values would stay.  Take those off before the resolved
+	 * class is added; classes something else added to the widget are left alone.
+	 */
+	private replaceRowClass(element : Element, template : any, resolved : any)
+	{
+		if(typeof template !== "string" || typeof resolved !== "string" || !element.classList)
+		{
+			return;
+		}
+		const placeholders = template.split(/\s+/).filter((name) => /[$@{]/.test(name));
+		element.classList.remove(...placeholders, ...(this._appliedRowClasses.get(element) ?? []));
+		this._appliedRowClasses.set(element, resolved.split(/\s+/).filter(Boolean));
+	}
+
+	/**
+	 * Remember a resolved attribute value that is final row data.
+	 *
+	 * The resolver has already put the row's values in; the content manager would
+	 * expand the result again, and expandName() compiles anything with a "$" in it as a
+	 * PHP expression, or reads "@name" from the content array.  Only values it would
+	 * change need remembering.
+	 */
+	private collectRowLiteral(literals : Set<string>, resolved : {literal? : boolean}, value : any)
+	{
+		if(resolved.literal && typeof value === "string" && (value.includes("$") || value.startsWith("@")))
+		{
+			literals.add(value);
+		}
+	}
+
+	/**
+	 * transformAttributes() with the given final row values kept as they are.
+	 *
+	 * It is still the widget's transformAttributes() - widgets hook it, and it still
+	 * translates and converts types - only expandName() hands these values back unchanged.
+	 */
+	private transformRowAttributes(element : any, attributes : Record<string, any>, mgr : any, literals : Set<string>)
+	{
+		if(!literals.size || !mgr || typeof element.setArrayMgr !== "function")
+		{
+			element.transformAttributes(attributes);
+			return;
+		}
+		const literalMgr = Object.create(mgr);
+		literalMgr.expandName = (ident : string) => literals.has(ident) ? ident : mgr.expandName(ident);
+		element.setArrayMgr("content", literalMgr);
+		try
+		{
+			element.transformAttributes(attributes);
+		}
+		finally
+		{
+			element.setArrayMgr("content", mgr);
+		}
 	}
 
 	/**

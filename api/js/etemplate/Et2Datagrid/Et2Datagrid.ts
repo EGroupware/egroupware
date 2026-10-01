@@ -1493,8 +1493,15 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 * Resolve row tokens without opening an ArrayMgr perspective.  Non-row
 	 * tokens such as $cont and @labels are deliberately left for the widget's
 	 * normal content manager.
+	 *
+	 * All tokens are resolved in a single pass: a value put in for one token is row
+	 * data, and is not scanned again for the next one.
+	 *
+	 * literal is true when only row tokens were in the expression, so the resolved
+	 * value is final: it holds row data, eg. an email body with a "$" in it, and must
+	 * not be expanded again by the content manager.
 	 */
-	_resolveRowExpression(value : string, rowData : any, rowId : string) : {value : any; rowValue? : any; fallback : boolean; field? : string}
+	_resolveRowExpression(value : string, rowData : any, rowId : string) : {value : any; rowValue? : any; fallback : boolean; field? : string; literal : boolean}
 	{
 		const normalized = this._canonicalRowExpression(value);
 		const exact = normalized.match(/^\$\[([^\]]+)\]$/) || normalized.match(/^\$([a-zA-Z_][a-zA-Z0-9_]*)$/);
@@ -1502,11 +1509,11 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			const field = exact[1];
 			const rowValue = this._getFieldValue(rowData, field) ?? "";
-			return {value: rowValue, rowValue, fallback: false, field};
+			return {value: rowValue, rowValue, fallback: false, field, literal: true};
 		}
 		if(normalized === "$row" || normalized === "${row}")
 		{
-			return {value: rowId, rowValue: rowId, fallback: false};
+			return {value: rowId, rowValue: rowId, fallback: false, literal: true};
 		}
 
 		// An "@name"/"@@name" reference reads the content array, not the row - "@@name" the
@@ -1517,18 +1524,26 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		// disabled=/hidden= pair take effect. Defer those to the array manager, which resolves
 		// them through parseBoolExpression().
 		let fallback = /\$row_cont|\$\{row\}\[|\{\$row\}\[|@/.test(normalized);
-		const resolved = normalized
-			.replace(/\$\[([^\]]+)\]/g, (_match, field) => String(this._getFieldValue(rowData, field) ?? ""))
-			.replace(/\$row\b/g, rowId)
-			.replace(/\$([a-zA-Z_][a-zA-Z0-9_]*)\b/g, (match, field) =>
+		let rowTokens = 0;
+		let rest = "";
+		let restFrom = 0;
+		const resolved = normalized.replace(/\$\[([^\]]+)\]|\$([a-zA-Z_][a-zA-Z0-9_]*)\b/g, (match, path, name, offset) =>
+		{
+			if(name && ["row_cont", "cont", "_cont"].includes(name))
 			{
-				if(["row", "row_cont", "cont", "_cont"].includes(field))
-				{
-					return match;
-				}
-				return String(this._getFieldValue(rowData, field) ?? "");
-			});
-		return {value: resolved, fallback};
+				return match;
+			}
+			rowTokens++;
+			rest += normalized.substring(restFrom, offset);
+			restFrom = offset + match.length;
+			if(name === "row")
+			{
+				return rowId;
+			}
+			return String(this._getFieldValue(rowData, path ?? name) ?? "");
+		});
+		rest += normalized.substring(restFrom);
+		return {value: resolved, fallback, literal: rowTokens > 0 && !fallback && !/[$@]/.test(rest)};
 	}
 
 	_rowAttributePropertyType(element : any, attribute : string) : any

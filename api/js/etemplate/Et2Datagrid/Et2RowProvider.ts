@@ -70,14 +70,12 @@ export class Et2RowProvider
 		{
 			return value;
 		}
-		let resolved = value;
-		resolved = resolved.replace(/\{([^}]+)\}/g, (_match, token) => String(getFieldValue(row, token) ?? ""));
-		resolved = resolved.replace(/\$row\.([a-zA-Z0-9_.]+)/g, (_match, token) => String(getFieldValue(row, token) ?? ""));
-		resolved = resolved.replace(/\$\{row\}\[([^\]]+)\]/g, (_match, token) => String(getFieldValue(row, token) ?? ""));
-		resolved = resolved.replace(/\$\[([^\]]+)\]/g, (_match, token) => String(getFieldValue(row, token) ?? ""));
-		resolved = resolved.replace(/\$row_cont\[([^\]]+)\]/g, (_match, token) => String(getFieldValue(row, token) ?? ""));
-		resolved = resolved.replace(/\$([a-zA-Z_][a-zA-Z0-9_]*)\b/g, (_match, token) => String(getFieldValue(row, token) ?? ""));
-		return resolved;
+		// A single pass: a value put in for one placeholder is row data, and is not scanned
+		// again for the next one, eg. a "$name" or "{name}" in a description
+		return value.replace(
+			/\{([^}]+)\}|\$row\.([a-zA-Z0-9_.]+)|\$\{row\}\[([^\]]+)\]|\$\[([^\]]+)\]|\$row_cont\[([^\]]+)\]|\$([a-zA-Z_][a-zA-Z0-9_]*)\b/g,
+			(_match, ...groups) => String(getFieldValue(row, groups.slice(0, 6).find((token) => token !== undefined)) ?? "")
+		);
 	}
 
 	/**
