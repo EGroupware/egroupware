@@ -2336,7 +2336,7 @@ export class MailCompose
 		// "mail: delete mail_compose::compose() and its exclusively-used helpers")
 		// get_preferred_identity() ran AFTER any recipient-based resolution and unconditionally
 		// overrode it via `?? $content['mailidentity']` whenever the preference applied. Tracker
-		// #124251 (Sebastian Ender, via Birgit/ralf): a shared mailbox's reply picked the
+		// #124251 (a customer, via Birgit/ralf): a shared mailbox's reply picked the
 		// ADDRESSED-TO alias as sender even though the user's own "use personal signature"
 		// preference should always win - exactly the "answer a shared inbox with my own personal
 		// address" use case that preference exists for. Only reached HERE (this method, unlike the
@@ -2360,11 +2360,31 @@ export class MailCompose
 	}
 
 	/**
-	 * Replicates the classic mail_compose.inc.php's own (deleted) get_preferred_identity() exactly:
-	 * 'default' = the account's own lowest ident_id; 'personal' = the first ADDITIONAL (second-lowest
-	 * ident_id) personal identity, falling back to the same "default" one if there's only one identity
-	 * at all. Returns null for the 'last-used'/unset preference (the everyday case, no override) or an
-	 * account with no identities - both match that function's own no-op returns.
+	 * 'default' = the account's own STANDARD identity - Mail\Account's own `ident_id` property,
+	 * the `egw_ea_accounts.ident_id` column (admin-settable, see Account::IDENTITY_JOIN), not
+	 * always the same as "ident_id == acc_id" (ralf, ticket #125092: that equivalence only holds
+	 * as long as nobody ever created another identity for the account). Api\Mail\Jmap\
+	 * Identity::synthesize() resolves this server-side and sends it down as each identity's own
+	 * `isStandard` flag - this method just reads it, it has no way to determine "standard" from
+	 * the id alone. Falls back to the lowest-id identity if, for some reason, none is flagged
+	 * `isStandard` at all (shouldn't normally happen - defensive only).
+	 *
+	 * Was: "lowest ident_id among this account's identities" (a customer via Birgit/Ingo: "es
+	 * ist aber immer eine andere Einstellung gesetzt" - not reliably right, since ADDITIONAL
+	 * identities get their own ident_id from the identities table's own global auto-increment,
+	 * unrelated to the account's real standard-identity column) - the classic, now-deleted
+	 * mail_compose.inc.php's get_preferred_identity() this used to replicate exactly had the exact
+	 * same "lowest ident_id" assumption, so this was usually only coincidentally right, on an
+	 * account nobody had added extra identities to.
+	 *
+	 * 'personal' = the first identity flagged `isPersonal` - `egw_ea_identities.account_id` equals
+	 * the CURRENT user's own account_id (ralf, ticket #125092: NOT simply "any identity other than
+	 * the standard one" - a general/shared ADDITIONAL identity, `account_id=0` same as the
+	 * standard one's, would wrongly match that). Falls back to the standard one if the account has
+	 * no genuinely personal identity of its own at all (eg. only general ones, or just the one).
+	 *
+	 * Returns null for the 'last-used'/unset preference (the everyday case, no override) or an
+	 * account with no identities - both match the classic function's own no-op returns.
 	 */
 	private preferredIdentityFromPreference(identities : any[]) : any | null
 	{
@@ -2374,7 +2394,13 @@ export class MailCompose
 			return null;
 		}
 		const sorted = [...identities].sort((a, b) => parseInt(a.id) - parseInt(b.id));
-		return pref === 'default' ? sorted[0] : (sorted[1] ?? sorted[0]);
+		const standard = identities.find((i) => i.isStandard) ?? sorted[0];
+		if (pref === 'default')
+		{
+			return standard;
+		}
+		const personal = identities.find((i) => i.isPersonal);
+		return personal ?? standard;
 	}
 
 	/**

@@ -987,13 +987,18 @@ class Account implements \ArrayAccess
 		if (!isset($user)) $user = $GLOBALS['egw_info']['user']['account_id'];
 		$acc_id = is_scalar($account) ? $account : $account['acc_id'];
 
-		$cols = array('ident_id', 'ident_name', 'ident_realname', 'ident_org', 'ident_email', 'ident_signature', 'acc_id', 'acc_imap_username', 'acc_imap_logintype', 'acc_domain');
+		$cols = array('ident_id', 'ident_name', 'ident_realname', 'ident_org', 'ident_email', 'ident_signature', 'acc_id', 'account_id', 'acc_imap_username', 'acc_imap_logintype', 'acc_domain');
 		if (!in_array($field, array_merge($cols, array('name', 'params'))))
 		{
 			$cols[] = $field;
 		}
 		$cols[array_search('ident_id', $cols)] = self::IDENTITIES_TABLE.'.ident_id AS ident_id';
 		$cols[array_search('acc_id', $cols)] = self::IDENTITIES_TABLE.'.acc_id AS acc_id';
+		// explicitly aliased: egw_ea_credentials (LEFT JOIN'ed below) has its OWN, unrelated
+		// account_id column too - a bare "account_id" would be ambiguous/ONE of the two depending
+		// on driver behaviour. 0 = a general identity (any user of this mail account may use it),
+		// a real account_id = personal to that one user only (identityObject()'s own isPersonal).
+		$cols[array_search('account_id', $cols)] = self::IDENTITIES_TABLE.'.account_id AS account_id';
 		$cols[array_search('acc_imap_username', $cols)] = Credentials::TABLE.'.cred_username AS acc_imap_username';
 
 		$where[] = self::$db->expression(self::IDENTITIES_TABLE, self::IDENTITIES_TABLE.'.', array('account_id' => self::memberships($user)));
