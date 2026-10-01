@@ -654,10 +654,13 @@ standard row layout:
 | Property                | Default | Effect                                                                 |
 |-------------------------|---------|------------------------------------------------------------------------|
 | `--row-height`          | `44px`  | Estimated row height used for virtual spacer rendering and empty rows. |
-| `--row-cell-max-height` | `10em`  | Maximum height for normal row cells before vertical scrolling.         |
+| `--row-cell-max-height` | `none`  | Maximum height for normal row cells; taller content is clipped.        |
 
-Use `--row-cell-max-height` when row content is being clipped or scrolls too early. It applies to
-normal row `td` / `th` cells; expanded rows and tile view use separate sizing paths.
+Rows grow to fit their content by default. Set `--row-cell-max-height` to keep a list compact: a
+cell taller than the limit is clipped and fades out at the bottom, without a scrollbar of its own.
+Cells holding an `et2-customfields-list` scroll instead, so no field is hidden. The fade needs CSS
+scroll-driven animations; browsers without them clip without fading. It applies to normal row
+`td` / `th` cells; expanded rows and tile view use separate sizing paths.
 
 ```css
 et2-nextmatch {
