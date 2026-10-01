@@ -236,6 +236,9 @@ describe("InfoLog print view", () =>
 	{
 		const styles : HTMLStyleElement[] = [];
 		let popup : HTMLDivElement;
+		// what kdots.css caps the popup to: 100dvh, which in CI's headless Firefox is not
+		// window.innerHeight, so measure the unit itself
+		let capHeight : number;
 
 		before(async() =>
 		{
@@ -250,12 +253,18 @@ describe("InfoLog print view", () =>
 
 		beforeEach(() =>
 		{
+			const probe = document.createElement("div");
+			probe.style.height = "100dvh";
+			document.body.append(probe);
+			capHeight = probe.offsetHeight;
+			probe.remove();
+
 			// the kdots rules match a direct child of body only, like the real popup
 			popup = document.createElement("div");
 			popup.id = "popupMainDiv";
 			popup.className = "popupMainDiv";
 			const content = document.createElement("div");
-			content.style.height = (3 * window.innerHeight) + "px";
+			content.style.height = (3 * capHeight) + "px";
 			popup.append(content);
 			document.body.append(popup);
 		});
@@ -271,8 +280,9 @@ describe("InfoLog print view", () =>
 		it("is capped to the window on screen", async() =>
 		{
 			await emulateMedia({media: "screen"});
-			assert.isAtMost(popup.clientHeight, window.innerHeight,
+			assert.isBelow(popup.clientHeight, popup.scrollHeight,
 				"kdots.css no longer caps the popup - this test is not looking at the real rules");
+			assert.isAtMost(popup.clientHeight, capHeight);
 		});
 
 		it("is not cut off to one page when printed", async() =>
