@@ -16,7 +16,7 @@ import {et2_csvSplit} from "../et2_core_common";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {Et2MarkdownMixin} from "../Markdown/Et2MarkdownMixin";
 
-import styles from "./Et2Description.styles";
+import styles, {linkStyles} from "./Et2Description.styles";
 export class Et2Description extends Et2MarkdownMixin(Et2Widget(LitElement)) implements et2_IDetachedDOM
 {
 
@@ -72,6 +72,7 @@ export class Et2Description extends Et2MarkdownMixin(Et2Widget(LitElement)) impl
 	connectedCallback()
 	{
 		super.connectedCallback();
+		Et2Description.addLinkStyles(this.getRootNode());
 
 		if (this.for)
 		{
@@ -87,6 +88,32 @@ export class Et2Description extends Et2MarkdownMixin(Et2Widget(LitElement)) impl
 		{
 			render(this._renderContent(), this);
 		}
+	}
+
+	/**
+	 * Id of the <style> carrying linkStyles, so each document or shadow root gets it only once
+	 */
+	static readonly LINK_STYLES_ID = "et2-description-link-styles";
+
+	/**
+	 * Put the styles for links inside descriptions into the given document or shadow root, once.
+	 *
+	 * Our links live in our light DOM, so they are styled by the tree we are in, not by our own shadow root.
+	 * A <style> element, not adoptedStyleSheets: eg. Et2Datagrid replaces its shadow root's adoptedStyleSheets
+	 * wholesale, which would drop a sheet added by us.
+	 */
+	static addLinkStyles(root : Node)
+	{
+		const target = root instanceof ShadowRoot ? root : (root instanceof Document ? root.head : null);
+		if(!target || (root as Document | ShadowRoot).getElementById(Et2Description.LINK_STYLES_ID))
+		{
+			return;
+		}
+		const style = document.createElement("style");
+		style.id = Et2Description.LINK_STYLES_ID;
+		style.textContent = linkStyles.cssText;
+		// First, so app CSS loaded before us still wins over equal specificity
+		target.prepend(style);
 	}
 
 	set_value(value)
