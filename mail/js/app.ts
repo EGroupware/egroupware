@@ -1887,6 +1887,33 @@ export class MailApp extends EgwApp
 	}
 
 	/**
+	 * Ticket #125092 (Ingo/Birgit, via ralf - "ohne Neuladen wird wieder die genommen von der ich
+	 * zuvor gewechselt war... als würde die pref nicht neu gelesen"): getComposeToolbarData()'s
+	 * own cache is keyed ONLY by accId, kept "for the life of the MAIN window" - it has no way to
+	 * know its cached `content.mailaccount` (baked in from whatever mail/LastSignatureIDUsed was
+	 * at the time of that FIRST fetch for this account) goes stale the moment a later send updates
+	 * that very preference (MailJmap.rememberLastUsedIdentity()) - every LATER compose for the
+	 * same account, same main-window lifetime, kept reusing that now-wrong identity pre-selection
+	 * without a full page reload (which simply starts a fresh MailApp/cache) ever being involved.
+	 * Called right after rememberLastUsedIdentity() updates the preference, so the NEXT compose
+	 * for this account re-fetches fresh content instead.
+	 *
+	 * Same opener-redirect as getComposeToolbarData() itself - a send can complete from within a
+	 * popup's own MailJmap instance, whose `this.app` is that popup's OWN freshly-instantiated
+	 * MailApp, not the one actually holding the cache.
+	 */
+	invalidateComposeToolbarData(accId : string) : void
+	{
+		const openerMail : MailApp = MailApp.safeOpener((opener) => (opener as any).app?.mail);
+		if (openerMail && openerMail !== this)
+		{
+			openerMail.invalidateComposeToolbarData(accId);
+			return;
+		}
+		delete this.composeToolbarDataPromises[accId];
+	}
+
+	/**
 	 * Bootstrap a compose popup entirely client-side - no server round-trip to
 	 * mail_compose::compose() at all for opening it (doc/ai/projects/mail-compose-jmap-migration.md,
 	 * Step 10). Run INSIDE the popup itself, via composeMessage()'s
