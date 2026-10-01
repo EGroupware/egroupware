@@ -3237,6 +3237,8 @@ abstract class Merge
 		catch (\Exception $e)
 		{
 			$response->error($message . $e->getMessage());
+			// nothing was merged, so there are no results to report
+			return;
 		}
 
 		// When an email is part of the merge, $merge_result also contains a success/failed/
