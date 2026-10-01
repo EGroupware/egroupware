@@ -9,6 +9,7 @@
  */
 
 import {EgwApp} from '../../api/js/jsapi/egw_app';
+import type {EgwFrameworkApp, FilterInfo} from "../../kdots/js/EgwFrameworkApp";
 import {Et2DateTimeReadonly} from "../../api/js/etemplate/Et2Date/Et2DateTimeReadonly";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {Et2DateTime} from "../../api/js/etemplate/Et2Date/Et2DateTime";
@@ -36,6 +37,20 @@ class TimesheetApp extends EgwApp
 	constructor()
 	{
 		super('timesheet');
+	}
+
+	/**
+	 * filter2 only switches the details on or off, it is not a filter
+	 *
+	 * @param filterValues
+	 * @param fwApp
+	 */
+	getFilterInfo(filterValues : { [id : string] : any }, fwApp : EgwFrameworkApp) : FilterInfo
+	{
+		const values = {...(filterValues ?? {})};
+		values.col_filter = {...(values.col_filter ?? {})};
+		delete values.filter2;
+		return fwApp.filterInfo(values);
 	}
 
 	/**

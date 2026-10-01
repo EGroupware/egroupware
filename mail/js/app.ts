@@ -22,6 +22,7 @@ import {loadWebComponent} from "../../api/js/etemplate/Et2Widget/Et2Widget";
 import type {Et2DatagridUpdateType} from "../../api/js/etemplate/Et2Datagrid/Et2Datagrid.types";
 import {Et2DatagridUpdateTypes} from "../../api/js/etemplate/Et2Datagrid/Et2Datagrid.types";
 import type {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatch";
+import type {EgwFrameworkApp, FilterInfo} from "../../kdots/js/EgwFrameworkApp";
 import {MailCompose} from "./compose";
 import {formatJmapAddress, isPreferenceOn, JmapBodyResult, JmapMessageReference, JmapUserError, MailJmap} from "./jmap";
 import {renderAttachmentIndex} from "./attachmentIndex";
@@ -9936,6 +9937,25 @@ export class MailApp extends EgwApp
 			toggle.value = false;
 			this.nm && this.nm.applyFilters({threaded: ''});
 		}
+	}
+
+	/**
+	 * Only status, flag, search and date range are filters the user set
+	 *
+	 * The folder is where we are, cat_id is the type of search (only matters together with a search),
+	 * and the details (filter2) and threaded toggles only change how the list is shown.
+	 *
+	 * @param filterValues
+	 * @param fwApp
+	 */
+	getFilterInfo(filterValues : { [id : string] : any }, fwApp : EgwFrameworkApp) : FilterInfo
+	{
+		const values = {...(filterValues ?? {})};
+		for(const key of ['selectedFolder', 'cat_id', 'filter2', 'threaded'])
+		{
+			delete values[key];
+		}
+		return fwApp.filterInfo(values);
 	}
 
 	/**

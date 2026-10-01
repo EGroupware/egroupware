@@ -68,6 +68,15 @@ class Hooks
 				'name'   => 'open_popups_in',
 				'values' => $popups_options
 			],
+			'filters_auto_open' => [
+				'type'    => 'check',
+				'label'   => 'Open filters automatically',
+				'name'    => 'filters_auto_open',
+				'help'    => 'Open the filters when the chosen filters match no entries in a list.',
+				'xmlrpc'  => True,
+				'admin'   => False,
+				'default' => '1',
+			],
 			/* disabled for now
 			'show_generation_time' => array(
 				'type'   => 'check',

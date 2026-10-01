@@ -6,7 +6,10 @@ app chooser icons + text	common	en	Icons + Text
 application chooser style	common	en	Application chooser style
 application list	common	en	Application list
 hide left area	common	en	Hide left area
+nothing matches your filters. change them here to see more entries.	common	en	Nothing matches your filters. Change them here to see more entries.
 open applications	common	en	Open applications
+open filters automatically	common	en	Open filters automatically
+open the filters when the chosen filters match no entries in a list.	common	en	Open the filters when the chosen filters match no entries in a list.
 reload %1	common	en	Reload %1
 settings	kdots	en	settings
 should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons	kdots	en	Should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons.
