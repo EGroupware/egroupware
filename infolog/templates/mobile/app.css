@@ -174,7 +174,7 @@ table.infolog_fullWidth {
 }
 /* Default off-state filter crushes the lock glyph to near-invisible; keep it legible */
 .infologEncrypt {
-  --image-filter-off: opacity(.6);
+  --image-filter-off: opacity(0.6);
 }
 div#infolog-edit_infolog-edit-description {
   height: 100%;
@@ -231,13 +231,6 @@ span#infolog-index_\$\{row\}\[info_des\] {
   #infolog-index_nm .gridCont_0_div_col_0.innerContainer {
     min-width: auto;
   }
-  .infoDescRow {
-    height: 32px;
-    max-width: 99%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
   div.infoLinksRow,
   div.infoLinksRow ul[id^='infolog-index_'][id$='filelinks]'] {
     max-width: 99%;
@@ -283,9 +276,6 @@ span#infolog-index_\$\{row\}\[info_des\] {
   table.egwGridView_grid span.arrow.closed {
     display: none !important;
   }
-  tr.infolog_rowHasParent > td:first-child {
-    background: none !important;
-  }
   div.et2_vbox.infolog_CompletedClmn {
     display: table-caption;
   }
@@ -302,23 +292,6 @@ span#infolog-index_\$\{row\}\[info_des\] {
   }
   #infolog-view .et2_label.et2_label_empty * {
     padding-left: 0px;
-  }
-  .infolog_CompletedClmn {
-    width: 100%;
-    max-width: 100%;
-  }
-  .infolog_CompletedClmn .infoType {
-    padding-right: 1em;
-  }
-  et2-vbox.infolog_CompletedClmn et2-image {
-    width: 1rem;
-  }
-  et2-vbox.infolog_CompletedClmn et2-image *[part="image"] {
-    vertical-align: middle;
-  }
-  et2-vbox.infolog_CompletedClmn progress {
-    width: 100%;
-    max-width: 2em;
   }
   #infolog-edit_timestamp::part(base) {
     background: transparent;

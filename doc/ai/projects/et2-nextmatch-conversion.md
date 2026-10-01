@@ -911,7 +911,7 @@ these in order, in one commit, then expect follow-up fixups.
    behind the current request.
 
 5. **Add row CSS via `<et2-styles>`** if the app doesn't already have `rows.css`/`rows.less` loaded
-   this way — see `Et2Nextmatch.md` § Styling Rows for the fallback rule to `app.css`.
+   this way. `app.css` never reaches the rows, so every row rule has to move there.
 
 6. **Verify in a browser**, watching the console the whole time (`.controller`/`.options` access
    failures throw at first use, not at page load, so a quiet page load proves nothing):
@@ -1105,8 +1105,8 @@ Mechanical renames seen in every conversion:
   row-template widgets during conversion; there is no modern equivalent to migrate them to, since the
   concept itself is gone.
 - Add `<et2-styles src="rows.css">` inside the row template to load row-scoped CSS into the datagrid's
-  row shadow DOM; add a `rows.css`/`rows.less` file per app for this if one doesn't already exist. See
-  `Et2Nextmatch.md` § Styling Rows for the fallback rules to `app.css`.
+  row shadow DOM; add a `rows.css`/`rows.less` file per app for this if one doesn't already exist.
+  There is no `app.css` fallback in the rows.
 - If an app has filter/search/sort controls that must be available before the nextmatch row template
   loads (e.g. for a tile view rendered without waiting on the row template), pull them into a static
   `<et2-template id="app.index.filter">` rather than relying on them being built from the nextmatch
@@ -1401,29 +1401,17 @@ Where an app's filters actually come from under `Et2Nextmatch`, and the trap in 
   shipping.
 - Auto-refresh pause/resume around long-running requests has no equivalent — call this out explicitly
   when converting an app that relies on it, rather than assuming it's covered.
-- **The row-shadow-DOM `app.css` compatibility fallback** (used when the row template has no
-  `<et2-styles>`) resolves the *containing template's own* template_set — derived from
-  `closest("et2-template").getUrl()` — falling back to `default` only if the skin-specific file 404s.
-  Don't assume it always loads `templates/default/app.css` regardless of the active skin; a
-  mobile-skin conversion needs `templates/mobile/app.css` to actually be the one that loads. Bare
-  `<et2-styles src="...">` values inside a row template resolve the same way, relative to that
-  template's own file.
-- **`app.css` selectors scoped to the index page's own container id (e.g. `#tracker-index
-  .some-row-class`) silently stop matching anything once that app converts**, with no warning
-  anywhere - the fallback above really does load that same file's rules into the datagrid's shadow
-  root, but a shadow root is its own separate node tree with no `#app-index` ancestor in it at all
-  (that id only exists in the light DOM), so an id-scoped selector can never match a row element
-  post-conversion. This is easy to miss because everything still *loads* without error; the only
-  symptom is that some row styling (read/unread bold, priority colors, italics, whatever the app used
-  the class for) just silently stops applying, and a plain page glance can miss it entirely if the
-  affected style is subtle (bold vs. not) rather than a layout break (Tracker: `tracker_unseen`/
+- **`app.css` never reaches the rows.** Rows render in the datagrid's shadow root, and only the row
+  template's `<et2-styles>` are adopted there - there is no `app.css` fallback. Any row styling an app
+  kept in `app.less`/`app.css` silently stops applying once it converts: no error, everything still
+  *loads*, and a subtle loss (bold vs. not) is easy to miss at a glance (Tracker: `tracker_unseen`/
   `tracker_seen` bold state, several priority-color classes, `tracker_overdue`, `private`/`planned`
-  italics - all of `app.less`'s `#tracker-index { ... }`-wrapped block, one file, one rename away from
-  fixed). Before considering an app's row-CSS unaffected by conversion, grep its `app.less`/`app.css`
-  for a selector scoped to that page's own container id and check whether any of the classes it
-  targets are used inside the row template - if so, drop the id scope (the shadow root already
-  provides equivalent isolation, so nothing is lost by doing this) and recompile
-  (`lessc app.less app.css`, checking the diff is purely the scope removal before overwriting).
+  italics). Before considering an app's row CSS done, grep its `app.less` (and the mobile skin's) for
+  every class used inside the row template and move those rules to `rows.less`. Drop any page
+  container id scope (e.g. `#tracker-index .some-row-class`) on the way: that id only exists in the
+  light DOM, and the shadow root already provides the isolation. Bare `<et2-styles src="...">` values
+  resolve relative to the row template's own `.xet` file, so a mobile template's `rows.css` is the one
+  next to it.
 - **Category-color row indicators have a built-in mechanism — don't hand-roll a dedicated column for
   it.** Give the `<row>` element's `class` binding the bare recognized placeholder for the category field
   (`$row_cont[info_cat]`, `$cat_id`, `$category`, or `$cat` — see `Et2RowProvider`'s
