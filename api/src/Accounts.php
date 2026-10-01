@@ -180,6 +180,18 @@ class Accounts
 	}
 
 	/**
+	 * Restore the session-cache switch when the object comes back from the session
+	 *
+	 * The switch is static and only the constructor sets it.  A request using the accounts object of an
+	 * egw object restored from the session would otherwise search with the default (on), even for SQL, and
+	 * get results cached in that session, which other users' changes never invalidate.
+	 */
+	function __wakeup()
+	{
+		self::$use_session_cache = !$this->backend instanceof Sql;
+	}
+
+	/**
 	 * Get cache-key for search parameters
 	 *
 	 * @param array $params
