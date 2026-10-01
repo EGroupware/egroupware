@@ -1200,8 +1200,48 @@ export class MailCompose
 	 *  account's backend doesn't support JMAP sending yet - caller falls through to the classic
 	 *  postback, silently.
 	 */
+	/**
+	 * true only when to/cc/bcc are ALL empty once normalized - a JmapNewEmail's to/cc/bcc are each
+	 * either a comma-separated string (a raw widget value) or an already-split array (MailJmap.
+	 * splitAddresses()'s own two accepted shapes, mirrored here since that method is private to
+	 * MailJmap) - this never needs to resolve distribution-list placeholders or parse display
+	 * names, just tell "genuinely nothing entered anywhere" apart from "something, however
+	 * malformed, was entered" (a malformed address is still the SERVER's job to reject with a
+	 * real reason, not this guard's).
+	 */
+	private static hasNoRecipientsAtAll(email : {to? : string | string[], cc? : string | string[], bcc? : string | string[]}) : boolean
+	{
+		const isEmpty = (value? : string | string[]) : boolean =>
+			!value || (Array.isArray(value) ? value : value.split(',')).every((a) => !a.trim());
+		return isEmpty(email.to) && isEmpty(email.cc) && isEmpty(email.bcc);
+	}
+
+	/**
+	 * Same ticket #125161 follow-up as hasNoRecipientsAtAll() - ralf: "I believe in the old app we
+	 * had a guard against no recipient or empty subject, and refused to send in both cases",
+	 * confirmed in the deleted mail_compose.inc.php's own compose() (git show 3bca66cf01):
+	 * `strlen(trim($_content['subject']))==0` blocked the send entirely. Extracted the same way as
+	 * that method, purely so this one-line check is directly unit-testable.
+	 */
+	private static hasNoSubject(email : {subject? : string}) : boolean
+	{
+		return !String(email.subject ?? '').trim();
+	}
+
 	private async trySendViaJmap() : Promise<boolean>
 	{
+		// Ticket #125161 (ralf): Send also has a keyboard accelerator (Ctrl+S,
+		// mail/src/Compose.php's own getToolbarActions()) - unlike a mouse click on the Send
+		// button, a keyboard shortcut involves no focus transfer/blur at all, so it can reach here
+		// in the SAME synchronous dispatch as the keydown event itself, potentially before a
+		// native keyup (or any other not-yet-flushed widget-commit event) for whatever key the
+		// user was last typing has even been processed. Stepping out of the current task via a
+		// real macrotask (setTimeout, not just another microtask - several already run via the
+		// promise chain in submitAction() before this is even called, which evidently isn't
+		// enough) gives any such pending event a chance to finish before currentEmailFields()
+		// below reads the actual widget values.
+		await new Promise<void>((resolve) => setTimeout(resolve, 0));
+
 		if (!this.jmapEligible()) return false;
 
 		let sent : {emailId : string, mailboxId : string};
@@ -1215,6 +1255,32 @@ export class MailCompose
 				signed ? MailCompose.SMIME_TYPE_SIGN : encrypted ? MailCompose.SMIME_TYPE_ENCRYPT : undefined;
 			const passphrase = this.et2.getWidgetById('smime_passphrase')?.get_value();
 			email = await this.currentEmailFields(true);
+			// Ticket #125161 (a customer, forwarding from a function mailbox): nothing ever
+			// checked for at least one recipient before actually sending - a To field that was
+			// empty (exact mechanism still unconfirmed - a leading "typed text never committed on
+			// a direct Send click" theory turned out to be a claude-in-chrome tooling artifact,
+			// not reproducible by hand) silently went all the way to the server as an empty
+			// envelope, which Horde only rejects deep inside the actual SMTP transaction ("valid
+			// RCPT command must precede DATA") - a cryptic, log-only failure the user never sees a
+			// clear reason for. Classic mail_compose.inc.php validated this itself before ever
+			// attempting to send; this JMAP-native path never reimplemented that check at all.
+			if (MailCompose.hasNoRecipientsAtAll(email))
+			{
+				this.egw.message(this.egw.lang('No recipient address given!'), 'error');
+				return true;
+			}
+			// ralf, same ticket: "I believe in the old app we had a guard against no recipient or
+			// empty subject, and refused to send in both cases" - confirmed in the deleted
+			// mail_compose.inc.php's own compose() (git show 3bca66cf01): a hard block (never even
+			// attempted send()), same "no subject supplied" phrase reused here, same precedence
+			// (subject checked right after recipients there too - body-emptiness was ALSO checked
+			// classically, but ralf asked for these two specifically, so only these two are
+			// reimplemented here).
+			if (MailCompose.hasNoSubject(email))
+			{
+				this.egw.message(this.egw.lang('No subject supplied'), 'error');
+				return true;
+			}
 			// Mailvelope already produced the ciphertext client-side (its own iframe editor, not
 			// the mail_htmltext/mail_plaintext widgets email.body came from above) - pgpArmored
 			// takes the SAME bodyOverride swap smimeType does in sendNewEmail(), just with no
