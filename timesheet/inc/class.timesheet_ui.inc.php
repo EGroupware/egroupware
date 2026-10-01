@@ -1103,7 +1103,7 @@ class timesheet_ui extends timesheet_bo
 				'filter_onchange' => "app.timesheet.filter_change",
 				'filter_aria_label' => lang('Time range'),
 				'filter2_onchange' => "app.timesheet.filter2_change",
-				'filter2'        => '',
+				'filter2'        => $GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['show_details'] ? '1' : '',
 				'filter2_aria_label' => lang('Details'),
 				'row_id'         => 'ts_id',
 				'row_modified'   => 'ts_modified',
