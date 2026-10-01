@@ -381,7 +381,9 @@ export abstract class EgwApp
 		{
 			const openOnNoRows = (total : number) =>
 			{
-				if(total !== 0 || filterDrawer.open)
+				// The drawer shows the filters of the list on screen: an app keeping several lists loaded
+				// (eg. ProjectManager) must not have a hidden one's empty result open it over the visible one
+				if(total !== 0 || filterDrawer.open || fwApp.nextmatch !== nm)
 				{
 					return;
 				}
