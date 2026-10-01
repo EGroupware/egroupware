@@ -101,10 +101,18 @@ export class Et2RowProvider
 		return {found: true, value: current};
 	}
 
-	static customizeRowRootAttributes(rowRoot : HTMLElement, row : any, getFieldValue : (row : any, key : string) => any)
+	/**
+	 * Resolve row placeholders in the row root's attributes.
+	 *
+	 * @param attributeNames limit resolving to these attributes, eg. the template's own ones.
+	 * 	A mounted row also carries identity attributes holding row data (data-row-id),
+	 * 	which must not be resolved again, or a "{x}" or "$x" in an id gets replaced.
+	 */
+	static customizeRowRootAttributes(rowRoot: HTMLElement, row: any, getFieldValue: (row: any, key: string) => any,
+		attributeNames?: string[])
 	{
 		const categoryIds = this._rowCategoryIds(row, getFieldValue);
-		for(const name of rowRoot.getAttributeNames())
+		for(const name of attributeNames ?? rowRoot.getAttributeNames())
 		{
 			const value = rowRoot.getAttribute(name);
 			if(value === null)
