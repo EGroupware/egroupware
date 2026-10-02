@@ -200,6 +200,59 @@ class Mailer extends Horde_Mime_Mail
 	}
 
 	/**
+	 * Make sure the mail has a sender: header From AND envelope sender (Return-Path)
+	 *
+	 * Keeps the sender of the mail-account (see setAccount()) and only falls back to $address, if the account has none,
+	 * eg. an SMTP-only profile without identity email, which SMTP username is no email address either.
+	 * Nowadays SMTP servers commonly reject an empty envelope sender ("<>") and a From not matching the
+	 * authenticated account, so we send From and envelope sender with the same address.
+	 *
+	 * @param string $address fallback sender address
+	 * @param string $personal =''  fallback name, only used together with $address
+	 */
+	public function setFallbackSender(string $address, string $personal='') : void
+	{
+		$return_path = self::bareAddress($this->getHeader('Return-Path'));
+		$from = self::bareAddress($this->getHeader('From'));
+		$sender = $return_path ?: ($from ?: $address);
+
+		if ($from === '')
+		{
+			$this->setFrom($sender, $sender === $address ? $personal : '');
+		}
+		if ($return_path === '')
+		{
+			$this->addHeader('Return-Path', '<'.$sender.'>', true);
+		}
+	}
+
+	/**
+	 * Get the bare address (without name and angle brackets) of the first address in a header value
+	 *
+	 * @param ?string $header eg. "Name <name@example.org>", "<>" or null
+	 * @return string '' if there is no address
+	 */
+	protected static function bareAddress(?string $header) : string
+	{
+		if (!is_string($header) || trim($header, " \t<>") === '')
+		{
+			return '';
+		}
+		try
+		{
+			foreach(new Horde_Mail_Rfc822_List($header) as $address)
+			{
+				return (string)$address->bare_address;
+			}
+		}
+		catch (\Exception $e)
+		{
+			unset($e);
+		}
+		return '';
+	}
+
+	/**
 	 * Add one or multiple addresses to To, Cc, Bcc or Reply-To
 	 *
 	 * @param string|array|Horde_Mail_Rfc822_List $address
