@@ -1,6 +1,7 @@
 import {assert} from "@open-wc/testing";
 import * as sinon from "sinon";
 import {Et2Datagrid} from "../Et2Datagrid";
+import {Et2DatagridPrintController} from "../Et2DatagridPrintController";
 
 /**
  * Contract under test: beforePrint() / afterPrint() for a grid whose owner does not prepare
@@ -87,5 +88,56 @@ describe("Et2Datagrid printing", () =>
 		assert.isTrue(loadRowRange.notCalled);
 		assert.isTrue(setPrintRows.notCalled);
 		assert.isTrue(clearPrintRows.notCalled, "cleared the owner's print rows");
+	});
+});
+
+/**
+ * Contract under test: while print rows are rendered, a `rangeChanged` from the virtualizer
+ * that was replaced by them (a layout message already on its way still fires it) must not
+ * reach the virtualize() directive's listener, which would render the virtualized range over
+ * the print rows.  After clearPrintRows() it reaches it again.
+ */
+describe("Et2DatagridPrintController", () =>
+{
+	function createHost()
+	{
+		const host = <any>document.createElement("div");
+		host.attachShadow({mode: "open"}).innerHTML = `<div class="dg-body"><table><tbody id="rows"></tbody></table></div>`;
+		Object.assign(host, {
+			fixedRowHeight: true,
+			requestUpdate: () => {},
+			updateComplete: Promise.resolve(true),
+			_syncRowsMinHeight: () => {},
+			_scheduleVirtualizerLayoutSync: () => {},
+			_sparseVirtualizerLayoutActive: false,
+			_waitForRowUpgradesToFinish: async() => {}
+		});
+		document.body.append(host);
+		return host;
+	}
+
+	it("keeps the replaced virtualizer's rangeChanged from the directive while printing", async() =>
+	{
+		const host = createHost();
+		const rows = host.shadowRoot.getElementById("rows");
+		// Stands in for the virtualize() directive's listener
+		const directive = sinon.spy();
+		rows.addEventListener("rangeChanged", directive);
+		const controller = new Et2DatagridPrintController(host);
+
+		try
+		{
+			await controller.setPrintRows([]);
+			rows.dispatchEvent(new Event("rangeChanged"));
+			assert.isTrue(directive.notCalled, "the directive re-rendered over the print rows");
+
+			controller.clearPrintRows();
+			rows.dispatchEvent(new Event("rangeChanged"));
+			assert.isTrue(directive.calledOnce, "the directive is still blocked after printing");
+		}
+		finally
+		{
+			host.remove();
+		}
 	});
 });

@@ -28,6 +28,8 @@ export class Et2DatagridPrintController
 	private _rows : Et2DatagridRow[] | null = null;
 	/** Fixed-row-height state to restore after print rows return to virtualization. */
 	private _fixedRowHeight : boolean | null = null;
+	/** The rows container blockVirtualizer() listens on, for clearPrintRows() */
+	private _blockedContainer : HTMLElement | null = null;
 
 	constructor(host : Et2DatagridPrintHost)
 	{
@@ -54,6 +56,7 @@ export class Et2DatagridPrintController
 			id: this.host.dataProvider?.normalizeRowId?.(rowId, true) || String(rowId)
 		}));
 		this.host.classList.add("print");
+		this._blockVirtualizer();
 		this.host.requestUpdate();
 		await this.host.updateComplete;
 		this.host._syncRowsMinHeight();
@@ -74,6 +77,34 @@ export class Et2DatagridPrintController
 		await this._waitForPrintImages();
 		await this._waitForPrintRowsToSettle();
 		this.syncPrintFlowHeight();
+	}
+
+	/**
+	 * Keep the virtualizer from rendering over the print rows
+	 *
+	 * Switching to print rows replaces the virtualize() directive in the rows container, which
+	 * disconnects its virtualizer - but a layout message already on its way (eg. right after a
+	 * load, when printing does not wait for a dialog first) still reaches the virtualizer's
+	 * _updateDOM(), which does not check for being connected.  It announces the range with a
+	 * `rangeChanged` event on the rows container, and the directive's listener renders the
+	 * virtualized range into the container, removing the print rows.  Swallow that event while
+	 * the print rows are there: a capture listener on the container runs before the directive's.
+	 */
+	private _blockVirtualizer() : void
+	{
+		const container = this.host.shadowRoot?.getElementById("rows") ?? null;
+		if(container === this._blockedContainer)
+		{
+			return;
+		}
+		this._blockedContainer?.removeEventListener("rangeChanged", Et2DatagridPrintController._stopRangeChanged, true);
+		container?.addEventListener("rangeChanged", Et2DatagridPrintController._stopRangeChanged, true);
+		this._blockedContainer = container;
+	}
+
+	private static _stopRangeChanged(event : Event) : void
+	{
+		event.stopImmediatePropagation();
 	}
 
 	/**
@@ -227,6 +258,8 @@ export class Et2DatagridPrintController
 			return;
 		}
 		this._rows = null;
+		this._blockedContainer?.removeEventListener("rangeChanged", Et2DatagridPrintController._stopRangeChanged, true);
+		this._blockedContainer = null;
 		this.host.fixedRowHeight = this._fixedRowHeight ?? this.host.fixedRowHeight;
 		this._fixedRowHeight = null;
 		const printContainers = this.host.shadowRoot?.querySelectorAll<HTMLElement>(".dg-body, .dg-body table, .dg-body #rows");
