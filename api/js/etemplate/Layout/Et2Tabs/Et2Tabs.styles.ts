@@ -33,4 +33,22 @@ export default css`
 				min-height: initial;
 			}
 		}
+
+	/* beforePrint() shows every tab's panel, so no height limit (the inline height comes from tabHeight) */
+	:host([printing]) {
+		overflow: visible;
+	}
+	:host([printing]) .tab-group--top {
+		height: auto;
+	}
+	:host([printing]) .tab-group__body {
+		height: auto !important;
+		overflow: visible;
+	}
+	/* Each panel prints its tab label as heading instead, see Et2TabPanel */
+	@media print {
+		:host([printing]) .tab-group__nav-container {
+			display: none;
+		}
+	}
 `;
