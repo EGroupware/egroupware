@@ -13,6 +13,7 @@ import {HasSlotController} from "../../api/js/etemplate/Et2Widget/slot";
 import {state} from "lit/decorators/state.js";
 import {EgwPopups} from "./EgwPopups";
 import Sortable from "sortablejs/modular/sortable.complete.esm.js";
+import {et2_IPrint} from "../../api/js/etemplate/et2_core_interfaces";
 
 /**
  * @summary Accessable, webComponent-based EGroupware framework
@@ -932,10 +933,21 @@ export class EgwFramework extends LitElement
 	}
 
 	/**
-	 * Print
+	 * Print the active application, or the given window
+	 *
+	 * Popups share the main window's framework, so their templates call `framework.print(window)`
+	 * to print themselves instead of the active application.
+	 *
+	 * @param {Window} [_window] window to print, eg. a popup - anything else (no argument, the main
+	 *	window, or the click event when used directly as an event handler) prints the active application
 	 */
-	public async print()
+	public async print(_window? : Window)
 	{
+		// Window check by duck-typing: a popup's Window is from another realm, so instanceof fails
+		if(_window && _window.window === _window && _window !== this.egw.window)
+		{
+			return this.printWindow(_window);
+		}
 		const appElement : EgwFrameworkApp = this.activeApp;
 		try
 		{
@@ -950,6 +962,105 @@ export class EgwFramework extends LitElement
 		{
 			// Ignore rejected
 		}
+	}
+
+	/**
+	 * Print a window other than the main one, eg. a popup
+	 *
+	 * Lets the widgets of the window's visible etemplates prepare (et2_IPrint beforePrint()), prints
+	 * the window once they are ready, and resets them (afterPrint()) once the print dialog closes.
+	 * Uses the window's own etemplate2 registry, as each popup loads its own copy.
+	 */
+	protected async printWindow(_window : Window)
+	{
+		_window.focus();
+
+		const registry = (<any>_window).etemplate2;
+		const et2_list = [];
+		let deferred = [];
+		if(registry)
+		{
+			_window.document.querySelectorAll(".et2_container[id]").forEach((node : HTMLElement) =>
+			{
+				const et2 = registry.getById(node.id);
+				if(et2 && (node.offsetWidth > 0 || node.offsetHeight > 0 || node.getClientRects().length > 0))
+				{
+					// A widget failing to prepare must not stop the window from printing
+					try
+					{
+						deferred = deferred.concat(et2.print());
+					}
+					catch(e)
+					{
+						this.egw.debug("error", "Preparing for print failed", e);
+					}
+					// Also when it failed: widgets prepared before the failing one need resetting
+					et2_list.push(et2);
+				}
+			});
+		}
+
+		let cleanedUp = false;
+		let previewBlurred = false;
+		const cleanup = () =>
+		{
+			if(cleanedUp)
+			{
+				return;
+			}
+			cleanedUp = true;
+			_window.removeEventListener("blur", onBlur);
+			_window.removeEventListener("focus", onFocus);
+			_window.removeEventListener("afterprint", afterPrint);
+
+			// Give the browser a chance to deal, then reset the etemplates
+			_window.setTimeout(() =>
+			{
+				et2_list.forEach(et2 => et2.widgetContainer?.iterateOver(_widget =>
+				{
+					_widget.afterPrint();
+				}, et2, et2_IPrint));
+			}, 100);
+		};
+		const chromium = /Chrome|Chromium|Edg\//.test(_window.navigator.userAgent);
+		const afterPrint = () =>
+		{
+			if(!chromium || !previewBlurred)
+			{
+				cleanup();
+			}
+		};
+		const onBlur = () => {previewBlurred = true;};
+		// Focus returning after the preview blurred means the dialog closed, afterprint is not
+		// reliably fired on cancel in every browser
+		const onFocus = () =>
+		{
+			if(previewBlurred)
+			{
+				cleanup();
+			}
+		};
+
+		try
+		{
+			await Promise.all(deferred);
+		}
+		catch(e)
+		{
+			cleanup();
+			// Rejected without a reason means a print dialog was canceled: do not print
+			if(typeof e == "undefined")
+			{
+				return;
+			}
+		}
+		if(et2_list.length)
+		{
+			_window.addEventListener("blur", onBlur);
+			_window.addEventListener("focus", onFocus);
+			_window.addEventListener("afterprint", afterPrint, {once: true});
+		}
+		_window.setTimeout(_window.print, 0);
 	}
 
 	public async setSidebox(appname, sideboxData, hash)
