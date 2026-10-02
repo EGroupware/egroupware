@@ -506,6 +506,52 @@ describe("MailJmap.getAttachmentViewUrl() - PDF gets wrapped with a real downloa
 		assert.include(html, "navpanes=0");
 	});
 
+	/**
+	 * Ticket #125641 (a customer, relayed by Birgit): suppressing the native PDF viewer's own
+	 * toolbar above also hid its Print icon - Ctrl/Cmd-P and right-click->Print on the <embed>
+	 * itself still worked, just with no visible button for it anymore.
+	 *
+	 * The click handler is deliberately an EXTERNAL `<script src="blob:...">`, never an inline
+	 * onclick/<script> - found live 2026-10-02 testing against boulder.egroupware.org: this app's
+	 * own CSP (no 'unsafe-inline' in script-src) is inherited by a blob: document from whichever
+	 * page created it, so an inline handler silently never runs at all. These tests fetch and
+	 * execute that referenced script directly, the same way a real browser would, rather than
+	 * just grepping the wrapper HTML for a literal "window.print()" string.
+	 */
+	it("shows a Print button wired to an external, CSP-safe <script src> that calls window.print()", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const html = await fetchWrapperHtml(jmap);
+
+		assert.include(html, '<button type="button" id="egwPrintBtn">', "must have a button for the script to attach to");
+		const scriptSrcMatch = html.match(/<script src="(blob:[^"]+)">/);
+		assert.isNotNull(scriptSrcMatch, "Print's click handler must be an external <script src>, not inline (CSP blocks inline in this app)");
+
+		const scriptCode = await fetch(scriptSrcMatch[1]).then(r => r.text());
+		assert.include(scriptCode, "egwPrintBtn");
+		assert.include(scriptCode, "window.print()");
+	});
+
+	it("shows the Print button before the Download link in the toolbar", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const html = await fetchWrapperHtml(jmap);
+
+		assert.isBelow(html.indexOf('id="egwPrintBtn"'), html.indexOf('download="Invoice RE-2026-200.pdf"'),
+			"Print should appear first, matching the order Birgit asked for in the ticket");
+	});
+
+	it("reuses the same Print script blob: URL across multiple PDF wraps, rather than leaking a fresh one each time", async() =>
+	{
+		const jmap1 = new MailJmap(createFakeApp());
+		const html1 = await fetchWrapperHtml(jmap1);
+		const jmap2 = new MailJmap(createFakeApp());
+		const html2 = await fetchWrapperHtml(jmap2);
+
+		const src = (html : string) => html.match(/<script src="(blob:[^"]+)">/)[1];
+		assert.equal(src(html1), src(html2));
+	});
+
 	it("does NOT wrap a non-PDF type - still returns the plain named-File content url directly", async() =>
 	{
 		const jmap = new MailJmap(createFakeApp());

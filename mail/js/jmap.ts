@@ -4716,28 +4716,69 @@ export class MailJmap
 		// complete, unambiguous URL instead.
 		const rawIconUrl = egw.image('fileexport') || '';
 		const downloadIconUrl = escaped(rawIconUrl && !rawIconUrl.match(/^[a-z]+:/i) ? location.origin + rawIconUrl : rawIconUrl);
+		// same origin-prefixing reasoning as downloadIconUrl above - 'print' is the same icon key
+		// mail/src/Compose.php's own toolbar Print action already uses elsewhere in this app.
+		const rawPrintIconUrl = egw.image('print') || '';
+		const printIconUrl = escaped(rawPrintIconUrl && !rawPrintIconUrl.match(/^[a-z]+:/i) ? location.origin + rawPrintIconUrl : rawPrintIconUrl);
 		// #toolbar=0&navpanes=0 suppresses the browser's OWN native PDF viewer chrome entirely (a
 		// long-standing Chrome/PDFium URL-fragment convention, also honoured for blob: content) -
 		// without it, that native toolbar's OWN save/download icon is still visible right next to
 		// ours and LOOKS like the more familiar option, so a user reaches for that one out of habit
 		// and gets the wrong (UUID) name right back - found live 2026-09-15 (ralf, after confirming
 		// the CSP fix worked): "thought I doubt out uses will click on the correct Download link".
-		// Hiding the native chrome leaves our own button the only visible affordance at all.
+		// Hiding the native chrome leaves our own button the only visible affordance at all - but
+		// it ALSO hides that chrome's own Print icon, found live via ticket #125641 (a customer,
+		// relayed by Birgit: "ich denke es spricht aber auch nichts dagegen, einfach zusätzlich dort
+		// auch einen Print-Button mit anzuzeigen, der dann die gleiche Aktion triggert wie der
+		// Rechtsklick" - Ctrl/Cmd-P or right-click->Print on the embed itself still worked all
+		// along, just with no visible button for it anymore). Added one here, right next to
+		// Download - window.print() on this WRAPPER document (not the embed itself, which has no
+		// scriptable print() of its own) still prints the embedded PDF's own pages in Chromium, with
+		// the toolbar itself hidden from the print output via the @media print rule below.
 		const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${safeName}</title>` +
 			`<style>html,body{margin:0;height:100%;font-family:sans-serif}` +
 			`.toolbar{display:flex;align-items:center;gap:10px;height:48px;` +
 			`background:#323639;padding:0 16px;box-sizing:border-box}` +
 			`.toolbar .name{color:#fff;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}` +
-			`.toolbar a{color:#212529;background:#fff;text-decoration:none;font-size:13px;font-weight:600;` +
-			`display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:4px;flex-shrink:0}` +
-			`.toolbar a:hover{background:#e9ecef}` +
-			`.toolbar a img{width:16px;height:16px;display:block}` +
-			`embed{display:block;width:100%;height:calc(100% - 48px);border:0}</style></head>` +
+			`.toolbar a,.toolbar button{color:#212529;background:#fff;text-decoration:none;font-size:13px;font-weight:600;` +
+			`display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:4px;flex-shrink:0;` +
+			`border:0;font-family:inherit;cursor:pointer}` +
+			`.toolbar a:hover,.toolbar button:hover{background:#e9ecef}` +
+			`.toolbar a img,.toolbar button img{width:16px;height:16px;display:block}` +
+			`embed{display:block;width:100%;height:calc(100% - 48px);border:0}` +
+			`@media print{.toolbar{display:none}embed{height:100%}}</style></head>` +
 			`<body><div class="toolbar"><span class="name">${safeName}</span>` +
+			`<button type="button" id="egwPrintBtn"><img src="${printIconUrl}" alt="">${escaped(egw.lang('print'))}</button>` +
 			`<a href="${contentUrl}" download="${safeName}"><img src="${downloadIconUrl}" alt="">${escaped(egw.lang('download'))}</a></div>` +
-			`<embed src="${contentUrl}#toolbar=0&navpanes=0" type="${escaped(mimeType)}"></body></html>`;
+			`<embed src="${contentUrl}#toolbar=0&navpanes=0" type="${escaped(mimeType)}">` +
+			`<script src="${MailJmap.printButtonScriptUrl()}"></script></body></html>`;
 		return URL.createObjectURL(new Blob([html], {type: 'text/html'}));
 	}
+
+	/**
+	 * The Print button's click handler has to live in a SEPARATE <script src="blob:..."> file,
+	 * never an inline onclick/<script> block directly in wrapPdfViewerWithDownload()'s own HTML -
+	 * found live 2026-10-02 testing ticket #125641's fix against boulder.egroupware.org: this
+	 * app's own CSP (`script-src 'self' 'unsafe-eval' blob: ...`, no 'unsafe-inline') is INHERITED
+	 * by a blob: document from whichever page created it (a Chrome-specific behaviour, confirmed
+	 * empirically - an inline onclick/<script> silently never ran at all, no visible error short of
+	 * a CSP violation console message). `blob:` itself IS an allowed script-src value though - a
+	 * SEPARATE blob: URL referenced via `<script src>` loads and runs fine under the exact same
+	 * policy. The handler code is always identical (no per-attachment data baked in), so this is
+	 * memoized once and reused for every wrapped PDF, rather than creating (and never revoking) a
+	 * fresh blob: URL on every single call.
+	 */
+	private static printButtonScriptUrl() : string
+	{
+		if (!MailJmap._printButtonScriptUrl)
+		{
+			const js = `document.getElementById('egwPrintBtn').addEventListener('click', () => window.print());`;
+			MailJmap._printButtonScriptUrl = URL.createObjectURL(new Blob([js], {type: 'text/javascript'}));
+		}
+		return MailJmap._printButtonScriptUrl;
+	}
+
+	private static _printButtonScriptUrl : string | undefined;
 
 	/**
 	 * Revoke previously-created getAttachmentViewUrl() object URLs for a row, eg. before
