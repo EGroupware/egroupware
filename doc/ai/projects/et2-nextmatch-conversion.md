@@ -157,11 +157,16 @@ checklist.
   column).
 - **As a starting point for a real conversion:** `php api/etemplate.php -i <app>/templates/default/<name>.xet`
   now includes this rewrite. It also reformats the file (attribute spacing collapses, `>` becomes
-  `&gt;`, umlauts become `&#xF6;` entities, the `<?xml-model` line goes), so review the diff. Two of
-  its header renames are wrong: `nextmatch-filterheader` comes out as a plain `et2-nextmatch-header`
-  and `nextmatch-accountfilter` as `et2-nextmatch-filter` - make them `et2-nextmatch-header-filter`
-  and `et2-nextmatch-header-account` by hand (Records). It also maps a sortheader's legacy `options=`
-  to `sortmode=`, which is rarely right. Run it in the container (`docker exec -u www-data -w
+  `&gt;`, umlauts become `&#xF6;` entities, the `<?xml-model` line goes), so review the diff. Each
+  legacy header name becomes its own web-component: `nextmatch-header` -> `et2-nextmatch-header`;
+  `nextmatch-filterheader`, `nextmatch-taglistheader` and `nextmatch-filter` -> `et2-nextmatch-header-filter`;
+  `nextmatch-accountfilter` -> `et2-nextmatch-header-account`; `nextmatch-customfilter` with a `type=` ->
+  `et2-nextmatch-header-custom` (without one it is left for the server-side transformer);
+  `nextmatch-entryheader` and `nextmatch-entry` -> `et2-nextmatch-header-entry`; already converted
+  `et2-nextmatch-header-*` are left as they are (`api/tests/Etemplate/ConvertNextmatchHeadersTest.php`).
+  A sortheader's legacy `options=` becomes `sortmode=`, which is what it always meant: the default sort
+  direction, anything but `DESC` sorting ascending. That also happens for an already converted
+  `et2-nextmatch-sortheader` and when serving, as the web-component ignores `options=`. Run it in the container (`docker exec -u www-data -w
   /var/www/egroupware egroupware php api/etemplate.php <path>`); without `-i` it prints the result.
 
 ## Status by app
