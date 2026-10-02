@@ -59,6 +59,12 @@ class admin_db_backup
 	 */
 	function index()
 	{
+		// unlike most other admin_* classes, this one has no ACL check of its own, and includes
+		// setup/db_backup.php, whose own auth check is skipped when run from inside EGroupware
+		if (!isset($GLOBALS['egw_info']['user']['apps']['admin']))
+		{
+			throw new Api\Exception\NoPermission\Admin();
+		}
 		$tpl_root = EGW_SERVER_ROOT.'/setup/templates/default';
 		$self = $GLOBALS['egw']->link('/index.php',array('menuaction'=>'admin.admin_db_backup.index'));
 		Api\Translation::add_app('setup');

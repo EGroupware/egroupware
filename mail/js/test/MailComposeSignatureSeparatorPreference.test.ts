@@ -41,6 +41,8 @@ function fakeIdentity(overrides : Partial<JmapIdentity> = {}) : JmapIdentity
 		textSignature: 'John Doe',
 		htmlSignature: '<p>John Doe</p>',
 		mayDelete: false,
+		isStandard: false,
+		isPersonal: false,
 		...overrides,
 	};
 }

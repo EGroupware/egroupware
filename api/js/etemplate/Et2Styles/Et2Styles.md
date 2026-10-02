@@ -86,11 +86,9 @@ does not need to be inside the `<row>` element. Both inline CSS and `src` are
 supported. A bare filename such as `row.css` resolves beside the `.xet` file that
 contains the row template.
 
-If row-template-local styles are present, `et2-nextmatch` adopts only the
-framework row stylesheet and the extracted row-template styles into the datagrid
-row shadow root. The application's `templates/default/app.css` fallback is not
-added to that shadow root. If no row-template-local `et2-styles` is present,
-`app.css` is still used as the compatibility fallback for row styling.
+`et2-nextmatch` adopts only the framework row stylesheet and the extracted
+row-template styles into the datagrid row shadow root. The application's
+`app.css` is never added to that shadow root.
 
 :::tip
 

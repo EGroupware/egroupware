@@ -63,10 +63,12 @@ Don't skip it silently:
 ## Hidden/backgrounded automation tabs produce fake "stuck" results
 
 See `doc/ai/testing.md`'s "Hidden/backgrounded tabs produce fake UI bugs" section (canonical) - this
-component is a repeat offender there. Not a risk under CI as configured (Playwright runs with
-`concurrency: 1`, genuinely foregrounded), but if a test "hangs" locally, check
-`document.hidden`/`document.visibilityState` on the automation tab before concluding anything is (or
-isn't) broken.
+component is a repeat offender there. Not a risk under the test runner at all, at any concurrency:
+Playwright's headless pages are separate offscreen targets rather than tabs, and measure as
+`visible`/`hasFocus()` with rAF at 60fps even with 8 running at once (see the launcher comment in
+`web-test-runner.config.mjs`). It is a real risk for *hand-driven* browser automation, so if a test
+"hangs" there, check `document.hidden`/`document.visibilityState` on the automation tab before
+concluding anything is (or isn't) broken.
 
 ## Even test-only changes deserve a live, focused-browser spot check
 

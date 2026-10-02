@@ -548,12 +548,14 @@ window.egw_import = (function()
 		{
 			var $main_div = jQuery('#popupMainDiv');
 			let $et2 = jQuery('.et2_container');
+			let $widthNode = $et2;
 			let $layoutTable = jQuery(".et2_container > * > table", $main_div);
 			if ($layoutTable.length && $et2.width() < $layoutTable.width())
 			{
 				// Still using a layout table, and it's bigger.
-				// Use the layout table for width calculation
-				$et2 = $layoutTable;
+				// Use the layout table for width calculation only: its height is the whole unscrolled
+				// content, which grew the popup past the screen (eg. Firefox and InfoLog's print view)
+				$widthNode = $layoutTable;
 			}
 			var w = {
 				width: egw_getWindowInnerWidth(),
@@ -561,7 +563,7 @@ window.egw_import = (function()
 			};
 			// Use et2_container for width since #popupMainDiv is full width, but we still need
 			// to take padding/margin into account
-			var delta_width = w.width - ($et2.outerWidth(true) + ($main_div.outerWidth(true) - $main_div.width()));
+			var delta_width = w.width - ($widthNode.outerWidth(true) + ($main_div.outerWidth(true) - $main_div.width()));
 			var delta_height = w.height - ($et2.outerHeight(true) + ($main_div.outerHeight(true) - $main_div.height()));
 
 			// Don't let the window gets horizental scrollbar
@@ -583,7 +585,7 @@ window.egw_import = (function()
 
 				if (window.framework && typeof window.framework.resize_popup != 'undefined')
 				{
-					window.framework.resize_popup($et2.outerWidth(true), $et2.outerHeight(true), window);
+					window.framework.resize_popup($widthNode.outerWidth(true), $et2.outerHeight(true), window);
 				}
 				else
 				{
@@ -601,6 +603,7 @@ window.egw_import = (function()
 			}
 			$main_div = null;
 			$et2 = null;
+			$widthNode = null;
 			$layoutTable = null;
 		};
 

@@ -13,7 +13,11 @@ const egwStub = {
 	},
 	// a widget with statustext binds a tooltip as soon as it connects
 	tooltipBind: () => {},
-	tooltipUnbind: () => {}
+	tooltipUnbind: () => {},
+	// Et2Date polls for the lang preference for 2.5s when it gets none, inside a 3s test timeout
+	preference: (name : string) => name == "lang" ? "en" : null,
+	ajaxUrl: (url : string) => url,
+	holidays: () => Promise.resolve({})
 };
 window.egw = function() { return egwStub; } as any;
 Object.assign(window.egw, egwStub);
@@ -44,6 +48,7 @@ describe("Et2Customfields webcomponents", () =>
 		await import("../Et2Customfields");
 		await import("../Et2CustomfieldsList");
 		await import("../Et2CustomfieldsFilters");
+		await import("../../Et2Link/Et2LinkEntry");
 		await import("../../Et2Select/Et2Select");
 		await import("../../Et2Select/SelectTypes");
 		await import("../../Et2Textbox/Et2Textbox");
@@ -705,6 +710,63 @@ describe("Et2Customfields webcomponents", () =>
 	});
 
 	/**
+	 * Contract: false as a field's value means empty.  The server sends it for an empty field
+	 * when a submit only re-renders the form, eg. Addressbook's address book change.
+	 * Setup: render an editable date customfield with the value false.
+	 * Pass: the date widget is empty, not the invalid date "false" parses to, which failed
+	 * validation on the next save.
+	 */
+	it("treats false as an empty field value", async() =>
+	{
+		await import("../../Et2Date/Et2Date");
+		const {et2_arrayMgr} = await import("../../et2_core_arrayMgr");
+		const element = await fixture<Et2CustomfieldsBase>(html`
+			<et2-customfields></et2-customfields>
+		`);
+		// the generated widget only stringifies its value when it has content to expand it against
+		(<any>element).setArrayMgr("content", new et2_arrayMgr({}));
+		element.customfields = {cf_date: {label: "Date", type: "date"}};
+		element.fields = {cf_date: true};
+		element.value = {"#cf_date": false};
+		await element.updateComplete;
+		const date = <any>element.querySelector("[data-field='cf_date'] et2-date");
+		await date?.updateComplete;
+
+		assert.exists(date, "date customfield should render an et2-date");
+		assert.equal(date.value, "", "false should leave the date empty");
+	});
+
+	/**
+	 * Contract: a generated field can be found by its id, and is validated before submit.
+	 * The server reports a customfield's validation error under the field's id, and eTemplate
+	 * only validates widgets in its tree - which the generated fields are not.
+	 * Setup: render an empty required text customfield.
+	 * Pass: getWidgetById() finds the field widget, submit() resolves false, and resolves true
+	 * once the field has a value.
+	 */
+	it("finds and validates its generated fields", async() =>
+	{
+		const element = await fixture<Et2CustomfieldsBase>(html`
+			<et2-customfields></et2-customfields>
+		`);
+		element.customfields = {cf_text: {label: "Text", type: "text", needed: true}};
+		element.fields = {cf_text: true};
+		element.value = {"#cf_text": ""};
+		await element.updateComplete;
+		const field = <any>element.querySelector("[data-field='cf_text'] et2-textbox");
+		await field?.updateComplete;
+
+		// compare, rather than assert on the DOM nodes: chai hangs formatting a node for a failure
+		assert.isTrue((<any>element).getWidgetById("#cf_text") === field, "the field widget should be found by its id");
+		assert.isTrue((<any>element).getWidgetById("#cf_missing") === null, "an unknown field should not be found");
+		assert.isFalse(await (<any>element).submit({}), "an empty required field should stop the submit");
+
+		field.value = "filled";
+		await field.updateComplete;
+		assert.isTrue(await (<any>element).submit({}), "a filled required field should let the submit through");
+	});
+
+	/**
 	 * Contract: customfield metadata controls the field list; row values alone do not.
 	 * Setup: assign only a row value and no customfield definitions.
 	 * Pass: no visible field names or field DOM nodes are created.
@@ -784,6 +846,66 @@ describe("Et2Customfields webcomponents", () =>
 		assert.isTrue(select?.multiple, "filter selectbox should be multiple");
 		assertNoElement(element.querySelector("[data-field='cf_text']"), "text customfields should not render as filters");
 		assertNoElement(element.querySelector("[data-field='cf_file']"), "filemanager customfields should not render as filters");
+	});
+
+	/**
+	 * Contract: a filter box sets the customfield filters the way legacy did, one `{"#name": value}`
+	 * map through set_value() - that is how clearing the filters and applying a favourite reach them,
+	 * and a field missing from the map is emptied.
+	 * Setup: render a select filter, set it, then set an empty map.
+	 * Pass: getValue() reports the value set, then nothing.
+	 */
+	it("takes its filters from set_value(), and empties those left out", async() =>
+	{
+		const element = await fixture<any>(html`
+			<et2-customfields-filters></et2-customfields-filters>
+		`);
+		element.customfields = {cf_select: {label: "Select", type: "select", values: {open: "Open", closed: "Closed"}}};
+		await element.updateComplete;
+
+		element.set_value({"#cf_select": ["open"]});
+		await element.updateComplete;
+		assert.deepEqual(element.getValue()["#cf_select"], ["open"], "set_value() should reach the filter");
+
+		element.set_value({});
+		await element.updateComplete;
+		assert.isEmpty(element.getValue()["#cf_select"], "a filter missing from the map should be emptied");
+	});
+
+	/**
+	 * Contract: once we are updated, getValue() reports what was set - including from an entry
+	 * filter limited to one app, which keeps reporting its old entry until it has re-rendered.
+	 * A filter box clearing the filters applies whatever getValue() says as soon as we are done.
+	 * Setup: render an app-backed filter, select an entry, then clear it.
+	 * Pass: getValue() is empty as soon as updateComplete resolves.
+	 */
+	it("is not updated until its entry filters have caught up", async() =>
+	{
+		const linkAppList = egwStub.link_app_list;
+		egwStub.link_app_list = () => ({tracker: "Tracker"});
+		try
+		{
+			const element = await fixture<any>(html`
+				<et2-customfields-filters></et2-customfields-filters>
+			`);
+			element.customfields = {cf_ticket: {label: "Ticket", type: "tracker"}};
+			await element.updateComplete;
+			const entry = element.querySelector("[data-field='cf_ticket'] > *") as any;
+			assert.equal(entry?.localName, "et2-link-entry", "an app-backed customfield filters by entry");
+			assert.equal(entry.onlyApp, "tracker", "limited to its app");
+
+			element.set_value({"#cf_ticket": "174"});
+			await element.updateComplete;
+			assert.equal(element.getValue()["#cf_ticket"], "174", "the entry should be selected");
+
+			element.set_value({});
+			await element.updateComplete;
+			assert.equal(element.getValue()["#cf_ticket"], "", "clearing must have landed once we are updated");
+		}
+		finally
+		{
+			egwStub.link_app_list = linkAppList;
+		}
 	});
 
 	it("supports type_filter previous across widget instances", async() =>

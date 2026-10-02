@@ -170,6 +170,31 @@ body {
 `;
 }
 
+/**
+ * Client-side mirror of Api\Framework::defaultFontCss() (api/src/Framework.php) - same
+ * rte_font/rte_font_size/rte_font_unit preferences, same "plain properties on a class so any
+ * font already present in the content simply overrides it via cascade/inheritance" approach.
+ * Used by mail/js/jmap.ts's wrapDocument() to give the JMAP-native srcdoc iframe a default font,
+ * without a round-trip to the PHP version - the preference is already available client-side.
+ *
+ * Also targets a `pre` inside the class (plain-text mail's own wrapping element, textToHtml()):
+ * the browser's UA stylesheet sets `pre{font-family:monospace}` directly ON that element, which
+ * otherwise wins over our class's value even though it only reaches `pre` via inheritance from an
+ * ancestor - a rule matching an element directly always beats an inherited value, regardless of
+ * specificity.
+ */
+export function defaultFontCssRule(className : string = "mailDefaultFont", preference : PreferenceGetter = egw.preference.bind(egw)) : string
+{
+	const styles = paragraphStyles(preference);
+	// no quotes allowed: an unbalanced one in the raw preference value would otherwise swallow the
+	// rest of the CSS text - an unquoted multi-word name (eg. "Segoe UI") is still valid CSS
+	const fontFamily = String(styles["font-family"] || "").replace(/[^a-zA-Z0-9 ,._-]/g, "") || "arial, helvetica, sans-serif";
+	const fontSize = String(styles["font-size"] || "").replace(/[^0-9a-zA-Z%.]/g, "") || "10pt";
+	const safeClass = className.replace(/[^a-zA-Z0-9_-]/g, "");
+
+	return `.${safeClass},.${safeClass} pre{font-family:${fontFamily};font-size:${fontSize};}`;
+}
+
 export function htmlAreaFormats(preference : PreferenceGetter = egw.preference.bind(egw)) : NonNullable<TinyMceConfig["formats"]>
 {
 	const styles = paragraphStyles(preference);
@@ -180,9 +205,15 @@ export function htmlAreaFormats(preference : PreferenceGetter = egw.preference.b
 			remove: "all",
 			styles
 		},
+		// ticket #125241: missing `styles` here (unlike "p" above) meant selecting "Small
+		// Paragraph" (BLOCK_FORMATS' own div=p alias) from the toolbar never applied the user's
+		// preferred font/size live in the editor, unlike a plain paragraph - _applyDefaultFontToContent()
+		// would still inline it retroactively on submit (its own selector already includes "div"),
+		// but only once that runs at all (see compose.ts's own getValue(true) fix, same ticket).
 		div: {
 			block: "div",
-			remove: "all"
+			remove: "all",
+			styles
 		}
 	};
 }

@@ -1,0 +1,14 @@
+/**
+ * EGroupware Resources - styles for the mobile resource list rows
+ *
+ * Loaded into the list's row shadow DOM by <et2-styles src="rows.css"> in show.xet,
+ * app.css does not reach the rows.
+ */
+.resource_name {
+	font-weight: bold;
+}
+.resource_name, .resource_ellipsis {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}

@@ -367,6 +367,17 @@ class Imap extends Jmap\Base
 			}
 			catch (\Throwable $e)
 			{
+				// ticket #125161: a "serverFail" JMAP method-error is normal JMAP protocol shape,
+				// not treated as a PHP-level exception anywhere above this - so unlike every
+				// app-level exception boundary (Api\Json\Request, json.php, egw_exception_handler),
+				// NOTHING logged this at all, even though its raw, untranslated $e->getMessage()
+				// (eg. a Horde_Imap_Client_Exception's own RFC 5530 NONEXISTENT response text, worded
+				// "could not be deleted" regardless of which underlying IMAP command actually failed)
+				// still reaches the client verbatim via `description`. A real customer's forwards were
+				// consistently failing this way with nothing in the error log to explain why - logged
+				// here now, so the NEXT occurrence shows exactly which method/underlying exception it
+				// actually was.
+				_egw_log_exception($e);
 				$responses[] = ['error', ['type' => 'serverFail', 'description' => $e->getMessage()], $callId];
 			}
 		}
@@ -899,11 +910,34 @@ class Imap extends Jmap\Base
 			// without it, an account with hundreds of folders (the exact case this whole-account
 			// mode exists for, see the subscribe-management popup) would need hundreds of
 			// separate STATUS round-trips just to render the popup.
-			$list = [];
-			foreach ($imap->listMailboxes('*', \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, [
+			$listOptions = [
 				'attributes' => true, 'special_use' => true, 'children' => true,
 				'status' => \Horde_Imap_Client::STATUS_MESSAGES | \Horde_Imap_Client::STATUS_UNSEEN,
-			]) as $mailboxName => $info)
+			];
+			try
+			{
+				$infos = $imap->listMailboxes('*', \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, $listOptions);
+			}
+			catch (\Throwable $e)
+			{
+				// Ticket #125161 (2026-10-01): the same "one broken mailbox poisons Horde's whole
+				// batched LIST-STATUS call" issue #125081 already fixed for the explicit-ids
+				// branch below, but for a full-account '*' scan there's no finite set of names to
+				// retry individually - a real customer's own Dovecot threw "Mailbox doesn't
+				// exist" computing STATUS for one genuinely-subscribed folder (a server-side
+				// consistency issue, not anything EGroupware itself did), aborting EVERY
+				// full-account scan - and therefore anything that triggers one (confirmed live:
+				// this broke SENDING mail, via whatever post-send folder-tree refresh calls this
+				// with ids:null). Retry the scan once more without 'status' - mailboxNode()
+				// already fetches status per-mailbox itself when none was pre-supplied, with its
+				// own matching graceful-failure handling (leaves zero counts rather than
+				// throwing) - so one still-broken folder's STATUS only costs that one folder its
+				// counts instead of taking the whole list down again.
+				unset($listOptions['status']);
+				$infos = $imap->listMailboxes('*', \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, $listOptions);
+			}
+			$list = [];
+			foreach ($infos as $mailboxName => $info)
 			{
 				$list[] = self::mailboxNode($imap, $mailboxName, (array)($info['attributes'] ?? []), $info['status'] ?? null);
 			}
@@ -3024,6 +3058,59 @@ class Imap extends Jmap\Base
 	 * something this codebase's own client ever sends, so isn't supported here - fails with
 	 * invalidProperties instead of guessing a fallback mailbox.
 	 */
+	/**
+	 * Client-facing (and, via $e->details, server-log-facing) description for a failed
+	 * EmailSubmission/set create - ticket #125201 (a real customer, "Mailbox unavailable"
+	 * stalling a large-distribution-list send).
+	 *
+	 * Horde_Smtp_Exception (Postfix's own SMTP transport, used by the shim's send - see
+	 * buildMailerFromEmailProperties()/$mailer->send(), emailSubmissionSet() above) replaces the
+	 * SERVER's own specific response text with a generic one keyed purely off the numeric SMTP
+	 * code (eg. ANY 450 becomes the same bare "Mailbox unavailable.", regardless of Postfix's real
+	 * reason) - getMessage() only ever returns that generic text, but the real, specific response
+	 * Postfix actually sent survives on the exception's own raw_msg property, unused anywhere in
+	 * this codebase until now. Preferred here (both for the client-facing description, and for the
+	 * server log via $e->details, which _egw_log_exception() also logs when set) - either one
+	 * alone previously showed nothing more useful than "Mailbox unavailable.".
+	 */
+	private static function describeSendException(\Throwable $e) : string
+	{
+		$description = $e->getMessage();
+		// $e->details FIRST, not just a direct Horde_Smtp_Exception check: the exception actually
+		// reaching here is near-always a WRAPPED one (Horde_Mime_Part::send()'s own
+		// Horde_Mime_Exception(new Horde_Mail_Exception($smtpException))) - Horde_Exception_Wrapped
+		// (both Horde_Mail_Exception and Horde_Mime_Exception extend it) copies the wrapped
+		// exception's OWN ->details forward into itself at construction time, so this works
+		// regardless of how many layers of wrapping actually happened; a bare Horde_Smtp_Exception
+		// (never wrapped at all) would have no ->details of its own, hence the raw_msg fallback.
+		//
+		// NOT empty($e->raw_msg)/isset($e->raw_msg) for THAT fallback: Horde_Exception exposes
+		// raw_msg only via __get(), with no matching __isset() - empty()/isset() special-case a
+		// magic property to call __isset() first and treat it as "not set" (without ever calling
+		// __get() at all) when that's missing, regardless of what direct access would actually
+		// return. Found live writing this fix's own test: empty($e->raw_msg) was unconditionally
+		// true even though $e->raw_msg itself printed the real string right below it.
+		// instanceof \Horde_Exception guards BOTH property reads below - a plain \Exception/\Error
+		// (this is a general catch(\Throwable), not Horde-specific) has neither ->details nor
+		// ->raw_msg declared at all, and PHP 8.2+ warns on accessing an undeclared property.
+		$rawMsg = null;
+		if ($e instanceof \Horde_Exception && $e->details)
+		{
+			$rawMsg = $e->details;
+		}
+		elseif ($e instanceof \Horde_Smtp_Exception)
+		{
+			$rawMsg = $e->raw_msg;
+		}
+		if ($rawMsg)
+		{
+			$description = $rawMsg;
+			$e->details = $rawMsg;
+		}
+		_egw_log_exception($e);
+		return $description;
+	}
+
 	public static function emailSubmissionSet(string $accountId, array $args) : array
 	{
 		$created = [];
@@ -3106,7 +3193,35 @@ class Imap extends Jmap\Base
 					continue;
 				}
 
+				// Ticket #125161 follow-up (Noje, live: warning box shown but mail still sent with
+				// a blank subject) - defense-in-depth, independent of whatever client-side mechanism
+				// is letting a MailCompose.hasNoSubject()/hasNoRecipientsAtAll() check through (see
+				// those methods' own docblocks in mail/js/compose.ts) - this is the ONE place every
+				// shim submission passes through regardless of how it got here, so it's the only
+				// place a check can't be bypassed (a real Stalwart account never reaches this class
+				// at all for its own EmailSubmission/set - see the 'blobId' comment further below -
+				// so this only ever protects shim/classic-IMAP accounts, exactly Noje's own). Mirrors
+				// the classic, deleted mail_compose::send()'s own hard block (git show 3bca66cf01) for
+				// the same two cases. Recipients already get a de-facto backstop from the SMTP server
+				// itself refusing DATA with zero accepted RCPT TO's (the "valid RCPT command must
+				// precede DATA" error that started this ticket) - but an empty Subject header is
+				// perfectly valid SMTP, so nothing would ever catch that case server-side without an
+				// explicit check like this one.
+				if (self::hasNoRecipientsAtAll($email))
+				{
+					$notCreated[$creationId] = ['type' => 'invalidProperties', 'properties' => ['to'],
+						'description' => lang('No recipient address given!')];
+					continue;
+				}
+				if (self::hasNoSubject($email))
+				{
+					$notCreated[$creationId] = ['type' => 'invalidProperties', 'properties' => ['subject'],
+						'description' => lang('No subject supplied')];
+					continue;
+				}
+
 				$mailer = self::buildMailerFromEmailProperties($accountId, (array)$email);
+
 				// a genuinely-signed draft (see smimeEncryptEmailProperties()'s own TYPE_SIGN
 				// docblock - the Email/import path used to create such a draft in the first place)
 				// must be sent/stored with its EXACT stored body bytes, never rebuilt from
@@ -3190,11 +3305,26 @@ class Imap extends Jmap\Base
 					// for its own EmailSubmission/set at all (real passthrough, see class docblock),
 					// so this key is simply absent from its response - MailJmap.sendNewEmail() falls
 					// back to the (safe-for-Stalwart) fetchRawSource(rowId) path when it's missing.
-					'blobId' => $rawBlobId];
+					'blobId' => $rawBlobId,
+					// ticket #125201 - another shim-only extension: Api\Mailer::send()'s own
+					// $failedRecipients (address => reason), non-empty only when send() itself
+					// already recovered from a partial rejection (some, not all, recipients bounced
+					// at SMTP time) by retrying without them - see that property's own docblock.
+					// The message DID go out successfully to everyone else; this just lets
+					// MailJmap.sendNewEmail() tell the user which addresses did NOT get it, instead
+					// of the send silently "succeeding" with no indication some recipients never
+					// received anything at all.
+					'failedRecipients' => (object)$mailer->failedRecipients];
 			}
 			catch (\Throwable $e)
 			{
-				$notCreated[$creationId] = ['type' => 'serverFail', 'description' => $e->getMessage()];
+				// ticket #125201 follow-up (a real customer, "Mailbox unavailable" stalling a
+				// large-distribution-list send): local to this method, never reaches dispatch()'s
+				// own catch (Imap::dispatch()'s own _egw_log_exception() fix does NOT cover this
+				// site) - logged here too, so a genuine mail-submission failure isn't silently
+				// invisible server-side either. See describeSendException()'s own docblock for why
+				// Horde_Smtp_Exception needs special handling.
+				$notCreated[$creationId] = ['type' => 'serverFail', 'description' => self::describeSendException($e)];
 			}
 		}
 
@@ -3205,6 +3335,27 @@ class Imap extends Jmap\Base
 			'created' => (object)$created,
 			'notCreated' => (object)$notCreated,
 		];
+	}
+
+	/**
+	 * emailSubmissionSet()'s own no-recipients guard, extracted purely so it's directly unit-
+	 * testable (same reasoning as its JS mirror, MailCompose.hasNoRecipientsAtAll()) - a JMAP
+	 * Email object's 'to'/'cc'/'bcc' properties are each either absent or a list of
+	 * {name, email} objects (never a raw string, unlike the client-side widget values that other
+	 * method has to deal with).
+	 */
+	private static function hasNoRecipientsAtAll(array $email) : bool
+	{
+		$hasAny = static fn(array $addresses) : bool => (bool)array_filter($addresses, static fn($a) => !empty($a['email']));
+		return !$hasAny((array)($email['to'] ?? []))
+			&& !$hasAny((array)($email['cc'] ?? []))
+			&& !$hasAny((array)($email['bcc'] ?? []));
+	}
+
+	/** emailSubmissionSet()'s own no-subject guard - see hasNoRecipientsAtAll()'s own docblock. */
+	private static function hasNoSubject(array $email) : bool
+	{
+		return trim((string)($email['subject'] ?? '')) === '';
 	}
 
 	/**
@@ -3266,6 +3417,17 @@ class Imap extends Jmap\Base
 	 * of disposition), both of which the classic per-row flag always treated as "has an
 	 * attachment".
 	 *
+	 * Live report 2026-09-29 (ralf, copying an NDN bounce from the real-JMAP/Stalwart test account
+	 * into a plain-IMAP one): the copy's own .eml (message/rfc822) part - and its sibling
+	 * message/delivery-status part - never showed up as an attachment at all when viewed via the
+	 * shim, unlike the original viewed via Stalwart. Root cause: a genuine NDN's own sub-parts
+	 * typically carry NO Content-Disposition header at all (empty, not 'attachment') - missing
+	 * here, this method always returned false for them, so app.ts's own "only bother resolving the
+	 * full attachmentsBlock when the row already flagged hasAttachment" optimization
+	 * (renderMessageInto()) never even tried, even though emailBodyFields()'s own 'attachments'
+	 * list (built once a message IS actually opened) already correctly includes such a part via
+	 * this exact same "no disposition + not multipart/text" default - added here too, to match.
+	 *
 	 * @param \Horde_Mime_Part $structure
 	 * @return bool
 	 */
@@ -3279,7 +3441,8 @@ class Imap extends Jmap\Base
 			if ($partDisposition === 'attachment' ||
 				($partDisposition === 'inline' && $partPrimaryType === 'image' && $part->getType() === 'image/tiff') ||
 				($partDisposition === 'inline' && $partPrimaryType === 'image' && !$part->getContentId()) ||
-				($partDisposition === 'inline' && $partPrimaryType !== 'image' && $partPrimaryType !== 'multipart' && $partPrimaryType !== 'text'))
+				($partDisposition === 'inline' && $partPrimaryType !== 'image' && $partPrimaryType !== 'multipart' && $partPrimaryType !== 'text') ||
+				(empty($partDisposition) && $partPrimaryType !== 'multipart' && $partPrimaryType !== 'text'))
 			{
 				return true;
 			}
@@ -3535,13 +3698,35 @@ class Imap extends Jmap\Base
 		$htmlId = $structure->findBody('html');
 
 		$attachments = [];
+		// a message/rfc822 attachment (eg. forward-as-attachment) is ONE opaque attachment - its
+		// own internal structure (headers/body/sub-parts, walked by partIterator() below same as
+		// everything else) must not ALSO be listed as separate top-level attachments of the
+		// CONTAINING message. Found live 2026-09-25 (ralf): a forwarded GitHub notification's
+		// popup listed its own text/plain and text/html alternative parts as "Unknown_Part2.1.txt"/
+		// "Unknown_Part2.2.htm" alongside the real .eml attachment. Mirrors Mail::
+		// getMessageAttachments()'s own classic $skipParts handling for the exact same case.
+		$skipParts = [];
 		foreach ($structure->partIterator() as $part)
 		{
 			/** @var \Horde_Mime_Part $part */
 			$id = $part->getMimeId();
+			if (isset($skipParts[$id]))
+			{
+				continue;
+			}
 			if ($part->getPrimaryType() === 'multipart' || $id === $textId || $id === $htmlId)
 			{
 				continue;
+			}
+			if ($part->getPrimaryType() === 'message')
+			{
+				foreach ($part->contentTypeMap() as $subId => $subType)
+				{
+					if ($subId !== $id)
+					{
+						$skipParts[$subId] = true;
+					}
+				}
 			}
 			$attachments[] = self::bodyPartToJmap($part, $mailbox, $uid);
 		}
@@ -3849,6 +4034,20 @@ class Imap extends Jmap\Base
 	 * server-side JMAP-native S/MIME/TNEF resolvers (Imap\Jmap for Stalwart, this class for the
 	 * local shim - see plan) fetching a part in-process, no HTTP round trip needed.
 	 *
+	 * Deliberately does NOT ask the server to decode the part (no 'decode' fetch option) - ticket
+	 * #125561 (a message/rfc822 attachment, re-fetched by emailSubmissionSet()'s own "rebuild the
+	 * mailer from the just-saved draft" flow, arrived at the actual send still base64-encoded,
+	 * never decoded): root-caused to Horde_Imap_Client_Socket's own BINARY-fetch fallback (see its
+	 * "Dovecot bug ... try again with non-decoded body" comment) - when the server can't/won't
+	 * server-side-decode a part (Dovecot correctly refuses for message/rfc822 declaring base64,
+	 * since RFC 2046 [5.2.1] permits only 7bit/8bit/binary there), Horde silently retries WITHOUT
+	 * decoding and labels the STILL-ENCODED raw bytes it got back with the exact same generic
+	 * '8bit' it uses for a genuinely successful decode - the two cases are indistinguishable from
+	 * the returned $data->getBodyPartDecode() value alone. Fetching the part's own MIME header
+	 * (its literal declared Content-Transfer-Encoding, always reliable - unlike Horde's post-hoc
+	 * label) and decoding client-side ourselves sidesteps the whole negotiation, for every part
+	 * type, not just message/rfc822.
+	 *
 	 * @param \Horde_Imap_Client_Socket $imap
 	 * @param string $mailbox
 	 * @param string $uid
@@ -3859,7 +4058,8 @@ class Imap extends Jmap\Base
 	{
 		$query = new \Horde_Imap_Client_Fetch_Query();
 		$query->structure();
-		$query->bodyPart($partId, ['decode' => true, 'peek' => true]);
+		$query->bodyPart($partId, ['peek' => true]);
+		$query->mimeHeader($partId, ['peek' => true]);
 		$results = $imap->fetch($mailbox, $query, [
 			'ids' => new \Horde_Imap_Client_Ids([(int)$uid]),
 		]);
@@ -3868,9 +4068,7 @@ class Imap extends Jmap\Base
 		{
 			return null;
 		}
-		// same transfer-decode recipe as fetchBodyValue()
 		$raw = (string)$data->getBodyPart($partId);
-		$encoding = $data->getBodyPartDecode($partId);
 		$part = $data->getStructure()->getPart($partId);
 		if (!$part)
 		{
@@ -3883,6 +4081,33 @@ class Imap extends Jmap\Base
 			// "Call to a member function setContents() on null", same root-cause shape as preview()'s
 			// own getPart() miss (fixed earlier this session).
 			return null;
+		}
+		$mimeHeaders = $data->getMimeHeader($partId, \Horde_Imap_Client_Data_Fetch::HEADER_PARSE);
+		$cte = $mimeHeaders ? $mimeHeaders['content-transfer-encoding'] : null;
+		$encoding = $cte ? $cte->value : '7bit';
+		// A real delivery round trip (SMTP send -> external relay -> re-delivery into our own
+		// INBOX) can strip the Content-Transfer-Encoding header itself, not just refuse to act
+		// on it - found live 2026-09-29 (ticket #125561's own follow-up): the SENT copy (verified
+		// right after sending, never relayed) correctly had "Content-Transfer-Encoding: base64"
+		// on this exact part, but the delivered INBOX copy of the very same message had NO such
+		// header at all - some hop along the path evidently treats it as invalid (correctly, per
+		// RFC 2046 [5.2.1]) and removes it rather than leaving it for the recipient to see. When
+		// that happens there is no header left to trust at all, from ANY IMAP-level
+		// introspection (this one, Horde's own BINARY-decode negotiation, or Dovecot's own
+		// BODYSTRUCTURE) - only the bytes themselves are still real evidence. A message/rfc822
+		// part's body is never legitimately base64 UNLESS Rfc822AttachmentPart put it there (see
+		// its own docblock) - real MIME text (headers, boundaries) never happens to consist
+		// entirely of the base64 alphabet, so this is a safe, narrow heuristic, not a general
+		// "guess the encoding" mechanism.
+		if ($encoding === '7bit' && $part->getType() === 'message/rfc822' && $raw !== ''
+			&& preg_match('/^[A-Za-z0-9+\/=\s]+$/', $raw)
+			&& ($decoded = base64_decode($raw, true)) !== false
+			&& preg_match('/^[!-9;-~]+:[ \t].*?\r?\n\r?\n/s', $decoded))
+		{
+			// already decoded ourselves above - 'binary' is a pure pass-through label here (never
+			// re-decode $decoded, unlike passing 'base64' would)
+			$encoding = 'binary';
+			$raw = $decoded;
 		}
 		$part->setContents($raw, ['encoding' => $encoding]);
 		return $part->getContents();
@@ -4695,9 +4920,65 @@ class Imap extends Jmap\Base
  * list once actually delivered. This re-adds JUST that one header, reusing the exact same header
  * object setDisposition()/setDispositionParameter() already populated (never rebuilt from
  * scratch) - used ONLY for message/rfc822 attachments, via Imap::addAttachmentPart().
+ *
+ * Ticket #125561 (a real customer, forwarding a message with inline/attached images as a
+ * message/rfc822 attachment): the CARRIED message's own raw bytes are embedded byte-for-byte
+ * (setContents() in addAttachmentPart() above) - when the original had ANY part using
+ * Content-Transfer-Encoding: binary or 8bit (a real image attachment commonly does, since Horde
+ * itself defaults new attachments to 'binary', see DEFAULT_ENCODING), those raw non-7bit-clean
+ * bytes end up inside THIS wrapper part with NO Content-Transfer-Encoding header at all - RFC
+ * 2045 [6.1]'s default when the header is omitted is '7bit', a claim the actual bytes flatly
+ * contradict. A strictly-conformant downstream MUA/relay re-serializing or re-validating the
+ * message is then entitled to treat it as 7bit text and strip/mangle any byte >= 0x80 or NUL -
+ * exactly the "images corrupted, 0x00 bytes missing" the reporter found. addMimeHeaders()'s early
+ * return for message/* skips computing this entirely.
+ *
+ * First fix attempt (kept declaring 8bit/binary, RFC 2046 [5.2.1]'s own allowed labels for a
+ * message/rfc822 body, and left the bytes untouched - matching how every OTHER part type's
+ * Content-Transfer-Encoding already works) turned out insufficient: live-verified 2026-09-29
+ * against a real customer .eml AND the user's own reproduction that even with the correct header
+ * now present, the embedded image's bytes themselves arrived corrupted - every NUL byte replaced
+ * by the overlong-UTF8 encoding of U+0000 (\xc0\x80), the textbook signature of something along
+ * the delivery path "fixing up" what it assumed was mis-encoded text. That declared encoding is
+ * what triggers BINARYMIME/8BITMIME (RFC 3030 BDAT/CHUNKING) transport in the first place - not
+ * reliable through every relay/milter apparently in this environment's path. Declaring base64
+ * instead sidesteps the whole problem: the wire bytes are guaranteed plain 7bit ASCII, so no
+ * relay ever has a reason to "fix" anything, and no 8BITMIME/BINARYMIME extension is needed at
+ * all - exactly how every normal (non-message) attachment is already sent. This IS a deliberate
+ * RFC 2046 [5.2.1] violation ("no encoding other than 7bit, 8bit, or binary is permitted for the
+ * body of a message/rfc822 entity") - accepted pragmatically since a decoder only needs to
+ * base64-decode before parsing the carried message, exactly as for any other encoded part, and
+ * real-world mail software tolerates this widely in practice.
+ *
+ * Unlike 7bit/8bit/binary, base64 actually transforms the bytes - and Horde_Mime_Part::toString()
+ * has its own hard-coded "$ptype == 'message'" branch that emits $this->_contents verbatim,
+ * bypassing _transferEncode() (and therefore whatever Content-Transfer-Encoding gets declared)
+ * entirely, for every message/* part regardless of subclass. So the encoding has to happen here,
+ * up front in setContents() itself, storing the already-encoded bytes as this part's own
+ * "contents" - there's no later hook where Horde would do it for us.
  */
 class Rfc822AttachmentPart extends \Horde_Mime_Part
 {
+	/**
+	 * @var bool true once setContents() had to base64-encode non-7bit-clean content - see this
+	 *  class's own docblock for why that can't be left to Horde's normal per-type encoding step
+	 */
+	private bool $rfc822Base64Encoded = false;
+
+	public function setContents($contents, $options = array())
+	{
+		parent::setContents($contents, $options);
+
+		$this->rfc822Base64Encoded = false;
+		if (!empty($this->_contents) && $this->_scanStream($this->_contents) !== false)
+		{
+			$encoded = $this->_transferEncode($this->_contents, 'base64');
+			fclose($this->_contents);
+			$this->_contents = $encoded;
+			$this->rfc822Base64Encoded = true;
+		}
+	}
+
 	public function addMimeHeaders($options = array())
 	{
 		$headers = parent::addMimeHeaders($options);
@@ -4705,6 +4986,10 @@ class Rfc822AttachmentPart extends \Horde_Mime_Part
 		if (!$cd->isDefault())
 		{
 			$headers->addHeaderOb($cd);
+		}
+		if ($this->rfc822Base64Encoded)
+		{
+			$headers->addHeaderOb(new \Horde_Mime_Headers_ContentTransferEncoding(null, 'base64'));
 		}
 		return $headers;
 	}

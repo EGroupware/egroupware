@@ -60,6 +60,12 @@ export class Et2Customfields extends Et2CustomfieldsBase implements Et2LayoutHos
 	@property({type: String})
 	prefix : string = CUSTOMFIELD_PREFIX;
 
+	/** The values are keyed the way we submit them, so importexport's filter finds its own again. */
+	protected get valuePrefix() : string
+	{
+		return this.prefix ?? CUSTOMFIELD_PREFIX;
+	}
+
 	/**
 	 * Show the customfields as text rather than as inputs.
 	 *
@@ -207,9 +213,55 @@ export class Et2Customfields extends Et2CustomfieldsBase implements Et2LayoutHos
 		return valid;
 	}
 
+	/**
+	 * et2_ISubmitListener: validate the generated fields before the form is submitted.
+	 *
+	 * The eTemplate only asks widgets in its tree, which our field widgets are not, so without
+	 * this eg. an empty required customfield went to the server and came back as an error, instead
+	 * of being shown right away.  Resolving false makes eTemplate open our tab.
+	 *
+	 * @param _values The values about to be submitted.
+	 */
+	async submit(_values) : Promise<boolean>
+	{
+		const results = await Promise.all(Object.values(this.widgets)
+			.filter((widget) => typeof widget?.submit === "function" && widget.readonly !== true)
+			.map((widget) => widget.submit(_values)));
+		return results.every((ok) => ok !== false);
+	}
+
+	/**
+	 * Find a widget by id, including the field widgets we generated.
+	 *
+	 * The server reports a customfield's validation error under the field's own id, eg. "#date",
+	 * and the error is shown by looking that id up in the widget tree.  Our field widgets are not
+	 * in the tree, so without this the lookup finds nothing, the error only reaches the console
+	 * and the user is left with a form that silently does not save.
+	 */
+	getWidgetById(_id)
+	{
+		const found = super.getWidgetById(_id);
+		if(found || typeof _id !== "string" || !_id.startsWith(this.prefix))
+		{
+			return found;
+		}
+		const widget = this.widgets[_id.substring(this.prefix.length)];
+		return widget?.id === _id ? widget : null;
+	}
+
+	/**
+	 * The value to give a field's widget.
+	 *
+	 * Customfields::validate() turns an empty field into false, because the storage backend needs
+	 * that to clear it.  Content that goes back to the client without being saved, eg. after a
+	 * submit that only re-renders the form, still holds that false.  Handed to a widget as an
+	 * attribute it becomes the string "false", which a date field reads as an invalid date that
+	 * then fails validation on the next save, so treat it as empty.
+	 */
 	private _fieldValue(fieldName : string)
 	{
-		return this.value?.[this.prefix + fieldName] ?? this.value?.[fieldName] ?? "";
+		const value = this.value?.[this.prefix + fieldName] ?? this.value?.[fieldName];
+		return value === false || value === null || typeof value === "undefined" ? "" : value;
 	}
 
 	private _fieldWidgetMappings(fieldName : string, field : Record<string, any>, value : any, onlyField : boolean) : Et2CustomfieldWidgetMapping[]
@@ -222,6 +274,20 @@ export class Et2Customfields extends Et2CustomfieldsBase implements Et2LayoutHos
 			// Our own label names the field only when it is the only one we show
 			label: onlyField && this.label ? this.label : undefined
 		});
+		// Attributes the server set for one field, under our id - eg. importexport's filter makes its
+		// selects multiple and gives its date ranges an empty label.  The legacy widget's fields were
+		// widget-tree children and found these themselves; ours are not, so hand them over here.
+		const fieldModifications = this.id ? this.getArrayMgr("modifications")?.getEntry(this.id)?.[this.prefix + fieldName] : null;
+		if(mappings[0] && fieldModifications && typeof fieldModifications === "object")
+		{
+			for(const [name, value] of Object.entries(fieldModifications))
+			{
+				if(value !== null && typeof value !== "undefined")
+				{
+					mappings[0].attrs[name] = value;
+				}
+			}
+		}
 		// The file dialog opens in whichever mode the upload beside it accepts
 		const upload = mappings[0];
 		const select = mappings.find((m) => m.tagName === "et2-vfs-select");

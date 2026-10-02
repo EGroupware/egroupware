@@ -159,7 +159,7 @@ Worth knowing, because each of these is a nextmatch feature someone may expect:
 |---|---|---|
 | `columns` | `user_ts,owner,status,new_value,old_value` | Which columns to show. Unlisted ones are hidden, not removed - they stay available in the column chooser. |
 | `status_id` | `status` | Id for the "Changed" column's widget. Move it if the surrounding dialog already has a widget called `status`; calendar does. Must not equal the history log's own id. |
-| `lazy` | `true` | Wait for the tab to be shown before loading. |
+| `lazy` | `true` | Wait until it is actually displayed before loading - an unopened tab, or anything else hiding it. |
 | `auto-height` | `false` | Grow to fit rows instead of scrolling internally. |
 | `get_rows` | `Api\Storage\History::get_rows` | Row source. Read server-side from the template only. |
 

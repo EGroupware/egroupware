@@ -57,6 +57,10 @@ installation, and anything else is used as given.
 <et2-description href="https://www.egroupware.org" value="The EGroupware website"></et2-description>
 ```
 
+Links, from `href`, `activateLinks` or markdown, are shown in the primary colour without underline.
+Any app rule for `a` inside the description overrides that, eg. `.myRow et2-description a { color: inherit; }`
+to give a linked title the row's colour.
+
 `extraLinkTarget` sets the target (default `_browser`), and `extraLinkPopup` - a `widthxheight`
 string such as `640x480` - opens the link in a popup window instead of a tab. Neither is shown live
 here, because both would spawn a window while you are reading.

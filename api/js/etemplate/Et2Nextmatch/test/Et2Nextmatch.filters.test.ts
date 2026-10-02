@@ -1788,4 +1788,68 @@ describe("Et2Nextmatch expandable child grid wiring", () =>
 			el.remove();
 		}
 	});
+
+	/**
+	 * Contract under test:
+	 * - `printOptions` prints without asking: no print dialog, the preset columns,
+	 *   orientation and row count, and nothing saved as print preference.
+	 * - `columns: "all"` includes columns the user has hidden.
+	 */
+	describe("printOptions", () =>
+	{
+		let el : Et2Nextmatch;
+		let complete : sinon.SinonStub;
+		let setPreference : sinon.SinonSpy;
+
+		beforeEach(async() =>
+		{
+			complete = sinon.stub(Et2Dialog.prototype, "getComplete").resolves([Et2Dialog.CANCEL_BUTTON, {}]);
+			// Et2Widget.egw() can hand out window.egw itself rather than what calling it returns
+			setPreference = sinon.spy();
+			sinon.replace(egwStub, "set_preference", setPreference);
+			sinon.replace(<any>window.egw, "set_preference", setPreference);
+			(egwStub as any).loading_prompt = (<any>window.egw).loading_prompt = () => {};
+			el = new Et2Nextmatch();
+			el.setColumns([{key: "name", title: "Name"}, {key: "email", title: "Email", hidden: true}]);
+			document.body.append(el);
+			await el.updateComplete;
+		});
+
+		afterEach(() =>
+		{
+			el.afterPrint();
+			complete.restore();
+			sinon.restore();
+			delete (egwStub as any).loading_prompt;
+			delete (<any>window.egw).loading_prompt;
+			document.querySelectorAll("et2-dialog").forEach((dialog) => dialog.remove());
+			el.remove();
+		});
+
+		const shownColumns = () => (<any>el)._currentColumns.filter((column) => !column.hidden).map((column) => column.key);
+
+		it("prints all columns, without a dialog and without saving preferences", async() =>
+		{
+			el.printOptions = {columns: "all", rowCount: 100, orientation: "landscape"};
+			await el.beforePrint();
+
+			assert.isTrue(complete.notCalled, "the print dialog was shown although printOptions were set");
+			assert.isTrue(setPreference.notCalled, "preset print options were saved as print preference");
+			assert.sameMembers(shownColumns(), ["name", "email"], "hidden column was not printed");
+			assert.isTrue(el.classList.contains("landscape"), "preset orientation was not used");
+
+			el.afterPrint();
+			assert.sameMembers(shownColumns(), ["name"], "columns were not restored after printing");
+		});
+
+		it("prints the given columns in portrait by default", async() =>
+		{
+			el.printOptions = {columns: ["email"]};
+			await el.beforePrint();
+
+			assert.isTrue(complete.notCalled, "the print dialog was shown although printOptions were set");
+			assert.sameMembers(shownColumns(), ["email"], "preset columns were not used");
+			assert.isTrue(el.classList.contains("portrait"), "default orientation is not portrait");
+		});
+	});
 });

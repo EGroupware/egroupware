@@ -240,6 +240,15 @@ Run the relevant web component tests with the project’s npm script when availa
 * every group: `npm run jstest`
 * one app: `npm run jstest -- --group api`
 * one file or glob: `npm run jstest -- api/js/etemplate/MyWidget/test/MyWidget.test.ts`
+* one browser: `JSTEST_BROWSERS=chromium npm run jstest` (default is `firefox,chromium`)
+* one shard: `JSTEST_SHARD=1/2 npm run jstest` - every 2nd test file, ignored when explicit
+  files/globs are given
+
+CI runs one job per browser per shard, because the suite's time is per test *file* (each is its own
+browser page) rather than per test: only ~105s of a ~334s full run is test code. Splitting across
+runners therefore works, while raising `web-test-runner`'s own `concurrency` does not - it just
+starves the real-timer tests. The measurements are in the launcher comment in
+`web-test-runner.config.mjs`; read it before changing either.
 
 Note the `--group`. A **bare app name is not a group selector** - `@web/test-runner` declares its own
 `files` option as the CLI's default (positional) option and merges CLI args over the config file, so
@@ -278,6 +287,14 @@ cp -p   /path/to/main/header.inc.php .            # gitignored, so no worktree e
 Without `vendor` the failure is loud but misleading: ~336 tests fail with
 `Failed to load /vendor/bower-asset/jquery/dist/jquery.min.js`, which looks like a code regression
 rather than a missing directory.
+
+The `node_modules` symlink only works when the worktree's branch has the same `package.json` as the
+main checkout. A worktree of a release branch such as `26` needs its own install instead:
+`npm ci --ignore-scripts` (a few seconds). Otherwise anything the branches pin differently fails to
+resolve. For example, 26 still imports `@bundled-es-modules/pdfjs-dist`, which master replaced with
+`pdfjs-dist`, so every app's tests die with `Failed to fetch dynamically imported module: .../app.ts`
+while the api suites still pass. The missing package is named only in the test runner's own output
+(`Error while transforming ...: Could not resolve import`), not in the browser error.
 
 Both symlinks then show up as untracked, because `.gitignore` lists them with a trailing slash
 (`/node_modules/`) which matches a directory but not a symlink. Add them to `info/exclude` - note

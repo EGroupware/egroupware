@@ -68,7 +68,7 @@
                     </row>
                     <row class="mailComposeHeaders">
                         <et2-description  value="Subject"></et2-description>
-                        <et2-textbox  align="left" width="100%" id="subject" height="25" onchange="app.mail.compose.subject2title"></et2-textbox>
+                        <et2-textbox  align="left" width="100%" id="subject" height="25" required="true" onchange="app.mail.compose.subject2title"></et2-textbox>
 
 					</row>
 				</rows>

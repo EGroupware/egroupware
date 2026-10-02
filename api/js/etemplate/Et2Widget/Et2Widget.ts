@@ -175,6 +175,54 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		align : string;
 
 		/**
+		 * How much of a layout's leftover space this widget should take.
+		 *
+		 * Only means anything inside a container that has a `layout` (see Et2LayoutController): a
+		 * bare `grow` or `grow="1"` takes an equal share of whatever the non-growing children left
+		 * over, `grow="2"` takes twice what a `grow="1"` sibling does.
+		 *
+		 * It has to reflect.  The layout stylesheet matches the `[grow]` attribute - CSS cannot see
+		 * a property - and transformAttributes() only calls setAttribute() for an attribute the
+		 * element already carries or a property declared as reflecting.  Widgets built from a .xet
+		 * are created with document.createElement() and handed their attributes as an object, so
+		 * they carry none at that point: without this declaration `grow="1"` lands as an inert JS
+		 * property and nothing in the layout ever matches it.
+		 */
+		@property({type: String, reflect: true})
+		grow : string;
+
+		/**
+		 * How many of a layout's columns this widget should take.
+		 *
+		 * `span="all"` is every column wherever the widget landed, `span="end"` / `span="*"` is
+		 * from its own column to the end of its line.  Only means anything inside a container that
+		 * has a `layout`, and only for the column layouts - `stack` gives every child the full
+		 * width anyway.
+		 *
+		 * The same name is also read straight off the XML node by the legacy `<grid>` widget, for
+		 * the unrelated job of counting table cells to merge; that path never looks at the widget,
+		 * so declaring it here does not disturb it.  Reflecting it does mean a legacy grid's
+		 * `span="all"` cells now carry the attribute too, which matches nothing outside a layout.
+		 *
+		 * Reflects for the same reason `grow` does.
+		 */
+		@property({type: String, reflect: true})
+		span : string;
+
+		/**
+		 * Take every column of a layout, the same as `span="all"`.
+		 *
+		 * Boolean rather than a bare marker so it can be driven from content the way the rest of
+		 * the template can - `full="@is_wide"` resolves through the array manager like any other
+		 * boolean attribute.  That does mean it needs a value: write `full="true"`, since an empty
+		 * `full=""` resolves to false and removes the attribute again.
+		 *
+		 * Reflects for the same reason `grow` does.
+		 */
+		@property({type: Boolean, reflect: true})
+		full : boolean;
+
+		/**
 		 * List of properties that get translated
 		 *
 		 * Done separately to not interfere with properties - if we re-define label property,

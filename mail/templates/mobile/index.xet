@@ -37,7 +37,7 @@
 				</row>
 			</rows>
 		</grid>
-		<et2-styles  src="rows.css"></et2-styles>
+		<et2-styles  src="/mail/templates/default/rows.css"></et2-styles>
 	</et2-template>
 	<et2-template  id="mail.index.rows.horizontal" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
@@ -91,7 +91,7 @@
 				</row>
 			</rows>
 		</grid>
-		<et2-styles  src="rows.css"></et2-styles>
+		<et2-styles  src="/mail/templates/default/rows.css"></et2-styles>
 	</et2-template>
     <et2-template  id="mail.index.dates" template="" lang="" group="0" version="1.9.001">
         <et2-date  id="startdate" label="Start" class="et2-label-fixed" style="padding-bottom: .3rem" onchange="widget.getParent().getWidgetById('enddate').set_min(widget.getValue());return true;"></et2-date>

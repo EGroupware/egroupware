@@ -221,7 +221,7 @@ class Et2DatagridSparseFlowLayout extends FlowLayout
  * @csspart column-selection - Column selection action container in the header.
  *
  * @cssproperty [--row-height=44px] - Estimated row height used for spacer rendering.
- * @cssproperty [--row-cell-max-height=10em] - Maximum height for individual row cells before vertical scrolling.
+ * @cssproperty [--row-cell-max-height=none] - Maximum height for individual row cells; taller content is clipped. Unlimited by default.
  * @cssproperty [--meta-column-width=0px] - Width of leading metadata column; expandable grids calculate a width large enough for the expander when it is not supplied.
  * @cssproperty [--row-expander-size=var(--sl-spacing-large)] - Width and height of the row expand/collapse button.
  * @cssproperty [--row-expander-icon-size=0.5em] - Size of the default CSS triangle expander icon.
@@ -344,6 +344,12 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 * lives on somebody else's object, where a plain name could collide with theirs.
 	 */
 	private static readonly HIDDEN_LAYOUT_GUARD = Symbol("et2-hidden-layout-guard");
+	/**
+	 * Marks a rows element, and each virtualizer instance on it, that
+	 * _guardSupersededVirtualizerNotifications() has already wrapped. A symbol for the
+	 * same reason as HIDDEN_LAYOUT_GUARD.
+	 */
+	private static readonly SUPERSEDED_NOTIFY_GUARD = Symbol("et2-superseded-notify-guard");
 	/** Incremented on every _clearRows() - guards that flag's bounded fallback timer below. */
 	private _rowsClearEpoch : number = 0;
 	_sparseVirtualizerLayoutActive : boolean = false;
@@ -1090,6 +1096,79 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
+	 * Stop a virtualizer that has already been replaced from changing which rows are shown.
+	 *
+	 * The virtualize() directive cannot change an existing virtualizer's layout type, so a layout
+	 * swap (a fixed-row-height grid moving from the bootstrap FlowLayout to
+	 * Et2DatagridSparseFlowLayout, see _scheduleSparseVirtualizerLayoutActivation()) builds a new
+	 * virtualizer. Its compatibility check is async, so two renders landing before it resolves both
+	 * see the old instance and both build a replacement, the second disconnecting the first. The
+	 * first has already queued a DOM update, and @lit-labs/virtualizer runs it anyway: detached,
+	 * it computes an empty range and announces it on the same rows element the live virtualizer
+	 * uses. The directive renders the last range it heard, so the grid goes empty, permanently -
+	 * the live virtualizer never re-announces a range it believes is unchanged. Happens whenever
+	 * the machine is busy enough for the two renders to overlap.
+	 *
+	 * The directive only listens for these events; it cannot tell which virtualizer sent one. The
+	 * virtualizer can: the one the rows element currently points at (virtualizerRef) is live, any
+	 * other has been replaced. So each instance's range and visibility announcements are dropped
+	 * once it is no longer the rows element's current one. That is deliberately "replaced", not
+	 * "disconnected": a disconnected but still current virtualizer is the stuck state
+	 * _reconnectStuckVirtualizer() wakes back up, and its announcements must keep working.
+	 *
+	 * Wrapping has to happen as each instance is created, not from updated(): the short-lived one
+	 * is built and replaced within a single render and never becomes current at a point this grid
+	 * could look. Every virtualizer assigns itself to virtualizerRef on its rows element in its
+	 * constructor, so an accessor there sees each one. Installed once per rows element (a view
+	 * switch renders a new one), wrapping whatever instance is already on it.
+	 */
+	private _guardSupersededVirtualizerNotifications() : void
+	{
+		const rows = this._rowsBody as any;
+		const guard = Et2Datagrid.SUPERSEDED_NOTIFY_GUARD;
+		if(!rows || rows[guard])
+		{
+			return;
+		}
+		rows[guard] = true;
+		const wrap = (virtualizer : any) =>
+		{
+			if(!virtualizer || virtualizer[guard])
+			{
+				return;
+			}
+			virtualizer[guard] = true;
+			for(const method of ["_notifyRange", "_notifyVisibility"])
+			{
+				const original = virtualizer[method];
+				if(typeof original !== "function")
+				{
+					continue;
+				}
+				virtualizer[method] = function(...args : any[])
+				{
+					if(rows[virtualizerRef] !== this)
+					{
+						return;
+					}
+					return original.apply(this, args);
+				};
+			}
+		};
+		let current = rows[virtualizerRef];
+		wrap(current);
+		Object.defineProperty(rows, virtualizerRef, {
+			configurable: true,
+			get: () => current,
+			set: (virtualizer) =>
+			{
+				current = virtualizer;
+				wrap(virtualizer);
+			}
+		});
+	}
+
+	/**
 	 * Is this grid actually being rendered right now?
 	 *
 	 * A rendered element always has at least one client rect; one hidden by `display: none` (on
@@ -1106,6 +1185,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	disconnectedCallback()
 	{
+		this._selection.stopPrefetch();
 		this._syncTemplateHandlerListeners(new Set());
 		this.removeEventListener("et2-embedded-height", this._handleEmbeddedHeightEvent as EventListener);
 		this._rowRenderer.dispose();
@@ -1413,8 +1493,15 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 * Resolve row tokens without opening an ArrayMgr perspective.  Non-row
 	 * tokens such as $cont and @labels are deliberately left for the widget's
 	 * normal content manager.
+	 *
+	 * All tokens are resolved in a single pass: a value put in for one token is row
+	 * data, and is not scanned again for the next one.
+	 *
+	 * literal is true when only row tokens were in the expression, so the resolved
+	 * value is final: it holds row data, eg. an email body with a "$" in it, and must
+	 * not be expanded again by the content manager.
 	 */
-	_resolveRowExpression(value : string, rowData : any, rowId : string) : {value : any; rowValue? : any; fallback : boolean; field? : string}
+	_resolveRowExpression(value : string, rowData : any, rowId : string) : {value : any; rowValue? : any; fallback : boolean; field? : string; literal : boolean}
 	{
 		const normalized = this._canonicalRowExpression(value);
 		const exact = normalized.match(/^\$\[([^\]]+)\]$/) || normalized.match(/^\$([a-zA-Z_][a-zA-Z0-9_]*)$/);
@@ -1422,11 +1509,11 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			const field = exact[1];
 			const rowValue = this._getFieldValue(rowData, field) ?? "";
-			return {value: rowValue, rowValue, fallback: false, field};
+			return {value: rowValue, rowValue, fallback: false, field, literal: true};
 		}
 		if(normalized === "$row" || normalized === "${row}")
 		{
-			return {value: rowId, rowValue: rowId, fallback: false};
+			return {value: rowId, rowValue: rowId, fallback: false, literal: true};
 		}
 
 		// An "@name"/"@@name" reference reads the content array, not the row - "@@name" the
@@ -1437,18 +1524,26 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		// disabled=/hidden= pair take effect. Defer those to the array manager, which resolves
 		// them through parseBoolExpression().
 		let fallback = /\$row_cont|\$\{row\}\[|\{\$row\}\[|@/.test(normalized);
-		const resolved = normalized
-			.replace(/\$\[([^\]]+)\]/g, (_match, field) => String(this._getFieldValue(rowData, field) ?? ""))
-			.replace(/\$row\b/g, rowId)
-			.replace(/\$([a-zA-Z_][a-zA-Z0-9_]*)\b/g, (match, field) =>
+		let rowTokens = 0;
+		let rest = "";
+		let restFrom = 0;
+		const resolved = normalized.replace(/\$\[([^\]]+)\]|\$([a-zA-Z_][a-zA-Z0-9_]*)\b/g, (match, path, name, offset) =>
+		{
+			if(name && ["row_cont", "cont", "_cont"].includes(name))
 			{
-				if(["row", "row_cont", "cont", "_cont"].includes(field))
-				{
-					return match;
-				}
-				return String(this._getFieldValue(rowData, field) ?? "");
-			});
-		return {value: resolved, fallback};
+				return match;
+			}
+			rowTokens++;
+			rest += normalized.substring(restFrom, offset);
+			restFrom = offset + match.length;
+			if(name === "row")
+			{
+				return rowId;
+			}
+			return String(this._getFieldValue(rowData, path ?? name) ?? "");
+		});
+		rest += normalized.substring(restFrom);
+		return {value: resolved, fallback, literal: rowTokens > 0 && !fallback && !/[$@]/.test(rest)};
 	}
 
 	_rowAttributePropertyType(element : any, attribute : string) : any
@@ -1481,6 +1576,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		super.updated(changedProperties);
 		this._reconnectStuckVirtualizer();
 		this._guardVirtualizerLayoutWhileHidden();
+		this._guardSupersededVirtualizerNotifications();
 
 		// Include new row stylesheet(s)
 		if(changedProperties.has("rowStylesheets"))
@@ -3304,7 +3400,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _isColumnPersistenceDisabled() : boolean
 	{
-		return this.noColumnPersistence || this.noVisibleHeader;
+		return this.noColumnPersistence || this.noVisibleHeader || !!this.templateData?.noHeader;
 	}
 
 	/**
@@ -3618,6 +3714,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				this._rowsByIndex[index] = this.dataProvider?.getRowData ? {id: row.id} : row;
 			}
 			this.rows = this._rowsByIndex.filter(Boolean) as Et2DatagridRow[];
+			this._selection.addFetchedRows(start, (response.rows || []).length);
 		}
 		catch(e)
 		{
@@ -4556,8 +4653,14 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return 1;
 		}
+		// Pending pages reserve slots through their extent. Adding their count to
+		// `_rowsByIndex.length` counts a page still pending below that length twice (the
+		// tail page landed first after a jump to the end), showing placeholders past the
+		// end. Top-level grids only: an embedded child's parent reservation currently
+		// relies on the height change when that over-count drops away, and does not
+		// arrive without it.
 		const materializedCount = Math.max(
-			this._rowsByIndex.length + this._requestQueue.pendingPlaceholderCount,
+			this._rowsByIndex.length + (this.embeddedVirtualized ? this._requestQueue.pendingPlaceholderCount : 0),
 			this.rows.length,
 			this._requestQueue.pendingPlaceholderExtent
 		);
@@ -5489,6 +5592,21 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this.requestUpdate();
 	}
 
+	/**
+	 * Scroll the grid body back to the first row.
+	 *
+	 * reload() keeps the scroll position, which is right when the same query is refetched, but
+	 * not when the caller switches to a different data set (eg. changed filters).
+	 */
+	scrollToTop()
+	{
+		const body = this._body;
+		if(body)
+		{
+			body.scrollTop = 0;
+		}
+	}
+
 	clearSelection(emitSelectionChanged : boolean = true)
 	{
 		if(!this.selectedRowIds.size && !this.allSelected)
@@ -5549,6 +5667,53 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		// registration) get the same signal regardless of load path.
 		this.dispatchEvent(new CustomEvent("et2-loading-done", {bubbles: true, composed: true}));
 	}
+
+	/**
+	 * Set up for printing, for a grid whose owner does not do it itself
+	 *
+	 * Virtualization only renders the rows in the viewport, so print every row instead: load
+	 * them all and render them without virtualization.  An owner that prepares printing itself
+	 * (Et2Nextmatch picks the rows and columns) has called setPrintRows() already - leave that
+	 * alone.  Not reached by etemplate2.print(), the grid lives in its owner's shadow DOM: an
+	 * owner with an Et2LazyLoadController gets it called from there.
+	 *
+	 * @return resolves once the rows are rendered
+	 */
+	async beforePrint() : Promise<void>
+	{
+		if(this._printRows)
+		{
+			return;
+		}
+		// A (re)load still on its way has no total yet - wait for its first page to know how many
+		if(this.total === null)
+		{
+			await this.loadRowRange(0, this.pageSize - 1);
+		}
+		if(typeof this.total === "number" && this.total > 0)
+		{
+			await this.loadRowRange(0, this.total - 1);
+		}
+		this._printingSelf = true;
+		this.classList.add("print-self");
+		await this.setPrintRows(this.getLoadedRowIds().filter(Boolean));
+	}
+
+	/**
+	 * Reset after printing, if beforePrint() set up the print rows
+	 */
+	afterPrint() : void
+	{
+		if(this._printingSelf)
+		{
+			this._printingSelf = false;
+			this.classList.remove("print-self");
+			this.clearPrintRows();
+		}
+	}
+
+	/** beforePrint() rendered the print rows, not the owner */
+	private _printingSelf = false;
 
 	/**
 	 * Render already-fetched rows without virtualization for print output.
@@ -6108,6 +6273,32 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				return;
 			}
 		}
+	}
+
+	/**
+	 * Shift range of the current selection that still holds rows not fetched yet, or null.
+	 *
+	 * Those rows have no id until fetched, so anything acting on the selection has to fetch
+	 * them first and hand them to completePendingSelectionRange(), or it only gets part of it.
+	 */
+	get pendingSelectionRange() : { start : number, end : number } | null
+	{
+		return this._selection.pendingRange;
+	}
+
+	/** Add the ids fetched for pendingSelectionRange to the selection */
+	completePendingSelectionRange(ids : string[])
+	{
+		this._selection.completePendingRange(ids);
+	}
+
+	/**
+	 * Stop prefetching the rows of pendingSelectionRange (started shortly after the shift+click),
+	 * eg. when an action fetches the rest itself and would otherwise request the same pages.
+	 */
+	stopSelectionPrefetch()
+	{
+		this._selection.stopPrefetch();
 	}
 
 	/** How long loadRowRange() waits for the rows it asked for before giving up. */

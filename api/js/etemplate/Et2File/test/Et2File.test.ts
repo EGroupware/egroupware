@@ -282,6 +282,36 @@ describe('Et2File Component', async() =>
 		assert.isFalse(errEvent.detail.success, "error path should report success:false");
 		assert.equal(badFile.warning, 'Permission denied', "failed file should carry a warning");
 	});
+
+	describe('with no file list to drive (noFileList)', () =>
+	{
+		beforeEach(async() =>
+		{
+			element.noFileList = true;
+			await element.updateComplete;
+		});
+
+		it('reports no file items rather than throwing', () =>
+		{
+			// fileItemList had its "?? []" outside Array.from(), which throws on undefined long
+			// before the ?? is reached
+			assert.deepEqual(element.fileItemList, [], "no list to query means no items");
+			assert.isUndefined(element.findFileItem({uniqueIdentifier: 'nope'}));
+		});
+
+		it('still starts the upload', async() =>
+		{
+			// Losing the per-file UI must not lose the upload.  It used to: findFileItem() threw,
+			// resumableFileAdded() never got as far as et2-add, and the file sat in the queue at
+			// 0% forever with nothing on screen to say so.
+			const listener = oneEvent(element, 'et2-add');
+			element.addFile(new File(['content'], 'no-list.txt', {type: 'text/plain'}));
+
+			const event = await listener;
+			assert.equal(event.detail.uniqueIdentifier, element.resumable.files[0].uniqueIdentifier,
+				"et2-add must carry the file that was queued");
+		});
+	});
 });
 
 // value is a {tempFileName: FileInfo} map built by real upload interactions (Resumable), not a

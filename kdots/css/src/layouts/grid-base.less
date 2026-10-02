@@ -101,9 +101,14 @@
 	overflow-x: hidden;
 
 	/* ---------- FULL-WIDTH ROWS ---------- */
+	/* A tabbox and a nextmatch take every column without being asked, the same way they take the
+	 * leftover height below: half a dialog is not a useful width for either of them, so saying
+	 * span="all" on every one would only be noise.
+	 */
 
 	[full], [span="all"],
-	et2-tabbox {
+	et2-tabbox,
+	et2-nextmatch {
 	  grid-column: 1 / -1;
 	}
 
@@ -122,9 +127,14 @@
 	}
 
 	/* ---------- VERTICAL GROW ---------- */
+	/* Keep the automatic tags here the same as GROW_TAG_SELECTOR in Et2LayoutStrategies.ts: that
+	 * is what gives their row a 1fr track, and without the stretch the item would sit at its own
+	 * height inside the track it was just given.
+	 */
 
 	[grow],
-	et2-tabbox {
+	et2-tabbox,
+	et2-nextmatch {
 	  align-self: stretch;
 	}
 

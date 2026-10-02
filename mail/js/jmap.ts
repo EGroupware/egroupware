@@ -27,6 +27,7 @@ import DOMPurify from "../../api/js/etemplate/Et2Image/dompurify-shim";
 import {isNamespaceRootName, sortTopLevel} from "./folderTree";
 import {formatDate, formatDateTime} from "../../api/js/etemplate/Et2Date/Et2Date";
 import {convert as htmlToText} from "html-to-text";
+import {defaultFontCssRule} from "../../api/js/etemplate/Et2HtmlArea/Et2HtmlAreaConfig";
 
 interface JmapToken
 {
@@ -192,6 +193,26 @@ export interface JmapIdentity
 	textSignature : string;
 	htmlSignature : string;
 	mayDelete : boolean;
+	/**
+	 * EGroupware's own extension (RFC 8621 has no such concept) - ticket #125092: the account's
+	 * real standard identity is whichever ident_id its own `egw_ea_accounts.ident_id` column
+	 * points to (Mail\Account's own `$ident_id` property, admin-settable, see Account::
+	 * IDENTITY_JOIN) - the same as this account's acc_id only as long as nobody ever created
+	 * another identity for it, not always. Api\Mail\Jmap\Identity::synthesize() sets this from
+	 * that real column, never from id===acc_id (a previous version of this fix assumed that
+	 * equivalence always held, which isn't always the case).
+	 */
+	isStandard : boolean;
+	/**
+	 * EGroupware's own extension (RFC 8621 has no such concept) - ticket #125092: true for an
+	 * identity that's genuinely personal to the CURRENT user (`egw_ea_identities.account_id`
+	 * equals their own account_id), false for a general identity usable by any user of this mail
+	 * account (`account_id=0`, "0=all users of give mail account" per the table's own schema
+	 * comment - includes the standard identity, which is general by definition). NOT simply "any
+	 * identity other than the standard one" - a previous version of this fix conflated "personal"
+	 * with "additional", which a general/shared additional identity would also wrongly match.
+	 */
+	isPersonal : boolean;
 }
 
 /** RFC 8621 EmailAddress shape (from/to/cc/replyTo properties) */
@@ -377,6 +398,18 @@ export class JmapUnsupportedBackendError extends JmapUserError {}
 export class JmapSmimePassphraseError extends JmapUserError {}
 
 /**
+ * Thrown by a JMAP-native method to signal "this operation is out of scope for the JMAP path by
+ * design here, silently fall back to the classic endpoint instead" - eg. every cross-account
+ * copy/move (moveMessages()/copyMessages()/moveAllMatching()/copyAllMatching()). Deliberately does
+ * NOT extend JmapUserError: unlike a real failure (shown to the user, or the classic fallback
+ * skipped entirely since JMAP already gave a definitive answer), this is an expected, everyday
+ * control-flow signal - MailApp.handleJmapError() (mail/js/app.ts) must not console.error() it,
+ * that would misreport by-design behaviour as a broken JMAP path (ralf, live report 2026-09-29:
+ * "only open is to NOT console.log the caught exception, as it will be reported back as error").
+ */
+export class JmapUnsupportedOperationError extends Error {}
+
+/**
  * Format one JMAP-shaped error object ({type, description?}) as a human string, or null if it
  * doesn't actually look like a JMAP/HTTP error object (eg. a plain fetch-failure Error/TypeError -
  * jmap-jam's own signal for "couldn't even talk to the server", left as the existing silent-
@@ -408,6 +441,24 @@ export function describeSetError(setErrors : Record<string, any> | undefined) : 
 {
 	if (!setErrors || !Object.keys(setErrors).length) return null;
 	return Object.values(setErrors).map(formatProblem).filter((m) : m is string => m !== null).join('; ') || null;
+}
+
+/**
+ * Ticket #125201: Api\Mail\Jmap\Imap::emailSubmissionSet()'s own shim-only "failedRecipients"
+ * extension (address => reason, EmailSubmission/set's created.sub1 - see that PHP code's own
+ * docblock) - present, non-empty, only when Api\Mailer::send() itself already recovered from a
+ * PARTIAL SMTP rejection (some, not all, recipients bounced) by retrying without them. The
+ * message DID go out to everyone else; this builds the one user-facing sentence that's the only
+ * place that fact ever reaches the user, since send() itself no longer throws for this case at
+ * all. Returns null (no message to show) for an absent/empty map - always the case for a real
+ * Stalwart account, whose own native EmailSubmission/set response never carries this extension.
+ */
+export function describeFailedRecipientsWarning(egw : { lang(key : string, ...args : any[]) : string },
+	failedRecipients : Record<string, string> | undefined) : string | null
+{
+	if (!failedRecipients || !Object.keys(failedRecipients).length) return null;
+	const list = Object.entries(failedRecipients).map(([address, reason]) => `${address} (${reason})`).join(', ');
+	return egw.lang('The mail was sent successfully to all recipients, except the following: %1', list);
 }
 
 /**
@@ -574,6 +625,17 @@ export class MailJmap
 	private static readonly CHECK_CERT_POPUP_KEY_PREFIX = 'mail_checkCert_popup_';
 	private static readonly CHECK_CERT_POPUP_DEBOUNCE_MS = 5 * 60 * 1000;
 
+	// help.egroupware.org "Rückmeldung zu 26.9.20260928" (Jürgen): a genuine "couldn't even talk
+	// to the server" failure right after this tab regained visibility (eg. switching back from
+	// another window) is very likely just the browser resuming a connection it throttled/
+	// suspended while backgrounded, not a real account problem - handleFetchRowsError() uses this
+	// to stay quiet for that case instead of popping up the account wizard (which then even gets
+	// blocked by the browser's own popup blocker on top, adding a second, more confusing message)
+	// for what the very next background poll cycle (Et2NextmatchAutoRefresh) will most likely
+	// resolve on its own anyway.
+	private static readonly VISIBILITY_RESUME_GRACE_MS = 5000;
+	private recentlyResumedVisibilityAt = 0;
+
 	private static readonly CSP_RELOAD_KEY = 'mail_jmap_csp_reload';
 	private static cspListenerInstalled = false;
 	// the most-recently-constructed instance - the securitypolicyviolation listener below is
@@ -597,6 +659,14 @@ export class MailJmap
 			window.addEventListener('securitypolicyviolation',
 				(e : SecurityPolicyViolationEvent) => MailJmap.current?.onCspViolation(e));
 		}
+		// see VISIBILITY_RESUME_GRACE_MS's own docblock
+		document.addEventListener('visibilitychange', () =>
+		{
+			if (!document.hidden)
+			{
+				this.recentlyResumedVisibilityAt = Date.now();
+			}
+		});
 	}
 
 	/**
@@ -837,6 +907,13 @@ export class MailJmap
 					properties,
 				});
 				return {ids, emails};
+			}, {
+				// Email/query+Email/get are both read-only - safe to retry once over plain HTTP if
+				// the WebSocket closes before answering (see RetryableRequestOptions' own docblock,
+				// jmap-jam-websocket.ts) - found live 2026-10-02 (ralf) against this exact call: a
+				// large-mailbox listing taking 20-28s can race the heartbeat into force-closing an
+				// otherwise-healthy connection.
+				retryIdempotentOnClose: true,
 			}),
 			// a single mailboxRole() lookup makes no sense across multiple real mailboxes -
 			// resolved per-row instead, below, once the actual result set is known
@@ -2117,6 +2194,13 @@ export class MailJmap
 		const message = e instanceof JmapUserError ? e.message : describeJmapError(e);
 		if (!message)
 		{
+			// see VISIBILITY_RESUME_GRACE_MS's own docblock - stay quiet, the next autorefresh
+			// poll (or a user action) will just retry
+			if (Date.now() - this.recentlyResumedVisibilityAt < MailJmap.VISIBILITY_RESUME_GRACE_MS)
+			{
+				console.warn('MailJmap.fetchRows(): failed shortly after this tab regained visibility - treating as a transient resume hiccup, not opening the account wizard', e);
+				return MailJmap.emptyRowsResult();
+			}
 			// a genuine "couldn't even talk to the server" failure, not a real JMAP/business
 			// error with its own actionable message - see popupCheckCert()'s docblock
 			this.popupCheckCert(profileID, this.checkCertTypeFor(profileID), e);
@@ -3012,16 +3096,26 @@ export class MailJmap
 				console.warn('MailJmap.fetchBodyFromMessagePart(): no token, falling back', {rowId, partID});
 				return {special: true};
 			}
-			const args : any = {accountId: token.accountId, ids: [ref.emailId], properties: ['attachments']};
+			// Found live 2026-09-25 (ralf, a real forward-as-attachment .eml, not the bounce/NDM
+			// stub this whole method was originally written for): raw-dumping the sub-part's bytes
+			// as plain text (below) shows the nested message's own RFC 5322 SOURCE - headers, MIME
+			// boundaries, encoded body - instead of a rendered body, which is wrong for anything
+			// with a real HTML/text body of its own. The classic fallback already recurses properly
+			// into a message/rfc822 part's own structure to find ITS text/html body (Api\Mail::
+			// getMessageBody()'s 'message'/'rfc822' case) - this whole raw-dump shortcut only exists
+			// because that classic path needs a real IMAP UID, which for a JMAP-native (Stalwart)
+			// row can cost a slow raw IMAP EMAILID search (see this method's own docblock). A local-
+			// shim row (token.isLocal) already IS a real IMAP UID - classic costs nothing extra here,
+			// so skip the raw-dump shortcut entirely and let the classic parser render it properly.
 			if (token.isLocal)
 			{
-				args.mailboxId = ref.mailboxId;
+				return {special: true};
 			}
-			const emails = token.isLocal ?
-				await this.emailGetViaCacheableGet(this.clients[ref.profileID], args) :
-				(await this.clients[ref.profileID].requestMany((t) => ({
-					emails: t.Email.get(args) as any,
-				})))[0].emails;
+			// only a real (non-local) JMAP account reaches here now - see the isLocal guard above
+			const args : any = {accountId: token.accountId, ids: [ref.emailId], properties: ['attachments']};
+			const [{emails}] = await this.clients[ref.profileID].requestMany((t) => ({
+				emails: t.Email.get(args) as any,
+			}));
 			const email = (emails.list || [])[0];
 			const attachment = (email?.attachments || []).find((a : any) => String(a.partId) === String(partID));
 			if (!attachment?.blobId)
@@ -3032,6 +3126,13 @@ export class MailJmap
 				return {special: true};
 			}
 			const text = await this.downloadPartText(ref.profileID, token, attachment);
+			if (!text || !text.trim())
+			{
+				console.warn('MailJmap.fetchBodyFromMessagePart(): downloaded part was empty, falling back', {
+					rowId, partID, attachment,
+				});
+				return {special: true};
+			}
 			return {
 				special: false,
 				html: this.wrapDocument(MailJmap.textToHtml(text)),
@@ -4248,22 +4349,13 @@ export class MailJmap
 	}
 
 	/**
-	 * A fresh, unguessable CSP nonce value (base64, 16 random bytes) - see wrapDocument()'s own
-	 * docblock for why this exists alongside 'self'.
-	 */
-	private static randomNonce() : string
-	{
-		return btoa(String.fromCharCode(...crypto.getRandomValues(new Uint8Array(16))));
-	}
-
-	/**
 	 * Wrap already-sanitized body HTML into a self-contained document for the body iframe's
 	 * `srcdoc` - shared by assembleBodyHtml() (normal mail) and fetchBody()'s PGP path.
 	 *
-	 * Loads the same `preview.js` (mailto/internal-EGroupware-link activation) the server-rendered
-	 * body already uses, unmodified - a `srcdoc` iframe without a `sandbox` attribute is same-
-	 * origin with the parent, exactly like the server-rendered one, so this needs no separate
-	 * reimplementation of that logic. `<meta>`/`<base>` are explicitly forbidden from the sanitized
+	 * Runs no script at all (script-src 'none'): unlike the server-rendered body, which loads
+	 * preview.js, mailto/internal-EGroupware-link activation is attached from the outer page by
+	 * bodyLinks.ts's activateBodyLinks() (MailApp's iframe 'load' listener), just like
+	 * resolveInlineImages() and resolveBarePdfEmbed(). `<meta>`/`<base>` are explicitly forbidden from the sanitized
 	 * body content itself (assembleBodyHtml()'s DOMPurify config), so a malicious/buggy message
 	 * can't smuggle in a competing CSP, a `<meta http-equiv="refresh">`, or hijack relative URLs.
 	 *
@@ -4282,19 +4374,6 @@ export class MailJmap
 	 */
 	private wrapDocument(body : string, forMailvelope : boolean = false) : string
 	{
-		// script-src used to be plain 'self', matching the classic server-rendered response's own
-		// HTTP *header* CSP (mail_ui::get_load_email_data(), class.mail_ui.inc.php:2993-3000) -
-		// but this document is a `srcdoc` iframe (no real URL of its own, "about:srcdoc") with its
-		// CSP delivered via a <meta> tag INSIDE that same markup, not an HTTP header on a real
-		// same-origin response; found live 2026-09-23 via a real customer (Firefox, "every mail
-		// opened in preview"): Firefox failed to resolve 'self' against the srcdoc's inherited
-		// parent origin in this meta-tag-CSP context, outright blocking preview.js
-		// (mailto:/internal-EGroupware-link activation) on EVERY single message. A nonce is origin-
-		// resolution-independent (a pure string match between this directive and the script tag's
-		// own `nonce` attribute below), so it can't be affected by this kind of ambiguity in any
-		// browser - kept alongside 'self' rather than replacing it, since 'self' still correctly
-		// covers whichever browsers DID resolve it right.
-		const nonce = MailJmap.randomNonce();
 		// frame-src/object-src both need 'blob:' (not just 'none'/'self') for the bare-PDF case
 		// (resolveBarePdfEmbed()) - Chrome's built-in PDF viewer, loading an <embed>'s blob: URL,
 		// hits both directives (found live via the exact console violations: "Framing 'blob:...'
@@ -4303,14 +4382,14 @@ export class MailJmap
 		// (URL.createObjectURL()), a message body's own HTML can never itself supply one, so this
 		// adds no attacker-reachable capability.
 		const csp = "frame-src " + (forMailvelope ? "'self'" : "blob:") + "; " +
-			"connect-src 'none'; manifest-src 'none'; script-src 'self' 'nonce-"+nonce+"'; " +
+			"connect-src 'none'; manifest-src 'none'; script-src 'none'; " +
 			"img-src http: blob: data:; media-src https: http: data:; object-src blob:";
 
 		return `<!DOCTYPE html><html><head><meta charset="utf-8">` +
 			`<meta http-equiv="Content-Security-Policy" content="${csp}">` +
 			`<link rel="stylesheet" href="${this.egw.link('/mail/templates/default/preview.css')}">` +
-			`<script defer nonce="${nonce}" src="${this.egw.link('/mail/js/preview.js')}"></script>` +
-			`</head><body><div class="mailDisplayBody"><table width="100%" style="table-layout:fixed">` +
+			`<style>${defaultFontCssRule()}</style>` +
+			`</head><body><div class="mailDisplayBody mailDefaultFont"><table width="100%" style="table-layout:fixed">` +
 			`<tr><td class="td_display">${body}</td></tr></table></div></body></html>`;
 	}
 
@@ -4644,28 +4723,69 @@ export class MailJmap
 		// complete, unambiguous URL instead.
 		const rawIconUrl = egw.image('fileexport') || '';
 		const downloadIconUrl = escaped(rawIconUrl && !rawIconUrl.match(/^[a-z]+:/i) ? location.origin + rawIconUrl : rawIconUrl);
+		// same origin-prefixing reasoning as downloadIconUrl above - 'print' is the same icon key
+		// mail/src/Compose.php's own toolbar Print action already uses elsewhere in this app.
+		const rawPrintIconUrl = egw.image('print') || '';
+		const printIconUrl = escaped(rawPrintIconUrl && !rawPrintIconUrl.match(/^[a-z]+:/i) ? location.origin + rawPrintIconUrl : rawPrintIconUrl);
 		// #toolbar=0&navpanes=0 suppresses the browser's OWN native PDF viewer chrome entirely (a
 		// long-standing Chrome/PDFium URL-fragment convention, also honoured for blob: content) -
 		// without it, that native toolbar's OWN save/download icon is still visible right next to
 		// ours and LOOKS like the more familiar option, so a user reaches for that one out of habit
 		// and gets the wrong (UUID) name right back - found live 2026-09-15 (ralf, after confirming
 		// the CSP fix worked): "thought I doubt out uses will click on the correct Download link".
-		// Hiding the native chrome leaves our own button the only visible affordance at all.
+		// Hiding the native chrome leaves our own button the only visible affordance at all - but
+		// it ALSO hides that chrome's own Print icon, found live via ticket #125641 (a customer,
+		// relayed by Birgit: "ich denke es spricht aber auch nichts dagegen, einfach zusätzlich dort
+		// auch einen Print-Button mit anzuzeigen, der dann die gleiche Aktion triggert wie der
+		// Rechtsklick" - Ctrl/Cmd-P or right-click->Print on the embed itself still worked all
+		// along, just with no visible button for it anymore). Added one here, right next to
+		// Download - window.print() on this WRAPPER document (not the embed itself, which has no
+		// scriptable print() of its own) still prints the embedded PDF's own pages in Chromium, with
+		// the toolbar itself hidden from the print output via the @media print rule below.
 		const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${safeName}</title>` +
 			`<style>html,body{margin:0;height:100%;font-family:sans-serif}` +
 			`.toolbar{display:flex;align-items:center;gap:10px;height:48px;` +
 			`background:#323639;padding:0 16px;box-sizing:border-box}` +
 			`.toolbar .name{color:#fff;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}` +
-			`.toolbar a{color:#212529;background:#fff;text-decoration:none;font-size:13px;font-weight:600;` +
-			`display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:4px;flex-shrink:0}` +
-			`.toolbar a:hover{background:#e9ecef}` +
-			`.toolbar a img{width:16px;height:16px;display:block}` +
-			`embed{display:block;width:100%;height:calc(100% - 48px);border:0}</style></head>` +
+			`.toolbar a,.toolbar button{color:#212529;background:#fff;text-decoration:none;font-size:13px;font-weight:600;` +
+			`display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:4px;flex-shrink:0;` +
+			`border:0;font-family:inherit;cursor:pointer}` +
+			`.toolbar a:hover,.toolbar button:hover{background:#e9ecef}` +
+			`.toolbar a img,.toolbar button img{width:16px;height:16px;display:block}` +
+			`embed{display:block;width:100%;height:calc(100% - 48px);border:0}` +
+			`@media print{.toolbar{display:none}embed{height:100%}}</style></head>` +
 			`<body><div class="toolbar"><span class="name">${safeName}</span>` +
+			`<button type="button" id="egwPrintBtn"><img src="${printIconUrl}" alt="">${escaped(egw.lang('print'))}</button>` +
 			`<a href="${contentUrl}" download="${safeName}"><img src="${downloadIconUrl}" alt="">${escaped(egw.lang('download'))}</a></div>` +
-			`<embed src="${contentUrl}#toolbar=0&navpanes=0" type="${escaped(mimeType)}"></body></html>`;
+			`<embed src="${contentUrl}#toolbar=0&navpanes=0" type="${escaped(mimeType)}">` +
+			`<script src="${MailJmap.printButtonScriptUrl()}"></script></body></html>`;
 		return URL.createObjectURL(new Blob([html], {type: 'text/html'}));
 	}
+
+	/**
+	 * The Print button's click handler has to live in a SEPARATE <script src="blob:..."> file,
+	 * never an inline onclick/<script> block directly in wrapPdfViewerWithDownload()'s own HTML -
+	 * found live 2026-10-02 testing ticket #125641's fix against boulder.egroupware.org: this
+	 * app's own CSP (`script-src 'self' 'unsafe-eval' blob: ...`, no 'unsafe-inline') is INHERITED
+	 * by a blob: document from whichever page created it (a Chrome-specific behaviour, confirmed
+	 * empirically - an inline onclick/<script> silently never ran at all, no visible error short of
+	 * a CSP violation console message). `blob:` itself IS an allowed script-src value though - a
+	 * SEPARATE blob: URL referenced via `<script src>` loads and runs fine under the exact same
+	 * policy. The handler code is always identical (no per-attachment data baked in), so this is
+	 * memoized once and reused for every wrapped PDF, rather than creating (and never revoking) a
+	 * fresh blob: URL on every single call.
+	 */
+	private static printButtonScriptUrl() : string
+	{
+		if (!MailJmap._printButtonScriptUrl)
+		{
+			const js = `document.getElementById('egwPrintBtn').addEventListener('click', () => window.print());`;
+			MailJmap._printButtonScriptUrl = URL.createObjectURL(new Blob([js], {type: 'text/javascript'}));
+		}
+		return MailJmap._printButtonScriptUrl;
+	}
+
+	private static _printButtonScriptUrl : string | undefined;
 
 	/**
 	 * Revoke previously-created getAttachmentViewUrl() object URLs for a row, eg. before
@@ -5605,7 +5725,7 @@ export class MailJmap
 	{
 		if (!references.length || references.some(ref => ref.profileID !== targetProfileID))
 		{
-			throw new Error('MailJmap.moveMessages(): cross-account move not supported');
+			throw new JmapUnsupportedOperationError('MailJmap.moveMessages(): cross-account move not supported');
 		}
 		const token = await this.ensureToken(targetProfileID);
 		if (!token)
@@ -5633,7 +5753,7 @@ export class MailJmap
 	{
 		if (!references.length || references.some(ref => ref.profileID !== targetProfileID))
 		{
-			throw new Error('MailJmap.copyMessages(): cross-account copy not supported');
+			throw new JmapUnsupportedOperationError('MailJmap.copyMessages(): cross-account copy not supported');
 		}
 		const token = await this.ensureToken(targetProfileID);
 		if (!token)
@@ -5746,6 +5866,19 @@ export class MailJmap
 			{
 				throw new JmapUserError(describeSetError(submission.notCreated) ?? this.egw.lang('Failed to send message'));
 			}
+			// ticket #125092 (Ingo/Birgit Becker): the classic, now-deleted
+			// mail_compose::compose()'s own LastSignatureIDUsed write-back (0fcea2103a) never got
+			// reimplemented for this client-side JMAP send - "use last used signature" (the
+			// mail/defaultIdentity preference's default/unset value) silently never remembered
+			// anything, always falling through to whatever compose.ts's own server-rendered
+			// initial selection happened to be. this.identity.id (not submissionIdentityId,
+			// Stalwart's own OPAQUE identity id - meaningless as a stored "last used" value) is
+			// the real, numeric ident_id actually used for THIS send, same value a reply/forward's
+			// own recipient-matching or a later compose would need to recognize again.
+			this.rememberLastUsedIdentity(profileID.split(':', 2)[0], identity.id);
+			// ticket #125201 - see describeFailedRecipientsWarning()'s own docblock
+			const warning = describeFailedRecipientsWarning(this.egw, (submission.created.sub1 as any).failedRecipients);
+			if (warning) this.egw.message(warning, 'warning');
 			if (existingDraftEmailId)
 			{
 				try
@@ -5815,7 +5948,7 @@ export class MailJmap
 		smimeType : string, passphrase? : string,
 		passExpMinutes? : number) : Promise<{type : string, blobId : string} | {whole : true, blobId : string}>
 	{
-		const {body, inlineImages} = await this.resolveOutgoingInlineImages(token, client, email.body ?? '');
+		const {body, inlineImages} = await this.resolveOutgoingInlineImages(token, client, email.body ?? '', !!email.isHtml);
 		const emailProperties = this.draftEmailProperties(identity, {...email, body}, inlineImages);
 		const result : any = await this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_smimeEncryptEmailProperties',
 			[profileID, emailProperties, smimeType, passphrase || '', passExpMinutes ?? null]);
@@ -6171,11 +6304,18 @@ export class MailJmap
 	 * "strip the original message's own trailing signature from the quote" heuristic (RFC 3676
 	 * §4.3) - both nice-to-haves, not load-bearing for a first working version.
 	 *
-	 * @param context fetchForReply()'s result - context.mimeType decides whether the reply is
-	 *  HTML or plain: a reply adopts the ORIGINAL message's mimeType, same as the classic
-	 *  implementation - not the user's own new-compose mimeType preference
+	 * @param context fetchForReply()'s result - context.body/context.mimeType are the ORIGINAL
+	 *  message's own shape, unrelated to the target compose's actual mode (see targetIsHtml)
+	 * @param targetIsHtml the mode the COMPOSE is actually going to be in - normally the same as
+	 *  the original message's own mimeType (`context.mimeType === 'html'`, the default), but the
+	 *  two can now disagree: MailCompose.bootstrapReply()'s own `replyOptions` preference
+	 *  ("force html"/"force text") can pick a DIFFERENT mode than the original message actually
+	 *  has (ticket #125251 - a plain-text original, force-html preference: the quoted body came
+	 *  back as raw plain-text with literal newlines, which an HTML/TinyMCE editor collapses into
+	 *  one run-on paragraph exactly like any other whitespace - "Zeilenumbrüche gehen verloren").
+	 *  Converts context.body to whichever shape targetIsHtml actually needs, in EITHER direction.
 	 */
-	quoteOriginalMessage(context : JmapReplyContext) : string
+	quoteOriginalMessage(context : JmapReplyContext, targetIsHtml : boolean = context.mimeType === 'html') : string
 	{
 		const formatList = (addresses : JmapEmailAddress[]) => addresses.map(formatJmapAddress).join(', ');
 		// context.date is jmapUtcToUserTz()'s intermediate shape (already timezone-shifted, but
@@ -6191,21 +6331,28 @@ export class MailJmap
 			['date', context.date ? formatDateTime(new Date(context.date)) : ''],
 		];
 
-		if (context.mimeType === 'html')
+		if (targetIsHtml)
 		{
 			const lines = attributionLines
 				.filter(([, value]) => value)
 				.map(([label, value]) => `${MailJmap.escapeHtml(this.egw.lang(label))}: ${MailJmap.escapeHtml(value)}`)
 				.join('<br>');
+			// same escape+<br> conversion applyPresetBody() already uses for the same "plain
+			// content going into an HTML editor" problem - a no-op when the original already IS html
+			const quotedBody = context.mimeType === 'html' ? context.body :
+				this.egw.htmlspecialchars(context.body).replace(/\r\n|\r|\n/g, '<br>\n');
 			return `<fieldset class="originalMessage"><legend>${MailJmap.escapeHtml(this.egw.lang('original message'))}</legend>${lines}</fieldset>` +
-				`<blockquote type="cite">${context.body}</blockquote><br>`;
+				`<blockquote type="cite">${quotedBody}</blockquote><br>`;
 		}
 
 		const attribution = attributionLines
 			.filter(([, value]) => value)
 			.map(([label, value]) => `${this.egw.lang(label)}: ${value}`)
 			.join('\r\n');
-		const quotedLines = context.body.split('\n').map((line) => '> ' + line.replace(/\r$/, '')).join('\r\n');
+		// mirror image of the html branch above: the original's own HTML tags would otherwise show
+		// up literally as text once dropped into a plain-text editor - a no-op when already plain
+		const plainBody = context.mimeType === 'html' ? MailJmap.htmlToPlainText(context.body) : context.body;
+		const quotedLines = plainBody.split('\n').map((line) => '> ' + line.replace(/\r$/, '')).join('\r\n');
 		return attribution + '\r\n\r\n' + quotedLines;
 	}
 
@@ -6279,6 +6426,30 @@ export class MailJmap
 	}
 
 	/**
+	 * Ticket #125092: update the `mail/LastSignatureIDUsed` preference's OWN entry for this one
+	 * account after a successful send - sendNewEmail()'s only caller of this. That preference is
+	 * an object keyed by acc_id (classic mail_compose.inc.php's own shape, `$sigPref[$profileID]`
+	 * - see Compose::setDefaults()), never a single scalar: a user with several mail accounts has
+	 * one independently-remembered "last used identity" per account, not one shared across all of
+	 * them. Read-modify-write against whatever is already cached (egw.preference() already returns
+	 * a shallow copy, see its own docblock) so every OTHER account's own entry survives untouched -
+	 * only this call's own accId key is ever replaced.
+	 *
+	 * Also invalidates MailApp.getComposeToolbarData()'s own per-account cache (ticket #125092,
+	 * Ingo/Birgit via ralf, follow-up found live: without this, the NEXT compose for this same
+	 * account - same main-window lifetime - kept reusing the stale identity pre-selection that
+	 * cache had baked in from BEFORE this send, until a full page reload started a fresh cache) -
+	 * see that method's own docblock.
+	 */
+	private rememberLastUsedIdentity(accId : string, identId : string) : void
+	{
+		const current = this.egw.preference('LastSignatureIDUsed', 'mail') ?? {};
+		const updated = {...current, [accId] : identId};
+		this.egw.set_preference('mail', 'LastSignatureIDUsed', updated);
+		this.app.invalidateComposeToolbarData(accId);
+	}
+
+	/**
 	 * address widgets (Et2Email) store an autocomplete-selected entry as a full "Display Name
 	 * <address@example.com>" string, not a bare address - found live 2026-08-27, Stalwart
 	 * rejecting a submission with "No recipients found in email" because {email: "Name <addr>"}
@@ -6294,8 +6465,13 @@ export class MailJmap
 
 	private addressesToJmap(value? : string | string[])
 	{
+		// ticket #125201: filter(Boolean) must run BEFORE .map(trim) - a falsy (null/undefined)
+		// entry (found live: a distribution-list member with no email address at all, resolved
+		// server-side into a bare null - see ComposeMessageBuilder::resolveEmailAddressList())
+		// crashed here with "Cannot read properties of null (reading 'trim')" when filter ran
+		// only afterwards, surfacing to the user as a generic "Account not reachable".
 		return value
-			? (Array.isArray(value) ? value : value.split(',')).map((address) => address.trim()).filter(Boolean).map((address) => this.parseAddress(address))
+			? (Array.isArray(value) ? value : value.split(',')).filter(Boolean).map((address) => address.trim()).filter(Boolean).map((address) => this.parseAddress(address))
 			: undefined;
 	}
 
@@ -6655,12 +6831,60 @@ export class MailJmap
 	 * live body keeps referencing the same original src unchanged; only a COPY built for the
 	 * outgoing payload gets rewritten to cid: here).
 	 */
-	private async resolveOutgoingInlineImages(token : JmapToken, client : JamClient, html : string) : Promise<{body : string, inlineImages : JmapInlineImage[]}>
+	/**
+	 * Find the [start,end) offsets of every quoted-content '<blockquote>...</blockquote>' region
+	 * in an html mail body - nesting-aware, so a quote-of-a-quote counts as ONE range, and an
+	 * interleaved/bottom-posted reply's several SIBLING blockquotes (answering inside the
+	 * citation, eg. "> How are you?\nI'm fine\n> rest of citation") each get their OWN range, never
+	 * lumped together with the genuinely new reply text in between them.
+	 */
+	private findQuoteRanges(html : string) : Array<[number, number]>
 	{
+		const ranges : Array<[number, number]> = [];
+		const tagRegex = /<blockquote\b[^>]*>|<\/blockquote>/gi;
+		let depth = 0, start = -1, match : RegExpExecArray | null;
+		while ((match = tagRegex.exec(html)) !== null)
+		{
+			if (!match[0].toLowerCase().startsWith('</blockquote'))
+			{
+				if (depth++ === 0) start = match.index;
+			}
+			else if (depth > 0 && --depth === 0)
+			{
+				ranges.push([start, match.index + match[0].length]);
+			}
+		}
+		return ranges;
+	}
+
+	private async resolveOutgoingInlineImages(token : JmapToken, client : JamClient, html : string, isHtml : boolean) : Promise<{body : string, inlineImages : JmapInlineImage[]}>
+	{
+		// a plain-text body is never HTML, however much a `src="...webdav.php..."`-shaped substring
+		// it happens to literally contain looks like one (eg. copy-pasted HTML source, or an
+		// attacker deliberately including that exact text in a plain-text message they know will
+		// get quoted verbatim into a plain-text reply, '>' prefixed but otherwise untouched, see
+		// quoteOriginalMessage()'s plain-plain branch) - this function has no business running on
+		// it at all, same as classic ComposeMessageBuilder::createMessage()'s switch($mimeType)
+		// only ever calling Mail::processURL2InlineImages() from its 'html' case.
+		if (!isHtml)
+		{
+			return {body: html, inlineImages: []};
+		}
 		const srcRegex = /\bsrc\s*=\s*(["'])(blob:[^"']+|data:image\/[^"']+|[^"']*\/webdav\.php\/[^"']+)\1/gi;
+		// a '/webdav.php' src found inside quoted/cited content (quoteOriginalMessage()'s own
+		// <blockquote type="cite"> wrapper) must NEVER be auto-embedded here - it can be
+		// attacker-supplied content from the message being replied to/forwarded, not something the
+		// CURRENT compose session itself inserted (a VFS-picked image, upload, or the identity
+		// signature). blob:/data: urls are exempt - those are the ORIGINAL message's own
+		// already-resolved inline images, not a fresh fetch of an arbitrary path.
+		const quoteRanges = this.findQuoteRanges(html);
+		const isWebdavUrl = (url : string) => !url.startsWith('blob:') && !url.startsWith('data:');
+		const isQuoted = (offset : number) => quoteRanges.some(([s, e]) => offset >= s && offset < e);
+
 		const urls = new Set<string>();
 		for (const match of html.matchAll(srcRegex))
 		{
+			if (isWebdavUrl(match[2]) && isQuoted(match.index ?? -1)) continue;
 			urls.add(match[2]);
 		}
 		if (!urls.size)
@@ -6725,8 +6949,9 @@ export class MailJmap
 		{
 			return {body: html, inlineImages: []};
 		}
-		const body = html.replace(srcRegex, (full, quote, url) =>
+		const body = html.replace(srcRegex, (full, quote, url, offset) =>
 		{
+			if (isWebdavUrl(url) && isQuoted(offset)) return full;
 			const cid = cidByUrl.get(url);
 			return cid ? `src=${quote}cid:${cid}${quote}` : full;
 		});
@@ -6844,7 +7069,7 @@ export class MailJmap
 	{
 		const {body, inlineImages} = bodyOverride ?
 			{body: email.body ?? '', inlineImages: [] as JmapInlineImage[]} :
-			await this.resolveOutgoingInlineImages(token, client, email.body ?? '');
+			await this.resolveOutgoingInlineImages(token, client, email.body ?? '', !!email.isHtml);
 		const properties : any = this.draftEmailProperties(identity, {...email, body}, inlineImages, autocryptHeader);
 		if (bodyOverride)
 		{
@@ -7053,7 +7278,7 @@ export class MailJmap
 		const [profileID, folder] = (query.selectedFolder || '').split('::', 2);
 		if (profileID !== targetProfileID)
 		{
-			throw new Error('MailJmap.moveAllMatching(): cross-account move not supported');
+			throw new JmapUnsupportedOperationError('MailJmap.moveAllMatching(): cross-account move not supported');
 		}
 		const token = await this.ensureToken(profileID);
 		if (!token)
@@ -7077,7 +7302,7 @@ export class MailJmap
 		const [profileID, folder] = (query.selectedFolder || '').split('::', 2);
 		if (profileID !== targetProfileID)
 		{
-			throw new Error('MailJmap.copyAllMatching(): cross-account copy not supported');
+			throw new JmapUnsupportedOperationError('MailJmap.copyAllMatching(): cross-account copy not supported');
 		}
 		const token = await this.ensureToken(profileID);
 		if (!token)
@@ -7497,6 +7722,45 @@ export class MailJmap
 	}
 
 	/**
+	 * S/MIME row-list icon (ticket #125281 - regressed away entirely during the JMAP migration,
+	 * mail_ui::header2gridelements()'s `$data['smime'] = ... Smime::TYPE_SIGN : Smime::TYPE_ENCRYPT`
+	 * had no equivalent in email2row() at all). Same top-level Content-Type header already fetched
+	 * for every list row (CONTENT_TYPE_HEADER_PROPERTY) - no extra per-row cost, matching the
+	 * classic code's own cheap Content-Type-only check (never resolveSmimeSignedAttachments()'s
+	 * heavier per-part distinction - that's only needed to decide the attachment-paperclip icon,
+	 * not this one). Returns a smime.xet/mail.index.rows.*.xet image name, or '' for a plain
+	 * message - see Api\Mail\Smime::TYPE_SIGN/TYPE_ENCRYPT for the matching icon-name constants.
+	 */
+	private static smimeRowIcon(contentTypeHeader : string) : string
+	{
+		if (MailJmap.isSignedContentType(contentTypeHeader)) return 'smime_sign';
+		const type = (contentTypeHeader || '').split(';')[0].trim().toLowerCase();
+		return (type === 'application/pkcs7-mime' || type === 'application/x-pkcs7-mime') ? 'smime_encrypt' : '';
+	}
+
+	/**
+	 * Same idea as smimeRowIcon(), for PGP/MIME (RFC 3156) - ticket #125281 ("probably want the
+	 * same for PGP"). Deliberately detection-only, a pure Content-Type check exactly like
+	 * smimeRowIcon() - NOT the existing verifyPgpSignature()/findPgpPart() machinery (jmap.ts's own
+	 * PGP feature), which walks the full bodyStructure and actually verifies a signature; either
+	 * would cost a per-row fetch this list view can't afford (bodyStructure isn't part of the
+	 * list-fetch properties at all, unlike the header used here). Inline (non-MIME) PGP - a bare
+	 * "-----BEGIN PGP MESSAGE-----" in the body text, no distinct top-level Content-Type - is NOT
+	 * detectable this way and stays undetected in the list (would need the full body).
+	 *
+	 * No dedicated PGP icon asset exists (unlike S/MIME's smime_sign.svg/smime_encrypt.svg) - reuses
+	 * the same generic icon the preview pane's own PGP indicator already uses (index.xet's
+	 * `pgp_signature` image, src="envelope-at-fill").
+	 */
+	private static pgpRowIcon(contentTypeHeader : string) : string
+	{
+		const type = (contentTypeHeader || '').split(';')[0].trim().toLowerCase();
+		if (type !== 'multipart/signed' && type !== 'multipart/encrypted') return '';
+		return /protocol\s*=\s*"?application\/pgp-(signature|encrypted)"?/i.test(contentTypeHeader || '') ?
+			'envelope-at-fill' : '';
+	}
+
+	/**
 	 * @param showRecipient true for a Sent/Drafts/Templates mailbox - mail_ui::header2gridelements()'s
 	 *  old convention (lost during the JMAP migration, found live 2026-09-02, ralf: "In Sent folder
 	 *  we used to show the recipient's address, not the sender"): the unified `address` field (the
@@ -7563,6 +7827,10 @@ export class MailJmap
 			// the individual image values below instead of a legacy html widget.
 			attachments: hasAttachment ? 'attach' : '',
 			attachment_icon: hasAttachment ? 'attach' : '',
+			// ticket #125281: row-list security icons - see smimeRowIcon()/pgpRowIcon()'s own
+			// docblocks for why each is a cheap Content-Type-only check, no extra per-row fetch
+			smime: MailJmap.smimeRowIcon(email[MailJmap.CONTENT_TYPE_HEADER_PROPERTY]),
+			pgp: MailJmap.pgpRowIcon(email[MailJmap.CONTENT_TYPE_HEADER_PROPERTY]),
 			flagged_icon: hasFlagged ? 'unread_flagged_small' : '',
 			// no attachment-list preview block for Phase 1 (see class docblock) - but app.ts's
 			// preview() unconditionally reads data.attachmentsBlock[0], so this must at

@@ -10,6 +10,7 @@
  */
 
 import {EgwApp} from '../../api/js/jsapi/egw_app';
+import type {EgwFrameworkApp, FilterInfo} from "../../kdots/js/EgwFrameworkApp";
 import type {PushData} from '../../api/js/jsapi/egw_app';
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
@@ -60,6 +61,20 @@ class AddressbookApp extends EgwApp
 	{
 		// call parent
 		super('addressbook');
+	}
+
+	/**
+	 * col_filter[owner] is only a copy of the addressbook chosen in filter, not a filter of its own
+	 *
+	 * @param filterValues
+	 * @param fwApp
+	 */
+	getFilterInfo(filterValues : { [id : string] : any }, fwApp : EgwFrameworkApp) : FilterInfo
+	{
+		const values = {...(filterValues ?? {})};
+		values.col_filter = {...(values.col_filter ?? {})};
+		delete values.col_filter.owner;
+		return fwApp.filterInfo(values);
 	}
 
 	/**

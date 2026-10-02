@@ -83,4 +83,14 @@ export default css`
 	.et2_link * {
 		pointer-events: auto;
 	}
+
+	/*
+	 * Shared look for an entry that is still listed but no longer in effect (revoked application
+	 * password, deleted calendar event, disabled policy).  The server adds rowInactive next to the
+	 * row's own class, which it keeps for enableClass/disableClass of the actions.
+	 */
+	tr.rowInactive > td {
+		color: var(--sl-color-neutral-500);
+		font-style: italic;
+	}
 `;

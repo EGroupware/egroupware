@@ -1,0 +1,9 @@
+/**
+ * EGroupware Preferences - styles for the application passwords / tokens list rows
+ *
+ * Loaded into the list's row shadow DOM by <et2-styles src="rows.css"> in tokens.xet,
+ * app.css does not reach the rows.
+ */
+tr.template > td * {
+	color: darkblue !important;
+}

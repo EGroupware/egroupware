@@ -18,25 +18,52 @@ Object.assign(window.egw, egwStub);
 describe("Et2Nextmatch row stylesheet synchronization", () =>
 {
 	/**
-	 * Contract: template-local row styles replace app.css for datagrid rows.
-	 * Setup: compose row styles with both an app stylesheet and a template
-	 * stylesheet present.
-	 * Pass: the template stylesheet is included and the app stylesheet is not.
+	 * Contract: datagrid rows get the framework row styles plus the row template's own styles, nothing else.
+	 * Setup: synchronize with a template stylesheet present.
+	 * Pass: exactly those two sheets, framework first.
 	 */
-	it("uses template row styles instead of app.css in datagrid row stylesheets", async() =>
+	it("adopts only the framework and row template styles", async() =>
 	{
 		const nextmatch = new Et2Nextmatch() as any;
-		const appSheet = new CSSStyleSheet();
-		await appSheet.replace(".from-app-css { color: red; }");
 		const templateSheet = new CSSStyleSheet();
 		await templateSheet.replace(".from-template { color: green; }");
 
-		nextmatch._appRowStylesheet = appSheet;
 		nextmatch._templateData = {rowStylesheets: [templateSheet]};
 		nextmatch._syncDatagridRowStylesheets();
 
-		assert.include(nextmatch._rowStylesheets, templateSheet, "template row stylesheet should be adopted");
-		assert.notInclude(nextmatch._rowStylesheets, appSheet, "app.css should not be adopted when template row styles exist");
+		assert.lengthOf(nextmatch._rowStylesheets, 2);
+		assert.strictEqual(nextmatch._rowStylesheets[1], templateSheet, "template row stylesheet should be adopted");
+	});
+
+	/**
+	 * Contract: app.css is page CSS and never reaches the row shadow root, even for a row template
+	 * without <et2-styles>.
+	 * Setup: a nextmatch whose row template has no styles goes through template application, with fetch
+	 * recording every request.
+	 * Pass: no app.css request, and only the framework row styles are adopted.
+	 */
+	it("never loads app.css into the rows", async() =>
+	{
+		const originalFetch = window.fetch;
+		const fetchedUrls : string[] = [];
+		window.fetch = (async(input : RequestInfo | URL) =>
+		{
+			fetchedUrls.push(String(input));
+			return new Response("", {status: 200});
+		}) as typeof window.fetch;
+		try
+		{
+			const nextmatch = new Et2Nextmatch() as any;
+			nextmatch._applyTemplateData({columns: [], rowStylesheets: []});
+			await new Promise(resolve => setTimeout(resolve, 0));
+
+			assert.deepEqual(fetchedUrls.filter(url => url.includes("app.css")), [], "app.css should not be requested");
+			assert.lengthOf(nextmatch._rowStylesheets, 1, "only the framework row styles");
+		}
+		finally
+		{
+			window.fetch = originalFetch;
+		}
 	});
 
 	/**

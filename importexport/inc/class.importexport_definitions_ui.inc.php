@@ -135,9 +135,8 @@ class importexport_definitions_ui
 						$action = $content['nm']['action'];
 						if($content['nm']['action'] == 'allowed')
 						{
-							$content['allowed'] = $content['allowed_popup']['allowed_private'] == 'true' ? null : (
-								$content['allowed_popup']['all_users']=='true' ? 'all' : implode(',',$content['allowed_popup']['allowed'])
-							);
+							// '' is "Just me", 'all' is "All users", see $sel_options['allowed_popup']
+							$content['allowed'] = implode(',', (array)$content['allowed_popup']['allowed']);
 						}
 						else
 						{
@@ -189,6 +188,14 @@ class importexport_definitions_ui
 			'allowed_users' => array(
 				array('value' => 'private', 'label' => lang('Private')),
 				array('value' => 'all', 'label' => lang('all'))
+			),
+			// "Change allowed users" popup: the same special options as the wizard's allowed users,
+			// kept exclusive by app.importexport.allowed_users_change()
+			'allowed_popup' => array(
+				'allowed' => array(
+					array('value' => '', 'label' => lang('Just me')),
+					array('value' => 'all', 'label' => lang('all users'))
+				)
 			)
 		);
 		foreach ($this->plugins as $appname => $options)

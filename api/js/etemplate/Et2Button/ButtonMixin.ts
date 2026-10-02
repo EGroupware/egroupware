@@ -186,7 +186,13 @@ export const ButtonMixin = <T extends Constructor>(superclass : T) =>
 		// Submit the form
 		if(!this.noSubmit && this.getInstanceManager())
 		{
-			return this.getInstanceManager().submit(this, undefined, this.noValidation);
+			const submitted = this.getInstanceManager().submit(this, undefined, this.noValidation);
+			// submit() has already collected our value.  A successful submit re-renders the form,
+			// but one the server rejects, eg. with a validation error, keeps this button.  Still
+			// clicked, it would ride along on the next submit - an onchange one that skips
+			// validation - and save the entry unvalidated.
+			this.clicked = false;
+			return submitted;
 		}
 		this.clicked = false;
 		this.getInstanceManager()?.skip_close_prompt(false);

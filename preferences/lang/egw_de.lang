@@ -56,6 +56,8 @@ div	preferences	de	div
 do you always want to see full date and time, if there is less space, or just the time for today and the date otherwise?	preferences	de	Möchten Sie immer Datum und Uhrzeit sehen, auch wenn weniger Platz vorhanden ist, oder für heute nur die Uhrzeit und ansonsten nur das Datum?
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	de	Bevorzugen Sie ein 24 Stunden Zeitformat oder 12 Stunden mit angehängtem Vor-/Nachmittag.
 edit custom fields	preferences	de	Benutzerdefinierte Felder editieren
+editor and preview	preferences	de	Editor und Vorschau
+editor only	preferences	de	Nur Editor
 enable	preferences	de	Aktivieren
 enable drag and drop functionality (experimental)	preferences	de	Drag-and-Drop einschalten (experimentell)
 enable menubar	preferences	de	Menüleiste aktivieren
@@ -111,17 +113,22 @@ logging in via singlesignon does not provide a password to pass it on to mail- o
 look & feel	preferences	de	Aussehen und Handhabung
 lowercase letters	preferences	de	Kleinbuchstaben
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	de	Macht die Seitenleiste links mit Scroll-Button nach oben/unten scrollbar (nützlich für Benutzer auf Tablets).
+markdown	preferences	de	Markdown
+markdown view	preferences	de	Markdown-Ansicht
 max matches per page	preferences	de	Maximale Treffer pro Seite
 max number of icons in navbar	preferences	de	Maximale Anzahl von Icons in der Navigationsleiste
 new secret generated, you need to save it to disable the old one!	preferences	de	Neuer Schlüssel generiert, Sie müssen ihn jetzt speichern und den alten ungültig zu machen!
 no default	preferences	de	Keine Vorgabe
+no selection	preferences	de	Keine Auswahl
 no user-selection at all	common	de	Überhaupt keine Benutzerauswahl
 note: this feature does *not* change your email password. this will	preferences	de	Anmerkung: Diese Funktion ändert nicht Ihr E-Mail Passwort.
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	de	Hinweis: Diese Funktion ändert *nicht* Ihr Passwort auf dem E-Mail-Server. Dies müssen Sie separat tun.
 notification settings	preferences	de	Einstellungen der Benachrichtigungen
 number format	preferences	de	Format von Zahlen
 numbers	preferences	de	Zahlen
+off	preferences	de	Aus
 old password and new password are the same. this is invalid. you must enter a new password	preferences	de	Altes Passwort und Neues Passwort sind gleich. Dies ist nicht erlaubt. Sie müssen ein neues Passwort vergeben.
+on	preferences	de	Ein
 open popups in	preferences	de	Öffne Pop-ups in
 or other compatible apps	preferences	de	Oder andere kompatible Apps
 p: paragraph	preferences	de	p: Absatz
@@ -139,6 +146,7 @@ popup window	preferences	de	Pop-up-Fenster
 popup with search	preferences	de	Pop-up mit Suche
 preferences saved.	preferences	de	Einstellungen gespeichert.
 preformatted	preferences	de	Vorformatiert
+preview only	preferences	de	Nur Vorschau
 pt: points (1/72 inch)	preferences	de	pt: Punkt (1/72 Inch)
 px: display pixels	preferences	de	px: Bildschirmpixel
 re-enter your password	preferences	de	Neues Passwort wiederholen
@@ -206,6 +214,8 @@ when you can select multiple options, should the option list stay open until you
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	de	Wenn Sie hier Ja auswählen, werden in der Hauptnavigationsleiste oben zusätzlich Buttons für die Startseite und zum Abmelden angezeigt.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	de	Wählen Sie hier den Zeichensatz für den CSV Import/Export. Der Standard-Zeichensatz ist der Zeichensatz Ihrer EGroupware Installation.
 which currency symbol or name should be used in egroupware.	preferences	de	Welches Währungssymbol oder Name soll in EGroupware verwendet werden.
+which view markdown-enabled text fields open in by default	preferences	de	In welcher Ansicht Textfelder mit Markdown standardmäßig geöffnet werden
+write and read plain-text fields as markdown, so **bold**, lists, links and headings are formatted instead of shown as typed. "on" turns it on for every text field, "off" turns it off even for the fields that ask for it themselves, "no selection" lets each field (template.xet) decide.	preferences	de	Textfelder als Markdown schreiben und lesen, so dass **fett**, Listen, Links und Überschriften formatiert werden statt so angezeigt, wie sie eingegeben wurden. "Ein" schaltet es für jedes Textfeld ein, "Aus" schaltet es auch für die Felder ab, die es selbst anfordern, "Keine Auswahl" überlässt die Entscheidung dem jeweiligen Feld (template.xet).
 you can show the applications as icons only, icons with app-name or both.	preferences	de	Sie können die Anwendungen als Symbol (Icon), Text oder beides anzeigen.
 you can show the linked entries with icons only, icons with app-name or both.	common	de	Sie können verknüpfte Einträge mit Bild, Anwendungsnamen oder beidem anzeigen.
 you do not have permission to set acl's in this mode!	preferences	de	Sie haben keine Berechtigung die ACL in diesem Modus zu setzen.

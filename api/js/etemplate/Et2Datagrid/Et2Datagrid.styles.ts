@@ -38,6 +38,11 @@ export default css`
 		 */
 		padding-bottom: 250mm;
 	}
+	/* A grid printing itself (see Et2Datagrid.beforePrint()) sits in a form with more below it,
+	 * so its last row is not the end of the page and the page of padding only wastes paper */
+	:host(.print.print-self) .dg-body #rows {
+		padding-bottom: 0;
+	}
 
 	:host(.print) .dg-body tbody {
 		display: grid;
@@ -253,7 +258,9 @@ export default css`
 			background: var(--sl-color-primary-200, #d4dfe8);
 		}
 
-		tbody > [data-row-id].dg-row-active {
+		/* Active (keyboard) row on a selected row. An unselected active row is only framed while
+		   the grid has focus, see :host(:focus-within) below. */
+		tbody > [data-row-id].dg-row-active[aria-selected="true"] {
 			box-shadow: inset 0 0 0 2px var(--sl-color-primary-600, #2869db);
 		}
 
@@ -271,10 +278,29 @@ export default css`
 			box-sizing: border-box;
 			padding: 0px var(--sl-spacing-x-small);
 			min-width: 0;
-			max-height: var(--row-cell-max-height, 10em);
+			max-height: var(--row-cell-max-height, none);
 			overflow-x: hidden;
-			overflow-y: auto;
+			/* Only bites when an app sets --row-cell-max-height: clip, no per-cell scrollbar */
+			overflow-y: hidden;
 			text-overflow: ellipsis;
+		}
+
+		/* A customfields list can be long, so let it scroll instead of hiding fields */
+		tbody td:has(> et2-customfields-list) {
+			overflow-y: auto;
+		}
+
+		/* Fade out the bottom of a clipped cell. The cell's own scroll timeline is only active while its
+		   content overflows, so cells that fit are left alone. Only when an app sets a limit: without
+		   one a few pixels of overflow (eg. a child's padding) would fade out the cell's last line. */
+		@supports (animation-timeline: scroll(self)) {
+			@container style(--row-cell-max-height) {
+				tbody td:not([data-dg-meta-cell="1"], :has(> et2-customfields-list)),
+				tbody th {
+					animation: dg-cell-clip-fade linear both;
+					animation-timeline: scroll(self block);
+				}
+			}
 		}
 
 		tbody td[data-dg-meta-cell="1"] {
@@ -287,6 +313,14 @@ export default css`
 			justify-content: center;
 		}
 
+	}
+
+	/* Plain row descriptions are rendered as a bare span instead of et2-description.
+	   Keep newlines the way the widget does (it sets white-space: pre-wrap).  :where()
+	   keeps the specificity at zero so an app's own class rule (eg. a single-line
+	   ellipsis) still wins. */
+	:where(span[data-et2-description]) {
+		white-space: pre-wrap;
 	}
 
 	:host([fixed-row-height]) .dg-body tbody > tr[data-row-id]:not(.dg-row-expanded) {
@@ -415,6 +449,15 @@ export default css`
 		}
 	}
 
+	@keyframes dg-cell-clip-fade {
+		from {
+			mask-image: linear-gradient(to bottom, #000 calc(100% - 1.5em), transparent);
+		}
+		to {
+			mask-image: none;
+		}
+	}
+
 	@keyframes dg-row-refresh-pulse {
 		0% {
 			background-color: color-mix(in srgb, var(--sl-color-warning-200) 0%, transparent);
@@ -480,7 +523,14 @@ export default css`
 		background: var(--highlight-background-color, var(--sl-color-primary-100, #eef5ff));
 	}
 
-	.dg-tile-grid > [data-row-id].dg-row-active {
+	/*
+	 * The active row is where keyboard navigation continues from. Framing it while the focus is
+	 * elsewhere (eg. after a folder or filter change, where the grid makes the first row active)
+	 * marks an unselected row that nothing acts on - so without focus only a selected row shows it.
+	 */
+	.dg-tile-grid > [data-row-id].dg-row-active[aria-selected="true"],
+	:host(:focus-within) .dg-body tbody > [data-row-id].dg-row-active,
+	:host(:focus-within) .dg-tile-grid > [data-row-id].dg-row-active {
 		box-shadow: inset 0 0 0 2px var(--sl-color-primary-600, #2869db);
 	}
 

@@ -8,7 +8,7 @@ import {repeat} from "lit/directives/repeat.js";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import shoelace from "../Styles/shoelace";
 import {Et2DatagridColumnVisibility} from "../Et2Datagrid/Et2DatagridColumnState";
-import {et2_customfields_list} from "../et2_extension_customfields";
+import {CUSTOMFIELD_PREFIX} from "../Et2Customfields/Et2CustomfieldsBase";
 import Sortable from "sortablejs/modular/sortable.complete.esm";
 import {SlMenuItem} from "@shoelace-style/shoelace";
 import {Et2Select} from "../Et2Select/Et2Select";
@@ -209,7 +209,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 			return [];
 		}
 		return Object.values(widget.customfields).map((field) => ({
-			id: et2_customfields_list.PREFIX + field.name,
+			id: CUSTOMFIELD_PREFIX + field.name,
 			caption: field.label,
 			visibility: widget.fields?.[field.name] ? Et2DatagridColumnVisibility.VISIBLE : false
 		}));

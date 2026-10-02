@@ -1,5 +1,7 @@
 import {assert} from "@open-wc/testing";
 import "../ColumnSelection.ts";
+// The selector renders shoelace menu items and an et2-select, which it does not register itself
+import "../../Et2Select/Et2Select";
 
 const egw = {
 	lang: (label : string) => label,

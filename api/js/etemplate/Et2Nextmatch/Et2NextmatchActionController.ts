@@ -1175,6 +1175,40 @@ export class Et2NextmatchActionController implements ReactiveController
 	}
 
 	/**
+	 * Action objects for the given (datastore) row ids, to hand to an action handler as its senders.
+	 *
+	 * Rows that have an action object already keep it. All others - rows the grid never
+	 * rendered, eg. with "select all" - get a detached object, so a handler sees every selected
+	 * row the same way. Those are not registered with the object manager: they only live as long
+	 * as the handler holds on to them, and registering thousands of them would slow down every
+	 * later selection change.
+	 */
+	actionObjectsForRows(rowIds : string[]) : EgwActionObject[]
+	{
+		this.ensureActionManagers();
+		return rowIds.map((rowId) =>
+		{
+			const existing = this.rowActionObjects.get(rowId);
+			if(existing)
+			{
+				return existing;
+			}
+			const row = document.createElement("tr");
+			row.setAttribute("data-row-id", rowId);
+			const rowObject = new EgwActionObject(rowId, this.objectManager, this.createRowActionObjectInterface(row), this.actionManager);
+			rowObject._context = row;
+			rowObject.getSelected = () => true;
+			const rowData = (this.host as any)._dataProvider?.getRowData?.(rowId) ??
+				this.host.egw().dataGetUIDdata?.(rowId)?.data;
+			if(rowData && typeof rowData === "object")
+			{
+				(rowObject as any).data = rowData;
+			}
+			return rowObject;
+		});
+	}
+
+	/**
 	 * Mirror a context-action row into both datagrid and action object selection.
 	 */
 	private _selectActionRow(rowId : string, rowObject : EgwActionObject)
@@ -1347,7 +1381,10 @@ export class Et2NextmatchActionController implements ReactiveController
 	private normalizeSelection(selection : { ids? : string[]; all? : boolean } = {}, senders : EgwActionObject[] = [])
 	{
 		const provider = (this.host as any)._dataProvider;
-		const rawIds = (selection.ids && selection.ids.length ? selection.ids : senders.map((sender) => sender?.id))
+		// With "select all" the selection only knows the rendered rows, while EgwAction.execute()
+		// collected every row as senders - use those, eg. for `$id` in a popup or location url
+		const useSenders = !selection.ids?.length || selection.all === true && senders.length > selection.ids.length;
+		const rawIds = (useSenders ? senders.map((sender) => sender?.id) : selection.ids)
 			.filter(Boolean)
 			.map((id) => provider?.normalizeRowId?.(String(id), true) || String(id));
 		const providerIds = rawIds

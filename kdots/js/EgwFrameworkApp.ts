@@ -855,7 +855,7 @@ export class EgwFrameworkApp extends LitElement
 		delete values.sort;
 
 		// If there are no filters set, show filter-circle.  Show filter-circle-fill if there are filters set.
-		const emptyFilter = (v) => typeof v == "object" ? Object.values(v).filter(emptyFilter).length : v;
+		const emptyFilter = (v) => typeof v == "object" && v ? Object.values(v).filter(emptyFilter).length : v;
 		if(Object.values(values).filter(emptyFilter).length !== 0)
 		{
 			info.icon = "filter-circle-fill";
@@ -1449,9 +1449,13 @@ export class EgwFrameworkApp extends LitElement
                                      slot="header-actions" name="x-circle-fill"
                                      label="${this.egw.lang("Clear filters")}"
                                      statustext="${this.egw.lang("Clear filters")}"
-                                     @click=${e =>
+                                     @click=${async e =>
                                      {
                                          this.filters.value = {};
+                                         // Not every filter reads back empty straight away: an
+                                         // Et2LinkEntry limited to one app keeps reporting its old
+                                         // entry until it has re-rendered
+                                         await this.filters.updateComplete;
                                          this.filters.applyFilters();
                                      }}
                     ></et2-button-icon>` : nothing

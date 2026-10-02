@@ -2448,6 +2448,18 @@ class Ui
 	}
 
 	/**
+	 * Envelope (From/To/Cc/Bcc/Subject/Date) of a message/rfc822 sub-part - see
+	 * MessageDisplayHandler::fetchMessagePartEnvelope()'s own docblock.
+	 *
+	 * @param string $_messageID the CONTAINING message's own row id
+	 * @param string $_partID the attached message/rfc822 sub-part's mime id
+	 */
+	function ajax_fetchMessagePartEnvelope($_messageID, $_partID)
+	{
+		Api\Json\Response::get()->data($this->messageDisplayHandler()->fetchMessagePartEnvelope($_messageID, $_partID));
+	}
+
+	/**
 	 * ajax_setFolderStatus - its called via json, so the function must start with ajax (or the class-name must contain ajax)
 	 * gets the counters and sets the text of a treenode if needed (unread Messages found)
 	 * @param array $_folder folders to refresh its unseen message counters
@@ -2505,14 +2517,20 @@ class Ui
 	 * (mail/js/app.ts) only ever passes the NON-TNEF attachments here, having already routed any
 	 * TNEF/winmail.dat entry to ajax_resolveWinmail() above instead - see its own docblock.
 	 *
+	 * $_partID (ticket #125561 follow-up): the "view" popup's own message/rfc822 sub-part
+	 * (renderMessageInto()'s own partID param) - resolveAttachmentsJmap() explicitly doesn't
+	 * implement this (see its own docblock), so this always falls through to
+	 * resolveAttachmentsBlock(), which does (Api\Mail::getMessageAttachments($uid, $partID)).
+	 *
 	 * @param string $_rowid row id from nm
 	 * @param ?array $_attachments
+	 * @param ?string $_partID
 	 * @return void
 	 */
-	function ajax_fetchAttachments($_rowid, $_attachments=null)
+	function ajax_fetchAttachments($_rowid, $_attachments=null, $_partID=null)
 	{
 		Api\Json\Response::get()->data([
-			'attachmentsBlock' => AttachmentJmap::resolveAttachmentsJmap($_rowid, null, false, $_attachments) ?? $this->attachmentHandler()->resolveAttachmentsBlock($_rowid),
+			'attachmentsBlock' => AttachmentJmap::resolveAttachmentsJmap($_rowid, $_partID, false, $_attachments) ?? $this->attachmentHandler()->resolveAttachmentsBlock($_rowid, $_partID),
 		]);
 	}
 

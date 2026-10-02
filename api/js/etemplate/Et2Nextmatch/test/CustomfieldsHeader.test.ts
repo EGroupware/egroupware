@@ -57,6 +57,60 @@ const modificationsWithCustomfields = (customfieldSettings : Record<string, any>
 	};
 };
 
+/**
+ * Upper bound of update cycles a settling header may run.
+ * Connecting, hydrating metadata and a handful of hydration retries stay well below it,
+ * a re-render loop exceeds it within one task.
+ */
+const MAX_SETTLE_UPDATES = 25;
+
+/**
+ * Count the header's update cycles, and stop a runaway re-render loop once it passes
+ * MAX_SETTLE_UPDATES.
+ *
+ * Lit chains the updates of such a loop as microtasks, which would starve timers and hang the
+ * runner, so past the limit `updated()` is no longer forwarded - that breaks the loop - and the
+ * returned counter records the overflow for the test to fail on.
+ */
+const countUpdates = (header: any) =>
+{
+	const counter = {updates: 0};
+	const originalUpdated = header.updated.bind(header);
+	header.updated = (changedProperties: Map<string, any>) =>
+	{
+		counter.updates++;
+		if(counter.updates <= MAX_SETTLE_UPDATES)
+		{
+			originalUpdated(changedProperties);
+		}
+	};
+	return counter;
+};
+
+/**
+ * Modifications whose local entry (for the widget id) and root `~custom_fields~` entry both carry a key
+ * that is none of customfields/fields/exclude/typeFilter, so every merge reports `changed`.
+ */
+const modificationsWithExtraKeys = (id: string, customfieldSettings: Record<string, any>) =>
+{
+	return {
+		getEntry: (entryId: string) =>
+		{
+			if(entryId === "~custom_fields~")
+			{
+				return {...customfieldSettings, extra_global: "global"};
+			}
+			return entryId === id ? {extra_local: "local"} : {};
+		},
+		getRoot()
+		{
+			return this;
+		}
+	};
+};
+
+const waitMs = (ms: number) => new Promise((resolve) => window.setTimeout(resolve, ms));
+
 describe("Et2CustomfieldsHeader", () =>
 {
 	it("treats fields as the selected customfield allow-list", () =>
@@ -160,5 +214,83 @@ describe("Et2CustomfieldsHeader", () =>
 		{
 			host.remove();
 		}
+	});
+
+	/**
+	 * Contract under test:
+	 * - With explicit `fields` (column preference / column selection), hydrating from modifications keeps
+	 *   the `fields` object itself instead of assigning a copy.  A copy is a new reference, so Lit saw a
+	 *   property change on every hydration, and as long as customfields or fields were empty `updated()`
+	 *   hydrated again - an endless re-render loop that pegged the browser tab's CPU.
+	 *
+	 * Setup strategy:
+	 * - Modifications carry a key beyond customfields/fields/exclude/typeFilter in both the widget's own
+	 *   entry and the root `~custom_fields~` entry.  Hydration never stores such keys back, so the merge
+	 *   reports `changed` on every call - the condition that used to keep the loop going.
+	 * - (a) explicit but empty fields, with customfield definitions in `~custom_fields~`.
+	 * - (b) explicit non-empty fields, with no customfield definitions anywhere, so the hydration
+	 *   retry timer runs.
+	 *   A `changed` merge used to reset the retry attempts every time, so the timer never stopped.
+	 * - A short hydrationRetryMs, waiting well past HYDRATION_RETRY_MAX (8) retry intervals.
+	 * - countUpdates() stops forwarding `updated()` past MAX_SETTLE_UPDATES, so a regression fails
+	 *   instead of hanging the runner in an endless microtask chain.
+	 *
+	 * Pass criteria:
+	 * - `updateComplete` resolves, and the header runs at most MAX_SETTLE_UPDATES update cycles in total.
+	 * - The explicit fields are kept as they were.
+	 * - No hydration retry is still pending, ie. the retries stopped.
+	 *
+	 * Environment-sensitive constraints:
+	 * - Timers can fire late on a loaded runner, so the wait is 20 retry intervals
+	 *   for at most 8 retries.
+	 */
+	const explicitFieldsSettleCases = [
+		{
+			name: "empty explicit fields",
+			fields: {},
+			customfields: {cf_text: {label: "Text", type: "text"}}
+		},
+		{
+			name: "non-empty explicit fields without customfields",
+			fields: {cf_text: true},
+			customfields: undefined
+		}
+	];
+	explicitFieldsSettleCases.forEach(({name, fields, customfields}) =>
+	{
+		it(`settles with ${name} and always-changing modifications`, async() =>
+		{
+			const retryMs = 10;
+			const header = document.createElement("et2-nextmatch-header-customfields") as any;
+			header.id = "cf_header";
+			header.hydrationRetryMs = retryMs;
+			header.fields = fields;
+			header._hasExplicitFields = true;
+			header.setArrayMgr("modifications", modificationsWithExtraKeys(
+				"cf_header",
+				customfields ? {customfields} : {}
+			) as any);
+			const counter = countUpdates(header);
+
+			document.body.append(header);
+			try
+			{
+				await header.updateComplete;
+				await waitMs(retryMs * 20);
+				await header.updateComplete;
+
+				assert.isAtMost(
+					counter.updates,
+					MAX_SETTLE_UPDATES,
+					"header should settle instead of re-rendering endlessly"
+				);
+				assert.deepEqual(header.fields, fields, "explicit fields should be kept");
+				assert.isNull(header._pendingHydrationTimer, "hydration retries should stop");
+			}
+			finally
+			{
+				header.remove();
+			}
+		});
 	});
 });

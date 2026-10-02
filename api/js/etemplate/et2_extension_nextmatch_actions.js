@@ -285,13 +285,26 @@ export function nm_action(_action, _senders, _target, _ids)
 /**
  * Fetch all IDs to the client side, user wants to do something with them...
  *
+ * Et2Nextmatch has no controller, but fetches all its ids itself - hand over to that, so app code written
+ * for the legacy widget keeps working.  The callback gets the ids without their "app::" prefix either way.
+ *
  * @param {string[]} ids Array of selected IDs
- * @param {et2_nextmatch} nextmatch
+ * @param {et2_nextmatch|Et2Nextmatch} nextmatch
  * @param {function} callback Callback function
  * @returns {Boolean}
  */
 export function fetchAll(ids, nextmatch, callback)
 {
+	if(nextmatch && typeof nextmatch.fetchAllIds === "function")
+	{
+		if(!nextmatch.getSelection().all) return false;
+		nextmatch.fetchAllIds().then(
+			idsArr => callback.call(this, idsArr.map(id => String(id).split("::").pop())),
+			// canceled by the user, same as legacy: callback is not called
+			() => {}
+		);
+		return true;
+	}
 	if(!nextmatch || !nextmatch.controller) return false;
 	var selection = nextmatch.getSelection();
 	if(!selection.all) return false;

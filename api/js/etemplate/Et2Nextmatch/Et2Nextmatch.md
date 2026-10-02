@@ -73,6 +73,27 @@ guard.
 - If both a `template` attribute and slotted templates are provided, `template` wins.
 - `setRows()` can preload initial rows; otherwise rows are fetched through the bound Nextmatch data provider.
 
+## Printing
+
+When its page is printed, `et2-nextmatch` asks which columns, how many rows (up to 100 by default)
+and which page orientation to print, remembers the columns and orientation as the user's print
+preference, and prints exactly those rows.
+
+To always print a list the same way without asking, set `printOptions` from the app's JS, eg. in
+`et2_ready()`:
+
+```ts
+nm.printOptions = {columns: "all", rowCount: 100, orientation: "portrait"};
+```
+
+- `columns`: `"all"` for every column the column selection offers (also ones the user has hidden),
+  or the column keys to print, in that order.
+- `rowCount`: the maximum number of rows to print.
+- `orientation`: `"portrait"` or `"landscape"`.
+
+Options left out use the dialog's defaults: the saved print columns (or the visible ones), up to
+100 rows, portrait. Nothing is saved as print preference.
+
 ## Row value bindings
 
 Row templates bind in two ways, and the distinction is worth keeping straight:
@@ -151,9 +172,8 @@ extracts those styles and adopts them into the datagrid row shadow DOM.
 The `et2-styles` element can be anywhere inside the row template definition, not only inside `<row>`.
 Bare filenames such as `row.css` resolve relative to the `.xet` file containing the template.
 
-When row-template-local styles are present, the current application's `templates/default/app.css` is
-not loaded into the datagrid row shadow DOM. If the row template does not contain `et2-styles`,
-`app.css` is still loaded as a compatibility fallback.
+The application's `app.css` is never loaded into the datagrid row shadow DOM, with or without
+`et2-styles`. A row template without `et2-styles` gets only the framework row styles.
 
 Row-template-local stylesheets have these advantages:
 
@@ -192,8 +212,7 @@ Because the rows are managed by `et2-datagrid` inside its shadow DOM, you cannot
 * `et2-nextmatch::part(exported-part) { ... }` can style explicitly exported parts.
 
 For framework-level row styles, add to `Et2Nextmatch.row.styles.ts`. For app-specific row styles, use the app's
-row-template `et2-styles`. `templates/default/app.css` remains the fallback for row templates that have
-not been migrated.
+row-template `et2-styles`. `app.css` does not reach rows.
 
 For application rules generated at runtime, create a constructable stylesheet and add it through the nextmatch:
 
@@ -204,6 +223,27 @@ nextmatch.addRowStylesheet(style);
 ```
 
 The stylesheet is adopted after the static row styles and is retained if the row template is reloaded.
+
+### Greying Out Inactive Entries
+
+For an entry that is still listed but no longer in effect - a revoked application password, a deleted
+calendar event, a disabled policy - add the class `rowInactive` to the row. The framework row styles show
+it in a muted, italic font, the same in every app, so the app needs no CSS of its own for it.
+
+```php
+if ($row['token_revoked'])
+{
+	// "revoked" stays for the actions' enableClass/disableClass, "rowInactive" greys the row out
+	$row['class'] = 'revoked rowInactive';
+}
+```
+
+```xml
+<row class="$row_cont[class]">
+```
+
+Add `rowInactive` next to the app's own class rather than replacing it, since actions and app code
+usually key on the app's class.
 
 ### Highlighting an Overdue Entry
 

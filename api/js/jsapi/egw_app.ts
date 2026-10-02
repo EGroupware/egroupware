@@ -371,29 +371,59 @@ export abstract class EgwApp
 			}
 		}
 
-		// If there are filters set and we get 0 rows, open the filter drawer
+		// If there are filters set and we get 0 rows, open the filter drawer - unless the user turned that off
+		// (the preference is unset until someone opens the preferences page, so unset means on)
 		const nm : any = _ev.target ?? null;
-		const emptyFilter = (v : any) => typeof v == "object" && v ? Object.values(v).filter(emptyFilter).length : v;
-		if(Object.values(activeFilters).filter(emptyFilter).length !== 0)
+		const fwApp : EgwFrameworkApp = nm?.closest('egw-app');
+		const filterDrawer = fwApp?.filtersDrawer;
+		if(nm && filterDrawer && !filterDrawer.open && activeFilters &&
+			this.egw.preference('filters_auto_open', 'common') != '0' && this.nmHasFiltersSet(activeFilters, fwApp))
 		{
-			const filterDrawer = nm?.closest('egw-app')?.filtersDrawer;
-			if(nm && filterDrawer && !filterDrawer.open)
+			const openOnNoRows = (total : number) =>
 			{
-				// On load the rows are usually fetched before et2_ready() gets to run the sync, so
-				// et2-search-result has already been and gone and waiting for the next one never
-				// fires - take the count nm already has instead.  Only for a real filter change is
-				// nm.total still the count from BEFORE it, so there we do have to wait.
-				const total = parseInt(nm.total ?? '');
-				if(!isUserChange && !isNaN(total))
+				// The drawer shows the filters of the list on screen: an app keeping several lists loaded
+				// (eg. ProjectManager) must not have a hidden one's empty result open it over the visible one
+				if(total !== 0 || filterDrawer.open || fwApp.nextmatch !== nm)
 				{
-					filterDrawer.open = total === 0;
+					return;
 				}
-				else
-				{
-					nm.addEventListener('et2-search-result', (e : CustomEvent) => { filterDrawer.open = e.detail.total == 0;}, {once: true});
-				}
+				filterDrawer.open = true;
+				// Auto-closing and discardable, egw.message() offers neither a duration nor (from an app window) the discard
+				egw_getFramework()?.message(this.egw.lang('Nothing matches your filters. Change them here to see more entries.'),
+					'info', 10, true, 'common:filters_auto_opened');
+			};
+			// On load the rows are usually fetched before et2_ready() gets to run the sync, so
+			// et2-search-result has already been and gone and waiting for the next one never
+			// fires - take the count nm already has instead.  Only for a real filter change is
+			// nm.total still the count from BEFORE it, so there we do have to wait.
+			const total = parseInt(nm.total ?? '');
+			if(!isUserChange && !isNaN(total))
+			{
+				openOnNoRows(total);
+			}
+			else
+			{
+				nm.addEventListener('et2-search-result', (e : CustomEvent) => openOnNoRows(Number(e.detail.total)), {once: true});
 			}
 		}
+	}
+
+	/**
+	 * Check if the app considers any of the given nextmatch filters set
+	 *
+	 * Asks the same getFilterInfo() that decides the framework's filter button icon, so values an app
+	 * does not count as a filter (eg. filemanager's current directory, calendar's date span) do not
+	 * open the filter drawer either.
+	 *
+	 * @param activeFilters nextmatch filters
+	 * @param fwApp framework app the nextmatch is in
+	 */
+	protected nmHasFiltersSet(activeFilters : Record<string, any>, fwApp : EgwFrameworkApp) : boolean
+	{
+		// Work on a copy, some apps' getFilterInfo() delete what they do not consider a filter
+		const filters = JSON.parse(JSON.stringify(activeFilters));
+		const info = typeof fwApp?.getFilterInfo == "function" ? fwApp.getFilterInfo(filters, fwApp) : null;
+		return info?.icon == "filter-circle-fill";
 	}
 
 	/**

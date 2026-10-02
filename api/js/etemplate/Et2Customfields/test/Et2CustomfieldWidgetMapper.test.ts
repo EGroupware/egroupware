@@ -141,6 +141,23 @@ describe("Et2CustomfieldWidgetMapper", () =>
 		});
 		assert.notProperty(readonly?.attrs || {}, "searchOptions", "readonly links should not keep search options");
 
+		// importexport's filter sends its link columns typed link-entry, the app in only_app
+		const linkEntry = mapCustomfieldToWidget(
+			"pm_id",
+			{type: "link-entry", only_app: "project"},
+			"",
+			{context: "field", apps: {project: true}}
+		);
+		assert.equal(linkEntry?.tagName, "et2-link-entry");
+		assert.equal(linkEntry?.attrs.onlyApp, "project", "a link-entry field is restricted to its only_app");
+		const anyApp = mapCustomfieldToWidget(
+			"info_contact",
+			{type: "link-entry", only_app: ""},
+			"",
+			{context: "field", apps: {project: true}}
+		);
+		assert.equal(anyApp?.attrs.onlyApp, "", "an empty only_app leaves the app to choose");
+
 		const discovered = mapCustomfieldToWidget(
 			"cf_project",
 			{type: "project"},

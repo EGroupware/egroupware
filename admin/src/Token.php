@@ -224,7 +224,7 @@ class Token
 			$row['token_apps'] = Api\Auth\Token::limits2apps($row['token_limits']);
 			if ($row['token_revoked'])
 			{
-				$row['class'] = 'revoked';
+				$row['class'] = 'revoked rowInactive';
 			}
 			elseif (!$row['account_id'] && empty($row['token_hash']))
 			{

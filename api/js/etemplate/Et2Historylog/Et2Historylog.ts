@@ -13,6 +13,7 @@ import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
 import {styleMap} from "lit/directives/style-map.js";
 import {Et2Widget, loadWebComponent} from "../Et2Widget/Et2Widget";
+import {Et2LazyLoadController} from "../Et2Widget/Et2LazyLoadController";
 import {Et2Datagrid} from "../Et2Datagrid/Et2Datagrid";
 import {Et2RowProvider} from "../Et2Datagrid/Et2RowProvider";
 import {Et2NextmatchDataProvider} from "../Et2Nextmatch/Et2NextmatchDataProvider";
@@ -107,11 +108,18 @@ export class Et2Historylog extends Et2Widget(LitElement) implements NextmatchInt
 	columns : string | string[] = "user_ts,owner,status,new_value,old_value";
 
 	/**
-	 * Wait for the tab this sits on to be shown before loading anything.  On by default - a
-	 * history tab is rarely the one the user opens first.
+	 * Wait until this is actually being displayed before loading anything - not just the entries
+	 * but the row template too.  On by default: a history tab is rarely the one the user opens
+	 * first, and an entry's history is one of the more expensive things to fetch.
 	 */
 	@property({type: Boolean})
 	lazy : boolean = true;
+
+	/**
+	 * Tells us when this history log is actually being displayed, for `lazy` - see
+	 * `_loadWhenVisible()`.
+	 */
+	private _lazyVisible = new Et2LazyLoadController(this);
 
 	/** Grow to fit rows instead of scrolling internally.  See _resolveHeight(). */
 	@property({type: Boolean, reflect: true, attribute: "auto-height"})
@@ -402,41 +410,28 @@ export class Et2Historylog extends Et2Widget(LitElement) implements NextmatchInt
 	}
 
 	/**
-	 * Resolve immediately unless `lazy` is set and we are inside an inactive `<et2-tab-panel>`.
+	 * Run `load` right away unless `lazy` is set and this history log is not currently being
+	 * displayed - in that case, run it once it is.
 	 *
-	 * Same approach as Et2Nextmatch's own lazy handling, and as the legacy history log's - which
-	 * is where it started.
+	 * Same question, same answer as Et2Nextmatch's own lazy handling: `Et2LazyLoadController`
+	 * reads it off the element itself (`checkVisibility()`), which covers `display: none`
+	 * anywhere up the tree.  A history log on an unopened `<et2-tab-panel>` is the usual case and
+	 * Shoelace hides those with `display: none`, but it is not the only one - a dialog that
+	 * builds its whole widget tree up front and reveals a section later hides it just as well,
+	 * and this widget has no business knowing which of those it is.  An earlier version listened
+	 * for the enclosing `<et2-tabbox>`'s `sl-tab-show` instead - inherited from the legacy history
+	 * log this replaced, and still how the legacy nextmatch does it - and so handled only tabs.
+	 *
+	 * Handing `load` to the controller, rather than awaiting `whenReady` ourselves, lets printing
+	 * wait for it too - see Et2LazyLoadController.beforePrint().
 	 */
-	private async _whenLazyVisible() : Promise<void>
+	private _loadWhenVisible(load : () => Promise<void>) : Promise<void>
 	{
 		if(!this.lazy)
 		{
-			return;
+			return load();
 		}
-		const panel = this.closest("et2-tab-panel");
-		const panelName = panel?.getAttribute("name");
-		if(!panel || !panelName || panel.hasAttribute("active"))
-		{
-			return;
-		}
-		const group = panel.closest("et2-tabbox");
-		if(!group)
-		{
-			return;
-		}
-		return new Promise<void>(resolve =>
-		{
-			const handler = (e : CustomEvent) =>
-			{
-				if(e.detail?.name !== panelName)
-				{
-					return;
-				}
-				group.removeEventListener("sl-tab-show", <EventListener>handler);
-				resolve();
-			};
-			group.addEventListener("sl-tab-show", <EventListener>handler);
-		});
+		return this._lazyVisible.defer(load);
 	}
 
 	async firstUpdated(changed : PropertyValues)
@@ -458,8 +453,14 @@ export class Et2Historylog extends Et2Widget(LitElement) implements NextmatchInt
 		this._seedFilters();
 		this._buildRegistry();
 
-		await this._whenLazyVisible();
+		await this._loadWhenVisible(() => this._load());
+	}
 
+	/**
+	 * Load the row template, then the rows
+	 */
+	private async _load() : Promise<void>
+	{
 		// try/finally around the load: if the row template cannot be read the grid must stop
 		// claiming to be loading, or it sits on its spinner for the life of the dialog with no
 		// indication of what went wrong.

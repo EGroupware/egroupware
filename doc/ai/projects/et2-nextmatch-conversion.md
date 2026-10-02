@@ -9,333 +9,423 @@ generated component docs for
 [`et2-datagrid`](https://etemplate.egroupware.org/components/et2-datagrid/) — this document does not
 repeat that reference material.
 
-Apps converted so far: Addressbook, Infolog, Filemanager, Mail, Timesheet, Tracker, Home, Calendar,
-ProjectManager. Apps still on the legacy widget: Admin, Importexport, Aiassistant, Preferences.
-Non-core apps (Resources, News_admin, Smallpart, Schulmanager, Stylite, Kanban, ...) have never been
-on this list at all and still need one. Related in-flight/reference docs in the same directory as the
-widget source: `ColumnSelectionNotes.md`, `Et2DatagridDirectoryMigrationPlan.md`, `NestedExpansion.md`.
+How this document is organised: the [checklist](#conversion-checklist) is the procedure, and each step
+links to the reference and lessons it depends on. [Status by app](#status-by-app) says what is
+converted. [Lessons learned](#lessons-learned) collects what earlier conversions taught, by topic, so
+read the topics that apply to the app in hand. The reference sections hold the lookup tables. The
+[appendix](#appendix-removing-the-legacy-widget) is for whoever eventually deletes the legacy widget.
 
-Home's conversion is the favourite portlet (`home/templates/default/favorite.xet` +
-`Et2PortletFavorite.ts`), and with it every app's favourite-portlet row template — see
-[The Home favourite portlet](#the-home-favourite-portlet) below, which is where the other apps'
-portlet row templates are now covered.
+## Conversion checklist
 
-Addressbook's conversion covers every *reachable* list view the app itself owns: the main index
-(including its mobile skin), the org/duplicate grouped views, the CRM popup (`CRM.ts`), and the
-contact-picker popup. `index.rows.xet`'s Home-favorite-portlet variant came later, with Home's own
-conversion. One addressbook-owned template is still deliberately on the legacy widget:
+Do **not** split this across multiple commits by layer (template-only, then JS-only, etc.) — see
+[Why template + app-JS must land together](#why-template--app-js-must-land-together). Work through
+these in order, in one commit, then expect follow-up fixups.
 
-- `display.xet` (the Sitemgr "display" module, `class.addressbook_display.inc.php`) — this is a CMS
-  content-block view, only reachable when the `sitemgr` app is installed and a page/module is
-  configured to embed it. On an instance without `sitemgr` installed there is no way to load or
-  browser-verify this template at all (the menuaction silently redirects to Home instead of erroring),
-  so it was converted once, found untestable, and reverted rather than ship an unverified change to a
-  template with no test coverage. Convert it for real only alongside access to an instance that has
-  `sitemgr` installed and a page configured to use the module.
+0. **Find every nextmatch instance the app owns, not just the main list.** An app's "list view" is
+   often more than one `.xet` file: grouped/alternate views of the same list (e.g. an org/duplicate
+   view switched via a toolbar select), a print/display/merge view, a picker/select popup, a
+   secondary popup list driven by its own `app.ts`-sibling class (e.g. a "CRM"-style related-entries
+   view), and the app's own mobile-skin templates all commonly define their own `<nextmatch>` and
+   row templates independent of `index.xet`. `grep -rl "<nextmatch\b" <app>/templates/` (and the
+   equivalent JS grep from step 2, run across every file in `<app>/js/`, not just `app.ts`) before
+   considering the app converted — Addressbook's initial conversion commit only did the main index
+   and silently left five more templates plus a whole secondary `CRM.ts` widget class on the legacy
+   widget.
 
-Filemanager's conversion covers the main index (desktop + mobile skin), the tile view, the background
-jobs list (`jobs.xet`), and the shares list (`shares.xet`). `home.rows.xet` (the Home favorite-portlet
-variant) came later, with Home's own conversion.
+1. **Convert the `.xet` template(s).** Apply the mechanical renames in
+   [Template rename patterns](#reference-template-rename-patterns): tag renames, header markup
+   restructuring, row-value binding syntax fixes, `et2-styles` for row CSS. Check off each pattern
+   that applies to this app's templates; don't assume a pattern doesn't apply without checking.
+   Then check every tag left in the row template against `customElements` - `Et2RowProvider`
+   clones row cells **by tag name**, so an app-specific tag with no client-side registration
+   renders nothing at all, silently - see [Row widgets and row styling](#row-widgets-and-row-styling).
 
-Timesheet's conversion covers the main index (desktop + mobile skin). `index.rows.xet` (the
-Home-favorite-portlet variant, rendered through `timesheet_favorite_portlet.inc.php`) came later, with
-Home's own conversion.
+2. **Rewrite `app.ts`/`app.js` in the same commit.** Grep the app's JS for each of these and replace
+   per [Legacy API replacement table](#reference-legacy-api-replacement-table):
+   - `.controller.` (any access)
+   - `.options.settings.` / `.options.onselect`
+   - `.activeFilters` (direct mutation, not read)
+   - `_getPreferences(`
+   - `et2_extension_nextmatch_actions` (import)
+   - `_get_autorefresh(` / `_set_autorefresh(`
+   - `.set_onfiledrop(`
+   - jQuery `.on('refresh', ...)`
+   - `et2_nextmatch.DELETE` or other `et2_nextmatch.*` constants
+   A zero-result grep for a pattern means that pattern doesn't apply to this app — it does not mean
+   skip the step.
 
-Tracker's conversion covers the main index (desktop + mobile skin), the admin Escalations list
-(`escalations.xet`), and the comments/replies list embedded in the edit popup (`edit.xet`'s
-`tracker.edit.comments`/`tracker.edit.comment_row`, id `replies` — desktop only, the mobile edit
-template renders comments as a static loop with no nextmatch at all). `index.rows.xet` (the
-Home-favorite-portlet variant, rendered through `tracker_favorite_portlet.inc.php`, same `tracker.index.rows`
-template id as the real index but a separate file) came later, with Home's own conversion. The comments nextmatch also uses
-`lazy="true"` (see [Lazy loading a nextmatch that lives inside a tab](#lazy-loading-a-nextmatch-that-lives-inside-a-tab))
-so it doesn't fetch until the Comments tab is actually activated.
+3. **Check the settings allow-list.** For every `$content['nm'][key]` the app's own JS reads back via
+   `nm.settings.<key>`, confirm `key` is in `Et2Nextmatch.ts`'s `ALLOWED_SETTINGS`. See
+   [Settings allow-list](#reference-settings-allow-list). If it's missing, either add it there (it's
+   shared framework code — check with a reviewer first, per `AGENTS.md`) or read the value from
+   content directly (`this.et2.getArrayMgr("content").getEntry("nm[<key>]")`).
 
-Tracker had 4 `<et2-box class="action_popup prompt">` mass-action popups (`admin_popup`, `link_popup`,
-`assigned_popup`, `group_popup` in `templates/default/index.xet`). 3 of them (`admin_popup`,
-`assigned_popup`, `group_popup`) were converted to real `<et2-dialog>` elements per the action item
-below — all verified live against `nathan.egroupware.org`: `admin_popup`'s Update (real field change
-confirmed via `tr_modified`), `assigned_popup`'s Add/Delete (confirmed via `egw_tracker_assignee`
-rows), and all three dialogs' Cancel buttons (close without submitting, dialog stays reusable —
-`destroyOnClose="false"`). `group_popup`'s Ok button was also verified to submit the correct payload
-and take the correct code path, but its actual database write is blocked on this instance by a
-genuine, pre-existing, unrelated site configuration: `egw_config` has `tracker/field_acl` saved with
-`"tr_group":0`, i.e. this instance's admin has deliberately set the `tr_group` field ACL to "nobody
-may edit it" for the whole app, regardless of admin/technician status. `tracker_bo::readonlys_from_acl()`
-short-circuits on `!$rights` before ever calling `check_rights()`, so `is_admin()`/`is_technician()`
-being `true` is irrelevant once the field-level ACL itself is `0` — this is not a bug, just a config
-value that predates (or intentionally disables) mass group-reassignment. Not fixed, not in scope.
+   This step is about settings the app's **JS** reads back — it is not a licence to delete every
+   `$content['nm']` key that isn't on the list. Several are consumed server-side and deliberately never
+   sent to the client, `no_filter`/`no_filter2`/`no_cat` being the ones most likely to get pruned by
+   mistake; see [the filterbox and `filter-template.php`](#reference-the-filterbox-and-filter-templatephp).
 
-The 4th, `link_popup` (a picker to link/unlink selected entries to one target entry via the generic
-Link registry), was **deleted outright** instead of converted — see
-[Before converting a `link_popup`-style action, check for the auto-added "Link" action](#before-converting-a-link_popup-style-action-check-for-the-auto-added-link-action)
-below. Removed: the `<et2-dialog>` (never built, since the plain-box version was deleted directly),
-the `'link'` entry in `tracker_ui`'s action-tree (under `change.children`), the `case 'link':` block in
-`tracker_ui::action()` (which called `Link::link()`/`Link::unlink()` directly, bypassing per-entry
-edit-rights checks that the generic action's `Widget\Link::ajax_link()` does perform via
-`checkLinkAccess()` — a small permissions gap fixed as a side effect of the removal, not the reason for
-it), and `'link'` from `index()`'s `in_array($multi_action, [...])` composite-action-string list. Live
-re-verified after removal: the generic "Link" context-menu item still appears and links/unlinks
-correctly (`egw_links` rows confirmed appearing/disappearing), `assigned_popup` Add/Delete still works
-(same shared composite-action-string code path), and no new console errors.
+4. **If the app needs a per-request-varying column-preference key** (e.g. different visible columns
+   for two different views of the same row template), set `$content['nm']['columnselection_pref']` to
+   that key server-side, same as before. `Et2Nextmatch`'s `settings` setter forwards this to
+   `columnPreferenceName` automatically, re-deriving it on every settings update (not just first
+   load), so no special handling is needed on the app side for the persistence itself. Just confirm in
+   the browser (step 6) that column visibility persists correctly across a reload for each variant of
+   the view.
 
-Converting `assigned_popup` also surfaced a real sync bug between the filter drawer's `tr_tracker`
-control and the toolbar's `tr_assigned` picker (the picker needs to know which tracker queue is active
-to offer the right assignee list, but only the toolbar's own `tr_tracker` control used to update it —
-the drawer's copy, which shares the same widget id, didn't). Fixed by adding a `case 'tr_tracker':` arm
-to `app.ts`'s existing `checkNmFilterChanged()` — the generic handler that already fires for every
-`col_filter` key change regardless of which physical control (toolbar or drawer) changed it, since both
-write through the same shared id and the same `et2-filter` event. No new wiring was needed; the sync
-bug was really just a missing case in code that already ran on every relevant change.
+   **If the app's own PHP also reads that same preference back** (e.g. to decide whether an expensive
+   column is currently visible, the way Infolog does for `show_times`), make sure it re-derives the key
+   the same way it was computed for the current request, rather than reading it back off the AJAX
+   `$query` array. `Et2Nextmatch`'s row-fetch requests only resend filter-value settings (`filter`,
+   `filter2`, `cat_id`, `search`, `col_filter`, `searchletter`), not the whole settings object, so
+   anything else in `$query` — including `columnselection_pref` itself — can be one full-page-load
+   behind the current request.
 
-## ProjectManager
+5. **Add row CSS via `<et2-styles>`** if the app doesn't already have `rows.css`/`rows.less` loaded
+   this way. `app.css` never reaches the rows, so every row rule has to move there.
 
-ProjectManager's conversion covers all three of its list views - the project list
-(`projectmanager.list`), the element list (`projectmanager.elements.list`) and the pricelist
-(`projectmanager.pricelist.list`) - in both the default and mobile skins.
-`templates/default/list.rows.xet` (the Home favourite-portlet variant) came earlier, with Home's own
-conversion. It is the first app converted that shows **several nextmatches on one page**, which is
-where most of what follows comes from.
+6. **Verify in a browser**, watching the console the whole time (`.controller`/`.options` access
+   failures throw at first use, not at page load, so a quiet page load proves nothing):
+   - list loads, sorts, filters, selects rows
+   - bulk actions (delete, move, whatever the app has) work on both a partial selection and "select
+     all"
+   - any view switch the app has (row/tile/kanban/etc.) works and doesn't leave stale state
+   - column visibility/order/width persists across a reload, including for every distinct
+     column-preference key the app uses (see step 4)
+   - the filter drawer holds what it should: search, the Sorting select, the standard
+     `filter`/`filter2`/`cat_id` controls the app actually offers, and a Column Filters section matching
+     the row template's filtering headers. A filter that silently vanished usually means a `no_*` flag
+     or a header widget changed kind during the template conversion — see
+     [the filterbox and `filter-template.php`](#reference-the-filterbox-and-filter-templatephp)
+   - push/refresh notifications update the list correctly — first check *which* push mechanism the
+     app actually uses; not every app shares the generic `api.queue` long-poll (e.g. mail registers
+     its own IMAP push via `ajax_enablePush`). Confirming the registration call succeeds is not the
+     same as watching a real push event land and refresh the list — say explicitly which of the two
+     you verified. Don't conclude a transport is broken from one AJAX error either: a page
+     reload/navigation aborting an in-flight long-poll logs a failure indistinguishable from a real
+     one — retest against a fresh, idle load before drawing that conclusion.
+   - if the app has a mobile skin, verify it with real device/User-Agent emulation plus a reload, not
+     a resized desktop browser window (see `doc/ai/testing.md` § Browser / manual verification) —
+     EGroupware selects the mobile template server-side from the request's `User-Agent`, so a plain
+     resize just squeezes the desktop layout into a width it was never built for and can produce
+     scary-looking but meaningless collapses (e.g. row text rendering into a 0-width cell)
+   - a UI element that looks to be missing right after SPA-navigating into the app (as opposed to a
+     full page load) may just be a stale-view artifact, not a regression — confirm on a fresh reload
+     before reporting it
+   - the app header looks like the other apps': an Add button is a plain + icon,
+     `<et2-button-icon image="add" statustext="...">` with no label, in the app header
+     (`main-header`), not a labelled `<et2-button>` left over from a `header_left` template - see
+     [Layout and template structure](#layout-and-template-structure) for lists shown inside Admin
+   - toolbar controls that mirror an `nm` filter (a details/no-details toggle, a view-mode select,
+     etc.) show the *correct, persisted* state on a fresh page load, not just after the first click —
+     set a non-default filter value, reload, and confirm the control's displayed state already matches
+     `nm.activeFilters` before touching it. A control that looks right only after one "wasted" click is
+     a real bug class, not a quirk (Timesheet's details toggle); see
+     [Startup/lifecycle timing pitfalls](#reference-startuplifecycle-timing-pitfalls) below
+   - keep [Startup/lifecycle timing pitfalls](#reference-startuplifecycle-timing-pitfalls) in mind
+     while doing this — several of these bugs only show up on interaction, not on load
 
-- **An app that keeps more than one nextmatch alive has to mark the inactive ones' filterboxes
-  `hidden`, and nothing does that for it.** ProjectManager loads all four of its views at once and
-  swaps which one is displayed, so three `Et2Nextmatch`es exist side by side. Each builds its own
-  `<et2-filterbox>` and appends it to the nearest ancestor offering a `filter` slot
-  (`_ensureFilterbox()`), which for all three is the same `<egw-app>` - and the drawer's body is a
-  bare `<slot name="filter">`, so all three showed at once, stacked, with nothing saying which
-  belonged to the list on screen.
+7. **Budget for 1-3 follow-up fixup commits.** Every real conversion so far needed at least one; treat
+   the first commit as "converted, pending fixups," not "done."
 
-  The app-side hook for "which nextmatch is current" already exists and ProjectManager already had
-  it: `EgwFrameworkApp.getNextmatch` is a `@property({type: Function})` an app overrides, and Admin
-  overrides it the same way (`admin/js/app.ts`, keyed off its tree selection). **That hook is not
-  enough**, because it only feeds the drawer's label/icon, the column-selection button and the
-  `filters` getter - not what is *in* the drawer. Admin never hit this at all: `admin.index` is
-  still on the legacy `<nextmatch>`, which keeps its filters in its own header bar and never puts
-  an `<et2-filterbox>` in the app's filter slot.
+## Why template + app-JS must land together
 
-  **Use the `hidden` attribute, not CSS.** `EgwFrameworkApp.filters` is
-  `querySelector("et2-filterbox:not([hidden],[disabled])")` - that selector *is* the contract for an
-  app with several filterboxes, and it is also what the "Clear filters" button, the filter-set icon
-  and `getFilterInfo()` read. Hiding the inactive boxes with `style.display` instead satisfies the
-  eye and not the getter: verified live that the project list was on screen while `filters` resolved
-  to the element list's box, so all three of those read the wrong filterbox. Note the filterbox
-  needed `:host([hidden]) { display: none }` added (`Et2Filterbox.styles.ts`) before the attribute
-  did anything visually - its existing author-origin `:host { display: block }` beats the UA's own
-  `[hidden]` rule.
+Converting only the `.xet` template (and PHP, if any) is not sufficient. The app's own
+`app.ts`/`app.js` almost always contains code written against the legacy `et2_nextmatch` widget's
+public surface, and quite often private internals. A template-only conversion loads without error and breaks the first time the app's
+own JS calls one of those legacy methods. 
 
-  **Re-run the sync when a filterbox appears, not only on the view switch.** A nextmatch does not
-  create its filterbox until its filter template arrives, which is after the switch that should have
-  hidden it - so a one-shot pass leaves any view that was never displayed unhidden. ProjectManager
-  uses a `MutationObserver` on the `<egw-app>` node for this.
+## Automatic fallback for unconverted templates
 
-  **The drawer's row count goes stale across a view switch too.**
-  `EgwFrameworkApp.handleSearchResults()` correctly only takes a count from the current nextmatch,
-  but switching views produces no new search result - the list being shown already has its rows - so
-  the heading keeps counting the view you came from ("Filters: 3 entries" over a 5-row project
-  list). The app has to set `<egw-app>.rowCount` from the now-current nextmatch's `totalCount`
-  itself.
+`convertNextmatch()` in `api/etemplate.php` rewrites every `<nextmatch>` to `<et2-nextmatch>` in the
+copy of the template sent to the client, so an app nobody converted — ours or a customer's — still
+shows its list and data. It is a stopgap, not a conversion: an app running on it still needs this
+checklist.
 
-- **A legacy widget the server rewrites via a `type` modification renders nothing inside a row, and
-  registering the tag client-side is the fix.** ProjectManager's `<projectmanager-select-erole>` has
-  no client-side implementation at all: `projectmanager_etemplate_widget` (an
-  `Etemplate\Widget\Transformer`) maps its type to `et2-select`, which reaches the browser as a
-  `type` entry in the modifications array. Both `et2_core_widget`'s `createElementFromNode()` and
-  `Et2Widget.loadFromXML()` honour that entry *before* looking for a custom element, so outside a
-  row it has always resolved to `et2-select` - but `Et2RowProvider._cloneElement()` builds a row by
-  cloning elements **by tag name** and never consults modifications, so in a row the untouched tag
-  reached `document.createElement()` as an unknown element: in the DOM, inert, rendering nothing,
-  with no console warning. Registering the tag as a real custom element
-  (`projectmanager/js/ProjectmanagerSelectErole.ts`, extending `Et2Select`) fixes the row case and
-  changes nothing elsewhere, because the type modification still wins outside rows. Register a
-  `<tag>_ro` variant alongside it - `_cloneElement()` swaps any row widget for one when it exists,
-  and that is what a read-only row cell actually gets. **Grep an app's row templates for tags with
-  no `customElements.define()` before considering it converted**; this failure mode is completely
-  silent.
+- **How to tell:** the `.xet` source still says `<nextmatch>`, but the page has an `et2-nextmatch`.
+  The server keeps parsing the raw file, so server-side it is still the legacy widget.
+- **What it converts:** the mechanical template patterns only — `options=` → `template=`,
+  `header_left`/`header_right` → slots, `class="th"` on the header row, sortheader/customfields header
+  renames, `$field` row classes, leftover `options=` on row widgets, and a grid nested in a header or
+  row cell → `et2-vbox`/`et2-hbox` (row/column `disabled=` kept, column alignment lost).
+- **Opting out:** `<nextmatch legacy="true">` keeps the legacy widget for that nextmatch and its row
+  template — for an app whose JS breaks on the new widget and can't be converted yet.
+- **Known gaps:** app JS using the legacy API (`.controller`, `nm_action`, `.options.settings`, …) can
+  fail on first use; `fetchAll()` is the exception, it hands over to `fetchAllIds()`. A repeating grid
+  (`<grid id="${row}[…]">`, one row per array entry) can't be converted and its cell stays empty; the
+  console shows `Et2RowProvider: <grid …> in a row template is not supported` (Resources' accessories
+  column).
+- **As a starting point for a real conversion:** `php api/etemplate.php -i <app>/templates/default/<name>.xet`
+  now includes this rewrite. It also reformats the file (attribute spacing collapses, `>` becomes
+  `&gt;`, umlauts become `&#xF6;` entities, the `<?xml-model` line goes), so review the diff. Each
+  legacy header name becomes its own web-component: `nextmatch-header` -> `et2-nextmatch-header`;
+  `nextmatch-filterheader`, `nextmatch-taglistheader` and `nextmatch-filter` -> `et2-nextmatch-header-filter`;
+  `nextmatch-accountfilter` -> `et2-nextmatch-header-account`; `nextmatch-customfilter` with a `type=` ->
+  `et2-nextmatch-header-custom` (without one it is left for the server-side transformer);
+  `nextmatch-entryheader` and `nextmatch-entry` -> `et2-nextmatch-header-entry`; already converted
+  `et2-nextmatch-header-*` are left as they are (`api/tests/Etemplate/ConvertNextmatchHeadersTest.php`).
+  A sortheader's legacy `options=` becomes `sortmode=`, which is what it always meant: the default sort
+  direction, anything but `DESC` sorting ascending. That also happens for an already converted
+  `et2-nextmatch-sortheader` and when serving, as the web-component ignores `options=`. Run it in the container (`docker exec -u www-data -w
+  /var/www/egroupware egroupware php api/etemplate.php <path>`); without `-i` it prints the result.
 
-- **`<progress>`: the trailing `%` depends on the field.** Per the `<progress>` entry in the rename
-  patterns below, the value binding goes in `value=`/`title=`. ProjectManager needed
-  `title="$row_cont[pm_completion]%"` for the project list but `title="$row_cont[pe_completion]"`
-  for the element list - `pm_completion` arrives as `"7"` and `pe_completion` as `"7%"`. Check the
-  real row data rather than copying the sibling template; `value=` is unaffected either way, since
-  the HTML float parser stops at the `%`.
+## Status by app
 
-- **`add_existing` was a real `action_popup` and was converted, not deleted.** Unlike the
-  `link_popup` case below, `projectmanager_elements_ui::action()`'s `'add_existing'` links the
-  *picked* entry to the project the list is showing, ignoring the selected rows entirely - the
-  generic "Link" action does the opposite (links the selected rows to a picked target), so it is not
-  a replacement. Converted to a real `<et2-dialog>` with an `<et2-box id="add_existing_popup">`
-  inside it for the namespace and the buttons in the `footer` slot, exactly as Tracker's
-  `admin_popup`. The app's own `app.less` had `#projectmanager-elements-list_add_existing_popup
-  {display:none}` left over from the box version, which silently collapsed the new dialog's body to
-  zero height - **grep the app's CSS for the popup's id when converting one of these.**
+| App | Status | Covers |
+|---|---|---|
+| Addressbook | converted, verified | main index (desktop + mobile), org/duplicate grouped views, CRM popup, contact picker. `display.xet` (Sitemgr content block) is parked on the legacy widget: it is only reachable with `sitemgr` installed, so it cannot be verified here |
+| Infolog | converted, verified | main index (desktop + mobile) |
+| Filemanager | converted, verified | main index (desktop + mobile), tile view, `jobs.xet`, `shares.xet` |
+| Mail | converted, partly verified | main index (desktop + mobile); live push-triggered refresh not yet observed |
+| Timesheet | converted, verified | main index (desktop + mobile) |
+| Tracker | converted, verified | main index (desktop + mobile), Escalations, the edit popup's lazy comments list |
+| Home | converted, verified | the favourite portlet and every app's portlet row template, see [below](#the-home-favourite-portlet) |
+| Calendar | converted, verified | `calendar.list` (desktop + mobile) |
+| ProjectManager | converted, verified | project list, element list, pricelist (desktop + mobile) |
+| Admin | converted, verified | all nine lists, incl. push refresh |
+| Importexport | converted, verified | the definition list (shown inside Admin or Preferences), incl. its "Change" owner / allowed users dialogs |
+| Preferences | converted, verified | application passwords tab of the "Security & Password" popup |
+| Resources | converted, partly verified | resource list (incl. accessory links and the delete / un-delete dialogs) and category ACL list verified; mobile skin and Home's portlet row template not |
+| openid, webauthn | converted, partly verified | their "Security & Password" tabs and openid's client list in Admin; mobile skins and webauthn's Register (needs a real authenticator) not |
+| aitools, bookmarks, developer, esyncpro, invoices, kanban, news_admin, rag, records, smallpart | converted, verified | every list; esyncpro had no devices to show, smallpart's mobile courses list not checked |
+| policy | converted, not to be committed yet | popup printing fixed in kdots (`framework.print(window)` prints the popup); still needs its lists' `printOptions` set (replacing `_override_print_dialogs()`), and `Et2Tabs.beforePrint()` fixed, which throws for any template with tabs |
+| stylite | converted, partly verified | call history (empty here); Placetel VoIP destinations need a configured Placetel account |
 
-- **Three framework bugs this app's first review found, all of them things another conversion will
-  hit too.** (1) An `egw_open` action whose spec names no app - `'egw_open' => 'edit-'`, meaning
-  "take the app from the id", which is what a list holding rows from several apps uses - was a
-  silent no-op: `Et2NextmatchActionController.executeEgwOpenAction()` bailed on `if(!type || !app)`,
-  where the legacy `nm_action()` had no guard and `egw.open()` documents an empty app as supported
-  (it splits an `"<app>:<id>"` id itself). (2) The column-selection dialog listed a column by
-  `header.textContent`, preferred over `column.title` - fine until a header cell also holds a
-  widget showing data, at which point a column called "Status" is offered as "6.7%", because the
-  cell's rendered text is the column total sitting next to the sort header. (3)
-  `Et2DatagridPrintController.syncPrintFlowHeight()` pinned the printed row block to
-  `tbody.scrollHeight`, which counts the deliberate 250mm `padding-bottom` the print stylesheet adds
-  as somewhere for the last row to overflow into - declaring 4 rows that occupy 212px as a 1157px
-  block, roughly a page taller than they are, to be fragmented as though it had that much content.
+Still on the legacy widget: Addressbook's `display.xet` (Sitemgr only, see above), and
+Aiassistant's conversation list, skipped on purpose: nothing links to it, its row template fails
+server-side (`findLastRow()`) and its button handlers don't exist, with or without a conversion. Phpbrain
+(deprecated, to be replaced by the knowledgebase app) and Schulmanager (unused) are deliberately left
+out. They, and every customer template, *run* on `Et2Nextmatch` through the
+[automatic fallback](#automatic-fallback-for-unconverted-templates), but that is not a conversion.
+Related in-flight/reference docs in the same directory as the widget source: `ColumnSelectionNotes.md`,
+`Et2DatagridDirectoryMigrationPlan.md`, `NestedExpansion.md`.
 
-- **The mobile elements and pricelist templates had the nextmatch inside a `<grid>`**, the blocker
-  described in Calendar's section below. Both lifted to direct children of the index template,
-  following Addressbook's converted mobile skin, which keeps its own trailing `legacy_actions` grid
-  as a sibling.
+The checklist is based on these conversions; expect it to grow as more apps convert.
 
-## Calendar
+## Lessons learned
 
-Calendar's conversion covers its only list view, `calendar.list` (desktop + mobile skin).
-`calendar/templates/default/list.rows.xet` (the Home favourite-portlet variant) came earlier, with
-Home's own conversion. Things specific to this app, most of which generalise:
+What earlier conversions taught, by topic. Each entry is the rule, with the app it came from in
+parentheses. Where a reference section already has the full entry, the lesson links to it instead of
+repeating it.
 
-- **Take the `<et2-nextmatch>` out of any wrapping `<grid>` - it must be a direct child of the
-  index template.** Legacy `<nextmatch>` sat happily in a grid cell; `Et2Nextmatch` can not. A grid
-  is a real `<table>`, and a table cell does not constrain its child's height, so `Et2Datagrid` never
-  gets a bounded box to scroll inside: it grows to fit every row (456575px for 4565 rows here), the
-  page scrolls instead of the grid, and the virtualizer renders the whole result set as empty
-  placeholder rows. The legacy `grid` widget can not adopt a web component as a child either -
-  `Legacy widget grid[#] could not handle adding a child (ET2-NEXTMATCH)` in the console is the
-  same problem announcing itself. Every already-converted app has the nextmatch as a direct child
-  (`timesheet.index` is the clearest example); calendar's `calendar.list` and its mobile skin both
-  had to lose their wrapper grid, with the `css`/`msg`/`plus_button_container` widgets that shared it
-  becoming direct children carrying their own `disabled=` instead of relying on a `<row disabled=>`.
-  **Check for this before assuming a conversion is done: the symptom is a list that does not scroll,
-  which is easy to mistake for a styling problem.**
-- **The app already had a hand-written filterbox, so the filter drawer needed no work at all.**
-  `calendar/templates/default/filter.xet` is an `<et2-template slot="filter">` holding its own
-  `<et2-filterbox>`, exec'd as a separate etemplate by `calendar_ui`, and `app.ts`'s
-  `_setupFilterTemplate()` hands it the nextmatch once the list has loaded. `filter_template=""` on
-  the nextmatch tag suppresses the generated one. All of that predates the conversion and kept
-  working against `Et2Nextmatch` unchanged - `Et2Filterbox` handles either widget.
-- **`header_right`/`header_left` templates move into the nextmatch's own `header` slot**, as
-  `<et2-template id="<template.id>" slot="header"></et2-template>` children of `<et2-nextmatch>` -
-  the same mechanism `Et2PortletFavorite.applyHeaderTemplate()` uses, and the alternative to the
-  `slot="main-header"` route the reference section below describes. Note `<et2-template>` takes the
-  template name in **`id`**, not `template`, and `getWidgetById('<that id>')` then still finds it, so
-  existing app code that reaches for the header template by name keeps working (calendar's
-  `filter_change()` disables `calendar.list.dates` unless the date range is "custom").
-- **The delete/undelete `action_popup` boxes were dead markup and were deleted, not converted.**
-  Both `delete_popup` and `undelete_popup` (the "this recurrence or the whole series?" prompts) were
-  still in `list.xet`, styled hidden by `#calendar-list_delete_popup { display: none }` in `app.less`,
-  with buttons wired to the legacy `nm_submit_popup`/`nm_popup_action` globals - but nothing reaches
-  them any more: both the `delete` and `undelete` actions have had
-  `onExecute => javaScript:app.calendar.cal_delete` for a long time, and that runs
-  `et2_calendar_event.recur_prompt()` (a real dialog) plus an ajax call instead. Before converting an
-  app's action popups, check the action tree for an `onExecute` that has already replaced them.
-- **An `onExecute` handler that hands its action to the nextmatch has to be checked against the action
-  manager it actually came from.** Calendar has two: `ical()` and `cal_fix_app_id()`, both replacing
-  `nm_action(_action, ...)` with `nm.executeAction(id, {ids, all})`. `executeAction()` re-resolves the
-  action *by id* from the nextmatch's own manager, which matters because `calendar_uiviews` builds a
-  second action tree for the non-list views out of the same `calendar_uilist::get_actions()` array and
-  swaps some `onExecute`s. `ical()` only ever runs from the other views (so `_action` is a foreign
-  object, and re-resolving is exactly right); `cal_fix_app_id()` only ever runs from the list (so
-  `_action` *is* the nextmatch's own object, and the url it patches onto `_action.data` survives into
-  the execute). Get this backwards and a url rewrite silently goes nowhere.
-- **Setting the sort separately from the filter apply is the "rows fetched but never shown" bug.**
-  `filter_change()` used to call `nm.sortBy('cal_start', asc, false)` right after `update_state()` had
-  called `nm.applyFilters(state.state)`. Under `Et2Datagrid` that mutates `_filters` while the apply's
-  own fetch is in flight, changing the query signature, and the response is dropped as superseded with
-  no re-fetch (see the pitfall entry below). Fixed by folding `sort: {id, asc}` into the same object
-  passed to `applyFilters()`. **Any app whose filter-change handler also sorts needs this check.**
-- **`app.ts` code hung off a legacy setting round-trip can be dead already.** Calendar assigned
-  `nm.set_startdate`/`nm.set_enddate` to keep `state.first`/`state.last` in sync with what
-  `get_rows()` computed. Those setters are only ever called through `etemplate2`'s `assign` JSON
-  plugin (`widget['set_' + key](value)`), and **no PHP in the tree calls `Api\Json\Msg::assign()`** -
-  so they had been dead for as long as that was true. Removed rather than ported. Worth grepping for
-  `assign(` before porting any `set_<something>` the app defines on a widget rather than calls.
-- **The app-level autorefresh preference key was wrong, and converting surfaced it.**
-  `_set_autorefresh()` read `"nextmatch-" + nm.options.settings.columnselection_pref + "-autorefresh"`,
-  but calendar sets no `columnselection_pref`, so the key was literally
-  `nextmatch-undefined-autorefresh` and never matched what the column-selection dialog writes. Both
-  `Nextmatch.php` and `Et2NextmatchAutoRefresh` use `columnselection_pref ?? template`; app code that
-  reads the same preference must use the same fallback (`nm.settings.columnselection_pref ||
-  nm.template`). Calendar's own timer now only covers the non-list views - the listview's nextmatch
-  autorefreshes itself.
-  - This surfaced a gap in `Et2NextmatchAutoRefresh`, **fixed generically rather than per-app**:
-    legacy could stop the nextmatch's own poll while the listview sat hidden behind another calendar
-    view (`nm._set_autorefresh(0)`), but the controller only paused on the `<egw-app>` tab's
-    `hide`/`show` and on `document.visibilitychange` - neither of which fires when an app swaps
-    between two of its *own* views in one tab, or for a nextmatch in an inactive `<et2-tab-panel>` or
-    a collapsed section. `shouldRun` now also requires the host to actually be rendered
-    (`getClientRects().length` - not `offsetParent`, which is also `null` for a visible
-    `position: fixed` element), with a `ResizeObserver` on the host as the trigger, since that is the
-    one observer that reports a 0x0 box for a `display: none` element **without** also firing for a
-    grid merely scrolled out of the viewport, which should keep refreshing. The immediate
-    catch-up refresh a resume does is now gated on a timer having genuinely been armed before
-    (`hasRun`), so a grid that was simply not rendered yet at its first load does not stack an extra
-    full reload on top of the load it just did. Tests: `Et2NextmatchAutoRefresh.test.ts`.
-- **The sidebox "Documents" select was removed rather than repaired.** It had been dead in the list
-  view since `d24ca39d09`: `sidebox_merge()` looked up `'document_' + widget.getValue()`, one action
-  per document, which is how `Merge::document_action()` built them until that commit replaced the
-  nested per-document menus with the file-selection dialog. There has been exactly **one** merge
-  action with no children ever since, so the lookup returned `null` and the guard around it silently
-  did nothing. Repairing it also could not restore the old behaviour - `_getMergeDocument()` always
-  opens the dialog and has no pre-selection path, so the picked document could not be passed through
-  and the select would have become a bare trigger. Rows already carry the generic "Insert in
-  document" action, so the select, `sidebox_merge()`, and the `$sel_options['merge']` that fed it are
-  all gone. Note this does remove "merge the visible timespan" from the non-list views, where that
-  path did still work; the per-entry context-menu action is what remains.
+### Layout and template structure
 
-  Two things worth carrying to the next app. `Merge::document_action()`'s docblock still describes
-  the pre-2024 submenu-by-mime behaviour and its `$prefix`/`$default_doc` parameters are now unused,
-  so surrounding code reads as if per-document action ids still existed - check any merge call site
-  for that shape. And **don't reach into an `Et2Nextmatch`'s actions to run one.** The obvious port of
-  `nm.controller._actionManager.getActionById(id)` is to walk the global registry the way
-  `Et2NextmatchActionController.ensureActionManagers()` builds it (app manager -> a child named after
-  the etemplate's `uniqueId` -> a child named after the widget's `id`). It works, but it hands app
-  code a live, mutable `EgwAction` and silently returns `null` the day that nesting changes.
-  `Et2Nextmatch` deliberately exposes no accessor for its action manager, and adding one was
-  considered and **rejected** by the project owner - not wanting to make actions easier to mess with
-  is the point, not an oversight. `Et2Nextmatch.executeAction()` is not the alternative either: it
-  runs the framework's own default execute (`executeNextmatchAction()`, the `nm_action` switch) and
-  deliberately skips the action's `onExecute`, so it is the right replacement for a url/submit action
-  like `ical` and the wrong one for anything whose behaviour lives in a JS handler. Where an app
-  genuinely has to drive such an action, pass a plain action-shaped literal describing the work -
-  the shape `smallpartApp.mergeVideo()` uses - rather than fetching the real one.
-- **A CSS rule that hides something inside a web component stops working once that widget moves its
-  content into a shadow root.** `filter.xet` hid an `<et2-iframe>` - the fallback target
-  `CalendarApp.linkHandler()` uses for calendar urls that are not one of the ajax views - with
-  `#calendar-filter_calendar-filter iframe { display: none; }`. The real `<iframe>` now lives in
-  `Et2Iframe`'s shadow root, which that light-DOM descendant selector can never reach, so a large
-  empty box sat in the filter drawer. Fixed by giving the widget `disabled="true"` (what
-  `admin.index`'s identical iframe does) rather than styling it. Note the fallback itself is
-  separately broken and was left alone: `linkHandler()` looks the iframe up via
-  `this.sidebox_et2.getWidgetById('iframe')`, but it lives in `calendar.filter`, a different
-  etemplate, so the lookup returns null and the branch bails out.
-- **An app whose filters are never empty needs its own `getFilterInfo`, or the filter button stays lit
-  forever.** `EgwFrameworkApp._filterTemplate()` picks the icon by running the *filterbox's* value
-  through `filterInfo()`, which shows `filter-circle-fill` if any value survives a plain truthiness
-  check (`sort` and `search_type` are the only keys it drops). Calendar always has a date range
-  (`filter`, never blank - a list of events covers some span, and `update_state()` re-derives one
-  from the current dates whenever it is cleared) and a participation-status filter whose default
-  value is the literal string `"default"`. Both count as "set", so the icon was lit on a fresh load
-  and "Clear filters" could not turn it off. `EgwApp.getFilterInfo` exists for exactly this - it is
-  bound onto the framework app by `et2_ready()` - so calendar's (which already existed, adjusting the
-  tooltip) now drops `filter` unless it is `custom` and `status_filter` when it is `default` before
-  delegating. **Worth checking for any app with a control that has no empty state.**
+- **The `<et2-nextmatch>` must be a direct child of the index template, never inside a `<grid>`.** A
+  grid is a `<table>`, and a table cell does not bound its child's height: the datagrid grows to fit
+  every row, the page scrolls instead of the grid, and the virtualizer renders the whole result as
+  empty placeholders. The console also says `Legacy widget grid[#] could not handle adding a child
+  (ET2-NEXTMATCH)`. Widgets that shared the wrapper grid become direct children with their own
+  `disabled=` (Calendar, ProjectManager's mobile skin). The symptom is a list that doesn't scroll,
+  easy to mistake for a styling problem.
+- **A list that shares its template with other widgets needs `layout="stack"`, plus one CSS rule for
+  now** (the [pitfall entry](#reference-startuplifecycle-timing-pitfalls) has the why). `grow="1"`
+  doesn't reach the DOM from a `.xet`: `transformAttributes()` only sets an attribute for a reflecting
+  property, so `[layout="stack"] [grow]` never matches. Keep `grow="1"` in the template anyway and add
+  `et2-template[layout="stack"] > et2-nextmatch { flex: 1 1 auto; min-height: 0 }` to the app CSS. The
+  upstream fix is to reflect `grow`, or to add `et2-nextmatch` to `GROW_TAG_SELECTOR` in
+  `Et2LayoutStrategies.ts`. In a popup, give the etemplate container a height too (Admin).
+- **`et2-template` lays out its children inside a `<div part="base">` in its shadow root**, so that
+  div is the flex container, not the element. Its `id` attribute is `<dom id>_<template name>`, so
+  `[id="admin.accesslog"]` matches nothing (Admin).
+- **Legacy `header_left`/`header_right` templates move into a slot** of the nextmatch:
+  `<et2-template id="<template id>" slot="header">` (the name goes in `id`, not `template`, and
+  `getWidgetById()` still finds it by that name) (Calendar), or `main-header`, see the rename patterns.
+- **A list another app shows inside Admin gets its Add button into Admin's header** the way
+  Admin's own lists do: a `<template id>.header` template with `slot="main-header"`, plus
+  `app.admin.enableAppToolbar(et2, name)` from the app's `et2_ready()`, which moves it into the
+  `<egw-app>` and hides it again when Admin shows something else (openid, aitools, Filemanager's
+  jobs). If the same list can also be shown elsewhere (Importexport's in Preferences, for users
+  without admin rights), nothing moves the header there, so put it into the nextmatch's `header`
+  slot instead. Either way, make it a + icon (`<et2-button-icon image="add">`), not a labelled button.
+- **Keep a footer widget a sibling of the nextmatch, not in its `footer` slot**, unless its value
+  lives in the nextmatch's namespace: children of `<et2-nextmatch>` read `$content['nm'][...]`
+  (Admin's access-log percentage went blank).
+- **Replace `class="hide"` plus `set_disabled()` with `disabled=`.** `Et2Widget.set_disabled(false)`
+  clears `hidden`, which can't beat a `.hide` class still on the element, so the widget never
+  reappears (Admin's group list). Grep converted templates for `class="hide"`.
+- **On `<row class=>`, bind with `$row_cont[field]`, not `$field`**: the bare form logged "Error
+  compiling PHP $status_class" and set no class (Admin).
+- **A CSS rule that hides something inside a web component stops working once the component moves
+  its content into a shadow root** (Calendar's filter-drawer iframe). Use the widget's `disabled=`.
 
-- **"Clear filters" returning an empty list is a measurement artifact, not a bug.** Checked twice
-  (2026-09-14): the row count dips to 0 only while the reload it triggers is in flight, and settles
-  back to the full count - polling for 14s after a clear shows it never even dips. Worth knowing
-  because `EgwFrameworkApp`'s clear does `filters.value = {}` then `applyFilters()`, and calendar's
-  `update_state()` re-derives `filter`/`status_filter` right afterwards, so a snapshot taken between
-  those two can show anything. Take a settled reading, not a single one.
-- **Two known-broken-but-unrelated things found while verifying, both left alone**:
-  `<et2-description value="#%s" id="${row}[id]">` renders `46`, not `#46` - `Et2Description.set_value()`
-  tests and substitutes into `_value` itself (`_value.replace(/%s/g, _value)`) where legacy
-  `et2_description` used `this.options.value` as the format string, so the "value is a format string
-  for the bound content" feature is simply gone on the web component, for every app. And
-  `CalendarApp._sortable()` throws (`Sortable: el must be an HTMLElement, not null`) on any
-  `update_state()` reached before `calendar.view` has loaded - e.g. navigating straight to
-  `calendar.calendar_uilist.listview` - which leaves `state_update_in_progress` stuck `true` and makes
-  every later state update a silent no-op. Neither is caused by, or fixed by, the conversion.
+### Row widgets and row styling
 
-## The Home favourite portlet
+- **Every tag in a row template needs a client-side custom element.** `Et2RowProvider` clones row
+  cells by tag name and never consults the server's `type` modifications, so a server-transformed tag
+  renders nothing, silently (ProjectManager's `<projectmanager-select-erole>`, Admin's
+  `<customfields-types>`). Register a custom element, plus a `<tag>_ro` variant, which is what a
+  read-only cell gets. Or, if the app already publishes the options, use a plain
+  `<et2-select readonly="true">` (Admin). Grep the row templates for tags with no
+  `customElements.define()`.
+- **A nested repeating `<grid>` in a row cell is inert**: the row provider has no autorepeat
+  (Resources' accessories column). It needs a widget the row provider understands, or a flat field
+  from the server.
+- **Row CSS moves to `rows.css` behind `<et2-styles>`, keyed on classes**: see the pitfall entry
+  "`app.css` never reaches the rows". Rules keyed on generated widget ids
+  (`span[id^="admin-index"]...`) or legacy grid markup (`tr.x td`, `.egwGridView_outer`) don't survive
+  either (Admin). `et2-image`/`et2-appicon` keep their `<img>` in the light DOM, so a class on the host
+  needs `.cls, .cls img`.
+- **Category colour goes in the row's class, not in a column of its own**: see the pitfall entry.
+- **Check a `<progress>` field's real format before adding `%`**: `pm_completion` arrives as `7`,
+  `pe_completion` as `7%` (ProjectManager).
+- **Header-less row templates (an empty `<row class="th">`, most mobile skins) save no column state.**
+  Their columns only have positional keys (`col0`, ...), which name a different column as soon as the
+  template adds or removes one, and nobody can resize them anyway.
+- **Give every column header a widget with an `id`.** A plain `<et2-description value="News">` as
+  header leaves the column with a positional key (`col0`), and a saved column preference for `col0`
+  can hide it for good - News' main column was invisible, under the legacy fallback as well. An
+  `<et2-nextmatch-header id="news" label="News">` gives it a stable key (News).
+- **An `et2-link`/`et2-link-string` entry only opens with a string id.** `Et2Link._handleClick()`
+  gives up when `entryId` is a number, so a server-built `[{app, id, title}]` list needs
+  `'id' => (string)$id` (Resources' accessory links).
+- **`<column width="…em">` doesn't work yet**: the unit is dropped (`6em` becomes `6px`). Use px.
+- **`<et2-description value="#%s">` no longer formats**: the web component substitutes into its own
+  value and renders `46`, not `#46` (Calendar). Not fixed; don't rely on it.
+
+### Several lists on one page
+
+- **Each `Et2Nextmatch` appends its own filterbox to the `<egw-app>`, so the app must mark the
+  inactive ones `hidden`.** Use the attribute, not CSS: `EgwFrameworkApp.filters`, and with it "Clear
+  filters", the filter icon and `getFilterInfo()`, is
+  `querySelector("et2-filterbox:not([hidden],[disabled])")`. Sync on every view switch, once
+  immediately (Admin's boxes already existed at `et2_ready()`), and from a `MutationObserver` on the
+  `<egw-app>`, since a filterbox only appears once its filter template arrives (ProjectManager, Admin).
+- **Override `EgwFrameworkApp.getNextmatch` to return the list on screen**, from the app's own view
+  state (ProjectManager's view, Admin's tree value). The drawer label, column selection and the
+  filter drawer's auto-open all use it.
+- **On a view switch, set `<egw-app>.rowCount` from the current nextmatch's `totalCount`**: the switch
+  produces no new search result, so the drawer heading keeps the old count (ProjectManager).
+- **Don't find "the" nextmatch with `getWidgetById('nm')`**: ids differ per list (Admin's tokens list
+  is `token`). Query `et2-nextmatch` in the DOM.
+- **A list loaded on demand needs `lazy="true"`, not just `num_rows => 0`.** `lazy` defers the fetch
+  until the nextmatch is actually displayed (inactive tab, `disabled`, an app's hidden view). If the
+  app also refreshes on show, skip the first show, which already is the initial fetch (Admin's group
+  list).
+
+### Filters and the filter drawer
+
+- **A nextmatch in a popup gets no filterbox**: put its controls in the nextmatch's `header` slot,
+  see the [filterbox reference](#reference-the-filterbox-and-filter-templatephp) (Admin's ACL popup).
+  Or, if its row template already has filter headers, keep them in the column headers with
+  `replaceFilters="false"` on the `<et2-nextmatch>`: `api/etemplate.php` otherwise turns every filter
+  header into a plain label when serving the template, expecting the filterbox to take over. The
+  attribute is live, not legacy - it was dropped once as "unused" and the popup lost its filters
+  (Preferences' application passwords, openid's access tokens, Policy's history).
+- **A nextmatch in a tab added through `extraTabs`** (the hook-provided tabs of Preferences' "Security
+  & Password" popup) used to fail every fetch after the page's own rows - sorting, paging, refresh -
+  with "Unknown nextmatch/historylog widget": the tab is only attached to the template while it runs,
+  so `Nextmatch::ajax_get_rows()`'s `getElementById()` could not see it. Fixed in `33dff7dff2`:
+  `Nextmatch::getExtraTabsElementById()` searches only the extraTabs stored in the request's
+  modifications, and only at the exact namespaced `form_name`.
+- **An app with its own `slot="filter"` template needs no drawer work** (Calendar).
+- **An app whose filters are never empty needs its own `getFilterInfo`**, or the filter icon stays lit
+  and "Clear filters" can't clear it. Calendar always has a date range and a status filter defaulting
+  to `"default"`; its `getFilterInfo` drops those before delegating.
+- **Fold a sort into the same `applyFilters()` call.** A separate `sortBy()` straight after
+  `applyFilters()` changes the query signature mid-fetch, and the response is dropped as superseded
+  (Calendar); see the pitfall entry on `_filters` mutation.
+
+### Actions and popups
+
+An action with `'nm_action' => 'open_popup'` opens the element whose id contains `<action id>_popup`.
+`Et2NextmatchActionController.openActionPopup()` expects that element to **be an `<et2-dialog>`**: it
+sets `.selectedIds` and calls `.show()`. For a legacy box popup (`<et2-box class="action_popup prompt">`,
+shown and hidden by CSS) it delegates to the legacy `nm_open_popup()`, which upgrades the box into a
+dialog at runtime. That delegation is a stopgap that keeps `et2_extension_nextmatch_actions.js` in use;
+the goal is for every converted app to ship real dialogs. If no matching element exists at all, the
+action falls through to a plain form submit with whatever the fields hold, which is a silent no-op at
+best.
+
+**Action item for every conversion:** grep the app's list templates for `action_popup`/`prompt` boxes
+and convert them to `<et2-dialog>`s in the same commit. Put the fields in an `<et2-box id="<action>_popup">`
+inside the dialog (for the namespace) and the buttons in its `footer` slot. The buttons are the hard
+part: a box popup's buttons rely on `nm_open_popup()` setting the `window.nm_popup_action`/
+`nm_popup_ids` globals for `nm_submit_popup()`, and a real dialog skips that upgrade, so each button's
+onclick has to submit without those globals (Tracker's `app.tracker.submit_popup()`, Admin's
+`app.admin.submit_popup()`). Also grep the app's CSS for the popup's id: a leftover `display:none` from
+the box version collapses the new dialog's body to nothing. Check the mobile skin too: if an
+`open_popup` action is not `hideOnMobile`, the mobile list template needs the dialog as well.
+
+**State of the converted apps (2026-10-01):** no legacy box popups and no `nm_submit_popup`/
+`nm_hide_popup`/`nm_open_popup` calls are left in their list templates. Every `open_popup` action has a
+real dialog on desktop: InfoLog `startdate`/`enddate`/`responsible`, Tracker `admin`/`assigned`/`group`,
+ProjectManager `add_existing` (desktop and mobile), Admin categories `owner` (desktop and mobile),
+Importexport `owner`/`allowed`. On
+mobile, InfoLog's and Tracker's "Change" submenus are `hideOnMobile`, so their dialogs are not needed
+there, and Tracker's top-level "Multiple changes" (`admin`) is `hideOnMobile` as well, since the mobile list
+has no `admin_popup_dialog`.
+
+- **Size a dialog with `::part(panel)` CSS, not `width=`.** In a `.xet`, `width=` on any web component
+  becomes the host's inline CSS `width` (`loadWebComponent()`), so it never reaches `Et2Dialog.width`.
+  `et2-dialog.<class>::part(panel) { width: 40em }` in the template's `<et2-styles>` works
+  (Importexport).
+- **A multiple select's value comes in option order, not in click order.** `sl-select` builds it from
+  its selected options. App code that treats the last value as the one just picked, eg. to keep
+  "Just me"/"All users" exclusive of groups, has to compare with the previous value instead
+  (Importexport's `allowed_users_change()`).
+- **Check whether a popup is still reachable before converting it.** Calendar's `delete_popup`/
+  `undelete_popup` boxes had long been replaced by `onExecute` handlers (`app.calendar.cal_delete`, a
+  real dialog plus an ajax call) and were deleted, not converted.
+- **Don't reach into an `Et2Nextmatch`'s action manager.** It deliberately has no accessor (a decision,
+  not an oversight). `nm.executeAction(id, {ids, all})` runs the framework's default execute and skips
+  the action's `onExecute`, so it replaces an `nm_action(...)` call for a url/submit action but not a
+  JS-handled one. It also re-resolves the action by id from the nextmatch's own manager, which matters
+  when an app builds a second action tree from the same array (Calendar's non-list views). Where app
+  code has to drive a JS-handled action itself, pass a plain action-shaped literal, as
+  `smallpartApp.mergeVideo()` does.
+
+#### Before converting a `link_popup`-style action, check for the auto-added "Link" action
+
+EGroupware's action framework already auto-adds a generic "Link" context-menu action to **every** app
+whose entries are registered in the cross-app Link registry (i.e. the app's `setup.inc.php` has a
+`hooks['search_link']` entry) — see `EgwPopupActionImplementation._addLinkAction()`
+(`api/js/egw_action/EgwPopupActionImplementation.ts:968`), wired into every popup/context menu's
+`_buildMenu()` (`:636`) and gated only on `egw.link_get_registry(app, 'query'|'title')` returning
+something. It opens `LinkAction.open()` (`api/js/etemplate/Et2Link/LinkAction.ts`): a small dialog to
+pick one target entry via `<et2-link-entry>`, then Add (link) or Remove (unlink) every currently
+selected entry — including a proper "select all" (`nextmatch.fetchAllIds()`), per-entry success/failure
+reporting, and a real per-source edit-rights check (`Widget\Link::checkLinkAccess()`, called once per
+source entry inside `Widget\Link::ajax_link()`/`ajax_delete()`) — all via `jsonq()`, no page reload.
+
+If an app being converted has its own hand-rolled `link_popup`/`link_action`-style mass-action (a
+`<et2-link-entry>` plus Add/Delete buttons, backed by the app's own `case 'link':` in its `*_ui::action()`
+that calls `Link::link()`/`Link::unlink()` directly), **check whether it can just be deleted** instead of
+converted to a `<et2-dialog>`. Not every link-like popup is a duplicate, though: ProjectManager's
+`add_existing` links the *picked* entry to the project on screen, ignoring the selected rows, which
+is the opposite direction of the generic action, so it was converted:
+
+- Confirm the app is actually in the Link registry (it almost certainly is, if it has its own link
+  action at all) — `grep -n "search_link" <app>/setup/setup.inc.php`, or check live via
+  `egw.link_get_registry('<app>', 'query')` in the browser console.
+- Confirm live that right-clicking a row already shows a top-level "Link" item (with the link icon) —
+  if the app's own action is nested under a submenu (Tracker's was under "Change"), the two coexist
+  without colliding, so this is safe to check on an unconverted app too, before doing anything else.
+- **Check for anything the app's own `case 'link':` does that the generic action does not**, before
+  deleting it — Tracker's had nothing extra (it did no edit-rights check at all, which the generic action does), but another
+  app's version might: an extra confirmation, a restriction to certain link types/apps, a side effect
+  (e.g. also notifying someone, or writing to the app's own audit/history log), or a different rights
+  model for who may link vs. unlink. Losing a silent app-specific restriction is easy to miss since
+  both the old and new action "work" from the end user's point of view — the only way to catch a
+  difference is reading the old handler's full body once before deleting it, not just diffing behavior
+  in a manual click-test.
+- If it does turn out to be pure app-specific reproduction of the generic behaviour, delete: the popup
+  markup, the action-tree entry, the `case 'link':` handler, and anywhere the app's own JS/PHP builds a
+  composite `<action>_<verb>_<value>` string specifically for `'link'` (Tracker had this in the
+  `in_array($multi_action, [...])` block in `tracker_ui::index()`, shared with `assigned`/`group` —
+  remove only the `'link'` member and its `is_array()` special-case, not the whole block).
+
+### Preferences, refresh and push
+
+- **App code that reads a nextmatch preference must use the framework's key fallback,
+  `columnselection_pref ?? template`** (Calendar read `nextmatch-undefined-autorefresh`).
+- **A `set_<x>` method an app defines on the widget may already be dead**: those are only called by
+  the JSON `assign` plugin, which no PHP uses (Calendar's `set_startdate`/`set_enddate`). Grep for
+  `assign(` before porting one.
+- **Verify push with a change made in another session.** A refresh in the editor's own session proves
+  little: account searches used to be cached per session, so only other sessions got stale rows
+  (fixed by `Accounts::__wakeup()`, Admin).
+
+### The Home favourite portlet
 
 Home's "favourite" portlet renders another app's list inside a small tile, so converting it converts a
 piece of every app at once. It is one template (`home/templates/default/favorite.xet`), one widget class
@@ -386,372 +476,17 @@ Portlet-specific things that do not come up when converting an app's own list:
   accessory sub-list was the one instance; it now needs either a repeating widget the row provider
   understands or a flat server-provided field.
 
-## Status
+### Testing a conversion
 
-In progress. The checklist below is validated against five real conversions (see the reference
-sections for the evidence each item is based on). Expect it to grow as more apps convert.
+Checklist step 6 has the full list. In addition:
 
-## Legacy-only interfaces: `et2_INextmatchHeader` / `et2_INextmatchSortable`
-
-Both interfaces stay in `et2_extension_nextmatch.ts` and **are deleted along with it** - they are
-the legacy widget's contracts with its headers, and `Et2Nextmatch` drives neither. Verified, not
-assumed:
-
-- `Et2Nextmatch.ts` never mentions either interface, and never calls `implements()` or
-  `iterateOver()` at all. It finds its sort headers by tag name
-  (`querySelectorAll("et2-nextmatch-sortheader")`) and duck-types `setSortmode()`.
-- `setNextmatch()` has exactly one caller in the whole tree, in `et2_extension_nextmatch.ts`
-  itself. Every `setNextmatch()` implementation on an `Et2Nextmatch/Headers/*` widget, and the
-  `nextmatch` field each keeps, exists only so that header still works inside a legacy
-  `<nextmatch>`.
-- `et2_INextmatchSortable` has no consumer outside the legacy widget whatsoever.
-
-**They were deliberately not moved to a neutral module**, because moving them buys nothing. Seven
-of the eight `api/js` files that import them use them only in an `implements` clause, and the
-project's Babel pipeline (`@babel/preset-typescript`) erases an import that survives only in type
-positions - those files emit no import statement at all, so they never depended on the legacy
-module at runtime. (The same is true in reverse: `et2_extension_nextmatch.ts`'s own
-`import {Et2Filterbox}` is a type annotation plus a type *assertion*, so it is erased too.)
-
-The one exception was `Et2Filterbox`, whose `originalWidgets="replace"` branch used the `const` as
-a **value** - and that single import was enough to pull the entire ~4600-line legacy module in
-wherever a filterbox loads. Since `implements()` takes a plain string (see
-`et2_core_inheritance.ts`), that is now written as `widget.implements("et2_INextmatchHeader")` with
-no import, which is the whole of the real decoupling here. The registry entry it looks up is
-registered by `et2_extension_nextmatch.ts`, which `etemplate2.ts` always loads.
-
-**When the legacy widget is deleted**, delete with it: both interfaces and their
-`et2_implements_registry` entries; the `implements et2_INextmatchHeader` /
-`implements et2_INextmatchSortable` clauses and `setNextmatch()` implementations on
-`Headers/Header.ts`, `Headers/FilterMixin.ts`, `Headers/FilterHeader.ts`,
-`Headers/AccountFilterHeader.ts`, `Headers/EntryHeader.ts`, `Headers/SortableHeader.ts` and
-`Et2Favorites.ts`; `Et2Filterbox`'s `implements("et2_INextmatchHeader")` check (note that the
-`"replace"` case then falls through to `"delete"`, which is the intended end state - the widgets
-it finds by tag name are header widgets by construction, so the check only ever did real work for
-widgets scraped out of the legacy header bar); and `Et2Filterbox`'s local
-`LegacyNextmatchInternals` type with the `header` / `template_promise` guards that use it.
-
-What does **not** go is `Et2Nextmatch/NextmatchInterfaces.ts` - see below.
-
-## `NextmatchInterface`: what the widgets around a nextmatch may rely on
-
-`api/js/etemplate/Et2Nextmatch/NextmatchInterfaces.ts` holds `NextmatchInterface` and
-`NextmatchActiveFilters`, the shape a header, filter or favourite widget sees. Both
-`et2_nextmatch` and `Et2Nextmatch` declare `implements NextmatchInterface`, so anything added to
-it has to exist on both.
-
-This replaced `et2_nextmatch` type annotations in `Headers/Header.ts`, `Headers/FilterMixin.ts`,
-`Et2Favorites.ts` and `Et2Filterbox.ts`. Those annotations were not merely a needless import -
-they were **wrong**: `Et2Filterbox` genuinely drives both widgets, duck-typing `getDOMNode()`,
-`getChildren()` and `updateComplete`, and carried six `@ts-ignore`s papering over the mismatch.
-Three of those are now gone, along with two real pre-existing errors (`activeFilters.sort` did not
-exist on the legacy `ActiveFilters` type, which this replaced).
-
-**Re-export it with `export type`, not a plain `export`.** `NextmatchInterface` and
-`NextmatchActiveFilters` are types, so Babel strips them and the compiled module has no runtime
-export of either name; `et2_extension_nextmatch.ts` re-exporting them as values fails the rollup
-build with *"'NextmatchInterface' is not exported by ... NextmatchInterfaces.ts"*. `npm run
-typecheck` does **not** catch this - tsc is happy, because in TypeScript's view the names do exist.
-Only a real `npx rollup -c` finds it, which is worth remembering for any future type-only module.
-
-Two things to know if you extend it:
-
-- `NextmatchActiveFilters` is a **type alias, not an interface**, on purpose. Only aliases get
-  TypeScript's implicit index signature, and without it the two implementations - one typed with
-  named filter keys, one returning a plain `Record<string, any>` - cannot both satisfy it without
-  a cast.
-- `options` is on the interface but marked `@deprecated`. Both widgets have it (the webComponent
-  via `Et2Widget`'s compatibility getter, which rebuilds it on every access and logs a
-  deprecation trace), and a couple of callers still index it by name. Prefer real properties.
-
-## `ExposeMixin`'s gallery, and the row API it needed (fixed 2026-09-14)
-
-`api/js/etemplate/Expose/ExposeMixin.ts` - the gallery/lightbox mixin used by `Et2VfsMime.ts`
-(filemanager's file-thumbnail widget), `Et2Link.ts`, `Et2LinkList.ts`, `Et2ImageExpose.ts`, and
-`Et2DescriptionExpose.ts` - finds the containing grid so the gallery can sync navigation to it
-(`find_nextmatch()`). It only ever recognised the legacy `et2_nextmatch` widget, so the whole
-gallery-to-grid sync was dead code in filemanager - the one app the feature was written for - from
-the moment filemanager converted. Two separate things had to change, and doing only the first would
-have made it worse: detection returning a grid whose `controller` does not exist turns a silent
-no-op into a `TypeError`.
-
-**Detection now walks the composed DOM tree, not the widget tree.** `find_nextmatch()` used to climb
-`getParent()` and test `instanceOf(et2_nextmatch)`, which is always `false` for an `Et2Nextmatch`
-(the two widgets are unrelated class hierarchies). The widget tree is not usable here at all:
-`Et2RowProvider`/`Et2DatagridRowRenderer` hydrate row widgets without ever calling `setParent()`, so
-a row widget's `getParent()` is `null`. The walk now goes up `parentNode`, hopping to
-`(node as ShadowRoot).host` at each shadow boundary, until it reaches an `<et2-nextmatch>` - which is
-also the only way out of the row widget's own shadow root, something `closest()` cannot do.
-
-**A row widget gets detached while its gallery is open.** Opening the gallery applies a mime
-`col_filter` so the grid only holds media, and that reload can replace the very row the clicked
-widget was rendered into. The widget keeps working (the gallery is driven from it), but it is out of
-the DOM, so the walk above has nothing left to climb - and `expose_onclose()` would then never clear
-the mime filter, leaving filemanager stuck showing only images. The legacy widget tree survived
-detachment for free; the DOM does not, so the mixin remembers the nextmatch in
-`_gallery_nextmatch` for the life of the gallery and falls back to it (guarded on `isConnected`),
-clearing it in `expose_onclosed()`. **Confirmed live** on `nathan.egroupware.org`: without the
-fallback the filter stayed applied after closing the gallery.
-
-**The filemanager-only restriction was deliberately left in place** (`find_nextmatch()`'s own
-comment: "At the moment only filemanger nm would work as gallery ... but filemanager", enforced via
-a `dom_id.match(/filemanager/i)` check - `dom_id` resolves on `Et2Nextmatch` too, `Et2Widget.ts`).
-Widening the feature to other apps is a product decision, not a side effect of fixing detection.
-
-**New public API on `Et2Nextmatch`/`Et2Datagrid`**, replacing the legacy internals the downstream
-code reached into (`nm.controller.*`). Each is the minimum needed for one of them:
-
-| Legacy internal | New API |
-|---|---|
-| `nm.controller.getRowByNode(node)` (+ `entry.controller.getDepth()`) | `nm.getRowByNode(node)` → `{id, depth}` or `null`. `depth` is 0 for a row of the nextmatch's own grid and counts up per level of expanded child grid, which is what the old `getDepth() > 0` check meant. |
-| `nm.controller._indexMap` | `nm.getLoadedRowIds()` / `Et2Datagrid.getLoadedRowIds()` → row ids by index, `null` for indexes not loaded. Row *content* still lives in egw's UID cache (`egw.dataGetUIDdata()`); this is only the index → uid mapping. |
-| `nm.controller._gridCallback(start, end)` | `nm.loadRowRange(start, end)` / `Et2Datagrid.loadRowRange()` - loads an index range the user has *not* scrolled to, without moving the grid, and resolves when the range is complete (or when fetching stops making progress). Unlike the legacy callback it is awaitable, so the caller reads rows that actually arrived instead of whatever happened to be cached. |
-| `nm.controller._grid.getTotalCount()` | `nm.totalCount` (already existed). |
-| `nm.update_in_progress` | `nm.isLoading`. |
-
-`Et2Datagrid._queueChunkRequest()` was extracted while doing this: `_requestChunkForRowIndex()`,
-`loadMore()` and the new `loadRowRange()` all queue a page the same way.
-
-**Side benefit, confirmed**: `ExposeMixin.ts` imported `et2_nextmatch` from
-`et2_extension_nextmatch.ts` purely for that one `instanceOf()` check, and `ET2_DATAVIEW_STEPSIZE`
-from `et2_dataview_controller.ts` for one number (now a local `GALLERY_PAGE_SIZE`). Both legacy
-imports are gone, so `Et2Link`, `Et2LinkList`, `Et2ImageExpose`, `Et2DescriptionExpose` and
-`Et2VfsMime` no longer reach the ~4600-line legacy widget-registration file at the root of the
-circular-import TDZ hazard (see the `et2_core_inheritance.ts`/`Et2Widget.ts` fix history) through
-this edge at all.
-
-**Still rough**: `set_slide()`'s index bookkeeping drops the very last row of a paged-in range (its
-`num -= 1` at the end), so the final image of a large folder can be missing from the gallery. That
-is untouched legacy gallery code, not part of this fix.
-
-## Known gap: `open_popup` actions whose popup markup isn't already an `<et2-dialog>`
-
-`Et2NextmatchActionController.openActionPopup()` (`Et2Nextmatch/Et2NextmatchActionController.ts`,
-~line 1468) — the modern replacement for the legacy `nm_action()`'s `case 'open_popup'` — finds the
-popup element (`[id*='<action.id>_popup']`) and calls `.show()`/sets `.open = true`/calls
-`.showModal()` on it, in that order, assuming the popup **is already an `<et2-dialog>`**. If none of
-those exist on the element (e.g. a plain `<et2-box id="foo_popup" class="action_popup prompt">`,
-shown/hidden purely via CSS - the pattern several apps use for their own custom multi-select popups,
-predating `Et2Dialog`), `openActionPopup()` returns `false` silently, and execution falls through to
-the `case "submit"` branch instead: it does a real, full form submit with whatever the popup's fields
-currently hold (their untouched defaults, since the popup was never actually shown for the user to
-fill in) - **not** an error, just a silent no-op-shaped submit for actions like Tracker's `admin`
-(only fires if `$content['admin_popup']` is a non-empty array, which never happens here) or `group`/
-`link` (both have `case` blocks in their apps' `::action()` keyed off a `_`-joined `$settings` suffix
-that a real dialog submission would have supplied).
-
-The **legacy** `nm_open_popup()` (`et2_extension_nextmatch_actions.js`, still used directly by apps
-that override `onExecute` for one specific popup action, e.g. Tracker's `assigned`/`change_assigned`
-and Infolog's `responsible`/`change_responsible`) does not have this limitation - on first use it
-upgrades the plain div in place: strips the `.prompt`/`.action_popup` hiding classes, moves its
-buttons into a real `Et2Dialog`'s footer slot, and calls `dialog.show()`. That upgrade path only runs
-for the one action an app explicitly wires to `nm_open_popup` via a custom `onExecute` - actions left
-on the framework's default execute (`Et2NextmatchActionController.initActions()`'s
-`setDefaultExecute`) go through `openActionPopup()` instead and hit the gap above.
-
-**Confirmed live** (2026-09-03, via `nm.executeAction('admin', {ids:['tracker::10'], all:false})`
-against Tracker's real index on `nathan.egroupware.org`): the `admin_popup` `<et2-box>` never opened
-(stayed `display:none`, never became an `<et2-dialog>`), and the followed-through submit was a
-genuine no-op only because `tracker_ui::action()`'s `admin` case requires `$action` to be an array -
-confirmed by `tr_modified` staying unchanged. Tracker's `group` and `link` actions are exposed to the
-exact same gap (both `nm_action: 'open_popup'` with no custom `onExecute`, both backed by a plain
-`<et2-box class="action_popup prompt">`) and were **not** further live-tested after this finding, to
-avoid another real submit against production data. Infolog already has the identical exposure today,
-independent of Tracker's conversion - `infolog/templates/default/index.xet` has `link_popup`,
-`startdate_popup`, and `enddate_popup` as the same `<et2-box class="action_popup prompt">` pattern
-with no custom `onExecute`, all wired through the same default-execute path.
-
-**Fixed 2026-09-03** (commit `81b4c2d55c`): `openActionPopup()` now delegates to `nm_open_popup()` for
-any popup that isn't already an `<et2-dialog>`, logging a one-time deprecation notice per popup id via
-`et2_warnOnce()`. Both paths now behave identically and no longer silently fall through to a bad
-submit - but note this is a **delegation, not a removal**: the framework's own default-execute path
-now depends on the legacy `et2_extension_nextmatch_actions.js` file too, on top of the apps that
-already called it directly from a custom `onExecute`. It does not reduce the codebase's dependency on
-that file; if anything it adds a caller. Deleting `et2_extension_nextmatch_actions.js` eventually is a
-real goal (confirmed directly by the project owner), but the intended path there is **not** a
-framework-level rewrite of `openActionPopup()` - it's every app, as it converts to `Et2Nextmatch`, also
-converting its own action-popup markup from the legacy `<et2-box class="action_popup prompt">` pattern
-to a real `<et2-dialog>`, the same way `tracker.edit.comment_edit`'s dialog already is. Once every app
-using `Et2NextmatchActionController` has real `<et2-dialog>` popups, the `openActionPopup()` delegation
-becomes dead code for the "converted app" case (though `nm_open_popup()` the function still needs to
-keep existing as long as any app remains on the *legacy* `et2_nextmatch` widget, since that widget's
-own `nm_action()` calls it directly through a completely separate code path that `Et2NextmatchActionController`
-never touches).
-
-**Action item for every app's conversion checklist**: grep the app's own templates for
-`class="action_popup prompt"` (or any other plain box/div toggled by CSS for a multi-select bulk-action
-popup) alongside its `<nextmatch>`/`<et2-nextmatch>` tag, and convert those to real `<et2-dialog>`
-elements as part of the SAME conversion commit — don't leave them as box popups the delegation above
-happens to keep working. Tracker had 4 of these (`admin_popup`, `link_popup`, `assigned_popup`,
-`group_popup` in `templates/default/index.xet`); 3 (`admin_popup`, `assigned_popup`, `group_popup`)
-have been converted and live-verified, `link_popup` was deleted instead (see the Tracker paragraph
-above and the subsection immediately below — **check for this case before converting any app's own
-`link_popup`-style popup**). The button-wiring is the hard part, not the markup: each
-box popup's buttons rely on `nm_open_popup()`'s runtime upgrade wrapping every `<et2-button>`'s onclick
-to set the legacy `window.nm_popup_action`/`window.nm_popup_ids` globals before calling the button's
-own handler (typically `onclick="nm_submit_popup(this)"`, which reads those same globals to build and
-send the submit). A real `<et2-dialog>` written directly in the template skips that upgrade path
-entirely (`openActionPopup()`'s already-a-dialog fast path only sets `.selectedIds` and calls
-`.show()` — no button wrapping at all), so each button's own onclick must be rewritten to not depend
-on those globals.
-
-### Before converting a `link_popup`-style action, check for the auto-added "Link" action
-
-EGroupware's action framework already auto-adds a generic "Link" context-menu action to **every** app
-whose entries are registered in the cross-app Link registry (i.e. the app's `setup.inc.php` has a
-`hooks['search_link']` entry) — see `EgwPopupActionImplementation._addLinkAction()`
-(`api/js/egw_action/EgwPopupActionImplementation.ts:968`), wired into every popup/context menu's
-`_buildMenu()` (`:636`) and gated only on `egw.link_get_registry(app, 'query'|'title')` returning
-something. It opens `LinkAction.open()` (`api/js/etemplate/Et2Link/LinkAction.ts`): a small dialog to
-pick one target entry via `<et2-link-entry>`, then Add (link) or Remove (unlink) every currently
-selected entry — including a proper "select all" (`nextmatch.fetchAllIds()`), per-entry success/failure
-reporting, and a real per-source edit-rights check (`Widget\Link::checkLinkAccess()`, called once per
-source entry inside `Widget\Link::ajax_link()`/`ajax_delete()`) — all via `jsonq()`, no page reload.
-
-If an app being converted has its own hand-rolled `link_popup`/`link_action`-style mass-action (a
-`<et2-link-entry>` plus Add/Delete buttons, backed by the app's own `case 'link':` in its `*_ui::action()`
-that calls `Link::link()`/`Link::unlink()` directly), **check whether it can just be deleted** instead of
-converted to a `<et2-dialog>`:
-
-- Confirm the app is actually in the Link registry (it almost certainly is, if it has its own link
-  action at all) — `grep -n "search_link" <app>/setup/setup.inc.php`, or check live via
-  `egw.link_get_registry('<app>', 'query')` in the browser console.
-- Confirm live that right-clicking a row already shows a top-level "Link" item (with the link icon) —
-  if the app's own action is nested under a submenu (Tracker's was under "Change"), the two coexist
-  without colliding, so this is safe to check on an unconverted app too, before doing anything else.
-- **Check for anything the app's own `case 'link':` does that the generic action does not**, before
-  deleting it — Tracker's had nothing extra (no ACL check at all, in fact — see above), but another
-  app's version might: an extra confirmation, a restriction to certain link types/apps, a side effect
-  (e.g. also notifying someone, or writing to the app's own audit/history log), or a different rights
-  model for who may link vs. unlink. Losing a silent app-specific restriction is easy to miss since
-  both the old and new action "work" from the end user's point of view — the only way to catch a
-  difference is reading the old handler's full body once before deleting it, not just diffing behavior
-  in a manual click-test.
-- If it does turn out to be pure app-specific reproduction of the generic behaviour, delete: the popup
-  markup, the action-tree entry, the `case 'link':` handler, and anywhere the app's own JS/PHP builds a
-  composite `<action>_<verb>_<value>` string specifically for `'link'` (Tracker had this in the
-  `in_array($multi_action, [...])` block in `tracker_ui::index()`, shared with `assigned`/`group` —
-  remove only the `'link'` member and its `is_array()` special-case, not the whole block).
-- Infolog's `index.xet` still has the identical `link_popup` pattern (`link_popup`/`link_action[add]`/
-  `link_action[delete]`, `infolog_ui.inc.php`'s `case 'link':`) and has not been checked against this
-  yet — worth doing whenever Infolog's own conversion is revisited, independent of anything here.
-
-## Conversion checklist
-
-Do **not** split this across multiple commits by layer (template-only, then JS-only, etc.) — see
-[Why template + app-JS must land together](#why-template--app-js-must-land-together). Work through
-these in order, in one commit, then expect follow-up fixups.
-
-0. **Find every nextmatch instance the app owns, not just the main list.** An app's "list view" is
-   often more than one `.xet` file: grouped/alternate views of the same list (e.g. an org/duplicate
-   view switched via a toolbar select), a print/display/merge view, a picker/select popup, a
-   secondary popup list driven by its own `app.ts`-sibling class (e.g. a "CRM"-style related-entries
-   view), and the app's own mobile-skin templates all commonly define their own `<nextmatch>` and
-   row templates independent of `index.xet`. `grep -rl "<nextmatch\b" <app>/templates/` (and the
-   equivalent JS grep from step 2, run across every file in `<app>/js/`, not just `app.ts`) before
-   considering the app converted — Addressbook's initial conversion commit only did the main index
-   and silently left five more templates plus a whole secondary `CRM.ts` widget class on the legacy
-   widget.
-
-1. **Convert the `.xet` template(s).** Apply the mechanical renames in
-   [Template rename patterns](#reference-template-rename-patterns): tag renames, header markup
-   restructuring, row-value binding syntax fixes, `et2-styles` for row CSS. Check off each pattern
-   that applies to this app's templates; don't assume a pattern doesn't apply without checking.
-   Then check every tag left in the row template against `customElements` - `Et2RowProvider`
-   clones row cells **by tag name**, so an app-specific tag with no client-side registration
-   renders nothing at all, silently (ProjectManager's `<projectmanager-select-erole>`; see its
-   section above for why a server-side type transformation does not save you here).
-
-2. **Rewrite `app.ts`/`app.js` in the same commit.** Grep the app's JS for each of these and replace
-   per [Legacy API replacement table](#reference-legacy-api-replacement-table):
-   - `.controller.` (any access)
-   - `.options.settings.` / `.options.onselect`
-   - `.activeFilters` (direct mutation, not read)
-   - `_getPreferences(`
-   - `et2_extension_nextmatch_actions` (import)
-   - `_get_autorefresh(` / `_set_autorefresh(`
-   - `.set_onfiledrop(`
-   - jQuery `.on('refresh', ...)`
-   - `et2_nextmatch.DELETE` or other `et2_nextmatch.*` constants
-   A zero-result grep for a pattern means that pattern doesn't apply to this app — it does not mean
-   skip the step.
-
-3. **Check the settings allow-list.** For every `$content['nm'][key]` the app's own JS reads back via
-   `nm.settings.<key>`, confirm `key` is in `Et2Nextmatch.ts`'s `ALLOWED_SETTINGS`. See
-   [Settings allow-list](#reference-settings-allow-list). If it's missing, either add it there (it's
-   shared framework code — check with a reviewer first, per `AGENTS.md`) or read the value from
-   content directly (`this.et2.getArrayMgr("content").getEntry("nm[<key>]")`).
-
-   This step is about settings the app's **JS** reads back — it is not a licence to delete every
-   `$content['nm']` key that isn't on the list. Several are consumed server-side and deliberately never
-   sent to the client, `no_filter`/`no_filter2`/`no_cat` being the ones most likely to get pruned by
-   mistake; see [the filterbox and `filter-template.php`](#reference-the-filterbox-and-filter-templatephp).
-
-4. **If the app needs a per-request-varying column-preference key** (e.g. different visible columns
-   for two different views of the same row template), set `$content['nm']['columnselection_pref']` to
-   that key server-side, same as before. `Et2Nextmatch`'s `settings` setter forwards this to
-   `columnPreferenceName` automatically, re-deriving it on every settings update (not just first
-   load), so no special handling is needed on the app side for the persistence itself. Just confirm in
-   the browser (step 6) that column visibility persists correctly across a reload for each variant of
-   the view.
-
-   **If the app's own PHP also reads that same preference back** (e.g. to decide whether an expensive
-   column is currently visible, the way Infolog does for `show_times`), make sure it re-derives the key
-   the same way it was computed for the current request, rather than reading it back off the AJAX
-   `$query` array. `Et2Nextmatch`'s row-fetch requests only resend filter-value settings (`filter`,
-   `filter2`, `cat_id`, `search`, `col_filter`, `searchletter`), not the whole settings object, so
-   anything else in `$query` — including `columnselection_pref` itself — can be one full-page-load
-   behind the current request.
-
-5. **Add row CSS via `<et2-styles>`** if the app doesn't already have `rows.css`/`rows.less` loaded
-   this way — see `Et2Nextmatch.md` § Styling Rows for the fallback rule to `app.css`.
-
-6. **Verify in a browser**, watching the console the whole time (`.controller`/`.options` access
-   failures throw at first use, not at page load, so a quiet page load proves nothing):
-   - list loads, sorts, filters, selects rows
-   - bulk actions (delete, move, whatever the app has) work on both a partial selection and "select
-     all"
-   - any view switch the app has (row/tile/kanban/etc.) works and doesn't leave stale state
-   - column visibility/order/width persists across a reload, including for every distinct
-     column-preference key the app uses (see step 4)
-   - the filter drawer holds what it should: search, the Sorting select, the standard
-     `filter`/`filter2`/`cat_id` controls the app actually offers, and a Column Filters section matching
-     the row template's filtering headers. A filter that silently vanished usually means a `no_*` flag
-     or a header widget changed kind during the template conversion — see
-     [the filterbox and `filter-template.php`](#reference-the-filterbox-and-filter-templatephp)
-   - push/refresh notifications update the list correctly — first check *which* push mechanism the
-     app actually uses; not every app shares the generic `api.queue` long-poll (e.g. mail registers
-     its own IMAP push via `ajax_enablePush`). Confirming the registration call succeeds is not the
-     same as watching a real push event land and refresh the list — say explicitly which of the two
-     you verified. Don't conclude a transport is broken from one AJAX error either: a page
-     reload/navigation aborting an in-flight long-poll logs a failure indistinguishable from a real
-     one — retest against a fresh, idle load before drawing that conclusion.
-   - if the app has a mobile skin, verify it with real device/User-Agent emulation plus a reload, not
-     a resized desktop browser window (see `doc/ai/testing.md` § Browser / manual verification) —
-     EGroupware selects the mobile template server-side from the request's `User-Agent`, so a plain
-     resize just squeezes the desktop layout into a width it was never built for and can produce
-     scary-looking but meaningless collapses (e.g. row text rendering into a 0-width cell)
-   - a UI element that looks to be missing right after SPA-navigating into the app (as opposed to a
-     full page load) may just be a stale-view artifact, not a regression — confirm on a fresh reload
-     before reporting it
-   - toolbar controls that mirror an `nm` filter (a details/no-details toggle, a view-mode select,
-     etc.) show the *correct, persisted* state on a fresh page load, not just after the first click —
-     set a non-default filter value, reload, and confirm the control's displayed state already matches
-     `nm.activeFilters` before touching it. A control that looks right only after one "wasted" click is
-     a real bug class, not a quirk (Timesheet's details toggle); see
-     [Startup/lifecycle timing pitfalls](#reference-startuplifecycle-timing-pitfalls) below
-   - keep [Startup/lifecycle timing pitfalls](#reference-startuplifecycle-timing-pitfalls) in mind
-     while doing this — several of these bugs only show up on interaction, not on load
-
-7. **Budget for 1-3 follow-up fixup commits.** Every real conversion so far needed at least one; treat
-   the first commit as "converted, pending fixups," not "done."
-
-## Why template + app-JS must land together
-
-Converting only the `.xet` template (and PHP, if any) is not sufficient. The app's own
-`app.ts`/`app.js` almost always contains code written against the legacy `et2_nextmatch` widget's
-public surface, and quite often private internals. A template-only conversion loads without error and breaks the first time the app's
-own JS calls one of those legacy methods. 
+- **Reach a sub-page the way the app's UI does** (Admin: through the tree, `app.admin.load(url)`), not
+  by its own URL. A synthetic `app.admin.run()` is not a click either: it doesn't set the tree value
+  that `getNextmatch()` reads. `app.admin.load(url)` without `ajax=true` in the url loads the page
+  into Admin's iframe, where a nextmatch finds no `<egw-app>` and appends its filterbox to the
+  iframe's `<body>`, out of reach. The tree's own links carry `ajax=true` (Importexport).
+- **Take a settled reading.** Right after "Clear filters" the row count can read 0 while the reload
+  is in flight (Calendar).
 
 ## Reference: template rename patterns
 
@@ -826,9 +561,19 @@ Mechanical renames seen in every conversion:
 - Nested `<grid>`/`<columns>`/`<rows>` inside a `<nextmatch-header>` cell (multi-line sortable headers)
   does not carry over — replace with `<et2-vbox>`/`<et2-hbox>` wrapping
   `<et2-nextmatch-sortheader>` elements (Addressbook, Infolog).
-- Row `class` binding: `<row class="$row_cont[class] $row_cont[cat_id]">` can be simplified to the
-  direct-binding form `<row class="$class $cat_id">` — both syntaxes work, but new/edited rows should
-  use direct bindings (see `Et2Nextmatch.md` § Row value bindings).
+- Row `class` binding: **use `<row class="$row_cont[class] $row_cont[cat_id]">`, not the
+  direct-binding form `<row class="$class $cat_id">`.** The direct form is right for widgets *inside*
+  the row, but on the `<row>` element itself it is evaluated as a PHP expression and fails — Admin's
+  converted index logged *"Error compiling PHP $status_class --> using it literally (Variable
+  $status_class is not defined)"* on every load and put no class on the row at all, silently
+  (an unstyled row looks like a styling problem, not a binding one). The bare-placeholder
+  category-colour mechanism further down is the one exception, and it takes `$cat_id`-style names
+  because `Et2RowProvider` matches them by name, not because the expression resolves.
+- **`class="hide"` on a widget no longer survives `set_disabled(false)`.** Legacy's `set_disabled()`
+  went through jQuery `.toggle()`, which writes an inline `display` that beats `.hide { display:none }`
+  from `etemplate2.css`; `Et2Widget.set_disabled()` sets the `hidden` property instead, which can
+  never out-specify a class still on the element. A widget hidden by both (Admin's groups nextmatch)
+  becomes permanently invisible — replace the class with `disabled="true"`.
 - Row-value binding syntax matters per-widget: `${row}[fieldname]` doesn't always work where the
   direct-binding form `$row_cont[fieldname]` does (Infolog) — if a bound value renders wrong or blank
   after confirming the field name is correct, try the direct-binding form before assuming the data
@@ -858,6 +603,13 @@ Mechanical renames seen in every conversion:
   implement the same "select the next/previous row after this one is removed" behavior in `app.ts` via
   the `et2-rows-deleted` event instead (see the replacement table below). `no_dynheight="true"` was
   also dropped without replacement in the one conversion that had it.
+- **`<et2-nextmatch>`'s `header`/`footer` slots are inside its namespace.** Moving a widget into one
+  of them (eg. while lifting the nextmatch out of a wrapper box) re-scopes it: `<et2-number id="percent">`
+  starts reading `$content['nm']['percent']` instead of `$content['percent']` and renders blank, with
+  no error (Admin's access log). That is right for a header template the app already treats as part of
+  the nextmatch — legacy's `header_left` was in that namespace too, which is why
+  `admin_cmds::remotes()` reads its Add button back as `$content['nm']['add']` — and wrong for
+  anything the controller sets at top level, which stays a plain sibling of the `<et2-nextmatch>` tag.
 - **`header_right="some.template.id"` (a template shown to the right of the header row) has no
   `Et2Nextmatch` property equivalent** — `Et2Nextmatch` doesn't expose a `headerRight`/`header_right`
   attribute at all. If there's room for it, replace it with the pre-existing, widget-independent
@@ -881,8 +633,8 @@ Mechanical renames seen in every conversion:
   row-template widgets during conversion; there is no modern equivalent to migrate them to, since the
   concept itself is gone.
 - Add `<et2-styles src="rows.css">` inside the row template to load row-scoped CSS into the datagrid's
-  row shadow DOM; add a `rows.css`/`rows.less` file per app for this if one doesn't already exist. See
-  `Et2Nextmatch.md` § Styling Rows for the fallback rules to `app.css`.
+  row shadow DOM; add a `rows.css`/`rows.less` file per app for this if one doesn't already exist.
+  There is no `app.css` fallback in the rows.
 - If an app has filter/search/sort controls that must be available before the nextmatch row template
   loads (e.g. for a tile view rendered without waiting on the row template), pull them into a static
   `<et2-template id="app.index.filter">` rather than relying on them being built from the nextmatch
@@ -918,6 +670,7 @@ Legacy `et2_nextmatch` widget API usage that has no direct equivalent and must b
 | `nm.update_in_progress` | `nm.isLoading`. |
 | `this.nm.controller.getObjectManager()` | `egw_getObjectManager(appname).getObjectById(nm_index)` — grep the app for `.controller.` before considering it converted; every remaining hit is a crash waiting to happen. |
 | jQuery `.on('refresh', (_event, _widget, _row_id, _type) => ...)` | `Et2Nextmatch.refresh()` dispatches a plain DOM `CustomEvent` with **no extra arguments** — `_widget`/`_row_id`/`_type` are always `undefined` now. Close over an already-captured reference instead of reading widget/row from the event. |
+| Overriding `nm._create_print_dialog` to print without asking (preset columns / rows / orientation) | `nm.printOptions = {columns: "all" \| [keys], rowCount, orientation}` — no print dialog, nothing saved as print preference; options left out use the dialog's defaults. |
 | Guessing at a renamed setting (e.g. `nm.settings.foldertree`) | Verify the replacement property actually exists on `Et2Nextmatch` (check `Et2Nextmatch.ts`) before using it. |
 
 ### Autorefresh
@@ -946,12 +699,12 @@ after every (re)load:
   `class.infolog_ui.inc.php:1162`) ends up with a doubled `nextmatch-nextmatch-...` key - that
   matches what `Nextmatch.php` itself computes for the same app, so it's consistent, if odd; it's
   moot for Infolog anyway since `disable_autorefresh` is set. Also note the fallback uses the
-  *widget's* `template` (set once from server attrs), not `columnPreferenceName` or any
-  per-view-mode row-template id - Mail's row template varies per view (`mail.index.rows.vertical`)
-  while its shipped default preference name does not (`nextmatch-mail.index.rows-autorefresh`,
-  `mail/setup/default_records.inc.php:32`), so that default currently never matches and is
-  effectively dead; fixing Mail's shipped key (or making the lookup view-independent) is an
-  open follow-up, not blocking since Mail also uses push as its primary mechanism.
+  *widget's* `template` (set once from server attrs), not `columnPreferenceName`. An app whose
+  row template varies per view, but which wants one interval for all of them, sets the
+  `autorefreshPreference` attribute: it replaces `preferenceBase` for the autorefresh key only, so
+  column preferences stay per template. Mail's `index.xet` does this (`mail.index.rows`, for its
+  `mail.index.rows.vertical`/`.horizontal` templates), which is also the name its shipped default
+  (`mail/setup/default_records.inc.php`) has always used.
 - **Opt-out**: `disable_autorefresh` was added to `ALLOWED_SETTINGS` - Infolog/Timesheet/Invoices'
   existing `disable_autorefresh => true // we have push` now actually takes effect.
 - **What a tick does**: `refresh(undefined)` - a full reload, same as the toolbar refresh action,
@@ -1039,13 +792,36 @@ Fix: a new `lazy` boolean property on `Et2Nextmatch` (`Et2Nextmatch.ts`, alongsi
 When set, `firstUpdated()` calls a new private `_whenLazyVisible()` before the client-fetch
 `_datagrid?.reload()` call (only that branch - template/column parsing and the server-preloaded-rows
 branch are untouched, so headers still render immediately even though row data is deferred).
-`_whenLazyVisible()` no-ops unless the nextmatch is inside an inactive `<et2-tab-panel>` (checked via
-`closest("et2-tab-panel")` + the panel's own reflected `active` attribute), in which case it returns a
-promise that resolves on the enclosing `<et2-tabbox>`'s `sl-tab-show` event once `event.detail.name`
-matches the panel's `name`. This mirrors an existing precedent in the codebase for the identical
-problem - `et2_widget_historylog.ts`'s `doLoadingFinished()` uses the same `sl-tab-show`/panel-name-match
-technique to lazily load a History tab's content, just against the legacy `get_tab_info()` API instead
-of a web-component ancestor.
+`_whenLazyVisible()` no-ops unless the nextmatch is not currently being displayed, in which case it
+returns `Et2LazyLoadController`'s `whenReady` - the controller `Et2LinkString` already uses to hold a
+per-row request until the row is worth loading. It answers "is it displayed" from the element itself
+(`checkVisibility()`, triggered by an `IntersectionObserver`), so it covers `display: none` anywhere
+up the tree without the widget knowing what put it there: an inactive `<et2-tab-panel>` (Shoelace
+gives it `display: none` unless `[active]`), a `disabled`/`hidden` widget, an app toggling between
+its own views. Being scrolled out of view deliberately does not count as hidden, the same call
+`Et2NextmatchAutoRefresh` makes. An earlier version listened for the enclosing `<et2-tabbox>`'s
+`sl-tab-show` instead and so covered only tabs - the technique the legacy nextmatch
+(`et2_extension_nextmatch.ts`) still uses, and which `Et2Historylog` had inherited from the legacy
+history log it replaced. `Et2Historylog` has its own `lazy` (defaulting to **true**) and its own
+copy of `_whenLazyVisible()`, since it is not an `Et2Nextmatch` subclass; it was widened the same
+way in the same change, so a history log hidden by anything other than a tab panel now defers too -
+and for it that covers the row template as well as the entries.
+
+One consequence worth knowing when testing: `IntersectionObserver` callbacks are delivered with the
+browser's rendering steps, which a backgrounded browser tab does not run - so a lazy nextmatch shown
+while its browser tab is in the background waits for that tab to be foregrounded. Harmless in use
+(nobody is looking, and autorefresh pauses on the same condition by design), but it makes an
+automated repro on a `document.hidden` tab look stuck; see the note on forcing a frame with a
+screenshot in `doc/ai/testing.md`.
+
+**`num_rows => 0` on its own defers nothing — pair it with `lazy="true"`.** Under the legacy widget
+an app could ship a nextmatch with no rows and load it on demand by dispatching a bubbling `show`
+event at it (Admin's `group_list()` did exactly that, for the group list behind its tree).
+`Et2Nextmatch` has no such listener, and `Nextmatch.php` sets `total` to `null` when `num_rows` is
+0 — which `firstUpdated()` reads as "no data was sent yet", so without `lazy` it fetches
+immediately anyway. `lazy` is not tab-specific: it defers until the nextmatch is actually being
+displayed, so it covers a list hidden by `disabled`/`hidden` or by an app toggling its own views,
+not just one on an unopened tab.
 
 Usage: add `lazy="true"` to the `<et2-nextmatch>` tag. If the app also ships rows/`total` with the
 initial page load (skip this if it doesn't, e.g. via a settings key like Tracker's own
@@ -1113,6 +889,14 @@ Where an app's filters actually come from under `Et2Nextmatch`, and the trap in 
   and Timesheet each put an `et2-select-cat` in their `slot="main-header"` toolbar *and* get a category
   filter in the drawer from the mechanism above; both exist at once. Don't infer from "there's one in the
   toolbar" that the drawer has none — that misreading is what this section exists to prevent.
+- **A nextmatch in a popup gets no filterbox at all.** `Nextmatch::beforeSendToClient()` returns
+  early for `Api\Etemplate::$request->output_mode === 2`, before both the `filterTemplate` computation
+  and the `no_search`/`no_filter`/`no_filter2`/`no_cat` suppression — correct while the legacy widget
+  drew its own header bar, silently filter-less once converted. Put the controls the popup needs in
+  the nextmatch's own `header` slot (they land in its namespace, so they read `$content['nm'][...]`,
+  and `nm.getWidgetById()` finds them, which is how per-fetch `sel_options` still reach them). Note
+  `EgwApp.changeNmFilter()` can not drive them: it resolves the nextmatch through `<egw-app>`, which
+  a popup window has none of. See [Filters and the filter drawer](#filters-and-the-filter-drawer).
 - **To replace the generated filterbox entirely**, slot a template as `slot="filter"`. Calendar is the
   only app currently doing this (`calendar/templates/default/filter.xet`), and it did so before its own
   conversion - so an app arriving with one of these needs no filter-drawer work at all. Filters can also be grouped
@@ -1146,29 +930,22 @@ Where an app's filters actually come from under `Et2Nextmatch`, and the trap in 
   shipping.
 - Auto-refresh pause/resume around long-running requests has no equivalent — call this out explicitly
   when converting an app that relies on it, rather than assuming it's covered.
-- **The row-shadow-DOM `app.css` compatibility fallback** (used when the row template has no
-  `<et2-styles>`) resolves the *containing template's own* template_set — derived from
-  `closest("et2-template").getUrl()` — falling back to `default` only if the skin-specific file 404s.
-  Don't assume it always loads `templates/default/app.css` regardless of the active skin; a
-  mobile-skin conversion needs `templates/mobile/app.css` to actually be the one that loads. Bare
-  `<et2-styles src="...">` values inside a row template resolve the same way, relative to that
-  template's own file.
-- **`app.css` selectors scoped to the index page's own container id (e.g. `#tracker-index
-  .some-row-class`) silently stop matching anything once that app converts**, with no warning
-  anywhere - the fallback above really does load that same file's rules into the datagrid's shadow
-  root, but a shadow root is its own separate node tree with no `#app-index` ancestor in it at all
-  (that id only exists in the light DOM), so an id-scoped selector can never match a row element
-  post-conversion. This is easy to miss because everything still *loads* without error; the only
-  symptom is that some row styling (read/unread bold, priority colors, italics, whatever the app used
-  the class for) just silently stops applying, and a plain page glance can miss it entirely if the
-  affected style is subtle (bold vs. not) rather than a layout break (Tracker: `tracker_unseen`/
+- **`app.css` never reaches the rows.** Rows render in the datagrid's shadow root, and only the row
+  template's `<et2-styles>` are adopted there - there is no `app.css` fallback. Any row styling an app
+  kept in `app.less`/`app.css` silently stops applying once it converts: no error, everything still
+  *loads*, and a subtle loss (bold vs. not) is easy to miss at a glance (Tracker: `tracker_unseen`/
   `tracker_seen` bold state, several priority-color classes, `tracker_overdue`, `private`/`planned`
-  italics - all of `app.less`'s `#tracker-index { ... }`-wrapped block, one file, one rename away from
-  fixed). Before considering an app's row-CSS unaffected by conversion, grep its `app.less`/`app.css`
-  for a selector scoped to that page's own container id and check whether any of the classes it
-  targets are used inside the row template - if so, drop the id scope (the shadow root already
-  provides equivalent isolation, so nothing is lost by doing this) and recompile
-  (`lessc app.less app.css`, checking the diff is purely the scope removal before overwriting).
+  italics). Before considering an app's row CSS done, grep its `app.less` (and the mobile skin's) for
+  every class used inside the row template and move those rules to `rows.less`. Drop any page
+  container id scope (e.g. `#tracker-index .some-row-class`) on the way: that id only exists in the
+  light DOM, and the shadow root already provides the isolation. Bare `<et2-styles src="...">` values
+  resolve relative to the row template's own `.xet` file, so a mobile template's `rows.css` is the one
+  next to it.
+- **Greyed-out "no longer in effect" rows use the shared `rowInactive` class** instead of a rule of
+  their own: have `get_rows()` add it next to the app's class (`'revoked rowInactive'`,
+  `'rowDeleted rowInactive'`, `'policy_disabled rowInactive'`) and drop the app's grey/italic rule.
+  Keep the app's class - actions' `enableClass`/`disableClass` and other code still key on it. The rule
+  lives in `Et2Nextmatch.row.styles.ts`, so it only exists for `<et2-nextmatch>` rows, not legacy ones.
 - **Category-color row indicators have a built-in mechanism — don't hand-roll a dedicated column for
   it.** Give the `<row>` element's `class` binding the bare recognized placeholder for the category field
   (`$row_cont[info_cat]`, `$cat_id`, `$category`, or `$cat` — see `Et2RowProvider`'s
@@ -1181,6 +958,13 @@ Where an app's filters actually come from under `Et2Nextmatch`, and the trap in 
   Prefer this over a hand-rolled column with an inline `style="background-color: ..."` (which is also
   easy to get wrong — the framework's custom property is hyphenated, `--cat-<id>-color`, not
   underscored).
+- **A converted list that shares its page with another widget wants `layout="stack"` on its
+  template.** `Et2Datagrid` takes the full height it is offered and pushes its neighbour off the
+  page, which shows up as a second, outer scrollbar (or a footer toolbar that looks simply missing).
+  `layout="stack"` lays the template's direct children out as a flex column so the grid shrinks to
+  fit — but note `grow="1"`, the attribute that marks which child takes the leftover space, does
+  **not** reach the DOM from a `.xet` today, so the growing child still needs one CSS rule; see
+  [Layout and template structure](#layout-and-template-structure) for the rule and the upstream fixes.
 - **Direct `_filters` mutation while a fetch is in flight can make `Et2Datagrid` silently discard that
   fetch's response.** `Et2Datagrid._fetchPage()` captures `dataProvider.getQuerySignature()` (a
   serialization of the live `_filters` object) at dispatch time and compares it again once the response
@@ -1252,3 +1036,102 @@ Where an app's filters actually come from under `Et2Nextmatch`, and the trap in 
   also fire as a reaction to a programmatic state change (a favorite, "No filters", a saved view)
   where the rest of the widget tree may not have caught up yet - a case that either didn't exist or
   behaved differently under the legacy nextmatch's own filter-sync plumbing.
+
+## Appendix: removing the legacy widget
+
+Notes for whoever deletes `et2_extension_nextmatch*.ts`.
+
+### Legacy-only interfaces: `et2_INextmatchHeader` / `et2_INextmatchSortable`
+
+Both interfaces stay in `et2_extension_nextmatch.ts` and **are deleted along with it** - they are
+the legacy widget's contracts with its headers, and `Et2Nextmatch` drives neither. Verified, not
+assumed:
+
+- `Et2Nextmatch.ts` never mentions either interface, and never calls `implements()` or
+  `iterateOver()` at all. It finds its sort headers by tag name
+  (`querySelectorAll("et2-nextmatch-sortheader")`) and duck-types `setSortmode()`.
+- `setNextmatch()` has exactly one caller in the whole tree, in `et2_extension_nextmatch.ts`
+  itself. Every `setNextmatch()` implementation on an `Et2Nextmatch/Headers/*` widget, and the
+  `nextmatch` field each keeps, exists only so that header still works inside a legacy
+  `<nextmatch>`.
+- `et2_INextmatchSortable` has no consumer outside the legacy widget whatsoever.
+
+**They were deliberately not moved to a neutral module**, because moving them buys nothing. Seven
+of the eight `api/js` files that import them use them only in an `implements` clause, and the
+project's Babel pipeline (`@babel/preset-typescript`) erases an import that survives only in type
+positions - those files emit no import statement at all, so they never depended on the legacy
+module at runtime. (The same is true in reverse: `et2_extension_nextmatch.ts`'s own
+`import {Et2Filterbox}` is a type annotation plus a type *assertion*, so it is erased too.)
+
+The one exception was `Et2Filterbox`, whose `originalWidgets="replace"` branch used the `const` as
+a **value** - and that single import was enough to pull the entire ~4600-line legacy module in
+wherever a filterbox loads. Since `implements()` takes a plain string (see
+`et2_core_inheritance.ts`), that is now written as `widget.implements("et2_INextmatchHeader")` with
+no import, which is the whole of the real decoupling here. The registry entry it looks up is
+registered by `et2_extension_nextmatch.ts`, which `etemplate2.ts` always loads.
+
+**When the legacy widget is deleted**, delete with it: both interfaces and their
+`et2_implements_registry` entries; the `implements et2_INextmatchHeader` /
+`implements et2_INextmatchSortable` clauses and `setNextmatch()` implementations on
+`Headers/Header.ts`, `Headers/FilterMixin.ts`, `Headers/FilterHeader.ts`,
+`Headers/AccountFilterHeader.ts`, `Headers/EntryHeader.ts`, `Headers/SortableHeader.ts` and
+`Et2Favorites.ts`; `Et2Filterbox`'s `implements("et2_INextmatchHeader")` check (note that the
+`"replace"` case then falls through to `"delete"`, which is the intended end state - the widgets
+it finds by tag name are header widgets by construction, so the check only ever did real work for
+widgets scraped out of the legacy header bar); and `Et2Filterbox`'s local
+`LegacyNextmatchInternals` type with the `header` / `template_promise` guards that use it.
+
+What does **not** go is `Et2Nextmatch/NextmatchInterfaces.ts` - see below.
+
+### `NextmatchInterface`: what the widgets around a nextmatch may rely on
+
+`api/js/etemplate/Et2Nextmatch/NextmatchInterfaces.ts` holds `NextmatchInterface` and
+`NextmatchActiveFilters`, the shape a header, filter or favourite widget sees. Both
+`et2_nextmatch` and `Et2Nextmatch` declare `implements NextmatchInterface`, so anything added to
+it has to exist on both.
+
+This replaced `et2_nextmatch` type annotations in `Headers/Header.ts`, `Headers/FilterMixin.ts`,
+`Et2Favorites.ts` and `Et2Filterbox.ts`. Those annotations were not merely a needless import -
+they were **wrong**: `Et2Filterbox` genuinely drives both widgets, duck-typing `getDOMNode()`,
+`getChildren()` and `updateComplete`, and carried six `@ts-ignore`s papering over the mismatch.
+Three of those are now gone, along with two real pre-existing errors (`activeFilters.sort` did not
+exist on the legacy `ActiveFilters` type, which this replaced).
+
+**Re-export it with `export type`, not a plain `export`.** `NextmatchInterface` and
+`NextmatchActiveFilters` are types, so Babel strips them and the compiled module has no runtime
+export of either name; `et2_extension_nextmatch.ts` re-exporting them as values fails the rollup
+build with *"'NextmatchInterface' is not exported by ... NextmatchInterfaces.ts"*. `npm run
+typecheck` does **not** catch this - tsc is happy, because in TypeScript's view the names do exist.
+Only a real `npx rollup -c` finds it, which is worth remembering for any future type-only module.
+
+Two things to know if you extend it:
+
+- `NextmatchActiveFilters` is a **type alias, not an interface**, on purpose. Only aliases get
+  TypeScript's implicit index signature, and without it the two implementations - one typed with
+  named filter keys, one returning a plain `Record<string, any>` - cannot both satisfy it without
+  a cast.
+- `options` is on the interface but marked `@deprecated`. Both widgets have it (the webComponent
+  via `Et2Widget`'s compatibility getter, which rebuilds it on every access and logs a
+  deprecation trace), and a couple of callers still index it by name. Prefer real properties.
+
+### `ExposeMixin` and the row API it uses
+
+`api/js/etemplate/Expose/ExposeMixin.ts` (the gallery behind `Et2VfsMime`, `Et2Link`,
+`Et2LinkList`, `Et2ImageExpose`, `Et2DescriptionExpose`) finds its nextmatch by walking the composed
+DOM up through shadow roots to `<et2-nextmatch>`; the widget tree can't be used, because row widgets
+have no widget-tree parent. It remembers the nextmatch for the life of the gallery
+(`_gallery_nextmatch`), since a reload can detach the row it was opened from. The gallery is still
+restricted to Filemanager on purpose. It no longer imports the legacy widget or dataview.
+
+It replaced the legacy internals with this public API on `Et2Nextmatch`/`Et2Datagrid`:
+
+| Legacy internal | New API |
+|---|---|
+| `nm.controller.getRowByNode(node)` (+ `entry.controller.getDepth()`) | `nm.getRowByNode(node)` → `{id, depth}` or `null`. `depth` is 0 for a row of the nextmatch's own grid and counts up per level of expanded child grid, which is what the old `getDepth() > 0` check meant. |
+| `nm.controller._indexMap` | `nm.getLoadedRowIds()` / `Et2Datagrid.getLoadedRowIds()` → row ids by index, `null` for indexes not loaded. Row *content* still lives in egw's UID cache (`egw.dataGetUIDdata()`); this is only the index → uid mapping. |
+| `nm.controller._gridCallback(start, end)` | `nm.loadRowRange(start, end)` / `Et2Datagrid.loadRowRange()` - loads an index range the user has *not* scrolled to, without moving the grid, and resolves when the range is complete (or when fetching stops making progress). Unlike the legacy callback it is awaitable, so the caller reads rows that actually arrived instead of whatever happened to be cached. |
+| `nm.controller._grid.getTotalCount()` | `nm.totalCount` (already existed). |
+| `nm.update_in_progress` | `nm.isLoading`. |
+
+Known rough edge: `set_slide()` drops the last row of a paged-in range, so the final image of a large
+folder can be missing (untouched legacy gallery code).

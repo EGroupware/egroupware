@@ -22,11 +22,12 @@ import {loadWebComponent} from "../../api/js/etemplate/Et2Widget/Et2Widget";
 import type {Et2DatagridUpdateType} from "../../api/js/etemplate/Et2Datagrid/Et2Datagrid.types";
 import {Et2DatagridUpdateTypes} from "../../api/js/etemplate/Et2Datagrid/Et2Datagrid.types";
 import type {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatch";
+import type {EgwFrameworkApp, FilterInfo} from "../../kdots/js/EgwFrameworkApp";
 import {MailCompose} from "./compose";
 import {formatJmapAddress, isPreferenceOn, JmapBodyResult, JmapMessageReference, JmapUserError, MailJmap} from "./jmap";
 import {renderAttachmentIndex} from "./attachmentIndex";
 import {attachmentSaveUrl, downloadAttachments} from "./attachmentDownload";
-import {openLinksInNewTab} from "./bodyLinks";
+import {activateBodyLinks, openLinksInNewTab} from "./bodyLinks";
 import {buildErrorNode, buildFolderLevel, buildMailboxPaths, FolderTreeNode, isNamespaceRootName} from "./folderTree";
 // egw/egw_getFramework are ambient globals (declare global {} in egw_global.d.ts,
 // unconditionally included via tsconfig's "**/*.d.ts") - no import needed or possible.
@@ -106,6 +107,19 @@ export class MailApp extends EgwApp
 
 	// Aborts the in-flight fetchBody() request when a newer selection supersedes it.
 	previewFetchAbort : AbortController = null;
+
+	// display()'s "view" popup for a message/rfc822 sub-part fires TWO independent async
+	// updates to the same mailDisplayDetails widget - the envelope override (From/To/Subject/
+	// Date, see display()'s own docblock) and renderMessageInto()'s own partID-scoped
+	// attachmentsBlock fetch. Each used to build its OWN merged content snapshot from whatever
+	// stale row data was available at ITS OWN call time and set_value() it wholesale - whichever
+	// one resolved LAST silently reverted the other's already-applied fields (found live
+	// 2026-09-29, ticket #125561's own follow-up: attachments showed correctly, but From/To/
+	// Subject reverted back to the CONTAINING message's own). Both now read-merge-write this one
+	// shared reference instead, so whichever resolves second builds on top of the first's
+	// result rather than overwriting it. A popup window has its own MailApp instance (a separate
+	// page), so this never needs to be keyed by rowId.
+	private _popupMergedContent : any = null;
 	/**
 	 *
 	 */
@@ -1372,6 +1386,17 @@ export class MailApp extends EgwApp
 		const h:any = egw().open(_id, 'mail', 'view', command + '=' + _id.replace(/=/g, "_") + '&mode=' + _mode);
 		const setTitle = async(w) =>
 		{
+			// egw().open() resolves to an <et2-dialog> ELEMENT rather than a real Window when the
+			// popup opened "inline" (EgwFramework.openPopup()'s own narrow-viewport/"open_popups_in:
+			// same_window" branch) - found live 2026-09-28 (ralf, ticket #124351): egw(w) then
+			// crashed constructing its per-window Files module (`w.document.querySelectorAll()` on
+			// an Element, which has no `.document` at all) - an uncaught promise rejection that also
+			// meant the title below silently never got set (a dialog has no window title of its own
+			// anyway, so simply skipping is correct, not just crash-safe).
+			if (!(w instanceof Window))
+			{
+				return;
+			}
 			await egw(w).ready;
 			w.document.title = subject;
 		}
@@ -1601,7 +1626,23 @@ export class MailApp extends EgwApp
 		// would delay the window.open() a real popup needs below far enough to risk the popup
 		// blocker (found live: it also broke existing synchronous-call tests expecting
 		// egw.link()/egw.openPopup() to fire in the same tick). matchMedia() is synchronous.
-		if(window.matchMedia('(max-width: 800px)').matches)
+		//
+		// `!window.opener` (ticket #124351, a real customer: "clicking reply/forward in a message
+		// popup does nothing") - openComposeDialog() builds its <et2-dialog> via loadWebComponent()
+		// DIRECTLY IN THIS WINDOW's own already-open document, unlike a real compose popup (a fresh
+		// page navigation, its own fresh document/JS realm). Live-reproduced (ralf, 2026-09-28): a
+		// message opened in its own popup window (window.opener set) is very often narrower than
+		// 800px itself - forwarding FROM there hit this same matchMedia branch and threw
+		// "NotAllowedError: Sharing constructed stylesheets in multiple documents is not allowed"
+		// building every nested Lit component (Et2Dialog/Et2Template/SlIconButton), because a
+		// browser's constructed CSSStyleSheet is bound to whichever document originally built it -
+		// EGroupware's popup bootstrap reuses opener-window state for exactly this kind of already-
+		// open secondary window, so the dialog never actually renders: nothing visible happens,
+		// silently. A second, already-open popup can always safely open a THIRD real window instead
+		// (a fresh navigation sidesteps this entirely, same as an ordinary compose popup already
+		// does) - so this narrow-viewport inline-dialog convenience only applies to the true
+		// top-level app window, never to a window that is itself already a popup.
+		if(window.matchMedia('(max-width: 800px)').matches && !window.opener)
 		{
 			void this.openComposeDialog(settings, accId);
 			return;
@@ -1743,14 +1784,15 @@ export class MailApp extends EgwApp
 	 * egw.openWithinWindow()'s own urlParamsTooLong() check already uses for the classic path.
 	 *
 	 * @param preset {to?, cc?, bcc?, subject?, files?, filemode?, body?, bodyMimeType?, mimeType?,
-	 *  attachmentContents?, msg?} - see bootstrapComposePopup()'s own preset docblock for the full
-	 *  shape/semantics of each field
+	 *  attachmentContents?, attachmentUrls?, msg?} - see bootstrapComposePopup()'s own preset
+	 *  docblock for the full shape/semantics of each field
 	 */
 	composeWithPreset(preset : {
 		to? : any, cc? : any, bcc? : any, subject? : string,
 		files? : { path : string, name : string, type : string }[],
 		filemode? : string, body? : string, bodyMimeType? : 'plain' | 'html', mimeType? : string,
 		attachmentContents? : { name : string, type : string, content : string }[],
+		attachmentUrls? : { name : string, type : string, url : string, size : number }[],
 		msg? : string,
 	}) : void
 	{
@@ -1846,6 +1888,33 @@ export class MailApp extends EgwApp
 	}
 
 	/**
+	 * Ticket #125092 (Ingo/Birgit, via ralf - "ohne Neuladen wird wieder die genommen von der ich
+	 * zuvor gewechselt war... als würde die pref nicht neu gelesen"): getComposeToolbarData()'s
+	 * own cache is keyed ONLY by accId, kept "for the life of the MAIN window" - it has no way to
+	 * know its cached `content.mailaccount` (baked in from whatever mail/LastSignatureIDUsed was
+	 * at the time of that FIRST fetch for this account) goes stale the moment a later send updates
+	 * that very preference (MailJmap.rememberLastUsedIdentity()) - every LATER compose for the
+	 * same account, same main-window lifetime, kept reusing that now-wrong identity pre-selection
+	 * without a full page reload (which simply starts a fresh MailApp/cache) ever being involved.
+	 * Called right after rememberLastUsedIdentity() updates the preference, so the NEXT compose
+	 * for this account re-fetches fresh content instead.
+	 *
+	 * Same opener-redirect as getComposeToolbarData() itself - a send can complete from within a
+	 * popup's own MailJmap instance, whose `this.app` is that popup's OWN freshly-instantiated
+	 * MailApp, not the one actually holding the cache.
+	 */
+	invalidateComposeToolbarData(accId : string) : void
+	{
+		const openerMail : MailApp = MailApp.safeOpener((opener) => (opener as any).app?.mail);
+		if (openerMail && openerMail !== this)
+		{
+			openerMail.invalidateComposeToolbarData(accId);
+			return;
+		}
+		delete this.composeToolbarDataPromises[accId];
+	}
+
+	/**
 	 * Bootstrap a compose popup entirely client-side - no server round-trip to
 	 * mail_compose::compose() at all for opening it (doc/ai/projects/mail-compose-jmap-migration.md,
 	 * Step 10). Run INSIDE the popup itself, via composeMessage()'s
@@ -1886,9 +1955,9 @@ export class MailApp extends EgwApp
 	 *  that was only ever a workaround to get an exec_id before compose.php existed to compute one
 	 *  upfront (ralf, 2026-09-07: "that's the workaround we used ..., so there's no need for it now")
 	 * @param preset {to?, cc?, bcc?, subject?, files?, filemode?, body?, bodyMimeType?, mimeType?,
-	 *  attachmentContents?, msg?} - MailApp.composeWithPreset()'s own param, round-tripped through
-	 *  compose.php's own $_REQUEST['preset'], appended onto whatever getComposeToolbarData()'s
-	 *  content already has, or {} for every other caller.
+	 *  attachmentContents?, attachmentUrls?, msg?} - MailApp.composeWithPreset()'s own param,
+	 *  round-tripped through compose.php's own $_REQUEST['preset'], appended onto whatever
+	 *  getComposeToolbarData()'s content already has, or {} for every other caller.
 	 *  - `subject` overwrites (a blank compose never has one already, unlike to/cc/bcc's append).
 	 *  - `files` are VFS paths (addressbook vCard-attach, filemanager "mail selected files") -
 	 *    {path, name, type} each, turned into a bare `jmapVfsPath` marker attachment entry (same
@@ -1896,11 +1965,22 @@ export class MailApp extends EgwApp
 	 *    picker, minus any actual upload - MailJmap.uploadVfsAttachment()/the shim's own
 	 *    zero-byte-moved reference resolve it at send time, see uploadAttachmentsViaJmap()'s own
 	 *    docblock).
-	 *  - `attachmentContents` are already-known bytes with nothing server-side left to reference
-	 *    (calendar's own meeting-invite .ics, generated fresh per compose, never staged anywhere) -
-	 *    {name, type, content} each, uploaded as a real JMAP blob immediately (MailCompose.
-	 *    applyPresetAttachmentContent()), same jmapBlobId-tagged shape carryForwardAttachments()
-	 *    already uses for a reply's own carried-forward attachments.
+	 *  - `attachmentContents` are already-known bytes with genuinely nothing server-side left to
+	 *    reference (calendar's own meeting-invite .ics, generated fresh per compose, never staged
+	 *    anywhere) - {name, type, content} each (content base64-encoded), uploaded as a real JMAP
+	 *    blob immediately (MailCompose.applyPresetAttachmentContent()), same jmapBlobId-tagged
+	 *    shape carryForwardAttachments() already uses for a reply's own carried-forward
+	 *    attachments.
+	 *  - `attachmentUrls` are mail's own REST API's attachments (ApiHandler::prepareAttachments()'s
+	 *    $compose=true branch, tickets #125601/#125621) - unlike the .ics case, a REST-uploaded
+	 *    attachment DOES still have something server-side to reference (its temp file, served back
+	 *    via GET /mail/attachments/<token>), so this carries a lightweight {name, type, url, size}
+	 *    reference instead of inlining content - MailCompose.applyPresetAttachmentUrls() fetches it
+	 *    itself and uploads it as a real JMAP blob the same way, merging via the same
+	 *    carryForwardAttachments() call. (A prior version of this fix inlined REST attachments as
+	 *    base64 into `attachmentContents` too - reverted, a real-world attachment made the preset,
+	 *    which travels a server push and then a browser form-POST back to compose.php, large enough
+	 *    to risk silent truncation somewhere along that path.)
 	 *  - `body`/`bodyMimeType` - preset body text/its own type ('plain'|'html', default 'html') -
 	 *    MailCompose.applyPresetBody() converts plain to html itself if the compose is actually in
 	 *    html mode, mirroring classic mergePresetBody(). `mimeType` (no `body` prefix) is a
@@ -1919,6 +1999,7 @@ export class MailApp extends EgwApp
 			files? : { path : string, name : string, type : string }[],
 			filemode? : string, body? : string, bodyMimeType? : 'plain' | 'html', mimeType? : string,
 			attachmentContents? : { name : string, type : string, content : string }[],
+			attachmentUrls? : { name : string, type : string, url : string, size : number }[],
 			msg? : string,
 		},
 		// the attached message/rfc822 sub-part's own id (mail_ui::displayMessage()'s own `part` GET
@@ -2069,12 +2150,13 @@ export class MailApp extends EgwApp
 			etemplate_exec_id
 		}, url);
 
-		// preset.files/attachmentContents/body - see the comments where each is read above for why
-		// these have to run AFTER the template has loaded (MailCompose.applyPresetFiles()/
-		// applyPresetAttachmentContent()/applyPresetBody()'s own docblocks) rather than as part of
-		// the content bootstrapClientSideTemplate() was just given. Awaiting bootstrapPromise first
-		// so this runs after bootstrapSignature() has already inserted the signature, not racing
-		// with it. attachmentContents (a real upload) before body, so a share-link-style body
+		// preset.files/attachmentContents/attachmentUrls/body - see the comments where each is read
+		// above for why these have to run AFTER the template has loaded (MailCompose.
+		// applyPresetFiles()/applyPresetAttachmentContent()/applyPresetAttachmentUrls()/
+		// applyPresetBody()'s own docblocks) rather than as part of the content
+		// bootstrapClientSideTemplate() was just given. Awaiting bootstrapPromise first so this
+		// runs after bootstrapSignature() has already inserted the signature, not racing with it.
+		// attachmentContents/attachmentUrls (a real upload) before body, so a share-link-style body
 		// insertion (none of today's callers combine the two, but nothing stops a future one)
 		// wouldn't ever reference an attachment that hasn't finished uploading yet.
 		//
@@ -2104,6 +2186,10 @@ export class MailApp extends EgwApp
 		if (preset?.attachmentContents?.length)
 		{
 			await (<any>window).app._compose.applyPresetAttachmentContent(preset.attachmentContents);
+		}
+		if (preset?.attachmentUrls?.length)
+		{
+			await (<any>window).app._compose.applyPresetAttachmentUrls(preset.attachmentUrls);
 		}
 		if (preset?.body)
 		{
@@ -2363,6 +2449,10 @@ export class MailApp extends EgwApp
 	 */
 	display()
 	{
+		// reset for _popupMergedContent's own read-merge-write race guard (see its docblock) -
+		// a fresh display() call means a fresh message, never a leftover merge base from
+		// whatever this popup last showed
+		this._popupMergedContent = null;
 		const dataElem : {data : any} = {data:{FROM:"",SENDER:"",TO:"",CC:"",BCC:""}};
 		const content = this.et2.getArrayMgr('content').data;
 
@@ -2384,7 +2474,48 @@ export class MailApp extends EgwApp
 			const details = this.et2.getWidgetById('mailDisplayDetails');
 			if (rowId && details)
 			{
-				this.renderPopupMessage(details, rowId);
+				this.renderPopupMessage(details, rowId, content.part || undefined);
+			}
+			// content.part means this popup is showing a message/rfc822 SUB-part (a forward-as-
+			// attachment's own carried message) - renderPopupMessage() above always shows the
+			// CONTAINING message's own From/To/Subject (it has no concept of a sub-part, see its own
+			// docblock), which is wrong for a real forwarded message (found live 2026-09-25, ralf: a
+			// forwarded GitHub notification's popup showed HIS OWN From/To instead of GitHub's).
+			// Overrides just the header/address fields once the attached message's own envelope is
+			// known, on top of whatever renderPopupMessage() already rendered (attachments now come
+			// from the sub-part too, see renderMessageInto()'s own partID handling - only the header
+			// fields still need this separate override, since renderPopupMessage() has no envelope
+			// concept of its own).
+			// Local-shim accounts only - see fetchMessagePartEnvelope()'s own docblock for why.
+			if (rowId && details && content.part)
+			{
+				this.jmap.isLocalAccount(this.jmap.messageReference(rowId).profileID).then((isLocal) =>
+				{
+					if (!isLocal) return;
+					return this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_fetchMessagePartEnvelope', [rowId, content.part]);
+				}).then((envelope : any) =>
+				{
+					if (!envelope) return;
+					// read-merge-write this._popupMergedContent, not a fresh snapshot - see its own
+					// docblock for why (races against renderMessageInto()'s own partID-scoped
+					// attachmentsBlock update for this same widget)
+					const current = this._popupMergedContent ?? egw.dataGetUIDdata(rowId)?.data ?? {};
+					this._popupMergedContent = {
+						...current,
+						subject: envelope.subject,
+						date: envelope.date,
+						// fromaddress/toaddress (not just the "additional..." widgets) also drive the
+						// avatar's contactId and the "To" row's disabled="!@toaddress" expression
+						// (mail/templates/default/display.xet) - keep both in sync.
+						fromaddress: envelope.from,
+						toaddress: envelope.to,
+						additionalfromaddress: envelope.from,
+						additionaltoaddress: envelope.to,
+						ccaddress: envelope.cc,
+						bccaddress: envelope.bcc,
+					};
+					details.set_value({content: this._popupMergedContent});
+				}).catch((e) => console.error('MailApp.display(): fetchMessagePartEnvelope failed', e));
 			}
 
 			// Body: same JMAP-native fast path the main preview pane already has
@@ -2419,8 +2550,11 @@ export class MailApp extends EgwApp
 	 *
 	 * @param template the mailDisplayDetails grid widget
 	 * @param rowId
+	 * @param partID mail_ui::displayMessage()'s own `part` GET param (content.part), threaded
+	 *  through to renderMessageInto() - see its own docblock for why a sub-part view needs its
+	 *  OWN, separately-fetched attachmentsBlock
 	 */
-	renderPopupMessage(template, rowId : string)
+	renderPopupMessage(template, rowId : string, partID? : string)
 	{
 		let openerData : any;
 		try
@@ -2435,7 +2569,7 @@ export class MailApp extends EgwApp
 
 		if (openerData && Object.keys(openerData).length)
 		{
-			const data = this.renderMessageInto(template, rowId, openerData);
+			const data = this.renderMessageInto(template, rowId, openerData, partID);
 			this.registerForDrag(rowId, data.attachmentsBlock);
 		}
 		else
@@ -2462,7 +2596,7 @@ export class MailApp extends EgwApp
 				if (_data)
 				{
 					egw.dataStoreUID(_data.uid ?? rowId, _data);
-					const data = this.renderMessageInto(template, rowId, _data);
+					const data = this.renderMessageInto(template, rowId, _data, partID);
 					this.registerForDrag(rowId, data.attachmentsBlock);
 				}
 			}).catch((e) =>
@@ -2561,17 +2695,54 @@ export class MailApp extends EgwApp
 	 * @param rowId
 	 * @param data optional pre-resolved row data (e.g. from window.opener's cache); defaults to
 	 *  this window's own egw.dataGetUIDdata(rowId).data
+	 * @param partID mail_ui::displayMessage()'s own `part` GET param - set only for the "view"
+	 *  popup showing a message/rfc822 SUB-part (a forward-as-attachment's own carried message),
+	 *  never for the ordinary preview pane. `data` (from the row cache) is the CONTAINING
+	 *  message's own - its attachmentsBlock is already resolved (typically just the carried
+	 *  message itself), so the on-demand fetches below never fire, and the popup showed the
+	 *  containing message's own attachment (the very .eml being viewed) instead of the carried
+	 *  message's real attachments - clicking it just reopened the same view again (found live,
+	 *  ticket #125561's own follow-up: "I can open the forwarded eml, but it does not show the
+	 *  original attachment, but the eml again"). Fetched fresh, scoped to partID, every time -
+	 *  never written back to egw.dataStoreUID()/mutated onto the shared `data` object, since that
+	 *  cache entry is keyed by the CONTAINING message's own uid and is shared with the message
+	 *  list/preview pane for THAT message - overwriting it with the sub-part's own attachments
+	 *  would corrupt every other view of the containing message too.
 	 * @return the row data object (attachmentsBlock may still be updating asynchronously)
 	 */
-	renderMessageInto(template, rowId : string, data? : any) : any
+	renderMessageInto(template, rowId : string, data? : any, partID? : string) : any
 	{
 		const sel_options = {};
 		const attachmentsBlock = this.et2.getWidgetById('attachmentsBlock');
 		data = data ?? egw.dataGetUIDdata(rowId).data ?? {};
 		data.emailTag = egw.preference('emailTag', 'mail') ?? 'onlyname';
 
+		if (partID)
+		{
+			if (attachmentsBlock) attachmentsBlock.getDOMNode().classList.add('loading');
+			// Not this.egw.jsonq() - same Link::set_data() session-persistence reason as the
+			// other on-demand attachment fetches in this method.
+			this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_fetchAttachments', [rowId, null, partID]).then(async(_data) =>
+			{
+				if (attachmentsBlock) attachmentsBlock.getDOMNode().classList.remove('loading');
+				if (!_data || !Array.isArray(_data.attachmentsBlock))
+				{
+					return;
+				}
+				const partSelOptions = {};
+				// read-merge-write this._popupMergedContent, not a fresh clone of `data` - see its
+				// own docblock for why (races against display()'s own envelope override for this
+				// same widget); still never egw.dataStoreUID()'d, for the reason stated above
+				const current = this._popupMergedContent ?? data;
+				const partData = {...current, attachmentsBlock: _data.attachmentsBlock};
+				this.setupViewAttachmentActions(partData, partSelOptions);
+				await this.resolveAttachmentViewUrls(rowId, partData.attachmentsBlock);
+				this._popupMergedContent = partData;
+				if (!egwIsMobile() && template) template.set_value({content: partData, sel_options: partSelOptions});
+			});
+		}
 		// Try to resolve winmail.data attachment
-		if (data && data.attachmentsBlock && data.attachmentsBlock[0]
+		else if (data && data.attachmentsBlock && data.attachmentsBlock[0]
 				&& data.attachmentsBlock[0].winmailFlag
 				&& (data.attachmentsBlock[0].mimetype =='application/ms-tnef' ||
 				data.attachmentsBlock[0].filename == "winmail.dat"))
@@ -2668,7 +2839,10 @@ export class MailApp extends EgwApp
 			});
 		}
 
-		if (data.attachmentsBlock)
+		// partID: skip resolving/rendering the CONTAINING message's own attachmentsBlock entirely -
+		// the async fetch above already renders the sub-part's own once it resolves; doing this too
+		// would just flash the wrong (containing message's) attachments first.
+		if (!partID && data.attachmentsBlock)
 		{
 			this.setupViewAttachmentActions(data, sel_options);
 			this.resolveAttachmentViewUrls(rowId, data.attachmentsBlock).then((changed) =>
@@ -2681,7 +2855,14 @@ export class MailApp extends EgwApp
 			});
 		}
 
-		if (!egwIsMobile() && template) template.set_value({content:data, sel_options:sel_options});
+		if (partID)
+		{
+			// seed this._popupMergedContent - see its own docblock. Nothing has resolved yet at
+			// this point (this whole method is still running synchronously), so this is always
+			// the first of the two racing updates to run.
+			this._popupMergedContent = {...data, attachmentsBlock: []};
+		}
+		if (!egwIsMobile() && template) template.set_value({content: partID ? this._popupMergedContent : data, sel_options:sel_options});
 
 		return data;
 	}
@@ -3217,6 +3398,8 @@ export class MailApp extends EgwApp
 				const doc = iframe.contentWindow.document;
 				doc.documentElement.dataset.rowId = rowId;
 				openLinksInNewTab(doc);
+				// srcdoc body runs no script of its own (MailJmap.wrapDocument()), unlike the classic one with preview.js
+				activateBodyLinks(doc, this.egw);
 				this.jmap.resolveInlineImages(doc, rowId, fast).catch((e) =>
 					console.error('MailApp.loadMessageBody(): resolveInlineImages failed', e));
 				// see MailJmap.resolveBarePdfEmbed()'s own docblock for why this runs from here
@@ -4256,7 +4439,13 @@ export class MailApp extends EgwApp
 		{
 			throw e;
 		}
-		console.error('MailApp: JMAP action failed, falling back to classic', e);
+		// JmapUnsupportedOperationError (eg. every cross-account copy/move) is an expected,
+		// by-design fallback signal, not a real failure - see its own docblock (jmap.ts) for why
+		// this must stay quiet instead of console.error()ing what's actually normal behaviour
+		if (e?.constructor?.name !== 'JmapUnsupportedOperationError')
+		{
+			console.error('MailApp: JMAP action failed, falling back to classic', e);
+		}
 		return fallback();
 	}
 
@@ -4649,6 +4838,9 @@ export class MailApp extends EgwApp
 			}
 			else
 			{
+				// Another folder's rows: the previous folder's active row must not survive the reload,
+				// or its frame reappears on an unselected mail when you come back to that folder
+				nm.clearActiveRow();
 				nm.applyFilters({'selectedFolder': _folder});
 			}
 		}
@@ -5459,13 +5651,28 @@ export class MailApp extends EgwApp
 		}
 		//alert('header('+_elems[0].id+')');
 		const rowId = _elems[0].id;
+		// set only when this action is invoked on the CURRENTLY DISPLAYED message (a toolbar
+		// button in the "view" popup, not a list row right-click - a list row is always a real
+		// top-level message, never a message/rfc822 sub-part) - ticket #125561 follow-up: "view
+		// header" for a forwarded message's own carried message showed the CONTAINING message's
+		// own header instead (found live 2026-09-29, ralf: "viewing the source or header from
+		// the eml shows the forwarded message"). The JMAP fast path below (fetchRawHeader()) has
+		// no concept of a sub-part at all - only the classic path (displayHeader(), its own
+		// Api\Mail::getMessageRawHeader() already fixed for exactly this) does, via `&part=`.
+		const partID = this.et2.getArrayMgr("content").getEntry('part') || undefined;
 		const classicHeaderPopup = () =>
 		{
 			let url = this.egw.webserverUrl+'/index.php?';
 			url += 'menuaction=mail.EGroupware\\Mail\\Ui.displayHeader';	// todo compose for Draft folder
 			url += '&id='+rowId;
+			if (partID) url += '&part='+partID;
 			this.displayHeaderLines(url);
 		};
+		if (partID)
+		{
+			classicHeaderPopup();
+			return;
+		}
 		this.jmap.fetchRawHeader(rowId).then(async(text : string) =>
 		{
 			// egw.openPopup() (kdots framework) returns a Promise resolving to the actual
@@ -5509,14 +5716,22 @@ export class MailApp extends EgwApp
 		}
 		//alert('mailSource('+_elems[0].id+')');
 		const rowId = _elems[0].id;
+		// see header()'s own comment for why - same gap, same fix (ticket #125561 follow-up)
+		const partID = this.et2.getArrayMgr("content").getEntry('part') || undefined;
 		const classicSourcePopup = () =>
 		{
 			let url = this.egw.webserverUrl+'/index.php?';
 			url += 'menuaction=mail.EGroupware\\Mail\\Ui.saveMessage';	// todo compose for Draft folder
 			url += '&id='+rowId;
 			url += '&location=display';
+			if (partID) url += '&part='+partID;
 			this.displayHeaderLines(url);
 		};
+		if (partID)
+		{
+			classicSourcePopup();
+			return;
+		}
 		this.jmap.fetchRawSource(rowId).then(async(text : string) =>
 		{
 			// egw.openPopup() (kdots framework) returns a Promise resolving to the actual
@@ -9722,6 +9937,25 @@ export class MailApp extends EgwApp
 			toggle.value = false;
 			this.nm && this.nm.applyFilters({threaded: ''});
 		}
+	}
+
+	/**
+	 * Only status, flag, search and date range are filters the user set
+	 *
+	 * The folder is where we are, cat_id is the type of search (only matters together with a search),
+	 * and the details (filter2) and threaded toggles only change how the list is shown.
+	 *
+	 * @param filterValues
+	 * @param fwApp
+	 */
+	getFilterInfo(filterValues : { [id : string] : any }, fwApp : EgwFrameworkApp) : FilterInfo
+	{
+		const values = {...(filterValues ?? {})};
+		for(const key of ['selectedFolder', 'cat_id', 'filter2', 'threaded'])
+		{
+			delete values[key];
+		}
+		return fwApp.filterInfo(values);
 	}
 
 	/**

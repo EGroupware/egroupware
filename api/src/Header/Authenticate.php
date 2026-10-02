@@ -69,6 +69,299 @@ class Authenticate
 	const ERROR_LOG = 0;
 
 	/**
+	 * All non-empty values of the Authorization header, in order of preference
+	 *
+	 * Depending on web-server and PHP SAPI the header is available in $_SERVER['HTTP_AUTHORIZATION'], as
+	 * $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] (rewrite rule, eg. Apache with FCGI/CGI), or only via getallheaders() /
+	 * apache_request_headers() (Apache not writing it to $_SERVER).
+	 *
+	 * @param ?array $server default $_SERVER
+	 * @param ?array $headers default getallheaders() (if available), pass [] to NOT use it
+	 * @return string[] trimmed values
+	 */
+	static public function authorizationHeaders(?array $server=null, ?array $headers=null) : array
+	{
+		$server ??= $_SERVER;
+		$values = [];
+		foreach(['HTTP_AUTHORIZATION', 'REDIRECT_HTTP_AUTHORIZATION'] as $name)
+		{
+			if (isset($server[$name]) && is_string($server[$name]) && trim($server[$name]) !== '')
+			{
+				$values[] = trim($server[$name]);
+			}
+		}
+		$headers ??= function_exists('getallheaders') ? (getallheaders() ?: []) : [];
+		foreach($headers as $name => $value)
+		{
+			if (strcasecmp((string)$name, 'Authorization') === 0 && is_string($value) && trim($value) !== '')
+			{
+				$values[] = trim($value);
+			}
+		}
+		return array_values(array_unique($values));
+	}
+
+	/**
+	 * Check if a request carries anything autocreate_session_callback() could authenticate with
+	 *
+	 * Used by groupdav.php to directly reject requests without any credentials, so it has to look at the
+	 * same places autocreate_session_callback() reads them from, otherwise it rejects requests the callback
+	 * would have accepted: depending on web-server and PHP SAPI (Apache module, FPM/FCGI/CGI with or without
+	 * rewrite rule or CGIPassAuth) credentials arrive as PHP_AUTH_USER/PW, PHP_AUTH_DIGEST or in an Authorization header
+	 * (see authorizationHeaders()).
+	 *
+	 * @param ?array $server default $_SERVER
+	 * @param ?array $cookie default $_COOKIE
+	 * @param ?array $headers default getallheaders() (if available), pass [] to NOT use it
+	 * @return bool true: credentials given, false: none (or just an empty "Basic")
+	 */
+	static public function hasCredentials(?array $server=null, ?array $cookie=null, ?array $headers=null) : bool
+	{
+		$server ??= $_SERVER;
+		$cookie ??= $_COOKIE;
+
+		if (!empty($server['PHP_AUTH_USER']) || !empty($server['PHP_AUTH_DIGEST']))
+		{
+			return true;
+		}
+		foreach(self::authorizationHeaders($server, $headers) as $authorization)
+		{
+			// an empty "Basic" (user and password missing, web-servers usually trim the trailing space) is no credentials,
+			// this is a cheap way to reject floods of such requests before the DB is even opened
+			if (!preg_match('/^basic$/i', $authorization))
+			{
+				return true;
+			}
+		}
+		// bearer token from cookie is checked by autocreate_session_callback() too
+		return !empty($cookie['oauth_id_token']);
+	}
+
+	/**
+	 * Get basic auth credentials from an Authorization header
+	 *
+	 * @param ?array $server default $_SERVER
+	 * @param ?array $headers default getallheaders() (if available), pass [] to NOT use it
+	 * @return ?array null if there's no basic Authorization header, otherwise [$username, $password], both null if malformed
+	 */
+	static public function basicCredentials(?array $server=null, ?array $headers=null) : ?array
+	{
+		foreach(self::authorizationHeaders($server, $headers) as $authorization)
+		{
+			if (preg_match('/^Basic\s+(\S+)$/i', $authorization, $matches))
+			{
+				$hash = base64_decode($matches[1]);
+				return $hash !== false && str_contains($hash, ':') ? explode(':', $hash, 2) : [null, null];
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Get a bearer token from the Authorization header or the oauth_id_token cookie
+	 *
+	 * @param ?array $server default $_SERVER
+	 * @param ?array $cookie default $_COOKIE
+	 * @param ?array $headers default getallheaders() (if available), pass [] to NOT use it
+	 * @return ?string token or null if there is none
+	 */
+	static public function bearerToken(?array $server=null, ?array $cookie=null, ?array $headers=null) : ?string
+	{
+		$cookie ??= $_COOKIE;
+
+		foreach(self::authorizationHeaders($server, $headers) as $authorization)
+		{
+			if (preg_match('/^Bearer\s+(\S.*)$/i', $authorization, $matches))
+			{
+				return $matches[1];
+			}
+		}
+		return !empty($cookie['oauth_id_token']) ? $cookie['oauth_id_token'] : null;
+	}
+
+	/**
+	 * Redact credentials in the output of phpinfo(), so it can be shared eg. to debug authentication problems
+	 *
+	 * phpinfo() shows PHP_AUTH_PW, the Authorization header (in $_SERVER, the environment and the request headers) and
+	 * the cookies incl. the session-id in clear. We show what is needed to see which variables arrive in PHP, but
+	 * not the secrets:
+	 * - Authorization: Basic <username>:<as many * as the password has characters>
+	 * - Authorization: other schemes: the scheme and the first 4 characters of the token plus ********, NOT its length
+	 *   (digest: the username)
+	 * - PHP_AUTH_PW: "** length=8 **"
+	 * - cookies: only the names
+	 *
+	 * @param string $html output of phpinfo() (HTML)
+	 * @return string
+	 */
+	static public function redactPhpinfo(string $html) : string
+	{
+		return preg_replace_callback('#<tr><td class="e">(.*?)</td><td class="v">(.*?)</td></tr>#s', static function(array $row)
+		{
+			$name = html_entity_decode(trim(strip_tags($row[1])), ENT_QUOTES | ENT_HTML5);
+			$value = html_entity_decode(trim(strip_tags($row[2])), ENT_QUOTES | ENT_HTML5);
+			$redacted = null;
+
+			if (preg_match('/(^|[^A-Z0-9])PHP_AUTH_PW(?![A-Z0-9_])/i', $name))
+			{
+				$redacted = '** length='.strlen($value).' **';
+			}
+			elseif (preg_match('/(^|[^A-Z0-9])(PHP_AUTH_DIGEST|(REDIRECT_)*HTTP_AUTHORIZATION|Authorization)(?![A-Z0-9_])/i', $name))
+			{
+				$redacted = self::redactAuthorization($value);
+			}
+			elseif (preg_match('/\$_COOKIE\[/i', $name))
+			{
+				$redacted = '***';
+			}
+			elseif (preg_match('/(^|[^A-Z0-9])(\w+_)?HTTP_COOKIE(?![A-Z0-9_])|(^|[^A-Z0-9])Cookie(?![A-Z0-9_])/i', $name))
+			{
+				$redacted = implode('; ', array_map(static function($cookie)
+				{
+					return trim(explode('=', $cookie, 2)[0]).'=***';
+				}, array_filter(explode(';', $value), static fn($cookie) => trim($cookie) !== '')));
+			}
+			return $redacted === null ? $row[0] :
+				'<tr><td class="e">'.$row[1].'</td><td class="v">'.htmlspecialchars($redacted, ENT_QUOTES | ENT_HTML5).' </td></tr>';
+		}, $html);
+	}
+
+	/**
+	 * Which text format does the client prefer over HTML (Accept header, a generic "*&#47;*" does NOT count)
+	 *
+	 * @param ?string $accept default $_SERVER['HTTP_ACCEPT']
+	 * @return ?string 'text/markdown' or 'text/plain' (both get the same markdown), null for HTML
+	 */
+	static public function preferredTextFormat(?string $accept=null) : ?string
+	{
+		$quality = ['text/markdown' => 0.0, 'text/plain' => 0.0, 'text/html' => 0.0];
+		foreach(explode(',', $accept ?? $_SERVER['HTTP_ACCEPT'] ?? '') as $type)
+		{
+			$parts = array_map('trim', explode(';', $type));
+			$mime = strtolower(array_shift($parts));
+			if (!isset($quality[$mime])) continue;
+			$q = 1.0;
+			foreach($parts as $param)
+			{
+				if (preg_match('/^q=([0-9.]+)$/i', $param, $m)) $q = (float)$m[1];
+			}
+			$quality[$mime] = max($quality[$mime], $q);
+		}
+		// the better one of markdown and plain (markdown on a tie), but only if not less preferred than HTML
+		$mime = $quality['text/plain'] > $quality['text/markdown'] ? 'text/plain' : 'text/markdown';
+		return $quality[$mime] > 0 && $quality[$mime] >= $quality['text/html'] ? $mime : null;
+	}
+
+	/**
+	 * Convert the HTML output of phpinfo() to Markdown: headings and tables (GitHub flavoured), nothing else
+	 *
+	 * Tables get the header row of the HTML table, or "Name | Value" if it has none.
+	 *
+	 * @param string $html output of phpinfo() (HTML)
+	 * @return string
+	 */
+	static public function phpinfoToMarkdown(string $html) : string
+	{
+		$decode = static fn($html) => trim(preg_replace('/\s+/u', ' ', html_entity_decode(strip_tags(
+			preg_replace('#<br\s*/?>#i', ' ', $html)), ENT_QUOTES | ENT_HTML5)));
+		// pipes have to be escaped, asterisks (eg. redacted passwords) are shown as code instead of being escaped
+		$cell = static function($html) use ($decode)
+		{
+			$text = str_replace('|', '\|', $decode($html));
+			if (str_contains($text, '*'))
+			{
+				$text = str_contains($text, '`') ? str_replace('*', '\*', $text) : '`'.$text.'`';
+			}
+			return $text;
+		};
+		$heading = static function($tag, $html) use ($decode)
+		{
+			return str_repeat('#', (int)$tag[1]).' '.$decode($html);
+		};
+
+		if (($pos = stripos($html, '<body')) !== false)
+		{
+			$html = substr($html, $pos);
+		}
+		// tables: headings inside them (PHP Version) are headings, all other rows form a table
+		$html = preg_replace_callback('#<table[^>]*>(.*?)</table>#is', static function($table) use ($cell, $heading)
+		{
+			$out = $rows = [];
+			$header = null;
+			preg_match_all('#<tr[^>]*>(.*?)</tr>#is', $table[1], $trs);
+			foreach($trs[1] as $tr)
+			{
+				if (preg_match('#<(h[1-3])[^>]*>(.*?)</h[1-3]>#is', $tr, $h))
+				{
+					$out[] = $heading($h[1], $h[2]);
+					continue;
+				}
+				preg_match_all('#<t([dh])[^>]*>(.*?)</t[dh]>#is', $tr, $cells);
+				$row = array_map($cell, $cells[2]);
+				if (!$rows && $header === null && $cells[1] && !in_array('d', $cells[1]))
+				{
+					$header = $row;	// all cells are <th>
+				}
+				else
+				{
+					$rows[] = $row;
+				}
+			}
+			if ($rows)
+			{
+				$cols = max(count($header ?? []), ...array_map('count', $rows));
+				$header ??= array_slice(['Name', 'Value', 'Master'], 0, $cols) + array_fill(0, $cols, '');
+				$line = static fn(array $cells) => '| '.implode(' | ', array_pad($cells, $cols, '')).' |';
+				$out[] = $line($header)."\n".'|'.str_repeat(' --- |', $cols)."\n".implode("\n", array_map($line, $rows));
+			}
+			// decoded text is escaped again, so the final strip_tags() does not remove "<...>" contained in values
+			return "\n\n".htmlspecialchars(implode("\n\n", $out))."\n\n";
+		}, $html);
+		// headings outside of tables, eg. one per module
+		$html = preg_replace_callback('#<(h[1-3])[^>]*>(.*?)</h[1-3]>#is', static fn($m) => "\n\n".htmlspecialchars($heading($m[1], $m[2]))."\n\n", $html);
+		$text = html_entity_decode(strip_tags($html), ENT_QUOTES | ENT_HTML5);
+
+		return trim(preg_replace("/\n{3,}/", "\n\n", preg_replace('/[ \t]+\n/', "\n", $text)))."\n";
+	}
+
+	/**
+	 * Redact the value of an Authorization header, see redactPhpinfo()
+	 *
+	 * @param string $authorization eg. "Basic dXNlcjpwdw=="
+	 * @return string eg. "Basic user:**"
+	 */
+	static public function redactAuthorization(string $authorization) : string
+	{
+		$authorization = trim($authorization);
+		[$scheme, $rest] = preg_split('/\s+/', $authorization, 2) + [1 => ''];
+		switch(strtolower($scheme))
+		{
+			case 'basic':
+				$credentials = base64_decode($rest, true);
+				return $credentials !== false && str_contains($credentials, ':') ?
+					$scheme.' '.explode(':', $credentials, 2)[0].':'.str_repeat('*', strlen(explode(':', $credentials, 2)[1])) :
+					$scheme.($rest !== '' ? ' ********' : '');
+			case 'digest':
+				return $scheme.(preg_match('/username="([^"]*)"/', $rest, $m) ? ' username="'.$m[1].'", ********' : ' ********');
+			default:
+				return $scheme.($rest !== '' ? ' '.self::maskSecret($rest) : '');
+		}
+	}
+
+	/**
+	 * Show only the start of a secret (token): first 4 characters (less for short secrets) plus fixed number of *
+	 *
+	 * The length of the secret is NOT shown.
+	 *
+	 * @param string $secret
+	 * @return string eg. "abcd********"
+	 */
+	static protected function maskSecret(string $secret) : string
+	{
+		return mb_substr($secret, 0, min(4, intdiv(mb_strlen($secret), 3))).'********';
+	}
+
+	/**
 	 * Callback to be used to create session via header include authenticated via basic or digest auth
 	 *
 	 * @param array $account NOT used!
@@ -89,22 +382,17 @@ class Authenticate
 		$session = $GLOBALS['egw']->session;
 
 		$username = $_SERVER['PHP_AUTH_USER']; $password = $_SERVER['PHP_AUTH_PW'];
-		// Support for basic auth when using PHP CGI (what about digest auth?)
-		if (!isset($username) && !empty($_SERVER['REDIRECT_HTTP_AUTHORIZATION']) && strpos($_SERVER['REDIRECT_HTTP_AUTHORIZATION'],'Basic ') === 0)
+		// Support for basic auth when PHP did not parse the header into PHP_AUTH_USER/PW (eg. PHP CGI, Apache with rewrite rule)
+		if (!isset($username) && ($basic = self::basicCredentials()) !== null)
 		{
-			$hash = base64_decode(substr($_SERVER['REDIRECT_HTTP_AUTHORIZATION'],6));
-			if (strpos($hash, ':') !== false)
-			{
-				list($username, $password) = explode(':', $hash, 2);
-			}
+			[$username, $password] = $basic;
 		}
 		elseif (isset($_SERVER['PHP_AUTH_DIGEST']) && !self::is_valid($realm,$_SERVER['PHP_AUTH_DIGEST'],$username,$password))
 		{
 			unset($password);
 		}
-		elseif ((isset($_SERVER['HTTP_AUTHORIZATION']) && preg_match('/^Bearer (.+)$/i', $_SERVER['HTTP_AUTHORIZATION'], $matches) ||
-			!empty($_COOKIE['oauth_id_token']) && ($matches = [1 => $_COOKIE['oauth_id_token']])) &&
-			class_exists('EGroupware\OpenID\Token') && ($token = (new Token())->validate($matches[1], "PT5M", $client)))
+		elseif (($bearer = self::bearerToken()) !== null &&
+			class_exists('EGroupware\OpenID\Token') && ($token = (new Token())->validate($bearer, "PT5M", $client)))
 		{
 			$username = $token->claims()->get('sub');
 			unset($password);

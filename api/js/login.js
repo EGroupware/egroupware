@@ -14,10 +14,11 @@ if (top !== window) top.location = window.location;
 try {
 	Function ("() => {};");	// ES6 check
 	Function("window?.location;");	// ES2020 check
+	document.querySelector('thead:has(*)');
 	// Function("window<<<test");	// Test which should fail
 }
-catch (exception){
-	alert('Your browser is not up-to-date (JavaScript ES2020 compatible), you may experience some of the features not working.');
+catch (exception) {
+	alert('Your browser is not up-to-date:\n* JavaScript ES2020 compatible\n* support for CSS :has() pseudo class\n\nYou need at least:\n* Chrome(ium)/Edge 105\n* Firefox 121\n* Safari 15.4');
 }
 
 const login_on_ready = () => {

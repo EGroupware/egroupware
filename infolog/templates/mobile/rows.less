@@ -1,0 +1,51 @@
+/**
+ * EGroupware - InfoLog - Row styles for the nextmatch list, mobile skin
+ *
+ * Loaded into each datagrid row's shadow root via <et2-styles src="rows.css"> in the row
+ * template; app.css does not reach rows.  The default skin's row styles plus mobile overrides.
+ *
+ * Please do NOT change rows.css directly, instead change rows.less and compile it!
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package infolog
+ * @link http://www.egroupware.org
+ */
+
+@import (less) "../default/rows.less";
+
+/* Description is a single, ellipsed line */
+.infoDescRow {
+	height: 32px;
+	max-width: 99%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/* No parent caret in the first column */
+tr.infolog_rowHasParent > td:first-child {
+	background: none !important;
+}
+
+.infolog_CompletedClmn {
+	// Mobile fills its column horizontally instead of shrinking to fit-content (default/rows.less)
+	width: 100%;
+	max-width: 100%;
+	.infoType {
+		padding-right: 1em;
+	}
+}
+
+// Mobile's column wrapper is an et2-vbox, not the et2-hbox rows.less styles for desktop
+et2-vbox.infolog_CompletedClmn {
+	et2-image {
+		width: 1rem;
+		*[part="image"] {
+			vertical-align: middle;
+		}
+	}
+	progress {
+		width: 100%;
+		max-width: 2em;
+	}
+}

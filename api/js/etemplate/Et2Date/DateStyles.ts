@@ -13,8 +13,9 @@ export const dateStyles = [
 			display: block;
 			white-space: nowrap;
 			min-width: fit-content;
+			/* LitFlatpickr's own :host sets a white background and black text, follow the surroundings instead */
 			background-color: transparent;
-			color: var(--sl-color-neutral-950);
+			color: inherit;
 		}
 
 		/* Size variants */

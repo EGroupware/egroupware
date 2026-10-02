@@ -519,21 +519,22 @@ export class MailCompose
 	/**
 	 * Apply a client-side-only compose bootstrap's own preset attachment CONTENT (calendar's own
 	 * meeting-invite .ics - doc/ai/projects/mail-compose-jmap-migration.md, Step 10) - unlike
-	 * applyPresetFiles()'s bare VFS-path reference, there is nothing server-side left to reference
-	 * here (the .ics is generated fresh per compose, never staged anywhere), so this uploads it as
-	 * a real JMAP blob immediately and merges it via carryForwardAttachments() - the same
-	 * jmapBlobId-tagged shape a reply's own carried-forward attachments already use, not
+	 * applyPresetFiles()'s bare VFS-path reference, there is genuinely nothing server-side left to
+	 * reference here (the .ics is generated fresh per compose, never staged anywhere), so this
+	 * uploads it as a real JMAP blob immediately and merges it via carryForwardAttachments() - the
+	 * same jmapBlobId-tagged shape a reply's own carried-forward attachments already use, not
 	 * applyPresetFiles()'s deferred jmapVfsPath marker.
 	 *
-	 * Also used by mail's own REST API (ApiHandler::prepareAttachments()) for an attachment
-	 * uploaded via POST /mail/attachments/ and then referenced to open a compose window - that one
-	 * lives in a local server temp file, equally "nothing server-side left to reference" from this
-	 * popup's own separate window, and can be arbitrary binary (found live: attachments uploaded
-	 * then referenced this way never showed up in the opened compose window - applyPresetFiles()'s
-	 * VFS-path shape doesn't fit either, the file was never in VFS to begin with).
+	 * NOT used any more by mail's own REST API (ApiHandler::prepareAttachments()) for a
+	 * REST-uploaded attachment - that one DOES have something to reference (its local server temp
+	 * file, addressable via GET /mail/attachments/<token>), so it uses applyPresetAttachmentUrls()
+	 * instead (below): a real-world attachment inlined here as base64 made the preset - which
+	 * travels a server push and then a browser form-POST back to compose.php - large enough to
+	 * risk silent truncation somewhere along that path (found live, tickets #125601/#125621, a
+	 * customer's 128KB PDF attachment).
 	 *
-	 * @param files {name, type, content}[] - content is base64-encoded (unlike the ICS case alone,
-	 *  a REST-uploaded attachment can be arbitrary binary, so this must round-trip safely for both)
+	 * @param files {name, type, content}[] - content is base64-encoded, since this needs to round-
+	 *  trip arbitrary binary safely (calendar's .ics is text, but this function doesn't assume that)
 	 */
 	public async applyPresetAttachmentContent(files : { name : string, type : string, content : string }[]) : Promise<void>
 	{
@@ -544,6 +545,43 @@ export class MailCompose
 			const bytes = Uint8Array.from(atob(f.content), c => c.charCodeAt(0));
 			const blob = new Blob([bytes], {type: f.type});
 			return this.app.jmap.uploadAttachment(profileID, blob, f.name, f.type);
+		}));
+		this.carryForwardAttachments(uploaded, profileID);
+	}
+
+	/**
+	 * Apply a client-side-only compose bootstrap's own preset attachment REFERENCE (mail's own
+	 * REST API - ApiHandler::prepareAttachments()'s $compose=true branch, tickets #125601/#125621):
+	 * an attachment uploaded via POST /mail/attachments/ and then referenced to open a compose
+	 * window. Unlike applyPresetAttachmentContent()'s calendar-.ics case, this one's bytes DO still
+	 * exist server-side (ApiHandler::get()'s own GET /mail/attachments/<token> branch serves them
+	 * back), so the preset only needs to carry the (small) url/name/type/size - this fetches the
+	 * bytes itself and uploads them as a real JMAP blob, same as applyPresetAttachmentContent()
+	 * and a user's own drag-and-drop attach both already do, merging via carryForwardAttachments().
+	 *
+	 * Same-origin fetch() rides the popup's own session cookie, no separate auth needed - this
+	 * function only ever runs inside an already-authenticated compose popup.
+	 *
+	 * @param refs {name, type, url, size}[] - url is a fully-qualified, fetchable URL built by
+	 *  prepareAttachments() (Api\Framework::getUrl(Api\Framework::link('/groupdav.php'.$attachment)))
+	 *  from the token ApiHandler::storeAttachment() returned - NOT that bare token path itself
+	 *  (eg. "/mail/attachments/report.pdf--abc123..."), which is only a server-side matching
+	 *  pattern and doesn't route through the REST dispatch at all when fetched directly (found
+	 *  live 2026-09-29: landed on the site root instead of groupdav.php, returning unrelated content)
+	 */
+	public async applyPresetAttachmentUrls(refs : { name : string, type : string, url : string, size : number }[]) : Promise<void>
+	{
+		if (!refs.length) return;
+		const profileID = this.currentProfileID();
+		const uploaded = await Promise.all(refs.map(async(r) =>
+		{
+			const response = await fetch(r.url, {credentials: 'same-origin'});
+			if (!response.ok)
+			{
+				throw new Error(`Fetching attachment '${r.name}' (${r.url}) failed: ${response.status} ${response.statusText}`);
+			}
+			const blob = await response.blob();
+			return this.app.jmap.uploadAttachment(profileID, blob, r.name, r.type);
 		}));
 		this.carryForwardAttachments(uploaded, profileID);
 	}
@@ -1162,8 +1200,48 @@ export class MailCompose
 	 *  account's backend doesn't support JMAP sending yet - caller falls through to the classic
 	 *  postback, silently.
 	 */
+	/**
+	 * true only when to/cc/bcc are ALL empty once normalized - a JmapNewEmail's to/cc/bcc are each
+	 * either a comma-separated string (a raw widget value) or an already-split array (MailJmap.
+	 * splitAddresses()'s own two accepted shapes, mirrored here since that method is private to
+	 * MailJmap) - this never needs to resolve distribution-list placeholders or parse display
+	 * names, just tell "genuinely nothing entered anywhere" apart from "something, however
+	 * malformed, was entered" (a malformed address is still the SERVER's job to reject with a
+	 * real reason, not this guard's).
+	 */
+	private static hasNoRecipientsAtAll(email : {to? : string | string[], cc? : string | string[], bcc? : string | string[]}) : boolean
+	{
+		const isEmpty = (value? : string | string[]) : boolean =>
+			!value || (Array.isArray(value) ? value : value.split(',')).every((a) => !a.trim());
+		return isEmpty(email.to) && isEmpty(email.cc) && isEmpty(email.bcc);
+	}
+
+	/**
+	 * Same ticket #125161 follow-up as hasNoRecipientsAtAll() - ralf: "I believe in the old app we
+	 * had a guard against no recipient or empty subject, and refused to send in both cases",
+	 * confirmed in the deleted mail_compose.inc.php's own compose() (git show 3bca66cf01):
+	 * `strlen(trim($_content['subject']))==0` blocked the send entirely. Extracted the same way as
+	 * that method, purely so this one-line check is directly unit-testable.
+	 */
+	private static hasNoSubject(email : {subject? : string}) : boolean
+	{
+		return !String(email.subject ?? '').trim();
+	}
+
 	private async trySendViaJmap() : Promise<boolean>
 	{
+		// Ticket #125161 (ralf): Send also has a keyboard accelerator (Ctrl+S,
+		// mail/src/Compose.php's own getToolbarActions()) - unlike a mouse click on the Send
+		// button, a keyboard shortcut involves no focus transfer/blur at all, so it can reach here
+		// in the SAME synchronous dispatch as the keydown event itself, potentially before a
+		// native keyup (or any other not-yet-flushed widget-commit event) for whatever key the
+		// user was last typing has even been processed. Stepping out of the current task via a
+		// real macrotask (setTimeout, not just another microtask - several already run via the
+		// promise chain in submitAction() before this is even called, which evidently isn't
+		// enough) gives any such pending event a chance to finish before currentEmailFields()
+		// below reads the actual widget values.
+		await new Promise<void>((resolve) => setTimeout(resolve, 0));
+
 		if (!this.jmapEligible()) return false;
 
 		let sent : {emailId : string, mailboxId : string};
@@ -1177,6 +1255,32 @@ export class MailCompose
 				signed ? MailCompose.SMIME_TYPE_SIGN : encrypted ? MailCompose.SMIME_TYPE_ENCRYPT : undefined;
 			const passphrase = this.et2.getWidgetById('smime_passphrase')?.get_value();
 			email = await this.currentEmailFields(true);
+			// Ticket #125161 (a customer, forwarding from a function mailbox): nothing ever
+			// checked for at least one recipient before actually sending - a To field that was
+			// empty (exact mechanism still unconfirmed - a leading "typed text never committed on
+			// a direct Send click" theory turned out to be a claude-in-chrome tooling artifact,
+			// not reproducible by hand) silently went all the way to the server as an empty
+			// envelope, which Horde only rejects deep inside the actual SMTP transaction ("valid
+			// RCPT command must precede DATA") - a cryptic, log-only failure the user never sees a
+			// clear reason for. Classic mail_compose.inc.php validated this itself before ever
+			// attempting to send; this JMAP-native path never reimplemented that check at all.
+			if (MailCompose.hasNoRecipientsAtAll(email))
+			{
+				this.egw.message(this.egw.lang('No recipient address given!'), 'error');
+				return true;
+			}
+			// ralf, same ticket: "I believe in the old app we had a guard against no recipient or
+			// empty subject, and refused to send in both cases" - confirmed in the deleted
+			// mail_compose.inc.php's own compose() (git show 3bca66cf01): a hard block (never even
+			// attempted send()), same "no subject supplied" phrase reused here, same precedence
+			// (subject checked right after recipients there too - body-emptiness was ALSO checked
+			// classically, but ralf asked for these two specifically, so only these two are
+			// reimplemented here).
+			if (MailCompose.hasNoSubject(email))
+			{
+				this.egw.message(this.egw.lang('No subject supplied'), 'error');
+				return true;
+			}
 			// Mailvelope already produced the ciphertext client-side (its own iframe editor, not
 			// the mail_htmltext/mail_plaintext widgets email.body came from above) - pgpArmored
 			// takes the SAME bodyOverride swap smimeType does in sendNewEmail(), just with no
@@ -1789,7 +1893,7 @@ export class MailCompose
 		const isHtml = replyOptions === 'html' ? true : replyOptions === 'text' ? false : context.mimeType === 'html';
 		this.et2.getWidgetById('mimeType')?.set_value(isHtml);
 		this.syncMimeTypeContainers(isHtml);
-		const quoted = this.app.jmap.quoteOriginalMessage(context);
+		const quoted = this.app.jmap.quoteOriginalMessage(context, isHtml);
 		await this.applySignatureForCurrentIdentity(quoted, this.isReplyCompose);
 
 		if ((mode === 'reply_attachments' || isForward) && context.attachments.length)
@@ -1825,6 +1929,8 @@ export class MailCompose
 		}
 		this.isReplyCompose = false;
 		this.replyThreadingHeaders = null;
+		// before the signature insertion below, which reads the selected identity
+		await this.applyPreferredIdentityForNewCompose();
 
 		// cc/bcc unconditional (even when empty) - found live 2026-09-08 (see bootstrapReply()'s
 		// own identical fix): an `if (context.cc.length)` guard here left whatever was already
@@ -1922,6 +2028,7 @@ export class MailCompose
 		this.isReplyCompose = true;
 		const subject = '[FWD] ' + messages[0].subject;
 		this.et2.getWidgetById('subject')?.set_value(subject);
+		await this.applyPreferredIdentityForNewCompose();
 
 		// no quoted body - still apply the normal new-message signature (classic getForwardData()
 		// never suppresses it for this mode either, $suppressSigOnTop stays false)
@@ -2254,25 +2361,31 @@ export class MailCompose
 	}
 
 	/**
-	 * Select the identity the original message was actually addressed to - matching one of the
-	 * account's own identity email addresses against the reply target's To/Cc - rather than
-	 * leaving whatever identity was last used/configured as default, UNLESS the "Default identity
-	 * for compose" preference (mail/defaultIdentity) is set to 'default'/'personal', which must
-	 * take precedence instead (see preferredIdentityFromPreference()'s own docblock - this mirrors
-	 * the classic mail_compose.inc.php's now-deleted get_preferred_identity() exactly). Genuinely
-	 * useful for an account with several aliases/identities (eg. a 13-identity test account),
-	 * replying "as" whichever address actually received the message rather than whichever
-	 * identity happened to be selected last - but only when the user hasn't asked to always
-	 * prefer their own personal/default identity instead (tracker #124251).
+	 * Resolve the identity for a reply/forward per the "Default identity for compose" preference
+	 * (mail/defaultIdentity, mail/inc/class.mail_hooks.inc.php).
 	 *
-	 * Two edge cases (ralf, 2026-08-27) for the recipient-matching fallback itself:
-	 * - No address matches at all (eg. the user was only bcc'ed) - do nothing, leaving the
-	 *   widget's already-classically-rendered value, which is itself already the "last-used"
-	 *   identity (mail_compose.inc.php's LastSignatureIDUsed preference, read back as the default
-	 *   for every new compose unless a different `defaultIdentity` pref is configured).
+	 * Ticket #125092 follow-up (Ingo, live: "beim Antworten auf eine Mail springt die Identität
+	 * aber wieder zurück auf die Standard-Identität" - replying briefly showed the correct
+	 * last-used identity, then snapped back to standard) - ralf+Birgit decided:
+	 * a) the three PRE-EXISTING preference values ('last-used'/unset, 'default', 'personal') get
+	 *    NO exception for reply/forward any more - each applies exactly as it does to a brand-new
+	 *    compose (see preferredIdentityFromPreference()). Tracker #124251's own recipient-address
+	 *    matching (replying "as" whichever of the account's own addresses the original message was
+	 *    actually sent to - useful for a shared mailbox with several aliases) no longer runs for
+	 *    any of these three.
+	 * b) that recipient-matching behaviour survives, but ONLY as its own new, explicitly opt-in
+	 *    preference value: 'default-matching' - "use the standard identity of the active account
+	 *    for a new compose, but reply/forward prefers whichever identity the message was actually
+	 *    addressed to" (exactly the OLD unconditional 'last-used' behaviour, now gated behind this
+	 *    one value only).
+	 *
+	 * Two edge cases for the recipient-matching itself, 'default-matching' only (ralf, 2026-08-27,
+	 * unchanged from the original #124251 fix):
+	 * - No address matches at all (eg. the user was only bcc'ed) - falls through to the same
+	 *   standard-identity resolution 'default-matching' uses for a brand-new compose.
 	 * - More than one identity matches (eg. several aliases were all on the To/Cc) - prefer
-	 *   keeping the current (again, "last-used") selection if it happens to be among the matches,
-	 *   closest to previous behaviour, rather than an arbitrary pick among equally-valid matches.
+	 *   keeping the current (last-used) selection if it happens to be among the matches, closest
+	 *   to previous behaviour, rather than an arbitrary pick among equally-valid matches.
 	 *
 	 * Silently does nothing if identities can't be fetched either - same
 	 * never-worth-blocking-compose-on philosophy as applySignatureForCurrentIdentity().
@@ -2291,42 +2404,61 @@ export class MailCompose
 		{
 			return [];
 		}
-		// "Default identity for compose" preference (mail/defaultIdentity, mail/inc/
-		// class.mail_hooks.inc.php) - when set to 'default'/'personal' (anything but the default
-		// 'last-used'/unset), it must WIN over the recipient-matching below, same precedence the
-		// classic mail_compose.inc.php always had: its own (deleted in 3bca66cf01,
-		// "mail: delete mail_compose::compose() and its exclusively-used helpers")
-		// get_preferred_identity() ran AFTER any recipient-based resolution and unconditionally
-		// overrode it via `?? $content['mailidentity']` whenever the preference applied. Tracker
-		// #124251 (Sebastian Ender, via Birgit/ralf): a shared mailbox's reply picked the
-		// ADDRESSED-TO alias as sender even though the user's own "use personal signature"
-		// preference should always win - exactly the "answer a shared inbox with my own personal
-		// address" use case that preference exists for. Only reached HERE (this method, unlike the
-		// deleted one, is reply/forward-specific) - a genuinely new blank compose has no recipient
-		// to match against in the first place, so this preference is moot there.
+		if (this.egw.preference('defaultIdentity', 'mail') === 'default-matching')
+		{
+			const recipientEmails = new Set([...context.to, ...context.cc].map((a) => a.email.toLowerCase()));
+			const matches = identities.filter((i) => recipientEmails.has(i.email.toLowerCase()));
+			if (matches.length)
+			{
+				const [, currentIdentId] = String(this.et2.getWidgetById('mailaccount')?.get_value() ?? '').split(':', 2);
+				const preferred = matches.find((i) => i.id === currentIdentId) ?? matches[0];
+				this.et2.getWidgetById('mailaccount')?.set_value(`${context.profileID}:${preferred.id}`);
+				return identities;
+			}
+			// no recipient match at all - fall through to the same standard-identity resolution
+			// below that 'default-matching' also uses for a brand-new compose.
+		}
 		const preferredIdentity = this.preferredIdentityFromPreference(identities);
 		if (preferredIdentity)
 		{
 			this.et2.getWidgetById('mailaccount')?.set_value(`${context.profileID}:${preferredIdentity.id}`);
-			return identities;
-		}
-		const recipientEmails = new Set([...context.to, ...context.cc].map((a) => a.email.toLowerCase()));
-		const matches = identities.filter((i) => recipientEmails.has(i.email.toLowerCase()));
-		if (matches.length)
-		{
-			const [, currentIdentId] = String(this.et2.getWidgetById('mailaccount')?.get_value() ?? '').split(':', 2);
-			const preferred = matches.find((i) => i.id === currentIdentId) ?? matches[0];
-			this.et2.getWidgetById('mailaccount')?.set_value(`${context.profileID}:${preferred.id}`);
 		}
 		return identities;
 	}
 
 	/**
-	 * Replicates the classic mail_compose.inc.php's own (deleted) get_preferred_identity() exactly:
-	 * 'default' = the account's own lowest ident_id; 'personal' = the first ADDITIONAL (second-lowest
-	 * ident_id) personal identity, falling back to the same "default" one if there's only one identity
-	 * at all. Returns null for the 'last-used'/unset preference (the everyday case, no override) or an
-	 * account with no identities - both match that function's own no-op returns.
+	 * 'default' = the account's own STANDARD identity - Mail\Account's own `ident_id` property,
+	 * the `egw_ea_accounts.ident_id` column (admin-settable, see Account::IDENTITY_JOIN), not
+	 * always the same as "ident_id == acc_id" (ralf, ticket #125092: that equivalence only holds
+	 * as long as nobody ever created another identity for the account). Api\Mail\Jmap\
+	 * Identity::synthesize() resolves this server-side and sends it down as each identity's own
+	 * `isStandard` flag - this method just reads it, it has no way to determine "standard" from
+	 * the id alone. Falls back to the lowest-id identity if, for some reason, none is flagged
+	 * `isStandard` at all (shouldn't normally happen - defensive only).
+	 *
+	 * Was: "lowest ident_id among this account's identities" (a customer via Birgit/Ingo: "es
+	 * ist aber immer eine andere Einstellung gesetzt" - not reliably right, since ADDITIONAL
+	 * identities get their own ident_id from the identities table's own global auto-increment,
+	 * unrelated to the account's real standard-identity column) - the classic, now-deleted
+	 * mail_compose.inc.php's get_preferred_identity() this used to replicate exactly had the exact
+	 * same "lowest ident_id" assumption, so this was usually only coincidentally right, on an
+	 * account nobody had added extra identities to.
+	 *
+	 * 'personal' = the first identity flagged `isPersonal` - `egw_ea_identities.account_id` equals
+	 * the CURRENT user's own account_id (ralf, ticket #125092: NOT simply "any identity other than
+	 * the standard one" - a general/shared ADDITIONAL identity, `account_id=0` same as the
+	 * standard one's, would wrongly match that). Falls back to the standard one if the account has
+	 * no genuinely personal identity of its own at all (eg. only general ones, or just the one).
+	 *
+	 * 'default-matching' = same as 'default' (the standard identity) as far as THIS method is
+	 * concerned - selectIdentityForRecipients()'s own reply/forward-only recipient-address
+	 * matching (ralf+Birgit, ticket #125092 follow-up) runs BEFORE this method is even reached for
+	 * that one preference value, and only falls through to here when it found no match - see that
+	 * method's own docblock for the full precedence.
+	 *
+	 * Returns null for the 'last-used'/unset preference (the everyday case, no override, NO
+	 * exception for reply/forward any more either - ralf+Birgit, same follow-up) or an account with
+	 * no identities - both match the classic function's own no-op returns.
 	 */
 	private preferredIdentityFromPreference(identities : any[]) : any | null
 	{
@@ -2336,7 +2468,25 @@ export class MailCompose
 			return null;
 		}
 		const sorted = [...identities].sort((a, b) => parseInt(a.id) - parseInt(b.id));
-		return pref === 'default' ? sorted[0] : (sorted[1] ?? sorted[0]);
+		const standard = sorted.find((i) => i.isStandard) ?? sorted[0];
+		if (pref === 'default' || pref === 'default-matching')
+		{
+			return standard;
+		}
+		if (pref === 'personal')
+		{
+			// Birgit, ticket #125092: "bei 'personal' ... wird die letzte persönliche angezogen und
+			// nicht die Erste" - picking from the plain `identities` array used whatever order the
+			// server happened to return them in (Account::identities()'s own ORDER BY account_id,
+			// ident_realname, ident_org, ident_email - NOT ident_id), so a user with several personal
+			// identities got an arbitrary one, not their first/lowest-id one. The classic, now-deleted
+			// get_preferred_identity()'s own 'personal' always meant "lowest ident_id among the
+			// matching ones" - `sorted` (already lowest-id-first) is what must be searched here, same
+			// as the isStandard fallback above.
+			const personal = sorted.find((i) => i.isPersonal);
+			return personal ?? standard;
+		}
+		return null;
 	}
 
 	/**
@@ -2357,12 +2507,16 @@ export class MailCompose
 
 	/**
 	 * "Default identity for compose" preference (mail/defaultIdentity) for a genuinely new, blank
-	 * compose - selectIdentityForRecipients() already applies this same preference for reply/
-	 * forward (tracker #124251's own fix), but a brand-new compose window never consulted it at
-	 * all, unlike the classic, now-deleted mail_compose.inc.php's get_preferred_identity(), which
-	 * ran for EVERY compose() call unconditionally - found live via ticket #124821 (2026-09-22):
-	 * "die Einstellung dass immer die persönliche Signatur genommen werden soll wird nicht
-	 * berücksichtigt" (the "always use my personal signature" setting isn't respected). Leaves the
+	 * compose - selectIdentityForRecipients() already applies this same preference (plus, for
+	 * 'default-matching' only, its own reply/forward recipient-address matching) for reply/forward,
+	 * but a brand-new compose window never consulted it at all, unlike the classic, now-deleted
+	 * mail_compose.inc.php's get_preferred_identity(), which ran for EVERY compose() call
+	 * unconditionally - found live via ticket #124821 (2026-09-22): "die Einstellung dass immer die
+	 * persönliche Signatur genommen werden soll wird nicht berücksichtigt" (the "always use my
+	 * personal signature" setting isn't respected).
+	 * Also used by bootstrapComposeAsNew() (compose as new, reopened drafts)
+	 * and bootstrapForwardAsAttachment(),
+	 * which have no recipients to match either. Leaves the
 	 * server's own pre-selected identity (mail_compose.inc.php's LastSignatureIDUsed) untouched for
 	 * 'last-used'/unset (the everyday case, see preferredIdentityFromPreference()'s own docblock).
 	 */
@@ -2675,7 +2829,16 @@ export class MailCompose
 	{
 		const isHtml = this.et2.getWidgetById('mimeType')?.get_value() !== false;
 		const hasAttachments = Object.keys(this.et2.getArrayMgr('content').getEntry('attachments') || {}).length > 0;
-		let body = this.et2.getWidgetById(isHtml ? 'mail_htmltext' : 'mail_plaintext')?.get_value();
+		// getValue(true), not the legacy get_value() (which always calls plain getValue(), no
+		// args) - ticket #125241: Et2HtmlArea's own applyDefaultFont only inlines the user's
+		// preferred font/size into the markup when its OWN getValue() sees submit_value===true
+		// (its own docblock: "easier to do here before submit than to do it server-side"). The
+		// classic postback path always passed that (etemplate2.ts's getValues(): "true: let widget
+		// know getValue()/submit is calling it") on every form submit; this JMAP-native compose
+		// never had an equivalent postback at all, so the font/size never got inlined for a real
+		// send - found live (ralf, relaying a real customer's report): a message's font/size in
+		// the Sent folder didn't match what was shown while composing it.
+		let body = this.et2.getWidgetById(isHtml ? 'mail_htmltext' : 'mail_plaintext')?.getValue(true);
 		// only for the actual outgoing message, not a saved draft - the widget itself keeps the
 		// marker (unwrapping here only affects this local copy), so a draft reopened later can
 		// still locate it for a clean identity-switch signature swap (updateSignatureForIdentity()).

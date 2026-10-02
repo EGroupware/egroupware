@@ -1639,15 +1639,25 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 
 	/**
 	 * Init static variables
+	 *
+	 * @param ?array $config the mail app's own config (Api\Config::read('mail')) - only read from
+	 *  the DB here if not already given, so merely autoloading this class (this file's own
+	 *  trailing Imap::init_static() call below, triggered just by referencing Mail\Imap or any
+	 *  subclass, e.g. Mail\Imap\Jmap) doesn't itself require a live DB connection when nothing
+	 *  actually needs $hosts_with_push populated from real config yet - eg. a PHPUnit test
+	 *  exercising pure logic on a Mail\Imap subclass, no DB session at all (see
+	 *  [[feedback_bare_testcase_poisons_account_db]] and admin_mail.inc.php's
+	 *  normalizeAccountType()'s own identical "merely autoloading Mail\Imap eagerly touches the
+	 *  DB" workaround comment - this fixes the root cause instead of working around it again)
 	 */
-	public static function init_static()
+	public static function init_static(?array $config=null)
 	{
 		self::$supports_keywords = Api\Cache::getSession (__CLASS__, 'supports_keywords');
 
 		// hosts from header.inc.php
 		self::$hosts_with_push = $GLOBALS['egw_info']['server']['imap_hosts_with_push'] ?? [];
 		// plus hosts from mail site config
-		$config = Api\Config::read('mail');
+		$config ??= isset($GLOBALS['egw']->db) ? Api\Config::read('mail') : [];
 		foreach(!empty($config['imap_hosts_with_push']) ? preg_split('/[, ]+/', $config['imap_hosts_with_push']) : [] as $host)
 		{
 			self::$hosts_with_push[] = $host;

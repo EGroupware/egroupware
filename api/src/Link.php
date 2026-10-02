@@ -862,6 +862,12 @@ class Link extends Link\Storage
 		{
 			unset($options['order'], $options['sort']);
 		}
+		// integer keys are used by Storage\Base::search() as a raw, unquoted SQL fragment (not a
+		// column=value condition) - never let a client-supplied filter reach a link_query with one
+		if (isset($options['filter']) && is_array($options['filter']))
+		{
+			$options['filter'] = array_filter($options['filter'], fn($key) => !is_int($key), ARRAY_FILTER_USE_KEY);
+		}
 
 		$result = self::exec($method, array($pattern, &$options));
 

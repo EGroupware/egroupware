@@ -6,10 +6,23 @@
 	<et2-template id="api.nextmatch_test.sub_template" template="" lang="" group="0" version="17.1">
 		<et2-nextmatch id="sub_nm" lazy="true"/>
 	</et2-template>
+	<!-- only ever added at run time, as an extraTab of the tabbox below: NOT referenced in api.nextmatch_test -->
+	<et2-template id="api.nextmatch_test.extra_tab" template="" lang="" group="0" version="17.1">
+		<et2-nextmatch id="tab_nm" lazy="true"/>
+	</et2-template>
 	<template id="api.nextmatch_test" template="" lang="" group="0" version="17.1">
 		<historylog id="history"/>
 		<historylog id="history_custom" get_rows="EGroupware\Api\Etemplate\Widget\NextmatchTest::mock_get_rows"/>
 		<!-- bare reference tag, as a lazy-loaded tab-panel uses: NOT expanded while this template is parsed -->
 		<et2-template id="api.nextmatch_test.sub_template"/>
+		<!-- tabs added by the server via extraTabs, as Preferences' "Security &amp; Password" popup does -->
+		<et2-tabbox id="tabs">
+			<tabs>
+				<tab id="first" label="First"/>
+			</tabs>
+			<tabpanels>
+				<et2-vbox/>
+			</tabpanels>
+		</et2-tabbox>
 	</template>
 </overlay>

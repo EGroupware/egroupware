@@ -13,25 +13,9 @@
 
 /* tablets and smartphones  */
 @media all {
-	#admin-index {
-		table.egwGridView_outer tbody {
-			span[id^="admin-index"][id$='status]']{
-				text-align: right;
-			}
-			.adminCol2 {
-				float: right;
-				div {
-					text-align: right;
-				}
-			}
-			span[id^="admin-index"][id$='account_lid]']{
-				font-weight: bold;
-			}
-			span[id^="admin-index"][id$='account_lastname]']::after{
-				content:",";
-			}
-		}
-	}
+	/* The account / group list row styles moved to rows.css: those rows render inside
+	   et2-datagrid's shadow root, where neither #admin-index nor the legacy dataview
+	   table.egwGridView_outer exists, so nothing here could match them any more. */
 	.globalCat_hiddenCatid {
 		display: none;
 	}

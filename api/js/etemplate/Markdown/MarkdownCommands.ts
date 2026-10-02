@@ -227,6 +227,62 @@ export function applyCommand(value: string, start: number, end: number, command:
 }
 
 /**
+ * A file to link to, as the format popup's file buttons hand it over.
+ */
+export interface LinkTarget
+{
+	/** fallback link text, used when nothing is selected - normally the file name */
+	name: string;
+	url: string;
+	/** render it inline with `!` rather than as a plain link */
+	image?: boolean;
+}
+
+/**
+ * Escape the parts of a link that would otherwise end it early.
+ *
+ * Only the characters markdown actually reads as structure are escaped, so a file called
+ * "Rechnung (final).pdf" survives as its own name rather than as percent-encoded noise.
+ */
+function escapeLinkText(text: string): string
+{
+	// a link label cannot span a line break - markdown-it would end the paragraph
+	return text.replace(/[\\\[\]]/g, match => "\\" + match).replace(/\s*\n\s*/g, " ");
+}
+
+function escapeLinkUrl(url: string): string
+{
+	// a space would end the destination, and unbalanced parens would end it early
+	return url.replace(/[\\()]/g, match => "\\" + match).replace(/ /g, "%20");
+}
+
+/**
+ * Insert a link to a file over the selection.
+ *
+ * The selection becomes the link text - you select the words the link should read as, then pick
+ * the file behind them - and only falls back to the file's own name when nothing is selected.
+ *
+ * Unlike applyCommand("link") there is no placeholder to type over: the url is already known, so
+ * the caret is left after the insert rather than inside it.
+ */
+export function insertLink(value: string, start: number, end: number, link: LinkTarget): CommandResult
+{
+	value = value ?? "";
+	start = Math.max(0, Math.min(start ?? 0, value.length));
+	end = Math.max(start, Math.min(end ?? start, value.length));
+
+	const text = escapeLinkText(value.slice(start, end) || link.name || link.url);
+	const inserted = (link.image ? "![" : "[") + text + "](" + escapeLinkUrl(link.url) + ")";
+	const after = start + inserted.length;
+
+	return {
+		value: value.slice(0, start) + inserted + value.slice(end),
+		start: after,
+		end: after
+	};
+}
+
+/**
  * The smallest replacement turning `oldValue` into `newValue`.
  *
  * Commands rebuild the whole source, but replacing the whole textarea would collapse the

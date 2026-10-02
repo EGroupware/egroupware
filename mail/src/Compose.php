@@ -956,7 +956,14 @@ class Compose
 							{
 								$this->mail_bo->deleteMessages($duid,$dmailbox,'remove_immediately');
 							}
-							catch (Api\Exception $e)
+							// Api\Exception is EGroupware's own hierarchy - a Horde_Imap_Client_Exception
+							// (eg. the IMAP server's generic RFC 5530 NONEXISTENT response, worded
+							// "could not be deleted" regardless of which command actually triggered it -
+							// found live, ticket #125161) extends Horde_Exception_Wrapped/
+							// Horde_Exception/\Exception instead, so it was never caught here and
+							// propagated uncaught all the way to the client as a raw, untranslated
+							// error instead of just marking this best-effort cleanup unsuccessful.
+							catch (\Exception $e)
 							{
 								$msg = str_replace('"',"'",$e->getMessage());
 								$success = false;
@@ -1096,7 +1103,17 @@ class Compose
 				$sigPref = $GLOBALS['egw_info']['user']['preferences']['mail']['LastSignatureIDUsed'];
 				if (!empty($sigPref[$this->mail_bo->profileID]) && $sigPref[$this->mail_bo->profileID]>0)
 				{
-					$content['mailidentity'] = $sigPref[$this->mail_bo->profileID];
+					// validate the identity still belongs to the current user, in case the pref
+					// is stale (eg. identity got deleted or reassigned to a different account)
+					try
+					{
+						Mail\Account::read_identity($sigPref[$this->mail_bo->profileID]);
+						$content['mailidentity'] = $sigPref[$this->mail_bo->profileID];
+					}
+					catch (Api\Exception\NotFound $e)
+					{
+						unset($e);
+					}
 				}
 			}
 			// if we have no preference search for first identity with non-empty signature

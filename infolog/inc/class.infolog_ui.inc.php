@@ -982,7 +982,7 @@ class infolog_ui
 				// Some processing to add values in for links and cats
 				$multi_action = $values['nm']['multi_action'];
 				// Action has an additional action - add / delete, etc.  Buttons named <multi-action>_action[action_name]
-				if(in_array($multi_action, array('link', 'responsible', 'startdate', 'enddate')))
+				if(in_array($multi_action, array('responsible', 'startdate', 'enddate')))
 				{
 					// eTemplate ignores the _popup namespace, but et2 doesn't
 					if($values[$multi_action.'_popup'])
@@ -994,11 +994,7 @@ class infolog_ui
 						$popup =& $values;
 					}
 					$values['nm']['multi_action'] .= '_' . key($popup[$multi_action . '_action'] ?? []);
-					if($multi_action == 'link')
-					{
-						$popup[$multi_action] = $popup['link']['app'] . ':'.$popup['link']['id'];
-					}
-					else if(is_array($popup[$multi_action]))
+					if(is_array($popup[$multi_action]))
 					{
 						$popup[$multi_action] = implode(',',$popup[$multi_action]);
 					}
@@ -1424,11 +1420,6 @@ class infolog_ui
 						'nm_action' => 'open_popup',
 						'onExecute' => 'javaScript:app.infolog.change_responsible'
 					),
-					'link' => array(
-						'caption' => 'Links',
-						'group' => $group,
-						'nm_action' => 'open_popup',
-					),
 				),
 				'hideOnMobile' => true
 			),
@@ -1671,44 +1662,6 @@ class infolog_ui
 		// Actions that can handle a list of IDs
 		switch($action)
 		{
-			case 'link':
-				list($add_remove, $link) = explode('_', $settings, 2);
-				list($app, $link_id) = explode(strpos($link,':') !== false ? ':' : ',', $link);
-				if(!$link_id)
-				{
-					$action_msg = 'linked';
-					$msg = lang('You need to select an entry for linking.');
-					break;
-				}
-				$title = Link::title($app, $link_id);
-				foreach($checked as $id)
-				{
-					if(!$this->bo->check_access($id, Acl::EDIT))
-					{
-						$failed++;
-						continue;
-					}
-					if($add_remove == 'add')
-					{
-						$action_msg = lang('linked to %1', $title);
-						if(Link::link('infolog', $id, $app, $link_id))
-						{
-							$success++;
-						}
-						else
-						{
-							$failed++;
-						}
-					}
-					else
-					{
-						$action_msg = lang('unlinked from %1', $title);
-						$count = Link::unlink(0, 'infolog', $id, '', $app, $link_id);
-						$success += $count;
-					}
-				}
-				return $failed == 0;
-
 			case 'document':
 				if (!$settings) $settings = $this->prefs['default_document'];
 				$document_merge = new infolog_merge();

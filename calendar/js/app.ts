@@ -846,16 +846,24 @@ export class CalendarApp extends EgwApp
 
 	getFilterInfo(filterValues)
 	{
-		// A calendar list always covers some date range and always has a participation-status
-		// filter, so neither value is ever empty and the generic "anything truthy means filters
-		// are set" rule would light the filter icon permanently, with nothing the user could
-		// clear to turn it off.  Only a custom date range is a filter someone actually set -
-		// week/month/today/all is just the span the current view covers - and "default" is the
-		// status filter's own default.
-		const values = {...filterValues};
-		if(values.filter !== 'custom')
+		// Only count what the filters drawer offers and the user can clear there.  The list view
+		// gets the whole calendar state (owner, view, sortby, weekend, ...) as its filters, and
+		// the participants come from the calendars chosen in the side menu.  A calendar list
+		// always covers some date range - switching from week or month to the list carries that
+		// span over as a custom range - so the date range is never a filter either, and "default"
+		// is the status filter's own default.
+		const values : { [id : string] : any } = {};
+		for(const key of ['search', 'cat_id', 'status_filter'])
 		{
-			delete values.filter;
+			values[key] = filterValues?.[key];
+		}
+		// Integration pickers (eg. projectmanager's) next to their template descriptions and settings
+		for(const [app, data] of Object.entries(filterValues?.integration ?? {}))
+		{
+			if(isNaN(<any>app) && data && typeof data == "object")
+			{
+				values[app] = Object.values(data).filter(v => Array.isArray(v));
+			}
 		}
 		if(values.status_filter === 'default')
 		{
@@ -1887,17 +1895,15 @@ export class CalendarApp extends EgwApp
 	}
 
 	/**
-	 * show/hide the filter of nm list in calendar listview
+	 * Copy the date range filter of the nm list in calendar listview into the state
 	 *
 	 */
 	filter_change()
 	{
-		const view = this.listEtemplate?.widgetContainer || null;
 		const nm = this.listNextmatch;
 		// The date range filter lives in calendar.filter (the app's own filterbox), not in the
 		// nextmatch header, so read the value the nextmatch is actually querying with.
 		const filter = nm ? nm.activeFilters.filter : null;
-		const dates = view ? <Et2Template>view.getWidgetById('calendar.list.dates') : null;
 
 		// Update state when user changes it.  Sort order is NOT set here: for 'before' the list
 		// is shown newest-first, but that has to go into the same applyFilters() call that
@@ -1911,19 +1917,6 @@ export class CalendarApp extends EgwApp
 		else
 		{
 			delete this.state.filter;
-		}
-		if (filter && dates)
-		{
-			dates.set_disabled(filter !== "custom");
-			if (filter == "custom" && !this.state_update_in_progress)
-			{
-				// Copy state dates over, without causing [another] state update
-				const actual = this.state_update_in_progress;
-				this.state_update_in_progress = true;
-				(<Et2Date>view.getWidgetById('startdate')).set_value(this.state.first);
-				(<Et2Date>view.getWidgetById('enddate')).set_value(this.state.last);
-				this.state_update_in_progress = actual;
-			}
 		}
 	}
 

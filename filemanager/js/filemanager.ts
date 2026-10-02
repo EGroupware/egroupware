@@ -14,6 +14,7 @@ import type {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatc
 import type {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import type {Et2DatagridUpdateType, Et2DatagridView} from "../../api/js/etemplate/Et2Datagrid/Et2Datagrid.types";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
+import type {EgwFrameworkApp, FilterInfo} from "../../kdots/js/EgwFrameworkApp";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 // et2_file is now a shim over Et2File (et2_widget_file.ts deleted); passed as a runtime
 // instanceof-filter value to iterateOver() below, but since <file> is unconditionally
@@ -508,6 +509,25 @@ export class filemanagerAPP extends EgwApp
 		{
 			super.checkNmFilterChanged(app_toolbar, 'path', value);
 		}
+	}
+
+	/**
+	 * The current directory is where we are and view how the files are shown, neither is a filter the user set
+	 *
+	 * @param filterValues
+	 * @param fwApp
+	 */
+	getFilterInfo(filterValues : { [id : string] : any }, fwApp : EgwFrameworkApp) : FilterInfo
+	{
+		const values = {...(filterValues ?? {})};
+		delete values.path;
+		delete values.view;
+		if(values.col_filter && typeof values.col_filter == "object")
+		{
+			values.col_filter = {...values.col_filter};
+			delete values.col_filter.dir;
+		}
+		return fwApp.filterInfo(values);
 	}
 
 	/**

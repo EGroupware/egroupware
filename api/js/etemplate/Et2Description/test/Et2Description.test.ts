@@ -234,3 +234,69 @@ describe("Et2Description markdown", () =>
 // <slot part="form-control-label"> (display:contents), which "width" has no effect on at all -
 // .et2-label-fixed genuinely cannot apply here, not a bug.
 widgetSlotTests(before, ["label"], {skipLabelFixed: true});
+/**
+ * Link styling.
+ *
+ * Contract: links inside a description are rendered into its light DOM, out of reach of its own shadow
+ * styles, so the description puts its link styles into whichever document or shadow root it is in, once,
+ * at a specificity any app rule overrides.
+ *
+ * Setup: descriptions with href / activateLinks, in the document and inside a shadow root (like a list's
+ * row, which page CSS does not reach).
+ */
+describe("Et2Description link styles", () =>
+{
+	const linkColor = () =>
+	{
+		const probe = document.createElement("span");
+		probe.style.color = "var(--sl-color-primary-700)";
+		document.body.append(probe);
+		const color = getComputedStyle(probe).color;
+		probe.remove();
+		return color;
+	};
+
+	it("styles links in the document", async() =>
+	{
+		const description = await fixture<Et2Description>(html`
+            <et2-description noLang href="not_real_url" value="click me"></et2-description>`);
+		// @ts-ignore TypeScript doesn't recognize widgets as Elements
+		await elementUpdated(description);
+
+		const a = description.querySelector("a");
+		assert.equal(getComputedStyle(a).color, linkColor(), "Link has the browser's default colour");
+		assert.equal(getComputedStyle(a).textDecorationLine, "none", "Link is underlined");
+	});
+
+	it("styles links inside a shadow root, once per root", async() =>
+	{
+		const host = await fixture<HTMLDivElement>(html`<div></div>`);
+		const root = host.attachShadow({mode: "open"});
+		root.innerHTML = `<et2-description noLang activateLinks value="see www.egroupware.org"></et2-description>
+			<et2-description noLang href="not_real_url" value="click me"></et2-description>`;
+		const descriptions = Array.from(root.querySelectorAll("et2-description")) as Et2Description[];
+		// @ts-ignore TypeScript doesn't recognize widgets as Elements
+		await Promise.all(descriptions.map(d => elementUpdated(d)));
+
+		assert.lengthOf(root.querySelectorAll("style#" + Et2Description.LINK_STYLES_ID), 1, "Link styles not added exactly once");
+		descriptions.forEach(d =>
+		{
+			const a = d.querySelector("a");
+			assert.isNotNull(a, "No link rendered");
+			assert.equal(getComputedStyle(a).color, linkColor(), "Link in a shadow root has the browser's default colour");
+		});
+	});
+
+	it("lets an app rule win", async() =>
+	{
+		const host = await fixture<HTMLDivElement>(html`<div></div>`);
+		const root = host.attachShadow({mode: "open"});
+		root.innerHTML = `<style>a { color: rgb(1, 2, 3); }</style>
+			<et2-description noLang href="not_real_url" value="click me"></et2-description>`;
+		const description = root.querySelector("et2-description") as Et2Description;
+		// @ts-ignore TypeScript doesn't recognize widgets as Elements
+		await elementUpdated(description);
+
+		assert.equal(getComputedStyle(description.querySelector("a")).color, "rgb(1, 2, 3)", "App rule was overridden");
+	});
+});

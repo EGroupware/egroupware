@@ -482,7 +482,9 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 
 		nextmatchNode?.classList?.add("et2-filterbox--" + this.originalWidgets);
 
-		if(this._nextmatch?.options)
+		// Legacy widget only - the webComponent has no sub-header templates or settings.lettersearch,
+		// and Et2Widget's options getter would build a throwaway object just to be checked here.
+		if(this._nextmatch?.header && this._nextmatch.options)
 		{
 			// If the nextmatch has sub-headers and we didn't grab everything from them, mark the NM so we don't hide them
 			const subHeaders = ["header_left", "header_right", "header_row", "header2"];

@@ -15,6 +15,16 @@ $GLOBALS['egw_info']['flags'] = array(
 	'nonavbar'   => True,
 	'currentapp' => 'admin'
 );
+// autoloading is not yet setup, so we have to include this file explicitly
+require_once __DIR__.'/../api/src/Header/Authenticate.php';
+
+// allow authenticating via basic auth (eg. curl -u admin:password) to debug how a web-server passes credentials to PHP,
+// but only if credentials are given: otherwise we'd send a basic auth challenge instead of redirecting to the login
+if (Api\Header\Authenticate::hasCredentials())
+{
+	$GLOBALS['egw_info']['flags']['autocreate_session_callback'] = 'EGroupware\\Api\\Header\\Authenticate::autocreate_session_callback';
+	$GLOBALS['egw_info']['flags']['auth_realm'] = 'EGroupware admin';
+}
 include('../header.inc.php');
 
 if ($GLOBALS['egw']->acl->checkAdminDeny('info_access', 1))
@@ -33,11 +43,20 @@ $cache_info .= '</td></tr></tbody></table>'."\n";
 
 ob_start();
 phpinfo();
-$phpinfo = ob_get_clean();
+// phpinfo() shows PHP_AUTH_PW, the Authorization header and cookies in clear, redact them
+$phpinfo = Api\Header\Authenticate::redactPhpinfo(ob_get_clean());
 
 $info = str_ireplace('<body><div class="center">', '<body><div class="center">'."\n".$cache_info, $phpinfo);
 if ($info == $phpinfo)
 {
-	echo $cache_info;
+	$info = $cache_info.$info;
 }
-echo $info;
+if (($format = Api\Header\Authenticate::preferredTextFormat()))	// Accept: text/plain or text/markdown, eg. curl -H 'Accept: text/plain' ...
+{
+	header('Content-Type: '.$format.'; charset=utf-8');
+	echo Api\Header\Authenticate::phpinfoToMarkdown($info);
+}
+else
+{
+	echo $info;
+}

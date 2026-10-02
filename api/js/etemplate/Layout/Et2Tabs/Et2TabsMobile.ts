@@ -3,7 +3,9 @@ import {html, TemplateResult} from "lit";
 import {classMap} from "lit/directives/class-map.js";
 import {repeat} from "lit/directives/repeat.js";
 import {Et2Details} from "../Et2Details/Et2Details";
-import {SlTab, SlTabPanel} from "@shoelace-style/shoelace";
+import {SlDetails, SlTab, SlTabPanel} from "@shoelace-style/shoelace";
+import {et2_IPrint} from "../../et2_core_interfaces";
+import type {Et2TabPanel} from "./Et2TabPanel";
 
 /**
  * Widget to render tabs in a mobile-friendly way
@@ -13,6 +15,11 @@ import {SlTab, SlTabPanel} from "@shoelace-style/shoelace";
  */
 export class Et2TabsMobile extends Et2Tabs
 {
+	/**
+	 * Details opened by beforePrint(), to close again afterPrint()
+	 */
+	protected _printOpened : SlDetails[] = [];
+
 	connectedCallback()
 	{
 		super.connectedCallback();
@@ -107,6 +114,56 @@ export class Et2TabsMobile extends Et2Tabs
 		// Don't call super, it hides tab content
 	}
 
+
+	/**
+	 * Set up for printing
+	 *
+	 * Every panel is already active, it sits inside its tab's details, so open all details that are not
+	 * hidden.  Opening animates, so widgets in details that were closed are not visible yet when
+	 * etemplate2.print() checks them right after this returns, and get skipped there.  Once the details
+	 * are open we prepare those widgets for printing ourselves, the same way etemplate2.print() does.
+	 *
+	 * @return {Promise} resolves when all details are open and their widgets are ready for printing
+	 */
+	async beforePrint()
+	{
+		this._printOpened = (<SlDetails[]><unknown>this.getAllTabs()).filter(details => !details.hidden && !details.open);
+		await Promise.all(this._printOpened.map(details => details.show()));
+
+		const instanceManager = this.getInstanceManager();
+		const panels = <Et2TabPanel[]><unknown>this.getAllPanels();
+		const deferred = [];
+		this._printOpened.forEach(details =>
+		{
+			panels.find(panel => panel.slot == details.getAttribute("id"))?.iterateOver(widget =>
+			{
+				// Skip widgets from a different etemplate, and hidden widgets
+				const node = widget.getDOMNode?.() ?? widget;
+				if(widget.getInstanceManager() != instanceManager ||
+					!node || !(node.offsetWidth || node.offsetHeight || node.getClientRects().length))
+				{
+					return;
+				}
+				const result = widget.beforePrint();
+				if(result && typeof result == "object")
+				{
+					deferred.push(result);
+				}
+			}, this, et2_IPrint);
+		});
+		await Promise.all(deferred);
+	}
+
+	/**
+	 * Reset after printing
+	 *
+	 * Close the details beforePrint() opened
+	 */
+	afterPrint()
+	{
+		this._printOpened.forEach(details => details.hide());
+		this._printOpened = [];
+	}
 
 	get nav() : HTMLElement
 	{

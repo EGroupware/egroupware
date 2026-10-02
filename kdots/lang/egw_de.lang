@@ -2,6 +2,9 @@ activate to show more colorful app icons in the open tabs. if unchecked they def
 app chooser icons	common	de	Auswahl über Icons
 app chooser icons + text	common	de	Auswahl über Icons & Text
 application chooser style	common	de	Stil der Anwendungsauswahl
+nothing matches your filters. change them here to see more entries.	common	de	Nichts entspricht Ihren Filtern. Ändern Sie sie hier, um mehr Einträge zu sehen.
+open filters automatically	common	de	Filter automatisch öffnen
+open the filters when the chosen filters match no entries in a list.	common	de	Die Filter öffnen, wenn die gewählten Filter keine Einträge einer Liste ergeben.
 reload %1	common	de	%1 neu laden
 should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons	kdots	de	Soll die Anwendungsauswahl nur Icons oder auch den Anwendungsnamen enthalten. Z.B. für Benutzer, die mit den Icons noch nicht vertraut sind.
 show app icons in there app color	kdots	de	App-Symbole in der App-Farbe anzeigen

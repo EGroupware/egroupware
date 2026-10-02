@@ -82,6 +82,15 @@ class resources_ui
 					return $this->index();
 				}
 			}
+			// Which button of the delete / un-delete dialog was clicked, see show.xet
+			if ($content['nm']['action'] === 'delete' && !empty($content['delete_popup']['promote']))
+			{
+				$content['nm']['action'] = 'delete_promote';
+			}
+			elseif ($content['nm']['action'] === 'restore' && !empty($content['restore_popup']['accessories']))
+			{
+				$content['nm']['action'] = 'restore_accessories';
+			}
 			if ($content['nm']['action'])
 			{
 				if (!count($content['nm']['selected']) && !$content['nm']['select_all'])
@@ -548,7 +557,6 @@ class resources_ui
 		}
 		$sel_options['status'] = resources_bo::$field2label;
 
-		//$sel_options['gen_src_list'] = $this->bo->get_genpicturelist();
 		$sel_options['cat_id'] =  $this->bo->acl->get_cats(Acl::ADD);
 		$sel_options['cat_id'] = count($sel_options['cat_id']) == 1 ? $sel_options['cat_id'] :
 			array('' => lang('select one')) + $sel_options['cat_id'];

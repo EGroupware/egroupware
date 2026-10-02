@@ -300,4 +300,89 @@ describe('EgwFramework', () =>
 			assert.isTrue(dialog.classList.contains('egw-popup'));
 		});
 	});
+
+	describe('print() of a popup window', () =>
+	{
+		// Popups share the main window's framework and call framework.print(window).  A same-origin
+		// iframe stands in for the popup: a real Window that is not egw's window.
+		let iframe : HTMLIFrameElement;
+		let popup : any;
+		let et2 : any;
+		let widget : any;
+		let deferred : {promise : Promise<void>, resolve : Function, reject : Function};
+
+		beforeEach(async() =>
+		{
+			iframe = document.createElement('iframe');
+			document.body.append(iframe);
+			popup = iframe.contentWindow;
+			popup.document.body.innerHTML = '<form id="app-edit" class="et2_container">Popup content</form>';
+			popup.print = sinon.stub();
+
+			deferred = <any>{};
+			deferred.promise = new Promise((resolve, reject) => Object.assign(deferred, {resolve, reject}));
+			widget = {afterPrint: sinon.stub()};
+			et2 = {
+				print: sinon.stub().returns([deferred.promise]),
+				widgetContainer: {iterateOver: (callback, context) => callback.call(context, widget)}
+			};
+			popup.etemplate2 = {getById: sinon.stub().callsFake(id => id === 'app-edit' ? et2 : null)};
+		});
+
+		afterEach(() =>
+		{
+			iframe.remove();
+		});
+
+		// print() schedules the actual window.print() and the afterPrint() reset with timeouts
+		const settle = (ms = 0) => new Promise(resolve => setTimeout(resolve, ms));
+
+		it('prepares the popup\'s etemplates, prints the popup once they are ready, then resets them', async() =>
+		{
+			const printed = element.print(popup);
+			await settle();
+			assert.isTrue(et2.print.calledOnce, "popup's etemplate was not asked to prepare for printing");
+			assert.isTrue(popup.print.notCalled, 'popup was printed before its etemplate was ready');
+
+			deferred.resolve();
+			await printed;
+			await settle();
+			assert.isTrue(popup.print.calledOnce, 'popup was not printed');
+			assert.isTrue(widget.afterPrint.notCalled, "popup's widgets were reset before printing");
+
+			popup.dispatchEvent(new Event('afterprint'));
+			await settle(150);
+			assert.isTrue(widget.afterPrint.calledOnce, "popup's widgets were not reset after printing");
+		});
+
+		it('does not print the popup when preparing was canceled', async() =>
+		{
+			const printed = element.print(popup);
+			deferred.reject();
+			await printed;
+			await settle(150);
+			assert.isTrue(popup.print.notCalled, 'popup was printed although a print dialog was canceled');
+			assert.isTrue(widget.afterPrint.calledOnce, "popup's widgets were not reset after canceling");
+		});
+
+		it('still prints the popup when a widget fails to prepare', async() =>
+		{
+			et2.print = sinon.stub().throws(new TypeError('broken beforePrint()'));
+			await element.print(popup);
+			await settle();
+			assert.isTrue(popup.print.calledOnce, 'a widget failing to prepare stopped the popup from printing');
+
+			popup.dispatchEvent(new Event('afterprint'));
+			await settle(150);
+			assert.isTrue(widget.afterPrint.calledOnce, "popup's widgets were not reset after printing");
+		});
+
+		it('prints the active application when given an event instead of a window', async() =>
+		{
+			// The header print button passes its click event
+			await element.print(<any>new MouseEvent('click'));
+			assert.isTrue(et2.print.notCalled, 'popup was prepared for printing without being asked to');
+			assert.isTrue(popup.print.notCalled, 'popup was printed without being asked to');
+		});
+	});
 });

@@ -53,6 +53,13 @@ export interface Et2DatagridTemplateData
 	loaderTemplate : HTMLTemplateElement | null;
 	noResultsTemplate? : HTMLTemplateElement | null;
 	columns : Et2DatagridColumn[];
+	/**
+	 * The template has no header cells (eg. a mobile row template with an empty `<row class="th">`), so the
+	 * columns only have generated placeholder headers and positional keys (`col0`, `col1`, ...).  Nobody can
+	 * resize or choose such columns, and a positional key names a different column as soon as the template
+	 * adds or removes one, so their state is neither saved nor restored.
+	 */
+	noHeader? : boolean;
 	/** Physical row-template column order before user/preference reordering. */
 	sourceColumns? : Et2DatagridColumn[];
 }

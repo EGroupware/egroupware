@@ -403,8 +403,13 @@ class Sql extends Api\Storage
 		$group = $GLOBALS['egw_info']['user']['preferences']['addressbook']['duplicate_fields'] ?
 				explode(',',$GLOBALS['egw_info']['user']['preferences']['addressbook']['duplicate_fields']):
 				array('n_family', 'org_name', 'contact_email');
-		$match_count = $GLOBALS['egw_info']['user']['preferences']['addressbook']['duplicate_threshold'] ?
-				$GLOBALS['egw_info']['user']['preferences']['addressbook']['duplicate_threshold'] : 3;
+		// duplicate_fields is a stored preference, but used unquoted below as column names (SELECT
+		// expressions, GROUP BY, ORDER BY) --> only accept the fields the addressbook UI itself
+		// offers for it, same list Storage::$duplicate_fields exposes there
+		$group = array_values(array_intersect($group, array_keys(Storage::$duplicate_fields)));
+		if (!$group) $group = array('n_family', 'org_name', 'contact_email');
+		// likewise interpolated unquoted into HAVING match_count >= $match_count below
+		$match_count = (int)($GLOBALS['egw_info']['user']['preferences']['addressbook']['duplicate_threshold'] ?: 3);
 
 		$columns = Array();
 		$extra = Array();

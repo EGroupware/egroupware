@@ -20,13 +20,13 @@
 				<row class="th">
 					<et2-nextmatch-header-account  id="account_id" label="LoginID" emptyLabel="All"></et2-nextmatch-header-account>
 					<et2-nextmatch-header  label="Login-Status" id="sessionstatus"></et2-nextmatch-header>
-					<nextmatch-sortheader label="Loginid" id="loginid"/>
-					<nextmatch-sortheader label="IP" id="ip"/>
-					<nextmatch-sortheader label="Login" id="li"/>
-					<nextmatch-sortheader label="Logout" id="lo"/>
+					<et2-nextmatch-sortheader  label="Loginid" id="loginid"/>
+					<et2-nextmatch-sortheader  label="IP" id="ip"/>
+					<et2-nextmatch-sortheader  label="Login" id="li"/>
+					<et2-nextmatch-sortheader  label="Logout" id="lo"/>
 					<et2-nextmatch-header  label="Total" id="total"></et2-nextmatch-header>
-					<nextmatch-sortheader label="Idle" id="session_dla"/>
-					<nextmatch-sortheader label="User-Agent" id="user_agent"/>
+					<et2-nextmatch-sortheader  label="Idle" id="session_dla"/>
+					<et2-nextmatch-sortheader  label="User-Agent" id="user_agent"/>
 					<et2-nextmatch-header  label="Action" id="session_action"></et2-nextmatch-header>
 				</row>
 				<row class="row $row_cont[class]">
@@ -46,17 +46,21 @@
 				</row>
 			</rows>
 		</grid>
+		<et2-styles src="rows.css"></et2-styles>
 	</et2-template>
 	<et2-template  id="admin.accesslog.header" template="" lang="" group="0" version="1.9.001">
 		<et2-template  template="api.search-button"></et2-template>
 		<et2-select-account  id="account_id" emptyLabel="LoginID" onchange="app.admin.changeNmFilter"></et2-select-account>
 	</et2-template>
-	<et2-template  id="admin.accesslog" template="" lang="" group="0" version="1.9.001">
+	<et2-template  id="admin.accesslog" template="" lang="" group="0" version="1.9.001" layout="stack">
 		<et2-template  template="admin.accesslog.header" slot="main-header"></et2-template>
-		<et2-vbox>
-			<nextmatch id="nm" options="admin.accesslog.rows" span="all"/>
-			<et2-number  label="{Percent of users that logged out}: %s %" id="percent" precision="1" readonly="true"></et2-number>
-		</et2-vbox>
+		<!-- The nextmatch and the percentage below it are both direct children, not wrapped in a
+		     box: the nextmatch needs a bounded box of its own to scroll inside, which a flex/table
+		     wrapper does not give it.  The percentage stays a *sibling* rather than moving into the
+		     nextmatch's footer slot - et2-nextmatch opens a namespace, so a child would look for
+		     $content['nm']['percent'], and admin_accesslog::index() sets $content['percent']. -->
+		<et2-nextmatch  id="nm" template="admin.accesslog.rows" grow="1"></et2-nextmatch>
+		<et2-number  label="{Percent of users that logged out}: %s %" id="percent" precision="1" readonly="true"></et2-number>
 		<et2-styles>
 			.selectAllArrow { padding-right: 12px; }
 		</et2-styles>

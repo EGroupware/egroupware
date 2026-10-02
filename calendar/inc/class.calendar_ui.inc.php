@@ -798,7 +798,7 @@ class calendar_ui
 		// mark deleted events
 		if ($event['deleted'])
 		{
-			$event['class'] .= 'rowDeleted ';
+			$event['class'] .= 'rowDeleted rowInactive ';
 		}
 
 		// v-- this should not be necessary

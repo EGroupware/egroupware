@@ -137,16 +137,6 @@ egw-app {
 
   }
 
-  /** filter drawer styling**/
-
-  *[slot="filter"] et2-details {
-	&:has(> .et2_customfield_list:only-child > tbody:empty) {
-	  display: none;
-	}
-	&:has(> .et2_customfield_list:only-child:empty) {
-	  display: none;
-	}
-  }
 }
 
 /* non-default application colors, are set server-side by Api\Framework::app_colors() in a style-tag in the header */

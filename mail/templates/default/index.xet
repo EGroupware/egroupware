@@ -144,6 +144,7 @@
                         <et2-hbox  class="status_icons">
                             <et2-image  src="$row_cont[status_icon]" class="status_img $row_cont[class]"></et2-image>
                             <et2-image  src="$row_cont[smime]" inline="true" class="bi"></et2-image>
+                            <et2-image  src="$row_cont[pgp]" inline="true" class="bi"></et2-image>
                             <et2-image  src="$row_cont[attachment_icon]"></et2-image>
                             <et2-image  src="$row_cont[flagged_icon]" id="flaggedImage"></et2-image>
                         </et2-hbox>
@@ -155,7 +156,7 @@
     </et2-template>
     <et2-template  id="mail.index.splitter" height="100%" template="" lang="" group="0" version="1.9.001">
         <et2-split  id="mailSplitter" style="--min: 30%;--max:min(70%,calc(100% - 30em));" vertical="false">
-            <et2-nextmatch  id="nm" onselect="app.mail.preview" template="mail.index.rows.vertical" noDynheight="true"></et2-nextmatch>
+            <et2-nextmatch  id="nm" onselect="app.mail.preview" template="mail.index.rows.vertical" autorefreshPreference="mail.index.rows" noDynheight="true"></et2-nextmatch>
             <et2-template  id="mail.index.preview"></et2-template>
         </et2-split>
     </et2-template>
@@ -210,14 +211,17 @@
                     <et2-url-email  id="${row}[toaddress]" readonly="true" emailDisplay="preference"></et2-url-email>
                     <et2-url-email  id="${row}[fromaddress]" readonly="true" emailDisplay="preference"></et2-url-email>
                     <et2-vfs-size  align="right" id="${row}[size]" noLang="1" readonly="true"></et2-vfs-size>
-                    <et2-image  align="center" src="$row_cont[smime]" inline="true" class="horizontal_smime"></et2-image>
+                    <et2-hbox>
+                        <et2-image  align="center" src="$row_cont[smime]" inline="true" class="horizontal_smime"></et2-image>
+                        <et2-image  align="center" src="$row_cont[pgp]" inline="true" class="horizontal_smime"></et2-image>
+                    </et2-hbox>
                 </row>
             </rows>
         </grid>
         <et2-styles  src="rows.css"></et2-styles>
     </et2-template>
     <et2-template  id="mail.index.nosplitter" template="" lang="" group="0" version="1.9.001">
-        <et2-nextmatch  id="nm" onselect="app.mail.preview" template="mail.index.rows.horizontal" noDynheight="true"></et2-nextmatch>
+        <et2-nextmatch  id="nm" onselect="app.mail.preview" template="mail.index.rows.horizontal" autorefreshPreference="mail.index.rows" noDynheight="true"></et2-nextmatch>
     </et2-template>
     <et2-template  id="mail.index.header" template="" lang="" group="0" version="1.9.001">
         <et2-button  id="button[mailcreate]" onclick="app.mail.composeMessage(false);" label="Compose" image="add" noSubmit="true"></et2-button>

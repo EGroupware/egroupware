@@ -4,7 +4,6 @@ import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
 import {Et2Widget, loadWebComponent} from "../Et2Widget/Et2Widget";
-import {loadStylesheet} from "../Et2Widget/cssTools";
 import {Et2Datagrid, type Et2DatagridRowsSnapshot} from "../Et2Datagrid/Et2Datagrid";
 import {
 	Et2DatagridColumn,
@@ -21,11 +20,13 @@ import {type Et2DatagridColumnSelectionItem, Et2DatagridColumnState} from "../Et
 import {Et2RowProvider} from "../Et2Datagrid/Et2RowProvider";
 import {Et2NextmatchDataProvider} from "./Et2NextmatchDataProvider";
 import {EgwAction} from "../../egw_action/EgwAction";
+import type {EgwActionObject} from "../../egw_action/EgwActionObject";
 import {Et2Filterbox} from "../Et2Filterbox/Et2Filterbox";
 import {Et2Template} from "../Et2Template/Et2Template";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import {Et2NextmatchActionController} from "./Et2NextmatchActionController";
 import {Et2NextmatchAutoRefresh} from "./Et2NextmatchAutoRefresh";
+import {Et2LazyLoadController} from "../Et2Widget/Et2LazyLoadController";
 import {Et2VfsUpload} from "../Et2Vfs/Et2VfsUpload";
 import {
 	applyLegacyNextmatchColumnPreferences,
@@ -54,6 +55,15 @@ const LETTERSEARCH_SELECTION_ID = "~search_letter~";
 type Et2NextmatchPrintState = {
 	columns : Et2DatagridColumn[];
 	orientationStyle : HTMLStyleElement;
+};
+
+/** Print options to use instead of asking, see Et2Nextmatch.printOptions */
+export type Et2NextmatchPrintOptions = {
+	/** "all" for every column the column selection offers, or the column keys to print in that order */
+	columns? : "all" | string[];
+	/** Maximum number of rows to print */
+	rowCount? : number;
+	orientation? : "portrait" | "landscape";
 };
 
 /**
@@ -86,7 +96,7 @@ type Et2NextmatchPrintState = {
  * @csspart subgrid - Expanded child `et2-datagrid` rendered for expandable rows.
  * @csspart footer - Wrapper for bottom slot content rendered below the grid.
  * @cssproperty [--row-height=3em] - Forwarded to internal datagrid row-height estimate.
- * @cssproperty [--row-cell-max-height=10em] - Forwarded to internal datagrid row cell max height.
+ * @cssproperty [--row-cell-max-height=none] - Forwarded to internal datagrid row cell max height.
  * @cssproperty [--meta-column-width=max(var(--sl-spacing-large), 6px)] - Width of leading metadata indicator/expander column.
  */
 @customElement("et2-nextmatch")
@@ -240,6 +250,24 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 	columnPreferenceName : string = "";
 
 	/**
+	 * Print with these options instead of showing the print dialog, eg. to always print a list the same way
+	 *
+	 * Options left out default to the dialog's defaults: the saved print columns (or the visible ones),
+	 * up to 100 rows, portrait.  Nothing is saved as print preference.
+	 */
+	@property({type: Object, attribute: false})
+	printOptions : Et2NextmatchPrintOptions | null = null;
+
+	/**
+	 * Optional name for the autorefresh interval preference (`nextmatch-<name>-autorefresh`),
+	 * default the row template's. For a nextmatch that switches row templates, and with
+	 * them its column preference, but should keep one interval - Mail's vertical and
+	 * horizontal layouts.
+	 */
+	@property({type: String})
+	autorefreshPreference : string = "";
+
+	/**
 	 * App that owns this nextmatch's rows - used for sort/refresh/lettersearch preference
 	 * persistence, row-stylesheet loading and legacy action-manager registration (see
 	 * `_getAppName()`). Set this explicitly when a nextmatch is embedded in another app's
@@ -290,11 +318,17 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 	private _lettersearchVisible : boolean = true;
 
 	/**
-	 * Defer the initial row fetch until this nextmatch's tab panel (an ancestor
-	 * `<et2-tab-panel>`) is actually shown, instead of loading immediately on connect.
+	 * Defer the initial row fetch until this nextmatch is actually being displayed,
+	 * instead of loading immediately on connect.  "Displayed" means nothing up the tree
+	 * hides it - an inactive `<et2-tab-panel>` (which is `display: none`), an app view
+	 * toggled off, a widget still carrying `disabled`/`hidden` - so an app that ships an
+	 * empty list and shows it on demand never asks the server for rows nobody looks at.
+	 *
 	 * Only affects the client-side `reload()` fallback in firstUpdated() - template/column
 	 * parsing and any server-preloaded rows/total are unaffected, so headers still render.
-	 * Has no effect when there's no ancestor tab panel, or it's already the active one.
+	 * That means an app using this must also stop its own server side from shipping rows
+	 * (`'num_rows' => 0`), or the preloaded-rows branch runs and there is nothing left to
+	 * defer.  Has no effect on a nextmatch that is displayed straight away.
 	 */
 	@property({type: Boolean})
 	lazy : boolean = false;
@@ -415,8 +449,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 	@state()
 	private _templateLoading : boolean = true;
 
-	private _appRowStylesheet : CSSStyleSheet | null = null;
-
 	@state()
 	private _rowStylesheets : CSSStyleSheet[] = [rowStyles.styleSheet!];
 	private _additionalRowStylesheets : CSSStyleSheet[] = [];
@@ -518,6 +550,13 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 	 * rationale (interval source, why a tick is a full reload, visibility pausing).
 	 */
 	private _autoRefresh : Et2NextmatchAutoRefresh;
+
+	/**
+	 * Tells us when this nextmatch is actually being displayed, for `lazy` - see
+	 * `_whenLazyVisible()`.  Constructed unconditionally (it is one IntersectionObserver
+	 * either way), since `lazy` can be set after construction.
+	 */
+	private _lazyVisible : Et2LazyLoadController;
 
 	/**
 	 * Row element currently highlighted as a native file drop target, so we can
@@ -791,6 +830,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 		this._dataProvider = new Et2NextmatchDataProvider(this as any);
 		this._actionController = new Et2NextmatchActionController(this as any);
 		this._autoRefresh = new Et2NextmatchAutoRefresh(this);
+		this._lazyVisible = new Et2LazyLoadController(this);
 	}
 
 	/**
@@ -1200,14 +1240,21 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 			this._dataProvider.processAdditionalData(this._initialAdditionalData);
 			this._initialAdditionalData = null;
 		}
-		await this._updateRowStylesheets();
 	}
 
 	/**
-	 * Resolve immediately unless `lazy` is set and this nextmatch is sitting inside an
-	 * inactive `<et2-tab-panel>` - in that case, wait for the enclosing `<et2-tabbox>`'s
-	 * `sl-tab-show` for this panel before resolving.  Deferring like this is what keeps an
-	 * unopened tab free: a nextmatch on a tab nobody looks at never asks the server for rows.
+	 * Resolve immediately unless `lazy` is set and this nextmatch is not currently being
+	 * displayed - in that case, resolve once it is.  Deferring like this is what keeps an
+	 * unopened list free: a nextmatch nobody has looked at never asks the server for rows.
+	 *
+	 * The "is it displayed" question is `Et2LazyLoadController`'s, not ours: it answers it
+	 * from the element itself (`checkVisibility()`), which covers `display: none` anywhere
+	 * up the tree without this widget having to know what put it there.  An inactive
+	 * `<et2-tab-panel>` is exactly that case (Shoelace gives it `display: none` unless
+	 * `[active]`), so a tab panel needs no special handling here - an earlier version
+	 * listened for the enclosing `<et2-tabbox>`'s `sl-tab-show` and so covered only tabs.
+	 * Being scrolled out of view deliberately does NOT count as hidden, same as it doesn't
+	 * for `Et2NextmatchAutoRefresh`: that is a viewport question, not a rendering one.
 	 */
 	private async _whenLazyVisible() : Promise<void>
 	{
@@ -1215,30 +1262,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 		{
 			return;
 		}
-		const panel = this.closest("et2-tab-panel");
-		const panelName = panel?.getAttribute("name");
-		if(!panel || !panelName || panel.hasAttribute("active"))
-		{
-			return;
-		}
-		const group = panel.closest("et2-tabbox");
-		if(!group)
-		{
-			return;
-		}
-		return new Promise<void>(resolve =>
-		{
-			const handler = (e : CustomEvent) =>
-			{
-				if(e.detail?.name !== panelName)
-				{
-					return;
-				}
-				group.removeEventListener("sl-tab-show", handler);
-				resolve();
-			};
-			group.addEventListener("sl-tab-show", handler);
-		});
+		return this._lazyVisible.whenReady;
 	}
 
 	/**
@@ -1276,8 +1300,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 			{
 				this._applyTemplateFromSlots();
 			}
-			// Load new row CSS
-			void this._updateRowStylesheets();
 		}
 		if(changedProperties.has("filterTemplate"))
 		{
@@ -1325,9 +1347,36 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 	 */
 	async fetchAllIds(pageSize : number = 200, maxRows : number = Number.POSITIVE_INFINITY) : Promise<string[]>
 	{
+		// An action handler run by executeWithCompleteSelection() gets the ids collected for it,
+		// instead of fetching them all over again
+		if(this._collectedProviderIds && maxRows === Number.POSITIVE_INFINITY)
+		{
+			return [...this._collectedProviderIds];
+		}
+		return this.fetchIdRange(0, maxRows, pageSize);
+	}
+
+	/**
+	 * Fetch the provider ids of `count` rows from row `start` on, behind a cancelable wait dialog.
+	 *
+	 * Rows the grid has fetched already are taken from it; only the gaps between them are
+	 * requested, one page at a time. If there are no gaps, there is no request and no dialog.
+	 *
+	 * Rejects with an AbortError if the user cancels; no further page is requested then.
+	 */
+	async fetchIdRange(start : number, count : number = Number.POSITIVE_INFINITY, pageSize : number = 200) : Promise<string[]>
+	{
+		const allLoaded = this._loadedProviderIds(start, count);
+		if(allLoaded)
+		{
+			return allLoaded;
+		}
+		// Rows not loaded are holes in this sparse array - always index it, never every()/map() it
+		const loaded = this._datagrid?.getLoadedRowIds?.() || [];
+		const total = this._datagrid?.total;
+		let end = typeof total === "number" && total >= 0 ? Math.min(total, start + count) : start + count;
 		const ids : string[] = [];
-		let start = 0;
-		let total : number | null = null;
+		let offset = start;
 		let cancelled = false;
 		const dialog = Et2Dialog.show_dialog(
 			() =>
@@ -1349,13 +1398,28 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 		);
 		try
 		{
-			do
+			while(offset < end)
 			{
+				// take what the grid has already
+				while(offset < end && loaded[offset])
+				{
+					ids.push(this._dataProvider.toProviderRowId(loaded[offset++]));
+				}
+				if(offset >= end)
+				{
+					break;
+				}
+				// request the gap up to the next loaded row, at most a page of it
+				let gapEnd = offset;
+				while(gapEnd < end && gapEnd - offset < pageSize && !loaded[gapEnd])
+				{
+					gapEnd++;
+				}
 				if(cancelled)
 				{
 					throw new DOMException("Canceled", "AbortError");
 				}
-				const page = await this._dataProvider.fetchPage(start, Math.min(pageSize, maxRows - ids.length));
+				const page = await this._dataProvider.fetchPage(offset, gapEnd - offset);
 				if(cancelled)
 				{
 					throw new DOMException("Canceled", "AbortError");
@@ -1368,10 +1432,12 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 					break;
 				}
 				ids.push(...page.rows.map((row) => this._dataProvider.toProviderRowId(row.id)));
-				total = typeof page.total === "number" ? page.total : ids.length;
-				start += pageSize;
+				if(typeof page.total === "number")
+				{
+					end = Math.min(page.total, start + count);
+				}
+				offset += page.rows.length;
 			}
-			while(ids.length < total && ids.length < maxRows);
 			return Array.from(new Set(ids));
 		}
 		finally
@@ -1380,13 +1446,116 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 		}
 	}
 
+	/**
+	 * Provider ids of `count` rows from row `start` on, if the grid has fetched them all
+	 * already, otherwise null.
+	 */
+	private _loadedProviderIds(start : number, count : number) : string[] | null
+	{
+		const total = this._datagrid?.total;
+		if(typeof total !== "number" || total < 0)
+		{
+			return null;
+		}
+		const end = Math.min(total, start + count);
+		// Index loop, not every()/map(): rows not loaded are holes in this array, which those skip
+		const loaded = this._datagrid.getLoadedRowIds?.() || [];
+		const ids : string[] = [];
+		for(let index = start; index < end; index++)
+		{
+			if(!loaded[index])
+			{
+				return null;
+			}
+			ids.push(this._dataProvider.toProviderRowId(loaded[index]));
+		}
+		return ids;
+	}
 
+	/** Provider row ids collected for the action handler running right now, see executeWithCompleteSelection() */
+	private _collectedProviderIds : string[] | null = null;
+
+	/**
+	 * True if the action senders are not the complete selection: "select all" is active, a
+	 * shift range holds rows that were not fetched, or the senders are a stale part of the
+	 * selection - a context menu keeps the senders from when it was opened, and rows arriving
+	 * later in a shift range join the selection after that.
+	 */
+	selectionIncomplete(senders? : { id : string }[]) : boolean
+	{
+		const selection = this.getSelection();
+		if(this._datagrid?.pendingSelectionRange || selection.all)
+		{
+			return true;
+		}
+		if(!senders || senders.length >= selection.ids.length)
+		{
+			return false;
+		}
+		const selected = new Set(selection.ids);
+		return senders.every((sender) => selected.has(sender?.id));
+	}
+
+	/**
+	 * Run an action handler with every selected row as its senders.
+	 *
+	 * The grid only renders the rows in view, so the senders an action is triggered with are
+	 * the rendered rows only. With "select all" or a shift range over rows that were never
+	 * fetched, handlers working from their senders silently left out all the other rows.
+	 * This fetches the missing ids first (fetchIdRange()), so no handler has to care.
+	 *
+	 * While ids have to be fetched, the user gets fetchIdRange()'s "Loading, please wait" dialog
+	 * telling them why the action does not happen yet. Resolves without calling `run` if they
+	 * cancel it.
+	 */
+	async executeWithCompleteSelection(run : (senders : EgwActionObject[]) => any) : Promise<void>
+	{
+		let providerIds : string[] | null = null;
+		try
+		{
+			const range = this._datagrid?.pendingSelectionRange;
+			if(range)
+			{
+				// take over from the grid's prefetch: fetchIdRange() picks up the rows it already got
+				this._datagrid.stopSelectionPrefetch();
+				const rangeIds = await this.fetchIdRange(range.start, range.end - range.start + 1);
+				this._datagrid.completePendingSelectionRange(rangeIds.map((id) => this._dataProvider.normalizeRowId(id, true)));
+			}
+			if(this.getSelection().all)
+			{
+				// no request and no dialog if every row is fetched already
+				providerIds = await this.fetchAllIds();
+			}
+		}
+		catch(e)
+		{
+			if((e as DOMException)?.name === "AbortError")
+			{
+				return;
+			}
+			throw e;
+		}
+		const rowIds = providerIds ?
+					   providerIds.map((id) => this._dataProvider.normalizeRowId(id, true)) :
+					   this.getSelection().ids;
+		const senders = this._actionController.actionObjectsForRows(rowIds);
+		this._collectedProviderIds = providerIds;
+		try
+		{
+			run(senders);
+		}
+		finally
+		{
+			this._collectedProviderIds = null;
+		}
+	}
 
 	/**
 	 * Prepare the current nextmatch for browser printing.
 	 *
 	 * The existing XET dialog supplies print-only columns, row count, and page
-	 * orientation.  Column/orientation choices default from `_printPreferenceKey`
+	 * orientation, unless `printOptions` presets them.  Column/orientation choices
+	 * default from `_printPreferenceKey`
 	 * (falling back to legacy Nextmatch's `<pref>_print`/`<pref>_print_orientation`
 	 * preferences if that's all that exists), and are saved back only to
 	 * `_printPreferenceKey` - see that getter for why the legacy keys are never written.
@@ -1416,49 +1585,64 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 			? mappedDefaultIds
 			: columns.filter((column) => column.visibility).map((column) => column.id);
 
-		const dialog = new Et2Dialog(this.egw());
-		dialog.transformAttributes({
-			title: this.egw().lang("Print"),
-			template: this.egw().link(this.egw().webserverUrl + "/api/templates/default/nm_print_dialog.xet"),
-			buttons: Et2Dialog.BUTTONS_OK_CANCEL,
-			isModal: true,
-			value: {
-				content: {
-					row_count: Math.min(100, total),
-					columns: defaultColumnIds,
-					orientation: printDefaults.orientation ?? false
-				},
-				modifications: {columns: {columns}}
-			}
-		});
-		document.body.append(dialog);
-		const [button, value] = await dialog.getComplete();
-		if(button !== Et2Dialog.OK_BUTTON)
+		let selectedColumns : string[];
+		let requestedRows : number;
+		let orientation : "portrait" | "landscape";
+		if(this.printOptions)
 		{
-			// EgwFrameworkApp treats an undefined rejection as an aborted print.
-			// Defined errors are handled there and would still open browser print.
-			return Promise.reject();
+			const options = this.printOptions;
+			selectedColumns = (options.columns === "all" ? columns.map((column) => column.id) :
+				options.columns?.length ? options.columns : defaultColumnIds)
+				.map((column) => String(column).split("___").join(" "))
+				.filter(Boolean);
+			requestedRows = Math.min(total, Math.max(0, options.rowCount ?? 100));
+			orientation = options.orientation === "landscape" ? "landscape" : "portrait";
 		}
+		else
+		{
+			const dialog = new Et2Dialog(this.egw());
+			dialog.transformAttributes({
+				title: this.egw().lang("Print"),
+				template: this.egw().link(this.egw().webserverUrl + "/api/templates/default/nm_print_dialog.xet"),
+				buttons: Et2Dialog.BUTTONS_OK_CANCEL,
+				isModal: true,
+				value: {
+					content: {
+						row_count: Math.min(100, total),
+						columns: defaultColumnIds,
+						orientation: printDefaults.orientation ?? false
+					},
+					modifications: {columns: {columns}}
+				}
+			});
+			document.body.append(dialog);
+			const [button, value] = await dialog.getComplete();
+			if(button !== Et2Dialog.OK_BUTTON)
+			{
+				// EgwFrameworkApp treats an undefined rejection as an aborted print.
+				// Defined errors are handled there and would still open browser print.
+				return Promise.reject();
+			}
 
-		const selectedColumns = ((value as any)?.columns || [])
-			.map((column : unknown) => String(column).split("___").join(" "))
-			.filter(Boolean);
+			selectedColumns = ((value as any)?.columns || [])
+				.map((column : unknown) => String(column).split("___").join(" "))
+				.filter(Boolean);
+			requestedRows = Math.min(total, Math.max(0, parseInt((value as any)?.row_count, 10) || 0));
+			orientation = (value as any)?.orientation ? "landscape" : "portrait";
 
-		const requestedRows = Math.min(total, Math.max(0, parseInt((value as any)?.row_count, 10) || 0));
-		const orientation : "portrait" | "landscape" = (value as any)?.orientation ? "landscape" : "portrait";
+			const printKey = this._printPreferenceKey;
+			if(printKey)
+			{
+				try
+				{
+					this.egw().set_preference(app, printKey, {columns: selectedColumns, orientation});
+				}
+				catch(e)
+				{
+				}
+			}
+		}
 		const originalColumns = this._currentColumns.map((column) => ({...column}));
-
-		const printKey = this._printPreferenceKey;
-		if(printKey)
-		{
-			try
-			{
-				this.egw().set_preference(app, printKey, {columns: selectedColumns, orientation});
-			}
-			catch(e)
-			{
-			}
-		}
 
 		try
 		{
@@ -1542,6 +1726,20 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 	{
 		this._childGrids().forEach((grid) => grid.clearSelection());
 		this._datagrid?.clearSelection();
+	}
+
+	/**
+	 * Forget the keyboard/pointer active row (the one drawn with a focus frame).
+	 *
+	 * A reload keeps the active row by id, which is right when the same query is refetched. When
+	 * the caller switches to a different data set (eg. mail changing folder), call this right
+	 * before applyFilters(), so the old id does not come back as a frame on a row that is not
+	 * selected. The datagrid picks a new active row once the new rows arrive.
+	 */
+	clearActiveRow()
+	{
+		this._childGrids().forEach((grid) => grid.clearActiveRow());
+		this._datagrid?.clearActiveRow();
 	}
 
 	selectAllRows()
@@ -2310,6 +2508,14 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 				{
 					this._armForceFreshKnownUids();
 				}
+				else
+				{
+					// Changed filters are a different result set - show it from the first row,
+					// not wherever the previous one was scrolled to. A hard reload refetches the
+					// same query (eg. autorefresh, or re-clicking mail's current folder) and keeps
+					// the position.
+					this._datagrid?.scrollToTop();
+				}
 				this._datagrid?.reload();
 			}
 			else if(isHardReload)
@@ -2502,7 +2708,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 		{
 			if(!this.template && this._hasAddedTemplateSlotNode(records))
 			{
-				this._applyTemplateFromSlots().then(() => this._updateRowStylesheets());
+				this._applyTemplateFromSlots();
 			}
 		});
 		this._slotObserver.observe(this, {
@@ -2726,7 +2932,8 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 	) : Et2DatagridColumn[]
 	{
 		const rowTemplateId = String(templateData?.rowTemplateId || "").trim();
-		if(!rowTemplateId || !columns.length)
+		// without header cells there is no column state to migrate, see Et2DatagridTemplateData.noHeader
+		if(!rowTemplateId || !columns.length || templateData?.noHeader)
 		{
 			return columns;
 		}
@@ -2767,7 +2974,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 		}
 
 		const nextColumns = applyLegacyNextmatchColumnPreferences(columns, storedVisibility, storedSizes);
-		this._seedDatagridColumnPreferencesFromLegacy(rowTemplateId, app, nextColumns);
+		this._seedDatagridColumnPreferencesFromLegacy(rowTemplateId, app, nextColumns, storedSizes);
 
 		return nextColumns.map((column) =>
 		{
@@ -2786,11 +2993,15 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 	 *
 	 * This is only a migration seed. Once the datagrid has stored its own
 	 * preference, for example after a column resize, that newer preference wins.
+	 *
+	 * @param storedSizes the legacy size preference: only the widths it holds are stored, see
+	 * 	datagridColumnPreferenceValue()
 	 */
 	private _seedDatagridColumnPreferencesFromLegacy(
 		rowTemplateId : string,
 		app : string,
-		columns : Et2NextmatchResolvedColumn[]
+		columns : Et2NextmatchResolvedColumn[],
+		storedSizes? : any
 	)
 	{
 		const key = String(this.columnPreferenceName || "").trim() || `nextmatch-${rowTemplateId}-prefs`;
@@ -2805,7 +3016,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 		{
 			return;
 		}
-		const value = datagridColumnPreferenceValue(columns);
+		const value = datagridColumnPreferenceValue(columns, storedSizes);
 		try
 		{
 			this.egw().set_preference(app, key, value);
@@ -2850,39 +3061,12 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 		);
 	};
 
-	/**
-	 * Template-set (theme) this nextmatch's own containing template was loaded from, eg. "mobile" or
-	 * "default" - so the app.css fallback in `_updateRowStylesheets()` loads the same skin's stylesheet
-	 * instead of always the default skin's.
-	 */
-	private _appRowStylesheetTemplateSet() : string
-	{
-		const url = (this.closest("et2-template") as any)?.getUrl?.() ?? "";
-		const match = url.match(/\/templates\/([^\/]+)\//);
-		return match ? match[1] : "default";
-	}
-
-	private async _updateRowStylesheets()
-	{
-		const appName = this._getAppName();
-		const templateSet = this._appRowStylesheetTemplateSet();
-		this._appRowStylesheet = await loadStylesheet(this.egw().link(`/${appName}/templates/${templateSet}/app.css`));
-		// Fall back to the default skin's app.css if this app has no skin-specific one (eg. no
-		// dedicated templates/mobile/app.css)
-		if(!this._appRowStylesheet && templateSet !== "default")
-		{
-			this._appRowStylesheet = await loadStylesheet(this.egw().link(`/${appName}/templates/default/app.css`));
-		}
-		await this.updateComplete;
-		this._syncDatagridRowStylesheets();
-	}
-
 	private _syncDatagridRowStylesheets()
 	{
 		const templateRowStylesheets = this._templateData?.rowStylesheets || [];
 		this._rowStylesheets = [
 			rowStyles.styleSheet!,
-			...(templateRowStylesheets.length ? templateRowStylesheets : (this._appRowStylesheet ? [this._appRowStylesheet] : [])),
+			...templateRowStylesheets,
 			...this._additionalRowStylesheets
 		];
 		const datagrid = this._datagrid;
@@ -3424,7 +3608,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 	 */
 	private _persistLegacyColumnSelection(columns : Et2DatagridColumn[])
 	{
-		if(this._datagrid?.noColumnPersistence || this._datagrid?.noVisibleHeader)
+		if(this._datagrid?.noColumnPersistence || this._datagrid?.noVisibleHeader || this._templateData?.noHeader)
 		{
 			return;
 		}

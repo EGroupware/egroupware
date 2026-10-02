@@ -1,6 +1,6 @@
 import {CUSTOMFIELD_PREFIX, Et2CustomfieldsBase, lightDomStylesTemplate} from "./Et2CustomfieldsBase";
 import {customElement} from "lit/decorators/custom-element.js";
-import {html} from "lit";
+import {html, PropertyValues} from "lit";
 import {html as staticHtml, unsafeStatic} from "lit/static-html.js";
 import {repeat} from "lit/directives/repeat.js";
 import {ref} from "lit/directives/ref.js";
@@ -111,8 +111,9 @@ export class Et2CustomfieldsFilters extends Et2CustomfieldsBase
 		if(this._valued.has(element))
 		{
 			// Already placed, so by now it holds whatever the user filtered by - handing it the
-			// value we started with would throw that away.  Lit gives ref() a fresh callback each
-			// render, so this is tracked per element rather than per name.
+			// value we started with would throw that away.  A later value reaches it through
+			// updated() instead.  Lit gives ref() a fresh callback each render, so this is tracked
+			// per element rather than per name.
 			delete attrs.value;
 		}
 		this._valued.add(element);
@@ -139,6 +140,41 @@ export class Et2CustomfieldsFilters extends Et2CustomfieldsBase
 			}
 		}
 		return value;
+	}
+
+	/**
+	 * Set every filter at once, from the same `{"#name": value}` map getValue() reports.
+	 *
+	 * This is how a filter box pushes the nextmatch's filters in - clearing them, or applying a
+	 * favourite - so a field missing from the map is emptied.  A copy is taken because a nextmatch
+	 * hands over its own col_filter, which it changes in place: the same object again would not
+	 * count as a new value.
+	 */
+	set_value(value : Record<string, any>)
+	{
+		this.value = {...(value && typeof value == "object" ? value : {})};
+	}
+
+	/**
+	 * Give the filters a new value when ours changes.
+	 *
+	 * Rendering deliberately leaves an already-placed filter alone, so this is the one path that
+	 * replaces what the user has chosen.
+	 */
+	updated(changedProperties : PropertyValues)
+	{
+		super.updated(changedProperties);
+		if(!changedProperties.has("value"))
+		{
+			return;
+		}
+		for(const [fieldName, widget] of Object.entries(this.widgets))
+		{
+			if(typeof widget?.set_value === "function")
+			{
+				widget.set_value(this._fieldValue(fieldName));
+			}
+		}
 	}
 
 	/**

@@ -474,6 +474,33 @@ export class EgwAction {
      * @param {object} _target is an optional parameter which may represent e.g. a drag drop target
      */
     execute(_senders, _target = null): any {
+        // A nextmatch only renders the rows in view, so with "select all" or a shift range over
+        // rows not fetched yet, _senders are just part of the selection: collect all rows first.
+        // Drag and drop stay synchronous (drag returns its helper), single-row actions get the row.
+        const nextmatch = this.type !== "drag" && this.type !== "drop" && this.id !== "select_all" &&
+            this.allowOnMultiple !== false ? this._selectionOwner() : null;
+        if (nextmatch && nextmatch.selectionIncomplete(_senders)) {
+            nextmatch.executeWithCompleteSelection((senders) => this._execute(senders, _target));
+            return;
+        }
+        return this._execute(_senders, _target);
+    };
+
+    /**
+     * Nextmatch this action belongs to, if it can collect its complete selection
+     */
+    private _selectionOwner(): any {
+        for (let action: EgwAction = this; action; action = action.parent) {
+            const nextmatch = action.data?.nextmatch;
+            if (nextmatch && typeof nextmatch.selectionIncomplete === "function" &&
+                typeof nextmatch.executeWithCompleteSelection === "function") {
+                return nextmatch;
+            }
+        }
+        return null;
+    };
+
+    private _execute(_senders, _target): any {
         if (!this._check_confirm_mass_selections(_senders, _target)) {
             return this._check_confirm(_senders, _target);
         }

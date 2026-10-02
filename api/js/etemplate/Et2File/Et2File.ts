@@ -166,7 +166,10 @@ export class Et2File extends Et2InputWidget(LitElement)
 
 	get fileItemList() : Et2FileItem[]
 	{
-		return Array.from(this.list?.querySelectorAll("et2-file-item")) ?? [];
+		// the "?? []" used to sit outside Array.from(), which throws on undefined before the ??
+		// is ever reached - so with no list to query (noFileList) this threw rather than
+		// returning nothing, and took the whole upload down with it
+		return this.list ? Array.from(this.list.querySelectorAll("et2-file-item")) : [];
 	}
 
 	constructor()
@@ -378,23 +381,27 @@ export class Et2File extends Et2InputWidget(LitElement)
 
 		await this.updateComplete;
 
+		// There is no item to drive when the file list is turned off (noFileList), or when the
+		// list is somewhere we do not own (fileListTarget).  That only costs us the per-file UI -
+		// it must NOT stop the upload, which used to return here and leave the file sitting in
+		// the queue at 0% forever, with nothing on screen to say so.
 		const fileItem = this.findFileItem(file);
-		if(!fileItem)
+		if(fileItem)
 		{
-			return;
-		}
-		fileItem.loading = true;
-		fileItem.requestUpdate("loading");
+			fileItem.loading = true;
+			fileItem.requestUpdate("loading");
 
-		// Bind close => abort upload
-		fileItem.addEventListener("sl-hide", () =>
-		{
-			file.abort();
-			this.resumable.removeFile(file);
-		}, {once: true});
+			// Bind close => abort upload
+			fileItem.addEventListener("sl-hide", () =>
+			{
+				file.abort();
+				this.resumable.removeFile(file);
+			}, {once: true});
+
+			await fileItem.updateComplete;
+		}
 
 		// Actually start uploading
-		await fileItem.updateComplete;
 		const ev = new CustomEvent("et2-add", {bubbles: true, detail: file, cancelable: true});
 		this.dispatchEvent(ev);
 

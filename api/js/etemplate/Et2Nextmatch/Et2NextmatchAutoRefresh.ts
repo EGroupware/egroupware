@@ -10,7 +10,7 @@ import type {Et2Nextmatch} from "./Et2Nextmatch";
  * (the `disable_autorefresh` setting) rather than relying on this.
  *
  * The interval is read from a per-instance user preference
- * (`nextmatch-<preferenceBase>-autorefresh`, seconds; 0/absent = off), editable
+ * (`nextmatch-<autorefreshPreference ?? preferenceBase>-autorefresh`, seconds; 0/absent = off), editable
  * from the column-selection dialog's `autoRefresh` field via
  * `seedColumnSelection()`/`applyColumnSelection()`.
  *
@@ -121,9 +121,14 @@ export class Et2NextmatchAutoRefresh implements ReactiveController
 		return String(this.host.settings.columnselection_pref || this.host.template || "");
 	}
 
+	/**
+	 * The host's `autorefreshPreference` property, if set, names the autorefresh
+	 * preference separately - for a nextmatch that switches row templates while the
+	 * refresh interval should stay one value. Without it each template got its own interval.
+	 */
 	private get preferenceKey() : string
 	{
-		return `nextmatch-${this.preferenceBase}-autorefresh`;
+		return `nextmatch-${this.host.autorefreshPreference || this.preferenceBase}-autorefresh`;
 	}
 
 	/**

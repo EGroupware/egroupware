@@ -10,17 +10,11 @@
  * @package infolog
  */
 @import "../default/app";
+// Row styles of the nextmatch list are in rows.less
 
 @media all {
 	#infolog-index_nm .gridCont_0_div_col_0.innerContainer {
 		min-width: auto;
-	}
-	.infoDescRow {
-		height:32px;
-		max-width: 99%;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
 	}
 	div.infoLinksRow, div.infoLinksRow ul[id^='infolog-index_'][id$='filelinks]'] {
 		max-width: 99%;
@@ -74,9 +68,6 @@
 	table.egwGridView_grid span.arrow.closed{
 		display: none !important;
 	}
-	tr.infolog_rowHasParent > td:first-child {
-		background: none !important;
-	}
 	div.et2_vbox.infolog_CompletedClmn {
 		display: table-caption;
 	}
@@ -94,27 +85,6 @@
 		.et2_label.et2_label_empty {
 			padding-left:0px;
 			* {padding-left:0px;}
-		}
-	}
-	.infolog_CompletedClmn {
-		// Mobile fills its column horizontally instead of shrinking to fit-content (default/rows.less)
-		width: 100%;
-		max-width: 100%;
-		.infoType{
-			padding-right: 1em;
-		}
-	}
-	// Mobile's column wrapper is an et2-vbox, not the et2-hbox rows.less styles for desktop
-	et2-vbox.infolog_CompletedClmn {
-		et2-image {
-			width: 1rem;
-			*[part="image"] {
-				vertical-align: middle;
-			}
-		}
-		progress {
-			width: 100%;
-			max-width: 2em;
 		}
 	}
 

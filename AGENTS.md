@@ -118,6 +118,19 @@ and drop the 11th entry if that pushes the list over 10 - dropping it here does 
 file itself. The full set of project docs, including everything trimmed off this list, always
 lives in `doc/ai/projects/` - check there directly for anything not shown here.
 
+- `doc/ai/projects/et2-nextmatch-conversion.md` - per-app migration from the legacy
+  `et2_extension_nextmatch` widget (`<nextmatch>`) to the `Et2Nextmatch` web component
+  (`<et2-nextmatch>`). Covers the template-rename checklist, the legacy-widget-API-to-`Et2Nextmatch`
+  replacement table for app JS/TS, lifecycle timing pitfalls, and the `columnselection_pref` ->
+  `columnPreferenceName` audit/fix for apps already converted. Admin is now converted (all nine of
+  its lists, desktop + mobile), which added: a nextmatch in a *popup* gets no filterbox at all
+  (`Nextmatch::beforeSendToClient()` returns early for `output_mode === 2`), `num_rows => 0` no
+  longer defers the initial fetch, `class="hide"` no longer survives `set_disabled(false)`, a `<row
+  class="$field">` direct binding fails where `$row_cont[field]` works, and a list sharing its page
+  with another widget needs `layout="stack"` - whose `grow="1"` companion does not survive `.xet`
+  parsing, because `transformAttributes()` only reflects attributes a widget declares. Unconverted
+  templates now fall back to `Et2Nextmatch` automatically (`api/etemplate.php`, opt out with
+  `legacy="true"`) - a stopgap, not a conversion.
 - `doc/ai/projects/nextmatch-action-ajax-conversion.md` - moving nextmatch context-menu actions off
   the full eTemplate submit they silently fall through to (no `onExecute`/`url`/`egw_open` ->
   `nm_action: "submit"` -> `index()` re-runs -> a brand new nextmatch, losing scroll, selection and
@@ -148,11 +161,6 @@ lives in `doc/ai/projects/` - check there directly for anything not shown here.
   of wiki's full-copy-per-revision storage, and migration mappings from both legacy apps. Design
   phase, no code written yet - deferred for later phases: multi-category-per-document, public/
   anonymous access, and phpbrain's FAQ-style question-intake pipeline.
-- `doc/ai/projects/et2-nextmatch-conversion.md` - per-app migration from the legacy
-  `et2_extension_nextmatch` widget (`<nextmatch>`) to the `Et2Nextmatch` web component
-  (`<et2-nextmatch>`). Covers the template-rename checklist, the legacy-widget-API-to-`Et2Nextmatch`
-  replacement table for app JS/TS, lifecycle timing pitfalls, and the `columnselection_pref` ->
-  `columnPreferenceName` audit/fix for apps already converted.
 - `doc/ai/projects/push-fallback-longpoll.md` - giving the swoole-less push
   fallback (shared hosting / tarball-in-docroot installs with no `swoolepush`
   daemon) a low-latency, PHP-FPM-friendly delivery path (bounded long-poll +

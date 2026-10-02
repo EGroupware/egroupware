@@ -3556,3 +3556,80 @@ client-side compose-from-draft flow `mail_ui::ajax_view()` already uses for an e
 Committed as `1012269cc1`.
 
 Both this and the regex cleanup above are committed locally only, not yet pushed.
+
+## Done + live-verified (2026-09-29): REST compose-preset attachments now carry a reference,
+## not base64 content
+
+Found while investigating customer tickets #125601/#125621 (Barthelmeß EDV/aERP, Schofer Germany -
+REST API regressions since their last update). Root cause for #125621 ("Bestell-E-Mails ohne
+Anhang, Betreff, E-Mail Adresse und Textinhalt" - a REST-triggered compose popup opening
+completely blank apart from the default From/signature): `ApiHandler::prepareAttachments()`'s
+`$compose=true` branch (`mail/src/ApiHandler.php:596-608`, from the 2026-09-25 fix `a05c51d642`/
+`bee6bb766f` for "REST-uploaded attachments never appeared in a compose window opened via REST")
+reads the REST-uploaded temp file and inlines its full content as base64 into
+`attachmentContents`, rather than passing a lightweight reference the way every other attachment
+path in the app does (VFS `files` marker, JMAP `blobId`, and this same function's own
+`$compose=false`/direct-send branch, which still passes `file => $path`).
+
+That fix's own comment reasoned "nothing server-side left to reference by the time the compose
+popup actually opens" - true for calendar's freshly-generated `.ics` (never staged anywhere), but
+**not actually true for a REST-uploaded attachment**: it lives in `temp_dir` under an opaque token,
+and `ApiHandler::get()` (`mail/src/ApiHandler.php:745-752`) already serves it back via
+`GET /mail/attachments/<token>` with proper `Content-Type`/`Content-Length`. So the reference was
+available all along - the 2026-09-25 fix just didn't use it.
+
+For a real attachment (aERP's own repro: a 128KB PDF), inlining base64 makes the preset - which
+travels server push → browser (`Api\Json\Push`, here the customer's `swoolepush`/websocket
+backend, not the DB-polling `notifications_push` fallback) → a real `form.submit()` POST back into
+the popup (`MailApp.composeWithPresetPost()`, for anything too long for a GET url) - roughly 200KB+
+instead of a few hundred bytes. Also found live in `swoolepush/src/Backend.php:240`:
+`http_open()`'s `fwrite($sock, $request.$body)` doesn't loop for a partial write, a latent bug that
+a payload this size could plausibly trigger (PHP's `fwrite()` isn't guaranteed to write the whole
+buffer in one call) - worth fixing independently, but secondary: even with that fixed, base64-
+inlining a real-world attachment is architecturally inconsistent with how attachments work
+everywhere else in this app (a user's own drag-and-drop attach uploads immediately via
+`MailJmap.uploadAttachment()` - a real binary blob POST, RFC 8620 §6.3 - and only ever carries the
+resulting `blobId` forward from then on; JMAP-shim accounts get the same treatment via
+`Api\Mail\Jmap\Imap::upload()`).
+
+**Fix implemented**:
+- `mail/src/ApiHandler.php::prepareAttachments()` ($compose=true, REST-token branch only): stopped
+  `base64_encode(file_get_contents($path))`; returns `attachmentUrls[] = {name, type, url, size}`
+  instead. Leaves the VFS-path branch (already `files`-shaped) and the `$compose=false` branch
+  (already `file`-referenced) untouched.
+- `mail/js/compose.ts`: new `applyPresetAttachmentUrls(refs)`, sibling to
+  `applyPresetAttachmentContent()` - `fetch(r.url, {credentials: 'same-origin'})` → `.blob()` →
+  `this.app.jmap.uploadAttachment()` → `carryForwardAttachments()`. Reuses the exact same upload
+  pipeline a real drag-and-drop attach already uses, so it inherits that path's existing
+  large-attachment handling (relevant given ralf's real-world concern: customers regularly send
+  30MB+ attachments).
+- `mail/js/app.ts::bootstrapComposePopup()`: new `preset.attachmentUrls` branch alongside the
+  existing `attachmentContents` one (same "after template load, before body" ordering); preset
+  param type + docblock updated (the old one claimed "nothing server-side left to reference" for
+  the REST-token case specifically, which this fix shows was never actually true).
+- Tests: `mail/tests/ApiHandlerPrepareAttachmentsTest.php` updated for the new `attachmentUrls`
+  shape (8/8 pass); new `mail/js/test/MailComposeApplyPresetAttachmentUrls.test.ts` (stubs
+  `fetch`/`uploadAttachment`, same style as `ComposeWithPresetLongBody.test.ts`) - single/multiple
+  refs, empty list, and a failed-fetch (404) case. Full `mail` jstest group 866/866 (was 862).
+
+**A second bug found and fixed during live verification**: `attachmentUrls[].url` was initially
+just the bare `/mail/attachments/<token>` string (the same pattern `prepareAttachments()` itself
+matches attachments against server-side) - not a URL at all. `MailCompose.applyPresetAttachmentUrls()`'s
+`fetch()` resolved that root-relative path against the site root, landing outside `groupdav.php`'s
+own dispatch entirely and getting back unrelated short content (found live via nginx access log:
+`GET /mail/attachments/<token>` at ~800 bytes instead of routing through `/egroupware/groupdav.php/`
+and returning the real ~380KB file). Fixed by building a real, fully-qualified URL the same way
+`storeAttachment()`'s own `Location` header already does: `Api\Framework::getUrl(Api\Framework::
+link('/groupdav.php'.$attachment))`. `session()` above (line ~126) already had a comment noting the
+identical "must be ABSOLUTE, a bare relative path was tried and reverted" lesson for JMAP's own
+uploadUrl/downloadUrl templates - this is the same lesson, just not yet applied here too.
+
+**Live-verified end-to-end** (2026-09-29, ralf, via curl against a real account + a real ~374KB
+PNG): upload → REST compose-trigger → popup opens with the real image correctly attached (visible,
+not a broken-image icon, confirmed via the popup's own `fetch(location.href)` reporting the correct
+type/size) → Send works too. A parallel report of a "broken image" for a *manually* drag-and-dropped
+attachment turned out to be an unrelated stale test artifact left over from another agent's
+concurrent forwarding-fix work in the same shared checkout, not a real bug - no further action
+needed there.
+
+Backported to 26 alongside master (same as the original `a05c51d642`/`bee6bb766f` fix it corrects).

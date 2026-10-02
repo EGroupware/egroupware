@@ -129,16 +129,47 @@ jobs:
           restore-keys: |
             composer-cache-${{ runner.os }}-
 
+      # vendor/ is not the whole of "composer install": composer/installers puts the 15
+      # egroupware-app packages (tracker, projectmanager, smallpart, collabora, ...) into
+      # top-level directories instead.  Caching vendor/ on its own would restore an
+      # installed.json claiming those apps are present, composer would not reinstall the
+      # missing directories, and both suites would quietly run fewer tests - so the whole
+      # result is cached as one archive, with the app list read out of composer.lock rather
+      # than written down here where it would drift.
+      #
+      # The key is composer.lock's hash and there are deliberately no restore-keys: a near
+      # miss must not serve a tree built from a different lock file.  It is either exactly
+      # this lock's install, or a fresh one.  Skipped for an extra-apps run, whose "Checkout
+      # additional apps" step replaces composer's copy of an app with a git clone - that tree
+      # must never be packed up and handed to a later run.
+      - name: Cache composer install
+        id: composer-install-cache
+        if: inputs.test-scope != 'extra-apps'
+        uses: actions/cache@v4
+        with:
+          path: ~/composer-install.tar
+          key: composer-install-${{ runner.os }}-${{ hashFiles('sources/composer.lock') }}
+
       - name: Install PHP dependencies in sources
         shell: bash
         run: |
           set -euo pipefail
-          COMPOSER_CACHE_DIR="${HOME}/.composer/cache"
-          docker run --rm --user "$(id -u):$(id -g)" \
-            -v "${COMPOSER_CACHE_DIR}":/tmp/composer-cache \
-            -v "${GITHUB_WORKSPACE}/sources":/app -w /app \
-            -e COMPOSER_CACHE_DIR=/tmp/composer-cache \
-            composer install --no-interaction --ignore-platform-reqs
+          if [ "${{ steps.composer-install-cache.outputs.cache-hit }}" = "true" ]; then
+            tar -xf "${HOME}/composer-install.tar" -C "${GITHUB_WORKSPACE}/sources"
+          else
+            COMPOSER_CACHE_DIR="${HOME}/.composer/cache"
+            docker run --rm --user "$(id -u):$(id -g)" \
+              -v "${COMPOSER_CACHE_DIR}":/tmp/composer-cache \
+              -v "${GITHUB_WORKSPACE}/sources":/app -w /app \
+              -e COMPOSER_CACHE_DIR=/tmp/composer-cache \
+              composer install --no-interaction --ignore-platform-reqs
+            # Pack vendor plus every directory composer installed an app into, so a restore
+            # reproduces this tree exactly.  tar fails loudly if one is missing, rather than
+            # caching an incomplete install.
+            APPS=$(jq -r '.packages[] | select(.type=="egroupware-app") | .name | split("/")[1]' \
+              "${GITHUB_WORKSPACE}/sources/composer.lock")
+            tar -cf "${HOME}/composer-install.tar" -C "${GITHUB_WORKSPACE}/sources" vendor $APPS
+          fi
           php "${GITHUB_WORKSPACE}/sources/install-cli.php" --git-apps pull
 
       - name: Mint installation token for additional apps
@@ -255,7 +286,18 @@ jobs:
           COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
-          $COMPOSE up -d --force-recreate db egroupware nginx
+          # Pull only the three images this job starts.  nginx depends_on push, collabora-key
+          # and rocketchat, and those on collabora-init and mongo, so a plain
+          # "up db egroupware nginx" fetches eight images to run three: docker-compose.ci.yml
+          # parks the other five at replicas: 0, which keeps them from running but not from being
+          # fetched.  Measured at 66s of a 5m41s job, all of it before the first container started.
+          #
+          # "pull" does not follow depends_on unless asked (--include-deps), and --no-deps stops
+          # "up" from putting them back.  --pull never is what makes that stick: without it "up"
+          # would fetch again for itself.  Images stay current regardless - the pull above runs on
+          # every job, it is only the redundant second fetch that is suppressed.
+          $COMPOSE pull db egroupware nginx
+          $COMPOSE up -d --force-recreate --no-deps --pull never db egroupware nginx
 
       - name: Wait for install
         run: |
@@ -786,6 +828,20 @@ jobs:
   jstest:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
+    # One job per browser per shard, so the suite runs on four runners that do not share a CPU
+    # instead of four pages sharing one.  Measured on 4 cores (a runner's size): both browsers
+    # together 338s, firefox alone 285s, chromium alone 157s, half the files in firefox 145s/152s
+    # - it splits near enough linearly, because the cost is per test FILE (one browser page each),
+    # not per test.  Raising web-test-runner's own concurrency instead does not work; the comment
+    # on the launchers in web-test-runner.config.mjs has those numbers.
+    #
+    # fail-fast is off: a failure in one browser is exactly when the other browser's result is
+    # most worth having.
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [firefox, chromium]
+        shard: [1, 2]
     env:
       EGW_DB_ROOT_PW: ciroot
       COMPOSE_PROJECT_NAME: egwci
@@ -822,16 +878,47 @@ jobs:
           restore-keys: |
             composer-cache-${{ runner.os }}-
 
+      # vendor/ is not the whole of "composer install": composer/installers puts the 15
+      # egroupware-app packages (tracker, projectmanager, smallpart, collabora, ...) into
+      # top-level directories instead.  Caching vendor/ on its own would restore an
+      # installed.json claiming those apps are present, composer would not reinstall the
+      # missing directories, and both suites would quietly run fewer tests - so the whole
+      # result is cached as one archive, with the app list read out of composer.lock rather
+      # than written down here where it would drift.
+      #
+      # The key is composer.lock's hash and there are deliberately no restore-keys: a near
+      # miss must not serve a tree built from a different lock file.  It is either exactly
+      # this lock's install, or a fresh one.  Skipped for an extra-apps run, whose "Checkout
+      # additional apps" step replaces composer's copy of an app with a git clone - that tree
+      # must never be packed up and handed to a later run.
+      - name: Cache composer install
+        id: composer-install-cache
+        if: inputs.test-scope != 'extra-apps'
+        uses: actions/cache@v4
+        with:
+          path: ~/composer-install.tar
+          key: composer-install-${{ runner.os }}-${{ hashFiles('sources/composer.lock') }}
+
       - name: Install PHP dependencies in sources
         shell: bash
         run: |
           set -euo pipefail
-          COMPOSER_CACHE_DIR="${HOME}/.composer/cache"
-          docker run --rm --user "$(id -u):$(id -g)" \
-            -v "${COMPOSER_CACHE_DIR}":/tmp/composer-cache \
-            -v "${GITHUB_WORKSPACE}/sources":/app -w /app \
-            -e COMPOSER_CACHE_DIR=/tmp/composer-cache \
-            composer install --no-interaction --ignore-platform-reqs
+          if [ "${{ steps.composer-install-cache.outputs.cache-hit }}" = "true" ]; then
+            tar -xf "${HOME}/composer-install.tar" -C "${GITHUB_WORKSPACE}/sources"
+          else
+            COMPOSER_CACHE_DIR="${HOME}/.composer/cache"
+            docker run --rm --user "$(id -u):$(id -g)" \
+              -v "${COMPOSER_CACHE_DIR}":/tmp/composer-cache \
+              -v "${GITHUB_WORKSPACE}/sources":/app -w /app \
+              -e COMPOSER_CACHE_DIR=/tmp/composer-cache \
+              composer install --no-interaction --ignore-platform-reqs
+            # Pack vendor plus every directory composer installed an app into, so a restore
+            # reproduces this tree exactly.  tar fails loudly if one is missing, rather than
+            # caching an incomplete install.
+            APPS=$(jq -r '.packages[] | select(.type=="egroupware-app") | .name | split("/")[1]' \
+              "${GITHUB_WORKSPACE}/sources/composer.lock")
+            tar -cf "${HOME}/composer-install.tar" -C "${GITHUB_WORKSPACE}/sources" vendor $APPS
+          fi
 
       - name: Mint installation token for additional apps
         id: extra-apps-app-token
@@ -913,30 +1000,51 @@ jobs:
       - name: Install npm dependencies
         run: npm ci
 
+      # Only this job's browser: downloading the other one costs ~10s and it is never launched.
       - name: Install Playwright system dependencies
-        run: npx playwright install-deps chromium firefox
+        run: npx playwright install-deps ${{ matrix.browser }}
 
-      - name: Install Playwright Chromium
+      # package-lock.json is what pins the Playwright version, so a bump changes the key and
+      # downloads the matching browser.  No restore-keys, for the same reason as above: a
+      # near miss would hand this job a browser from a different Playwright version.
+      - name: Cache Playwright ${{ matrix.browser }}
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ matrix.browser }}-${{ hashFiles('sources/package-lock.json') }}
+
+      - name: Install Playwright ${{ matrix.browser }}
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         timeout-minutes: 10
         env:
           DEBUG: pw:install
-        run: npx playwright install chromium
-
-      - name: Install Playwright Firefox
-        timeout-minutes: 10
-        env:
-          DEBUG: pw:install
-        run: npx playwright install firefox
+        run: npx playwright install ${{ matrix.browser }}
 
       - name: Run jstest
         env:
           TEST_SCOPE: ${{ inputs.test-scope || 'all' }}
+          # Read by web-test-runner.config.mjs: which browser to launch, and which share of the
+          # test files to take.  JSTEST_SHARD splits the same file walk the per-app groups are
+          # built from, so nothing here has to list them.
+          JSTEST_BROWSERS: ${{ matrix.browser }}
+          # The total must match the length of matrix.shard above, or files get dropped.
+          JSTEST_SHARD: ${{ matrix.shard }}/2
+          SHARD_INDEX: ${{ matrix.shard }}
         run: |
           set -euo pipefail
           if [ "$TEST_SCOPE" != "extra-apps" ]; then
             npm run jstest
             exit $?
           fi
+          # An extra app's suite is a handful of files: sharding it would leave shards with
+          # nothing to run (which the config rejects), so only the first shard of each browser
+          # does the work here.
+          if [ "$SHARD_INDEX" != "1" ]; then
+            echo "::notice::extra-apps tests run unsharded, nothing to do in shard $SHARD_INDEX"
+            exit 0
+          fi
+          unset JSTEST_SHARD
           # Positional globs become the runner's `files`, replacing the per-app groups it would
           # otherwise discover. Group *names* must not be passed positionally - the config throws
           # on that - so select by path instead, which also works for an app with no group yet.

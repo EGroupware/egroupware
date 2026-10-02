@@ -610,6 +610,13 @@ class JsCalendar extends JsBase
 		foreach($event['participants'] as $uid => $status)
 		{
 			\calendar_so::split_status($status, $quantity, $role);
+			// deleted ('X') participants and exception markers ('E') are only returned by a search with
+			// filter 'everything' (sync-collection report), never by read() / GET --> don't report them
+			// (same as calendar_ical does), they have no JSCalendar participationStatus anyway
+			if (in_array($status, ['X', 'E'], true))
+			{
+				continue;
+			}
 			\calendar_so::split_user($uid, $user_type, $user_id);
 			try {
 				$info = self::getCalendar()->resource_info($uid) ?: [];

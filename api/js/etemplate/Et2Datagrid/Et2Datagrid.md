@@ -507,9 +507,8 @@ inside the row template definition; it does not need to be inside the `<row>` el
 `src="row.css"` resolves relative to the `.xet` file containing the row template. Inline CSS inside
 `et2-styles` is also supported.
 
-If the row template contains `et2-styles`, `et2-nextmatch` does not load the application's
-`templates/default/app.css` into the datagrid row shadow DOM. If no row-local `et2-styles` is present,
-`app.css` is still loaded as the compatibility fallback.
+`et2-nextmatch` never loads the application's `app.css` into the datagrid row shadow DOM. Row
+styles come only from the row template's `et2-styles`.
 
 ### Static Widget Style
 
@@ -654,10 +653,13 @@ standard row layout:
 | Property                | Default | Effect                                                                 |
 |-------------------------|---------|------------------------------------------------------------------------|
 | `--row-height`          | `44px`  | Estimated row height used for virtual spacer rendering and empty rows. |
-| `--row-cell-max-height` | `10em`  | Maximum height for normal row cells before vertical scrolling.         |
+| `--row-cell-max-height` | `none`  | Maximum height for normal row cells; taller content is clipped.        |
 
-Use `--row-cell-max-height` when row content is being clipped or scrolls too early. It applies to
-normal row `td` / `th` cells; expanded rows and tile view use separate sizing paths.
+Rows grow to fit their content by default. Set `--row-cell-max-height` to keep a list compact: a
+cell taller than the limit is clipped and fades out at the bottom, without a scrollbar of its own.
+Cells holding an `et2-customfields-list` scroll instead, so no field is hidden. The fade needs CSS
+scroll-driven animations; browsers without them clip without fading. It applies to normal row
+`td` / `th` cells; expanded rows and tile view use separate sizing paths.
 
 ```css
 et2-nextmatch {

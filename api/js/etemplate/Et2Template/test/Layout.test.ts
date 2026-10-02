@@ -241,7 +241,8 @@ describe("Layout grow factors in a stack", () =>
 			}
 			et2-template[layout="stack"] > * { flex: 0 0 auto; min-height: 0; }
 			et2-template[layout="stack"] [grow],
-			et2-template[layout="stack"] et2-tabbox { flex: 1 1 auto; min-height: 0; }
+			et2-template[layout="stack"] et2-tabbox,
+			et2-template[layout="stack"] et2-nextmatch { flex: 1 1 auto; min-height: 0; }
 			/* A natural height on the growing children, which is the whole point: with
 			 * flex-basis: auto that height becomes their basis, they fill the container on their
 			 * own and are shrunk rather than grown - and shrinking ignores the grow factor.
@@ -304,6 +305,34 @@ describe("Layout grow factors in a stack", () =>
 
 		assert.closeTo(height(element, "two"), 3 * height(element, "tabs"), 1,
 			"a tabbox grows with a factor of 1 unless it says otherwise");
+	});
+
+	it("grows an et2-nextmatch without being asked, the same way a tabbox does", async() =>
+	{
+		// A list is never what a stack should leave space around - whatever sits with it is a
+		// header or a footer - so the tag is enough on its own, no grow= needed
+		const element = await laidOut(html`
+            <et2-template layout="stack">
+                <div id="fixed"></div>
+                <et2-nextmatch id="nm"></et2-nextmatch>
+                <div id="two" grow="3"></div>
+            </et2-template>`);
+
+		assert.closeTo(height(element, "two"), 3 * height(element, "nm"), 1,
+			"a nextmatch grows with a factor of 1 unless it says otherwise");
+	});
+
+	it("still honours a grow factor the nextmatch does name", async() =>
+	{
+		const element = await laidOut(html`
+            <et2-template layout="stack">
+                <div id="fixed"></div>
+                <et2-nextmatch id="nm" grow="2"></et2-nextmatch>
+                <div id="two" grow="1"></div>
+            </et2-template>`);
+
+		assert.closeTo(height(element, "nm"), 2 * height(element, "two"), 1,
+			"the automatic factor must not override one the template asked for");
 	});
 
 	it("gives the factor back when the layout no longer wants it", async() =>

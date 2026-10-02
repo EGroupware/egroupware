@@ -30,7 +30,6 @@ class resources_bo
 
 	const DELETED = 'deleted';
 	const PICTURE_NAME = '.picture.jpg';
-	var $resource_icons = '/resources/templates/default/images/resource_icons/';
 	var $debug = 0;
 	/**
 	 * Instance of resources so object
@@ -250,7 +249,10 @@ class resources_bo
 				$accessories = $this->get_acc_list($resource['res_id'],$query['filter2']==self::DELETED);
 				foreach($accessories as $acc_id => $acc_name)
 				{
-					$resource['accessories'][] = array('acc_id' => $acc_id, 'name' => $this->link_title($acc_id));
+					$title = $this->link_title($acc_id);
+					$resource['accessories'][] = array('acc_id' => $acc_id, 'name' => $title);
+					// the same as links for the list's et2-link-string, id as string: et2-link only opens those
+					$resource['accessory_links'][] = array('app' => 'resources', 'id' => (string)$acc_id, 'title' => $title);
 				}
 			} elseif ($resource['accessory_of'] > 0) {
 				$resource['accessory_of_label'] = $this->link_title($resource['accessory_of']);
@@ -1047,9 +1049,8 @@ class resources_bo
 				// fall through
 			case 'gen_src':
 			default :
-				$src = $resource['picture_src'];
-				$picture = !$fullsize?$GLOBALS['egw_info']['server']['webserver_url'].$this->resource_icons:$this->resource_icons;
-				$picture .= strpos($src,'.') !== false ? $src : 'generic.png';
+				// there are no generic pictures anymore, use the app icon instead
+				$picture = Api\Image::find('resources', 'navbar');
 		}
 		return $picture;
 	}
@@ -1068,27 +1069,5 @@ class resources_bo
 			return array_shift($arr);	// $arr = array($path => (bool)$ok);
 		}
 		return false;
-	}
-
-	/**
-	 * get_genpicturelist
-	 * gets all pictures from 'generic picutres dir' in selectbox style for eTemplate
-	 *
-	 * Cornelius Weiss <egw@von-und-zu-weiss.de>
-	 * @return array directory contens in eTemplates selectbox style
-	 */
-	function get_genpicturelist()
-	{
-		$icons['generic.png'] = lang('gernal resource');
-		$dir = dir(EGW_SERVER_ROOT.$this->resource_icons);
-		while($file = $dir->read())
-		{
-			if (preg_match('/\\.(png|gif|jpe?g)$/i',$file) && $file != 'generic.png')
-			{
-				$icons[$file] = substr($file,0,strpos($file,'.'));
-			}
-		}
-		$dir->close();
-		return $icons;
 	}
 }

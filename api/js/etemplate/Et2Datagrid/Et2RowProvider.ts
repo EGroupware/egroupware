@@ -70,14 +70,12 @@ export class Et2RowProvider
 		{
 			return value;
 		}
-		let resolved = value;
-		resolved = resolved.replace(/\{([^}]+)\}/g, (_match, token) => String(getFieldValue(row, token) ?? ""));
-		resolved = resolved.replace(/\$row\.([a-zA-Z0-9_.]+)/g, (_match, token) => String(getFieldValue(row, token) ?? ""));
-		resolved = resolved.replace(/\$\{row\}\[([^\]]+)\]/g, (_match, token) => String(getFieldValue(row, token) ?? ""));
-		resolved = resolved.replace(/\$\[([^\]]+)\]/g, (_match, token) => String(getFieldValue(row, token) ?? ""));
-		resolved = resolved.replace(/\$row_cont\[([^\]]+)\]/g, (_match, token) => String(getFieldValue(row, token) ?? ""));
-		resolved = resolved.replace(/\$([a-zA-Z_][a-zA-Z0-9_]*)\b/g, (_match, token) => String(getFieldValue(row, token) ?? ""));
-		return resolved;
+		// A single pass: a value put in for one placeholder is row data, and is not scanned
+		// again for the next one, eg. a "$name" or "{name}" in a description
+		return value.replace(
+			/\{([^}]+)\}|\$row\.([a-zA-Z0-9_.]+)|\$\{row\}\[([^\]]+)\]|\$\[([^\]]+)\]|\$row_cont\[([^\]]+)\]|\$([a-zA-Z_][a-zA-Z0-9_]*)\b/g,
+			(_match, ...groups) => String(getFieldValue(row, groups.slice(0, 6).find((token) => token !== undefined)) ?? "")
+		);
 	}
 
 	/**
@@ -101,10 +99,18 @@ export class Et2RowProvider
 		return {found: true, value: current};
 	}
 
-	static customizeRowRootAttributes(rowRoot : HTMLElement, row : any, getFieldValue : (row : any, key : string) => any)
+	/**
+	 * Resolve row placeholders in the row root's attributes.
+	 *
+	 * @param attributeNames limit resolving to these attributes, eg. the template's own ones.
+	 * 	A mounted row also carries identity attributes holding row data (data-row-id),
+	 * 	which must not be resolved again, or a "{x}" or "$x" in an id gets replaced.
+	 */
+	static customizeRowRootAttributes(rowRoot: HTMLElement, row: any, getFieldValue: (row: any, key: string) => any,
+		attributeNames?: string[])
 	{
 		const categoryIds = this._rowCategoryIds(row, getFieldValue);
-		for(const name of rowRoot.getAttributeNames())
+		for(const name of attributeNames ?? rowRoot.getAttributeNames())
 		{
 			const value = rowRoot.getAttribute(name);
 			if(value === null)
@@ -242,7 +248,14 @@ export class Et2RowProvider
 		this._cancelActiveTemplate();
 		try
 		{
-			tpl = <Et2Template><unknown>loadWebComponent("et2-template", {id: templateName}, this.host as any);
+			// autoLoad off: we only want this element as a handle for reading the template XML below.
+			// Left on, setting the id makes Et2Template build the row template's entire widget tree,
+			// which we would immediately destroy in the finally - and a row template's <grid> is a
+			// legacy widget, so every webComponent in it warns on the way in.
+			tpl = <Et2Template><unknown>loadWebComponent("et2-template", {
+				autoLoad: false,
+				id: templateName
+			}, this.host as any);
 			this._activeTemplate = tpl;
 			let xml : Element | null = null;
 			// We prefer to read it directly ourselves
@@ -439,6 +452,15 @@ export class Et2RowProvider
 		}
 		rowNode = rowNode ?? headerNode?.nextElementSibling ?? tplRoot;
 
+		// A <grid> in a header or row cell is a legacy widget the row clones can not render, so its cell stays
+		// empty with no other sign of why.  api/etemplate.php converts the static ones, not a repeating one.
+		for(const grid of [headerNode, rowNode !== tplRoot ? rowNode : null]
+			.flatMap((node) => node ? Array.from(node.querySelectorAll("grid")) : []))
+		{
+			this.host.egw?.()?.debug("warn", "Et2RowProvider: <grid" + (grid.id ? ' id="' + grid.id + '"' : "") +
+				"> in a row template is not supported, its cell stays empty. " + templateUrl);
+		}
+
 		// Use the original header node structure without flattening
 		// This preserves wrappers like et2-vbox, et2-hbox, etc.
 		const columnDefs = headerNode ?
@@ -467,6 +489,7 @@ export class Et2RowProvider
 			view,
 			tileLayout: view === "tile" ? this._tileLayoutFromRowNode(rowNode) : undefined,
 			columns,
+			noHeader: columns.length > 0 && !this._headerCellNodes(headerNode).length,
 			rowTemplateId: tplRoot.getAttribute("id") || tplRoot.id || normalizedRowNode?.id || undefined,
 			rowTemplate: prepared?.template ?? null,
 			rowTemplateXml: prepared?.xml ?? null,
@@ -526,12 +549,7 @@ export class Et2RowProvider
 	 */
 	private _extractColumnsFromHeaderNode(headerNode : Element, minColumnCount : number = 0) : Et2DatagridColumn[]
 	{
-		const nodes = this._headerColumnSourceNodes(headerNode)
-			.filter((node) =>
-			{
-				const tag = node.tagName.toLowerCase();
-				return tag !== "columns" && tag !== "column";
-			});
+		const nodes = this._headerCellNodes(headerNode);
 		const columns : Et2DatagridColumn[] = [];
 		nodes.forEach((node, index) =>
 		{
@@ -559,6 +577,19 @@ export class Et2RowProvider
 			}
 		}
 		return columns;
+	}
+
+	/**
+	 * The header row's actual header cells, without the <columns>/<column> width metadata
+	 */
+	private _headerCellNodes(headerNode : Element | null) : Element[]
+	{
+		return headerNode ? this._headerColumnSourceNodes(headerNode)
+			.filter((node) =>
+			{
+				const tag = node.tagName.toLowerCase();
+				return tag !== "columns" && tag !== "column";
+			}) : [];
 	}
 
 	/**
@@ -1143,6 +1174,9 @@ export class Et2RowProvider
 		}
 
 		const element = document.createElement("span");
+		// Marks the stand-in so the datagrid styles can give it the widget's own text handling
+		// (newlines preserved), which a bare span does not have.
+		element.setAttribute("data-et2-description", "");
 		const className = source.getAttribute("class");
 		if(className)
 		{
@@ -1462,6 +1496,10 @@ export class Et2RowProvider
 
 	/**
 	 * Resolve user-visible header title from known Nextmatch header widgets.
+	 *
+	 * Raw template attributes are expanded against the host's content, the same way the
+	 * header widget built from them expands its own label, so a label such as
+	 * `@@labels[record_title]` becomes the title it shows instead of the expression.
 	 */
 	private _extractHeaderTitle(node : Element) : string
 	{
@@ -1472,16 +1510,33 @@ export class Et2RowProvider
 				// Node has already been read, maybe put into the DOM
 				(node as any).label || (node as any).emptyLabel ||
 				// Maybe reading raw template
-				node.getAttribute("label") || node.getAttribute("emptyLabel") || node.getAttribute("title") ||
+				this._expandHeaderAttribute(node.getAttribute("label") || node.getAttribute("emptyLabel") || node.getAttribute("title")) ||
 				""
 			).trim();
 		}
 
 		const labels = Array.from(node.querySelectorAll("*"))
-			.map((element) => ((element as any).label || (element as any).emptyLabel || element.getAttribute("label") || element.getAttribute("emptyLabel") || element.getAttribute("title") || element.textContent || "").trim())
+			.map((element) => ((element as any).label || (element as any).emptyLabel || this._expandHeaderAttribute(element.getAttribute("label") || element.getAttribute("emptyLabel") || element.getAttribute("title")) || element.textContent || "").trim())
 			.filter(Boolean);
 
 		return [...new Set(labels)].join(" / ");
+	}
+
+	/**
+	 * Expand a raw header attribute containing an `@` or `$` expression with the host's content.
+	 *
+	 * Anything else, or any value when the host has no content array manager, is returned as it is.
+	 * An expression that expands to nothing gives "", so the caller falls back to the cell's text or key.
+	 */
+	private _expandHeaderAttribute(value : string | null) : string
+	{
+		const contentMgr = this.host.getArrayMgr?.("content");
+		if(!value || !contentMgr || !/[@$]/.test(value))
+		{
+			return value || "";
+		}
+		const expanded = contentMgr.expandName(value);
+		return typeof expanded === "string" || typeof expanded === "number" ? String(expanded) : "";
 	}
 
 	/**

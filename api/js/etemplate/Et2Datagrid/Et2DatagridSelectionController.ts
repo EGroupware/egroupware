@@ -19,6 +19,19 @@ export class Et2DatagridSelectionController
 	allSelected : boolean = false;
 	/** Anchor index for shift-range selection semantics. */
 	anchorRowIndex : number = -1;
+	/**
+	 * Shift range covering rows that were not fetched yet, see selectRange() and pendingRange.
+	 * `ids` is the selection it was made for: once the selection is replaced, it no longer applies.
+	 */
+	private _pendingRange : { start : number, end : number, ids : Set<string> } | null = null;
+
+	/** Pause after a shift+click before prefetching its missing rows, see _prefetchPendingRange() */
+	static PREFETCH_DELAY_MS = 500;
+	/** Most rows a prefetch fetches; the rest are only fetched once an action needs them */
+	static PREFETCH_MAX_ROWS = 1000;
+	private _prefetchTimer : number | null = null;
+	/** Bumped to stop a running prefetch before its next page */
+	private _prefetchGeneration = 0;
 	/** Keyboard/pointer active row index in currently loaded rows. */
 	activeRowIndex : number = -1;
 	/** Active row id mirrored from `activeRowIndex` for event payload convenience. */
@@ -361,16 +374,161 @@ export class Et2DatagridSelectionController
 		const start = Math.min(startIndex, endIndex);
 		const end = Math.max(startIndex, endIndex);
 		const next = new Set<string>();
+		let missing = false;
 		for(let i = start; i <= end; i++)
 		{
 			if(this.host._rowsByIndex[i])
 			{
 				next.add(this.host._rowsByIndex[i].id);
 			}
+			else
+			{
+				missing = true;
+			}
 		}
 		this.selectedRowIds = next;
+		// Rows the user scrolled past without them being fetched (eg. first row, jump to the
+		// end, shift+click the last) have no id yet. Nothing is fetched now, to keep the click
+		// instant: rows arriving later are added (addFetchedRows()), and whatever acts on the
+		// selection fetches the rest first (Et2Nextmatch.executeWithCompleteSelection()).
+		this._pendingRange = missing ? {start, end, ids: next} : null;
 		this.syncRowAccessibilityState();
 		this.emitSelectionChanged();
+		this.stopPrefetch();
+		if(missing)
+		{
+			this._prefetchTimer = window.setTimeout(() => this._prefetchPendingRange(),
+				Et2DatagridSelectionController.PREFETCH_DELAY_MS);
+		}
+	}
+
+	/**
+	 * Get a head start on the rows of a pending shift range, before an action needs them.
+	 *
+	 * Low profile: one page at a time, each after the previous one landed, so it never competes
+	 * with the pages the user scrolls to by more than one request. The rows go into the grid
+	 * like any other page - addFetchedRows() adds them to the selection - so an action started
+	 * meanwhile only has to fetch what is still missing. Stops once the selection changes, the
+	 * range is complete, PREFETCH_MAX_ROWS are fetched, or stopPrefetch() is called. The one page
+	 * already requested - in flight, or queued for the request queue's next dispatch, which a
+	 * stop does not take back - is the most that can be wasted.
+	 */
+	private async _prefetchPendingRange()
+	{
+		this._prefetchTimer = null;
+		const generation = this._prefetchGeneration;
+		let fetched = 0;
+		while(generation === this._prefetchGeneration && fetched < Et2DatagridSelectionController.PREFETCH_MAX_ROWS)
+		{
+			const range = this.pendingRange;
+			if(!range)
+			{
+				return;
+			}
+			let first = range.start;
+			while(first <= range.end && this.host._rowsByIndex[first])
+			{
+				first++;
+			}
+			if(first > range.end)
+			{
+				return;
+			}
+			const pageSize = this.host.pageSize;
+			const last = Math.min(range.end, (Math.floor(first / pageSize) + 1) * pageSize - 1);
+			await this.host.loadRowRange(first, last);
+			if(!this.host._rowsByIndex[first])
+			{
+				// the page did not arrive (fetch failed, list changed): leave it to the action
+				return;
+			}
+			fetched += last - first + 1;
+		}
+	}
+
+	/**
+	 * Stop prefetching a pending shift range, eg. because an action fetches the rest itself.
+	 */
+	stopPrefetch()
+	{
+		this._prefetchGeneration++;
+		if(this._prefetchTimer !== null)
+		{
+			window.clearTimeout(this._prefetchTimer);
+			this._prefetchTimer = null;
+		}
+	}
+
+	/**
+	 * The shift range still holding rows that were not fetched, or null if the selection is complete.
+	 */
+	get pendingRange() : { start : number, end : number } | null
+	{
+		const range = this._pendingRange;
+		if(!range || range.ids !== this.selectedRowIds || !range.ids.size || this.allSelected)
+		{
+			this._pendingRange = null;
+			return null;
+		}
+		return {start: range.start, end: range.end};
+	}
+
+	/**
+	 * Select rows that just arrived inside a pending shift range, so the selection the user
+	 * sees grows into the range as its rows are fetched.
+	 */
+	addFetchedRows(start : number, count : number)
+	{
+		const range = this.pendingRange && this._pendingRange;
+		if(!range)
+		{
+			return;
+		}
+		let added = false;
+		for(let i = Math.max(start, range.start); i < start + count && i <= range.end; i++)
+		{
+			const id = this.host._rowsByIndex[i]?.id;
+			if(id && !range.ids.has(id))
+			{
+				range.ids.add(id);
+				added = true;
+			}
+		}
+		this._completeRangeIfLoaded(range);
+		if(added)
+		{
+			this.syncRowAccessibilityState();
+			this.emitSelectionChanged();
+		}
+	}
+
+	/**
+	 * Complete a pending shift range with ids fetched for it by someone else (the nextmatch,
+	 * before running an action on the selection).
+	 */
+	completePendingRange(ids : string[])
+	{
+		const range = this.pendingRange && this._pendingRange;
+		if(!range)
+		{
+			return;
+		}
+		ids.forEach((id) => range.ids.add(id));
+		this._pendingRange = null;
+		this.syncRowAccessibilityState();
+		this.emitSelectionChanged();
+	}
+
+	private _completeRangeIfLoaded(range : { start : number, end : number })
+	{
+		for(let i = range.start; i <= range.end; i++)
+		{
+			if(!this.host._rowsByIndex[i])
+			{
+				return;
+			}
+		}
+		this._pendingRange = null;
 	}
 
 	/**
