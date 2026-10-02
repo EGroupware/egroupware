@@ -75,6 +75,20 @@ export class EgwPopups
 	}
 
 	/**
+	 * Get all open popup windows, regardless of app
+	 *
+	 * Et2Dialogs live in our own document, so they are not included.
+	 *
+	 * @return {Window[]}
+	 */
+	public get windows() : Window[]
+	{
+		return <Window[]>this._popups
+			.filter(w => !(w instanceof Et2Dialog) && !w.closed)
+			.map((w:Window) => w.$iFrame?.[0]?.contentWindow ?? w);
+	}
+
+	/**
 	 * Check if given window is a "popup" alike, returning integer or undefined if not
 	 *
 	 * @param {Window} _wnd
