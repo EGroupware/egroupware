@@ -392,20 +392,17 @@ export class AdminApp extends EgwApp
 				}
 				else
 				{
-					// No iframe, but if there's a nm in the current view, refresh it
-					const et2s = etemplate2.getByApplication('admin');
-					for(let i = 0; i < et2s.length; i++)
+					// No iframe, so refresh the lists in the current view ourselves.  Admin
+					// shows several different ones - accounts, groups, API tokens, access log -
+					// and more than one can be in the same template, so every nextmatch is
+					// asked rather than one picked by id.  A list that does not have the row
+					// just ignores it; passing the id and type along keeps that to a single-row
+					// update instead of a full reload.
+					for(const et2 of etemplate2.getByApplication('admin'))
 					{
-						const nm = <Et2Nextmatch>et2s[i].widgetContainer.getWidgetById('nm');
-						if(nm)
-						{
-							nm.refresh(undefined, undefined);
-						}
-					}
-					// Get group list too, if visible, since it wasn't found in the loop above
-					if(!this.groups.disabled)
-					{
-						this.groups.refresh(undefined, undefined);
+						et2.widgetContainer.querySelectorAll('et2-nextmatch').forEach(
+							(nm : Et2Nextmatch) => nm.refresh(_id, _type)
+						);
 					}
 					return false;
 				}
