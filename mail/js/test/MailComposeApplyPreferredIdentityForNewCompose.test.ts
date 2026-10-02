@@ -144,6 +144,20 @@ describe("MailCompose.applyPreferredIdentityForNewCompose() - defaultIdentity pr
 			"id 15 is flagged isPersonal - id 22 (a general additional identity) must never be picked here");
 	});
 
+	it("'default-matching' resolves to the account's own flagged STANDARD identity, same as 'default', for a brand-new compose", async() =>
+	{
+		// ticket #125092 follow-up (ralf+Birgit): "use the standard identity of the active
+		// account for new compose, reply/forward uses the first identity matching the mail
+		// replied/forwarded" - the reply/forward-only matching half is covered by
+		// MailComposeDefaultIdentityPreference.test.ts; this new-compose half has no recipient to
+		// match against in the first place, so it must behave exactly like 'default'.
+		const {compose, et2} = createComposeForNew(createEgw('default-matching'), '1:22', {'1' : accountOneIdentities()});
+
+		await (compose as any).applyPreferredIdentityForNewCompose();
+
+		assert.strictEqual(et2.widgets.mailaccount.get_value(), '1:1');
+	});
+
 	it("resolves the CORRECT account's flagged standard identity when the compose was opened for account 2, not account 1's", async() =>
 	{
 		const {compose, et2} = createComposeForNew(createEgw('default'), '2:2', {

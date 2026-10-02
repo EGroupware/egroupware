@@ -25,7 +25,14 @@ const egw : any = {
 		let i = 0;
 		return String(label).replace(/%(\d+)/g, () => args[i++] ?? '');
 	},
-	preference: (_key : string, _app? : string) => null,
+	// ticket #125092 follow-up (ralf+Birgit): recipient-address matching on reply/forward is now
+	// gated behind the 'default-matching' preference value specifically (every other value,
+	// 'last-used' included, no longer does it at all) - this file's whole premise is a race
+	// TRIGGERED BY selectIdentityForRecipients()'s own mailaccount.set_value() call on a match, so
+	// the default here must opt into that, unlike a real installation's own actual default. Tests
+	// that care about a DIFFERENT preference value's own behaviour (eg. the 'last-used'/unset
+	// bootstrapSignature() test below) override this locally.
+	preference: (key : string, _app? : string) => key === 'defaultIdentity' ? 'default-matching' : null,
 	message: (_msg : string, _type? : string) => {},
 };
 
@@ -278,17 +285,31 @@ describe("MailCompose bootstrap race (bootstrapping flag)", () =>
 		it("still resolves correctly with nothing to race against", async() =>
 		{
 			// context.to/cc match no identity's own email - selectIdentityForRecipients() finds
-			// no match, so mailaccount.set_value() (the race trigger) is never even called
+			// no match, so mailaccount.set_value() (the race trigger) is never even called. Needs
+			// 'defaultIdentity' pinned to 'last-used' (null) explicitly here, overriding this
+			// file's own module-level 'default-matching' default (see its own docblock) - unlike
+			// 'last-used', 'default-matching' falls through to a standard-identity override even
+			// on NO match, which WOULD call set_value() after all and contradict this test's title.
 			const context = fakeContext({mimeType: 'plain', to: [{email: 'someone-else@example.com'}]});
 			const {compose, et2} = createComposeForReply(context, [fakeIdentity()]);
 			let raceCalls = 0;
 			(compose as any).updateSignatureForIdentity = async() => { raceCalls++; };
 
-			await (compose as any).bootstrapReply('msg1', 'reply');
+			const originalPreference = egw.preference;
+			egw.preference = (key : string, app? : string) => key === 'defaultIdentity' ? null : originalPreference(key, app);
 
-			assert.strictEqual(et2.widgets.mimeType.get_value(), false);
-			assert.include(et2.widgets.mail_plaintext.get_value(), 'the original body');
-			assert.strictEqual(raceCalls, 0);
+			try
+			{
+				await (compose as any).bootstrapReply('msg1', 'reply');
+
+				assert.strictEqual(et2.widgets.mimeType.get_value(), false);
+				assert.include(et2.widgets.mail_plaintext.get_value(), 'the original body');
+				assert.strictEqual(raceCalls, 0);
+			}
+			finally
+			{
+				egw.preference = originalPreference;
+			}
 		});
 	});
 
@@ -665,10 +686,23 @@ describe("MailCompose bootstrapSignature() - 'Default identity for compose' pref
 		const et2 = createFakeEt2(compose, '1:5');
 		(compose as any).et2 = et2;
 
-		await (compose as any).bootstrapSignature();
+		// this file's own module-level egw.preference() defaults 'defaultIdentity' to
+		// 'default-matching' (see its own docblock) - this ONE test is specifically about the
+		// REAL 'last-used'/unset default instead, so it must override that back explicitly.
+		const originalPreference = egw.preference;
+		egw.preference = (key : string, app? : string) =>
+			key === 'defaultIdentity' ? null : originalPreference(key, app);
+		try
+		{
+			await (compose as any).bootstrapSignature();
 
-		assert.equal(et2.widgets.mailaccount.get_value(), '1:5', "mailaccount must stay untouched");
-		assert.include(et2.widgets.mail_htmltext.get_value(), 'Default Sig');
+			assert.equal(et2.widgets.mailaccount.get_value(), '1:5', "mailaccount must stay untouched");
+			assert.include(et2.widgets.mail_htmltext.get_value(), 'Default Sig');
+		}
+		finally
+		{
+			egw.preference = originalPreference;
+		}
 	});
 });
 
