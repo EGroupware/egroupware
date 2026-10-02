@@ -1496,6 +1496,10 @@ export class Et2RowProvider
 
 	/**
 	 * Resolve user-visible header title from known Nextmatch header widgets.
+	 *
+	 * Raw template attributes are expanded against the host's content, the same way the
+	 * header widget built from them expands its own label, so a label such as
+	 * `@@labels[record_title]` becomes the title it shows instead of the expression.
 	 */
 	private _extractHeaderTitle(node : Element) : string
 	{
@@ -1506,16 +1510,33 @@ export class Et2RowProvider
 				// Node has already been read, maybe put into the DOM
 				(node as any).label || (node as any).emptyLabel ||
 				// Maybe reading raw template
-				node.getAttribute("label") || node.getAttribute("emptyLabel") || node.getAttribute("title") ||
+				this._expandHeaderAttribute(node.getAttribute("label") || node.getAttribute("emptyLabel") || node.getAttribute("title")) ||
 				""
 			).trim();
 		}
 
 		const labels = Array.from(node.querySelectorAll("*"))
-			.map((element) => ((element as any).label || (element as any).emptyLabel || element.getAttribute("label") || element.getAttribute("emptyLabel") || element.getAttribute("title") || element.textContent || "").trim())
+			.map((element) => ((element as any).label || (element as any).emptyLabel || this._expandHeaderAttribute(element.getAttribute("label") || element.getAttribute("emptyLabel") || element.getAttribute("title")) || element.textContent || "").trim())
 			.filter(Boolean);
 
 		return [...new Set(labels)].join(" / ");
+	}
+
+	/**
+	 * Expand a raw header attribute containing an `@` or `$` expression with the host's content.
+	 *
+	 * Anything else, or any value when the host has no content array manager, is returned as it is.
+	 * An expression that expands to nothing gives "", so the caller falls back to the cell's text or key.
+	 */
+	private _expandHeaderAttribute(value : string | null) : string
+	{
+		const contentMgr = this.host.getArrayMgr?.("content");
+		if(!value || !contentMgr || !/[@$]/.test(value))
+		{
+			return value || "";
+		}
+		const expanded = contentMgr.expandName(value);
+		return typeof expanded === "string" || typeof expanded === "number" ? String(expanded) : "";
 	}
 
 	/**
