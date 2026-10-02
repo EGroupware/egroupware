@@ -564,34 +564,47 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 	}
 	/**
 	 * Set up for printing
+	 *
+	 * Show the content of every tab that is not hidden, one below the other with its label as heading
+	 * (in print only, see the [printing] styles), and remove the height limit.
+	 *
+	 * etemplate2.print() checks if a widget is visible right before calling its beforePrint(), and it
+	 * reaches the widgets inside our panels in the same pass.  So the panels get their "active"
+	 * attribute set directly: setting the property would only be reflected on the next Lit update.
 	 */
 	beforePrint()
 	{
-		// Remove the "active" flag from all tabs-flags
-		this.querySelector("[active]").removeAttribute("active");
-
 		// Remove height limit
 		this.style.height = '';
+		this.toggleAttribute("printing", true);
 
 		// Show all enabled tabs
-		for(let i = 0; i < this.tabData.length; i++)
+		for(const entry of this.tabData)
 		{
-			let entry = this.tabData[i];
-			if(entry.hidden)
+			if(!entry.flagDiv || !entry.contentDiv || entry.flagDiv.hidden || entry.contentDiv.hidden)
 			{
 				continue;
 			}
-			entry.flagDiv.insertBefore(entry.contentDiv);
-			entry.contentDiv.show();
+			entry.contentDiv.dataset.printLabel = entry.label;
+			entry.contentDiv.setAttribute("active", "");
 		}
 	}
 
 	/**
 	 * Reset after printing
+	 *
+	 * Back to showing only the active tab.  Not via setActiveTab(), which does nothing for the tab
+	 * that is already active, so would leave every panel showing.
 	 */
 	afterPrint()
 	{
-		this.setActiveTab(this._selectedIndex);
+		this.removeAttribute("printing");
+		const activeTab = this.getActiveTab();
+		this.getAllPanels().forEach(panel =>
+		{
+			delete panel.dataset.printLabel;
+			panel.active = panel.name === activeTab?.panel;
+		});
 	}
 
 	/**
