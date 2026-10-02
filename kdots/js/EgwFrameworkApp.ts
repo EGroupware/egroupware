@@ -1449,9 +1449,13 @@ export class EgwFrameworkApp extends LitElement
                                      slot="header-actions" name="x-circle-fill"
                                      label="${this.egw.lang("Clear filters")}"
                                      statustext="${this.egw.lang("Clear filters")}"
-                                     @click=${e =>
+                                     @click=${async e =>
                                      {
                                          this.filters.value = {};
+                                         // Not every filter reads back empty straight away: an
+                                         // Et2LinkEntry limited to one app keeps reporting its old
+                                         // entry until it has re-rendered
+                                         await this.filters.updateComplete;
                                          this.filters.applyFilters();
                                      }}
                     ></et2-button-icon>` : nothing

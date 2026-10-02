@@ -48,6 +48,7 @@ describe("Et2Customfields webcomponents", () =>
 		await import("../Et2Customfields");
 		await import("../Et2CustomfieldsList");
 		await import("../Et2CustomfieldsFilters");
+		await import("../../Et2Link/Et2LinkEntry");
 		await import("../../Et2Select/Et2Select");
 		await import("../../Et2Select/SelectTypes");
 		await import("../../Et2Textbox/Et2Textbox");
@@ -845,6 +846,66 @@ describe("Et2Customfields webcomponents", () =>
 		assert.isTrue(select?.multiple, "filter selectbox should be multiple");
 		assertNoElement(element.querySelector("[data-field='cf_text']"), "text customfields should not render as filters");
 		assertNoElement(element.querySelector("[data-field='cf_file']"), "filemanager customfields should not render as filters");
+	});
+
+	/**
+	 * Contract: a filter box sets the customfield filters the way legacy did, one `{"#name": value}`
+	 * map through set_value() - that is how clearing the filters and applying a favourite reach them,
+	 * and a field missing from the map is emptied.
+	 * Setup: render a select filter, set it, then set an empty map.
+	 * Pass: getValue() reports the value set, then nothing.
+	 */
+	it("takes its filters from set_value(), and empties those left out", async() =>
+	{
+		const element = await fixture<any>(html`
+			<et2-customfields-filters></et2-customfields-filters>
+		`);
+		element.customfields = {cf_select: {label: "Select", type: "select", values: {open: "Open", closed: "Closed"}}};
+		await element.updateComplete;
+
+		element.set_value({"#cf_select": ["open"]});
+		await element.updateComplete;
+		assert.deepEqual(element.getValue()["#cf_select"], ["open"], "set_value() should reach the filter");
+
+		element.set_value({});
+		await element.updateComplete;
+		assert.isEmpty(element.getValue()["#cf_select"], "a filter missing from the map should be emptied");
+	});
+
+	/**
+	 * Contract: once we are updated, getValue() reports what was set - including from an entry
+	 * filter limited to one app, which keeps reporting its old entry until it has re-rendered.
+	 * A filter box clearing the filters applies whatever getValue() says as soon as we are done.
+	 * Setup: render an app-backed filter, select an entry, then clear it.
+	 * Pass: getValue() is empty as soon as updateComplete resolves.
+	 */
+	it("is not updated until its entry filters have caught up", async() =>
+	{
+		const linkAppList = egwStub.link_app_list;
+		egwStub.link_app_list = () => ({tracker: "Tracker"});
+		try
+		{
+			const element = await fixture<any>(html`
+				<et2-customfields-filters></et2-customfields-filters>
+			`);
+			element.customfields = {cf_ticket: {label: "Ticket", type: "tracker"}};
+			await element.updateComplete;
+			const entry = element.querySelector("[data-field='cf_ticket'] > *") as any;
+			assert.equal(entry?.localName, "et2-link-entry", "an app-backed customfield filters by entry");
+			assert.equal(entry.onlyApp, "tracker", "limited to its app");
+
+			element.set_value({"#cf_ticket": "174"});
+			await element.updateComplete;
+			assert.equal(element.getValue()["#cf_ticket"], "174", "the entry should be selected");
+
+			element.set_value({});
+			await element.updateComplete;
+			assert.equal(element.getValue()["#cf_ticket"], "", "clearing must have landed once we are updated");
+		}
+		finally
+		{
+			egwStub.link_app_list = linkAppList;
+		}
 	});
 
 	it("supports type_filter previous across widget instances", async() =>
