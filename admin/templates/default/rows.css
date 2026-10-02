@@ -68,3 +68,12 @@
 	color: red;
 	font-style: italic;
 }
+
+/* Application passwords list: a revoked token is greyed out, a template for user tokens is blue */
+tr.revoked > td * {
+	color: grey !important;
+	font-style: italic;
+}
+tr.template > td * {
+	color: darkblue !important;
+}
