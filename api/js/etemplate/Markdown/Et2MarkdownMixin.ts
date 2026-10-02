@@ -6,11 +6,11 @@
  * @link https://www.egroupware.org
  */
 
-import {type CSSResultGroup, LitElement} from "lit";
+import {type CSSResultGroup, LitElement, type PropertyValues} from "lit";
 import {property} from "lit/decorators/property.js";
 import {dedupeMixin} from "@open-wc/dedupe-mixin";
 import {MarkdownController} from "./MarkdownController";
-import {markdownStyles} from "./Markdown.styles";
+import {addMarkdownStyles, markdownStyles} from "./Markdown.styles";
 
 type Constructor<T = {}> = new (...args : any[]) => T;
 
@@ -92,6 +92,26 @@ export const Et2MarkdownMixin = dedupeMixin(<T extends Constructor<LitElement>>(
 			if(preference === "on" || preference === "off")
 			{
 				this.markdown = preference === "on";
+			}
+
+			// static styles above only reach markdown rendered into our own shadow DOM.  A host
+			// that renders it into its light DOM (Et2Description) is styled by the tree it sits
+			// in, which is not always the document - see addMarkdownStyles().
+			if(this.markdown)
+			{
+				addMarkdownStyles(this.getRootNode());
+			}
+		}
+
+		protected updated(changedProperties : PropertyValues)
+		{
+			// @ts-ignore superclass is only typed as Constructor<LitElement>, which has no updated()
+			super.updated(changedProperties);
+
+			// markdown turned on after we were connected - our root still needs the styles
+			if(changedProperties.has("markdown") && this.markdown)
+			{
+				addMarkdownStyles(this.getRootNode());
 			}
 		}
 
