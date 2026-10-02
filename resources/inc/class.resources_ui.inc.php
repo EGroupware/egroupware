@@ -82,6 +82,15 @@ class resources_ui
 					return $this->index();
 				}
 			}
+			// Which button of the delete / un-delete dialog was clicked, see show.xet
+			if ($content['nm']['action'] === 'delete' && !empty($content['delete_popup']['promote']))
+			{
+				$content['nm']['action'] = 'delete_promote';
+			}
+			elseif ($content['nm']['action'] === 'restore' && !empty($content['restore_popup']['accessories']))
+			{
+				$content['nm']['action'] = 'restore_accessories';
+			}
 			if ($content['nm']['action'])
 			{
 				if (!count($content['nm']['selected']) && !$content['nm']['select_all'])

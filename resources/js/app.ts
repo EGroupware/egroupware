@@ -10,7 +10,7 @@
 
 import {EgwApp} from "../../api/js/jsapi/egw_app";
 import type {EgwFrameworkApp, FilterInfo} from "../../kdots/js/EgwFrameworkApp";
-import {fetchAll} from "../../api/js/etemplate/et2_extension_nextmatch_actions.js";
+import type {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatch";
 import type {CalendarApp} from "../../calendar/js/app";
 // egw is an ambient global (declare global {} in egw_global.d.ts, unconditionally included
 // via tsconfig's "**/*.d.ts") - no import needed or possible.
@@ -76,7 +76,7 @@ class resourcesApp extends EgwApp
 	{
 		let res_ids = [];
 		let matches = [];
-		let nm = _action.parent.data.nextmatch;
+		let nm = <Et2Nextmatch>_action.parent.data.nextmatch;
 		let selection = nm.getSelection();
 
 		const show_calendar = (res_ids) => {
@@ -92,7 +92,7 @@ class resourcesApp extends EgwApp
 		if(selection && selection.all)
 		{
 			// Get selected ids from nextmatch - it will ask server if user did 'select all'
-			fetchAll(res_ids, nm, show_calendar)
+			nm.fetchAllIds().then(show_calendar);
 		}
 		else
 		{
@@ -178,6 +178,40 @@ class resourcesApp extends EgwApp
 		{
 			rBtn.set_value('own_src');
 		}
+	}
+
+	/**
+	 * Submit the delete / un-delete dialog of the resource list
+	 *
+	 * The dialogs are real <et2-dialog>s, so Et2NextmatchActionController.openActionPopup() just sets
+	 * their .selectedIds and shows them; the window.nm_popup_action/nm_popup_ids globals the legacy
+	 * nm_submit_popup() used are never set.  Every button submits the dialog's own action, the clicked
+	 * button lands in the submitted content (eg. delete_popup[promote]), from which
+	 * resources_ui::index() picks delete_promote or restore_accessories.
+	 *
+	 * @param _event
+	 * @param _widget the clicked button
+	 * @param _action_id the nm action the dialog was opened for, "delete" or "restore"
+	 * @return false to stop the button's own submit
+	 */
+	submit_popup(_event : Event, _widget, _action_id : string) : boolean
+	{
+		const dialog = <any>_widget.closest('et2-dialog');
+		const nm = <Et2Nextmatch>_widget.getInstanceManager()?.widgetContainer?.getWidgetById('nm');
+		if(!nm)
+		{
+			return false;
+		}
+		// Prefer the live selection - it still carries "select all", which the dialog's
+		// .selectedIds (a plain array of ids) does not
+		const selection = nm.getSelection();
+		if(!selection.all && dialog?.selectedIds?.length)
+		{
+			selection.ids = dialog.selectedIds;
+		}
+		nm.executeAction(_action_id, selection, {nmAction: "submit"});
+		dialog?.close();
+		return false;
 	}
 }
 app.classes.resources = resourcesApp;

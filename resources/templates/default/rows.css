@@ -1,0 +1,12 @@
+/**
+ * EGroupware Resources - styles for the resource list rows
+ *
+ * Loaded into the list's row shadow DOM by <et2-styles src="rows.css"> in show.xet,
+ * app.css does not reach the rows.
+ */
+.thumbnailImage img {
+	width: 100%;
+	max-width: 65px;
+	height: auto !important;
+	max-height: 50px;
+}

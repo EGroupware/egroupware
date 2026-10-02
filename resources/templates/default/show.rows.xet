@@ -55,12 +55,9 @@
 					</et2-vbox>
 					<et2-vbox  noLang="1">
 						<et2-description  href="resources.resources_ui.edit&amp;res_id=$row_cont[accessory_of]" id="${row}[accessory_of_label]" extraLinkPopup="850x600" noLang="1"></et2-description>
-						<!-- The accessory sub-list used to be an autorepeating <grid> over ${row}[accessories].
-						     Et2Datagrid builds a row by cloning and hydrating individual widgets, so a nested
-						     grid is inert markup there - it renders nothing at all, silently. Restoring the
-						     sub-list needs either a repeating widget the row provider understands, or a
-						     server-provided flat field to bind a single widget to; until then this column
-						     shows only which resource an accessory belongs to. -->
+						<!-- was a repeating <grid> over ${row}[accessories], which the list's rows can not
+						     render: resources_bo::get_rows() sends the same entries as accessory_links -->
+						<et2-link-string  id="${row}[accessory_links]"></et2-link-string>
 					</et2-vbox>
 					<et2-customfields-list  id="$row" app="resources"/>
 				</row>

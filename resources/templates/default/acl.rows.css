@@ -1,0 +1,13 @@
+/**
+ * EGroupware Resources - styles for the category ACL list rows
+ *
+ * Loaded into the list's row shadow DOM by <et2-styles src="acl.rows.css"> in acl.xet,
+ * app.css does not reach the rows.
+ */
+/* top-level categories are bold, sub-categories are indented by level_spacer */
+.level0 {
+	font-weight: bold;
+}
+.level_spacer {
+	flex: 0 0 auto;
+}

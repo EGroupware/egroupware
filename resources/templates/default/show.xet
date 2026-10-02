@@ -19,25 +19,25 @@
                 <row class="th">
                     <et2-nextmatch-header  label="Image" id="image"></et2-nextmatch-header>
                     <et2-vbox>
-                        <nextmatch-sortheader label="Name" id="name"/>
-                        <nextmatch-sortheader label="Short description" id="short_description"/>
+                        <et2-nextmatch-sortheader  label="Name" id="name"></et2-nextmatch-sortheader>
+                        <et2-nextmatch-sortheader  label="Short description" id="short_description"></et2-nextmatch-sortheader>
                     </et2-vbox>
                     <et2-vbox>
-                        <nextmatch-sortheader statustext="How many of this resource are usable" label="Useable" id="useable"/>
-                        <nextmatch-sortheader statustext="How many of this resource exists" label="Quantity" id="quantity"/>
-                        <nextmatch-sortheader statustext="Is the ressource bookable?" label="Bookable" id="bookable"/>
+                        <et2-nextmatch-sortheader  statustext="How many of this resource are usable" label="Useable" id="useable"></et2-nextmatch-sortheader>
+                        <et2-nextmatch-sortheader  statustext="How many of this resource exists" label="Quantity" id="quantity"></et2-nextmatch-sortheader>
+                        <et2-nextmatch-sortheader  statustext="Is the ressource bookable?" label="Bookable" id="bookable"></et2-nextmatch-sortheader>
                     </et2-vbox>
                     <et2-vbox>
-                        <nextmatch-sortheader label="Category" id="cat_id"/>
+                        <et2-nextmatch-sortheader  label="Category" id="cat_id"></et2-nextmatch-sortheader>
                         <et2-description  value="Administrator"></et2-description>
                     </et2-vbox>
                     <et2-vbox>
-                        <nextmatch-sortheader label="Location" id="location"/>
+                        <et2-nextmatch-sortheader  label="Location" id="location"></et2-nextmatch-sortheader>
                         <et2-description  value="Storage information"></et2-description>
                     </et2-vbox>
-                    <nextmatch-sortheader label="Inventory Number" id="inventory_number"/>
+                    <et2-nextmatch-sortheader  label="Inventory Number" id="inventory_number"></et2-nextmatch-sortheader>
                     <et2-nextmatch-header  label="Resource / Accessories"></et2-nextmatch-header>
-                    <nextmatch-customfields id="customfields"/>
+                    <et2-nextmatch-header-customfields  id="customfields" app="resources"></et2-nextmatch-header-customfields>
                     <et2-nextmatch-header  label="Kanban" id="kanban"></et2-nextmatch-header>
                 </row>
                 <row class="$row_cont[class]">
@@ -62,22 +62,16 @@
                     <et2-description  id="${row}[inventory_number]" noLang="1"></et2-description>
                     <et2-vbox  noLang="1">
                         <et2-description  href="resources.resources_ui.edit&amp;res_id=$row_cont[accessory_of]" id="${row}[accessory_of_label]" extraLinkPopup="850x600" noLang="1"></et2-description>
-                        <grid width="100%" id="${row}[accessories]">
-                            <columns>
-                                <column/>
-                            </columns>
-                            <rows>
-                                <row>
-                                    <et2-description  href="resources.resources_ui.edit&amp;res_id=$row_cont[acc_id]" id="${row}[name]" extraLinkPopup="850x600" noLang="1"></et2-description>
-                                </row>
-                            </rows>
-                        </grid>
+                        <!-- was a repeating <grid> over ${row}[accessories], which the list's rows can not
+                             render: resources_bo::get_rows() sends the same entries as accessory_links -->
+                        <et2-link-string  id="${row}[accessory_links]"></et2-link-string>
                     </et2-vbox>
-                    <customfields-list id="$row"/>
+                    <et2-customfields-list  id="$row" app="resources"></et2-customfields-list>
                     <et2-link-string  entryId="$row_cont[res_id]" application="resources" onlyApp="kanban"></et2-link-string>
                 </row>
             </rows>
         </grid>
+        <et2-styles src="rows.css"></et2-styles>
     </et2-template>
     <et2-template  id="resources.show.header" template="" lang="" group="0" version="1.9.002">
         <et2-toolbar  id="toolbar">
@@ -89,45 +83,32 @@
     </et2-template>
     <et2-template  id="resources.show" template="" lang="" group="0" version="1.9.003">
         <et2-template  template="resources.show.header" slot="main-header"></et2-template>
-        <nextmatch id="nm" template="resources.show.rows"/>
-        <et2-box  id="delete_popup" class="action_popup prompt">
-            <et2-vbox  class="prompt">
-                <et2-description  value="Delete" class="promptheader"></et2-description>
+        <et2-nextmatch  id="nm" template="resources.show.rows"></et2-nextmatch>
+        <!-- The delete / un-delete mass actions.  These used to be <et2-box class="action_popup prompt">
+             boxes, upgraded into dialogs at runtime by the legacy nm_open_popup(), whose buttons changed the
+             action through the window.nm_popup_action global it set.  As real <et2-dialog>s none of that
+             runs: every button submits the dialog's own action through app.resources.submit_popup(), and
+             resources_ui::index() reads which one was clicked from $content['delete_popup'] /
+             $content['restore_popup']. -->
+        <et2-dialog  id="delete_popup_dialog" class="action_popup_dialog" title="Delete" open="false" buttons="" destroyOnClose="false">
+            <et2-box  id="delete_popup">
                 <et2-description  value="Delete accessories of selected resources too?"></et2-description>
-                <et2-hbox>
-                    <et2-button  label="Yes - Delete accessories too" id="delete" onclick="nm_submit_popup(this); return false;"></et2-button>
-                    <et2-button  label="No - Make them resources" id="delete_promote" onclick="nm_popup_action.id = 'delete_promote'; nm_submit_popup(this); return false;"></et2-button>
-                    <et2-button  label="Cancel" onclick="nm_hide_popup(this,'delete_popup');" noSubmit="true"></et2-button>
-                </et2-hbox>
-            </et2-vbox>
-        </et2-box>
-        <et2-box  id="restore_popup" class="action_popup prompt">
-            <et2-vbox  class="prompt">
-                <et2-description  value="Un-delete" class="promptheader"></et2-description>
+            </et2-box>
+            <et2-button  slot="footer" variant="primary" label="Yes - Delete accessories too" id="delete_popup[accessories]" onclick="return app.resources.submit_popup(ev, widget, 'delete');"></et2-button>
+            <et2-button  slot="footer" label="No - Make them resources" id="delete_popup[promote]" onclick="return app.resources.submit_popup(ev, widget, 'delete');"></et2-button>
+            <et2-button  slot="footer" label="Cancel" id="delete_popup_cancel" noSubmit="true" onclick="widget.closest('et2-dialog').hide(); return false;"></et2-button>
+        </et2-dialog>
+        <et2-dialog  id="restore_popup_dialog" class="action_popup_dialog" title="Un-delete" open="false" buttons="" destroyOnClose="false">
+            <et2-box  id="restore_popup">
                 <et2-description  value="Un-delete accessories of selected resources too?"></et2-description>
-                <et2-hbox>
-                    <et2-button  label="Yes - Un-delete accessories too" id="restore_accessories" onclick="nm_popup_action.id = 'restore_accessories';nm_submit_popup(this); return false;"></et2-button>
-                    <et2-button  label="No - Leave them" id="restore" onclick="nm_popup_action.id = 'restore'; nm_submit_popup(this); return false;"></et2-button>
-                    <et2-button  label="Cancel" onclick="nm_hide_popup(this,'restore_popup');" noSubmit="true"></et2-button>
-                </et2-hbox>
-            </et2-vbox>
-        </et2-box>
+            </et2-box>
+            <et2-button  slot="footer" variant="primary" label="Yes - Un-delete accessories too" id="restore_popup[accessories]" onclick="return app.resources.submit_popup(ev, widget, 'restore');"></et2-button>
+            <et2-button  slot="footer" label="No - Leave them" id="restore_popup[leave]" onclick="return app.resources.submit_popup(ev, widget, 'restore');"></et2-button>
+            <et2-button  slot="footer" label="Cancel" id="restore_popup_cancel" noSubmit="true" onclick="widget.closest('et2-dialog').hide(); return false;"></et2-button>
+        </et2-dialog>
         <et2-styles>
-            .thumbnailImage img {
-            width: 100%;
-            max-width: 65px;
-            height: auto !important;
-            max-height: 50px;
-            }
-            .action_popup[id] {
-            position: fixed;
-            top: 200px;
-            left: 450px;
-            width: 76ex;
-            z-index: 20000;
-            display: none;
-            border-collapse:collapse;
-            border-spacing:0px
+            .action_popup_dialog::part(panel) {
+            width: 40em;
             }
         </et2-styles>
     </et2-template>
