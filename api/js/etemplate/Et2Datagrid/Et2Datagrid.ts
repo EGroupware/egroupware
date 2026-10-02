@@ -5669,6 +5669,53 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
+	 * Set up for printing, for a grid whose owner does not do it itself
+	 *
+	 * Virtualization only renders the rows in the viewport, so print every row instead: load
+	 * them all and render them without virtualization.  An owner that prepares printing itself
+	 * (Et2Nextmatch picks the rows and columns) has called setPrintRows() already - leave that
+	 * alone.  Not reached by etemplate2.print(), the grid lives in its owner's shadow DOM: an
+	 * owner with an Et2LazyLoadController gets it called from there.
+	 *
+	 * @return resolves once the rows are rendered
+	 */
+	async beforePrint() : Promise<void>
+	{
+		if(this._printRows)
+		{
+			return;
+		}
+		// A (re)load still on its way has no total yet - wait for its first page to know how many
+		if(this.total === null)
+		{
+			await this.loadRowRange(0, this.pageSize - 1);
+		}
+		if(typeof this.total === "number" && this.total > 0)
+		{
+			await this.loadRowRange(0, this.total - 1);
+		}
+		this._printingSelf = true;
+		this.classList.add("print-self");
+		await this.setPrintRows(this.getLoadedRowIds().filter(Boolean));
+	}
+
+	/**
+	 * Reset after printing, if beforePrint() set up the print rows
+	 */
+	afterPrint() : void
+	{
+		if(this._printingSelf)
+		{
+			this._printingSelf = false;
+			this.classList.remove("print-self");
+			this.clearPrintRows();
+		}
+	}
+
+	/** beforePrint() rendered the print rows, not the owner */
+	private _printingSelf = false;
+
+	/**
 	 * Render already-fetched rows without virtualization for print output.
 	 * The caller owns fetching and must call clearPrintRows() after printing.
 	 */
