@@ -88,11 +88,8 @@ export default css`
 	 * Shared look for an entry that is still listed but no longer in effect (revoked application
 	 * password, deleted calendar event, disabled policy).  The server adds rowInactive next to the
 	 * row's own class, which it keeps for enableClass/disableClass of the actions.
-	 * The descendants are listed too, as widgets like et2-date_ro set their own color on :host,
-	 * which a rule from the row's tree still overrides without !important.
 	 */
-	tr.rowInactive > td,
-	tr.rowInactive > td * {
+	tr.rowInactive > td {
 		color: var(--sl-color-neutral-500);
 		font-style: italic;
 	}
