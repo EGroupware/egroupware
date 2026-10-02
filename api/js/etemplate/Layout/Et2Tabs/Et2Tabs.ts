@@ -258,10 +258,11 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 				if (parseInt(maxHeight) > 50 && parseInt(maxHeight) < parseInt(tabHeight)) //there was a reasonable max height set
 				{
 					this.tabHeight = maxHeight;
-				} else if(maxHeight != '0px'){ //max height was set but is unreasonable small
+				} else if(parseInt(maxHeight) > 0 && parseInt(maxHeight) < parseInt(tabHeight)){ //max height was set but is unreasonable small
 					this.tabHeight = '86vh' // use most of available space, but not all so Tabbox header fits too, and does not need second scrollbar
 				} else
 				{
+					// no max height, or the first tab fits into it
 					this.tabHeight = tabHeight;
 				}
 				if(!initial)
@@ -680,14 +681,23 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 
 	resize(_height)
 	{
-		if(_height && this.tabHeight != 'auto')
+		if(_height && this.tabHeight && this.tabHeight != 'auto')
 		{
+			// _height is in px, but tabHeight can be in any unit (eg. "86vh" from _sizeTabs(), "20em" or
+			// a calc() from a template), so start from the height the body renders at for those
+			let height = /^\d+(\.\d+)?(px)?$/.test(this.tabHeight) ? parseFloat(this.tabHeight) :
+				this.shadowRoot?.querySelector('.tab-group__body')?.getBoundingClientRect().height;
+			if(!height)
+			{
+				// not rendered (eg. in a hidden tab), nothing to start from
+				return;
+			}
 			// _height is the spare space of the whole dialog, so once the panel is as small as it
 			// goes and the dialog still does not fit, every resize subtracts that same shortfall
 			// again.  Without a floor the height runs away negative, which the browser discards -
 			// the panel falls back to its content height and needs one resize per pixel to climb
 			// back.  50px is the same "too small to be a real height" mark _sizeTabs() uses.
-			this.tabHeight = Math.max(50, parseInt(this.tabHeight) + parseInt(_height)) + "";
+			this.tabHeight = Math.max(50, Math.round(height + parseInt(_height))) + "";
 		}
 	}
 }
