@@ -4082,7 +4082,7 @@
                     "homepage": "https://github.com/Nyholm"
                 },
                 {
-                    "name": "M\u00e1rk S\u00e1gi-Kaz\u00e1r",
+                    "name": "Márk Sági-Kazár",
                     "email": "mark.sagikazar@gmail.com",
                     "homepage": "https://github.com/sagikazarmark"
                 },
@@ -4281,7 +4281,7 @@
                     "homepage": "https://github.com/Nyholm"
                 },
                 {
-                    "name": "M\u00e1rk S\u00e1gi-Kaz\u00e1r",
+                    "name": "Márk Sági-Kazár",
                     "email": "mark.sagikazar@gmail.com",
                     "homepage": "https://github.com/sagikazarmark"
                 },
@@ -4291,7 +4291,7 @@
                     "homepage": "https://github.com/Tobion"
                 },
                 {
-                    "name": "M\u00e1rk S\u00e1gi-Kaz\u00e1r",
+                    "name": "Márk Sági-Kazár",
                     "email": "mark.sagikazar@gmail.com",
                     "homepage": "https://sagikazarmark.hu"
                 }
@@ -5806,7 +5806,7 @@
             ],
             "authors": [
                 {
-                    "name": "S\u00e9rgio Carvalho",
+                    "name": "Sérgio Carvalho",
                     "email": "sergiosgc@gmail.com",
                     "role": "Lead"
                 }
@@ -6137,16 +6137,16 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "3.0.55",
+            "version": "3.0.57",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "db9744e6d47e742b1f974e965ad49bdd041105af"
+                "reference": "d17e0ddaeaf6f22f7e007cbb437d78792fe2a0e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/db9744e6d47e742b1f974e965ad49bdd041105af",
-                "reference": "db9744e6d47e742b1f974e965ad49bdd041105af",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/d17e0ddaeaf6f22f7e007cbb437d78792fe2a0e4",
+                "reference": "d17e0ddaeaf6f22f7e007cbb437d78792fe2a0e4",
                 "shasum": ""
             },
             "require": {
@@ -6194,7 +6194,7 @@
                     "role": "Developer"
                 },
                 {
-                    "name": "Hans-J\u00fcrgen Petrich",
+                    "name": "Hans-Jürgen Petrich",
                     "email": "petrich@tronic-media.com",
                     "role": "Developer"
                 },
@@ -6227,7 +6227,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpseclib/phpseclib/issues",
-                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.55"
+                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.57"
             },
             "funding": [
                 {
@@ -6243,7 +6243,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-06-14T23:24:10+00:00"
+            "time": "2026-08-26T12:13:21+00:00"
         },
         {
             "name": "phpstan/phpdoc-parser",
@@ -7225,11 +7225,11 @@
             ],
             "authors": [
                 {
-                    "name": "Andreas \u00c5kre Solberg",
+                    "name": "Andreas Åkre Solberg",
                     "email": "andreas.solberg@uninett.no"
                 },
                 {
-                    "name": "Jaime P\u00e9rez Crespo",
+                    "name": "Jaime Pérez Crespo",
                     "email": "jaime.perez@uninett.no"
                 },
                 {
@@ -7292,7 +7292,7 @@
             ],
             "authors": [
                 {
-                    "name": "Andreas \u00c5kre Solberg",
+                    "name": "Andreas Åkre Solberg",
                     "email": "andreas.solberg@uninett.no"
                 }
             ],
@@ -7419,7 +7419,7 @@
             ],
             "authors": [
                 {
-                    "name": "Andreas \u00c5kre Solberg",
+                    "name": "Andreas Åkre Solberg",
                     "email": "andreas.solberg@uninett.no"
                 },
                 {
@@ -13760,7 +13760,7 @@
         "ext-xml": "*",
         "ext-xsl": "*"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "platform-overrides": {
         "php": "8.2"
     },
