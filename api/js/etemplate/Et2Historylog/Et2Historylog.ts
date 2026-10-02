@@ -117,7 +117,7 @@ export class Et2Historylog extends Et2Widget(LitElement) implements NextmatchInt
 
 	/**
 	 * Tells us when this history log is actually being displayed, for `lazy` - see
-	 * `_whenLazyVisible()`.
+	 * `_loadWhenVisible()`.
 	 */
 	private _lazyVisible = new Et2LazyLoadController(this);
 
@@ -410,8 +410,8 @@ export class Et2Historylog extends Et2Widget(LitElement) implements NextmatchInt
 	}
 
 	/**
-	 * Resolve immediately unless `lazy` is set and this history log is not currently being
-	 * displayed - in that case, resolve once it is.
+	 * Run `load` right away unless `lazy` is set and this history log is not currently being
+	 * displayed - in that case, run it once it is.
 	 *
 	 * Same question, same answer as Et2Nextmatch's own lazy handling: `Et2LazyLoadController`
 	 * reads it off the element itself (`checkVisibility()`), which covers `display: none`
@@ -421,14 +421,17 @@ export class Et2Historylog extends Et2Widget(LitElement) implements NextmatchInt
 	 * and this widget has no business knowing which of those it is.  An earlier version listened
 	 * for the enclosing `<et2-tabbox>`'s `sl-tab-show` instead - inherited from the legacy history
 	 * log this replaced, and still how the legacy nextmatch does it - and so handled only tabs.
+	 *
+	 * Handing `load` to the controller, rather than awaiting `whenReady` ourselves, lets printing
+	 * wait for it too - see Et2LazyLoadController.beforePrint().
 	 */
-	private async _whenLazyVisible() : Promise<void>
+	private _loadWhenVisible(load : () => Promise<void>) : Promise<void>
 	{
 		if(!this.lazy)
 		{
-			return;
+			return load();
 		}
-		return this._lazyVisible.whenReady;
+		return this._lazyVisible.defer(load);
 	}
 
 	async firstUpdated(changed : PropertyValues)
@@ -450,8 +453,14 @@ export class Et2Historylog extends Et2Widget(LitElement) implements NextmatchInt
 		this._seedFilters();
 		this._buildRegistry();
 
-		await this._whenLazyVisible();
+		await this._loadWhenVisible(() => this._load());
+	}
 
+	/**
+	 * Load the row template, then the rows
+	 */
+	private async _load() : Promise<void>
+	{
 		// try/finally around the load: if the row template cannot be read the grid must stop
 		// claiming to be loading, or it sits on its spinner for the life of the dialog with no
 		// indication of what went wrong.

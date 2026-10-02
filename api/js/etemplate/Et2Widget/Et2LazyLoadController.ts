@@ -9,7 +9,11 @@
 
 import type {ReactiveController, ReactiveControllerHost} from "lit";
 
-export type Et2LazyLoadHost = ReactiveControllerHost & HTMLElement & { checkVisibility?() : boolean };
+export type Et2LazyLoadHost = ReactiveControllerHost & HTMLElement & {
+	checkVisibility?() : boolean,
+	beforePrint?() : unknown,
+	afterPrint?() : void
+};
 
 /**
  * Lets a widget hold off on work that isn't worth doing yet - typically because nobody
@@ -58,29 +62,53 @@ export type Et2LazyLoadHost = ReactiveControllerHost & HTMLElement & { checkVisi
  * open, which may never come.  It settles once and is done; a caller that expects to
  * wait again later (e.g. after the host is hidden and shown again) reads it again rather
  * than holding on to the first Promise.
+ *
+ * Printing is the other case where waiting for the host to be looked at does not work: a print
+ * shows what nobody opened (eg. every tab, see Et2Tabs.beforePrint()) and scrolls nothing into
+ * view.  So the controller gives its host a `beforePrint()` (and `afterPrint()`), which makes it
+ * an et2_IPrint that etemplate2.print() prepares: it forces the gates and waits for the work the
+ * host deferred - whatever `onReady` returned, or what it handed to `defer()`.  What the host
+ * then shows can still be lazy (eg. an Et2Datagrid only renders the rows in the viewport), and
+ * etemplate2.print() does not look into shadow DOM, so the printable widgets in the host's
+ * shadow root get prepared too.  A lazy widget needs no print handling of its own; one that has
+ * its own `beforePrint()` keeps it.
  */
 export class Et2LazyLoadController implements ReactiveController
 {
 	private host : Et2LazyLoadHost;
-	private onReady : () => void;
+	private onReady : () => unknown;
 	private isExtraReady : () => boolean;
 	private observer : IntersectionObserver;
 	private resolvers : Array<() => void> = [];
+	/** The deferred work last started, from onReady or defer() */
+	private work : Promise<unknown> | null = null;
+	/** Widgets in the host's shadow root that beforePrint() prepared, for afterPrint() */
+	private printed : Array<{ afterPrint() : void }> = [];
 
 	/**
 	 * @param host
 	 * @param onReady Called whenever `ready` is seen becoming true - make it idempotent.
-	 *  Optional for a caller that only wants to `await whenReady`.
+	 *  Optional for a caller that only wants to `await whenReady`.  Return a Promise for work
+	 *  it starts, so printing can wait for it.
 	 * @param isExtraReady Additional condition to require alongside visibility, checked
 	 *  on every observation; call `recheck()` when whatever it depends on changes.
 	 *  Defaults to visibility being the only condition.
 	 */
-	constructor(host : Et2LazyLoadHost, onReady : () => void = () => {}, isExtraReady : () => boolean = () => true)
+	constructor(host : Et2LazyLoadHost, onReady : () => unknown = () => {}, isExtraReady : () => boolean = () => true)
 	{
 		this.host = host;
 		this.onReady = onReady;
 		this.isExtraReady = isExtraReady;
 		host.addController(this);
+
+		if(typeof host.beforePrint !== "function")
+		{
+			host.beforePrint = () => this.beforePrint();
+			if(typeof host.afterPrint !== "function")
+			{
+				host.afterPrint = () => this.afterPrint();
+			}
+		}
 	}
 
 	/**
@@ -134,6 +162,48 @@ export class Et2LazyLoadController implements ReactiveController
 	}
 
 	/**
+	 * Run `work` once `whenReady` resolves - like awaiting `whenReady` first, but printing can
+	 * then wait for the work too, see beforePrint().
+	 */
+	defer<T>(work : () => T | Promise<T>) : Promise<T>
+	{
+		const promise = this.whenReady.then(work);
+		this.work = promise;
+		return promise;
+	}
+
+	/**
+	 * Get the host ready for printing, as its own beforePrint()
+	 *
+	 * etemplate2.print() only calls it for a displayed host, so whatever the host deferred is
+	 * wanted now: force the gates and wait for that work, then prepare the displayed printable
+	 * widgets (with beforePrint() and afterPrint()) in the host's shadow root.  A failed load
+	 * does not stop the print, it just prints what there is.
+	 *
+	 * @return resolves once the deferred work is done and those widgets are ready
+	 */
+	async beforePrint() : Promise<void>
+	{
+		this.force();
+		await Promise.allSettled([this.work]);
+		await this.host.updateComplete;
+
+		this.printed = <any[]>Array.from(this.host.shadowRoot?.querySelectorAll("*") ?? []).filter((widget : any) =>
+			typeof widget.beforePrint === "function" && typeof widget.afterPrint === "function" &&
+			(widget.checkVisibility?.() ?? true));
+		await Promise.allSettled(this.printed.map((widget : any) => widget.beforePrint()));
+	}
+
+	/**
+	 * Reset after printing, as the host's own afterPrint()
+	 */
+	afterPrint() : void
+	{
+		this.printed.forEach(widget => widget.afterPrint());
+		this.printed = [];
+	}
+
+	/**
 	 * Re-check readiness for whatever `isExtraReady` depends on - the visibility half has
 	 * its own IntersectionObserver and doesn't need this.  Call it from the code that owns
 	 * the condition `isExtraReady` checks, once that condition changes.
@@ -157,7 +227,11 @@ export class Et2LazyLoadController implements ReactiveController
 
 	private fire() : void
 	{
-		this.onReady();
+		const result = this.onReady();
+		if(result && typeof (<Promise<unknown>>result).then === "function")
+		{
+			this.work = <Promise<unknown>>result;
+		}
 		const resolvers = this.resolvers;
 		this.resolvers = [];
 		resolvers.forEach(resolve => resolve());

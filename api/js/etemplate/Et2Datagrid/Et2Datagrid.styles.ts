@@ -38,6 +38,11 @@ export default css`
 		 */
 		padding-bottom: 250mm;
 	}
+	/* A grid printing itself (see Et2Datagrid.beforePrint()) sits in a form with more below it,
+	 * so its last row is not the end of the page and the page of padding only wastes paper */
+	:host(.print.print-self) .dg-body #rows {
+		padding-bottom: 0;
+	}
 
 	:host(.print) .dg-body tbody {
 		display: grid;
