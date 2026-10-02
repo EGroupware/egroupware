@@ -227,17 +227,28 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 		};
 		const changed = mergeCustomfieldSettingsFromSources(attrs, localData, globalData);
 		attrs.fields = this._normalizeFieldsAttribute(attrs.fields);
-		if(changed)
+		if(!changed)
 		{
-			this.customfields = attrs.customfields || {};
-			this.fields = preserveVisibility ? {...previousFields} : (attrs.fields || {});
-			this._hasExplicitFields = preserveVisibility;
-			this.exclude = attrs.exclude || this.exclude;
-			this.typeFilter = typeof attrs.typeFilter === "undefined" ? this.typeFilter : attrs.typeFilter;
-			this._recomputeVisibility();
-			this._hydrationAttempts = 0;
+			return false;
 		}
-		return changed;
+		const before = [this.customfields, this.fields, this.exclude, this.typeFilter];
+		this.customfields = attrs.customfields || {};
+		this.fields = preserveVisibility ? previousFields : (attrs.fields || {});
+		this._hasExplicitFields = preserveVisibility;
+		this.exclude = attrs.exclude || this.exclude;
+		this.typeFilter = typeof attrs.typeFilter === "undefined" ? this.typeFilter : attrs.typeFilter;
+		// The merge also reports keys this header never stores (eg. "app" from ~custom_fields~),
+		// so it can report changed on every call.
+		// Only a change to what the header uses counts,
+		// otherwise resetting the attempts would keep the hydration retry running forever.
+		const after = [this.customfields, this.fields, this.exclude, this.typeFilter];
+		if(after.every((value, index) => value === before[index]))
+		{
+			return false;
+		}
+		this._recomputeVisibility();
+		this._hydrationAttempts = 0;
+		return true;
 	}
 
 	private _needsHydrationRetry() : boolean
