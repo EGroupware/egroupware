@@ -183,7 +183,7 @@ checklist.
 | Resources | converted, partly verified | resource list (incl. accessory links and the delete / un-delete dialogs) and category ACL list verified; mobile skin and Home's portlet row template not |
 | openid, webauthn | converted, partly verified | their "Security & Password" tabs and openid's client list in Admin; mobile skins and webauthn's Register (needs a real authenticator) not |
 | aitools, bookmarks, developer, esyncpro, invoices, kanban, news_admin, rag, records, smallpart | converted, verified | every list; esyncpro had no devices to show, smallpart's mobile courses list not checked |
-| policy | converted, not to be committed yet | its popups' Print buttons print the main window (kdots `EgwFramework.print()` ignores its window argument) - open |
+| policy | converted, not to be committed yet | popup printing fixed in kdots (`framework.print(window)` prints the popup); still needs its lists' `printOptions` set (replacing `_override_print_dialogs()`), and `Et2Tabs.beforePrint()` fixed, which throws for any template with tabs |
 | stylite | converted, partly verified | call history (empty here); Placetel VoIP destinations need a configured Placetel account |
 
 Still on the legacy widget: Addressbook's `display.xet` (Sitemgr only, see above), and
@@ -665,6 +665,7 @@ Legacy `et2_nextmatch` widget API usage that has no direct equivalent and must b
 | `nm.update_in_progress` | `nm.isLoading`. |
 | `this.nm.controller.getObjectManager()` | `egw_getObjectManager(appname).getObjectById(nm_index)` — grep the app for `.controller.` before considering it converted; every remaining hit is a crash waiting to happen. |
 | jQuery `.on('refresh', (_event, _widget, _row_id, _type) => ...)` | `Et2Nextmatch.refresh()` dispatches a plain DOM `CustomEvent` with **no extra arguments** — `_widget`/`_row_id`/`_type` are always `undefined` now. Close over an already-captured reference instead of reading widget/row from the event. |
+| Overriding `nm._create_print_dialog` to print without asking (preset columns / rows / orientation) | `nm.printOptions = {columns: "all" \| [keys], rowCount, orientation}` — no print dialog, nothing saved as print preference; options left out use the dialog's defaults. |
 | Guessing at a renamed setting (e.g. `nm.settings.foldertree`) | Verify the replacement property actually exists on `Et2Nextmatch` (check `Et2Nextmatch.ts`) before using it. |
 
 ### Autorefresh

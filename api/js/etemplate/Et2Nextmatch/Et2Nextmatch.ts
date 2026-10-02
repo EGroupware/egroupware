@@ -57,6 +57,15 @@ type Et2NextmatchPrintState = {
 	orientationStyle : HTMLStyleElement;
 };
 
+/** Print options to use instead of asking, see Et2Nextmatch.printOptions */
+export type Et2NextmatchPrintOptions = {
+	/** "all" for every column the column selection offers, or the column keys to print in that order */
+	columns? : "all" | string[];
+	/** Maximum number of rows to print */
+	rowCount? : number;
+	orientation? : "portrait" | "landscape";
+};
+
 /**
  * @summary Nextmatch shows entries with filtering and context menus.
  *
@@ -239,6 +248,15 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 	/** Optional custom preference name for persisted datagrid column settings. */
 	@property({type: String, attribute: "column-preference-name"})
 	columnPreferenceName : string = "";
+
+	/**
+	 * Print with these options instead of showing the print dialog, eg. to always print a list the same way
+	 *
+	 * Options left out default to the dialog's defaults: the saved print columns (or the visible ones),
+	 * up to 100 rows, portrait.  Nothing is saved as print preference.
+	 */
+	@property({type: Object, attribute: false})
+	printOptions : Et2NextmatchPrintOptions | null = null;
 
 	/**
 	 * Optional name for the autorefresh interval preference (`nextmatch-<name>-autorefresh`),
@@ -1536,7 +1554,8 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 	 * Prepare the current nextmatch for browser printing.
 	 *
 	 * The existing XET dialog supplies print-only columns, row count, and page
-	 * orientation.  Column/orientation choices default from `_printPreferenceKey`
+	 * orientation, unless `printOptions` presets them.  Column/orientation choices
+	 * default from `_printPreferenceKey`
 	 * (falling back to legacy Nextmatch's `<pref>_print`/`<pref>_print_orientation`
 	 * preferences if that's all that exists), and are saved back only to
 	 * `_printPreferenceKey` - see that getter for why the legacy keys are never written.
@@ -1566,49 +1585,64 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 			? mappedDefaultIds
 			: columns.filter((column) => column.visibility).map((column) => column.id);
 
-		const dialog = new Et2Dialog(this.egw());
-		dialog.transformAttributes({
-			title: this.egw().lang("Print"),
-			template: this.egw().link(this.egw().webserverUrl + "/api/templates/default/nm_print_dialog.xet"),
-			buttons: Et2Dialog.BUTTONS_OK_CANCEL,
-			isModal: true,
-			value: {
-				content: {
-					row_count: Math.min(100, total),
-					columns: defaultColumnIds,
-					orientation: printDefaults.orientation ?? false
-				},
-				modifications: {columns: {columns}}
-			}
-		});
-		document.body.append(dialog);
-		const [button, value] = await dialog.getComplete();
-		if(button !== Et2Dialog.OK_BUTTON)
+		let selectedColumns : string[];
+		let requestedRows : number;
+		let orientation : "portrait" | "landscape";
+		if(this.printOptions)
 		{
-			// EgwFrameworkApp treats an undefined rejection as an aborted print.
-			// Defined errors are handled there and would still open browser print.
-			return Promise.reject();
+			const options = this.printOptions;
+			selectedColumns = (options.columns === "all" ? columns.map((column) => column.id) :
+				options.columns?.length ? options.columns : defaultColumnIds)
+				.map((column) => String(column).split("___").join(" "))
+				.filter(Boolean);
+			requestedRows = Math.min(total, Math.max(0, options.rowCount ?? 100));
+			orientation = options.orientation === "landscape" ? "landscape" : "portrait";
 		}
+		else
+		{
+			const dialog = new Et2Dialog(this.egw());
+			dialog.transformAttributes({
+				title: this.egw().lang("Print"),
+				template: this.egw().link(this.egw().webserverUrl + "/api/templates/default/nm_print_dialog.xet"),
+				buttons: Et2Dialog.BUTTONS_OK_CANCEL,
+				isModal: true,
+				value: {
+					content: {
+						row_count: Math.min(100, total),
+						columns: defaultColumnIds,
+						orientation: printDefaults.orientation ?? false
+					},
+					modifications: {columns: {columns}}
+				}
+			});
+			document.body.append(dialog);
+			const [button, value] = await dialog.getComplete();
+			if(button !== Et2Dialog.OK_BUTTON)
+			{
+				// EgwFrameworkApp treats an undefined rejection as an aborted print.
+				// Defined errors are handled there and would still open browser print.
+				return Promise.reject();
+			}
 
-		const selectedColumns = ((value as any)?.columns || [])
-			.map((column : unknown) => String(column).split("___").join(" "))
-			.filter(Boolean);
+			selectedColumns = ((value as any)?.columns || [])
+				.map((column : unknown) => String(column).split("___").join(" "))
+				.filter(Boolean);
+			requestedRows = Math.min(total, Math.max(0, parseInt((value as any)?.row_count, 10) || 0));
+			orientation = (value as any)?.orientation ? "landscape" : "portrait";
 
-		const requestedRows = Math.min(total, Math.max(0, parseInt((value as any)?.row_count, 10) || 0));
-		const orientation : "portrait" | "landscape" = (value as any)?.orientation ? "landscape" : "portrait";
+			const printKey = this._printPreferenceKey;
+			if(printKey)
+			{
+				try
+				{
+					this.egw().set_preference(app, printKey, {columns: selectedColumns, orientation});
+				}
+				catch(e)
+				{
+				}
+			}
+		}
 		const originalColumns = this._currentColumns.map((column) => ({...column}));
-
-		const printKey = this._printPreferenceKey;
-		if(printKey)
-		{
-			try
-			{
-				this.egw().set_preference(app, printKey, {columns: selectedColumns, orientation});
-			}
-			catch(e)
-			{
-			}
-		}
 
 		try
 		{
