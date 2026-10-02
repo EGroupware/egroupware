@@ -219,6 +219,42 @@ describe("EgwFrameworkApp filter indicator", () =>
 		assert.equal(filterIcon(), "filter-circle", "icon must not change");
 	});
 
+	/**
+	 * Some filters only read back empty once they have re-rendered (an Et2LinkEntry limited to one
+	 * app reports its search node's value), so the drawer's clear button has to wait for the
+	 * filterbox to settle before applying - otherwise the old value is applied straight back.
+	 */
+	it("applies the cleared filters, not the ones still being cleared", async() =>
+	{
+		let settling : Promise<any> = Promise.resolve();
+		Object.defineProperty(filterbox, "value", {
+			get: () => filterValues,
+			// Like a widget that only empties on its next render
+			set: () => {settling = new Promise(resolve => setTimeout(resolve)).then(() => filterValues = {});},
+			configurable: true
+		});
+		const baseUpdateComplete = filterbox.getUpdateComplete.bind(filterbox);
+		sandbox.stub(filterbox, "getUpdateComplete").callsFake(async() =>
+		{
+			const result = await baseUpdateComplete();
+			await settling;
+			return result;
+		});
+		let applied;
+		sandbox.stub(filterbox, "applyFilters").callsFake(() => {applied = {...filterbox.value};});
+
+		filterValues = {col_filter: {pm_id: "2"}};
+		filterbox.dispatchEvent(new Event("change", {bubbles: true}));
+		await settled();
+		const clearButton = <HTMLElement>element.shadowRoot.querySelector("et2-button-icon[name='x-circle-fill']");
+		assert.exists(clearButton, "filters are set, so the drawer offers to clear them");
+
+		clearButton.click();
+		await settled();
+
+		assert.deepEqual(applied, {}, "clear must apply the emptied filters");
+	});
+
 	it("does not modify the filter values it is given", () =>
 	{
 		const values = {sort: {id: "cat_id", asc: true}, search_type: "rag", cat_id: ""};
