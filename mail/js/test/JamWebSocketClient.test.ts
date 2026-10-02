@@ -398,6 +398,64 @@ describe("JamWebSocketClient.requestMany()", () =>
 		const [result] = await client.requestMany((t : any) => ({a : t.Mailbox.get({accountId : "acc1", ids : ["1"]})}));
 		assert.deepEqual(result.a, {list : []});
 	});
+
+	it("rejects (no retry) when the socket closes before answering and retryIdempotentOnClose isn't set", async() =>
+	{
+		// the existing, deliberate default - see WebSocketClosedBeforeResponseError's and
+		// RetryableRequestOptions' own docblocks: a lost response for a non-idempotent call can't be
+		// safely assumed not to have reached the server, so silently retrying it over HTTP must stay
+		// strictly opt-in.
+		(globalThis as any).WebSocket = FakeWebSocket;
+		fetchStub = stubFetch(fakeSession(true));
+
+		const client = new JamWebSocketClient({sessionUrl : "https://example.com/session", bearerToken : "tok"});
+		await client.session;
+		await flush();
+		const socket = FakeWebSocket.instances[0];
+		socket.simulateOpen();
+
+		const pending = client.requestMany((t : any) => ({a : t.Mailbox.get({accountId : "acc1", ids : ["1"]})}));
+		await flush();
+
+		socket.simulateClose();
+
+		let rejected = false;
+		await pending.catch(() => rejected = true);
+		assert.isTrue(rejected, "must reject, not silently retry over HTTP, when the caller never opted in");
+		assert.equal(fetchStub.callCount, 1, "only the session bootstrap fetch should have happened");
+	});
+
+	it("retries once over HTTP when retryIdempotentOnClose is set and the socket closes before answering", async() =>
+	{
+		// found live 2026-10-02 (ralf): a large-mailbox Email/query+Email/get listing fetch taking
+		// 20-28s+ can race the heartbeat into force-closing an otherwise-healthy connection (see the
+		// "does not probe while a request... is still awaiting its response" heartbeat test) - both
+		// calls here are read-only, so MailJmap.getRows() opts this specific requestMany() into a
+		// one-shot HTTP retry rather than surfacing the lost connection as a user-facing error.
+		(globalThis as any).WebSocket = FakeWebSocket;
+		fetchStub = stubFetch(fakeSession(true), {
+			methodResponses : [["Mailbox/get", {list : [{id : "1"}]}, "a"]],
+			sessionState : "state1"
+		});
+
+		const client = new JamWebSocketClient({sessionUrl : "https://example.com/session", bearerToken : "tok"});
+		await client.session;
+		await flush();
+		const socket = FakeWebSocket.instances[0];
+		socket.simulateOpen();
+
+		const pending = client.requestMany(
+			(t : any) => ({a : t.Mailbox.get({accountId : "acc1", ids : ["1"]})}),
+			{retryIdempotentOnClose : true}
+		);
+		await flush();
+
+		socket.simulateClose();
+
+		const [result] = await pending;
+		assert.deepEqual(result.a, {list : [{id : "1"}]}, "must resolve from the HTTP retry's own response");
+		assert.equal(fetchStub.callCount, 2, "session bootstrap + exactly one HTTP retry POST, no more");
+	});
 });
 
 describe("JamWebSocketClient.onPush()", () =>
@@ -585,6 +643,48 @@ describe("JamWebSocketClient heartbeat", () =>
 
 			await clock.tickAsync(100);
 			assert.equal(socket.sent.length, 1, "recent real traffic within the interval must suppress the heartbeat tick");
+		}
+		finally
+		{
+			clock.restore();
+		}
+	});
+
+	it("does not probe while a request sent just before the interval is still awaiting its response", async() =>
+	{
+		// found live 2026-10-02 (ralf): #lastActivity was previously only ever updated on receipt
+		// (see #handleMessage()), so a request that's genuinely still in flight - no response yet,
+		// but very much not idle - looked exactly like an idle connection to this check. A
+		// large-mailbox Email/query taking 20-28s+ could race the heartbeat (which ticks on a fixed
+		// schedule from connection-open, regardless of what's in flight) into probing, and if the
+		// server was still busy with that same real request and didn't also answer the trivial
+		// Core/echo probe within heartbeatTimeoutMs, the client force-closed an otherwise-healthy,
+		// still-working connection.
+		(globalThis as any).WebSocket = FakeWebSocket;
+		fetchStub = stubFetch(fakeSession(true));
+		const clock = sinon.useFakeTimers();
+
+		try
+		{
+			const client = new JamWebSocketClient({
+				sessionUrl : "https://example.com/session", bearerToken : "tok",
+				heartbeatIntervalMs : 1000, heartbeatTimeoutMs : 500
+			});
+			await client.session;
+			await clock.tickAsync(0);
+			const socket = FakeWebSocket.instances[0];
+			socket.simulateOpen();
+
+			await clock.tickAsync(900);
+			// sent, but deliberately never answered in this test - the request is still "in flight"
+			void client.request(["Core/echo", {hello : "world"}]);
+			await clock.tickAsync(0);
+			assert.equal(socket.sent.length, 1, "the real request must have been sent");
+
+			await clock.tickAsync(1000);
+			assert.equal(socket.sent.length, 1,
+				"a request still awaiting its response must count as activity - no heartbeat probe should be sent on top of it");
+			assert.equal(socket.readyState, FakeWebSocket.OPEN, "must not force-close a connection that's genuinely still working");
 		}
 		finally
 		{

@@ -164,6 +164,32 @@ type PendingEntry =
 	reject : (error : ProblemDetails | Error) => void;
 };
 
+/**
+ * #handleClose() rejects every still-pending request with one of these - a dedicated class (rather
+ * than a plain Error, matched by message string) so #requestManyOverWebSocket()'s optional
+ * retry-over-HTTP fallback (see RetryableRequestOptions) can reliably tell "the connection died
+ * before any answer came back" apart from a genuine RequestError the server did send (ProblemDetails,
+ * rejected separately in #handleMessage() - never safe/useful to retry, it's a real answer).
+ */
+export class WebSocketClosedBeforeResponseError extends Error {}
+
+/**
+ * requestMany()'s options, plus an opt-in escape hatch from the "never silently retry a lost
+ * response" safety rule in #handleClose()'s own docblock. That rule exists because a lost response
+ * for a non-idempotent call (Email/set create, EmailSubmission/set, ...) can't be safely assumed not
+ * to have reached the server - but a read-only query has no such risk, and found live 2026-10-02
+ * (ralf): a large-mailbox Email/query taking 20-28s can race the heartbeat (heartbeatIntervalMs
+ * ticks on a fixed schedule from connection-open, NOT reset by an in-flight request - see
+ * #startHeartbeat()) into force-closing an otherwise-healthy, still-working connection. Set only at
+ * call sites that are genuinely idempotent (MailJmap.getRows()'s own listing fetch, not any
+ * create/update/destroy) - retries once over plain HTTP, the same transport already used whenever
+ * the socket isn't open.
+ */
+export interface RetryableRequestOptions extends RequestOptions
+{
+	retryIdempotentOnClose? : boolean;
+}
+
 export type JamWebSocketClientConfig = ClientConfig &
 {
 	/**
@@ -682,10 +708,13 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 		// A lost response for a non-idempotent call (e.g. an Email/set create) can't be safely
 		// assumed not to have reached the server - reject in-flight requests rather than silently
 		// re-issuing them over HTTP. See doc/ai/projects/mail-jmap-jam-websocket.md, "Decisions".
+		// A dedicated error class (not just this message string) lets #requestManyOverWebSocket()'s
+		// opt-in retryIdempotentOnClose fallback tell this apart from a genuine server RequestError -
+		// see RetryableRequestOptions' own docblock.
 		const pending = Array.from(this.#pending.values());
 		this.#pending.clear();
 		pending.forEach((entry) => entry.reject(
-			new Error("JamWebSocketClient: WebSocket connection closed before a response was received")
+			new WebSocketClosedBeforeResponseError("JamWebSocketClient: WebSocket connection closed before a response was received")
 		));
 
 		if (this.#closedByUs)
@@ -701,9 +730,22 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 		this.#reconnectTimer = window.setTimeout(() => this.#connect(), delay);
 	}
 
-	/** Sends one WebSocketRequestFrame and resolves/rejects once its matching frame arrives - shared by request() and requestMany(). */
+	/**
+	 * Sends one WebSocketRequestFrame and resolves/rejects once its matching frame arrives - shared
+	 * by request() and requestMany().
+	 *
+	 * Also counts as activity on its own, same as #handleMessage() does for a received frame - found
+	 * live 2026-10-02 (ralf): #lastActivity was previously only ever updated on receipt, so a single
+	 * slow-but-healthy request (a large-mailbox Email/query, 20-28s+) looked exactly like an idle
+	 * connection to #sendHeartbeat()'s periodic check, which runs on a fixed schedule from
+	 * connection-open regardless of what's currently in flight (see #startHeartbeat()). Recording the
+	 * send itself means a heartbeat tick landing seconds after a real request went out correctly sees
+	 * the connection as recently active and skips probing it - it no longer takes a lucky phase
+	 * alignment between the tick and a slow query to avoid a self-inflicted close.
+	 */
 	#send(id : string, frame : WebSocketRequestFrame) : Promise<WebSocketResponseFrame>
 	{
+		this.#lastActivity = Date.now();
 		return new Promise((resolve, reject) =>
 		{
 			this.#pending.set(id, {resolve, reject});
@@ -814,7 +856,7 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 	// destructuring - only the compile-time shape check on the result is lost.
 	requestMany(
 		draftsFn : (proxy : DraftsProxy) => Record<string, DraftHandle>,
-		options : RequestOptions = {}
+		options : RetryableRequestOptions = {}
 	) : Promise<any>
 	{
 		if (this.transport !== "websocket")
@@ -831,10 +873,10 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 	/** The WebSocket-transport half of requestMany() - see request()'s docblock for why this is a true #private method, and why requestMany() itself isn't async. */
 	async #requestManyOverWebSocket(
 		draftsFn : (proxy : DraftsProxy) => Record<string, DraftHandle>,
-		options : RequestOptions
+		options : RetryableRequestOptions
 	) : Promise<[Record<string, any>, Meta]>
 	{
-		const {using = [], createdIds : createdIdsInput} = options;
+		const {using = [], createdIds : createdIdsInput, retryIdempotentOnClose} = options;
 		const {methodCalls, methodNames} = buildRequestsFromDrafts(draftsFn);
 		const id = `R${this.#nextId++}`;
 		const frame : WebSocketRequestFrame =
@@ -846,7 +888,23 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 			createdIds : createdIdsInput
 		};
 
-		const response = await this.#send(id, frame);
+		let response : WebSocketResponseFrame;
+		try
+		{
+			response = await this.#send(id, frame);
+		}
+		catch (e)
+		{
+			// See RetryableRequestOptions' own docblock - only for a lost connection, caller-opted-in
+			// idempotent calls, and only once (the retry itself goes over plain HTTP, not back onto a
+			// WebSocket that may just be reconnecting - same transport #transport would already pick
+			// on its own for any OTHER call made right now).
+			if (retryIdempotentOnClose && e instanceof WebSocketClosedBeforeResponseError)
+			{
+				return super.requestMany(draftsFn as any, {using, createdIds : createdIdsInput});
+			}
+			throw e;
+		}
 
 		const errors = response.methodResponses
 			.map((invocation) => getErrorFromInvocation(invocation))

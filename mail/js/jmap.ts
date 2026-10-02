@@ -875,6 +875,13 @@ export class MailJmap
 					properties,
 				});
 				return {ids, emails};
+			}, {
+				// Email/query+Email/get are both read-only - safe to retry once over plain HTTP if
+				// the WebSocket closes before answering (see RetryableRequestOptions' own docblock,
+				// jmap-jam-websocket.ts) - found live 2026-10-02 (ralf) against this exact call: a
+				// large-mailbox listing taking 20-28s can race the heartbeat into force-closing an
+				// otherwise-healthy connection.
+				retryIdempotentOnClose: true,
 			}),
 			// a single mailboxRole() lookup makes no sense across multiple real mailboxes -
 			// resolved per-row instead, below, once the actual result set is known
