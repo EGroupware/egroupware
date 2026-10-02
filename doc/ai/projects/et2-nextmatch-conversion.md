@@ -157,7 +157,12 @@ checklist.
   column).
 - **As a starting point for a real conversion:** `php api/etemplate.php -i <app>/templates/default/<name>.xet`
   now includes this rewrite. It also reformats the file (attribute spacing collapses, `>` becomes
-  `&gt;`), so review the diff.
+  `&gt;`, umlauts become `&#xF6;` entities, the `<?xml-model` line goes), so review the diff. Two of
+  its header renames are wrong: `nextmatch-filterheader` comes out as a plain `et2-nextmatch-header`
+  and `nextmatch-accountfilter` as `et2-nextmatch-filter` - make them `et2-nextmatch-header-filter`
+  and `et2-nextmatch-header-account` by hand (Records). It also maps a sortheader's legacy `options=`
+  to `sortmode=`, which is rarely right. Run it in the container (`docker exec -u www-data -w
+  /var/www/egroupware egroupware php api/etemplate.php <path>`); without `-i` it prints the result.
 
 ## Status by app
 
@@ -174,15 +179,23 @@ checklist.
 | ProjectManager | converted, verified | project list, element list, pricelist (desktop + mobile) |
 | Admin | converted, verified | all nine lists, incl. push refresh |
 | Importexport | converted, verified | the definition list (shown inside Admin or Preferences), incl. its "Change" owner / allowed users dialogs |
+| Preferences | converted, verified | application passwords tab of the "Security & Password" popup |
+| Resources | converted, partly verified | resource list (incl. accessory links and the delete / un-delete dialogs) and category ACL list verified; mobile skin and Home's portlet row template not |
+| openid, webauthn | converted, partly verified | their "Security & Password" tabs and openid's client list in Admin; mobile skins and webauthn's Register (needs a real authenticator) not |
+| aitools, bookmarks, developer, esyncpro, invoices, kanban, news_admin, rag, records, smallpart | converted, verified | every list; esyncpro had no devices to show, smallpart's mobile courses list not checked |
+| policy | converted, not to be committed yet | its popups' Print buttons print the main window (kdots `EgwFramework.print()` ignores its window argument) - open |
+| stylite | converted, partly verified | call history (empty here); Placetel VoIP destinations need a configured Placetel account |
 
-Still on the legacy widget: Preferences, and the non-core apps (Resources, Aiassistant, News_admin,
-Smallpart, Stylite, Kanban, ...). Phpbrain (deprecated, to be replaced by the knowledgebase app) and
-Schulmanager (unused) are deliberately left out. They, and every customer template, *run* on
-`Et2Nextmatch` through the [automatic fallback](#automatic-fallback-for-unconverted-templates), but
-that is not a conversion. Related in-flight/reference docs in the same directory as the widget
-source: `ColumnSelectionNotes.md`, `Et2DatagridDirectoryMigrationPlan.md`, `NestedExpansion.md`.
+Still on the legacy widget: Addressbook's `display.xet` (Sitemgr only, see above), and
+Aiassistant's conversation list, skipped on purpose: nothing links to it, its row template fails
+server-side (`findLastRow()`) and its button handlers don't exist, with or without a conversion. Phpbrain
+(deprecated, to be replaced by the knowledgebase app) and Schulmanager (unused) are deliberately left
+out. They, and every customer template, *run* on `Et2Nextmatch` through the
+[automatic fallback](#automatic-fallback-for-unconverted-templates), but that is not a conversion.
+Related in-flight/reference docs in the same directory as the widget source: `ColumnSelectionNotes.md`,
+`Et2DatagridDirectoryMigrationPlan.md`, `NestedExpansion.md`.
 
-The checklist is based on these eleven conversions; expect it to grow as more apps convert.
+The checklist is based on these conversions; expect it to grow as more apps convert.
 
 ## Lessons learned
 
@@ -253,6 +266,13 @@ repeating it.
 - **Header-less row templates (an empty `<row class="th">`, most mobile skins) save no column state.**
   Their columns only have positional keys (`col0`, ...), which name a different column as soon as the
   template adds or removes one, and nobody can resize them anyway.
+- **Give every column header a widget with an `id`.** A plain `<et2-description value="News">` as
+  header leaves the column with a positional key (`col0`), and a saved column preference for `col0`
+  can hide it for good - News' main column was invisible, under the legacy fallback as well. An
+  `<et2-nextmatch-header id="news" label="News">` gives it a stable key (News).
+- **An `et2-link`/`et2-link-string` entry only opens with a string id.** `Et2Link._handleClick()`
+  gives up when `entryId` is a number, so a server-built `[{app, id, title}]` list needs
+  `'id' => (string)$id` (Resources' accessory links).
 - **`<column width="…em">` doesn't work yet**: the unit is dropped (`6em` becomes `6px`). Use px.
 - **`<et2-description value="#%s">` no longer formats**: the web component substitutes into its own
   value and renders `46`, not `#46` (Calendar). Not fixed; don't rely on it.
@@ -281,6 +301,17 @@ repeating it.
 
 - **A nextmatch in a popup gets no filterbox**: put its controls in the nextmatch's `header` slot,
   see the [filterbox reference](#reference-the-filterbox-and-filter-templatephp) (Admin's ACL popup).
+  Or, if its row template already has filter headers, keep them in the column headers with
+  `replaceFilters="false"` on the `<et2-nextmatch>`: `api/etemplate.php` otherwise turns every filter
+  header into a plain label when serving the template, expecting the filterbox to take over. The
+  attribute is live, not legacy - it was dropped once as "unused" and the popup lost its filters
+  (Preferences' application passwords, openid's access tokens, Policy's history).
+- **A nextmatch in a tab added through `extraTabs`** (the hook-provided tabs of Preferences' "Security
+  & Password" popup) used to fail every fetch after the page's own rows - sorting, paging, refresh -
+  with "Unknown nextmatch/historylog widget": the tab is only attached to the template while it runs,
+  so `Nextmatch::ajax_get_rows()`'s `getElementById()` could not see it. Fixed in `33dff7dff2`:
+  `Nextmatch::getExtraTabsElementById()` searches only the extraTabs stored in the request's
+  modifications, and only at the exact namespaced `form_name`.
 - **An app with its own `slot="filter"` template needs no drawer work** (Calendar).
 - **An app whose filters are never empty needs its own `getFilterInfo`**, or the filter icon stays lit
   and "Clear filters" can't clear it. Calendar always has a date range and a status filter defaulting
