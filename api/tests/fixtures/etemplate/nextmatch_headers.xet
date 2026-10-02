@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
+<overlay>
+	<template id="test.nextmatch_headers.rows">
+		<grid width="100%">
+			<columns>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="th">
+					<nextmatch-header id="header_closed" label="Closed"></nextmatch-header>
+					<nextmatch-header id="header_short" label="Short"/>
+					<nextmatch-sortheader id="sort" label="Sort" options="DESC"></nextmatch-sortheader>
+					<et2-nextmatch-sortheader id="et2_sort" label="Converted sort" options="DESC"/>
+					<nextmatch-sortheader id="sort_both" label="Both" sortmode="ASC" options="DESC"/>
+					<nextmatch-filterheader id="filterheader" options="Type"/>
+					<nextmatch-taglistheader id="taglistheader" empty_label="Tags"/>
+					<nextmatch-filter id="filter" empty_label="Filter"></nextmatch-filter>
+					<nextmatch-accountfilter id="accountfilter" options="Modified by"/>
+					<nextmatch-customfilter id="customfilter" type="select-country" empty_label="Country"/>
+					<nextmatch-customfilter id="customfilter_untyped" options="link-entry"/>
+					<nextmatch-entryheader id="entryheader" empty_label="Entry"/>
+					<nextmatch-entry id="entry" empty_label="Entry"/>
+					<nextmatch-header-filter id="header_filter" empty_label="Dashed"/>
+					<et2-nextmatch-header-account id="et2_account" emptyLabel="Owner"></et2-nextmatch-header-account>
+					<et2-nextmatch-header-custom id="et2_custom" emptyLabel="App" widgetType="select-app"></et2-nextmatch-header-custom>
+				</row>
+				<row>
+					<description id="${row}[header_closed]"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="test.nextmatch_headers">
+		<nextmatch id="nm" template="test.nextmatch_headers.rows"/>
+	</template>
+</overlay>

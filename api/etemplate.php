@@ -425,29 +425,46 @@ function send_template()
 		// use et2-email instead of et2-select-email
 		$str = preg_replace('#<et2-select-email\s(.*?")\s*/?>(</et2-select-email>)?#s', '<et2-email $1></et2-email>', $str);
 
+		// a sortheader's only legacy option is its default sort direction, the web-component ignores options=
+		$str = preg_replace_callback('#<((?:et2-)?nextmatch-sortheader)\s([^>]*?)(\s*/?>)#s', static function (array $matches)
+		{
+			$attrs = parseAttrs($matches[2]);
+			if (!isset($attrs['options']))
+			{
+				return $matches[0];
+			}
+			$attrs['sortmode'] = $attrs['sortmode'] ?? $attrs['options'];
+			unset($attrs['options']);
+			return '<' . $matches[1] . stringAttrs($attrs) . $matches[3];
+		}, $str);
+
 		// nextmatch headers
 		// replace all filters with NM headers, if not running via cli (as we currently don't want to remove them permanently!)
 		$replace_filters = PHP_SAPI !== 'cli' && !preg_match('/<nextmatch [^>]*replaceFilters="false"/', $str);
-		$str = preg_replace_callback('#<(et2-)?(nextmatch-)(account|sort|custom|filter|taglist)?(header(-account|-custom|-filter|-entry)?|filter|entry) ([^>]+)(/>|></et2-nextmatch-[^>]+>)#s',
+		// legacy name --> web-component: nextmatch-header, -filterheader/-taglistheader/-filter, -accountfilter,
+		// -customfilter, -entryheader/-entry, the dashed nextmatch-header-* form and the et2- prefixed one
+		// (closing tag optional) all give a "kind" of '', filter, account, custom or entry
+		$str = preg_replace_callback('#<((et2-)?nextmatch-(account|sort|custom|filter|taglist|entry)?(header(?:-(account|custom|filter|entry))?|filter|entry))\s([^>]*?)\s*(/>|></\1>)#s',
 			static function (array $matches) use ($replace_filters)
 		{
 			$attrs = parseAttrs($matches[6]);
-
-			if (($matches[3] === 'custom' || $matches[5] === '-custom'))
+			$kind = $matches[5] ?: $matches[3] ?: ($matches[4] === 'header' ? '' : $matches[4]);
+			if ($kind === 'taglist')
 			{
-				$attrs['widget_type'] = $attrs['type'];
+				$kind = 'filter';
 			}
-			if(in_array($matches[3], ['sort']) || !$replace_filters && ($matches[3] == "custom" && empty($attrs['widget_type'])))
+			if ($kind === 'custom')
+			{
+				$attrs['widget_type'] = $attrs['type'] ?? null;
+			}
+			// sortheaders keep their tag, et2- prefixed headers are already converted
+			if ($kind === 'sort' || !$replace_filters && ($matches[2] || $kind === 'custom' && empty($attrs['widget_type'])))
 			{
 				return $matches[0];
 			}
 			// No longer needed & type causes problems
 			unset($attrs['type'], $attrs['tags']);
 
-			if($matches[3] === 'taglist')
-			{
-				$matches[3] = "filter";
-			}
 			if ($replace_filters)
 			{
 				if (empty($attrs['label']))
@@ -458,7 +475,7 @@ function send_template()
 				unset($attrs['widget_type'], $attrs['widgetType'], $attrs['class'], $attrs['options']);
 				return '<et2-nextmatch-header ' . stringAttrs($attrs) . '/>';
 			}
-			$tag = 'et2-nextmatch-' . $matches[4];
+			$tag = 'et2-nextmatch-header' . ($kind ? '-' . $kind : '');
 			return '<' . $tag . stringAttrs($attrs) . '></' . $tag . '>';
 		}, $str);
 
