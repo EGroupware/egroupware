@@ -915,14 +915,17 @@ class InfologApp extends EgwApp
 	/**
 	 * Submit one of the index nextmatch action popups (responsible / startdate / enddate).
 	 *
-	 * The popups are real <et2-dialog>s, so nothing sets the legacy nm_popup_action globals
-	 * nm_submit_popup() needs. ButtonMixin._handleClick() has already set the clicked button's
-	 * `clicked = true` before this onclick runs, so its id (eg. "responsible_action[add]") lands
-	 * in the submitted content - that's what tells infolog_ui::index() which button was pressed,
-	 * via `key($popup[$multi_action . '_action'])`. executeAction() then triggers the normal
-	 * whole-template submit with the nextmatch payload (action id, selected, select_all,
-	 * checkboxes) merged into Et2Nextmatch's value. Returning false stops the button from also
-	 * running its own (second) submit.
+	 * Sends just the collected value over ajax instead of posting the whole eTemplate back.  A
+	 * submit re-runs index() and builds a brand new nextmatch, so the list loses its scroll
+	 * position, its selection and every row's state just to set one date - which is the whole
+	 * reason these actions were converted.
+	 *
+	 * The work is the inherited submit_action_popup(): the button's own id carries both halves it
+	 * needs (`<action>_action[<verb>]`, eg. "responsible_action[add]"), so _action_id is not
+	 * passed on.  It is still in the signature because the template's onclick hands it over, and
+	 * that template is shared with whatever else opens these popups.
+	 *
+	 * Returning false stops the button from also running its own (second, real) submit.
 	 *
 	 * @param _event
 	 * @param _widget the button that was clicked
@@ -930,21 +933,7 @@ class InfologApp extends EgwApp
 	 */
 	submit_popup(_event : Event, _widget, _action_id : string) : boolean
 	{
-		const dialog = _widget.closest('et2-dialog');
-		const nm = <Et2Nextmatch>_widget.getInstanceManager()?.widgetContainer?.getWidgetById('nm');
-		if(!nm)
-		{
-			return false;
-		}
-		// Prefer the live selection - it still carries "select all", which the dialog's own
-		// .selectedIds (a plain array of ids set by openActionPopup()) does not.
-		const selection = nm.getSelection();
-		if(!selection.all && dialog?.selectedIds?.length)
-		{
-			selection.ids = dialog.selectedIds;
-		}
-		nm.executeAction(_action_id, selection, {nmAction: "submit"});
-		dialog?.hide();
+		this.submit_action_popup(_widget);
 		return false;
 	}
 
