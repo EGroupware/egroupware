@@ -270,6 +270,10 @@ export class AdminApp extends EgwApp
 					});
 					this.ajax_target.getDOMNode().replaceChildren();
 				}
+				// clear() nulls this.et2 if it pointed at the template just removed (any admin-owned
+				// page, eg. site config); fall back to admin.index, which holds tree, nm and the egw-app
+				// the toolbar lives in - nmFilterChange() and refresh() need it
+				this.et2 ??= this.ajax_target.getInstanceManager()?.widgetContainer;
 				// NOT converted to egw.request(): that helper always constructs its JsonRequest
 				// with _context set to the calling egw instance (see Json.request() in
 				// egw_json.ts), and can't take a _callback at all - both incompatible with the
