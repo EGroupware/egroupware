@@ -2474,6 +2474,14 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 				{
 					this._armForceFreshKnownUids();
 				}
+				else
+				{
+					// Changed filters are a different result set - show it from the first row,
+					// not wherever the previous one was scrolled to. A hard reload refetches the
+					// same query (eg. autorefresh, or re-clicking mail's current folder) and keeps
+					// the position.
+					this._datagrid?.scrollToTop();
+				}
 				this._datagrid?.reload();
 			}
 			else if(isHardReload)

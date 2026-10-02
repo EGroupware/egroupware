@@ -5592,6 +5592,21 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this.requestUpdate();
 	}
 
+	/**
+	 * Scroll the grid body back to the first row.
+	 *
+	 * reload() keeps the scroll position, which is right when the same query is refetched, but
+	 * not when the caller switches to a different data set (eg. changed filters).
+	 */
+	scrollToTop()
+	{
+		const body = this._body;
+		if(body)
+		{
+			body.scrollTop = 0;
+		}
+	}
+
 	clearSelection(emitSelectionChanged : boolean = true)
 	{
 		if(!this.selectedRowIds.size && !this.allSelected)
