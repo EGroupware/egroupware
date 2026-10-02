@@ -1262,7 +1262,23 @@ export class EgwFramework extends LitElement
 		// Update CSS classes
 		this.closest("html").classList.toggle("sl-theme-light", mode == "light");
 		this.closest("html").classList.toggle("sl-theme-dark", mode == "dark");
-		// Keep in session for popups
+		// Already open popups got their theme from the server when they loaded,
+		// so switch them too
+		this.popups.windows.forEach(popup =>
+		{
+			try
+			{
+				const html = popup.document.documentElement;
+				html.setAttribute("data-darkmode", mode == "dark" ? "1" : "0");
+				html.classList.toggle("sl-theme-light", mode == "light");
+				html.classList.toggle("sl-theme-dark", mode == "dark");
+			}
+			catch(e)
+			{
+				// Popup navigated to a foreign origin, nothing we can do
+			}
+		});
+		// Keep in session for popups opened later
 		this.egw.jsonq("EGroupware\\Api\\Framework\\Ajax::ajax_set_darkmode_flag", [mode == "dark"]);
 	}
 
