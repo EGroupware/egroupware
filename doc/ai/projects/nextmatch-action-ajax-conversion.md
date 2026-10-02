@@ -1301,6 +1301,43 @@ and `false` means *also close the sub-entries*. So plain "Close" closes subs too
 actions are indistinguishable. Pre-existing, unrelated to transport, and changing it would
 change behaviour users may rely on - left alone deliberately.
 
+### Admin - as built, and the two bugs that had to be fixed together
+
+`EGroupware\Admin\Token::activate`/`revoke` and `admin_accesslog::delete`/`kill` converted,
+with the usual `ajax_action` + `validateExecId()`. "Select all" needs different handling in
+each: `Token::action()` loops exactly the ids it is handed, so nothing to expand; the access
+log has no `$content` to read the filters from, so `get_rows()` now caches `search`,
+`col_filter` and `session_list` per list and `ajax_action()` re-runs the query with
+`num_rows = -1`. With nothing cached it refuses - an empty query there would mean every row.
+
+The first run looked like a conversion that half-worked: the server said "1 token activated
+again." and the row stayed revoked. Two independent causes, and fixing either one alone
+changes nothing:
+
+* **Nothing pushes for admin.** The `msg-only-push-refresh` sentinel means "a push will
+  carry the change". What actually sends that push is `Link::notify_update()`, which fires the
+  `notify-all` hook the push server (swoolepush) listens on - and admin calls it exactly zero
+  times, in `Token` or anywhere else. So the client was told to wait for something that never
+  comes. Both endpoints now always name the app.
+* **`AdminApp.observer()` only knew one list.** It intercepts every `egw.refresh` for `admin`,
+  returns `false` to suppress the regular refresh, and looked for `getWidgetById('nm')` - so
+  the token list, which is called `token`, was never refreshed by anything. The group list had
+  already hit this and been patched by name (`if(!this.groups.disabled)`), which is what that
+  odd-looking special case was. Replaced with `querySelectorAll('et2-nextmatch')` over each
+  admin etemplate, passing `_id` and `_type` through, so the accounts and groups lists get a
+  single-row update instead of the blind full reload they had.
+
+A third, smaller one: `egw.refresh()` takes a single id, and these endpoints were passing
+`$selected[0]` with a `null` type for a multi-row action. `Et2Nextmatch.refresh(id, null)`
+defaults the type only when it is `undefined`, so a literal `null` falls through and the list
+never updates. Multi-row now passes no id at all, which is a plain reload. Same shape exists in
+infolog's `action()` - harmless there only because the sentinel hands the job to push.
+
+The lesson for the apps still to convert: **the sentinel is only safe where the app calls
+`Link::notify_update()` on save.** `grep -rn notify_update <app>/` answers it - infolog,
+addressbook, tracker, timesheet and calendar all do; admin does not. An app that does not must
+name itself in the 2nd argument, unconditionally.
+
 ### Phase 0's regression test - as built
 
 `api/tests/Etemplate/Widget/NextmatchActionSubmitTest.php`. 41 target classes; 40 reachable,

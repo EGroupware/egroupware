@@ -313,6 +313,12 @@ class Token
 				'confirm' => 'Active this token again',
 				'enableClass' => 'revoked',
 				'group' => $group=5,
+				'onExecute' => 'javaScript:app.'.$app.'.ajax_action',
+				// the list is shown from two apps, so the endpoint has to be named per app: a
+				// menuaction is rejected unless its app matches the class's own namespace, and
+				// json.php additionally requires the caller to HAVE that app - a preferences-only
+				// user has no admin
+				'data' => ['menuaction' => static::APP.'.'.static::class.'.ajax_action'],
 			],
 			'revoke' => [
 				'caption' => 'Revoke',
@@ -320,6 +326,8 @@ class Token
 				'icon' => 'delete',
 				'disableClass' => static::APP !== 'admin' ? ['template', 'revoked'] : 'revoked',
 				'group' => $group,
+				'onExecute' => 'javaScript:app.'.$app.'.ajax_action',
+				'data' => ['menuaction' => static::APP.'.'.static::class.'.ajax_action'],
 			],
 		];
 		if ($app === 'preferences')
@@ -344,6 +352,47 @@ class Token
 			$actions['edit']['disableClass'] = 'template';
 		}
 		return $actions;
+	}
+
+	/**
+	 * Activate or revoke the tokens the list's context menu was opened on
+	 *
+	 * $all_selected is accepted but not expanded: action() loops exactly the ids it is handed, so
+	 * "select all" acts on the rows the client sent and nothing more.
+	 *
+	 * @param string $exec_id eTemplate request this came from - the only thing saying the caller
+	 *	had one of our pages open, see Nextmatch::validateExecId()
+	 * @param string $action
+	 * @param string[] $selected token_ids
+	 * @param bool $all_selected
+	 */
+	public static function ajax_action($exec_id, $action, array $selected, $all_selected=false)
+	{
+		if (!Api\Etemplate\Widget\Nextmatch::validateExecId($exec_id))
+		{
+			return;
+		}
+		$failed = false;
+		try {
+			$msg = static::action($action, $selected, $all_selected);
+		}
+		catch (\Exception $e) {
+			$msg = $e->getMessage();
+			$failed = true;
+		}
+		// Naming the app in the 2nd argument makes egw.refresh() update the list itself.  The
+		// alternative - the "message only, a push will carry the change" sentinel - needs
+		// something to actually send that push, and nothing does for tokens, so the row would
+		// just stay as it was.  The 5th argument (_targetapp) is a real app regardless: it is
+		// resolved before egw.refresh()'s msg-only early-return, and a name that is not an app
+		// throws in the kdots framework.
+		//
+		// Only one id fits in that 3rd argument, so the cheap single-row update is only on when
+		// exactly one row changed; for anything more it gets no id at all, which reloads the list.
+		$single = count($selected) === 1;
+		Api\Json\Response::get()->call('egw.refresh', $msg, static::APP,
+			$single ? $selected[0] : null, $single ? 'update' : null, static::APP, null, null,
+			$failed ? 'error' : 'success');
 	}
 
 	/**

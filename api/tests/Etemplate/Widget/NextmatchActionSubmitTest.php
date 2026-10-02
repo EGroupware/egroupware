@@ -48,10 +48,6 @@ class NextmatchActionSubmitTest extends LoggedInTest
 	 * installation.
 	 */
 	const BASELINE = [
-		'EGroupware\\Admin\\Token' => [
-			'activate',
-			'revoke'
-		],
 		'EGroupware\\Aiassistant\\Ui' => [
 			'delete',
 			'separator'
@@ -92,9 +88,6 @@ class NextmatchActionSubmitTest extends LoggedInTest
 			'kanban',
 			'view_duplicates',
 			'view_org'
-		],
-		'admin_accesslog' => [
-			'delete'
 		],
 		'admin_customfields' => [
 			'delete'

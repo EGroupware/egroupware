@@ -71,6 +71,12 @@ class admin_accesslog
 			throw new Api\Exception\NoPermission();
 		}
 
+		// Remember what the list is showing, so ajax_action() can expand a "select all" - it has no
+		// $content to read the filters from.  Keyed by which of the two lists it is, since both
+		// run through this same method.
+		Api\Cache::setSession('admin', 'accesslog-'.($query['session_list'] ? 'sessions' : 'log'),
+			array_intersect_key($query, array_flip(['search', 'col_filter', 'session_list'])));
+
 		$heartbeat_limit = Api\Session::heartbeat_limit();
 
 		if ($query['session_list'])	// filter active sessions
@@ -273,6 +279,66 @@ class admin_accesslog
 	}
 
 	/**
+	 * Delete log entries / kill sessions the list's context menu was opened on
+	 *
+	 * "Select all" is expanded by re-running get_rows() with the filters it cached for whichever
+	 * of the two lists this action belongs to - 'kill' is only offered on the sessions list,
+	 * everything else on the access log.  With nothing cached the only safe answer is to do
+	 * nothing: an empty query would mean every row the user can see.
+	 *
+	 * @param string $exec_id eTemplate request this came from, see Nextmatch::validateExecId()
+	 * @param string $action 'delete' or 'kill'
+	 * @param string[] $selected sessionids
+	 * @param bool $all_selected
+	 */
+	public function ajax_action($exec_id, $action, array $selected, $all_selected=false)
+	{
+		if (!Api\Etemplate\Widget\Nextmatch::validateExecId($exec_id))
+		{
+			return;
+		}
+		if ($all_selected)
+		{
+			$query = Api\Cache::getSession('admin', 'accesslog-'.($action === 'kill' ? 'sessions' : 'log'));
+			if (!is_array($query))
+			{
+				Api\Json\Response::get()->call('egw.message',
+					lang('Could not determine the current selection, please try again.'), 'error');
+				return;
+			}
+			@set_time_limit(0);
+			$query['num_rows'] = -1;
+			$all = $readonlys = [];
+			$this->get_rows($query, $all, $readonlys);
+			$selected = array_column($all, 'sessionid');
+		}
+
+		$success = $failed = $action_msg = null;
+		if ($this->action($action, $selected, $success, $failed, $action_msg))
+		{
+			$msg = $action_msg === 'killed' ? lang('%1 sessions killed', $success) :
+				lang('%1 log entries deleted.', $success);
+		}
+		else
+		{
+			$msg = $action_msg === 'killed' ? lang('Permission denied!') : lang('Error deleting log entry!');
+		}
+		// Naming the app in the 2nd argument makes egw.refresh() update the list itself.  The
+		// alternative - the "message only, a push will carry the change" sentinel - needs
+		// something to actually send that push, and nothing does for the access log, so the row
+		// would just stay as it was.  The 5th argument (_targetapp) is a real app regardless: it
+		// is resolved before egw.refresh()'s msg-only early-return, and a name that is not an app
+		// throws in the kdots framework.
+		//
+		// Only one id fits in that 3rd argument, so the cheap single-row update is only on when
+		// exactly one row changed; for anything more it gets no id at all, which reloads the list.
+		$single = !$all_selected && count($selected) === 1;
+		Api\Json\Response::get()->call('egw.refresh', $msg, 'admin',
+			$single ? $selected[0] : null, $single ? 'delete' : null, 'admin', null, null,
+			$failed ? 'error' : 'success');
+	}
+
+	/**
 	 * Apply an action to multiple logs
 	 *
 	 * @param type $action
@@ -341,6 +407,8 @@ class admin_accesslog
 			$actions= array(
 				'kill' => array(
 					'caption' => 'Kill',
+					'onExecute' => 'javaScript:app.admin.ajax_action',
+					'data' => ['menuaction' => 'admin.admin_accesslog.ajax_action'],
 					'confirm' => 'Kill this session',
 					'confirm_multiple' => 'Kill these sessions',
 					'group' => $group,
@@ -354,6 +422,8 @@ class admin_accesslog
 			$actions= array(
 				'delete' => array(
 					'caption' => 'Delete',
+					'onExecute' => 'javaScript:app.admin.ajax_action',
+					'data' => ['menuaction' => 'admin.admin_accesslog.ajax_action'],
 					'confirm' => 'Delete this entry',
 					'confirm_multiple' => 'Delete these entries',
 					'group' => $group,
