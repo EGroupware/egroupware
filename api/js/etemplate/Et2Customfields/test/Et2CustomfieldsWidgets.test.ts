@@ -13,7 +13,11 @@ const egwStub = {
 	},
 	// a widget with statustext binds a tooltip as soon as it connects
 	tooltipBind: () => {},
-	tooltipUnbind: () => {}
+	tooltipUnbind: () => {},
+	// Et2Date polls for the lang preference for 2.5s when it gets none, inside a 3s test timeout
+	preference: (name : string) => name == "lang" ? "en" : null,
+	ajaxUrl: (url : string) => url,
+	holidays: () => Promise.resolve({})
 };
 window.egw = function() { return egwStub; } as any;
 Object.assign(window.egw, egwStub);
