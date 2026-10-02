@@ -1338,6 +1338,54 @@ The lesson for the apps still to convert: **the sentinel is only safe where the 
 addressbook, tracker, timesheet and calendar all do; admin does not. An app that does not must
 name itself in the 2nd argument, unconditionally.
 
+### records - as built
+
+`delete` and the five `status_<cat_id>` entries converted. `records_ui::ajax_action()` wraps the
+existing private `do_action()`, so the two shapes it accepts - a plain id and a prefixed one
+whose suffix carries the value - are unchanged; only the transport moved. "Select all" acts on
+the ids the client sent, which is what the submit it replaces did too (there is no cached query
+to expand from, and `do_action()` loops exactly what it is handed).
+
+Named `records` in `egw.refresh()`'s 2nd argument rather than using the msg-only sentinel.
+records *does* call `Link::notify_update()`, but only from `save()` - and `delete()` only reaches
+`save()` for the rows it soft-deletes. A record that is really removed on the second pass never
+notifies, so a push is not something to wait for.
+
+**Status stayed a sub-menu, deliberately.** The earlier baseline note said the category picker
+dialog was blocked by records still being on the legacy `<nextmatch>` widget; that is no longer
+true (`c124ef5` converted both lists to `Et2Nextmatch`), but two things argue against the picker
+here anyway: there are five statuses under `STATUS_PARENT`, far short of the length that makes a
+menu unusable, and the picker's "Remove with nothing selected" would clear the status outright -
+an operation this menu never offered, and `records_bo::check_access()` reads `record_status` to
+decide rights. `Nextmatch::egw_actions()` pushes `onExecute` onto every child, so one line
+converts all five entries either way. **Open question for the end: do we want the picker here
+regardless, for consistency with timesheet and infolog?**
+
+Two things found on the way:
+
+* **Fixed: `records_bo::get_notification_users()` fatals on PHP 8.** `get_ids_for_location()`
+  returns whoever the right was granted to - a single user as well as a group - and
+  `Accounts::members()` answers `null` for a user (and for an id that no longer exists), which
+  `$users += null` turns into "Unsupported operand types: array + null". Every status change
+  through the context menu hit it, submit or ajax; it is 2014 code that PHP 8 made fatal.
+  Replaced with `array_merge(..., (array)...)`. Nothing to do with the conversion, but it made
+  the converted action unrunnable, so it could not be left.
+* **records has no `tests/` directory and no `.github/workflows`** - it was the only converted
+  app without either (tracker, projectmanager, invoices and kanban all have both). `tests/` now
+  exists with `AjaxActionTest.php`, but nothing runs it in CI. **Open: add the callable
+  `testing.yml` workflow to the records repo.**
+
+Test-writing gotchas worth not re-learning:
+
+* `records_bo` caches `$is_admin` and `$cat_rights` in statics behind "only set this once"
+  guards, so `asAdmin()` alone changes nothing - the next `records_ui` still sees the rights the
+  fixture was built with. Both have to be cleared (and cleared again afterwards) around the
+  switch.
+* The regular test user has READ|ADD|EDIT on the records categories but not DELETE, and
+  `delete()` silently skips the rows it may not touch - so a delete test that does not switch
+  user passes its call and fails its assertion. Purging a fixture needs admin too, for the same
+  reason plus `check_access()` refusing DELETE on an already-deleted record to non-admins.
+
 ### Phase 0's regression test - as built
 
 `api/tests/Etemplate/Widget/NextmatchActionSubmitTest.php`. 41 target classes; 40 reachable,

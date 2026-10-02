@@ -127,12 +127,6 @@ class NextmatchActionSubmitTest extends LoggedInTest
 		'projectmanager_pricelist_ui' => [
 			'delete'
 		],
-		// status/* is back: records is still on the legacy <nextmatch> widget, whose nm_action()
-		// has no 'categories' case, so the picker dialog would be a dead menu entry there
-		'records_ui' => [
-			'delete',
-			'status/*'
-		],
 	];
 
 	/**
