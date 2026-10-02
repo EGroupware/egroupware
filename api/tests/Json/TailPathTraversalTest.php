@@ -97,4 +97,65 @@ class TailPathTraversalTest extends LoggedInTest
 
 		$tail->ajax_chunk($never_allowlisted);
 	}
+
+	/**
+	 * Without an allowlist in the session (never stored or lost, eg. expired session) the sinks used to throw
+	 * "in_array(): Argument #2 ($haystack) must be of type array, null given" (TypeError, HTTP 500 in the log
+	 * viewer's clear / reload / download buttons) instead of refusing the filename.
+	 */
+	public function testSinksRefuseCleanlyWithoutAllowlistInSession()
+	{
+		\EGroupware\Api\Cache::unsetSession('phpgwapi', Tail::class);
+		$tail = new Tail();
+		$filename = 'groupdav/demo/tail-test-'.bin2hex(random_bytes(4)).'.log';
+
+		foreach(['ajax_chunk' => [$filename], 'ajax_delete' => [$filename, true]] as $method => $args)
+		{
+			try
+			{
+				$tail->$method(...$args);
+				$this->fail("$method() must refuse a filename without allowlist");
+			}
+			catch (\EGroupware\Api\Exception\WrongParameter $e)
+			{
+				$this->addToAssertionCount(1);
+			}
+		}
+		$_GET['filename'] = $filename;
+		try
+		{
+			$tail->download();
+			$this->fail('download() must refuse a filename without allowlist');
+		}
+		catch (\EGroupware\Api\Exception\WrongParameter $e)
+		{
+			$this->addToAssertionCount(1);
+		}
+		finally
+		{
+			unset($_GET['filename']);
+		}
+	}
+
+	/**
+	 * Pass criteria: only a string in the allowlist is accepted, neither another filename nor an array / null
+	 */
+	public function testSinksRefuseFilenamesNotInAllowlist()
+	{
+		$allowed = 'groupdav/demo/tail-test-'.bin2hex(random_bytes(4)).'.log';
+		$tail = new Tail($allowed);
+
+		foreach([$allowed.'x', 'groupdav/demo/other.log', null, [$allowed], 0] as $filename)
+		{
+			try
+			{
+				$tail->ajax_chunk($filename);
+				$this->fail('ajax_chunk() must refuse '.json_encode($filename));
+			}
+			catch (\EGroupware\Api\Exception\WrongParameter|\TypeError $e)
+			{
+				$this->addToAssertionCount(1);
+			}
+		}
+	}
 }

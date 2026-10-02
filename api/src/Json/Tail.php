@@ -77,12 +77,26 @@ class Tail
 			}
 			$this->filename = $filename;
 
-			if (!$this->filenames || !in_array($filename,$this->filenames))
+			if (!$this->isAllowed($filename))
 			{
 				$this->filenames[] = $filename;
 				Api\Cache::setSession('phpgwapi', __CLASS__, $this->filenames);
 			}
 		}
+	}
+
+	/**
+	 * Check a filename is in the allowlist stored in the session
+	 *
+	 * The allowlist is missing (null) if it was never stored or got lost (eg. expired / replaced session),
+	 * in which case nothing is allowed, instead of in_array() throwing a TypeError.
+	 *
+	 * @param mixed $filename
+	 * @return bool
+	 */
+	protected function isAllowed($filename) : bool
+	{
+		return is_string($filename) && is_array($this->filenames) && in_array($filename, $this->filenames, true);
 	}
 
 	/**
@@ -94,9 +108,9 @@ class Tail
 	 */
 	public function ajax_chunk($filename,$start=0)
 	{
-		if (!in_array($filename,$this->filenames))
+		if (!$this->isAllowed($filename))
 		{
-			throw new Api\Exception\WrongParameter("Not allowed to view '$filename'!");
+			throw new Api\Exception\WrongParameter("Not allowed to view '".(is_scalar($filename) ? $filename : gettype($filename))."'!");
 		}
 		$filename = $GLOBALS['egw_info']['server']['files_dir'].'/'.$filename;
 
@@ -138,9 +152,9 @@ class Tail
 	 */
 	public function ajax_delete($filename,$truncate=false)
 	{
-		if (!in_array($filename,$this->filenames))
+		if (!$this->isAllowed($filename))
 		{
-			throw new Api\Exception\WrongParameter("Not allowed to view '$filename'!");
+			throw new Api\Exception\WrongParameter("Not allowed to view '".(is_scalar($filename) ? $filename : gettype($filename))."'!");
 		}
 		$filename = $GLOBALS['egw_info']['server']['files_dir'].'/'.$filename;
 
@@ -187,10 +201,10 @@ class Tail
 	 */
 	public function download()
 	{
-		$filename = $_GET['filename'];
-		if (!in_array($filename,$this->filenames))
+		$filename = $_GET['filename'] ?? null;
+		if (!$this->isAllowed($filename))
 		{
-			throw new Api\Exception\WrongParameter("Not allowed to download '$filename'!");
+			throw new Api\Exception\WrongParameter("Not allowed to download '".(is_scalar($filename) ? $filename : gettype($filename))."'!");
 		}
 		// FIRST: switch off zlib.output_compression, as this would limit downloads in size to memory_limit
 		ini_set('zlib.output_compression',0);
