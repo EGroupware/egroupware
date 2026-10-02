@@ -935,6 +935,11 @@ Where an app's filters actually come from under `Et2Nextmatch`, and the trap in 
   light DOM, and the shadow root already provides the isolation. Bare `<et2-styles src="...">` values
   resolve relative to the row template's own `.xet` file, so a mobile template's `rows.css` is the one
   next to it.
+- **Greyed-out "no longer in effect" rows use the shared `rowInactive` class** instead of a rule of
+  their own: have `get_rows()` add it next to the app's class (`'revoked rowInactive'`,
+  `'rowDeleted rowInactive'`, `'policy_disabled rowInactive'`) and drop the app's grey/italic rule.
+  Keep the app's class - actions' `enableClass`/`disableClass` and other code still key on it. The rule
+  lives in `Et2Nextmatch.row.styles.ts`, so it only exists for `<et2-nextmatch>` rows, not legacy ones.
 - **Category-color row indicators have a built-in mechanism — don't hand-roll a dedicated column for
   it.** Give the `<row>` element's `class` binding the bare recognized placeholder for the category field
   (`$row_cont[info_cat]`, `$cat_id`, `$category`, or `$cat` — see `Et2RowProvider`'s

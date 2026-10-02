@@ -203,6 +203,27 @@ nextmatch.addRowStylesheet(style);
 
 The stylesheet is adopted after the static row styles and is retained if the row template is reloaded.
 
+### Greying Out Inactive Entries
+
+For an entry that is still listed but no longer in effect - a revoked application password, a deleted
+calendar event, a disabled policy - add the class `rowInactive` to the row. The framework row styles show
+it in a muted, italic font, the same in every app, so the app needs no CSS of its own for it.
+
+```php
+if ($row['token_revoked'])
+{
+	// "revoked" stays for the actions' enableClass/disableClass, "rowInactive" greys the row out
+	$row['class'] = 'revoked rowInactive';
+}
+```
+
+```xml
+<row class="$row_cont[class]">
+```
+
+Add `rowInactive` next to the app's own class rather than replacing it, since actions and app code
+usually key on the app's class.
+
 ### Highlighting an Overdue Entry
 
 Have the server add an `overdue` class for rows that need attention, then style that class via CSS.
