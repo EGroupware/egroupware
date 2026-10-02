@@ -51,6 +51,17 @@ class Session
 	const ERROR_LOG_DEBUG = false;
 
 	/**
+	 * microtime(true) of the moment session_start() returned in verify() (ie. once any session
+	 * storage locking - relevant for comparing eg. the default file/memcached handler's native
+	 * locking against a non-locking handler like Session\Redis - is done and the session is
+	 * available), or null if verify() hasn't run yet this request. Read by json.php's opt-in
+	 * benchmark log, see $GLOBALS['egw_info']['server']['json_benchmark_log'].
+	 *
+	 * @var float|null
+	 */
+	public static ?float $session_start_time = null;
+
+	/**
 	 * key of eGW's session-data in $_SESSION
 	 */
 	const EGW_SESSION_VAR = 'egw_session';
@@ -1236,7 +1247,8 @@ class Session
 			try {
 				$mailer = new Mailer();
 				// notify admin(s) via email
-				$mailer->setFrom('eGroupWare@'.$GLOBALS['egw_info']['server']['mail_suffix']);
+				// use sender of the (SMTP-only) account, only if it has none the synthetic one, for From AND envelope sender
+				$mailer->setFallbackSender('eGroupWare@'.$GLOBALS['egw_info']['server']['mail_suffix']);
 				$mailer->addHeader('Subject', lang("eGroupWare: login blocked for user '%1', IP %2",$login,$ip));
 				$mailer->setBody(lang("Too many unsucessful attempts to login: %1 for the user '%2', %3 for the IP %4",$false_id,$login,$false_ip,$ip));
 				foreach(preg_split('/,\s*/',$GLOBALS['egw_info']['server']['admin_mails']) as $mail)
@@ -1384,9 +1396,11 @@ class Session
 				session_id($this->sessionid);
 				self::cache_control();
 				session_start();
+				self::$session_start_time = microtime(true);
 				break;
 			case PHP_SESSION_ACTIVE:
 				// session already started eg. by managementserver_client
+				self::$session_start_time ??= microtime(true);
 		}
 
 		// check if we have a eGroupware session --> return false if not (but dont destroy it!)
@@ -1424,8 +1438,22 @@ class Session
 		{
 			$this->update_dla(true);
 		}
-		elseif ($GLOBALS['egw_info']['flags']['currentapp'] == 'notifications')
+		elseif ($GLOBALS['egw_info']['flags']['currentapp'] == 'notifications' ||
+			($_GET['menuaction'] ?? null) === 'EGroupware\\Api\\Json\\Push::ajax_poll')
 		{
+			// notifications_push::online() (and Api\Json\Push::online(), which falls back to it
+			// once the real backend is unreachable) only ever considers a session "online" via
+			// this same heartbeat - previously only ever refreshed by the notifications app's
+			// own (older, separate) polling loop. A session connected purely through the newer,
+			// generic push-fallback long-poll/SSE (Api\Json\Push::ajax_poll(), doc/ai/projects/
+			// push-fallback-longpoll.md) - which resolves currentapp to 'api', not
+			// 'notifications', and works for every logged-in user regardless of whether they
+			// have the notifications app at all - was never counted, silently undercounting who
+			// is actually online whenever the fallback (not the real backend) is what's carrying
+			// push. heartbeat_limit()'s ~70s recency window easily covers the gap between one
+			// ajax_poll() call ending and the next reissuing, so refreshing it once per call
+			// (this fires once per verify(), ie. once per ajax_poll() invocation) is enough -
+			// found live 2026-09-21 while building an admin diagnostic page around this data.
 			$this->update_notification_heartbeat();
 		}
 		$this->account_id = $GLOBALS['egw']->accounts->name2id($this->account_lid,'account_lid','u');
