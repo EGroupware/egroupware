@@ -2358,25 +2358,31 @@ export class MailCompose
 	}
 
 	/**
-	 * Select the identity the original message was actually addressed to - matching one of the
-	 * account's own identity email addresses against the reply target's To/Cc - rather than
-	 * leaving whatever identity was last used/configured as default, UNLESS the "Default identity
-	 * for compose" preference (mail/defaultIdentity) is set to 'default'/'personal', which must
-	 * take precedence instead (see preferredIdentityFromPreference()'s own docblock - this mirrors
-	 * the classic mail_compose.inc.php's now-deleted get_preferred_identity() exactly). Genuinely
-	 * useful for an account with several aliases/identities (eg. a 13-identity test account),
-	 * replying "as" whichever address actually received the message rather than whichever
-	 * identity happened to be selected last - but only when the user hasn't asked to always
-	 * prefer their own personal/default identity instead (tracker #124251).
+	 * Resolve the identity for a reply/forward per the "Default identity for compose" preference
+	 * (mail/defaultIdentity, mail/inc/class.mail_hooks.inc.php).
 	 *
-	 * Two edge cases (ralf, 2026-08-27) for the recipient-matching fallback itself:
-	 * - No address matches at all (eg. the user was only bcc'ed) - do nothing, leaving the
-	 *   widget's already-classically-rendered value, which is itself already the "last-used"
-	 *   identity (mail_compose.inc.php's LastSignatureIDUsed preference, read back as the default
-	 *   for every new compose unless a different `defaultIdentity` pref is configured).
+	 * Ticket #125092 follow-up (Ingo, live: "beim Antworten auf eine Mail springt die Identität
+	 * aber wieder zurück auf die Standard-Identität" - replying briefly showed the correct
+	 * last-used identity, then snapped back to standard) - ralf+Birgit decided:
+	 * a) the three PRE-EXISTING preference values ('last-used'/unset, 'default', 'personal') get
+	 *    NO exception for reply/forward any more - each applies exactly as it does to a brand-new
+	 *    compose (see preferredIdentityFromPreference()). Tracker #124251's own recipient-address
+	 *    matching (replying "as" whichever of the account's own addresses the original message was
+	 *    actually sent to - useful for a shared mailbox with several aliases) no longer runs for
+	 *    any of these three.
+	 * b) that recipient-matching behaviour survives, but ONLY as its own new, explicitly opt-in
+	 *    preference value: 'default-matching' - "use the standard identity of the active account
+	 *    for a new compose, but reply/forward prefers whichever identity the message was actually
+	 *    addressed to" (exactly the OLD unconditional 'last-used' behaviour, now gated behind this
+	 *    one value only).
+	 *
+	 * Two edge cases for the recipient-matching itself, 'default-matching' only (ralf, 2026-08-27,
+	 * unchanged from the original #124251 fix):
+	 * - No address matches at all (eg. the user was only bcc'ed) - falls through to the same
+	 *   standard-identity resolution 'default-matching' uses for a brand-new compose.
 	 * - More than one identity matches (eg. several aliases were all on the To/Cc) - prefer
-	 *   keeping the current (again, "last-used") selection if it happens to be among the matches,
-	 *   closest to previous behaviour, rather than an arbitrary pick among equally-valid matches.
+	 *   keeping the current (last-used) selection if it happens to be among the matches, closest
+	 *   to previous behaviour, rather than an arbitrary pick among equally-valid matches.
 	 *
 	 * Silently does nothing if identities can't be fetched either - same
 	 * never-worth-blocking-compose-on philosophy as applySignatureForCurrentIdentity().
@@ -2395,32 +2401,24 @@ export class MailCompose
 		{
 			return [];
 		}
-		// "Default identity for compose" preference (mail/defaultIdentity, mail/inc/
-		// class.mail_hooks.inc.php) - when set to 'default'/'personal' (anything but the default
-		// 'last-used'/unset), it must WIN over the recipient-matching below, same precedence the
-		// classic mail_compose.inc.php always had: its own (deleted in 3bca66cf01,
-		// "mail: delete mail_compose::compose() and its exclusively-used helpers")
-		// get_preferred_identity() ran AFTER any recipient-based resolution and unconditionally
-		// overrode it via `?? $content['mailidentity']` whenever the preference applied. Tracker
-		// #124251 (a customer, via Birgit/ralf): a shared mailbox's reply picked the
-		// ADDRESSED-TO alias as sender even though the user's own "use personal signature"
-		// preference should always win - exactly the "answer a shared inbox with my own personal
-		// address" use case that preference exists for. Only reached HERE (this method, unlike the
-		// deleted one, is reply/forward-specific) - a genuinely new blank compose has no recipient
-		// to match against in the first place, so this preference is moot there.
+		if (this.egw.preference('defaultIdentity', 'mail') === 'default-matching')
+		{
+			const recipientEmails = new Set([...context.to, ...context.cc].map((a) => a.email.toLowerCase()));
+			const matches = identities.filter((i) => recipientEmails.has(i.email.toLowerCase()));
+			if (matches.length)
+			{
+				const [, currentIdentId] = String(this.et2.getWidgetById('mailaccount')?.get_value() ?? '').split(':', 2);
+				const preferred = matches.find((i) => i.id === currentIdentId) ?? matches[0];
+				this.et2.getWidgetById('mailaccount')?.set_value(`${context.profileID}:${preferred.id}`);
+				return identities;
+			}
+			// no recipient match at all - fall through to the same standard-identity resolution
+			// below that 'default-matching' also uses for a brand-new compose.
+		}
 		const preferredIdentity = this.preferredIdentityFromPreference(identities);
 		if (preferredIdentity)
 		{
 			this.et2.getWidgetById('mailaccount')?.set_value(`${context.profileID}:${preferredIdentity.id}`);
-			return identities;
-		}
-		const recipientEmails = new Set([...context.to, ...context.cc].map((a) => a.email.toLowerCase()));
-		const matches = identities.filter((i) => recipientEmails.has(i.email.toLowerCase()));
-		if (matches.length)
-		{
-			const [, currentIdentId] = String(this.et2.getWidgetById('mailaccount')?.get_value() ?? '').split(':', 2);
-			const preferred = matches.find((i) => i.id === currentIdentId) ?? matches[0];
-			this.et2.getWidgetById('mailaccount')?.set_value(`${context.profileID}:${preferred.id}`);
 		}
 		return identities;
 	}
@@ -2449,8 +2447,15 @@ export class MailCompose
 	 * standard one's, would wrongly match that). Falls back to the standard one if the account has
 	 * no genuinely personal identity of its own at all (eg. only general ones, or just the one).
 	 *
-	 * Returns null for the 'last-used'/unset preference (the everyday case, no override) or an
-	 * account with no identities - both match the classic function's own no-op returns.
+	 * 'default-matching' = same as 'default' (the standard identity) as far as THIS method is
+	 * concerned - selectIdentityForRecipients()'s own reply/forward-only recipient-address
+	 * matching (ralf+Birgit, ticket #125092 follow-up) runs BEFORE this method is even reached for
+	 * that one preference value, and only falls through to here when it found no match - see that
+	 * method's own docblock for the full precedence.
+	 *
+	 * Returns null for the 'last-used'/unset preference (the everyday case, no override, NO
+	 * exception for reply/forward any more either - ralf+Birgit, same follow-up) or an account with
+	 * no identities - both match the classic function's own no-op returns.
 	 */
 	private preferredIdentityFromPreference(identities : any[]) : any | null
 	{
@@ -2461,20 +2466,24 @@ export class MailCompose
 		}
 		const sorted = [...identities].sort((a, b) => parseInt(a.id) - parseInt(b.id));
 		const standard = sorted.find((i) => i.isStandard) ?? sorted[0];
-		if (pref === 'default')
+		if (pref === 'default' || pref === 'default-matching')
 		{
 			return standard;
 		}
-		// Birgit, ticket #125092: "bei 'personal' ... wird die letzte persönliche angezogen und
-		// nicht die Erste" - picking from the plain `identities` array used whatever order the
-		// server happened to return them in (Account::identities()'s own ORDER BY account_id,
-		// ident_realname, ident_org, ident_email - NOT ident_id), so a user with several personal
-		// identities got an arbitrary one, not their first/lowest-id one. The classic, now-deleted
-		// get_preferred_identity()'s own 'personal' always meant "lowest ident_id among the
-		// matching ones" - `sorted` (already lowest-id-first) is what must be searched here, same
-		// as the isStandard fallback above.
-		const personal = sorted.find((i) => i.isPersonal);
-		return personal ?? standard;
+		if (pref === 'personal')
+		{
+			// Birgit, ticket #125092: "bei 'personal' ... wird die letzte persönliche angezogen und
+			// nicht die Erste" - picking from the plain `identities` array used whatever order the
+			// server happened to return them in (Account::identities()'s own ORDER BY account_id,
+			// ident_realname, ident_org, ident_email - NOT ident_id), so a user with several personal
+			// identities got an arbitrary one, not their first/lowest-id one. The classic, now-deleted
+			// get_preferred_identity()'s own 'personal' always meant "lowest ident_id among the
+			// matching ones" - `sorted` (already lowest-id-first) is what must be searched here, same
+			// as the isStandard fallback above.
+			const personal = sorted.find((i) => i.isPersonal);
+			return personal ?? standard;
+		}
+		return null;
 	}
 
 	/**
@@ -2495,12 +2504,16 @@ export class MailCompose
 
 	/**
 	 * "Default identity for compose" preference (mail/defaultIdentity) for a genuinely new, blank
-	 * compose - selectIdentityForRecipients() already applies this same preference for reply/
-	 * forward (tracker #124251's own fix), but a brand-new compose window never consulted it at
-	 * all, unlike the classic, now-deleted mail_compose.inc.php's get_preferred_identity(), which
-	 * ran for EVERY compose() call unconditionally - found live via ticket #124821 (2026-09-22):
-	 * "die Einstellung dass immer die persönliche Signatur genommen werden soll wird nicht
-	 * berücksichtigt" (the "always use my personal signature" setting isn't respected). Leaves the
+	 * compose - selectIdentityForRecipients() already applies this same preference (plus, for
+	 * 'default-matching' only, its own reply/forward recipient-address matching) for reply/forward,
+	 * but a brand-new compose window never consulted it at all, unlike the classic, now-deleted
+	 * mail_compose.inc.php's get_preferred_identity(), which ran for EVERY compose() call
+	 * unconditionally - found live via ticket #124821 (2026-09-22): "die Einstellung dass immer die
+	 * persönliche Signatur genommen werden soll wird nicht berücksichtigt" (the "always use my
+	 * personal signature" setting isn't respected).
+	 * Also used by bootstrapComposeAsNew() (compose as new, reopened drafts)
+	 * and bootstrapForwardAsAttachment(),
+	 * which have no recipients to match either. Leaves the
 	 * server's own pre-selected identity (mail_compose.inc.php's LastSignatureIDUsed) untouched for
 	 * 'last-used'/unset (the everyday case, see preferredIdentityFromPreference()'s own docblock).
 	 */

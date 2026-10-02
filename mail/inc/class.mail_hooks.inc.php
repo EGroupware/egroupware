@@ -292,12 +292,13 @@ class mail_hooks
 			'defaultIdentity' => array(
 				'type'   => 'select',
 				'label'  => 'Default identity for compose',
-				'help'   => 'Which mail identity (signature) do you want to start with. For personal we always use the first personal signature.',
+				'help'   => 'Which mail identity (signature) do you want to start with. For personal we always use the first personal signature. Replying or forwarding a message uses this same setting too, same as a new message, except for the last option, which instead picks whichever identity the message was actually addressed to.',
 				'name'   => 'defaultIdentity',
 				'values' => array(
 					'last-used' => lang('Last used signature'),
 					'default'   => lang('Default signature'),
 					'personal'  => lang('Personal signature'),
+					'default-matching' => lang('Default signature, but matching identity for reply/forward'),
 				)
 			),
 			'htmlOptions' => array(

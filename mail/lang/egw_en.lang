@@ -156,6 +156,7 @@ currently:	mail	en	Currently:
 deactive	mail	en	Deactive
 default identity for compose	mail	en	Default identity for compose
 default signature	mail	en	Default signature
+default signature, but matching identity for reply/forward	mail	en	Default signature, but matching identity for reply/forward
 default sorting order	mail	en	Default sorting order
 default toolbar actions shown in mail's html editor	mail	en	Functions enabled in the HTML editor toolbar when composing an email
 default value for remembering s/mime passphrase in minutes	mail	en	Default value for remembering S/MIME passphrase in minutes
@@ -790,6 +791,7 @@ when sending messages	mail	en	When sending messages
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	en	which folders (additional to the Sent Folder) should be displayed using the Sent Folder view schema
 which folders - in general - should not be automatically created, if not existing	mail	en	which folders - in general - should NOT be automatically created, if not existing
 which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	en	Which mail identity (signature) do you want to start with. For personal signature we always use the first personal signature.
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature. replying or forwarding a message uses this same setting too, same as a new message, except for the last option, which instead picks whichever identity the message was actually addressed to.	mail	en	Which mail identity (signature) do you want to start with. For personal we always use the first personal signature. Replying or forwarding a message uses this same setting too, same as a new message, except for the last option, which instead picks whichever identity the message was actually addressed to.
 which method to use when forwarding a message	mail	en	Which method to use when forwarding a message
 whitelisted mails are not marked as spam	mail	en	Whitelisted emails are not marked as spam
 whole message	mail	en	Whole message

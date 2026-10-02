@@ -154,6 +154,7 @@ currently:	mail	de	Aktuell:
 deactive	mail	de	Deaktiviert
 default identity for compose	mail	de	Standardidentität für das Verfassen von E-Mails
 default signature	mail	de	Standard-Signatur
+default signature, but matching identity for reply/forward	mail	de	Standard-Signatur, jedoch passende Identität beim Antworten/Weiterleiten
 default sorting order	mail	de	Wählen Sie die Standard-Sortierreihenfolge aus
 default toolbar actions shown in mail's html editor	mail	de	Aktivierte Funktionen in der HTML-Editor-Symbolleiste beim E-Mail verfassen
 default value for remembering s/mime passphrase in minutes	mail	de	Standardwert für die Erinnerung an die S/MIME-Passphrase in Minuten
@@ -778,6 +779,7 @@ when sending messages	mail	de	Wenn Nachrichten versendet werden
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	de	Welche E-Mail-Ordner, zusätzlich zum Gesendet-Ordner, sollen im Anzeigenschema analog des Gesendet-Ordners dargestellt werden (Empfänger-Adresse, anstatt der Absender-Adresse)
 which folders - in general - should not be automatically created, if not existing	mail	de	Welche E-Mail-Ordner sollen generell NICHT automatisch angelegt werden, wenn Sie nicht existieren? Wählen Sie hier die Ordner aus, die NICHT von EGroupware automatisch angelegt werden dürfen
 which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	de	Mit welcher E-Mail-Identität (Signatur) möchten Sie beginnen?\nBei „Persönliche Signatur“ wird immer die erste persönliche Signatur verwendet.
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature. replying or forwarding a message uses this same setting too, same as a new message, except for the last option, which instead picks whichever identity the message was actually addressed to.	mail	de	Mit welcher E-Mail-Identität (Signatur) möchten Sie beginnen?\nBei „Persönliche Signatur“ wird immer die erste persönliche Signatur verwendet. Beim Antworten oder Weiterleiten gilt dieselbe Einstellung wie bei einer neuen Nachricht - außer bei der letzten Option, die stattdessen die Identität verwendet, an die die Nachricht tatsächlich adressiert war.
 which method to use when forwarding a message	mail	de	Wählen Sie die Methode zum Weiterleiten von Nachrichten
 whitelisted mails are not marked as spam	mail	de	E-Mail-Adressen auf der Domain-Whitelist, werden nicht als Spam markiert
 whole message	mail	de	gesamte Nachricht

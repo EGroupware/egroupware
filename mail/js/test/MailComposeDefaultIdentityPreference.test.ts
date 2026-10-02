@@ -17,10 +17,6 @@ import type {JmapIdentity, JmapReplyContext} from "../jmap";
  * "mail: delete mail_compose::compose() and its exclusively-used helpers"), but the new
  * client-side JMAP reply path never reimplemented that precedence.
  *
- * Only the preference-precedence piece is under test here - selectIdentityForRecipients()'s own
- * recipient-matching behaviour (no preference set) is already covered by
- * MailComposeBootstrapRace.test.ts.
- *
  * Ticket #125092 (a customer via Birgit/Ingo): preferredIdentityFromPreference()'s 'default'
  * used to just mean "the account's own lowest ident_id", which isn't reliably the account's real
  * standard identity at all - see that method's own docblock. The real standard identity is
@@ -28,6 +24,16 @@ import type {JmapIdentity, JmapReplyContext} from "../jmap";
  * `egw_ea_accounts.ident_id` column, admin-settable, independent of both acc_id and ident_id
  * ordering) - the fixture below deliberately keeps non-sequential, acc_id-unrelated ids to prove
  * the fix no longer depends on id===profileID or "lowest id" at all, only on this flag.
+ *
+ * Ticket #125092 FOLLOW-UP (Ingo, live: "beim Antworten auf eine Mail springt die Identität aber
+ * wieder zurück auf die Standard-Identität" - briefly showed the correct last-used identity, then
+ * snapped back) - ralf+Birgit decided the #124251 recipient-address matching above should no
+ * longer apply to the three PRE-EXISTING preference values at all, 'last-used'/unset included -
+ * each now behaves EXACTLY like a brand-new compose for reply/forward too, no exception. The
+ * matching behaviour survives only as its own new, explicitly opt-in preference value,
+ * 'default-matching' - see the second describe block below. The 'personal'/'default'-precedence
+ * tests above this comment remain correct and unchanged by that follow-up (they already never
+ * depended on recipient-matching to begin with).
  */
 
 function createEgw(preferenceValue : string | null) : any
@@ -143,23 +149,28 @@ function createComposeForReply(egw : any, context : JmapReplyContext, identities
 
 describe("MailCompose.selectIdentityForRecipients() - defaultIdentity preference precedence (tracker #124251)", () =>
 {
-	it("without the preference set (unset/'last-used'), still matches the addressed-to alias - unchanged existing behaviour", async() =>
+	it("without the preference set (unset/'last-used'), does NOT match the addressed-to alias any more - keeps the already-selected (last-used) identity untouched", async() =>
 	{
+		// ticket #125092 follow-up (Ingo, live): the #124251 matching below used to apply
+		// unconditionally whenever this preference was unset/'last-used' - ralf+Birgit decided
+		// there must be NO exception for reply/forward any more for this value, same as a
+		// brand-new compose leaves last-used alone. initialMailaccount defaults to '1:10', so a
+		// jump to '1:30' (the matched alias) would mean the old override is still firing.
 		const {compose, et2} = createComposeForReply(createEgw(null), fakeContext(), sharedMailboxIdentities());
 
 		await (compose as any).selectIdentityForRecipients(fakeContext());
 
-		assert.strictEqual(et2.widgets.mailaccount.get_value(), '1:30',
-			"no preference set - the addressed-to alias (alias@example.org, id 30) wins, matching pre-fix behaviour");
+		assert.strictEqual(et2.widgets.mailaccount.get_value(), '1:10',
+			"no preference set - must leave the already-selected (last-used) identity alone, no recipient-matching exception any more");
 	});
 
-	it("explicit 'last-used' preference also still matches the addressed-to alias", async() =>
+	it("explicit 'last-used' preference also does NOT match the addressed-to alias any more", async() =>
 	{
 		const {compose, et2} = createComposeForReply(createEgw('last-used'), fakeContext(), sharedMailboxIdentities());
 
 		await (compose as any).selectIdentityForRecipients(fakeContext());
 
-		assert.strictEqual(et2.widgets.mailaccount.get_value(), '1:30');
+		assert.strictEqual(et2.widgets.mailaccount.get_value(), '1:10');
 	});
 
 	it("'personal' preference wins over the addressed-to alias - the actual tracker #124251 scenario", async() =>
@@ -268,5 +279,48 @@ describe("MailCompose.selectIdentityForRecipients() - defaultIdentity preference
 
 		assert.strictEqual(et2.widgets.mailaccount.get_value(), '1:96',
 			"must pick the lowest ident_id (96, the first one ever created) among the personal-flagged identities, not 411");
+	});
+});
+
+/**
+ * Ticket #125092 follow-up (ralf+Birgit): 'default-matching' is the new, explicitly opt-in
+ * preference value that keeps the OLD tracker #124251 recipient-address-matching behaviour for
+ * reply/forward, while still using the account's own standard identity for a brand-new compose
+ * (covered by MailComposeApplyPreferredIdentityForNewCompose.test.ts) - "use the standard identity
+ * of the active account for new compose, reply/forward uses the first identity matching the mail
+ * replied/forwarded".
+ */
+describe("MailCompose.selectIdentityForRecipients() - the new 'default-matching' preference value", () =>
+{
+	it("matches the addressed-to alias when one of the account's own identities was in the original To/Cc", async() =>
+	{
+		const {compose, et2} = createComposeForReply(createEgw('default-matching'), fakeContext(), sharedMailboxIdentities());
+
+		await (compose as any).selectIdentityForRecipients(fakeContext());
+
+		assert.strictEqual(et2.widgets.mailaccount.get_value(), '1:30',
+			"exactly the old #124251 behaviour, now gated behind this one preference value");
+	});
+
+	it("falls back to the account's own standard identity when no recipient address matches at all", async() =>
+	{
+		const context = fakeContext({to : [{email : 'nobody-matches@example.com'}]});
+		const {compose, et2} = createComposeForReply(createEgw('default-matching'), context, sharedMailboxIdentities());
+
+		await (compose as any).selectIdentityForRecipients(context);
+
+		assert.strictEqual(et2.widgets.mailaccount.get_value(), '1:10',
+			"no match - falls through to the same standard-identity resolution a new compose uses, not last-used");
+	});
+
+	it("prefers the currently-selected identity when it is itself among several matches, same as the old behaviour", async() =>
+	{
+		const context = fakeContext({to : [{email : 'alias@example.org'}], cc : [{email : 'personal@example.org'}]});
+		const {compose, et2} = createComposeForReply(createEgw('default-matching'), context, sharedMailboxIdentities(), '1:20');
+
+		await (compose as any).selectIdentityForRecipients(context);
+
+		assert.strictEqual(et2.widgets.mailaccount.get_value(), '1:20',
+			"both 30 and 20 match the recipients - the already-selected one (20) must win over an arbitrary pick");
 	});
 });
