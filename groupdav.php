@@ -20,17 +20,20 @@
 
 use EGroupware\Api;
 
-// check we either have a session cookie, or an Authorization header, otherwise directly return 401 Unauthorized
+// autoloading and include path are not yet setup, so we have to include this file explicitly
+require_once __DIR__.'/api/src/Header/Authenticate.php';
+
+// check we either have a session cookie, or credentials (Authorization header, PHP_AUTH_USER, ...), otherwise directly return 401 Unauthorized
 if (!preg_match('#/groupdav.php/openapi.json($|\?)#', $_SERVER['REQUEST_URI']) &&
-	empty($_COOKIE['sessionid']) && (empty($_SERVER['HTTP_AUTHORIZATION']) ||
-		// also disallow empty Basic auth user or PW
-		str_starts_with($_SERVER['HTTP_AUTHORIZATION'], 'Basic ') && (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']))))
+	empty($_COOKIE['sessionid']) && !Api\Header\Authenticate::hasCredentials())
 {
 	error_log($_SERVER['REQUEST_METHOD'].' '.(empty($_SERVER['HTTPS']) ? 'http://' : 'https://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].
-		(isset($_SERVER['HTTP_AUTHORIZATION']) ? ': Authorization: '.$_SERVER['HTTP_AUTHORIZATION'] : ': sessionid='.($_COOKIE['sessionid']??'NULL')).
+		(($_SERVER['HTTP_AUTHORIZATION'] ?? $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ?? null) !== null ?
+			': Authorization: '.($_SERVER['HTTP_AUTHORIZATION'] ?? $_SERVER['REDIRECT_HTTP_AUTHORIZATION']) :
+			': sessionid='.($_COOKIE['sessionid']??'NULL')).
 		': '.($_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? 'NULL').' '.$_SERVER['HTTP_USER_AGENT'].' --> 401 Unauthorized'."\n");
 	if (!empty($_SERVER['CONTENT_LENGTH'])) error_log('body: '.file_get_contents('php://input'));
-	error_log('_COOKIE='.json_encode($_COOKIE).', PHP_AUTH_USER='.json_encode($_SERVER['PHP_AUTH_USER']??null).', _SERVER='.json_encode($_SERVER));
+	//error_log('_COOKIE='.json_encode($_COOKIE).', PHP_AUTH_USER='.json_encode($_SERVER['PHP_AUTH_USER']??null).', _SERVER='.json_encode($_SERVER));
 
 	header('Cache-Control: no-store, no-cache, must-revalidate');
 	header('Expires: Thu, 19 Nov 1981 08:52:00 GMT');
