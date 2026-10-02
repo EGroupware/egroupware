@@ -31,6 +31,14 @@ class NextmatchTest extends Etemplate\WidgetBaseTest
 	const TEST_TEMPLATE = 'api.nextmatch_test';
 
 	/**
+	 * Content of "tab_nm" for the extraTabs tests: a server-side get_rows, no initial rows
+	 */
+	const TAB_NM_CONTENT = array(
+		'get_rows' => __CLASS__.'::mock_get_rows',
+		'num_rows' => 0,	// lazy: no rows shipped with the page itself
+	);
+
+	/**
 	 * @var array|null backup of Nextmatch::$raw_form_names, restored in tearDown
 	 */
 	private $raw_form_names_backup;
@@ -204,6 +212,110 @@ class NextmatchTest extends Etemplate\WidgetBaseTest
 	}
 
 	/**
+	 * A nextmatch in a tab the server adds via a tabbox's extraTabs (as hooks do for
+	 * Preferences' "Security & Password" popup) is only attached to the template while it
+	 * runs, so getElementById() alone can not see it - every fetch after the rows shipped
+	 * with the page (sorting, paging, refresh) failed with "Unknown nextmatch".
+	 *
+	 * Setup: api.nextmatch_test.extra_tab (holding "tab_nm") is added to the "tabs" tabbox
+	 * as an extra tab, and the page is rendered with a server-side get_rows for it.
+	 * Pass criteria: no InvalidArgumentException, the server-side get_rows ran (total=1) and
+	 * the get_rows the client sent along was ignored.
+	 */
+	public function testAjaxGetRowsResolvesNextmatchInExtraTab()
+	{
+		$exec_id = $this->extraTabRequest(array('tab_nm' => self::TAB_NM_CONTENT), array(
+			'label'    => 'Extra',
+			'template' => 'api.nextmatch_test.extra_tab',
+		));
+		self::$mock_get_rows_params = null;
+		self::$client_get_rows_called = false;
+
+		Nextmatch::ajax_get_rows($exec_id, array('start' => 0, 'num_rows' => 10), array(
+			'get_rows' => __CLASS__.'::client_get_rows',
+		), 'tab_nm');
+
+		$data = $this->responseData();
+		$this->assertSame(1, $data['total'] ?? null,
+			'nextmatch inside an extraTabs tab did not resolve to its server-side get_rows');
+		$this->assertFalse(self::$client_get_rows_called,
+			'client-supplied get_rows callback must never be called');
+	}
+
+	/**
+	 * Only the extraTabs THIS request's server side added may be searched: a template that
+	 * exists on disk, and holds a nextmatch of the requested id, but was not added as a tab of
+	 * this page must not make the form_name resolve.
+	 *
+	 * Setup: same page and content as testAjaxGetRowsResolvesNextmatchInExtraTab(), so a
+	 * server-side get_rows for "tab_nm" is in the request - but no extraTabs are set.
+	 * Pass criteria: InvalidArgumentException, as for any other unknown form_name.
+	 */
+	public function testAjaxGetRowsRejectsNextmatchInTabNotAddedByRequest()
+	{
+		$exec_id = $this->extraTabRequest(array('tab_nm' => self::TAB_NM_CONTENT));
+
+		$this->expectException(\InvalidArgumentException::class);
+		Nextmatch::ajax_get_rows($exec_id, array('start' => 0, 'num_rows' => 10), array(), 'tab_nm');
+	}
+
+	/**
+	 * A nextmatch in an extraTabs tab must be requested by its full name, namespaces included:
+	 * a tab given its own namespace (the tab's "content") holds "ns[tab_nm]", and its bare id
+	 * "tab_nm" must not resolve to it.
+	 *
+	 * Setup: the extra tab is added with content="ns"; the request has a server-side get_rows
+	 * both at "ns[tab_nm]" and at a top-level "tab_nm", so only the widget resolution can tell
+	 * the two names apart.
+	 * Pass criteria: "ns[tab_nm]" resolves (total=1), "tab_nm" throws InvalidArgumentException.
+	 */
+	public function testAjaxGetRowsExtraTabRequiresFullNamespace()
+	{
+		$exec_id = $this->extraTabRequest(array(
+			'ns'     => array('tab_nm' => self::TAB_NM_CONTENT),
+			'tab_nm' => self::TAB_NM_CONTENT,
+		), array(
+			'label'    => 'Extra',
+			'template' => 'api.nextmatch_test.extra_tab',
+			'content'  => 'ns',
+		));
+		self::$mock_get_rows_params = null;
+
+		Nextmatch::ajax_get_rows($exec_id, array('start' => 0, 'num_rows' => 10), array(), 'ns[tab_nm]');
+		$this->assertSame(1, $this->responseData()['total'] ?? null,
+			'namespaced nextmatch inside an extraTabs tab did not resolve by its full name');
+
+		$this->expectException(\InvalidArgumentException::class);
+		Nextmatch::ajax_get_rows($exec_id, array('start' => 0, 'num_rows' => 10), array(), 'tab_nm');
+	}
+
+	/**
+	 * Render the test template, optionally adding $tab to its "tabs" tabbox via extraTabs
+	 *
+	 * Rendering attaches an extra tab to the cached template objects themselves, which a real
+	 * ajax_get_rows() request - a new PHP process - starts without, so the cache is reset
+	 * afterwards: otherwise getElementById() finds the nextmatch and the extraTabs lookup is
+	 * never exercised.
+	 *
+	 * @param array $content
+	 * @param ?array $tab extraTabs entry, null to add none
+	 * @return string etemplate_exec_id
+	 */
+	private function extraTabRequest(array $content, ?array $tab=null)
+	{
+		$exec_id = $this->templateRequest($content, $tab ? static function(Etemplate $etemplate) use ($tab)
+		{
+			$etemplate->setElementAttribute('tabs', 'add_tabs', true);
+			$etemplate->setElementAttribute('tabs', 'extraTabs', array($tab));
+		} : null);
+
+		$cache = new \ReflectionProperty(Template::class, 'cache');
+		$cache->setValue(null, array());
+
+		return $exec_id;
+	}
+
+	/**
 	 * Render the test template to create the server-side request cache used by
 	 * ajax_get_rows() (see templateRequest()).  Returning an exec id proves the
 	 * history widget resolved.
@@ -254,9 +366,10 @@ class NextmatchTest extends Etemplate\WidgetBaseTest
 	 * exit(), killing the whole PHPUnit process instead of just failing a test.
 	 *
 	 * @param array $content
+	 * @param ?callable $prepare called with the Etemplate before exec(), eg. to set element attributes
 	 * @return string etemplate_exec_id
 	 */
-	private function templateRequest(array $content)
+	private function templateRequest(array $content, ?callable $prepare=null)
 	{
 		if (session_status() !== PHP_SESSION_ACTIVE) session_start();
 
@@ -264,6 +377,7 @@ class NextmatchTest extends Etemplate\WidgetBaseTest
 		$etemplate = new Etemplate();
 		$this->assertTrue($etemplate->read(self::TEST_TEMPLATE, 'test'),
 			'could not load nextmatch test template');
+		if ($prepare) $prepare($etemplate);
 		$result = $this->mockedExec($etemplate, $content);
 
 		$exec_id = null;

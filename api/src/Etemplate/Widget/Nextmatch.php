@@ -445,6 +445,57 @@ class Nextmatch extends Etemplate\Widget
 	);
 
 	/**
+	 * Find a row-source widget in a tab added through a tabbox's extraTabs
+	 *
+	 * Such a tab is only attached to the template inside Tabbox::run(), so getElementById()
+	 * can not see it.  Only the extraTabs stored in this request's modifications are searched -
+	 * they are set server-side (by the app or a hook) while the page is rendered, the client can
+	 * not add any - and only those tab templates get run, not the whole page: running the page
+	 * would let Tabbox::run() write extraTabs back, re-saving the request and sending an assign
+	 * to the client on every fetch.
+	 *
+	 * Unlike getElementById(), the widget must sit at exactly $form_name, namespaces included,
+	 * not merely carry an id equal to it.
+	 *
+	 * @param string $form_name full name of the widget, as sent by the client
+	 * @param string[] $types widget types able to back a row request
+	 * @return Etemplate\Widget|null
+	 */
+	protected static function getExtraTabsElementById($form_name, array $types)
+	{
+		$widget = null;
+		foreach((array)self::$request->modifications as $tabbox_name => $modifications)
+		{
+			// modifications are keyed by the tabbox's full name, but a tabbox opens no namespace
+			// of its own: its tabs live in the namespace of its parent
+			$cname = strpos($tabbox_name, '[') !== false ? preg_replace('/\[[^\]]*\]$/', '', $tabbox_name) : '';
+
+			foreach((array)($modifications['extraTabs'] ?? []) as $tab)
+			{
+				if (!is_array($tab) || empty($tab['template']) || !($template = Template::instance($tab['template'])))
+				{
+					continue;
+				}
+				// same as Tabbox::run(): a tab's namespace goes on a clone, not the cached template
+				$template = clone $template;
+				if (isset($tab['content'])) $template->attrs['content'] = $tab['content'];
+
+				$template->run(static function($cname, $expand, $child) use ($form_name, $types, &$widget)
+				{
+					if (!$widget && in_array($child->type, $types, true) &&
+						self::form_name($cname, $child->id, $expand) === $form_name)
+					{
+						$widget = $child;
+					}
+				}, [$cname, []]);
+
+				if ($widget) return $widget;
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * Callback to fetch more rows
 	 *
 	 * Callback uses existing get_rows callback, but requires now 'row_id' to be set.
@@ -497,6 +548,14 @@ class Nextmatch extends Etemplate\Widget
 		{
 			$template = $template->getElementById($form_name, strpos($form_name, 'history') === 0 ? 'historylog' : 'et2-nextmatch') ??
 				$template->getElementById($form_name, strpos($form_name, 'history') === 0 ? 'historylog' : 'nextmatch');
+			// A tab added through a tabbox's extraTabs (eg. the hook-provided tabs of Preferences'
+			// "Security & Password" popup) is only attached to the template while it runs, so
+			// getElementById() can not see a nextmatch in it.
+			if (!$template)
+			{
+				$template = self::getExtraTabsElementById($form_name,
+					strpos($form_name, 'history') === 0 ? ['historylog'] : ['et2-nextmatch', 'nextmatch']);
+			}
 		}
 		else
 		{
