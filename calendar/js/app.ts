@@ -1895,17 +1895,15 @@ export class CalendarApp extends EgwApp
 	}
 
 	/**
-	 * show/hide the filter of nm list in calendar listview
+	 * Copy the date range filter of the nm list in calendar listview into the state
 	 *
 	 */
 	filter_change()
 	{
-		const view = this.listEtemplate?.widgetContainer || null;
 		const nm = this.listNextmatch;
 		// The date range filter lives in calendar.filter (the app's own filterbox), not in the
 		// nextmatch header, so read the value the nextmatch is actually querying with.
 		const filter = nm ? nm.activeFilters.filter : null;
-		const dates = view ? <Et2Template>view.getWidgetById('calendar.list.dates') : null;
 
 		// Update state when user changes it.  Sort order is NOT set here: for 'before' the list
 		// is shown newest-first, but that has to go into the same applyFilters() call that
@@ -1919,19 +1917,6 @@ export class CalendarApp extends EgwApp
 		else
 		{
 			delete this.state.filter;
-		}
-		if (filter && dates)
-		{
-			dates.set_disabled(filter !== "custom");
-			if (filter == "custom" && !this.state_update_in_progress)
-			{
-				// Copy state dates over, without causing [another] state update
-				const actual = this.state_update_in_progress;
-				this.state_update_in_progress = true;
-				(<Et2Date>view.getWidgetById('startdate')).set_value(this.state.first);
-				(<Et2Date>view.getWidgetById('enddate')).set_value(this.state.last);
-				this.state_update_in_progress = actual;
-			}
 		}
 	}
 
