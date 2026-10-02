@@ -436,7 +436,8 @@ function send_template()
 
 		// nextmatch headers
 		// replace all filters with NM headers, if not running via cli (as we currently don't want to remove them permanently!)
-		$replace_filters = PHP_SAPI !== 'cli' && !preg_match('/<nextmatch [^>]*replaceFilters="false"/', $str);
+		// replaceFilters="false" keeps them, eg. for a nextmatch in a popup, which gets no filterbox
+		$replace_filters = PHP_SAPI !== 'cli' && !preg_match('/<(et2-)?nextmatch [^>]*replaceFilters="false"/', $str);
 		$str = preg_replace_callback('#<(et2-)?(nextmatch-)(account|sort|custom|filter|taglist)?(header(-account|-custom|-filter|-entry)?|filter|entry) ([^>]+)(/>|></et2-nextmatch-[^>]+>)#s',
 			static function (array $matches) use ($replace_filters)
 		{
