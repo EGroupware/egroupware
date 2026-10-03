@@ -868,7 +868,13 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		if (!($events =& $bo->search($params)))
 		{
 			$events = [];
-			return $events;
+			// search returns nothing eg. for a series which first occurrence is excluded and the next one is behind
+			// the search horizon: with a given master we still have to return it, otherwise the event gets exported
+			// as empty iCal (HTTP 200 with empty body, which makes eg. DAVx5 abort the sync of the whole calendar)
+			if (!isset($master))
+			{
+				return $events;
+			}
 		}
 
 		// find master, which is not always first event, e.g. when first event is an exception
