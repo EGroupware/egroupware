@@ -57,9 +57,6 @@ class NextmatchActionSubmitTest extends LoggedInTest
 			'exempt',
 			'readd'
 		],
-		'EGroupware\\Stylite\\Calls' => [
-			'delete'
-		],
 		// view_org/view_duplicates switch the list to a different rows template rather than acting
 		// on the selection, so they are not action() operations at all and stay a redraw - see the
 		// doc. export/kanban belong to other apps.

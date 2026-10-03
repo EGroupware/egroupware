@@ -1599,6 +1599,30 @@ transport-independent** - the same early return stopped the submit - but worth r
 `egw.link()` does not consult the build manifest, so this `import()` only works where
 `policy/js/app.min.js` happens to be self-contained. **Open.**
 
+### stylite Calls - as built, and a hole closed on the way
+
+`delete` and `undelete` converted. The interesting part is that `Calls::ajax_action()` already
+existed - the voicemail dialog's Delete and Call buttons called it - but with the signature
+`($action, $selected)` and **no eTemplate request id at all**. Any logged-in user with stylite
+could delete a call by guessing its id. The list's actions now go through the same method, which
+is how the dialog got the check too; its two call sites in `stylite/js/app.ts` pass the exec id
+they take from the nextmatch the action was run from.
+
+This is the one converted app where the msg-only sentinel is genuinely safe:
+`Cti\Storage::delete()` calls `Link::notify_update()` on *every* path it takes - the soft delete,
+the real delete and the un-delete - so a push really does carry the change. Compare invoices,
+where only `save()` notifies.
+
+**FOUND, NOT FIXED:** `Cti\Storage::delete()`'s "delete already deleted --> really delete" branch
+is unreachable through this action. A plain delete searches with the default filter
+(`call_deleted IS NULL`), and only an *un*-delete adds `deleted` to it - so an already-marked
+call is never found and a second Delete is a no-op. Pre-existing and transport-independent; a
+test pins the current behaviour rather than changing it.
+
+**Not verified live:** this instance has no calls at all and no CTI configuration, so the list
+has nothing to act on. Covered by `stylite/tests/Cti/CallsAjaxActionTest.php` (5 tests), which
+needs EPL CI to run anywhere else.
+
 ### Phase 0's regression test - as built
 
 `api/tests/Etemplate/Widget/NextmatchActionSubmitTest.php`. 41 target classes; 40 reachable,
