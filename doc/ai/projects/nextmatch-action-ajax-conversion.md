@@ -1475,6 +1475,27 @@ they decline to run (no application selected), which is enough to pin that the e
 **Open: developer has no CI** and had no `tests/` - it now has the one file. Its default branch
 is `main`; the work is on a new `nm-action-ajax` branch.
 
+### invoices - as built, and the first app where the sentinel was nearly right
+
+`delete` converted - the ZIP downloads next to it stay `postSubmit`, they need a real form POST.
+
+Delete is two-stage: an invoice that is not yet of status "deleted" is only marked, and a second
+Delete removes it for good. The interesting part is that `get_rows()` does not return deleted
+invoices, so **both** stages take the row out of the list - `delete` is the right refresh type
+for each, and a test pins that the list really hides them, because the day that changes the first
+stage needs `update` instead.
+
+This is the first converted app that does push: `Bo::save()` calls `Link::notify_update()`, and
+the browser check showed it arriving - two `egw.refresh` calls per delete, the push's and the
+endpoint's. The sentinel still cannot be used, because `Bo::delete()` (the second stage) does
+**not** notify, so a really-removed invoice would sit in the list until the next reload. A
+redundant refresh on the first stage is the cheaper of the two mistakes, and once both agreed on
+`delete` the two calls are idempotent. Worth recording as the shape to look for: "the app
+pushes" is not enough, every path the action can take has to push.
+
+Housekeeping: invoices had a stale local `nm-action-ajax` branch (one unpushed Proposal E commit,
+three commits behind master). Merged master into it rather than starting again.
+
 ### Phase 0's regression test - as built
 
 `api/tests/Etemplate/Widget/NextmatchActionSubmitTest.php`. 41 target classes; 40 reachable,
