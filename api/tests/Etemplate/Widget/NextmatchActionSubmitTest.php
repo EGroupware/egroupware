@@ -72,9 +72,6 @@ class NextmatchActionSubmitTest extends LoggedInTest
 		'admin_customfields' => [
 			'delete'
 		],
-		'bookmarks_ui' => [
-			'delete'
-		],
 		'importexport_definitions_ui' => [
 			'copy',
 			'createexport',

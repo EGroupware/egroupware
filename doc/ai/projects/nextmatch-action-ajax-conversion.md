@@ -1508,6 +1508,19 @@ Verified live: copying a board opened the copy for editing, with the message, an
 rebuild. In practice the `egw_open` navigates away before the list can act on the refresh - the
 refresh matters for the case where it does not.
 
+### bookmarks - as built
+
+`delete` converted. The delete loop lived inline in `_list()`, so it moved into a small
+`action($action, $selected)` that both the submit branch and the endpoint call - the submit
+branch is now two lines. `bookmarks_bo::delete()` already refuses a bookmark the user has no
+rights to and the count in the message reflects that, which a test pins.
+
+`bookmarks.bookmarks_ui.ajax_action` is exactly the `<app>.<app>_ui.ajax_action` convention the
+client falls back to, so this is the first converted app that needs no `data['menuaction']` at
+all. Verified live.
+
+**Open: bookmarks had no `tests/` and has no CI** - the one test file is new.
+
 ### Phase 0's regression test - as built
 
 `api/tests/Etemplate/Widget/NextmatchActionSubmitTest.php`. 41 target classes; 40 reachable,
