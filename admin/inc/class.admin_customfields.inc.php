@@ -210,21 +210,9 @@ class admin_customfields
 		// Custom field deleted from nextmatch
 		if(($content['nm']['action'] ?? null) == 'delete')
 		{
-			foreach($this->fields as $name => $data)
+			foreach($this->deleteFields((array)$content['nm']['selected'], $content['nm']['admin_cmd']) as $cf_id)
 			{
-				if(in_array($data['id'],$content['nm']['selected']))
-				{
-					$cmd = new admin_cmd_customfield(
-							$this->appname,
-							array('id' => $data['id'],'name' => $name),
-							null,
-							$content['nm']['admin_cmd']
-					);
-					$cmd->run();
-					unset($this->fields[$name]);
-
-					Framework::refresh_opener('Deleted', 'admin', $data['id'] /* Conflicts with Api\Accounts 'delete'*/);
-				}
+				Framework::refresh_opener('Deleted', 'admin', $cf_id /* Conflicts with Api\Accounts 'delete'*/);
 			}
 		}
 
@@ -642,9 +630,98 @@ class admin_customfields
 				'policy_confirmation' => 'Oh yeah',
 				'group' => ++$group,
 				'disableClass' => 'rowNoDelete',
+				'onExecute' => 'javaScript:app.admin.ajax_action',
+				// the list is admin's, but the class is not admin_ui, so the
+				// "<app>.<app>_ui.ajax_action" convention the client falls back to misses it
+				'data' => array('menuaction' => 'admin.admin_customfields.ajax_action'),
 			),
 		);
 		return $actions;
+	}
+
+	/**
+	 * Delete the given custom fields, through the admin command so the change is logged
+	 *
+	 * The app and name are read back from the fields themselves rather than from $this->appname:
+	 * the ajax endpoint has no $_GET['appname'] to construct this class with, and a selection is
+	 * within one app's list anyway.
+	 *
+	 * @param array $cf_ids
+	 * @param array|null $admin_cmd "requested by" and comment, when the policy app asked for them
+	 * @return int[] the cf_ids actually deleted
+	 */
+	protected function deleteFields(array $cf_ids, $admin_cmd=null)
+	{
+		$deleted = array();
+		foreach($cf_ids as $cf_id)
+		{
+			if (!($field = $this->so->read(array('cf_id' => (int)$cf_id))))
+			{
+				continue;
+			}
+			$cmd = new admin_cmd_customfield(
+				$field['cf_app'],
+				array('id' => $field['cf_id'], 'name' => $field['cf_name']),
+				null,
+				$admin_cmd
+			);
+			$cmd->run();
+			unset($this->fields[$field['cf_name']]);
+			$deleted[] = (int)$field['cf_id'];
+		}
+		return $deleted;
+	}
+
+	/**
+	 * Run the custom-field list's Delete over ajax, so the list keeps its scroll position and
+	 * selection instead of being rebuilt
+	 *
+	 * @param string $exec_id eTemplate request this came from - the only thing saying the caller
+	 *	had one of our pages open, see Nextmatch::validateExecId()
+	 * @param string $action 'delete'
+	 * @param string[] $selected cf_ids
+	 * @param bool $all_selected accepted but not expanded: deleteFields() acts on exactly the ids
+	 *	it is handed, which is what the submit it replaces did too
+	 * @param array $checkboxes unused, the list has no checkbox actions
+	 * @param array|null $admin_cmd what the policy app's dialog collected, see EgwApp.ajax_action
+	 */
+	public function ajax_action($exec_id, $action, array $selected, $all_selected=false,
+		$checkboxes=null, $admin_cmd=null)
+	{
+		unset($all_selected, $checkboxes);	// not used, but part of the shared sender's payload
+
+		if (!Api\Etemplate\Widget\Nextmatch::validateExecId($exec_id))
+		{
+			return;
+		}
+		// same right as index(): deleting a custom field runs an admin command
+		if (!isset($GLOBALS['egw_info']['user']['apps']['admin']) ||
+			$GLOBALS['egw']->acl->checkAdminDeny('site_config_acce', 2))
+		{
+			throw new Api\Exception\NoPermission();
+		}
+		$failed = false;
+		try
+		{
+			$deleted = $action === 'delete' ? $this->deleteFields($selected, $admin_cmd) : array();
+			$msg = lang('%1 entries %2', count($deleted), lang('deleted'));
+		}
+		catch (\Exception $e)
+		{
+			$deleted = array();
+			$msg = $e->getMessage();
+			$failed = true;
+		}
+		// Naming the app in the 2nd argument makes egw.refresh() update the list itself: the
+		// "message only, a push will carry the change" sentinel needs something to send that
+		// push, and custom fields never notify_update().
+		//
+		// The 5th argument (_targetapp) stays null: this list is opened from the admin tree, so
+		// naming an app would send egw.refresh() looking for a window that is not the one showing
+		// the list - see the importexport section of the conversion doc.
+		Api\Json\Response::get()->call('egw.refresh', $msg, 'admin',
+			count($deleted) === 1 ? $deleted[0] : null, count($deleted) === 1 ? 'delete' : null,
+			null, null, null, $failed ? 'error' : 'success');
 	}
 
 	function update(&$content)

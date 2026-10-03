@@ -69,9 +69,6 @@ class NextmatchActionSubmitTest extends LoggedInTest
 			'view_duplicates',
 			'view_org'
 		],
-		'admin_customfields' => [
-			'delete'
-		],
 		// 'erole' only exists when the enable_eroles config is on, and is a container (not a leaf)
 		// when it is - it is here because this instance has the config off.
 		// delete/sync_all were converted and then REVERTED: projectmanager_bo::check_acl() returns

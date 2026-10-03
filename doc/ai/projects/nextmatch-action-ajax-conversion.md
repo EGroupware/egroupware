@@ -1569,6 +1569,36 @@ reported "0 entries deleted" however many it removed - visible on the submit too
 often. It now returns the count of definitions it really deleted (it silently skips any the user
 does not own), and the ui reports that.
 
+### admin_customfields - as built, and the first policy_confirmation action
+
+`delete` converted. Two things it needed that nothing before it did:
+
+* **The policy dialog's answers have to be forwarded.** This is the first converted action with
+  `policy_confirmation`: the policy app shows its own dialog ("requested by", comment) and
+  `policy.confirm()` does `Object.assign(action.data, value)` just before running `onExecute`. A
+  submit carried that along as `nm[admin_cmd]`; over ajax nothing did. `EgwApp.ajax_action()` now
+  sends `_action.data.admin_cmd` as a 6th argument - additive, so no existing endpoint changes
+  (PHP ignores extra arguments to a userland function). Without it the policy app would insist on
+  a comment and then throw it away, which is worse than not asking. `admin/src/Groups.php` is the
+  only other `policy_confirmation` in the tree and is a `url` action, so it is unaffected.
+* **The delete can no longer rely on `$this->appname`.** `json.php` constructs the class with no
+  arguments and there is no `$_GET['appname']` on an ajax POST, so the loop that read
+  `$this->fields` moved into `deleteFields()`, which reads each field's `cf_app` and `cf_name`
+  back from `egw_customfields`. The submit branch calls the same method.
+
+`_targetapp` is null, for the same reason as importexport: this list is opened from the admin
+tree, so it lives in admin's window.
+
+**Verified as far as this instance allows.** The endpoint was driven over the real HTTP path from
+the browser - the row went in place, the message appeared, the list kept its state, and the
+policy comment reached `egw_admin_queue`. The one link not exercised is the context-menu click
+itself, because `EgwAction`'s policy branch does
+`import(egw.link('/policy/js/app.min.js'))` and that file is the un-bundled build on this
+instance, so the dynamic import fails and the action never runs. **That is pre-existing and
+transport-independent** - the same early return stopped the submit - but worth recording:
+`egw.link()` does not consult the build manifest, so this `import()` only works where
+`policy/js/app.min.js` happens to be self-contained. **Open.**
+
 ### Phase 0's regression test - as built
 
 `api/tests/Etemplate/Widget/NextmatchActionSubmitTest.php`. 41 target classes; 40 reachable,

@@ -1486,12 +1486,20 @@ export abstract class EgwApp
 			checkboxes[checkbox.id] = (<any>checkbox).checked || false;
 		}
 
+		// An action with 'policy_confirmation' shows the policy app's dialog first, and
+		// policy.confirm() does Object.assign(action.data, value) with what it collected just
+		// before running us. A submit carried that along as nm[admin_cmd]; over ajax it has to be
+		// passed explicitly, or the "requested by" and comment the policy app insisted on are
+		// silently dropped - which is worse than not asking for them.
+		const admin_cmd = (<any>_action)?.data?.admin_cmd ?? null;
+
 		return this.egw.request(menuaction, [
 			EgwApp._execId(nm, this.et2),
 			_action.id,
 			ids,
 			(<Et2Nextmatch>nm)?.getSelection?.().all === true,
-			checkboxes
+			checkboxes,
+			admin_cmd
 		]);
 	}
 
