@@ -2599,15 +2599,21 @@ ORDER BY cal_user_type, cal_usre_id
 	/**
 	 * Get all unfinished recuring events (or all users) after a given time
 	 *
+	 * The returned start is where moving the horizont has to continue: the last recurrence at or before $time (the
+	 * old horizont), or the first one, if there is none. Exceptions behind the horizont are stored too, they must NOT
+	 * count, otherwise all recurrences between the horizont and such an exception would never be created.
+	 *
 	 * @param DateTime $time
-	 * @return array with cal_id => max(cal_start) pairs
+	 * @return array with cal_id => max(cal_start) pairs (at or before $time)
 	 * @throws Api\Db\Exception
 	 * @throws Api\Db\Exception\InvalidSql
 	 */
 	function unfinished_recuring(DateTime $time) : array
 	{
 		$ids = array();
-		foreach($rs=$this->db->select($this->repeats_table, "$this->repeats_table.cal_id,MAX(cal_start) AS cal_start",
+		$horizont = (int)$time->format('server');
+		foreach($rs=$this->db->select($this->repeats_table, "$this->repeats_table.cal_id,".
+			"COALESCE(MAX(CASE WHEN cal_start <= $horizont THEN cal_start END),MIN(cal_start)) AS cal_start",
 		                              '(range_end IS NULL OR range_end > ' . (int)$time->format('server') . ')',
 			__LINE__, __FILE__, false, "GROUP BY $this->repeats_table.cal_id,range_end", 'calendar', 0,
 			" JOIN $this->cal_table ON $this->repeats_table.cal_id=$this->cal_table.cal_id".
