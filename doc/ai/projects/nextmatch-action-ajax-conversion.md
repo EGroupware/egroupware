@@ -1623,6 +1623,36 @@ test pins the current behaviour rather than changing it.
 has nothing to act on. Covered by `stylite/tests/Cti/CallsAjaxActionTest.php` (5 tests), which
 needs EPL CI to run anywhere else.
 
+### smallpart - as built, the last of the baseline
+
+Courses' `copy_course`/`copy_no_participants` and Questions' `delete`/`exempt`/`readd`. Both
+classes already had an `ajax_action()` - Courses' reached from `app.smallpart.courseAction`,
+Questions' from nothing at all - and both needed fixing before the lists could use them:
+
+* **Neither checked an eTemplate request id.** Courses' was live, so that was a real hole: any
+  logged-in user with smallpart could unsubscribe, close or delete a course by id. Both now
+  validate, and `courseAction()` sends the exec id it takes from the nextmatch.
+* **Both answered `egw.refresh(..., $selected[1], 'update')`.** The second id of a one-element
+  selection does not exist, so a single-row action named no row and the list quietly did not
+  update it. `$selected[0]`, and the type follows the action (delete removes a row, exempt and
+  readd change one).
+* **Copying a course called `Framework::redirect_link(); exit;` from inside `action()`.** A
+  submit can redirect; an ajax request cannot - it would have to answer the XHR with a 302.
+  `action()` now reports the new course_id back through a by-reference parameter and each caller
+  opens it its own way: the submit still redirects, the endpoint answers with `egw_open`.
+
+Verified live: Copy Course opened the copy for editing with its message and no page submit -
+`egw.open(<new id>, 'smallpart', 'edit')`, which is exactly what the redirect did. The question
+list was covered by tests only; `smallpart/tests/AjaxActionTest.php` is 5 tests.
+
+Two things learned while writing those tests, worth not re-learning: `Overlay::aclCheck()` wants
+a *participant* who is also a teacher, so owning the fixture course is not enough; and
+`Questions::action()` reads the course and video from the list's saved session state when it is
+not handed a filter, so a delete needs that state set, exactly as the real list leaves it.
+
+The smallpart suite's 27 errors are all `SmallpartRestCreateReadDeleteTest` (guzzle HTTP against
+a REST endpoint) and are identical with and without this change.
+
 ### Phase 0's regression test - as built
 
 `api/tests/Etemplate/Widget/NextmatchActionSubmitTest.php`. 41 target classes; 40 reachable,

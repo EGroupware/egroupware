@@ -48,15 +48,6 @@ class NextmatchActionSubmitTest extends LoggedInTest
 	 * installation.
 	 */
 	const BASELINE = [
-		'EGroupware\\SmallParT\\Courses' => [
-			'copy_course',
-			'copy_no_participants'
-		],
-		'EGroupware\\SmallParT\\Questions' => [
-			'delete',
-			'exempt',
-			'readd'
-		],
 		// view_org/view_duplicates switch the list to a different rows template rather than acting
 		// on the selection, so they are not action() operations at all and stay a redraw - see the
 		// doc. export/kanban belong to other apps.
