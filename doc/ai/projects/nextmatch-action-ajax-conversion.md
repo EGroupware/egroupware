@@ -1521,6 +1521,30 @@ all. Verified live.
 
 **Open: bookmarks had no `tests/` and has no CI** - the one test file is new.
 
+### news_admin - as built, two lists in two classes
+
+The news list (`news_admin_gui`) its Delete, and the category list (`news_admin_ui`) its Delete
+and Update RSS feed. This is the first app with **two** lists in two classes, which is exactly
+the case the client's `<app>.<app>_ui.ajax_action` fallback gets wrong: `news_admin_gui` has to
+name its menuaction explicitly or its Delete would reach the *category* list's endpoint and
+delete categories. Worth remembering for any app with a second list class.
+
+As with bookmarks, the news list's delete loop was inline in `index()` and moved into a small
+`action()` both paths share.
+
+**Fixed: "select all" on the category list fatalled.** `news_admin_ui::action()`'s expansion
+called `$this->get_rows()`, and that class has no `get_rows` at all - only `get_cats()`. Under
+PHP 8 that is a fatal, not a no-op, so selecting all categories and acting on them died rather
+than doing anything. The conversion is the first thing to ever run that branch.
+
+Verified live: Update RSS feed on a real feed re-imported 15 entries and reloaded the list in
+place, and deleting a news entry removed its row in place. Two things worth knowing about this
+app's own list filters, both pre-existing: the news list defaults to `col_filter[news_lang]='en'`
+and `col_filter[visible]='now'`, and the real (RSS-imported) rows have `news_begin` NULL, so the
+list can legitimately show nothing at all depending on which of those is set.
+
+**Open: news_admin had no `tests/` and has no CI** - the one test file is new.
+
 ### Phase 0's regression test - as built
 
 `api/tests/Etemplate/Widget/NextmatchActionSubmitTest.php`. 41 target classes; 40 reachable,
