@@ -1424,6 +1424,31 @@ select-all expansion and its refusal, and the refresh arguments) and **not** by 
 also has no `.github/workflows`, and its default branch is `main`, not `master`. The work is on a
 new `nm-action-ajax` branch there.
 
+### aitools - as built
+
+`delete` converted (one action, one menuaction - the class is namespaced, so the client's
+`<app>.<app>_ui.ajax_action` fallback would not find it). Verified live: single delete updates
+the row in place, and select-all under a search deleted exactly the three rows the search showed,
+leaving the other 17 prompts alone.
+
+**Select all used to ignore the filter entirely.** `Admin::action()` expanded it with
+`$this->prompts->search(null, false, ...)` - every prompt in the table, regardless of what the
+list was showing. Selecting all of a three-row search result would have deleted those three *and*
+everything the search had filtered out. `get_rows()` now caches the query and `action()` re-runs
+it with `num_rows = -1`, refusing when nothing is cached. Worth noticing because this is the
+third app in a row (after `admin_accesslog` and aiassistant) where the select-all expansion was
+either missing, unbounded or capped at a default page size - the ajax conversion is the first
+time any of them was exercised.
+
+`Api\Framework::refresh_opener()` stays in `action()`'s delete case and is now dead for this
+path: it only records into `Framework\Extra::$extra`, which `etemplate2.ts` reads out of an
+eTemplate exec payload, never out of a bare `json.php` response. Harmless, left alone.
+
+**Pre-existing, not mine:** `ChatCompletionsRequestTypesTest::testSystemMessageCarriesNoPerUserContext`
+fails on this instance (its customised `system_prompt` row carries per-user context). Confirmed
+identical with the conversion stashed. **Open: aitools has `tests/` but no `.github/workflows`,**
+so nothing runs them - same gap as records.
+
 ### Phase 0's regression test - as built
 
 `api/tests/Etemplate/Widget/NextmatchActionSubmitTest.php`. 41 target classes; 40 reachable,
