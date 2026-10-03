@@ -1,3 +1,20 @@
+egroupware-docker (26.10.20261003) hardy; urgency=low
+
+  * SECURITY: this release contains security fixes, everyone is strongly adviced to update to it!
+  * Api: fresh install aborted on MySQL/MariaDB without VECTOR support
+  * Calendar/CalDAV/REST: sync-collection REPORT returned participants removed from an event
+  * Infolog: remember showDetail state across sessions
+  * Kdots: open filters on an empty list only when the app considers filters set, explain why with a dismissible message, and add a preference to turn it off
+  * Login: warn about not supported old browsers, required: Chrome(ium)/Edge 105, Firefox 121 or Safari 15.4
+  * Mail: many fies around forwarding mails and the compose preference which mail account to use
+  * Mail: REST-composed attachment shows as broken/empty when opening a compose window
+  * Mail: a distribution-list send aborted entirely for everyone because of one bad recipient
+  * Registration: anonymous session (Lost password / Sign up) failed, anonymous password is no longer used and checked
+  * Timesheet: remember the details toggle across sessions again
+  * Tracker/REST API/OpenAPI: fix wrongly documented fields
+
+ -- Ralf Becker <rb@egroupware.org>  Sat, 03 Oct 2026 19:43:14 +0200
+
 egroupware-docker (26.9.20260928) hardy; urgency=low
 
   * SECURITY: this release fixes multiple high and critical level security vulnerabilities, everyone is strongly adviced to update to it!
