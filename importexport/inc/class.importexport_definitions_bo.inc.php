@@ -121,6 +121,10 @@ class importexport_definitions_bo {
 	 *
 	 * @param array $keys
 	 */
+	/**
+	 * @param array $keys definition_ids
+	 * @return int number of definitions deleted, skipping any the user does not own
+	 */
 	public function delete($keys) {
 		foreach ($keys as $index => $key) {
 			// Check for ownership
@@ -138,6 +142,9 @@ class importexport_definitions_bo {
 		if(count($keys) > 0) {
 			$this->so_sql->delete(array('definition_id' => $keys));
 		}
+		// how many were actually deleted - the ones the loop above did not unset for lack of
+		// ownership - so callers can report it instead of always saying "0 deleted"
+		return count($keys);
 	}
 
 	/**

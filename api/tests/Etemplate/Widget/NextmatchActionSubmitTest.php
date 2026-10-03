@@ -72,11 +72,6 @@ class NextmatchActionSubmitTest extends LoggedInTest
 		'admin_customfields' => [
 			'delete'
 		],
-		'importexport_definitions_ui' => [
-			'copy',
-			'createexport',
-			'delete'
-		],
 		// 'erole' only exists when the enable_eroles config is on, and is a container (not a leaf)
 		// when it is - it is here because this instance has the config off.
 		// delete/sync_all were converted and then REVERTED: projectmanager_bo::check_acl() returns

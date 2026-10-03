@@ -270,6 +270,10 @@ class importexport_definitions_ui
 			'copy' => array(
 				'caption' => 'Copy',
 				'group' => ++$group,
+				'onExecute' => 'javaScript:app.importexport.ajax_action',
+				// the endpoint has to be named: the "<app>.<app>_ui.ajax_action" convention the
+				// client falls back to would be importexport.importexport_ui, which does not exist
+				'data' => array('menuaction' => 'importexport.importexport_definitions_ui.ajax_action'),
 			),
 			'createexport' => array(
 				'caption' => 'Create export',
@@ -277,7 +281,11 @@ class importexport_definitions_ui
 				'icon' => 'export',
 				'group' => $group,
 				'allowOnMultiple' => false,
-				'disableClass' => 'export'
+				'disableClass' => 'export',
+				'onExecute' => 'javaScript:app.importexport.ajax_action',
+				// the endpoint has to be named: the "<app>.<app>_ui.ajax_action" convention the
+				// client falls back to would be importexport.importexport_ui, which does not exist
+				'data' => array('menuaction' => 'importexport.importexport_definitions_ui.ajax_action'),
 			),
 
 			'export' => array(
@@ -292,6 +300,10 @@ class importexport_definitions_ui
 				'confirm_multiple' => 'Delete these entries',
 				'group' => ++$group,
 				'disableClass' => 'rowNoDelete',
+				'onExecute' => 'javaScript:app.importexport.ajax_action',
+				// the endpoint has to be named: the "<app>.<app>_ui.ajax_action" convention the
+				// client falls back to would be importexport.importexport_ui, which does not exist
+				'data' => array('menuaction' => 'importexport.importexport_definitions_ui.ajax_action'),
 			),
 		);
 
@@ -315,6 +327,48 @@ class importexport_definitions_ui
 	 * @param string/array $session_name 'index' or 'email', or array with session-data depending if we are in the main list or the popup
 	 * @return boolean true if all actions succeded, false otherwise
 	 */
+	/**
+	 * Run the definition list's Copy, Create export and Delete over ajax, so the list keeps its
+	 * scroll position and selection instead of being rebuilt
+	 *
+	 * Export stays a postSubmit - it needs a real form POST to reach the browser as a file.
+	 *
+	 * Only a single Delete can be a row update; Copy and Create export add a definition, which
+	 * lands wherever the sort puts it, so those reload.
+	 *
+	 * @param string $exec_id eTemplate request this came from - the only thing saying the caller
+	 *	had one of our pages open, see Nextmatch::validateExecId()
+	 * @param string $action 'copy', 'createexport' or 'delete'
+	 * @param string[] $selected definition_ids
+	 * @param bool $all_selected expanded by action() from the query the list last ran
+	 */
+	public function ajax_action($exec_id, $action, array $selected, $all_selected=false)
+	{
+		if (!Api\Etemplate\Widget\Nextmatch::validateExecId($exec_id))
+		{
+			return;
+		}
+		$success = $failed = 0;
+		$action_msg = $msg = '';
+		// 'index' is the session key get_rows() caches the query under, and the only way a
+		// "select all" can be expanded to the definitions the list is actually showing
+		$this->action($action, $selected, $all_selected, $success, $failed, $action_msg, 'index', $msg);
+		$msg .= lang('%1 definition(s) %2', $success, $action_msg);
+		// Naming the app in the 2nd argument makes egw.refresh() update the list itself: the
+		// "message only, a push will carry the change" sentinel needs something to send that
+		// push, and importexport never calls Link::notify_update().
+		//
+		// The 5th argument (_targetapp) is deliberately null, NOT 'importexport': this list is
+		// normally opened from the admin tree, so it lives in admin's window, and naming its own
+		// app sends egw.refresh() looking for an importexport window that is not the one showing
+		// the list - the refresh is then silently dropped. null means "the current window", which
+		// is right wherever the list was opened from.
+		$single = $action === 'delete' && !$all_selected && count($selected) === 1;
+		Api\Json\Response::get()->call('egw.refresh', $msg, 'importexport',
+			$single ? $selected[0] : null, $single ? 'delete' : null, null, null, null,
+			$failed ? 'error' : 'success');
+	}
+
 	function action($action,$selected,$use_all,&$success,&$failed,&$action_msg,$session_name,&$msg)
 	{
 		//error_log( __METHOD__."('$action', ".array2string($selected).', '.array2string($use_all).",,, '$session_name')");
@@ -364,7 +418,10 @@ class importexport_definitions_ui
 				}
 				break;
 			case 'delete':
-				$bodefinitions->delete($selected);
+				// delete() skips definitions the user does not own, so count what it really did
+				// rather than reporting "0 entries deleted" after every delete
+				$success = $bodefinitions->delete($selected);
+				$failed = count($selected) - $success;
 				$action_msg = lang('deleted');
 				break;
 

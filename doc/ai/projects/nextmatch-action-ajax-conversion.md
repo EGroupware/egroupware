@@ -1545,6 +1545,30 @@ list can legitimately show nothing at all depending on which of those is set.
 
 **Open: news_admin had no `tests/` and has no CI** - the one test file is new.
 
+### importexport - as built, and the _targetapp trap in reverse
+
+`copy`, `createexport` and `delete` converted; `export` next to them stays `postSubmit`, it needs
+a real form POST to reach the browser as a file. Only a single delete is a row update - copy and
+createexport add a definition, which lands wherever the sort puts it.
+
+**The 5th argument (`_targetapp`) has to be null here, and finding out why is the useful part.**
+The first browser check looked like a clean pass - "1 definition(s) Copied.", the copy really in
+the database - except the list never changed. `egw.refresh()` had been given `'importexport'` as
+_targetapp, so it went looking for an importexport window; but this list is opened from the admin
+tree, so it is rendered inside *admin's* window, and the refresh was silently dropped. `null`
+means "the current window", which is right wherever the list was opened from.
+
+So the rule from the infolog/timesheet sentinel bug needs a second half. It was: _targetapp must
+never be the `msg-only-push-refresh` sentinel, because resolving a non-app throws. It is also:
+**_targetapp must not name an app whose window is not the one showing the list.** Any list
+reachable from the admin tree is in that position. `null` satisfies both, and is what
+projectmanager already passes.
+
+Also fixed while here: `importexport_definitions_bo::delete()` returned nothing, so every delete
+reported "0 entries deleted" however many it removed - visible on the submit too, just less
+often. It now returns the count of definitions it really deleted (it silently skips any the user
+does not own), and the ui reports that.
+
 ### Phase 0's regression test - as built
 
 `api/tests/Etemplate/Widget/NextmatchActionSubmitTest.php`. 41 target classes; 40 reachable,
