@@ -48,9 +48,6 @@ class NextmatchActionSubmitTest extends LoggedInTest
 	 * installation.
 	 */
 	const BASELINE = [
-		'EGroupware\\Kanban\\Ui\\BoardList' => [
-			'copy'
-		],
 		'EGroupware\\SmallParT\\Courses' => [
 			'copy_course',
 			'copy_no_participants'

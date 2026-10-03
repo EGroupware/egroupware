@@ -1496,6 +1496,18 @@ pushes" is not enough, every path the action can take has to push.
 Housekeeping: invoices had a stale local `nm-action-ajax` branch (one unpushed Proposal E commit,
 three commits behind master). Merged master into it rather than starting again.
 
+### kanban - as built
+
+`copy` was the only entry in the board list's menu without a handler - View, Edit and Add board
+are `egw_open`, Add card and Delete already had their own javaScript handlers. `action()` even
+answers for itself: it sends the "copied" message and an `egw_open` that takes the user into the
+new board. All that was missing is telling the list a row appeared, which is what the endpoint
+adds, as a plain reload (a copy lands wherever the sort puts it).
+
+Verified live: copying a board opened the copy for editing, with the message, and no page
+rebuild. In practice the `egw_open` navigates away before the list can act on the refresh - the
+refresh matters for the case where it does not.
+
 ### Phase 0's regression test - as built
 
 `api/tests/Etemplate/Widget/NextmatchActionSubmitTest.php`. 41 target classes; 40 reachable,
