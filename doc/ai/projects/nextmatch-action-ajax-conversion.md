@@ -1449,6 +1449,32 @@ fails on this instance (its customised `system_prompt` row carries per-user cont
 identical with the conversion stashed. **Open: aitools has `tests/` but no `.github/workflows`,**
 so nothing runs them - same gap as records.
 
+### developer (TranslationTools) - as built
+
+All five converted: `import`, `current` (Save), `all` (Save all), `move_to_api` and `delete`.
+This is the list that benefits most - it holds every phrase in the installation (11,511 on the
+dev instance), so a submit was the most expensive reload in the product, and `get_rows()` on top
+of that re-imports the app's lang-files whenever the app or language changes.
+
+Only a single `delete` asks for a row update. Import adds rows, Save/Save all rewrite lang-files
+and Move to api rewrites every language of a phrase, so all four send no id and let the list
+reload. `$all_selected` is accepted but not expanded - `action()` loops exactly the ids it is
+handed, which is what the submit did too.
+
+Verified live: Save with no application selected answered "You need to select an app first!"
+through `egw.refresh`, and deleting a single phrase removed its row in place. The delete fixture
+was a real row (`timesheet:en:7657`) and was put back with `Langfiles::importLangFiles()` - which
+is also why DB-only fixtures are useless for a browser check here: the list is re-imported from
+the lang-files on disk, so rows inserted straight into `egw_translations` never appear in it.
+
+Deliberately **not** exercised in `developer/tests/AjaxActionTest.php`: Import, Save, Save all
+and Move to api, because they write lang-files into the source tree. They are covered only where
+they decline to run (no application selected), which is enough to pin that the endpoint reaches
+`action()` and reports back.
+
+**Open: developer has no CI** and had no `tests/` - it now has the one file. Its default branch
+is `main`; the work is on a new `nm-action-ajax` branch.
+
 ### Phase 0's regression test - as built
 
 `api/tests/Etemplate/Widget/NextmatchActionSubmitTest.php`. 41 target classes; 40 reachable,

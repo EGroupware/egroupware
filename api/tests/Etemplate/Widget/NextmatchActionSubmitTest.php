@@ -48,13 +48,6 @@ class NextmatchActionSubmitTest extends LoggedInTest
 	 * installation.
 	 */
 	const BASELINE = [
-		'EGroupware\\Developer\\TranslationTools' => [
-			'all',
-			'current',
-			'delete',
-			'import',
-			'move_to_api'
-		],
 		'EGroupware\\Invoices\\Ui' => [
 			'delete'
 		],
