@@ -867,6 +867,20 @@ class calendar_bo
 	}
 
 	/**
+	 * Maximum number of days (from now) the horizont is moved to, ie. recurrences of unlimited events and exceptions
+	 * behind it are not stored
+	 *
+	 * @return int
+	 */
+	protected function max_horizont_days() : int
+	{
+		$maxdays = !empty($GLOBALS['egw_info']['server']['calendar_horizont']) ?
+			abs((int)$GLOBALS['egw_info']['server']['calendar_horizont']) : 0;
+
+		return $maxdays ?: 1000;	// old default
+	}
+
+	/**
 	 * check and evtl. move the horizont (maximum date for unlimited recuring events) to a new date
 	 *
 	 * @internal automaticaly called by search
@@ -887,11 +901,7 @@ class calendar_bo
 			if ($this->debug == 'check_move_horizont') $this->debug_message('calendar_bo::check_move_horizont(%1) horizont=%2 is bigger ==> nothing to do',true,$new_horizont,(int)$this->config['horizont']);
 			return;
 		}
-		if (!empty($GLOBALS['egw_info']['server']['calendar_horizont']))
-		{
-			$maxdays = abs($GLOBALS['egw_info']['server']['calendar_horizont']);
-		}
-		if (empty($maxdays)) $maxdays = 1000; // old default
+		$maxdays = $this->max_horizont_days();
 		$now = new DateTime('now', DateTime::$server_timezone);
 		$max_horizont = clone $now;
 		$max_horizont->modify("+$maxdays days");
@@ -940,8 +950,11 @@ class calendar_bo
 	 *
 	 * @param array $event
 	 * @param mixed $start =0 minimum start-time for new recurrences or !$start = since the start of the event
+	 * @param DateTime|null $until =null maximum start-time for new recurrences (user-time), default the horizont
+	 * @param bool $only_exceptions =false true: only store recurrences which are exceptions of the event, used to store
+	 *	exceptions behind the horizont, which otherwise have no row to carry the exception flag
 	 */
-	function set_recurrences($event, DateTime|null $start = null)
+	function set_recurrences($event, DateTime|null $start = null, DateTime|null $until = null, bool $only_exceptions = false)
 	{
 		if ($this->debug && ((int) $this->debug >= 2 || $this->debug == 'set_recurrences' || $this->debug == 'check_move_horizont'))
 		{
@@ -969,7 +982,7 @@ class calendar_bo
 		}
 		$events = array();
 
-		$this->insert_all_recurrences($event, $start, (new DateTime($this->config['horizont'], Api\DateTime::$server_timezone))->setUser(), $events);
+		$this->insert_all_recurrences($event, $start, $until ?? (new DateTime($this->config['horizont'], Api\DateTime::$server_timezone))->setUser(), $events);
 
 		$exceptions = array();
 		foreach((array)$event['recur_exception'] as $exception)
@@ -980,6 +993,10 @@ class calendar_bo
 		{
 			// PERIOD
 			$is_exception = in_array(Api\DateTime::to($ev['start'], true), $exceptions);
+			if ($only_exceptions && !$is_exception)
+			{
+				continue;
+			}
 			if ($ev['whole_day'])
 			{
 				$start = clone $ev['start'];

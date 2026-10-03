@@ -1580,6 +1580,42 @@ class calendar_boupdate extends calendar_bo
 	}
 
 	/**
+	 * Store exceptions of an event behind the horizont
+	 *
+	 * An exception is only a flag on the row of its recurrence, and recurrences of unlimited events are only stored up
+	 * to the horizont. Exceptions behind it (eg. EXDATE imported via CalDAV) would get lost, so we store just their
+	 * recurrence, flagged as exception. Moving the horizont continues behind the last recurrence at or before the old
+	 * horizont (see calendar_so::unfinished_recuring()) and keeps the flag.
+	 *
+	 * To not create an unlimited number of rows, only exceptions up to the maximum horizont are stored.
+	 *
+	 * @param array $event with DateTime values in user-time (for start, end and recur_exception)
+	 */
+	protected function set_exceptions_behind_horizont(array $event) : void
+	{
+		if (empty($event['recur_type']) || empty($event['recur_exception']) || empty($event['id']))
+		{
+			return;
+		}
+		$horizont = new DateTime($this->config['horizont'], DateTime::$server_timezone);
+		$max = (new DateTime('now', DateTime::$server_timezone))->modify('+'.$this->max_horizont_days().' days');
+		$event['participants'] = [];	// exceptions have no participants, avoids set_recurrences() reading them for each exception
+
+		foreach((array)$event['recur_exception'] as $exception)
+		{
+			if (!($exception instanceof DateTime))
+			{
+				$exception = new DateTime($exception, DateTime::$server_timezone);
+			}
+			if ($exception <= $horizont || $exception > $max)
+			{
+				continue;
+			}
+			$this->set_recurrences($event, (clone $exception)->setTime(0, 0, 0), (clone $exception)->setTime(23, 59, 59), true);
+		}
+	}
+
+	/**
 	 * saves an event to the database, does NOT do any notifications, see calendar_boupdate::update for that
 	 *
 	 * This methode converts from user to server time and handles the insertion of users and dates of repeating events
@@ -1851,6 +1887,7 @@ class calendar_boupdate extends calendar_bo
 				array_diff_key($save_event, ['participants' => true]),
 				$set_recurrences_start ? (new DateTime($set_recurrences_start, DateTime::$server_timezone))->setUser() : null
 			);
+			$this->set_exceptions_behind_horizont($save_event);
 		}
 
 		// create links for new participants from addressbook, if configured

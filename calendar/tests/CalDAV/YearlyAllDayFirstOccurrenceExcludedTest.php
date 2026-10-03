@@ -55,6 +55,7 @@ class YearlyAllDayFirstOccurrenceExcludedTest extends CalDAVTest
 		return [
 			'starts in 30 days, first occurrence excluded (the report)' => [$in('+30 days'), [$in('+30 days')]],
 			'starts in 30 days, no exception'                          => [$in('+30 days'), []],
+			'starts in 30 days, 2nd occurrence excluded (behind the horizont)' => [$in('+30 days'), [$in('+30 days +1 year')]],
 			'started 2 years ago, first occurrence excluded'           => [$in('-2 years'), [$in('-2 years')]],
 			'starts in 2 years, no exception'                          => [$in('+2 years'), []],
 			'starts in 2 years, first occurrence excluded'             => [$in('+2 years'), [$in('+2 years')]],
