@@ -1653,6 +1653,36 @@ not handed a filter, so a delete needs that state set, exactly as the real list 
 The smallpart suite's 27 errors are all `SmallpartRestCreateReadDeleteTest` (guzzle HTTP against
 a REST endpoint) and are identical with and without this change.
 
+### State of the baseline (2026-10-03)
+
+`NextmatchActionSubmitTest::BASELINE` is down to three entries, all of them deliberate:
+
+* `addressbook_ui` - `view_org`/`view_duplicates` switch the list to a different rows template
+  rather than acting on a selection, `export/*` is a download and `kanban` belongs to another
+  app.
+* `projectmanager_elements_ui` - converted and **reverted**: `projectmanager_bo::check_acl()`
+  returns true for everything but DELETE when no project is loaded, and an endpoint has only
+  untrusted `pe_id`s, which cannot identify an element on their own ((pm_id, pe_id) is the
+  composite key).
+* `projectmanager_pricelist_ui` - its `delete` has no server-side handler at all;
+  `projectmanager_pricelist_ui` extends the bo, not the UI class that dispatches
+  `$content['nm']['action']`, so the submit re-renders and deletes nothing. Making it work is new
+  functionality.
+
+Everything else that fell through now goes over ajax. Each converted app has its own
+`AjaxActionTest`, and all of them together run green (572 tests across the suites this work
+touched).
+
+**Open items collected on the way, none of them blockers:**
+
+| | |
+|---|---|
+| aiassistant | its list is the last legacy `<nextmatch>` in the tree and renders no widget at all, so the conversion is unverified in a browser - Et2Nextmatch conversion tracker's job |
+| admin_customfields | `EgwAction`'s policy branch does `import(egw.link('/policy/js/app.min.js'))`, and `egw.link()` does not consult the build manifest - the dynamic import fails wherever that file is not self-contained, which stops the action on submit too |
+| stylite Calls | `Cti\Storage::delete()`'s "really delete an already-deleted call" branch is unreachable: a plain delete searches with `call_deleted IS NULL` |
+| records | should Status become the category picker dialog, for consistency with timesheet and infolog? Left as a sub-menu, see that section |
+| CI | records, aiassistant, developer, bookmarks and news_admin have no `.github/workflows` at all; aitools has `tests/` but no workflow. Their new test files run nowhere |
+
 ### Phase 0's regression test - as built
 
 `api/tests/Etemplate/Widget/NextmatchActionSubmitTest.php`. 41 target classes; 40 reachable,
