@@ -1386,6 +1386,44 @@ Test-writing gotchas worth not re-learning:
   user passes its call and fails its assertion. Purging a fixture needs admin too, for the same
   reason plus `check_access()` refusing DELETE on an already-deleted record to non-admins.
 
+### aiassistant - as built, and why it could not be verified live
+
+`delete` converted; the `separator` entry removed. That entry was a caption with nothing to
+execute, which is exactly the fall-through shape - clicking it submitted the whole eTemplate.
+`egw_action` already draws a line between groups, so `++$group` on `delete` gives the same menu
+without a phantom action.
+
+Delete reaching a handler at all is new: `Ui::list()` rebuilds `$content` from scratch on every
+call and never looks at `$content['nm']['action']`, so the submit it replaces ran `action()`
+never. Two more bugs in that dead path, fixed on the way through: "select all" read a session key
+(`aiassistant/index`) that nothing ever wrote, so an empty query would have meant every
+conversation; and `Bo::search()` defaults to `$limit = 25`, so it would have stopped there
+anyway. `Bo::get_rows()` now caches the criteria under `aiassistant/list`, `action()` expands
+from them with an explicit `$limit = 0`, and refuses when nothing is cached.
+
+**Fixed on the way: the list fatalled before it drew anything.**
+`Nextmatch::call_get_rows()` resolves the row template with `Template::instance()`, which walks
+the `.xet` file with XMLReader caching each `<template>` **and returns as soon as it reaches the
+one it was asked for**. `aiassistant.list` was the *first* template in `list.xet`, so
+`aiassistant.list.rows` was never cached, `instance()` answered `false`, and
+`findLastRow(false)` raised a TypeError that replaced the whole page. Every other app puts the
+main template last for exactly this reason (records' `index.xet` ends with `records.index`);
+`list.xet` now does too. Nothing to do with the conversion, but it is the same file the
+conversion is about and it made the app unusable.
+
+**Open, and why aiassistant is unverified live:** with that fixed the page renders, but the list
+does not - `aiassistant/templates/default/list.xet` is the last `<nextmatch>` (legacy widget) in
+the tree, and it produces no widget client-side at all; the row that should hold it contains only
+the header template. The legacy class is still registered
+(`et2_register_widget(et2_nextmatch, ["nextmatch"])`), so this is not "the widget was removed" -
+but chasing it is the Et2Nextmatch conversion tracker's job, not this one. The conversion here is
+covered by `aiassistant/tests/AjaxActionTest.php` (7 tests, exercising the real delete, the
+select-all expansion and its refusal, and the refresh arguments) and **not** by a browser check.
+
+**Open: aiassistant has no CI.** Like records it had no `tests/` directory; unlike records it
+also has no `.github/workflows`, and its default branch is `main`, not `master`. The work is on a
+new `nm-action-ajax` branch there.
+
 ### Phase 0's regression test - as built
 
 `api/tests/Etemplate/Widget/NextmatchActionSubmitTest.php`. 41 target classes; 40 reachable,

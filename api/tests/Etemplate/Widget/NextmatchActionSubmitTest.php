@@ -48,10 +48,6 @@ class NextmatchActionSubmitTest extends LoggedInTest
 	 * installation.
 	 */
 	const BASELINE = [
-		'EGroupware\\Aiassistant\\Ui' => [
-			'delete',
-			'separator'
-		],
 		'EGroupware\\Aitools\\Admin' => [
 			'delete'
 		],
