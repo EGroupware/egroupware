@@ -13,6 +13,16 @@ import type {MailApp} from "../app";
  * approach as MailJmap.test.ts's "local shim uses a cacheable GET" describe block.
  */
 
+/** One real, minimal, parseable PDF (ticket #125641: wrapPdfViewerWithDownload() now actually parses the bytes via pdfjs-dist) - see MailJmapAttachmentUploadResolve.test.ts's own identical constant for the full reasoning. */
+const MINIMAL_VALID_PDF =
+	"%PDF-1.4\n" +
+	"1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n" +
+	"2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n" +
+	"3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 200 200] /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >>\nendobj\n" +
+	"4 0 obj\n<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>\nendobj\n" +
+	"5 0 obj\n<< /Length 44 >>\nstream\nBT /F1 24 Tf 20 100 Td (Test PDF) Tj ET\nendstream\nendobj\n" +
+	"trailer\n<< /Size 6 /Root 1 0 R >>\n%%EOF";
+
 const egw = {
 	user: (_key : string) => 1,
 	lang: (label : string) => label,
@@ -61,9 +71,18 @@ describe("MailJmap - 'smime:' blobId bypasses client.downloadBlob() (ticket #124
 		let capturedInit : any;
 		globalThis.fetch = (async(url : any, init? : any) =>
 		{
+			// a PDF attachment also triggers wrapPdfViewerWithDownload()'s own real pdfjs-dist
+			// worker fetch (ticket #125641) - passed through to the REAL fetch() here (a genuine
+			// network request for the real node_modules/pdfjs-dist/build/pdf.worker.mjs file,
+			// same as every other PDF-wrapper test in MailJmapAttachmentUploadResolve.test.ts),
+			// since this test's own concern is only the smime: blobId's OWN download URL below.
+			if (String(url).includes("pdf.worker"))
+			{
+				return originalFetch(url, init);
+			}
 			capturedUrl = String(url);
 			capturedInit = init;
-			return {ok: true, blob: async() => new Blob(["decrypted bytes"], {type: "application/pdf"})};
+			return {ok: true, blob: async() => new Blob([MINIMAL_VALID_PDF], {type: "application/pdf"})};
 		}) as any;
 
 		const blobId = "smime:cm93SWQ:dG9wTGV2ZWxUeXBl:ZnJvbUFkZHJlc3M:2";

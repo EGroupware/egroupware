@@ -28,6 +28,7 @@ import {isNamespaceRootName, sortTopLevel} from "./folderTree";
 import {formatDate, formatDateTime} from "../../api/js/etemplate/Et2Date/Et2Date";
 import {convert as htmlToText} from "html-to-text";
 import {defaultFontCssRule} from "../../api/js/etemplate/Et2HtmlArea/Et2HtmlAreaConfig";
+import * as pdfjs from "pdfjs-dist";
 
 interface JmapToken
 {
@@ -4666,12 +4667,13 @@ export class MailJmap
 					fileName: filename || 'attachment',
 				});
 			}
-			const contentUrl = URL.createObjectURL(MailJmap.withKnownFilename(await response.blob(), mimeType, filename));
+			const namedBlob = MailJmap.withKnownFilename(await response.blob(), mimeType, filename);
+			const contentUrl = URL.createObjectURL(namedBlob);
 			const urls = (this.attachmentViewUrls[rowId] ??= []);
 			urls.push(contentUrl);
 			if ((mimeType || '').toLowerCase() === 'application/pdf')
 			{
-				const wrapperUrl = MailJmap.wrapPdfViewerWithDownload(contentUrl, filename, mimeType);
+				const wrapperUrl = await MailJmap.wrapPdfViewerWithDownload(namedBlob, contentUrl, filename, mimeType);
 				urls.push(wrapperUrl);
 				return wrapperUrl;
 			}
@@ -4686,16 +4688,16 @@ export class MailJmap
 	}
 
 	/**
-	 * Wrap a PDF content blob: URL in a tiny same-origin HTML shell - an <embed> for viewing (the
-	 * exact same blob: URL, unchanged - viewing itself was never the problem) plus a real, visible
-	 * download link using the one mechanism actually proven reliable in this codebase
-	 * (downloadAttachment()'s own `<a download>` click) - never the browser's own native PDF
-	 * viewer's built-in save/download button, confirmed live 2026-09-15 (ralf, testing acc_id=42
-	 * against boulder.egroupware.org) to use the blob: URL's own opaque UUID as its suggested
-	 * filename regardless of the File's real .name - getAttachmentViewUrl()'s withKnownFilename()
-	 * wrapping alone was NOT sufficient for this case, tracker #124541's own follow-up after the
-	 * first fix (9404d7ef57 - the classic server-rendered popup path, unaffected by this at all)
-	 * didn't resolve it for JMAP-native/shim accounts.
+	 * Wrap a PDF in a tiny same-origin HTML shell - its pages pre-rendered to plain <img> elements
+	 * (via pdfjs-dist, see renderPdfPagesToImages()) for viewing, plus a real, visible download
+	 * link using the one mechanism actually proven reliable in this codebase (downloadAttachment()'s
+	 * own `<a download>` click) - never the browser's own native PDF viewer's built-in save/download
+	 * button, confirmed live 2026-09-15 (ralf, testing acc_id=42 against boulder.egroupware.org) to
+	 * use the blob: URL's own opaque UUID as its suggested filename regardless of the File's real
+	 * .name - getAttachmentViewUrl()'s withKnownFilename() wrapping alone was NOT sufficient for
+	 * this case, tracker #124541's own follow-up after the first fix (9404d7ef57 - the classic
+	 * server-rendered popup path, unaffected by this at all) didn't resolve it for JMAP-native/
+	 * shim accounts.
 	 *
 	 * No CSP meta tag here deliberately - unlike assembleBodyHtml()'s message-body srcdoc (which
 	 * needs frame-src 'none' to stop a message's own content escaping into a full navigation),
@@ -4704,11 +4706,37 @@ export class MailJmap
 	 * The wrapper blob: URL is only valid as long as the tab that created it (this one) stays
 	 * open - same pre-existing constraint every getAttachmentViewUrl() URL already has, not a new
 	 * one from this wrapping.
+	 *
+	 * Rendered to plain <img> pages rather than a native <embed type="application/pdf">, after
+	 * three dead-end attempts (ticket #125641, Sam/ralf, 2026-10-04) to make window.print() work on
+	 * an embedded PDF plugin at all:
+	 * 1. embed src = the SAME blob: contentUrl the Download link uses - Chrome DevTools' own Issues
+	 *    panel flagged "Fetching partitioned blob URL", blocked as cross-partition since that blob
+	 *    was created in the OPENER window's realm, but this wrapper is a separate top-level
+	 *    browsing context once opened, and current Chrome/Firefox partition blob: URL access by
+	 *    creating context. Viewing still worked (the plugin keeps its own already-fetched copy for
+	 *    on-screen display), but window.print() - even called directly, no button involved - was a
+	 *    silent no-op: Chrome's print pipeline evidently needs its own fresh fetch of the embed's
+	 *    src to render print output, and that fetch is exactly what the partition block stops.
+	 * 2. embed src = a `data:` URI instead (no separate fetch step at all) - fixed print, but broke
+	 *    on-screen viewing entirely: Chrome's native PDF plugin simply never activates for a
+	 *    `data:` src, only blob:/http(s):/file:.
+	 * 3. embed src = a blob: URL created by the WRAPPER document itself (same realm creates and
+	 *    fetches it, no cross-partition mismatch) - viewing worked again, but print was blocked
+	 *    exactly the same as attempt 1 regardless. Conclusion: Chrome's print pipeline apparently
+	 *    cannot access ANY blob: URL for an embedded PDF plugin, regardless of where/when it was
+	 *    created - there's no remaining variant of "native embed + window.print()" left to try.
+	 *
+	 * Pre-rendering to <img> (already-decoded pixels, nothing left to fetch at print time, no
+	 * plugin involved at all) sidesteps the whole class of problem - the same reasoning as this
+	 * app's own mail-body printing (MailApp.preparePrint()/displayPrint()), which also prints
+	 * plain, already-rendered DOM content rather than a foreign embedded resource.
 	 */
-	private static wrapPdfViewerWithDownload(contentUrl : string, filename : string, mimeType : string) : string
+	private static async wrapPdfViewerWithDownload(blob : Blob, contentUrl : string, filename : string, mimeType : string) : Promise<string>
 	{
 		const escaped = (s : string) => (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 		const safeName = escaped(filename || 'attachment');
+		const pageImages = await MailJmap.renderPdfPagesToImages(blob);
 		// same disk/floppy icon used everywhere else in the app for a download action -
 		// setupViewAttachmentActions()'s own single-attachment "Download" (mail/js/app.ts) uses
 		// this exact same 'fileexport' icon key, which resolves (via egw.image()'s own bootstrap
@@ -4727,24 +4755,11 @@ export class MailJmap
 		// mail/src/Compose.php's own toolbar Print action already uses elsewhere in this app.
 		const rawPrintIconUrl = egw.image('print') || '';
 		const printIconUrl = escaped(rawPrintIconUrl && !rawPrintIconUrl.match(/^[a-z]+:/i) ? location.origin + rawPrintIconUrl : rawPrintIconUrl);
-		// #toolbar=0&navpanes=0 suppresses the browser's OWN native PDF viewer chrome entirely (a
-		// long-standing Chrome/PDFium URL-fragment convention, also honoured for blob: content) -
-		// without it, that native toolbar's OWN save/download icon is still visible right next to
-		// ours and LOOKS like the more familiar option, so a user reaches for that one out of habit
-		// and gets the wrong (UUID) name right back - found live 2026-09-15 (ralf, after confirming
-		// the CSP fix worked): "thought I doubt out uses will click on the correct Download link".
-		// Hiding the native chrome leaves our own button the only visible affordance at all - but
-		// it ALSO hides that chrome's own Print icon, found live via ticket #125641 (a customer,
-		// relayed by Birgit: "ich denke es spricht aber auch nichts dagegen, einfach zusätzlich dort
-		// auch einen Print-Button mit anzuzeigen, der dann die gleiche Aktion triggert wie der
-		// Rechtsklick" - Ctrl/Cmd-P or right-click->Print on the embed itself still worked all
-		// along, just with no visible button for it anymore). Added one here, right next to
-		// Download - window.print() on this WRAPPER document (not the embed itself, which has no
-		// scriptable print() of its own) still prints the embedded PDF's own pages in Chromium, with
-		// the toolbar itself hidden from the print output via the @media print rule below.
+		const pagesHtml = pageImages.map((dataUrl, i) =>
+			`<img src="${dataUrl}" alt="${escaped(egw.lang('page'))} ${i + 1}">`).join('');
 		const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${safeName}</title>` +
-			`<style>html,body{margin:0;height:100%;font-family:sans-serif}` +
-			`.toolbar{display:flex;align-items:center;gap:10px;height:48px;` +
+			`<style>html,body{margin:0;background:#525659;font-family:sans-serif}` +
+			`.toolbar{position:sticky;top:0;z-index:1;display:flex;align-items:center;gap:10px;height:48px;` +
 			`background:#323639;padding:0 16px;box-sizing:border-box}` +
 			`.toolbar .name{color:#fff;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}` +
 			`.toolbar a,.toolbar button{color:#212529;background:#fff;text-decoration:none;font-size:13px;font-weight:600;` +
@@ -4752,15 +4767,90 @@ export class MailJmap
 			`border:0;font-family:inherit;cursor:pointer}` +
 			`.toolbar a:hover,.toolbar button:hover{background:#e9ecef}` +
 			`.toolbar a img,.toolbar button img{width:16px;height:16px;display:block}` +
-			`embed{display:block;width:100%;height:calc(100% - 48px);border:0}` +
-			`@media print{.toolbar{display:none}embed{height:100%}}</style></head>` +
+			`#egwPdfPages{display:flex;flex-direction:column;align-items:center;gap:8px;padding:8px}` +
+			`#egwPdfPages img{display:block;max-width:100%;box-shadow:0 1px 4px rgba(0,0,0,.4)}` +
+			`@media print{.toolbar{display:none}body{background:#fff}` +
+			`#egwPdfPages{padding:0;gap:0}#egwPdfPages img{max-width:100%;box-shadow:none;page-break-after:always}}` +
+			`</style></head>` +
 			`<body><div class="toolbar"><span class="name">${safeName}</span>` +
 			`<button type="button" id="egwPrintBtn"><img src="${printIconUrl}" alt="">${escaped(egw.lang('print'))}</button>` +
 			`<a href="${contentUrl}" download="${safeName}"><img src="${downloadIconUrl}" alt="">${escaped(egw.lang('download'))}</a></div>` +
-			`<embed src="${contentUrl}#toolbar=0&navpanes=0" type="${escaped(mimeType)}">` +
+			`<div id="egwPdfPages">${pagesHtml}</div>` +
 			`<script src="${MailJmap.printButtonScriptUrl()}"></script></body></html>`;
 		return URL.createObjectURL(new Blob([html], {type: 'text/html'}));
 	}
+
+	/**
+	 * Renders every page of a PDF Blob to a plain PNG `data:` URI (via pdfjs-dist, the same library
+	 * api/js/etemplate/CustomHtmlElements/pdf-player.ts already uses elsewhere in this app) - see
+	 * wrapPdfViewerWithDownload()'s own docblock for why a pre-rendered <img> per page, not a native
+	 * <embed>, is what ends up in the wrapper. Runs entirely in THIS (the opener's) realm, where
+	 * pdfjs-dist is already bundled - the wrapper document itself stays pure static markup, no
+	 * pdf.js of its own to load there at all.
+	 */
+	private static async renderPdfPagesToImages(blob : Blob) : Promise<string[]>
+	{
+		await MailJmap.ensurePdfWorkerSrc();
+		const pdf = await pdfjs.getDocument({data: new Uint8Array(await blob.arrayBuffer())}).promise;
+		try
+		{
+			const images : string[] = [];
+			for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++)
+			{
+				const page = await pdf.getPage(pageNumber);
+				// 1.5 matches pdf-player.ts's own viewer default - crisp enough for on-screen
+				// reading and print alike without inflating the wrapper's own HTML too much per page
+				const viewport = page.getViewport({scale: 1.5});
+				const canvas = document.createElement('canvas');
+				canvas.width = viewport.width;
+				canvas.height = viewport.height;
+				await page.render({canvas, viewport}).promise;
+				images.push(canvas.toDataURL('image/png'));
+				page.cleanup();
+			}
+			return images;
+		}
+		finally
+		{
+			await pdf.destroy();
+		}
+	}
+
+	/**
+	 * pdf.js only ships its worker as a native ES module (pdf.worker.mjs) - no classic-script build
+	 * exists any more. Module workers (and pdf.js's own "fake worker" fallback, which dynamically
+	 * import()s the same URL on the main thread) both require the server to serve it with a
+	 * JavaScript-family Content-Type - many web servers' default mime.types have no `.mjs` mapping
+	 * and serve it as application/octet-stream instead, which every browser correctly refuses to
+	 * execute as a module. Since EGroupware ships to many self-hosted installs whose web server
+	 * config we don't control, fetch the worker's source as plain text (fetch() doesn't care about
+	 * Content-Type) and hand the browser an explicitly-typed Blob URL instead - same fix, same
+	 * reasoning as pdf-player.ts's own ensureWorkerSrc() (not reused directly: that one lives in a
+	 * different rollup chunk/module instance of pdfjs-dist, with its own separate
+	 * GlobalWorkerOptions to set).
+	 *
+	 * Memoized at class scope, not per call - GlobalWorkerOptions.workerSrc is itself a single
+	 * global pdf.js setting, and re-fetching/re-blobbing the worker for every PDF attachment would
+	 * be wasteful.
+	 */
+	private static ensurePdfWorkerSrc() : Promise<string>
+	{
+		if (!MailJmap._pdfWorkerBlobUrl)
+		{
+			const url = egw.webserverUrl + '/node_modules/pdfjs-dist/build/pdf.worker.mjs';
+			MailJmap._pdfWorkerBlobUrl = fetch(url)
+				.then((response) => response.text())
+				.then((source) => URL.createObjectURL(new Blob([source], {type: 'text/javascript'})))
+				.then((blobUrl) =>
+				{
+					pdfjs.GlobalWorkerOptions.workerSrc = blobUrl;
+					return blobUrl;
+				});
+		}
+		return MailJmap._pdfWorkerBlobUrl;
+	}
+
+	private static _pdfWorkerBlobUrl : Promise<string> | undefined;
 
 	/**
 	 * The Print button's click handler has to live in a SEPARATE <script src="blob:..."> file,
@@ -4771,9 +4861,10 @@ export class MailJmap
 	 * empirically - an inline onclick/<script> silently never ran at all, no visible error short of
 	 * a CSP violation console message). `blob:` itself IS an allowed script-src value though - a
 	 * SEPARATE blob: URL referenced via `<script src>` loads and runs fine under the exact same
-	 * policy. The handler code is always identical (no per-attachment data baked in), so this is
-	 * memoized once and reused for every wrapped PDF, rather than creating (and never revoking) a
-	 * fresh blob: URL on every single call.
+	 * policy. The handler code is always identical (no per-attachment data baked in any more, now
+	 * that the PDF itself is pre-rendered <img> markup rather than something this script has to
+	 * set up), so it's memoized once and reused for every wrapped PDF, rather than creating (and
+	 * never revoking) a fresh blob: URL on every single call.
 	 */
 	private static printButtonScriptUrl() : string
 	{
@@ -6723,10 +6814,11 @@ export class MailJmap
 			mimeType: type || 'application/octet-stream',
 			fileName: name,
 		});
-		const contentUrl = URL.createObjectURL(MailJmap.withKnownFilename(await response.blob(), type, name));
+		const namedBlob = MailJmap.withKnownFilename(await response.blob(), type, name);
+		const contentUrl = URL.createObjectURL(namedBlob);
 		if ((type || '').toLowerCase() === 'application/pdf')
 		{
-			return MailJmap.wrapPdfViewerWithDownload(contentUrl, name, type);
+			return await MailJmap.wrapPdfViewerWithDownload(namedBlob, contentUrl, name, type);
 		}
 		return contentUrl;
 	}
