@@ -36,10 +36,19 @@ import * as pdfjs from "pdfjs-dist";
  * Cached at module scope (not per pdf-player instance) since GlobalWorkerOptions.workerSrc is
  * itself a single global pdf.js setting, and re-fetching/re-blobbing the ~2MB worker for every
  * <pdf-player> would be wasteful.
+ *
+ * Exported (ticket #125641, 2026-10-04) - mail/js/jmap.ts's own PDF-attachment print/view wrapper
+ * (MailJmap.renderPdfPagesToImages()) needs this exact same setup, and reuses this one rather than
+ * duplicating it: this module is already unconditionally imported by every single page
+ * (etemplate2.ts -> et2_widget_video.ts -> here), so rollup already puts both callers' own
+ * `import * as pdfjs from "pdfjs-dist"` in the SAME shared chunk - confirmed live by ralf
+ * (concerned about a second, duplicate ~1MB+ copy getting bundled into mail's own chunk instead -
+ * it doesn't, but a SEPARATE memoized workerBlobUrl in jmap.ts would still have wastefully
+ * re-fetched/re-blobbed the ~2MB worker a second time on any page using both features).
  */
 let workerBlobUrl : Promise<string> = null;
 
-function ensureWorkerSrc() : Promise<string>
+export function ensureWorkerSrc() : Promise<string>
 {
 	if (!workerBlobUrl)
 	{

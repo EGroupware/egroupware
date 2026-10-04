@@ -29,6 +29,7 @@ import {formatDate, formatDateTime} from "../../api/js/etemplate/Et2Date/Et2Date
 import {convert as htmlToText} from "html-to-text";
 import {defaultFontCssRule} from "../../api/js/etemplate/Et2HtmlArea/Et2HtmlAreaConfig";
 import * as pdfjs from "pdfjs-dist";
+import {ensureWorkerSrc} from "../../api/js/etemplate/CustomHtmlElements/pdf-player";
 
 interface JmapToken
 {
@@ -4787,10 +4788,16 @@ export class MailJmap
 	 * <embed>, is what ends up in the wrapper. Runs entirely in THIS (the opener's) realm, where
 	 * pdfjs-dist is already bundled - the wrapper document itself stays pure static markup, no
 	 * pdf.js of its own to load there at all.
+	 *
+	 * ensureWorkerSrc() is pdf-player.ts's own (imported, not duplicated here) - confirmed live
+	 * (ralf, ticket #125641) that rollup already puts both files' own `import * as pdfjs from
+	 * "pdfjs-dist"` in the SAME shared chunk (etemplate2.ts -> et2_widget_video.ts -> pdf-player.ts
+	 * unconditionally imports it for every single page already), so reusing its memoized
+	 * workerBlobUrl avoids a second, wasteful ~2MB worker fetch+blob on any page using both features.
 	 */
 	private static async renderPdfPagesToImages(blob : Blob) : Promise<string[]>
 	{
-		await MailJmap.ensurePdfWorkerSrc();
+		await ensureWorkerSrc();
 		const pdf = await pdfjs.getDocument({data: new Uint8Array(await blob.arrayBuffer())}).promise;
 		try
 		{
@@ -4815,42 +4822,6 @@ export class MailJmap
 			await pdf.destroy();
 		}
 	}
-
-	/**
-	 * pdf.js only ships its worker as a native ES module (pdf.worker.mjs) - no classic-script build
-	 * exists any more. Module workers (and pdf.js's own "fake worker" fallback, which dynamically
-	 * import()s the same URL on the main thread) both require the server to serve it with a
-	 * JavaScript-family Content-Type - many web servers' default mime.types have no `.mjs` mapping
-	 * and serve it as application/octet-stream instead, which every browser correctly refuses to
-	 * execute as a module. Since EGroupware ships to many self-hosted installs whose web server
-	 * config we don't control, fetch the worker's source as plain text (fetch() doesn't care about
-	 * Content-Type) and hand the browser an explicitly-typed Blob URL instead - same fix, same
-	 * reasoning as pdf-player.ts's own ensureWorkerSrc() (not reused directly: that one lives in a
-	 * different rollup chunk/module instance of pdfjs-dist, with its own separate
-	 * GlobalWorkerOptions to set).
-	 *
-	 * Memoized at class scope, not per call - GlobalWorkerOptions.workerSrc is itself a single
-	 * global pdf.js setting, and re-fetching/re-blobbing the worker for every PDF attachment would
-	 * be wasteful.
-	 */
-	private static ensurePdfWorkerSrc() : Promise<string>
-	{
-		if (!MailJmap._pdfWorkerBlobUrl)
-		{
-			const url = egw.webserverUrl + '/node_modules/pdfjs-dist/build/pdf.worker.mjs';
-			MailJmap._pdfWorkerBlobUrl = fetch(url)
-				.then((response) => response.text())
-				.then((source) => URL.createObjectURL(new Blob([source], {type: 'text/javascript'})))
-				.then((blobUrl) =>
-				{
-					pdfjs.GlobalWorkerOptions.workerSrc = blobUrl;
-					return blobUrl;
-				});
-		}
-		return MailJmap._pdfWorkerBlobUrl;
-	}
-
-	private static _pdfWorkerBlobUrl : Promise<string> | undefined;
 
 	/**
 	 * The Print button's click handler has to live in a SEPARATE <script src="blob:..."> file,
