@@ -10,6 +10,23 @@ import type {MailApp} from "../app";
  * fetchAttachmentsMetadata()/getAttachmentViewUrl() - previously untested.
  */
 
+/**
+ * Ticket #125641 follow-up (2026-10-04): wrapPdfViewerWithDownload() now actually PARSES the PDF
+ * via pdfjs-dist (renderPdfPagesToImages()) rather than just referencing its bytes by URL - a bare
+ * placeholder string like "%PDF-1.4" (fine for the old <embed>-based wrapper, which never looked
+ * inside the bytes at all) is not a real, parseable PDF and would make every test below reject.
+ * One real, minimal (single blank page, 200x200pt) PDF, reused everywhere a "real" PDF attachment
+ * is needed.
+ */
+const MINIMAL_VALID_PDF =
+	"%PDF-1.4\n" +
+	"1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n" +
+	"2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n" +
+	"3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 200 200] /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >>\nendobj\n" +
+	"4 0 obj\n<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>\nendobj\n" +
+	"5 0 obj\n<< /Length 44 >>\nstream\nBT /F1 24 Tf 20 100 Td (Test PDF) Tj ET\nendstream\nendobj\n" +
+	"trailer\n<< /Size 6 /Root 1 0 R >>\n%%EOF";
+
 const egw = {
 	user : (_key : string) => 1,
 	lang : (label : string, ...args : string[]) =>
@@ -199,12 +216,12 @@ describe("MailJmap.downloadBlobUrl() - the SVG+xml mime-type-enforcement fix", (
 	it("wraps a PDF in the same download-link viewer wrapper getAttachmentViewUrl() uses, not a raw blob: URL", async() =>
 	{
 		const jmap = new MailJmap(createFakeApp());
-		primeToken(jmap, "1", {downloadBlob : async() => ({blob : async() => new Blob(["%PDF-1.4"], {type : "application/pdf"})})});
+		primeToken(jmap, "1", {downloadBlob : async() => ({blob : async() => new Blob([MINIMAL_VALID_PDF], {type : "application/pdf"})})});
 
 		const wrapperUrl = await jmap.downloadBlobUrl("1", "blob1", "Invoice RE-2026-200.pdf", "application/pdf");
 		const html = await fetch(wrapperUrl).then(r => r.text());
 
-		assert.include(html, "<embed", "must still embed the actual PDF for viewing");
+		assert.include(html, "<img", "must still render the actual PDF's page(s) for viewing");
 		assert.include(html, 'download="Invoice RE-2026-200.pdf"', "must offer the real filename, not the blob: URL's own opaque UUID");
 	});
 
@@ -413,7 +430,7 @@ describe("MailJmap.getAttachmentViewUrl() - PDF gets wrapped with a real downloa
 	// named File alone is not enough there: the native viewer doesn't consult it for that action.
 	async function fetchWrapperHtml(jmap : MailJmap) : Promise<string>
 	{
-		primeToken(jmap, "1", {downloadBlob : async() => ({blob : async() => new Blob(["%PDF-1.4"], {type : "application/pdf"})})});
+		primeToken(jmap, "1", {downloadBlob : async() => ({blob : async() => new Blob([MINIMAL_VALID_PDF], {type : "application/pdf"})})});
 		const wrapperUrl = await jmap.getAttachmentViewUrl("row1", "1", "blob1", "Invoice RE-2026-200.pdf", "application/pdf");
 		return await fetch(wrapperUrl).then(r => r.text());
 	}
@@ -423,7 +440,7 @@ describe("MailJmap.getAttachmentViewUrl() - PDF gets wrapped with a real downloa
 		const jmap = new MailJmap(createFakeApp());
 		const html = await fetchWrapperHtml(jmap);
 
-		assert.include(html, "<embed", "must embed the actual PDF for viewing - that part already worked, only the save-name didn't");
+		assert.include(html, "<img", "must render the actual PDF's page(s) for viewing - that part already worked, only the save-name didn't");
 	});
 
 	it("wrapper's download link uses the real filename via a real <a download> - the one mechanism proven reliable in this codebase", async() =>
@@ -490,35 +507,26 @@ describe("MailJmap.getAttachmentViewUrl() - PDF gets wrapped with a real downloa
 		}
 	});
 
-	it("suppresses the browser's own native PDF viewer toolbar, so our download link is the only one visible", async() =>
+	/**
+	 * Ticket #125641 follow-up (Sam, live reproduction with ralf, 2026-10-04): three dead-end
+	 * attempts at a native <embed type="application/pdf"> + window.print() combination, each
+	 * breaking something else - see wrapPdfViewerWithDownload()'s own docblock for the full
+	 * history (blob: cross-partition block, data: URI not activating the native plugin, then the
+	 * SAME partition block even for a wrapper-document-local blob:). Landed on pre-rendering every
+	 * page to a plain <img> (via pdfjs-dist, same library pdf-player.ts already uses) - already-
+	 * decoded pixels, nothing left to fetch at print time, no native plugin involved at all.
+	 */
+	it("renders the PDF's page(s) as plain <img> elements, not a native <embed>", async() =>
 	{
-		// ralf, 2026-09-15, right after confirming the CSP fix above actually worked live:
-		// "thought I doubt out uses will click on the correct Download link" - the native PDF
-		// viewer's OWN toolbar (with its own, still-wrong-filename save button) was still shown
-		// right next to ours, and looks like the more familiar option. #toolbar=0&navpanes=0 is
-		// the standard Chrome/PDFium URL-fragment convention for suppressing that native chrome
-		// entirely, also honoured for blob: content, leaving ours the only visible download
-		// affordance at all.
 		const jmap = new MailJmap(createFakeApp());
 		const html = await fetchWrapperHtml(jmap);
 
-		assert.include(html, "#toolbar=0");
-		assert.include(html, "navpanes=0");
+		assert.notInclude(html, "<embed", "the native plugin route is a dead end for printing - see this describe block's own docblock");
+		assert.match(html, /<div id="egwPdfPages"><img src="data:image\/png;base64,[^"]+" alt="[^"]*"><\/div>/,
+			"exactly one rendered page for this single-page test fixture, as a data: PNG - never a blob:, nothing left to fetch at print time");
 	});
 
-	/**
-	 * Ticket #125641 (a customer, relayed by Birgit): suppressing the native PDF viewer's own
-	 * toolbar above also hid its Print icon - Ctrl/Cmd-P and right-click->Print on the <embed>
-	 * itself still worked, just with no visible button for it anymore.
-	 *
-	 * The click handler is deliberately an EXTERNAL `<script src="blob:...">`, never an inline
-	 * onclick/<script> - found live 2026-10-02 testing against boulder.egroupware.org: this app's
-	 * own CSP (no 'unsafe-inline' in script-src) is inherited by a blob: document from whichever
-	 * page created it, so an inline handler silently never runs at all. These tests fetch and
-	 * execute that referenced script directly, the same way a real browser would, rather than
-	 * just grepping the wrapper HTML for a literal "window.print()" string.
-	 */
-	it("shows a Print button wired to an external, CSP-safe <script src> that calls window.print()", async() =>
+	it("shows a Print button whose script wires its click to window.print()", async() =>
 	{
 		const jmap = new MailJmap(createFakeApp());
 		const html = await fetchWrapperHtml(jmap);
@@ -526,8 +534,8 @@ describe("MailJmap.getAttachmentViewUrl() - PDF gets wrapped with a real downloa
 		assert.include(html, '<button type="button" id="egwPrintBtn">', "must have a button for the script to attach to");
 		const scriptSrcMatch = html.match(/<script src="(blob:[^"]+)">/);
 		assert.isNotNull(scriptSrcMatch, "Print's click handler must be an external <script src>, not inline (CSP blocks inline in this app)");
-
 		const scriptCode = await fetch(scriptSrcMatch[1]).then(r => r.text());
+
 		assert.include(scriptCode, "egwPrintBtn");
 		assert.include(scriptCode, "window.print()");
 	});
@@ -541,7 +549,7 @@ describe("MailJmap.getAttachmentViewUrl() - PDF gets wrapped with a real downloa
 			"Print should appear first, matching the order Birgit asked for in the ticket");
 	});
 
-	it("reuses the same Print script blob: URL across multiple PDF wraps, rather than leaking a fresh one each time", async() =>
+	it("reuses the same Print script blob: URL across multiple PDF wraps - it carries no per-attachment data any more", async() =>
 	{
 		const jmap1 = new MailJmap(createFakeApp());
 		const html1 = await fetchWrapperHtml(jmap1);
@@ -566,7 +574,7 @@ describe("MailJmap.getAttachmentViewUrl() - PDF gets wrapped with a real downloa
 	it("tracks both the content and wrapper urls under the rowId, so revokeAttachmentViewUrls() releases both", async() =>
 	{
 		const jmap = new MailJmap(createFakeApp());
-		primeToken(jmap, "1", {downloadBlob : async() => ({blob : async() => new Blob(["%PDF-1.4"], {type : "application/pdf"})})});
+		primeToken(jmap, "1", {downloadBlob : async() => ({blob : async() => new Blob([MINIMAL_VALID_PDF], {type : "application/pdf"})})});
 
 		await jmap.getAttachmentViewUrl("row1", "1", "blob1", "Invoice.pdf", "application/pdf");
 
