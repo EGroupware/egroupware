@@ -982,29 +982,34 @@ function update_api_setup(string $egw_dir)
 }
 
 /**
- * Update content of package.json file with new maintenance version
+ * Update content of package.json (and package-lock.json) file with new maintenance version
+ *
+ * Uses `npm version`, NOT a hand-rolled regex replace on package.json alone - that used to leave
+ * package-lock.json's own "version" fields stale (one release behind package.json's), which broke
+ * a straight `git compare <tag>...<branch>` patch's first hunk against anything built from this
+ * tag (eg. doc/docker/fpm/Dockerfile-patch): the committed package-lock.json never matched the
+ * image's own, since nothing here ever re-synced it. `--no-git-tag-version` - this script commits
+ * the result itself below; `--allow-same-version` - harmless if ever re-run for the same version.
  *
  * @param string $egw_dir full path to EGroupware directory
- * @return string full patch to file
+ * @return string space-separated paths of package.json and package-lock.json, for the git commit below
  */
 function update_package_json(string $egw_dir)
 {
 	global $config;
 
-	if (!($content = file_get_contents($path=$egw_dir.'/package.json')))
+	$path = $egw_dir.'/package.json';
+	$lock_path = $egw_dir.'/package-lock.json';
+	if (!file_exists($path))
 	{
-		throw new Exception("Could not read file '$path' to update maintenance-version!");
+		throw new Exception("Could not find file '$path' to update maintenance-version!");
 	}
 
-	$content = preg_replace('/"version":\s+"[^"]+",/',
-		'"version": "'.$config['version'].'.'.$config['packaging'].'",',
-		$content);
+	$version = $config['version'].'.'.$config['packaging'];
+	run_cmd('cd '.escapeshellarg($egw_dir).' && npm version '.escapeshellarg($version).
+		' --no-git-tag-version --allow-same-version');
 
-	if (!file_put_contents($path, $content))
-	{
-		throw new Exception("Could not update file '$path' with maintenance-version!");
-	}
-	return $path;
+	return $path.' '.$lock_path;
 }
 
 /**
