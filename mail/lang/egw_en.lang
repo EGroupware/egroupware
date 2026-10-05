@@ -406,6 +406,7 @@ mail settings	mail	en	Mail settings
 mail source	mail	en	Mail Source
 mail-address	mail	en	Mail-Address
 mailaccount	mail	en	Mail account
+mailing-lists and groups resolved, the message goes to %1 recipients	mail	en	Mailing-lists and groups resolved, the message goes to %1 recipients
 mailinglist	mail	en	Mailinglist
 mails	common	en	Mails
 mails can be copied to that folder via context menu, if folder is configured.	mail	en	Emails can be copied to that folder via context menu, if folder is configured.
@@ -462,6 +463,7 @@ no adress, to send this mail to, supplied	mail	en	no address was supplied to who
 no filter	mail	en	No filter
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	en	No folder destination supplied, and no folder to save message or other measure to store the email (save to InfoLog/Tracker) provided, but required.
 no folders	mail	en	no folders
+no mailing-list or group found in the recipients	mail	en	No mailing-list or group found in the recipients
 no message body supplied	mail	en	No message body supplied
 no plain text part found	mail	en	No plain text part found
 no private key stored to import a certificate for!	mail	en	No private key stored to import a certificate for!
@@ -597,6 +599,8 @@ request for passphrase	mail	en	Request for passphrase
 required pear class mail/mimedecode.php not found.	mail	en	Required PEAR class Mail/mimeDecode.php not found.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	en	Required to disable if you use Dovecot with private seen flags on shared or user folder!
 resend after how many days?	mail	en	Resend after how many days?
+resolve all mailing-list recipients to check them	mail	en	Resolve all mailing-list recipients to check them
+resolve mailing-lists	mail	en	Resolve mailing-lists
 respond to mail sent to:	mail	en	Respond to email sent to:
 restrict acl management	admin	en	Restrict access rights management
 rights	mail	en	Rights

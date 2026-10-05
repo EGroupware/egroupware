@@ -165,6 +165,14 @@ class Compose
 				'onExecute' => 'javaScript:app.mail.addressbookSelect',
 				'toolbarDefault' => false,
 			),
+			'resolve_lists' => array(
+				'caption' => 'Resolve mailing-lists',
+				'icon' => 'person-lines-fill',
+				'group' => $group,
+				'hint' => 'Resolve all mailing-list recipients to check them',
+				'onExecute' => 'javaScript:app.mail.compose.resolveMailingLists',
+				'toolbarDefault' => false,
+			),
 			'disposition' => array(
 				'caption' => 'Notification',
 				'icon' => 'notification',
