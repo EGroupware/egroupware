@@ -486,7 +486,7 @@ emails	common	pl	E-maile
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	pl	Osadzone style CSS, np. ".red { background: red; }" (zwróć uwagę na "." przed nazwą klasy) lub "@import url(...)" (nazwy klas są globalne dla całej strony!).
 empty file	common	pl	Pusty plik
 enable javascript onchange submit	common	pl	Aktywuj przesłanie formularza poprzez JavaScript na onchange
-enable logging	groupdav	pl	Włącz rejestrowanie
+enable logging	common	pl	Włącz rejestrowanie
 enabled	common	pl	Aktywny
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	pl	Umożliwia rejestrowanie ruchu CalDAV/CardDAV w celu diagnozowania problemów z urządzeniami.
 end date	common	pl	Data końcowa
@@ -1203,7 +1203,7 @@ show (no save)	common	pl	Pokaż (bez zapisu)
 show all	common	pl	Pokaż wszystko
 show all / cancel filter	common	pl	Pokaż wszystko / anuluj filtr
 show all categorys	common	pl	Pokaż wszystkie kategorie
-show log of following device	groupdav	pl	Pokaż dziennik następującego urządzenia
+show log of following device	common	pl	Pokaż dziennik następującego urządzenia
 show page generation time	common	pl	Wyświetl czas generowania strony
 show page generation time on the bottom of the page?	common	pl	Wyświetlać czas generowania strony w jej stopce.
 show page generation time?	common	pl	Czy pokazywać czas generowania strony
