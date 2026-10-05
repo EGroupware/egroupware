@@ -96,6 +96,12 @@ class pdf_player extends HTMLElement {
 	 */
 	private _canvas : HTMLCanvasElement;
 	/**
+	 * The currently in-flight render() call on _canvas, if any - see __render()'s own docblock
+	 * for why this has to be tracked.
+	 * @private
+	 */
+	private _renderTask : any = null;
+	/**
 	 * Styling contianer
 	 * @private
 	 */
@@ -209,6 +215,8 @@ class pdf_player extends HTMLElement {
 	{
 		this.__pdfViewState.pdf?.destroy();
 		this.__pdfViewState.pdf = null;
+		this._renderTask?.cancel();
+		this._renderTask = null;
 		this._canvas?.remove();
 		this._canvas = document.createElement('canvas');
 		this._wrapper.appendChild(this._canvas);
@@ -236,6 +244,14 @@ class pdf_player extends HTMLElement {
 	/**
 	 * Render given page from pdf into the canvas container
 	 *
+	 * pdf.js refuses a second render() on a canvas that already has one in flight
+	 * ("Cannot use the same canvas during multiple render() operations") - found live 2026-10-05
+	 * navigating pages quickly enough (eg. play()'s own interval, or rapid prevPage()/nextPage())
+	 * for two calls to this method to overlap, since _canvas is reused across every call rather
+	 * than one per page. Cancelling any still-pending previous task before starting the next one
+	 * (rather than eg. awaiting it first) matches how a user expects "jump to this page" to behave
+	 * - show the latest requested page as soon as possible, not queue up every intermediate one.
+	 *
 	 * @param _page
 	 * @private
 	 */
@@ -244,15 +260,27 @@ class pdf_player extends HTMLElement {
 		if (!this.__pdfViewState.pdf) return;
 		let p = _page || this.__pdfViewState.currentPage;
 		let self = this;
+		self._renderTask?.cancel();
+		self._renderTask = null;
 		return this.__pdfViewState.pdf.getPage(p).then((page) => {
 			let canvasContext = self._canvas.getContext('2d');
 			let viewport = page.getViewport({scale:self.__pdfViewState.zoom});
 			self._canvas.width = viewport.width;
 			self._canvas.height = viewport.height;
 
-			page.render({
+			const task = page.render({
 				canvasContext: canvasContext,
 				viewport: viewport
+			});
+			self._renderTask = task;
+			return task.promise.then(() =>
+			{
+				if (self._renderTask === task) self._renderTask = null;
+			}).catch((e) =>
+			{
+				// our own cancel() above (or a newer call's own cancel()) rejects this exact
+				// way - expected and silent; anything else is a genuine render failure
+				if (e?.name !== 'RenderingCancelledException') throw e;
 			});
 		});
 	}
@@ -448,6 +476,8 @@ class pdf_player extends HTMLElement {
 	disconnectedCallback()
 	{
 		window.clearInterval(this.__playingInterval);
+		this._renderTask?.cancel();
+		this._renderTask = null;
 		this.__pdfViewState.pdf?.destroy();
 		this.__pdfViewState.pdf = null;
 	}
