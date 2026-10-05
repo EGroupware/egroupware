@@ -34,6 +34,9 @@ export class EgwPopupAction extends EgwAction {
     iconOnly = false;
     // Marks this child as the static default to preselect when there is no stored preference yet
     toolbarDefault = false;
+    // A (top-level) toolbar action is shown in the toolbar until the user moves it into the menu - with this set, it is
+    // in the menu until the user moves it to the toolbar, as long as there is no stored preference for it yet
+    defaultInList = false;
 
     constructor(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple) {
         super(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple)
@@ -139,6 +142,9 @@ export class EgwPopupAction extends EgwAction {
     }
     set_toolbarDefault (_value : boolean){
         this.toolbarDefault = _value;
+    }
+    set_defaultInList (_value : boolean){
+        this.defaultInList = _value;
     }
 }
 

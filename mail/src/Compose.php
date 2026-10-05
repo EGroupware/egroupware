@@ -171,7 +171,7 @@ class Compose
 				'group' => $group,
 				'hint' => 'Resolve all mailing-list recipients to check them',
 				'onExecute' => 'javaScript:app.mail.compose.resolveMailingLists',
-				'toolbarDefault' => false,
+				'defaultInList' => true,	// in the toolbar's menu, until a user moves it into the toolbar
 			),
 			'disposition' => array(
 				'caption' => 'Notification',
