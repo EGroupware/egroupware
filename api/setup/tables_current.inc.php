@@ -490,7 +490,7 @@ $phpgw_baseline = array(
 			'ident_realname' => array('type' => 'varchar','precision' => '128','nullable' => False,'comment' => 'real name'),
 			'ident_email' => array('type' => 'varchar','precision' => '128','comment' => 'email address'),
 			'ident_org' => array('type' => 'varchar','precision' => '128','comment' => 'organisation'),
-			'ident_signature' => array('type' => 'text','comment' => 'signature text'),
+			'ident_signature' => array('type' => 'longtext','comment' => 'signature text'),
 			'account_id' => array('type' => 'int','meta' => 'account','precision' => '4','nullable' => False,'default' => '0','comment' => '0=all users of give mail account'),
 			'ident_name' => array('type' => 'varchar','precision' => '128','comment' => 'name of identity to display')
 		),
