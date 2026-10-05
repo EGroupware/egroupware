@@ -12,9 +12,7 @@ ask to start and stop working time with session	timesheet	ru	Попросите 
 both: allow to use projectmanager and free project-names	admin	ru	Оба: позволяет использовать Управление проектами и свободные названия проектов
 by	timesheet	ru	к
 category for 'working time'	admin	ru	Категория для 'Рабочее время'
-change category	timesheet	ru	Изменить категорию
 change owner when updating	timesheet	ru	Смена владельца при обновлении
-changed category to %1	timesheet	ru	Категория изменена на %1
 changed status	timesheet	ru	Состояние изменено.
 choose 'creator' of imported data	timesheet	ru	Изменить "создателя" импортированных данных
 comment by %1 at %2:	timesheet	ru	Комментировать по %1 на %2

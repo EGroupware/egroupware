@@ -259,8 +259,10 @@ centered	common	en	Centered
 central african republic	common	en	CENTRAL AFRICAN REPUBLIC
 chad	common	en	CHAD
 change	common	en	Change
+change category	common	en	Change category
 change owner	common	en	Change Owner
 changed	common	en	Changed
+changed category to %1	common	en	Changed category to %1
 changes that you made may not be saved.	common	en	Changes that you made may not be saved.
 charset	common	en	Charset
 check all	common	en	Check all
@@ -1164,6 +1166,7 @@ remove selected accounts	common	en	Remove selected accounts
 remove shortcut	common	en	Remove shortcut
 remove this link (not the entry itself)	common	en	Remove link
 removed (now) empty directory fs_id=%1	admin	en	Removed (now) empty folder fs_id=%1
+removed category	common	en	removed category
 removeformat	common	en	Removeformat
 rename	common	en	Rename
 repeat password	common	en	Repeat password

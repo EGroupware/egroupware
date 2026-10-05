@@ -838,6 +838,7 @@ remove	api	no	Fjern
 remove row (can not be undone!!!)	common	no	Fjern linje (Kan ikke gjøres om!)
 remove selected accounts	common	no	Fjern valgte konti
 remove this link (not the entry itself)	common	no	Fjern denne lenken (ikke forekomsten i seg selv)
+removed category	common	no	fjernet kategori
 rename	common	no	Endre navn
 replace	common	no	Erstatt
 replace with	common	no	Erstatt med

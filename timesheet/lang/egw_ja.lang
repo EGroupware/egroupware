@@ -12,9 +12,7 @@ ask to start and stop working time with session	timesheet	ja	セッションで�
 both: allow to use projectmanager and free project-names	admin	ja	両方: プロジェクト・マネージャを利用
 by	timesheet	ja	作業者:
 category for 'working time'	admin	ja	労働時間」のカテゴリー
-change category	timesheet	ja	カテゴリを変更
 change owner when updating	timesheet	ja	更新時に所有者を変更する
-changed category to %1	timesheet	ja	カテゴリを %1 に変更しました。
 changed status	timesheet	ja	状態を変更しました。
 choose 'creator' of imported data	timesheet	ja	インポート・データの作成者を選択
 comment by %1 at %2:	timesheet	ja	%1が%2にコメント:

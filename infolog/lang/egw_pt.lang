@@ -77,14 +77,12 @@ cancelled	infolog	pt	Cancelado
 categories	infolog	pt	Categorias
 category	infolog	pt	Categoria
 change	infolog	pt	Mudança
-change category	infolog	pt	Alterar categoria
 change completed	infolog	pt	Alterar concluída.
 change completion	infolog	pt	Mude conclusão
 change history	infolog	pt	Mudar a história
 change owner when updating	infolog	pt	Alterar proprietário ao atualizar
 change responsible	infolog	pt	Alterar responsável
 change the status of an entry, eg. close it	infolog	pt	Alterar o estado de um registo, ex: fechá-lo
-changed category to %1	infolog	pt	Categoria alterada para 1%
 changed completion to %1%	infolog	pt	Conclusão alterado para %1%
 changed status to %1	infolog	pt	Status alterado para 1%
 changed type	infolog	pt	Tipo Changed
@@ -392,7 +390,6 @@ regular expression	infolog	pt	Expressão regular
 remark	infolog	pt	Remarcar
 remove this link (not the entry itself)	infolog	pt	Remover esta ligação (não o registo em si)
 removed	infolog	pt	Removido.
-removed category	infolog	pt	categoria removido
 replacement	infolog	pt	Substituição
 replacements for inserting entries into documents	infolog	pt	Substitutos para a inserção de entradas em documentos
 requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	pt	Requer que o utilizador que edita tenha acesso de escrita a estes contactos, para os partilhar com o utilizador responsável.

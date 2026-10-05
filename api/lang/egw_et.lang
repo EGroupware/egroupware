@@ -605,6 +605,7 @@ regular	common	et	Regulaarne
 reject	common	et	Lükka tagasi
 remove	api	et	Kustutamine
 remove selected accounts	common	et	Eemalda märgitud kontod
+removed category	common	et	eemaldatud kategooria
 rename	common	et	Nimeta ümber
 repeat password	common	et	Parooli kordamine
 replace	common	et	Asenda

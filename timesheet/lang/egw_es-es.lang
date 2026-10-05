@@ -12,9 +12,7 @@ ask to start and stop working time with session	timesheet	es-es	Solicite iniciar
 both: allow to use projectmanager and free project-names	admin	es-es	Ambos: permitir usar nombres de proyectos del Administrador de proyectos y libres
 by	timesheet	es-es	por
 category for 'working time'	admin	es-es	Categoría para 'Tiempo de trabajo'
-change category	timesheet	es-es	Cambiar categoría
 change owner when updating	timesheet	es-es	Cambiar propietario al actualizar
-changed category to %1	timesheet	es-es	La categoría se ha cambiado a %1
 changed status	timesheet	es-es	estado cambiado
 check all	timesheet	es-es	Marcar todo
 choose 'creator' of imported data	timesheet	es-es	Seleccione el «creador» de los datos importados

@@ -78,14 +78,12 @@ cancelled	infolog	sk	Zrušené.
 categories	infolog	sk	Kategórie
 category	infolog	sk	Kategória
 change	infolog	sk	Zmeniť
-change category	infolog	sk	Zmeniť kategóriu
 change completed	infolog	sk	Zmeny vykonané.
 change completion	infolog	sk	Zmeniť dokončenosť
 change history	infolog	sk	Zmeniť históriu
 change owner when updating	infolog	sk	Zmeniť vlastníka pri aktualizovaní
 change responsible	infolog	sk	Zmeniť zodpovedných
 change the status of an entry, eg. close it	infolog	sk	Zmeniť stav záznamu, napr. uzavrieť ho
-changed category to %1	infolog	sk	Kategória zmenená na %1
 changed completion to %1%	infolog	sk	Dokončenosť zmenená na %1%
 changed status to %1	infolog	sk	Stav zmenený na %1
 changed type	infolog	sk	Typ zmenený
@@ -398,7 +396,6 @@ regular expression	infolog	sk	Regulérny výraz
 remark	infolog	sk	Poznámka
 remove this link (not the entry itself)	infolog	sk	Odstrániť tento odkaz (nie záznam samotný).
 removed	infolog	sk	Odstránené.
-removed category	infolog	sk	Odstránená kategória
 replacement	infolog	sk	Náhrada
 replacements for inserting entries into documents	infolog	sk	Náhrady pre vkladanie polí do dokumentov
 requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	sk	Vyžaduje, aby mal editujúci používateľ prístup na zápis do týchto kontaktov, aby ich mohol zdieľať so zodpovedným používateľom.

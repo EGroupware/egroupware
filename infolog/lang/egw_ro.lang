@@ -185,7 +185,6 @@ re-planned time	infolog	ro	Timp replanificat
 receive notifications about items of type owned by groups you are part of	infolog	ro	Primiți notificări despre elementele de tip deținute de grupurile din care faceți parte
 regular expression	infolog	ro	Expresie regulată
 removed	infolog	ro	Eliminat.
-removed category	infolog	ro	categoria eliminat
 replacement	infolog	ro	Înlocuire
 replacements for inserting entries into documents	infolog	ro	Înlocuitori pentru inserarea de intrări în documente
 requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	ro	Necesită ca utilizatorul care editează să aibă acces în scris la aceste contacte, pentru a le partaja cu utilizatorul responsabil.

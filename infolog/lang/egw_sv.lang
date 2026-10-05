@@ -78,14 +78,12 @@ cancelled	infolog	sv	Avbruten
 categories	infolog	sv	Kategorier
 category	infolog	sv	Kategori
 change	infolog	sv	Ändra
-change category	infolog	sv	Ändra kategori
 change completed	infolog	sv	Ändringen slutförd.
 change completion	infolog	sv	Slutförande av ändring
 change history	infolog	sv	Ändra historien
 change owner when updating	infolog	sv	Byt ägare vid uppdatering
 change responsible	infolog	sv	Ändra ansvarig
 change the status of an entry, eg. close it	infolog	sv	Ändra status på post, t.ex. stäng den
-changed category to %1	infolog	sv	Ändrade kategori till %1
 changed completion to %1%	infolog	sv	Ändrad avslutning till %1%.
 changed status to %1	infolog	sv	Ändrad status till %1
 changed type	infolog	sv	Ändrad typ
@@ -398,7 +396,6 @@ regular expression	infolog	sv	Vanliga uttryck
 remark	infolog	sv	Anmärkning
 remove this link (not the entry itself)	infolog	sv	Radera länk (inte posten)
 removed	infolog	sv	Borttagen.
-removed category	infolog	sv	borttagen kategori
 replacement	infolog	sv	Ersättning
 replacements for inserting entries into documents	infolog	sv	Ersättare för att infoga poster i dokument
 requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	sv	Kräver att den redigerande användaren har skrivåtkomst till dessa kontakter för att kunna dela dem med den ansvariga användaren.

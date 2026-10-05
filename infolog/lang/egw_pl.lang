@@ -78,12 +78,10 @@ cancelled	infolog	pl	Anulowany
 categories	infolog	pl	Kategorie
 category	infolog	pl	Kategoria
 change	infolog	pl	Zmiana
-change category	infolog	pl	Zmiana kategorii
 change history	infolog	pl	Zmień historię
 change owner when updating	infolog	pl	Zmiana właściciela podczas aktualizacji
 change responsible	infolog	pl	Odpowiedzialny za zmianę
 change the status of an entry, eg. close it	infolog	pl	Zmień status wpisu, np. zakończ go
-changed category to %1	infolog	pl	Zmieniono kategorię na %1
 changed completion to %1%	infolog	pl	Zmieniono zakończenie na %1%
 changed status to %1	infolog	pl	Zmieniono status na %1
 changed type	infolog	pl	Zmieniony typ
@@ -384,7 +382,6 @@ regular expression	infolog	pl	Wyrażenie regularne
 remark	infolog	pl	Przypomnienie
 remove this link (not the entry itself)	infolog	pl	Usuń ten link (ale nie wpis).
 removed	infolog	pl	Usunięto.
-removed category	infolog	pl	usunięta kategoria
 replacement	infolog	pl	Zastąpienie
 replacements for inserting entries into documents	infolog	pl	Zamienniki do wstawiania wpisów do dokumentów
 requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	pl	Wymaga, aby użytkownik edytujący miał dostęp do zapisu do tych kontaktów, aby udostępnić je odpowiedzialnemu użytkownikowi.

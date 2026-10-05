@@ -260,8 +260,10 @@ centered	common	de	Zentriert
 central african republic	common	de	ZENTRAL AFRIKANISCHE REPUBLIK
 chad	common	de	TSCHAD
 change	common	de	Ändern
+change category	common	de	Kategorie ändern
 change owner	common	de	Eigentümer ändern
 changed	common	de	Geändert
+changed category to %1	common	de	Kategorie geändert zu %1
 changes that you made may not be saved.	common	de	Änderungen, die Sie vorgenommen haben, werden möglicherweise nicht gespeichert.
 charset	common	de	Zeichensatz
 check all	common	de	Alle auswählen
@@ -1166,6 +1168,7 @@ remove selected accounts	common	de	Ausgewählte Benutzer entfernen
 remove shortcut	common	de	Abkürzung entfernen
 remove this link (not the entry itself)	common	de	Entfernt diese Verknüpfung (nicht den Eintrag selbst)
 removed (now) empty directory fs_id=%1	admin	de	Leerer Ordner fs_id=%1 wurde jetzt gelöscht
+removed category	common	de	Kategorie erfolgreich entfernt
 removeformat	common	de	Formatierung entfernen
 rename	common	de	Umbenennen
 repeat password	common	de	Passwort wiederholen

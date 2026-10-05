@@ -140,6 +140,10 @@ class AjaxActionTest extends \EGroupware\Api\AppTest
 		$this->assertNotNull($parms, 'and it has to answer with egw.refresh');
 		$this->assertSame('success', end($parms),
 			'a removal is a success - it used to be reported as a failure');
+		// 'removed category' lives in api/lang as a common phrase, shared with infolog rather
+		// than copied per app - this also pins that the common fallback resolves it here
+		$this->assertStringContainsString('removed category', $parms[0],
+			'the message has to be translated, not left as a raw phrase lookup');
 	}
 
 	/**
