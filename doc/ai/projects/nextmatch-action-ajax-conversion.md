@@ -776,8 +776,8 @@ in this project - handled by Proposal D like any other oversized submenu. `share
 | 4 | **DONE.** Proposal A - `Nextmatch::category_action()` picker dialog, both cardinality shapes, 5 call sites moved | Biggest single reduction |
 | 5 | **DONE.** Proposal B - distribution-list dialog | Addressbook-specific. `move_to`/`shared_with` need no bespoke dialog - Proposal D covers them |
 | 6 | **DONE.** The `open_popup` bucket: infolog (4 popups) and tracker (`assigned`, `group`, `admin`) | Needs the dialog to return values without a template submit |
-| 7 | **EMPTY.** Every app listed here - importexport, esyncpro, smallpart, news_admin, stylite - is on the legacy `<nextmatch>` widget and therefore blocked, see section 6. Only mail's `copyto` is reachable, and that is a container whose folder children load after the menu opens | - |
-| - | admin, records, invoices, kanban, bookmarks, aitools, aiassistant, developer, stylite `calls`, webauthn, openid, phpbrain, schulmanager, smallpart `courses` | **Blocked on `et2-nextmatch-conversion.md`** - not scheduled here |
+| 7 | **DONE, once the prerequisite was met.** Originally empty: every app here was on the legacy `<nextmatch>` widget and therefore blocked. `et2-nextmatch-conversion.md` finished on 2026-10-02 and converted them all, so the whole long tail became reachable and was done here: admin x3, records, importexport, news_admin x2, invoices, kanban, bookmarks, aitools, developer, stylite `calls`, smallpart `courses` + `questions`. See "The Et2Nextmatch prerequisite" in section 6 | - |
+| - | **Still not converted:** esyncpro (`policy/*`, `wipe`, `delete`) - see the baseline-state section. webauthn and openid have no action lists at all; phpbrain and schulmanager are excluded (deprecated / no longer used); aiassistant was excluded by the user 2026-10-05 after its conversion had already landed | - |
 
 Phase 0 lands in `api` alone and gates everything after it. Phase 3 (Proposal D) is otherwise
 independent - it dispatches whatever the child action already does, so it neither waits for
@@ -867,6 +867,18 @@ own default executor (the function shared by the majority of actions - the one i
 | 8 | The sharing-UI ticket is **EGW-CE #43584**. It turns out to cover `share/*` (anonymous share links), **not** addressbook's `shared_with/*` - so it does not overlap this project's scope at all | settled |
 
 ### The Et2Nextmatch prerequisite
+
+> **MET - this blocker no longer exists.** `et2-nextmatch-conversion.md` completed on
+> 2026-10-02: every app in the "blocked" list below now ships real `<et2-nextmatch>` templates
+> (admin 10, smallpart 5, records 2, news_admin 2, stylite 2, importexport/invoices/kanban/
+> bookmarks/aitools/developer/esyncpro 1 each). That is what unblocked phase 7, and all of them
+> except esyncpro were converted here. Only `addressbook/display.xet` (parked),
+> `aiassistant/list.xet`, phpbrain and schulmanager are still legacy, and
+> `convertNextmatch()` (`api/etemplate.php:675`) serves even those as `<et2-nextmatch>` - a
+> safety net, not the thing that unblocked this work. The section is kept because the failure
+> mode it documents is still real and still silent - a converted action dispatched by the legacy
+> `nm_action()` is a dead menu entry, not an error - and because it explains the records revert.
+> Treat the two tables as history, not as current state.
 
 `Et2Nextmatch` routes through `Et2NextmatchActionController.executeNextmatchAction()`. The
 legacy `<nextmatch>` widget routes through `nm_action()` in
@@ -1158,9 +1170,12 @@ Its server takes *two* shapes, and no change was needed for either:
   applies field by field (`is_array($action) && $action['update']`). Verified live: it sends
   `{update: true, tr_completion: "50", ...}` and the empty fields are dropped server-side.
 
-**The rest are all blocked**, not merely harder: importexport, news_admin, resources, admin
-categories and schulmanager are every one of them still on the legacy `<nextmatch>` widget -
-see the corrected reachability table in section 6.
+**The rest were all blocked** at the time, not merely harder: importexport, news_admin,
+resources, admin categories and schulmanager were every one of them still on the legacy
+`<nextmatch>` widget. That blocker has since dissolved - `convertNextmatch()` serves them all as
+`<et2-nextmatch>` templates of their own - and importexport, news_admin and admin have been
+converted here. Resources and schulmanager were not: schulmanager is out of scope (no longer
+used) and resources was never in this project's inventory. See the note in section 6.
 
 ### Proposal B - as built
 
@@ -1233,6 +1248,90 @@ be used in a test as things stand.
 Left on submit rather than shipping either an ACL bypass or an action that silently does
 nothing. `sync_all` is worse still - it acts on a whole *project*, which an ajax request has no
 trustworthy way to name.
+
+**Re-checked 2026-10-05 against ralf's `303b91b` "hardening for projectmanager ACL checks"
+(already merged into this branch): both reasons stand unchanged.** That commit adds gates at
+call sites - four in `projectmanager_gantt`, a READ check in `projectmanager_pricelist_bo::pricelist()`,
+and clearing `$this->data` after a denied read in `projectmanager_bo::read()`. It does **not**
+touch `projectmanager_bo::check_acl()`'s `if (!$pm_id) return $required != Acl::DELETE;`, which
+is the line the revert hinged on, nor `projectmanager_elements_ui::action()`'s
+`case 'delete': if (!$this->project->check_acl(Acl::ADD))` at line 1331.
+
+It does, however, demonstrate the shape a fix would take: `check_acl($required, ['pm_id' => $pm_id])`
+with an **explicit** pm_id makes the method do its own independent lookup instead of falling back
+to `$this->data` - `projectmanager_elements_ui` already does this at line 485. The open question
+was where a trustworthy pm_id could come from.
+
+**Answer: not from the stored eTemplate request. That route was investigated and is dead.** The
+idea was that the element list is scoped to one project (`$content['nm']['col_filter']['pm_id']`,
+set server-side at line 1092) and `Etemplate\Request` exposes `$request->content`, so a validated
+exec-id would carry a pm_id the server wrote. Measured 2026-10-05 by instrumenting
+`Etemplate\Request::cleanup()`, and it fails on two counts:
+
+* **It goes stale the moment the user changes project.** The project is a real, client-owned
+  filter - the list has a project selector. Switching it fires a `get_rows` with the new pm_id,
+  but nothing re-stores the request: `Nextmatch::ajax_get_rows()` takes
+  `$value = self::get_array(self::$request->content, ...)` **without `=&`**, so the
+  `array_merge($value, $filters)` that applies the client's filters writes to a copy. Confirmed
+  live: with the list showing project 1511's elements (row ids `projectmanager:1511:0` and that
+  project's infolog elements), the stored request still read `col_filter={"pe_resources":null,"pm_id":2769}`,
+  and no further store happened at all.
+* **It is `0` when the same template is rendered from the projects index**, which embeds
+  `projectmanager.elements.list` and `projectmanager.pricelist.list` for its expandable rows with
+  no project loaded.
+
+The first is the fatal one. An endpoint reading that pm_id would ACL-check **the project the page
+was opened with** while deleting elements of **whatever project the list is showing now** - so a
+user with ADD on project A could delete project B's elements. That is strictly worse than today's
+unconditional pass, because it would look like a real check while silently authorising against the
+wrong object. The row ids do not rescue it either: they are `pe_app:pe_app_id:pe_id`
+(`infolog:1445:14035`), which carries no pm_id.
+
+So any fix has to get the project from something both server-side and current - neither the stored
+request nor the client's parameters qualify.
+
+**There is such a source: the element table itself.** The second blocker above ("cannot identify
+the element from a pe_id alone") is wrong, and the earlier `search(['pe_id' => ...])` returning
+nothing was a quirk of the bo/so layer, not a fact about the data: `projectmanager_elements_so`
+builds `pe_app`/`pe_app_id` by joining `egw_links` and scopes its queries to `$this->pm_id`, which
+an endpoint constructed without a project does not have. A direct read does work:
+
+	SELECT pm_id FROM egw_pm_elements WHERE pe_id IN (...)
+
+`pe_id` originates as a link id - `projectmanager_elements_bo` sets `'pe_id' => $data['link_id']`
+and `updateElement()` documents it as "element- / link-id" - so it comes from a global sequence
+and does not collide across projects. Measured on this instance: 100 elements, 100 distinct
+`pe_id`s, none spanning more than one project.
+
+**Read it from `egw_pm_elements`, not from `egw_links`.** 11 of those 100 elements have no link row
+at all - orphans whose link was deleted while the element row stayed (project 2038 has three such
+elements and no links whatsoever). The element table still carries their `pm_id`; a join through
+`egw_links` would silently drop them, and silently dropping rows from an ACL check is the wrong
+direction to fail in.
+
+The bo already does the lookup: `projectmanager_elements_so::__construct()` ends with
+`if ($this->read($pe_id)) $this->pm_id = $this->data['pm_id'];`, and `read(['pe_id' => $id])`
+resolves an element from a bare pe_id. So an endpoint can get the project from the selection
+alone, then `check_acl(Acl::ADD, $pm_id)` per distinct project - Ralf's explicit-pm_id pattern,
+which forces an independent lookup - and act only on the elements whose project passed.
+
+**A hole found while confirming that, now fixed (`projectmanager` b778aa4).**
+`projectmanager_elements_ui::ajax_action()` predates this project, is a public menuaction, and ran
+the `ignore` action with **no exec id and no ACL check of any kind** - unlike the `cat` (line 1255)
+and `delete` (1331) branches beside it, and `projectmanager_elements_bo::save()` has no gate
+either. Any user with projectmanager could set `pe_status` on arbitrary elements by guessing ids.
+It also called `save()` after a failed `read()`, writing the status onto whatever the object still
+held. All three are closed: an exec-id guard on the endpoint, per-element rights from the
+element's own `pm_id`, and a refusal when the element does not resolve.
+`projectmanager/tests/ElementIgnoreAclTest.php` (5 tests) pins it; the full projectmanager suite
+stays green at 29 tests / 336 assertions. The denial path - a user who genuinely lacks rights on
+the element's project - is **not** covered, because this harness has no second-user helper
+(`LoggedInTest` offers `asAdmin()` only).
+
+`delete` itself is **not yet converted**; the entry stays in BASELINE until it is.
+
+`sync_all` is unaffected either way - a single-project scope is exactly what it would need, but it
+still acts on the whole project, so it stays a submit regardless.
 
 **A third by-reference trap**, after `save()` and this: `infolog_bo::write()` also takes
 `&$values_in`, so it cannot be handed an inline array either. Three of these in one codebase is
@@ -1411,7 +1510,8 @@ main template last for exactly this reason (records' `index.xet` ends with `reco
 `list.xet` now does too. Nothing to do with the conversion, but it is the same file the
 conversion is about and it made the app unusable.
 
-**Open, and why aiassistant is unverified live:** with that fixed the page renders, but the list
+**Why aiassistant was never verified live** (moot now that the app is excluded - see below):
+with that fixed the page renders, but the list
 does not - `aiassistant/templates/default/list.xet` is the last `<nextmatch>` (legacy widget) in
 the tree, and it produces no widget client-side at all; the row that should hold it contains only
 the header template. The legacy class is still registered
@@ -1419,6 +1519,13 @@ the header template. The legacy class is still registered
 but chasing it is the Et2Nextmatch conversion tracker's job, not this one. The conversion here is
 covered by `aiassistant/tests/AjaxActionTest.php` (7 tests, exercising the real delete, the
 select-all expansion and its refusal, and the refresh arguments) and **not** by a browser check.
+
+**EXCLUDED from this project by the user, 2026-10-05** - after the work had already landed. Both
+commits stay (decided the same day): `d42a2cd`, the template-ordering fatal above, which is an
+unrelated bug fix; and `2f611c5`, the conversion plus its 7 tests, which is done and green. The
+app is simply out of scope for anything further here. If `2f611c5` is ever reverted,
+`NextmatchActionSubmitTest::BASELINE` needs `'EGroupware\\Aiassistant\\Ui' => ['delete', 'separator']`
+put back, or the class dropped from the scan list, otherwise the test goes red.
 
 **Open: aiassistant has no CI.** Like records it had no `tests/` directory; unlike records it
 also has no `.github/workflows`, and its default branch is `main`, not `master`. The work is on a
@@ -1605,7 +1712,13 @@ itself, because `EgwAction`'s policy branch does
 instance, so the dynamic import fails and the action never runs. **That is pre-existing and
 transport-independent** - the same early return stopped the submit - but worth recording:
 `egw.link()` does not consult the build manifest, so this `import()` only works where
-`policy/js/app.min.js` happens to be self-contained. **Open.**
+`policy/js/app.min.js` happens to be self-contained. **FIXED 2026-10-05 (`446316d5f7`)**, in its
+own task: `policy_confirmation` became a generic `confirm_handler` naming the handler
+(`'app.policy.confirm'`), dispatched through `egw.applyFunc()`, which does the manifest-aware
+load *and* the instantiation the special case used to hand-roll - so the special case is gone
+rather than the import patched. The app-presence gate is kept, derived from the handler string
+but only enforced for `app.<app>.<method>` handlers, so a differently-shaped handler dispatches
+and throws loudly instead of being silently disabled.
 
 ### stylite Calls - as built, and a hole closed on the way
 
@@ -1627,9 +1740,24 @@ is unreachable through this action. A plain delete searches with the default fil
 call is never found and a second Delete is a no-op. Pre-existing and transport-independent; a
 test pins the current behaviour rather than changing it.
 
-**Not verified live:** this instance has no calls at all and no CTI configuration, so the list
-has nothing to act on. Covered by `stylite/tests/Cti/CallsAjaxActionTest.php` (5 tests), which
-needs EPL CI to run anywhere else.
+**Verified live 2026-10-05.** This instance has no CTI configuration and the table was empty, so
+three call rows were fabricated to drive it. `delete` from the real context menu removed the row
+in place and showed "Call deleted"; `undelete` reported "1 calls undeleted" and moved the row back
+out of the Deleted filter. Both showed two refreshes - the real push *and* this endpoint's
+message-only one - which is the sentinel above behaving as designed.
+
+`undelete` could not be reached from the context menu, for a reason that turned out to belong to
+another project: it is only registered when the server-side filter is `deleted`/`all`, and
+**`Et2Nextmatch` never applies the action list `get_rows()` returns**. Legacy
+`et2_extension_nextmatch.ts` had `set_actions()`, which tore down the existing action children,
+dropped the cached `data.menu` and re-inited; `Et2Nextmatch` only inherits `Et2Widget`'s
+`set actions` -> `_initActions()`, which runs once at widget creation. So after switching the
+filter the live manager still held `delete` and no `undelete`. Pre-existing on master and
+unrelated to this conversion - verified by driving `app.stylite.ajax_action` directly instead.
+Logged as an open item against the Et2Nextmatch conversion.
+
+Also covered by `stylite/tests/Cti/CallsAjaxActionTest.php` (5 tests), which needs EPL CI to run
+anywhere else.
 
 ### smallpart - as built, the last of the baseline
 
@@ -1686,16 +1814,71 @@ a REST endpoint) and are identical with and without this change.
   `$content['nm']['action']`, so the submit re-renders and deletes nothing. Making it work is new
   functionality.
 
-Everything else that fell through now goes over ajax. Each converted app has its own
-`AjaxActionTest`, and all of them together run green (572 tests across the suites this work
-touched).
+Everything else that fell through now goes over ajax, **with one exception the harness cannot
+see here: esyncpro.** `esyncpro_ui::get_actions()`'s `policy/policy_*`, `wipe` and `delete` have
+no `onExecute` and still submit. Nothing blocks it - `esyncpro/templates/default/index.xet` is
+`<et2-nextmatch>` like the rest - it was simply missed. It is not in BASELINE because the test
+never reaches it on this instance - `esyncpro_ui` is admin-only and the `NoPermission` it throws is deliberately caught and
+skipped, so that the baseline stays portable between instances. The cost of that choice is this:
+**run the test as an admin and it goes red**, because esyncpro's fall-throughs would appear and
+are not baselined. Either convert esyncpro or add it to BASELINE; leaving it as-is makes the
+test's result depend on who runs it.
+
+Each converted app has its own `AjaxActionTest`, and all of them together run green (572 tests
+across the suites this work touched).
+
+### Exec-id refusal, and two endpoints that had no guard (2026-10-05)
+
+Every converted endpoint calls `Nextmatch::validateExecId()`, but only some of their tests proved
+it *refuses*. That is the half that fails silently: an endpoint which stops validating still
+passes every test about what it does on success. Swept, and three test files had no refusal case -
+`calendar`, `tracker` and `filemanager`'s shares - all now pinned with both a bogus id and an
+empty one.
+
+The sweep also turned up two endpoints with no guard at all:
+
+* **`projectmanager_ui::ajax_action()`** (`projectmanager` dfa0787) - the project list's own
+  converted actions, the only endpoint this project converted that never took an exec id.
+  `action()` does check rights per project, so this was defence in depth rather than a hole.
+* **`filemanager_ui::ajax_action()`** (core f593d50cc4) - pre-existing and not converted here, but
+  a public menuaction that moves, deletes and shares VFS paths. `Vfs::` enforces rights per path,
+  which is the substantive guard, but nothing established the caller had one of our pages open.
+  Six call sites had to move to the new signature: five in `filemanager/js/filemanager.ts`
+  (`_do_action`'s sync and async branches, `upload()`, the file-a-file dialog and the
+  overwrite/rename prompt) and the mail-drag one in `EgwApp`. `upload()`'s target is documented as
+  overridable by sharing classes; nothing in the tree overrides it today, so a subclass that does
+  must pass the exec id first as well.
+
+The rejection a user genuinely **lacks rights** for is covered too, in
+`projectmanager/tests/ElementIgnoreAclTest.php`: once with a stand-in project object that denies
+`ADD` (pinning this project's own decision - refuse, and ask about the *element's* own pm_id) and
+once for real, with `LoggedInTest::switchUser()` via `asAdmin()`, acting as an account that is
+neither the project's creator nor a member. `projectmanager_bo::check_acl()` has no admin bypass,
+so the admin test account is simply another user there.
+
+**FOUND, NOT FIXED - `projectmanager_bo::check_acl()` caches rights per project, not per user.**
+It opens with `static $cache = array()` keyed by **pm_id alone**, so within one PHP process the
+first user to ask about a project decides the answer for every later one. A function-static
+outlives even a full `switchUser()` (which tears down and rebuilds `$GLOBALS['egw']`), and a
+freshly constructed bo still matches the `$user == $this->user` branch that binds the cache
+entry. Harmless in a web request, which serves one user per process; real for PHPUnit, CLI and
+admin_cmd flows. The second-user test above has to spend one
+`check_acl($required, $pm_id, $no_cache=true)` call to recompute for whoever is logged in now -
+PHP offers no way to reset a function-static from outside, so a test cannot clear it by
+reflection. The singleton-level version of this was fixed in `b0b6c19`; this static is a
+separate, still-open instance.
+
+That one nearly hid itself: a diagnostic added to find out *why* the switched-in user was being
+allowed also called `check_acl(..., true)`, which recomputed the cache correctly and made the test
+pass. Removing the diagnostic made it fail again - the probe was the fix.
 
 **Open items collected on the way, none of them blockers:**
 
 | | |
 |---|---|
-| aiassistant | its list is the last legacy `<nextmatch>` in the tree and renders no widget at all, so the conversion is unverified in a browser - Et2Nextmatch conversion tracker's job |
-| stylite Calls | `Cti\Storage::delete()`'s "really delete an already-deleted call" branch is unreachable: a plain delete searches with `call_deleted IS NULL` |
+| aiassistant | **Excluded from this project by the user, 2026-10-05.** Two commits are already on its `nm-action-ajax` branch: `d42a2cd` (the conversation-history page showed a PHP error instead of the list - a main-template-ordering fatal, independent of this project and worth keeping either way) and `2f611c5` (the conversion itself + 7 tests). **Decided 2026-10-05: both commits stay.** `d42a2cd` is an unrelated bug fix, and the conversion is done and green, so excluding the app from the project's remaining scope costs nothing. Should `2f611c5` ever be reverted, `NextmatchActionSubmitTest::BASELINE` needs `'EGroupware\\Aiassistant\\Ui' => ['delete', 'separator']` put back, or the class dropped from the scan list, otherwise the test goes red |
+| stylite Calls | `Cti\Storage::delete()`'s "really delete an already-deleted call" branch is unreachable: a plain delete searches with `call_deleted IS NULL`. Both converted actions verified live 2026-10-05 against fabricated call rows: `delete` removes the row in place and shows "Call deleted"; `undelete` reports "1 calls undeleted" and moves the row back out of the Deleted filter. Both show the real push *and* the endpoint's message-only refresh, which is what the `msg-only-push-refresh` sentinel is for here |
+| Et2Nextmatch (not this project) | **filter-dependent actions never appear after a filter change.** Legacy `et2_extension_nextmatch.ts`'s `set_actions()` tears the old action children down, drops the cached menu and re-inits when `get_rows()` returns a changed action list; `Et2Nextmatch` only inherits `Et2Widget`'s `set actions` -> `_initActions()`, with no teardown. Found on stylite Calls, whose `undelete` is only registered when the server-side filter is `deleted`/`all`: switching the filter in the UI leaves the live action manager holding `delete` and no `undelete`, so the action is unreachable from the menu. Pre-existing on master and not caused by this project - the conversion was verified by driving `app.stylite.ajax_action` directly. Belongs to the Et2Nextmatch conversion |
 | records | should Status become the category picker dialog, for consistency with timesheet and infolog? Left as a sub-menu, see that section |
 | CI | records, aiassistant, developer, bookmarks and news_admin have no `.github/workflows` at all; aitools has `tests/` but no workflow. Their new test files run nowhere |
 
