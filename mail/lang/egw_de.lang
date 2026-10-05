@@ -399,6 +399,7 @@ mail settings	mail	de	E-Mail-Einstellungen
 mail source	mail	de	Nachrichten-Quelltext anzeigen
 mail-address	mail	de	E-Mail-Adresse
 mailaccount	mail	de	Mailkonto
+mailing-lists and groups resolved, the message goes to %1 recipients	mail	de	Verteilerlisten und Gruppen aufgelöst, die Nachricht geht an %1 Empfänger
 mailinglist	mail	de	Mailingliste
 mails	common	de	Mails
 mails can be copied to that folder via context menu, if folder is configured.	mail	de	Mails können per Kontextmenü in diesen Ordner kopiert werden, wenn er konfiguriert ist.
@@ -455,6 +456,7 @@ no adress, to send this mail to, supplied	mail	de	Keine Empfängeradresse angege
 no filter	mail	de	Kein Filter
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	de	Es sind keine Zielordner oder andere Methoden (als InfoLog/Tracker ablegen) angegeben, um die Nachricht nach dem Senden zu speichern.
 no folders	mail	de	Keine Ordner
+no mailing-list or group found in the recipients	mail	de	Keine Verteilerliste oder Gruppe in den Empfängern gefunden
 no message body supplied	mail	de	Keinen Nachrichtentext-Teil gefunden
 no plain text part found	mail	de	Kein Text-Teil gefunden
 no private key stored to import a certificate for!	mail	de	Kein privater Schlüssel gespeichert, für den ein Zertifikat importiert werden könnte!
@@ -585,6 +587,8 @@ request for passphrase	mail	de	Anforderung einer Passphrase
 required pear class mail/mimedecode.php not found.	mail	de	Die benötigte PEAR Klasse Mail/mimeDecode.php konnte nicht gefunden werden.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	de	Muss ausgeschaltet werden, wenn Sie Dovecot mit privaten Gelesen-Flags auf geteilten oder freigegebenen Ordnern benutzen!
 resend after how many days?	mail	de	Nach wie vielen Tagen erneut senden?
+resolve all mailing-list recipients to check them	mail	de	Alle Verteilerlisten-Empfänger auflösen, um sie zu prüfen
+resolve mailing-lists	mail	de	Verteilerlisten auflösen
 respond to mail sent to:	mail	de	Benachrichtigung für:
 restrict acl management	admin	de	ACL-Verwaltung beschränken
 rights	mail	de	Zugriffsrechte

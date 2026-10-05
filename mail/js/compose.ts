@@ -1222,6 +1222,69 @@ export class MailCompose
 	}
 
 	/**
+	 * Expand distribution lists and groups in the given recipients into their members, server-side
+	 * (Compose::ajax_resolveDistributionLists(), like on sending)
+	 *
+	 * @returns {Promise<{to : string[], cc : string[], bcc : string[]}|undefined>} undefined if the server request failed
+	 */
+	private async resolveRecipients(to : string[], cc : string[], bcc : string[]) : Promise<{to : string[], cc : string[], bcc : string[]}|undefined>
+	{
+		const resolved = await this.egw.request('mail.EGroupware\\Mail\\Compose.ajax_resolveDistributionLists', [{to, cc, bcc}]);
+		return resolved ? {to : resolved.to ?? [], cc : resolved.cc ?? [], bcc : resolved.bcc ?? []} : undefined;
+	}
+
+	/**
+	 * Entries without the ones identifying an already listed recipient, the first one wins
+	 */
+	static uniqueRecipients(entries : string[]) : string[]
+	{
+		const seen = new Set<string>();
+		return entries.filter((entry) =>
+		{
+			const key = MailCompose.recipientKey(entry);
+			return key && !seen.has(key) && seen.add(key);
+		});
+	}
+
+	/**
+	 * Toolbar action (ticket #125731): replace all distribution lists and groups in To, Cc and Bcc by their members,
+	 * so the user can check who the message really goes to - classic compose showed them when switching the editor
+	 * mode (a server round trip), the client-side compose does not.
+	 *
+	 * Does nothing but telling so, if there is no list or group. A recipient listed twice afterwards is kept once.
+	 *
+	 * @param {object} _action toolbar action (unused)
+	 */
+	async resolveMailingLists(_action? : any) : Promise<void>
+	{
+		const fields = ['to', 'cc', 'bcc'] as const;
+		const entries = {} as Record<typeof fields[number], string[]>;
+		for (const field of fields)
+		{
+			entries[field] = MailCompose.recipientEntries(this.et2.getWidgetById(field)?.get_value());
+		}
+		if (!fields.some((field) => entries[field].some((entry) => MailJmap.DISTRIBUTION_LIST_RE.test(entry))))
+		{
+			this.egw.message(this.egw.lang('No mailing-list or group found in the recipients'), 'info');
+			return;
+		}
+		const resolved = await this.resolveRecipients(entries.to, entries.cc, entries.bcc);
+		if (!resolved)
+		{
+			this.egw.message(this.egw.lang('Failed to resolve distribution list(s)'), 'error');
+			return;
+		}
+		for (const field of fields)
+		{
+			this.et2.getWidgetById(field)?.set_value(MailCompose.uniqueRecipients(resolved[field]));
+		}
+		// show cc/bcc rows, which got recipients
+		this.fieldExpanderInit();
+		this.egw.message(this.egw.lang('Mailing-lists and groups resolved, the message goes to %1 recipients',
+			MailCompose.countDistinctRecipients(resolved.to, resolved.cc, resolved.bcc)), 'success');
+	}
+
+	/**
 	 * Ticket #124811: ask the user, before sending to more recipients in To and Cc than the admin allows
 	 * (site configuration mail "max_recipients_to_cc", 0 = off), as all of them see each others addresses.
 	 *
@@ -1246,10 +1309,9 @@ export class MailCompose
 		// a list or group counts as one entry only, expand them, but only if still needed to decide
 		if (count <= limit && entries.some((entry) => MailJmap.DISTRIBUTION_LIST_RE.test(entry)))
 		{
-			const resolved : {to : string[], cc : string[]} = await this.egw.request(
-				'mail.EGroupware\\Mail\\Compose.ajax_resolveDistributionLists', [{to, cc, bcc : []}]);
+			const resolved = await this.resolveRecipients(to, cc, []);
 			// a failed expansion is not a reason to block sending: the real send reports it
-			if (resolved) count = MailCompose.countDistinctRecipients(resolved.to ?? [], resolved.cc ?? []);
+			if (resolved) count = MailCompose.countDistinctRecipients(resolved.to, resolved.cc);
 		}
 		const key = entries.join(',');
 		if (count <= limit || key === this.confirmedManyRecipients) return true;
