@@ -77,8 +77,13 @@ describe('MailApp.composeWithPreset()', () =>
 			// real Open module (a much heavier harness - see EgwOpenHarness.ts - for a single
 			// arithmetic check this test only needs to trust, not re-verify).
 			urlParamsTooLong: (extra : any) => ('preset=' + extra.preset + '&').length > 2083,
-			openPopup: sinon.spy(),
-			open: sinon.stub().resolves({name: 'compose__'}),
+			// A single url-encoded openPopup() now covers both the real GET-path navigation
+			// (non-empty url, fire-and-forget - the window itself does the rest) AND the
+			// POST-fallback's own "give me a blank, named popup" call (empty url, _returnID=true) -
+			// ticket #125621's fix deliberately moved that off egw.open(), which resolves the
+			// mail/add app-registry entry into a REAL url and navigates there as a side effect,
+			// racing the form POST below for control of the same window.
+			openPopup: sinon.stub().callsFake((url : string) => url === '' ? {name : 'compose__'} : undefined),
 		};
 		(<any>window).egw = egw;
 
@@ -96,11 +101,16 @@ describe('MailApp.composeWithPreset()', () =>
 	it('posts a mail-sized preset body instead of opening it as a GET url', async() =>
 	{
 		app.composeWithPreset(preset(MAIL_SIZED_BODY));
-		// composeWithPresetPost() is async (awaits egw.open()) - let it settle
+		// composeWithPresetPost() is async (awaits egw.openPopup()) - let it settle
 		await new Promise(resolve => setTimeout(resolve, 0));
 
-		assert.isFalse(egw.openPopup.called, 'a GET url of this length is what the webserver answers with 414');
-		assert.isTrue(egw.open.calledOnce, 'a popup still has to be opened for the form to target');
+		// a single openPopup() call reserves a blank, named popup for the form below to POST into -
+		// its OWN url must be empty (ticket #125621: NOT a real url/menuaction resolved via
+		// egw.open(), which would navigate the popup there as a side effect and race the form POST
+		// for control of the window) - a GET url of the real preset's length is what the webserver
+		// would otherwise answer with 414
+		assert.isTrue(egw.openPopup.calledOnce);
+		assert.strictEqual(egw.openPopup.firstCall.args[0], '', 'must open genuinely blank, not navigate anywhere itself');
 		assert.isTrue(submitStub.calledOnce, 'preset has to be posted instead');
 
 		const form = submitStub.firstCall.thisValue as HTMLFormElement;
