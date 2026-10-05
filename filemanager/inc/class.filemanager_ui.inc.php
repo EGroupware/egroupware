@@ -1728,8 +1728,16 @@ class filemanager_ui
 	 * @param string[] $props Properties for the file, eg: [comment => 'Latest from Ralf']
 	 * @see static::action()
 	 */
-	public static function ajax_action($action, $selected, $dir=null, $props=null)
+	public static function ajax_action($exec_id, $action, $selected, $dir=null, $props=null)
 	{
+		// A public menuaction that moves, deletes and shares VFS paths. Vfs:: enforces rights on
+		// every path, which is the substantive guard, but the exec id is what says the caller had
+		// one of our pages open - including the upload and share branches, which are reachable
+		// with nothing but a path.
+		if (!Api\Etemplate\Widget\Nextmatch::validateExecId($exec_id))
+		{
+			return;
+		}
 		// do we have root rights, need to run here too, as method is static and therefore does NOT run __construct
 		if (Api\Cache::getSession('filemanager', 'is_root'))
 		{

@@ -126,6 +126,27 @@ class AjaxActionTest extends LoggedInTest
 	}
 
 	/**
+	 * The refusal is the half that silently does nothing when it regresses: an endpoint that
+	 * stops validating still passes every test about what it does on success.
+	 */
+	public function testSharesABogusExecIdDeletesNothing()
+	{
+		$this->tmp_path = '/home/' . $GLOBALS['egw_info']['user']['account_lid'] . '/ajaxactiontest_bogus.txt';
+		$this->assertNotFalse(file_put_contents(Vfs::PREFIX . $this->tmp_path, 'AjaxActionTest'),
+			'could not create the file to share');
+		$this->share_id = Api\Vfs\Sharing::create('', $this->tmp_path, Api\Vfs\Sharing::READONLY, '', '')['share_id']
+			?? null;
+		$this->assertNotNull($this->share_id, 'could not create the test share');
+
+		(new \filemanager_shares())->ajax_delete('filemanager_nobody_not-a-real-request-id',
+			'delete', [$this->share_id], false);
+
+		$this->assertNotEmpty($this->readShare($this->share_id),
+			'a rejected request must not run the action');
+		$this->assertNull($this->refreshCall(), 'and must not answer with egw.refresh either');
+	}
+
+	/**
 	 * Only 'delete' is supported - anything else must be refused, not silently treated as one.
 	 */
 	public function testSharesRejectsAnUnknownAction()

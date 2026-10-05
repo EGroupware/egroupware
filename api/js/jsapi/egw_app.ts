@@ -1807,7 +1807,10 @@ export abstract class EgwApp
 		if(mail_ids.length)
 		{
 			egw.message(egw.lang("Please wait..."));
-			this.egw.json('filemanager.filemanager_ui.ajax_action', ['mail', mail_ids, vfs_path], function(data)
+			// the exec id is this app's own - validateExecId() only asks that the caller has a
+			// live eTemplate request, not that it belongs to filemanager
+			this.egw.json('filemanager.filemanager_ui.ajax_action',
+				[EgwApp._execId(null, this.et2), 'mail', mail_ids, vfs_path], function(data)
 			{
 				// Trigger an update (minimal, no sorting changes) to display the new link
 				egw.refresh(data.msg || '', ids[0], ids[1], 'update');

@@ -35,6 +35,47 @@ class FilemanagerUiTest extends \EGroupware\Api\AppTest
 	 * Pass criteria: a path under temp_dir must be rejected with WrongParameter, and no
 	 * share row created for it - even though the file exists and is readable.
 	 */
+	/**
+	 * A real eTemplate request id - ajax_action() refuses without one, see
+	 * Nextmatch::validateExecId().  Writing to the request is what persists it.
+	 */
+	protected function execId() : string
+	{
+		$request = \EGroupware\Api\Etemplate\Request::read();
+		$id = $request->id();
+		$request->content = array('nm' => array());
+		unset($request);
+		return $id;
+	}
+
+	/**
+	 * ajax_action() is a public menuaction that moves, deletes and shares VFS paths. Vfs::
+	 * enforces rights per path, but nothing used to establish that the caller had one of our
+	 * pages open at all - the share branches below are reachable with just a path.
+	 */
+	public function testRefusesWithoutAnExecId()
+	{
+		$before = (new Base('api', 'egw_sharing'))->read(array('share_path' => $this->temp_path));
+
+		// no exception: it has to return before reaching the branch that would throw
+		filemanager_ui::ajax_action('', 'shareReadonlyLink', $this->temp_path, '/');
+
+		$after = (new Base('api', 'egw_sharing'))->read(array('share_path' => $this->temp_path));
+		$this->assertSame((bool)$before, (bool)$after, 'no share may be created without an exec id');
+	}
+
+	public function testRefusesAnExecIdThatIsNotOurs()
+	{
+		$before = (new Base('api', 'egw_sharing'))->read(array('share_path' => $this->temp_path));
+
+		filemanager_ui::ajax_action('filemanager_nobody_madeThisUp', 'shareReadonlyLink',
+			$this->temp_path, '/');
+
+		$after = (new Base('api', 'egw_sharing'))->read(array('share_path' => $this->temp_path));
+		$this->assertSame((bool)$before, (bool)$after,
+			'an id that resolves to no request is no better than none');
+	}
+
 	public function testRejectsTempDirPath()
 	{
 		$temp_dir = $GLOBALS['egw_info']['server']['temp_dir'];
@@ -45,7 +86,7 @@ class FilemanagerUiTest extends \EGroupware\Api\AppTest
 
 		try
 		{
-			filemanager_ui::ajax_action('shareReadonlyLink', $this->temp_path, '/');
+			filemanager_ui::ajax_action($this->execId(), 'shareReadonlyLink', $this->temp_path, '/');
 		}
 		finally
 		{
@@ -68,7 +109,7 @@ class FilemanagerUiTest extends \EGroupware\Api\AppTest
 
 		try
 		{
-			filemanager_ui::ajax_action('shareReadonlyLink', $look_alike, '/');
+			filemanager_ui::ajax_action($this->execId(), 'shareReadonlyLink', $look_alike, '/');
 			$this->fail('expected an exception for a non-existent VFS path');
 		}
 		catch (\EGroupware\Api\Exception\WrongParameter $e)
