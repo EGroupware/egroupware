@@ -194,6 +194,37 @@ export function deepExtend(out : any, ...arguments_ : any[]) : any
 	return out;
 }
 
+/**
+ * Rebuild a server-given "absolute" URL using THIS page's own actually-correct scheme+host,
+ * discarding whatever scheme/host the server put on it - for any URL documented/guaranteed to be
+ * same-origin regardless.
+ *
+ * `config_webserver_url` is very commonly configured as a bare path (eg. just `/egroupware`, no
+ * scheme or host at all) - server-side code building a "full" URL from that has to GUESS the
+ * current request's own scheme/host from request headers (`Api\Header\Http::schema()`/`host()`:
+ * `$_SERVER['HTTPS']`, `X-Forwarded-Proto`/`X-Forwarded-Host`), which is NOT reliable everywhere a
+ * reverse proxy is involved (ralf, 2026-10-05: "a couple of reports in that regard" - the JMAP shim
+ * hitting the same class of bug trying `http:` against an `https:`-loaded page, among others) - the
+ * browser is the only place that can ever be CERTAIN what scheme/host this page itself actually
+ * used, via `location`.
+ *
+ * Found live via ticket #125621 (REST-composed attachment fetch failing silently): `applyPreset
+ * AttachmentUrls()` (mail/js/compose.ts) fetches `url`s built by `ApiHandler::prepareAttachments()`
+ * (`Api\Framework::getUrl(Api\Framework::link(...))`) - documented same-origin (rides the popup's
+ * own session cookie), but one came back `http://` while the popup itself loaded over `https://`;
+ * the browser silently blocks that as mixed content (`TypeError: Failed to fetch`), serious because
+ * `applyPresetAttachmentUrls()` is itself un-guarded in its own caller (bootstrapComposePopup()),
+ * so that one failure cascaded into aborting every later preset field (body, the `msg` toast) too.
+ *
+ * @param url a same-origin URL from server-provided data, absolute or relative
+ * @return `url`'s own path+search+hash, re-based onto this page's own `location.origin`
+ */
+export function sameOriginUrl(url : string) : string
+{
+	const parsed = new URL(url, location.origin);
+	return location.origin + parsed.pathname + parsed.search + parsed.hash;
+}
+
 function json_escape_string(input : string) : string
 {
 	var len = input.length;

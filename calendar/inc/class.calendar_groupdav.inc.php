@@ -407,6 +407,15 @@ class calendar_groupdav extends Api\CalDAV\Handler
 						strpos($path, '/inbox/') !== false ? 'REQUEST' : null,
 						!isset($calendar_data['children']['expand']) ? false :
 							($calendar_data['children']['expand']['attrs'] ?: true), $exceptions, $is_jscalendar ? false : null);
+					// nothing was exported: report the resource as not found (without properties), instead of an empty
+					// calendar-data, which makes eg. DAVx5 abort the sync of the whole calendar ("multi-get response without data")
+					if (!$is_jscalendar && ($content === false || $content === '' || $content === null) &&
+						!isset($calendar_data['children']['expand']))
+					{
+						error_log(__METHOD__."() nothing to export for event #$event[id] --> reported as not found");
+						yield ['path' => $path.urldecode($this->get_path($event))];
+						continue;
+					}
 					$props['getcontentlength'] = bytes($is_jscalendar ? json_encode($content) : $content);
 					$props['calendar-data'] = Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'calendar-data',$content);
 				}
@@ -735,6 +744,14 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			$options['data'] = $this->iCal($event, $user, strpos($options['path'], '/inbox/') !== false ? 'REQUEST' : null, false, null);
 			$options['mimetype'] = 'text/calendar; charset=utf-8';
 		}
+		// nothing was exported (exportVCal() returns false then): 404, NOT status 200 with an empty body, which makes
+		// clients like DAVx5 abort the sync of the whole calendar
+		if ($options['data'] === false || $options['data'] === '' || $options['data'] === null)
+		{
+			error_log(__METHOD__."() nothing to export for event #$event[id] ($options[path]) --> 404 Not Found");
+			unset($options['data']);
+			return '404 Not Found';
+		}
 		header('Content-Encoding: identity');
 		$schedule_tag = null;
 		header('ETag: "'.$this->get_etag($event, $schedule_tag).'"');
@@ -758,7 +775,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	 * @param bool|"pretty"|null $json null: iCal, false: return array with JSCalendar data, true+"pretty": return json-serialized JSCalendar
 	 * @return string|array array if $json === false
 	 */
-	private function iCal(array $event, $user=null, $method=null, $expand=false, ?array $events=null, $json=null)
+	protected function iCal(array $event, $user=null, $method=null, $expand=false, ?array $events=null, $json=null)
 	{
 		static $handler = null;
 		if (is_null($handler)) $handler = $this->_get_handler();
@@ -868,7 +885,13 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		if (!($events =& $bo->search($params)))
 		{
 			$events = [];
-			return $events;
+			// search returns nothing eg. for a series which first occurrence is excluded and the next one is behind
+			// the search horizon: with a given master we still have to return it, otherwise the event gets exported
+			// as empty iCal (HTTP 200 with empty body, which makes eg. DAVx5 abort the sync of the whole calendar)
+			if (!isset($master))
+			{
+				return $events;
+			}
 		}
 
 		// find master, which is not always first event, e.g. when first event is an exception

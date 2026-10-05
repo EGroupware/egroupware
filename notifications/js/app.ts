@@ -8,6 +8,7 @@
 
 import {EgwApp} from '../../api/js/jsapi/egw_app';
 import {Et2Dialog} from '../../api/js/etemplate/Et2Dialog/Et2Dialog';
+import {trustedScript} from '../../api/js/jsapi/egw_trusted_types';
 // egw/app/framework are ambient globals (declare global {} in egw_global.d.ts, unconditionally
 // included via tsconfig's "**/*.d.ts") - no import needed or possible.
 
@@ -444,7 +445,7 @@ export class NotificationsApp extends EgwApp
 				actionsContainer.className = 'egwpopup_actions_container';
 				for(const action of notification.data.actions)
 				{
-					const func = new Function(action.onExecute);
+					const func = new Function(trustedScript(action.onExecute));
 					const icon = this.egw.image(action.icon, notification.data.app);
 					const bootstrap = icon?.match(/\/node_modules\/bootstrap-icons\/icons\/([^.]+)\.svg/);
 
@@ -636,7 +637,7 @@ export class NotificationsApp extends EgwApp
 			this.update_message_status(id, "SEEN");
 			if(notification.extra_data.onSeenAction)
 			{
-				const func = new Function(notification.extra_data.onSeenAction);
+				const func = new Function(trustedScript(notification.extra_data.onSeenAction));
 				func.apply(this, [notification.extra_data]);
 			}
 		}

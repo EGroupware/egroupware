@@ -495,7 +495,7 @@ emails	common	fr	Courriels
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	fr	Styles CSS incorporés, p.e. '.rouge { fond: rouge; }' (notez le '.' avant le nom de la classe) ou '@import url(...)' (les noms de classe sont globaux pour la page entière!)
 empty file	common	fr	Fichier vide
 enable javascript onchange submit	common	fr	Activer la soumission sur changement en JavaScript
-enable logging	groupdav	fr	Activer la journalisation
+enable logging	common	fr	Activer la journalisation
 enabled	common	fr	Activé
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	fr	Activer la journalisation du CalDAV/CardDAV pour diagnostiquer les problèmes de synchronisation
 end date	common	fr	Date de fin
@@ -1145,7 +1145,7 @@ replace with	common	fr	Remplacer par
 request could not be processed, please reload your window (press f5 or cmd r)!	common	fr	La requête n'a pas pu être traitée, veuillez recharger la page (appui sur F5 our Ctrl+R) !
 requested resource '%1' does not exist or has expired	common	fr	La ressource nécessaire '%1' n'existe pas ou est expirée
 requests and full responses to files directory	common	fr	Requêtes et réponses complète sur les répertoires de fichiers
-requests and truncated responses to apache error-log	groupdav	fr	Requêtes et réponses tronquées vers les logs d'erreur Apache
+requests and truncated responses to apache error-log	common	fr	Requêtes et réponses tronquées vers les logs d'erreur Apache
 required	common	fr	Nécessaire
 required directory "%1" created.	admin	fr	Répertoire nécessaire "%1" créé.
 required directory "%1" has wrong mode %2 instead of %3!	admin	fr	Le dossier requis "%1" a un mode incorrect %2 au lieu du mode %3 !
@@ -1309,7 +1309,7 @@ show (no save)	common	fr	Montrer (pas de sauvegarde)
 show all	common	fr	Afficher tous les éléments
 show all / cancel filter	common	fr	Montrer tout / annuler les filtres
 show all categorys	common	fr	Afficher toutes les catégories
-show log of following device	groupdav	fr	Montrer les logs de l'appareil
+show log of following device	common	fr	Montrer les logs de l'appareil
 show page generation time	common	fr	Afficher le temps de génération de la page
 show page generation time on the bottom of the page?	common	fr	Afficher le temps de génération de page au fond de la page ?
 show page generation time?	common	fr	Afficher le temps de génération de la page
@@ -1573,7 +1573,7 @@ you need to be an egroupware administrator to access this functionality!	common	
 you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	fr	Vous devez installer le plugin Mailvelope à Chrome ou Firefox depuis www.mailvelope.com ou en cliquant sur le bouton d'installation.
 you need to select a file first!	common	fr	Sélectionner d'abord un fichier !
 you need to select some entries first!	common	fr	Vous d'abord devez sélectionner des entrées !
-you need to set enable logging to "%1" to create/update a log.	groupdav	fr	Vous devez activer la journalisation pour "%1" pour créer et mettre à jour un log.
+you need to set enable logging to "%1" to create/update a log.	common	fr	Vous devez activer la journalisation pour "%1" pour créer et mettre à jour un log.
 you tried to automatically size a flex column, which always takes the rest of the space	common	fr	Vous avez essayé de changer la taille d'une colonne flex, qui prend toujours le reste de l'espace disponible.
 you will not be able to send or receive encrypted mails before completing that step!	common	fr	Vous ne pourrez pas envoyer ou recevoir des mails crypté avant de remplir cette étape !
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	fr	Vous avez tenté d'ouvrir l'application EGroupware: %1, mais vous n'avez aucune permission d'y accéder !

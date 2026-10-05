@@ -165,6 +165,14 @@ class Compose
 				'onExecute' => 'javaScript:app.mail.addressbookSelect',
 				'toolbarDefault' => false,
 			),
+			'resolve_lists' => array(
+				'caption' => 'Resolve mailing-lists',
+				'icon' => 'person-lines-fill',
+				'group' => $group,
+				'hint' => 'Resolve all mailing-list recipients to check them',
+				'onExecute' => 'javaScript:app.mail.compose.resolveMailingLists',
+				'defaultInList' => true,	// in the toolbar's menu, until a user moves it into the toolbar
+			),
 			'disposition' => array(
 				'caption' => 'Notification',
 				'icon' => 'notification',
@@ -294,8 +302,15 @@ class Compose
 	 * not once per popup open.
 	 *
 	 * @param int|string|null $_acc_id account/profile id, defaults to the user's active account
+	 * @param bool $_skip_predefined_addresses =false true: do NOT merge the "predefined compose
+	 *  addresses" account preference below into to/cc/bcc - ApiHandler.php's REST API sets this
+	 *  (via MailApp.bootstrapComposePopup()'s own preset.skipPredefinedAddresses, found live via
+	 *  ticket #125621 - ralf: "my standard cc should not be in, when created via REST, as it's a
+	 *  user preference") - a REST caller's own to/cc/bcc must be the ONLY recipients, never silently
+	 *  joined by whatever the authenticated user's personal account-settings preference happens to
+	 *  add for their own, actually-interactive composes.
 	 */
-	function ajax_getComposeToolbarData($_acc_id=null)
+	function ajax_getComposeToolbarData($_acc_id=null, $_skip_predefined_addresses=false)
 	{
 		if ($_acc_id && $this->mail_bo->profileID != (int)$_acc_id)
 		{
@@ -382,12 +397,15 @@ class Compose
 		// checking off doc/ai/projects/mail-compose-jmap-migration.md Step 10's own "predefined
 		// compose addresses" gap - ralf: appending onto an already-JMAP-fetched reply's own
 		// recipients is a separate, more invasive change than closing the common blank-compose case).
-		$preferencePreset = $GLOBALS['egw_info']['user']['preferences']['mail'][$this->mail_bo->profileID.'_predefined_compose_addresses'] ?? [];
-		foreach ($preferencePreset as $pref => $values)
+		if (!$_skip_predefined_addresses)
 		{
-			if (!empty($values))
+			$preferencePreset = $GLOBALS['egw_info']['user']['preferences']['mail'][$this->mail_bo->profileID.'_predefined_compose_addresses'] ?? [];
+			foreach ($preferencePreset as $pref => $values)
 			{
-				$content[$pref] = array_merge((array)($content[$pref] ?? []), (array)$values);
+				if (!empty($values))
+				{
+					$content[$pref] = array_merge((array)($content[$pref] ?? []), (array)$values);
+				}
 			}
 		}
 

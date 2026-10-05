@@ -64,6 +64,7 @@ any status	mail	de	Alle Status
 append	mail	de	hinzufügen
 appended after reply before sending	mail	de	Einfügen unter dem zitierten Text im Zuge des Versendens
 application mail expected but got: %1	mail	de	Anwendung E-Mail erwarted, aber %1 erhalten
+applying %1 to the new message failed	mail	de	Anwenden von %1 auf die neue Nachricht fehlgeschlagen
 applying rights	mail	de	Rechte werden angewendet
 applying rights to %1 folders ...	mail	de	Rechte werden auf %1 Ordner angewendet ...
 archive	mail	de	Archiv
@@ -397,10 +398,12 @@ mail settings	mail	de	E-Mail-Einstellungen
 mail source	mail	de	Nachrichten-Quelltext anzeigen
 mail-address	mail	de	E-Mail-Adresse
 mailaccount	mail	de	Mailkonto
+mailing-lists and groups resolved, the message goes to %1 recipients	mail	de	Verteilerlisten und Gruppen aufgelöst, die Nachricht geht an %1 Empfänger
 mailinglist	mail	de	Mailingliste
 mails	common	de	Mails
 mails can be copied to that folder via context menu, if folder is configured.	mail	de	Mails können per Kontextmenü in diesen Ordner kopiert werden, wenn er konfiguriert ist.
 mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	de	Der Mail-Server meldete:\n\n%1 \n\nWollen Sie fortfahren und die ausgewählten Mails direkt löschen (OK klicken)?\nWenn nicht, bitte den Mülleimer leeren und es noch einmal versuchen. (Abbruch klicken)
+many recipients	mail	de	Viele Empfänger
 mark all as read	mail	de	Alle als Gelesen markieren
 mark all messages in folder as read	mail	de	Alle Nachrichten in diesem Ordner als Gelesen markieren
 mark as deleted	mail	de	Als Gelöscht markieren
@@ -426,6 +429,7 @@ move selected mails to archive	mail	de	Verschiebe ausgewählte Nachrichten in de
 move selected to	mail	de	Verschiebe ausgewählte nach
 move to	mail	de	Verschieben
 move to archive	mail	de	Verschiebe in Archivordner
+move to bcc and send	mail	de	Nach Bcc verschieben und senden
 move to trash	mail	de	Verschiebe in Papierkorb
 moved %1 message(s) from %2 to %3	mail	de	%1 Nachricht(en) wurden von %2 nach %3 verschoben.
 moving folders from one mailaccount to another is not supported	mail	de	Verschieben von Ordnern von einem Mailkonto zu einem anderen wird nicht unterstützt.
@@ -451,6 +455,7 @@ no adress, to send this mail to, supplied	mail	de	Keine Empfängeradresse angege
 no filter	mail	de	Kein Filter
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	de	Es sind keine Zielordner oder andere Methoden (als InfoLog/Tracker ablegen) angegeben, um die Nachricht nach dem Senden zu speichern.
 no folders	mail	de	Keine Ordner
+no mailing-list or group found in the recipients	mail	de	Keine Verteilerliste oder Gruppe in den Empfängern gefunden
 no message body supplied	mail	de	Keinen Nachrichtentext-Teil gefunden
 no plain text part found	mail	de	Kein Text-Teil gefunden
 no private key stored to import a certificate for!	mail	de	Kein privater Schlüssel gespeichert, für den ein Zertifikat importiert werden könnte!
@@ -472,6 +477,7 @@ notify when new mails arrive in these folders	mail	de	Benachrichtigung, sobald n
 offer to add sender's s/mime certificate or pgp key to contact	mail	de	Anbieten, S/MIME-Zertifikat oder PGP-Schlüssel des Absenders zum Kontakt hinzuzufügen
 on	mail	de	am
 on behalf of	mail	de	Im Namen von
+on sending the user is asked, if all of them should be moved to bcc, so they can not see each others addresses. distribution lists and groups are counted with their members.	mail	de	Beim Senden wird der Benutzer gefragt, ob alle nach Bcc verschoben werden sollen, damit sie ihre Adressen nicht gegenseitig sehen. Verteilerlisten und Gruppen werden mit ihren Mitgliedern gezählt.
 on vacation	mail	de	Abwesenheit
 once per day	mail	de	Einmal pro Tag
 one address is not valid	mail	de	Eine Adresse ist ungültig
@@ -580,6 +586,8 @@ request for passphrase	mail	de	Anforderung einer Passphrase
 required pear class mail/mimedecode.php not found.	mail	de	Die benötigte PEAR Klasse Mail/mimeDecode.php konnte nicht gefunden werden.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	de	Muss ausgeschaltet werden, wenn Sie Dovecot mit privaten Gelesen-Flags auf geteilten oder freigegebenen Ordnern benutzen!
 resend after how many days?	mail	de	Nach wie vielen Tagen erneut senden?
+resolve all mailing-list recipients to check them	mail	de	Alle Verteilerlisten-Empfänger auflösen, um sie zu prüfen
+resolve mailing-lists	mail	de	Verteilerlisten auflösen
 respond to mail sent to:	mail	de	Benachrichtigung für:
 restrict acl management	admin	de	ACL-Verwaltung beschränken
 rights	mail	de	Zugriffsrechte
@@ -633,6 +641,7 @@ selected	mail	de	ausgewählt.
 selected date range (with quicksearch)	mail	de	Datumsbereich (mit Schnellsuche)
 self-signed certificate created.	mail	de	Selbstsigniertes Zertifikat erstellt.
 send a reject message:	mail	de	Ablehnungs-E-Mail senden:
+send anyway	mail	de	Trotzdem senden
 send attachments greater than given size as download link instead (in mb)	mail	de	Sende Anhänge als Link zum Herunterladen, wenn sie folgende Größe überschreiten (in MB)
 send files as	mail	de	Dateien versenden als
 send message and move to send folder (if configured)	mail	de	Versende Nachricht und kopiere diese in den konfigurierten Gesendet-Ordner
@@ -727,6 +736,7 @@ there is no space left to store sieve script, please check sieve_maxscriptsize o
 this action affects every message in the selected thread(s) - %1 messages in total. continue?	mail	de	Diese Aktion betrifft jede Nachricht in den ausgewählten Thread(s) - insgesamt %1 Nachrichten. Fortfahren?
 this mailbox is large - only showing messages since %1 for now	mail	de	Dieses Postfach ist sehr groß - es werden vorerst nur Nachrichten seit dem %1 angezeigt
 this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	de	Diese Mail enthält externe Bilder die über das unsichere HTTP-Protokoll ausgeliefert werden. Bitte seien Sie sich bewusst, dass Anzeigen oder Erlauben Ihre Sicherheit beeinträchtigen kann!
+this message goes to %1 recipients in to and cc, more than the limit of %2. all of them see the addresses of all others. move all of them to bcc?	mail	de	Diese Nachricht geht an %1 Empfänger in An und Cc, mehr als das Limit von %2. Alle sehen die Adressen aller anderen. Alle nach Bcc verschieben?
 this message is smime encrypted and password protected.	mail	de	Diese Nachricht ist S/MIME-verschlüsselt und mit Passwort geschützt.
 timeout on connections to your imap server	mail	de	Stellen Sie hier das Verbindungstimeout für IMAP Verbindungen ein.
 to do	mail	de	Zu erledigen
@@ -765,6 +775,7 @@ validate addresses on submit:	mail	de	Adresse beim Speichern überprüfen:
 validate selected addresses on submit:	mail	de	Überprüfe die ausgewählten Adressen beim Senden des Formulars:
 view full mail source	mail	de	Quelltext anzeigen
 view header lines	mail	de	Kopfzeilen anzeigen
+warn if more than this number of recipients are in to and cc (0 = off)	mail	de	Warnen, wenn mehr als diese Anzahl an Empfängern in An und Cc steht (0 = aus)
 what do do with html email	mail	de	Wie sollen E-Mails im HTML-Format angezeigt werden.
 what order the list columns are in	mail	de	Wählen Sie die Spaltenanordnung in der E-Mail Liste aus
 what to do when you delete a message	mail	de	Wählen Sie die Methode aus, wenn Sie eine Nachricht löschen. Diese kann entweder direkt gelöscht werden, oder in den Papierkorb verschoben werden.

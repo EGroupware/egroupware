@@ -18,6 +18,7 @@ import {et2_widget} from "../../api/js/etemplate/et2_core_widget";
 import type {JmapAttachment, JmapReplyContext} from "./jmap";
 import {formatJmapAddress, isPreferenceOn, MailJmap} from "./jmap";
 import {normalizeFormatBlock} from "../../api/js/etemplate/Et2HtmlArea/Et2HtmlAreaConfig";
+import {sameOriginUrl} from "../../api/js/jsapi/egw_utils";
 
 export class MailCompose
 {
@@ -567,7 +568,13 @@ export class MailCompose
 	 *  from the token ApiHandler::storeAttachment() returned - NOT that bare token path itself
 	 *  (eg. "/mail/attachments/report.pdf--abc123..."), which is only a server-side matching
 	 *  pattern and doesn't route through the REST dispatch at all when fetched directly (found
-	 *  live 2026-09-29: landed on the site root instead of groupdav.php, returning unrelated content)
+	 *  live 2026-09-29: landed on the site root instead of groupdav.php, returning unrelated content).
+	 *  Re-based onto this page's own location.origin via sameOriginUrl() before fetching - found
+	 *  live via ticket #125621 that the server's own scheme-guessing (config_webserver_url is
+	 *  commonly just a bare path, so Api\Framework::getUrl() has to infer scheme/host from request
+	 *  headers) can come back `http:` under some reverse-proxy setups even though this popup itself
+	 *  loaded over `https:`, which the browser then silently blocks as mixed content - see
+	 *  sameOriginUrl()'s own docblock.
 	 */
 	public async applyPresetAttachmentUrls(refs : { name : string, type : string, url : string, size : number }[]) : Promise<void>
 	{
@@ -575,7 +582,7 @@ export class MailCompose
 		const profileID = this.currentProfileID();
 		const uploaded = await Promise.all(refs.map(async(r) =>
 		{
-			const response = await fetch(r.url, {credentials: 'same-origin'});
+			const response = await fetch(sameOriginUrl(r.url), {credentials: 'same-origin'});
 			if (!response.ok)
 			{
 				throw new Error(`Fetching attachment '${r.name}' (${r.url}) failed: ${response.status} ${response.statusText}`);
@@ -1137,6 +1144,11 @@ export class MailCompose
 		// waitForPendingUploads()'s own docblock - a fast Send/Save click can also beat a
 		// still-uploading classic (non-JMAP) attachment's own postback merge to the punch.
 		wait = wait.then(() => this.waitForPendingUploads());
+		// ticket #124811: ask before sending to more recipients in To and Cc than the admin allows,
+		// they all see each others addresses - offers to move them to Bcc instead. Cancel stops everything
+		// below, the message is neither sent nor changed.
+		let proceed = true;
+		wait = wait.then(() => this.confirmManyRecipients()).then((ok : boolean) => { proceed = ok; });
 
 		// mailvelope (PGP) used to have its own branch here that just encrypted the body into the
 		// mail_plaintext widget and stopped (`return false`) - clicking Send visibly did nothing
@@ -1155,6 +1167,7 @@ export class MailCompose
 		{
 			// Wait for integration & pending
 			wait.then(() => {
+					if (!proceed) return;
 					// trySendViaJmap() never goes through ETemplate's own submit() (no form postback at
 					// all), so its "please wait" spinner never fired here - found live 2026-09-01
 					// (ralf: "before the rework of compose, on submission we had a spinner... this is no
@@ -1162,9 +1175,10 @@ export class MailCompose
 					// uses, so a fall-through to the classic postback below just keeps it showing.
 					this.egw.loading_prompt('et2_submit_spinner', true, this.egw.lang('Please wait while sending your mail'));
 				})
-				.then(() => this.trySendViaJmap())
+				.then(() => proceed ? this.trySendViaJmap() : true)
 				.then((sent) =>
 				{
+					if (!proceed) return;
 					if (sent)
 					{
 						this.egw.loading_prompt('et2_submit_spinner', false);
@@ -1177,8 +1191,169 @@ export class MailCompose
 
 		wait.then(() =>
 		{
+			if (!proceed) return;
 			this.et2.getInstanceManager().submit(null, 'Please wait while sending your mail');
 		});
+	}
+
+	/**
+	 * The recipients (to/cc) the user already confirmed to send to, in spite of being more than the admin's
+	 * "max_recipients_to_cc" limit - so a repeated submit (eg. after entering the S/MIME passphrase) does not ask again
+	 */
+	private confirmedManyRecipients : string = '';
+
+	/**
+	 * Entries of a to/cc/bcc widget value, which is either an array or a comma-separated string
+	 */
+	static recipientEntries(value? : string | string[]) : string[]
+	{
+		return MailJmap.splitAddresses(value);
+	}
+
+	/**
+	 * What identifies a recipient: bare lower-case address of `"Name" <a@b.c>`, a list or group placeholder is
+	 * identified by its entry
+	 */
+	static recipientKey(entry : string) : string
+	{
+		const bare = /<([^<>]+)>\s*$/.exec(entry);
+		return (bare ? bare[1] : entry).trim().toLowerCase();
+	}
+
+	/**
+	 * Number of different recipients in all given entry lists, the same address in To and Cc counts once
+	 */
+	static countDistinctRecipients(...lists : string[][]) : number
+	{
+		return new Set(lists.flat().map((entry) => MailCompose.recipientKey(entry)).filter(Boolean)).size;
+	}
+
+	/**
+	 * Expand distribution lists and groups in the given recipients into their members, server-side
+	 * (Compose::ajax_resolveDistributionLists(), like on sending)
+	 *
+	 * @returns {Promise<{to : string[], cc : string[], bcc : string[]}|undefined>} undefined if the server request failed
+	 */
+	private async resolveRecipients(to : string[], cc : string[], bcc : string[]) : Promise<{to : string[], cc : string[], bcc : string[]}|undefined>
+	{
+		const resolved = await this.egw.request('mail.EGroupware\\Mail\\Compose.ajax_resolveDistributionLists', [{to, cc, bcc}]);
+		return resolved ? {to : resolved.to ?? [], cc : resolved.cc ?? [], bcc : resolved.bcc ?? []} : undefined;
+	}
+
+	/**
+	 * Entries without the ones identifying an already listed recipient, the first one wins
+	 */
+	static uniqueRecipients(entries : string[]) : string[]
+	{
+		const seen = new Set<string>();
+		return entries.filter((entry) =>
+		{
+			const key = MailCompose.recipientKey(entry);
+			return key && !seen.has(key) && seen.add(key);
+		});
+	}
+
+	/**
+	 * Toolbar action (ticket #125731): replace all distribution lists and groups in To, Cc and Bcc by their members,
+	 * so the user can check who the message really goes to - classic compose showed them when switching the editor
+	 * mode (a server round trip), the client-side compose does not.
+	 *
+	 * Does nothing but telling so, if there is no list or group. A recipient listed twice afterwards is kept once.
+	 *
+	 * @param {object} _action toolbar action (unused)
+	 */
+	async resolveMailingLists(_action? : any) : Promise<void>
+	{
+		const fields = ['to', 'cc', 'bcc'] as const;
+		const entries = {} as Record<typeof fields[number], string[]>;
+		for (const field of fields)
+		{
+			entries[field] = MailCompose.recipientEntries(this.et2.getWidgetById(field)?.get_value());
+		}
+		if (!fields.some((field) => entries[field].some((entry) => MailJmap.DISTRIBUTION_LIST_RE.test(entry))))
+		{
+			this.egw.message(this.egw.lang('No mailing-list or group found in the recipients'), 'info');
+			return;
+		}
+		const resolved = await this.resolveRecipients(entries.to, entries.cc, entries.bcc);
+		if (!resolved)
+		{
+			this.egw.message(this.egw.lang('Failed to resolve distribution list(s)'), 'error');
+			return;
+		}
+		for (const field of fields)
+		{
+			this.et2.getWidgetById(field)?.set_value(MailCompose.uniqueRecipients(resolved[field]));
+		}
+		// show cc/bcc rows, which got recipients
+		this.fieldExpanderInit();
+		this.egw.message(this.egw.lang('Mailing-lists and groups resolved, the message goes to %1 recipients',
+			MailCompose.countDistinctRecipients(resolved.to, resolved.cc, resolved.bcc)), 'success');
+	}
+
+	/**
+	 * Ticket #124811: ask the user, before sending to more recipients in To and Cc than the admin allows
+	 * (site configuration mail "max_recipients_to_cc", 0 = off), as all of them see each others addresses.
+	 *
+	 * Distribution lists and groups are counted with their members, resolved server-side like on sending.
+	 * Moving to Bcc moves ALL To and Cc recipients (To stays empty), as anybody being warned does not want
+	 * any of them to be visible.
+	 *
+	 * @returns {Promise<boolean>} true: go on sending (not too many, chosen "send anyway", or recipients were moved
+	 *  to Bcc), false: user cancelled
+	 */
+	private async confirmManyRecipients() : Promise<boolean>
+	{
+		const limit = Number(this.egw.config('max_recipients_to_cc', 'mail')) || 0;
+		if (limit <= 0) return true;
+
+		const to = MailCompose.recipientEntries(this.et2.getWidgetById('to')?.get_value());
+		const cc = MailCompose.recipientEntries(this.et2.getWidgetById('cc')?.get_value());
+		const entries = [...to, ...cc];
+		if (!entries.length) return true;
+
+		let count = MailCompose.countDistinctRecipients(entries);
+		// a list or group counts as one entry only, expand them, but only if still needed to decide
+		if (count <= limit && entries.some((entry) => MailJmap.DISTRIBUTION_LIST_RE.test(entry)))
+		{
+			const resolved = await this.resolveRecipients(to, cc, []);
+			// a failed expansion is not a reason to block sending: the real send reports it
+			if (resolved) count = MailCompose.countDistinctRecipients(resolved.to, resolved.cc);
+		}
+		const key = entries.join(',');
+		if (count <= limit || key === this.confirmedManyRecipients) return true;
+
+		const [buttonId] = await Et2Dialog.show_dialog(null,
+			this.egw.lang('This message goes to %1 recipients in To and Cc, more than the limit of %2. All of them see the addresses of all others. Move all of them to Bcc?', count, limit),
+			this.egw.lang('Many recipients'), {},
+			[
+				{label: this.egw.lang('Move to Bcc and send'), id: 'bcc', class: 'ui-priority-primary', default: true, image: 'check'},
+				{label: this.egw.lang('Send anyway'), id: 'send', image: 'send'},
+				{label: this.egw.lang('Cancel'), id: 'cancel', image: 'cancelDialog'}
+			], Et2Dialog.WARNING_MESSAGE).getComplete();
+		const button = String(buttonId);	// custom buttons have string ids, getComplete() is typed for the numeric BUTTONS_*
+
+		if (button === 'bcc')
+		{
+			const bcc = MailCompose.recipientEntries(this.et2.getWidgetById('bcc')?.get_value());
+			const seen = new Set(bcc.map((entry) => MailCompose.recipientKey(entry)));
+			this.et2.getWidgetById('bcc')?.set_value([...bcc, ...entries.filter((entry) =>
+			{
+				const key = MailCompose.recipientKey(entry);
+				return !seen.has(key) && seen.add(key);
+			})]);
+			this.et2.getWidgetById('to')?.set_value([]);
+			this.et2.getWidgetById('cc')?.set_value([]);
+			// show the Bcc row, it is hidden behind the "..." expander as long as it was empty
+			this.fieldExpanderInit();
+			return true;
+		}
+		if (button === 'send')
+		{
+			this.confirmedManyRecipients = key;
+			return true;
+		}
+		return false;
 	}
 
 	/**

@@ -1192,3 +1192,18 @@ function api_upgrade26_1_001()
 
 	return $GLOBALS['setup_info']['api']['currentver'] = '26.1.002';
 }
+
+/**
+ * Widen ident_signature to longtext, to have room for an embedded (data: URI) signature image
+ *
+ * @return string
+ */
+function api_upgrade26_1_002()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_ea_identities', 'ident_signature', array(
+		'type' => 'longtext',
+		'comment' => 'signature text'
+	));
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '26.1.003';
+}

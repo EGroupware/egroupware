@@ -486,7 +486,7 @@ emails	common	pt-br	E-mails
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	pt-br	Encaixado estivo CSS, ex. '.red { background: red; }' (note o '.' antes do nome-da-classe) ou '@import url(...)' (nomes de classe são globais para a página inteira!)
 empty file	common	pt-br	Arquivo vazio
 enable javascript onchange submit	common	pt-br	Ativar JavaScript sobre as alterações submetidas
-enable logging	groupdav	pt-br	Ativar registro
+enable logging	common	pt-br	Ativar registro
 enabled	common	pt-br	Habilitado
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	pt-br	Permite o registro do tráfego CalDAV/CardDAV para diagnosticar problemas com dispositivos.
 end date	common	pt-br	Data do término
@@ -1255,7 +1255,7 @@ show (no save)	common	pt-br	Exibir (sem salvar)
 show all	common	pt-br	Exibir tudo
 show all / cancel filter	common	pt-br	Mostrar tudo / cancelar filtro
 show all categorys	common	pt-br	Mostrar todas as Categorias
-show log of following device	groupdav	pt-br	Mostrar log do seguinte dispositivo
+show log of following device	common	pt-br	Mostrar log do seguinte dispositivo
 show page generation time	common	pt-br	Mostrar tempo de criação da página
 show page generation time on the bottom of the page?	common	pt-br	O tempo de criação da página deve ser mostrado no rodapé.
 show page generation time?	common	pt-br	Exibir tempo de geração da página

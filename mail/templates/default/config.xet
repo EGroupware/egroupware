@@ -123,6 +123,13 @@
 					<et2-textbox  id="newsettings[quota_limit_warning]"></et2-textbox>
 				</row>
 				<row>
+					<et2-vbox>
+						<et2-description  value="Warn if more than this number of recipients are in To and Cc (0 = off)"></et2-description>
+						<et2-description  value="On sending the user is asked, if all of them should be moved to Bcc, so they can not see each others addresses. Distribution lists and groups are counted with their members."></et2-description>
+					</et2-vbox>
+					<et2-number  id="newsettings[max_recipients_to_cc]" min="0" precision="0" placeholder="0"></et2-number>
+				</row>
+				<row>
 					<et2-description  value="Default value for remembering S/MIME passphrase in minutes"></et2-description>
 					<et2-textbox  id="newsettings[smime_pass_exp]"></et2-textbox>
 				</row>

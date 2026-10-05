@@ -262,7 +262,7 @@ class Config
 			'manual' => array('manual_remote_egw_url'),
 			'infolog' => array('status'),
 			'timesheet' => array('status_labels'),
-			'mail' => array('quota_limit_warning'),
+			'mail' => array('quota_limit_warning', 'max_recipients_to_cc'),
 		);
 		if (!isset(self::$configs))
 		{

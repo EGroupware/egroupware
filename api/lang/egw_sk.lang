@@ -494,7 +494,7 @@ emails	common	sk	E-maily
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	sk	Embedded CSS styles, e.g. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)
 empty file	common	sk	Prázdny súbor
 enable javascript onchange submit	common	sk	Zapnúť odosielanie JavaScript onchange
-enable logging	groupdav	sk	Povoliť záznam protokolu
+enable logging	common	sk	Povoliť záznam protokolu
 enabled	common	sk	Aktívny
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	sk	Povolí záznam protokolu prevádzky CalDAV/CardDAV za účelom diagnostiky problémov so zariadeniami.
 end date	common	sk	Dátum ukončenia
@@ -1141,7 +1141,7 @@ replace with	common	sk	Zameniť za
 request could not be processed, please reload your window (press f5 or cmd r)!	common	sk	Požiadavka sa nedala spracovať, prosím znovu načítajte okno pomocu F5 alebo Ctrl+R!
 requested resource '%1' does not exist or has expired	common	sk	Požadovaný prostriedok "%1" neexistuje alebo jeho platnosť vypršala
 requests and full responses to files directory	common	sk	Požiadavky a plné odpovede do priečinka súborov
-requests and truncated responses to apache error-log	groupdav	sk	Požiadavky a skrátené odpovede do chybového protokolu Apache
+requests and truncated responses to apache error-log	common	sk	Požiadavky a skrátené odpovede do chybového protokolu Apache
 required	common	sk	Vyžadované
 required directory "%1" created.	admin	sk	Požadovaný priečinok "%1" vytvorený.
 required directory "%1" has wrong mode %2 instead of %3!	admin	sk	Požadovaný priečinok "%1" má nesprávny režim %2 namiesto %3!
@@ -1304,7 +1304,7 @@ show (no save)	common	sk	Ukázať (neuložiť)
 show all	common	sk	Ukázať všetko
 show all / cancel filter	common	sk	Ukázať všetko / zrušiť filter
 show all categorys	common	sk	Ukázať všetky kategórie
-show log of following device	groupdav	sk	Zobraziť protokol nasledujúceho zariadenia
+show log of following device	common	sk	Zobraziť protokol nasledujúceho zariadenia
 show page generation time	common	sk	Ukázať čas generovania stránky
 show page generation time on the bottom of the page?	common	sk	Ukázať čas generovania stránky na jej spodku.
 show page generation time?	common	sk	Ukázať čas generovania stránky
@@ -1567,7 +1567,7 @@ you need to be an egroupware administrator to access this functionality!	common	
 you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	sk	Najprv musíte nainštalovať zásuvný modul Mailvelope ktorý je dostupný pre Chrome a Firefox na stránke www.mailvelope.com alebo kliknutím na tlačítko inštalácie.
 you need to select a file first!	common	sk	Je potrebné najprv vybrať súbor!
 you need to select some entries first!	common	sk	Najprv musíte vybrať niektoré položky!
-you need to set enable logging to "%1" to create/update a log.	groupdav	sk	Ak chcete vytvoriť/aktualizovať protokol, musíte povoliť protokolovanie na %1.
+you need to set enable logging to "%1" to create/update a log.	common	sk	Ak chcete vytvoriť/aktualizovať protokol, musíte povoliť protokolovanie na %1.
 you tried to automatically size a flex column, which always takes the rest of the space	common	sk	Pokúšate sa nastaviť automatickú veľkosť pohyblivého stĺpca, ktorý vždy zaberie celý zvyšný priestor.
 you will not be able to send or receive encrypted mails before completing that step!	common	sk	Kým nedokončíte tento krok, NEbudete môcť posielať alebo prijímať šifrované správy!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	sk	Pokúsili ste sa otvoriť aplikáciu EGroupware: %1, ale nemáte na to oprávnenia!

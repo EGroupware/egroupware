@@ -484,7 +484,7 @@ emails	common	fi	Sähköpostit
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	fi	Upotetut CSS tyylit, esim. .red { background: red; }' (huomaa '.' ennen luokan nimeä) tai '@import url(...)' (luokan nimi on globaali koko sivulla!)
 empty file	common	fi	Tyhjä tiedosto
 enable javascript onchange submit	common	fi	Salli JavaScript onchange lähetys
-enable logging	groupdav	fi	Salli loki
+enable logging	common	fi	Salli loki
 enabled	common	fi	Käytössä
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	fi	Mahdollistaa CalDAV/CardDAV-liikenteen kirjaamisen laitteiden ongelmien diagnosoimiseksi.
 end date	common	fi	Loppumispäivä
@@ -1240,7 +1240,7 @@ show (no save)	common	fi	Näytä (ei tallenna)
 show all	common	fi	Näytä kaikki
 show all / cancel filter	common	fi	Näytä kaikki / keskeytä suodin
 show all categorys	common	fi	Näytä kaikki kategoriat
-show log of following device	groupdav	fi	Näytä valitun puhelimen loki
+show log of following device	common	fi	Näytä valitun puhelimen loki
 show page generation time	common	fi	Näytä sivun tekemiseen kulunut aika
 show page generation time on the bottom of the page?	common	fi	Näytä sivun tekemiseen kulunut aika sivun alareunassa.
 show page generation time?	common	fi	Näytä sivun tekemiseen kulunut aika
@@ -1478,7 +1478,7 @@ you need to be an egroupware administrator to access this functionality!	common	
 you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	fi	Sinun on asennettava Mailvelope-lisäosa, joka on saatavilla Chromeen ja Firefoxiin osoitteesta www.mailvelope.com tai napsauttamalla asennuspainiketta.
 you need to select a file first!	common	fi	Valitse tiedosto!
 you need to select some entries first!	common	fi	Valitse merkinnät!
-you need to set enable logging to "%1" to create/update a log.	groupdav	fi	Salli loki "%1" lokimerkinnöille.
+you need to set enable logging to "%1" to create/update a log.	common	fi	Salli loki "%1" lokimerkinnöille.
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	fi	Sinulla ei ole käyttöoikeutta sovellukseen %1!
 your account has been updated with new data from your identity provider.	common	fi	Tilisi on päivitetty uusilla tiedoilla identiteetin tarjoajalta.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	fi	Selaimesi ei ole ajan tasalla (JavaScript ES6 -yhteensopiva), joten jotkin ominaisuudet eivät ehkä toimi.

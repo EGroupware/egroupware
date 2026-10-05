@@ -11,6 +11,7 @@
 
 import './egw.js';
 import './egw_utils';
+import {trustedScript} from "./egw_trusted_types";
 
 export interface JsonModule
 {
@@ -939,7 +940,7 @@ class Json implements JsonModule
 			{
 				try
 				{
-					var func = new Function(res.data);
+					var func = new Function(trustedScript(res.data));
 					func.call(req.egw ? req.egw.window : window);
 				}
 				catch (e)

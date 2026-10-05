@@ -1786,6 +1786,22 @@ export class MailApp extends EgwApp
 	 * @param preset {to?, cc?, bcc?, subject?, files?, filemode?, body?, bodyMimeType?, mimeType?,
 	 *  attachmentContents?, attachmentUrls?, msg?} - see bootstrapComposePopup()'s own preset
 	 *  docblock for the full shape/semantics of each field
+	 * @param from classic from/id compose.php pair (eg. 'reply', 'forward') - only ever needed
+	 *  together with a preset by ApiHandler.php's REST `replyEml` case (imports the eml into
+	 *  Drafts first, then needs both the reply_id/from pair AND a to/cc/bcc/subject/... preset in
+	 *  the SAME popup) - every other caller only ever has a preset, no from/id, so this defaults
+	 *  to '' same as before this param existed
+	 * @param id classic from/id compose.php pair's row-id half - see `from` above
+	 * @param explicitAccId the mail account to compose from - when given, used as-is instead of
+	 *  the user's own currently-active-account preference below. ApiHandler.php's REST compose
+	 *  endpoint always has to pass this explicitly (ralf, 2026-10-05: "the REST API should NOT use
+	 *  the preference about which identity to use, but the specified identity ... as documented") -
+	 *  a REST caller specifies (or gets defaulted to the first) `ident_id` server-side regardless
+	 *  of what the authenticated user happens to have active in their own desktop session right
+	 *  now, so composing had to honor that identity's account, not silently substitute whatever
+	 *  account this user's browser last had open. Every other (non-REST, UI-triggered) caller has
+	 *  no such specified-identity concept and correctly keeps composing from the user's current
+	 *  account, same as before this param existed.
 	 */
 	composeWithPreset(preset : {
 		to? : any, cc? : any, bcc? : any, subject? : string,
@@ -1794,21 +1810,21 @@ export class MailApp extends EgwApp
 		attachmentContents? : { name : string, type : string, content : string }[],
 		attachmentUrls? : { name : string, type : string, url : string, size : number }[],
 		msg? : string,
-	}) : void
+	}, from : string = '', id : string = '', explicitAccId : string = '') : void
 	{
 		// See composeMessage()'s own comment on this same read - a stale legacy-format preference
 		// value must not reach compose.php's acc_id param unsplit.
-		const accId = (this.egw.preference('ActiveProfileID', 'mail') || '').toString().split('::')[0];
+		const accId = explicitAccId || (this.egw.preference('ActiveProfileID', 'mail') || '').toString().split('::')[0];
 		const window_name = 'compose_preset_' + Date.now();
 		const presetJson = JSON.stringify(preset);
-		if (egw.urlParamsTooLong({preset: presetJson}))
+		if (egw.urlParamsTooLong({preset: presetJson, from, id}))
 		{
-			void this.composeWithPresetPost(preset, accId);
+			void this.composeWithPresetPost(preset, accId, from, id);
 			return;
 		}
 		const url = this.egw.link('/mail/compose.php', {
-			from: '',
-			id: '',
+			from,
+			id,
 			acc_id: accId,
 			mode: '',
 			smime_type: '',
@@ -1824,14 +1840,14 @@ export class MailApp extends EgwApp
 	 * preset into that SAME window, replacing it with this popup's own client-side bootstrap.
 	 * compose.php reads $_REQUEST['preset'] (not $_GET-only) specifically so this works.
 	 */
-	private async composeWithPresetPost(preset : object, accId : string) : Promise<void>
+	private async composeWithPresetPost(preset : object, accId : string, from : string = '', id : string = '') : Promise<void>
 	{
 		const window_name = 'compose_preset_' + Date.now();
 		const popup : any = await egw.open('', 'mail', 'add', '', window_name, 'mail');
 		if (!popup) return;	// popup blocked, or blocker-warning dialog already shown
 		const target = typeof popup.name === 'string' && popup.name ? popup.name : '_blank';
 		const url = this.egw.link('/mail/compose.php', {
-			from: '', id: '', acc_id: accId, mode: '', smime_type: '',
+			from, id, acc_id: accId, mode: '', smime_type: '',
 		});
 		const doc = document;
 		const form = doc.createElement('form');
@@ -1870,13 +1886,25 @@ export class MailApp extends EgwApp
 	 * instance/cache instead of reusing one tied to a now-gone window.
 	 *
 	 * @param accId account/profile id, "acc_id:ident_id" is fine too - the server only uses acc_id
+	 * @param skipPredefinedAddresses true: skip the "predefined compose addresses" account
+	 *  preference server-side (ApiHandler.php's REST API only - see Compose.php's own
+	 *  ajax_getComposeToolbarData() docblock, ticket #125621) - deliberately bypasses the cache
+	 *  entirely rather than keying it by this flag too: a REST compose is a one-off, and caching
+	 *  its suppressed-preference result would incorrectly serve it to the NEXT, genuinely
+	 *  interactive compose of the same account for the rest of this window's life.
 	 */
-	getComposeToolbarData(accId : string) : Promise<{ actions : object, sel_options : object, content : object }>
+	getComposeToolbarData(accId : string, skipPredefinedAddresses : boolean = false) : Promise<{ actions : object, sel_options : object, content : object }>
 	{
 		const openerMail : MailApp = MailApp.safeOpener((opener) => (opener as any).app?.mail);
 		if (openerMail && openerMail !== this)
 		{
-			return openerMail.getComposeToolbarData(accId);
+			return openerMail.getComposeToolbarData(accId, skipPredefinedAddresses);
+		}
+		if (skipPredefinedAddresses)
+		{
+			return this.egw.request(
+				'mail.EGroupware\\Mail\\Compose.ajax_getComposeToolbarData', [accId.split(':')[0], true]
+			);
 		}
 		if (!this.composeToolbarDataPromises[accId])
 		{
@@ -1990,12 +2018,29 @@ export class MailApp extends EgwApp
 	 *    as classic custom_mail()'s own (non-forcing) `mimeType` derivation.
 	 *  - `msg` - an info message to show once the popup has loaded (calendar's own meeting-request
 	 *    disclaimer, classic compose()'s own Framework::message($msg) equivalent for this path).
+	 *  - `replyto`/`priority` overwrite, same as `subject` - ApiHandler.php's REST API documents
+	 *    both (doc/REST-CalDAV-CardDAV/Mail.md) but neither reached the compose window at all
+	 *    before this fix (found live 2026-10-05 alongside the `identity`/account bug below).
+	 *  - `identity` (an ident_id, NOT an acc_id - see this class's own REST API docs) overwrites
+	 *    `mailaccount` as `${accId}:${identity}` - without this, a REST caller's specified (or
+	 *    defaulted-to-first) identity was computed server-side and put into the preset, but never
+	 *    actually consumed client-side at all: the compose window silently opened with whatever
+	 *    identity getComposeToolbarData()'s own server-side default happened to be for that
+	 *    account, which only ever coincidentally matched for an account with just one identity.
+	 *  - `skipPredefinedAddresses` - internal-only, never set by a REST caller's own request body:
+	 *    ApiHandler.php always sets this `true` on its own preset, so getComposeToolbarData() skips
+	 *    the "predefined compose addresses" account preference (a personal default Cc/Bcc, set via
+	 *    mail's account-settings UI) entirely - found live via ticket #125621 (ralf: "my standard cc
+	 *    should not be in, when created via REST, as it's a user preference"): that preference used
+	 *    to get baked into the content baseline unconditionally, so it ended up APPENDED alongside
+	 *    the REST caller's own, explicitly-specified cc regardless.
 	 */
 	async bootstrapComposePopup(from : string, sourceId : string, accId : string, mode : string, smimeType : string,
 		pgpEncrypted : string,
 		bootstrap : {name : string, url : string, etemplate_exec_id : string},
 		preset? : {
-			to? : string[], cc? : string[], bcc? : string[], subject? : string,
+			to? : string[], cc? : string[], bcc? : string[], subject? : string, replyto? : string,
+			priority? : number, identity? : string, skipPredefinedAddresses? : boolean,
 			files? : { path : string, name : string, type : string }[],
 			filemode? : string, body? : string, bodyMimeType? : 'plain' | 'html', mimeType? : string,
 			attachmentContents? : { name : string, type : string, content : string }[],
@@ -2027,7 +2072,7 @@ export class MailApp extends EgwApp
 		// hasComposePrepareHook() says something is actually registered (cached per profileID
 		// alongside every other JMAP bootstrap fact - see MailJmap.ensureToken()).
 		const [{actions, sel_options, content}, prepared] = await Promise.all([
-			this.getComposeToolbarData(accId),
+			this.getComposeToolbarData(accId, !!preset?.skipPredefinedAddresses),
 			this.jmap.hasComposePrepareHook(accId).then(has => has ?
 				this.egw.request('mail.EGroupware\\Mail\\Compose.ajax_prepareCompose', []) : null)
 		]);
@@ -2071,6 +2116,30 @@ export class MailApp extends EgwApp
 		if (preset?.subject)
 		{
 			contentCopy.subject = preset.subject;
+		}
+		// preset.replyto/priority (ApiHandler.php's REST API, doc/REST-CalDAV-CardDAV/Mail.md) -
+		// same overwrite semantics as subject above; found live 2026-10-05 that neither ever
+		// reached the compose window at all before this fix, alongside the identity/account gap
+		// just below. `replyto` is documented as a single RFC822 address string, but its widget
+		// (same et2-email type as to/cc/bcc, `multiple="true"`) wants an array.
+		if (preset?.replyto)
+		{
+			contentCopy.replyto = [preset.replyto];
+		}
+		if (preset?.priority)
+		{
+			contentCopy.priority = preset.priority;
+		}
+		// preset.identity (an ident_id - NOT accId, the mail ACCOUNT, already resolved above) -
+		// the REST caller's specified (or defaulted-to-first) identity, found live 2026-10-05 to
+		// never have been consumed at all: the compose window silently opened with whatever
+		// identity getComposeToolbarData()'s own server-side default happened to be for `accId`,
+		// which only ever coincidentally matched for an account with just a single identity.
+		// `acc_id:ident_id` is this widget's own combined-value convention (Compose.php's
+		// ajax_getComposeToolbarData()).
+		if (preset?.identity)
+		{
+			contentCopy.mailaccount = `${accId}:${preset.identity}`;
 		}
 
 		// preset.files (addressbook vCard-attach, filemanager "mail selected files") is applied
@@ -2172,36 +2241,55 @@ export class MailApp extends EgwApp
 		// nobody. `bootstrapPromise` must therefore be awaited HERE UNCONDITIONALLY now, not only
 		// when a preset needs it.
 		await (<any>window).app._compose.bootstrapPromise;
+		// Each preset step below is independently guarded - found live via ticket #125621: this
+		// whole block used to run unguarded, so ONE step throwing (attachmentUrls' own fetch()
+		// failing, eg. a mixed-content-blocked http:/https: mismatch - see sameOriginUrl()'s own
+		// docblock) silently aborted every LATER step too, body/msg included, even though the
+		// failed attachment had nothing to do with them - the compose window looked almost
+		// entirely empty (only the signature, from the separate bootstrapPromise chain above,
+		// actually showed) despite the preset itself having arrived completely intact.
+		const applyPresetStep = async(label : string, step : () => void | Promise<void>) =>
+		{
+			try
+			{
+				await step();
+			}
+			catch (e)
+			{
+				console.error(`bootstrapComposePopup(): applying preset.${label} failed`, e);
+				this.egw.message(this.egw.lang('Applying %1 to the new message failed', label), 'error');
+			}
+		};
 		if (preset?.files?.length)
 		{
-			(<any>window).app._compose.applyPresetFiles(preset.files);
+			await applyPresetStep('files', () => (<any>window).app._compose.applyPresetFiles(preset.files));
 		}
 		// contentCopy.filemode above only preselects the widget - a "send as link/share" the user
 		// picked in filemanager has to count as their explicit choice too, or the send would
 		// silently attach the files anyway (MailCompose.applyPresetFilemode()'s own docblock)
 		if (preset?.filemode)
 		{
-			(<any>window).app._compose.applyPresetFilemode(preset.filemode);
+			await applyPresetStep('filemode', () => (<any>window).app._compose.applyPresetFilemode(preset.filemode));
 		}
 		if (preset?.attachmentContents?.length)
 		{
-			await (<any>window).app._compose.applyPresetAttachmentContent(preset.attachmentContents);
+			await applyPresetStep('attachmentContents', () => (<any>window).app._compose.applyPresetAttachmentContent(preset.attachmentContents));
 		}
 		if (preset?.attachmentUrls?.length)
 		{
-			await (<any>window).app._compose.applyPresetAttachmentUrls(preset.attachmentUrls);
+			await applyPresetStep('attachmentUrls', () => (<any>window).app._compose.applyPresetAttachmentUrls(preset.attachmentUrls));
 		}
 		if (preset?.body)
 		{
-			(<any>window).app._compose.applyPresetBody(preset.body, preset.bodyMimeType);
+			await applyPresetStep('body', () => (<any>window).app._compose.applyPresetBody(preset.body, preset.bodyMimeType));
 		}
 		if (pgpEncrypted === '1' && actionsCopy.pgp)
 		{
-			this.togglePgpEncrypt({checked: true});
+			await applyPresetStep('pgp', () => this.togglePgpEncrypt({checked: true}));
 		}
 		if (preset?.msg)
 		{
-			this.egw.message(preset.msg, 'info');
+			await applyPresetStep('msg', () => this.egw.message(preset.msg, 'info'));
 		}
 	}
 

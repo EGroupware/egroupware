@@ -130,6 +130,12 @@ class ApiHandler extends Api\CalDAV\Handler
 					'body' => $body,
 					'mimeType' => $type,
 					'identity' => $ident_id,
+					// MailApp.bootstrapComposePopup() reads this to skip the "predefined compose
+					// addresses" account preference (ticket #125621, ralf: "my standard cc should
+					// not be in, when created via REST, as it's a user preference") - a REST
+					// caller's own to/cc/bcc must be the ONLY recipients, never silently joined by
+					// the authenticated user's own personal compose-default preference.
+					'skipPredefinedAddresses' => true,
 				]+self::prepareAttachments($data['attachments'] ?? [], $data['attachmentType'] ?? 'attach',
 					$data['shareExpiration'], $data['sharePassword'], $do_compose));
 
@@ -141,31 +147,31 @@ class ApiHandler extends Api\CalDAV\Handler
 						$account_lid = Api\Accounts::id2name($user);
 						throw new \Exception("User '$account_lid' (#$user) is NOT online", 404);
 					}
+					// $ident_id above is either the REST path's explicit <id>, or defaultIdentity()'s
+					// "first IMAP account's first identity" - either way NOT whatever account this
+					// user's own desktop session currently has active. The account that identity
+					// belongs to has to be passed through explicitly to composeWithPreset() (ralf,
+					// 2026-10-05: "the REST API should NOT use the preference about which identity
+					// to use, but the specified identity ... as documented") - left to its own
+					// default, composeWithPreset() resolves the compose account from the
+					// authenticated user's 'ActiveProfileID' preference instead, silently composing
+					// from whatever account that user's browser last had open rather than the
+					// identity this REST request actually specified.
+					$acc_id = $acc_id ?? Api\Mail\Account::read_identity($ident_id)['acc_id'];
 					$push = new Api\Json\Push($user);
-					if ($params)
-					{
-						// replyEml above set reply_id/from - MailApp.composeWithPreset() only ever
-						// opens a genuinely new compose (from/id hardcoded empty, no reply_id/from
-						// support at all), so this narrower combination still goes through the
-						// generic popup mechanism, same as before
-						$push->call('egw.open', '', 'mail', 'add', $params+['preset' => $preset], '_blank', 'mail');
-					}
-					else
-					{
-						// MailApp.composeWithPreset() is the client-side function actually built
-						// to carry a preset correctly - JSON-encodes it up front and transparently
-						// falls back to POST (composeWithPresetPost()) when that's too long for a
-						// GET url, exactly the case an attachmentContents/files-bearing preset can
-						// hit. The generic egw.open() used above doesn't do either: it
-						// bracket-flattens $preset's own nested arrays-of-objects straight into
-						// the query string ("preset[attachmentContents][]=[object Object]" - an
-						// implicit JS toString() on the object - found live), and even a plain
-						// scalar preset never actually worked through it either way, attachments
-						// or not - compose.php's own $_REQUEST['preset'] is only ever read as ONE
-						// json_decode()d string (composeWithPreset()'s own convention), never as
-						// bracket-nested params.
-						$push->call('app.mail.composeWithPreset', $preset);
-					}
+					// MailApp.composeWithPreset() JSON-encodes $preset up front and transparently
+					// falls back to POST (composeWithPresetPost()) when that's too long for a GET
+					// url - the generic egw.open() this used to go through for the replyEml case
+					// (passing reply_id/from alongside $preset) doesn't do either: it
+					// bracket-flattens $preset's own nested arrays/objects straight into the query
+					// string ("preset[to][]=a@b.com"), which compose.php's own
+					// json_decode($_REQUEST['preset']) can't parse - a PHP array, not a JSON
+					// string, found live 2026-10-05 (reported: "REST mail-compose doesn't fill
+					// recipients") - every preset field, not just recipients, silently died this
+					// way whenever replyEml was combined with to/cc/bcc/subject/etc. composeWithPreset()
+					// now also accepts the classic from/id pair replyEml sets in $params (only
+					// non-empty when replyEml is), so this single call covers both cases.
+					$push->call('app.mail.composeWithPreset', $preset, $params['from'] ?? '', $params['reply_id'] ?? '', (string)$acc_id);
 					echo json_encode([
 						'status' => 200,
 						'message' => 'Request to open compose window sent',

@@ -8,6 +8,7 @@
 import {assert} from "@open-wc/testing";
 import * as sinon from "sinon";
 import {createEgwUtilsEnv, EgwUtilsEnv} from "./EgwUtilsHarness";
+import {sameOriginUrl} from "../egw_utils";
 
 describe('egw_utils.js (utils)', () =>
 {
@@ -306,6 +307,38 @@ describe('egw_utils.js (utils)', () =>
 				return;
 			}
 			assert.throws(() => env.egw().copyTextToClipboard('hello'));
+		});
+	});
+
+	/**
+	 * Regression coverage for ticket #125621 (2026-10-05): a server-given "absolute" URL's own
+	 * scheme/host can't be trusted (config_webserver_url is commonly just a bare path, so the
+	 * server has to GUESS scheme/host from request headers, which came back `http:` under at
+	 * least one reverse-proxy setup even though the page itself loaded over `https:` - the
+	 * browser then silently blocks a same-origin fetch() of it as mixed content). sameOriginUrl()
+	 * re-bases any such URL onto THIS page's own, always-correct location.origin - these tests run
+	 * in the top-level test page's own real window, not EgwUtilsHarness's mocked one, since
+	 * sameOriginUrl() is a bare function reading the real global `location`, not anything
+	 * EgwUtilsHarness stubs.
+	 */
+	describe('sameOriginUrl()', () =>
+	{
+		it('replaces a mismatched scheme+host with this page\'s own origin, keeping path/search/hash', () =>
+		{
+			const result = sameOriginUrl('http://other-host.example/groupdav.php/mail/attachments/x--abc?foo=bar#frag');
+			assert.equal(result, location.origin + '/groupdav.php/mail/attachments/x--abc?foo=bar#frag');
+		});
+
+		it('leaves an already-same-origin URL\'s path/search untouched', () =>
+		{
+			const result = sameOriginUrl(location.origin + '/egroupware/groupdav.php/mail/attachments/x--abc');
+			assert.equal(result, location.origin + '/egroupware/groupdav.php/mail/attachments/x--abc');
+		});
+
+		it('resolves a bare relative path against this page\'s own origin', () =>
+		{
+			const result = sameOriginUrl('/egroupware/groupdav.php/mail/attachments/x--abc');
+			assert.equal(result, location.origin + '/egroupware/groupdav.php/mail/attachments/x--abc');
 		});
 	});
 });

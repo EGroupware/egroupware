@@ -546,7 +546,8 @@ trait ComposeMessageBuilder
 	/**
 	 * resolveEmailAddressList
 	 * @param array $_emailAddressList list of emailaddresses, may contain distributionlists
-	 * @return array return the list of emailaddresses with distributionlists resolved
+	 * @return array return the list of emailaddresses with distributionlists resolved, members as `Name <email>`
+	 *  (just the address for a member without a name)
 	 */
 	static function resolveEmailAddressList($_emailAddressList)
 	{
@@ -572,7 +573,9 @@ trait ComposeMessageBuilder
 					// "Account not reachable" instead of any hint one list member has no email address.
 					if ($addr = $email['email'] ?: $email['email_home'])
 					{
-						$addrFromList[] = $addr;
+						// with the name of the member, as it is shown for recipients picked one by one (Api\Mailer::add_personal()
+						// quotes it as needed), so the user can see who is in a list, and the recipient sees names in To/Cc too
+						$addrFromList[] = Api\Mailer::add_personal($addr, trim((string)($email['n_fn'] ?? '')));
 					}
 				}
 			}

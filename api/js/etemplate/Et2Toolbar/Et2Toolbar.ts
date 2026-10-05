@@ -332,7 +332,9 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 			}
 			if(action.id && typeof this._preference[action.id] == "undefined")
 			{
-				this._preference[action.id] = false;
+				// no preference of the user yet: shown in the toolbar, unless the action asks to start in the menu
+				// (not stored, so the user's later choice, which stores the whole preference, always wins)
+				this._preference[action.id] = !!action.defaultInList;
 			}
 			this._addAction(action, last_group);
 		}
