@@ -65,6 +65,7 @@ any status	mail	en	any status
 append	mail	en	append
 appended after reply before sending	mail	en	Appended after reply before sending
 application mail expected but got: %1	mail	en	Application email expected but got: %1
+applying %1 to the new message failed	mail	en	Applying %1 to the new message failed
 applying rights	mail	en	Applying rights
 applying rights to %1 folders ...	mail	en	Applying rights to %1 folders ...
 archive	mail	en	Archive

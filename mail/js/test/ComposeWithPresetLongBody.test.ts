@@ -124,4 +124,86 @@ describe('MailApp.composeWithPreset()', () =>
 		assert.include(url, '/mail/compose.php');
 		assert.include(decodeURIComponent(url).replace(/\+/g, ' '), SHORT_BODY, 'the short body itself must still be in the GET url');
 	});
+
+	/**
+	 * Regression coverage for ApiHandler.php's REST `replyEml` case (found live 2026-10-05: "REST
+	 * mail-compose doesn't fill recipients"): replying to an imported eml needs BOTH the classic
+	 * from/id pair (reply_id/from, previously only ever passed via the old, broken egw.open() push)
+	 * AND a to/cc/bcc/subject/... preset in the SAME popup - composeWithPreset() now accepts both
+	 * optional trailing params instead of hardcoding from/id to '', so a single call covers it.
+	 */
+	it('passes an explicit from/id pair through to the popup url alongside the preset', async() =>
+	{
+		app.composeWithPreset(preset(SHORT_BODY), 'reply', '42:INBOX:123');
+		await new Promise(resolve => setTimeout(resolve, 0));
+
+		assert.isTrue(egw.openPopup.calledOnce);
+		const [url] = egw.openPopup.firstCall.args;
+		const params = new URLSearchParams(url.split('?')[1]);
+		assert.equal(params.get('from'), 'reply');
+		assert.equal(params.get('id'), '42:INBOX:123');
+		assert.equal(JSON.parse(params.get('preset')).subject, 'Team meeting', 'the preset itself must still be carried too');
+	});
+
+	it('defaults from/id to empty strings when not given, same as before this param existed', async() =>
+	{
+		app.composeWithPreset(preset(SHORT_BODY));
+		await new Promise(resolve => setTimeout(resolve, 0));
+
+		const [url] = egw.openPopup.firstCall.args;
+		const params = new URLSearchParams(url.split('?')[1]);
+		assert.equal(params.get('from'), '');
+		assert.equal(params.get('id'), '');
+	});
+
+	it('also carries from/id through the POST fallback for a too-long preset', async() =>
+	{
+		app.composeWithPreset(preset(MAIL_SIZED_BODY), 'reply', '42:INBOX:123');
+		await new Promise(resolve => setTimeout(resolve, 0));
+
+		assert.isTrue(submitStub.calledOnce);
+		const form = submitStub.firstCall.thisValue as HTMLFormElement;
+		const params = new URLSearchParams(form.action.split('?')[1]);
+		assert.equal(params.get('from'), 'reply');
+		assert.equal(params.get('id'), '42:INBOX:123');
+	});
+
+	/**
+	 * Regression coverage for ApiHandler.php's REST compose endpoint (found live 2026-10-05, ralf:
+	 * "the REST API should NOT use the preference about which identity to use, but the specified
+	 * identity ... as documented") - a REST caller's `ident_id` (explicit or defaulted to the
+	 * first) belongs to a specific account, which must be composed from regardless of whatever
+	 * account this user's own desktop session happens to have active right now. `egw.preference`
+	 * is stubbed to always return account '42' above - these tests prove an explicit account
+	 * overrides that, and that omitting it still falls back to the preference unchanged.
+	 */
+	it('uses an explicitly given account instead of the ActiveProfileID preference', async() =>
+	{
+		app.composeWithPreset(preset(SHORT_BODY), '', '', '7');
+		await new Promise(resolve => setTimeout(resolve, 0));
+
+		const [url] = egw.openPopup.firstCall.args;
+		const params = new URLSearchParams(url.split('?')[1]);
+		assert.equal(params.get('acc_id'), '7', "the explicitly given account must win, not the user's own ActiveProfileID (42)");
+	});
+
+	it('falls back to the ActiveProfileID preference when no explicit account is given', async() =>
+	{
+		app.composeWithPreset(preset(SHORT_BODY));
+		await new Promise(resolve => setTimeout(resolve, 0));
+
+		const [url] = egw.openPopup.firstCall.args;
+		const params = new URLSearchParams(url.split('?')[1]);
+		assert.equal(params.get('acc_id'), '42', 'every non-REST caller has no specified identity, so the preference is correct here');
+	});
+
+	it('carries an explicit account through the POST fallback too', async() =>
+	{
+		app.composeWithPreset(preset(MAIL_SIZED_BODY), '', '', '7');
+		await new Promise(resolve => setTimeout(resolve, 0));
+
+		const form = submitStub.firstCall.thisValue as HTMLFormElement;
+		const params = new URLSearchParams(form.action.split('?')[1]);
+		assert.equal(params.get('acc_id'), '7');
+	});
 });

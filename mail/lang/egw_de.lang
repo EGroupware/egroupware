@@ -64,6 +64,7 @@ any status	mail	de	Alle Status
 append	mail	de	hinzufügen
 appended after reply before sending	mail	de	Einfügen unter dem zitierten Text im Zuge des Versendens
 application mail expected but got: %1	mail	de	Anwendung E-Mail erwarted, aber %1 erhalten
+applying %1 to the new message failed	mail	de	Anwenden von %1 auf die neue Nachricht fehlgeschlagen
 applying rights	mail	de	Rechte werden angewendet
 applying rights to %1 folders ...	mail	de	Rechte werden auf %1 Ordner angewendet ...
 archive	mail	de	Archiv
