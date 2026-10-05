@@ -1569,18 +1569,26 @@ reported "0 entries deleted" however many it removed - visible on the submit too
 often. It now returns the count of definitions it really deleted (it silently skips any the user
 does not own), and the ui reports that.
 
-### admin_customfields - as built, and the first policy_confirmation action
+### admin_customfields - as built, and the first confirm_handler action
 
 `delete` converted. Two things it needed that nothing before it did:
 
 * **The policy dialog's answers have to be forwarded.** This is the first converted action with
-  `policy_confirmation`: the policy app shows its own dialog ("requested by", comment) and
+  a `confirm_handler`: the policy app shows its own dialog ("requested by", comment) and
   `policy.confirm()` does `Object.assign(action.data, value)` just before running `onExecute`. A
   submit carried that along as `nm[admin_cmd]`; over ajax nothing did. `EgwApp.ajax_action()` now
   sends `_action.data.admin_cmd` as a 6th argument - additive, so no existing endpoint changes
   (PHP ignores extra arguments to a userland function). Without it the policy app would insist on
   a comment and then throw it away, which is worse than not asking. `admin/src/Groups.php` is the
-  only other `policy_confirmation` in the tree and is a `url` action, so it is unaffected.
+  only other `confirm_handler` in the tree and is a `url` action, so it is unaffected.
+* **`confirm_handler` is a dotted path, not an app name.** `EgwAction._check_confirm()` hands it to
+  `egw.applyFunc()`, which resolves it, loads the owning app's module through the build manifest and
+  instantiates its class - no app name in the framework, and none of it specific to policy. An
+  `app.<app>.<method>` handler is still only dispatched when `egw.app('<app>')` says the user has
+  that app, because `applyFunc()` answers a missing app by logging and returning, which would drop
+  the action; falling through to the plain confirm dialog instead still runs it. The key this
+  replaced, `policy_confirmation`, is still understood as `app.policy.confirm` for producers outside
+  this tree.
 * **The delete can no longer rely on `$this->appname`.** `json.php` constructs the class with no
   arguments and there is no `$_GET['appname']` on an ajax POST, so the loop that read
   `$this->fields` moved into `deleteFields()`, which reads each field's `cf_app` and `cf_name`
@@ -1687,7 +1695,6 @@ touched).
 | | |
 |---|---|
 | aiassistant | its list is the last legacy `<nextmatch>` in the tree and renders no widget at all, so the conversion is unverified in a browser - Et2Nextmatch conversion tracker's job |
-| admin_customfields | `EgwAction`'s policy branch does `import(egw.link('/policy/js/app.min.js'))`, and `egw.link()` does not consult the build manifest - the dynamic import fails wherever that file is not self-contained, which stops the action on submit too. **Do not patch the import**: `egw.applyFunc()` already does the manifest-aware load *and* the instantiation that branch hand-rolls, so `policy_confirmation` can become a generic `confirm_handler` and the special case deleted. Spun off as its own task 2026-10-05. Keep the app-presence gate, derived from the handler string - without it an instance with no policy app loses today's fallback to the plain confirm dialog |
 | stylite Calls | `Cti\Storage::delete()`'s "really delete an already-deleted call" branch is unreachable: a plain delete searches with `call_deleted IS NULL` |
 | records | should Status become the category picker dialog, for consistency with timesheet and infolog? Left as a sub-menu, see that section |
 | CI | records, aiassistant, developer, bookmarks and news_admin have no `.github/workflows` at all; aitools has `tests/` but no workflow. Their new test files run nowhere |

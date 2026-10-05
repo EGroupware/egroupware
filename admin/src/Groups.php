@@ -386,7 +386,7 @@ class Groups
 		if ($GLOBALS['egw_info']['user']['apps']['policy'])
 		{
 			$ret['delete'] += array(
-				'policy_confirmation' => true,
+				'confirm_handler' => 'app.policy.confirm',
 				'url'                 => 'menuaction=admin.admin_account.delete&account_id=$id'
 			);
 		}

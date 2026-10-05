@@ -1599,7 +1599,9 @@ export class AdminApp extends EgwApp
 
 		if(egw.app('policy'))
 		{
-			import(egw.link('/policy/js/app.min.js?' + ((new Date).valueOf() / 86400000 | 0).toString())).then(() =>
+			// egw_import() resolves the logical path against the build manifest, so the hashed
+			// sibling chunks app.min.js imports resolve too, and de-dupes per document
+			(<any>window).egw_import('/policy/js/app.min.js').then(() =>
 			{
 				// policy is its own nested-git-repo app (like tracker/status), invisible to
 				// this file's types - same EPL/stylite-blind-spot pattern as app.stylite

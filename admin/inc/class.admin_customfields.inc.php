@@ -627,7 +627,7 @@ class admin_customfields
 				'caption' => 'Delete',
 				'confirm' => 'Delete this entry',
 				'confirm_multiple' => 'Delete these entries',
-				'policy_confirmation' => 'Oh yeah',
+				'confirm_handler' => 'app.policy.confirm',
 				'group' => ++$group,
 				'disableClass' => 'rowNoDelete',
 				'onExecute' => 'javaScript:app.admin.ajax_action',

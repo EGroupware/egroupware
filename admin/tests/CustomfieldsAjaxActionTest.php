@@ -17,7 +17,7 @@ require_once realpath(__DIR__ . '/../../api/tests/LoggedInTest.php');
 /**
  * admin_customfields::ajax_action() is a new endpoint: Delete used to submit the whole eTemplate.
  *
- * It is the first converted action carrying 'policy_confirmation', which is what makes it
+ * It is the first converted action carrying a 'confirm_handler', which is what makes it
  * interesting: the policy app shows its own dialog and writes what it collected ("requested by",
  * comment) into action.data, which a submit carried along as nm[admin_cmd]. EgwApp.ajax_action()
  * now forwards that as a 6th argument - without it the policy app would ask for a comment and
