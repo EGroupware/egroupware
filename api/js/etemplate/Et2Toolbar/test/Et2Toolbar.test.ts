@@ -158,6 +158,59 @@ describe("et2-toolbar", () =>
 		assert.exists(listButton, "Missing dropdown for admin");
 	});
 
+	describe("defaultInList", () =>
+	{
+		let originalPreference : any;
+		let stored : any;
+
+		beforeEach(() =>
+		{
+			originalPreference = (window as any).egw.preference;
+			stored = {};
+			(window as any).egw.preference = () => stored;
+		});
+		afterEach(() =>
+		{
+			(window as any).egw.preference = originalPreference;
+		});
+
+		const create = async(actions : any) =>
+		{
+			const el = await fixture<any>(html`
+                <et2-toolbar></et2-toolbar>`);
+			el.id = "defaultInListTest";
+			el.actions = actions;
+			await el.updateComplete;
+			return el;
+		};
+
+		it("an action with defaultInList starts in the menu, the others stay in the toolbar", async() =>
+		{
+			const el = await create({
+				normal: {id: "normal", caption: "Normal"},
+				// explicitly NOT in the menu, toolbarDefault is only about which child of a dropdown is preselected
+				normal2: {id: "normal2", caption: "Normal 2", toolbarDefault: false},
+				optional: {id: "optional", caption: "Optional", defaultInList: true},
+			});
+
+			assert.equal(el.querySelector("#normal").slot, "", "stays in the toolbar");
+			assert.equal(el.querySelector("#normal2").slot, "", "toolbarDefault false does not hide a top-level action");
+			assert.equal(el.querySelector("#optional").slot, "list", "starts in the menu");
+		});
+
+		it("the stored preference of the user wins over defaultInList", async() =>
+		{
+			stored = {optional: false, other: true};	// user moved "optional" into the toolbar, hid "other"
+			const el = await create({
+				optional: {id: "optional", caption: "Optional", defaultInList: true},
+				other: {id: "other", caption: "Other"},
+			});
+
+			assert.equal(el.querySelector("#optional").slot, "", "user's choice: in the toolbar");
+			assert.equal(el.querySelector("#other").slot, "list", "user's choice: in the menu");
+		});
+	});
+
 	it('hides controls based on preference', async() =>
 	{
 		// Stub egw().preference
