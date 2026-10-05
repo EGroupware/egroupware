@@ -305,6 +305,20 @@ const MAX_URL_PARAMS_LENGTH = 2083;
  * Length of the query-string given url parameters would generate
  *
  * Array values are counted as one "name[]=value" pair per element, as that is how they get sent.
+ *
+ * Each value is run through encodeURIComponent() before being measured, matching exactly what
+ * egw_links.ts's own urlencode() (what egw.link() actually builds the real query string with)
+ * does to every scalar value - found live via ticket #125621 (2026-10-05): a REST-composed
+ * message's full HTML body (quotes, braces/semicolons from inline CSS, backslash-escaped CRLF)
+ * encodes far less efficiently than plain text, so measuring the RAW (pre-encoding) string length
+ * against MAX_URL_PARAMS_LENGTH badly under-counted the real, resulting URL - a real-world case
+ * measured 1786 raw characters (comfortably under the 2083 threshold, so composeWithPreset() kept
+ * the GET/openPopup() path) but came out to 2676 characters once actually encoded into the url
+ * (2771 for the whole URL) - well over it. Whatever a too-long url's actual failure mode is for a
+ * given deployment (a hard rejection, or a front-end proxy silently truncating it mid-escape-
+ * sequence - this customer's own request already passes through at least one reverse proxy ahead
+ * of their own nginx, per its X-Forwarded-For/X-Real-Ip headers), it's never correct to decide
+ * "short enough for GET" based on a length the real URL never actually has.
  */
 function urlParamsLength(_extra : string|object) : number
 {
@@ -317,11 +331,11 @@ function urlParamsLength(_extra : string|object) : number
 	{
 		if (Array.isArray(value))
 		{
-			value.forEach(val => len += (name + '[]=' + val + '&').length);
+			value.forEach(val => len += (name + '[]=' + encodeURIComponent(val) + '&').length);
 		}
 		else if (value)
 		{
-			len += (name + '=' + value + '&').length;
+			len += (name + '=' + encodeURIComponent(value) + '&').length;
 		}
 	}
 	return len;

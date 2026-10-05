@@ -692,14 +692,39 @@ describe('egw_open.js (open)', () =>
 		{
 			const instance = env.egw();
 			const recipient = 'First Last <first.last@example.com>';
-			// one 'preset[bcc][]=<recipient>&' pair per recipient is what gets counted,
-			// so derive how many of them fit into MAX_URL_PARAMS_LENGTH (2083) rather
-			// than hard-coding a count that breaks if the sample address changes
-			const perRecipient = ('preset[bcc][]=' + recipient + '&').length;
+			// one 'preset[bcc][]=<recipient>&' pair per recipient is what gets counted - the
+			// recipient itself is encodeURIComponent()-ed first (its own space/</> expand under
+			// encoding), matching what the real implementation measures - so derive how many fit
+			// into MAX_URL_PARAMS_LENGTH (2083) rather than hard-coding a count that breaks if the
+			// sample address changes
+			const perRecipient = ('preset[bcc][]=' + encodeURIComponent(recipient) + '&').length;
 			const fits = Math.floor(2083 / perRecipient);
 
 			assert.isFalse(instance.urlParamsTooLong({'preset[bcc]': new Array(fits).fill(recipient)}));
 			assert.isTrue(instance.urlParamsTooLong({'preset[bcc]': new Array(fits + 1).fill(recipient)}));
+		});
+
+		/**
+		 * Regression coverage for ticket #125621 (2026-10-05): a REST-composed message's full HTML
+		 * body (quotes/braces/semicolons from inline CSS, backslash-escaped CRLF inside the JSON
+		 * string) encodes far less efficiently under encodeURIComponent() than plain text - a
+		 * real-world case measured 1786 RAW characters (comfortably under 2083, so this used to
+		 * return false, keeping composeWithPreset() on the GET/openPopup() path) but came out to
+		 * 2676 characters once actually encoded into the url (2771 for the whole URL) - well over
+		 * it. Reproduced here with a value that is short BEFORE encoding but long after, proving
+		 * the check now measures what the real url actually ends up being, not the raw input.
+		 */
+		it('a value that is short raw but long once url-encoded is still caught', () =>
+		{
+			const instance = env.egw();
+			// every character triples under encodeURIComponent() ('"' -> '%22'), so this is well
+			// under 2083 raw characters but well over it once actually encoded
+			const quoteHeavy = '"'.repeat(800);
+
+			assert.isBelow(quoteHeavy.length, 2083, 'the raw/pre-encoding value itself must stay under the threshold for this test to prove anything');
+			assert.isAbove(encodeURIComponent(quoteHeavy).length, 2083, 'sanity check: this value really does encode past the threshold');
+			assert.isTrue(instance.urlParamsTooLong({'preset[body]': quoteHeavy}),
+				'must measure the url-encoded length, not the raw string length');
 		});
 
 		it('openWithinWindow() keeps using the GET url for short parameters', () =>
