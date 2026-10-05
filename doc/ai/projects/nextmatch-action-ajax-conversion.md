@@ -144,7 +144,7 @@ All `delete`-shaped, none runtime-verified: `admin/src/Groups.php`, `phpbrain`
 (`publish`/`delete`, twice), `openid` (`Ui`, `User`), `webauthn/src/Register.php`,
 `schulmanager_substitution_ui`, `stylite/src/Cti/Placetel/AdminUI.php`,
 `records/inc/class.records_admin.inc.php`, `news_admin_gui`. Plus `EGroupware\Stylite\Calls`
-`reimport`/`undelete`, which are conditional on a filter this run did not hit.
+`reimport`/`undelete`, which are conditional on a filter the inventory scan did not hit.
 
 ### A related, separate bucket: `nm_action => 'open_popup'`
 
@@ -796,27 +796,69 @@ converted action, in a real browser:
 3. Assert the nextmatch widget instance is **the same object** afterwards, the scroll offset
    is unchanged, and the filters/search are unchanged.
 
-### Verification run (2026-09-23)
+### Verification
 
-Every converted action driven through the real context menu on disposable fixtures, one app at a
-time, with the nextmatch instance tagged beforehand so "same object afterwards" is checked rather
-than assumed. All of them passed that check, kept their filters and search, and updated only the
-rows they touched (confirmed against the database each time - no action reached a row outside the
-filter).
+Actions are driven through the real context menu (or the registered action object, where a
+submenu will not render), with the nextmatch instance captured beforehand so "same widget
+afterwards" is checked rather than assumed, and the result confirmed against the database rather
+than the success message. Reversibility is established *before* acting - the inverse action has
+to exist and be offered - because several of these lists have asymmetric rights or a filter that
+re-sorts under the pointer.
 
-| App | Driven |
+| App | Driven live |
 | --- | --- |
-| addressbook | Categories dialog (Add multi / Replace / Remove), distribution-list dialog (Add, Remove, filter pre-fill), Move to address book (with and without "Copy instead of move"), Share into addressbook + Unshare, Type, Delete, Delete selected distribution list, Select all |
-| infolog | Close, Status, Change category (Set + the bare "Remove"), Delegation, Start date, Due date, Links, Delete, Select all |
-| tracker | Completed, Category (Proposal D dialog), Assigned to, Multiple changes, Close, Select all |
-| timesheet | Change category, Modify status, Delete, Select all |
-| calendar | Change your status (set and set back) |
+| addressbook | Categories dialog (Add / Replace / Remove), distribution-list dialog (Add, Remove, 37 lists), `move_to`, `delete`, Select all |
+| infolog | Close, Status, Type, Completion, Change category (Set + Remove), Delegation, Start date, Due date, Links, Delete, Select all |
+| tracker | `seen`, `unseen`, Completion, Status, Close, Category via the Proposal D dialog, `assigned` open_popup, Multiple changes, Select all |
+| timesheet | Change category (Set + Remove), Modify status, Delete, Select all |
+| calendar | Change your status, set and set back, in **both** the list view and week view - `cal_role` survives both ways |
+| records | Status (stored in `record_status`, not `cat_id`) |
+| projectmanager | Project status, set and restored |
+| kanban | `copy` then `delete_board`, board id set restored exactly |
+| bookmarks | `delete` |
+| aitools | `delete`, two rows at once |
+| invoices | `delete`, two rows at once |
+| stylite Calls | `delete`, `undelete` |
+| smallpart | `exempt` then `readd` |
+| admin | Custom field delete, incl. the policy dialog's comment reaching `egw_admin_queue` |
+| mail | Nothing to drive: `copyto` is a placeholder container and its folder children are built client-side with `onExecute: 'javaScript:app.mail.copy2Folder'`, so no mail leaf submits |
 
-"Select all" was scoped by a search matching only the fixtures in every case, and the result
-message named exactly that many entries - eg. 2 of 261 contacts, with the database confirming no
-other row was modified.
+**Not driven**, each for a reason rather than an omission: importexport (the definitions list needs
+admin context and renders blank from a direct URL), news_admin (list returns no rows), filemanager
+Shares and Jobs (Jobs is empty and its `add` opens no popup; both are covered end to end by
+`filemanager/tests/AjaxActionTest.php`, which creates and deletes a real share and a real job),
+admin Tokens (all of them are already revoked, so there is no round trip that does not rewrite a
+timestamp), and developer (excluded).
 
-Three bugs only this run could have found:
+**Three behaviours that only live driving confirms**, all previously asserted only in tests:
+
+* A **multi-row** action sends **no id and no type** - `["2 prompt(s) deleted.", "aitools", null,
+  null, "aitools", ...]` - so the list reloads instead of falling through on a null type.
+* **invoices** shows the push and the endpoint side by side: two push refreshes
+  (`["", "invoices", "541", "delete"]`) followed by the endpoint's own multi-row one.
+* **projectmanager**'s project list uses a shape nothing else does - the ids as an **array** with
+  `update-in-place` (`["1 project(s) Status set.", "projectmanager", ["2769"], "update-in-place", ...]`).
+
+**Calendar's week/day/planner views inherit the list's actions.** `calendar_uiviews::get_actions()`
+opens with `$ui = new calendar_uilist(); $actions = $ui->get_actions();` and then overrides, so a
+change to the *list's* actions reaches the grid views too. It is safe today because uiviews
+rebuilds every status child from scratch with `onExecute: 'javaScript:app.calendar.status'` - the
+live action manager shows `A/R/T/U/D` there against the list's `status-A`, a different handler -
+and the `ajax_action` this project added sits on the container, which never executes. Confirmed
+behaviourally: week view's Change your status writes `cal_status` and preserves `cal_role` both
+ways. **`calendar_uiviews` is not in `NextmatchActionSubmitTest`'s scan list**, so that inheritance
+is unguarded; `Timesheet` is the other action it inherits without overriding.
+
+**Not a regression, though it looks like one:** kanban's `copy` replaces the nextmatch widget.
+`BoardList::action()` ends with `Response::get()->apply('egw_open', [$new_id, 'kanban', 'edit', ...])`
+- the action deliberately opens the copy for editing, the same way smallpart's `copy_course` does.
+The list is not lost, it is navigated away from.
+
+**Cosmetic, recorded so it is not mistaken for data loss:** smallpart's `exempt` -> `readd` round
+trip is not byte-identical. `readd` leaves `exempt: false` in the question's JSON where the key was
+originally absent; `min_score`/`max_score` are restored exactly and the question scores again.
+
+**Four bugs that only live driving could have found, all fixed:**
 
 1. **`csv_export` stuck in the stored nextmatch value** (`Nextmatch::ajax_get_rows()`). It is a
    per-request instruction to `get_rows()` - "do not cache this query in the session" - set for a
@@ -841,8 +883,15 @@ Three bugs only this run could have found:
    action's ancestors for the menuaction, the way `onExecute` is inherited, so a container declares
    it once for its whole submenu. Covered by `calendar/tests/AjaxActionTest.php`.
 
-Not driven in the browser: filemanager's Shares and Jobs lists, which are covered end to end by
-`filemanager/tests/AjaxActionTest.php` (it creates and deletes a real share and a real job).
+4. **Timesheet's "Remove category" could never work.** `timesheet_ui::action()`'s `cat` branch
+   tested `($entry = $this->read($id)) && ($entry['cat_id'] = $settings) && $this->save(...)`,
+   where the middle term is an *assignment* and therefore evaluates to `$settings`. Removing a
+   category passes an empty one, the chain short-circuited before `save()`, and the user was told
+   *"insufficient rights"* for an entry they owned. Pre-existing since 2010 and identical on
+   master, but Proposal A's picker puts **Remove** in front of the user as its own button, so it
+   went from unreachable to two clicks away. infolog, records and projectmanager handle the empty
+   case properly - timesheet was the only one. Fixed, with `timesheet/tests/AjaxActionTest.php`
+   pinning it (the test was confirmed to fail against the old code).
 
 The action manager can be walked at runtime to list what still resolves to submit:
 leaf actions with `type === "popup"`, no `data.url`, no `data.egw_open`,
@@ -858,7 +907,7 @@ own default executor (the function shared by the majority of actions - the one i
 
 | # | Decision | |
 | --- | --- | --- |
-| 1 | **Target: master only.** Not backported to `26` - it is a behaviour change across many apps, and `d3da314452` already covers the worst user-visible symptom there | settled |
+| 1 | **Target: master, as a squash-merge** of the per-repo `nm-action-ajax` branches. Not backported to `26` - it is a behaviour change across many apps, and `d3da314452` already covers the worst user-visible symptom there. A squash is what makes this landable at all: `confirm_handler` does not cherry-pick onto master on its own (three conflicts, two of them modify/delete on branch-only files), so the project goes as a whole | settled |
 | 2 | **Scope: every app in the `EGroupware` and `EGroupwareGmbH` orgs**, subject to the Et2Nextmatch prerequisite below. All 20 separate app repos checked are in one of those two orgs | settled |
 | 3 | **The legacy `nm_action()` dispatcher is NOT being touched.** Apps still on the `<nextmatch>` widget wait for their `Et2Nextmatch` conversion (`doc/ai/projects/et2-nextmatch-conversion.md`) instead | settled |
 | 4 | **The inventory harness comes back as a permanent test with a baseline** (phase 0) | settled |
