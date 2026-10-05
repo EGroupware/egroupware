@@ -107,6 +107,31 @@ class AjaxActionTest extends LoggedInTest
 	}
 
 	/**
+	 * The refusal is the half that silently does nothing when it regresses: an endpoint that
+	 * stops validating still passes every test about what it does on success.
+	 */
+	public function testABogusExecIdChangesNothing()
+	{
+		$this->makeEvent();
+		$this->assertSame('A', $this->myStatus());
+
+		(new \calendar_uilist())->ajax_action('calendar_nobody_not-a-real-request-id', 'status-T',
+			[$this->event_id], false, []);
+
+		$this->assertSame('A', $this->myStatus(), 'a rejected request must not run the action');
+		$this->assertNull($this->refreshCall(), 'and must not answer with egw.refresh either');
+	}
+
+	public function testAnEmptyExecIdChangesNothing()
+	{
+		$this->makeEvent();
+
+		(new \calendar_uilist())->ajax_action('', 'status-T', [$this->event_id], false, []);
+
+		$this->assertSame('A', $this->myStatus(), 'no exec id at all is refused the same way');
+	}
+
+	/**
 	 * The regression shape: status-<X> has to reach action()'s body and persist. action() splits
 	 * the id on '-', so the status letter travels in the action id itself.
 	 */
