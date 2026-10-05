@@ -81,7 +81,6 @@ change history	infolog	bg	История на промените
 change owner when updating	infolog	bg	Промяна на собственика при актуализиране
 change responsible	infolog	bg	Отговорник за промяната
 change the status of an entry, eg. close it	infolog	bg	Променя статуса на запис, напр. приключва го
-changed category to %1	infolog	bg	Променена категория на %1
 changed completion to %1%	infolog	bg	Променено завършване на %1%
 changed status to %1	infolog	bg	Променен статус на %1
 changed type	infolog	bg	Променен тип
@@ -391,7 +390,6 @@ regular expression	infolog	bg	Редовен израз
 remark	infolog	bg	Забележка
 remove this link (not the entry itself)	infolog	bg	Премахване на връзката (не и на записа).
 removed	infolog	bg	Премахнати.
-removed category	infolog	bg	Отстранена категория
 replacement	infolog	bg	Замяна
 replacements for inserting entries into documents	infolog	bg	Заместители за вмъкване на записи в документи
 requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	bg	Изисква потребителят за редактиране да има достъп за писане до тези контакти, за да ги сподели с отговорния потребител.

@@ -371,7 +371,6 @@ regular expression	infolog	no	Vanlig uttrykk
 remark	infolog	no	Merknad
 remove this link (not the entry itself)	infolog	no	Slett denne lenken (ikke selve innslaget).
 removed	infolog	no	Fjernet.
-removed category	infolog	no	fjernet kategori
 replacement	infolog	no	Erstatning
 replacements for inserting entries into documents	infolog	no	Erstatninger for å sette inn oppføringer i dokumenter
 requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	no	Krever at den redigerende brukeren har skrivetilgang til disse kontaktene for å kunne dele dem med den ansvarlige brukeren.

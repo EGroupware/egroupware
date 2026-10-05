@@ -1,0 +1,1894 @@
+# Nextmatch actions: submit -> ajax, and picker dialogs for unbounded option sets
+
+Two related problems with nextmatch context-menu actions, found together:
+
+1. **Most actions do a full eTemplate submit**, which tears down and rebuilds the whole
+   template - nextmatch included. Everything the user had set up in the list (scroll
+   position, selection, row heights/expanded cells, and in older releases the filters
+   themselves) is lost on every "Close", "Change category", "Add to distribution list".
+2. **Several actions render one sub-action per row of user data** (one menu entry per
+   category, per distribution list, per addressbook, per share target, per tracker queue, per
+   kanban board). With a handful that is fine; past a screenful it is a multi-level "More..."
+   maze that is slower to use than the thing it replaced, and it bloats every `get_rows`
+   response. Some of these are conceptually unbounded, others merely grow with the
+   installation until one day they are too long - and nothing notices when that happens.
+
+Status: **all phases done.** Every app in the inventory is converted except esyncpro, which was
+missed rather than blocked - see the baseline section. Target is master, as a squash-merge.
+
+---
+
+## 1. The submit problem
+
+### Mechanism (confirmed)
+
+An action with no `onExecute`, no `url` and no `egw_open` gets nothing written into
+`$action['data']['nm_action']` by `Nextmatch::egw_actions()`
+(`api/src/Etemplate/Widget/Nextmatch.php`, ~line 1248 - it only sets `nm_action` for the
+url/popup/egw_open cases). Client-side the gap is then filled in
+`Et2NextmatchActionController.executeNextmatchAction()`:
+
+```ts
+if(typeof action.data.nm_action === "undefined" && (action as any).type === "popup")
+{
+    action.data.nm_action = "submit";      // "popup" is the default action type
+}
+```
+
+`nm_action: "submit"` routes to `executeSubmitAction()` -> `etemplate2.submit()` ->
+`Etemplate.process_exec` -> the app's `index()` runs again -> `$tpl->exec()` -> a brand new
+et2 instance and a brand new nextmatch.
+
+So the fall-through is silent: an action author who writes only `caption`/`icon`/`group`
+gets a full-page-equivalent reload, and nothing in the action definition says so.
+
+### Evidence (live, master, 2026-09-23)
+
+Driving the real `egw_action` objects in the browser, with `etemplate2.submit()` wrapped so
+nothing was written server-side:
+
+* InfoLog's `close` action resolves to `action.data.nm_action === "submit"` and calls
+  `etemplate2.submit()` with `{multi_action: "close", selected: [...], select_all, checkboxes}`.
+* Before/after a real submit round-trip: the nextmatch widget instance is **replaced**
+  (`nm_after !== nm_before`) and the datagrid scroll offset goes **3000 -> 0**.
+* For comparison, the ajax path (`egw.refresh(msg, app, id, 'update')`) keeps the same
+  widget instance and the scroll offset (2500 -> 2500).
+
+That contrast is the whole justification for this project.
+
+### What is and is not already fixed
+
+`d3da314452` ("Addressbook: Fix filters from submit actions were overwritten with
+defaults", also in `26`) added a session-state restore at the top of
+`addressbook_ui::index()`: `$content['nm']` is seeded from
+`Api\Cache::getSession('addressbook', 'index')` (written by `get_rows()`) instead of from
+the hardcoded defaults. Verified live: `search` and `filter2` now survive an addressbook
+action submit.
+
+That is a per-app, per-filter band-aid for one symptom. It does **not** address the
+teardown itself, and apps without it still fall through to their defaults. Treat it as
+evidence that the symptom is real and recurring, not as a fix.
+
+---
+
+## 2. Inventory of submitting actions
+
+### How this was measured
+
+Three passes, because no single one is complete:
+
+1. **Live browser dump** - walk each app's real `egw_action` manager and apply the exact
+   client-side rule (leaf, `type === "popup"`, no `data.url`, no `data.egw_open`,
+   `data.nm_action` undefined, `onExecute` still the controller's own default executor from
+   `setDefaultExecute()`). This is production behaviour, nothing inferred.
+2. **A PHP harness** - call each app's real `get_actions()` and run the result through the
+   real `Nextmatch::egw_actions()`, then classify the resolved tree. Reaches apps whose list
+   is awkward to open, and resolves everything the helpers generate.
+3. **A source scan** - for the handful of apps that define actions inline in `index()` with no
+   `get_actions()` at all.
+
+A naive source scan on its own is **not** reliable here, and got three things wrong before the
+other two passes corrected it: `filemanager` `share_mail` is a container whose children do
+have handlers; `projectmanager_elements_ui` `erole` is `unset()` when `enable_eroles` is off
+and becomes a container when it is on; `timesheet_add` inherits `egw_open` from its parent.
+
+**Caveat on the numbers:** passes 1 and 2 reflect *this* instance - its installed apps, its
+config, its categories, its ACL. Category/list/addressbook counts scale with the data;
+config-gated actions (`erole`) can be absent entirely. The *set* of action ids is stable, the
+counts are not.
+
+### Runtime-verified (live browser)
+
+| App | submit / total | Families |
+| --- | --- | --- |
+| addressbook | **180 / 421** | `cat/cat_add/*` + `cat/cat_del/*` (~150), `lists/to_list/*` (37), `lists/remove_from_list`, `lists/delete_list`, `move_to/*` (7), `shared_with/*` (5), `change_type/*`, `view_org`, `view_duplicates`, `merge`, `merge_duplicates`, `invoices/*`, `export/*` |
+| tracker | **83 / 132** | `change/cat/*` (18), `change/resolution/*` (16), `change/tracker/*` (12), `change/completion/*` (11), `change/priority/*` (9), `change/status/*` (7), `change/version/*` (5), `change/seen`, `change/unseen`, `close`, `close_100_<res>`, `invoices/*` |
+| infolog | **76 / 337** | `change/cat/*` (38), `change/status/*` (12), `change/type/*` (11), `change/completion/*` (11), `close`, `close_all`, `ical`, `invoices/*` |
+| calendar | **7 / 32** | `status/*` (5), `timesheet/*`, `ical` |
+| mail | **1 / 48** | only `copyto`, a container whose folder children load later - effectively clean |
+| projectmanager (projects) | 2 | `delete`, `undelete` only - `cat` and `status` are already ajax |
+
+### Harness-verified (34 classes)
+
+Everything below is a plain `nm_action: "submit"` leaf. `select_all` and the `egw_copy`/
+`egw_paste` clipboard pseudo-actions are excluded - they are handled client-side and are
+**not** part of this problem.
+
+| Class | Actions |
+| --- | --- |
+| `projectmanager_elements_ui` | `cat/cat_*` (33), `sync_all`, `delete` |
+| `records_ui` | `status/status_*` (6), `delete` |
+| `importexport_definitions_ui` | `copy`, `createexport`, `export`*, `delete` |
+| `EGroupware\Developer\TranslationTools` | `import`, `current`, `all`, `move_to_api`, `delete` |
+| `esyncpro_ui` | `policy/policy_*`, `wipe`, `delete` |
+| `EGroupware\SmallParT\Questions` | `exempt`, `readd`, `delete` |
+| `EGroupware\Invoices\Ui` | `downloadZIP-XML`*, `downloadZIP-PDF`*, `delete` |
+| `news_admin_ui` | `update`, `delete` |
+| `filemanager_ui` | `unlock`, `saveaszip`* |
+| `EGroupware\Admin\Token` | `activate`, `revoke` |
+| `EGroupware\SmallParT\Courses` | `copy_course`, `copy_no_participants` |
+| `EGroupware\Aiassistant\Ui` | `separator`, `delete` |
+| `bookmarks_ui`, `admin_customfields`, `admin_accesslog`, `filemanager_shares`, `EGroupware\Filemanager\Jobs`, `projectmanager_pricelist_ui`, `EGroupware\Aitools\Admin`, `EGroupware\Stylite\Calls` | `delete` |
+| `EGroupware\Kanban\Ui\BoardList` | `copy` |
+
+`*` = `postSubmit` download, see "Must stay a submit".
+
+**Clean, nothing to do:** `timesheet_ui`, `admin_categories`, `admin_acl`, `mail_sieve`,
+`resources_acl_ui`, `resources_ui`, `EGroupware\Rag\Ui`, `EGroupware\Kanban\Datasource`,
+`EGroupware\Policy\Ui`, `EGroupware\Status\Ui`, `EGroupware\Stylite\Firewall`,
+`EGroupware\Stylite\Vfs\S3\Config`, `EGroupware\SmallParT\Student\Ui`.
+
+### Source-read only (actions defined inline, no `get_actions()`)
+
+All `delete`-shaped, none runtime-verified: `admin/src/Groups.php`, `phpbrain`
+(`publish`/`delete`, twice), `openid` (`Ui`, `User`), `webauthn/src/Register.php`,
+`schulmanager_substitution_ui`, `stylite/src/Cti/Placetel/AdminUI.php`,
+`records/inc/class.records_admin.inc.php`, `news_admin_gui`. Plus `EGroupware\Stylite\Calls`
+`reimport`/`undelete`, which are conditional on a filter the inventory scan did not hit.
+
+### A related, separate bucket: `nm_action => 'open_popup'`
+
+These open a dialog - but the dialog's OK button then submits the **whole** template anyway to
+get its values back, and if the popup element is missing `executeNextmatchAction()` falls
+straight through to `case "submit"`. Same end result, more work to convert, so they are
+scheduled separately (phase 5):
+
+`projectmanager_elements_ui` `add_existing`; `resources_ui` `delete`, `restore`;
+`importexport_definitions_ui` `change/owner`, `change/allowed`; `news_admin_ui`
+`change/reader`; `infolog` `change/{startdate,enddate,responsible,link}`; `tracker`
+`change/group`.
+
+### Already correct
+
+**timesheet is the reference implementation** and needs no work - including its category
+action, which piggybacks on the status handler
+(`$actions['cat']['onExecute'] = $actions['status']['onExecute'];`). Also fine: addressbook
+`delete`, infolog `delete`/`delete_sub`, calendar's ajax actions, mail (all but the `copyto`
+container), and `projectmanager_ui`'s `cat_*`/`status` (`app.projectmanager.change_status`,
+with a comment in place saying it is deliberately ajax "so the list keeps its scroll position
+instead of reloading to the top" - independent confirmation that this problem has already
+been hit and worked around app by app).
+
+Calendar has no category context-menu action at all; its `status/*` is participant status.
+
+### Not actually broken (do not "fix" these)
+
+* `select_all` in many apps - special-cased in `Et2NextmatchActionController` (~line 290),
+  which installs its own `onExecute`.
+* `egw_copy` / `egw_copy_add` / `egw_paste` - clipboard pseudo-actions added client-side.
+* `mail/src/Ui.php` `CUSTOM_FLAGS` (`customFlag1`-`5`) - a constant merged into an action that
+  *does* have an `onExecute`, not an action list. A naive scan flags it.
+* `api/src/Html/htmLawed/htmLawed.php`, `stylite/src/Cti/Storage.php` `selects` - unrelated
+  arrays that happen to contain a `caption` key.
+
+### Must stay a submit
+
+Downloads: addressbook `export/vcard` and `documents/*`, infolog `ical`, filemanager
+`saveaszip`, importexport `export`, invoices `downloadZIP-*`. These use `postSubmit` (a real
+`<form method="POST">`), which per AGENTS.md's "File downloads" section is the only reliable
+way to get a file out of an EGroupware popup. `postSubmit()` also does **not** re-render - the
+server answers with the file and the page stays put - so they are not part of this problem in
+the first place.
+
+---
+
+## 3. The submit -> ajax conversion
+
+Timesheet already has the shape; the scope here (30+ classes) says it belongs in the base
+class rather than copy-pasted per app.
+
+### `ajax_action()` goes on `EgwApp`, not in every `$app/js/app.ts`
+
+`EgwApp` (`api/js/jsapi/egw_app.ts`) already owns everything the handler needs - `appname`,
+`egw`, and an `nm` member typed `Et2Nextmatch | et2_nextmatch` - and already imports
+nextmatch-action helpers (`fetchAll`, `nm_action`), so this is not a new concern for the file:
+
+```ts
+/**
+ * Run a nextmatch action over ajax instead of submitting (and re-rendering) the template.
+ * Wired up server-side with 'onExecute' => 'javaScript:app.<app>.ajax_action'.
+ */
+protected ajax_action(_action : EgwAction, _senders : EgwActionObject[])
+{
+    const nm = _action.parent?.data?.nextmatch || _action.data?.nextmatch || this.nm;
+    const ids = _senders.map(s => s.id.split("::").pop());
+    this.egw.request(_action.data?.menuaction || this.appname + "." + this.appname + "_ui.ajax_action",
+        [_action.id, ids, (<Et2Nextmatch>nm)?.getSelection().all === true]);
+}
+```
+
+Apps needing something different (extra checkbox values, a confirm, a per-action menuaction)
+override it or pass their own - the same way `EgwApp` handles the rest of its overridable
+hooks.
+
+**The menuaction is the one thing the base class cannot derive.** The convention
+`<app>.<app>_ui.ajax_action` covers addressbook/infolog/timesheet/calendar/tracker, but not
+`EGroupware\Invoices\Ui::ajax_action`, `projectmanager_elements_ui::ajax_action` or
+`EGroupware\SmallParT\Courses::ajax_action`. Read it from `_action.data.menuaction`, set once
+server-side per app - `long_task` already uses `data.menuaction` exactly this way, so there is
+precedent and no new plumbing. The convention stays as the fallback so most apps set nothing.
+
+Two things to get right while doing this:
+
+* The `nm : Et2Nextmatch | et2_nextmatch` union needs a cast per call - a known wart already
+  recorded in `doc/ai/projects/app-ts-modernization.md`.
+* `_action.parent?.data?.nextmatch` first, then `_action.data?.nextmatch`, then `this.nm`:
+  the controller sets `action.data.nextmatch` on the *executed* action, but a child action
+  reached through a submenu carries it on the parent, and `this.nm` is the fallback for an
+  action fired outside a row context.
+
+### Server
+
+Delegate to the app's existing `action()` and answer with `egw.refresh`, never a redraw:
+
+```php
+$app = Api\Json\Push::onlyFallback() || $all_selected ? '<app>' : 'msg-only-push-refresh';
+Api\Json\Response::get()->call('egw.refresh', $msg, $app, $selected[0], …);
+```
+
+Most apps already have a usable `ajax_action()` (infolog, addressbook, calendar,
+projectmanager, timesheet, filemanager, smallpart, mail_sieve). The work is mostly **wiring
+actions to it**, not writing it.
+
+### The cheap lever
+
+`Nextmatch::egw_actions()` inherits `onExecute` from a parent action to all its children
+(`$inherit_attrs`, ~line 1237). One
+`'onExecute' => 'javaScript:app.<app>.ajax_action'` on `$actions['cat']` converts every
+category child at once - including ones built at runtime from a variable, which is most of
+the volume. Timesheet already exploits this
+(`$actions['cat']['onExecute'] = $actions['status']['onExecute'];`), and
+`projectmanager_ui` does the same for its `cat`.
+
+One gotcha in that inheritance: `egw_actions()` does
+`if (!empty($action['default'])) unset($inherit_keys['onExecute']);`, so a container marked
+`default` keeps its own `onExecute` instead of handing it down. None of the containers in
+scope are `default`, but it is worth knowing before wondering why one did not inherit.
+
+### Sharp edges
+
+
+1. **Session-query dependency.** `remove_from_list`/`delete_list` read `$query['filter2']` and
+   `unshare` reads `$query['filter']` out of
+   `Api\Cache::getSession('addressbook', $session_name)` (`action()`, ~line 1396). That cache is
+   written by `get_rows()` (~line 1864), so it *is* reachable from an ajax endpoint - but the
+   key differs per template (`index` vs `select`), and `addressbook_ui::ajax_action()` currently
+   hardcodes `'index'`. Pass the real session name.
+2. **`select_all`.** The ajax endpoint must keep re-running `get_rows()` with
+   `num_rows => -1` to expand the selection, and answer with `egw.refresh(msg, app)` (full
+   reload, filters kept) rather than a per-id refresh.
+3. **`delete_list` deliberately clears `filter2`** (`action()`, ~line 1479) - the list is gone,
+   so the filter must go too. Today that state change rides along on the redraw; the ajax
+   version has to push it to the client explicitly.
+4. **`nm_action => 'open_popup'` actions** (infolog `startdate`/`enddate`/`responsible`/`link`,
+   tracker `group`) open a dialog whose OK button submits the *whole* template to get the
+   popup's values back. Converting these is a bigger job than the rest - schedule separately,
+   or fold into the picker-dialog work below, which solves the same problem better.
+5. **Two pre-existing bugs in `addressbook_ui::ajax_action()`** (~line 1357): its 4th parameter
+   `$skip_notification` is passed into `action()`'s `$checkboxes` slot, and the user message
+   says `'%1 event(s) %2'` (copy-pasted from calendar). The checkbox one will bite as soon as
+   `move_to_*` (reads `$checkboxes['move_to_copy']`) or `shared_with_*` (reads
+   `$checkboxes['writable']`) are routed through it. Fix while touching the file.
+6. **`disableIfNoEPL`, `enableClass`, `confirm_mass_selection`** and friends are evaluated
+   client-side and are unaffected by the transport - but `confirm`/`confirm_multiple` run
+   *before* `onExecute`, so an app handler must not re-confirm.
+
+---
+
+### What the exec_id used to be doing
+
+An eTemplate submit carries an `etemplate_exec_id`; `ajax_action()` does not, and two of the
+things that id was quietly providing have to be replaced by hand.
+
+1. **Content validation.** `process_exec()` drops any `$content` key with no widget declared in
+   the template (AGENTS.md, "in an Etemplate ... read-only from the client").  Every converted
+   action whose payload is an id is unaffected - an id is one scalar, and the handlers parse it.
+   The exception is tracker's **"Multiple changes"**, whose payload is a whole field map: its
+   `action()` writes every key of that map onto the ticket before `save()`, so on the submit path
+   the popup's declared widgets were the bound and on the ajax path there was none.  A crafted
+   request could set any `egw_tracker` column (`tr_creator`, `tr_private`) on every ticket the
+   caller may save.  Fixed by bounding it server-side against
+   `tracker_ui::MULTI_CHANGE_FIELDS`, with `testMultipleChangesIgnoresFieldsThePopupDoesNotOffer()`
+   pinning it (red without the filter: `tr_creator` went 6 -> 1).  **Any future action that sends
+   a map rather than an id needs its own allowlist.**
+2. **An unguessable token.** `json.php` authenticates by session cookie and checks app run-rights
+   and the `ajax_*` naming rule, but has no CSRF token of its own; the exec_id was effectively
+   filling that role for submits.  **The id is simply passed along and checked**, the way
+   `Nextmatch::ajax_get_rows()`, `Nextmatch::ajax_set_admin_default()` and `Link::ajax_delete()`
+   already do - `EgwApp.ajax_action()`/`submit_action_popup()`, the two picker dialogs, calendar's
+   recur prompt and tracker's popup all send
+   `getInstanceManager().etemplate_exec_id`, and every endpoint opens with
+   `Nextmatch::validateExecId()`, which refuses when it is missing or no longer known.
+   `Request::read()` does not consume it (`remove_if_not_modified` is off by default), so the page
+   that owns it keeps working.  WHICH template the id belongs to is deliberately not checked: the
+   menuaction already pins the class, `json.php` has already required the app, and every handler
+   re-derives its authority from the entry id.  What it adds is that the caller had to have a page
+   of ours open.  Pinned by
+   `NextmatchAjaxActionTest::testAnActionWithoutALiveExecIdDoesNothing()`.
+
+   Separately and unchanged by this work: `cookie_samesite_attribute` is unset on this instance, so
+   the session cookie falls back to the browser's `Lax` default.  That is a browser default rather
+   than an application control, and it applies to every `ajax_*` endpoint in the product - worth
+   setting explicitly in setup, but it is not this project's to fix.
+
+What the endpoints do NOT rely on the client for, checked case by case: addressbook re-derives
+ACL per id and per target (`move_to_*` rejects a target the caller has no `Acl::EDIT` grant on;
+`shared_with_*` gates `shared_writable` on `check_perms(Acl::EDIT)`, so a forged `writable`
+checkbox cannot grant more than the caller has), infolog/calendar/tracker/timesheet all read the
+entry server-side and act only on named fields, `$session_name` is allow-listed to the two lists
+that have a nextmatch, and "select all" refuses rather than falling back to an unfiltered query.
+
+---
+
+## 4. The many-sub-actions problem, and picker dialogs
+
+### The rule
+
+> **Submenu** when the option set is a bounded, fixed enum the developer wrote down
+> (infolog status/completion, tracker's percent list). These are ~10 entries, stable, and a
+> submenu is the fastest possible UI for them - leave them alone, just make them ajax.
+>
+> **Bespoke picker dialog** when the option set is user data *and* the action wants verbs or
+> multi-select (categories, distribution lists) - Proposals A-B.
+>
+> **Generic overflow dialog** for everything in between: data-driven lists that are bounded in
+> principle but grow with the installation (tracker queues/versions/resolutions/statuses,
+> kanban boards, esyncpro policies, content types). These need no bespoke UI, just a search
+> box once they get long - Proposal D, which handles them automatically by size with no
+> per-app work.
+
+The existing mitigations are themselves evidence of the problem:
+`Nextmatch::DEFAULT_MAX_MENU_LENGTH = 50` with automatic "More..." pagination, plus
+`category_action()` silently switching to `category_hierarchy()` (nested submenus) past that
+threshold. Both turn a long list into a *deep* list; neither gives you search, neither lets
+you pick two categories in one go, and both still ship every entry to the client on every
+`get_rows` response.
+
+### The pattern to copy
+
+`api/js/etemplate/Et2Link/LinkAction.ts` + `api/templates/default/link_action.xet` is already
+exactly this: a shared, API-level action that opens an `Et2Dialog` with one picker widget and
+a couple of verb buttons, then does its work over `jsonq()` and reports per-entry failures.
+It is registered automatically for every nextmatch by
+`EgwPopupActionImplementation._addLinkAction()` - note the deliberate **dynamic** `import()`
+there, to avoid the `et2_core_widget` circular-import TDZ bug; a new sibling must do the same.
+
+Addressbook's `add_new_list()` / `rename_list()` (dialog + `add_list_dialog.xet` + ajax) show
+the same shape inside an app.
+
+### Proposal A - Categories (all apps)
+
+Replace the per-category children with **one** "Categories" action opening a dialog built on
+`<et2-select-cat>` - already a tree dropdown with search and tagging
+(`Et2SelectCategory extends Et2StaticSelectMixin(Et2TreeDropdown)`), so hierarchy, search and
+optional multi-select come for free.
+
+Effect in addressbook: ~150 action definitions -> 1. In infolog: 38 -> 1.
+
+#### Cardinality varies per app, and the dialog has to follow it
+
+**An entry can hold several categories in some apps and exactly one in others.** There is no
+central registry of which is which: the *only* place cardinality is declared today is
+`multiple="true"` on the `et2-select-cat` in each app's edit template, which `get_actions()`
+cannot see. The server-side action handlers already diverge to match, and this divergence is
+correct - do **not** try to unify it:
+
+| Call site | Field | Cardinality | Today's action(s) | Today's handler |
+| --- | --- | --- | --- | --- |
+| addressbook x2 | `cat_id` | **multiple** (`multiple="true"`, comma-separated) | `cat_add_<id>` + `cat_del_<id>`, two separate submenus captioned "Add category"/"Delete category" | explodes/implodes the comma list |
+| infolog | `info_cat` | single | `cat_<id>`, "Change category" | `$entry['info_cat'] = $settings` (replace) |
+| timesheet | `cat_id` | single | `cat_<id>`, "Change category" | `$entry['cat_id'] = $settings` (replace); already ajax |
+| projectmanager (`projectmanager_ui`) | `cat_id` | single | `cat_<id>`, "Change category" | replace; **already ajax** via `app.projectmanager.change_status` |
+| projectmanager (`projectmanager_elements_ui`) | `cat_id` | single | `cat_<id>`, "Change category" | replace; still submits |
+| records | status, under `records_fields::STATUS_PARENT` | single | `status_<id>`, captioned "Status" | a status enum that merely happens to be stored as a category |
+
+So the dialog needs two shapes, chosen by the call site:
+
+**Multiple** (addressbook): `<et2-select-cat multiple="true">`, buttons **Add** / **Remove** /
+**Replace**. Add and Remove map onto the existing `cat_add_<id>`/`cat_del_<id>` handling
+unchanged. Replace is new behaviour and was explicitly approved - it has no existing server
+handler on the multi-category side, so it needs one (set `cat_id` to exactly the picked list,
+rather than a `cat_del` of everything followed by a `cat_add`, which would write each contact
+twice and fire two history entries).
+
+**Single** (infolog, timesheet, both projectmanager lists, records): single-select
+`<et2-select-cat>`, buttons **Set** / **Remove**. Set maps onto the existing `cat_<id>`
+replace handler. **Remove is new capability, not a redesign**: today `category_action()`
+emits no "None" entry at all, so there is currently *no way* to clear a category from the
+list in these apps - the server handler already does the right thing for an empty
+`$settings` (infolog's own `action()` even has the `lang('removed category')` branch for it),
+it is simply unreachable from the UI. Reaching it costs nothing.
+
+Records is the odd one out only in labelling: keep its "Status" caption, pass its
+`STATUS_PARENT` through to the widget's `parentCat`, and offer **Set** only (clearing a
+status is not meaningful there).
+
+#### Delivery
+
+Give `Nextmatch::category_action()` two new parameters: a mode that returns the single dialog
+action instead of the children, and an explicit **`$multiple`** telling the dialog which shape
+to use. `$multiple` has to be stated at the call site - there is nothing to infer it from.
+Default it to `false` (the majority, and the safe shape: offering Add/Remove where only
+replace is implemented would be a data-loss-shaped bug, whereas offering Set where multiple is
+supported merely under-uses the field) and convert addressbook's two call sites explicitly in
+the same commit.
+
+Server side there is no generic save path (each app has its own save + ACL), so the endpoint
+stays per-app. But the **first pass needs no server change at all**: the dialog can call the
+app's existing `ajax_action()` once per picked id, reusing the untouched `cat_add_<id>` /
+`cat_del_<id>` / `cat_<id>` handling. Batching into a single array-taking call is a follow-up
+optimisation, not a prerequisite - and it is only meaningful for the multiple case anyway.
+
+Keep the old submenu behaviour available until all 7 call sites are moved.
+
+### Proposal B - Distribution lists (addressbook)
+
+Replace `to_list/*` (37 children) + `remove_from_list` with **one** "Distribution lists"
+dialog:
+
+* `<et2-tree-dropdown>` fed by the existing `addressbook_ui::distribution_lists()` output -
+  the same widget and the same option tree the `filter2` picker already uses, so no new
+  server-side data assembly.
+* Buttons: **Add to list**, **Remove from list**, and an inline **New list...** that reuses
+  the existing `add_list_dialog.xet` path.
+
+This also fixes a real usability wart: today `remove_from_list` silently operates on whatever
+`filter2` happens to be, and errors with "You need to select a distribution list" if it is
+empty. In a dialog the target list is explicit.
+
+`rename_list` and `delete_list` act on the *filter*, not on the selection, so they stay as
+separate actions - they just need the ajax conversion, not a picker.
+
+### Proposal C - withdrawn: `move_to` and `shared_with` are Proposal D's job
+
+An earlier draft proposed a bespoke picker for addressbook's `move_to` (7 addressbooks plus a
+"Copy instead of move" checkbox child). It does not need one: at 7 entries it is not even over
+D's threshold today, and on an installation with enough addressbooks that it is, D catches it
+automatically. Same for `shared_with` (5 addressbooks plus a `writable` checkbox and
+`unshare`).
+
+What they *do* need is the checkbox refinement to Proposal D, below.
+
+
+### Proposal D - a generic overflow dialog for ANY oversized submenu
+
+Proposals A-B are bespoke: they know what a category or a distribution list *is*, and offer
+verbs (Add/Remove/Replace) that only make sense for that field. But plenty of submenus are
+neither a fixed enum nor conceptually unbounded - they are **bounded but data-driven, and grow
+with the installation**:
+
+| Submenu | Children come from | Grows with |
+| --- | --- | --- |
+| tracker `change/tracker` | `$this->trackers` | configured trackers/queues |
+| tracker `change/{cat,version,resolution}` | `get_tracker_labels(...)` per tracker | admin config |
+| tracker `change/status` | `get_tracker_stati($tracker)` | admin config |
+| tracker `change/responsible` | accounts | users |
+| kanban (in every app's menu) | a `Bo::search()` over boards | boards |
+| esyncpro `policy` | configured policies | admin config |
+| records `status` | categories under `STATUS_PARENT` | admin config |
+| infolog `change/type`, addressbook `change_type` | content types | admin config |
+
+On this instance tracker's are 5-18 each and perfectly usable. On a big installation they are
+not, and nobody is going to notice the moment they crossed over. The existing safety valve -
+`DEFAULT_MAX_MENU_LENGTH = 50` with automatic "More..." pagination - makes it *worse*, turning
+a long list into a nested one with no search.
+
+So: **when a container's children exceed a threshold, render it as a single menu entry that
+opens a generic selection dialog instead of a submenu.** Automatic, API-level, no per-app work,
+and it applies to apps that have not been converted yet.
+
+#### It dispatches the real child action, so nothing else changes
+
+This is the property that makes it safe and cheap. The dialog does not reimplement anything -
+it lists the container's existing `EgwAction` children, and on OK calls
+`chosen.execute(senders, target)`. Every child therefore keeps its own `onExecute`,
+`nm_action`, `confirm`, `enabled`, `icon`, `hint` and `data.level` exactly as it has today.
+
+Concretely that means it works for submit-based children *right now* and keeps working
+unchanged after those children are converted to ajax by phases 1-2 - the two efforts do not
+have to be sequenced against each other.
+
+#### Three small changes, all in shared code
+
+1. **`Nextmatch::egw_actions()`** - where it currently decides to paginate into "More...",
+   instead set `$action['data']['nm_action'] = 'select_children'` on the container when the
+   child count exceeds the threshold. `data[]` is the right place: the top-level `nm_action`
+   key is in `$inherit_attrs` and gets stripped off the parent by the `array_diff_key()` at
+   the end of the children branch, but `data['nm_action']` survives - which is exactly where
+   `egw_actions()` already writes its own derived values.
+2. **`EgwAction.appendToTree()`** - skip the child recursion for such a container, so the menu
+   renders it as a plain leaf. Today `appendToTree(_tree, true)` unconditionally pulls the
+   whole subtree in, which is the only reason a submenu appears at all (`action_links` only
+   ever contains first-level ids). The children stay in the action manager and stay
+   executable; they are just not drawn.
+3. **`Et2NextmatchActionController.executeNextmatchAction()`** - a new
+   `case "select_children"` that opens the dialog. `setDefaultExecute()` already installs the
+   default executor on containers as well as leaves (`EgwAction.setDefaultExecute()` sets it
+   on `this` before recursing), and `_buildMenuLayer()` already gives every enabled leaf an
+   `onClick` that calls `execute()`, so a now-childless container fires through the normal
+   path with no extra wiring.
+
+#### The dialog
+
+A single shared `api/templates/default/action_select.xet`, same plain-static-class + `.xet`
+shape as `LinkAction`: one picker plus OK/Cancel. Flat children map onto an
+`<et2-select search="true">`; hierarchical ones (`category_action()` switches to
+`category_hierarchy()` above its own threshold) onto `<et2-tree-dropdown>`, or a flat list
+indented by `data.level`, which the children already carry - `_buildMenuLayer()` reads
+`link.actionObj?.data?.level` today for exactly that.
+
+#### Modifier checkboxes have to come along
+
+Some containers mix two kinds of child: the things you pick, and a checkbox that modifies what
+picking one *does*. `move_to` has `move_to_copy` ("Copy instead of move") next to the
+addressbooks; `shared_with` has `writable` next to them; `Api\Sharing`'s `share` has
+`shareWritable` and `shareFiles`.
+
+A dialog that only listed the pickable children would silently drop the modifier. So the
+generic dialog renders **the checkbox children as checkboxes** alongside the picker.
+`executeSubmitAction()` already collects every checkbox in the manager via
+`getActionsByAttr("checkbox", true)`, so their values reach the server unchanged whether the
+user ticked them in a menu or in the dialog - no server-side change needed.
+
+This is also the better UI: a checkbox inside a context menu is a well-known usability wart,
+and it is what the share-dialog mockup independently removes too.
+
+
+#### Threshold, and how an app overrides any of it
+
+Default threshold: **15**, about a screenful. `DEFAULT_MAX_MENU_LENGTH = 50` stays what it is -
+a pagination threshold, a different thing - so this is a separate constant. Worth defaulting
+lower on mobile, where a long submenu is worse still.
+
+**The override must NOT be `onExecute`, and this is a trap worth spelling out.** For a
+container *with children*, `Nextmatch::egw_actions()` inherits `onExecute` down to the
+children and then strips it off the parent:
+
+```php
+$action['children'] = self::egw_actions($action['children'], …, array_intersect_key($action, $inherit_keys));
+if (!empty($action['default'])) unset($inherit_keys['onExecute']);
+$action = array_diff_key($action, $inherit_keys);   // parent loses onExecute
+```
+
+That is exactly what timesheet and `projectmanager_ui` rely on to convert a whole submenu in
+one line - but it means an app that sets `'onExecute'` on the container to "take over the
+dialog" silently gets the opposite: the handler lands on every child and the container keeps
+none. (`'default' => true` is the one exception, and abusing it for this would change the
+double-click action too.)
+
+So every override lives under `'data'`, which `egw_actions()` only ever writes to and never
+strips. Four levels, each a strict superset of the one before:
+
+**1. Move or disable the threshold** - one integer:
+
+```php
+'data' => ['maxMenuLength' => 40],     // this menu is fine up to 40
+'data' => ['maxMenuLength' => 0],      // always use the dialog, however few children
+'data' => ['maxMenuLength' => false],  // never collapse, keep the submenu at any size
+```
+
+**2. Tune the generated dialog** - it still builds and dispatches everything itself:
+
+```php
+'data' => ['selectDialog' => [
+    'widget'   => 'et2-select-cat',   // default: et2-select for flat, et2-tree-dropdown for hierarchical
+    'multiple' => true,
+    'title'    => 'Move to addressbook',
+    'okLabel'  => 'Move',
+]],
+```
+
+**3. Swap the template** - same dispatch, entirely your own markup. The dialog's value is
+returned to the generic handler, which still resolves the pick to a child action:
+
+```php
+'data' => ['selectDialog' => ['template' => '/myapp/templates/default/my_picker.xet']],
+```
+
+**4. Replace it completely** - your JS gets called instead of the dialog, with the collapsed
+container:
+
+```php
+'data' => ['selectDialog' => ['onExecute' => 'javaScript:app.myapp.pickThing']],
+```
+
+The contract for level 4 is deliberately tiny, because the children are still real actions:
+
+```ts
+pickThing(action, senders)
+{
+    // action.children are the real EgwActions - hidden from the menu, not removed
+    const chosen = /* whatever UI you like */;
+    chosen.execute(senders);   // identical to the user having clicked the submenu entry
+}
+```
+
+`chosen.execute()` is the same call the generic dialog makes, so a custom picker inherits each
+child's own `onExecute`/`nm_action`/`confirm`/`enabled` for free - it cannot accidentally
+diverge from what the submenu did. And the generic opener should be exported as a helper so
+level 4 can call it with its own options rather than reimplement it:
+
+```ts
+SelectChildrenAction.open(this.egw, action, senders, {title: …, widget: …});
+```
+
+**One flag drives the menu side.** Server-side the threshold decision writes
+`data['nm_action'] = 'select_children'`; `EgwAction.appendToTree()` skips the child recursion
+when it sees that, so the entry renders as a leaf. Levels 2-4 all still produce that flag -
+they only change what happens *after* the click - so the menu looks the same in every case.
+
+#### What it does not do
+
+* **It does not reduce payload.** All children are still serialized into every `get_rows`
+  response - that is the thing Proposals A and B fix by replacing children with a compact
+  option list. D is a usability fix, A/B are usability *and* payload fixes.
+* **It cannot express verbs.** One pick, one action. Add/Remove/Replace on categories, or
+  Add-to/Remove-from on distribution lists, need the bespoke dialogs. So D does **not**
+  replace A or B - it is the safety net for everything A and B do not cover.
+* **Double confirmation** is possible if both the container and the chosen child define
+  `confirm`: `EgwAction.execute()` runs `_check_confirm()` on the container before the dialog,
+  and again on the child after. None of the containers in scope set `confirm` today, but the
+  new case should suppress the container's.
+
+### Proposal E - tell the user an action will ask them something
+
+Shoelace draws the submenu chevron itself, from the presence of `slot="submenu"` in
+`EgwMenuShoelace.itemTemplate()`. So today the menu distinguishes exactly two states: "has a
+submenu" (chevron) and "does something immediately" (nothing).
+
+There is no third state for "this opens a dialog to collect options first" - and there are
+already plenty of those, with no indication at all: every `nm_action => 'open_popup'` action
+(infolog `Start date`, `Due date`, `Delegation`, `Links`; tracker `Group`; resources
+`Delete`/`Un-delete`; importexport `Owner`, `Allowed users`; news_admin `Read permissions`;
+`projectmanager_elements_ui` `Add existing`), and all of Proposals A-D once they exist.
+
+**Proposal D makes this a requirement rather than a nicety.** A container that shows a chevron
+today will, after D, show no chevron - it becomes a plain leaf. Without a replacement
+affordance the entry ends up telling the user *less* than it does now. D has to put something
+back.
+
+#### Use the ellipsis, not a chevron-like glyph
+
+A trailing `…` meaning "this command needs more input before it happens" is the long-standing
+convention in every desktop HIG (Apple, Microsoft, GNOME), so it needs no explanation. A
+chevron - or anything resembling one - would be wrong here: a chevron means "there is more
+menu, you are still in the menu", a dialog is a different kind of transition, and conflating
+the two costs the chevron its current meaning. (The `slot="suffix"` an icon would use is also
+already taken by keyboard shortcuts.)
+
+#### Derive it, never declare it
+
+Append it in `EgwMenuShoelace.itemTemplate()` from the item's resolved `data.nm_action`
+(`select_children`, `open_popup`, and the Proposal A-C dialog actions), rather than letting
+each action opt in. Derived, it cannot drift from what the action actually does, and no app
+has to remember it.
+
+**Do not put it in the caption.** EGroupware does that today and it has already caused
+translation drift: `mail/src/Ui.php` uses `'caption' => 'Folder Management ...'`, so the lang
+files carry the dotted and dotless forms as two independent keys - which have since been
+translated differently:
+
+| key | `de` |
+| --- | --- |
+| `folder management` | Ordner-Verwaltung |
+| `folder management ...` | Ordner-Verwaltung ... |
+| `subscribe folder` | Abonnieren |
+| `subscribe folder ...` | Ordner abonnieren ... |
+| `edit account` | Konto Einstellungen |
+| `edit account ...` | Konto bearbeiten ... |
+
+Same concept, two different German strings, decided by whether someone typed three dots. The
+punctuation is also inconsistent in the source: mail uses `' ...'` (with a space) in some
+captions and `'...'` in others, invoices and schulmanager use `'...'`.
+
+Appending at render time removes the whole class of problem: the ellipsis stops being
+translatable content.
+
+#### What must NOT get one
+
+The indicator is only worth having if it stays meaningful:
+
+* **Confirmation is not input.** Both Apple's and Microsoft's guidelines are explicit that a
+  command which only asks "are you sure?" gets no ellipsis. So `confirm`,
+  `confirm_multiple` and `confirm_mass_selection` actions (addressbook `Delete`, infolog
+  `Close`, `merge`) must not get one - otherwise it degrades into "something will happen",
+  which is no information at all.
+* **Opening a window is not input.** `popup`/`location`/`egw_open`, and any `onExecute` that
+  just opens a management UI, navigate to or open something - they do not gather options for
+  the action you picked. No ellipsis, however the action happens to be wired.
+
+**Decision (2026-09-23): apply that rule uniformly, including to the borderline cases.** Mail's
+`Edit account ...` opens the account editor, so it loses its ellipsis - and so do its
+siblings, which are the same kind of thing: `Subscribe folder ...`, `Folder Management ...`,
+`Edit folder ACL ...`, `Set predefined values for compose...` (all `onExecute` handlers that
+open a popup), plus `schulmanager_ui`'s `Noten-Details...` / `Kontaktdaten...`. Consistency is
+worth more than preserving individually-defensible exceptions: an affordance that appears on
+some window-openers and not others tells the user nothing.
+
+Net effect: **every hardcoded ellipsis currently in a context-menu caption goes away**, and
+the affordance comes back only where it is derived from real behaviour.
+
+#### One limitation, and the escape hatch
+
+Deriving from `nm_action` only covers actions whose behaviour is *declared*. An action that
+opens an options dialog from inside an arbitrary `onExecute` JS method is invisible to it -
+mail's folder-tree actions above are exactly that shape. The rule above happens to disqualify
+all of today's examples, but the next one might genuinely qualify, so pair the derived cases
+with an explicit opt-in (`'promptsForInput' => true`) that the same render code honours. Do
+not let it become the default route: if an action needs the flag, that is usually a hint its
+behaviour should have been declared in `nm_action` in the first place.
+
+#### Cleanup this enables
+
+* Delete the duplicate dotted lang keys (`folder management ...`, `subscribe folder ...`,
+  `edit account ...` in `mail/lang/egw_{en,de}.lang`), keeping the dotless ones.
+* Rename the ellipsis-only keys to their dotless form, carrying the translations over:
+  `edit folder acl ...`, `set predefined values for compose...` (mail), `from template...`
+  (invoices).
+* Drop the hardcoded `.'...'` in `addressbook_ui::distribution_lists()` (two places) - that
+  one is a tree label rather than a menu caption, but it is the same convention applied by
+  hand.
+* `mail/src/Compose.php`'s `'Upload files...'` is a compose-toolbar button, not a context-menu
+  action - out of scope for this change, leave it.
+
+### Out of scope: the share dialog (EGW-CE #43584)
+
+That ticket replaces the whole `share` submenu - Share link, Writable, Share files, folder,
+the mail options, and Collabora's writable online link - with one dialog. **Out of scope
+here**, and not blocked by anything in this project: every `share/*` child already has an
+`onExecute` or is a checkbox, so none of them submit.
+
+One earlier draft of this doc confused it with addressbook's `shared_with/*`. They are
+different features: `shared_with_<owner>` grants **another user access to the contact** inside
+their own addressbook (written to `$contact['shared'][]`) and does still submit, so it stays
+in this project - handled by Proposal D like any other oversized submenu. `share/*` creates an
+**anonymous share link** and is the ticket's subject.
+
+---
+
+## 5. Phases
+
+| Phase | Scope | Rationale |
+| --- | --- | --- |
+| 0 | **DONE.** `EgwApp.ajax_action()` + the `data.menuaction` convention; `api/tests/Etemplate/Widget/NextmatchActionSubmitTest.php` (baselined); the console warning when an action resolves to `nm_action: "submit"` unasked | Everything else depends on this `api` version; stops the pattern silently coming back |
+| 1 | **DONE.** addressbook (`lists/*`, `merge`, `merge_duplicates`, `move_to/*`, `shared_with/*`, `change_type/*`, `undelete`, `delete`) and infolog (`close`, `close_all`, `change/{type,status,completion}/*`, `undelete`) | The two reported cases. Core repo |
+| 2 | **DONE.** tracker (the biggest single list), calendar, filemanager x3, projectmanager x2 | Highest-traffic remainder. Cross-repo: tracker and projectmanager are separate |
+| 3 | **DONE.** Proposal D (generic overflow dialog) + Proposal E (the `…` affordance) | Independent of 1-2 and of each app. E ships with D because D removes the chevron those entries have today. E's menu half reaches legacy apps too |
+| 4 | **DONE.** Proposal A - `Nextmatch::category_action()` picker dialog, both cardinality shapes, 5 call sites moved | Biggest single reduction |
+| 5 | **DONE.** Proposal B - distribution-list dialog | Addressbook-specific. `move_to`/`shared_with` need no bespoke dialog - Proposal D covers them |
+| 6 | **DONE.** The `open_popup` bucket: infolog (4 popups) and tracker (`assigned`, `group`, `admin`) | Needs the dialog to return values without a template submit |
+| 7 | **DONE.** admin x3, records, importexport, news_admin x2, invoices, kanban, bookmarks, aitools, developer, stylite `calls`, smallpart `courses` + `questions`. Originally listed as blocked on the Et2Nextmatch conversion, which finished 2026-10-02 | - |
+| - | **Still not converted:** esyncpro (`policy/*`, `wipe`, `delete`) - see the baseline-state section. webauthn and openid have no action lists at all; phpbrain and schulmanager are excluded (deprecated / no longer used); aiassistant was excluded by the user 2026-10-05 after its conversion had already landed | - |
+
+Phase 0 lands in `api` alone and gates everything after it. Phase 3 (Proposal D) is otherwise
+independent - it dispatches whatever the child action already does, so it neither waits for
+nor blocks the ajax conversion. Phases 4-5 build on the endpoints phase 1 establishes.
+
+Everything happens on a feature branch per repo, targeting master only.
+
+### How to verify
+
+A code-reading pass is not enough here - the whole point is runtime behaviour. For each
+converted action, in a real browser:
+
+1. Scroll the list well down and select rows.
+2. Run the action.
+3. Assert the nextmatch widget instance is **the same object** afterwards, the scroll offset
+   is unchanged, and the filters/search are unchanged.
+
+### Verification
+
+Actions are driven through the real context menu (or the registered action object, where a
+submenu will not render), with the nextmatch instance captured beforehand so "same widget
+afterwards" is checked rather than assumed, and the result confirmed against the database rather
+than the success message. Reversibility is established *before* acting - the inverse action has
+to exist and be offered - because several of these lists have asymmetric rights or a filter that
+re-sorts under the pointer.
+
+| App | Driven live |
+| --- | --- |
+| addressbook | Categories dialog (Add / Replace / Remove), distribution-list dialog (Add, Remove, 37 lists), `move_to`, `delete`, Select all |
+| infolog | Close, Status, Type, Completion, Change category (Set + Remove), Delegation, Start date, Due date, Links, Delete, Select all |
+| tracker | `seen`, `unseen`, Completion, Status, Close, Category via the Proposal D dialog, `assigned` open_popup, Multiple changes, Select all |
+| timesheet | Change category (Set + Remove), Modify status, Delete, Select all |
+| calendar | Change your status, set and set back, in **both** the list view and week view - `cal_role` survives both ways |
+| records | Status (stored in `record_status`, not `cat_id`) |
+| projectmanager | Project status, set and restored |
+| kanban | `copy` then `delete_board`, board id set restored exactly |
+| bookmarks | `delete` |
+| aitools | `delete`, two rows at once |
+| invoices | `delete`, two rows at once |
+| stylite Calls | `delete`, `undelete` |
+| smallpart | `exempt` then `readd` |
+| admin | Custom field delete, incl. the policy dialog's comment reaching `egw_admin_queue` |
+| mail | Nothing to drive: `copyto` is a placeholder container and its folder children are built client-side with `onExecute: 'javaScript:app.mail.copy2Folder'`, so no mail leaf submits |
+
+**Not driven**, each for a reason rather than an omission: importexport (the definitions list needs
+admin context and renders blank from a direct URL), news_admin (list returns no rows), filemanager
+Shares and Jobs (Jobs is empty and its `add` opens no popup; both are covered end to end by
+`filemanager/tests/AjaxActionTest.php`, which creates and deletes a real share and a real job),
+admin Tokens (all of them are already revoked, so there is no round trip that does not rewrite a
+timestamp), and developer (excluded).
+
+**Three behaviours that only live driving confirms**, all previously asserted only in tests:
+
+* A **multi-row** action sends **no id and no type** - `["2 prompt(s) deleted.", "aitools", null,
+  null, "aitools", ...]` - so the list reloads instead of falling through on a null type.
+* **invoices** shows the push and the endpoint side by side: two push refreshes
+  (`["", "invoices", "541", "delete"]`) followed by the endpoint's own multi-row one.
+* **projectmanager**'s project list uses a shape nothing else does - the ids as an **array** with
+  `update-in-place` (`["1 project(s) Status set.", "projectmanager", ["2769"], "update-in-place", ...]`).
+
+**Calendar's week/day/planner views inherit the list's actions.** `calendar_uiviews::get_actions()`
+opens with `$ui = new calendar_uilist(); $actions = $ui->get_actions();` and then overrides, so a
+change to the *list's* actions reaches the grid views too. It is safe today because uiviews
+rebuilds every status child from scratch with `onExecute: 'javaScript:app.calendar.status'` - the
+live action manager shows `A/R/T/U/D` there against the list's `status-A`, a different handler -
+and the `ajax_action` this project added sits on the container, which never executes. Confirmed
+behaviourally: week view's Change your status writes `cal_status` and preserves `cal_role` both
+ways. **`calendar_uiviews` is not in `NextmatchActionSubmitTest`'s scan list**, so that inheritance
+is unguarded; `Timesheet` is the other action it inherits without overriding.
+
+**Not a regression, though it looks like one:** kanban's `copy` replaces the nextmatch widget.
+`BoardList::action()` ends with `Response::get()->apply('egw_open', [$new_id, 'kanban', 'edit', ...])`
+- the action deliberately opens the copy for editing, the same way smallpart's `copy_course` does.
+The list is not lost, it is navigated away from.
+
+**Cosmetic, recorded so it is not mistaken for data loss:** smallpart's `exempt` -> `readd` round
+trip is not byte-identical. `readd` leaves `exempt: false` in the question's JSON where the key was
+originally absent; `min_score`/`max_score` are restored exactly and the question scores again.
+
+**Four bugs that only live driving could have found, all fixed:**
+
+1. **`csv_export` stuck in the stored nextmatch value** (`Nextmatch::ajax_get_rows()`). It is a
+   per-request instruction to `get_rows()` - "do not cache this query in the session" - set for a
+   single-row refresh, but the change-detection loop at the end of the method wrote every changed
+   key back into the persisted request content. One refresh armed it and every later query then
+   claimed to be one, so `get_rows()` stopped caching the query for the rest of the session.
+   Nothing looked wrong: the list kept returning the right rows. But everything that reads that
+   cache - a "select all" expansion, addressbook's `delete_list` - silently used whichever filters
+   were in force when the page was opened. Since ajax context-menu actions refresh exactly one
+   row, the conversion is what arms it: the first action on a list poisoned every action after it.
+   Symptom that led there: "Delete selected distribution list" answering *"You need to select a
+   distribution list"* with one plainly selected. Covered by
+   `NextmatchTest::testCsvExportFlagDoesNotSurviveIntoTheNextQuery()`.
+2. **Popup inputs resolved against the whole template** (`EgwApp.submit_action_popup()`). A popup's
+   input is free to carry the same id as a filter in the list header, and infolog's do: the
+   Start/Due date popups hold `<et2-date-time id="startdate">` while the filter area holds
+   `<et2-date id="startdate">`. `this.et2.getWidgetById()` found the filter, which is empty, so
+   "set the start date" **cleared** it. Now looked up inside `<action>_popup` first.
+3. **Calendar's endpoint is not on `<app>_ui`** - it lives on `calendar_uilist`, and the actions
+   never declared a `menuaction`, so every one of them answered *"calendar.calendar_ui.ajax_action
+   is not a valid menuaction"* (400) and did nothing. `EgwApp.ajax_action()` now walks up the
+   action's ancestors for the menuaction, the way `onExecute` is inherited, so a container declares
+   it once for its whole submenu. Covered by `calendar/tests/AjaxActionTest.php`.
+
+4. **Timesheet's "Remove category" could never work.** `timesheet_ui::action()`'s `cat` branch
+   tested `($entry = $this->read($id)) && ($entry['cat_id'] = $settings) && $this->save(...)`,
+   where the middle term is an *assignment* and therefore evaluates to `$settings`. Removing a
+   category passes an empty one, the chain short-circuited before `save()`, and the user was told
+   *"insufficient rights"* for an entry they owned. Pre-existing since 2010 and identical on
+   master, but Proposal A's picker puts **Remove** in front of the user as its own button, so it
+   went from unreachable to two clicks away. infolog, records and projectmanager handle the empty
+   case properly - timesheet was the only one. Fixed, with `timesheet/tests/AjaxActionTest.php`
+   pinning it (the test was confirmed to fail against the old code).
+
+The action manager can be walked at runtime to list what still resolves to submit:
+leaf actions with `type === "popup"`, no `data.url`, no `data.egw_open`,
+`data.nm_action === undefined`, and whose `onExecute.functionToPerform` is the controller's
+own default executor (the function shared by the majority of actions - the one installed by
+`setDefaultExecute()`).
+
+---
+
+## 6. Scope, dependencies and decisions
+
+### Decided (2026-09-23)
+
+| # | Decision | |
+| --- | --- | --- |
+| 1 | **Target: master, as a squash-merge** of the per-repo `nm-action-ajax` branches. Not backported to `26` - it is a behaviour change across many apps, and `d3da314452` already covers the worst user-visible symptom there. A squash is what makes this landable at all: `confirm_handler` does not cherry-pick onto master on its own (three conflicts, two of them modify/delete on branch-only files), so the project goes as a whole | settled |
+| 2 | **Scope: every app in the `EGroupware` and `EGroupwareGmbH` orgs**, subject to the Et2Nextmatch prerequisite below. All 20 separate app repos checked are in one of those two orgs | settled |
+| 3 | **The legacy `nm_action()` dispatcher is NOT being touched.** Apps still on the `<nextmatch>` widget wait for their `Et2Nextmatch` conversion (`doc/ai/projects/et2-nextmatch-conversion.md`) instead | settled |
+| 4 | **The inventory harness comes back as a permanent test with a baseline** (phase 0) | settled |
+| 5 | **All work happens on a feature branch**, not directly on master | settled |
+| 6 | **Proposal D threshold: 15.** A named constant; per-action override via `data['maxMenuLength']`, with three further levels of override up to replacing the dialog outright | settled |
+| 7 | **Proposal A offers Replace** (multi-category) as well as Add/Remove, and **Remove** on the single-category apps | settled |
+| 8 | The sharing-UI ticket is **EGW-CE #43584**. It turns out to cover `share/*` (anonymous share links), **not** addressbook's `shared_with/*` - so it does not overlap this project's scope at all | settled |
+
+### The Et2Nextmatch prerequisite (met)
+
+An app was only reachable here once its list template used `<et2-nextmatch>`: that routes
+through `Et2NextmatchActionController.executeNextmatchAction()`, while the legacy `<nextmatch>`
+widget routes through `nm_action()` in `api/js/etemplate/et2_extension_nextmatch_actions.js`,
+which per decision 3 is left alone. `EgwAction.appendToTree()` and
+`EgwMenuShoelace.itemTemplate()` are shared, so Proposal E and the menu half of Proposal D reach
+legacy lists too; the `ajax_action` conversion and Proposal D's `select_children` dispatch do
+not.
+
+`et2-nextmatch-conversion.md` finished on 2026-10-02 and every app in this project's inventory
+now ships real `<et2-nextmatch>` templates, so the constraint no longer binds. The only legacy
+list templates left in the tree are `addressbook/display.xet` (parked), `aiassistant/list.xet`,
+phpbrain and schulmanager - none of them this project's concern - and `convertNextmatch()`
+(`api/etemplate.php:675`) serves even those as `<et2-nextmatch>` anyway.
+
+**Two things from it are still worth knowing.**
+
+A converted action on a legacy list fails *silently*. `nm_action()`'s switch has no `categories`
+case, so an unknown `nm_action` value matches nothing and the menu entry does nothing at all -
+no error. That is how records' Status action, converted to the category picker in Proposal A,
+had to be reverted.
+
+Telling the two apart needs care: the header widgets (`et2-nextmatch-header-filter`,
+`et2-nextmatch-header-account`, `nextmatch-sortheader`) usually appear *above* the list widget,
+so grepping a template for the first `<nextmatch` / `<et2-nextmatch` answers with whichever
+prefix the header uses. Match the list tag with a following delimiter instead:
+
+	grep -cE "<nextmatch[ />]"      # legacy list
+	grep -cE "<et2-nextmatch[ />]"  # converted list
+
+A first-match grep is what wrongly listed importexport, esyncpro, news_admin, smallpart's
+`questions` and stylite's `placetel` as already converted.
+
+### This spans 21 repositories
+
+Only `api`, `addressbook`, `infolog`, `calendar`, `filemanager`, `mail`, `timesheet`, `admin`
+and `importexport` live in the core repo. Separate repos, each needing its own commit on its
+own branch: `tracker`, `projectmanager`, `records`, `policy`, `smallpart`, `invoices`,
+`esyncpro`, `stylite` (the `epl` repo), `kanban`, `news_admin`, `bookmarks`, `phpbrain`,
+`openid`, `webauthn`, `schulmanager`, `developer`, `aitools`, `aiassistant`, `rag`,
+`collabora`.
+
+Phase 2 is cross-repo from the start, because **tracker - the single biggest list at 83
+actions - is a separate repo**. Any shared-API change (phases 0, 3) lands in `api` first and
+every per-app commit depends on that version, so the `api` change should go in on its own and
+be verified before the per-app sweep starts.
+
+### Phase 1 - as built
+
+Both apps' actions now carry `'onExecute' => 'javaScript:app.<app>.ajax_action'`. Setting it on
+a *container* (`to_list`, `move_to`, `shared_with`, `change_type`, and infolog's
+`change/type|status|completion`) converts every generated child in one line, exactly as the
+inheritance lever promises.
+
+Deliberately not set on infolog's `change` container itself: it also holds the
+`nm_action => 'open_popup'` children (`startdate`, `enddate`, `responsible`, `link`), and an
+inherited `onExecute` runs *instead of* the default executor, so their popups would never open.
+Set it on the individual sub-containers instead.
+
+Four things this turned up:
+
+* **`EgwApp.ajax_action()` had to grow a checkbox guard.** `egw_actions()` applies inherited
+  attributes with `$action += $default_attrs` to *every* child, checkbox children included - so
+  `move_to`'s "Copy instead of move" and `shared_with`'s "Share writable" inherited the handler
+  and would have fired a real action on being ticked. The method now returns early for
+  `_action.checkbox`, the same guard `executeNextmatchAction()` opens with.
+* **Checkbox values had to be sent.** A submit passes them; the first version of
+  `ajax_action()` did not, which would have silently broken "Copy instead of move",
+  "Share writable" and infolog's "Do not notify". They now travel as a 4th argument, collected
+  the same way the controller collects them.
+* **Two pre-existing bugs in `addressbook_ui::ajax_action()`**, both fixed: its 4th parameter
+  was declared `$skip_notification` and passed straight into `action()`'s `$checkboxes` slot
+  (harmless only while no converted action read it - `move_to_*` and `shared_with_*` both do),
+  and its messages said "event(s)", copy-pasted from calendar. It also only sent
+  `Response::message()`, not `egw.refresh()`, so a converted action would not have updated any
+  row.
+* **`select_all` was broken in infolog's `ajax_action()`** - it passed `[]` as the query, so
+  `action()`'s `get_rows()` ran with no filters at all, ie. every InfoLog the user can see. It
+  now passes the query `get_rows()` cached in the session, the same one `index()` restores on a
+  submit.
+
+`app.addressbook.action` was deleted: its only case was `delete`, its 4th argument
+(`no_notifications`) referenced an action addressbook does not have, and the inherited
+`ajax_action` does the job.
+
+Not converted, with reasons: `view_org`/`view_duplicates` switch the list to a different rows
+template rather than acting on the selection - they are not `action()` operations and a redraw
+is defensible; `cat/*` is Proposal A's job; `export/*` and `kanban` belong to other apps.
+
+`projectmanager_elements_ui`'s **`erole` is a genuine gap, and bigger than the baseline shows.**
+The baseline records it as one bare leaf, which is an artifact of how the harness runs: children
+are built from `get_free_eroles()`, which returns nothing unless the eroles bo carries a `pm_id`,
+and the harness has no project in scope.  With a project it is a container - on this instance
+`enable_eroles` is on, six global roles exist and none are used by the project's elements, so a
+real element list offers six `erole_<role_id>` children, each with only `caption`/`group`/
+`enabled` and therefore each falling through to submit.  **The baseline cannot see them**, so it
+will not notice if more appear; anything measured through a project-scoped list has the same
+blind spot.
+
+Unlike `delete`/`sync_all` it is not blocked on the missing project context: its handler already
+re-reads the element by its composite key and re-derives the allowed roles from *that element's*
+own project (`new projectmanager_eroles_bo($element['pm_id'], $element['pe_id'])`), explicitly
+refusing to treat what the menu offered as authority.  Whether `save()`'s `check_acl()` behaves
+without a loaded project has NOT been checked, so "convertible" is a read of the handler, not a
+verified claim.
+
+### Phase 2 - as built
+
+* **tracker** had no `ajax_action()` at all - added one wrapping its existing `action()`. Wired
+  `close`, `close_100_<resolution>`, `change/seen`, `change/unseen` and the five generated
+  sub-containers (`tracker`, `version`, `priority`, `status`, `resolution`, `completion`).
+  Again not on `change` itself, which holds the `open_popup` children `assigned` and `group`.
+* **calendar** had an `ajax_action()` that only sent `Response::message()` - it refreshed
+  nothing, so a converted action would not have updated a row. Now calls `egw.refresh()`.
+  Its 4th parameter had to accept both shapes: `EgwApp.ajax_action()` sends the checkbox array,
+  while the older recur-prompt path in `calendar/js/app.ts` sends a plain bool for
+  "Do not notify". Both verified live.
+* **filemanager**: `unlock` goes through the existing `app.filemanager.action` ->
+  `filemanager_ui::action()`, the same route `delete` already used. `filemanager_shares` and
+  `Filemanager\Jobs` had no ajax endpoint and got one each.
+* **projectmanager**: `delete`/`undelete` reuse `app.projectmanager.change_status`, already
+  wired to its `ajax_action()`. `projectmanager_elements_ui`'s `delete`/`sync_all` were
+  converted and then **reverted** - see "Building fixtures" below.
+
+Two traps worth recording:
+
+* **`filemanager_shares extends filemanager_ui`, whose `ajax_action()` is `static`** - adding a
+  non-static `ajax_action()` there is an instant PHP fatal ("cannot make static method non
+  static"), and making it static would shadow the inherited VFS endpoint, which has a totally
+  different signature. Named `ajax_delete()` instead, with the menuaction given explicitly via
+  `data['menuaction']`.
+* **`projectmanager_pricelist_ui`'s `delete` is dead** and was left that way: the class extends
+  `projectmanager_pricelist_bo`, not the UI class that dispatches `$content['nm']['action']`, so
+  the submit re-renders and deletes nothing. Making it work is new functionality, not a
+  transport change. It stays in the test baseline with that note.
+
+### Proposal D - as built
+
+`Nextmatch::DEFAULT_MAX_MENU_SELECT = 15` and `selectChildrenIfTooLong()`, called from
+`egw_actions()` right after a container has recursed into its children; `appendToTree()` skips
+the child recursion for `nm_action === 'select_children'`; `executeSelectChildrenAction()` in the
+controller; `SelectChildrenAction` + `api/templates/default/action_select.xet`.
+
+Verified live in addressbook: `to_list` (37 lists) and `cat_add`/`cat_del` (18 each) switch to
+the dialog, `move_to` (8) and `shared_with` (6) keep their sub-menu. The over-threshold container
+really does render as a **leaf** in the menu tree, and picking an option executes the real child
+action (`to_list_3`) with the original senders - which is the whole point: no behaviour is
+reimplemented.
+
+Four things worth knowing:
+
+* **Do not overwrite a declared `nm_action`.** The first version applied the length heuristic
+  unconditionally, which would have clobbered eg. tracker's `admin` or infolog's `startdate`
+  (both `open_popup`) if they ever grew past the threshold. Caught by its own test, now guarded -
+  and the guard has to check both `data['nm_action']` and the top-level `nm_action`, since a
+  hand-written one stays at the top level.
+* **Checkbox children do not count towards the length**, and travel into the dialog as real
+  checkboxes. They are modifiers, not options.
+* **`emptyLabel` from the `.xet` attribute did not take effect**, so it is set programmatically
+  after `updateComplete`. Without it `et2-select` preselects the first option, which would make
+  OK-without-choosing act on whatever sorted first - a genuinely dangerous default for
+  "Move to addressbook".
+* `enabled: javaScript:...` children are re-evaluated for the current selection when the dialog
+  opens, so it does not offer options a menu would have hidden.
+
+### Proposal A - as built
+
+`category_action()` takes an 8th parameter `$multiple`: leaving it null keeps the historic
+sub-menu (so an unconverted caller still works, and a long list still gets Proposal D's generic
+picker), while `true`/`false` returns a single leaf action carrying
+`data['nm_action'] = 'categories'` plus the settings the dialog needs. `CategoryAction` +
+`api/templates/default/category_action.xet` do the rest, using `et2-select-cat`, which fetches
+its own options - that is where the payload saving comes from.
+
+Converted: **addressbook** (multiple - its *two* sub-menus, "Add category" and "Delete category",
+collapse into one action), **infolog**, **timesheet** and **projectmanager_ui** (all single).
+**records was converted and reverted** - it is still on the legacy `<nextmatch>` widget, where
+an unknown `nm_action` matches nothing and the action silently does nothing. `projectmanager_elements_ui` deliberately left on the sub-menu: its
+`ajax_action()` has a different signature (`$data` where the others take `$all_selected`), so it
+needs its own endpoint work first; Proposal D collapses it meanwhile.
+
+Verified live: addressbook shows one `Categories…` leaf with **Add / Remove / Replace** over a
+`multiple` picker; infolog shows **Set / Remove** over a single one, and picking a category
+sends `cat_2282` while Remove sends the bare `cat_` - the action ids the existing per-app
+`action()` handlers already understand. Menu action links for an addressbook row dropped from
+**418 to 284**.
+
+Three things worth knowing:
+
+* **Replace needed a real server handler** (`cat_set_<csv>` in addressbook). Deliberately not a
+  `cat_del` of everything followed by a `cat_add`: that writes each contact twice and logs two
+  history entries for one user action. It **shipped broken** - see below.
+* **"Remove" on a single-category app is new only in being reachable.** The handlers already did
+  the right thing for an empty value - infolog even has a `lang('removed category')` branch -
+  but `category_action()` never emitted a "None" entry, so nothing could reach it.
+* **Two apps had to lose an `onExecute`.** timesheet copied status' handler onto `cat`, and
+  `projectmanager_ui` used `change_status`; either would have run *instead of* opening the
+  dialog, since a leaf action's own `onExecute` pre-empts the controller's default executor.
+
+Also fixed a phase-2 oversight it exposed: **tracker's `change/cat` is not a `category_action()`
+at all** - its children come from `get_tracker_labels('cat')`, ie. tracker's own labels - so it
+was never Proposal A's to convert and simply needed the same ajax handler as its siblings.
+
+### The testing hole a bogus id leaves, and the second bug it hid
+
+`cat_set` went out with a PHP 8 fatal: it called `$this->save(array('cat_id' => $ids) + $contact)`,
+and `save()` takes `&$contact` by reference, which cannot be an inline expression. Reported from
+the browser within minutes.
+
+It passed every check here because of *how* the action was exercised. To avoid writing to real
+data, actions were driven with a deliberately non-existent row id - and every one of these
+handlers opens with `if (($Ok = !!($contact = $this->read($id)) && ...))`, so `read()` returns
+false, the `&&` short-circuits, and **the handler body never runs at all**. That technique proves
+the request routing, the action id, the payload and the refresh. It proves *nothing* about what
+the action does.
+
+The fix for the testing gap is two test files that call the real endpoints with a real row:
+`addressbook/tests/CategoryActionTest.php` (the category verbs) and
+`api/tests/Etemplate/Widget/NextmatchAjaxActionTest.php` (the `ajax_action()` endpoints
+themselves - argument order, the checkbox array, select-all, and the `egw.refresh` response).
+Reverting the one-line `cat_set` fix makes 3 of the former's cases fail with the exact reported
+error, which is the check that they are worth anything.
+
+**Writing them immediately found a second, worse bug - in the select-all "fix" itself.** The new
+`$query = $all_selected ? Api\Cache::getSession(...) : []` still handed `action()` an empty
+query whenever nothing was cached, and `action()` then sets `num_rows = -1` and re-runs
+`get_rows()` on it - unfiltered. So "select all" with no cached query would have closed, deleted
+or re-categorised **every entry the user can see**, which is exactly the bug the change claimed
+to fix. All three endpoints (`infolog`, `addressbook`, `calendar`) plus tracker's new one now
+refuse and say so instead of guessing. In addressbook the same hole is reachable from the
+*submit* path too and predates this work; the guard sits in `ajax_action()`, so the submit path
+is unchanged.
+
+Its teardown also has to call `Contacts::delete()` **twice**: the first call only marks
+`tid = 'D'` (the "deleted" bin), so a single call would leave every fixture visible in the
+address book. One test asserts the fixture is really gone, so that cannot rot silently.
+
+### Phase 6 - the open_popup bucket, and why it is not one job
+
+These actions show a small form (Delegation, Start date, Links, ...) and then submitted the
+**whole** eTemplate just so the server could read the few values in it.
+
+**No server change was needed.** `action()` already parses these as one composite id,
+`<action>_<verb>_<value>` (eg. `responsible_add_5,7`, `startdate_ok_1764547200`) - which is
+exactly what `index()` assembles out of the submitted popup values. `EgwApp.submit_action_popup()`
+builds the same id from the popup's own widgets and sends it to `ajax_action()`. A popup converts
+by pointing its buttons at it instead of `nm_submit_popup()`:
+
+	onclick="app.<app>.submit_action_popup(this)"
+
+The button id carries both halves (`<action>_action[<verb>]`), and the ids come from
+`.selectedIds`, which `openActionPopup()` already puts on the popup element.
+
+**infolog is converted** - all four popups (`responsible`, `startdate`, `enddate`, `link`), 7
+buttons. Verified live through the real context menu: picking Delegation, choosing users and
+hitting Add sends `responsible_add_5,7` for the real row id with the checkbox values, and the
+template is **not** rebuilt. `NextmatchAjaxActionTest` covers the composite ids server-side,
+including the empty value that clears a date.
+
+**tracker is converted too**, through its own `submit_popup()` (its popups are already real
+`<et2-dialog>`s - someone had modernised the form but it still submitted the whole template).
+Its server takes *two* shapes, and no change was needed for either:
+
+* `assigned` and `group` want the same composite id. The verb has to be a single token -
+  `action()` does `list(,$settings) = explode('_', $settings)` and takes only the second
+  element, so a verb containing an underscore would be read as the value. `assigned` is the
+  only one whose verb means anything (ok/add/delete, from the button's own id); `group` throws
+  it away, so it gets a plain `set`.
+* "Multiple changes" hands over the popup's whole field set as an **array**, which `action()`
+  applies field by field (`is_array($action) && $action['update']`). Verified live: it sends
+  `{update: true, tr_completion: "50", ...}` and the empty fields are dropped server-side.
+
+**The rest were all blocked** at the time, not merely harder: importexport, news_admin,
+resources, admin categories and schulmanager were every one of them still on the legacy
+`<nextmatch>` widget. That blocker has since dissolved - `convertNextmatch()` serves them all as
+`<et2-nextmatch>` templates of their own - and importexport, news_admin and admin have been
+converted here. Resources and schulmanager were not: schulmanager is out of scope (no longer
+used) and resources was never in this project's inventory. See the note in section 6.
+
+### Proposal B - as built
+
+One `Add to or remove from list...` entry replaces a 37-entry sub-menu *and* the separate
+"Remove from distribution list". `DistributionListAction` +
+`api/templates/default/distribution_list_action.xet`, dispatched by
+`nm_action = 'distribution_lists'`.
+
+**It fixes a real usability hole, not just the menu.** The old removal carried no list id at
+all: `action()` fell back to `$query['filter2']`, ie. whichever list the filter dropdown happened
+to be showing. That is why the entry had to be disabled unless a list was selected there, and
+why a contact could not be removed from a list you were not already filtered to. A new
+`remove_from_list_<id>` action id names the list; the bare id keeps the filter2 fallback so
+nothing unconverted changes.
+
+When the list is already filtered to a distribution list, that list is **prefilled** in the
+picker - for Remove it used to be the only list the action could work on at all, so this is the
+common case and it saves two clicks. Only ever a value that is really on offer: the filter tree
+also carries container and group entries (`lists`, groups-as-lists) which are not editable
+lists, and `filter2` can hold several values when used with tags. The empty option stays
+regardless, or a filter that prefills nothing would leave the first list selected.
+
+The options are fetched when the dialog opens (`ajax_distribution_lists()`) instead of
+travelling with every `get_rows()` response - the point of replacing a per-list sub-menu is not
+to send the lists at all. Menu action links for an addressbook row are now **246**, down from
+418 before this work and 284 after Proposal A.
+
+`rename_list` and `delete_list` stay separate menu entries: they act on the *filter*, not on the
+selection, so they are a different operation and already ajax.
+
+Covered by `addressbook/tests/DistributionListActionTest.php` (5 tests), including the one that
+matters - removing with an explicitly EMPTY cached query, which is what proves the id comes from
+the action and not from the filter - plus the bare-id fallback and the refuse-when-nothing-named
+case.
+
+### Building fixtures for the endpoints that had never run
+
+Four new endpoints had been written and shipped without ever executing against a real row.
+Giving each one a fixture found something in three of them.
+
+**`tracker_ui::ajax_action()`** (`tracker/tests/AjaxActionTest.php`, 11 tests) - fine. Creates a
+ticket in the first configured queue, closes it, checks completion, and pins that `_targetapp`
+is a real app name.
+
+**`filemanager_shares::ajax_delete()` and `Filemanager\Jobs::ajax_action()`**
+(`filemanager/tests/AjaxActionTest.php`, 5 tests) - both fine. The jobs list lives in the
+filemanager *config* rather than a table, so the test snapshots the whole `jobs` value and puts
+it back, or a failed assertion would leave a stray job in a real user's list.
+
+**`projectmanager_elements_ui::ajax_action()`'s `delete` and `sync_all` stay on submit.**
+
+`delete` was converted and reverted. `projectmanager_bo::check_acl()` opens with
+`if (!$pm_id) return $required != Acl::DELETE;` ("new entry, everything allowed"), and the
+endpoint has no project to construct the UI with - it receives untrusted `pe_id`s - so delegating
+to `action('delete')`, which guards itself with `$this->project->check_acl(Acl::ADD)`, makes that
+check **pass unconditionally**. The submit path never had the problem because `index()` always has
+a project loaded. Ralf's `303b91b` ("hardening for projectmanager ACL checks") does not change
+this: it adds gates at call sites in `projectmanager_gantt` and `projectmanager_pricelist_bo`, and
+clears `$this->data` after a denied read, but leaves both the `!$pm_id` early return and
+`projectmanager_elements_ui::action()`'s `case 'delete'` guard untouched.
+
+`sync_all` is worse and stays regardless - it acts on a whole *project*, which an ajax request has
+no trustworthy way to name.
+
+**The route a conversion would take.** Rights have to come from the element's own project, looked
+up server-side: `SELECT pm_id FROM egw_pm_elements WHERE pe_id IN (...)`, then
+`check_acl(Acl::ADD, $pm_id)` per distinct project - an **explicit** pm_id, which forces
+`check_acl()` to do its own lookup instead of falling back to `$this->data`
+(`projectmanager_elements_ui` already does this at line 485). The bo does the lookup itself:
+`projectmanager_elements_so::__construct()` ends with
+`if ($this->read($pe_id)) $this->pm_id = $this->data['pm_id'];`, and `read(['pe_id' => $id])`
+resolves an element from a bare pe_id. `pe_id` originates as a link id
+(`'pe_id' => $data['link_id']`), so it comes from a global sequence and does not collide across
+projects - measured here, 100 elements, 100 distinct pe_ids, none spanning more than one project.
+
+Read it from `egw_pm_elements`, **not** by joining `egw_links`: 11 of those 100 elements have no
+link row at all, orphans whose link was deleted while the element row stayed. The element table
+still carries their pm_id; a join would silently drop them, and silently dropping rows from an ACL
+check fails in the wrong direction.
+
+**A dead end worth not re-trying: the stored eTemplate request.** The element list is scoped to
+one project (`$content['nm']['col_filter']['pm_id']`, set server-side at line 1092) and
+`Etemplate\Request` exposes `$request->content`, so a validated exec-id looks like it carries a
+server-written pm_id. It does not stay current. The project is a client-owned filter, and
+switching it fires a `get_rows` without re-storing the request:
+`Nextmatch::ajax_get_rows()` takes `$value = self::get_array(self::$request->content, ...)`
+**without `=&`**, so the `array_merge($value, $filters)` applying the client's filters writes to a
+copy. Measured: with the list showing project 1511's elements, the stored request still read
+`pm_id: 2769`. An endpoint trusting it would ACL-check the project the page was *opened* with
+while deleting elements of whatever project the list shows *now* - worse than the unconditional
+pass, because it looks like a real check. (It is also `0` whenever the same template is rendered
+from the projects index, which embeds it for expandable rows with no project loaded.) The row ids
+do not help either: `pe_app:pe_app_id:pe_id` carries no pm_id.
+
+**The `ignore` action on that same endpoint was an open hole, now closed** (`projectmanager`
+b778aa4). `ajax_action()` predates this project, is a public menuaction, and ran `ignore` with no
+exec id and **no ACL check of any kind** - unlike the `cat` and `delete` branches beside it, and
+`projectmanager_elements_bo::save()` has no gate either. Any user with projectmanager could set
+`pe_status` on arbitrary elements by guessing ids. It also called `save()` after a failed
+`read()`, writing the status onto whatever the object still held. All three are closed, and
+`projectmanager/tests/ElementIgnoreAclTest.php` (7 tests) pins them, including a real second user
+with no rights on the project.
+
+**A fixture gotcha:** linking an entry to a project does not create the element row under PHPUnit
+unless `Link::run_notifies()` is called explicitly - it otherwise waits for `Egw::on_shutdown()`,
+which never comes in a test.
+
+**A third by-reference trap**, after `save()` and this: `infolog_bo::write()` also takes
+`&$values_in`, so it cannot be handed an inline array either. Three of these in one codebase is
+a pattern, not an accident - check the signature before calling any `save()`/`write()` with a
+literal.
+
+### Proposal D - the bug that only a real context menu showed
+
+The first version guarded the child recursion at the *bottom* of `appendToTree()`, and a
+synthetic test over the action manager said it worked. It did not: the real menu still drew the
+full sub-menu.
+
+`EgwPopupActionImplementation._getMenuStructure()` builds the tree from the object's *links*,
+and those contain **every** action - 418 of them on an addressbook row, children included. So
+each child is handed to `appendToTree()` in its own right and attaches **itself** to its
+parent's node on the way up; the downward guard it never reached was irrelevant. The check has
+to walk ancestors on the way up instead, which is what it now does.
+
+Worth remembering generally: a menu-structure change cannot be verified by reconstructing the
+tree yourself. Open the context menu.
+
+### Proposal E - as built
+
+`EgwMenuShoelace.promptSuffix()`, appended to the caption in `itemTemplate()` and derived from
+the action's resolved `nm_action` (`select_children`, `open_popup`), with `promptsForInput` as
+the opt-in for an action that opens its dialog from its own `onExecute`.
+
+Verified live in addressbook: exactly `cat_add`, `cat_del` and `to_list` carry the `…`, and **no
+item has both a chevron and an ellipsis**. `merge`, `open`, `delete` and the container entries
+correctly have none.
+
+Cleanup done with it: the hand-written ellipsis is gone from mail's five folder-tree captions,
+invoices' `From template`, and addressbook's two `distribution_lists()` tree labels. In the lang
+files the three duplicate dotted keys were dropped and the three ellipsis-only ones renamed to
+their dotless form, carrying their translations over - checked afterwards that all seven
+stripped captions still resolve in both `en` and `de`.
+
+### A live bug found on the way: the `msg-only-push-refresh` sentinel
+
+`egw.refresh()`'s 2nd argument doubles as a "message only, push will deliver the rest"
+sentinel, but several apps pass that same value as its 5th argument (`_targetapp`) too:
+
+```php
+$app = Api\Json\Push::onlyFallback() || $all_selected ? 'infolog' : 'msg-only-push-refresh';
+Api\Json\Response::get()->call('egw.refresh', $msg, $app, $id, $type, $app, null, null, $msg_type);
+```
+
+`refresh()` resolves `_targetapp` at `egw_message.ts:392` - *before* `this.message()` on 394 and
+before the msg-only early-return on 397 - and kdots' `egw_appWindow()` does
+`this.loadApp(appname).iframe`, which throws for a name that is not an app. So the user never
+sees the result message at all; it is not just console noise.
+
+Confirmed live against infolog's `delete` action, which predates this work. Fixed here for
+addressbook and infolog by keeping the sentinel in the 2nd argument only and always passing the
+real app name as the 5th. Grepping the tree for the sentinel afterwards showed the spun-off task's scope was too wide:
+calendar's `ajax_action()` never called `egw.refresh()` at all, and both projectmanager ones
+already pass `null` as `_targetapp`. **Only timesheet** was still affected, and a parallel
+session has since fixed and live-verified it.
+
+### Found, not fixed: `close` and `close_all` are the same thing
+
+`infolog_ui::action()` does `list($action, $settings) = explode('_', $_action, 2)`, so
+`close_all` arrives as action `close` with settings `all` - and `case 'close'` ignores
+`$settings`, calling `$this->close($id, '', false, ...)`. That third argument is `$closesingle`,
+and `false` means *also close the sub-entries*. So plain "Close" closes subs too, and the two
+actions are indistinguishable. Pre-existing, unrelated to transport, and changing it would
+change behaviour users may rely on - left alone deliberately.
+
+### Admin - as built, and the two bugs that had to be fixed together
+
+`EGroupware\Admin\Token::activate`/`revoke` and `admin_accesslog::delete`/`kill` converted,
+with the usual `ajax_action` + `validateExecId()`. "Select all" needs different handling in
+each: `Token::action()` loops exactly the ids it is handed, so nothing to expand; the access
+log has no `$content` to read the filters from, so `get_rows()` now caches `search`,
+`col_filter` and `session_list` per list and `ajax_action()` re-runs the query with
+`num_rows = -1`. With nothing cached it refuses - an empty query there would mean every row.
+
+The first run looked like a conversion that half-worked: the server said "1 token activated
+again." and the row stayed revoked. Two independent causes, and fixing either one alone
+changes nothing:
+
+* **Nothing pushes for admin.** The `msg-only-push-refresh` sentinel means "a push will
+  carry the change". What actually sends that push is `Link::notify_update()`, which fires the
+  `notify-all` hook the push server (swoolepush) listens on - and admin calls it exactly zero
+  times, in `Token` or anywhere else. So the client was told to wait for something that never
+  comes. Both endpoints now always name the app.
+* **`AdminApp.observer()` only knew one list.** It intercepts every `egw.refresh` for `admin`,
+  returns `false` to suppress the regular refresh, and looked for `getWidgetById('nm')` - so
+  the token list, which is called `token`, was never refreshed by anything. The group list had
+  already hit this and been patched by name (`if(!this.groups.disabled)`), which is what that
+  odd-looking special case was. Replaced with `querySelectorAll('et2-nextmatch')` over each
+  admin etemplate, passing `_id` and `_type` through, so the accounts and groups lists get a
+  single-row update instead of the blind full reload they had.
+
+A third, smaller one: `egw.refresh()` takes a single id, and these endpoints were passing
+`$selected[0]` with a `null` type for a multi-row action. `Et2Nextmatch.refresh(id, null)`
+defaults the type only when it is `undefined`, so a literal `null` falls through and the list
+never updates. Multi-row now passes no id at all, which is a plain reload. Same shape exists in
+infolog's `action()` - harmless there only because the sentinel hands the job to push.
+
+The lesson for the apps still to convert: **the sentinel is only safe where the app calls
+`Link::notify_update()` on save.** `grep -rn notify_update <app>/` answers it - infolog,
+addressbook, tracker, timesheet and calendar all do; admin does not. An app that does not must
+name itself in the 2nd argument, unconditionally.
+
+### records - as built
+
+`delete` and the five `status_<cat_id>` entries converted. `records_ui::ajax_action()` wraps the
+existing private `do_action()`, so the two shapes it accepts - a plain id and a prefixed one
+whose suffix carries the value - are unchanged; only the transport moved. "Select all" acts on
+the ids the client sent, which is what the submit it replaces did too (there is no cached query
+to expand from, and `do_action()` loops exactly what it is handed).
+
+Named `records` in `egw.refresh()`'s 2nd argument rather than using the msg-only sentinel.
+records *does* call `Link::notify_update()`, but only from `save()` - and `delete()` only reaches
+`save()` for the rows it soft-deletes. A record that is really removed on the second pass never
+notifies, so a push is not something to wait for.
+
+**Status stayed a sub-menu, deliberately.** The earlier baseline note said the category picker
+dialog was blocked by records still being on the legacy `<nextmatch>` widget; that is no longer
+true (`c124ef5` converted both lists to `Et2Nextmatch`), but two things argue against the picker
+here anyway: there are five statuses under `STATUS_PARENT`, far short of the length that makes a
+menu unusable, and the picker's "Remove with nothing selected" would clear the status outright -
+an operation this menu never offered, and `records_bo::check_access()` reads `record_status` to
+decide rights. `Nextmatch::egw_actions()` pushes `onExecute` onto every child, so one line
+converts all five entries either way. **Open question for the end: do we want the picker here
+regardless, for consistency with timesheet and infolog?**
+
+Two things found on the way:
+
+* **Fixed: `records_bo::get_notification_users()` fatals on PHP 8.** `get_ids_for_location()`
+  returns whoever the right was granted to - a single user as well as a group - and
+  `Accounts::members()` answers `null` for a user (and for an id that no longer exists), which
+  `$users += null` turns into "Unsupported operand types: array + null". Every status change
+  through the context menu hit it, submit or ajax; it is 2014 code that PHP 8 made fatal.
+  Replaced with `array_merge(..., (array)...)`. Nothing to do with the conversion, but it made
+  the converted action unrunnable, so it could not be left.
+* **records has no `tests/` directory and no `.github/workflows`** - it was the only converted
+  app without either (tracker, projectmanager, invoices and kanban all have both). `tests/` now
+  exists with `AjaxActionTest.php`, but nothing runs it in CI. **Open: add the callable
+  `testing.yml` workflow to the records repo.**
+
+Test-writing gotchas worth not re-learning:
+
+* `records_bo` caches `$is_admin` and `$cat_rights` in statics behind "only set this once"
+  guards, so `asAdmin()` alone changes nothing - the next `records_ui` still sees the rights the
+  fixture was built with. Both have to be cleared (and cleared again afterwards) around the
+  switch.
+* The regular test user has READ|ADD|EDIT on the records categories but not DELETE, and
+  `delete()` silently skips the rows it may not touch - so a delete test that does not switch
+  user passes its call and fails its assertion. Purging a fixture needs admin too, for the same
+  reason plus `check_access()` refusing DELETE on an already-deleted record to non-admins.
+
+### aiassistant - as built (app since excluded)
+
+**The app is out of scope for this project** (user's decision, 2026-10-05), but the work had
+already landed and both commits stay: `d42a2cd` (a template-ordering fatal, an unrelated bug fix)
+and `2f611c5` (the conversion plus 7 tests). Reverting `2f611c5` would need
+`'EGroupware\\Aiassistant\\Ui' => ['delete', 'separator']` restored to
+`NextmatchActionSubmitTest::BASELINE`, or the class dropped from its scan list, or that test goes
+red.
+
+`delete` is converted and the `separator` entry is gone - it was a caption with nothing to
+execute, the fall-through shape exactly, so clicking it submitted the whole eTemplate.
+`egw_action` already draws a line between groups, so `++$group` on `delete` gives the same menu
+without the phantom action.
+
+Delete reaching a handler at all was new here: `Ui::list()` rebuilds `$content` from scratch on
+every call and never looks at `$content['nm']['action']`, so the submit it replaced ran `action()`
+never. Two bugs in that dead path were fixed with it - "select all" read a session key
+(`aiassistant/index`) nothing ever wrote, so an empty query would have meant every conversation,
+and `Bo::search()` defaults to `$limit = 25` so it would have stopped there anyway.
+`Bo::get_rows()` now caches the criteria under `aiassistant/list`, `action()` expands from them
+with an explicit `$limit = 0` and refuses when nothing is cached.
+
+**The template-ordering fatal is worth keeping in mind for any app.**
+`Nextmatch::call_get_rows()` resolves the row template with `Template::instance()`, which walks
+the `.xet` with XMLReader caching each `<template>` **and returns as soon as it reaches the one it
+was asked for**. `aiassistant.list` was *first* in `list.xet`, so `aiassistant.list.rows` was
+never cached, `instance()` answered `false`, and `findLastRow(false)` raised a TypeError that
+replaced the whole page. The main template has to be **last** in the file; every other app does
+this (records' `index.xet` ends with `records.index`).
+
+Covered by `aiassistant/tests/AjaxActionTest.php` (7 tests) and not by a browser check - the list
+rendered no widget client-side, which belongs to the Et2Nextmatch conversion rather than here.
+The repo has no `.github/workflows` and its default branch is `main`, so those tests run nowhere
+(see the CI item).
+
+### aitools - as built
+
+`delete` converted (one action, one menuaction - the class is namespaced, so the client's
+`<app>.<app>_ui.ajax_action` fallback would not find it). Verified live: single delete updates
+the row in place, and select-all under a search deleted exactly the three rows the search showed,
+leaving the other 17 prompts alone.
+
+**Select all used to ignore the filter entirely.** `Admin::action()` expanded it with
+`$this->prompts->search(null, false, ...)` - every prompt in the table, regardless of what the
+list was showing. Selecting all of a three-row search result would have deleted those three *and*
+everything the search had filtered out. `get_rows()` now caches the query and `action()` re-runs
+it with `num_rows = -1`, refusing when nothing is cached. Worth noticing because this is the
+third app in a row (after `admin_accesslog` and aiassistant) where the select-all expansion was
+either missing, unbounded or capped at a default page size - the ajax conversion is the first
+time any of them was exercised.
+
+`Api\Framework::refresh_opener()` stays in `action()`'s delete case and is now dead for this
+path: it only records into `Framework\Extra::$extra`, which `etemplate2.ts` reads out of an
+eTemplate exec payload, never out of a bare `json.php` response. Harmless, left alone.
+
+**Pre-existing, not mine:** `ChatCompletionsRequestTypesTest::testSystemMessageCarriesNoPerUserContext`
+fails on this instance (its customised `system_prompt` row carries per-user context). Confirmed
+identical with the conversion stashed. **Open: aitools has `tests/` but no `.github/workflows`,**
+so nothing runs them - same gap as records.
+
+### developer (TranslationTools) - as built
+
+All five converted: `import`, `current` (Save), `all` (Save all), `move_to_api` and `delete`.
+This is the list that benefits most - it holds every phrase in the installation (11,511 on the
+dev instance), so a submit was the most expensive reload in the product, and `get_rows()` on top
+of that re-imports the app's lang-files whenever the app or language changes.
+
+Only a single `delete` asks for a row update. Import adds rows, Save/Save all rewrite lang-files
+and Move to api rewrites every language of a phrase, so all four send no id and let the list
+reload. `$all_selected` is accepted but not expanded - `action()` loops exactly the ids it is
+handed, which is what the submit did too.
+
+Verified live: Save with no application selected answered "You need to select an app first!"
+through `egw.refresh`, and deleting a single phrase removed its row in place. The delete fixture
+was a real row (`timesheet:en:7657`) and was put back with `Langfiles::importLangFiles()` - which
+is also why DB-only fixtures are useless for a browser check here: the list is re-imported from
+the lang-files on disk, so rows inserted straight into `egw_translations` never appear in it.
+
+Deliberately **not** exercised in `developer/tests/AjaxActionTest.php`: Import, Save, Save all
+and Move to api, because they write lang-files into the source tree. They are covered only where
+they decline to run (no application selected), which is enough to pin that the endpoint reaches
+`action()` and reports back.
+
+**Open: developer has no CI** and had no `tests/` - it now has the one file. Its default branch
+is `main`; the work is on a new `nm-action-ajax` branch.
+
+### invoices - as built, and the first app where the sentinel was nearly right
+
+`delete` converted - the ZIP downloads next to it stay `postSubmit`, they need a real form POST.
+
+Delete is two-stage: an invoice that is not yet of status "deleted" is only marked, and a second
+Delete removes it for good. The interesting part is that `get_rows()` does not return deleted
+invoices, so **both** stages take the row out of the list - `delete` is the right refresh type
+for each, and a test pins that the list really hides them, because the day that changes the first
+stage needs `update` instead.
+
+This is the first converted app that does push: `Bo::save()` calls `Link::notify_update()`, and
+the browser check showed it arriving - two `egw.refresh` calls per delete, the push's and the
+endpoint's. The sentinel still cannot be used, because `Bo::delete()` (the second stage) does
+**not** notify, so a really-removed invoice would sit in the list until the next reload. A
+redundant refresh on the first stage is the cheaper of the two mistakes, and once both agreed on
+`delete` the two calls are idempotent. Worth recording as the shape to look for: "the app
+pushes" is not enough, every path the action can take has to push.
+
+Housekeeping: invoices had a stale local `nm-action-ajax` branch (one unpushed Proposal E commit,
+three commits behind master). Merged master into it rather than starting again.
+
+### kanban - as built
+
+`copy` was the only entry in the board list's menu without a handler - View, Edit and Add board
+are `egw_open`, Add card and Delete already had their own javaScript handlers. `action()` even
+answers for itself: it sends the "copied" message and an `egw_open` that takes the user into the
+new board. All that was missing is telling the list a row appeared, which is what the endpoint
+adds, as a plain reload (a copy lands wherever the sort puts it).
+
+Verified live: copying a board opened the copy for editing, with the message, and no page
+rebuild. In practice the `egw_open` navigates away before the list can act on the refresh - the
+refresh matters for the case where it does not.
+
+### bookmarks - as built
+
+`delete` converted. The delete loop lived inline in `_list()`, so it moved into a small
+`action($action, $selected)` that both the submit branch and the endpoint call - the submit
+branch is now two lines. `bookmarks_bo::delete()` already refuses a bookmark the user has no
+rights to and the count in the message reflects that, which a test pins.
+
+`bookmarks.bookmarks_ui.ajax_action` is exactly the `<app>.<app>_ui.ajax_action` convention the
+client falls back to, so this is the first converted app that needs no `data['menuaction']` at
+all. Verified live.
+
+**Open: bookmarks had no `tests/` and has no CI** - the one test file is new.
+
+### news_admin - as built, two lists in two classes
+
+The news list (`news_admin_gui`) its Delete, and the category list (`news_admin_ui`) its Delete
+and Update RSS feed. This is the first app with **two** lists in two classes, which is exactly
+the case the client's `<app>.<app>_ui.ajax_action` fallback gets wrong: `news_admin_gui` has to
+name its menuaction explicitly or its Delete would reach the *category* list's endpoint and
+delete categories. Worth remembering for any app with a second list class.
+
+As with bookmarks, the news list's delete loop was inline in `index()` and moved into a small
+`action()` both paths share.
+
+**Fixed: "select all" on the category list fatalled.** `news_admin_ui::action()`'s expansion
+called `$this->get_rows()`, and that class has no `get_rows` at all - only `get_cats()`. Under
+PHP 8 that is a fatal, not a no-op, so selecting all categories and acting on them died rather
+than doing anything. The conversion is the first thing to ever run that branch.
+
+Verified live: Update RSS feed on a real feed re-imported 15 entries and reloaded the list in
+place, and deleting a news entry removed its row in place. Two things worth knowing about this
+app's own list filters, both pre-existing: the news list defaults to `col_filter[news_lang]='en'`
+and `col_filter[visible]='now'`, and the real (RSS-imported) rows have `news_begin` NULL, so the
+list can legitimately show nothing at all depending on which of those is set.
+
+**Open: news_admin had no `tests/` and has no CI** - the one test file is new.
+
+### importexport - as built, and the _targetapp trap in reverse
+
+`copy`, `createexport` and `delete` converted; `export` next to them stays `postSubmit`, it needs
+a real form POST to reach the browser as a file. Only a single delete is a row update - copy and
+createexport add a definition, which lands wherever the sort puts it.
+
+**The 5th argument (`_targetapp`) has to be null here, and finding out why is the useful part.**
+The first browser check looked like a clean pass - "1 definition(s) Copied.", the copy really in
+the database - except the list never changed. `egw.refresh()` had been given `'importexport'` as
+_targetapp, so it went looking for an importexport window; but this list is opened from the admin
+tree, so it is rendered inside *admin's* window, and the refresh was silently dropped. `null`
+means "the current window", which is right wherever the list was opened from.
+
+So the rule from the infolog/timesheet sentinel bug needs a second half. It was: _targetapp must
+never be the `msg-only-push-refresh` sentinel, because resolving a non-app throws. It is also:
+**_targetapp must not name an app whose window is not the one showing the list.** Any list
+reachable from the admin tree is in that position. `null` satisfies both, and is what
+projectmanager already passes.
+
+Also fixed while here: `importexport_definitions_bo::delete()` returned nothing, so every delete
+reported "0 entries deleted" however many it removed - visible on the submit too, just less
+often. It now returns the count of definitions it really deleted (it silently skips any the user
+does not own), and the ui reports that.
+
+### admin_customfields - as built, and the first confirm_handler action
+
+`delete` converted. Two things it needed that nothing before it did:
+
+* **The policy dialog's answers have to be forwarded.** This is the first converted action with
+  a `confirm_handler`: the policy app shows its own dialog ("requested by", comment) and
+  `policy.confirm()` does `Object.assign(action.data, value)` just before running `onExecute`. A
+  submit carried that along as `nm[admin_cmd]`; over ajax nothing did. `EgwApp.ajax_action()` now
+  sends `_action.data.admin_cmd` as a 6th argument - additive, so no existing endpoint changes
+  (PHP ignores extra arguments to a userland function). Without it the policy app would insist on
+  a comment and then throw it away, which is worse than not asking. `admin/src/Groups.php` is the
+  only other `confirm_handler` in the tree and is a `url` action, so it is unaffected.
+* **`confirm_handler` is a dotted path, not an app name.** `EgwAction._check_confirm()` hands it to
+  `egw.applyFunc()`, which resolves it, loads the owning app's module through the build manifest and
+  instantiates its class - no app name in the framework, and none of it specific to policy. An
+  `app.<app>.<method>` handler is still only dispatched when `egw.app('<app>')` says the user has
+  that app, because `applyFunc()` answers a missing app by logging and returning, which would drop
+  the action; falling through to the plain confirm dialog instead still runs it. The key this
+  replaced, `policy_confirmation`, is still understood as `app.policy.confirm` for producers outside
+  this tree.
+* **The delete can no longer rely on `$this->appname`.** `json.php` constructs the class with no
+  arguments and there is no `$_GET['appname']` on an ajax POST, so the loop that read
+  `$this->fields` moved into `deleteFields()`, which reads each field's `cf_app` and `cf_name`
+  back from `egw_customfields`. The submit branch calls the same method.
+
+`_targetapp` is null, for the same reason as importexport: this list is opened from the admin
+tree, so it lives in admin's window.
+
+**Verified live.** The context-menu Delete opens the policy dialog, the row goes in place, the
+list keeps its state, and the comment reaches `egw_admin_queue.cmd_comment` - the json.php payload
+carries the dialog's answers as the 6th argument.
+
+Getting there needed the `confirm_handler` generalisation above: the old `policy_confirmation`
+branch did `import(egw.link('/policy/js/app.min.js'))`, and `egw.link()` does not consult the
+build manifest, so the dynamic import failed wherever that file is not self-contained and the
+action never ran - on submit as well as over ajax. `egw.applyFunc()` does the manifest-aware load
+*and* the instantiation that branch hand-rolled, which is why the special case could be deleted
+rather than patched.
+
+### stylite Calls - as built, and a hole closed on the way
+
+`delete` and `undelete` converted. The interesting part is that `Calls::ajax_action()` already
+existed - the voicemail dialog's Delete and Call buttons called it - but with the signature
+`($action, $selected)` and **no eTemplate request id at all**. Any logged-in user with stylite
+could delete a call by guessing its id. The list's actions now go through the same method, which
+is how the dialog got the check too; its two call sites in `stylite/js/app.ts` pass the exec id
+they take from the nextmatch the action was run from.
+
+This is the one converted app where the msg-only sentinel is genuinely safe:
+`Cti\Storage::delete()` calls `Link::notify_update()` on *every* path it takes - the soft delete,
+the real delete and the un-delete - so a push really does carry the change. Compare invoices,
+where only `save()` notifies.
+
+**FOUND, NOT FIXED:** `Cti\Storage::delete()`'s "delete already deleted --> really delete" branch
+is unreachable through this action. A plain delete searches with the default filter
+(`call_deleted IS NULL`), and only an *un*-delete adds `deleted` to it - so an already-marked
+call is never found and a second Delete is a no-op. Pre-existing and transport-independent; a
+test pins the current behaviour rather than changing it.
+
+**Verified live** against fabricated call rows (this instance has no CTI configuration and the
+table was empty). `delete` from the context menu removes the row in place and shows "Call
+deleted"; `undelete` reports "1 calls undeleted" and moves the row back out of the Deleted
+filter. Both show two refreshes - the real push *and* this endpoint's message-only one - which is
+the sentinel behaving as designed.
+
+`undelete` is **not reachable from the context menu**, for a reason belonging to another project:
+it is only registered when the server-side filter is `deleted`/`all`, and `Et2Nextmatch` never
+applies the action list `get_rows()` returns, so after a filter change the live action manager
+still holds `delete` and no `undelete`. Driving `app.stylite.ajax_action` directly is how it was
+verified here. See the Et2Nextmatch open item.
+
+Covered by `stylite/tests/Cti/CallsAjaxActionTest.php` (5 tests), which needs EPL CI to run
+anywhere else.
+
+### smallpart - as built, the last of the baseline
+
+Courses' `copy_course`/`copy_no_participants` and Questions' `delete`/`exempt`/`readd`. Both
+classes already had an `ajax_action()` - Courses' reached from `app.smallpart.courseAction`,
+Questions' from nothing at all - and both needed fixing before the lists could use them:
+
+* **Neither checked an eTemplate request id.** Courses' was live, so that was a real hole: any
+  logged-in user with smallpart could unsubscribe, close or delete a course by id. Both now
+  validate, and `courseAction()` sends the exec id it takes from the nextmatch.
+* **Both answered `egw.refresh(..., $selected[1], 'update')`.** The second id of a one-element
+  selection does not exist, so a single-row action named no row and the list quietly did not
+  update it. `$selected[0]`, and the type follows the action (delete removes a row, exempt and
+  readd change one).
+* **Copying a course called `Framework::redirect_link(); exit;` from inside `action()`.** A
+  submit can redirect; an ajax request cannot - it would have to answer the XHR with a 302.
+  `action()` now reports the new course_id back through a by-reference parameter and each caller
+  opens it its own way: the submit still redirects, the endpoint answers with `egw_open`.
+
+Verified live: Copy Course opened the copy for editing with its message and no page submit -
+`egw.open(<new id>, 'smallpart', 'edit')`, which is exactly what the redirect did. The question
+list is covered by tests only; `smallpart/tests/AjaxActionTest.php` is 7 tests.
+
+`Questions::action()` reads the course and video from the list's saved session state when it is
+not handed a filter, and `Overlay::aclCheck()` refuses a `course_id` of 0 - so the state has to be
+set, exactly as the real list leaves it.
+
+**Where that bit us (2026-10-05).** After master's ACL hardening put `Overlay::aclCheck()` behind
+`exempt`/`readd` as well, the question tests started failing with "Permisson denied!" and it looked
+like the harness could not produce a participant who is also a teacher. It could all along:
+creating a course already subscribes its owner as `ROLE_ADMIN` (`Bo.php:3148`). The real cause was
+that `asAccount()` switches the EGroupware session, so the `Api\Cache::setSession()` recording the
+list state landed in the *other* user's session and the action read an empty filter. Two traps in
+one: a self-subscribe "fix" makes it worse, because the hardening forces the self path to
+`ROLE_STUDENT`; and the state must be written inside the same `asAccount()` callback as the action,
+since each callback is its own session. `exempt` and `delete` are really exercised now.
+
+The smallpart suite's 27 errors are all `SmallpartRestCreateReadDeleteTest` (guzzle HTTP against
+a REST endpoint) and are identical with and without this change.
+
+### State of the baseline
+
+`NextmatchActionSubmitTest::BASELINE` is down to three entries, all of them deliberate:
+
+* `addressbook_ui` - `view_org`/`view_duplicates` switch the list to a different rows template
+  rather than acting on a selection, `export/*` is a download and `kanban` belongs to another
+  app.
+* `projectmanager_elements_ui` - converted and **reverted**: `projectmanager_bo::check_acl()`
+  returns true for everything but DELETE when no project is loaded, so an endpoint holding only
+  `pe_id`s skips the check entirely. A workable route exists (resolve each element's own pm_id
+  from `egw_pm_elements`); see the projectmanager section.
+* `projectmanager_pricelist_ui` - its `delete` has no server-side handler at all;
+  `projectmanager_pricelist_ui` extends the bo, not the UI class that dispatches
+  `$content['nm']['action']`, so the submit re-renders and deletes nothing. Making it work is new
+  functionality.
+
+Everything else that fell through now goes over ajax, **with one exception the harness cannot
+see here: esyncpro.** `esyncpro_ui::get_actions()`'s `policy/policy_*`, `wipe` and `delete` have
+no `onExecute` and still submit. Nothing blocks it - `esyncpro/templates/default/index.xet` is
+`<et2-nextmatch>` like the rest - it was simply missed. It is not in BASELINE because the test never reaches it
+on this instance - `esyncpro_ui` is admin-only and the `NoPermission` it throws is deliberately
+skipped, so the baseline stays portable between instances. The cost of that choice is this:
+**run the test as an admin and it goes red**, because esyncpro's fall-throughs would appear and
+are not baselined. Either convert esyncpro or add it to BASELINE; leaving it as-is makes the
+test's result depend on who runs it.
+
+Each converted app has its own `AjaxActionTest`, and every one of them covers the refusal as well
+as the success path. All the suites this work touches run green.
+
+### Exec-id guards and rejection coverage
+
+Every converted endpoint calls `Nextmatch::validateExecId()`, and every endpoint's test proves it
+*refuses* as well as that it acts - with both a bogus id and an empty one. The refusal is the half
+that fails silently: an endpoint that stops validating still passes every test about what it does
+on success.
+
+Two endpoints had no guard at all and now do:
+
+* **`projectmanager_ui::ajax_action()`** (`projectmanager` dfa0787) - the project list's own
+  converted actions, the only endpoint this project converted that never took an exec id.
+  `action()` checks rights per project, so this was defence in depth rather than a hole.
+* **`filemanager_ui::ajax_action()`** (core f593d50cc4) - pre-existing and not converted here, but
+  a public menuaction that moves, deletes and shares VFS paths. `Vfs::` enforces rights per path,
+  which is the substantive guard, but nothing established the caller had one of our pages open.
+  Six call sites moved to the new signature: five in `filemanager/js/filemanager.ts`
+  (`_do_action`'s sync and async branches, `upload()`, the file-a-file dialog and the
+  overwrite/rename prompt) and the mail-drag one in `EgwApp`. `upload()`'s target is documented as
+  overridable by sharing classes; nothing in the tree overrides it today, so a subclass that does
+  must pass the exec id first as well.
+
+A user who genuinely **lacks rights** is covered in `projectmanager/tests/ElementIgnoreAclTest.php`:
+once with a stand-in project object that denies `ADD` (pinning this project's own decision - refuse,
+and ask about the *element's* own pm_id) and once for real via `LoggedInTest::switchUser()`, acting
+as an account that is neither the project's creator nor a member. `projectmanager_bo::check_acl()`
+has no admin bypass, so the admin test account is simply another user there.
+
+**FOUND, NOT FIXED - `projectmanager_bo::check_acl()` caches rights per project, not per user.**
+It opens with `static $cache = array()` keyed by **pm_id alone**, so within one PHP process the
+first user to ask about a project decides the answer for every later one. A function-static
+outlives even a full `switchUser()` (which tears down and rebuilds `$GLOBALS['egw']`), and a
+freshly constructed bo still matches the `$user == $this->user` branch that binds the cache entry.
+Harmless in a web request, which serves one user per process; real for PHPUnit, CLI and admin_cmd
+flows. PHP offers no way to reset a function-static from outside, so a test cannot clear it by
+reflection - the second-user test spends one `check_acl($required, $pm_id, $no_cache=true)` call to
+recompute for whoever is logged in now. The singleton-level version was fixed in `b0b6c19`; this
+static is a separate, still-open instance.
+
+Worth not re-learning: a diagnostic added to find out why the switched-in user was being allowed
+*also* called `check_acl(..., true)`, which recomputed the cache and made the test pass. Removing
+the diagnostic made it fail again - the probe was the fix. Check whether instrumentation is what
+produced a result before trusting it.
+
+**Open items** (none of them blockers):
+
+| | |
+|---|---|
+| aiassistant | **Excluded from this project by the user, 2026-10-05.** Two commits are already on its `nm-action-ajax` branch: `d42a2cd` (the conversation-history page showed a PHP error instead of the list - a main-template-ordering fatal, independent of this project and worth keeping either way) and `2f611c5` (the conversion itself + 7 tests). **Decided 2026-10-05: both commits stay.** `d42a2cd` is an unrelated bug fix, and the conversion is done and green, so excluding the app from the project's remaining scope costs nothing. Should `2f611c5` ever be reverted, `NextmatchActionSubmitTest::BASELINE` needs `'EGroupware\\Aiassistant\\Ui' => ['delete', 'separator']` put back, or the class dropped from the scan list, otherwise the test goes red |
+| stylite Calls | `Cti\Storage::delete()`'s "really delete an already-deleted call" branch is unreachable: a plain delete searches with `call_deleted IS NULL`. Both converted actions verified live 2026-10-05 against fabricated call rows: `delete` removes the row in place and shows "Call deleted"; `undelete` reports "1 calls undeleted" and moves the row back out of the Deleted filter. Both show the real push *and* the endpoint's message-only refresh, which is what the `msg-only-push-refresh` sentinel is for here |
+| Et2Nextmatch (not this project) | **filter-dependent actions never appear after a filter change.** Legacy `et2_extension_nextmatch.ts`'s `set_actions()` tears the old action children down, drops the cached menu and re-inits when `get_rows()` returns a changed action list; `Et2Nextmatch` only inherits `Et2Widget`'s `set actions` -> `_initActions()`, with no teardown. Found on stylite Calls, whose `undelete` is only registered when the server-side filter is `deleted`/`all`: switching the filter in the UI leaves the live action manager holding `delete` and no `undelete`, so the action is unreachable from the menu. Pre-existing on master and not caused by this project - the conversion was verified by driving `app.stylite.ajax_action` directly. Belongs to the Et2Nextmatch conversion |
+| records | should Status become the category picker dialog, for consistency with timesheet and infolog? Left as a sub-menu, see that section |
+| CI | records, aiassistant, developer, bookmarks and news_admin have no `.github/workflows` at all; aitools has `tests/` but no workflow. Their new test files run nowhere |
+
+### Phase 0's regression test - as built
+
+`api/tests/Etemplate/Widget/NextmatchActionSubmitTest.php`. 41 target classes; 40 reachable,
+the one exception recorded in its `UNREACHABLE` const (`EGroupware\Mail\Ui::get_actions()`
+reads `$this->mail_bo->getArchiveFolder()`, which needs a live IMAP/JMAP profile - mail is
+covered by the live browser check instead, where it has exactly one fall-through).
+
+Three things the throw-away version got wrong, all fixed here and worth not re-learning:
+
+* **`newInstanceWithoutConstructor()` silently skipped the 7 apps that matter most** -
+  addressbook, infolog, calendar, tracker, projectmanager, news_admin, mail - because their
+  `get_actions()` reads members the constructor sets. The test now really constructs them
+  (checked side-effect free: they build a bo/Etemplate and read config/prefs; `calendar_ui`'s
+  `manage_states()` only *reads* saved states). Mail is the only one left, and it is asserted.
+* **Admin-only lists depend on who runs the test.** `admin_categories` and `esyncpro_ui` throw
+  `NoPermission\Admin` for a non-admin user, so that exception is caught and skipped rather
+  than recorded - otherwise the baseline would not be portable between instances.
+* **Action paths carry instance data.** `cat/cat_add/cat_add_sub_2255/...` embeds category ids
+  and a tree depth that vary per install. `collapse()` reduces every nested path to its parent
+  family, truncating at the first digit-bearing segment.
+
+The remaining environment sensitivity is handled by only hard-failing in **one** direction:
+a *new* fall-through fails the test; a baseline entry that does **not** appear only prints a
+notice (with `EGW_TEST_VERBOSE`). Addressbook's `lists/*` actions, for instance, only exist
+`if (($add_lists = $this->get_lists(Acl::EDIT)))` - a user with no editable distribution lists
+never builds them, and that must not be a failure.
+
+Verified it actually catches a regression by adding a bare `['caption' => ...]` action to
+timesheet (a currently-clean app) and confirming the test named it, then reverting.
+
+---
+
+The original notes on why this harness is the right guard:
+
+The throw-away harness that produced section 2 (call every app's real `get_actions()`, run it
+through the real `Nextmatch::egw_actions()`, classify each resolved leaf) is the right
+regression guard: it fails when a new action falls through to `nm_action: "submit"` without
+asking for it, which is the whole bug class.
+
+Making it permanent needs three things it did not have as a throw-away:
+
+* An **expected-set baseline** rather than a printout, so it goes red only on *new*
+  fall-throughs while the known ones are being worked through.
+* Not using `newInstanceWithoutConstructor()`, which silently skipped 7 classes whose
+  `get_actions()` touches constructor-initialised members. Either construct properly where
+  that is side-effect free, or assert the list of classes it could not reach, so the gap stays
+  visible instead of looking like a pass.
+* Assertions on action **ids and shapes, never counts** - categories, lists, trackers and
+  boards are instance data.
+
+It also has to encode the false-positive classes from section 2: `select_all`,
+`egw_copy`/`egw_paste`, and the top-level-vs-`data['nm_action']` distinction that made the
+first run of it wrong.
+
+---
+
+## Secondary benefit
+
+`get_actions()` output is regenerated and shipped on **every** `get_rows` response
+(`$query['actions'] = $this->get_actions(...)`). Addressbook currently ships 421 action
+definitions per response, most of them one-per-category or one-per-list entries. Proposals A
+and B remove ~190 of them outright. Worth measuring before/after, but it is a side effect,
+not the motivation.

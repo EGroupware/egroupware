@@ -12,9 +12,7 @@ ask to start and stop working time with session	timesheet	sl	Vprašajte za zače
 both: allow to use projectmanager and free project-names	admin	sl	Oboje: dovolite uporabo vodje projekta in brezplačnih imen projekta
 by	timesheet	sl	od
 category for 'working time'	admin	sl	Kategorija za 'Delovni čas'
-change category	timesheet	sl	Spremeni kategorijo
 change owner when updating	timesheet	sl	Sprememba lastnika pri posodabljanju
-changed category to %1	timesheet	sl	Spremenjena kategorija v %1
 changed status	timesheet	sl	Spremenjen status.
 choose 'creator' of imported data	timesheet	sl	Izberite "ustvarjalec" uvoženih podatkov
 comment by %1 at %2:	timesheet	sl	Komentarji od %1 pri %2

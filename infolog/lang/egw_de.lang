@@ -77,14 +77,12 @@ cancelled	infolog	de	Abgesagt.
 categories	infolog	de	Kategorien
 category	infolog	de	Kategorie
 change	infolog	de	Ändern
-change category	infolog	de	Kategorie ändern
 change completed	infolog	de	Änderungen durchgeführt.
 change completion	infolog	de	Bearbeitungsstatus ändern
 change history	infolog	de	Änderungsverlauf
 change owner when updating	infolog	de	Ändert den Benutzer bei bei diesem Änderungsvorgang
 change responsible	infolog	de	Verantwortlichkeit ändern
 change the status of an entry, eg. close it	infolog	de	Status eines Eintrags ändern, z.B. Ihn als erledigt markieren
-changed category to %1	infolog	de	Kategorie geändert zu %1
 changed completion to %1%	infolog	de	Erledigt geändert zu %1%
 changed status to %1	infolog	de	Status geändert zu %1
 changed type	infolog	de	Typ geändert
@@ -400,7 +398,6 @@ regular expression	infolog	de	Reguläre Ausdrücke
 remark	infolog	de	Bemerkung
 remove this link (not the entry itself)	infolog	de	Diese Verknüpfung lösen (nicht den Eintrag selbst).
 removed	infolog	de	Entfernt.
-removed category	infolog	de	Kategorie erfolgreich entfernt
 replacement	infolog	de	Platzhalter
 replacements for inserting entries into documents	infolog	de	Platzhalter für das Einfügen in Dokumente
 requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	de	Erfordert, dass der bearbeitende Benutzer Schreibzugriff auf diese Kontakte hat, um sie mit dem verantwortlichen Benutzer zu teilen.

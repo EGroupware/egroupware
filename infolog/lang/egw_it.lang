@@ -78,14 +78,12 @@ cancelled	infolog	it	Annullato
 categories	infolog	it	Categorie
 category	infolog	it	Categoria
 change	infolog	it	Modifica
-change category	infolog	it	Modifica categoria
 change completed	infolog	it	Modifica completata.
 change completion	infolog	it	Modifica la percentuale di completamento
 change history	infolog	it	Cambia storico
 change owner when updating	infolog	it	Modifica il proprietario quando aggiorni
 change responsible	infolog	it	Cambia responsabile
 change the status of an entry, eg. close it	infolog	it	Cambia lo stato di una voce, es. chiudi
-changed category to %1	infolog	it	Categoria modificata in %1
 changed completion to %1%	infolog	it	Completamento modificato in %1%
 changed status to %1	infolog	it	Stato cambiato in %1
 changed type	infolog	it	Tipo modificato
@@ -398,7 +396,6 @@ regular expression	infolog	it	Espressione regolare
 remark	infolog	it	Osservazione
 remove this link (not the entry itself)	infolog	it	Rimuovi questo link (non la voce).
 removed	infolog	it	Rimosso.
-removed category	infolog	it	categoria rimossa
 replacement	infolog	it	Sostituzione
 replacements for inserting entries into documents	infolog	it	Sostituzioni per l'inserimento di voci in documenti
 requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	it	Richiede che l'utente che modifica abbia accesso in scrittura a questi contatti, per condividerli con l'utente responsabile.

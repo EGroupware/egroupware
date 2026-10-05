@@ -243,6 +243,7 @@ cape verde	common	en	CAPE VERDE
 caption	common	en	Caption
 categories	common	en	Categories
 categories for	common	en	Categories for
+categories set	common	en	Categories set
 category	common	en	Category
 category %1 has been added !	common	en	Category %1 has been added!
 category %1 has been updated !	common	en	Category %1 has been updated!
@@ -258,8 +259,10 @@ centered	common	en	Centered
 central african republic	common	en	CENTRAL AFRICAN REPUBLIC
 chad	common	en	CHAD
 change	common	en	Change
+change category	common	en	Change category
 change owner	common	en	Change Owner
 changed	common	en	Changed
+changed category to %1	common	en	Changed category to %1
 changes that you made may not be saved.	common	en	Changes that you made may not be saved.
 charset	common	en	Charset
 check all	common	en	Check all
@@ -341,6 +344,7 @@ copy to clipboard	common	en	Copy to clipboard
 costa rica	common	en	COSTA RICA
 cote d ivoire	common	en	COTE D IVOIRE
 could not contact server. operation timed out!	common	en	Could not contact server. Operation timed out!
+could not determine the current selection, please try again.	common	en	Could not determine the current selection, please try again.
 could not link: %1	common	en	Could not link: %1
 could not unlink: %1	common	en	Could not unlink: %1
 create	common	en	Create
@@ -1001,6 +1005,7 @@ not supported by current application!	common	en	Not supported by current applica
 note	common	en	Note
 notes	common	en	Notes
 nothing	common	en	Nothing
+nothing available	common	en	Nothing available
 nothing found - try again !!!	common	en	Nothing found - try again!
 nothing in clipboard to paste !!!	common	en	Nothing in clipboard to paste!
 nothing matched search criteria !!!	common	en	Nothing matched search criteria!
@@ -1161,6 +1166,7 @@ remove selected accounts	common	en	Remove selected accounts
 remove shortcut	common	en	Remove shortcut
 remove this link (not the entry itself)	common	en	Remove link
 removed (now) empty directory fs_id=%1	admin	en	Removed (now) empty folder fs_id=%1
+removed category	common	en	removed category
 removeformat	common	en	Removeformat
 rename	common	en	Rename
 repeat password	common	en	Repeat password
@@ -1310,6 +1316,7 @@ server error	common	en	Server error
 server is unwilling to perform.	common	en	Server is unwilling to perform.
 server name	common	en	Server name
 session has been killed	common	en	Session has been killed.
+set	common	en	Set
 set as default	common	en	Set as default
 set these columns as the default	common	en	Set these columns as the default
 set user as only responsible user, but keeping groups	groupdav	en	Set user as only responsible user, but keeping groups

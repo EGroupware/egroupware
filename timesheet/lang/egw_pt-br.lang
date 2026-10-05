@@ -9,7 +9,6 @@ ask to start and stop working time with session	timesheet	pt-br	Pedir para inici
 both: allow to use projectmanager and free project-names	admin	pt-br	Ambos: permitir usar Gerenciador de Projetos e nomes de projetos livres
 by	timesheet	pt-br	por
 category for 'working time'	admin	pt-br	Categoria para 'Tempo de trabalho'
-change category	timesheet	pt-br	alterar categoria
 change owner when updating	timesheet	pt-br	Alterar o proprietário ao atualizar
 choose 'creator' of imported data	timesheet	pt-br	Escolha o “criador” dos dados importados
 comment by %1 at %2:	timesheet	pt-br	Comentário feito por %1 em %2:

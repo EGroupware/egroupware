@@ -255,8 +255,10 @@ centered	common	sk	Na stred
 central african republic	common	sk	STREDOAFRICKÁ REPUBLIKA
 chad	common	sk	ČAD
 change	common	sk	Zmeniť
+change category	common	sk	Zmeniť kategóriu
 change owner	common	sk	Zmeniť vlastníka
 changed	common	sk	Zmenené
+changed category to %1	common	sk	Kategória zmenená na %1
 changes that you made may not be saved.	common	sk	Vykonané zmeny sa nemusia uložiť.
 charset	common	sk	Charset
 check all	common	sk	Označiť všetko
@@ -1133,6 +1135,7 @@ remove selected accounts	common	sk	Odstrániť vybrané účty
 remove shortcut	common	sk	Odstrániť skratku
 remove this link (not the entry itself)	common	sk	Odstrániť tento odkaz (nie záznam samotný)
 removed (now) empty directory fs_id=%1	admin	sk	Odstránený (v súčasnosti) prázdny priečinok fs_id=%1
+removed category	common	sk	Odstránená kategória
 removeformat	common	sk	Odstrániť formát
 rename	common	sk	Premenovať
 repeat password	common	sk	Zopakovať heslo

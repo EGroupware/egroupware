@@ -213,6 +213,7 @@ centered	common	id	Tengah
 central african republic	common	id	REPUBLIK AFRIKA TENGAH
 chad	common	id	CHAD
 change	common	id	Perubahan
+change category	common	id	Ubah kategori
 changed	common	id	Diubah
 changes that you made may not be saved.	common	id	Perubahan yang Anda buat mungkin tidak tersimpan.
 charset	common	id	Aksara
@@ -839,6 +840,7 @@ remember me for %1	common	id	Ingat saya untuk %1
 remove	api	id	Hapus
 remove selected accounts	common	id	Buang akoun terpilih
 remove shortcut	common	id	Buang Shortcut
+removed category	common	id	kategori yang dihapus
 rename	common	id	Ubah
 repeat password	common	id	Ulangi kata sandi
 replace	common	id	Ganti

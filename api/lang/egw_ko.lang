@@ -433,6 +433,7 @@ readonly	common	ko	읽기전용
 reject	common	ko	거부
 remove	api	ko	삭제
 remove selected accounts	common	ko	선택된 계정 삭제
+removed category	common	ko	제거된 카테고리
 rename	common	ko	이름변경
 replace	common	ko	치환
 replace with	common	ko	치환될 글월

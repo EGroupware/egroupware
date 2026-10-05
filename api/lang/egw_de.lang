@@ -244,6 +244,7 @@ cape verde	common	de	KAP VERDE
 caption	common	de	Text
 categories	common	de	Kategorien
 categories for	common	de	Kategorien für
+categories set	common	de	Kategorien gesetzt
 category	common	de	Kategorie
 category %1 has been added !	common	de	Kategorie %1 wurde hinzugefügt!
 category %1 has been updated !	common	de	Kategorie %1 wurde überarbeitet!
@@ -259,8 +260,10 @@ centered	common	de	Zentriert
 central african republic	common	de	ZENTRAL AFRIKANISCHE REPUBLIK
 chad	common	de	TSCHAD
 change	common	de	Ändern
+change category	common	de	Kategorie ändern
 change owner	common	de	Eigentümer ändern
 changed	common	de	Geändert
+changed category to %1	common	de	Kategorie geändert zu %1
 changes that you made may not be saved.	common	de	Änderungen, die Sie vorgenommen haben, werden möglicherweise nicht gespeichert.
 charset	common	de	Zeichensatz
 check all	common	de	Alle auswählen
@@ -342,6 +345,7 @@ copy to clipboard	common	de	In die Zwischenablage kopieren
 costa rica	common	de	COSTA RICA
 cote d ivoire	common	de	COTE D IVOIRE
 could not contact server. operation timed out!	common	de	Konnte Server nicht kontaktieren. Zeitüberschreitung!
+could not determine the current selection, please try again.	common	de	Die aktuelle Auswahl konnte nicht ermittelt werden, bitte erneut versuchen.
 could not link: %1	common	de	Konnte nicht verknüpfen: %1
 could not unlink: %1	common	de	Konnte nicht lösen: %1
 create	common	de	Erstellen
@@ -1003,6 +1007,7 @@ not supported by current application!	common	de	Für diese Anwendung nicht mögl
 note	common	de	Notiz
 notes	common	de	Notizen
 nothing	common	de	Nichts
+nothing available	common	de	Nichts verfügbar
 nothing found - try again !!!	common	de	Nichts gefunden - nochmal versuchen!
 nothing in clipboard to paste !!!	common	de	Zwischenablage leer - nichts zum einfügen!
 nothing matched search criteria !!!	common	de	Nicht gefunden bei diesem Suchkriterium!
@@ -1163,6 +1168,7 @@ remove selected accounts	common	de	Ausgewählte Benutzer entfernen
 remove shortcut	common	de	Abkürzung entfernen
 remove this link (not the entry itself)	common	de	Entfernt diese Verknüpfung (nicht den Eintrag selbst)
 removed (now) empty directory fs_id=%1	admin	de	Leerer Ordner fs_id=%1 wurde jetzt gelöscht
+removed category	common	de	Kategorie erfolgreich entfernt
 removeformat	common	de	Formatierung entfernen
 rename	common	de	Umbenennen
 repeat password	common	de	Passwort wiederholen
@@ -1312,6 +1318,7 @@ server error	common	de	Serverfehler
 server is unwilling to perform.	common	de	Server ist zur Ausführung nicht bereit.
 server name	common	de	Server Name
 session has been killed	common	de	Session wurde beendet
+set	common	de	Setzen
 set as default	common	de	Als Vorgabe setzen
 set these columns as the default	common	de	Spaltenauswahl als Vorgabe setzen
 set user as only responsible user, but keeping groups	groupdav	de	Setze Benutzer als einzigen verantwortlichen Benutzer, Gruppen werden nicht geändert

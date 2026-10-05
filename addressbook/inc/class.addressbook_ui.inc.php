@@ -462,14 +462,14 @@ class addressbook_ui extends addressbook_bo
 
 			$lists[] = [
 				Etemplate\Widget\Tree::ID => 'add',
-				Etemplate\Widget\Tree::LABEL => lang('Add a new list').'...',
+				Etemplate\Widget\Tree::LABEL => lang('Add a new list'),
 				Etemplate\Widget\Tree::IMAGE_LEAF => Api\Image::find('api', 'add'),
 			];
 		}
 		else
 		{
 			$lists = $this->get_lists(Acl::READ, ['' => lang('No distribution list')], false);
-			$lists['add'] = lang('Add a new list').'...';
+			$lists['add'] = lang('Add a new list');
 		}
 		return $lists;
 	}
@@ -588,25 +588,15 @@ class addressbook_ui extends addressbook_bo
 
 		++$group;	// other AB related stuff group: lists, AB's, categories
 		// categories submenu
-		$actions['cat'] = array(
-			'caption' => 'Categories',
-			'group' => $group,
-			'children' => array(
-				'cat_add' => Etemplate\Widget\Nextmatch::category_action(
-					'addressbook',$group,'Add category', 'cat_add_',
-					true, 0,Etemplate\Widget\Nextmatch::DEFAULT_MAX_MENU_LENGTH,false
-				)+array(
-					'icon' => 'foldertree_nolines_plus',
-					'disableClass' => 'rowNoEdit',
-				),
-				'cat_del' => Etemplate\Widget\Nextmatch::category_action(
-					'addressbook',$group,'Delete category', 'cat_del_',
-					true, 0,Etemplate\Widget\Nextmatch::DEFAULT_MAX_MENU_LENGTH,false
-				)+array(
-					'icon' => 'foldertree_nolines_minus',
-					'disableClass' => 'rowNoEdit',
-				),
-			),
+		$actions['cat'] = Etemplate\Widget\Nextmatch::category_action(
+			'addressbook', $group, 'Categories', 'cat_',
+			true, 0, Etemplate\Widget\Nextmatch::DEFAULT_MAX_MENU_LENGTH,
+			// a contact holds SEVERAL categories (cat_id is a comma-separated list, and the edit
+			// template's et2-select-cat is multiple="true"), so one dialog offering
+			// Add/Remove/Replace replaces both per-category sub-menus
+			true
+		)+array(
+			'disableClass' => 'rowNoEdit',
 		);
 		if (!$GLOBALS['egw_info']['user']['apps']['preferences']) unset($actions['cats']['children']['cat_edit']);
 		// Submenu for all distributionlist stuff
@@ -624,21 +614,24 @@ class addressbook_ui extends addressbook_bo
 		if (($add_lists = $this->get_lists(Acl::EDIT)))	// do we have distribution lists?, and are we allowed to edit them
 		{
 			$actions['lists']['children'] += array(
+				// One dialog replacing a sub-menu with an entry per list PLUS a separate
+				// "Remove from distribution list". That removal carried no list id: the server
+				// fell back to $query['filter2'], ie. whichever list the filter dropdown happened
+				// to show - which is why it had to be disabled unless one was selected, and why
+				// you could not remove a contact from a list you were not filtered to. The dialog
+				// names the list, so it means what it says.
 				'to_list' => array(
-					'caption' => 'Add to distribution list',
-					'children' => $add_lists,
-					'prefix' => 'to_list_',
+					'caption' => 'Add to or remove from list',
 					'icon' => 'foldertree_nolines_plus',
-					'enabled' => ($add_lists?true:false), // if there are editable lists, allow to add a contact to one of them,
-					//'disableClass' => 'rowNoEdit',	  // wether you are allowed to edit the contact or not, as you alter a list, not the contact
-				),
-				'remove_from_list' => array(
-					'caption' => 'Remove from distribution list',
-					'confirm' => 'Remove selected contacts from distribution list',
-					'icon' => 'foldertree_nolines_minus',
-					'enabled' => 'javaScript:app.addressbook.nm_compare_field',
-					'fieldId' => 'exec[nm][filter2]',
-					'fieldValue' => '!',	// enable if list != ''
+					'data' => array(
+						'nm_action' => 'distribution_lists',
+						'distributionLists' => array(
+							// fetched when the dialog opens, not shipped with every get_rows()
+							'optionsMenuaction' => 'addressbook.addressbook_ui.ajax_distribution_lists',
+							'addPrefix' => 'to_list_',
+							'removePrefix' => 'remove_from_list_',
+						),
+					),
 				),
 				'rename_list' => array(
 					'caption' => 'Rename selected distribution list',
@@ -651,6 +644,7 @@ class addressbook_ui extends addressbook_bo
 				'delete_list' => array(
 					'caption' => 'Delete selected distribution list!',
 					'confirm' => 'Delete selected distribution list!',
+					'onExecute' => 'javaScript:app.addressbook.ajax_action',
 					'icon' => 'delete',
 					'enabled' => 'javaScript:app.addressbook.nm_compare_field',
 					'fieldId' => 'exec[nm][filter2]',
@@ -659,7 +653,6 @@ class addressbook_ui extends addressbook_bo
 			);
 			if(is_subclass_of('etemplate', 'etemplate_new'))
 			{
-				$actions['lists']['children']['remove_from_list']['fieldId'] = 'filter2';
 				$actions['lists']['children']['rename_list']['fieldId'] = 'filter2';
 				$actions['lists']['children']['delete_list']['fieldId'] = 'filter2';
 			}
@@ -688,6 +681,7 @@ class addressbook_ui extends addressbook_bo
 				'caption' => 'Move to addressbook',
 				'children' => $move2addressbooks,
 				'prefix' => 'move_to_',
+				'onExecute' => 'javaScript:app.addressbook.ajax_action',
 				'group' => $group,
 				'disableClass' => 'rowNoDelete',
 				'hideOnMobile' => true
@@ -729,11 +723,13 @@ class addressbook_ui extends addressbook_bo
 				],
 				'prefix' => 'shared_with_',
 				'group' => $group,
-				'hideOnMobile' => true
+				'hideOnMobile' => true,
+				'onExecute' => 'javaScript:app.addressbook.ajax_action',
 			];
 		}
 		$actions['change_type'] = $this->change_type_actions($group);
 		$actions['merge'] = array(
+			'onExecute' => 'javaScript:app.addressbook.ajax_action',
 			'caption' => 'Merge contacts',
 			'confirm' => 'Merge into first or account, deletes all other!',
 			'hint' => 'Merge into first or account, deletes all other!',
@@ -744,6 +740,7 @@ class addressbook_ui extends addressbook_bo
 		);
 		// Duplicates view
 		$actions['merge_duplicates'] = array(
+			'onExecute' => 'javaScript:app.addressbook.ajax_action',
 			'caption'	=> 'Merge duplicates',
 			'group'		=> $group,
 			'allowOnMultiple'	=> true,
@@ -977,7 +974,7 @@ class addressbook_ui extends addressbook_bo
 				'confirm_multiple' => 'Delete these entries',
 				'group' => $group,
 				'disableClass' => 'rowNoDelete',
-				'onExecute' => 'javaScript:app.addressbook.action',
+				'onExecute' => 'javaScript:app.addressbook.ajax_action',
 			);
 		}
 		if ($this->grants[0] & Acl::DELETE)
@@ -996,6 +993,7 @@ class addressbook_ui extends addressbook_bo
 		if($tid_filter == 'D')
 		{
 			$actions['undelete'] = array(
+				'onExecute' => 'javaScript:app.addressbook.ajax_action',
 				'caption' => 'Un-delete',
 				'icon' => 'revert',
 				'group' => $group,
@@ -1044,6 +1042,7 @@ class addressbook_ui extends addressbook_bo
 			'caption' => 'Type',
 			'children' => $types,
 			'prefix' => 'to_type_',
+			'onExecute' => 'javaScript:app.addressbook.ajax_action',
 			'group' => $group,
 			'disableClass' => 'rowNoEdit',
 			'hideOnDisabled' => true,
@@ -1300,6 +1299,27 @@ class addressbook_ui extends addressbook_bo
 		Api\Json\Response::get()->data($new_id == $list_id ? "true" : $new_id);
 	}
 
+	/**
+	 * The distribution lists the user may add to / remove from, for the list dialog
+	 *
+	 * Fetched when the dialog opens rather than shipped with every get_rows() response: as a
+	 * sub-menu this was one action per list, which on an installation with a few hundred lists is
+	 * both unusable and a large part of the actions payload.
+	 *
+	 * @param bool $editable_only true for the add/remove dialog (Acl::EDIT), false for a filter
+	 */
+	public function ajax_distribution_lists($editable_only = true)
+	{
+		$lists = $this->get_lists($editable_only ? Acl::EDIT : Acl::READ);
+
+		$options = [];
+		foreach((array)$lists as $list_id => $label)
+		{
+			$options[] = ['value' => (string)$list_id, 'label' => $label];
+		}
+		Api\Json\Response::get()->data($options);
+	}
+
 	function ajax_get_list_owner($list_id)
 	{
 		$owner = $this->getOwner(null);
@@ -1347,29 +1367,68 @@ class addressbook_ui extends addressbook_bo
 	}
 
 	/**
-	 * Apply an action to multiple events, but called via AJAX instead of submit
+	 * Apply an action to multiple contacts, but called via AJAX instead of submit
+	 *
+	 * Unlike a submit this leaves the list standing, so it keeps its scroll position, selection
+	 * and row state - egw.refresh() below updates only the rows that changed.
 	 *
 	 * @param string $action
 	 * @param string[] $selected
-	 * @param bool $all_selected All entries are selected, not just what's in $selected
-	 * @param bool $skip_notification
+	 * @param bool $all_selected All contacts matching the current filters are selected, not just $selected
+	 * @param array $checkboxes values of the checkbox actions in the same menu: move_to_copy
+	 *	("Copy instead of move") and writable ("Share writable")
+	 * @param string $session_name which list this came from, 'index' or 'select' - action() reads the
+	 *	query get_rows() cached under it for filter2/filter, see below
 	 */
-	public function ajax_action($action, $selected, $all_selected, $skip_notification = false)
+	public function ajax_action($exec_id, $action, $selected, $all_selected, array $checkboxes = [], $session_name = 'index')
 	{
+		// The context menu calls this directly, so the eTemplate's exec id is the only thing
+		// saying the caller had one of our pages open - see Nextmatch::validateExecId()
+		if (!Api\Etemplate\Widget\Nextmatch::validateExecId($exec_id))
+		{
+			return;
+		}
 		$success = 0;
 		$failed = 0;
 		$action_msg = '';
-		$session_name = 'index';
+		$error_msg = null;
+		// Only the two lists that have a nextmatch, so a crafted request cannot point action() at
+		// an arbitrary session key
+		if (!in_array($session_name, ['index', 'select'], true)) $session_name = 'index';
 
-		if($this->action($action, $selected, $all_selected, $success, $failed, $action_msg, $session_name, $msg, $skip_notification))
+		// "select all" makes action() re-run get_rows() with the query get_rows() itself cached.
+		// With no cached query that falls through to no filter at all - ie. EVERY contact the
+		// user can see - so refuse rather than guess what "all" meant.
+		if ($all_selected && !is_array(Api\Cache::getSession('addressbook', $session_name)))
 		{
-			$msg = lang('%1 event(s) %2',$success,$action_msg);
+			Api\Json\Response::get()->call('egw.message',
+				lang('Could not determine the current selection, please try again.'), 'error');
+			return;
+		}
+
+		// $checkboxes is action()'s 9th argument, NOT the 4th. This used to be declared as
+		// `$skip_notification = false` and passed straight through, which silently landed a bool
+		// in the $checkboxes slot - harmless only because no ajax-converted action read it yet.
+		// move_to_* (move_to_copy) and shared_with_* (writable) both do.
+		if($this->action($action, $selected, $all_selected, $success, $failed, $action_msg,
+			$session_name, $msg, $checkboxes, $error_msg))
+		{
+			$msg = lang('%1 contact(s) %2', $success, $action_msg);
 		}
 		elseif(is_null($msg))
 		{
-			$msg .= lang('%1 event(s) %2, %3 failed because of insufficient rights !!!',$success,$action_msg,$failed);
+			$msg = empty($error_msg) ?
+				lang('%1 contact(s) %2, %3 failed because of insufficent rights !!!', $success, $action_msg, $failed) :
+				lang('%1 contact(s) %2, %3 failed because of %4 !!!', $success, $action_msg, $failed, $error_msg);
 		}
-		Api\Json\Response::get()->message($msg);
+		// egw.refresh()'s 2nd argument doubles as the "message only, push will do the rest"
+		// sentinel, but its 5th (_targetapp) must always be a real app: egw_appWindow() is
+		// called on it BEFORE the msg-only early-return, and resolving 'msg-only-push-refresh'
+		// throws in the kdots framework - which aborts refresh() before it ever shows $msg.
+		$push_app = Api\Json\Push::onlyFallback() || $all_selected ? 'addressbook' : 'msg-only-push-refresh';
+		Api\Json\Response::get()->call('egw.refresh', $msg, $push_app, $selected[0] ?? null,
+			$all_selected || count($selected) > 1 ? null : ($action === 'delete' ? 'delete' : 'update'),
+			'addressbook', null, null, $failed ? 'error' : 'success');
 	}
 
 	/**
@@ -1390,6 +1449,7 @@ class addressbook_ui extends addressbook_bo
 		//echo "<p>uicontacts::action('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n";
 		$success = $failed = 0;
 		$error_msg = null;
+		$from_list = null;
 		if ($use_all || in_array($action,array('remove_from_list','delete_list','unshare')))
 		{
 			// get the whole selection
@@ -1412,6 +1472,13 @@ class addressbook_ui extends addressbook_bo
 		{
 			$action = (int)substr($action,8).(substr($action,-1) == 'p' ? 'p' : '');
 		}
+		elseif (substr($action,0,17) === 'remove_from_list_')
+		{
+			// the dialog names the list explicitly; the old sub-menu action had no id and fell
+			// back to whatever filter2 happened to be (see the handler below)
+			$from_list = (int)substr($action, 17);
+			$action = 'remove_from_list';
+		}
 		elseif (substr($action,0,8) == 'to_list_')
 		{
 			$to_list = (int)substr($action,8);
@@ -1426,6 +1493,11 @@ class addressbook_ui extends addressbook_bo
 		{
 			$document = substr($action,9);
 			$action = 'document';
+		}
+		elseif(substr($action,0,8) === 'cat_set_')	// cat_set_12,34 - replace the whole list
+		{
+			$cat_ids = array_filter(array_map('intval', explode(',', substr($action, 8))));
+			$action = 'cat_set';
 		}
 		elseif(substr($action,0,4) == 'cat_')	// cat_add_123 or cat_del_456
 		{
@@ -1515,6 +1587,25 @@ class addressbook_ui extends addressbook_bo
 		{
 			switch($action)
 			{
+				case 'cat_set':
+					// Replace the whole list in ONE write. Deliberately not a cat_del of
+					// everything followed by a cat_add: that would save each contact twice and
+					// log two history entries for what the user did once.
+					if (($Ok = !!($contact = $this->read($id)) && $this->check_perms(Acl::EDIT,$contact)))
+					{
+						$action_msg = lang('categories set');
+						$ids = $cat_ids ? implode(',', $cat_ids) : null;
+						// save() takes &$contact by reference, so it has to be handed a variable -
+						// an inline array expression is a fatal in PHP 8. Same shape as cat_add/
+						// cat_del below.
+						if ($ids !== $contact['cat_id'])
+						{
+							$contact['cat_id'] = $ids;
+							$Ok = $this->save($contact);
+						}
+					}
+					break;
+
 				case 'cat_add':
 				case 'cat_del':
 					if (($Ok = !!($contact = $this->read($id)) && $this->check_perms(Acl::EDIT,$contact)))
@@ -1608,14 +1699,18 @@ class addressbook_ui extends addressbook_bo
 
 				case 'remove_from_list':
 					$action_msg = lang('removed from distribution list');
-					if (!$query['filter2'])
+					// remove_from_list_<id> names the list; the bare remove_from_list (the old
+					// sub-menu entry) silently used whichever list the filter2 dropdown happened
+					// to be showing, which is why it had to be disabled unless one was selected
+					$list = $from_list ?: ($query['filter2'] ?? null);
+					if (!$list)
 					{
 						$msg = lang('You need to select a distribution list');
 						return false;
 					}
 					else
 					{
-						$Ok = $this->remove_from_list($id,$query['filter2']) !== false;
+						$Ok = $this->remove_from_list($id, $list) !== false;
 					}
 					break;
 

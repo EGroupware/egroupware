@@ -176,6 +176,7 @@ central african republic	common	hu	Közép-Afrikai Köztársaság
 chad	common	hu	Csád
 change	common	hu	Változtat
 changed	common	hu	Változott
+changed category to %1	common	hu	A kategória %1-re változott
 changes that you made may not be saved.	common	hu	Előfordulhat, hogy az elvégzett módosítások nem kerülnek mentésre.
 charset	common	hu	Betűkészlet
 check all	common	hu	Összes kijelölese
@@ -768,6 +769,7 @@ remove	api	hu	Törlés
 remove selected accounts	common	hu	Kiválasztott hozzáférések törlése
 remove shortcut	common	hu	Gyorsbillentyű eltávolítása
 remove this link (not the entry itself)	common	hu	Hivatkozás eltávolítása (nem a bejegyzést magát)
+removed category	common	hu	eltávolított kategória
 rename	common	hu	Átnevez
 repeat password	common	hu	Jelszó megismétlése
 replace	common	hu	Csere

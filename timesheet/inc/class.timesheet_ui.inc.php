@@ -1228,8 +1228,10 @@ class timesheet_ui extends timesheet_bo
 				'icon' => 'copy',
 				'group' => $group,
 			),
+			// cat_id holds exactly ONE category (action() assigns it), so Set/Remove
 			'cat' => Etemplate\Widget\Nextmatch::category_action(
-				'timesheet',++$group,'Change category','cat_'
+				'timesheet',++$group,'Change category','cat_',
+				true, 0, Etemplate\Widget\Nextmatch::DEFAULT_MAX_MENU_LENGTH, false
 			),
 			'status' => array(
 				'icon' => 'apply',
@@ -1242,7 +1244,9 @@ class timesheet_ui extends timesheet_bo
 			),
 		);
 		// Change category via AJAX
-		$actions['cat']['onExecute'] = $actions['status']['onExecute'];
+		// NOT $actions['cat']['onExecute'] = ... any more: the category action is now a
+		// picker dialog (nm_action=categories) which dispatches to ajax_action itself, and an
+		// onExecute here would run instead of opening it
 
 		// Other Api\Applications
 		$group++;
@@ -1317,8 +1321,14 @@ class timesheet_ui extends timesheet_bo
 	 * @param string[] $selected
 	 * @param bool $all_selected All events are selected, not just what's in $selected
 	 */
-	public function ajax_action($action, $selected, $all_selected)
+	public function ajax_action($exec_id, $action, $selected, $all_selected)
 	{
+		// The context menu calls this directly, so the eTemplate's exec id is the only thing
+		// saying the caller had one of our pages open - see Nextmatch::validateExecId()
+		if (!Api\Etemplate\Widget\Nextmatch::validateExecId($exec_id))
+		{
+			return;
+		}
 		$success = 0;
 		$failed = 0;
 		$action_msg = '';
@@ -1454,12 +1464,21 @@ class timesheet_ui extends timesheet_bo
 				}
 				break;
 			case 'cat':
-				$cat_name = Api\Categories::id2name($settings);
-				$action_msg = lang('changed category to %1', $cat_name);
+				// an empty $settings means "remove the category", which the picker dialog offers
+				// as its own button - so it must not be mistaken for a failure. The test below
+				// used to be `($entry['cat_id'] = $settings)`, an assignment whose *value* is
+				// $settings, so removing one short-circuited before save() and was counted as a
+				// failure (reported to the user as "insufficient rights").
+				$action_msg = $settings ? lang('changed category to %1', Api\Categories::id2name($settings)) :
+					lang('removed category');
 				foreach((array)$checked as $n => $id) {
-					if (($entry = $this->read($id)) &&
-						($entry['cat_id'] = $settings) &&
-						$this->save($entry) == 0)
+					if (!($entry = $this->read($id)))
+					{
+						$failed++;
+						continue;
+					}
+					$entry['cat_id'] = $settings;
+					if ($this->save($entry) == 0)
 					{
 						$success++;
 					}

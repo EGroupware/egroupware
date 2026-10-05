@@ -371,7 +371,12 @@ export class AdminApp extends EgwApp
 				// if iframe is used --> refresh it
 				const iframe_node = this.iframe ? this.iframe.iframe : undefined;
 				const iframe_url = iframe_node ? iframe_node.contentDocument.location.href : undefined;
-				if (_id && iframe_url != 'about:blank')
+				// iframe_node has to be part of the test: with no iframe iframe_url is undefined,
+				// and `undefined != 'about:blank'` is true, so this branch used to be taken
+				// anyway - reaching load(undefined) and throwing on a null this.iframe. That
+				// happens on every admin page that is not inside the tree's iframe, which is
+				// exactly where the else branch below is the one that should run.
+				if (_id && iframe_node && iframe_url != 'about:blank')
 				{
 					let refresh_done = false;
 					// Try for intelligent et2 refresh inside iframe
@@ -392,20 +397,17 @@ export class AdminApp extends EgwApp
 				}
 				else
 				{
-					// No iframe, but if there's a nm in the current view, refresh it
-					const et2s = etemplate2.getByApplication('admin');
-					for(let i = 0; i < et2s.length; i++)
+					// No iframe, so refresh the lists in the current view ourselves.  Admin
+					// shows several different ones - accounts, groups, API tokens, access log -
+					// and more than one can be in the same template, so every nextmatch is
+					// asked rather than one picked by id.  A list that does not have the row
+					// just ignores it; passing the id and type along keeps that to a single-row
+					// update instead of a full reload.
+					for(const et2 of etemplate2.getByApplication('admin'))
 					{
-						const nm = <Et2Nextmatch>et2s[i].widgetContainer.getWidgetById('nm');
-						if(nm)
-						{
-							nm.refresh(undefined, undefined);
-						}
-					}
-					// Get group list too, if visible, since it wasn't found in the loop above
-					if(!this.groups.disabled)
-					{
-						this.groups.refresh(undefined, undefined);
+						et2.widgetContainer.querySelectorAll('et2-nextmatch').forEach(
+							(nm : Et2Nextmatch) => nm.refresh(_id, _type)
+						);
 					}
 					return false;
 				}
@@ -1602,7 +1604,9 @@ export class AdminApp extends EgwApp
 
 		if(egw.app('policy'))
 		{
-			import(egw.link('/policy/js/app.min.js?' + ((new Date).valueOf() / 86400000 | 0).toString())).then(() =>
+			// egw_import() resolves the logical path against the build manifest, so the hashed
+			// sibling chunks app.min.js imports resolve too, and de-dupes per document
+			(<any>window).egw_import('/policy/js/app.min.js').then(() =>
 			{
 				// policy is its own nested-git-repo app (like tracker/status), invisible to
 				// this file's types - same EPL/stylite-blind-spot pattern as app.stylite

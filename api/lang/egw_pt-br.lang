@@ -248,8 +248,10 @@ centered	common	pt-br	Centralizado
 central african republic	common	pt-br	REPÚBLICA CENTRO AFRICANA
 chad	common	pt-br	CHADE
 change	common	pt-br	Alterar
+change category	common	pt-br	Alterar categoria
 change owner	common	pt-br	Alterar proprietário
 changed	common	pt-br	Alterado
+changed category to %1	common	pt-br	Categoria alterada para %1
 changes that you made may not be saved.	common	pt-br	As alterações que você fez podem não ser salvas.
 charset	common	pt-br	Conjunto de caracteres
 check all	common	pt-br	Verificar todos
@@ -1100,6 +1102,7 @@ remove selected accounts	common	pt-br	Apagar contas selecionadas
 remove shortcut	common	pt-br	Remover tecla de atalho
 remove this link (not the entry itself)	common	pt-br	Remover este link (não a própria entrada)
 removed (now) empty directory fs_id=%1	admin	pt-br	Removido (agora) diretório vazio fs_id =%1
+removed category	common	pt-br	categoria removida
 rename	common	pt-br	Renomear
 repeat password	common	pt-br	Repita a senha
 replace	common	pt-br	Substituir

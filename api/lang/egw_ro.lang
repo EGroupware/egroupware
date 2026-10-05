@@ -189,6 +189,7 @@ preferences	common	ro	Preferințe
 print orientation	common	ro	Orientare
 processing the file	common	ro	Se procesează fișierul
 remove	api	ro	Elimină
+removed category	common	ro	categoria eliminat
 repeat password	common	ro	Repetarea parolei
 saved column sizes to preferences.	common	ro	Salvat dimensiunile coloanelor în preferințe.
 selection of files can only be done in one folder.  %1 files unselected.	common	ro	Selectarea fișierelor se poate face doar într-un singur dosar. %1 fișiere neselectate.

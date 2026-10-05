@@ -251,8 +251,10 @@ centered	common	it	Centrato
 central african republic	common	it	REPUBBLICA CENTRO AFRICANA
 chad	common	it	CHAD
 change	common	it	Cambia
+change category	common	it	Modifica categoria
 change owner	common	it	Cambia proprietario
 changed	common	it	Modificato
+changed category to %1	common	it	Categoria modificata in %1
 changes that you made may not be saved.	common	it	Es posible que no se guarden los cambios realizados.
 charset	common	it	Set di caratteri
 check all	common	it	Seleziona tutto
@@ -1123,6 +1125,7 @@ remove selected accounts	common	it	Rimuovi gli account selezionati
 remove shortcut	common	it	Rimuovi scorciatoie
 remove this link (not the entry itself)	common	it	Rimuovi link
 removed (now) empty directory fs_id=%1	admin	it	Rimossa (adesso) cartella vuota fs_id=%1
+removed category	common	it	categoria rimossa
 rename	common	it	Rinomina
 repeat password	common	it	Ripeti la password
 replace	common	it	Sostituisci

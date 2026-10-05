@@ -1423,6 +1423,192 @@ export abstract class EgwApp
 	}
 
 	/**
+	 * Run a nextmatch action over ajax, instead of submitting the whole eTemplate.
+	 *
+	 * A nextmatch action that declares no onExecute, url or egw_open falls through to
+	 * nm_action = "submit" (Et2NextmatchActionController), which posts the template back to the
+	 * server and re-renders it from scratch: a brand new nextmatch, so scroll position,
+	 * selection and row state are all lost. Wiring the action up with
+	 * 'onExecute' => 'javaScript:app.<app>.ajax_action' instead sends just the action id and the
+	 * selected ids, and the server answers with egw.refresh(), which updates the affected rows
+	 * in place and leaves the rest of the list alone.
+	 *
+	 * Setting this on a *container* action converts its whole submenu in one line, because
+	 * Nextmatch::egw_actions() inherits onExecute down to every child - including children built
+	 * at runtime from a variable, which is where most of the volume is.
+	 *
+	 * The server method is read from the action's data, falling back to the
+	 * "<app>.<app>_ui.ajax_action" convention. It has to be declared for apps that do not match
+	 * that convention (namespaced classes like EGroupware\Invoices\Ui, or a second list class
+	 * like projectmanager_elements_ui):
+	 *
+	 *	'data' => ['menuaction' => 'EGroupware\\Invoices\\Ui::ajax_action'],
+	 *
+	 * The checkbox actions in the same menu are sent along as a 4th argument, the same way a
+	 * submit passes them: several actions are modified by one ("Do not notify", "Copy instead of
+	 * move", "Share writable"), and they would otherwise be silently dropped by the conversion -
+	 * a checkbox that no longer does anything is worse than one that is not offered.
+	 *
+	 * @param _action action that was executed; _action.id is passed to the server as the action
+	 * @param _senders selected rows, ids in the "<app>::<id>" uid format
+	 */
+	ajax_action(_action : EgwAction, _senders : EgwActionObject[] = [])
+	{
+		// Setting this on a container makes Nextmatch::egw_actions() push it onto EVERY child
+		// (`$action += $default_attrs`), checkbox children included - eg. move_to's "Copy instead
+		// of move" and shared_with's "Share writable". Ticking one of those must only record the
+		// value for the next real action, never run one. Et2NextmatchActionController's own
+		// executeNextmatchAction() opens with the same guard.
+		if((<any>_action).checkbox)
+		{
+			return;
+		}
+		// The controller sets data.nextmatch on the action it executes, but a child reached
+		// through a submenu carries it on its parent, and an action fired outside a row context
+		// (eg. a placeholder action on an empty list) has neither - fall back to our own nm.
+		const nm = _action?.parent?.data?.nextmatch || _action?.data?.nextmatch || this.nm;
+		const ids = _senders.map(sender => (sender?.id || "").split("::").pop()).filter(Boolean);
+		// Declared on a container it has to reach every child, the same way onExecute does:
+		// $inherit_attrs does not carry 'data', so a child of calendar's "Change your status"
+		// arrives with no menuaction of its own and fell back to the convention - which for
+		// calendar is a class that does not exist ("calendar.calendar_ui.ajax_action is not a
+		// valid menuaction", 400, action silently lost).
+		let menuaction = null;
+		for(let a = <any>_action; a && !menuaction; a = a.parent)
+		{
+			menuaction = a?.data?.menuaction;
+		}
+		menuaction = menuaction || this.appname + "." + this.appname + "_ui.ajax_action";
+
+		const checkboxes = {};
+		for(const checkbox of (_action.getManager?.()?.getActionsByAttr?.("checkbox", true) || []))
+		{
+			checkboxes[checkbox.id] = (<any>checkbox).checked || false;
+		}
+
+		// An action whose 'confirm_handler' is 'app.policy.confirm' shows the policy app's dialog
+		// first, and policy.confirm() does Object.assign(action.data, value) with what it collected
+		// just before running us. A submit carried that along as nm[admin_cmd]; over ajax it has to
+		// be passed explicitly, or the "requested by" and comment the policy app insisted on are
+		// silently dropped - which is worse than not asking for them.
+		const admin_cmd = (<any>_action)?.data?.admin_cmd ?? null;
+
+		return this.egw.request(menuaction, [
+			EgwApp._execId(nm, this.et2),
+			_action.id,
+			ids,
+			(<Et2Nextmatch>nm)?.getSelection?.().all === true,
+			checkboxes,
+			admin_cmd
+		]);
+	}
+
+	/**
+	 * Apply a nextmatch action whose options were collected in an action popup, over ajax.
+	 *
+	 * The `nm_action => 'open_popup'` actions show a small form (Delegation, Start date, Links,
+	 * ...) and then had its OK button submit the WHOLE eTemplate, just so the server could read
+	 * the few values in it - rebuilding the list and losing its scroll position and selection for
+	 * a change to one field.
+	 *
+	 * No server change is needed to stop that: `action()` already parses these as one composite
+	 * id, `<action>_<verb>_<value>` (eg. `responsible_add_5,7`, `startdate_ok_1764547200`), which
+	 * is exactly what index() builds out of the submitted popup values. This builds the same id
+	 * and sends it to the app's ajax_action() instead.
+	 *
+	 * Wire a popup's buttons up with `onclick="app.<app>.submit_action_popup(this)"` in place of
+	 * `nm_submit_popup(this)`. The button id gives both halves: `<action>_action[<verb>]`.
+	 *
+	 * @param button the clicked button, id "<action>_action[<verb>]"
+	 */
+	submit_action_popup(button)
+	{
+		const id = (button?.id || "").replace(/^.*?_(?=[^_]*_action\[)/, "");
+		const match = /^(.*)_action\[(.*)\]$/.exec(id) || /^(.*)_action\[(.*)\]$/.exec(button?.id || "");
+		if(!match)
+		{
+			this.egw.debug("warn", "submit_action_popup() called from a button that is not <action>_action[<verb>]", button);
+			return;
+		}
+		const [, action, verb] = match;
+
+		const popup = <any>document.querySelector("[id$='" + action + "_popup']");
+		// Look inside the popup first: a popup's input is free to carry the same id as a filter
+		// in the list header, and several do - infolog's Start/Due date popups hold <et2-date-time
+		// id="startdate"> while the filter area holds <et2-date id="startdate">.  Asking the
+		// template found the filter, which is empty, so "set the start date" cleared it instead.
+		const popupWidget = <any>this.et2?.getWidgetById(action + "_popup");
+		const widget = <any>(popupWidget?.getWidgetById?.(action) ?? this.et2?.getWidgetById(action));
+		const value = EgwApp._actionPopupValue(widget?.get_value ? widget.get_value() : widget?.value);
+
+		const nm = <Et2Nextmatch>this.et2?.getWidgetById("nm") ?? this.nm;
+		// the controller puts the ids it opened the popup for on the popup element itself
+		const ids = [].concat(popup?.selectedIds ?? nm?.getSelection?.().ids ?? [])
+			.map(uid => String(uid).split("::").pop()).filter(Boolean);
+
+		// hide the popup whichever shape it is - a real <et2-dialog>, or the legacy
+		// class="action_popup" box that nm_open_popup() upgrades at runtime
+		if(typeof popup?.hide === "function")
+		{
+			popup.hide();
+		}
+		else if(popup)
+		{
+			popup.style.display = "none";
+		}
+		(<any>window).nm_hide_popup?.(button, null);
+
+		const checkboxes = {};
+		const manager = nm?.["_actionController"]?.actionManager;
+		for(const checkbox of (manager?.getActionsByAttr?.("checkbox", true) || []))
+		{
+			checkboxes[checkbox.id] = (<any>checkbox).checked || false;
+		}
+
+		return this.egw.request(this.appname + "." + this.appname + "_ui.ajax_action", [
+			EgwApp._execId(nm, this.et2),
+			action + "_" + verb + "_" + value,
+			ids,
+			nm?.getSelection?.().all === true,
+			checkboxes
+		]);
+	}
+
+	/**
+	 * The eTemplate exec id to send along with a converted context-menu action.
+	 *
+	 * An eTemplate submit carries this by itself; an ajax action has to pass it explicitly, and
+	 * the server refuses without it - json.php has no CSRF token of its own, so this unguessable
+	 * id is what says the caller had one of our pages open.  See
+	 * Api\Etemplate\Widget\Nextmatch::validateExecId().
+	 *
+	 * Taken from the nextmatch when there is one (it is the widget the action belongs to) and from
+	 * the app's own template otherwise, eg. a placeholder action fired on an empty list.
+	 */
+	protected static _execId(nm : any, et2 : any) : string
+	{
+		return nm?.getInstanceManager?.()?.etemplate_exec_id ??
+			et2?.getInstanceManager?.()?.etemplate_exec_id ?? "";
+	}
+
+	/**
+	 * Flatten an action popup's value the same way index() did when it arrived as $content.
+	 */
+	private static _actionPopupValue(value) : string
+	{
+		if(value === null || typeof value === "undefined")
+		{
+			return "";
+		}
+		// et2-link-entry gives {app, id}, which action() splits on ':'
+		if(typeof value === "object" && !Array.isArray(value) && value.app)
+		{
+			return value.id ? value.app + ":" + value.id : "";
+		}
+		return [].concat(value).join(",");
+	}
+
+	/**
 	 * Initializes actions and handlers on sidebox (delete)
 	 *
 	 * @param {jQuery} sidebox jQuery of DOM node
@@ -1621,7 +1807,10 @@ export abstract class EgwApp
 		if(mail_ids.length)
 		{
 			egw.message(egw.lang("Please wait..."));
-			this.egw.json('filemanager.filemanager_ui.ajax_action', ['mail', mail_ids, vfs_path], function(data)
+			// the exec id is this app's own - validateExecId() only asks that the caller has a
+			// live eTemplate request, not that it belongs to filemanager
+			this.egw.json('filemanager.filemanager_ui.ajax_action',
+				[EgwApp._execId(null, this.et2), 'mail', mail_ids, vfs_path], function(data)
 			{
 				// Trigger an update (minimal, no sorting changes) to display the new link
 				egw.refresh(data.msg || '', ids[0], ids[1], 'update');

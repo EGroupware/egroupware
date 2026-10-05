@@ -12,9 +12,7 @@ ask to start and stop working time with session	timesheet	sk	Opýtať sa na zač
 both: allow to use projectmanager and free project-names	admin	sk	Obidvoje: povoliť používanie Projektovníka a voľné názvy projektov
 by	timesheet	sk	(kým)
 category for 'working time'	admin	sk	Kategória pre 'Pracovný čas'
-change category	timesheet	sk	Zmeniť kategóriu
 change owner when updating	timesheet	sk	Zmeniť vlastníka pri aktualizácii
-changed category to %1	timesheet	sk	Kategória zmenená na %1
 changed status	timesheet	sk	Zmenený stav.
 choose 'creator' of imported data	timesheet	sk	Vyberte 'tvorcu' importovaných údajov
 comment by %1 at %2:	timesheet	sk	Poznámka od %1 ku %2:

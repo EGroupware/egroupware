@@ -12,9 +12,7 @@ ask to start and stop working time with session	timesheet	fi	Pyydä aloittamaan 
 both: allow to use projectmanager and free project-names	admin	fi	Molemmat: salli projektinhallinnan ja vapaiden projektinimien käyttö
 by	timesheet	fi	Henkilö:
 category for 'working time'	admin	fi	Kategoria 'Työaika'
-change category	timesheet	fi	Muuta kategoria
 change owner when updating	timesheet	fi	Vaihda omistajaa päivityksen yhteydessä
-changed category to %1	timesheet	fi	Kategoria muutettu: %1
 changed status	timesheet	fi	Tila muutettu
 choose 'creator' of imported data	timesheet	fi	Valitse omistaja tuodulle tiedostolle
 comment by %1 at %2:	timesheet	fi	Kommentoinut: %1, %1

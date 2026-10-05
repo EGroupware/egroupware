@@ -78,14 +78,12 @@ cancelled	infolog	ru	отменено.
 categories	infolog	ru	Категории
 category	infolog	ru	Категория
 change	infolog	ru	Изменить
-change category	infolog	ru	Изменить категорию
 change completed	infolog	ru	Изменения завершены.
 change completion	infolog	ru	Завершение изменений
 change history	infolog	ru	Изменить историю
 change owner when updating	infolog	ru	Изменит владельца при обновлении
 change responsible	infolog	ru	Ответственный за изменение
 change the status of an entry, eg. close it	infolog	ru	Изменить состояние записи, например, закрыть ее
-changed category to %1	infolog	ru	Изменена категория на %1
 changed completion to %1%	infolog	ru	Завершено изменение на %1%
 changed status to %1	infolog	ru	Изменено состояния на %1
 changed type	infolog	ru	Изменен тип
@@ -398,7 +396,6 @@ regular expression	infolog	ru	Постоянное выражение
 remark	infolog	ru	Примечание
 remove this link (not the entry itself)	infolog	ru	Удалить эту ссылку (не саму запись).
 removed	infolog	ru	Удалено.
-removed category	infolog	ru	Удаленная категория
 replacement	infolog	ru	Замена
 replacements for inserting entries into documents	infolog	ru	Замены для вставки записей в документы
 requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	ru	Требуется, чтобы редактирующий пользователь имел доступ на запись к этим контактам, чтобы поделиться ими с ответственным пользователем.

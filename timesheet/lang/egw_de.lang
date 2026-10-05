@@ -14,9 +14,7 @@ billable	timesheet	de	abrechenbar
 both: allow to use projectmanager and free project-names	admin	de	Beides: verwende Projektmanager und freie Projektnamen
 by	timesheet	de	von
 category for 'working time'	admin	de	Kategorie für 'Arbeitszeit'
-change category	timesheet	de	Kategorie ändern
 change owner when updating	timesheet	de	Ändere Eigentümer beim aktualisieren
-changed category to %1	timesheet	de	Kategorie geändert zu %1
 changed status	timesheet	de	Status geändert
 check all	timesheet	de	Alle selektieren
 choose 'creator' of imported data	timesheet	de	Wählen Sie den 'Ersteller' der Importierten Daten.

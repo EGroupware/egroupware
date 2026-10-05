@@ -830,6 +830,7 @@ remove	api	lv	Dzēst
 remove row (can not be undone!!!)	common	lv	Dzēst rindu
 remove selected accounts	common	lv	Likvidēt izvēlētos kontus
 remove this link (not the entry itself)	common	lv	Dzēst saiti
+removed category	common	lv	Noņemts kategorija
 rename	common	lv	Pārsaukt
 repeat password	common	lv	Atkārtot paroli
 required	common	lv	Pieprasīts

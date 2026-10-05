@@ -131,6 +131,25 @@ lives in `doc/ai/projects/` - check there directly for anything not shown here.
   parsing, because `transformAttributes()` only reflects attributes a widget declares. Unconverted
   templates now fall back to `Et2Nextmatch` automatically (`api/etemplate.php`, opt out with
   `legacy="true"`) - a stopgap, not a conversion.
+- `doc/ai/projects/nextmatch-action-ajax-conversion.md` - moving nextmatch context-menu actions off
+  the full eTemplate submit they silently fall through to (no `onExecute`/`url`/`egw_open` ->
+  `nm_action: "submit"` -> `index()` re-runs -> a brand new nextmatch, losing scroll, selection and
+  row state), plus picker dialogs replacing the actions that render one sub-menu entry per row of
+  user data (categories, distribution lists, addressbooks, share targets). Phases 0-6 DONE
+  (addressbook, infolog, tracker, calendar, timesheet, filemanager, projectmanager; the generic
+  overflow dialog and its `…` affordance; the category and distribution-list dialogs; the
+  `open_popup` bucket). Phase 7 is empty and the rest is blocked on `et2-nextmatch-conversion.md`,
+  because the legacy `nm_action()` dispatcher is deliberately NOT touched - an app is only
+  reachable once its list template uses `<et2-nextmatch>`. Master only, no 26 backport; spans 4
+  repos (tracker, projectmanager and records are separate). Read it for the measured per-app
+  inventory (three passes, because a source scan alone gives both false positives and negatives),
+  the `onExecute`-inheritance lever that converts a whole dynamic submenu in one line, the
+  submenu-vs-dialog rule and per-app category cardinality, and the 2026-09-23 in-browser
+  verification run - which found three bugs no code-reading pass would have: `csv_export` sticking
+  in the stored nextmatch value and silently freezing the session's cached query (so "select all"
+  and `delete_list` used page-load-time filters), popup inputs resolved against the whole template
+  instead of their own popup (infolog's Start date shares an id with a filter, so setting it
+  cleared it), and calendar's endpoint living on `calendar_uilist` with no `menuaction` declared.
 - `doc/ai/projects/knowledgebase-app.md` - design of a brand-new `knowledgebase` app to supersede
   the deprecated `phpbrain` (Knowledge Base) and `wiki` apps, built on `Api\Storage`/
   `Api\Storage\Tracking`/`Api\Categories`/`Api\Acl` rather than either legacy app's bespoke
@@ -241,12 +260,6 @@ lives in `doc/ai/projects/` - check there directly for anything not shown here.
   app picker swaps the search combo for a plain URL input, then the existing (Link) button/ajax
   path - already fully generic - just works, no new widgets or endpoints needed), and a small
   inline-SVG icon (no new asset file). Done and tested.
-- `doc/ai/projects/mail-bo-decoupling.md` - breaking `Api\Mail`/`mail_ui` apart into smaller,
-  independently-testable components, to fix the "large heavily-coupled legacy class with no test
-  coverage" problem shared by those two and `MailApp` (client-side). Phase 1 (4 low-risk `Api\Mail`
-  groups) done; covers the full method inventory, per-group coupling/risk assessment, and the
-  extraction discipline that emerged (no wrapper unless a separate-repo consumer needs it; delete
-  confirmed-dead code; re-check "no callers" case-insensitively for PHP method names).
 
 ## Security and data handling
 

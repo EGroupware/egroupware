@@ -590,12 +590,32 @@ class calendar_uilist extends calendar_ui
 	 * @param bool $all_selected All events are selected, not just what's in $selected
 	 * @param bool $skip_notification
 	 */
-	public function ajax_action($action, $selected, $all_selected, $skip_notification = false)
+	public function ajax_action($exec_id, $action, $selected, $all_selected, $checkboxes = false)
 	{
+		// The context menu calls this directly, so the eTemplate's exec id is the only thing
+		// saying the caller had one of our pages open - see Nextmatch::validateExecId()
+		if (!Api\Etemplate\Widget\Nextmatch::validateExecId($exec_id))
+		{
+			return;
+		}
 		$success = 0;
 		$failed = 0;
 		$action_msg = '';
 		$session_name = 'calendar_list';
+
+		// EgwApp.ajax_action() sends the menu's checkbox actions as an array here; the older
+		// recur-prompt path in calendar/js/app.ts sends a plain bool for "Do not notify"
+		$skip_notification = is_array($checkboxes) ? !empty($checkboxes['no_notifications']) : (bool)$checkboxes;
+
+		// "select all" makes action() re-run get_rows() with the query get_rows() itself cached.
+		// With no cached query that falls through to no filter at all - ie. EVERY event the user
+		// can see - so refuse rather than guess what "all" meant.
+		if ($all_selected && !is_array(Api\Cache::getSession('calendar', $session_name)))
+		{
+			Api\Json\Response::get()->call('egw.message',
+				lang('Could not determine the current selection, please try again.'), 'error');
+			return;
+		}
 
 		if($this->action($action, $selected, $all_selected, $success, $failed, $action_msg, $session_name, $msg, $skip_notification))
 		{
@@ -605,7 +625,14 @@ class calendar_uilist extends calendar_ui
 		{
 			$msg .= lang('%1 event(s) %2, %3 failed because of insufficient rights !!!',$success,$action_msg,$failed);
 		}
-		Api\Json\Response::get()->message($msg);
+		// This used to only send the message, leaving the list untouched - fine while the only
+		// caller re-rendered anyway, but an ajax-converted action has to update its own rows.
+		// The sentinel belongs in the 2nd argument only: egw.refresh() resolves its 5th
+		// (_targetapp) before the msg-only early-return, and a name that is not an app throws.
+		$push_app = Api\Json\Push::onlyFallback() || $all_selected ? 'calendar' : 'msg-only-push-refresh';
+		Api\Json\Response::get()->call('egw.refresh', $msg, $push_app, $selected[0] ?? null,
+			$all_selected || count($selected) > 1 ? null : ($action === 'delete' ? 'delete' : 'update'),
+			'calendar', null, null, $failed ? 'error' : 'success');
 	}
 
 	/**
@@ -999,6 +1026,10 @@ class calendar_uilist extends calendar_ui
 			'prefix' => 'status-',
 			'children' => $status,
 			'group' => ++$group,
+			'onExecute' => 'javaScript:app.calendar.ajax_action',
+			// calendar's list endpoint is on calendar_uilist, not the "<app>.<app>_ui.ajax_action"
+			// EgwApp.ajax_action() falls back to - without this the request 400s
+			'data' => ['menuaction' => 'calendar.calendar_uilist.ajax_action'],
 		);
 		++$group;	// integration with other apps: infolog, calendar, filemanager
 
@@ -1114,6 +1145,8 @@ class calendar_uilist extends calendar_ui
 				'group' => $group,
 				'allowOnMultiple' => 'only',
 				'hideOnDisabled' => true,	// show only one timesheet action in context menu
+				'onExecute' => 'javaScript:app.calendar.ajax_action',
+				'data' => ['menuaction' => 'calendar.calendar_uilist.ajax_action'],
 			);
 			// if specific timer is NOT disabled, allow to book further time on existing sheets
 			$config = Api\Config::read('timesheet');

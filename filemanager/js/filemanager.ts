@@ -712,7 +712,8 @@ export class filemanagerAPP extends EgwApp
 			widget.value = widgetValue;
 			value["conflict"] = _conflict;
 			widget.requestUpdate("loading");
-			egw.request(_target, ['upload', value, _path, {ui_path: this.egw.window.location.pathname}])
+			egw.request(_target, [filemanagerAPP._execId(null, widget), 'upload', value, _path,
+				{ui_path: this.egw.window.location.pathname}])
 				.then(data => this._upload_callback(data))
 				.finally(() =>
 				{
@@ -740,7 +741,8 @@ export class filemanagerAPP extends EgwApp
 		}
 
 		let props = widget.getInstanceManager().getValues(widget.getRoot());
-		egw.request('filemanager_ui::ajax_action', [action == 'save_as' ? 'upload' : 'link', widget.getValue(), path, props])
+		egw.request('filemanager_ui::ajax_action', [filemanagerAPP._execId(null, widget),
+			action == 'save_as' ? 'upload' : 'link', widget.getValue(), path, props])
 			.then((_data) =>
 			{
 				// app.filemanager is typed generically as EgwApp; _upload_callback is filemanagerAPP-specific
@@ -819,7 +821,8 @@ export class filemanagerAPP extends EgwApp
 								uploaded[this.my_data.file].name = _value;
 								delete uploaded[this.my_data.file].confirm;
 								// send overwrite-confirmation and/or rename request to server
-								egw.request('filemanager_ui::ajax_action', [this.my_data.action, uploaded, this.my_data.path, this.my_data.props])
+								egw.request('filemanager_ui::ajax_action', [filemanagerAPP._execId(that.nm, that.et2),
+									this.my_data.action, uploaded, this.my_data.path, this.my_data.props])
 									.then(data => that._upload_callback(data));
 								return;
 							case "cancel":
@@ -1045,13 +1048,15 @@ export class filemanagerAPP extends EgwApp
 		if (_sync)
 		{
 			// Genuinely synchronous request - egw.request() is always async
-			egw.json('filemanager_ui::ajax_action', [_type, _selected, _path],
+			egw.json('filemanager_ui::ajax_action',
+				[filemanagerAPP._execId(this.nm, this.et2), _type, _selected, _path],
 				this._do_action_callback, this, false, this
 			).sendRequest(false);
 		}
 		else
 		{
-			egw.request('filemanager_ui::ajax_action', [_type, _selected, _path])
+			egw.request('filemanager_ui::ajax_action',
+				[filemanagerAPP._execId(this.nm, this.et2), _type, _selected, _path])
 				.then(data => this._do_action_callback(data));
 		}
 	}

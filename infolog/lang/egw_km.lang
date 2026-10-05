@@ -75,14 +75,12 @@ cancelled	infolog	km	បានលុបចោល។
 categories	infolog	km	ប្រភេទ
 category	infolog	km	ប្រភេទ
 change	infolog	km	ផ្លាស់ប្តូរ
-change category	infolog	km	ផ្លាស់ប្តូរប្រភេទ
 change completed	infolog	km	ការផ្លាស់ប្តូរបានបញ្ចប់។
 change completion	infolog	km	ផ្លាស់ប្តូរការបញ្ចប់
 change history	infolog	km	ផ្លាស់ប្តូរប្រវត្តិ
 change owner when updating	infolog	km	ផ្លាស់ប្តូរម្ចាស់នៅពេលធ្វើបច្ចុប្បន្នភាព
 change responsible	infolog	km	ផ្លាស់ប្តូរការទទួលខុសត្រូវ
 change the status of an entry, eg. close it	infolog	km	ផ្លាស់ប្តូរស្ថានភាពនៃធាតុមួយ, ឧ។ បិទវា។
-changed category to %1	infolog	km	បានប្តូរប្រភេទទៅជា%1
 changed completion to %1%	infolog	km	បានផ្លាស់ប្តូរការបញ្ចប់ទៅជា%1%
 changed status to %1	infolog	km	បានផ្លាស់ប្តូរស្ថានភាពទៅ%1
 changed type	infolog	km	ប្រភេទដែលបានផ្លាស់ប្តូរ
@@ -386,7 +384,6 @@ regular expression	infolog	km	ការបញ្ចេញមតិទៀងទ�
 remark	infolog	km	ចំណាំ
 remove this link (not the entry itself)	infolog	km	ដកតំណនេះចេញ មិនមែនធាតុចូលទេ។
 removed	infolog	km	បានដកចេញ។
-removed category	infolog	km	ប្រភេទដែលបានដកចេញ
 replacement	infolog	km	ការជំនួស
 replacements for inserting entries into documents	infolog	km	ការជំនួសសម្រាប់ការបញ្ចូលធាតុទៅក្នុងឯកសារ
 responsible	infolog	km	ទទួលខុសត្រូវ
