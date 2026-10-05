@@ -1253,7 +1253,7 @@ class Account implements \ArrayAccess
 			'ident_realname' => $identity['ident_realname'],
 			'ident_org' => $identity['ident_org'],
 			'ident_email' => $identity['ident_email'],
-			'ident_signature' => $identity['ident_signature'],
+			'ident_signature' => self::embedSignatureImages($identity['ident_signature']),
 			'account_id' => self::is_multiple($identity) ? 0 :
 				(is_array($identity['account_id']) ? $identity['account_id'][0] : $identity['account_id']),
 		);
@@ -1268,6 +1268,129 @@ class Account implements \ArrayAccess
 		self::$db->insert(self::IDENTITIES_TABLE, $data, false, __LINE__, __FILE__, self::APP);
 
 		return self::$db->get_last_insert_id(self::IDENTITIES_TABLE, 'ident_id');
+	}
+
+	/**
+	 * Signature images above this size (bytes) get resized down before embedding - deliberately
+	 * NOT a tighter default: an un-resized image still has to fit comfortably under the OLD
+	 * ident_signature column's 64KB TEXT limit on an install that has not yet run the longtext
+	 * schema migration this feature ships alongside (api_upgrade26_1_002()).
+	 */
+	const SIGNATURE_IMAGE_RESIZE_THRESHOLD = 32768;
+
+	/**
+	 * Embed any same-origin VFS/webdav-referenced <img> in a signature as a data: URI
+	 *
+	 * A signature is regularly edited by (or for) someone other than whoever uploaded its image:
+	 * an admin creating/editing an account for a different user, or a personal account later
+	 * turned into one shared with others - but an image uploaded into the signature's rich-text
+	 * editor lands in the UPLOADING user's own home VFS directory (Api\Etemplate\Widget\Vfs::
+	 * ajax_htmlarea_upload()'s default temp-dir), which is not reliably accessible to whoever the
+	 * mail account actually ends up being used by. Embedding the bytes directly in the stored
+	 * signature sidesteps that access problem entirely.
+	 *
+	 * Applied unconditionally to every signature save (not gated on the account currently being
+	 * shared/multi-user) - an account's ownership can change later without the signature itself
+	 * being re-saved, so gating here would just move the failure to a different, harder-to-spot
+	 * moment instead of preventing it.
+	 *
+	 * @param string|null $html
+	 * @return string|null same HTML, with any matching <img src="..."> rewritten to a data: URI
+	 */
+	protected static function embedSignatureImages($html)
+	{
+		if (empty($html) || !str_contains($html, '/webdav.php'))
+		{
+			return $html;
+		}
+		// only a same-origin '/webdav.php' url may be read directly via vfs:// below - a foreign
+		// host's "/webdav.php" must NOT be read from our own vfs (same check processURL2InlineImages()
+		// itself already uses, Mail.php, for the identical reason)
+		$own_host = strtolower((string)Api\Header\Http::host());
+
+		return preg_replace_callback('/(<img[^>]+src=")([^"]+)(")/Ui', static function (array $matches) use ($own_host)
+		{
+			$url = html_entity_decode($matches[2]);
+			if (!str_contains($url, '/webdav.php'))
+			{
+				return $matches[0];
+			}
+			$url_host = parse_url($url, PHP_URL_HOST);
+			$same_origin = $url_host === null || (strcasecmp($url_host, $own_host) === 0 &&
+				in_array(strtolower(parse_url($url, PHP_URL_SCHEME) ?? ''), ['http', 'https'], true));
+			if (!$same_origin)
+			{
+				return $matches[0];
+			}
+			[, $path] = explode('/webdav.php', $url, 2);
+			Api\Vfs::load_wrapper('vfs');
+			if (!($bytes = @file_get_contents('vfs://default'.urldecode($path))))
+			{
+				return $matches[0];
+			}
+			$mime = Api\MimeMagic::analyze_data($bytes);
+			if (strlen($bytes) > self::SIGNATURE_IMAGE_RESIZE_THRESHOLD)
+			{
+				[$bytes, $mime] = self::resizeSignatureImage($bytes, $mime);
+			}
+			return $matches[1].'data:'.$mime.';base64,'.base64_encode($bytes).$matches[3];
+		}, $html);
+	}
+
+	/**
+	 * Resize a too-large signature image down, preserving PNG transparency
+	 *
+	 * Mirrors Api\Contacts::resize_photo()'s general GD approach (resize-by-width, preserve aspect
+	 * ratio), but does NOT force every format to JPEG - a PNG company logo with a transparent
+	 * background (the single most common real-world signature-image shape) would otherwise gain
+	 * an ugly solid-color box around it. Every other format still converts to JPEG, same as
+	 * resize_photo().
+	 *
+	 * @param string $bytes raw image bytes
+	 * @param string $mime source mime type, as Api\MimeMagic::analyze_data() detected it
+	 * @param int $max_w =320 max width to resize to
+	 * @return array{0:string,1:string} [$bytes, $mime] - $mime stays 'image/png' for a PNG source,
+	 *  becomes 'image/jpeg' for everything else (including when resizing itself could not happen,
+	 *  eg. $bytes didn't decode as an image at all - returned unchanged rather than dropped)
+	 */
+	protected static function resizeSignatureImage(string $bytes, string $mime, int $max_w=320)
+	{
+		if (!($image = @imagecreatefromstring($bytes)))
+		{
+			return [$bytes, $mime];
+		}
+		$src_w = imagesx($image);
+		$src_h = imagesy($image);
+		if ($src_w <= $max_w)
+		{
+			imagedestroy($image);
+			return [$bytes, $mime];	// already narrow enough - only the overall BYTE size tripped the threshold
+		}
+		$dst_h = (int)round($src_h * $max_w / $src_w);
+		$resized = imagecreatetruecolor($max_w, $dst_h);
+		$is_png = $mime === 'image/png';
+		if ($is_png)
+		{
+			imagealphablending($resized, false);
+			imagesavealpha($resized, true);
+		}
+		imagecopyresampled($resized, $image, 0, 0, 0, 0, $max_w, $dst_h, $src_w, $src_h);
+		imagedestroy($image);
+
+		ob_start();
+		if ($is_png)
+		{
+			imagepng($resized);
+		}
+		else
+		{
+			imagejpeg($resized, null, 85);
+			$mime = 'image/jpeg';
+		}
+		$bytes = ob_get_clean();
+		imagedestroy($resized);
+
+		return [$bytes, $mime];
 	}
 
 	/**
