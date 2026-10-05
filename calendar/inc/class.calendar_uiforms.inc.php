@@ -2308,6 +2308,70 @@ class calendar_uiforms extends calendar_ui
 	}
 
 	/**
+	 * Get all (lowercased) email addresses of a participant
+	 *
+	 * Returns both business and home address of a contact.
+	 *
+	 * @param string|int|null $uid
+	 * @param bool $ignore_acl true: also read contacts the current user has no read access to
+	 * @return string[]
+	 */
+	protected static function participantEmails($uid, bool $ignore_acl=false) : array
+	{
+		$emails = [];
+		if (is_numeric($uid))
+		{
+			$emails[] = Api\Accounts::id2name($uid, 'account_email');
+		}
+		elseif (is_string($uid) && $uid[0] === 'e')
+		{
+			$emails[] = substr($uid, 1);
+		}
+		elseif (is_string($uid) && $uid[0] === 'c' && ($contact = (new Api\Contacts)->read(substr($uid, 1), $ignore_acl)))
+		{
+			$emails[] = $contact['email'] ?? null;
+			$emails[] = $contact['email_home'] ?? null;
+		}
+		return array_values(array_unique(array_filter(array_map(static function($email)
+		{
+			if (empty($email)) return null;
+			return strtolower(preg_match('/<([^<>]+?)>$/', $email, $matches) ? $matches[1] : trim($email));
+		}, $emails))));
+	}
+
+	/**
+	 * Find the participants of an event, which share an email address with the given participant
+	 *
+	 * The same address can exist in several contacts, so an iCal reply, which only identifies its sender
+	 * by email, can not be mapped to a participant via an addressbook search.
+	 *
+	 * Contacts the current user can not read are only compared, if the user may change the status of
+	 * the event's contact participants anyway (EDIT right on the owner's calendar), as the match would
+	 * otherwise tell, which email addresses hidden contacts have.
+	 *
+	 * @param array $event existing event with "participants" (uid => status) and "owner"
+	 * @param string|int $uid participant parsed from the iCal
+	 * @return string[] uids from the event's participants, the one given in $uid first, if it is one
+	 */
+	protected function participantsSharingEmail(array $event, $uid) : array
+	{
+		$participants = $event['participants'] ?? [];
+		$matches = isset($participants[$uid]) ? [$uid] : [];
+		if (($emails = self::participantEmails($uid)))
+		{
+			$ignore_acl = $this->bo->check_perms(Acl::EDIT, 0, $event['owner']);
+			foreach(array_keys($participants) as $existing)
+			{
+				if ((string)$existing !== (string)$uid && array_intersect($emails, self::participantEmails($existing, $ignore_acl)))
+				{
+					$matches[] = $existing;
+				}
+			}
+		}
+		return $matches;
+	}
+
+	/**
 	 * Display iCal meeting request for EMail app and allow to accept, tentative or reject it or a reply and allow to apply it
 	 *
 	 * @todo Handle situation when user is NOT invited, but eg. can view that mail ...
@@ -2389,7 +2453,24 @@ class calendar_uiforms extends calendar_ui
 						}
 						if ($event['ical_sender_uid'])
 						{
-							$existing_status = $existing_event['participants'][$event['ical_sender_uid']];
+							// the address can belong to several contacts (some maybe not readable for us), the iCal parser
+							// picks one of them --> apply the reply to the participants of the event sharing the address
+							$sender_uids = $this->participantsSharingEmail($existing_event, $event['ical_sender_uid']);
+							if ($sender_uids)
+							{
+								$event['ical_sender_uid'] = $sender_uids[0];
+								foreach($sender_uids as $uid)
+								{
+									$q = $r = null;
+									$s = $existing_event['participants'][$uid];
+									calendar_so::split_status($s, $q, $r);
+									$event['participants'][$uid] = calendar_so::combine_status($event['ical_sender_status'], $q, $r);
+								}
+								$event['participants'] = array_diff_key($event['participants'],
+									array_flip(array_diff(array_keys($parts), $sender_uids)));
+							}
+							$event['ical_sender_uids'] = $sender_uids ?: [$event['ical_sender_uid']];
+							$existing_status = $existing_event['participants'][$event['ical_sender_uid']] ?? null;
 							// check if email matches, in case we have now something like "Name <email>"
 							if (!isset($existing_status) && $event['ical_sender_uid'][0] === 'e')
 							{
@@ -2409,10 +2490,20 @@ class calendar_uiforms extends calendar_ui
 								if (!empty($event['sender_warning'])) $event['sender_warning'] .= "\n\n";
 								$event['sender_warning'] .= lang('Replying "%1" is NOT a participant of the event! Only continue if you want to add as new participant.', $participant);
 							}
-							calendar_so::split_status($existing_status, $quantity, $role);
-							if ($existing_status != $event['ical_sender_status'])
+							// status is already applied, if it is for all participants sharing the address
+							$to_change = [];
+							foreach($event['ical_sender_uids'] as $uid)
 							{
-								$readonlys['button[apply]'] =  !$this->bo->check_status_perms($event['ical_sender_uid'], $existing_event);
+								$s = $existing_event['participants'][$uid] ?? null;
+								calendar_so::split_status($s, $quantity, $role);
+								if ($s != $event['ical_sender_status']) $to_change[] = $uid;
+							}
+							if ($to_change)
+							{
+								$readonlys['button[apply]'] = !array_filter($to_change, function($uid) use ($existing_event)
+								{
+									return $this->bo->check_status_perms($uid, $existing_event);
+								});
 							}
 							else
 							{
@@ -2638,9 +2729,19 @@ class calendar_uiforms extends calendar_ui
 
 				case 'apply':
 					// set status and send notification / meeting response
-					if (strtolower($event['ics_method']) === 'reply' && $this->bo->set_status($event['id'], $event['ical_sender_uid'], $event['ical_sender_status'], $event['recurrence']))
+					if (strtolower($event['ics_method']) === 'reply')
 					{
-						$msg[] = lang('Status changed');
+						$changed = false;
+						// all participants sharing the replying address, one notification is enough
+						foreach($event['ical_sender_uids'] ?? [$event['ical_sender_uid']] as $sender_uid)
+						{
+							if ($this->bo->set_status($event['id'], $sender_uid, $event['ical_sender_status'], $event['recurrence'],
+								false, true, $changed))
+							{
+								$changed = true;
+							}
+						}
+						if ($changed) $msg[] = lang('Status changed');
 					}
 					break;
 
