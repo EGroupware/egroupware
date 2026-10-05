@@ -1734,17 +1734,29 @@ export class MailApp extends EgwApp
 	 * docblock used to document (falling back to egw.openWithinWindow()'s classic
 	 * urlParamsTooLong()/openComposePost() path, which posted into the classic mail_compose::
 	 * compose() postback; both removed together with compose() itself). Same technique
-	 * composeWithPresetPost() already uses: open a blank popup via egw.open() first, then POST the
-	 * (potentially long) `id` into that same window as compose.php's own bootstrap target - `from`/
-	 * `acc_id`/`mode`/`smime_type` stay in the url's query string (always short), only `id` needs to
-	 * be a form field. compose.php reads `id` via `$_REQUEST` (not `$_GET`-only) specifically so
-	 * this works.
+	 * composeWithPresetPost() already uses: open a blank popup via egw.openPopup('', ...) first,
+	 * then POST the (potentially long) `id` into that same window as compose.php's own bootstrap
+	 * target - `from`/`acc_id`/`mode`/`smime_type` stay in the url's query string (always short),
+	 * only `id` needs to be a form field. compose.php reads `id` via `$_REQUEST` (not `$_GET`-only)
+	 * specifically so this works.
 	 */
 	private async openComposePopupUrlPost(settings : { id : string, from : string, smime_type? : string, mode? : string, pgp_encrypted? : string }, accId : string) : Promise<void>
 	{
 		const compose_list = egw.getOpenWindows("mail", /^compose_/);
 		const window_name = 'compose_' + compose_list.length + '_' + (settings.from || '') + '_post';
-		const popup : any = await egw.open('', 'mail', 'add', '', window_name, 'mail');
+		// NOT egw.open('', 'mail', 'add', ...) - found live via ticket #125621: that resolves the
+		// mail/add app-registry entry into a REAL url (the classic mail.mail_hooks.compose
+		// menuaction, which itself redirects to this SAME compose.php with NO preset/id at all) and
+		// navigates the popup there as a side effect, same as a normal egw.open() call anywhere
+		// else - it does NOT just reserve a blank window. That unwanted navigation then races the
+		// form POST below for control of this same named window - confirmed live (a bare
+		// egw.open() call alone, with no form ever submitted, still produced its own GET hit on
+		// compose.php) - whichever one the browser applies last wins, so this intermittently
+		// showed the blank/default compose instead of the posted preset, with no error anywhere.
+		// egw.openPopup('', ...) is a plain window.open('', ...) wrapper with no app-registry/
+		// menuaction resolution at all, so nothing else ever navigates this window before the form
+		// below deliberately does.
+		const popup : any = egw.openPopup('', 870, 'availHeight', window_name, 'mail', true);
 		if (!popup) return;	// popup blocked, or blocker-warning dialog already shown
 		const target = typeof popup.name === 'string' && popup.name ? popup.name : '_blank';
 		const url = this.egw.link('/mail/compose.php', {
@@ -1835,15 +1847,26 @@ export class MailApp extends EgwApp
 
 	/**
 	 * composeWithPreset()'s own POST fallback for a too-long preset - same technique
-	 * openComposePopupUrlPost() above uses: open a popup via egw.open() first (sized/named the
-	 * same way, briefly blank - cosmetic only, this is the rare long-content case), then POST the
-	 * preset into that SAME window, replacing it with this popup's own client-side bootstrap.
-	 * compose.php reads $_REQUEST['preset'] (not $_GET-only) specifically so this works.
+	 * openComposePopupUrlPost() above uses: open a genuinely blank popup via egw.openPopup('', ...)
+	 * first (sized/named the same way), then POST the preset into that SAME window, replacing it
+	 * with this popup's own client-side bootstrap. compose.php reads $_REQUEST['preset'] (not
+	 * $_GET-only) specifically so this works.
+	 *
+	 * NOT egw.open('', 'mail', 'add', ...) (found live via ticket #125621) - see
+	 * openComposePopupUrlPost()'s own docblock for the full story: that call resolves to a REAL
+	 * url (the classic mail.mail_hooks.compose menuaction, redirecting back to this same
+	 * compose.php with NO preset) and navigates the popup there as a side effect, racing the form
+	 * POST below for control of this same named window - confirmed live, a bare egw.open() call
+	 * with no form ever submitted still produced its own empty GET hit on compose.php. Whichever
+	 * navigation the browser applies last wins, so a REST-composed message intermittently opened
+	 * as a blank/default compose instead of the posted preset, with nothing in any log or console
+	 * to point at why. egw.openPopup('', ...) is a plain window.open('', ...) wrapper with no
+	 * app-registry/menuaction resolution at all, so nothing else ever navigates this window first.
 	 */
 	private async composeWithPresetPost(preset : object, accId : string, from : string = '', id : string = '') : Promise<void>
 	{
 		const window_name = 'compose_preset_' + Date.now();
-		const popup : any = await egw.open('', 'mail', 'add', '', window_name, 'mail');
+		const popup : any = egw.openPopup('', 870, 'availHeight', window_name, 'mail', true);
 		if (!popup) return;	// popup blocked, or blocker-warning dialog already shown
 		const target = typeof popup.name === 'string' && popup.name ? popup.name : '_blank';
 		const url = this.egw.link('/mail/compose.php', {
