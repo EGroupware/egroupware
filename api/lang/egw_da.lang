@@ -320,7 +320,7 @@ el salvador	common	da	El Salvador
 email	common	da	E-mail
 email-address of the user, eg. "%1"	common	da	E-mail-adresse for brugeren, f.eks. "%1"
 emails	common	da	E-mails
-enable logging	groupdav	da	Aktivér logning
+enable logging	common	da	Aktivér logning
 enabled	common	da	Slået til
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	da	Muliggør logning af CalDAV/CardDAV-trafik for at diagnosticere problemer med enheder.
 end date	common	da	Slutdato

@@ -495,7 +495,7 @@ emails	common	es-es	Correo electrónico
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	es-es	Estilos incrustados CSS, por ej. '.red { background: red; }' (ver el '.' delante del nombre de la clase) o '@import url(...)' (los nombres de las clases son globales para toda la página)
 empty file	common	es-es	Archivo vacío
 enable javascript onchange submit	common	es-es	Activar enviar JavaScript onchange
-enable logging	groupdav	es-es	Activar registro
+enable logging	common	es-es	Activar registro
 enabled	common	es-es	Habilitado
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	es-es	Activa el registro de tráfico CalDAV/CardDAV para diagnosticar problemas con los dispositivos.
 end date	common	es-es	Fecha de finalización
@@ -1145,7 +1145,7 @@ replace with	common	es-es	Sustituir por
 request could not be processed, please reload your window (press f5 or cmd r)!	common	es-es	¡No se ha podido procesar la solicitud, vuelva a cargar la ventana (presione F5 o Ctrl-R)!
 requested resource '%1' does not exist or has expired	common	es-es	El recurso solicitado '%1' no existe o ha caducado
 requests and full responses to files directory	common	es-es	Solicitudes y respuestas completas al directorio de archivos
-requests and truncated responses to apache error-log	groupdav	es-es	Solicitudes y respuestas truncadas al registro de errores de Apache
+requests and truncated responses to apache error-log	common	es-es	Solicitudes y respuestas truncadas al registro de errores de Apache
 required	common	es-es	Requerido
 required directory "%1" created.	admin	es-es	Directorio requerido "%1" creado.
 required directory "%1" has wrong mode %2 instead of %3!	admin	es-es	¡El directorio requerido "%1" tiene un modo incorrecto %2 en lugar de %3!
@@ -1309,7 +1309,7 @@ show (no save)	common	es-es	Mostrar (sin guardar)
 show all	common	es-es	Mostrar todo
 show all / cancel filter	common	es-es	Mostrar todo / cancelar filtro
 show all categorys	common	es-es	Mostrar todas las categorías
-show log of following device	groupdav	es-es	Mostrar bitácora del dispositivo siguiente
+show log of following device	common	es-es	Mostrar bitácora del dispositivo siguiente
 show page generation time	common	es-es	Mostrar el tiempo que tarda en generarse la página
 show page generation time on the bottom of the page?	common	es-es	Mostrar el tiempo que tarda en generarse la página en la parte inferior de la página.
 show page generation time?	common	es-es	Mostrar el tiempo que tarda en generarse la página
@@ -1572,7 +1572,7 @@ you need to be an egroupware administrator to access this functionality!	common	
 you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	es-es	Debe instalar el complemento Mailvelope disponible para Chrome y Firefox desde www.mailvelope.com o haciendo clic en el botón de instalación.
 you need to select a file first!	common	es-es	¡Seleccione un archivo primero!
 you need to select some entries first!	common	es-es	¡Necesita seleccionar algunas entradas primero!
-you need to set enable logging to "%1" to create/update a log.	groupdav	es-es	Debe establecer habilitar el registro en "%1" para crear/actualizar un registro.
+you need to set enable logging to "%1" to create/update a log.	common	es-es	Debe establecer habilitar el registro en "%1" para crear/actualizar un registro.
 you tried to automatically size a flex column, which always takes the rest of the space	common	es-es	Intentó dimensionar automáticamente una columna flexible, que siempre ocupa el resto del espacio.
 you will not be able to send or receive encrypted mails before completing that step!	common	es-es	¡NO podrá enviar ni recibir correos cifrados antes de completar ese paso!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	es-es	¡Ha intentado abrir la aplicación de EGroupware %1, pero no tiene permiso para acceder a esta aplicación!

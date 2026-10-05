@@ -477,7 +477,7 @@ email-address of the user, eg. "%1"	common	km	អាសយដ្ឋានអ៊�
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	km	រចនាប័ទ្ម CSS ដែលបានបង្កប់ឧទាហរណ៍ '.red { ផ្ទៃខាងក្រោយ: ក្រហម; }' (ចំណាំ '.' នៅពីមុខ class-name) ឬ '@import url(...)' (ឈ្មោះថ្នាក់គឺសកលសម្រាប់ទំព័រទាំងមូល!)
 empty file	common	km	ឯកសារទទេ
 enable javascript onchange submit	common	km	បើកដំណើរការ JavaScript onChange ដាក់ស្នើ
-enable logging	groupdav	km	បើកដំណើរការកំណត់ហេតុ
+enable logging	common	km	បើកដំណើរការកំណត់ហេតុ
 enabled	common	km	បានបើក
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	km	បើកដំណើរការការកត់ត្រាចរាចរ CalDAV/CardDAV ដើម្បីវិនិច្ឆ័យបញ្ហាជាមួយឧបករណ៍។
 end date	common	km	កាលបរិច្ឆេទបញ្ចប់
@@ -1098,7 +1098,7 @@ replace	common	km	ជំនួស
 replace with	common	km	ជំនួយ​ដោយ
 request could not be processed, please reload your window (press f5 or cmd r)!	common	km	សំណើមិនអាចដំណើរការបានទេ សូមផ្ទុកបង្អួចរបស់អ្នកឡើងវិញ (ចុច F5 ឬ Cmd R)!
 requests and full responses to files directory	common	km	សំណើ និងការឆ្លើយតបពេញលេញចំពោះថតឯកសារ
-requests and truncated responses to apache error-log	groupdav	km	សំណើ និងកាត់បន្ថយការឆ្លើយតបចំពោះ Apache error-log
+requests and truncated responses to apache error-log	common	km	សំណើ និងកាត់បន្ថយការឆ្លើយតបចំពោះ Apache error-log
 required	common	km	ទាមទារ
 required directory "%1" created.	admin	km	ថតឯកសារដែលត្រូវការ "%1" ត្រូវបានបង្កើតឡើង។
 required directory "%1" has wrong mode %2 instead of %3!	admin	km	ថតឯកសារដែលត្រូវការ "%1" មានរបៀប%2 ខុសជំនួសឱ្យ%3!
@@ -1260,7 +1260,7 @@ show (no save)	common	km	បង្ហាញ (មិនរក្សាទុក)
 show all	common	km	បង្ហាញ​ទាំងអស់
 show all / cancel filter	common	km	បង្ហាញទាំងអស់ / បោះបង់តម្រង
 show all categorys	common	km	បង្ហាញប្រភេទទាំងអស់។
-show log of following device	groupdav	km	បង្ហាញកំណត់ហេតុនៃឧបករណ៍ខាងក្រោម
+show log of following device	common	km	បង្ហាញកំណត់ហេតុនៃឧបករណ៍ខាងក្រោម
 show page generation time	common	km	បង្ហាញពេលវេលាបង្កើតទំព័រ
 show page generation time on the bottom of the page?	common	km	បង្ហាញពេលវេលាបង្កើតទំព័រនៅផ្នែកខាងក្រោមនៃទំព័រ។
 show page generation time?	common	km	បង្ហាញពេលវេលាបង្កើតទំព័រ
@@ -1516,7 +1516,7 @@ you need to be an egroupware administrator to access this functionality!	common	
 you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	km	អ្នកត្រូវដំឡើងកម្មវិធីជំនួយ Mailvelope ដែលមានសម្រាប់ Chrome និង Firefox ពី www.mailvelope.com ឬដោយចុចលើប៊ូតុងដំឡើង។
 you need to select a file first!	common	km	ជ្រើសរើសឯកសារជាមុនសិន!
 you need to select some entries first!	common	km	អ្នកត្រូវជ្រើសរើសធាតុមួយចំនួនជាមុនសិន!
-you need to set enable logging to "%1" to create/update a log.	groupdav	km	អ្នក​ត្រូវ​កំណត់​បើក​ការ​កត់ត្រា​ទៅ "%1" ដើម្បី​បង្កើត/អាប់ដេត​កំណត់ហេតុ។
+you need to set enable logging to "%1" to create/update a log.	common	km	អ្នក​ត្រូវ​កំណត់​បើក​ការ​កត់ត្រា​ទៅ "%1" ដើម្បី​បង្កើត/អាប់ដេត​កំណត់ហេតុ។
 you tried to automatically size a flex column, which always takes the rest of the space	common	km	អ្នកបានព្យាយាមកំណត់ទំហំជួរឈរ flex ដោយស្វ័យប្រវត្តិ ដែលតែងតែយកកន្លែងដែលនៅសល់។
 you will not be able to send or receive encrypted mails before completing that step!	common	km	អ្នក​នឹង​មិន​អាច​ផ្ញើ ឬ​ទទួល​អ៊ីមែល​ដែល​បាន​អ៊ិនគ្រីប​មុន​នឹង​បញ្ចប់​ជំហាន​នោះ​ឡើយ!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	km	អ្នកមិនមានសិទ្ធិចូលប្រើកម្មវិធី%1 ទេ!

@@ -489,7 +489,7 @@ emails	common	sl	Elektronska sporočila
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	sl	Vključeni slogi CSS, npr. '.red { background: red; }' (pazite na '.' pred imenom razreda) ali '@import url(...)' (imena razredov so globalna za celo stran!)
 empty file	common	sl	Prazna datoteka
 enable javascript onchange submit	common	sl	Omogoči JavaScript onchange
-enable logging	groupdav	sl	Omogoči prijavo
+enable logging	common	sl	Omogoči prijavo
 enabled	common	sl	Omogočeno
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	sl	Omogoča beleženje prometa CalDAV/CardDAV za diagnosticiranje težav z napravami.
 end date	common	sl	Končni datum
@@ -1125,7 +1125,7 @@ replace with	common	sl	Zamenjaj z
 request could not be processed, please reload your window (press f5 or cmd r)!	common	sl	Zahteve ni bilo mogoče obdelati, ponovno naložite okno (pritisnite F5 ali Ctrl+R)!
 requested resource '%1' does not exist or has expired	common	sl	Zahtevani vir '%1' ne obstaja ali je potekel
 requests and full responses to files directory	common	sl	Zahteve in popoln odgovor na imenik datotek
-requests and truncated responses to apache error-log	groupdav	sl	Zahteve in okrnjene odzive na dnevnik napak Apache
+requests and truncated responses to apache error-log	common	sl	Zahteve in okrnjene odzive na dnevnik napak Apache
 required	common	sl	Zahtevano
 required directory "%1" created.	admin	sl	Zahtevan imenik »%1« je ustvarjen.
 required directory "%1" has wrong mode %2 instead of %3!	admin	sl	Zahtevan imenik "%1" ima napačen način %2 namesto %3!
@@ -1287,7 +1287,7 @@ show (no save)	common	sl	Prikaži (ne shrani)
 show all	common	sl	Prikaži vse
 show all / cancel filter	common	sl	Pokaži vse / prekliči filter
 show all categorys	common	sl	Prikaži vse kategorije
-show log of following device	groupdav	sl	Prikažite dnevnik naslednje naprave
+show log of following device	common	sl	Prikažite dnevnik naslednje naprave
 show page generation time	common	sl	Prikaži čas generiranja strani
 show page generation time on the bottom of the page?	common	sl	Pokažem čas generiranja strani na dnu.
 show page generation time?	common	sl	Prikažem čas ustvarjanja strani
@@ -1549,7 +1549,7 @@ you need to be an egroupware administrator to access this functionality!	common	
 you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	sl	You need to install Mailvelope plugin available for Chrome and Firefox from www.mailvelope.com or by clicking on install button.
 you need to select a file first!	common	sl	Najprej izberite datoteko!
 you need to select some entries first!	common	sl	Najprej morate izbrati nekaj vnosov!
-you need to set enable logging to "%1" to create/update a log.	groupdav	sl	Če želite ustvariti / posodobiti dnevnik, morate omogočiti beleženje omogočiti "%1".
+you need to set enable logging to "%1" to create/update a log.	common	sl	Če želite ustvariti / posodobiti dnevnik, morate omogočiti beleženje omogočiti "%1".
 you tried to automatically size a flex column, which always takes the rest of the space	common	sl	Poskusili ste samodejno ustvariti kolono flex, ki vedno vzame preostanek prostora.
 you will not be able to send or receive encrypted mails before completing that step!	common	sl	Pred zaključkom tega koraka NE boste mogli pošiljati ali prejemati šifriranih e-poštnih sporočil!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	sl	Poskusili ste odpreti aplikacijo %1 ampak nimate pravice dostopa!
