@@ -11,6 +11,14 @@ fix opportunistically whenever you're already touching a listed function, don't 
 unrelated files. See `doc/ai/projects/jsapi-modernization.md` for the jQuery-removal swap table and
 why removal in `api/js/etemplate`/`api/js/jsapi` was deliberately postponed there.
 
+Tier 1 below (`api`, `calendar`, `smallpart`, `kanban`, `projectmanager`'s gantt widget) is also the
+precondition blocking `doc/ai/projects/remove-unsafe-eval-jquery.md`'s Phase 2 (real Trusted Types
+enforcement, to retire `script-src`'s `'unsafe-eval'`) - jQuery is loaded on every page today
+specifically because this Tier still depends on it synchronously, and that's what forces a
+`'default'`-policy escape hatch for jQuery's own `innerHTML` internals. Once Tier 1 is gone, that
+escape hatch is no longer needed - two independent projects converging on the same precondition as the
+"Future idea: lazy-load `jQuery` proxy" section below.
+
 Raw scan: 27 apps had `jQuery` references, 204 file hits (167 candidate production usage, 26
 test-harness/stub, 11 vendor library/plugin files). After review, the **114 real, in-scope usage
 files sort into two usage-level tiers** below, plus a false-positive tier and an out-of-scope tier.
