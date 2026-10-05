@@ -1643,12 +1643,21 @@ Questions' from nothing at all - and both needed fixing before the lists could u
 
 Verified live: Copy Course opened the copy for editing with its message and no page submit -
 `egw.open(<new id>, 'smallpart', 'edit')`, which is exactly what the redirect did. The question
-list was covered by tests only; `smallpart/tests/AjaxActionTest.php` is 5 tests.
+list is covered by tests only; `smallpart/tests/AjaxActionTest.php` is 7 tests.
 
-Two things learned while writing those tests, worth not re-learning: `Overlay::aclCheck()` wants
-a *participant* who is also a teacher, so owning the fixture course is not enough; and
 `Questions::action()` reads the course and video from the list's saved session state when it is
-not handed a filter, so a delete needs that state set, exactly as the real list leaves it.
+not handed a filter, and `Overlay::aclCheck()` refuses a `course_id` of 0 - so the state has to be
+set, exactly as the real list leaves it.
+
+**Where that bit us (2026-10-05).** After master's ACL hardening put `Overlay::aclCheck()` behind
+`exempt`/`readd` as well, the question tests started failing with "Permisson denied!" and it looked
+like the harness could not produce a participant who is also a teacher. It could all along:
+creating a course already subscribes its owner as `ROLE_ADMIN` (`Bo.php:3148`). The real cause was
+that `asAccount()` switches the EGroupware session, so the `Api\Cache::setSession()` recording the
+list state landed in the *other* user's session and the action read an empty filter. Two traps in
+one: a self-subscribe "fix" makes it worse, because the hardening forces the self path to
+`ROLE_STUDENT`; and the state must be written inside the same `asAccount()` callback as the action,
+since each callback is its own session. `exempt` and `delete` are really exercised now.
 
 The smallpart suite's 27 errors are all `SmallpartRestCreateReadDeleteTest` (guzzle HTTP against
 a REST endpoint) and are identical with and without this change.
@@ -1678,7 +1687,7 @@ touched).
 | | |
 |---|---|
 | aiassistant | its list is the last legacy `<nextmatch>` in the tree and renders no widget at all, so the conversion is unverified in a browser - Et2Nextmatch conversion tracker's job |
-| admin_customfields | `EgwAction`'s policy branch does `import(egw.link('/policy/js/app.min.js'))`, and `egw.link()` does not consult the build manifest - the dynamic import fails wherever that file is not self-contained, which stops the action on submit too |
+| admin_customfields | `EgwAction`'s policy branch does `import(egw.link('/policy/js/app.min.js'))`, and `egw.link()` does not consult the build manifest - the dynamic import fails wherever that file is not self-contained, which stops the action on submit too. **Do not patch the import**: `egw.applyFunc()` already does the manifest-aware load *and* the instantiation that branch hand-rolls, so `policy_confirmation` can become a generic `confirm_handler` and the special case deleted. Spun off as its own task 2026-10-05. Keep the app-presence gate, derived from the handler string - without it an instance with no policy app loses today's fallback to the plain confirm dialog |
 | stylite Calls | `Cti\Storage::delete()`'s "really delete an already-deleted call" branch is unreachable: a plain delete searches with `call_deleted IS NULL` |
 | records | should Status become the category picker dialog, for consistency with timesheet and infolog? Left as a sub-menu, see that section |
 | CI | records, aiassistant, developer, bookmarks and news_admin have no `.github/workflows` at all; aitools has `tests/` but no workflow. Their new test files run nowhere |
