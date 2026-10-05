@@ -97,13 +97,11 @@ describe("pdf-player", () =>
 		assert.strictEqual(el.src, newSrc, "getter must return what was set, not recurse into itself");
 	});
 
-	// NOTE: __render()'s page.render() call is NOT awaited/cancelled by set currentTime() before
-	// starting the next one - calling nextPage()/prevPage() again before the previous render on
-	// the same <canvas> has finished throws pdf.js's own "Cannot use the same canvas during
-	// multiple render() operations" (confirmed while writing this test: real pdf.js behavior, not
-	// a test artifact). A real user could hit this by clicking next/prev fast enough - a
-	// pre-existing bug, out of scope to fix here, but worth knowing. This test therefore awaits
-	// each page turn before starting the next one.
+	// __render() now cancels any still-in-flight render on the same <canvas> before starting the
+	// next one (ticket found live 2026-10-05, smallpart/ViDoTeach: "Cannot use the same canvas
+	// during multiple render() operations" navigating pages fast enough for two calls to overlap -
+	// see __render()'s own docblock in pdf-player.ts). This test still awaits each page turn before
+	// the next, same as before the fix - the rapid-fire, non-awaited case is its own test below.
 	it("nextPage()/prevPage() navigate between real pages and update currentTime", async() =>
 	{
 		const el = await loadedPlayer(2);
@@ -119,6 +117,33 @@ describe("pdf-player", () =>
 		el.prevPage();
 		await aTick();
 		assert.equal(el.currentTime, 1);
+	});
+
+	/**
+	 * Regression test for the bug the previous test's own comment used to document as unfixed:
+	 * calling nextPage() again before the previous page's render() had finished used to throw
+	 * pdf.js's own "Cannot use the same canvas during multiple render() operations" - found live
+	 * 2026-10-05 (smallpart/ViDoTeach, navigating a real PDF course fast enough to hit it).
+	 * __render() now cancels the previous in-flight task before starting the next, so this must
+	 * settle on the LAST requested page with no unhandled exception, same as a user clicking
+	 * next/prev faster than pages can actually render.
+	 */
+	it("navigating several pages in a row WITHOUT awaiting between them settles on the last one, with no throw", async() =>
+	{
+		const el = await loadedPlayer(4);
+
+		// deliberately not awaited between calls - this is exactly the "clicked faster than the
+		// previous render finished" scenario that used to throw
+		el.nextPage(); // -> 1
+		el.nextPage(); // -> 2
+		el.nextPage(); // -> 3
+
+		await aTick();
+
+		assert.equal(el.currentTime, 3, "must land on the last requested page, not an intermediate one");
+		const canvas = el.shadowRoot.querySelector("canvas");
+		assert.isAbove(canvas.width, 0, "the final page must have actually rendered, not been left mid-cancellation");
+		assert.isAbove(canvas.height, 0);
 	});
 
 	it("going past the last page marks ended without moving currentTime further", async() =>
