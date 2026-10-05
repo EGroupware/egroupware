@@ -176,6 +176,40 @@ class NextmatchActionSubmitTest extends LoggedInTest
 	 * - select_all and the egw_copy/egw_copy_add/egw_paste clipboard pseudo-actions get their
 	 *   onExecute installed client-side, so they are never really a submit.
 	 */
+	/**
+	 * A disabled action is not a fall-through, and a runtime-decided one still is.
+	 *
+	 * This is what makes the baseline portable. An installation without categories gets
+	 * `'enabled' => false` on the category action, and one without stylite gets it on
+	 * shareDocuments - neither can be dispatched, so neither may be reported. A
+	 * `javaScript:` callback is the opposite case: it decides per row at runtime, so the
+	 * action is dispatchable and must still be reported.
+	 */
+	public function testDisabledActionsAreNotFallThroughs()
+	{
+		$disabled = self::fallThroughs(['cat' => [
+			'caption'  => 'Change category',
+			'enabled'  => false,
+			'children' => ['cat_1' => ['caption' => 'One']],	// no onExecute
+		]]);
+		$this->assertSame([], $disabled,
+			'an action disabled outright cannot be dispatched, nor anything under it');
+
+		$runtime = self::fallThroughs(['cat' => [
+			'caption'  => 'Change category',
+			'enabled'  => 'javaScript:app.foo.is_enabled',
+			'children' => ['cat_1' => ['caption' => 'One']],	// no onExecute
+		]]);
+		$this->assertSame(['cat/cat_1'], $runtime,
+			'a callback decides at runtime, so the action still has to be reported');
+
+		$plain = self::fallThroughs(['cat' => [
+			'caption'  => 'Change category',
+			'children' => ['cat_1' => ['caption' => 'One']],
+		]]);
+		$this->assertSame(['cat/cat_1'], $plain, 'and an action with no enabled key is unchanged');
+	}
+
 	protected static function fallThroughs(array $actions, string $path = '') : array
 	{
 		$found = [];
@@ -183,6 +217,15 @@ class NextmatchActionSubmitTest extends LoggedInTest
 		{
 			if (!is_array($action)) continue;
 			$full = $path === '' ? (string)$id : $path . '/' . $id;
+
+			// 'enabled' => false disables the action outright - neither it nor anything under it
+			// can ever be dispatched, so it cannot fall through. This is how an action switches
+			// itself off when the data it needs is absent: category_action() does
+			// `'enabled' => (bool)$cat_actions` for an installation with no categories, and
+			// Link\Sharing::get_actions() disables shareDocuments where stylite is not installed.
+			// A 'javaScript:...' callback decides at runtime instead and is deliberately NOT
+			// skipped - the action is dispatchable whenever the callback says so.
+			if (array_key_exists('enabled', $action) && $action['enabled'] === false) continue;
 
 			if (!empty($action['children']))
 			{
