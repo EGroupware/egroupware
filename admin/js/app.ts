@@ -371,7 +371,12 @@ export class AdminApp extends EgwApp
 				// if iframe is used --> refresh it
 				const iframe_node = this.iframe ? this.iframe.iframe : undefined;
 				const iframe_url = iframe_node ? iframe_node.contentDocument.location.href : undefined;
-				if (_id && iframe_url != 'about:blank')
+				// iframe_node has to be part of the test: with no iframe iframe_url is undefined,
+				// and `undefined != 'about:blank'` is true, so this branch used to be taken
+				// anyway - reaching load(undefined) and throwing on a null this.iframe. That
+				// happens on every admin page that is not inside the tree's iframe, which is
+				// exactly where the else branch below is the one that should run.
+				if (_id && iframe_node && iframe_url != 'about:blank')
 				{
 					let refresh_done = false;
 					// Try for intelligent et2 refresh inside iframe
