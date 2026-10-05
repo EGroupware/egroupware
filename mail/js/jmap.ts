@@ -6544,9 +6544,9 @@ export class MailJmap
 	 * Mirrors ComposeMessageBuilder::resolveEmailAddressList()'s own PHP regex exactly (mail/src/
 	 * ComposeMessageBuilder.php).
 	 */
-	private static readonly DISTRIBUTION_LIST_RE = /^-?\d+$|<-?\d+@lists\.egroupware\.org>\s*$/;
+	static readonly DISTRIBUTION_LIST_RE = /^-?\d+$|<-?\d+@lists\.egroupware\.org>\s*$/;
 
-	private static splitAddresses(value? : string | string[]) : string[]
+	static splitAddresses(value? : string | string[]) : string[]
 	{
 		return value ? (Array.isArray(value) ? value : value.split(',')).map((address) => address.trim()).filter(Boolean) : [];
 	}

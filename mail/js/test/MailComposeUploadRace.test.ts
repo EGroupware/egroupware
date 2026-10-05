@@ -22,6 +22,7 @@ const egw : any = {
 		return String(label).replace(/%(\d+)/g, () => args[i++] ?? '');
 	},
 	preference: (_key : string, _app? : string) => null,
+	config: (_key : string, _app? : string) => undefined,	// site configuration, submitAction() asks for max_recipients_to_cc
 	message: (_msg : string, _type? : string) => {},
 	loading_prompt: (_id : string, _show : boolean, _msg? : string) => {},
 };

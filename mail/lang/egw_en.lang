@@ -410,6 +410,7 @@ mailinglist	mail	en	Mailinglist
 mails	common	en	Mails
 mails can be copied to that folder via context menu, if folder is configured.	mail	en	Emails can be copied to that folder via context menu, if folder is configured.
 mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	en	Mail server reported:\n\n%1\n\nDo you want to proceed by deleting the selected messages immediately (click OK)?\nIf not, please try to empty your trashfolder before continuing. (click Cancel)
+many recipients	mail	en	Many recipients
 mark all as read	mail	en	Mark all as read
 mark all messages in folder as read	mail	en	Mark all messages in folder as read
 mark as deleted	mail	en	Mark as deleted
@@ -435,6 +436,7 @@ move selected mails to archive	mail	en	Move selected emails to archive
 move selected to	mail	en	Move selected to
 move to	mail	en	Move to
 move to archive	mail	en	Move to archive folder
+move to bcc and send	mail	en	Move to Bcc and send
 move to trash	mail	en	Move to trash
 moved %1 message(s) from %2 to %3	mail	en	Moved %1 message(s) from %2 to %3.
 moving folders from one mailaccount to another is not supported	mail	en	Moving folders from one email account to another is not supported.
@@ -483,6 +485,7 @@ obsolete delete right, combination rights of e, t and x	mail	en	Obsolete delete 
 offer to add sender's s/mime certificate or pgp key to contact	mail	en	Offer to add sender's S/MIME certificate or PGP key to contact
 on	mail	en	on
 on behalf of	mail	en	On behalf of
+on sending the user is asked, if all of them should be moved to bcc, so they can not see each others addresses. distribution lists and groups are counted with their members.	mail	en	On sending the user is asked, if all of them should be moved to Bcc, so they can not see each others addresses. Distribution lists and groups are counted with their members.
 on vacation	mail	en	On vacation
 once per day	mail	en	Once per day
 one address is not valid	mail	en	One address is not valid
@@ -647,6 +650,7 @@ selected	mail	en	selected.
 selected date range (with quicksearch)	mail	en	Selected date range (with quicksearch)
 self-signed certificate created.	mail	en	Self-signed certificate created.
 send a reject message:	mail	en	Send a reject message:
+send anyway	mail	en	Send anyway
 send attachments greater than given size as download link instead (in mb)	mail	en	Send attachments greater than given size as download link instead (in MB)
 send files as	mail	en	Send files as
 send message and move to send folder (if configured)	mail	en	Send message and move to send folder (if configured)
@@ -742,6 +746,7 @@ there is no space left to store sieve script, please check sieve_maxscriptsize o
 this action affects every message in the selected thread(s) - %1 messages in total. continue?	mail	en	This action affects every message in the selected thread(s) - %1 messages in total. Continue?
 this mailbox is large - only showing messages since %1 for now	mail	en	This mailbox is large - only showing messages since %1 for now
 this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	en	This email contains external images served via insecure HTTP protocol. Be aware showing or allowing them can compromise your security!
+this message goes to %1 recipients in to and cc, more than the limit of %2. all of them see the addresses of all others. move all of them to bcc?	mail	en	This message goes to %1 recipients in To and Cc, more than the limit of %2. All of them see the addresses of all others. Move all of them to Bcc?
 this message is smime encrypted and password protected.	mail	en	This message is S/MIME encrypted and password protected.
 timeout on connections to your imap server	mail	en	Timeout on connections to your IMAP Server
 to do	mail	en	To do
@@ -780,6 +785,7 @@ validate addresses on submit:	mail	en	Validate addresses on submit:
 validate selected addresses on submit:	mail	en	Validate selected addresses on submit:
 view full mail source	mail	en	View full email source
 view header lines	mail	en	View header lines
+warn if more than this number of recipients are in to and cc (0 = off)	mail	en	Warn if more than this number of recipients are in To and Cc (0 = off)
 what do do with html email	mail	en	What to do with HTML email.
 what order the list columns are in	mail	en	What order the list columns are in
 what to do when you delete a message	mail	en	What to do when you delete a message.

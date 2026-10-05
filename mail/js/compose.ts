@@ -1137,6 +1137,11 @@ export class MailCompose
 		// waitForPendingUploads()'s own docblock - a fast Send/Save click can also beat a
 		// still-uploading classic (non-JMAP) attachment's own postback merge to the punch.
 		wait = wait.then(() => this.waitForPendingUploads());
+		// ticket #124811: ask before sending to more recipients in To and Cc than the admin allows,
+		// they all see each others addresses - offers to move them to Bcc instead. Cancel stops everything
+		// below, the message is neither sent nor changed.
+		let proceed = true;
+		wait = wait.then(() => this.confirmManyRecipients()).then((ok : boolean) => { proceed = ok; });
 
 		// mailvelope (PGP) used to have its own branch here that just encrypted the body into the
 		// mail_plaintext widget and stopped (`return false`) - clicking Send visibly did nothing
@@ -1155,6 +1160,7 @@ export class MailCompose
 		{
 			// Wait for integration & pending
 			wait.then(() => {
+					if (!proceed) return;
 					// trySendViaJmap() never goes through ETemplate's own submit() (no form postback at
 					// all), so its "please wait" spinner never fired here - found live 2026-09-01
 					// (ralf: "before the rework of compose, on submission we had a spinner... this is no
@@ -1162,9 +1168,10 @@ export class MailCompose
 					// uses, so a fall-through to the classic postback below just keeps it showing.
 					this.egw.loading_prompt('et2_submit_spinner', true, this.egw.lang('Please wait while sending your mail'));
 				})
-				.then(() => this.trySendViaJmap())
+				.then(() => proceed ? this.trySendViaJmap() : true)
 				.then((sent) =>
 				{
+					if (!proceed) return;
 					if (sent)
 					{
 						this.egw.loading_prompt('et2_submit_spinner', false);
@@ -1177,8 +1184,107 @@ export class MailCompose
 
 		wait.then(() =>
 		{
+			if (!proceed) return;
 			this.et2.getInstanceManager().submit(null, 'Please wait while sending your mail');
 		});
+	}
+
+	/**
+	 * The recipients (to/cc) the user already confirmed to send to, in spite of being more than the admin's
+	 * "max_recipients_to_cc" limit - so a repeated submit (eg. after entering the S/MIME passphrase) does not ask again
+	 */
+	private confirmedManyRecipients : string = '';
+
+	/**
+	 * Entries of a to/cc/bcc widget value, which is either an array or a comma-separated string
+	 */
+	static recipientEntries(value? : string | string[]) : string[]
+	{
+		return MailJmap.splitAddresses(value);
+	}
+
+	/**
+	 * What identifies a recipient: bare lower-case address of `"Name" <a@b.c>`, a list or group placeholder is
+	 * identified by its entry
+	 */
+	static recipientKey(entry : string) : string
+	{
+		const bare = /<([^<>]+)>\s*$/.exec(entry);
+		return (bare ? bare[1] : entry).trim().toLowerCase();
+	}
+
+	/**
+	 * Number of different recipients in all given entry lists, the same address in To and Cc counts once
+	 */
+	static countDistinctRecipients(...lists : string[][]) : number
+	{
+		return new Set(lists.flat().map((entry) => MailCompose.recipientKey(entry)).filter(Boolean)).size;
+	}
+
+	/**
+	 * Ticket #124811: ask the user, before sending to more recipients in To and Cc than the admin allows
+	 * (site configuration mail "max_recipients_to_cc", 0 = off), as all of them see each others addresses.
+	 *
+	 * Distribution lists and groups are counted with their members, resolved server-side like on sending.
+	 * Moving to Bcc moves ALL To and Cc recipients (To stays empty), as anybody being warned does not want
+	 * any of them to be visible.
+	 *
+	 * @returns {Promise<boolean>} true: go on sending (not too many, chosen "send anyway", or recipients were moved
+	 *  to Bcc), false: user cancelled
+	 */
+	private async confirmManyRecipients() : Promise<boolean>
+	{
+		const limit = Number(this.egw.config('max_recipients_to_cc', 'mail')) || 0;
+		if (limit <= 0) return true;
+
+		const to = MailCompose.recipientEntries(this.et2.getWidgetById('to')?.get_value());
+		const cc = MailCompose.recipientEntries(this.et2.getWidgetById('cc')?.get_value());
+		const entries = [...to, ...cc];
+		if (!entries.length) return true;
+
+		let count = MailCompose.countDistinctRecipients(entries);
+		// a list or group counts as one entry only, expand them, but only if still needed to decide
+		if (count <= limit && entries.some((entry) => MailJmap.DISTRIBUTION_LIST_RE.test(entry)))
+		{
+			const resolved : {to : string[], cc : string[]} = await this.egw.request(
+				'mail.EGroupware\\Mail\\Compose.ajax_resolveDistributionLists', [{to, cc, bcc : []}]);
+			// a failed expansion is not a reason to block sending: the real send reports it
+			if (resolved) count = MailCompose.countDistinctRecipients(resolved.to ?? [], resolved.cc ?? []);
+		}
+		const key = entries.join(',');
+		if (count <= limit || key === this.confirmedManyRecipients) return true;
+
+		const [buttonId] = await Et2Dialog.show_dialog(null,
+			this.egw.lang('This message goes to %1 recipients in To and Cc, more than the limit of %2. All of them see the addresses of all others. Move all of them to Bcc?', count, limit),
+			this.egw.lang('Many recipients'), {},
+			[
+				{label: this.egw.lang('Move to Bcc and send'), id: 'bcc', class: 'ui-priority-primary', default: true, image: 'check'},
+				{label: this.egw.lang('Send anyway'), id: 'send', image: 'send'},
+				{label: this.egw.lang('Cancel'), id: 'cancel', image: 'cancelDialog'}
+			], Et2Dialog.WARNING_MESSAGE).getComplete();
+		const button = String(buttonId);	// custom buttons have string ids, getComplete() is typed for the numeric BUTTONS_*
+
+		if (button === 'bcc')
+		{
+			const bcc = MailCompose.recipientEntries(this.et2.getWidgetById('bcc')?.get_value());
+			const seen = new Set(bcc.map((entry) => MailCompose.recipientKey(entry)));
+			this.et2.getWidgetById('bcc')?.set_value([...bcc, ...entries.filter((entry) =>
+			{
+				const key = MailCompose.recipientKey(entry);
+				return !seen.has(key) && seen.add(key);
+			})]);
+			this.et2.getWidgetById('to')?.set_value([]);
+			this.et2.getWidgetById('cc')?.set_value([]);
+			// show the Bcc row, it is hidden behind the "..." expander as long as it was empty
+			this.fieldExpanderInit();
+			return true;
+		}
+		if (button === 'send')
+		{
+			this.confirmedManyRecipients = key;
+			return true;
+		}
+		return false;
 	}
 
 	/**
