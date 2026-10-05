@@ -65,11 +65,52 @@ class NextmatchAjaxActionTest extends LoggedInTest
 			$this->contacts->delete($this->contact_id);
 			$this->contact_id = null;
 		}
-		if ($this->info_id)
+		$leaked = $this->purgeInfolog();
+		if ($leaked)
 		{
-			$this->infolog->delete($this->info_id, false, false, true);
-			$this->info_id = null;
+			throw new \RuntimeException($leaked);
 		}
+	}
+
+	/**
+	 * Purge the entry makeInfolog() created, and say so when it survives.
+	 *
+	 * infolog_bo::delete() soft-deletes, the same way Contacts::delete() above does: the first
+	 * call sets info_status to 'deleted', unlinks everything but file attachments and keeps the
+	 * row, and only purges once the entry already reads 'deleted'. One call therefore returns
+	 * true with the row still in egw_infolog, which on a shared instance means a growing pile of
+	 * 'AjaxActionTest' fixtures. Hence two calls, and a read of egw_infolog afterwards rather
+	 * than trusting either return value - a delete refused on rights also only returns false.
+	 *
+	 * @return string empty when the row is gone, otherwise what is left behind and why
+	 */
+	protected function purgeInfolog() : string
+	{
+		if (!$this->info_id)
+		{
+			return '';
+		}
+		$info_id = $this->info_id;
+		$this->info_id = null;
+
+		$problem = '';
+		try
+		{
+			$this->infolog->delete($info_id, false, false, true);	// -> info_status 'deleted'
+			$this->infolog->delete($info_id, false, false, true);	// -> row gone
+		}
+		catch (\Exception $e)
+		{
+			$problem = ': ' . get_class($e) . ': ' . $e->getMessage();
+		}
+		$left = $GLOBALS['egw']->db->select('egw_infolog', 'info_status', array('info_id' => $info_id),
+			__LINE__, __FILE__, false, '', 'infolog')->fetchColumn();
+		if ($left === false && !$problem)
+		{
+			return '';
+		}
+		return sprintf('could not clean up the fixture infolog #%d, it is still in egw_infolog as "%s"%s',
+			$info_id, (string)$left, $problem);
 	}
 
 	/**
