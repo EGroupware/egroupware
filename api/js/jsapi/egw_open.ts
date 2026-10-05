@@ -10,6 +10,7 @@
  */
 
 import './egw_core';
+import {trustedScript} from "./egw_trusted_types";
 
 export interface OpenModule
 {
@@ -551,7 +552,7 @@ class Open implements OpenModule
 		var url = _link;
 		if (url.indexOf('javascript:') == 0)
 		{
-			(new Function(url.substr(11)))();
+			(new Function(trustedScript(url.substr(11))))();
 			return;
 		}
 		if (url.indexOf('mailto:') == 0)

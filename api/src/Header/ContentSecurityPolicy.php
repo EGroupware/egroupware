@@ -34,7 +34,7 @@ class ContentSecurityPolicy
 	 *
 	 * @var array
 	 */
-	private static $sources = array(				// our dhtmlxcommon version (not the current) uses eval,
+	private static $sources = array(
 		// 'blob:' here is a CORE default, not app-specific - ticket #125641 (2026-10-04): found
 		// live that mail's own PDF-attachment print/view wrapper (MailJmap.wrapPdfViewerWithDownload(),
 		// pdf.js worker loading, both via a blob: object URL) only worked because smallpart happens
@@ -48,7 +48,57 @@ class ContentSecurityPolicy
 		// core-trusted scheme for both img-src and object-src below, extending that same trust to
 		// script-src (a well-established, secure pattern for dynamically-created worker/script
 		// blobs) belongs at this level, not behind an unrelated app's install state.
-		'script-src'  => array("'unsafe-eval'", 'blob:'),	// sidebox javascript links, maybe more
+		//
+		// 'trusted-types-eval' + the (not-yet-enabled, see below) trusted-types directive
+		// (ralf, 2026-10-05, master only for now - see api/js/jsapi/egw_trusted_types.ts's own
+		// docblock for the full reasoning): narrows 'unsafe-eval' down to exactly this app's own
+		// seven new Function() call sites (all routed through that module's trustedScript()),
+		// rather than leaving eval open for literally any string anywhere. Deliberately NOT
+		// replacing 'unsafe-eval' - kept side-by-side so a browser that doesn't support Trusted
+		// Types yet (pre Safari 26/Firefox 148/Chrome+Edge 145 - caniuse.com/?search=trusted-types-eval)
+		// just falls back to it with zero regression.
+		// @see https://centralcsp.com/en/blog/trusted-types-eval-csp
+		//
+		// require-trusted-types-for 'script' is DELIBERATELY NOT enabled yet (tried live
+		// 2026-10-05, reverted within the hour): it doesn't just gate eval()/new Function() - it
+		// enforces on EVERY DOM-XSS sink application-wide (.innerHTML/.outerHTML/document.write()/
+		// etc.), requiring a TrustedHTML object instead of a plain string for ALL of them. jQuery's
+		// own .html()/innerHTML and the offline.min.js library both broke immediately on page load
+		// (TypeError: "This document requires 'TrustedHTML' assignment"). Enabling this for real
+		// needs a 'default' Trusted Types policy (a specially-reserved policy name that
+		// automatically intercepts any UNWRAPPED sink assignment app-wide, including third-party
+		// code we don't control) covering createHTML() as a passthrough at minimum, likely wired up
+		// alongside egw_trusted_types.ts - not attempted yet, much bigger retrofit than the eval
+		// call sites alone. 'trusted-types' below stays declared (harmless on its own re: sink
+		// ENFORCEMENT - it only restricts which POLICY NAMES may be created, independent of
+		// require-trusted-types-for) so egw_trusted_types.ts's createPolicy('egw-legacy-eval', ...)
+		// call keeps succeeding once this policy allowlist is reached in a future, more careful pass.
+		// That allowlist restriction itself is NOT harmless though - found live 2026-10-05: lit-html
+		// (this app's own UI framework, loaded on every page regardless of Trusted Types) proactively
+		// creates its OWN named policy ('lit-html') on startup, unconditionally, for its own internal
+		// sanitizeDOMValue() use - blocked outright the moment 'trusted-types' lists anything that
+		// doesn't include it ("Creating a TrustedTypePolicy named 'lit-html' violates..."). Added
+		// here; if another bundled library's own policy name shows up blocked later, same fix.
+		//
+		// 'allow-duplicates' also needed - found live 2026-10-05, immediately after the above:
+		// "a TrustedTypePolicy with that name already exists and the directive does not contain
+		// 'allow-duplicates'". This app's own per-app bundles each pull in their own copy of lit/
+		// lit-html (rollup's chunking doesn't fully dedupe it across every entry point), so more
+		// than one copy of lit-html's own createPolicy('lit-html', ...) bootstrap call can run in
+		// the same document - the spec blocks RE-creating an existing policy name by default (an
+		// anti-hijacking guard, to stop an attacker from overwriting an already-trusted policy),
+		// but here it's just this app's own benign multi-bundle structure, not an attack.
+		//
+		// 'dompurify' (DOMPurify, bundled for Et2Image/et2-html-area sanitisation - see
+		// api/js/etemplate/Et2Image/dompurify-shim.ts) also proactively creates its OWN named
+		// policy, same pattern as lit-html - found live 2026-10-05 right after the above two fixes.
+		// Searched every bundled dependency directly for the literal createPolicy('name', ...)
+		// pattern (`grep -rhoE "createPolicy\(['\"][a-zA-Z0-9_-]+['\"]" node_modules/`) rather than
+		// keep discovering these one at a time live - lit-html and dompurify are the only two REAL
+		// runtime ones in this app's entire dependency tree ('default'/'my-organization' only ever
+		// appear inside dompurify's own README.md as doc examples, never executed).
+		'script-src'  => array("'unsafe-eval'", "'trusted-types-eval'", 'blob:'),
+		'trusted-types' => ['egw-legacy-eval', 'lit-html', 'dompurify', "'allow-duplicates'"],
 		'style-src'   => array("'unsafe-inline'"),	// eTemplate styles and custom framework colors
 		'connect-src' => null,	// NOT array(), to call the hook
 		'frame-src'   => null,	// NOT array(), to call the hook
@@ -59,6 +109,16 @@ class ContentSecurityPolicy
 		'font-src'    => ["'self'"],
 		'default-src' => ["'none'"],	// disallows all not explicit set sources!
 	);
+
+	/**
+	 * Directives whose values are NEVER "'self'" / a URL - send()'s own auto-"'self'"-prepend
+	 * (below) must not apply to them. 'trusted-types' takes bare policy-name tokens (not even
+	 * quoted) and 'require-trusted-types-for' takes only the fixed keyword 'script' - "'self'"
+	 * would be meaningless, and almost certainly rejected outright, in either one.
+	 *
+	 * @var array
+	 */
+	private static $no_self_sources = ['trusted-types', 'require-trusted-types-for'];
 
 	/**
 	 * Add Content-Security-Policy sources
@@ -101,7 +161,7 @@ class ContentSecurityPolicy
 
 		foreach($attrs as $attr)
 		{
-			if (in_array($attr, array('none', 'self', 'unsafe-eval', 'unsafe-inline')))
+			if (in_array($attr, array('none', 'self', 'unsafe-eval', 'unsafe-inline', 'trusted-types-eval')))
 			{
 				$attr = "'$attr'";	// automatic add quotes
 			}
@@ -205,8 +265,9 @@ class ContentSecurityPolicy
 			if (in_array("'none'", $urls)) {
 				if ($source !== 'default-src') continue;
 			}
-			// automatic add 'self', if not 'none'
-			elseif (!in_array("'self'", $urls)) {
+			// automatic add 'self', if not 'none' - except for directives whose values are never
+			// "'self'" to begin with (trusted-types/require-trusted-types-for, see $no_self_sources)
+			elseif (!in_array($source, self::$no_self_sources) && !in_array("'self'", $urls)) {
 				array_unshift($urls, "'self'");
 			}
 			$policies[] = "$source " . implode(' ', $urls);
