@@ -18,6 +18,7 @@ import {et2_widget} from "../../api/js/etemplate/et2_core_widget";
 import type {JmapAttachment, JmapReplyContext} from "./jmap";
 import {formatJmapAddress, isPreferenceOn, MailJmap} from "./jmap";
 import {normalizeFormatBlock} from "../../api/js/etemplate/Et2HtmlArea/Et2HtmlAreaConfig";
+import {sameOriginUrl} from "../../api/js/jsapi/egw_utils";
 
 export class MailCompose
 {
@@ -567,7 +568,13 @@ export class MailCompose
 	 *  from the token ApiHandler::storeAttachment() returned - NOT that bare token path itself
 	 *  (eg. "/mail/attachments/report.pdf--abc123..."), which is only a server-side matching
 	 *  pattern and doesn't route through the REST dispatch at all when fetched directly (found
-	 *  live 2026-09-29: landed on the site root instead of groupdav.php, returning unrelated content)
+	 *  live 2026-09-29: landed on the site root instead of groupdav.php, returning unrelated content).
+	 *  Re-based onto this page's own location.origin via sameOriginUrl() before fetching - found
+	 *  live via ticket #125621 that the server's own scheme-guessing (config_webserver_url is
+	 *  commonly just a bare path, so Api\Framework::getUrl() has to infer scheme/host from request
+	 *  headers) can come back `http:` under some reverse-proxy setups even though this popup itself
+	 *  loaded over `https:`, which the browser then silently blocks as mixed content - see
+	 *  sameOriginUrl()'s own docblock.
 	 */
 	public async applyPresetAttachmentUrls(refs : { name : string, type : string, url : string, size : number }[]) : Promise<void>
 	{
@@ -575,7 +582,7 @@ export class MailCompose
 		const profileID = this.currentProfileID();
 		const uploaded = await Promise.all(refs.map(async(r) =>
 		{
-			const response = await fetch(r.url, {credentials: 'same-origin'});
+			const response = await fetch(sameOriginUrl(r.url), {credentials: 'same-origin'});
 			if (!response.ok)
 			{
 				throw new Error(`Fetching attachment '${r.name}' (${r.url}) failed: ${response.status} ${response.statusText}`);

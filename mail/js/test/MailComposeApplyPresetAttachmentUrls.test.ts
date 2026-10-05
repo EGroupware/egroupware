@@ -5,6 +5,7 @@ import "./MailAppImportStub";
 // way the other mail tests do, before compose.ts pulls it in transitively
 import "../../../api/js/etemplate/Et2Widget/Et2Widget";
 import {MailCompose} from "../compose";
+import {sameOriginUrl} from "../../../api/js/jsapi/egw_utils";
 
 /**
  * MailCompose.applyPresetAttachmentUrls() (tickets #125601/#125621): mail's own REST API
@@ -26,6 +27,14 @@ import {MailCompose} from "../compose";
  * Setup: bare MailCompose (constructor only sets `this.app`/isJmapMode), `et2.getWidgetById()`
  * only ever asked for 'mailaccount' (currentProfileID()'s own read) - same minimal fake other
  * compose.ts unit tests (eg. MailComposeApplyPresetFilemode.test.ts) already use.
+ *
+ * Found live via ticket #125621 (2026-10-05): the `url` prepareAttachments() sends can come back
+ * with the WRONG scheme (`http:` under at least one reverse-proxy setup, even though this page
+ * itself loaded over `https:` - config_webserver_url is commonly just a bare path, so the server
+ * has to guess scheme/host from request headers) - the browser then silently blocks the fetch as
+ * mixed content. Every `fetch()` call below now goes through `sameOriginUrl()` first (re-bases
+ * onto THIS page's own origin - see its own docblock in egw_utils.ts), so the stubbed `fetch()`
+ * calls/assertions below expect `sameOriginUrl(url)`, not the bare `url` string.
  */
 describe('MailCompose.applyPresetAttachmentUrls()', () =>
 {
@@ -63,13 +72,13 @@ describe('MailCompose.applyPresetAttachmentUrls()', () =>
 
 	it('fetches each reference, uploads it as a real JMAP blob, and carries the result forward', async() =>
 	{
-		fetchStub.withArgs('/mail/attachments/report--abc123').resolves(okResponse('hello pdf', 'application/pdf'));
+		fetchStub.withArgs(sameOriginUrl('/mail/attachments/report--abc123')).resolves(okResponse('hello pdf', 'application/pdf'));
 
 		await compose.applyPresetAttachmentUrls([
 			{name: 'report.pdf', type: 'application/pdf', url: '/mail/attachments/report--abc123', size: 9},
 		]);
 
-		assert.isTrue(fetchStub.calledOnceWith('/mail/attachments/report--abc123', {credentials: 'same-origin'}));
+		assert.isTrue(fetchStub.calledOnceWith(sameOriginUrl('/mail/attachments/report--abc123'), {credentials: 'same-origin'}));
 		assert.isTrue(uploadAttachment.calledOnce);
 		const [profileID, blob, name, type] = uploadAttachment.firstCall.args;
 		assert.equal(profileID, '42', 'must upload against the compose popup\'s own current account');
@@ -85,8 +94,8 @@ describe('MailCompose.applyPresetAttachmentUrls()', () =>
 
 	it('handles several references, keeping them in order', async() =>
 	{
-		fetchStub.withArgs('/mail/attachments/first--a').resolves(okResponse('AAA', 'text/plain'));
-		fetchStub.withArgs('/mail/attachments/second--b').resolves(okResponse('BBBB', 'text/plain'));
+		fetchStub.withArgs(sameOriginUrl('/mail/attachments/first--a')).resolves(okResponse('AAA', 'text/plain'));
+		fetchStub.withArgs(sameOriginUrl('/mail/attachments/second--b')).resolves(okResponse('BBBB', 'text/plain'));
 
 		await compose.applyPresetAttachmentUrls([
 			{name: 'first.txt', type: 'text/plain', url: '/mail/attachments/first--a', size: 3},
@@ -111,7 +120,7 @@ describe('MailCompose.applyPresetAttachmentUrls()', () =>
 
 	it('rejects when a referenced attachment can no longer be fetched (eg. expired temp file)', async() =>
 	{
-		fetchStub.withArgs('/mail/attachments/gone--x').resolves({ok: false, status: 404, statusText: 'Not Found'});
+		fetchStub.withArgs(sameOriginUrl('/mail/attachments/gone--x')).resolves({ok: false, status: 404, statusText: 'Not Found'});
 
 		let error : any;
 		try
@@ -129,5 +138,20 @@ describe('MailCompose.applyPresetAttachmentUrls()', () =>
 		assert.include(error.message, 'gone.pdf');
 		assert.isFalse(uploadAttachment.called);
 		assert.isFalse(carryForwardAttachments.called);
+	});
+
+	it('re-bases a URL with the wrong scheme/host onto this page\'s own origin before fetching (ticket #125621)', async() =>
+	{
+		fetchStub.withArgs(location.origin + '/mail/attachments/report--abc123')
+			.resolves(okResponse('hello pdf', 'application/pdf'));
+
+		await compose.applyPresetAttachmentUrls([
+			// a server guess gone wrong: wrong scheme AND a different host entirely - same class of
+			// bug either way, both must be discarded in favor of this page's own location.origin
+			{name: 'report.pdf', type: 'application/pdf', url: 'http://other-host.example/mail/attachments/report--abc123', size: 9},
+		]);
+
+		assert.isTrue(fetchStub.calledOnceWith(location.origin + '/mail/attachments/report--abc123', {credentials: 'same-origin'}));
+		assert.isTrue(uploadAttachment.calledOnce, 'must still succeed - the mismatched scheme/host must not reach fetch() at all');
 	});
 });
