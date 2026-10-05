@@ -1464,12 +1464,21 @@ class timesheet_ui extends timesheet_bo
 				}
 				break;
 			case 'cat':
-				$cat_name = Api\Categories::id2name($settings);
-				$action_msg = lang('changed category to %1', $cat_name);
+				// an empty $settings means "remove the category", which the picker dialog offers
+				// as its own button - so it must not be mistaken for a failure. The test below
+				// used to be `($entry['cat_id'] = $settings)`, an assignment whose *value* is
+				// $settings, so removing one short-circuited before save() and was counted as a
+				// failure (reported to the user as "insufficient rights").
+				$action_msg = $settings ? lang('changed category to %1', Api\Categories::id2name($settings)) :
+					lang('removed category');
 				foreach((array)$checked as $n => $id) {
-					if (($entry = $this->read($id)) &&
-						($entry['cat_id'] = $settings) &&
-						$this->save($entry) == 0)
+					if (!($entry = $this->read($id)))
+					{
+						$failed++;
+						continue;
+					}
+					$entry['cat_id'] = $settings;
+					if ($this->save($entry) == 0)
 					{
 						$success++;
 					}

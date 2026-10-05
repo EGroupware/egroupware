@@ -126,10 +126,11 @@ price	timesheet	en	Price
 project fields	timesheet	en	Project fields
 projectmanager integration	admin	en	Project Manager integration
 quantity	timesheet	en	Quantity
+re-edit timesheet	timesheet	en	Re-edit timesheet
 readable	timesheet	en	Readable
 recorded	timesheet	en	Recorded
 recovered	timesheet	en	recovered
-re-edit timesheet	timesheet	en	Re-edit timesheet
+removed category	timesheet	en	removed category
 replacements for inserting entries into documents	timesheet	en	Replacements for inserting entries into documents
 restore this entry	timesheet	en	Restore this entry
 save & new	timesheet	en	Save & New
