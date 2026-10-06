@@ -4423,6 +4423,40 @@ export class MailJmap
 	private objectUrls : Record<string, string[]> = {};
 
 	/**
+	 * Rows that may hold object URLs (objectUrls, attachmentViewUrls), least recently resolved first
+	 *
+	 * Only the row in the preview pane (or the single-message dialog) is on screen, but every row
+	 * ever previewed kept its blobs - inline images, viewable attachments, a PDF's rendered pages -
+	 * until the page was closed, so a mail tab left open for days held every one of them. The most
+	 * recent MAX_ROWS_WITH_URLS are kept, so flipping back and forth between a handful of messages
+	 * does not download their attachments again each time.
+	 */
+	private rowsWithUrls : string[] = [];
+
+	private static readonly MAX_ROWS_WITH_URLS = 10;
+
+	/**
+	 * Mark a row as the most recently resolved, and revoke the URLs of any row that falls out of
+	 * the most recent MAX_ROWS_WITH_URLS
+	 */
+	private touchRowUrls(rowId : string) : void
+	{
+		const index = this.rowsWithUrls.indexOf(rowId);
+		if (index !== -1)
+		{
+			this.rowsWithUrls.splice(index, 1);
+		}
+		this.rowsWithUrls.push(rowId);
+		while (this.rowsWithUrls.length > MailJmap.MAX_ROWS_WITH_URLS)
+		{
+			const evicted = this.rowsWithUrls.shift();
+			(this.objectUrls[evicted] || []).forEach(url => URL.revokeObjectURL(url));
+			delete this.objectUrls[evicted];
+			this.revokeAttachmentViewUrls(evicted);
+		}
+	}
+
+	/**
 	 * Resolve a bare PDF's base64 payload (Jmap\Imap::structureToHtml()'s "whole message is one
 	 * PDF, no separate body" branch, ticket #125171) into a real blob: URL - Chrome's built-in PDF
 	 * viewer flatly refuses to render a PDF from a data: URI at all (confirmed live: neither
@@ -4475,6 +4509,7 @@ export class MailJmap
 	{
 		(this.objectUrls[rowId] || []).forEach(url => URL.revokeObjectURL(url));
 		this.objectUrls[rowId] = [];
+		this.touchRowUrls(rowId);
 
 		// assembleBodyHtml()'s deferCidImages() already moved "cid:..." out of src into data-cid
 		// (and cleared src) before this HTML ever reached the iframe, so the browser never
@@ -4517,6 +4552,12 @@ export class MailJmap
 					fileName: attachment.name || 'image',
 				});
 				const url = URL.createObjectURL(MailJmap.withKnownType(await response.blob(), attachment.type));
+				if (!this.rowsWithUrls.includes(rowId))
+				{
+					// newer messages were previewed while this downloaded - nobody is looking at this one
+					URL.revokeObjectURL(url);
+					return;
+				}
 				this.objectUrls[rowId].push(url);
 				img.src = url;
 			}
@@ -4641,6 +4682,7 @@ export class MailJmap
 	 */
 	async getAttachmentViewUrl(rowId : string, profileID : string, blobId : string, filename : string, mimeType : string) : Promise<string>
 	{
+		this.touchRowUrls(rowId);
 		try
 		{
 			let response : Response;
@@ -4670,12 +4712,27 @@ export class MailJmap
 			}
 			const namedBlob = MailJmap.withKnownFilename(await response.blob(), mimeType, filename);
 			const contentUrl = URL.createObjectURL(namedBlob);
-			const urls = (this.attachmentViewUrls[rowId] ??= []);
-			urls.push(contentUrl);
+			// newer messages were previewed while this downloaded - nobody is looking at this one
+			const superseded = () => new JmapUserError('Message is no longer displayed');
+			if (!this.rowsWithUrls.includes(rowId))
+			{
+				URL.revokeObjectURL(contentUrl);
+				throw superseded();
+			}
+			(this.attachmentViewUrls[rowId] ??= []).push(contentUrl);
 			if ((mimeType || '').toLowerCase() === 'application/pdf')
 			{
 				const wrapperUrl = await MailJmap.wrapPdfViewerWithDownload(namedBlob, contentUrl, filename, mimeType);
-				urls.push(wrapperUrl);
+				if (!this.rowsWithUrls.includes(rowId))
+				{
+					// the wrapper was built after the row was evicted, so its revoke already ran without it
+					URL.revokeObjectURL(wrapperUrl);
+					throw superseded();
+				}
+				// Looked up again, not the array used above: rendering the pages takes a while, and a
+				// second resolve of this row in that time (the preview asks from two places) revokes
+				// and replaces it - a wrapper pushed onto the old one was never revoked.
+				(this.attachmentViewUrls[rowId] ??= []).push(wrapperUrl);
 				return wrapperUrl;
 			}
 			return contentUrl;
