@@ -155,6 +155,13 @@ export class CalendarApp extends EgwApp
 	// Calendar-wide autorefresh
 	_autorefresh_timer : ReturnType<typeof setInterval> = null;
 
+	// The tab hide/show listeners the autorefresh pauses and resumes on, bound once per element
+	// (see _bindAutorefreshTabEvents()) rather than on every _set_autorefresh() call
+	private _autorefresh_tab : {el : Element, hide : EventListener, show : EventListener} = null;
+
+	// The refresh interval elapsed while the tab was hidden, so the next "show" refreshes
+	private _autorefresh_stale : boolean = false;
+
 	// Set by _scroll()'s scroll_animate() to prevent scrolling too fast, read via app.calendar
 	// since scroll_animate's own `this` is dynamic (see _scroll())
 	_scroll_disabled : boolean = false;
@@ -257,6 +264,7 @@ export class CalendarApp extends EgwApp
 			window.clearInterval(this._autorefresh_timer);
 			this._autorefresh_timer = null;
 		}
+		this._unbindAutorefreshTabEvents();
 	}
 
 	/**
@@ -4306,6 +4314,40 @@ export class CalendarApp extends EgwApp
 	}
 
 	/**
+	 * Autorefresh interval in seconds, 0 for off
+	 *
+	 * Same formula as Nextmatch.php and Et2NextmatchAutoRefresh: the column selection
+	 * dialog, which is where this value gets set, stores it under the row template name
+	 * when the app sets no columnselection_pref - which calendar does not.  Reading
+	 * columnselection_pref alone gave "nextmatch-undefined-autorefresh", so this never
+	 * found a value at all and the non-list views never refreshed themselves.
+	 */
+	private _autorefresh_time() : number
+	{
+		const nm = this.listNextmatch;
+		if(!nm)
+		{
+			return 0;
+		}
+		const refresh_preference = "nextmatch-" + (nm.settings.columnselection_pref || nm.template) + "-autorefresh";
+		return this.egw.preference(refresh_preference, 'calendar') || 0;
+	}
+
+	/**
+	 * Clear cache and redraw the current state, what an autorefresh tick does
+	 */
+	private _autorefresh_refresh = () =>
+	{
+		// Deleted events are not coming properly, so clear it all
+		this._clear_cache();
+		// Force redraw to current state
+		this.setState({state: this.state});
+
+		// This is a fast update, but misses deleted events
+		//this._fetch_data(this.state);
+	};
+
+	/**
 	 * Set a refresh timer that works for the current view.
 	 *
 	 * Only the other views need one: the listview's nextmatch runs its own background
@@ -4318,13 +4360,7 @@ export class CalendarApp extends EgwApp
 		// Listview (and with it the preference the interval comes from) not loaded
 		if(!nm) return;
 
-		// Same formula as Nextmatch.php and Et2NextmatchAutoRefresh: the column selection
-		// dialog, which is where this value gets set, stores it under the row template name
-		// when the app sets no columnselection_pref - which calendar does not.  Reading
-		// columnselection_pref alone gave "nextmatch-undefined-autorefresh", so this never
-		// found a value at all and the non-list views never refreshed themselves.
-		const refresh_preference = "nextmatch-" + (nm.settings.columnselection_pref || nm.template) + "-autorefresh";
-		const time = this.egw.preference(refresh_preference, 'calendar');
+		const time = this._autorefresh_time();
 
 		if(this.state.view == 'listview')
 		{
@@ -4333,17 +4369,6 @@ export class CalendarApp extends EgwApp
 			this._autorefresh_timer = null;
 			return;
 		}
-		// An arrow, so it's already correctly bound to this CalendarApp instance regardless of
-		// how it's later invoked (bare call, setInterval, ...) - no self/proxy needed.
-		const refresh = () => {
-			// Deleted events are not coming properly, so clear it all
-			this._clear_cache();
-			// Force redraw to current state
-			this.setState({state: this.state});
-
-			// This is a fast update, but misses deleted events
-			//this._fetch_data(this.state);
-		};
 
 		// Start / update timer
 		if (this._autorefresh_timer)
@@ -4353,34 +4378,77 @@ export class CalendarApp extends EgwApp
 		}
 		if(time > 0)
 		{
-			this._autorefresh_timer = setInterval(refresh, time * 1000);
+			this._autorefresh_timer = setInterval(this._autorefresh_refresh, time * 1000);
 		}
 
-		// Bind to tab show/hide events, so that we don't bother refreshing in the background.
-		// Both handlers below always run at most once (the "hide" one unconditionally clears
-		// itself right after firing too), so {once: true} is the exact native equivalent of the
-		// old jQuery `.on(...)` + manual `.off(e)`-on-self dance.
-		const parentEl = nm.getInstanceManager().DOMContainer.parentNode;
-		parentEl.addEventListener('hide', () => {
-			// Stop
-			window.clearInterval(this._autorefresh_timer);
+		// Pause while the tab is in the background, so that we don't bother refreshing there
+		this._bindAutorefreshTabEvents(nm.getInstanceManager().DOMContainer.parentNode);
+	}
 
+	/**
+	 * Pause the autorefresh while the calendar tab is hidden, and bring it back when it is shown
+	 *
+	 * _set_autorefresh() runs on every state change, and on every autorefresh tick, so the
+	 * listeners are bound once per element and read the current preference when they fire.
+	 * Binding them per call stacked one more pair on the tab each time, none of which went away
+	 * until the tab was actually hidden or shown - and each stale "show" then ran its own
+	 * _set_autorefresh() and added still more.
+	 *
+	 * @param {Element} el the calendar's tab (egw-app)
+	 */
+	private _bindAutorefreshTabEvents(el : Element)
+	{
+		if(this._autorefresh_tab?.el === el)
+		{
+			return;
+		}
+		this._unbindAutorefreshTabEvents();
+
+		const hide = () =>
+		{
+			// Stop - also drops the pending timeout from an earlier hide
+			window.clearInterval(this._autorefresh_timer);
+			this._autorefresh_stale = false;
+
+			const time = this._autorefresh_time();
 			if(!time) return;
 
-			// If the autorefresh time is up, bind once to trigger a refresh
-			// (if needed) when tab is activated again
-			this._autorefresh_timer = setTimeout(() => {
+			// If the autorefresh time is up, refresh (if needed) when the tab is activated again
+			this._autorefresh_timer = setTimeout(() =>
+			{
 				// Check in case it was stopped / destroyed since
 				if(!this._autorefresh_timer) return;
 
-				parentEl.addEventListener('show', () => refresh(), {once: true});
-			}, time*1000);
-		}, {once: true});
-		parentEl.addEventListener('show', () => {
-			// Start normal autorefresh timer again. _set_autorefresh() recomputes the same
-			// preference value itself, so no argument is needed here.
+				this._autorefresh_stale = true;
+			}, time * 1000);
+		};
+		const show = () =>
+		{
+			const stale = this._autorefresh_stale;
+			this._autorefresh_stale = false;
+
+			// Start normal autorefresh timer again
 			this._set_autorefresh();
-		}, {once: true});
+			if(stale)
+			{
+				this._autorefresh_refresh();
+			}
+		};
+		el.addEventListener('hide', hide);
+		el.addEventListener('show', show);
+		this._autorefresh_tab = {el, hide, show};
+	}
+
+	private _unbindAutorefreshTabEvents()
+	{
+		if(!this._autorefresh_tab)
+		{
+			return;
+		}
+		this._autorefresh_tab.el.removeEventListener('hide', this._autorefresh_tab.hide);
+		this._autorefresh_tab.el.removeEventListener('show', this._autorefresh_tab.show);
+		this._autorefresh_tab = null;
+		this._autorefresh_stale = false;
 	}
 
 	/**
