@@ -39,8 +39,6 @@
 	@{selector} > [part~="base"] {
 	  grid-template-columns: 1fr;
 	}
-
-	._grid-one-column(@selector);
   }
 
   /* Both selectors name the same element, for the two kinds of host this mixin serves.
@@ -91,6 +89,14 @@
   /* var() is not fully supported yet */
   @container (max-width: var(--collapse-width, 600px)) {
 	._grid-collapse(@host-selector);
+  }
+
+  /* A single column still has room for label and input side by side well below the point where
+   * the columns collapse, so labels only stack above their fields once the container is really
+   * narrow.  Relative units, so it follows the text size like --column-min-width does.
+   */
+  @container (max-width: 36em) {
+	._grid-one-column(@host-selector);
   }
 
   @{host-selector} {

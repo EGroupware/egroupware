@@ -822,23 +822,6 @@ body egw-app,
   [layout="2-column"] > [part~="base"] {
     grid-template-columns: 1fr;
   }
-  [layout="2-column"] *.et2-label-fixed::part(form-control) {
-    flex-wrap: wrap;
-  }
-  [layout="2-column"] *::part(form-control-label) {
-    width: 100%;
-    flex-basis: 100%;
-    margin-right: 0;
-  }
-  [layout="2-column"] *::part(form-control-input) {
-    flex-basis: 100%;
-  }
-  [layout="2-column"] *::part(form-control-help-text) {
-    left: 0;
-  }
-  [layout="2-column"] et2-hbox::part(base) {
-    align-items: flex-end;
-  }
 }
 /* Responsive fallback: collapse to 1 column on small screens */
 /* var() is not fully supported yet, so this is the fallback */
@@ -847,23 +830,6 @@ body egw-app,
   [layout="2-column"] > [part~="base"] {
     grid-template-columns: 1fr;
   }
-  [layout="2-column"] *.et2-label-fixed::part(form-control) {
-    flex-wrap: wrap;
-  }
-  [layout="2-column"] *::part(form-control-label) {
-    width: 100%;
-    flex-basis: 100%;
-    margin-right: 0;
-  }
-  [layout="2-column"] *::part(form-control-input) {
-    flex-basis: 100%;
-  }
-  [layout="2-column"] *::part(form-control-help-text) {
-    left: 0;
-  }
-  [layout="2-column"] et2-hbox::part(base) {
-    align-items: flex-end;
-  }
 }
 /* var() is not fully supported yet */
 @container (max-width: var(--collapse-width, 600px)) {
@@ -871,6 +837,12 @@ body egw-app,
   [layout="2-column"] > [part~="base"] {
     grid-template-columns: 1fr;
   }
+}
+/* A single column still has room for label and input side by side well below the point where
+   * the columns collapse, so labels only stack above their fields once the container is really
+   * narrow.  Relative units, so it follows the text size like --column-min-width does.
+   */
+@container (max-width: 36em) {
   [layout="2-column"] *.et2-label-fixed::part(form-control) {
     flex-wrap: wrap;
   }
@@ -885,6 +857,7 @@ body egw-app,
   [layout="2-column"] *::part(form-control-help-text) {
     left: 0;
   }
+  /* When titles break, we want to align widgets at the bottom of the hbox */
   [layout="2-column"] et2-hbox::part(base) {
     align-items: flex-end;
   }
@@ -968,23 +941,6 @@ body egw-app,
   [layout="edit"] > [part~="base"] {
     grid-template-columns: 1fr;
   }
-  [layout="edit"] *.et2-label-fixed::part(form-control) {
-    flex-wrap: wrap;
-  }
-  [layout="edit"] *::part(form-control-label) {
-    width: 100%;
-    flex-basis: 100%;
-    margin-right: 0;
-  }
-  [layout="edit"] *::part(form-control-input) {
-    flex-basis: 100%;
-  }
-  [layout="edit"] *::part(form-control-help-text) {
-    left: 0;
-  }
-  [layout="edit"] et2-hbox::part(base) {
-    align-items: flex-end;
-  }
 }
 /* Responsive fallback: collapse to 1 column on small screens */
 /* var() is not fully supported yet, so this is the fallback */
@@ -993,23 +949,6 @@ body egw-app,
   [layout="edit"] > [part~="base"] {
     grid-template-columns: 1fr;
   }
-  [layout="edit"] *.et2-label-fixed::part(form-control) {
-    flex-wrap: wrap;
-  }
-  [layout="edit"] *::part(form-control-label) {
-    width: 100%;
-    flex-basis: 100%;
-    margin-right: 0;
-  }
-  [layout="edit"] *::part(form-control-input) {
-    flex-basis: 100%;
-  }
-  [layout="edit"] *::part(form-control-help-text) {
-    left: 0;
-  }
-  [layout="edit"] et2-hbox::part(base) {
-    align-items: flex-end;
-  }
 }
 /* var() is not fully supported yet */
 @container (max-width: var(--collapse-width, 600px)) {
@@ -1017,6 +956,12 @@ body egw-app,
   [layout="edit"] > [part~="base"] {
     grid-template-columns: 1fr;
   }
+}
+/* A single column still has room for label and input side by side well below the point where
+   * the columns collapse, so labels only stack above their fields once the container is really
+   * narrow.  Relative units, so it follows the text size like --column-min-width does.
+   */
+@container (max-width: 36em) {
   [layout="edit"] *.et2-label-fixed::part(form-control) {
     flex-wrap: wrap;
   }
@@ -1031,6 +976,7 @@ body egw-app,
   [layout="edit"] *::part(form-control-help-text) {
     left: 0;
   }
+  /* When titles break, we want to align widgets at the bottom of the hbox */
   [layout="edit"] et2-hbox::part(base) {
     align-items: flex-end;
   }
