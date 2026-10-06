@@ -1792,7 +1792,7 @@ class filemanager_ui
 			// Upload, then link
 			case 'link':
 				// First upload
-				$arr = static::ajax_action('upload', $selected, $dir, $props);
+				$arr = static::ajax_action($exec_id, 'upload', $selected, $dir, $props);
 				$app_dir = Link::vfs_path($props['entry']['app'],$props['entry']['id'],'',true);
 
 				foreach($arr['uploaded'] as $file)

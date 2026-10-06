@@ -960,7 +960,7 @@ export const AppJS = (function(){ "use strict"; return Class.extend(
 		if(mail_ids.length)
 		{
 			egw.message(egw.lang("Please wait..."));
-			this.egw.json('filemanager.filemanager_ui.ajax_action',['mail',mail_ids, vfs_path],function(data){
+			this.egw.json('filemanager.filemanager_ui.ajax_action',[this.et2 && this.et2.getInstanceManager().etemplate_exec_id || '', 'mail', mail_ids, vfs_path],function(data){
 				// Trigger an update (minimal, no sorting changes) to display the new link
 				egw.refresh(data.msg||'',ids[0],ids[1],'update');
 			}).sendRequest(true);

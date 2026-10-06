@@ -359,6 +359,7 @@ class InfologApp extends EgwApp
 		const child_button = document.body.querySelector<HTMLButtonElement>('#delete_sub') || document.body.querySelector<HTMLButtonElement>('[id*="delete_sub"]');
 		this._action_all = _action.parent.data.nextmatch?.getSelection().all;
 		this._action_ids = _senders.map(sender => sender.id.split("::").pop());
+		this._action_exec_id = InfologApp._execId(_action.parent.data.nextmatch, this.et2);
 		if(child_button)
 		{
 			child_button.disabled = !_senders.some(sender => this._row_has_subs(sender));
@@ -415,7 +416,7 @@ class InfologApp extends EgwApp
 			{
 				return;
 			}
-			egw.json("infolog.infolog_ui.ajax_action", [button_id === DELETE_SUB ? "delete_sub" : "delete", [info_id], false])
+			egw.json("infolog.infolog_ui.ajax_action", [InfologApp._execId(null, this.et2), button_id === DELETE_SUB ? "delete_sub" : "delete", [info_id], false])
 				.sendRequest(false);	// false = synchronious request, so the delete completes before we close
 			window.close();
 		}, egw.lang("Delete selected entries?"), egw.lang("Delete"), undefined, buttons,
@@ -425,6 +426,7 @@ class InfologApp extends EgwApp
 
 	private _action_ids = [];
 	private _action_all = false;
+	private _action_exec_id = "";
 
 	/**
 	 * Callback for action using ids set(!) in this._action_ids and this._action_all
@@ -433,7 +435,7 @@ class InfologApp extends EgwApp
 	 */
 	actionCallback(_action)
 	{
-		egw.request("infolog.infolog_ui.ajax_action", [_action, this._action_ids, this._action_all]);
+		egw.request("infolog.infolog_ui.ajax_action", [this._action_exec_id, _action, this._action_ids, this._action_all]);
 	}
 
 	/**

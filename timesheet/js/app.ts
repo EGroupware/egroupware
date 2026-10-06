@@ -436,7 +436,8 @@ class TimesheetApp extends EgwApp
 		{
 			ids.push(_senders[i].id.split("::").pop());
 		}
-		egw.request("timesheet.timesheet_ui.ajax_action", [_action.id, ids, all]);
+		const nm = _action.parent.data.nextmatch;
+		egw.request("timesheet.timesheet_ui.ajax_action", [TimesheetApp._execId(nm, this.et2), _action.id, ids, all]);
 	}
 
 	/**
