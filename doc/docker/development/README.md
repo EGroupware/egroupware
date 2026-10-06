@@ -9,6 +9,7 @@ The container and docker-compose.yml file in this directory are the easiest way 
 * sessions: volume for sessions, internal no need to change
 * sources-push: swoolpush subdirectory of sources
 * collabora-config: /etc/loolwsd for Collabora container, by default $PWD/data/default/loolwsd
+* n8n: workflows, credentials and executions of n8n, internal no need to change
 
 ### It runs the following containers:
 * egroupware: php-fpm
@@ -18,6 +19,7 @@ The container and docker-compose.yml file in this directory are the easiest way 
 * egroupware-watchtower: to automatic keeps the containers up to date
 * phpmyadmin: phpMyAdmin to administrate your MariaDB
 * collabora: Collabora Online Office
+* egroupware-n8n: n8n workflow automation as http://localhost/n8n/, with an example workflow turning support mail into Tracker tickets, see [doc/n8n](../../n8n/README.md)
 
 ### Usage:
 ```

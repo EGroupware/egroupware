@@ -1,0 +1,998 @@
+{
+  "name": "EGroupware Mail -> Tracker",
+  "id": "egwMailToTracker",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 1
+            }
+          ]
+        }
+      },
+      "id": "c3000000-0000-4000-8000-000000000001",
+      "name": "Every minute",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cfg-base",
+              "name": "egwBase",
+              "value": "http://nginx/egroupware/groupdav.php",
+              "type": "string"
+            },
+            {
+              "id": "cfg-user",
+              "name": "egwUser",
+              "value": "sysop",
+              "type": "string"
+            },
+            {
+              "id": "cfg-queue",
+              "name": "egwQueue",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "cfg-llm-url",
+              "name": "llmUrl",
+              "type": "string",
+              "value": "https://ai-proxy.egroupware.org/v1/chat/completions"
+            },
+            {
+              "id": "cfg-model",
+              "name": "llmModel",
+              "type": "string",
+              "value": "mistralai/Mistral-Small-24B-Instruct"
+            },
+            {
+              "id": "cfg-prompt",
+              "name": "classifierPrompt",
+              "type": "string",
+              "value": "You triage incoming support e-mails into EGroupware Tracker tickets.\n\nAnswer with a single JSON object, no prose, no markdown fence:\n{\n  \"queue\": one of \"Bugs\", \"Feature Requests\", \"Patches\",\n  \"category\": one of \"Tracker\", \"API\", or null,\n  \"priority\": integer 1-9 (1 lowest, 5 normal, 9 highest; base it on real business impact, not on the sender shouting),\n  \"title\": imperative one-line summary, max 70 chars, no \"Re:\" and no ticket ids,\n  \"summary\": at most two sentences describing the problem,\n  \"language\": ISO 639-1 code of the mail\n}\n\nRules:\n- \"Bugs\" = something is broken or behaves wrongly. \"Feature Requests\" = asks for something new.\n  \"Patches\" = the sender supplies a fix, diff or pull request.\n- Several people blocked, data loss or a production outage -> priority 8-9.\n  One person inconvenienced, or a question -> priority 3-4. Anything else -> 5."
+            },
+            {
+              "id": "cfg-acc",
+              "name": "mailAccount",
+              "type": "string",
+              "value": ""
+            },
+            {
+              "id": "cfg-folder",
+              "name": "mailFolder",
+              "type": "string",
+              "value": "INBOX"
+            },
+            {
+              "id": "cfg-queues",
+              "name": "queueIds",
+              "type": "string",
+              "value": "{\"Bugs\": 8, \"Feature Requests\": 7, \"Patches\": 9}"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": []
+      },
+      "id": "a1000000-0000-4000-8000-000000000002",
+      "name": "Config",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        180,
+        0
+      ],
+      "notes": "mailAccount = acc_id from GET /mail. mailFolder accepts either the opaque folder id or, since upstream dbcff1056d/84ad5102ad, the literal name - \"INBOX\", or \"INBOX::Sent\" for a subfolder."
+    },
+    {
+      "parameters": {
+        "jsCode": "// The JMAP-lite mail endpoints are read-only, so a processed mail cannot be flagged as seen.\n// Track the newest receivedAt we have already handled instead, and ask only for what is newer.\nconst store = $getWorkflowStaticData('global');\nconst cfg = $input.first().json;\n\n// first run: look one hour back rather than importing the whole mailbox as tickets\nconst since = store.lastSeenAt || new Date(Date.now() - 3600 * 1000).toISOString().replace(/\\.\\d+Z$/, 'Z');\n\nreturn [{ json: { ...cfg, since } }];"
+      },
+      "id": "c3000000-0000-4000-8000-000000000002",
+      "name": "Since when?",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        360,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.egwBase }}/mail/{{ $json.mailAccount }}/folders/{{ $json.mailFolder }}/emails",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
+      },
+      "id": "c3000000-0000-4000-8000-000000000003",
+      "name": "List new mail",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        540,
+        0
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "egwRestBasicAuth",
+          "name": "EGroupware REST API"
+        }
+      },
+      "notes": "GET the folder listing; new-vs-seen is decided in \"Split new mail\" - filter[after] is a no-op on the JmapShim."
+    },
+    {
+      "parameters": {
+        "jsCode": "// {\"responses\": {\"<path>\": {...}}, ...} -> one item per mail we have NOT filed yet.\n//\n// Two things rule out the obvious approaches:\n//  - the JMAP-lite endpoints are read-only, so a handled mail cannot be flagged \\Seen;\n//  - filter[after] and filter[hasAttachment] are no-ops on the JmapShim (verified live: after\n//    returns the whole mailbox even for a future timestamp).\n// n8n's own static data is no help either - it is only persisted for production executions,\n// so any manual run would re-import everything. The tickets are therefore the source of truth.\nconst listed = $('List new mail').first().json ?? {};\nconst known  = $input.first().json ?? {};\nconst cfg    = $('Since when?').first().json;\nconst store  = $getWorkflowStaticData('global');\n\nconst mailKey = e => `${cfg.mailAccount}:${cfg.mailFolder}:${e.id}`;\n\n// every key already recorded on a ticket\nconst filed = new Set();\nfor (const t of Object.values(known.responses ?? {})) {\n  for (const m of String(t.description ?? '').matchAll(/^Mail:\\s+(\\S+)/gm)) {\n    filed.add(m[1]);\n  }\n}\n\nconst all = Object.values(listed.responses ?? {});\nall.sort((a, b) => String(a.receivedAt ?? '').localeCompare(String(b.receivedAt ?? '')));\n\n// ... and nothing older than \"Since when?\": one hour back on the very first run, so pointing the\n// workflow at a full mailbox does not turn all of it into tickets\nconst fresh = all.filter(e => !filed.has(mailKey(e)) && String(e.receivedAt ?? '') >= cfg.since);\n\n// keep the high-water mark up to date for production runs, where it does persist\nif (fresh.length) store.lastSeenAt = fresh[fresh.length - 1].receivedAt;\n\nreturn fresh.map(e => ({\n  json: {\n    emailId: e.id,\n    mailKey: mailKey(e),\n    receivedAt: e.receivedAt,\n    egwBase: cfg.egwBase,\n    egwUser: cfg.egwUser,\n    egwQueue: cfg.egwQueue,\n    llmModel: cfg.llmModel,\n    classifierPrompt: cfg.classifierPrompt,\n    mailAccount: cfg.mailAccount,\n    mailFolder: cfg.mailFolder,\n  },\n}));"
+      },
+      "id": "c3000000-0000-4000-8000-000000000004",
+      "name": "Split new mail",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        900,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.egwBase }}/mail/{{ $json.mailAccount }}/folders/{{ $json.mailFolder }}/emails/{{ $json.emailId }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
+      },
+      "id": "c3000000-0000-4000-8000-000000000005",
+      "name": "Fetch body",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1080,
+        0
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "egwRestBasicAuth",
+          "name": "EGroupware REST API"
+        }
+      },
+      "notes": "The list endpoint returns headers only; bodyValues come from the single-email GET."
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// JMAP Email -> the mail shape \"Parse Email\" already understands (it was written against the\n// Gmail Trigger's output), so the whole downstream pipeline is reused unchanged.\nconst e = $input.item.json ?? {};\nconst meta = $('Split new mail').item.json;\n\nconst from = (e.from ?? [])[0] ?? {};\n\n// prefer the text/plain part; fall back to whatever bodyValues holds, then to the preview\nconst values = e.bodyValues ?? {};\nconst textPartId = (e.textBody ?? [])[0]?.partId;\nconst body =\n  (textPartId && values[textPartId]?.value) ||\n  Object.values(values)[0]?.value ||\n  e.preview ||\n  '';\n\nreturn {\n  json: {\n    id: e.id,\n    threadId: e.threadId ?? e.id,\n    subject: e.subject ?? '(no subject)',\n    from: { value: [{ address: from.email ?? '', name: from.name ?? '' }], text: from.email ?? '' },\n    date: e.sentAt ?? e.receivedAt ?? new Date().toISOString(),\n    textPlain: body,\n    egwBase: meta.egwBase,\n    egwUser: meta.egwUser,\n    egwQueue: meta.egwQueue,\n    llmModel: meta.llmModel,\n    classifierPrompt: meta.classifierPrompt,\n    // everything the attachment round trip needs later on\n    mailMeta: {\n      emailId: e.id,\n      mailKey: meta.mailKey,\n      mailAccount: meta.mailAccount,\n      mailFolder: meta.mailFolder,\n      attachments: (e.attachments ?? []).map(a => ({\n        blobId: a.blobId,\n        name: a.name || (a.blobId + '.bin'),\n        type: a.type || 'application/octet-stream',\n      })),\n    },\n  },\n};"
+      },
+      "id": "c3000000-0000-4000-8000-000000000006",
+      "name": "To mail shape",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1260,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const m = $input.item.json;\n\nconst subject = String(m.subject ?? m.Subject ?? '(no subject)');\nconst from = m.from?.value?.[0]?.address ?? m.from?.text ?? m.From ?? '';\nconst fromName = m.from?.value?.[0]?.name ?? '';\nconst date = m.date ?? m.Date ?? new Date().toISOString();\nconst body = String(m.textPlain ?? m.text ?? m.snippet ?? '').replace(/\\r\\n/g, '\\n').trim();\n\n// Does the subject reference an existing ticket?  e.g. \"Re: [#42] printer broken\"\nconst ref = subject.match(/\\[#(\\d+)\\]/);\nconst ticketId = ref ? parseInt(ref[1], 10) : null;\n\n// Clean title: drop the [#id] token and any Re:/Fwd:/Aw: prefixes\nconst title = subject\n  .replace(/\\[#\\d+\\]/g, '')\n  .replace(/^\\s*((re|fwd|fw|aw|tr)\\s*:\\s*)+/i, '')\n  .trim() || '(no subject)';\n\n// Tracker priority is 1..9, 5 = medium\nconst haystack = subject + ' ' + body;\nconst urgent = /\\b(urgent|asap|critical|outage|blocker|emergency|down)\\b/i.test(haystack);\nconst low = /\\b(question|fyi|info|low priority)\\b/i.test(subject);\nconst priority = urgent ? 8 : low ? 3 : 5;\n\nconst sender = fromName ? fromName + ' (' + from + ')' : from;\nconst header = ['From:  ' + sender, 'Date:  ' + date, 'Mail:  ' + ((m.mailMeta && m.mailMeta.mailKey) || m.id || '')].join('\\n');\n\nconst cfg = m;   // carried through by \"To mail shape\"\n\nreturn {\n  json: {\n    isReply: ticketId !== null,\n    ticketId,\n    title,\n    priority,\n    // full mail for a new ticket's description\n    description: header + '\\n' + '-'.repeat(60) + '\\n\\n' + body,\n    // shorter form for a reply on an existing ticket\n    replyMessage: 'Mail from ' + sender + ' (' + date + '):\\n' +\n      'Mail:  ' + ((m.mailMeta && m.mailMeta.mailKey) || m.id || '') + '\\n\\n' + body,\n    gmailId: m.id ?? null,\n    threadId: m.threadId ?? null,\n    replyTo: from,\n    subject,\n    egwBase: cfg.egwBase,\n    egwUser: cfg.egwUser,\n    egwQueue: cfg.egwQueue,\n    mailMeta: m.mailMeta ?? null,\n    bodyText: body,\n    llmModel: cfg.llmModel,\n    classifierPrompt: cfg.classifierPrompt,\n  },\n  binary: $input.item.binary,\n};"
+      },
+      "id": "a1000000-0000-4000-8000-000000000003",
+      "name": "Parse Email",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1440,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "is-reply",
+              "leftValue": "={{ $json.isReply }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": []
+      },
+      "id": "a1000000-0000-4000-8000-000000000004",
+      "name": "Reply to existing ticket?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1620,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Parse Email').item.json.egwBase }}/{{ $('Parse Email').item.json.egwUser }}/tracker/{{ $('Parse Email').item.json.ticketId }}/replies/",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ message: $('Parse Email').item.json.replyMessage, restricted: false }) }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          }
+        }
+      },
+      "id": "a1000000-0000-4000-8000-000000000005",
+      "name": "POST reply",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2420,
+        -330
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "egwRestBasicAuth",
+          "name": "EGroupware REST API"
+        }
+      },
+      "notes": "An answer to a ticket mail becomes a Tracker reply, not an edit of the description."
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const res = $input.item.json ?? {};\nconst mail = $('Parse Email').item.json;\nconst status = res.statusCode ?? null;\n\nif (status !== 201 && status !== 204) {\n  throw new Error(\n    'Adding a reply to ticket #' + mail.ticketId + ' failed: HTTP ' + status +\n    ' ' + JSON.stringify(res.body ?? '')\n  );\n}\n\n// The reply is stored, but nothing yet records WHICH mail produced it - and \"Split new mail\"\n// only knows a mail is handled when its key appears in a ticket description. Without this the\n// same reply mail is picked up again on the very next poll, forever.\nconst ticket = $('GET ticket').item.json.body ?? {};\nconst key = mail.mailMeta && mail.mailMeta.mailKey;\nconst description = String(ticket.description ?? '');\nconst alreadyRecorded = key && description.includes('Mail:  ' + key);\n\nreturn {\n  json: {\n    ticketId: mail.ticketId,\n    created: false,\n    egwBase: mail.egwBase,\n    egwUser: mail.egwUser,\n    title: mail.title,\n    replyTo: mail.replyTo,\n    threadId: mail.threadId,\n    mailMeta: mail.mailMeta ?? null,\n    needsMarker: !!key && !alreadyRecorded,\n    // the description the marker gets appended to\n    patch: { description: description + '\\nMail:  ' + key },\n  },\n  binary: $('Parse Email').item.binary,\n};"
+      },
+      "id": "a1000000-0000-4000-8000-000000000006",
+      "name": "Reply added",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2600,
+        -330
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.egwBase }}/{{ $json.egwUser }}/tracker/",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify(Object.assign({ title: $json.title, description: $json.description, priority: $json.priority, status: \"Open\", privacy: \"public\" }, $json.trackerId ? { tracker: $json.trackerId } : {}, $json.llmCategory ? { category: $json.llmCategory } : {})) }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          }
+        }
+      },
+      "id": "a1000000-0000-4000-8000-000000000007",
+      "name": "POST create ticket",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2600,
+        330
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "egwRestBasicAuth",
+          "name": "EGroupware REST API"
+        }
+      },
+      "notes": "status must be the capitalised label 'Open' — the lowercase values in the main repo's doc/REST-CalDAV-CardDAV/Tracker.md are rejected with 422."
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const res = $input.item.json ?? {};\nconst mail = $('Parse Email').item.json;\n\nconst headers = res.headers ?? {};\nconst location = headers.location ?? headers.Location ?? '';\nconst m = String(location).match(/\\/(\\d+)\\/?$/);\nconst ticketId = m ? parseInt(m[1], 10) : null;\n\nif (!ticketId) {\n  throw new Error(\n    'Tracker returned no ticket id. HTTP ' + (res.statusCode ?? '?') +\n    ' Location=\"' + location + '\" body=' + JSON.stringify(res.body ?? '')\n  );\n}\n\nreturn {\n  json: {\n    ticketId,\n    created: true,\n    egwBase: mail.egwBase,\n    egwUser: mail.egwUser,\n    title: mail.title,\n    replyTo: mail.replyTo,\n    threadId: mail.threadId,\n    mailMeta: mail.mailMeta ?? null,\n  },\n  binary: $('Parse Email').item.binary,\n};"
+      },
+      "id": "a1000000-0000-4000-8000-000000000008",
+      "name": "Extract ticket id",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2780,
+        330
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// one item per JMAP attachment reference - the bytes are fetched by the next node\nconst out = [];\n\nfor (const item of $input.all()) {\n  const meta = item.json.mailMeta ?? {};\n  for (const a of meta.attachments ?? []) {\n    out.push({\n      json: {\n        ticketId: item.json.ticketId,\n        egwBase: item.json.egwBase,\n        egwUser: item.json.egwUser,\n        mailAccount: meta.mailAccount,\n        mailFolder: meta.mailFolder,\n        emailId: meta.emailId,\n        blobId: a.blobId,\n        fileName: a.name,\n        mimeType: a.type,\n      },\n    });\n  }\n}\n\nreturn out;"
+      },
+      "id": "a1000000-0000-4000-8000-000000000009",
+      "name": "Split attachment refs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3060,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.egwBase }}/{{ $json.egwUser }}/tracker/{{ $json.ticketId }}/links/{{ encodeURIComponent($json.fileName) }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "={{ $json.mimeType }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "file",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          }
+        }
+      },
+      "id": "a1000000-0000-4000-8000-00000000000a",
+      "name": "Upload attachment",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3420,
+        0
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "egwRestBasicAuth",
+          "name": "EGroupware REST API"
+        }
+      },
+      "notes": "POST, not PUT — a PUT here is parsed as a JSON link payload and fails with 422 'Error parsing JSON'."
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json.llmUrl }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: $json.llmModel, temperature: 0, max_tokens: 400, messages: [ { role: \"system\", content: $json.classifierPrompt }, { role: \"user\", content: \"Subject: \" + $json.subject + \"\\n\\n\" + $json.bodyText } ] }) }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          }
+        }
+      },
+      "id": "a1000000-0000-4000-8000-00000000000c",
+      "name": "Classify (LLM)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2240,
+        330
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "egwAiProxyHeader",
+          "name": "EGroupware AI proxy"
+        }
+      },
+      "notes": "EGroupware AI proxy. neverError is on so a proxy outage degrades to the keyword rules instead of losing the mail."
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const mail = $('Parse Email').item.json;\nconst res  = $input.item.json ?? {};\n\n// queue labels -> tracker ids (Admin > Tracker), from Config - ids differ between installations\nlet QUEUES = {};\ntry { QUEUES = JSON.parse($('Config').first().json.queueIds || '{}'); } catch (e) {}\n\nlet c = null;\ntry {\n  let raw = res.body?.choices?.[0]?.message?.content ?? '';\n  raw = String(raw).replace(/^```(?:json)?/m, '').replace(/```\\s*$/m, '').trim();\n  c = JSON.parse(raw);\n} catch (e) {\n  c = null;                        // fall back to Parse Email's keyword guess\n}\n\nconst queueId  = c && QUEUES[c.queue] ? QUEUES[c.queue]\n               : (mail.egwQueue ? Number(mail.egwQueue) : null);\nconst priority = c && Number.isInteger(c.priority) && c.priority >= 1 && c.priority <= 9\n               ? c.priority : mail.priority;\nconst title    = c && c.title ? String(c.title).slice(0, 70) : mail.title;\n\n// keep the triage visible at the top of the ticket so a human can sanity-check it\nconst triage = c\n  ? ['Triage: ' + (c.queue ?? '?') + ' / priority ' + priority + ' / ' + (c.language ?? '?'),\n     c.summary ? 'Summary: ' + c.summary : null].filter(Boolean).join('\\n') + '\\n\\n'\n  : 'Triage: LLM unavailable, fell back to keyword rules\\n\\n';\n\nreturn {\n  json: {\n    ...mail,\n    title,\n    priority,\n    trackerId: queueId,\n    llmCategory: (c && c.category) || null,\n    classified: c !== null,\n    description: triage + mail.description,\n  },\n  binary: $('Parse Email').item.binary,\n};"
+      },
+      "id": "a1000000-0000-4000-8000-00000000000d",
+      "name": "Apply classification",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2420,
+        330
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.egwBase }}/mail/{{ $json.mailAccount }}/folders/{{ $json.mailFolder }}/emails/{{ $json.emailId }}/attachments/{{ $json.blobId }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "file",
+              "outputPropertyName": "file"
+            }
+          }
+        }
+      },
+      "id": "c3000000-0000-4000-8000-000000000007",
+      "name": "Download attachment",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3240,
+        0
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "egwRestBasicAuth",
+          "name": "EGroupware REST API"
+        }
+      },
+      "notes": "A JMAP Email lists attachments as blob references, so the bytes need this second GET."
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Since when?').first().json.egwBase }}/{{ $('Since when?').first().json.egwUser }}/tracker/",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
+      },
+      "id": "c3000000-0000-4000-8000-000000000008",
+      "name": "Known tickets",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        720,
+        0
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "egwRestBasicAuth",
+          "name": "EGroupware REST API"
+        }
+      },
+      "notes": "The de-dup record: every ticket carries the mail key it came from in its description."
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.egwBase }}/{{ $json.egwUser }}/tracker/{{ $json.ticketId }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          }
+        }
+      },
+      "id": "c3000000-0000-4000-8000-000000000009",
+      "name": "GET ticket",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1880,
+        -330
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "egwRestBasicAuth",
+          "name": "EGroupware REST API"
+        }
+      },
+      "notes": "neverError: a 404 here is an expected outcome (the ticket was deleted), not a failure."
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ticket-exists",
+              "leftValue": "={{ $json.statusCode }}",
+              "rightValue": 200,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": []
+      },
+      "id": "c3000000-0000-4000-8000-00000000000a",
+      "name": "Ticket still there?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2060,
+        -330
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// hand the create branch the mail again - the two HTTP hops in front of it replaced the item\nreturn { json: $('Parse Email').item.json, binary: $('Parse Email').item.binary };"
+      },
+      "id": "c3000000-0000-4000-8000-00000000000b",
+      "name": "Ticket is gone",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2150,
+        0
+      ],
+      "notes": "The referenced ticket was deleted, so treat the mail as a new request."
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// The reply branch has no \"Mail: <key>\" marker in a ticket description to prove a mail was\n// handled, and PATCH cannot add one - it ignores description silently (204, unchanged). But\n// GET ticket, right before this, already returns the ticket's replies, so the marker lives in\n// the reply text instead and is checked here for free.\n//\n// Without this the schedule re-posts the same reply every minute: manual runs never showed it,\n// an active workflow produced 13 copies in 13 minutes.\nconst out = [];\nconst items = $input.all();\n\nfor (let i = 0; i < items.length; i++) {\n  const mail = $('Parse Email').itemMatching(i).json;\n  const ticket = items[i].json.body ?? {};\n  const key = (mail.mailMeta && mail.mailMeta.mailKey) || mail.id || '';\n\n  const alreadyThere = Object.values(ticket.replies ?? {}).some(\n    r => String(r.message ?? '').includes('Mail:  ' + key)\n  );\n\n  if (!alreadyThere) {\n    out.push({ json: mail, binary: $('Parse Email').itemMatching(i).binary });\n  }\n}\n\n// an empty array simply ends the branch - \"nothing new to reply to\" is not an error\nreturn out;"
+      },
+      "id": "c3000000-0000-4000-8000-00000000000d",
+      "name": "Already replied?",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2240,
+        -330
+      ],
+      "notes": "Stops the schedule from re-posting the same reply every minute."
+    },
+    {
+      "parameters": {
+        "content": "## 1 · Read new mail\nEvery minute n8n lists the **INBOX** through EGroupware's mail REST API, skips anything already filed as a ticket, and fetches each new mail's body.",
+        "height": 370,
+        "width": 1840,
+        "color": 5
+      },
+      "id": "d0000000-0000-4000-8000-000000000001",
+      "name": "Note d0000000-0000-4000-8000-000000000001",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        -170
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## 2 · Answer to an existing ticket\nSubject carries **[#id]** → the mail is added as a **reply** on that ticket — never a second ticket.",
+        "height": 330,
+        "width": 900,
+        "color": 4
+      },
+      "id": "d0000000-0000-4000-8000-000000000002",
+      "name": "Note d0000000-0000-4000-8000-000000000002",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1820,
+        -520
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## 3 · New ticket — AI triage\nAn LLM decides the **queue**, the **priority** and an English **title**; the ticket is created over the Tracker REST API.",
+        "height": 330,
+        "width": 800,
+        "color": 6
+      },
+      "id": "d0000000-0000-4000-8000-000000000003",
+      "name": "Note d0000000-0000-4000-8000-000000000003",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2180,
+        190
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## 4 · Attachments\nFiles are pulled from the mail and linked to the ticket.",
+        "height": 370,
+        "width": 560,
+        "color": 2
+      },
+      "id": "d0000000-0000-4000-8000-000000000004",
+      "name": "Note d0000000-0000-4000-8000-000000000004",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3000,
+        -170
+      ]
+    }
+  ],
+  "connections": {
+    "Every minute": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Since when?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Since when?": {
+      "main": [
+        [
+          {
+            "node": "List new mail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List new mail": {
+      "main": [
+        [
+          {
+            "node": "Known tickets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split new mail": {
+      "main": [
+        [
+          {
+            "node": "Fetch body",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch body": {
+      "main": [
+        [
+          {
+            "node": "To mail shape",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "To mail shape": {
+      "main": [
+        [
+          {
+            "node": "Parse Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Email": {
+      "main": [
+        [
+          {
+            "node": "Reply to existing ticket?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reply to existing ticket?": {
+      "main": [
+        [
+          {
+            "node": "GET ticket",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Classify (LLM)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "POST reply": {
+      "main": [
+        [
+          {
+            "node": "Reply added",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reply added": {
+      "main": [
+        [
+          {
+            "node": "Split attachment refs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Classify (LLM)": {
+      "main": [
+        [
+          {
+            "node": "Apply classification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apply classification": {
+      "main": [
+        [
+          {
+            "node": "POST create ticket",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "POST create ticket": {
+      "main": [
+        [
+          {
+            "node": "Extract ticket id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract ticket id": {
+      "main": [
+        [
+          {
+            "node": "Split attachment refs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split attachment refs": {
+      "main": [
+        [
+          {
+            "node": "Download attachment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download attachment": {
+      "main": [
+        [
+          {
+            "node": "Upload attachment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Known tickets": {
+      "main": [
+        [
+          {
+            "node": "Split new mail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET ticket": {
+      "main": [
+        [
+          {
+            "node": "Ticket still there?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ticket still there?": {
+      "main": [
+        [
+          {
+            "node": "Already replied?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Ticket is gone",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ticket is gone": {
+      "main": [
+        [
+          {
+            "node": "Classify (LLM)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Already replied?": {
+      "main": [
+        [
+          {
+            "node": "POST reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "pinData": {}
+}
