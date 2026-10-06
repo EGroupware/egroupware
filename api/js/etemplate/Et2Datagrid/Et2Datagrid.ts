@@ -5919,11 +5919,31 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			{
 				this._finalizeRefreshedRows();
 			}
+			await this._refreshEmbeddedChildGrids(row_ids, type);
 		}
 		catch(e)
 		{
 			this.egw().debug("error", e.message);
 		}
+	}
+
+	/**
+	 * Pass a targeted refresh on to expanded child grids that render one of the rows
+	 *
+	 * Refreshing stores the new row data centrally, but each grid only re-renders the rows it holds
+	 * itself, so a row shown inside an expanded child grid stays stale unless that grid is told.
+	 * Only grids that currently render a row are asked: refreshing `add` or `update` in a grid
+	 * that does not have the row yet would insert it there.
+	 */
+	private async _refreshEmbeddedChildGrids(row_ids : string[], type : Et2DatagridUpdateType) : Promise<void>
+	{
+		const rowIds = this._normalizeRefreshRowIds(row_ids);
+		await Promise.all(this._directEmbeddedChildGrids().map((childGrid) =>
+		{
+			const rendered = rowIds.filter((rowId) =>
+				!!childGrid.shadowRoot?.querySelector(`[data-row-id='${CSS.escape(rowId)}']`));
+			return rendered.length ? childGrid.refresh(rendered, type) : undefined;
+		}));
 	}
 
 	/**
