@@ -112,6 +112,7 @@ class Jsonq implements JsonqModule
 			}
 			if (something_to_send)
 			{
+				const sent = Object.keys(jobs_to_send);
 				egw.request('api.queue', jobs_to_send).then(_data =>
 				{
 					if (typeof _data != 'object') throw "jsonq_callback called with NO object as parameter!";
@@ -165,21 +166,43 @@ class Jsonq implements JsonqModule
 
 						delete this.#jsonqQueue[uid];
 					}
-					// if nothing left in queue, stop interval-timer to give browser a rest
-					if (this.#jsonqTimer && typeof this.#jsonqQueue['u'+(this.#jsonqUid-1)] != 'object')
+					this.jsonqStopTimerWhenIdle();
+				}).catch(err =>
+				{
+					// egw.request() resolves undefined when the request itself failed (offline,
+					// session expired, bad response), which the check above throws on.  Left
+					// alone, these jobs stayed queued as "sent" for good: their promises never
+					// settled, whatever they referenced stayed alive, and the newest of them kept
+					// the timer running.
+					for(const uid of sent)
 					{
-						// only if we are still on the document we armed it on - the id would
-						// otherwise be stale and could match an unrelated timer, see #jsonqTimerDoc
-						// clearing needs no live-realm helper, unlike arming it
-						if (this.#jsonqTimerDoc === window.document)
-						{
-							window.clearInterval(this.#jsonqTimer);
-						}
-						this.#jsonqTimer = null;
-						this.#jsonqTimerDoc = null;
+						const job = this.#jsonqQueue[uid];
+						if (!job) continue;	// already answered
+						delete this.#jsonqQueue[uid];
+						job.reject(err instanceof Error ? err : new Error(String(err)));
 					}
+					this.jsonqStopTimerWhenIdle();
 				});
 			}
+		}
+	}
+
+	/**
+	 * If nothing is left in the queue, stop the interval-timer to give the browser a rest
+	 */
+	private jsonqStopTimerWhenIdle() : void
+	{
+		if (this.#jsonqTimer && typeof this.#jsonqQueue['u'+(this.#jsonqUid-1)] != 'object')
+		{
+			// only if we are still on the document we armed it on - the id would
+			// otherwise be stale and could match an unrelated timer, see #jsonqTimerDoc
+			// clearing needs no live-realm helper, unlike arming it
+			if (this.#jsonqTimerDoc === window.document)
+			{
+				window.clearInterval(this.#jsonqTimer);
+			}
+			this.#jsonqTimer = null;
+			this.#jsonqTimerDoc = null;
 		}
 	}
 

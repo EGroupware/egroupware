@@ -483,6 +483,33 @@ describe('egw_jsonq.js (jsonq)', () =>
 		assert.equal(rejection.message, 'boom');
 	});
 
+	it('rejects every job of a batch whose request failed, instead of leaving them queued for good', async() =>
+	{
+		// egw.request() resolves undefined when the request itself fails (offline, session expired,
+		// bad response). The jobs of that batch used to stay queued as "sent": their promises never
+		// settled, nothing they referenced could be collected, and - because the newest one was still
+		// in the queue - the batching timer never stopped.
+		const p1 = env.egw().jsonq('menu.one', [1]);
+		const p2 = env.egw().jsonq('menu.two', [2]);
+		const settled = [p1, p2].map(p => p.then(() => 'resolved', (e : any) => 'rejected:' + e.constructor.name));
+
+		await wait(150);
+		assert.equal(env.fetchCalls.length, 1);
+		env.fetchCalls[0].reject(new Error('network down'));
+
+		assert.deepEqual(await Promise.all(settled), ['rejected:Error', 'rejected:Error']);
+
+		// the failure did not wedge the queue: a later call is sent, and answered
+		const p3 = env.egw().jsonq('menu.three', [3]);
+		await wait(150);
+		assert.equal(env.fetchCalls.length, 2, 'a call after the failure must start a new batch');
+		const jobs3 = Object.keys(JSON.parse(env.fetchCalls[1].init.body).request.parameters[0]);
+		assert.equal(jobs3.length, 1, 'the failed batch\'s jobs must not be sent again');
+		const uid3 = jobs3[0];
+		env.fetchCalls[1].resolve({response: [{type: 'data', data: {[uid3]: [{type: 'data', data: 'result-three'}]}}]});
+		assert.equal(await p3, 'result-three');
+	});
+
 	it('calls callbeforesend just before the batch is sent, allowing parameters to be modified', async() =>
 	{
 		const callbeforesend = sinon.stub().callsFake((params : any[]) => { params.push('extra'); });
