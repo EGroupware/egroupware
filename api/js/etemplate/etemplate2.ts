@@ -1271,30 +1271,7 @@ export class etemplate2
 
 				if(invalid_widgets.length && !(invalid_widgets[0] instanceof et2_widget))
 				{
-					// Handle validation_error (messages coming back from server as a response) if widget is children of a tabbox
-					const scroll = (w) =>
-					{
-						// scroll the widget into view
-						if(typeof w.scrollIntoView === 'function')
-						{
-							w.scrollIntoView();
-						}
-					}
-					let tmpWidget = invalid_widgets[0];
-					while(tmpWidget.getParent() && tmpWidget.getType() !== 'ET2-TABBOX')
-					{
-						tmpWidget = tmpWidget.getParent();
-					}
-					//Activate the tab where the widget with validation error is located
-					if(tmpWidget.getType() === 'ET2-TABBOX')
-					{
-						(<Et2Tabs><unknown>tmpWidget).activateTab(invalid_widgets[0]);
-						(<Et2Tabs><unknown>tmpWidget).updateComplete.then(() => scroll(invalid_widgets[0]));
-					}
-					else
-					{
-						scroll(invalid_widgets[0]);
-					}
+					etemplate2.showWidget(invalid_widgets[0]);
 				}
 				else
 				{
@@ -1884,6 +1861,61 @@ export class etemplate2
 	}
 
 	/**
+	 * Make a widget visible: open the tab it is in, then scroll it into view
+	 *
+	 * Scrolling waits for the tab to be shown, a hidden widget has no position to scroll to.
+	 * A widget that generates its own fields (eg. customfields) is not itself what the user wants to
+	 * see, so we scroll to its first field matching the filter, falling back to the widget.
+	 *
+	 * @param widget et2 widget or DOM node
+	 * @param filter picks which of the widget's generated fields to scroll to, default: has a validation error
+	 */
+	public static showWidget(widget : any, filter : (field : any) => boolean = (field) => (field?.hasFeedbackFor || []).includes("error"))
+	{
+		if(!widget)
+		{
+			return;
+		}
+		const scroll = () =>
+		{
+			let target = widget;
+			if(widget.widgets && typeof widget.widgets === "object")
+			{
+				target = Object.values(widget.widgets).find(filter) || widget;
+			}
+			const node = typeof target.getDOMNode === "function" ? target.getDOMNode() : target;
+			if(typeof target.scrollIntoView === "function")
+			{
+				target.scrollIntoView({block: "center"});
+			}
+			else if(typeof node?.scrollIntoView === "function")
+			{
+				node.scrollIntoView({block: "center"});
+			}
+		};
+		// Walk the DOM, as generated fields are not in the widget tree, and shadow roots to their host
+		let panel = null;
+		for(let node = widget instanceof Node ? widget : widget.getDOMNode?.(); node; node = node.parentNode || (<ShadowRoot>node).host)
+		{
+			if(node.nodeName === 'ET2-TAB-PANEL')
+			{
+				panel = node;
+				break;
+			}
+		}
+		const tabs = <any>panel?.parentElement;
+		if(tabs && typeof tabs.show === "function")
+		{
+			tabs.show(panel.name);
+			tabs.updateComplete.then(() => requestAnimationFrame(scroll));
+		}
+		else
+		{
+			scroll();
+		}
+	}
+
+	/**
 	 * Plugin for egw.json type "et2_validation_error"
 	 *
 	 * @param _type
@@ -1910,22 +1942,7 @@ export class etemplate2
 				console.warn(`Validation error without widget.  ID:${id} - ${_response.data[id]}`);
 				continue;
 			}
-			// Handle validation_error (messages coming back from server as a response) if widget is children of a tabbox
-			let tmpWidget = widget;
-			while(tmpWidget.getParent() && tmpWidget.getType() !== 'ET2-TABBOX')
-			{
-				tmpWidget = tmpWidget.getParent();
-			}
-			//Activate the tab where the widget with validation error is located
-			if(tmpWidget.getType() === 'ET2-TABBOX')
-			{
-				(<Et2Tabs><unknown>tmpWidget).activateTab(widget);
-			}
-			// scroll the widget into view
-			if (typeof widget.getDOMNode().scrollIntoView === 'function')
-			{
-				widget.scrollIntoView();
-			}
+			etemplate2.showWidget(widget);
 		}
 		egw().debug("warn", "Validation errors", _response.data);
 	}
