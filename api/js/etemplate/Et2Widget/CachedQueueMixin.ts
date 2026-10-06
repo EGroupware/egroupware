@@ -282,27 +282,53 @@ export const CachedQueueMixin = <T extends Constructor<typeof Et2Widget & {
 			const first = queue[0];
 			const widget = <CachedQueueMixinClass>first.owner;
 
+			// What this request is for.  Widgets that queue while it is in flight are not part of it,
+			// and are left for the next one.
+			const sent = [...queue];
+
 			// Get all parameters and remove duplicates (though there shouldn't be any)
-			const uniqueParams = Array.from(new Set(queue.map(item => item.cacheKey)))
+			const uniqueParams = Array.from(new Set(sent.map(item => item.cacheKey)))
 				.map(item => JSON.parse(item));
-			if(uniqueParams.length !== queue.length)
+			if(uniqueParams.length !== sent.length)
 			{
 				// Should not be here, figure out how we got a duplicate in the queue
-				console.warn("Duplicate request in the queue", queue);
+				console.warn("Duplicate request in the queue", sent);
 			}
 
 			// Send the request
-			const data = await widget.egw().request(widget.staticThis.searchUrl, [uniqueParams]) ?? {};
-
-			// Map results back to all queued items
-			for(let i = queue.length - 1; i >= 0; i--)
+			let data : any;
+			try
 			{
-				const item = queue[i];
+				data = await widget.egw().request(widget.staticThis.searchUrl, [uniqueParams]);
+			}
+			catch(e)
+			{
+				// Handled like no answer, below
+			}
+			if(data === null || typeof data !== "object")
+			{
+				data = {};
+			}
+
+			// Map results back to the queued items
+			for(const item of sent)
+			{
 				const widgetData = data[item.cacheKey];
+
+				// Every item leaves the queue, answered or not.  One the server gave no answer for (the
+				// request failed, or the server keyed it differently) used to stop the loop here and
+				// stay queued - holding its widget, and asked for again with every later request.
+				const index = queue.indexOf(item);
+				if(index !== -1)
+				{
+					queue.splice(index, 1);
+				}
+
 				if(typeof widgetData === "undefined")
 				{
-					// No response yet - either coming in the next one, or server didn't give an answer for it
-					return;
+					// Don't cache a non-answer, so a later widget asks again
+					item.resolve(undefined);
+					continue;
 				}
 
 				// Cache it
@@ -310,9 +336,6 @@ export const CachedQueueMixin = <T extends Constructor<typeof Et2Widget & {
 
 				// Resolve the promise for this request
 				item.resolve(widgetData);
-
-				// Remove from the cache
-				queue.splice(i, 1);
 			}
 
 			return data;
