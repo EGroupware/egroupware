@@ -204,8 +204,21 @@ export class Et2AppBox extends Et2Widget(LitElement)
 		// Don't consider sort as a filter.
 		delete values.sort;
 
-		const emptyFilter = (v : any) => typeof v == "object" ? Object.values(v).filter(emptyFilter).length : v;
-		if(Object.values(values).filter(emptyFilter).length !== 0)
+		// "Nothing set" is not always falsy: a cleared Et2LinkEntry still reports {app, id: ''} because it
+		// remembers the last chosen app, so an object with an empty id is empty whatever else it holds.
+		const hasValue = (v : any) : boolean =>
+		{
+			if(!v || typeof v !== "object")
+			{
+				return Boolean(v);
+			}
+			if("app" in v && "id" in v && !v.id)
+			{
+				return false;
+			}
+			return Object.values(v).some(hasValue);
+		};
+		if(Object.values(values).some(hasValue))
 		{
 			info.icon = "filter-circle-fill";
 		}
