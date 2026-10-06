@@ -605,7 +605,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 				do
 				{
 					var cache_id = CalendarApp._daywise_cache_id(t, sort_key);
-					egw.dataRegisterUID(cache_id, row._data_callback, row);
+					row.registerUID(cache_id);
 
 					t.setUTCDate(t.getUTCDate() + 1);
 				}
