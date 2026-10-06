@@ -322,7 +322,7 @@ export default css`
 	et2-image {
 		filter: var(--image-filter);
 	}
-    sl-details.favorites {
+    et2-details.favorites {
 		&::part(content) {
 			padding: 0;
 		}

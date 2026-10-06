@@ -1300,23 +1300,22 @@ export class EgwFrameworkApp extends LitElement
 		let favorites : symbol | TemplateResult = nothing;
 		if(this.features?.favorites)
 		{
-			favorites = html`${until(Favorite.load(this.egw, this.name).then((favorites) =>
-			{
-				// Add favorite menu to sidebox
-				const favSidebox = this._sideboxData?.find(s => s.title.toLowerCase() == "favorites" || s.title == this.egw.lang("favorites"));
-				return html`
-                    <et2-details
-                            exportparts="base:details-base, header:details-header, summary:details-summary, content:details-content"
-                            class="favorites sidebox" slot="left"
-                                ?open=${favSidebox?.opened}
-                                summary=${this.egw.lang("Favorites")}
-                                @sl-show=${() => {this.egw.set_preference(this.name, 'jdots_sidebox_' + favSidebox.menu_name, true);}}
-                                @sl-hide=${() => {this.egw.set_preference(this.name, 'jdots_sidebox_' + favSidebox.menu_name, false);}}
-                    >
-                        <et2-favorites-menu application=${this.name} sortable></et2-favorites-menu>
-                    </et2-details>
-				`;
-			}), nothing)}`;
+			// Add favorite menu to sidebox.  Rendered directly: waiting for anything here would throw the sidebox away
+			// and make it again on every render of the app (eg. whenever the number of rows changes), and anything
+			// the user was in the middle of clicking in it would be lost.
+			const favSidebox = this._sideboxData?.find(s => s.title.toLowerCase() == "favorites" || s.title == this.egw.lang("favorites"));
+			favorites = html`
+                <et2-details
+                        exportparts="base:details-base, header:details-header, summary:details-summary, content:details-content"
+                        class="favorites sidebox" slot="left"
+                        ?open=${favSidebox?.opened}
+                        summary=${this.egw.lang("Favorites")}
+                        @sl-show=${() => {this.egw.set_preference(this.name, 'jdots_sidebox_' + favSidebox.menu_name, true);}}
+                        @sl-hide=${() => {this.egw.set_preference(this.name, 'jdots_sidebox_' + favSidebox.menu_name, false);}}
+                >
+                    <et2-favorites-menu application=${this.name} sortable></et2-favorites-menu>
+                </et2-details>
+			`;
 		}
 		return html`
             <slot name="left-top"></slot>

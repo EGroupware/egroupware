@@ -625,7 +625,7 @@ egw-app {
   /* Nice formatting for custom templates slotted into filter */
   /* Application template gets full height */
   /*sidebox styling
-  * same styling should apply to sl-details.favorites inside the EgwFrameworkApp.styles.ts
+  * same styling should apply to et2-details.favorites inside the EgwFrameworkApp.styles.ts
   */
   /** Clean nextmatch headers **/
   /* Hide nextmatch header, it's in the framework now */
@@ -717,15 +717,15 @@ egw-app et2-favorites-menu::part(menu) {
 egw-app::part(details-header) {
   background-color: var(--template-custom-color, var(--application-color, var(--sl-color-primary-800, lightblue)));
   padding-block: var(--sl-spacing-3x-small);
-  margin: var(--sl-spacing-medium);
-  margin-bottom: 0;
+  margin: 0;
   color: var(--application-header-text-color);
 }
 egw-app::part(details-base) {
   border: none;
   border-radius: 0;
 }
-egw-app::part(content) {
+egw-app::part(content),
+egw-app::part(details-content) {
   padding: 0;
 }
 egw-app .et2_nextmatch.et2-filterbox--loaded:not(.et2-filterbox--none):not(.et2-filterbox--has-header):not(.et2-filterbox--has-lettersearch) .nextmatch_header {

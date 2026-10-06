@@ -187,9 +187,11 @@ class Favorites
 	 * @param string $action "add" or "delete"
 	 * @param boolean|int|String $group ID of the group to create the favorite for, or 'all' for all users
 	 * @param array $filters key => value pairs for the filter
+	 * @param string|null $folder Name of the folder the favorite is listed in, empty or null for none.
+	 *	Only stored with the favorite, so for a favorite shared with a group it is the folder every member sees by default.
 	 * @return boolean Success
 	 */
-	public static function set_favorite($app, $_name, $action, $group, $filters = array())
+	public static function set_favorite($app, $_name, $action, $group, $filters = array(), $folder = null)
 	{
 		// Only use alphanumeric for preference name, so it can be used directly as DOM ID
 		$name = strip_tags($_name);
@@ -240,6 +242,10 @@ class Favorites
 				'group' => $group ? $group : false,
 				'state' => $filters
 			);
+			if (($folder = trim(strip_tags((string)$folder))) !== '')
+			{
+				$filters['folder'] = $folder;
+			}
 			$pref_name = "favorite_".preg_replace('/[^A-Za-z0-9-_]/u','_',$name);
 			$result = $prefs->add($app,$pref_name,$filters,$type);
 			$pref = $prefs->save_repository(false,$type);
