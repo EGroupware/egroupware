@@ -230,10 +230,8 @@ describe("Et2Description markdown", () =>
 // Description is not an input widget (no readonly/required/get_value/isValid), so it can't run
 // inputBasicTests()'s value/required/disabled/hidden contract - but its label rendering follows
 // the same part="form-control-label" convention as real input widgets, so that part is still
-// worth checking. It has no help-text slot at all. skipLabelFixed: the label part is a bare
-// <slot part="form-control-label"> (display:contents), which "width" has no effect on at all -
-// .et2-label-fixed genuinely cannot apply here, not a bug.
-widgetSlotTests(before, ["label"], {skipLabelFixed: true});
+// worth checking. It has no help-text slot at all.
+widgetSlotTests(before, ["label"]);
 /**
  * Link styling.
  *

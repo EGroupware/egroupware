@@ -1,5 +1,28 @@
 import {css} from "lit";
 
+/**
+ * For read-only widgets that render their own `<span class="form-control-label">` next to the value.
+ *
+ * Under .et2-label-fixed the label becomes a column of its own (the width comes from the rule in the
+ * default styles below) and the row is as tall as the input it stands in for.  Like an editable field, the
+ * value drops below the label when the two no longer fit side by side.  The height is on the label
+ * rather than the host because a layout's min-height: 0 on its children outranks :host rules.
+ */
+export const readonlyFixedLabelStyles = css`
+	:host(.et2-label-fixed) {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+
+	:host(.et2-label-fixed) .form-control-label {
+		display: flex;
+		align-items: center;
+		min-height: var(--sl-input-height-medium);
+		margin-right: var(--sl-spacing-medium);
+	}
+`;
+
 export default css`
 	:host([disabled]) {
 		display: none;

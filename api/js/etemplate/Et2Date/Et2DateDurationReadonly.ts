@@ -8,9 +8,10 @@
  */
 
 
-import {css, html} from "lit";
+import {css, html, nothing} from "lit";
 import {Et2DateDuration, formatOptions} from "./Et2DateDuration";
 import {dateStyles} from "./DateStyles";
+import {readonlyFixedLabelStyles} from "../Et2Widget/Et2Widget.styles";
 import {customElement} from "lit/decorators/custom-element.js";
 
 
@@ -28,6 +29,7 @@ export class Et2DateDurationReadonly extends Et2DateDuration
 		return [
 			...super.styles,
 			...dateStyles,
+			readonlyFixedLabelStyles,
 			css`
 			:host {
 			border: none;
@@ -78,6 +80,7 @@ export class Et2DateDurationReadonly extends Et2DateDuration
 
 		const display = this.formatter(parsed, format_options);
 		return html`
+            ${this.label ? html`<span class="form-control-label" part="form-control-label">${this.label}</span>` : nothing}
             <slot name="prefix"></slot>
             <span ${this.id ? html`id="${this._dom_id}"` : ''}>
                   ${display.value}${display.unit}

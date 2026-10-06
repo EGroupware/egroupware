@@ -27,11 +27,32 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 			...dateStyles,
 			css`
 
+				/* dateStyles ask for fit-content, which keeps the range from ever shrinking below both inputs side by side */
+				:host {
+					min-width: 0;
+				}
+
+				/*
+				 * No basis of its own: what the row needs (two dates side by side) is what decides whether the
+				 * label can stay beside it, not the width the dates would like to have.
+				 */
 				.form-control-input {
 					display: flex;
+					flex: 1 1 0;
 					flex-direction: row;
-					flex-wrap: nowrap;
+					flex-wrap: wrap;
 					align-items: baseline;
+					min-width: min(28ex, 100%);
+				}
+
+				/*
+				 * The From and To inputs share the row, or take a row each when it is too narrow for two.  Their
+				 * width is the room left over, so only min-width (the date plus its padding, as in Et2Date) decides
+				 * when they stop fitting side by side.
+				 */
+				et2-date {
+					flex: 1 1 0;
+					min-width: 14ex;
 				}
 			`,
 		];

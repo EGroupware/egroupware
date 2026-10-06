@@ -62,7 +62,8 @@ export default css`
 		flex: 1 1 auto;
 		order: 2;
 		margin-left: 0px;
-		height: var(--sl-input-height-medium);
+		/* Inside the combobox's own border, so showing the search does not make the select taller */
+		height: calc(var(--sl-input-height-medium) - 2 * var(--sl-input-border-width));
 		width: 100%;
 		  background-color: var(--input-background-color);
 		z-index: var(--sl-z-index-dropdown);
