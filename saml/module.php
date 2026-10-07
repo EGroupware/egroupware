@@ -14,6 +14,10 @@ require_once('_include.php');
 $config = Configuration::getInstance();
 $headers = $config->getOptionalArray('headers.security', Configuration::DEFAULT_SECURITY_HEADERS);
 
+// SimpleSAMLphp saves its session (eg. the login done in the ACS) from a header-callback, which runs too late,
+// as the PHP session is already closed by then: save it in a shutdown function (SimpleSAMLphp redirects with exit)
+register_shutdown_function([\EGroupware\Api\Auth\Saml::class, 'save_simplesaml_session']);
+
 try {
 	$response = Module::process();
 	foreach ($headers as $header => $value) {
