@@ -144,6 +144,7 @@
 		"pragmarx/google2fa-qrcode": "^1.0",
 		"robrichards/xmlseclibs": "^3.1.1",
 		"simplesamlphp/simplesamlphp": "^2.5.0",
+		"simplesamlphp/simplesamlphp-module-metarefresh": "^1.3",
 		"slim/slim": "^4.15",
 		"steverhoades/oauth2-openid-connect-server": "^3.0.1",
 		"web-auth/webauthn-lib": "^5.3.5"

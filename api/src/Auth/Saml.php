@@ -424,7 +424,13 @@ class Saml implements BackendSSO
 			}
 			if (count($metadata) !== count($idps) || $config['saml_metadata_refresh'] === 'now')
 			{
-				self::refreshMetadata($config);
+				try {
+					self::refreshMetadata($config);
+				}
+				// setup only catches \Exception, an \Error (eg. missing class) would kill the request
+				catch (\Throwable $e) {
+					throw new \Exception('Error downloading IdP metadata: '.$e->getMessage(), $e->getCode(), $e);
+				}
 			}
 		}
 	}
