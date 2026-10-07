@@ -34,7 +34,7 @@ export default css`
 	}
 
 	  :host([rows]) .menu {
-		height: calc(var(--rows, 5) * 1.9rem);
+		height: calc(var(--rows, 5) * var(--row-height) + 2px); /* + top/bottom border */
 		overflow-y: auto;
 	}
 		sl-menu-item::part(label){
