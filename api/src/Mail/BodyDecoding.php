@@ -193,9 +193,10 @@ class BodyDecoding
 			Html::replaceTagsCompletley($css, 'script'); // strip out script that may be included
 		}
 		// styledefinitions are enclosed with curly brackets; template stuff tries to replace everything
-		// between curly brackets that has no horizontal whitespace, so widen the colons a bit; the
-		// <!-- style --> comment wrapper is outdated and ck-editor does not understand it, so remove it
-		$css = str_replace([':', '<!--', '-->'], [': ', '', ''], $css);
+		// between curly brackets that has no horizontal whitespace, so pad the opening brackets
+		// (not the colons, that breaks pseudo-classes like :focus);
+		// the <!-- style --> comment wrapper is outdated and ck-editor does not understand it, so remove it
+		$css = str_replace(['{', '<!--', '-->'], ['{ ', '', ''], $css);
 
 		// the outlook style fix sets line-height:0, which breaks all tr lines in the content - restore it
 		if (preg_match('/Outlook 2016 Height Fix/i', $css))
