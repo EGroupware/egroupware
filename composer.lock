@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e9f367a19fd45aa072b250a6f9cbc743",
+    "content-hash": "be578ff770e759d07f2458808e8e4b1e",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -7482,6 +7482,61 @@
                 "source": "https://github.com/simplesamlphp/simplesamlphp-assets-base/tree/v2.5.15"
             },
             "time": "2026-05-31T03:32:51+00:00"
+        },
+        {
+            "name": "simplesamlphp/simplesamlphp-module-metarefresh",
+            "version": "v1.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/simplesamlphp/simplesamlphp-module-metarefresh.git",
+                "reference": "8db16329991b2d167827bb81c587c0dfb6e1ef2b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/simplesamlphp/simplesamlphp-module-metarefresh/zipball/8db16329991b2d167827bb81c587c0dfb6e1ef2b",
+                "reference": "8db16329991b2d167827bb81c587c0dfb6e1ef2b",
+                "shasum": ""
+            },
+            "require": {
+                "ext-libxml": "*",
+                "php": "^8.3",
+                "simplesamlphp/assert": "^2.0",
+                "simplesamlphp/composer-module-installer": "^1.7",
+                "simplesamlphp/simplesamlphp": "~2.5@dev",
+                "simplesamlphp/xml-common": "~2.7",
+                "symfony/http-client": "~7.4",
+                "symfony/http-foundation": "~7.4",
+                "symfony/var-exporter": "~7.4"
+            },
+            "require-dev": {
+                "simplesamlphp/simplesamlphp-test-framework": "~1.11"
+            },
+            "type": "simplesamlphp-module",
+            "autoload": {
+                "psr-4": {
+                    "SimpleSAML\\Module\\metarefresh\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Andreas Åkre Solberg",
+                    "email": "andreas.solberg@uninett.no"
+                }
+            ],
+            "description": "The metarefresh module will download and parse metadata documents and store them locally",
+            "keywords": [
+                "metarefresh",
+                "simplesamlphp"
+            ],
+            "support": {
+                "issues": "https://github.com/simplesamlphp/simplesamlphp-module-metarefresh/issues",
+                "source": "https://github.com/simplesamlphp/simplesamlphp-module-metarefresh"
+            },
+            "time": "2026-03-18T15:02:11+00:00"
         },
         {
             "name": "simplesamlphp/xml-common",
