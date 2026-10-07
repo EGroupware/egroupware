@@ -7,10 +7,10 @@
             <et2-textarea  id="description" cols="70"></et2-textarea>
         </et2-ai>
 		<et2-hbox  disabled="@no_add_alarm" height="35">
-			<et2-button  label="Add new alarm" id="button[add_alarm]" image="add"></et2-button>
 			<et2-select  statustext="" id="new_alarm[options]" onchange="app.calendar.alarm_custom_date"></et2-select>
             <et2-date-time  id="new_alarm[date]" class="calendar_alarm_date_display" dataFormat="object"></et2-date-time>
 			<et2-select  statustext="Select who should get the alarm" label="for" id="new_alarm[owner]" noLang="1"></et2-select>
+			<et2-button  label="Add new alarm" id="button[add_alarm]" image="add"></et2-button>
 		</et2-hbox>
         <grid id="alarm" width="100%">
             <columns>
