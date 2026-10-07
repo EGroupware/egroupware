@@ -1126,9 +1126,27 @@ et2-image.pgp_sig_unknownkey, et2-image.pgp_sig_unknownkey svg {
 	max-width: 7em;
 	justify-content: flex-end;
 	min-width: 5em;
+	flex-shrink: 0;
 	color: var(--sl-color-neutral-700,darkgrey);
 }
+// From is the only address row (To, Cc and Bcc disabled):
+// keep the attachments row below the avatar, instead of moving up beside it,
+// by top-aligning the avatar and giving the From row the avatar's height
+et2-hbox.mailPreviewHeaders:has(et2-vbox.addresses > et2-hbox:first-child + [disabled] + [disabled] + [disabled]) {
+	> et2-lavatar {
+		align-self: flex-start;
+	}
+	et2-vbox.addresses > et2-hbox:first-child {
+		min-height: 3.8em;	// lavatar size="2.75em" is relative to its own, bigger font-size
+	}
+}
 
+// date grows with the free space next to a short From address, keep its text right-aligned
+.mailPreviewHeaders {
+	et2-date-time_ro, et2-date-time-today {
+	text-align: end;
+	}
+}
 .mailPreviewHeaders et2-select-email::part(combobox) {
 	border: none;
 }
@@ -1163,8 +1181,8 @@ et2-hbox.mailPreviewHeaders {
 }
 
 et2-description#mail-index_mailPreview_subject {
-	margin-bottom: 0;
-	margin-top: 0.3em;
+	margin: 0.3em 0;
+	font-weight: bold;
 }
 
 /* Make +N tag in email look like text, not tag */
