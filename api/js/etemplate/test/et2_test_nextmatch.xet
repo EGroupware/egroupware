@@ -106,7 +106,7 @@
 							<date-duration id="${row}[info_sum_timesheets]" readonly="true" options="@duration_format" class="timesheet"/>
 						</hbox>
 						<hbox id="planified" options="1,0">
-							<image label="planned time" src="k_alarm.png"/>
+							<image label="planned time" src="alarm"/>
 							<date-duration id="${row}[info_planned_time]" readonly="true" options="@duration_format" span="all" class="planned"/>
 						</hbox>
 						<hbox id="replanified" options="1,0">
