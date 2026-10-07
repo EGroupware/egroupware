@@ -840,11 +840,11 @@ export abstract class EgwApp
 				// Not using resetSort() to avoid the extra applyFilters() call
 				nm.sortBy(undefined, undefined, false);
 			}
-			nm.applyFilters(state.state || state.filter || {});
+			nm.applyFilters(this._favoriteFilters(nm, state.state || state.filter || {}));
 			if(state.state && state.state.selectcols)
 			{
 				// Make sure it's a real array, not an object, then set cols
-				nm.set_columns(jQuery.extend([], state.state.selectcols));
+				this._applyFavoriteColumns(nm, jQuery.extend([], state.state.selectcols));
 			}
 			nextmatched = true;
 		}
@@ -875,6 +875,47 @@ export abstract class EgwApp
 		}
 		egw.open_link(url, undefined, undefined, this.appname);
 		return false;
+	}
+
+	/**
+	 * Filters to apply for a favorite
+	 *
+	 * Applying filters only changes the column filters it lists.  A favorite that has column filters, even
+	 * an empty list or empty values, has to leave the list with exactly those: the column filters set before
+	 * are cleared, not kept.
+	 *
+	 * @param nm nextmatch the filters are for
+	 * @param filters filters of the favorite
+	 * @return filters to pass to nm.applyFilters()
+	 */
+	protected _favoriteFilters(nm : { activeFilters? : Record<string, any> }, filters : Record<string, any>) : Record<string, any>
+	{
+		if(typeof filters?.col_filter === "undefined" || filters.col_filter === null)
+		{
+			return filters;
+		}
+		const col_filter = {};
+		Object.keys(nm.activeFilters?.col_filter ?? {}).forEach(column => col_filter[column] = "");
+		// An empty list is how PHP stores no column filters
+		Object.assign(col_filter, Array.isArray(filters.col_filter) ? {} : filters.col_filter);
+		return {...filters, col_filter};
+	}
+
+	/**
+	 * Show the columns of a favorite
+	 *
+	 * Changing the filters can change which saved column preference the nextmatch uses (eg. InfoLog's
+	 * details), and that preference is loaded when the nextmatch and its datagrid update, over any
+	 * columns set before.  So the columns are set once they have updated.
+	 *
+	 * @param nm nextmatch to set the columns of
+	 * @param columns keys of the columns to show
+	 */
+	protected _applyFavoriteColumns(nm : { updateComplete? : Promise<any>, _datagrid? : { updateComplete? : Promise<any> }, setColumns : Function }, columns : string[]) : Promise<void>
+	{
+		return Promise.resolve(nm.updateComplete)
+			.then(() => nm._datagrid?.updateComplete)
+			.then(() => nm.setColumns(columns));
 	}
 
 	/**

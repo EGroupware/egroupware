@@ -327,7 +327,11 @@ export class filemanagerAPP extends EgwApp
 		}
 		if(typeof state.state === "undefined") state.state = {};
 
-		state.state.col_filter ??= {};
+		// PHP stores "no column filters" as an empty array, which would lose the dir set on it when serialized
+		if(!state.state.col_filter || Array.isArray(state.state.col_filter))
+		{
+			state.state.col_filter = {};
+		}
 		// Client side uses dir, not path
 		state.state.col_filter.dir = dir;
 

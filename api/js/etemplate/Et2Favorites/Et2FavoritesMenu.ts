@@ -474,28 +474,16 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * A copy of a state without the values that mean "not set": null, undefined, empty strings, arrays and objects
+	 * The column filters that are set
 	 *
-	 * Nextmatch drops empty column filters from its state, while favorites saved earlier still hold them, and
-	 * older favorites hold empty lists (eg. selected) too.  Neither is a difference the user can see.
+	 * Nextmatch leaves a column filter out when it is empty (not set, "" or an empty list), favorites saved earlier
+	 * may still hold it.  A column that is empty in the favorite has to be empty in the state too.
 	 */
-	protected static dropEmpty(state : object | undefined) : object
+	protected static setColumnFilters(colFilter : object | undefined) : object
 	{
-		const isEmpty = (value) => value === null || typeof value === "undefined" || value === "" ||
-			(typeof value === "object" && Object.keys(value).length === 0);
-		const result = {};
-		Object.entries(state ?? {}).forEach(([key, value]) =>
-		{
-			if(key === "col_filter" && value && typeof value === "object")
-			{
-				value = Object.fromEntries(Object.entries(value).filter(([, filter]) => !isEmpty(filter)));
-			}
-			if(!isEmpty(value))
-			{
-				result[key] = value;
-			}
-		});
-		return result;
+		return Object.fromEntries(Object.entries(colFilter ?? {})
+			.filter(([, value]) => value && !(Array.isArray(value) && value.length === 0))
+			.sort(([a], [b]) => a < b ? -1 : 1));
 	}
 
 	/**
@@ -516,12 +504,10 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
 			return;
 		}
 
-		currentState = Et2FavoritesMenu.dropEmpty(currentState);
 		Object.entries(this.favorites).forEach(([name, favorite]) =>
 		{
 			const app_object = window.app[this.application];
 			if (app_object) favorite = app_object.fixState(favorite);
-			favorite = {...favorite, state: Et2FavoritesMenu.dropEmpty(favorite.state)};
 
 			let match_count = 0;
 			let extra_keys = Object.keys(favorite.state);
@@ -532,6 +518,17 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
 				if(extra_keys.includes(state_key))
 				{
 					extra_keys.splice(extra_keys.indexOf(state_key), 1);
+				}
+				if(state_key == "col_filter")
+				{
+					// Every column has to agree, set or not
+					if(JSON.stringify(Et2FavoritesMenu.setColumnFilters(currentState[state_key])) !==
+						JSON.stringify(Et2FavoritesMenu.setColumnFilters(favorite.state?.[state_key])))
+					{
+						return;
+					}
+					match_count++;
+					continue;
 				}
 				if(state_key == "selectcols")
 				{
@@ -609,7 +606,13 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
 			// Check for anything set that the current one does not have
 			for(var i = 0; i < extra_keys.length; i++)
 			{
-				if(favorite.state[extra_keys[i]])
+				let extra = favorite.state[extra_keys[i]];
+				if(extra_keys[i] == "col_filter")
+				{
+					extra = Et2FavoritesMenu.setColumnFilters(extra);
+				}
+				// An empty list or object, like selected: [], is not something that is set
+				if(extra && !(typeof extra === "object" && Object.keys(extra).length === 0))
 				{
 					return;
 				}
@@ -644,8 +647,10 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
 	{
 		if(e && e.detail?.nm?.getInstanceManager().app == this.application)
 		{
-			// Get the full state of the app and highlight if a favourite matches
-			this.highlightFavorite(e.detail.activeFilters ?? this.getInstanceManager()?.app_obj[this.application]?.getState());
+			// Get the full state of the app and highlight if a favourite matches.  Not just the nextmatch's filters,
+			// the app may add to them (eg. the view), or leave some out (eg. the directory in filemanager).
+			const app = this.getInstanceManager()?.app_obj?.[this.application] ?? window.app?.[this.application];
+			this.highlightFavorite(app?.getState?.() ?? e.detail.activeFilters);
 		}
 		// Could also be a non-nm state change
 	}

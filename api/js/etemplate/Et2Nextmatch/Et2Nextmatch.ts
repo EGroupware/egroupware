@@ -33,7 +33,10 @@ import {
 	datagridColumnPreferenceValue,
 	type Et2NextmatchResolvedColumn,
 	legacyColumnSelectionCsv,
-	mapLegacyVisibleKeysToCurrentColumns
+	mapLegacyVisibleKeysToCurrentColumns,
+	legacyVisibleCustomfieldNames,
+	applyLegacyCustomfieldVisibility,
+	visibleCustomfieldKeys
 } from "./Et2NextmatchColumnPreferences";
 import "./Headers/Header";
 import "./Headers/SortableHeader";
@@ -1764,8 +1767,18 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 	setColumns(columns : Array<string | Et2DatagridColumn>)
 	{
 		const currentColumns = this._currentColumns.length ? this._currentColumns : this._datagrid?.columns || [];
-		const stringColumns = (columns || []).filter((column) => typeof column === "string") as string[];
-		const hasOnlyStringColumns = stringColumns.length === (columns || []).length;
+		const requestedKeys = (columns || []).filter((column) => typeof column === "string") as string[];
+		const hasOnlyStringColumns = requestedKeys.length === (columns || []).length;
+		// Favorites and app states from before the columns were converted name columns that no longer exist,
+		// eg. each custom field on its own.  Show the column that took their place.
+		const mappedKeys = hasOnlyStringColumns && currentColumns.length
+			? mapLegacyVisibleKeysToCurrentColumns(requestedKeys, currentColumns) : [];
+		if(hasOnlyStringColumns && requestedKeys.length && currentColumns.length && !mappedKeys.length)
+		{
+			// None of them is a column here, showing none at all is never what was meant
+			return;
+		}
+		const stringColumns = mappedKeys.length ? mappedKeys : requestedKeys;
 		if(hasOnlyStringColumns)
 		{
 			this._pendingVisibleColumnKeys = stringColumns.map((column) => String(column));
@@ -1798,6 +1811,12 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 			// column preference back over this selection.
 			this._datagrid.applyExternalColumns(nextColumns.map((column) => ({...column})));
 			this._datagrid.requestUpdate();
+		}
+		if(hasOnlyStringColumns)
+		{
+			// ... and only the custom fields they listed
+			applyLegacyCustomfieldVisibility(<Et2NextmatchResolvedColumn[]>(this._datagrid?.columns ?? nextColumns),
+				legacyVisibleCustomfieldNames(requestedKeys));
 		}
 		this.dispatchEvent(new CustomEvent("et2-columns-changed", {
 			detail: {columns: nextColumns},
@@ -1857,7 +1876,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 		// state as a visible column.
 		const selectcols = new Et2DatagridColumnState()
 			.visibleColumns(this._currentColumns, this._parseColumnBooleanExpression)
-			.map((column) => String(column.key || ""))
+			.flatMap((column) => [String(column.key || ""), ...visibleCustomfieldKeys(column)])
 			.filter(Boolean);
 		if(this.lettersearch && this._lettersearchVisible)
 		{

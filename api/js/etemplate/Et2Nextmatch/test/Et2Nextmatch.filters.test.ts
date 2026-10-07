@@ -1247,6 +1247,56 @@ describe("Et2Nextmatch header event handling", () =>
 		warn.restore();
 	});
 
+	it("shows the custom fields column for a favorite that listed the custom fields as columns", async() =>
+	{
+		const el = new Et2Nextmatch();
+		el.setColumns([
+			{key: "title", title: "Title"} as any,
+			{key: "owner", title: "Owner"} as any,
+			{key: "customfields", title: "Custom fields"} as any
+		]);
+		el.setColumns(["title", "#Ticket", "#select"]);
+		assert.deepEqual(el.value.selectcols, ["title", "customfields"], "legacy custom field keys should show the custom fields column");
+		el.setColumns(["gone", "also_gone"]);
+		assert.deepEqual(el.value.selectcols, ["title", "customfields"], "keys that match no column should leave the columns alone");
+	});
+
+	it("reports the custom fields shown, so a favorite can keep them", async() =>
+	{
+		const el = new Et2Nextmatch();
+		el.setColumns([
+			{key: "title", title: "Title"} as any,
+			{
+				key: "customfields", title: "Custom fields",
+				header: {getCustomfieldVisibility: () => ({Ticket: true, hidden_one: false, "Big file": true})}
+			} as any
+		]);
+		assert.deepEqual(el.value.selectcols, ["title", "customfields", "#Ticket", "#Big file"]);
+
+		el.setColumns([
+			{key: "title", title: "Title"} as any,
+			{key: "customfields", title: "Custom fields", hidden: true, header: {getCustomfieldVisibility: () => ({Ticket: true})}} as any
+		]);
+		assert.deepEqual(el.value.selectcols, ["title"], "custom fields of a column that is not shown are not reported");
+	});
+
+	it("shows only the custom fields a favorite listed", async() =>
+	{
+		const el = new Et2Nextmatch();
+		const visibility = sinon.spy();
+		el.setColumns([
+			{key: "title", title: "Title"} as any,
+			{key: "customfields", title: "Custom fields", header: {setCustomfieldVisibility: visibility}} as any
+		]);
+		el.setColumns(["title", "#Ticket", "#Big file"]);
+		assert.isTrue(visibility.calledOnce, "the custom fields column should be told which custom fields to show");
+		assert.deepEqual(visibility.firstCall.args[0], {"Ticket": true, "Big file": true});
+
+		visibility.resetHistory();
+		el.setColumns(["title", "customfields"]);
+		assert.isFalse(visibility.called, "a favorite without custom field names should leave the custom fields alone");
+	});
+
 	/**
 	 * Contract under test:
 	 * - `setColumns()` updates the live root datagrid, not only Nextmatch's

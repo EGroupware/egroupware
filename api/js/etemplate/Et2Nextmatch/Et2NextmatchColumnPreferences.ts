@@ -74,6 +74,27 @@ export function datagridColumnPreferenceValue(columns : Et2NextmatchResolvedColu
 }
 
 /**
+ * The custom fields a column shows, as the `#name` entries a column list holds them as
+ *
+ * Only the custom fields column has any.  Without them a saved column list can not tell the custom fields
+ * that were shown from all of them.
+ */
+export function visibleCustomfieldKeys(column : Et2DatagridColumn) : string[]
+{
+	const header = column.header as any;
+	if(String(column.key) !== "customfields" || typeof header?.getCustomfieldVisibility !== "function")
+	{
+		return [];
+	}
+	const visibility = header.getCustomfieldVisibility();
+	if(!visibility || typeof visibility !== "object")
+	{
+		return [];
+	}
+	return Object.keys(visibility).filter((name) => visibility[name] === true).map((name) => CUSTOMFIELD_PREFIX + name);
+}
+
+/**
  * Rebuild the legacy Nextmatch CSV-format column-visibility preference (visible
  * column keys, in order, with `#`-prefixed custom-field markers) from current
  * Datagrid columns.

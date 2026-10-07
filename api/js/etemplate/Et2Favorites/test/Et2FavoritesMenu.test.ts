@@ -688,13 +688,6 @@ describe("Favorites menu", () =>
 			assert.equal(await highlighted({cat_id: "5", col_filter: {}}), "A");
 		});
 
-		it("still tells apart a favorite with a column filter set", async() =>
-		{
-			prefs = {favorite_A: favorite("A", {cat_id: "5", col_filter: {info_status: "done", info_type: ""}})};
-			assert.equal(await highlighted({cat_id: "5", col_filter: {}}), "");
-			assert.equal(await highlighted({cat_id: "5", col_filter: {info_status: "done"}}), "A");
-		});
-
 		it("ignores empty values, like an empty selected list, that only the favorite holds", async() =>
 		{
 			prefs = {favorite_A: favorite("A", {cat_id: "5", selected: [], search: "", startdate: null})};
@@ -726,6 +719,120 @@ describe("Favorites menu", () =>
 		{
 			prefs = {favorite_A: favorite("A", {cat_id: "6", selectcols: ["a"]})};
 			assert.equal(await highlighted({cat_id: "5", selectcols: ["a"]}), "");
+		});
+
+		it("does not highlight a favorite without a search once a search is set", async() =>
+		{
+			prefs = {favorite_A: favorite("A", {cat_id: "5", search: ""})};
+			assert.equal(await highlighted({cat_id: "5", search: ""}), "A");
+			assert.equal(await highlighted({cat_id: "5", search: "foo"}), "");
+		});
+
+		it("does not highlight a favorite with a search once the search is changed or cleared", async() =>
+		{
+			prefs = {favorite_A: favorite("A", {cat_id: "5", search: "foo"})};
+			assert.equal(await highlighted({cat_id: "5", search: "foo"}), "A");
+			assert.equal(await highlighted({cat_id: "5", search: "bar"}), "");
+			assert.equal(await highlighted({cat_id: "5", search: ""}), "");
+			assert.equal(await highlighted({cat_id: "5", search: null}), "");
+		});
+
+		it("treats an empty column filter like none, in the favorite or the state", async() =>
+		{
+			prefs = {favorite_A: favorite("A", {cat_id: "5", col_filter: {info_type: "", info_status: null, info_owner: []}})};
+			assert.equal(await highlighted({cat_id: "5", col_filter: {}}), "A");
+			assert.equal(await highlighted({cat_id: "5"}), "A");
+			assert.equal(await highlighted({cat_id: "5", col_filter: {info_type: ""}}), "A");
+		});
+
+		it("does not highlight a favorite with a column filter the state does not have", async() =>
+		{
+			prefs = {favorite_A: favorite("A", {cat_id: "5", col_filter: {info_status: "done", info_type: ""}})};
+			assert.equal(await highlighted({cat_id: "5", col_filter: {info_status: "done"}}), "A");
+			assert.equal(await highlighted({cat_id: "5", col_filter: {}}), "");
+			assert.equal(await highlighted({cat_id: "5"}), "");
+		});
+
+		it("does not highlight a favorite without a column filter once the state has one", async() =>
+		{
+			prefs = {favorite_A: favorite("A", {cat_id: "5", col_filter: {}})};
+			assert.equal(await highlighted({cat_id: "5", col_filter: {info_status: "done"}}), "");
+		});
+
+		it("does not highlight a favorite with another value in a column filter", async() =>
+		{
+			prefs = {favorite_A: favorite("A", {cat_id: "5", col_filter: {info_status: "done"}})};
+			assert.equal(await highlighted({cat_id: "5", col_filter: {info_status: "open"}}), "");
+		});
+
+		it("does not highlight a favorite with an empty column filter once that column is set", async() =>
+		{
+			prefs = {favorite_A: favorite("A", {cat_id: "5", col_filter: {info_type: ""}})};
+			assert.equal(await highlighted({cat_id: "5", col_filter: {info_type: ""}}), "A");
+			assert.equal(await highlighted({cat_id: "5", col_filter: {info_type: "task"}}), "");
+		});
+	});
+
+	describe("when the filters change", () =>
+	{
+		const favorite = (name : string, state : object) : any => ({name: name, group: false, state: state});
+		const filterEvent = (app : string, activeFilters? : object) => new CustomEvent("et2-filter", {
+			bubbles: true,
+			detail: {nm: {getInstanceManager: () => ({app: app})}, activeFilters: activeFilters}
+		});
+		const changed = async(element : Et2FavoritesMenu, event : CustomEvent) =>
+		{
+			document.dispatchEvent(event);
+			await element.updateComplete;
+			return element.activeFavorite;
+		};
+		const appState = (state : object) =>
+		{
+			(<any>window).app[APP].fixState = fav => fav;
+			(<any>window).app[APP].getState = () => state;
+		};
+
+		it("highlights from the state of the app, which has more than the nextmatch's filters", async() =>
+		{
+			prefs = {favorite_A: favorite("A", {cat_id: "5", view: "list"})};
+			const element = await create();
+			appState({cat_id: "5", view: "list"});
+			assert.equal(await changed(element, filterEvent(APP, {cat_id: "5"})), "A");
+		});
+
+		it("highlights from the state of the app, which leaves out what the nextmatch has", async() =>
+		{
+			prefs = {favorite_A: favorite("A", {cat_id: "5", col_filter: {}})};
+			const element = await create();
+			appState({cat_id: "5", col_filter: {}});
+			assert.equal(await changed(element, filterEvent(APP, {cat_id: "5", col_filter: {dir: "/home"}})), "A");
+		});
+
+		it("takes the filters of the nextmatch if the app has no state", async() =>
+		{
+			prefs = {favorite_A: favorite("A", {cat_id: "5"})};
+			const element = await create();
+			appState(undefined);
+			(<any>window).app[APP].getState = undefined;
+			assert.equal(await changed(element, filterEvent(APP, {cat_id: "5"})), "A");
+		});
+
+		it("stops highlighting once the state no longer matches", async() =>
+		{
+			prefs = {favorite_A: favorite("A", {cat_id: "5"})};
+			const element = await create();
+			appState({cat_id: "5"});
+			assert.equal(await changed(element, filterEvent(APP)), "A");
+			appState({cat_id: "6"});
+			assert.equal(await changed(element, filterEvent(APP)), "");
+		});
+
+		it("ignores the filters of another application", async() =>
+		{
+			prefs = {favorite_A: favorite("A", {cat_id: "5"})};
+			const element = await create();
+			appState({cat_id: "5"});
+			assert.equal(await changed(element, filterEvent("other")), "");
 		});
 	});
 });
