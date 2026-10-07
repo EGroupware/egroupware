@@ -42,6 +42,9 @@ import {CalendarApp} from "./app";
  */
 export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDetachedDOM, et2_IResizeable,et2_IPrint
 {
+	/** Month range (first|last|today) we already scrolled to today for */
+	private static _scrolled_to_today : string = '';
+
 	static readonly _attributes : any = {
 		value: {
 			type: "any",
@@ -1105,6 +1108,8 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		// Handle not fully visible elements
 		this._scroll();
 
+		this._scrollToToday();
+
 		// Set 'now' line
 		this._updateNow();
 
@@ -1187,6 +1192,50 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 			}
 			day.set_class(classes.join(' '));
 		}
+	}
+
+	/**
+	 * Month and multi-week view: bring today's day into view, so at the end of a month
+	 * the previous month's days at the top of the list are not mistaken for it.
+	 *
+	 * Only done when today is in the displayed range, and once per displayed range,
+	 * so later redraws (eg. new events) do not undo the user's own scrolling.
+	 */
+	private _scrollToToday()
+	{
+		const state = (this.getInstanceManager().app_obj.calendar || app.calendar)?.state;
+		if(!state || !['month', 'weekN'].includes(state.view) || !this.day_list || !this.day_widgets)
+		{
+			return;
+		}
+		const now = new Date();
+		now.setUTCMinutes(now.getUTCMinutes() - now.getTimezoneOffset());
+		const today = formatDate(now, {dateFormat: "Ymd"});
+		// Each week is its own timegrid, so decide on the whole displayed range
+		if(today < formatDate(new Date(state.first), {dateFormat: "Ymd"}) ||
+			today > formatDate(new Date(state.last), {dateFormat: "Ymd"}))
+		{
+			// Scroll again when coming back to the current month
+			et2_calendar_timegrid._scrolled_to_today = '';
+			return;
+		}
+		if(this.day_list.indexOf(today) < 0)
+		{
+			return;
+		}
+		const key = state.first + '|' + state.last + '|' + today;
+		if(et2_calendar_timegrid._scrolled_to_today === key)
+		{
+			return;
+		}
+		et2_calendar_timegrid._scrolled_to_today = key;
+		// Layout may not be final yet
+		window.setTimeout(() =>
+		{
+			const day = this.day_widgets[this.day_widgets.findIndex(d => d.options?.date === today)];
+			const node = day?.getDOMNode?.() ?? day?.div?.get?.(0);
+			node?.scrollIntoView?.({block: "nearest"});
+		}, 0);
 	}
 
 	/**
