@@ -188,9 +188,11 @@ tr.mail .status_icons et2-image {
   font-size: calc(1em + 2px);
   height: calc(1em + 2px);
   width: calc(1em + 2px);
+  flex-shrink: 0;
 }
 tr.mail et2-image.horizontal_smime {
   display: block;
   width: calc(1em + 2px);
   font-size: calc(1em + 2px);
+  flex-shrink: 0;
 }
