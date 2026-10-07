@@ -111,7 +111,11 @@ class Saml implements BackendSSO
 	/**
 	 * Some urn:oid constants for common attributes
 	 */
-	const eduPersonPricipalName = 'urn:oid:1.3.6.1.4.1.5923.1.1.1.6';
+	const eduPersonPrincipalName = 'urn:oid:1.3.6.1.4.1.5923.1.1.1.6';
+	/**
+	 * @deprecated misspelled, use self::eduPersonPrincipalName
+	 */
+	const eduPersonPricipalName = self::eduPersonPrincipalName;
 	const eduPersonUniqueId = 'urn:oid:1.3.6.1.4.1.5923.1.1.1.13';
 	const emailAddress = 'urn:oid:0.9.2342.19200300.100.1.3';
 	const uid = 'urn:oid:0.9.2342.19200300.100.1.1';
@@ -223,7 +227,12 @@ class Saml implements BackendSSO
 			session_id($id);
 			if (!session_start()) return;
 		}
-		SimpleSAML\Session::getSessionFromRequest()->save();
+		try {
+			SimpleSAML\Session::getSessionFromRequest()->save();
+		}
+		catch (\Throwable $e) {
+			_egw_log_exception($e);
+		}
 	}
 
 	/**
@@ -541,7 +550,7 @@ class Saml implements BackendSSO
 		$config['baseurlpath'] = Api\Framework::getUrl(Api\Egw::link('/saml/'));
 		$config['username_oid'] = [self::usernameOid($config)];
 		$config['attribute_oids'] = [
-			'eduPersonPricipalName' => self::eduPersonPricipalName,
+			'eduPersonPrincipalName' => self::eduPersonPrincipalName,
 			'eduPersonUniqueId' => self::eduPersonUniqueId,
 			'emailAddress' => self::emailAddress,
 			'uid' => self::uid,
@@ -579,10 +588,23 @@ class Saml implements BackendSSO
 			if (file_exists($path = $config['files_dir'] . '/saml/'.$file) &&
 				($content = file_get_contents($path)))
 			{
+				// repair config.php with SimpleSAMLphp's cookie domain not set to the one EGroupware uses
+				if ($file === 'config.php')
+				{
+					$cookie_domain = Api\Session::getCookieDomain($cookie_path, $cookie_secure);
+					$content = preg_replace([
+						"/^(\s*'session\.cookie\.domain' => *).*?$/m",
+						"/^(\s*)(?:\/\/)?('session\.cookie\.secure' => *)(?:true|false),$/m",
+					], [
+						// no domain, if EGroupware has none (eg. localhost or IP-address)
+						$cookie_domain ? "$1'.$cookie_domain'," : '$1\'\',',
+						'$1$2'.($cookie_secure ? 'true' : 'false').',',
+					], $content);
+				}
 				// repair authsources.php created without the "entityID" key, which makes SimpleSAMLphp 2 fail
 				if ($file === 'authsources.php')
 				{
-					$content = preg_replace("/('default-sp' => *\[\s*'saml:SP',\s*)('https?:\/\/[^']*',)/", "$1'entityID' => $2", $content);
+					$content = preg_replace("/('default-sp' => *\[\s*'saml:SP',(?:\s|\/\/[^\n]*\n)*)('https?:\/\/[^']*',)/", "$1'entityID' => $2", $content);
 				}
 				foreach($replacements as $conf => $reg_exp)
 				{
@@ -638,7 +660,7 @@ class Saml implements BackendSSO
 		switch($config['saml_username'])
 		{
 			case 'eduPersonPrincipalName':
-				return self::eduPersonPricipalName;
+				return self::eduPersonPrincipalName;
 			case 'eduPersonUniqueId':
 				return self::eduPersonUniqueId;
 			case 'emailAddress':
@@ -671,8 +693,8 @@ class Saml implements BackendSSO
 				$keys = [self::emailAddress, 'emailAddress', 'mailPrimaryAddress'];
 				break;
 			case 'eduPersonPrincipalName':
-			case self::eduPersonPricipalName:
-				$keys = [self::eduPersonPricipalName, 'eduPersonPrincipalName'];
+			case self::eduPersonPrincipalName:
+				$keys = [self::eduPersonPrincipalName, 'eduPersonPrincipalName'];
 				break;
 			case 'eduPersonUniqueId':
 			case self::eduPersonUniqueId:
@@ -793,7 +815,7 @@ class Saml implements BackendSSO
 		if (!file_exists($private_key_path) || !file_exists($public_key_path) ||
 			!preg_match('/^-----BEGIN CERTIFICATE-----$/m', file_get_contents($public_key_path)))
 		{
-			$config = [
+			$openssl_config = [
 				"digest_alg" => "sha512",
 				"private_key_bits" => 2048,
 				"private_key_type" => OPENSSL_KEYTYPE_RSA,
@@ -801,7 +823,7 @@ class Saml implements BackendSSO
 			// Read or generate the private key
 			if ((!file_exists($private_key_path) ||
 				($pkey = openssl_pkey_get_private(file_get_contents($private_key_path))) === false) &&
-				($pkey = openssl_pkey_new($config)) === false)
+				($pkey = openssl_pkey_new($openssl_config)) === false)
 			{
 				throw new Exception('Error generating key-pair!');
 			}
@@ -809,8 +831,8 @@ class Saml implements BackendSSO
 			// generate CSR and self-sign it
 			if (($csr = openssl_csr_new([
 					'commonName' => Api\Header\Http::host(),
-				], $pkey, $config)) === false ||
-				($cert = openssl_csr_sign($csr, null, $pkey, 3650, $config)) === false)
+				], $pkey, $openssl_config)) === false ||
+				($cert = openssl_csr_sign($csr, null, $pkey, 3650, $openssl_config)) === false)
 			{
 				throw new Exception('Error self-signing cert!');
 			}
@@ -875,7 +897,11 @@ EOF
 							"'session.cookie.name' => 'SimpleSAMLSessionID'," => "'session.cookie.name' => 'sessionid',",
 							"'session.cookie.path' => '/'," => "'session.cookie.path' => '$cookie_path',",
 							"'session.cookie.domain' => null," => "'session.cookie.domain' => '.$cookie_domain',",
+							// SimpleSAMLphp 2.x has an empty string / commented out value, which gives a host-only cookie,
+							// which the browser keeps beside our cookie of the same name with the domain set, and sends the older one first
+							"'session.cookie.domain' => ''," => "'session.cookie.domain' => '.$cookie_domain',",
 							"'session.cookie.secure' => false," => "'session.cookie.secure' => ".($cookie_secure ? 'true' : 'false').',',
+							"//'session.cookie.secure' => true," => "'session.cookie.secure' => ".($cookie_secure ? 'true' : 'false').',',
 							"'session.phpsession.cookiename' => 'SimpleSAML'," => "'session.phpsession.cookiename' => 'sessionid',",
 						];
 						break;
@@ -899,7 +925,7 @@ EOF
 								"\t\t'en' => ".self::quote($config['saml_sp'] ?: 'EGroupware').",\n".
 								"\t],\n\n".
 								"\t'attributes' => [\n".
-								"\t\t'eduPersonPricipalName' => '".self::eduPersonPricipalName."',\n".
+								"\t\t'eduPersonPrincipalName' => '".self::eduPersonPrincipalName."',\n".
 								"\t\t'eduPersonUniqueId' => '".self::eduPersonUniqueId."',\n".
 								"\t\t'emailAddress' => '".self::emailAddress."',\n".
 								"\t\t'firstName' => '".self::firstName."',\n".
