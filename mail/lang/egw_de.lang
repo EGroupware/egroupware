@@ -33,6 +33,7 @@ add this key into contact	mail	de	Diesen Schlüssel dem Kontakt hinzufügen
 add to addressbook	mail	de	Zum Adressbuch hinzufügen
 adding %1 to blacklisted email addresses failed because of %2	mail	de	Hinzufügen von %1 als E-Mail-Adresse zur Blacklist ist fehlgeschlagen, da %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	de	Hinzufügen von %1 als E-Mail-Adresse zur Whitelist ist fehlgeschlagen, da %2
+after %1 seconds	mail	de	Nach %1 Sekunden
 after reply, visible during compose	mail	de	Unter dem zitierten Text, sichtbar während der Bearbeitung
 aliases+forwards	mail	de	Aliase + Weiterleitungen
 all	mail	de	Alle
@@ -327,6 +328,7 @@ high priority	mail	de	Hohe Priorität
 hold %1 to drag files to your computer	mail	de	%1 halten um Dateien auf Ihren Computer zu ziehen
 home page folders	mail	de	Darstellung von E-Mails auf der Startseite
 hostname or ip	mail	de	Hostname oder IP
+how long a message has to stay open in the preview pane or a popup before it gets marked as read - this lets you skim past a message without marking it read. "immediately" is the previous, default behaviour.	mail	de	Wie lange eine Nachricht in der Vorschau oder einem Popup geöffnet bleiben muss, bevor sie als gelesen markiert wird - so können Sie eine Nachricht überfliegen, ohne sie als gelesen zu markieren. "Sofort" ist das bisherige Standardverhalten.
 how often to check with the server for new mail	mail	de	Aktualisierungsintervall zum prüfen nach neuen E-Mails
 how should the available information on identities be displayed	admin	de	Hier legen Sie fest wie die verfügbaren Informationen Ihrer Identitäten in ausgehenden Mails angezeigt wird
 how to forward messages	mail	de	Wie möchten Sie Nachrichten weiterleiten
@@ -355,6 +357,7 @@ imap - incoming mail	mail	de	IMAP-Posteingang-Server
 imap administration	mail	de	Administrator IMAP-Server
 imap server	mail	de	IMAP-Server
 imap timeout	mail	de	Zeitüberschreitung des IMAP-Servers nach
+immediately	mail	de	Sofort
 import ca-signed certificate for this key	mail	de	CA-signiertes Zertifikat für diesen Schlüssel importieren
 import certificate	mail	de	Zertifikat importieren
 import message	mail	de	E-Mail importieren
@@ -407,6 +410,7 @@ many recipients	mail	de	Viele Empfänger
 mark all as read	mail	de	Alle als Gelesen markieren
 mark all messages in folder as read	mail	de	Alle Nachrichten in diesem Ordner als Gelesen markieren
 mark as deleted	mail	de	Als Gelöscht markieren
+mark message as read after	mail	de	Nachricht als gelesen markieren nach
 match:	mail	de	Übereinstimmung:
 matches	mail	de	stimmt überein (*, ? erlaubt)
 matches regexp	mail	de	stimmt überein mit regulärem Ausdruck

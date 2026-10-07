@@ -51,7 +51,9 @@ function createMailApp(toolbarActions : object)
 
 	Object.assign(app, {
 		appname: 'mail',
-		egw: {lang: (label : string) => label, is_popup: () => false},
+		// scheduleMarkRead() reads this for the markAsReadDelay preference - undefined/'0' means
+		// immediate, same as every call site's previous direct markOpenedMessageRead() call
+		egw: {lang: (label : string) => label, is_popup: () => false, preference: () => undefined},
 		nm_index: 'nm',
 		isMainWindow: true,
 		selectedMails: [],

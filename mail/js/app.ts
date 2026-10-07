@@ -200,6 +200,17 @@ export class MailApp extends EgwApp
 	private pendingReadMark : Map<string, Promise<void>> = new Map();
 
 	/**
+	 * A delayed auto-mark-as-read scheduled by scheduleMarkRead(), per the markAsReadDelay mail
+	 * preference ("skim protection", like other mail clients offer) - cleared whenever a
+	 * different message replaces it before the delay elapses, so briefly skimming past a
+	 * message never marks it read. Only one message can be "currently displayed" at a time in
+	 * a given preview pane / popup / mobile view, each of which runs its own MailApp instance
+	 * (a popup or the mobile view is a separate window with its own script context), so a
+	 * single field - not a per-rowId map - is enough.
+	 */
+	private pendingReadMarkTimer : { rowId : string, timer : number } = null;
+
+	/**
 	 * accId -> in-flight/resolved promise of ajax_getComposeToolbarData()'s {actions, sel_options}
 	 *
 	 * Mostly static per account for a session, so cached here rather than re-fetched by every
@@ -1408,7 +1419,7 @@ export class MailApp extends EgwApp
 		{
 			setTitle(h);
 		}
-		this.markOpenedMessageRead(_id, dataElem.data);
+		this.scheduleMarkRead(_id, dataElem.data);
 	}
 
 	/**
@@ -3137,6 +3148,37 @@ export class MailApp extends EgwApp
 	}
 
 	/**
+	 * Mark a message read immediately, or after the configured markAsReadDelay preference -
+	 * replaces every direct markOpenedMessageRead() call (preview pane, popup, mobile view).
+	 * Any previously scheduled delayed mark is cancelled first, so switching away from a
+	 * message before its own delay elapses never marks it read.
+	 *
+	 * @param rowId nextmatch row id
+	 * @param data cached row data
+	 */
+	private scheduleMarkRead(rowId : string, data : any) : void
+	{
+		if (this.pendingReadMarkTimer)
+		{
+			window.clearTimeout(this.pendingReadMarkTimer.timer);
+			this.pendingReadMarkTimer = null;
+		}
+
+		const delay = parseInt(<string>this.egw.preference('markAsReadDelay', 'mail')) || 0;
+		if (!delay)
+		{
+			this.markOpenedMessageRead(rowId, data);
+			return;
+		}
+		const timer = window.setTimeout(() =>
+		{
+			this.pendingReadMarkTimer = null;
+			this.markOpenedMessageRead(rowId, data);
+		}, delay * 1000);
+		this.pendingReadMarkTimer = {rowId, timer};
+	}
+
+	/**
 	 * preview - implementation of the preview action
 	 *
 	 * @param nextmatch Et2Nextmatch The widget whose row was selected
@@ -3283,7 +3325,7 @@ export class MailApp extends EgwApp
 			));
 		}
 
-		this.markOpenedMessageRead(rowId, data);
+		this.scheduleMarkRead(rowId, data);
 	}
 
 	protected setupViewAttachmentActions(data, sel_options)
@@ -9182,7 +9224,7 @@ export class MailApp extends EgwApp
 			}
 			// update local storage with added toolbar actions
 			egw.dataStoreUID(id,content.data);
-			this.markOpenedMessageRead(id, content.data);
+			this.scheduleMarkRead(id, content.data);
 		}
 
 

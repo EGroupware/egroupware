@@ -24,7 +24,7 @@ function createMailApp()
 		egw: {lang: (label : string) => label},
 		selectedMails: [],
 		currentlyFocussed: '',
-		markOpenedMessageRead: () => {},
+		scheduleMarkRead: () => {},
 	});
 
 	return app;
