@@ -312,6 +312,39 @@ class AttachmentJmap
 	}
 
 	/**
+	 * Per-message identifier embedded into each unpacked TNEF sub-attachment's "is_winmail"
+	 * fingerprint (uid@partID@mimeId, see JmapImap::tnefAttachments()).
+	 *
+	 * Api\Mail::getAttachment() later finds the wanted sub-attachment by comparing that fingerprint
+	 * against "<real IMAP uid>@<partID>@<mimeId>", so for a plain-IMAP row (including a plain-IMAP
+	 * account listed via the local JMAP shim) it must be the numeric message UID. The
+	 * $partID/$blobId fast path of resolveWinmailJmap() never resolves $uid itself, which used to
+	 * leave the fingerprint as "@2@0" - no sub-attachment matched, and clicking the unpacked
+	 * appointment returned an empty response instead of the event.
+	 *
+	 * A real JMAP (eg. Stalwart) row has no numeric UID without an IMAP EMAILID search, which is
+	 * deliberately avoided here, so its emailID substitutes: it keeps the fingerprint unique per
+	 * message, although per-file download of unpacked sub-attachments isn't JMAP-native for those
+	 * rows either way.
+	 *
+	 * @param string|null $uid already-resolved message UID, if the caller has one
+	 * @param Api\Mail\RowIdParts|array $idParts result of Api\Mail::splitRowID()
+	 * @return string
+	 */
+	public static function tnefFingerprintUid(?string $uid, $idParts) : string
+	{
+		if ($uid !== null && $uid !== '')
+		{
+			return $uid;
+		}
+		if (empty($idParts['is_jmap']) && !empty($idParts['msgUID']))
+		{
+			return (string)$idParts['msgUID'];
+		}
+		return (string)($idParts['emailID'] ?? '');
+	}
+
+	/**
 	 * JMAP-native winmail.dat unpacking for ajax_resolveWinmail() - fetches the winmail.dat part's
 	 * raw bytes via JMAP (Stalwart: Imap\Jmap's jmapClient(); local IMAP: JmapShim) instead of
 	 * Mail::getMessageAttachments()'s IMAP-based enumeration + Mail::getAttachment(), decodes via
@@ -425,13 +458,7 @@ class AttachmentJmap
 				return null;
 			}
 
-			// tnefAttachments() embeds $uid into each sub-attachment's "is_winmail" composite
-			// fingerprint (uid@partID@mimeId) - for a Stalwart row $uid is deliberately never
-			// resolved above, so emailID substitutes as the per-message identifier; per-file
-			// download of one of these unpacked sub-attachments already isn't JMAP-native for
-			// Stalwart either way (see this method's own docblock scope note), so this only keeps
-			// the fingerprint unique, not functional, for that still-unimplemented step
-			$attachments = JmapImap::tnefAttachments($uid ?? $idParts['emailID'] ?? '', $partID, $decoded);
+			$attachments = JmapImap::tnefAttachments(self::tnefFingerprintUid($uid, $idParts), $partID, $decoded);
 			return self::createAttachmentBlock($attachments, $rowID, $uid, $mailbox);
 		}
 		catch (\Throwable $e)
