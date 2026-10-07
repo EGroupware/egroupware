@@ -1130,20 +1130,62 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 	{
 		var day;
 		let app_calendar = this.getInstanceManager().app_obj.calendar || app.calendar;
+		// Today as Ymd in user's timezone, same as the day column's today class
+		const now = new Date();
+		now.setUTCMinutes(now.getUTCMinutes() - now.getTimezoneOffset());
+		const today = formatDate(now, {dateFormat: "Ymd"});
+
+		// Today's month is the "current" one if today is displayed, otherwise the
+		// month with most days in the displayed range.  Not the month of the start date.
+		let reference_month = 0;
+		if(app_calendar && app_calendar.state)
+		{
+			const state = app_calendar.state;
+			const days_per_month = {};
+			const end = new Date(state.last).getTime();
+			const d = new Date(state.first);
+			for(let n = 0; !isNaN(d.getTime()) && d.getTime() <= end && n < 400; n++)
+			{
+				days_per_month[d.getUTCMonth() + 1] = (days_per_month[d.getUTCMonth() + 1] || 0) + 1;
+				d.setUTCDate(d.getUTCDate() + 1);
+			}
+			const in_range = !isNaN(d.getTime()) && formatDate(new Date(state.first), {dateFormat: "Ymd"}) <= today &&
+				today <= formatDate(new Date(state.last), {dateFormat: "Ymd"});
+			let most = 0;
+			Object.keys(days_per_month).forEach(m =>
+			{
+				// >= so a tie goes to the later month
+				if(days_per_month[m] >= most)
+				{
+					most = days_per_month[m];
+					reference_month = parseInt(m);
+				}
+			});
+			if(in_range)
+			{
+				reference_month = parseInt(today.substr(4, 2));
+			}
+			else if(!reference_month)
+			{
+				reference_month = new Date(state.date).getUTCMonth() + 1;
+			}
+		}
+
 		for(var i = 0; i < this.day_widgets.length; i++)
 		{
 			day = this.day_widgets[i];
+			const classes = [];
 
 			// Classes
-			if(app_calendar && app_calendar.state &&
-				this.day_list[i] && parseInt(this.day_list[i].substr(4,2)) !== new Date(app_calendar.state.date).getUTCMonth()+1)
+			if(reference_month && this.day_list[i] && parseInt(this.day_list[i].substr(4,2)) !== reference_month)
 			{
-				day.set_class('calendar_differentMonth');
+				classes.push('calendar_differentMonth');
 			}
-			else
+			if(this.day_list[i] && this.day_list[i] < today)
 			{
-				day.set_class('');
+				classes.push('calendar_past');
 			}
+			day.set_class(classes.join(' '));
 		}
 	}
 
