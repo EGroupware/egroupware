@@ -8,7 +8,6 @@ export default css`
 
 	.link {
 	display: flex;
-	gap: 0.5rem;
 	}
 
 	.link__title {
