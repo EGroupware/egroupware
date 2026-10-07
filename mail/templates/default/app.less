@@ -1158,22 +1158,27 @@ et2-hbox.mailPreviewHeaders:has(et2-vbox.addresses > et2-hbox:first-child + [dis
 #mail-index_mail-index-header_right {gap: 1ex;}
 
 et2-dropdown.vacationnotice {
-	min-width: 8em;
-}
+	padding-inline: var(--sl-spacing-2x-small);
 
-et2-dropdown.vacationnotice et2-hbox[slot=trigger]::part(base) {
-	align-items: center;
-}
-
-et2-dropdown.vacationnotice::part(panel) {
-	background: var(--sl-color-blue-100);
-	border-color: var(--sl-color-blue-200);
-	border-width: 1px;
-	font-size: var(--sl-font-size-large);
-}
-
-et2-dropdown.vacationnotice > *:not([slot=trigger]) > * {
-	color: var(--sl-color-gray-900);
+	et2-hbox[slot=trigger]::part(base) {
+		align-items: center;
+		justify-content: center;
+		border: solid var(--sl-input-border-width) var(--sl-color-danger-600);
+		border-radius: var(--sl-border-radius-medium);
+		padding-inline: var(--sl-spacing-3x-small);
+	}
+	&::part(panel) {
+		background: var(--sl-color-blue-100);
+		border-color: var(--sl-color-blue-200);
+		border-width: 1px;
+		font-size: var(--sl-font-size-large);
+	}
+	> *:not([slot=trigger]) > * {
+		color: var(--sl-color-gray-900);
+	}
+	et2-button-icon{
+		display: none;
+	}
 }
 
 et2-hbox.mailPreviewHeaders {
