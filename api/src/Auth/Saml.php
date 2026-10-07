@@ -133,6 +133,24 @@ class Saml implements BackendSSO
 		{
 			return null;
 		}
+		// SameSite=Strict session cookies are NOT sent back by the browser with the IdP's POST to SimpleSAMLphp's ACS,
+		// so the cookie needs to be (re-)sent as Lax BEFORE we get redirected to the IdP
+		if ($GLOBALS['egw_info']['server']['cookie_samesite_attribute'] === 'Strict')
+		{
+			$GLOBALS['egw_info']['server']['cookie_samesite_attribute'] = 'Lax';
+		}
+		// SimpleSAMLphp starts its own session in the shared PHP session and regenerates the session-id doing so,
+		// but as we run with session.use_cookies=0, PHP does NOT send the cookie for the new id and the browser would
+		// come back from the IdP with the old id, which does not contain the state of the SAML request
+		SimpleSAML\Session::getSessionFromRequest();
+		if (session_status() === PHP_SESSION_ACTIVE)
+		{
+			Api\Session::egw_setcookie(Api\Session::EGW_SESSION_NAME, session_id());
+			$_COOKIE[Api\Session::EGW_SESSION_NAME] = session_id();
+		}
+		// SimpleSAMLphp saves its session (with the state of the SAML request) from a header-callback, which runs
+		// too late (EGroupware already closed the PHP session) and the state would be lost, so save it before
+		Api\Egw::on_shutdown([self::class, 'save_simplesaml_session']);
 		// login (redirects to IdP)
 		$as = new SimpleSAML\Auth\Simple(self::$auth_source);
 		$as->requireAuth(preg_match('|^https://|', $idp) ?
@@ -183,6 +201,29 @@ class Saml implements BackendSSO
 		}
 		// return user session
 		return $GLOBALS['egw']->session->create($username, null, null, false, false);
+	}
+
+	/**
+	 * Save SimpleSAMLphp's session (incl. the state of the SAML request) into the shared PHP session
+	 *
+	 * Has "session" in its name to be run by Api\Egw::__destruct() before the PHP session is closed.
+	 */
+	public static function save_simplesaml_session()
+	{
+		// EGroupware might have closed the session already (eg. before redirecting), reopen it to be able to save
+		if (session_status() !== PHP_SESSION_ACTIVE)
+		{
+			if (($id = session_id()) === '')
+			{
+				return;
+			}
+			ini_set('session.use_cookies', 0);
+			session_cache_limiter('');
+			session_name(Api\Session::EGW_SESSION_NAME);
+			session_id($id);
+			if (!session_start()) return;
+		}
+		SimpleSAML\Session::getSessionFromRequest()->save();
 	}
 
 	/**
