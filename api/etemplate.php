@@ -96,7 +96,9 @@ function send_template()
 	// (relPath() deliberately prefers a mounted /etemplates VFS customization for real serving)
 	$path = PHP_SAPI === 'cli' ? Api\Etemplate::rel2path($fspath) :
 		Api\Etemplate::rel2path(Api\Etemplate::relPath($app . '.' . basename($name, '.xet'), $template));
-	if(empty($path) || !file_exists($path) || !is_readable($path))
+	// $app/$template (unlike $name above) are not basename()'d - same path-traversal safety-net
+	// filter-template.php already applies for the same reason
+	if(empty($path) || strpos($path, '..') !== false || !file_exists($path) || !is_readable($path))
 	{
 		if (PHP_SAPI === 'cli')
 		{
