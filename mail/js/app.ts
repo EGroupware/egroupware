@@ -6944,15 +6944,32 @@ export class MailApp extends EgwApp
 	};
 
 	/**
+	 * A target folder's recorded usage: how often, and when it was last used. 'count' alone used
+	 * to be stored directly as the preference value (ticket #124271: a folder someone just started
+	 * using heavily could never outrank an old habit on count alone, and the fix needs 'last' to
+	 * show it anyway, ranked by recency) - usageCount()/usageLast() below still read a plain number
+	 * as a pre-#124271 entry with no recency info yet, so an existing preference needs no migration.
+	 */
+	private static usageCount(entry : number | { count : number, last : number }) : number
+	{
+		return typeof entry == 'number' ? entry : (entry?.count || 0);
+	}
+
+	private static usageLast(entry : number | { count : number, last : number }) : number
+	{
+		return typeof entry == 'number' ? 0 : (entry?.last || 0);
+	}
+
+	/**
 	 * Bump the use-counter for a move/copy target folder, entirely client-side: stored as an implicit
-	 * preference (mail/moveFolderUsage or mail/copyFolderUsage, {"<profileID>::<folder>": count, ...})
-	 * via egw.preference()/set_preference() - same mechanism already used for e.g. the per-profile
-	 * "last folder" pref (see onNodeSelect() above) - and immediately reflected in the quick-submenu
-	 * via updateFolderQuickAction(), without waiting for any server round trip. Deliberately not
-	 * tracked server-side: the JMAP fast move/copy path (tryJmapMove()/tryJmapCopy()) never
-	 * touches the server's ajax_copyMessages() at all, so a server-side counter (what both used to be,
-	 * see mail_ui::get_actions()'s pre-195852cc34 history for move) silently stops updating for
-	 * exactly the common case.
+	 * preference (mail/moveFolderUsage or mail/copyFolderUsage, {"<profileID>::<folder>": {count,
+	 * last}, ...}) via egw.preference()/set_preference() - same mechanism already used for e.g. the
+	 * per-profile "last folder" pref (see onNodeSelect() above) - and immediately reflected in the
+	 * quick-submenu via updateFolderQuickAction(), without waiting for any server round trip.
+	 * Deliberately not tracked server-side: the JMAP fast move/copy path (tryJmapMove()/
+	 * tryJmapCopy()) never touches the server's ajax_copyMessages() at all, so a server-side counter
+	 * (what both used to be, see mail_ui::get_actions()'s pre-195852cc34 history for move) silently
+	 * stops updating for exactly the common case.
 	 *
 	 * @param kind 'move' or 'copy'
 	 * @param target string "<profileID>::<folder>" target, as built by callMove()/callCopy()
@@ -6961,22 +6978,34 @@ export class MailApp extends EgwApp
 	{
 		if (!target || target.indexOf('::') < 0) return;
 		const cfg = MailApp.FOLDER_QUICK_ACTIONS[kind];
-		const usage : Record<string, number> = Object.assign({}, this.egw.preference(cfg.prefKey, 'mail') || {});
-		usage[target] = (usage[target] || 0) + 1;
-		// keep the stored list from growing without bound, well beyond the top 10 actually shown
+		const usage : Record<string, number | { count : number, last : number }> =
+			Object.assign({}, this.egw.preference(cfg.prefKey, 'mail') || {});
+		usage[target] = {count: MailApp.usageCount(usage[target]) + 1, last: Date.now()};
+		// Keep the stored list from growing without bound, well beyond the 10+5 actually shown -
+		// but a just-started-on-today folder (low count, high 'last') has to survive this just as
+		// long as an old habit (high count) does, or it can never reach the "last used" slice
+		// below for long enough to show up there either (#124271's whole point).
 		const keys = Object.keys(usage);
 		if (keys.length > 30)
 		{
-			keys.sort((a, b) => usage[b] - usage[a]).slice(30).forEach(k => delete usage[k]);
+			const keepByCount = keys.slice().sort((a, b) => MailApp.usageCount(usage[b]) - MailApp.usageCount(usage[a])).slice(0, 30);
+			const keepByRecency = keys.slice().sort((a, b) => MailApp.usageLast(usage[b]) - MailApp.usageLast(usage[a])).slice(0, 10);
+			const keep = new Set([...keepByCount, ...keepByRecency]);
+			keys.forEach((k) => { if (!keep.has(k)) delete usage[k]; });
 		}
 		this.egw.set_preference('mail', cfg.prefKey, usage);
 		this.updateFolderQuickAction(kind, usage);
 	}
 
 	/**
-	 * (Re)build the "Move selected to"/"Copy selected to" quick-submenu from its usage preference,
-	 * showing the 10 highest-used target folders, and merge it into the nextmatch's live action
-	 * definitions.
+	 * (Re)build the "Move selected to"/"Copy selected to" quick-submenu from its usage preference
+	 * and merge it into the nextmatch's live action definitions: the 10 highest-used target folders,
+	 * then (ticket #124271 - a folder someone just started using a lot could never outrank an old,
+	 * higher-count habit) up to 5 more of the most RECENTLY used ones not already among those 10,
+	 * oldest first - so the single most-recently-used target ends up in the very last row, easiest
+	 * to spot right after a move/copy - separated from the top 10 by a menu separator
+	 * (EgwPopupActionImplementation groups/separates a submenu's children by their own 'group' - see
+	 * its own _groupLayers()/_buildMenuLayer()).
 	 *
 	 * Et2Nextmatch (unlike the legacy nextmatch_widget) has no set_actions()/options.actions - actions
 	 * are pushed through its reactive `actions` property (Et2Widget.ts's `set actions()`), which feeds
@@ -6988,27 +7017,33 @@ export class MailApp extends EgwApp
 	 * The 'moveto'/'copyto' action ids already exist (see mail_ui::get_actions()'s placeholders,
 	 * defined directly above "Move to archive" so that's where they stay - updateActions() updates an
 	 * existing action in place rather than re-appending it, so this never needs to set the group here.
-	 * With no usage yet (top.length == 0), the action is left with no children - its 'enabled' callback
-	 * (folderQuickActionEnabled() below) then greys it out via the normal disabled styling, staying
-	 * visible since 'hideOnDisabled' defaults to false.
+	 * With no usage yet (no children at all), the action is left with no children - its 'enabled'
+	 * callback (folderQuickActionEnabled() below) then greys it out via the normal disabled styling,
+	 * staying visible since 'hideOnDisabled' defaults to false.
 	 *
 	 * @param kind 'move' or 'copy'
 	 * @param usage optional already-loaded usage preference, to avoid re-reading it
 	 */
-	private updateFolderQuickAction(kind : 'move' | 'copy', usage? : Record<string, number>) : void
+	private updateFolderQuickAction(kind : 'move' | 'copy', usage? : Record<string, number | { count : number, last : number }>) : void
 	{
 		const cfg = MailApp.FOLDER_QUICK_ACTIONS[kind];
 		usage = usage || this.egw.preference(cfg.prefKey, 'mail') || {};
 		const nm : any = this.et2.getWidgetById(this.nm_index);
 		if (!nm) return;
 		const currentFolder = nm.activeFilters?.selectedFolder;
-		const top = Object.keys(usage)
-			.filter(target => target !== currentFolder)
-			.sort((a, b) => (usage[b] || 0) - (usage[a] || 0))
-			.slice(0, 10);
+		const candidates = Object.keys(usage).filter(target => target !== currentFolder);
+		const top = candidates.slice().sort((a, b) => MailApp.usageCount(usage[b]) - MailApp.usageCount(usage[a])).slice(0, 10);
+		const topSet = new Set(top);
+		// Picks the 5 most recent not-already-in-top candidates, then reverses that selection so
+		// the single most-recently-used one ends up in the very last row - easiest to spot right
+		// after making a move/copy, rather than straight after the separator.
+		const recent = candidates.filter(target => !topSet.has(target) && MailApp.usageLast(usage[target]) > 0)
+			.sort((a, b) => MailApp.usageLast(usage[b]) - MailApp.usageLast(usage[a]))
+			.slice(0, 5)
+			.reverse();
 		const ftree : any = this.et2.getWidgetById(this.nm_index + '[foldertree]');
 		const children = {};
-		top.forEach(target =>
+		[...top, ...recent].forEach((target, index) =>
 		{
 			// Always prefix with the account's own email address - folder names like "Sent"/"Trash"
 			// are common across accounts, and target itself (used for storage/lookup/sorting
@@ -7032,6 +7067,9 @@ export class MailApp extends EgwApp
 				icon: cfg.icon,
 				onExecute: cfg.onExecute,
 				allowOnMultiple: true,
+				// group 0 for the top-used folders, group 1 for the "also recently used" ones below
+				// them - only populated/separated when recent.length > 0
+				group: index < top.length ? 0 : 1,
 			};
 		});
 		nm.actions = {
