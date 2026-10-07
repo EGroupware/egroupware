@@ -192,6 +192,9 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	private _openIds : Set<string>;
 	private _hasSavedOpenState : boolean = false;
 	private _openStateSaveTimer : number;
+	// saveOpenState()'s own request-serialization - see its docblock (ticket #124991)
+	private _openStateSaveInFlight : Promise<any> | null = null;
+	private _openStateSavePendingIds : string[] | null = null;
 	/***
 	 * If you alter the pictures used as expand/collapse icons
 	 * you need to increase this number to cache bust Browser-caching
@@ -412,7 +415,6 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	{
 		const parts = this.openStatePreferenceParts();
 		if (!parts) return;
-		const [app, name] = parts;
 
 		const ids : string[] = [];
 		const collect = (options : TreeItemData[]) =>
@@ -429,10 +431,47 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		collect(this._selectOptions);
 
 		window.clearTimeout(this._openStateSaveTimer);
-		this._openStateSaveTimer = window.setTimeout(() =>
+		this._openStateSaveTimer = window.setTimeout(() => this.flushOpenState(parts, ids), 300);
+	}
+
+	/**
+	 * Actually sends saveOpenState()'s collected ids - serialized so at most one save request for
+	 * this preference is ever in flight at a time (ticket #124991: "collapse a folder, expand a
+	 * different one, the collapsed one re-expands again" - every save already sends the complete,
+	 * current list, so there's no incremental-merge/stale-cache bug to find there; the actual race
+	 * is server-side. Framework::ajax_set_preference() is a plain read-modify-write with no
+	 * locking, and jsonq's own batching (egw_jsonq.ts's jsonqSend(), on its own 100ms tick) never
+	 * waits for an in-flight api.queue request before sending the next one - two saves fired close
+	 * together (but more than this 300ms debounce apart) can each become their own concurrent HTTP
+	 * request, and whichever happens to finish ITS OWN read-modify-write LAST wins server-side,
+	 * regardless of which one actually carried the newer state. Never letting a second request for
+	 * this preference go out while one is still in flight - sending only the LATEST ids once it
+	 * settles, dropping any superseded one in between - keeps "sent last" and "arrives/finishes
+	 * last" the same thing again.
+	 *
+	 * @param parts [app, name] - see openStatePreferenceParts()
+	 * @param ids the complete current list of open node ids (not a delta)
+	 */
+	private flushOpenState(parts : [string, string], ids : string[]) : void
+	{
+		if (this._openStateSaveInFlight)
 		{
-			egw().set_preference(app, name, JSON.stringify(ids));
-		}, 300);
+			this._openStateSavePendingIds = ids;
+			return;
+		}
+		const [app, name] = parts;
+		this._openStateSaveInFlight = egw().jsonq('EGroupware\\Api\\Framework::ajax_set_preference', [app, name, JSON.stringify(ids)])
+			.catch((e) => egw().debug?.('error', 'Et2Tree.flushOpenState(): failed to persist ' + app + '.' + name, e))
+			.finally(() =>
+			{
+				this._openStateSaveInFlight = null;
+				if (this._openStateSavePendingIds)
+				{
+					const pending = this._openStateSavePendingIds;
+					this._openStateSavePendingIds = null;
+					this.flushOpenState(parts, pending);
+				}
+			});
 	}
 
 
