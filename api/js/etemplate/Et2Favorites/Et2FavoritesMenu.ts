@@ -474,6 +474,31 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
 	}
 
 	/**
+	 * A copy of a state without the values that mean "not set": null, undefined, empty strings, arrays and objects
+	 *
+	 * Nextmatch drops empty column filters from its state, while favorites saved earlier still hold them, and
+	 * older favorites hold empty lists (eg. selected) too.  Neither is a difference the user can see.
+	 */
+	protected static dropEmpty(state : object | undefined) : object
+	{
+		const isEmpty = (value) => value === null || typeof value === "undefined" || value === "" ||
+			(typeof value === "object" && Object.keys(value).length === 0);
+		const result = {};
+		Object.entries(state ?? {}).forEach(([key, value]) =>
+		{
+			if(key === "col_filter" && value && typeof value === "object")
+			{
+				value = Object.fromEntries(Object.entries(value).filter(([, filter]) => !isEmpty(filter)));
+			}
+			if(!isEmpty(value))
+			{
+				result[key] = value;
+			}
+		});
+		return result;
+	}
+
+	/**
 	 * Highlight the favorite that matches the given state, if any
 	 *
 	 * @param currentState
@@ -491,10 +516,12 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
 			return;
 		}
 
+		currentState = Et2FavoritesMenu.dropEmpty(currentState);
 		Object.entries(this.favorites).forEach(([name, favorite]) =>
 		{
 			const app_object = window.app[this.application];
 			if (app_object) favorite = app_object.fixState(favorite);
+			favorite = {...favorite, state: Et2FavoritesMenu.dropEmpty(favorite.state)};
 
 			let match_count = 0;
 			let extra_keys = Object.keys(favorite.state);
@@ -502,7 +529,21 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
 			// Look through each key in the current state
 			for(const state_key in currentState)
 			{
-				extra_keys.splice(extra_keys.indexOf(state_key), 1);
+				if(extra_keys.includes(state_key))
+				{
+					extra_keys.splice(extra_keys.indexOf(state_key), 1);
+				}
+				if(state_key == "selectcols")
+				{
+					// Columns are how the list is shown, not what it shows.  A favorite from before the list's
+					// columns changed can't be matched by its column names, so they only help to pick between
+					// favorites that otherwise match.
+					if(JSON.stringify(currentState[state_key]) === JSON.stringify(favorite.state[state_key]))
+					{
+						match_count++;
+					}
+					continue;
+				}
 				if(typeof favorite.state != "undefined" && typeof currentState[state_key] != "undefined" && typeof favorite.state[state_key] != "undefined" && (currentState[state_key] == favorite.state[state_key] || !currentState[state_key] && !favorite.state[state_key]))
 				{
 					match_count++;

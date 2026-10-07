@@ -658,4 +658,74 @@ describe("Favorites menu", () =>
 			assert.deepEqual(prefs.fav_folder_pref, {S: ""});
 		});
 	});
+
+	describe("highlighting", () =>
+	{
+		const favorite = (name : string, state : object) : any => ({name: name, group: false, state: state});
+		const highlighted = async(state : object) : Promise<string> =>
+		{
+			(<any>window).app[APP].fixState = fav => fav;
+			const element = await create();
+			await element.highlightFavorite(state);
+			return element.activeFavorite;
+		};
+
+		it("highlights a favorite that matches the state exactly", async() =>
+		{
+			prefs = {favorite_A: favorite("A", {search: "a", filter: "open"}), favorite_B: favorite("B", {search: "b"})};
+			assert.equal(await highlighted({search: "a", filter: "open"}), "A");
+		});
+
+		it("does not highlight a favorite with a different value", async() =>
+		{
+			prefs = {favorite_A: favorite("A", {search: "a", filter: "open"})};
+			assert.equal(await highlighted({search: "a", filter: "done"}), "");
+		});
+
+		it("ignores empty column filters that only the favorite holds", async() =>
+		{
+			prefs = {favorite_A: favorite("A", {cat_id: "5", col_filter: {info_type: "", info_status: "", linked: null}})};
+			assert.equal(await highlighted({cat_id: "5", col_filter: {}}), "A");
+		});
+
+		it("still tells apart a favorite with a column filter set", async() =>
+		{
+			prefs = {favorite_A: favorite("A", {cat_id: "5", col_filter: {info_status: "done", info_type: ""}})};
+			assert.equal(await highlighted({cat_id: "5", col_filter: {}}), "");
+			assert.equal(await highlighted({cat_id: "5", col_filter: {info_status: "done"}}), "A");
+		});
+
+		it("ignores empty values, like an empty selected list, that only the favorite holds", async() =>
+		{
+			prefs = {favorite_A: favorite("A", {cat_id: "5", selected: [], search: "", startdate: null})};
+			assert.equal(await highlighted({cat_id: "5"}), "A");
+		});
+
+		it("does not highlight a favorite that sets something the state does not", async() =>
+		{
+			prefs = {favorite_A: favorite("A", {cat_id: "5", filter: "open", selected: []})};
+			assert.equal(await highlighted({cat_id: "5", filter: ""}), "");
+		});
+
+		it("does not rule out a favorite because its columns differ", async() =>
+		{
+			prefs = {favorite_A: favorite("A", {cat_id: "5", selectcols: ["old_a", "old_b"]})};
+			assert.equal(await highlighted({cat_id: "5", selectcols: ["new_a"]}), "A");
+		});
+
+		it("prefers the favorite whose columns also match", async() =>
+		{
+			prefs = {
+				favorite_A: favorite("A", {cat_id: "5", selectcols: ["a"]}),
+				favorite_B: favorite("B", {cat_id: "5", selectcols: ["b"]})
+			};
+			assert.equal(await highlighted({cat_id: "5", selectcols: ["b"]}), "B");
+		});
+
+		it("still rules out a favorite with other filters, whatever its columns", async() =>
+		{
+			prefs = {favorite_A: favorite("A", {cat_id: "6", selectcols: ["a"]})};
+			assert.equal(await highlighted({cat_id: "5", selectcols: ["a"]}), "");
+		});
+	});
 });
