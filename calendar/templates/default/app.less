@@ -513,6 +513,21 @@ Hide subsequent headers in week view with non-consolidated owners
   background-color: rgba(200,200,200,0.1);
 }
 
+/* Days in the past: dim the day and its events a bit, but keep them legible */
+.calendar_calDayColHeader.calendar_past > * {
+  opacity: 0.7;
+}
+.calendar_calDayCol.calendar_past {
+  background-color: rgba(200,200,200,0.1);
+}
+/* Past days in a different month: stay darker than either alone, so the month break remains visible */
+.calendar_calDayCol.calendar_past.calendar_differentMonth {
+  background-color: rgba(200,200,200,0.18);
+}
+.calendar_calDayCol.calendar_past .calendar_calEvent {
+  opacity: 0.7;
+}
+
 /* Daily sortable */
 .calendar_calDayColHeader .ui-sortable-handle {
   cursor: ew-resize;
