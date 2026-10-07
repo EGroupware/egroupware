@@ -216,4 +216,29 @@ describe('MailApp.composeWithPreset()', () =>
 		const params = new URLSearchParams(form.action.split('?')[1]);
 		assert.equal(params.get('acc_id'), '7');
 	});
+
+	/**
+	 * Regression test: egw.openPopup() returns a Promise, not a Window, whenever the current window
+	 * runs the full desktop framework (egw_open.ts's own openPopup() hands off to
+	 * EgwFramework.openPopup(), an async method, any time window.framework exists - true for every
+	 * normal desktop tab, not just this suite's bare-prototype stub). Without awaiting it,
+	 * `popup.name` reads undefined off the pending Promise object itself, silently falling back to
+	 * the '_blank' target below - the form then posts into a brand new, unrelated tab instead of the
+	 * window this call just reserved, which sits abandoned at about:blank forever. Found live in a
+	 * customer environment, after ticket #125621's own fix had already shipped.
+	 */
+	it('awaits a Promise-returning openPopup() (the real desktop-framework case) instead of reading .name off the pending Promise itself', async() =>
+	{
+		egw.openPopup = sinon.stub().callsFake((url : string) =>
+			url === '' ? Promise.resolve({name : 'compose__'}) : Promise.resolve(undefined));
+
+		app.composeWithPreset(preset(MAIL_SIZED_BODY));
+		await new Promise(resolve => setTimeout(resolve, 0));
+		await new Promise(resolve => setTimeout(resolve, 0));
+
+		assert.isTrue(submitStub.calledOnce);
+		const form = submitStub.firstCall.thisValue as HTMLFormElement;
+		assert.equal(form.target, 'compose__',
+			'must target the actually-reserved window, not fall back to _blank because .name was read off an unawaited Promise');
+	});
 });

@@ -1767,7 +1767,15 @@ export class MailApp extends EgwApp
 		// egw.openPopup('', ...) is a plain window.open('', ...) wrapper with no app-registry/
 		// menuaction resolution at all, so nothing else ever navigates this window before the form
 		// below deliberately does.
-		const popup : any = egw.openPopup('', 870, 'availHeight', window_name, 'mail', true);
+		// egw.openPopup() returns a Promise, not a Window, whenever the current window runs the
+		// full desktop framework (egw_open.ts's own openPopup() hands off to
+		// EgwFramework.openPopup(), an async method, any time `window.framework` exists - true for
+		// every normal desktop tab, not just a bare/isolated one) - awaiting it here is required to
+		// ever see the real, named window this reserved, not a pending Promise object whose own
+		// (nonexistent) `.name` silently fell back to the `target` default below. Found live: the
+		// reserved popup then sat there forever at about:blank while the form POST missed it
+		// entirely, landing in a brand new, unrelated tab instead (ralf, customer environment).
+		const popup : any = await egw.openPopup('', 870, 'availHeight', window_name, 'mail', true);
 		if (!popup) return;	// popup blocked, or blocker-warning dialog already shown
 		const target = typeof popup.name === 'string' && popup.name ? popup.name : '_blank';
 		const url = this.egw.link('/mail/compose.php', {
@@ -1877,7 +1885,10 @@ export class MailApp extends EgwApp
 	private async composeWithPresetPost(preset : object, accId : string, from : string = '', id : string = '') : Promise<void>
 	{
 		const window_name = 'compose_preset_' + Date.now();
-		const popup : any = egw.openPopup('', 870, 'availHeight', window_name, 'mail', true);
+		// see openComposePopupUrlPost()'s identical `await` and its own comment just above that -
+		// same gap, same fix: egw.openPopup() returns a pending Promise (not a Window) whenever
+		// window.framework exists, i.e. in every normal desktop tab, not just a bare/isolated one.
+		const popup : any = await egw.openPopup('', 870, 'availHeight', window_name, 'mail', true);
 		if (!popup) return;	// popup blocked, or blocker-warning dialog already shown
 		const target = typeof popup.name === 'string' && popup.name ? popup.name : '_blank';
 		const url = this.egw.link('/mail/compose.php', {
