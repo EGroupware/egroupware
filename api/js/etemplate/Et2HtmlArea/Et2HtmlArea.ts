@@ -23,6 +23,8 @@ import type {Editor as TinyMceEditor, RawEditorOptions, TinyMCE} from "tinymce";
 import {
 	BLOCK_FORMATS,
 	editorContentStyle,
+	fontSizeFormats,
+	fontSizeUnit,
 	htmlAreaFormats,
 	type HtmlAreaMode,
 	LANGUAGE_CODE as HTMLAREA_LANGUAGE_CODE,
@@ -828,6 +830,9 @@ export class Et2HtmlArea extends Et2MarkdownEditMixin(Et2InputWidget(LitElement)
 			forced_root_block: this._defaultFormatBlock === 'div' ? 'div' : 'p',
 			newline_behavior: this._newlineBehavior,
 			content_style: editorContentStyle(api.preference.bind(api)),
+			// same sizes and unit as the rte_font_size/rte_font_unit preferences, eg. to allow 11pt
+			font_size_formats: fontSizeFormats(api.preference.bind(api)),
+			font_size_input_default_unit: fontSizeUnit(api.preference.bind(api)),
 			convert_urls: false,
 			// setting p (and below also the preferred formatblock) to the user's font and -size preference
 			formats: htmlAreaFormats(api.preference.bind(api)),
@@ -1084,6 +1089,12 @@ export class Et2HtmlArea extends Et2MarkdownEditMixin(Et2InputWidget(LitElement)
 
 	protected _applyDefaultFormatBlock(editor : TinyMceEditor)
 	{
+		// only for new content: the format's remove: "all" would replace
+		// the first block's own saved font and size with the preferred ones
+		if(!editor.dom.isEmpty(editor.getBody()))
+		{
+			return;
+		}
 		editor.formatter.apply(this._defaultFormatBlock);
 		editor.nodeChanged();
 	}

@@ -144,6 +144,35 @@ export function paragraphStyles(preference : PreferenceGetter = egw.preference.b
 	};
 }
 
+/**
+ * Client-side mirror of Api\Etemplate\Widget\HtmlArea::$font_size_options,
+ * the choices of the "Default font size" (rte_font_size) preference
+ */
+export const FONT_SIZE_OPTIONS = [8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72];
+
+export function fontSizeUnit(preference : PreferenceGetter = egw.preference.bind(egw)) : "pt" | "px"
+{
+	return preference("rte_font_unit", "common") === "px" ? "px" : "pt";
+}
+
+/**
+ * TinyMCE font_size_formats offering the same sizes as the rte_font_size preference,
+ * in the user's preferred unit, instead of TinyMCE's 8pt 10pt 12pt 14pt 18pt 24pt 36pt default
+ */
+export function fontSizeFormats(preference : PreferenceGetter = egw.preference.bind(egw)) : string
+{
+	const unit = fontSizeUnit(preference);
+	const sizes = [...FONT_SIZE_OPTIONS];
+	// a stored default outside the list (eg. from an older version) should still be selectable
+	const preferred = parseFloat(preference("rte_font_size", "common"));
+	if(preferred > 0 && !sizes.includes(preferred))
+	{
+		sizes.push(preferred);
+		sizes.sort((a, b) => a - b);
+	}
+	return sizes.map(size => size + unit).join(" ");
+}
+
 export function editorContentStyle(preference : PreferenceGetter = egw.preference.bind(egw)) : string
 {
 	const styles = paragraphStyles(preference);
