@@ -173,8 +173,10 @@ class HtmLawed
 		$css = preg_replace('/(javascript|expession|-moz-binding)/i','',$style);
 		if (stripos($css,'script')!==false) Api\Mail\Html::replaceTagsCompletley($css,'script'); // Strip out script that may be included
 		// we need this, as styledefinitions are enclosed with curly brackets; and template stuff tries to replace everything between curly brackets that is having no horizontal whitespace
+		//so pad '{' with a space to '{ '
+		// do not pad ':' this breakes css :pseudo-classes
 		// as the comments as <!-- styledefinition --> in stylesheet are outdated, and ck-editor does not understand it, we remove it
-		$css_no_comment = str_replace(array(':','<!--','-->'),array(': ','',''),$css);
+		$css_no_comment = str_replace(array('{','<!--','-->'),array('{ ','',''),$css);
 		//error_log(__METHOD__.__LINE__.$css);
 		// we already removed what we have found, above, as we used pretty much the same routine as in Api\Mail\Html::replaceTagsCompletley
 		// no need to do the extra routine
