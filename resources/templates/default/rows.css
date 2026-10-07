@@ -4,9 +4,13 @@
  * Loaded into the list's row shadow DOM by <et2-styles src="rows.css"> in show.xet,
  * app.css does not reach the rows.
  */
+/* Et2Image sets an inline max-width: 100%, so our max-width needs !important;
+   object-fit keeps the aspect ratio once max-height limits the box */
 .thumbnailImage img {
 	width: 100%;
-	max-width: 65px;
+	max-width: 100px !important;
 	height: auto !important;
-	max-height: 50px;
+	max-height: 90px;
+	object-fit: contain;
+	object-position: left center;
 }
