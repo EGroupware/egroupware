@@ -224,10 +224,22 @@ tr.mail .status_icons et2-image {
 	height: calc(1em + 2px);
 	//force width so icons line up, even if some are not set
 	width: calc(1em + 2px);
+	// A bootstrap-icons glyph (eg. the attachment paperclip) has real font-glyph content giving it
+	// a genuine min-content width, so it never visibly needed this - but S/MIME/PGP's own inlined
+	// <svg> (Et2Image's "ourSvg && inline" branch, not the bi-*.svg one) is told to fill 100% of
+	// ITS OWN box (see Et2Image.ts's own transformSvg() comment) rather than carry an intrinsic
+	// size, so it contributes ~nothing to this flex item's min-content - flex-shrink's default of 1
+	// then let the row's other greedy content (.mail_subject's `flex: 1 1 auto`) crush it down to a
+	// ~4px sliver (confirmed live: a real smime_sign icon measured width:4px vs the paperclip's
+	// 16px, in the exact same row) despite the explicit width above, which only sets the flex-basis,
+	// not a shrink floor.
+	flex-shrink: 0;
 }
 
 tr.mail et2-image.horizontal_smime {
 	display: block;
 	width: calc(1em + 2px);
 	font-size: calc(1em + 2px);
+	// see tr.mail .status_icons et2-image's own comment just above - same inlined-SVG shrink bug
+	flex-shrink: 0;
 }
