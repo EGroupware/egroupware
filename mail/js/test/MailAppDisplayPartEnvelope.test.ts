@@ -67,6 +67,7 @@ describe('MailApp.display() - message/rfc822 sub-part envelope override', () =>
 			wireLabelFlagDropdowns : sinon.spy(),
 			renderPopupMessage : sinon.spy(),
 			loadMessageBody : sinon.spy(),
+			_set_Window_title : sinon.spy(),
 		});
 		// `jmap` is a getter-only accessor on the real MailApp.prototype (lazily constructs the real
 		// MailJmap) - shadow it with an own data property instead of a plain assignment, which would
@@ -96,6 +97,10 @@ describe('MailApp.display() - message/rfc822 sub-part envelope override', () =>
 		assert.equal(rendered.toaddress, 'someone@example.com');
 		// the containing row's own cached fields not touched by the override survive untouched
 		assert.equal(rendered.uid, 'mail::5::42::b:1');
+		// ticket: print/display popup title stuck on the CONTAINING message's subject for a
+		// forwarded message/rfc822 sub-part - the override above replaces it, so the title has to
+		// be refreshed again too, not just left at whatever renderPopupMessage() set it to earlier
+		assert.isTrue((<any>app)._set_Window_title.called);
 	});
 
 	it('never fetches the envelope for a real JMAP (non-local) account', async() =>

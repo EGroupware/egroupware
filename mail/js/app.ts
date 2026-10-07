@@ -2637,6 +2637,9 @@ export class MailApp extends EgwApp
 						bccaddress: envelope.bcc,
 					};
 					details.set_value({content: this._popupMergedContent});
+					// this replaces whatever subject renderPopupMessage() already set the title from
+					// (the CONTAINING message's own) with the forwarded sub-part's real one
+					this._set_Window_title();
 				}).catch((e) => console.error('MailApp.display(): fetchMessagePartEnvelope failed', e));
 			}
 
@@ -2693,6 +2696,14 @@ export class MailApp extends EgwApp
 		{
 			const data = this.renderMessageInto(template, rowId, openerData, partID);
 			this.registerForDrag(rowId, data.attachmentsBlock);
+			// et2_ready()'s own super.et2_ready() call already set the window title (base
+			// egw_app.ts's et2_ready()), but that runs BEFORE display()/renderPopupMessage() ever
+			// gets to fill the subject widget - see getWindowTitle()'s own
+			// '#mail-display_mailDisplayDetails_subject' lookup, empty at that point - so the popup
+			// was left with a blank/stale title regardless of how fast this branch resolves. Same
+			// gap already fixed for compose (compose.ts's own bootstrapReply()/etc., see its final
+			// _set_Window_title() call) but never ported to display/print.
+			this._set_Window_title();
 		}
 		else
 		{
@@ -2720,6 +2731,9 @@ export class MailApp extends EgwApp
 					egw.dataStoreUID(_data.uid ?? rowId, _data);
 					const data = this.renderMessageInto(template, rowId, _data, partID);
 					this.registerForDrag(rowId, data.attachmentsBlock);
+					// see the sync (openerData) branch's own comment above - same gap, this one just
+					// resolves later
+					this._set_Window_title();
 				}
 			}).catch((e) =>
 			{
