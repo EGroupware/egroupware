@@ -510,6 +510,20 @@ class mail_hooks
 				'default' => 'vertical',
 				'reload' => true
 			),
+			'markAsReadDelay' => array(
+				'type' => 'select',
+				'label' => 'Mark message as read after',
+				'help' => 'How long a message has to stay open in the preview pane or a popup before it gets marked as read - this lets you skim past a message without marking it read. "Immediately" is the previous, default behaviour.',
+				'name' => 'markAsReadDelay',
+				'values' => array(
+					'0' => lang('immediately'),
+					'2' => lang('after %1 seconds', 2),
+					'5' => lang('after %1 seconds', 5),
+					'10' => lang('after %1 seconds', 10),
+					'30' => lang('after %1 seconds', 30),
+				),
+				'default' => '0',
+			),
 			'smime_pgp_add_contact' => array(
 				'type' => 'select',
 				'label' => 'Offer to add sender\'s S/MIME certificate or PGP key to contact',

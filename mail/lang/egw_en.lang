@@ -34,6 +34,7 @@ add to addressbook	mail	en	Add to addressbook
 adding %1 to blacklisted email addresses failed because of %2	mail	en	Adding %1 to blacklisted email addresses failed because of %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	en	Adding %1 to whiltelisted email addresses failed because of %2
 administer (perform setacl/deleteacl/getacl/listrights)	mail	en	Administer (perform SETACL/DELETEACL/GETACL/LISTRIGHTS)
+after %1 seconds	mail	en	After %1 seconds
 after reply, visible during compose	mail	en	After reply, visible during compose
 aliases+forwards	mail	en	Aliases+Forwards
 all	mail	en	all
@@ -334,6 +335,7 @@ high priority	mail	en	High priority
 hold %1 to drag files to your computer	mail	en	Hold %1 to drag files to your computer
 home page folders	mail	en	home page folders
 hostname or ip	mail	en	Hostname or IP
+how long a message has to stay open in the preview pane or a popup before it gets marked as read - this lets you skim past a message without marking it read. "immediately" is the previous, default behaviour.	mail	en	How long a message has to stay open in the preview pane or a popup before it gets marked as read - this lets you skim past a message without marking it read. "Immediately" is the previous, default behaviour.
 how often to check with the server for new mail	mail	en	How often to check with the server for new email
 how should the available information on identities be displayed	admin	en	How should the available information on identities be displayed
 how to forward messages	mail	en	How to forward messages
@@ -362,6 +364,7 @@ imap - incoming mail	mail	en	IMAP - incoming email
 imap administration	mail	en	IMAP administration
 imap server	mail	en	IMAP server
 imap timeout	mail	en	IMAP timeout
+immediately	mail	en	Immediately
 import ca-signed certificate for this key	mail	en	Import CA-signed certificate for this key
 import certificate	mail	en	Import certificate
 import message	mail	en	Import message
@@ -416,6 +419,7 @@ many recipients	mail	en	Many recipients
 mark all as read	mail	en	Mark all as read
 mark all messages in folder as read	mail	en	Mark all messages in folder as read
 mark as deleted	mail	en	Mark as deleted
+mark message as read after	mail	en	Mark message as read after
 match:	mail	en	Match:
 matches	mail	en	matches
 matches regexp	mail	en	matches regexp
