@@ -126,14 +126,17 @@ class Saml implements BackendSSO
 	function login()
 	{
 		// check if one of the configured IdP's is requested, deny login if not
-		if (!in_array($_REQUEST['idp'], self::splitIdP($GLOBALS['egw_info']['server']['saml_idp'])))
+		$idps = self::splitIdP($GLOBALS['egw_info']['server']['saml_idp']);
+		// the login button for a single IdP does not send an idp, so use the only configured one
+		$idp = $_REQUEST['idp'] ?? (count($idps) === 1 ? $idps[0] : null);
+		if (!in_array($idp, $idps, true))
 		{
 			return null;
 		}
 		// login (redirects to IdP)
 		$as = new SimpleSAML\Auth\Simple(self::$auth_source);
-		$as->requireAuth(preg_match('|^https://|', $_REQUEST['idp']) ?
-			['saml:idp' => $_REQUEST['idp']] : []);
+		$as->requireAuth(preg_match('|^https://|', $idp) ?
+			['saml:idp' => $idp] : []);
 
 		/* cleanup session for EGroupware: currently NOT used as we share the session with SimpleSAMLphp
 		$session = SimpleSAML\Session::getSessionFromRequest();
@@ -535,6 +538,11 @@ class Saml implements BackendSSO
 			if (file_exists($path = $config['files_dir'] . '/saml/'.$file) &&
 				($content = file_get_contents($path)))
 			{
+				// repair authsources.php created without the "entityID" key, which makes SimpleSAMLphp 2 fail
+				if ($file === 'authsources.php')
+				{
+					$content = preg_replace("/('default-sp' => *\[\s*'saml:SP',\s*)('https?:\/\/[^']*',)/", "$1'entityID' => $2", $content);
+				}
 				foreach($replacements as $conf => $reg_exp)
 				{
 					$content = preg_replace($reg_exp, '$1' . (is_array($config[$conf]) ?
@@ -835,7 +843,7 @@ EOF
 						$replacements = [
 							"'idp' => null," => "'idp' => ".self::quote(
 								count(self::splitIdP($config['saml_idp'])) <= 1 ? trim($config['saml_idp']) : null).',',
-							"'entityID' => 'https://myapp.example.org/'" => "'https://".Api\Header\Http::host()."/'",
+							"'entityID' => 'https://myapp.example.org/'" => "'entityID' => 'https://".Api\Header\Http::host()."/'",
 							"'discoURL' => null," => "'discoURL' => null,\n\n".
 								// add our private and public keys
 								"\t'privatekey' => 'saml.pem',\n\n".
