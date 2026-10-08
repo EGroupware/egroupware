@@ -1134,7 +1134,8 @@ class Base
 		if (!preg_match_all("/((?:COALESCE)\\( *[a-z_][a-z0-9_.]* *(?:, *[a-z_][a-z0-9_.]* *)+\\)|#?[a-z_][a-z0-9_.]+) *(<> *''|IS NULL|IS NOT NULL|& *\d+)? *(ASC|DESC)?(, *|$)/ui", $order_by, $all_matches) ||
 			$order_by !== implode('', $all_matches[0]))
 		{
-			error_log(__METHOD__."(".json_encode($fragment).") REMOVED");
+			// log with a trace to find the caller, but continue without the ORDER BY instead of aborting
+			_egw_log_exception(new \InvalidArgumentException(__METHOD__."(".json_encode($fragment).") REMOVED, continuing without ORDER BY"));
 			return '';
 		}
 		// only ever return the validated part, never anything that preceded an ORDER BY in $fragment
