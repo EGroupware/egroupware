@@ -166,6 +166,12 @@ export class MailApp extends EgwApp
 	 */
 	image_proxy : any = 'https://';
 
+	/**
+	 * Re-render a JMAP-native (srcdoc) body document showing its external content,
+	 * set by loadMessageBody() and used by resolveExternalImages()
+	 */
+	private externalContentRenderers = new WeakMap<Document, () => void>();
+
 	customLabels: CustomLabels = {};
 
 	/**
@@ -3664,9 +3670,15 @@ export class MailApp extends EgwApp
 			{
 				onSmimeAttachments(fast.attachments);
 			}
-			iframe.addEventListener('load', () =>
+			const onBodyLoad = () =>
 			{
 				const doc = iframe.contentWindow.document;
+				// "Show"/"Allow" of resolveExternalImages(): the body's CSP can only be widened by a new document
+				this.externalContentRenderers.set(doc, () =>
+				{
+					iframe.addEventListener('load', onBodyLoad, {once: true});
+					iframe.srcdoc = this.jmap.showExternalContent(iframe.srcdoc);
+				});
 				doc.documentElement.dataset.rowId = rowId;
 				openLinksInNewTab(doc);
 				// srcdoc body runs no script of its own (MailJmap.wrapDocument()), unlike the classic one with preview.js
@@ -3692,8 +3704,12 @@ export class MailApp extends EgwApp
 					if (result && rowId === this.currentlyFocussed) this.setPgpSignatureFlags(result);
 				}).catch((e) => console.error('MailApp.loadMessageBody(): verifyPgpSignature failed', e));
 				onLoad(doc);
-			}, {once: true});
-			iframe.srcdoc = fast.html;
+			};
+			iframe.addEventListener('load', onBodyLoad, {once: true});
+			// "Print with images" (openMessage()'s print_images mode) shows external content right away -
+			// mail.display's own iframe onload calls resolveExternalImages() before onBodyLoad() could set a renderer
+			iframe.srcdoc = window.location.search.endsWith('&mode=print_images') ?
+				this.jmap.showExternalContent(fast.html) : fast.html;
 		}).catch((e) =>
 		{
 			this.inFlightRequests = Math.max(0, this.inFlightRequests - 1);
@@ -3719,13 +3735,51 @@ export class MailApp extends EgwApp
 		});
 	}
 
-		/**
-		 * Show external images
-		 * @param _node
-		 * @param show True to show images, otherwise use preferences
-		 */
-		resolveExternalImages(_node, show = null)
+	/**
+	 * Function to render a mail body document again showing its external content,
+	 * as the body's CSP can not be widened in place:
+	 * - a JMAP-native (srcdoc) body is rendered again client-side, set by loadMessageBody()
+	 * - a server-rendered body is reloaded with _showExternal=1 (MessageDisplayHandler::externalContentCsp())
+	 *
+	 * @param doc body document
+	 * @return undefined for anything else, eg. an already reloaded body
+	 */
+	private externalContentRenderer(doc : Document) : (() => void) | undefined
 	{
+		const renderer = this.externalContentRenderers?.get(doc);
+		const win = doc?.defaultView;
+		if (renderer || !win?.frameElement || !/[?&]menuaction=[^&]*loadEmailBody/.test(win.location.search) ||
+			/[?&]_showExternal=1/.test(win.location.search))
+		{
+			return renderer;
+		}
+		return () =>
+		{
+			// the iframe's own onload handler (eg. loadClassicBody()'s) runs only once
+			win.frameElement.addEventListener('load', (e) =>
+				this.resolveExternalImages((e.target as HTMLIFrameElement).contentDocument), {once: true});
+			win.location.replace(win.location.href+'&_showExternal=1');
+		};
+	}
+
+	/**
+	 * Show external images
+	 *
+	 * The body's CSP blocks external content besides images too (eg. CSS backgrounds), so
+	 * "Show"/"Allow" render the body again (externalContentRenderer())
+	 * instead of only setting the images' src.
+	 *
+	 * @param _node
+	 * @param show True to show images, otherwise use preferences
+	 */
+	resolveExternalImages(_node, show = null)
+	{
+		const doc = _node.nodeType === Node.DOCUMENT_NODE ? _node : _node.ownerDocument;
+		// a server-rendered body reloaded by "Show"/"Allow", see externalContentRenderer()
+		if (/[?&]_showExternal=1/.test(doc?.defaultView?.location.search ?? ''))
+		{
+			show = true;
+		}
 		const image_proxy = this.image_proxy;
 		//Do not run resolve images if it's forced already to show them all
 		// or forced to not show them all.
@@ -3736,7 +3790,10 @@ export class MailApp extends EgwApp
 		}
 
 		const external_images = _node.querySelectorAll('img[alt*="[blocked external image:"]');
-		if (external_images.length > 0 && _node.querySelector('.mail_externalImagesMsg') === null)
+		// first url of other external content blocked by a JMAP-native body's CSP
+		const blocked_other = _node.querySelector('[data-blocked-external]')?.getAttribute('data-blocked-external');
+		const renderShowingExternal = this.externalContentRenderer(doc);
+		if ((external_images.length > 0 || blocked_other) && _node.querySelector('.mail_externalImagesMsg') === null)
 		{
 			const container = document.createElement('div');
 			container.classList.add('mail_externalImagesMsg');
@@ -3765,47 +3822,58 @@ export class MailApp extends EgwApp
 				};
 			};
 
-			const host = getUrlParts(external_images[0].alt);
-			const showImages = (_images, _save?) =>
+			let pref = Object.values(egw.preference('allowExternalDomains', 'mail') || {});
+			const saveDomain = (_domain) =>
 			{
-				const save = _save || false;
-				_images.forEach((node) => {
-					const parts = getUrlParts (node.alt);
-					if (save)
+				if (pref && pref.length)
+				{
+					if (pref.indexOf(_domain) == -1)
 					{
-						if (pref && pref.length)
-						{
-							if (pref.indexOf(parts.domain) == -1)
-							{
-								pref.push(parts.domain);
-								egw.set_preference( 'mail', 'allowExternalDomains', pref);
-							}
-						}
-						else
-						{
-							pref = [parts.domain];
-							egw.set_preference( 'mail', 'allowExternalDomains', pref);
-						}
+						pref.push(_domain);
+						egw.set_preference( 'mail', 'allowExternalDomains', pref);
 					}
-					node.src = parts.url;
+				}
+				else
+				{
+					pref = [_domain];
+					egw.set_preference( 'mail', 'allowExternalDomains', pref);
+				}
+			};
+			const showImages = (_images) =>
+			{
+				_images.forEach((node) => {
+					node.src = getUrlParts(node.alt).url;
 				});
 			};
 			if (show == true)
 			{
-				return showImages(external_images, false);
+				if (renderShowingExternal)
+				{
+					return renderShowingExternal();
+				}
+				return showImages(external_images);
 			}
-			let pref = egw.preference('allowExternalDomains', 'mail') || {};
-			pref = Object.values(pref);
-			if (pref.indexOf(host.domain)>-1)
+			// images of allowlisted domains (eg. http: ones, shown through the image proxy) are shown
+			// right away, without unblocking the images of other domains
+			const allowed_images = Array.from(external_images).filter((img : HTMLImageElement) =>
+				pref.indexOf(getUrlParts(img.alt).domain) > -1);
+			showImages(allowed_images);
+			const blocked_alts = [
+				...Array.from(external_images)
+					.filter((img) => !allowed_images.includes(img))
+					.map((img : HTMLImageElement) => img.alt),
+				...(blocked_other ? ['[blocked external image:'+blocked_other+']'] : [])
+			];
+			if (!blocked_alts.length)
 			{
-				showImages (external_images);
 				return;
 			}
+			const host = getUrlParts(blocked_alts[0]);
 			let message = this.egw.lang('In order to protect your privacy all external sources within this email are blocked.');
-			for (const img of external_images)
+			for (const alt of blocked_alts)
 			{
-				if (!img.alt) continue;
-				const r = getUrlParts(img.alt);
+				if (!alt) continue;
+				const r = getUrlParts(alt);
 				if (r && r.protocol == 'http')
 				{
 					message = this.egw.lang('This mail contains external images served via insecure HTTP protocol. Be aware showing or allowing them can compromise your security!');
@@ -3840,8 +3908,17 @@ export class MailApp extends EgwApp
 			allowBtn.textContent = this.egw.lang('Allow');
 			allowBtn.title = this.egw.lang('Always allow external sources from %1', host.domain);
 			allowBtn.addEventListener('click', () =>{
-				showImages(external_images, true);
 				container.remove();
+				// only the domain the button's title names, not eg. a tracker's domain of another image
+				saveDomain(host.domain);
+				if (renderShowingExternal)
+				{
+					renderShowingExternal();
+				}
+				else
+				{
+					showImages(external_images);
+				}
 			});
 			container.appendChild(allowBtn);
 
@@ -3850,11 +3927,18 @@ export class MailApp extends EgwApp
 			showBtn.title = this.egw.lang('Show them this time only');
 			showBtn.addEventListener('click', () =>
 			{
-				showImages(external_images);
 				container.remove();
-				if (_node.querySelector("body"))
+				if (renderShowingExternal)
 				{
-					_node.querySelector("body").dispatchEvent(new Event('load'));
+					renderShowingExternal();
+				}
+				else
+				{
+					showImages(external_images);
+					if (_node.querySelector("body"))
+					{
+						_node.querySelector("body").dispatchEvent(new Event('load'));
+					}
 				}
 				// found live 2026-09-09 while adding test coverage: no guard here for the
 				// (real, unremarkable) case where no toolbar/displayToolbar action manager

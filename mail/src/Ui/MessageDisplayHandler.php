@@ -545,8 +545,7 @@ class MessageDisplayHandler
 				Api\Header\ContentSecurityPolicy::add($src, 'none');
 			}
 			Api\Header\ContentSecurityPolicy::add('script-src', 'self', true);	// true = remove default 'unsafe-eval'
-			Api\Header\ContentSecurityPolicy::add('img-src', 'http:');
-			Api\Header\ContentSecurityPolicy::add('media-src', ['https:', 'http:']);
+			$this->externalContentCsp();
 
 			return $this->get_email_header().$this->showBody($body, false);
 		}
@@ -711,6 +710,43 @@ class MessageDisplayHandler
 	}
 
 	/**
+	 * Restrict external content of the mail body via CSP, as HtmLawed only blocks `<img src>`,
+	 * not eg. a CSS background - mirrors MailJmap.externalContentCsp() of the JMAP-native body.
+	 *
+	 * Only our own origin, the image proxy and the allowlisted domains are allowed, unless the
+	 * allowExternalIMGs preference is "Always" or the user clicked "Show"/"Allow" in the body
+	 * (_showExternal=1, see MailApp.resolveExternalImages()). Plain http: is never allowed,
+	 * http images are shown through the image proxy.
+	 * font-src ('self') and style-src ('self' 'unsafe-inline') already block external content.
+	 */
+	protected function externalContentCsp()
+	{
+		$prefs = $GLOBALS['egw_info']['user']['preferences']['mail'] ?? [];
+		$sources = ['data:', 'blob:'];
+		if (!empty($_GET['_showExternal']) || ($prefs['allowExternalIMGs'] ?? 2) == 1)
+		{
+			$sources[] = 'https:';
+		}
+		else
+		{
+			foreach((array)($prefs['allowExternalDomains'] ?? []) as $domain)
+			{
+				// only plain hostnames, anything else (eg. a stray url) could widen or break the policy
+				if (is_string($domain) && preg_match('/^[a-z0-9.-]+(:\d+)?$/i', $domain))
+				{
+					$sources[] = 'https://'.$domain;
+				}
+			}
+		}
+		if (parse_url($proxy = Ui::image_proxy(), PHP_URL_HOST))
+		{
+			$sources[] = $proxy;	// add() reduces it to its origin
+		}
+		Api\Header\ContentSecurityPolicy::add('img-src', $sources, true);
+		Api\Header\ContentSecurityPolicy::add('media-src', $sources, true);
+	}
+
+	/**
 	 * @param string|\Closure $uid real IMAP UID, or (2026-09-01 follow-up) a closure resolving to
 	 *  one - loadEmailBody() passes a closure over Mail::splitRowID()'s own lazy RowIdParts result
 	 *  for a Stalwart-opaque-id row, so this never pays RowIdParts' own "real IMAP EMAILID search"
@@ -832,8 +868,7 @@ class MessageDisplayHandler
 				Api\Header\ContentSecurityPolicy::add($src, 'none');
 			}
 			Api\Header\ContentSecurityPolicy::add('script-src', 'self', true);	// true = remove default 'unsafe-eval'
-			Api\Header\ContentSecurityPolicy::add('img-src', 'http:');
-			Api\Header\ContentSecurityPolicy::add('media-src', ['https:','http:']);
+			$this->externalContentCsp();
 		}
 		// Compose the content of the frame
 		$frameHtml =

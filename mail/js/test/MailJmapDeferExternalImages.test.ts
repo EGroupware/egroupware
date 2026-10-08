@@ -155,6 +155,16 @@ describe("MailJmap.deferExternalImages()", () =>
 		assert.isNull(img.getAttribute("alt"));
 	});
 
+	it("parks the srcset of a deferred image, as the browser would prefer it over the placeholder src", () =>
+	{
+		const jmap = new MailJmap(createFakeApp({allowIMGs: 2}));
+		const doc = defer(jmap, '<img src="https://example.com/logo.png" srcset="https://example.com/logo@2x.png 2x">');
+		const img = doc.querySelector("img");
+
+		assert.isNull(img.getAttribute("srcset"));
+		assert.equal(img.getAttribute("data-blocked-srcset"), "https://example.com/logo@2x.png 2x");
+	});
+
 	it("preserves an existing alt text, appending the blocked marker rather than replacing it", () =>
 	{
 		const jmap = new MailJmap(createFakeApp({allowIMGs: 2}));

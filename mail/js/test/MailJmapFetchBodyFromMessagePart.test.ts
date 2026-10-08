@@ -21,6 +21,8 @@ const egw = {
 	user : (_key : string) => 5,
 	lang : (label : string) => String(label),
 	link : (path : string, params? : any) => path + '?' + new URLSearchParams(params ?? {}).toString(),
+	// wrapDocument()'s external-content CSP reads allowExternalIMGs/allowExternalDomains
+	preference : (_name : string, _app? : string) => null,
 };
 
 function createFakeApp() : MailApp
