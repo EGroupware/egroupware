@@ -12,6 +12,7 @@ import {IsEmail} from "../Validators/IsEmail";
 import {Et2UrlEmail} from "./Et2UrlEmail";
 import {Et2UrlReadonly} from "./Et2UrlReadonly";
 import {property} from "lit/decorators/property.js";
+import type {PropertyValues} from "lit";
 import {formatEmailAddress, splitEmail} from "../Et2Email/utils";
 
 /**
@@ -84,6 +85,32 @@ export class Et2UrlEmailReadonly extends Et2UrlReadonly
 	get value()
 	{
 		return super.value;
+	}
+
+	/**
+	 * Ticket #126151, part 2: having ANY onclick installed (even one that no-ops via
+	 * disableClickAction above) makes Et2Widget's own willUpdate() add the "et2_clickable" CSS
+	 * class (api/js/etemplate/Et2Widget/Et2Widget.ts) - and a nextmatch row click landing on a
+	 * ".et2_clickable" descendant is explicitly treated as "an interactive widget's own click,
+	 * not a row click" by Et2Datagrid._isInteractiveRowEventTarget(), which then skips the row's
+	 * own select/open-for-reading handling entirely (found live: the compose-popup regression
+	 * was gone, but so was row selection and the double-click message-view popup). Clearing
+	 * `onclick` itself - not just no-opping its body - removes that class too, via the same
+	 * reactive property Et2Widget's own class-toggle already watches. Done here, before calling
+	 * super.willUpdate(), so the base class's own `changedProperties.has("onclick")` check sees
+	 * it within the SAME update pass (Lit's documented pattern for deriving one reactive property
+	 * from another in willUpdate(), https://lit.dev/msg/change-in-update) - this property's own
+	 * XET-attribute value is reliably applied by the time any update pass runs, same timing
+	 * guarantee as the click-time check in the handler body above, which stays as a defense-in-
+	 * depth fallback.
+	 */
+	willUpdate(changedProperties : PropertyValues)
+	{
+		if(this.disableClickAction && this.onclick)
+		{
+			this.onclick = null;
+		}
+		super.willUpdate(changedProperties);
 	}
 
 	transformAttributes(attrs)
