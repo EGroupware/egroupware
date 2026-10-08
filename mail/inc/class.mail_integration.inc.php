@@ -142,6 +142,7 @@ class mail_integration
 	{
 		// For dealing with multiple files of the same name
 		$dupe_count = $file_list = array();
+		$headers = [];
 
 		//error_log(__METHOD__.__LINE__.': RowID:'.$_rowid.': emailAddress:'. array2string($_to_emailAddress));
 		// Integrate not yet saved mail
@@ -304,6 +305,9 @@ class mail_integration
 					$mailcontent = Mail::get_mailcontent($mo, $uid, '', $mailbox, null, true,
 						!in_array($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions'], ['text_only','no_attachments']),
 						false); // do NOT output pdf or images, if there is not mail-body
+					// link ALL addresses of the mail (To, Cc, Bcc, From) like with the raw message option, not just the one(s)
+					// Mail::get_mailcontent() picks as 'mailaddress', depending on the folder being a Sent folder
+					$headers = $mailcontent['headers'] ?? [];
 					// this one adds the mail itself (as message/rfc822 (.eml) file) to the app as additional attachment
 					// this is done to have a simple archive functionality (ToDo: opening .eml in email module)
 					if (in_array($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions'],['add_raw','no_attachments']))
