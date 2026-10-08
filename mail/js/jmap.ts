@@ -4794,7 +4794,7 @@ export class MailJmap
 			// default (this document's own URL would otherwise leak to every external image/link
 			// target in the mail body too, a privacy leak independent of hotlink-protection)
 			`<meta name="referrer" content="no-referrer">` +
-			`<link rel="stylesheet" href="${this.egw.link('/mail/templates/default/preview.css')}">` +
+			`<link rel="stylesheet" href="${this.app?.preview_css || this.egw.link('/mail/templates/default/preview.css')}">` +
 			`<style>${defaultFontCssRule()}</style>` +
 			`</head><body${bodyAttrs}><div class="mailDisplayBody mailDefaultFont"><table width="100%" style="table-layout:fixed">` +
 			`<tr><td class="td_display">${body}</td></tr></table></div></body></html>`;

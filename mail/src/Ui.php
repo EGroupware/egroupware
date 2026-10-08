@@ -627,6 +627,19 @@ class Ui
 	}
 
 	/**
+	 * Url of the stylesheet of the client-side rendered message body (MailJmap.wrapDocument())
+	 *
+	 * With its modification time, so browsers do not keep using an outdated version.
+	 *
+	 * @return string
+	 */
+	public static function preview_css()
+	{
+		$file = '/mail/templates/default/preview.css';
+		return Egw::link($file).'?'.filemtime(EGW_SERVER_ROOT.$file);
+	}
+
+	/**
 	 * Main mail page
 	 *
 	 * @param ?array $content
@@ -934,6 +947,7 @@ class Ui
 		));
 		// send configured image proxy to client-side
 		$content['image_proxy'] = self::image_proxy();
+		$content['preview_css'] = self::preview_css();
 		$content['no_vfs'] = !$GLOBALS['egw_info']['user']['apps']['filemanager'];
 		return $etpl->exec('mail.EGroupware\\Mail\\Ui.index',$content,$sel_options,$readonlys,$preserv);
 	}
@@ -2060,6 +2074,7 @@ class Ui
 			'part' => $partID,
 			'displayToolbaractions' => json_encode($this->getDisplayToolbarActions()),
 			'image_proxy' => self::image_proxy(),
+			'preview_css' => self::preview_css(),
 			'emailTag' => $GLOBALS['egw_info']['user']['preferences']['mail']['emailTag'] ?? 'onlyname',
 		];
 		if (!$hA['is_jmap'] && (!$uid || !$mailbox))

@@ -167,6 +167,11 @@ export class MailApp extends EgwApp
 	image_proxy : any = 'https://';
 
 	/**
+	 * Url of the stylesheet of the client-side rendered message body, with a cache-buster
+	 */
+	preview_css : string = '';
+
+	/**
 	 * Re-render a JMAP-native (srcdoc) body document showing its external content,
 	 * set by loadMessageBody() and used by resolveExternalImages()
 	 */
@@ -756,6 +761,7 @@ export class MailApp extends EgwApp
 		this.updateCustomLabelStylesheet();
 		// set image_proxy for resolveExternalImages
 		this.image_proxy = this.et2.getArrayMgr('content').getEntry('image_proxy') || 'https://';
+		this.preview_css = this.et2.getArrayMgr('content').getEntry('preview_css') || '';
 	}
 
 	/**
