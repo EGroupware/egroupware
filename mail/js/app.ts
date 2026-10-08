@@ -30,6 +30,7 @@ import {attachmentSaveUrl, downloadAttachments} from "./attachmentDownload";
 import {dropRtfBody, findTnefEntry, isTnefEntry, renumber, spliceUnpacked} from "./tnef";
 import {activateBodyLinks, openLinksInNewTab} from "./bodyLinks";
 import {buildErrorNode, buildFolderLevel, buildMailboxPaths, FolderTreeNode, isNamespaceRootName} from "./folderTree";
+import {Et2UrlEmail} from "../../api/js/etemplate/Et2Url/Et2UrlEmail";
 // egw/egw_getFramework are ambient globals (declare global {} in egw_global.d.ts,
 // unconditionally included via tsconfig's "**/*.d.ts") - no import needed or possible.
 
@@ -1622,6 +1623,24 @@ export class MailApp extends EgwApp
 		const accId = settings.from && settings.id ?
 			rowIdProfileID(settings.id) : (this.egw.preference('ActiveProfileID', 'mail') || '').toString().split('::')[0];
 		return this.openComposePopupUrl(settings, accId);
+	}
+
+	/**
+	 * Context-menu action 'composetosender' (ticket #126151): a brand-new, blank compose
+	 * addressed to this row's actual sender - NOT a re-edit of the whole message the way
+	 * 'composeasnew'/composeMessage() above works. Added so a mail list row's own sender/
+	 * address chip no longer has to intercept a plain click/tap to offer this (see the row
+	 * templates' disableClickAction="true" and Et2UrlEmailReadonly.transformAttributes()).
+	 *
+	 * @param _action
+	 * @param _elems _elems[0].id is the row-id
+	 */
+	composeToSender(_action, _elems)
+	{
+		const id = (_elems && _elems.length ? _elems[0].id : '') || this.currentlyFocussed || '';
+		const data = id ? egw.dataGetUIDdata(id) : null;
+		const address = data?.data?.fromaddress || '';
+		if (address) Et2UrlEmail.action(address);
 	}
 
 	/**

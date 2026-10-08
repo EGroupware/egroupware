@@ -38,6 +38,22 @@ export class Et2UrlEmailReadonly extends Et2UrlReadonly
 	@property({type: String})
 	emailDisplay : "email" | "full" | "name" | "domain" | "preference";
 
+	/**
+	 * Suppress the default click-to-compose action entirely (ticket #126151: a mail-list row's
+	 * own sender/address chip must only ever select/open the row for reading, never intercept a
+	 * plain click/tap to mailto:-open a compose - "you cannot teach users to tap only in specific
+	 * places"). Checked INSIDE the default onclick handler below, at actual click time, not used
+	 * to decide (in transformAttributes()) whether to install that handler in the first place -
+	 * for a widget living inside a nextmatch row template, transformAttributes() can run before
+	 * this property's own XET-attribute value has been applied yet (confirmed live: a row's widget
+	 * already had disableClickAction=true by the time it was inspected, but still carried the
+	 * default onclick - transformAttributes() had already made its install-or-not decision using a
+	 * still-default `false` moments earlier). A click, by contrast, can only ever happen once the
+	 * widget's full attribute/property application has long since finished.
+	 */
+	@property({type: Boolean})
+	disableClickAction : boolean = false;
+
 	set value(val : string)
 	{
 		const raw = val || "";
@@ -78,6 +94,7 @@ export class Et2UrlEmailReadonly extends Et2UrlReadonly
 			attrs.onclick = function(event)
 			{
 				const widget = event?.currentTarget || this;
+				if (widget.disableClickAction) return;
 				let email = widget._emailValue || widget._value;
 				if (!IsEmail.EMAIL_PREG.exec(email))
 				{
