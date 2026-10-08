@@ -182,6 +182,21 @@ class HtmlArea extends Etemplate\Widget
 					self::get_array($content, $form_name),
 					$this->attrs['validationRules'] ?? $this->attrs['validation_rules']
 				);
+				// htmLawed's own regex-heavy parsing can exhaust PHP's pcre.backtrack_limit/
+				// recursion_limit on a sufficiently large value (eg. a multi-megabyte data: URI
+				// from a pasted image that should have been resized/uploaded as an attachment
+				// instead of staying inline) - preg_last_error() is a global flag set by the
+				// LAST regex engine call, so it still reflects htmLawed's own failure here, even
+				// though purify() itself returns a plain string with no error indication.
+				// Found live (ticket #125961 follow-up): a 2MB image pasted into a mail
+				// signature silently reduced the whole field to a near-empty fragment on save,
+				// with nothing in any log - rejecting the save here instead surfaces a clear
+				// error to the user rather than silently discarding their content.
+				if (preg_last_error() !== PREG_NO_ERROR)
+				{
+					self::set_validation_error($form_name, lang('Content too large or complex to process safely - please reduce the size of any pasted images and try again.'));
+					return;
+				}
 			}
 			$valid =& self::get_array($validated, $form_name, true);
 			if (true) $valid = $value;

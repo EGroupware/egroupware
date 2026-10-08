@@ -386,6 +386,18 @@ class Compose
 		$content['html_toolbar'] = empty(Mail::$mailConfig['html_toolbar']) ?
 			implode(',', Etemplate\Widget\HtmlArea::$toolbar_default_list) : implode(',', Mail::$mailConfig['html_toolbar']);
 		$content['attachmentLimitMb'] = Api\Config::read('mail')['attachment_limit_mb'] ?: self::$maxAttachmentSizeDefault;
+		// ticket #125961: a pasted/dropped/"insert from VFS" inline body image must never become
+		// a webdav.php URL - give the htmlarea a literal upload target that resizes it to a
+		// data: URI itself instead. MUST be a server-rendered content value (not a JS property set
+		// later, eg. from mail/js/compose.ts) - found live: @tinymce/tinymce-webcomponent only
+		// reads its upload config ONCE, at its own connectedCallback()-driven TinyMCE init; its
+		// attributeChangedCallback() doesn't even look at images_upload_url/images_upload_handler,
+		// so setting a JS property afterward (however early) has no effect on the already-running
+		// editor - exactly why a toolbar-inserted image kept producing a raw webdav.php URL that
+		// survived all the way into the sent MIME message. Same prefixed-URL convention as
+		// admin_mail.inc.php's own signature_image_upload_url.
+		$content['mail_body_image_upload_url'] = $GLOBALS['egw_info']['server']['webserver_url'].
+			'/json.php?menuaction=EGroupware\\Mail\\Compose::ajax_uploadInlineImage';
 
 		// "predefined compose addresses" account preference (set via mail's account-settings UI,
 		// mail/js/app.ts:8035's own pref_id convention) - compose()'s own equivalent merge, lines
@@ -1452,4 +1464,67 @@ class Compose
 		return array_merge($trim($group_lists), $trim($manual_lists));
 	}
 
+	/**
+	 * Inline body images above this size (bytes) get resized down before embedding - same
+	 * threshold/rationale as Mail\Account::SIGNATURE_IMAGE_RESIZE_THRESHOLD: mail bodies have no
+	 * DB-column size ceiling of their own, but the same "don't bloat an outgoing mail with a
+	 * casually pasted screenshot" concern applies.
+	 */
+	const INLINE_IMAGE_RESIZE_THRESHOLD = 32768;
+
+	/**
+	 * TinyMCE's images_upload_url target for compose's own inline-body-image paste/drop (ticket
+	 * #125961) - called directly via a plain fetch()/POST (egw.ajaxUrl(), same convention
+	 * Et2MarkdownEditMixin.ts's _uploadMarkdownFile() already uses for a different endpoint), not
+	 * through egw.json()'s JSON-RPC envelope, so (like Vfs::ajax_htmlarea_upload(), which this
+	 * deliberately does NOT reuse - see this method's own call site in mail/js/compose.ts) this
+	 * needs no $public_functions entry and answers with a bare, non-enveloped JSON body.
+	 *
+	 * Returns a data: URI directly - no VFS write happens at all, eliminating the webdav.php
+	 * security surface entirely for this insertion path (the problem ticket #125961 reported:
+	 * a webdav.php-referenced inline image survives forwarding only if some other client/session
+	 * can still reach the same VFS path - a data: URI has no such dependency, and converts to a
+	 * real CID MIME attachment on send the same way any other data:-sourced inline image already
+	 * does, see Mail::processURL2InlineImages()).
+	 *
+	 * Also doubles as the "insert from VFS" target (a `path` query param instead of a `$_FILES`
+	 * upload - Et2HtmlArea.ts's _openDefaultFilePicker() appends `&path=` to this SAME
+	 * mail_body_image_upload_url when picking an existing VFS file, rather than calling a second,
+	 * separate endpoint): reads an ALREADY-UPLOADED VFS file's bytes (the user just picked it via
+	 * the VFS-browse dialog "insert from VFS" always had - Api\Vfs's own ACL check applies
+	 * automatically, no new security surface, since the picker dialog itself already required
+	 * read access to show it) instead of a fresh upload, answering the same data: URI shape.
+	 *
+	 * $path is read directly from $_GET rather than taken as a method parameter: called via a
+	 * plain fetch()/POST, NOT through egw.json()'s own $parameters-from-POST-body convention
+	 * (Json\Request::handleRequest()'s static-method dispatch only ever fills in positional
+	 * arguments from a JSON-encoded POST body, never from $_GET - confirmed live: a $path
+	 * parameter declared as a real method argument here received nothing and threw "too few
+	 * arguments" until this was fixed).
+	 *
+	 * @return void writes {"location": "data:<mime>;base64,<...>"} or {"location": error message}
+	 */
+	public static function ajax_uploadInlineImage()
+	{
+		$file = $_FILES['file'] ?? null;
+		$path = $_GET['path'] ?? '';
+		if (isset($file))
+		{
+			$result = !is_uploaded_file($file['tmp_name']) ? ['location' => lang('No _FILES[upload] found!')] :
+				Api\MimeMagic::imageUploadResponse(file_get_contents($file['tmp_name']), self::INLINE_IMAGE_RESIZE_THRESHOLD);
+		}
+		else
+		{
+			Api\Vfs::load_wrapper('vfs');
+			$bytes = $path === '' ? false : @file_get_contents('vfs://default'.$path);
+			$result = $bytes === false ? ['location' => lang('Could not read file')] :
+				Api\MimeMagic::imageUploadResponse($bytes, self::INLINE_IMAGE_RESIZE_THRESHOLD);
+		}
+
+		// switch regular JSON response handling off - same as Vfs::ajax_htmlarea_upload()
+		Api\Json\Request::isJSONRequest(false);
+		header('Content-Type: application/json; charset=utf-8');
+		echo json_encode($result);
+		exit;
+	}
 }

@@ -1198,6 +1198,26 @@ class Account implements \ArrayAccess
 		{
 			throw new Api\Exception\NotFound();
 		}
+		// a signature saved before embedSignatureImages() existed (or by a client that never
+		// re-triggers a save) can still carry a '/webdav.php' image reference that only works for
+		// whoever has that exact account's own session (ticket #125961 follow-up) - self-heal it
+		// the first time it's read instead of a separate migration: unlike a bulk upgrade step,
+		// this runs with the REAL reading user's own session/VFS-ACL context, which a migration
+		// has no reliable way to reproduce per-identity (different identities can be owned by/
+		// shared with different users, on different hosts for the same-origin check)
+		if (!empty($data['ident_signature']) && str_contains($data['ident_signature'], '/webdav.php'))
+		{
+			$embedded = self::embedSignatureImages($data['ident_signature']);
+			if ($embedded !== $data['ident_signature'])
+			{
+				$data['ident_signature'] = $embedded;
+				if ((int)$data['ident_id'] > 0)
+				{
+					self::$db->update(self::IDENTITIES_TABLE, array('ident_signature' => $embedded),
+						array('ident_id' => $data['ident_id']), __LINE__, __FILE__, self::APP);
+				}
+			}
+		}
 		if ($replace_placeholders)
 		{
 			// set empty email&realname from session / account
@@ -1304,8 +1324,7 @@ class Account implements \ArrayAccess
 			return $html;
 		}
 		// only a same-origin '/webdav.php' url may be read directly via vfs:// below - a foreign
-		// host's "/webdav.php" must NOT be read from our own vfs (same check processURL2InlineImages()
-		// itself already uses, Mail.php, for the identical reason)
+		// host's "/webdav.php" must NOT be read from our own vfs
 		$own_host = strtolower((string)Api\Header\Http::host());
 
 		return preg_replace_callback('/(<img[^>]+src=")([^"]+)(")/Ui', static function (array $matches) use ($own_host)
@@ -1331,66 +1350,49 @@ class Account implements \ArrayAccess
 			$mime = Api\MimeMagic::analyze_data($bytes);
 			if (strlen($bytes) > self::SIGNATURE_IMAGE_RESIZE_THRESHOLD)
 			{
-				[$bytes, $mime] = self::resizeSignatureImage($bytes, $mime);
+				[$bytes, $mime] = Api\MimeMagic::resizeImage($bytes, $mime);
 			}
 			return $matches[1].'data:'.$mime.';base64,'.base64_encode($bytes).$matches[3];
 		}, $html);
 	}
 
 	/**
-	 * Resize a too-large signature image down, preserving PNG transparency
+	 * TinyMCE's images_upload_url target for the signature editor's own inline-image paste/drop
+	 * (ticket #125961 follow-up - a real report: a ~1.2-2MB image pasted into a signature
+	 * "simply vanished" on save) - root cause was that the signature htmlarea never had an
+	 * `imageUpload` target at all, so a pasted image reached Api\Etemplate\Widget\Vfs::
+	 * ajax_htmlarea_upload()'s own last-resort, no-resize fallback branch (no VFS write, no
+	 * resize, the full original bytes base64-encoded as-is) - embedSignatureImages() above never
+	 * got a chance to run either, since its own `/webdav.php` detection never matched (no webdav
+	 * URL was ever produced). The resulting multi-megabyte value then exhausted PHP's
+	 * pcre.backtrack_limit inside Etemplate\Widget\HtmlArea::validate()'s own HtmLawed::purify()
+	 * call, silently reducing the whole field to a near-empty fragment - now rejected with a
+	 * clear error there instead (see HtmlArea::validate()'s own docblock), but the real fix is
+	 * this: resize BEFORE the image ever reaches that far, same as mail compose's own
+	 * Mail\Compose::ajax_uploadInlineImage() (same Api\MimeMagic::imageUploadResponse() helper).
 	 *
-	 * Mirrors Api\Contacts::resize_photo()'s general GD approach (resize-by-width, preserve aspect
-	 * ratio), but does NOT force every format to JPEG - a PNG company logo with a transparent
-	 * background (the single most common real-world signature-image shape) would otherwise gain
-	 * an ugly solid-color box around it. Every other format still converts to JPEG, same as
-	 * resize_photo().
+	 * Called directly via a plain fetch()/POST (egw.ajaxUrl()), not through egw.json()'s JSON-RPC
+	 * envelope - needs no $public_functions entry, answers with a bare, non-enveloped JSON body,
+	 * same convention as Mail\Compose::ajax_uploadInlineImage().
 	 *
-	 * @param string $bytes raw image bytes
-	 * @param string $mime source mime type, as Api\MimeMagic::analyze_data() detected it
-	 * @param int $max_w =320 max width to resize to
-	 * @return array{0:string,1:string} [$bytes, $mime] - $mime stays 'image/png' for a PNG source,
-	 *  becomes 'image/jpeg' for everything else (including when resizing itself could not happen,
-	 *  eg. $bytes didn't decode as an image at all - returned unchanged rather than dropped)
+	 * @return void writes {"location": "data:<mime>;base64,<...>"} or {"location": error message}
 	 */
-	protected static function resizeSignatureImage(string $bytes, string $mime, int $max_w=320)
+	public static function ajax_uploadSignatureImage()
 	{
-		if (!($image = @imagecreatefromstring($bytes)))
+		$file = $_FILES['file'] ?? null;
+		if (!isset($file) || !is_uploaded_file($file['tmp_name']))
 		{
-			return [$bytes, $mime];
-		}
-		$src_w = imagesx($image);
-		$src_h = imagesy($image);
-		if ($src_w <= $max_w)
-		{
-			imagedestroy($image);
-			return [$bytes, $mime];	// already narrow enough - only the overall BYTE size tripped the threshold
-		}
-		$dst_h = (int)round($src_h * $max_w / $src_w);
-		$resized = imagecreatetruecolor($max_w, $dst_h);
-		$is_png = $mime === 'image/png';
-		if ($is_png)
-		{
-			imagealphablending($resized, false);
-			imagesavealpha($resized, true);
-		}
-		imagecopyresampled($resized, $image, 0, 0, 0, 0, $max_w, $dst_h, $src_w, $src_h);
-		imagedestroy($image);
-
-		ob_start();
-		if ($is_png)
-		{
-			imagepng($resized);
+			$result = ['location' => lang('No _FILES[upload] found!')];
 		}
 		else
 		{
-			imagejpeg($resized, null, 85);
-			$mime = 'image/jpeg';
+			$result = Api\MimeMagic::imageUploadResponse(file_get_contents($file['tmp_name']), self::SIGNATURE_IMAGE_RESIZE_THRESHOLD);
 		}
-		$bytes = ob_get_clean();
-		imagedestroy($resized);
 
-		return [$bytes, $mime];
+		Api\Json\Request::isJSONRequest(false);
+		header('Content-Type: application/json; charset=utf-8');
+		echo json_encode($result);
+		exit;
 	}
 
 	/**

@@ -239,6 +239,92 @@ class MimeMagic
 	}
 
 	/**
+	 * Resize a too-large image down, preserving PNG transparency
+	 *
+	 * GD-based (resize-by-width, preserve aspect ratio). Does NOT force every format to JPEG -
+	 * a PNG with a transparent background would otherwise gain an ugly solid-color box around
+	 * it. Every other format converts to JPEG. Shared by signature-image embedding
+	 * (Api\Mail\Account::embedSignatureImages()) and mail's inline-body-image compose endpoints
+	 * (Mail\Compose) - same recipe, same size limits, both contexts care about keeping a casually
+	 * pasted/dropped image from bloating what gets stored/sent.
+	 *
+	 * @param string $bytes raw image bytes
+	 * @param string $mime source mime type, as Api\MimeMagic::analyze_data() detected it
+	 * @param int $max_w =320 max width to resize to
+	 * @return array{0:string,1:string} [$bytes, $mime] - $mime stays 'image/png' for a PNG source,
+	 *  becomes 'image/jpeg' for everything else (including when resizing itself could not happen,
+	 *  eg. $bytes didn't decode as an image at all - returned unchanged rather than dropped)
+	 */
+	public static function resizeImage(string $bytes, string $mime, int $max_w=320) : array
+	{
+		if (!($image = @imagecreatefromstring($bytes)))
+		{
+			return [$bytes, $mime];
+		}
+		$src_w = imagesx($image);
+		$src_h = imagesy($image);
+		if ($src_w <= $max_w)
+		{
+			imagedestroy($image);
+			return [$bytes, $mime];	// already narrow enough - only the overall BYTE size tripped the threshold
+		}
+		$dst_h = (int)round($src_h * $max_w / $src_w);
+		$resized = imagecreatetruecolor($max_w, $dst_h);
+		$is_png = $mime === 'image/png';
+		if ($is_png)
+		{
+			imagealphablending($resized, false);
+			imagesavealpha($resized, true);
+		}
+		imagecopyresampled($resized, $image, 0, 0, 0, 0, $max_w, $dst_h, $src_w, $src_h);
+		imagedestroy($image);
+
+		ob_start();
+		if ($is_png)
+		{
+			imagepng($resized);
+		}
+		else
+		{
+			imagejpeg($resized, null, 85);
+			$mime = 'image/jpeg';
+		}
+		$bytes = ob_get_clean();
+		imagedestroy($resized);
+
+		return [$bytes, $mime];
+	}
+
+	/**
+	 * Build the {"location": "data:<mime>;base64,<...>"} response TinyMCE's images_upload_url/
+	 * images_upload_handler contract expects, from raw uploaded/read bytes - rejecting anything
+	 * that isn't actually an image, and resizing (resizeImage() above) anything over
+	 * $resize_threshold first. Shared by every "paste/drop/insert-from-VFS an inline image"
+	 * endpoint that wants a self-contained data: URI instead of a VFS/webdav.php reference
+	 * (Mail\Compose::ajax_uploadInlineImage()/ajax_resizeVfsImageForCompose() for mail body
+	 * images, Mail\Account::ajax_uploadSignatureImage() for signature images) - same recipe,
+	 * same response shape, parameterized only by the caller's own size threshold.
+	 *
+	 * @param string $bytes raw file bytes (not necessarily an image at all)
+	 * @param int $resize_threshold bytes - resize only above this size
+	 * @param int $max_w =320 max width to resize to
+	 * @return array{location: string} a data: URI on success, a plain error message otherwise
+	 */
+	public static function imageUploadResponse(string $bytes, int $resize_threshold, int $max_w=320) : array
+	{
+		$mime = self::analyze_data($bytes);
+		if (!$mime || !str_starts_with($mime, 'image/'))
+		{
+			return ['location' => lang('Not an image')];
+		}
+		if (strlen($bytes) > $resize_threshold)
+		{
+			[$bytes, $mime] = self::resizeImage($bytes, $mime, $max_w);
+		}
+		return ['location' => 'data:'.$mime.';base64,'.base64_encode($bytes)];
+	}
+
+	/**
 	 * Get an array containing a mapping of common file extensions to
 	 * MIME types.
 	 *

@@ -126,6 +126,35 @@ describe("MailJmap.deferExternalImages()", () =>
 		assert.isNull(img.getAttribute("alt"));
 	});
 
+	/**
+	 * Ticket #125961: a same-origin '/webdav.php' url must NOT get the general same-origin pass -
+	 * it only works for whoever has this exact account's own session, so it is no safer than any
+	 * other external image reference (eg. a stray one left over in forwarded/quoted content from
+	 * before compose stopped producing these).
+	 */
+	it("still blocks a same-origin '/webdav.php' image - the same-origin pass does not cover it", () =>
+	{
+		const jmap = new MailJmap(createFakeApp({allowIMGs: 2, webserverUrl: "https://my.egroupware.example"}));
+		const doc = defer(jmap, '<img src="https://my.egroupware.example/webdav.php/home/someone/.tmp/x/logo.png">');
+		const img = doc.querySelector("img");
+
+		assert.equal(img.getAttribute("src"), "/egroupware/api/templates/default/images/no-image-shown.png");
+		assert.include(img.getAttribute("alt"), "[blocked external image:https://my.egroupware.example/webdav.php/home/someone/.tmp/x/logo.png]");
+	});
+
+	it("an allowlisted domain still rescues a same-origin '/webdav.php' image, same as any other external domain", () =>
+	{
+		const jmap = new MailJmap(createFakeApp({
+			allowIMGs: 2, webserverUrl: "https://my.egroupware.example",
+			allowedDomains: ["my.egroupware.example"],
+		}));
+		const doc = defer(jmap, '<img src="https://my.egroupware.example/webdav.php/home/someone/.tmp/x/logo.png">');
+		const img = doc.querySelector("img");
+
+		assert.equal(img.getAttribute("src"), "https://my.egroupware.example/webdav.php/home/someone/.tmp/x/logo.png");
+		assert.isNull(img.getAttribute("alt"));
+	});
+
 	it("preserves an existing alt text, appending the blocked marker rather than replacing it", () =>
 	{
 		const jmap = new MailJmap(createFakeApp({allowIMGs: 2}));

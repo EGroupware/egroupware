@@ -27,6 +27,7 @@ import {MailCompose} from "./compose";
 import {formatJmapAddress, isPreferenceOn, JmapBodyResult, JmapMessageReference, JmapUserError, MailJmap} from "./jmap";
 import {renderAttachmentIndex} from "./attachmentIndex";
 import {attachmentSaveUrl, downloadAttachments} from "./attachmentDownload";
+import {dropRtfBody, findTnefEntry, isTnefEntry, renumber, spliceUnpacked} from "./tnef";
 import {activateBodyLinks, openLinksInNewTab} from "./bodyLinks";
 import {buildErrorNode, buildFolderLevel, buildMailboxPaths, FolderTreeNode, isNamespaceRootName} from "./folderTree";
 // egw/egw_getFramework are ambient globals (declare global {} in egw_global.d.ts,
@@ -2800,9 +2801,7 @@ export class MailApp extends EgwApp
 		{
 			return this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_fetchAttachments', [rowId]);
 		}
-		const isTnef = (a : any) => (a.type || '').toLowerCase() === 'application/ms-tnef' ||
-			(a.name || '').toLowerCase() === 'winmail.dat';
-		const tnefIndex = metadata.findIndex(isTnef);
+		const tnefIndex = metadata.findIndex(isTnefEntry);
 		if (tnefIndex === -1)
 		{
 			return this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_fetchAttachments', [rowId, metadata]);
@@ -2824,8 +2823,8 @@ export class MailApp extends EgwApp
 		// TNEF entry's own original position gives exactly the "everything before"/"everything
 		// after" halves to splice the decoded sub-attachments in between
 		const resolved = siblingsResult?.attachmentsBlock || [];
-		const merged = [...resolved.slice(0, tnefIndex), ...tnefResult, ...resolved.slice(tnefIndex)];
-		merged.forEach((item, index) => item.attachment_number = index);
+		// the RTF copy of the mail body Outlook puts into the winmail.dat is no attachment (ticket #126161)
+		const merged = spliceUnpacked([...resolved.slice(0, tnefIndex), null, ...resolved.slice(tnefIndex)], tnefIndex, dropRtfBody(tnefResult));
 		return {attachmentsBlock: merged};
 	}
 
@@ -2888,30 +2887,45 @@ export class MailApp extends EgwApp
 				if (!egwIsMobile() && template) template.set_value({content: partData, sel_options: partSelOptions});
 			});
 		}
-		// Try to resolve winmail.data attachment
-		else if (data && data.attachmentsBlock && data.attachmentsBlock[0]
-				&& data.attachmentsBlock[0].winmailFlag
-				&& (data.attachmentsBlock[0].mimetype =='application/ms-tnef' ||
-				data.attachmentsBlock[0].filename == "winmail.dat"))
+		// Try to resolve winmail.dat attachment: found by its type or name in ANY position, not by the "winmailFlag"
+		// (the JMAP code leaves it empty for the raw winmail.dat) and not only as first attachment - the display
+		// popup (and an .eml opened from a ticket) showed just "winmail.dat" (ticket #126161), as unlike the preview
+		// its attachmentsBlock is already filled, so it never took the on-demand route below, which handles TNEF
+		else if (data && findTnefEntry(data.attachmentsBlock) >= 0)
 		{
+			const tnefIndex = findTnefEntry(data.attachmentsBlock);
+			const tnefEntry = data.attachmentsBlock[tnefIndex];
 			if (attachmentsBlock) attachmentsBlock.getDOMNode().classList.add('loading');
 			// Not this.egw.jsonq() - see the ajax_fetchMessageDetails call above for why: this
 			// also generates a Link::set_data() token that needs to survive in the session.
-			this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_resolveWinmail',[rowId]).then((_data) =>
+			// partID and blobId (JMAP-native rows) make the server skip searching for the TNEF itself
+			this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_resolveWinmail',
+				[rowId, tnefEntry.partID ?? tnefEntry.partId ?? null, tnefEntry.blobId ?? null]).then(async(_data) =>
 			{
 				if (attachmentsBlock) attachmentsBlock.getDOMNode().classList.remove('loading');
-				if (typeof _data == 'object')
+				if (Array.isArray(_data) && _data.length)
 				{
-					data.attachmentsBlock = _data;
-					data.attachmentsBlockTitle = _data.length > 1 ? `+${_data.length-1}` : '';
+					// with a blobId (JMAP-native row) the server returns ONLY the files unpacked from the winmail.dat, which
+					// replace it between the other attachments, the classic fallback returns ALL attachments, winmail.dat resolved
+					// The RTF copy of the mail body is no attachment
+					data.attachmentsBlock = tnefEntry.blobId ?
+						spliceUnpacked(data.attachmentsBlock, tnefIndex, dropRtfBody(_data)) :
+						renumber(dropRtfBody(_data));
+					// download/view actions and the pdf.js viewer URLs, as for every other attachment
+					this.setupViewAttachmentActions(data, sel_options);
+					await this.resolveAttachmentViewUrls(rowId, data.attachmentsBlock);
 					// Update client cache to avoid resolving winmail.dat attachment again
 					egw.dataStoreUID(data.uid, data);
-					if (!egwIsMobile() && template) template.set_value({content:data});
+					if (!egwIsMobile() && template) template.set_value({content: data, sel_options: sel_options});
 				}
 				else
 				{
-					console.log('Can not resolve the winmail.data!');
+					console.log('Can not resolve the winmail.dat!');
 				}
+			}).catch((e) =>
+			{
+				if (attachmentsBlock) attachmentsBlock.getDOMNode().classList.remove('loading');
+				console.log('Can not resolve the winmail.dat!', e);
 			});
 		}
 		// Rows fetched via client-side JMAP (see mail/js/jmap.ts) don't carry a resolved
@@ -3092,12 +3106,18 @@ export class MailApp extends EgwApp
 			const type = (item.type || '').toLowerCase();
 			return item.blobId && !excluded.includes(type) && MailApp.VIEWABLE_TYPES.has(type);
 		});
-		if (!eligible.length)
+		// a PDF unpacked from a winmail.dat has no JMAP blob (it lives inside of it), but is viewed in the pdf.js viewer too
+		const unpackedPdfs = attachmentsBlock.filter((item) => item && !item.blobId && item.winmailFlag &&
+			(item.type || '').toLowerCase() === 'application/pdf');
+		if (!eligible.length && !unpackedPdfs.length)
 		{
 			return false;
 		}
 		this.jmap.revokeAttachmentViewUrls(rowId);
-		const results = await Promise.all(eligible.map((item) =>
+		this.tnefViewUrls ??= {};
+		(this.tnefViewUrls[rowId] ?? []).forEach((url) => URL.revokeObjectURL(url));
+		this.tnefViewUrls[rowId] = [];
+		const results = await Promise.all([...eligible.map((item) =>
 			this.jmap.getAttachmentViewUrl(rowId, profileID, item.blobId, item.filename, item.type)
 				.then((url) => { item.mime_url = url; return true; })
 				.catch((e) =>
@@ -3105,8 +3125,50 @@ export class MailApp extends EgwApp
 					console.error('resolveAttachmentViewUrls(): failed for', item.filename, e);
 					return false;
 				})
-		));
+		), ...unpackedPdfs.map((item) => this.resolveUnpackedPdfViewUrl(rowId, item))]);
 		return results.some(Boolean);
+	}
+
+	/**
+	 * Object URLs of the pdf.js viewer pages built for PDFs unpacked from a winmail.dat, by row,
+	 * revoked the next time the row is resolved (same convention as MailJmap's attachmentViewUrls)
+	 */
+	private tnefViewUrls : Record<string, string[]> = {};
+
+	/**
+	 * Show a PDF unpacked from a winmail.dat (TNEF) in the same pdf.js viewer as every other PDF of a mail, instead of
+	 * the browsers own PDF viewer (ticket #126161)
+	 *
+	 * The PDF has no JMAP blob, so its bytes come from the classic getAttachment URL (which the download uses, too),
+	 * and are wrapped by MailJmap's own pdf.js wrapper, which is private to it (and its file is not touched here) -
+	 * reached with bracket notation.
+	 *
+	 * @param rowId
+	 * @param item attachmentsBlock row, gets its mime_url replaced
+	 * @return true if mime_url was replaced, false on any error - the classic URL (browsers PDF viewer) stays then
+	 */
+	private async resolveUnpackedPdfViewUrl(rowId : string, item : any) : Promise<boolean>
+	{
+		try
+		{
+			const response = await fetch(attachmentSaveUrl(this.egw, item), {credentials: 'same-origin'});
+			if (!response.ok)
+			{
+				throw new Error('HTTP ' + response.status + ' ' + response.statusText);
+			}
+			const blob = MailJmap['withKnownFilename'](await response.blob(), item.type, item.filename);
+			const contentUrl = URL.createObjectURL(blob);
+			(this.tnefViewUrls[rowId] ??= []).push(contentUrl);
+			const viewerUrl = await MailJmap['wrapPdfViewerWithDownload'](blob, contentUrl, item.filename, item.type);
+			(this.tnefViewUrls[rowId] ??= []).push(viewerUrl);
+			item.mime_url = viewerUrl;
+			return true;
+		}
+		catch (e)
+		{
+			console.error('resolveUnpackedPdfViewUrl(): failed for', item.filename, e);
+			return false;
+		}
 	}
 
 	/**
