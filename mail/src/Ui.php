@@ -1414,11 +1414,27 @@ class Ui
 				'hideOnMobile' => true
 			),
 			'composeasnew' => array(
-				'caption' => 'Compose',
+				// ticket #126151: "Compose" alone reads as "write a new mail", but this action
+				// actually re-opens the WHOLE selected message as an editable new draft (see
+				// composeMessage()'s own docblock in mail/js/app.ts) - promoted the existing,
+				// already-translated 'hint' text to the visible caption instead, matching the
+				// clearer label ralf compared this to (Thunderbird's "Edit as New").
+				'caption' => 'Compose as new',
 				'icon' => 'new',
-				'hint' => 'Compose as new',
 				'group' => $group,
 				'onExecute' => 'javaScript:app.mail.composeMessage',
+				'allowOnMultiple' => false,
+			),
+			'composetosender' => array(
+				// ticket #126151: a blank compose addressed to this message's actual sender -
+				// distinct from 'composeasnew' above, which replays the whole message. Added so
+				// the row's own sender/address chip no longer needs to intercept a plain click/
+				// tap to offer this (see the row templates' onclick="app.mail.rowSenderClick"
+				// and Et2UrlEmailReadonly.transformAttributes()).
+				'caption' => 'New mail to sender',
+				'icon' => 'new',
+				'group' => $group,
+				'onExecute' => 'javaScript:app.mail.composeToSender',
 				'allowOnMultiple' => false,
 			),
 			'modifysubject' => array(

@@ -458,6 +458,7 @@ never show	mail	en	Never show
 never show notification	mail	en	Never show notification
 new mail from %1	mail	en	New email from %1
 new mail notification	mail	en	New email notification
+new mail to sender	mail	en	New mail to sender
 new message type	mail	en	New message type
 new subject	mail	en	New subject
 no (valid) send folder set in preferences	mail	en	No (valid) Send Folder set in preferences
