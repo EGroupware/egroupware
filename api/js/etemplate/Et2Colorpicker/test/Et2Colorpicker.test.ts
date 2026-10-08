@@ -69,15 +69,56 @@ describe("Colorpicker widget", () =>
 		assert.equal(element.getValue(), "");
 	});
 
+	describe("required", () =>
+	{
+		const YELLOW = "rgb(255, 255, 208)";
+		const trigger = () => getComputedStyle(element.shadowRoot.querySelector(".color-dropdown__trigger")).backgroundColor;
+
+		it("is yellow when required and empty", async() =>
+		{
+			element.required = true;
+			element.set_value("");
+			await element.updateComplete;
+
+			assert.equal(trigger(), YELLOW);
+		});
+
+		it("is not yellow once it has a colour", async() =>
+		{
+			element.required = true;
+			element.set_value("#ff0000");
+			await element.updateComplete;
+
+			assert.notEqual(trigger(), YELLOW);
+		});
+
+		it("is not yellow when it is not required", async() =>
+		{
+			element.set_value("");
+			await element.updateComplete;
+
+			assert.notEqual(trigger(), YELLOW);
+		});
+	});
+
+	it("shows the not-allowed cursor over the clear button when disabled", async() =>
+	{
+		element.set_value("#ff0000");
+		element.disabled = true;
+		await element.updateComplete;
+
+		const clear = element.shadowRoot.querySelector<HTMLElement>(".input__clear");
+		assert.exists(clear);
+		assert.equal(getComputedStyle(clear).cursor, "not-allowed");
+	});
 });
 
-// SlColorPicker has no form-control-label/form-control-help-text parts at all (its label is
-// screen-reader only, wrapped in <sl-visually-hidden>) and no plain <input> to check for an empty
-// display - use the trigger button's own "empty" class instead, and it normalizes hex to
-// uppercase.
+// SlColorPicker has no plain <input> to check for an empty display - use the trigger button's own "empty" class
+// instead, and it normalizes hex to uppercase.
 inputBasicTests(before, "#ff0000", "input", {
 	expectedValue: "#FF0000",
-	skip: ["label", "help-text"],
+	// conformance: the control is a trigger button, and aria-required is not valid on one
+	skip: ["required-aria"],
 	checkEmptyDisplay: (element : Et2Colorpicker) =>
 		assert.isTrue(
 			element.shadowRoot.querySelector(".color-dropdown__trigger")?.classList.contains("color-dropdown__trigger--empty"),

@@ -173,7 +173,7 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
                     part="vfs button clipboard"
                     exportparts="base:button_base"
                     id="paste"
-                    image="clipboard-data" aria-label=${this.egw().lang("clipboard contents")} noSubmit="true"
+                    image="clipboard-data" noSubmit="true"
                     title=${this.egw().lang("Clipboard contents")}
                     ?readonly=${this.readonly}
                     disabled

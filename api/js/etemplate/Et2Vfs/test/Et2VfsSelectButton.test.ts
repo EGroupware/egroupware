@@ -5,6 +5,9 @@ import {assert, elementUpdated, fixture, html} from '@open-wc/testing';
 import {Et2VfsSelectButton} from "../Et2VfsSelectButton";
 import {inputBasicTests} from "../../Et2InputWidget/test/InputBasicTests";
 import * as sinon from "sinon";
+// What the widget renders: not registered unless imported, and an unregistered element has no controls
+import "../../Et2Button/Et2Button";
+import "../Et2VfsSelectDialog";
 
 // @ts-ignore
 window.egw = {
@@ -46,6 +49,7 @@ describe("Vfs select button widget", () =>
 // button, like Et2Button), it internally builds a nested <et2-vfs-select-dialog> which needs the
 // same egw() surface Et2LinkTo's nested dialog construction needed (see that test file).
 inputBasicTests(before, ["/home/test/file.txt"], "input", {
-	skip: ["label", "help-text"],
+	// conformance: the control is a button, and aria-required is not valid on one
+	skip: ["label", "help-text", "required-aria"],
 	checkEmptyDisplay: () => {}
 });

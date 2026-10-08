@@ -4,6 +4,8 @@ export default css`
 
 	.form-control-input {
 		position: relative;
+		/* The padding and border count towards this minimum: otherwise the label drops above a field that would fit */
+		box-sizing: border-box;
 		min-width: 15em;
 
 		flex: 1;
@@ -39,8 +41,10 @@ export default css`
 	}
 
 	.vfs-path__value-input {
-		flex: 1 1 auto;
-		min-width: 12em;
+		/* Take the room there is, not the width a text input asks for: that made the widget wider while editing */
+		flex: 1 1 0;
+		width: 0;
+		min-width: 0;
 		border: none;
 		outline: none;
 		color: var(--input-text-color);
@@ -176,5 +180,11 @@ export default css`
 
 	.vfs-path__disabled sl-breadcrumb-item::part(label) {
 		color: var(--sl-input-color-disabled);
+	}
+
+	/* Nothing in a disabled path can be clicked, the separators included */
+	.vfs-path__disabled sl-breadcrumb-item::part(label),
+	.vfs-path__disabled sl-breadcrumb-item::part(separator) {
+		cursor: not-allowed;
 	}
 `;

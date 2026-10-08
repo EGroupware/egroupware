@@ -310,7 +310,11 @@ export function inputBasicTests(before : Function, test_value : any, value_selec
 	widgetConformanceTests(before, {
 		testValue: test_value,
 		expectedValue: expectedValue,
-		skip: skip.filter(check => !["readonly", "disabled", "hidden", "required", "roundtrip", "label", "help-text", "label-fixed"].includes(check)) as ConformanceCheck[],
+		skip: [
+			...skip.filter(check => !["readonly", "disabled", "hidden", "required", "roundtrip", "label", "help-text", "label-fixed"].includes(check)),
+			// No label part to click on
+			...(skip.includes("label") ? ["label-click"] : [])
+		] as ConformanceCheck[],
 		parts: options.parts
 	});
 }

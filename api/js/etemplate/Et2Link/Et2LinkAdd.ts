@@ -112,12 +112,14 @@ export class Et2LinkAdd extends Et2InputWidget(LitElement)
                         part="form-control-label"
                         class="form-control__label"
                         aria-hidden=${hasLabel ? 'false' : 'true'}
+                        @click=${this._focusOnLabelClick}
                 >
                     <slot name="label">${this.label}</slot>
                 </label>
                 <div part="form-control-input" class="form-control-input">
                     <slot part="prefix" name="prefix"></slot>
                     <et2-link-apps
+                            statustext=${this.egw().lang("Select an application")}
                             onlyApp=${this.application || nothing}
                             applicationList=${this.applicationList || nothing}
                             exportparts="listbox"
@@ -128,7 +130,7 @@ export class Et2LinkAdd extends Et2InputWidget(LitElement)
                     <et2-button-icon
                             id=${this.id + "_add"}
                             image="add"
-                            aria-label=${this.egw().lang("Add entry")}
+                            statustext=${this.egw().lang("Add entry")}
                             ?disabled=${this.disabled}
                             ?readonly=${this.readonly}
                             noSubmit

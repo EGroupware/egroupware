@@ -137,7 +137,7 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
                 'form-control': true,
                 'form-control--has-label': this.label.split("%")[0] || false
             })}>
-                <div class="form-control__label" part="form-control-label">
+                <div class="form-control__label" part="form-control-label" @click=${this._focusOnLabelClick}>
                     <label
                             part="form-control-label"
                             class="form-control__label"
@@ -183,6 +183,8 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 		return html`
             <et2-select
                     name="relative"
+                    statustext=${this.egw().lang("Date range")}
+                    .ariaDescription=${this.helpText}
                     ?disabled=${this.disabled}
                     ?readonly=${this.readonly}
                     ?required=${this.required}
@@ -204,6 +206,7 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 		return html`
 			<et2-date
 				name="from"
+				.ariaDescription=${this.helpText}
 				?disabled=${this.disabled}
 				?readonly=${this.readonly}
 				?required=${this.required}
@@ -213,6 +216,7 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
             ></et2-date>
             <et2-date
                     name="to"
+                    .ariaDescription=${this.helpText}
                     ?disabled=${this.disabled}
 				?readonly=${this.readonly}
 				?required=${this.required}

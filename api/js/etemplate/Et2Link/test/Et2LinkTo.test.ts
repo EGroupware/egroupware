@@ -57,6 +57,9 @@ describe("Link to widget", () =>
 // value is a plain string | LinkInfo, unmodified by any getter/setter override - a plain string
 // round-trips exactly, unlike the LinkInfo-object shape its sibling widgets normalize to.
 inputBasicTests(before, "infolog:123", "input", {
+	// conformance: the controls are the buttons (add / paste / ...) and the list of links, none of which can be
+	// required or carry the widget's help text - it has none to show
+	skip: ["required-aria", "help-text-aria"],
 	checkEmptyDisplay: (element : Et2LinkTo) =>
 		assert.notOk(element.shadowRoot.querySelector("et2-link-entry")?.["value"]?.id, "Displaying something when there is no value")
 });

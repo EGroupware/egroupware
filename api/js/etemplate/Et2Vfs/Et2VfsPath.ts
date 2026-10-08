@@ -21,6 +21,7 @@ import {SlBreadcrumbItem} from "@shoelace-style/shoelace";
 import {HasSlotController} from "../Et2Widget/slot";
 import {until} from "lit/directives/until.js";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
+import "../Layout/Et2VisuallyHidden/Et2VisuallyHidden";
 
 /**
  * @summary Display an editable path from the VFS
@@ -395,7 +396,7 @@ export class Et2VfsPath extends Et2InputWidget(LitElement) implements et2_IDetac
 		}
 		return html`
             <sl-breadcrumb-item class="vfs-path__directory" data-value="${path.trim()}">
-                ${pathName}
+                ${pathName || html`<et2-visually-hidden>${this.egw().lang("Root directory")}</et2-visually-hidden>`}
                 <span slot="separator">/</span>
             </sl-breadcrumb-item>`;
 	}

@@ -9,7 +9,8 @@
  */
 
 
-import {html, PropertyValues, render} from "lit";
+import {html, nothing, PropertyValues, render} from "lit";
+import {classMap} from "lit/directives/class-map.js";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {SlColorPicker} from "@shoelace-style/shoelace";
 import shoelace from "../Styles/shoelace";
@@ -54,6 +55,49 @@ export class Et2Colorpicker extends Et2InputWidget(SlColorPicker)
 	}
 
 	/**
+	 * SlColorPicker has no visible label or help text of its own, so they are rendered around it, like the other widgets
+	 */
+	render()
+	{
+		const label = this._labelTemplate();
+		const help = this._helpTextTemplate();
+
+		return html`
+            <div
+                    part="form-control"
+                    class=${classMap({
+                        "form-control": true,
+                        "form-control--medium": true,
+                        "form-control--has-label": label !== nothing,
+                        "form-control--has-help-text": help !== nothing
+                    })}
+            >
+                ${label}
+                <div part="form-control-input" class="form-control-input">
+                    ${super.render()}
+                </div>
+                ${help}
+            </div>
+		`;
+	}
+
+	updated(changedProperties : PropertyValues)
+	{
+		super.updated(changedProperties);
+
+		if(changedProperties.has("disabled") && this._buttonNode)
+		{
+			// SlColorPicker marks a disabled trigger with a CSS class only, which assistive tech never sees
+			this._buttonNode.setAttribute("aria-disabled", this.disabled ? "true" : "false");
+			// The clear button is rendered by hand, outside SlColorPicker's own render, so it has to follow disabled itself
+			if(changedProperties.get("disabled") !== undefined)
+			{
+				render(this._clearButtonTemplate(), this._buttonNode);
+			}
+		}
+	}
+
+	/**
 	 * SlColorPicker's trigger button, which we render our clear button into.
 	 *
 	 * Null when inline, where SlColorPicker renders no trigger.
@@ -63,11 +107,20 @@ export class Et2Colorpicker extends Et2InputWidget(SlColorPicker)
 		return this.shadowRoot.querySelector("button[slot='trigger']");
 	}
 
+	/**
+	 * The trigger button is what the user operates, so it gets the aria-label / -description
+	 */
+	getInputNode() : HTMLInputElement
+	{
+		return this._buttonNode as unknown as HTMLInputElement;
+	}
+
 	_clearButtonTemplate()
 	{
 		return html`
             <button part="clear-button" class="input__clear" type="button" tabindex="-1"
                     aria-label="${this.egw().lang("Clear entry")}"
+                    ?disabled=${this.disabled}
                     @click=${this._handleClickClear}>
                 <slot name="clear-icon">
                     <sl-icon name="x-circle-fill" library="system"></sl-icon>

@@ -5,15 +5,25 @@ export default css`
 		display: flex;
 	}
 	.input-group__suffix{
-		width: 12px;
-		height: 12px;
+		width: var(--sl-spacing-small);
+		height: var(--sl-spacing-small);
 	}
 	.input-group__container {
 		align-items: center
 	}
 
+	/* Required and empty: the yellow etemplate2.css gives the other widgets through a part this one does not have */
+	:host([required]:not(.hasValue)) .color-dropdown__trigger {
+		background-color: var(--required-background-color, #ffffd0);
+	}
+
 	.color-dropdown__trigger--empty .input__clear {
 		display: none;
+	}
+
+	/* The same not-allowed cursor the trigger shows */
+	.input__clear:disabled {
+		cursor: not-allowed;
 	}
 	.input__clear {
 		display: inline-flex;

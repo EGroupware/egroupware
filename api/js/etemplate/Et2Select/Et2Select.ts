@@ -468,6 +468,37 @@ export class Et2Select extends SelectSearchMixin(FreeEntryMixin(Et2WidgetWithSel
 		{
 			this.select.handleDefaultSlotChange = this.handleDefaultSlotChange;
 		}
+		this._setAriaAttributes();
+	}
+
+	/**
+	 * Shoelace ignores aria-label on <sl-select>, and points its combobox at its own label part, which is empty
+	 * when we have no label.  So a select without a visible label has no accessible name at all.  Name the
+	 * combobox ourselves, from the same fallback (label, placeholder, statustext) the other input widgets use.
+	 */
+	protected _setAriaAttributes()
+	{
+		super._setAriaAttributes();
+		const select = this.select;
+		select?.updateComplete.then(() =>
+		{
+			const input = select.shadowRoot?.querySelector(".select__display-input");
+			if(!input)
+			{
+				return;
+			}
+			// The same goes for the help text: its part is not filled either
+			if(this.ariaDescription)
+			{
+				input.setAttribute("aria-description", this.ariaDescription);
+			}
+			if(this.label || !this.ariaLabel)
+			{
+				return;
+			}
+			input.removeAttribute("aria-labelledby");
+			input.setAttribute("aria-label", this.ariaLabel);
+		});
 	}
 
 	/**
@@ -481,6 +512,10 @@ export class Et2Select extends SelectSearchMixin(FreeEntryMixin(Et2WidgetWithSel
 	{
 		super.updated(changedProperties);
 
+		if(changedProperties.has("ariaLabel") || changedProperties.has("label"))
+		{
+			this._setAriaAttributes();
+		}
 		if(changedProperties.has("select_options") || changedProperties.has("_optionsActivated"))
 		{
 			this.bindOptionTooltips();
@@ -1340,7 +1375,6 @@ protected stopEdit(abort = false)
                     exportparts="form-control, form-control-label, form-control-input, form-control-help-text, prefix, tags, display-input, expand-icon, combobox, combobox:base, listbox, option, icon"
                     label=${this.label || nothing}
                     placeholder=${placeholder}
-                    aria-label=${this.ariaLabel || nothing}
                     aria-description=${this.ariaDescription || nothing}
                     ?multiple=${this.multiple}
                     ?disabled=${this.disabled || this.readonly}

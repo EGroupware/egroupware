@@ -699,7 +699,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 
 	protected handleLabelClick()
 	{
-		this._searchNode.focus();
+		this.focus();
 	}
 
 	handleTagRemove(event : SlRemoveEvent, value : string)
@@ -984,6 +984,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
                         part="form-control-label"
                         class="form-control__label"
                         aria-hidden=${hasLabel ? 'false' : 'true'}
+                        @click=${this.handleLabelClick}
                 >
                     <slot name="label">${this.label}</slot>
                 </label>

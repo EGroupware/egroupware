@@ -406,6 +406,7 @@ export class Et2LinkEntry extends Et2InputWidget(LitElement)
                     <slot name="prefix"></slot>
                     <et2-link-apps
                             part="link-entry__app-select"
+                            statustext=${this.egw().lang("Select an application")}
                             onlyApp=${this.onlyApp ? this.onlyApp : nothing}
                             ?appIcons=${this.appIcons}
                             applicationList=${this.applicationList ? this.applicationList : nothing}
@@ -416,6 +417,7 @@ export class Et2LinkEntry extends Et2InputWidget(LitElement)
                     ></et2-link-apps>
                     <et2-url
                             part="link-entry__url"
+                            .ariaDescription=${this.helpText}
                             ?hidden=${this.app !== LINK_URL_APPNAME}
                             ?required=${this.required}
                             ?disabled=${this.disabled}
@@ -425,6 +427,7 @@ export class Et2LinkEntry extends Et2InputWidget(LitElement)
                     ></et2-url>
                     <et2-link-search
                             part="link-entry__search"
+                            .ariaDescription=${this.helpText}
                             exportparts="combobox:control"
                             ?hidden=${this.app === LINK_URL_APPNAME}
                             ?placeholder=${this.placeholder}

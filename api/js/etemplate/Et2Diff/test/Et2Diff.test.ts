@@ -142,7 +142,7 @@ const DIFF_HEADER = "--- diff\n+++ diff\n";
 inputBasicTests(before, DIFF_HEADER + "@@ -1 +1 @@\n-old line\n+new line", "input", {
 	emptyValue: DIFF_HEADER,
 	// conformance: display-only, no interactive control
-	skip: ["required", "disabled-controls", "required-aria", "help-text-aria", "focus"],
+	skip: ["required", "disabled-controls", "required-aria", "help-text-aria", "focus", "label-click"],
 	checkEmptyDisplay: (element : Et2Diff) =>
 		assert.equal(element.textContent.trim(), "", "Displaying something when there is no value")
 });

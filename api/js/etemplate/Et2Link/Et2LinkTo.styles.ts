@@ -18,8 +18,4 @@ export default css`
 		width: 100%;
 		gap: 0.5rem;
 	}
-
-	::slotted(.et2_file) {
-		width: 30px;
-	}
 `;

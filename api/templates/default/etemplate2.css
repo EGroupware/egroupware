@@ -37,6 +37,8 @@
     --primary-background-color: #4177a2;
     --highlight-background-color: rgba(153, 204, 255, .4);
 	--required-background-color: #ffffd0;
+	/* Required is the yellow above, not an asterisk: blank the marker Shoelace puts after a required widget's label */
+	--sl-input-required-content: "";
 
     --label-color: #000000;
     /* For fixed width labels - use class 'et2-label-fixed'*/

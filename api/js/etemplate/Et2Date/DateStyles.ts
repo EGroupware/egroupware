@@ -4,7 +4,6 @@
 
 import {css} from "lit";
 import {colorsDefStyles} from "../Styles/colorsDefStyles";
-import {cssImage} from "../Et2Widget/Et2Widget";
 
 export const dateStyles = [
 	colorsDefStyles,
@@ -16,6 +15,13 @@ export const dateStyles = [
 			/* LitFlatpickr's own :host sets a white background and black text, follow the surroundings instead */
 			background-color: transparent;
 			color: inherit;
+			/* ... and a hand cursor over everything, the label included */
+			cursor: default;
+		}
+
+		/* LitFlatpickr makes everything slotted into it a hand as well, and the label text is slotted */
+		::slotted(*) {
+			cursor: default;
 		}
 
 		/* Size variants */
@@ -51,22 +57,5 @@ export const dateStyles = [
 
 		input[type="date"] {
 			padding: 0 var(--sl-input-spacing-medium);
-		}
-
-		input.flatpickr {
-			border: 1px solid;
-			border-color: var(--input-border-color);
-			color: var(--input-text-color);
-			padding-top: 4px;
-			padding-bottom: 4px;
-			flex: 1 1 auto;
-		}
-
-		input.flatpickr:hover {
-			background-image: ${cssImage("datepopup")};
-			background-repeat: no-repeat;
-			background-position-x: right;
-			background-position-y: 1px;
-			background-size: 18px;
 		}
 `];

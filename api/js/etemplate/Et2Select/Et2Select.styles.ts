@@ -272,7 +272,7 @@ export default css`
 		z-index: 1;
 		background: var(--sl-input-background-color);
 		padding: var(--sl-input-spacing-small);
-		padding-left: 2px;
+		padding-left: var(--sl-spacing-3x-small);
 
 		box-shadow: var(--sl-shadow-large);
 		min-width: fit-content;

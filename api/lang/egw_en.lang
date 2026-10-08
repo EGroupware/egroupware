@@ -381,6 +381,7 @@ database error!	common	en	Database error!
 date	common	en	Date
 date + time	common	en	Date + time
 date due	common	en	Due date
+date range	common	en	Date range
 date+time	common	en	Date+Time
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	en	Date time port.\nIf using port 13, set firewall rules appropriately before submitting this page.\n(Port: 13 / Host: 129.6.15.28).
 day	common	en	day
@@ -1208,6 +1209,7 @@ returns struct of users application access	common	en	Returns struct of users app
 reunion	common	en	REUNION
 right	common	en	Right
 romania	common	en	ROMANIA
+root directory	common	en	Root directory
 rotate left	common	en	Rotate left
 rotate right	common	en	Rotate right
 row...	common	en	Row ...
@@ -1510,6 +1512,7 @@ underline	common	en	Underline
 undo	common	en	Undo
 unicode	common	en	Unicode
 unique	common	en	Unique
+unit	common	en	Unit
 united arab emirates	common	en	UNITED ARAB EMIRATES
 united kingdom	common	en	UNITED KINGDOM
 united states	common	en	UNITED STATES

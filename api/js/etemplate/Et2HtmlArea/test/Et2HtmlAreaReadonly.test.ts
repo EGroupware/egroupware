@@ -69,7 +69,7 @@ inputBasicTests(before, "some html value", "input", {
 	expectedValue: null,
 	emptyValue: null,
 	// conformance: the readonly htmlarea renders display-only content, no interactive control
-	skip: ["required", "disabled-controls", "required-aria", "help-text-aria", "focus"],
+	skip: ["required", "disabled-controls", "required-aria", "help-text-aria", "focus", "label-click"],
 	checkEmptyDisplay: (element : Et2HtmlAreaReadonly) =>
 		assert.equal(element.shadowRoot.querySelector("[part='readonly-content']").textContent.trim(), "",
 			"Displaying something when there is no value")

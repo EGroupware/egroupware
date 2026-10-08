@@ -49,6 +49,7 @@ export type ConformanceCheck =
 	| "lifecycle"
 	| "namespace"
 	| "parts"
+	| "label-click"
 	| "styles";
 
 export interface WidgetConformanceOptions
@@ -135,25 +136,46 @@ function deepQueryAll(root : Element | ShadowRoot, selector : string) : HTMLElem
 
 const CONTROL_SELECTOR = "input:not([type=hidden]), textarea, select, button, [contenteditable=true], " +
 	"[role=textbox], [role=combobox], [role=checkbox], [role=switch], [role=slider], [role=spinbutton], " +
-	"[role=listbox], [role=radio], [role=button]";
+	"[role=radio], [role=button]";
 
-/** The interactive controls a widget renders, in light DOM or any shadow root */
-function controlsOf(element : Element) : HTMLElement[]
+/**
+ * The interactive controls a widget renders, in light DOM or any shadow root.
+ *
+ * Only what is showing: a control in a closed dropdown or behind an editor (a colour picker's swatches,
+ * TinyMCE's backing <textarea>) is not something the user can reach, so it says nothing about the widget.
+ *
+ * @param nested also count nested custom elements that take `disabled` themselves (et2-button-icon,
+ *    et2-select, sl-menu-item ...): a widget built out of other widgets has to disable those, and their
+ *    own inner <input>/<button> only show up once each of them has rendered
+ */
+function controlsOf(element : Element, nested = false) : HTMLElement[]
 {
-	const controls = deepQueryAll(element, CONTROL_SELECTOR);
+	let controls = deepQueryAll(element, CONTROL_SELECTOR);
 	if(element.shadowRoot)
 	{
 		controls.push(...deepQueryAll(element.shadowRoot, CONTROL_SELECTOR));
 	}
-	return controls;
+	if(nested)
+	{
+		const inner = [...deepQueryAll(element, "*"), ...(element.shadowRoot ? deepQueryAll(element.shadowRoot, "*") : [])];
+		// Dialogs and images take `disabled` too, but they are not something a user operates
+		controls.push(...inner.filter(el => el.localName.includes("-") && "disabled" in el && !/dialog|avatar|^(et2-image|sl-icon)$/.test(el.localName)));
+	}
+	return [...new Set(controls)].filter(isShown);
 }
 
-function requireControls(element : Element) : HTMLElement[]
+/** Is `el` showing?  A `display: contents` wrapper has no box, so checkVisibility() says no although its children are */
+function isShown(el : HTMLElement) : boolean
 {
-	const controls = controlsOf(element);
+	return getComputedStyle(el).display === "contents" || (<any>el).checkVisibility();
+}
+
+function requireControls(element : Element, nested = false) : HTMLElement[]
+{
+	const controls = controlsOf(element, nested);
 	if(!controls.length)
 	{
-		throw new Error("no interactive control found in the widget - if it has none, skip this check with a reason");
+		throw new Error("no interactive control found (" + describeContents(element) + ") - if it has none, skip this check with a reason");
 	}
 	return controls;
 }
@@ -183,6 +205,24 @@ function deepActiveElement() : Element | null
 	return active;
 }
 
+/** One line saying what a control is and the state a conformance check looked at, for failure messages */
+function describeControl(control : HTMLElement) : string
+{
+	const attrs = ["type", "role", "aria-disabled", "aria-required", "aria-describedby"]
+		.filter(name => control.hasAttribute(name))
+		.map(name => `${name}="${control.getAttribute(name)}"`);
+	const props = ["disabled", "required"].filter(name => name in control).map(name => `${name}=${(<any>control)[name]}`);
+	return `<${control.localName}${attrs.length ? " " + attrs.join(" ") : ""}> ${props.join(" ")}`.trim();
+}
+
+/** What a widget renders, for the "no control found" message: its custom-element descendants and shadow root */
+function describeContents(element : Element) : string
+{
+	const nested = deepQueryAll(element.shadowRoot ?? element, "*")
+		.filter(el => el.localName.includes("-")).map(el => el.localName);
+	return `shadowRoot=${!!element.shadowRoot}, ${element.children.length} light child(ren), nested custom elements: ${[...new Set(nested)].join(", ") || "none"}`;
+}
+
 function isDisabledish(control : HTMLElement, host : HTMLElement) : boolean
 {
 	return (<any>control).disabled === true ||
@@ -197,12 +237,47 @@ function isRequiredish(control : HTMLElement, host : HTMLElement) : boolean
 		host.getAttribute("aria-required") === "true";
 }
 
-/** Resolve an aria-describedby id relative to the control (same shadow root, else the document) */
+/**
+ * What assistive tech gets as the description of a control: the text of what aria-describedby points at
+ * (resolved in the control's own shadow root - an id cannot reach across one) and any aria-description, which is
+ * how a composite widget hands its help text to the controls inside the widgets it is built from
+ */
 function describedByText(control : HTMLElement) : string
 {
 	const ids = (control.getAttribute("aria-describedby") ?? "").split(/\s+/).filter(Boolean);
 	const root = <Document | ShadowRoot>control.getRootNode();
-	return ids.map(id => root.getElementById?.(id)?.textContent ?? "").join(" ").trim();
+	return [...ids.map(id => root.getElementById?.(id)?.textContent ?? ""), control.getAttribute("aria-description") ?? ""]
+		.join(" ").trim();
+}
+
+/**
+ * `property: value` of every declaration in the stylesheets that has a px length over 1px (hairline borders are fine)
+ */
+function pxDeclarations(sheets : any[]) : string[]
+{
+	const css = sheets.map(sheet => sheet?.cssText ?? "").join("\n")
+		.replace(/\/\*[\s\S]*?\*\//g, "")
+		// Breakpoints cannot use a variable, and a px default in var(--x, 4px) or --x: 4px is the variable
+		.replace(/@(media|container|supports)[^{]*\{/g, "{")
+		.replace(/var\([^()]*\)/g, "var()")
+		.replace(/--[\w-]+\s*:[^;}]*/g, "");
+	return [...css.matchAll(/([\w-]+)\s*:\s*([^;{}]*)/g)]
+		.filter(([, , value]) => [...value.matchAll(/(?<![\w.#-])(\d*\.?\d+)px\b/g)].some(px => parseFloat(px[1]) > 1))
+		.map(([, property, value]) => `${property}: ${value.trim().replace(/\s+/g, " ")}`);
+}
+
+/** The stylesheets of the Shoelace component classes (SlInput, SlColorPicker ...) a widget is built on */
+function shoelaceSheets(ctor : any) : any[]
+{
+	const sheets = [];
+	for(let c = ctor; c && c !== Function.prototype; c = Object.getPrototypeOf(c))
+	{
+		if(/^Sl[A-Z]/.test(c.name) && Object.prototype.hasOwnProperty.call(c, "styles"))
+		{
+			sheets.push(c.styles);
+		}
+	}
+	return sheets.flat(Infinity);
 }
 
 export function widgetConformanceTests(before : Function, options : WidgetConformanceOptions)
@@ -257,29 +332,36 @@ export function widgetConformanceTests(before : Function, options : WidgetConfor
 			{
 				conformanceIt("disables its inner controls and cannot take focus", async() =>
 				{
+					// A widget has to have something to disable.  Once disabled it may well have nothing left (a
+					// breadcrumb that stops being links), which is fine as long as nothing is left enabled.
+					requireControls(element, true);
+
 					element.disabled = true;
 					await settle(element);
 
-					for(const control of requireControls(element))
-					{
-						assert.isTrue(isDisabledish(control, element),
-							`<${control.localName}> is still enabled (no disabled / aria-disabled) while the widget is disabled`);
-					}
+					const controls = controlsOf(element, true);
+					const enabled = controls.filter(control => !isDisabledish(control, element));
+					assert.isEmpty(enabled, `${enabled.length} of ${controls.length} control(s) still enabled while the widget is disabled: ` +
+						enabled.map(describeControl).join("; "));
+
 					element.focus();
 					assert.isFalse(composedContains(element, deepActiveElement()), "A disabled widget took focus");
 				});
 				conformanceIt("enables its inner controls again", async() =>
 				{
+					// Some controls are disabled for their own reasons (Et2Url's call button with nothing to call),
+					// so count what is disabled while the widget is enabled and expect no more of them afterwards
+					const baseline = requireControls(element, true).filter(control => isDisabledish(control, element)).length;
+
 					element.disabled = true;
 					await settle(element);
 					element.disabled = false;
 					await settle(element);
 
-					for(const control of requireControls(element))
-					{
-						assert.isFalse(isDisabledish(control, element),
-							`<${control.localName}> stays disabled after the widget is re-enabled`);
-					}
+					const controls = requireControls(element, true);
+					const stuck = controls.filter(control => isDisabledish(control, element));
+					assert.isAtMost(stuck.length, baseline, `${stuck.length} of ${controls.length} control(s) disabled after the widget is ` +
+						`re-enabled, ${baseline} were before: ` + stuck.map(describeControl).join("; "));
 				});
 			});
 		}
@@ -291,8 +373,9 @@ export function widgetConformanceTests(before : Function, options : WidgetConfor
 				element.required = true;
 				await settle(element);
 
-				assert.isTrue(requireControls(element).some(control => isRequiredish(control, element)),
-					"No control has required / aria-required while the widget is required");
+				const controls = requireControls(element);
+				assert.isTrue(controls.some(control => isRequiredish(control, element)),
+					"No control has required / aria-required while the widget is required: " + controls.map(describeControl).join("; "));
 			});
 		}
 
@@ -303,9 +386,27 @@ export function widgetConformanceTests(before : Function, options : WidgetConfor
 				element.helpText = "Conformance help text";
 				await settle(element);
 
-				assert.isTrue(requireControls(element).some(
-					control => describedByText(control).includes("Conformance help text")),
-					"No control has an aria-describedby that resolves to the help text");
+				const controls = requireControls(element);
+				assert.isTrue(controls.some(control => describedByText(control).includes("Conformance help text")),
+					"No control has an aria-describedby that resolves to the help text: " + controls.map(describeControl).join("; "));
+			});
+		}
+
+		if(enabled("label-click"))
+		{
+			conformanceIt("Label: clicking it focuses the widget", async() =>
+			{
+				element.label = "Conformance label";
+				await settle(element);
+				const label = deepQueryPart(element.shadowRoot ?? element, "form-control-label");
+				assert.exists(label, "no part=\"form-control-label\" to click - if the widget has no label, skip this check with a reason");
+
+				document.activeElement?.blur?.();
+				label.click();
+				await settle(element);
+
+				assert.isTrue(composedContains(element, deepActiveElement()),
+					`clicking the label left focus on <${deepActiveElement()?.localName}>, not inside the widget`);
 			});
 		}
 
@@ -468,13 +569,11 @@ export function widgetConformanceTests(before : Function, options : WidgetConfor
 		{
 			conformanceIt("Styles: no hard-coded px lengths (use em / variables)", () =>
 			{
-				const sheets : any[] = (<any>element.constructor).elementStyles ?? [];
-				const css = sheets.map(sheet => sheet?.cssText ?? "").join("\n").replace(/\/\*[\s\S]*?\*\//g, "");
-				// 0 and 1px (hairline borders) are fine
-				const offenders = [...css.matchAll(/(?<![\w.#-])(\d*\.?\d+)px\b/g)]
-					.filter(match => parseFloat(match[1]) > 1)
-					.map(match => match[0]);
-				assert.isEmpty(offenders, `${offenders.length} px length(s): ${[...new Set(offenders)].slice(0, 8).join(", ")}`);
+				const ctor = <any>element.constructor;
+				// Whatever Shoelace's own component brings along is not ours to change
+				const theirs = new Set(pxDeclarations(shoelaceSheets(ctor)));
+				const offenders = pxDeclarations(ctor.elementStyles ?? []).filter(declaration => !theirs.has(declaration));
+				assert.isEmpty(offenders, `${offenders.length} declaration(s) with px: ${[...new Set(offenders)].slice(0, 6).join("; ")}`);
 			});
 		}
 	});

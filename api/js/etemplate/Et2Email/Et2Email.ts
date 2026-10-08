@@ -915,7 +915,8 @@ export class Et2Email
 
 	protected handleLabelClick()
 	{
-		this._search.focus();
+		// Like focus(), which also marks the widget as focused - not just the input
+		this.focus();
 	}
 
 	/**

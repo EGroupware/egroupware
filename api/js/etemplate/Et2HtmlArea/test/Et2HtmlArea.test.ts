@@ -549,7 +549,11 @@ inputBasicTests(async() =>
 	`);
 	sinon.stub(element, "egw").returns(window.egw as any);
 	return element;
-}, "Rich text value", "tinymce-editor");
+}, "Rich text value", "tinymce-editor", {
+	// conformance: the control is TinyMCE's iframe editor, which the TinyMceStub in these tests does not render, so
+	// there is nothing here to check - the stub also has no options.get(), which disabling goes through
+	skip: ["a11y", "disabled-controls", "required-aria", "help-text-aria", "focus", "label-click"]
+});
 /**
  * Contract under test: markdown is a plain-text feature, confined to mode="ascii".
  *

@@ -191,7 +191,9 @@ export const SelectSearchMixin = dedupeMixin(<T extends Constructor<LitElement &
 			this._searchTimeout = null;
 			this._unbindListeners();
 
-			while(this.lastChild) this.lastChild.remove();
+			// Drop the options, but only the elements: a parent that renders children into us (Et2LinkEntry's <option>)
+			// keeps its Lit marker comments there, and rendering again after a reconnect fails without them
+			Array.from<Element>(this.children).forEach(child => child.remove());
 			this._selected_remote = [];
 		}
 

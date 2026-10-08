@@ -497,7 +497,7 @@ function mapFilemanagerField(
 		delete attrs.needed;
 		// `values.noUpload` hides the upload button, `values.noVfsSelect` the "link existing file"
 		// one - both are read off the widget as classes, the way the legacy widget set them.
-		attrs.class = [attrs.class, "et2_file", values.noUpload ? "noUpload" : "", values.noVfsSelect ? "noVfsSelect" : ""]
+		attrs.class = [attrs.class, values.noUpload ? "noUpload" : "", values.noVfsSelect ? "noVfsSelect" : ""]
 			.filter(Boolean).join(" ");
 		// An upload lists its files between its own button and whatever comes next, which here is
 		// the button for linking a file already in the VFS - so a field holding a file put that

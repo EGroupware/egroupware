@@ -149,6 +149,8 @@ export class Et2Number extends Et2Textbox
 
 	willUpdate(changedProperties : PropertyValues)
 	{
+		super.willUpdate(changedProperties);
+
 		if(this._mask && Object.keys(this.maskOptions).filter(v => changedProperties.has(v)).length > 0)
 		{
 			this._mask.updateOptions(this.maskOptions);

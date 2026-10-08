@@ -62,6 +62,34 @@ describe("Switch widget", () =>
 		);
 	})
 
+	it("toggles when its label is clicked, like the label of a checkbox", async() =>
+	{
+		element.label = "Click me";
+		element.checked = false;
+		await element.updateComplete;
+
+		element.shadowRoot.querySelector<HTMLElement>("#label").click();
+		await element.updateComplete;
+		assert.isTrue(element.checked, "Clicking the label did not turn the switch on");
+
+		element.shadowRoot.querySelector<HTMLElement>("#label").click();
+		await element.updateComplete;
+		assert.isFalse(element.checked, "Clicking the label did not turn the switch off again");
+	});
+
+	it("does not toggle from its label when disabled", async() =>
+	{
+		element.label = "Click me";
+		element.checked = false;
+		element.disabled = true;
+		await element.updateComplete;
+
+		element.shadowRoot.querySelector<HTMLElement>("#label").click();
+		await element.updateComplete;
+
+		assert.isFalse(element.checked);
+	});
+
 	it("click happens", () =>
 	{
 		// Setup

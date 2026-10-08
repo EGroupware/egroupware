@@ -61,6 +61,7 @@ describe("Dropdown button widget", () =>
 // value is a plain string (this._value), not derived from rendered DOM state - a direct property,
 // simple round trip. No label/help-text rendering exists at all (it's a button).
 inputBasicTests(before, "one", "sl-menu-item", {
-	skip: ["label", "help-text"],
+	// conformance: a split button has nothing to require, and no help text to link a description to
+	skip: ["label", "help-text", "required-aria", "help-text-aria"],
 	checkEmptyDisplay: () => {}
 });

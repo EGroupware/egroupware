@@ -7,6 +7,9 @@ import * as sinon from "sinon";
 import {inputBasicTests} from "../../Et2InputWidget/test/InputBasicTests";
 // The internal <et2-date> from/to fields never upgrade without this
 import "../Et2Date";
+// What the widget renders: not registered unless imported, and an unregistered element has no controls
+import "../../Et2Button/Et2ButtonIcon";
+import "../../Et2Select/Et2Select";
 import "@shoelace-style/shoelace/dist/components/select/select.js";
 import "@shoelace-style/shoelace/dist/components/option/option.js";
 
@@ -19,6 +22,7 @@ window.egwIsMobile = () => false;
 window.egw = {
 	lang: i => i,
 	tooltipUnbind: () => {},
+	tooltipBind: () => {},
 	preference: (pref) => pref == "lang" ? Promise.resolve("en") : null,
 	image: i => "",
 	holidays: (y) => Promise.resolve({})

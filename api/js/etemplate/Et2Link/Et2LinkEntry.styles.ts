@@ -24,7 +24,7 @@ export default css`
 		flex: 1 1 0;
 		flex-wrap: nowrap;
 		gap: 0.5rem;
-		min-width: min(calc(200px + 6rem), 100%);
+		min-width: min(calc(12.5rem + 6rem), 100%);
 	}
 
 	et2-link-apps {
