@@ -77,7 +77,7 @@ const PROPERTY_NAME : Partial<Record<WidgetSlotName, string>> = {
  * see it. Searching every nested shadow root is the only way to find it from test code, and is
  * correct regardless of how many `exportparts` hops away the real element is.
  */
-function deepQueryPart(root : Element | ShadowRoot, part : string) : HTMLElement | null
+export function deepQueryPart(root : Element | ShadowRoot, part : string) : HTMLElement | null
 {
 	const direct = root.querySelector(`[part~="${part}"]`) as HTMLElement | null;
 	if(direct)

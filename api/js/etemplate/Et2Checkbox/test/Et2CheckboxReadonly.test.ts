@@ -85,7 +85,8 @@ describe("Checkbox readonly widget", () =>
 // Its label/check icon are plain content (part="label"/"control", not the form-control-label/
 // form-control-help-text convention), like Et2Checkbox itself.
 inputBasicTests(before, "1", "input", {
-	skip: ["label", "help-text"],
+	// conformance: the readonly checkbox is a display-only icon, no interactive control
+	skip: ["label", "help-text", "disabled-controls", "required-aria", "help-text-aria", "focus"],
 	checkEmptyDisplay: (element : Et2CheckboxReadonly) =>
 		assert.equal(element.shadowRoot.querySelector(".checkbox__control").textContent.trim(), "",
 			"Displaying something when there is no value")

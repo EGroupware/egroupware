@@ -33,6 +33,7 @@
 import {Et2InputWidgetInterface} from "../Et2InputWidget";
 import {assert, elementUpdated} from "@open-wc/testing";
 import {widgetSlotTests} from "../../Et2Widget/test/WidgetSlotTests";
+import {ConformanceCheck, widgetConformanceTests} from "../../Et2Widget/test/WidgetConformance";
 
 export interface InputBasicTestOptions
 {
@@ -62,7 +63,13 @@ export interface InputBasicTestOptions
 	 * real, widget-specific reason - leave a one-line comment at the call site saying why, don't
 	 * use this as a quick way to silence a failure without understanding it.
 	 */
-	skip? : Array<"readonly" | "disabled" | "hidden" | "required" | "roundtrip" | "label" | "help-text" | "label-fixed">;
+	skip? : Array<"readonly" | "disabled" | "hidden" | "required" | "roundtrip" | "label" | "help-text" | "label-fixed" | ConformanceCheck>;
+
+	/**
+	 * The @csspart names this widget documents beyond label / help-text, checked by the (warning
+	 * only) conformance tier - see Et2Widget/test/WidgetConformance.ts.
+	 */
+	parts? : string[];
 }
 
 // Widget used in each test
@@ -297,4 +304,13 @@ export function inputBasicTests(before : Function, test_value : any, value_selec
 	{
 		widgetSlotTests(before, slots, {skipLabelFixed: skip.includes("label-fixed")});
 	}
+
+	// Code-quality / UX standards (accessibility, focus, namespaces, ...).  Warnings only for now
+	// (JSTEST_CONFORMANCE=strict makes them fail) - see WidgetConformance.ts
+	widgetConformanceTests(before, {
+		testValue: test_value,
+		expectedValue: expectedValue,
+		skip: skip.filter(check => !["readonly", "disabled", "hidden", "required", "roundtrip", "label", "help-text", "label-fixed"].includes(check)) as ConformanceCheck[],
+		parts: options.parts
+	});
 }

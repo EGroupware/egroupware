@@ -14,6 +14,8 @@
  * - one file/glob: `npm run jstest -- api/js/etemplate/MyWidget/test/MyWidget.test.ts`
  * - one browser:   `JSTEST_BROWSERS=chromium npm run jstest`
  * - one shard:     `JSTEST_SHARD=1/2 npm run jstest`   (every 2nd test file; CI uses this)
+ * - conformance:   `JSTEST_CONFORMANCE=strict npm run jstest`  (widget conformance warnings, see
+ *                   api/js/etemplate/Et2Widget/test/WidgetConformance.ts, become failures)
  *
  * Note the `--group`: a bare app name (`npm run jstest -- api`) is NOT a group selector, it is a
  * path, and the runner would glob the whole api/ directory.  See the comment on cliFiles below.
@@ -176,6 +178,8 @@ export default {
 					// CI/test environments can expose POSIX locale tags that Intl rejects.
 					// Make sure the document has a lang for shoelace / library localization to find
 					document.documentElement.lang = 'en-US';
+					// "strict": widget conformance warnings (WidgetConformance.ts) become failures
+					window.JSTEST_CONFORMANCE = ${JSON.stringify(process.env.JSTEST_CONFORMANCE || 'warn')};
 					Object.defineProperty(window.navigator, 'language', {value: 'en-US', configurable: true});
 					Object.defineProperty(window.navigator, 'languages', {value: ['en-US'], configurable: true});
 					// egw.js redirects the page to ?cd=popup at module scope when it can't find a
