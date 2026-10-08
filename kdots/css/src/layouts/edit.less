@@ -11,6 +11,13 @@
 	grid-column: 1 / -1;
   }
 
+  /* Keep the buttons (Save / Apply / Cancel) reachable when the form scrolls, e.g. in a side panel */
+  [class*="footer"], [class*="Footer"] {
+	position: sticky;
+	bottom: 0;
+	background: var(--sl-panel-background-color);
+  }
+
   et2-appicon {
 	flex-grow: 0;
   }

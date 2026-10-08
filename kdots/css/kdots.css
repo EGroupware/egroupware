@@ -1021,6 +1021,7 @@ body egw-app,
 }
 [layout="edit"] {
   /* Specific rules for edit layout */
+  /* Keep the buttons (Save / Apply / Cancel) reachable when the form scrolls, e.g. in a side panel */
 }
 [layout="edit"] [class*="header"],
 [layout="edit"] [class*="footer"],
@@ -1028,6 +1029,12 @@ body egw-app,
 [layout="edit"] [class*="Footer"] {
   /* Header / footer are automatically full width */
   grid-column: 1 / -1;
+}
+[layout="edit"] [class*="footer"],
+[layout="edit"] [class*="Footer"] {
+  position: sticky;
+  bottom: 0;
+  background: var(--sl-panel-background-color);
 }
 [layout="edit"] et2-appicon {
   flex-grow: 0;
