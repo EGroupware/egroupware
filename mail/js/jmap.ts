@@ -4395,19 +4395,25 @@ export class MailJmap
 	 *
 	 * Blocking lists only our own origins and the allowlisted domains (https only), allowing adds
 	 * `https:` - plain http: is never allowed, it has to go through image_proxy.
-	 * Origins are listed explicitly, as Firefox does not resolve 'self' for a srcdoc meta-tag CSP.
+	 * Our own sources are listed explicitly (with their path), as Firefox does not resolve 'self'
+	 * for a srcdoc meta-tag CSP.
 	 *
 	 * @param showExternal true: allow all (https) external content, false: use the preferences
 	 */
 	private externalContentCsp(showExternal : boolean) : string
 	{
-		const sources = new Set<string>([window.location.origin]);
-		for (const url of [this.egw.webserverUrl, this.app?.image_proxy])
+		const sources = new Set<string>();
+		// EGroupware itself and the image proxy only by their path, not their whole origin:
+		// anything else served by the same webserver (eg. a tracker) is as external as any other host
+		for (const url of [(this.egw.webserverUrl || '').replace(/\/*$/, '/'), this.app?.image_proxy])
 		{
 			try
 			{
-				const origin = new URL(url, window.location.href).origin;
-				if (origin.startsWith('http')) sources.add(origin);
+				const parsed = new URL(url, window.location.href);
+				if (parsed.protocol.startsWith('http'))
+				{
+					sources.add(parsed.origin+parsed.pathname.replace(/[^/]*$/, ''));
+				}
 			}
 			catch (e) {}	// eg. image_proxy's 'https://' default, which is no url
 		}
