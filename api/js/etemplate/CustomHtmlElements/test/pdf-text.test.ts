@@ -1,5 +1,5 @@
 import {assert} from "@open-wc/testing";
-import {extractPdfText, joinPageTexts, pagesWithoutText, pdfItemsToText, renderPdfPages} from "../pdf-text";
+import {EINVOICE_FORMATS, embeddedXmlFiles, extractPdfText, findEInvoiceXml, joinPageTexts, pagesWithoutText, pdfItemsToText, renderPdfPages} from "../pdf-text";
 
 // Stub global egw - pdf-player.ts's ensureWorkerSrc() reads egw.webserverUrl to fetch() the real
 // pdf.worker.mjs, see pdf-player.test.ts for the details. Every load goes through a REAL Worker.
@@ -40,6 +40,27 @@ function pdfWithPages(pageCount : number) : Uint8Array
 	}
 	return new TextEncoder().encode(`%PDF-1.1\n1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj\n` +
 		`2 0 obj<</Type/Pages/Kids[${kids.join(" ")}]/Count ${pageCount}>>endobj\n${pages}trailer<</Root 1 0 R>>\n`);
+}
+
+/**
+ * Builds a minimal PDF with the given files embedded, like the hybrid PDFs of ZUGFeRD / Factur-X do
+ */
+function pdfWithAttachments(files : {[name : string] : string}) : Uint8Array
+{
+	let names = "";
+	let objects = "";
+	let n = 6;
+	for(const [name, content] of Object.entries(files))
+	{
+		names += `(${name}) ${n} 0 R `;
+		objects += `${n} 0 obj<</Type/Filespec/F(${name})/UF(${name})/EF<</F ${n + 1} 0 R>>>>endobj\n` +
+			`${n + 1} 0 obj<</Type/EmbeddedFile/Length ${content.length}>>stream\n${content}\nendstream endobj\n`;
+		n += 2;
+	}
+	return new TextEncoder().encode(`%PDF-1.7\n` +
+		`1 0 obj<</Type/Catalog/Pages 2 0 R/Names<</EmbeddedFiles<</Names[${names}]>>>>>>endobj\n` +
+		`2 0 obj<</Type/Pages/Kids[3 0 R]/Count 1>>endobj\n` +
+		`3 0 obj<</Type/Page/Parent 2 0 R/MediaBox[0 0 100 100]>>endobj\n` + objects + `trailer<</Root 1 0 R>>\n`);
 }
 
 /** a text item as pdf.js returns it */
@@ -225,5 +246,66 @@ describe("pagesWithoutText / joinPageTexts", () =>
 	it("prefers the OCR text of a page, even if the page has some text (eg. just a page number)", () =>
 	{
 		assert.equal(joinPageTexts(["Seite 1/2", "Seite 2/2"], {1: "Invoice", 2: "Total"}), "Invoice\n\nTotal");
+	});
+});
+
+describe("embeddedXmlFiles", () =>
+{
+	it("finds the XML of an e-invoice (ZUGFeRD, Factur-X, XRechnung)", async() =>
+	{
+		assert.deepEqual(await embeddedXmlFiles(pdfWithAttachments({"factur-x.xml": "<rsm:CrossIndustryInvoice/>"})), ["factur-x.xml"]);
+		assert.deepEqual(await embeddedXmlFiles(pdfWithAttachments({"ZUGFeRD-invoice.XML": "<x/>"})), ["ZUGFeRD-invoice.XML"]);
+	});
+
+	it("finds only the XML files, if there are other attachments too", async() =>
+	{
+		assert.deepEqual(await embeddedXmlFiles(pdfWithAttachments({"terms.txt": "hello", "xrechnung.xml": "<x/>"})), ["xrechnung.xml"]);
+	});
+
+	it("finds nothing in a PDF with other attachments or without any", async() =>
+	{
+		assert.deepEqual(await embeddedXmlFiles(pdfWithAttachments({"terms.txt": "hello"})), []);
+		assert.deepEqual(await embeddedXmlFiles(pdfWithPages(1)), []);
+	});
+
+	it("does NOT consume the data and returns an empty list for something which is no PDF", async() =>
+	{
+		const data = pdfWithAttachments({"factur-x.xml": "<x/>"});
+		const length = data.byteLength;
+		await embeddedXmlFiles(data);
+		assert.equal(data.byteLength, length);
+		assert.deepEqual(await embeddedXmlFiles(new TextEncoder().encode("no pdf")).catch(() => []), []);
+	});
+});
+
+describe("findEInvoiceXml", () =>
+{
+	it("finds the XML of ZUGFeRD 1.0 and 2.x, Factur-X and XRechnung and knows their format", async() =>
+	{
+		const expected = {
+			"ZUGFeRD-invoice.xml": "ZUGFeRD 1.0",
+			"zugferd-invoice.xml": "ZUGFeRD 2.0",
+			"factur-x.xml": "Factur-X / ZUGFeRD 2.1",
+			"xrechnung.xml": "XRechnung"
+		};
+		assert.deepEqual(EINVOICE_FORMATS, expected);
+		for(const name of Object.keys(expected))
+		{
+			assert.equal(await findEInvoiceXml(pdfWithAttachments({[name]: "<x/>"})), name);
+		}
+	});
+
+	it("finds the e-invoice among other attachments", async() =>
+	{
+		assert.equal(await findEInvoiceXml(pdfWithAttachments({"terms.txt": "hello", "other.xml": "<x/>", "factur-x.xml": "<x/>"})), "factur-x.xml");
+	});
+
+	it("is NOT fooled by any other XML or by a name in a different case, like the PHP reader", async() =>
+	{
+		assert.isNull(await findEInvoiceXml(pdfWithAttachments({"metadata.xml": "<x/>"})));
+		assert.isNull(await findEInvoiceXml(pdfWithAttachments({"FACTUR-X.XML": "<x/>"})));
+		assert.isNull(await findEInvoiceXml(pdfWithAttachments({"toString": "<x/>"})), "no prototype properties");
+		assert.isNull(await findEInvoiceXml(pdfWithAttachments({"terms.txt": "hello"})));
+		assert.isNull(await findEInvoiceXml(pdfWithPages(1)));
 	});
 });

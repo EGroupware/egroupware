@@ -158,6 +158,61 @@ export async function extractPdfText(data : Uint8Array|ArrayBuffer, maxPages = 2
 }
 
 /**
+ * Names of the XML files embedded in a PDF
+ *
+ * An e-invoice (ZUGFeRD, Factur-X, XRechnung in a PDF/A-3 hybrid) carries its data in an embedded XML (eg. "factur-x.xml",
+ * "zugferd-invoice.xml" or "xrechnung.xml"), which is the legally binding part, NOT the visible pages of the PDF.
+ * Such a PDF must be imported from its XML and not by reading or OCR-ing its pages.
+ *
+ * @param data content of the PDF, the array is NOT changed or consumed
+ * @return file names (not the content) of the embedded XML files, empty array if there are none or they can not be read
+ */
+export async function embeddedXmlFiles(data : Uint8Array|ArrayBuffer) : Promise<string[]>
+{
+	const pdf = await openPdf(data);
+	try
+	{
+		const attachments = await pdf.getAttachments();
+		return Object.values<any>(attachments || {})
+			.map(attachment => String(attachment?.filename ?? ""))
+			.filter(name => /\.xml$/i.test(name));
+	}
+	catch(e)
+	{
+		return [];
+	}
+	finally
+	{
+		await pdf.destroy();
+	}
+}
+
+/**
+ * File names of the XML of an e-invoice embedded in a PDF and the format they stand for
+ *
+ * The same names, matched exactly (case-sensitive) like horstoeko/zugferd (ZugferdDocumentPdfReaderExt::ATTACHMENT_FILENAMES)
+ * does in PHP, which the invoices import uses.
+ */
+export const EINVOICE_FORMATS : Record<string, string> = {
+	"ZUGFeRD-invoice.xml": "ZUGFeRD 1.0",
+	"zugferd-invoice.xml": "ZUGFeRD 2.0",
+	"factur-x.xml": "Factur-X / ZUGFeRD 2.1",
+	"xrechnung.xml": "XRechnung"
+};
+
+/**
+ * Find the XML of an e-invoice (ZUGFeRD, Factur-X, XRechnung) in a PDF
+ *
+ * @param data content of the PDF, the array is NOT changed or consumed
+ * @return file name of the XML (a key of EINVOICE_FORMATS) or null, if the PDF has none
+ * @throws if pdf.js can not read the PDF
+ */
+export async function findEInvoiceXml(data : Uint8Array|ArrayBuffer) : Promise<string|null>
+{
+	return (await embeddedXmlFiles(data)).find(name => Object.prototype.hasOwnProperty.call(EINVOICE_FORMATS, name)) ?? null;
+}
+
+/**
  * Render the pages of a PDF to canvases
  *
  * @param data content of the PDF, the array is NOT changed or consumed
