@@ -213,6 +213,23 @@ abstract class LoggedInTest extends TestCase
 		unset($GLOBALS['egw_setup']);
 		unset($GLOBALS['_SESSION']);
 		$_SESSION = array();
+
+		// doc/phpunit_bootstrap.php sets these $GLOBALS['egw_info']['server'] overrides once,
+		// before any test class runs - the unset() above wipes them too, silently breaking any
+		// bare TestCase-based suite that happens to run later in this same shared, long-running
+		// PHPUnit process and relies on one of them (eg. temp_dir - found via
+		// mail/tests/ResolveAttachmentBytesTest.php's "upload:<token>" fast path building a
+		// broken "<null>/jmap_upload_<token>" path and silently falling through to its classic
+		// fetch fallback instead, only when run after a LoggedInTest-based class). setUpBeforeClass()
+		// doesn't have the same problem - its own unset() is immediately followed by load_egw(),
+		// which repopulates $GLOBALS['egw_info'] from a real, DB-backed session.
+		$GLOBALS['egw_info']['server']['temp_dir'] = '/tmp';
+		$GLOBALS['egw_info']['server']['install_id'] = 'PHPUnit test';
+		if (($egw_url = getenv('EGW_URL') ?: ($_ENV['EGW_URL'] ?? null)))
+		{
+			$path = parse_url($egw_url, PHP_URL_PATH);
+			$GLOBALS['egw_info']['server']['webserver_url'] = $path ?: $egw_url;
+		}
 	}
 
 	/**
