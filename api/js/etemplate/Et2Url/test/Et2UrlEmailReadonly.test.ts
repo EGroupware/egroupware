@@ -105,5 +105,36 @@ describe("Et2UrlEmailReadonly", () =>
 
 			assert.isTrue(actionStub.calledOnceWith("test@example.com"));
 		});
+
+		/**
+		 * Ticket #126151, part 2: a real customer/user report after the first fix landed - the
+		 * compose popup was gone, but so was ordinary row selection/preview and the double-click
+		 * message-view popup. Root cause: Et2Widget's own willUpdate() adds the "et2_clickable"
+		 * CSS class whenever `onclick` is a function - true here even though the function itself
+		 * now no-ops - and Et2Datagrid._isInteractiveRowEventTarget() treats any click landing on
+		 * a ".et2_clickable" element as "belongs to the widget, not the row", skipping the row's
+		 * own click handling entirely. Fixed by clearing `onclick` itself (not just no-opping its
+		 * body) once disableClickAction is known true, via updated() - runs after a real custom
+		 * element's full attribute/property lifecycle, so it reaches the correct state reliably,
+		 * same reasoning as checking disableClickAction inside the handler body above.
+		 */
+		it("clears onclick (and so the et2_clickable class) once disableClickAction is true", async() =>
+		{
+			const element = await fixture<Et2UrlEmailReadonly>(html`
+				<et2-url-email_ro emailDisplay="email"></et2-url-email_ro>
+			`);
+			// Simulates transformAttributes() having installed the default handler - fixture()
+			// does not go through that XET-content-array pipeline itself.
+			element.onclick = () => {};
+			await element.updateComplete;
+			assert.isTrue(element.classList.contains("et2_clickable"),
+				"sanity check: a plain onclick does add the class, same as a real row widget");
+
+			element.disableClickAction = true;
+			await element.updateComplete;
+
+			assert.isNull(element.onclick);
+			assert.isFalse(element.classList.contains("et2_clickable"));
+		});
 	});
 });
