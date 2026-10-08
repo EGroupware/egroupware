@@ -574,11 +574,14 @@ function send_template()
 		}
 
 		// wrap et2-textarea and htmlarea in et2-ai, if not already done or noAiTools attribute is set truish
+		// nextmatch rows (ids bound to the row: ${row}[...], $row_cont[...]) are never wrapped, a template can still
+		// wrap them explicitly with <et2-ai>
 		$str = preg_replace_callback('#(<et2-ai[^>]*>\n?)?\s*<(et2-textarea|et2-htmlarea|htmlarea)\s(.*?)\s*/?>(</\2>)?#s', function ($matches)
 		{
 			$attrs = parseAttrs($matches[3]);
 			$noAiTools = $attrs['noAiTools'] ?? 'false';
-			if (!empty($matches[1]) || $noAiTools && $noAiTools !== 'false')
+			if (!empty($matches[1]) || $noAiTools && $noAiTools !== 'false' ||
+				preg_match('/^\$(\{row\}|row_cont\b|row\b)/', $attrs['id'] ?? ''))
 			{
 				return $matches[0];
 			}
