@@ -88,8 +88,10 @@ class AccountReadIdentitySelfHealsWebdavSignatureTest extends Api\LoggedInTest
 		$bytes = ob_get_clean();
 		imagedestroy($image);
 
+		$backup = Api\Vfs::$is_root;
 		Api\Vfs::$is_root = true;
 		file_put_contents(Api\Vfs::PREFIX.$path, $bytes);
+		Api\Vfs::$is_root = $backup;
 		$this->vfsPaths[] = $path;
 	}
 
