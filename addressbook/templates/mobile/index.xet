@@ -10,7 +10,6 @@
 	<et2-template  id="addressbook.index.rows" template="" lang="" group="0" version="1.9.005">
 		<grid width="100%">
 			<columns>
-				<column width="10"/>
 				<column width="70"/>
 				<column width="80%"/>
 			</columns>
@@ -18,13 +17,12 @@
 				<row class="th">
 					<et2-description></et2-description>
 					<et2-description></et2-description>
-					<et2-description></et2-description>
 				</row>
 				<row class="$row_cont[class]" valign="top">
-					<et2-description  class="cat_$row_cont[cat_id] mobile_cat_col"></et2-description>
-					<et2-vbox  class="addressbookCol3">
-						<et2-lavatar  src="$row_cont[photo]" lname="$row_cont[n_family]" fname="$row_cont[n_given]"></et2-lavatar>
-					</et2-vbox>
+					<et2-hbox>
+						<et2-description  class="cat_$row_cont[cat_id] mobile_cat_col"></et2-description>
+						<et2-lavatar  src="$row_cont[photo]" lname="$row_cont[n_family]" fname="$row_cont[n_given]" shape="rounded"></et2-lavatar>
+					</et2-hbox>
 					<et2-vbox  class="addressbookCol1">
 						<et2-customfields-list  id="$row" class="customfields" app="addressbook" disabled="true"/>
 						<et2-vbox  id="${row}[id]">
