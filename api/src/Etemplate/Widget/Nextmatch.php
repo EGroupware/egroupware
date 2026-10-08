@@ -1436,11 +1436,13 @@ class Nextmatch extends Etemplate\Widget
 	 * @param boolean $globals =true application global categories too
 	 * @param int $parent_id =0 only returns cats of a certain parent
 	 * @param int $max_cats_flat =self::DEFAULT_MAX_MENU_LENGTH use hierarchical display if more cats
+	 * @param boolean|null $multiple dialog shape, see the code; null = sub-menu
+	 * @param boolean $none =true sub-menu only: offer a leading "None" entry that sends the bare prefix to clear the category
 	 * @return array like self::egw_actions
 	 */
 	public static function category_action($app, $group=0, $caption='Change category',
 		$prefix='cat_', $globals=true, $parent_id=0, $max_cats_flat=self::DEFAULT_MAX_MENU_LENGTH,
-		$multiple=null)
+		$multiple=null, $none=true)
 	{
 		// $multiple opts in to the picker dialog and says which shape it takes. Leaving it null
 		// keeps the historic sub-menu (one entry per category), which for a long category list
@@ -1500,10 +1502,20 @@ class Nextmatch extends Etemplate\Widget
 				}
 			}
 		}
+		$enabled = (bool)$cat_actions;
+		if ($enabled && $none)
+		{
+			// an empty key makes the action id the bare prefix, which is how the apps' action()
+			// handlers (and the picker dialog's "Remove") clear the category
+			$cat_actions = array('' => array(
+				'caption' => 'None',
+				'icon' => 'delete',
+			)) + $cat_actions;
+		}
 		return array(
 			'caption' => $caption,
 			'children' => $cat_actions,
-			'enabled' => (bool)$cat_actions,
+			'enabled' => $enabled,
 			'group' => $group,
 			'prefix' => $prefix,
 		);
