@@ -88,8 +88,11 @@ class kdots_framework extends Api\Framework\Ajax
 			return [];
 		}
 		*/
-		// add our JS incl. cache-buster
-		self::includeJS('/kdots/js/app.min.js');
+		// add our JS incl. cache-buster, the login page does not need the framework JS (and the etemplate2 it pulls in)
+		if (basename($_SERVER['PHP_SELF']) !== 'login.php')
+		{
+			self::includeJS('/kdots/js/app.min.js');
+		}
 		$data = parent::_get_header($extra);
 
 		$data['theme'] = ($data['theme'] ?? '') . (
