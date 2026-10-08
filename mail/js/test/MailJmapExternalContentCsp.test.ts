@@ -59,7 +59,8 @@ describe("MailJmap external content CSP", () =>
 
 		for (const directive of ["img-src", "media-src", "font-src", "style-src"])
 		{
-			assert.include(policy[directive], window.location.origin, directive);
+			assert.include(policy[directive], window.location.origin+"/egroupware/", directive);
+			assert.notInclude(policy[directive], window.location.origin, directive);
 			assert.notInclude(policy[directive], "https:", directive);
 			assert.notInclude(policy[directive], "http:", directive);
 		}
@@ -73,7 +74,7 @@ describe("MailJmap external content CSP", () =>
 
 		assert.include(policy["img-src"], "https://example.com");
 		assert.notInclude(policy["img-src"], "http://example.com");
-		assert.isFalse(Object.values(policy).flat().some((source) => source.includes("/egroupware") || source.includes("evil")),
+		assert.isFalse(Object.values(policy).flat().some((source) => source.startsWith("https://http") || source.includes("evil")),
 			"a non-hostname allowlist entry must not end up in the policy");
 		assert.deepEqual(policy["script-src"], ["'none'"]);
 	});
@@ -86,11 +87,25 @@ describe("MailJmap external content CSP", () =>
 		assert.notInclude(policy["img-src"], "http:");
 	});
 
-	it("allows the image proxy's origin, so http: images can be shown through it", () =>
+	it("allows the image proxy's path, so http: images can be shown through it", () =>
 	{
 		const policy = csp(wrap(new MailJmap(createFakeApp({imageProxy: "https://proxy.example.org/abc/"})), "<p>hi</p>"));
 
-		assert.include(policy["img-src"], "https://proxy.example.org");
+		assert.include(policy["img-src"], "https://proxy.example.org/abc/");
+	});
+
+	/**
+	 * Found live 2026-10-08 with a tracker at https://<egroupware host>/trk/pixel.php: allowing our
+	 * whole origin let every CSS/srcset/poster variant through - only EGroupware's path is ours.
+	 */
+	it("allows only EGroupware's path of its own origin, so the same host's other paths stay blocked", () =>
+	{
+		const html = (new MailJmap(createFakeApp({allowIMGs: 2})) as any).wrapDocument(
+			`<div style="background:url('${window.location.origin}/trk/pixel.php?v=inline-style')"></div>`);
+		const doc = new DOMParser().parseFromString(html, "text/html");
+
+		assert.deepEqual(csp(doc)["img-src"], [window.location.origin+"/egroupware/", "blob:", "data:"]);
+		assert.equal(doc.body.getAttribute("data-blocked-external"), `${window.location.origin}/trk/pixel.php?v=inline-style`);
 	});
 
 	it("marks the body with a blocked inline-style background url", () =>
