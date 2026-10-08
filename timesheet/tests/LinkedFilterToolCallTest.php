@@ -26,6 +26,18 @@ require_once realpath(__DIR__.'/../../api/tests/AppTest.php');
  */
 class LinkedFilterToolCallTest extends \EGroupware\Api\AppTest
 {
+	/**
+	 * Api\CalDAV::__construct() (instantiated internally by toolCall()) calls
+	 * set_exception_handler() for every request - fine for a real HTTP request (a fresh PHP
+	 * process each time), but toolCall() runs in-process here, so each test method below leaves
+	 * it installed for the rest of the PHPUnit run, which PHPUnit's own risky-test detector flags.
+	 */
+	protected function tearDown() : void
+	{
+		restore_exception_handler();
+		parent::tearDown();
+	}
+
 	public function testEmptyLinkedFilterIsIgnoredNotRejected()
 	{
 		$result = Api\CalDAV\OpenAPI::toolCall('listTimesheets', ['filters[linked]' => '']);
