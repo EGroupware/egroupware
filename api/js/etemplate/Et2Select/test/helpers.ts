@@ -98,7 +98,7 @@ export async function activateOptions(select : AnySelect) : Promise<void>
 /**
  * The search input, however it is currently implemented.
  */
-function searchNode(select : AnySelect) : any
+export function searchNode(select : AnySelect) : any
 {
 	return (<any>select)._searchInputNode;
 }

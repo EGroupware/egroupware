@@ -1248,6 +1248,7 @@ search accounts	common	en	Search accounts
 search for '%1'	common	en	Search for '%1'
 search letter	common	en	Search letter
 search or select accounts	common	en	Search or select accounts
+search or type to add...	common	en	Search or type to add ...
 search...	common	en	Search ...
 searchreplace	common	en	Searchreplace
 second	common	en	second
@@ -1294,6 +1295,7 @@ select multiple accounts	common	en	Select multiple accounts
 select number	common	en	Select number
 select one	common	en	Select one
 select one ...	common	en	Select ...
+select or type to add...	common	en	Select or type to add ...
 select percentage	common	en	Select percentage
 select priority	common	en	Select priority
 select some options	common	en	Select some options
@@ -1497,6 +1499,7 @@ tuvalu	common	en	TUVALU
 type	common	en	Type
 type of the column	common	en	Type of column
 type of the field (select label if field should be empty)	common	en	Type of field. Select label if field should be empty.
+type to add...	common	en	Type to add ...
 uganda	common	en	UGANDA
 ukraine	common	en	UKRAINE
 un-delete	common	en	Un-Delete

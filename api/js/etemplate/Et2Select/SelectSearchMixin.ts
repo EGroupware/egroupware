@@ -347,7 +347,7 @@ export const SelectSearchMixin = dedupeMixin(<T extends Constructor<LitElement &
                              clearable
                              autocomplete="off"
                              tabindex="-1"
-                             placeholder="${this.egw().lang("search")}"
+                             placeholder="${this._searchPlaceholder}"
                              style="flex: 1 1 auto;"
                              @mousedown=${this._handleSearchMouseDown}
                              @keydown=${this._handleSearchKeyDown}
@@ -430,6 +430,25 @@ export const SelectSearchMixin = dedupeMixin(<T extends Constructor<LitElement &
 		protected get _needsSearchControls() : boolean
 		{
 			return !this.readonly && (this.searchEnabled || this.allowFreeEntries);
+		}
+
+		/**
+		 * Hint shown in the empty search box.  With free entries the box also accepts new values,
+		 * so say so, since nothing else tells the user they can type their own.
+		 */
+		protected get _searchPlaceholder() : string
+		{
+			if(!this.allowFreeEntries)
+			{
+				return this.egw().lang("search");
+			}
+			if(this.searchEnabled)
+			{
+				return this.egw().lang("search or type to add...");
+			}
+			// emptyLabel is rendered as a selectable option, but is not part of select_options
+			const hasChoices = this.select_options.length > 0 || !!this.emptyLabel;
+			return this.egw().lang(hasChoices ? "select or type to add..." : "type to add...");
 		}
 
 		public get searchEnabled() : boolean

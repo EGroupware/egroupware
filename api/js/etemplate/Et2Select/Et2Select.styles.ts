@@ -22,6 +22,13 @@ export default css`
 	}
 
 
+	/* The label wraps the input below it when the two don't fit.  An open search box is wider than the
+	   display value it replaces, so without this the input drops below the label as soon as it opens. */
+	:host([search]) sl-select[open]::part(form-control-input), :host([allowfreeentries]) sl-select[open]::part(form-control-input) {
+		flex: 1 1 8em;
+		min-width: 0;
+	}
+
 	  :host([search]) sl-select[open]::part(prefix), :host([allowfreeentries]) sl-select[open]::part(prefix) {
 		flex: 2 1 auto;
 		flex-wrap: wrap;

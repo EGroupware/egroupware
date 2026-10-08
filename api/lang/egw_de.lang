@@ -1250,6 +1250,7 @@ search accounts	common	de	Benutzer suchen
 search for '%1'	common	de	Suche nach '%1'
 search letter	common	de	Suche nach Buchstaben
 search or select accounts	common	de	Suchen und auswählen von Benutzern
+search or type to add...	common	de	Suchen oder zum Hinzufügen eingeben ...
 search...	common	de	Suchen ...
 searchreplace	common	de	Suchen und ersetzen
 second	common	de	Sekunden
@@ -1296,6 +1297,7 @@ select multiple accounts	common	de	Mehrere Benutzer auswählen
 select number	common	de	Zahl auswählen
 select one	common	de	Eine(n) auswählen
 select one ...	common	de	Eine auswählen ...
+select or type to add...	common	de	Auswählen oder zum Hinzufügen eingeben ...
 select percentage	common	de	Prozente auswählen
 select priority	common	de	Priorität auswählen
 select some options	common	de	Optionen auswählen
@@ -1499,6 +1501,7 @@ tuvalu	common	de	TUVALU
 type	common	de	Typ
 type of the column	common	de	Typ der Spalte
 type of the field (select label if field should be empty)	common	de	Type des Feldes (Beschriftung auswählen wenn Feld leer sein soll)
+type to add...	common	de	Zum Hinzufügen eingeben ...
 uganda	common	de	UGANDA
 ukraine	common	de	UKRAINE
 un-delete	common	de	Gelöschte Einträge wiederherstellen
