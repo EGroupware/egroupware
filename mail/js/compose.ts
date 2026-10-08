@@ -2772,8 +2772,23 @@ export class MailCompose
 			{
 				marker.remove();
 			}
+			// ticket #126191 (Ingo, a FRESH/non-reply compose): the tag check alone isn't enough
+			// to recognize "the blank placeholder line, still untouched" - once the user types
+			// several lines of real text starting in it, it's indistinguishable from genuine body
+			// content by tag name only, and extracting just that FIRST paragraph anyway strands it
+			// in front of the newly-spliced-in signature while every OTHER typed paragraph (there
+			// being no structural reason to treat any one of them specially) ends up behind the new
+			// signature instead of alongside the first one.
+			//
+			// A reply/forward is different: its leading paragraph is a deliberately SEPARATE region
+			// by design (the user's own intro line, directly above the quoted original message) -
+			// not just an arbitrary first paragraph of an otherwise undifferentiated body - so it's
+			// always extracted/kept pinned above the signature regardless of content, same as
+			// before (see the 2026-09-22/Ingo-Henze fix above this block, which this must not
+			// regress - MailComposeBootstrapRace.test.ts's own "keeps the leading block ABOVE...").
 			const first = doc.body.firstElementChild;
-			if (first && first.tagName === startTag)
+			const stillBlank = !!first && first.textContent.trim() === '' && !first.querySelector('img');
+			if (first && first.tagName === startTag && (this.isReplyCompose || stillBlank))
 			{
 				leadingBlockHtml = first.outerHTML;
 				first.remove();
