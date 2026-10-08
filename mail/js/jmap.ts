@@ -4313,6 +4313,11 @@ export class MailJmap
 	 * http: url, exactly mirroring HtmLawed's own condition: a plain http: image is deferred
 	 * regardless of that preference, so it only ever reaches the browser already rewritten
 	 * through image_proxy, never as a raw http: request.
+	 *
+	 * The same-origin exemption below deliberately does NOT cover `/webdav.php` (ticket
+	 * #125961): such a URL only works for whoever has this exact account's own session, so it is
+	 * no safer than any other external image reference and must go through the same
+	 * block/allow-domain treatment, not be trusted merely for sharing this webserver's origin.
 	 */
 	private deferExternalImages(html : string) : string
 	{
@@ -4324,8 +4329,10 @@ export class MailJmap
 		doc.querySelectorAll('img[src]').forEach((img : HTMLImageElement) =>
 		{
 			const src = img.getAttribute('src');
+			const isOwnWebdav = webserverUrl && src?.startsWith(webserverUrl) &&
+				src.slice(webserverUrl.length).startsWith('/webdav.php');
 			if (!src || src.startsWith('cid:') || src.startsWith('data:') ||
-				(webserverUrl && src.startsWith(webserverUrl)))
+				(webserverUrl && src.startsWith(webserverUrl) && !isOwnWebdav))
 			{
 				return;
 			}
@@ -6926,85 +6933,48 @@ export class MailJmap
 	 * Mail::processURL2InlineImages() produces for its own equivalent problem (there, resolving
 	 * normal http(s) image URLs pasted/left in the body).
 	 *
-	 * Three distinct source shapes, one per real insertion path a user can hit during compose
-	 * (found live 2026-09-14, ralf: "when you insert an image into the mail - from Vfs / via
-	 * upload (ends also in vfs) / via Dnd - It need to be converted to an attachment with a cid...
-	 * We seem to have missed that" - this method only ever handled the FIRST of the three below):
+	 * Two distinct source shapes, one per real insertion path a user can hit during compose:
 	 * - `blob:` - resolveInlineCidImages() (fetchForReply()'s quoted body) already turned a
 	 *   reply/forward's own pre-existing `cid:` images into these for display. Only ever resolves
 	 *   a URL this same instance's inlineImageBlobs map actually has the Blob for (see that
 	 *   field's own docblock for why - CSP blocks fetch()-ing a blob: URL back) - a blob: URL from
 	 *   anywhere else (there shouldn't be one) is left untouched rather than dropped/attempted.
-	 * - `.../webdav.php/...` - Et2HtmlArea's own `imageUpload="link_to"` (compose.xet) routes
-	 *   TinyMCE's native drag-and-drop/paste/upload image handling AND the explicit "insert from
-	 *   VFS" picker through the SAME server endpoint
-	 *   (EGroupware\Api\Etemplate\Widget\Vfs::ajax_htmlarea_upload()), which stores the file in
-	 *   VFS and hands TinyMCE back a `Api\Vfs::download_url()` (a `/webdav.php/<path>` URL) to use
-	 *   as `src` - fetched here the same way uploadVfsAttachment() fetches a known VFS path, just
-	 *   working from the already-resolved URL directly instead of reconstructing it.
-	 * - `data:image/...` - a base64-embedded image (that same server endpoint's own fallback for
-	 *   a non-eTemplate2 caller, or any other source that ends up leaving one in the body) -
-	 *   decoded directly into a Blob, no network fetch needed.
+	 * - `data:image/...` - a freshly pasted/dropped/"inserted from VFS" image (ticket #125961:
+	 *   Mail\Compose::ajax_uploadInlineImage()/ajax_resizeVfsImageForCompose() answer with a
+	 *   data: URI directly, Et2HtmlArea's imagesUploadHandler/pickedFileUrlResolver insert it as-
+	 *   is - no VFS/webdav.php round-trip happens at all any more) - decoded directly into a
+	 *   Blob, no network fetch needed.
 	 *
-	 * All three are cached by their own url string in the SAME inlineImageUploads map - deliberately
-	 * NOT re-uploaded/re-fetched on every later send/autosave of this same compose session (the
-	 * live body keeps referencing the same original src unchanged; only a COPY built for the
-	 * outgoing payload gets rewritten to cid: here).
+	 * A `.../webdav.php/...` src is deliberately NOT handled here (removed, ticket #125961) - it
+	 * only ever works for whoever has this exact account's own session, which is exactly why an
+	 * auto-embedded one used to break the moment the message was forwarded. Compose no longer
+	 * produces one, so one reaching this far is leftover/foreign content, left as a plain,
+	 * unconverted src - same as any other external image reference (subject to mail's own "block
+	 * external images" display-time privacy guard, not auto-fetched here).
+	 *
+	 * Both remaining shapes are cached by their own url string in the SAME inlineImageUploads map -
+	 * deliberately NOT re-uploaded/re-fetched on every later send/autosave of this same compose
+	 * session (the live body keeps referencing the same original src unchanged; only a COPY built
+	 * for the outgoing payload gets rewritten to cid: here).
 	 */
-	/**
-	 * Find the [start,end) offsets of every quoted-content '<blockquote>...</blockquote>' region
-	 * in an html mail body - nesting-aware, so a quote-of-a-quote counts as ONE range, and an
-	 * interleaved/bottom-posted reply's several SIBLING blockquotes (answering inside the
-	 * citation, eg. "> How are you?\nI'm fine\n> rest of citation") each get their OWN range, never
-	 * lumped together with the genuinely new reply text in between them.
-	 */
-	private findQuoteRanges(html : string) : Array<[number, number]>
-	{
-		const ranges : Array<[number, number]> = [];
-		const tagRegex = /<blockquote\b[^>]*>|<\/blockquote>/gi;
-		let depth = 0, start = -1, match : RegExpExecArray | null;
-		while ((match = tagRegex.exec(html)) !== null)
-		{
-			if (!match[0].toLowerCase().startsWith('</blockquote'))
-			{
-				if (depth++ === 0) start = match.index;
-			}
-			else if (depth > 0 && --depth === 0)
-			{
-				ranges.push([start, match.index + match[0].length]);
-			}
-		}
-		return ranges;
-	}
-
 	private async resolveOutgoingInlineImages(token : JmapToken, client : JamClient, html : string, isHtml : boolean) : Promise<{body : string, inlineImages : JmapInlineImage[]}>
 	{
-		// a plain-text body is never HTML, however much a `src="...webdav.php..."`-shaped substring
-		// it happens to literally contain looks like one (eg. copy-pasted HTML source, or an
-		// attacker deliberately including that exact text in a plain-text message they know will
-		// get quoted verbatim into a plain-text reply, '>' prefixed but otherwise untouched, see
-		// quoteOriginalMessage()'s plain-plain branch) - this function has no business running on
-		// it at all, same as classic ComposeMessageBuilder::createMessage()'s switch($mimeType)
+		// a plain-text body is never HTML, however much a `src="...data:image..."`-shaped
+		// substring it happens to literally contain looks like one (eg. copy-pasted HTML source,
+		// or an attacker deliberately including that exact text in a plain-text message they know
+		// will get quoted verbatim into a plain-text reply, '>' prefixed but otherwise untouched,
+		// see quoteOriginalMessage()'s plain-plain branch) - this function has no business running
+		// on it at all, same as classic ComposeMessageBuilder::createMessage()'s switch($mimeType)
 		// only ever calling Mail::processURL2InlineImages() from its 'html' case.
 		if (!isHtml)
 		{
 			return {body: html, inlineImages: []};
 		}
-		const srcRegex = /\bsrc\s*=\s*(["'])(blob:[^"']+|data:image\/[^"']+|[^"']*\/webdav\.php\/[^"']+)\1/gi;
-		// a '/webdav.php' src found inside quoted/cited content (quoteOriginalMessage()'s own
-		// <blockquote type="cite"> wrapper) must NEVER be auto-embedded here - it can be
-		// attacker-supplied content from the message being replied to/forwarded, not something the
-		// CURRENT compose session itself inserted (a VFS-picked image, upload, or the identity
-		// signature). blob:/data: urls are exempt - those are the ORIGINAL message's own
-		// already-resolved inline images, not a fresh fetch of an arbitrary path.
-		const quoteRanges = this.findQuoteRanges(html);
-		const isWebdavUrl = (url : string) => !url.startsWith('blob:') && !url.startsWith('data:');
-		const isQuoted = (offset : number) => quoteRanges.some(([s, e]) => offset >= s && offset < e);
+		const srcRegex = /\bsrc\s*=\s*(["'])(blob:[^"']+|data:image\/[^"']+)\1/gi;
 
 		const urls = new Set<string>();
 		for (const match of html.matchAll(srcRegex))
 		{
-			if (isWebdavUrl(match[2]) && isQuoted(match.index ?? -1)) continue;
 			urls.add(match[2]);
 		}
 		if (!urls.size)
@@ -7030,29 +7000,18 @@ export class MailJmap
 			try
 			{
 				let blob : Blob;
-				let name : string | null = null;
 				if (url.startsWith('blob:'))
 				{
 					blob = this.inlineImageBlobs.get(url);
 					if (!blob) return;
 				}
-				else if (url.startsWith('data:'))
+				else
 				{
 					const response = await fetch(url);
 					blob = await response.blob();
 				}
-				else
-				{
-					// a webdav.php URL - same fetch uploadVfsAttachment() uses for a known VFS
-					// path, just working from the already-resolved URL directly
-					const response = await fetch(url, {credentials: 'same-origin'});
-					if (!response.ok) return;
-					blob = await response.blob();
-					const lastSegment = url.split(/[?#]/)[0].split('/').pop();
-					if (lastSegment) name = decodeURIComponent(lastSegment);
-				}
 				const type = blob.type || 'application/octet-stream';
-				name ||= `inline-image-${++index}${extensionByType[type] ?? ''}`;
+				const name = `inline-image-${++index}${extensionByType[type] ?? ''}`;
 				const response = await client.uploadBlob(token.accountId, blob);
 				const cid = `${crypto.randomUUID()}@${window.location.hostname}`;
 				const inlineImage : JmapInlineImage = {blobId: response.blobId, type, name, size: response.size ?? blob.size, cid};
@@ -7069,9 +7028,8 @@ export class MailJmap
 		{
 			return {body: html, inlineImages: []};
 		}
-		const body = html.replace(srcRegex, (full, quote, url, offset) =>
+		const body = html.replace(srcRegex, (full, quote, url) =>
 		{
-			if (isWebdavUrl(url) && isQuoted(offset)) return full;
 			const cid = cidByUrl.get(url);
 			return cid ? `src=${quote}cid:${cid}${quote}` : full;
 		});

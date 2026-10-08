@@ -14,8 +14,11 @@ use EGroupware\Api;
 use EGroupware\Api\Mail;
 
 /**
- * Both methods under test are protected static - called via Reflection, same pattern
- * AccountJmapUrlTest.php already uses for Mail\Account's own pure helpers.
+ * embedSignatureImages() is protected static - called via Reflection, same pattern
+ * AccountJmapUrlTest.php already uses for Mail\Account's own pure helpers. Its own resize step
+ * now delegates to Api\MimeMagic::resizeImage() (relocated there, ticket #125961, so mail's
+ * inline-body-image compose endpoints can reuse the exact same recipe) - covered directly by
+ * MimeMagicResizeImageTest, not re-tested here.
  *
  * Still extends Api\LoggedInTest rather than a bare TestCase, even though neither method touches
  * the DB directly - merely autoloading Mail\Account from a bare TestCase can poison its static
@@ -61,13 +64,6 @@ class AccountEmbedSignatureImagesTest extends Api\LoggedInTest
 		return $method->invoke(null, $html);
 	}
 
-	private function resizeSignatureImage(string $bytes, string $mime, int $max_w=320) : array
-	{
-		$method = new \ReflectionMethod(Mail\Account::class, 'resizeSignatureImage');
-		$method->setAccessible(true);
-		return $method->invoke(null, $bytes, $mime, $max_w);
-	}
-
 	// --- embedSignatureImages() ---
 
 	public function testNullPassesThrough()
@@ -87,8 +83,7 @@ class AccountEmbedSignatureImagesTest extends Api\LoggedInTest
 	}
 
 	/**
-	 * A foreign host's own "/webdav.php" must NEVER be read from our own VFS - same reasoning
-	 * Mail::processURL2InlineImages() already documents for the identical check.
+	 * A foreign host's own "/webdav.php" must NEVER be read from our own VFS.
 	 */
 	public function testForeignHostWebdavUrlIsLeftUnchanged()
 	{
@@ -117,82 +112,5 @@ class AccountEmbedSignatureImagesTest extends Api\LoggedInTest
 	{
 		$html = '<p>Best regards</p><img src="https://attacker.example/webdav.php/x.png"><p>More text</p>';
 		$this->assertSame($html, $this->embedSignatureImages($html));
-	}
-
-	// --- resizeSignatureImage() ---
-
-	private function makePng(int $width, int $height, bool $withAlpha) : string
-	{
-		$image = imagecreatetruecolor($width, $height);
-		if ($withAlpha)
-		{
-			imagealphablending($image, false);
-			imagesavealpha($image, true);
-			// half-transparent red, index 64 of 127 (0 = opaque, 127 = fully transparent)
-			$color = imagecolorallocatealpha($image, 255, 0, 0, 64);
-		}
-		else
-		{
-			$color = imagecolorallocate($image, 255, 0, 0);
-		}
-		imagefill($image, 0, 0, $color);
-		ob_start();
-		imagepng($image);
-		$bytes = ob_get_clean();
-		imagedestroy($image);
-		return $bytes;
-	}
-
-	public function testAlreadyNarrowImageIsReturnedUnchanged()
-	{
-		$bytes = $this->makePng(100, 50, false);
-		[$result, $mime] = $this->resizeSignatureImage($bytes, 'image/png');
-		$this->assertSame($bytes, $result, 'width below the threshold must not be touched at all');
-		$this->assertSame('image/png', $mime);
-	}
-
-	public function testWidePngIsResizedAndKeepsPngMimeAndAlpha()
-	{
-		$bytes = $this->makePng(640, 320, true);
-		[$result, $mime] = $this->resizeSignatureImage($bytes, 'image/png', 320);
-
-		$this->assertSame('image/png', $mime, 'a PNG source must stay PNG, not be forced to JPEG');
-		$this->assertNotSame($bytes, $result);
-
-		$resized = imagecreatefromstring($result);
-		$this->assertNotFalse($resized, 'resized output must still decode as a real image');
-		$this->assertSame(320, imagesx($resized));
-		$this->assertSame(160, imagesy($resized), 'aspect ratio must be preserved');
-
-		// alpha channel must survive - a pixel from the filled (half-transparent) area
-		$rgba = imagecolorat($resized, 10, 10);
-		$alpha = ($rgba >> 24) & 0x7F;
-		$this->assertGreaterThan(0, $alpha, 'resizing a transparent PNG must not flatten it to fully opaque');
-		imagedestroy($resized);
-	}
-
-	/**
-	 * The png/not-png branch is driven by the $mime PARAMETER, not re-sniffed from the bytes -
-	 * deliberately exercised with real PNG bytes here to isolate just that branching decision
-	 * (a real non-PNG fixture would only re-test GD's own format handling, not this method's logic).
-	 */
-	public function testNonPngSourceIsConvertedToJpeg()
-	{
-		$bytes = $this->makePng(640, 320, false);
-		[$result, $mime] = $this->resizeSignatureImage($bytes, 'image/gif', 320);
-
-		$this->assertSame('image/jpeg', $mime);
-		$resized = imagecreatefromstring($result);
-		$this->assertNotFalse($resized);
-		$this->assertSame(320, imagesx($resized));
-		imagedestroy($resized);
-	}
-
-	public function testUndecodableBytesAreReturnedUnchangedRatherThanDropped()
-	{
-		$garbage = 'this is not an image '.random_bytes(16);
-		[$result, $mime] = $this->resizeSignatureImage($garbage, 'image/png');
-		$this->assertSame($garbage, $result);
-		$this->assertSame('image/png', $mime);
 	}
 }

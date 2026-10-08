@@ -36,7 +36,7 @@
 					<et2-description  for="ident_email" value="EMail address"></et2-description>
 					<et2-url-email  id="ident_email" options="80,128" width="96%"></et2-url-email>
 				</row>
-				<row><et2-ai  span="all"><et2-htmlarea  id="ident_signature" width="100%" toolbarMode="wrap"></et2-htmlarea></et2-ai>
+				<row><et2-ai  span="all"><et2-htmlarea  id="ident_signature" width="100%" toolbarMode="wrap" imageUpload="@signature_image_upload_url"></et2-htmlarea></et2-ai>
 				</row>
 			</rows>
 		</grid>

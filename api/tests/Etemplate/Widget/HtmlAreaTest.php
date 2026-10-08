@@ -135,4 +135,39 @@ class HtmlAreaTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 		$this->mockedRoundTrip($etemplate, $content, array(), array());
 		$this->addToAssertionCount(1);
 	}
+
+	/**
+	 * Ticket #125961 follow-up: htmLawed's own regex-heavy parsing can exhaust PHP's
+	 * pcre.backtrack_limit on a sufficiently large value (eg. a multi-megabyte data: URI from an
+	 * unresized pasted image) - found live via a real report: a ~2MB image pasted into a mail
+	 * signature silently reduced the WHOLE field to a near-empty fragment on save, with nothing
+	 * in any log. validate() must now reject the save with a clear, visible error instead of
+	 * silently persisting the garbled result.
+	 */
+	public function testOversizedContentExhaustingPcreBacktrackLimitIsRejectedNotSilentlyCorrupted()
+	{
+		$etemplate = new Etemplate();
+		$etemplate->read(static::TEST_TEMPLATE, 'test');
+
+		// a large, genuinely valid data: URI (not just repeated bytes - htmLawed's own src=""
+		// matching needs real base64-ish content to exercise the same regex path a real pasted
+		// image hits) is enough on its own to exhaust the backtrack limit
+		$dataUri = 'data:image/jpeg;base64,'.base64_encode(random_bytes(2 * 1024 * 1024));
+		$huge = '<p>Best regards</p><img src="'.$dataUri.'" alt="sig">';
+
+		$content = array(
+			'html_widget'    => $huge,
+			'ascii_widget'   => '',
+			'dynamic_widget' => '',
+			'edit_mode'      => 'html'
+		);
+		$result = $this->mockedRoundTrip($etemplate, $content, array(), array());
+
+		$this->assertNotEmpty(
+			Etemplate\Widget::get_validation_errors('exec[html_widget]') ?? Etemplate\Widget::get_validation_errors('html_widget'),
+			'an oversized value that defeats htmLawed must surface a validation error, not silently save a corrupted result'
+		);
+		$this->assertStringNotContainsString($dataUri, $result['html_widget'] ?? '',
+			'the oversized, unsanitized value must never reach storage either way');
+	}
 }

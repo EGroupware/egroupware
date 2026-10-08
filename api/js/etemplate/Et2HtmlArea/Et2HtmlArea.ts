@@ -194,6 +194,13 @@ export class Et2HtmlArea extends Et2MarkdownEditMixin(Et2InputWidget(LitElement)
 
 	/**
 	 * Callback function for handling image upload.
+	 *
+	 * @deprecated for a NEW integration: set the `imageUpload` attribute to a literal menuaction
+	 *  URL instead (see _getImageUploadUrl()'s own docblock) - a JS property set after this
+	 *  widget's first render has no effect (ticket #125961: @tinymce/tinymce-webcomponent only
+	 *  reads its upload config once, at its own one-time TinyMCE init; its own
+	 *  attributeChangedCallback() doesn't even look at images_upload_url/images_upload_handler).
+	 *  Kept only because it's still a documented, public widget property.
 	 */
 	@property({type: Function, attribute: false})
 	imagesUploadHandler : TinyMceUploadHandler | null = null;
@@ -843,6 +850,29 @@ export class Et2HtmlArea extends Et2MarkdownEditMixin(Et2InputWidget(LitElement)
 			noneditable_class: "mceNonEditable",
 			paste_data_images: true,
 			paste_postprocess: (_editor, args) => this._stripPastedFont(args.node),
+			// TinyMCE's own default (automatic_uploads: true) auto-uploads EVERY `data:` image its
+			// SetContent handler finds - not just a freshly pasted/dropped one, but any already-
+			// embedded one too, the instant content LOADS into the editor. (images_dataimg_filter,
+			// an older per-image opt-out hook, was removed in TinyMCE 6 - it no longer does
+			// anything, confirmed against this project's own installed tinymce.js, which lists it
+			// under its internal `removedOptions`.) That silently corrupts any content that
+			// already legitimately embeds a data: URI (ticket #125961: a mail signature's own
+			// embedded image) - found live: an existing signature's small data: URI image turned
+			// into a `blob:` src the instant the editor loaded it, then failed to upload (HTTP
+			// 405) and was left as a dead blob: URL (only ever valid in that one browser tab) once
+			// saved.
+			//
+			// Disabled here ONLY as the starting value - re-enabled in the "init" handler below,
+			// right after the editor's own initial content load (_syncValueToEditor()) has already
+			// run with it off. Every OTHER TinyMCE-native image-insertion path (paste, drop, AND
+			// the toolbar's own "Insert/Edit Image" dialog upload tab, which calls
+			// editor.editorUpload.uploadImagesAuto() directly - found live: image_advtab's own
+			// upload flow is a THIRD path, distinct from both paste/drop and "insert from VFS",
+			// that would otherwise need its own separate explicit trigger) then goes through
+			// TinyMCE's own built-in automatic_uploads mechanism normally, no extra wiring needed -
+			// only the very first, risky SetContent (loading already-stored content) ever sees it
+			// disabled.
+			automatic_uploads: false,
 			contextmenu: false,
 			image_advtab: true,
 			// TinyMCE's split UI mode hoists menus/popups out of scroll-clipped
@@ -994,7 +1024,28 @@ export class Et2HtmlArea extends Et2MarkdownEditMixin(Et2InputWidget(LitElement)
 			}
 
 			const file = dialog.fileInfo(path) as FileInfo | undefined;
-			const url = file?.downloadUrl ? `${this.egw().webserverUrl}${file.downloadUrl}` : "";
+			// a literal imageUpload URL (mail compose/signature's own data:-URI-producing
+			// endpoint, ticket #125961) also doubles as the "insert from VFS" target: same
+			// literal URL, `&path=` appended, resizing the picked file server-side into a data:
+			// URI the same way a fresh upload already does - rather than the classic webdav.php
+			// URL every other imageUpload="link_to" user still gets unchanged below. Checked
+			// against `this.imageUpload` itself (the raw attribute), NOT _getImageUploadUrl()'s
+			// own COMPUTED return value - that value always starts with "/" either way (the
+			// classic branch's own request_id/widget_id URL is itself an absolute path).
+			const isLiteralUploadUrl = !!this.imageUpload &&
+				(this.imageUpload[0] === "/" || this.imageUpload.startsWith("http"));
+			let url = "";
+			if(isLiteralUploadUrl && file)
+			{
+				const response = await fetch(`${this._getImageUploadUrl()}&path=${encodeURIComponent(file.path ?? "")}`,
+					{method: "POST", credentials: "same-origin"});
+				const answer = await response.json();
+				url = typeof answer?.location === "string" && answer.location.startsWith("data:") ? answer.location : "";
+			}
+			else
+			{
+				url = file?.downloadUrl ? `${this.egw().webserverUrl}${file.downloadUrl}` : "";
+			}
 			if(!url)
 			{
 				return;
@@ -1066,6 +1117,12 @@ export class Et2HtmlArea extends Et2MarkdownEditMixin(Et2InputWidget(LitElement)
 		{
 			this._ensureShadowDomStyles();
 			this._syncValueToEditor();
+			// automatic_uploads starts false (see its own docblock in _getTinyMceConfig()) purely
+			// to keep THIS call - loading the editor's own initial, already-stored value - from
+			// auto-uploading any data: image already embedded in it. Re-enabled immediately after,
+			// so every later paste/drop/"Insert Image" dialog upload goes through TinyMCE's own
+			// normal, built-in mechanism.
+			editor.options.set("automatic_uploads", true);
 			this._applyDefaultFormatBlock(editor);
 			if(!this._tinymceResolved)
 			{

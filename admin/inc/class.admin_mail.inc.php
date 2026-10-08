@@ -2188,6 +2188,19 @@ class admin_mail
 		{
 			$content = self::splitVerifyCheckbox($content, $ssl_field);
 		}
+		// ticket #125961 follow-up: give the signature htmlarea an upload target that resizes a
+		// pasted/dropped image to a data: URI itself - without this, it falls back to
+		// Vfs::ajax_htmlarea_upload()'s own un-resized, full-size data: URI response, which can
+		// exhaust PHP's pcre.backtrack_limit in HtmlArea::validate()'s own purify() call for a
+		// multi-megabyte image, silently reducing the whole signature to an empty fragment.
+		//
+		// Prefixed with webserver_url (same as egw.ajaxUrl() does client-side,
+		// `this.webserverUrl + '/json.php?menuaction=' + _menuaction`) - a bare '/json.php...'
+		// only works when EGroupware is mounted at the domain root; found live via nginx's own
+		// access log (a 405, never even reaching PHP) that this install's webserver_url has a
+		// '/egroupware' path component the un-prefixed literal was missing entirely.
+		$content['signature_image_upload_url'] = $GLOBALS['egw_info']['server']['webserver_url'].
+			'/json.php?menuaction=EGroupware\\Api\\Mail\\Account::ajax_uploadSignatureImage';
 		$tpl->exec(static::APP_CLASS.'edit', $content, $sel_options, $readonlys, $content, 2);
 	}
 

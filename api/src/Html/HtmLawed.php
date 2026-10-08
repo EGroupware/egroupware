@@ -408,8 +408,16 @@ function hl_email_tag_transform($element, $attribute_array=0)
 				if (($GLOBALS['egw_info']['user']['preferences']['mail']['allowExternalIMGs']??null) != 1
 						&& !in_array($url[0], $domains) || substr($attribute_array['src'],0, 5) == 'http:')
 				{
-					//the own webserver url is not external, so it should be allowed
-					if (empty($GLOBALS['egw_info']['server']['webserver_url'])||!preg_match("$^".$GLOBALS['egw_info']['server']['webserver_url'].".*$",$attribute_array['src']))
+					// the own webserver url is not external, so it should be allowed - EXCEPT a
+					// '/webdav.php' reference (ticket #125961): such a url only works for
+					// whoever has this exact account's own session, so it is no safer than any
+					// other external image reference and must go through the same block/
+					// allow-domain treatment, not be trusted merely for sharing this webserver's
+					// origin
+					$is_own_webdav = !empty($GLOBALS['egw_info']['server']['webserver_url']) &&
+						preg_match("$^".$GLOBALS['egw_info']['server']['webserver_url'].".*$",$attribute_array['src']) &&
+						str_contains($attribute_array['src'], '/webdav.php');
+					if ($is_own_webdav || empty($GLOBALS['egw_info']['server']['webserver_url'])||!preg_match("$^".$GLOBALS['egw_info']['server']['webserver_url'].".*$",$attribute_array['src']))
 					{
 						$attribute_array['alt']= $attribute_array['alt'].' [blocked external image:'.$attribute_array['src'].']';
 						if (!isset($attribute_array['title'])) $attribute_array['title']=$attribute_array['alt'];
