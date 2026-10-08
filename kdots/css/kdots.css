@@ -857,7 +857,6 @@ body egw-app,
   [layout="2-column"] *::part(form-control-help-text) {
     left: 0;
   }
-  /* When titles break, we want to align widgets at the bottom of the hbox */
   [layout="2-column"] et2-hbox::part(base) {
     align-items: flex-end;
   }
@@ -976,7 +975,6 @@ body egw-app,
   [layout="edit"] *::part(form-control-help-text) {
     left: 0;
   }
-  /* When titles break, we want to align widgets at the bottom of the hbox */
   [layout="edit"] et2-hbox::part(base) {
     align-items: flex-end;
   }
@@ -2248,9 +2246,7 @@ html:not(.desktop) body .et2_nextmatch table.egwGridView_grid tbody tr td img {
   padding: 8px 0px 0px 0px;
 }
 html:not(.desktop) :root .et2_nextmatch table.egwGridView_grid tbody tr td time.et2_label,
-html:not(.desktop) body .et2_nextmatch table.egwGridView_grid tbody tr td time.et2_label,
-html:not(.desktop) :root .et2_nextmatch table.egwGridView_grid tbody tr td span.mobile_cat_col,
-html:not(.desktop) body .et2_nextmatch table.egwGridView_grid tbody tr td span.mobile_cat_col {
+html:not(.desktop) body .et2_nextmatch table.egwGridView_grid tbody tr td time.et2_label {
   padding: 0;
 }
 html:not(.desktop) :root .et2_nextmatch table.egwGridView_grid tbody tr td div.et2_progress,

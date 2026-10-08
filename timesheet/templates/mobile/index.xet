@@ -9,7 +9,6 @@
 	<et2-template  id="timesheet.index.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
-				<column width="10"/>
 				<column width="80%" />
 				<column width="110"/>
 			</columns>
@@ -17,8 +16,7 @@
 				<row class="th">
 
 				</row>
-				<row class="$class timesheetRow">
-					<et2-description  class="cat_$row_cont[cat_id] mobile_cat_col"></et2-description>
+				<row class="$cat_id $class timesheetRow">
 					<et2-vbox>
 						<et2-customfields-list  id="$row" class="customfields" app="timesheet" disabled="true"/>
 						<et2-description  id="${row}[ts_title]" class="ts_title" noLang="1"></et2-description>

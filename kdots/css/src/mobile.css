@@ -596,9 +596,7 @@ html:not(.desktop) body .et2_nextmatch table.egwGridView_grid tbody tr td img {
   padding: 8px 0px 0px 0px;
 }
 html:not(.desktop) :root .et2_nextmatch table.egwGridView_grid tbody tr td time.et2_label,
-html:not(.desktop) body .et2_nextmatch table.egwGridView_grid tbody tr td time.et2_label,
-html:not(.desktop) :root .et2_nextmatch table.egwGridView_grid tbody tr td span.mobile_cat_col,
-html:not(.desktop) body .et2_nextmatch table.egwGridView_grid tbody tr td span.mobile_cat_col {
+html:not(.desktop) body .et2_nextmatch table.egwGridView_grid tbody tr td time.et2_label {
   padding: 0;
 }
 html:not(.desktop) :root .et2_nextmatch table.egwGridView_grid tbody tr td div.et2_progress,
