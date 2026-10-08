@@ -152,3 +152,31 @@ nothing". Clear both fields below and compare.
         .then(() => {durationShort.value = 45;});
 </script>
 ```
+
+### Read-only, spelled out in words
+
+`et2-date-duration_ro` is the read-only twin: it shows the duration as text, and a template gets it
+when it says `readonly="true"`. By default the text is compact - a number followed by a unit letter.
+Set `unitDisplay` to `long`, `short` or `narrow` to spell the unit out instead, picking the
+best one the way the editable widget does: "45 minutes", "2 hours", "30 days". It is off by default,
+and an empty duration shows nothing at all, not even the label.
+
+The language is the user's `lang` preference, not the browser's: a German user sees "30 Tage" even in
+an English browser. Plain HTML like the preview has no user preferences, so it falls back to the
+language of the page, which the server sets from the user's language. The preview below is written
+in the page's language, so you see it in the language of this documentation.
+
+```html:preview
+<et2-date-duration_ro id="duration-words-long" label="Long:" unitDisplay="long"></et2-date-duration_ro>
+<et2-date-duration_ro id="duration-words-short" label="Short:" unitDisplay="short"></et2-date-duration_ro>
+<et2-date-duration_ro id="duration-words-narrow" label="Narrow:" unitDisplay="narrow"></et2-date-duration_ro>
+<et2-date-duration_ro id="duration-words-plain" label="Not set:"></et2-date-duration_ro>
+<script>
+    const durationWords = ["long", "short", "narrow", "plain"].map(
+        name => document.getElementById("duration-words-" + name));
+
+    customElements.whenDefined("et2-date-duration_ro")
+        .then(() => Promise.all(durationWords.map(widget => widget.updateComplete)))
+        .then(() => durationWords.forEach(widget => {widget.value = 150;}));
+</script>
+```
