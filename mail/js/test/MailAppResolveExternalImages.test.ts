@@ -192,6 +192,140 @@ describe("MailApp.resolveExternalImages()", () =>
 		assert.deepEqual(Object.values(prefs.allowExternalDomains), ['example.org']);
 	});
 
+	/**
+	 * A JMAP-native body (MailJmap.wrapDocument()) blocks other external content by its CSP and
+	 * marks the body with the first blocked url, eg. for a CSS background - which needs a banner
+	 * just like an image, and "Show"/"Allow" have to render the body again to widen its CSP.
+	 */
+	function jmapBodyDocument(blockedOther : string | null, ...urls : string[]) : Document
+	{
+		const doc = document.implementation.createHTMLDocument('');
+		if (blockedOther) doc.body.setAttribute('data-blocked-external', blockedOther);
+		doc.body.appendChild(containerWithBlockedImages(...urls));
+		return doc;
+	}
+
+	function clickButton(app : MailApp, doc : Document, label : string)
+	{
+		Array.from(doc.querySelectorAll('button')).find((btn) => btn.textContent === app.egw.lang(label))!.click();
+	}
+
+	it("shows the banner for a body whose only blocked external content is no image (eg. a CSS background)", () =>
+	{
+		const app = createMailApp();
+		const doc = jmapBodyDocument('https://claude.ai/images/email/hand_wave.gif');
+
+		app.resolveExternalImages(doc);
+
+		assert.isNotNull(banner(doc.body));
+		assert.include((Array.from(doc.querySelectorAll('button')).find((btn) => btn.textContent === 'Allow') as HTMLElement).title,
+			'claude.ai');
+	});
+
+	it("'Show' renders a JMAP-native body again instead of setting the images' src", () =>
+	{
+		const app = createMailApp();
+		const doc = jmapBodyDocument('https://claude.ai/images/email/hand_wave.gif', 'https://example.org/photo.png');
+		let rendered = 0;
+		(app as any).externalContentRenderers = new WeakMap([[doc, () => rendered++]]);
+		app.resolveExternalImages(doc);
+
+		clickButton(app, doc, 'Show');
+
+		assert.equal(rendered, 1);
+		assert.notEqual(doc.querySelector('img')!.getAttribute('src'), 'https://example.org/photo.png',
+			"the rendered document shows the images, the old one must not request them");
+		assert.deepEqual(prefs.allowExternalDomains, {}, "a one-time Show must not persist any domain");
+	});
+
+	it("'Allow' persists only the domain named in its title, not the domains of the other images", () =>
+	{
+		const app = createMailApp();
+		const node = containerWithBlockedImages('https://example.org/photo.png', 'https://tracker.example.com/pixel.gif');
+		app.resolveExternalImages(node);
+		const allowButton = Array.from(node.querySelectorAll('button')).find((btn) => btn.textContent === 'Allow');
+		assert.include(allowButton!.title, 'example.org');
+
+		allowButton!.click();
+
+		assert.deepEqual(Object.values(prefs.allowExternalDomains), ['example.org']);
+		assert.equal(node.querySelectorAll('img')[1].getAttribute('src'), 'https://tracker.example.com/pixel.gif',
+			"all images are still shown this time");
+	});
+
+	it("an allowlisted first image does not unblock the images of other domains", () =>
+	{
+		prefs.allowExternalDomains = {a: 'example.org'};
+		const app = createMailApp('https://proxy.example.org/');
+		const node = containerWithBlockedImages('http://example.org/photo.png', 'https://tracker.example.com/pixel.gif');
+
+		app.resolveExternalImages(node);
+
+		const [allowed, blocked] = Array.from(node.querySelectorAll('img'));
+		assert.equal(allowed.getAttribute('src'), 'https://proxy.example.org/example.org/photo.png', "the allowlisted image is shown");
+		assert.isNull(blocked.getAttribute('src'), "the other domain's image stays blocked");
+		assert.isNotNull(banner(node));
+		assert.include((Array.from(node.querySelectorAll('button')).find((btn) => btn.textContent === 'Allow') as HTMLElement).title,
+			'tracker.example.com', "the banner names the still blocked domain");
+	});
+
+	it("'Allow' persists the blocked domain and renders a JMAP-native body again", () =>
+	{
+		const app = createMailApp();
+		const doc = jmapBodyDocument('https://claude.ai/images/email/hand_wave.gif', 'https://example.org/photo.png');
+		let rendered = 0;
+		(app as any).externalContentRenderers = new WeakMap([[doc, () => rendered++]]);
+		app.resolveExternalImages(doc);
+
+		clickButton(app, doc, 'Allow');
+
+		assert.equal(rendered, 1);
+		assert.includeMembers(Object.values(prefs.allowExternalDomains), ['example.org']);
+		assertNoElement(banner(doc.body));
+	});
+
+	/**
+	 * A server-rendered body gets its CSP as header, so "Show"/"Allow" reload it with
+	 * _showExternal=1 (MessageDisplayHandler::externalContentCsp() then allows https: content),
+	 * and the reloaded body shows its images directly.
+	 */
+	function classicBodyDocument(search : string, ...urls : string[]) : {doc : Document, replaced : string[]}
+	{
+		const doc = jmapBodyDocument(null, ...urls);
+		const replaced : string[] = [];
+		Object.defineProperty(doc, 'defaultView', {value: {
+			frameElement: document.createElement('iframe'),
+			location: {search, href: 'https://egw.example.org/egroupware/index.php'+search, replace: (url : string) => replaced.push(url)},
+		}});
+		return {doc, replaced};
+	}
+
+	it("'Show' reloads a server-rendered body with _showExternal=1", () =>
+	{
+		const app = createMailApp();
+		const {doc, replaced} = classicBodyDocument('?menuaction=mail.EGroupware%5CMail%5CUi.loadEmailBody&_messageID=1',
+			'https://example.org/photo.png');
+		app.resolveExternalImages(doc);
+
+		clickButton(app, doc, 'Show');
+
+		assert.deepEqual(replaced, ['https://egw.example.org/egroupware/index.php?menuaction=mail.EGroupware%5CMail%5CUi.loadEmailBody&_messageID=1&_showExternal=1']);
+		assert.notEqual(doc.querySelector('img')!.getAttribute('src'), 'https://example.org/photo.png');
+	});
+
+	it("shows the images of a server-rendered body reloaded with _showExternal=1 directly, without a banner", () =>
+	{
+		const app = createMailApp();
+		const {doc, replaced} = classicBodyDocument('?menuaction=mail.EGroupware%5CMail%5CUi.loadEmailBody&_messageID=1&_showExternal=1',
+			'https://example.org/photo.png');
+
+		app.resolveExternalImages(doc);
+
+		assertNoElement(banner(doc.body));
+		assert.equal(doc.querySelector('img')!.getAttribute('src'), 'https://example.org/photo.png');
+		assert.deepEqual(replaced, [], "an already reloaded body must not be reloaded again");
+	});
+
 	it("'Close' dismisses the banner without resolving any image", () =>
 	{
 		const app = createMailApp();

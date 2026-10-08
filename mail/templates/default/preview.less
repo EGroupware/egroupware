@@ -134,6 +134,11 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
   display: none;
 }
 
+/* placeholder of a blocked external image keeps the image's box, but is never stretched to it */
+img[alt*="[blocked external image:"] {
+  object-fit: scale-down;
+}
+
 .mail_externalImagesMsg {
   display: block;
   position: fixed;

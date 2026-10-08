@@ -615,7 +615,7 @@ class Ui
 	 *
 	 * @return string
 	 */
-	protected static function image_proxy()
+	public static function image_proxy()
 	{
 		$configs = Api\Config::read('mail');
 		$image_proxy = $configs[self::IMAGE_PROXY_CONFIG] ?? self::DEFAULT_IMAGE_PROXY;
