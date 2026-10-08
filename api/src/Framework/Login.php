@@ -303,8 +303,6 @@ class Login
 			$tmpl->set_var('cd', lang('Browser %1 %2 is not recommended. You may experience issues and not working features. Please use the latest version of Chrome, Firefox or Edge. Thank You!',Api\Header\UserAgent::type(), Api\Header\UserAgent::version()));
 			$tmpl->set_var('cd_class', 'warning_message');
 		}
-		// load jquery for login screen too
-		Api\Framework::includeJS('jquery', 'jquery');
 
 		// call hook to allow apps to modify login page, eg. for multifactor auth
 		Api\Hooks::process([
@@ -427,8 +425,6 @@ class Login
 			'<br />'.lang('Please, check back with us shortly.'),
 		));
 
-		// load jquery for deny-login screen too
-		Api\Framework::includeJS('jquery', 'jquery');
 
 		$this->framework->render($tmpl->fp('loginout','login_form'),false,false);
 	}
