@@ -96,6 +96,31 @@ export function pdfItemsToText(items : PdfTextItem[]) : string
 }
 
 /**
+ * Which pages of a PDF have no (real) text layer, eg. scans or pages with just paths, and need to be OCR-ed
+ *
+ * @param pages text of each page, as in PdfText.pages
+ * @param minChars minimum number of characters (without whitespace) a page needs to count as having text,
+ *	a scan might still have eg. a page number
+ * @return page numbers (1-based)
+ */
+export function pagesWithoutText(pages : string[], minChars = 25) : number[]
+{
+	return pages.map((text, n) => text.replace(/\s/g, "").length < minChars ? n + 1 : 0).filter(n => n > 0);
+}
+
+/**
+ * Join the text of the pages of a PDF, using the OCR-ed text for the pages without text
+ *
+ * @param pages text of each page, as in PdfText.pages
+ * @param ocr OCR-ed text by page number (1-based), pages not OCR-ed (or failed) keep their own text
+ * @return text of all pages separated by an empty line
+ */
+export function joinPageTexts(pages : string[], ocr : Record<number, string>) : string
+{
+	return pages.map((text, n) => ocr[n + 1] ?? text).map(text => text.trim()).filter(text => text !== "").join("\n\n");
+}
+
+/**
  * Open a PDF, pdf.js takes over (transfers) the array it gets, so we always hand it a copy
  */
 async function openPdf(data : Uint8Array|ArrayBuffer)
@@ -136,24 +161,30 @@ export async function extractPdfText(data : Uint8Array|ArrayBuffer, maxPages = 2
  * Render the pages of a PDF to canvases
  *
  * @param data content of the PDF, the array is NOT changed or consumed
- * @param onPage called with each rendered page, so it can be shown or converted to an image before the next one is rendered
- * @param scale 1 = 72 dpi, 1.5 is a good size to read on screen, 2 to OCR
+ * @param onPage called with each rendered page, so it can be shown or converted to an image before the next one is
+ *	rendered, the rendering waits for the promise it might return
+ * @param scale 1 = 72 dpi, 1.5 is a good size to read on screen, or {width: 1200} for a fixed width in pixels
  * @param maxPages maximum number of pages to render
+ * @param only page numbers (1-based) to render, default all
  * @return total number of pages of the PDF
  */
 export async function renderPdfPages(data : Uint8Array|ArrayBuffer, onPage : (canvas : HTMLCanvasElement, pageNumber : number) => void|Promise<void>,
-									 scale = 1.5, maxPages = 20) : Promise<number>
+									 scale : number|{ width : number } = 1.5, maxPages = 20, only? : number[]) : Promise<number>
 {
 	const pdf = await openPdf(data);
 	try
 	{
 		for(let n = 1; n <= Math.min(pdf.numPages, maxPages); n++)
 		{
+			if(only && only.indexOf(n) < 0)
+			{
+				continue;
+			}
 			const page = await pdf.getPage(n);
-			const viewport = page.getViewport({scale});
+			const viewport = page.getViewport({scale: typeof scale === "number" ? scale : scale.width / page.getViewport({scale: 1}).width});
 			const canvas = document.createElement("canvas");
-			canvas.width = viewport.width;
-			canvas.height = viewport.height;
+			canvas.width = Math.round(viewport.width);
+			canvas.height = Math.round(viewport.height);
 			await page.render({canvas, viewport}).promise;
 			await onPage(canvas, n);
 			page.cleanup();
