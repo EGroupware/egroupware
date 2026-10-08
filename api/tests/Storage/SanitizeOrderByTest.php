@@ -83,6 +83,8 @@ class SanitizeOrderByTest extends TestCase
 			'nested COALESCE' => ['COALESCE(tr_modified, COALESCE(tr_created,1)) DESC'],
 			'numeric literal as COALESCE arg' => ['COALESCE(tr_modified,1) DESC'],
 			'only numeric literal args' => ['COALESCE(1,2) DESC'],
+			// was used by the invoices import to prefer a contact with the exact email-address
+			'comparison with string literal' => ["contact_email='support@example.org' DESC,contact_owner ASC"],
 			'SQL line comment after valid prefix' => ['COALESCE(tr_modified,tr_created) DESC -- , x'],
 			'SQL block comment after valid prefix' => ['COALESCE(tr_modified,tr_created) DESC/*comment*/, x'],
 			'SQL hash comment after valid prefix' => ['COALESCE(tr_modified,tr_created) DESC # comment'],
@@ -111,6 +113,27 @@ class SanitizeOrderByTest extends TestCase
 	public function testStripped($input)
 	{
 		$this->assertSame('', Api\Storage\Base::sanitizeOrderBy($input));
+	}
+
+	/**
+	 * A removed fragment is logged WITH a trace to find the caller, but must NOT abort (no exception thrown)
+	 */
+	public function testRemovedIsLoggedWithTraceAndContinues()
+	{
+		$log = tempnam(sys_get_temp_dir(), 'orderby-log');
+		$old_log = ini_set('error_log', $log);
+		try {
+			$this->assertSame('', Api\Storage\Base::sanitizeOrderBy("contact_email='a@b.org' DESC,contact_owner ASC"));
+		}
+		finally {
+			ini_set('error_log', $old_log === false ? '' : $old_log);
+		}
+		$logged = file_get_contents($log);
+		unlink($log);
+		$this->assertStringContainsString('sanitizeOrderBy', $logged);
+		$this->assertStringContainsString("contact_email='a@b.org'", $logged);
+		$this->assertStringContainsString('REMOVED', $logged);
+		$this->assertMatchesRegularExpression('/#0 \/.*SanitizeOrderByTest\.php\(\d+\): .*sanitizeOrderBy\(\)/', $logged, 'trace with the caller is missing');
 	}
 
 	/**
