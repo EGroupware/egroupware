@@ -38,9 +38,13 @@ class AttachmentJmap
 	 * @param ?int $uid uid of the message
 	 * @param ?string $mailbox mailbox identifier
 	 * @param boolean $_returnFullHTML flag wether to return HTML or data array
+	 * @param Mail\RowIdParts|null $idParts test-only seam, same purpose as resolveWinmailJmap()'s own
+	 *  - lets a caller that already resolved $rowID hand its RowIdParts through instead of this
+	 *  method independently re-resolving $rowID via Mail::splitRowID() (a second, separate account
+	 *  lookup from whatever the caller already did). Every real caller leaves this null.
 	 * @return array|string data array or html or empty string
 	 */
-	public static function createAttachmentBlock($attachments, $rowID, $uid, $mailbox, $_returnFullHTML=false)
+	public static function createAttachmentBlock($attachments, $rowID, $uid, $mailbox, $_returnFullHTML=false, ?Mail\RowIdParts $idParts=null)
 	{
 		$attachmentHTMLBlock = '';
 		$attachmentHTML = [];
@@ -48,7 +52,7 @@ class AttachmentJmap
 		// row-id - done once here, not per-attachment (see below), and without touching the
 		// msgUID/folder keys (which for a Stalwart opaque-id row DO cost a real IMAP search) since
 		// $uid/$mailbox are already given as parameters
-		$acc_id = Mail::splitRowID($rowID)['profileID'];
+		$acc_id = ($idParts ?? Mail::splitRowID($rowID))['profileID'];
 
 		// skip message/delivery-status and set a title for original eml file
 		if (($attachments[0]['mimeType'] === 'message/delivery-status'))
@@ -98,8 +102,8 @@ class AttachmentJmap
 					// $uid/$mailbox are null when the caller resolved a blobId for every part and
 					// intentionally skipped their (possibly IMAP-expensive) resolution - only
 					// derived here, from $rowID, if this classic fallback is actually reached
-					$fallbackUid = $uid ?? Mail::splitRowID($rowID)['msgUID'];
-					$fallbackMailbox = $mailbox ?? Mail::splitRowID($rowID)['folder'];
+					$fallbackUid = $uid ?? ($idParts ?? Mail::splitRowID($rowID))['msgUID'];
+					$fallbackMailbox = $mailbox ?? ($idParts ?? Mail::splitRowID($rowID))['folder'];
 					$attachmentTarget = ['EGroupware\\Api\\Mail::getAttachmentAccount', [$acc_id, $fallbackMailbox, $fallbackUid, $value['partID'], $value['is_winmail'] ?? false, true]];
 				}
 				$attachmentHTML[$key]['mime_data'] = Api\Link::set_data($value['mimeType'], $attachmentTarget[0], $attachmentTarget[1],
@@ -374,12 +378,22 @@ class AttachmentJmap
 	 * @param string $rowID
 	 * @param string|null $partID the TNEF attachment's own partId, when already known - see above
 	 * @param string|null $blobId the TNEF attachment's own blobId, when already known - see above
+	 * @param Mail\RowIdParts|null $idParts test-only seam: Mail::splitRowID($rowID)'s own result,
+	 *  when the caller already has one. Every real caller leaves this null (the normal
+	 *  Mail::splitRowID($rowID) call below runs as before) - it exists only so a test for the
+	 *  $partID/$blobId fast path's plain-IMAP branch (ticket #99311: the fingerprint this method
+	 *  builds for each unpacked sub-attachment needs that branch's own real msgUID, not emailID,
+	 *  which is JMAP-only) can supply a synthetic is_jmap=false RowIdParts directly - that branch
+	 *  is otherwise unreachable in an automated test, since Mail::splitRowID() unconditionally
+	 *  resolves $rowID against a real, DB-backed account via Mail::getInstance() first, and no
+	 *  plain-IMAP account is available to this test suite's own login (see
+	 *  ResolveWinmailJmapFastPathTest's own docblock).
 	 * @return array|null null if not applicable/failed - caller falls through to the classic
 	 *  resolveAttachmentsBlock() path
 	 */
-	public static function resolveWinmailJmap($rowID, ?string $partID=null, ?string $blobId=null) : ?array
+	public static function resolveWinmailJmap($rowID, ?string $partID=null, ?string $blobId=null, ?Mail\RowIdParts $idParts=null) : ?array
 	{
-		$idParts = Mail::splitRowID($rowID);
+		$idParts ??= Mail::splitRowID($rowID);
 		$acc_id = $idParts['profileID'];
 		if (!$acc_id)
 		{
@@ -459,7 +473,7 @@ class AttachmentJmap
 			}
 
 			$attachments = JmapImap::tnefAttachments(self::tnefFingerprintUid($uid, $idParts), $partID, $decoded);
-			return self::createAttachmentBlock($attachments, $rowID, $uid, $mailbox);
+			return self::createAttachmentBlock($attachments, $rowID, $uid, $mailbox, false, $idParts);
 		}
 		catch (\Throwable $e)
 		{
