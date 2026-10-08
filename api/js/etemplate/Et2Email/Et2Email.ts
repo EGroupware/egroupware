@@ -303,6 +303,7 @@ export class Et2Email
 		if(this._sortable)
 		{
 			this._sortable.destroy();
+			this._sortable = null;
 		}
 		document.removeEventListener('focusin', this.handleLostFocus);
 	}
@@ -399,6 +400,7 @@ export class Et2Email
 		if(this._sortable)
 		{
 			this._sortable.destroy();
+			this._sortable = null;
 		}
 
 		if(!this.allowDragAndDrop)

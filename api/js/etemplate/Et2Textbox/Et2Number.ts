@@ -129,12 +129,6 @@ export class Et2Number extends Et2Textbox
 		}
 	}
 
-	disconnectedCallback()
-	{
-		super.disconnectedCallback();
-		while(this.lastChild) this.lastChild.remove();
-	}
-
 	firstUpdated()
 	{
 		super.firstUpdated();
