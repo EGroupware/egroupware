@@ -4264,7 +4264,7 @@ export class MailJmap
 	 * regardless of that preference, so it only ever reaches the browser already rewritten
 	 * through image_proxy, never as a raw http: request.
 	 *
-	 * The same-origin exemption below deliberately does NOT cover `/webdav.php` (ticket
+	 * The same-origin exemption of externalUrlFilter() deliberately does NOT cover `/webdav.php` (ticket
 	 * #125961): such a URL only works for whoever has this exact account's own session, so it is
 	 * no safer than any other external image reference and must go through the same
 	 * block/allow-domain treatment, not be trusted merely for sharing this webserver's origin.
@@ -4272,39 +4272,218 @@ export class MailJmap
 	private deferExternalImages(html : string) : string
 	{
 		const doc = new DOMParser().parseFromString(html, 'text/html');
-		const allowIMGs = Number(this.egw.preference('allowExternalIMGs', 'mail') ?? 2);
-		const allowedDomains : string[] = Object.values(this.egw.preference('allowExternalDomains', 'mail') || {});
-		const webserverUrl = this.egw.webserverUrl || '';
+		const isBlocked = this.externalUrlFilter();
 
 		doc.querySelectorAll('img[src]').forEach((img : HTMLImageElement) =>
 		{
 			const src = img.getAttribute('src');
-			const isOwnWebdav = webserverUrl && src?.startsWith(webserverUrl) &&
-				src.slice(webserverUrl.length).startsWith('/webdav.php');
-			if (!src || src.startsWith('cid:') || src.startsWith('data:') ||
-				(webserverUrl && src.startsWith(webserverUrl) && !isOwnWebdav))
+			if (!isBlocked(src))
 			{
 				return;
 			}
-			const isHttp = src.startsWith('http:');
-			const domain = src.replace(/^https?:\/\//i, '').split('/')[0];
-			// mirrors HtmLawed's `($allowIMGs != 1 && !in_array($domain, $domains)) || $isHttp`
-			// blocking condition (negated/De Morgan'd into a "nothing to defer" skip check): never
-			// skip for a plain http: url, regardless of preference/allowlist - it always goes
-			// through the defer+image_proxy-rewrite path below.
-			if (!isHttp && (allowIMGs === 1 || allowedDomains.indexOf(domain) !== -1))
-			{
-				return;
-			}
-			const alt = (img.getAttribute('alt') || '')+' [blocked external image:'+src+']';
+			const alt = (img.getAttribute('alt') || '')+MailJmap.BLOCKED_IMAGE_MARKER+src+']';
 			img.setAttribute('alt', alt);
 			if (!img.hasAttribute('title'))
 			{
 				img.setAttribute('title', alt);
 			}
 			img.setAttribute('src', this.egw.image('no-image-shown', 'mail'));
+			// the browser prefers srcset over src, which would bypass the placeholder -
+			// parked here and restored by showExternalContent()
+			if (img.hasAttribute('srcset'))
+			{
+				img.setAttribute('data-blocked-srcset', img.getAttribute('srcset'));
+				img.removeAttribute('srcset');
+			}
 		});
 		return doc.body.innerHTML;
+	}
+
+	/** alt-text marker shared with MailApp.resolveExternalImages() and Api\Html\HtmLawed */
+	private static readonly BLOCKED_IMAGE_MARKER = ' [blocked external image:';
+
+	/**
+	 * Which urls of a message body the 'allowExternalIMGs' / 'allowExternalDomains' preferences
+	 * block, mirroring HtmLawed's `($allowIMGs != 1 && !in_array($domain, $domains)) || $isHttp`:
+	 * a plain http: url is always blocked, regardless of preference/allowlist, so it only ever
+	 * reaches the browser rewritten through image_proxy, never as a raw http: request.
+	 *
+	 * @return callback returning true for a blocked url
+	 */
+	private externalUrlFilter() : (url : string) => boolean
+	{
+		const allowIMGs = Number(this.egw.preference('allowExternalIMGs', 'mail') ?? 2);
+		const allowedDomains = this.allowedExternalDomains();
+		const webserverUrl = this.egw.webserverUrl || '';
+
+		return (url : string) =>
+		{
+			url = (url || '').trim();
+			// same-origin, but not /webdav.php (ticket #125961, see deferExternalImages())
+			const isOwnWebdav = webserverUrl && url.startsWith(webserverUrl) &&
+				url.slice(webserverUrl.length).startsWith('/webdav.php');
+			if (!url || /^(cid|data|blob):/i.test(url) || url.startsWith('#') ||
+				(webserverUrl && url.startsWith(webserverUrl) && !isOwnWebdav))
+			{
+				return false;
+			}
+			const domain = url.replace(/^(https?:)?\/\//i, '').split('/')[0];
+			return /^http:/i.test(url) || !(allowIMGs === 1 || allowedDomains.indexOf(domain) !== -1);
+		};
+	}
+
+	private allowedExternalDomains() : string[]
+	{
+		return Object.values(this.egw.preference('allowExternalDomains', 'mail') || {});
+	}
+
+	/**
+	 * The external-content directives of the body document's CSP - the actual privacy boundary,
+	 * as it applies to every way a message can reference a url, not just the `<img src>`
+	 * deferExternalImages() rewrites: inline `style` and `<style>` url()/@import/@font-face,
+	 * `background`, `srcset`, `poster`, `<video>`/`<audio>`/`<source>`, SVG `<image>`.
+	 *
+	 * Blocking lists only our own origins and the allowlisted domains (https only), allowing adds
+	 * `https:` - plain http: is never allowed, it has to go through image_proxy.
+	 * Origins are listed explicitly, as Firefox does not resolve 'self' for a srcdoc meta-tag CSP.
+	 *
+	 * @param showExternal true: allow all (https) external content, false: use the preferences
+	 */
+	private externalContentCsp(showExternal : boolean) : string
+	{
+		const sources = new Set<string>([window.location.origin]);
+		for (const url of [this.egw.webserverUrl, this.app?.image_proxy])
+		{
+			try
+			{
+				const origin = new URL(url, window.location.href).origin;
+				if (origin.startsWith('http')) sources.add(origin);
+			}
+			catch (e) {}	// eg. image_proxy's 'https://' default, which is no url
+		}
+		if (showExternal || Number(this.egw.preference('allowExternalIMGs', 'mail') ?? 2) === 1)
+		{
+			sources.add('https:');
+		}
+		else
+		{
+			// only plain hostnames, anything else (eg. a stray url) could widen or break the policy
+			this.allowedExternalDomains().filter((domain) => /^[a-z0-9.-]+(:\d+)?$/i.test(domain))
+				.forEach((domain) => sources.add('https://'+domain));
+		}
+		const src = [...sources].join(' ');
+		return `img-src ${src} blob: data:; media-src ${src} blob: data:; font-src ${src} data:; ` +
+			`style-src ${src} 'unsafe-inline'`;
+	}
+
+	/**
+	 * First url the external-content CSP blocks, which is not an already deferred `<img src>`.
+	 *
+	 * Gives MailApp.resolveExternalImages() something to offer "Show" for, as eg. a body whose
+	 * only external content is a CSS background would otherwise be blocked silently.
+	 * Only used for the banner, the CSP blocks those urls whether they are detected here or not.
+	 *
+	 * @return blocked url or null
+	 */
+	private findBlockedExternalUrl(body : string) : string | null
+	{
+		const isBlocked = this.externalUrlFilter();
+		const doc = new DOMParser().parseFromString(body, 'text/html');
+		const cssUrls = (css : string) => [
+			...[...css.matchAll(/url\(\s*(['"]?)([^'")]*)\1\s*\)/gi)].map((match) => match[2]),
+			...[...css.matchAll(/@import\s+(['"])([^'"]*)\1/gi)].map((match) => match[2]),
+		];
+		const srcsetUrls = (srcset : string) => srcset.split(',').map((candidate) => candidate.trim().split(/\s+/)[0]);
+
+		for (const element of Array.from(doc.querySelectorAll('*')))
+		{
+			const urls : string[] = [];
+			if (element.localName === 'style')
+			{
+				urls.push(...cssUrls(element.textContent));
+			}
+			for (const attr of Array.from(element.attributes))
+			{
+				switch (attr.localName)
+				{
+					case 'style':
+						urls.push(...cssUrls(attr.value));
+						break;
+					case 'src':
+					case 'background':
+					case 'poster':
+						urls.push(attr.value);
+						break;
+					case 'srcset':
+						urls.push(...srcsetUrls(attr.value));
+						break;
+					case 'href':	// href and xlink:href of SVG's <image>, <use>, <feImage>
+						if (element.namespaceURI === 'http://www.w3.org/2000/svg' && element.localName !== 'a')
+						{
+							urls.push(attr.value);
+						}
+						break;
+				}
+			}
+			const blocked = urls.find(isBlocked);
+			if (blocked)
+			{
+				return blocked;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Render an already wrapDocument()-wrapped body again, showing its external content:
+	 * deferred images get their url back (http: ones through image_proxy) and the CSP allows
+	 * https: external content - which can only be widened by a new document, not in place.
+	 *
+	 * Used for the "Show"/"Allow" buttons of MailApp.resolveExternalImages().
+	 *
+	 * @param html srcdoc of the body iframe
+	 * @return srcdoc to show external content
+	 */
+	public showExternalContent(html : string) : string
+	{
+		const doc = new DOMParser().parseFromString(html, 'text/html');
+		const imageProxy = this.app?.image_proxy || 'https://';
+
+		doc.querySelectorAll('img[alt*="'+MailJmap.BLOCKED_IMAGE_MARKER.trim()+'"]').forEach((img : HTMLImageElement) =>
+		{
+			const marked = img.getAttribute('alt');
+			const start = marked.lastIndexOf(MailJmap.BLOCKED_IMAGE_MARKER.trim());
+			const url = marked.substring(start+MailJmap.BLOCKED_IMAGE_MARKER.trim().length, marked.lastIndexOf(']'));
+			const alt = marked.substring(0, start).trim();
+
+			img.setAttribute('src', /^http:\/\//i.test(url) ? url.replace(/^http:\/\//i, imageProxy) : url);
+			if (alt)
+			{
+				img.setAttribute('alt', alt);
+			}
+			else
+			{
+				img.removeAttribute('alt');
+			}
+			if (img.getAttribute('title') === marked)
+			{
+				img.removeAttribute('title');
+			}
+			if (img.hasAttribute('data-blocked-srcset'))
+			{
+				img.setAttribute('srcset', img.getAttribute('data-blocked-srcset'));
+				img.removeAttribute('data-blocked-srcset');
+			}
+		});
+		doc.body.removeAttribute('data-blocked-external');
+
+		const meta = doc.querySelector('meta[http-equiv="Content-Security-Policy"]');
+		meta?.setAttribute('content', meta.getAttribute('content')
+			.split(';').map((directive) => directive.trim())
+			.filter((directive) => !/^(img|media|font|style)-src\b/.test(directive))
+			.concat(this.externalContentCsp(true)).join('; '));
+
+		return '<!DOCTYPE html>'+doc.documentElement.outerHTML;
 	}
 
 	/**
@@ -4320,6 +4499,9 @@ export class MailJmap
 	 *
 	 * cid: image references are left as-is here - resolved asynchronously after render by
 	 * resolveInlineImages(), same as external images already are (resolveExternalImages()).
+	 *
+	 * External content is blocked by the CSP according to the user's preferences (see
+	 * externalContentCsp()), for every caller - including S/MIME bodies rendered by the server.
 	 *
 	 * @param body
 	 * @param forMailvelope true only for fetchBody()'s own PGP branch - leaves frame-src at its
@@ -4341,14 +4523,18 @@ export class MailJmap
 		// (URL.createObjectURL()), a message body's own HTML can never itself supply one, so this
 		// adds no attacker-reachable capability.
 		const csp = "frame-src " + (forMailvelope ? "'self'" : "blob:") + "; " +
-			"connect-src 'none'; manifest-src 'none'; script-src 'none'; " +
-			"img-src http: blob: data:; media-src https: http: data:; object-src blob:";
+			"connect-src 'none'; manifest-src 'none'; script-src 'none'; object-src blob:; " +
+			this.externalContentCsp(false);
+		// tells MailApp.resolveExternalImages() to offer "Show" for content the CSP blocks
+		const blockedUrl = this.findBlockedExternalUrl(body);
+		const bodyAttrs = blockedUrl ? ` data-blocked-external="${blockedUrl.replace(/&/g, '&amp;')
+			.replace(/"/g, '&quot;').replace(/</g, '&lt;')}"` : '';
 
 		return `<!DOCTYPE html><html><head><meta charset="utf-8">` +
 			`<meta http-equiv="Content-Security-Policy" content="${csp}">` +
 			`<link rel="stylesheet" href="${this.egw.link('/mail/templates/default/preview.css')}">` +
 			`<style>${defaultFontCssRule()}</style>` +
-			`</head><body><div class="mailDisplayBody mailDefaultFont"><table width="100%" style="table-layout:fixed">` +
+			`</head><body${bodyAttrs}><div class="mailDisplayBody mailDefaultFont"><table width="100%" style="table-layout:fixed">` +
 			`<tr><td class="td_display">${body}</td></tr></table></div></body></html>`;
 	}
 
