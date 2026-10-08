@@ -938,8 +938,20 @@ export class MailApp extends EgwApp
 		// accounts) put the raw JMAP Mailbox id there, not base64(path) like the classic
 		// accountId::profileID::base64(path)::uid shape does - atob() on that would silently
 		// produce garbage instead of throwing, breaking folder-tree badge updates below.
-		const folder = acc_id+'::'+pushData.acl.folder;
 		const foldertree = this.et2 ? this.et2.getWidgetById('nm[foldertree]') : null;
+		// Dovecot's push (Lua plugin) sends the mailbox name with the server's own hierarchy delimiter,
+		// eg. "INBOX.Einkauf" for a "." delimiter, while the folder-tree uses "/"-joined paths ("INBOX/Einkauf"),
+		// so the unseen counter of every folder below INBOX was never found (only INBOX and top-level folders)
+		if (foldertree && typeof pushData.acl.folder === 'string' && pushData.acl.folder.includes('.') &&
+			!foldertree.getNode(acc_id+'::'+pushData.acl.folder))
+		{
+			const canonical = pushData.acl.folder.replace(/\./g, '/');
+			if (foldertree.getNode(acc_id+'::'+canonical))
+			{
+				pushData.acl.folder = canonical;
+			}
+		}
+		const folder = acc_id+'::'+pushData.acl.folder;
 		this.push_active[acc_id] = true;
 
 		// update unseen counter in folder-tree (also for delete)
