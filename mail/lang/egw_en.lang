@@ -421,6 +421,8 @@ mark message as read after	mail	en	Mark message as read after
 match:	mail	en	Match:
 matches	mail	en	matches
 matches regexp	mail	en	matches regexp
+max. width of inline images in a mail body or signature (in px)	mail	en	Max. width of inline images in a mail body or signature (in px)
+a pasted, dropped or inserted image above a certain file-size gets scaled down to this width (keeping aspect ratio), to avoid bloating the mail. leave empty for the default of 800px.	mail	en	A pasted, dropped or inserted image above a certain file-size gets scaled down to this width (keeping aspect ratio), to avoid bloating the mail. Leave empty for the default of 800px.
 mbstring.func_overload=0 is required for correct mail processing!	mail	en	mbstring.func_overload=0 is required for correct email processing!
 message body	mail	en	Message body
 message learned as ham (not spam) and moved back to inbox	mail	en	Message learned as ham (not spam) and moved back to inbox

@@ -1487,6 +1487,15 @@ class Compose
 	const INLINE_IMAGE_RESIZE_THRESHOLD = 32768;
 
 	/**
+	 * Fallback for the 'inlineImageMaxWidth' preference, when it's empty/not set (ticket #126241:
+	 * 320px, Api\MimeMagic::resizeImage()'s own default, was reported as excessively small for a
+	 * deliberately inserted, larger image - the threshold above only decides WHETHER to resize at
+	 * all, not how far, so a big original always collapsed to the same fixed 320px width). Shared
+	 * with Api\Mail\Account::SIGNATURE_IMAGE_DEFAULT_MAX_WIDTH - same preference, same fallback.
+	 */
+	const INLINE_IMAGE_DEFAULT_MAX_WIDTH = 800;
+
+	/**
 	 * TinyMCE's images_upload_url target for compose's own inline-body-image paste/drop (ticket
 	 * #125961) - called directly via a plain fetch()/POST (egw.ajaxUrl(), same convention
 	 * Et2MarkdownEditMixin.ts's _uploadMarkdownFile() already uses for a different endpoint), not
@@ -1522,17 +1531,19 @@ class Compose
 	{
 		$file = $_FILES['file'] ?? null;
 		$path = $_GET['path'] ?? '';
+		$max_w = (int)($GLOBALS['egw_info']['user']['preferences']['mail']['inlineImageMaxWidth'] ?? 0) ?:
+			self::INLINE_IMAGE_DEFAULT_MAX_WIDTH;
 		if (isset($file))
 		{
 			$result = !is_uploaded_file($file['tmp_name']) ? ['location' => lang('No _FILES[upload] found!')] :
-				Api\MimeMagic::imageUploadResponse(file_get_contents($file['tmp_name']), self::INLINE_IMAGE_RESIZE_THRESHOLD);
+				Api\MimeMagic::imageUploadResponse(file_get_contents($file['tmp_name']), self::INLINE_IMAGE_RESIZE_THRESHOLD, $max_w);
 		}
 		else
 		{
 			Api\Vfs::load_wrapper('vfs');
 			$bytes = $path === '' ? false : @file_get_contents('vfs://default'.$path);
 			$result = $bytes === false ? ['location' => lang('Could not read file')] :
-				Api\MimeMagic::imageUploadResponse($bytes, self::INLINE_IMAGE_RESIZE_THRESHOLD);
+				Api\MimeMagic::imageUploadResponse($bytes, self::INLINE_IMAGE_RESIZE_THRESHOLD, $max_w);
 		}
 
 		// switch regular JSON response handling off - same as Vfs::ajax_htmlarea_upload()

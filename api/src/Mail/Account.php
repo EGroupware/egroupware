@@ -1299,6 +1299,26 @@ class Account implements \ArrayAccess
 	const SIGNATURE_IMAGE_RESIZE_THRESHOLD = 32768;
 
 	/**
+	 * Fallback for the 'inlineImageMaxWidth' preference, when it's empty/not set - same mail
+	 * preference and fallback Mail\Compose::INLINE_IMAGE_DEFAULT_MAX_WIDTH uses for mail-body
+	 * inline images (ticket #126241), reused here so a signature image gets the same user-
+	 * configurable width instead of Api\MimeMagic::resizeImage()'s own, smaller 320px default.
+	 */
+	const SIGNATURE_IMAGE_DEFAULT_MAX_WIDTH = 800;
+
+	/**
+	 * Read the 'inlineImageMaxWidth' mail preference, falling back to
+	 * SIGNATURE_IMAGE_DEFAULT_MAX_WIDTH when it's empty, unset or not numeric.
+	 *
+	 * @return int
+	 */
+	protected static function inlineImageMaxWidth() : int
+	{
+		return (int)($GLOBALS['egw_info']['user']['preferences']['mail']['inlineImageMaxWidth'] ?? 0) ?:
+			self::SIGNATURE_IMAGE_DEFAULT_MAX_WIDTH;
+	}
+
+	/**
 	 * Embed any same-origin VFS/webdav-referenced <img> in a signature as a data: URI
 	 *
 	 * A signature is regularly edited by (or for) someone other than whoever uploaded its image:
@@ -1350,7 +1370,7 @@ class Account implements \ArrayAccess
 			$mime = Api\MimeMagic::analyze_data($bytes);
 			if (strlen($bytes) > self::SIGNATURE_IMAGE_RESIZE_THRESHOLD)
 			{
-				[$bytes, $mime] = Api\MimeMagic::resizeImage($bytes, $mime);
+				[$bytes, $mime] = Api\MimeMagic::resizeImage($bytes, $mime, self::inlineImageMaxWidth());
 			}
 			return $matches[1].'data:'.$mime.';base64,'.base64_encode($bytes).$matches[3];
 		}, $html);
@@ -1386,7 +1406,8 @@ class Account implements \ArrayAccess
 		}
 		else
 		{
-			$result = Api\MimeMagic::imageUploadResponse(file_get_contents($file['tmp_name']), self::SIGNATURE_IMAGE_RESIZE_THRESHOLD);
+			$result = Api\MimeMagic::imageUploadResponse(file_get_contents($file['tmp_name']), self::SIGNATURE_IMAGE_RESIZE_THRESHOLD,
+				self::inlineImageMaxWidth());
 		}
 
 		Api\Json\Request::isJSONRequest(false);

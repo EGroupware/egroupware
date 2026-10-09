@@ -78,6 +78,37 @@ class MimeMagicImageUploadResponseTest extends TestCase
 			'an oversized image must be resized, not passed through as-is');
 	}
 
+	/**
+	 * Mail\Compose::ajax_uploadInlineImage() (ticket #126241) passes its own $max_w, read from
+	 * the 'inlineImageMaxWidth' preference, through to here - confirm it actually reaches
+	 * MimeMagic::resizeImage() instead of being silently ignored in favour of the method's own
+	 * 320px default.
+	 */
+	public function testCustomMaxWidthIsForwardedToResize()
+	{
+		$image = imagecreatetruecolor(640, 640);
+		mt_srand(1);
+		for ($x = 0; $x < 640; $x += 2)
+		{
+			for ($y = 0; $y < 640; $y += 2)
+			{
+				imagesetpixel($image, $x, $y, imagecolorallocate($image, mt_rand(0, 255), mt_rand(0, 255), mt_rand(0, 255)));
+			}
+		}
+		ob_start();
+		imagepng($image, null, 0);
+		$bytes = ob_get_clean();
+		imagedestroy($image);
+		$this->assertGreaterThan(self::THRESHOLD, strlen($bytes), 'fixture must actually exceed the threshold');
+
+		$result = MimeMagic::imageUploadResponse($bytes, self::THRESHOLD, 100);
+
+		$data = base64_decode(substr($result['location'], strpos($result['location'], 'base64,') + strlen('base64,')));
+		$resized = imagecreatefromstring($data);
+		$this->assertSame(100, imagesx($resized), 'the caller-supplied max_w must be used, not the 320px default');
+		imagedestroy($resized);
+	}
+
 	public function testNonImageBytesAreRejected()
 	{
 		$result = $this->call('this is not an image at all');
