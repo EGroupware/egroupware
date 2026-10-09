@@ -337,6 +337,45 @@ describe("SearchMixin remote search", () =>
 
 		assert.deepEqual(resultValues(element), ["one"], "Remote result duplicated the local one");
 	});
+
+	it("discards a slow search's results once a newer search has started (ticket #126251)", async() =>
+	{
+		// A real backend can be slow (eg. an unindexed LIKE over a large table), so a second
+		// search can easily start - and finish - before an earlier one's request comes back.
+		// Without a generation check, that late response still gets appended on top of the
+		// newer one's results: every further search just keeps adding to the pile, and a user
+		// who types for a while ends up with thousands of stale, duplicate options - which is
+		// what actually froze the browser tab on ticket #126251.
+		let resolveFirst : (value : any) => void;
+		const firstResponse = new Promise(resolve => { resolveFirst = resolve; });
+		const request = sinon.stub();
+		request.onCall(0).returns(firstResponse);
+		request.onCall(1).returns(Promise.resolve({results: [{value: "second", label: "Second"}], total: 1}));
+		window.egw.request = request;
+
+		const element = await makeWidget();
+		element.searchUrl = "test";
+
+		// First (slow) search - do not wait for it to finish
+		(<any>element).shadowRoot.querySelector("#search").value = "first";
+		await element.startSearch();
+		const firstSearchPromise = (<any>element)._searchPromise;
+
+		// Second (fast) search supersedes it before the first request answers
+		(<any>element).shadowRoot.querySelector("#search").value = "second";
+		await element.startSearch();
+		await (<any>element)._searchPromise;
+		await element.updateComplete;
+
+		assert.deepEqual(resultValues(element), ["second"], "Second search's own results are missing");
+
+		// The first request finally answers - its results must be dropped, not appended
+		resolveFirst({results: [{value: "first", label: "First"}], total: 1});
+		await firstSearchPromise;
+		await element.updateComplete;
+
+		assert.deepEqual(resultValues(element), ["second"], "Stale results from the superseded search leaked in");
+	});
 });
 
 describe("SearchMixin bad response shape", () =>
