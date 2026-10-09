@@ -2764,6 +2764,7 @@ export class MailCompose
 		// there regardless), which is why the earlier fix's simpler suppress-only approach looked
 		// correct when only tested against 'below'/'none'.
 		let leadingBlockHtml : string | null = null;
+		let hasRealContent = false;
 		if (isHtml)
 		{
 			const doc = new DOMParser().parseFromString(current, 'text/html');
@@ -2788,6 +2789,9 @@ export class MailCompose
 			// regress - MailComposeBootstrapRace.test.ts's own "keeps the leading block ABOVE...").
 			const first = doc.body.firstElementChild;
 			const stillBlank = !!first && first.textContent.trim() === '' && !first.querySelector('img');
+			// computed on the whole body (marker already stripped above), BEFORE removing `first` -
+			// see this function's own forcePlacementBelow computation below for why
+			hasRealContent = !stillBlank && (doc.body.textContent.trim() !== '' || !!doc.body.querySelector('img'));
 			if (first && first.tagName === startTag && (this.isReplyCompose || stillBlank))
 			{
 				leadingBlockHtml = first.outerHTML;
@@ -2808,8 +2812,18 @@ export class MailCompose
 			// else: can't confidently locate the previously-inserted signature (the user edited
 			// around/inside it) - leave the current value as pristine rather than guessing; this
 			// skips re-insertion once instead of risking a corrupted/duplicated signature
+			hasRealContent = pristine.trim() !== '';
 		}
-		await this.applySignatureForCurrentIdentity(pristine, this.isReplyCompose && !leadingBlockHtml, leadingBlockHtml);
+		// ticket #126191 follow-up (Ingo): "before"/'top' placement only has meaning relative to a
+		// reply's own quoted content (the signature sits above THAT, still below the user's own
+		// separately-tracked intro line) - a fresh, non-reply compose has nothing for the signature
+		// to be "before" at all, so once real text already exists, force it below regardless of the
+		// raw preference value - matches Ingo's own explicit expectation ("the signature should
+		// always be placed below the text") once there's nothing reply-shaped to justify "top".
+		// A still-blank fresh compose (hasRealContent false) is unaffected - 'top' still gives the
+		// normal "type into the blank line sitting above the signature" starting layout.
+		const forcePlacementBelow = !this.isReplyCompose && hasRealContent;
+		await this.applySignatureForCurrentIdentity(pristine, this.isReplyCompose && !leadingBlockHtml, leadingBlockHtml, forcePlacementBelow);
 	}
 
 	/**
@@ -2833,8 +2847,15 @@ export class MailCompose
 	 *  isReply:true, since that would place it in the WRONG position for 'top' placement (that
 	 *  function builds `start + signatureBlock + body` - a pre-existing block folded into `body`
 	 *  with `start` suppressed would land AFTER the signature instead of before it)
+	 * @param forcePlacementBelow ticket #126191 follow-up: treat the 'insertSignatureAtTopOfMessage'
+	 *  preference as 'below' for this one call regardless of its actual value - set by
+	 *  updateSignatureForIdentity() for a non-reply compose that already has real typed content,
+	 *  where "before"/'top' has no meaning (nothing reply-shaped for the signature to be before) -
+	 *  every other caller (a reply, or a still-blank fresh compose) omits this and keeps the
+	 *  preference's own value honored exactly as configured
 	 */
-	private async applySignatureForCurrentIdentity(pristineBody : string, isReply : boolean = false, leadingBlockHtml : string | null = null) : Promise<void>
+	private async applySignatureForCurrentIdentity(pristineBody : string, isReply : boolean = false, leadingBlockHtml : string | null = null,
+		forcePlacementBelow : boolean = false) : Promise<void>
 	{
 		const mailaccountValue = this.et2.getWidgetById('mailaccount')?.get_value();
 		const [profileID, identId] = String(mailaccountValue ?? '').split(':', 2);
@@ -2864,8 +2885,12 @@ export class MailCompose
 
 		const mimeType : 'html' | 'plain' = this.et2.getWidgetById('mimeType')?.get_value() !== false ? 'html' : 'plain';
 		const insertPref = this.egw.preference('insertSignatureAtTopOfMessage', 'mail');
-		const placement : 'top' | 'below' | 'none' =
+		let placement : 'top' | 'below' | 'none' =
 			insertPref === '1' ? 'top' : insertPref === 'no_belowaftersend' ? 'none' : 'below';
+		if (forcePlacementBelow && placement === 'top')
+		{
+			placement = 'below';
+		}
 		// isPreferenceOn(), not a plain `!!` - this select's default/"show the separator" value is
 		// the STRING "0" (mail_hooks.inc.php's own $no_yes default), which classic PHP's `!$value`
 		// correctly treats as falsy but a naive JS `!!value` does NOT (any non-empty string is
