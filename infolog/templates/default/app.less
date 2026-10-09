@@ -25,22 +25,37 @@ table.infolog_fullWidth { width: 100%; }
   margin-left: 2px;
 }
 
-/* Right-align extra buttons in tab and give them the same size as other buttons */
-.infologExtraButton {
+/* Right-align extra buttons in tab and give them the same size as other buttons.
+ * They sit in the tab bar's scrolling strip, so stick the pair to its right end: when the tabs
+ * overflow, the tabs scroll underneath and the buttons stay reachable. */
+.infologExtraButtons {
   margin-left: auto;
+  position: sticky;
+  right: 0;
+  flex: 0 0 auto;
+  background: var(--sl-panel-background-color);
+}
+.infologExtraButton {
   display: flex;
   align-items: center;
   font-size: 20px;
 }
 
-.infologExtraButton ~ .infologExtraButton {
-  margin: 0;
-}
 /* Default off-state filter crushes the lock glyph to near-invisible; keep it legible */
 .infologEncrypt {
   --image-filter-off: opacity(.6);
 }
 
+/* Edit dialog (layout="edit") */
+/* The title takes what the icon leaves, and may shrink below its intrinsic width in a narrow panel */
+.dialogHeader et2-textbox {
+  flex: 1 1 0;
+  min-width: 0;
+}
+/* Contact may shrink to its column instead of running into the next label */
+et2-template[id="infolog.edit"] > et2-link-entry {
+  min-width: 0;
+}
 div#infolog-edit_infolog-edit-description {
   height: 100%;
 }
