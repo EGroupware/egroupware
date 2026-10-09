@@ -18,7 +18,7 @@ import {IegwAppLocal} from "../../jsapi/egw_global";
 import {until} from "lit/directives/until.js";
 import {classMap} from "lit/directives/class-map.js";
 import {SelectOption} from "../Et2Select/FindSelectOptions";
-import {Et2LayoutController, Et2LayoutHost, Et2LayoutName} from "../Layout/Et2LayoutController/Et2LayoutController";
+import {Et2LayoutController, Et2LayoutHost, Et2LayoutName, Et2LayoutSize} from "../Layout/Et2LayoutController/Et2LayoutController";
 
 // @ts-ignore
 /**
@@ -117,6 +117,18 @@ export class Et2Template extends Et2Widget(LitElement) implements Et2LayoutHost
 		}
 
 		this.loading = Promise.resolve();
+	}
+
+	/**
+	 * The size this template's layout would like to be, so a window around it (a popup) can fit
+	 * itself to it.
+	 *
+	 * @return {Et2LayoutSize | null} the size of the content box in pixels, or null when the
+	 *         template has no layout
+	 */
+	getPreferredSize(columns? : number) : Et2LayoutSize | null
+	{
+		return this._layout.getPreferredSize(columns);
 	}
 
 	destroy()

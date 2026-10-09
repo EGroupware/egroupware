@@ -563,8 +563,31 @@ window.egw_import = (function()
 			};
 			// Use et2_container for width since #popupMainDiv is full width, but we still need
 			// to take padding/margin into account
-			var delta_width = w.width - ($widthNode.outerWidth(true) + ($main_div.outerWidth(true) - $main_div.width()));
-			var delta_height = w.height - ($et2.outerHeight(true) + ($main_div.outerHeight(true) - $main_div.height()));
+			var fit_width = $widthNode.outerWidth(true);
+			var fit_height = $et2.outerHeight(true);
+			var main_extra_width = $main_div.outerWidth(true) - $main_div.width();
+			var main_extra_height = $main_div.outerHeight(true) - $main_div.height();
+
+			// A template with a layout fills the window and scrolls, so the container never says how big its
+			// content is - ask the layout how big it would like to be instead
+			// (a template, not any widget with a layout: a custom fields widget inside a template without
+			// one has a layout of its own that says nothing about how big the popup should be)
+			const layoutHost = $et2[0] ? $et2[0].querySelector('et2-template[layout]') : null;
+			const preferred = layoutHost && typeof layoutHost.getPreferredSize === 'function' ?
+							  layoutHost.getPreferredSize() : null;
+			if (preferred)
+			{
+				// The container follows the window, so how far the layout is from what it asks for is how
+				// far the window has to move.  Its offset width counts a scrollbar as room the layout
+				// has, as it will not need one once it fits.
+				fit_width = w.width - main_extra_width - (layoutHost.offsetWidth - preferred.width);
+				fit_height = w.height - main_extra_height - (layoutHost.clientHeight - preferred.height);
+				// Never bigger than the screen has room for
+				fit_width = Math.min(fit_width, screen.availWidth - (egw_getWindowOuterWidth() - w.width) - main_extra_width);
+				fit_height = Math.min(fit_height, egw.availHeight() - (egw_getWindowOuterHeight() - w.height) - main_extra_height);
+			}
+			var delta_width = w.width - (fit_width + main_extra_width);
+			var delta_height = w.height - (fit_height + main_extra_height);
 
 			// Don't let the window gets horizental scrollbar
 			var scrollWidth = document.body.scrollWidth - document.body.clientWidth;
@@ -585,7 +608,7 @@ window.egw_import = (function()
 
 				if (window.framework && typeof window.framework.resize_popup != 'undefined')
 				{
-					window.framework.resize_popup($widthNode.outerWidth(true), $et2.outerHeight(true), window);
+					window.framework.resize_popup(fit_width, fit_height, window);
 				}
 				else
 				{

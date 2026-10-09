@@ -523,3 +523,40 @@ describe("Layout against the stylesheet the app ships", () =>
 		assert.equal(columns(await at(500)), 1);
 	});
 });
+
+/**
+ * A popup is fitted to its content by asking the content how big it is.  A layout fills the
+ * window it is given, so it has to say how big it would like to be instead.
+ */
+describe("Et2Template getPreferredSize()", () =>
+{
+	it("has no preference when the template has no layout", async() =>
+	{
+		const element = await make(html`<et2-template></et2-template>`);
+
+		assert.isNull(element.getPreferredSize());
+	});
+
+	it("asks for the columns the layout prefers, each --column-min-width wide, and leaves the host as it was",
+		async() =>
+	{
+		const element = await make(html`
+            <et2-template layout="edit" style="--column-min-width: 300px; display: block; height: 120px;">
+                <div style="height: 50px"></div>
+                <div style="height: 50px"></div>
+                <div style="height: 50px"></div>
+            </et2-template>`);
+		// The grid itself comes from the CSS of the theme, which a test does not load
+		const gridBase = <HTMLElement>base(element);
+		gridBase.style.cssText = "display: grid; grid-template-columns: repeat(auto-fit, minmax(var(--column-min-width), 1fr)); column-gap: 10px; grid-auto-rows: min-content";
+		const before = element.getAttribute("style");
+
+		const preferred = element.getPreferredSize();
+
+		assert.isNotNull(preferred);
+		assert.isAtLeast(preferred.width, 2 * 300 + 10, "room for two columns and the gap between them");
+		assert.isAtMost(preferred.width, 2 * 300 + 10 + 40, "not much more than two columns need");
+		assert.isAtLeast(preferred.height, 100, "the rows' height at that width, not the host's own");
+		assert.equal(element.getAttribute("style"), before, "the measuring left the host's style changed");
+	});
+});

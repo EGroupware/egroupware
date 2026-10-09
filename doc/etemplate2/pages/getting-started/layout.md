@@ -81,8 +81,12 @@ The layout arranges the container's **direct children**.  Do not wrap them in a 
 box - the layout would have exactly one child to arrange, and nothing would happen.
 :::
 
+A dialog that opens in a popup fits itself to its layout: the popup is sized to the columns the layout prefers and the
+height they need, and follows the "Set content size" preference, so nothing has to be done in the template.
+
 See [Layout Controller](/mixins/et2layoutcontroller) for how the columns collapse, the `span` and `grow`
-attributes, lining up labels, and the CSS variables that control when it all happens.
+attributes, lining up labels, the conventions `edit` adds (a footer that stays put, buttons that shrink to their
+icons, a row of owner and dates), fitting a popup, and the CSS variables that control when it all happens.
 
 ## Boxes: `et2-hbox` and `et2-vbox`
 

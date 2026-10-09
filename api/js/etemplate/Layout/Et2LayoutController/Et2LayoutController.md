@@ -127,6 +127,13 @@ wide popup and one column in a narrow sidebar without knowing anything about eit
 - `<et2-tabbox>` is full width and at least `20em` tall, so the tabs are not squeezed into half a dialog.
 - `<et2-nextmatch>` is full width too, for the same reason.
 - `<et2-appicon>` does not stretch.
+- A `footer` stays at the bottom of the dialog while the form scrolls, so Save / Apply / Cancel stay reachable, and
+  its widgets wrap onto another line rather than run off the edge of a narrow panel.
+- When the container is as narrow as it takes to stack the labels above the fields (`36em`), every `et2-button` with
+  an icon gives up its label and keeps only the icon.  Above that there is room for both, so both stay.  The label is
+  clipped, not removed, so it is still the button's accessible name.  A button without an icon keeps its label, and
+  so does `et2-dropdown-button`.
+- Anything with the class `dialogMeta` is a row of read-only facts - see [Who changed it, and when](#who-changed-it-and-when).
 
 ```xml
 
@@ -171,6 +178,34 @@ Once a second column would be too narrow to be useful, the grid drops to one.  L
 
 When even one column cannot hold a label and an input side by side, the labels move above the inputs - and they do it
 for every field at once, so the form does not turn into a ragged mix of wrapped and unwrapped rows.
+
+### Who changed it, and when
+
+The owner, the last modifier and the dates are not inputs, so they do not line up with the form's fields by
+themselves.  Give a row of them the class `dialogMeta`, and `edit` sets it out like one more field: a label in the
+label column, then the name starting where the inputs above it start, and the date at the edge of the cell.
+
+```xml
+
+<et2-hbox class="dialogMeta">
+	<et2-description value="Last modified" for="ts_modifier"/>
+	<et2-hbox>
+		<et2-select-account id="ts_modifier" readonly="true"/>
+		<et2-date-time id="ts_modified" readonly="true"/>
+	</et2-hbox>
+</et2-hbox>
+<et2-hbox class="dialogMeta">
+	<et2-description value="Created" for="ts_created"/>
+	<et2-date-time id="ts_created" readonly="true"/>
+</et2-hbox>
+```
+
+- The label and the pair that follows it are separate children, so the pair can wrap by itself.  When the cell is too
+  narrow for the name and the date together, the date drops to a line of its own and, being alone on it, starts under
+  the name rather than under the label.
+- A row with nothing but a date (`Created`) has the date at the right edge, so stacked in one column the dates end at
+  the same place whatever the names before them.
+- At the width where the labels stack above their fields, the name and date drop under their label too.
 
 ## Wider widgets: `span`
 
@@ -319,6 +354,17 @@ It can also be set per template, right where the layout is chosen:
 <et2-template id="timesheet.edit.general" layout="2-column" style="--column-min-width:34em;">
 ```
 
+:::tip
+Choose a value that lets a column hold a label **and** its input side by side: the label column
+(`--label-width`, `8em` by default) plus the widest input in the form.  `24em` holds a date input, as in the
+timesheet dialog; link entries, category selects and email inputs need more - `28em` in the InfoLog dialog.
+
+The value scales with the text size, but the inputs do not scale in step with it exactly, so check a new dialog with
+the "Set content size" preference at its largest.  A column that is too narrow does not overflow - the label is the
+part that gives way, so some labels come out narrower than the others and the inputs stop lining up.  If that happens,
+widen the column.
+:::
+
 ### `--collapse-width`
 
 - Default: `600px`
@@ -346,6 +392,32 @@ Nothing has to be done per widget, and the container itself is untouched - givin
 containment (`contain: layout`) would fix the dropdowns and break everything else that escapes
 a scrolling panel with `position: fixed`, including the rich text editor's menus.
 
+## Fitting a popup to a layout
+
+A popup is sized to its content: `resize_popup()` in `egw.js` compares the window with the container and moves the
+window by the difference.  A layout fills whatever it is given and scrolls inside it, so the container never says how big
+the content is, and without help a popup holding a layout would stay at the size it was opened at.
+
+`getPreferredSize()` on `<et2-template>` says it instead - it asks its `Et2LayoutController`, which does the measuring.
+It returns the size of the layout's content box, in pixels, or `null` when there is no layout to measure:
+
+- **Width**: the layout's preferred number of columns (`2` for `2-column` and `edit`, `1` for `stack`), each
+  `--column-min-width` wide, plus the gaps, the padding and room for a scrollbar.  The width is never below
+  `--collapse-width` plus the scrollbar, or the columns it asked for would collapse again.
+- **Height**: every row at its natural height at that width, with a growing row such as a tabbox at its own minimum.
+
+`resize_popup()` moves the window by how far the layout is from that size, never beyond what the screen has room for,
+and it shrinks a window that is bigger than the layout needs.  Nothing has to be done in the template.
+
+The size a popup is *registered* with (`edit_popup` and friends in the app's hooks) is only the size it opens at.
+Register one that fits the layout's preferred size at the standard text size, so the popup does not open in one column
+and then jump.  The registered size is in pixels and does not follow the "Set content size" preference, which is why the
+popup is fitted afterwards.
+
+:::warning
+A window that is already as tall as the screen keeps its height - `resize_popup()` has always left those alone.
+:::
+
 ## Widget Implementation
 
 `Et2LayoutController` applies layout strategies (`stack`, `2-column`, `edit`) to layout hosts, and keeps spanned
@@ -366,6 +438,16 @@ export class MyLayoutHost extends Et2Widget(LitElement) implements Et2LayoutHost
 	layout : Et2LayoutName;
 
 	private _layout = new Et2LayoutController(this);
+}
+```
+
+A widget that should be able to say how big its layout would like to be (see
+[Fitting a popup to a layout](#fitting-a-popup-to-a-layout)) forwards to the controller:
+
+```ts
+getPreferredSize() : Et2LayoutSize | null
+{
+	return this._layout.getPreferredSize();
 }
 ```
 
