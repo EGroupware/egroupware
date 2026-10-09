@@ -223,6 +223,10 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 		protected _searchPromise : Promise<DataType[]> = Promise.resolve(<DataType[]>[]);
 		protected _searchResults : DataType[] = [];
 
+		// Bumped by every startSearch() call so a slow, superseded remoteSearch() can tell its
+		// results are stale (and not append them) once a newer search has already reset _searchResults
+		protected _searchGeneration : number = 0;
+
 		// Input where user types to filter
 		protected get _searchNode() : HTMLInputElement { return this.shadowRoot.querySelector("#search");}
 
@@ -247,6 +251,7 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 			// Stop timeout timer
 			clearTimeout(this._searchTimeout);
 
+			this._searchGeneration++;
 			this._totalResults = 0;
 			this._searchResults = [];
 
@@ -380,22 +385,25 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 				return Promise.resolve(<DataType[]><unknown>[]);
 			}
 
+			// Tag this call with the generation current when it started, so a response that comes
+			// back after a newer search has already reset _searchResults can be told apart and
+			// dropped - otherwise a slow server (eg. a large, unindexed position table) lets many
+			// searches overlap, and every one of them keeps appending to the current results,
+			// growing the dropdown (and the browser) without bound. See ticket #126251.
+			const generation = this._searchGeneration;
+			const ifCurrent = (results) => generation === this._searchGeneration ?
+				<any>this.processRemoteResults(results) : <DataType[]><unknown>[];
+
 			// Caller supplies the results itself - no round-trip
 			if(typeof this.searchUrl === "function")
 			{
-				return Promise.resolve(this.searchUrl(search, options)).then((results) =>
-				{
-					return <any>this.processRemoteResults(results);
-				});
+				return Promise.resolve(this.searchUrl(search, options)).then(ifCurrent);
 			}
 
 			// An app's own method, resolved (and lazy-loaded) through egw()
 			if(this.searchUrl.startsWith("app."))
 			{
-				return Promise.resolve(this.egw().applyFunc(this.searchUrl, [search, options])).then((results) =>
-				{
-					return <any>this.processRemoteResults(results);
-				});
+				return Promise.resolve(this.egw().applyFunc(this.searchUrl, [search, options])).then(ifCurrent);
 			}
 
 			// Include a limit by default to avoid massive lists breaking the UI
@@ -406,10 +414,7 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 				...options
 			}
 			return this.egw().request(this.egw().link(this.egw().ajaxUrl(this.egw().decodePath(this.searchUrl)),
-				{query: search, ...sendOptions}), [search, sendOptions]).then((results : Results) =>
-			{
-				return this.processRemoteResults(results);
-			});
+				{query: search, ...sendOptions}), [search, sendOptions]).then(ifCurrent);
 		}
 
 		/**
