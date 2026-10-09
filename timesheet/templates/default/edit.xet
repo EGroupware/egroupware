@@ -149,13 +149,17 @@
         <et2-select label="User" id="ts_owner" span="2" noLang="1"></et2-select>
         <et2-select label="Status" span="3" statustext="select a status of the timesheet" id="ts_status" disabled="@no_ts_status" emptyLabel="please select"></et2-select>
 
-        <et2-description value="Last modified"></et2-description>
-					<et2-hbox  span="3">
-						<et2-select-account  id="ts_modifier" readonly="true"></et2-select-account>
-						<et2-date-time  id="ts_modified" readonly="true" align="left" disabled="!@ts_modified"></et2-date-time>
-					</et2-hbox>
-        <et2-date-time label="Created" id="ts_created" readonly="true" align="left"></et2-date-time>
-
+        <et2-hbox class="dialogMeta">
+            <et2-description value="Last modified" for="ts_modifier"></et2-description>
+            <et2-hbox>
+                <et2-select-account id="ts_modifier" readonly="true"></et2-select-account>
+                <et2-date-time id="ts_modified" readonly="true" disabled="!@ts_modified"></et2-date-time>
+            </et2-hbox>
+        </et2-hbox>
+        <et2-hbox class="dialogMeta">
+            <et2-description value="Created"></et2-description>
+            <et2-date-time id="ts_created" readonly="true"></et2-date-time>
+        </et2-hbox>
 
         <et2-hbox class="dialogFooterToolbar">
 						<et2-hbox>

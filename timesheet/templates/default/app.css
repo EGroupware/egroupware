@@ -15,13 +15,14 @@ table.egwGridView_grid tbody td[align=right] {
   margin-bottom: 5px;
   display: inline-block;
 }
-/* The edit dialog's responsive grid defaults to 26rem-wide columns - far more than these
- * fields need, and wide enough that the popup would have to open ~200px wider than it does
- * just to fit two of them side by side.  At 22em both columns fit the registered popup size
- * (timesheet_hooks::search_link()), and the grid still drops to a single column when the
- * window really is narrow. */
+/* The edit dialog's responsive grid defaults to 26rem-wide columns - more than these fields
+ * need, and wide enough that the popup would have to open ~200px wider than it does just to
+ * fit two of them side by side.  24em is the narrowest column in which a label still keeps
+ * its full width beside the date input: at 22em the labels shrink at the larger text sizes.
+ * Both columns fit the registered popup size (timesheet_hooks::search_link()), and the grid
+ * still drops to a single column when the window really is narrow. */
 #timesheet-edit.et2_container et2-template[layout="edit"] {
-  --column-min-width: 22em;
+  --column-min-width: 24em;
 }
 /* Match the split Save button's box to the surrounding Edit/Apply/Cancel buttons */
 #timesheet-edit_save_split {
