@@ -145,6 +145,7 @@
                             <et2-image  src="$row_cont[status_icon]" class="status_img $row_cont[class]"></et2-image>
                             <et2-image  src="$row_cont[smime]" inline="true" class="bi"></et2-image>
                             <et2-image  src="$row_cont[pgp]" inline="true" class="bi"></et2-image>
+                            <et2-image  src="$row_cont[priority_icon]"></et2-image>
                             <et2-image  src="$row_cont[attachment_icon]"></et2-image>
                             <et2-image  src="$row_cont[flagged_icon]" id="flaggedImage"></et2-image>
                         </et2-hbox>
@@ -195,6 +196,7 @@
                         <et2-image  src="$row_cont[status_icon]" class="status_img $row_cont[class]"></et2-image>
                     </et2-hbox>
                     <et2-hbox  class="status_icons">
+                        <et2-image  src="$row_cont[priority_icon]"></et2-image>
                         <et2-image  src="$row_cont[attachment_icon]"></et2-image>
                         <et2-image  src="$row_cont[flagged_icon]" id="flaggedImage"></et2-image>
                     </et2-hbox>

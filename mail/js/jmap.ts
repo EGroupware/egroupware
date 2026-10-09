@@ -571,6 +571,12 @@ export class MailJmap
 	// bare form's raw, undecoded value is all isSmimeWrapperOnly() needs anyway (plain ASCII
 	// type/param text, never RFC 2047-encoded).
 	private static readonly CONTENT_TYPE_HEADER_PROPERTY = 'header:content-type';
+	// X-Priority for the row-list priority mark - classic mail_ui::header2gridelements() showed a
+	// prio_high/prio_low icon and a prio_high row class, lost when get_rows() was removed. Bare
+	// RFC 8621 §4.1.3 form, the same key the local IMAP shim already serves
+	// (Api\Mail\Jmap\Imap::PRIORITY_HEADER_PROPERTY) inside its existing X-Priority/
+	// Disposition-Notification-To header fetch - no extra IMAP round trip per row.
+	private static readonly PRIORITY_HEADER_PROPERTY = 'header:X-Priority';
 	// Thread-Topic/Thread-Index/List-Id reply propagation (classic getReplyData()'s equivalent,
 	// removed 2014 commit 2172fc769d, found missing here entirely 2026-09-09 - see
 	// fetchForReply()'s own use of these). Matches Api\Mail\Jmap\Imap::THREAD_TOPIC_HEADER_PROPERTY
@@ -890,7 +896,7 @@ export class MailJmap
 				});
 				const properties = [
 					'id', 'keywords', 'size', 'receivedAt', 'sentAt', 'subject',
-					'from', 'to', 'cc', 'bcc', 'hasAttachment', MailJmap.MDN_HEADER_PROPERTY,
+					'from', 'to', 'cc', 'bcc', 'hasAttachment', MailJmap.MDN_HEADER_PROPERTY, MailJmap.PRIORITY_HEADER_PROPERTY,
 				MailJmap.CONTENT_TYPE_HEADER_PROPERTY,
 				];
 				if (fetchPreview)
@@ -1024,7 +1030,7 @@ export class MailJmap
 	{
 		const properties = [
 			'id', 'threadId', 'keywords', 'size', 'receivedAt', 'sentAt', 'subject',
-			'from', 'to', 'cc', 'bcc', 'hasAttachment', MailJmap.MDN_HEADER_PROPERTY,
+			'from', 'to', 'cc', 'bcc', 'hasAttachment', MailJmap.MDN_HEADER_PROPERTY, MailJmap.PRIORITY_HEADER_PROPERTY,
 			MailJmap.CONTENT_TYPE_HEADER_PROPERTY,
 		];
 		if (fetchPreview)
@@ -1136,7 +1142,7 @@ export class MailJmap
 		const mailboxId = await this.mailboxId(client, token.accountId, profileID, folder);
 		const properties = [
 			'id', 'keywords', 'size', 'receivedAt', 'sentAt', 'subject',
-			'from', 'to', 'cc', 'bcc', 'hasAttachment', MailJmap.MDN_HEADER_PROPERTY,
+			'from', 'to', 'cc', 'bcc', 'hasAttachment', MailJmap.MDN_HEADER_PROPERTY, MailJmap.PRIORITY_HEADER_PROPERTY,
 			MailJmap.CONTENT_TYPE_HEADER_PROPERTY,
 		];
 		if (fetchPreview)
@@ -2769,7 +2775,7 @@ export class MailJmap
 				}
 				const properties = [
 					'id', 'keywords', 'size', 'receivedAt', 'sentAt', 'subject',
-					'from', 'to', 'cc', 'bcc', 'hasAttachment', MailJmap.MDN_HEADER_PROPERTY,
+					'from', 'to', 'cc', 'bcc', 'hasAttachment', MailJmap.MDN_HEADER_PROPERTY, MailJmap.PRIORITY_HEADER_PROPERTY,
 				MailJmap.CONTENT_TYPE_HEADER_PROPERTY,
 				];
 				if (fetchPreview)
@@ -7971,6 +7977,8 @@ export class MailJmap
 	{
 		const row = this.email2row(representative, profileID, mailboxId);
 		const {flags, css, status_icon, hasFlagged, labelTags} = this.keywordsToRowFlags(this.aggregateThreadKeywords(members));
+		// css is rebuilt from the thread's keywords above - keep the representative's priority class
+		if (MailJmap.rowPriority(representative) === 'high') css.push('prio_high');
 		return {
 			...row,
 			// the representative's own row_id/uid still end in its plain email id (from
@@ -8153,6 +8161,18 @@ export class MailJmap
 	 *  cross-folder result actually lives without a dedicated folder column/row. `fromaddress`/
 	 *  `toaddress` etc. stay unprefixed - only the one unified display column changes.
 	 */
+	/**
+	 * X-Priority value ("1", "1 (Highest)", " 5 (Lowest)" raw form from a real JMAP server, ...)
+	 * mapped like classic mail_ui::header2gridelements(): below 3 is high, above 3 is low,
+	 * anything else (3, missing, unparsable) is normal.
+	 */
+	private static rowPriority(email : any) : 'high' | 'low' | ''
+	{
+		const prio = parseInt(String(email?.[MailJmap.PRIORITY_HEADER_PROPERTY] ?? '').trim(), 10);
+		if (isNaN(prio) || prio === 3) return '';
+		return prio < 3 ? 'high' : 'low';
+	}
+
 	private email2row(email : any, profileID : string, mailboxId : string, showRecipient : boolean = false, folderLabel? : string) : any
 	{
 		const addressList = (list : { name? : string, email : string }[]) =>
@@ -8173,6 +8193,8 @@ export class MailJmap
 
 		const keywords : Record<string, boolean> = email.keywords || {};
 		const {flags, css, status_icon, hasFlagged, labelTags} = this.keywordsToRowFlags(keywords);
+		const priority = MailJmap.rowPriority(email);
+		if (priority === 'high') css.push('prio_high');
 
 		// mail_ui::header2gridelements()'s convention (relied on by app.ts's preview(), which
 		// concats "primary address" + "additional addresses" into one list for the preview panel):
@@ -8212,6 +8234,7 @@ export class MailJmap
 			smime: MailJmap.smimeRowIcon(email[MailJmap.CONTENT_TYPE_HEADER_PROPERTY]),
 			pgp: MailJmap.pgpRowIcon(email[MailJmap.CONTENT_TYPE_HEADER_PROPERTY]),
 			flagged_icon: hasFlagged ? 'unread_flagged_small' : '',
+			priority_icon: priority ? 'prio_' + priority : '',
 			// no attachment-list preview block for Phase 1 (see class docblock) - but app.ts's
 			// preview() unconditionally reads data.attachmentsBlock[0], so this must at
 			// least exist as an array or clicking a row throws and the preview never loads
