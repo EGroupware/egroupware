@@ -113,4 +113,61 @@ class ImapRealMailboxNameTest extends TestCase
 
 		$imap->openMailbox('INBOX/Sub/Folder');
 	}
+
+	/**
+	 * Found live (a real customer, 2026-10-09, help.egroupware.org): unlike openMailbox()/fetch()/
+	 * etc. above, getACL()/setACL()/deleteACL()/getMyACLRights() were never given the same
+	 * JMAP-CANONICAL-PATH-FIX translation - mail_acl's own calls (mail/inc/class.mail_acl.inc.php)
+	 * sent the canonical "/"-path straight to Horde's raw GETACL/SETACL/DELETEACL commands,
+	 * failing outright against any non-"/"-delimited server ("Die Zugriffsrechte konnten auf dem
+	 * IMAP Server nicht gelesen werden!").
+	 */
+	public function testGetACLTranslatesBeforeReachingHorde()
+	{
+		$imap = $this->mockImap('.', ['_getACL']);
+		$imap->expects($this->once())
+			->method('_getACL')
+			->with($this->callback(fn($mailbox) => (string)$mailbox === 'INBOX.Arens Mails'))
+			->willReturn([]);
+
+		$imap->getACL('INBOX/Arens Mails');
+	}
+
+	public function testSetACLTranslatesBeforeReachingHorde()
+	{
+		// setACL()/deleteACL()/getMyACLRights() (unlike getACL()) check $this->_capability('ACL')
+		// first - stub it truthy too, or they'd throw NoSupportExtension before ever reaching
+		// _setACL() at all. Only the mailbox argument is asserted - identifier/options go through
+		// Horde's own UTF7-IMAP/ACL-string encoding first, out of scope for this translation test.
+		$imap = $this->mockImap('.', ['_setACL', '_capability']);
+		$imap->method('_capability')->willReturn(true);
+		$imap->expects($this->once())
+			->method('_setACL')
+			->with($this->callback(fn($mailbox) => (string)$mailbox === 'INBOX.Arens Mails'), $this->anything(), $this->anything());
+
+		$imap->setACL('INBOX/Arens Mails', 'someone', ['rights' => 'lrs']);
+	}
+
+	public function testDeleteACLTranslatesBeforeReachingHorde()
+	{
+		$imap = $this->mockImap('.', ['_deleteACL', '_capability']);
+		$imap->method('_capability')->willReturn(true);
+		$imap->expects($this->once())
+			->method('_deleteACL')
+			->with($this->callback(fn($mailbox) => (string)$mailbox === 'INBOX.Arens Mails'), $this->anything());
+
+		$imap->deleteACL('INBOX/Arens Mails', 'someone');
+	}
+
+	public function testGetMyACLRightsTranslatesBeforeReachingHorde()
+	{
+		$imap = $this->mockImap('.', ['_getMyACLRights', '_capability']);
+		$imap->method('_capability')->willReturn(true);
+		$imap->expects($this->once())
+			->method('_getMyACLRights')
+			->with($this->callback(fn($mailbox) => (string)$mailbox === 'INBOX.Arens Mails'))
+			->willReturn(null);
+
+		$imap->getMyACLRights('INBOX/Arens Mails');
+	}
 }
