@@ -262,6 +262,13 @@ class SharingACLTest extends SharingBase
 		$this->assertNotNull($form, "Could not read the share link");
 		$rows = array_values($data['data']['content']['nm']['rows']);
 
+		// The client keeps the upload widget pointed at the hidden upload folder only if told this share has one,
+		// otherwise it retargets uploads at whatever folder is shown, which the visitor cannot write to
+		$this->assertTrue($data['data']['content']['hidden_upload'] ?? false,
+			"Client was not told this share has a hidden upload folder");
+		$this->assertFalse($data['data']['content']['initial_path_readonly'] ?? true,
+			"Client was told the share root is read-only, which disables the upload button");
+
 		// Check we can't find the non-shared file
 		$result = array_filter($rows, function($v) {
 			return $v['name'] == $this->no_access;

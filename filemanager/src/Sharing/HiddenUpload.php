@@ -42,6 +42,8 @@ class HiddenUpload extends AnonymousList
 		{
 			// Tell client side that the path is actually writable
 			$content['initial_path_readonly'] = false;
+			// Client side must not re-point the upload at the directory being shown
+			$content['hidden_upload'] = true;
 
 			// No new anything
 			$this->etemplate->disableElement('nm[new]');

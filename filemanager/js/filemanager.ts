@@ -319,12 +319,7 @@ export class filemanagerAPP extends EgwApp
 		{
 			this.path_widget[etemplate_name].set_value(dir);
 		}
-		const upload = this.et2.getWidgetById('upload');
-		if(upload)
-		{
-			// Et2VfsUpload needs the trailing /
-			upload.path = dir + '/';
-		}
+		this.setUploadPath(dir);
 		if(typeof state.state === "undefined") state.state = {};
 
 		// PHP stores "no column filters" as an empty array, which would lose the dir set on it when serialized
@@ -467,6 +462,24 @@ export class filemanagerAPP extends EgwApp
 	}
 
 	/**
+	 * Point the upload widget at the directory being shown
+	 *
+	 * A share with a hidden upload folder always uploads into that folder, whatever directory is shown,
+	 * so the path the server gave the widget is left alone.
+	 *
+	 * @param dir
+	 */
+	protected setUploadPath(dir : string)
+	{
+		const upload = this.et2.getWidgetById('upload');
+		if(upload && !this.et2.getArrayMgr('content').getEntry('hidden_upload'))
+		{
+			// Et2VfsUpload needs the trailing /
+			upload.path = dir + '/';
+		}
+	}
+
+	/**
 	 * Get current working directory
 	 */
 	get_path(etemplate_name? : string) : string
@@ -485,12 +498,7 @@ export class filemanagerAPP extends EgwApp
 		{
 			this.change_dir('~', widget);
 		}
-		const upload = this.et2.getWidgetById('upload');
-		if(upload)
-		{
-			// Et2VfsUpload needs the trailing /
-			upload.path = widget.getValue() + '/';
-		}
+		this.setUploadPath(widget.getValue());
 		this.nm && this.nm.applyFilters({col_filter: {dir: widget.getValue()}});
 
 		return true;
