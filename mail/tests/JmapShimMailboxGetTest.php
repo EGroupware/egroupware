@@ -27,7 +27,7 @@ use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 #[AllowMockObjectsWithoutExpectations]
 class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 {
-	private function mockImap(array $namespaces = [], array $onlyMethods = []) : Imap
+	private function mockImap(array $namespaces = [], array $onlyMethods = [], bool $omitOthersNamespace = false) : Imap
 	{
 		$imap = $this->getMockBuilder(Imap::class)
 			->disableOriginalConstructor()
@@ -36,16 +36,23 @@ class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 				$onlyMethods,
 			)))
 			->getMock();
-		$imap->method('getNameSpaceArray')->willReturn([
+		$nameSpaceArray = [
 			'personal' => [[
 				'delimiter' => $namespaces['personal'][0]['delimiter'] ?? '.',
 				'name' => $namespaces['personal'][0]['name'] ?? '',
 			]],
-			'others' => [[
+		];
+		// a real server very commonly never advertises a distinct "Other Users'"/"Shared"
+		// NAMESPACE entry at all - Api\Mail\Imap::getNameSpaceArray() then has no 'others' key to
+		// return at all (not an empty one) - see namespaceDelimiter()'s own docblock (ticket #126231)
+		if (!$omitOthersNamespace)
+		{
+			$nameSpaceArray['others'] = [[
 				'delimiter' => $namespaces['others'][0]['delimiter'] ?? '\\',
 				'name' => $namespaces['others'][0]['name'] ?? '',
-			]],
-		]);
+			]];
+		}
+		$imap->method('getNameSpaceArray')->willReturn($nameSpaceArray);
 		// mailboxNode()'s 'aclCapable' field calls this for the INBOX path - stub it so tests
 		// that never construct a real connection don't fall through to the real
 		// Horde_Imap_Client_Base::queryCapability(), which tries to actually connect (this mock
@@ -151,6 +158,31 @@ class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 		$ids = $this->invokePrivate('listChildIds', [$imap, 'user']);
 
 		$this->assertSame([base64_encode('user/bb')], $ids);
+	}
+
+	/**
+	 * Ticket #126231 (2026-10-09, a real customer, Cyrus): a server that never advertises a
+	 * distinct "Other Users'" NAMESPACE entry at all (common - getNameSpaceArray() then has no
+	 * 'others' key, not merely an empty one) regressed by the fix above - namespaceDelimiter()
+	 * used to default straight to '/' for 'others' once nothing was reported, silently building
+	 * "user/%" against a Cyrus server whose real (and only) delimiter is '.', matching NOTHING
+	 * under "user" at all (every subscribed shared mailbox vanishing from the tree, exactly the
+	 * reported symptom) - must fall back to the 'personal' delimiter instead, restoring the
+	 * previously-accidental-but-correct behaviour for this common case.
+	 */
+	public function testListChildIdsUnderNamespaceRootFallsBackToPersonalDelimiterWhenOthersNotAdvertised()
+	{
+		$imap = $this->mockImap(['personal' => [['delimiter' => '.']]], omitOthersNamespace: true);
+		$imap->expects($this->once())->method('listMailboxes')
+			->with('user.%', \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, ['children' => true])
+			->willReturn(['user.helpdesk' => []]);
+
+		$ids = $this->invokePrivate('listChildIds', [$imap, 'user']);
+
+		// canonicalPath() always represents the path "/"-joined regardless of the real server
+		// delimiter - namespacePrefix('others') is itself '' here (no 'others' namespace at all),
+		// so canonicalPath() falls through to the 'personal' delimiter ('.') for the translation
+		$this->assertSame([base64_encode('user/helpdesk')], $ids);
 	}
 
 	/**

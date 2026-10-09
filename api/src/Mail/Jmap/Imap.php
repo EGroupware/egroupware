@@ -1476,6 +1476,22 @@ class Imap extends Jmap\Base
 	/**
 	 * Get (and cache, per request/connection) one of $imap's namespace delimiters
 	 *
+	 * Many real servers (plenty of Cyrus installs included) never advertise a distinct "Other
+	 * Users'"/"Shared" NAMESPACE entry at all - Api\Mail\Imap::getNameSpaceArray() then has no
+	 * 'others'/'shared' key to return (see its own getUserMailboxString() sibling method's
+	 * explicit `!isset($nameSpaces['others'])` guard, same gap). Found live (ticket #126231, a
+	 * real customer report after upgrading past 08aeb81d02/51e01b9c6d): THOSE fixes started
+	 * asking for the 'others' delimiter specifically whenever a path is under "user"/"shared"
+	 * (isNamespaceRootPath()), where this method used to silently default straight to '/' - wrong
+	 * for a server whose real (personal-namespace, and in practice only) delimiter is anything
+	 * else (eg. Cyrus's classic '.'), building a wildcard LIST pattern against the wrong
+	 * delimiter and silently matching nothing for that whole level (listChildIds()'s own comment
+	 * on exactly this failure mode) - previously MASKED by always (wrongly, but for such a server
+	 * harmlessly) using the 'personal' delimiter unconditionally. Falling back to 'personal' first
+	 * (only reaching the hardcoded '/' if that's ALSO never reported) restores that previously-
+	 * accidental correctness for this real, common case, while a server that genuinely reports a
+	 * distinct 'others' delimiter still gets it.
+	 *
 	 * @param \Horde_Imap_Client_Socket $imap
 	 * @param string $namespace 'personal'|'others'|'shared' (Horde_Imap_Client_Socket::getNameSpaceArray()'s keys)
 	 * @return string
@@ -1484,7 +1500,13 @@ class Imap extends Jmap\Base
 	{
 		static $delimiters = [];
 		$key = spl_object_id($imap).'|'.$namespace;
-		return $delimiters[$key] ??= $imap->getNameSpaceArray()[$namespace][0]['delimiter'] ?? '/';
+		if (isset($delimiters[$key]))
+		{
+			return $delimiters[$key];
+		}
+		$nameSpaces = $imap->getNameSpaceArray();
+		return $delimiters[$key] = $nameSpaces[$namespace][0]['delimiter'] ??
+			($namespace !== 'personal' ? $nameSpaces['personal'][0]['delimiter'] ?? null : null) ?? '/';
 	}
 
 	/**
