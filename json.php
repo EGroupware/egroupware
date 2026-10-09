@@ -126,12 +126,6 @@ try {
 	//Create a new json handler
 	$json = new Json\Request();
 
-	//Check whether the request data is set
-	if (isset($GLOBALS['egw_unset_vars']['_POST[json_data]']))
-	{
-		$json->isJSONRequest(true);	// otherwise exception is not send back to client, as we have not yet called parseRequest()
-		throw new Json\Exception\ScriptTags("JSON Data contains script tags. Aborting...");
-	}
 	// check if we have a real json request
 	if (strpos($_SERVER['CONTENT_TYPE'], 'application/json') === 0)
 	{
