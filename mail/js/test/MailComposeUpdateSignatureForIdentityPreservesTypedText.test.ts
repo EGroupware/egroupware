@@ -133,7 +133,7 @@ describe("MailCompose.updateSignatureForIdentity() preserves typed text (ticket 
 		et2.getWidgetById('mail_htmltext').set_value(
 			'<p>Danke für die Info</p>' +
 			'<div id="' + MailJmap.SIGNATURE_MARKER_ID + '"><p>Old Signature</p></div>' +
-			'<blockquote>Original message text</blockquote>'
+			'<blockquote type="cite">Original message text</blockquote>'
 		);
 
 		await (compose as any).updateSignatureForIdentity();
@@ -146,6 +146,35 @@ describe("MailCompose.updateSignatureForIdentity() preserves typed text (ticket 
 			"the user's own intro line stays pinned above the signature, unaffected by the non-reply forcePlacementBelow override");
 		assert.isBelow(signaturePos, quotePos,
 			"the signature stays above the quoted original message");
+	});
+
+	it("keeps every line of a MULTI-paragraph reply intro together, ahead of the signature (ticket #126191 follow-up)", async() =>
+	{
+		const {compose, et2} = createCompose({insertSignatureAtTopOfMessage: '1'});
+		(compose as any).isReplyCompose = true;
+		// Ingo's own follow-up report: replying still works for a SINGLE typed line, but a second
+		// (or further) intro paragraph used to be left behind in `pristine`, landing BETWEEN the
+		// signature and the quoted original instead of staying with the first line.
+		et2.getWidgetById('mail_htmltext').set_value(
+			'<p>Danke für die Info</p>' +
+			'<p>und noch ein zweiter Satz dazu</p>' +
+			'<div id="' + MailJmap.SIGNATURE_MARKER_ID + '"><p>Old Signature</p></div>' +
+			'<fieldset class="originalMessage"><legend>Original message</legend></fieldset>' +
+			'<blockquote type="cite">Original message text</blockquote>'
+		);
+
+		await (compose as any).updateSignatureForIdentity();
+
+		const value = et2.getWidgetById('mail_htmltext').get_value();
+		const firstLine = value.indexOf('Danke für die Info');
+		const secondLine = value.indexOf('und noch ein zweiter Satz dazu');
+		const signaturePos = value.indexOf('Freundliche Grüße');
+		const quotePos = value.indexOf('Original message text');
+		assert.isAbove(firstLine, -1);
+		assert.isAbove(secondLine, -1);
+		assert.isBelow(firstLine, secondLine, "both intro lines stay in their original relative order");
+		assert.isBelow(secondLine, signaturePos, "the second intro line must stay ABOVE the signature, not get stranded below it");
+		assert.isBelow(signaturePos, quotePos, "the signature stays above the quoted original message");
 	});
 
 	it("still recognizes a genuinely untouched blank placeholder line and preserves it verbatim", async() =>

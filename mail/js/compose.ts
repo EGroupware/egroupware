@@ -2770,29 +2770,51 @@ export class MailCompose
 			{
 				marker.remove();
 			}
-			// ticket #126191 (Ingo, a FRESH/non-reply compose): the tag check alone isn't enough
-			// to recognize "the blank placeholder line, still untouched" - once the user types
-			// several lines of real text starting in it, it's indistinguishable from genuine body
-			// content by tag name only, and extracting just that FIRST paragraph anyway strands it
-			// in front of the newly-spliced-in signature while every OTHER typed paragraph (there
-			// being no structural reason to treat any one of them specially) ends up behind the new
-			// signature instead of alongside the first one.
-			//
-			// A reply/forward is different: its leading paragraph is a deliberately SEPARATE region
-			// by design (the user's own intro line, directly above the quoted original message) -
-			// not just an arbitrary first paragraph of an otherwise undifferentiated body - so it's
-			// always extracted/kept pinned above the signature regardless of content, same as
-			// before (see the 2026-09-22/Ingo-Henze fix above this block, which this must not
-			// regress - MailComposeBootstrapRace.test.ts's own "keeps the leading block ABOVE...").
-			const first = doc.body.firstElementChild;
-			const stillBlank = !!first && first.textContent.trim() === '' && !first.querySelector('img');
-			// computed on the whole body (marker already stripped above), BEFORE removing `first` -
-			// see this function's own forcePlacementBelow computation below for why
-			hasRealContent = !stillBlank && (doc.body.textContent.trim() !== '' || !!doc.body.querySelector('img'));
-			if (first && first.tagName === startTag && (this.isReplyCompose || stillBlank))
+			if (this.isReplyCompose)
 			{
-				leadingBlockHtml = first.outerHTML;
-				first.remove();
+				// ticket #126191 follow-up (Ingo, 2026-10-09): a reply/forward's own intro can span
+				// MULTIPLE typed paragraphs, not just one - recognizing only
+				// doc.body.firstElementChild stranded every paragraph beyond the first behind the
+				// signature on the next identity switch, same bug class the non-reply branch below
+				// already covers. Collect every leading sibling up to (not including) the quote
+				// boundary itself (quoteOriginalMessage()'s own structure:
+				// fieldset.originalMessage, then blockquote[type="cite"]) instead of just the first
+				// element - absent entirely for a quote-less mode (eg.
+				// bootstrapForwardAsAttachment()), in which case this collects the WHOLE body,
+				// which is exactly the right fallback (nothing to stay pinned "above a quote" that
+				// doesn't exist).
+				const quoteBoundary = doc.body.querySelector('fieldset.originalMessage, blockquote[type="cite"]');
+				const leadingNodes : Element[] = [];
+				for (let node = doc.body.firstElementChild; node && node !== quoteBoundary; node = node.nextElementSibling)
+				{
+					leadingNodes.push(node);
+				}
+				if (leadingNodes.length)
+				{
+					leadingBlockHtml = leadingNodes.map((el) => el.outerHTML).join('');
+					leadingNodes.forEach((el) => el.remove());
+				}
+			}
+			else
+			{
+				// ticket #126191 (Ingo, a FRESH/non-reply compose): the tag check alone isn't
+				// enough to recognize "the blank placeholder line, still untouched" - once the
+				// user types several lines of real text starting in it, it's indistinguishable
+				// from genuine body content by tag name only, and extracting just that FIRST
+				// paragraph anyway strands it in front of the newly-spliced-in signature while
+				// every OTHER typed paragraph (there being no structural reason to treat any one
+				// of them specially) ends up behind the new signature instead of alongside the
+				// first one.
+				const first = doc.body.firstElementChild;
+				const stillBlank = !!first && first.textContent.trim() === '' && !first.querySelector('img');
+				// computed on the whole body, BEFORE removing `first` - see this function's own
+				// forcePlacementBelow computation below for why
+				hasRealContent = !stillBlank && (doc.body.textContent.trim() !== '' || !!doc.body.querySelector('img'));
+				if (first && first.tagName === startTag && stillBlank)
+				{
+					leadingBlockHtml = first.outerHTML;
+					first.remove();
+				}
 			}
 			pristine = doc.body.innerHTML;
 		}
