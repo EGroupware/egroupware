@@ -670,6 +670,40 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	}
 
 	/**
+	 * @inheritdoc JMAP-CANONICAL-PATH-FIX, see realMailboxName() - found live (a real customer,
+	 * 2026-10-09, help.egroupware.org): unlike openMailbox()/fetch()/etc. above, the ACL methods
+	 * were never given this same translation when the fix was first added, so mail_acl's own
+	 * getACL()/setACL()/deleteACL() calls (mail/inc/class.mail_acl.inc.php) sent the canonical
+	 * "/"-path straight to Horde's raw GETACL/SETACL/DELETEACL commands, failing outright against
+	 * any non-"/"-delimited server ("Die Zugriffsrechte konnten auf dem IMAP Server nicht gelesen
+	 * werden!" / PHP error "mail_acl::getACL Could not get ACL rights ... IMAP error reported by
+	 * server") - the exact same bug class ticket #124401 already fixed for every other mailbox-
+	 * addressing method, just missed for this one family.
+	 */
+	public function getACL($mailbox)
+	{
+		return parent::getACL($this->realMailboxName($mailbox));
+	}
+
+	/** @inheritdoc JMAP-CANONICAL-PATH-FIX, see getACL()'s own comment above */
+	public function setACL($mailbox, $identifier, $options)
+	{
+		return parent::setACL($this->realMailboxName($mailbox), $identifier, $options);
+	}
+
+	/** @inheritdoc JMAP-CANONICAL-PATH-FIX, see getACL()'s own comment above */
+	public function deleteACL($mailbox, $identifier)
+	{
+		return parent::deleteACL($this->realMailboxName($mailbox), $identifier);
+	}
+
+	/** @inheritdoc JMAP-CANONICAL-PATH-FIX, see getACL()'s own comment above */
+	public function getMyACLRights($mailbox)
+	{
+		return parent::getMyACLRights($this->realMailboxName($mailbox));
+	}
+
+	/**
 	 * getSpecialUseFolders
 	 *
 	 * @return ?string current mailbox, or if none check on INBOX, and return upon existance
