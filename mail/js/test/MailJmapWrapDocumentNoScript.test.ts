@@ -51,4 +51,17 @@ describe("MailJmap.wrapDocument() - no script in the srcdoc body", () =>
 		assert.include(html, "script-src 'none'");
 		assert.include(html, "frame-src 'self'");
 	});
+
+	/**
+	 * Ticket #126241 follow-up: an ALLOWED external image (allowlisted domain, or 'Always') can
+	 * still render as a broken image - many sites hotlink-protect based on the Referer header,
+	 * which a plain <img src> cross-origin fetch sends by default. no-referrer also stops this
+	 * document's own url leaking to every external image/link target in a received mail body.
+	 */
+	it("sends no referrer at all, so a hotlink-protected external image/link doesn't see this page's url", () =>
+	{
+		const html = wrap(new MailJmap(createFakeApp()), "<p>hi</p>");
+
+		assert.match(html, /<meta name="referrer" content="no-referrer">/);
+	});
 });
