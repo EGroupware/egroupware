@@ -38,7 +38,18 @@ body {
 			background-repeat: no-repeat;
 		}
 		padding-top: 0px !important;
-		height: 99%;
+		height: 100%;
+		// the toolbar sits above the form, so the form takes what is left instead of a fixed share of the height
+		display: flex;
+		flex-direction: column;
+		> form {
+			flex: 1 1 0;
+			min-height: 0;
+			height: auto;
+		}
+		> iframe {
+			flex: none;
+		}
 		#filemanager-index_nm {
 			height: 99%;
 		}

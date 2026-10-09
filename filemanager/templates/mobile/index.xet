@@ -53,10 +53,12 @@
                 <et2-image  src="filemanager/navbar" slot="prefix"></et2-image>
             </et2-vfs-path>
         </et2-toolbar>
+        <et2-box id="toolbar" style="display: block; height: 0; overflow: visible">
         <et2-vfs-upload  statustext="Select file to upload in current directory" id="upload" class="plus_button" style="flex: none;" path="{$cont['path']}/" dropTarget="filemanager-index" multiple="true" onchange="widget.value={}; return false;" image="plus-circle" ariaLabel="Upload"
         >
             <et2-button-icon  class="plus_button" size="large" noSubmit="true" slot="button" image="plus-lg"></et2-button-icon>
         </et2-vfs-upload>
+        </et2-box>
         <et2-nextmatch  id="nm" template="filemanager.index.rows" headerRight="filemanager.index.header_right"></et2-nextmatch>
 	</et2-template>
 </overlay>
