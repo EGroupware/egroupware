@@ -1,8 +1,26 @@
 <?php
 /**
- * EGroupware XSS protection and other security relevant functions
+ * EGroupware security relevant functions
  *
  * Usually loaded via header.inc.php or api/src/loader/common.php
+ *
+ * Found live via ticket #125621 (a real customer, Schofer/aERP, 2026-10-09): this file used to
+ * also scan every $_GET/$_POST/$_REQUEST/$_COOKIE value for script-tag-shaped patterns and run
+ * Api\Html\HtmLawed::purify() on anything that matched - a pre-CSP-era defense against a page
+ * somewhere echoing raw request data back unescaped. It unconditionally ran that purifier on the
+ * WHOLE raw value of any matching field, not just the offending fragment - for a REST-compose
+ * request whose JSON `preset` field happened to embed a full HTML document (a `<meta>` tag is
+ * enough to trigger it), this ran an HTML purifier over a JSON string, mangling it entirely
+ * (hoisting/reformatting the document's own embedded `<style>` block to the front, stripping its
+ * DOCTYPE/html/head wrapper and class attribute values) - exactly the class of bug CSP is the
+ * correct place to defend against now instead (the threat this scanner targeted - an inline
+ * `<script>`/`onclick=`/`javascript:` URL actually executing - is the thing CSP's script-src
+ * blocks at the point of execution, not something worth trying to pre-filter out of every
+ * incoming request value via regex). Removed entirely (ralf, 2026-10-09: checked security.php's
+ * own history - its last real change predates this file's own register_globals handling being
+ * already-dead code for well over a decade; "I'd say throw everything out"), keeping only the two
+ * functions below that are still genuinely in use elsewhere (php_safe_unserialize()/
+ * json_php_unserialize()) - unrelated to the removed scanner, just living in the same file.
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
@@ -10,133 +28,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
-
-use EGroupware\Api;
-
-/**
- * check $_REQUEST data for XSS, vars containing script tags are moved to $GLOBALS['egw_unset_vars']
- *
- * @internal
- * @param array &$var reference of array to check
- * @param string $name ='' name of the array
- * @param boolean $log = true Log the results of checking to the error log
- */
-function _check_script_tag(&$var,$name='',$log=true)
-{
-	static $preg=null;
-	//old: '/<\/?[^>]*\b(iframe|script|javascript|on(before)?(abort|blur|change|click|dblclick|error|focus|keydown|keypress|keyup|load|mousedown|mousemove|mouseout|mouseover|mouseup|reset|select|submit|unload))\b[^>]*>/i';
-	if (!isset($preg)) $preg =
-		// forbidden tags like iframe or script
-		'/(<(\s*\/)?\s*(iframe|script|object|embed|math|meta)[^a-z0-9]|'.
-		// on* attributes
-		'<[^>]*on(before)?(abort|blur|change|click|dblclick|error|focus|keydown|keypress|keyup|load|mouse(out|enter|leave|over|move|up|wheel|down)'.
-		'|cached|beforeunload|online|offline|open|message|close|animation(start|end|iteration)|transition(start|end|run)|reset'.
-		'|beforeprint|afterprint|composition(start|update|end)|fullscreenchange|fullscreenerror|cut|copy|auxclick|contextmenu'.
-		'|wheel|drag(start|end|enter|over|leave)|drop|loadstart|progress|timeout|loadendreset|select|submit|unload|resize'.
-		'|propertychange|page(hide|show)|scroll|readystatechange|start|popstate|form|input)\s*=|'.
-		// ="javascript:*" diverse javascript attribute value
-		'<[^>]+(href|src|dynsrc|lowsrc|background|style|poster|action)\s*=\s*("|\')?[^"\']*javascript|'.
-		// benavior:url and expression in style attribute
-		'<[^>]+style\s*=\s*("|\')[^>]*(behavior\s*:\s*url|expression)\s*\()/i';
-	if (is_array($var))
-	{
-		foreach($var as $key => $val)
-		{
-			if (is_array($val))
-			{
-				_check_script_tag($var[$key],$name.'['.$key.']');
-			}
-			elseif(strpos($val, '<') !== false)	// speedup: ignore everything without <
-			{
-				if (preg_match($preg,$val))
-				{
-					// special handling for $_POST[json_data], to decend into it's decoded content, fixing json direct might break json syntax
-					if ($name == '_POST' && $key == 'json_data' && ($json_data = json_decode($val, true)))
-					{
-						_check_script_tag($json_data, $name.'[json_data]');
-						$_REQUEST[$key] = $var[$key] = json_encode($json_data);
-						continue;
-					}
-					//error_log(__FUNCTION__."(,$name) ${name}[$key] = ".$var[$key]);
-					$GLOBALS['egw_unset_vars'][$name.'['.$key.']'] = $var[$key];
-					// attempt to clean the thing
-					$var[$key] = Api\Html\HtmLawed::purify($val);
-					// check if we succeeded, if not drop the var anyway, keep the egw_unset_var in any case
-					if (preg_match($preg, $var[$key]))
-					{
-						if($log)
-						{
-							error_log("*** _check_script_tag($name): unset({$name}[$key]) with value '$val'");
-						}
-						unset($var[$key]);
-					}
-					elseif($log)
-					{
-						error_log("*** _check_script_tag($name): HtmlLawed::purify({$name}[$key]) succeeded '$val' --> '{$var[$key]}'");
-					}
-				}
-			}
-		}
-		// in case some stupid old code expects the array-pointer to be at the start of the array
-		reset($var);
-	}
-}
-
-foreach(array('_COOKIE','_GET','_POST','_REQUEST','HTTP_GET_VARS','HTTP_POST_VARS') as $n => $where)
-{
-	$pregs = array(
-		'order' => '/^[a-zA-Z0-9_,]*$/',
-		'sort'  => '/^(ASC|DESC|asc|desc|0|1|2|3|4|5|6|7){0,1}$/',
-	);
-	foreach(array('order','sort') as $name)
-	{
-		if (isset($GLOBALS[$where][$name]) && !is_array($GLOBALS[$where][$name]) && !preg_match($pregs[$name],$GLOBALS[$where][$name]))
-		{
-			$GLOBALS[$where][$name] = '';
-		}
-	}
-	// do the check for script-tags only for _GET and _POST or if we found something in _GET and _POST
-	// speeds up the execution a bit
-	if (isset($GLOBALS[$where]) && is_array($GLOBALS[$where]) && ($n < 3 || isset($GLOBALS['egw_unset_vars'])))
-	{
-		_check_script_tag($GLOBALS[$where],$where);
-	}
-}
-//if (is_array($GLOBALS['egw_unset_vars'])) { echo "egw_unset_vars=<pre>".htmlspecialchars(print_r($GLOBALS['egw_unset_vars'],true))."</pre>"; exit; }
-
-// $GLOBALS[egw_info][flags][currentapp] and die  if it contains something nasty or unexpected
-if (isset($GLOBALS['egw_info']) && isset($GLOBALS['egw_info']['flags']) &&
-	isset($GLOBALS['egw_info']['flags']['currentapp']) && !preg_match('/^[A-Za-z0-9_-]+$/',$GLOBALS['egw_info']['flags']['currentapp']))
-{
-	error_log(__FILE__.': '.__LINE__.' Invalid $GLOBALS[egw_info][flags][currentapp]='.array2string($GLOBALS['egw_info']['flags']['currentapp']).', $_SERVER[REQUEST_URI]='.array2string($_SERVER['REQUEST_URI']));
-	die('Invalid $GLOBALS[egw_info][flags][currentapp]!');
-}
-
-// neutralises register_globals On, which is not used by eGW
-// some code from the hardend php project: http://www.hardened-php.net/articles/PHPUG-PHP-Sicherheit-Parametermanipulationen.pdf
-if (ini_get('register_globals'))
-{
-	function unregister_globals()
-	{
-		// protect against GLOBALS overwrite or setting egw_info
-		if (isset($_REQUEST['GLOBALS']) || isset($_FILES['GLOBALS']) || isset($_REQUEST['egw_info']) || isset($_FILES['egw_info']))
-		{
-			die('GLOBALS overwrite detected!!!');
-		}
-		// unregister all globals
-		$noUnset = array('GLOBALS','_GET','_POST','_COOKIE','_SERVER','_ENV','_FILES','xajax');
-		foreach(array_unique(array_merge(
-			array_keys($_GET),array_keys($_POST),array_keys($_COOKIE),array_keys($_SERVER),array_keys($_ENV),array_keys($_FILES),
-			isset($_SESSION) && is_array($_SESSION) ? array_keys($_SESSION) : array())) as $k)
-		{
-			if (!in_array($k,$noUnset) && isset($GLOBALS[$k]))
-			{
-				unset($GLOBALS[$k]);
-			}
-		}
-	}
-	unregister_globals();
-}
 
 /**
  * Unserialize a php serialized string, but only if it contains NO objects 'O:\d:"' or 'C:\d:"' pattern

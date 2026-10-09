@@ -15,7 +15,6 @@ use EGroupware\Api\Framework;
 use EGroupware\Api\Link;
 use EGroupware\Api\Mail;
 use EGroupware\Api\Mail\AddressList;
-use EGroupware\Api\Mail\BodyDecoding;
 
 /**
  * Send a mail directly, no interactive compose UI involved - extracted 2026-09-08 from
@@ -42,39 +41,6 @@ class Send
 	function __construct(?int $_acc_id=null)
 	{
 		$this->initMailAccount($_acc_id);
-	}
-
-	/**
-	 * HTML cleanup
-	 *
-	 * @param type $_body message
-	 * @param type $_useTidy = false, if true tidy extension will be loaded and tidy will try to clean body message
-	 *			since the tidy causes segmentation fault ATM, we set the default to false.
-	 * @return type
-	 */
-	static function _getCleanHTML($_body, $_useTidy = false)
-	{
-		static $nonDisplayAbleCharacters = array('[\016]','[\017]',
-				'[\020]','[\021]','[\022]','[\023]','[\024]','[\025]','[\026]','[\027]',
-				'[\030]','[\031]','[\032]','[\033]','[\034]','[\035]','[\036]','[\037]');
-
-		if ($_useTidy && extension_loaded('tidy') )
-		{
-			$tidy = new \tidy();
-			$cleaned = $tidy->repairString($_body, Mail::$tidy_config,'utf8');
-			// Found errors. Strip it all so there's some output
-			if($tidy->getStatus() == 2)
-			{
-				error_log(__METHOD__.' ('.__LINE__.') '.' ->'.$tidy->errorBuffer);
-			}
-			else
-			{
-				$_body = $cleaned;
-			}
-		}
-
-		BodyDecoding::getCleanHTML($_body);
-		return preg_replace($nonDisplayAbleCharacters, '', $_body);
 	}
 
 	function send($_formData, ?int $_acc_id=null)
@@ -141,21 +107,6 @@ class Send
 				$this->sessionData['uid'] = $dhA['msgUID'];
 				$this->sessionData['messageFolder'] = $dhA['folder'];
 			}
-		}
-		// if the body is empty, maybe someone pasted something with scripts, into the message body
-		// this should not happen anymore, unless you call send directly, since the check was introduced with the action command
-		if(empty($this->sessionData['body']))
-		{
-			// this is to be found with the egw_unset_vars array for the _POST['body'] array
-			$name='_POST';
-			$key='body';
-			#error_log($GLOBALS['egw_unset_vars'][$name.'['.$key.']']);
-			if (isset($GLOBALS['egw_unset_vars'][$name.'['.$key.']']))
-			{
-				$this->sessionData['body'] = self::_getCleanHTML( $GLOBALS['egw_unset_vars'][$name.'['.$key.']']);
-				$_formData['body']=$this->sessionData['body'];
-			}
-			#error_log($this->sessionData['body']);
 		}
 		if(empty($this->sessionData['to']) && empty($this->sessionData['cc']) &&
 		   empty($this->sessionData['bcc']) && empty($this->sessionData['folder'])) {
