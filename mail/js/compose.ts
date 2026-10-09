@@ -1117,7 +1117,28 @@ export class MailCompose
 			return;
 		}
 		const url = await this.app.jmap.downloadBlobUrl(attgrid.jmapProfileID, attgrid.jmapBlobId, attgrid.name, attgrid.type);
-		egw.openPopup(url, 800, 600, 'maildisplayAttachment_' + attgrid.tmp_name);
+		if ((attgrid.type || '').toLowerCase() === 'application/pdf')
+		{
+			// downloadBlobUrl() wrapped this in a real HTML shell (pre-rendered pages + its own
+			// visible, working download link) - a genuine page, fine to navigate a popup to.
+			egw.openPopup(url, 800, 600, 'maildisplayAttachment_' + attgrid.tmp_name);
+			return;
+		}
+		// ticket #126271: for anything else, `url` is a BARE blob: URL of the raw file - the
+		// browser can't render eg. an xlsx inline, so navigating a popup directly to it just
+		// triggers a download inside that popup's own context, which then sits there empty - and,
+		// same bug class as tracker #124541/#124932 (getAttachmentViewUrl()'s own docblock), a
+		// plain NAVIGATION to a blob: URL (as opposed to a real `<a download>` click) falls back to
+		// the blob's own opaque UUID as the save filename regardless of the underlying File's real
+		// .name, even though downloadBlobUrl() already built a correctly-named File. Use the one
+		// mechanism actually proven reliable in this codebase instead - no popup/tab ever opens.
+		const link = document.createElement('a');
+		link.href = url;
+		link.download = attgrid.name || 'attachment';
+		document.body.appendChild(link);
+		link.click();
+		link.remove();
+		window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 	}
 
 	/**
