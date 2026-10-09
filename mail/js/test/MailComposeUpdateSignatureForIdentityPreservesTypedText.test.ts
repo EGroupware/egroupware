@@ -116,13 +116,36 @@ describe("MailCompose.updateSignatureForIdentity() preserves typed text (ticket 
 			"all three typed lines must stay in their original relative order");
 		assert.isBelow(secondLine, thirdLine,
 			"all three typed lines must stay in their original relative order");
-		// 'top' placement correctly puts the signature ahead of EXISTING body content (see
-		// MailJmap.composeBodyWithSignature()'s own "body && !isReply" branch) - the bug was never
-		// about WHERE the signature lands overall, only that it used to land INSIDE the user's own
-		// text instead of cleanly before or after all of it.
+		// Ticket #126191 FOLLOW-UP (Ingo, 2026-10-09): 'top'/"before" only has meaning relative to a
+		// reply's own quoted content - a fresh, non-reply compose that already has real typed text
+		// has nothing for the signature to be "before" at all, so it must land AFTER every typed
+		// line instead, regardless of the raw preference value (see updateSignatureForIdentity()'s
+		// own forcePlacementBelow computation).
 		const signaturePos = value.indexOf('Freundliche Grüße');
-		assert.isBelow(signaturePos, firstLine,
-			"the signature must not be spliced in between any of the typed lines");
+		assert.isAbove(signaturePos, thirdLine,
+			"the signature must land after every typed line, not before them");
+	});
+
+	it("still places the signature ahead of a reply's own quoted content, even with 'top' preference", async() =>
+	{
+		const {compose, et2} = createCompose({insertSignatureAtTopOfMessage: '1'});
+		(compose as any).isReplyCompose = true;
+		et2.getWidgetById('mail_htmltext').set_value(
+			'<p>Danke für die Info</p>' +
+			'<div id="' + MailJmap.SIGNATURE_MARKER_ID + '"><p>Old Signature</p></div>' +
+			'<blockquote>Original message text</blockquote>'
+		);
+
+		await (compose as any).updateSignatureForIdentity();
+
+		const value = et2.getWidgetById('mail_htmltext').get_value();
+		const introPos = value.indexOf('Danke für die Info');
+		const signaturePos = value.indexOf('Freundliche Grüße');
+		const quotePos = value.indexOf('Original message text');
+		assert.isBelow(introPos, signaturePos,
+			"the user's own intro line stays pinned above the signature, unaffected by the non-reply forcePlacementBelow override");
+		assert.isBelow(signaturePos, quotePos,
+			"the signature stays above the quoted original message");
 	});
 
 	it("still recognizes a genuinely untouched blank placeholder line and preserves it verbatim", async() =>
