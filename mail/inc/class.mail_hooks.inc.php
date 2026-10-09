@@ -375,6 +375,15 @@ class mail_hooks
 				'default'=> 0,
 				'admin'  => False,
 			),
+			'inlineImageMaxWidth' => array(
+				'type'   => 'input',
+				'size'   => 4,
+				'label'  => 'Max. width of inline images in a mail body or signature (in px)',
+				'help'   => 'A pasted, dropped or inserted image above a certain file-size gets scaled down to this width (keeping aspect ratio), to avoid bloating the mail. Leave empty for the default of 800px.',
+				'name'   => 'inlineImageMaxWidth',
+				'xmlrpc' => True,
+				'admin'  => False,
+			),
 			'allowExternalIMGs' => array(
 				'type'   => 'select',
 				'label'  => 'Allow external images',

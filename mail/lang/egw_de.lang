@@ -416,6 +416,8 @@ mark message as read after	mail	de	Nachricht als gelesen markieren nach
 match:	mail	de	Übereinstimmung:
 matches	mail	de	stimmt überein (*, ? erlaubt)
 matches regexp	mail	de	stimmt überein mit regulärem Ausdruck
+max. width of inline images in a mail body or signature (in px)	mail	de	Max. Breite von eingefügten Bildern im Mailtext oder der Signatur (in px)
+a pasted, dropped or inserted image above a certain file-size gets scaled down to this width (keeping aspect ratio), to avoid bloating the mail. leave empty for the default of 800px.	mail	de	Ein eingefügtes (Paste/Drag&Drop oder Datei einfügen) Bild wird ab einer bestimmten Dateigröße auf diese Breite herunterskaliert (Seitenverhältnis bleibt erhalten), um die Mail nicht unnötig zu vergrößern. Leer lassen für den Standardwert von 800px.
 mbstring.func_overload=0 is required for correct mail processing!	mail	de	mbstring.func_overload=0 wird von der Anwendung Mail zwingend benötigt!
 message body	mail	de	Nachricht
 message learned as ham (not spam) and moved back to inbox	mail	de	Nachricht wurde als "gute E-Mail" (kein Spam) gelernt und in den Posteingang verschoben
