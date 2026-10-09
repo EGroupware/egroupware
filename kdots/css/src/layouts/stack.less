@@ -6,27 +6,25 @@
 	min-height: 0;
   }
 
-  /* Default: children keep their own height and do not grow.
-   * Not `:scope > *`: this compiles into kdots.css, a document stylesheet, where :scope is
-   * :root - so the rule matched nothing and non-growing children silently kept the flex
-   * defaults (shrinkable, min-height: auto) instead.  Stays less specific than the opt-in
-   * rule below, which has to win.
-   */
-
   & > * {
+	/* Default: children keep their own height and do not grow.
+	 * Not `:scope > *`: this compiles into kdots.css, a document stylesheet, where :scope is
+	 * :root - so the rule matched nothing and non-growing children silently kept the flex
+	 * defaults (shrinkable, min-height: auto) instead.  Stays less specific than the opt-in
+	 * rule below, which has to win.
+	 */
 	flex: 0 0 auto;
 	min-height: 0;
   }
 
-  /* Opt-in growth.  Et2LayoutController overrides flex-grow inline when grow= names a factor,
-   * which CSS cannot read out of the attribute.
-   *
-   * A tabbox and a nextmatch grow without asking - they are never what a stack should leave space
-   * around, so needing grow= on every one of them would only be noise.  Keep this list the same as
-   * GROW_TAG_SELECTOR in Et2LayoutStrategies.ts, which decides the same thing for the grid layouts.
-   */
-
   [grow], et2-tabbox, et2-nextmatch {
+	/* Opt-in growth.  Et2LayoutController overrides flex-grow inline when grow= names a factor,
+	 * which CSS cannot read out of the attribute.
+	 *
+	 * A tabbox and a nextmatch grow without asking - they are never what a stack should leave space
+	 * around, so needing grow= on every one of them would only be noise.  Keep this list the same as
+	 * GROW_TAG_SELECTOR in Et2LayoutStrategies.ts, which decides the same thing for the grid layouts.
+	 */
 	flex: 1 1 auto;
 	min-height: 0;
   }

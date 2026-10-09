@@ -62,15 +62,15 @@
 	min-height: 0;
   }
   @{host-selector} {
-	/* Do not allow fixed width labels to wrap normally - the one-column rules below
-	 * override this once the container is too narrow to keep label and input side by side.
-	 * Keep this selector no more specific than _grid-one-column's matching rule, or that
-	 * override silently loses and the label never wraps.  et2-box/et2-hbox child variants
-	 * are deliberately absent: .et2-label-fixed already matches them, so they would only
-	 * add specificity.
-	 */
 	*.et2-label-fixed {
 	  &::part(form-control) {
+		/* Do not allow fixed width labels to wrap normally - the one-column rules below
+		 * override this once the container is too narrow to keep label and input side by side.
+		 * Keep this selector no more specific than _grid-one-column's matching rule, or that
+		 * override silently loses and the label never wraps.  et2-box/et2-hbox child variants
+		 * are deliberately absent: .et2-label-fixed already matches them, so they would only
+		 * add specificity.
+		 */
 		flex-wrap: nowrap;
 	  }
 	}
@@ -106,46 +106,40 @@
 	overflow-y: auto;
 	overflow-x: hidden;
 
-	/* ---------- FULL-WIDTH ROWS ---------- */
-	/* A tabbox and a nextmatch take every column without being asked, the same way they take the
-	 * leftover height below: half a dialog is not a useful width for either of them, so saying
-	 * span="all" on every one would only be noise.
-	 */
-
+	// ---------- FULL-WIDTH ROWS ----------
 	[full], [span="all"],
 	et2-tabbox,
 	et2-nextmatch {
+	  /* A tabbox and a nextmatch take every column without being asked, the same way they take the
+	   * leftover height below: half a dialog is not a useful width for either of them, so saying
+	   * span="all" on every one would only be noise.
+	   */
 	  grid-column: 1 / -1;
 	}
 
-	/* ---------- REST-WIDTH ROWS ---------- */
-	/* span="end" / span="*" stretch from their own column to the end of the line, which CSS
-	 * cannot express: `grid-column-end: -1` on an auto-placed item is a span of one ending at
-	 * the last line, so it would jump into the last column instead of filling the rest of its
-	 * line.  Et2LayoutController measures the column it landed in and writes the real
-	 * `grid-column` inline.
-	 */
+	// ---------- REST-WIDTH ROWS ----------
+	// span="end" / span="*" stretch from their own column to the end of the line, which CSS
+	// cannot express: `grid-column-end: -1` on an auto-placed item is a span of one ending at
+	// the last line, so it would jump into the last column instead of filling the rest of its
+	// line.  Et2LayoutController measures the column it landed in and writes the real
+	// `grid-column` inline.  There is no rule here for that reason.
 
-	/* ---------- DEFAULT COLUMN FLOW ---------- */
-
+	// ---------- DEFAULT COLUMN FLOW ----------
 	* {
 	  min-height: 0;
 	}
 
-	/* ---------- VERTICAL GROW ---------- */
-	/* Keep the automatic tags here the same as GROW_TAG_SELECTOR in Et2LayoutStrategies.ts: that
-	 * is what gives their row a 1fr track, and without the stretch the item would sit at its own
-	 * height inside the track it was just given.
-	 */
-
+	// ---------- VERTICAL GROW ----------
 	[grow],
 	et2-tabbox,
 	et2-nextmatch {
+	  /* Keep the automatic tags here the same as GROW_TAG_SELECTOR in Et2LayoutStrategies.ts: that
+	   * is what gives their row a 1fr track, and without the stretch the item would sit at its own
+	   * height inside the track it was just given.  Grow row sizing itself is set by the
+	   * Et2LayoutController strategy, to target the actual grow row.
+	   */
 	  align-self: stretch;
 	}
-
-	/* ---------- WIDGET CHANGES ---------- */
-	/* Grow row sizing is set by Et2LayoutController strategy to target the actual grow row */
   }
 
 }

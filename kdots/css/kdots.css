@@ -747,21 +747,6 @@ body egw-app,
   --application-color: var(--default-color);
 }
 /*** END APPLICATION ***/
-[layout="stack"] {
-  /* Default: children keep their own height and do not grow.
-   * Not `:scope > *`: this compiles into kdots.css, a document stylesheet, where :scope is
-   * :root - so the rule matched nothing and non-growing children silently kept the flex
-   * defaults (shrinkable, min-height: auto) instead.  Stays less specific than the opt-in
-   * rule below, which has to win.
-   */
-  /* Opt-in growth.  Et2LayoutController overrides flex-grow inline when grow= names a factor,
-   * which CSS cannot read out of the attribute.
-   *
-   * A tabbox and a nextmatch grow without asking - they are never what a stack should leave space
-   * around, so needing grow= on every one of them would only be noise.  Keep this list the same as
-   * GROW_TAG_SELECTOR in Et2LayoutStrategies.ts, which decides the same thing for the grid layouts.
-   */
-}
 [layout="stack"]::part(base) {
   position: relative;
   display: flex;
@@ -769,12 +754,25 @@ body egw-app,
   min-height: 0;
 }
 [layout="stack"] > * {
+  /* Default: children keep their own height and do not grow.
+	 * Not `:scope > *`: this compiles into kdots.css, a document stylesheet, where :scope is
+	 * :root - so the rule matched nothing and non-growing children silently kept the flex
+	 * defaults (shrinkable, min-height: auto) instead.  Stays less specific than the opt-in
+	 * rule below, which has to win.
+	 */
   flex: 0 0 auto;
   min-height: 0;
 }
 [layout="stack"] [grow],
 [layout="stack"] et2-tabbox,
 [layout="stack"] et2-nextmatch {
+  /* Opt-in growth.  Et2LayoutController overrides flex-grow inline when grow= names a factor,
+	 * which CSS cannot read out of the attribute.
+	 *
+	 * A tabbox and a nextmatch grow without asking - they are never what a stack should leave space
+	 * around, so needing grow= on every one of them would only be noise.  Keep this list the same as
+	 * GROW_TAG_SELECTOR in Et2LayoutStrategies.ts, which decides the same thing for the grid layouts.
+	 */
   flex: 1 1 auto;
   min-height: 0;
 }
@@ -804,16 +802,14 @@ body egw-app,
   height: 100%;
   min-height: 0;
 }
-[layout="2-column"] {
-  /* Do not allow fixed width labels to wrap normally - the one-column rules below
-	 * override this once the container is too narrow to keep label and input side by side.
-	 * Keep this selector no more specific than _grid-one-column's matching rule, or that
-	 * override silently loses and the label never wraps.  et2-box/et2-hbox child variants
-	 * are deliberately absent: .et2-label-fixed already matches them, so they would only
-	 * add specificity.
-	 */
-}
 [layout="2-column"] *.et2-label-fixed::part(form-control) {
+  /* Do not allow fixed width labels to wrap normally - the one-column rules below
+		 * override this once the container is too narrow to keep label and input side by side.
+		 * Keep this selector no more specific than _grid-one-column's matching rule, or that
+		 * override silently loses and the label never wraps.  et2-box/et2-hbox child variants
+		 * are deliberately absent: .et2-label-fixed already matches them, so they would only
+		 * add specificity.
+		 */
   flex-wrap: nowrap;
 }
 /* One-column mode: keep label/input stacking consistent for all widgets */
@@ -857,6 +853,7 @@ body egw-app,
   [layout="2-column"] *::part(form-control-help-text) {
     left: 0;
   }
+  /* When titles break, we want to align widgets at the bottom of the hbox */
   [layout="2-column"] et2-hbox::part(base) {
     align-items: flex-end;
   }
@@ -866,31 +863,15 @@ body egw-app,
   container-type: inline-size;
   overflow-y: auto;
   overflow-x: hidden;
-  /* ---------- FULL-WIDTH ROWS ---------- */
-  /* A tabbox and a nextmatch take every column without being asked, the same way they take the
-	 * leftover height below: half a dialog is not a useful width for either of them, so saying
-	 * span="all" on every one would only be noise.
-	 */
-  /* ---------- REST-WIDTH ROWS ---------- */
-  /* span="end" / span="*" stretch from their own column to the end of the line, which CSS
-	 * cannot express: `grid-column-end: -1` on an auto-placed item is a span of one ending at
-	 * the last line, so it would jump into the last column instead of filling the rest of its
-	 * line.  Et2LayoutController measures the column it landed in and writes the real
-	 * `grid-column` inline.
-	 */
-  /* ---------- DEFAULT COLUMN FLOW ---------- */
-  /* ---------- VERTICAL GROW ---------- */
-  /* Keep the automatic tags here the same as GROW_TAG_SELECTOR in Et2LayoutStrategies.ts: that
-	 * is what gives their row a 1fr track, and without the stretch the item would sit at its own
-	 * height inside the track it was just given.
-	 */
-  /* ---------- WIDGET CHANGES ---------- */
-  /* Grow row sizing is set by Et2LayoutController strategy to target the actual grow row */
 }
 [layout="2-column"] [full],
 [layout="2-column"] [span="all"],
 [layout="2-column"] et2-tabbox,
 [layout="2-column"] et2-nextmatch {
+  /* A tabbox and a nextmatch take every column without being asked, the same way they take the
+	   * leftover height below: half a dialog is not a useful width for either of them, so saying
+	   * span="all" on every one would only be noise.
+	   */
   grid-column: 1 / -1;
 }
 [layout="2-column"] * {
@@ -899,6 +880,11 @@ body egw-app,
 [layout="2-column"] [grow],
 [layout="2-column"] et2-tabbox,
 [layout="2-column"] et2-nextmatch {
+  /* Keep the automatic tags here the same as GROW_TAG_SELECTOR in Et2LayoutStrategies.ts: that
+	   * is what gives their row a 1fr track, and without the stretch the item would sit at its own
+	   * height inside the track it was just given.  Grow row sizing itself is set by the
+	   * Et2LayoutController strategy, to target the actual grow row.
+	   */
   align-self: stretch;
 }
 /* Base container */
@@ -922,16 +908,14 @@ body egw-app,
   height: 100%;
   min-height: 0;
 }
-[layout="edit"] {
-  /* Do not allow fixed width labels to wrap normally - the one-column rules below
-	 * override this once the container is too narrow to keep label and input side by side.
-	 * Keep this selector no more specific than _grid-one-column's matching rule, or that
-	 * override silently loses and the label never wraps.  et2-box/et2-hbox child variants
-	 * are deliberately absent: .et2-label-fixed already matches them, so they would only
-	 * add specificity.
-	 */
-}
 [layout="edit"] *.et2-label-fixed::part(form-control) {
+  /* Do not allow fixed width labels to wrap normally - the one-column rules below
+		 * override this once the container is too narrow to keep label and input side by side.
+		 * Keep this selector no more specific than _grid-one-column's matching rule, or that
+		 * override silently loses and the label never wraps.  et2-box/et2-hbox child variants
+		 * are deliberately absent: .et2-label-fixed already matches them, so they would only
+		 * add specificity.
+		 */
   flex-wrap: nowrap;
 }
 /* One-column mode: keep label/input stacking consistent for all widgets */
@@ -975,6 +959,7 @@ body egw-app,
   [layout="edit"] *::part(form-control-help-text) {
     left: 0;
   }
+  /* When titles break, we want to align widgets at the bottom of the hbox */
   [layout="edit"] et2-hbox::part(base) {
     align-items: flex-end;
   }
@@ -984,31 +969,15 @@ body egw-app,
   container-type: inline-size;
   overflow-y: auto;
   overflow-x: hidden;
-  /* ---------- FULL-WIDTH ROWS ---------- */
-  /* A tabbox and a nextmatch take every column without being asked, the same way they take the
-	 * leftover height below: half a dialog is not a useful width for either of them, so saying
-	 * span="all" on every one would only be noise.
-	 */
-  /* ---------- REST-WIDTH ROWS ---------- */
-  /* span="end" / span="*" stretch from their own column to the end of the line, which CSS
-	 * cannot express: `grid-column-end: -1` on an auto-placed item is a span of one ending at
-	 * the last line, so it would jump into the last column instead of filling the rest of its
-	 * line.  Et2LayoutController measures the column it landed in and writes the real
-	 * `grid-column` inline.
-	 */
-  /* ---------- DEFAULT COLUMN FLOW ---------- */
-  /* ---------- VERTICAL GROW ---------- */
-  /* Keep the automatic tags here the same as GROW_TAG_SELECTOR in Et2LayoutStrategies.ts: that
-	 * is what gives their row a 1fr track, and without the stretch the item would sit at its own
-	 * height inside the track it was just given.
-	 */
-  /* ---------- WIDGET CHANGES ---------- */
-  /* Grow row sizing is set by Et2LayoutController strategy to target the actual grow row */
 }
 [layout="edit"] [full],
 [layout="edit"] [span="all"],
 [layout="edit"] et2-tabbox,
 [layout="edit"] et2-nextmatch {
+  /* A tabbox and a nextmatch take every column without being asked, the same way they take the
+	   * leftover height below: half a dialog is not a useful width for either of them, so saying
+	   * span="all" on every one would only be noise.
+	   */
   grid-column: 1 / -1;
 }
 [layout="edit"] * {
@@ -1017,11 +986,12 @@ body egw-app,
 [layout="edit"] [grow],
 [layout="edit"] et2-tabbox,
 [layout="edit"] et2-nextmatch {
+  /* Keep the automatic tags here the same as GROW_TAG_SELECTOR in Et2LayoutStrategies.ts: that
+	   * is what gives their row a 1fr track, and without the stretch the item would sit at its own
+	   * height inside the track it was just given.  Grow row sizing itself is set by the
+	   * Et2LayoutController strategy, to target the actual grow row.
+	   */
   align-self: stretch;
-}
-[layout="edit"] {
-  /* Specific rules for edit layout */
-  /* Keep the buttons (Save / Apply / Cancel) reachable when the form scrolls, e.g. in a side panel */
 }
 [layout="edit"] [class*="header"],
 [layout="edit"] [class*="footer"],
@@ -1032,15 +1002,106 @@ body egw-app,
 }
 [layout="edit"] [class*="footer"],
 [layout="edit"] [class*="Footer"] {
+  /* Keep the buttons (Save / Apply / Cancel) reachable when the form scrolls, e.g. in a side panel */
   position: sticky;
   bottom: 0;
   background: var(--sl-panel-background-color);
+}
+[layout="edit"] [class*="footer"]::part(base),
+[layout="edit"] [class*="Footer"]::part(base) {
+  /* Its widgets wrap onto another line rather than run off the edge of a narrow panel */
+  flex-wrap: wrap;
+}
+[layout="edit"] [class*="footer"] et2-checkbox,
+[layout="edit"] [class*="Footer"] et2-checkbox {
+  white-space: nowrap;
 }
 [layout="edit"] et2-appicon {
   flex-grow: 0;
 }
 [layout="edit"] et2-tabbox {
   min-height: 20em;
+}
+/* Read-only facts at the bottom of a dialog - who changed it, when - as a row of their own: a
+ * label in the label column, then the name and the date.  The name starts where the inputs above
+ * do and the date ends at the cell's edge, so stacked in one column the dates line up whatever
+ * the names before them.  When the cell is too narrow for both, the date drops to a line of its
+ * own and starts under the name.  A row with nothing but a date (Created) has the date at the
+ * edge.  The text is centred in the cell, which is as tall as the inputs beside it. */
+[layout="edit"] .dialogMeta et2-select-account_ro,
+[layout="edit"] .dialogMeta et2-date-time_ro,
+[layout="edit"] .dialogMeta et2-description {
+  display: flex;
+  align-items: center;
+}
+/* No gap of its own: the label is followed by exactly the gap the inputs' labels have */
+[layout="edit"] .dialogMeta::part(base) {
+  column-gap: 0;
+  justify-content: space-between;
+}
+/* The label is as wide as the inputs' labels, so what follows it starts where the inputs do */
+[layout="edit"] .dialogMeta et2-description {
+  width: var(--label-width, 8em);
+  min-width: var(--label-width, 8em);
+}
+/* The name and the date, after the label's gap */
+[layout="edit"] .dialogMeta > et2-hbox {
+  flex: 1 1 0;
+  min-width: 0;
+  margin-left: var(--sl-spacing-medium);
+}
+/* The name and the date go to opposite ends of the row.  When there is no room for both the date
+ * wraps, and being alone on its line it starts at the left, under the name */
+[layout="edit"] .dialogMeta > et2-hbox::part(base) {
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+/* The name keeps its width.  Its widget sets its flex with !important, so this has to as well */
+[layout="edit"] .dialogMeta et2-select-account_ro {
+  flex-shrink: 0 !important;
+}
+/* The date has its own width, or there is no room left to put between the two */
+[layout="edit"] .dialogMeta et2-date-time_ro {
+  flex: 0 0 auto;
+}
+/* At the width where labels stack above their fields (the same 36em as _grid-one-column).
+ *
+ * Written out in full, not nested in the block above: less hoists a nested @container and drops
+ * the parent selector, which would shrink every icon button in the app. */
+@container (max-width: 36em) {
+  /* The name and the date drop under their label like an input does */
+  [layout="edit"] .dialogMeta:has(> et2-hbox)::part(base) {
+    flex-wrap: wrap;
+  }
+  [layout="edit"] .dialogMeta:has(> et2-hbox) > et2-description {
+    width: 100%;
+  }
+  [layout="edit"] .dialogMeta > et2-hbox {
+    flex-basis: 100%;
+    margin-left: 0;
+  }
+  /* Buttons with an icon give up their label and keep just the icon.  Above this width there is
+   * room for both, so both stay.  The label is only clipped, not removed, so it is still the
+   * button's accessible name. */
+  [layout="edit"] et2-button:has(> et2-image) {
+    flex: none;
+    min-width: 0;
+    width: var(--sl-input-height-medium);
+  }
+  [layout="edit"] et2-button:has(> et2-image)::part(base) {
+    width: var(--sl-input-height-medium);
+    padding-inline: 0;
+    justify-content: center;
+  }
+  [layout="edit"] et2-button:has(> et2-image)::part(label) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    padding: 0;
+    white-space: nowrap;
+  }
 }
 /*** Popup styling ***/
 .popupMainDiv {
