@@ -28,6 +28,16 @@
 					</et2-hbox>
 				</row>
 				<row>
+					<et2-description  value="PGP keyserver" span="all" class="subHeader"></et2-description>
+				</row>
+				<row>
+					<et2-vbox>
+						<et2-description  value="HKP keyserver base URL (eg. https://keys.openpgp.org)"></et2-description>
+						<et2-description  value="Empty disables all public-keyserver lookups and uploads - no network calls are made"></et2-description>
+					</et2-vbox>
+					<et2-textbox  id="newsettings[pgp_keyserver]" placeholder="https://keys.openpgp.org"></et2-textbox>
+				</row>
+				<row>
 					<et2-description  value="GeoLocation integration" span="all" class="subHeader"></et2-description>
 				</row>
 				<row>

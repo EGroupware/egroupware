@@ -39,19 +39,47 @@ class addressbook_bo extends Api\Contacts
 	}
 
 	/**
-	 * Keyserver URL and CA to verify ssl connection
+	 * Read the configured HKP keyserver base URL (eg. "https://keys.openpgp.org"), or null if
+	 * none is configured - admin config 'pgp_keyserver' (addressbook/templates/default/
+	 * config.xet), empty by default.
+	 *
+	 * Found live (ticket: help.egroupware.org/t/80089, a real customer): this used to be a
+	 * hardcoded, no-timeout lookup against hkps.pool.sks-keyservers.net - a public keyserver pool
+	 * shut down in 2021, whose hostname no longer even resolves. Every single mail send (own
+	 * identity lookup, buildAutocryptHeader()) and every PGP-signed message opened from an
+	 * unknown sender (verifyPgpSignature()) silently waited out that DNS failure + connection
+	 * timeout (~10s, no benefit - the lookup never found anything) before continuing regardless.
+	 * No keyserver is configured by default now, and nothing here makes any network call at all
+	 * unless an admin explicitly opts in by setting one.
+	 *
+	 * @return ?string base url (no trailing slash), or null if disabled
 	 */
-	const KEYSERVER = 'https://hkps.pool.sks-keyservers.net/pks/lookup?op=get&exact=on&search=';
-	const KEYSERVER_CA = '/addressbook/doc/sks-keyservers.netCA.pem';
+	protected static function pgp_keyserver() : ?string
+	{
+		$keyserver = trim((string)($GLOBALS['egw_info']['server']['pgp_keyserver'] ?? ''));
+		return $keyserver === '' ? null : rtrim($keyserver, '/');
+	}
+
+	/**
+	 * Short timeout for any configured keyserver's own HTTP request - a MISCONFIGURED or
+	 * temporarily unreachable keyserver must not reintroduce the same multi-second hang on every
+	 * mail send this feature is opt-in to avoid by default (see pgp_keyserver()'s own docblock).
+	 */
+	const KEYSERVER_TIMEOUT = 3;
 
 	/**
 	 * Search keyserver for PGP public keys
+	 *
+	 * No-op (no network call at all) unless an admin has configured a keyserver - see
+	 * pgp_keyserver()'s own docblock.
 	 *
 	 * @param int|string|array $recipients (array of) email addresses or numeric account-ids
 	 * @param array $result =array()
 	 */
 	public static function get_pgp_keyserver($recipients, array $result=array())
 	{
+		if (!($keyserver = self::pgp_keyserver())) return $result;
+
 		foreach($recipients as $recipient)
 		{
 			$id = $recipient;
@@ -60,12 +88,10 @@ class addressbook_bo extends Api\Contacts
 				$recipient = $GLOBALS['egw']->accounts->id2name($recipient, 'account_email');
 			}
 			$matches = null;
-			if (($response = file_get_contents(self::KEYSERVER.urlencode($recipient), false, stream_context_create(array(
-					'ssl' => array(
-						'verify_peer' => true,
-						'cafile' => EGW_SERVER_ROOT.self::KEYSERVER_CA,
-					)
-				)))) && preg_match(self::$pgp_key_regexp, $response, $matches))
+			if (($response = @file_get_contents($keyserver.'/pks/lookup?op=get&exact=on&search='.urlencode($recipient), false,
+					stream_context_create(array(
+						'http' => array('timeout' => self::KEYSERVER_TIMEOUT),
+					)))) && preg_match(self::$pgp_key_regexp, $response, $matches))
 			{
 				$result[$id] = $matches[0];
 			}
@@ -107,26 +133,31 @@ class addressbook_bo extends Api\Contacts
 	public function ajax_set_pgp_keys($keys, $allow_user_updates=null)
 	{
 		$message = $this->set_keys($keys, true, $allow_user_updates);
-		// add all keys to public keyserver too
-		$message .= "\n".lang('%1 key(s) added to public keyserver "%2".',
-			self::set_pgp_keyserver($keys), PARSE_URL(self::KEYSERVER_ADD, PHP_URL_HOST));
+		// only attempt the public keyserver, and only mention it at all, if one is configured -
+		// see pgp_keyserver()'s own docblock
+		if (($keyserver = self::pgp_keyserver()))
+		{
+			$message .= "\n".lang('%1 key(s) added to public keyserver "%2".',
+				self::set_pgp_keyserver($keys), parse_url($keyserver, PHP_URL_HOST));
+		}
 
 		Api\Json\Response::get()->data($message);
 	}
 
 	/**
-	 * Keyserver add URL
-	 */
-	const KEYSERVER_ADD = 'https://hkps.pool.sks-keyservers.net/pks/add';
-
-	/**
 	 * Upload PGP keys to public keyserver
+	 *
+	 * No-op (no network call at all) unless an admin has configured a keyserver - see
+	 * pgp_keyserver()'s own docblock. Callers only interested in "did this actually happen"
+	 * (ajax_set_pgp_keys() above) must check pgp_keyserver() themselves first.
 	 *
 	 * @param array $keys email|account_id => public key pairs to store
 	 * @return int number of pgp keys stored
 	 */
 	public static function set_pgp_keyserver($keys)
 	{
+		if (!($keyserver = self::pgp_keyserver())) return 0;
+
 		$added = 0;
 		foreach($keys as $email => $cert)
 		{
@@ -134,12 +165,9 @@ class addressbook_bo extends Api\Contacts
 			{
 				$email = $GLOBALS['egw']->accounts->id2name($email, 'account_email');
 			}
-			if (($response = file_get_contents(self::KEYSERVER_ADD, false, stream_context_create(array(
-					'ssl' => array(
-						'verify_peer' => true,
-						'cafile' => EGW_SERVER_ROOT.self::KEYSERVER_CA,
-					),
+			if (($response = @file_get_contents($keyserver.'/pks/add', false, stream_context_create(array(
 					'http' => array(
+						'timeout' => self::KEYSERVER_TIMEOUT,
 						'header'  => "Content-type: text/plain",
 						'method'  => 'POST',
 						'content' => http_build_query(array(

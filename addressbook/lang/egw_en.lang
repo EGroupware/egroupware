@@ -403,6 +403,9 @@ participants	addressbook	en	Participants
 permission denied !!!	addressbook	en	Permission denied!
 permissiong denied! ask your administrator to allow regular uses to update their public keys.	addressbook	en	Permission denied! Ask your administrator to allow regular uses to update their public keys.
 pgp key	addressbook	en	PGP key
+pgp keyserver	admin	en	PGP keyserver
+hkp keyserver base url (eg. https://keys.openpgp.org)	admin	en	HKP keyserver base URL (eg. https://keys.openpgp.org)
+empty disables all public-keyserver lookups and uploads - no network calls are made	admin	en	Empty disables all public-keyserver lookups and uploads - no network calls are made
 phone number	common	en	Phone number
 phone numbers	common	en	Phone numbers
 photo	addressbook	en	Photo
