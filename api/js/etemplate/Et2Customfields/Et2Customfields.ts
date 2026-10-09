@@ -479,7 +479,7 @@ export class Et2Customfields extends Et2CustomfieldsBase implements Et2LayoutHos
 			return nothing;
 		}
 		return html`
-            <et2-label class="customfields__caption et2-label-fixed" .value=${field.label || fieldName}></et2-label>`;
+            <et2-label class="customfields__caption" .value=${field.label || fieldName}></et2-label>`;
 	}
 
 	/**

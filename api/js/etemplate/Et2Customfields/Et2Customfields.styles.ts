@@ -114,9 +114,12 @@ export default css`
 	}
 
 	/* Stands in for the label an upload would otherwise render inside its own button, so it has to
-	   line up with the label column the rest of the fields use */
+	   line up with the label column the rest of the fields use.  The height is the buttons' own,
+	   not the row's: the row is top-aligned so a file list growing beside the buttons does not
+	   drag the caption down, and the caption centres on the buttons it labels. */
 	et2-customfields .customfields__caption {
 		width: var(--label-width, 8em);
+		height: var(--sl-input-height-medium);
 		flex: 0 0 auto;
 	}
 
