@@ -1204,6 +1204,11 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 	private _scrollToToday()
 	{
 		const state = (this.getInstanceManager().app_obj.calendar || app.calendar)?.state;
+		if(state && !['month', 'weekN'].includes(state.view))
+		{
+			// Scroll again when coming back to month / multi-week, even for the same range
+			et2_calendar_timegrid._scrolled_to_today = '';
+		}
 		if(!state || !['month', 'weekN'].includes(state.view) || !this.day_list || !this.day_widgets)
 		{
 			return;
