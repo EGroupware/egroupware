@@ -402,6 +402,9 @@ participants	addressbook	de	Teilnehmer
 permission denied !!!	addressbook	de	Zugriff verweigert!
 permissiong denied! ask your administrator to allow regular uses to update their public keys.	addressbook	de	Zugriff verweigert! Bitten Sie Ihren Administrator normalen Benutzern zu erlauben Ihren öffentlichen Schlüssel zu aktualisieren.
 pgp key	addressbook	de	PGP-Schlüssel
+pgp keyserver	admin	de	PGP-Schlüsselserver
+hkp keyserver base url (eg. https://keys.openpgp.org)	admin	de	HKP-Schlüsselserver Basis-URL (z.B. https://keys.openpgp.org)
+empty disables all public-keyserver lookups and uploads - no network calls are made	admin	de	Leer deaktiviert alle Abfragen und Uploads zum öffentlichen Schlüsselserver - es werden keine Netzwerkzugriffe durchgeführt
 phone number	common	de	Telefonnummer
 phone numbers	common	de	Telefonnummern
 photo	addressbook	de	Foto
