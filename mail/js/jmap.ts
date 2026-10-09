@@ -4692,6 +4692,12 @@ export class MailJmap
 
 		return `<!DOCTYPE html><html><head><meta charset="utf-8">` +
 			`<meta http-equiv="Content-Security-Policy" content="${csp}">` +
+			// found live (ralf, ticket #126241 follow-up): an ALLOWED external image (allowlisted
+			// domain, or 'Always') can still render as a broken image - many sites hotlink-protect
+			// based on the Referer header, which a plain <img src> cross-origin fetch sends by
+			// default (this document's own URL would otherwise leak to every external image/link
+			// target in the mail body too, a privacy leak independent of hotlink-protection)
+			`<meta name="referrer" content="no-referrer">` +
 			`<link rel="stylesheet" href="${this.egw.link('/mail/templates/default/preview.css')}">` +
 			`<style>${defaultFontCssRule()}</style>` +
 			`</head><body${bodyAttrs}><div class="mailDisplayBody mailDefaultFont"><table width="100%" style="table-layout:fixed">` +
