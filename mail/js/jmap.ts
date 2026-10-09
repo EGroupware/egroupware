@@ -3281,10 +3281,21 @@ export class MailJmap
 			const useHtml = !!htmlPart;
 			const part = useHtml ? htmlPart : textParts[0];
 			const raw = part ? (email.bodyValues?.[part.partId]?.value || '') : '';
-			const sanitized = useHtml ? DOMPurify.sanitize(raw, {
+			let sanitized = useHtml ? DOMPurify.sanitize(raw, {
 				FORBID_TAGS: ['script', 'meta', 'base', 'object', 'embed', 'applet', 'iframe'],
 				ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto|tel|cid|data):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i,
 			}) : raw;
+			// ticket (ralf, 2026-10-09): a blocked external url (eg. a tracking pixel) must not
+			// survive into a reply/forward/edit-as-new's quoted body - the compose editor has no
+			// CSP of its own (unlike the message-view iframe), so it would be fetched the instant
+			// this is rendered, AND re-sent live to whoever receives the new message. See
+			// sanitizeExternalContentForQuoting()'s own docblock. cid: urls are untouched here
+			// (externalUrlFilter() never blocks them) - resolveInlineCidImages() below still finds
+			// them afterward.
+			if (useHtml)
+			{
+				sanitized = this.sanitizeExternalContentForQuoting(sanitized);
+			}
 			// unlike the message-view path (resolveInlineImages()), the quoted body here is a plain
 			// string, not yet attached to any DOM/iframe - resolve straight into real blob: URLs
 			// before it's ever inserted into the compose editor, no defer-then-patch-after-render
@@ -4438,6 +4449,99 @@ export class MailJmap
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * Hard-remove every external url externalUrlFilter() blocks from a quoted/forwarded/edit-as-
+	 * new body - every vector findBlockedExternalUrl() already knows about (inline style/<style>
+	 * url()/@import, background, poster, srcset, SVG <image>/<use>/<feImage> href, and any
+	 * element's own `src`, not just `<img>`), not only `<img src>`.
+	 *
+	 * Found live 2026-10-09 (ralf): deferExternalImages()'s CSP-based soft-block only protects the
+	 * message-VIEW iframe. The compose editor (TinyMCE) has no CSP of its own, so a live external
+	 * url surviving into a quoted body is fetched by the browser the instant it's inserted into
+	 * the editor's DOM - and worse, gets re-SENT as part of a brand-new message the quoting user
+	 * authored, reaching a tracker on behalf of a recipient who never received the original mail
+	 * at all ("spreading" the tracking, not just locally displaying it).
+	 *
+	 * Unlike deferExternalImages() (a soft, restorable placeholder - there is no "Show"/"Allow" UI
+	 * inside compose to restore one), a blocked reference here is removed outright: an element
+	 * whose own purpose is that one url (img/video/audio/source/input[type=image]) is removed
+	 * entirely rather than left as an empty, broken-looking placeholder; a `background`/`poster`
+	 * attribute, a srcset candidate, or a CSS `url()`/`@import` is just dropped, keeping the rest
+	 * of the element/rule/declaration intact. An ALLOWED url (an allowlisted domain, or the
+	 * 'Always' preference) is left completely unchanged, exactly like any other image - same
+	 * shared blocking decision as the view path (externalUrlFilter()).
+	 */
+	private sanitizeExternalContentForQuoting(html : string) : string
+	{
+		const isBlocked = this.externalUrlFilter();
+		// A <template> fragment parse - NOT new DOMParser().parseFromString(html, 'text/html') -
+		// deliberately: the latter builds a full document, and a bare leading <style> (a real,
+		// common shape for an HTML email's own embedded CSS) gets hoisted into its <head> by the
+		// HTML parser's own tree-construction rules, silently vanishing from `doc.body.innerHTML`.
+		// A template's content is parsed as a plain fragment - no head/body split, nothing hoisted.
+		const template = document.createElement('template');
+		template.innerHTML = html;
+		const root = template.content;
+		const sanitizeCss = (css : string) : string => css
+			.replace(/url\(\s*(['"]?)([^'")]*)\1\s*\)/gi, (match, _q, url) => isBlocked(url) ? 'url()' : match)
+			.replace(/@import\s+(['"])([^'"]*)\1\s*;?/gi, (match, _q, url) => isBlocked(url) ? '' : match);
+		const sanitizeSrcset = (srcset : string) : string => srcset.split(',')
+			.map((candidate) => candidate.trim())
+			.filter((candidate) => candidate && !isBlocked(candidate.split(/\s+/)[0]))
+			.join(', ');
+
+		root.querySelectorAll('style').forEach((style) =>
+		{
+			style.textContent = sanitizeCss(style.textContent || '');
+		});
+		Array.from(root.querySelectorAll('*')).forEach((element) =>
+		{
+			for (const attr of Array.from(element.attributes))
+			{
+				switch (attr.localName)
+				{
+					case 'style':
+						element.setAttribute('style', sanitizeCss(attr.value));
+						break;
+					case 'src':
+					case 'background':
+					case 'poster':
+						if (isBlocked(attr.value))
+						{
+							if (attr.localName === 'src')
+							{
+								element.remove();
+								return;
+							}
+							element.removeAttribute(attr.localName);
+						}
+						break;
+					case 'srcset':
+					{
+						const sanitized = sanitizeSrcset(attr.value);
+						if (sanitized)
+						{
+							element.setAttribute('srcset', sanitized);
+						}
+						else
+						{
+							element.removeAttribute('srcset');
+						}
+						break;
+					}
+					case 'href':	// href and xlink:href of SVG's <image>, <use>, <feImage>
+						if (element.namespaceURI === 'http://www.w3.org/2000/svg' && element.localName !== 'a' &&
+							isBlocked(attr.value))
+						{
+							element.removeAttribute('href');
+						}
+						break;
+				}
+			}
+		});
+		return template.innerHTML;
 	}
 
 	/**
