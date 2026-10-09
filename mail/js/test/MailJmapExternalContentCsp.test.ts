@@ -206,3 +206,138 @@ describe("MailJmap.showExternalContent()", () =>
 		assert.isNotNull(doc.querySelector("div.mailDisplayBody td.td_display div[style]"), "the body itself is unchanged");
 	});
 });
+
+/**
+ * Found live 2026-10-09 (ralf): a blocked external url (eg. a tracking pixel) must not survive
+ * into a reply/forward/edit-as-new's quoted body at all - unlike the message-VIEW iframe, the
+ * compose editor (TinyMCE) has no CSP of its own, so deferExternalImages()'s soft, restorable
+ * placeholder is not enough: the url would be fetched the instant it's rendered into the editor,
+ * AND re-sent live as part of the new message, reaching the tracker on behalf of a recipient who
+ * never got the original mail. sanitizeExternalContentForQuoting() hard-removes every blocked
+ * reference instead (no alt-stashed url, no "Show"/"Allow" to restore it - there is no such UI
+ * inside compose) while leaving an ALLOWED url (an allowlisted domain, or the 'Always'
+ * preference) completely unchanged, for every vector findBlockedExternalUrl() already covers.
+ */
+describe("MailJmap.sanitizeExternalContentForQuoting()", () =>
+{
+	function sanitize(jmap : MailJmap, html : string) : string
+	{
+		return (jmap as any).sanitizeExternalContentForQuoting(html);
+	}
+
+	it("removes a blocked <img> entirely, not just its src", () =>
+	{
+		const html = sanitize(new MailJmap(createFakeApp()),
+			'<p>hi</p><img alt="tracker" src="https://tracker.example.com/pixel.gif">');
+
+		assert.notInclude(html, "tracker.example.com");
+		assert.isNull(new DOMParser().parseFromString(html, "text/html").querySelector("img"));
+		assert.include(html, "<p>hi</p>");
+	});
+
+	it("leaves an allowlisted <img> completely unchanged", () =>
+	{
+		const html = sanitize(new MailJmap(createFakeApp({allowedDomains: ["example.com"]})),
+			'<img alt="logo" src="https://example.com/logo.png">');
+
+		const img = new DOMParser().parseFromString(html, "text/html").querySelector("img");
+		assert.equal(img.getAttribute("src"), "https://example.com/logo.png");
+		assert.equal(img.getAttribute("alt"), "logo");
+	});
+
+	it("leaves any <img> unchanged under the 'Always' (1) preference", () =>
+	{
+		const html = sanitize(new MailJmap(createFakeApp({allowIMGs: 1})),
+			'<img src="https://tracker.example.com/pixel.gif">');
+
+		assert.include(html, "tracker.example.com");
+	});
+
+	it("drops a blocked url() from an inline style attribute, keeping the rest of the declaration", () =>
+	{
+		const html = sanitize(new MailJmap(createFakeApp()),
+			'<div style="background:url(https://tracker.example.com/bg.gif) center / contain no-repeat; color: red"></div>');
+
+		const div = new DOMParser().parseFromString(html, "text/html").querySelector("div");
+		assert.notInclude(div.getAttribute("style"), "tracker.example.com");
+		assert.include(div.getAttribute("style"), "color: red");
+	});
+
+	it("leaves an allowlisted url() in an inline style attribute unchanged", () =>
+	{
+		const html = sanitize(new MailJmap(createFakeApp({allowedDomains: ["example.com"]})),
+			'<div style="background:url(https://example.com/bg.png)"></div>');
+
+		assert.include(new DOMParser().parseFromString(html, "text/html").querySelector("div").getAttribute("style"),
+			"example.com/bg.png");
+	});
+
+	it("drops a blocked url() and @import from a <style> block, keeping an allowed rule", () =>
+	{
+		const html = sanitize(new MailJmap(createFakeApp({allowedDomains: ["example.com"]})),
+			'<style>' +
+			'p { background: url(https://tracker.example.com/bg.gif) }' +
+			'@import "https://tracker.example.com/fonts.css";' +
+			'div { background: url(https://example.com/bg.png) }' +
+			'</style>');
+
+		const css = new DOMParser().parseFromString(html, "text/html").querySelector("style").textContent;
+		assert.notInclude(css, "tracker.example.com");
+		assert.include(css, "example.com/bg.png");
+	});
+
+	it("drops a blocked background/poster attribute, keeping the element", () =>
+	{
+		const html = sanitize(new MailJmap(createFakeApp()),
+			'<table><tr><td background="https://tracker.example.com/bg.gif">hi</td></tr></table>' +
+			'<video poster="https://tracker.example.com/poster.png"></video>');
+
+		const doc = new DOMParser().parseFromString(html, "text/html");
+		assert.isFalse(doc.querySelector("td").hasAttribute("background"));
+		assert.equal(doc.querySelector("td").textContent, "hi");
+		assert.isFalse(doc.querySelector("video").hasAttribute("poster"));
+	});
+
+	it("filters a blocked candidate out of srcset, keeping an allowed one", () =>
+	{
+		const html = sanitize(new MailJmap(createFakeApp({allowedDomains: ["example.com"]})),
+			'<picture><source srcset="https://tracker.example.com/a.webp 1x, https://example.com/b.webp 2x"></picture>');
+
+		assert.equal(new DOMParser().parseFromString(html, "text/html").querySelector("source").getAttribute("srcset"),
+			"https://example.com/b.webp 2x");
+	});
+
+	it("removes the srcset attribute entirely once every candidate is blocked", () =>
+	{
+		const html = sanitize(new MailJmap(createFakeApp({allowedDomains: ["example.com"]})),
+			'<img src="https://example.com/a.png" srcset="https://tracker.example.com/a.webp 1x">');
+
+		const img = new DOMParser().parseFromString(html, "text/html").querySelector("img");
+		assert.equal(img.getAttribute("src"), "https://example.com/a.png", "the allowlisted src itself must survive");
+		assert.isFalse(img.hasAttribute("srcset"));
+	});
+
+	it("removes a blocked SVG <image>/<use> href, keeping an svg <a> href untouched", () =>
+	{
+		const html = sanitize(new MailJmap(createFakeApp()),
+			'<svg xmlns="http://www.w3.org/2000/svg">' +
+			'<image href="https://tracker.example.com/a.png"></image>' +
+			'<a href="https://tracker.example.com/click"><text>link</text></a>' +
+			'</svg>');
+
+		const doc = new DOMParser().parseFromString(html, "text/html");
+		assert.isFalse(doc.querySelector("image").hasAttribute("href"));
+		assert.equal(doc.querySelector("a").getAttribute("href"), "https://tracker.example.com/click",
+			"an SVG <a> is a real hyperlink, not a resource fetch - externalUrlFilter() rules apply to resources, not navigation");
+	});
+
+	it("never touches cid:/data: urls", () =>
+	{
+		const html = sanitize(new MailJmap(createFakeApp()),
+			'<img src="cid:logo@example.com"><div style="background:url(data:image/png;base64,AAAA)"></div>');
+
+		const doc = new DOMParser().parseFromString(html, "text/html");
+		assert.equal(doc.querySelector("img").getAttribute("src"), "cid:logo@example.com");
+		assert.include(doc.querySelector("div").getAttribute("style"), "data:image/png;base64,AAAA");
+	});
+});
