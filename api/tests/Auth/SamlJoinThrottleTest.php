@@ -37,15 +37,35 @@ class SamlJoinThrottleTest extends LoggedInTest
 	protected ?int $account_id = null;
 	protected $old_saml_join;
 	protected array $old_server = [];
+	protected ?string $old_host = null;
 
 	protected function setUp() : void
 	{
 		parent::setUp();
 		$this->files_dir = sys_get_temp_dir().'/saml-join-throttle-test-'.uniqid();
 		mkdir($this->files_dir);
-
 		$this->old_server = $GLOBALS['egw_info']['server'] ?? [];
-		$GLOBALS['egw_info']['server'] = array_merge($this->old_server, [
+		$this->old_host = $_SERVER['HTTP_HOST'] ?? null;
+
+		$this->applySamlTestServerConfig();
+	}
+
+	/**
+	 * (Re-)apply the test's SAML/files_dir server config onto $GLOBALS['egw_info']['server'].
+	 *
+	 * makeUser()'s asAdmin() switches the session twice (switchUser() tears down and re-bootstraps
+	 * the whole environment via load_egw()), which reloads $GLOBALS['egw_info'] fresh from this
+	 * install's REAL config - wiping whatever setUp() put there. So this must be called again right
+	 * before every checkJoin(), not just once in setUp(), or checkJoin() silently falls back to
+	 * whatever 'saml_join' this install's own DB config happens to have (empty on a clean install,
+	 * which made this test's bug invisible against a dev install that already had one configured).
+	 *
+	 * HTTP_HOST is needed too - checkDefaultConfig() uses it as the self-signed cert's commonName
+	 * (Api\Header\Http::host()), same reason SamlDefaultConfigTest sets it.
+	 */
+	protected function applySamlTestServerConfig() : void
+	{
+		$GLOBALS['egw_info']['server'] = array_merge($GLOBALS['egw_info']['server'] ?? [], [
 			'files_dir' => $this->files_dir,
 			'webserver_url' => '/egroupware',
 			'saml_idp' => 'https://idp.example.org/idp/shibboleth',
@@ -55,11 +75,13 @@ class SamlJoinThrottleTest extends LoggedInTest
 			'saml_contact_email' => 'admin@example.org',
 			'saml_join' => 'username',
 		]);
+		$_SERVER['HTTP_HOST'] = 'saml-join-throttle-test.example.org';
 	}
 
 	protected function tearDown() : void
 	{
 		$GLOBALS['egw_info']['server'] = $this->old_server;
+		if (isset($this->old_host)) $_SERVER['HTTP_HOST'] = $this->old_host; else unset($_SERVER['HTTP_HOST']);
 		exec('rm -rf '.escapeshellarg($this->files_dir));
 
 		if ($this->account_id)
@@ -105,6 +127,7 @@ class SamlJoinThrottleTest extends LoggedInTest
 	 */
 	protected function checkJoin(string $login, string $password)
 	{
+		$this->applySamlTestServerConfig();
 		$saml = new Saml();
 		$method = new \ReflectionMethod($saml, 'checkJoin');
 		$method->setAccessible(true);
