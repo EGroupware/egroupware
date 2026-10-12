@@ -821,6 +821,26 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
   .et2_email:last-child:after {
     content: "";
   }
+  /* mail.index (the list+preview view, NOT the dedicated mail.display popup above) has its own
+     separate message-list grid (<et2-nextmatch>) and folder tree (<et2-tree>) - neither is
+     covered by anything above. Et2Nextmatch.ts DOES have a real print-preparation system
+     (beforePrint()/afterPrint(), converting its virtualized grid to a bounded set of real rows)
+     but it's only ever reachable via the in-app Print action, never the browser's native print
+     (no 'beforeprint' listener exists anywhere) - found live 2026-10-12 (Stefan Unverricht,
+     relaying a report that ctrl+P on a displayed message was incomplete; ralf's own follow-up
+     testing on the list+preview view specifically found ctrl+P there produced 4,625 PAGES,
+     effectively unusable): native print leaves the grid virtualized, so its internal "full
+     scroll height" placeholder (used by @lit-labs/virtualizer to size the scrollbar correctly
+     without rendering every row) becomes real print-layout height once print ignores the
+     on-screen height/overflow constraint, and the browser paginates that mostly-blank space.
+     Hiding the list and folder tree outright under print - showing only the preview pane's own
+     message content - matches what printing directly from this view is actually for; et2-split's
+     own flex layout gives the remaining (preview) pane the full width once its sibling is gone.
+  */
+  et2-nextmatch,
+  et2-tree {
+    display: none !important;
+  }
 }
 /* MOBILE and tablets (Portrait & Landscape) View --------------*/
 /* Mobile (landscape) Tablet----------- */
