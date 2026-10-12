@@ -5002,7 +5002,17 @@ export class MailJmap
 	{
 		const escaped = (s : string) => (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 		const safeName = escaped(filename || 'attachment');
-		const pageImages = await MailJmap.renderPdfPagesToImages(blob);
+		const pageImages = await MailJmap.renderPdfPagesToImages(blob, MailJmap.PDF_SCREEN_SCALE);
+		// ticket #125641 follow-up: the fixed scale above is deliberately low (fast initial render,
+		// small page) - printing those same screen-resolution images produced visibly blurry output
+		// (a customer comparing against the old, native-PDF-viewer-based EGroupware noticed). Since
+		// the actual print action only happens if/when the user clicks Print, re-rendering every page
+		// at a much higher resolution JUST for that (registerPdfBlobForPrint()/
+		// ensurePrintRenderCallback(), invoked from the wrapper's own print button script - see
+		// printButtonScriptUrl()) avoids paying that extra render time/memory for every PDF that's
+		// only ever looked at, not printed.
+		const printToken = MailJmap.registerPdfBlobForPrint(blob);
+		MailJmap.ensurePrintRenderCallback();
 		// same disk/floppy icon used everywhere else in the app for a download action -
 		// setupViewAttachmentActions()'s own single-attachment "Download" (mail/js/app.ts) uses
 		// this exact same 'fileexport' icon key, which resolves (via egw.image()'s own bootstrap
@@ -5038,7 +5048,7 @@ export class MailJmap
 			`@media print{.toolbar{display:none}body{background:#fff}` +
 			`#egwPdfPages{padding:0;gap:0}#egwPdfPages img{max-width:100%;box-shadow:none;page-break-after:always}}` +
 			`</style></head>` +
-			`<body><div class="toolbar"><span class="name">${safeName}</span>` +
+			`<body data-pdf-print-token="${escaped(printToken)}"><div class="toolbar"><span class="name">${safeName}</span>` +
 			`<button type="button" id="egwPrintBtn"><img src="${printIconUrl}" alt="">${escaped(egw.lang('print'))}</button>` +
 			`<a href="${contentUrl}" download="${safeName}"><img src="${downloadIconUrl}" alt="">${escaped(egw.lang('download'))}</a></div>` +
 			`<div id="egwPdfPages">${pagesHtml}</div>` +
@@ -5060,7 +5070,7 @@ export class MailJmap
 	 * unconditionally imports it for every single page already), so reusing its memoized
 	 * workerBlobUrl avoids a second, wasteful ~2MB worker fetch+blob on any page using both features.
 	 */
-	private static async renderPdfPagesToImages(blob : Blob) : Promise<string[]>
+	private static async renderPdfPagesToImages(blob : Blob, scale : number) : Promise<string[]>
 	{
 		await ensureWorkerSrc();
 		const pdf = await pdfjs.getDocument({data: new Uint8Array(await blob.arrayBuffer())}).promise;
@@ -5070,9 +5080,7 @@ export class MailJmap
 			for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++)
 			{
 				const page = await pdf.getPage(pageNumber);
-				// 1.5 matches pdf-player.ts's own viewer default - crisp enough for on-screen
-				// reading and print alike without inflating the wrapper's own HTML too much per page
-				const viewport = page.getViewport({scale: 1.5});
+				const viewport = page.getViewport({scale});
 				const canvas = document.createElement('canvas');
 				canvas.width = viewport.width;
 				canvas.height = viewport.height;
@@ -5086,6 +5094,55 @@ export class MailJmap
 		{
 			await pdf.destroy();
 		}
+	}
+
+	/** ~108 DPI (PDF's native unit is 72 DPI) - fast initial render for on-screen viewing */
+	private static readonly PDF_SCREEN_SCALE = 1.5;
+
+	/** ~200 DPI - sharp enough for print, only ever rendered on demand (see registerPdfBlobForPrint()) */
+	private static readonly PDF_PRINT_SCALE = 2.8;
+
+	/**
+	 * Registers a PDF's bytes for an on-demand, print-resolution re-render, keyed by a fresh token -
+	 * see wrapPdfViewerWithDownload()'s own docblock for why this is needed instead of just always
+	 * rendering at print resolution. Capped at a handful of entries (an LRU-ish eviction, oldest
+	 * first) since nothing currently revokes an entry individually - the wrapper window(s) it belongs
+	 * to are typically closed long before a user has viewed enough DIFFERENT PDFs in one session for
+	 * this to matter, and the cap bounds the worst case regardless.
+	 */
+	private static registerPdfBlobForPrint(blob : Blob) : string
+	{
+		const token = (crypto as any).randomUUID ? crypto.randomUUID() : Date.now() + '-' + Math.random();
+		MailJmap.pdfBlobsByPrintToken.set(token, blob);
+		while (MailJmap.pdfBlobsByPrintToken.size > 20)
+		{
+			MailJmap.pdfBlobsByPrintToken.delete(MailJmap.pdfBlobsByPrintToken.keys().next().value);
+		}
+		return token;
+	}
+
+	private static pdfBlobsByPrintToken : Map<string, Blob> = new Map();
+
+	/**
+	 * Exposes a single, idempotent callback on THIS (the opener) window, so the wrapper window's own
+	 * print button script - running in a separate blob: document with no pdfjs-dist of its own loaded
+	 * (see wrapPdfViewerWithDownload()'s docblock) - can ask the opener to re-render a specific PDF's
+	 * pages at print resolution via `window.opener`, identified by the token in its own
+	 * `data-pdf-print-token` body attribute. `window.opener` is intact here: neither the `<a
+	 * target="_blank">` a PDF attachment link renders as (Et2Description.wrapLink()) nor
+	 * egw.openPopup() (compose.ts's carry-forward attachment path) sets rel/features=noopener.
+	 */
+	private static ensurePrintRenderCallback() : void
+	{
+		if ((window as any).__egwRenderPdfPrintImages)
+		{
+			return;
+		}
+		(window as any).__egwRenderPdfPrintImages = async(token : string) : Promise<string[] | null> =>
+		{
+			const blob = MailJmap.pdfBlobsByPrintToken.get(token);
+			return blob ? await MailJmap.renderPdfPagesToImages(blob, MailJmap.PDF_PRINT_SCALE) : null;
+		};
 	}
 
 	/**
@@ -5106,7 +5163,27 @@ export class MailJmap
 	{
 		if (!MailJmap._printButtonScriptUrl)
 		{
-			const js = `document.getElementById('egwPrintBtn').addEventListener('click', () => window.print());`;
+			// still a single shared, memoized script with no per-attachment data of its own baked in
+			// (ticket #125641 follow-up) - the PDF-specific bit is only the token read from THIS
+			// document's own <body data-pdf-print-token>, never embedded in the script itself. If the
+			// opener-side re-render fails or isn't reachable for any reason, falls through to printing
+			// at whatever resolution is already shown rather than blocking printing entirely.
+			const js = `document.getElementById('egwPrintBtn').addEventListener('click', async () => {` +
+				`try {` +
+				`const token = document.body.dataset.pdfPrintToken;` +
+				`const render = window.opener && window.opener.__egwRenderPdfPrintImages;` +
+				`if (token && render) {` +
+				`const highRes = await render(token);` +
+				`const imgs = document.querySelectorAll('#egwPdfPages img');` +
+				`if (highRes) await Promise.all(Array.from(imgs).map((img, i) => highRes[i] ? new Promise((resolve) => {` +
+				`img.addEventListener('load', resolve, {once: true});` +
+				`img.addEventListener('error', resolve, {once: true});` +
+				`img.src = highRes[i];` +
+				`}) : Promise.resolve()));` +
+				`}` +
+				`} catch (e) { console.error(e); }` +
+				`window.print();` +
+				`});`;
 			MailJmap._printButtonScriptUrl = URL.createObjectURL(new Blob([js], {type: 'text/javascript'}));
 		}
 		return MailJmap._printButtonScriptUrl;
