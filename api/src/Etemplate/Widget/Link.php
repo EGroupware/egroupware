@@ -262,6 +262,14 @@ class Link extends Etemplate\Widget
 		$app = $value['to_app'];
 		$id = $value['to_id'];
 
+		// unlike ajax_link()/ajax_delete(), there's no not-yet-saved-entry case to exempt here -
+		// listing links only ever makes sense for an already-saved entry, so $app/$id being set is
+		// always a real entry to check read-access on
+		if ($app && $id && !is_array($id) && !Api\Link::file_access($app, $id))
+		{
+			throw new Api\Exception\NoPermission();
+		}
+
 		$links = Api\Link::get_links($app, $id, $value['only_app']??'', 'link_lastmod DESC, link_id DESC',
 			true, $value['show_deleted']??false, $value['limit']??null);
 
@@ -368,6 +376,13 @@ class Link extends Etemplate\Widget
 		{
 			return;	// cant do anything
 		}
+		// checked against the bare entry id, before $dest_file (a not-yet-existing target's
+		// filename, no access decision to make on it) gets appended below
+		if ($id && !self::checkLinkAccess($app, $id))
+		{
+			throw new Api\Exception\NoPermission();
+		}
+
 		if($id && $dest_file && trim($dest_file) !== '')
 		{
 			$id .= "/$dest_file";
@@ -414,6 +429,13 @@ class Link extends Etemplate\Widget
 	 */
 	public static function ajax_copy_to($file_info, $target, $button_id)
 	{
+		// same READ check download_zip() uses: copying requires seeing the file, not editing the entry
+		if (!empty($file_info['app2']) && !empty($file_info['id2']) &&
+			!Api\Link::file_access($file_info['app2'], $file_info['id2']))
+		{
+			throw new Api\Exception\NoPermission();
+		}
+
 		$error_count = 0;
 		$copied = array();
 		Api\Vfs::copy_files([Api\Link::vfs_path($file_info['app2'], $file_info['id2'], $file_info['id'], true)], $target,$error_count,$copied);

@@ -187,6 +187,20 @@ class LinkAclTest extends LoggedInTest
 	}
 
 	/**
+	 * Same as grantInfologEdit(), but only Acl::READ - a separate bit (Acl.php: READ=1, EDIT=4),
+	 * to prove a READ-only check (ajax_link_list()) actually requires READ and isn't incidentally
+	 * satisfied by an EDIT grant.
+	 */
+	protected function grantInfologRead() : void
+	{
+		$command = new \admin_cmd_acl(true, $this->account_id, 'infolog', 'run', Acl::READ);
+		$command->run();
+
+		$grant = new \admin_cmd_acl(true, $GLOBALS['egw_info']['user']['account_id'], 'infolog', $this->account_id, Acl::READ);
+		$grant->run();
+	}
+
+	/**
 	 * Simulate an etemplate-request that recorded $app/$id as edit-allowed (what
 	 * Link::beforeSendToClient() does for a widget rendered non-readonly), without needing
 	 * to actually render a template.
@@ -406,6 +420,122 @@ class LinkAclTest extends LoggedInTest
 		$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
 		$link = Api\Link::get_link($link_id);
 		$this->assertSame('legit comment', $link['link_remark'] ?? null, 'Comment was NOT changed despite whitelisted exec_id');
+	}
+
+	/**
+	 * Regression test for GHSA-5m64-v9gc-fqv3: ajax_link_list() used to perform NO access check at
+	 * all, returning the full link graph (remarks, owner, titles, ...) of ANY entry to ANY
+	 * authenticated user.
+	 */
+	public function testAjaxLinkListDeniedWithoutAccess()
+	{
+		$id1 = $this->makeInfolog();
+		$id2 = $this->makeInfolog();
+		$this->makeLink($id1, $id2);
+
+		$this->makeUser();
+		$this->switchUser($this->account['account_lid'], $this->account['account_passwd']);
+
+		try
+		{
+			Link::ajax_link_list(['to_app' => 'infolog', 'to_id' => $id1]);
+			$this->fail('ajax_link_list() should have thrown Api\Exception\NoPermission');
+		}
+		catch (Api\Exception\NoPermission $e)
+		{
+			// expected
+		}
+
+		$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
+	}
+
+	/**
+	 * Acl::READ (not Acl::EDIT) must be enough - this is a read-only listing endpoint.
+	 */
+	public function testAjaxLinkListAllowedViaRealReadRights()
+	{
+		$id1 = $this->makeInfolog();
+		$id2 = $this->makeInfolog();
+		$this->makeLink($id1, $id2);
+
+		$this->makeUser();
+		$this->grantInfologRead();
+		$this->switchUser($this->account['account_lid'], $this->account['account_passwd']);
+
+		Link::ajax_link_list(['to_app' => 'infolog', 'to_id' => $id1]);
+
+		$response = Api\Json\Response::get()->initResponseArray();
+		$data = null;
+		foreach ($response as $item)
+		{
+			if ($item['type'] === 'data') $data = $item['data'];
+		}
+		$this->assertIsArray($data, 'ajax_link_list() should have returned the link data');
+
+		$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
+	}
+
+	/**
+	 * Regression test for GHSA-5m64-v9gc-fqv3: ajax_link_existing() used to perform NO access
+	 * check on the target entry before attaching/symlinking into it.
+	 */
+	public function testAjaxLinkExistingDeniedWithoutAccess()
+	{
+		$id1 = $this->makeInfolog();
+
+		$this->makeUser();
+		$this->switchUser($this->account['account_lid'], $this->account['account_passwd']);
+
+		try
+		{
+			Link::ajax_link_existing("infolog:$id1:", []);
+			$this->fail('ajax_link_existing() should have thrown Api\Exception\NoPermission');
+		}
+		catch (Api\Exception\NoPermission $e)
+		{
+			// expected
+		}
+
+		$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
+	}
+
+	public function testAjaxLinkExistingAllowedViaRealEditRights()
+	{
+		$id1 = $this->makeInfolog();
+
+		$this->makeUser();
+		$this->grantInfologEdit();
+		$this->switchUser($this->account['account_lid'], $this->account['account_passwd']);
+
+		// no files to attach - this only proves the ACL gate itself does not throw
+		Link::ajax_link_existing("infolog:$id1:", []);
+		$this->addToAssertionCount(1);
+
+		$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
+	}
+
+	/**
+	 * Regression test for GHSA-5m64-v9gc-fqv3: ajax_copy_to() used to perform NO access check on
+	 * the source link's entry before copying its file elsewhere.
+	 */
+	public function testAjaxCopyToDeniedWithoutAccess()
+	{
+		$id1 = $this->makeInfolog();
+
+		$this->makeUser();
+		$this->switchUser($this->account['account_lid'], $this->account['account_passwd']);
+
+		try
+		{
+			Link::ajax_copy_to(['app2' => 'infolog', 'id2' => $id1, 'id' => 'does-not-matter'], '/tmp', null);
+			$this->fail('ajax_copy_to() should have thrown Api\Exception\NoPermission');
+		}
+		catch (Api\Exception\NoPermission $e)
+		{
+			// expected
+		}
+
+		$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
 	}
 
 	/**
