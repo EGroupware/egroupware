@@ -3,7 +3,10 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
     <et2-template  id="mail.index.preview">
-        <et2-toolbar  id="toolbar" listHeader="short"></et2-toolbar>
+        <!-- noPrint: mail.display's own equivalent toolbar (displayToolbar) already has this -
+             this preview-pane toolbar was simply missing it, so it kept printing under Ctrl+P.
+             Found live 2026-10-12 (ralf, following up on Stefan Unverricht's ctrl+P report). -->
+        <et2-toolbar  id="toolbar" listHeader="short" class="noPrint"></et2-toolbar>
         <grid id="mailPreview" width="100%">
             <columns>
                 <column/>
@@ -33,7 +36,53 @@
                                 <et2-image  id="pgp_signature" src="envelope-at-fill" inline="true" hidden="true" align="right" width="24"></et2-image>
                             </et2-hbox>
                         </et2-hbox>
-                        <et2-hbox  width="100%" class="mailPreviewHeaders">
+                        <!-- onlyPrint: simpler, non-interactive layout (no avatar/toolbar/dropdown actions),
+                             shown only for print media via CSS - same field ids/shape as mail.display's own
+                             identical block (display.xet), which this was missing entirely: printing a
+                             message from THIS preview pane (not the mail.display popup) showed no header
+                             info at all - the avatar-containing interactive block below doesn't print
+                             correctly (same class of shadow-DOM-vs-print issue as the message body itself,
+                             see MailApp.preparePrint()'s own docblock), which is exactly why mail.display
+                             already has this same print-only duplicate instead of relying on the interactive
+                             block printing as-is. Found live 2026-10-12 (ralf, following up on Stefan
+                             Unverricht's ctrl+P report). -->
+                        <et2-vbox  width="100%" class="mailPreviewHeaders onlyPrint">
+                            <et2-date-time  align="right" id="date" readonly="true" style="max-width: fit-content;"></et2-date-time>
+                            <et2-vbox>
+                                <et2-hbox>
+                                    <et2-description  value="From" class="firstColumnTitle"></et2-description>
+                                    <et2-email  id="additionalfromaddress" readonly="true"></et2-email>
+                                </et2-hbox>
+                                <et2-hbox  disabled="!@toaddress">
+                                    <et2-description  value="To" class="firstColumnTitle"></et2-description>
+                                    <et2-email  id="additionaltoaddress" readonly="true"></et2-email>
+                                </et2-hbox>
+                                <et2-hbox  disabled="!@ccaddress">
+                                    <et2-description  value="Cc" class="firstColumnTitle"></et2-description>
+                                    <et2-email  id="ccaddress" readonly="true"></et2-email>
+                                </et2-hbox>
+                                <et2-hbox  disabled="!@bccaddress">
+                                    <et2-description  value="Bcc" class="firstColumnTitle"></et2-description>
+                                    <et2-email  id="bccaddress" readonly="true"></et2-email>
+                                </et2-hbox>
+                            </et2-vbox>
+                            <grid id="attachmentsBlock" class="attachments" disabled="!@attachmentsBlock">
+                                <columns>
+                                    <column/>
+                                    <column width="70%"/>
+                                    <column width="11%"/>
+                                </columns>
+                                <rows>
+                                    <row class="row attachmentRow">
+                                        <et2-description  id="${row}[type]"></et2-description>
+                                        <et2-description-expose  class="et2_link useEllipsis" id="${row}[filename]" mime="$row_cont[type]" href="$row_cont[mime_url]" noLang="1" mimeData="$row_cont[mime_data]"></et2-description-expose>
+                                        <et2-description  align="right" id="${row}[size]"></et2-description>
+                                    </row>
+                                </rows>
+                            </grid>
+                        </et2-vbox>
+                        <!-- noPrint: normal interactive display, avatar + toolbar dropdown actions per attachment -->
+                        <et2-hbox  width="100%" class="mailPreviewHeaders noPrint">
                             <et2-lavatar  contactId="email:$cont[fromaddress]" lname="$cont[fromlavatar][lname]" fname="$cont[fromlavatar][fname]" shape="rounded" size="2.75em"></et2-lavatar>
                             <et2-vbox>
                                 <et2-vbox  class="addresses">
