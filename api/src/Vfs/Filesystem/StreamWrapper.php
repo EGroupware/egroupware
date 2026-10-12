@@ -117,7 +117,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 	/**
 	 * Regular expression identifying scripts, to NOT allow updating them if exec mount option is NOT set
 	 */
-	const SCRIPT_EXTENSIONS_PREG = '/\.(php[0-9]*|pl|py)$/';
+	const SCRIPT_EXTENSIONS_PREG = '/\.(php[0-9]*|pl|py)$/i';
 
 	/**
 	 * This method is called immediately after your stream object is created.
