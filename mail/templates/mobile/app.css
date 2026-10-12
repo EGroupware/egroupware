@@ -827,6 +827,15 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
   .et2_email:last-child:after {
     content: "";
   }
+  /* see mail/templates/default/app.css's own identical rule for why (ticket live report
+     2026-10-12, Stefan Unverricht/ralf): native print bypasses Et2Nextmatch's own bounded-rows
+     print conversion entirely, so a visible virtualized message-list grid pages out to
+     thousands of mostly-blank pages. Harmless no-op if neither element is on screen at once in
+     this layout. */
+  et2-nextmatch,
+  et2-tree {
+    display: none !important;
+  }
 }
 /* MOBILE and tablets (Portrait & Landscape) View --------------*/
 /* Mobile (landscape) Tablet----------- */
