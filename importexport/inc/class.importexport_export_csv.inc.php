@@ -522,6 +522,14 @@ class importexport_export_csv implements importexport_iface_export_record
 		$writeDelimiter = false;
 		foreach($dataArray as $dataElement) {
 			if($writeDelimiter) $string .= $delimiter;
+			$dataElement = (string)$dataElement;
+			// neutralize spreadsheet formula injection (OWASP CSV Injection): a leading '=', '+',
+			// '-', '@', TAB or CR makes Excel/LibreOffice interpret the cell as a formula when the
+			// export is opened there - prefixing with a single quote keeps it as plain text in both
+			if ($dataElement !== '' && strpos("=+-@\t\r", $dataElement[0]) !== false)
+			{
+				$dataElement = "'".$dataElement;
+			}
 			$string .= $enclosure . str_replace(array("\r\n", '"'), array("\n",'""'), $dataElement) . $enclosure;
 			$writeDelimiter = true;
 		}
